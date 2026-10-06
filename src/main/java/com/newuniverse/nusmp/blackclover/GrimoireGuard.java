@@ -82,7 +82,7 @@ public final class GrimoireGuard {
                             if (!enabled() || a == null || a.length < 4) return pass;
                             Object skill = a[3] instanceof io.github.manasmods.manascore.network.api.util.Changeable<?> c ? c.get() : null;
                             if (skill instanceof io.github.manasmods.manascore.skill.api.ManasSkill ms
-                                    && isGrimoireSkill(SkillAPI.getSkillRegistry().getKey(ms))) {
+                                    && isGrimoireSkill(SkillAPI.getSkillRegistry().getKey(ms).map(net.minecraft.resources.ResourceKey::location).orElse(null))) {
                                 if (a[0] instanceof Player thief) thief.displayClientMessage(Component.literal(
                                         "A grimoire cannot be taken. It chose its mage.").withStyle(ChatFormatting.DARK_PURPLE), true);
                                 return refuse;
