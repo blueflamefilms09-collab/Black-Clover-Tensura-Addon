@@ -1,0 +1,68 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.gradle.userdev' version '7.1.38'
+}
+
+version = mod_version
+group = mod_group_id
+base { archivesName = "multiverse-of-anime" }
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+repositories {
+    mavenCentral()
+    maven {
+        name = "CurseMaven"
+        url = "https://cursemaven.com"
+        content { includeGroup "curse.maven" }
+    }
+}
+
+// ManasCore ships its modules (skill, storage, network...) as jars inside one jar.
+// This task unpacks them so we can compile against them.
+def extractedManasCoreDir = layout.buildDirectory.dir("extracted-deps/manascore")
+configurations {
+    manasCoreBundle { canBeResolved = true; canBeConsumed = false; transitive = false }
+}
+tasks.register("extractManasCoreModules", Copy) {
+    inputs.files(configurations.manasCoreBundle)
+    from { configurations.manasCoreBundle.collect { zipTree(it).matching { include "**/*.jar" } } }
+    into extractedManasCoreDir
+    includeEmptyDirs = false
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+runs {
+    configureEach {
+        workingDirectory project.layout.projectDirectory.dir('run').dir(name)
+        modSource project.sourceSets.main
+    }
+    client { }
+    server { argument '--nogui' }
+}
+
+dependencies {
+    implementation "net.neoforged:neoforge:${neo_version}"
+    // Headless VFX rule checks (gradle build runs them; a failing effect blocks the jar)
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher' 
+
+    manasCoreBundle "curse.maven:manascore-619025:8022425"
+    implementation "curse.maven:manascore-619025:8022425"
+    implementation fileTree(dir: extractedManasCoreDir.get().asFile, include: ["**/*.jar"])
+
+    implementation "curse.maven:architectury-api-419699:5786327"
+    implementation "curse.maven:geckolib-388172:8350073"
+    implementation "curse.maven:smartbrainlib-661293:7055149"
+    // Tensura: Reincarnated (built against 2.0.1.0; runs fine on 2.0.1.3)
+    implementation "curse.maven:tensura-reincarnated-643695:8098859"
+}
+
+tasks.withType(JavaCompile).configureEach {
+    dependsOn tasks.named("extractManasCoreModules")
+    options.encoding = 'UTF-8'
+}
+
+test {
+    useJUnitPlatform()
+    testLogging { events "failed"; exceptionFormat "full" }
+}

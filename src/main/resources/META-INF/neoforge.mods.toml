@@ -1,0 +1,40 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="All rights reserved"
+
+[[mods]]
+modId="nusmp"
+version="0.20.0"
+displayName="Multiverse of Anime in Tensura"
+description='''Anime powers for Tensura: Reincarnated - Hell Mode, DanMachi, Black Clover grimoires, Fire Force, Jujutsu Kaisen, JoJo and more, with Unique to Ultimate evolutions.'''
+
+[[dependencies.nusmp]]
+modId="neoforge"
+type="required"
+versionRange="[21.1,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.nusmp]]
+modId="tensura"
+type="required"
+versionRange="[2.0.1.0,)"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.nusmp]]
+modId="manascore_skill"
+type="required"
+versionRange="[4.0.0.2,)"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.nusmp]]
+modId="manascore_storage"
+type="required"
+versionRange="[4.0.0.2,)"
+ordering="AFTER"
+side="BOTH"
+
+[[mixins]]
+config="nusmp.mixins.json"

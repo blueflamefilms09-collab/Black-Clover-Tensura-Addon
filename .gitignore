@@ -1,0 +1,15 @@
+# Gradle / build output
+.gradle/
+build/
+run/
+out/
+# IDE
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+bin/
+# Python
+__pycache__/

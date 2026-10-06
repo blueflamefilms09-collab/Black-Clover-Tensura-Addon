@@ -1,0 +1,8 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "com.newuniverse.nusmp.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": ["OverlordUndeadHandlerMixin"],
+  "injectors": { "defaultRequire": 0 }
+}

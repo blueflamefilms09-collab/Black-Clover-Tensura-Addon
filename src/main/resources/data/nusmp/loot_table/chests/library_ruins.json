@@ -1,0 +1,104 @@
+{
+ "type": "minecraft:chest",
+ "pools": [
+  {
+   "rolls": {
+    "type": "minecraft:uniform",
+    "min": 2,
+    "max": 4
+   },
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "nusmp:mana_method_rune_stone",
+     "weight": 8,
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": {
+        "type": "minecraft:uniform",
+        "min": 1,
+        "max": 2
+       }
+      }
+     ]
+    },
+    {
+     "type": "minecraft:item",
+     "name": "nusmp:recovery_salve",
+     "weight": 5
+    },
+    {
+     "type": "minecraft:item",
+     "name": "nusmp:spirit_charm",
+     "weight": 3
+    },
+    {
+     "type": "minecraft:item",
+     "name": "nusmp:anti_bird_charm",
+     "weight": 4
+    },
+    {
+     "type": "minecraft:item",
+     "name": "nusmp:magic_knight_robe_junior",
+     "weight": 4
+    },
+    {
+     "type": "minecraft:item",
+     "name": "nusmp:magic_knight_robe_junior_hood",
+     "weight": 4
+    },
+    {
+     "type": "minecraft:item",
+     "name": "nusmp:magic_knight_robe_junior_boots",
+     "weight": 4
+    },
+    {
+     "type": "minecraft:item",
+     "name": "minecraft:book",
+     "weight": 12,
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": {
+        "type": "minecraft:uniform",
+        "min": 1,
+        "max": 4
+       }
+      }
+     ]
+    },
+    {
+     "type": "minecraft:item",
+     "name": "minecraft:paper",
+     "weight": 10,
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": {
+        "type": "minecraft:uniform",
+        "min": 2,
+        "max": 8
+       }
+      }
+     ]
+    },
+    {
+     "type": "minecraft:item",
+     "name": "minecraft:candle",
+     "weight": 6,
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": {
+        "type": "minecraft:uniform",
+        "min": 1,
+        "max": 3
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

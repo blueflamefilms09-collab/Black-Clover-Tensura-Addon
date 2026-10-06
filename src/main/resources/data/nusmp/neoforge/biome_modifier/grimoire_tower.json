@@ -1,0 +1,6 @@
+{
+ "type": "neoforge:add_features",
+ "biomes": "#minecraft:is_overworld",
+ "features": "nusmp:grimoire_tower",
+ "step": "surface_structures"
+}

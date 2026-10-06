@@ -1,0 +1,52 @@
+{
+  "loader": "nusmp:grimoire",
+  "_comment": "Procedural 3D grimoire (0.20). Geometry is assembled per item at runtime from the nusmp:appearance component (see GrimoireModelPlan / GrimoireBakedModel); the 32 greyscale base textures live in textures/item/grimoire3d. The previous 2D-variant model is kept untouched as grimoire_legacy.json.",
+  "tint_layers": {
+    "cover_primary": 0,
+    "trim_metal": 1,
+    "insignia": 2,
+    "aura_glow": 3
+  },
+  "display": {
+    "gui": {
+      "rotation": [20, 35, 0],
+      "translation": [0, 0, 0],
+      "scale": [1.0, 1.0, 1.0]
+    },
+    "ground": {
+      "rotation": [0, 0, 0],
+      "translation": [0, 2, 0],
+      "scale": [0.55, 0.55, 0.55]
+    },
+    "fixed": {
+      "rotation": [0, 180, 0],
+      "translation": [0, 0, 0],
+      "scale": [0.95, 0.95, 0.95]
+    },
+    "head": {
+      "rotation": [0, 180, 0],
+      "translation": [0, 13, 7],
+      "scale": [1.0, 1.0, 1.0]
+    },
+    "thirdperson_righthand": {
+      "rotation": [0, 0, 0],
+      "translation": [0, 3, 1.5],
+      "scale": [0.7, 0.7, 0.7]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [0, 0, 0],
+      "translation": [0, 3, 1.5],
+      "scale": [0.7, 0.7, 0.7]
+    },
+    "firstperson_righthand": {
+      "rotation": [12, -22, 0],
+      "translation": [1.5, 2.5, -2],
+      "scale": [0.8, 0.8, 0.8]
+    },
+    "firstperson_lefthand": {
+      "rotation": [12, 22, 0],
+      "translation": [-1.5, 2.5, -2],
+      "scale": [0.8, 0.8, 0.8]
+    }
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "_comment": "Default color (ARGB hex), duration (ticks) and screen shake per effect. Shake only plays on signature casts (power >= 1.5). Textures: assets/nusmp/textures/particle/.",
+  "magic_circle": {
+    "color": "FFFFD86B",
+    "duration": 40,
+    "shake": 0.0
+  },
+  "magic_circle_explosion": {
+    "color": "FFFFD86B",
+    "duration": 34,
+    "shake": 0.0
+  },
+  "flame_trail": {
+    "color": "FFFF6A1E",
+    "duration": 24,
+    "shake": 0.0
+  },
+  "flame_explosion": {
+    "color": "FFFF6A1E",
+    "duration": 26,
+    "shake": 0.0
+  },
+  "wind_slash": {
+    "color": "FF8CFFC2",
+    "duration": 16,
+    "shake": 0.0
+  },
+  "wind_ring": {
+    "color": "FF8CFFC2",
+    "duration": 30,
+    "shake": 0.0
+  },
+  "anti_magic_slash": {
+    "color": "FF1A1A1A",
+    "duration": 18,
+    "shake": 0.0
+  },
+  "water_splash": {
+    "color": "FF4FA8FF",
+    "duration": 24,
+    "shake": 0.0
+  },
+  "water_ring": {
+    "color": "FF4FA8FF",
+    "duration": 30,
+    "shake": 0.0
+  },
+  "elf_circle": {
+    "color": "FF6CFF7A",
+    "duration": 50,
+    "shake": 0.0
+  },
+  "devil_circle": {
+    "color": "FFFF2A2A",
+    "duration": 50,
+    "shake": 0.0
+  },
+  "lightning_spear": {
+    "color": "FFFFE14A",
+    "duration": 10,
+    "shake": 0.0
+  },
+  "earth_spikes": {
+    "color": "FFB08850",
+    "duration": 20,
+    "shake": 0.0
+  },
+  "spatial_rift": {
+    "color": "FFB088FF",
+    "duration": 30,
+    "shake": 0.0
+  },
+  "mirror_pane": {
+    "color": "FFDDEEFF",
+    "duration": 40,
+    "shake": 0.0
+  },
+  "thread_line": {
+    "color": "FFFF3355",
+    "duration": 20,
+    "shake": 0.0
+  },
+  "spirit_aura": {
+    "color": "FF7FE8FF",
+    "duration": 160,
+    "shake": 0.0
+  },
+  "mana_charge": {
+    "color": "FF9FD0FF",
+    "duration": 40,
+    "shake": 0.0
+  },
+  "spell_card": {
+    "color": "FFFFD86B",
+    "duration": 30,
+    "shake": 0.0
+  },
+  "weapon_constructs": {
+    "color": "FF8CFF6A",
+    "duration": 160,
+    "shake": 0.0
+  }
+}

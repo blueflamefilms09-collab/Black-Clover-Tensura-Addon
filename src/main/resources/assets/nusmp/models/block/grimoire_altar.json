@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "nusmp:block/grimoire_altar",
+    "top": "nusmp:block/grimoire_altar_top",
+    "side": "nusmp:block/grimoire_altar",
+    "bottom": "minecraft:block/mossy_stone_bricks"
+  },
+  "elements": [
+    {
+      "from": [1, 0, 1],
+      "to": [15, 12, 15],
+      "faces": {
+        "north": { "texture": "#side" },
+        "south": { "texture": "#side" },
+        "west":  { "texture": "#side" },
+        "east":  { "texture": "#side" },
+        "up":    { "texture": "#top" },
+        "down":  { "texture": "#bottom" }
+      }
+    },
+    {
+      "from": [2, 12, 2],
+      "to": [14, 14, 14],
+      "faces": {
+        "north": { "texture": "#side" },
+        "south": { "texture": "#side" },
+        "west":  { "texture": "#side" },
+        "east":  { "texture": "#side" },
+        "up":    { "texture": "#top" },
+        "down":  { "texture": "#top" }
+      }
+    }
+  ]
+}

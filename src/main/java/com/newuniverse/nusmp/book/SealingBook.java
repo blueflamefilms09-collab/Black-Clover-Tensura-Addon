@@ -1,0 +1,61 @@
+package com.newuniverse.nusmp.book;
+
+import com.newuniverse.nusmp.balance.BalanceLaw;
+import com.newuniverse.nusmp.blackclover.MagicType;
+import com.newuniverse.nusmp.blackclover.TimeStop;
+import com.newuniverse.nusmp.vfx.VfxShape;
+import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
+import io.github.manasmods.tensura.ability.magic.Element;
+import io.github.manasmods.tensura.damage.TensuraDamageTypes;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
+
+import java.util.List;
+
+/** Sealing Magic. */
+public class SealingBook extends GrimoireBook {
+    private final List<BookPage> pages = List.of(
+            BookPage.zone("seal", "Seal", SealingBook::seal),
+            BookPage.signature("grand_seal", "Grand Seal", SealingBook::grandSeal));
+
+    public SealingBook() { super(MagicType.SEALING, 0xFFE8C26A); }
+    @Override protected List<BookPage> familyPages() { return pages; }
+    @Override public ResourceKey<DamageType> damageType() { return TensuraDamageTypes.MAGIC_GENERIC; }
+
+    /** Seals a mage's grimoire for 5 s (bosses: 1 s); on monsters it seals the wound shut with a sealing cut. */
+    static void apply(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, LivingEntity t, int mode, int ticks) {
+        int dur = BalanceLaw.isBoss(t) ? 20 : ticks;
+        if (t instanceof Player) t.getPersistentData().putLong("nusmp_sealed_until", t.level().getGameTime() + dur);
+        b.hurt(i, p, t, mode, 6f);
+        t.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, dur, 1));
+        b.vfx(p, VfxShape.MAGIC_CIRCLE, t.position().add(0, t.getBbHeight() / 2, 0), p.getEyePosition(), dur, 0.6f);
+    }
+
+    static boolean seal(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
+        LivingEntity t = target(p, 16);
+        if (t == null) { fail(p, "Nothing to seal."); return false; }
+        b.castCircle(p, 0.7f);
+        apply(b, i, p, t, mode, 100);
+        return true;
+    }
+
+    static boolean grandSeal(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
+        List<LivingEntity> ts = around(p, p.position(), 6);
+        if (ts.isEmpty()) { fail(p, "Nothing to seal."); return false; }
+        b.castCircle(p, 1.4f);
+        for (LivingEntity t : ts) apply(b, i, p, t, mode, 80);
+        return true;
+    }
+}
