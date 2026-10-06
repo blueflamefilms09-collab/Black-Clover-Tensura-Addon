@@ -38,15 +38,29 @@ public class NUSMP {
         NUCreativeTab.TABS.register(modEventBus);
         modEventBus.addListener(VfxSpawn::registerPayloads);
         modEventBus.addListener(com.newuniverse.nusmp.book.GrimoireSummon::registerPayloads);
+        modEventBus.addListener(com.newuniverse.nusmp.multiverse.MultiverseSync::registerPayloads);
         if (FMLEnvironment.dist == Dist.CLIENT) {
             modEventBus.addListener(com.newuniverse.nusmp.client.NUClient::onClientSetup);
             com.newuniverse.nusmp.vfx.client.VfxClientEvents.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireClient.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireShelfClient.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireFloatClient.init();
-            modEventBus.addListener(com.newuniverse.nusmp.client.SpiritLordRenderer::register);
+            com.newuniverse.nusmp.client.multiverse.MultiverseStatusClient.init(modEventBus);
+            modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.multiverse.MultiverseClientConfig.SPEC, "nusmp-multiverse-client.toml");
+            // Spirit Lords are small floating orbs for now (SpiritLordRenderer, the full Tensura body, is kept for later)
+            modEventBus.addListener(com.newuniverse.nusmp.client.SpiritOrbRenderer::register);
         }
         modContainer.registerConfig(ModConfig.Type.SERVER, NUConfig.SPEC);
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.multiverse.MultiverseConfig.SPEC, "nusmp-multiverse-server.toml");
+        // Multiverse: /multiverse commands, ceremony, mastery pages, ranks & stars, squads, status sync, world sites
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.MultiverseCommands::register);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.Ceremony::onPlayerTick);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.MasteryPages::onPlayerTick);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.Squads::onPlayerTick);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.MultiverseSync::onPlayerTick);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.MultiverseSync::onLogin);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.MultiverseSync::onLogout);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.WorldSites::onServerTick);
         NeoForge.EVENT_BUS.addListener(FaithCommand::register);
         NeoForge.EVENT_BUS.addListener(LiarisFreeseSkill::onKill);
         NeoForge.EVENT_BUS.addListener(SkillEvolution::onPlayerTick);

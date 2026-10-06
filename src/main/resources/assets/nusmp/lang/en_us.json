@@ -451,5 +451,9 @@
   "key.categories.nusmp": "Multiverse of Anime",
   "key.nusmp.grimoire_shelf": "Grimoire Shelf",
   "nusmp.grimoire_shelf.opened": "Grimoire shelf opened (%s books).",
-  "nusmp.grimoire_shelf.closed": "Grimoire shelf closed."
+  "nusmp.grimoire_shelf.closed": "Grimoire shelf closed.",
+  "key.nusmp.multiverse_status": "Multiverse Status",
+  "item.nusmp.spirit_lord_skill": "Spirit Lord Skill",
+  "nusmp.skill.spirit_lord": "Spirit Lord",
+  "nusmp.skill.spirit_lord.description": "A spirit lord has bound itself to you - no grimoire needed. Hold Spirit Channeling to fill the gauge and pull enemies in, then release: Overdrive at 25%, Nova at 50%, Cataclysm at 100%. Your body takes less from physical blows and falls cannot hurt you. Earn your spirit's full trust, give it a True Name, and call it to your side."
 }

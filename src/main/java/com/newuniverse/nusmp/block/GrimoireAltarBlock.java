@@ -46,6 +46,13 @@ public class GrimoireAltarBlock extends Block {
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (level.isClientSide || !(player instanceof ServerPlayer p)) return InteractionResult.SUCCESS;
+        com.newuniverse.nusmp.multiverse.WorldSites.record(com.newuniverse.nusmp.multiverse.WorldSites.Kind.TOWER, level.dimension(), pos);
+        // Missed the ceremony? Any altar accepts an eligible mage (a grimoire always answers here).
+        if (com.newuniverse.nusmp.multiverse.Ceremony.isEligible(p)) {
+            glow(p, pos, 0xFFFFD86B, 1.4f);
+            com.newuniverse.nusmp.multiverse.Ceremony.choose(p, "a Grimoire Altar");
+            return InteractionResult.CONSUME;
+        }
         if (GrimoireAcceptance.hasRolled(p)) {
             p.displayClientMessage(Component.literal("Your fate is already written. Hold your grimoire and pray to seek a higher cover.").withStyle(ChatFormatting.GRAY), true);
             glow(p, pos, 0xFF8CFFC2, 0.8f);
@@ -63,6 +70,12 @@ public class GrimoireAltarBlock extends Block {
         if (!(stack.getItem() instanceof GrimoireItem)) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         if (level.isClientSide || !(player instanceof ServerPlayer p)) return ItemInteractionResult.SUCCESS;
         if (!GrimoireItem.isOwnedBy(stack, p.getUUID())) { p.displayClientMessage(Component.literal("The altar only hears a grimoire's owner.").withStyle(ChatFormatting.RED), true); return ItemInteractionResult.CONSUME; }
+        com.newuniverse.nusmp.multiverse.WorldSites.record(com.newuniverse.nusmp.multiverse.WorldSites.Kind.TOWER, level.dimension(), pos);
+        // Sneak: altar training (mastery). Otherwise the daily prayer for a higher cover, as before.
+        if (p.isShiftKeyDown()) {
+            if (com.newuniverse.nusmp.multiverse.MasteryPages.altarTraining(p)) glow(p, pos, 0xFF8CFFC2, 1.0f);
+            return ItemInteractionResult.CONSUME;
+        }
         var g = GrimoirePages.grimoireOf(p);
         if (g.isEmpty()) return ItemInteractionResult.CONSUME;
         long day = level.getDayTime() / 24000L;

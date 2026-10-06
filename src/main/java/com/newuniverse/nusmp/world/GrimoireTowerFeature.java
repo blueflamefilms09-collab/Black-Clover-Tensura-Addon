@@ -93,6 +93,7 @@ public class GrimoireTowerFeature extends Feature<NoneFeatureConfiguration> {
                 if (dx * dx + dz * dz <= rr * rr && dx * dx + dz * dz >= (rr - 1) * (rr - 1))
                     level.setBlock(o.offset(dx, y, dz), Blocks.DEEPSLATE_TILES.defaultBlockState(), 2);
         }
+        com.newuniverse.nusmp.multiverse.WorldSites.record(com.newuniverse.nusmp.multiverse.WorldSites.Kind.TOWER, level.getLevel().dimension(), o);
         return true;
     }
 }

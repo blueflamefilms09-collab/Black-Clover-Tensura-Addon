@@ -211,6 +211,18 @@ public final class SpiritBond {
         return true;
     }
 
+    /** Admin incarnation (/multiverse spirit incarnate): gives the bonded spirit a body and True Name without trust or a charm. */
+    public static boolean forceIncarnate(ServerPlayer p, String name) {
+        CompoundTag d = data(p);
+        if (!d.contains("nusmp_spirit_kind") && !com.newuniverse.nusmp.multiverse.SpiritLordSkill.instance(p).isPresent()) return false;
+        d.putBoolean("nusmp_spirit_incarnate", true);
+        d.putString("nusmp_spirit_name", name);
+        d.putInt("nusmp_spirit_trust", Math.max(d.getInt("nusmp_spirit_trust"), 100));
+        save(p, d);
+        p.getServer().getPlayerList().broadcastSystemMessage(Component.literal(p.getName().getString() + "'s spirit takes a body and the name " + name + ".").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD), false);
+        return true;
+    }
+
     // ---------------------------------------------------------------- what the spirit notices
     public static void onDeath(LivingDeathEvent e) {
         if (!(e.getSource().getEntity() instanceof ServerPlayer p) || !bonded(p)) return;

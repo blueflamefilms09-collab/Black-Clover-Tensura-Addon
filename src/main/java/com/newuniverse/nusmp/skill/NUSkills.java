@@ -133,6 +133,9 @@ public final class NUSkills {
     /** Anti-Magic Spirit Lord: awakened by mastering the Anti-Magic grimoire (or /nusmp grimoire awaken_anti). */
     public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.antimagic.AntiMagicLordSkill> ANTI_MAGIC_LORD =
             SKILLS.register("anti_magic_spirit_lord", () -> new com.newuniverse.nusmp.antimagic.AntiMagicLordSkill());
+    /** Spirit Lord (Unique): the non-grimoire path (multiverse.SpiritLordSkill). */
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.multiverse.SpiritLordSkill> SPIRIT_LORD =
+            SKILLS.register("spirit_lord", () -> new com.newuniverse.nusmp.multiverse.SpiritLordSkill());
     /** Forbidden Magic: written by a devil contract (not a grimoire family). */
     public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_FORBIDDEN = book("forbidden_magic", com.newuniverse.nusmp.book.ForbiddenBook::new);
 

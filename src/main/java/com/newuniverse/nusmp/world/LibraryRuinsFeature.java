@@ -44,6 +44,7 @@ public class LibraryRuinsFeature extends Feature<NoneFeatureConfiguration> {
         BlockPos chest = o.offset(0, 0, 0);
         level.setBlock(chest, Blocks.CHEST.defaultBlockState(), 2);
         RandomizableContainer.setBlockEntityLootTable(level, rand, chest, LOOT);
+        com.newuniverse.nusmp.multiverse.WorldSites.record(com.newuniverse.nusmp.multiverse.WorldSites.Kind.RUINS, level.getLevel().dimension(), o);
         return true;
     }
 }

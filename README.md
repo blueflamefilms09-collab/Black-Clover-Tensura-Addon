@@ -185,3 +185,49 @@ Layers in `vfx/client/layer/` (`FireSpellLayer`, `WaterSpellLayer`, `WindSpellLa
 - **Earth**: Earth Spikes = 3D stone spikes erupting one after another; Earth Wall = cracks, dust and rubble along the wall; Mother Earth Split = a racing crack with stone slabs heaving up.
 - Test any of them: `/nusmp vfx fire_lion|fire_spear|fire_pillar|fire_burst|water_dragon|water_cradle|water_burst|wind_tornado|wind_gale|stone_spikes|earth_rise|earth_fissure [power]`.
 - Preview without the game: `python tools/vfx_preview/preview.py [scene...]` compiles the real layer code against small stubs and renders the frames to `build/vfx_preview/` (scenes in `tools/vfx_preview/scenes.json`).
+
+## Multiverse systems (commands under `/multiverse`)
+Server config: `world/serverconfig/nusmp-multiverse-server.toml`; client config: `config/nusmp-multiverse-client.toml`. The old `/nusmp` commands still work.
+
+**Grimoire Acceptance Ceremony**
+- Once a year (real-world March by default, or `/multiverse ceremony start|stop`) grimoires choose every eligible player who comes within 48 blocks of a Grimoire Tower. Eligible = no grimoire yet.
+- Missed it? Pray empty-handed at any Grimoire Altar (top floor of every tower): a grimoire always answers there.
+- Cover rarity when chosen: Three-Leaf / basic suit 80, Four-Leaf / Double Spade / Two-Heart / Five-Sided 16, Five-Leaf 3.5, Black (Anti-Magic five-leaf) 0.5 (config weights).
+- Grants are transactional: the new grimoire item gets its own `GrimoireId` UUID and is handed over before anything is consumed (creative copies are used up only after binding worked).
+- The old soul-type auto roll is kept behind `legacySoulAutoRoll` (off).
+
+**Pages unlock by mastery only**
+- Page k of n opens at k/n of the mastery bar, if its rank/race gate passes and a slot is free. Slots: 6, growing to 12 with mastery, +4 with a spirit or devil contract, max 16.
+- Gates: zone pages need Intermediate 5th, signature pages Senior 5th; per-page overrides in `pageGates` (Chrono Anastasis Senior 3rd, Leo Rugiens Senior 5th by default).
+- Mastery from casting (as before), altar training (sneak + use your grimoire on an altar, costs 10% magicule, 5 min cooldown), Spirit Channeling time, and gold stars (missions). Kill-based page rolls are kept behind `pagesFromKills` (off).
+
+**Magic Knight rank, stars, social class, race**
+- Everyone starts as a 5th Class Junior Magic Knight. Junior/Intermediate/Senior have 5th-1st classes; Grand Magic Knight and Wizard King are set by admins.
+- Gold stars (merit) and black stars (demerit): with `autoPromote` every 10 net stars moves you up one class, up to 1st Class Senior.
+- Social class (Royalty / Noble / Commoner / Peasant) is flavour; race (Human, Elf, Devil, Spirit-bonded, Dwarf, Hybrid) can gate pages.
+
+**Magic Knight Squads (need FTB Teams)**
+- A squad is an FTB Teams party flagged as a squad. Captain = party owner, Vice-Captain chosen by the captain, everyone else Member. Invites, leaving and ownership go through FTB Teams' own commands.
+- Create needs Intermediate 5th, join Junior 5th, max 10 knights. Squad score = members' gold minus black stars (offline members count with their last known stars); `/multiverse squad standings` lists the Star Awards.
+- Without FTB Teams, squad commands and the panel say "requires FTB Teams".
+
+**Status panel (Tensura menu)**
+- In the Tensura status / magic menu, the "Coming Soon" placeholder is replaced by the Multiverse panel (rank, stars, squad, grimoire, spirit, ceremony). Click it for the full status screen (rank, stars, squad, social class, race, grimoire pages/slots/mastery, spirit lord, anti-magic, ceremony).
+- If the placeholder isn't a widget, a small "Multiverse" button opens the screen instead; `panelRect` in the client config places the panel exactly. There is also a "Multiverse Status" key (unbound by default).
+
+**Spirit Lord (no grimoire needed)**
+- The Spirit Lord Skill item (or `/multiverse spirit bond`) binds you to Salamander, Undine, Sylph, Gnome (one mage each) or the Anti-Magic lord and teaches the Spirit Lord skill: 30% less physical damage, no fall damage, Spirit Channeling 0-100% with Overdrive (25%), Nova (50%) and Cataclysm (100%), and Call Spirit once it is incarnated.
+- Spirit Lord companions are now a small floating orb in the spirit's colour (the full Tensura body renderer is kept for later).
+
+**Commands**
+```
+/multiverse grimoire give|page|awaken_anti <player> ...
+/multiverse ceremony start|stop|status | accept|reset|legacy_roll <player>
+/multiverse spirit bond <player> <type> | incarnate <player> <name> | info [player]
+/multiverse antimode <player> <0-3>        (Dormant, Black Arm, Black Form, Devil Union)
+/multiverse rank set <player> <rank> [class] | rank info [player]
+/multiverse stars add <player> <amount> | stars info [player]   (negative amount = black stars)
+/multiverse profile class|race|eligible <player> <value>
+/multiverse squad create <name> | invite <player> | leave | info | standings | setcaptain <player> | setvice <player>
+/multiverse locate tower|ruins
+```

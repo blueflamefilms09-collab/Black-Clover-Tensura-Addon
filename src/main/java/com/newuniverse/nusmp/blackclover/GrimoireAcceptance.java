@@ -49,6 +49,8 @@ public final class GrimoireAcceptance {
             if (player.tickCount % 400 == 0) GrimoirePages.migrateStarter(player);
             return;
         }
+        // Grimoires now choose mages at the Acceptance Ceremony (multiverse.Ceremony); the old soul-type roll is kept behind a switch.
+        if (!com.newuniverse.nusmp.multiverse.MultiverseConfig.get(com.newuniverse.nusmp.multiverse.MultiverseConfig.LEGACY_SOUL_AUTO_ROLL)) return;
         String soul = NightmareSouls.soulTypeOf(player);
         if (soul == null) return; // Nightmare hasn't assigned a soul type yet
         roll(player, soul);

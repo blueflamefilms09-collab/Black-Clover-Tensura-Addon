@@ -13,7 +13,7 @@ public final class NUEntities {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(Registries.ENTITY_TYPE, NUSMP.MODID);
 
     public static final DeferredHolder<EntityType<?>, EntityType<SpiritLordEntity>> SPIRIT_LORD = ENTITIES.register("spirit_lord",
-            () -> EntityType.Builder.of(SpiritLordEntity::new, MobCategory.CREATURE).sized(0.8f, 2.2f).clientTrackingRange(10).build("spirit_lord"));
+            () -> EntityType.Builder.of(SpiritLordEntity::new, MobCategory.CREATURE).sized(0.6f, 1.4f).clientTrackingRange(10).build("spirit_lord"));
 
     public static void attributes(EntityAttributeCreationEvent e) { e.put(SPIRIT_LORD.get(), SpiritLordEntity.createAttributes().build()); }
 }

@@ -118,6 +118,8 @@ public final class GrimoirePages {
     }
 
     public static void onDeath(LivingDeathEvent event) {
+        // Pages unlock by mastery (multiverse.MasteryPages); kill rolls are kept behind a switch, off by default.
+        if (!com.newuniverse.nusmp.multiverse.MultiverseConfig.get(com.newuniverse.nusmp.multiverse.MultiverseConfig.PAGES_FROM_KILLS)) return;
         if (!(event.getSource().getEntity() instanceof ServerPlayer killer)) return;
         LivingEntity dead = event.getEntity();
         if (dead == killer || grimoireOf(killer).isEmpty()) return;

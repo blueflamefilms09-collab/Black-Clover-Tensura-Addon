@@ -40,6 +40,7 @@ public class GrimoireItem extends Item {
         CompoundTag tag = data(stack);
         tag.putUUID("Owner", owner.getUUID());
         tag.putString("OwnerName", owner.getName().getString());
+        tag.putUUID("GrimoireId", UUID.randomUUID());     // every granted grimoire is its own book, made before anything is consumed
         stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
         return stack;
     }
@@ -124,8 +125,12 @@ public class GrimoireItem extends Item {
         GrimoireCover chosenCover = cover(stack);
         MagicType chosenMagic = MagicType.byName(tag.getString("Magic"));
         Devil chosenDevil = Devil.byName(tag.getString("Devil"));
-        stack.shrink(1);
+        // transactional: the new grimoire is made and handed over first; the unbound copy is used up only once that worked
         GrimoireAcceptance.grantExact(sp, chosenCover, chosenMagic, chosenDevil);
+        if (GrimoirePages.grimoireOf(sp).isPresent()) {
+            stack.shrink(1);
+            com.newuniverse.nusmp.multiverse.MultiverseProfile.setAccepted(sp, true, "a bound creative grimoire");
+        }
         return InteractionResultHolder.success(stack);
     }
 

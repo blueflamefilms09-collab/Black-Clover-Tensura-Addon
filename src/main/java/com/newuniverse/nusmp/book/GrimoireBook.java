@@ -165,6 +165,7 @@ public abstract class GrimoireBook extends Skill {
         if (page == null) return true;
         if (isChannel(mode)) {   // Spirit Channeling: a 0-100% gauge and an aura that grows and pulls
             int gauge = Math.min(100, heldTicks);
+            if (usable(instance, entity, mode)) com.newuniverse.nusmp.multiverse.MasteryPages.onChanneling(p, instance, heldTicks);   // channeling trains mastery
             if (heldTicks % 5 == 0) p.displayClientMessage(Component.literal("Spirit Channeling " + gauge + "%"
                     + (gauge >= 100 ? "  CATACLYSM" : gauge >= 50 ? "  Spirit Nova" : gauge >= 25 ? "  Overdrive" : "")).withStyle(ChatFormatting.AQUA, ChatFormatting.BOLD), true);
             if (heldTicks % 10 == 0 && usable(instance, entity, mode)) {
