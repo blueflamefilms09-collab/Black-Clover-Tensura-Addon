@@ -13,3 +13,6 @@ out/
 bin/
 # Python
 __pycache__/
+
+# Source zips handed out for building
+nusmp-source-*.zip
