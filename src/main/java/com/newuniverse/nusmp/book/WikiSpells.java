@@ -786,8 +786,8 @@ public final class WikiSpells {
     public static boolean briarPrison(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         Vec3 c = GrimoireBook.aim(p, 20);
         b.castCircle(p, 1.1f);
-        send(p, VfxShape.THREAD_WEB, c, c.add(0, 1, 0), 100, 3.5f);
-        send(p, VfxShape.SEAL_CHAINS, c.add(0, 1, 0), c, 100, 1.4f);
+        send(p, VfxShape.THREAD_WEB, c, c.add(0, 1, 0), 0xFF3A8A3A, 100, 3.5f);         // briars, green
+        send(p, VfxShape.SEAL_CHAINS, c.add(0, 1, 0), c, 0xFF4A9A40, 100, 1.4f);
         boolean hold = BalanceLaw.beginControl(p);
         SpellRuntime.zone(p.serverLevel(), 100, 10, age -> {
             for (LivingEntity t : GrimoireBook.around(p, c, 3.5)) {
