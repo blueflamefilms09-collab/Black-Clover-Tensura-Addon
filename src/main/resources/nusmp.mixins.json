@@ -4,5 +4,6 @@
   "package": "com.newuniverse.nusmp.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": ["OverlordUndeadHandlerMixin"],
+  "client": ["client.ComingSoonTextMixin"],
   "injectors": { "defaultRequire": 0 }
 }

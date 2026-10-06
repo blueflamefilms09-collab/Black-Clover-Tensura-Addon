@@ -52,6 +52,35 @@ public final class MultiverseStatusClient {
         NeoForge.EVENT_BUS.addListener(MultiverseStatusClient::onScreenClick);
     }
 
+    /** True while a target screen is open and has no panel yet (the text hook only looks then). */
+    public static boolean watching() {
+        Screen s = Minecraft.getInstance().screen;
+        return target(s) && !PANELS.containsKey(s);
+    }
+
+    /**
+     * Called by the text-draw hook (mixin.client.ComingSoonTextMixin) for text drawn while a target screen is open. If it is the
+     * placeholder text ("Coming Soon"), the text is skipped and the status panel takes its spot: a panel centred on where the
+     * text was, at least 130 x 56. Returns true to skip drawing the text.
+     */
+    public static boolean placeholderText(GuiGraphics g, net.minecraft.client.gui.Font font, String text, int x, int y) {
+        Screen s = Minecraft.getInstance().screen;
+        if (!target(s)) return false;
+        String want = MultiverseClientConfig.get(MultiverseClientConfig.PANEL_TEXT).toLowerCase();
+        if (want.isEmpty() || !text.trim().toLowerCase().equals(want)) return false;
+        int[] r = PANELS.get(s);
+        if (r == null) {
+            org.joml.Matrix4f m = g.pose().last().pose();
+            org.joml.Vector4f a = m.transform(new org.joml.Vector4f(x, y, 0, 1));
+            org.joml.Vector4f b = m.transform(new org.joml.Vector4f(x + font.width(text), y + font.lineHeight, 0, 1));
+            float cx = (a.x() + b.x()) / 2, cy = (a.y() + b.y()) / 2;
+            int w = Math.max(130, (int) Math.abs(b.x() - a.x()) + 12), h = Math.max(56, (int) Math.abs(b.y() - a.y()) + 12);
+            r = new int[]{Math.max(0, (int) cx - w / 2), Math.max(0, (int) cy - h / 2), w, h};
+            PANELS.put(s, r);
+        }
+        return true;
+    }
+
     private static boolean target(Screen s) {
         String prefix = MultiverseClientConfig.get(MultiverseClientConfig.SCREEN_PREFIX);
         return s != null && !(s instanceof MultiverseStatusScreen) && !prefix.isEmpty() && s.getClass().getName().startsWith(prefix);
