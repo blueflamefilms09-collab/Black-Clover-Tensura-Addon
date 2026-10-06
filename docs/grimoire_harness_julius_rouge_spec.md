@@ -10,9 +10,11 @@ two assets.
 - **Harness:** every player with a bound grimoire wears a leather belt with a brass buckle. A strap hangs from the right hip
   and wraps the dormant book: down the front cover to a brass tip, over the top, down the back, with a keeper loop. It is drawn
   on top of the player (`GrimoireFloatClient.belt` / `bookStrap`) and uses no armour slot.
-- **Julius's grimoire:** a canon book with `Canon = julius` is drawn as a cylinder of loose pages with no covers. It turns
-  slowly at the hip. When summoned it glows, turns faster and flutters. Opening it fans the cylinder wider, and a spell switch
-  sends a ripple round it (`juliusCylinder`).
+- **The Time grimoire** (Julius's canon book and, since 0.37, every Time Magic grimoire) is drawn as the page drum of the
+  owner's screenshot: a solid upright cylinder of about 96 cream pages packed edge to edge from the centre out, a ribbed band
+  of page edges round the outside, and a radial fan of page tops. It is about 0.8 blocks across and stands off the leg at
+  the hip. Summoned it stays upright beside you, glows, turns faster and flutters. Opening fans it slightly wider, and a
+  spell switch sends a ripple round it (`juliusCylinder`).
 - Textures: `tools/gen_harness_textures.py`. The page leaf is the grimoire's own `page_leaf.png`.
 
 ---
@@ -60,16 +62,21 @@ Units: metres, with the character at Minecraft scale (body 0.5 x 0.25 x 0.75 m).
 ## 2. Julius Novachrono's Time Magic grimoire (cylindrical, unbound)
 
 ### Mesh & array setup
-The book is a drum of loose pages standing on end. There are no covers, no spine and no binding, and the pages fan
-radially round a hollow centre.
+The book is a **solid drum** of loose pages standing on end (0.37, after the owner's screenshot). There are no covers, no
+spine and no binding. The pages are packed edge to edge from the centre out, so from above they read as a radial fan and
+from the side as a ribbed wall of page edges. The drum is about 0.8 blocks across and a little shorter than it is wide.
 
-- **One page:** a plane 0.08 m (radial) x 0.20 m (tall), subdivided 4 x 8 so it can bend. Origin at its inner edge.
+- **One page:** a plane from the centre to the rim (0.4 m radial) x 0.33 m tall, subdivided 4 x 8 so it can bend. Origin at
+  its inner edge (on the axis).
 - **The ring (Geometry Nodes, `TimeGrimoire`):**
-  1. Use a Mesh Circle of 64 vertices (radius 0.022 m, the hollow core) and Instance on Points the page object.
+  1. Use a Mesh Circle of 96 vertices (radius 0.01 m: the pages meet at the axis) and Instance on Points the page object.
   2. Use Align Euler to Vector (X axis to the point's normal) so every page points outward.
   3. Use Realize Instances, then Set Position with an offset of Noise Texture (scale 3, W = `#frame / 90`) x 0.004 m along Z.
      Each page drifts slightly in height, as in the reference image.
-  4. Store an attribute `page_id` (the instance Index) for the shader and the rig.
+  4. Store an attribute `page_id` (the instance Index) for the shader and the rig. Alternate the page tint by
+     `page_id % 2` (`#F4ECD6` / `#E2D8BE`) so the ribbing reads.
+  5. **Edge band:** a Cylinder (32 sides, no caps) at the page radius + 1 mm, with the `drum_edge` texture (vertical page
+     edges, every other one darker, uneven tops and bottoms) wrapped once round.
 - **Alternative without Geometry Nodes:** an Array modifier (count 64, Object Offset, an Empty rotated 5.625 degrees about
   Z), then Apply.
 

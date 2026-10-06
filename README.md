@@ -60,7 +60,7 @@ Chanted magics: use **Chant** mode until the chant is complete, then switch to *
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.36.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.37.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -204,6 +204,10 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Anti-Magic kit**: new pages **Black Hurricane** (a whirling field that drags foes in and strips their magic) and **Black Form** (30 s of strength, speed, resistance and jump, with an anti-magic burst); mastering the Anti-Magic Lord now also grants the **Demon-Slasher** katana next to Demon-Dweller and Demon-Destroyer.
 - **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
 - **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
+
+## 0.37 - the Time grimoire's page drum
+- **Replacement:** the Time grimoire now looks like the owner's screenshot. It is a solid upright drum of about 96 cream pages packed edge to edge, with a ribbed band of page edges round the outside and a radial fan of page tops: no covers, no spine. It is about 0.8 blocks across and stands off the leg at the hip. Summoned, it stays upright beside you, glows, turns, flutters, fans out and ripples on a spell switch. This replaces 0.35's small hollow translucent ring and now applies to **every Time Magic grimoire**, not only Julius's canon book (`tools/gen_time_drum_texture.py`). The Time Magic VFX are untouched.
+- The blueprint's Julius section is updated to the solid drum (`docs/grimoire_harness_julius_rouge_spec.md`).
 
 ## 0.36 - low-profile floating grimoire
 - **Replacement:** the grimoire is ultra-thin (2.8 units board to board, was 5), and summoned it opens almost flat (14 degrees, was a 34-degree V). It now floats low beside your right side, lying open at a steep tilt with the pages facing up at you, after the floating-grimoire references; first person matches the tilt. The summon trip, hip harness, page flip and Julius's drum are unchanged.

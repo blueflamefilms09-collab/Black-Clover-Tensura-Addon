@@ -236,7 +236,11 @@ public final class GrimoireFloatClient {
             long[] flip = FLIPS.get(id);
             Vector3f strapTop = null;
             if (julius(stack)) {
-                // 0.35: Julius Novachrono's grimoire has no covers and no spine: a turning cylinder of pages
+                // the Time grimoire has no covers and no spine: a page drum standing upright (0.37: undo the book's tilt)
+                if (!self) {
+                    pose.mulPose(Axis.ZP.rotationDegrees(-p.roll()));
+                    pose.mulPose(Axis.XP.rotationDegrees(-p.pitch()));
+                }
                 juliusCylinder(pose, buffers, now, arrived, step, flip != null ? now - flip[0] : -1, light);
                 pose.popPose();
                 if (!self && !hipStack.isEmpty()) belt(buffers, owner, partial, cam, sneak, null, lightAt(owner, partial));
@@ -279,32 +283,56 @@ public final class GrimoireFloatClient {
     private static final ResourceLocation HARNESS_LEATHER = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/grimoire_harness_leather.png");
     private static final ResourceLocation HARNESS_BRASS = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/grimoire_harness_brass.png");
 
-    /** Julius Novachrono's canon grimoire (the only one in the Clover Kingdom with no front or back cover). */
+    /**
+     * The Time grimoire: Julius Novachrono's canon book, and since 0.37 every Time Magic grimoire, is drawn as the coverless page
+     * drum of the anime (the only grimoire in the Clover Kingdom with no front or back cover).
+     */
     static boolean julius(ItemStack stack) {
-        return !stack.isEmpty() && "julius".equalsIgnoreCase(GrimoireItem.data(stack).getString("Canon"));
+        if (stack.isEmpty()) return false;
+        var d = GrimoireItem.data(stack);
+        return "julius".equalsIgnoreCase(d.getString("Canon")) || "TIME".equals(d.getString("Magic"));
     }
 
+    private static final ResourceLocation DRUM_EDGE = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/item/grimoire_book/drum_edge.png");
+
     /**
-     * Julius's grimoire: a cylinder of loose pages standing on end, no covers, no spine (model units, around x = z = 8). Dormant it
-     * turns slowly; summoned it glows, turns faster and its pages flutter; opening fans it wider; a spell switch sends a ripple
-     * round it instead of turning pages over.
+     * The Time grimoire's page drum (0.37, after the owner's screenshot): a solid cylinder of cream pages packed edge to edge from
+     * the centre out, with a ribbed band of page edges round the outside - no covers, no spine. Twice the book's size, standing
+     * clear of the leg at the hip. Dormant it turns slowly; summoned it glows, turns faster and its pages flutter; opening fans it
+     * a little wider; a spell switch sends a ripple round it. Model units, around x = z = 8.
      */
     private static void juliusCylinder(PoseStack pose, MultiBufferSource buffers, float now, float arrived, int step, float flipAge, int light) {
-        VertexConsumer vc = buffers.getBuffer(RenderType.entityTranslucent(LEAF));
         pose.pushPose();
         handTransform(pose);
         pose.scale(1f / 16f, 1f / 16f, 1f / 16f);
-        int n = 44;
+        float push = 3.5f * (1 - arrived);                                   // at the hip: stand off the leg
+        pose.translate(8f, 8f, 8f + push);
+        float k0 = 1 - 0.5f * arrived;                                      // the summoned pose is 2x the hip size: keep the drum ~0.8 blocks across
+        pose.scale(1.7f * k0, 1.45f * k0, 1.7f * k0);
+        pose.translate(-8f, -8f, -8f);
+        PoseStack.Pose last = pose.last();
         float open = step / (float) GrimoireCarry.OPEN_STEPS;
-        float spin = now * (0.006f + 0.03f * arrived);
-        float ri = 1.4f + 0.8f * open, ro = 6.0f + 1.2f * open;
-        int[] tint = arrived > 0.5f ? new int[]{255, 246, 214} : new int[]{236, 228, 208};
+        float spin = now * (0.004f + 0.02f * arrived);
+        float ro = 6.4f + 0.6f * open, y0 = 2.2f, y1 = 13.8f;
+        // the pages: radial sheets packed edge to edge
+        VertexConsumer pages = buffers.getBuffer(RenderType.entityCutoutNoCull(LEAF));
+        int n = 96;
         for (int k = 0; k < n; k++) {
-            float a = Mth.TWO_PI * k / n + spin + 0.05f * arrived * Mth.sin(now * 0.25f + k * 0.9f);
-            if (flipAge >= 0 && flipAge < 20) a += 0.3f * Mth.sin(flipAge * 0.6f - k * 0.45f) * (1 - flipAge / 20f);   // the ripple
-            float lift = 0.3f * arrived * Mth.sin(now * 0.3f + k * 1.3f);
+            float a = Mth.TWO_PI * k / n + spin + 0.025f * arrived * Mth.sin(now * 0.25f + k * 0.9f);
+            if (flipAge >= 0 && flipAge < 20) a += 0.12f * Mth.sin(flipAge * 0.6f - k * 0.3f) * (1 - flipAge / 20f);   // the ripple
+            float lift = 0.15f * arrived * Mth.sin(now * 0.3f + k * 1.3f);
             float ca = Mth.cos(a), sa = Mth.sin(a);
-            strip(vc, pose.last(), 8 + ca * ri, 8 + sa * ri, 8 + ca * ro, 8 + sa * ro, 1.6f + lift, 14.4f + lift, 0f, 1f, tint, 235, light);
+            int[] tint = k % 2 == 0 ? new int[]{244, 236, 214} : new int[]{226, 216, 190};
+            strip(pages, last, 8 + ca * 0.35f, 8 + sa * 0.35f, 8 + ca * ro, 8 + sa * ro, y0 + lift, y1 + lift, 0f, 1f, tint, 255, light);
+        }
+        // the ribbed band of page edges round the outside
+        VertexConsumer edge = buffers.getBuffer(RenderType.entityCutoutNoCull(DRUM_EDGE));
+        int seg = 32;
+        for (int k = 0; k < seg; k++) {
+            float a0 = Mth.TWO_PI * k / seg + spin, a1 = Mth.TWO_PI * (k + 1) / seg + spin;
+            float x0 = 8 + Mth.cos(a0) * (ro + 0.02f), z0 = 8 + Mth.sin(a0) * (ro + 0.02f), x1 = 8 + Mth.cos(a1) * (ro + 0.02f), z1 = 8 + Mth.sin(a1) * (ro + 0.02f);
+            float nx = Mth.cos((a0 + a1) / 2), nz = Mth.sin((a0 + a1) / 2);
+            face(edge, last, x0, y1, z0, x1, y1, z1, x1, y0, z1, x0, y0, z0, 1f, light, nx, 0, nz);
         }
         pose.popPose();
     }
