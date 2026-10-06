@@ -33,6 +33,17 @@ jobs:
               for j in $JARS; do unzip -Z1 "$j" | grep -E '\.class$' | grep -E "${pat#list:}" | head -200; done
               continue
             fi
+            if [ "${pat#strings:}" != "$pat" ]; then          # strings:<regex> prints the string constants (e.g. tag ids)
+              echo "===== strings: ${pat#strings:} ====="
+              for j in $JARS; do
+                for c in $(unzip -Z1 "$j" | grep -E '\.class$' | grep -E "${pat#strings:}" | head -10); do
+                  cls=${c%.class}; cls=${cls//\//.}
+                  echo "----- $cls"
+                  javap -c -p -cp "$j" "$cls" 2>/dev/null | grep -E 'ldc|putstatic|getstatic' | head -120
+                done
+              done
+              continue
+            fi
             echo "===== pattern: $pat ====="
             for j in $JARS; do
               for c in $(unzip -Z1 "$j" | grep -E '\.class$' | grep -E "$pat" | head -40); do

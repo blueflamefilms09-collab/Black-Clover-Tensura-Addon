@@ -1,7 +1,5 @@
-# 0.39: skill copy / plunder protection (inner classes allowed)
-tensura/event/TensuraSkillEvents\$(SkillPlunderEvent|SkillLearningEvent|SkillGriefEvent)\.class
-tensura/ability/TensuraSkill\.class
-tensura/ability/skill/unique/(AnalystSkill|UsurperSkill|PredatorSkill|GluttonySkill)\.class
-tensura/entity/human/CloneEntity\$CopySkill\.class
-list:tensura/.*[Tt]ag[s]?\.class
-list:tensura/data/
+# 0.39: how to register Tensura's skill events, and its skill tags (plunder / copy blacklists?)
+manasmods/tensura/event/TensuraSkillEvents\.class
+manasmods/tensura/data/TensuraSkillTags\.class
+strings:manasmods/tensura/data/TensuraSkillTags\.class
+strings:manasmods/tensura/ability/skill/unique/(AnalystSkill|PredatorSkill|GluttonySkill|UsurperSkill)\.class
