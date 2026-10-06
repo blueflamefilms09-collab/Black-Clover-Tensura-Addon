@@ -34,7 +34,12 @@ public enum VfxShape {
     FX_SPIRIT_AURA,          // Spirit Channeling hold (follows caster); payload colour = element 0-3
     FX_SPIRIT_OVERDRIVE,     // 25% release: dash from -> to
     FX_SPIRIT_NOVA,          // 50% release: burst at 'from'
-    FX_SPIRIT_CATACLYSM;     // 100% release: 6 s around the caster (follows)
+    FX_SPIRIT_CATACLYSM,     // 100% release: 6 s around the caster (follows)
+    // Time Magic (TimeMagicLayer), drawn after the anime
+    TIME_STASIS,             // Chrono Stasis: glass sphere + orbiting Roman-numeral ribbon at 'from' (follows); power = radius
+    TIME_CLOCK,              // Chrono Anastasis: clock face at 'to' over ground centre 'from', gold rain; power = radius
+    TIME_REWIND,             // Time Reversal / passive rewind: dial at 'from', hands and ribbon run backwards
+    TIME_ACCEL;              // Time Acceleration: dial + two ribbons whirling forwards around the caster (follows)
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

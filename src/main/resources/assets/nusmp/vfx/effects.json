@@ -99,5 +99,25 @@
     "color": "FF8CFF6A",
     "duration": 160,
     "shake": 0.0
+  },
+  "time_stasis": {
+    "color": "FFB4CCFF",
+    "duration": 60,
+    "shake": 0.0
+  },
+  "time_clock": {
+    "color": "FF9C9CF5",
+    "duration": 80,
+    "shake": 0.0
+  },
+  "time_rewind": {
+    "color": "FFB4CCFF",
+    "duration": 30,
+    "shake": 0.0
+  },
+  "time_accel": {
+    "color": "FFB4CCFF",
+    "duration": 40,
+    "shake": 0.0
   }
 }

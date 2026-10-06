@@ -33,6 +33,13 @@ public final class VfxCommand {
         catch (IllegalArgumentException e) { player.sendSystemMessage(Component.literal("Unknown effect: " + name)); return 0; }
         Vec3 eye = player.getEyePosition();
         Vec3 target = player.pick(24, 1f, false).getLocation();
+        switch (shape) {   // Time Magic: placed like the spells place them
+            case TIME_STASIS -> { VfxSpawn.send(player.serverLevel(), shape, target.add(0, 1, 0), target.add(0, 1, 0), 0, 0, 2f * power); return 1; }
+            case TIME_CLOCK -> { VfxSpawn.send(player.serverLevel(), shape, target, target.add(0, 6 + 6 * power, 0), 0, 0, 12f * power); return 1; }
+            case TIME_REWIND -> { VfxSpawn.send(player.serverLevel(), shape, target, target.add(0, 1, 0), 0, 0, 1.6f * power); return 1; }
+            case TIME_ACCEL -> { VfxSpawn.sendFollowing(player.serverLevel(), shape, player, player.position().add(0, 1, 0), 0, 0, power); return 1; }
+            default -> { }
+        }
         boolean atFeet = shape == VfxShape.WIND_RING || shape == VfxShape.ELF_CIRCLE || shape == VfxShape.DEVIL_CIRCLE;
         Vec3 from = atFeet ? player.position().add(0, 0.05, 0) : eye.add(player.getLookAngle().scale(1.5));
         if (atFeet || shape == VfxShape.MAGIC_CIRCLE || shape == VfxShape.MAGIC_CIRCLE_EXPLOSION) {

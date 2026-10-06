@@ -10,6 +10,7 @@ import com.newuniverse.nusmp.vfx.client.layer.RuneCircleLayer;
 import com.newuniverse.nusmp.vfx.client.layer.AntiMagicLayer;
 import com.newuniverse.nusmp.vfx.client.layer.ElementShapesLayer;
 import com.newuniverse.nusmp.vfx.client.layer.AuraLayer;
+import com.newuniverse.nusmp.vfx.client.layer.TimeMagicLayer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.ParticleStatus;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -44,6 +45,7 @@ public final class VfxManager {
         register(new AntiMagicLayer());
         register(new ElementShapesLayer());
         register(new AuraLayer());
+        register(new TimeMagicLayer());
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }

@@ -159,3 +159,12 @@ Every grimoire is now a real 3D book assembled at runtime from 32 greyscale text
 - Client only: no entity, nothing sent over the network. Every frame `GrimoireShelfClient.onRender` asks `GrimoireShelfLayout.open(i, n, age)` (`core/magic/grimoire/`, pure maths) for each book's pose at `age = (game time - open time) + partial tick` and draws the book item there.
 - Bob: `0.04 * sin(age * 0.12 + i * 7) * e` blocks (about 2.5 cm, one bob every ~52 ticks / 2.6 s, each book out of step), where `e` is the 0-1 opening ease, so a book only bobs once it has arrived. Height: `-0.6 + (rest.up + 0.6) * e + bob`.
 - Books turn to face you (`Axis.YP.rotation(atan2(dx, dz))`); the one you look at tilts back 8 degrees and grows 22%.
+
+## Time Magic look and passive
+Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `tools/gen_time_vfx_textures.py`, `textures/particle/time_*.png`).
+- **Chrono Stasis**: a pale-blue glass sphere around the target, a white ribbon of Roman numerals orbiting it at a tilt, four-pointed sparkles inside. It follows the frozen target and lasts exactly as long as the freeze.
+- **Chrono Stasis Grigora**: one stasis sphere on every frozen target (up to 16), plus the gold circle under you.
+- **Chrono Anastasis** (new page, appended after Stolen Time so the other pages keep their numbers): a blue-violet clock face 12 blocks wide (16 mastered) opens over the spot you look at, with its hands sweeping backwards and gold light raining down. Under it, broken blocks from the last minute are rewound, you and your allies (every player when nobody is on a team) heal 25% of max health and are put out if burning, and enemy projectiles in the air are uncast. Cooldown 60 s.
+- **Time Acceleration**: a dial at your feet with racing hands and two numeral ribbons whirling forwards. **Time Reversal**: a dial whose hands and ribbon run backwards.
+- **Passive, Time Sense** (always on with the Time book): enemy projectiles within 4 blocks (6 mastered) that are flying at you get caught in a small stasis bubble and lose 60% of their speed, once each, at most 3 every 2 ticks. 3 s after you are hurt, 20% (35% mastered) of the damage taken in that window is rewound (healed, at most 4 hearts), shown by a rewinding dial at your feet; then it rests for 10 s.
+- Test: `/nusmp vfx time_stasis|time_clock|time_rewind|time_accel [power]`.
