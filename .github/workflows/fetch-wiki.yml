@@ -20,5 +20,5 @@ jobs:
             curl -sSL --max-time 60 -A "Mozilla/5.0 (reference fetch for a fan mod)" \
               "https://blackclover.fandom.com/api.php?action=parse&page=$(python3 -c 'import sys,urllib.parse;print(urllib.parse.quote(sys.argv[1]))' "$page")&prop=wikitext&format=json&formatversion=2" \
               | python3 -c 'import sys,json; d=json.load(sys.stdin); print(d.get("parse",{}).get("wikitext","(no wikitext) " + str(d)[:400]))' \
-              | sed -E 's/\{\{[Rr]ef[^}]*\}\}//g; s/<ref[^>]*>[^<]*<\/ref>//g; s/<ref[^>]*\/>//g' | cut -c1-400 | head -700
+              | sed -E 's/\{\{[Rr]ef[^}]*\}\}//g; s/<ref[^>]*>[^<]*<\/ref>//g; s/<ref[^>]*\/>//g' | sed -n "/==Description==/,/==References==/p" | cut -c1-500 | head -30
           done < .github/wiki-request.txt
