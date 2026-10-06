@@ -44,7 +44,7 @@ public final class GrimoireCommand {
                                     .filter(java.util.Optional::isPresent).map(java.util.Optional::get).findFirst();
                             String soul = NightmareSouls.soulTypeOf(p);
                             String text = p.getName().getString() + " | soul type: " + (soul == null ? "not assigned" : soul)
-                                    + " | rolled: " + GrimoireAcceptance.hasRolled(p) + " | kills: " + GrimoirePages.kills(p) + " | "
+                                    + " | rolled: " + GrimoireAcceptance.hasRolled(p) + " | "
                                     + inst.map(i -> GrimoireMagicSkill.describe(p, i)).orElse("no grimoire");
                             ctx.getSource().sendSuccess(() -> Component.literal(text), false);
                             return 1;
@@ -74,13 +74,6 @@ public final class GrimoireCommand {
                                             GrimoireAcceptance.grantExact(p, cover, GrimoirePages.magicOf(g.get()), cover.isForbidden() ? devil : null);
                                             return 1;
                                         }))))
-                        .then(Commands.literal("addkills").then(Commands.argument("player", EntityArgument.player())
-                                .then(Commands.argument("kills", IntegerArgumentType.integer(1, 100000)).executes(ctx -> {
-                                    ServerPlayer p = EntityArgument.getPlayer(ctx, "player");
-                                    GrimoirePages.addKills(p, IntegerArgumentType.getInteger(ctx, "kills"));
-                                    ctx.getSource().sendSuccess(() -> Component.literal(p.getName().getString() + " grimoire kills: " + GrimoirePages.kills(p)), true);
-                                    return 1;
-                                }))))
                         .then(Commands.literal("page").then(Commands.argument("player", EntityArgument.player())
                                 .then(Commands.argument("page", com.mojang.brigadier.arguments.StringArgumentType.greedyString())
                                         .executes(ctx -> {

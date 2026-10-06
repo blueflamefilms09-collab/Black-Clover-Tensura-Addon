@@ -33,7 +33,16 @@ public record BookLook(String emblem, BookMotif motif, boolean tattered, int cov
         if (forbidden && !m.equals("ANTI_MAGIC")) coverColor = BookPalette.scale(coverColor, 0.55f);    // a devil darkens the book
         BookMotif motif = BookPalette.motif(emblem, m);
         int trim = forbidden ? BookPalette.scale(BookPalette.trim(m), 0.8f) : BookPalette.trim(m);   // tarnished, but the black clover still reads
-        return new BookLook(emblem, motif, motif == BookMotif.TATTERED, coverColor, trim, BookPalette.emblem(emblem), BookPalette.glow(m), null);
+        int glow = BookPalette.glow(m);
+        if (emblem.equals("BLACK_MAGIC")) {                    // black magic: the book itself turns black, its metal blood-red
+            coverColor = BookPalette.scale(coverColor, 0.28f);
+            trim = BookPalette.BLACK_MAGIC_TRIM;
+        } else if (emblem.equals("GOD_TIER")) {                // god-tier: ivory and bright gold, a white-gold glow
+            coverColor = BookPalette.mix(coverColor, BookPalette.GOD_TIER_COVER, 0.6f);
+            trim = BookPalette.GOD_TIER_TRIM;
+            glow = BookPalette.GOD_TIER_GLOW;
+        }
+        return new BookLook(emblem, motif, motif == BookMotif.TATTERED, coverColor, trim, BookPalette.emblem(emblem), glow, null);
     }
 
     /** RGB for a tint layer, or -1 for none. */

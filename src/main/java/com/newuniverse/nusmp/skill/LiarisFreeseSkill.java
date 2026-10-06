@@ -34,6 +34,11 @@ public class LiarisFreeseSkill extends Skill {
         }
     }
 
+    private static boolean isGrimoire(ManasSkillInstance i) {
+        return i.getSkill() instanceof com.newuniverse.nusmp.book.GrimoireBook || i.getSkill() instanceof GrimoireMagicSkill
+                || i.getSkill() instanceof GrimoirePageSkill;
+    }
+
     public static void onKill(LivingDeathEvent event) {
         if (!(event.getSource().getEntity() instanceof ServerPlayer player)) return;
         if (event.getEntity() == player) return;
@@ -45,6 +50,7 @@ public class LiarisFreeseSkill extends Skill {
         if (amount <= 0) return;
         for (ManasSkillInstance instance : new ArrayList<>(skills.getLearnedSkills())) {
             if (instance.isMastered(player)) continue;
+            if (isGrimoire(instance)) continue;            // grimoire mastery opens pages, and pages never come from kills
             instance.addMasteryPoint(player, amount);
             instance.markDirty();
         }

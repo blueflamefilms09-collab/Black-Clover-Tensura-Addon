@@ -66,8 +66,10 @@ public final class GrimoireKeeper {
             if (d.contains("Devil")) inst.getOrCreateTag().putString("Devil", d.getString("Devil"));
             if (SkillAPI.getSkillsFrom(p).learnSkill(inst, Component.literal("Your grimoire restores its magic.").withStyle(ChatFormatting.GOLD))) return;
             if (p.tickCount % 12000 == 0) {
-                p.displayClientMessage(Component.literal("Your grimoire's magic was removed by another mod (Unique-skill limits?). "
-                        + "Check configs such as tensura_awv_addon 'uniqueSkillsAreGlobal'.").withStyle(ChatFormatting.RED), false);
+                p.displayClientMessage(Component.literal("Your grimoire's magic could not return: a server rule on unique skills blocks it. "
+                        + "Ask an admin.").withStyle(ChatFormatting.RED), false);
+                com.mojang.logging.LogUtils.getLogger().warn("[nusmp] {}'s grimoire skill was removed and could not be re-learned; check unique-skill limits "
+                        + "(e.g. tensura_awv_addon 'uniqueSkillsAreGlobal')", p.getName().getString());
             }
             return;
         }

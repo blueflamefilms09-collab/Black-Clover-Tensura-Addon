@@ -110,13 +110,33 @@ class GrimoireBookPlanTest {
     }
 
     @Test
-    void kingdomsGetTheirMotifsAndAstaIsTattered() {
-        assertEquals(BookMotif.WHEELS, BookLook.resolve("SPADE", "FLAME", null, 0).motif());
-        assertEquals(BookMotif.FLORAL, BookLook.resolve("HEART", "WATER", null, 0).motif());
-        assertEquals(BookMotif.LATTICE, BookLook.resolve("DIAMOND", "EARTH", null, 0).motif());
-        assertEquals(BookMotif.ORNATE, BookLook.resolve("FOUR_LEAF", "WIND", null, 0).motif());
+    void coversWearTheirArtPackDesignsAndAstaIsTattered() {
+        assertEquals(BookMotif.SPADE, BookLook.resolve("SPADE", "FLAME", null, 0).motif());
+        assertEquals(BookMotif.HEART, BookLook.resolve("HEART", "WATER", null, 0).motif());
+        assertEquals(BookMotif.DIAMOND, BookLook.resolve("DIAMOND", "EARTH", null, 0).motif());
+        assertEquals(BookMotif.FOUR_LEAF, BookLook.resolve("FOUR_LEAF", "WIND", null, 0).motif());
+        assertEquals(BookMotif.BLACK_MAGIC, BookLook.resolve("BLACK_MAGIC", "DARK", null, 0).motif());
+        assertEquals(BookMotif.GOD_TIER, BookLook.resolve("GOD_TIER", "LIGHT", null, 0).motif());
+        for (GrimoireCover c : GrimoireCover.values()) {
+            BookMotif m = BookLook.resolve(c.name(), "FLAME", null, 0).motif();
+            assertTrue(m.isArt(), c + " wears an art-pack design");
+            for (String t : new String[]{m.texture(), m.base(), "emblem_" + c.name().toLowerCase()})
+                assertTrue(new File(TEXTURES, t + ".png").isFile(), "missing " + t);
+        }
+        // black magic is dark with blood-red metal; god-tier is bright with gold
+        BookLook black = BookLook.resolve("BLACK_MAGIC", "FLAME", null, 0), god = BookLook.resolve("GOD_TIER", "FLAME", null, 0);
+        assertEquals(BookPalette.BLACK_MAGIC_TRIM, black.trimColor());
+        assertEquals(BookPalette.GOD_TIER_TRIM, god.trimColor());
+        assertTrue(lum(black.coverColor()) < lum(BookLook.resolve("THREE_LEAF", "FLAME", null, 0).coverColor()));
+        assertTrue(lum(god.coverColor()) > lum(BookLook.resolve("THREE_LEAF", "FLAME", null, 0).coverColor()));
+        assertTrue(GrimoireCover.BLACK_MAGIC.isForbidden() && !GrimoireCover.GOD_TIER.isForbidden());
+        // only the canon specials keep a procedural overlay
+        for (CanonBook b : CanonBook.values())
+            assertTrue(b.motif.isArt() || b == CanonBook.ASTA || b == CanonBook.KARNA, b + " uses its cover's design");
         BookLook asta = BookLook.resolve("FIVE_LEAF", "ANTI_MAGIC", null, 0);
         assertTrue(asta.tattered());
         assertEquals(BookPalette.emblem("FIVE_LEAF"), asta.emblemColor());
     }
+
+    private static int lum(int rgb) { return ((rgb >> 16) & 255) * 3 + ((rgb >> 8) & 255) * 6 + (rgb & 255); }
 }

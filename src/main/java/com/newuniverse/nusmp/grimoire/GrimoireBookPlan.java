@@ -65,14 +65,14 @@ public final class GrimoireBookPlan {
 
         // front cover: raised double frame (outer bars; the inner line is part of the ornament texture), ornament, medallion, emblem
         if (!key.tattered()) frame(out, FRONT1, BAR_H, trim);
-        overlay(out, Face.SOUTH, FRONT1 + 0.02f, key.motif().texture(), trim, false);
+        design(out, Face.SOUTH, BX0, BY0, BX1, BY1, FRONT1, 1, key);
         box(out, 8 - MED, 8 - MED, FRONT1, 8 + MED, 8 + MED, FRONT1 + MED_H, "trim_metal", trim, false, false, new Face[]{Face.UP, Face.DOWN, Face.WEST, Face.EAST});
         quad(out, Face.SOUTH, 8 - MED, 8 - MED, 8 + MED, 8 + MED, FRONT1 + MED_H, "medallion", trim, false);
         quad(out, Face.SOUTH, 8 - EMB, 8 - EMB, 8 + EMB, 8 + EMB, FRONT1 + MED_H + 0.02f, "emblem_" + key.emblem().toLowerCase(), BookLook.TINT_EMBLEM, held);
 
         // back cover: the same frame and ornament, a small rosette
         if (!key.tattered()) frame(out, BACK0, -BAR_H, trim);
-        overlay(out, Face.NORTH, BACK0 - 0.02f, key.motif().texture(), trim, false);
+        design(out, Face.NORTH, BX0, BY0, BX1, BY1, BACK0, -1, key);
         float r = MED * 0.55f;
         box(out, 8 - r, 8 - r, BACK0 - MED_H * 0.8f, 8 + r, 8 + r, BACK0, "trim_metal", trim, false, false, new Face[]{Face.UP, Face.DOWN, Face.WEST, Face.EAST});
         quad(out, Face.NORTH, 8 - r, 8 - r, 8 + r, 8 + r, BACK0 - MED_H * 0.8f, "medallion", trim, false);
@@ -94,9 +94,19 @@ public final class GrimoireBookPlan {
         box(out, x0 + BAR, y0, z0, x1 - BAR, y0 + BAR, z1, "trim_metal", tint, false, true, faces);     // bottom
     }
 
-    /** The motif texture stamped over a whole cover face. */
-    private static void overlay(List<Quad> out, Face face, float z, String texture, int tint, boolean emissive) {
-        quad(out, face, BX0, BY0, BX1, BY1, z, texture, tint, emissive);
+    /**
+     * The cover design over a whole cover face at depth {@code z} ({@code dir} +1 = outwards along +Z, -1 along -Z). An art-pack
+     * design is two layers: its background shading tinted to the cover colour, then its ornament in the art's own colours, which
+     * glows while the book is held. The canon specials (tattered, straps) are one trim-tinted overlay as before.
+     */
+    private static void design(List<Quad> out, Face face, float x0, float y0, float x1, float y1, float z, int dir, BookLook.Key key) {
+        BookMotif m = key.motif();
+        if (m.isArt()) {
+            quad(out, face, x0, y0, x1, y1, z + dir * 0.015f, m.base(), BookLook.TINT_COVER, false);
+            quad(out, face, x0, y0, x1, y1, z + dir * 0.03f, m.texture(), -1, key.held());
+        } else {
+            quad(out, face, x0, y0, x1, y1, z + dir * 0.02f, m.texture(), BookLook.TINT_TRIM, false);
+        }
     }
 
     /** A single quad facing SOUTH or NORTH at depth z over [x0,x1] x [y0,y1], full texture. */
@@ -170,7 +180,7 @@ public final class GrimoireBookPlan {
                 box(half, x0 + BAR, y1 - BAR, z0, x1 - BAR, y1, z1, "trim_metal", trim, false, true, BAR_FACES_FRONT);
                 box(half, x0 + BAR, y0, z0, x1 - BAR, y0 + BAR, z1, "trim_metal", trim, false, true, BAR_FACES_FRONT);
             }
-            quad(half, Face.SOUTH, xa, BY0, xb, BY1, cz + 0.02f, key.motif().texture(), trim, false);
+            design(half, Face.SOUTH, xa, BY0, xb, BY1, cz, 1, key);
             float mx = (xa + xb) / 2, my = 8f, med = side > 0 ? MED * 0.8f : MED * 0.45f;
             box(half, mx - med, my - med, cz, mx + med, my + med, cz + MED_H, "trim_metal", trim, false, false, new Face[]{Face.UP, Face.DOWN, Face.WEST, Face.EAST});
             quad(half, Face.SOUTH, mx - med, my - med, mx + med, my + med, cz + MED_H, "medallion", trim, false);
@@ -204,9 +214,12 @@ public final class GrimoireBookPlan {
     /** Every texture the plan can use (for the model loader to resolve). */
     public static List<String> textures() {
         List<String> t = new ArrayList<>(List.of("cover_leather", "cover_tattered", "pages", "spine", "trim_metal", "medallion"));
-        for (BookMotif m : BookMotif.values()) t.add(m.texture());
+        for (BookMotif m : BookMotif.values()) {
+            t.add(m.texture());
+            if (m.base() != null) t.add(m.base());
+        }
         for (String e : new String[]{"three_leaf", "four_leaf", "five_leaf", "spade", "double_spade", "triple_spade",
-                "heart", "two_heart", "cracked_heart", "diamond", "five_sided", "cracked_diamond"}) t.add("emblem_" + e);
+                "heart", "two_heart", "cracked_heart", "diamond", "five_sided", "cracked_diamond", "black_magic", "god_tier"}) t.add("emblem_" + e);
         return t;
     }
 }

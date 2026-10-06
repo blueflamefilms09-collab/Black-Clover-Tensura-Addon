@@ -40,9 +40,9 @@ import java.util.function.UnaryOperator;
  * Summon Grimoire). While the slot is filled the book hangs dormant at the owner's right hip; an empty slot means no grimoire is
  * carried. Kept through death. Open it from the Multiverse status screen, the "Grimoire Slot" key or /multiverse grimoire slot.
  *
- * <p>Every grimoire the mod hands out still lands in the inventory first; each tick an owned grimoire found outside the hands is
- * moved into an empty slot, so all the old grant paths fill the slot without changes. A grimoire held in a hand is left alone
- * (the altar and old habits still work).
+ * <p>Every grimoire the mod hands out still lands in the inventory first; each tick an owned grimoire found anywhere in the
+ * inventory (hotbar and offhand included) is moved into an empty slot, so all the grant paths fill the slot without changes.
+ * Casting needs the book summoned from the slot (book.GrimoireSummon); the altar reads the slot too.
  *
  * <p>Sync: {@link HipPayload} (entity id + the slot's stack) to the owner and everyone tracking them, for the hip book.
  */
@@ -65,8 +65,8 @@ public final class GrimoireSlot {
 
     public static void set(Player p, ItemStack stack) { p.setData(SLOT, stack == null ? ItemStack.EMPTY : stack); }
 
-    /** Where a grimoire counts as "with you, ready": the slot, then both hands. */
-    public static List<ItemStack> ready(Player p) { return List.of(get(p), p.getMainHandItem(), p.getOffhandItem()); }
+    /** Where a bound grimoire counts as carried (0.24: the Grimoire Slot only; the hotbar and hands never enable anything). */
+    public static List<ItemStack> ready(Player p) { return List.of(get(p)); }
 
     /** True if the slot or a hand holds a stack matching {@code test}. */
     public static boolean anyReady(Player p, Predicate<ItemStack> test) {
@@ -93,13 +93,17 @@ public final class GrimoireSlot {
         if (!(event.getEntity() instanceof ServerPlayer p)) return;
         if (get(p).isEmpty()) {
             Inventory inv = p.getInventory();
-            for (int i = 0; i < inv.items.size(); i++) {
-                if (i == inv.selected) continue;                                   // a book in the hand stays there
-                ItemStack s = inv.items.get(i);
-                if (!GrimoireItem.isOwnedBy(s, p.getUUID())) continue;
-                set(p, s.copy());
-                inv.items.set(i, ItemStack.EMPTY);
-                break;
+            for (var list : List.of(inv.items, inv.offhand)) {
+                boolean moved = false;
+                for (int i = 0; i < list.size(); i++) {
+                    ItemStack s = list.get(i);
+                    if (!GrimoireItem.isOwnedBy(s, p.getUUID())) continue;
+                    set(p, s.copy());
+                    list.set(i, ItemStack.EMPTY);
+                    moved = true;
+                    break;
+                }
+                if (moved) break;
             }
         }
         ItemStack now = get(p), last = SENT.get(p.getUUID());

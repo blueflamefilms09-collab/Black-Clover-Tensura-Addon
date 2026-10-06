@@ -89,12 +89,29 @@ public final class GrimoireAcceptance {
             magic = MagicType.ANTI_MAGIC;
             devil = Devil.LIEBE;
         } else {
-            List<MagicType> pool = MagicType.forSoul(soul == null ? NightmareSouls.NO_NIGHTMARE : soul);
+            List<MagicType> pool = starterPool(soul);
             magic = pool.get(r.nextInt(pool.size()));
             if (leaves >= 5) devil = randomDevil(r);
         }
 
         grantExact(player, cover, magic, devil);
+    }
+
+    /**
+     * The attributes a grimoire can choose (config starterMagics, default Fire / Water / Wind / Earth), narrowed to the player's soul
+     * family when that leaves any (a Water soul gets Water). Anti-Magic is never in here: it comes with the Black Magic cover.
+     */
+    public static List<MagicType> starterPool(String soul) {
+        List<MagicType> starters = new java.util.ArrayList<>();
+        for (String s : com.newuniverse.nusmp.multiverse.MultiverseConfig.get(com.newuniverse.nusmp.multiverse.MultiverseConfig.STARTER_MAGICS)) {
+            try { MagicType t = MagicType.valueOf(s.trim().toUpperCase()); if (t != MagicType.ANTI_MAGIC && !starters.contains(t)) starters.add(t); }
+            catch (IllegalArgumentException ignored) {}
+        }
+        if (starters.isEmpty()) starters.addAll(List.of(MagicType.FLAME, MagicType.WATER, MagicType.WIND, MagicType.EARTH));
+        List<MagicType> soulPool = MagicType.forSoul(soul == null ? NightmareSouls.NO_NIGHTMARE : soul);
+        List<MagicType> both = new java.util.ArrayList<>(starters);
+        both.retainAll(soulPool);
+        return both.isEmpty() || soulPool.size() == MagicType.values().length - 1 ? starters : both;
     }
 
     /** Weighted kingdom roll (config). */

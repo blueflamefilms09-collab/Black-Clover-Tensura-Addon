@@ -33,12 +33,10 @@ public abstract class GrimoirePageSkill extends Skill {
 
     @Override public ResourceLocation getSkillIcon() { return icon; }
 
-    /** Holding your own grimoire? Pages are locked without it. */
+    /** Is your grimoire summoned? Pages are locked without it (0.24: holding it is not enough). */
     protected static boolean ready(ServerPlayer player) {
-        for (ItemStack s : com.newuniverse.nusmp.blackclover.GrimoireSlot.ready(player)) {
-            if (GrimoireItem.isOwnedBy(s, player.getUUID())) return true;
-        }
-        SkillUtil.fail(player, "Your pages are sealed shut. Put your grimoire in your Grimoire Slot.");
+        if (com.newuniverse.nusmp.book.GrimoireSummon.isFloating(player)) return true;
+        SkillUtil.fail(player, "Your pages are sealed shut. Summon your grimoire first (Summon Grimoire).");
         return false;
     }
 

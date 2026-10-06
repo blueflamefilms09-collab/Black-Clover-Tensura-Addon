@@ -340,5 +340,6 @@ if __name__ == "__main__":
     emblem("diamond", diamonds("one"))
     emblem("five_sided", diamonds("five"))
     emblem("cracked_diamond", diamonds("cracked"))
-    for m in ("filigree", "ornate", "wheels", "stars", "lattice", "floral", "straps", "tattered", "plain"):
+    # 0.24: the cover designs come from the art pack (tools/gen_cover_art_textures.py); only the canon specials stay procedural
+    for m in ("straps", "tattered"):
         ornament(m, m)

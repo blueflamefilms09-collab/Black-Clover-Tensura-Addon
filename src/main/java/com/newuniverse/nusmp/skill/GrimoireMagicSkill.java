@@ -212,14 +212,12 @@ public class GrimoireMagicSkill extends Skill {
 
     /** True if the player holds their own grimoire. Summons it back if it's lost. */
     private static boolean holdingOwnGrimoire(ServerPlayer player, ManasSkillInstance instance) {
-        for (ItemStack s : com.newuniverse.nusmp.blackclover.GrimoireSlot.ready(player)) {
-            if (GrimoireItem.isOwnedBy(s, player.getUUID())) return true;
-        }
-        for (ItemStack s : player.getInventory().items) {
-            if (GrimoireItem.isOwnedBy(s, player.getUUID())) {
-                SkillUtil.fail(player, "Put your grimoire in your Grimoire Slot to cast.");
-                return false;
-            }
+        if (com.newuniverse.nusmp.book.GrimoireSummon.isFloating(player)) return true;                  // 0.24: cast only while summoned
+        boolean carried = com.newuniverse.nusmp.blackclover.GrimoireSlot.holdsOwn(player, null);
+        for (ItemStack s : player.getInventory().items) if (GrimoireItem.isOwnedBy(s, player.getUUID())) carried = true;
+        if (carried) {
+            SkillUtil.fail(player, "Summon your grimoire first (Summon Grimoire).");
+            return false;
         }
         player.getInventory().placeItemBackInInventory(GrimoireItem.create(player, coverOf(instance), magic(instance), devil(instance)));
         player.displayClientMessage(Component.literal("Your grimoire returns to you.").withStyle(ChatFormatting.GOLD), true);

@@ -1,8 +1,8 @@
 package com.newuniverse.nusmp.blackclover;
 
 /**
- * Every cover state. The ORDER here must match the item model overrides (variant index).
- * tier: 3 = common, 4 = rare, 5 = forbidden (devil). damage/cost multiply every spell.
+ * Every cover state (new ones appended at the end). tier: 3 = common, 4 = rare, 5 = five-leaf and above (forbidden = devil,
+ * except the god-tier). damage/cost multiply every spell.
  */
 public enum GrimoireCover {
     THREE_LEAF(Kingdom.CLOVER, 3, 1.00, 1.00, "Three leaves: Faith, Hope and Love."),
@@ -16,7 +16,10 @@ public enum GrimoireCover {
     CRACKED_HEART(Kingdom.HEART, 3, 1.10, 1.05, "The cover split when they were lost. Grief writes louder than love."),
     DIAMOND(Kingdom.DIAMOND, 3, 1.00, 1.00, "The Diamond suit: every spell is an experiment."),
     FIVE_SIDED(Kingdom.DIAMOND, 4, 1.03, 0.97, "The fifth side is Good Fortune."),
-    CRACKED_DIAMOND(Kingdom.DIAMOND, 3, 0.97, 1.03, "Misfortune has split the cover. Luck runs the other way now.");
+    CRACKED_DIAMOND(Kingdom.DIAMOND, 3, 0.97, 1.03, "Misfortune has split the cover. Luck runs the other way now."),
+    // 0.24: the two tiers above the five-leaf (rarest ceremony results)
+    BLACK_MAGIC(Kingdom.CLOVER, 5, 1.15, 1.00, "A grimoire bound in black. Devil power writes its pages, not mana."),
+    GOD_TIER(Kingdom.CLOVER, 5, 1.15, 0.90, "A grimoire of legend. The pages burn gold, and the world remembers its owner.");
 
     public final Kingdom kingdom;
     public final int tier;
@@ -28,7 +31,10 @@ public enum GrimoireCover {
     }
 
     public boolean isRare() { return this == FOUR_LEAF || this == FIVE_SIDED; }   // luck covers (+5% page chance)
-    public boolean isForbidden() { return tier >= 5; }
+    public boolean isForbidden() { return tier >= 5 && this != GOD_TIER; }
+
+    /** The rarity ladder: 3-leaf -> 4-leaf / kingdom covers -> 5-leaf -> black magic / god-tier. */
+    public boolean isLegendary() { return this == BLACK_MAGIC || this == GOD_TIER; }
     public boolean isCracked() { return this == CRACKED_HEART || this == CRACKED_DIAMOND; }
 
     public String displayName() {
@@ -37,6 +43,7 @@ public enum GrimoireCover {
             case SPADE -> "Spade Grimoire"; case DOUBLE_SPADE -> "Double-Spade Grimoire"; case TRIPLE_SPADE -> "Triple-Spade Grimoire";
             case HEART -> "Heart Grimoire"; case TWO_HEART -> "Two-Heart Grimoire"; case CRACKED_HEART -> "Cracked-Heart Grimoire";
             case DIAMOND -> "Diamond Grimoire"; case FIVE_SIDED -> "Five-Sided Diamond Grimoire"; case CRACKED_DIAMOND -> "Cracked-Diamond Grimoire";
+            case BLACK_MAGIC -> "Black Magic Grimoire"; case GOD_TIER -> "God-Tier Grimoire";
         };
     }
 

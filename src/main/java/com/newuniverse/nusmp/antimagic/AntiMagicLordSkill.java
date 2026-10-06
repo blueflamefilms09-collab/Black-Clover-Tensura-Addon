@@ -70,7 +70,8 @@ public class AntiMagicLordSkill extends Skill {
         if (e instanceof ServerPlayer p) {
             p.getInventory().placeItemBackInInventory(MagicWeaponItem.bound(NUItems.DEMON_DWELLER.get(), p));
             p.getInventory().placeItemBackInInventory(MagicWeaponItem.bound(NUItems.DEMON_DESTROYER.get(), p));
-            p.sendSystemMessage(Component.literal("Two more demon swords answer you: Demon-Dweller and Demon-Destroyer.").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.BOLD));
+            p.getInventory().placeItemBackInInventory(MagicWeaponItem.bound(NUItems.DEMON_SLASHER_KATANA.get(), p));
+            p.sendSystemMessage(Component.literal("More demon swords answer you: Demon-Dweller, Demon-Destroyer and Demon-Slasher.").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.BOLD));
         }
     }
 

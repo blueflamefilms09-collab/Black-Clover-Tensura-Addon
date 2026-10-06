@@ -61,10 +61,6 @@ public final class NUConfig {
     public static final ModConfigSpec.IntValue DEVIL_UNION_SECONDS;
     public static final ModConfigSpec.BooleanValue ANNOUNCE_THREE_LEAF;
     public static final ModConfigSpec.IntValue WEIGHT_CLOVER, WEIGHT_SPADE, WEIGHT_HEART, WEIGHT_DIAMOND;
-    public static final ModConfigSpec.IntValue KILLS_PER_ROLL, BOSS_KILL_WEIGHT;
-    public static final ModConfigSpec.DoubleValue PAGE_CHANCE, RARE_PAGE_BONUS, CRACKED_PAGE_PENALTY;
-    public static final ModConfigSpec.BooleanValue PLAYER_KILLS_COUNT;
-    public static final ModConfigSpec.IntValue PAGE_PITY;
     public static final ModConfigSpec.BooleanValue ALLOW_FORBIDDEN_START;
     public static final ModConfigSpec.DoubleValue BAL_MOB_DAMAGE_MULT;
     public static final ModConfigSpec.BooleanValue GRIEF;
@@ -73,8 +69,7 @@ public final class NUConfig {
     public static final ModConfigSpec.IntValue GEAR_SENIOR_DAMAGE, GEAR_ELEMENT_BONUS, GEAR_RECOIL_REDUCTION, GEAR_EAGLE_REDUCTION, GEAR_HEART_COST,
             GEAR_DIAMOND_COOLDOWN, GEAR_SPADE_DAMAGE, GEAR_DEVIL_DAMAGE, GEAR_DEVIL_GRACE, GEAR_FORTUNE_SUCCESS, GEAR_FORTUNE_CRACK;
     // Forbidden magic
-    public static final ModConfigSpec.DoubleValue FORBIDDEN_HP_PRICE, FORBIDDEN_MAXHP_PRICE, FORBIDDEN_MANA_TAX, FORBIDDEN_PAGE_CHANCE;
-    public static final ModConfigSpec.IntValue FORBIDDEN_MIN_KILLS;
+    public static final ModConfigSpec.DoubleValue FORBIDDEN_HP_PRICE, FORBIDDEN_MAXHP_PRICE, FORBIDDEN_MANA_TAX;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -140,16 +135,9 @@ public final class NUConfig {
         WEIGHT_SPADE = b.defineInRange("weightSpade", 20, 0, 1000);
         WEIGHT_HEART = b.defineInRange("weightHeart", 20, 0, 1000);
         WEIGHT_DIAMOND = b.defineInRange("weightDiamond", 20, 0, 1000);
-        KILLS_PER_ROLL = b.comment("Kills needed for each new-page roll.").defineInRange("killsPerRoll", 100, 1, 100000);
-        BOSS_KILL_WEIGHT = b.comment("How many kills a boss counts as.").defineInRange("bossKillWeight", 10, 1, 1000);
-        PAGE_CHANCE = b.comment("Percent chance a roll writes a new page.").defineInRange("pageChance", 20.0, 0.0, 100.0);
-        RARE_PAGE_BONUS = b.comment("Extra percent for luck covers (four-leaf / five-sided).").defineInRange("rarePageBonus", 5.0, 0.0, 100.0);
-        PAGE_PITY = b.comment("This many rolls in a row guarantees a page (5 = the 5th roll after 4 fails).").defineInRange("pagePity", 5, 1, 100);
         ALLOW_FORBIDDEN_START = b.comment("Balance law: five-leaf / triple spade can't be a starting roll unless this is true.").define("allowForbiddenStart", false);
         GRIEF = b.comment("Grief flag: can grimoire explosions break blocks? (default off)").define("griefBlocks", false);
         BAL_MOB_DAMAGE_MULT = b.comment("Balance law: multiplier on addon spell damage vs mobs (players are capped at 4-14 hearts by mastery).").defineInRange("mobDamageMultiplier", 1.0, 0.0, 10.0);
-        CRACKED_PAGE_PENALTY = b.comment("Percent removed for cracked covers.").defineInRange("crackedPagePenalty", 10.0, 0.0, 100.0);
-        PLAYER_KILLS_COUNT = b.comment("Do killed players count toward page rolls?").define("playerKillsCount", true);
         GRIMOIRE_UNIQUE_LOOKS = b.comment("Each owner's grimoire gets its own cosmetic variation (cover, trim metal, thickness, clasp, colour drift). Off = every grimoire of a type looks identical.").define("uniqueLooks", true);
         b.pop();
 
@@ -175,8 +163,6 @@ public final class NUConfig {
         FORBIDDEN_HP_PRICE = b.comment("HP paid per forbidden cast (stacks +25% per recent cast, decays every 5 min).").defineInRange("hpPrice", 3.0, 0.0, 100.0);
         FORBIDDEN_MAXHP_PRICE = b.comment("Devil contract 'life' price: max HP removed.").defineInRange("maxHpPrice", 4.0, 0.0, 100.0);
         FORBIDDEN_MANA_TAX = b.comment("Devil contract 'mana' price: permanent extra grimoire cost (0.15 = +15%).").defineInRange("manaTax", 0.15, 0.0, 10.0);
-        FORBIDDEN_MIN_KILLS = b.comment("Kills before a five-leaf / triple-spade book can roll forbidden pages.").defineInRange("minKills", 300, 100, 100000);
-        FORBIDDEN_PAGE_CHANCE = b.comment("Percent chance per roll to write a forbidden page.").defineInRange("pageChance", 5.0, 0.0, 100.0);
         b.pop();
 
         SPEC = b.build();

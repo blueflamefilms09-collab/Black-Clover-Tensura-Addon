@@ -83,7 +83,6 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(GrimoireCommand::register);
         NeoForge.EVENT_BUS.addListener(VfxCommand::register);
         // Grimoire pages & Time magic engine
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.blackclover.GrimoirePages::onDeath);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.blackclover.TimeStop::onEntityTick);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.blackclover.TimeStop::onIncomingDamage);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.blackclover.TimeStop::onAttack);

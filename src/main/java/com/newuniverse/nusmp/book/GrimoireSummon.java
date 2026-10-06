@@ -59,7 +59,7 @@ public final class GrimoireSummon {
         return s != null && (magic == null || s.magic == magic) && !find(p, s.magic).isEmpty();
     }
 
-    /** The owner's grimoire of this magic in the Grimoire Slot (or, for old habits, a hand), or EMPTY. */
+    /** The owner's grimoire of this magic in the Grimoire Slot, or EMPTY. */
     static ItemStack find(Player p, MagicType magic) {
         for (ItemStack s : com.newuniverse.nusmp.blackclover.GrimoireSlot.ready(p))
             if (GrimoireItem.isOwnedBy(s, p.getUUID()) && magic.name().equals(GrimoireItem.data(s).getString("Magic"))) return s;
@@ -67,8 +67,10 @@ public final class GrimoireSummon {
     }
 
     /** The ability key: summon; with shift held, stow it back at the hip. */
-    public static void toggle(ServerPlayer p, GrimoireBook book) {
-        if (p.isShiftKeyDown()) { dismiss(p, true); return; }
+    public static void toggle(ServerPlayer p, GrimoireBook book) { toggle(p, book, p.isShiftKeyDown()); }
+
+    public static void toggle(ServerPlayer p, GrimoireBook book, boolean stow) {
+        if (stow) { dismiss(p, true); return; }
         State s = FLOATING.get(p.getUUID());
         if (s != null && s.magic == book.magic) {
             p.displayClientMessage(Component.literal("Your grimoire is already out. (sneak + ability key to stow it)").withStyle(ChatFormatting.GRAY), true);
@@ -165,11 +167,31 @@ public final class GrimoireSummon {
         @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
     }
 
+    /** The "Summon Grimoire" key (client): summon your book from its slot, or stow it ({@code stow} = shift was held). */
+    public record KeyPayload(boolean stow) implements CustomPacketPayload {
+        public static final Type<KeyPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "grimoire_summon_key"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, KeyPayload> STREAM_CODEC = StreamCodec.composite(ByteBufCodecs.BOOL, KeyPayload::stow, KeyPayload::new);
+        @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
+    }
+
+    /** Server side of the key: the player's own grimoire book decides which magic floats. */
+    static void onKey(ServerPlayer p, boolean stow) {
+        if (stow) { dismiss(p, true); return; }
+        var g = com.newuniverse.nusmp.blackclover.GrimoirePages.grimoireOf(p);
+        if (g.isEmpty() || !(g.get().getSkill() instanceof GrimoireBook book)) {
+            GrimoireBook.fail(p, "You have no grimoire bound yet.");
+            return;
+        }
+        toggle(p, book, false);
+    }
+
     /** Mod-bus listener. The handler only runs on clients, so the client class is never loaded on a server. */
     public static void registerPayloads(RegisterPayloadHandlersEvent event) {
         var r = event.registrar("1").optional();
         r.playToClient(FloatPayload.TYPE, FloatPayload.STREAM_CODEC,
                 (payload, ctx) -> ctx.enqueueWork(() -> com.newuniverse.nusmp.client.grimoire.GrimoireFloatClient.receive(payload.entityId(), payload.stack())));
+        r.playToServer(KeyPayload.TYPE, KeyPayload.STREAM_CODEC,
+                (payload, ctx) -> ctx.enqueueWork(() -> { if (ctx.player() instanceof ServerPlayer sp) onKey(sp, payload.stow()); }));
         r.playToClient(FlipPayload.TYPE, FlipPayload.STREAM_CODEC,
                 (payload, ctx) -> ctx.enqueueWork(() -> com.newuniverse.nusmp.client.grimoire.GrimoireFloatClient.flip(payload.entityId(), payload.reverse())));
     }

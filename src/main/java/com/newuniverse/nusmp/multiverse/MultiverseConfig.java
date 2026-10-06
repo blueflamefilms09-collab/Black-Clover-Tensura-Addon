@@ -14,9 +14,9 @@ public final class MultiverseConfig {
     public static final ModConfigSpec.IntValue CEREMONY_TOWER_RADIUS;
     public static final ModConfigSpec.BooleanValue EVERYONE_ELIGIBLE;
     public static final ModConfigSpec.BooleanValue LEGACY_SOUL_AUTO_ROLL;
-    public static final ModConfigSpec.DoubleValue WEIGHT_COMMON, WEIGHT_UNCOMMON, WEIGHT_RARE, WEIGHT_BLACK;
+    public static final ModConfigSpec.DoubleValue WEIGHT_COMMON, WEIGHT_UNCOMMON, WEIGHT_RARE, WEIGHT_BLACK, WEIGHT_GOD;
+    public static final ModConfigSpec.ConfigValue<java.util.List<? extends String>> STARTER_MAGICS;
     // pages
-    public static final ModConfigSpec.BooleanValue PAGES_FROM_KILLS;
     public static final ModConfigSpec.IntValue PAGE_SLOTS_FLOOR, PAGE_SLOTS_CEILING, PAGE_SLOTS_CONTRACT_BONUS, PAGE_SLOTS_CAP;
     public static final ModConfigSpec.DoubleValue PAGE_MASTERY_SCALE;
     public static final ModConfigSpec.ConfigValue<String> GATE_ZONE, GATE_SIGNATURE;
@@ -46,16 +46,18 @@ public final class MultiverseConfig {
         WEIGHT_COMMON = b.comment("Cover rarity weights when a grimoire chooses you. Common: Three-Leaf / basic suit covers.").defineInRange("weightCommon", 80.0, 0, 1000);
         WEIGHT_UNCOMMON = b.comment("Four-Leaf / Double Spade / Two-Heart / Five-Sided Diamond.").defineInRange("weightUncommon", 16.0, 0, 1000);
         WEIGHT_RARE = b.comment("Five-Leaf (devil-inhabited).").defineInRange("weightRare", 3.5, 0, 1000);
-        WEIGHT_BLACK = b.comment("Black Magic / God-tier: the Anti-Magic five-leaf.").defineInRange("weightBlack", 0.5, 0, 1000);
+        WEIGHT_BLACK = b.comment("Black Magic cover (black book, Anti-Magic, the devil Liebe).").defineInRange("weightBlack", 0.5, 0, 1000);
+        WEIGHT_GOD = b.comment("God-Tier cover (the rarest: an ivory-and-gold book with a starter attribute).").defineInRange("weightGod", 0.1, 0, 1000);
+        STARTER_MAGICS = b.comment("Attributes a grimoire can choose at the ceremony (Anti-Magic comes with the Black Magic cover or an empty soul).")
+                .defineListAllowEmpty("starterMagics", java.util.List.of("FLAME", "WATER", "WIND", "EARTH"), () -> "FLAME", o -> o instanceof String);
         b.pop();
 
         b.push("pages");
-        PAGES_FROM_KILLS = b.comment("Old behaviour: page rolls from kills (kept, off by default; pages unlock by mastery).").define("pagesFromKills", false);
         PAGE_SLOTS_FLOOR = b.defineInRange("slotsFloor", 6, 1, 64);
         PAGE_SLOTS_CEILING = b.comment("Slots grow from the floor to this ceiling with mastery.").defineInRange("slotsCeiling", 12, 1, 64);
         PAGE_SLOTS_CONTRACT_BONUS = b.comment("Extra slots with a spirit or devil contract.").defineInRange("slotsContractBonus", 4, 0, 64);
         PAGE_SLOTS_CAP = b.defineInRange("slotsCap", 16, 1, 64);
-        PAGE_MASTERY_SCALE = b.comment("Page k of n unlocks at mastery k/n x this (1.0 = spread over the whole mastery bar).").defineInRange("masteryScale", 1.0, 0.05, 2.0);
+        PAGE_MASTERY_SCALE = b.comment("A page's mastery cost: the larger of its place in the book (k/n) and its spell cost (cost% / 35), times this.").defineInRange("masteryScale", 1.0, 0.05, 2.0);
         GATE_ZONE = b.comment("Minimum Magic Knight rank for zone pages (rank or rank:class, e.g. INTERMEDIATE:5).").define("gateZone", "INTERMEDIATE:5");
         GATE_SIGNATURE = b.comment("Minimum rank for signature (ultimate) pages.").define("gateSignature", "SENIOR:5");
         PAGE_GATES = b.comment("Per-page overrides: book_id:page_id=RANK[:class][;RACE|RACE]. Example: book_time:chrono_anastasis=GRAND")

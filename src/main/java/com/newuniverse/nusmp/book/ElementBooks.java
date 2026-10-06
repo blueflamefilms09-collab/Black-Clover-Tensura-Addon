@@ -160,6 +160,20 @@ public final class ElementBooks {
         return new ElementBook(MagicType.ANTI_MAGIC, 0xFF2A0A30, TensuraDamageTypes.MAGIC_GENERIC, List.of(
                 new BookPage("demon_slayer_slash", "Demon-Slayer Slash", "Demon-Slayer Slash", 0, 0, 80, slash),
                 new BookPage("black_divider", "Black Divider", "Black Divider", 0, 0, 160, dash(10, 8, false, VfxShape.ANTI_MAGIC_SLASH, strip())),
-                new BookPage("black_meteorite", "Black Meteorite", "Black Meteorite", 0, 0, 600, nova(16, 4, true, VfxShape.ANTI_MAGIC_SLASH, all(strip(), knock(1.5))))));
+                new BookPage("black_meteorite", "Black Meteorite", "Black Meteorite", 0, 0, 600, nova(16, 4, true, VfxShape.ANTI_MAGIC_SLASH, all(strip(), knock(1.5)))),
+                // 0.24: Black Hurricane (a spinning field of anti-magic that drags foes in and strips their magic) and Black Form
+                new BookPage("black_hurricane", "Black Hurricane", "Black Hurricane", 0, 0, 300,
+                        field(3, 6, 60, 10, false, VfxShape.ANTI_MAGIC_SLASH, all(strip(), (t, p) -> {
+                            var d = p.position().subtract(t.position()).normalize().scale(0.35);
+                            t.setDeltaMovement(t.getDeltaMovement().add(d.x, 0.12, d.z));
+                            t.hurtMarked = true;
+                        }))),
+                new BookPage("black_form", "Black Form", "Black Form", 0, 0, 1200, (b, i, p, m) -> {
+                    p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 600, 1));
+                    p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 600, 1));
+                    p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 600, 0));
+                    p.addEffect(new MobEffectInstance(MobEffects.JUMP, 600, 1));
+                    return nova(4, 3, false, VfxShape.ANTI_MAGIC_SLASH, all(strip(), knock(1.0))).cast(b, i, p, m);
+                })));
     }
 }

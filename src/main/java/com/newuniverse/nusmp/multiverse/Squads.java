@@ -105,7 +105,7 @@ public final class Squads {
 
     public static boolean available() { return Ftb.available(); }
 
-    public static final Component REQUIRES_FTB = Component.literal("Magic Knight Squads require FTB Teams, which is not installed.").withStyle(ChatFormatting.RED);
+    public static final Component REQUIRES_FTB = Component.literal("Magic Knight Squads are not available on this server (team support is not installed).").withStyle(ChatFormatting.RED);
 
     // ---------------------------------------------------------------- squad records
     /** Which FTB teams are squads, their display name / colour / vice, and each member's last known stars. */
@@ -221,7 +221,7 @@ public final class Squads {
         if (party.isEmpty()) {
             Ftb.run(p, "ftbteams party create " + name);          // FTB makes the team; we flag it below
             party = Ftb.party(p);
-            if (party.isEmpty()) { fail(p, "FTB Teams did not create the party."); return; }
+            if (party.isEmpty()) { fail(p, "The squad could not be founded. Try again, or ask an admin."); return; }
         } else if (!p.getUUID().equals(Ftb.owner(party.get()))) {
             fail(p, "Only your party's owner can turn it into a squad.");
             return;
@@ -301,7 +301,7 @@ public final class Squads {
     /** Status panel block. */
     public static CompoundTag summary(ServerPlayer p) {
         CompoundTag t = new CompoundTag();
-        if (!available()) { t.putString("State", "Requires FTB Teams"); return t; }
+        if (!available()) { t.putString("State", "Requires team support"); return t; }
         Optional<Membership> m = membership(p);
         if (m.isEmpty()) { t.putString("State", "No squad"); return t; }
         t.putString("Name", m.get().squad.name);

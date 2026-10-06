@@ -53,14 +53,12 @@ public class GrimoireAltarBlock extends Block {
             com.newuniverse.nusmp.multiverse.Ceremony.choose(p, "a Grimoire Altar");
             return InteractionResult.CONSUME;
         }
-        if (GrimoireAcceptance.hasRolled(p)) {
-            p.displayClientMessage(Component.literal("Your fate is already written. Hold your grimoire and pray to seek a higher cover.").withStyle(ChatFormatting.GRAY), true);
-            glow(p, pos, 0xFF8CFFC2, 0.8f);
-            return InteractionResult.CONSUME;
-        }
-        String soul = NightmareSouls.soulTypeOf(p);
-        glow(p, pos, 0xFFFFD86B, 1.4f);
-        GrimoireAcceptance.roll(p, soul == null ? "" : soul);
+        // a bound mage prays with the grimoire in their Grimoire Slot (sneak: training)
+        ItemStack slotted = com.newuniverse.nusmp.blackclover.GrimoireSlot.get(p);
+        if (GrimoireItem.isOwnedBy(slotted, p.getUUID())) { pray(p, level, pos); return InteractionResult.CONSUME; }
+        p.displayClientMessage(Component.literal(GrimoireAcceptance.hasRolled(p) ? "Your fate is already written."
+                : "No grimoire answers you yet. Ask about the next Grimoire Acceptance Ceremony.").withStyle(ChatFormatting.GRAY), true);
+        glow(p, pos, 0xFF8CFFC2, 0.8f);
         return InteractionResult.CONSUME;
     }
 
@@ -71,18 +69,23 @@ public class GrimoireAltarBlock extends Block {
         if (level.isClientSide || !(player instanceof ServerPlayer p)) return ItemInteractionResult.SUCCESS;
         if (!GrimoireItem.isOwnedBy(stack, p.getUUID())) { p.displayClientMessage(Component.literal("The altar only hears a grimoire's owner.").withStyle(ChatFormatting.RED), true); return ItemInteractionResult.CONSUME; }
         com.newuniverse.nusmp.multiverse.WorldSites.record(com.newuniverse.nusmp.multiverse.WorldSites.Kind.TOWER, level.dimension(), pos);
-        // Sneak: altar training (mastery). Otherwise the daily prayer for a higher cover, as before.
+        pray(p, level, pos);
+        return ItemInteractionResult.CONSUME;
+    }
+
+    /** A bound mage at the altar. Sneak: altar training (mastery). Otherwise the daily prayer for a higher cover. */
+    private static void pray(ServerPlayer p, Level level, BlockPos pos) {
         if (p.isShiftKeyDown()) {
             if (com.newuniverse.nusmp.multiverse.MasteryPages.altarTraining(p)) glow(p, pos, 0xFF8CFFC2, 1.0f);
-            return ItemInteractionResult.CONSUME;
+            return;
         }
         var g = GrimoirePages.grimoireOf(p);
-        if (g.isEmpty()) return ItemInteractionResult.CONSUME;
+        if (g.isEmpty()) return;
         long day = level.getDayTime() / 24000L;
         var data = p.getPersistentData();
         if (data.getLong("nusmp_altar_day") == day + 1) {
             p.displayClientMessage(Component.literal("The altar has already heard you today.").withStyle(ChatFormatting.GRAY), true);
-            return ItemInteractionResult.CONSUME;
+            return;
         }
         data.putLong("nusmp_altar_day", day + 1);
         GrimoireCover cover = GrimoirePages.coverOf(g.get());
@@ -95,6 +98,5 @@ public class GrimoireAltarBlock extends Block {
             glow(p, pos, 0xFF8CFFC2, 0.9f);
             p.displayClientMessage(Component.literal(next == null ? "The altar blesses your grimoire, but your cover cannot grow here." : "The altar is silent today. Return tomorrow.").withStyle(ChatFormatting.GRAY), true);
         }
-        return ItemInteractionResult.CONSUME;
     }
 }

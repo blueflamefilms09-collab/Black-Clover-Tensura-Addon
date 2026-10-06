@@ -23,6 +23,8 @@ LOOKS = [
     ("Noelle", "", "", "noelle", 0), ("Yami", "", "", "yami", 0), ("Julius", "", "", "julius", 0),
     ("Karna", "", "", "karna", 0), ("Kirsch", "", "", "kirsch", 0), ("Zenon", "", "", "zenon", 0),
     ("Vanica", "", "", "vanica", 0), ("Floga", "", "", "floga", 0), ("Mars", "", "", "mars", 0),
+    ("Black Magic", "BLACK_MAGIC", "DARK", "", 0), ("God-Tier", "GOD_TIER", "LIGHT", "", 0),
+    ("Triple Spade", "TRIPLE_SPADE", "GRAVITY", "", 0), ("Two-Heart", "TWO_HEART", "WATER", "", 0),
 ]
 LIGHT = np.array([0.35, 0.8, 0.5]) / np.linalg.norm([0.35, 0.8, 0.5])
 OPEN_BOOKS = [("Fuegoleon", "fuegoleon"), ("Yuno", "yuno"), ("Asta", "asta"), ("Noelle", "noelle"), ("Yami", "yami"), ("Julius", "julius")]

@@ -24,12 +24,22 @@ public final class GrimoireSlotClient {
     public static final KeyMapping KEY = new KeyMapping("key.nusmp.grimoire_slot", InputConstants.Type.KEYSYM,
             InputConstants.UNKNOWN.getValue(), "key.categories.nusmp");
 
+    /** Summon Grimoire (default G): your book floats from the hip to your right hand; with shift held it goes back to the hip. */
+    public static final KeyMapping SUMMON = new KeyMapping("key.nusmp.grimoire_summon", InputConstants.Type.KEYSYM,
+            org.lwjgl.glfw.GLFW.GLFW_KEY_G, "key.categories.nusmp");
+
     private GrimoireSlotClient() {}
 
     public static void init(IEventBus modBus) {
-        modBus.addListener((RegisterKeyMappingsEvent e) -> e.register(KEY));
+        modBus.addListener((RegisterKeyMappingsEvent e) -> { e.register(KEY); e.register(SUMMON); });
         modBus.addListener((RegisterMenuScreensEvent e) -> e.register(GrimoireSlot.MENU.get(), GrimoireSlotScreen::new));
-        NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post e) -> { while (KEY.consumeClick()) open(); });
+        NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post e) -> {
+            while (KEY.consumeClick()) open();
+            while (SUMMON.consumeClick()) {
+                var mc = Minecraft.getInstance();
+                if (mc.player != null) PacketDistributor.sendToServer(new com.newuniverse.nusmp.book.GrimoireSummon.KeyPayload(mc.player.isShiftKeyDown()));
+            }
+        });
         NeoForge.EVENT_BUS.addListener(GrimoireSlotClient::onNameTag);
     }
 

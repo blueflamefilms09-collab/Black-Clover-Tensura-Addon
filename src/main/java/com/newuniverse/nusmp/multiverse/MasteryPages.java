@@ -47,10 +47,15 @@ public final class MasteryPages {
         return ForbiddenMagic.devilOf(p) != null;
     }
 
-    /** Mastery needed (0..1) for family page m of n. The starter page (0) is always open. */
-    public static double threshold(int m, int n) {
+    /**
+     * A page's mastery cost (0..1 of the mastery bar): the larger of its place in the book (k/n) and its spell cost (cost% / 35, so a
+     * signature spell needs the full bar), times masteryScale. The starter page (0) is always open. A page opens when mastery >= cost.
+     */
+    public static double masteryCost(BookPage page, int m, int n) {
         if (m <= 0) return 0;
-        return Math.min(1.0, (double) m / Math.max(1, n) * MultiverseConfig.get(MultiverseConfig.PAGE_MASTERY_SCALE));
+        double byPlace = (double) m / Math.max(1, n);
+        double byCost = page == null ? 0 : Math.min(1.0, page.costPercent() / 35.0);
+        return Math.min(1.0, Math.max(byPlace, byCost) * MultiverseConfig.get(MultiverseConfig.PAGE_MASTERY_SCALE));
     }
 
     // ---------------------------------------------------------------- gates
@@ -102,8 +107,8 @@ public final class MasteryPages {
         if (unlocked >= slots(p, inst, book)) return -1;
         double mastery = book.masteryFrac(inst);
         for (int m = 1; m < n; m++) {
-            if (GrimoireBook.isUnlocked(inst, m) || mastery < threshold(m, n)) continue;
             BookPage page = book.page(m);
+            if (GrimoireBook.isUnlocked(inst, m) || mastery < masteryCost(page, m, n)) continue;
             Gate gate = gate(book, page);
             if (!gate.passes(p)) {
                 remindGate(p, inst, m, page, gate);

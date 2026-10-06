@@ -156,11 +156,11 @@ public class GrimoireItem extends Item {
             return InteractionResultHolder.fail(stack);
         }
         // A grimoire chooses one mage. Someone who already has one keeps it (pages, mastery and all) and keeps this
-        // unbound copy too: binding would otherwise wipe their own grimoire. Admins reset first: /nusmp grimoire reset <player>.
+        // unbound copy too: binding would otherwise wipe their own grimoire. Admins reset first: /multiverse ceremony reset <player>.
         var existing = GrimoirePages.grimoireOf(sp);
         if (existing.isPresent()) {
             MagicType own = GrimoirePages.magicOf(existing.get());
-            sp.displayClientMessage(Component.literal("You already have a grimoire (" + own.displayName + "). Use /nusmp grimoire reset first to swap it.")
+            sp.displayClientMessage(Component.literal("You already have a grimoire (" + own.displayName + "). An admin can free you with /multiverse ceremony reset.")
                     .withStyle(ChatFormatting.GRAY), true);
             return InteractionResultHolder.fail(stack);
         }

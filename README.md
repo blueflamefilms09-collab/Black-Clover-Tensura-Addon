@@ -57,7 +57,7 @@ Chanted magics: use **Chant** mode until the chant is complete, then switch to *
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.23.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.24.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -96,12 +96,12 @@ Custom immediate-mode renderer (no vanilla particles): `com.newuniverse.nusmp.vf
 ## Grimoires: kingdoms, covers, pages (0.11)
 - Acceptance rolls a kingdom (Clover 40 / Spade 20 / Heart 20 / Diamond 20) and a tier; the kingdom decides the cover.
 - Covers: three/four/five-leaf, spade/double/triple spade, heart/two-heart/cracked heart, diamond/five-sided/cracked diamond. Each changes spell power and cost.
-- Pages: every 100 kills (bosses count 10) roll 35% for a new page (+15% rare covers, -10% cracked). No pages left -> mastery instead.
+- Pages open by mastery only (0.24: the old kill rolls are gone; see "0.24" below).
 - Time Magic pages: Chrono Stasis (starter), Chrono Stasis Grigora, Time Acceleration, Time Reversal, Stolen Time.
-- Admin: `/nusmp grimoire setcover|addkills|page|info|give|roll|reset ...`
+- Admin: `/multiverse grimoire ...` (the old `/nusmp grimoire setcover|page|info|give|roll|reset` stays as a hidden admin alias).
 
 ## Grimoires as Tensura Unique skills (0.13)
-- Every ported family is ONE Unique skill (`nusmp:book_<family>`), pages are modes. Hold the grimoire, hold the skill key to chant (1 s, 0.4 s mastered), release to cast.
+- Every ported family is ONE Unique skill (`nusmp:book_<family>`), pages are modes. Summon the grimoire (0.24: it must be out), hold the skill key to chant (1 s, 0.4 s mastered), release to cast.
 - Families: time, fire, water, wind, earth, light, dark, spatial, lightning, steel, mirror, thread, plant, sealing, gravity, ice, mercury.
 - Cooldown tiers: starter 4 s, mid 8 s, zone 15 s, signature 30 s, daily one in-game day. Cooldown shows in the mode name.
 - Spirit Dive (fire/water/wind/earth, Tensura Spirit Lord + free spirit slot), Devil Union (five-leaf/triple spade).
@@ -177,8 +177,8 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 
 ## Grimoire Slot (0.22)
 - A bound grimoire lives in a dedicated **Grimoire Slot**, not the hotbar: open it with the "Grimoire Slot" key (unbound by default), the button on the Multiverse status screen, or `/multiverse slot`. Only your own bound grimoire fits.
-- While the slot is filled the book hangs **dormant at your right hip** (everyone sees it); an empty slot means no grimoire is carried. Casting and Summon Grimoire work straight from the slot (a grimoire in your hand still works too).
-- Any grimoire the mod gives you lands in the slot by itself (an owned grimoire elsewhere in the inventory moves in when the slot is empty; the one in your hand stays put, e.g. for the altar). The slot is kept through death.
+- While the slot is filled the book hangs **dormant at your right hip** (everyone sees it); an empty slot means no grimoire is carried. Summon Grimoire works straight from the slot; casting needs the book summoned (0.24).
+- Any grimoire the mod gives you lands in the slot by itself (an owned grimoire anywhere in the inventory, hotbar or offhand moves in when the slot is empty). The slot is kept through death.
 - **HUD cleanup**: names, titles and any other text floating above players' heads are hidden (client config `[hud] hideHeadText`, default on).
 
 ## Skill icons (0.23)
@@ -190,6 +190,17 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - The floating spell card shown while chanting picks the icon by spell: Ultimate for signature-tier spells, Buff for defensive / buff / debuff spells, Active otherwise, with the archetype badge in its corner (`core/magic/grimoire/SpellArchetype`).
 - `docs/skill_icon_prompts.md`: the brief's three image-generator prompts (Midjourney / DALL-E) for every magic, each naming the file it would replace, if you want hand-painted icons instead.
 - Sneaking alone does not stow it (only sneak + the ability key), so sneaking (and Grigora's sneak-to-spare-players) still works while it floats.
+
+## 0.24 - the brief: art-pack covers, slot-only grimoire, summon to cast, mastery-only pages
+- **Covers from the art pack.** Every grimoire's covers now wear one of the owner's cover designs (`tools/art/covers`, `tools/gen_cover_art_textures.py`): the design's background shading tinted to the magic's colour, its ornament in the art's own colours, glowing while the book is held. Three-Leaf (blue, gold filigree), Four-Leaf (green, gilded vines), Five-Leaf (royal flourishes), Spade (crown of spears), Triple Spade (arcane wheels), Heart (cloud swirls), Two-Heart (sea serpent), Diamond (stained crystal), and the two new top tiers **Black Magic** (black book, blood-red burst, blood-red metal) and **God-Tier** (ivory and gold, golden sunburst, white-gold glow). Only Asta's tattered book and Karna's straps keep their own look. The procedural 0.21 ornaments (filigree, ornate, wheels, lattice, floral, stars, plain) are gone.
+- **Rarity ladder** at the ceremony / altar: Three-Leaf -> Four-Leaf / kingdom covers -> Five-Leaf -> Black Magic (Anti-Magic, the devil Liebe; `weightBlack` 0.5) / God-Tier (`weightGod` 0.1).
+- **Starter attributes**: a grimoire chooses Fire, Water, Wind or Earth (config `starterMagics`, narrowed to your soul family when it can be); Anti-Magic comes with the Black Magic cover or an empty soul. Every other magic stays in the mod (canon books, admin grants).
+- **Grimoire Slot only.** A bound grimoire always lives in the Grimoire Slot (anything bound in your inventory, hotbar or offhand moves in by itself); it hangs dormant at your hip. Holding it or selecting it on the hotbar does nothing.
+- **Cast only when summoned.** Press **G** ("Summon / Stow Grimoire", rebindable) or use the Summon Grimoire page: the book floats from your hip to your right hand and bobs; **shift + G** stows it. Every page needs the book out. *Anti-Magic exception:* the Anti-Magic Lord's Black Form toggle and the demon swords work without a summoned book (they are the swords drawn from it); the Anti-Magic book's own pages still need it out.
+- **Pages by mastery only.** Kill rolls, the kill counter, `/nusmp grimoire addkills` and their configs were removed; Liaris Freese no longer feeds grimoire mastery from kills. A page opens when mastery >= its cost (the larger of its place in the book and its spell cost: cost% / 35), its rank / race gate passes and a slot is free (slots 6 -> 12, +4 with a spirit or devil contract, cap 16).
+- **Anti-Magic kit**: new pages **Black Hurricane** (a whirling field that drags foes in and strips their magic) and **Black Form** (30 s of strength, speed, resistance and jump, with an anti-magic burst); mastering the Anti-Magic Lord now also grants the **Demon-Slasher** katana next to Demon-Dweller and Demon-Destroyer.
+- **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
+- **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
 
 ## Creative grimoires no longer overwrite yours
 - Right-clicking an unbound (creative-tab) grimoire when you already have one now does nothing and keeps the item; reset first with `/nusmp grimoire reset <player>`. Binding also keeps the clicked book's cover (it used to fall back to the default cover).

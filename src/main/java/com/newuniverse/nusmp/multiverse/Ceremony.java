@@ -109,16 +109,19 @@ public final class Ceremony {
     }
 
     // ---------------------------------------------------------------- the grant
-    private enum Tier { COMMON, UNCOMMON, RARE, BLACK }
+    /** Rarity ladder: 3-leaf -> 4-leaf / kingdom covers -> 5-leaf -> black magic / god-tier. */
+    private enum Tier { COMMON, UNCOMMON, RARE, BLACK, GOD }
 
     private static Tier rollTier(ServerPlayer p) {
         double c = MultiverseConfig.get(MultiverseConfig.WEIGHT_COMMON), u = MultiverseConfig.get(MultiverseConfig.WEIGHT_UNCOMMON);
         double r = MultiverseConfig.get(MultiverseConfig.WEIGHT_RARE), b = MultiverseConfig.get(MultiverseConfig.WEIGHT_BLACK);
-        double x = p.getRandom().nextDouble() * Math.max(1e-6, c + u + r + b);
+        double g = MultiverseConfig.get(MultiverseConfig.WEIGHT_GOD);
+        double x = p.getRandom().nextDouble() * Math.max(1e-6, c + u + r + b + g);
         if (x < c) return Tier.COMMON;
         if (x < c + u) return Tier.UNCOMMON;
         if (x < c + u + r) return Tier.RARE;
-        return Tier.BLACK;
+        if (x < c + u + r + b) return Tier.BLACK;
+        return Tier.GOD;
     }
 
     /** A grimoire chooses this player. Returns false if they already have one. */
@@ -127,7 +130,10 @@ public final class Ceremony {
         Tier tier = rollTier(p);
         String soul = NightmareSouls.soulTypeOf(p);
         if (tier == Tier.BLACK) {
-            GrimoireAcceptance.grantExact(p, Kingdom.CLOVER.coverFor(5), MagicType.ANTI_MAGIC, Devil.LIEBE);
+            GrimoireAcceptance.grantExact(p, com.newuniverse.nusmp.blackclover.GrimoireCover.BLACK_MAGIC, MagicType.ANTI_MAGIC, Devil.LIEBE);
+        } else if (tier == Tier.GOD) {
+            var pool = GrimoireAcceptance.starterPool(soul);
+            GrimoireAcceptance.grantExact(p, com.newuniverse.nusmp.blackclover.GrimoireCover.GOD_TIER, pool.get(p.getRandom().nextInt(pool.size())), null);
         } else {
             GrimoireAcceptance.grant(p, tier == Tier.COMMON ? 3 : tier == Tier.UNCOMMON ? 4 : 5, soul == null ? "" : soul);
         }

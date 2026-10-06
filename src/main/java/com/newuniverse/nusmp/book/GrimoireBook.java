@@ -38,7 +38,7 @@ import java.util.List;
  * through getMagiculeCost + EnergyHelper.isOutOfEnergy, damage through createSource with Tensura
  * damage types, cooldowns through instance.setCoolDown(cooldown, mode) only after a successful cast.
  *
- * Modes: the family's pages (mode 0 unlocked, the rest sealed until a kill roll), then Spirit Dive
+ * Modes: the family's pages (mode 0 unlocked, the rest open by mastery: multiverse.MasteryPages), then Spirit Dive
  * (element books, Spirit Lord gate) and Devil Union (five-leaf / triple-spade covers only).
  */
 public abstract class GrimoireBook extends Skill {
@@ -208,7 +208,7 @@ public abstract class GrimoireBook extends Skill {
         if (heldTicks < castTicks(instance, entity)) { fail(player, "The chant broke off."); instance.getOrCreateTag().putBoolean("ManaZone", false); return; }
         instance.getOrCreateTag().putInt("HeldTicks", heldTicks);
         if (!usable(instance, entity, mode)) { fail(player, "That page is still sealed."); return; }
-        if (!holdingBook(player)) { fail(player, "Your pages are sealed shut. Hold your " + magic.displayName + " grimoire."); return; }
+        if (!holdingBook(player)) { fail(player, "Your pages are sealed shut. Summon your " + magic.displayName + " grimoire first (Summon Grimoire)."); return; }
         if (player.getPersistentData().getLong("nusmp_sealed_until") > player.level().getGameTime()) { fail(player, "Your grimoire has been sealed!"); return; }
         if (instance.onCoolDown(mode)) { fail(player, p.name() + " is recharging (" + instance.getCoolDown(mode) + "s)."); return; }
         if (EnergyHelper.isOutOfEnergy(entity, instance, mode)) return;   // Tensura checks and spends
@@ -515,14 +515,13 @@ public abstract class GrimoireBook extends Skill {
     }
 
     // ---------------------------------------------------------------- misc
-    /** Your own grimoire of this book's magic must be in the Grimoire Slot, a hand, or summoned (the Forbidden book accepts any of yours). */
+    /**
+     * Casting needs your grimoire of this book's magic summoned (0.24; the Forbidden book accepts any of yours). Holding it, or having
+     * it on the hotbar, is not enough. The Anti-Magic exception: the Anti-Magic Lord's Black Form toggle and the demon swords work
+     * without a summoned book (they are the swords drawn from it), but the Anti-Magic book's pages still need it out.
+     */
     private boolean holdingBook(ServerPlayer p) {
-        if (GrimoireSummon.isFloating(p, this instanceof ForbiddenBook ? null : magic)) return true;
-        for (ItemStack s : com.newuniverse.nusmp.blackclover.GrimoireSlot.ready(p)) {             // the Grimoire Slot or a hand
-            if (!GrimoireItem.isOwnedBy(s, p.getUUID())) continue;
-            if (this instanceof ForbiddenBook || magic.name().equals(GrimoireItem.data(s).getString("Magic"))) return true;
-        }
-        return false;
+        return GrimoireSummon.isFloating(p, this instanceof ForbiddenBook ? null : magic);
     }
 
     public static void fail(ServerPlayer p, String msg) { p.displayClientMessage(Component.literal(msg).withStyle(ChatFormatting.RED), true); }

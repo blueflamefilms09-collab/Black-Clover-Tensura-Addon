@@ -60,7 +60,8 @@ public final class BookPalette {
     /** Emblem colour by cover (clover gold, five-leaf black, suits in their kingdom's metal). */
     public static int emblem(String cover) {
         return switch (cover) {
-            case "FIVE_LEAF" -> 0x141010;
+            case "FIVE_LEAF", "BLACK_MAGIC" -> 0x141010;
+            case "GOD_TIER" -> 0xFFE9A8;
             case "SPADE", "DOUBLE_SPADE" -> 0x9AA2B4;
             case "TRIPLE_SPADE" -> 0x2A2228;
             case "HEART", "TWO_HEART", "CRACKED_HEART" -> 0xF0A2B2;
@@ -69,17 +70,21 @@ public final class BookPalette {
         };
     }
 
-    /** The motif a book gets when it isn't a named canon book: by kingdom and cover, with a few per-magic exceptions. */
+    /** The design a book gets when it isn't a named canon book: its cover's art-pack design; an Anti-Magic five-leaf is tattered. */
     public static BookMotif motif(String cover, String magic) {
-        if ("ANTI_MAGIC".equals(magic)) return BookMotif.TATTERED;
-        if ("STAR".equals(magic)) return BookMotif.STARS;
-        return switch (cover) {
-            case "FOUR_LEAF", "FIVE_LEAF" -> BookMotif.ORNATE;
-            case "SPADE", "DOUBLE_SPADE", "TRIPLE_SPADE" -> BookMotif.WHEELS;
-            case "HEART", "TWO_HEART", "CRACKED_HEART" -> BookMotif.FLORAL;
-            case "DIAMOND", "FIVE_SIDED", "CRACKED_DIAMOND" -> BookMotif.LATTICE;
-            default -> BookMotif.FILIGREE;
-        };
+        if ("ANTI_MAGIC".equals(magic) && "FIVE_LEAF".equals(cover)) return BookMotif.TATTERED;
+        return BookMotif.forCover(cover);
+    }
+
+    /** Black magic: soot-black leather and blood-red metal. God-tier: ivory leather and bright gold, glowing white-gold. */
+    public static final int BLACK_MAGIC_TRIM = 0x9A1C24, GOD_TIER_COVER = 0xF2EAD6, GOD_TIER_TRIM = 0xFFD670, GOD_TIER_GLOW = 0xFFF2B0;
+
+    /** Blends two RGB colours ({@code t} 0 = a, 1 = b). */
+    public static int mix(int a, int b, float t) {
+        int r = Math.round(((a >> 16) & 255) + ((((b >> 16) & 255) - ((a >> 16) & 255)) * t));
+        int g = Math.round(((a >> 8) & 255) + ((((b >> 8) & 255) - ((a >> 8) & 255)) * t));
+        int bl = Math.round((a & 255) + (((b & 255) - (a & 255)) * t));
+        return (r << 16) | (g << 8) | bl;
     }
 
     /** Multiplies an RGB colour's brightness. */
