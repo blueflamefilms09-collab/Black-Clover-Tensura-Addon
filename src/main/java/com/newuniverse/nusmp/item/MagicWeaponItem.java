@@ -51,7 +51,9 @@ public class MagicWeaponItem extends SwordItem {
         DEMON_DWELLER(Tiers.NETHERITE, 3, -2.2f, "Black Slash", "A flying anti-magic slash that cuts spells out of its path and knocks its target back.", 120, true),
         DEMON_DESTROYER(Tiers.NETHERITE, 4, -2.6f, "Causality Break", "Undoes spell effects: cleanses you and allies nearby, erases spells around you and strips every buff from foes close by.", 300, true),
         LICHT_DWELLER(Tiers.NETHERITE, 4, -2.4f, "Conquering Eon", "Licht's white Demon-Dweller: a 20-block slash that grows with every ally near you, and heals you.", 240, false),
-        LICHT_DESTROYER(Tiers.NETHERITE, 5, -2.6f, "Causality Break", "Licht's white Demon-Destroyer: strips every buff from foes in front of you and erases their spells.", 240, false);
+        LICHT_DESTROYER(Tiers.NETHERITE, 5, -2.6f, "Causality Break", "Licht's white Demon-Destroyer: strips every buff from foes in front of you and erases their spells.", 240, false),
+        // 0.32: a cryo-lattice mana runeblade (docs/runeblade_spec.md)
+        RIMEHEART(Tiers.NETHERITE, 5, -2.4f, "Glacial Matrix Burst", "Vents the blade's stored mana as a frost shockwave: erases spells within 5 blocks, freezes and slows everything caught. Critical hits shatter a smaller burst around the target; paired with a second magic sword the burst recharges 40% faster.", 200, false);
 
         final Tier tier; final int damage; final float speed; final String ability, desc; final int cooldown; final boolean demon;
         Kind(Tier t, int d, float s, String a, String desc, int cd, boolean demon) {
@@ -62,9 +64,38 @@ public class MagicWeaponItem extends SwordItem {
     public final Kind kind;
 
     public MagicWeaponItem(Kind kind) {
-        super(kind.tier, new Item.Properties().attributes(SwordItem.createAttributes(kind.tier, kind.damage, kind.speed))
-                .rarity(kind.demon ? Rarity.EPIC : Rarity.RARE).fireResistant());
+        super(kind.tier, new Item.Properties().attributes(attributes(kind))
+                .rarity(kind.demon || kind == Kind.RIMEHEART ? Rarity.EPIC : Rarity.RARE).fireResistant());
         this.kind = kind;
+    }
+
+    private static final net.minecraft.resources.ResourceLocation RIMEHEART_STANCE =
+            net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("nusmp", "rimeheart_stance");
+
+    /** Sword attributes; the Rimeheart also roots its wielder a little (knockback resistance while held). */
+    private static net.minecraft.world.item.component.ItemAttributeModifiers attributes(Kind kind) {
+        var a = SwordItem.createAttributes(kind.tier, kind.damage, kind.speed);
+        if (kind == Kind.RIMEHEART)
+            a = a.withModifierAdded(net.minecraft.world.entity.ai.attributes.Attributes.KNOCKBACK_RESISTANCE,
+                    new net.minecraft.world.entity.ai.attributes.AttributeModifier(RIMEHEART_STANCE, 0.25,
+                            net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE),
+                    net.minecraft.world.entity.EquipmentSlotGroup.MAINHAND);
+        return a;
+    }
+
+    /** Dual-wield synergy: another magic sword in the off hand. */
+    static boolean pairedBlade(Player p) { return p.getOffhandItem().getItem() instanceof MagicWeaponItem; }
+
+    int cooldownFor(Player p) { return kind == Kind.RIMEHEART && pairedBlade(p) ? Math.round(kind.cooldown * 0.6f) : kind.cooldown; }
+
+    /** A burst of frost mana: freezes, slows and hurts everything within r of c (the wielder and allies excepted). */
+    private void frostBurst(ServerPlayer p, Vec3 c, double r, float dmg, LivingEntity skip) {
+        for (LivingEntity t : GrimoireBook.around(p, c, r)) {
+            if (t == skip) continue;
+            hit(p, t, dmg);
+            t.setTicksFrozen(Math.min(t.getTicksRequiredToFreeze() + 100, t.getTicksFrozen() + 120));
+            t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 80, 1));
+        }
     }
 
     // ---------------------------------------------------------------- binding (demon swords)
@@ -112,7 +143,7 @@ public class MagicWeaponItem extends SwordItem {
         if (level.isClientSide || !(player instanceof ServerPlayer p)) return InteractionResultHolder.pass(stack);
         if (!usableBy(stack, p)) { GrimoireBook.fail(p, "This sword answers only to its owner."); return InteractionResultHolder.fail(stack); }
         if (!technique(p)) return InteractionResultHolder.fail(stack);
-        p.getCooldowns().addCooldown(this, kind.cooldown);
+        p.getCooldowns().addCooldown(this, cooldownFor(p));
         p.displayClientMessage(Component.literal(kind.ability + "!").withStyle(kind.demon ? ChatFormatting.DARK_GRAY : ChatFormatting.AQUA, ChatFormatting.BOLD), true);
         return InteractionResultHolder.success(stack);
     }
@@ -219,6 +250,16 @@ public class MagicWeaponItem extends SwordItem {
                 BalanceLaw.heal(p, 4 + Math.min(5, allies));
                 VfxSpawn.send(p.serverLevel(), VfxShape.WIND_SLASH, eye, end, 0xFFF4F8FF, 18, 2.2f);
             }
+            case RIMEHEART -> {
+                eraseProjectiles(p, p.getBoundingBox().inflate(5));
+                frostBurst(p, p.position(), 5, 10, null);
+                for (LivingEntity t : GrimoireBook.around(p, p.position(), 5)) {
+                    Vec3 away = t.position().subtract(p.position()).normalize();
+                    t.knockback(0.9, -away.x, -away.z);
+                }
+                VfxSpawn.send(p.serverLevel(), VfxShape.WATER_BURST, p.position().add(0, 0.6, 0), p.position(), 0xFF8FE9FF, 22, 1.7f);
+                VfxSpawn.send(p.serverLevel(), VfxShape.WATER_RING, p.position().add(0, 0.1, 0), p.position().add(0, 1, 0), 0xFF3FE9FF, 20, 1.6f);
+            }
             case LICHT_DESTROYER -> {
                 eraseProjectiles(p, p.getBoundingBox().inflate(5));
                 for (LivingEntity t : GrimoireBook.around(p, p.position(), 5)) {
@@ -241,6 +282,14 @@ public class MagicWeaponItem extends SwordItem {
                 case MIASMA_KATANA -> target.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 60, 0));
                 case DEMON_SLAYER, DEMON_DWELLER, DEMON_SLASHER_KATANA -> stripOne(target);
                 case DEMON_DESTROYER, LICHT_DESTROYER -> { for (int k = 0; k < 3; k++) stripOne(target); }
+                case RIMEHEART -> {
+                    target.setTicksFrozen(Math.min(target.getTicksRequiredToFreeze() + 100, target.getTicksFrozen() + (pairedBlade(p) ? 80 : 50)));
+                    target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 0));
+                    if (p.fallDistance > 0 && !p.onGround() && !p.isInWater()) {        // a critical hit shatters a mana burst
+                        frostBurst(p, target.position(), 3, 5, target);
+                        VfxSpawn.send(p.serverLevel(), VfxShape.WATER_BURST, target.position().add(0, target.getBbHeight() / 2, 0), target.position(), 0xFF8FE9FF, 16, 0.9f);
+                    }
+                }
                 default -> {}
             }
             if (kind.demon) AntiMagic.addAmp(p, 10);
@@ -254,6 +303,7 @@ public class MagicWeaponItem extends SwordItem {
         tip.add(Component.literal("  " + kind.desc).withStyle(ChatFormatting.GRAY));
         tip.add(Component.literal("  Cooldown: " + kind.cooldown / 20 + " s").withStyle(ChatFormatting.DARK_GRAY));
         CustomData d = stack.get(DataComponents.CUSTOM_DATA);
+        if (kind == Kind.RIMEHEART) tip.add(Component.literal("  Off-hand magic sword: burst recharges 40% faster, hits freeze longer").withStyle(ChatFormatting.AQUA));
         if (d != null && d.copyTag().contains("ExpiresAt"))
             tip.add(Component.literal("Drawn from a grimoire: fades after a minute").withStyle(ChatFormatting.AQUA));
         if (kind.demon && d != null && d.copyTag().contains("OwnerName"))

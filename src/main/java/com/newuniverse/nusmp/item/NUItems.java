@@ -104,6 +104,8 @@ public final class NUItems {
     // 0.28: Licht's white swords (Sword Magic), drawn from the grimoire
     public static final DeferredItem<MagicWeaponItem> LICHT_DWELLER = weapon("licht_dweller_sword", MagicWeaponItem.Kind.LICHT_DWELLER);
     public static final DeferredItem<MagicWeaponItem> LICHT_DESTROYER = weapon("licht_destroyer_sword", MagicWeaponItem.Kind.LICHT_DESTROYER);
+    // 0.32: the Rimeheart Runeblade
+    public static final DeferredItem<MagicWeaponItem> RIMEHEART_RUNEBLADE = weapon("rimeheart_runeblade", MagicWeaponItem.Kind.RIMEHEART);
 
     /** Spirit Lord Skill: grants the non-grimoire Spirit Lord path. */
     public static final DeferredItem<SpiritLordSkillItem> SPIRIT_LORD_SKILL = ITEMS.register("spirit_lord_skill", SpiritLordSkillItem::new);
@@ -111,7 +113,7 @@ public final class NUItems {
     public static List<DeferredItem<? extends Item>> all() {
         List<DeferredItem<? extends Item>> l = new java.util.ArrayList<>();
         for (RobeSet s : SETS) { l.add(s.hood()); l.add(s.chest()); l.add(s.legs()); l.add(s.boots()); }
-        l.addAll(List.of(DEMON_SLASHER_KATANA, MIASMA_KATANA, SPELL_FORGED_RAPIER, SEVERING_GREATSWORD, DEMON_SLAYER, DEMON_DWELLER, DEMON_DESTROYER, LICHT_DWELLER, LICHT_DESTROYER));
+        l.addAll(List.of(DEMON_SLASHER_KATANA, MIASMA_KATANA, SPELL_FORGED_RAPIER, SEVERING_GREATSWORD, DEMON_SLAYER, DEMON_DWELLER, DEMON_DESTROYER, LICHT_DWELLER, LICHT_DESTROYER, RIMEHEART_RUNEBLADE));
         l.addAll(List.of(COMMUNICATION_DEVICE, RUNE_STONE, SPIRIT_CHARM, BOND_THREAD, FORTUNE_DIE,
                 GRIMOIRE_CHAIN, ANTI_BIRD_CHARM, RECOVERY_SALVE, WRITTEN_CONSENT, DEVIL_CONTRACT, MAGIC_TOOL_SWORD, MAGIC_TOOL_SPEAR, MAGIC_TOOL_BOW, SPIRIT_LORD_SKILL));
         return l;
