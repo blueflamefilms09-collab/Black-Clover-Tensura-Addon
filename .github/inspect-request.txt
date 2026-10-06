@@ -1,10 +1,7 @@
-# 0.39: skill copy / plunder protection
-list:tensura/.*([Cc]opy|[Ss]teal|[Pp]lunder|[Pp]redat|[Gg]lutton|[Uu]surp|[Mm]imic|[Aa]nalys|[Rr]obber|[Tt]ake|[Ss]eize)
-list:tensura/(event|api/event|ability/event)/
-list:manascore/.*/event/
-tensura/ability/skill/Skill\.class
-manascore/skill/api/ManasSkill\.class
-manascore/skill/api/ManasSkillInstance\.class
-tensura/ability/SkillUtils\.class
-tensura/ability/SkillHelper\.class
-tensura/registry/.*[Tt]ags\.class
+# 0.39: skill copy / plunder protection (inner classes allowed)
+tensura/event/TensuraSkillEvents\$(SkillPlunderEvent|SkillLearningEvent|SkillGriefEvent)\.class
+tensura/ability/TensuraSkill\.class
+tensura/ability/skill/unique/(AnalystSkill|UsurperSkill|PredatorSkill|GluttonySkill)\.class
+tensura/entity/human/CloneEntity\$CopySkill\.class
+list:tensura/.*[Tt]ag[s]?\.class
+list:tensura/data/

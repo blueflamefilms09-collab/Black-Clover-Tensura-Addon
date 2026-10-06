@@ -35,9 +35,9 @@ jobs:
             fi
             echo "===== pattern: $pat ====="
             for j in $JARS; do
-              for c in $(unzip -Z1 "$j" | grep -E '\.class$' | grep -v '\$' | grep -E "$pat" | head -40); do
+              for c in $(unzip -Z1 "$j" | grep -E '\.class$' | grep -E "$pat" | head -40); do
                 cls=${c%.class}; cls=${cls//\//.}
-                echo "----- $cls  ($j)"
+                echo "----- $cls"
                 javap -cp "$j" -public "$cls" 2>/dev/null | head -220
               done
             done
