@@ -21,7 +21,7 @@ def flat(s):
 
 sections = re.split(r"\n(==+)\s*([^=]+?)\s*\1\s*\n", "\n" + text)
 print("-- intro:", flat(sections[0])[:500].replace("\n", " "))
-wanted = re.compile(r"description|spell|user|captain|ability|abilities|known|member|commander|squad", re.I)
+wanted = re.compile(r"description|spell|user|captain|ability|abilities|known|member|commander|squad|magic", re.I)
 for i in range(1, len(sections) - 2, 3):
     title, body = sections[i + 1], sections[i + 2]
     if not wanted.search(title):
@@ -29,5 +29,5 @@ for i in range(1, len(sections) - 2, 3):
     lines = [flat(l) for l in body.splitlines() if l.strip()]
     keep = [l for l in lines if l and not l.startswith(("{|", "|}", "[[File", "File:", "{{"))]
     print(f"-- {title}:")
-    for l in keep[:45]:
+    for l in keep[:60]:
         print("   ", l[:220])
