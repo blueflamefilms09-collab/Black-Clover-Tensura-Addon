@@ -77,6 +77,8 @@ MAGIC = {
     "ash":           ("Ash Magic", 0xB0AAA2, 0xE8E4DE, "ash grey and ember", "Ash Absorbing Formation"),
     "cotton":        ("Cotton Magic", 0xFFE8F4, 0xFFFFFF, "soft cotton white and pink", "Sleeping Sheep Strike"),
     "recombination": ("Recombination Magic", 0xFF9A3C, 0xFFD8B0, "magic-house timber and orange", "The Raging Black Bull"),
+    # 0.40 (appended so every existing icon keeps its seed)
+    "painting":      ("Painting Magic", 0x3A9BFF, 0xC8F0FF, "wet ink blue and rainbow paint", "Master of Valhalla"),
 }
 
 
@@ -498,6 +500,16 @@ def g_recombination(d):
     d.polygon(P([(5.5, -4), (10, -9), (8.5, -3)]), fill=220)
     for y in (-1, 6):
         d.line(P([(-5.5, y), (5.5, y)]), fill=140, width=int(0.8 * U))
+
+
+def g_painting(d):
+    """An artist's palette with paint dabs and a brush laid across it."""
+    d.ellipse(box(-10, -7, 8, 8), fill=255)
+    d.ellipse(box(-6.5, 2, -2.5, 6), fill=0)                                         # the thumb hole
+    for (x, y) in ((-5, -3.5), (-0.5, -4.5), (4, -2.5), (4.5, 2.5)):
+        d.ellipse(box(x - 1.6, y - 1.6, x + 1.6, y + 1.6), fill=150)
+    d.line(P([(-2, 9), (10, -9)]), fill=200, width=int(1.4 * U))                       # the brush handle
+    d.polygon(P([(8.6, -7.5), (11.4, -10.5), (12, -8.6), (10.2, -6.6)]), fill=255)        # the bristle tip
 
 
 GLYPHS = {k: globals()["g_" + k] for k in MAGIC}

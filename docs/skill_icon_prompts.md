@@ -803,3 +803,23 @@ Template: `[Spell/Magic description] in Black Clover anime magic spell icon styl
    ```
    ultimate recombination magic: The Raging Black Bull at full power, complex multi-layered magic circles with a star seal, celestial and abyssal energy, intense particle storm, black iron border lit from within in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing magic-house timber and orange magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
    ```
+
+## Painting Magic
+
+1. **Active spell / attack** (`textures/skill/grimoire/painting.png`)
+
+   ```
+   Master of Valhalla unleashed as a dynamic painting magic attack, energy discharge bursting from an open grimoire, motion streaks, gold embossed frame with clover runes in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing wet ink blue and rainbow paint magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```
+
+2. **Buff / grimoire page rune** (`textures/skill/icons/painting_buff.png`)
+
+   ```
+   a glowing painting magic rune sigil on an ancient parchment grimoire page, mystical glyph circle, binding chains and a faint defensive shield, silver stone border in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing wet ink blue and rainbow paint magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```
+
+3. **Ultimate / forbidden** (`textures/skill/icons/painting_ultimate.png`)
+
+   ```
+   ultimate painting magic: Master of Valhalla at full power, complex multi-layered magic circles with a star seal, celestial and abyssal energy, intense particle storm, black iron border lit from within in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing wet ink blue and rainbow paint magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```

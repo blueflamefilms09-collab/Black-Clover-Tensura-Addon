@@ -66,7 +66,9 @@ public enum MagicType {
     TRANSMUTATION("Transmutation Magic", "Alchemy", "EARTH", HitEffect.WEAKEN, () -> ParticleTypes.ENCHANT, () -> MobEffects.DAMAGE_RESISTANCE),
     ASH("Ash Magic", "Ash", "FLAME", HitEffect.WITHER, () -> ParticleTypes.ASH, () -> MobEffects.DAMAGE_RESISTANCE),
     COTTON("Cotton Magic", "Cotton", "FANTASY", HitEffect.SLOW, () -> ParticleTypes.WHITE_ASH, () -> MobEffects.REGENERATION),
-    RECOMBINATION("Recombination Magic", "Bull", "FANTASY", HitEffect.PUSH, () -> ParticleTypes.CRIT, () -> MobEffects.ABSORPTION);
+    RECOMBINATION("Recombination Magic", "Bull", "FANTASY", HitEffect.PUSH, () -> ParticleTypes.CRIT, () -> MobEffects.ABSORPTION),
+    // 0.40: Painting Magic (Rill Boismortier, Lira), appended
+    PAINTING("Painting Magic", "Canvas", "FANTASY", HitEffect.SLOW, () -> ParticleTypes.DRIPPING_WATER, () -> MobEffects.ABSORPTION);
 
     public final String displayName;
     public final String word;

@@ -60,7 +60,7 @@ Chanted magics: use **Chant** mode until the chant is complete, then switch to *
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.40.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.41.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -204,6 +204,18 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Anti-Magic kit**: new pages **Black Hurricane** (a whirling field that drags foes in and strips their magic) and **Black Form** (30 s of strength, speed, resistance and jump, with an anti-magic burst); mastering the Anti-Magic Lord now also grants the **Demon-Slasher** katana next to Demon-Dweller and Demon-Destroyer.
 - **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
 - **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
+
+## 0.41 - Dream Magic's pocket dimension, Painting Magic
+- **Replacement: Dream World and Glamour World** no longer only debuff a field. They pull their targets into a real pocket dimension, `nusmp:dream`: a pastel arena under an iridescent dome with a starry sky.
+  - **Manifestation:** inside, the caster's words become solid (bear, feast, fire, ice, cage, stars, wall, sleep). Dorothy also reads minds: what dreamers say can be turned against them.
+  - **Exhaustion:** a dream load wears each dreamer's mind down until it breaks.
+  - **Breakout:** heavy combined damage, teleporting, or casting Spatial, Time, Anti-Magic or Dream Magic shatters the dream.
+  - **Returning:** everyone goes back where they were. Page ids are kept.
+- **New page:** Imagination Manifestation (Dream).
+- **New attribute: Painting Magic** (from the wiki), with nine pages: Brushstroke, Spring of Restriction, Camouflage, Souterrain Giant's Strong Arm, Deux Tempêtes of Fire and Ice, God's Game, Elemental Quintet, Master of Valhalla and Painted Menagerie. It has sticky ink that dries to lacquer and roots, camouflage that breaks when you strike, and paintings that come to life.
+  - **Replacement:** Rill Boismortier's canon book is Painting Magic (was Creation); his Creation page stays.
+- **New VFX** at the Time standard: dream transition, dome, manifestation and shatter; paint stroke, sticky splat, painting-to-life and camouflage (`tools/gen_dream_paint_vfx_textures.py`). The Painting skill icons are new too.
+- Guide: `docs/dream_painting_spec.md`.
 
 ## 0.40 - crash fix
 - **Fix (crash):** the transformation armour overlays (Wind Spirit Dive and the others) crashed the client with "Not building!": the layer kept drawing into a buffer after asking Minecraft for one of another render type, which closes the first. Each piece now asks for its buffer right before it draws. The headless preview (`tools/mode_preview`) now catches this.

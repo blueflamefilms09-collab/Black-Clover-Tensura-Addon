@@ -1922,5 +1922,335 @@
     1.8
    ]
   ]
+ },
+ "dream_transition": {
+  "layer": "DreamPaintLayer",
+  "shape": "DREAM_TRANSITION",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 10,
+  "duration": 30,
+  "cam": [
+   0,
+   7,
+   -18
+  ],
+  "target": [
+   0,
+   1.5,
+   0
+  ],
+  "ages": [
+   5,
+   14,
+   26
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    3,
+    0,
+    2,
+    1.8
+   ]
+  ]
+ },
+ "dream_dome": {
+  "layer": "DreamPaintLayer",
+  "shape": "DREAM_DOME",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   18,
+   0
+  ],
+  "power": 18,
+  "duration": 600,
+  "cam": [
+   0,
+   6,
+   -28
+  ],
+  "target": [
+   0,
+   6,
+   0
+  ],
+  "ages": [
+   10,
+   40,
+   200
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    4,
+    0,
+    -3,
+    1.8
+   ]
+  ]
+ },
+ "dream_manifest": {
+  "layer": "DreamPaintLayer",
+  "shape": "DREAM_MANIFEST",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   2,
+   0
+  ],
+  "power": 2.4,
+  "duration": 24,
+  "cam": [
+   0,
+   3,
+   -8
+  ],
+  "target": [
+   0,
+   1.5,
+   0
+  ],
+  "ages": [
+   4,
+   12,
+   18
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "dream_shatter": {
+  "layer": "DreamPaintLayer",
+  "shape": "DREAM_SHATTER",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   18,
+   0
+  ],
+  "power": 18,
+  "duration": 30,
+  "cam": [
+   0,
+   8,
+   -34
+  ],
+  "target": [
+   0,
+   7,
+   0
+  ],
+  "ages": [
+   3,
+   12,
+   24
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "paint_stroke": {
+  "layer": "DreamPaintLayer",
+  "shape": "PAINT_STROKE",
+  "from": [
+   0,
+   1.4,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   8
+  ],
+  "power": 0.8,
+  "duration": 20,
+  "cam": [
+   5,
+   3,
+   -2
+  ],
+  "target": [
+   0,
+   1.2,
+   4
+  ],
+  "ages": [
+   4,
+   9,
+   15
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    8,
+    1.8
+   ]
+  ]
+ },
+ "paint_splat": {
+  "layer": "DreamPaintLayer",
+  "shape": "PAINT_SPLAT",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 2.2,
+  "duration": 100,
+  "cam": [
+   0,
+   4,
+   -6
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ],
+  "ages": [
+   4,
+   30,
+   70
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "paint_beast": {
+  "layer": "DreamPaintLayer",
+  "shape": "PAINT_BEAST",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.6,
+  "duration": 36,
+  "cam": [
+   0,
+   3,
+   -7
+  ],
+  "target": [
+   0,
+   1.4,
+   0
+  ],
+  "ages": [
+   6,
+   18,
+   30
+  ],
+  "figures": [
+   [
+    2,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "paint_camo": {
+  "layer": "DreamPaintLayer",
+  "shape": "PAINT_CAMO",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.0,
+  "duration": 200,
+  "cam": [
+   0,
+   2,
+   -4
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   20,
+   60,
+   120
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
  }
 }

@@ -83,7 +83,16 @@ public enum VfxShape {
     SHADOW_POOL,             // Dark Garden Invitation / Kids' Playground: an inky pool at 'from', shadow hands rising; power = radius
     SHADOW_UNITE,            // Unite Mode: devil-dark aura round the caster (follows); power = size
     RECOMBINE_CONSTRUCT,     // The Raging Black Bull: planks of a magic house fly in and assemble round 'from'; power = size
-    ROUGE_CAT;               // Red Thread of Fate: Rouge, a cat woven of red thread, on the caster's head (follows); power >= 2 = unravelling
+    ROUGE_CAT,               // Red Thread of Fate: Rouge, a cat woven of red thread, on the caster's head (follows); power >= 2 = unravelling
+    // 0.40: Dream Magic (the pocket dimension) and Painting Magic
+    DREAM_TRANSITION,        // Glamour World opening / closing: pastel mist and starlight swirl out from 'from' and close in; power = radius
+    DREAM_DOME,              // the dream's sky: an iridescent dome over 'from', bubbles and drifting stars; power = radius
+    DREAM_MANIFEST,          // Imagination Manifestation: smoke swirls in at 'from' and solidifies (a flash, a pop of stars); power = size
+    DREAM_SHATTER,           // the dream breaks from inside: the dome cracks into shards that burst outward; power = radius
+    PAINT_STROKE,            // a wet brush stroke painted through the air from 'from' to 'to', splashing ink where it lands; power = width
+    PAINT_SPLAT,             // a sticky ink splatter on the ground at 'from' that dries to lacquer; power = radius
+    PAINT_BEAST,             // a painting comes to life at 'from': flat brushstrokes lift off and wrap into a glowing outline; power = size
+    PAINT_CAMO;              // Camouflage: a refraction shimmer and paint flecks round the caster (follows); power = size
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

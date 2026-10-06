@@ -160,8 +160,10 @@ public final class ElementBooks {
         return new ElementBook(MagicType.DREAM, 0xFFF0B0D8, TensuraDamageTypes.MAGIC_GENERIC, List.of(
                 starter("dream_haze", "Dream Haze", bind(3, 16, true, VfxShape.ELF_CIRCLE, NONE)),
                 mid("sweet_dream", "Sweet Dream", healAllies(6, 0.15f)),
-                signature("dream_world", "Dream World", field(3, 6, 120, 20, false, VfxShape.ELF_CIRCLE, effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 30, 2)))),
-                signature("glamour_world", "Glamour World", WikiSpells::glamourWorld).withCooldown(1200)));         // 0.34: Dorothy Unsworth
+                // 0.41: Dream World and Glamour World pull their targets into the dream dimension (DreamWorld); page ids kept
+                signature("dream_world", "Dream World", (b, i, p, m) -> DreamWorld.open(b, i, p, m, false)).withCooldown(900),
+                signature("glamour_world", "Glamour World", (b, i, p, m) -> DreamWorld.open(b, i, p, m, true)).withCooldown(1200),   // Dorothy Unsworth
+                mid("imagination_manifestation", "Imagination Manifestation", DreamWorld::manifestPage).withCooldown(60)));
     }
 
     /**

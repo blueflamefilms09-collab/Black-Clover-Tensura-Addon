@@ -46,6 +46,8 @@ public final class CharacterSpells {
         lock("book_plant", "briar_prison", CanonBook.CHARLOTTE);
         lock("book_sword", "ripper_cut", CanonBook.JACK);
         lock("book_creation", "painted_menagerie", CanonBook.RILL);
+        lock("book_painting", "painted_menagerie", CanonBook.RILL);      // 0.41: Painting Magic proper
+        lock("book_painting", "master_of_valhalla", CanonBook.RILL);
         lock("book_dream", "glamour_world", CanonBook.DOROTHY);
         lock("book_storm", "vortex_shield", CanonBook.KAISER);
         lock("book_mercury", "mercury_rain", CanonBook.NOZEL);

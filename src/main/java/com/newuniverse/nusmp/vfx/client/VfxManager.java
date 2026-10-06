@@ -58,6 +58,7 @@ public final class VfxManager {
         register(new EarthSpellLayer());
         register(new ArcaneSpellLayer());     // 0.34
         register(new ArcaneSpellLayer2());
+        register(new DreamPaintLayer());      // 0.40
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }

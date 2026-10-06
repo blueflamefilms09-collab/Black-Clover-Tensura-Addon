@@ -228,6 +228,7 @@ public abstract class GrimoireBook extends Skill {
         instance.getOrCreateTag().putBoolean("ManaZone", false);
         com.newuniverse.nusmp.item.MagicGear.onCast(player);
         com.newuniverse.nusmp.multiverse.SecretQuests.onCast(player);              // 0.39: secret quest progress
+        DreamWorld.onCast(player, magic);                                         // 0.41: Spatial / Time / Anti-Magic / Dream tear a dream open
         exhaustion(player);
         instance.markDirty();
     }

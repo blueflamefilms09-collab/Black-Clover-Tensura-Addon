@@ -49,6 +49,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.grimoire.GrimoireShelfClient.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireFloatClient.init();
             com.newuniverse.nusmp.client.mode.ModeArmorClient.init(modEventBus);
+            com.newuniverse.nusmp.client.DreamSkyClient.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireSlotClient.init(modEventBus);
             com.newuniverse.nusmp.client.multiverse.MultiverseStatusClient.init(modEventBus);
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.multiverse.MultiverseClientConfig.SPEC, "nusmp-multiverse-client.toml");
@@ -76,6 +77,17 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.blackclover.GrimoireGuard::onPlayerTick);
         com.newuniverse.nusmp.blackclover.GrimoireGuard.registerTensuraHooks();
         com.newuniverse.nusmp.multiverse.FtbQuestsChapter.install();
+        // 0.41: Dream Magic's pocket dimension, Painting Magic's camouflage
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.DreamWorld::onServerTick);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.DreamWorld::onDamage);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.DreamWorld::onTeleport);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.DreamWorld::onDeath);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.DreamWorld::onLogout);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.DreamWorld::onLogin);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.DreamWorld::onChat);
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent e) -> {
+            if (e.getSource().getEntity() instanceof net.minecraft.server.level.ServerPlayer sp) com.newuniverse.nusmp.book.PaintingBook.breakCamouflage(sp);
+        });
         // races: Tensura's race + this mod's buff (Devil is command only)
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.RaceBuffs::onPlayerTick);
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerRespawnEvent e) -> com.newuniverse.nusmp.multiverse.RaceBuffs.reset(e.getEntity()));
