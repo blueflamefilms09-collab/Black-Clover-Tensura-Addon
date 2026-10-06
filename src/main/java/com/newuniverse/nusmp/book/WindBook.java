@@ -62,7 +62,7 @@ public class WindBook extends GrimoireBook {
         for (Player ally : p.serverLevel().getEntitiesOfClass(Player.class, new AABB(a, end).inflate(1.5))) {
             if (ally == p || ally.isAlliedTo(p)) ally.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 100, 0));
         }
-        b.vfx(p, VfxShape.FX_WIND_GUST, p.position(), p.position().add(dir.scale(10 * size(i, p))), 0, 1f);
+        com.newuniverse.nusmp.vfx.VfxSpawn.send(p.serverLevel(), VfxShape.WIND_GALE, a, end, 0, 24, 1f);
         return true;
     }
 
@@ -70,7 +70,7 @@ public class WindBook extends GrimoireBook {
     static boolean storm(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         float r = 5 * size(i, p);
         b.castCircle(p, 1.5f);
-        b.vfx(p, VfxShape.WIND_RING, p.position(), p.position().add(0, 1, 0), 30, 1.4f);
+        com.newuniverse.nusmp.vfx.VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.WIND_TORNADO, p, p.position().add(0, 1, 0), 0, 100, r);
         SpellRuntime.zone(p.serverLevel(), 100, 5, age -> {
             Vec3 c = p.position();
             for (LivingEntity t : around(p, c, r)) {
@@ -80,7 +80,6 @@ public class WindBook extends GrimoireBook {
                 t.hurtMarked = true;
                 if (age % 20 == 0) b.hurt(i, p, t, mode, 4f);
             }
-            if (age % 20 == 0 && age > 0) b.vfx(p, VfxShape.WIND_RING, c, c.add(0, 1, 0), 22, r / 4f);
         });
         return true;
     }

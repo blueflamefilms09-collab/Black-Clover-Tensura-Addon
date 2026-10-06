@@ -11,6 +11,10 @@ import com.newuniverse.nusmp.vfx.client.layer.AntiMagicLayer;
 import com.newuniverse.nusmp.vfx.client.layer.ElementShapesLayer;
 import com.newuniverse.nusmp.vfx.client.layer.AuraLayer;
 import com.newuniverse.nusmp.vfx.client.layer.TimeMagicLayer;
+import com.newuniverse.nusmp.vfx.client.layer.FireSpellLayer;
+import com.newuniverse.nusmp.vfx.client.layer.WaterSpellLayer;
+import com.newuniverse.nusmp.vfx.client.layer.WindSpellLayer;
+import com.newuniverse.nusmp.vfx.client.layer.EarthSpellLayer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.ParticleStatus;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -46,6 +50,10 @@ public final class VfxManager {
         register(new ElementShapesLayer());
         register(new AuraLayer());
         register(new TimeMagicLayer());
+        register(new FireSpellLayer());
+        register(new WaterSpellLayer());
+        register(new WindSpellLayer());
+        register(new EarthSpellLayer());
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }

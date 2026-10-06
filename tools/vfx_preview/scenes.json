@@ -1,0 +1,630 @@
+{
+ "_comment": "Preview scenes for tools/vfx_preview/preview.py. Positions in blocks; cam/target = camera; figures = [x, y, z, height] stand-ins.",
+ "time_stasis": {
+  "layer": "TimeMagicLayer",
+  "shape": "TIME_STASIS",
+  "from": [
+   0,
+   1,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 2.0,
+  "duration": 60,
+  "cam": [
+   0,
+   2.2,
+   -5
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   3,
+   20,
+   45
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "time_clock": {
+  "layer": "TimeMagicLayer",
+  "shape": "TIME_CLOCK",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   12,
+   0
+  ],
+  "power": 12,
+  "duration": 80,
+  "cam": [
+   0,
+   1.6,
+   -26
+  ],
+  "target": [
+   0,
+   7,
+   0
+  ],
+  "ages": [
+   10,
+   40,
+   70
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    3,
+    0,
+    2,
+    1.8
+   ]
+  ]
+ },
+ "fire_lion": {
+  "layer": "FireSpellLayer",
+  "shape": "FIRE_LION",
+  "from": [
+   0,
+   1.2,
+   0
+  ],
+  "to": [
+   0,
+   1.2,
+   16
+  ],
+  "power": 1.2,
+  "duration": 34,
+  "cam": [
+   9,
+   3,
+   4
+  ],
+  "target": [
+   0,
+   1.5,
+   9
+  ],
+  "ages": [
+   6,
+   14,
+   26
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -1,
+    1.8
+   ],
+   [
+    0,
+    0,
+    16.5,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.25,
+   0.22,
+   0.3
+  ],
+  "horizon": [
+   0.55,
+   0.45,
+   0.42
+  ]
+ },
+ "fire_spear": {
+  "layer": "FireSpellLayer",
+  "shape": "FIRE_SPEAR",
+  "from": [
+   0,
+   1.6,
+   0
+  ],
+  "to": [
+   0,
+   1.6,
+   20
+  ],
+  "power": 1.0,
+  "duration": 16,
+  "cam": [
+   6,
+   2.5,
+   3
+  ],
+  "target": [
+   0,
+   1.5,
+   9
+  ],
+  "ages": [
+   3,
+   6,
+   11
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -0.5,
+    1.8
+   ]
+  ]
+ },
+ "fire_pillar": {
+  "layer": "FireSpellLayer",
+  "shape": "FIRE_PILLAR",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.0,
+  "duration": 30,
+  "cam": [
+   0,
+   2.0,
+   -7
+  ],
+  "target": [
+   0,
+   2,
+   0
+  ],
+  "ages": [
+   3,
+   10,
+   22
+  ],
+  "figures": [
+   [
+    2.5,
+    0,
+    1,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.25,
+   0.22,
+   0.3
+  ]
+ },
+ "fire_burst": {
+  "layer": "FireSpellLayer",
+  "shape": "FIRE_BURST",
+  "from": [
+   0,
+   0.8,
+   0
+  ],
+  "to": [
+   0,
+   0.8,
+   0
+  ],
+  "power": 1.0,
+  "duration": 22,
+  "cam": [
+   0,
+   2.0,
+   -7
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   2,
+   7,
+   15
+  ],
+  "figures": [
+   [
+    2.5,
+    0,
+    1,
+    1.8
+   ]
+  ]
+ },
+ "water_dragon": {
+  "layer": "WaterSpellLayer",
+  "shape": "WATER_DRAGON",
+  "from": [
+   0,
+   1.6,
+   0
+  ],
+  "to": [
+   0,
+   1.6,
+   18
+  ],
+  "power": 1.2,
+  "duration": 26,
+  "cam": [
+   8,
+   3,
+   3
+  ],
+  "target": [
+   0,
+   1.5,
+   9
+  ],
+  "ages": [
+   6,
+   12,
+   19
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -0.5,
+    1.8
+   ],
+   [
+    0,
+    0,
+    18.5,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.35,
+   0.45,
+   0.55
+  ]
+ },
+ "water_cradle": {
+  "layer": "WaterSpellLayer",
+  "shape": "WATER_CRADLE",
+  "from": [
+   0,
+   1,
+   0
+  ],
+  "to": [
+   0,
+   2,
+   0
+  ],
+  "power": 4.0,
+  "duration": 160,
+  "cam": [
+   0,
+   3.5,
+   -11
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   4,
+   40,
+   90
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    1.2,
+    0,
+    0.6,
+    1.8
+   ]
+  ]
+ },
+ "water_burst": {
+  "layer": "WaterSpellLayer",
+  "shape": "WATER_BURST",
+  "from": [
+   0,
+   0.8,
+   0
+  ],
+  "to": [
+   0,
+   0.8,
+   0
+  ],
+  "power": 1.2,
+  "duration": 24,
+  "cam": [
+   0,
+   2.2,
+   -7
+  ],
+  "target": [
+   0,
+   0.8,
+   0
+  ],
+  "ages": [
+   3,
+   8,
+   16
+  ],
+  "figures": [
+   [
+    2.5,
+    0,
+    1,
+    1.8
+   ]
+  ]
+ },
+ "wind_tornado": {
+  "layer": "WindSpellLayer",
+  "shape": "WIND_TORNADO",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 5.0,
+  "duration": 100,
+  "cam": [
+   0,
+   4,
+   -17
+  ],
+  "target": [
+   0,
+   5,
+   0
+  ],
+  "ages": [
+   6,
+   40,
+   92
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    3,
+    0,
+    1,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.5,
+   0.58
+  ]
+ },
+ "wind_gale": {
+  "layer": "WindSpellLayer",
+  "shape": "WIND_GALE",
+  "from": [
+   0,
+   1.2,
+   0
+  ],
+  "to": [
+   0,
+   1.2,
+   12
+  ],
+  "power": 1.0,
+  "duration": 24,
+  "cam": [
+   6,
+   2.6,
+   2
+  ],
+  "target": [
+   0,
+   1.2,
+   6
+  ],
+  "ages": [
+   5,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -0.5,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.5,
+   0.58
+  ]
+ },
+ "stone_spikes": {
+  "layer": "EarthSpellLayer",
+  "shape": "STONE_SPIKES",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   8
+  ],
+  "power": 1.0,
+  "duration": 44,
+  "cam": [
+   5,
+   2.6,
+   -1
+  ],
+  "target": [
+   0,
+   0.8,
+   4
+  ],
+  "ages": [
+   6,
+   14,
+   30
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -0.6,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.48,
+   0.52,
+   0.58
+  ]
+ },
+ "earth_rise": {
+  "layer": "EarthSpellLayer",
+  "shape": "EARTH_RISE",
+  "from": [
+   -2,
+   0,
+   2.5
+  ],
+  "to": [
+   2,
+   0,
+   2.5
+  ],
+  "power": 1.0,
+  "duration": 30,
+  "cam": [
+   1.5,
+   2.4,
+   -4
+  ],
+  "target": [
+   0,
+   1,
+   2.5
+  ],
+  "ages": [
+   3,
+   9,
+   18
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.48,
+   0.52,
+   0.58
+  ]
+ },
+ "earth_fissure": {
+  "layer": "EarthSpellLayer",
+  "shape": "EARTH_FISSURE",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   12
+  ],
+  "power": 1.0,
+  "duration": 40,
+  "cam": [
+   5,
+   3.2,
+   -2
+  ],
+  "target": [
+   0,
+   0.5,
+   6
+  ],
+  "ages": [
+   6,
+   14,
+   28
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -0.6,
+    1.8
+   ],
+   [
+    1,
+    0,
+    9,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.48,
+   0.52,
+   0.58
+  ]
+ }
+}

@@ -38,6 +38,20 @@ public final class VfxCommand {
             case TIME_CLOCK -> { VfxSpawn.send(player.serverLevel(), shape, target, target.add(0, 6 + 6 * power, 0), 0, 0, 12f * power); return 1; }
             case TIME_REWIND -> { VfxSpawn.send(player.serverLevel(), shape, target, target.add(0, 1, 0), 0, 0, 1.6f * power); return 1; }
             case TIME_ACCEL -> { VfxSpawn.sendFollowing(player.serverLevel(), shape, player, player.position().add(0, 1, 0), 0, 0, power); return 1; }
+            // elements: travelling spells go from in front of you to where you look; ground spells sit where you look
+            case FIRE_LION, FIRE_SPEAR, WATER_DRAGON, WIND_GALE -> { VfxSpawn.send(player.serverLevel(), shape, eye.add(player.getLookAngle().scale(1.5)), target, 0, 0, power); return 1; }
+            case FIRE_PILLAR, FIRE_BURST, WATER_BURST -> { VfxSpawn.send(player.serverLevel(), shape, target, target.add(0, 1, 0), 0, 0, power); return 1; }
+            case WATER_CRADLE -> {
+                Vec3 c = player.position().add(0, 1, 0);
+                VfxSpawn.send(player.serverLevel(), new VfxPayload(shape.ordinal(), c, c, 0, 0, 4f * power, player.getId(), player.getRandom().nextLong()));
+                return 1;
+            }
+            case WIND_TORNADO -> { VfxSpawn.sendFollowing(player.serverLevel(), shape, player, player.position().add(0, 1, 0), 0, 0, 5f * power); return 1; }
+            case STONE_SPIKES, EARTH_RISE, EARTH_FISSURE -> {
+                Vec3 flat = player.getLookAngle().multiply(1, 0, 1).normalize();
+                VfxSpawn.send(player.serverLevel(), shape, player.position(), player.position().add(flat.scale(10)), 0, 0, power);
+                return 1;
+            }
             default -> { }
         }
         boolean atFeet = shape == VfxShape.WIND_RING || shape == VfxShape.ELF_CIRCLE || shape == VfxShape.DEVIL_CIRCLE;

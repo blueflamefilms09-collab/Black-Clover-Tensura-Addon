@@ -78,6 +78,8 @@ public abstract class GrimoireBook extends Skill {
                 l.add(BookPage.signature("spirit_channeling", "Spirit Channeling", GrimoireBook::channel));
             }
             if (!(this instanceof ForbiddenBook)) l.add(BookPage.signature("devil_union", "Devil Union", GrimoireBook::devilUnion));
+            // base ability, last so every existing page keeps its mode number: free, instant, no chant
+            if (!(this instanceof ForbiddenBook)) l.add(new BookPage(SUMMON_ID, "Summon Grimoire", "Summon Grimoire", 0, 0, 0, (b, i, p, m) -> true));
             all = l;
         }
         return all;
@@ -88,6 +90,8 @@ public abstract class GrimoireBook extends Skill {
     private boolean isDive(int mode) { return page(mode) != null && (page(mode).id().equals("spirit_dive") || page(mode).id().equals("spirit_channeling")); }
     private boolean isChannel(int mode) { return page(mode) != null && page(mode).id().equals("spirit_channeling"); }
     private boolean isUnion(int mode) { return page(mode) != null && page(mode).id().equals("devil_union"); }
+    public static final String SUMMON_ID = "summon_grimoire";
+    private boolean isSummon(int mode) { return page(mode) != null && page(mode).id().equals(SUMMON_ID); }
 
     public static boolean isUnlocked(ManasSkillInstance i, int mode) { return mode == 0 || (i.getOrCreateTag().getInt("Unlocked") & (1 << mode)) != 0; }
 
@@ -101,6 +105,7 @@ public abstract class GrimoireBook extends Skill {
         if (mode < familyCount()) return isUnlocked(i, mode);
         if (isDive(mode)) return e instanceof ServerPlayer p ? spiritGateOpen(p) : true;
         if (isUnion(mode)) return cover(i).isForbidden();
+        if (isSummon(mode)) return true;
         return false;
     }
 
@@ -145,9 +150,16 @@ public abstract class GrimoireBook extends Skill {
 
     public int castTicks(ManasSkillInstance i, LivingEntity e) { return i.isMastered(e) ? CAST_TICKS_MASTERED : CAST_TICKS; }
 
+    /** Summon Grimoire acts on the key press itself (no chant). Every other page is chanted in onHeld / cast in onRelease. */
+    @Override
+    public void onPressed(ManasSkillInstance instance, LivingEntity entity, int keyNumber, int mode) {
+        if (!isSummon(mode)) { super.onPressed(instance, entity, keyNumber, mode); return; }
+        if (entity instanceof ServerPlayer p) GrimoireSummon.toggle(p, this);
+    }
+
     @Override
     public boolean onHeld(ManasSkillInstance instance, LivingEntity entity, int heldTicks, int mode) {
-        if (!(entity instanceof ServerPlayer p)) return true;
+        if (!(entity instanceof ServerPlayer p) || isSummon(mode)) return true;
         int need = castTicks(instance, entity);
         BookPage page = page(mode);
         if (page == null) return true;
@@ -184,7 +196,7 @@ public abstract class GrimoireBook extends Skill {
 
     @Override
     public void onRelease(ManasSkillInstance instance, LivingEntity entity, int heldTicks, int keyNumber, int mode) {
-        if (!(entity instanceof ServerPlayer player)) return;
+        if (!(entity instanceof ServerPlayer player) || isSummon(mode)) return;
         BookPage p = page(mode);
         if (p == null) return;
         if (heldTicks < castTicks(instance, entity)) { fail(player, "The chant broke off."); instance.getOrCreateTag().putBoolean("ManaZone", false); return; }
@@ -497,8 +509,9 @@ public abstract class GrimoireBook extends Skill {
     }
 
     // ---------------------------------------------------------------- misc
-    /** Your own grimoire of this book's magic must be in a hand (the Forbidden book accepts any of yours). */
+    /** Your own grimoire of this book's magic must be in a hand or summoned (the Forbidden book accepts any of yours). */
     private boolean holdingBook(ServerPlayer p) {
+        if (GrimoireSummon.isFloating(p, this instanceof ForbiddenBook ? null : magic)) return true;
         for (ItemStack s : new ItemStack[]{p.getMainHandItem(), p.getOffhandItem()}) {
             if (!GrimoireItem.isOwnedBy(s, p.getUUID())) continue;
             if (this instanceof ForbiddenBook || magic.name().equals(GrimoireItem.data(s).getString("Magic"))) return true;

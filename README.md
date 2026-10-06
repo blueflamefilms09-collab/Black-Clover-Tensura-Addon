@@ -168,3 +168,20 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Time Acceleration**: a dial at your feet with racing hands and two numeral ribbons whirling forwards. **Time Reversal**: a dial whose hands and ribbon run backwards.
 - **Passive, Time Sense** (always on with the Time book): enemy projectiles within 4 blocks (6 mastered) that are flying at you get caught in a small stasis bubble and lose 60% of their speed, once each, at most 3 every 2 ticks. 3 s after you are hurt, 20% (35% mastered) of the damage taken in that window is rewound (healed, at most 4 hearts), shown by a rewinding dial at your feet; then it rests for 10 s.
 - Test: `/nusmp vfx time_stasis|time_clock|time_rewind|time_accel [power]`.
+
+## Summon Grimoire (base ability of every grimoire)
+- Every grimoire book has a new last mode, **Summon Grimoire**: free, instant (no chant). Your grimoire floats, glowing, in front of your right hand, and counts as held, so you can cast with your hands free.
+- Put it away: **double-tap sneak**, or use Summon Grimoire again (while sneaking, or with the same book). It also goes away on death, dimension change, logout or if the item leaves your inventory. Other players see it too.
+- A single sneak does not dismiss it, so sneaking (and Grigora's sneak-to-spare-players) still works while it floats.
+
+## Creative grimoires no longer overwrite yours
+- Right-clicking an unbound (creative-tab) grimoire when you already have one now does nothing and keeps the item; reset first with `/nusmp grimoire reset <player>`. Binding also keeps the clicked book's cover (it used to fall back to the default cover).
+
+## Fire, Water, Wind and Earth spell visuals (after the anime / wiki)
+Layers in `vfx/client/layer/` (`FireSpellLayer`, `WaterSpellLayer`, `WindSpellLayer`, `EarthSpellLayer`, shared `ElementFx`), textures from `tools/gen_element_vfx_textures.py`. Old effects are kept; these books now use the new ones:
+- **Fire**: Sol Linea = a spiralling flame spear; Calderos = Ignis Columna flame pillars; hits burst into flame. New page **Leo Rugiens** (appended last): a lion of flame bounds up to 20 blocks, burning what it runs through, and roars out in a blast where it lands.
+- **Water**: Sea Dragon's Roar = a water dragon with a sinuous body flying to the target, splash crown on impact; Sea Dragon's Cradle = a whirling water sphere ringed by watery globs that follows you.
+- **Wind**: Gust Lane = Swallow's Gale (swallows made of wind, streaks, rolling rings); Spirit Storm = a green-white tornado around you.
+- **Earth**: Earth Spikes = 3D stone spikes erupting one after another; Earth Wall = cracks, dust and rubble along the wall; Mother Earth Split = a racing crack with stone slabs heaving up.
+- Test any of them: `/nusmp vfx fire_lion|fire_spear|fire_pillar|fire_burst|water_dragon|water_cradle|water_burst|wind_tornado|wind_gale|stone_spikes|earth_rise|earth_fissure [power]`.
+- Preview without the game: `python tools/vfx_preview/preview.py [scene...]` compiles the real layer code against small stubs and renders the frames to `build/vfx_preview/` (scenes in `tools/vfx_preview/scenes.json`).

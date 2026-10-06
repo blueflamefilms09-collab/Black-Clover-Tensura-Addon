@@ -112,9 +112,20 @@ public class GrimoireItem extends Item {
             sp.displayClientMessage(Component.literal("This grimoire has not chosen you.").withStyle(ChatFormatting.GRAY), true);
             return InteractionResultHolder.fail(stack);
         }
+        // A grimoire chooses one mage. Someone who already has one keeps it (pages, mastery and all) and keeps this
+        // unbound copy too: binding would otherwise wipe their own grimoire. Admins reset first: /nusmp grimoire reset <player>.
+        var existing = GrimoirePages.grimoireOf(sp);
+        if (existing.isPresent()) {
+            MagicType own = GrimoirePages.magicOf(existing.get());
+            sp.displayClientMessage(Component.literal("You already have a grimoire (" + own.displayName + "). Use /nusmp grimoire reset first to swap it.")
+                    .withStyle(ChatFormatting.GRAY), true);
+            return InteractionResultHolder.fail(stack);
+        }
+        GrimoireCover chosenCover = cover(stack);
+        MagicType chosenMagic = MagicType.byName(tag.getString("Magic"));
+        Devil chosenDevil = Devil.byName(tag.getString("Devil"));
         stack.shrink(1);
-        GrimoireAcceptance.grantExact(sp, cover(stack), MagicType.byName(tag.getString("Magic")),
-                Devil.byName(tag.getString("Devil")));
+        GrimoireAcceptance.grantExact(sp, chosenCover, chosenMagic, chosenDevil);
         return InteractionResultHolder.success(stack);
     }
 

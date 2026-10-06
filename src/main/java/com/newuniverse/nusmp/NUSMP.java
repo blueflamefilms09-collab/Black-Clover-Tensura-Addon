@@ -37,11 +37,13 @@ public class NUSMP {
         modEventBus.addListener(com.newuniverse.nusmp.entity.NUEntities::attributes);
         NUCreativeTab.TABS.register(modEventBus);
         modEventBus.addListener(VfxSpawn::registerPayloads);
+        modEventBus.addListener(com.newuniverse.nusmp.book.GrimoireSummon::registerPayloads);
         if (FMLEnvironment.dist == Dist.CLIENT) {
             modEventBus.addListener(com.newuniverse.nusmp.client.NUClient::onClientSetup);
             com.newuniverse.nusmp.vfx.client.VfxClientEvents.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireClient.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireShelfClient.init(modEventBus);
+            com.newuniverse.nusmp.client.grimoire.GrimoireFloatClient.init();
             modEventBus.addListener(com.newuniverse.nusmp.client.SpiritLordRenderer::register);
         }
         modContainer.registerConfig(ModConfig.Type.SERVER, NUConfig.SPEC);
@@ -49,6 +51,12 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(LiarisFreeseSkill::onKill);
         NeoForge.EVENT_BUS.addListener(SkillEvolution::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(GrimoireAcceptance::onPlayerTick);
+        // Summon Grimoire (base ability): floating book state
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.GrimoireSummon::onPlayerTick);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.GrimoireSummon::onDeath);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.GrimoireSummon::onLogout);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.GrimoireSummon::onDimension);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.GrimoireSummon::onStartTracking);
         NeoForge.EVENT_BUS.addListener(GrimoireCommand::register);
         NeoForge.EVENT_BUS.addListener(VfxCommand::register);
         // Grimoire pages & Time magic engine

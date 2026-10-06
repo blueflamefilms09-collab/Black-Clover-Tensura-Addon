@@ -55,7 +55,10 @@ public class WaterBook extends GrimoireBook {
         LivingEntity target = target(p, 32);
         Vec3 start = p.getEyePosition(), dir = p.getViewVector(1f);
         b.castCircle(p, 1.4f);
-        b.vfx(p, VfxShape.WATER_RING, p.position(), p.position().add(0, 1, 0), 24, 1.2f);
+        // the sea dragon: drawn along the line to the target (or aim); the bolt below does the hitting
+        Vec3 end = target != null ? target.position().add(0, target.getBbHeight() / 2, 0) : aim(p, 32);
+        int flight = Math.max(10, Math.min(70, (int) (start.distanceTo(end) / 0.9) + 6));
+        com.newuniverse.nusmp.vfx.VfxSpawn.send(p.serverLevel(), VfxShape.WATER_DRAGON, start, end, 0, flight, 1.2f * s);
         SpellRuntime.bolt(p, start, dir.scale(0.9), 1.4 * s, 70, false, target, (bolt, t) -> {}, (bolt, at) -> {
             for (LivingEntity t : around(p, at, 2.5 * s)) {
                 b.hurt(i, p, t, mode, 20f);
@@ -63,7 +66,7 @@ public class WaterBook extends GrimoireBook {
                 Vec3 away = t.position().subtract(at).normalize();
                 t.knockback(2.5, -away.x, -away.z);
             }
-            b.vfx(p, VfxShape.FX_WATER_CRASH, at, at, 0, 1.4f * s);
+            com.newuniverse.nusmp.vfx.VfxSpawn.send(p.serverLevel(), VfxShape.WATER_BURST, at, at, 0, 24, 1.4f * s);
         });
         return true;
     }
@@ -72,6 +75,9 @@ public class WaterBook extends GrimoireBook {
     static boolean cradle(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         float r = 4 * size(i, p);
         b.castCircle(p, 1f);
+        Vec3 centre = p.position().add(0, 1, 0);       // the whirling sphere, following you for the whole spell
+        com.newuniverse.nusmp.vfx.VfxSpawn.send(p.serverLevel(), new com.newuniverse.nusmp.vfx.VfxPayload(VfxShape.WATER_CRADLE.ordinal(),
+                centre, centre, 0, 160, r, p.getId(), p.getRandom().nextLong()));
         SpellRuntime.zone(p.serverLevel(), 160, 1, age -> {
             Vec3 c = p.position();
             for (Projectile pr : p.serverLevel().getEntitiesOfClass(Projectile.class, new AABB(c, c).inflate(r))) {
@@ -82,7 +88,6 @@ public class WaterBook extends GrimoireBook {
                     if (ally == p || ally.isAlliedTo(p)) BalanceLaw.heal(ally, 2f);
                 }
             }
-            if (age % 40 == 0) b.vfx(p, VfxShape.WATER_RING, c, c.add(0, 1, 0), 40, r / 4.5f);
         });
         return true;
     }

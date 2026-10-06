@@ -44,7 +44,7 @@ public class EarthBook extends GrimoireBook {
     static boolean spikes(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         Vec3 a = p.position(), dir = flatDir(p);
         int n = (int) (8 * size(i, p));
-        b.vfx(p, VfxShape.FX_EARTH_SPIKES, a, a.add(dir.scale(n)), 0, 1f);
+        com.newuniverse.nusmp.vfx.VfxSpawn.send(p.serverLevel(), VfxShape.STONE_SPIKES, a, a.add(dir.scale(n)), 0, n * 2 + 24, 1f);
         for (int k = 1; k <= n; k++) {
             Vec3 pt = a.add(dir.scale(k));
             SpellRuntime.later(p.serverLevel(), k * 2, () -> {
@@ -69,7 +69,7 @@ public class EarthBook extends GrimoireBook {
         }
         if (placed == 0) { fail(p, "There's no room to raise a wall."); return false; }
         b.castCircle(p, 0.7f);
-        b.vfx(p, VfxShape.EARTH_SPIKES, base.add(side.scale(-2)), base.add(side.scale(2)), 16, 0.8f);
+        com.newuniverse.nusmp.vfx.VfxSpawn.send(p.serverLevel(), VfxShape.EARTH_RISE, base.add(side.scale(-2)), base.add(side.scale(2)), 0, 30, 1f);
         return true;
     }
 
@@ -82,7 +82,7 @@ public class EarthBook extends GrimoireBook {
             if (root) t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, BalanceLaw.controlTicks(t, 60), 6));
         }
         b.castCircle(p, 1f);
-        b.vfx(p, VfxShape.EARTH_SPIKES, a, end, 26, 1.5f);
+        com.newuniverse.nusmp.vfx.VfxSpawn.send(p.serverLevel(), VfxShape.EARTH_FISSURE, a, end, 0, 40, 1f);
         return true;
     }
 }

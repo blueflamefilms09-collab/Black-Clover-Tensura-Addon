@@ -39,7 +39,20 @@ public enum VfxShape {
     TIME_STASIS,             // Chrono Stasis: glass sphere + orbiting Roman-numeral ribbon at 'from' (follows); power = radius
     TIME_CLOCK,              // Chrono Anastasis: clock face at 'to' over ground centre 'from', gold rain; power = radius
     TIME_REWIND,             // Time Reversal / passive rewind: dial at 'from', hands and ribbon run backwards
-    TIME_ACCEL;              // Time Acceleration: dial + two ribbons whirling forwards around the caster (follows)
+    TIME_ACCEL,              // Time Acceleration: dial + two ribbons whirling forwards around the caster (follows)
+    // Elements drawn after the anime / wiki (FireSpellLayer, WaterSpellLayer, WindSpellLayer, EarthSpellLayer)
+    FIRE_LION,               // Leo Rugiens: a lion of flame charges from -> to, mane blazing; power = size
+    FIRE_SPEAR,              // Sol Linea: spiralling flame spear from -> to
+    FIRE_PILLAR,             // Ignis Columna / Calderos: flame column erupting at 'from'; power = radius
+    FIRE_BURST,              // flame explosion at 'from'
+    WATER_DRAGON,            // Sea Dragon's Roar: water dragon from -> to (duration = flight time)
+    WATER_CRADLE,            // Sea Dragon's Cradle: whirling water sphere ringed by globs at 'from' (follows); power = radius
+    WATER_BURST,             // splash crown, droplets and ripples at 'from'
+    WIND_TORNADO,            // Spirit Storm / Tornado Fang: green-white tornado at 'from' (follows); power = radius
+    WIND_GALE,               // Swallow's Gale / Gust Lane: wind swallows and streaks from -> to
+    STONE_SPIKES,            // stone spikes rising one after another from -> to (one per block, 2 ticks apart)
+    EARTH_RISE,              // Ground Wall: crack, dust and debris along the wall base from -> to
+    EARTH_FISSURE;           // Mother Earth Split: crack runs from -> to, stone slabs push up along it
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

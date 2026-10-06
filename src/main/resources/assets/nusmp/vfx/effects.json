@@ -119,5 +119,65 @@
     "color": "FFB4CCFF",
     "duration": 40,
     "shake": 0.0
+  },
+  "fire_lion": {
+    "color": "FFFF8A2A",
+    "duration": 34,
+    "shake": 0.0
+  },
+  "fire_spear": {
+    "color": "FFFF8A2A",
+    "duration": 16,
+    "shake": 0.0
+  },
+  "fire_pillar": {
+    "color": "FFFF8A2A",
+    "duration": 30,
+    "shake": 0.0
+  },
+  "fire_burst": {
+    "color": "FFFF8A2A",
+    "duration": 22,
+    "shake": 0.0
+  },
+  "water_dragon": {
+    "color": "FF6EC3FF",
+    "duration": 30,
+    "shake": 0.0
+  },
+  "water_cradle": {
+    "color": "FF6EC3FF",
+    "duration": 160,
+    "shake": 0.0
+  },
+  "water_burst": {
+    "color": "FF6EC3FF",
+    "duration": 24,
+    "shake": 0.0
+  },
+  "wind_tornado": {
+    "color": "FFA6FFD6",
+    "duration": 100,
+    "shake": 0.0
+  },
+  "wind_gale": {
+    "color": "FFA6FFD6",
+    "duration": 24,
+    "shake": 0.0
+  },
+  "stone_spikes": {
+    "color": "FFFFB45A",
+    "duration": 44,
+    "shake": 0.0
+  },
+  "earth_rise": {
+    "color": "FFFFB45A",
+    "duration": 30,
+    "shake": 0.0
+  },
+  "earth_fissure": {
+    "color": "FFFFB45A",
+    "duration": 40,
+    "shake": 0.0
   }
 }
