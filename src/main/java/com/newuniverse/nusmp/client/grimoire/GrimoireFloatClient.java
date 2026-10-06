@@ -320,7 +320,7 @@ public final class GrimoireFloatClient {
         pose.scale(1f / 16f, 1f / 16f, 1f / 16f);
         PoseStack.Pose last = pose.last();
         VertexConsumer leather = buffers.getBuffer(RenderType.entityCutoutNoCull(HARNESS_LEATHER));
-        float x0 = 7f, x1 = 9f, top = 15.1f, zf = 10.65f, zb = 5.35f;
+        float x0 = 7f, x1 = 9f, top = 15.1f, zf = 9.55f, zb = 6.45f;    // 0.36: on the slim boards (front 9.4, back 6.6)
         face(leather, last, x0, top, zf, x0, 3.2f, zf, x1, 3.2f, zf, x1, top, zf, 3f, light, 0, 0, 1);       // front
         face(leather, last, x0, top, zb, x0, top, zf, x1, top, zf, x1, top, zb, 1.3f, light, 0, 1, 0);       // over the top
         face(leather, last, x1, top, zb, x1, 8.5f, zb, x0, 8.5f, zb, x0, top, zb, 1.6f, light, 0, 0, -1);    // down the back
