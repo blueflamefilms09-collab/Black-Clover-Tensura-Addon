@@ -41,6 +41,7 @@ public class NUSMP {
             modEventBus.addListener(com.newuniverse.nusmp.client.NUClient::onClientSetup);
             com.newuniverse.nusmp.vfx.client.VfxClientEvents.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireClient.init(modEventBus);
+            com.newuniverse.nusmp.client.grimoire.GrimoireShelfClient.init(modEventBus);
             modEventBus.addListener(com.newuniverse.nusmp.client.SpiritLordRenderer::register);
         }
         modContainer.registerConfig(ModConfig.Type.SERVER, NUConfig.SPEC);
