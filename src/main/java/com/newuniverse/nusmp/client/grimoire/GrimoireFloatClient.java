@@ -233,6 +233,15 @@ public final class GrimoireFloatClient {
                 pose.scale(s, s, s);
             }
             int light = arrived > 0.5f ? LightTexture.FULL_BRIGHT : lightAt(owner, partial);
+            long[] flip = FLIPS.get(id);
+            Vector3f strapTop = null;
+            if (julius(stack)) {
+                // 0.35: Julius Novachrono's grimoire has no covers and no spine: a turning cylinder of pages
+                juliusCylinder(pose, buffers, now, arrived, step, flip != null ? now - flip[0] : -1, light);
+                pose.popPose();
+                if (!self && !hipStack.isEmpty()) belt(buffers, owner, partial, cam, sneak, null, lightAt(owner, partial));
+                continue;
+            }
             if (arrived >= 1f) {
                 // summoned: the in-hand context makes the model glow; step > 0 draws the open V
                 mc.getItemRenderer().renderStatic(stack, ItemDisplayContext.THIRD_PERSON_RIGHT_HAND, light, OverlayTexture.NO_OVERLAY, pose, buffers, mc.level, id);
@@ -243,10 +252,11 @@ public final class GrimoireFloatClient {
                 pose.translate(0.5f, 0.5f, 0.5f);
                 mc.getItemRenderer().renderStatic(stack, ItemDisplayContext.NONE, light, OverlayTexture.NO_OVERLAY, pose, buffers, mc.level, id);
                 pose.popPose();
+                if (e == null) strapTop = bookStrap(pose, buffers, light);       // 0.35: the holster strap round the dormant book
             }
-            long[] f = FLIPS.get(id);
-            if (f != null && step == GrimoireCarry.OPEN_STEPS) pages(pose, buffers, cam, stack, now - f[0], f[1] == 1, light);
+            if (flip != null && step == GrimoireCarry.OPEN_STEPS) pages(pose, buffers, cam, stack, now - flip[0], flip[1] == 1, light);
             pose.popPose();
+            if (!self && !hipStack.isEmpty()) belt(buffers, owner, partial, cam, sneak, strapTop, lightAt(owner, partial));
         }
         buffers.endBatch();
         modelView.popMatrix();
@@ -263,6 +273,114 @@ public final class GrimoireFloatClient {
     private static int lightAt(Player owner, float partial) {
         Minecraft mc = Minecraft.getInstance();
         return mc.getEntityRenderDispatcher().getPackedLightCoords(owner, partial);
+    }
+
+    // ---------------------------------------------------------------- 0.35: Julius's coverless grimoire, the holster harness
+    private static final ResourceLocation HARNESS_LEATHER = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/grimoire_harness_leather.png");
+    private static final ResourceLocation HARNESS_BRASS = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/grimoire_harness_brass.png");
+
+    /** Julius Novachrono's canon grimoire (the only one in the Clover Kingdom with no front or back cover). */
+    static boolean julius(ItemStack stack) {
+        return !stack.isEmpty() && "julius".equalsIgnoreCase(GrimoireItem.data(stack).getString("Canon"));
+    }
+
+    /**
+     * Julius's grimoire: a cylinder of loose pages standing on end, no covers, no spine (model units, around x = z = 8). Dormant it
+     * turns slowly; summoned it glows, turns faster and its pages flutter; opening fans it wider; a spell switch sends a ripple
+     * round it instead of turning pages over.
+     */
+    private static void juliusCylinder(PoseStack pose, MultiBufferSource buffers, float now, float arrived, int step, float flipAge, int light) {
+        VertexConsumer vc = buffers.getBuffer(RenderType.entityTranslucent(LEAF));
+        pose.pushPose();
+        handTransform(pose);
+        pose.scale(1f / 16f, 1f / 16f, 1f / 16f);
+        int n = 44;
+        float open = step / (float) GrimoireCarry.OPEN_STEPS;
+        float spin = now * (0.006f + 0.03f * arrived);
+        float ri = 1.4f + 0.8f * open, ro = 6.0f + 1.2f * open;
+        int[] tint = arrived > 0.5f ? new int[]{255, 246, 214} : new int[]{236, 228, 208};
+        for (int k = 0; k < n; k++) {
+            float a = Mth.TWO_PI * k / n + spin + 0.05f * arrived * Mth.sin(now * 0.25f + k * 0.9f);
+            if (flipAge >= 0 && flipAge < 20) a += 0.3f * Mth.sin(flipAge * 0.6f - k * 0.45f) * (1 - flipAge / 20f);   // the ripple
+            float lift = 0.3f * arrived * Mth.sin(now * 0.3f + k * 1.3f);
+            float ca = Mth.cos(a), sa = Mth.sin(a);
+            strip(vc, pose.last(), 8 + ca * ri, 8 + sa * ri, 8 + ca * ro, 8 + sa * ro, 1.6f + lift, 14.4f + lift, 0f, 1f, tint, 235, light);
+        }
+        pose.popPose();
+    }
+
+    /**
+     * The holster strap round the dormant book (after the owner's belt-holster references): down over the front cover to a
+     * brass tip, over the top, and down the back. Model units, in the book's own pose. Returns where the strap leaves the top
+     * of the book (camera-relative), for the belt to hang it from.
+     */
+    private static Vector3f bookStrap(PoseStack pose, MultiBufferSource buffers, int light) {
+        pose.pushPose();
+        handTransform(pose);
+        pose.scale(1f / 16f, 1f / 16f, 1f / 16f);
+        PoseStack.Pose last = pose.last();
+        VertexConsumer leather = buffers.getBuffer(RenderType.entityCutoutNoCull(HARNESS_LEATHER));
+        float x0 = 7f, x1 = 9f, top = 15.1f, zf = 10.65f, zb = 5.35f;
+        face(leather, last, x0, top, zf, x0, 3.2f, zf, x1, 3.2f, zf, x1, top, zf, 3f, light, 0, 0, 1);       // front
+        face(leather, last, x0, top, zb, x0, top, zf, x1, top, zf, x1, top, zb, 1.3f, light, 0, 1, 0);       // over the top
+        face(leather, last, x1, top, zb, x1, 8.5f, zb, x0, 8.5f, zb, x0, top, zb, 1.6f, light, 0, 0, -1);    // down the back
+        face(leather, last, 6.4f, 7.2f, zf + 0.05f, 6.4f, 5.6f, zf + 0.05f, 9.6f, 5.6f, zf + 0.05f, 9.6f, 7.2f, zf + 0.05f, 0.5f, light, 0, 0, 1);   // keeper loop
+        VertexConsumer brass = buffers.getBuffer(RenderType.entityCutoutNoCull(HARNESS_BRASS));
+        face(brass, last, x0 - 0.15f, 3.4f, zf + 0.1f, x0 + 1f, 1.4f, zf + 0.1f, x1 - 1f, 1.4f, zf + 0.1f, x1 + 0.15f, 3.4f, zf + 0.1f, 1f, light, 0, 0, 1);
+        Vector3f anchor = last.pose().transformPosition(new Vector3f(8f, top, 8f));
+        pose.popPose();
+        return anchor;
+    }
+
+    /**
+     * The belt: a leather band round the owner's waist with a brass buckle in front, and the hanging strap from the right hip to
+     * the book. Drawn on top of the player like a cosmetic layer, so it never takes an armour slot. World space, camera-relative.
+     */
+    private static void belt(MultiBufferSource buffers, Player owner, float partial, Vec3 cam, boolean sneak, Vector3f strapTop, int light) {
+        PoseStack.Pose last = new PoseStack().last();
+        double yaw = Math.toRadians(Mth.rotLerp(partial, owner.yBodyRotO, owner.yBodyRot));
+        Vector3f fwd = new Vector3f((float) -Math.sin(yaw), 0, (float) Math.cos(yaw)), right = new Vector3f((float) -Math.cos(yaw), 0, (float) -Math.sin(yaw));
+        Vec3 pos = owner.getPosition(partial).subtract(cam);
+        Vector3f c = new Vector3f((float) pos.x, (float) pos.y + (sneak ? 0.62f : 0.78f), (float) pos.z);
+        float hw = 0.27f, hd = 0.155f, hh = 0.05f;
+        VertexConsumer leather = buffers.getBuffer(RenderType.entityCutoutNoCull(HARNESS_LEATHER));
+        float[][] corners = {{-1, 1}, {1, 1}, {1, -1}, {-1, -1}};          // (side, front) round the waist: front, right, back, left
+        for (int k = 0; k < 4; k++) {
+            float[] a = corners[k], b = corners[(k + 1) % 4];
+            Vector3f pa = new Vector3f(c).add(new Vector3f(right).mul(a[0] * hw)).add(new Vector3f(fwd).mul(a[1] * hd));
+            Vector3f pb = new Vector3f(c).add(new Vector3f(right).mul(b[0] * hw)).add(new Vector3f(fwd).mul(b[1] * hd));
+            Vector3f n = k == 0 ? fwd : k == 1 ? right : k == 2 ? new Vector3f(fwd).negate() : new Vector3f(right).negate();
+            face(leather, last, pa.x, pa.y + hh, pa.z, pb.x, pb.y + hh, pb.z, pb.x, pb.y - hh, pb.z, pa.x, pa.y - hh, pa.z,
+                    k % 2 == 0 ? 2f : 1f, light, n.x, n.y, n.z);
+        }
+        // the hanging strap from the right hip down to the book
+        Vector3f hip = new Vector3f(c).add(new Vector3f(right).mul(hw + 0.01f)).add(0, -0.02f, 0);
+        Vector3f end = strapTop != null ? strapTop : new Vector3f(hip).add(new Vector3f(right).mul(0.05f)).add(0, -0.25f, 0);
+        Vector3f across = new Vector3f(end).sub(hip).cross(right);
+        if (across.lengthSquared() > 1e-6f) {
+            across.normalize().mul(0.035f);
+            face(leather, last, hip.x - across.x, hip.y - across.y, hip.z - across.z, end.x - across.x, end.y - across.y, end.z - across.z,
+                    end.x + across.x, end.y + across.y, end.z + across.z, hip.x + across.x, hip.y + across.y, hip.z + across.z, 1f, light, right.x, right.y, right.z);
+        }
+        // the brass buckle at the front
+        VertexConsumer brass = buffers.getBuffer(RenderType.entityCutoutNoCull(HARNESS_BRASS));
+        Vector3f b = new Vector3f(c).add(new Vector3f(fwd).mul(hd + 0.006f));
+        Vector3f r = new Vector3f(right).mul(0.05f);
+        face(brass, last, b.x - r.x, b.y + 0.06f, b.z - r.z, b.x - r.x, b.y - 0.06f, b.z - r.z, b.x + r.x, b.y - 0.06f, b.z + r.z, b.x + r.x, b.y + 0.06f, b.z + r.z,
+                1f, light, fwd.x, fwd.y, fwd.z);
+    }
+
+    /** One textured quad a-b-c-d: U runs a -> b (0 .. uLen, tiling), V runs a -> d (0 .. 1). */
+    private static void face(VertexConsumer vc, PoseStack.Pose last, float ax, float ay, float az, float bx, float by, float bz,
+                             float cx, float cy, float cz, float dx, float dy, float dz, float uLen, int light, float nx, float ny, float nz) {
+        put(vc, last, ax, ay, az, 0, 0, light, nx, ny, nz);
+        put(vc, last, bx, by, bz, uLen, 0, light, nx, ny, nz);
+        put(vc, last, cx, cy, cz, uLen, 1, light, nx, ny, nz);
+        put(vc, last, dx, dy, dz, 0, 1, light, nx, ny, nz);
+    }
+
+    private static void put(VertexConsumer vc, PoseStack.Pose last, float x, float y, float z, float u, float v, int light, float nx, float ny, float nz) {
+        vc.addVertex(last, x, y, z).setColor(255, 255, 255, 255).setUv(u, v).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(last, nx, ny, nz);
     }
 
     // ---------------------------------------------------------------- page flip
