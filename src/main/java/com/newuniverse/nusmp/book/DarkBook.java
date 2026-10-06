@@ -26,11 +26,17 @@ import java.util.List;
 
 /** Dark Magic (Yami). */
 public class DarkBook extends GrimoireBook {
+    // 0.28: rebuilt after the wiki (Yami Sukehiro); page ids kept so unlocks and mastery carry over, new spells appended
     private final List<BookPage> pages = List.of(
-            BookPage.starter("avidya_slash", "Dark Cloaked Avidya Slash", DarkBook::avidya),
-            BookPage.zone("black_hole", "Black Hole", DarkBook::blackHole),
-            BookPage.signature("dimension_slash", "Dimension Slash", DarkBook::dimension),
-            BookPage.mid("death_thrust", "Death Thrust", TensuraShots.shot(TensuraShots.Shot.DIMENSION_CUT, 13, 2.2f, 1.2f, 0)));
+            BookPage.starter("avidya_slash", "Dark Cloaked Avidya Slash", CanonSpells::avidyaSlash),
+            BookPage.zone("black_hole", "Black Hole", CanonSpells::blackHole),
+            BookPage.signature("dimension_slash", "Dark Cloaked Dimension Slash", CanonSpells::dimensionSlash).withCooldown(300),
+            BookPage.mid("death_thrust", "Death Thrust", CanonSpells::deathThrust),
+            BookPage.mid("black_blade", "Dark Cloaked Black Blade", CanonSpells::blackBlade).withCooldown(900),
+            BookPage.mid("avidya_wild_slash", "Dark Cloaked Avidya Wild Slash", CanonSpells::avidyaWildSlash),
+            BookPage.zone("black_moon", "Dark Cloaked Black Moon", CanonSpells::blackMoon).withCooldown(900),
+            BookPage.mid("iai_slash", "Dark Cloaked Iai Slash", CanonSpells::iaiSlash),
+            BookPage.signature("dimension_slash_equinox", "Dark Cloaked Dimension Slash: Equinox", CanonSpells::dimensionSlashEquinox));
 
     public DarkBook() { super(MagicType.DARK, 0xFF5B3A8A); }
     @Override protected List<BookPage> familyPages() { return pages; }

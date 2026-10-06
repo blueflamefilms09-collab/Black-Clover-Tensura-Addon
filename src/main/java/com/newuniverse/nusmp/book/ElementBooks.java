@@ -21,11 +21,14 @@ public final class ElementBooks {
     @SafeVarargs
     private static <T> java.util.function.Supplier<T>[] fx(java.util.function.Supplier<T>... s) { return s; }
 
+    /** Sword Magic (Licht), after the wiki (0.28): page ids kept from 0.21 so unlocks and mastery carry over. */
     public static GrimoireBook sword() {
         return new ElementBook(MagicType.SWORD, 0xFFD8E2FF, TensuraDamageTypes.MAGIC_GENERIC, List.of(
-                starter("flying_blade", "Flying Blade", shot(Shot.AURA_SLASH, 9, 2.2f, 0.6f, 0)),
-                zone("thousand_swords", "Thousand Swords", field(3, 4, 40, 10, true, VfxShape.LIGHTNING_SPEAR, NONE)),
-                signature("blade_domain", "Blade Domain", constructs(4, 3.5, 160))));
+                starter("flying_blade", "Origin Flash", CanonSpells::originFlash),
+                zone("thousand_swords", "Origin Flash Barrage", CanonSpells::originFlashBarrage),
+                signature("blade_domain", "Demon-Dweller Sword: Conquering Eon", CanonSpells::conqueringEon),
+                mid("summon_demon_dweller", "Sword Magic: Demon-Dweller Sword", CanonSpells::summonDweller).withCooldown(1200),
+                mid("summon_demon_destroyer", "Sword Magic: Demon-Destroyer Sword", CanonSpells::summonDestroyer).withCooldown(1200)));
     }
 
     public static GrimoireBook explosion() {
@@ -150,30 +153,19 @@ public final class ElementBooks {
                 signature("dream_world", "Dream World", field(3, 6, 120, 20, false, VfxShape.ELF_CIRCLE, effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 30, 2))))));
     }
 
-    /** Anti-Magic (Liebe): no magicule cost; cuts magic out of the air. */
+    /**
+     * Anti-Magic (Liebe): no magicule cost; cuts magic out of the air. Rebuilt after the wiki in 0.28 (page ids kept so unlocks
+     * and mastery carry over; new spells appended).
+     */
     public static GrimoireBook antiMagic() {
-        BookPage.Cast slash = (b, i, p, m) -> {
-            for (var pr : p.serverLevel().getEntitiesOfClass(net.minecraft.world.entity.projectile.Projectile.class, p.getBoundingBox().inflate(5)))
-                if (pr.getOwner() != p) pr.discard();
-            return cone(10, 4.5, 0.5, VfxShape.ANTI_MAGIC_SLASH, strip()).cast(b, i, p, m);
-        };
         return new ElementBook(MagicType.ANTI_MAGIC, 0xFF2A0A30, TensuraDamageTypes.MAGIC_GENERIC, List.of(
-                new BookPage("demon_slayer_slash", "Demon-Slayer Slash", "Demon-Slayer Slash", 0, 0, 80, slash),
-                new BookPage("black_divider", "Black Divider", "Black Divider", 0, 0, 160, dash(10, 8, false, VfxShape.ANTI_MAGIC_SLASH, strip())),
-                new BookPage("black_meteorite", "Black Meteorite", "Black Meteorite", 0, 0, 600, nova(16, 4, true, VfxShape.ANTI_MAGIC_SLASH, all(strip(), knock(1.5)))),
-                // 0.24: Black Hurricane (a spinning field of anti-magic that drags foes in and strips their magic) and Black Form
-                new BookPage("black_hurricane", "Black Hurricane", "Black Hurricane", 0, 0, 300,
-                        field(3, 6, 60, 10, false, VfxShape.ANTI_MAGIC_SLASH, all(strip(), (t, p) -> {
-                            var d = p.position().subtract(t.position()).normalize().scale(0.35);
-                            t.setDeltaMovement(t.getDeltaMovement().add(d.x, 0.12, d.z));
-                            t.hurtMarked = true;
-                        }))),
-                new BookPage("black_form", "Black Form", "Black Form", 0, 0, 1200, (b, i, p, m) -> {
-                    p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 600, 1));
-                    p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 600, 1));
-                    p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 600, 0));
-                    p.addEffect(new MobEffectInstance(MobEffects.JUMP, 600, 1));
-                    return nova(4, 3, false, VfxShape.ANTI_MAGIC_SLASH, all(strip(), knock(1.0))).cast(b, i, p, m);
-                })));
+                new BookPage("demon_slayer_slash", "Black Slash", "Demon-Dweller Sword: Black Slash", 0, 0, 80, CanonSpells::blackSlash),
+                new BookPage("black_divider", "Black Divider", "Demon-Slayer Sword: Black Divider", 0, 0, 160, CanonSpells::blackDivider),
+                new BookPage("black_meteorite", "Black Meteorite", "Black Meteorite", 0, 0, 300, CanonSpells::blackMeteorite),
+                new BookPage("black_hurricane", "Black Hurricane", "Black Hurricane", 0, 0, 300, CanonSpells::blackHurricane),
+                new BookPage("black_form", "Black Asta", "Black Asta", 0, 0, 1200, CanonSpells::blackAsta),
+                new BookPage("bull_thrust", "Bull Thrust", "Bull Thrust", 0, 0, 160, CanonSpells::bullThrust),
+                new BookPage("infinite_slash", "Infinite Slash", "Demon-Slasher Katana: Infinite Slash", 0, 0, 240, CanonSpells::infiniteSlash),
+                new BookPage("infinite_slash_equinox", "Infinite Slash Equinox", "Demon-Slasher Katana: Infinite Slash Equinox", 0, 0, 900, CanonSpells::infiniteSlashEquinox)));
     }
 }

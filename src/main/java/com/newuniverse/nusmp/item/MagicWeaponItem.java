@@ -42,13 +42,16 @@ import java.util.UUID;
  */
 public class MagicWeaponItem extends SwordItem {
     public enum Kind {
-        DEMON_SLASHER_KATANA(Tiers.DIAMOND, 3, -2.2f, "Mana Suppression Arc", "A crescent that cuts mana: damages, strips a buff and drains 5% magicule.", 160, false),
-        MIASMA_KATANA(Tiers.DIAMOND, 3, -2.3f, "Dimension Slash", "A 12-block cut that destroys projectiles first. Hits wither.", 200, false),
+        // 0.28: abilities renamed and rebuilt after the Black Clover wiki (ids kept so old worlds load)
+        DEMON_SLASHER_KATANA(Tiers.DIAMOND, 3, -2.2f, "Infinite Slash", "A long flying anti-magic slash from overhead: cuts every spell in a 20-block line and strips a buff from all it hits.", 160, true),
+        MIASMA_KATANA(Tiers.DIAMOND, 3, -2.3f, "Dark Cloaked Dimension Slash", "A 16-block cut of darkness that cuts spells and space first. Hits are left in darkness.", 200, false),
         SPELL_FORGED_RAPIER(Tiers.DIAMOND, 1, -1.8f, "Spatial Edge", "Blink 6 blocks forward, piercing everything on the way.", 120, false),
         SEVERING_GREATSWORD(Tiers.NETHERITE, 5, -3.2f, "Sword Rain", "Eight blades fall on the spot you aim at.", 300, false),
-        DEMON_SLAYER(Tiers.NETHERITE, 6, -3.0f, "Demon-Slayer Cut", "Erases nearby projectiles, then a huge cut that strips magic from everything hit.", 160, true),
-        DEMON_DWELLER(Tiers.NETHERITE, 3, -2.2f, "Black Slash", "A flying anti-magic slash that cuts spells out of its path.", 120, true),
-        DEMON_DESTROYER(Tiers.NETHERITE, 4, -2.6f, "Undo", "Cleanses curses, misfortune and harmful effects from you and allies nearby. Hits strip every buff.", 300, true);
+        DEMON_SLAYER(Tiers.NETHERITE, 6, -3.0f, "Black Divider", "Bats spells back with the flat of the blade, then a huge anti-magic sweep that strips magic from everything hit.", 160, true),
+        DEMON_DWELLER(Tiers.NETHERITE, 3, -2.2f, "Black Slash", "A flying anti-magic slash that cuts spells out of its path and knocks its target back.", 120, true),
+        DEMON_DESTROYER(Tiers.NETHERITE, 4, -2.6f, "Causality Break", "Undoes spell effects: cleanses you and allies nearby, erases spells around you and strips every buff from foes close by.", 300, true),
+        LICHT_DWELLER(Tiers.NETHERITE, 4, -2.4f, "Conquering Eon", "Licht's white Demon-Dweller: a 20-block slash that grows with every ally near you, and heals you.", 240, false),
+        LICHT_DESTROYER(Tiers.NETHERITE, 5, -2.6f, "Causality Break", "Licht's white Demon-Destroyer: strips every buff from foes in front of you and erases their spells.", 240, false);
 
         final Tier tier; final int damage; final float speed; final String ability, desc; final int cooldown; final boolean demon;
         Kind(Tier t, int d, float s, String a, String desc, int cd, boolean demon) {
@@ -74,8 +77,28 @@ public class MagicWeaponItem extends SwordItem {
         return s;
     }
 
+    /** A sword drawn from a grimoire (Sword Magic): bound to its caster and gone after {@code ticks}. */
+    public static ItemStack summoned(Item item, Player owner, int ticks) {
+        ItemStack s = bound(item, owner);
+        CompoundTag t = s.get(DataComponents.CUSTOM_DATA).copyTag();
+        t.putLong("ExpiresAt", owner.level().getGameTime() + ticks);
+        s.set(DataComponents.CUSTOM_DATA, CustomData.of(t));
+        return s;
+    }
+
+    @Override
+    public void inventoryTick(ItemStack stack, Level level, net.minecraft.world.entity.Entity holder, int slot, boolean selected) {
+        if (level.isClientSide || level.getGameTime() % 20 != 0) return;
+        CustomData d = stack.get(DataComponents.CUSTOM_DATA);
+        if (d == null) return;
+        CompoundTag t = d.copyTag();
+        if (t.contains("ExpiresAt") && level.getGameTime() >= t.getLong("ExpiresAt")) stack.setCount(0);   // the summoned sword fades
+    }
+
     public static boolean usableBy(ItemStack s, Player p) {
-        if (!(s.getItem() instanceof MagicWeaponItem w) || !w.kind.demon) return true;
+        if (!(s.getItem() instanceof MagicWeaponItem w)) return true;
+        CustomData d0 = s.get(DataComponents.CUSTOM_DATA);
+        if (!w.kind.demon && (d0 == null || !d0.copyTag().contains("ExpiresAt"))) return true;
         CustomData d = s.get(DataComponents.CUSTOM_DATA);
         if (d == null || !d.copyTag().hasUUID("Owner")) return true;
         UUID o = d.copyTag().getUUID("Owner");
@@ -111,20 +134,22 @@ public class MagicWeaponItem extends SwordItem {
         Vec3 eye = p.getEyePosition(), look = p.getViewVector(1f);
         switch (kind) {
             case DEMON_SLASHER_KATANA -> {
-                for (LivingEntity t : GrimoireBook.around(p, p.position(), 5)) {
-                    if (t.getBoundingBox().getCenter().subtract(eye).normalize().dot(look) < 0.5) continue;
-                    hit(p, t, 9);
+                Vec3 end = eye.add(look.scale(20));
+                eraseProjectiles(p, new AABB(eye, end).inflate(1.6));
+                for (LivingEntity t : GrimoireBook.along(p, eye, end, 1.6)) {
+                    hit(p, t, 11);
                     stripOne(t);
                     var ex = TensuraStorages.getExistenceFrom(t);
                     if (ex != null) { ex.setMagicule(Math.max(0, ex.getMagicule() - EnergyHelper.getMaxMagicule(t) * 0.05)); ex.markDirty(); }
                 }
-                VfxSpawn.send(p.serverLevel(), VfxShape.WIND_SLASH, eye, eye.add(look.scale(5)), 0xFFE04050, 14, 1.3f);
+                VfxSpawn.send(p.serverLevel(), VfxShape.ANTI_MAGIC_SLASH, eye, end, 0xFF2A0A30, 16, 1.6f);
             }
             case MIASMA_KATANA -> {
-                Vec3 end = eye.add(look.scale(12));
+                Vec3 end = eye.add(look.scale(16));
                 eraseProjectiles(p, new AABB(eye, end).inflate(1.2));
-                for (LivingEntity t : GrimoireBook.along(p, eye, end, 1.2)) { hit(p, t, 11); t.addEffect(new MobEffectInstance(MobEffects.WITHER, 60, 0)); }
-                VfxSpawn.send(p.serverLevel(), VfxShape.WIND_SLASH, eye, end, 0xFF8A5AD0, 16, 1.6f);
+                for (LivingEntity t : GrimoireBook.along(p, eye, end, 1.2)) { hit(p, t, 12); t.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 80, 0)); }
+                VfxSpawn.send(p.serverLevel(), VfxShape.WIND_SLASH, eye, end, 0xFF1A0F2A, 16, 1.6f);
+                VfxSpawn.send(p.serverLevel(), VfxShape.SPATIAL_RIFT, end, end.add(0, 1, 0), 0xFF5B3A8A, 16, 0.8f);
             }
             case SPELL_FORGED_RAPIER -> {
                 Vec3 from = p.position(), dir = look.multiply(1, 0, 1).normalize(), dest = null;
@@ -151,18 +176,27 @@ public class MagicWeaponItem extends SwordItem {
                 VfxSpawn.send(p.serverLevel(), VfxShape.WEAPON_CONSTRUCTS, c, c.add(0, 1, 0), 0xFFD8E2FF, 40, 1.2f);
             }
             case DEMON_SLAYER -> {
-                eraseProjectiles(p, p.getBoundingBox().inflate(5));
-                for (LivingEntity t : GrimoireBook.around(p, p.position(), 4.5)) {
-                    if (t.getBoundingBox().getCenter().subtract(eye).normalize().dot(look) < 0.4) continue;
-                    hit(p, t, 12);
+                for (Projectile pr : p.serverLevel().getEntitiesOfClass(Projectile.class, p.getBoundingBox().inflate(6))) {
+                    if (pr.getOwner() == p) continue;
+                    pr.setDeltaMovement(pr.getDeltaMovement().scale(-1.2));   // the flat of the blade bats spells back
+                    pr.setOwner(p);
+                    pr.hurtMarked = true;
+                }
+                for (LivingEntity t : GrimoireBook.around(p, p.position(), 6)) {
+                    if (t.getBoundingBox().getCenter().subtract(eye).normalize().dot(look) < 0.3) continue;
+                    hit(p, t, 13);
                     stripOne(t);
                 }
-                VfxSpawn.send(p.serverLevel(), VfxShape.ANTI_MAGIC_SLASH, eye, eye.add(look.scale(4.5)), 0xFF2A0A30, 18, 1.6f);
+                VfxSpawn.send(p.serverLevel(), VfxShape.ANTI_MAGIC_SLASH, eye, eye.add(look.scale(6)), 0xFF2A0A30, 18, 2.0f);
             }
             case DEMON_DWELLER -> {
                 Vec3 end = eye.add(look.scale(16));
                 eraseProjectiles(p, new AABB(eye, end).inflate(1.2));
-                SpellRuntime.bolt(p, eye, look.scale(1.8), 1.0, 9, true, null, (b, t) -> { hit(p, t, 10); stripOne(t); }, null);
+                SpellRuntime.bolt(p, eye, look.scale(1.8), 1.0, 9, true, null, (b, t) -> {
+                    hit(p, t, 10);
+                    stripOne(t);
+                    t.knockback(1.0, p.getX() - t.getX(), p.getZ() - t.getZ());
+                }, null);
                 VfxSpawn.send(p.serverLevel(), VfxShape.ANTI_MAGIC_SLASH, eye, end, 0xFF2A0A30, 16, 1.4f);
             }
             case DEMON_DESTROYER -> {
@@ -172,7 +206,27 @@ public class MagicWeaponItem extends SwordItem {
                     t.getPersistentData().putLong("nusmp_misfortune_until", 0);
                     t.getPersistentData().putLong("nusmp_sealed_until", 0);
                 }
+                eraseProjectiles(p, p.getBoundingBox().inflate(5));
+                for (LivingEntity t : GrimoireBook.around(p, p.position(), 3.5)) { for (int k = 0; k < 4; k++) stripOne(t); hit(p, t, 8); }
                 VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.ANTI_MAGIC_SLASH, p, p.position().add(0, 1, 0).add(look), 0xFF2A0A30, 18, 1.2f);
+            }
+            case LICHT_DWELLER -> {
+                int allies = 0;
+                for (Player o : p.serverLevel().players()) if (o != p && o.distanceToSqr(p) < 16 * 16 && o.isAlliedTo(p)) allies++;
+                Vec3 end = eye.add(look.scale(20));
+                eraseProjectiles(p, new AABB(eye, end).inflate(2));
+                for (LivingEntity t : GrimoireBook.along(p, eye, end, 2)) hit(p, t, 12 + 3 * Math.min(5, allies));
+                BalanceLaw.heal(p, 4 + Math.min(5, allies));
+                VfxSpawn.send(p.serverLevel(), VfxShape.WIND_SLASH, eye, end, 0xFFF4F8FF, 18, 2.2f);
+            }
+            case LICHT_DESTROYER -> {
+                eraseProjectiles(p, p.getBoundingBox().inflate(5));
+                for (LivingEntity t : GrimoireBook.around(p, p.position(), 5)) {
+                    if (t.getBoundingBox().getCenter().subtract(eye).normalize().dot(look) < 0.4) continue;
+                    hit(p, t, 10);
+                    for (MobEffectInstance e : new ArrayList<>(t.getActiveEffects())) if (e.getEffect().value().isBeneficial()) t.removeEffect(e.getEffect());
+                }
+                VfxSpawn.send(p.serverLevel(), VfxShape.WIND_SLASH, eye, eye.add(look.scale(5)), 0xFFF4F8FF, 16, 1.6f);
             }
         }
         return true;
@@ -184,9 +238,9 @@ public class MagicWeaponItem extends SwordItem {
         boolean r = super.hurtEnemy(stack, target, attacker);
         if (attacker instanceof ServerPlayer p) {
             switch (kind) {
-                case MIASMA_KATANA -> target.addEffect(new MobEffectInstance(MobEffects.WITHER, 60, 0));
-                case DEMON_SLAYER, DEMON_DWELLER -> stripOne(target);
-                case DEMON_DESTROYER -> { for (int k = 0; k < 3; k++) stripOne(target); }
+                case MIASMA_KATANA -> target.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 60, 0));
+                case DEMON_SLAYER, DEMON_DWELLER, DEMON_SLASHER_KATANA -> stripOne(target);
+                case DEMON_DESTROYER, LICHT_DESTROYER -> { for (int k = 0; k < 3; k++) stripOne(target); }
                 default -> {}
             }
             if (kind.demon) AntiMagic.addAmp(p, 10);
@@ -200,6 +254,8 @@ public class MagicWeaponItem extends SwordItem {
         tip.add(Component.literal("  " + kind.desc).withStyle(ChatFormatting.GRAY));
         tip.add(Component.literal("  Cooldown: " + kind.cooldown / 20 + " s").withStyle(ChatFormatting.DARK_GRAY));
         CustomData d = stack.get(DataComponents.CUSTOM_DATA);
+        if (d != null && d.copyTag().contains("ExpiresAt"))
+            tip.add(Component.literal("Drawn from a grimoire: fades after a minute").withStyle(ChatFormatting.AQUA));
         if (kind.demon && d != null && d.copyTag().contains("OwnerName"))
             tip.add(Component.literal("Bound to " + d.copyTag().getString("OwnerName")).withStyle(ChatFormatting.DARK_PURPLE));
     }
