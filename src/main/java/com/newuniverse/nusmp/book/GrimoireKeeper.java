@@ -33,6 +33,7 @@ public final class GrimoireKeeper {
 
         var inv = p.getInventory();
         var skills = SkillAPI.getSkillsFrom(p);
+        if (com.newuniverse.nusmp.blackclover.GrimoireSlot.holdsOwn(p, book.magic)) return;               // already in the Grimoire Slot
         int orphan = -1;
         for (int slot = 0; slot < inv.getContainerSize(); slot++) {
             ItemStack s = inv.getItem(slot);
@@ -50,7 +51,10 @@ public final class GrimoireKeeper {
     /** Every 5 s: own a bound grimoire but the book skill vanished? Teach it again. */
     public static void heal(ServerPlayer p) {
         if (p.tickCount % 100 != 0 || GrimoirePages.grimoireOf(p).isPresent()) return;
-        for (ItemStack s : p.getInventory().items) {
+        var books = new java.util.ArrayList<ItemStack>();
+        books.add(com.newuniverse.nusmp.blackclover.GrimoireSlot.get(p));
+        books.addAll(p.getInventory().items);
+        for (ItemStack s : books) {
             if (!GrimoireItem.isOwnedBy(s, p.getUUID())) continue;
             CompoundTag d = GrimoireItem.data(s);
             var magic = com.newuniverse.nusmp.blackclover.MagicType.byName(d.getString("Magic"));

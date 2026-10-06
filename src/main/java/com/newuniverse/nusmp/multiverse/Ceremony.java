@@ -146,6 +146,7 @@ public final class Ceremony {
     public static void reset(ServerPlayer p) {
         for (var id : NUSkills.allGrimoireSkillIds()) SkillAPI.getSkillsFrom(p).forgetSkill(id);
         var inv = p.getInventory();
+        com.newuniverse.nusmp.blackclover.GrimoireSlot.replaceOwned(p, old -> ItemStack.EMPTY);
         for (int slot = 0; slot < inv.getContainerSize(); slot++) {
             if (GrimoireItem.isOwnedBy(inv.getItem(slot), p.getUUID())) inv.setItem(slot, ItemStack.EMPTY);
         }

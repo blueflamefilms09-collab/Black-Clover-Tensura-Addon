@@ -28,6 +28,8 @@ public class MultiverseStatusScreen extends Screen {
     @Override
     protected void init() {
         addRenderableWidget(Button.builder(Component.literal("Back"), b -> onClose()).bounds(width / 2 - 40, height - 26, 80, 18).build());
+        addRenderableWidget(Button.builder(Component.literal("Grimoire Slot"), b -> com.newuniverse.nusmp.client.grimoire.GrimoireSlotClient.open())
+                .bounds(width - 96, height - 26, 88, 18).build());
     }
 
     @Override

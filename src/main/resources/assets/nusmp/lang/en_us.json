@@ -450,6 +450,7 @@
   "nusmp.page.book_earth.spirit_channeling": "Hold to pull raw spirit energy: an aura grows around you and drags enemies in. Release at 25% for an elemental dash, 50% for a Spirit Nova, 100% to become a living conduit for six seconds.",
   "key.categories.nusmp": "Multiverse of Anime",
   "key.nusmp.grimoire_shelf": "Grimoire Shelf",
+  "key.nusmp.grimoire_slot": "Grimoire Slot",
   "nusmp.grimoire_shelf.opened": "Grimoire shelf opened (%s books).",
   "nusmp.grimoire_shelf.closed": "Grimoire shelf closed.",
   "key.nusmp.multiverse_status": "Multiverse Status",

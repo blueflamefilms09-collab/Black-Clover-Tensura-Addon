@@ -28,23 +28,21 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * Summon Grimoire, the base ability of every grimoire book: your grimoire leaves your bag and floats, glowing, in front of your
- * right hand, so you can cast with your hands free (a summoned grimoire counts as held). It stays your item the whole time; only
+ * Summon Grimoire, the base ability of every grimoire book. Press the ability key while your grimoire is in its Grimoire Slot
+ * (see blackclover.GrimoireSlot): it leaves its dormant spot at your right hip and floats up in front of your right hand, glowing
+ * and bobbing, so you cast with your hands free (a summoned grimoire counts as held). It stays your item the whole time; only
  * its floating copy is drawn.
  *
- * <p>Put it away: double-tap sneak (shift), or use Summon Grimoire again while sneaking. It also goes away on death, dimension
- * change, logging out, or when the grimoire item leaves your inventory.
+ * <p>Put it away: press the ability key while sneaking (shift); it floats back down to your hip. It also goes away on death,
+ * dimension change, logging out, or when the grimoire leaves the slot. Switching spells while it is out flips its pages
+ * ({@link FlipPayload}).
  *
  * <p>Sync: {@link FloatPayload} (entity id + the grimoire stack, empty = put away) to the player and everyone tracking them.
  */
 public final class GrimoireSummon {
-    /** Two sneak presses within this many ticks put the grimoire away. */
-    public static final int DOUBLE_TAP_TICKS = 8;
-
     private static final class State {
         final MagicType magic;
-        boolean wasSneaking;
-        long lastSneakPress = -100;
+        long lastFlip = -100;
         State(MagicType magic) { this.magic = magic; }
     }
 
@@ -61,30 +59,34 @@ public final class GrimoireSummon {
         return s != null && (magic == null || s.magic == magic) && !find(p, s.magic).isEmpty();
     }
 
-    /** The owner's grimoire of this magic anywhere in their inventory, or EMPTY. */
+    /** The owner's grimoire of this magic in the Grimoire Slot (or, for old habits, a hand), or EMPTY. */
     static ItemStack find(Player p, MagicType magic) {
-        for (ItemStack s : p.getInventory().items) if (GrimoireItem.isOwnedBy(s, p.getUUID()) && magic.name().equals(GrimoireItem.data(s).getString("Magic"))) return s;
-        for (ItemStack s : p.getInventory().offhand) if (GrimoireItem.isOwnedBy(s, p.getUUID()) && magic.name().equals(GrimoireItem.data(s).getString("Magic"))) return s;
+        for (ItemStack s : com.newuniverse.nusmp.blackclover.GrimoireSlot.ready(p))
+            if (GrimoireItem.isOwnedBy(s, p.getUUID()) && magic.name().equals(GrimoireItem.data(s).getString("Magic"))) return s;
         return ItemStack.EMPTY;
     }
 
-    /** The ability: summon, or put away when already out (or when sneaking). */
+    /** The ability key: summon; with shift held, stow it back at the hip. */
     public static void toggle(ServerPlayer p, GrimoireBook book) {
-        if (isFloating(p) && (p.isShiftKeyDown() || FLOATING.get(p.getUUID()).magic == book.magic)) { dismiss(p, true); return; }
-        if (p.isShiftKeyDown()) return;
+        if (p.isShiftKeyDown()) { dismiss(p, true); return; }
+        State s = FLOATING.get(p.getUUID());
+        if (s != null && s.magic == book.magic) {
+            p.displayClientMessage(Component.literal("Your grimoire is already out. (sneak + ability key to stow it)").withStyle(ChatFormatting.GRAY), true);
+            return;
+        }
         summon(p, book);
     }
 
     public static void summon(ServerPlayer p, GrimoireBook book) {
         ItemStack stack = find(p, book.magic);
-        if (stack.isEmpty()) { GrimoireBook.fail(p, "Your " + book.magic.displayName + " grimoire isn't with you."); return; }
+        if (stack.isEmpty()) { GrimoireBook.fail(p, "Your " + book.magic.displayName + " grimoire isn't in your Grimoire Slot."); return; }
         FLOATING.put(p.getUUID(), new State(book.magic));
         broadcast(p, stack.copy());
         Vec3 hand = handPoint(p);
         VfxSpawn.send(p.serverLevel(), VfxShape.MAGIC_CIRCLE, hand, hand.add(p.getViewVector(1f)), book.color, 16, 0.35f);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.BOOK_PAGE_TURN, SoundSource.PLAYERS, 1.0f, 0.8f);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 0.6f, 1.2f);
-        p.displayClientMessage(Component.literal("Your grimoire answers. (double-tap sneak to put it away)").withStyle(ChatFormatting.GOLD), true);
+        p.displayClientMessage(Component.literal("Your grimoire answers. (sneak + ability key to stow it)").withStyle(ChatFormatting.GOLD), true);
     }
 
     public static void dismiss(ServerPlayer p, boolean effects) {
@@ -92,7 +94,7 @@ public final class GrimoireSummon {
         broadcast(p, ItemStack.EMPTY);
         if (effects) {
             p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.BOOK_PUT, SoundSource.PLAYERS, 0.9f, 1.0f);
-            p.displayClientMessage(Component.literal("You put your grimoire away.").withStyle(ChatFormatting.GRAY), true);
+            p.displayClientMessage(Component.literal("Your grimoire returns to your side.").withStyle(ChatFormatting.GRAY), true);
         }
     }
 
@@ -104,19 +106,23 @@ public final class GrimoireSummon {
     }
 
     // ---------------------------------------------------------------- events
-    /** Double-tap sneak puts it away; losing the item puts it away silently. */
+    /** Losing the grimoire (it left the slot and the hands) puts it away silently. */
     public static void onPlayerTick(PlayerTickEvent.Post event) {
         if (!(event.getEntity() instanceof ServerPlayer p)) return;
         State s = FLOATING.get(p.getUUID());
         if (s == null) return;
-        if (find(p, s.magic).isEmpty() || !p.isAlive()) { dismiss(p, false); return; }
-        boolean sneaking = p.isShiftKeyDown();
-        if (sneaking && !s.wasSneaking) {
-            long now = p.level().getGameTime();
-            if (now - s.lastSneakPress <= DOUBLE_TAP_TICKS) { s.wasSneaking = true; dismiss(p, true); return; }
-            s.lastSneakPress = now;
-        }
-        s.wasSneaking = sneaking;
+        if (find(p, s.magic).isEmpty() || !p.isAlive()) dismiss(p, false);
+    }
+
+    /** A spell switch on a book of this magic: if that grimoire is out, its pages flip for everyone who can see it. */
+    public static void onSpellSwitch(ServerPlayer p, MagicType magic, boolean reverse) {
+        State s = FLOATING.get(p.getUUID());
+        if (s == null || (magic != null && s.magic != magic)) return;
+        long now = p.level().getGameTime();
+        if (now - s.lastFlip < 2) return;                                                       // one flip per switch
+        s.lastFlip = now;
+        PacketDistributor.sendToPlayersTrackingEntityAndSelf(p, new FlipPayload(p.getId(), reverse));
+        p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.BOOK_PAGE_TURN, SoundSource.PLAYERS, 0.7f, 1.3f);
     }
 
     public static void onDeath(LivingDeathEvent e) { if (e.getEntity() instanceof ServerPlayer p) dismiss(p, false); }
@@ -148,9 +154,23 @@ public final class GrimoireSummon {
         @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
     }
 
+    /** Player {@code entityId} switched spells while their grimoire is out: play the page flip ({@code reverse} = flip backwards). */
+    public record FlipPayload(int entityId, boolean reverse) implements CustomPacketPayload {
+        public static final Type<FlipPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "grimoire_flip"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, FlipPayload> STREAM_CODEC = StreamCodec.composite(
+                ByteBufCodecs.VAR_INT, FlipPayload::entityId,
+                ByteBufCodecs.BOOL, FlipPayload::reverse,
+                FlipPayload::new);
+
+        @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
+    }
+
     /** Mod-bus listener. The handler only runs on clients, so the client class is never loaded on a server. */
     public static void registerPayloads(RegisterPayloadHandlersEvent event) {
-        event.registrar("1").optional().playToClient(FloatPayload.TYPE, FloatPayload.STREAM_CODEC,
+        var r = event.registrar("1").optional();
+        r.playToClient(FloatPayload.TYPE, FloatPayload.STREAM_CODEC,
                 (payload, ctx) -> ctx.enqueueWork(() -> com.newuniverse.nusmp.client.grimoire.GrimoireFloatClient.receive(payload.entityId(), payload.stack())));
+        r.playToClient(FlipPayload.TYPE, FlipPayload.STREAM_CODEC,
+                (payload, ctx) -> ctx.enqueueWork(() -> com.newuniverse.nusmp.client.grimoire.GrimoireFloatClient.flip(payload.entityId(), payload.reverse())));
     }
 }

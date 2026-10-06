@@ -127,6 +127,13 @@ public final class GrimoireAcceptance {
         // Books hand over their own grimoire when learned; only give one here if none matches yet (no duplicates).
         boolean has = false;
         var inv = player.getInventory();
+        if (GrimoireSlot.holdsOwn(player, magic)) {                                   // already in the Grimoire Slot: rebuild it there
+            String canon = GrimoireItem.data(GrimoireSlot.get(player)).getString("Canon");
+            ItemStack fresh = GrimoireItem.create(player, cover, magic, devil);
+            if (!canon.isEmpty()) GrimoireItem.setCanon(fresh, canon);
+            GrimoireSlot.set(player, fresh);
+            has = true;
+        }
         for (int slot = 0; slot < inv.getContainerSize(); slot++) {
             var st = inv.getItem(slot);
             if (!GrimoireItem.isOwnedBy(st, player.getUUID())) continue;

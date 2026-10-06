@@ -115,11 +115,14 @@ public abstract class GrimoireBook extends Skill {
     @Override
     public int nextMode(LivingEntity entity, ManasSkillInstance instance, int mode, boolean reverse) {
         int n = pages().size();
+        int next = 0;
         for (int step = 1; step <= n; step++) {
             int m = Math.floorMod(mode + (reverse ? -step : step), n);
-            if (usable(instance, entity, m)) return m;
+            if (usable(instance, entity, m)) { next = m; break; }
         }
-        return 0;
+        // switching spells while the grimoire is summoned flips its pages (server tells everyone watching)
+        if (next != mode && entity instanceof ServerPlayer sp) GrimoireSummon.onSpellSwitch(sp, this instanceof ForbiddenBook ? null : magic, reverse);
+        return next;
     }
 
     @Override public String getModeId(ManasSkillInstance instance, int mode) { BookPage p = page(mode); return p == null ? "none" : p.id(); }
@@ -182,7 +185,8 @@ public abstract class GrimoireBook extends Skill {
         if (heldTicks == 1) {
             VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.MANA_CHARGE, p, p.position().add(0, 1, 0), color, need * 2, 1f);
             VfxSpawn.send(p.serverLevel(), new com.newuniverse.nusmp.vfx.VfxPayload(VfxShape.SPELL_CARD.ordinal(),
-                    p.getEyePosition().add(p.getViewVector(1f).scale(1.2)).add(0, 0.6, 0), p.getEyePosition(), color, need + 20, 1f, p.getId(), magic.ordinal()));
+                    p.getEyePosition().add(p.getViewVector(1f).scale(1.2)).add(0, 0.6, 0), p.getEyePosition(), color, need + 20, 1f, p.getId(),
+                    com.newuniverse.nusmp.core.magic.grimoire.SpellArchetype.packSeed(magic.ordinal(), com.newuniverse.nusmp.core.magic.grimoire.SpellArchetype.of(page.id()))));
         }
         if (heldTicks == need * 2 && !instance.getOrCreateTag().getBoolean("ManaZone")) {
             instance.getOrCreateTag().putBoolean("ManaZone", true);
@@ -510,10 +514,10 @@ public abstract class GrimoireBook extends Skill {
     }
 
     // ---------------------------------------------------------------- misc
-    /** Your own grimoire of this book's magic must be in a hand or summoned (the Forbidden book accepts any of yours). */
+    /** Your own grimoire of this book's magic must be in the Grimoire Slot, a hand, or summoned (the Forbidden book accepts any of yours). */
     private boolean holdingBook(ServerPlayer p) {
         if (GrimoireSummon.isFloating(p, this instanceof ForbiddenBook ? null : magic)) return true;
-        for (ItemStack s : new ItemStack[]{p.getMainHandItem(), p.getOffhandItem()}) {
+        for (ItemStack s : com.newuniverse.nusmp.blackclover.GrimoireSlot.ready(p)) {             // the Grimoire Slot or a hand
             if (!GrimoireItem.isOwnedBy(s, p.getUUID())) continue;
             if (this instanceof ForbiddenBook || magic.name().equals(GrimoireItem.data(s).getString("Magic"))) return true;
         }

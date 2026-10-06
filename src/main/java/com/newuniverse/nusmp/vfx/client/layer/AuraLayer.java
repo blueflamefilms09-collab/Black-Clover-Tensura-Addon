@@ -87,11 +87,15 @@ public class AuraLayer extends AbstractVfxLayer {
         float alpha = VfxAnim.fadeInOut(t, 0.15f, 0.3f);
         Vector3f at = ctx.rel(inst.from(ctx).add(0, VfxAnim.easeOutCubic(t) * 0.5, 0));
         MagicType[] all = MagicType.values();
-        MagicType m = all[(int) Math.floorMod(inst.seed, (long) all.length)];
+        int seed = (int) inst.seed;
+        MagicType m = all[Math.floorMod(com.newuniverse.nusmp.core.magic.grimoire.SpellArchetype.magicOf(seed), all.length)];
+        var archetype = com.newuniverse.nusmp.core.magic.grimoire.SpellArchetype.archetypeOf(seed);
         ResourceLocation icon = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/skill/grimoire/" + m.name().toLowerCase() + ".png");
         float wob = 0.15f * Mth.sin(age * 0.2f);
         VfxBloom.glow(ctx, buf, at, 0.6f, inst.color, alpha);
         buf.billboard(ctx, icon, VfxBlend.ALPHA, at, 0.7f, wob, VfxVertexBuffer.withAlpha(0xFFFFFFFF, alpha));
+        if (archetype != null)   // the spell's archetype badge (offense / defense / buff / debuff) in the card's corner
+            buf.billboard(ctx, ResourceLocation.fromNamespaceAndPath("nusmp", archetype.texture()), VfxBlend.ALPHA, at, 0.7f, wob, VfxVertexBuffer.withAlpha(0xFFFFFFFF, alpha));
         buf.billboard(ctx, VfxTextures.CARD_FRAME, VfxBlend.ADD, at, 0.82f, wob, VfxVertexBuffer.withAlpha(inst.color, alpha));
     }
 

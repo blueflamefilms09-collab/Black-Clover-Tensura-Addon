@@ -156,6 +156,14 @@ public class GrimoireItem extends Item {
 
     /** Gives the player's own grimoire of this magic a canon book's look (after binding a canon copy). */
     public static void applyCanon(ServerPlayer p, MagicType magic, String canon) {
+        if (GrimoireSlot.holdsOwn(p, magic)) {
+            ItemStack copy = GrimoireSlot.get(p).copy();
+            setCanon(copy, canon);
+            CanonBook b = CanonBook.byId(canon);
+            if (b != null) copy.set(DataComponents.CUSTOM_NAME, Component.literal(b.owner + "'s Grimoire").withStyle(ChatFormatting.GOLD));
+            GrimoireSlot.set(p, copy);
+            return;
+        }
         var inv = p.getInventory();
         for (int slot = 0; slot < inv.getContainerSize(); slot++) {
             ItemStack s = inv.getItem(slot);

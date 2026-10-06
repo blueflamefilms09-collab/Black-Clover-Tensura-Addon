@@ -28,6 +28,9 @@ public class NUSMP {
         NUSkills.SKILLS.register(modEventBus);
         BlackCloverRegistry.ITEMS.register(modEventBus);
         com.newuniverse.nusmp.grimoire.GrimoireComponents.COMPONENTS.register(modEventBus);
+        com.newuniverse.nusmp.blackclover.GrimoireSlot.ATTACHMENTS.register(modEventBus);
+        com.newuniverse.nusmp.blackclover.GrimoireSlot.MENUS.register(modEventBus);
+        modEventBus.addListener(com.newuniverse.nusmp.blackclover.GrimoireSlot::registerPayloads);
         com.newuniverse.nusmp.block.NUBlocks.init();
         com.newuniverse.nusmp.block.NUBlocks.BLOCKS.register(modEventBus);
         com.newuniverse.nusmp.world.NUWorldgen.FEATURES.register(modEventBus);
@@ -44,6 +47,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.grimoire.GrimoireClient.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireShelfClient.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireFloatClient.init();
+            com.newuniverse.nusmp.client.grimoire.GrimoireSlotClient.init(modEventBus);
             com.newuniverse.nusmp.client.multiverse.MultiverseStatusClient.init(modEventBus);
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.multiverse.MultiverseClientConfig.SPEC, "nusmp-multiverse-client.toml");
             // Spirit Lords are small floating orbs for now (SpiritLordRenderer, the full Tensura body, is kept for later)
@@ -70,6 +74,12 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.GrimoireSummon::onLogout);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.GrimoireSummon::onDimension);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.GrimoireSummon::onStartTracking);
+        // Grimoire Slot (0.22): the bound book lives here, dormant at the hip
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.blackclover.GrimoireSlot::onPlayerTick);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.blackclover.GrimoireSlot::onLogout);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.blackclover.GrimoireSlot::onRespawn);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.blackclover.GrimoireSlot::onDimension);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.blackclover.GrimoireSlot::onStartTracking);
         NeoForge.EVENT_BUS.addListener(GrimoireCommand::register);
         NeoForge.EVENT_BUS.addListener(VfxCommand::register);
         // Grimoire pages & Time magic engine

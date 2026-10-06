@@ -41,7 +41,7 @@ public final class GrimoirePages {
     public static Optional<ManasSkillInstance> grimoireOf(Player p) {
         Skills skills = SkillAPI.getSkillsFrom(p);
         // Several books? The one whose grimoire you are holding wins.
-        for (var s : new net.minecraft.world.item.ItemStack[]{p.getMainHandItem(), p.getOffhandItem()}) {
+        for (var s : new net.minecraft.world.item.ItemStack[]{p.getMainHandItem(), p.getOffhandItem(), GrimoireSlot.get(p)}) {
             if (!GrimoireItem.isOwnedBy(s, p.getUUID())) continue;
             var held = skills.getSkill(NUSkills.grimoireSkillFor(MagicType.byName(GrimoireItem.data(s).getString("Magic"))).getRegistryName());
             if (held.isPresent()) return held;

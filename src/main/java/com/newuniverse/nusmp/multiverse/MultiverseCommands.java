@@ -118,6 +118,12 @@ public final class MultiverseCommands {
                                 .executes(ctx -> giveCanon(ctx, false))
                                 .then(Commands.literal("copy").executes(ctx -> giveCanon(ctx, true)))))));
 
+        // ---------------------------------------------------------------- grimoire slot (players)
+        root.then(Commands.literal("slot").executes(ctx -> {
+            com.newuniverse.nusmp.blackclover.GrimoireSlot.open(ctx.getSource().getPlayerOrException());
+            return 1;
+        }));
+
         // ---------------------------------------------------------------- ceremony
         root.then(Commands.literal("ceremony").requires(MultiverseCommands::admin)
                 .then(Commands.literal("start").executes(ctx -> { Ceremony.start(ctx.getSource().getServer()); return 1; }))

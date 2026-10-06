@@ -9,6 +9,7 @@ public final class MultiverseClientConfig {
     public static final ModConfigSpec.ConfigValue<String> PANEL_TEXT;
     public static final ModConfigSpec.ConfigValue<String> PANEL_RECT;
     public static final ModConfigSpec.BooleanValue BUTTON_FALLBACK;
+    public static final ModConfigSpec.BooleanValue HIDE_HEAD_TEXT;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -20,6 +21,9 @@ public final class MultiverseClientConfig {
                 .define("panelRect", "");
         BUTTON_FALLBACK = b.comment("When no placeholder is found, add a small 'Multiverse' button that opens the full status screen.")
                 .define("buttonFallback", true);
+        b.pop();
+        b.push("hud");
+        HIDE_HEAD_TEXT = b.comment("Hide every name, title or other text floating above players' heads.").define("hideHeadText", true);
         b.pop();
         SPEC = b.build();
     }

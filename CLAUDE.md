@@ -13,6 +13,10 @@
    effects are built to.
 4. **Bump the version on every change: +0.1.0** (e.g. 0.21.0 -> 0.22.0) in `gradle.properties` (`mod_version`) and
    `src/main/resources/META-INF/neoforge.mods.toml` (`version`), and update the jar name in README / LIBRARIES.
+5. **Always check whether a request is fully new or a replacement.** Before building anything from a new spec or file, compare
+   it with what the mod already has: if it covers something that exists (same feature, same asset, same mechanic), it is a
+   replacement, so swap the old one out (rule 2 exception); if nothing like it exists, it is new, so add it next to everything
+   else. When handing over the build, list which parts were new and which were replacements.
 
 Build: `gradlew.bat build` (JDK 21) -> `build/libs/multiverse-of-anime-<version>.jar`.
 Preview VFX without the game: `python tools/vfx_preview/preview.py`.

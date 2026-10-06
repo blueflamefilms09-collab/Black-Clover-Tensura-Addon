@@ -199,6 +199,7 @@ public final class MagicGear {
         g.getOrCreateTag().putInt("Leaves", cover.tier);
         g.markDirty();
         var inv = p.getInventory();
+        com.newuniverse.nusmp.blackclover.GrimoireSlot.replaceOwned(p, old -> GrimoireItem.create(p, cover, GrimoirePages.magicOf(g), com.newuniverse.nusmp.blackclover.Devil.byName(g.getOrCreateTag().getString("Devil"))));
         for (int s = 0; s < inv.getContainerSize(); s++) {
             if (GrimoireItem.isOwnedBy(inv.getItem(s), p.getUUID()))
                 inv.setItem(s, GrimoireItem.create(p, cover, GrimoirePages.magicOf(g), com.newuniverse.nusmp.blackclover.Devil.byName(g.getOrCreateTag().getString("Devil"))));

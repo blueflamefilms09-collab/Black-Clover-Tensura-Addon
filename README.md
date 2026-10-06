@@ -57,7 +57,7 @@ Chanted magics: use **Chant** mode until the chant is complete, then switch to *
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.21.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.22.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -170,9 +170,21 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - Test: `/nusmp vfx time_stasis|time_clock|time_rewind|time_accel [power]`.
 
 ## Summon Grimoire (base ability of every grimoire)
-- Every grimoire book has a new last mode, **Summon Grimoire**: free, instant (no chant). Your grimoire floats, glowing, in front of your right hand, and counts as held, so you can cast with your hands free.
-- Put it away: **double-tap sneak**, or use Summon Grimoire again (while sneaking, or with the same book). It also goes away on death, dimension change, logout or if the item leaves your inventory. Other players see it too.
-- A single sneak does not dismiss it, so sneaking (and Grigora's sneak-to-spare-players) still works while it floats.
+- Every grimoire book has a new last mode, **Summon Grimoire**: free, instant (no chant). Press the ability key while your grimoire is in its **Grimoire Slot**: it floats up from your right hip to the front of your right hand (12-tick ease, a small arc), glows, and starts its idle bob. It counts as held, so you cast with your hands free.
+- Put it away (0.22): press the ability key **while sneaking (shift)**; it floats back down to your hip. It also goes away on death, dimension change, logout or if it leaves the slot. Other players see all of it.
+- Switching spells while it is out plays a **page flip** (3 pages, ~10 ticks): parchment for most books; anti-magic / forbidden books have torn, soot-dark pages that tremble and throw red-black sparks; Flame-soul books singe with embers, Water-soul books shed droplets, Wind-soul books puff air, Earth-soul books shed dust.
+
+## Grimoire Slot (0.22)
+- A bound grimoire lives in a dedicated **Grimoire Slot**, not the hotbar: open it with the "Grimoire Slot" key (unbound by default), the button on the Multiverse status screen, or `/multiverse slot`. Only your own bound grimoire fits.
+- While the slot is filled the book hangs **dormant at your right hip** (everyone sees it); an empty slot means no grimoire is carried. Casting and Summon Grimoire work straight from the slot (a grimoire in your hand still works too).
+- Any grimoire the mod gives you lands in the slot by itself (an owned grimoire elsewhere in the inventory moves in when the slot is empty; the one in your hand stays put, e.g. for the altar). The slot is kept through death.
+- **HUD cleanup**: names, titles and any other text floating above players' heads are hidden (client config `[hud] hideHeadText`, default on).
+
+## Skill icons (0.22)
+- `python tools/gen_skill_icons.py` builds the 32x32 Black Clover icon set in `textures/skill/icons/`: two backgrounds (`bg_aura` dark blue glowing aura, `bg_ancient` dark brown cracked plate), glowing mana-attribute symbols (`sym_water`, `fire`, `wind`, `earth`, `light`, `dark`, `light_dark`, `anti_magic`, plus `infinity` and `clover` after the references), spell-archetype badges (`mod_offense` crosshair, `mod_defense` shield, `mod_buff` up-arrow, `mod_debuff` down-arrow) and `sheet.png` with everything.
+- The Water, Flame, Wind, Earth, Light, Dark and Anti-Magic grimoire skill icons are rebuilt in this style (the other magics keep their icons).
+- The floating spell card shown while chanting now carries the spell's archetype badge (`core/magic/grimoire/SpellArchetype`, worked out from the page id).
+- Sneaking alone does not stow it (only sneak + the ability key), so sneaking (and Grigora's sneak-to-spare-players) still works while it floats.
 
 ## Creative grimoires no longer overwrite yours
 - Right-clicking an unbound (creative-tab) grimoire when you already have one now does nothing and keeps the item; reset first with `/nusmp grimoire reset <player>`. Binding also keeps the clicked book's cover (it used to fall back to the default cover).

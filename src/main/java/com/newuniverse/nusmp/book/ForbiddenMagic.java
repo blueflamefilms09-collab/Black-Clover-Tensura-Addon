@@ -120,6 +120,7 @@ public final class ForbiddenMagic {
         inst.getOrCreateTag().putInt("Leaves", 5);
         inst.markDirty();
         var invent = p.getInventory();
+        com.newuniverse.nusmp.blackclover.GrimoireSlot.replaceOwned(p, old -> GrimoireItem.create(p, dark, magic, null));
         for (int s = 0; s < invent.getContainerSize(); s++) {
             if (GrimoireItem.isOwnedBy(invent.getItem(s), p.getUUID())) invent.setItem(s, GrimoireItem.create(p, dark, magic, null));
         }

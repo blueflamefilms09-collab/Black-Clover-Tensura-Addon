@@ -212,12 +212,12 @@ public class GrimoireMagicSkill extends Skill {
 
     /** True if the player holds their own grimoire. Summons it back if it's lost. */
     private static boolean holdingOwnGrimoire(ServerPlayer player, ManasSkillInstance instance) {
-        for (ItemStack s : new ItemStack[]{player.getMainHandItem(), player.getOffhandItem()}) {
+        for (ItemStack s : com.newuniverse.nusmp.blackclover.GrimoireSlot.ready(player)) {
             if (GrimoireItem.isOwnedBy(s, player.getUUID())) return true;
         }
         for (ItemStack s : player.getInventory().items) {
             if (GrimoireItem.isOwnedBy(s, player.getUUID())) {
-                SkillUtil.fail(player, "Hold your grimoire to cast.");
+                SkillUtil.fail(player, "Put your grimoire in your Grimoire Slot to cast.");
                 return false;
             }
         }
@@ -284,6 +284,7 @@ public class GrimoireMagicSkill extends Skill {
         instance.markDirty();
         // replace their old grimoire with the darkened one
         player.getInventory().clearOrCountMatchingItems(s -> GrimoireItem.isOwnedBy(s, player.getUUID()), -1, player.inventoryMenu.getCraftSlots());
+        com.newuniverse.nusmp.blackclover.GrimoireSlot.replaceOwned(player, old -> ItemStack.EMPTY);
         player.getServer().getPlayerList().broadcastSystemMessage(Component.literal("In " + player.getName().getString()
                 + "'s final despair, their grimoire darkens... a fifth leaf appears. The devil " + devil.displayName + " has awakened.")
                 .withStyle(ChatFormatting.DARK_RED), false);

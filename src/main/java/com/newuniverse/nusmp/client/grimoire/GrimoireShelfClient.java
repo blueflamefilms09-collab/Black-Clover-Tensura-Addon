@@ -81,6 +81,8 @@ public final class GrimoireShelfClient {
         LocalPlayer player = Minecraft.getInstance().player;
         if (player == null) return 0;
         List<ItemStack> found = new ArrayList<>();
+        ItemStack slotted = GrimoireFloatClient.hip(player.getId());                 // the Grimoire Slot first
+        if (!slotted.isEmpty()) found.add(slotted.copyWithCount(1));
         Inventory inv = player.getInventory();
         for (int i = 0; i < inv.getContainerSize(); i++) {
             ItemStack s = inv.getItem(i);
