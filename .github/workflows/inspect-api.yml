@@ -20,7 +20,7 @@ jobs:
       - name: Resolve dependencies
         run: |
           chmod +x gradlew
-          ./gradlew extractManasCoreModules dependencies --configuration compileClasspath --no-daemon -q > /dev/null || true
+          ./gradlew extractManasCoreModules compileJava --no-daemon -q > /dev/null 2>&1 || true   # compileJava downloads the jar files themselves
       - name: Dump matching classes
         run: |
           JARS=$( (find ~/.gradle/caches/modules-2 -name '*.jar' | grep -i -E 'tensura|manascore'; find build/extracted-deps -name '*.jar') | sort -u)
