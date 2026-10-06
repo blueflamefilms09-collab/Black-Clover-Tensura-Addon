@@ -32,10 +32,25 @@ public enum SpellArchetype {
     }
 
     /** Packs magic ordinal + archetype into the spell card's seed (old seeds below 100 carry no archetype). */
-    public static int packSeed(int magicOrdinal, SpellArchetype a) { return magicOrdinal + 100 * (a.ordinal() + 1); }
+    public static int packSeed(int magicOrdinal, SpellArchetype a) { return packSeed(magicOrdinal, a, false); }
+    /** Same, plus whether it is the book's ultimate (signature-tier) spell, which shows the Ultimate icon (0.23). */
+    public static int packSeed(int magicOrdinal, SpellArchetype a, boolean ultimate) { return magicOrdinal + 100 * (a.ordinal() + 1) + (ultimate ? 1000 : 0); }
     public static int magicOf(int seed) { return Math.floorMod(seed, 100); }
     public static SpellArchetype archetypeOf(int seed) {
-        int a = Math.floorDiv(seed, 100) - 1;
+        int a = Math.floorMod(seed, 1000) / 100 - 1;
         return a >= 0 && a < values().length ? values()[a] : null;
+    }
+    public static boolean isUltimate(int seed) { return seed >= 1000; }
+
+    /**
+     * Which of the magic's three icons (tools/gen_skill_icons.py) a spell card shows: the Ultimate icon for signature spells, the
+     * Buff / rune icon for defensive, buff and debuff spells, otherwise the Active icon (the book's own skill icon).
+     */
+    public static String iconPath(String magic, int seed) {
+        String m = magic.toLowerCase(Locale.ROOT);
+        if (isUltimate(seed)) return "textures/skill/icons/" + m + "_ultimate.png";
+        SpellArchetype a = archetypeOf(seed);
+        if (a != null && a != OFFENSE) return "textures/skill/icons/" + m + "_buff.png";
+        return "textures/skill/grimoire/" + m + ".png";
     }
 }

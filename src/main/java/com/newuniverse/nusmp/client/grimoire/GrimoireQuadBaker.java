@@ -28,7 +28,8 @@ final class GrimoireQuadBaker {
     static BakedQuad bake(GrimoireBookPlan.Quad q, TextureAtlasSprite sprite) {
         int[] v = new int[32];
         Direction dir = direction(q.face());
-        int normal = ((dir.getStepX() * 127) & 0xFF) | (((dir.getStepY() * 127) & 0xFF) << 8) | (((dir.getStepZ() * 127) & 0xFF) << 16);
+        float[] n = q.normal();                                                       // exact normal (the open book's halves are turned)
+        int normal = (((int) (n[0] * 127)) & 0xFF) | ((((int) (n[1] * 127)) & 0xFF) << 8) | ((((int) (n[2] * 127)) & 0xFF) << 16);
         int light = q.emissive() ? FULLBRIGHT : 0;
         float[] pos = q.pos(), uv = q.uv();
         for (int i = 0; i < 4; i++) {

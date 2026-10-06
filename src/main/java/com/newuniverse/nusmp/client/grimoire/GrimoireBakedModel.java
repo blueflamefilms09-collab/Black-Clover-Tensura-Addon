@@ -24,7 +24,8 @@ import java.util.Map;
 /**
  * The grimoire's baked model. The instance the model manager holds is a shell: when an item is about to be drawn,
  * {@link Overrides#resolve} reads the stack's look ({@link GrimoireItem#look}) and returns the {@link View} for its geometry key
- * (emblem, motif, wear, held). The handful of keys is built once and kept; colours come from the item colour handler (tintindex).
+ * (emblem, motif, wear, held, open). The handful of keys is built once and kept; colours come from the item colour handler (tintindex).
+ * The open V (open 1..3) is only ever asked for by the summoned-book renderer, through a client-side copy of the stack.
  * In a hand (first / third person) the "held" view is used: its pages and emblem glow.
  */
 public final class GrimoireBakedModel implements BakedModel {
@@ -69,7 +70,7 @@ public final class GrimoireBakedModel implements BakedModel {
         View held() {
             if (key.held()) return this;
             View v = heldView;
-            if (v == null) heldView = v = viewFor(new BookLook.Key(key.emblem(), key.motif(), key.tattered(), true));
+            if (v == null) heldView = v = viewFor(new BookLook.Key(key.emblem(), key.motif(), key.tattered(), true, key.open()));
             return v;
         }
 
@@ -97,7 +98,7 @@ public final class GrimoireBakedModel implements BakedModel {
         @Nullable
         @Override
         public BakedModel resolve(BakedModel model, ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int seed) {
-            return viewFor(GrimoireItem.look(stack).key(false));
+            return viewFor(GrimoireItem.look(stack).key(false, GrimoireItem.openView(stack)));
         }
     }
 }

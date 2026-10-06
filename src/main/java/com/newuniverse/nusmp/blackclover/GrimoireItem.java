@@ -88,7 +88,30 @@ public class GrimoireItem extends Item {
         stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
     }
 
-    private static final ThreadLocal<Object[]> LAST_LOOK = ThreadLocal.withInitial(() -> new Object[2]);
+    private static final ThreadLocal<Object[]> LAST_LOOK = ThreadLocal.withInitial(() -> new Object[3]);
+
+    /**
+     * Client render copies only: which opening step of the summoned book to draw (0 closed, 1..3 opening into the V). Set by the
+     * summoned-book renderer on its own copy of the stack; real items never carry it.
+     */
+    public static final String OPEN_VIEW = "OpenView";
+
+    public static int openView(ItemStack stack) {
+        CustomData d = stack.get(DataComponents.CUSTOM_DATA);
+        if (d == null) return 0;
+        look(stack);                                                    // fills the memo for this data object
+        Object[] memo = LAST_LOOK.get();
+        return memo[0] == d ? (Integer) memo[2] : 0;
+    }
+
+    /** A render-only copy of a grimoire showing opening step {@code step}. */
+    public static ItemStack withOpenView(ItemStack stack, int step) {
+        ItemStack copy = stack.copy();
+        CompoundTag t = data(copy);
+        t.putInt(OPEN_VIEW, step);
+        copy.set(DataComponents.CUSTOM_DATA, CustomData.of(t));
+        return copy;
+    }
 
     /** How this grimoire looks (cover, magic, canon book, owner shade). Remembered per thread for the same data object. */
     public static BookLook look(ItemStack stack) {
@@ -102,6 +125,7 @@ public class GrimoireItem extends Item {
         BookLook look = BookLook.resolve(cover(stack).name(), t.getString("Magic"), t.getString("Canon"), seed);
         memo[0] = d;
         memo[1] = look;
+        memo[2] = t.getInt(OPEN_VIEW);
         return look;
     }
 

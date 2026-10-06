@@ -46,8 +46,15 @@ public record BookLook(String emblem, BookMotif motif, boolean tattered, int cov
         };
     }
 
-    /** What the geometry depends on (colours are tints, not geometry). */
-    public record Key(String emblem, BookMotif motif, boolean tattered, boolean held) {}
+    /**
+     * What the geometry depends on (colours are tints, not geometry). {@code open}: 0 = the closed book; 1..3 = the summoned book
+     * opening into a V, spine towards the onlookers ({@link GrimoireBookPlan#OPEN_DEGREES}).
+     */
+    public record Key(String emblem, BookMotif motif, boolean tattered, boolean held, int open) {
+        public Key(String emblem, BookMotif motif, boolean tattered, boolean held) { this(emblem, motif, tattered, held, 0); }
+    }
 
     public Key key(boolean held) { return new Key(emblem, motif, tattered, held); }
+
+    public Key key(boolean held, int open) { return new Key(emblem, motif, tattered, held, Math.max(0, Math.min(GrimoireBookPlan.OPEN_STEPS, open))); }
 }

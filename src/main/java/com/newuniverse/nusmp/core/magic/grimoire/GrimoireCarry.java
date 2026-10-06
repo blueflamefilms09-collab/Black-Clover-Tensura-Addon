@@ -1,7 +1,7 @@
 package com.newuniverse.nusmp.core.magic.grimoire;
 
 /**
- * Where a carried grimoire is, as pure maths (no Minecraft imports, unit-tested): dormant at the right hip, summoned in front of
+ * Where a carried grimoire is, and how open it is, as pure maths (no Minecraft imports, unit-tested): dormant at the right hip, summoned in front of
  * the right hand, and the smooth trip between the two. Also the page-flip curve played when the owner switches spells.
  *
  * <p>Positions are in the owner's body frame, in blocks from their feet: {@code right}, {@code up}, {@code forward}. Rotations are
@@ -48,6 +48,38 @@ public final class GrimoireCarry {
     }
 
     static float lerp(float a, float b, float t) { return a + (b - a) * t; }
+
+    // ---------------------------------------------------------------- opening into the V (0.23)
+    /** Opening steps of the summoned book (matches GrimoireBookPlan.OPEN_STEPS) and ticks per step. */
+    public static final int OPEN_STEPS = 3;
+    public static final float OPEN_STEP_TICKS = 2f;
+    /** On a stow the book first closes in front of the hand (this many ticks), then floats back to the hip. */
+    public static final float CLOSE_TICKS = OPEN_STEPS * OPEN_STEP_TICKS;
+
+    /** Opening step {@code age} ticks after the summon: 0 (closed) while it travels, then 1, 2, 3 (fully open V). */
+    public static int openStep(float age) {
+        float since = age - TRAVEL_TICKS;
+        if (since < 0f) return 0;
+        return Math.min(OPEN_STEPS, 1 + (int) (since / OPEN_STEP_TICKS));
+    }
+
+    /** Opening step {@code back} ticks after a stow: 3, 2, 1 while it closes, then 0 (closed, travelling home). */
+    public static int closeStep(float back) {
+        if (back < 0f) return OPEN_STEPS;
+        if (back >= CLOSE_TICKS) return 0;
+        return OPEN_STEPS - (int) (back / OPEN_STEP_TICKS);
+    }
+
+    /**
+     * Heading of a turning page inside the open book, in degrees in the book's X/Z plane (page runs along (cos, sin) from the
+     * spine): it starts on the right-hand page block ({@code -openDeg}), swings through the reader's side (-90) and lands on the
+     * left-hand block ({@code -(180 - openDeg)}); {@code reverse} turns it back the other way.
+     */
+    public static float pageHeading(int k, float age, float openDeg, boolean reverse) {
+        float t = pageAngle(k, age) / FLIP_MAX_DEG;
+        if (reverse) t = 1f - t;
+        return -openDeg - t * (180f - 2f * openDeg);
+    }
 
     // ---------------------------------------------------------------- page flip
     /** Pages turned per spell switch. */

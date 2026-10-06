@@ -57,7 +57,7 @@ Chanted magics: use **Chant** mode until the chant is complete, then switch to *
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.22.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.23.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -172,7 +172,8 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 ## Summon Grimoire (base ability of every grimoire)
 - Every grimoire book has a new last mode, **Summon Grimoire**: free, instant (no chant). Press the ability key while your grimoire is in its **Grimoire Slot**: it floats up from your right hip to the front of your right hand (12-tick ease, a small arc), glows, and starts its idle bob. It counts as held, so you cast with your hands free.
 - Put it away (0.22): press the ability key **while sneaking (shift)**; it floats back down to your hip. It also goes away on death, dimension change, logout or if it leaves the slot. Other players see all of it.
-- Switching spells while it is out plays a **page flip** (3 pages, ~10 ticks): parchment for most books; anti-magic / forbidden books have torn, soot-dark pages that tremble and throw red-black sparks; Flame-soul books singe with embers, Water-soul books shed droplets, Wind-soul books puff air, Earth-soul books shed dust.
+- Once it arrives it **opens into a V** like the Blender reference renders (three quick steps): spine and covers towards everyone else, the glowing pages towards you (in first person you look into the open book). On a stow it closes in front of your hand, then floats home (`GrimoireBookPlan.buildOpen`, `GrimoireCarry.openStep`; preview: `python tools/grimoire_preview/preview.py` -> `build/grimoire_preview/open.png`).
+- Switching spells while it is out plays a **page flip** (3 pages, ~10 ticks) inside the open book, from the right-hand page block over to the left: parchment for most books; anti-magic / forbidden books have torn, soot-dark pages that tremble and throw red-black sparks; Flame-soul books singe with embers, Water-soul books shed droplets, Wind-soul books puff air, Earth-soul books shed dust.
 
 ## Grimoire Slot (0.22)
 - A bound grimoire lives in a dedicated **Grimoire Slot**, not the hotbar: open it with the "Grimoire Slot" key (unbound by default), the button on the Multiverse status screen, or `/multiverse slot`. Only your own bound grimoire fits.
@@ -180,10 +181,14 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - Any grimoire the mod gives you lands in the slot by itself (an owned grimoire elsewhere in the inventory moves in when the slot is empty; the one in your hand stays put, e.g. for the altar). The slot is kept through death.
 - **HUD cleanup**: names, titles and any other text floating above players' heads are hidden (client config `[hud] hideHeadText`, default on).
 
-## Skill icons (0.22)
-- `python tools/gen_skill_icons.py` builds the 32x32 Black Clover icon set in `textures/skill/icons/`: two backgrounds (`bg_aura` dark blue glowing aura, `bg_ancient` dark brown cracked plate), glowing mana-attribute symbols (`sym_water`, `fire`, `wind`, `earth`, `light`, `dark`, `light_dark`, `anti_magic`, plus `infinity` and `clover` after the references), spell-archetype badges (`mod_offense` crosshair, `mod_defense` shield, `mod_buff` up-arrow, `mod_debuff` down-arrow) and `sheet.png` with everything.
-- The Water, Flame, Wind, Earth, Light, Dark and Anti-Magic grimoire skill icons are rebuilt in this style (the other magics keep their icons).
-- The floating spell card shown while chanting now carries the spell's archetype badge (`core/magic/grimoire/SpellArchetype`, worked out from the page id).
+## Skill icons (0.23)
+- `python tools/gen_skill_icons.py` builds three 32x32 icons for **every** grimoire magic (all 35 plus Forbidden), after the "Black Clover Skill Icon Generator" brief (dark fantasy anime spell icon, glossy and clean-lined, embossed rune borders, glowing magic colour, particles):
+  - **Active / attack** `textures/skill/grimoire/<magic>.png` (the book's skill icon): midnight-blue aura, energy streaks, gold frame with clover-rune corners.
+  - **Buff / rune** `textures/skill/icons/<magic>_buff.png`: ancient parchment, glowing rune circle, chain links, silver stone frame.
+  - **Ultimate / forbidden** `textures/skill/icons/<magic>_ultimate.png`: black void, radial burst, layered magic circles with a star seal, black-iron frame lit in the magic colour.
+  - Layers `bg_aura` / `bg_ancient` / `bg_void`, `sym_<magic>`, the archetype badges `mod_offense` (crosshair) / `mod_defense` (shield) / `mod_buff` (up-arrow) / `mod_debuff` (down-arrow), and `sheet.png` with everything.
+- The floating spell card shown while chanting picks the icon by spell: Ultimate for signature-tier spells, Buff for defensive / buff / debuff spells, Active otherwise, with the archetype badge in its corner (`core/magic/grimoire/SpellArchetype`).
+- `docs/skill_icon_prompts.md`: the brief's three image-generator prompts (Midjourney / DALL-E) for every magic, each naming the file it would replace, if you want hand-painted icons instead.
 - Sneaking alone does not stow it (only sneak + the ability key), so sneaking (and Grigora's sneak-to-spare-players) still works while it floats.
 
 ## Creative grimoires no longer overwrite yours

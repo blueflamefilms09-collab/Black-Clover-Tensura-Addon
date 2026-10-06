@@ -13,8 +13,31 @@ import java.util.List;
 public final class GrimoireBookPlan {
     public enum Face { DOWN, UP, NORTH, SOUTH, WEST, EAST }
 
-    /** One quad: 4 corners (x,y,z in 0..16, outward winding), UVs (0..16 of the texture), texture name, tint layer (-1 none). */
-    public record Quad(float[] pos, float[] uv, String texture, int tint, boolean emissive, Face face) {}
+    /**
+     * One quad: 4 corners (x,y,z in 0..16, outward winding), UVs (0..16 of the texture), texture name, tint layer (-1 none), the
+     * nearest axis it faces and its exact outward normal (differs from the axis only on the open book's turned halves).
+     */
+    public record Quad(float[] pos, float[] uv, String texture, int tint, boolean emissive, Face face, float[] normal) {
+        public Quad(float[] pos, float[] uv, String texture, int tint, boolean emissive, Face face) {
+            this(pos, uv, texture, tint, emissive, face, axis(face));
+        }
+    }
+
+    /** Unit normal of an axis face. */
+    public static float[] axis(Face f) {
+        return switch (f) {
+            case DOWN -> new float[]{0, -1, 0}; case UP -> new float[]{0, 1, 0}; case NORTH -> new float[]{0, 0, -1};
+            case SOUTH -> new float[]{0, 0, 1}; case WEST -> new float[]{-1, 0, 0}; case EAST -> new float[]{1, 0, 0};
+        };
+    }
+
+    /** The axis face closest to a normal. */
+    public static Face nearest(float nx, float ny, float nz) {
+        float ax = Math.abs(nx), ay = Math.abs(ny), az = Math.abs(nz);
+        if (ay >= ax && ay >= az) return ny > 0 ? Face.UP : Face.DOWN;
+        if (ax >= az) return nx > 0 ? Face.EAST : Face.WEST;
+        return nz > 0 ? Face.SOUTH : Face.NORTH;
+    }
 
     // layout (model units)
     static final float BX0 = 2.5f, BX1 = 13.5f, BY0 = 1.3f, BY1 = 14.7f;            // boards
@@ -27,6 +50,7 @@ public final class GrimoireBookPlan {
     private GrimoireBookPlan() {}
 
     public static List<Quad> build(BookLook.Key key) {
+        if (key.open() > 0) return buildOpen(key);
         List<Quad> out = new ArrayList<>(110);
         boolean held = key.held();
         String leather = key.tattered() ? "cover_tattered" : "cover_leather";
@@ -107,6 +131,74 @@ public final class GrimoireBookPlan {
             case WEST -> new float[]{x0, y1, z0, x0, y0, z0, x0, y0, z1, x0, y1, z1};
             case EAST -> new float[]{x1, y1, z1, x1, y0, z1, x1, y0, z0, x1, y1, z0};
         };
+    }
+
+    // ---------------------------------------------------------------- the summoned book, open in a V
+    /** Opening steps (Key.open 1..3): degrees each half is turned back from lying flat; 34 is the fully open V of the reference renders. */
+    public static final int OPEN_STEPS = 3;
+    public static final float[] OPEN_DEGREES = {90f, 62f, 46f, 34f};
+    /** Spine axis (vertical) at (OPEN_CX, OPEN_CZ); each half is OPEN_W wide; boards OPEN_T thick; page blocks OPEN_P thick. */
+    public static final float OPEN_CX = 8f, OPEN_CZ = 11f, OPEN_W = 7.6f, OPEN_T = 0.8f, OPEN_P = 1.6f;
+    /** Where loose pages turn (page flip): on the spine axis, at the page surface. */
+    public static final float OPEN_HINGE_Z = OPEN_CZ - OPEN_T - OPEN_P - 0.6f;
+
+    /**
+     * The open book: two halves hinged on a vertical spine at the front, each turned back by {@link #OPEN_DEGREES}, outer covers
+     * facing out (+Z, to onlookers) and the glowing page blocks facing the reader behind it (-Z): the right half carries the front
+     * cover (frame, ornament, medallion, emblem), the left half the back cover (frame, ornament, rosette).
+     */
+    static List<Quad> buildOpen(BookLook.Key key) {
+        List<Quad> out = new ArrayList<>(140);
+        boolean held = key.held();
+        String leather = key.tattered() ? "cover_tattered" : "cover_leather";
+        int cover = BookLook.TINT_COVER, trim = BookLook.TINT_TRIM;
+        float th = (float) Math.toRadians(OPEN_DEGREES[Math.max(1, Math.min(OPEN_STEPS, key.open()))]);
+        float cx = OPEN_CX, cz = OPEN_CZ, w = OPEN_W, t = OPEN_T, p = OPEN_P;
+        // page blocks start far enough from the spine that the two halves' pages do not cross
+        float u0 = Math.max(0.6f, Math.min(3.0f, (0.05f + (t + p) * (float) Math.sin(th)) / (float) Math.cos(th)));
+        for (int side : new int[]{1, -1}) {
+            List<Quad> half = new ArrayList<>(70);
+            float xa = side > 0 ? cx + 0.3f : cx - w, xb = side > 0 ? cx + w : cx - 0.3f;
+            box(half, xa, BY0, cz - t, xb, BY1, cz, leather, cover, false, true, ALL);
+            float pa = side > 0 ? cx + u0 : cx - w + 0.3f, pb = side > 0 ? cx + w - 0.3f : cx - u0;
+            box(half, pa, PY0, cz - t - p, pb, PY1, cz - t, "pages", -1, held, true,
+                    new Face[]{Face.UP, Face.DOWN, Face.NORTH, side > 0 ? Face.EAST : Face.WEST});
+            if (!key.tattered()) {
+                float x0 = xa + BAR_INSET, x1 = xb - BAR_INSET, y0 = BY0 + BAR_INSET, y1 = BY1 - BAR_INSET, z0 = cz, z1 = cz + BAR_H;
+                box(half, x0, y0, z0, x0 + BAR, y1, z1, "trim_metal", trim, false, true, BAR_FACES_FRONT);
+                box(half, x1 - BAR, y0, z0, x1, y1, z1, "trim_metal", trim, false, true, BAR_FACES_FRONT);
+                box(half, x0 + BAR, y1 - BAR, z0, x1 - BAR, y1, z1, "trim_metal", trim, false, true, BAR_FACES_FRONT);
+                box(half, x0 + BAR, y0, z0, x1 - BAR, y0 + BAR, z1, "trim_metal", trim, false, true, BAR_FACES_FRONT);
+            }
+            quad(half, Face.SOUTH, xa, BY0, xb, BY1, cz + 0.02f, key.motif().texture(), trim, false);
+            float mx = (xa + xb) / 2, my = 8f, med = side > 0 ? MED * 0.8f : MED * 0.45f;
+            box(half, mx - med, my - med, cz, mx + med, my + med, cz + MED_H, "trim_metal", trim, false, false, new Face[]{Face.UP, Face.DOWN, Face.WEST, Face.EAST});
+            quad(half, Face.SOUTH, mx - med, my - med, mx + med, my + med, cz + MED_H, "medallion", trim, false);
+            if (side > 0) {
+                float e = EMB * 0.8f;
+                quad(half, Face.SOUTH, mx - e, my - e, mx + e, my + e, cz + MED_H + 0.02f, "emblem_" + key.emblem().toLowerCase(), BookLook.TINT_EMBLEM, held);
+            }
+            for (Quad q : half) out.add(turn(q, cx, cz, side * th));
+        }
+        // the spine, bulging towards the onlookers, with three metal bands
+        box(out, cx - 1.0f, SY0, cz - t - 0.3f, cx + 1.0f, SY1, cz + 0.5f, "spine", cover, false, true, ALL);
+        for (float y : new float[]{3.95f, 8.0f, 12.05f})
+            box(out, cx - 0.8f, y - 0.25f, cz + 0.5f, cx + 0.8f, y + 0.25f, cz + 0.75f, "trim_metal", trim, false, true, ALL);
+        return Collections.unmodifiableList(out);
+    }
+
+    /** Turns a quad about the vertical axis through (cx, cz) by {@code a} radians (positive swings +X towards -Z). */
+    static Quad turn(Quad q, float cx, float cz, float a) {
+        float c = (float) Math.cos(a), s = (float) Math.sin(a);
+        float[] p = q.pos().clone();
+        for (int i = 0; i < 4; i++) {
+            float dx = p[i * 3] - cx, dz = p[i * 3 + 2] - cz;
+            p[i * 3] = cx + dx * c + dz * s;
+            p[i * 3 + 2] = cz - dx * s + dz * c;
+        }
+        float[] n = q.normal();
+        float nx = n[0] * c + n[2] * s, nz = -n[0] * s + n[2] * c;
+        return new Quad(p, q.uv(), q.texture(), q.tint(), q.emissive(), nearest(nx, n[1], nz), new float[]{nx, n[1], nz});
     }
 
     /** Every texture the plan can use (for the model loader to resolve). */

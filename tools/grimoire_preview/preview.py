@@ -1,7 +1,9 @@
 """Preview the grimoire item look headlessly: compiles the real pure look/geometry classes, renders each book like the inventory
 (gui) view and a front view, with the real textures, tints, simple face shading and held glow.
 
-    python tools/grimoire_preview/preview.py      ->  build/grimoire_preview/books.png
+    python tools/grimoire_preview/preview.py      ->  build/grimoire_preview/books.png  (closed books, inventory + held views)
+                                                      build/grimoire_preview/open.png   (the summoned book opening into the V,
+                                                      seen by onlookers and by its owner, for the six Blender-preset books)
 """
 import json, math, os, shutil, subprocess, sys
 import numpy as np
@@ -22,7 +24,8 @@ LOOKS = [
     ("Karna", "", "", "karna", 0), ("Kirsch", "", "", "kirsch", 0), ("Zenon", "", "", "zenon", 0),
     ("Vanica", "", "", "vanica", 0), ("Floga", "", "", "floga", 0), ("Mars", "", "", "mars", 0),
 ]
-SHADE = {"UP": 1.0, "DOWN": 0.5, "NORTH": 0.8, "SOUTH": 0.8, "WEST": 0.6, "EAST": 0.6}
+LIGHT = np.array([0.35, 0.8, 0.5]) / np.linalg.norm([0.35, 0.8, 0.5])
+OPEN_BOOKS = [("Fuegoleon", "fuegoleon"), ("Yuno", "yuno"), ("Asta", "asta"), ("Noelle", "noelle"), ("Yami", "yami"), ("Julius", "julius")]
 W = H = 220
 
 
@@ -74,7 +77,8 @@ def render(book, R, held_bg):
         if q["tint"] >= 0:
             c = tints[q["tint"]]
             col = np.array([(c >> 16) & 255, (c >> 8) & 255, c & 255], np.float32) / 255
-        shade = 1.0 if q["e"] else SHADE[q["f"]]
+        n = np.array(q.get("n", [0, 0, 1])) @ R.T
+        shade = 1.0 if q["e"] else 0.45 + 0.55 * max(0.0, float(n @ LIGHT))
         for tri in ((0, 1, 2), (0, 2, 3)):
             x0, x1, x2 = sx[list(tri)]; y0, y1, y2 = sy[list(tri)]
             den = (y1 - y2) * (x0 - x2) + (x2 - x1) * (y0 - y2)
@@ -129,6 +133,26 @@ def main():
     for i, t in enumerate(tiles):
         sheet.paste(t, ((i % cols) * W * 2, (i // cols) * (H + 18)))
     path = os.path.join(OUT, "books.png")
+    sheet.save(path)
+    print("wrote", path)
+
+    # the summoned book: opening steps 1..3 seen by onlookers (spine and covers towards them), and the full V seen by its owner
+    entries = []
+    for label, canon in OPEN_BOOKS:
+        for step in (1, 2, 3):
+            entries.append(f"{label} step {step}|||{canon}|0|true|{step}")
+    subprocess.run(["java", "-cp", cls, "GrimoirePreview", out_json] + entries, check=True)
+    books = json.load(open(out_json))
+    views = [("opening", rot(8, -20), 0), ("opening", rot(8, -20), 1), ("open, onlookers", rot(8, -20), 2), ("open, owner", rot(8, 160), 2)]
+    sheet = Image.new("RGB", (len(views) * W, len(OPEN_BOOKS) * (H + 18)), (20, 20, 24))
+    for r, (label, _) in enumerate(OPEN_BOOKS):
+        for c, (what, R, k) in enumerate(views):
+            img = render(books[r * 3 + k], R, [0.12, 0.12, 0.16])
+            tile = Image.new("RGB", (W, H + 18), (30, 30, 36))
+            tile.paste(Image.fromarray((np.clip(img, 0, 1) * 255).astype(np.uint8)), (0, 18))
+            ImageDraw.Draw(tile).text((6, 3), f"{label}: {what}" + (f" {k + 1}/3" if c < 2 else ""), fill=(240, 220, 160))
+            sheet.paste(tile, (c * W, r * (H + 18)))
+    path = os.path.join(OUT, "open.png")
     sheet.save(path)
     print("wrote", path)
 

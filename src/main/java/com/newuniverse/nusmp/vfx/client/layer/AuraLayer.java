@@ -90,7 +90,8 @@ public class AuraLayer extends AbstractVfxLayer {
         int seed = (int) inst.seed;
         MagicType m = all[Math.floorMod(com.newuniverse.nusmp.core.magic.grimoire.SpellArchetype.magicOf(seed), all.length)];
         var archetype = com.newuniverse.nusmp.core.magic.grimoire.SpellArchetype.archetypeOf(seed);
-        ResourceLocation icon = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/skill/grimoire/" + m.name().toLowerCase() + ".png");
+        // the magic's Active, Buff or Ultimate icon depending on the spell (0.23)
+        ResourceLocation icon = ResourceLocation.fromNamespaceAndPath("nusmp", com.newuniverse.nusmp.core.magic.grimoire.SpellArchetype.iconPath(m.name(), seed));
         float wob = 0.15f * Mth.sin(age * 0.2f);
         VfxBloom.glow(ctx, buf, at, 0.6f, inst.color, alpha);
         buf.billboard(ctx, icon, VfxBlend.ALPHA, at, 0.7f, wob, VfxVertexBuffer.withAlpha(0xFFFFFFFF, alpha));

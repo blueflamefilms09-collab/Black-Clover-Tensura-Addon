@@ -6,7 +6,7 @@ import java.util.Locale;
 
 /**
  * Dumps the real grimoire geometry (GrimoireBookPlan) and resolved tints (BookLook) for a list of looks as JSON, for preview.py.
- * args: out.json then entries "label|cover|magic|canon|seed|held"
+ * args: out.json then entries "label|cover|magic|canon|seed|held[|open]" (open: 0 closed, 1..3 opening steps of the summoned V)
  */
 public final class GrimoirePreview {
     public static void main(String[] a) throws Exception {
@@ -15,15 +15,16 @@ public final class GrimoirePreview {
             String[] p = a[i].split("\\|", -1);
             BookLook look = BookLook.resolve(p[1], p[2], p[3], Integer.parseInt(p[4]));
             boolean held = Boolean.parseBoolean(p[5]);
+            int open = p.length > 6 ? Integer.parseInt(p[6]) : 0;
             if (i > 1) sb.append(',');
             sb.append("{\"label\":\"").append(p[0]).append("\",\"tints\":[").append(look.tint(0)).append(',').append(look.tint(1)).append(',').append(look.tint(2))
               .append("],\"glow\":").append(look.glowColor()).append(",\"quads\":[");
             boolean first = true;
-            for (GrimoireBookPlan.Quad q : GrimoireBookPlan.build(look.key(held))) {
+            for (GrimoireBookPlan.Quad q : GrimoireBookPlan.build(look.key(held, open))) {
                 if (!first) sb.append(',');
                 first = false;
                 sb.append("{\"t\":\"").append(q.texture()).append("\",\"tint\":").append(q.tint()).append(",\"e\":").append(q.emissive())
-                  .append(",\"f\":\"").append(q.face()).append("\",\"p\":[");
+                  .append(",\"f\":\"").append(q.face()).append("\",\"n\":[").append(String.format(Locale.ROOT, "%.3f,%.3f,%.3f", q.normal()[0], q.normal()[1], q.normal()[2])).append("],\"p\":[");
                 for (int k = 0; k < 12; k++) sb.append(k > 0 ? "," : "").append(String.format(Locale.ROOT, "%.3f", q.pos()[k]));
                 sb.append("],\"uv\":[");
                 for (int k = 0; k < 8; k++) sb.append(k > 0 ? "," : "").append(String.format(Locale.ROOT, "%.3f", q.uv()[k]));

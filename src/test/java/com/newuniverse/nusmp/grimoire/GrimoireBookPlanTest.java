@@ -42,6 +42,7 @@ class GrimoireBookPlanTest {
                         float nx = ay * bz - az * by, ny = az * bx - ax * bz, nz = ax * by - ay * bx;
                         float[] want = normalOf(q.face());
                         assertTrue(nx * want[0] + ny * want[1] + nz * want[2] > 0, "inward winding on " + q.texture() + " " + q.face());
+                        assertArrayEquals(want, q.normal(), 1e-6f);
                         assertTrue(GrimoireBookPlan.textures().contains(q.texture()), "unknown texture " + q.texture());
                         for (float u : q.uv()) assertTrue(u >= 0 && u <= 16);
                     }
@@ -52,6 +53,40 @@ class GrimoireBookPlanTest {
             }
         }
         assertEquals(GrimoireCover.values().length * BookMotif.values().length * 2, looks);
+    }
+
+    @Test
+    void openBookIsWellFormedAtEveryStep() {
+        for (BookMotif m : BookMotif.values()) {
+            for (int step = 1; step <= GrimoireBookPlan.OPEN_STEPS; step++) {
+                for (boolean held : new boolean[]{false, true}) {
+                    BookLook.Key key = new BookLook.Key("FOUR_LEAF", m, m == BookMotif.TATTERED, held, step);
+                    List<GrimoireBookPlan.Quad> quads = GrimoireBookPlan.build(key);
+                    assertTrue(quads.size() > 40 && quads.size() < 220, "quad count " + quads.size());
+                    float maxZ = 0;
+                    boolean pagesToReader = false, coverToOnlookers = false;
+                    for (GrimoireBookPlan.Quad q : quads) {
+                        float[] p = q.pos();
+                        for (float v : p) assertTrue(v >= 0 && v <= 16, "outside the item cube: " + v + " at step " + step);
+                        float ax = p[3] - p[0], ay = p[4] - p[1], az = p[5] - p[2];
+                        float bx = p[6] - p[0], by = p[7] - p[1], bz = p[8] - p[2];
+                        float nx = ay * bz - az * by, ny = az * bx - ax * bz, nz = ax * by - ay * bx;
+                        float[] n = q.normal();
+                        assertEquals(1f, (float) Math.sqrt(n[0] * n[0] + n[1] * n[1] + n[2] * n[2]), 1e-4f);
+                        assertTrue(nx * n[0] + ny * n[1] + nz * n[2] > 0, "inward winding on " + q.texture() + " step " + step);
+                        float[] axis = normalOf(q.face());
+                        assertTrue(n[0] * axis[0] + n[1] * axis[1] + n[2] * axis[2] > 0.5f, "face is the nearest axis");
+                        for (int i = 2; i < 12; i += 3) maxZ = Math.max(maxZ, p[i]);
+                        if (q.texture().equals("pages") && n[2] < -0.5f) pagesToReader = true;
+                        if (q.texture().startsWith("emblem_") && n[2] > 0.4f) coverToOnlookers = true;
+                    }
+                    assertTrue(pagesToReader, "pages face the owner (-Z)");
+                    assertTrue(coverToOnlookers, "front cover and emblem face onlookers (+Z)");
+                    assertEquals(held, quads.stream().anyMatch(GrimoireBookPlan.Quad::emissive), "only a held book glows");
+                }
+            }
+        }
+        assertTrue(GrimoireBookPlan.OPEN_HINGE_Z < GrimoireBookPlan.OPEN_CZ - GrimoireBookPlan.OPEN_T - GrimoireBookPlan.OPEN_P, "flip hinge in front of the pages");
     }
 
     @Test

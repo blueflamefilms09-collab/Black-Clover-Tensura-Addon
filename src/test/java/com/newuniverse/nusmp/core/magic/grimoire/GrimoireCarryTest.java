@@ -64,6 +64,34 @@ class GrimoireCarryTest {
     }
 
     @Test
+    void bookOpensAfterArrivingAndClosesBeforeLeaving() {
+        assertEquals(0, GrimoireCarry.openStep(0f));
+        assertEquals(0, GrimoireCarry.openStep(GrimoireCarry.TRAVEL_TICKS - 0.1f), "closed while it travels");
+        assertEquals(1, GrimoireCarry.openStep(GrimoireCarry.TRAVEL_TICKS));
+        assertEquals(GrimoireCarry.OPEN_STEPS, GrimoireCarry.openStep(GrimoireCarry.TRAVEL_TICKS + 100));
+        int last = 0;
+        for (float a = 0; a < GrimoireCarry.TRAVEL_TICKS + 20; a += 0.5f) { int s = GrimoireCarry.openStep(a); assertTrue(s >= last); last = s; }
+        assertEquals(GrimoireCarry.OPEN_STEPS, GrimoireCarry.closeStep(0f));
+        assertEquals(0, GrimoireCarry.closeStep(GrimoireCarry.CLOSE_TICKS));
+        last = GrimoireCarry.OPEN_STEPS;
+        for (float a = 0; a < GrimoireCarry.CLOSE_TICKS + 2; a += 0.5f) { int s = GrimoireCarry.closeStep(a); assertTrue(s <= last && s >= 0); last = s; }
+        assertEquals(GrimoireCarry.OPEN_STEPS, com.newuniverse.nusmp.grimoire.GrimoireBookPlan.OPEN_STEPS);
+    }
+
+    @Test
+    void pagesTurnFromTheRightBlockToTheLeftThroughTheReadersSide() {
+        float open = 34f, end = GrimoireCarry.flipDuration() + 1;
+        assertEquals(-open, GrimoireCarry.pageHeading(0, 0f, open, false), EPS);
+        assertEquals(-(180f - open), GrimoireCarry.pageHeading(0, end, open, false), 0.01f);
+        assertEquals(-(180f - open), GrimoireCarry.pageHeading(0, 0f, open, true), EPS);
+        assertEquals(-open, GrimoireCarry.pageHeading(0, end, open, true), 0.01f);
+        for (float a = 0; a < end; a += 0.25f) {
+            float h = GrimoireCarry.pageHeading(1, a, open, false);
+            assertTrue(h <= -open + EPS && h >= -(180f - open) - EPS, "stays between the page blocks, on the reader's side");
+        }
+    }
+
+    @Test
     void archetypesFromPageIds() {
         assertEquals(SpellArchetype.OFFENSE, SpellArchetype.of("exploding_fireball"));
         assertEquals(SpellArchetype.DEFENSE, SpellArchetype.of("mercury_shield"));
@@ -79,5 +107,22 @@ class GrimoireCarryTest {
             assertTrue(new File("src/main/resources/assets/nusmp/" + a.texture()).isFile(), "badge texture " + a);
         }
         assertNull(SpellArchetype.archetypeOf(7), "old cards carry no badge");
+        int ult = SpellArchetype.packSeed(12, SpellArchetype.DEBUFF, true);
+        assertEquals(12, SpellArchetype.magicOf(ult));
+        assertEquals(SpellArchetype.DEBUFF, SpellArchetype.archetypeOf(ult));
+        assertTrue(SpellArchetype.isUltimate(ult));
+        assertFalse(SpellArchetype.isUltimate(SpellArchetype.packSeed(12, SpellArchetype.DEBUFF)));
+        // every magic has all three icons on disk
+        String[] magics = {"flame", "explosion", "magma", "water", "ice", "mercury", "mist", "wind", "star", "storm", "earth", "plant", "sand",
+                "light", "lightning", "sword", "dark", "shadow", "poison", "spatial", "mirror", "gravity", "time", "sealing", "reinforcement",
+                "beast", "bone", "blood", "creation", "copy", "illusion", "dream", "anti_magic", "steel", "thread"};
+        for (String m : magics) {
+            for (int seed : new int[]{SpellArchetype.packSeed(0, SpellArchetype.OFFENSE), SpellArchetype.packSeed(0, SpellArchetype.BUFF), ult}) {
+                String path = SpellArchetype.iconPath(m.toUpperCase(), seed);
+                assertTrue(new File("src/main/resources/assets/nusmp/" + path).isFile(), "icon " + path);
+            }
+        }
+        assertEquals("textures/skill/icons/water_buff.png", SpellArchetype.iconPath("WATER", SpellArchetype.packSeed(3, SpellArchetype.DEFENSE)));
+        assertEquals("textures/skill/grimoire/water.png", SpellArchetype.iconPath("WATER", 3));
     }
 }

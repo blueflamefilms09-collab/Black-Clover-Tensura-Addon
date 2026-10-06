@@ -8,6 +8,7 @@ import com.newuniverse.nusmp.blackclover.GrimoireItem;
 import com.newuniverse.nusmp.blackclover.MagicType;
 import com.newuniverse.nusmp.core.magic.grimoire.GrimoireCarry;
 import com.newuniverse.nusmp.core.magic.grimoire.GrimoireShelfLayout;
+import com.newuniverse.nusmp.grimoire.GrimoireBookPlan;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
@@ -49,7 +50,10 @@ import java.util.Set;
  *   <li><b>Summoned</b> (book.GrimoireSummon): it floats up from the hip to the front of the right hand along
  *       {@link GrimoireCarry#trip}, then bobs ({@link GrimoireShelfLayout#bob}, faded in by the trip) and sways; stowing plays the
  *       trip backwards to the hip. In first person it rises from below your view to your lower right.</li>
- *   <li><b>Page flip</b> on a spell switch while summoned: {@link GrimoireCarry#FLIP_PAGES} loose pages swing over the spine.
+ *   <li><b>Open V</b> (0.23): once it arrives the book opens in three quick steps into the V of the reference renders, spine and
+ *       covers towards onlookers, glowing pages towards its owner; on a stow it closes again before floating home.</li>
+ *   <li><b>Page flip</b> on a spell switch while summoned: {@link GrimoireCarry#FLIP_PAGES} loose pages turn from the right-hand
+ *       page block to the left-hand one.
  *       Parchment for most books; anti-magic pages are torn, soot-dark and tremble with red-black sparks; Flame-soul pages singe
  *       with embers, Water-soul pages shed droplets, Wind-soul pages throw puffs of air, Earth-soul pages shed dust.</li>
  * </ul>
@@ -63,7 +67,16 @@ public final class GrimoireFloatClient {
         ItemStack stack;
         long start;
         long vanishAt = -1;
+        /** Render copies of the stack for opening steps 1..3 (see GrimoireItem#withOpenView), made once per stack. */
+        final ItemStack[] open = new ItemStack[GrimoireCarry.OPEN_STEPS + 1];
         Entry(ItemStack stack, long start) { this.stack = stack; this.start = start; }
+
+        ItemStack view(int step) {
+            if (step <= 0) return stack;
+            ItemStack v = open[step];
+            if (v == null) open[step] = v = GrimoireItem.withOpenView(stack, step);
+            return v;
+        }
     }
 
     /** Summoned (or just stowed) books by entity id. */
@@ -95,7 +108,7 @@ public final class GrimoireFloatClient {
             if (e != null && e.vanishAt < 0) e.vanishAt = now;
             return;
         }
-        if (e != null && e.vanishAt < 0) e.stack = stack;          // swapped books: keep floating, change the look
+        if (e != null && e.vanishAt < 0) { e.stack = stack; java.util.Arrays.fill(e.open, null); }   // swapped books: keep floating, change the look
         else FLOATING.put(entityId, new Entry(stack, now));
     }
 
@@ -123,7 +136,7 @@ public final class GrimoireFloatClient {
             var en = it.next();
             Entry e = en.getValue();
             var ent = mc.level.getEntity(en.getKey());
-            if (ent == null || !ent.isAlive() || (e.vanishAt >= 0 && now - e.vanishAt > GrimoireCarry.TRAVEL_TICKS + 1)) it.remove();
+            if (ent == null || !ent.isAlive() || (e.vanishAt >= 0 && now - e.vanishAt > GrimoireCarry.CLOSE_TICKS + GrimoireCarry.TRAVEL_TICKS + 1)) it.remove();
         }
         FLIPS.entrySet().removeIf(f -> now - f.getValue()[0] > GrimoireCarry.flipDuration() + 2);
         if (now % 40 == 0) HIP.keySet().removeIf(id -> mc.level.getEntity(id) == null);
@@ -158,18 +171,28 @@ public final class GrimoireFloatClient {
 
             GrimoireCarry.Pose p;
             ItemStack stack;
-            float arrived;                                   // 1 = fully summoned (glows, bobs, can flip)
+            float arrived;                                   // 1 = fully summoned (glows, bobs, opens, can flip)
             float age = 0;
+            int step = 0;                                    // opening step: 0 closed .. 3 the full V
+            float back = 0;
             if (e != null && e.vanishAt < 0) {
                 age = now - e.start;
                 arrived = GrimoireCarry.travel(age);
                 p = GrimoireCarry.trip(true, age, sneak);
-                stack = e.stack;
+                step = GrimoireCarry.openStep(age);
+                stack = e.view(step);
             } else if (e != null) {
-                float back = now - e.vanishAt;
-                arrived = 0;
-                p = GrimoireCarry.trip(false, back, sneak);
-                stack = e.stack;
+                back = now - e.vanishAt;
+                step = GrimoireCarry.closeStep(back);
+                if (step > 0) {                              // closing up in front of the hand first
+                    arrived = 1;
+                    p = sneak ? GrimoireCarry.HAND_SNEAK : GrimoireCarry.HAND;
+                    age = now - e.start;
+                } else {
+                    arrived = 0;
+                    p = GrimoireCarry.trip(false, back - GrimoireCarry.CLOSE_TICKS, sneak);
+                }
+                stack = e.view(step);
             } else {
                 if (hipStack.isEmpty() || self) continue;
                 arrived = 0;
@@ -177,14 +200,14 @@ public final class GrimoireFloatClient {
                 stack = hipStack;
             }
             // with nothing in the slot (book lost while out) the stowed book fades instead of landing at the hip
-            float fade = e != null && e.vanishAt >= 0 && hipStack.isEmpty() ? 1f - GrimoireCarry.travel(now - e.vanishAt) : 1f;
+            float fade = e != null && e.vanishAt >= 0 && hipStack.isEmpty() ? 1f - GrimoireCarry.travel(back - GrimoireCarry.CLOSE_TICKS) : 1f;
             float bob = GrimoireShelfLayout.bob(0, age, arrived);
             float sway = Mth.sin(age * 0.05f) * 4f * arrived;
 
             pose.pushPose();
             if (self) {
                 // first person: from below your view (t = 0) up to your lower right (t = 1)
-                float t = e.vanishAt < 0 ? arrived : 1f - GrimoireCarry.travel(now - e.vanishAt);
+                float t = e.vanishAt < 0 || step > 0 ? arrived : 1f - GrimoireCarry.travel(back - GrimoireCarry.CLOSE_TICKS);
                 if (t <= 0.01f) { pose.popPose(); continue; }
                 Vector3f look = camera.getLookVector(), up = camera.getUpVector(), left = camera.getLeftVector();
                 double drop = (1 - t) * 0.9;
@@ -192,7 +215,7 @@ public final class GrimoireFloatClient {
                         .add(-left.x() * 0.42, -left.y() * 0.42, -left.z() * 0.42)
                         .add(up.x() * (bob - 0.2 - drop), up.y() * (bob - 0.2 - drop), up.z() * (bob - 0.2 - drop));
                 pose.translate(at.x - cam.x, at.y - cam.y, at.z - cam.z);
-                pose.mulPose(Axis.YP.rotationDegrees(180f - camera.getYRot() - 18f + sway));
+                pose.mulPose(Axis.YP.rotationDegrees(-camera.getYRot() - 18f + sway));   // covers away from you: you read the pages
                 pose.mulPose(Axis.XP.rotationDegrees(camera.getXRot() * 0.6f - 12f - 40f * (1 - t)));
                 float s = Mth.lerp(t, 0.38f, 0.55f);
                 pose.scale(s, s, s);
@@ -210,7 +233,7 @@ public final class GrimoireFloatClient {
             }
             int light = arrived > 0.5f ? LightTexture.FULL_BRIGHT : lightAt(owner, partial);
             if (arrived >= 1f) {
-                // summoned: the in-hand context makes the model glow
+                // summoned: the in-hand context makes the model glow; step > 0 draws the open V
                 mc.getItemRenderer().renderStatic(stack, ItemDisplayContext.THIRD_PERSON_RIGHT_HAND, light, OverlayTexture.NO_OVERLAY, pose, buffers, mc.level, id);
             } else {
                 // dormant or travelling: same placement as the in-hand transform, without the glow
@@ -221,7 +244,7 @@ public final class GrimoireFloatClient {
                 pose.popPose();
             }
             long[] f = FLIPS.get(id);
-            if (f != null && arrived >= 1f) pages(pose, buffers, cam, stack, now - f[0], f[1] == 1, light);
+            if (f != null && step == GrimoireCarry.OPEN_STEPS) pages(pose, buffers, cam, stack, now - f[0], f[1] == 1, light);
             pose.popPose();
         }
         buffers.endBatch();
@@ -257,8 +280,9 @@ public final class GrimoireFloatClient {
     }
 
     /**
-     * Loose pages turning over the spine, in the book model's own units (0..16, front cover at z 10.5, spine at x 2.7). Each page is
-     * two strips: the inner half at the hinge angle, the outer half lagging behind ({@link GrimoireCarry#pageBend}).
+     * Loose pages turning inside the open book, in the book model's own units (0..16): each starts on the right-hand page block,
+     * swings through the reader's side and lands on the left-hand block ({@link GrimoireCarry#pageHeading}); two strips per page,
+     * the outer half lagging behind ({@link GrimoireCarry#pageBend}).
      */
     private static void pages(PoseStack pose, MultiBufferSource buffers, Vec3 cam, ItemStack stack, float age, boolean reverse, int light) {
         Style style = style(stack);
@@ -272,19 +296,20 @@ public final class GrimoireFloatClient {
         pose.pushPose();
         handTransform(pose);
         pose.scale(1f / 16f, 1f / 16f, 1f / 16f);
-        final float hx = 2.7f, hz = 10.95f, y0 = 1.8f, y1 = 14.2f, half = 5.15f;
+        float openDeg = GrimoireBookPlan.OPEN_DEGREES[GrimoireBookPlan.OPEN_STEPS];
+        final float hx = GrimoireBookPlan.OPEN_CX, hz = GrimoireBookPlan.OPEN_HINGE_Z, r0 = 0.9f, half = 3.0f, y0 = 1.8f, y1 = 14.2f;
         for (int k = 0; k < GrimoireCarry.FLIP_PAGES; k++) {
             float alpha = GrimoireCarry.pageAlpha(k, age);
             if (alpha <= 0f) continue;
-            float deg = GrimoireCarry.pageAngle(k, age);
-            if (reverse) deg = GrimoireCarry.FLIP_MAX_DEG - deg;
-            float a1 = (float) Math.toRadians(deg), a2 = (float) Math.toRadians(deg + (reverse ? -1 : 1) * GrimoireCarry.pageBend(k, age));
+            float a1 = (float) Math.toRadians(GrimoireCarry.pageHeading(k, age, openDeg, reverse));
+            float a2 = a1 + (float) Math.toRadians((reverse ? -1 : 1) * GrimoireCarry.pageBend(k, age));
             float jx = 0, jz = 0;
             if (style == Style.ANTI) { jx = (RNG.nextFloat() - 0.5f) * 0.3f; jz = (RNG.nextFloat() - 0.5f) * 0.3f; }   // crackling tremble
-            float x1 = hx + Mth.cos(a1) * half + jx, z1 = hz + Mth.sin(a1) * half + jz;
+            float x0 = hx + Mth.cos(a1) * r0, z0 = hz + Mth.sin(a1) * r0;
+            float x1 = x0 + Mth.cos(a1) * half + jx, z1 = z0 + Mth.sin(a1) * half + jz;
             float x2 = x1 + Mth.cos(a2) * half, z2 = z1 + Mth.sin(a2) * half;
             int a = (int) (alpha * (style == Style.ANTI ? 230 : 245));
-            strip(vc, pose.last(), hx, hz, x1, z1, y0, y1, 0f, 0.5f, tint, a, light);
+            strip(vc, pose.last(), x0, z0, x1, z1, y0, y1, 0f, 0.5f, tint, a, light);
             strip(vc, pose.last(), x1, z1, x2, z2, y0, y1, 0.5f, 1f, tint, a, light);
             if (RNG.nextFloat() < 0.4f) particle(pose.last().pose(), cam, style, x2, (y0 + y1) * 0.5f + (RNG.nextFloat() - 0.5f) * 10f, z2);
         }
