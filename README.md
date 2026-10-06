@@ -60,7 +60,7 @@ Chanted magics: use **Chant** mode until the chant is complete, then switch to *
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.33.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.34.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -204,6 +204,40 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Anti-Magic kit**: new pages **Black Hurricane** (a whirling field that drags foes in and strips their magic) and **Black Form** (30 s of strength, speed, resistance and jump, with an anti-magic burst); mastering the Anti-Magic Lord now also grants the **Demon-Slasher** katana next to Demon-Dweller and Demon-Destroyer.
 - **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
 - **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
+
+## 0.34 - every other magic after the wiki, captains' character spells, Rouge
+Time, Fire, Water, Earth and Wind keep their spells and effects exactly as they were. Everything below is new (appended pages) unless marked *replaced*; replaced pages keep their ids, so open pages and mastery carry over.
+- **New effects** (20, `ArcaneSpellLayer` / `ArcaneSpellLayer2`, textures from `tools/gen_arcane_vfx_textures.py`, all checked in `tools/vfx_preview` under the 400-vertex budget): thread web and puppet strings, seal chains and the trinity seal crystal, Thunder Fiend arcs and the Rising Salim pillar, the transmutation circle, the poison curtain and breath, the dimensional gate and the Red Room cube, the ash formation, reflect ray and mirror doubles, cotton sheep, the glutton's maw, shadow pools with hands, the Unite aura, the Raging Black Bull construct and Rouge.
+- **Thread:** Arachne's Web, Dancing Doll (the foe walks where you look; a monster turns on its own side), Mending. Red Thread now shows puppet strings. *Replaced:* Rouge is now drawn as a woven cat on your head that unravels when she saves you, and she can also dodge a blow for you (12%).
+- **Seal:** Sealing Chains, Trinity Seal Magic, Barrier. *Replaced:* Seal / Grand Seal now show chains.
+- **Lightning:** Thunder Fiend and Black Lightning Battle Fiend (Luck only; blows arc to more foes), Pulsaranta, God of Lightning Rising Salim, Thunderbird Cavalry.
+- **Spatial:** Unopening Red Room, Myriad Black, Door of Fate (a gate that takes you and your allies to your spawn point). *Replaced:* the Fallen Angel Gate is now a real portal; Spatial Mana Domination is renamed Sacred Mana Domination.
+- **Mirror:** Reflect Ray, Large Reflect Ray, Full Reflection. *Replaced:* Real Double now spawns three mirror doubles (Tensura-style body doubles): blows can shatter a double instead of you, the doubles echo your blows, and monsters lose track of you. **Gauche's Hand Mirror** (new relic): sneak-use to leave a mirror, use to step back through it.
+- **Poison** (*replaced*, same ids): Aufwachen Dachs, Violett Schirm, Basilisk's Breath, plus Curse-Worker's Neighbor (Gordon only).
+- **Shadow** (*replaced*, same ids): Dark Garden Invitation, Kids' Playground, Shadow Realm, plus Heaven's Shadow Second Sight and Unite Mode: Canis / Gallus / Canis x Felis (Nacht only).
+- **New attributes** (new grimoires, icons and cover colours): **Transmutation** (Grey: Iron Spikes, Magic Convert, Quagmire, Grand Transmutation), **Ash** (Zora: Ash Bullets, Ash Cloud, Ash Absorbing Formation, Revelation of the Cowardly), **Cotton / Food** (Charmy: rolls Cotton or Food 50/50 when bound, Charmy's own book has both: Sleeping Sheep Strike, Sheep Cook, Sheep Bondage, Cotton Cloud / Gourmet's Bite, Glutton's Banquet), **Recombination** (Henry: Mana Corkscrew, Bulwark, Room Swap, The Raging Black Bull).
+- **Character spells**: some pages only open in a named character's grimoire (`book/CharacterSpells.java`; the character is the canon book bound with the creative tab or `/multiverse grimoire canon <player> <book>`). Already-open pages stay open.
+
+  | Character | Spells |
+  |---|---|
+  | Yami Sukehiro | Dark Cloaked Dimension Slash: Equinox |
+  | Fuegoleon / Leopold Vermillion | Leo Rugiens |
+  | Mereoleona Vermillion | Calidos Brachium |
+  | Yuno | Spirit of Zephyr |
+  | William Vangeance | World Tree Magic: Yggdrasil |
+  | Charlotte Roselei | Briar Magic: Briar Prison |
+  | Jack the Ripper | Slash Magic: Ripper Cut |
+  | Rill Boismortier | Painting Magic: Painted Menagerie |
+  | Dorothy Unsworth | Glamour World |
+  | Kaiser Granvorka | Vortex Magic: Vortex Shield |
+  | Nozel Silva | Mercury Magic: Mercury Rain |
+  | Nacht Faust | Unite Mode: Canis, Gallus, Canis x Felis |
+  | Luck Voltia | Thunder Fiend, Black Lightning Battle Fiend |
+  | Gordon Agrippa | Curse-Worker's Neighbor |
+  | Zora Ideale | Revelation of the Cowardly |
+  | Henry Legolant | The Raging Black Bull |
+- **New canon grimoires:** the captains Charlotte, Jack, Rill, Dorothy, Kaiser and Nacht, and the Black Bulls Grey, Gordon and Henry. Charmy's and Zora's canon books now carry Cotton and Ash.
+- Rouge's Blender build blueprint (topology, woven fibres, Geometry Nodes threads, the unravel rig, shaders, compositing): `docs/rouge_spec.md`.
 
 ## 0.33 - every sword redrawn as pixel art
 - **Replacement:** the Demon-Slayer, Demon-Dweller, Demon-Destroyer, Demon-Slasher Katana, Yami's Katana, Licht's Demon-Dweller and Demon-Destroyer, the Spell-Forged Rapier and the Severing Greatsword are redrawn in the same pixel-art style as the Rimeheart Runeblade and the reference sheet (`tools/gen_pixel_swords.py`, replacing the 0.28 smooth 128 px sprites and `tools/gen_weapon_textures.py`). Each is a 32x32 sprite with 4-step palette ramps lit from the top-left and canon shapes (the Slayer's chipped edges and pointed tip, the Dweller's four-sided guard and spiral grip, the Destroyer's bite and flared clover end, round tsubas and diamond-wrapped katana grips, the rapier's swept hilt).

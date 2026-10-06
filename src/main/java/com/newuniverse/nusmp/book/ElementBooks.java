@@ -28,7 +28,8 @@ public final class ElementBooks {
                 zone("thousand_swords", "Origin Flash Barrage", CanonSpells::originFlashBarrage),
                 signature("blade_domain", "Demon-Dweller Sword: Conquering Eon", CanonSpells::conqueringEon),
                 mid("summon_demon_dweller", "Sword Magic: Demon-Dweller Sword", CanonSpells::summonDweller).withCooldown(1200),
-                mid("summon_demon_destroyer", "Sword Magic: Demon-Destroyer Sword", CanonSpells::summonDestroyer).withCooldown(1200)));
+                mid("summon_demon_destroyer", "Sword Magic: Demon-Destroyer Sword", CanonSpells::summonDestroyer).withCooldown(1200),
+                signature("ripper_cut", "Slash Magic: Ripper Cut", WikiSpells::ripperCut)));                       // 0.34: Jack the Ripper
     }
 
     public static GrimoireBook explosion() {
@@ -66,7 +67,8 @@ public final class ElementBooks {
                 starter("storm_lance", "Storm Lance", shot(Shot.LIGHTNING_LANCE, 9, 2.4f, 0.4f, 0)),
                 mid("tempest_ring", "Tempest Ring", nova(6, 5, false, VfxShape.WIND_RING, all(knock(1.4), lift(0.4)))),
                 signature("eye_of_the_storm", "Eye of the Storm", field(4, 5, 100, 10, false, VfxShape.WIND_RING, lift(0.3))),
-                zone("thunder_sphere", "Thunder Sphere", shot(Shot.THUNDER_SPHERE, 12, 1.2f, 0.6f, 0))));
+                zone("thunder_sphere", "Thunder Sphere", shot(Shot.THUNDER_SPHERE, 12, 1.2f, 0.6f, 0)),
+                zone("vortex_shield", "Vortex Magic: Vortex Shield", WikiSpells::vortexShield).withCooldown(900)));  // 0.34: Kaiser Granvorka
     }
 
     public static GrimoireBook sand() {
@@ -76,19 +78,26 @@ public final class ElementBooks {
                 signature("quicksand_tomb", "Quicksand Tomb", bind(8, 16, false, VfxShape.EARTH_SPIKES, NONE))));
     }
 
+    /** Shadow Magic (Nacht Faust), rebuilt after the wiki in 0.34: page ids kept, new spells appended (Unite modes: Nacht only). */
     public static GrimoireBook shadow() {
         return new ElementBook(MagicType.SHADOW, 0xFF3A3A55, TensuraDamageTypes.DARKNESS_ELEMENTAL, List.of(
-                starter("shadow_step", "Shadow Step", dash(9, 0, true, VfxShape.SPATIAL_RIFT, NONE)),
-                zone("shadow_bind", "Shadow Bind", bind(4, 16, false, VfxShape.THREAD_LINE, NONE)),
-                signature("shadow_realm", "Shadow Realm", field(4, 5, 100, 20, false, VfxShape.SPATIAL_RIFT, effect(() -> new MobEffectInstance(MobEffects.DARKNESS, 40, 0))))));
+                starter("shadow_step", "Dark Garden Invitation", WikiSpells::darkGardenInvitation),
+                zone("shadow_bind", "Kids' Playground", WikiSpells::kidsPlayground),
+                signature("shadow_realm", "Shadow Realm", WikiSpells::shadowRealm),
+                mid("heavens_shadow_second_sight", "Heaven's Shadow Second Sight", WikiSpells::secondSight),
+                mid("unite_canis", "Unite Mode: Canis", WikiSpells::uniteCanis).withCooldown(900),
+                mid("unite_gallus", "Unite Mode: Gallus", WikiSpells::uniteGallus).withCooldown(900),
+                signature("unite_canis_felis", "Unite Mode: Canis x Felis", WikiSpells::uniteCanisFelis).withCooldown(1200)));
     }
 
+    /** Poison Magic (Gordon Agrippa), rebuilt after the wiki in 0.34: page ids kept, Curse-Worker's Neighbor appended (Gordon only). */
     public static GrimoireBook poison() {
         return new ElementBook(MagicType.POISON, 0xFF8BD13C, TensuraDamageTypes.MAGIC_GENERIC, List.of(
-                starter("venom_bolt", "Venom Bolt", shot(Shot.POISON_BALL, 7, 1.5f, 0.3f, 0)),
-                zone("toxic_cloud", "Toxic Cloud", field(2, 4, 100, 20, true, VfxShape.WATER_RING, effect(() -> new MobEffectInstance(MobEffects.POISON, 40, 0)))),
-                signature("plague_nova", "Plague Nova", nova(10, 6, false, VfxShape.MAGIC_CIRCLE_EXPLOSION, all(effect(() -> new MobEffectInstance(MobEffects.POISON, 120, 1)), effect(() -> new MobEffectInstance(MobEffects.WITHER, 60, 0))))),
-                mid("acid_ball", "Acid Ball", shot(Shot.ACID_BALL, 10, 1.4f, 0.4f, 0))));
+                starter("venom_bolt", "Aufwachen Dachs", WikiSpells::aufwachenDachs),
+                zone("toxic_cloud", "Violett Schirm", WikiSpells::violettSchirm),
+                signature("plague_nova", "Basilisk's Breath", WikiSpells::basiliskBreath),
+                mid("acid_ball", "Acid Ball", shot(Shot.ACID_BALL, 10, 1.4f, 0.4f, 0)),
+                mid("curse_workers_neighbor", "Curse-Worker's Neighbor", WikiSpells::curseWorkersNeighbor)));
     }
 
     public static GrimoireBook reinforcement() {
@@ -130,7 +139,8 @@ public final class ElementBooks {
         return new ElementBook(MagicType.CREATION, 0xFFF0E8C0, TensuraDamageTypes.MAGIC_GENERIC, List.of(
                 starter("created_blade", "Creation: Blade", shot(Shot.AURA_SLASH, 9, 2.0f, 0.6f, 0)),
                 mid("created_wall", "Creation: Wall", wall(Blocks.SMOOTH_QUARTZ.defaultBlockState())),
-                signature("arsenal", "Creation: Arsenal", constructs(5, 4, 160))));
+                signature("arsenal", "Creation: Arsenal", constructs(5, 4, 160)),
+                signature("painted_menagerie", "Painting Magic: Painted Menagerie", WikiSpells::paintedMenagerie).withCooldown(1200)));   // 0.34: Rill Boismortier
     }
 
     public static GrimoireBook copyBook() {
@@ -150,7 +160,8 @@ public final class ElementBooks {
         return new ElementBook(MagicType.DREAM, 0xFFF0B0D8, TensuraDamageTypes.MAGIC_GENERIC, List.of(
                 starter("dream_haze", "Dream Haze", bind(3, 16, true, VfxShape.ELF_CIRCLE, NONE)),
                 mid("sweet_dream", "Sweet Dream", healAllies(6, 0.15f)),
-                signature("dream_world", "Dream World", field(3, 6, 120, 20, false, VfxShape.ELF_CIRCLE, effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 30, 2))))));
+                signature("dream_world", "Dream World", field(3, 6, 120, 20, false, VfxShape.ELF_CIRCLE, effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 30, 2)))),
+                signature("glamour_world", "Glamour World", WikiSpells::glamourWorld).withCooldown(1200)));         // 0.34: Dorothy Unsworth
     }
 
     /**

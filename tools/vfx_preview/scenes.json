@@ -1007,5 +1007,920 @@
     1.8
    ]
   ]
+ },
+ "thread_web": {
+  "layer": "ArcaneSpellLayer",
+  "shape": "THREAD_WEB",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 4,
+  "duration": 120,
+  "cam": [
+   0,
+   5,
+   -7
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ],
+  "ages": [
+   3,
+   12,
+   60
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "thread_strings": {
+  "layer": "ArcaneSpellLayer",
+  "shape": "THREAD_STRINGS",
+  "from": [
+   0,
+   1.4,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   7
+  ],
+  "power": 1,
+  "duration": 60,
+  "cam": [
+   7,
+   2.5,
+   2
+  ],
+  "target": [
+   0,
+   1.4,
+   4
+  ],
+  "ages": [
+   3,
+   15,
+   40
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    7,
+    1.8
+   ]
+  ]
+ },
+ "seal_chains": {
+  "layer": "ArcaneSpellLayer",
+  "shape": "SEAL_CHAINS",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1,
+  "duration": 80,
+  "cam": [
+   0,
+   2,
+   -5
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   3,
+   12,
+   50
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "seal_trinity": {
+  "layer": "ArcaneSpellLayer",
+  "shape": "SEAL_TRINITY",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1,
+  "duration": 40,
+  "cam": [
+   0,
+   2.5,
+   -6
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   6,
+   20,
+   32
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "lightning_fiend": {
+  "layer": "ArcaneSpellLayer",
+  "shape": "LIGHTNING_FIEND",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1,
+  "duration": 400,
+  "cam": [
+   0,
+   1.5,
+   -4
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   5,
+   40,
+   41
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "lightning_fiend_black": {
+  "layer": "ArcaneSpellLayer",
+  "shape": "LIGHTNING_FIEND",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 2,
+  "duration": 400,
+  "cam": [
+   0,
+   1.5,
+   -4
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   5,
+   40,
+   41
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "lightning_god": {
+  "layer": "ArcaneSpellLayer",
+  "shape": "LIGHTNING_GOD",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.2,
+  "duration": 26,
+  "cam": [
+   0,
+   4,
+   -16
+  ],
+  "target": [
+   0,
+   6,
+   0
+  ],
+  "ages": [
+   2,
+   6,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "alchemy_circle": {
+  "layer": "ArcaneSpellLayer",
+  "shape": "ALCHEMY_CIRCLE",
+  "from": [
+   0,
+   1.3,
+   1.5
+  ],
+  "to": [
+   0,
+   1.3,
+   4
+  ],
+  "power": 1,
+  "duration": 30,
+  "cam": [
+   3,
+   2,
+   -3
+  ],
+  "target": [
+   0,
+   1.3,
+   1.5
+  ],
+  "ages": [
+   4,
+   12,
+   24
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "poison_curtain": {
+  "layer": "ArcaneSpellLayer",
+  "shape": "POISON_CURTAIN",
+  "from": [
+   -3,
+   0,
+   3
+  ],
+  "to": [
+   3,
+   0,
+   3
+  ],
+  "power": 3,
+  "duration": 160,
+  "cam": [
+   0,
+   2,
+   -5
+  ],
+  "target": [
+   0,
+   1.5,
+   3
+  ],
+  "ages": [
+   4,
+   14,
+   80
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "poison_breath": {
+  "layer": "ArcaneSpellLayer",
+  "shape": "POISON_BREATH",
+  "from": [
+   0,
+   1.5,
+   0.5
+  ],
+  "to": [
+   0,
+   1.2,
+   10
+  ],
+  "power": 1,
+  "duration": 30,
+  "cam": [
+   7,
+   3,
+   1
+  ],
+  "target": [
+   0,
+   1.3,
+   5
+  ],
+  "ages": [
+   5,
+   12,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "space_portal": {
+  "layer": "ArcaneSpellLayer",
+  "shape": "SPACE_PORTAL",
+  "from": [
+   0,
+   0,
+   3
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 1.4,
+  "duration": 400,
+  "cam": [
+   2,
+   2,
+   -3
+  ],
+  "target": [
+   0,
+   1.6,
+   3
+  ],
+  "ages": [
+   4,
+   14,
+   100
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "space_cube": {
+  "layer": "ArcaneSpellLayer2",
+  "shape": "SPACE_CUBE",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.5,
+  "duration": 100,
+  "cam": [
+   3,
+   3,
+   -6
+  ],
+  "target": [
+   0,
+   1.5,
+   0
+  ],
+  "ages": [
+   4,
+   14,
+   60
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "ash_formation": {
+  "layer": "ArcaneSpellLayer2",
+  "shape": "ASH_FORMATION",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 4,
+  "duration": 160,
+  "cam": [
+   0,
+   5,
+   -8
+  ],
+  "target": [
+   0,
+   0.5,
+   0
+  ],
+  "ages": [
+   5,
+   20,
+   80
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "mirror_ray": {
+  "layer": "ArcaneSpellLayer2",
+  "shape": "MIRROR_RAY",
+  "from": [
+   0,
+   1.5,
+   1
+  ],
+  "to": [
+   0,
+   1.3,
+   12
+  ],
+  "power": 1,
+  "duration": 16,
+  "cam": [
+   6,
+   2.5,
+   -1
+  ],
+  "target": [
+   0,
+   1.4,
+   5
+  ],
+  "ages": [
+   3,
+   6,
+   10
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    12,
+    1.8
+   ]
+  ]
+ },
+ "mirror_double": {
+  "layer": "ArcaneSpellLayer2",
+  "shape": "MIRROR_DOUBLE",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 3,
+  "duration": 200,
+  "cam": [
+   0,
+   2.2,
+   -6
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   4,
+   30,
+   90
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "cotton_sheep_strike": {
+  "layer": "ArcaneSpellLayer2",
+  "shape": "COTTON_SHEEP",
+  "from": [
+   0,
+   1,
+   1
+  ],
+  "to": [
+   0,
+   1,
+   9
+  ],
+  "power": 1,
+  "duration": 24,
+  "cam": [
+   7,
+   2.5,
+   2
+  ],
+  "target": [
+   0,
+   1,
+   5
+  ],
+  "ages": [
+   4,
+   10,
+   20
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    9,
+    1.8
+   ]
+  ]
+ },
+ "cotton_sheep_cook": {
+  "layer": "ArcaneSpellLayer2",
+  "shape": "COTTON_SHEEP",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 1,
+  "duration": 24,
+  "cam": [
+   0,
+   2.2,
+   -5
+  ],
+  "target": [
+   0,
+   0.8,
+   0
+  ],
+  "ages": [
+   4,
+   10,
+   20
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "food_maw": {
+  "layer": "ArcaneSpellLayer2",
+  "shape": "FOOD_MAW",
+  "from": [
+   0,
+   1.6,
+   3
+  ],
+  "to": [
+   0,
+   1.6,
+   8
+  ],
+  "power": 1,
+  "duration": 40,
+  "cam": [
+   3,
+   2,
+   -3
+  ],
+  "target": [
+   0,
+   1.6,
+   3
+  ],
+  "ages": [
+   4,
+   16,
+   32
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "shadow_pool": {
+  "layer": "ArcaneSpellLayer2",
+  "shape": "SHADOW_POOL",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 3,
+  "duration": 60,
+  "cam": [
+   0,
+   3.5,
+   -7
+  ],
+  "target": [
+   0,
+   0.5,
+   0
+  ],
+  "ages": [
+   4,
+   16,
+   40
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "shadow_unite": {
+  "layer": "ArcaneSpellLayer2",
+  "shape": "SHADOW_UNITE",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1,
+  "duration": 400,
+  "cam": [
+   0,
+   1.8,
+   -4.5
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   5,
+   30,
+   100
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "recombine_construct": {
+  "layer": "ArcaneSpellLayer2",
+  "shape": "RECOMBINE_CONSTRUCT",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.4,
+  "duration": 40,
+  "cam": [
+   4,
+   3,
+   -7
+  ],
+  "target": [
+   0,
+   1.6,
+   0
+  ],
+  "ages": [
+   6,
+   14,
+   30
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "rouge_cat": {
+  "layer": "ArcaneSpellLayer2",
+  "shape": "ROUGE_CAT",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1,
+  "duration": 120,
+  "cam": [
+   0,
+   2.4,
+   -4
+  ],
+  "target": [
+   0,
+   2,
+   0
+  ],
+  "ages": [
+   6,
+   30,
+   80
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "rouge_unravel": {
+  "layer": "ArcaneSpellLayer2",
+  "shape": "ROUGE_CAT",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 2,
+  "duration": 40,
+  "cam": [
+   0,
+   2.4,
+   -4
+  ],
+  "target": [
+   0,
+   2,
+   0
+  ],
+  "ages": [
+   4,
+   14,
+   26
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
  }
 }

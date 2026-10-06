@@ -130,6 +130,11 @@ public final class NUSkills {
     public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_ILLUSION = book("book_illusion", com.newuniverse.nusmp.book.ElementBooks::illusion);
     public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_DREAM = book("book_dream", com.newuniverse.nusmp.book.ElementBooks::dream);
     public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_ANTI_MAGIC = book("book_anti_magic", com.newuniverse.nusmp.book.ElementBooks::antiMagic);
+    // 0.34: attributes from the wiki
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_TRANSMUTATION = book("book_transmutation", com.newuniverse.nusmp.book.WikiBooks::transmutation);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_ASH = book("book_ash", com.newuniverse.nusmp.book.AshBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_COTTON = book("book_cotton", com.newuniverse.nusmp.book.CottonBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_RECOMBINATION = book("book_recombination", com.newuniverse.nusmp.book.WikiBooks::recombination);
     /** Anti-Magic Spirit Lord: awakened by mastering the Anti-Magic grimoire (or /nusmp grimoire awaken_anti). */
     public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.antimagic.AntiMagicLordSkill> ANTI_MAGIC_LORD =
             SKILLS.register("anti_magic_spirit_lord", () -> new com.newuniverse.nusmp.antimagic.AntiMagicLordSkill());
@@ -143,7 +148,8 @@ public final class NUSkills {
             BOOK_TIME, BOOK_FIRE, BOOK_WATER, BOOK_WIND, BOOK_EARTH, BOOK_LIGHT, BOOK_DARK, BOOK_SPATIAL, BOOK_LIGHTNING,
             BOOK_STEEL, BOOK_MIRROR, BOOK_THREAD, BOOK_PLANT, BOOK_SEALING, BOOK_GRAVITY, BOOK_ICE, BOOK_MERCURY,
             BOOK_SWORD, BOOK_EXPLOSION, BOOK_MAGMA, BOOK_MIST, BOOK_STAR, BOOK_STORM, BOOK_SAND, BOOK_SHADOW, BOOK_POISON,
-            BOOK_REINFORCEMENT, BOOK_BEAST, BOOK_BONE, BOOK_BLOOD, BOOK_CREATION, BOOK_COPY, BOOK_ILLUSION, BOOK_DREAM, BOOK_ANTI_MAGIC);
+            BOOK_REINFORCEMENT, BOOK_BEAST, BOOK_BONE, BOOK_BLOOD, BOOK_CREATION, BOOK_COPY, BOOK_ILLUSION, BOOK_DREAM, BOOK_ANTI_MAGIC,
+            BOOK_TRANSMUTATION, BOOK_ASH, BOOK_COTTON, BOOK_RECOMBINATION);
 
     /** The Unique book for a magic type, or null if that family isn't ported yet. */
     public static com.newuniverse.nusmp.book.GrimoireBook bookFor(com.newuniverse.nusmp.blackclover.MagicType m) {

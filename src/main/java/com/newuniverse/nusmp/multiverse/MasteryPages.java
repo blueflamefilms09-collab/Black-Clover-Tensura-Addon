@@ -111,7 +111,12 @@ public final class MasteryPages {
             if (GrimoireBook.isUnlocked(inst, m) || mastery < masteryCost(page, m, n)) continue;
             Gate gate = gate(book, page);
             if (!gate.passes(p)) {
-                remindGate(p, inst, m, page, gate);
+                remindGate(p, inst, m, page, gate.describe());
+                continue;
+            }
+            String block = book.pageBlock(p, inst, m);                     // 0.34: character spells, Cotton / Food half
+            if (block != null) {
+                remindGate(p, inst, m, page, block);
                 continue;
             }
             GrimoireBook.unlock(inst, m);
@@ -126,13 +131,13 @@ public final class MasteryPages {
     }
 
     /** Tells the player once per page (until it opens) what it waits for. */
-    private static void remindGate(ServerPlayer p, ManasSkillInstance inst, int m, BookPage page, Gate gate) {
+    private static void remindGate(ServerPlayer p, ManasSkillInstance inst, int m, BookPage page, String what) {
         var tag = inst.getOrCreateTag();
         int told = tag.getInt("GateTold");
         if ((told & (1 << m)) != 0) return;
         tag.putInt("GateTold", told | (1 << m));
         inst.markDirty();
-        p.sendSystemMessage(Component.literal("A page stirs (" + page.name() + "), but it will only open for: " + gate.describe() + ".").withStyle(ChatFormatting.GRAY));
+        p.sendSystemMessage(Component.literal("A page stirs (" + page.name() + "), but it will only open for: " + what + ".").withStyle(ChatFormatting.GRAY));
     }
 
     // ---------------------------------------------------------------- mastery sources besides casting

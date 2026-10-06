@@ -86,6 +86,14 @@ public abstract class GrimoireBook extends Skill {
     }
 
     public int familyCount() { return familyPages().size(); }
+
+    /**
+     * Anything besides mastery, rank and race that a page waits for before it can open (0.34): character spells, Charmy's
+     * Cotton / Food half. Null = nothing; otherwise who or what it waits for, shown to the player once.
+     */
+    public String pageBlock(ServerPlayer p, ManasSkillInstance inst, int mode) {
+        return CharacterSpells.block(this, page(mode), p);
+    }
     public BookPage page(int mode) { return mode >= 0 && mode < pages().size() ? pages().get(mode) : null; }
     private boolean isDive(int mode) { return page(mode) != null && (page(mode).id().equals("spirit_dive") || page(mode).id().equals("spirit_channeling")); }
     private boolean isChannel(int mode) { return page(mode) != null && page(mode).id().equals("spirit_channeling"); }

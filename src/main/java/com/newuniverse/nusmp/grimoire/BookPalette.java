@@ -24,6 +24,7 @@ public final class BookPalette {
             case "CREATION" -> 0xE6E0D0; case "COPY" -> 0x5F6A80; case "ILLUSION" -> 0x8E4AB0; case "DREAM" -> 0xE69CC8;
             case "ANTI_MAGIC" -> 0x1C1918;
             case "STEEL" -> 0x8FA3B4; case "THREAD" -> 0xB28CC4;
+            case "TRANSMUTATION" -> 0x5E6E78; case "ASH" -> 0x55524E; case "COTTON" -> 0xF2EEE4; case "RECOMBINATION" -> 0x3A3430;
             default -> 0x8A6A4A;
         };
     }
@@ -53,6 +54,7 @@ public final class BookPalette {
             case "CREATION" -> 0xFFFFFF; case "COPY" -> 0xA0B0D0; case "ILLUSION" -> 0xD070FF; case "DREAM" -> 0xFFA8E0;
             case "ANTI_MAGIC" -> 0xB01020;
             case "STEEL" -> 0xB8C4D8; case "THREAD" -> 0xFF4060;
+            case "TRANSMUTATION" -> 0x7AF0D8; case "ASH" -> 0xB0AAA2; case "COTTON" -> 0xFFF4FA; case "RECOMBINATION" -> 0xFF9A3C;
             default -> 0xFFFFFF;
         };
     }

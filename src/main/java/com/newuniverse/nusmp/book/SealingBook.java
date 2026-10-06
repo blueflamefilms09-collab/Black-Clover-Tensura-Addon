@@ -28,7 +28,11 @@ import java.util.List;
 public class SealingBook extends GrimoireBook {
     private final List<BookPage> pages = List.of(
             BookPage.zone("seal", "Seal", SealingBook::seal),
-            BookPage.signature("grand_seal", "Grand Seal", SealingBook::grandSeal));
+            BookPage.signature("grand_seal", "Grand Seal", SealingBook::grandSeal),
+            // 0.34: wiki spells, appended
+            BookPage.mid("sealing_chains", "Seal Magic: Sealing Chains", WikiSpells::sealingChains),
+            BookPage.signature("trinity_seal", "Trinity Seal Magic", WikiSpells::trinitySeal),
+            BookPage.zone("seal_barrier", "Seal Magic: Barrier", WikiSpells::sealBarrier));
 
     public SealingBook() { super(MagicType.SEALING, 0xFFE8C26A); }
     @Override protected List<BookPage> familyPages() { return pages; }
@@ -40,7 +44,7 @@ public class SealingBook extends GrimoireBook {
         if (t instanceof Player) t.getPersistentData().putLong("nusmp_sealed_until", t.level().getGameTime() + dur);
         b.hurt(i, p, t, mode, 6f);
         t.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, dur, 1));
-        b.vfx(p, VfxShape.MAGIC_CIRCLE, t.position().add(0, t.getBbHeight() / 2, 0), p.getEyePosition(), dur, 0.6f);
+        b.vfx(p, VfxShape.SEAL_CHAINS, t.position().add(0, t.getBbHeight() / 2, 0), t.position(), dur, Math.max(0.8f, t.getBbHeight() / 1.8f));   // 0.34
     }
 
     static boolean seal(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {

@@ -81,6 +81,7 @@ public final class NUItems {
     public static final DeferredItem<RelicItem> RECOVERY_SALVE = relic("recovery_salve", RelicItem.Kind.RECOVERY_SALVE, Rarity.UNCOMMON);
     public static final DeferredItem<RelicItem> WRITTEN_CONSENT = relic("written_consent", RelicItem.Kind.CONSENT, Rarity.COMMON);
     public static final DeferredItem<RelicItem> DEVIL_CONTRACT = relic("devil_contract", RelicItem.Kind.DEVIL_CONTRACT, Rarity.EPIC);
+    public static final DeferredItem<RelicItem> GAUCHE_MIRROR = relic("gauches_hand_mirror", RelicItem.Kind.GAUCHE_MIRROR, Rarity.RARE);   // 0.34
 
     // ---------------------------------------------------------------- magic tools (attribute conduction)
     public static final DeferredItem<SwordItem> MAGIC_TOOL_SWORD = ITEMS.register("magic_tool_sword",
@@ -115,7 +116,7 @@ public final class NUItems {
         for (RobeSet s : SETS) { l.add(s.hood()); l.add(s.chest()); l.add(s.legs()); l.add(s.boots()); }
         l.addAll(List.of(DEMON_SLASHER_KATANA, MIASMA_KATANA, SPELL_FORGED_RAPIER, SEVERING_GREATSWORD, DEMON_SLAYER, DEMON_DWELLER, DEMON_DESTROYER, LICHT_DWELLER, LICHT_DESTROYER, RIMEHEART_RUNEBLADE));
         l.addAll(List.of(COMMUNICATION_DEVICE, RUNE_STONE, SPIRIT_CHARM, BOND_THREAD, FORTUNE_DIE,
-                GRIMOIRE_CHAIN, ANTI_BIRD_CHARM, RECOVERY_SALVE, WRITTEN_CONSENT, DEVIL_CONTRACT, MAGIC_TOOL_SWORD, MAGIC_TOOL_SPEAR, MAGIC_TOOL_BOW, SPIRIT_LORD_SKILL));
+                GRIMOIRE_CHAIN, ANTI_BIRD_CHARM, RECOVERY_SALVE, WRITTEN_CONSENT, DEVIL_CONTRACT, GAUCHE_MIRROR, MAGIC_TOOL_SWORD, MAGIC_TOOL_SPEAR, MAGIC_TOOL_BOW, SPIRIT_LORD_SKILL));
         return l;
     }
 }

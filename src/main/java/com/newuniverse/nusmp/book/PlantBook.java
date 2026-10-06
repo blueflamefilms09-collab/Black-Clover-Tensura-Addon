@@ -28,7 +28,10 @@ import java.util.List;
 public class PlantBook extends GrimoireBook {
     private final List<BookPage> pages = List.of(
             BookPage.mid("guidepost", "Magic Flower Guidepost", PlantBook::guidepost),
-            BookPage.signature("hundred_flowers", "Dream World of a Hundred Flowers", PlantBook::dreamWorld));
+            BookPage.signature("hundred_flowers", "Dream World of a Hundred Flowers", PlantBook::dreamWorld),
+            // 0.34: captains' character spells (William Vangeance, Charlotte Roselei)
+            BookPage.signature("yggdrasil", "World Tree Magic: Yggdrasil", WikiSpells::yggdrasil).withCooldown(1200),
+            BookPage.zone("briar_prison", "Briar Magic: Briar Prison", WikiSpells::briarPrison));
 
     public PlantBook() { super(MagicType.PLANT, 0xFF6CFF7A); }
     @Override protected List<BookPage> familyPages() { return pages; }

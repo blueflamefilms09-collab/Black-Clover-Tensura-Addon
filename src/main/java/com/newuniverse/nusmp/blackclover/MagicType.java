@@ -61,7 +61,12 @@ public enum MagicType {
     ANTI_MAGIC("Anti-Magic", "Black", "EMPTY", HitEffect.NULLIFY, () -> ParticleTypes.SQUID_INK, () -> MobEffects.DAMAGE_BOOST),
     // Added later: keep at the END (item model variants use the ordinal)
     STEEL("Steel Magic", "Steel", "BATTLE", HitEffect.PIERCE, () -> ParticleTypes.CRIT, () -> MobEffects.DAMAGE_RESISTANCE),
-    THREAD("Thread Magic", "Thread", "FANTASY", HitEffect.SLOW, () -> ParticleTypes.ENCHANT, () -> MobEffects.DAMAGE_RESISTANCE);
+    THREAD("Thread Magic", "Thread", "FANTASY", HitEffect.SLOW, () -> ParticleTypes.ENCHANT, () -> MobEffects.DAMAGE_RESISTANCE),
+    // 0.34: attributes from the wiki (Grey, Zora, Charmy, Henry); appended so every ordinal above stays put
+    TRANSMUTATION("Transmutation Magic", "Alchemy", "EARTH", HitEffect.WEAKEN, () -> ParticleTypes.ENCHANT, () -> MobEffects.DAMAGE_RESISTANCE),
+    ASH("Ash Magic", "Ash", "FLAME", HitEffect.WITHER, () -> ParticleTypes.ASH, () -> MobEffects.DAMAGE_RESISTANCE),
+    COTTON("Cotton Magic", "Cotton", "FANTASY", HitEffect.SLOW, () -> ParticleTypes.WHITE_ASH, () -> MobEffects.REGENERATION),
+    RECOMBINATION("Recombination Magic", "Bull", "FANTASY", HitEffect.PUSH, () -> ParticleTypes.CRIT, () -> MobEffects.ABSORPTION);
 
     public final String displayName;
     public final String word;

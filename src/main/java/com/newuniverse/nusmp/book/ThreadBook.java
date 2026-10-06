@@ -28,7 +28,11 @@ import java.util.List;
 public class ThreadBook extends GrimoireBook {
     private final List<BookPage> pages = List.of(
             BookPage.starter("red_thread", "Red Thread", ThreadBook::redThread),
-            BookPage.daily("rouge", "Rouge", ThreadBook::rouge));
+            BookPage.daily("rouge", "Red Thread of Fate: Rouge", ThreadBook::rouge),
+            // 0.34: wiki spells, appended
+            BookPage.zone("arachnes_web", "Arachne's Web", WikiSpells::arachnesWeb),
+            BookPage.mid("dancing_doll", "Dancing Doll", WikiSpells::dancingDoll),
+            BookPage.mid("thread_mending", "Thread Magic: Mending", WikiSpells::threadMending));
 
     public ThreadBook() { super(MagicType.THREAD, 0xFFFF3355); }
     @Override protected List<BookPage> familyPages() { return pages; }
@@ -45,7 +49,7 @@ public class ThreadBook extends GrimoireBook {
         t.hurtMarked = true;
         b.hurt(i, p, t, mode, 3f);
         b.castCircle(p, 0.6f);
-        b.vfx(p, VfxShape.THREAD_LINE, p.getEyePosition(), t.getBoundingBox().getCenter(), ticks, 1f);
+        b.vfx(p, VfxShape.THREAD_STRINGS, p.getEyePosition().add(p.getViewVector(1f).scale(0.6)).add(0, -0.3, 0), t.getBoundingBox().getCenter(), ticks, 1f);
         return true;
     }
 
@@ -54,7 +58,7 @@ public class ThreadBook extends GrimoireBook {
         if (i.getOrCreateTag().getBoolean("RougeArmed")) { fail(p, "Rouge is already watching over you."); return false; }
         i.getOrCreateTag().putBoolean("RougeArmed", true);
         b.castCircle(p, 0.8f);
-        b.vfx(p, VfxShape.THREAD_LINE, p.position().add(0, 0.2, 0), p.position().add(0, 2, 0), 30, 0.8f);
+        com.newuniverse.nusmp.vfx.VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.ROUGE_CAT, p, p.position().add(0, 1, 0), 0, 200, 1f);   // 0.34: Rouge herself
         return true;
     }
 
@@ -66,6 +70,20 @@ public class ThreadBook extends GrimoireBook {
             t.putDouble("PX" + k, t.getDouble("PX" + (k - 1))); t.putDouble("PY" + k, t.getDouble("PY" + (k - 1))); t.putDouble("PZ" + k, t.getDouble("PZ" + (k - 1)));
         }
         t.putDouble("PX0", p.getX()); t.putDouble("PY0", p.getY()); t.putDouble("PZ0", p.getZ());
+    }
+
+    /** Rouge unravels and pulls you out of the way (the wiki: she unravels to dodge): a 12% chance to turn a blow aside. */
+    @Override
+    public boolean onTakenDamage(ManasSkillInstance i, LivingEntity owner, net.minecraft.world.damagesource.DamageSource source,
+                                 io.github.manasmods.manascore.network.api.util.Changeable<Float> amount) {
+        super.onTakenDamage(i, owner, source, amount);
+        if (owner instanceof ServerPlayer p && i.getOrCreateTag().getBoolean("RougeArmed") && source.getEntity() instanceof LivingEntity
+                && p.getRandom().nextFloat() < 0.12f) {
+            amount.set(0f);
+            com.newuniverse.nusmp.vfx.VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.ROUGE_CAT, p, p.position().add(0, 1, 0), 0, 30, 2f);
+            p.displayClientMessage(net.minecraft.network.chat.Component.literal("Rouge unravels and pulls you out of the way.").withStyle(net.minecraft.ChatFormatting.RED), true);
+        }
+        return true;
     }
 
     @Override
@@ -80,7 +98,7 @@ public class ThreadBook extends GrimoireBook {
         if (t.contains("PX4")) p.teleportTo(t.getDouble("PX4"), t.getDouble("PY4"), t.getDouble("PZ4"));
         p.displayClientMessage(net.minecraft.network.chat.Component.literal("Rouge pulls the thread back. That never happened.")
                 .withStyle(net.minecraft.ChatFormatting.RED), false);
-        vfx(p, VfxShape.THREAD_LINE, p.position().add(0, 0.2, 0), p.position().add(0, 2.2, 0), 30, 1.2f);
+        com.newuniverse.nusmp.vfx.VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.ROUGE_CAT, p, p.position().add(0, 1, 0), 0, 40, 2f);   // she unravels
         i.markDirty();
         return false;
     }

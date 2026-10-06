@@ -35,7 +35,9 @@ public class FireBook extends GrimoireBook {
             // 0.31: wiki spells, appended
             BookPage.mid("spiral_flame", "Spiral Flame", FireBook::spiralFlame),
             BookPage.zone("wild_bursting_flame", "Wild Bursting Flame", FireBook::wildBurst),
-            BookPage.signature("ignis_columna", "Ignis Columna", FireBook::ignisColumna).withCooldown(600));
+            BookPage.signature("ignis_columna", "Ignis Columna", FireBook::ignisColumna).withCooldown(600),
+            // 0.34: Mereoleona Vermillion's character spell
+            BookPage.signature("calidos_brachium", "Calidos Brachium", WikiSpells::calidosBrachium).withCooldown(600));
 
     public FireBook() { super(MagicType.FLAME, 0xFFFF6A1E); }
     @Override protected List<BookPage> familyPages() { return pages; }

@@ -29,7 +29,14 @@ public class LightningBook extends GrimoireBook {
     private final List<BookPage> pages = List.of(
             BookPage.starter("chain", "Chain Lightning", LightningBook::chain),
             BookPage.mid("thunder_boots", "Thunder God's Boots", LightningBook::boots),
-            BookPage.zone("thunder_lance", "Thunder Lance", TensuraShots.shot(TensuraShots.Shot.THUNDER_LANCE, 13, 2.4f, 0.6f, 0)));
+            BookPage.zone("thunder_lance", "Thunder Lance", TensuraShots.shot(TensuraShots.Shot.THUNDER_LANCE, 13, 2.4f, 0.6f, 0)),
+            // 0.34: wiki spells, appended
+            BookPage.mid("thunder_fiend", "Thunder Fiend", WikiSpells::thunderFiend).withCooldown(900),
+            BookPage.mid("pulsaranta", "Pulsaranta", WikiSpells::pulsaranta),
+            BookPage.signature("rising_salim", "God of Lightning Rising Salim", WikiSpells::risingSalim),
+            BookPage.zone("thunderbird_cavalry", "Thunderbird Cavalry: Sky-Splitting Magic Bow Armament",
+                    ElementBook.volley(5, 8, 2.2, true, VfxShape.LIGHTNING_SPEAR, ElementBook.NONE)),
+            BookPage.signature("black_lightning_battle_fiend", "Black Lightning Battle Fiend", WikiSpells::blackLightningFiend).withCooldown(1200));
 
     public LightningBook() { super(MagicType.LIGHTNING, 0xFFFFE14A); }
     @Override protected List<BookPage> familyPages() { return pages; }
@@ -71,10 +78,24 @@ public class LightningBook extends GrimoireBook {
         return true;
     }
 
+    private static boolean ARCING;
+
     @Override
     public boolean onDamageEntity(ManasSkillInstance i, LivingEntity owner, LivingEntity target,
                                   net.minecraft.world.damagesource.DamageSource source,
                                   io.github.manasmods.manascore.network.api.util.Changeable<Float> amount) {
+        if (!ARCING && owner instanceof ServerPlayer p && source.getDirectEntity() == owner
+                && owner.level().getGameTime() < i.getOrCreateTag().getLong("FiendUntil")) {         // 0.34: Thunder Fiend arcs to more foes
+            ARCING = true;                                                                          // an arc never sets off another arc
+            try {
+            int arcs = i.getOrCreateTag().getBoolean("FiendBlack") ? 2 : 1;
+            for (LivingEntity e : around(p, target.position(), 5)) {
+                if (e == target || arcs-- <= 0) continue;
+                hurt(i, p, e, 0, 5f);
+                vfx(p, VfxShape.FX_LIGHTNING_ARC, target.getBoundingBox().getCenter(), e.getBoundingBox().getCenter(), 0, 0.8f);
+            }
+            } finally { ARCING = false; }
+        }
         if (owner instanceof ServerPlayer p && source.getDirectEntity() == owner
                 && owner.level().getGameTime() < i.getOrCreateTag().getLong("ChargeUntil")) {
             i.getOrCreateTag().putLong("ChargeUntil", 0);

@@ -72,6 +72,11 @@ MAGIC = {
     "steel":         ("Steel Magic", 0xB8C4D8, 0xEEF2FA, "gunmetal steel", "Blazing Steel Shot"),
     "thread":        ("Thread Magic", 0xFF4060, 0xFFB0C0, "scarlet thread red", "Red Thread"),
     "forbidden":     ("Forbidden Magic", 0xC01030, 0x1A0A0E, "abyssal black and blood red", "Underworld Gate"),
+    # 0.34: attributes from the wiki (appended after forbidden so every existing icon keeps its seed)
+    "transmutation": ("Transmutation Magic", 0x7AF0D8, 0xD8FFF4, "alchemical teal and silver", "Magic Convert"),
+    "ash":           ("Ash Magic", 0xB0AAA2, 0xE8E4DE, "ash grey and ember", "Ash Absorbing Formation"),
+    "cotton":        ("Cotton Magic", 0xFFE8F4, 0xFFFFFF, "soft cotton white and pink", "Sleeping Sheep Strike"),
+    "recombination": ("Recombination Magic", 0xFF9A3C, 0xFFD8B0, "magic-house timber and orange", "The Raging Black Bull"),
 }
 
 
@@ -455,6 +460,44 @@ def g_forbidden(d):
           [(x, 3.4 * math.cos(x / 6 * math.pi / 2)) for x in np.linspace(6, -6, 20)]
     d.polygon(P(eye), fill=255)
     d.ellipse(box(-1.2, -3.0, 1.2, 3.0), fill=0)
+
+
+def g_transmutation(d):
+    """A transmutation circle: ring, inscribed triangle and a small inner ring."""
+    d.ellipse(box(-10, -10, 10, 10), outline=255, width=int(1.6 * U))
+    tri = [(math.cos(-math.pi / 2 + k * 2 * math.pi / 3) * 8.6, math.sin(-math.pi / 2 + k * 2 * math.pi / 3) * 8.6) for k in range(3)]
+    d.polygon(P(tri), outline=255, width=int(1.4 * U))
+    d.ellipse(box(-3, -1.5, 3, 4.5), fill=200)
+
+
+def g_ash(d):
+    """A swirl of ash flakes round a dark ember."""
+    for k in range(7):
+        a = k * 2 * math.pi / 7
+        r = 4.5 + k * 0.8
+        x, y = math.cos(a) * r, math.sin(a) * r
+        d.polygon(P([(x - 1.6, y), (x, y - 1.2), (x + 1.8, y + 0.2), (x, y + 1.4)]), fill=255 if k % 2 else 180)
+    d.ellipse(box(-3.2, -3.2, 3.2, 3.2), fill=140)
+
+
+def g_cotton(d):
+    """A cotton sheep: a puffy cloud body, a face and little legs."""
+    for (x, y, r) in ((-4, -1, 4.4), (0.5, -3, 4.8), (4.5, -0.5, 4.2), (-1.5, 2.5, 4.2), (3, 2.5, 4)):
+        d.ellipse(box(x - r, y - r, x + r, y + r), fill=255)
+    d.ellipse(box(6.5, -3.5, 10.5, 1.5), fill=170)
+    for x in (-4, -1, 2.5, 5.5):
+        d.rectangle(box(x - 0.7, 5.5, x + 0.7, 9.5), fill=170)
+
+
+def g_recombination(d):
+    """A bull's head made of blocks: a square face, two horns."""
+    d.rectangle(box(-5.5, -4, 5.5, 8), fill=255)
+    d.rectangle(box(-3.5, 1, -1, 3.5), fill=120)
+    d.rectangle(box(1, 1, 3.5, 3.5), fill=120)
+    d.polygon(P([(-5.5, -4), (-10, -9), (-8.5, -3)]), fill=220)
+    d.polygon(P([(5.5, -4), (10, -9), (8.5, -3)]), fill=220)
+    for y in (-1, 6):
+        d.line(P([(-5.5, y), (5.5, y)]), fill=140, width=int(0.8 * U))
 
 
 GLYPHS = {k: globals()["g_" + k] for k in MAGIC}

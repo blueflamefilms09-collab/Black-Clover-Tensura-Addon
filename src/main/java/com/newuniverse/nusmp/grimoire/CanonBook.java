@@ -18,13 +18,13 @@ public enum CanonBook {
     YAMI("Yami Sukehiro", "THREE_LEAF", "DARK", 0x4A1450, 0xC8A050, 0, null),
     JULIUS("Julius Novachrono", "THREE_LEAF", "TIME", 0xE8DCC0, 0xD8B050, 0, null),
     MIMOSA("Mimosa Vermillion", "THREE_LEAF", "PLANT", 0xC8C858, 0xE8D070, 0, null),
-    CHARMY("Charmy Pappitson", "THREE_LEAF", "CREATION", 0xF0EAD8, 0xE8C8A0, 0, null),          // Cotton Magic
+    CHARMY("Charmy Pappitson", "THREE_LEAF", "COTTON", 0xF0EAD8, 0xE8C8A0, 0, null),            // Cotton + Food Magic (0.34)
     FINRAL("Finral Roulacase", "THREE_LEAF", "SPATIAL", 0x3E5A4A, 0xC8A050, 0, null),
     VANESSA("Vanessa Enoteca", "THREE_LEAF", "THREAD", 0xB890C8, 0xE8C8E0, 0, null),
     LUCK("Luck Voltia", "THREE_LEAF", "LIGHTNING", 0x9CC8D8, 0xE8F0F8, 0, null),
     GAUCHE("Gauche Adlai", "THREE_LEAF", "MIRROR", 0x6A60C8, 0xD0D8F0, 0, null),
     MAGNA("Magna Swing", "THREE_LEAF", "FLAME", 0xA02010, 0x302020, 0, null),
-    ZORA("Zora Ideale", "THREE_LEAF", "CREATION", 0xC8C8C8, 0x707070, 0, null),               // Ash Magic
+    ZORA("Zora Ideale", "THREE_LEAF", "ASH", 0xC8C8C8, 0x707070, 0, null),                    // Ash Magic (0.34)
     KLAUS("Klaus Lunettes", "THREE_LEAF", "STEEL", 0x9AB0C0, 0xD8E0E8, 0, null),
     KIRSCH("Kirsch Vermillion", "THREE_LEAF", "PLANT", 0xE88AB8, 0xF8D0E0, 0, null),            // Cherry Blossom Magic
     KARNA("Karna Freese", "THREE_LEAF", "LIGHT", 0x2A3E8E, 0xC0303A, 0, BookMotif.STRAPS),                 // Moonlight Magic
@@ -41,7 +41,17 @@ public enum CanonBook {
     GADJAH("Gadjah", "HEART", "LIGHTNING", 0xC8A040, 0x6A4A20, 0, null),
     LOLOPECHKA("Lolopechka", "HEART", "WATER", 0x4A8AD8, 0xD8E8F8, 0, null),
     // Diamond Kingdom
-    MARS("Mars", "DIAMOND", "EARTH", 0xD8D8E0, 0xB04030, 0, null);                            // Mineral Magic
+    MARS("Mars", "DIAMOND", "EARTH", 0xD8D8E0, 0xB04030, 0, null),                            // Mineral Magic
+    // 0.34: the remaining squad captains (wiki: Magic Knights) and the Black Bulls with the new attributes; appended
+    CHARLOTTE("Charlotte Roselei", "THREE_LEAF", "PLANT", 0x2A6A9A, 0xC8D8E8, 0, null),        // Blue Rose captain; Briar Magic
+    JACK("Jack the Ripper", "THREE_LEAF", "SWORD", 0x2E8A5A, 0xC8E0C8, 0, null),               // Green Mantis captain; Slash Magic
+    RILL("Rill Boismortier", "THREE_LEAF", "CREATION", 0x9AD0C0, 0xE8F0E8, 0, null),          // Aqua Deer captain; Painting Magic
+    DOROTHY("Dorothy Unsworth", "THREE_LEAF", "DREAM", 0xE88AA0, 0xF0D8E0, 0, null),          // Coral Peacock captain; Dream Magic
+    KAISER("Kaiser Granvorka", "THREE_LEAF", "STORM", 0x6A4A8A, 0xD0C0E0, 0, null),           // Purple Orca captain; Vortex Magic
+    NACHT("Nacht Faust", "THREE_LEAF", "SHADOW", 0x1A1A22, 0x8A8AA0, 0, null),                // Black Bull (captain after Yami); Shadow Magic
+    GREY("Grey", "THREE_LEAF", "TRANSMUTATION", 0x6A7280, 0xD0D8E0, 0, null),                 // Black Bull; Transmutation Magic
+    GORDON("Gordon Agrippa", "THREE_LEAF", "POISON", 0x3A4A2A, 0xB0C890, 0, null),            // Black Bull; Poison Magic
+    HENRY("Henry Legolant", "THREE_LEAF", "RECOMBINATION", 0x3A3430, 0xC8A050, 0, null);      // Black Bull; Recombination Magic
 
     public final String owner, cover, magic;
     public final int coverColor, trimColor, emblemColor;

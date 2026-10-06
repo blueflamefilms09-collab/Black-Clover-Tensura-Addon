@@ -27,9 +27,13 @@ import java.util.List;
 /** Spatial Magic (Finral / Langris). */
 public class SpatialBook extends GrimoireBook {
     private final List<BookPage> pages = List.of(
-            BookPage.starter("domination", "Spatial Mana Domination", SpatialBook::domination),
+            BookPage.starter("domination", "Sacred Mana Domination", SpatialBook::domination),
             BookPage.mid("fallen_angel_gate", "Fallen Angel Gate", SpatialBook::gate).withCooldown(0),
-            BookPage.zone("space_cut", "Spatial Cut", TensuraShots.shot(TensuraShots.Shot.SPACE_CUT, 12, 2.2f, 0.5f, 0)));
+            BookPage.zone("space_cut", "Spatial Cut", TensuraShots.shot(TensuraShots.Shot.SPACE_CUT, 12, 2.2f, 0.5f, 0)),
+            // 0.34: wiki spells, appended
+            BookPage.zone("unopening_red_room", "Unopening Red Room", WikiSpells::redRoom),
+            BookPage.mid("myriad_black", "Myriad Black", WikiSpells::myriadBlack),
+            BookPage.signature("door_of_fate", "Door of Fate", WikiSpells::doorOfFate).withCooldown(2400));
 
     public SpatialBook() { super(MagicType.SPATIAL, 0xFFB088FF); }
     @Override protected List<BookPage> familyPages() { return pages; }
@@ -65,7 +69,7 @@ public class SpatialBook extends GrimoireBook {
         if (now > tag.getLong("GateAUntil")) {
             tag.putDouble("GAX", at.x); tag.putDouble("GAY", at.y); tag.putDouble("GAZ", at.z);
             tag.putLong("GateAUntil", now + 400);
-            b.vfx(p, VfxShape.SPATIAL_RIFT, at, at.add(0, 1, 0), 400, 1f);
+            b.vfx(p, VfxShape.SPACE_PORTAL, at, p.position(), 400, 1f);           // 0.34: the gate itself
             p.displayClientMessage(net.minecraft.network.chat.Component.literal("First gate open. Cast again to open the second."), true);
             return true;
         }
@@ -73,7 +77,7 @@ public class SpatialBook extends GrimoireBook {
         Vec3 bb = at;
         tag.putLong("GateAUntil", 0);
         i.setCoolDown(45, mode);   // seconds
-        b.vfx(p, VfxShape.SPATIAL_RIFT, bb, bb.add(0, 1, 0), 400, 1f);
+        b.vfx(p, VfxShape.SPACE_PORTAL, bb, p.position(), 400, 1f);
         ServerLevel level = p.serverLevel();
         SpellRuntime.zone(level, 400, 1, age -> {
             hop(level, a, bb);

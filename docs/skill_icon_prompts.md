@@ -723,3 +723,83 @@ Template: `[Spell/Magic description] in Black Clover anime magic spell icon styl
    ```
    ultimate forbidden magic: Underworld Gate at full power, complex multi-layered magic circles with a star seal, celestial and abyssal energy, intense particle storm, black iron border lit from within in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing abyssal black and blood red magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
    ```
+
+## Transmutation Magic
+
+1. **Active spell / attack** (`textures/skill/grimoire/transmutation.png`)
+
+   ```
+   Magic Convert unleashed as a dynamic transmutation magic attack, energy discharge bursting from an open grimoire, motion streaks, gold embossed frame with clover runes in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing alchemical teal and silver magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```
+
+2. **Buff / grimoire page rune** (`textures/skill/icons/transmutation_buff.png`)
+
+   ```
+   a glowing transmutation magic rune sigil on an ancient parchment grimoire page, mystical glyph circle, binding chains and a faint defensive shield, silver stone border in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing alchemical teal and silver magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```
+
+3. **Ultimate / forbidden** (`textures/skill/icons/transmutation_ultimate.png`)
+
+   ```
+   ultimate transmutation magic: Magic Convert at full power, complex multi-layered magic circles with a star seal, celestial and abyssal energy, intense particle storm, black iron border lit from within in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing alchemical teal and silver magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```
+
+## Ash Magic
+
+1. **Active spell / attack** (`textures/skill/grimoire/ash.png`)
+
+   ```
+   Ash Absorbing Formation unleashed as a dynamic ash magic attack, energy discharge bursting from an open grimoire, motion streaks, gold embossed frame with clover runes in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing ash grey and ember magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```
+
+2. **Buff / grimoire page rune** (`textures/skill/icons/ash_buff.png`)
+
+   ```
+   a glowing ash magic rune sigil on an ancient parchment grimoire page, mystical glyph circle, binding chains and a faint defensive shield, silver stone border in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing ash grey and ember magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```
+
+3. **Ultimate / forbidden** (`textures/skill/icons/ash_ultimate.png`)
+
+   ```
+   ultimate ash magic: Ash Absorbing Formation at full power, complex multi-layered magic circles with a star seal, celestial and abyssal energy, intense particle storm, black iron border lit from within in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing ash grey and ember magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```
+
+## Cotton Magic
+
+1. **Active spell / attack** (`textures/skill/grimoire/cotton.png`)
+
+   ```
+   Sleeping Sheep Strike unleashed as a dynamic cotton magic attack, energy discharge bursting from an open grimoire, motion streaks, gold embossed frame with clover runes in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing soft cotton white and pink magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```
+
+2. **Buff / grimoire page rune** (`textures/skill/icons/cotton_buff.png`)
+
+   ```
+   a glowing cotton magic rune sigil on an ancient parchment grimoire page, mystical glyph circle, binding chains and a faint defensive shield, silver stone border in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing soft cotton white and pink magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```
+
+3. **Ultimate / forbidden** (`textures/skill/icons/cotton_ultimate.png`)
+
+   ```
+   ultimate cotton magic: Sleeping Sheep Strike at full power, complex multi-layered magic circles with a star seal, celestial and abyssal energy, intense particle storm, black iron border lit from within in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing soft cotton white and pink magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```
+
+## Recombination Magic
+
+1. **Active spell / attack** (`textures/skill/grimoire/recombination.png`)
+
+   ```
+   The Raging Black Bull unleashed as a dynamic recombination magic attack, energy discharge bursting from an open grimoire, motion streaks, gold embossed frame with clover runes in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing magic-house timber and orange magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```
+
+2. **Buff / grimoire page rune** (`textures/skill/icons/recombination_buff.png`)
+
+   ```
+   a glowing recombination magic rune sigil on an ancient parchment grimoire page, mystical glyph circle, binding chains and a faint defensive shield, silver stone border in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing magic-house timber and orange magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```
+
+3. **Ultimate / forbidden** (`textures/skill/icons/recombination_ultimate.png`)
+
+   ```
+   ultimate recombination magic: The Raging Black Bull at full power, complex multi-layered magic circles with a star seal, celestial and abyssal energy, intense particle storm, black iron border lit from within in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing magic-house timber and orange magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```

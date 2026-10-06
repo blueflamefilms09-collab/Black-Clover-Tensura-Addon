@@ -62,7 +62,28 @@ public enum VfxShape {
     WIND_EMPEROR,            // Slicing Wind Emperor: a huge crescent made of many wind blades flying from -> to
     WIND_ZEPHYR,             // Spirit of Zephyr: gale wings and a wind mantle round the caster (follows); power = size
     EARTH_CLAWS,             // Witch Hunter Claws: stone claws burst up round 'from' and clamp shut; power = radius
-    EARTH_RAMPAGE;           // Rampaging Mother Earth: a heaving wave of stone slabs rolling from -> to
+    EARTH_RAMPAGE,           // Rampaging Mother Earth: a heaving wave of stone slabs rolling from -> to
+    // 0.34: the other magics, rebuilt after the wiki (ArcaneSpellLayer / ArcaneSpellLayer2); appended
+    THREAD_WEB,              // Arachne's Web: a web of thread spreading over the ground at 'from'; power = radius
+    THREAD_STRINGS,          // Dancing Doll / Red Thread: puppet threads from the caster's hand 'from' to the target 'to'
+    SEAL_CHAINS,             // Seal chains: rune-inscribed chains closing round 'from' (the target); power = size
+    SEAL_TRINITY,            // Trinity Seal: three seal circles converge on 'from' and crystallise; power = size
+    LIGHTNING_FIEND,         // Thunder Fiend: crackling arcs round the caster (follows); power = size (> 1.5 = black lightning)
+    LIGHTNING_GOD,           // Rising Salim: a pillar of lightning crashing down on 'from' with branching bolts; power = radius
+    ALCHEMY_CIRCLE,          // Magic Convert / transmutation: a transmutation circle at 'from' facing 'to', motes converging
+    POISON_CURTAIN,          // Violett Schirm: a hanging curtain of purple poison along from -> to; power = height
+    POISON_BREATH,           // Basilisk's Breath: a cone of toxic mist rolling from -> to
+    SPACE_PORTAL,            // Fallen Angel Gate / Door of Fate: a dimensional gate at 'from' facing 'to'; power = radius
+    SPACE_CUBE,              // Unopening Red Room: a box of warped space round 'from'; power = half size
+    ASH_FORMATION,           // Ash Absorbing Formation: a ring of swirling ash at 'from' drawing everything in; power = radius
+    MIRROR_RAY,              // Reflect Ray: a mirror at 'from' fires a beam of light to 'to'
+    MIRROR_DOUBLE,           // Real Double: mirror-glass doubles circling the caster (follows); power = number of doubles
+    COTTON_SHEEP,            // Sleeping Sheep Strike (from -> to) / Sheep Cook (from == to: sheep round the caster)
+    FOOD_MAW,                // Glutton's Banquet: a giant maw at 'from' facing 'to' opens and devours; power = size
+    SHADOW_POOL,             // Dark Garden Invitation / Kids' Playground: an inky pool at 'from', shadow hands rising; power = radius
+    SHADOW_UNITE,            // Unite Mode: devil-dark aura round the caster (follows); power = size
+    RECOMBINE_CONSTRUCT,     // The Raging Black Bull: planks of a magic house fly in and assemble round 'from'; power = size
+    ROUGE_CAT;               // Red Thread of Fate: Rouge, a cat woven of red thread, on the caster's head (follows); power >= 2 = unravelling
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

@@ -28,7 +28,8 @@ import java.util.UUID;
 public class RelicItem extends Item {
     public enum Kind {
         COMMUNICATION(1), RUNE_STONE(16), SPIRIT_CHARM(16), BOND_THREAD(16), FORTUNE_DIE(16), GRIMOIRE_CHAIN(1),
-        ANTI_BIRD(1), RECOVERY_SALVE(16), CONSENT(1), DEVIL_CONTRACT(1);
+        ANTI_BIRD(1), RECOVERY_SALVE(16), CONSENT(1), DEVIL_CONTRACT(1),
+        GAUCHE_MIRROR(1);                     // 0.34: Gauche Adlai's hand mirror (Mirror Magic tool), appended
         final int stack;
         Kind(int stack) { this.stack = stack; }
     }
@@ -100,6 +101,27 @@ public class RelicItem extends Item {
                             .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/devilpact accept " + o[0]))
                             .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("Bind the devil and pay this price")))));
                 }
+                return InteractionResultHolder.success(stack);
+            }
+            case GAUCHE_MIRROR -> {
+                // sneak-use: leave a mirror here; use: step through to it (Mirror Magic moves instantly between mirrors)
+                net.minecraft.nbt.CompoundTag tag = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
+                        net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
+                if (p.isShiftKeyDown()) {
+                    tag.putDouble("MX", p.getX()); tag.putDouble("MY", p.getY()); tag.putDouble("MZ", p.getZ());
+                    tag.putString("MDim", p.level().dimension().location().toString());
+                    stack.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(tag));
+                    com.newuniverse.nusmp.vfx.VfxSpawn.send(p.serverLevel(), com.newuniverse.nusmp.vfx.VfxShape.MIRROR_PANE, p.position().add(0, 1, 0),
+                            p.position().add(p.getViewVector(1f)).add(0, 1, 0), 0, 30, 1.2f);
+                    p.displayClientMessage(Component.literal("A mirror is left here.").withStyle(ChatFormatting.AQUA), true);
+                    return InteractionResultHolder.success(stack);
+                }
+                if (!tag.contains("MX")) { GrimoireBook.fail(p, "No mirror placed yet (sneak-use to leave one)."); return InteractionResultHolder.fail(stack); }
+                if (!tag.getString("MDim").equals(p.level().dimension().location().toString())) { GrimoireBook.fail(p, "Your mirror is in another world."); return InteractionResultHolder.fail(stack); }
+                com.newuniverse.nusmp.vfx.VfxSpawn.send(p.serverLevel(), com.newuniverse.nusmp.vfx.VfxShape.MIRROR_PANE, p.position().add(0, 1, 0),
+                        p.position().add(p.getViewVector(1f)).add(0, 1, 0), 0, 20, 1.2f);
+                p.teleportTo(tag.getDouble("MX"), tag.getDouble("MY"), tag.getDouble("MZ"));
+                p.getCooldowns().addCooldown(this, 600);
                 return InteractionResultHolder.success(stack);
             }
             default -> { return InteractionResultHolder.pass(stack); }

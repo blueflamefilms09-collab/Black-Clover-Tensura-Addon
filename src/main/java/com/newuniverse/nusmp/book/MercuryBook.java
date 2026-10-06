@@ -28,7 +28,9 @@ import java.util.List;
 public class MercuryBook extends GrimoireBook {
     private final List<BookPage> pages = List.of(
             BookPage.starter("silver_blade", "Silver Blade", MercuryBook::blade),
-            BookPage.signature("mercury_shield", "Mercury Shield", MercuryBook::shield));
+            BookPage.signature("mercury_shield", "Mercury Shield", MercuryBook::shield),
+            // 0.34: Nozel Silva's character spell
+            BookPage.signature("mercury_rain", "Mercury Magic: Mercury Rain", WikiSpells::mercuryRain));
 
     public MercuryBook() { super(MagicType.MERCURY, 0xFFC9D1DB); }
     @Override protected List<BookPage> familyPages() { return pages; }

@@ -10,6 +10,8 @@ import com.newuniverse.nusmp.vfx.client.layer.RuneCircleLayer;
 import com.newuniverse.nusmp.vfx.client.layer.AntiMagicLayer;
 import com.newuniverse.nusmp.vfx.client.layer.ElementShapesLayer;
 import com.newuniverse.nusmp.vfx.client.layer.AuraLayer;
+import com.newuniverse.nusmp.vfx.client.layer.ArcaneSpellLayer;
+import com.newuniverse.nusmp.vfx.client.layer.ArcaneSpellLayer2;
 import com.newuniverse.nusmp.vfx.client.layer.TimeMagicLayer;
 import com.newuniverse.nusmp.vfx.client.layer.FireSpellLayer;
 import com.newuniverse.nusmp.vfx.client.layer.WaterSpellLayer;
@@ -54,6 +56,8 @@ public final class VfxManager {
         register(new WaterSpellLayer());
         register(new WindSpellLayer());
         register(new EarthSpellLayer());
+        register(new ArcaneSpellLayer());     // 0.34
+        register(new ArcaneSpellLayer2());
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }
