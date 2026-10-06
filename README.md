@@ -60,7 +60,7 @@ Chanted magics: use **Chant** mode until the chant is complete, then switch to *
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.39.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.40.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -204,6 +204,10 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Anti-Magic kit**: new pages **Black Hurricane** (a whirling field that drags foes in and strips their magic) and **Black Form** (30 s of strength, speed, resistance and jump, with an anti-magic burst); mastering the Anti-Magic Lord now also grants the **Demon-Slasher** katana next to Demon-Dweller and Demon-Destroyer.
 - **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
 - **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
+
+## 0.40 - crash fix
+- **Fix (crash):** the transformation armour overlays (Wind Spirit Dive and the others) crashed the client with "Not building!": the layer kept drawing into a buffer after asking Minecraft for one of another render type, which closes the first. Each piece now asks for its buffer right before it draws. The headless preview (`tools/mode_preview`) now catches this.
+- **Fix:** the grimoire guard's hook into Tensura's plunder / learning events failed to attach (Java access to Architectury's event class), so only the 5 s check was protecting grimoires. It now registers through the public `Event` interface.
 
 ## 0.39 - The Convergence
 - **New (core system):** the world starts as pure Tensura and the Black Clover world slowly bleeds in. Full guide: `docs/convergence.md`.

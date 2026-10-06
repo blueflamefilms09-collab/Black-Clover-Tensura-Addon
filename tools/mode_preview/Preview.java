@@ -30,10 +30,16 @@ public final class Preview {
             pose.mulPose(Axis.YP.rotationDegrees(180f));          // LivingEntityRenderer at body yaw 0
             pose.scale(-1f, -1f, 1f);
             pose.translate(0f, -1.501f, 0f);
-            layer.render(pose, type -> new VertexConsumer() {
+            RenderType[] current = {null};
+            layer.render(pose, type -> { current[0] = type; return new VertexConsumer() {
+                final RenderType mine = type;
+                void live() {   // like MultiBufferSource.BufferSource: asking for another render type ends this buffer
+                    if (current[0] != mine) throw new IllegalStateException("Not building! (" + mine + " used after " + current[0] + " was requested)");
+                }
                 PoseStack.Pose p;
                 float x, y, z, u, v; int al;
                 public VertexConsumer addVertex(PoseStack.Pose pp, float xx, float yy, float zz) {
+                    live();
                     Vector4f w = pp.pose.transform(new Vector4f(xx, yy, zz, 1f));
                     x = w.x; y = w.y; z = w.z; return this;
                 }
@@ -49,7 +55,7 @@ public final class Preview {
                     n[0]++;
                     return this;
                 }
-            }, 0xF000F0, new AbstractClientPlayer(), 0f, 0f, 0f, 40f, 0f, 0f);
+            }; }, 0xF000F0, new AbstractClientPlayer(), 0f, 0f, 0f, 40f, 0f, 0f);
             sb.append(firstMode ? "" : ",").append('"').append(m.name()).append("\":[").append(q).append(']');
             firstMode = false;
         }

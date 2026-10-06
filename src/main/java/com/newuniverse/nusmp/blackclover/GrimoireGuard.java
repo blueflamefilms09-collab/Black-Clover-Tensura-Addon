@@ -68,6 +68,7 @@ public final class GrimoireGuard {
             Class<?> learn = Class.forName("io.github.manasmods.tensura.event.TensuraSkillEvents$SkillLearningEvent");
             Class<?> result = Class.forName("dev.architectury.event.EventResult");
             Object pass = result.getMethod("pass").invoke(null), refuse = result.getMethod("interruptFalse").invoke(null);
+            java.lang.reflect.Method eventRegister = Class.forName("dev.architectury.event.Event").getMethod("register", Object.class);
             int hooked = 0;
             for (java.lang.reflect.Field f : events.getFields()) {
                 if (!java.lang.reflect.Modifier.isStatic(f.getModifiers())) continue;
@@ -101,10 +102,10 @@ public final class GrimoireGuard {
                         return pass;
                     });
                 } else continue;
+                // call register through the public Event interface (the implementation class, EventFactory$EventImpl, is not accessible)
                 Object event = f.get(null);
-                for (java.lang.reflect.Method rm : event.getClass().getMethods()) {
-                    if (rm.getName().equals("register") && rm.getParameterCount() == 1) { rm.invoke(event, listener); hooked++; break; }
-                }
+                eventRegister.invoke(event, listener);
+                hooked++;
             }
             LOGGER.info("Grimoire guard: hooked {} Tensura skill event(s) (plunder / learning).", hooked);
         } catch (Throwable t) {

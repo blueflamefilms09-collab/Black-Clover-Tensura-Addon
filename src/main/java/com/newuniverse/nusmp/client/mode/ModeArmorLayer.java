@@ -106,16 +106,14 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
         enter(pose, m.body);
         box(c.solid(WIND_PLATE), pose, -4.45f, -0.2f, -2.45f, 4.45f, 12.3f, 2.45f, 255, a, c.light);
         box(c.glow(WIND_GLOW), pose, -4.5f, -0.25f, -2.5f, 4.5f, 12.35f, 2.5f, 255, c.alpha(0.8f), FULL);
-        VertexConsumer fur = c.solid(WIND_FUR);
-        box(fur, pose, -4.9f, -2.2f, -3.0f, 4.9f, 0.9f, -2.3f, 255, a, c.light);      // collar front
-        box(fur, pose, -4.9f, -3.6f, 2.3f, 4.9f, 0.9f, 3.0f, 255, a, c.light);        // collar back, standing tall
-        box(fur, pose, -4.9f, -3.0f, -2.3f, -4.2f, 0.9f, 2.3f, 255, a, c.light);
-        box(fur, pose, 4.2f, -3.0f, -2.3f, 4.9f, 0.9f, 2.3f, 255, a, c.light);
+        box(c.solid(WIND_FUR), pose, -4.9f, -2.2f, -3.0f, 4.9f, 0.9f, -2.3f, 255, a, c.light);      // collar front
+        box(c.solid(WIND_FUR), pose, -4.9f, -3.6f, 2.3f, 4.9f, 0.9f, 3.0f, 255, a, c.light);        // collar back, standing tall
+        box(c.solid(WIND_FUR), pose, -4.9f, -3.0f, -2.3f, -4.2f, 0.9f, 2.3f, 255, a, c.light);
+        box(c.solid(WIND_FUR), pose, 4.2f, -3.0f, -2.3f, 4.9f, 0.9f, 2.3f, 255, a, c.light);
         float tail = 6f + 2.5f * c.swing;                                           // the tails flare as you run
-        VertexConsumer coat = c.solid(WIND_PLATE);
-        flap(coat, pose, -4.45f, 11.5f, 2.45f, 4.45f, 11.5f + 8f, 2.45f + tail * 0.35f, a, c.light);
-        flap(coat, pose, -4.45f, 11.5f, -2.45f, -0.6f, 11.5f + 7f, -2.45f - tail * 0.2f, a, c.light);
-        flap(coat, pose, 0.6f, 11.5f, -2.45f, 4.45f, 11.5f + 7f, -2.45f - tail * 0.2f, a, c.light);
+        flap(c.solid(WIND_PLATE), pose, -4.45f, 11.5f, 2.45f, 4.45f, 11.5f + 8f, 2.45f + tail * 0.35f, a, c.light);
+        flap(c.solid(WIND_PLATE), pose, -4.45f, 11.5f, -2.45f, -0.6f, 11.5f + 7f, -2.45f - tail * 0.2f, a, c.light);
+        flap(c.solid(WIND_PLATE), pose, 0.6f, 11.5f, -2.45f, 4.45f, 11.5f + 7f, -2.45f - tail * 0.2f, a, c.light);
         // the wings: blade feathers of wind, semi-transparent
         float beat = Mth.sin(c.now * 0.18f) * 9f;
         wings(c, pose, c.clear(WIND_WING), 27f * c.k, 25f * c.k, 30f + beat, -4f + beat * 0.5f, c.alpha(0.75f), FULL, true);
@@ -125,20 +123,19 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
             enter(pose, arm);
             float x0 = arm == m.rightArm ? -3.3f : -1.3f, x1 = arm == m.rightArm ? 1.3f : 3.3f;
             box(c.solid(WIND_PLATE), pose, x0, -2.3f, -2.3f, x1, 6.6f, 2.3f, 255, a, c.light);
-            box(fur, pose, x0 - 0.5f, 6.4f, -2.8f, x1 + 0.5f, 8.6f, 2.8f, 255, a, c.light);
+            box(c.solid(WIND_FUR), pose, x0 - 0.5f, 6.4f, -2.8f, x1 + 0.5f, 8.6f, 2.8f, 255, a, c.light);
             pose.popPose();
         }
         // the crown: eight star blades floating over the head, slowly turning
         enter(pose, m.head);
         pose.translate(0, -9.2f - 0.5f * Mth.sin(c.now * 0.1f), 0);
         pose.mulPose(Axis.YP.rotationDegrees(c.now * 1.2f));
-        VertexConsumer crown = c.glow(WIND_CREST);
         for (int i = 0; i < 8; i++) {
             pose.pushPose();
             pose.mulPose(Axis.YP.rotationDegrees(i * 45f));
             pose.translate(0, 0, -4.6f);
             float h = (i % 2 == 0 ? 7f : 5f) * c.k;
-            card(crown, pose, -1.6f, 0f, 1.6f, -h, 0, c.alpha(1f), FULL);
+            card(c.glow(WIND_CREST), pose, -1.6f, 0f, 1.6f, -h, 0, c.alpha(1f), FULL);
             pose.popPose();
         }
         pose.popPose();
@@ -148,27 +145,26 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
     private static void fire(Ctx c, PlayerModel<AbstractClientPlayer> m) {
         PoseStack pose = c.pose;
         int a = c.alpha(1f);
-        VertexConsumer plate = c.solid(FIRE_PLATE), glow = c.glow(FIRE_GLOW);
         // right: the heavy gauntlet, a spiked pauldron and four claws
         enter(pose, m.rightArm);
-        box(plate, pose, -3.8f, 4.2f, -2.8f, 1.8f, 10.7f, 2.8f, 255, a, c.light);
-        box(glow, pose, -3.85f, 4.15f, -2.85f, 1.85f, 10.75f, 2.85f, 255, c.alpha(1f), FULL);
-        box(plate, pose, -4.2f, -3.0f, -3.0f, 2.0f, 1.4f, 3.0f, 255, a, c.light);
-        spike(plate, pose, -3.0f, -3.0f, 0f, 1.4f, -5.5f, -8.5f, 0f, a, c.light);
-        spike(plate, pose, -0.6f, -3.0f, 0f, 1.1f, -2.2f, -7.4f, 0.8f, a, c.light);
+        box(c.solid(FIRE_PLATE), pose, -3.8f, 4.2f, -2.8f, 1.8f, 10.7f, 2.8f, 255, a, c.light);
+        box(c.glow(FIRE_GLOW), pose, -3.85f, 4.15f, -2.85f, 1.85f, 10.75f, 2.85f, 255, c.alpha(1f), FULL);
+        box(c.solid(FIRE_PLATE), pose, -4.2f, -3.0f, -3.0f, 2.0f, 1.4f, 3.0f, 255, a, c.light);
+        spike(c.solid(FIRE_PLATE), pose, -3.0f, -3.0f, 0f, 1.4f, -5.5f, -8.5f, 0f, a, c.light);
+        spike(c.solid(FIRE_PLATE), pose, -0.6f, -3.0f, 0f, 1.1f, -2.2f, -7.4f, 0.8f, a, c.light);
         for (int i = 0; i < 4; i++) {
             float x = -3.0f + i * 1.45f;
-            spike(plate, pose, x, 10.6f, -1.6f, 0.55f, x - 0.3f, 14.8f * c.k + 10.6f * (1 - c.k), -3.2f, a, c.light);
+            spike(c.solid(FIRE_PLATE), pose, x, 10.6f, -1.6f, 0.55f, x - 0.3f, 14.8f * c.k + 10.6f * (1 - c.k), -3.2f, a, c.light);
         }
         pose.popPose();
         // left: the lighter gauntlet with three claws
         enter(pose, m.leftArm);
-        box(plate, pose, -1.5f, 5.6f, -2.5f, 3.5f, 10.5f, 2.5f, 255, a, c.light);
-        box(glow, pose, -1.55f, 5.55f, -2.55f, 3.55f, 10.55f, 2.55f, 255, c.alpha(0.8f), FULL);
-        box(plate, pose, -1.6f, -2.6f, -2.6f, 3.4f, 0.4f, 2.6f, 255, a, c.light);
+        box(c.solid(FIRE_PLATE), pose, -1.5f, 5.6f, -2.5f, 3.5f, 10.5f, 2.5f, 255, a, c.light);
+        box(c.glow(FIRE_GLOW), pose, -1.55f, 5.55f, -2.55f, 3.55f, 10.55f, 2.55f, 255, c.alpha(0.8f), FULL);
+        box(c.solid(FIRE_PLATE), pose, -1.6f, -2.6f, -2.6f, 3.4f, 0.4f, 2.6f, 255, a, c.light);
         for (int i = 0; i < 3; i++) {
             float x = -0.8f + i * 1.6f;
-            spike(plate, pose, x, 10.5f, -1.5f, 0.5f, x + 0.2f, 13.6f * c.k + 10.5f * (1 - c.k), -2.8f, a, c.light);
+            spike(c.solid(FIRE_PLATE), pose, x, 10.5f, -1.5f, 0.5f, x + 0.2f, 13.6f * c.k + 10.5f * (1 - c.k), -2.8f, a, c.light);
         }
         pose.popPose();
         // the dragon wing frame, flame membranes glowing
@@ -178,7 +174,6 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
         pose.popPose();
         // flame hair: strands licking up from the head, flickering
         enter(pose, m.head);
-        VertexConsumer flame = c.glow(FIRE_CREST);
         for (int i = 0; i < 7; i++) {
             pose.pushPose();
             float ang = -75f + i * 25f;
@@ -187,7 +182,7 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
             pose.translate(0, 0, -3.6f);
             pose.mulPose(Axis.XP.rotationDegrees(25f));                 // lean out and back
             float h = (5.5f + 1.8f * Mth.sin(c.now * 0.6f + i * 1.7f)) * c.k;
-            card(flame, pose, -1.8f, 0.5f, 1.8f, -h, 0, c.alpha(1f), FULL);
+            card(c.glow(FIRE_CREST), pose, -1.8f, 0.5f, 1.8f, -h, 0, c.alpha(1f), FULL);
             pose.popPose();
         }
         pose.popPose();
@@ -197,7 +192,6 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
     private static void demon(Ctx c, PlayerModel<AbstractClientPlayer> m) {
         PoseStack pose = c.pose;
         int a = c.alpha(1f);
-        VertexConsumer plate = c.solid(DEMON_PLATE);
         // the horn: four jagged segments from the left of the forehead, curving out and up
         enter(pose, m.head);
         pose.translate(2.4f, -7.4f, -2.2f);
@@ -206,17 +200,17 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
         float w = 1.6f;
         for (int i = 0; i < 4; i++) {
             float len = (3.2f - i * 0.3f) * c.k;
-            box(plate, pose, -w, -len, -w, w, 0.2f, w, 255, a, c.light);
+            box(c.solid(DEMON_PLATE), pose, -w, -len, -w, w, 0.2f, w, 255, a, c.light);
             pose.translate(0, -len, 0);
             pose.mulPose(Axis.ZP.rotationDegrees(i % 2 == 0 ? 16f : 6f));
             pose.mulPose(Axis.XP.rotationDegrees(i % 2 == 0 ? -6f : 8f));
             w *= 0.74f;
         }
-        spike(plate, pose, 0, 0.2f, 0, w, 0.5f, -3.4f * c.k, 0, a, c.light);
+        spike(c.solid(DEMON_PLATE), pose, 0, 0.2f, 0, w, 0.5f, -3.4f * c.k, 0, a, c.light);
         pose.popPose();
         // the black arm (right) with red veins
         enter(pose, m.rightArm);
-        box(plate, pose, -3.35f, -2.35f, -2.35f, 1.35f, 10.35f, 2.35f, 255, a, c.light);
+        box(c.solid(DEMON_PLATE), pose, -3.35f, -2.35f, -2.35f, 1.35f, 10.35f, 2.35f, 255, a, c.light);
         box(c.glow(DEMON_GLOW), pose, -3.4f, -2.4f, -2.4f, 1.4f, 10.4f, 2.4f, 255, c.alpha(1f), FULL);
         pose.popPose();
         // one tattered wing on the left shoulder
@@ -229,14 +223,13 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
         card(c.solid(DEMON_WING), pose, 0f, 0f, 24f * c.k, -23f * c.k, 0, a, c.light);
         pose.popPose();
         // dark pixel wisps rising and drifting round the body
-        VertexConsumer wisp = c.solid(DEMON_WISP);
         for (int i = 0; i < 14; i++) {
             float t = (c.now * 0.04f + i * 0.137f) % 1f;
             float ang = i * 2.39f + c.now * 0.03f;
             float r = 6.5f + 3f * Mth.sin(i * 1.7f);
             float x = Mth.cos(ang) * r, z = Mth.sin(ang) * r, y = 22f - t * 30f;
             float s = (i % 3 == 0 ? 1.4f : 0.9f) * c.k * Mth.sin(t * Mth.PI);
-            if (s > 0.05f) box(wisp, pose, x - s, y - s, z - s, x + s, y + s, z + s, 255, a, c.light);
+            if (s > 0.05f) box(c.solid(DEMON_WISP), pose, x - s, y - s, z - s, x + s, y + s, z + s, 255, a, c.light);
         }
         pose.popPose();
     }
@@ -245,29 +238,27 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
     private static void lightning(Ctx c, PlayerModel<AbstractClientPlayer> m) {
         PoseStack pose = c.pose;
         int a = c.alpha(1f);
-        VertexConsumer plate = c.solid(BOLT_PLATE), glow = c.glow(BOLT_GLOW);
         float pulse = 0.65f + 0.35f * Mth.sin(c.now * 0.9f);
         // angular runic chest plate
         enter(pose, m.body);
-        box(plate, pose, -4.6f, -0.5f, -2.7f, 4.6f, 7.6f, 2.7f, 255, a, c.light);
-        box(glow, pose, -4.65f, -0.55f, -2.75f, 4.65f, 7.65f, 2.75f, 255, c.alpha(pulse), FULL);
+        box(c.solid(BOLT_PLATE), pose, -4.6f, -0.5f, -2.7f, 4.6f, 7.6f, 2.7f, 255, a, c.light);
+        box(c.glow(BOLT_GLOW), pose, -4.65f, -0.55f, -2.75f, 4.65f, 7.65f, 2.75f, 255, c.alpha(pulse), FULL);
         pose.popPose();
         // shoulder plates with swept spikes
         for (ModelPart arm : new ModelPart[]{m.rightArm, m.leftArm}) {
             boolean right = arm == m.rightArm;
             float x0 = right ? -4.0f : -2.0f, x1 = right ? 2.0f : 4.0f, out = right ? -1 : 1;
             enter(pose, arm);
-            box(plate, pose, x0, -2.9f, -2.9f, x1, 1.8f, 2.9f, 255, a, c.light);
-            box(glow, pose, x0 - 0.05f, -2.95f, -2.95f, x1 + 0.05f, 1.85f, 2.95f, 255, c.alpha(pulse), FULL);
+            box(c.solid(BOLT_PLATE), pose, x0, -2.9f, -2.9f, x1, 1.8f, 2.9f, 255, a, c.light);
+            box(c.glow(BOLT_GLOW), pose, x0 - 0.05f, -2.95f, -2.95f, x1 + 0.05f, 1.85f, 2.95f, 255, c.alpha(pulse), FULL);
             float cx = (x0 + x1) / 2;
-            spike(plate, pose, cx, -2.9f, -1.0f, 1.0f, cx + out * 2.6f, -2.9f - 4.8f * c.k, -1.0f, a, c.light);
-            spike(plate, pose, cx, -2.9f, 1.4f, 0.8f, cx + out * 2.0f, -2.9f - 3.6f * c.k, 1.9f, a, c.light);
+            spike(c.solid(BOLT_PLATE), pose, cx, -2.9f, -1.0f, 1.0f, cx + out * 2.6f, -2.9f - 4.8f * c.k, -1.0f, a, c.light);
+            spike(c.solid(BOLT_PLATE), pose, cx, -2.9f, 1.4f, 0.8f, cx + out * 2.0f, -2.9f - 3.6f * c.k, 1.9f, a, c.light);
             pose.popPose();
         }
         // the crown of crackling bolts, re-striking every two ticks
         enter(pose, m.head);
         pose.translate(0, -8.6f, 0);
-        VertexConsumer bolt = c.glow(BOLT_CREST);
         int strike = (int) (c.now / 2f);
         for (int i = 0; i < 7; i++) {
             float jitter = hash(strike * 31 + i);
@@ -276,7 +267,7 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
             pose.translate(0, 0, -4.4f);
             pose.mulPose(Axis.XP.rotationDegrees(8f + jitter * 12f));      // lean out like a crown
             float h = (4.5f + 3.5f * jitter) * c.k;
-            card(bolt, pose, -1.5f, 0.6f, 1.5f, -h, jitter > 0.5f ? 1 : 0, c.alpha(0.6f + 0.4f * jitter), FULL);
+            card(c.glow(BOLT_CREST), pose, -1.5f, 0.6f, 1.5f, -h, jitter > 0.5f ? 1 : 0, c.alpha(0.6f + 0.4f * jitter), FULL);
             pose.popPose();
         }
         pose.popPose();
@@ -286,18 +277,17 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
     private static void valkyrie(Ctx c, PlayerModel<AbstractClientPlayer> m) {
         PoseStack pose = c.pose;
         int a = c.alpha(0.88f);
-        VertexConsumer plate = c.clear(VALK_PLATE), glow = c.glow(VALK_GLOW);
         // crystalline chest plate and the flared skirt plates
         enter(pose, m.body);
-        box(plate, pose, -4.5f, -0.4f, -2.6f, 4.5f, 7.2f, 2.6f, 255, a, c.light);
-        box(glow, pose, -4.55f, -0.45f, -2.65f, 4.55f, 7.25f, 2.65f, 255, c.alpha(0.7f), FULL);
+        box(c.clear(VALK_PLATE), pose, -4.5f, -0.4f, -2.6f, 4.5f, 7.2f, 2.6f, 255, a, c.light);
+        box(c.glow(VALK_GLOW), pose, -4.55f, -0.45f, -2.65f, 4.55f, 7.25f, 2.65f, 255, c.alpha(0.7f), FULL);
         for (int i = 0; i < 6; i++) {
             pose.pushPose();
             pose.translate(0, 10f, 0);
             pose.mulPose(Axis.YP.rotationDegrees(i * 60f + 30f));
             pose.translate(0, 0, -3.4f);
             pose.mulPose(Axis.XP.rotationDegrees(-22f - 6f * c.swing));     // flared out, more when running
-            card(plate, pose, -2.6f, 0f, 2.6f, 6.5f * c.k, 0, a, c.light);
+            card(c.clear(VALK_PLATE), pose, -2.6f, 0f, 2.6f, 6.5f * c.k, 0, a, c.light);
             pose.popPose();
         }
         // avian water wings
@@ -308,35 +298,34 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
         for (ModelPart arm : new ModelPart[]{m.rightArm, m.leftArm}) {
             enter(pose, arm);
             float x0 = arm == m.rightArm ? -3.5f : -1.5f, x1 = arm == m.rightArm ? 1.5f : 3.5f;
-            box(plate, pose, x0, 4.5f, -2.5f, x1, 10.5f, 2.5f, 255, a, c.light);
-            box(plate, pose, x0 - 0.3f, -2.7f, -2.7f, x1 + 0.3f, 0.8f, 2.7f, 255, a, c.light);
+            box(c.clear(VALK_PLATE), pose, x0, 4.5f, -2.5f, x1, 10.5f, 2.5f, 255, a, c.light);
+            box(c.clear(VALK_PLATE), pose, x0 - 0.3f, -2.7f, -2.7f, x1 + 0.3f, 0.8f, 2.7f, 255, a, c.light);
             pose.popPose();
         }
         // the drill lance in the right hand, held forward, spinning
         enter(pose, m.rightArm);
         pose.translate(-1f, 10.5f, -1f);
-        box(plate, pose, -0.6f, -0.6f, -1f, 0.6f, 0.6f, 6f, 255, a, c.light);              // the grip, running back past the hand
-        box(plate, pose, -3.2f, -3.2f, -2.2f, 3.2f, 3.2f, -1.4f, 255, a, c.light);          // the guard
+        box(c.clear(VALK_PLATE), pose, -0.6f, -0.6f, -1f, 0.6f, 0.6f, 6f, 255, a, c.light);              // the grip, running back past the hand
+        box(c.clear(VALK_PLATE), pose, -3.2f, -3.2f, -2.2f, 3.2f, 3.2f, -1.4f, 255, a, c.light);          // the guard
         pose.mulPose(Axis.ZP.rotationDegrees(c.now * 24f));
         cone(c.clear(VALK_LANCE), pose, 2.9f, -2.2f, -2.2f - 24f * c.k, 8, a, FULL);
         pose.popPose();
         // greaves
         for (ModelPart leg : new ModelPart[]{m.rightLeg, m.leftLeg}) {
             enter(pose, leg);
-            box(plate, pose, -2.5f, 4.8f, -2.6f, 2.5f, 12.3f, 2.5f, 255, a, c.light);
-            box(glow, pose, -2.55f, 4.75f, -2.65f, 2.55f, 12.35f, 2.55f, 255, c.alpha(0.6f), FULL);
+            box(c.clear(VALK_PLATE), pose, -2.5f, 4.8f, -2.6f, 2.5f, 12.3f, 2.5f, 255, a, c.light);
+            box(c.glow(VALK_GLOW), pose, -2.55f, 4.75f, -2.65f, 2.55f, 12.35f, 2.55f, 255, c.alpha(0.6f), FULL);
             pose.popPose();
         }
         // helmet wings
         enter(pose, m.head);
-        VertexConsumer crest = c.clear(VALK_CREST);
         for (int side : new int[]{-1, 1}) {
             pose.pushPose();
             pose.translate(side * 4.2f, -5.5f, 0.5f);
             pose.scale(side, 1, 1);
             pose.mulPose(Axis.YP.rotationDegrees(-70f));
             pose.mulPose(Axis.ZP.rotationDegrees(-15f));
-            card(crest, pose, 0f, 0f, 6.5f * c.k, -6.5f * c.k, 0, c.alpha(0.95f), FULL);
+            card(c.clear(VALK_CREST), pose, 0f, 0f, 6.5f * c.k, -6.5f * c.k, 0, c.alpha(0.95f), FULL);
             pose.popPose();
         }
         pose.popPose();
