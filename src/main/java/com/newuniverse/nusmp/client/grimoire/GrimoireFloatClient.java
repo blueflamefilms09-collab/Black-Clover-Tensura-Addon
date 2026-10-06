@@ -211,13 +211,14 @@ public final class GrimoireFloatClient {
                 if (t <= 0.01f) { pose.popPose(); continue; }
                 Vector3f look = camera.getLookVector(), up = camera.getUpVector(), left = camera.getLeftVector();
                 double drop = (1 - t) * 0.9;
-                Vec3 at = cam.add(look.x() * 1.05, look.y() * 1.05, look.z() * 1.05)
-                        .add(-left.x() * 0.5, -left.y() * 0.5, -left.z() * 0.5)
-                        .add(up.x() * (bob - 0.24 - drop), up.y() * (bob - 0.24 - drop), up.z() * (bob - 0.24 - drop));
+                // 0.29: the book is 2x bigger, so it sits a little further out, right and down to keep the crosshair clear
+                Vec3 at = cam.add(look.x() * 1.35, look.y() * 1.35, look.z() * 1.35)
+                        .add(-left.x() * 0.75, -left.y() * 0.75, -left.z() * 0.75)
+                        .add(up.x() * (bob - 0.42 - drop), up.y() * (bob - 0.42 - drop), up.z() * (bob - 0.42 - drop));
                 pose.translate(at.x - cam.x, at.y - cam.y, at.z - cam.z);
                 pose.mulPose(Axis.YP.rotationDegrees(-camera.getYRot() - 18f + sway));   // covers away from you: you read the pages
                 pose.mulPose(Axis.XP.rotationDegrees(camera.getXRot() * 0.6f - 12f - 40f * (1 - t)));
-                float s = Mth.lerp(t, 0.42f, 0.8f);
+                float s = Mth.lerp(t, 0.84f, 1.6f);
                 pose.scale(s, s, s);
             } else {
                 double yaw = Math.toRadians(Mth.rotLerp(partial, owner.yBodyRotO, owner.yBodyRot));

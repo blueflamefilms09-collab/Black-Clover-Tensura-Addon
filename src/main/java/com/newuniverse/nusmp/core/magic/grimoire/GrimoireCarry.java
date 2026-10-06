@@ -15,13 +15,13 @@ public final class GrimoireCarry {
     public record Pose(float right, float up, float forward, float yaw, float pitch, float roll, float scale) {}
 
     /** Dormant: hanging against the right hip / thigh, cover out to the side, slightly tilted, smaller. */
-    public static final Pose HIP = new Pose(0.34f, 0.46f, 0.0f, -90f, 0f, -8f, 0.42f);          // 0.27: lower on the thigh, clear of the arm
+    public static final Pose HIP = new Pose(0.42f, 0.55f, 0.0f, -90f, 0f, -8f, 0.84f);          // 0.29: 2x bigger, a little further out so it clears the leg
     /** Dormant while sneaking (the hips drop). */
-    public static final Pose HIP_SNEAK = new Pose(0.34f, 0.32f, -0.1f, -90f, 0f, -8f, 0.42f);
+    public static final Pose HIP_SNEAK = new Pose(0.42f, 0.41f, -0.1f, -90f, 0f, -8f, 0.84f);
     /** Summoned: in front of the right hand, cover facing out, turned a little inwards. */
-    public static final Pose HAND = new Pose(0.52f, 1.12f, 0.7f, 15f, -10f, 0f, 0.85f);          // 0.27: bigger
+    public static final Pose HAND = new Pose(0.6f, 1.12f, 0.9f, 15f, -10f, 0f, 1.7f);           // 0.29: 2x bigger, further out so it clears the body
     /** Summoned while sneaking. */
-    public static final Pose HAND_SNEAK = new Pose(0.52f, 0.92f, 0.7f, 15f, -10f, 0f, 0.85f);
+    public static final Pose HAND_SNEAK = new Pose(0.6f, 0.92f, 0.9f, 15f, -10f, 0f, 1.7f);
 
     private GrimoireCarry() {}
 

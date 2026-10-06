@@ -60,7 +60,7 @@ Chanted magics: use **Chant** mode until the chant is complete, then switch to *
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.28.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.29.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -204,6 +204,9 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Anti-Magic kit**: new pages **Black Hurricane** (a whirling field that drags foes in and strips their magic) and **Black Form** (30 s of strength, speed, resistance and jump, with an anti-magic burst); mastering the Anti-Magic Lord now also grants the **Demon-Slasher** katana next to Demon-Dweller and Demon-Destroyer.
 - **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
 - **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
+
+## 0.29 - bigger grimoire
+- The summoned book is **2x bigger** (in third person and in first person), and so is the dormant book on the hip. Both sit a little further out so the larger book clears the leg, the body and the crosshair.
 
 ## 0.28 - Black Clover weapons from the art pack; Anti Magic, Sword Magic and Yami's Dark Magic after the wiki
 - **Weapons (replacements).** Demon-Slayer, Demon-Dweller, Demon-Destroyer, Demon-Slasher Katana and Yami's Katana (id kept: `miasma_infused_katana`) are redrawn from the weapons art pack (`tools/gen_weapon_textures.py`): one 128x128 sprite each, extruded to 3D in game, held large. Canon details: the Demon-Slayer's pointed tip, inward-angled base and fuller; the Demon-Dweller's four-sided guard, spiral grip, sphere pommel and markings; the Demon-Destroyer's wide blade end with the clover. The old layered element models (`textures/item/demon_swords/`, `demon_sword_display.json`) are gone.
