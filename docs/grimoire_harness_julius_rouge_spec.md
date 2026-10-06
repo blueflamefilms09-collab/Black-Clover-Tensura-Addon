@@ -10,7 +10,7 @@ two assets.
 - **Harness:** every player with a bound grimoire wears a leather belt with a brass buckle. A strap hangs from the right hip
   and wraps the dormant book: down the front cover to a brass tip, over the top, down the back, with a keeper loop. It is drawn
   on top of the player (`GrimoireFloatClient.belt` / `bookStrap`) and uses no armour slot.
-- **The Time grimoire** (Julius's canon book and, since 0.37, every Time Magic grimoire) is drawn as the page drum of the
+- **The Time grimoire** (Julius's canon book only; 0.37 briefly drew every Time grimoire this way, 0.38 reverted it) is drawn as the page drum of the
   owner's screenshot: a solid upright cylinder of about 96 cream pages packed edge to edge from the centre out, a ribbed band
   of page edges round the outside, and a radial fan of page tops. It is about 0.8 blocks across and stands off the leg at
   the hip. Summoned it stays upright beside you, glows, turns faster and flutters. Opening fans it slightly wider, and a

@@ -13,6 +13,9 @@ Companion documents: `docs/grimoire_harness_julius_rouge_spec.md` (the holster, 
   the old V was 62 / 46 / 34).
 - **New hover position:** it floats low beside the owner's right side (0.78 right, 0.82 up, 0.5 forward), lying open at a
   steep tilt: pitched 55 degrees so the pages face up at the owner, yawed 28 degrees inward, rolled -10 degrees.
+- **0.38 hover position:** in third person it now hovers in front of the right shoulder (0.62 right, 0.92 up, 0.85
+  forward), turned 20 degrees in toward the owner and pitched 28 degrees back, at scale 1.6. That matches the first-person
+  book. The 0.36 numbers below turned the pages outward and sat the book on the arm; they are kept here for reference.
 - **Glowing runes:** while it is held open, full-bright runes in the book's trim metal glow on both pages.
 - **No armour slot:** it is drawn by its own renderer from the Grimoire Slot. The dormant book hangs in the holster
   harness (0.35).

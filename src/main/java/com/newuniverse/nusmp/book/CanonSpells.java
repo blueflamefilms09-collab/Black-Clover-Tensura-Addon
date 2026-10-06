@@ -170,6 +170,7 @@ public final class CanonSpells {
         p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 600, 0));
         if (uses == 2) p.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 1200, 0));
         SpellRuntime.zone(p.serverLevel(), 600, 10, age -> cutSpells(p, p.getBoundingBox().inflate(2.5)));   // magic near you erodes
+        com.newuniverse.nusmp.blackclover.ModeArmor.start(p, com.newuniverse.nusmp.blackclover.ModeArmor.Mode.DEMON, 600);              // 0.38: Asta's Anti-Magic Demon Mode armour
         b.vfx(p, VfxShape.ANTI_MAGIC_SLASH, p.position().add(0, 1, 0), p.position().add(0, 2, 0), 30, 2f);
         return true;
     }

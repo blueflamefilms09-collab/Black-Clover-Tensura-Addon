@@ -60,7 +60,7 @@ Chanted magics: use **Chant** mode until the chant is complete, then switch to *
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.37.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.38.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -204,6 +204,18 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Anti-Magic kit**: new pages **Black Hurricane** (a whirling field that drags foes in and strips their magic) and **Black Form** (30 s of strength, speed, resistance and jump, with an anti-magic burst); mastering the Anti-Magic Lord now also grants the **Demon-Slasher** katana next to Demon-Dweller and Demon-Destroyer.
 - **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
 - **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
+
+## 0.38 - third-person book fix, Julius-only drum, transformation armour
+- **Fix (third person):** the summoned book no longer looks like a flat card stuck to your hand and facing the camera. The 0.36 pose turned the pages outward, away from you, and the 1.1-block book sat on your right arm. Now it hovers in front of your right shoulder, clear of the body, turned in toward you and leaning back like a lectern: the same view as first person, which is unchanged (`tools/grimoire_preview/third_person.py` checks it from behind, the front and the side).
+- **Replacement:** the page drum is Julius's canon grimoire only again. Every other Time grimoire is a normal book. His drum no longer ripples or flips pages on a spell switch.
+- **New: transformation armour overlays.** These are temporary and take no armour slot. They appear on the instant the mode is cast and fade when it ends.
+  - Wind Spirit Dive (Yuno): fur-collared coat, floating star-blade crown, wind wings. Turned on by Spirit Dive on the Wind book or by Spirit of Zephyr.
+  - Fire Spirit Dive (Salamander): clawed gauntlets, dragon wing frame, flame hair.
+  - Anti-Magic Demon Mode (Asta): one horn, one tattered left wing, black arm, dark pixel wisps. Turned on by Black Asta or by the Spirit Lord's Black Form.
+  - Lightning God Mode (Luck): runic chest and shoulder plates, a crackling bolt crown. Turned on by Thunder Fiend or Black Lightning Battle Fiend.
+  - Valkyrie Dress (Noelle): crystal water armour, avian water wings, a spinning drill lance.
+  - Synced to everyone nearby. Textures come from `tools/gen_mode_armor_textures.py`; preview with `python tools/mode_preview/preview.py`.
+- Blender blueprint for the overlays (topology and sockets, per-mode breakdowns, shaders and scrolling textures, Minecraft integration): `docs/mode_armor_spec.md`.
 
 ## 0.37 - the Time grimoire's page drum
 - **Replacement:** the Time grimoire now looks like the owner's screenshot. It is a solid upright drum of about 96 cream pages packed edge to edge, with a ribbed band of page edges round the outside and a radial fan of page tops: no covers, no spine. It is about 0.8 blocks across and stands off the leg at the hip. Summoned, it stays upright beside you, glows, turns, flutters, fans out and ripples on a spell switch. This replaces 0.35's small hollow translucent ring and now applies to **every Time Magic grimoire**, not only Julius's canon book (`tools/gen_time_drum_texture.py`). The Time Magic VFX are untouched.

@@ -21,9 +21,14 @@ public final class GrimoireCarry {
     /** Summoned: beside the owner's right side, open and tilted steeply so its pages face up at them. */
     // 0.36: floats low beside the owner, lying open at a steep tilt (pages up toward the owner, reclining away), after the
     // owner's floating-grimoire references; 0.29's upright pose in front of the hand was (0.6, 1.12, 0.9, 15, -10, 0)
-    public static final Pose HAND = new Pose(0.78f, 0.82f, 0.5f, 28f, 55f, -10f, 1.7f);
+    // 0.38: the 0.36 numbers turned the pages outward (yaw +28 swings the reading side away from the owner) and the 1.13-block-wide
+    // book sat on the right arm, so in third person it read as a flat card stuck to the hand, facing the camera. Now it hovers in
+    // front of the right shoulder, clear of the body, turned in toward the owner and leaning back like a lectern: the same
+    // relation to the eye as the first-person book (right 0.75, down 0.42, yaw -18, pitch +22, scale 1.6), seen from outside.
+    // 0.36 was (0.78, 0.82, 0.5, 28, 55, -10, 1.7).
+    public static final Pose HAND = new Pose(0.62f, 0.92f, 0.85f, -20f, 28f, 0f, 1.6f);
     /** Summoned while sneaking. */
-    public static final Pose HAND_SNEAK = new Pose(0.78f, 0.62f, 0.5f, 28f, 55f, -10f, 1.7f);
+    public static final Pose HAND_SNEAK = new Pose(0.62f, 0.72f, 0.85f, -20f, 28f, 0f, 1.6f);
 
     private GrimoireCarry() {}
 

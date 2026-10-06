@@ -132,6 +132,7 @@ public class WindBook extends GrimoireBook {
     static boolean zephyr(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         b.castCircle(p, 1.5f);
         com.newuniverse.nusmp.vfx.VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.WIND_ZEPHYR, p, p.position().add(0, 1, 0), 0, 600, 1f);
+        com.newuniverse.nusmp.blackclover.ModeArmor.start(p, com.newuniverse.nusmp.blackclover.ModeArmor.Mode.WIND_SPIRIT_DIVE, 600);   // 0.38: Yuno's Spirit Dive armour
         p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 600, 2));
         p.addEffect(new MobEffectInstance(MobEffects.JUMP, 600, 2));
         p.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 600, 0));

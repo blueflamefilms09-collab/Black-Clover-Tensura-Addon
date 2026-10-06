@@ -241,7 +241,7 @@ public final class GrimoireFloatClient {
                     pose.mulPose(Axis.ZP.rotationDegrees(-p.roll()));
                     pose.mulPose(Axis.XP.rotationDegrees(-p.pitch()));
                 }
-                juliusCylinder(pose, buffers, now, arrived, step, flip != null ? now - flip[0] : -1, light);
+                juliusCylinder(pose, buffers, now, arrived, step, light);   // 0.38: no page flip, his pages never need turning
                 pose.popPose();
                 if (!self && !hipStack.isEmpty()) belt(buffers, owner, partial, cam, sneak, null, lightAt(owner, partial));
                 continue;
@@ -284,13 +284,13 @@ public final class GrimoireFloatClient {
     private static final ResourceLocation HARNESS_BRASS = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/grimoire_harness_brass.png");
 
     /**
-     * The Time grimoire: Julius Novachrono's canon book, and since 0.37 every Time Magic grimoire, is drawn as the coverless page
-     * drum of the anime (the only grimoire in the Clover Kingdom with no front or back cover).
+     * Julius Novachrono's canon Time grimoire is drawn as the coverless page drum of the anime (the only grimoire in the Clover
+     * Kingdom with no front or back cover). 0.37 drew every Time grimoire this way; since 0.38 it is Julius's book only.
      */
     static boolean julius(ItemStack stack) {
         if (stack.isEmpty()) return false;
         var d = GrimoireItem.data(stack);
-        return "julius".equalsIgnoreCase(d.getString("Canon")) || "TIME".equals(d.getString("Magic"));
+        return "julius".equalsIgnoreCase(d.getString("Canon"));         // 0.38: Julius's book only again; other Time grimoires are books
     }
 
     private static final ResourceLocation DRUM_EDGE = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/item/grimoire_book/drum_edge.png");
@@ -299,9 +299,9 @@ public final class GrimoireFloatClient {
      * The Time grimoire's page drum (0.37, after the owner's screenshot): a solid cylinder of cream pages packed edge to edge from
      * the centre out, with a ribbed band of page edges round the outside - no covers, no spine. Twice the book's size, standing
      * clear of the leg at the hip. Dormant it turns slowly; summoned it glows, turns faster and its pages flutter; opening fans it
-     * a little wider; a spell switch sends a ripple round it. Model units, around x = z = 8.
+     * a little wider; no page flip (0.38: he has no need to turn pages). Model units, around x = z = 8.
      */
-    private static void juliusCylinder(PoseStack pose, MultiBufferSource buffers, float now, float arrived, int step, float flipAge, int light) {
+    private static void juliusCylinder(PoseStack pose, MultiBufferSource buffers, float now, float arrived, int step, int light) {
         pose.pushPose();
         handTransform(pose);
         pose.scale(1f / 16f, 1f / 16f, 1f / 16f);
@@ -319,7 +319,6 @@ public final class GrimoireFloatClient {
         int n = 96;
         for (int k = 0; k < n; k++) {
             float a = Mth.TWO_PI * k / n + spin + 0.025f * arrived * Mth.sin(now * 0.25f + k * 0.9f);
-            if (flipAge >= 0 && flipAge < 20) a += 0.12f * Mth.sin(flipAge * 0.6f - k * 0.3f) * (1 - flipAge / 20f);   // the ripple
             float lift = 0.15f * arrived * Mth.sin(now * 0.3f + k * 1.3f);
             float ca = Mth.cos(a), sa = Mth.sin(a);
             int[] tint = k % 2 == 0 ? new int[]{244, 236, 214} : new int[]{226, 216, 190};

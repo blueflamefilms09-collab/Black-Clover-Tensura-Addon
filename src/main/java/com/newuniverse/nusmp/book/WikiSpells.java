@@ -183,6 +183,7 @@ public final class WikiSpells {
         b.castCircle(p, 1f);
         VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.LIGHTNING_FIEND, p, p.position().add(0, 1, 0), 0, 600, 1f);
         i.getOrCreateTag().putLong("FiendUntil", p.level().getGameTime() + 600);
+        com.newuniverse.nusmp.blackclover.ModeArmor.start(p, com.newuniverse.nusmp.blackclover.ModeArmor.Mode.LIGHTNING_GOD, 600);      // 0.38: Luck's Lightning God armour
         i.getOrCreateTag().putBoolean("FiendBlack", false);
         i.markDirty();
         return buff(p, 600, new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 600, 2), new MobEffectInstance(MobEffects.DIG_SPEED, 600, 1));
@@ -193,6 +194,7 @@ public final class WikiSpells {
         b.castCircle(p, 1.4f);
         VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.LIGHTNING_FIEND, p, p.position().add(0, 1, 0), 0, 600, 2f);
         i.getOrCreateTag().putLong("FiendUntil", p.level().getGameTime() + 600);
+        com.newuniverse.nusmp.blackclover.ModeArmor.start(p, com.newuniverse.nusmp.blackclover.ModeArmor.Mode.LIGHTNING_GOD, 600);      // 0.38: Luck's Lightning God armour
         i.getOrCreateTag().putBoolean("FiendBlack", true);
         i.markDirty();
         return buff(p, 600, new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 600, 3), new MobEffectInstance(MobEffects.DAMAGE_BOOST, 600, 1),

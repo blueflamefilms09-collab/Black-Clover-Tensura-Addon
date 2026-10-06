@@ -41,12 +41,14 @@ public class NUSMP {
         NUCreativeTab.TABS.register(modEventBus);
         modEventBus.addListener(VfxSpawn::registerPayloads);
         modEventBus.addListener(com.newuniverse.nusmp.book.GrimoireSummon::registerPayloads);
+        modEventBus.addListener(com.newuniverse.nusmp.blackclover.ModeArmor::registerPayloads);
         modEventBus.addListener(com.newuniverse.nusmp.multiverse.MultiverseSync::registerPayloads);
         if (FMLEnvironment.dist == Dist.CLIENT) {
             com.newuniverse.nusmp.vfx.client.VfxClientEvents.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireClient.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireShelfClient.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireFloatClient.init();
+            com.newuniverse.nusmp.client.mode.ModeArmorClient.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireSlotClient.init(modEventBus);
             com.newuniverse.nusmp.client.multiverse.MultiverseStatusClient.init(modEventBus);
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.multiverse.MultiverseClientConfig.SPEC, "nusmp-multiverse-client.toml");
@@ -78,6 +80,9 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.GrimoireSummon::onLogout);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.GrimoireSummon::onDimension);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.GrimoireSummon::onStartTracking);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.blackclover.ModeArmor::onStartTracking);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.blackclover.ModeArmor::onLogin);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.blackclover.ModeArmor::onDeath);
         // Grimoire Slot (0.22): the bound book lives here, dormant at the hip
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.blackclover.GrimoireSlot::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.blackclover.GrimoireSlot::onLogout);

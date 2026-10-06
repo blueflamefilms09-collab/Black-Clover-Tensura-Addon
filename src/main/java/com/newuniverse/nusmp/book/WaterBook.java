@@ -140,6 +140,7 @@ public class WaterBook extends GrimoireBook {
     static boolean valkyrieDress(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         b.castCircle(p, 1.4f);
         com.newuniverse.nusmp.vfx.VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.WATER_DRESS, p, p.position().add(0, 1, 0), 0, 600, 1f);
+        com.newuniverse.nusmp.blackclover.ModeArmor.start(p, com.newuniverse.nusmp.blackclover.ModeArmor.Mode.VALKYRIE, 600);           // 0.38: the Valkyrie Dress armour overlay
         p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 600, 1));
         p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 600, 1));
         p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 600, 1));

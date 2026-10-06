@@ -338,11 +338,19 @@ public abstract class GrimoireBook extends Skill {
         return owner == null || owner.equals(p.getUUID());
     }
 
+    /** 0.38: the transformation armour this book's Spirit Dive puts on (null = none): Sylph's wind, Salamander's fire. */
+    public com.newuniverse.nusmp.blackclover.ModeArmor.Mode diveArmor() {
+        if (this instanceof WindBook) return com.newuniverse.nusmp.blackclover.ModeArmor.Mode.WIND_SPIRIT_DIVE;
+        if (this instanceof FireBook) return com.newuniverse.nusmp.blackclover.ModeArmor.Mode.FIRE_SPIRIT_DIVE;
+        return null;
+    }
+
     private static boolean spiritDive(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         long now = p.level().getGameTime();
         if (now < i.getOrCreateTag().getLong("DiveUntil")) {       // recast ends it early, lock still applies
             i.getOrCreateTag().putLong("DiveUntil", now);
             i.setCoolDown(60, mode);                                   // seconds
+            if (b.diveArmor() != null) com.newuniverse.nusmp.blackclover.ModeArmor.stop(p, b.diveArmor());
             return false;
         }
         if (!SpiritBond.willAnswer(p)) { fail(p, b.spiritName() + " will not answer you. Earn back its trust."); return false; }
@@ -359,6 +367,7 @@ public abstract class GrimoireBook extends Skill {
         SpiritBond.addTrust(p, 2, "spirit_dive");
         SpiritBond.heavyUse(p);
         i.getOrCreateTag().putLong("DiveUntil", now + 160);
+        if (b.diveArmor() != null) com.newuniverse.nusmp.blackclover.ModeArmor.start(p, b.diveArmor(), 160);   // 0.38: the Spirit Dive armour overlay
         i.setCoolDown(8 + 60, mode);                                  // seconds: 8 s dive + 60 s spirit lock
         VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.SPIRIT_AURA, p, p.position().add(0, 1, 0), b.color, 160, 1.0F);
         p.getServer().getPlayerList().broadcastSystemMessage(Component.literal(p.getName().getString() + " dives with " + b.spiritName() + "!")
@@ -427,6 +436,7 @@ public abstract class GrimoireBook extends Skill {
         if (now < i.getOrCreateTag().getLong("DiveUntil")) {
             if (!spiritGateOpen(p) || !drain(p, EnergyHelper.getMaxMagicule(p) * 0.02)) {
                 i.getOrCreateTag().putLong("DiveUntil", now);
+                if (diveArmor() != null) com.newuniverse.nusmp.blackclover.ModeArmor.stop(p, diveArmor());
                 fail(p, "The spirit slips away.");
             }
         }

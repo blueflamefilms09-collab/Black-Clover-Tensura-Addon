@@ -84,6 +84,7 @@ public class AntiMagicLordSkill extends Skill {
             return;
         }
         p.displayClientMessage(Component.literal("Black Form.").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.BOLD), true);
+        com.newuniverse.nusmp.blackclover.ModeArmor.start(p, com.newuniverse.nusmp.blackclover.ModeArmor.Mode.DEMON, 45);               // 0.38: Demon Mode armour, refreshed each second while on
         VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.SPIRIT_AURA, p, p.position().add(0, 1, 0), 0xFF1A1018, 60, 1.4f);
         VfxSpawn.send(p.serverLevel(), VfxShape.ANTI_MAGIC_SLASH, p.getEyePosition(), p.getEyePosition().add(p.getViewVector(1f).scale(3)), 0xFF2A0A30, 18, 2.0f);
     }
@@ -91,6 +92,7 @@ public class AntiMagicLordSkill extends Skill {
     @Override
     public void onToggleOff(ManasSkillInstance i, LivingEntity e) {
         modifier(e, Attributes.ATTACK_DAMAGE, FORM_DMG, 0, AttributeModifier.Operation.ADD_MULTIPLIED_BASE, false);
+        if (e instanceof ServerPlayer p) com.newuniverse.nusmp.blackclover.ModeArmor.stop(p, com.newuniverse.nusmp.blackclover.ModeArmor.Mode.DEMON);
     }
 
     @Override
@@ -106,9 +108,13 @@ public class AntiMagicLordSkill extends Skill {
             modifier(p, Attributes.ATTACK_DAMAGE, FORM_DMG, 0, AttributeModifier.Operation.ADD_MULTIPLIED_BASE, false);
             p.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 100, 1));
             p.displayClientMessage(Component.literal("Your Anti-Magic runs dry. Black Form ends.").withStyle(ChatFormatting.GRAY), true);
+            com.newuniverse.nusmp.blackclover.ModeArmor.stop(p, com.newuniverse.nusmp.blackclover.ModeArmor.Mode.DEMON);
             return;
         }
         AntiMagic.setAmp(i, amp);
+        if (com.newuniverse.nusmp.blackclover.ModeArmor.active(p) == com.newuniverse.nusmp.blackclover.ModeArmor.Mode.DEMON
+                || com.newuniverse.nusmp.blackclover.ModeArmor.active(p) == com.newuniverse.nusmp.blackclover.ModeArmor.Mode.NONE)
+            com.newuniverse.nusmp.blackclover.ModeArmor.start(p, com.newuniverse.nusmp.blackclover.ModeArmor.Mode.DEMON, 45);
         modifier(p, Attributes.ATTACK_DAMAGE, FORM_DMG, 0.25, AttributeModifier.Operation.ADD_MULTIPLIED_BASE, true);
         p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 40, 1, false, false));
         if (p.tickCount % 60 == 0) VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.SPIRIT_AURA, p, p.position().add(0, 1, 0), 0xFF1A1018, 62, 1.4f);
