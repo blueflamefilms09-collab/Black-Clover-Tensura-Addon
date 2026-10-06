@@ -1,5 +1,6 @@
 # Developer helper: prints Black Clover wiki pages (wikitext, via the MediaWiki API) into the job log, so spells can be checked
-# against the source from a session that cannot reach the wiki. Runs when .github/wiki-request.txt changes (one page title per line).
+# against the source from a session that cannot reach the wiki. Runs when .github/wiki-request.txt changes (one page title per line;
+# a "tensura:" prefix reads the Tensura Reincarnated wiki, tensura.wiki.gg, instead).
 name: Fetch wiki reference
 
 on:
@@ -17,7 +18,9 @@ jobs:
           while IFS= read -r page; do
             [ -z "$page" ] && continue
             echo "=================== PAGE: $page ==================="
+            host="https://blackclover.fandom.com/api.php"
+            case "$page" in tensura:*) host="https://tensura.wiki.gg/api.php"; page="${page#tensura:}";; esac
             curl -sSL --max-time 60 -A "Mozilla/5.0 (reference fetch for a fan mod)" \
-              "https://blackclover.fandom.com/api.php?action=parse&page=$(python3 -c 'import sys,urllib.parse;print(urllib.parse.quote(sys.argv[1]))' "$page")&prop=wikitext&format=json&formatversion=2" \
+              "$host?action=parse&page=$(python3 -c 'import sys,urllib.parse;print(urllib.parse.quote(sys.argv[1]))' "$page")&prop=wikitext&format=json&formatversion=2" \
               | python3 .github/scripts/wiki_extract.py
           done < .github/wiki-request.txt
