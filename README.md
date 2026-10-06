@@ -235,7 +235,9 @@ Server config: `world/serverconfig/nusmp-multiverse-server.toml`; client config:
 **Magic Knight rank, stars, social class, race**
 - Everyone starts as a 5th Class Junior Magic Knight. Junior/Intermediate/Senior have 5th-1st classes; Grand Magic Knight and Wizard King are set by admins.
 - Gold stars (merit) and black stars (demerit): with `autoPromote` every 10 net stars moves you up one class, up to 1st Class Senior.
-- Social class (Royalty / Noble / Commoner / Peasant) is flavour; race (Human, Elf, Devil, Spirit-bonded, Dwarf, Hybrid) can gate pages.
+- Social class (Royalty / Noble / Commoner / Peasant) is flavour. **Race (0.27)** is the player's **Tensura race**; the mod only adds a small buff on top of it by family and uses the family for page gates:
+  Human (+5% attack, +1 luck), Elf (+8% speed, +2 health), Dwarf (+2 armor toughness, +15% mining speed), Beastfolk (+10% speed, higher jump), Ogre / Oni (+10% attack, +2 health), Goblin (+5% speed, +1 luck), Giant (+4 health, +20% knockback resistance), Orc (+4 health, +5% attack), Lizardman / Dragonewt (+2 armor, +5% attack), Merfolk (faster swimming, more air), Slime (half fall damage, +2 armor), Ghoul / Vampire (+5% attack and speed), Wight / Skeleton (+2 armor, +20% knockback resistance), Daemon (+8% attack, +5% speed).
+  **Devil** is the mod's only own race and is **command only** for now: `/multiverse profile race <player> devil` (+10% attack, +2 armor, +5% speed), `... none` to return them to their Tensura race. The old Spirit-bonded and Hybrid races are gone.
 
 **Magic Knight Squads (need FTB Teams)**
 - A squad is an FTB Teams party flagged as a squad. Captain = party owner, Vice-Captain chosen by the captain, everyone else Member. Invites, leaving and ownership go through FTB Teams' own commands.

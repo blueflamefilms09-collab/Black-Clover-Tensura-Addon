@@ -87,7 +87,6 @@ public class SpiritLordSkill extends Skill {
             return "The spirit could not bind to you (another mod refused the skill).";
         }
         if (!type.equals("Anti")) SpiritBond.bond(p, type);
-        if (MultiverseProfile.race(p) == Race.HUMAN) MultiverseProfile.setRace(p, Race.SPIRIT_BONDED);
         MultiverseSync.markDirty(p);
         return null;
     }

@@ -64,6 +64,10 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.MultiverseSync::onLogin);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.MultiverseSync::onLogout);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.WorldSites::onServerTick);
+        // races: Tensura's race + this mod's buff (Devil is command only)
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.RaceBuffs::onPlayerTick);
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerRespawnEvent e) -> com.newuniverse.nusmp.multiverse.RaceBuffs.reset(e.getEntity()));
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent e) -> com.newuniverse.nusmp.multiverse.RaceBuffs.reset(e.getEntity()));
         NeoForge.EVENT_BUS.addListener(FaithCommand::register);
         NeoForge.EVENT_BUS.addListener(LiarisFreeseSkill::onKill);
         NeoForge.EVENT_BUS.addListener(SkillEvolution::onPlayerTick);

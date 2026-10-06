@@ -218,14 +218,18 @@ public final class MultiverseCommands {
                                     MultiverseProfile.setSocialClass(EntityArgument.getPlayer(ctx, "player"), c);
                                     return ok(ctx, "Social class: " + c.displayName);
                                 }))))
+                // races are the player's Tensura race (with this mod's buff on top); only Devil is set here, by command
                 .then(Commands.literal("race").then(Commands.argument("player", EntityArgument.player())
                         .then(Commands.argument("value", StringArgumentType.word())
-                                .suggests((c, b) -> { for (Race r : Race.values()) b.suggest(r.name().toLowerCase()); return b.buildFuture(); })
+                                .suggests((c, b) -> { b.suggest("devil"); b.suggest("none"); return b.buildFuture(); })
                                 .executes(ctx -> {
-                                    Race r = Race.byName(StringArgumentType.getString(ctx, "value"));
-                                    if (r == null) return fail(ctx, "Unknown race.");
-                                    MultiverseProfile.setRace(EntityArgument.getPlayer(ctx, "player"), r);
-                                    return ok(ctx, "Race: " + r.displayName);
+                                    String v = StringArgumentType.getString(ctx, "value").toLowerCase();
+                                    ServerPlayer target = EntityArgument.getPlayer(ctx, "player");
+                                    if (!v.equals("devil") && !v.equals("none"))
+                                        return fail(ctx, "Races come from Tensura; only 'devil' (or 'none' to undo it) can be set here.");
+                                    MultiverseProfile.setDevil(target, v.equals("devil"));
+                                    MultiverseSync.markDirty(target);
+                                    return ok(ctx, target.getName().getString() + " is now: " + RaceBuffs.displayName(target));
                                 }))))
                 .then(Commands.literal("eligible").then(Commands.argument("player", EntityArgument.player())
                         .then(Commands.argument("value", com.mojang.brigadier.arguments.BoolArgumentType.bool()).executes(ctx -> {

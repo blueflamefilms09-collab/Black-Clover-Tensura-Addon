@@ -98,14 +98,20 @@ public final class MultiverseProfile {
         write(p, t);
     }
 
+    /**
+     * The player's race: Devil if an admin made them one (the mod's only own race, command only), otherwise the family of their
+     * Tensura race (Human when Tensura reports none).
+     */
     public static Race race(Player p) {
-        Race r = Race.byName(read(p).getString("Race"));
-        return r == null ? Race.HUMAN : r;
+        if (Race.DEVIL.name().equals(read(p).getString("Race"))) return Race.DEVIL;
+        Race fam = RaceBuffs.tensuraFamily(p);
+        return fam == null ? Race.HUMAN : fam;
     }
 
-    public static void setRace(ServerPlayer p, Race r) {
+    /** Admin: make the player a Devil (true) or return them to their Tensura race (false). */
+    public static void setDevil(ServerPlayer p, boolean devil) {
         CompoundTag t = read(p);
-        t.putString("Race", r.name());
+        if (devil) t.putString("Race", Race.DEVIL.name()); else t.remove("Race");
         write(p, t);
     }
 

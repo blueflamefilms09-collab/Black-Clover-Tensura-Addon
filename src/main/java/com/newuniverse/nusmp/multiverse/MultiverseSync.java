@@ -61,7 +61,7 @@ public final class MultiverseSync {
         t.put("Squad", Squads.summary(p));
         // social class & race
         t.putString("Social", MultiverseProfile.socialClass(p).displayName);
-        t.putString("Race", MultiverseProfile.race(p).displayName);
+        t.putString("Race", RaceBuffs.displayName(p));
         // grimoire
         CompoundTag g = new CompoundTag();
         var inst = GrimoirePages.grimoireOf(p);
