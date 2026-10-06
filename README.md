@@ -52,12 +52,15 @@ Config `[ultimate_evolution]`: enabled, minimumEP, replacesBase.
 Chanted magics: use **Chant** mode until the chant is complete, then switch to **Cast**. Mastery shortens the chant by one line.
 
 ## Build
+
+**Ready-made jar:** every push is built on GitHub (`.github/workflows/build.yml`): open the repository's **Releases** page and download `multiverse-of-anime-<version>.jar` from the newest "Multiverse <version> (build N)". Put it in `mods` and delete any older `multiverse-of-anime-*.jar` there (an old jar is why a game can still show the flat pre-0.21 books).
+
 1. Install **JDK 21** (Eclipse Adoptium Temurin 21).
 2. Open a terminal in this folder and run:
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.24.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.25.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
