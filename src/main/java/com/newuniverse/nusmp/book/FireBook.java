@@ -31,7 +31,11 @@ public class FireBook extends GrimoireBook {
             BookPage.mid("sol_linea", "Sol Linea", TensuraShots.shot(TensuraShots.Shot.FIRE_LANCE, 14, 2.4f, 0.8f, 100)),
             BookPage.zone("calderos", "Calderos", FireBook::calderos),
             // appended last so the existing pages keep their mode numbers and unlock bits
-            BookPage.signature("leo_rugiens", "Leo Rugiens", FireBook::leoRugiens).withCooldown(600));
+            BookPage.signature("leo_rugiens", "Leo Rugiens", FireBook::leoRugiens).withCooldown(600),
+            // 0.31: wiki spells, appended
+            BookPage.mid("spiral_flame", "Spiral Flame", FireBook::spiralFlame),
+            BookPage.zone("wild_bursting_flame", "Wild Bursting Flame", FireBook::wildBurst),
+            BookPage.signature("ignis_columna", "Ignis Columna", FireBook::ignisColumna).withCooldown(600));
 
     public FireBook() { super(MagicType.FLAME, 0xFFFF6A1E); }
     @Override protected List<BookPage> familyPages() { return pages; }
@@ -113,6 +117,62 @@ public class FireBook extends GrimoireBook {
                     t.hurtMarked = true;
                 }
                 com.newuniverse.nusmp.vfx.VfxSpawn.send(p.serverLevel(), VfxShape.FIRE_PILLAR, pt, pt.add(0, 1, 0), 0, 30, s);
+            }
+        });
+        return true;
+    }
+
+    /** Spiral Flame: a vortex of flame drills forward, piercing and burning everything in its path, and bursts at the end. */
+    static boolean spiralFlame(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
+        float s = size(i, p);
+        Vec3 start = p.getEyePosition(), dir = p.getViewVector(1f);
+        b.castCircle(p, 1f);
+        com.newuniverse.nusmp.vfx.VfxSpawn.send(p.serverLevel(), VfxShape.FIRE_SPIRAL, start, start.add(dir.scale(22)), 0, 22, 1.1f * s);
+        SpellRuntime.bolt(p, start, dir.scale(1.7), 1.0 * s, 13, true, null, (bolt, t) -> {
+            b.hurt(i, p, t, mode, 13f);
+            t.igniteForSeconds(5);
+            t.knockback(0.8, -dir.x, -dir.z);
+        }, (bolt, at) -> {
+            for (LivingEntity t : around(p, at, 2.5 * s)) { b.hurt(i, p, t, mode, 6f); t.igniteForSeconds(3); }
+            com.newuniverse.nusmp.vfx.VfxSpawn.send(p.serverLevel(), VfxShape.FIRE_BURST, at, at, 0, 20, 0.9f * s);
+        });
+        return true;
+    }
+
+    /** Wild Bursting Flame: flame bursts out of you in every direction, three waves, each throwing foes back. */
+    static boolean wildBurst(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
+        float r = 5.5f * size(i, p);
+        Vec3 c = p.position();
+        b.castCircle(p, 1.2f);
+        com.newuniverse.nusmp.vfx.VfxSpawn.send(p.serverLevel(), VfxShape.FIRE_WILD, c, c.add(0, 1, 0), 0, 30, r);
+        for (int w = 0; w < 3; w++) {
+            float reach = r * (0.55f + 0.225f * w);
+            SpellRuntime.later(p.serverLevel(), w * 6, () -> {
+                for (LivingEntity t : around(p, p.position(), reach)) {
+                    b.hurt(i, p, t, mode, 7f);
+                    t.igniteForSeconds(4);
+                    Vec3 away = t.position().subtract(p.position()).normalize();
+                    t.knockback(0.9, -away.x, -away.z);
+                }
+            });
+        }
+        return true;
+    }
+
+    /** Ignis Columna: a towering column of flame erupts where you aim and keeps burning for 2.5 s, lifting what stands in it. */
+    static boolean ignisColumna(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
+        float s = size(i, p);
+        Vec3 c = aim(p, 24);
+        double r = 2.2 * s;
+        b.castCircle(p, 1.5f);
+        com.newuniverse.nusmp.vfx.VfxSpawn.send(p.serverLevel(), VfxShape.FIRE_PILLAR, c, c.add(0, 1, 0), 0, 50, 2.6f * s);
+        SpellRuntime.zone(p.serverLevel(), 50, 5, age -> {
+            for (LivingEntity t : p.serverLevel().getEntitiesOfClass(LivingEntity.class, new AABB(c, c).inflate(r, 0, r).expandTowards(0, 10, 0),
+                    e -> e != p && e.isAlive() && !e.isAlliedTo(p))) {
+                b.hurt(i, p, t, mode, age == 0 ? 12f : 3.5f);
+                t.igniteForSeconds(6);
+                t.setDeltaMovement(t.getDeltaMovement().multiply(0.5, 0, 0.5).add(0, 0.35, 0));
+                t.hurtMarked = true;
             }
         });
         return true;

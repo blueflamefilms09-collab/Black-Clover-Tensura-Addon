@@ -230,8 +230,8 @@
   "nusmp.page.book_wind.gust_lane": "You open a corridor of gale. Enemies are thrown down it, arrows are torn apart in it, and your friends run faster through it.",
   "nusmp.page.book_wind.spirit_storm": "A storm wakes around you and refuses to let go of anything nearby. It lifts, it spins, it does not care who stands in it.",
   "nusmp.page.book_earth.spike_line": "Stone spears break the ground one after another, racing away from you like a crack in ice.",
-  "nusmp.page.book_earth.wall": "The ground stands up to defend you. It remembers to lie back down eight seconds later.",
-  "nusmp.page.book_earth.mother_earth_split": "The earth opens in a long scar. Those standing on it are wounded, and the ground holds their feet a moment longer.",
+  "nusmp.page.book_earth.wall": "Mud Wall Partition - the ground stands up to defend you. It remembers to lie back down eight seconds later.",
+  "nusmp.page.book_earth.mother_earth_split": "Divided Mother Earth - the earth opens in a long scar. Those standing on it are wounded, and the ground holds their feet a moment longer.",
   "nusmp.page.book_light.judgment": "A blade of light, as long as a ship, swung once. Whatever it touches glows for a while afterward, as if ashamed.",
   "nusmp.page.book_light.divine_punishment": "You mark someone. A second later, the sky answers with five spears of light.",
   "nusmp.page.book_dark.avidya_slash": "Dark Cloaked Avidya Slash - a flying wave of darkness, sharp as a blade, that swallows spells in mid-flight.",
@@ -471,5 +471,16 @@
   "nusmp.page.book_dark.avidya_wild_slash": "Dark Cloaked Avidya Wild Slash - swing wildly: a spray of Avidya Slashes.",
   "nusmp.page.book_dark.black_moon": "Dark Cloaked Black Moon - Mana Zone: a black hole overhead swallows every enemy spell nearby for 10 s; allies' spells pass.",
   "nusmp.page.book_dark.iai_slash": "Dark Cloaked Iai Slash - the blade is drawn and you cut through the nearest foe. Deeper under Black Moon.",
-  "nusmp.page.book_dark.dimension_slash_equinox": "Dark Cloaked Dimension Slash: Equinox - with Mana Zone, the Dimension Slash reaches enormously far."
+  "nusmp.page.book_dark.dimension_slash_equinox": "Dark Cloaked Dimension Slash: Equinox - with Mana Zone, the Dimension Slash reaches enormously far.",
+  "nusmp.page.book_fire.spiral_flame": "Spiral Flame - a vortex of flame drills forward, piercing and burning everything in its path, then bursts where it ends.",
+  "nusmp.page.book_fire.wild_bursting_flame": "Wild Bursting Flame - flame bursts out of you in every direction, three waves, each one throwing your enemies back.",
+  "nusmp.page.book_fire.ignis_columna": "Ignis Columna - a towering column of flame erupts where you aim and keeps burning, lifting whatever stands inside it.",
+  "nusmp.page.book_water.aqua_javelin": "Aqua Javelin - a lance of high-pressure water, dense enough to pierce a whole line of enemies.",
+  "nusmp.page.book_water.sea_dragons_nest": "Sea Dragon's Nest - a dome of whirling water rises over you: enemy spells inside are swallowed, foes are slowed and battered, allies heal.",
+  "nusmp.page.book_water.valkyrie_dress": "Valkyrie Dress - water becomes armour: for thirty seconds you are faster, stronger, harder to hurt and light on your feet.",
+  "nusmp.page.book_earth.witch_hunter_claws": "Witch Hunter Claws - stone claws burst out of the ground round your target and clamp shut, crushing it and holding it in place.",
+  "nusmp.page.book_earth.rampaging_mother_earth": "Rampaging Mother Earth - the ground heaves in a rolling wave that tears eighteen blocks ahead, throwing everything in its way into the air.",
+  "nusmp.page.book_wind.towering_tornado": "Towering Tornado - a huge tornado where you aim: it drags enemies in and up, shreds them and swallows their spells.",
+  "nusmp.page.book_wind.slicing_wind_emperor": "Slicing Wind Emperor - a vast crescent made of countless wind blades sweeps far ahead, cutting spells and everything else in its path.",
+  "nusmp.page.book_wind.spirit_of_zephyr": "Spirit of Zephyr - the wind spirit wraps you for thirty seconds: very fast, light as air, and enemy spells are blown away before they reach you."
 }

@@ -29,7 +29,11 @@ public class WindBook extends GrimoireBook {
     private final List<BookPage> pages = List.of(
             BookPage.starter("kamaitachi", "Crescent Kamaitachi", TensuraShots.shot(TensuraShots.Shot.WIND_BLADE, 9, 2.0f, 1.0f, 0)),
             BookPage.mid("gust_lane", "Gust Lane", WindBook::lane),
-            BookPage.signature("spirit_storm", "Spirit Storm", WindBook::storm));
+            BookPage.signature("spirit_storm", "Spirit Storm", WindBook::storm),
+            // 0.31: wiki spells, appended
+            BookPage.zone("towering_tornado", "Towering Tornado", WindBook::toweringTornado),
+            BookPage.signature("slicing_wind_emperor", "Slicing Wind Emperor", WindBook::windEmperor),
+            BookPage.signature("spirit_of_zephyr", "Spirit of Zephyr", WindBook::zephyr).withCooldown(1800));
 
     public WindBook() { super(MagicType.WIND, 0xFF8CFFC2); }
     @Override protected List<BookPage> familyPages() { return pages; }
@@ -79,6 +83,65 @@ public class WindBook extends GrimoireBook {
                 t.setDeltaMovement(swirl.add(0, 0.35, 0));
                 t.hurtMarked = true;
                 if (age % 20 == 0) b.hurt(i, p, t, mode, 4f);
+            }
+        });
+        return true;
+    }
+
+    /** Towering Tornado: a huge tornado where you aim for 5 s: it drags foes in and up, shreds them and swallows spells. */
+    static boolean toweringTornado(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
+        float r = 3.5f * size(i, p);
+        Vec3 c = aim(p, 22);
+        b.castCircle(p, 1.3f);
+        com.newuniverse.nusmp.vfx.VfxSpawn.send(p.serverLevel(), VfxShape.WIND_TORNADO, c, c.add(0, 1, 0), 0, 100, r);
+        SpellRuntime.zone(p.serverLevel(), 100, 4, age -> {
+            for (LivingEntity t : p.serverLevel().getEntitiesOfClass(LivingEntity.class, new AABB(c, c).inflate(r * 1.6, 0, r * 1.6).expandTowards(0, r * 2.8, 0),
+                    e -> e != p && e.isAlive() && !e.isAlliedTo(p))) {
+                Vec3 to = t.position().subtract(c);
+                Vec3 swirl = new Vec3(-to.z, 0, to.x).normalize().scale(0.35), pull = to.multiply(-0.08, 0, -0.08);
+                t.setDeltaMovement(swirl.add(pull).add(0, t.getY() - c.y < r * 2 ? 0.3 : 0.02, 0));
+                t.hurtMarked = true;
+                if (age % 20 == 0) b.hurt(i, p, t, mode, 4f);
+            }
+            for (Projectile pr : p.serverLevel().getEntitiesOfClass(Projectile.class, new AABB(c, c).inflate(r, 0, r).expandTowards(0, r * 2.8, 0)))
+                if (pr.getOwner() != p) pr.discard();
+        });
+        return true;
+    }
+
+    /** Slicing Wind Emperor: a huge crescent of many wind blades sweeps 28 blocks ahead, cutting spells and everything else. */
+    static boolean windEmperor(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
+        float s = size(i, p);
+        Vec3 a = p.getEyePosition(), dir = p.getViewVector(1f), end = a.add(dir.scale(28));
+        b.castCircle(p, 1.5f);
+        com.newuniverse.nusmp.vfx.VfxSpawn.send(p.serverLevel(), VfxShape.WIND_EMPEROR, a, end, 0, 20, 1.8f * s);
+        for (Projectile pr : p.serverLevel().getEntitiesOfClass(Projectile.class, new AABB(a, end).inflate(3 * s))) if (pr.getOwner() != p) pr.discard();
+        for (LivingEntity t : along(p, a, end, 3.0 * s)) {
+            double f = Math.min(1, t.position().distanceTo(a) / 28);
+            int delay = (int) Math.round(15 * (1 - Math.cbrt(1 - f)));
+            SpellRuntime.later(p.serverLevel(), delay, () -> {
+                if (!t.isAlive()) return;
+                b.hurt(i, p, t, mode, 18f);
+                t.knockback(0.8, -dir.x, -dir.z);
+            });
+        }
+        return true;
+    }
+
+    /** Spirit of Zephyr: the wind spirit wraps you for 30 s: very fast, light as air, enemy spells blown away before they touch you. */
+    static boolean zephyr(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
+        b.castCircle(p, 1.5f);
+        com.newuniverse.nusmp.vfx.VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.WIND_ZEPHYR, p, p.position().add(0, 1, 0), 0, 600, 1f);
+        p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 600, 2));
+        p.addEffect(new MobEffectInstance(MobEffects.JUMP, 600, 2));
+        p.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 600, 0));
+        p.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 600, 1));
+        SpellRuntime.zone(p.serverLevel(), 600, 4, age -> {
+            for (Projectile pr : p.serverLevel().getEntitiesOfClass(Projectile.class, p.getBoundingBox().inflate(3))) {
+                if (pr.getOwner() == p || (pr.getOwner() instanceof LivingEntity o && o.isAlliedTo(p))) continue;
+                Vec3 away = pr.position().subtract(p.position()).normalize().scale(1.2);
+                pr.setDeltaMovement(away);
+                pr.hurtMarked = true;
             }
         });
         return true;

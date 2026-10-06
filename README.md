@@ -60,7 +60,7 @@ Chanted magics: use **Chant** mode until the chant is complete, then switch to *
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.30.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.31.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -204,6 +204,15 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Anti-Magic kit**: new pages **Black Hurricane** (a whirling field that drags foes in and strips their magic) and **Black Form** (30 s of strength, speed, resistance and jump, with an anti-magic burst); mastering the Anti-Magic Lord now also grants the **Demon-Slasher** katana next to Demon-Dweller and Demon-Destroyer.
 - **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
 - **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
+
+## 0.31 - Fire, Water, Earth and Wind spells from the wiki
+New pages (appended; Time Magic VFX untouched, new effects built to the same standard and checked in `tools/vfx_preview`):
+- **Fire:** **Spiral Flame** (a flame vortex drills forward, piercing), **Wild Bursting Flame** (three waves of flame out of you in every direction), **Ignis Columna** (a towering column of flame that keeps burning and lifts).
+- **Water:** **Aqua Javelin** (high-pressure piercing lance), **Sea Dragon's Nest** (water dome: enemy spells swallowed, foes slowed, allies heal), **Valkyrie Dress** (water armour, 30 s of speed, strength, resistance and jump).
+- **Earth:** **Witch Hunter Claws** (stone claws clamp shut on the target and hold it), **Rampaging Mother Earth** (a heaving wave of stone rolling 18 blocks); Earth Wall is now called **Mud Wall Partition** and Mother Earth Split **Divided Mother Earth** (same spells, canon names).
+- **Wind:** **Towering Tornado** (a huge tornado where you aim), **Slicing Wind Emperor** (a vast crescent of many wind blades), **Spirit of Zephyr** (30 s of wind-spirit speed and lightness; enemy spells blown away).
+- Nine new effects (FIRE_SPIRAL, FIRE_WILD, WATER_JAVELIN, WATER_NEST, WATER_DRESS, WIND_EMPEROR, WIND_ZEPHYR, EARTH_CLAWS, EARTH_RAMPAGE); Ignis Columna and Towering Tornado use the existing column and tornado effects, scaled up.
+- Already in the mod from earlier versions: the Summon Grimoire ability with the float / open / stow animation, the creative grimoire fix, and Time-quality Fire / Water / Wind / Earth effects.
 
 ## 0.30 - addon logo
 - The Four Kingdoms / Tensura emblem is the mod's logo (`src/main/resources/logo.png`, 512x512, shown in the in-game Mods list). The same file works as the CurseForge project icon.

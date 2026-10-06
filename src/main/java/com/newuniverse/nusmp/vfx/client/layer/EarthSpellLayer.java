@@ -18,18 +18,25 @@ import static com.newuniverse.nusmp.vfx.client.layer.ElementFx.*;
  *   <li>EARTH_RISE, Ground Wall: the ground cracks along the wall's base, dust billows up and rubble flies as the wall rises.</li>
  *   <li>EARTH_FISSURE, Mother Earth Split: a crack races from 'from' to 'to', glowing faintly with mana, and slabs of stone shove up
  *       and lean out along both sides of it.</li>
+ *   <li>EARTH_CLAWS, Witch Hunter Claws (0.31): five curved stone claws burst out of a cracked ring round 'from', then bend in and
+ *       clamp shut on whatever stands there. power = radius.</li>
+ *   <li>EARTH_RAMPAGE, Rampaging Mother Earth (0.31): the ground heaves in a rolling wave from 'from' to 'to': slabs shove up high at
+ *       the wave front and settle behind it, dust and rubble thrown off its crest.</li>
  * </ul>
  */
 public class EarthSpellLayer extends AbstractVfxLayer {
     private static final int STONE = 0xFFFFFFFF, DUST = 0xC0C9B08A, CRACK = 0xFF2A1C12;
 
-    @Override public Set<VfxShape> shapes() { return EnumSet.of(VfxShape.STONE_SPIKES, VfxShape.EARTH_RISE, VfxShape.EARTH_FISSURE); }
+    @Override public Set<VfxShape> shapes() { return EnumSet.of(VfxShape.STONE_SPIKES, VfxShape.EARTH_RISE, VfxShape.EARTH_FISSURE,
+            VfxShape.EARTH_CLAWS, VfxShape.EARTH_RAMPAGE); }
 
     @Override
     public int defaultDuration(VfxShape s) {
         return switch (s) {
             case STONE_SPIKES -> 44;
             case EARTH_RISE -> 30;
+            case EARTH_CLAWS -> 36;
+            case EARTH_RAMPAGE -> 40;
             default -> 40;
         };
     }
@@ -38,7 +45,8 @@ public class EarthSpellLayer extends AbstractVfxLayer {
 
     @Override
     public void onSpawn(VfxInstance inst) {
-        VfxShake.add(inst.payload.from(), inst.shape == VfxShape.EARTH_FISSURE ? 1.4f : 0.7f, inst.shape == VfxShape.EARTH_FISSURE ? 18 : 10);
+        boolean big = inst.shape == VfxShape.EARTH_FISSURE || inst.shape == VfxShape.EARTH_RAMPAGE;
+        VfxShake.add(inst.payload.from(), big ? 1.4f : 0.7f, big ? 18 : 10);
     }
 
     @Override
@@ -47,6 +55,8 @@ public class EarthSpellLayer extends AbstractVfxLayer {
             case STONE_SPIKES -> spikes(inst, ctx, buf);
             case EARTH_RISE -> rise(inst, ctx, buf);
             case EARTH_FISSURE -> fissure(inst, ctx, buf);
+            case EARTH_CLAWS -> claws(inst, ctx, buf);
+            case EARTH_RAMPAGE -> rampage(inst, ctx, buf);
             default -> { }
         }
     }
@@ -184,6 +194,95 @@ public class EarthSpellLayer extends AbstractVfxLayer {
                 Vector3f q = new Vector3f(base).add(new Vector3f(sd).mul(side * ct)).add(0, (3.6f * ct - 4f * ct * ct) * p + 0.2f, 0);
                 buf.billboard(ctx, EARTH_CHUNK, VfxBlend.ALPHA, q, 0.3f * p, age * 0.4f + i, STONE);
             }
+        }
+    }
+    // ------------------------------------------------------------------ Witch Hunter Claws (0.31)
+    private void claws(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {
+        float age = inst.ageTicks(ctx.partialTick), r = inst.power;
+        Vector3f c = ctx.rel(inst.from(ctx));
+        float rise = VfxAnim.easeOutBack(Mth.clamp(age / 7f, 0, 1));
+        float clamp = VfxAnim.easeOutCubic(Mth.clamp((age - 7f) / 6f, 0, 1));
+        float sink = Mth.clamp((inst.duration - age) / 8f, 0, 1);
+        float fade = life(inst, age, 0, 8);
+        // the cracked ring they tear out of
+        buf.ring(EARTH_CRACK, VfxBlend.ALPHA, VfxPose.ground(new Vector3f(c).add(0, 0.04f, 0)), r * 0.75f, r * 1.25f, ctx.seg(12, 8), 3, 0,
+                VfxVertexBuffer.withAlpha(CRACK, 0.85f * fade));
+        buf.ring(EARTH_CRACK, VfxBlend.ADD, VfxPose.ground(new Vector3f(c).add(0, 0.05f, 0)), r * 0.92f, r * 1.05f, ctx.seg(12, 8), 3, 0,
+                VfxVertexBuffer.withAlpha(inst.color, 0.5f * fade * (1 - clamp * 0.5f)));
+        // five claws: a lower and an upper joint each, the upper one bending in over the centre as they close
+        int n = 5;
+        for (int i = 0; i < n; i++) {
+            float ang = Mth.TWO_PI * i / n + hash(inst.seed, i, 1) * 0.3f;
+            Vector3f out = new Vector3f(Mth.cos(ang), 0, Mth.sin(ang));
+            float h = (1.6f + 0.5f * hash(inst.seed, i, 2)) * r * 0.8f * rise * sink;
+            if (h <= 0.02f) continue;
+            Vector3f base = new Vector3f(c).add(new Vector3f(out).mul(r)).add(0, -0.2f, 0);
+            Vector3f knuckle = new Vector3f(base).add(new Vector3f(out).mul(0.15f * r - 0.35f * r * clamp)).add(0, h * 0.6f, 0);
+            Vector3f tip = new Vector3f(knuckle).add(new Vector3f(out).mul(-(0.1f + 0.75f * clamp) * r)).add(0, h * (0.45f - 0.3f * clamp), 0);
+            float rad = 0.32f * r * 0.8f;
+            spike(buf, base, knuckle, rad, ang, STONE);
+            spike(buf, new Vector3f(knuckle).add(0, -0.15f * h, 0), tip, rad * 0.75f, ang + 0.4f, STONE);
+        }
+        // dust bursting from the ring, and rocks thrown up
+        int d = ctx.seg(8, 4);
+        for (int i = 0; i < d; i++) {
+            float ang = Mth.TWO_PI * i / d, dt = Mth.clamp(age / 16f, 0, 1);
+            Vector3f q = new Vector3f(c).add(Mth.cos(ang) * r * (1 + 0.5f * dt), 0.3f + dt * 0.9f, Mth.sin(ang) * r * (1 + 0.5f * dt));
+            buf.billboard(ctx, EARTH_DUST, VfxBlend.ALPHA, q, (0.9f + 1.3f * dt) * Math.min(r, 2.5f), i, VfxVertexBuffer.withAlpha(DUST, (1 - dt) * 0.9f));
+        }
+        int k = ctx.seg(8, 4);
+        for (int i = 0; i < k; i++) {
+            float ct = Mth.clamp((age - hash(inst.seed, i, 3) * 4) / 14f, 0, 1);
+            if (ct <= 0 || ct >= 1) continue;
+            float ang = hash(inst.seed, i, 4) * Mth.TWO_PI;
+            Vector3f q = new Vector3f(c).add(Mth.cos(ang) * r * (1 + 0.8f * ct), (4f * ct - 4.4f * ct * ct) * Math.min(r, 2.5f) + 0.2f, Mth.sin(ang) * r * (1 + 0.8f * ct));
+            buf.billboard(ctx, EARTH_CHUNK, VfxBlend.ALPHA, q, 0.3f * Math.min(r, 2.5f), age * 0.4f + i, STONE);
+        }
+    }
+
+    // ------------------------------------------------------------------ Rampaging Mother Earth (0.31)
+    private void rampage(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {
+        float age = inst.ageTicks(ctx.partialTick), p = inst.power;
+        Vector3f a = ctx.rel(inst.from(ctx)), b = ctx.rel(inst.to(ctx));
+        Vector3f path = new Vector3f(b).sub(a);
+        float len = path.length();
+        if (len < 0.01f) return;
+        Vector3f dir = new Vector3f(path).div(len), sd = side(dir);
+        float front = len * VfxAnim.easeOutCubic(Mth.clamp(age / (inst.duration * 0.6f), 0, 1));
+        float sink = Mth.clamp((inst.duration - age) / 10f, 0, 1);
+        float fade = life(inst, age, 0, 10);
+        // the torn ground under the wave
+        groundStrip(buf, EARTH_CRACK, VfxBlend.ALPHA, new Vector3f(a).add(0, 0.03f, 0), new Vector3f(dir).mul(front).add(a).add(0, 0.03f, 0), 2.6f * p, 0, front / 3f,
+                VfxVertexBuffer.withAlpha(CRACK, 0.75f * fade));
+        // rows of slabs: high at the wave front, settling behind it, leaning out to both sides
+        int rows = Math.min(8, Math.max(2, Math.round(len / 1.5f)));
+        for (int k = 0; k < rows; k++) {
+            float d = (k + 0.5f) / rows * len;
+            if (d > front) continue;
+            float behind = (front - d) / Math.max(1f, 0.25f * len);
+            float heave = VfxAnim.easeOutBack(Mth.clamp((front - d) / 1.2f, 0, 1)) * (0.35f + 1.15f * Mth.clamp(1.4f - behind, 0, 1));
+            for (int s = -1; s <= 1; s += 2) {
+                float h = (1.1f + 0.6f * hash(inst.seed, k * 2 + (s + 1) / 2, 1)) * p * heave * sink;
+                if (h <= 0.02f) continue;
+                Vector3f out = new Vector3f(sd).mul(s);
+                Vector3f base = new Vector3f(dir).mul(d).add(a).add(new Vector3f(out).mul(0.75f * p)).add(0, -0.3f * p, 0);
+                Vector3f along = new Vector3f(dir).rotateY((hash(inst.seed, k, 2 + s) - 0.5f) * 0.6f);
+                slab(buf, base, along, out, 0.7f * p, 0.22f * p, h, 0.35f + 0.25f * hash(inst.seed, k, 5), STONE);
+            }
+        }
+        // dust and rubble thrown off the crest
+        Vector3f crest = new Vector3f(dir).mul(front).add(a);
+        int d = ctx.seg(6, 3);
+        for (int i = 0; i < d; i++) {
+            float ph = hash(inst.seed, i, 6) * 10f, lt = ((age + ph) % 10f) / 10f;
+            Vector3f q = new Vector3f(crest).add(new Vector3f(sd).mul((hash(inst.seed, i, 7) - 0.5f) * 3 * p)).add(new Vector3f(dir).mul(-lt * 1.5f)).add(0, 0.5f + lt * 1.5f * p, 0);
+            buf.billboard(ctx, EARTH_DUST, VfxBlend.ALPHA, q, (1.0f + 1.6f * lt) * p, i, VfxVertexBuffer.withAlpha(DUST, (1 - lt) * 0.85f * fade));
+        }
+        int r = ctx.seg(6, 3);
+        for (int i = 0; i < r; i++) {
+            float ph = hash(inst.seed, i, 8) * 12f, ct = ((age + ph) % 12f) / 12f;
+            Vector3f q = new Vector3f(crest).add(new Vector3f(sd).mul((hash(inst.seed, i, 9) - 0.5f) * 3.5f * p * (0.5f + ct))).add(0, (3.2f * ct - 3.6f * ct * ct) * p + 0.4f, 0);
+            buf.billboard(ctx, EARTH_CHUNK, VfxBlend.ALPHA, q, 0.3f * p, age * 0.4f + i, VfxVertexBuffer.withAlpha(STONE, fade));
         }
     }
 }

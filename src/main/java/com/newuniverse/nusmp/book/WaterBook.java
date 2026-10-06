@@ -29,7 +29,11 @@ public class WaterBook extends GrimoireBook {
     private final List<BookPage> pages = List.of(
             BookPage.starter("waterball", "Sea Dragon's Waterball", TensuraShots.shot(TensuraShots.Shot.WATER_BALL, 9, 1.4f, 1.2f, 0)),
             BookPage.signature("roar", "Sea Dragon's Roar", WaterBook::roar),
-            BookPage.zone("cradle", "Sea Dragon's Cradle", WaterBook::cradle));
+            BookPage.zone("cradle", "Sea Dragon's Cradle", WaterBook::cradle),
+            // 0.31: wiki spells, appended
+            BookPage.mid("aqua_javelin", "Aqua Javelin", WaterBook::aquaJavelin),
+            BookPage.zone("sea_dragons_nest", "Sea Dragon's Nest", WaterBook::nest).withCooldown(600),
+            BookPage.signature("valkyrie_dress", "Valkyrie Dress", WaterBook::valkyrieDress).withCooldown(1200));
 
     public WaterBook() { super(MagicType.WATER, 0xFF4FA8FF); }
     @Override protected List<BookPage> familyPages() { return pages; }
@@ -89,6 +93,59 @@ public class WaterBook extends GrimoireBook {
                 }
             }
         });
+        return true;
+    }
+
+    /** Aqua Javelin: a high-pressure lance of water that pierces everything in a long line. */
+    static boolean aquaJavelin(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
+        float s = size(i, p);
+        Vec3 start = p.getEyePosition(), dir = p.getViewVector(1f);
+        b.castCircle(p, 0.8f);
+        com.newuniverse.nusmp.vfx.VfxSpawn.send(p.serverLevel(), VfxShape.WATER_JAVELIN, start, start.add(dir.scale(26)), 0, 14, 1.2f * s);
+        SpellRuntime.bolt(p, start, dir.scale(2.6), 0.6 * s, 10, true, null, (bolt, t) -> {
+            b.hurt(i, p, t, mode, 12f);
+            t.clearFire();
+            t.knockback(0.7, -dir.x, -dir.z);
+            com.newuniverse.nusmp.vfx.VfxSpawn.send(p.serverLevel(), VfxShape.WATER_BURST, t.position().add(0, t.getBbHeight() / 2, 0), t.position(), 0, 16, 0.5f);
+        }, null);
+        return true;
+    }
+
+    /** Sea Dragon's Nest: a dome of water over you for 10 s: enemy spells inside are swallowed, foes are slowed and battered, allies heal. */
+    static boolean nest(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
+        float r = 6 * size(i, p);
+        Vec3 c = p.position();
+        b.castCircle(p, 1.2f);
+        com.newuniverse.nusmp.vfx.VfxSpawn.send(p.serverLevel(), VfxShape.WATER_NEST, c, c.add(0, 1, 0), 0, 200, r);
+        SpellRuntime.zone(p.serverLevel(), 200, 5, age -> {
+            AABB box = new AABB(c, c).inflate(r);
+            for (Projectile pr : p.serverLevel().getEntitiesOfClass(Projectile.class, box)) {
+                if (pr.getOwner() == p || (pr.getOwner() instanceof LivingEntity o && o.isAlliedTo(p))) continue;
+                if (pr.position().distanceToSqr(c) <= r * r) pr.discard();
+            }
+            for (LivingEntity t : around(p, c, r)) {
+                t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 30, 1));
+                if (age % 20 == 0) b.hurt(i, p, t, mode, 3f);
+            }
+            if (age % 20 == 0) {
+                for (Player ally : p.serverLevel().getEntitiesOfClass(Player.class, box)) {
+                    if ((ally == p || ally.isAlliedTo(p)) && ally.position().distanceToSqr(c) <= r * r) BalanceLaw.heal(ally, 1.5f);
+                }
+            }
+        });
+        return true;
+    }
+
+    /** Valkyrie Dress: water armour for 30 s: faster, stronger, harder to hurt, light on your feet. */
+    static boolean valkyrieDress(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
+        b.castCircle(p, 1.4f);
+        com.newuniverse.nusmp.vfx.VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.WATER_DRESS, p, p.position().add(0, 1, 0), 0, 600, 1f);
+        p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 600, 1));
+        p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 600, 1));
+        p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 600, 1));
+        p.addEffect(new MobEffectInstance(MobEffects.JUMP, 600, 1));
+        p.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 600, 0));
+        p.clearFire();
         return true;
     }
 }

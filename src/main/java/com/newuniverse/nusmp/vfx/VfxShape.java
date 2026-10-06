@@ -52,7 +52,17 @@ public enum VfxShape {
     WIND_GALE,               // Swallow's Gale / Gust Lane: wind swallows and streaks from -> to
     STONE_SPIKES,            // stone spikes rising one after another from -> to (one per block, 2 ticks apart)
     EARTH_RISE,              // Ground Wall: crack, dust and debris along the wall base from -> to
-    EARTH_FISSURE;           // Mother Earth Split: crack runs from -> to, stone slabs push up along it
+    EARTH_FISSURE,           // Mother Earth Split: crack runs from -> to, stone slabs push up along it
+    // 0.31: the wiki spells of the four elements (appended so the ids above never move)
+    FIRE_SPIRAL,             // Spiral Flame: a widening corkscrew vortex of flame drilling from -> to
+    FIRE_WILD,               // Wild Bursting Flame: flame bursting out in every direction from 'from' in waves; power = radius
+    WATER_JAVELIN,           // Aqua Javelin: a high-pressure lance of water from -> to, spray cone at the head
+    WATER_NEST,              // Sea Dragon's Nest: a dome of whirling water over 'from', spouts and currents; power = radius
+    WATER_DRESS,             // Valkyrie Dress: flowing water armour on the caster (follows); power = size
+    WIND_EMPEROR,            // Slicing Wind Emperor: a huge crescent made of many wind blades flying from -> to
+    WIND_ZEPHYR,             // Spirit of Zephyr: gale wings and a wind mantle round the caster (follows); power = size
+    EARTH_CLAWS,             // Witch Hunter Claws: stone claws burst up round 'from' and clamp shut; power = radius
+    EARTH_RAMPAGE;           // Rampaging Mother Earth: a heaving wave of stone slabs rolling from -> to
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();
