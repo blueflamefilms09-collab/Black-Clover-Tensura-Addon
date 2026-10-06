@@ -15,13 +15,13 @@ public final class GrimoireCarry {
     public record Pose(float right, float up, float forward, float yaw, float pitch, float roll, float scale) {}
 
     /** Dormant: hanging against the right hip / thigh, cover out to the side, slightly tilted, smaller. */
-    public static final Pose HIP = new Pose(0.36f, 0.72f, -0.02f, -90f, 0f, -12f, 0.38f);
+    public static final Pose HIP = new Pose(0.34f, 0.46f, 0.0f, -90f, 0f, -8f, 0.42f);          // 0.27: lower on the thigh, clear of the arm
     /** Dormant while sneaking (the hips drop). */
-    public static final Pose HIP_SNEAK = new Pose(0.36f, 0.56f, -0.12f, -90f, 0f, -12f, 0.38f);
+    public static final Pose HIP_SNEAK = new Pose(0.34f, 0.32f, -0.1f, -90f, 0f, -8f, 0.42f);
     /** Summoned: in front of the right hand, cover facing out, turned a little inwards. */
-    public static final Pose HAND = new Pose(0.45f, 1.05f, 0.55f, 15f, -10f, 0f, 0.55f);
+    public static final Pose HAND = new Pose(0.52f, 1.12f, 0.7f, 15f, -10f, 0f, 0.85f);          // 0.27: bigger
     /** Summoned while sneaking. */
-    public static final Pose HAND_SNEAK = new Pose(0.45f, 0.85f, 0.55f, 15f, -10f, 0f, 0.55f);
+    public static final Pose HAND_SNEAK = new Pose(0.52f, 0.92f, 0.7f, 15f, -10f, 0f, 0.85f);
 
     private GrimoireCarry() {}
 

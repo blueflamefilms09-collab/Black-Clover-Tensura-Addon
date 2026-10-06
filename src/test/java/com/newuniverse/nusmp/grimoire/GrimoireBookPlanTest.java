@@ -62,7 +62,7 @@ class GrimoireBookPlanTest {
                 for (boolean held : new boolean[]{false, true}) {
                     BookLook.Key key = new BookLook.Key("FOUR_LEAF", m, m == BookMotif.TATTERED, held, step);
                     List<GrimoireBookPlan.Quad> quads = GrimoireBookPlan.build(key);
-                    assertTrue(quads.size() > 40 && quads.size() < 220, "quad count " + quads.size());
+                    assertTrue(quads.size() > 40 && quads.size() < 420, "quad count " + quads.size());
                     float maxZ = 0;
                     boolean pagesToReader = false, coverToOnlookers = false;
                     for (GrimoireBookPlan.Quad q : quads) {

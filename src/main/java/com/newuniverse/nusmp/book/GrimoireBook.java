@@ -184,10 +184,7 @@ public abstract class GrimoireBook extends Skill {
         }
         if (heldTicks == 1) {
             VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.MANA_CHARGE, p, p.position().add(0, 1, 0), color, need * 2, 1f);
-            VfxSpawn.send(p.serverLevel(), new com.newuniverse.nusmp.vfx.VfxPayload(VfxShape.SPELL_CARD.ordinal(),
-                    p.getEyePosition().add(p.getViewVector(1f).scale(1.2)).add(0, 0.6, 0), p.getEyePosition(), color, need + 20, 1f, p.getId(),
-                    com.newuniverse.nusmp.core.magic.grimoire.SpellArchetype.packSeed(magic.ordinal(), com.newuniverse.nusmp.core.magic.grimoire.SpellArchetype.of(page.id()),
-                            page.costPercent() >= 35)));
+            // 0.27: the floating spell card in front of the face is no longer shown (owner's request); the shape stays registered
         }
         if (heldTicks == need * 2 && !instance.getOrCreateTag().getBoolean("ManaZone")) {
             instance.getOrCreateTag().putBoolean("ManaZone", true);

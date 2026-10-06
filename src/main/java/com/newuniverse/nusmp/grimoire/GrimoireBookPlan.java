@@ -188,13 +188,29 @@ public final class GrimoireBookPlan {
                 float e = EMB * 0.8f;
                 quad(half, Face.SOUTH, mx - e, my - e, mx + e, my + e, cz + MED_H + 0.02f, "emblem_" + key.emblem().toLowerCase(), BookLook.TINT_EMBLEM, held);
             }
-            for (Quad q : half) out.add(turn(q, cx, cz, side * th));
+            for (Quad q : half) {
+                Quad turned = turn(q, cx, cz, side * th);
+                out.add(turned);
+                out.add(backFace(turned));          // double-sided: no renderer or viewing angle can cull a half away (0.27)
+            }
         }
         // the spine, bulging towards the onlookers, with three metal bands
         box(out, cx - 1.0f, SY0, cz - t - 0.3f, cx + 1.0f, SY1, cz + 0.5f, "spine", cover, false, true, ALL);
         for (float y : new float[]{3.95f, 8.0f, 12.05f})
             box(out, cx - 0.8f, y - 0.25f, cz + 0.5f, cx + 0.8f, y + 0.25f, cz + 0.75f, "trim_metal", trim, false, true, ALL);
         return Collections.unmodifiableList(out);
+    }
+
+    /** The same quad seen from behind: corners in reverse order, normal flipped. */
+    static Quad backFace(Quad q) {
+        float[] p = q.pos(), uv = q.uv();
+        float[] rp = new float[12], ruv = new float[8];
+        for (int i = 0; i < 4; i++) {
+            System.arraycopy(p, (3 - i) * 3, rp, i * 3, 3);
+            System.arraycopy(uv, (3 - i) * 2, ruv, i * 2, 2);
+        }
+        float[] n = q.normal();
+        return new Quad(rp, ruv, q.texture(), q.tint(), q.emissive(), nearest(-n[0], -n[1], -n[2]), new float[]{-n[0], -n[1], -n[2]});
     }
 
     /** Turns a quad about the vertical axis through (cx, cz) by {@code a} radians (positive swings +X towards -Z). */
