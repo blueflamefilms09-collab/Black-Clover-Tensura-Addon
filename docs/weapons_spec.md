@@ -2,7 +2,7 @@
 
 These are built from the owner's weapons art pack (Asta's black swords and their red anti-magic variants; Licht's white
 Demon-Dweller and Demon-Destroyer; Yami's katana) and from the Black Clover wiki (Anti Magic, Sword Magic, Yami Sukehiro).
-The in-game sprites come from `tools/gen_weapon_textures.py`. The Blender notes are for anyone who wants a full 3D version
+The in-game sprites come from `tools/gen_pixel_swords.py` (32x32 pixel art since 0.33). The Blender notes are for anyone who wants a full 3D version
 later, for example a GeckoLib or OBJ model or a render.
 
 Shared shader setup (Blender, Principled BSDF):

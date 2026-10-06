@@ -60,7 +60,7 @@ Chanted magics: use **Chant** mode until the chant is complete, then switch to *
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.32.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.33.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -204,6 +204,11 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Anti-Magic kit**: new pages **Black Hurricane** (a whirling field that drags foes in and strips their magic) and **Black Form** (30 s of strength, speed, resistance and jump, with an anti-magic burst); mastering the Anti-Magic Lord now also grants the **Demon-Slasher** katana next to Demon-Dweller and Demon-Destroyer.
 - **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
 - **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
+
+## 0.33 - every sword redrawn as pixel art
+- **Replacement:** the Demon-Slayer, Demon-Dweller, Demon-Destroyer, Demon-Slasher Katana, Yami's Katana, Licht's Demon-Dweller and Demon-Destroyer, the Spell-Forged Rapier and the Severing Greatsword are redrawn in the same pixel-art style as the Rimeheart Runeblade and the reference sheet (`tools/gen_pixel_swords.py`, replacing the 0.28 smooth 128 px sprites and `tools/gen_weapon_textures.py`). Each is a 32x32 sprite with 4-step palette ramps lit from the top-left and canon shapes (the Slayer's chipped edges and pointed tip, the Dweller's four-sided guard and spiral grip, the Destroyer's bite and flared clover end, round tsubas and diamond-wrapped katana grips, the rapier's swept hilt).
+- Mana glows: Asta's katana has a crimson anti-magic edge, Licht's swords have gold light markings and clover, the rapier has blue runes and the greatsword a blue gem. These sit on a full-bright layer (`<sword>_glow.png`), like the runeblade.
+- Item ids, stats and abilities are unchanged. The plain Magic Tool sword and spear keep their vanilla-style 16 px look.
 
 ## 0.32 - Rimeheart Runeblade
 - New sword: **Rimeheart Runeblade**, a navy-steel pixel-art runeblade with a hooked silver guard and cyan mana runes (32x32 sprite, `tools/gen_runeblade_texture.py`). Its runes and gems sit on a separate layer drawn full-bright, so they glow in the dark (and shader packs bloom them).

@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "minecraft:item/handheld",
   "textures": {
     "layer0": "nusmp:item/demon_destroyer_sword"
   },
@@ -16,9 +16,9 @@
         0.5
       ],
       "scale": [
-        1.4875,
-        1.4875,
-        1.4875
+        1.488,
+        1.488,
+        1.488
       ]
     },
     "thirdperson_lefthand": {
@@ -33,9 +33,9 @@
         0.5
       ],
       "scale": [
-        1.4875,
-        1.4875,
-        1.4875
+        1.488,
+        1.488,
+        1.488
       ]
     },
     "firstperson_righthand": {
