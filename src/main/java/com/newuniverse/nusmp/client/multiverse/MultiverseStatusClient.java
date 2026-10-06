@@ -64,6 +64,15 @@ public final class MultiverseStatusClient {
      * text was, at least 130 x 56. Returns true to skip drawing the text.
      */
     public static boolean placeholderText(GuiGraphics g, net.minecraft.client.gui.Font font, String text, int x, int y) {
+        try {
+            return placeholderTextUnsafe(g, font, text, x, y);
+        } catch (RuntimeException e) {
+            warnOnce(e);
+            return false;                        // never break another mod's screen: just draw the text normally
+        }
+    }
+
+    private static boolean placeholderTextUnsafe(GuiGraphics g, net.minecraft.client.gui.Font font, String text, int x, int y) {
         Screen s = Minecraft.getInstance().screen;
         if (!target(s)) return false;
         String want = MultiverseClientConfig.get(MultiverseClientConfig.PANEL_TEXT).toLowerCase();
@@ -86,7 +95,20 @@ public final class MultiverseStatusClient {
         return s != null && !(s instanceof MultiverseStatusScreen) && !prefix.isEmpty() && s.getClass().getName().startsWith(prefix);
     }
 
+    private static boolean warned;
+
+    /** Our hooks sit inside other mods' screens: a surprise there is logged once and the hook steps aside, never a crash. */
+    private static void warnOnce(RuntimeException e) {
+        if (warned) return;
+        warned = true;
+        com.mojang.logging.LogUtils.getLogger().warn("[nusmp] Multiverse status panel skipped a screen it could not read", e);
+    }
+
     private static void onScreenInit(ScreenEvent.Init.Post event) {
+        try { onScreenInitUnsafe(event); } catch (RuntimeException e) { warnOnce(e); }
+    }
+
+    private static void onScreenInitUnsafe(ScreenEvent.Init.Post event) {
         Screen s = event.getScreen();
         PANELS.remove(s);
         if (!target(s)) return;
@@ -94,7 +116,9 @@ public final class MultiverseStatusClient {
         if (rect == null) {
             String text = MultiverseClientConfig.get(MultiverseClientConfig.PANEL_TEXT).toLowerCase();
             for (GuiEventListener l : event.getListenersList()) {
-                if (l instanceof AbstractWidget w && !text.isEmpty() && w.getMessage().getString().toLowerCase().contains(text)) {
+                if (!(l instanceof AbstractWidget w) || text.isEmpty()) continue;
+                Component msg = w.getMessage();          // some mods' widgets have no message at all (null): skip them
+                if (msg != null && msg.getString().toLowerCase().contains(text)) {
                     rect = new int[]{w.getX(), w.getY(), w.getWidth(), w.getHeight()};
                     w.visible = false;           // the panel takes the placeholder's place
                     w.active = false;
@@ -113,6 +137,10 @@ public final class MultiverseStatusClient {
     }
 
     private static void onScreenRender(ScreenEvent.Render.Post event) {
+        try { onScreenRenderUnsafe(event); } catch (RuntimeException e) { warnOnce(e); }
+    }
+
+    private static void onScreenRenderUnsafe(ScreenEvent.Render.Post event) {
         int[] r = PANELS.get(event.getScreen());
         if (r == null) return;
         GuiGraphics g = event.getGuiGraphics();
@@ -121,6 +149,10 @@ public final class MultiverseStatusClient {
     }
 
     private static void onScreenClick(ScreenEvent.MouseButtonPressed.Pre event) {
+        try { onScreenClickUnsafe(event); } catch (RuntimeException e) { warnOnce(e); }
+    }
+
+    private static void onScreenClickUnsafe(ScreenEvent.MouseButtonPressed.Pre event) {
         int[] r = PANELS.get(event.getScreen());
         if (r == null || event.getButton() != 0 || !inside(r, event.getMouseX(), event.getMouseY())) return;
         Minecraft.getInstance().setScreen(new MultiverseStatusScreen(event.getScreen()));

@@ -4,8 +4,8 @@ license="All rights reserved"
 
 [[mods]]
 modId="nusmp"
-version="0.25.0"
-displayName="Multiverse of Anime in Tensura"
+version="0.26.0"
+displayName="Multiverse"
 description='''Anime powers for Tensura: Reincarnated - Hell Mode, DanMachi, Black Clover grimoires, Fire Force, Jujutsu Kaisen, JoJo and more, with Unique to Ultimate evolutions.'''
 
 [[dependencies.nusmp]]
