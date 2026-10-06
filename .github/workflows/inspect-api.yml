@@ -1,0 +1,38 @@
+# Developer helper: prints the public API of dependency classes into the job log (the build session cannot download these jars).
+# Runs when .github/inspect-request.txt changes; that file lists grep patterns (one per line) for class names to javap.
+name: Inspect dependency API
+
+on:
+  push:
+    paths: [ ".github/inspect-request.txt" ]
+  workflow_dispatch:
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Resolve dependencies
+        run: |
+          chmod +x gradlew
+          ./gradlew extractManasCoreModules dependencies --configuration compileClasspath --no-daemon -q > /dev/null || true
+      - name: Dump matching classes
+        run: |
+          JARS=$( (find ~/.gradle/caches/modules-2 -name '*.jar' | grep -i -E 'tensura|manascore'; find build/extracted-deps -name '*.jar') | sort -u)
+          echo "== jars =="; echo "$JARS"
+          while IFS= read -r pat; do
+            [ -z "$pat" ] && continue
+            echo "===== pattern: $pat ====="
+            for j in $JARS; do
+              for c in $(unzip -Z1 "$j" | grep -E '\.class$' | grep -v '\$' | grep -E "$pat" | head -40); do
+                cls=${c%.class}; cls=${cls//\//.}
+                echo "----- $cls  ($j)"
+                javap -cp "$j" -public "$cls" 2>/dev/null | head -80
+              done
+            done
+          done < .github/inspect-request.txt
