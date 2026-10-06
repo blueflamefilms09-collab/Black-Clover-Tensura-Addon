@@ -27,12 +27,18 @@ jobs:
           echo "== jars =="; echo "$JARS"
           while IFS= read -r pat; do
             [ -z "$pat" ] && continue
+            case "$pat" in \#*) continue;; esac
+            if [ "${pat#list:}" != "$pat" ]; then             # list:<regex> prints matching class names only
+              echo "===== list: ${pat#list:} ====="
+              for j in $JARS; do unzip -Z1 "$j" | grep -E '\.class$' | grep -E "${pat#list:}" | head -200; done
+              continue
+            fi
             echo "===== pattern: $pat ====="
             for j in $JARS; do
               for c in $(unzip -Z1 "$j" | grep -E '\.class$' | grep -v '\$' | grep -E "$pat" | head -40); do
                 cls=${c%.class}; cls=${cls//\//.}
                 echo "----- $cls  ($j)"
-                javap -cp "$j" -public "$cls" 2>/dev/null | head -80
+                javap -cp "$j" -public "$cls" 2>/dev/null | head -220
               done
             done
           done < .github/inspect-request.txt
