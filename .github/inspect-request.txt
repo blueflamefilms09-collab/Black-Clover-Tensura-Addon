@@ -1,5 +1,7 @@
-# 0.39: how to register Tensura's skill events, and its skill tags (plunder / copy blacklists?)
-manasmods/tensura/event/TensuraSkillEvents\.class
-manasmods/tensura/data/TensuraSkillTags\.class
-strings:manasmods/tensura/data/TensuraSkillTags\.class
-strings:manasmods/tensura/ability/skill/unique/(AnalystSkill|PredatorSkill|GluttonySkill|UsurperSkill)\.class
+# 0.42 Mirror overhaul: Tensura clones (Body Double / Doppelganger), effects, existence points
+manasmods/tensura/entity/human/CloneEntity\.class
+list:manasmods/tensura/.*([Dd]oppel|[Bb]odyDouble|[Cc]lone)
+list:manasmods/tensura/registry/.*([Ee]ffect|[Ee]ntit)
+strings:manasmods/tensura/registry/effect/TensuraMobEffects\.class
+manasmods/tensura/(capability|storage|api)/.*[Ee]xistence.*\.class
+manasmods/tensura/util/EnergyHelper\.class
