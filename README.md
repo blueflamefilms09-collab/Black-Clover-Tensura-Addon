@@ -60,7 +60,7 @@ Chanted magics: use **Chant** mode until the chant is complete, then switch to *
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.41.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.42.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -204,6 +204,21 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Anti-Magic kit**: new pages **Black Hurricane** (a whirling field that drags foes in and strips their magic) and **Black Form** (30 s of strength, speed, resistance and jump, with an anti-magic burst); mastering the Anti-Magic Lord now also grants the **Demon-Slasher** katana next to Demon-Dweller and Demon-Destroyer.
 - **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
 - **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
+
+## 0.42 - Mirror Magic overhaul (Gauche Adlai)
+- **Real mirrors:** every Mirror spell now summons an ornate silver mirror. Frames come in five shapes (oval, arch, round, gothic crest and diamond), with glass, a flickering violet mana corona, distortion ripples and an edge glow.
+- **Replacements:** Reflect Refrain, Real Double, Reflect Ray and Full Reflection (page ids are kept).
+  - **Real Double:** doubles are now real, living mirror clones (`nusmp:mirror_double`). Each wears your mirrored skin and holds your weapon.
+    - **Cost:** each double costs a tenth of your max magicules, with aura making up any shortfall.
+    - **Combat:** doubles fight beside you, echo every spell you cast and pull enemies off you. 35% of the blows aimed at you land on a double.
+    - **Trading places:** sneak-cast to swap places with a double.
+  - **Reflect Refrain / Full Reflection:** the shots they catch go back to the shooter, who is silenced. Full Reflection also returns 60% of melee blows.
+  - **Reflect Ray:** fires a volley that wounds the spirit.
+- **New pages:** Mirror Array (orbiting mirrors that catch shots and shatter in place of a killing blow), Mirror Step (glass-to-glass travel), Mirrors Slash and Mirrors Meteorite.
+- **Scaling:** Mirror power grows with your Tensura EP and your armour.
+- **Tensura effects:** silence (magic jamming), fragility and spiritual damage.
+- **New VFX:** mirror frame, array, shatter and step-out (`tools/gen_mirror_vfx_textures.py`).
+- Guide with Blender and shader notes: `docs/mirror_spec.md`.
 
 ## 0.41 - Dream Magic's pocket dimension, Painting Magic
 - **Replacement: Dream World and Glamour World** no longer only debuff a field. They pull their targets into a real pocket dimension, `nusmp:dream`: a pastel arena under an iridescent dome with a starry sky.

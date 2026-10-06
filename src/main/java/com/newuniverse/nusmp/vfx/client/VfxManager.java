@@ -13,6 +13,7 @@ import com.newuniverse.nusmp.vfx.client.layer.AuraLayer;
 import com.newuniverse.nusmp.vfx.client.layer.ArcaneSpellLayer;
 import com.newuniverse.nusmp.vfx.client.layer.ArcaneSpellLayer2;
 import com.newuniverse.nusmp.vfx.client.layer.DreamPaintLayer;
+import com.newuniverse.nusmp.vfx.client.layer.MirrorLayer;
 import com.newuniverse.nusmp.vfx.client.layer.TimeMagicLayer;
 import com.newuniverse.nusmp.vfx.client.layer.FireSpellLayer;
 import com.newuniverse.nusmp.vfx.client.layer.WaterSpellLayer;
@@ -60,6 +61,7 @@ public final class VfxManager {
         register(new ArcaneSpellLayer());     // 0.34
         register(new ArcaneSpellLayer2());
         register(new DreamPaintLayer());      // 0.41
+        register(new MirrorLayer());          // 0.42
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }

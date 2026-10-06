@@ -55,6 +55,7 @@ public class NUSMP {
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.multiverse.MultiverseClientConfig.SPEC, "nusmp-multiverse-client.toml");
             // Spirit Lords are small floating orbs for now (SpiritLordRenderer, the full Tensura body, is kept for later)
             modEventBus.addListener(com.newuniverse.nusmp.client.SpiritOrbRenderer::register);
+            modEventBus.addListener(com.newuniverse.nusmp.client.MirrorDoubleRenderer::register);
         }
         modContainer.registerConfig(ModConfig.Type.SERVER, NUConfig.SPEC);
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.multiverse.MultiverseConfig.SPEC, "nusmp-multiverse-server.toml");
@@ -85,6 +86,9 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.DreamWorld::onLogout);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.DreamWorld::onLogin);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.DreamWorld::onChat);
+        // 0.42: Mirror Magic (array interception, lethal-hit shatter, Full Reflection)
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.MirrorWorks::onPlayerTick);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.MirrorWorks::onIncomingDamage);
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent e) -> {
             if (e.getSource().getEntity() instanceof net.minecraft.server.level.ServerPlayer sp) com.newuniverse.nusmp.book.PaintingBook.breakCamouflage(sp);
         });

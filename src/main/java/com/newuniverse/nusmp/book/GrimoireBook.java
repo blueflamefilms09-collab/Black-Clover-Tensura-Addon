@@ -229,6 +229,7 @@ public abstract class GrimoireBook extends Skill {
         com.newuniverse.nusmp.item.MagicGear.onCast(player);
         com.newuniverse.nusmp.multiverse.SecretQuests.onCast(player);              // 0.39: secret quest progress
         DreamWorld.onCast(player, magic);                                         // 0.41: Spatial / Time / Anti-Magic / Dream tear a dream open
+        MirrorWorks.echo(player);                                                 // 0.42: Real Doubles cast with you
         exhaustion(player);
         instance.markDirty();
     }

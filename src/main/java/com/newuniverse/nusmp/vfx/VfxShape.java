@@ -92,7 +92,12 @@ public enum VfxShape {
     PAINT_STROKE,            // a wet brush stroke painted through the air from 'from' to 'to', splashing ink where it lands; power = width
     PAINT_SPLAT,             // a sticky ink splatter on the ground at 'from' that dries to lacquer; power = radius
     PAINT_BEAST,             // a painting comes to life at 'from': flat brushstrokes lift off and wrap into a glowing outline; power = size
-    PAINT_CAMO;              // Camouflage: a refraction shimmer and paint flecks round the caster (follows); power = size
+    PAINT_CAMO,              // Camouflage: a refraction shimmer and paint flecks round the caster (follows); power = size
+    // 0.42: Mirror Magic overhaul
+    MIRROR_FRAME,            // a real ornate mirror at 'from' facing 'to' (shape from the seed); power = half-height
+    MIRROR_ARRAY,            // mirrors of mixed shapes turning round the caster (follows); power = number of mirrors
+    MIRROR_SHATTER,          // a mirror bursts into shards at 'from'; power = size
+    MIRROR_STEP;             // a Real Double steps out of the glass at 'from': prismatic streaks round a forming figure; power = height
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

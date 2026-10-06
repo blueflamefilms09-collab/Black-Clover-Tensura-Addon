@@ -24,81 +24,53 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-/** Mirror Magic. */
+/**
+ * Mirror Magic (Gauche Adlai), rebuilt in 0.42 as a front-line attribute (see {@link MirrorWorks}): real ornate mirrors that
+ * catch and return spells, tangible Real Doubles from the mirror world, travel between mirrors, mirror blades and a mirror
+ * meteor storm, everything scaled by the caster's EP. Page ids from 0.34 are kept; new pages are appended.
+ */
 public class MirrorBook extends GrimoireBook {
     private final List<BookPage> pages = List.of(
-            BookPage.starter("reflect_refrain", "Reflect Refrain", MirrorBook::reflect),
-            BookPage.signature("real_double", "Real Double", MirrorBook::realDouble),
-            // 0.34: wiki spells, appended
-            BookPage.mid("reflect_ray", "Reflect Ray", WikiSpells::reflectRay),
+            BookPage.starter("reflect_refrain", "Reflect Refrain", MirrorWorks::reflectRefrain),
+            BookPage.signature("real_double", "Real Double", MirrorWorks::realDouble).withCooldown(600),
+            // 0.34: wiki spells, appended (0.42: rebuilt)
+            BookPage.mid("reflect_ray", "Reflect Ray", MirrorWorks::reflectRay),
             BookPage.zone("large_reflect_ray", "Large Reflect Ray", WikiSpells::largeReflectRay),
-            BookPage.signature("full_reflection", "Full Reflection", WikiSpells::fullReflection));
+            BookPage.signature("full_reflection", "Full Reflection", MirrorWorks::fullReflection),
+            // 0.42: appended
+            BookPage.mid("mirror_array", "Mirror Array", MirrorWorks::mirrorArray).withCooldown(900),
+            BookPage.mid("mirror_step", "Mirror Step", MirrorWorks::mirrorStep).withCooldown(100),
+            BookPage.zone("mirrors_slash", "Mirrors Slash", MirrorWorks::mirrorsSlash),
+            BookPage.signature("mirrors_meteorite", "Mirrors Meteorite", MirrorWorks::mirrorsMeteorite).withCooldown(900));
 
     public MirrorBook() { super(MagicType.MIRROR, 0xFFDDEEFF); }
     @Override protected List<BookPage> familyPages() { return pages; }
     @Override public ResourceKey<DamageType> damageType() { return TensuraDamageTypes.MAGIC_GENERIC; }
 
-    /** A pane in front of you for 3 s; enemy projectiles that touch it fly back as yours. */
-    static boolean reflect(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
-        b.castCircle(p, 0.6f);
-        Vec3 pane = p.getEyePosition().add(p.getViewVector(1f).scale(1.6));
-        b.vfx(p, VfxShape.MIRROR_PANE, pane, pane.add(p.getViewVector(1f)), 60, 1f);
-        SpellRuntime.zone(p.serverLevel(), 60, 1, age -> {
-            for (Projectile pr : p.serverLevel().getEntitiesOfClass(Projectile.class, new AABB(pane, pane).inflate(1.6))) {
-                if (pr.getOwner() == p) continue;
-                pr.setDeltaMovement(pr.getDeltaMovement().scale(-1));
-                pr.setOwner(p);
-                pr.hurtMarked = true;
-            }
-        });
-        return true;
-    }
-
-    /**
-     * Real Double (0.34, with the body-double logic of Tensura's clones): three mirror doubles circle you for 10 s - each blow
-     * aimed at you may hit a double instead (it shatters), each of your blows is echoed by the doubles - and your mirror image
-     * casts your last page again, once, for free.
-     */
-    static boolean realDouble(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
-        i.getOrCreateTag().putLong("DoublesUntil", p.level().getGameTime() + 200);
-        i.getOrCreateTag().putInt("Doubles", 3);
-        i.markDirty();
-        com.newuniverse.nusmp.vfx.VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.MIRROR_DOUBLE, p, p.position().add(0, 1, 0), 0, 200, 3f);
-        for (net.minecraft.world.entity.Mob m : p.serverLevel().getEntitiesOfClass(net.minecraft.world.entity.Mob.class, p.getBoundingBox().inflate(16)))
-            if (m.getTarget() == p && p.getRandom().nextBoolean()) m.setTarget(null);       // half of them lose you among the doubles
-        int last = i.getOrCreateTag().getInt("LastMode");
-        if (last == mode || last >= b.familyCount()) last = 0;
-        BookPage page = b.page(last);
-        b.vfx(p, VfxShape.MIRROR_PANE, p.position().add(0, 1, 0), p.position().add(p.getViewVector(1f)), 30, 1.4f);
-        return page.cast().cast(b, i, p, last);
-    }
-
-    static int doubles(ManasSkillInstance i, LivingEntity owner) {
-        return owner.level().getGameTime() < i.getOrCreateTag().getLong("DoublesUntil") ? i.getOrCreateTag().getInt("Doubles") : 0;
-    }
-
-    /** A blow aimed at you may strike a double instead (50%); the double shatters. */
+    /** A blow aimed at you may strike one of your Real Doubles instead (35%): it steps in front of it. */
     @Override
     public boolean onTakenDamage(ManasSkillInstance i, LivingEntity owner, net.minecraft.world.damagesource.DamageSource source,
                                  io.github.manasmods.manascore.network.api.util.Changeable<Float> amount) {
         super.onTakenDamage(i, owner, source, amount);
-        int n = doubles(i, owner);
-        if (n > 0 && source.getEntity() instanceof LivingEntity && owner instanceof ServerPlayer p && p.getRandom().nextBoolean()) {
-            amount.set(0f);
-            i.getOrCreateTag().putInt("Doubles", n - 1);
-            i.markDirty();
-            com.newuniverse.nusmp.vfx.VfxSpawn.send(p.serverLevel(), VfxShape.MIRROR_PANE, p.position().add(0, 1, 0), p.position().add(p.getViewVector(1f)).add(0, 1, 0), 0, 12, 1.2f);
-            p.displayClientMessage(net.minecraft.network.chat.Component.literal("The blow shatters a double (" + (n - 1) + " left).").withStyle(net.minecraft.ChatFormatting.AQUA), true);
-        }
+        if (!(owner instanceof ServerPlayer p) || !(source.getEntity() instanceof LivingEntity) || p.getRandom().nextFloat() >= 0.35f) return true;
+        var out = MirrorWorks.doubles(p);
+        if (out.isEmpty()) return true;
+        var d = out.get(p.getRandom().nextInt(out.size()));
+        float a = amount.get();
+        amount.set(0f);
+        d.hurt(source, a);
+        p.displayClientMessage(net.minecraft.network.chat.Component.literal("Your double takes the blow.").withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE), true);
         return true;
     }
 
-    /** Your doubles mirror your blows: +20% damage per double still standing. */
+    /** Together with your doubles you strike harder (the wiki's double-power attack): +20% per double, up to +60%. */
     @Override
     public boolean onDamageEntity(ManasSkillInstance i, LivingEntity owner, LivingEntity target, net.minecraft.world.damagesource.DamageSource source,
                                   io.github.manasmods.manascore.network.api.util.Changeable<Float> amount) {
-        int n = doubles(i, owner);
-        if (n > 0 && source.getDirectEntity() == owner) amount.set(amount.get() * (1 + 0.2f * n));
+        if (owner instanceof ServerPlayer p && source.getDirectEntity() == owner) {
+            int n = Math.min(3, MirrorWorks.doubles(p).size());
+            if (n > 0) amount.set(amount.get() * (1 + 0.2f * n));
+        }
         return true;
     }
 }
