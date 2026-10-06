@@ -66,6 +66,16 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.MultiverseSync::onLogin);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.MultiverseSync::onLogout);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.WorldSites::onServerTick);
+        // 0.39: The Convergence (origin roll, stages, awakening), secret quests, grimoire guard
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.Convergence::onLogin);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.Convergence::onPlayerTick);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.Convergence::onServerTick);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.Convergence::onServerStarted);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.SecretQuests::onPlayerTick);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.SecretQuests::onKill);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.blackclover.GrimoireGuard::onPlayerTick);
+        com.newuniverse.nusmp.blackclover.GrimoireGuard.registerTensuraHooks();
+        com.newuniverse.nusmp.multiverse.FtbQuestsChapter.install();
         // races: Tensura's race + this mod's buff (Devil is command only)
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.RaceBuffs::onPlayerTick);
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerRespawnEvent e) -> com.newuniverse.nusmp.multiverse.RaceBuffs.reset(e.getEntity()));

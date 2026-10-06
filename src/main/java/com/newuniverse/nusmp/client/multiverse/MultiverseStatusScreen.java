@@ -42,6 +42,28 @@ public class MultiverseStatusScreen extends Screen {
 
     static List<Block> blocks(CompoundTag s) {
         List<Block> out = new ArrayList<>();
+        // 0.39: The Convergence. Until the Clover Kingdom manifests, a Tensura-origin player sees nothing of Black Clover.
+        CompoundTag v = s.getCompound("Convergence");
+        if (v.getBoolean("On") && !v.getBoolean("Revealed")) {
+            out.add(new Block("Race", List.of(s.getString("Race").isEmpty() ? "Human" : s.getString("Race")), false));
+            out.add(new Block("The World", List.of("FIRST_GRIMOIRE".equals(v.getString("Stage"))
+                    ? "Rumours of a human with a floating book..." : "Something feels... off."), false));
+            return out;
+        }
+        if (v.getBoolean("On") && v.getBoolean("Anomaly")) {
+            List<String> o = new ArrayList<>();
+            o.add(v.getBoolean("Detected") ? "Anomaly: " + v.getString("Kingdom") : "Unknown Magic Detected");
+            o.add("The Convergence: " + v.getString("StageTitle"));
+            out.add(new Block("Origin", o, false));
+            CompoundTag q = v.getCompound("Quests");
+            List<String> ql = new ArrayList<>();
+            for (var e : q.getList("Open", net.minecraft.nbt.Tag.TAG_STRING)) ql.add(e.getAsString());
+            if (ql.isEmpty()) ql.add("None open right now");
+            ql.add("Completed: " + q.getList("Done", net.minecraft.nbt.Tag.TAG_STRING).size());
+            out.add(new Block("Secret Quests", ql, false));
+        } else if (v.getBoolean("On")) {
+            out.add(new Block("Origin", List.of("Tensura-origin", "The Convergence: " + v.getString("StageTitle")), false));
+        }
         out.add(new Block("Magic Knight Rank", List.of(s.getString("Rank").isEmpty() ? "5th Class Junior Magic Knight" : s.getString("Rank")), false));
         out.add(new Block("Stars", List.of("Gold " + s.getInt("Gold") + "   Black " + s.getInt("Black"), "Net " + s.getInt("Net")), false));
         CompoundTag sq = s.getCompound("Squad");

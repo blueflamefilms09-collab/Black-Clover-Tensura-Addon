@@ -52,6 +52,7 @@ public final class GrimoireAcceptance {
         }
         // Grimoires now choose mages at the Acceptance Ceremony (multiverse.Ceremony); the old soul-type roll is kept behind a switch.
         if (!com.newuniverse.nusmp.multiverse.MultiverseConfig.get(com.newuniverse.nusmp.multiverse.MultiverseConfig.LEGACY_SOUL_AUTO_ROLL)) return;
+        if (!com.newuniverse.nusmp.multiverse.Convergence.mayHaveGrimoire(player)) return;   // 0.39: only anomalies are chosen
         String soul = NightmareSouls.soulTypeOf(player);
         if (soul == null) return; // Nightmare hasn't assigned a soul type yet
         roll(player, soul);
@@ -133,6 +134,7 @@ public final class GrimoireAcceptance {
         int leaves = cover.tier;
         Skills skills = SkillAPI.getSkillsFrom(player);
         for (var id : NUSkills.allGrimoireSkillIds()) skills.forgetSkill(id);
+        GrimoireGuard.markLegit(player, true);                                          // 0.39: given by the world or an admin
         ManasSkillInstance inst = NUSkills.grimoireSkillFor(magic).createDefaultInstance();
         CompoundTag tag = inst.getOrCreateTag();
         tag.putInt("Leaves", leaves);
@@ -176,7 +178,11 @@ public final class GrimoireAcceptance {
                 .append(Component.literal(" from the " + cover.kingdom.displayName).withStyle(ChatFormatting.WHITE))
                 .append(Component.literal(" of " + magic.displayName + (devil != null ? ", inhabited by the devil " + devil.displayName : "") + "!")
                         .withStyle(ChatFormatting.WHITE));
-        if (leaves >= 4 || NUConfig.ANNOUNCE_THREE_LEAF.get()) {
+        if (com.newuniverse.nusmp.multiverse.Convergence.enabled()) {
+            // 0.39: the Convergence keeps anomalies secret: the details are theirs, the world only feels a disturbance
+            player.displayClientMessage(msg, false);
+            com.newuniverse.nusmp.multiverse.Convergence.announceGrimoire(player.getServer());
+        } else if (leaves >= 4 || NUConfig.ANNOUNCE_THREE_LEAF.get()) {
             player.getServer().getPlayerList().broadcastSystemMessage(msg, false);
         } else {
             player.displayClientMessage(msg, false);

@@ -276,6 +276,70 @@ public final class MultiverseCommands {
                     return 1;
                 }))));
 
+        // ---------------------------------------------------------------- 0.39: the Convergence (admin) and secret quests
+        root.then(Commands.literal("convergence").requires(MultiverseCommands::admin)
+                .then(Commands.literal("status").executes(ctx -> {
+                    var server = ctx.getSource().getServer();
+                    Convergence.Stage st = Convergence.stage(server);
+                    long days = (System.currentTimeMillis() - Convergence.stageSince(server)) / 86_400_000L;
+                    return ok(ctx, "The Convergence is " + (Convergence.enabled() ? "on" : "OFF (old ceremony rules)") + ". Stage: " + st.name()
+                            + " (" + st.title + ", " + days + " days). Players rolled: " + Convergence.rolled(server)
+                            + ", anomalies: " + Convergence.anomalies(server) + ".");
+                }))
+                .then(Commands.literal("stage").then(Commands.argument("stage", StringArgumentType.word())
+                        .suggests((c, b) -> { for (Convergence.Stage s : Convergence.Stage.values()) b.suggest(s.name().toLowerCase()); return b.buildFuture(); })
+                        .executes(ctx -> {
+                            String arg = StringArgumentType.getString(ctx, "stage");
+                            Convergence.Stage st = null;
+                            for (Convergence.Stage s : Convergence.Stage.values()) if (s.name().equalsIgnoreCase(arg)) st = s;
+                            if (st == null) return fail(ctx, "Stages: signs, first_grimoire, clover, diamond, heart, spade.");
+                            Convergence.setStage(ctx.getSource().getServer(), st, true);
+                            return ok(ctx, "The Convergence is now at " + st.name() + " (" + st.title + ").");
+                        })))
+                .then(Commands.literal("origin").then(Commands.argument("player", EntityArgument.player())
+                        .executes(ctx -> { ServerPlayer p = EntityArgument.getPlayer(ctx, "player"); return ok(ctx, p.getName().getString() + ": " + Convergence.describe(p)); })
+                        .then(Commands.argument("origin", StringArgumentType.word())
+                                .suggests((c, b) -> { for (String s : new String[]{"tensura", "clover", "diamond", "heart", "spade"}) b.suggest(s); return b.buildFuture(); })
+                                .executes(ctx -> {
+                                    ServerPlayer p = EntityArgument.getPlayer(ctx, "player");
+                                    String arg = StringArgumentType.getString(ctx, "origin");
+                                    com.newuniverse.nusmp.blackclover.Kingdom k = null;
+                                    if (!arg.equalsIgnoreCase("tensura")) {
+                                        try { k = com.newuniverse.nusmp.blackclover.Kingdom.valueOf(arg.toUpperCase()); }
+                                        catch (IllegalArgumentException e) { return fail(ctx, "Origins: tensura, clover, diamond, heart, spade."); }
+                                    }
+                                    Convergence.setOrigin(p, k);
+                                    return ok(ctx, p.getName().getString() + " is now " + Convergence.describe(p) + ".");
+                                }))))
+                .then(Commands.literal("reroll").then(Commands.argument("player", EntityArgument.player()).executes(ctx -> {
+                    ServerPlayer p = EntityArgument.getPlayer(ctx, "player");
+                    Convergence.reroll(p);
+                    return ok(ctx, p.getName().getString() + " rolled again: " + Convergence.describe(p) + ".");
+                })))
+                .then(Commands.literal("awaken").then(Commands.argument("player", EntityArgument.player()).executes(ctx -> {
+                    ServerPlayer p = EntityArgument.getPlayer(ctx, "player");
+                    if (!Convergence.isAnomaly(p)) return fail(ctx, p.getName().getString() + " is not an anomaly. /multiverse convergence origin first, or /multiverse grimoire give.");
+                    return Convergence.awaken(p) ? ok(ctx, p.getName().getString() + " was chosen by another world's magic.") : fail(ctx, "They already have a grimoire, or the grant did not go through.");
+                }))));
+        root.then(Commands.literal("quests")
+                .executes(ctx -> listQuests(ctx, ctx.getSource().getPlayerOrException()))
+                .then(Commands.argument("player", EntityArgument.player()).requires(MultiverseCommands::admin)
+                        .executes(ctx -> listQuests(ctx, EntityArgument.getPlayer(ctx, "player")))
+                        .then(Commands.literal("complete").then(Commands.argument("quest", StringArgumentType.word())
+                                .suggests((c, b) -> { for (SecretQuests.Quest q : SecretQuests.Quest.values()) b.suggest(q.id); return b.buildFuture(); })
+                                .executes(ctx -> {
+                                    ServerPlayer p = EntityArgument.getPlayer(ctx, "player");
+                                    SecretQuests.Quest q = SecretQuests.byId(StringArgumentType.getString(ctx, "quest"));
+                                    if (q == null) return fail(ctx, "No such secret quest.");
+                                    SecretQuests.forceComplete(p, q);
+                                    return ok(ctx, "Completed '" + q.title + "' for " + p.getName().getString() + ".");
+                                })))
+                        .then(Commands.literal("reset").executes(ctx -> {
+                            ServerPlayer p = EntityArgument.getPlayer(ctx, "player");
+                            SecretQuests.reset(p);
+                            return ok(ctx, "Secret quest progress reset for " + p.getName().getString() + ".");
+                        }))));
+
         // ---------------------------------------------------------------- locate
         root.then(Commands.literal("locate")
                 .then(Commands.literal("tower").executes(ctx -> locate(ctx, WorldSites.Kind.TOWER)))
@@ -318,8 +382,27 @@ public final class MultiverseCommands {
         return 1;
     }
 
+    /** Secret quests: an anomaly sees their own; to anyone else the command says nothing is there. */
+    private static int listQuests(CommandContext<CommandSourceStack> ctx, ServerPlayer p) {
+        boolean self = ctx.getSource().getEntity() == p;
+        if (!Convergence.isAnomaly(p) || !SecretQuests.enabled()) {
+            return fail(ctx, self ? "Unknown command or argument." : p.getName().getString() + " is not an anomaly (" + Convergence.describe(p) + ").");
+        }
+        ctx.getSource().sendSuccess(() -> Component.literal("Secret quests (" + Convergence.describe(p) + ")").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD), false);
+        for (SecretQuests.Quest q : SecretQuests.Quest.values()) {
+            boolean done = SecretQuests.done(p, q), open = SecretQuests.open(p, q);
+            if (!done && !open) continue;
+            ctx.getSource().sendSuccess(() -> Component.literal((done ? "  ✔ " : "  ✦ ") + q.title).withStyle(done ? ChatFormatting.GRAY : ChatFormatting.LIGHT_PURPLE)
+                    .append(Component.literal(done ? "" : " - " + q.hint).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC)), false);
+        }
+        return 1;
+    }
+
     private static int locate(CommandContext<CommandSourceStack> ctx, WorldSites.Kind kind) {
         var src = ctx.getSource();
+        // 0.39: until the Clover Kingdom manifests, only anomalies (and admins) can find the towers
+        if (kind == WorldSites.Kind.TOWER && src.getEntity() instanceof ServerPlayer sp && !Convergence.revealed(sp) && !src.hasPermission(2))
+            return fail(ctx, "No such place is known.");
         var site = WorldSites.get(src.getServer()).nearest(kind, src.getLevel().dimension(), net.minecraft.core.BlockPos.containing(src.getPosition()));
         String what = kind == WorldSites.Kind.TOWER ? "Grimoire Tower" : "Library Ruins";
         if (site.isEmpty()) return fail(ctx, "No " + what + " has been found in this dimension yet. They are rare; explore new land and they record themselves.");

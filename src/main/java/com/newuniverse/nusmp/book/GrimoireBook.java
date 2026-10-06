@@ -227,6 +227,7 @@ public abstract class GrimoireBook extends Skill {
         instance.getOrCreateTag().putInt("LastMode", mode);
         instance.getOrCreateTag().putBoolean("ManaZone", false);
         com.newuniverse.nusmp.item.MagicGear.onCast(player);
+        com.newuniverse.nusmp.multiverse.SecretQuests.onCast(player);              // 0.39: secret quest progress
         exhaustion(player);
         instance.markDirty();
     }

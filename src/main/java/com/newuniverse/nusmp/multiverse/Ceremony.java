@@ -92,6 +92,7 @@ public final class Ceremony {
 
     public static boolean isEligible(ServerPlayer p) {
         if (GrimoirePages.grimoireOf(p).isPresent()) return false;
+        if (Convergence.enabled()) return Convergence.isAnomaly(p);         // 0.39: only anomalies are ever chosen
         return MultiverseConfig.get(MultiverseConfig.EVERYONE_ELIGIBLE) || MultiverseProfile.eligibleFlag(p);
     }
 
@@ -110,7 +111,7 @@ public final class Ceremony {
 
     // ---------------------------------------------------------------- the grant
     /** Rarity ladder: 3-leaf -> 4-leaf / kingdom covers -> 5-leaf -> black magic / god-tier. */
-    private enum Tier { COMMON, UNCOMMON, RARE, BLACK, GOD }
+    enum Tier { COMMON, UNCOMMON, RARE, BLACK, GOD }
 
     private static Tier rollTier(ServerPlayer p) {
         double c = MultiverseConfig.get(MultiverseConfig.WEIGHT_COMMON), u = MultiverseConfig.get(MultiverseConfig.WEIGHT_UNCOMMON);
@@ -129,7 +130,10 @@ public final class Ceremony {
         if (GrimoirePages.grimoireOf(p).isPresent()) return false;
         Tier tier = rollTier(p);
         String soul = NightmareSouls.soulTypeOf(p);
-        if (tier == Tier.BLACK) {
+        Kingdom home = Convergence.kingdomOf(p);
+        if (home != null) {
+            grantForKingdom(p, home, tier, soul);                            // 0.39: the anomaly's kingdom picks the covers
+        } else if (tier == Tier.BLACK) {
             GrimoireAcceptance.grantExact(p, com.newuniverse.nusmp.blackclover.GrimoireCover.BLACK_MAGIC, MagicType.ANTI_MAGIC, Devil.LIEBE);
         } else if (tier == Tier.GOD) {
             var pool = GrimoireAcceptance.starterPool(soul);
@@ -148,6 +152,28 @@ public final class Ceremony {
         return true;
     }
 
+    /**
+     * 0.39: a grimoire from the anomaly's own kingdom. Clover keeps the whole ladder (3/4/5-leaf, Black Magic, God-Tier); Spade
+     * tops out at the devil-inhabited Triple Spade; Heart and Diamond have no devil covers (Diamond's rarest is Five-Sided).
+     */
+    static void grantForKingdom(ServerPlayer p, Kingdom kingdom, Tier tier, String soul) {
+        if (kingdom == Kingdom.CLOVER && tier == Tier.BLACK) {
+            GrimoireAcceptance.grantExact(p, com.newuniverse.nusmp.blackclover.GrimoireCover.BLACK_MAGIC, MagicType.ANTI_MAGIC, Devil.LIEBE);
+            return;
+        }
+        if (kingdom == Kingdom.CLOVER && tier == Tier.GOD) {
+            var pool = GrimoireAcceptance.starterPool(soul);
+            GrimoireAcceptance.grantExact(p, com.newuniverse.nusmp.blackclover.GrimoireCover.GOD_TIER, pool.get(p.getRandom().nextInt(pool.size())), null);
+            return;
+        }
+        int leaves = tier == Tier.COMMON ? 3 : tier == Tier.UNCOMMON ? 4 : 5;
+        if (leaves >= 5 && (kingdom == Kingdom.HEART || kingdom == Kingdom.DIAMOND)) leaves = 4;
+        var cover = kingdom.coverFor(leaves);                                // Heart stays Heart (Two-Heart only comes from a love bond)
+        var pool = GrimoireAcceptance.starterPool(soul);
+        MagicType magic = pool.get(p.getRandom().nextInt(pool.size()));
+        GrimoireAcceptance.grantExact(p, cover, magic, cover.isForbidden() ? GrimoireAcceptance.randomDevil(p.getRandom()) : null);
+    }
+
     /** Admin reset: the grimoire (skill and bound items) is taken back and the player may be chosen again. */
     public static void reset(ServerPlayer p) {
         for (var id : NUSkills.allGrimoireSkillIds()) SkillAPI.getSkillsFrom(p).forgetSkill(id);
@@ -157,6 +183,7 @@ public final class Ceremony {
             if (GrimoireItem.isOwnedBy(inv.getItem(slot), p.getUUID())) inv.setItem(slot, ItemStack.EMPTY);
         }
         GrimoireAcceptance.markRolled(p, false);
+        com.newuniverse.nusmp.blackclover.GrimoireGuard.markLegit(p, false);
         MultiverseProfile.setAccepted(p, false, "");
         MultiverseProfile.setEligible(p, true);
     }

@@ -31,6 +31,13 @@ public final class MultiverseConfig {
     public static final ModConfigSpec.IntValue SQUAD_MAX_SIZE;
     public static final ModConfigSpec.BooleanValue SQUAD_CAPTAIN_PROMOTES_VICE, SQUAD_GOLD_FEEDS_SCORE, SQUAD_BLACK_REDUCES_SCORE, SQUAD_OFFLINE_COUNT;
     // spirit lord
+    // 0.39: The Convergence
+    public static final ModConfigSpec.BooleanValue CONVERGENCE_ENABLED, CONVERGENCE_AUTO_ADVANCE, CONVERGENCE_RUMOURS, CONVERGENCE_ANNOUNCE, GRIMOIRE_GUARD,
+            QUESTS_ENABLED, QUESTS_FTB_CHAPTER;
+    public static final ModConfigSpec.DoubleValue ANOMALY_CHANCE;
+    public static final ModConfigSpec.IntValue ANOMALY_PITY, KINGDOM_CLOVER, KINGDOM_DIAMOND, KINGDOM_HEART, KINGDOM_SPADE, DETECT_MINUTES, AWAKEN_MINUTES,
+            RUMOUR_MINUTES;
+    public static final ModConfigSpec.ConfigValue<List<? extends Integer>> STAGE_DAYS;
     public static final ModConfigSpec.DoubleValue SPIRIT_PHYSICAL_REDUCTION;
     public static final ModConfigSpec.BooleanValue SPIRIT_FALL_IMMUNE;
 
@@ -82,6 +89,37 @@ public final class MultiverseConfig {
         SQUAD_GOLD_FEEDS_SCORE = b.define("goldStarsFeedScore", true);
         SQUAD_BLACK_REDUCES_SCORE = b.define("blackStarsReduceScore", true);
         SQUAD_OFFLINE_COUNT = b.define("offlineMembersCount", true);
+        b.pop();
+
+        b.comment("The Convergence (0.39): the world starts as pure Tensura; a few players are anomalies whose magic comes from the",
+                "Black Clover world, and the four kingdoms bleed in over the season (stages: SIGNS, FIRST_GRIMOIRE, CLOVER, DIAMOND, HEART, SPADE).")
+                .push("convergence");
+        CONVERGENCE_ENABLED = b.comment("On: only anomaly players can be chosen by a grimoire (by the world or an admin). Off: the old ceremony rules.")
+                .define("enabled", true);
+        ANOMALY_CHANCE = b.comment("Percent chance that a new player is a Black Clover-origin anomaly.").defineInRange("anomalyChance", 5.0, 0, 100);
+        ANOMALY_PITY = b.comment("Pity rule: if this many players in a row rolled Tensura, the next one is an anomaly (0 = off).")
+                .defineInRange("pityEvery", 20, 0, 100000);
+        KINGDOM_CLOVER = b.comment("Kingdom weights for anomalies (the kingdom picks the grimoire's covers).").defineInRange("weightClover", 50, 0, 1000);
+        KINGDOM_DIAMOND = b.defineInRange("weightDiamond", 20, 0, 1000);
+        KINGDOM_HEART = b.defineInRange("weightHeart", 20, 0, 1000);
+        KINGDOM_SPADE = b.defineInRange("weightSpade", 10, 0, 1000);
+        DETECT_MINUTES = b.comment("Minutes an anomaly plays before [Unknown Magic Detected].").defineInRange("detectMinutes", 10, 0, 100000);
+        AWAKEN_MINUTES = b.comment("Minutes an anomaly plays before the world gives them their grimoire (a Grimoire Tower or altar can be sooner).")
+                .defineInRange("awakenMinutes", 30, 0, 100000);
+        CONVERGENCE_AUTO_ADVANCE = b.comment("Advance the stages by themselves (admins can always use /multiverse convergence stage).")
+                .define("autoAdvance", true);
+        STAGE_DAYS = b.comment("Real days spent in FIRST_GRIMOIRE, CLOVER, DIAMOND and HEART before the next stage opens (auto advance).",
+                        "SIGNS -> FIRST_GRIMOIRE happens when the first anomaly receives a grimoire.")
+                .defineListAllowEmpty("stageDays", List.of(3, 7, 7, 7), () -> 7, o -> o instanceof Integer i && i >= 0);
+        CONVERGENCE_ANNOUNCE = b.comment("Announce grimoires and stages anonymously (\"The world has experienced an anomalous magical disturbance\").")
+                .define("announce", true);
+        CONVERGENCE_RUMOURS = b.comment("Players now and then overhear strange rumours (the first signs of the bleed).").define("rumours", true);
+        RUMOUR_MINUTES = b.comment("Average minutes between rumours per player.").defineInRange("rumourMinutes", 45, 1, 100000);
+        GRIMOIRE_GUARD = b.comment("Grimoire skills cannot be copied, plundered, stolen or learned any other way than from the world or an admin",
+                "(/multiverse grimoire give | canon, the ceremony, an awakening). Anything else is cancelled or taken back.").define("grimoireGuard", true);
+        QUESTS_ENABLED = b.comment("Secret side quests for anomaly players.").define("secretQuests", true);
+        QUESTS_FTB_CHAPTER = b.comment("With FTB Quests installed, write the hidden 'Convergence' chapter into config/ftbquests/quests/chapters",
+                "(only if the file is missing; the quests complete through advancements, so they stay in step).").define("ftbQuestsChapter", true);
         b.pop();
 
         b.push("spirit_lord");

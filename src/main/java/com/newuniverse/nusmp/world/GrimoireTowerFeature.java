@@ -30,6 +30,9 @@ public class GrimoireTowerFeature extends Feature<NoneFeatureConfiguration> {
 
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
+        // 0.39: the towers belong to the Clover Kingdom; they only start appearing in new land once the Convergence reaches it
+        if (com.newuniverse.nusmp.multiverse.Convergence.enabled()
+                && !com.newuniverse.nusmp.multiverse.Convergence.cachedStage().atLeast(com.newuniverse.nusmp.multiverse.Convergence.Stage.CLOVER)) return false;
         WorldGenLevel level = ctx.level();
         RandomSource rand = ctx.random();
         BlockPos o = level.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, ctx.origin());

@@ -60,7 +60,7 @@ Chanted magics: use **Chant** mode until the chant is complete, then switch to *
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.38.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.39.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -204,6 +204,24 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Anti-Magic kit**: new pages **Black Hurricane** (a whirling field that drags foes in and strips their magic) and **Black Form** (30 s of strength, speed, resistance and jump, with an anti-magic burst); mastering the Anti-Magic Lord now also grants the **Demon-Slasher** katana next to Demon-Dweller and Demon-Destroyer.
 - **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
 - **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
+
+## 0.39 - The Convergence
+- **New (core system):** the world starts as pure Tensura and the Black Clover world slowly bleeds in. Full guide: `docs/convergence.md`.
+  - **Origin roll:** each account gets one server-side roll the first time it joins. About 5% are **anomalies**, Black Clover-origin mages; everyone else is Tensura-origin.
+  - **Pity rule:** after 20 Tensura rolls in a row, the next player is an anomaly.
+  - **Kingdom roll:** each anomaly also rolls a kingdom (50 Clover / 20 Diamond / 20 Heart / 10 Spade), and the kingdom picks the grimoire's covers.
+  - **Awakening:** after some play time, an anomaly sees **[Unknown Magic Detected]**, then the world chooses them ("You have been chosen by another world's magic."). Everyone else only sees an anonymous "anomalous magical disturbance".
+  - **Stages:** SIGNS → FIRST_GRIMOIRE → CLOVER → DIAMOND → HEART → SPADE. Each comes with rumours and announcements, ending in **❄ THE SPADE KINGDOM HAS ARRIVED**. Stages advance by real days or with `/multiverse convergence stage`.
+  - **Hidden until revealed:** Grimoire Towers only generate from the CLOVER stage, and Tensura-origin players see no Black Clover status until then.
+  - **Tensura skills:** Black Clover players keep and use all their Tensura races, evolutions and skills.
+- **New: secret side quests for anomalies.** There are 15 (four of them, one per kingdom, only for that kingdom's anomalies), rewarding gold stars and grimoire mastery.
+  - They show up in chat, the Multiverse status panel and `/multiverse quests`.
+  - With FTB Quests installed, a hidden "The Convergence" chapter is written. Its quests complete through hidden advancements, so only anomalies ever see it.
+- **New: the grimoire skill can't be copied, plundered or bestowed.** Tensura's plunder and learning events are refused for grimoire skills, and a catch-all takes back any grimoire skill nobody gave. Only the world or an admin can give one.
+- **Replacements:**
+  - The Acceptance Ceremony and altars choose only anomalies: "everyone eligible" is replaced while the Convergence is on, and `enabled = false` restores it.
+  - A grimoire grant is announced anonymously instead of by name.
+  - Players who already had a grimoire keep it and become anomalies of their cover's kingdom.
 
 ## 0.38 - third-person book fix, Julius-only drum, transformation armour
 - **Fix (third person):** the summoned book no longer looks like a flat card stuck to your hand and facing the camera. The 0.36 pose turned the pages outward, away from you, and the 1.1-block book sat on your right arm. Now it hovers in front of your right shoulder, clear of the body, turned in toward you and leaning back like a lectern: the same view as first person, which is unchanged (`tools/grimoire_preview/third_person.py` checks it from behind, the front and the side).

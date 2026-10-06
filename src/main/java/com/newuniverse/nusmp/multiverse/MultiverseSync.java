@@ -103,6 +103,20 @@ public final class MultiverseSync {
         c.putBoolean("Active", Ceremony.isActive(p.getServer()));
         c.putString("Where", MultiverseProfile.acceptedAt(p));
         t.put("Ceremony", c);
+        // 0.39: the Convergence (what this player may know, their origin, secret quests)
+        CompoundTag v = new CompoundTag();
+        if (Convergence.enabled()) {
+            v.putBoolean("On", true);
+            v.putBoolean("Anomaly", Convergence.isAnomaly(p));
+            v.putBoolean("Revealed", Convergence.revealed(p));
+            v.putBoolean("Detected", Convergence.detected(p));
+            v.putString("Stage", Convergence.stage(p.getServer()).name());
+            v.putString("StageTitle", Convergence.stage(p.getServer()).title);
+            var k = Convergence.kingdomOf(p);
+            if (k != null) v.putString("Kingdom", k.displayName);
+            v.put("Quests", SecretQuests.summary(p));
+        }
+        t.put("Convergence", v);
         return t;
     }
 
