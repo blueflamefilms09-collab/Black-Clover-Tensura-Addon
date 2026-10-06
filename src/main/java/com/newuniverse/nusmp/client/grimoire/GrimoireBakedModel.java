@@ -1,9 +1,8 @@
 package com.newuniverse.nusmp.client.grimoire;
 
-import com.newuniverse.nusmp.grimoire.GrimoireAppearance;
-import com.newuniverse.nusmp.grimoire.GrimoireRenderKey;
-import com.newuniverse.nusmp.grimoire.GrimoireSprite;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.newuniverse.nusmp.blackclover.GrimoireItem;
+import com.newuniverse.nusmp.grimoire.BookLook;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
@@ -18,62 +17,39 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
-import java.util.EnumMap;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  * The grimoire's baked model. The instance the model manager holds is a shell: when an item is about to be drawn,
- * {@link Overrides#resolve} reads the stack's {@link GrimoireAppearance}, maps it to a {@link GrimoireRenderKey} and returns the
- * {@link View} for that key - quads assembled once ({@link GrimoireQuadBaker}) and kept in a small LRU, so nothing is built
- * or allocated per frame for a book that has been drawn before. Colours are NOT part of the key; they come from the item colour
- * handler via tintindex.
+ * {@link Overrides#resolve} reads the stack's look ({@link GrimoireItem#look}) and returns the {@link View} for its geometry key
+ * (emblem, motif, wear, held). The handful of keys is built once and kept; colours come from the item colour handler (tintindex).
+ * In a hand (first / third person) the "held" view is used: its pages and emblem glow.
  */
 public final class GrimoireBakedModel implements BakedModel {
-    /** Distinct looks kept hot. A hotbar + inventory + a few dropped books is far below this. */
-    static final int CACHE_SIZE = 512;
-
-    private final EnumMap<GrimoireSprite, TextureAtlasSprite> sprites;
+    private final Map<String, TextureAtlasSprite> sprites;
     private final ItemTransforms transforms;
     private final TextureAtlasSprite particle;
     private final Overrides overrides = new Overrides();
-    /** Access-ordered LRU: key -> quads (wrapped in the model view that serves them). Only the render thread touches it. */
-    private final Map<GrimoireRenderKey, View> cache = new LinkedHashMap<>(CACHE_SIZE + 1, 0.75f, true) {
-        @Override
-        protected boolean removeEldestEntry(Map.Entry<GrimoireRenderKey, View> eldest) { return size() > CACHE_SIZE; }
-    };
+    private final Map<BookLook.Key, View> cache = new HashMap<>();
 
-    // one-entry identity memo: the same stack drawn every frame never even builds a key
-    private GrimoireAppearance lastAppearance;
-    private View lastView;
-
-    GrimoireBakedModel(EnumMap<GrimoireSprite, TextureAtlasSprite> sprites, ItemTransforms transforms) {
+    GrimoireBakedModel(Map<String, TextureAtlasSprite> sprites, ItemTransforms transforms) {
         this.sprites = sprites;
         this.transforms = transforms;
-        this.particle = sprites.get(GrimoireSprite.COVER_PLAIN);
+        this.particle = sprites.get("cover_leather");
     }
 
-    /** Quads for a key, building and caching them on first use. */
-    List<BakedQuad> quadsFor(GrimoireRenderKey key) { return viewFor(key).quads; }
-
-    int cachedLooks() { synchronized (cache) { return cache.size(); } }
-
-    private View viewFor(GrimoireRenderKey key) {
+    private View viewFor(BookLook.Key key) {
         synchronized (cache) {
-            View v = cache.get(key);
-            if (v == null) {
-                v = new View(key, GrimoireQuadBaker.bake(key, sprites));
-                cache.put(key, v);
-            }
-            return v;
+            return cache.computeIfAbsent(key, k -> new View(k, GrimoireQuadBaker.bake(k, sprites)));
         }
     }
 
     // ---- the shell itself (what a plain getQuads() caller sees): the default look
     @Override
     public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, RandomSource rand) {
-        return side == null ? viewFor(GrimoireAppearance.DEFAULT.renderKey()).quads : List.of();
+        return side == null ? viewFor(BookLook.DEFAULT.key(false)).quads : List.of();
     }
     @Override public boolean useAmbientOcclusion() { return false; }
     @Override public boolean isGui3d() { return true; }
@@ -83,18 +59,17 @@ public final class GrimoireBakedModel implements BakedModel {
     @Override public ItemTransforms getTransforms() { return transforms; }
     @Override public ItemOverrides getOverrides() { return overrides; }
 
-    /** The resolved per-look model: same flags and transforms, quads fixed. */
+    /** One resolved book. */
     private final class View implements BakedModel {
-        final GrimoireRenderKey key;
+        final BookLook.Key key;
         final List<BakedQuad> quads;
         private View heldView;
-        View(GrimoireRenderKey key, List<BakedQuad> quads) { this.key = key; this.quads = quads; }
+        View(BookLook.Key key, List<BakedQuad> quads) { this.key = key; this.quads = quads; }
 
-        /** The same book with its glow (canon: a grimoire glows slightly while it is out and in use). Looked up once, then remembered. */
         View held() {
             if (key.held()) return this;
             View v = heldView;
-            if (v == null) heldView = v = viewFor(key.withHeld(true));
+            if (v == null) heldView = v = viewFor(new BookLook.Key(key.emblem(), key.motif(), key.tattered(), true));
             return v;
         }
 
@@ -122,13 +97,7 @@ public final class GrimoireBakedModel implements BakedModel {
         @Nullable
         @Override
         public BakedModel resolve(BakedModel model, ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int seed) {
-            GrimoireAppearance a = GrimoireAppearance.of(stack);
-            View v = lastView;
-            if (a == lastAppearance && v != null) return v;
-            v = viewFor(a.renderKey());
-            lastAppearance = a;
-            lastView = v;
-            return v;
+            return viewFor(GrimoireItem.look(stack).key(false));
         }
     }
 }

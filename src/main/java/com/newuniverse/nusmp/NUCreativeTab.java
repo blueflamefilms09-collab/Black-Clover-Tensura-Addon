@@ -30,10 +30,8 @@ public final class NUCreativeTab {
                     if (m == MagicType.ANTI_MAGIC) continue;
                     output.accept(GrimoireItem.createUnbound(GrimoireCover.THREE_LEAF, m, null));
                 }
-                // 0.20: crests, thicknesses and clasps that only exist as looks
-                for (var e : com.newuniverse.nusmp.grimoire.GrimoireShowcase.entries()) {
-                    output.accept(GrimoireItem.createWithLook(e.look(), e.magic(), e.look().insignia().toCover().isForbidden() ? Devil.MEGICULA : null));
-                }
+                // the named canon grimoires (Fuegoleon, Yuno, Asta, Noelle, ...)
+                for (var b : com.newuniverse.nusmp.grimoire.CanonBook.values()) output.accept(GrimoireItem.createCanon(b));
             })
             .build());
 

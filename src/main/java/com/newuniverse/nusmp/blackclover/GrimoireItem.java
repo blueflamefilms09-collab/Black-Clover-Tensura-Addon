@@ -17,7 +17,8 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.CustomData;
 
 import com.newuniverse.nusmp.NUConfig;
-import com.newuniverse.nusmp.grimoire.GrimoireAppearance;
+import com.newuniverse.nusmp.grimoire.BookLook;
+import com.newuniverse.nusmp.grimoire.CanonBook;
 import com.newuniverse.nusmp.grimoire.GrimoireComponents;
 
 import java.util.List;
@@ -36,8 +37,9 @@ public class GrimoireItem extends Item {
 
     public static ItemStack create(Player owner, GrimoireCover cover, MagicType magic, Devil devil) {
         ItemStack stack = createUnbound(cover, magic, devil);
-        if (uniqueLooks()) stack.set(GrimoireComponents.APPEARANCE.get(), GrimoireAppearance.forOwner(cover, magic, owner.getUUID()));
         CompoundTag tag = data(stack);
+        UUID id = owner.getUUID();
+        tag.putInt("LookSeed", uniqueLooks() ? (int) (id.getMostSignificantBits() ^ id.getLeastSignificantBits()) | 1 : 0);   // each mage's book is a shade of its own
         tag.putUUID("Owner", owner.getUUID());
         tag.putString("OwnerName", owner.getName().getString());
         tag.putUUID("GrimoireId", UUID.randomUUID());     // every granted grimoire is its own book, made before anything is consumed
@@ -58,7 +60,6 @@ public class GrimoireItem extends Item {
         tag.putString("Magic", magic.name());
         if (devil != null) tag.putString("Devil", devil.name());
         stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
-        stack.set(GrimoireComponents.APPEARANCE.get(), GrimoireAppearance.fromCover(cover, magic));
         stack.set(DataComponents.CUSTOM_NAME, Component.literal(cover.displayName())
                 .withStyle(cover.isForbidden() ? ChatFormatting.DARK_RED : cover.isRare() ? ChatFormatting.GOLD
                         : cover.isCracked() ? ChatFormatting.GRAY : ChatFormatting.GREEN));
@@ -67,18 +68,41 @@ public class GrimoireItem extends Item {
     }
 
     /**
-     * A grimoire drawn with an explicit look (creative tab showcase, {@code /nusmp grimoire look}). Spell power, cost and rarity follow
-     * the crest's nearest real cover; only the appearance is custom. Real grimoires are rebuilt from (cover, magic, owner), so a custom
-     * look is cosmetic and lasts only as long as this stack does.
+     * A named canon grimoire from the Black Clover grimoire tables (creative tab, /multiverse grimoire canon): its cover, magic and
+     * look follow the original owner's book. Binding it makes it yours and keeps the look.
      */
-    public static ItemStack createWithLook(GrimoireAppearance look, MagicType magic, Devil devil) {
-        GrimoireCover cover = look.insignia().toCover();
-        ItemStack stack = createUnbound(cover, magic, devil);
-        stack.set(GrimoireComponents.APPEARANCE.get(), look);
-        stack.set(DataComponents.CUSTOM_NAME, Component.literal(look.insignia().displayName + " Grimoire")
-                .withStyle(cover.isForbidden() ? ChatFormatting.DARK_RED : cover.isRare() ? ChatFormatting.GOLD
-                        : cover.isCracked() ? ChatFormatting.GRAY : ChatFormatting.GREEN));
+    public static ItemStack createCanon(CanonBook book) {
+        GrimoireCover cover = GrimoireCover.byName(book.cover, 3);
+        MagicType magic = MagicType.byName(book.magic);
+        ItemStack stack = createUnbound(cover, magic, cover.isForbidden() ? (magic == MagicType.ANTI_MAGIC ? Devil.LIEBE : Devil.MEGICULA) : null);
+        setCanon(stack, book.id());
+        stack.set(DataComponents.CUSTOM_NAME, Component.literal(book.owner + "'s Grimoire")
+                .withStyle(cover.isForbidden() ? ChatFormatting.DARK_RED : cover.isRare() ? ChatFormatting.GOLD : ChatFormatting.GREEN));
         return stack;
+    }
+
+    /** Copy-on-write: marks the stack as a canon book's look. */
+    public static void setCanon(ItemStack stack, String canonId) {
+        CompoundTag tag = data(stack);
+        if (canonId == null || canonId.isEmpty()) tag.remove("Canon"); else tag.putString("Canon", canonId);
+        stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
+    }
+
+    private static final ThreadLocal<Object[]> LAST_LOOK = ThreadLocal.withInitial(() -> new Object[2]);
+
+    /** How this grimoire looks (cover, magic, canon book, owner shade). Remembered per thread for the same data object. */
+    public static BookLook look(ItemStack stack) {
+        CustomData d = stack.get(DataComponents.CUSTOM_DATA);
+        if (d == null) return BookLook.DEFAULT;
+        Object[] memo = LAST_LOOK.get();
+        if (memo[0] == d) return (BookLook) memo[1];
+        CompoundTag t = d.copyTag();
+        int seed = t.contains("LookSeed") ? t.getInt("LookSeed")
+                : t.hasUUID("Owner") ? (int) (t.getUUID("Owner").getMostSignificantBits() ^ t.getUUID("Owner").getLeastSignificantBits()) | 1 : 0;
+        BookLook look = BookLook.resolve(cover(stack).name(), t.getString("Magic"), t.getString("Canon"), seed);
+        memo[0] = d;
+        memo[1] = look;
+        return look;
     }
 
     /** Server config switch: each owner's grimoire gets its own cosmetic variation (default on). */
@@ -86,16 +110,10 @@ public class GrimoireItem extends Item {
         try { return NUConfig.GRIMOIRE_UNIQUE_LOOKS.get(); } catch (IllegalStateException notLoaded) { return true; }
     }
 
-    /** Grimoires from before 0.20 have no appearance component; give them one the first time the server sees them in an inventory. */
+    /** Grimoires from before 0.21 still carry the removed look component; drop it the first time the server sees the stack. */
     @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean selected) {
-        if (level.isClientSide || stack.has(GrimoireComponents.APPEARANCE.get())) return;
-        CompoundTag tag = data(stack);
-        if (!tag.contains("Magic")) return;
-        GrimoireCover cover = cover(stack);
-        MagicType magic = MagicType.byName(tag.getString("Magic"));
-        stack.set(GrimoireComponents.APPEARANCE.get(), tag.hasUUID("Owner") && uniqueLooks()
-                ? GrimoireAppearance.forOwner(cover, magic, tag.getUUID("Owner")) : GrimoireAppearance.fromCover(cover, magic));
+        if (!level.isClientSide && stack.has(GrimoireComponents.LEGACY_APPEARANCE.get())) stack.remove(GrimoireComponents.LEGACY_APPEARANCE.get());
     }
 
     public static GrimoireCover cover(ItemStack stack) {
@@ -126,12 +144,30 @@ public class GrimoireItem extends Item {
         MagicType chosenMagic = MagicType.byName(tag.getString("Magic"));
         Devil chosenDevil = Devil.byName(tag.getString("Devil"));
         // transactional: the new grimoire is made and handed over first; the unbound copy is used up only once that worked
+        String canon = tag.getString("Canon");
         GrimoireAcceptance.grantExact(sp, chosenCover, chosenMagic, chosenDevil);
         if (GrimoirePages.grimoireOf(sp).isPresent()) {
+            if (!canon.isEmpty()) applyCanon(sp, chosenMagic, canon);
             stack.shrink(1);
             com.newuniverse.nusmp.multiverse.MultiverseProfile.setAccepted(sp, true, "a bound creative grimoire");
         }
         return InteractionResultHolder.success(stack);
+    }
+
+    /** Gives the player's own grimoire of this magic a canon book's look (after binding a canon copy). */
+    public static void applyCanon(ServerPlayer p, MagicType magic, String canon) {
+        var inv = p.getInventory();
+        for (int slot = 0; slot < inv.getContainerSize(); slot++) {
+            ItemStack s = inv.getItem(slot);
+            if (isOwnedBy(s, p.getUUID()) && magic.name().equals(data(s).getString("Magic"))) {
+                ItemStack copy = s.copy();
+                setCanon(copy, canon);
+                CanonBook b = CanonBook.byId(canon);
+                if (b != null) copy.set(DataComponents.CUSTOM_NAME, Component.literal(b.owner + "'s Grimoire").withStyle(ChatFormatting.GOLD));
+                inv.setItem(slot, copy);
+                return;
+            }
+        }
     }
 
     public static String leafName(int leaves) {
@@ -159,9 +195,9 @@ public class GrimoireItem extends Item {
         tooltip.add(Component.literal(cover.kingdom.displayName).withStyle(ChatFormatting.GOLD));
         tooltip.add(Component.literal(cover.lore).withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
         tooltip.add(Component.literal(String.format("Spell power x%.2f, cost x%.2f", cover.damage, cover.cost)).withStyle(ChatFormatting.DARK_GRAY));
-        GrimoireAppearance look = GrimoireAppearance.of(stack);
-        tooltip.add(Component.literal(look.cover().displayName + " cover, " + look.trimMetal().displayName + " trim, "
-                + look.thickness().displayName + ", " + look.clasp().displayName).withStyle(ChatFormatting.DARK_GRAY));
+        BookLook look = look(stack);
+        if (look.canon() != null) tooltip.add(Component.literal("The grimoire of " + look.canon().owner).withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC));
+        tooltip.add(Component.literal("Cover ornament: " + look.motif().displayName()).withStyle(ChatFormatting.DARK_GRAY));
         if (tag.hasUUID("Owner")) tooltip.add(Component.literal("Owner: " + tag.getString("OwnerName")).withStyle(ChatFormatting.GRAY));
         Devil devil = Devil.byName(tag.getString("Devil"));
         if (devil != null) {

@@ -154,14 +154,6 @@ public final class GrimoireCommand {
                                             com.newuniverse.nusmp.entity.SpiritLordEntity.toggle(p, k);
                                             return 1;
                                         }))))
-                        // 0.20: any of the 103,000 procedural looks. /nusmp grimoire look <player> <0..102999> | lookseed <player> <seed>
-                        .then(Commands.literal("look").then(Commands.argument("player", EntityArgument.player())
-                                .then(Commands.argument("id", IntegerArgumentType.integer(0, com.newuniverse.nusmp.grimoire.GrimoireAppearance.ID_COUNT - 1)).executes(ctx ->
-                                        giveLook(ctx.getSource(), EntityArgument.getPlayer(ctx, "player"), IntegerArgumentType.getInteger(ctx, "id"))))))
-                        .then(Commands.literal("lookseed").then(Commands.argument("player", EntityArgument.player())
-                                .then(Commands.argument("seed", com.mojang.brigadier.arguments.LongArgumentType.longArg()).executes(ctx ->
-                                        giveLook(ctx.getSource(), EntityArgument.getPlayer(ctx, "player"),
-                                                com.newuniverse.nusmp.grimoire.GrimoireAppearance.idOfSeed(com.mojang.brigadier.arguments.LongArgumentType.getLong(ctx, "seed")))))))
                         .then(Commands.literal("reset").then(Commands.argument("player", EntityArgument.player()).executes(ctx -> {
                             ServerPlayer p = EntityArgument.getPlayer(ctx, "player");
                             for (var id : NUSkills.allGrimoireSkillIds()) SkillAPI.getSkillsFrom(p).forgetSkill(id);
@@ -169,17 +161,5 @@ public final class GrimoireCommand {
                             ctx.getSource().sendSuccess(() -> Component.literal("Reset " + p.getName().getString() + "'s grimoire."), true);
                             return 1;
                         })))));
-    }
-    /** Hands out an unbound grimoire with the procedural look of grimoire #id. Its magic follows the look's aura affinity. */
-    private static int giveLook(net.minecraft.commands.CommandSourceStack source, ServerPlayer target, int id) {
-        var look = com.newuniverse.nusmp.grimoire.GrimoireAppearance.fromGrimoireId(id);
-        var affinity = com.newuniverse.nusmp.grimoire.GrimoireAppearance.affinityOfId(id);
-        var cover = look.insignia().toCover();
-        var stack = GrimoireItem.createWithLook(look, affinity.magic(), cover.isForbidden() ? Devil.MEGICULA : null);
-        target.getInventory().placeItemBackInInventory(stack);
-        source.sendSuccess(() -> Component.literal("Gave " + target.getName().getString() + " grimoire look #" + id + ": "
-                + look.insignia().displayName + ", " + look.cover().displayName + ", " + look.trimMetal().displayName + " trim, "
-                + look.thickness().displayName + ", " + look.clasp().displayName + ", " + affinity.displayName + " aura"), true);
-        return 1;
     }
 }

@@ -7,7 +7,7 @@ import com.mojang.math.Axis;
 import com.newuniverse.nusmp.blackclover.BlackCloverRegistry;
 import com.newuniverse.nusmp.blackclover.GrimoireItem;
 import com.newuniverse.nusmp.core.magic.grimoire.GrimoireShelfLayout;
-import com.newuniverse.nusmp.grimoire.GrimoireShowcase;
+import com.newuniverse.nusmp.grimoire.CanonBook;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -87,7 +87,7 @@ public final class GrimoireShelfClient {
             if (s.is(BlackCloverRegistry.GRIMOIRE.get())) found.add(s.copyWithCount(1));
         }
         if (found.isEmpty()) {
-            for (GrimoireShowcase.Entry e : GrimoireShowcase.entries()) found.add(GrimoireItem.createWithLook(e.look(), e.magic(), null));
+            for (CanonBook b : CanonBook.values()) found.add(GrimoireItem.createCanon(b));
         }
         books = List.copyOf(found);
         centers = new double[books.size() * 3];

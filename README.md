@@ -57,7 +57,7 @@ Chanted magics: use **Chant** mode until the chant is complete, then switch to *
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.20.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.21.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -143,19 +143,19 @@ Custom immediate-mode renderer (no vanilla particles): `com.newuniverse.nusmp.vf
 - New Grimoire Altar pedestal model and top texture.
 
 ## 0.20 - procedural 3D grimoires
-Every grimoire is now a real 3D book assembled at runtime from 32 greyscale textures + colour, instead of a flat per-variant icon. The old 2D model is kept as `models/item/grimoire_legacy.json` and every old texture is still in the jar.
-- **Look data** lives in the `nusmp:appearance` data component (`GrimoireAppearance`): kingdom, crest, leaf count, cover material, trim metal, primary / trim / aura colours, page thickness, clasp. 16 bytes on the wire. Old grimoires get one automatically the first time the server sees them in an inventory.
-- **Layers** (tintindex): 0 cover primary, 1 trim metal, 2 crest, 3 emissive aura. Crests: three/four/five-leaf, heart / two / tiered / cracked, spade / double / triple, diamond / dual / five-sided / cracked, Boundless (coverless, time), Forbidden Runes.
-- **Geometry** (`GrimoireModelPlan`, baked by `GrimoireBakedModel`): thin / standard / tome / single-page bodies, corner brackets and spine bands per metal style, and clasps: open, single buckle, dual chains, padlock + key. Quads are built once per `GrimoireRenderKey` and kept in a 512-entry LRU; colours are not in the key, so recolours share geometry. Aura glow is full-bright.
-- **Generator**: `GrimoireAppearance.fromGrimoireId(0..102999)` (or `fromSeed(long)`) maps an id to a unique crest / cover / metal / thickness / clasp / affinity combination (107,520 combinations, bijective scramble, so no two ids collide).
-- **In game**: each owner's grimoire gets its own cosmetic variation (cover material, metal, thickness, clasp, colour drift) inside what suits its rarity; same owner + cover + magic always gives the same look. Config `[black_clover] uniqueLooks` (default true) turns this off.
-- Creative tab: extra showcase grimoires for the crests / thicknesses / clasps no regular grimoire has.
-- Admin: `/nusmp grimoire look <player> <0-102999>` and `/nusmp grimoire lookseed <player> <seed>` give an unbound grimoire with that look (its magic follows the aura affinity).
-- Textures are regenerated with `python tools/gen_grimoire_textures.py` (needs Pillow + numpy). `gradle build` runs `GrimoireAppearanceTest` (103,000 unique ids, codecs, rarity rules) and `GrimoireModelPlanTest` (every geometry wound outward, inside the item cube, tints, texture budget <= 40). `GRIMOIRE_PREVIEW_DIR=build/preview gradle test --tests '*GrimoirePreviewTest'` renders contact sheets with a software rasteriser.
-- **Canon look (Black Clover):** the kingdom insignia sits at the centre of the front cover and the binding reflects the owner's magic (so the cover colour is the magic's). Three-leaf = common: plain leather, simple border, gold clover. Four-leaf = rare: gold clover plus intricate gilded ornaments around the border (a wind four-leaf is Yuno's gold-and-green). A four-leaf that turns into a devil's five-leaf gets a darker cover, dark ornaments and a black clover; an Anti-Magic five-leaf is Asta's: black clover on filthy, tattered leather. Grimoires have no straps, chains, locks or corner caps, and a grimoire only glows (slightly) while it is held out, never in the inventory, on the ground or in a frame. Julius' coverless book is the Boundless crest. Spade / heart / diamond books use the same construction with their suit; the double / triple / cracked / five-sided variants are this mod's own inventions, not series canon. Clasps, chains, padlocks, dragon hide, runed trim and the full aura are kept for `/nusmp grimoire look` ids and the creative showcase.
+Replaced in 0.21 by the art-based grimoire below (the procedural look, its 33 textures, the 420 old 2D variant models and the `/nusmp grimoire look` / `lookseed` commands were removed at the owner's request). Old worlds still load: the old `nusmp:appearance` data is accepted and dropped the first time the server sees the stack.
+
+## 0.21 - grimoires after the Black Clover art
+Every grimoire is a 3D book built after the reference art: thick leather boards, a cream page block, a banded spine, a raised double gold frame, a corner / border ornament stamped on both covers, a raised medallion with the emblem (clover or suit) on the front and a rosette on the back. Pages and emblem glow only while the book is held.
+- **Look** comes from the grimoire's own data (cover, magic, optional canon book, owner), so every old grimoire gets the new look automatically. Cover colour follows the magic, trim is gold / silver / bronze / dark, the emblem colour follows the cover. Each owner's book is shaded slightly differently (config `[black_clover] uniqueLooks`).
+- **Ornaments by kingdom**: Clover three-leaf = filigree, four/five-leaf = ornate, Spade = wheels, Heart = floral, Diamond = lattice, Star magic = stars; Asta's anti-magic five-leaf is tattered. A devil's five-leaf / triple-spade is darker.
+- **Canon books** (31): Fuegoleon, Mereoleona, Leopold, Yuno, Asta, Noelle, Nozel, Yami, Julius, Mimosa, Charmy, Finral, Vanessa, Luck, Gauche, Magna, Zora, Klaus, Kirsch, Karna, William, Langris, Lemiel, Zenon, Vanica, Dante, Lucius, Floga, Gadjah, Lolopechka, Mars. They are in the creative tab; using one (creative / op, no grimoire yet) binds it and keeps the look.
+- **Admin**: `/multiverse grimoire canon <player> <book>` binds a canon book to a player who has no grimoire; add `copy` to hand out an unbound copy instead.
+- **Code**: `grimoire/BookLook`, `BookPalette`, `BookMotif`, `CanonBook`, `GrimoireBookPlan` (pure, tested by `GrimoireBookPlanTest`); `client/grimoire/GrimoireBakedModel` bakes and caches one model per emblem x ornament x held. Tint layers: 0 cover, 1 trim, 2 emblem.
+- **Textures**: `textures/item/grimoire_book/` (27 files), regenerated with `PYTHONHASHSEED=0 python tools/gen_grimoire_book_textures.py` (Pillow + numpy). Preview without the game: `python tools/grimoire_preview/preview.py` -> `build/grimoire_preview/books.png`.
 
 ## Grimoire shelf (client)
-- `/grimoireshelf` toggles a floating shelf in front of you: the grimoires in your inventory, or the creative-tab showcase looks if you carry none. `/grimoireshelf close` closes it; there is also a "Grimoire Shelf" key (unbound by default, under Controls > Multiverse of Anime). It closes when you walk 6 blocks away, change dimension or log out.
+- `/grimoireshelf` toggles a floating shelf in front of you: the grimoires in your inventory, or the canon books if you carry none. `/grimoireshelf close` closes it; there is also a "Grimoire Shelf" key (unbound by default, under Controls > Multiverse of Anime). It closes when you walk 6 blocks away, change dimension or log out.
 - Client only: no entity, nothing sent over the network. Every frame `GrimoireShelfClient.onRender` asks `GrimoireShelfLayout.open(i, n, age)` (`core/magic/grimoire/`, pure maths) for each book's pose at `age = (game time - open time) + partial tick` and draws the book item there.
 - Bob: `0.04 * sin(age * 0.12 + i * 7) * e` blocks (about 2.5 cm, one bob every ~52 ticks / 2.6 s, each book out of step), where `e` is the 0-1 opening ease, so a book only bobs once it has arrived. Height: `-0.6 + (rest.up + 0.6) * e + bob`.
 - Books turn to face you (`Axis.YP.rotation(atan2(dx, dz))`); the one you look at tilts back 8 degrees and grows 22%.

@@ -40,7 +40,6 @@ public class NUSMP {
         modEventBus.addListener(com.newuniverse.nusmp.book.GrimoireSummon::registerPayloads);
         modEventBus.addListener(com.newuniverse.nusmp.multiverse.MultiverseSync::registerPayloads);
         if (FMLEnvironment.dist == Dist.CLIENT) {
-            modEventBus.addListener(com.newuniverse.nusmp.client.NUClient::onClientSetup);
             com.newuniverse.nusmp.vfx.client.VfxClientEvents.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireClient.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireShelfClient.init(modEventBus);

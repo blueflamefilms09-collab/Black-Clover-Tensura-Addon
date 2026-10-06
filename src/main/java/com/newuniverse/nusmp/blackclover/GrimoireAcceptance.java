@@ -13,6 +13,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import java.util.List;
@@ -129,7 +130,14 @@ public final class GrimoireAcceptance {
         for (int slot = 0; slot < inv.getContainerSize(); slot++) {
             var st = inv.getItem(slot);
             if (!GrimoireItem.isOwnedBy(st, player.getUUID())) continue;
-            if (magic.name().equals(GrimoireItem.data(st).getString("Magic"))) { inv.setItem(slot, GrimoireItem.create(player, cover, magic, devil)); has = true; break; }
+            if (magic.name().equals(GrimoireItem.data(st).getString("Magic"))) {
+                String canon = GrimoireItem.data(st).getString("Canon");               // a canon book keeps its look through a re-grant
+                ItemStack fresh = GrimoireItem.create(player, cover, magic, devil);
+                if (!canon.isEmpty()) GrimoireItem.setCanon(fresh, canon);
+                inv.setItem(slot, fresh);
+                has = true;
+                break;
+            }
         }
         if (!has) inv.placeItemBackInInventory(GrimoireItem.create(player, cover, magic, devil));
         markRolled(player, true);

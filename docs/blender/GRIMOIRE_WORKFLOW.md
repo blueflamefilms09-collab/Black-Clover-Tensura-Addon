@@ -129,4 +129,4 @@ Every object is a separate, named, editable mesh with live modifiers (Bevel, Out
 
 ## 9. Into the Minecraft mod
 
-The mod's grimoire is a procedural item model with its own textures (`textures/item/grimoire3d`). The armor models (GeckoLib) come from Blockbench. A Blender grimoire is for renders, promo art and reference. To bring it in game, rebuild it in Blockbench at **16 px per block**: boxes only, no curves, and the ornaments baked into a 64x64 texture.
+The mod's grimoire is a procedural item model with its own textures (`textures/item/grimoire_book`). The armor models (GeckoLib) come from Blockbench. A Blender grimoire is for renders, promo art and reference. To bring it in game, rebuild it in Blockbench at **16 px per block**: boxes only, no curves, and the ornaments baked into a 64x64 texture.

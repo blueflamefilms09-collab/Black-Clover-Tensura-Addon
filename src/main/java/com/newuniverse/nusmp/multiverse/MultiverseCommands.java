@@ -8,10 +8,14 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.newuniverse.nusmp.antimagic.AntiMagic;
 import com.newuniverse.nusmp.blackclover.GrimoireAcceptance;
+import com.newuniverse.nusmp.blackclover.GrimoireCover;
+import com.newuniverse.nusmp.blackclover.GrimoireItem;
+import com.newuniverse.nusmp.blackclover.MagicType;
 import com.newuniverse.nusmp.blackclover.GrimoirePages;
 import com.newuniverse.nusmp.blackclover.NightmareSouls;
 import com.newuniverse.nusmp.book.GrimoireBook;
 import com.newuniverse.nusmp.book.SpiritBond;
+import com.newuniverse.nusmp.grimoire.CanonBook;
 import com.newuniverse.nusmp.skill.NUSkills;
 import io.github.manasmods.manascore.skill.api.SkillAPI;
 import net.minecraft.ChatFormatting;
@@ -44,6 +48,27 @@ public final class MultiverseCommands {
     /** The named player if given and the source is an admin, else the source player. */
     private static ServerPlayer targetOrSelf(CommandContext<CommandSourceStack> ctx, boolean hasArg) throws CommandSyntaxException {
         return hasArg ? EntityArgument.getPlayer(ctx, "player") : ctx.getSource().getPlayerOrException();
+    }
+
+    /** /multiverse grimoire canon <player> <book> [copy]: binds the canon book (player without a grimoire) or gives an unbound copy. */
+    private static int giveCanon(CommandContext<CommandSourceStack> ctx, boolean copy) throws CommandSyntaxException {
+        ServerPlayer p = EntityArgument.getPlayer(ctx, "player");
+        CanonBook book = CanonBook.byId(StringArgumentType.getString(ctx, "book"));
+        if (book == null) return fail(ctx, "Unknown canon grimoire. Try one of the suggestions.");
+        if (copy) {
+            p.getInventory().placeItemBackInInventory(GrimoireItem.createCanon(book));
+            return ok(ctx, "Gave " + p.getName().getString() + " an unbound copy of " + book.owner + "'s grimoire.");
+        }
+        if (GrimoirePages.grimoireOf(p).isPresent()) return fail(ctx, p.getName().getString() + " already has a grimoire. /multiverse ceremony reset first, or add 'copy'.");
+        MagicType magic = MagicType.byName(book.magic);
+        GrimoireCover cover = GrimoireCover.byName(book.cover, 3);
+        GrimoireAcceptance.grantExact(p, cover, magic, cover.isForbidden()
+                ? (magic == MagicType.ANTI_MAGIC ? com.newuniverse.nusmp.blackclover.Devil.LIEBE : com.newuniverse.nusmp.blackclover.Devil.MEGICULA) : null);
+        if (GrimoirePages.grimoireOf(p).isEmpty()) return fail(ctx, "The grant did not go through.");
+        GrimoireItem.applyCanon(p, magic, book.id());
+        MultiverseProfile.setAccepted(p, true, book.owner + "'s grimoire");
+        MultiverseSync.markDirty(p);
+        return ok(ctx, book.owner + "'s grimoire chose " + p.getName().getString() + ".");
     }
 
     public static void register(RegisterCommandsEvent event) {
@@ -85,7 +110,13 @@ public final class MultiverseCommands {
                             Component.literal("You have become an Anti-Magic Spirit Lord.").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.BOLD));
                     MultiverseSync.markDirty(p);
                     return learned ? ok(ctx, "Awakened " + p.getName().getString() + ".") : fail(ctx, "Already awakened.");
-                }))));
+                })))
+                // a named canon grimoire: bound to the player if they have none yet, else handed over as an unbound copy
+                .then(Commands.literal("canon").then(Commands.argument("player", EntityArgument.player())
+                        .then(Commands.argument("book", StringArgumentType.word())
+                                .suggests((c, b) -> { for (CanonBook k : CanonBook.values()) b.suggest(k.id()); return b.buildFuture(); })
+                                .executes(ctx -> giveCanon(ctx, false))
+                                .then(Commands.literal("copy").executes(ctx -> giveCanon(ctx, true)))))));
 
         // ---------------------------------------------------------------- ceremony
         root.then(Commands.literal("ceremony").requires(MultiverseCommands::admin)

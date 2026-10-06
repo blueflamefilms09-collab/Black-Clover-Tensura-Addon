@@ -1,3 +1,5 @@
+> **Superseded in 0.21.0:** the procedural look described below was replaced by the art-based grimoire (see README "0.21"). The classes, textures, legacy models and commands named here no longer exist.
+
 # Handoff: procedural 3D grimoires (nusmp 0.20.0)
 
 Mod: "Multiverse of Anime in Tensura", id `nusmp`, NeoForge 1.21.1 (built against 21.1.234, user runs 21.1.250), Tensura 2.0.1.x, ManasCore 4.0.0.2.
