@@ -217,7 +217,7 @@ public final class GrimoireFloatClient {
                         .add(up.x() * (bob - 0.42 - drop), up.y() * (bob - 0.42 - drop), up.z() * (bob - 0.42 - drop));
                 pose.translate(at.x - cam.x, at.y - cam.y, at.z - cam.z);
                 pose.mulPose(Axis.YP.rotationDegrees(-camera.getYRot() - 18f + sway));   // covers away from you: you read the pages
-                pose.mulPose(Axis.XP.rotationDegrees(camera.getXRot() * 0.6f - 12f - 40f * (1 - t)));
+                pose.mulPose(Axis.XP.rotationDegrees(camera.getXRot() * 0.6f + 22f - 40f * (1 - t)));   // 0.36: tilted, pages up at you
                 float s = Mth.lerp(t, 0.84f, 1.6f);
                 pose.scale(s, s, s);
             } else {

@@ -18,10 +18,12 @@ public final class GrimoireCarry {
     public static final Pose HIP = new Pose(0.42f, 0.55f, 0.0f, -90f, 0f, -8f, 0.84f);          // 0.29: 2x bigger, a little further out so it clears the leg
     /** Dormant while sneaking (the hips drop). */
     public static final Pose HIP_SNEAK = new Pose(0.42f, 0.41f, -0.1f, -90f, 0f, -8f, 0.84f);
-    /** Summoned: in front of the right hand, cover facing out, turned a little inwards. */
-    public static final Pose HAND = new Pose(0.6f, 1.12f, 0.9f, 15f, -10f, 0f, 1.7f);           // 0.29: 2x bigger, further out so it clears the body
+    /** Summoned: beside the owner's right side, open and tilted steeply so its pages face up at them. */
+    // 0.36: floats low beside the owner, lying open at a steep tilt (pages up toward the owner, reclining away), after the
+    // owner's floating-grimoire references; 0.29's upright pose in front of the hand was (0.6, 1.12, 0.9, 15, -10, 0)
+    public static final Pose HAND = new Pose(0.78f, 0.82f, 0.5f, 28f, 55f, -10f, 1.7f);
     /** Summoned while sneaking. */
-    public static final Pose HAND_SNEAK = new Pose(0.6f, 0.92f, 0.9f, 15f, -10f, 0f, 1.7f);
+    public static final Pose HAND_SNEAK = new Pose(0.78f, 0.62f, 0.5f, 28f, 55f, -10f, 1.7f);
 
     private GrimoireCarry() {}
 

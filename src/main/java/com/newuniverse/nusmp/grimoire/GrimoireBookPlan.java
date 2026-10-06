@@ -41,9 +41,9 @@ public final class GrimoireBookPlan {
 
     // layout (model units)
     static final float BX0 = 2.5f, BX1 = 13.5f, BY0 = 1.3f, BY1 = 14.7f;            // boards
-    static final float BACK0 = 5.5f, BACK1 = 6.3f, FRONT0 = 9.7f, FRONT1 = 10.5f;
+    static final float BACK0 = 6.6f, BACK1 = 7.1f, FRONT0 = 8.9f, FRONT1 = 9.4f;           // 0.36: ultra-thin (was 5.5 / 6.3 / 9.7 / 10.5)
     static final float PX0 = 2.7f, PX1 = 13.2f, PY0 = 1.6f, PY1 = 14.4f;            // pages
-    static final float SX0 = 1.9f, SX1 = 2.7f, SY0 = 1.1f, SY1 = 14.9f, SZ0 = 5.4f, SZ1 = 10.6f;   // spine
+    static final float SX0 = 1.9f, SX1 = 2.7f, SY0 = 1.1f, SY1 = 14.9f, SZ0 = 6.5f, SZ1 = 9.5f;    // spine (0.36: slim)
     static final float BAR = 0.45f, BAR_INSET = 0.4f, BAR_H = 0.3f;                 // raised frame bars
     static final float MED = 2.0f, MED_H = 0.35f, EMB = 1.6f;                       // medallion half-size, height; emblem half-size
 
@@ -146,9 +146,9 @@ public final class GrimoireBookPlan {
     // ---------------------------------------------------------------- the summoned book, open in a V
     /** Opening steps (Key.open 1..3): degrees each half is turned back from lying flat; 34 is the fully open V of the reference renders. */
     public static final int OPEN_STEPS = 3;
-    public static final float[] OPEN_DEGREES = {90f, 62f, 46f, 34f};
+    public static final float[] OPEN_DEGREES = {90f, 55f, 30f, 14f};       // 0.36: opens almost flat (was 62 / 46 / 34)
     /** Spine axis (vertical) at (OPEN_CX, OPEN_CZ); each half is OPEN_W wide; boards OPEN_T thick; page blocks OPEN_P thick. */
-    public static final float OPEN_CX = 8f, OPEN_CZ = 11f, OPEN_W = 7.6f, OPEN_T = 0.8f, OPEN_P = 1.6f;
+    public static final float OPEN_CX = 8f, OPEN_CZ = 11f, OPEN_W = 7.6f, OPEN_T = 0.45f, OPEN_P = 0.9f;   // 0.36: thin boards and page blocks
     /** Where loose pages turn (page flip): on the spine axis, at the page surface. */
     public static final float OPEN_HINGE_Z = OPEN_CZ - OPEN_T - OPEN_P - 0.6f;
 
@@ -173,6 +173,8 @@ public final class GrimoireBookPlan {
             float pa = side > 0 ? cx + u0 : cx - w + 0.3f, pb = side > 0 ? cx + w - 0.3f : cx - u0;
             box(half, pa, PY0, cz - t - p, pb, PY1, cz - t, "pages", -1, held, true,
                     new Face[]{Face.UP, Face.DOWN, Face.NORTH, side > 0 ? Face.EAST : Face.WEST});
+            // 0.36: glowing spell runes on the open pages while the book is held (cast state)
+            if (held) quad(half, Face.NORTH, pa + 0.5f, PY0 + 0.6f, pb - 0.5f, PY1 - 0.6f, cz - t - p - 0.03f, "page_runes", BookLook.TINT_TRIM, true);
             if (!key.tattered()) {
                 float x0 = xa + BAR_INSET, x1 = xb - BAR_INSET, y0 = BY0 + BAR_INSET, y1 = BY1 - BAR_INSET, z0 = cz, z1 = cz + BAR_H;
                 box(half, x0, y0, z0, x0 + BAR, y1, z1, "trim_metal", trim, false, true, BAR_FACES_FRONT);
@@ -229,7 +231,7 @@ public final class GrimoireBookPlan {
 
     /** Every texture the plan can use (for the model loader to resolve). */
     public static List<String> textures() {
-        List<String> t = new ArrayList<>(List.of("cover_leather", "cover_tattered", "pages", "spine", "trim_metal", "medallion"));
+        List<String> t = new ArrayList<>(List.of("cover_leather", "cover_tattered", "pages", "spine", "trim_metal", "medallion", "page_runes"));
         for (BookMotif m : BookMotif.values()) {
             t.add(m.texture());
             if (m.base() != null) t.add(m.base());
