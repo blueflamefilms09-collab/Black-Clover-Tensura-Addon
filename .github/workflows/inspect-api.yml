@@ -36,3 +36,14 @@ jobs:
               done
             done
           done < .github/inspect-request.txt
+      - name: Dump NeoForge model-loader JSON keys
+        run: |
+          NJ=$(find ~/.gradle/caches -name '*.jar' 2>/dev/null | xargs -I{} sh -c 'unzip -Z1 "{}" 2>/dev/null | grep -q "net/neoforged/neoforge/client/model/ItemLayerModel" && echo "{}"' | head -3)
+          echo "== neoforge jars =="; echo "$NJ"
+          for j in $NJ; do
+            for c in $(unzip -Z1 "$j" | grep -E 'net/neoforged/neoforge/client/model/(ItemLayerModel|ExtraFaceData|QuadTransformers).*\.class$'); do
+              cls=${c%.class}; cls=${cls//\//.}
+              echo "----- $cls"
+              javap -c -p -cp "$j" "$cls" 2>/dev/null | grep -E 'ldc|String ' | head -60
+            done
+          done

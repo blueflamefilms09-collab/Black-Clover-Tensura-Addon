@@ -2,3 +2,4 @@ manascore/race/api/
 tensura/race/[A-Za-z]*Race[s]?\.class
 tensura/registry/race/
 tensura/race/TensuraRaces
+# 0.32: NeoForge item_layers emissive keys
