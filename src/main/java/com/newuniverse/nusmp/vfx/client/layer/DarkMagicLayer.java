@@ -97,11 +97,11 @@ public class DarkMagicLayer extends AbstractVfxLayer {
         Vector3f c = ctx.rel(inst.from(ctx)).add(0f, 0.35f * P, 0f);
         Vector3f toCam = new Vector3f(c).negate();
         if (toCam.lengthSquared() < 1e-6f) toCam.set(0, 0, 1); else toCam.normalize();
-        Vector3f n = new Vector3f(toCam).mul(0.55f).add(0f, 0.83f, 0f).normalize();
+        Vector3f n = new Vector3f(toCam).mul(0.68f).add(0f, 0.73f, 0f).normalize();
         VfxPose pose = VfxPose.facing(c, n);
 
         // the shadow it casts on the air, the stars behind it and the corona round the sphere (rays and a violet halo, nothing over the black)
-        float rc = 0.34f * P * sc;
+        float rc = 0.38f * P * sc;
         buf.billboard(ctx, VIGNETTE, VfxBlend.ALPHA, c, 3.0f * P * (0.4f + 0.6f * sc), 0f, col(WHITE, 0.5f * vis * saturate(open)));
         buf.billboard(ctx, STARS, VfxBlend.ADD, c, 3.4f * P * (0.5f + 0.5f * sc), age * 0.004f, col(RIM, 0.3f * vis * sc));
         buf.billboard(ctx, CORONA, VfxBlend.ADD, c, 5.0f * rc * 1.15f, age * 0.01f, col(violet, 0.85f * vis * pulse));
@@ -110,7 +110,7 @@ public class DarkMagicLayer extends AbstractVfxLayer {
         // lensing ripples spreading from it
         for (int k = 0; k < 2; k++) {
             float p = frac(age / 26f + k * 0.5f);
-            buf.billboard(ctx, RIPPLE, VfxBlend.ADD, c, P * (1.2f + 2.4f * VfxAnim.easeOutCubic(p)) * sc, k * 1.9f + age * 0.01f, col(k == 0 ? violet : magenta, (1f - p) * saturate(p * 6f) * 0.32f * vis));
+            buf.billboard(ctx, RIPPLE, VfxBlend.ADD, c, P * (1.2f + 2.4f * VfxAnim.easeOutCubic(p)) * sc, k * 1.9f + age * 0.01f, col(k == 0 ? violet : magenta, (1f - p) * saturate(p * 6f) * 0.22f * vis));
         }
 
         // anticipation: a bright ring collapses into the point, then the sphere snaps open with a flash
@@ -123,21 +123,21 @@ public class DarkMagicLayer extends AbstractVfxLayer {
         if (burst > 0f && burst < 1f) buf.billboard(ctx, FLARE, VfxBlend.ADD, c, P * 3.6f * (0.4f + 0.6f * burst), 0f, col(RIM, (1f - burst) * (1f - burst)));
 
         // the accretion disk (its hole is the sphere): two counter-rotating skins, and the lensed copy of its far side wrapped round the sphere
-        buf.plane(DISK, VfxBlend.ADD, pose.spin(age * 0.07f), 1.19f * P * sc, col(WHITE, 0.85f * vis));
-        buf.plane(DISK, VfxBlend.ADD, pose.lift(0.02f * P).spin(1.1f - age * 0.045f), 1.0f * P * sc, col(magenta, 0.5f * vis * (1.35f - pulse)));
-        buf.billboard(ctx, DISK, VfxBlend.ADD, c, 2.4f * P * sc, -age * 0.05f, col(violet, 0.3f * vis));
+        buf.plane(DISK, VfxBlend.ADD, pose.spin(age * 0.07f), rc / 0.285f, col(WHITE, 0.85f * vis));
+        buf.plane(DISK, VfxBlend.ADD, pose.lift(0.02f * P).spin(1.1f - age * 0.045f), rc / 0.285f * 0.84f, col(violet, 0.55f * vis * (1.35f - pulse)));
+        buf.billboard(ctx, DISK, VfxBlend.ADD, c, rc / 0.285f * 2f, -age * 0.05f, col(violet, 0.26f * vis));
 
         // the sphere itself, and the photon ring hugging it
-        buf.billboard(ctx, ORB, VfxBlend.ALPHA, c, 0.872f * P * sc * (1f + 0.02f * Mth.sin(age * 0.7f)), 0f, col(WHITE, vis));
-        buf.billboard(ctx, PHOTON, VfxBlend.ADD, c, 1.1f * P * sc, age * 0.03f, col(RIM, 0.95f * vis * pulse));
-        buf.billboard(ctx, PHOTON, VfxBlend.ADD, c, 1.5f * P * sc, -age * 0.02f + 2f, col(violet, 0.4f * vis));
+        buf.billboard(ctx, ORB, VfxBlend.ALPHA, c, rc * 2f / 0.78f * (1f + 0.02f * Mth.sin(age * 0.7f)), 0f, col(WHITE, vis));
+        buf.billboard(ctx, PHOTON, VfxBlend.ADD, c, rc * 2f / 0.62f * 1.05f, age * 0.03f, col(RIM, 0.95f * vis * pulse));
+        buf.billboard(ctx, PHOTON, VfxBlend.ADD, c, rc * 2f / 0.62f * 1.42f, -age * 0.02f + 2f, col(violet, 0.4f * vis));
 
         // debris spiralling in: chunks, with a streak behind each of the nearer ones
         for (int k = 0; k < 12; k++) {
             float spd = 0.8f + 0.5f * hash(inst.seed, k);
             float ph = frac(age / (30f / spd) + hash(inst.seed, 20 + k)), a0 = hash(inst.seed, 40 + k) * Mth.TWO_PI, lift = (hash(inst.seed, 60 + k) - 0.5f) * 0.5f * P;
             Vector3f pos = spiral(c, pose, P, ph, a0, lift);
-            float size = (0.10f + 0.09f * hash(inst.seed, 80 + k)) * P * (1f - 0.6f * ph);
+            float size = (0.16f + 0.14f * hash(inst.seed, 80 + k)) * P * (1f - 0.6f * ph);
             float life = saturate(ph * 8f) * saturate((1f - ph) * 5f) * vis;
             buf.billboard(ctx, k % 2 == 0 ? SHARD_A : SHARD_B, VfxBlend.ALPHA, pos, size * 2.2f, ph * 9f + k, col(WHITE, life));
             if (k % 2 == 0) {
@@ -180,8 +180,8 @@ public class DarkMagicLayer extends AbstractVfxLayer {
         float gr = VfxAnim.easeOutCubic(saturate(age / 20f)) * saturate((dur - age) / 14f);
         VfxPose ground = VfxPose.ground(new Vector3f(g).add(0f, 0.06f, 0f));
         buf.plane(VIGNETTE, VfxBlend.ALPHA, ground, ringR * 1.25f * gr, col(WHITE, 0.7f * gr));
-        buf.plane(VfxTextures.GLOW, VfxBlend.ADD, ground.lift(0.01f), ringR * 1.1f * gr, col(violet, 0.22f * gr * pulse));
-        buf.plane(MOONRING, VfxBlend.ADD, ground.lift(0.02f).spin(age * 0.012f), ringR * gr, col(violet, 0.85f * gr));
+        buf.plane(VfxTextures.GLOW, VfxBlend.ADD, ground.lift(0.01f), ringR * 1.1f * gr, col(violet, 0.38f * gr * pulse));
+        buf.plane(MOONRING, VfxBlend.ADD, ground.lift(0.02f).spin(age * 0.012f), ringR * gr, col(violet, 1.0f * gr));
         buf.plane(MOONRING, VfxBlend.ADD, ground.lift(0.03f).spin(-age * 0.02f + 0.5f), ringR * 0.62f * gr, col(magenta, 0.55f * gr));
 
         // darkness all round it, the corona (two skins turning against each other) and the halo
@@ -212,7 +212,7 @@ public class DarkMagicLayer extends AbstractVfxLayer {
             float y = Mth.lerp((float) Math.pow(ph, 1.15), m.y - 0.5f * S, g.y + 0.3f);
             Vector3f pos = new Vector3f(g.x + Mth.cos(ang) * rad, y, g.z + Mth.sin(ang) * rad);
             float life = Mth.sin(ph * Mth.PI) * vis;
-            buf.billboard(ctx, MOTE, VfxBlend.ALPHA, pos, (0.5f + 0.7f * hash(inst.seed, 80 + k)) * Math.min(R, 3f) * (0.6f + 0.6f * ph), ph * 5f + k, col(WHITE, life * 0.9f));
+            buf.billboard(ctx, MOTE, VfxBlend.ALPHA, pos, (0.35f + 0.5f * hash(inst.seed, 80 + k)) * Math.min(R, 3f) * (0.6f + 0.6f * ph), ph * 5f + k, col(WHITE, life * 0.9f));
             if (k < 6) buf.billboard(ctx, GLINT, VfxBlend.ADD, pos, 0.5f * Math.min(R, 3f) * life, k + ph * 3f, col(RIM, life));
         }
     }
@@ -232,15 +232,15 @@ public class DarkMagicLayer extends AbstractVfxLayer {
         float fade = saturate((dur - age) / (dur * 0.22f));
         float pulse = 0.8f + 0.2f * Mth.sin(age * 1.1f);
         Vector3f head = new Vector3f(a).add(new Vector3f(dir).mul(len * thr));
-        float sLen = Math.min(len * thr, 5f + 2.2f * P) * (1f - retract);
+        float sLen = Math.min(len * thr, 7f + 3f * P) * (1f - retract);
         Vector3f tail = new Vector3f(head).sub(new Vector3f(dir).mul(sLen));
-        float W = 0.5f * P;
+        float W = 0.72f * P;
         Vector3f p1 = DarkMagicFx.perp(dir, ctx), p2 = new Vector3f(dir).cross(p1).normalize();
 
         // the black cut left in the air
         float trail = saturate((dur - age) / (dur * 0.7f)) * saturate(thr * 4f);
         if (trail > 0.01f && len * thr > 0.5f) {
-            DarkMagicFx.line(buf, ctx, AFTERIMAGE, VfxBlend.ALPHA, a, head, 3, 0.55f * P * (0.4f + 0.6f * trail), col(WHITE, 0.85f * trail));
+            DarkMagicFx.line(buf, ctx, AFTERIMAGE, VfxBlend.ALPHA, a, head, 3, 0.34f * P * (0.4f + 0.6f * trail), col(WHITE, 0.8f * trail));
             DarkMagicFx.line(buf, ctx, CUT_GLOW, VfxBlend.ADD, a, head, 3, 1.5f * P, col(violet, 0.28f * trail));
         }
 
@@ -263,8 +263,8 @@ public class DarkMagicLayer extends AbstractVfxLayer {
                 pts[i] = new Vector3f(tail).lerp(head, s).add(new Vector3f(p1).mul(0.05f * P * Mth.sin(age * 1.3f + i * 2.4f) * (1f - s)));
                 w[i] = W; wg[i] = W * 2.3f * (0.9f + 0.15f * Mth.sin(age * 0.9f + i)); wh[i] = W * 1.15f;
                 cb[i] = col(WHITE, fade * saturate(thr * 4f));
-                cg[i] = col(violet, 0.75f * fade * pulse * saturate(thr * 4f));
-                ch[i] = col(magenta, 0.45f * fade * (1.6f - pulse) * saturate(thr * 4f));
+                cg[i] = col(violet, 0.5f * fade * pulse * saturate(thr * 4f));
+                ch[i] = col(magenta, 0.28f * fade * (1.6f - pulse) * saturate(thr * 4f));
             }
             DarkMagicFx.ribbon(buf, ctx, SPEAR_GLOW, VfxBlend.ADD, pts, wg, cg, 0f, 1f);
             DarkMagicFx.ribbon(buf, ctx, SPEAR, VfxBlend.ALPHA, pts, w, cb, 0f, 1f);
@@ -272,7 +272,7 @@ public class DarkMagicLayer extends AbstractVfxLayer {
 
             // two streaks of darkness twisting round it
             for (int h = 0; h < 2; h++) {
-                int m = 6;
+                int m = 8;
                 Vector3f[] hp = new Vector3f[m];
                 float[] hw = new float[m];
                 int[] hc = new int[m];
@@ -297,7 +297,7 @@ public class DarkMagicLayer extends AbstractVfxLayer {
         for (int k = 0; k < 4; k++) {
             float ph = frac(age / 5f + k * 0.25f), d = ph * 3.2f * P;
             Vector3f ctr = new Vector3f(head).sub(new Vector3f(dir).mul(d));
-            buf.plane(SHOCK, VfxBlend.ADD, VfxPose.facing(ctr, dir).spin(k * 1.7f + age * 0.2f), 0.5f * P + 0.55f * d, col(k % 2 == 0 ? violet : RIM, Mth.sin(ph * Mth.PI) * 0.75f * cone));
+            buf.plane(SHOCK, VfxBlend.ADD, VfxPose.facing(ctr, dir).spin(k * 1.7f + age * 0.2f), 0.5f * P + 0.55f * d, col(k % 2 == 0 ? violet : magenta, Mth.sin(ph * Mth.PI) * 0.55f * cone));
         }
 
         // the burst where it lands: rings, a flash, rays, shards
@@ -334,7 +334,7 @@ public class DarkMagicLayer extends AbstractVfxLayer {
         float prog = VfxAnim.easeOutCubic(saturate((age - 1f) / 2.5f));
         float flash = 1f - saturate((age - 1f) / (dur * 0.30f));
         float light = 1f - saturate((age - 3f) / (dur * 0.42f));
-        float dark = 1f - saturate((age - 3f) / (dur * 0.85f));
+        float dark = 1f - saturate((age - 5f) / (dur * 0.85f));
         float split = VfxAnim.easeOutCubic(saturate((age - 2f) / 6f));
         Vector3f bow = new Vector3f(ctx.camUp).mul(Math.min(0.9f, len * 0.07f));
         Vector3f p1 = DarkMagicFx.perp(dir, ctx);

@@ -93,7 +93,8 @@ def disk():
     heat = np.exp(-(r - 0.29) / 0.10)
     a = inner * outer * (0.30 + 0.85 * arms) * bands * (0.8 + 0.4 * heat)
     a = np.clip(a * (0.65 + 0.35 * (0.5 + 0.5 * np.cos(th - 0.9))), 0, 1)                   # one side brighter (relativistic beaming)
-    col = mix(MAGENTA, VIOLET, np.clip(ss(r, 0.34, 0.8), 0, 1))
+    col = mix(mix(VIOLET, MAGENTA, 0.30), DEEP * 1.5, np.clip(ss(r, 0.40, 0.95), 0, 1))
+    col = mix(col, MAGENTA, np.clip((n2 - 0.55) * 1.6, 0, 0.5) * ss(r, 0.3, 0.6))
     col = mix(col, RIM, np.clip(heat * 1.15 - 0.25, 0, 1))
     cv = Canvas(s, s)
     cv.over(col, a)
@@ -157,8 +158,8 @@ def moon():
         crat += lip * lit * 0.55 + ss(d, cr, cr * 0.4) * 0.12
     shade = np.clip((-0.6 * x - 0.6 * y) * 0.5 + 0.5, 0, 1)
     surf = (0.05 + 0.10 * n + 0.05 * n2 + 0.22 * np.clip(crat, 0, 1)) * (0.35 + 0.9 * shade) * body
-    cv.add(VIOLET, surf * 0.55)
-    cv.add(DEEP, surf * 0.5)
+    cv.add(VIOLET, surf * 0.32)
+    cv.add(DEEP, surf * 0.3)
     crescent = np.exp(-((r - 0.94) / 0.016) ** 2) * np.clip(np.cos(th - 3.9), 0, 1) ** 1.3        # a bright thin crescent rim
     cv.add(RIM, np.clip(crescent * 1.3, 0, 1) * body)
     cv.add(MAGENTA, np.exp(-((r - 0.92) / 0.03) ** 2) * 0.35 * (0.5 + 0.5 * np.cos(th - 3.9)).clip(0, 1) * body)

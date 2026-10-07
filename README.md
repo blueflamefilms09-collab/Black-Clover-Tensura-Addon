@@ -60,7 +60,7 @@ Chanted magics: use **Chant** mode until the chant is complete, then switch to *
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.57.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.58.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -204,6 +204,13 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Anti-Magic kit**: new pages **Black Hurricane** (a whirling field that drags foes in and strips their magic) and **Black Form** (30 s of strength, speed, resistance and jump, with an anti-magic burst); mastering the Anti-Magic Lord now also grants the **Demon-Slasher** katana next to Demon-Dweller and Demon-Destroyer.
 - **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
 - **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
+
+## 0.58 - Every new magic has a real grimoire; Ice and Dark VFX, sounds, summons
+
+- New: all 29 new grimoires now hold about 12 themed pages each (Eye, Eyeball, Body and Legion may still be one page if their build did not finish; see the build notes), with page descriptions.
+- Replaced: Ice Magic's water-looking effects are real ice effects; Yami's Black Hole, Black Moon, Death Thrust and Iai Slash have their own dark effects.
+- New: sounds for the new effects (ice cracks, metal rings, gel squelches, beasts roar); summoned models and render layers for Beast, Key, Glass, Barrier, Mercury and the metal magics.
+- Not verified: nothing was run in game.
 
 ## 0.57 - Real grimoires for the new magics, bug fixes
 
