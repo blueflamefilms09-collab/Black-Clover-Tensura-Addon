@@ -1,6 +1,15 @@
-# 0.46 custom menu: which widget is the "?" category in Tensura's ability categories (Magic tab) screen
-list:manasmods/tensura/client/screen/.*/
-list:manasmods/tensura/.*client/.*[Ww]idget
-strings:manasmods/tensura/client/screen/AbilityCategoriesScreen
-strings:manasmods/tensura/client/screen/MainScreen\.class
-manasmods/tensura/client/screen/AbilityCategoriesScreen\.class
+# 0.48: Genesis Demon-Slayer + Word Soul counters: skill cooldown/toggle API, skill types, damage types, EP/attributes, effects, barriers
+io/github/manasmods/manascore/skill/api/ManasSkillInstance\.class
+io/github/manasmods/manascore/skill/api/Skills\.class
+io/github/manasmods/manascore/skill/api/ManasSkill\.class
+io/github/manasmods/tensura/ability/skill/Skill\.class
+io/github/manasmods/tensura/ability/skill/Skill\$SkillType\.class
+io/github/manasmods/tensura/damage/TensuraDamageTypes\.class
+io/github/manasmods/tensura/util/EnergyHelper\.class
+list:io/github/manasmods/tensura/.*[Aa]ttribute
+list:io/github/manasmods/tensura/registry/.*
+list:io/github/manasmods/tensura/ability/skill/ultimate/.*
+list:io/github/manasmods/tensura/.*[Bb]arrier.*
+strings:io/github/manasmods/tensura/registry/.*[Ee]ffect.*
+strings:io/github/manasmods/tensura/registry/.*[Aa]ttribute.*
+io/github/manasmods/tensura/storage/.*[Ee]xistence.*\.class
