@@ -1,7 +1,5 @@
-# 0.42 Mirror overhaul: Tensura clones (Body Double / Doppelganger), effects, existence points
-manasmods/tensura/entity/human/CloneEntity\.class
-list:manasmods/tensura/.*([Dd]oppel|[Bb]odyDouble|[Cc]lone)
-list:manasmods/tensura/registry/.*([Ee]ffect|[Ee]ntit)
-strings:manasmods/tensura/registry/effect/TensuraMobEffects\.class
-manasmods/tensura/(capability|storage|api)/.*[Ee]xistence.*\.class
-manasmods/tensura/util/EnergyHelper\.class
+# Cast animation guide: how Tensura poses the player body while casting (player animator? own pose code? GeckoLib?)
+list:manasmods/tensura/.*([Aa]nimat|ArmPose|[Pp]ose[A-Z]|[Cc]asting|[Cc]harg)
+list:(dev/kosmx|playeranim|zigythebird|software/bernie)
+list:manasmods/(tensura|manascore)/.*(client/(model|render)/.*[Pp]layer|mixin/.*(Player|HumanoidModel|ItemInHand))
+strings:manasmods/tensura/.*mixin/.*HumanoidModel
