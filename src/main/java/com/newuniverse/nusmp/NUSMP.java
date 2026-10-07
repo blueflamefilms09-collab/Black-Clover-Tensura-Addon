@@ -62,6 +62,7 @@ public class NUSMP {
             modEventBus.addListener(com.newuniverse.nusmp.client.PaintedConstructRenderer::layers);
             modEventBus.addListener(com.newuniverse.nusmp.client.ZagredRenderer::register);              // 0.47
             modEventBus.addListener(com.newuniverse.nusmp.client.ZagredRenderer::layers);
+            com.newuniverse.nusmp.client.DemonSlayerRenderer.init(modEventBus);                            // 0.48: the Genesis Demon-Slayer's 3D model and shaders
         }
         modContainer.registerConfig(ModConfig.Type.SERVER, NUConfig.SPEC);
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.multiverse.MultiverseConfig.SPEC, "nusmp-multiverse-server.toml");
