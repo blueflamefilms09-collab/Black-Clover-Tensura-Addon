@@ -44,6 +44,7 @@ public class NUSMP {
         modEventBus.addListener(com.newuniverse.nusmp.book.GrimoireSummon::registerPayloads);
         modEventBus.addListener(com.newuniverse.nusmp.blackclover.ModeArmor::registerPayloads);
         modEventBus.addListener(com.newuniverse.nusmp.multiverse.MultiverseSync::registerPayloads);
+        modEventBus.addListener(com.newuniverse.nusmp.entity.ZagredStatePayload::register);                 // 0.48: Zagred's state, word and reticle
         if (FMLEnvironment.dist == Dist.CLIENT) {
             com.newuniverse.nusmp.vfx.client.VfxClientEvents.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireClient.init(modEventBus);

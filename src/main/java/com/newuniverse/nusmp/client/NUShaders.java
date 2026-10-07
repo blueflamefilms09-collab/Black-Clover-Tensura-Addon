@@ -28,6 +28,7 @@ public final class NUShaders {
 
     public static void register(RegisterShadersEvent e) {
         load(e, "rendertype_demon_void", DefaultVertexFormat.POSITION, s -> demonVoid = s);
+        load(e, "rendertype_zagred_aura", DefaultVertexFormat.NEW_ENTITY, s -> zagredAura = s);
     }
 
     /** Registers one shader; if it can't be built it is logged and set to null (the vanilla fallback is used). */

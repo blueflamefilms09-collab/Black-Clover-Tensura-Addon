@@ -25,6 +25,20 @@ public final class NURenderTypes extends RenderType {
                     .setCullState(NO_CULL)
                     .createCompositeState(false));
 
+    /** Zagred's aura: the model again, additive, both faces, the fresnel rim shader over its texture's silhouette. */
+    private static final java.util.function.Function<ResourceLocation, RenderType> ZAGRED_AURA = net.minecraft.Util.memoize(tex ->
+            create("nusmp_zagred_aura", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 1536, false, true,
+                    CompositeState.builder()
+                            .setShaderState(new ShaderStateShard(NUShaders::zagredAura))
+                            .setTextureState(new TextureStateShard(tex, false, false))
+                            .setTransparencyState(ADDITIVE_TRANSPARENCY)
+                            .setCullState(NO_CULL)
+                            .setWriteMaskState(COLOR_WRITE)
+                            .createCompositeState(false)));
+
+    /** Zagred's fresnel aura, or vanilla's additive eyes pass if the shader did not load. */
+    public static RenderType zagredAura(ResourceLocation tex) { return NUShaders.zagredAura() != null ? ZAGRED_AURA.apply(tex) : RenderType.eyes(tex); }
+
     /** nusmp's crimson void, or vanilla's end portal if the shader did not load. Vertex format POSITION either way. */
     public static RenderType demonVoid() { return NUShaders.demonVoid() != null ? DEMON_VOID : RenderType.endPortal(); }
 }

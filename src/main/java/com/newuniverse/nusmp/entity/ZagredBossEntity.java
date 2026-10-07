@@ -47,6 +47,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -68,6 +69,8 @@ import java.util.UUID;
  * A purple boss bar shows the phase; the arena's matter is put back when it dies or is removed.
  */
 public class ZagredBossEntity extends Monster {
+    /** 0.48: what it is doing (synced with ZagredStatePayload for the model's pose and the target reticle). */
+    public static final int STATE_IDLE = 0, STATE_STALK = 1, STATE_COMBAT = 2, STATE_CASTING = 3;
     private static final EntityDataAccessor<Integer> PHASE = SynchedEntityData.defineId(ZagredBossEntity.class, EntityDataSerializers.INT);
     public static final int VIOLET = KotodamaWords.VIOLET;
 
@@ -79,6 +82,21 @@ public class ZagredBossEntity extends Monster {
     private String adapted = "";
     private long exposedUntil, nextHalt = 100, nextShatter, nextLance = 160, nextFlood, nextSwords = 200, nextAdapt = 200;
     private boolean healed;
+    // 0.48 utility AI: a word is chosen by scoring the situation, telegraphed (reticle + casting pose) for CAST_TICKS, then spoken
+    static final int CAST_TICKS = 15;
+    private final Map<Word, Long> wordReady = new java.util.EnumMap<>(Word.class);
+    private int state = STATE_IDLE, stateWord = -1, stateTarget = -1;
+    private Word pending;
+    private long castAt, nextThink;
+    private float recentDamage;
+    private int clientState = STATE_IDLE, clientWord = -1, clientTarget = -1;
+
+    /** Client copies, set by ZagredStatePayload. */
+    public int clientState() { return clientState; }
+    public int clientWord() { return clientWord; }
+    public int clientTarget() { return clientTarget; }
+
+    public void applyState(int state, int word, int target) { clientState = state; clientWord = word; clientTarget = target; }
 
     public ZagredBossEntity(EntityType<? extends Monster> type, Level level) {
         super(type, level);
@@ -120,7 +138,11 @@ public class ZagredBossEntity extends Monster {
 
     // ---------------------------------------------------------------- boss bar
     @Override
-    public void startSeenByPlayer(ServerPlayer p) { super.startSeenByPlayer(p); bar.addPlayer(p); }
+    public void startSeenByPlayer(ServerPlayer p) {
+        super.startSeenByPlayer(p);
+        bar.addPlayer(p);
+        net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(p, new ZagredStatePayload(getId(), state, stateWord, stateTarget, phase()));
+    }
 
     @Override
     public void stopSeenByPlayer(ServerPlayer p) { super.stopSeenByPlayer(p); bar.removePlayer(p); }
@@ -139,17 +161,36 @@ public class ZagredBossEntity extends Monster {
         bar.setName(Component.literal("Zagred  ·  Phase " + ph + (t < exposedUntil ? "  ·  EXPOSED" : !adapted.isEmpty() && ph >= 2 ? "  ·  adapted: " + adapted : ""))
                 .withStyle(ChatFormatting.DARK_PURPLE));
         if (t % 60 == 0) VfxSpawn.sendFollowing(sl, VfxShape.KOTO_AURA, this, position(), VIOLET, 70, 1.6f);
+        recentDamage *= 0.97f;
         LivingEntity target = getTarget();
-        if (target == null || !target.isAlive()) return;
-
-        // "Shatter" whenever something is flying at it
-        if (t >= nextShatter && !sl.getEntitiesOfClass(Projectile.class, getBoundingBox().inflate(10), pr -> pr.getOwner() != this).isEmpty()) {
-            KotodamaWords.speak(this, Word.SHATTER, Source.BOSS);
-            nextShatter = t + (ph >= 3 ? 80 : 120);
+        if (target == null || !target.isAlive()) {
+            setState(sl, fighters.isEmpty() ? STATE_IDLE : STATE_STALK, null, null);
+            pending = null; castAt = 0;
+            return;
         }
-        if (t >= nextHalt && distanceToSqr(target) < 20 * 20) {
-            KotodamaWords.speak(this, Word.HALT, Source.BOSS);
-            nextHalt = t + (ph == 4 ? 200 : 280);
+        if (pending != null) {                                                   // a telegraphed word lands
+            if (t >= castAt) {
+                KotodamaWords.speak(this, pending, Source.BOSS);
+                if (pending == Word.HEAL) { healed = true; say(sl, "\"Heal.\""); }
+                pending = null;
+                setState(sl, STATE_COMBAT, null, target);
+            }
+        } else if (t >= nextThink) {
+            nextThink = t + 10;
+            Word w = choose(sl, target, ph, frac);
+            if (w != null) {
+                pending = w;
+                castAt = t + (w == Word.SHATTER ? 3 : CAST_TICKS);              // Shatter answers at once
+                wordReady.put(w, t + cooldown(w, ph));
+                setState(sl, STATE_CASTING, w, target);
+                getNavigation().stop();
+            } else setState(sl, STATE_COMBAT, null, target);
+        }
+        // anti-magic up close: back off and fight from range
+        if (antiMagicNear(target) && distanceToSqr(target) < 36 && t % 20 == 0) {
+            Vec3 away = position().subtract(target.position()).normalize().scale(8).add(position());
+            getNavigation().moveTo(away.x, away.y, away.z, 1.3);
+            nextLance = Math.min(nextLance, t + 20);
         }
         if (ph >= 2 && t >= nextAdapt) { adapt(sl); nextAdapt = t + 200; }
         if (ph >= 2 && t >= nextLance) {
@@ -161,15 +202,95 @@ public class ZagredBossEntity extends Monster {
             UnderworldMatter.start(sl, this, arena, 14 + 2 * (ph - 3), 500);
             nextFlood = t + 600;
         }
-        if (ph >= 3 && t >= nextSwords) {
-            KotodamaWords.speak(this, Word.SWORDS, Source.BOSS);
-            nextSwords = t + (ph == 4 ? 160 : 240);
+    }
+
+    /** Sends the state to the clients when it changes. */
+    void setState(ServerLevel sl, int s, Word w, LivingEntity target) {
+        int word = w == null ? -1 : w.ordinal(), tid = target == null ? -1 : target.getId();
+        if (s == state && word == stateWord && tid == stateTarget) return;
+        state = s; stateWord = word; stateTarget = tid;
+        net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntity(this, new ZagredStatePayload(getId(), s, word, tid, phase()));
+    }
+
+    /** Ticks before a word can be chosen again. */
+    static int cooldown(Word w, int ph) {
+        int base = switch (w) {
+            case SHATTER -> 100; case HALT -> 260; case SWORDS -> 220; case FALL -> 300; case REVEAL -> 400; case SEAL -> 400;
+            case REJECT -> 400; case FEAR -> 500; case DRAIN -> 500; case SLEEP -> 600; case BANISH -> 600; case REVERSE -> 600;
+            case PETRIFY -> 800; default -> 100000;
+        };
+        return ph == 4 ? base * 3 / 4 : base;
+    }
+
+    boolean ready(Word w) { return tickCount >= wordReady.getOrDefault(w, 0L); }
+
+    /**
+     * Target analysis: every word is scored for the situation (who is flying, hidden, buffed, summoning, casting Ultimates,
+     * clustered, firing at it, hurting it fast) and the best one above the bar is spoken. Phases unlock more words.
+     */
+    Word choose(ServerLevel sl, LivingEntity target, int ph, float frac) {
+        List<LivingEntity> foes = KotodamaWords.foes(this, position(), 24);
+        if (foes.isEmpty()) return null;
+        Map<Word, Float> score = new java.util.EnumMap<>(Word.class);
+        int close = 0, flying = 0, hidden = 0, buffs = 0, summons = 0, casters = 0;
+        for (LivingEntity f : foes) {
+            if (f.distanceToSqr(this) < 12 * 12) close++;
+            if (!f.onGround() && !f.isInWater() && (f instanceof Player pl && (pl.getAbilities().flying || pl.isFallFlying()) || f.getY() - getY() > 4)) flying++;
+            if (f.isInvisible()) hidden++;
+            for (var e : f.getActiveEffects()) if (e.getEffect().value().isBeneficial()) buffs++;
+            try { if (io.github.manasmods.tensura.storage.ep.ExistenceStorage.isSummon(f)) summons++; } catch (Throwable ignored) {}
+            if (f instanceof Player && com.newuniverse.nusmp.antimagic.Nullification.maxEP(f) > 100_000) casters++;
         }
-        if (ph == 4 && !healed && frac < 0.1f) {
-            healed = true;
-            KotodamaWords.speak(this, Word.HEAL, Source.BOSS);
-            say(sl, "\"Heal.\"");
+        boolean shots = !sl.getEntitiesOfClass(Projectile.class, getBoundingBox().inflate(10), pr -> pr.getOwner() != this).isEmpty();
+        if (shots) score.put(Word.SHATTER, 9f);
+        if (ph == 4 && !healed && frac < 0.1f) score.put(Word.HEAL, 10f);
+        if (hidden > 0) score.put(Word.REVEAL, 6f + hidden);
+        if (flying > 0) score.put(Word.FALL, 5f + flying);
+        if (close >= 2) score.put(Word.HALT, 3f + close);
+        else if (distanceToSqr(target) < 36) score.put(Word.HALT, 2.6f);
+        if (casters > 0) score.put(Word.SEAL, 4f + casters);
+        if (buffs >= 2) score.put(Word.REJECT, 2f + Math.min(4, buffs * 0.5f));
+        if (summons > 0) score.put(Word.BANISH, 5f + summons);
+        if (recentDamage > getMaxHealth() * 0.12f) score.put(Word.REVERSE, 5.5f);
+        if (ph >= 2) {
+            if (close >= 2) score.put(Word.FEAR, 3f + close * 0.5f);
+            if (frac < 0.5f) score.put(Word.DRAIN, 3.2f);
+            if (close >= 3) score.put(Word.SLEEP, 4.5f);
         }
+        if (ph >= 3) {
+            score.put(Word.SWORDS, 3f);
+            if (distanceToSqr(target) < 25) score.put(Word.PETRIFY, 3.4f);
+        }
+        Word best = null;
+        float top = 2.5f;
+        for (var e : score.entrySet()) {
+            if (!ready(e.getKey())) continue;
+            float s = e.getValue() + getRandom().nextFloat() * 0.6f;
+            if (s > top) { top = s; best = e.getKey(); }
+        }
+        return best;
+    }
+
+    /** Is 't' fighting with anti-magic (a demon sword in hand, the Lord, a summoned Anti-Magic grimoire)? */
+    boolean antiMagicNear(LivingEntity t) {
+        return t instanceof Player p && (BuiltInRegistries.ITEM.getKey(p.getMainHandItem().getItem()).getPath().startsWith("demon_")
+                || AntiMagic.lord(p).isPresent());
+    }
+
+    /** Client: dark magenta and black embers shed from the wings and tail. */
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        if (!level().isClientSide || tickCount % 2 != 0) return;
+        var r = getRandom();
+        float yawRad = yBodyRot * net.minecraft.util.Mth.DEG_TO_RAD;
+        double bx = getX() + Math.sin(yawRad) * 0.6, bz = getZ() - Math.cos(yawRad) * 0.6;
+        level().addParticle(new net.minecraft.core.particles.DustParticleOptions(new org.joml.Vector3f(0.55f, 0.04f, 0.42f), 1.6f),
+                bx + (r.nextDouble() - 0.5) * 3.2, getY() + 1.2 + r.nextDouble() * 1.6, bz + (r.nextDouble() - 0.5) * 3.2, 0, 0.02, 0);
+        if (r.nextInt(3) == 0) level().addParticle(net.minecraft.core.particles.ParticleTypes.LARGE_SMOKE,
+                bx + (r.nextDouble() - 0.5) * 2, getY() + 0.6 + r.nextDouble() * 2, bz + (r.nextDouble() - 0.5) * 2, 0, 0.01, 0);
+        if (clientState == STATE_CASTING && r.nextInt(2) == 0) level().addParticle(net.minecraft.core.particles.ParticleTypes.WITCH,
+                getX() + (r.nextDouble() - 0.5), getY() + 2.4, getZ() + (r.nextDouble() - 0.5), 0, 0.05, 0);
     }
 
     void enterPhase(ServerLevel sl, int ph) {
@@ -250,6 +371,7 @@ public class ZagredBossEntity extends Monster {
     public boolean hurt(DamageSource source, float amount) {
         if (level().isClientSide || source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return super.hurt(source, amount);
         if (source.getEntity() instanceof ServerPlayer p) fighters.add(p.getUUID());
+        recentDamage += amount;
         String el = element(source);
         long t = tickCount;
         int ph = phase();
