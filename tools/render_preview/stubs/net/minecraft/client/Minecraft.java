@@ -4,6 +4,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.server.packs.resources.ResourceManager;
 
 /**
  * Preview stub of Minecraft: the singleton the painters reach through Minecraft.getInstance(): options (camera perspective), player
@@ -32,6 +33,7 @@ public class Minecraft {
     public DeltaTracker getTimer() { return timer; }
     public EntityRenderDispatcher getEntityRenderDispatcher() { Camera.previewUses++; return entityRenderDispatcher; }
     public boolean isPaused() { return false; }
+    public ResourceManager getResourceManager() { return location -> java.util.Optional.empty(); }
 
     /** Preview helper (not in the game): the partial tick the frame being recorded reports. */
     public void previewSetPartialTick(float p) { partialTick = p; }

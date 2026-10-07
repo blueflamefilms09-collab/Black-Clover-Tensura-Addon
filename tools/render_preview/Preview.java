@@ -1,10 +1,13 @@
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.logging.LogUtils;
 import com.mojang.math.Axis;
 import com.newuniverse.nusmp.aura.Aura;
+import com.newuniverse.nusmp.client.aura.AuraPainter;
 import com.newuniverse.nusmp.client.aura.PlayerAuraClient;
 import com.newuniverse.nusmp.client.aura.PlayerAuraLayer;
 import com.newuniverse.nusmp.client.prop.MagicPropRenderer;
+import com.newuniverse.nusmp.client.prop.PropPainter;
 import com.newuniverse.nusmp.client.prop.PropPainters;
 import com.newuniverse.nusmp.prop.MagicPropEntity;
 import com.newuniverse.nusmp.prop.PropKind;
@@ -522,6 +525,18 @@ public final class Preview {
         }
     }
 
+    /** Directories of the mod's assets and of this tool (for the geo file source), from the job. */
+    static String modAssets = "", previewDir = "";
+
+    /** Warnings / errors the game would only log (a geo file that is missing or broken) become issues. */
+    static void drainLog(List<Issue> issues) {
+        for (String[] m : LogUtils.MESSAGES) {
+            boolean missing = m[1].contains("not found");
+            issues.add(new Issue(missing ? "GEO_MISSING" : "GEO_BROKEN", "ERROR", "the game would only log this and draw nothing: " + m[1]));
+        }
+        LogUtils.MESSAGES.clear();
+    }
+
     static void setCamera(double[] eye, double[] target) {
         Minecraft.getInstance().gameRenderer.getMainCamera().previewSet(eye[0], eye[1], eye[2], target[0], target[1], target[2]);
     }
@@ -612,7 +627,7 @@ public final class Preview {
     }
 
     // ---------------------------------------------------------------- props
-    static void runProp(Map<String, Object> sc, Out out, String binDir) throws Exception {
+    static void runProp(Map<String, Object> sc, Out out, String binDir, PropPainter injected) throws Exception {
         String name = str(sc, "name", "scene");
         List<Issue> issues = new ArrayList<>();
         double[] ages = readAges(sc);
@@ -622,6 +637,7 @@ public final class Preview {
         String attr = str(sc, "attr", null);
         if (attr != null) { Issue i = register("com.newuniverse.nusmp.client.prop." + attr + "PropPainter"); if (i != null) issues.add(i); }
         for (Object ex : list(sc.get("examples"))) { Issue i = register("examples." + ex); if (i != null) issues.add(i); }
+        if (injected != null) PropPainters.register(kind, injected);
         boolean registered = PropPainters.previewHas(kind);
         if (!registered) issues.add(new Issue("NO_PAINTER", "NOTE", "no painter is registered for " + kind + " (the attribute's PropPainter.register() registered nothing, or it is still the stub): nothing is drawn"));
 
@@ -704,6 +720,7 @@ public final class Preview {
                 } catch (Throwable t) { issues.add(issueOf(t)); }
                 figure = so.add(rec.frame, 0, true);
             }
+            drainLog(issues);
             finishScene(out, name, "prop", so, issues, registered, camUsed[0], frames, figure, ages, null);
         }
     }
@@ -714,7 +731,7 @@ public final class Preview {
     }
 
     // ---------------------------------------------------------------- auras
-    static void runAura(Map<String, Object> sc, Out out, String binDir) throws Exception {
+    static void runAura(Map<String, Object> sc, Out out, String binDir, AuraPainter injected) throws Exception {
         String name = str(sc, "name", "scene");
         List<Issue> issues = new ArrayList<>();
         double[] ages = readAges(sc);
@@ -724,6 +741,7 @@ public final class Preview {
         String attr = str(sc, "attr", null);
         if (attr != null) { Issue i = register("com.newuniverse.nusmp.client.aura." + attr + "Aura"); if (i != null) issues.add(i); }
         for (Object ex : list(sc.get("examples"))) { Issue i = register("examples." + ex); if (i != null) issues.add(i); }
+        if (injected != null) PlayerAuraClient.register(aura, injected);
         boolean registered = PlayerAuraClient.previewHasPainter(aura);
         if (!registered) issues.add(new Issue("NO_PAINTER", "NOTE", "no painter is registered for Aura." + aura + " (the attribute's Aura.register() registered nothing, or it is still the stub): only the base player is drawn"));
 
@@ -780,6 +798,7 @@ public final class Preview {
                 return rec.frame;
             };
             recordAll(so, out.meta, ages, views, fn, frames, camUsed);
+            drainLog(issues);
             finishScene(out, name, "aura", so, issues, registered, camUsed[0], frames, -1, ages, null);
         }
     }
@@ -791,14 +810,23 @@ public final class Preview {
             System.exit(2);
         }
         Map<String, Object> job = map(Json.parse(new String(Files.readAllBytes(Paths.get(args[0])), StandardCharsets.UTF_8)));
+        modAssets = str(job, "modAssets", "");
+        previewDir = str(job, "previewDir", "");
         Out out = new Out();
         for (Object o : list(job.get("scenes"))) {
             Map<String, Object> sc = map(o);
             String name = str(sc, "name", "scene");
             try {
                 switch (str(sc, "kind", "")) {
-                    case "prop" -> runProp(sc, out, args[2]);
-                    case "aura" -> runAura(sc, out, args[2]);
+                    case "prop" -> runProp(sc, out, args[2], null);
+                    case "aura" -> runAura(sc, out, args[2], null);
+                    case "geo" -> {
+                        try {
+                            Class.forName("GeoPreview").getDeclaredMethod("run", Map.class, Out.class, String.class).invoke(null, sc, out, args[2]);
+                        } catch (InvocationTargetException e) {
+                            throw e.getCause() == null ? e : e.getCause();
+                        }
+                    }
                     default -> throw new IllegalArgumentException("unknown scene kind " + sc.get("kind"));
                 }
             } catch (Throwable t) {

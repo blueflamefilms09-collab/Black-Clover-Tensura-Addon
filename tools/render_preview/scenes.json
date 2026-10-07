@@ -1,0 +1,202 @@
+{
+ "_comment": "Self-test scenes of tools/render_preview/preview.py (see README.md). Real attributes put their own scenes in scenes.d/<key>.json. Keys starting with _ are comments.",
+ "selftest_prop_primitives": {
+  "kind": "prop",
+  "example": "PrimitivesProp",
+  "propKind": "BRONZE_1",
+  "ages": [
+   10,
+   50
+  ],
+  "tile": [
+   1100,
+   300
+  ],
+  "maxLife": 100,
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 14
+   },
+   {
+    "name": "top",
+    "yaw": 0,
+    "pitch": 62
+   }
+  ]
+ },
+ "selftest_prop_bronze_real": {
+  "kind": "prop",
+  "attr": "Bronze",
+  "ages": [
+   0,
+   40
+  ],
+  "tile": [
+   300,
+   300
+  ]
+ },
+ "selftest_aura_overlay": {
+  "kind": "aura",
+  "example": "AuraOverlay",
+  "aura": "BRONZE",
+  "total": 120,
+  "ages": [
+   4,
+   12,
+   40,
+   80,
+   112
+  ]
+ },
+ "selftest_aura_bronze_real": {
+  "kind": "aura",
+  "attr": "Bronze",
+  "ages": [
+   20
+  ],
+  "total": 120
+ },
+ "selftest_aura_run": {
+  "kind": "aura",
+  "example": "AuraOverlay",
+  "aura": "BRONZE",
+  "total": 120,
+  "ages": [
+   20,
+   24,
+   28,
+   32
+  ],
+  "limbSwingAmount": 1.0,
+  "limbSwing": [
+   0.0,
+   1.2,
+   2.4,
+   3.6
+  ],
+  "headYaw": 25,
+  "headPitch": 10
+ },
+ "selftest_aura_crouch_slim": {
+  "kind": "aura",
+  "example": "AuraOverlay",
+  "aura": "BRONZE",
+  "total": 120,
+  "skin": "alex",
+  "ages": [
+   30,
+   60
+  ],
+  "crouch": true,
+  "headYaw": -35,
+  "headPitch": 20,
+  "bodyYaw": 20
+ },
+ "selftest_prop_bad_geometry": {
+  "kind": "prop",
+  "example": "ErrorProps",
+  "propKind": "BRONZE_2",
+  "param": 0,
+  "ages": [
+   5
+  ],
+  "tile": [
+   360,
+   420
+  ],
+  "expect": [
+   "NAN",
+   "ZERO_AREA",
+   "MISSING_TEXTURE",
+   "NORMAL_LEN",
+   "NORMAL_MISMATCH",
+   "PARTIAL_QUAD"
+  ]
+ },
+ "selftest_prop_bad_pose": {
+  "kind": "prop",
+  "example": "ErrorProps",
+  "propKind": "BRONZE_2",
+  "param": 1,
+  "ages": [
+   5
+  ],
+  "expect": [
+   "UNBALANCED_POSE"
+  ]
+ },
+ "selftest_prop_bad_vertex": {
+  "kind": "prop",
+  "example": "ErrorProps",
+  "propKind": "BRONZE_2",
+  "param": 2,
+  "ages": [
+   5
+  ],
+  "expect": [
+   "MISSING_ELEMENTS"
+  ]
+ },
+ "selftest_prop_bad_stale": {
+  "kind": "prop",
+  "example": "ErrorProps",
+  "propKind": "BRONZE_2",
+  "param": 3,
+  "ages": [
+   5
+  ],
+  "expect": [
+   "STALE_CONSUMER"
+  ]
+ },
+ "selftest_prop_bad_budget": {
+  "kind": "prop",
+  "example": "ErrorProps",
+  "propKind": "BRONZE_2",
+  "param": 4,
+  "ages": [
+   5
+  ],
+  "expect": [
+   "BUDGET"
+  ]
+ },
+ "selftest_prop_bad_owner": {
+  "kind": "prop",
+  "example": "ErrorProps",
+  "propKind": "BRONZE_2",
+  "param": 5,
+  "ages": [
+   5
+  ],
+  "expect": [
+   "OWNER_NULL"
+  ]
+ },
+ "selftest_prop_bad_alpha": {
+  "kind": "prop",
+  "example": "ErrorProps",
+  "propKind": "BRONZE_2",
+  "param": 6,
+  "ages": [
+   5
+  ],
+  "expect": [
+   "ALPHA_ZERO"
+  ]
+ },
+ "selftest_aura_bad_pose": {
+  "kind": "aura",
+  "example": "BadAura",
+  "aura": "COPPER",
+  "ages": [
+   20
+  ],
+  "expect": [
+   "UNBALANCED_POSE"
+  ]
+ }
+}
