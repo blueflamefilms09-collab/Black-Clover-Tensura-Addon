@@ -196,7 +196,7 @@ def render_facets(w, h, facets, seed, mottle=0.07, ridge=0.85, rim=0.7, glow_fn=
         lum = lum + 0.55 * blur(np.asarray(fr).astype(np.float32) / 255, 0.7) * cov
     if glow_fn is not None:
         lum = lum + glow_fn(xs / S, ys / S) * cov
-    lum = np.clip(lum + ridge * e_int + rim * e_rim * (1 - 0.6 * e_int), 0, 1)
+    lum = np.clip(np.clip(lum, 0, 1) ** 1.7 + ridge * e_int + rim * e_rim * (1 - 0.6 * e_int), 0, 1)   # darker glass, the seams carry the light
     a = box_down(cov, w, h)
     l = box_down(lum * cov, w, h) / np.maximum(a, 1e-4)
     return l, a
@@ -692,7 +692,7 @@ def ring(size=256):
     rng = np.random.default_rng(2101)
     n = value_noise(S, S, 16, 2102, False)
     band = np.exp(-((r - 0.885) / 0.028) ** 2) + 0.5 * np.exp(-((r - 0.86) / 0.09) ** 2)
-    trail = smooth(0.58, 0.88, r) * 0.45 * (0.6 + 0.8 * n) * (r < 0.9)
+    trail = smooth(0.66, 0.88, r) * 0.26 * (0.6 + 0.8 * n) * (r < 0.9)
     teeth_n = 44
     ph = (th / (2 * math.pi) * teeth_n) % 1.0
     tooth = 1 - np.abs(ph - 0.5) * 2

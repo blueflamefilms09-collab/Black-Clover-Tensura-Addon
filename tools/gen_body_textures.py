@@ -19,8 +19,8 @@ layer (vfx/client/layer/BodyLayer.java, BodyFx.java) relies on:
   body_ring        256x256, sigil: tick band, ring of 12 muscle bellies, ECG line, spokes (outer circle at 0.965 of the half size)
   body_pulse       256x256, thin heartbeat ring at 0.86 of the half size with a fading inner trail
   body_wall        256x128, tiles in U; muscle ropes rising from a hot base (bottom) and dissolving into steam (top)
-  body_fibre       256x64, tiles in U; braided fibre ribbon, U runs along the length
-  body_slug        256x64, the compressed round, nose at U = 1, U runs along the length
+  body_fibre       64x256, tiles in V; braided fibre ribbon, V runs along the length
+  body_slug        64x256, the compressed round, nose at the top (V = 0), V runs along the length
   body_muzzle      256x256, muzzle star (8 long petals, 8 shorter, hot core)
   body_rifling     256x256, barrel seen from the front: knurled flesh ring, bevel, spiral rifling grooves
   body_strand      64x256, whipping tendon strand, base at the bottom, tip at the top
@@ -39,10 +39,13 @@ TAU = math.tau
 
 
 # ------------------------------------------------------------------------------------------------ helpers
-def save(lum, alpha, name):
-    """lum / alpha: float arrays in 0..1 (lum is defined everywhere, also under alpha 0, so edges never get dark fringes)."""
+def save(lum, alpha, name, turn=False):
+    """lum / alpha: float arrays in 0..1 (lum is defined everywhere, also under alpha 0, so edges never get dark fringes).
+    turn = rotate a quarter turn counter-clockwise (a texture drawn with its length along x, nose to the right, ends up with the nose at the top)."""
     lum = np.clip(lum, 0, 1)
     alpha = np.clip(alpha, 0, 1)
+    if turn:
+        lum, alpha = np.rot90(lum), np.rot90(alpha)
     img = np.dstack([lum * 255 + 0.5, lum * 255 + 0.5, lum * 255 + 0.5, alpha * 255 + 0.5]).astype(np.uint8)
     os.makedirs(OUT, exist_ok=True)
     Image.fromarray(img, "RGBA").save(os.path.join(OUT, name + ".png"), optimize=True)
@@ -423,7 +426,7 @@ def fibre(w=256, h=64):
         alpha = np.maximum(alpha, cov)
     halo = np.exp(-(((y - 0.5) / 0.46) ** 2)) * 0.20
     lum = np.where(alpha > 0.08, lum, 1.0)
-    save(lum, np.maximum(alpha, halo), "body_fibre")
+    save(lum, np.maximum(alpha, halo), "body_fibre", turn=True)
 
 
 def slug(w=256, h=64):
@@ -450,7 +453,7 @@ def slug(w=256, h=64):
     rim = np.exp(-((d - 0.90) / 0.09) ** 2) * m * 0.5
     a = 0.80 * m * streaks * body_fade + 0.55 * core + 0.85 * nose + 0.30 * bands * band_w * m + 0.50 * np.clip(arcs, 0, 1) * (x > 0.55) + rim
     lum = 0.55 + 0.45 * np.clip(core * 1.5 + nose * 2 + bands * band_w * 0.5 + rim, 0, 1)
-    save(lum, np.clip(a, 0, 1) * (1 - smoothstep(0.985, 1.0, x)), "body_slug")
+    save(lum, np.clip(a, 0, 1) * (1 - smoothstep(0.985, 1.0, x)), "body_slug", turn=True)
 
 
 # ------------------------------------------------------------------------------------------------ barrel and muzzle

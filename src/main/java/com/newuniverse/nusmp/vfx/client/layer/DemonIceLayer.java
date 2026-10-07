@@ -83,7 +83,7 @@ public class DemonIceLayer extends AbstractVfxLayer {
             float grow = VfxAnim.easeOutBack(chargeT);
             Vector3f at = new Vector3f(a).add(new Vector3f(dir).mul(0.25f * p));
             facing(buf, SIGIL, VfxBlend.ADD, at, dir, -age * 0.16f, 1.0f * p * grow, a(edge, 0.75f * sig));
-            facing(buf, FLAKE, VfxBlend.ADD, new Vector3f(at).add(new Vector3f(dir).mul(0.03f)), dir, age * 0.12f, 0.62f * p * grow, a(hot, 0.95f * sig));
+            buf.billboard(ctx, FLAKE, VfxBlend.ADD, at, 1.3f * p * grow, age * 0.12f, a(hot, 0.95f * sig));
             VfxBloom.glow(ctx, buf, at, 0.75f * p * (0.35f + 0.65f * chargeT), glow, 0.85f * sig);
             if (chargeT < 1f) {
                 for (int i = 0; i < 6; i++) {
@@ -100,7 +100,7 @@ public class DemonIceLayer extends AbstractVfxLayer {
         }
 
         // ---- the lance and everything it drags behind it
-        final float lanceLen = 2.6f * p * (1f - 0.5f * landT), lanceW = lanceLen * 0.25f * 1.15f;
+        final float lanceLen = 3.4f * p * (1f - 0.5f * landT), lanceW = lanceLen * 0.36f;
         final float grow = ease((age - charge * 0.45f) / (charge * 0.55f));
         final float lanceA = grow * (1f - landT * landT);
         if (lanceA > 0.02f) {
@@ -114,8 +114,8 @@ public class DemonIceLayer extends AbstractVfxLayer {
             // the frost trail: narrow and hot at the head, spreading dust behind it
             float trail = Math.min(len * e + lanceLen, 6f * p + lanceLen);
             Vector3f t0 = new Vector3f(head).sub(new Vector3f(dir).mul(trail));
-            strip(buf, SPRAY, VfxBlend.ALPHA, t0, head, 1.7f * p, 0.45f * p, a(INK, 0.0f), a(INK, 0.55f * lanceA));
-            strip(buf, SPRAY, VfxBlend.ADD, t0, head, 1.5f * p, 0.4f * p, a(glow, 0.0f), a(hot, 0.9f * lanceA));
+            strip(buf, SPRAY, VfxBlend.ALPHA, t0, head, 2.4f * p, 0.7f * p, a(INK, 0.0f), a(INK, 0.6f * lanceA));
+            strip(buf, SPRAY, VfxBlend.ADD, t0, head, 2.1f * p, 0.6f * p, a(glow, 0.0f), a(hot, 0.9f * lanceA));
             // the body: facing the camera, and a second plane turning about the axis
             strip(buf, LANCE, VfxBlend.ALPHA, tail, head, lanceW, lanceW, a(BODY, lanceA), a(BODY, lanceA));
             strip(buf, LANCE, VfxBlend.ADD, tail, head, lanceW, lanceW, a(glow, 0.85f * lanceA), a(edge, lanceA));
@@ -128,13 +128,20 @@ public class DemonIceLayer extends AbstractVfxLayer {
                 stripSide(buf, LANCE, VfxBlend.ADD, tail, head, s2, lanceW * 0.85f, lanceW * 0.85f, a(edge, 0.55f * lanceA), a(edge, 0.7f * lanceA));
                 // three splinters orbiting the shaft
                 Vector3f u1 = new Vector3f(s1).cross(dir).normalize();
-                for (int i = 0; i < 3; i++) {
-                    float phi = age * 0.65f + i * 2.09f, along = 0.15f + 0.6f * hash(inst.seed, i, 2);
+                for (int i = 0; i < 6; i++) {
+                    float phi = age * 0.65f + i * 1.047f * (i % 2 == 0 ? 1f : -1f), along = 0.15f + 0.6f * hash(inst.seed, i, 2);
                     Vector3f q = new Vector3f(tail).lerp(head, along).add(new Vector3f(s1).mul(Mth.cos(phi) * 0.42f * p)).add(new Vector3f(u1).mul(Mth.sin(phi) * 0.42f * p));
                     cell(buf, ctx, SHARDS, VfxBlend.ALPHA, q, 0.3f * p, age * 0.4f + i * 2f, i % 4, SHARD_CELLS, a(BODY, lanceA));
                     cell(buf, ctx, SHARDS, VfxBlend.ADD, q, 0.3f * p, age * 0.4f + i * 2f, i % 4, SHARD_CELLS, a(edge, 0.8f * lanceA));
                 }
             }
+            // speed lines either side, and a violet halo round the head
+            for (int sgn = -1; sgn <= 1; sgn += 2) {
+                Vector3f off = new Vector3f(s1).mul(sgn * 0.42f * p);
+                strip(buf, SPRAY, VfxBlend.ADD, new Vector3f(head).sub(new Vector3f(dir).mul(2.6f * p)).add(off), new Vector3f(head).add(off).add(new Vector3f(dir).mul(0.3f * p)),
+                        0.28f * p, 0.08f * p, a(edge, 0f), a(edge, 0.55f * lanceA));
+            }
+            VfxBloom.glow(ctx, buf, head, 1.1f * p, VIOLET, 0.45f * lanceA);
             VfxBloom.glow(ctx, buf, head, 0.7f * p, glow, 0.85f * lanceA);
             buf.billboard(ctx, GLINT, VfxBlend.ADD, head, 0.95f * p * (0.8f + 0.2f * Mth.sin(age * 1.3f)), age * 0.3f, a(hot, lanceA));
         }
@@ -201,7 +208,7 @@ public class DemonIceLayer extends AbstractVfxLayer {
             float rr = R * (0.28f + 0.5f * hash(inst.seed, i, 2));
             Vector3f q = new Vector3f(c).add(Mth.cos(ang) * rr, 0.45f + 0.15f * Mth.sin(age * 0.07f + i), Mth.sin(ang) * rr);
             float sz = Math.min(R * 0.8f, 4.5f) * (0.9f + 0.3f * hash(inst.seed, i, 3));
-            buf.billboard(ctx, MIST, VfxBlend.ALPHA, q, sz, ang + age * 0.01f, a(INK, 0.42f * fade));
+            buf.billboard(ctx, MIST, VfxBlend.ALPHA, q, sz, ang + age * 0.01f, a(INK, 0.6f * fade));
             if (i % 2 == 0) buf.billboard(ctx, MIST, VfxBlend.ADD, q, sz * 0.8f, -ang, a(glow, 0.2f * fade));
         }
 
@@ -214,10 +221,10 @@ public class DemonIceLayer extends AbstractVfxLayer {
         // ---- the rim: black crystals and the veil of cold light, and a ribbon of runes circling it
         if (rise > 0.02f) {
             int segs = ctx.seg(16, 10);
-            float hh = wh * 1.45f * rise;
-            float rep = Math.max(2f, Math.round(Mth.TWO_PI * R / (4f * wh * 1.45f)));
+            float hh = wh * 1.7f * rise;
+            float rep = Math.max(2f, Math.round(Mth.TWO_PI * R / (4f * wh * 1.7f)));
             hoop(buf, WALL, VfxBlend.ALPHA, c, R * 0.99f, -0.05f, hh, segs, rep, age * 0.0016f, a(BODY, 0.97f * fade), a(BODY, 0.97f * fade));
-            hoop(buf, WALL, VfxBlend.ADD, c, R * 0.99f, -0.05f, hh, segs, rep, age * 0.0016f, a(glow, 0.9f * fade), a(edge, 0.9f * fade));
+            hoop(buf, WALL, VfxBlend.ADD, c, R * 0.99f, -0.05f, hh, segs, rep, age * 0.0016f, a(glow, 0.6f * fade), a(edge, 0.55f * fade));
             hoop(buf, RUNES, VfxBlend.ADD, c, R * 0.985f, wh * 0.46f * rise, 0.42f * Math.min(wh, 3f) * rise, ctx.seg(12, 8), Math.max(2f, Math.round(Mth.TWO_PI * R / (8f * 0.42f * Math.min(wh, 3f)))),
                     -age * 0.0035f, a(hot, 0.65f * fade), a(hot, 0.65f * fade));
         }
@@ -230,7 +237,7 @@ public class DemonIceLayer extends AbstractVfxLayer {
             float up = VfxAnim.easeOutBack(Mth.clamp(lt / 0.2f, 0f, 1f)) * (1f - smooth(0.72f, 1f, lt));
             if (up <= 0.02f) continue;
             float ang = hash(inst.seed + cyc * 31L, i, 5) * Mth.TWO_PI, rr = R * (0.2f + 0.62f * hash(inst.seed + cyc * 31L, i, 6));
-            float h = (0.9f + 0.8f * hash(inst.seed + cyc * 31L, i, 7)) * Math.min(1.5f, 0.55f + 0.1f * R) * up;
+            float h = (1.3f + 1.1f * hash(inst.seed + cyc * 31L, i, 7)) * Math.min(2.0f, 0.7f + 0.12f * R) * up;
             Vector3f base = new Vector3f(c).add(Mth.cos(ang) * rr, -0.05f, Mth.sin(ang) * rr);
             stand(buf, CRYSTAL, VfxBlend.ALPHA, base, h * 0.27f, h, 0f, a(BODY, fade));
             stand(buf, CRYSTAL, VfxBlend.ADD, base, h * 0.27f, h, 0f, a(edge, 0.85f * fade));
@@ -294,10 +301,22 @@ public class DemonIceLayer extends AbstractVfxLayer {
             strip(buf, LANCE, VfxBlend.ADD, from, to, w, w, a(glow, 0.5f * retract), a(edge, 0.95f * retract));
         }
 
+        // ---- a crown of crystal clusters thrust up round the centre
+        for (int i = 0; i < 5; i++) {
+            float delay = 1f + hash(inst.seed, i, 20) * 3f;
+            float up = VfxAnim.easeOutBack(Mth.clamp((age - delay) / 7f, 0f, 1f)) * (1f - smooth(0.55f, 0.95f, t));
+            if (up <= 0.02f) continue;
+            float ang = Mth.TWO_PI * (i + 0.5f * hash(inst.seed, i, 21)) / 5f + 0.4f, rr = (1.0f + 0.7f * hash(inst.seed, i, 22)) * p;
+            float h = (1.0f + 0.9f * hash(inst.seed, i, 23)) * p * up;
+            Vector3f base = new Vector3f(c).add(Mth.cos(ang) * rr, -0.5f * p, Mth.sin(ang) * rr);
+            stand(buf, CRYSTAL, VfxBlend.ALPHA, base, h * 0.27f, h, 0f, a(BODY, 1f - smooth(0.7f, 1f, t)));
+            stand(buf, CRYSTAL, VfxBlend.ADD, base, h * 0.27f, h, 0f, a(edge, 0.85f * (1f - smooth(0.6f, 1f, t))));
+        }
+
         // ---- rings and the rune band flying outward
         float ringR = (0.35f + 3.4f * e) * p;
         flat(buf, RING, VfxBlend.ALPHA, new Vector3f(c).add(0, -0.4f * p, 0), 0.01f, 0.5f, ringR * 0.86f, a(INK, 0.6f * Math.max(0f, 1f - t * 1.4f)));
-        flat(buf, RING, VfxBlend.ADD, new Vector3f(c).add(0, -0.4f * p, 0), 0.03f, 1.1f, ringR, a(edge, 1.1f * fade));
+        flat(buf, RING, VfxBlend.ADD, new Vector3f(c).add(0, -0.4f * p, 0), 0.03f, 1.1f, ringR, a(edge, 0.8f * fade));
         buf.billboard(ctx, RING, VfxBlend.ADD, c, (0.8f + 3.2f * ease(age / 6f)) * p, age * 0.04f, a(hot, 0.85f * (1f - ease(age / 14f))));
         float bandT = ease(age / 14f);
         if (bandT < 0.999f && ctx.detail > 0.2f) {
@@ -307,7 +326,7 @@ public class DemonIceLayer extends AbstractVfxLayer {
 
         // ---- the flash: inverted colours, the shatter star, white-hot bloom
         float flash = Mth.clamp(1f - age / 6f, 0f, 1f);
-        if (flash > 0f) buf.billboard(ctx, INVERT, VfxBlend.NEGATIVE, c, (2.0f + 2.6f * (1f - flash)) * p, 0, dim(0xFFB4C8FF, flash));
+        if (flash > 0f) buf.billboard(ctx, INVERT, VfxBlend.NEGATIVE, c, (1.6f + 2.0f * (1f - flash)) * p, 0, dim(0xFF7088E0, flash * flash));
         buf.billboard(ctx, BURST, VfxBlend.ADD, c, (0.7f + 3.6f * e) * p, age * 0.05f, a(hot, (1f - ease(age / 16f))));
         buf.billboard(ctx, BURST, VfxBlend.ADD, c, (0.5f + 2.2f * e) * p, -age * 0.07f + 0.6f, a(edge, 0.7f * fade));
         VfxBloom.glow(ctx, buf, c, 2.2f * p * (1f - 0.45f * t), glow, 0.9f * fade + 0.1f);
