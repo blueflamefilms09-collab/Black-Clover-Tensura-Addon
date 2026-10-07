@@ -126,6 +126,7 @@ class Book:
         self.bm = bmesh.new()
         self.dl = self.bm.verts.layers.deform.verify()
         self.etch = self.bm.verts.layers.float.new("etch")
+        self.sheet = self.bm.faces.layers.float.new("sheet")                  # 1 on the faces of a block, 0 on its walls (page edges)
 
     def vert(self, co, groups, etch=0.0):
         v = self.bm.verts.new(co)
@@ -157,8 +158,8 @@ class Book:
             top.append(rt)
         for j in range(ny - 1):
             for i in range(nx - 1):
-                self.face([bot[j][i], bot[j + 1][i], bot[j + 1][i + 1], bot[j][i + 1]], mat)      # facing down
-                self.face([top[j][i], top[j][i + 1], top[j + 1][i + 1], top[j + 1][i]], mat)      # facing up
+                self.face([bot[j][i], bot[j + 1][i], bot[j + 1][i + 1], bot[j][i + 1]], mat)[self.sheet] = 1.0   # facing down
+                self.face([top[j][i], top[j][i + 1], top[j + 1][i + 1], top[j + 1][i]], mat)[self.sheet] = 1.0   # facing up
         ring = [(i, 0) for i in range(nx - 1)] + [(nx - 1, j) for j in range(ny - 1)] + \
                [(i, ny - 1) for i in range(nx - 1, 0, -1)] + [(0, j) for j in range(ny - 1, 0, -1)]
         for k in range(len(ring)):
@@ -430,10 +431,26 @@ def pages_material():
     wave.inputs["Distortion"].default_value = 2.0
     links.new(tc.outputs["Generated"], wave.inputs["Vector"])
     ramp = nodes.new("ShaderNodeValToRGB")
-    ramp.color_ramp.elements[0].color = (0.36, 0.32, 0.34, 1)
-    ramp.color_ramp.elements[1].color = (0.66, 0.62, 0.58, 1)
+    ramp.color_ramp.elements[0].color = (0.2, 0.17, 0.2, 1)
+    ramp.color_ramp.elements[1].color = (0.42, 0.38, 0.38, 1)
     links.new(wave.outputs["Fac"], ramp.inputs["Fac"])
-    links.new(ramp.outputs["Color"], b.inputs["Base Color"])
+    # the lines only on the page edges: the page faces stay plain, stained parchment
+    stain = nodes.new("ShaderNodeTexNoise")
+    stain.inputs["Scale"].default_value = 9.0
+    links.new(tc.outputs["Generated"], stain.inputs["Vector"])
+    face_ramp = nodes.new("ShaderNodeValToRGB")
+    face_ramp.color_ramp.elements[0].color = (0.3, 0.26, 0.28, 1)
+    face_ramp.color_ramp.elements[1].color = (0.46, 0.42, 0.4, 1)
+    links.new(stain.outputs["Fac"], face_ramp.inputs["Fac"])
+    sheet = nodes.new("ShaderNodeAttribute")                                   # set per face by the builder; follows the rig
+    sheet.attribute_name = "sheet"
+    mix = nodes.new("ShaderNodeMix")
+    mix.data_type = "RGBA"
+    cols = [s for s in mix.inputs if s.type == "RGBA"]
+    links.new(sheet.outputs["Fac"], [s for s in mix.inputs if s.name == "Factor" and s.type == "VALUE"][0])
+    links.new(ramp.outputs["Color"], cols[0])
+    links.new(face_ramp.outputs["Color"], cols[1])
+    links.new([s for s in mix.outputs if s.type == "RGBA"][0], b.inputs["Base Color"])
     return mat
 
 
@@ -619,8 +636,8 @@ def setup_scene(engine, view):
         cam.location = (0.0, -0.62, 0.52)
         look(cam, (0.0, 0.0, 0.0))
     sc.camera = cam
-    for name, loc, energy, col in (("Key", (-0.5, -0.6, 0.9), 26, (1, 0.95, 0.92)), ("Rim", (0.7, 0.6, 0.5), 30, (0.6, 0.4, 1.0)),
-                                   ("Under", (0.0, 0.0, -0.5), 6, (0.5, 0.2, 1.0))):
+    for name, loc, energy, col in (("Key", (-0.5, -0.6, 0.9), 9, (1, 0.95, 0.92)), ("Rim", (0.7, 0.6, 0.5), 12, (0.6, 0.4, 1.0)),
+                                   ("Under", (0.0, 0.0, -0.5), 3, (0.5, 0.2, 1.0))):
         l = link(bpy.data.objects.new(name, bpy.data.lights.new(name, "AREA")))
         l.data.energy, l.data.size, l.data.color = energy, 0.7, col
         l.location = loc
@@ -644,6 +661,7 @@ def setup_scene(engine, view):
         sc.render.engine = "CYCLES"
         sc.cycles.device = "CPU"
         sc.cycles.volume_step_rate = 2.0
+        sc.cycles.volume_max_steps = 128                                          # a small object: no need for the default 1024
     else:
         sc.render.engine = "BLENDER_EEVEE_NEXT" if "BLENDER_EEVEE_NEXT" in engines else "BLENDER_EEVEE"
     try:
