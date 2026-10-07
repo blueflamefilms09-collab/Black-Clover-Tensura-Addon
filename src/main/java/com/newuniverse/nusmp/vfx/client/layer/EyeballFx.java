@@ -197,11 +197,11 @@ final class EyeballFx {
         }
         // iris
         float hi = d * 0.265f;
-        int ir = VfxVertexBuffer.withAlpha(VfxVertexBuffer.whiten(tint | 0xFF000000, Mth.clamp(flare * 0.55f, 0f, 0.8f)), a);
+        int ir = VfxVertexBuffer.withAlpha(VfxVertexBuffer.whiten(VfxVertexBuffer.lerpColor(0xFFBFE2C6, tint | 0xFF000000, 0.18f + 0.55f * Mth.clamp(flare, 0f, 1f)), Mth.clamp(flare * 0.30f, 0f, 0.6f)), a);   // sage green like the still, reddening when the eye strikes
         panel(buf, IRIS, VfxBlend.ALPHA, ic, rp, up2, hi, hi * sq, ir);
         // pupil
-        int pc = VfxVertexBuffer.withAlpha(0xFF000000, a);
-        if (slit) {
+        int pc = VfxVertexBuffer.withAlpha(0xFF2A1410, a);
+        if (slit && flare > 0.45f) {                                                // round dark pupil at rest, a predator slit when it strikes
             float hh = hi * (0.34f + 0.60f * dilate), hw = hh * (0.17f + 0.26f * dilate);
             panel(buf, SLIT, VfxBlend.ALPHA, ic, rp, up2, hw, hh * sq, pc);
         } else {

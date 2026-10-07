@@ -1,16 +1,538 @@
 {
-  "_comment": "Body Magic (BodyLayer). FX1 = Body Compression shot (from = origin, to = target, power = size, 16 ticks); FX2 = Titan field (from = ground centre, power = radius, 80 ticks); FX3 = Titan burst (from = centre, to - from = optional direction, power = scale, 28 ticks).",
-  "body_fx1": {"layer": "BodyLayer", "shape": "BODY_FX1", "from": [0, 1.5, 0], "to": [12, 1.3, 0], "power": 1.0, "duration": 16, "cam": [4.5, 2.4, -7.5], "target": [5.5, 1.4, 0], "ages": [2.5, 5, 9, 14], "figures": [[-0.5, 0, 0, 1.8], [12.6, 0, 0, 1.8]]},
-  "body_fx1_muzzle": {"layer": "BodyLayer", "shape": "BODY_FX1", "from": [0, 1.5, 0], "to": [12, 1.3, 0], "power": 1.0, "duration": 16, "cam": [1.9, 1.9, -2.7], "target": [1.1, 1.5, 0], "ages": [1, 2.5, 4, 6], "figures": [[-0.5, 0, 0, 1.8]]},
-  "body_fx1_impact": {"layer": "BodyLayer", "shape": "BODY_FX1", "from": [0, 1.5, 0], "to": [12, 1.3, 0], "power": 1.0, "duration": 16, "cam": [9.0, 2.2, -4.2], "target": [11.6, 1.4, 0], "ages": [11, 12.5, 14, 15.5], "figures": [[12.6, 0, 0, 1.8]]},
-  "body_fx1_big": {"layer": "BodyLayer", "shape": "BODY_FX1", "from": [0, 1.5, 0], "to": [16, 1.5, 0], "power": 2.2, "duration": 18, "cam": [6, 3.2, -10.5], "target": [7.5, 1.6, 0], "ages": [3, 7, 11, 16], "figures": [[-0.5, 0, 0, 1.8]]},
-  "body_fx2": {"layer": "BodyLayer", "shape": "BODY_FX2", "from": [0, 0, 0], "to": [0, 0, 0], "power": 6.0, "duration": 80, "cam": [8.5, 6.5, -11], "target": [0, 1.0, 0], "ages": [6, 26, 31, 55], "figures": [[0, 0, 0, 1.8], [3, 0, 2, 1.8]]},
-  "body_fx2_small": {"layer": "BodyLayer", "shape": "BODY_FX2", "from": [0, 0, 0], "to": [0, 0, 0], "power": 2.5, "duration": 60, "cam": [4.2, 3.4, -5.2], "target": [0, 0.8, 0], "ages": [10, 27, 31, 50], "figures": [[0, 0, 0, 1.8]]},
-  "body_fx2_big": {"layer": "BodyLayer", "shape": "BODY_FX2", "from": [0, 0, 0], "to": [0, 0, 0], "power": 12.0, "duration": 100, "cam": [17, 13, -22], "target": [0, 1.5, 0], "ages": [14, 28, 55], "figures": [[0, 0, 0, 1.8]]},
-  "body_fx3": {"layer": "BodyLayer", "shape": "BODY_FX3", "from": [0, 1.2, 0], "to": [0, 1.2, 0], "power": 1.5, "duration": 28, "cam": [4.8, 3.4, -6.8], "target": [0, 1.4, 0], "ages": [1.5, 5, 10, 20], "figures": [[0, 0, 0, 1.8]]},
-  "body_fx3_dir": {"layer": "BodyLayer", "shape": "BODY_FX3", "from": [0, 1.2, 0], "to": [3, 1.2, 0], "power": 1.5, "duration": 28, "cam": [1.5, 3.2, -7.5], "target": [1.8, 1.3, 0], "ages": [4, 8, 14, 22], "figures": [[-0.7, 0, 0, 1.8]]},
-  "body_fx3_big": {"layer": "BodyLayer", "shape": "BODY_FX3", "from": [0, 1.2, 0], "to": [0, 1.2, 0], "power": 3.0, "duration": 34, "cam": [8.5, 6.0, -12], "target": [0, 2.0, 0], "ages": [5, 10, 18, 28], "figures": [[0, 0, 0, 1.8]]},
-  "body_fx3_small": {"layer": "BodyLayer", "shape": "BODY_FX3", "from": [0, 1.2, 0], "to": [0, 1.2, 0], "power": 0.7, "duration": 28, "cam": [2.4, 2.4, -3.4], "target": [0, 1.3, 0], "ages": [3, 6, 12, 22], "figures": [[0, 0, 0, 1.8]]},
-  "body_fx3_white": {"layer": "BodyLayer", "shape": "BODY_FX3", "from": [0, 1.2, 0], "to": [0, 1.2, 0], "power": 1.5, "duration": 28, "color": "FFFFFFFF", "cam": [4.8, 3.4, -6.8], "target": [0, 1.4, 0], "ages": [5, 10, 20], "figures": [[0, 0, 0, 1.8]]},
-  "body_fx2_top": {"layer": "BodyLayer", "shape": "BODY_FX2", "from": [0, 0, 0], "to": [0, 0, 0], "power": 6.0, "duration": 80, "cam": [0, 15, -3.5], "target": [0, 0, 0], "ages": [9, 26, 31], "figures": [[0, 0, 0, 1.8], [3, 0, 2, 1.8]]}
+ "body_fx1": {
+  "layer": "BodyLayer",
+  "shape": "BODY_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   12,
+   1.3,
+   0
+  ],
+  "power": 1.0,
+  "duration": 16,
+  "cam": [
+   4.5,
+   2.4,
+   -7.5
+  ],
+  "target": [
+   5.5,
+   1.4,
+   0
+  ],
+  "ages": [
+   2.5,
+   5,
+   9,
+   14
+  ],
+  "figures": [
+   [
+    -0.5,
+    0,
+    0,
+    1.8
+   ],
+   [
+    12.6,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "body_fx1_muzzle": {
+  "layer": "BodyLayer",
+  "shape": "BODY_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   12,
+   1.3,
+   0
+  ],
+  "power": 1.0,
+  "duration": 16,
+  "cam": [
+   1.9,
+   1.9,
+   -2.7
+  ],
+  "target": [
+   1.1,
+   1.5,
+   0
+  ],
+  "ages": [
+   1,
+   2.5,
+   4,
+   6
+  ],
+  "figures": [
+   [
+    -0.5,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "body_fx1_impact": {
+  "layer": "BodyLayer",
+  "shape": "BODY_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   12,
+   1.3,
+   0
+  ],
+  "power": 1.0,
+  "duration": 16,
+  "cam": [
+   9.0,
+   2.2,
+   -4.2
+  ],
+  "target": [
+   11.6,
+   1.4,
+   0
+  ],
+  "ages": [
+   11,
+   12.5,
+   14,
+   15.5
+  ],
+  "figures": [
+   [
+    12.6,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "body_fx1_big": {
+  "layer": "BodyLayer",
+  "shape": "BODY_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   16,
+   1.5,
+   0
+  ],
+  "power": 2.2,
+  "duration": 18,
+  "cam": [
+   6,
+   3.2,
+   -10.5
+  ],
+  "target": [
+   7.5,
+   1.6,
+   0
+  ],
+  "ages": [
+   3,
+   7,
+   11,
+   16
+  ],
+  "figures": [
+   [
+    -0.5,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "body_fx2": {
+  "layer": "BodyLayer",
+  "shape": "BODY_FX2",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 6.0,
+  "duration": 80,
+  "cam": [
+   8.5,
+   6.5,
+   -11
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   6,
+   26,
+   31,
+   55
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    3,
+    0,
+    2,
+    1.8
+   ]
+  ]
+ },
+ "body_fx2_small": {
+  "layer": "BodyLayer",
+  "shape": "BODY_FX2",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 2.5,
+  "duration": 60,
+  "cam": [
+   4.2,
+   3.4,
+   -5.2
+  ],
+  "target": [
+   0,
+   0.8,
+   0
+  ],
+  "ages": [
+   10,
+   27,
+   31,
+   50
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "body_fx2_big": {
+  "layer": "BodyLayer",
+  "shape": "BODY_FX2",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 12.0,
+  "duration": 100,
+  "cam": [
+   17,
+   13,
+   -22
+  ],
+  "target": [
+   0,
+   1.5,
+   0
+  ],
+  "ages": [
+   14,
+   28,
+   55
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "body_fx3": {
+  "layer": "BodyLayer",
+  "shape": "BODY_FX3",
+  "from": [
+   0,
+   1.2,
+   0
+  ],
+  "to": [
+   0,
+   1.2,
+   0
+  ],
+  "power": 1.5,
+  "duration": 28,
+  "cam": [
+   4.8,
+   3.4,
+   -6.8
+  ],
+  "target": [
+   0,
+   1.4,
+   0
+  ],
+  "ages": [
+   1.5,
+   5,
+   10,
+   20
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "body_fx3_dir": {
+  "layer": "BodyLayer",
+  "shape": "BODY_FX3",
+  "from": [
+   0,
+   1.2,
+   0
+  ],
+  "to": [
+   3,
+   1.2,
+   0
+  ],
+  "power": 1.5,
+  "duration": 28,
+  "cam": [
+   1.5,
+   3.2,
+   -7.5
+  ],
+  "target": [
+   1.8,
+   1.3,
+   0
+  ],
+  "ages": [
+   4,
+   8,
+   14,
+   22
+  ],
+  "figures": [
+   [
+    -0.7,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "body_fx3_big": {
+  "layer": "BodyLayer",
+  "shape": "BODY_FX3",
+  "from": [
+   0,
+   1.2,
+   0
+  ],
+  "to": [
+   0,
+   1.2,
+   0
+  ],
+  "power": 3.0,
+  "duration": 34,
+  "cam": [
+   8.5,
+   6.0,
+   -12
+  ],
+  "target": [
+   0,
+   2.0,
+   0
+  ],
+  "ages": [
+   5,
+   10,
+   18,
+   28
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "body_fx3_small": {
+  "layer": "BodyLayer",
+  "shape": "BODY_FX3",
+  "from": [
+   0,
+   1.2,
+   0
+  ],
+  "to": [
+   0,
+   1.2,
+   0
+  ],
+  "power": 0.7,
+  "duration": 28,
+  "cam": [
+   2.4,
+   2.4,
+   -3.4
+  ],
+  "target": [
+   0,
+   1.3,
+   0
+  ],
+  "ages": [
+   3,
+   6,
+   12,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "body_fx3_white": {
+  "layer": "BodyLayer",
+  "shape": "BODY_FX3",
+  "from": [
+   0,
+   1.2,
+   0
+  ],
+  "to": [
+   0,
+   1.2,
+   0
+  ],
+  "power": 1.5,
+  "duration": 28,
+  "color": "FFFFFFFF",
+  "cam": [
+   4.8,
+   3.4,
+   -6.8
+  ],
+  "target": [
+   0,
+   1.4,
+   0
+  ],
+  "ages": [
+   5,
+   10,
+   20
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "body_fx2_top": {
+  "layer": "BodyLayer",
+  "shape": "BODY_FX2",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 6.0,
+  "duration": 80,
+  "cam": [
+   0,
+   15,
+   -3.5
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ],
+  "ages": [
+   9,
+   26,
+   31
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    3,
+    0,
+    2,
+    1.8
+   ]
+  ]
+ }
 }

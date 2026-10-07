@@ -154,9 +154,9 @@ def sclera_arrays(size):
     light = np.array([-0.42, -0.52, 0.74], np.float32)
     light /= np.linalg.norm(light)
     diff = np.clip(nx * light[0] + ny * light[1] + z * light[2], 0, 1)
-    shade = 0.60 + 0.40 * diff ** 0.8
-    cream = np.array([247, 234, 224], np.float32)
-    pink = np.array([228, 152, 154], np.float32)
+    shade = 0.84 + 0.16 * diff ** 0.8
+    cream = np.array([246, 234, 212], np.float32)
+    pink = np.array([232, 196, 170], np.float32)
     maroon = np.array([122, 40, 58], np.float32)
     col = cream[None, None, :] + (pink - cream)[None, None, :] * np.clip((1 - z) ** 1.5 * 0.95, 0, 1)[..., None]
     mott = fbm(size, size, 5, 5, 11, 4)
@@ -164,7 +164,7 @@ def sclera_arrays(size):
     col = col * (1 + (mott - 0.5) * 0.12)[..., None]
     col = col + np.array([8, -6, -20], np.float32)[None, None, :] * (yellow - 0.5)[..., None]
     col = col * shade[..., None]
-    col = col + (maroon - col) * np.clip((1 - z) ** 3.0 * 0.62, 0, 1)[..., None]
+    col = col + (maroon - col) * np.clip((1 - z) ** 3.0 * 0.16, 0, 1)[..., None]
     # capillaries: red vessels creeping in from the limb, thick where they leave it and thinning to hair-fine tips, plus a pale haze of threads
     rng = np.random.default_rng(1101)
     k = size / 256
@@ -185,14 +185,29 @@ def sclera_arrays(size):
     mf = draw_segments((size, size), fine)
     halo = blur_mask(np.maximum(m, mf * 0.6), 2.2 * k)
     ones = np.ones_like(col)
-    col = mix(col, np.array([236, 120, 126], np.float32)[None, None, :] * ones, halo * 0.34)
-    col = mix(col, np.array([214, 92, 104], np.float32)[None, None, :] * ones, np.clip(mf * 0.55, 0, 1))
-    col = mix(col, np.array([182, 24, 44], np.float32)[None, None, :] * ones, np.clip(m * 0.95, 0, 1))
-    col = mix(col, np.array([116, 12, 32], np.float32)[None, None, :] * ones, np.clip((m - 0.75) * 2.4, 0, 1) * 0.55)
+    col = mix(col, np.array([236, 120, 126], np.float32)[None, None, :] * ones, halo * 0.12)
+    col = mix(col, np.array([214, 92, 104], np.float32)[None, None, :] * ones, np.clip(mf * 0.22, 0, 1))
+    col = mix(col, np.array([182, 24, 44], np.float32)[None, None, :] * ones, np.clip(m * 0.40, 0, 1))
+    col = mix(col, np.array([116, 12, 32], np.float32)[None, None, :] * ones, np.clip((m - 0.75) * 2.4, 0, 1) * 0.18)
     # wet sheen: a soft window highlight and a faint rim light low right
     sheen = np.exp(-(((nx + 0.40) / 0.22) ** 2 + ((ny + 0.44) / 0.15) ** 2)) * 0.30
     rim = np.exp(-((r - 0.90) / 0.05) ** 2) * smooth(0.15, 0.75, nx * 0.6 + ny * 0.8) * 0.18
     col = col + (sheen + rim)[..., None] * 255 * 0.55
+    # cel-shaded finish (the anime still): a brown shadow crescent low in the ball with a scalloped lower edge, and a thin dark outline
+    ones2 = np.ones_like(col)
+    sh = np.clip(1.0 - ((nx / 0.64) ** 2 + ((ny - 0.66) / 0.36) ** 2), 0, 1)
+    sh = smooth(0.0, 0.05, sh)
+    scal = np.zeros_like(r)
+    for ang, rad in [(112, 0.15), (128, 0.19), (146, 0.13), (64, 0.17), (50, 0.20), (34, 0.12), (168, 0.11), (14, 0.10)]:
+        a_ = math.radians(ang)
+        cx_, cy_ = math.cos(a_) * 0.86, math.sin(a_) * 0.86
+        scal = np.maximum(scal, smooth(rad, rad - 0.025, np.sqrt((nx - cx_) ** 2 + (ny - cy_) ** 2)))
+    shadow = np.maximum(sh, scal * smooth(0.55, 0.9, ny + 0.45))
+    col = mix(col, np.array([118, 96, 94], np.float32)[None, None, :] * ones2, shadow * 0.92)
+    edge = np.clip(shadow - np.clip(blur_mask(shadow, 1.6 * size / 256) * 1.0, 0, 1) * 0.0, 0, 1)
+    ring = smooth(0.945, 0.972, r)
+    col = mix(col, np.array([62, 46, 46], np.float32)[None, None, :] * ones2, ring)
+    col = mix(col, np.array([70, 54, 56], np.float32)[None, None, :] * ones2, np.clip(blur_mask(shadow, 1.2 * size / 256) - shadow, 0, 1) * 0.5)
     alpha = smooth(1.0, 0.972, r)
     return np.clip(col, 0, 255), alpha
 
@@ -218,6 +233,17 @@ def iris_arrays(size):
     ring_r = 0.37 + 0.035 * (lumpy - 0.5) * 2 + 0.02 * np.sin(th * 11)
     collar = np.exp(-((r - ring_r) / 0.032) ** 2)
     v = v + 0.55 * collar
+    v = 0.55 * v + 0.24                                                  # flatter, cel-like body
+    # light dashes: short bright radial ticks across the iris, as inked in the anime still
+    rngd = np.random.default_rng(77)
+    nsec = 34
+    off = rngd.uniform(0.2, 0.8, nsec)
+    r0 = rngd.uniform(0.42, 0.55, nsec)
+    r1 = r0 + rngd.uniform(0.12, 0.26, nsec)
+    sec = np.floor(u * nsec).astype(int) % nsec
+    fr = u * nsec - np.floor(u * nsec)
+    dash = np.exp(-(((fr - off[sec]) * (2 * math.pi * np.maximum(r, 0.05) / nsec)) / 0.012) ** 2) * smooth(r0[sec] - 0.02, r0[sec] + 0.02, r) * smooth(r1[sec] + 0.02, r1[sec] - 0.02, r)
+    v = v + 0.55 * dash
     v = v * (0.72 + 0.60 * smooth(0.95, 0.20, r))                      # brighter towards the pupil
     crypt = fbm_at(u * 30, r * 9.0, 41, 2, wrap_u=30)
     v = v * (1 - 0.55 * smooth(0.60, 0.72, crypt) * smooth(0.40, 0.55, r) * smooth(0.90, 0.72, r))
@@ -225,7 +251,7 @@ def iris_arrays(size):
     v = v + 0.35 * np.exp(-((r - 0.205) / 0.025) ** 2)               # bright rim round the pupil
     v = np.where(r < 0.17, 0.04, v)
     v = np.clip(v, 0, 1) ** 0.80                                          # lift the mid-tones: a lit, glowing iris
-    v = v * (0.86 + 0.14 * smooth(-0.9, 0.35, ny))                     # upper lid shadow
+    v = v * (0.92 + 0.08 * smooth(-0.9, 0.35, ny))                     # upper lid shadow
     alpha = smooth(1.0, 0.975, r)
     return np.clip(v, 0, 1), alpha
 
@@ -726,7 +752,7 @@ def mini(size=128):
     out = np.dstack([rgb, a * 255]).astype(np.float32)
     img = Image.fromarray(np.clip(out, 0, 255).astype(np.uint8), "RGBA")
     # coloured iris: orange-red body, bright collarette, black limbal ring
-    tint = np.array([255, 78, 62], np.float32)
+    tint = np.array([160, 200, 168], np.float32)
     ir = np.dstack([iv[..., None] * tint[None, None, :], ia * 255]).astype(np.float32)
     ir_img = Image.fromarray(np.clip(ir, 0, 255).astype(np.uint8), "RGBA")
     d = int(big * 0.50)
@@ -737,7 +763,8 @@ def mini(size=128):
     pd = ImageDraw.Draw(pup)
     pcx, pcy = big * 0.5 + big * 0.185, big * 0.5
     pw, ph = big * 0.040, big * 0.115
-    pd.polygon([(pcx, pcy - ph), (pcx + pw, pcy), (pcx, pcy + ph), (pcx - pw, pcy)], fill=(0, 0, 0, 255))
+    pr = big * 0.062
+    pd.ellipse([pcx - pr, pcy - pr, pcx + pr, pcy + pr], fill=(42, 20, 16, 255))
     pup = pup.filter(ImageFilter.GaussianBlur(1.1))
     img.alpha_composite(pup)
     gl = Image.new("RGBA", (big, big), (0, 0, 0, 0))

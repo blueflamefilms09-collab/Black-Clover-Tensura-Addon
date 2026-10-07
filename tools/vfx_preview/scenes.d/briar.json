@@ -1,0 +1,244 @@
+{
+ "_comment": "Briar Magic preview scenes (BriarLayer). FX1 Thorn Lash, FX2 Briar Garden, FX3 Corpse-Hunting Briar Tree.",
+ "briar_cast": {
+  "layer": "BriarLayer",
+  "shape": "BRIAR_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.3,
+   8
+  ],
+  "power": 1.0,
+  "duration": 16,
+  "cam": [
+   4.5,
+   2.0,
+   4.5
+  ],
+  "target": [
+   0,
+   1.4,
+   4
+  ],
+  "ages": [
+   2,
+   5,
+   8,
+   11,
+   13,
+   15
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "briar_cast_big": {
+  "layer": "BriarLayer",
+  "shape": "BRIAR_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.3,
+   9
+  ],
+  "power": 2.2,
+  "duration": 22,
+  "cam": [
+   5.5,
+   2.5,
+   5.5
+  ],
+  "target": [
+   0,
+   1.4,
+   4.5
+  ],
+  "ages": [
+   3,
+   8,
+   12,
+   16,
+   19,
+   21
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "briar_zone": {
+  "layer": "BriarLayer",
+  "shape": "BRIAR_FX2",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 4.0,
+  "duration": 80,
+  "cam": [
+   7,
+   5.5,
+   8
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   3,
+   12,
+   24,
+   40,
+   60,
+   74
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "briar_zone_small": {
+  "layer": "BriarLayer",
+  "shape": "BRIAR_FX2",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 2.0,
+  "duration": 60,
+  "cam": [
+   4,
+   3.5,
+   5
+  ],
+  "target": [
+   0,
+   0.8,
+   0
+  ],
+  "ages": [
+   6,
+   20,
+   40
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "briar_impact": {
+  "layer": "BriarLayer",
+  "shape": "BRIAR_FX3",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 1.0,
+  "duration": 28,
+  "cam": [
+   4.5,
+   2.8,
+   6
+  ],
+  "target": [
+   0,
+   1.5,
+   0
+  ],
+  "ages": [
+   1,
+   3,
+   6,
+   10,
+   16,
+   24
+  ],
+  "figures": [
+   [
+    1.6,
+    0,
+    1.0,
+    1.8
+   ]
+  ]
+ },
+ "briar_impact_big": {
+  "layer": "BriarLayer",
+  "shape": "BRIAR_FX3",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   2,
+   0,
+   0
+  ],
+  "power": 2.2,
+  "duration": 36,
+  "cam": [
+   8,
+   4,
+   10
+  ],
+  "target": [
+   0,
+   2.5,
+   0
+  ],
+  "ages": [
+   2,
+   6,
+   12,
+   20,
+   30
+  ],
+  "figures": []
+ }
+}

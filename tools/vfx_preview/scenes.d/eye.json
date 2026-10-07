@@ -1,0 +1,247 @@
+{
+ "_comment": "Eye Magic previews: FX1 cast, FX2 field, FX3 signature.",
+ "eye_cast": {
+  "layer": "EyeLayer",
+  "shape": "EYE_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.5,
+   11
+  ],
+  "power": 1.0,
+  "duration": 16,
+  "cam": [
+   6,
+   2.2,
+   5.5
+  ],
+  "target": [
+   0,
+   1.5,
+   5.5
+  ],
+  "ages": [
+   2,
+   4,
+   7,
+   11,
+   14.5
+  ],
+  "figures": [
+   [
+    -0.5,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    11,
+    1.8
+   ]
+  ]
+ },
+ "eye_cast_big": {
+  "layer": "EyeLayer",
+  "shape": "EYE_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.5,
+   14
+  ],
+  "power": 2.2,
+  "duration": 20,
+  "cam": [
+   8,
+   3,
+   7
+  ],
+  "target": [
+   0,
+   1.5,
+   7
+  ],
+  "ages": [
+   3,
+   8,
+   13,
+   18
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    14,
+    1.8
+   ]
+  ]
+ },
+ "eye_field": {
+  "layer": "EyeLayer",
+  "shape": "EYE_FX2",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 5.0,
+  "duration": 80,
+  "cam": [
+   7,
+   5,
+   7
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   6,
+   25,
+   45,
+   75
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "eye_field_small": {
+  "layer": "EyeLayer",
+  "shape": "EYE_FX2",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 2.5,
+  "duration": 80,
+  "cam": [
+   5,
+   4,
+   5
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   10,
+   40
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "eye_burst": {
+  "layer": "EyeLayer",
+  "shape": "EYE_FX3",
+  "from": [
+   0,
+   2,
+   0
+  ],
+  "to": [
+   0,
+   2,
+   0
+  ],
+  "power": 1.0,
+  "duration": 28,
+  "cam": [
+   8,
+   3,
+   8
+  ],
+  "target": [
+   0,
+   2,
+   0
+  ],
+  "ages": [
+   2,
+   6,
+   9,
+   14,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "eye_burst_dir": {
+  "layer": "EyeLayer",
+  "shape": "EYE_FX3",
+  "from": [
+   0,
+   2,
+   0
+  ],
+  "to": [
+   4,
+   2,
+   0
+  ],
+  "power": 1.6,
+  "duration": 28,
+  "cam": [
+   8,
+   3,
+   8
+  ],
+  "target": [
+   0,
+   2,
+   0
+  ],
+  "ages": [
+   9,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ }
+}
