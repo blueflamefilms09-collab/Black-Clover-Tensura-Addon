@@ -89,15 +89,23 @@ public final class GrimoireSummon {
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.BOOK_PAGE_TURN, SoundSource.PLAYERS, 1.0f, 0.8f);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 0.6f, 1.2f);
         p.displayClientMessage(Component.literal("Your grimoire answers. (sneak + ability key to stow it)").withStyle(ChatFormatting.GOLD), true);
+        PaintStudio.onSummon(p, book.magic);                                                    // 0.44: a Painting grimoire brings its palette & brush
     }
 
     public static void dismiss(ServerPlayer p, boolean effects) {
         if (FLOATING.remove(p.getUUID()) == null) return;
         broadcast(p, ItemStack.EMPTY);
+        PaintStudio.onDismiss(p);                                                               // 0.44: the palette & brush dissolve
         if (effects) {
             p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.BOOK_PUT, SoundSource.PLAYERS, 0.9f, 1.0f);
             p.displayClientMessage(Component.literal("Your grimoire returns to your side.").withStyle(ChatFormatting.GRAY), true);
         }
+    }
+
+    /** The magic of the grimoire this player has out, or null (0.44: the palette & brush, element reading). */
+    public static MagicType floatingMagic(Player p) {
+        State s = FLOATING.get(p.getUUID());
+        return s == null ? null : s.magic;
     }
 
     /** Roughly where the floating book sits (in front of the right hand), for the summon flash. */

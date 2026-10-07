@@ -108,6 +108,10 @@ public final class NUItems {
     // 0.32: the Rimeheart Runeblade
     public static final DeferredItem<MagicWeaponItem> RIMEHEART_RUNEBLADE = weapon("rimeheart_runeblade", MagicWeaponItem.Kind.RIMEHEART);
 
+    // 0.44: Painting Magic's palette & brush (manifested by a Painting grimoire; see book.PaintStudio)
+    public static final DeferredItem<PaintToolItem> PAINT_BRUSH = ITEMS.register("paint_brush", () -> new PaintToolItem(PaintToolItem.Kind.BRUSH));
+    public static final DeferredItem<PaintToolItem> PAINT_PALETTE = ITEMS.register("paint_palette", () -> new PaintToolItem(PaintToolItem.Kind.PALETTE));
+
     /** Spirit Lord Skill: grants the non-grimoire Spirit Lord path. */
     public static final DeferredItem<SpiritLordSkillItem> SPIRIT_LORD_SKILL = ITEMS.register("spirit_lord_skill", SpiritLordSkillItem::new);
 
@@ -117,6 +121,7 @@ public final class NUItems {
         l.addAll(List.of(DEMON_SLASHER_KATANA, MIASMA_KATANA, SPELL_FORGED_RAPIER, SEVERING_GREATSWORD, DEMON_SLAYER, DEMON_DWELLER, DEMON_DESTROYER, LICHT_DWELLER, LICHT_DESTROYER, RIMEHEART_RUNEBLADE));
         l.addAll(List.of(COMMUNICATION_DEVICE, RUNE_STONE, SPIRIT_CHARM, BOND_THREAD, FORTUNE_DIE,
                 GRIMOIRE_CHAIN, ANTI_BIRD_CHARM, RECOVERY_SALVE, WRITTEN_CONSENT, DEVIL_CONTRACT, GAUCHE_MIRROR, MAGIC_TOOL_SWORD, MAGIC_TOOL_SPEAR, MAGIC_TOOL_BOW, SPIRIT_LORD_SKILL));
+        l.addAll(List.of(PAINT_BRUSH, PAINT_PALETTE));                                          // 0.44
         return l;
     }
 }

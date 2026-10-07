@@ -97,7 +97,12 @@ public enum VfxShape {
     MIRROR_FRAME,            // a real ornate mirror at 'from' facing 'to' (shape from the seed); power = half-height
     MIRROR_ARRAY,            // mirrors of mixed shapes turning round the caster (follows); power = number of mirrors
     MIRROR_SHATTER,          // a mirror bursts into shards at 'from'; power = size
-    MIRROR_STEP;             // a Real Double steps out of the glass at 'from': prismatic streaks round a forming figure; power = height
+    MIRROR_STEP,             // a Real Double steps out of the glass at 'from': prismatic streaks round a forming figure; power = height
+    // 0.44 Painting Magic remake (palette & brush)
+    PAINT_PALETTE,           // the palette manifests at 'from', board facing 'to': blobs of paint land in rippling pools; power = size
+    PAINT_TRAIL,             // a glossy wet brush sweep 'from' -> 'to' with a specular streak, drips and a splash; power = width
+    PAINT_EMERGE,            // a living illustration painted on the ground at 'from' stands up facing 'to'; seed & 3 = kind; power = height
+    PAINT_SHIFT;             // the paint changes element at 'from': the palette's colours swirl into the new one; power = size
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

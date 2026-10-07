@@ -38,6 +38,8 @@ import static com.newuniverse.nusmp.book.BookPage.*;
  *   <li><b>Camouflage:</b> a refraction-shimmer coat of paint that hides the painter until they strike
  *       ({@link VfxShape#PAINT_CAMO}).</li>
  * </ul>
+ * 0.44 remake: the palette & brush are real items the grimoire manifests, the paint can become any element (and counters
+ * them), the painter's mood and EP scale everything, and paintings come to life as solid constructs. See {@link PaintStudio}.
  */
 public final class PaintingBook {
     /** Ink colours: the painter's blue, and the elements the paint can become. */
@@ -55,7 +57,10 @@ public final class PaintingBook {
                 signature("gods_game", "God's Game", PaintingBook::godsGame).withCooldown(900),
                 signature("elemental_quintet", "Elemental Quintet", PaintingBook::elementalQuintet),
                 signature("master_of_valhalla", "Master of Valhalla", PaintingBook::masterOfValhalla).withCooldown(1200),
-                signature("painted_menagerie", "Painted Menagerie", WikiSpells::paintedMenagerie).withCooldown(900)));
+                signature("painted_menagerie", "Painted Menagerie", PaintStudio::menagerie).withCooldown(900),   // 0.44: living painted beasts
+                // 0.44: appended (page order is the unlock order; old pages keep their places)
+                mid("living_illustration", "Living Illustration", PaintStudio::livingIllustration).withCooldown(400),
+                mid("counter_palette", "Counter Palette", PaintStudio::counterPalette).withCooldown(300)));
     }
 
     // ---------------------------------------------------------------- shared
@@ -86,16 +91,19 @@ public final class PaintingBook {
     static boolean brushstroke(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         Vec3 eye = p.getEyePosition().add(p.getLookAngle().scale(0.6)).add(0, -0.3, 0);
         Vec3 dir = p.getLookAngle();
+        PaintStudio.Paint paint = PaintStudio.paint(p);                                  // 0.44: in the palette's current paint
+        float pw = PaintStudio.power(p);
         SpellRuntime.bolt(p, eye, dir.scale(1.6), 0.6, 12, false, null,
                 (bolt, t) -> {
-                    b.hurt(i, p, t, mode, 7f);
+                    b.hurt(i, p, t, mode, 7f * pw);
                     t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1));
+                    PaintStudio.applyPaint(p, t, paint, pw);
                 },
                 (bolt, at) -> {
-                    stroke(p, eye, at, INK, 18, 0.7f);
+                    VfxSpawn.send(p.serverLevel(), VfxShape.PAINT_TRAIL, eye, at, paint.color, 16, 0.7f);
                     Vec3 ground = p.level().clip(new net.minecraft.world.level.ClipContext(at, at.add(0, -4, 0),
                             net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, p)).getLocation();
-                    stickyInk(b, i, p, mode, ground, 1.6f, 60, INK, false);
+                    stickyInk(b, i, p, mode, ground, 1.6f, 60, paint.color, false);
                 });
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.BRUSH_GENERIC, SoundSource.PLAYERS, 1.2f, 1.3f);
         return true;
@@ -109,7 +117,7 @@ public final class PaintingBook {
         b.castCircle(p, 1.1f);
         stroke(p, p.getEyePosition(), at.add(0, 0.2, 0), INK, 16, 0.5f);
         int ticks = BalanceLaw.controlTicks(t != null ? t : p, 100);
-        SpellRuntime.later(p.serverLevel(), 6, () -> stickyInk(b, i, p, mode, at, 3f * GrimoireBook.size(i, p), ticks, 0xFF6A4AFF, true));
+        SpellRuntime.later(p.serverLevel(), 6, () -> stickyInk(b, i, p, mode, at, 3f * PaintStudio.size(i, p), ticks, 0xFF6A4AFF, true));
         return true;
     }
 
@@ -140,8 +148,8 @@ public final class PaintingBook {
         VfxSpawn.send(p.serverLevel(), VfxShape.PAINT_BEAST, at, at.add(0, 3, 0), EARTH, 30, 1.8f);
         SpellRuntime.later(p.serverLevel(), 10, () -> {
             p.serverLevel().playSound(null, net.minecraft.core.BlockPos.containing(at), SoundEvents.IRON_GOLEM_ATTACK, SoundSource.PLAYERS, 1.5f, 0.6f);
-            for (LivingEntity v : GrimoireBook.around(p, at, 2.5 * GrimoireBook.size(i, p))) {
-                b.hurt(i, p, v, mode, 12f);
+            for (LivingEntity v : GrimoireBook.around(p, at, 2.5 * PaintStudio.size(i, p))) {
+                b.hurt(i, p, v, mode, 12f * PaintStudio.power(p));
                 v.setDeltaMovement(v.getDeltaMovement().x, 1.1, v.getDeltaMovement().z);
                 v.hurtMarked = true;
             }
@@ -153,7 +161,7 @@ public final class PaintingBook {
     static boolean deuxTempetes(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         b.castCircle(p, 1.5f);
         ServerLevel level = p.serverLevel();
-        float r = 6 * GrimoireBook.size(i, p);
+        float r = 6 * PaintStudio.size(i, p);
         SpellRuntime.zone(level, 100, 5, age -> {
             float spin = age * 0.12f;
             for (int k = 0; k < 2; k++) {
@@ -165,7 +173,7 @@ public final class PaintingBook {
                     stroke(p, c.add(Mth.cos(a + 1.2f) * 2, 2.5, Mth.sin(a + 1.2f) * 2), c, col, 12, 0.9f);
                 }
                 for (LivingEntity t : GrimoireBook.around(p, c, 2.6)) {
-                    b.hurt(i, p, t, mode, 2.5f);
+                    b.hurt(i, p, t, mode, 2.5f * PaintStudio.power(p));
                     if (k == 0) t.igniteForSeconds(3);
                     else {
                         t.setTicksFrozen(Math.max(t.getTicksFrozen(), 200));
@@ -198,7 +206,7 @@ public final class PaintingBook {
     /** Elemental Quintet: five strokes of five elements at once - fire, water, wind, earth and lightning - on up to five foes. */
     static boolean elementalQuintet(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         b.castCircle(p, 1.6f);
-        List<LivingEntity> foes = GrimoireBook.around(p, p.position(), 16 * GrimoireBook.size(i, p));
+        List<LivingEntity> foes = GrimoireBook.around(p, p.position(), 16 * PaintStudio.size(i, p));
         foes.sort((x, y) -> Double.compare(x.distanceToSqr(p), y.distanceToSqr(p)));
         int[] cols = {FIRE, 0xFF4AA8FF, WIND, EARTH, BOLT};
         for (int k = 0; k < 5; k++) {
@@ -210,13 +218,13 @@ public final class PaintingBook {
             SpellRuntime.later(p.serverLevel(), 2 + k * 3, () -> {
                 stroke(p, start, at, cols[el], 16, 0.8f);
                 if (t == null || !t.isAlive()) return;
-                b.hurt(i, p, t, mode, 8f);
+                b.hurt(i, p, t, mode, 8f * PaintStudio.power(p));
                 switch (el) {
                     case 0 -> t.igniteForSeconds(5);
                     case 1 -> t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 80, 2));
                     case 2 -> { Vec3 away = t.position().subtract(p.position()).normalize(); t.knockback(1.6, -away.x, -away.z); }
                     case 3 -> t.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 100, 1));
-                    default -> b.hurt(i, p, t, mode, 6f);                                    // lightning hits twice
+                    default -> b.hurt(i, p, t, mode, 6f * PaintStudio.power(p));                                    // lightning hits twice
                 }
             });
         }
@@ -229,7 +237,7 @@ public final class PaintingBook {
         ServerLevel level = p.serverLevel();
         Vec3 dir = p.getLookAngle().multiply(1, 0, 1).normalize();
         Vec3 side = new Vec3(-dir.z, 0, dir.x);
-        float len = 16 * GrimoireBook.size(i, p);
+        float len = 16 * PaintStudio.size(i, p);
         level.playSound(null, p.blockPosition(), SoundEvents.RAID_HORN.value(), SoundSource.PLAYERS, 0.8f, 1.4f);
         for (int k = -3; k <= 3; k++) {
             Vec3 start = p.position().add(side.scale(k * 1.4)).add(dir.scale(1.5));
@@ -237,9 +245,13 @@ public final class PaintingBook {
             int lane = k;
             SpellRuntime.later(level, 14, () -> stroke(p, start.add(0, 1, 0), start.add(dir.scale(len)).add(0, 1, 0), lane % 2 == 0 ? GOLD : INK, 18, 1.1f));
         }
+        for (int k = 0; k < 4; k++) {                                                    // 0.44: four einherjar stay to fight
+            Vec3 at = p.position().add(side.scale((k - 1.5) * 2.2)).add(dir.scale(3));
+            PaintStudio.illustrate(p, com.newuniverse.nusmp.entity.PaintedConstructEntity.Kind.KNIGHT, at, PaintStudio.Paint.LIGHTNING, 400);
+        }
         SpellRuntime.later(level, 18, () -> {
             for (LivingEntity t : GrimoireBook.along(p, p.position().add(0, 1, 0), p.position().add(dir.scale(len)).add(0, 1, 0), 4.5)) {
-                b.hurt(i, p, t, mode, 16f);
+                b.hurt(i, p, t, mode, 16f * PaintStudio.power(p));
                 t.knockback(1.2, -dir.x, -dir.z);
             }
         });

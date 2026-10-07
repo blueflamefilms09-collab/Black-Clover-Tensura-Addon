@@ -56,6 +56,8 @@ public class NUSMP {
             // Spirit Lords are small floating orbs for now (SpiritLordRenderer, the full Tensura body, is kept for later)
             modEventBus.addListener(com.newuniverse.nusmp.client.SpiritOrbRenderer::register);
             modEventBus.addListener(com.newuniverse.nusmp.client.MirrorDoubleRenderer::register);
+            modEventBus.addListener(com.newuniverse.nusmp.client.PaintedConstructRenderer::register);      // 0.44
+            modEventBus.addListener(com.newuniverse.nusmp.client.PaintedConstructRenderer::layers);
         }
         modContainer.registerConfig(ModConfig.Type.SERVER, NUConfig.SPEC);
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.multiverse.MultiverseConfig.SPEC, "nusmp-multiverse-server.toml");
@@ -89,6 +91,11 @@ public class NUSMP {
         // 0.42: Mirror Magic (array interception, lethal-hit shatter, Full Reflection)
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.MirrorWorks::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.MirrorWorks::onIncomingDamage);
+        // 0.44: Painting Magic remake - palette & brush, mood, element counter
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.PaintStudio::onPlayerTick);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.PaintStudio::onIncomingDamage);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.PaintStudio::onDeath);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.PaintStudio::onUseItemFinish);
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent e) -> {
             if (e.getSource().getEntity() instanceof net.minecraft.server.level.ServerPlayer sp) com.newuniverse.nusmp.book.PaintingBook.breakCamouflage(sp);
         });

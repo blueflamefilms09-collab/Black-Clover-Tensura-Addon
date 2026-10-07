@@ -19,8 +19,13 @@ public final class NUEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<MirrorDoubleEntity>> MIRROR_DOUBLE = ENTITIES.register("mirror_double",
             () -> EntityType.Builder.of(MirrorDoubleEntity::new, MobCategory.MISC).sized(0.6f, 1.8f).clientTrackingRange(10).build("mirror_double"));
 
+    /** 0.44: Painting Magic's living illustrations (painted beast / einherjar / giant). */
+    public static final DeferredHolder<EntityType<?>, EntityType<PaintedConstructEntity>> PAINTED_CONSTRUCT = ENTITIES.register("painted_construct",
+            () -> EntityType.Builder.of(PaintedConstructEntity::new, MobCategory.MISC).sized(0.6f, 1.95f).clientTrackingRange(10).build("painted_construct"));
+
     public static void attributes(EntityAttributeCreationEvent e) {
         e.put(SPIRIT_LORD.get(), SpiritLordEntity.createAttributes().build());
         e.put(MIRROR_DOUBLE.get(), MirrorDoubleEntity.createAttributes().build());
+        e.put(PAINTED_CONSTRUCT.get(), PaintedConstructEntity.createAttributes().build());
     }
 }
