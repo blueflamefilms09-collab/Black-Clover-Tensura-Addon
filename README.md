@@ -60,7 +60,7 @@ Chanted magics: use **Chant** mode until the chant is complete, then switch to *
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.45.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.46.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -211,7 +211,7 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
   - **Mercury Magic** switches between liquid and hyper-dense forms. Silver Guardian is a liquid dome that pours back into spears when it ends, and fire melts through it. Silver Blade, Silver Rain and the new Silver Eagle all scale hard with EP.
   - **Canon books:** William Vangeance now uses World Tree Magic and Jack the Ripper uses Slash Magic. Their old pages stay registered.
 - **New magic:**
-  - **World Tree:** roots and trees grow from the ground and recede afterwards. They bind foes, catch shots in mid-air and drain magicules, passing them to you and your allies.
+  - **World Tree:** grows real Minecraft trees, from saplings up to mega jungle trees as your EP rises. They are taken back when the spell ends; set `worldTreeTreesStay` in the server config to keep them. They bind foes, catch shots in mid-air and drain magicules, passing them to you and your allies.
   - **Dice:** Elemental Dice rolls 2d6 etched with elements. The Fate Die plays by D&D rules: a natural 1 fumbles and silences you, a natural 20 is a critical hit. Also Gambler's Fallacy and Loaded Dice.
   - **Slash:** adaptive cuts permanently mark defended foes until their armour and barriers stop working. Also Forearm Blades and Ripper Dash (both use aura) and Death Scythe.
   - **Compass:** brass compasses whose needles lock onto the strongest magicule signature. Willful Compass sends enemy shots back; Another Atlas marks a foe; Compass Rose locks every foe nearby.

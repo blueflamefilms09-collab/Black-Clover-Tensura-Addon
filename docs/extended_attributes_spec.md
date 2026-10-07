@@ -65,9 +65,14 @@ The dome flows back into spears when it ends. Fire melts straight through the do
 
 ## World Tree Magic (new; William)
 
-**Real terrain:**
-- Mangrove roots, oak trunks and flowering azalea crowns are grown only into open space.
-- They are removed again after their time (`SpellRuntime.tempBlock`), so nothing is griefed.
+**Real trees (the owner's call):** the spells grow real Minecraft trees with the vanilla tree generators.
+- **Sizes:**
+  - small: oak, birch, azalea (Mistilteinn Seed);
+  - medium: fancy oak, jungle, spruce (the Yggdrasil ring);
+  - large: fancy oak at low EP, dark oak or mega spruce at mid EP, mega jungle at high EP (Magic Tree Descent and the Yggdrasil centre).
+- **Mangrove-root sculptures** are also grown into open space only.
+- **Taking them back:** each tree's blocks are snapshotted. When the spell ends, every block the tree changed that is still the tree's is put back, so nothing built in the meantime is touched.
+- **Keeping them:** server config `worldTreeTreesStay = true` keeps the trees. (A server restart before a spell ends also leaves its tree standing.)
 
 **Energy Drain:**
 - Bound foes lose magicules (Tensura).
@@ -77,8 +82,8 @@ The dome flows back into spears when it ends. Fire melts straight through the do
 |---|---|
 | Mistilteinn Seed (wiki) | A seed bolt: roots burst from the target, bind it and drain 3%. |
 | Root Bind | Binds the foe for 2.5 s, drains it, then drags it to you. |
-| Magic Tree Descent (wiki) | A world tree comes down through a hole in the sky for 20 s. It binds and drains everything around it and shares what it drinks with you and your allies, who also regenerate. |
-| Budding of Yggdrasil (wiki) | 12 great roots in a ring. Every foe inside is bound and drained for 5 s, and enemy shots are caught in mid-air. |
+| Magic Tree Descent (wiki) | A real great tree (sized by EP) grows where you aim for 20 s. It binds and drains everything around it and shares what it drinks with you and your allies, who also regenerate. |
+| Budding of Yggdrasil (wiki) | A ring of real trees and great roots, with a giant tree in front. Every foe inside is bound and drained for 5 s, and enemy shots are caught in mid-air. |
 
 ## Dice Magic (new)
 
@@ -154,7 +159,7 @@ python tools/vfx_preview/preview.py light_blade light_flare tree_roots tree_cano
   - A six-ray star bursts on impact.
 - **World Tree:**
   - Bark-textured roots arch out of the ground with emerald buds.
-  - The tree descends through a ring in the sky, with a breathing canopy and mana spiralling up the trunk.
+  - `TREE_CANOPY` (a drawn tree) stays registered but is no longer used: the spells grow real trees.
   - Drained mana flows in a sinuous emerald stream.
 - **Dice:** real 3D dice built from quads.
   - Translucent resin faces in element colours, with gold glyph and number engravings.

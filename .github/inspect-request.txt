@@ -1,4 +1,6 @@
-# 0.46 custom menu: Tensura's magic screen ("Magic" tab with the hexagon of category icons; one shows "?")
-list:manasmods/tensura/.*client/.*([Ss]creen|[Mm]enu|[Gg]ui).*[Mm]agic
-list:manasmods/tensura/.*client/(gui|screen)/[A-Za-z]*\.class
-strings:manasmods/tensura/.*client/.*([Ss]creen|[Gg]ui)/.*[Mm]agic[A-Za-z]*Screen\.class
+# 0.46 custom menu: which widget is the "?" category in Tensura's ability categories (Magic tab) screen
+list:manasmods/tensura/client/screen/.*/
+list:manasmods/tensura/.*client/.*[Ww]idget
+strings:manasmods/tensura/client/screen/AbilityCategoriesScreen
+strings:manasmods/tensura/client/screen/MainScreen\.class
+manasmods/tensura/client/screen/AbilityCategoriesScreen\.class

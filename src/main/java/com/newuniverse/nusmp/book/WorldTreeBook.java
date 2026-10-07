@@ -29,8 +29,9 @@ import java.util.List;
  * World Tree Magic (0.45, new; William Vangeance). After the wiki: gigantic world trees whose branches and roots bind, catch
  * attacks in mid-air, and absorb the mana of those nearby.
  * <ul>
- *   <li><b>Terrain:</b> roots and trees are real blocks (mangrove roots, oak, flowering azalea) grown into open space only and
- *       taken away again after their time (SpellRuntime.tempBlock): the battlefield changes, nothing is griefed.</li>
+ *   <li><b>Real trees:</b> the spells grow real Minecraft trees with the vanilla generators, small to huge (oak, birch, azalea;
+ *       fancy oak, jungle, spruce; dark oak, mega spruce, mega jungle by EP), plus mangrove-root sculptures. Unless the server
+ *       keeps them (config worldTreeTreesStay), each is taken back block by block when its spell ends.</li>
  *   <li><b>Energy Drain:</b> bound foes lose magicules (Tensura) and what is drained flows to you and your allies
  *       ({@link EnergyBridge#drain}).</li>
  *   <li><b>Catching spells:</b> inside Budding of Yggdrasil, enemy shots are caught by the roots.</li>
@@ -49,6 +50,59 @@ public class WorldTreeBook extends GrimoireBook {
     public WorldTreeBook() { super(MagicType.WORLD_TREE, 0xFF3CE08A); }
     @Override protected List<BookPage> familyPages() { return pages; }
     @Override public ResourceKey<DamageType> damageType() { return TensuraDamageTypes.EARTH_ELEMENTAL; }
+
+    // ---------------------------------------------------------------- real trees (0.45: the owner asked for real Minecraft trees)
+    /** Small, medium and large vanilla tree generators; World Tree Magic picks by spell and EP. */
+    static final List<ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>>> SMALL = List.of(
+            net.minecraft.data.worldgen.features.TreeFeatures.OAK, net.minecraft.data.worldgen.features.TreeFeatures.BIRCH,
+            net.minecraft.data.worldgen.features.TreeFeatures.AZALEA_TREE);
+    static final List<ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>>> MEDIUM = List.of(
+            net.minecraft.data.worldgen.features.TreeFeatures.FANCY_OAK, net.minecraft.data.worldgen.features.TreeFeatures.JUNGLE_TREE_NO_VINE,
+            net.minecraft.data.worldgen.features.TreeFeatures.SPRUCE);
+    static final List<ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>>> LARGE = List.of(
+            net.minecraft.data.worldgen.features.TreeFeatures.FANCY_OAK, net.minecraft.data.worldgen.features.TreeFeatures.DARK_OAK,
+            net.minecraft.data.worldgen.features.TreeFeatures.MEGA_SPRUCE, net.minecraft.data.worldgen.features.TreeFeatures.MEGA_JUNGLE_TREE);
+
+    /** The large tree for this caster: bigger with EP (fancy oak -> dark oak / mega spruce -> mega jungle). */
+    static ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> largeFor(ServerPlayer p) {
+        return switch (MirrorWorks.tier(EnergyBridge.power(p))) {
+            case 0 -> LARGE.get(0);
+            case 1 -> LARGE.get(1 + p.getRandom().nextInt(2));
+            default -> LARGE.get(3);
+        };
+    }
+
+    /**
+     * Grows a real Minecraft tree (the vanilla generator) at the ground under 'at'. Unless the server keeps World Tree trees
+     * (nusmp config worldTreeTreesStay), every block the tree placed is put back as it was after 'ticks' - only blocks that
+     * are still what the tree made, so nothing built in the meantime is touched. Returns true if a tree grew.
+     */
+    static boolean growTree(ServerLevel level, Vec3 at, ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> key, int ticks) {
+        var holder = level.registryAccess().registryOrThrow(net.minecraft.core.registries.Registries.CONFIGURED_FEATURE).getHolder(key);
+        if (holder.isEmpty()) return false;
+        BlockPos ground = level.getHeightmapPos(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BlockPos.containing(at));
+        if (Math.abs(ground.getY() - at.y) > 6) ground = BlockPos.containing(at);
+        // snapshot the space the tree can reach (mega trees: ~8 out, ~32 up), grow it, and remember what changed
+        int rx = 9, up = 34;
+        java.util.Map<BlockPos, BlockState> before = new java.util.HashMap<>();
+        for (BlockPos q : BlockPos.betweenClosed(ground.offset(-rx, -2, -rx), ground.offset(rx, up, rx))) before.put(q.immutable(), level.getBlockState(q));
+        boolean grew = holder.get().value().place(level, level.getChunkSource().getGenerator(), level.getRandom(), ground);
+        if (!grew) return false;
+        java.util.Map<BlockPos, BlockState> placed = new java.util.HashMap<>();
+        for (var e : before.entrySet()) {
+            BlockState now = level.getBlockState(e.getKey());
+            if (now != e.getValue()) placed.put(e.getKey(), now);
+        }
+        level.playSound(null, ground, SoundEvents.ROOTED_DIRT_PLACE, SoundSource.BLOCKS, 1.6f, 0.7f);
+        if (com.newuniverse.nusmp.NUConfig.WORLD_TREE_PERMANENT.get() || placed.isEmpty()) return true;
+        SpellRuntime.later(level, ticks, () -> {
+            for (var e : placed.entrySet())                                         // undo only what is still the tree's
+                if (level.isLoaded(e.getKey()) && level.getBlockState(e.getKey()) == e.getValue())
+                    level.setBlock(e.getKey(), before.get(e.getKey()), 2 | 16);
+            VfxSpawn.send(level, VfxShape.TREE_ROOTS, Vec3.atBottomCenterOf(placed.keySet().iterator().next()), at, EMERALD, 30, 2f);
+        });
+        return true;
+    }
 
     static void roots(ServerPlayer p, Vec3 at, float radius, int count, int ticks) {
         long seed = (p.getRandom().nextLong() & ~15L) | Math.min(15, count);
@@ -86,7 +140,10 @@ public class WorldTreeBook extends GrimoireBook {
                     roots(p, t.position(), 1.6f, 5, 40);
                     bind(p, t, 40, 0.03);
                 },
-                (bolt, at) -> roots(p, at, 1.2f, 4, 30));
+                (bolt, at) -> {
+                    roots(p, at, 1.2f, 4, 30);
+                    growTree(p.serverLevel(), at, SMALL.get(p.getRandom().nextInt(SMALL.size())), 400);   // the seed takes root
+                });
         return true;
     }
 
@@ -120,20 +177,10 @@ public class WorldTreeBook extends GrimoireBook {
         ServerLevel level = p.serverLevel();
         Vec3 at = aim(p, 24);
         float r = 8 * GrimoireBook.size(i, p) * (0.9f + 0.1f * EnergyBridge.power(p));
-        float h = 9 + 3 * EnergyBridge.scale(p);
         b.castCircle(p, 1.4f);
-        b.vfx(p, VfxShape.TREE_CANOPY, at, at.add(0, h, 0), 400, h);
         roots(p, at, r, 12, 400);
-        // the trunk and a crown of real blocks, gone again when the spell ends
         BlockPos base = BlockPos.containing(at);
-        int trunk = (int) (h * 0.6f);
-        for (int y = 0; y < trunk; y++)
-            for (int x = 0; x <= 1; x++) for (int z = 0; z <= 1; z++)
-                SpellRuntime.tempBlock(level, base.offset(x, y, z), Blocks.OAK_LOG.defaultBlockState(), 400);
-        for (int x = -3; x <= 4; x++) for (int z = -3; z <= 4; z++) for (int y = 0; y < 3; y++)
-            if ((x - 0.5) * (x - 0.5) + (z - 0.5) * (z - 0.5) + (y - 1) * (y - 1) * 3 < 14)
-                SpellRuntime.tempBlock(level, base.offset(x, trunk + y, z), Blocks.FLOWERING_AZALEA_LEAVES.defaultBlockState()
-                        .setValue(net.minecraft.world.level.block.LeavesBlock.PERSISTENT, true), 400);
+        if (!growTree(level, at, largeFor(p), 400)) growTree(level, at, MEDIUM.get(0), 400);   // a real world tree, sized by EP
         for (int k = 0; k < 6; k++) {
             float a = Mth.TWO_PI * k / 6;
             growRoots(level, base.offset(Math.round(Mth.cos(a) * 3), -1, Math.round(Mth.sin(a) * 3)), 3, 400, p.getRandom());
@@ -155,7 +202,7 @@ public class WorldTreeBook extends GrimoireBook {
                         ex.setMagicule(Math.min(io.github.manasmods.tensura.util.EnergyHelper.getMaxMagicule(f), ex.getMagicule() + total / friends.size()));
                         ex.markDirty();
                     }
-                    VfxSpawn.send(level, VfxShape.TREE_DRAIN, at.add(0, h * 0.5, 0), f.getBoundingBox().getCenter(), EMERALD, 18, 0.4f);
+                    VfxSpawn.send(level, VfxShape.TREE_DRAIN, at.add(0, 6, 0), f.getBoundingBox().getCenter(), EMERALD, 18, 0.4f);
                 }
             }
         });
@@ -175,8 +222,12 @@ public class WorldTreeBook extends GrimoireBook {
         roots(p, c, r, 12, 100);
         for (int k = 0; k < 12; k++) {
             float a = Mth.TWO_PI * k / 12;
-            growRoots(level, BlockPos.containing(c.add(Mth.cos(a) * r * 0.8, -1, Mth.sin(a) * r * 0.8)), 4, 140, p.getRandom());
+            Vec3 at = c.add(Mth.cos(a) * r * 0.8, 0, Mth.sin(a) * r * 0.8);
+            if (k % 2 == 0) growTree(level, at, MEDIUM.get(k / 2 % MEDIUM.size()), 200);   // a ring of real trees
+            else growRoots(level, BlockPos.containing(at.add(0, -1, 0)), 4, 200, p.getRandom());
         }
+        Vec3 front = c.add(p.getLookAngle().multiply(1, 0, 1).normalize().scale(r * 0.45));
+        growTree(level, front, largeFor(p), 200);
         SpellRuntime.zone(level, 100, 5, age -> {
             for (Projectile pr : level.getEntitiesOfClass(Projectile.class, new net.minecraft.world.phys.AABB(c, c).inflate(r),
                     x -> x.getOwner() != p && !(x.getOwner() instanceof LivingEntity o && o.isAlliedTo(p)))) {

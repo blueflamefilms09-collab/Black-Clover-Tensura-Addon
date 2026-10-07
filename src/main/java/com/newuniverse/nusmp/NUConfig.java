@@ -64,6 +64,7 @@ public final class NUConfig {
     public static final ModConfigSpec.BooleanValue ALLOW_FORBIDDEN_START;
     public static final ModConfigSpec.DoubleValue BAL_MOB_DAMAGE_MULT;
     public static final ModConfigSpec.BooleanValue GRIEF;
+    public static final ModConfigSpec.BooleanValue WORLD_TREE_PERMANENT;   // 0.45
     // Magic gear
     public static final ModConfigSpec.DoubleValue GEAR_REGEN_JUNIOR, GEAR_REGEN_SENIOR, GEAR_SPADE_REGEN_PENALTY, GEAR_CONDUCTION_DAMAGE;
     public static final ModConfigSpec.IntValue GEAR_SENIOR_DAMAGE, GEAR_ELEMENT_BONUS, GEAR_RECOIL_REDUCTION, GEAR_EAGLE_REDUCTION, GEAR_HEART_COST,
@@ -137,6 +138,8 @@ public final class NUConfig {
         WEIGHT_DIAMOND = b.defineInRange("weightDiamond", 20, 0, 1000);
         ALLOW_FORBIDDEN_START = b.comment("Balance law: five-leaf / triple spade can't be a starting roll unless this is true.").define("allowForbiddenStart", false);
         GRIEF = b.comment("Grief flag: can grimoire explosions break blocks? (default off)").define("griefBlocks", false);
+        WORLD_TREE_PERMANENT = b.comment("World Tree Magic grows real trees. false (default): each tree is taken back when its spell ends; true: the trees stay.")
+                .define("worldTreeTreesStay", false);
         BAL_MOB_DAMAGE_MULT = b.comment("Balance law: multiplier on addon spell damage vs mobs (players are capped at 4-14 hearts by mastery).").defineInRange("mobDamageMultiplier", 1.0, 0.0, 10.0);
         GRIMOIRE_UNIQUE_LOOKS = b.comment("Each owner's grimoire gets its own cosmetic variation (cover, trim metal, thickness, clasp, colour drift). Off = every grimoire of a type looks identical.").define("uniqueLooks", true);
         b.pop();
