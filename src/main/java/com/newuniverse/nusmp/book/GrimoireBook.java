@@ -88,6 +88,10 @@ public abstract class GrimoireBook extends Skill {
             if (!(this instanceof ForbiddenBook)) l.add(BookPage.signature("devil_union", "Devil Union", GrimoireBook::devilUnion));
             // base ability, last so every existing page keeps its mode number: free, instant, no chant
             if (!(this instanceof ForbiddenBook)) l.add(new BookPage(SUMMON_ID, "Summon Grimoire", "Summon Grimoire", 0, 0, 0, (b, i, p, m) -> true));
+            if (!(this instanceof ForbiddenBook)) {                                 // 0.54: as in the show, a weapon goes back into the book and comes out again
+                l.add(new BookPage(STORE_ID, "Store Weapon", "Store Weapon", 0, 0, 0, (b, i, p, m) -> true));
+                l.add(new BookPage(DRAW_ID, "Draw Weapon", "Draw Weapon", 0, 0, 0, (b, i, p, m) -> true));
+            }
             all = l;
         }
         return all;
@@ -108,6 +112,12 @@ public abstract class GrimoireBook extends Skill {
     private boolean isUnion(int mode) { return page(mode) != null && page(mode).id().equals("devil_union"); }
     public static final String SUMMON_ID = "summon_grimoire";
     private boolean isSummon(int mode) { return page(mode) != null && page(mode).id().equals(SUMMON_ID); }
+    /** 0.54: the last two pages of every grimoire: put the weapon in your hand back into the book, and draw a stored one (anim.WeaponStore). */
+    public static final String STORE_ID = "store_weapon", DRAW_ID = "draw_weapon";
+    private boolean isStore(int mode) { return page(mode) != null && page(mode).id().equals(STORE_ID); }
+    private boolean isDrawWeapon(int mode) { return page(mode) != null && page(mode).id().equals(DRAW_ID); }
+    /** Pages that act on the key press itself (no chant, no cost, no cooldown). */
+    private boolean instant(int mode) { return isSummon(mode) || isStore(mode) || isDrawWeapon(mode); }
 
     public static boolean isUnlocked(ManasSkillInstance i, int mode) { return mode == 0 || (i.getOrCreateTag().getInt("Unlocked") & (1 << mode)) != 0; }
 
@@ -121,7 +131,7 @@ public abstract class GrimoireBook extends Skill {
         if (mode < familyCount()) return isUnlocked(i, mode);
         if (isDive(mode)) return e instanceof ServerPlayer p ? spiritGateOpen(p) : true;
         if (isUnion(mode)) return cover(i).isForbidden();
-        if (isSummon(mode)) return true;
+        if (instant(mode)) return true;
         return false;
     }
 
@@ -172,13 +182,16 @@ public abstract class GrimoireBook extends Skill {
     /** Summon Grimoire acts on the key press itself (no chant). Every other page is chanted in onHeld / cast in onRelease. */
     @Override
     public void onPressed(ManasSkillInstance instance, LivingEntity entity, int keyNumber, int mode) {
-        if (!isSummon(mode)) { super.onPressed(instance, entity, keyNumber, mode); return; }
-        if (entity instanceof ServerPlayer p) GrimoireSummon.toggle(p, this);
+        if (!instant(mode)) { super.onPressed(instance, entity, keyNumber, mode); return; }
+        if (!(entity instanceof ServerPlayer p)) return;
+        if (isSummon(mode)) GrimoireSummon.toggle(p, this);
+        else if (isStore(mode)) com.newuniverse.nusmp.anim.WeaponStore.store(p, this, instance);
+        else com.newuniverse.nusmp.anim.WeaponStore.draw(p, this, instance);
     }
 
     @Override
     public boolean onHeld(ManasSkillInstance instance, LivingEntity entity, int heldTicks, int mode) {
-        if (!(entity instanceof ServerPlayer p) || isSummon(mode)) return true;
+        if (!(entity instanceof ServerPlayer p) || instant(mode)) return true;
         int need = castTicks(instance, entity);
         BookPage page = page(mode);
         if (page == null) return true;
@@ -199,6 +212,7 @@ public abstract class GrimoireBook extends Skill {
             return true;
         }
         if (heldTicks == 1) {
+            com.newuniverse.nusmp.anim.CastAnim.play(p, com.newuniverse.nusmp.anim.CastAnim.CHANT);          // 0.54: the chant pose
             VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.MANA_CHARGE, p, p.position().add(0, 1, 0), color, need * 2, 1f);
             // 0.27: the floating spell card in front of the face is no longer shown (owner's request); the shape stays registered
         }
@@ -206,6 +220,7 @@ public abstract class GrimoireBook extends Skill {
             instance.getOrCreateTag().putBoolean("ManaZone", true);
             p.displayClientMessage(Component.literal("Mana Zone! " + page.name() + " overcharged (+25% size, +50% cost)").withStyle(ChatFormatting.AQUA, ChatFormatting.BOLD), true);
             VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.WIND_RING, p, p.position().add(0, 1, 0), color, 20, 1.2f);
+            com.newuniverse.nusmp.anim.CastAnim.play(p, com.newuniverse.nusmp.anim.CastAnim.MANA_ZONE);       // 0.54: the overcharge stance
         } else if (heldTicks % 4 == 0 && heldTicks <= need) {
             int pct = Math.min(100, heldTicks * 100 / need);
             p.displayClientMessage(Component.literal("[" + stage(instance) + "] Chanting " + page.name() + "... " + pct + "%").withStyle(ChatFormatting.LIGHT_PURPLE), true);
@@ -215,17 +230,18 @@ public abstract class GrimoireBook extends Skill {
 
     @Override
     public void onRelease(ManasSkillInstance instance, LivingEntity entity, int heldTicks, int keyNumber, int mode) {
-        if (!(entity instanceof ServerPlayer player) || isSummon(mode)) return;
+        if (!(entity instanceof ServerPlayer player) || instant(mode)) return;
         BookPage p = page(mode);
         if (p == null) return;
-        if (heldTicks < castTicks(instance, entity)) { fail(player, "The chant broke off."); instance.getOrCreateTag().putBoolean("ManaZone", false); return; }
+        if (heldTicks < castTicks(instance, entity)) { fail(player, "The chant broke off."); instance.getOrCreateTag().putBoolean("ManaZone", false); return; }   // fail() plays the flinch
         instance.getOrCreateTag().putInt("HeldTicks", heldTicks);
         if (!usable(instance, entity, mode)) { fail(player, "That page is still sealed."); return; }
         if (!holdingBook(player)) { fail(player, "Your pages are sealed shut. Summon your " + magic.displayName + " grimoire first (Summon Grimoire)."); return; }
         if (player.getPersistentData().getLong("nusmp_sealed_until") > player.level().getGameTime()) { fail(player, "Your grimoire has been sealed!"); return; }
         if (instance.onCoolDown(mode)) { fail(player, p.name() + " is recharging (" + instance.getCoolDown(mode) + "s)."); return; }
         if (EnergyHelper.isOutOfEnergy(entity, instance, mode)) return;   // Tensura checks and spends
-        if (!p.cast().cast(this, instance, player, mode)) return;
+        if (!p.cast().cast(this, instance, player, mode)) { com.newuniverse.nusmp.anim.CastAnim.play(player, com.newuniverse.nusmp.anim.CastAnim.FAIL); return; }
+        com.newuniverse.nusmp.anim.CastAnim.play(player, com.newuniverse.nusmp.anim.CastAnim.releaseFor(p));   // 0.54: the release body animation
         shout(player, p.incantation());
         if (p.cooldown() > 0) {
             int ticks = (int) (p.cooldown() * com.newuniverse.nusmp.item.MagicGear.cooldownMult(player) * com.newuniverse.nusmp.NUGameRules.spellCooldown(player.level()));   // 0.48: 40% shorter by default
@@ -575,7 +591,10 @@ public abstract class GrimoireBook extends Skill {
         return GrimoireSummon.isFloating(p, this instanceof ForbiddenBook ? null : magic);
     }
 
-    public static void fail(ServerPlayer p, String msg) { p.displayClientMessage(Component.literal(msg).withStyle(ChatFormatting.RED), true); }
+    public static void fail(ServerPlayer p, String msg) {
+        p.displayClientMessage(Component.literal(msg).withStyle(ChatFormatting.RED), true);
+        com.newuniverse.nusmp.anim.CastAnim.play(p, com.newuniverse.nusmp.anim.CastAnim.FAIL);                 // 0.54: the fizzle flinch
+    }
 
     private void shout(ServerPlayer p, String incantation) {
         Component line = Component.literal(magic.displayName + ": " + incantation + "!").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD);

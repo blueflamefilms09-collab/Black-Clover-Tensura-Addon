@@ -170,6 +170,11 @@ and ends when the owner dies, logs out or the life runs out.
 
 Read `vfx/client/layer/TimeMagicLayer.java` first, then `ElementFx.java`, `FireSpellLayer.java`, `DemonSlayerLayer.java`, `MirrorLayer.java`, `GravityLayer.java`.
 
+* **THE SHAPE PROTOCOL (every attribute, so that spells and VFX meet without negotiation).** Your three shapes mean the same thing in every attribute:
+  * `<KEY>_FX1` = CAST / PROJECTILE: `from` = origin (caster hand / eye), `to` = target point, `power` = size scale (1.0 normal; 0.6 to 3.0), duration = flight ticks (default 16). A charge flash at `from` in the first quarter, then the projectile / beam / trail from `from` to `to` with an afterimage, ending in a small flash at `to`.
+  * `<KEY>_FX2` = ZONE / FIELD / DOME: `from` = centre on the ground, `power` = RADIUS in blocks (the effect is drawn to that radius), duration = life ticks (default 80). Ground sigil / ring, rising motes, a rim or wall, a pulse; fades in over 8 ticks and out over the last 12.
+  * `<KEY>_FX3` = IMPACT / BURST / SIGNATURE: `from` = centre, `to` = optional direction hint (`to - from`, may be zero), `power` = scale, duration = life ticks (default 28). Flash, expanding rings, the magic's debris flying out, a lingering afterglow.
+  Variants come from `power`, `color` (`inst.color`, mixed with the magic's own palette) and the length of `to - from`. Spells map pages onto them: a bolt page = FX1 trail + FX3 at the impact; a zone page = FX2; a buff = FX3 at the caster (+ aura); an ultimate = FX2 + a big FX3.
 * Your layer extends `AbstractVfxLayer`; it already exists as `<Pascal>Layer` with the three shapes. `render(inst, ctx, buf)` is called every frame for each live
   instance; everything is computed from the age (`inst.ageTicks(ctx.partialTick)`, `inst.progress(...)`) and the seed (`inst.random()`), never from state.
   Positions: `inst.from(ctx)`, `inst.to(ctx)` (world) -> `ctx.rel(...)` (camera relative). `inst.power` is your size/intensity knob (the spell passes it), `inst.color` the tint.

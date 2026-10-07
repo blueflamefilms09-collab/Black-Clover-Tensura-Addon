@@ -185,6 +185,14 @@ public class GrimoireItem extends Item {
 
     /** Gives the player's own grimoire of this magic a canon book's look (after binding a canon copy). */
     public static void applyCanon(ServerPlayer p, MagicType magic, String canon) {
+        applyCanonLook(p, magic, canon);
+        if ("yami".equals(canon)) {                                                      // 0.54: Yami's grimoire comes with Yami's weapon, drawn out of the book
+            com.newuniverse.nusmp.anim.SwordDraw.draw(p, com.newuniverse.nusmp.anim.SwordDraw.YAMI,
+                    com.newuniverse.nusmp.item.MagicWeaponItem.bound(com.newuniverse.nusmp.item.NUItems.MIASMA_KATANA.get(), p));
+        }
+    }
+
+    private static void applyCanonLook(ServerPlayer p, MagicType magic, String canon) {
         if (GrimoireSlot.holdsOwn(p, magic)) {
             ItemStack copy = GrimoireSlot.get(p).copy();
             setCanon(copy, canon);

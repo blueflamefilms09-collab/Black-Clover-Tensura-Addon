@@ -5,7 +5,7 @@ Tensura's casting, from Blockbench to in-game. Written for **this** mod: NeoForg
 (already a dependency), the existing chant / Mana Zone / release flow in `book/GrimoireBook.java`, and the VFX layers that
 already draw the magic circles.
 
-> Status: this is a plan. Nothing in the mod animates the player body yet. Section 6 lists the work in build order.
+> Status (0.54): built, without Player Animator. Clips live in `assets/nusmp/animations/player/cast.animation.json` (made by `tools/gen_cast_animations.py`), the server picks them in `anim/CastAnim`, `client/CastAnimClient` plays them from `PlayerModelMixin`. Chant and Mana Zone loop; releases are thrust (hand out), side, up, sweep, slam; the signature finisher and the fail flinch have their own clips. A page can pick its own with `BookPage.withAnim("out"|"side"|"up"|"sweep"|"slam"|"signature")`. The rest of this guide is the original plan and still the reference for new clips.
 
 ---
 

@@ -47,7 +47,8 @@ public class NUSMP {
         modEventBus.addListener(com.newuniverse.nusmp.book.RougeCat::register);                             // 0.49: Rouge on her summoner's head
         modEventBus.addListener(com.newuniverse.nusmp.aura.PlayerAuraPayload::register);                     // 0.53: player render layers
         com.newuniverse.nusmp.prop.MagicProps.init();                                                      // 0.53: props of the attribute expansion
-        modEventBus.addListener(com.newuniverse.nusmp.anim.SwordDrawPayload::register);                      // 0.52: the grimoire sword draw
+        modEventBus.addListener(com.newuniverse.nusmp.anim.SwordDrawPayload::register);
+        modEventBus.addListener(com.newuniverse.nusmp.anim.CastAnimPayload::register);                      // 0.54: casting body animations                      // 0.52: the grimoire sword draw
         modEventBus.addListener(com.newuniverse.nusmp.entity.ZagredStatePayload::register);                 // 0.48: Zagred's state, word and reticle
         if (FMLEnvironment.dist == Dist.CLIENT) {
             com.newuniverse.nusmp.vfx.client.VfxClientEvents.init(modEventBus);

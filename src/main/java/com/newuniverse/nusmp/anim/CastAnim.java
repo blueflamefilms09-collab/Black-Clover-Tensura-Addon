@@ -1,0 +1,41 @@
+package com.newuniverse.nusmp.anim;
+
+import com.newuniverse.nusmp.book.BookPage;
+import net.minecraft.server.level.ServerPlayer;
+import net.neoforged.neoforge.network.PacketDistributor;
+
+/**
+ * 0.54: the spell-casting body animations (docs/cast_animation_guide.md). The server decides which clip plays when (the chant while the
+ * key is held, the release on the cast, the fail flinch when it fizzles); every client that sees the player plays it
+ * ({@code client.CastAnimClient}, keyframes in assets/nusmp/animations/player/cast.animation.json made by tools/gen_cast_animations.py).
+ * Nothing here delays or changes a spell: the clips attach to moments that already exist.
+ */
+public final class CastAnim {
+    private CastAnim() {}
+
+    /** The clip names of cast.animation.json. */
+    public static final String CHANT = "cast_chant", MANA_ZONE = "cast_mana_zone", THRUST = "cast_release_thrust", SWEEP = "cast_release_sweep",
+            SIDE = "cast_release_side", UP = "cast_release_up", SLAM = "cast_release_slam", SIGNATURE = "cast_signature", FAIL = "cast_fail";
+
+    /** Plays a clip on the player for everyone who sees them. The chant and the mana zone loop until another clip or {@link #stop}. */
+    public static void play(ServerPlayer p, String clip) {
+        PacketDistributor.sendToPlayersTrackingEntityAndSelf(p, new CastAnimPayload(p.getId(), clip));
+    }
+
+    public static void stop(ServerPlayer p) { play(p, ""); }
+
+    /** The release clip of a page: its own override (BookPage.withAnim), else by tier: starter / mid thrust, zone / daily slam, signature the finisher. */
+    public static String releaseFor(BookPage page) {
+        if (page == null) return THRUST;
+        if (page.anim() != null && !page.anim().isEmpty()) {
+            return switch (page.anim()) { case "out", "thrust" -> THRUST; case "side" -> SIDE; case "up" -> UP; case "sweep" -> SWEEP; case "slam" -> SLAM;
+                case "signature" -> SIGNATURE; default -> page.anim(); };
+        }
+        double c = page.costPercent();
+        if (c >= 30) return SIGNATURE;
+        if (c >= 15) return SLAM;
+        // starters and mids: the hand goes out, up or to the side, by the page (the same page always casts the same way)
+        int h = Math.floorMod(page.id() == null ? 0 : page.id().hashCode(), 3);
+        return h == 0 ? THRUST : h == 1 ? SIDE : UP;
+    }
+}

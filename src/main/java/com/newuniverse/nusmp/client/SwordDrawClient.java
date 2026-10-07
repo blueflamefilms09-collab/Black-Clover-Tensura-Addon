@@ -87,6 +87,12 @@ public final class SwordDrawClient {
     /** How much of the draw pose shows: in over 3 ticks, out over the last 4. */
     static float weight(float t) { return Math.min(1f, t / 3f) * (1f - Mth.clamp((t - 20f) / 4f, 0f, 1f)); }
 
+    /** True while this entity's sword draw / store is playing (the cast animations leave the arms alone then). */
+    public static boolean isDrawing(LivingEntity e) {
+        int[] a = ANIMS.get(e.getId());
+        return a != null && e.tickCount - a[0] >= 0 && e.tickCount - a[0] <= DURATION;
+    }
+
     // ---------------------------------------------------------------- the model pose (called by the mixin)
     public static void pose(PlayerModel<?> m, LivingEntity e, float age) {
         int[] a = ANIMS.get(e.getId());
@@ -94,18 +100,19 @@ public final class SwordDrawClient {
         float t = age - a[0];
         if (t < 0 || t > DURATION) return;
         float w = weight(t);
-        m.rightArm.xRot = Mth.lerp(w, m.rightArm.xRot, sample(RIGHT_ARM, t, 0));
-        m.rightArm.yRot = Mth.lerp(w, m.rightArm.yRot, sample(RIGHT_ARM, t, 1));
-        m.rightArm.zRot = Mth.lerp(w, m.rightArm.zRot, sample(RIGHT_ARM, t, 2));
-        m.leftArm.xRot = Mth.lerp(w, m.leftArm.xRot, sample(LEFT_ARM, t, 0));
-        m.leftArm.yRot = Mth.lerp(w, m.leftArm.yRot, sample(LEFT_ARM, t, 1));
-        m.leftArm.zRot = Mth.lerp(w, m.leftArm.zRot, sample(LEFT_ARM, t, 2));
-        m.body.xRot = Mth.lerp(w, m.body.xRot, sample(BODY, t, 0));
-        m.body.yRot = Mth.lerp(w, m.body.yRot, sample(BODY, t, 1));
-        m.body.zRot = Mth.lerp(w, m.body.zRot, sample(BODY, t, 2));
-        m.head.xRot += sample(HEAD, t, 0) * w;
-        m.head.yRot += sample(HEAD, t, 1) * w;
-        m.head.zRot += sample(HEAD, t, 2) * w;
+        float tt = (a[1] & 16) != 0 ? DURATION - t : t;                                  // 0.54: a stored weapon plays the draw backwards
+        m.rightArm.xRot = Mth.lerp(w, m.rightArm.xRot, sample(RIGHT_ARM, tt, 0));
+        m.rightArm.yRot = Mth.lerp(w, m.rightArm.yRot, sample(RIGHT_ARM, tt, 1));
+        m.rightArm.zRot = Mth.lerp(w, m.rightArm.zRot, sample(RIGHT_ARM, tt, 2));
+        m.leftArm.xRot = Mth.lerp(w, m.leftArm.xRot, sample(LEFT_ARM, tt, 0));
+        m.leftArm.yRot = Mth.lerp(w, m.leftArm.yRot, sample(LEFT_ARM, tt, 1));
+        m.leftArm.zRot = Mth.lerp(w, m.leftArm.zRot, sample(LEFT_ARM, tt, 2));
+        m.body.xRot = Mth.lerp(w, m.body.xRot, sample(BODY, tt, 0));
+        m.body.yRot = Mth.lerp(w, m.body.yRot, sample(BODY, tt, 1));
+        m.body.zRot = Mth.lerp(w, m.body.zRot, sample(BODY, tt, 2));
+        m.head.xRot += sample(HEAD, tt, 0) * w;
+        m.head.yRot += sample(HEAD, tt, 1) * w;
+        m.head.zRot += sample(HEAD, tt, 2) * w;
         m.rightSleeve.copyFrom(m.rightArm);
         m.leftSleeve.copyFrom(m.leftArm);
         m.jacket.copyFrom(m.body);
@@ -121,7 +128,8 @@ public final class SwordDrawClient {
         if (a == null) return;
         float t = p.tickCount + e.getPartialTick() - a[0];
         if (t < 0 || t > DURATION) return;
-        float down = ease(0, t / 8f) - ease(1, (t - 10f) / 10f);                              // 0 -> 1 reaching the book, back to 0 with the sword
+        float tt = (a[1] & 16) != 0 ? DURATION - t : t;
+        float down = ease(0, tt / 8f) - ease(1, (tt - 10f) / 10f);                              // 0 -> 1 reaching the book, back to 0 with the sword
         PoseStack ps = e.getPoseStack();
         ps.translate(0.12f * down, -0.65f * down, 0.1f * down);
         ps.mulPose(Axis.XP.rotationDegrees(28f * down));
@@ -141,13 +149,14 @@ public final class SwordDrawClient {
             double yaw = Math.toRadians(p instanceof LivingEntity l ? l.yBodyRot : p.getYRot());
             double hx = p.getX() - Math.cos(yaw) * 0.5 - Math.sin(yaw) * -0.15, hy = p.getY() + 0.95, hz = p.getZ() - Math.sin(yaw) * 0.5 + Math.cos(yaw) * 0.15;
             var r = p.level().random;
-            boolean am = a[1] == 0;
+            int st = a[1] & 15;
+            boolean am = st == 0 || st == 2;                                              // 0.54: Anti-Magic and Yami's Dark Magic are dark, the rest are bright
             if (t <= GIVE_TICK + 2) {
                 for (int k = 0; k < 3; k++) {
                     double ox = (r.nextDouble() - 0.5) * 0.4, oz = (r.nextDouble() - 0.5) * 0.4;
                     if (am) {
                         boolean red = r.nextBoolean();
-                        p.level().addParticle(new DustParticleOptions(red ? new Vector3f(0.78f, 0.04f, 0.12f) : new Vector3f(0.04f, 0f, 0.07f), 1.3f),
+                        p.level().addParticle(new DustParticleOptions(red ? (st == 2 ? new Vector3f(0.45f, 0.12f, 0.75f) : new Vector3f(0.78f, 0.04f, 0.12f)) : new Vector3f(0.04f, 0f, 0.07f), 1.3f),
                                 hx + ox, hy + 0.1, hz + oz, 0, 0.05 + 0.02 * t / 4.0, 0);
                     } else {
                         p.level().addParticle(r.nextInt(3) == 0 ? ParticleTypes.ENCHANT : ParticleTypes.END_ROD, hx + ox, hy + 0.1, hz + oz, 0, 0.06, 0);
