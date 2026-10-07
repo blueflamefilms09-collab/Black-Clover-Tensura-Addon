@@ -33,6 +33,20 @@ jobs:
               for j in $JARS; do unzip -Z1 "$j" | grep -E '\.class$' | grep -E "${pat#list:}" | head -200; done
               continue
             fi
+            if [ "${pat#files:}" != "$pat" ]; then            # files:<regex> lists any jar entry (data, assets), not only classes
+              echo "===== files: ${pat#files:} ====="
+              for j in $JARS; do unzip -Z1 "$j" | grep -E "${pat#files:}" | head -300; done
+              continue
+            fi
+            if [ "${pat#cat:}" != "$pat" ]; then              # cat:<regex> prints matching data files (json, lang)
+              echo "===== cat: ${pat#cat:} ====="
+              for j in $JARS; do
+                for f in $(unzip -Z1 "$j" | grep -E "${pat#cat:}" | head -60); do
+                  echo "----- $f"; unzip -p "$j" "$f" | head -c 3000; echo
+                done
+              done
+              continue
+            fi
             if [ "${pat#strings:}" != "$pat" ]; then          # strings:<regex> prints the string constants (e.g. tag ids)
               echo "===== strings: ${pat#strings:} ====="
               for j in $JARS; do
