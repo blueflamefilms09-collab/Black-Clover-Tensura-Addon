@@ -520,10 +520,10 @@ def volume_material(name, density, puff=False):
                                                  math_node("POWER", math_node("MAXIMUM", dy, 0.0), 2.0)))
         inside = math_node("MINIMUM", math_node("MAXIMUM", dx, dy), 0.0)
         sd = math_node("ABSOLUTE", math_node("ADD", outside, inside))
-        edge = math_node("EXPONENT", math_node("MULTIPLY", math_node("POWER", math_node("DIVIDE", sd, 0.03), 2.0), -1.0))
+        edge = math_node("EXPONENT", math_node("MULTIPLY", math_node("POWER", math_node("DIVIDE", sd, 0.02), 2.0), -1.0))
         sepz = nodes.new("ShaderNodeSeparateXYZ")
         links.new(p, sepz.inputs[0])
-        height = math_node("EXPONENT", math_node("MULTIPLY", math_node("MAXIMUM", math_node("SUBTRACT", sepz.outputs["Z"], 0.03), 0.0), -18.0))
+        height = math_node("EXPONENT", math_node("MULTIPLY", math_node("MAXIMUM", math_node("SUBTRACT", sepz.outputs["Z"], 0.035), 0.0), -30.0))
         floor_cut = math_node("GREATER_THAN", sepz.outputs["Z"], -0.03)
         mask = math_node("MULTIPLY", math_node("MULTIPLY", edge, height), floor_cut)
     dens = math_node("MULTIPLY", math_node("MULTIPLY", mask, shaped.outputs["Result"]), density)
@@ -597,7 +597,7 @@ def smoke(book, density_mat, puff_mat):
     ps = book.particle_systems[-1]
     st = ps.settings
     st.name = "PageEdgeSmoke"
-    st.count = 500
+    st.count = 300
     st.frame_start, st.frame_end = 1, 140
     st.lifetime, st.lifetime_random = 60, 0.5
     st.emit_from = "VERT"
@@ -611,7 +611,7 @@ def smoke(book, density_mat, puff_mat):
     st.render_type = "OBJECT"
     st.instance_object = puff
     st.particle_size = 1.0
-    st.size_random = 0.7
+    st.size_random = 0.5
     ps.vertex_group_density = "page_edges"
     return box
 
@@ -679,7 +679,7 @@ def build():
     clover = build_clover(principled("Black Clover", (0.01, 0.008, 0.012), rough=0.25, emit=(0.25, 0.1, 0.5), emit_strength=0.15))
     panels = build_spine_panels(principled("Pewter", (0.42, 0.38, 0.5), rough=0.3, metal=1.0, emit=(0.5, 0.25, 1.0), emit_strength=0.08))
     build_rig(book, clover, panels)
-    smoke(book, volume_material("Page Edge Smoke", 900.0), volume_material("Smoke Puff", 600.0, puff=True))
+    smoke(book, volume_material("Page Edge Smoke", 60.0), volume_material("Smoke Puff", 80.0, puff=True))
     return book
 
 
