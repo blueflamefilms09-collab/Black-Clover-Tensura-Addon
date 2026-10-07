@@ -23,6 +23,7 @@ What it builds:
     blender --background --python build_zagred_grimoire.py -- --render open.png --frame 70 --view open --engine cycles
     blender --background --python build_zagred_grimoire.py -- --render closed.png --frame 140 --view closed --engine cycles
     options: --glb out.glb  --save out.blend  --res 1280x720  --samples 32  --engine cycles|eevee  --frame N  --view open|closed
+             --smoke 0 (skip the volumes for a fast look)
 """
 import math
 import sys
@@ -667,11 +668,14 @@ def build():
 def main():
     argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
     opts = {"--render": None, "--save": None, "--glb": None, "--res": "1280x720", "--samples": "32", "--engine": "eevee",
-            "--frame": "70", "--view": "open"}
+            "--frame": "70", "--view": "open", "--smoke": "1"}
     for i in range(0, len(argv) - 1, 2):
         opts[argv[i]] = argv[i + 1]
     build()
     setup_scene(opts["--engine"], opts["--view"])
+    if opts["--smoke"] == "0":                                                # a quick look without the (slow) volumes
+        bpy.data.objects["SmokeVolume"].hide_render = True
+        bpy.data.objects["ZagredGrimoire"].particle_systems[0].settings.render_type = "NONE"
     sc = bpy.context.scene
     rx, ry = (int(v) for v in opts["--res"].lower().split("x"))
     sc.render.resolution_x, sc.render.resolution_y = rx, ry
