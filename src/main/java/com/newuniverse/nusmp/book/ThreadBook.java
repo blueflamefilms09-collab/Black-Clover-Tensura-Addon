@@ -58,7 +58,7 @@ public class ThreadBook extends GrimoireBook {
         if (i.getOrCreateTag().getBoolean("RougeArmed")) { fail(p, "Rouge is already watching over you."); return false; }
         i.getOrCreateTag().putBoolean("RougeArmed", true);
         b.castCircle(p, 0.8f);
-        com.newuniverse.nusmp.vfx.VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.ROUGE_CAT, p, p.position().add(0, 1, 0), 0, 200, 1f);   // 0.34: Rouge herself
+        RougeCat.show(p);                                                 // 0.49: Rouge herself, a cat of red thread on your head
         return true;
     }
 
@@ -70,6 +70,7 @@ public class ThreadBook extends GrimoireBook {
             t.putDouble("PX" + k, t.getDouble("PX" + (k - 1))); t.putDouble("PY" + k, t.getDouble("PY" + (k - 1))); t.putDouble("PZ" + k, t.getDouble("PZ" + (k - 1)));
         }
         t.putDouble("PX0", p.getX()); t.putDouble("PY0", p.getY()); t.putDouble("PZ0", p.getZ());
+        if (t.getBoolean("RougeArmed")) RougeCat.show(p);                  // 0.49: she stays on your head while she watches over you
     }
 
     /** Rouge unravels and pulls you out of the way (the wiki: she unravels to dodge): a 12% chance to turn a blow aside. */

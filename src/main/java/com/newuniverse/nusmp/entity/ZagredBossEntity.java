@@ -89,6 +89,9 @@ public class ZagredBossEntity extends Monster {
     private Word pending;
     private long castAt, nextThink;
     private float recentDamage;
+    // 0.49: Tensura's own magic (TensuraCaster), learned on its first tick, cast between words
+    private List<net.minecraft.resources.ResourceLocation> tensuraKit;
+    private long nextTensura = 120;
     private int clientState = STATE_IDLE, clientWord = -1, clientTarget = -1;
 
     /** Client copies, set by ZagredStatePayload. */
@@ -162,6 +165,12 @@ public class ZagredBossEntity extends Monster {
                 .withStyle(ChatFormatting.DARK_PURPLE));
         if (t % 60 == 0) VfxSpawn.sendFollowing(sl, VfxShape.KOTO_AURA, this, position(), VIOLET, 70, 1.6f);
         recentDamage *= 0.97f;
+        if (tensuraKit == null) {
+            tensuraKit = TensuraCaster.learn(this, 5, "dark", "death", "shadow", "black", "hell", "curse", "gravity", "dimension", "spatial",
+                    "flare", "lightning", "bullet", "spear", "blade", "arrow");
+            TensuraCaster.ensureMana(this, 2_000_000);
+        }
+        if (t % 200 == 0) TensuraCaster.ensureMana(this, 2_000_000);
         LivingEntity target = getTarget();
         if (target == null || !target.isAlive()) {
             setState(sl, fighters.isEmpty() ? STATE_IDLE : STATE_STALK, null, null);
@@ -185,6 +194,19 @@ public class ZagredBossEntity extends Monster {
                 setState(sl, STATE_CASTING, w, target);
                 getNavigation().stop();
             } else setState(sl, STATE_COMBAT, null, target);
+        }
+        // Tensura's own magic between words: telegraphed like a word, then cast through ManasCore
+        if (pending == null && t >= nextTensura && !tensuraKit.isEmpty() && distanceToSqr(target) < 32 * 32) {
+            nextTensura = t + (ph == 4 ? 100 : 160);
+            setState(sl, STATE_CASTING, null, target);
+            getNavigation().stop();
+            SpellRuntime.later(sl, 12, () -> {
+                LivingEntity tg = getTarget();
+                if (!isAlive() || tg == null || !tg.isAlive()) return;
+                var id = TensuraCaster.cast(this, tg, tensuraKit, 10);
+                if (id != null) VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, getEyePosition(), tg.getBoundingBox().getCenter(), VIOLET, 20, 1.2f);
+                setState(sl, STATE_COMBAT, null, tg);
+            });
         }
         // anti-magic up close: back off and fight from range
         if (antiMagicNear(target) && distanceToSqr(target) < 36 && t % 20 == 0) {
@@ -277,7 +299,7 @@ public class ZagredBossEntity extends Monster {
                 || AntiMagic.lord(p).isPresent());
     }
 
-    /** Client: dark magenta and black embers shed from the wings and tail. */
+    /** Client: black flakes and smoke shed from the shoulders and wings (as in the reference art). */
     @Override
     public void aiStep() {
         super.aiStep();
@@ -285,10 +307,11 @@ public class ZagredBossEntity extends Monster {
         var r = getRandom();
         float yawRad = yBodyRot * net.minecraft.util.Mth.DEG_TO_RAD;
         double bx = getX() + Math.sin(yawRad) * 0.6, bz = getZ() - Math.cos(yawRad) * 0.6;
-        level().addParticle(new net.minecraft.core.particles.DustParticleOptions(new org.joml.Vector3f(0.55f, 0.04f, 0.42f), 1.6f),
-                bx + (r.nextDouble() - 0.5) * 3.2, getY() + 1.2 + r.nextDouble() * 1.6, bz + (r.nextDouble() - 0.5) * 3.2, 0, 0.02, 0);
+        for (int k = 0; k < 2; k++)                                             // black flakes shed off the shoulders and wings
+            level().addParticle(new net.minecraft.core.particles.DustParticleOptions(new org.joml.Vector3f(0.03f, 0.03f, 0.035f), 2.2f),
+                    bx + (r.nextDouble() - 0.5) * 3.6, getY() + 2.2 + r.nextDouble() * 1.4, bz + (r.nextDouble() - 0.5) * 3.6, 0, 0.015, 0);
         if (r.nextInt(3) == 0) level().addParticle(net.minecraft.core.particles.ParticleTypes.LARGE_SMOKE,
-                bx + (r.nextDouble() - 0.5) * 2, getY() + 0.6 + r.nextDouble() * 2, bz + (r.nextDouble() - 0.5) * 2, 0, 0.01, 0);
+                bx + (r.nextDouble() - 0.5) * 2, getY() + 2.0 + r.nextDouble() * 1.6, bz + (r.nextDouble() - 0.5) * 2, 0, 0.01, 0);
         if (clientState == STATE_CASTING && r.nextInt(2) == 0) level().addParticle(net.minecraft.core.particles.ParticleTypes.WITCH,
                 getX() + (r.nextDouble() - 0.5), getY() + 2.4, getZ() + (r.nextDouble() - 0.5), 0, 0.05, 0);
     }

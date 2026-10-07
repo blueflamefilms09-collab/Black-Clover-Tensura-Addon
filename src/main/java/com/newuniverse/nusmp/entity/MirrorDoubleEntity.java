@@ -78,6 +78,8 @@ public class MirrorDoubleEntity extends TamableAnimal {
     @Override
     protected void registerGoals() {
         goalSelector.addGoal(1, new FloatGoal(this));
+        goalSelector.addGoal(2, new SummonBrain.Caster(this, 0xFFC8B0FF, 5f, true, "light", "holy", "spear", "bullet"));                  // 0.49
+        targetSelector.addGoal(0, new SummonBrain.Guard(this, 16));
         goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.25, true));
         goalSelector.addGoal(5, new FollowOwnerGoal(this, 1.15, 6f, 2.5f));
         goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8f));

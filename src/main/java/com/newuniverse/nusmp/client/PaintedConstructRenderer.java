@@ -74,6 +74,7 @@ public class PaintedConstructRenderer extends MobRenderer<PaintedConstructEntity
     public void render(PaintedConstructEntity e, float yaw, float partial, PoseStack pose, MultiBufferSource buffers, int light) {
         PaintedConstructEntity.Kind k = e.kind();
         this.model = k == PaintedConstructEntity.Kind.BEAST ? beast : humanoid;
+        if (k == PaintedConstructEntity.Kind.BEAST && beast instanceof BeastModel<PaintedConstructEntity> bm) bm.setGenome(e.genome());
         this.shadowRadius = k == PaintedConstructEntity.Kind.GIANT ? 1.0f : 0.5f;
         super.render(e, yaw, partial, pose, buffers, light);
     }
@@ -88,7 +89,7 @@ public class PaintedConstructRenderer extends MobRenderer<PaintedConstructEntity
     protected void scale(PaintedConstructEntity e, PoseStack pose, float partial) {
         float t = Mth.clamp((e.tickCount + partial) / 16f, 0, 1);
         float c = 1.70158f, u = t - 1, rise = 1 + (c + 1) * u * u * u + c * u * u;              // ease-out-back
-        float k = switch (e.kind()) { case GIANT -> 2f; case KNIGHT -> 0.9375f; default -> 1f; };
+        float k = switch (e.kind()) { case GIANT -> 2f; case KNIGHT -> 0.9375f; default -> PaintedConstructEntity.geneScale(e.genome()); };
         float wide = 1 + 0.3f * (1 - t);
         pose.scale(k * wide, k * Math.max(0.04f, rise), k * wide);
     }
@@ -138,22 +139,81 @@ public class PaintedConstructRenderer extends MobRenderer<PaintedConstructEntity
         }
     }
 
-    /** A painted hound: long legs, deep chest, a muzzle and ears (QuadrupedModel animates the legs and head). */
+    /**
+     * The painted beast. 0.49: one body with every part a painted animal can have; the entity's genome
+     * (PaintedConstructEntity#genome) shows the head, body build, tail and extras it was drawn with - a pure wolf, panther, bear,
+     * boar, griffin, dragon or lion, or a chimera mixing them. QuadrupedModel animates the legs and head.
+     */
     static final class BeastModel<T extends Entity> extends QuadrupedModel<T> {
-        BeastModel(ModelPart root) { super(root, false, 4f, 4f, 2f, 2f, 24); }
+        private final ModelPart[] heads = new ModelPart[6], tails = new ModelPart[3];
+        private final ModelPart wings, mane, spikes;
+
+        BeastModel(ModelPart root) {
+            super(root, false, 4f, 4f, 2f, 2f, 24);
+            String[] h = {"wolf_face", "cat_face", "bear_face", "boar_face", "beak", "dragon_face"};
+            for (int k = 0; k < h.length; k++) heads[k] = head.getChild(h[k]);
+            ModelPart b = root.getChild("body");
+            tails[0] = b.getChild("tail"); tails[1] = b.getChild("tail_bushy"); tails[2] = b.getChild("tail_spiked");
+            wings = b.getChild("wings"); mane = root.getChild("head").getChild("mane"); spikes = b.getChild("spikes");
+        }
+
+        /** Shows the parts of this genome (see PaintedConstructEntity#genome). */
+        void setGenome(int g) {
+            int head = PaintedConstructEntity.geneHead(g), tail = PaintedConstructEntity.geneTail(g);
+            for (int k = 0; k < heads.length; k++) heads[k].visible = k == head;
+            for (int k = 0; k < tails.length; k++) tails[k].visible = k == tail;
+            wings.visible = PaintedConstructEntity.geneWings(g);
+            mane.visible = PaintedConstructEntity.geneMane(g);
+            spikes.visible = PaintedConstructEntity.geneSpikes(g);
+        }
+
+        @Override
+        public void setupAnim(T e, float limbSwing, float limbAmount, float age, float yaw, float pitch) {
+            super.setupAnim(e, limbSwing, limbAmount, age, yaw, pitch);
+            float beat = Mth.sin(age * 0.3f) * 0.35f;
+            wings.getChild("wing_r").zRot = 0.5f + beat;
+            wings.getChild("wing_l").zRot = -0.5f - beat;
+            for (ModelPart tl : tails) tl.yRot = Mth.sin(age * 0.15f) * 0.3f;
+        }
 
         static LayerDefinition createLayer() {
             MeshDefinition mesh = new MeshDefinition();
             PartDefinition root = mesh.getRoot();
             PartDefinition head = root.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-3f, -3f, -5f, 6, 6, 6),
                     PartPose.offset(0f, 10f, -7f));
-            head.addOrReplaceChild("muzzle", CubeListBuilder.create().texOffs(0, 12).addBox(-1.5f, 0f, -8f, 3, 3, 3), PartPose.ZERO);
-            head.addOrReplaceChild("ears", CubeListBuilder.create().texOffs(24, 0).addBox(-3f, -5f, -2f, 2, 2, 1).texOffs(24, 0).addBox(1f, -5f, -2f, 2, 2, 1),
-                    PartPose.ZERO);
+            // wolf: long muzzle, pointed ears (the 0.44 hound)
+            head.addOrReplaceChild("wolf_face", CubeListBuilder.create().texOffs(0, 12).addBox(-1.5f, 0f, -8f, 3, 3, 3)
+                    .texOffs(24, 0).addBox(-3f, -5f, -2f, 2, 2, 1).texOffs(24, 0).addBox(1f, -5f, -2f, 2, 2, 1), PartPose.ZERO);
+            // panther / lion: short flat muzzle, tall pointed ears, whisker pads
+            head.addOrReplaceChild("cat_face", CubeListBuilder.create().texOffs(0, 12).addBox(-2f, 0.5f, -6.5f, 4, 2, 2)
+                    .texOffs(24, 0).addBox(-3f, -6f, -2f, 2, 3, 1).texOffs(24, 0).addBox(1f, -6f, -2f, 2, 3, 1), PartPose.ZERO);
+            // bear: wide blunt muzzle, round ears
+            head.addOrReplaceChild("bear_face", CubeListBuilder.create().texOffs(0, 12).addBox(-2f, -0.5f, -7.5f, 4, 3, 3)
+                    .texOffs(24, 0).addBox(-3.5f, -4.5f, -1f, 2, 2, 1).texOffs(24, 0).addBox(1.5f, -4.5f, -1f, 2, 2, 1), PartPose.ZERO);
+            // boar: snout and upturned tusks
+            head.addOrReplaceChild("boar_face", CubeListBuilder.create().texOffs(0, 12).addBox(-2f, 0f, -8f, 4, 3, 3)
+                    .texOffs(24, 4).addBox(-2.5f, -1f, -8f, 1, 2, 1).texOffs(24, 4).addBox(1.5f, -1f, -8f, 1, 2, 1), PartPose.ZERO);
+            // griffin: hooked beak and a crest
+            head.addOrReplaceChild("beak", CubeListBuilder.create().texOffs(0, 12).addBox(-1f, -0.5f, -8f, 2, 2, 3)
+                    .texOffs(0, 12).addBox(-1f, 1.5f, -8f, 2, 1, 1).texOffs(24, 0).addBox(-0.5f, -6f, -3f, 1, 3, 4), PartPose.ZERO);
+            // dragon: long snout and two swept horns
+            head.addOrReplaceChild("dragon_face", CubeListBuilder.create().texOffs(0, 12).addBox(-1.5f, 0.5f, -9f, 3, 2, 4)
+                    .texOffs(24, 0).addBox(-2.5f, -6f, 0f, 1, 4, 1).texOffs(24, 0).addBox(1.5f, -6f, 0f, 1, 4, 1), PartPose.ZERO);
+            head.addOrReplaceChild("mane", CubeListBuilder.create().texOffs(0, 20).addBox(-4.5f, -4.5f, -1f, 9, 9, 3), PartPose.ZERO);
             PartDefinition body = root.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 20).addBox(-3.5f, -3.5f, -7f, 7, 7, 14),
                     PartPose.offset(0f, 12f, 0f));
-            body.addOrReplaceChild("tail", CubeListBuilder.create().texOffs(36, 0).addBox(-1f, 0f, 0f, 2, 2, 8),     // a child: QuadrupedModel only draws its own parts
+            body.addOrReplaceChild("tail", CubeListBuilder.create().texOffs(36, 0).addBox(-1f, 0f, 0f, 2, 2, 8),     // children: QuadrupedModel only draws its own parts
                     PartPose.offsetAndRotation(0f, -2.5f, 6.5f, -0.6f, 0f, 0f));
+            body.addOrReplaceChild("tail_bushy", CubeListBuilder.create().texOffs(36, 0).addBox(-1.5f, -0.5f, 0f, 3, 3, 7),
+                    PartPose.offsetAndRotation(0f, -2.5f, 6.5f, -0.9f, 0f, 0f));
+            body.addOrReplaceChild("tail_spiked", CubeListBuilder.create().texOffs(36, 0).addBox(-1f, 0f, 0f, 2, 2, 10)
+                    .texOffs(24, 0).addBox(-0.5f, -1.5f, 3f, 1, 2, 1).texOffs(24, 0).addBox(-0.5f, -1.5f, 7f, 1, 2, 1),
+                    PartPose.offsetAndRotation(0f, -2.5f, 6.5f, -0.3f, 0f, 0f));
+            PartDefinition wings = body.addOrReplaceChild("wings", CubeListBuilder.create(), PartPose.offset(0f, -3.5f, -2f));
+            wings.addOrReplaceChild("wing_r", CubeListBuilder.create().texOffs(0, 41).addBox(-12f, 0f, -3f, 12, 0, 8), PartPose.offset(-3f, 0f, 0f));
+            wings.addOrReplaceChild("wing_l", CubeListBuilder.create().texOffs(0, 41).mirror().addBox(0f, 0f, -3f, 12, 0, 8), PartPose.offset(3f, 0f, 0f));
+            body.addOrReplaceChild("spikes", CubeListBuilder.create().texOffs(24, 0).addBox(-0.5f, -6f, -5f, 1, 3, 1).texOffs(24, 0).addBox(-0.5f, -6f, -1f, 1, 3, 1)
+                    .texOffs(24, 0).addBox(-0.5f, -6f, 3f, 1, 3, 1), PartPose.ZERO);
             CubeListBuilder leg = CubeListBuilder.create().texOffs(44, 20).addBox(-1f, 0f, -1f, 2, 9, 2);
             root.addOrReplaceChild("right_hind_leg", leg, PartPose.offset(-2f, 15f, 5f));
             root.addOrReplaceChild("left_hind_leg", leg, PartPose.offset(2f, 15f, 5f));

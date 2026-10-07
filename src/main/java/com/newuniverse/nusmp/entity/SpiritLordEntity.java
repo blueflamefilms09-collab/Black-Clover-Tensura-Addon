@@ -87,6 +87,8 @@ public class SpiritLordEntity extends TamableAnimal implements GeoEntity {
     @Override
     protected void registerGoals() {
         goalSelector.addGoal(1, new FloatGoal(this));
+        goalSelector.addGoal(2, new SummonBrain.Caster(this, 0xFF9AE8FF, 7f, false, "spirit", "wind", "water", "fire", "light"));          // 0.49
+        targetSelector.addGoal(0, new SummonBrain.Guard(this, 18));
         goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.2, true));
         goalSelector.addGoal(5, new FollowOwnerGoal(this, 1.1, 8f, 3f));
         goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8f));

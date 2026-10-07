@@ -30,7 +30,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
  *   <li>Glow pass (full-bright, additive): the red eyes, horn and hair tips, ribcage cracks, rune lines and wing veins, pulsing
  *       faster each phase.</li>
  *   <li>Aura pass: the model again, slightly larger, through the nusmp:rendertype_zagred_aura core shader: a fresnel rim pulsing
- *       violet (#8000FF) to crimson (#FF0055). If the shader can't load, an additive eyes pass stands in.</li>
+ *       blood red to crimson (0.49). If the shader can't load, an additive eyes pass stands in.</li>
  *   <li>Target reticle: while it fights or telegraphs a word, a turning rune ring (and inward marks when casting) is projected at
  *       its target's feet (state from ZagredStatePayload).</li>
  *   <li>Phase 4: the otherworldly trident in its right claws.</li>
@@ -44,7 +44,7 @@ public class ZagredRenderer extends MobRenderer<ZagredBossEntity, ZagredModel> {
     private final ItemInHandRenderer items;
 
     public ZagredRenderer(EntityRendererProvider.Context ctx) {
-        super(ctx, new ZagredModel(ctx.bakeLayer(ZagredModel.LAYER)), 1.1f);
+        super(ctx, new ZagredModel(ctx.bakeLayer(ZagredModel.LAYER)), 0.9f);
         this.items = ctx.getItemInHandRenderer();
         addLayer(new Glow(this));
         addLayer(new Aura(this));
@@ -83,7 +83,7 @@ public class ZagredRenderer extends MobRenderer<ZagredBossEntity, ZagredModel> {
         flat(pose.last(), vc, r, (int) (k * 1.0), (int) (k * 0.05), (int) (k * 0.35));
         if (casting) {
             pose.mulPose(Axis.YP.rotation(-age * 0.2f));
-            flat(pose.last(), vc, r * 0.55f, 160, 10, 220);
+            flat(pose.last(), vc, r * 0.55f, 220, 10, 30);
         }
         pose.popPose();
     }
@@ -122,7 +122,7 @@ public class ZagredRenderer extends MobRenderer<ZagredBossEntity, ZagredModel> {
             float k = 0.55f + 0.15f * e.phase() + (e.clientState() == ZagredBossEntity.STATE_CASTING ? 0.3f : 0f);
             int a = (int) (255 * Math.min(1f, k));
             boolean shader = NUShaders.zagredAura() != null;
-            int color = shader ? (a << 24) | 0xFFFFFF : 0xFF000000 | ((int) (a * 0.35f) << 16) | ((int) (a * 0.05f) << 8) | (int) (a * 0.5f);
+            int color = shader ? (a << 24) | 0xFFFFFF : 0xFF000000 | ((int) (a * 0.3f) << 16) | ((int) (a * 0.02f) << 8) | (int) (a * 0.04f);
             pose.pushPose();
             pose.scale(1.04f, 1.02f, 1.04f);
             getParentModel().renderToBuffer(pose, buffers.getBuffer(NURenderTypes.zagredAura(TEX)), 0xF000F0, OverlayTexture.NO_OVERLAY, color);

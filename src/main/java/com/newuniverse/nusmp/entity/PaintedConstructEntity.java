@@ -55,6 +55,43 @@ public class PaintedConstructEntity extends TamableAnimal {
 
     private static final EntityDataAccessor<Integer> KIND = SynchedEntityData.defineId(PaintedConstructEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> PAINT = SynchedEntityData.defineId(PaintedConstructEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> GENOME = SynchedEntityData.defineId(PaintedConstructEntity.class, EntityDataSerializers.INT);
+
+    // ---------------------------------------------------------------- 0.49: the painted beast's genome
+    // bits 0-2 head (wolf, cat, bear, boar, eagle, dragon), 3-4 build (lean, heavy, small), 5 wings, 6 mane, 7 back spikes,
+    // 8-9 tail (long, bushy, spiked, none). A pure species, or (two times in five) a chimera with every gene rolled on its own.
+    static final String[] HEADS = {"Wolf", "Panther", "Bear", "Boar", "Griffin", "Dragon"};
+    static final int[][] SPECIES = {   // head, build, wings, mane, spikes, tail
+            {0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0}, {2, 1, 0, 0, 0, 3}, {3, 1, 0, 0, 1, 3}, {4, 0, 1, 0, 0, 0}, {5, 1, 1, 0, 1, 2}, {1, 1, 0, 1, 0, 0}};
+    static final String[] SPECIES_NAMES = {"Wolf", "Panther", "Bear", "Boar", "Griffin", "Dragon", "Lion"};
+
+    public static int geneHead(int g) { return Math.min(5, g & 7); }
+    public static int geneBuild(int g) { return Math.min(2, g >> 3 & 3); }
+    public static boolean geneWings(int g) { return (g >> 5 & 1) != 0; }
+    public static boolean geneMane(int g) { return (g >> 6 & 1) != 0; }
+    public static boolean geneSpikes(int g) { return (g >> 7 & 1) != 0; }
+    public static int geneTail(int g) { return g >> 8 & 3; }
+    public static float geneScale(int g) { return switch (geneBuild(g)) { case 1 -> 1.25f; case 2 -> 0.85f; default -> 1f; }; }
+
+    static int genome(int head, int build, int wings, int mane, int spikes, int tail) {
+        return head | build << 3 | wings << 5 | mane << 6 | spikes << 7 | tail << 8;
+    }
+
+    /** A random beast: a pure species, or a chimera (bit 10 marks it). */
+    static int rollGenome(net.minecraft.util.RandomSource r) {
+        if (r.nextInt(5) < 2) return genome(r.nextInt(6), r.nextInt(3), r.nextInt(3) == 0 ? 1 : 0, r.nextInt(4) == 0 ? 1 : 0, r.nextInt(3) == 0 ? 1 : 0, r.nextInt(4)) | 1 << 10;
+        int[] s = SPECIES[r.nextInt(SPECIES.length)];
+        return genome(s[0], s[1], s[2], s[3], s[4], s[5]) | indexOf(s) << 11;
+    }
+
+    static int indexOf(int[] s) { for (int k = 0; k < SPECIES.length; k++) if (SPECIES[k] == s) return k; return 0; }
+
+    static String beastName(int g) {
+        if ((g >> 10 & 1) != 0) return "Painted Chimera (" + HEADS[geneHead(g)] + (geneWings(g) ? ", winged" : "") + ")";
+        return "Painted " + SPECIES_NAMES[Math.min(SPECIES_NAMES.length - 1, g >> 11 & 7)];
+    }
+
+    public int genome() { return entityData.get(GENOME); }
 
     private int life = 600;
     private float power = 1f;
@@ -73,6 +110,7 @@ public class PaintedConstructEntity extends TamableAnimal {
         super.defineSynchedData(b);
         b.define(KIND, Kind.KNIGHT.ordinal());
         b.define(PAINT, 0);
+        b.define(GENOME, 0);
     }
 
     public Kind kind() { Kind[] v = Kind.values(); return v[Math.floorMod(entityData.get(KIND), v.length)]; }
@@ -81,14 +119,14 @@ public class PaintedConstructEntity extends TamableAnimal {
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
         super.onSyncedDataUpdated(key);
-        if (KIND.equals(key)) refreshDimensions();
+        if (KIND.equals(key) || GENOME.equals(key)) refreshDimensions();
     }
 
     @Override
     public EntityDimensions getDefaultDimensions(Pose pose) {
         if (entityData == null) return super.getDefaultDimensions(pose);                        // during construction
         return switch (kind()) {
-            case BEAST -> EntityDimensions.scalable(0.9f, 0.9f);
+            case BEAST -> EntityDimensions.scalable(0.9f * geneScale(genome()), 0.9f * geneScale(genome()));
             case KNIGHT -> EntityDimensions.scalable(0.6f, 1.95f);
             case GIANT -> EntityDimensions.scalable(1.2f, 3.9f);
         };
@@ -104,6 +142,7 @@ public class PaintedConstructEntity extends TamableAnimal {
         if (e == null) return null;
         e.entityData.set(KIND, kind.ordinal());
         e.entityData.set(PAINT, paint.ordinal());
+        if (kind == Kind.BEAST) e.entityData.set(GENOME, rollGenome(owner.getRandom()));      // 0.49: a random beast every time
         e.refreshDimensions();
         e.power = power;
         e.life = life;
@@ -119,8 +158,16 @@ public class PaintedConstructEntity extends TamableAnimal {
         set(e, Attributes.MOVEMENT_SPEED, speed);
         set(e, Attributes.ARMOR, kind == Kind.KNIGHT ? 6 : kind == Kind.GIANT ? 4 : 0);
         set(e, Attributes.ATTACK_KNOCKBACK, kind == Kind.GIANT ? 1.5 : 0);
+        if (kind == Kind.BEAST) {                                                                   // the body it was drawn with
+            int g = e.genome(), build = geneBuild(g), head = geneHead(g);
+            set(e, Attributes.MAX_HEALTH, hp * (build == 1 ? 1.6 : build == 2 ? 0.8 : 1) * (head == 2 ? 1.3 : 1));
+            set(e, Attributes.MOVEMENT_SPEED, speed * (build == 1 ? 0.85 : build == 2 ? 1.15 : 1) * (head == 1 ? 1.15 : 1) * (geneWings(g) ? 1.1 : 1));
+            set(e, Attributes.ATTACK_DAMAGE, atk * (head == 2 || head == 5 ? 1.3 : 1) * (geneMane(g) ? 1.15 : 1));
+            set(e, Attributes.ARMOR, (head == 2 ? 4 : 0) + (geneSpikes(g) ? 3 : 0));
+            set(e, Attributes.ATTACK_KNOCKBACK, head == 3 ? 1.2 : 0);
+        }
         e.setHealth(e.getMaxHealth());
-        e.setCustomName(net.minecraft.network.chat.Component.literal("Painted " + switch (kind) { case BEAST -> "Beast"; case KNIGHT -> "Einherjar"; case GIANT -> "Giant"; }));
+        e.setCustomName(net.minecraft.network.chat.Component.literal(kind == Kind.BEAST ? beastName(e.genome()) : "Painted " + switch (kind) { case BEAST -> "Beast"; case KNIGHT -> "Einherjar"; case GIANT -> "Giant"; }));
         e.setCustomNameVisible(false);
         owner.serverLevel().addFreshEntity(e);
         return e;
@@ -134,6 +181,8 @@ public class PaintedConstructEntity extends TamableAnimal {
     @Override
     protected void registerGoals() {
         goalSelector.addGoal(1, new FloatGoal(this));
+        goalSelector.addGoal(2, new SummonBrain.Caster(this, 0xFFFFC870, 6f, false, "fire", "water", "wind", "earth", "bullet", "arrow"));     // 0.49
+        targetSelector.addGoal(0, new SummonBrain.Guard(this, 16));
         goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.3, true));
         goalSelector.addGoal(5, new FollowOwnerGoal(this, 1.2, 7f, 3f));
         goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8f));
@@ -157,6 +206,12 @@ public class PaintedConstructEntity extends TamableAnimal {
         boolean hit = super.doHurtTarget(target);
         if (hit && target instanceof LivingEntity t && getOwner() instanceof ServerPlayer owner) {
             PaintStudio.applyPaint(owner, t, paint(), power * 0.6f);
+            if (kind() == Kind.BEAST) {                                                             // 0.49: what its head can do
+                int head = geneHead(genome());
+                if (head == 5) t.igniteForSeconds(3);                                                // dragon fire
+                if (head == 1) t.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.WEAKNESS, 60, 0));   // claws
+                if (head == 4) t.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN, 40, 1)); // talons
+            }
             if (level() instanceof ServerLevel sl)
                 VfxSpawn.send(sl, VfxShape.PAINT_SPLAT, t.position().add(0, t.getBbHeight() * 0.5, 0), t.position().add(0, 2, 0), paint().color, 14, 0.5f);
         }
@@ -195,6 +250,7 @@ public class PaintedConstructEntity extends TamableAnimal {
         super.addAdditionalSaveData(tag);
         tag.putInt("PaintKind", entityData.get(KIND));
         tag.putInt("PaintColour", entityData.get(PAINT));
+        tag.putInt("PaintGenome", entityData.get(GENOME));
         tag.putInt("PaintLife", life);
         tag.putFloat("PaintPower", power);
     }
@@ -204,6 +260,7 @@ public class PaintedConstructEntity extends TamableAnimal {
         super.readAdditionalSaveData(tag);
         entityData.set(KIND, tag.getInt("PaintKind"));
         entityData.set(PAINT, tag.getInt("PaintColour"));
+        entityData.set(GENOME, tag.getInt("PaintGenome"));
         life = tag.contains("PaintLife") ? tag.getInt("PaintLife") : 0;
         power = tag.contains("PaintPower") ? tag.getFloat("PaintPower") : 1f;
     }

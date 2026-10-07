@@ -176,6 +176,8 @@ public class TimeBook extends GrimoireBook {
         if (!(e instanceof ServerPlayer p) || !p.isAlive()) return;
         long now = p.level().getGameTime();
         CompoundTag tag = i.getOrCreateTag();
+        if (tag.getLong("PassiveAt") == now) return;                          // 0.49: once a tick, whoever drives it (see passiveTick)
+        tag.putLong("PassiveAt", now);
         // Reversal: the wound from 3 s ago is partly undone
         long at = tag.getLong("RewindAt");
         if (at > 0 && now >= at) {
@@ -222,5 +224,15 @@ public class TimeBook extends GrimoireBook {
             tag.putFloat("RewindHeal", share);
         }
         return r;
+    }
+
+    /**
+     * 0.49 fix: ManasCore does not tick passive skills, so Time Magic's passive (Reversal, Deceleration) never ran. The player
+     * tick drives it here; onTick's once-a-tick guard keeps it single if ManasCore does tick it too.
+     */
+    public static void passiveTick(net.neoforged.neoforge.event.tick.PlayerTickEvent.Post e) {
+        if (!(e.getEntity() instanceof ServerPlayer p)) return;
+        io.github.manasmods.manascore.skill.api.SkillAPI.getSkillsFrom(p).getSkill(com.newuniverse.nusmp.skill.NUSkills.BOOK_TIME.getId())
+                .ifPresent(i -> { if (i.getSkill() instanceof TimeBook b) b.onTick(i, p); });
     }
 }
