@@ -15,6 +15,9 @@ import com.newuniverse.nusmp.vfx.client.layer.ArcaneSpellLayer2;
 import com.newuniverse.nusmp.vfx.client.layer.DreamPaintLayer;
 import com.newuniverse.nusmp.vfx.client.layer.MirrorLayer;
 import com.newuniverse.nusmp.vfx.client.layer.PaintStudioLayer;
+import com.newuniverse.nusmp.vfx.client.layer.LightTreeLayer;
+import com.newuniverse.nusmp.vfx.client.layer.DiceLayer;
+import com.newuniverse.nusmp.vfx.client.layer.SlashCompassMercuryLayer;
 import com.newuniverse.nusmp.vfx.client.layer.TimeMagicLayer;
 import com.newuniverse.nusmp.vfx.client.layer.FireSpellLayer;
 import com.newuniverse.nusmp.vfx.client.layer.WaterSpellLayer;
@@ -64,6 +67,9 @@ public final class VfxManager {
         register(new DreamPaintLayer());      // 0.41
         register(new MirrorLayer());          // 0.42
         register(new PaintStudioLayer());     // 0.44
+        register(new LightTreeLayer());       // 0.45
+        register(new DiceLayer());
+        register(new SlashCompassMercuryLayer());
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }

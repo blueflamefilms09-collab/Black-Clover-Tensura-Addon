@@ -34,4 +34,5 @@ public final class VfxInstance {
     public RandomSource random() { return RandomSource.create(seed); }
     public Vec3 from(VfxRenderContext ctx) { return payload.from(); }
     public Vec3 to(VfxRenderContext ctx) { return payload.to(); }
+    public float followYaw(VfxRenderContext ctx) { return Float.NaN; }
 }

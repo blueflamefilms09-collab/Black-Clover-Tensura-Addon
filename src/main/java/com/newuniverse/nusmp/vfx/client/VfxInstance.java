@@ -47,6 +47,14 @@ public final class VfxInstance {
     public Vec3 from(VfxRenderContext ctx) { return follow(ctx, payload.from(), followOffsetFrom); }
     public Vec3 to(VfxRenderContext ctx) { return follow(ctx, payload.to(), followOffsetTo); }
 
+    /** 0.45: the body yaw (degrees) of the followed living entity, or NaN when nothing living is followed. */
+    public float followYaw(VfxRenderContext ctx) {
+        if (payload.followEntity() < 0 || ctx.level == null) return Float.NaN;
+        Entity e = ctx.level.getEntity(payload.followEntity());
+        if (!(e instanceof net.minecraft.world.entity.LivingEntity le)) return Float.NaN;
+        return net.minecraft.util.Mth.lerp(ctx.partialTick, le.yBodyRotO, le.yBodyRot);
+    }
+
     private Vec3 follow(VfxRenderContext ctx, Vec3 fixed, Vec3 offset) {
         if (offset == null) return fixed;
         Entity e = ctx.level.getEntity(payload.followEntity());

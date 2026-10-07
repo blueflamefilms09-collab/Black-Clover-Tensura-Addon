@@ -205,6 +205,26 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
 - **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
 
+## 0.45 - Light, World Tree, Dice, Slash, Compass, Mercury
+- **Replacements:**
+  - **Light Magic** is the fastest magic in the mod. Light hits ignore armour and cut the spirit; only an Aura barrier halves them. Its two pages were remade, and three were added: Healing Ray, Lamp of Avior Gloria and Light Speed.
+  - **Mercury Magic** switches between liquid and hyper-dense forms. Silver Guardian is a liquid dome that pours back into spears when it ends, and fire melts through it. Silver Blade, Silver Rain and the new Silver Eagle all scale hard with EP.
+  - **Canon books:** William Vangeance now uses World Tree Magic and Jack the Ripper uses Slash Magic. Their old pages stay registered.
+- **New magic:**
+  - **World Tree:** roots and trees grow from the ground and recede afterwards. They bind foes, catch shots in mid-air and drain magicules, passing them to you and your allies.
+  - **Dice:** Elemental Dice rolls 2d6 etched with elements. The Fate Die plays by D&D rules: a natural 1 fumbles and silences you, a natural 20 is a critical hit. Also Gambler's Fallacy and Loaded Dice.
+  - **Slash:** adaptive cuts permanently mark defended foes until their armour and barriers stop working. Also Forearm Blades and Ripper Dash (both use aura) and Death Scythe.
+  - **Compass:** brass compasses whose needles lock onto the strongest magicule signature. Willful Compass sends enemy shots back; Another Atlas marks a foe; Compass Rose locks every foe nearby.
+  - **Letoile Becquerel** joins as a canon Compass grimoire.
+- **New VFX (16 effects):**
+  - **Light:** blades with real lens-flare ghosts.
+  - **World Tree:** erupting roots, a descending world tree and a mana drain stream.
+  - **Dice:** 3D resin dice that roll and land on the result.
+  - **Slash:** forearm blades, crescent slashes and the scythe.
+  - **Compass:** the compass array, homing needles and a lock sigil.
+  - **Mercury:** a liquid-silver dome, spears and the eagle.
+- **New Blender script:** the dice and the compass, with a preview at `docs/blender/previews/dice_compass.png`. Guide: `docs/extended_attributes_spec.md`.
+
 ## 0.44 - Painting Magic remake (palette & brush)
 - **Replacement: Painting Magic.** Page ids are kept; the full guide is `docs/painting_palette_spec.md`.
   - **Palette & brush:** summoning a Painting grimoire now puts a real wooden thumb-hole **palette** in your off hand and a **mana brush** in your main hand.
