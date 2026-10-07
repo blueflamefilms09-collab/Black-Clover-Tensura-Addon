@@ -116,7 +116,7 @@ class GrimoireCarryTest {
         String[] magics = {"flame", "explosion", "magma", "water", "ice", "mercury", "mist", "wind", "star", "storm", "earth", "plant", "sand",
                 "light", "lightning", "sword", "dark", "shadow", "poison", "spatial", "mirror", "gravity", "time", "sealing", "reinforcement",
                 "beast", "bone", "blood", "creation", "copy", "illusion", "dream", "anti_magic", "steel", "thread",
-                "transmutation", "ash", "cotton", "recombination", "painting"};
+                "transmutation", "ash", "cotton", "recombination", "painting", "world_tree", "dice", "slash", "compass"};
         for (String m : magics) {
             for (int seed : new int[]{SpellArchetype.packSeed(0, SpellArchetype.OFFENSE), SpellArchetype.packSeed(0, SpellArchetype.BUFF), ult}) {
                 String path = SpellArchetype.iconPath(m.toUpperCase(), seed);

@@ -823,3 +823,83 @@ Template: `[Spell/Magic description] in Black Clover anime magic spell icon styl
    ```
    ultimate painting magic: Master of Valhalla at full power, complex multi-layered magic circles with a star seal, celestial and abyssal energy, intense particle storm, black iron border lit from within in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing wet ink blue and rainbow paint magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
    ```
+
+## World Tree Magic
+
+1. **Active spell / attack** (`textures/skill/grimoire/world_tree.png`)
+
+   ```
+   Budding of Yggdrasil unleashed as a dynamic world tree magic attack, energy discharge bursting from an open grimoire, motion streaks, gold embossed frame with clover runes in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing ancient bark brown and emerald magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```
+
+2. **Buff / grimoire page rune** (`textures/skill/icons/world_tree_buff.png`)
+
+   ```
+   a glowing world tree magic rune sigil on an ancient parchment grimoire page, mystical glyph circle, binding chains and a faint defensive shield, silver stone border in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing ancient bark brown and emerald magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```
+
+3. **Ultimate / forbidden** (`textures/skill/icons/world_tree_ultimate.png`)
+
+   ```
+   ultimate world tree magic: Budding of Yggdrasil at full power, complex multi-layered magic circles with a star seal, celestial and abyssal energy, intense particle storm, black iron border lit from within in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing ancient bark brown and emerald magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```
+
+## Dice Magic
+
+1. **Active spell / attack** (`textures/skill/grimoire/dice.png`)
+
+   ```
+   Gambler's Fallacy unleashed as a dynamic dice magic attack, energy discharge bursting from an open grimoire, motion streaks, gold embossed frame with clover runes in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing translucent violet resin and gold magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```
+
+2. **Buff / grimoire page rune** (`textures/skill/icons/dice_buff.png`)
+
+   ```
+   a glowing dice magic rune sigil on an ancient parchment grimoire page, mystical glyph circle, binding chains and a faint defensive shield, silver stone border in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing translucent violet resin and gold magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```
+
+3. **Ultimate / forbidden** (`textures/skill/icons/dice_ultimate.png`)
+
+   ```
+   ultimate dice magic: Gambler's Fallacy at full power, complex multi-layered magic circles with a star seal, celestial and abyssal energy, intense particle storm, black iron border lit from within in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing translucent violet resin and gold magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```
+
+## Slash Magic
+
+1. **Active spell / attack** (`textures/skill/grimoire/slash.png`)
+
+   ```
+   Death Scythe unleashed as a dynamic slash magic attack, energy discharge bursting from an open grimoire, motion streaks, gold embossed frame with clover runes in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing jagged mantis green magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```
+
+2. **Buff / grimoire page rune** (`textures/skill/icons/slash_buff.png`)
+
+   ```
+   a glowing slash magic rune sigil on an ancient parchment grimoire page, mystical glyph circle, binding chains and a faint defensive shield, silver stone border in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing jagged mantis green magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```
+
+3. **Ultimate / forbidden** (`textures/skill/icons/slash_ultimate.png`)
+
+   ```
+   ultimate slash magic: Death Scythe at full power, complex multi-layered magic circles with a star seal, celestial and abyssal energy, intense particle storm, black iron border lit from within in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing jagged mantis green magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```
+
+## Compass Magic
+
+1. **Active spell / attack** (`textures/skill/grimoire/compass.png`)
+
+   ```
+   Useless North unleashed as a dynamic compass magic attack, energy discharge bursting from an open grimoire, motion streaks, gold embossed frame with clover runes in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing brass, gold and compass green magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```
+
+2. **Buff / grimoire page rune** (`textures/skill/icons/compass_buff.png`)
+
+   ```
+   a glowing compass magic rune sigil on an ancient parchment grimoire page, mystical glyph circle, binding chains and a faint defensive shield, silver stone border in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing brass, gold and compass green magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```
+
+3. **Ultimate / forbidden** (`textures/skill/icons/compass_ultimate.png`)
+
+   ```
+   ultimate compass magic: Useless North at full power, complex multi-layered magic circles with a star seal, celestial and abyssal energy, intense particle storm, black iron border lit from within in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing brass, gold and compass green magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```

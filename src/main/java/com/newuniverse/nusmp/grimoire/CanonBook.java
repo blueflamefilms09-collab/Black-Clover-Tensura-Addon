@@ -28,7 +28,7 @@ public enum CanonBook {
     KLAUS("Klaus Lunettes", "THREE_LEAF", "STEEL", 0x9AB0C0, 0xD8E0E8, 0, null),
     KIRSCH("Kirsch Vermillion", "THREE_LEAF", "PLANT", 0xE88AB8, 0xF8D0E0, 0, null),            // Cherry Blossom Magic
     KARNA("Karna Freese", "THREE_LEAF", "LIGHT", 0x2A3E8E, 0xC0303A, 0, BookMotif.STRAPS),                 // Moonlight Magic
-    WILLIAM("William Vangeance", "THREE_LEAF", "PLANT", 0xE0D0A0, 0xC8A050, 0, null),          // World Tree Magic
+    WILLIAM("William Vangeance", "THREE_LEAF", "WORLD_TREE", 0xE0D0A0, 0xC8A050, 0, null),     // World Tree Magic (0.45; was PLANT)
     LANGRIS("Langris Vaude", "THREE_LEAF", "SPATIAL", 0x5AA8B8, 0xC8E0E8, 0, null),
     LEMIEL("Lemiel Silvamillion Clover", "THREE_LEAF", "LIGHT", 0xE0C060, 0xF8E8A0, 0, null),
     // Spade Kingdom (the Dark Triad)
@@ -44,14 +44,16 @@ public enum CanonBook {
     MARS("Mars", "DIAMOND", "EARTH", 0xD8D8E0, 0xB04030, 0, null),                            // Mineral Magic
     // 0.34: the remaining squad captains (wiki: Magic Knights) and the Black Bulls with the new attributes; appended
     CHARLOTTE("Charlotte Roselei", "THREE_LEAF", "PLANT", 0x2A6A9A, 0xC8D8E8, 0, null),        // Blue Rose captain; Briar Magic
-    JACK("Jack the Ripper", "THREE_LEAF", "SWORD", 0x2E8A5A, 0xC8E0C8, 0, null),               // Green Mantis captain; Slash Magic
+    JACK("Jack the Ripper", "THREE_LEAF", "SLASH", 0x2E8A5A, 0xC8E0C8, 0, null),               // Green Mantis captain; Slash Magic (0.45; was SWORD)
     RILL("Rill Boismortier", "THREE_LEAF", "PAINTING", 0x9AD0C0, 0xE8F0E8, 0, null),          // Aqua Deer captain; Painting Magic (0.41; was CREATION)
     DOROTHY("Dorothy Unsworth", "THREE_LEAF", "DREAM", 0xE88AA0, 0xF0D8E0, 0, null),          // Coral Peacock captain; Dream Magic
     KAISER("Kaiser Granvorka", "THREE_LEAF", "STORM", 0x6A4A8A, 0xD0C0E0, 0, null),           // Purple Orca captain; Vortex Magic
     NACHT("Nacht Faust", "THREE_LEAF", "SHADOW", 0x1A1A22, 0x8A8AA0, 0, null),                // Black Bull (captain after Yami); Shadow Magic
     GREY("Grey", "THREE_LEAF", "TRANSMUTATION", 0x6A7280, 0xD0D8E0, 0, null),                 // Black Bull; Transmutation Magic
     GORDON("Gordon Agrippa", "THREE_LEAF", "POISON", 0x3A4A2A, 0xB0C890, 0, null),            // Black Bull; Poison Magic
-    HENRY("Henry Legolant", "THREE_LEAF", "RECOMBINATION", 0x3A3430, 0xC8A050, 0, null);      // Black Bull; Recombination Magic
+    HENRY("Henry Legolant", "THREE_LEAF", "RECOMBINATION", 0x3A3430, 0xC8A050, 0, null),      // Black Bull; Recombination Magic
+    // 0.45: appended
+    LETOILE("Letoile Becquerel", "THREE_LEAF", "COMPASS", 0x3A6A4A, 0xD8B860, 0, null);       // Golden Dawn; Compass Magic
 
     public final String owner, cover, magic;
     public final int coverColor, trimColor, emblemColor;

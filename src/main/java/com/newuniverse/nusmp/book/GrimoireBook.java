@@ -255,6 +255,11 @@ public abstract class GrimoireBook extends Skill {
 
     /** Balance-law damage through a Tensura damage source (+10% pierce during Devil Union). */
     public void hurt(ManasSkillInstance i, ServerPlayer caster, LivingEntity target, int mode, float raw) {
+        hurtAs(i, caster, target, mode, raw, damageType());
+    }
+
+    /** 0.45: {@link #hurt} through a chosen Tensura damage type (Dice elements, Light), same multipliers. */
+    public void hurtAs(ManasSkillInstance i, ServerPlayer caster, LivingEntity target, int mode, float raw, ResourceKey<DamageType> type) {
         if (target == caster || target.isAlliedTo(caster)) return;
         float r = raw * (float) cover(i).damage * (inUnion(i, caster) ? 1.1f : 1f)
                 * (float) com.newuniverse.nusmp.item.MagicGear.damageMult(caster, magic);
@@ -262,7 +267,7 @@ public abstract class GrimoireBook extends Skill {
         if ((magic == MagicType.DARK || magic == MagicType.SHADOW) && (inDevilState(target)
                 || (target instanceof ServerPlayer tp && GrimoirePages.grimoireOf(tp).map(g -> cover(g).isForbidden()).orElse(false)))) r *= 1.25f;
         com.newuniverse.nusmp.blackclover.CopyMemory.remember(target, this, mode);
-        target.hurt(createSource(i, caster, damageType(), mode), BalanceLaw.damage(target, r, masteryFrac(i)));
+        target.hurt(createSource(i, caster, type, mode), BalanceLaw.damage(target, r, masteryFrac(i)));
     }
 
     public static LivingEntity target(ServerPlayer p, double range) {

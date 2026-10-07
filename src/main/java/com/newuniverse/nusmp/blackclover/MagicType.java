@@ -68,7 +68,12 @@ public enum MagicType {
     COTTON("Cotton Magic", "Cotton", "FANTASY", HitEffect.SLOW, () -> ParticleTypes.WHITE_ASH, () -> MobEffects.REGENERATION),
     RECOMBINATION("Recombination Magic", "Bull", "FANTASY", HitEffect.PUSH, () -> ParticleTypes.CRIT, () -> MobEffects.ABSORPTION),
     // 0.40: Painting Magic (Rill Boismortier, Lira), appended
-    PAINTING("Painting Magic", "Canvas", "FANTASY", HitEffect.SLOW, () -> ParticleTypes.DRIPPING_WATER, () -> MobEffects.ABSORPTION);
+    PAINTING("Painting Magic", "Canvas", "FANTASY", HitEffect.SLOW, () -> ParticleTypes.DRIPPING_WATER, () -> MobEffects.ABSORPTION),
+    // 0.45: World Tree (William Vangeance), Dice (Baval, David Swallow), Slash (Jack the Ripper), Compass (Letoile Becquerel); appended
+    WORLD_TREE("World Tree Magic", "Yggdrasil", "EARTH", HitEffect.SLOW, () -> ParticleTypes.HAPPY_VILLAGER, () -> MobEffects.REGENERATION),
+    DICE("Dice Magic", "Fortune", "FANTASY", HitEffect.PUSH, () -> ParticleTypes.ENCHANT, () -> MobEffects.LUCK),
+    SLASH("Slash Magic", "Ripper", "BATTLE", HitEffect.PIERCE, () -> ParticleTypes.SWEEP_ATTACK, () -> MobEffects.DAMAGE_BOOST),
+    COMPASS("Compass Magic", "Bearing", "SPACE", HitEffect.PULL, () -> ParticleTypes.WAX_ON, () -> MobEffects.MOVEMENT_SPEED);
 
     public final String displayName;
     public final String word;

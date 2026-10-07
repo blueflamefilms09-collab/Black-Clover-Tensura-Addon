@@ -102,7 +102,24 @@ public enum VfxShape {
     PAINT_PALETTE,           // the palette manifests at 'from', board facing 'to': blobs of paint land in rippling pools; power = size
     PAINT_TRAIL,             // a glossy wet brush sweep 'from' -> 'to' with a specular streak, drips and a splash; power = width
     PAINT_EMERGE,            // a living illustration painted on the ground at 'from' stands up facing 'to'; seed & 3 = kind; power = height
-    PAINT_SHIFT;             // the paint changes element at 'from': the palette's colours swirl into the new one; power = size
+    PAINT_SHIFT,             // the paint changes element at 'from': the palette's colours swirl into the new one; power = size
+    // 0.45 extended attributes
+    LIGHT_BLADE,             // a geometric light sword 'from' -> 'to' at light speed: blinding core, streak, lens flare at the head; power = size
+    LIGHT_FLARE,             // a lens flare / light burst at 'from' (star rays, ghosts, bloom); power = size
+    TREE_ROOTS,              // ancient roots erupt round 'from' out to radius power, emerald leaves and motes; seed & 15 = root count
+    TREE_CANOPY,             // a great world tree grows at 'from' (height power), emerald canopy, mana drawn up its trunk
+    TREE_DRAIN,              // a stream of emerald mana flows 'from' (drained) -> 'to' (receiver); power = width
+    DICE_D6,                 // two elemental d6 tumble from 'from' and land at 'to'; seed & 7 = die A (1..6), (seed >> 3) & 7 = die B
+    DICE_D20,                // a resin d20 with a galaxy core tumbles 'from' -> 'to'; seed & 31 = face (1..20); power = size
+    SLASH_BLADES,            // jagged green mana blades along both forearms of the followed caster; power = length
+    SLASH_WAVE,              // a projected jagged crescent cut 'from' -> 'to'; power = width
+    SLASH_SCYTHE,            // Death Scythe: a giant reaping arc round 'from' facing 'to'; power = radius
+    COMPASS_ARRAY,           // brass compasses hovering in an arc behind the followed caster, needles turned toward 'to'; power = count
+    COMPASS_NEEDLE,          // a golden compass needle homing 'from' -> 'to' with a gilt trail; power = size
+    COMPASS_LOCK,            // a compass-rose lock sigil on 'from' (the target's magicule signature); power = size
+    MERCURY_DOME,            // a flowing liquid-silver dome round 'from'; power = radius
+    MERCURY_SPEAR,           // a hyper-dense chrome spear 'from' -> 'to' with a liquid tail; power = size
+    MERCURY_EAGLE;           // a giant liquid-silver eagle swoops 'from' -> 'to'; power = wingspan
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

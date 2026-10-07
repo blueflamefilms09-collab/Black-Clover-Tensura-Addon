@@ -96,6 +96,7 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.PaintStudio::onIncomingDamage);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.PaintStudio::onDeath);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.PaintStudio::onUseItemFinish);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.SlashBook::onIncomingDamage);              // 0.45: forearm blades
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent e) -> {
             if (e.getSource().getEntity() instanceof net.minecraft.server.level.ServerPlayer sp) com.newuniverse.nusmp.book.PaintingBook.breakCamouflage(sp);
         });

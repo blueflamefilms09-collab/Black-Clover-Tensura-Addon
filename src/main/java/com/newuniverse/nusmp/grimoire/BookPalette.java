@@ -26,6 +26,7 @@ public final class BookPalette {
             case "STEEL" -> 0x8FA3B4; case "THREAD" -> 0xB28CC4;
             case "TRANSMUTATION" -> 0x5E6E78; case "ASH" -> 0x55524E; case "COTTON" -> 0xF2EEE4; case "RECOMBINATION" -> 0x3A3430;
             case "PAINTING" -> 0x2E5C8A;
+            case "WORLD_TREE" -> 0x4A3A22; case "DICE" -> 0x5A2A7A; case "SLASH" -> 0x1E5A3A; case "COMPASS" -> 0x3A6A4A;
             default -> 0x8A6A4A;
         };
     }
@@ -57,6 +58,7 @@ public final class BookPalette {
             case "STEEL" -> 0xB8C4D8; case "THREAD" -> 0xFF4060;
             case "TRANSMUTATION" -> 0x7AF0D8; case "ASH" -> 0xB0AAA2; case "COTTON" -> 0xFFF4FA; case "RECOMBINATION" -> 0xFF9A3C;
             case "PAINTING" -> 0x7AE0FF;
+            case "WORLD_TREE" -> 0x3CE08A; case "DICE" -> 0xB070FF; case "SLASH" -> 0x48FF7A; case "COMPASS" -> 0xFFC94A;
             default -> 0xFFFFFF;
         };
     }

@@ -79,6 +79,11 @@ MAGIC = {
     "recombination": ("Recombination Magic", 0xFF9A3C, 0xFFD8B0, "magic-house timber and orange", "The Raging Black Bull"),
     # 0.40 (appended so every existing icon keeps its seed)
     "painting":      ("Painting Magic", 0x3A9BFF, 0xC8F0FF, "wet ink blue and rainbow paint", "Master of Valhalla"),
+    # 0.45 (appended so every existing icon keeps its seed)
+    "world_tree":    ("World Tree Magic", 0x3CE08A, 0xD8FFE8, "ancient bark brown and emerald", "Budding of Yggdrasil"),
+    "dice":          ("Dice Magic", 0xB070FF, 0xFFE8A0, "translucent violet resin and gold", "Gambler's Fallacy"),
+    "slash":         ("Slash Magic", 0x48FF7A, 0xD8FFE0, "jagged mantis green", "Death Scythe"),
+    "compass":       ("Compass Magic", 0xFFC94A, 0xFFF0C0, "brass, gold and compass green", "Useless North"),
 }
 
 
@@ -510,6 +515,50 @@ def g_painting(d):
         d.ellipse(box(x - 1.6, y - 1.6, x + 1.6, y + 1.6), fill=150)
     d.line(P([(-2, 9), (10, -9)]), fill=200, width=int(1.4 * U))                       # the brush handle
     d.polygon(P([(8.6, -7.5), (11.4, -10.5), (12, -8.6), (10.2, -6.6)]), fill=255)        # the bristle tip
+
+
+def g_world_tree(d):
+    """A great tree: a thick trunk, a broad crown and spreading roots."""
+    d.ellipse(box(-10, -11, 10, 1), fill=255)
+    d.polygon(P([(-2.5, 0), (2.5, 0), (3.5, 7), (-3.5, 7)]), fill=200)
+    for sx in (-1, 1):
+        d.line(P([(0, 6), (sx * 5, 9), (sx * 10, 10)]), fill=200, width=int(1.4 * U))
+        d.line(P([(0, 6), (sx * 2.5, 10.5)]), fill=200, width=int(1.2 * U))
+    for (x, y) in ((-5, -6), (3, -7.5), (5, -3), (-2, -3)):
+        d.ellipse(box(x - 1.3, y - 1.3, x + 1.3, y + 1.3), fill=150)
+
+
+def g_dice(d):
+    """A die seen corner-on: three faces, pips on the front."""
+    d.polygon(P([(0, -10), (9, -5), (0, 0), (-9, -5)]), fill=255)
+    d.polygon(P([(-9, -5), (0, 0), (0, 10), (-9, 5)]), fill=190)
+    d.polygon(P([(9, -5), (0, 0), (0, 10), (9, 5)]), fill=130)
+    for (x, y) in ((0, -5),):
+        d.ellipse(box(x - 1.5, y - 1, x + 1.5, y + 1), fill=40)
+    for (x, y) in ((-6.5, -1), (-2.5, 6)):
+        d.ellipse(box(x - 1.2, y - 1.4, x + 1.2, y + 1.4), fill=40)
+    for (x, y) in ((2.5, -1), (4.5, 2.5), (6.5, 6)):
+        d.ellipse(box(x - 1.2, y - 1.4, x + 1.2, y + 1.4), fill=40)
+
+
+def g_slash(d):
+    """Three jagged claw slashes."""
+    for k in (-1, 0, 1):
+        x = k * 4.5
+        d.polygon(P([(x - 3, -10), (x + 0.5, -2), (x - 1, -1.5), (x + 3, 10), (x + 1.2, 1.5), (x + 2.6, 1), (x - 1, -10)]), fill=255)
+
+
+def g_compass(d):
+    """A compass: a ring, an eight-point rose and a needle."""
+    d.ellipse(box(-10, -10, 10, 10), outline=255, width=int(1.6 * U))
+    for k in range(8):
+        a = k * math.pi / 4
+        r = 8 if k % 2 == 0 else 5
+        tip = (math.cos(a) * r, math.sin(a) * r)
+        l = (math.cos(a + 0.35) * 1.8, math.sin(a + 0.35) * 1.8)
+        rr = (math.cos(a - 0.35) * 1.8, math.sin(a - 0.35) * 1.8)
+        d.polygon(P([l, tip, rr]), fill=255 if k % 2 == 0 else 170)
+    d.ellipse(box(-1.4, -1.4, 1.4, 1.4), fill=255)
 
 
 GLYPHS = {k: globals()["g_" + k] for k in MAGIC}
