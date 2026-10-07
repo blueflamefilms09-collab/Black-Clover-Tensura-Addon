@@ -1,7 +1,37 @@
-Game Magic
-Demon-Slayer Sword
-Black Meteorite
-Zagred
-tensura:Magic
-tensura:Skills
-tensura:Existence Points
+Beast Magic
+Demon Beast Magic
+Body Magic
+Blood Magic
+Bone Magic
+Eye Magic
+Eyeball Magic
+Curse Magic
+Curse-Warding Magic
+Demon Fire Magic
+Demon Ice Magic
+Demon Light Magic
+Demon Water Magic
+Gravity Magic
+Seal Magic
+Barrier Magic (attribute)
+Imitation Magic
+Key Magic
+Chain Magic
+Butoh Magic
+Briar Magic
+Cherry Blossom Magic
+Fungus Magic
+Food Magic
+Crystal Magic
+Corundum Magic
+Bronze Magic
+Copper Magic
+Iron Magic
+Black Oil Magic
+Gel Magic
+Glass Magic
+Bubble Magic
+Ice Magic
+Ice Wedge Magic
+Legion Magic
+Light Magic
