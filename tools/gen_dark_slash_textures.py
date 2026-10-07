@@ -7,6 +7,7 @@ starry specks. Strip textures run along V (v = 0 at the start, 1 at the end) and
 the ALPHA blend, they hold the black), "glow" ones are grey + alpha (drawn ADD, tinted by the vertex colour).
 
   textures/particle/dark_slash_tear.png         baked   128x512  the spatial fracture: black core, white-violet rim, jagged violet / magenta aura, stars inside
+  textures/particle/dark_slash_cracks.png       baked   512x512  the air cracking like glass round a fracture: black hairlines, violet edge light
   textures/particle/dark_slash_aura.png         glow    128x512  jagged violet halo spikes round a tear (additive)
   textures/particle/dark_slash_ring.png         glow    256x256  warped, broken afterimage rings with a doubled edge (additive)
   textures/particle/dark_slash_stars.png        glow    256x256  starry specks (additive)
@@ -129,47 +130,57 @@ def spikes(w, h, cx, hw, seed, count, reach, base_w=3.0, side_bias=0.0):
 
 # ---------------------------------------------------------------- the tear (baked) and its aura (glow)
 def tear():
+    """0.58: a real fracture. A wide lens of black void with hard, angular, uneven edges (each side jags on its own), a white-violet rim, light leaking
+    out of it as violet / magenta spikes, a nebula and a field of stars inside the void."""
     w, h = 128, 512
     y = (np.arange(h, dtype=np.float32) + 0.5) / h
     taper = np.sin(np.pi * y) ** 0.62
-    cx = centerline(h, 7001, 0.10)
-    cx = cx * taper
+    lens = np.sin(np.pi * y) ** 0.8
+    cx = centerline(h, 7001, 0.06) * taper
     X = (np.arange(w, dtype=np.float32) + 0.5) / w * 2 - 1
-    d = np.abs(X[None, :] - cx[:, None])
+    xd = X[None, :] - cx[:, None]
+    rng = np.random.default_rng(7010)
+    jl = np.repeat(rng.uniform(0.62, 1.38, h // 7 + 2), 7)[:h]                         # angular steps: the left and the right edge jag on their own
+    jr = np.repeat(rng.uniform(0.62, 1.38, h // 9 + 2), 9)[:h]
+    d = np.abs(xd) / np.where(xd < 0, jl[:, None], jr[:, None])
     n1 = fbm(w, h, 16, 7002)
     n2 = fbm(w, h, 6, 7003)
-    rowj = np.random.default_rng(7004).random(h // 3 + 2)
-    rowj = np.repeat(rowj, 3)[:h]
-    edge = 0.78 * taper[:, None] * (0.62 + 0.55 * rowj ** 2.0)[:, None] * (0.8 + 0.45 * n2)
-    core_w = 0.115 * taper ** 1.1 * (0.85 + 0.3 * n1[:, w // 2])
-    core_w = core_w[:, None]
-    spk = spikes(w, h, cx, taper * 0.9, 7005, 70, 1.05)
+    rowj = np.repeat(np.random.default_rng(7004).random(h // 3 + 2), 3)[:h]
+    edge = 0.92 * taper[:, None] * (0.62 + 0.55 * rowj ** 2.0)[:, None] * (0.8 + 0.45 * n2)
+    core_w = (0.34 * lens * (0.9 + 0.2 * n1[:, w // 2]))[:, None] + 0.004
+    spk = spikes(w, h, cx, taper * 0.95, 7005, 90, 1.05)
 
     cv = Canvas(w, h)
     t = np.clip((d - core_w) / np.maximum(edge - core_w, 1e-3), 0, 1)
-    halo = (1 - t) ** 1.9 * (0.62 + 0.55 * n1) * ss(d, 0, core_w * 0.6 + 0.01)
+    halo = (1 - t) ** 1.7 * (0.62 + 0.55 * n1) * ss(d, 0, core_w * 0.6 + 0.01)
     halo = np.maximum(halo * 0.95, spk * (1 - np.clip(d / 1.0, 0, 1)) ** 0.7 * 0.85)
     colr = mix(VIOLET, MAGENTA, np.clip(n2 * 1.3 - 0.25 + 0.5 * t, 0, 1))
     cv.over(colr, halo * 0.9)
-    bright = ss(d, 0, core_w * 2.6) * (1 - ss(d, core_w * 2.6, core_w * 7)) * halo
+    bright = ss(d, 0, core_w * 1.6) * (1 - ss(d, core_w * 1.6, core_w * 4.5)) * halo
     cv.over(mix(MAGENTA, RIM, np.full((h, w), 0.35, np.float32)), bright * 0.55)
-    # the rim of the void and the pitch-black core
-    cv.over(BLACK, ss(d, core_w + 0.012, core_w - 0.012))
+    # the void: a nebula and a field of stars deep inside, then the double rim
+    inside = ss(d, core_w + 0.012, core_w - 0.012)
+    cv.over(BLACK, inside)
+    neb = fbm(w, h, 10, 7007, 4)
+    depth = np.clip(1 - d / np.maximum(core_w, 1e-3), 0, 1)
+    cv.add(DEEP, np.clip((neb - 0.42) * 1.7, 0, 1) * 0.55 * ss(depth, 0.1, 0.7) * inside)
+    cv.add(VIOLET, np.clip((fbm(w, h, 5, 7008) - 0.5) * 2.2, 0, 1) * 0.22 * ss(depth, 0.3, 0.9) * inside)
     rim = np.exp(-((d - core_w) / 0.016) ** 2) * (taper[:, None] ** 0.6)
     cv.over(RIM, np.clip(rim * 1.15, 0, 1) * (0.75 + 0.25 * n2))
-    # stars inside the void
+    cv.over(mix(VIOLET, RIM, np.full((h, w), 0.6, np.float32)), np.clip(np.exp(-((d - core_w * 0.82) / 0.02) ** 2) * 0.55 * taper[:, None], 0, 1) * inside)
     rng = np.random.default_rng(7006)
     star = np.zeros((h, w), np.float32)
-    for _ in range(46):
-        sy = rng.integers(8, h - 8)
-        sx = int((cx[sy] + 1) * w / 2 + rng.uniform(-0.8, 0.8) * core_w[sy, 0] * w / 2)
-        if not (0 <= sx < w) or abs(sx + 0.5 - (cx[sy] + 1) * w / 2) > core_w[sy, 0] * w / 2 * 0.85:
+    for _ in range(190):
+        sy = int(rng.integers(8, h - 8))
+        cwid = core_w[sy, 0] * w / 2
+        sx = int((cx[sy] + 1) * w / 2 + rng.uniform(-0.85, 0.85) * cwid)
+        if not (1 <= sx < w - 1) or cwid < 3:
             continue
-        b = rng.uniform(0.5, 1.0)
+        b = rng.uniform(0.45, 1.0)
         star[sy, sx] = b
-        if b > 0.8:
-            star[sy, max(sx - 1, 0)] = max(star[sy, max(sx - 1, 0)], b * 0.4)
-            star[sy, min(sx + 1, w - 1)] = max(star[sy, min(sx + 1, w - 1)], b * 0.4)
+        if b > 0.75:
+            star[sy, sx - 1] = max(star[sy, sx - 1], b * 0.4)
+            star[sy, sx + 1] = max(star[sy, sx + 1], b * 0.4)
     cv.add(RIM, star * (cv.a > 0.9))
     put(cv.image(), "dark_slash_tear")
 
@@ -178,17 +189,63 @@ def aura():
     w, h = 128, 512
     y = (np.arange(h, dtype=np.float32) + 0.5) / h
     taper = np.sin(np.pi * y) ** 0.6
-    cx = centerline(h, 7101, 0.10) * taper
+    lens = np.sin(np.pi * y) ** 0.8
+    cx = centerline(h, 7001, 0.06) * taper
     X = (np.arange(w, dtype=np.float32) + 0.5) / w * 2 - 1
     d = np.abs(X[None, :] - cx[:, None])
     n = fbm(w, h, 12, 7102)
-    spk = spikes(w, h, cx, taper * 0.95, 7103, 120, 1.0, 2.6)
-    reach = (0.72 * taper[:, None]) * (0.7 + 0.5 * n)
+    spk = spikes(w, h, cx, taper * 0.95, 7103, 140, 1.0, 2.8)
+    reach = (0.85 * taper[:, None]) * (0.7 + 0.5 * n)
     soft = (1 - np.clip(d / np.maximum(reach, 1e-3), 0, 1)) ** 2.2
     a = np.maximum(soft * 0.85, spk * 0.8 * (1 - np.clip(d, 0, 1) ** 1.2))
     a = a * (0.55 + 0.55 * ss(n, 0.25, 0.7))
-    a *= ss(d, 0.10 * taper[:, None], 0.20 * taper[:, None] + 0.01)          # a hole where the black core sits: the glow is drawn on top of it
+    a *= ss(d, 0.27 * lens[:, None], 0.40 * lens[:, None] + 0.01)          # a hole where the black core sits: the glow is drawn on top of it
     put(grey_image(a), "dark_slash_aura")
+
+
+def cracks():
+    """0.58: the air cracking like glass round a fracture (a square sprite, drawn facing the tear): black hairlines with a violet edge light."""
+    s = 512
+    rng = np.random.default_rng(7020)
+    im = Image.new("L", (s * SS, s * SS), 0)
+    d = ImageDraw.Draw(im)
+    c = s * SS / 2
+
+    def crack(x0, y0, ang, ln, wd, depth):
+        pts = [(x0, y0)]
+        x, y = x0, y0
+        steps = max(3, int(ln / 30))
+        for i in range(steps):
+            ang += rng.uniform(-0.30, 0.30)
+            sl = ln / steps * rng.uniform(0.6, 1.3)
+            x, y = x + math.cos(ang) * sl, y + math.sin(ang) * sl
+            pts.append((x, y))
+            if depth < 1 and rng.random() < 0.14:
+                crack(x, y, ang + rng.choice([-1, 1]) * rng.uniform(0.5, 1.2), ln * rng.uniform(0.25, 0.5), wd * 0.6, depth + 1)
+        for i in range(len(pts) - 1):
+            d.line([pts[i], pts[i + 1]], fill=255, width=max(1, int(wd * (1 - 0.7 * i / len(pts)))))
+
+    for k in range(11):                                                                   # cracks leave the fracture along its length, mostly sideways
+        yy = c + rng.uniform(-0.62, 0.62) * c
+        side = 1 if k % 2 == 0 else -1
+        ang = (0.0 if side > 0 else math.pi) + rng.uniform(-0.75, 0.75)
+        crack(c + side * rng.uniform(0.0, 0.05) * c, yy, ang, rng.uniform(0.5, 1.0) * c * (1.0 - 0.45 * abs(yy - c) / c), 3.4 * SS, 0)
+    m = np.asarray(im.resize((s, s), Image.LANCZOS)).astype(np.float32) / 255
+    x, y, r, th = polar_grid(s)
+    m *= (1 - ss(np.abs(x), 0.8, 1.0)) * (1 - ss(np.abs(y), 0.82, 1.0))
+    glow = np.asarray(Image.fromarray((m * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(3.0))).astype(np.float32) / 255
+    cv = Canvas(s, s)
+    cv.over(mix(VIOLET, MAGENTA, np.clip(fbm(s, s, 6, 7021) * 1.3 - 0.2, 0, 1)), np.clip(glow * 1.5, 0, 1) * 0.7)
+    cv.over(BLACK, np.clip(m * 1.3, 0, 1))
+    edge = np.clip(m - np.asarray(Image.fromarray((m * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(1.2))).astype(np.float32) / 255, 0, 1)
+    cv.over(RIM, np.clip(edge * 2.6, 0, 1))
+    put(cv.image(), "dark_slash_cracks")
+
+
+def polar_grid(s):
+    yy, xx = np.mgrid[0:s, 0:s].astype(np.float32)
+    x, y = (xx + 0.5) / s * 2 - 1, (yy + 0.5) / s * 2 - 1
+    return x, y, np.sqrt(x * x + y * y), np.arctan2(y, x)
 
 
 # ---------------------------------------------------------------- ring, stars, glint, speed
@@ -389,6 +446,7 @@ def ash():
 def main():
     tear()
     aura()
+    cracks()
     ring()
     stars()
     glint()

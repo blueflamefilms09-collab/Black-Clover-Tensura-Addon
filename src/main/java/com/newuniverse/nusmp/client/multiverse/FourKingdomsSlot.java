@@ -44,7 +44,7 @@ public final class FourKingdomsSlot {
         return comingSoon;
     }
 
-    static boolean onTensuraScreen() {
+    public static boolean onTensuraScreen() {
         Screen s = Minecraft.getInstance().screen;
         return s != null && s.getClass().getName().equals(SCREEN);
     }

@@ -38,7 +38,8 @@ public class DarkSlashLayer extends AbstractVfxLayer {
 
     static final ResourceLocation TEAR = t("dark_slash_tear"), AURA = t("dark_slash_aura"), RING = t("dark_slash_ring"), STARS = t("dark_slash_stars"),
             CUT = t("dark_slash_cut"), CUT_GLOW = t("dark_slash_cut_glow"), CRESCENT = t("dark_slash_crescent"), BLADE = t("dark_slash_blade"),
-            BLADE_GLOW = t("dark_slash_blade_glow"), FLAME_A = t("dark_slash_flame_a"), FLAME_B = t("dark_slash_flame_b"), SMOKE = t("dark_slash_smoke"),
+            BLADE_GLOW = t("dark_slash_blade_glow"), CRACKS = t("dark_slash_cracks"), FLARE = t("darkfx_flare"), SHOCK = t("darkfx_shock"),
+            SHARD_A = t("darkfx_shard_a"), SHARD_B = t("darkfx_shard_b"), FLAME_A = t("dark_slash_flame_a"), FLAME_B = t("dark_slash_flame_b"), SMOKE = t("dark_slash_smoke"),
             ASH = t("dark_slash_ash"), SPEED = t("dark_slash_speed"), GLINT = t("dark_slash_glint");
     static final int WHITE = 0xFFFFFFFF, VIOLET = 0xFF9A3CFF, MAGENTA = 0xFFE83CC0, RIM = 0xFFEBDCFF;
 
@@ -83,7 +84,8 @@ public class DarkSlashLayer extends AbstractVfxLayer {
         float fade = saturate((dur - age) / (dur * 0.3f));
         float openX = Mth.lerp(VfxAnim.easeOutCubic(saturate(age / (dur * 0.22f))), 0.08f, 1f) * (0.1f + 0.9f * (float) Math.pow(fade, 0.8));
         float openY = VfxAnim.easeOutCubic(saturate(age / (dur * 0.13f))) * (0.75f + 0.25f * fade);
-        float H = (3.0f + 1.6f * P) * openY, Wd = (3.0f + 1.6f * P) * 0.44f * openX;
+        float sz = (3.0f + 1.6f * P) * (1f + 0.02f * Math.max(0f, a.distance(b) - 14f));            // a far landing (Equinox) is drawn bigger so it still reads
+        float H = sz * openY, Wd = sz * 0.6f * openX;
         if (H < 0.05f) return;
         Vector3f c = new Vector3f(head.x, head.y - 1.7f + H * 0.5f, head.z);
         Vector3f up = new Vector3f(0, 1, 0);
@@ -104,6 +106,20 @@ public class DarkSlashLayer extends AbstractVfxLayer {
         for (int k = -1; k <= 1; k++) {
             buf.billboard(ctx, STARS, VfxBlend.ADD, new Vector3f(c).add(0, k * H * 0.3f, 0), Math.max(1.0f, Wd * 1.8f), 0.9f * k + age * 0.004f * (k + 2), col(RIM, 0.5f * fade * saturate(age / 4f)));
         }
+
+        // 0.58: the air cracks like glass round the fracture, a vertical flare as it opens, a column of violet light
+        float crk = saturate(age / 3f) * fade * (0.6f + 0.4f * saturate(age / 8f));
+        if (crk > 0.02) {
+            float ch = H * 1.15f * (0.55f + 0.45f * openY), cw = ch * 1.1f;
+            Vector3f q0 = new Vector3f(c).add(new Vector3f(right).mul(-cw)).add(0, -ch, 0), q1 = new Vector3f(c).add(new Vector3f(right).mul(cw)).add(0, -ch, 0),
+                    q2 = new Vector3f(c).add(new Vector3f(right).mul(cw)).add(0, ch, 0), q3 = new Vector3f(c).add(new Vector3f(right).mul(-cw)).add(0, ch, 0);
+            int cc = col(0xFFFFFF, 0.75f * crk);
+            buf.quad(CRACKS, VfxBlend.ALPHA, q0, q1, q2, q3, 0f, 1f, 1f, 0f, cc, cc);
+        }
+        Vector3f baseP = new Vector3f(c.x, head.y - 1.7f, c.z);
+        DarkSlashStrip.line(buf, ctx, CUT_GLOW, VfxBlend.ADD, baseP, new Vector3f(baseP).add(0, H * 1.35f, 0), 2, Wd * 0.9f, col(violet, 0.22f * fade * saturate(age / 3f)));
+        float open0 = saturate(1f - age / (dur * 0.22f));
+        if (open0 > 0f) buf.billboard(ctx, FLARE, VfxBlend.ADD, c, H * 1.3f, Mth.PI * 0.5f, col(RIM, open0 * open0));
 
         // the tear: the aura crawls (two jagged copies pulsing against each other), the void is the shader quad or the ripple ribbon
         int n = ctx.seg(7, 4);
@@ -134,6 +150,20 @@ public class DarkSlashLayer extends AbstractVfxLayer {
             if (p < 0f || p > 1f) continue;
             float size = H * (0.35f + 0.85f * VfxAnim.easeOutCubic(p));
             buf.billboard(ctx, RING, VfxBlend.ADD, c, size, k * 1.3f + age * 0.012f * (k % 2 == 0 ? 1 : -1), col(k == 1 ? magenta : violet, (1f - p) * saturate(p * 8f) * 0.7f * fade));
+        }
+
+        // pieces of space knocked out of the edge drift away, and the landing sends a ring over the ground
+        for (int k = 0; k < 6; k++) {
+            float ph = saturate((age - dur * 0.08f) / (dur * 0.8f)), sd = (k % 2 == 0 ? 1f : -1f);
+            float y = (hash(inst.seed, 60 + k) - 0.5f) * H * 0.8f + ph * 0.5f * (k - 2.5f) * 0.3f;
+            Vector3f pos = new Vector3f(c).add(new Vector3f(right).mul(sd * (Wd * 0.45f + ph * Wd * (0.8f + hash(inst.seed, 70 + k))))).add(0, y, 0);
+            buf.billboard(ctx, k % 3 == 0 ? SHARD_A : SHARD_B, VfxBlend.ALPHA, pos, (0.35f + 0.35f * hash(inst.seed, 80 + k)) * P * (0.7f + 0.3f * (1f - ph)), age * 0.2f * sd + k, col(0xFFFFFF, saturate(age / 3f) * fade));
+        }
+        float lu = saturate((age - travel * 0.8f) / (dur * 0.6f));
+        if (lu > 0f && lu < 1f) {
+            VfxPose gp = VfxPose.ground(new Vector3f(baseP).add(0, 0.06f, 0));
+            buf.plane(SHOCK, VfxBlend.ADD, gp.spin(0.7f), H * (0.25f + 0.85f * VfxAnim.easeOutCubic(lu)), col(violet, (1f - lu) * 0.8f));
+            buf.plane(RING, VfxBlend.ADD, gp.lift(0.02f), H * (0.15f + 0.6f * VfxAnim.easeOutCubic(lu)), col(RIM, (1f - lu) * 0.5f));
         }
 
         // the three long diagonal scratches
@@ -179,7 +209,7 @@ public class DarkSlashLayer extends AbstractVfxLayer {
         float pulse = 0.78f + 0.22f * Mth.sin(age * 0.9f);
         Vector3f tip = new Vector3f(a).lerp(b, grow);
         int violet = tint(inst, VIOLET), magenta = tint(inst, MAGENTA);
-        float W = 0.3f * P + 0.14f;
+        float W = 0.46f * P + 0.2f;
 
         // darkness coats the sword: black smoke round the grip and the first stretch of blade
         for (int k = 0; k < 4; k++) {
@@ -241,7 +271,7 @@ public class DarkSlashLayer extends AbstractVfxLayer {
         float u = saturate(age / dur), fade = saturate((1f - u) / 0.2f);
         float grow = VfxAnim.easeOutCubic(saturate(age / (dur * 0.16f)));
         int violet = tint(inst, VIOLET), magenta = tint(inst, MAGENTA);
-        float R = 1.8f * P * grow;
+        float R = 2.4f * P * grow;
 
         // the crescent's frame: lateral axis rolled by a random angle round the flight direction
         Vector3f lat0 = new Vector3f(dir).cross(0, 1, 0);
@@ -275,7 +305,7 @@ public class DarkSlashLayer extends AbstractVfxLayer {
                 pts[i] = new Vector3f(head).sub(new Vector3f(dir).mul(back)).add(new Vector3f(lat).mul(R * Mth.sin(th)))
                         .add(new Vector3f(upR).mul(-R * 0.5f * (1f - Mth.cos(th)) + R * 0.2f))
                         .sub(new Vector3f(dir).mul(R * 0.35f * (1f - Mth.cos(th))));        // the tips sweep back
-                w[i] = (0.25f + 1.05f * prof) * P * 0.8f * grow;
+                w[i] = (0.3f + 1.35f * prof) * P * 0.8f * grow;
                 wg[i] = w[i] * 1.6f;
                 cb[i] = col(0xFFFFFF, k * fade);
                 cg[i] = col(i % 2 == 0 ? violet : magenta, 0.5f * k * fade * prof);
@@ -308,7 +338,7 @@ public class DarkSlashLayer extends AbstractVfxLayer {
         Vector3f ctr = new Vector3f(a).add(new Vector3f(dir).mul(1.6f + 0.6f * P));
         int violet = tint(inst, VIOLET), magenta = tint(inst, MAGENTA);
         float env = Mth.sin(saturate(age / dur) * Mth.PI) ;
-        int cuts = 9;
+        int cuts = 11;
 
         // the first flash as the flurry starts
         if (age < dur * 0.18f) VfxBloom.glow(ctx, buf, ctr, 1.1f * P, violet, 0.5f * (1f - age / (dur * 0.18f)));
@@ -325,19 +355,19 @@ public class DarkSlashLayer extends AbstractVfxLayer {
         // the cuts: each draws itself along its line, flashes, fades
         float stroke = Math.max(2f, dur * 0.16f);
         for (int k = 0; k < cuts; k++) {
-            float t0 = k * dur * 0.065f, prog = saturate((age - t0) / stroke);
+            float t0 = k * dur * 0.055f, prog = saturate((age - t0) / stroke);
             if (age < t0) continue;
             float hold = 1f - saturate((age - t0 - stroke) / (dur * 0.42f));
             if (hold <= 0f) continue;
             float ang = (k % 2 == 0 ? 0.55f : -0.55f) + (hash(inst.seed, k) - 0.5f) * 1.1f + (k % 3) * 0.12f;
             Vector3f d2 = new Vector3f(ctx.camRight).mul(Mth.cos(ang)).add(new Vector3f(ctx.camUp).mul(Mth.sin(ang)));
-            Vector3f centre = new Vector3f(ctr).add(new Vector3f(ctx.camRight).mul((hash(inst.seed, 30 + k) - 0.5f) * 1.7f * P)).add(new Vector3f(ctx.camUp).mul((hash(inst.seed, 40 + k) - 0.5f) * 1.2f * P));
-            float L = (1.7f + 1.3f * hash(inst.seed, 50 + k)) * P;
+            Vector3f centre = new Vector3f(ctr).add(new Vector3f(ctx.camRight).mul((hash(inst.seed, 30 + k) - 0.5f) * 2.4f * P)).add(new Vector3f(ctx.camUp).mul((hash(inst.seed, 40 + k) - 0.5f) * 1.7f * P));
+            float L = (2.5f + 1.8f * hash(inst.seed, 50 + k)) * P;
             Vector3f s0 = new Vector3f(centre).sub(new Vector3f(d2).mul(L * 0.5f));
             Vector3f s1 = new Vector3f(s0).add(new Vector3f(d2).mul(L * VfxAnim.easeOutCubic(prog)));
             float flash = 1f - saturate((age - t0) / (stroke * 2.2f));
-            DarkSlashStrip.line(buf, ctx, CUT, VfxBlend.ALPHA, s0, s1, 3, (0.2f + 0.12f * flash) * P, col(0xFFFFFF, hold));
-            DarkSlashStrip.line(buf, ctx, CUT_GLOW, VfxBlend.ADD, s0, s1, 3, (0.55f + 0.5f * flash) * P, col(k % 2 == 0 ? violet : magenta, (0.2f + 0.45f * flash) * hold));
+            DarkSlashStrip.line(buf, ctx, CUT, VfxBlend.ALPHA, s0, s1, 3, (0.38f + 0.2f * flash) * P, col(0xFFFFFF, hold));
+            DarkSlashStrip.line(buf, ctx, CUT_GLOW, VfxBlend.ADD, s0, s1, 3, (0.95f + 0.7f * flash) * P, col(k % 2 == 0 ? violet : magenta, (0.2f + 0.45f * flash) * hold));
             if (prog < 1f && k % 3 == 0) buf.billboard(ctx, GLINT, VfxBlend.ADD, s1, 0.8f * P, k, col(RIM, hold));
         }
 
