@@ -35,3 +35,4 @@ Ice Magic
 Ice Wedge Magic
 Legion Magic
 Light Magic
+

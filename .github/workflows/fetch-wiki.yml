@@ -1,12 +1,16 @@
-# Developer helper: prints Black Clover wiki pages (wikitext, via the MediaWiki API) into the job log, so spells can be checked
-# against the source from a session that cannot reach the wiki. Runs when .github/wiki-request.txt changes (one page title per line;
-# a "tensura:" prefix reads the Tensura Reincarnated wiki, tensura.wiki.gg, instead).
+# Developer helper: reads Black Clover wiki pages (wikitext, via the MediaWiki API) from a session that cannot reach the wiki.
+# Runs when .github/wiki-request.txt changes (one page title per line; a "tensura:" prefix reads the Tensura Reincarnated wiki,
+# tensura.wiki.gg, instead). The extract of each page is printed into the job log AND committed to .github/wiki/<slug>.txt
+# (by the workflow's own token, which does not start other workflows), so a session can read the files after a pull.
 name: Fetch wiki reference
 
 on:
   push:
     paths: [ ".github/wiki-request.txt" ]
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   fetch:
@@ -15,12 +19,22 @@ jobs:
       - uses: actions/checkout@v4
       - name: Print pages
         run: |
+          mkdir -p .github/wiki
           while IFS= read -r page; do
             [ -z "$page" ] && continue
             echo "=================== PAGE: $page ==================="
             host="https://blackclover.fandom.com/api.php"
-            case "$page" in tensura:*) host="https://tensura.wiki.gg/api.php"; page="${page#tensura:}";; esac
+            title="$page"
+            case "$page" in tensura:*) host="https://tensura.wiki.gg/api.php"; title="${page#tensura:}";; esac
+            slug=$(python3 -c 'import re,sys;print(re.sub(r"[^a-z0-9]+","_",sys.argv[1].lower()).strip("_"))' "$page")
             curl -sSL --max-time 60 -A "Mozilla/5.0 (reference fetch for a fan mod)" \
-              "$host?action=parse&page=$(python3 -c 'import sys,urllib.parse;print(urllib.parse.quote(sys.argv[1]))' "$page")&prop=wikitext&format=json&formatversion=2" \
-              | python3 .github/scripts/wiki_extract.py
+              "$host?action=parse&page=$(python3 -c 'import sys,urllib.parse;print(urllib.parse.quote(sys.argv[1]))' "$title")&prop=wikitext&format=json&formatversion=2" \
+              | python3 .github/scripts/wiki_extract.py | tee ".github/wiki/$slug.txt"
           done < .github/wiki-request.txt
+      - name: Commit the extracts
+        run: |
+          git config user.name "wiki-fetch"
+          git config user.email "wiki-fetch@users.noreply.github.com"
+          git add .github/wiki
+          git diff --cached --quiet || git commit -m "Wiki extracts of the requested pages"
+          git push || true
