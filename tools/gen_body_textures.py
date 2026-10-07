@@ -8,7 +8,7 @@ Look reference: Body Magic (Titan). Extreme physical enhancement shown as pulsin
 spell Body Compression condenses part of the body and restructures it into a gun barrel that fires a compressed blast. So the sprites are:
 billowing steam puffs and steam jets, striated muscle ropes and twisted fibre ribbons, glowing vein networks over a dark muscle-tissue
 disc, a ring of spindle-shaped muscle bellies with an ECG line (the heartbeat), a rifled barrel face and its muzzle star, a compressed
-round with its shock arcs, whipping tendon strands, a fibre starburst and a flexed-arm emblem.
+round with its shock arcs, whipping tendon strands and a fibre starburst.
 
 Texture convention (same as the rest of textures/particle): white or grey with alpha so one vertex colour tints them. Layouts the
 layer (vfx/client/layer/BodyLayer.java, BodyFx.java) relies on:
@@ -26,7 +26,6 @@ layer (vfx/client/layer/BodyLayer.java, BodyFx.java) relies on:
   body_strand      64x256, whipping tendon strand, base at the bottom, tip at the top
   body_burst       256x256, starburst of fine fibre rays
   body_spark       64x64, ember with a vertical streak (rotate it along its motion)
-  body_flex        256x256, flexed-arm emblem with a rim light
 """
 import math
 import os
@@ -149,7 +148,7 @@ def steam_cell(n, seed, kind):
     x, y, r, _ = polar(n)
     wx = (fbm(n, n, 32, seed + 1, 3, wrap=False) - 0.5) * 0.42
     wy = (fbm(n, n, 32, seed + 2, 3, wrap=False) - 0.5) * 0.42
-    xw, yw = x + wx, y + wy
+    xw, yw = (x + wx) * 0.76, (y + wy) * 0.76
     squash = (1.0, 0.70, 0.52, 0.85)[kind]
     count = (8, 7, 10, 8)[kind]
     dens = np.zeros((n, n), np.float32)
@@ -555,49 +554,7 @@ def spark(size=64):
     save(np.ones_like(a), a, "body_spark")
 
 
-# ------------------------------------------------------------------------------------------------ emblem
-def catmull(points, n=14):
-    """Closed Catmull-Rom spline through the points."""
-    out = []
-    m = len(points)
-    for i in range(m):
-        p0, p1, p2, p3 = (np.array(points[(i + k) % m], np.float64) for k in (-1, 0, 1, 2))
-        for t in np.linspace(0, 1, n, endpoint=False):
-            out.append(tuple(0.5 * ((2 * p1) + (-p0 + p2) * t + (2 * p0 - 5 * p1 + 4 * p2 - p3) * t * t + (-p0 + 3 * p1 - 3 * p2 + p3) * t ** 3)))
-    return out
-
-
-def flex(size=256):
-    """A flexed arm (the strength sign): shoulder and bicep on the left, forearm rising to a fist. Embossed like a medal: rim light, inner
-    bevel line, a soft inner glow and fibre lines across the bicep. The emblem of the field and of the burst."""
-    S = size * SS
-    outline = [(0.07, 0.60), (0.10, 0.47), (0.18, 0.36), (0.30, 0.28), (0.43, 0.27), (0.53, 0.32), (0.59, 0.40), (0.60, 0.30), (0.60, 0.20),
-               (0.57, 0.12), (0.62, 0.05), (0.73, 0.03), (0.83, 0.07), (0.87, 0.16), (0.84, 0.26), (0.80, 0.36), (0.80, 0.50),
-               (0.80, 0.64), (0.75, 0.76), (0.63, 0.84), (0.46, 0.88), (0.28, 0.86), (0.15, 0.80), (0.08, 0.71)]
-    img = Image.new("L", (S, S), 0)
-    d = ImageDraw.Draw(img)
-    d.polygon([(px * S, py * S) for px, py in catmull(outline)], fill=255)
-    m = to_arr(img, size)
-    # emboss: a smooth height field from the blurred mask, lit from the upper left
-    h = blur(m, 7.0)
-    gy, gx = np.gradient(h)
-    g = np.sqrt(gx * gx + gy * gy) + 1e-6
-    lit = np.clip((gx * 0.62 + gy * 0.78) / g, -1, 1) * np.clip(g / 0.035, 0, 1)
-    inner = np.clip((blur(m, 5.0) - 0.5) * 2.0, 0, 1)
-    bevel = np.exp(-((blur(m, 3.5) - 0.78) / 0.07) ** 2) * m
-    rim = np.clip(m - blur(m, 1.6) * 0.98, 0, 1) * 3.0
-    xx, yy = grid(size, size)
-    X, Y = xx / size, yy / size
-    stri = 0.5 + 0.5 * np.cos(2 * math.pi * 11 * np.sqrt(((X - 0.36) / 0.26) ** 2 + ((Y - 0.58) / 0.20) ** 2))
-    bic = np.exp(-((np.sqrt(((X - 0.36) / 0.26) ** 2 + ((Y - 0.58) / 0.20) ** 2)) / 0.9) ** 6)
-    lum = np.clip(0.45 + 0.25 * inner + 0.22 * lit + 0.45 * bevel + 0.16 * stri * bic * m + rim, 0, 1)
-    glow = np.exp(-(np.maximum(0, blur(1 - m, 6.0) - 0.5) / 0.05) ** 2) * 0.0
-    halo = blur(m, 9.0) * (1 - m)
-    a = np.clip(m * (0.84 + 0.16 * stri * bic) + halo * 0.9 + 0.3 * bevel, 0, 1)
-    save(np.where(m > 0.5, lum, 1.0), a, "body_flex")
-
-
-ALL = [steam, steam_jet, veins, flesh, ring, pulse, wall, fibre, slug, muzzle, rifling, strand, burst, spark, flex]
+ALL = [steam, steam_jet, veins, flesh, ring, pulse, wall, fibre, slug, muzzle, rifling, strand, burst, spark]
 
 if __name__ == "__main__":
     import sys
