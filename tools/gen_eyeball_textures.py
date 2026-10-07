@@ -224,7 +224,8 @@ def iris_arrays(size):
     v = v * (1 - 0.82 * smooth(0.80, 0.94, r))                         # the dark limbal ring
     v = v + 0.35 * np.exp(-((r - 0.205) / 0.025) ** 2)               # bright rim round the pupil
     v = np.where(r < 0.17, 0.04, v)
-    v = v * (0.84 + 0.16 * smooth(-0.9, 0.35, ny))                     # upper lid shadow
+    v = np.clip(v, 0, 1) ** 0.80                                          # lift the mid-tones: a lit, glowing iris
+    v = v * (0.86 + 0.14 * smooth(-0.9, 0.35, ny))                     # upper lid shadow
     alpha = smooth(1.0, 0.975, r)
     return np.clip(v, 0, 1), alpha
 

@@ -170,6 +170,32 @@ public class CurseLayer extends AbstractVfxLayer {
                         .add(new Vector3f(sd).mul(Mth.cos(phi) * rad)).add(new Vector3f(up2).mul(Mth.sin(phi) * rad));
                 cell(buf, ctx, GLYPHS, 4, (k * 5 + (int) (age * 0.2f)) & 15, VfxBlend.ADD, q, 0.42f * p, age * 0.1f + k, al(pal.hi, bodyA * (0.45f + 0.55f * f)));
             }
+
+            // a halo of runes spinning round the head, tilted and precessing
+            Vector3f axis = new Vector3f(dir).mul(0.75f)
+                    .add(new Vector3f(sd).mul(Mth.cos(age * 0.2f) * 0.5f)).add(new Vector3f(up2).mul(Mth.sin(age * 0.2f) * 0.5f));
+            VfxPose haloPose = VfxPose.facing(new Vector3f(head).sub(new Vector3f(dir).mul(0.35f * p)), axis);
+            hoop(buf, BAND, VfxBlend.ALPHA, haloPose, 0.58f * p, 0.58f * p, 0.115f * p, ctx.seg(8, 6), 2f, age * 0.05f, al(INK, 0.9f * hf));
+            hoop(buf, BAND, VfxBlend.ADD, haloPose, 0.58f * p, 0.58f * p, 0.11f * p, ctx.seg(8, 6), 2f, age * 0.05f, al(pal.hi, 0.9f * hf));
+
+            // two black tendrils streaming behind the head, writhing
+            for (int t = 0; t < 2; t++) {
+                Vector3f[] tp = new Vector3f[3];
+                float[] tw = new float[3];
+                int[] tc = new int[3], tg = new int[3];
+                float sgn = t == 0 ? 1f : -1f;
+                for (int m = 0; m < 3; m++) {
+                    float f = m / 2f;                                            // 0 = anchored on the shaft, 1 = the free tip
+                    tp[m] = new Vector3f(head).sub(new Vector3f(dir).mul((0.5f + 1.7f * f) * p))
+                            .add(new Vector3f(sd).mul(sgn * (0.12f + 0.45f * f) * p + Mth.sin(age * 0.7f + t * 2.1f + m * 1.3f) * 0.18f * p * f))
+                            .add(new Vector3f(up2).mul(Mth.cos(age * 0.6f + t * 1.7f + m) * 0.2f * p * f));
+                    tw[m] = 0.62f * p;
+                    tc[m] = al(INK, 0.95f * bodyA * (1f - 0.5f * f));
+                    tg[m] = al(VfxVertexBuffer.lerpColor(pal.deep, pal.hi, 1f - f), bodyA * 0.9f * (1f - 0.6f * f));
+                }
+                ribbon(buf, TENDRIL, VfxBlend.ALPHA, tp, tw, tc);
+                ribbon(buf, TENDRIL, VfxBlend.ADD, tp, tw, tg);
+            }
         }
 
         // ---- ash smoke left along the path, and embers drifting off it
@@ -231,13 +257,13 @@ public class CurseLayer extends AbstractVfxLayer {
         // ---- the ground: black blight spreads, glowing veins branch through it
         float blightR = R * (0.35f + 0.80f * open);
         VfxPose vp = g.spin(0.6f + age * 0.0015f);
-        buf.plane(VEINS, VfxBlend.ALPHA, vp, blightR, al(INK, 0.82f * fade));
-        buf.plane(VEINS, VfxBlend.ADD, vp.lift(0.012f), blightR, al(pal.glow, (0.30f + 0.30f * beat) * fade));
+        buf.plane(VEINS, VfxBlend.ALPHA, vp, blightR, al(INK, 0.9f * fade));
+        buf.plane(VEINS, VfxBlend.ADD, vp.lift(0.012f), blightR, al(pal.glow, (0.24f + 0.24f * beat) * fade));
 
         // ---- the sigil: a ring of runes, and a smaller one turning against it
         float sr = R * open;
         VfxPose sp = g.lift(0.02f).spin(age * 0.012f);
-        inkGlow(buf, SIGIL, sp, sr, al(INK, 0.95f * fade), al(pal.hi, 0.78f * fade));
+        inkGlow(buf, SIGIL, sp, sr, al(INK, 0.95f * fade), al(pal.glow, 0.85f * fade));
         VfxPose sp2 = g.lift(0.035f).spin(-age * 0.03f + 1f);
         inkGlow(buf, SIGIL, sp2, sr * 0.56f, al(INK, 0.7f * fade), al(pal.glow, 0.55f * fade));
 
@@ -266,6 +292,17 @@ public class CurseLayer extends AbstractVfxLayer {
             hoop(buf, WALL, VfxBlend.ADD, wp, R * 0.995f, R * 0.80f, hh * 0.5f, seg, rep, age * 0.0015f, al(pal.glow, (0.50f + 0.20f * beat) * fade));
         }
 
+        // ---- a ribbon of runes orbiting the dome, tilted, turning slowly
+        float bandH = hFull * 0.92f * VfxAnim.easeOutCubic(clamp01((age - 6f) / 14f));
+        if (bandH > 0.05f) {
+            float br = R * 0.84f, halfW = Mth.clamp(0.10f + 0.022f * R, 0.14f, 0.42f);
+            Vector3f axis = new Vector3f(0.09f * Mth.sin(age * 0.021f), 1f, 0.09f * Mth.cos(age * 0.021f));
+            float bRep = Math.max(2f, Math.round(Mth.TWO_PI * br / (8f * halfW * 2f)));
+            VfxPose bandPose = VfxPose.facing(new Vector3f(c).add(0, bandH, 0), axis);
+            hoop(buf, BAND, VfxBlend.ALPHA, bandPose, br, br, halfW * 1.05f, ctx.seg(8, 6), bRep, age * 0.004f, al(INK, 0.85f * fade));
+            hoop(buf, BAND, VfxBlend.ADD, bandPose, br, br, halfW, ctx.seg(8, 6), bRep, age * 0.004f, al(pal.hi, 0.8f * fade));
+        }
+
         // ---- thorns rising out of the earth along the rim
         int nt = ctx.seg(9, 5);
         float ph = Mth.clamp(0.9f + 0.16f * R, 1.2f, 3.2f);
@@ -277,8 +314,9 @@ public class CurseLayer extends AbstractVfxLayer {
             if (h < 0.05f) continue;
             Vector3f base = new Vector3f(c).add(Mth.cos(ang) * rho, 0.02f, Mth.sin(ang) * rho);
             int cellIdx = (i % 3 == 2) ? 1 : 0;
-            thorn(buf, VfxBlend.ALPHA, cellIdx, base, h, al(SHADE, 0.97f * fade), al(SHADE, 0.97f * fade));
-            thorn(buf, VfxBlend.ADD, cellIdx, base, h, al(pal.glow, 0.7f * fade), al(pal.hi, 0.85f * fade));
+            float sway = Mth.sin(age * 0.07f + i * 1.9f) * 0.06f * h;
+            thorn(buf, VfxBlend.ALPHA, cellIdx, base, h, sway, al(SHADE, 0.97f * fade), al(SHADE, 0.97f * fade));
+            thorn(buf, VfxBlend.ADD, cellIdx, base, h, sway, al(pal.glow, 0.7f * fade), al(pal.hi, 0.85f * fade));
         }
 
         // ---- violet embers rising, ash falling, soul wisps drifting up
@@ -303,7 +341,7 @@ public class CurseLayer extends AbstractVfxLayer {
             float ang = i * 2.4f + phs * 4.5f, rr = R * (0.25f + 0.45f * hash(inst.seed, i, 14));
             Vector3f q = new Vector3f(c).add(Mth.cos(ang) * rr, 0.5f + phs * 2.8f, Mth.sin(ang) * rr);
             float sz = 1.0f + 0.5f * hash(inst.seed, i, 15);
-            tall(buf, ctx, WISP, VfxBlend.ADD, q, 0.5f * sz, sz, Mth.sin(age * 0.1f + i) * 0.25f, al(pal.hi, 0.85f * (float) Math.sin(Mth.PI * phs) * fade));
+            tall(buf, ctx, WISP, VfxBlend.ADD, q, 0.5f * sz, sz, Mth.sin(age * 0.1f + i) * 0.25f, al(pal.hi, 0.6f * (float) Math.sin(Mth.PI * phs) * fade));
         }
         // a little smoke drifting along the foot of the wall
         int ns = ctx.seg(4, 2);
@@ -396,7 +434,7 @@ public class CurseLayer extends AbstractVfxLayer {
                 if (directed) v.mul(0.7f).add(new Vector3f(hint).mul(0.9f * (0.5f + hash(inst.seed, i, 31)))).normalize();
                 float speed = (2.4f + 3.0f * hash(inst.seed, i, 32)) * p;
                 Vector3f q = new Vector3f(c).add(new Vector3f(v).mul(speed * eh)).add(0, -2.4f * p * k * k, 0);
-                float sz = (0.45f + 0.5f * hash(inst.seed, i, 33)) * p, rot = age * (0.2f + 0.5f * hash(inst.seed, i, 34)) + i;
+                float sz = (0.32f + 0.4f * hash(inst.seed, i, 33)) * p, rot = age * (0.2f + 0.5f * hash(inst.seed, i, 34)) + i;
                 float va = 1f - sstep(0.55f, 1f, k);
                 int cellIdx = i & 3;
                 cell(buf, ctx, SHARDS, 2, cellIdx, VfxBlend.ALPHA, q, sz, rot, al(SHADE, va));

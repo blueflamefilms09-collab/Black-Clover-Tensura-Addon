@@ -18,12 +18,13 @@ layer (vfx/client/layer/BodyLayer.java, BodyFx.java) relies on:
   body_flesh       256x256, dark muscle-tissue disc (draw with alpha)
   body_ring        256x256, sigil: tick band, ring of 12 muscle bellies, ECG line, spokes (outer circle at 0.965 of the half size)
   body_pulse       256x256, thin heartbeat ring at 0.86 of the half size with a fading inner trail
-  body_wall        256x128, tiles in U; muscle ropes rising from a hot base (bottom) and dissolving into steam (top)
+  body_wall        256x128, tiles in U; a flesh wall with glowing veins climbing from a hot base (bottom), dissolving into steam (top)
+  body_band        256x64, tiles in U; striated muscle band with a glowing vein, soft top and bottom edges
   body_fibre       64x256, tiles in V; braided fibre ribbon, V runs along the length
   body_slug        64x256, the compressed round, nose at the top (V = 0), V runs along the length
   body_muzzle      256x256, muzzle star (8 long petals, 8 shorter, hot core)
   body_rifling     256x256, barrel seen from the front: knurled flesh ring, bevel, spiral rifling grooves
-  body_strand      64x256, whipping tendon strand, base at the bottom, tip at the top
+  body_strand      64x256, tendon tendril: thick base at the bottom, hair-fine tip at the top
   body_burst       256x256, starburst of fine fibre rays
   body_spark       64x64, ember with a vertical streak (rotate it along its motion)
 """
@@ -113,7 +114,7 @@ def blur(a, sigma, wrap=False):
     for axis in (0, 1):
         pad = [(0, 0), (0, 0)]
         pad[axis] = (r, r)
-        p = np.pad(out, pad, mode="wrap" if wrap else "edge")
+        p = np.pad(out, pad, mode="wrap" if (wrap is True or (wrap == "x" and axis == 1)) else "edge")
         acc = np.zeros_like(out)
         for i, kv in enumerate(k):
             sl = [slice(None), slice(None)]
@@ -135,14 +136,19 @@ def to_arr(im, size):
     return np.asarray(im.resize((size, size) if isinstance(size, int) else size, Image.LANCZOS), dtype=np.float32) / 255.0
 
 
-def shade_from_density(dens, light=(-0.65, -0.75), strength=0.26, base=0.74, thick=0.16):
+def to_arr_wh(im, wh):
+    """A supersampled 'L' image -> float array of size (w, h)."""
+    return np.asarray(im.resize(wh, Image.LANCZOS), dtype=np.float32) / 255.0
+
+
+def shade_from_density(dens, light=(-0.65, -0.75), strength=0.22, base=0.84, thick=0.12):
     """Soft cloud shading: bright on the lit side, darker where the cloud is thick (so alpha-blended steam reads as a volume)."""
     ds = blur(dens, 2.0)
     gy, gx = np.gradient(ds)
     g = np.sqrt(gx * gx + gy * gy) + 1e-5
     lit = (-gx * light[0] - gy * light[1]) / g
     mag = np.clip(g / (np.percentile(g, 96) + 1e-6), 0, 1)
-    return np.clip(base + strength * lit * mag - thick * np.clip(dens / 1.6, 0, 1), 0.5, 1.0)
+    return np.clip(base + strength * lit * mag - thick * np.clip(dens / 1.6, 0, 1), 0.6, 1.0)
 
 
 # ------------------------------------------------------------------------------------------------ steam
@@ -374,33 +380,75 @@ def pulse(size=256):
 
 # ------------------------------------------------------------------------------------------------ ribbons
 def wall(w=256, h=128):
-    """The rim of the field: muscle ropes (twisted tendons) standing on a hot base, thinning upwards and dissolving into steam wisps."""
-    xx, yy = grid(w, h)
-    v = 1 - (yy + 0.5) / h                               # 0 bottom .. 1 top
-    lum, alpha = np.full((h, w), 0.8, np.float32), np.zeros((h, w), np.float32)
+    """The rim of the field: a wall of dark flesh with glowing veins growing up it (they branch as they climb), dissolving into steam
+    wisps at the top. Tiles in U; the hot base is the bottom row. Veins are bright (lum 1), flesh is dark (lum ~0.35), so an additive
+    pass shows the veins and an alpha pass shows the flesh."""
+    W, H = w * SS, h * SS
+    img = Image.new("L", (W, H), 0)
+    d = ImageDraw.Draw(img)
     rng = np.random.default_rng(5001)
-    n = 10
-    for i in range(n):
-        xc = (i + 0.5) * w / n + w / n * 0.16 * math.sin(i * 2.3) + 6 * np.sin(v * 5.0 + i * 1.7)
-        hw = (12.5 - 8.0 * v) * (0.82 + 0.36 * rng.random())
-        dd = (xx - xc) / hw
-        cover = smoothstep(1.0, 0.8, np.abs(dd))
-        body = np.sqrt(np.clip(1 - dd * dd, 0, 1))
-        twist = 0.5 + 0.5 * np.sin((xx - xc) * 0.62 + yy * 0.46 + i * 1.3)
-        a_i = cover * (1 - smoothstep(0.30, 0.96, v))
-        l_i = 0.42 + 0.38 * body + 0.22 * twist * body
-        take = a_i > alpha
-        lum = np.where(take, l_i, lum)
-        alpha = np.maximum(alpha, a_i)
+
+    def grow(x, y, ang, length, width, depth):
+        step = H * 0.022
+        n = max(2, int(length / step))
+        px, py = x, y
+        for i in range(n):
+            ang += rng.normal(0, 0.16)
+            ang = -math.pi / 2 + (ang + math.pi / 2) * 0.90
+            nx, ny = px + math.cos(ang) * step, py + math.sin(ang) * step
+            if ny < 0:
+                break
+            wd = max(1, int(round(width * (1 - 0.72 * i / n))))
+            for off in (-W, 0, W):
+                d.line([(px + off, py), (nx + off, ny)], fill=255, width=wd)
+            px, py = nx, ny
+            if depth < 2 and i > 3 and rng.random() < 0.11:
+                grow(px, py, ang + rng.choice([-1, 1]) * rng.uniform(0.5, 1.0), length * rng.uniform(0.3, 0.55) * (1 - 0.5 * i / n), width * 0.62, depth + 1)
+
+    for k in range(14):
+        grow((k + rng.uniform(0.15, 0.85)) * W / 14, H, -math.pi / 2 + rng.normal(0, 0.12), H * rng.uniform(0.6, 1.0), SS * 3.4, 0)
+    core = to_arr_wh(img, (w, h))
+    xx, yy = grid(w, h)
+    v = 1 - (yy + 0.5) / h
+    topn = fbm(w, h, 14, 5004, 4)
+    dissolve = 1 - smoothstep(0.30, 0.98, v + 0.34 * (topn - 0.5))
+    fib = fbm(w, h, 6, 5101, 3, ch=40)
+    flesh_a = (0.66 - 0.14 * fib) * dissolve
+    veins = np.clip(core * 0.95 + blur(core, 1.2, "x") * 0.5 + blur(core, 4.0, "x") * 0.5, 0, 1) * (1 - smoothstep(0.62, 1.0, v + 0.3 * (topn - 0.5)))
     wisp_n = value_noise(w, h, 7, 5002, ch=44)
-    wisps = smoothstep(0.50, 0.82, wisp_n) * (1 - smoothstep(0.52, 1.0, v)) * smoothstep(0.02, 0.34, v)
-    haze = fbm(w, h, 26, 5003) * (1 - smoothstep(0.0, 0.7, v)) * 0.34
-    base = np.exp(-(v / 0.09) ** 2)
-    alpha = np.maximum(alpha, np.maximum(wisps * 0.8, haze))
-    lum = np.where(alpha > 0.3, lum, 0.92)
-    alpha = np.clip(alpha + base * 0.95, 0, 1)
-    lum = np.clip(lum + base * 0.4, 0, 1)
+    wisps = smoothstep(0.50, 0.82, wisp_n) * (1 - smoothstep(0.52, 1.0, v)) * smoothstep(0.10, 0.45, v)
+    base = np.exp(-(v / 0.07) ** 2)
+    alpha = np.clip(np.maximum(np.maximum(flesh_a, veins), wisps * 0.7) + base * 0.9, 0, 1)
+    vk = np.clip(veins * 1.4 + base, 0, 1)
+    lum = np.clip(0.30 + 0.32 * fib + 0.68 * vk, 0, 1)
+    lum = np.where(wisps * 0.7 > alpha * 0.9, 0.92, lum)
     save(lum, alpha, "body_wall")
+
+
+def band(w=256, h=64):
+    """A swelling muscle band for the burst: striated fibre bundles running along it with a glowing vein weaving across. Tiles in U."""
+    xx, yy = grid(w, h)
+    x, y = xx / w, (yy + 0.5) / h
+    rng = np.random.default_rng(5501)
+    lum, alpha = np.full((h, w), 0.6, np.float32), np.zeros((h, w), np.float32)
+    n = 13
+    for k in range(n):
+        yc = (k + 0.5) / n + 0.012 * np.sin(TAU * x * rng.integers(1, 4) + rng.uniform(0, TAU))
+        hw = 0.5 / n * rng.uniform(0.9, 1.25)
+        dd = (y - yc) / hw
+        cov = smoothstep(1.0, 0.7, np.abs(dd))
+        body = np.sqrt(np.clip(1 - np.minimum(np.abs(dd), 1) ** 2, 0, 1))
+        grain = 0.82 + 0.18 * np.sin(TAU * x * rng.integers(20, 46) + k * 2.1)
+        l = (0.34 + 0.66 * body) * grain
+        take = cov > alpha * 0.9
+        lum = np.where(take, l, lum)
+        alpha = np.maximum(alpha, cov)
+    vy = 0.5 + 0.20 * np.sin(TAU * x * 3 + 0.8) + 0.07 * np.sin(TAU * x * 7)
+    vein = np.exp(-((y - vy) / 0.035) ** 2)
+    vhalo = np.exp(-((y - vy) / 0.12) ** 2) * 0.4
+    edge = smoothstep(0.0, 0.16, y) * smoothstep(1.0, 0.84, y)
+    a = np.clip(alpha * 0.9 + vhalo * 0.5, 0, 1) * edge
+    save(np.clip(lum + vein * 0.7, 0, 1), np.clip(a + vein * edge, 0, 1), "body_band")
 
 
 def fibre(w=256, h=64):
@@ -424,7 +472,7 @@ def fibre(w=256, h=64):
         best = np.where(take, score, best)
         lum = np.where(take, l, lum)
         alpha = np.maximum(alpha, cov)
-    halo = np.exp(-(((y - 0.5) / 0.46) ** 2)) * 0.20
+    halo = np.exp(-(((y - 0.5) / 0.40) ** 2)) * 0.22 * (1 - smoothstep(0.30, 0.49, np.abs(y - 0.5)))
     lum = np.where(alpha > 0.08, lum, 1.0)
     save(lum, np.maximum(alpha, halo), "body_fibre", turn=True)
 
@@ -507,22 +555,21 @@ def rifling(size=256):
 
 # ------------------------------------------------------------------------------------------------ strands, burst, spark
 def strand(w=64, h=256):
-    """A whipping tendon: thick at the base (bottom), curving, twisted fibre body with a bright core, tapering to a hair-fine tip (top)."""
+    """A tendon tendril: a slender S-curved filament with a white core and a soft halo, fibrous near the thick base (bottom), ending in a
+    hair-fine tip (top)."""
     xx, yy = grid(w, h)
     u = (xx + 0.5) / w * 2 - 1
     v = 1 - (yy + 0.5) / h
-    xc = 0.38 * np.sin(v * math.pi * 1.45 + 0.35) * v ** 0.85
-    half = 0.34 * (1 - v) ** 0.65 * smoothstep(0.0, 0.05, v) + 0.012
-    d = (u - xc) / half
-    cov = smoothstep(1.0, 0.72, np.abs(d))
-    body = np.sqrt(np.clip(1 - np.minimum(np.abs(d), 1) ** 2, 0, 1))
-    twist = 0.72 + 0.28 * np.sin(v * 150 + d * 5.0)
-    core = np.exp(-(d / 0.30) ** 2)
-    lum = np.clip(0.42 + 0.50 * body * twist + 0.35 * core, 0, 1)
-    halo = np.exp(-(d / 2.1) ** 2) * 0.30 * (1 - 0.6 * v)
-    tipfade = 1 - smoothstep(0.95, 1.0, v)
-    alpha = np.maximum(cov, halo) * tipfade * smoothstep(0.0, 0.02, v)
-    save(lum, alpha, "body_strand")
+    xc = 0.44 * np.sin(v * math.pi * 1.7 + 0.3) * v ** 0.9
+    half = 0.17 * (1 - v) ** 0.85 * smoothstep(0.0, 0.04, v) + 0.010
+    dist = np.abs(u - xc)
+    d = dist / half
+    body = smoothstep(1.0, 0.55, d)
+    core = np.exp(-(d / 0.42) ** 2)
+    fibres = 0.86 + 0.14 * np.sin(v * 120 + (u - xc) * 40) * (1 - v)
+    halo = np.exp(-(dist / 0.22) ** 2) * 0.30 * (1 - v) ** 1.2
+    alpha = np.clip(np.maximum(body * 0.80 * fibres, core) + halo, 0, 1) * (1 - smoothstep(0.93, 1.0, v)) * smoothstep(0.0, 0.015, v)
+    save(np.clip(0.72 + 0.28 * core, 0, 1), alpha, "body_strand")
 
 
 def burst(size=256):
@@ -557,7 +604,7 @@ def spark(size=64):
     save(np.ones_like(a), a, "body_spark")
 
 
-ALL = [steam, steam_jet, veins, flesh, ring, pulse, wall, fibre, slug, muzzle, rifling, strand, burst, spark]
+ALL = [steam, steam_jet, veins, flesh, ring, pulse, wall, band, fibre, slug, muzzle, rifling, strand, burst, spark]
 
 if __name__ == "__main__":
     import sys

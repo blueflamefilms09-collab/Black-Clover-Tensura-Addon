@@ -159,10 +159,11 @@ def pool():
     h = 0.55 * ridge + 0.30 * n2 + 0.15 * fbm(S, S, 16, 3, 15)
     shade = lit(h, k=22.0)
     L = (0.30 + 0.62 * shade) * (0.55 + 0.45 * h) + 0.30 * ridge ** 3
-    crack = np.exp(-((n2 - 0.5) / 0.035) ** 2)                  # dark seams between plates
-    L *= 1 - 0.65 * crack
+    crack = np.exp(-((n2 - 0.5) / 0.05) ** 2)                  # dark seams between plates
+    L *= 1 - 0.40 * crack
     L *= 1 - 0.55 * sstep(0.55, 0.92, r)                        # darker where the tar rim is
     L += (fbm(S, S, 64, 2, 16) - 0.5) * 0.10
+    L = L * 1.18 + 0.06
     edge = 0.90 + 0.03 * ang_noise(th, 17)
     a = 1 - sstep(edge - 0.035, edge, r)
     save(rgba(np.clip(L, 0, 1), a), "pool")
@@ -200,12 +201,12 @@ def rim():
     X, Y = grid(N, N)
     r, th = np.sqrt(X * X + Y * Y), np.arctan2(Y, X)
     jag = (fbm(N, N, 22, 4, 31) - 0.5) * 0.05                   # high-frequency tearing of both edges
-    rin = 0.790 + 0.030 * ang_noise(th, 32) + jag
-    rout = 0.925 + 0.040 * ang_noise(th, 33, decay=0.6) + jag * 1.2
+    rin = 0.745 + 0.040 * ang_noise(th, 32, decay=0.7) + jag * 1.4
+    rout = 0.935 + 0.035 * ang_noise(th, 33, decay=0.6) + jag * 1.6
     band = ((r > rin) & (r < rout)).astype(np.float32)
     # pinch the band in places so it looks torn rather than a clean ring
     pinch = fbm(N, N, 5, 3, 34)
-    band *= ((pinch > 0.20) | ((r > rin + 0.02) & (r < rout - 0.02))).astype(np.float32)
+    band *= ((pinch > 0.12) | ((r > rin + 0.02) & (r < rout - 0.02))).astype(np.float32)
     mask = Image.fromarray((band * 255).astype(np.uint8), "L")
     d = ImageDraw.Draw(mask)
     rng = np.random.default_rng(35)
@@ -216,12 +217,13 @@ def rim():
         s = (0.004 + rng.random() ** 2 * 0.020) * c
         x, y = c + math.cos(a) * rr, c + math.sin(a) * rr
         d.ellipse([x - s, y - s, x + s, y + s], fill=255)
-    for _ in range(46):                                          # drips hanging inward from the inner edge
+    for _ in range(40):                                          # drips hanging inward from the inner edge
         a = rng.random() * 6.2832
         r0 = (0.80 + rng.random() * 0.02) * c
-        ln = (0.03 + rng.random() ** 1.5 * 0.11) * c
-        wd = (0.008 + rng.random() * 0.014) * c
+        ln = (0.04 + rng.random() ** 1.5 * 0.12) * c
+        wd = (0.014 + rng.random() * 0.020) * c
         ca, sa = math.cos(a), math.sin(a)
+        r0 = r0 - 0.04 * c
         p0 = (c + ca * (r0 + wd), c + sa * (r0 + wd))
         pa = (c + ca * r0 - sa * wd, c + sa * r0 + ca * wd)
         pb = (c + ca * r0 + sa * wd, c + sa * r0 - ca * wd)
@@ -233,16 +235,16 @@ def rim():
         a = rng.random() * 6.2832
         r0 = (0.90 + rng.random() * 0.02) * c
         ln = (0.03 + rng.random() * 0.05) * c
-        wd = (0.006 + rng.random() * 0.010) * c
+        wd = (0.012 + rng.random() * 0.016) * c
         ca, sa = math.cos(a), math.sin(a)
         d.polygon([(c + ca * r0 - sa * wd, c + sa * r0 + ca * wd), (c + ca * r0 + sa * wd, c + sa * r0 - ca * wd), (c + ca * (r0 + ln), c + sa * (r0 + ln))], fill=255)
     m = np.asarray(mask.filter(ImageFilter.GaussianBlur(0.8))).astype(np.float32) / 255
     soft = blur(m, 3.0 * ss)
-    hgt = soft * 1.0 + (fbm(N, N, 40, 3, 36) - 0.5) * 0.10 * m
+    hgt = soft * 1.0 + (fbm(N, N, 40, 3, 36) - 0.5) * 0.18 * m
     sh = lit(hgt, k=26.0)
-    spec = sh ** 5
+    spec = sh ** 8 * 0.55
     rimlit = np.clip(soft - blur(m, 7 * ss), 0, 1)
-    L = 0.045 + 0.05 * fbm(N, N, 30, 3, 37) + 0.85 * spec * m + 0.35 * np.clip(rimlit * 8, 0, 1) * m * (0.5 + 0.5 * sh)
+    L = 0.035 + 0.04 * fbm(N, N, 30, 3, 37) + 0.85 * spec * m + 0.22 * np.clip(rimlit * 8, 0, 1) * m * (0.5 + 0.5 * sh)
     L = down_arr(np.clip(L, 0, 1) * m, ss)
     a = down_arr(m, ss)
     save(rgba(L, a), "rim")
@@ -280,23 +282,22 @@ def flame():
 
 
 def candle():
-    w, h = 64, 128
+    w, h = 64, 64
 
     def half(y):
-        if y < 14 or y > 122:
+        if y < 20 or y > 61:
             return 0
-        t = (y - 14) / 108.0
-        skirt = 8 * math.exp(-((1 - t) / 0.16) ** 2)            # dripped, spreading foot
-        wob = 1.8 * math.sin(t * 17.0) * (1 - t)                # drip lumps
-        return 15 + 3 * t + skirt + wob
-    L, a = lit_blob(w, h, half, base=0.07, rim=0.5, seed=41, edge_noise=0.04)
-    # the top: a lit, slightly dished rim and a tiny wick
+        t = (y - 20) / 41.0
+        skirt = 11 * math.exp(-((1 - t) / 0.22) ** 2)           # dripped, spreading foot
+        wob = 1.6 * math.sin(t * 13.0) * (1 - t)                # drip lumps
+        return 12 + 2 * t + skirt + wob
+    L, a = lit_blob(w, h, half, base=0.10, rim=0.9, seed=41, edge_noise=0.05)
     img = rgba(L, a)
     d = ImageDraw.Draw(img)
-    d.ellipse([w / 2 - 13, 10, w / 2 + 13, 20], fill=(int(0.55 * 255),) * 3 + (255,))
-    d.ellipse([w / 2 - 9, 12, w / 2 + 9, 18], fill=(24, 24, 24, 255))
-    d.line([w / 2, 14, w / 2 + 1, 6], fill=(15, 15, 15, 255), width=2)
-    save(img, "candle")
+    d.ellipse([w / 2 - 13, 15, w / 2 + 13, 26], fill=(150, 150, 150, 255))   # the lit, dished top
+    d.ellipse([w / 2 - 9, 17, w / 2 + 9, 24], fill=(22, 22, 22, 255))
+    d.line([w / 2, 20, w / 2 + 1, 10], fill=(18, 18, 18, 255), width=2)         # wick
+    save(img.filter(ImageFilter.GaussianBlur(0.7)), "candle")
 
 
 def drop():
@@ -307,13 +308,13 @@ def drop():
         if t < 0 or t > 1:
             return 0
         return 25 * math.sin(math.pi * t ** 1.9) ** 0.85 + 0.6
-    L, a = lit_blob(w, h, half, base=0.09, rim=0.55, seed=42)
+    L, a = lit_blob(w, h, half, base=0.12, rim=0.9, seed=42)
     # a hard specular dot, as on wet black paint
     img = rgba(L, a)
     d = ImageDraw.Draw(img)
-    d.ellipse([w / 2 - 13, 70, w / 2 - 6, 86], fill=(255, 255, 255, 255))
-    d.ellipse([w / 2 - 11, 63, w / 2 - 8, 68], fill=(255, 255, 255, 255))
-    img = img.filter(ImageFilter.GaussianBlur(0.5))
+    d.pieslice([w / 2 - 20, 56, w / 2 + 2, 100], 150, 215, fill=(255, 255, 255, 255))
+    d.ellipse([w / 2 - 14, 52, w / 2 - 9, 57], fill=(255, 255, 255, 255))
+    img = img.filter(ImageFilter.GaussianBlur(0.9))
     save(img, "drop")
 
 
@@ -328,7 +329,7 @@ def streak():
         for pos, s in beads:
             base += 6.5 * math.exp(-((t - pos) / s) ** 2) * (0.4 + t)
         return base if t > 0.02 else 0
-    L, a = lit_blob(w, h, half, centre=lambda y: w / 2 + 3 * math.sin(y * 0.05), base=0.08, rim=0.5, seed=44, edge_noise=0.10)
+    L, a = lit_blob(w, h, half, centre=lambda y: w / 2 + 3 * math.sin(y * 0.05), base=0.12, rim=0.9, seed=44, edge_noise=0.10)
     img = rgba(L, a)
     d = ImageDraw.Draw(img)
     for i in range(7):                                         # detached drips falling off the tail
@@ -359,7 +360,7 @@ def tendril():
         bulb = 8 * math.exp(-((t - 0.17) / 0.07) ** 2)         # a heavy blob near the tip
         neck = -3 * math.exp(-((t - 0.30) / 0.05) ** 2)
         return max(0.0, body + bulb + neck)
-    L, a = lit_blob(w, h, half, centre=centre, base=0.07, rim=0.55, seed=45, edge_noise=0.08)
+    L, a = lit_blob(w, h, half, centre=centre, base=0.11, rim=0.9, seed=45, edge_noise=0.08)
     img = rgba(L, a)
     d = ImageDraw.Draw(img)
     # two thin side tendrils curling off the main one
@@ -390,11 +391,11 @@ def splat():
     core = (r < 0.27 + 0.07 * ang_noise(th, 52, 10, 0.9)).astype(np.float32)
     img = Image.fromarray((core * 255).astype(np.uint8), "L")
     d = ImageDraw.Draw(img)
-    rays = 17
+    rays = 11
     for i in range(rays):
         a = (i + rng.random() * 0.7) / rays * 6.2832
         ln = (0.50 + rng.random() ** 0.8 * 0.44) * c
-        wd = (0.030 + rng.random() * 0.040) * c
+        wd = (0.055 + rng.random() * 0.060) * c
         r0 = 0.15 * c
         ca, sa = math.cos(a), math.sin(a)
         pts = []
@@ -404,11 +405,12 @@ def splat():
             cr = r0 + (ln - r0) * t
             ox = -sa * bend * c
             oy = ca * bend * c
-            pts.append((c + ca * cr + ox, c + sa * cr + oy, wd * (1 - 0.82 * t ** 0.7) * (1 + 0.25 * math.sin(t * 9 + i))))
+            pts.append((c + ca * cr + ox, c + sa * cr + oy, wd * (1 - 0.70 * t ** 1.2) * (1 + 0.25 * math.sin(t * 9 + i))))
         for k in range(len(pts) - 1):
             x0, y0, w0 = pts[k]
             x1, y1, w1 = pts[k + 1]
-            d.line([(x0, y0), (x1, y1)], fill=255, width=max(1, int((w0 + w1))))
+            d.line([(x0, y0), (x1, y1)], fill=255, width=max(1, int((w0 + w1)) * 2))
+            d.ellipse([x1 - w1, y1 - w1, x1 + w1, y1 + w1], fill=255)
         tx, ty, tw = pts[-1]
         rr = tw * (1.0 + rng.random() * 1.2) + 2
         d.ellipse([tx - rr, ty - rr, tx + rr, ty + rr], fill=255)

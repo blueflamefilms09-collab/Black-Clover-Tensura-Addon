@@ -6,29 +6,42 @@ import net.minecraft.util.Mth;
 import org.joml.Vector3f;
 
 /**
- * Shared pieces of the Curse Magic effects: the textures (tools/gen_curse_textures.py), the palette and a few geometry helpers.
- * Every texture is read in two passes: ALPHA in near-black (the cursed mass) and ADD in violet (only the bright strokes, cracks
- * and rims light up), so one sprite gives a black body with light in it. Everything goes through VfxVertexBuffer.quad, so the
- * per-effect vertex budget still applies.
+ * Shared pieces of the Gel Magic effects: the textures (tools/gen_gel_textures.py), the palette and a few geometry helpers.
+ * Every jelly body sprite has a twin "_hi" sprite: the body is drawn ALPHA in the jelly tint (denser and more opaque at the rim,
+ * clear in the middle) and the twin is drawn ADD on top (rim light, window highlight, caustic net, bubble glints), so one jelly is
+ * two quads. Everything goes through VfxVertexBuffer.quad, so the per-effect vertex budget still applies.
  */
-final class CurseFx {
-    private CurseFx() {}
+final class GelFx {
+    private GelFx() {}
 
     private static ResourceLocation t(String n) { return VfxTextures.byName(n); }
 
-    static final ResourceLocation SIGIL = t("curse_sigil"), BRAND = t("curse_brand"), GLYPHS = t("curse_glyphs"), BAND = t("curse_band"),
-            VEINS = t("curse_veins"), WALL = t("curse_wall"), BOLT = t("curse_bolt"), TENDRIL = t("curse_tendril"), SMOKE = t("curse_smoke"),
-            FLAKES = t("curse_flakes"), FLASH = t("curse_flash"), RING = t("curse_ring"), WISP = t("curse_wisp"), SHARDS = t("curse_shards"),
-            CORONA = t("curse_corona");
+    static final ResourceLocation BLOB = t("gel_blob"), BLOB_HI = t("gel_blob_hi"), PUDDLE = t("gel_puddle"), PUDDLE_HI = t("gel_puddle_hi"),
+            SPLAT = t("gel_splat"), SPLAT_HI = t("gel_splat_hi"), SALA = t("gel_salamander"), SALA_HI = t("gel_salamander_hi"),
+            RING = t("gel_ring"), STRAND = t("gel_strand"), DROPS = t("gel_drops"), BUBBLES = t("gel_bubbles"), WALL = t("gel_wall"),
+            GLINT = t("gel_glint");
 
-    /** The palette: black with a violet cast, the owner's glow violet, an orchid rim, a white-violet core, a magenta accent. */
-    static final int INK = 0xFF060209, SHADE = 0xFF2E1A46, DEEP = 0xFF4B158F, VIOLET = 0xFF9A2AFF, ORCHID = 0xFFC864FF,
-            HOT = 0xFFF4E4FF, MAGENTA = 0xFFE0309A;
+    /** The palette: a mint jelly with a teal depth, a glass-white light and a faint lime for the sparks inside it. */
+    static final int JELLY = 0xFF62E4CC, DEEP = 0xFF1C8C94, MINT = 0xFF7AFFD8, GLASS = 0xFFDCFFF4, LIME = 0xFFC4FF9C;
 
     /** The palette colour pulled a little toward the spell's own tint (so a white tint still reads as this magic). */
     static int mix(int palette, int tint, float amount) {
         return VfxVertexBuffer.lerpColor(palette | 0xFF000000, tint | 0xFF000000, amount);
     }
+
+    /** The colours of one instance. */
+    static final class Pal {
+        final int body, hi, glow, deep, lime;
+        Pal(VfxInstance inst) {
+            body = mix(JELLY, inst.color, 0.30f);
+            hi = mix(GLASS, inst.color, 0.18f);
+            glow = mix(MINT, inst.color, 0.30f);
+            deep = mix(DEEP, inst.color, 0.30f);
+            lime = mix(LIME, inst.color, 0.15f);
+        }
+    }
+
+    static int al(int argb, float a) { return VfxVertexBuffer.withAlpha(argb, Mth.clamp(a, 0f, 1f)); }
 
     /** 0..1 smoothstep. */
     static float sstep(float a, float b, float x) {
@@ -52,7 +65,6 @@ final class CurseFx {
         return (x >>> 40) / (float) (1L << 24);
     }
 
-    /** Fraction part. */
     static float fract(float x) { return x - (float) Math.floor(x); }
 
     /** A random unit vector (per effect seed, index and salt). */
@@ -68,11 +80,9 @@ final class CurseFx {
         return s.normalize();
     }
 
-    /** Scales the RGB of a colour (for NEGATIVE blending, where alpha does not fade anything). */
-    static int dim(int argb, float f) {
-        int r = Mth.clamp((int) (((argb >> 16) & 255) * f), 0, 255), g = Mth.clamp((int) (((argb >> 8) & 255) * f), 0, 255);
-        int b = Mth.clamp((int) ((argb & 255) * f), 0, 255);
-        return 0xFF000000 | (r << 16) | (g << 8) | b;
+    /** Jelly jiggle: a damped-looking wobble in -1..1 (two beats that do not line up). */
+    static float jig(float age, float phase) {
+        return 0.65f * Mth.sin(age * 1.35f + phase) + 0.35f * Mth.sin(age * 2.3f + phase * 1.7f + 1f);
     }
 
     // ------------------------------------------------------------------ sprites
@@ -86,46 +96,47 @@ final class CurseFx {
                 u0, v0, u1, v1, argb, argb);
     }
 
-    /** A tall (or wide) camera-facing sprite using the whole texture. */
-    static void tall(VfxVertexBuffer buf, VfxRenderContext ctx, ResourceLocation tex, VfxBlend blend, Vector3f c, float w, float h, float roll, int argb) {
-        sprite(buf, ctx, tex, blend, c, w, h, roll, 0, 0, 1, 1, argb);
+    /** A jelly: the body ALPHA in {@code body}, its light ADD in {@code hi} (2 quads). */
+    static void jelly(VfxVertexBuffer buf, VfxRenderContext ctx, ResourceLocation tex, ResourceLocation texHi, Vector3f c, float w, float h, float roll,
+                      int body, int hi) {
+        sprite(buf, ctx, tex, VfxBlend.ALPHA, c, w, h, roll, 0, 0, 1, 1, body);
+        sprite(buf, ctx, texHi, VfxBlend.ADD, c, w, h, roll, 0, 0, 1, 1, hi);
     }
 
-    /** One cell of a square atlas with {@code cols} x {@code cols} cells, as a camera-facing square. */
-    static void cell(VfxVertexBuffer buf, VfxRenderContext ctx, ResourceLocation tex, int cols, int index, VfxBlend blend, Vector3f c, float size,
-                     float roll, int argb) {
-        float cs = 1f / cols, inset = 0.004f;
-        float u0 = (index % cols) * cs + inset, v0 = (index / cols) * cs + inset;
-        sprite(buf, ctx, tex, blend, c, size, size, roll, u0, v0, u0 + cs - 2 * inset, v0 + cs - 2 * inset, argb);
+    /** A rectangle lying on a pose plane (hw x hh half sizes), picture "up" along the pose's up. */
+    static void flat(VfxVertexBuffer buf, ResourceLocation tex, VfxBlend blend, VfxPose pose, float hw, float hh, int argb) {
+        buf.quad(tex, blend, pose.point(-hw, -hh), pose.point(hw, -hh), pose.point(hw, hh), pose.point(-hw, hh), 0, 0, 1, 1, argb, argb);
     }
 
-    /**
-     * A vertical card standing on the ground at {@code base} that always turns toward the camera (a cylindrical billboard): thorns,
-     * pillars. {@code cBase} colours the foot, {@code cTop} the tip, {@code sway} pushes the tip sideways. The UV rectangle may be one
-     * cell of an atlas.
-     */
-    static void standing(VfxVertexBuffer buf, ResourceLocation tex, VfxBlend blend, Vector3f base, float height, float halfWidth, float sway,
-                         float u0, float v0, float u1, float v1, int cBase, int cTop) {
-        Vector3f f = new Vector3f(base.x, 0, base.z);
-        if (f.lengthSquared() < 1e-6f) f.set(0, 0, 1);
-        f.normalize();
-        Vector3f unitRight = new Vector3f(f.z, 0, -f.x);
-        Vector3f r = new Vector3f(unitRight).mul(halfWidth), lean = new Vector3f(unitRight).mul(sway);
-        Vector3f lo0 = new Vector3f(base).sub(r), lo1 = new Vector3f(base).add(r);
-        buf.quad(tex, blend, lo0, lo1, new Vector3f(lo1).add(lean).add(0, height, 0), new Vector3f(lo0).add(lean).add(0, height, 0), u0, v0, u1, v1, cBase, cTop);
+    /** A jelly lying on a pose plane (2 quads). */
+    static void jellyFlat(VfxVertexBuffer buf, ResourceLocation tex, ResourceLocation texHi, VfxPose pose, float hw, float hh, int body, int hi) {
+        flat(buf, tex, VfxBlend.ALPHA, pose, hw, hh, body);
+        flat(buf, texHi, VfxBlend.ADD, pose.lift(0.004f), hw, hh, hi);
     }
 
-    /** A thorn / fang card from the shard atlas (cell 0 = tall thorn, 1 = fang cluster), its tip swaying by {@code sway} blocks. */
-    static void thorn(VfxVertexBuffer buf, VfxBlend blend, int cell, Vector3f base, float height, float sway, int cBase, int cTop) {
-        float cs = 0.5f, inset = 0.004f;
-        float u0 = (cell % 2) * cs + inset, v0 = (cell / 2) * cs + inset;
-        standing(buf, SHARDS, blend, base, height * 1.03f, height * 0.52f, sway, u0, v0, u0 + cs - 2 * inset, v0 + cs - 2 * inset, cBase, cTop);
+    /** One drop of the drops atlas (4 cells of 64 x 128: teardrop, bead, falling drop, double drop; tips point up); {@code size} = its height. */
+    static void drop(VfxVertexBuffer buf, VfxRenderContext ctx, VfxBlend blend, int cell, Vector3f c, float size, float roll, int argb) {
+        float u0 = (cell & 3) * 0.25f + 0.004f;
+        sprite(buf, ctx, DROPS, blend, c, size * 0.5f, size, roll, u0, 0.004f, u0 + 0.25f - 0.008f, 0.996f, argb);
     }
 
-    // ------------------------------------------------------------------ ribbons and rings
+    /** One bubble cell (2 x 2 atlas of 128). */
+    static void bubble(VfxVertexBuffer buf, VfxRenderContext ctx, VfxBlend blend, int cell, Vector3f c, float size, float roll, int argb) {
+        float u0 = (cell & 1) * 0.5f + 0.004f, v0 = ((cell >> 1) & 1) * 0.5f + 0.004f;
+        sprite(buf, ctx, BUBBLES, blend, c, size, size, roll, u0, v0, u0 + 0.492f, v0 + 0.492f, argb);
+    }
+
+    /** A drop that flies along screen direction (vx, vy): its tip trails behind it. */
+    static float tipRoll(VfxRenderContext ctx, Vector3f vel) {
+        float vx = vel.dot(ctx.camRight), vy = vel.dot(ctx.camUp);
+        if (vx * vx + vy * vy < 1e-6f) return 0f;
+        return (float) Math.atan2(-vy, -vx) - Mth.HALF_PI;
+    }
+
+    // ------------------------------------------------------------------ ribbons and hoops
     /**
      * A ribbon through points (camera-relative), turned to face the camera. The texture runs along it: v = 1 (image bottom) at the first
-     * point, v = 0 (image top) at the last, so the bolt / tendril sprites sit tail- / base-first. {@code widths} and {@code cols} per point.
+     * point, v = 0 (image top) at the last. {@code widths} and {@code cols} per point.
      */
     static void ribbon(VfxVertexBuffer buf, ResourceLocation tex, VfxBlend blend, Vector3f[] pts, float[] widths, int[] cols) {
         int n = pts.length;
@@ -146,7 +157,7 @@ final class CurseFx {
 
     /**
      * A ribbon standing on a circle (a wall): width along the pose normal, U wraps {@code repeats} times around and scrolls by {@code uScroll};
-     * the bottom edge has radius {@code rBottom}, the top edge {@code rTop} (a leaning wall).
+     * the bottom edge has radius {@code rBottom}, the top edge {@code rTop} (a leaning wall). The picture's bottom is at the pose's -normal side.
      */
     static void hoop(VfxVertexBuffer buf, ResourceLocation tex, VfxBlend blend, VfxPose pose, float rBottom, float rTop, float halfWidth,
                      int segments, float repeats, float uScroll, int argb) {
@@ -162,18 +173,15 @@ final class CurseFx {
         }
     }
 
-    /** A plane's half size that puts the jagged ring of curse_ring (drawn at 0.80 of the half size) at radius {@code r}. */
+    /** A plane's half size that puts the ridge of gel_ring (drawn at 0.80 of the half size) at radius {@code r}. */
     static float ringHalf(float r) { return r / 0.80f; }
 
-    /** A dark pass then a light pass of the same card (billboard). */
-    static void inkGlow(VfxVertexBuffer buf, VfxRenderContext ctx, ResourceLocation tex, Vector3f c, float size, float roll, int ink, int glow) {
-        buf.billboard(ctx, tex, VfxBlend.ALPHA, c, size * 1.04f, roll, ink);
-        buf.billboard(ctx, tex, VfxBlend.ADD, c, size, roll, glow);
-    }
-
-    /** A dark pass then a light pass of the same card lying on a plane. */
-    static void inkGlow(VfxVertexBuffer buf, ResourceLocation tex, VfxPose pose, float half, int ink, int glow) {
-        buf.plane(tex, VfxBlend.ALPHA, pose, half * 1.03f, ink);
-        buf.plane(tex, VfxBlend.ADD, pose.lift(0.004f), half, glow);
+    /** A pose lying on the ground at {@code c} whose right axis points along the horizontal direction (dx, dz); right x up = up-normal. */
+    static VfxPose groundHeading(Vector3f c, float dx, float dz) {
+        float l = Mth.sqrt(dx * dx + dz * dz);
+        if (l < 1e-5f) return VfxPose.ground(c);
+        Vector3f right = new Vector3f(dx / l, 0, dz / l);
+        Vector3f up = new Vector3f(dz / l, 0, -dx / l);
+        return new VfxPose(new Vector3f(c), right, up, new Vector3f(0, 1, 0));
     }
 }

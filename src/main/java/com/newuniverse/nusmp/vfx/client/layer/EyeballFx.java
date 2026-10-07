@@ -212,7 +212,10 @@ final class EyeballFx {
         if (lids) panel(buf, LID, VfxBlend.ALPHA, c, right, up, d * 0.94f, d * 0.705f * sq, VfxVertexBuffer.withAlpha(WHITE, a));
         // the wet glint, and the glow round the rim
         panel(buf, GLOSS, VfxBlend.ADD, c, right, up, R, R * sq, VfxVertexBuffer.withAlpha(WHITE, a * (0.62f + 0.3f * flare)));
-        if (flare > 0.02f) panel(buf, CORONA, VfxBlend.ADD, c, right, up, d * 1.05f, d * 1.05f * Math.max(0.5f, sq), VfxVertexBuffer.withAlpha(tint | 0xFF000000, a * Mth.clamp(flare, 0f, 1f) * 0.8f));
+        if (flare > 0.02f) {
+            float cs = lids ? 1.55f : 1.05f;                                        // with lids the ring sits outside the flesh, so the flesh stays readable
+            panel(buf, CORONA, VfxBlend.ADD, c, right, up, d * cs, d * cs * Math.max(0.5f, sq), VfxVertexBuffer.withAlpha(tint | 0xFF000000, a * Mth.clamp(flare, 0f, 1f) * (lids ? 0.6f : 0.8f)));
+        }
     }
 
     /**

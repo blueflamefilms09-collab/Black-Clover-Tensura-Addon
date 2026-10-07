@@ -537,7 +537,7 @@ def lizard(w=256, h=128):
 
 # ------------------------------------------------------------------------------------------------ patina
 def patina(n=128):
-    """Verdigris crust (the one coloured sprite): ragged green blotches over bronze brown with drips running down. Tiles."""
+    """Verdigris crust (the one coloured sprite): ragged green blotches over bronze brown with drips running down, round ragged outline."""
     crust = fbm(n, n, 28, 8101, 5)
     detail = fbm(n, n, 8, 8111, 3)
     drip = value_noise(n, n, 4, 64, 8121)            # long vertical streaks
@@ -553,6 +553,11 @@ def patina(n=128):
     col = col + sparkle
     alpha = np.clip(blot * 0.92 + (1 - blot) * smooth(0.30, 0.46, crust) * 0.40, 0, 1)
     alpha = np.maximum(alpha, dripmask * 0.55)
+    # round, ragged outline so a square quad reads as a stain, not a tile
+    xx, yy = grid(n, n)
+    rr = np.sqrt(((xx - (n - 1) / 2) / (n / 2)) ** 2 + ((yy - (n - 1) / 2) / (n / 2)) ** 2)
+    rr = rr + 0.28 * (fbm(n, n, 24, 8141, 4) - 0.5)
+    alpha = alpha * (1 - smooth(0.52, 0.92, rr))
     return Image.fromarray(np.dstack([np.clip(col[..., 0], 0, 255), np.clip(col[..., 1], 0, 255), np.clip(col[..., 2], 0, 255), alpha * 255]).astype(np.uint8), "RGBA")
 
 

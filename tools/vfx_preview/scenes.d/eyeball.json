@@ -1,47 +1,650 @@
 {
-  "_comment": "Eyeball Magic previews. FX1 cast / projectile, FX2 zone / field, FX3 impact / signature. Dark variants (night) check the glow, the daylight ones check readability.",
-
-  "eyeball_cast": {"layer": "EyeballLayer", "shape": "EYEBALL_FX1", "from": [0, 1.5, 0], "to": [0, 1.5, 11], "power": 1.0, "duration": 16,
-    "cam": [7, 2.6, 5.5], "target": [0, 1.5, 5.5], "ages": [2, 6, 10, 14], "figures": [[-0.5, 0, 0, 1.8], [0, 0, 11, 1.8]]},
-
-  "eyeball_cast_back": {"layer": "EyeballLayer", "shape": "EYEBALL_FX1", "from": [0, 1.5, 0], "to": [1.5, 1.7, 12], "power": 1.0, "duration": 16,
-    "cam": [0.9, 2.0, -3.5], "target": [0.5, 1.5, 8], "ages": [2, 6, 10, 14], "figures": [[1.5, 0, 12, 1.8]]},
-
-  "eyeball_cast_big": {"layer": "EyeballLayer", "shape": "EYEBALL_FX1", "from": [0, 2.0, 0], "to": [0, 2.2, 14], "power": 2.4, "duration": 16,
-    "cam": [10, 3.4, 7], "target": [0, 2.0, 7], "ages": [2, 6, 10, 14], "figures": [[-0.7, 0, 0, 1.8], [0, 0, 14, 1.8]]},
-
-  "eyeball_cast_close": {"layer": "EyeballLayer", "shape": "EYEBALL_FX1", "from": [0, 1.5, 0], "to": [0, 1.5, 6], "power": 1.0, "duration": 16,
-    "cam": [3.2, 1.9, 1.6], "target": [0, 1.5, 1.6], "ages": [1.5, 3, 5, 7], "figures": [[-0.5, 0, 0, 1.8]]},
-
-  "eyeball_field": {"layer": "EyeballLayer", "shape": "EYEBALL_FX2", "from": [0, 0, 0], "to": [0, 0, 0], "power": 8, "duration": 80,
-    "cam": [0, 6.5, -15], "target": [0, 1.2, 0], "ages": [6, 20, 46, 74], "figures": [[0, 0, 0, 1.8], [2.5, 0, 1.5, 1.8]]},
-
-  "eyeball_field_small": {"layer": "EyeballLayer", "shape": "EYEBALL_FX2", "from": [0, 0, 0], "to": [0, 0, 0], "power": 3, "duration": 80,
-    "cam": [0, 3.6, -7.5], "target": [0, 1.0, 0], "ages": [10, 30, 60], "figures": [[0, 0, 0, 1.8]]},
-
-  "eyeball_field_big": {"layer": "EyeballLayer", "shape": "EYEBALL_FX2", "from": [0, 0, 0], "to": [0, 0, 0], "power": 14, "duration": 80,
-    "cam": [0, 12, -27], "target": [0, 1.5, 0], "ages": [12, 44], "figures": [[0, 0, 0, 1.8]]},
-
-  "eyeball_field_night": {"layer": "EyeballLayer", "shape": "EYEBALL_FX2", "from": [0, 0, 0], "to": [0, 0, 0], "power": 8, "duration": 80,
-    "cam": [0, 6.5, -15], "target": [0, 1.2, 0], "ages": [30, 52], "figures": [[0, 0, 0, 1.8]],
-    "sky": [0.02, 0.03, 0.07], "horizon": [0.06, 0.06, 0.10], "floor": [0.10, 0.10, 0.12]},
-
-  "eyeball_burst": {"layer": "EyeballLayer", "shape": "EYEBALL_FX3", "from": [0, 2, 0], "to": [0, 2, 0], "power": 1.5, "duration": 28,
-    "cam": [0, 2.2, -9], "target": [0, 2, 0], "ages": [2, 6, 11, 17], "figures": [[0, 0, 0, 1.8]]},
-
-  "eyeball_burst_end": {"layer": "EyeballLayer", "shape": "EYEBALL_FX3", "from": [0, 2, 0], "to": [0, 2, 0], "power": 1.5, "duration": 28,
-    "cam": [0, 2.2, -9], "target": [0, 2, 0], "ages": [20, 24, 27], "figures": [[0, 0, 0, 1.8]]},
-
-  "eyeball_burst_dir": {"layer": "EyeballLayer", "shape": "EYEBALL_FX3", "from": [0, 2, 0], "to": [3, 2.6, 4], "power": 1.5, "duration": 28,
-    "cam": [8, 2.6, -5], "target": [1, 2.2, 1.5], "ages": [3, 8, 14, 22], "figures": [[0, 0, 0, 1.8]]},
-
-  "eyeball_burst_big": {"layer": "EyeballLayer", "shape": "EYEBALL_FX3", "from": [0, 3, 0], "to": [0, 3, 0], "power": 3.0, "duration": 28,
-    "cam": [0, 3.4, -17], "target": [0, 3, 0], "ages": [3, 8, 14, 22], "figures": [[0, 0, 0, 1.8]]},
-
-  "eyeball_burst_small": {"layer": "EyeballLayer", "shape": "EYEBALL_FX3", "from": [0, 1.6, 0], "to": [0, 1.6, 0], "power": 0.7, "duration": 28,
-    "cam": [0, 1.8, -5], "target": [0, 1.6, 0], "ages": [3, 8, 14, 22], "figures": [[0, 0, 0, 1.8]]},
-
-  "eyeball_burst_night": {"layer": "EyeballLayer", "shape": "EYEBALL_FX3", "from": [0, 2, 0], "to": [0, 2, 0], "power": 1.5, "duration": 28,
-    "cam": [0, 2.2, -9], "target": [0, 2, 0], "ages": [4, 9, 16], "figures": [[0, 0, 0, 1.8]],
-    "sky": [0.02, 0.03, 0.07], "horizon": [0.06, 0.06, 0.10], "floor": [0.10, 0.10, 0.12]}
+ "_comment": "Eyeball Magic previews. FX1 cast / projectile, FX2 zone / field, FX3 impact / signature. Dark variants (night) check the glow, the daylight ones check readability.",
+ "eyeball_cast": {
+  "layer": "EyeballLayer",
+  "shape": "EYEBALL_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.5,
+   11
+  ],
+  "power": 1.0,
+  "duration": 16,
+  "cam": [
+   11,
+   3.0,
+   5.5
+  ],
+  "target": [
+   0,
+   1.5,
+   5.5
+  ],
+  "ages": [
+   3,
+   6,
+   9,
+   12.5
+  ],
+  "figures": [
+   [
+    -0.5,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    11,
+    1.8
+   ]
+  ]
+ },
+ "eyeball_cast_back": {
+  "layer": "EyeballLayer",
+  "shape": "EYEBALL_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   1.5,
+   1.7,
+   12
+  ],
+  "power": 1.0,
+  "duration": 16,
+  "cam": [
+   0.9,
+   2.0,
+   -3.5
+  ],
+  "target": [
+   0.5,
+   1.5,
+   8
+  ],
+  "ages": [
+   3,
+   6,
+   9,
+   12.5
+  ],
+  "figures": [
+   [
+    1.5,
+    0,
+    12,
+    1.8
+   ]
+  ]
+ },
+ "eyeball_cast_big": {
+  "layer": "EyeballLayer",
+  "shape": "EYEBALL_FX1",
+  "from": [
+   0,
+   2.0,
+   0
+  ],
+  "to": [
+   0,
+   2.2,
+   14
+  ],
+  "power": 2.4,
+  "duration": 16,
+  "cam": [
+   14,
+   4.0,
+   7
+  ],
+  "target": [
+   0,
+   2.0,
+   7
+  ],
+  "ages": [
+   3,
+   6,
+   9,
+   12.5
+  ],
+  "figures": [
+   [
+    -0.7,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    14,
+    1.8
+   ]
+  ]
+ },
+ "eyeball_cast_close": {
+  "layer": "EyeballLayer",
+  "shape": "EYEBALL_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.5,
+   6
+  ],
+  "power": 1.0,
+  "duration": 16,
+  "cam": [
+   3.4,
+   1.9,
+   1.5
+  ],
+  "target": [
+   0,
+   1.5,
+   1.5
+  ],
+  "ages": [
+   1.5,
+   3,
+   4.5,
+   6.5
+  ],
+  "figures": [
+   [
+    -0.5,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "eyeball_field": {
+  "layer": "EyeballLayer",
+  "shape": "EYEBALL_FX2",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 8,
+  "duration": 80,
+  "cam": [
+   0,
+   6.5,
+   -15
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   6,
+   20,
+   46,
+   74
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    2.5,
+    0,
+    1.5,
+    1.8
+   ]
+  ]
+ },
+ "eyeball_field_small": {
+  "layer": "EyeballLayer",
+  "shape": "EYEBALL_FX2",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 3,
+  "duration": 80,
+  "cam": [
+   0,
+   3.6,
+   -7.5
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   10,
+   30,
+   60
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "eyeball_field_big": {
+  "layer": "EyeballLayer",
+  "shape": "EYEBALL_FX2",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 14,
+  "duration": 80,
+  "cam": [
+   0,
+   12,
+   -27
+  ],
+  "target": [
+   0,
+   1.5,
+   0
+  ],
+  "ages": [
+   12,
+   44
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "eyeball_field_night": {
+  "layer": "EyeballLayer",
+  "shape": "EYEBALL_FX2",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 8,
+  "duration": 80,
+  "cam": [
+   0,
+   6.5,
+   -15
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   30,
+   52
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.02,
+   0.03,
+   0.07
+  ],
+  "horizon": [
+   0.06,
+   0.06,
+   0.1
+  ],
+  "floor": [
+   0.1,
+   0.1,
+   0.12
+  ]
+ },
+ "eyeball_burst": {
+  "layer": "EyeballLayer",
+  "shape": "EYEBALL_FX3",
+  "from": [
+   0,
+   2,
+   0
+  ],
+  "to": [
+   0,
+   2,
+   0
+  ],
+  "power": 1.5,
+  "duration": 28,
+  "cam": [
+   0,
+   2.2,
+   -9
+  ],
+  "target": [
+   0,
+   2,
+   0
+  ],
+  "ages": [
+   2,
+   6,
+   11,
+   17
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "eyeball_burst_end": {
+  "layer": "EyeballLayer",
+  "shape": "EYEBALL_FX3",
+  "from": [
+   0,
+   2,
+   0
+  ],
+  "to": [
+   0,
+   2,
+   0
+  ],
+  "power": 1.5,
+  "duration": 28,
+  "cam": [
+   0,
+   2.2,
+   -9
+  ],
+  "target": [
+   0,
+   2,
+   0
+  ],
+  "ages": [
+   20,
+   24,
+   27
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "eyeball_burst_dir": {
+  "layer": "EyeballLayer",
+  "shape": "EYEBALL_FX3",
+  "from": [
+   0,
+   2,
+   0
+  ],
+  "to": [
+   3,
+   2.6,
+   4
+  ],
+  "power": 1.5,
+  "duration": 28,
+  "cam": [
+   8,
+   2.6,
+   -5
+  ],
+  "target": [
+   1,
+   2.2,
+   1.5
+  ],
+  "ages": [
+   3,
+   8,
+   14,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "eyeball_burst_big": {
+  "layer": "EyeballLayer",
+  "shape": "EYEBALL_FX3",
+  "from": [
+   0,
+   3,
+   0
+  ],
+  "to": [
+   0,
+   3,
+   0
+  ],
+  "power": 3.0,
+  "duration": 28,
+  "cam": [
+   0,
+   3.4,
+   -17
+  ],
+  "target": [
+   0,
+   3,
+   0
+  ],
+  "ages": [
+   3,
+   8,
+   14,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "eyeball_burst_small": {
+  "layer": "EyeballLayer",
+  "shape": "EYEBALL_FX3",
+  "from": [
+   0,
+   1.6,
+   0
+  ],
+  "to": [
+   0,
+   1.6,
+   0
+  ],
+  "power": 0.7,
+  "duration": 28,
+  "cam": [
+   0,
+   1.8,
+   -5
+  ],
+  "target": [
+   0,
+   1.6,
+   0
+  ],
+  "ages": [
+   3,
+   8,
+   14,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "eyeball_burst_night": {
+  "layer": "EyeballLayer",
+  "shape": "EYEBALL_FX3",
+  "from": [
+   0,
+   2,
+   0
+  ],
+  "to": [
+   0,
+   2,
+   0
+  ],
+  "power": 1.5,
+  "duration": 28,
+  "cam": [
+   0,
+   2.2,
+   -9
+  ],
+  "target": [
+   0,
+   2,
+   0
+  ],
+  "ages": [
+   4,
+   9,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.02,
+   0.03,
+   0.07
+  ],
+  "horizon": [
+   0.06,
+   0.06,
+   0.1
+  ],
+  "floor": [
+   0.1,
+   0.1,
+   0.12
+  ]
+ },
+ "eyeball_cast_mid": {
+  "layer": "EyeballLayer",
+  "shape": "EYEBALL_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.5,
+   6
+  ],
+  "power": 1.0,
+  "duration": 16,
+  "cam": [
+   7.0,
+   2.4,
+   3
+  ],
+  "target": [
+   0,
+   1.5,
+   3
+  ],
+  "ages": [
+   2.5,
+   6,
+   9.5,
+   12.5
+  ],
+  "figures": [
+   [
+    -0.5,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    6,
+    1.8
+   ]
+  ]
+ }
 }

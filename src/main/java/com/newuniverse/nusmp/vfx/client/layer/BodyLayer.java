@@ -92,18 +92,18 @@ public class BodyLayer extends AbstractVfxLayer {
             Vector3f p = new Vector3f(muzzle).add(new Vector3f(dir).mul(run * s))
                     .add(new Vector3f(sd).mul((h1 - 0.5f) * 0.9f * P * (0.4f + x))).add(new Vector3f(up).mul((h2 - 0.5f) * 0.5f * P))
                     .add(0f, (0.15f + 0.9f * ease(x)) * P, 0f);
-            float al = (float) Math.pow(1f - x, 1.4f) * Mth.clamp(x * 7f, 0f, 1f) * near(p), size = (0.6f + 1.3f * ease(x)) * P * (0.8f + 0.4f * h1);
-            puff(buf, ctx, k & 3, VfxBlend.ALPHA, p, size, h2 * Mth.TWO_PI + x, alpha(STEAM_WHITE, 0.62f * al));
+            float al = (float) Math.pow(1f - x, 1.4f) * Mth.clamp(x * 7f, 0f, 1f) * near(p), size = (0.7f + 1.5f * ease(x)) * P * (0.8f + 0.4f * h1);
+            puff(buf, ctx, k & 3, VfxBlend.ALPHA, p, size, h2 * Mth.TWO_PI + x, alpha(STEAM_WHITE, 0.72f * al));
             if (x < 0.3f && buf.hasBudget(8)) puff(buf, ctx, (k + 1) & 3, VfxBlend.ADD, p, size * 0.9f, h1 * Mth.TWO_PI, alpha(col, 0.5f * (1f - x / 0.3f)));
         }
 
         // the barrel forms out of the arm: compression rings collapse into it, a muzzle ring of flesh with rifling, a fibre tube behind it
         float bf = (1f - step(0.30f * D, 0.62f * D, age)) * Mth.clamp(age / (0.06f * D), 0f, 1f);
         if (bf > 0.01f) {
-            float open = VfxAnim.easeOutBack(Mth.clamp(age / (0.17f * D), 0f, 1f)), half = 0.40f * P * open;
+            float open = VfxAnim.easeOutBack(Mth.clamp(age / (0.17f * D), 0f, 1f)), half = 0.48f * P * open, barrel = Math.max(0.5f, muzzleD + 0.15f) * open;
             VfxPose face = VfxPose.facing(muzzle, dir).spin(age * 0.45f);
-            VfxPose rear = VfxPose.facing(new Vector3f(muzzle).sub(new Vector3f(dir).mul(0.45f * P * open)), dir);
-            tube(buf, FIBRE, VfxBlend.ALPHA, rear, half * 0.92f, 0.45f * P * open, 8, 2f, age * 0.01f, 1.2f, alpha(FLESH_DEEP, 0.9f * bf), alpha(FLESH_MID, 0.9f * bf));
+            VfxPose rear = VfxPose.facing(new Vector3f(muzzle).sub(new Vector3f(dir).mul(barrel * 0.5f)), dir);
+            tube(buf, FIBRE, VfxBlend.ALPHA, rear, half * 0.92f, barrel * 0.5f, 8, 2f, age * 0.01f, 1.2f, alpha(FLESH_DEEP, 0.9f * bf), alpha(FLESH_MID, 0.9f * bf));
             buf.plane(RIFLING, VfxBlend.ALPHA, face, half, alpha(FLESH_MID, 0.95f * bf));
             buf.plane(RIFLING, VfxBlend.ADD, face.lift(0.01f), half * 1.04f, alpha(col, 0.85f * bf));
             for (int k = 0; k < 3; k++) {
@@ -113,13 +113,13 @@ public class BodyLayer extends AbstractVfxLayer {
                         alpha(k == 1 ? hot : col, 0.75f * Mth.sin(ck * Mth.PI)));
             }
         }
-        VfxBloom.glow(ctx, buf, muzzle, (0.35f + 0.55f * charged) * P, col, (0.30f + 0.70f * charged) * Math.max(flash, bf));
+        VfxBloom.glow(ctx, buf, muzzle, (0.35f + 0.55f * charged) * P, col, 0.8f * (0.30f + 0.70f * charged) * Math.max(flash, bf));
 
         // the shot: muzzle star, a steam blast shooting forward and four puffs venting round the barrel
         if (age >= launch * 0.75f && flash > 0.01f) {
             float e = ease((age - launch * 0.75f) / (0.14f * D));
-            buf.billboard(ctx, MUZZLE, VfxBlend.ADD, muzzle, (0.9f + 2.3f * e) * P, 0.25f, alpha(hot, flash));
-            buf.billboard(ctx, MUZZLE, VfxBlend.ADD, muzzle, (0.5f + 1.5f * e) * P, 0.25f + Mth.PI / 8f, alpha(col, 0.8f * flash));
+            buf.billboard(ctx, MUZZLE, VfxBlend.ADD, muzzle, (0.9f + 2.3f * e) * P, 0.25f, alpha(hot, 0.85f * flash));
+            buf.billboard(ctx, MUZZLE, VfxBlend.ADD, muzzle, (0.5f + 1.5f * e) * P, 0.25f + Mth.PI / 8f, alpha(col, 0.7f * flash));
             Vector3f blastEnd = new Vector3f(muzzle).add(new Vector3f(dir).mul((0.8f + 2.8f * e) * P));
             int steam = alpha(STEAM_WHITE, 0.55f * flash * near(muzzle)), fire = alpha(col, 0.6f * flash * flash);
             strip(buf, JET, VfxBlend.ALPHA, muzzle, blastEnd, 1.5f * P, 1.5f * P, 1f, 0f, steam, steam);
@@ -242,18 +242,19 @@ public class BodyLayer extends AbstractVfxLayer {
         if (H > 0.1f) {
             int segs = ctx.seg(Mth.clamp(Math.round(R * 1.8f), 9, 16), 8);
             float reps = Math.max(2f, Math.round(Mth.TWO_PI * r / (2f * H)));
-            wall(buf, WALL, VfxBlend.ALPHA, c, r, H, segs, reps, age * 0.004f, alpha(FLESH_MID, 0.85f * fade), alpha(STEAM_SHADE, 0f));
-            wall(buf, WALL, VfxBlend.ADD, c, r * 1.003f, H, segs, reps, age * 0.004f, alpha(col, (0.55f + 0.35f * beat) * fade), alpha(col, 0f));
+            float swell = 1f + 0.035f * beat;
+            wall(buf, WALL, VfxBlend.ALPHA, c, r * swell, H * (1f + 0.08f * beat), segs, reps, age * 0.004f, alpha(0xFFD8946E, 0.92f * fade), alpha(STEAM_SHADE, 0f));
+            wall(buf, WALL, VfxBlend.ADD, c, r * swell * 1.004f, H * (1f + 0.08f * beat), segs, reps, age * 0.004f, alpha(col, (0.40f + 0.45f * beat) * fade), alpha(col, 0f));
         }
         // steam vents along the rim, each blowing in its own turn
-        int nj = ctx.seg(8, 4);
+        int nj = ctx.seg(6, 4);
         for (int i = 0; i < nj; i++) {
             float ang = Mth.TWO_PI * (i + 0.6f * hash(seed, i, 1)) / nj + age * 0.004f;
             float cyc = (age + hash(seed, i, 2) * 24f) % 24f / 24f;
-            float hh = (0.5f + 1.3f * ease(cyc)) * Math.max(1.2f, H), w = (0.35f + 0.35f * cyc) * Math.max(1.2f, H);
+            float hh = (0.6f + 1.2f * ease(cyc)) * Math.max(1.2f, H), w = (0.7f + 0.5f * cyc) * Math.max(1.2f, H);
             Vector3f base = new Vector3f(c).add(Mth.cos(ang) * r * 0.97f, 0.05f, Mth.sin(ang) * r * 0.97f);
-            Vector3f tip = new Vector3f(base).add(Mth.cos(ang) * 0.25f * hh, hh, Mth.sin(ang) * 0.25f * hh);
-            int sc = alpha(STEAM_WHITE, (float) Math.pow(Mth.sin(cyc * Mth.PI), 0.8f) * 0.7f * fade * near(base));
+            Vector3f tip = new Vector3f(base).add(Mth.cos(ang) * 0.45f * hh, hh, Mth.sin(ang) * 0.45f * hh);
+            int sc = alpha(STEAM_WHITE, (float) Math.pow(Mth.sin(cyc * Mth.PI), 0.9f) * 0.5f * fade * near(base));
             strip(buf, JET, VfxBlend.ALPHA, base, tip, w, w, 1f, 0f, sc, sc);
         }
         // a low mist drifting over the floor, embers rising off it
@@ -269,7 +270,7 @@ public class BodyLayer extends AbstractVfxLayer {
             Vector3f p = new Vector3f(c).add(Mth.cos(ang) * rho, 0.1f + lt * (1.2f + 0.25f * Math.min(R, 8f)), Mth.sin(ang) * rho);
             ember(buf, ctx, p, new Vector3f(0f, 1f, 0f), 0.18f + 0.025f * Math.min(R, 8f), alpha(i % 3 == 0 ? hot : col, Mth.sin(lt * Mth.PI) * fade));
         }
-        VfxBloom.glow(ctx, buf, new Vector3f(c).add(0f, 0.3f, 0f), Math.min(0.5f * R, 2.4f), col, (0.3f + 0.7f * beat) * fade);
+        VfxBloom.glow(ctx, buf, new Vector3f(c).add(0f, 0.3f, 0f), Math.min(0.35f * R, 1.8f), col, (0.25f + 0.55f * beat) * fade);
     }
 
     // ------------------------------------------------------------------ FX3: Titan burst
@@ -289,12 +290,13 @@ public class BodyLayer extends AbstractVfxLayer {
         // the inhale: fibre rays collapse in; then the bang
         if (age < boom + 0.5f) {
             float k = Mth.clamp(age / boom, 0f, 1f);
-            buf.billboard(ctx, BURST, VfxBlend.ADD, c, (3.2f - 2.4f * ease(k)) * P, age * 0.2f, alpha(col, 0.6f * k));
+            buf.billboard(ctx, BURST, VfxBlend.ADD, c, (3.4f - 2.5f * ease(k)) * P, age * 0.2f, alpha(col, 0.95f * k));
+            VfxBloom.glow(ctx, buf, c, (0.3f + 0.5f * k) * P, hot, 0.8f * k);
         }
         if (bt >= 0f) {
             float fl = 1f - step(0f, 9f, bt), e = ease(bt / 5f);
-            VfxBloom.glow(ctx, buf, c, (1.3f + 1.1f * e) * P, col, Math.max(fl, 0.45f * (1f - t) * (1f - t)));
-            buf.billboard(ctx, MUZZLE, VfxBlend.ADD, c, 3.6f * P * VfxAnim.easeOutBack(Mth.clamp(bt / 4f, 0f, 1f)), 0.2f + age * 0.02f, alpha(hot, (float) Math.pow(fl, 1.2f)));
+            VfxBloom.glow(ctx, buf, c, (1.0f + 0.9f * e) * P, col, Math.max(0.9f * fl, 0.45f * (1f - t) * (1f - t)));
+            buf.billboard(ctx, MUZZLE, VfxBlend.ADD, c, 3.3f * P * VfxAnim.easeOutBack(Mth.clamp(bt / 4f, 0f, 1f)), 0.2f + age * 0.02f, alpha(hot, 0.9f * (float) Math.pow(fl, 1.2f)));
             buf.billboard(ctx, BURST, VfxBlend.ADD, c, 4.8f * P * ease(bt / 7f), -age * 0.03f, alpha(col, 0.8f * fl));
         }
         // shock rings: the heart-thump, its echo, the sigil turning against them; the veins burned into the plane
@@ -307,6 +309,15 @@ public class BodyLayer extends AbstractVfxLayer {
             buf.plane(FLESH, VfxBlend.ALPHA, plane.lift(-0.01f).spin(age * 0.01f), ex * 0.95f / 0.94f, alpha(FLESH_MID, 0.5f * sa));
             buf.plane(VEINS, VfxBlend.ADD, plane.lift(0.015f).spin(age * 0.02f), ex / 0.92f, alpha(vein, 0.9f * sa));
         }
+        // the muscle band: a ring of twisted fibre swelling out of the centre
+        float xb = (bt - 0.5f) / 15f;
+        if (xb > 0f && xb < 1f) {
+            float rb = (0.25f + 3.3f * ease(xb)) * P, hb = (0.28f + 0.2f * (1f - xb)) * P, bal = (float) Math.pow(1f - xb, 1.2f);
+            int bs = ctx.seg(10, 7);
+            float reps = Mth.clamp(Math.round(0.8f * rb / hb), 2, 24);
+            tube(buf, BAND, VfxBlend.ALPHA, plane, rb, hb, bs, reps, 0f, 1f, alpha(FLESH_MID, 0.9f * bal), alpha(FLESH_MID, 0.9f * bal));
+            tube(buf, BAND, VfxBlend.ADD, plane, rb * 1.01f, hb, bs, reps, 0f, 1f, alpha(col, 0.75f * bal), alpha(col, 0.75f * bal));
+        }
         // steam jets blasting out (a cone round the hint, or all round), tendon strands whipping out between them
         int nj = ctx.seg(10, 6);
         for (int j = 0; j < nj; j++) {
@@ -314,18 +325,18 @@ public class BodyLayer extends AbstractVfxLayer {
             Vector3f v;
             if (dirOn && j % 4 != 3) v = new Vector3f(dir).add(new Vector3f(sd).mul((h1 - 0.5f) * 1.0f)).add(new Vector3f(up).mul((h2 - 0.5f) * 1.0f)).normalize();
             else {
-                float az = Mth.TWO_PI * (j + 0.4f * h1) / nj, el = -0.10f + 0.95f * h2;
+                float az = Mth.TWO_PI * (j + 0.4f * h1) / nj, el = j % 5 == 0 ? 0.9f + 0.4f * h2 : -0.05f + 0.6f * h2;
                 v = new Vector3f(Mth.cos(az) * Mth.cos(el), Mth.sin(el), Mth.sin(az) * Mth.cos(el));
             }
             float x = (bt - 0.4f * h3) / (0.62f * D);
             if (x <= 0f || x >= 1f) continue;
-            float e = ease(x * 1.15f), reach = (0.5f + 3.2f * (0.65f + 0.5f * h4) * e) * P, jl = (1.0f + 1.3f * h3) * P * (0.4f + 0.6f * e);
+            float e = ease(x * 1.15f), reach = (0.6f + 3.8f * (0.65f + 0.5f * h4) * e) * P, jl = (1.4f + 1.6f * h3) * P * (0.4f + 0.6f * e);
             Vector3f jb = new Vector3f(c).add(new Vector3f(v).mul(reach)), ja = new Vector3f(c).add(new Vector3f(v).mul(Math.max(0.2f * P, reach - jl)));
-            float w = (0.8f + 0.7f * h1) * P * (0.55f + 0.45f * e), al = (float) Math.pow(1f - x, 1.2f);
-            int sc = alpha(STEAM_WHITE, 0.75f * al * near(jb));
+            float w = (1.1f + 0.9f * h1) * P * (0.55f + 0.45f * e), al = (float) Math.pow(1f - x, 1.2f);
+            int sc = alpha(STEAM_WHITE, 0.85f * al * near(jb));
             strip(buf, JET, VfxBlend.ALPHA, ja, jb, w, w, 1f, 0f, sc, sc);
-            if (x < 0.4f) {
-                int fc = alpha(col, 0.75f * (1f - x / 0.4f));
+            if (x < 0.5f) {
+                int fc = alpha(col, 0.8f * (1f - x / 0.5f));
                 strip(buf, JET, VfxBlend.ADD, ja, jb, w * 0.8f, w * 0.8f, 1f, 0f, fc, fc);
             }
         }
@@ -340,11 +351,11 @@ public class BodyLayer extends AbstractVfxLayer {
             }
             float x = (bt - 0.2f * h3) / 15f;
             if (x <= 0f || x >= 1f) continue;
-            float e = ease(x * 1.1f), reach = (0.6f + 3.4f * e * (0.7f + 0.4f * h1)) * P, sl = (1.5f + 1.0f * h2) * P * (1f - 0.35f * x);
+            float e = ease(x * 1.1f), reach = (0.7f + 3.6f * e * (0.7f + 0.4f * h1)) * P, sl = (2.2f + 1.2f * h2) * P * (1f - 0.35f * x);
             Vector3f sb = new Vector3f(c).add(new Vector3f(v).mul(reach)), st = new Vector3f(c).add(new Vector3f(v).mul(Math.max(0.1f, reach - sl)));
-            float w = (h3 > 0.5f ? 0.34f : -0.34f) * P, al = (float) Math.pow(1f - x, 1.1f);
-            strip(buf, STRAND, VfxBlend.ALPHA, sb, st, w * 1.35f, w * 1.35f, 1f, 0f, alpha(FLESH_DEEP, 0.9f * al), alpha(FLESH_DEEP, 0.9f * al));
-            strip(buf, STRAND, VfxBlend.ADD, sb, st, w, w, 1f, 0f, alpha(col, al), alpha(col, al));
+            float w = (h3 > 0.5f ? 0.5f : -0.5f) * P, al = (float) Math.pow(1f - x, 1.1f);
+            strip(buf, STRAND, VfxBlend.ADD, sb, st, w * 1.5f, w * 1.5f, 1f, 0f, alpha(col, al), alpha(col, al));
+            strip(buf, STRAND, VfxBlend.ADD, sb, st, w, w, 1f, 0f, alpha(hot, 0.8f * al), alpha(hot, 0.8f * al));
         }
         // a blast streak along the direction
         if (dirOn && bt > 0f) {

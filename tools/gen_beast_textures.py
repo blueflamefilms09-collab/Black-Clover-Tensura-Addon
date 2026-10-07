@@ -215,49 +215,54 @@ def licks():
 
 # ------------------------------------------------------------------------------------------------ the roaring beast head
 def spirit():
-    """A roaring beast (wolf / lion) head, facing right, in the same cel flame; the mane streams back to the left and up."""
+    """A roaring beast (wolf / lion) head, facing right, in the same cel flame; the mane streams back to the left and up as flame strands."""
     n = 256
-    ss = 2
     head = [
-        (236, 118), (228, 104), (214, 94), (196, 86), (182, 72), (176, 52), (168, 24), (158, 48), (150, 56), (138, 52), (126, 40),
-        (122, 66), (108, 88), (92, 112), (84, 142), (92, 172), (110, 196), (138, 206), (160, 198), (186, 188), (214, 178), (232, 164),
-        (240, 148), (226, 142), (214, 150), (190, 152), (172, 144), (190, 134), (214, 132), (230, 130),
+        (240, 100), (242, 112), (232, 118), (226, 122), (222, 124), (218, 150), (212, 126), (204, 126), (190, 130), (172, 138),
+        (188, 154), (212, 154), (214, 152), (220, 130), (226, 154), (236, 156), (242, 164), (236, 178), (214, 188), (186, 194),
+        (164, 206), (140, 216), (112, 214), (86, 196), (70, 160), (76, 118), (96, 86), (120, 66), (122, 40), (136, 12), (152, 30),
+        (160, 58), (174, 68), (192, 80), (214, 90), (234, 94),
     ]
-    jaw_up = [(206, 134), (212, 154), (218, 134)]            # lower fang (rises from the jaw into the mouth)
-    fang_dn = [(200, 124), (205, 142), (211, 124)]           # upper fang
-    ear2 = [(138, 52), (118, 18), (112, 62)]
-    m = polygon_mask(n, n, [head, jaw_up, fang_dn, ear2], ss=4)
-    # eye: a slanted slit cut out of the head
-    eye = polygon_mask(n, n, [[(186, 96), (206, 104), (190, 108)]], ss=4)
-    # the mouth gap darkens a bit: remove a thin wedge so the jaw reads
-    # smear the mask backwards (left and up) with noise: the flame mane
+    polys = [head]
+    rng = np.random.default_rng(321)
+    T = lambda pts: [(0.88 * x + 40, 0.88 * y + 24) for x, y in pts]
+    roots = [(100, 84, -2.5), (112, 70, -2.3), (86, 104, -2.9), (78, 130, -3.1), (74, 156, -3.35), (86, 184, -3.55), (104, 204, -3.7), (128, 58, -2.2), (140, 24, -2.4), (122, 48, -2.7)]
+    for i, (rx, ry, ang0) in enumerate(roots):
+        ln = rng.uniform(70, 125) if i < 7 else rng.uniform(40, 70)
+        wd = rng.uniform(9, 14)
+        sway = rng.uniform(0.25, 0.5) * (1 if i % 2 == 0 else -1)
+        steps = 22
+        left, right = [], []
+        x, y = float(rx), float(ry)
+        for k in range(steps + 1):
+            t = k / steps
+            ang = ang0 + sway * math.sin(t * 3.0 + i) * 0.7 + 0.35 * t * (1 if ang0 < -3.0 else -1)
+            if k:
+                x += math.cos(ang) * ln / steps
+                y += math.sin(ang) * ln / steps - 0.6 * t * ln / steps
+            wk = wd * (1 - t) ** 0.85 * (1 + 0.25 * math.sin(t * 17 + i * 3)) + 0.2
+            nx, ny = -math.sin(ang), math.cos(ang)
+            left.append((x + nx * wk, y + ny * wk))
+            right.append((x - nx * wk, y - ny * wk))
+        polys.append(left + right[::-1])
+    m = polygon_mask(n, n, [T(q) for q in polys], ss=4)
+    eye_poly = [(182, 101), (200, 91), (210, 96), (192, 107)]
+    eye = polygon_mask(n, n, [T(eye_poly)], ss=4)
+    grooves = line_mask(n, n, [T(q) for q in ([(172, 82), (196, 92)], [(214, 100), (228, 110)], [(150, 116), (186, 136)], [(142, 146), (172, 168)], [(120, 100), (150, 98), (170, 106)], [(206, 118), (222, 114)])], 1.6)
+    b = blur(m, 20.0)
+    heat = np.clip((b - 0.08) / 0.62, 0, 1) ** 1.15 * 0.72
     xx, yy = grid(n, n)
-    acc = m.copy()
-    streak = value_noise(n, n, 4, 26, 301)
-    for k in range(1, 15):
-        sx, sy = -k * 4.2, -k * 1.1 - 0.05 * k * k
-        shifted = np.roll(np.roll(m, int(sx), axis=1), int(sy), axis=0)
-        # only the upper-left of the head produces mane
-        gate = smooth(0.15, 0.55, 1 - np.abs(yy / n - 0.45) * 1.4) * smooth(190, 120, xx)
-        fall = (1 - k / 15.0) ** 1.1
-        cut = smooth(0.25, 0.75, streak + 0.45 * fall - 0.35)
-        acc = np.maximum(acc, shifted * fall * cut * gate)
-    # fine jagged lick tips on the very top and back
-    acc = np.clip(acc * (1.0 - 0.9 * eye), 0, 1)
-    body = blur(acc, 1.6)
-    inner = blur(m, 7.5)
-    heat = np.clip(inner * 0.95 + body * 0.25 - 0.10, 0, 1)
-    heat = heat + (value_noise(n, n, 6, 22, 303) - 0.5) * 0.10
+    heat = heat + (value_noise(n, n, 34, 5, 303) - 0.5) * 0.16 * smooth(0.2, 0.5, heat)
+    heat = heat - grooves * 0.34 * (b > 0.6)
     rgb, al = cel_colour(heat)
     line = np.zeros_like(heat)
     for t0, k in ((0.14, 0.5), (0.38, 0.8), (0.62, 0.5)):
         line = np.maximum(line, np.exp(-((heat - t0) / 0.02) ** 2) * k)
     rgb = rgb * (1 - 0.65 * line[..., None]) + C_LINE[None, None] * 0.65 * line[..., None]
-    alpha = al * smooth(0.28, 0.40, body) * (1 - smooth(0.0, 0.05, eye) * 0.85)
-    # the eye: a hot white slit
-    ye = blur(eye, 0.8)
-    rgb = rgb * (1 - ye[..., None]) + C_HOT[None, None] * ye[..., None]
-    alpha = np.maximum(alpha, ye)
+    alpha = al * smooth(0.0, 1.0, m) * smooth(0.0, 1.0, blur(m, 0.7))
+    ye = blur(eye, 0.7)
+    rgb = rgb * (1 - ye[..., None]) + C_LINE[None, None] * ye[..., None] * 0.5
+    alpha = alpha * (1 - ye)
     finish_colour(rgb, alpha, "spirit")
 
 
@@ -273,7 +278,7 @@ def claw():
         t = (yy / n - (0.5 - length / 2)) / length
         tc = np.clip(t, 0, 1)
         cx = cx0 + lean * (tc - 0.5) + 0.05 * np.sin(tc * 3.1 + ph) * (tc - 0.5)
-        hw = width * np.sin(np.pi * np.clip(tc, 0, 1) ** 0.72) ** 0.85
+        hw = width * np.clip(np.sin(np.pi * np.clip(tc, 0, 1) ** 0.72), 0, 1) ** 0.85
         rl, rr = curve1d(900 + i * 7, 18), curve1d(901 + i * 7, 18)
         dx = xx / n - cx
         rag = np.where(dx < 0, 1 + 0.45 * (rl(tc) - 0.5), 1 + 0.45 * (rr(tc) - 0.5))
@@ -336,49 +341,66 @@ def sigil():
 
     R = c - 6
     ring(R, 7 * ss / 2)
-    ring(R - 14 * ss / 2, 3 * ss / 2, 200)
+    ring(R - 12 * ss / 2, 2.5 * ss / 2, 190)
     # fang teeth pointing inward, alternating long and short
     teeth = 24
     for i in range(teeth):
         a = 2 * math.pi * i / teeth
-        ln = (30 if i % 2 == 0 else 16) * ss / 2
-        r0 = R - 16 * ss / 2
-        da = 0.075 if i % 2 == 0 else 0.055
+        ln = (24 if i % 2 == 0 else 12) * ss / 2
+        r0 = R - 13 * ss / 2
+        da = 0.07 if i % 2 == 0 else 0.05
         p = [(c + math.cos(a - da) * r0, c + math.sin(a - da) * r0), (c + math.cos(a) * (r0 - ln), c + math.sin(a) * (r0 - ln)), (c + math.cos(a + da) * r0, c + math.sin(a + da) * r0)]
-        d.polygon(p, fill=255 if i % 2 == 0 else 190)
-    # inner thick ring with a ragged inner edge
-    r2 = R * 0.66
+        d.polygon(p, fill=255 if i % 2 == 0 else 200)
+    # inner thick ring
+    r2 = R * 0.60
     ring(r2, 6 * ss / 2)
-    ring(r2 - 10 * ss / 2, 2 * ss / 2, 170)
-    # eight paws around the second ring (small triangles + dots), outside the ring
+    ring(r2 - 9 * ss / 2, 2 * ss / 2, 170)
+    # twelve triple-claw scratches between the teeth and the paws (curved, tapering), a tick ring beyond them
+    rm = R * 0.855
+    for i in range(12):
+        a = 2 * math.pi * (i + 0.5) / 12
+        for j, off in enumerate((-0.045, 0.0, 0.045)):
+            pts_l, pts_r = [], []
+            for k in range(13):
+                t = k / 12
+                rr0 = rm - 13 + 26 * t
+                aa = a + off + 0.05 * t
+                wd = 3.2 * math.sin(math.pi * t) ** 0.8 + 0.2
+                pts_l.append((c + math.cos(aa) * (rr0 - wd), c + math.sin(aa) * (rr0 - wd)))
+                pts_r.append((c + math.cos(aa) * (rr0 + wd), c + math.sin(aa) * (rr0 + wd)))
+            d.polygon(pts_l + pts_r[::-1], fill=235)
+    # eight paws round the inner ring, toes pointing inward
     for i in range(8):
-        a = 2 * math.pi * (i + 0.5) / 8
-        px, py = c + math.cos(a) * (r2 + 36 * ss / 2), c + math.sin(a) * (r2 + 36 * ss / 2)
-        rad = 15 * ss / 2
+        a = 2 * math.pi * i / 8
+        rp = r2 + 36
+        px, py = c + math.cos(a) * rp, c + math.sin(a) * rp
+        rad = 15
+        ux, uy = -math.cos(a), -math.sin(a)            # toward the centre
+        sx, sy = -uy, ux
         d.ellipse([px - rad, py - rad * 0.8, px + rad, py + rad * 0.8], fill=235)
-        for k in (-1.2, -0.4, 0.4, 1.2):
-            tx, ty = px + math.cos(a + math.pi / 2) * k * rad * 0.9 + math.cos(a) * rad * 1.45, py + math.sin(a + math.pi / 2) * k * rad * 0.9 + math.sin(a) * rad * 1.45
+        for k in (-1.3, -0.45, 0.45, 1.3):
+            tx, ty = px + sx * k * rad * 0.85 + ux * rad * (1.25 + 0.2 * (1 - abs(k) / 1.3)), py + sy * k * rad * 0.85 + uy * rad * (1.25 + 0.2 * (1 - abs(k) / 1.3))
             tr = rad * 0.38
             d.ellipse([tx - tr, ty - tr, tx + tr, ty + tr], fill=235)
     # three curved claws sweeping round the centre (triskelion)
-    r3 = r2 * 0.50
+    r3 = r2 * 0.80
     for i in range(3):
         a0 = 2 * math.pi * i / 3
         pts = []
         for k in range(0, 41):
             t = k / 40
-            ang = a0 + t * 2.0
-            rr = r3 * (0.25 + 0.75 * t ** 0.8)
+            ang = a0 + t * 2.1
+            rr = r3 * (0.12 + 0.88 * t ** 0.8)
             pts.append((c + math.cos(ang) * rr, c + math.sin(ang) * rr))
-        outer = pts
-        wd = [max(0.4, 12 * ss / 2 * math.sin(math.pi * min(1, (k / 40) ** 0.6))) for k in range(41)]
+        wd = [max(0.4, 20 * math.sin(math.pi * min(1, (k / 40) ** 0.55))) for k in range(41)]
         left, right = [], []
         for k, (x, y) in enumerate(pts):
-            ang = a0 + k / 40 * 2.0
+            ang = a0 + k / 40 * 2.1
             nx, ny = math.cos(ang), math.sin(ang)
             left.append((x + nx * wd[k], y + ny * wd[k]))
-            right.append((x - nx * wd[k] * 0.4, y - ny * wd[k] * 0.4))
+            right.append((x - nx * wd[k] * 0.35, y - ny * wd[k] * 0.35))
         d.polygon(left + right[::-1], fill=255)
+    ring(r2 * 0.28, 4 * ss / 2, 220)
     arr = np.asarray(im.resize((n, n), Image.BOX), np.float32) / 255.0
     xx, yy = grid(n, n)
     rr = np.hypot(xx - n / 2, yy - n / 2) / (n / 2)
@@ -453,7 +475,7 @@ def fangs():
             t = k / 32
             x = 18 + (cw - 36) * (t ** 1.4) * (0.6 + 0.4 * curve) + 14 * math.sin(t * 2.4) * curve
             y = 58 - 52 * t
-            wd = 10 * (1 - t) ** 0.9 * (0.65 + 0.35 * (1 - i / 4.0)) + 0.3
+            wd = 17 * (1 - t) ** 0.8 * (0.7 + 0.3 * (1 - i / 4.0)) + 0.3
             ox, oy = 0.8, 0.6
             pts_l.append((x - wd * ox, y + wd * oy))
             pts_r.append((x + wd * ox, y - wd * oy))

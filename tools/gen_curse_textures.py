@@ -290,7 +290,9 @@ def tex_band():
         x = i * 64
         for m, hw, hh in ((core, 2.6, 6.5), (body, 4.4, 9.5)):
             m.poly([(x, 32 - hh), (x + hw, 32), (x, 32 + hh), (x - hw, 32)])
-    save(finish(core.arr(), body.arr(), wrap_x=True), "curse_band")
+    fill = Mask(W, H)                                          # a dark translucent ribbon behind the runes
+    fill.poly([(0, 5), (W, 5), (W, H - 5), (0, H - 5)], 170)
+    save(finish(core.arr(), body.arr(), fill.arr(), wrap_x=True), "curse_band")
 
 
 def tex_sigil(S=256):

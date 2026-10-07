@@ -11,7 +11,8 @@ import org.joml.Vector3f;
  * budget still applies.
  *
  * Texture layouts: body_steam is a 2 x 2 atlas of puffs; body_steam_jet, body_strand, body_fibre and body_slug run along V (the far
- * end is the top of the image, V = 0); body_wall and body_ring / body_pulse / body_veins / body_flesh are plates.
+ * end is the top of the image, V = 0); body_wall (hot base at the bottom) and body_band tile in U; body_ring / body_pulse / body_veins /
+ * body_flesh are plates.
  */
 public final class BodyFx {
     private BodyFx() {}
@@ -19,7 +20,7 @@ public final class BodyFx {
     private static ResourceLocation t(String n) { return VfxTextures.byName(n); }
 
     public static final ResourceLocation STEAM = t("body_steam"), JET = t("body_steam_jet"), VEINS = t("body_veins"), FLESH = t("body_flesh"),
-            RING = t("body_ring"), PULSE = t("body_pulse"), WALL = t("body_wall"), FIBRE = t("body_fibre"), SLUG = t("body_slug"),
+            RING = t("body_ring"), PULSE = t("body_pulse"), WALL = t("body_wall"), BAND = t("body_band"), FIBRE = t("body_fibre"), SLUG = t("body_slug"),
             MUZZLE = t("body_muzzle"), RIFLING = t("body_rifling"), STRAND = t("body_strand"), BURST = t("body_burst"), SPARK = t("body_spark");
 
     /** Palette: bronze-orange light, hot white-gold core, vein red, muscle tissue, dark flesh, steam. */
