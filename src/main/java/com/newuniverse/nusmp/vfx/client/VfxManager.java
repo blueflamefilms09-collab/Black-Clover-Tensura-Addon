@@ -200,6 +200,7 @@ public final class VfxManager {
         VfxInstance inst = new VfxInstance(p, layer, color, duration, mc.level);
         active.add(inst);
         layer.onSpawn(inst);
+        VfxSounds.play(shape, p.from(), inst.power);
         if (def != null && def.shake() > 0 && inst.power >= 1.5f && shape != VfxShape.MAGIC_CIRCLE_EXPLOSION && shape != VfxShape.FLAME_EXPLOSION) {
             VfxShake.add(p.to(), def.shake() * inst.power, 8);
         }
