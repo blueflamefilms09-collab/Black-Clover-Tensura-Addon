@@ -285,7 +285,7 @@ public class FoodLayer extends AbstractVfxLayer {
             ResourceLocation tex = type == 0 ? FORK : type == 1 ? KNIFE : CRUMB[type - 2];
             float sz = (tool ? 0.95f : 0.4f) * s * (0.7f + 0.5f * hash(inst.seed, i, 3));
             float spin = age * 0.35f * (hash(inst.seed, i, 4) - 0.5f) + i * 1.7f;
-            buf.billboard(ctx, tex, VfxBlend.ALPHA, q, sz, tool ? Mth.atan2(Mth.sin(ang), Mth.cos(ang)) - 1.57f + spin * 0.3f : spin, col(tool ? STEEL : WHITE, fade));
+            buf.billboard(ctx, tex, VfxBlend.ALPHA, q, sz, tool ? (float) Mth.atan2(Mth.sin(ang), Mth.cos(ang)) - 1.57f + spin * 0.3f : spin, col(tool ? STEEL : WHITE, fade));
         }
         // gold sparks and, late, crumbs drifting up out of the afterglow
         int m = ctx.seg(8, 4);

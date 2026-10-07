@@ -93,7 +93,7 @@ public class CherryBlossomLayer extends AbstractVfxLayer {
         panel(buf, tex, blend, new Vector3f(foot).add(0, h / 2, 0), right.normalize(), new Vector3f(0, 1, 0), w / 2, h / 2, argb);
     }
 
-    private static float screenAngle(VfxRenderContext ctx, Vector3f d) { return Mth.atan2(d.dot(ctx.camUp), d.dot(ctx.camRight)); }
+    private static float screenAngle(VfxRenderContext ctx, Vector3f d) { return (float) Mth.atan2(d.dot(ctx.camUp), d.dot(ctx.camRight)); }
 
     // ------------------------------------------------------------------ FX1
 

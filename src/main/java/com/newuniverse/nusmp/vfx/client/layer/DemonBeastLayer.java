@@ -146,7 +146,7 @@ public class DemonBeastLayer extends AbstractVfxLayer {
             float back = (0.18f + 0.22f * i) * Math.min(travel, 3f);
             Vector3f at = new Vector3f(head).fma(-back, dir).add(0, 0.1f * pw, 0);
             float k = fade * (1 - 0.35f * i) * Mth.clamp(1 - back / 3.2f, 0.2f, 1);
-            buf.billboard(ctx, CLAWS, VfxBlend.ADD, at, 1.5f * pw, 0.5f - 0.5f * i + Mth.atan2(dir.dot(ctx.camUp), dir.dot(ctx.camRight)) * 0.0f, a(i == 0 ? HOT : gl, 0.8f * k));
+            buf.billboard(ctx, CLAWS, VfxBlend.ADD, at, 1.5f * pw, 0.5f - 0.5f * i + (float) Mth.atan2(dir.dot(ctx.camUp), dir.dot(ctx.camRight)) * 0.0f, a(i == 0 ? HOT : gl, 0.8f * k));
         }
         // the beast body: two stipple layers turning in opposite senses, glow, eye
         buf.billboard(ctx, AURA, VfxBlend.ALPHA, head, 2.6f * pw, Mth.sin(age * 0.3f) * 0.08f, a(au, 0.95f * fade));

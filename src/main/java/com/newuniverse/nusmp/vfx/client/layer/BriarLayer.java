@@ -380,7 +380,7 @@ public class BriarLayer extends AbstractVfxLayer {
         for (int k = 0; k < 4; k++) {
             float ex = VfxAnim.easeOutCubic(Mth.clamp((age - k * 0.8f) / 9f, 0f, 1f));
             if (ex < 0.02f) continue;
-            float ang = k * Mth.HALF_PI + h(inst, k, 21) * 0.8f + (hl > 0.05f ? Mth.atan2(hint.z, hint.x) * 0.3f : 0f);
+            float ang = k * Mth.HALF_PI + h(inst, k, 21) * 0.8f + (hl > 0.05f ? (float) Mth.atan2(hint.z, hint.x) * 0.3f : 0f);
             float reach = (1.6f + 0.9f * h(inst, k, 22)) * sc * ex, rise = (0.9f + 1.0f * h(inst, k, 23)) * sc;
             float swirl = 0.5f * Mth.sin(age * 0.2f + k);
             Vector3f prev = new Vector3f(C).add(0, 0.1f, 0);
