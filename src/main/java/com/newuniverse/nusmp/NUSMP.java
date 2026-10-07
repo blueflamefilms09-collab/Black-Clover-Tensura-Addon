@@ -122,6 +122,13 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.antimagic.AntiMagic::migrate);                  // 0.48: old Spirit Lords fold into the grimoire
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.GrimoireBook::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.TimeBook::passiveTick);                    // 0.49: Time Magic's passive every tick               // 0.48: book upkeep without relying on skill ticks
+        // 0.53: the hook point of the 37 attributes (passives, buffs that last, damage rewrites; see book.ext.AttributeEvents)
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.ext.AttributeEvents::onIncomingDamage);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.ext.AttributeEvents::onDamaged);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.ext.AttributeEvents::onDeath);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.ext.AttributeEvents::onPlayerTick);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.ext.AttributeEvents::onServerTick);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.ext.AttributeEvents::onLogout);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.item.WeaponEngravings::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.item.BossRelics::onIncomingDamage);              // 0.52: Shroud of Margins
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.aura.PlayerAuras::onLogout);

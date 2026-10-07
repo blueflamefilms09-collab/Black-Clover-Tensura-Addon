@@ -42,4 +42,4 @@ jobs:
           git config user.email "wiki-fetch@users.noreply.github.com"
           git add .github/wiki
           git diff --cached --quiet || git commit -m "Wiki extracts of the requested pages"
-          git push || true
+          for i in 1 2 3 4; do git pull --rebase origin "$GITHUB_REF_NAME" && git push origin "HEAD:$GITHUB_REF_NAME" && break; sleep 8; done

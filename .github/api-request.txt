@@ -46,3 +46,4 @@
 # ---- ManasCore + Tensura (everything public)
 ^io/github/manasmods/manascore/.*$
 ^io/github/manasmods/tensura/.*$
+# (re-run marker 2)

@@ -30,7 +30,7 @@ ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 SRC = os.path.join(ROOT, "src", "main", "java")
 VFX = os.path.join(SRC, "com", "newuniverse", "nusmp", "vfx")
 TEXTURES = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
-BUILD = os.path.join(ROOT, "build", "vfx_preview")
+BUILD = os.environ.get("VFX_PREVIEW_BUILD") or os.path.join(ROOT, "build", "vfx_preview")      # 0.53: parallel authors each set their own folder
 JOML = os.path.join(HERE, "lib", "joml-1.10.5.jar")
 JOML_URL = "https://repo.maven.apache.org/maven2/org/joml/joml/1.10.5/joml-1.10.5.jar"
 
@@ -90,6 +90,14 @@ def build(layers):
     for layer in sorted(set(layers) | {"ElementFx"} | ({"ArcaneSpellLayer"} if {"ArcaneSpellLayer2", "DreamPaintLayer", "MirrorLayer", "PaintStudioLayer", "SlashCompassMercuryLayer", "LightTreeLayer", "DiceLayer", "KotodamaLayer", "DemonSlayerLayer"} & set(layers) else set())
                         | ({"DreamPaintLayer"} if {"PaintStudioLayer", "LightTreeLayer", "DiceLayer", "SlashCompassMercuryLayer", "KotodamaLayer", "DemonSlayerLayer"} & set(layers) else set())):     # shared helpers used by the element layers
         shutil.copy(os.path.join(VFX, "client", "layer", layer.split(".")[-1] + ".java"), os.path.join(pkg, "client", "layer"))
+    # 0.53: an attribute's helper classes (<Name>*.java next to <Name>Layer.java) travel with its layer
+    layer_dir = os.path.join(VFX, "client", "layer")
+    for layer in layers:
+        stem = layer.split(".")[-1]
+        stem = stem[:-5] if stem.endswith("Layer") else stem
+        for fn in os.listdir(layer_dir):
+            if fn.startswith(stem) and fn.endswith(".java"):
+                shutil.copy(os.path.join(layer_dir, fn), os.path.join(pkg, "client", "layer"))
     shutil.copy(os.path.join(HERE, "Preview.java"), gen)
     classes = os.path.join(BUILD, "classes")
     shutil.rmtree(classes, ignore_errors=True)
