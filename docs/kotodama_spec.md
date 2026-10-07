@@ -159,7 +159,7 @@ Other options: `--glb`, `--save`, `--res`, `--samples`.
 
 ## Not verified
 
-- **Compile:** the Java has not been compiled in this session (no Gradle offline here). CI compiles it on push.
+- **Compile:** CI compiles it and runs the unit tests (green from build 49 on). It was never compiled locally (no Gradle offline here).
 - **Untested in game:**
   - none of 0.47 has been played;
   - the boss fight, the sludge spread/restore, the chat trigger and the Tensura effect ids `paralysis`, `silence` and `fear` are untested in game;
