@@ -69,6 +69,12 @@ public class MagicWeaponItem extends SwordItem {
         this.kind = kind;
     }
 
+    /** 0.48: for a sword with its own item properties (the Genesis Demon-Slayer is unbreakable); the kind's attributes are added. */
+    protected MagicWeaponItem(Kind kind, Item.Properties properties) {
+        super(kind.tier, properties.attributes(attributes(kind)));
+        this.kind = kind;
+    }
+
     private static final net.minecraft.resources.ResourceLocation RIMEHEART_STANCE =
             net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("nusmp", "rimeheart_stance");
 
@@ -151,16 +157,16 @@ public class MagicWeaponItem extends SwordItem {
         return InteractionResultHolder.success(stack);
     }
 
-    private void hit(ServerPlayer p, LivingEntity t, float raw) {
+    protected void hit(ServerPlayer p, LivingEntity t, float raw) {
         if (t == p || t.isAlliedTo(p)) return;
         t.hurt(p.damageSources().playerAttack(p), BalanceLaw.damage(p, t, raw, 0.6));
     }
 
-    private static void stripOne(LivingEntity t) {
+    protected static void stripOne(LivingEntity t) {
         for (MobEffectInstance e : new ArrayList<>(t.getActiveEffects())) if (e.getEffect().value().isBeneficial()) { t.removeEffect(e.getEffect()); return; }
     }
 
-    private static void eraseProjectiles(ServerPlayer p, AABB box) {
+    protected static void eraseProjectiles(ServerPlayer p, AABB box) {
         for (Projectile pr : p.serverLevel().getEntitiesOfClass(Projectile.class, box)) if (pr.getOwner() != p) pr.discard();
     }
 

@@ -51,7 +51,7 @@ public final class BalanceLaw {
     }
 
     /** Players: at most pvpHitCap of their max health per hit. Mobs: the config multiplier. */
-    static float cap(LivingEntity target, float r) {
+    public static float cap(LivingEntity target, float r) {
         if (target instanceof Player) return (float) Math.min(r, target.getMaxHealth() * com.newuniverse.nusmp.NUGameRules.pvpHitCap(target.level()));
         return (float) (r * NUConfig.BAL_MOB_DAMAGE_MULT.get());
     }

@@ -99,7 +99,8 @@ public final class NUItems {
     public static final DeferredItem<MagicWeaponItem> MIASMA_KATANA = weapon("miasma_infused_katana", MagicWeaponItem.Kind.MIASMA_KATANA);
     public static final DeferredItem<MagicWeaponItem> SPELL_FORGED_RAPIER = weapon("spell_forged_rapier", MagicWeaponItem.Kind.SPELL_FORGED_RAPIER);
     public static final DeferredItem<MagicWeaponItem> SEVERING_GREATSWORD = weapon("severing_greatsword", MagicWeaponItem.Kind.SEVERING_GREATSWORD);
-    public static final DeferredItem<MagicWeaponItem> DEMON_SLAYER = weapon("demon_slayer_sword", MagicWeaponItem.Kind.DEMON_SLAYER);
+    // 0.48: the Genesis Demon-Slayer replaces the 0.28 sword at the same id (Black Divider kept; see DemonSlayerSwordItem)
+    public static final DeferredItem<MagicWeaponItem> DEMON_SLAYER = ITEMS.register("demon_slayer_sword", () -> new DemonSlayerSwordItem());
     public static final DeferredItem<MagicWeaponItem> DEMON_DWELLER = weapon("demon_dweller_sword", MagicWeaponItem.Kind.DEMON_DWELLER);
     public static final DeferredItem<MagicWeaponItem> DEMON_DESTROYER = weapon("demon_destroyer_sword", MagicWeaponItem.Kind.DEMON_DESTROYER);
     // 0.28: Licht's white swords (Sword Magic), drawn from the grimoire

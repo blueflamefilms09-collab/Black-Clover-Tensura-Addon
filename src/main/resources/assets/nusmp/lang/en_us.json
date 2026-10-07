@@ -631,5 +631,8 @@
   "gamerule.nusmpSpellDamagePercent": "Addon spell damage (%)",
   "gamerule.nusmpSpellDamagePercent.description": "Global damage factor for this addon's spells (default 100).",
   "gamerule.nusmpSpellCooldownPercent": "Addon spell cooldowns (%)",
-  "gamerule.nusmpSpellCooldownPercent.description": "Cooldown length for grimoire pages, magic weapons and Kotodama words (default 60 = 40% shorter than before 0.48)."
+  "gamerule.nusmpSpellCooldownPercent.description": "Cooldown length for grimoire pages, magic weapons and Kotodama words (default 60 = 40% shorter than before 0.48).",
+  "death.attack.nusmp.conceptual_severance": "%1$s was severed from existence by %2$s",
+  "death.attack.nusmp.conceptual_severance.item": "%1$s was severed from existence by %2$s using %3$s",
+  "death.attack.nusmp.conceptual_severance.player": "%1$s was severed from existence whilst fighting %2$s"
 }

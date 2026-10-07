@@ -126,7 +126,10 @@ public enum VfxShape {
     KOTO_SHATTER,            // a spell stripped back to magicules at 'from': it cracks and dissolves into motes drawn to 'to'; power = size
     KOTO_SWORDS,             // a storm of demon swords falls out of a void rift over 'from'; power = radius
     KOTO_TRIDENT,            // the otherworldly trident drawn out of a void rift at 'from' (pointing 'to'); power = size
-    KOTO_SLUDGE;             // underworld matter boiling up at 'from': black bubbles, violet tendrils, drain motes; power = size
+    KOTO_SLUDGE,             // underworld matter boiling up at 'from': black bubbles, violet tendrils, drain motes; power = size
+    // 0.48 Genesis Demon-Slayer
+    DEMON_METEOR,            // Black Meteorite: an anti-magic meteor 'from' -> 'to' (black core, crimson rim, torn void streaks, shed shards); power = size
+    NIHILITY_ZONE;           // a Nihility zone round 'from': a black dome edge with crimson cracks, magic motes snuffed out; power = radius
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

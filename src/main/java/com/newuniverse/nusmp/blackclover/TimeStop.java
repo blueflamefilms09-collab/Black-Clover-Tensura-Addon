@@ -32,6 +32,7 @@ public final class TimeStop {
 
     /** Freezes (or extends) an entity's stopped time. */
     public static void freeze(Entity e, int ticks) {
+        if (isImmune(e)) return;                                                   // 0.48: the Demon-Slayer's field
         long until = e.level().getGameTime() + ticks;
         Frozen f = FROZEN.get(e);
         if (f == null) FROZEN.put(e, new Frozen(until, e.position()));
@@ -39,6 +40,20 @@ public final class TimeStop {
     }
 
     public static boolean isFrozen(Entity e) { return FROZEN.containsKey(e); }
+
+    static final String K_IMMUNE = "nusmp_timestop_immune_until";
+
+    /**
+     * 0.48: 'e' can't be caught in stopped time for the next 'ticks' (the Genesis Demon-Slayer's Conceptual Nullification Field
+     * keeps its wielder and allies outside it); a freeze already on 'e' breaks at once.
+     */
+    public static void immune(Entity e, int ticks) {
+        long until = e.level().getGameTime() + ticks;
+        if (e.getPersistentData().getLong(K_IMMUNE) < until) e.getPersistentData().putLong(K_IMMUNE, until);
+        FROZEN.remove(e);
+    }
+
+    public static boolean isImmune(Entity e) { return e.level().getGameTime() < e.getPersistentData().getLong(K_IMMUNE); }
 
     /** Frozen entities skip their whole tick. */
     public static void onEntityTick(EntityTickEvent.Pre event) {
