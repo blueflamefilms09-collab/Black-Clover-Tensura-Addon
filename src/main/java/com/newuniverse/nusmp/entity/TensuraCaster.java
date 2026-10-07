@@ -93,7 +93,7 @@ public final class TensuraCaster {
                 if (!caster.isAlive() || BROKEN.contains(id)) return;
                 aim(caster, target);
                 held[0]++;
-                guard(id, () -> inst.onHeld(caster, held[0], 0, mode));
+                guard(id, () -> inst.onHeld(caster, held[0], mode));
             });
             SpellRuntime.later(sl, hold + 1, () -> {
                 if (!caster.isAlive() || BROKEN.contains(id)) return;
