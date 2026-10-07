@@ -60,7 +60,7 @@ Chanted magics: use **Chant** mode until the chant is complete, then switch to *
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.49.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.50.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -204,6 +204,27 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Anti-Magic kit**: new pages **Black Hurricane** (a whirling field that drags foes in and strips their magic) and **Black Form** (30 s of strength, speed, resistance and jump, with an anti-magic burst); mastering the Anti-Magic Lord now also grants the **Demon-Slasher** katana next to Demon-Dweller and Demon-Destroyer.
 - **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
 - **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
+
+## 0.50 - every weapon and relic in 3D (the Demon-Slayer standard), Tensura engravings
+- **Replacement: the in-hand look of 12 weapons and 11 relics.** Each is now a real 3D model like the Genesis Demon-Slayer; the inventory keeps its old icon.
+  - **Weapons:** Demon-Slasher Katana, Miasma-Infused Katana (Yami), Spell-Forged Rapier, Severing Greatsword, Demon-Dweller, Demon-Destroyer, Licht's Demon-Dweller and Demon-Destroyer, Rimeheart Runeblade, Otherworld Trident, Magic Tool Sword and Spear.
+  - **Relics:** Communication Magic Device, Mana-Method Rune Stone, Spirit Charm, Bond Thread, Fortune Die, Grimoire Chain, Anti-Bird Charm, Recovery Salve, Written Consent, Devil Contract, Gauche's Hand Mirror.
+  - **Shapes:** bevelled blades with a ridge, curved katanas with a hamon or a jagged red edge, clover cross guards, tsuba, extruded pixel guards, wrapped grips.
+  - **Effects:** glowing runes, edges and gems that pulse; Asta's demon swords show the crimson void through their notches and broken patches.
+  - **Guide:** built by `tools/gen_weapon_models.py`; preview with `python tools/item_preview/preview_weapons.py`.
+- **New: Tensura engravings on every weapon** (`item/WeaponEngravings.java`). They are applied once, the first time the weapon is in a player's inventory, and capped at each engraving's max level:
+  - Demon-Slasher: Barrier Piercing, Swift.
+  - Miasma Katana: Severance, Enervation.
+  - Rapier: Swift, Magic Weapon.
+  - Severing Greatsword: Severance, Crushing.
+  - Demon-Slayer: Barrier Piercing, Magic Interference.
+  - Demon-Dweller: Barrier Piercing, Energy Steal.
+  - Demon-Destroyer: Magic Interference, Sturdy.
+  - Licht's swords: Holy Weapon, plus Elemental Boost (Dweller) or Barrier Piercing (Destroyer).
+  - Rimeheart: Elemental Boost, Magicule Absorption.
+  - Otherworld Trident: Soul Eater, Elemental Boost.
+  - Magic Tool sword, spear and bow: Magic Weapon.
+- **Fix:** Black Meteorite (shift + use on the Demon-Slayer) is no longer spammable in creative; it keeps a 30 s creative cooldown.
 
 ## 0.49 - Zagred after the reference art, Game Magic, mob skill casting, smarter summons, more spells
 - **Replacement: Zagred's look, reshaped to the owner's two images.**

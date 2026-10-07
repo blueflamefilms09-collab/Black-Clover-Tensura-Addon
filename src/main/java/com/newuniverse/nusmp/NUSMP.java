@@ -65,6 +65,7 @@ public class NUSMP {
             modEventBus.addListener(com.newuniverse.nusmp.client.ZagredRenderer::register);              // 0.47
             modEventBus.addListener(com.newuniverse.nusmp.client.ZagredRenderer::layers);
             com.newuniverse.nusmp.client.DemonSlayerRenderer.init(modEventBus);
+            com.newuniverse.nusmp.client.WeaponRenderer.init(modEventBus);                                  // 0.50: every weapon in 3D
             modEventBus.addListener(com.newuniverse.nusmp.client.RougeCatLayer::layers);                    // 0.49: Rouge's cat model
             modEventBus.addListener(com.newuniverse.nusmp.client.RougeCatLayer::addLayers);                            // 0.48: the Genesis Demon-Slayer's 3D model and shaders
         }
@@ -111,6 +112,7 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.antimagic.AntiMagic::migrate);                  // 0.48: old Spirit Lords fold into the grimoire
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.GrimoireBook::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.TimeBook::passiveTick);                    // 0.49: Time Magic's passive every tick               // 0.48: book upkeep without relying on skill ticks
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.item.WeaponEngravings::onPlayerTick);              // 0.50: Tensura engravings on the weapons
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.TreeRestore::onServerTick);                // 0.48: World Tree trees taken back (saved)
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.antimagic.NihilityZone::onServerTick);          // 0.48: Black Meteorite's Nihility zones
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.server.ServerStoppingEvent e) -> com.newuniverse.nusmp.antimagic.NihilityZone.clear());

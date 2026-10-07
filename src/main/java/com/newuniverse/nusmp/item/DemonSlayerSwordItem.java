@@ -232,7 +232,7 @@ public class DemonSlayerSwordItem extends MagicWeaponItem {
         ServerLevel level = p.serverLevel();
         long now = level.getGameTime();
         long ready = p.getPersistentData().getLong(K_METEOR);
-        if (now < ready && !p.isCreative()) { GrimoireBook.fail(p, "Black Meteorite is gathering again (" + (ready - now + 19) / 20 + "s)."); return false; }
+        if (now < ready) { GrimoireBook.fail(p, "Black Meteorite is gathering again (" + (ready - now + 19) / 20 + "s)."); return false; }
         LivingEntity target = lockOn(p, LOCK_RANGE);
         if (target == null) { GrimoireBook.fail(p, "No energy signature to lock on to."); return false; }
         Vec3 from = p.position(), dest = landing(p, target);

@@ -1,7 +1,8 @@
 {
-  "parent": "minecraft:item/handheld",
+  "parent": "minecraft:builtin/entity",
+  "gui_light": "front",
   "textures": {
-    "layer0": "nusmp:item/demon_destroyer_sword"
+    "particle": "nusmp:item/demon_destroyer_sword"
   },
   "display": {
     "thirdperson_righthand": {
@@ -87,6 +88,23 @@
         0.5,
         0.5,
         0.5
+      ]
+    },
+    "head": {
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "translation": [
+        0,
+        13,
+        7
+      ],
+      "scale": [
+        1,
+        1,
+        1
       ]
     },
     "fixed": {

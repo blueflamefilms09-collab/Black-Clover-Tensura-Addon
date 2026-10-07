@@ -17,6 +17,13 @@
    it with what the mod already has: if it covers something that exists (same feature, same asset, same mechanic), it is a
    replacement, so swap the old one out (rule 2 exception); if nothing like it exists, it is new, so add it next to everything
    else. When handing over the build, list which parts were new and which were replacements.
+6. **Every weapon gets Tensura engravings.** Tensura Reincarnated's engravings are its enchantments (the `#tensura:engraving`
+   tag: severance, barrier_piercing, holy_weapon, magic_interference, ...). Any new or reworked weapon (sword, spear, bow,
+   trident, staff, ...) gets the engravings that fit its lore, listed in `item/WeaponEngravings.java` (applied once to the stack).
+7. **The Genesis Demon-Slayer is the visual standard for weapons and items.** New or reworked weapons and items are real 3D
+   models in hand (built in `tools/gen_weapon_models.py`, drawn by `client/WeaponRenderer.java`, previewed with
+   `python tools/item_preview/preview_weapons.py`), keep their old sprite as the inventory icon, and get glow / void / effects
+   that fit them.
 
 Build: `gradlew.bat build` (JDK 21) -> `build/libs/multiverse-of-anime-<version>.jar`.
 Preview VFX without the game: `python tools/vfx_preview/preview.py`.
