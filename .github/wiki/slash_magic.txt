@@ -1,0 +1,4 @@
+-- intro: Slash Magic is a magic attribute that allows the user to create mana blades that can slash through anything.
+-- Description:
+    This magic attribute allows the user to create mana blades. In order to use it to its full potential, specific spells are required, which are stored within grimoires. The user can extend large blades from their forearms which are good for close-range combat, while projected slashes can be released for mid to long-range combat. If the user has an innate battle-hungry desire to slash things apart, then as they fight the nature and sharpness of the blades respond to this instinctive desire by adapting to whatever the user is trying to slice, making it so the blades can cut through anything. The blades can even adapt to an enemy's magic, including non-physical ones, like space, healing, and gravity.
+-- spell pages: Death Scythe; Death Scythe: Lunatic Slash

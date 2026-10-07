@@ -1,0 +1,4 @@
+-- intro: Dice Magic is a magic attribute that allows the user to manifest dice.
+-- Description:
+    This magic attribute allows the user to manifest at will dice that generate power in proportion to the number of pips rolled. In order to use it to its full potential, specific spells are required, which are stored within grimoires.
+-- spell pages: Gambler's Fallacy

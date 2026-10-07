@@ -1,0 +1,4 @@
+-- intro: Compass Magic is a magic attribute that allows the user to manifest and manipulate compasses.
+-- Description:
+    This magic attribute allows the user to manifest and manipulate compasses at will. In order to use it to its full potential, specific spells are required, which are stored within grimoires. These compasses can change the trajectory of other spells and make the user's attacks lock onto and follow a target, much like how a compass locks on to magnetic north.
+-- spell pages: Useless North; Willful Compass; Another Atlas

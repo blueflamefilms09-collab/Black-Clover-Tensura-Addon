@@ -1,0 +1,4 @@
+-- intro: :For the similar magic used by a member of the Eye of the Midnight Sun, see Tree Magic.  World Tree Magic is a magic attribute that allows the user to generate and manipulate world trees.
+-- Description:
+    This magic attribute allows the user to generate and manipulate gigantic world trees at will. In order to use it to its full potential, specific spells are required, which are stored within grimoires. The branches and roots of world trees are excellent for binding, allowing the user to capture enemies and stop enemy attacks by grabbing them mid air. This magic is also capable of absorbing the mana from others in order to create trees as large as a city. This magic and Dark Magic are the two attributes that are required for the Tree of Qliphoth to grow.
+-- spell pages: Mistilteinn Seed; Dracaena Formation; Magic Tree Descent; Great Tree Mistilteinn; Magic Warding Ash; Budding of Yggdrasil; Mistilteinn Blade; Demon-Dweller Sword: Spirit Light Tree
