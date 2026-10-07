@@ -54,7 +54,7 @@ for j, classes in per_jar.items():
     classes.sort()
     for i in range(0, len(classes), 120):
         batch = classes[i:i + 120]
-        out = subprocess.run(["javap", "-protected", "-cp", j] + batch, capture_output=True, text=True)
+        out = subprocess.run(["javap", "-protected", "-constants", "-cp", j] + batch, capture_output=True, text=True)
         text = out.stdout
         # split per class so each lands in its group file
         for chunk in re.split(r"(?m)^(?=Compiled from )", text):
