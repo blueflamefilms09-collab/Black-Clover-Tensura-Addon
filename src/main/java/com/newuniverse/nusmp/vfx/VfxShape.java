@@ -187,7 +187,12 @@ public enum VfxShape {
     SEAL_BRANCH,             // Secre's Branching Array: cyan square-edged lines branching in a 3D web from 'from'; power = reach
     SEAL_CUBE,               // Secre's Eternal Prison: a translucent glowing cube round 'from' with speed lines on its edges; power = edge length
     SEAL_WOUND,              // Secre's Wound Sealing: a gentle blue stream from 'from' (grimoire) to 'to' (the ally) that closes wounds
-    SEAL_ORBIT;              // Secre's Orbital Bind: fast blue rings orbiting a sphere round 'from'; power = radius
+    SEAL_ORBIT,              // Secre's Orbital Bind: fast blue rings orbiting a sphere round 'from'; power = radius
+    // 0.57: the rest of Yami's Dark Magic (DarkMagicLayer)
+    DARK_BLACK_HOLE,         // Black Hole: a black sphere with a violet accretion ring at 'from'; power = radius; pulls motes inward
+    DARK_BLACK_MOON,         // Black Moon: a black moon overhead at 'from' with a violet corona and falling dark motes; power = radius
+    DARK_THRUST,             // Death Thrust: a spear of darkness from 'from' to 'to' with a shock cone at the tip; power = size
+    DARK_IAI;                // Iai Slash: one bright cut line from 'from' to 'to' with black afterimage and a sheath flash; power = size
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();
