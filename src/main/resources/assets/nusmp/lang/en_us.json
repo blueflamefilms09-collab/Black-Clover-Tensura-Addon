@@ -678,5 +678,15 @@
   "nusmp.page.book_gravity.gravity_well": "Gravity Well - gravity crushes down on an area: everything in it is pinned and slowed.",
   "nusmp.page.book_gravity.crushing_weight": "Crushing Weight - a sudden weight falls on everyone where you look, almost stopping them.",
   "nusmp.page.book_steel.steel_spikes": "Steel Spikes - a line of steel spikes rips out of the ground and throws foes up.",
-  "nusmp.page.book_steel.iron_maiden": "Iron Maiden - a cage of steel blades closes on a target, holding and weakening it."
+  "nusmp.page.book_steel.iron_maiden": "Iron Maiden - a cage of steel blades closes on a target, holding and weakening it.",
+  "item.nusmp.last_word": "Last Word",
+  "item.nusmp.shroud_of_margins": "Shroud of Margins",
+  "item.nusmp.shroud_of_margins.desc": "Carry it: three layers of barrier. Each absorbs one blow of up to 15% of your health and re-forms after 20 s. Spiritual damage is not stopped.",
+  "item.nusmp.circlet_of_quickened_thought": "Circlet of Quickened Thought",
+  "item.nusmp.circlet_of_quickened_thought.desc": "Carry it: grimoire page cooldowns -12%. Sneak and use for Overclock: 6 s of haste and speed (90 s cooldown).",
+  "item.nusmp.heart_of_words": "Heart of Words",
+  "item.nusmp.heart_of_words.desc": "What is left of a sentence Zagred wrote and could not finish. A crafting material.",
+  "entity.nusmp.grimoire_daemon": "Grimoire Daemon",
+  "entity.nusmp.cotton_sheep": "Cotton Sheep",
+  "entity.nusmp.cotton_cloud": "Cotton Cloud"
 }

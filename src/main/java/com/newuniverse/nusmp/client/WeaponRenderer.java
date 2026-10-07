@@ -58,7 +58,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             NUItems.RIMEHEART_RUNEBLADE, NUItems.OTHERWORLD_TRIDENT, NUItems.MAGIC_TOOL_SWORD, NUItems.MAGIC_TOOL_SPEAR,
             NUItems.COMMUNICATION_DEVICE, NUItems.RUNE_STONE, NUItems.SPIRIT_CHARM, NUItems.BOND_THREAD, NUItems.FORTUNE_DIE,
             NUItems.GRIMOIRE_CHAIN, NUItems.ANTI_BIRD_CHARM, NUItems.RECOVERY_SALVE, NUItems.WRITTEN_CONSENT, NUItems.DEVIL_CONTRACT,
-            NUItems.GAUCHE_MIRROR);
+            NUItems.GAUCHE_MIRROR, NUItems.LAST_WORD, NUItems.SHROUD_OF_MARGINS, NUItems.CIRCLET_OF_THOUGHT);
 
     static final int BODY = 0, VOID = 1, GLOW = 2;
 

@@ -83,7 +83,7 @@ public final class MagicGear {
     }
 
     public static double costMult(Player p) { return robe(p) == RobeItem.Kind.HEART ? 1 - Math.min(0.9, scaled(p, NUConfig.GEAR_HEART_COST.get() / 100.0)) : 1; }
-    public static double cooldownMult(Player p) { return robe(p) == RobeItem.Kind.DIAMOND ? 1 - Math.min(0.9, scaled(p, NUConfig.GEAR_DIAMOND_COOLDOWN.get() / 100.0)) : 1; }
+    public static double cooldownMult(Player p) { return (robe(p) == RobeItem.Kind.DIAMOND ? 1 - Math.min(0.9, scaled(p, NUConfig.GEAR_DIAMOND_COOLDOWN.get() / 100.0)) : 1) * BossRelics.cooldownMult(p); }
     public static double selfDamageMult(Player p) { return robe(p) == RobeItem.Kind.BLACK_BULL ? 1 - Math.min(1.0, scaled(p, NUConfig.GEAR_RECOIL_REDUCTION.get() / 100.0)) : 1; }
     public static void onCast(ServerPlayer p) {}
 

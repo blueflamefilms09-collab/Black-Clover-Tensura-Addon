@@ -27,10 +27,22 @@ public final class NUEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<ZagredBossEntity>> ZAGRED = ENTITIES.register("zagred",
             () -> EntityType.Builder.of(ZagredBossEntity::new, MobCategory.MONSTER).sized(1.0f, 3.6f).fireImmune().clientTrackingRange(16).build("zagred"));
 
+    /** 0.52: Zagred's Grimoire Daemons (lesser, greater, arch, and the Overwrite rule stones). */
+    public static final DeferredHolder<EntityType<?>, EntityType<GrimoireDaemonEntity>> GRIMOIRE_DAEMON = ENTITIES.register("grimoire_daemon",
+            () -> EntityType.Builder.of(GrimoireDaemonEntity::new, MobCategory.MONSTER).sized(0.8f, 1.9f).fireImmune().clientTrackingRange(12).build("grimoire_daemon"));
+
+    /** 0.52: Charmy's cotton sheep and cotton cloud (Cotton Magic). */
+    public static final DeferredHolder<EntityType<?>, EntityType<CottonSheepEntity>> COTTON_SHEEP = ENTITIES.register("cotton_sheep",
+            () -> EntityType.Builder.of(CottonSheepEntity::new, MobCategory.MISC).sized(0.9f, 1.9f).clientTrackingRange(10).updateInterval(1).build("cotton_sheep"));
+    public static final DeferredHolder<EntityType<?>, EntityType<CottonCloudEntity>> COTTON_CLOUD = ENTITIES.register("cotton_cloud",
+            () -> EntityType.Builder.<CottonCloudEntity>of(CottonCloudEntity::new, MobCategory.MISC).sized(2.6f, 0.6f).clientTrackingRange(10).updateInterval(1).build("cotton_cloud"));
+
     public static void attributes(EntityAttributeCreationEvent e) {
         e.put(SPIRIT_LORD.get(), SpiritLordEntity.createAttributes().build());
         e.put(MIRROR_DOUBLE.get(), MirrorDoubleEntity.createAttributes().build());
         e.put(PAINTED_CONSTRUCT.get(), PaintedConstructEntity.createAttributes().build());
         e.put(ZAGRED.get(), ZagredBossEntity.createAttributes().build());
+        e.put(GRIMOIRE_DAEMON.get(), GrimoireDaemonEntity.createAttributes().build());
+        e.put(COTTON_SHEEP.get(), CottonSheepEntity.createAttributes().build());
     }
 }

@@ -28,6 +28,8 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -45,6 +47,7 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -82,6 +85,19 @@ public class ZagredBossEntity extends Monster {
     private String adapted = "";
     private long exposedUntil, nextHalt = 100, nextShatter, nextLance = 160, nextFlood, nextSwords = 200, nextAdapt = 200;
     private boolean healed;
+    // 0.52: the Multilayer Barrier, Thought Acceleration, the acts, the daemons and the signature words (docs/zagred_boss_gdd.md)
+    final ZagredDefense.Barrier barrier = new ZagredDefense.Barrier();
+    final ZagredDefense.Reflex reflex = new ZagredDefense.Reflex();
+    private boolean defenseReady;
+    long reflexInvulnUntil, transitionUntil, staggerUntil, ruleUntil, lastWarn;
+    private int archSpawned, archCount;
+    private Word lastWord;
+    private final Map<UUID, Float> barrierDamage = new HashMap<>();
+    List<Vec3> redactPlan;
+    ZagredAttacks.Rule ruleKind, pendingRule, lastRule;
+    final List<UUID> stones = new ArrayList<>();
+    int stoneKills;
+    final Map<UUID, int[]> ruleViolation = new HashMap<>();
     // 0.48 utility AI: a word is chosen by scoring the situation, telegraphed (reticle + casting pose) for CAST_TICKS, then spoken
     static final int CAST_TICKS = 15;
     private final Map<Word, Long> wordReady = new java.util.EnumMap<>(Word.class);
@@ -159,12 +175,18 @@ public class ZagredBossEntity extends Monster {
         long t = tickCount;
         float frac = getHealth() / getMaxHealth();
         int ph = frac > 0.75f ? 1 : frac > 0.5f ? 2 : frac > 0.25f ? 3 : 4;
+        if (!defenseReady) {                                                    // first tick: the barrier and the reflex for this act
+            defenseReady = true;
+            barrier.set(ZagredDefense.layersFor(ph), getMaxHealth(), t);
+            reflex.set(ZagredDefense.tokensFor(ph));
+            applySpeed(ph);
+        }
         if (ph != phase()) enterPhase(sl, ph);
         bar.setProgress(frac);
-        bar.setName(Component.literal("Zagred  ·  Phase " + ph + (t < exposedUntil ? "  ·  EXPOSED" : !adapted.isEmpty() && ph >= 2 ? "  ·  adapted: " + adapted : ""))
-                .withStyle(ChatFormatting.DARK_PURPLE));
+        bar.setName(barName(ph, t));
         if (t % 60 == 0) VfxSpawn.sendFollowing(sl, VfxShape.KOTO_AURA, this, position(), VIOLET, 70, 1.6f);
         recentDamage *= 0.97f;
+        defenseTick(sl, t, ph);
         if (tensuraKit == null) {
             tensuraKit = TensuraCaster.learn(this, 5, "dark", "death", "shadow", "black", "hell", "curse", "gravity", "dimension", "spatial",
                     "flare", "lightning", "bullet", "spear", "blade", "arrow");
@@ -177,6 +199,12 @@ public class ZagredBossEntity extends Monster {
             pending = null; castAt = 0;
             return;
         }
+        if (t < transitionUntil || t < staggerUntil || barrier.reforming(t)) {        // no attack while he changes act, is staggered or rewrites the barrier
+            getNavigation().stop();
+            setState(sl, STATE_CASTING, null, target);
+            return;
+        }
+        if (ph >= 3 && t % 40 == 0) retarget(sl, ph);
         if (pending != null) {                                                   // a telegraphed word lands
             if (t >= castAt) {
                 KotodamaWords.speak(this, pending, Source.BOSS);
@@ -185,12 +213,14 @@ public class ZagredBossEntity extends Monster {
                 setState(sl, STATE_COMBAT, null, target);
             }
         } else if (t >= nextThink) {
-            nextThink = t + 10;
+            nextThink = t + (ph <= 2 ? 10 : ph == 3 ? 8 : 6);
             Word w = choose(sl, target, ph, frac);
             if (w != null) {
                 pending = w;
-                castAt = t + (w == Word.SHATTER ? 3 : CAST_TICKS);              // Shatter answers at once
+                castAt = t + castTicks(w, ph);                                  // Shatter answers at once
                 wordReady.put(w, t + cooldown(w, ph));
+                lastWord = w;
+                telegraph(sl, w, ph, t);
                 setState(sl, STATE_CASTING, w, target);
                 getNavigation().stop();
             } else setState(sl, STATE_COMBAT, null, target);
@@ -226,6 +256,173 @@ public class ZagredBossEntity extends Monster {
         }
     }
 
+    // ---------------------------------------------------------------- 0.52: defences, daemons, the acts
+    /** True while he is committed (a transition, a stagger, a Redact or Overwrite channel): no dodging then. */
+    boolean busy(long t) { return t < transitionUntil || t < staggerUntil || pending == Word.REDACT || pending == Word.OVERWRITE; }
+
+    BlockPos arenaPos() { return arena; }
+
+    /** The boss bar's name: phase, barrier layers, reflex tokens, the rule in force. */
+    Component barName(int ph, long t) {
+        StringBuilder s = new StringBuilder("Zagred  \u00b7  Phase ").append(ph).append("  \u00b7  Barrier ");
+        if (barrier.reforming(t)) s.append("writing...");
+        else for (int i = 0, n = barrier.layers(t), a = barrier.alive(t); i < n; i++) s.append(i < a ? "\u25a0" : "\u25a1");
+        s.append("  \u00b7  Reflex ");
+        for (int i = 0; i < reflex.max(); i++) s.append(i < reflex.tokens() ? "\u25cf" : "\u25cb");
+        if (reflex.out(t)) s.append(" OUT");
+        if (t < exposedUntil) s.append("  \u00b7  EXPOSED");
+        else if (!adapted.isEmpty() && ph >= 2) s.append("  \u00b7  adapted: ").append(adapted);
+        if (ruleKind != null && t < ruleUntil) s.append("  \u00b7  RULE: ").append(ruleKind.text);
+        return Component.literal(s.toString()).withStyle(ChatFormatting.DARK_PURPLE);
+    }
+
+    void applySpeed(int ph) {
+        var a = getAttribute(Attributes.MOVEMENT_SPEED);
+        if (a != null) a.setBaseValue(0.28 * (ph == 3 ? 1.08 : ph == 4 ? 1.15 : 1.0));
+    }
+
+    /** Barrier, reflex, regeneration, daemon packs, the leash and the rule, all on their own clocks. */
+    void defenseTick(ServerLevel sl, long t, int ph) {
+        barrier.tick(t, pending == Word.OVERWRITE, archCount > 0);
+        reflex.tick(this, sl, t, ph, busy(t));
+        if (t % 20 == 0 && t >= barrier.lockUntil && !barrier.reforming(t)) heal(getMaxHealth() * 0.004f);   // Ultra-Speed Regeneration
+        if (t % 5 == 0) ZagredAttacks.enforce(this, sl);
+        if (t % 10 == 0) {
+            for (MobEffectInstance e : new ArrayList<>(getActiveEffects()))                                  // Abnormal Condition Nullification
+                if (e.getEffect().value().getCategory() == MobEffectCategory.HARMFUL) removeEffect(e.getEffect());
+        }
+        if (t % 20 == 0) {
+            barrierDamage.replaceAll((k, v) -> v * 0.9f);
+            barrierDamage.values().removeIf(v -> v < 0.5f);
+            leash(sl, t);
+        }
+        if (t % 40 == 0) upkeepDaemons(sl, ph, false);
+    }
+
+    Vec3 arenaCenter() { return arena == null ? position() : Vec3.atBottomCenterOf(arena); }
+
+    /** Keeps the packs of daemons topped up for this act and the number of fighters. */
+    void upkeepDaemons(ServerLevel sl, int ph, boolean force) {
+        Vec3 c = arenaCenter();
+        int n = Math.max(1, sl.getPlayers(p -> p.distanceToSqr(c) < 40 * 40 && !p.isCreative() && !p.isSpectator()).size());
+        double scale = Math.min(1.5, 0.6 + 0.4 * n);
+        int lesser = 0, greater = 0, arch = 0;
+        for (GrimoireDaemonEntity d : GrimoireDaemonEntity.of(sl, getUUID(), c, 80)) {
+            switch (d.tier()) { case GrimoireDaemonEntity.LESSER -> lesser++; case GrimoireDaemonEntity.GREATER -> greater++; case GrimoireDaemonEntity.ARCH -> arch++; default -> { } }
+        }
+        archCount = arch;
+        int lesserCap = (int) Math.round((ph == 1 ? 4 : ph == 2 ? 6 : ph == 3 ? 8 : 12) * scale), greaterCap = ph == 3 ? 2 : ph == 4 ? 4 : 0;
+        if (lesser < lesserCap / 2 || (tickCount % 300 < 40 && lesser < lesserCap))
+            for (int i = 0; i < Math.min(3, lesserCap - lesser); i++) GrimoireDaemonEntity.spawn(sl, this, GrimoireDaemonEntity.LESSER, ringPos(sl, 8 + getRandom().nextDouble() * 5, 2.5));
+        if (greater < greaterCap && (force || tickCount % 400 < 40))
+            for (int i = 0; i < Math.min(2, greaterCap - greater); i++) GrimoireDaemonEntity.spawn(sl, this, GrimoireDaemonEntity.GREATER, ringPos(sl, 11, 0.8));
+    }
+
+    Vec3 ringPos(ServerLevel sl, double r, double up) {
+        Vec3 c = arenaCenter();
+        double a = getRandom().nextDouble() * Math.PI * 2;
+        return ZagredAttacks.ground(sl, c.add(Math.cos(a) * r, 0, Math.sin(a) * r), c.y).add(0, up, 0);
+    }
+
+    /** A 40-block leash: someone who runs far from the arena is called back. */
+    void leash(ServerLevel sl, long t) {
+        Vec3 c = arenaCenter();
+        for (ServerPlayer p : sl.players()) {
+            double d2 = p.distanceToSqr(c);
+            if (d2 < 40 * 40 || d2 > 120 * 120 || p.isCreative() || p.isSpectator()) continue;
+            if (t < p.getPersistentData().getLong("nusmp_zagred_leash")) continue;
+            p.getPersistentData().putLong("nusmp_zagred_leash", t + 100);
+            Vec3 to = ZagredAttacks.ground(sl, c.add(p.position().subtract(c).multiply(1, 0, 1).normalize().scale(12)), c.y);
+            say(sl, "Zagred: \"Return.\"");
+            p.teleportTo(to.x, to.y, to.z);
+        }
+    }
+
+    /** Act II goes for the strongest caster, Act III for whoever hurt the barrier most lately. */
+    void retarget(ServerLevel sl, int ph) {
+        LivingEntity best = null;
+        double top = -1;
+        if (ph == 3) {
+            for (LivingEntity f : KotodamaWords.foes(this, position(), 32)) {
+                if (!(f instanceof Player)) continue;
+                double ep = com.newuniverse.nusmp.antimagic.Nullification.maxEP(f);
+                if (ep > top) { top = ep; best = f; }
+            }
+        } else {
+            for (var e : barrierDamage.entrySet()) {
+                Player p = sl.getPlayerByUUID(e.getKey());
+                if (p != null && p.isAlive() && !p.isCreative() && e.getValue() > top) { top = e.getValue(); best = p; }
+            }
+        }
+        if (best != null && best != getTarget()) setTarget(best);
+    }
+
+    /** Wind-up tells that are not part of the model: the Halt ring, the Redact sentence, the Overwrite stones. */
+    void telegraph(ServerLevel sl, Word w, int ph, long t) {
+        switch (w) {
+            case HALT -> {
+                ZagredAttacks.ring(sl, position(), 12, 3, 5);
+                wordReady.merge(Word.REDACT, t + 80, Math::max);
+            }
+            case REDACT -> {
+                redactPlan = ZagredAttacks.plan(this, 5 + (ph >= 3 ? 2 : 0) + (ph == 4 ? 1 : 0));
+                ZagredAttacks.telegraph(this, redactPlan);
+                wordReady.merge(Word.HALT, t + 80, Math::max);
+            }
+            case OVERWRITE -> ZagredAttacks.overwriteStart(this, sl);
+            default -> { }
+        }
+    }
+
+    /** The sentence a Redact written during the wind-up (null if a player is speaking it). */
+    public List<Vec3> takePlan() {
+        List<Vec3> p = redactPlan;
+        redactPlan = null;
+        return p;
+    }
+
+    /** Wind-up ticks: 15 for most words, longer for the heavy ones, shorter in later acts (never below 8). */
+    static int castTicks(Word w, int ph) {
+        if (w == Word.SHATTER) return 3;
+        int base = switch (w) { case REDACT -> 20; case FALL -> 18; case OVERWRITE -> 40; default -> CAST_TICKS; };
+        float mult = ph <= 2 ? 1f : ph == 3 ? 0.8f : 0.67f;
+        return Math.max(w == Word.OVERWRITE ? 30 : 8, Math.round(base * mult));
+    }
+
+    /** Last Word's third mark: the outermost barrier layer breaks. */
+    public void breakBarrierLayer() {
+        if (barrier.breakOne(tickCount) && level() instanceof ServerLevel sl) {
+            VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, getBoundingBox().getCenter(), position(), 0xFFFFFFFF, 16, 1.6f);
+            sl.playSound(null, blockPosition(), SoundEvents.GLASS_BREAK, SoundSource.HOSTILE, 1.5f, 0.8f);
+        }
+    }
+
+    /** An Arch Daemon fell: its anchor is gone and his outermost barrier layer breaks. */
+    void archFell() {
+        archCount = Math.max(0, archCount - 1);
+        if (barrier.breakOne(tickCount) && level() instanceof ServerLevel sl) {
+            say(sl, "An Arch Daemon is struck down: a layer of Zagred's barrier breaks.");
+            VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, getBoundingBox().getCenter(), position(), 0xFFFFFFFF, 20, 2f);
+        }
+    }
+
+    /** A rule stone fell; the third one cuts the sentence short and staggers him for 2 s. */
+    void stoneBroken() {
+        if (++stoneKills < 3 || !(level() instanceof ServerLevel sl)) return;
+        if (pending == Word.OVERWRITE) { pending = null; castAt = 0; }
+        if (ruleKind != null) ZagredAttacks.endRule(this, sl);
+        for (UUID id : new ArrayList<>(stones)) if (sl.getEntity(id) instanceof GrimoireDaemonEntity s) s.discard();
+        stones.clear();
+        staggerUntil = tickCount + 40;
+        say(sl, "The sentence is cut. Zagred reels.");
+        VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, getBoundingBox().getCenter(), position(), 0xFFFFFFFF, 30, 3f);
+    }
+
+    @Override
+    public boolean canBeAffected(MobEffectInstance effect) {                    // Abnormal Condition Nullification: no harmful effect ever lands
+        return effect.getEffect().value().getCategory() != MobEffectCategory.HARMFUL && super.canBeAffected(effect);
+    }
+
     /** Sends the state to the clients when it changes. */
     void setState(ServerLevel sl, int s, Word w, LivingEntity target) {
         int word = w == null ? -1 : w.ordinal(), tid = target == null ? -1 : target.getId();
@@ -239,9 +436,9 @@ public class ZagredBossEntity extends Monster {
         int base = switch (w) {
             case SHATTER -> 100; case HALT -> 260; case SWORDS -> 220; case FALL -> 300; case REVEAL -> 400; case SEAL -> 400;
             case REJECT -> 400; case FEAR -> 500; case DRAIN -> 500; case SLEEP -> 600; case BANISH -> 600; case REVERSE -> 600;
-            case PETRIFY -> 800; default -> 100000;
+            case PETRIFY -> 800; case REDACT -> 160; case OVERWRITE -> 900; default -> 100000;
         };
-        return ph == 4 ? base * 3 / 4 : base;
+        return Math.round(base * (ph <= 2 ? 1f : ph == 3 ? 0.85f : 0.7f));
     }
 
     boolean ready(Word w) { return tickCount >= wordReady.getOrDefault(w, 0L); }
@@ -279,6 +476,8 @@ public class ZagredBossEntity extends Monster {
             if (frac < 0.5f) score.put(Word.DRAIN, 3.2f);
             if (close >= 3) score.put(Word.SLEEP, 4.5f);
         }
+        score.put(Word.REDACT, (flying > 0 ? 3.4f : 4.6f) + (close >= 2 ? 1.2f : 0f));
+        if (ph >= 3 && ruleKind == null && stones.isEmpty()) score.put(Word.OVERWRITE, 8f);
         if (ph >= 3) {
             score.put(Word.SWORDS, 3f);
             if (distanceToSqr(target) < 25) score.put(Word.PETRIFY, 3.4f);
@@ -286,7 +485,7 @@ public class ZagredBossEntity extends Monster {
         Word best = null;
         float top = 2.5f;
         for (var e : score.entrySet()) {
-            if (!ready(e.getKey())) continue;
+            if (!ready(e.getKey()) || e.getKey() == lastWord) continue;
             float s = e.getValue() + getRandom().nextFloat() * 0.6f;
             if (s > top) { top = s; best = e.getKey(); }
         }
@@ -294,9 +493,11 @@ public class ZagredBossEntity extends Monster {
     }
 
     /** Is 't' fighting with anti-magic (a demon sword in hand, the Lord, a summoned Anti-Magic grimoire)? */
-    boolean antiMagicNear(LivingEntity t) {
-        return t instanceof Player p && (BuiltInRegistries.ITEM.getKey(p.getMainHandItem().getItem()).getPath().startsWith("demon_")
-                || AntiMagic.lord(p).isPresent());
+    boolean antiMagicNear(LivingEntity t) { return t instanceof Player p && antiMagicHeld(p); }
+
+    /** A demon sword in hand, or the Anti-Magic Lord. */
+    static boolean antiMagicHeld(Player p) {
+        return BuiltInRegistries.ITEM.getKey(p.getMainHandItem().getItem()).getPath().startsWith("demon_") || AntiMagic.lord(p).isPresent();
     }
 
     /** Client: black flakes and smoke shed from the shoulders and wings (as in the reference art). */
@@ -328,6 +529,21 @@ public class ZagredBossEntity extends Monster {
         VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, getBoundingBox().getCenter(), position(), VIOLET, 40, 3f);
         sl.playSound(null, blockPosition(), SoundEvents.WITHER_SPAWN, SoundSource.HOSTILE, 2f, 0.6f);
         if (ph >= 3) nextFlood = tickCount;
+        barrier.set(ZagredDefense.layersFor(ph), getMaxHealth(), tickCount);
+        reflex.set(ZagredDefense.tokensFor(ph));
+        applySpeed(ph);
+        if (ph >= 3) {                                                   // the act changes: 3 s of calm, an Arch Daemon, the greater turrets
+            transitionUntil = tickCount + 60;
+            pending = null; castAt = 0;
+            wordReady.put(Word.OVERWRITE, tickCount + 400L);
+            if (archSpawned < ph - 2) {
+                archSpawned = ph - 2;
+                GrimoireDaemonEntity.spawn(sl, this, GrimoireDaemonEntity.ARCH, ringPos(sl, 8, 2.2));
+                archCount++;
+            }
+            upkeepDaemons(sl, ph, true);
+            say(sl, ph == 3 ? "An Arch Daemon answers the call." : "A second Arch Daemon answers the call.");
+        }
     }
 
     void say(ServerLevel sl, String line) {
@@ -390,32 +606,67 @@ public class ZagredBossEntity extends Monster {
                 && GrimoirePages.grimoireOf(p).map(i -> GrimoirePages.magicOf(i) == MagicType.ANTI_MAGIC).orElse(false);
     }
 
+    /** Order of operations (docs/zagred_boss_gdd.md 4.1): transitions, rule, nullification, reflex, resistances, adaptation, anchor, barrier, act 4. */
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if (level().isClientSide || source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return super.hurt(source, amount);
-        if (source.getEntity() instanceof ServerPlayer p) fighters.add(p.getUUID());
-        recentDamage += amount;
-        String el = element(source);
         long t = tickCount;
+        if (t < transitionUntil || t < reflexInvulnUntil) return false;
+        if (source.getEntity() instanceof ServerPlayer p) fighters.add(p.getUUID());
+        String el = element(source);
+        ZagredDefense.Kind kind = ZagredDefense.classify(source, el);
         int ph = phase();
+        if (ruleKind != null && t < ruleUntil && ruleKind.element != null && ruleKind.element.equals(el)
+                && source.getEntity() instanceof LivingEntity a && a != this) ZagredAttacks.punish(this, a);   // Overwrite: the banned element burns its caster
+        if (kind == ZagredDefense.Kind.PHYSICAL) {                                   // Physical Attack Nullification
+            if (source.getEntity() instanceof ServerPlayer p && t - lastWarn > 100) {
+                lastWarn = t;
+                p.displayClientMessage(Component.literal("Your blade cannot touch Zagred. Magic can.").withStyle(ChatFormatting.DARK_PURPLE), true);
+            }
+            return false;
+        }
+        if (reflex.dodgeHit(this, source, t, busy(t), kind)) return false;          // Thought Acceleration
+        recentDamage += amount;
+        amount *= ZagredDefense.resistance(el);
         if (ph >= 2) {
             elementDamage.merge(el, amount, Float::sum);
             if (el.equals(adapted)) amount *= 0.2f;
         }
-        if (ph == 4) {
-            if (!el.equals("physical") && !el.equals("projectile") && !el.equals("magic")) {
-                lastElementHit.put(el, t);
-                lastElementHit.values().removeIf(at -> t - at > 100);
-                if (lastElementHit.size() >= 3 && t >= exposedUntil && level() instanceof ServerLevel sl) {
-                    exposedUntil = t + 100;
-                    lastElementHit.clear();
-                    say(sl, "Three elements at once! Zagred's word falters: EXPOSED.");
-                    VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, getBoundingBox().getCenter(), position(), 0xFFFFFFFF, 30, 2.5f);
-                }
+        if (ph == 4 && !el.equals("physical") && !el.equals("projectile") && !el.equals("magic")) {
+            lastElementHit.put(el, t);
+            lastElementHit.values().removeIf(at -> t - at > 100);
+            if (lastElementHit.size() >= 3 && t >= exposedUntil && level() instanceof ServerLevel sl) {
+                exposedUntil = t + 100;
+                lastElementHit.clear();
+                say(sl, "Three elements at once! Zagred's word falters: EXPOSED.");
+                VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, getBoundingBox().getCenter(), position(), 0xFFFFFFFF, 30, 2.5f);
             }
-            if (!antiMagic(source) && t >= exposedUntil) amount *= 0.15f;
         }
-        return super.hurt(source, amount);
+        if (reflex.out(t)) amount *= 1.2f;                                           // out of thought
+        if (archCount > 0) amount *= 0.75f;                                          // an Arch Daemon anchors him
+        float through = barrier.absorb(amount, ZagredDefense.grainOf(kind, el), kind == ZagredDefense.Kind.ANTI_MAGIC, t);
+        if (barrier.broken > 0 && level() instanceof ServerLevel sl) {
+            VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, getBoundingBox().getCenter(), position(), 0xFFFFFFFF, 14, 1.6f);
+            sl.playSound(null, blockPosition(), SoundEvents.GLASS_BREAK, SoundSource.HOSTILE, 1.5f, 0.8f);
+            if (barrier.reformStarted) say(sl, "Zagred: \"Again.\"");
+        }
+        if (through <= 0) {                                                          // the layers took all of it
+            if (source.getEntity() instanceof ServerPlayer p) barrierDamage.merge(p.getUUID(), amount, Float::sum);
+            if (level() instanceof ServerLevel sl) sl.playSound(null, blockPosition(), SoundEvents.AMETHYST_BLOCK_HIT, SoundSource.HOSTILE, 1f, 1.2f);
+            return false;
+        }
+        amount = through;
+        if (ph == 4 && !antiMagic(source) && t >= exposedUntil) amount *= 0.15f;
+        return super.hurt(source, clampToThreshold(amount));
+    }
+
+    /** A single burst can't carry him past the next act: it stops just under the threshold. */
+    float clampToThreshold(float amount) {
+        int ph = phase();
+        float thr = ph == 1 ? 0.75f : ph == 2 ? 0.5f : ph == 3 ? 0.25f : 0f;
+        if (thr <= 0f) return amount;
+        float floor = thr * getMaxHealth();
+        return getHealth() - amount < floor ? Math.max(0f, getHealth() - floor + 0.5f) : amount;
     }
 
     @Override
@@ -426,7 +677,7 @@ public class ZagredBossEntity extends Monster {
         say(sl, "Zagred: \"...So words can be broken.\"");
         for (UUID id : fighters) {
             ServerPlayer p = sl.getServer().getPlayerList().getPlayer(id);
-            if (p != null) KotodamaWords.reward(p);
+            if (p != null) { KotodamaWords.reward(p); com.newuniverse.nusmp.item.BossRelics.give(p); }
         }
     }
 
@@ -442,6 +693,9 @@ public class ZagredBossEntity extends Monster {
         if (arena != null) tag.put("Arena", NbtUtils.writeBlockPos(arena));
         tag.putBoolean("Healed", healed);
         tag.putString("Adapted", adapted);
+        tag.putInt("ArchSpawned", archSpawned);
+        tag.putInt("Tokens", reflex.tokens());
+        barrier.save(tag);
     }
 
     @Override
@@ -450,6 +704,8 @@ public class ZagredBossEntity extends Monster {
         NbtUtils.readBlockPos(tag, "Arena").ifPresent(p -> arena = p);
         healed = tag.getBoolean("Healed");
         adapted = tag.getString("Adapted");
+        archSpawned = tag.getInt("ArchSpawned");
+        if (tag.contains("BCount")) { barrier.load(tag); defenseReady = true; reflex.set(Math.max(1, tag.getInt("Tokens"))); }
         if (hasCustomName()) bar.setName(getDisplayName());
     }
 

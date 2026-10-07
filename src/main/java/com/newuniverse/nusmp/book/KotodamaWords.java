@@ -5,6 +5,7 @@ import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.blackclover.Devil;
 import com.newuniverse.nusmp.blackclover.GrimoireCover;
 import com.newuniverse.nusmp.blackclover.MagicType;
+import com.newuniverse.nusmp.entity.ZagredAttacks;
 import com.newuniverse.nusmp.entity.ZagredBossEntity;
 import com.newuniverse.nusmp.item.OtherworldTridentItem;
 import com.newuniverse.nusmp.skill.NUSkills;
@@ -83,7 +84,10 @@ public final class KotodamaWords {
         FEAR("Cower", 0.20, 25_000, 600, true, "cower", "fear", "tremble"),
         BANISH("Banish", 0.30, 40_000, 900, false, "banish", "begone", "dismiss"),
         REVERSE("Reverse", 0.30, 40_000, 900, false, "reverse", "reflect", "rebound"),
-        DRAIN("Drain", 0.25, 30_000, 600, false, "drain", "siphon", "wither");
+        DRAIN("Drain", 0.25, 30_000, 600, false, "drain", "siphon", "wither"),
+        // 0.52: Zagred's signature words. Redact can be spoken by a player (creative / earned); Overwrite is the boss's alone.
+        REDACT("Redact", 0.20, 25_000, 600, false, "redact", "erase", "strike"),
+        OVERWRITE("Overwrite", 0.50, 120_000, 1800, false, "overwrite", "rewrite");
 
         public final String spoken;
         final double frac, floor;
@@ -169,6 +173,7 @@ public final class KotodamaWords {
         ServerPlayer p = caster instanceof ServerPlayer sp ? sp : null;
         long now = level.getGameTime();
         if (p != null) {
+            if (w == Word.OVERWRITE && src != Source.BOSS) { GrimoireBook.fail(p, "\"Overwrite\" is Zagred's alone."); return false; }
             if (src == Source.GRIMOIRE && !p.isCreative() && !earned(p)) {
                 GrimoireBook.fail(p, "The Word Soul does not answer. Kotodama is creative-only until Zagred is defeated.");
                 return false;
@@ -197,6 +202,8 @@ public final class KotodamaWords {
             case BANISH -> banish(caster, pw);
             case REVERSE -> reverse(caster, pw);
             case DRAIN -> drain(caster, pw);
+            case REDACT -> redact(caster, pw);
+            case OVERWRITE -> caster instanceof ZagredBossEntity z && ZagredAttacks.overwrite(z);
         };
         if (!done) return false;
         glyphs(caster, w, src, pw);
@@ -272,16 +279,30 @@ public final class KotodamaWords {
     }
 
     // ---------------------------------------------------------------- the words
+    /** "Redact": a sentence of glyph letters on the floor that detonates in reading order (the boss writes it during its wind-up). */
+    static boolean redact(LivingEntity c, float pw) {
+        java.util.List<Vec3> plan = c instanceof ZagredBossEntity z ? z.takePlan() : null;
+        int delay = 0;
+        if (plan == null) { plan = ZagredAttacks.plan(c, 5); ZagredAttacks.telegraph(c, plan); delay = 12; }
+        ZagredAttacks.redact(c, pw, plan, delay);
+        return true;
+    }
+
     /**
      * "Halt" / "Bind": Absolute Paralysis and Magic Jamming over a massive area. Everyone in range is paralysed (Tensura
      * paralysis, held in place by a velocity lock), their magic jammed (Tensura silence), and their spirit struck.
      */
     static boolean halt(LivingEntity c, float pw, Source src) {
         ServerLevel level = (ServerLevel) c.level();
-        double r = src == Source.DEVIL ? 8 + 4 * pw : 12 + 8 * pw;
+        double r = src == Source.BOSS ? 12 : src == Source.DEVIL ? 8 + 4 * pw : 12 + 8 * pw;
         List<LivingEntity> hit = foes(c, c.position(), r);
         for (LivingEntity t : hit) {
-            int ticks = BalanceLaw.controlTicks(t, (int) (100 * pw));
+            int ticks = BalanceLaw.controlTicks(t, src == Source.BOSS ? 30 : (int) (100 * pw));
+            if (src == Source.BOSS) {                                          // 0.52: 1.5 s, and an ally within 3 blocks who is free shortens it
+                int free = 0;
+                for (LivingEntity o : foes(c, t.position(), 3)) if (o != t && !hit.contains(o)) free++;
+                ticks = Math.max(10, ticks - 10 * Math.min(2, free));
+            }
             EnergyBridge.effect(t, "paralysis", ticks, 1);
             EnergyBridge.effect(t, "silence", ticks * 2, 1);
             spirit(c, t, src == Source.DEVIL ? 1 : 2 + pw);
@@ -429,6 +450,7 @@ public final class KotodamaWords {
     /** "Fall": everything flying is thrown to the ground (flight switched off, a crushing burden). */
     static boolean fall(LivingEntity c, float pw, Source src) {
         double r = reach(pw, src);
+        if (src == Source.BOSS) ZagredAttacks.crush(c, pw);                          // 0.52: after the pull, a low crushing ring
         for (LivingEntity t : foes(c, c.position(), r)) {
             t.removeEffect(net.minecraft.world.effect.MobEffects.LEVITATION);
             t.removeEffect(net.minecraft.world.effect.MobEffects.SLOW_FALLING);
@@ -436,7 +458,7 @@ public final class KotodamaWords {
             if (t instanceof Player pl) pl.stopFallFlying();
             t.setDeltaMovement(t.getDeltaMovement().x * 0.2, -2.5, t.getDeltaMovement().z * 0.2);
             t.hurtMarked = true;
-            EnergyBridge.effect(t, "burden", BalanceLaw.controlTicks(t, (int) (80 * pw)), 1);
+            EnergyBridge.effect(t, "burden", BalanceLaw.controlTicks(t, src == Source.BOSS ? 20 : (int) (80 * pw)), 1);
         }
         burst(c, r, ABYSS);
         c.level().playSound(null, c.blockPosition(), SoundEvents.ANVIL_LAND, SoundSource.HOSTILE, 1.2f, 0.5f);

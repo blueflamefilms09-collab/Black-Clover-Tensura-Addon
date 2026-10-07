@@ -8,7 +8,8 @@
   ],
   "client": [
     "client.ComingSoonTextMixin",
-    "client.FourKingdomsSlotMixin"
+    "client.FourKingdomsSlotMixin",
+    "client.PlayerModelMixin"
   ],
   "injectors": {
     "defaultRequire": 0

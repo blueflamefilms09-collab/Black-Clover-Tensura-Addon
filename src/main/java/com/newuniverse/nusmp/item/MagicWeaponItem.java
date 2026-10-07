@@ -53,7 +53,9 @@ public class MagicWeaponItem extends SwordItem {
         LICHT_DWELLER(Tiers.NETHERITE, 4, -2.4f, "Conquering Eon", "Licht's white Demon-Dweller: a 20-block slash that grows with every ally near you, and heals you.", 240, false),
         LICHT_DESTROYER(Tiers.NETHERITE, 5, -2.6f, "Causality Break", "Licht's white Demon-Destroyer: strips every buff from foes in front of you and erases their spells.", 240, false),
         // 0.32: a cryo-lattice mana runeblade (docs/runeblade_spec.md)
-        RIMEHEART(Tiers.NETHERITE, 5, -2.4f, "Glacial Matrix Burst", "Vents the blade's stored mana as a frost shockwave: erases spells within 5 blocks, freezes and slows everything caught. Critical hits shatter a smaller burst around the target; paired with a second magic sword the burst recharges 40% faster.", 200, false);
+        RIMEHEART(Tiers.NETHERITE, 5, -2.4f, "Glacial Matrix Burst", "Vents the blade's stored mana as a frost shockwave: erases spells within 5 blocks, freezes and slows everything caught. Critical hits shatter a smaller burst around the target; paired with a second magic sword the burst recharges 40% faster.", 200, false),
+        // 0.52: Zagred's quill-blade (docs/zagred_boss_gdd.md 3.1)
+        LAST_WORD(Tiers.NETHERITE, 5, -1.8f, "Sentence", "Writes a short sentence of glyph letters along your line of sight that detonates in reading order. Every hit leaves a struck-out mark: three marks within 5 s strip a buff and one layer of a barrier (20 s cooldown).", 400, false);
 
         final Tier tier; final int damage; final float speed; final String ability, desc; final int cooldown; final boolean demon;
         Kind(Tier t, int d, float s, String a, String desc, int cd, boolean demon) {
@@ -151,6 +153,10 @@ public class MagicWeaponItem extends SwordItem {
         ItemStack stack = player.getItemInHand(hand);
         if (level.isClientSide || !(player instanceof ServerPlayer p)) return InteractionResultHolder.pass(stack);
         if (!usableBy(stack, p)) { GrimoireBook.fail(p, "This sword answers only to its owner."); return InteractionResultHolder.fail(stack); }
+        if (p.isShiftKeyDown() && WeaponArts.alt(kind) != null) {                    // 0.52: the second technique (sneak + right-click)
+            WeaponArts.tryAlt(p, kind);
+            return InteractionResultHolder.success(stack);
+        }
         if (!technique(p)) return InteractionResultHolder.fail(stack);
         p.getCooldowns().addCooldown(this, cooldownFor(p));
         p.displayClientMessage(Component.literal(kind.ability + "!").withStyle(kind.demon ? ChatFormatting.DARK_GRAY : ChatFormatting.AQUA, ChatFormatting.BOLD), true);
@@ -269,6 +275,11 @@ public class MagicWeaponItem extends SwordItem {
                 VfxSpawn.send(p.serverLevel(), VfxShape.WATER_BURST, p.position().add(0, 0.6, 0), p.position(), 0xFF8FE9FF, 22, 1.7f);
                 VfxSpawn.send(p.serverLevel(), VfxShape.WATER_RING, p.position().add(0, 0.1, 0), p.position().add(0, 1, 0), 0xFF3FE9FF, 20, 1.6f);
             }
+            case LAST_WORD -> {
+                java.util.List<Vec3> pts = com.newuniverse.nusmp.entity.ZagredAttacks.plan(p, 4);
+                com.newuniverse.nusmp.entity.ZagredAttacks.telegraph(p, pts);
+                com.newuniverse.nusmp.entity.ZagredAttacks.redact(p, 1.9f, pts, 12);
+            }
             case LICHT_DESTROYER -> {
                 eraseProjectiles(p, p.getBoundingBox().inflate(5));
                 for (LivingEntity t : GrimoireBook.around(p, p.position(), 5)) {
@@ -282,7 +293,35 @@ public class MagicWeaponItem extends SwordItem {
         return true;
     }
 
+    // ---------------------------------------------------------------- Last Word's marks
+    /** A struck-out mark on the target; the third within 5 s strips a buff and one barrier layer (20 s cooldown). */
+    private static void redactMark(ServerPlayer p, LivingEntity target) {
+        long now = p.level().getGameTime();
+        long[] old = target.getPersistentData().getLongArray("nusmp_redact_marks");
+        long[] marks = new long[old.length + 1];
+        int n = 0;
+        for (long m : old) if (now - m <= 100) marks[n++] = m;
+        marks[n++] = now;
+        VfxSpawn.send(p.serverLevel(), VfxShape.KOTO_SHATTER, target.getBoundingBox().getCenter(), target.position(), 0xFFD02040, 10, 0.5f);
+        if (n >= 3 && now >= p.getPersistentData().getLong("nusmp_redact_cd")) {
+            p.getPersistentData().putLong("nusmp_redact_cd", now + 400);
+            stripOne(target);
+            if (target instanceof com.newuniverse.nusmp.entity.ZagredBossEntity z) z.breakBarrierLayer();
+            VfxSpawn.send(p.serverLevel(), VfxShape.KOTO_SHATTER, target.getBoundingBox().getCenter(), target.position(), 0xFFFFFFFF, 20, 1.6f);
+            p.displayClientMessage(Component.literal("Struck out!").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD), true);
+            n = 0;
+        }
+        target.getPersistentData().putLongArray("nusmp_redact_marks", java.util.Arrays.copyOf(marks, n));
+    }
+
     // ---------------------------------------------------------------- on hit
+    /** 0.52: remembers how charged the swing was, for the full-swing strike (see {@link WeaponArts}). */
+    @Override
+    public boolean onLeftClickEntity(ItemStack stack, Player player, net.minecraft.world.entity.Entity target) {
+        WeaponArts.swing(player);
+        return false;
+    }
+
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         boolean r = super.hurtEnemy(stack, target, attacker);
@@ -299,8 +338,10 @@ public class MagicWeaponItem extends SwordItem {
                         VfxSpawn.send(p.serverLevel(), VfxShape.WATER_BURST, target.position().add(0, target.getBbHeight() / 2, 0), target.position(), 0xFF8FE9FF, 16, 0.9f);
                     }
                 }
+                case LAST_WORD -> redactMark(p, target);
                 default -> {}
             }
+            WeaponArts.fullSwing(p, target, kind);                                 // 0.52: the weapon's signature strike on a full swing
             if (kind.demon) AntiMagic.addAmp(p, 10);
         }
         return r;
@@ -311,6 +352,13 @@ public class MagicWeaponItem extends SwordItem {
         tip.add(Component.literal("Right-click: " + kind.ability).withStyle(ChatFormatting.GOLD));
         tip.add(Component.literal("  " + kind.desc).withStyle(ChatFormatting.GRAY));
         tip.add(Component.literal("  Cooldown: " + Math.round(kind.cooldown * com.newuniverse.nusmp.NUGameRules.cooldownShown() / 20) + " s").withStyle(ChatFormatting.DARK_GRAY));
+        WeaponArts.Alt alt = WeaponArts.alt(kind);
+        if (alt != null) {                                                          // 0.52
+            tip.add(Component.literal("Sneak + right-click: " + alt.name()).withStyle(ChatFormatting.GOLD));
+            tip.add(Component.literal("  " + alt.desc()).withStyle(ChatFormatting.GRAY));
+            tip.add(Component.literal("  Cooldown: " + Math.round(alt.cooldown() * com.newuniverse.nusmp.NUGameRules.cooldownShown() / 20) + " s").withStyle(ChatFormatting.DARK_GRAY));
+            tip.add(Component.literal("Full swing: the weapon's signature strike lands too").withStyle(ChatFormatting.DARK_AQUA));
+        }
         CustomData d = stack.get(DataComponents.CUSTOM_DATA);
         if (kind == Kind.RIMEHEART) tip.add(Component.literal("  Off-hand magic sword: burst recharges 40% faster, hits freeze longer").withStyle(ChatFormatting.AQUA));
         if (d != null && d.copyTag().contains("ExpiresAt"))

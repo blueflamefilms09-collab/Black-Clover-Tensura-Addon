@@ -60,7 +60,7 @@ Chanted magics: use **Chant** mode until the chant is complete, then switch to *
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.51.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.52.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -204,6 +204,21 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Anti-Magic kit**: new pages **Black Hurricane** (a whirling field that drags foes in and strips their magic) and **Black Form** (30 s of strength, speed, resistance and jump, with an anti-magic burst); mastering the Anti-Magic Lord now also grants the **Demon-Slasher** katana next to Demon-Dweller and Demon-Destroyer.
 - **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
 - **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
+
+## 0.52 - Zagred as designed, better weapon abilities, Cotton sheep and cloud, the grimoire sword draw, fixes
+- **New: Zagred's defences and acts** (design: `docs/zagred_boss_gdd.md`).
+  - **Nullifications:** plain physical blows, harmful effects and spiritual attacks do nothing (a one-line hint tells attackers). Mythical weapons (this mod's swords, conceptual damage, very high EP), magic and anti-magic get through. Holy and demonic damage is halved, the natural four are at 60%.
+  - **Multilayer Barrier:** 3 layers in phases 1 and 2, 4 in phase 3, 5 in phase 4. Each layer takes full damage from its own grain and 40% from the other; anti-magic pierces at 150%. Layers refresh on their own. When all are gone he rewrites them for 3 s and takes 150%. Shown on the boss bar.
+  - **Thought Acceleration:** he sidesteps projectiles and single blows with a counter, spending tokens (shown on the bar). Two threats at once, bait, anti-magic or a far hit beat it; at zero tokens he takes 20% more for 2 s.
+  - **Acts:** think speed, wind-ups, cooldowns and move speed change at 50% and 25%, with a 3 s invulnerable transition; one burst cannot skip an act; a 40-block leash; later acts target the strongest caster, then the player who hurt the barrier most.
+- **New: Redact and Overwrite.** Redact writes a sentence of glyph letters on the floor that detonates in reading order (an anti-magic swing on a letter cuts the rest); players can speak it too (creative or earned). Overwrite writes one rule on the arena for 12 s (No fire, ice, lightning, flying, standing still or healing); destroying three of the five rule stones cuts it. Halt is now a 12-block ring for 1.5 s; Fall now ends in a low crushing ring you can jump.
+- **New: Grimoire Daemons** (lesser, greater, arch) with their own model and skins. Arch Daemons arrive at 50% and 25% and anchor his barrier.
+- **New: Zagred's drops.** Heart of Words for everyone who hurt him, plus one of Last Word (quill-blade, Barrier Piercing II and Severance I), Shroud of Margins and Circlet of Quickened Thought, with no repeats until all three have dropped.
+- **Replacement: the other swords' abilities.** Every Black Clover sword, the trident and Last Word get what the Demon-Slayer has: a full-swing strike on top of the normal blow, and a sneak + right-click second technique on its own cooldown (Black Dash, Dark Cloaked Eclipse, Spatial Barrage, Severing Quake, Black Hurricane Cut, Causality Collapse, Eon Burst, Light Verdict, Absolute Zero, Long Sentence, Void Rain). The right-click techniques are unchanged. Tooltips list them.
+- **Replacement: Cotton Magic's sheep.** Sleeping Sheep Strike, Sheep Cook and Sheep Bondage now summon real sheep entities (tall, fluffy and upright like the anime; cooks wear a chef's hat and a blue neckerchief) and a new **cotton cloud** entity instead of the billboard sheep VFX. Cotton Cloud is a cloud you ride (walk to steer, sneak to step off, up to four riders). The old VFX shape stays registered, unused.
+- **Replacement: the Grimoire Sword Draw.** Sword Magic's sword pages and the Anti-Magic sword awakenings now play a 1.2 s draw: the grimoire opens at the hip, the arm reaches in and pulls the sword out; it lands in the hand at tick 12. Guide and keyframe table: `docs/grimoire_sword_draw.md`.
+- **Fixes (your list):** the two katanas' blades were facing the wrong way in hand (mirrored); the Otherworld Trident is 65% bigger in hand; the Artist's Palette now faces the player in the off hand.
+- **Not verified:** none of it was run in game. The sword-draw numbers, the cloud ride feel, the new fight's balance, which Tensura engravings exist in your version, and whether the mixin applied are the things to check first.
 
 ## 0.51 - Zagred boss design document
 - **New: `docs/zagred_boss_gdd.md`** (design only, nothing in the game changes). It expands Zagred into acts, with four Word Soul attacks (Halt, Redact, Fall, Overwrite), the 50% and 25% phase changes, three drops with engravings, and the code logic for the Multilayer Barrier and Thought Acceleration. It also lists what is new and what already exists.

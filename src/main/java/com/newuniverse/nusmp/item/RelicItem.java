@@ -29,7 +29,8 @@ public class RelicItem extends Item {
     public enum Kind {
         COMMUNICATION(1), RUNE_STONE(16), SPIRIT_CHARM(16), BOND_THREAD(16), FORTUNE_DIE(16), GRIMOIRE_CHAIN(1),
         ANTI_BIRD(1), RECOVERY_SALVE(16), CONSENT(1), DEVIL_CONTRACT(1),
-        GAUCHE_MIRROR(1);                     // 0.34: Gauche Adlai's hand mirror (Mirror Magic tool), appended
+        GAUCHE_MIRROR(1),                     // 0.34: Gauche Adlai's hand mirror (Mirror Magic tool), appended
+        MARGINS(1), QUICKENED(1);             // 0.52: Zagred's Shroud of Margins and Circlet of Quickened Thought (see BossRelics)
         final int stack;
         Kind(int stack) { this.stack = stack; }
     }
@@ -122,6 +123,12 @@ public class RelicItem extends Item {
                         p.position().add(p.getViewVector(1f)).add(0, 1, 0), 0, 20, 1.2f);
                 p.teleportTo(tag.getDouble("MX"), tag.getDouble("MY"), tag.getDouble("MZ"));
                 p.getCooldowns().addCooldown(this, 600);
+                return InteractionResultHolder.success(stack);
+            }
+            case QUICKENED -> {
+                if (!p.isShiftKeyDown()) return InteractionResultHolder.pass(stack);
+                BossRelics.overclock(p);
+                p.getCooldowns().addCooldown(this, 1800);
                 return InteractionResultHolder.success(stack);
             }
             default -> { return InteractionResultHolder.pass(stack); }

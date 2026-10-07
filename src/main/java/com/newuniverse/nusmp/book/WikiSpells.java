@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.book;
 
+import com.newuniverse.nusmp.entity.CottonCloudEntity;
+import com.newuniverse.nusmp.entity.CottonSheepEntity;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
@@ -597,14 +599,18 @@ public final class WikiSpells {
     }
 
     // ================================================================ Cotton / Food Magic (Charmy)
-    /** Sleeping Sheep Strike: a cotton sheep bounds at the foe and puts it to sleep. */
+    /** Sleeping Sheep Strike: a cotton sheep climbs out of a cloud, bounds at the foe and puts it to sleep (0.52: a real sheep, not a VFX). */
     public static boolean sleepingSheepStrike(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         LivingEntity t = GrimoireBook.target(p, 18);
-        Vec3 from = p.position().add(p.getViewVector(1f).multiply(1, 0, 1).normalize()).add(0, 0.6, 0);
-        Vec3 to = t != null ? t.position().add(0, 0.6, 0) : GrimoireBook.aim(p, 14).add(0, 0.6, 0);
+        ServerLevel sl = p.serverLevel();
+        Vec3 flat = p.getViewVector(1f).multiply(1, 0, 1);
+        Vec3 fwd = flat.lengthSqr() < 1e-4 ? new Vec3(0, 0, 1) : flat.normalize();
+        Vec3 start = p.position().add(fwd.scale(1.6)).add(0, -0.05, 0);
+        Vec3 to = t != null ? t.position() : GrimoireBook.aim(p, 14);
         b.castCircle(p, 0.7f);
-        b.vfx(p, VfxShape.COTTON_SHEEP, from, to, 24, 1f);
-        SpellRuntime.later(p.serverLevel(), 14, () -> {
+        CottonCloudEntity.spawn(sl, CottonCloudEntity.PLATFORM, start, 0.6f, 40);
+        CottonSheepEntity.strike(sl, start, to, () -> {
+            CottonCloudEntity.spawn(sl, CottonCloudEntity.BURST, to.add(0, 0.2, 0), 1.0f, 24);
             for (LivingEntity e : GrimoireBook.around(p, to, 2.2)) {
                 b.hurt(i, p, e, mode, 6f);
                 int ticks = BalanceLaw.controlTicks(e, 60);
@@ -616,10 +622,13 @@ public final class WikiSpells {
         return true;
     }
 
-    /** Sheep Cook: cotton sheep chefs cook for everyone near you - healing, filling, a lasting regeneration. */
+    /** Sheep Cook: three chef sheep on a kitchen cloud cook for everyone near you - healing, filling, a lasting regeneration. */
     public static boolean sheepCook(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         b.castCircle(p, 0.9f);
-        b.vfx(p, VfxShape.COTTON_SHEEP, p.position(), p.position(), 100, 1f);
+        ServerLevel sl = p.serverLevel();
+        Vec3 base = p.position().add(0, -0.05, 0);
+        CottonCloudEntity.spawn(sl, CottonCloudEntity.PLATFORM, base, 1.5f, 110);
+        CottonSheepEntity.cooks(sl, base.add(0, 0.4, 0), 3, 1.5, 110);
         for (Player a : p.serverLevel().getEntitiesOfClass(Player.class, p.getBoundingBox().inflate(7), x -> x == p || x.isAlliedTo(p))) {
             BalanceLaw.heal(a, a.getMaxHealth() * 0.2f);
             a.getFoodData().eat(8, 0.8f);
@@ -628,25 +637,39 @@ public final class WikiSpells {
         return true;
     }
 
-    /** Sheep Bondage: a cotton sheep wraps the foe in cotton and holds it. */
+    /** Sheep Bondage: a cotton sheep leaps at the foe, hugs it, and a cocoon of cotton holds it. */
     public static boolean sheepBondage(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         LivingEntity t = GrimoireBook.target(p, 16);
         if (t == null) { GrimoireBook.fail(p, "No one to wrap up."); return false; }
         if (!GrimoireBook.control(p)) return false;
         b.castCircle(p, 0.8f);
-        b.vfx(p, VfxShape.COTTON_SHEEP, p.position().add(0, 0.6, 0), t.position().add(0, 0.6, 0), 24, 1.2f);
-        SpellRuntime.later(p.serverLevel(), 14, () -> { if (t.isAlive()) { root(t, 80); b.hurt(i, p, t, mode, 4f); } });
+        ServerLevel sl = p.serverLevel();
+        Vec3 flat = p.getViewVector(1f).multiply(1, 0, 1);
+        Vec3 fwd = flat.lengthSqr() < 1e-4 ? new Vec3(0, 0, 1) : flat.normalize();
+        Vec3 from = p.position().add(fwd.scale(1.2)).add(0, -0.05, 0);
+        CottonCloudEntity.spawn(sl, CottonCloudEntity.PLATFORM, from, 0.6f, 40);
+        CottonSheepEntity.bind(sl, from, t.position(), 80, () -> {
+            if (!t.isAlive()) return;
+            CottonCloudEntity.wrap(sl, t, 80);
+            root(t, 80);
+            b.hurt(i, p, t, mode, 4f);
+        });
         return true;
     }
 
-    /** Cotton Cloud: cotton lifts you and your allies - a soft rise, then a slow float down. */
+    /** Cotton Cloud: a cloud rises under you and your allies (up to four) and carries you where you walk, then sets you down softly. */
     public static boolean cottonCloud(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         b.castCircle(p, 0.8f);
-        b.vfx(p, VfxShape.COTTON_SHEEP, p.position(), p.position(), 60, 0.8f);
-        for (Player a : p.serverLevel().getEntitiesOfClass(Player.class, p.getBoundingBox().inflate(5), x -> x == p || x.isAlliedTo(p))) {
-            a.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 30, 1));
-            a.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 300, 0));
+        ServerLevel sl = p.serverLevel();
+        CottonCloudEntity cloud = CottonCloudEntity.spawn(sl, CottonCloudEntity.RIDE, p.position().add(0, -0.1, 0), 1.2f, 300);
+        if (cloud == null) return false;
+        p.startRiding(cloud, true);
+        int seats = 1;
+        for (Player a : sl.getEntitiesOfClass(Player.class, p.getBoundingBox().inflate(5), x -> x != p && x.isAlliedTo(p))) {
+            if (seats >= 4) break;
+            if (a.startRiding(cloud, true)) seats++;
         }
+        p.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 100, 0));
         return true;
     }
 

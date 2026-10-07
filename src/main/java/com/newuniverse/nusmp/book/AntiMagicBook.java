@@ -68,8 +68,10 @@ public class AntiMagicBook extends ElementBook {
         if (isLord(i)) return;
         i.getOrCreateTag().putBoolean(K_LORD, true);
         i.markDirty();
+        List<ItemStack> drawn = new java.util.ArrayList<>();
         for (Item sword : List.of(NUItems.DEMON_DWELLER.get(), NUItems.DEMON_DESTROYER.get(), NUItems.DEMON_SLASHER_KATANA.get()))
-            if (!owns(p, sword)) p.getInventory().placeItemBackInInventory(MagicWeaponItem.bound(sword, p));
+            if (!owns(p, sword)) drawn.add(MagicWeaponItem.bound(sword, p));
+        if (!drawn.isEmpty()) com.newuniverse.nusmp.anim.SwordDraw.draw(p, com.newuniverse.nusmp.anim.SwordDraw.ANTI_MAGIC, drawn.toArray(new ItemStack[0]));   // 0.52
         if (announce) {
             p.sendSystemMessage(Component.literal("Your grimoire's devil stirs: you have become the Anti-Magic Lord.").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.BOLD));
             p.sendSystemMessage(Component.literal("Demon-Dweller, Demon-Destroyer and Demon-Slasher answer you. Black Asta is now your Black Form.").withStyle(ChatFormatting.GRAY));
@@ -86,7 +88,7 @@ public class AntiMagicBook extends ElementBook {
     public void onLearnSkill(ManasSkillInstance i, LivingEntity e) {
         super.onLearnSkill(i, e);
         if (e instanceof ServerPlayer p && !owns(p, NUItems.DEMON_SLAYER.get())) {
-            p.getInventory().placeItemBackInInventory(MagicWeaponItem.bound(NUItems.DEMON_SLAYER.get(), p));
+            com.newuniverse.nusmp.anim.SwordDraw.draw(p, com.newuniverse.nusmp.anim.SwordDraw.ANTI_MAGIC, MagicWeaponItem.bound(NUItems.DEMON_SLAYER.get(), p));   // 0.52
             p.sendSystemMessage(Component.literal("Your grimoire opens - a demon's sword falls into your hand.").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.BOLD));
         }
     }

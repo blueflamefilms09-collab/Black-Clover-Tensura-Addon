@@ -1667,8 +1667,8 @@
     "firstperson_lefthand": {
       "rotation": [
         0,
-        90,
-        -25
+        -90,
+        25
       ],
       "translation": [
         1.13,

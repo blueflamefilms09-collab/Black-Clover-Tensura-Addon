@@ -82,6 +82,10 @@ public final class NUItems {
     public static final DeferredItem<RelicItem> WRITTEN_CONSENT = relic("written_consent", RelicItem.Kind.CONSENT, Rarity.COMMON);
     public static final DeferredItem<RelicItem> DEVIL_CONTRACT = relic("devil_contract", RelicItem.Kind.DEVIL_CONTRACT, Rarity.EPIC);
     public static final DeferredItem<RelicItem> GAUCHE_MIRROR = relic("gauches_hand_mirror", RelicItem.Kind.GAUCHE_MIRROR, Rarity.RARE);   // 0.34
+    // 0.52: Zagred's drops (see BossRelics)
+    public static final DeferredItem<RelicItem> SHROUD_OF_MARGINS = relic("shroud_of_margins", RelicItem.Kind.MARGINS, Rarity.EPIC);
+    public static final DeferredItem<RelicItem> CIRCLET_OF_THOUGHT = relic("circlet_of_quickened_thought", RelicItem.Kind.QUICKENED, Rarity.EPIC);
+    public static final DeferredItem<Item> HEART_OF_WORDS = ITEMS.register("heart_of_words", () -> new Item(new Item.Properties().stacksTo(16).rarity(Rarity.EPIC).fireResistant()));
 
     // ---------------------------------------------------------------- magic tools (attribute conduction)
     public static final DeferredItem<SwordItem> MAGIC_TOOL_SWORD = ITEMS.register("magic_tool_sword",
@@ -108,6 +112,8 @@ public final class NUItems {
     public static final DeferredItem<MagicWeaponItem> LICHT_DESTROYER = weapon("licht_destroyer_sword", MagicWeaponItem.Kind.LICHT_DESTROYER);
     // 0.32: the Rimeheart Runeblade
     public static final DeferredItem<MagicWeaponItem> RIMEHEART_RUNEBLADE = weapon("rimeheart_runeblade", MagicWeaponItem.Kind.RIMEHEART);
+    // 0.52: Zagred's quill-blade
+    public static final DeferredItem<MagicWeaponItem> LAST_WORD = weapon("last_word", MagicWeaponItem.Kind.LAST_WORD);
 
     // 0.44: Painting Magic's palette & brush (manifested by a Painting grimoire; see book.PaintStudio)
     public static final DeferredItem<PaintToolItem> PAINT_BRUSH = ITEMS.register("paint_brush", () -> new PaintToolItem(PaintToolItem.Kind.BRUSH));
@@ -126,6 +132,7 @@ public final class NUItems {
         l.addAll(List.of(COMMUNICATION_DEVICE, RUNE_STONE, SPIRIT_CHARM, BOND_THREAD, FORTUNE_DIE,
                 GRIMOIRE_CHAIN, ANTI_BIRD_CHARM, RECOVERY_SALVE, WRITTEN_CONSENT, DEVIL_CONTRACT, GAUCHE_MIRROR, MAGIC_TOOL_SWORD, MAGIC_TOOL_SPEAR, MAGIC_TOOL_BOW, SPIRIT_LORD_SKILL));
         l.addAll(List.of(PAINT_BRUSH, PAINT_PALETTE));                                          // 0.44
+        l.addAll(List.of(LAST_WORD, SHROUD_OF_MARGINS, CIRCLET_OF_THOUGHT, HEART_OF_WORDS));    // 0.52
         return l;
     }
 }

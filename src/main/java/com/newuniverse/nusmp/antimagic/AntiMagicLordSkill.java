@@ -51,7 +51,7 @@ public class AntiMagicLordSkill extends Skill {
     public void onLearnSkill(ManasSkillInstance i, LivingEntity e) {
         super.onLearnSkill(i, e);
         if (e instanceof ServerPlayer p) {
-            p.getInventory().placeItemBackInInventory(MagicWeaponItem.bound(NUItems.DEMON_SLAYER.get(), p));
+            com.newuniverse.nusmp.anim.SwordDraw.draw(p, com.newuniverse.nusmp.anim.SwordDraw.ANTI_MAGIC, MagicWeaponItem.bound(NUItems.DEMON_SLAYER.get(), p));   // 0.52
             p.sendSystemMessage(Component.literal("Your grimoire opens - a demon's sword falls into your hand.").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.BOLD));
         }
     }
@@ -68,9 +68,9 @@ public class AntiMagicLordSkill extends Skill {
     public void onSkillMastered(ManasSkillInstance i, LivingEntity e) {
         super.onSkillMastered(i, e);
         if (e instanceof ServerPlayer p) {
-            p.getInventory().placeItemBackInInventory(MagicWeaponItem.bound(NUItems.DEMON_DWELLER.get(), p));
-            p.getInventory().placeItemBackInInventory(MagicWeaponItem.bound(NUItems.DEMON_DESTROYER.get(), p));
-            p.getInventory().placeItemBackInInventory(MagicWeaponItem.bound(NUItems.DEMON_SLASHER_KATANA.get(), p));
+            com.newuniverse.nusmp.anim.SwordDraw.draw(p, com.newuniverse.nusmp.anim.SwordDraw.ANTI_MAGIC,                         // 0.52
+                    MagicWeaponItem.bound(NUItems.DEMON_DWELLER.get(), p), MagicWeaponItem.bound(NUItems.DEMON_DESTROYER.get(), p),
+                    MagicWeaponItem.bound(NUItems.DEMON_SLASHER_KATANA.get(), p));
             p.sendSystemMessage(Component.literal("More demon swords answer you: Demon-Dweller, Demon-Destroyer and Demon-Slasher.").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.BOLD));
         }
     }

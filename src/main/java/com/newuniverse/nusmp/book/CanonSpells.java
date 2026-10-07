@@ -239,7 +239,7 @@ public final class CanonSpells {
     static BookPage.Cast summonSword(boolean dweller) {
         return (b, i, p, mode) -> {
             ItemStack s = MagicWeaponItem.summoned((dweller ? NUItems.LICHT_DWELLER : NUItems.LICHT_DESTROYER).get(), p, 1200);
-            p.getInventory().placeItemBackInInventory(s);
+            com.newuniverse.nusmp.anim.SwordDraw.draw(p, com.newuniverse.nusmp.anim.SwordDraw.SWORD_MAGIC, s);      // 0.52: drawn out of the grimoire
             b.castCircle(p, 0.8f);
             p.displayClientMessage(Component.literal((dweller ? "Demon-Dweller" : "Demon-Destroyer") + " Sword drawn from your grimoire (60 s).")
                     .withStyle(ChatFormatting.AQUA), true);

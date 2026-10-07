@@ -961,6 +961,62 @@ def written_consent(m, a):
     return dict()
 
 
+def last_word(m, a):
+    """Last Word, Zagred's quill-blade: a long black rapier with a feather-barbed edge and red text running down the fuller."""
+    L = 54
+    st = straight_stations(L, 2.0, 1.2, 6, steps=3, ridge=0)
+
+    def paint(x, y, front, e, rd):
+        if x is None:
+            return col((40, 32, 52)), None
+        c = steel(x, y, (38, 32, 48), e, (120, 112, 140), rd, (64, 56, 80), 12)
+        g = None
+        if abs(x) < 0.5 and 4 < y < L - 8:
+            c = np.array((214, 34, 56), np.float32)
+            g = col((255, 60, 90), 0.5 + 0.5 * (int(y) % 3 != 0))
+        return col(c), g
+    Blade(st, 0.3, 0.9, paint).build(m, a)
+    gold = (214, 176, 70)
+    box(m, a, -5.5, -1.2, -1, 5.5, 0.6, 1, metal_paint(gold, gem=(200, 30, 54), glow_rgb=(255, 60, 90)))
+    for sx in (-1, 1):                                                           # the quill's swept guard tips
+        box(m, a, sx * 5.5 - 0.6, -2.6, -0.8, sx * 5.5 + 0.6, -1.2, 0.8, metal_paint(gold))
+    box(m, a, -1.1, -14, -1.1, 1.1, -1.2, 1.1, wrap_paint((30, 24, 34), (58, 40, 48), diamonds=True))
+    box(m, a, -1.8, -16.4, -1.8, 1.8, -14, 1.8, metal_paint(gold, gem=(200, 30, 54), glow_rgb=(255, 60, 90)))
+    return dict(glow=("FF3C5A", 0.1, 0.5, 1.0))
+
+
+def shroud_of_margins(m, a):
+    """The Shroud of Margins: a folded violet-black cloak with a white margin and lines of writing, a glowing clasp."""
+    def cloth(rgb):
+        def p(face, i, j, fw, fh):
+            c = np.array(rgb, np.float32) + fz(i * 2, j * 2, 11) * 14
+            g = None
+            if face in (3, 5):
+                if i in (0, fw - 1):
+                    c = np.array((206, 196, 232), np.float32)                      # the white margin
+                elif j % 2 == 1 and 1 < i < fw - 2 and (i + j) % 5:
+                    c = np.array((150, 120, 220), np.float32)
+                    g = col((170, 140, 255), 0.5)
+            return col(c), g
+        return p
+    box(m, a, -4.5, -3, -2, 4.5, 4, 2, cloth((38, 26, 62)))
+    box(m, a, -5.5, -9, -2.4, 5.5, -3, 2.4, cloth((38, 26, 62)))
+    box(m, a, -3.5, 4, -2.5, 3.5, 8, 2.5, cloth((24, 16, 44)))                       # the hood
+    box(m, a, -1, 2.5, 2, 1, 4, 3, metal_paint((230, 220, 255), gem=(190, 160, 255), glow_rgb=(190, 160, 255)))
+    return dict(glow=("B49BFF", 0.08, 0.4, 0.9))
+
+
+def circlet_of_thought(m, a):
+    """The Circlet of Quickened Thought: a gold band with a cyan stone and two small swept wings."""
+    ring = disc_mask(7, inner=5.4)
+    plate(m, a, ring, -7, -7, 0.9, lambda i, j, f: (col(shade((214, 176, 70), 1.2 if (i + j) % 3 == 0 else 0.95)), None), "xy")
+    box(m, a, -1.5, 3.5, -1.2, 1.5, 6.5, 1.2, metal_paint((110, 230, 250), gem=(150, 240, 255), glow_rgb=(150, 240, 255)))
+    for sx in (-1, 1):
+        wing = ascii_mask(["..##", ".###", "####", "###."])
+        plate(m, a, wing[:, ::-1] if sx < 0 else wing, sx * 7.5 - (4 if sx < 0 else 0), -1, 0.4, lambda i, j, f: (col(shade((240, 232, 200), 1.1 if j == 0 else 0.95)), None), "xy")
+    return dict(glow=("96F0FF", 0.1, 0.45, 1.0))
+
+
 RELICS = [
     ("anti_bird_charm", anti_bird_charm),
     ("bond_thread", bond_thread),
@@ -971,8 +1027,10 @@ RELICS = [
     ("recovery_salve", recovery_salve),
     ("spirit_charm", spirit_charm),
     ("written_consent", written_consent),
+    ("shroud_of_margins", shroud_of_margins),
+    ("circlet_of_quickened_thought", circlet_of_thought),
 ]
-SPECS += [("gauches_hand_mirror", hand_mirror), ("grimoire_chain", grimoire_chain)]                     # diagonal sprites: placed like the weapons
+SPECS += [("gauches_hand_mirror", hand_mirror), ("grimoire_chain", grimoire_chain), ("last_word", last_word)]                     # diagonal sprites: placed like the weapons
 
 
 # ================================================================ placement on the old sprite
@@ -996,7 +1054,24 @@ def sprite_box(item_id):
     return (xs.min()) / S, 1 - (ys.max() + 1) / S, (xs.max() + 1) / S, 1 - ys.min() / S
 
 
+# 0.52: the katana blades faced the wrong way in hand: their meshes are mirrored across x (edge forward, curve forward)
+FLIP = {"demon_slasher_katana", "miasma_infused_katana"}
+# 0.52: scale about a grip point (fraction along the sprite axis); the trident was too small in hand
+SIZE = {"otherworld_trident": 1.65}
+GRIP = {"otherworld_trident": 0.42}
+
+
+def mirror_x(mesh):
+    out = []
+    for (layer, pts, n) in mesh.quads:
+        q = [(-p[0],) + tuple(p[1:]) for p in pts]
+        out.append((layer, [q[0], q[3], q[2], q[1]], np.array([-n[0], n[1], n[2]])))
+    mesh.quads = out
+
+
 def write(item_id, mesh, atlas, extra, fit=False):
+    if item_id in FLIP:
+        mirror_x(mesh)
     ys = [p[1] for (_, pts, _) in mesh.quads for p in pts]
     ymin, ymax = min(ys), max(ys)
     if fit:                                                      # a relic: upright, centred on its sprite's box, same size
@@ -1009,6 +1084,11 @@ def write(item_id, mesh, atlas, extra, fit=False):
     else:
         origin, angle, length = sprite_axis(item_id)
         scale = length / (ymax - ymin)
+        k = SIZE.get(item_id, 1.0)
+        if k != 1.0:                                                  # grow about the grip, not the butt
+            d = np.array([math.cos(math.radians(angle)), math.sin(math.radians(angle))])
+            origin = origin + d * (GRIP.get(item_id, 0.4) * length) * (1 - k)
+            scale *= k
     path = os.path.join(ASSETS, "weapon_meshes")
     os.makedirs(path, exist_ok=True)
     glow_any = atlas.glow[..., 3].max() > 0

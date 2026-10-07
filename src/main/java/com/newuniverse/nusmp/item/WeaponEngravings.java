@@ -50,7 +50,8 @@ public final class WeaponEngravings {
             Map.entry("otherworld_trident", List.of(e("soul_eater", 1), e("elemental_boost", 1))),          // Zagred's otherworld weapon
             Map.entry("magic_tool_sword", List.of(e("magic_weapon", 1))),                                   // mana-forged tools
             Map.entry("magic_tool_spear", List.of(e("magic_weapon", 1))),
-            Map.entry("magic_tool_bow", List.of(e("magic_weapon", 1))));
+            Map.entry("magic_tool_bow", List.of(e("magic_weapon", 1))),
+            Map.entry("last_word", List.of(e("barrier_piercing", 2), e("severance", 1))));                  // 0.52: Zagred's quill-blade
 
     static final String FLAG = "NUEngraved";
 

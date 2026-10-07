@@ -1,6 +1,6 @@
 # Zagred, the Devil of Kotodama: boss design document (0.51)
 
-Status: **design only, nothing in this file is in the game yet.** It extends the 0.47-0.49 Zagred boss
+Status: **built in 0.52** (sections 1 to 5 are in the game; see the README's 0.52 section for what is and is not verified). It extends the 0.47-0.49 Zagred boss
 (`entity/ZagredBossEntity.java`, `book/KotodamaWords.java`, `entity/TensuraCaster.java`, `client/ZagredModel.java`).
 Names in `code font` are real classes and methods of the mod. Numbers are starting values to tune in play.
 

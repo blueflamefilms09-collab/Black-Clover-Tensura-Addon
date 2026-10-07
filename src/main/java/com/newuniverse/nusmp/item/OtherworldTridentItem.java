@@ -68,10 +68,37 @@ public class OtherworldTridentItem extends SwordItem {
         }
     }
 
+    /** 0.52 sneak + right-click: five void lances fall around where you aim, one after the other (20 s). */
+    static boolean voidRain(ServerPlayer p) {
+        long now = p.level().getGameTime(), ready = p.getPersistentData().getLong("nusmp_trident_rain");
+        if (now < ready) { com.newuniverse.nusmp.book.GrimoireBook.fail(p, "Void Rain is gathering again (" + (ready - now + 19) / 20 + "s)."); return false; }
+        Vec3 c = p.pick(30, 1f, false).getLocation();
+        ServerLevel sl = p.serverLevel();
+        var rnd = p.getRandom();
+        for (int k = 0; k < 5; k++) {
+            Vec3 at = k == 0 ? c : c.add(rnd.nextGaussian() * 2.2, 0, rnd.nextGaussian() * 2.2);
+            SpellRuntime.later(sl, 4 + k * 4, () -> {
+                VfxSpawn.send(sl, VfxShape.KOTO_TRIDENT, at.add(0, 12, 0), at, KotodamaWords.VIOLET, 8, 1f);
+                sl.playSound(null, net.minecraft.core.BlockPos.containing(at), SoundEvents.TRIDENT_THROW.value(), SoundSource.PLAYERS, 1.2f, 0.5f);
+                for (LivingEntity t : com.newuniverse.nusmp.book.GrimoireBook.around(p, at, 2.2)) {
+                    KotodamaWords.hurt(p, t, 10f);
+                    KotodamaWords.spirit(p, t, 1);
+                }
+            });
+        }
+        p.getPersistentData().putLong("nusmp_trident_rain", now + (p.isCreative() ? 100 : 400));
+        p.displayClientMessage(Component.literal("Void Rain!").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD), true);
+        return true;
+    }
+
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (player.getCooldowns().isOnCooldown(this)) return InteractionResultHolder.pass(stack);
+        if (player.isShiftKeyDown() && player instanceof ServerPlayer rain) {          // 0.52: Void Rain
+            if (voidRain(rain)) { rain.getCooldowns().addCooldown(this, 100); return InteractionResultHolder.success(stack); }
+            return InteractionResultHolder.fail(stack);
+        }
         if (player instanceof ServerPlayer sp) {
             Vec3 eye = sp.getEyePosition(), dir = sp.getViewVector(1f);
             VfxSpawn.send(sp.serverLevel(), VfxShape.KOTO_TRIDENT, eye.add(dir), eye.add(dir.scale(30)), KotodamaWords.VIOLET, 14, 1f);
