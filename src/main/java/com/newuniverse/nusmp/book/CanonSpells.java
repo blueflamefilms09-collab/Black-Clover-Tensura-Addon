@@ -278,7 +278,7 @@ public final class CanonSpells {
     public static boolean blackHole(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         Vec3 c = GrimoireBook.aim(p, 12);
         b.castCircle(p, 1f);
-        b.vfx(p, VfxShape.SPATIAL_RIFT, c, c.add(0, 1, 0), 60, 1f);
+        b.vfx(p, VfxShape.DARK_BLACK_HOLE, c, c.add(0, 1, 0), 60, 5f);
         SpellRuntime.zone(p.serverLevel(), 60, 2, age -> {
             for (Entity caster : cutSpells(p, new AABB(c, c).inflate(5)))
                 if (caster instanceof LivingEntity le && !ally(p, le)) {
@@ -293,14 +293,14 @@ public final class CanonSpells {
     public static boolean dimensionSlash(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         longCut(b, i, p, mode, 18, 1.4, 18, VfxShape.DARK_SLASH_DIMENSION, false, false);
         Vec3 end = p.getEyePosition().add(p.getViewVector(1f).scale(18));
-        b.vfx(p, VfxShape.SPATIAL_RIFT, end, end.add(0, 1, 0), 20, 0.8f);
+        b.vfx(p, VfxShape.DARK_BLACK_HOLE, end, end.add(0, 1, 0), 20, 1.4f);
         return true;
     }
 
     /** Death Thrust - with Black Moon up, the whole zone is crushed into the arm: one thrust, a focused blast. */
     public static boolean deathThrust(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         boolean moon = blackMoonActive(p);
-        longCut(b, i, p, mode, moon ? 14 : 8, 0.8, moon ? 26 : 13, VfxShape.DARK_SLASH_AVIDYA, false, false);
+        longCut(b, i, p, mode, moon ? 14 : 8, 0.8, moon ? 26 : 13, VfxShape.DARK_THRUST, false, false);
         if (moon) p.getPersistentData().putLong("nusmp_black_moon_until", 0);     // the zone was spent on the thrust
         else p.displayClientMessage(Component.literal("Without Black Moon the thrust is only a thrust.").withStyle(ChatFormatting.GRAY), true);
         return true;
@@ -327,7 +327,7 @@ public final class CanonSpells {
         p.getPersistentData().putLong("nusmp_black_moon_until", p.level().getGameTime() + 200);
         Vec3 c = p.position();
         b.castCircle(p, 1.4f);
-        b.vfx(p, VfxShape.SPATIAL_RIFT, c.add(0, 6, 0), c.add(0, 7, 0), 200, 2.2f);
+        b.vfx(p, VfxShape.DARK_BLACK_MOON, c, c.add(0, 1, 0), 200, 6f);
         SpellRuntime.zone(p.serverLevel(), 200, 2, age -> {
             if (!blackMoonActive(p)) return;
             for (Projectile pr : p.serverLevel().getEntitiesOfClass(Projectile.class, p.getBoundingBox().inflate(12))) {
@@ -347,7 +347,7 @@ public final class CanonSpells {
         if (!p.level().noCollision(p, p.getBoundingBox().move(dest.subtract(from)))) dest = t.position().subtract(t.position().subtract(from).normalize().scale(1.2));
         b.hurt(i, p, t, mode, blackMoonActive(p) ? 22 : 15);
         p.teleportTo(dest.x, dest.y, dest.z);
-        b.vfx(p, VfxShape.DARK_SLASH_AVIDYA, from.add(0, 1, 0), dest.add(0, 1, 0), 10, 1.2f);
+        b.vfx(p, VfxShape.DARK_IAI, from.add(0, 1, 0), dest.add(0, 1, 0), 14, 2f);
         return true;
     }
 
@@ -355,7 +355,7 @@ public final class CanonSpells {
     public static boolean dimensionSlashEquinox(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         longCut(b, i, p, mode, 48, 2.4, 28, VfxShape.DARK_SLASH_DIMENSION, false, false);
         Vec3 end = p.getEyePosition().add(p.getViewVector(1f).scale(48));
-        b.vfx(p, VfxShape.SPATIAL_RIFT, end, end.add(0, 1, 0), 30, 1.6f);
+        b.vfx(p, VfxShape.DARK_BLACK_HOLE, end, end.add(0, 1, 0), 30, 2.6f);
         return true;
     }
 }

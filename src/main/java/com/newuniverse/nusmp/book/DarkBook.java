@@ -58,7 +58,7 @@ public class DarkBook extends GrimoireBook {
     static boolean blackHole(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         Vec3 c = aim(p, 20);
         b.castCircle(p, 1f);
-        b.vfx(p, VfxShape.SPATIAL_RIFT, c, c.add(0, 1, 0), 40, 1f);
+        b.vfx(p, VfxShape.DARK_BLACK_HOLE, c, c.add(0, 1, 0), 40, 4f);
         SpellRuntime.zone(p.serverLevel(), 40, 1, age -> {
             for (LivingEntity t : around(p, c, 4)) {
                 Vec3 pull = c.subtract(t.position()).normalize().scale(0.35);
@@ -77,7 +77,7 @@ public class DarkBook extends GrimoireBook {
         for (LivingEntity t : along(p, a, end, 1.2)) b.hurt(i, p, t, mode, 18f);
         b.castCircle(p, 1.4f);
         b.vfx(p, VfxShape.WIND_SLASH, a, end, 18, 1.6f);
-        b.vfx(p, VfxShape.SPATIAL_RIFT, end, end.add(0, 1, 0), 20, 0.8f);
+        b.vfx(p, VfxShape.DARK_BLACK_HOLE, end, end.add(0, 1, 0), 20, 1.4f);
         return true;
     }
 }
