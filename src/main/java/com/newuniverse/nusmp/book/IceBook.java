@@ -31,7 +31,7 @@ public class IceBook extends GrimoireBook {
             BookPage.signature("ice_prison", "Ice Prison", IceBook::prison),
             // 0.49: more spells for a thin magic (appended)
             BookPage.starter("frost_ball", "Frost Ball", withFx(TensuraShots.shot(TensuraShots.Shot.FROST_BALL, 8, 1.6f, 0.6f, 0), VfxShape.ICE_FX3, 0.35f)),
-            BookPage.zone("frozen_ground", "Frozen Ground", frozenGround(
+            BookPage.zone("frozen_ground", "Frozen Ground", frozenGround(4.5, 80, 20,
                     ElementBook.all(ElementBook.effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 2)), (t, p) -> t.setTicksFrozen(t.getTicksRequiredToFreeze() + 40)))),
             BookPage.mid("blizzard_crown", "Blizzard Crown", ElementBook.nova(10, 6, false, VfxShape.ICE_FX3,
                     ElementBook.all(ElementBook.knock(1.0), ElementBook.effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1)),

@@ -50,7 +50,7 @@ public class IceLayer extends AbstractVfxLayer {
 
     @Override
     public void onSpawn(VfxInstance inst) {
-        if (inst.shape == VfxShape.ICE_FX3 && inst.power >= 3.6f) VfxShake.add(inst.payload.from(), 0.15f * Math.min(inst.power, 9f), 8);
+        if (inst.shape == VfxShape.ICE_FX3 && inst.power >= 5f) VfxShake.add(inst.payload.from(), 0.15f * Math.min(inst.power, 9f), 8);
     }
 
     @Override
