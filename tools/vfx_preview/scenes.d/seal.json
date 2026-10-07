@@ -1,0 +1,344 @@
+{
+ "_comment": "Sealing Magic preview scenes (SealLayer). FX1 cast / projectile, FX2 zone / field, FX3 impact burst.",
+ "seal_cast": {
+  "layer": "SealLayer",
+  "shape": "SEALING_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.3,
+   9
+  ],
+  "power": 1.0,
+  "duration": 16,
+  "cam": [
+   3.5,
+   1.9,
+   5.5
+  ],
+  "target": [
+   0,
+   1.4,
+   4.5
+  ],
+  "ages": [
+   2,
+   4,
+   8,
+   12,
+   14
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -0.4,
+    1.8
+   ],
+   [
+    0,
+    0,
+    9.4,
+    1.8
+   ]
+  ]
+ },
+ "seal_cast_big": {
+  "layer": "SealLayer",
+  "shape": "SEALING_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.3,
+   9
+  ],
+  "power": 2.2,
+  "duration": 22,
+  "cam": [
+   5,
+   2.4,
+   4.5
+  ],
+  "target": [
+   0,
+   1.4,
+   4.5
+  ],
+  "ages": [
+   3,
+   7,
+   11,
+   17,
+   20
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -0.4,
+    1.8
+   ],
+   [
+    0,
+    0,
+    9.4,
+    1.8
+   ]
+  ]
+ },
+ "seal_zone": {
+  "layer": "SealLayer",
+  "shape": "SEALING_FX2",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 4.0,
+  "duration": 80,
+  "cam": [
+   8,
+   6,
+   8
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   4,
+   12,
+   30,
+   50,
+   74
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "seal_zone_small": {
+  "layer": "SealLayer",
+  "shape": "SEALING_FX2",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 2.0,
+  "duration": 80,
+  "cam": [
+   5,
+   3.5,
+   5
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   10,
+   30,
+   55
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "seal_burst": {
+  "layer": "SealLayer",
+  "shape": "SEALING_FX3",
+  "from": [
+   0,
+   1.3,
+   0
+  ],
+  "to": [
+   0,
+   1.3,
+   0
+  ],
+  "power": 1.2,
+  "duration": 28,
+  "cam": [
+   6,
+   2.6,
+   6
+  ],
+  "target": [
+   0,
+   1.3,
+   0
+  ],
+  "ages": [
+   2,
+   5,
+   9,
+   15,
+   24
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -3,
+    1.8
+   ]
+  ]
+ },
+ "seal_burst_dir": {
+  "layer": "SealLayer",
+  "shape": "SEALING_FX3",
+  "from": [
+   0,
+   1.3,
+   0
+  ],
+  "to": [
+   0,
+   1.3,
+   3
+  ],
+  "power": 2.0,
+  "duration": 28,
+  "cam": [
+   7,
+   3.0,
+   4
+  ],
+  "target": [
+   0,
+   1.3,
+   0
+  ],
+  "ages": [
+   3,
+   8,
+   14,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -4,
+    1.8
+   ]
+  ]
+ },
+ "seal_chains_amp": {
+  "layer": "ArcaneSpellLayer",
+  "shape": "SEAL_CHAINS",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1,
+  "duration": 80,
+  "cam": [
+   0,
+   2,
+   -4.5
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   2,
+   6,
+   10,
+   16,
+   24,
+   40
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "seal_trinity_amp": {
+  "layer": "ArcaneSpellLayer",
+  "shape": "SEAL_TRINITY",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1,
+  "duration": 40,
+  "cam": [
+   0,
+   2.5,
+   -5
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   4,
+   12,
+   20,
+   25,
+   27,
+   30,
+   34,
+   38
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ }
+}

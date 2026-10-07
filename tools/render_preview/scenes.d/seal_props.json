@@ -1,0 +1,190 @@
+{
+ "seal_circle_fantasy": {
+  "kind": "prop",
+  "attr": "Seal",
+  "propKind": "SEALING_1",
+  "param": 48,
+  "seed": 0,
+  "scale": 1.8,
+  "maxLife": 100,
+  "ages": [
+   4,
+   14,
+   40,
+   90
+  ],
+  "tile": [
+   420,
+   360
+  ],
+  "views": [
+   {
+    "name": "above",
+    "yaw": 0,
+    "pitch": 58
+   },
+   {
+    "name": "side",
+    "yaw": 30,
+    "pitch": 22
+   }
+  ]
+ },
+ "seal_circle_scifi": {
+  "kind": "prop",
+  "attr": "Seal",
+  "propKind": "SEALING_1",
+  "param": 69,
+  "seed": 1,
+  "scale": 1.8,
+  "maxLife": 100,
+  "ages": [
+   14,
+   40,
+   90
+  ],
+  "tile": [
+   420,
+   360
+  ],
+  "views": [
+   {
+    "name": "above",
+    "yaw": 0,
+    "pitch": 58
+   },
+   {
+    "name": "side",
+    "yaw": 30,
+    "pitch": 22
+   }
+  ]
+ },
+ "seal_circle_gothic": {
+  "kind": "prop",
+  "attr": "Seal",
+  "propKind": "SEALING_1",
+  "param": 34,
+  "seed": 2,
+  "scale": 1.8,
+  "maxLife": 100,
+  "ages": [
+   14,
+   40,
+   90
+  ],
+  "tile": [
+   420,
+   360
+  ],
+  "views": [
+   {
+    "name": "above",
+    "yaw": 0,
+    "pitch": 58
+   },
+   {
+    "name": "side",
+    "yaw": 30,
+    "pitch": 22
+   }
+  ]
+ },
+ "seal_circle_anime": {
+  "kind": "prop",
+  "attr": "Seal",
+  "propKind": "SEALING_1",
+  "param": 88,
+  "seed": 3,
+  "scale": 1.8,
+  "maxLife": 100,
+  "ages": [
+   14,
+   40,
+   90
+  ],
+  "tile": [
+   420,
+   360
+  ],
+  "views": [
+   {
+    "name": "above",
+    "yaw": 0,
+    "pitch": 58
+   },
+   {
+    "name": "side",
+    "yaw": 30,
+    "pitch": 22
+   }
+  ]
+ },
+ "seal_circle_target": {
+  "kind": "prop",
+  "attr": "Seal",
+  "propKind": "SEALING_1",
+  "param": 89,
+  "seed": 7,
+  "scale": 1.4,
+  "maxLife": 100,
+  "ages": [
+   40,
+   70
+  ],
+  "tile": [
+   420,
+   360
+  ],
+  "views": [
+   {
+    "name": "above",
+    "yaw": 0,
+    "pitch": 58
+   },
+   {
+    "name": "side",
+    "yaw": 30,
+    "pitch": 22
+   }
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ]
+ },
+ "seal_eternal_prison": {
+  "kind": "prop",
+  "attr": "Seal",
+  "propKind": "SEALING_2",
+  "param": 0,
+  "seed": 4242,
+  "scale": 2.4,
+  "maxLife": 100,
+  "ages": [
+   3,
+   10,
+   30,
+   70,
+   90,
+   98
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 25,
+    "pitch": 18
+   },
+   {
+    "name": "top",
+    "yaw": 40,
+    "pitch": 45
+   }
+  ]
+ }
+}

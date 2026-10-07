@@ -202,7 +202,7 @@ public class ArcaneSpellLayer extends AbstractVfxLayer {
             hoop(buf, CHAIN, VfxBlend.ALPHA, VfxPose.facing(new Vector3f(c).add(0, (k - 1) * 0.3f * p, 0), axis), r, 0.12f * p, ctx.seg(14, 10), 4,
                     age * 0.02f * (k % 2 == 0 ? 1 : -1), VfxVertexBuffer.withAlpha(light, fade));
         }
-        VfxBloom.glow(ctx, buf, c, 0.9f * p, col, 0.45f * fade * (1 - 0.5f * Mth.clamp(age / 20f, 0, 1)));
+        VfxBloom.glow(ctx, buf, c, 0.9f * p, col, 0.45f * fade * (1 - 0.5f * Mth.clamp(age / 20f, 0, 1)));        ArcaneSpellSealFx.chainsExtra(inst, ctx, buf, c, age, p, fade, close, col, light);
     }
 
     // ------------------------------------------------------------------ Trinity Seal
@@ -230,7 +230,7 @@ public class ArcaneSpellLayer extends AbstractVfxLayer {
             buf.ring(VfxTextures.GLOW, VfxBlend.ADD, VfxPose.ground(new Vector3f(c).add(0, -0.8f * p, 0)), 3 * p * burst, 3.4f * p * burst, ctx.seg(16, 10), 1, 0,
                     VfxVertexBuffer.withAlpha(col, (1 - burst) * fade));
         }
-        VfxBloom.glow(ctx, buf, c, (0.6f + conv) * p, col, fade);
+        VfxBloom.glow(ctx, buf, c, (0.6f + conv) * p, col, fade);        ArcaneSpellSealFx.trinityExtra(inst, ctx, buf, c, age, p, fade, conv, burst, col, light);
     }
 
     // ------------------------------------------------------------------ Thunder Fiend

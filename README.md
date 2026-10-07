@@ -60,7 +60,7 @@ Chanted magics: use **Chant** mode until the chant is complete, then switch to *
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.55.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.56.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -204,6 +204,13 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Anti-Magic kit**: new pages **Black Hurricane** (a whirling field that drags foes in and strips their magic) and **Black Form** (30 s of strength, speed, resistance and jump, with an anti-magic burst); mastering the Anti-Magic Lord now also grants the **Demon-Slasher** katana next to Demon-Dweller and Demon-Destroyer.
 - **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
 - **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
+
+## 0.56 - Yami's dark slashes, Dimension Slash shader, Sealing amp, Secre's Seal Magic
+
+- Replaced: the Yami slash spells (Dimension Slash, Equinox, Black Blade, Avidya, wild slashes, Death Thrust, Iai) now use new dark slash VFX instead of the generic wind slash. Sealing Chains and Trinity Seal are amped up; the Sealing magic has its own cast / field / impact effects.
+- New: the Dimension Slash spatial-fracture shader (`rendertype_dimension_slash`, falls back to a sprite ribbon if it fails to load).
+- New: basic Sealing "Sigil Combo" (random shape / tint / orb count) and Secre Swallowtail's grimoire spells (Branching Array, Eternal Prison, Wound Sealing, Orbital Bind), seal circle / cube props and the orbital aura.
+- Not verified: nothing was run in game; the shader has never been loaded.
 
 ## 0.55 - New VFX for the new magics (built to the owner's art)
 

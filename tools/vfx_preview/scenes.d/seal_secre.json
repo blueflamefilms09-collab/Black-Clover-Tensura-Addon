@@ -1,0 +1,10 @@
+{
+ "_comment": "Secre's Seal Magic (SealSecreLayer). SEAL_BASIC: color = tint, seed = shape + 3 * (orbs - 1).",
+ "secre_basic_red": {"layer": "SealSecreLayer", "shape": "SEAL_BASIC", "from": [0, 0, 0], "to": [0, 0, 0], "power": 3.0, "duration": 60, "color": "FFFF4A3A", "seed": 12, "cam": [6, 5, 6], "target": [0, 0.5, 0], "ages": [5, 14, 30, 50], "figures": [[0, 0, 0, 1.8]]},
+ "secre_basic_blue": {"layer": "SealSecreLayer", "shape": "SEAL_BASIC", "from": [0, 0, 0], "to": [0, 0, 0], "power": 3.0, "duration": 60, "color": "FF4AA8FF", "seed": 4, "cam": [6, 5, 6], "target": [0, 0.5, 0], "ages": [5, 14, 30, 50], "figures": [[0, 0, 0, 1.8]]},
+ "secre_basic_purple": {"layer": "SealSecreLayer", "shape": "SEAL_BASIC", "from": [0, 0, 0], "to": [0, 0, 0], "power": 3.0, "duration": 60, "color": "FFB04AFF", "seed": 8, "cam": [6, 5, 6], "target": [0, 0.5, 0], "ages": [5, 14, 30, 50], "figures": [[0, 0, 0, 1.8]]},
+ "secre_branch": {"layer": "SealSecreLayer", "shape": "SEAL_BRANCH", "from": [0, 1.3, 0], "to": [0, 1.3, 1], "power": 4.0, "duration": 36, "cam": [5, 2.6, 5], "target": [0, 1.3, 0], "ages": [2, 6, 10, 16, 24, 32], "figures": [[0, 0, 0, 1.8]]},
+ "secre_cube": {"layer": "SealSecreLayer", "shape": "SEAL_CUBE", "from": [0, 1.0, 0], "to": [0, 1.0, 0], "power": 2.6, "duration": 60, "cam": [5, 2.6, 5], "target": [0, 1.0, 0], "ages": [3, 8, 20, 40, 56, 58], "figures": [[0, 0, 0, 1.8]]},
+ "secre_wound": {"layer": "SealSecreLayer", "shape": "SEAL_WOUND", "from": [0, 1.6, 0], "to": [4, 1.2, 2], "power": 1.0, "duration": 40, "cam": [3, 2.2, 7], "target": [2, 1.3, 1], "ages": [4, 10, 18, 26, 34], "figures": [[0, 0, 0, 1.8], [4, 0, 2, 1.8]]},
+ "secre_orbit": {"layer": "SealSecreLayer", "shape": "SEAL_ORBIT", "from": [0, 1.0, 0], "to": [0, 1.0, 0], "power": 1.8, "duration": 80, "cam": [4, 2.2, 4.5], "target": [0, 1.0, 0], "ages": [4, 12, 30, 50, 70], "figures": [[0, 0, 0, 1.8]]}
+}

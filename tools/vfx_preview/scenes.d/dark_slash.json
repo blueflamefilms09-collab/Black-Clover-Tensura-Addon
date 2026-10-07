@@ -1,0 +1,17 @@
+{
+ "_comment": "Yami's Dark Magic slashes (DarkSlashLayer): dimension slash (and Equinox), black blade, avidya crescent, wild flurry. The preview draws the tear as sprites (the shader quad only exists in the game).",
+ "dark_dimension": {"layer": "DarkSlashLayer", "shape": "DARK_SLASH_DIMENSION", "from": [0, 1.6, 0], "to": [0, 1.6, 14], "power": 1.4, "duration": 24,
+  "cam": [-2.5, 2.0, -3.5], "target": [0, 2.0, 9], "ages": [1, 3, 6, 10, 15, 21], "figures": [[0, 0, 0, 1.8], [-1, 0, 14, 1.8]], "sky": [0.36, 0.40, 0.50]},
+ "dark_dimension_side": {"layer": "DarkSlashLayer", "shape": "DARK_SLASH_DIMENSION", "from": [0, 1.6, 0], "to": [0, 1.6, 14], "power": 1.4, "duration": 24,
+  "cam": [9, 2.4, 9], "target": [0, 2.2, 8], "ages": [2, 5, 8, 12, 17, 22], "figures": [[0, 0, 0, 1.8]], "sky": [0.36, 0.40, 0.50]},
+ "dark_equinox": {"layer": "DarkSlashLayer", "shape": "DARK_SLASH_DIMENSION", "from": [0, 1.6, 0], "to": [0, 1.6, 40], "power": 2.4, "duration": 30,
+  "cam": [-5, 3.0, -6], "target": [0, 3.5, 24], "ages": [2, 6, 10, 16, 23, 28], "figures": [[0, 0, 0, 1.8]], "sky": [0.30, 0.34, 0.44]},
+ "dark_blade": {"layer": "DarkSlashLayer", "shape": "DARK_SLASH_BLADE", "from": [0, 1.3, 0.4], "to": [0, 1.9, 3.6], "power": 1.0, "duration": 30,
+  "cam": [2.6, 1.8, -1.6], "target": [0, 1.6, 1.8], "ages": [2, 5, 9, 14, 20, 27], "figures": [[0, 0, 0, 1.8]], "sky": [0.40, 0.44, 0.52]},
+ "dark_avidya": {"layer": "DarkSlashLayer", "shape": "DARK_SLASH_AVIDYA", "from": [0, 1.6, 0], "to": [0, 1.7, 14], "power": 1.3, "duration": 14,
+  "cam": [-3.0, 2.2, -3.0], "target": [0, 1.8, 7], "ages": [1, 3, 5, 7, 9, 12], "figures": [[0, 0, 0, 1.8], [0.5, 0, 14, 1.8]], "sky": [0.40, 0.44, 0.52]},
+ "dark_avidya_side": {"layer": "DarkSlashLayer", "shape": "DARK_SLASH_AVIDYA", "from": [0, 1.6, 0], "to": [0, 1.7, 14], "power": 1.3, "duration": 14,
+  "cam": [7, 3.0, 5], "target": [0, 1.8, 6], "ages": [1, 4, 6, 8, 10, 12], "figures": [[0, 0, 0, 1.8]], "sky": [0.40, 0.44, 0.52]},
+ "dark_wild": {"layer": "DarkSlashLayer", "shape": "DARK_SLASH_WILD", "from": [0, 1.6, 0], "to": [0, 1.6, 4], "power": 1.2, "duration": 24,
+  "cam": [0, 1.7, -3.2], "target": [0, 1.7, 3], "ages": [2, 5, 8, 11, 15, 20], "figures": [[0, 0, 4.4, 1.8]], "sky": [0.40, 0.44, 0.52]}
+}

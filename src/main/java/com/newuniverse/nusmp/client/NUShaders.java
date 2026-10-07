@@ -16,19 +16,24 @@ import java.util.function.Consumer;
  * <ul>
  *   <li>{@code rendertype_demon_void}: the Genesis Demon-Slayer's void (crimson end-portal parallax), format POSITION.</li>
  *   <li>{@code rendertype_zagred_aura}: Zagred's pulsing fresnel rim (purple to crimson), format NEW_ENTITY, additive.</li>
+ *   <li>{@code rendertype_dimension_slash}: Yami's Dimension Slash fracture (black core, jagged violet aura, stars), format POSITION_TEX_COLOR,
+ *       drawn by {@link NURenderTypes#drawDimensionSlash} for the Dark Slash VFX layer.</li>
  * </ul>
  */
 public final class NUShaders {
     private NUShaders() {}
 
-    private static ShaderInstance demonVoid, zagredAura;
+    private static ShaderInstance demonVoid, zagredAura, dimensionSlash;
 
     public static ShaderInstance demonVoid() { return demonVoid; }
     public static ShaderInstance zagredAura() { return zagredAura; }
+    public static ShaderInstance dimensionSlash() { return dimensionSlash; }
 
     public static void register(RegisterShadersEvent e) {
         load(e, "rendertype_demon_void", DefaultVertexFormat.POSITION, s -> demonVoid = s);
         load(e, "rendertype_zagred_aura", DefaultVertexFormat.NEW_ENTITY, s -> zagredAura = s);
+        load(e, "rendertype_dimension_slash", DefaultVertexFormat.POSITION_TEX_COLOR, s -> dimensionSlash = s);
+        com.newuniverse.nusmp.vfx.client.layer.DarkSlashShaderPass.drawer = NURenderTypes::drawDimensionSlash;      // the Dark Slash layer draws its tear through it
     }
 
     /** Registers one shader; if it can't be built it is logged and set to null (the vanilla fallback is used). */

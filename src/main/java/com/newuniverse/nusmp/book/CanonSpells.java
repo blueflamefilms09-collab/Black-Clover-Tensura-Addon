@@ -254,7 +254,7 @@ public final class CanonSpells {
 
     /** Dark Cloaked Avidya Slash - a flying wave of darkness, sharp as a blade, that swallows spells in mid-flight. */
     public static boolean avidyaSlash(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
-        flyingSlash(b, i, p, mode, p.getViewVector(1f), 12, 1.2, 14, VfxShape.WIND_SLASH, false);   // dark magic is slow and heavy
+        flyingSlash(b, i, p, mode, p.getViewVector(1f), 12, 1.2, 14, VfxShape.DARK_SLASH_AVIDYA, false);   // dark magic is slow and heavy
         b.castCircle(p, 0.6f);
         return true;
     }
@@ -267,8 +267,9 @@ public final class CanonSpells {
             double a = Math.toRadians(rnd.nextGaussian() * 18), e = rnd.nextGaussian() * 0.15;
             Vec3 dir = new Vec3(look.x * Math.cos(a) - look.z * Math.sin(a), look.y + e, look.x * Math.sin(a) + look.z * Math.cos(a));
             int delay = k * 3;
-            SpellRuntime.later(p.serverLevel(), delay, () -> flyingSlash(b, i, p, mode, dir, 7, 1.2, 12, VfxShape.WIND_SLASH, false));
+            SpellRuntime.later(p.serverLevel(), delay, () -> flyingSlash(b, i, p, mode, dir, 7, 1.2, 12, VfxShape.DARK_SLASH_AVIDYA, false));
         }
+        b.vfx(p, VfxShape.DARK_SLASH_WILD, p.getEyePosition(), p.getEyePosition().add(look.scale(4)), 24, 1.2f);
         b.castCircle(p, 0.8f);
         return true;
     }
@@ -290,7 +291,7 @@ public final class CanonSpells {
 
     /** Dark Cloaked Dimension Slash - a downward slash of darkness that flies out and cuts clouds of mana, space and spells. */
     public static boolean dimensionSlash(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
-        longCut(b, i, p, mode, 18, 1.4, 18, VfxShape.WIND_SLASH, false, false);
+        longCut(b, i, p, mode, 18, 1.4, 18, VfxShape.DARK_SLASH_DIMENSION, false, false);
         Vec3 end = p.getEyePosition().add(p.getViewVector(1f).scale(18));
         b.vfx(p, VfxShape.SPATIAL_RIFT, end, end.add(0, 1, 0), 20, 0.8f);
         return true;
@@ -299,7 +300,7 @@ public final class CanonSpells {
     /** Death Thrust - with Black Moon up, the whole zone is crushed into the arm: one thrust, a focused blast. */
     public static boolean deathThrust(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         boolean moon = blackMoonActive(p);
-        longCut(b, i, p, mode, moon ? 14 : 8, 0.8, moon ? 26 : 13, VfxShape.WIND_SLASH, false, false);
+        longCut(b, i, p, mode, moon ? 14 : 8, 0.8, moon ? 26 : 13, VfxShape.DARK_SLASH_AVIDYA, false, false);
         if (moon) p.getPersistentData().putLong("nusmp_black_moon_until", 0);     // the zone was spent on the thrust
         else p.displayClientMessage(Component.literal("Without Black Moon the thrust is only a thrust.").withStyle(ChatFormatting.GRAY), true);
         return true;
@@ -317,7 +318,7 @@ public final class CanonSpells {
         p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 600, 0));
         SpellRuntime.later(p.serverLevel(), 600, () -> { var r = p.getAttribute(Attributes.ENTITY_INTERACTION_RANGE); if (r != null) r.removeModifier(BLACK_BLADE); });
         b.castCircle(p, 0.6f);
-        b.vfx(p, VfxShape.WIND_SLASH, p.getEyePosition(), p.getEyePosition().add(p.getViewVector(1f).scale(3)), 14, 0.8f);
+        b.vfx(p, VfxShape.DARK_SLASH_BLADE, p.getEyePosition().add(0, -0.4, 0), p.getEyePosition().add(p.getViewVector(1f).scale(3)), 30, 0.8f);
         return true;
     }
 
@@ -346,13 +347,13 @@ public final class CanonSpells {
         if (!p.level().noCollision(p, p.getBoundingBox().move(dest.subtract(from)))) dest = t.position().subtract(t.position().subtract(from).normalize().scale(1.2));
         b.hurt(i, p, t, mode, blackMoonActive(p) ? 22 : 15);
         p.teleportTo(dest.x, dest.y, dest.z);
-        b.vfx(p, VfxShape.WIND_SLASH, from.add(0, 1, 0), dest.add(0, 1, 0), 10, 1.2f);
+        b.vfx(p, VfxShape.DARK_SLASH_AVIDYA, from.add(0, 1, 0), dest.add(0, 1, 0), 10, 1.2f);
         return true;
     }
 
     /** Dark Cloaked Dimension Slash: Equinox - with Mana Zone, the Dimension Slash's range and reach grow enormously. */
     public static boolean dimensionSlashEquinox(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
-        longCut(b, i, p, mode, 48, 2.4, 28, VfxShape.WIND_SLASH, false, false);
+        longCut(b, i, p, mode, 48, 2.4, 28, VfxShape.DARK_SLASH_DIMENSION, false, false);
         Vec3 end = p.getEyePosition().add(p.getViewVector(1f).scale(48));
         b.vfx(p, VfxShape.SPATIAL_RIFT, end, end.add(0, 1, 0), 30, 1.6f);
         return true;

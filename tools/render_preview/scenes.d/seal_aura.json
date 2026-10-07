@@ -1,0 +1,27 @@
+{
+ "seal_aura_halo": {
+  "kind": "aura",
+  "attr": "Seal",
+  "aura": "SEALING",
+  "total": 120,
+  "ages": [
+   12,
+   40,
+   80
+  ],
+  "style": 0
+ },
+ "seal_aura_orbital": {
+  "kind": "aura",
+  "attr": "Seal",
+  "aura": "SEALING",
+  "total": 120,
+  "ages": [
+   12,
+   30,
+   60,
+   90
+  ],
+  "style": 1
+ }
+}

@@ -51,6 +51,11 @@ public final class CharacterSpells {
         lock("book_dream", "glamour_world", CanonBook.DOROTHY);
         lock("book_storm", "vortex_shield", CanonBook.KAISER);
         lock("book_mercury", "mercury_rain", CanonBook.NOZEL);
+        // 0.56: Secre Swallowtail's Seal Magic
+        lock("book_sealing", "branching_array", CanonBook.SECRE);
+        lock("book_sealing", "eternal_prison", CanonBook.SECRE);
+        lock("book_sealing", "wound_sealing", CanonBook.SECRE);
+        lock("book_sealing", "orbital_bind", CanonBook.SECRE);
     }
 
     /** Who may open this page, or null if anyone may. */
