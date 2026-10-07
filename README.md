@@ -205,6 +205,22 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
 - **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
 
+## 0.44 - Painting Magic remake (palette & brush)
+- **Replacement: Painting Magic.** Page ids are kept; the full guide is `docs/painting_palette_spec.md`.
+  - **Palette & brush:** summoning a Painting grimoire now puts a real wooden thumb-hole **palette** in your off hand and a **mana brush** in your main hand.
+    - They are 3D models with glowing, animated pools of paint and a new model for each paint. They dissolve when you drop them or stow the grimoire, and they can't be duplicated.
+    - **Palette:** right-click changes the paint (ink, fire, water, ice, wind, earth, lightning). Sneak + right-click picks the paint that counters the last element that hit you. While held, it softens that element by 40%.
+    - **Brush:** right-click paints a stroke. It uses **Aura**, falling back to magicules.
+  - **Elements:** each paint does something different, including Tensura's silence (magic jamming), fragility (resistance shred), energy drain and spiritual damage.
+  - **Mood:** joy (landing hits, kills, food, friends nearby) boosts your imagination up to +30%; frustration (getting hurt, low health, fear) stifles it to −30%.
+  - **EP scaling:** EP and gear scale every painting.
+  - **Page changes:**
+    - Brushstroke, Painted Menagerie and Master of Valhalla were remade. The Menagerie and the einherjar are now living painted constructs.
+    - New pages: **Living Illustration** and **Counter Palette**.
+- **New: living illustrations.** The drawing is painted flat on the ground, stands up, and steps out as a solid painted beast, einherjar or giant with a glowing wet outline.
+- **New VFX** at the Time standard: palette manifest, glossy brush trail, living illustration and element shift (`tools/gen_paint_studio_textures.py`).
+- **Shaders and Blender:** labPBR specular maps let Photon shine the wet paint. A Blender builder for the palette & brush (`tools/blender/build_palette_brush.py`) has a preview at `docs/blender/previews/palette_brush.png`.
+
 ## 0.43 - Better Combat compatibility
 - **New: Better Combat support.** With [Better Combat](https://modrinth.com/mod/better-combat) installed, every Black Clover sword gets combo swings, attack hitboxes and dual wielding. The files are in `data/nusmp/weapon_attributes`. Without Better Combat nothing changes: the files are just ignored, and the dependency is optional.
   - **Asta's and Licht's blades** (Demon-Slasher, Demon-Slayer, Demon-Dweller, Demon-Destroyer and Licht's two) are one-handed, so you can dual-wield them as in canon. The big blades reach further.

@@ -72,6 +72,30 @@ def pools_texture(frames=8):
         json.dump({"animation": {"frametime": 3, "interpolate": True}}, fh, indent=2)
 
 
+def specular_maps(frames=8):
+    """labPBR specular maps (_s) for shader packs such as Photon: R = perceptual smoothness, G = F0 (230+ = metal),
+    A = emission (1..254; 255 = none). Wet paint: very smooth, dielectric, self-lit. Wood: satin. Ferrule: polished metal."""
+    st = Image.new("RGBA", (32, 32), (0, 0, 0, 255))
+    px = st.load()
+    for y in range(32):
+        for x in range(32):
+            if x < 16 and y < 16:
+                px[x, y] = (120, 10, 0, 255)                # satin wood, no glow
+            elif 16 <= x < 24 and y < 8:
+                px[x, y] = (90, 10, 0, 255)                 # end grain, rougher
+            elif 16 <= x < 20 and 8 <= y < 16:
+                px[x, y] = (215, 14, 0, 255)                # lacquered handle, glossy
+            elif 20 <= x < 24 and 8 <= y < 16:
+                px[x, y] = (200, 230, 0, 255)               # silver ferrule: metal (iron preset)
+            elif x >= 24 and y < 16:
+                px[x, y] = (60, 10, 0, 255)                 # bristles, matt
+    st.save(os.path.join(TEX, "paint_studio_s.png"))
+    pools = Image.new("RGBA", (32, 32 * frames), (245, 12, 0, 140))   # wet paint: glassy, a strong mana glow
+    pools.save(os.path.join(TEX, "paint_pools_s.png"))
+    with open(os.path.join(TEX, "paint_pools_s.png.mcmeta"), "w") as fh:
+        json.dump({"animation": {"frametime": 3, "interpolate": True}}, fh, indent=2)
+
+
 # ------------------------------------------------------------------------------------------------ models
 def face_all(tex, uv, cull_dir=None, emissive=False):
     f = {d: {"texture": tex, "uv": uv} for d in ("north", "south", "east", "west", "up", "down")}
@@ -186,6 +210,7 @@ def main():
     os.makedirs(TEX, exist_ok=True)
     studio_texture()
     pools_texture()
+    specular_maps()
     for base, fn in (("paint_palette", palette_model), ("paint_brush", brush_model)):
         root = fn(0)
         root["overrides"] = [{"predicate": {"custom_model_data": k + 1}, "model": f"nusmp:item/{base}_{PAINTS[k][0]}"} for k in range(1, len(PAINTS))]

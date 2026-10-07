@@ -2,7 +2,7 @@
 Painting Magic palette & brush builder for Blender (4.2 LTS - 5.x), for the 0.44 remake.
 
 Builds the two props Rill Boismortier manifests with his grimoire, matching the concept: a classic wooden thumb-hole artist's
-palette (kidney outline, finger notch, bevelled rim, a gentle dish) holding seven glossy pools of glowing mana paint, and a long
+palette (kidney outline, finger notch, bevelled rim) holding seven glossy pools of glowing mana paint, and a long
 tapered paintbrush (lacquered handle, silver ferrule, bristles drawn to a point, the tip loaded with wet paint). A swept,
 glowing paint trail arcs from the brush, the way strokes hang in the air when he paints.
 
@@ -93,11 +93,11 @@ def wood_material():
     nt = mat.node_tree
     bsdf = nt.nodes.get("Principled BSDF")
     wave = nt.nodes.new("ShaderNodeTexWave")
-    wave.inputs["Scale"].default_value = 4.0
-    wave.inputs["Distortion"].default_value = 6.0
+    wave.inputs["Scale"].default_value = 2.2
+    wave.inputs["Distortion"].default_value = 2.5
     wave.inputs["Detail"].default_value = 3.0
     ramp = nt.nodes.new("ShaderNodeValToRGB")
-    ramp.color_ramp.elements[0].color = (0.42, 0.24, 0.11, 1)
+    ramp.color_ramp.elements[0].color = (0.55, 0.32, 0.15, 1)
     ramp.color_ramp.elements[1].color = (0.78, 0.52, 0.28, 1)
     nt.links.new(wave.outputs["Fac"], ramp.inputs["Fac"])
     nt.links.new(ramp.outputs["Color"], bsdf.inputs["Base Color"])
@@ -155,10 +155,6 @@ def build_palette(paint_mats):
     bev.limit_method = "ANGLE"
     sub = ob.modifiers.new("Smooth", "SUBSURF")
     sub.levels = sub.render_levels = 1
-    bend = ob.modifiers.new("Dish", "SIMPLE_DEFORM")         # a gentle dish, like a real bent-ply palette
-    bend.deform_method = "BEND"
-    bend.angle = math.radians(12)
-    bend.deform_axis = "Y"
     ob.data.materials.append(wood_material())
     # the pools of paint: flattened, slightly lumpy blobs round the far side of the board
     for k, name in enumerate(POOL_ORDER):
@@ -213,9 +209,6 @@ def build_brush(paint_mat):
     lathe("Bristles", [(0.0115, 0.6), (0.014, 0.63), (0.012, 0.67), (0.0, 0.70)], mat=bristle, parent=root)
     tip = lathe("Paint Load", [(0.0122, 0.655), (0.0135, 0.67), (0.009, 0.69), (0.0, 0.715)], mat=paint_mat, parent=root)
     tip.scale = (1.06, 1.06, 1.0)
-    bend = tip.modifiers.new("Flick", "SIMPLE_DEFORM")        # the loaded tip bends a little, as if mid-stroke
-    bend.deform_method = "BEND"
-    bend.angle = math.radians(14)
     return root
 
 
@@ -270,7 +263,7 @@ def setup_scene(engine):
     else:
         sc.render.engine = "BLENDER_EEVEE_NEXT" if "BLENDER_EEVEE_NEXT" in engines else "BLENDER_EEVEE"
     try:
-        sc.view_settings.view_transform = "AgX"
+        sc.view_settings.view_transform = "Standard"     # keeps the paint saturated (AgX greys it)
     except TypeError:
         pass
     setup_bloom(sc)
@@ -316,7 +309,7 @@ def build(paint="ink"):
     brush.rotation_euler = (math.radians(0), math.radians(72), math.radians(30))
     bpy.context.view_layer.update()
     tip = brush.matrix_world @ Vector((0, 0, 0.71))
-    build_trail(paint_material("Trail " + paint, PAINTS[paint], glow=1.6), tip)
+    build_trail(paint_material("Trail " + paint, PAINTS[paint], glow=0.8), tip)
     return pal, brush
 
 
