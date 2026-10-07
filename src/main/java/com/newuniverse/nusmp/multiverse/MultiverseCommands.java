@@ -40,6 +40,19 @@ public final class MultiverseCommands {
         return 1;
     }
 
+    /** 0.48: an event prize - the Black Magic grimoire with Anti-Magic (Liebe), bound at once. */
+    private static int eventAntiMagic(CommandContext<CommandSourceStack> ctx, boolean replace) throws CommandSyntaxException {
+        ServerPlayer p = EntityArgument.getPlayer(ctx, "player");
+        if (!replace && GrimoirePages.grimoireOf(p).isPresent())
+            return fail(ctx, p.getName().getString() + " already has a grimoire. Add 'replace' to swap it for Anti-Magic.");
+        GrimoireAcceptance.grantExact(p, GrimoireCover.BLACK_MAGIC, MagicType.ANTI_MAGIC, com.newuniverse.nusmp.blackclover.Devil.LIEBE);
+        if (AntiMagic.book(p).isEmpty()) return fail(ctx, "The grant did not go through.");
+        p.getServer().getPlayerList().broadcastSystemMessage(Component.literal("A black grimoire has chosen " + p.getName().getString() + ". Anti-Magic.")
+                .withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.BOLD), false);
+        MultiverseSync.markDirty(p);
+        return ok(ctx, "Granted Anti-Magic to " + p.getName().getString() + " (event).");
+    }
+
     private static int fail(CommandContext<CommandSourceStack> ctx, String msg) {
         ctx.getSource().sendFailure(Component.literal(msg));
         return 0;
@@ -105,11 +118,11 @@ public final class MultiverseCommands {
                             return ok(ctx, "Unlocked page " + book.page(mode).name() + " for " + p.getName().getString() + " (admin; ignores mastery and gates).");
                         }))))
                 .then(Commands.literal("awaken_anti").then(Commands.argument("player", EntityArgument.player()).executes(ctx -> {
-                    ServerPlayer p = EntityArgument.getPlayer(ctx, "player");
-                    boolean learned = SkillAPI.getSkillsFrom(p).learnSkill(NUSkills.ANTI_MAGIC_LORD.get().createDefaultInstance(),
-                            Component.literal("You have become an Anti-Magic Spirit Lord.").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.BOLD));
+                    ServerPlayer p = EntityArgument.getPlayer(ctx, "player");          // 0.48: the Lord awakens inside the Anti-Magic grimoire
+                    if (AntiMagic.book(p).isEmpty()) return fail(ctx, p.getName().getString() + " has no Anti-Magic grimoire (/multiverse event antimagic).");
+                    boolean done = AntiMagic.awaken(p);
                     MultiverseSync.markDirty(p);
-                    return learned ? ok(ctx, "Awakened " + p.getName().getString() + ".") : fail(ctx, "Already awakened.");
+                    return done ? ok(ctx, "Awakened " + p.getName().getString() + ".") : fail(ctx, "Already awakened.");
                 })))
                 // a named canon grimoire: bound to the player if they have none yet, else handed over as an unbound copy
                 .then(Commands.literal("canon").then(Commands.argument("player", EntityArgument.player())
@@ -168,11 +181,17 @@ public final class MultiverseCommands {
         root.then(spirit);
 
         // ---------------------------------------------------------------- anti-magic
+        // 0.48: event grants. Anti-Magic is event-only: it is never rolled, an admin hands it out (replace = over an existing grimoire)
+        root.then(Commands.literal("event").requires(MultiverseCommands::admin)
+                .then(Commands.literal("antimagic").then(Commands.argument("player", EntityArgument.player())
+                        .executes(ctx -> eventAntiMagic(ctx, false))
+                        .then(Commands.literal("replace").executes(ctx -> eventAntiMagic(ctx, true))))));
+
         // 0.47: the Zagred boss (server config zagredBossEnabled, off by default)
         root.then(Commands.literal("boss").requires(MultiverseCommands::admin)
                 .then(Commands.literal("zagred").executes(ctx -> {
-                    if (!com.newuniverse.nusmp.NUConfig.ZAGRED_BOSS_ENABLED.get())
-                        return fail(ctx, "The Zagred boss is off. Set zagredBossEnabled = true in the server config to allow it.");
+                    if (!com.newuniverse.nusmp.NUGameRules.zagredBoss(ctx.getSource().getLevel()))
+                        return fail(ctx, "The Zagred boss is off. Turn it on with /gamerule nusmpZagredBoss true (or zagredBossEnabled in the server config).");
                     var z = com.newuniverse.nusmp.entity.ZagredBossEntity.summon(ctx.getSource().getLevel(), ctx.getSource().getPosition());
                     return z == null ? fail(ctx, "Zagred could not be summoned here.") : ok(ctx, "Zagred descends. The arena is here.");
                 })));
@@ -185,7 +204,9 @@ public final class MultiverseCommands {
                     int mode = IntegerArgumentType.getInteger(ctx, "mode");
                     MultiverseProfile.setAntiMode(p, mode);
                     boolean form = mode >= 2;            // Black Form for modes 2 and 3
-                    if (lord.get().isToggled() != form) {
+                    if (lord.get().getSkill() instanceof com.newuniverse.nusmp.book.AntiMagicBook) {          // 0.48: the merged Lord
+                        if (com.newuniverse.nusmp.book.AntiMagicBook.inBlackForm(lord.get()) != form) com.newuniverse.nusmp.book.AntiMagicBook.setForm(p, lord.get(), form);
+                    } else if (lord.get().isToggled() != form) {
                         lord.get().setToggled(form);
                         if (form) lord.get().getSkill().onToggleOn(lord.get(), p); else lord.get().getSkill().onToggleOff(lord.get(), p);
                         lord.get().markDirty();

@@ -66,6 +66,8 @@ public final class NUConfig {
     public static final ModConfigSpec.BooleanValue GRIEF;
     public static final ModConfigSpec.BooleanValue WORLD_TREE_PERMANENT;   // 0.45
     public static final ModConfigSpec.BooleanValue ZAGRED_BOSS_ENABLED, KOTODAMA_BOSS_REWARD;   // 0.47
+    public static final ModConfigSpec.BooleanValue ANTI_MAGIC_EVENT_ONLY;                       // 0.48
+    public static final ModConfigSpec.IntValue PVP_HIT_CAP_PERCENT, SPELL_DAMAGE_PERCENT, SPELL_COOLDOWN_PERCENT;   // 0.48
     // Magic gear
     public static final ModConfigSpec.DoubleValue GEAR_REGEN_JUNIOR, GEAR_REGEN_SENIOR, GEAR_SPADE_REGEN_PENALTY, GEAR_CONDUCTION_DAMAGE;
     public static final ModConfigSpec.IntValue GEAR_SENIOR_DAMAGE, GEAR_ELEMENT_BONUS, GEAR_RECOIL_REDUCTION, GEAR_EAGLE_REDUCTION, GEAR_HEART_COST,
@@ -145,7 +147,14 @@ public final class NUConfig {
                 .define("zagredBossEnabled", false);
         KOTODAMA_BOSS_REWARD = b.comment("Beating the Zagred boss grants Kotodama Magic to everyone who fought it. Off by default: Kotodama stays creative only.")
                 .define("kotodamaBossReward", false);
-        BAL_MOB_DAMAGE_MULT = b.comment("Balance law: multiplier on addon spell damage vs mobs (players are capped at 4-14 hearts by mastery).").defineInRange("mobDamageMultiplier", 1.0, 0.0, 10.0);
+        ANTI_MAGIC_EVENT_ONLY = b.comment("Anti-Magic is event-only: it is never rolled; admins grant it with /multiverse event antimagic <player>.")
+                .define("antiMagicEventOnly", true);
+        PVP_HIT_CAP_PERCENT = b.comment("0.48 balance: the most one addon spell hit can take from a player, as % of their max health.")
+                .defineInRange("pvpHitCapPercent", 40, 1, 100);
+        SPELL_DAMAGE_PERCENT = b.comment("0.48 balance: addon spell damage, % (applied on top of the EP scaling).").defineInRange("spellDamagePercent", 100, 0, 10000);
+        SPELL_COOLDOWN_PERCENT = b.comment("0.48 pacing: grimoire page and magic weapon cooldowns, % of their listed length (60 = 40% shorter).")
+                .defineInRange("spellCooldownPercent", 60, 1, 1000);
+        BAL_MOB_DAMAGE_MULT = b.comment("Balance law: multiplier on addon spell damage vs mobs (players: see pvpHitCapPercent).").defineInRange("mobDamageMultiplier", 1.0, 0.0, 10.0);
         GRIMOIRE_UNIQUE_LOOKS = b.comment("Each owner's grimoire gets its own cosmetic variation (cover, trim metal, thickness, clasp, colour drift). Off = every grimoire of a type looks identical.").define("uniqueLooks", true);
         b.pop();
 

@@ -228,7 +228,7 @@ public abstract class GrimoireBook extends Skill {
         if (!p.cast().cast(this, instance, player, mode)) return;
         shout(player, p.incantation());
         if (p.cooldown() > 0) {
-            int ticks = (int) (p.cooldown() * com.newuniverse.nusmp.item.MagicGear.cooldownMult(player));
+            int ticks = (int) (p.cooldown() * com.newuniverse.nusmp.item.MagicGear.cooldownMult(player) * com.newuniverse.nusmp.NUGameRules.spellCooldown(player.level()));   // 0.48: 40% shorter by default
             instance.setCoolDown(com.newuniverse.nusmp.NUSMP.ticksToSeconds(ticks), mode);
         }
         addMasteryPoint(instance, entity);
@@ -275,7 +275,7 @@ public abstract class GrimoireBook extends Skill {
         if ((magic == MagicType.DARK || magic == MagicType.SHADOW) && (inDevilState(target)
                 || (target instanceof ServerPlayer tp && GrimoirePages.grimoireOf(tp).map(g -> cover(g).isForbidden()).orElse(false)))) r *= 1.25f;
         com.newuniverse.nusmp.blackclover.CopyMemory.remember(target, this, mode);
-        target.hurt(createSource(i, caster, type, mode), BalanceLaw.damage(target, r, masteryFrac(i)));
+        target.hurt(createSource(i, caster, type, mode), BalanceLaw.damage(caster, target, r, masteryFrac(i)));
     }
 
     public static LivingEntity target(ServerPlayer p, double range) {
@@ -446,8 +446,20 @@ public abstract class GrimoireBook extends Skill {
 
     @Override
     public void onTick(ManasSkillInstance i, LivingEntity e) {
-        if (!(e instanceof ServerPlayer p) || p.tickCount % 20 != 0) return;
+        if (e instanceof ServerPlayer p) second(i, p);
+    }
+
+    /**
+     * 0.48: the book's once-a-second upkeep. ManasCore only ticks the skills it treats as active (a grimoire sitting in the skill list
+     * may never tick, which left Cotton / Food grimoires unrolled), so our own player tick ({@link #onPlayerTick}) drives it too;
+     * whichever comes first in a second runs it, the other skips.
+     */
+    public void second(ManasSkillInstance i, ServerPlayer p) {
         long now = p.level().getGameTime();
+        var stamp = i.getOrCreateTag();
+        long last = stamp.getLong("SecondAt");
+        if (last <= now && now - last < 20) return;
+        stamp.putLong("SecondAt", now);
         // Spirit Dive upkeep: magicule each second; ends if the Lord contract is lost.
         if (now < i.getOrCreateTag().getLong("DiveUntil")) {
             if (!spiritGateOpen(p) || !drain(p, EnergyHelper.getMaxMagicule(p) * 0.02)) {
@@ -472,6 +484,14 @@ public abstract class GrimoireBook extends Skill {
 
     /** Per-second hook for subclasses. */
     protected void tickBook(ManasSkillInstance i, ServerPlayer p) {}
+
+    /** Every second: each grimoire book the player has gets its upkeep (see {@link #second}). */
+    public static void onPlayerTick(net.neoforged.neoforge.event.tick.PlayerTickEvent.Post e) {
+        if (!(e.getEntity() instanceof ServerPlayer p) || p.tickCount % 20 != 3) return;
+        var skills = io.github.manasmods.manascore.skill.api.SkillAPI.getSkillsFrom(p);
+        for (var h : com.newuniverse.nusmp.skill.NUSkills.BOOKS)
+            skills.getSkill(h.getId()).ifPresent(i -> { if (i.getSkill() instanceof GrimoireBook b) b.second(i, p); });
+    }
 
     private static boolean drain(ServerPlayer p, double amount) {
         var ex = TensuraStorages.getExistenceFrom(p);

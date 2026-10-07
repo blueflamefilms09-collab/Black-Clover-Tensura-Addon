@@ -116,8 +116,7 @@ public final class GrimoireCommand {
                                         }))))
                         .then(Commands.literal("awaken_anti").then(Commands.argument("player", EntityArgument.player()).executes(ctx -> {
                             ServerPlayer p = EntityArgument.getPlayer(ctx, "player");
-                            boolean ok = SkillAPI.getSkillsFrom(p).learnSkill(NUSkills.ANTI_MAGIC_LORD.get().createDefaultInstance(),
-                                    Component.literal("You have become an Anti-Magic Spirit Lord.").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.BOLD));
+                            boolean ok = com.newuniverse.nusmp.antimagic.AntiMagic.awaken(p);   // 0.48: inside the Anti-Magic grimoire
                             ctx.getSource().sendSuccess(() -> Component.literal(ok ? "Awakened " + p.getName().getString() : "Already awakened"), true);
                             return ok ? 1 : 0;
                         })))

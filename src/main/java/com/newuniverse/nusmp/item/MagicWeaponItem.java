@@ -86,7 +86,10 @@ public class MagicWeaponItem extends SwordItem {
     /** Dual-wield synergy: another magic sword in the off hand. */
     static boolean pairedBlade(Player p) { return p.getOffhandItem().getItem() instanceof MagicWeaponItem; }
 
-    int cooldownFor(Player p) { return kind == Kind.RIMEHEART && pairedBlade(p) ? Math.round(kind.cooldown * 0.6f) : kind.cooldown; }
+    int cooldownFor(Player p) {
+        int base = kind == Kind.RIMEHEART && pairedBlade(p) ? Math.round(kind.cooldown * 0.6f) : kind.cooldown;
+        return Math.max(1, (int) Math.round(base * com.newuniverse.nusmp.NUGameRules.spellCooldown(p.level())));   // 0.48: 40% shorter by default
+    }
 
     /** A burst of frost mana: freezes, slows and hurts everything within r of c (the wielder and allies excepted). */
     private void frostBurst(ServerPlayer p, Vec3 c, double r, float dmg, LivingEntity skip) {
@@ -150,7 +153,7 @@ public class MagicWeaponItem extends SwordItem {
 
     private void hit(ServerPlayer p, LivingEntity t, float raw) {
         if (t == p || t.isAlliedTo(p)) return;
-        t.hurt(p.damageSources().playerAttack(p), BalanceLaw.damage(t, raw, 0.6));
+        t.hurt(p.damageSources().playerAttack(p), BalanceLaw.damage(p, t, raw, 0.6));
     }
 
     private static void stripOne(LivingEntity t) {
@@ -301,7 +304,7 @@ public class MagicWeaponItem extends SwordItem {
     public void appendHoverText(ItemStack stack, Item.TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
         tip.add(Component.literal("Right-click: " + kind.ability).withStyle(ChatFormatting.GOLD));
         tip.add(Component.literal("  " + kind.desc).withStyle(ChatFormatting.GRAY));
-        tip.add(Component.literal("  Cooldown: " + kind.cooldown / 20 + " s").withStyle(ChatFormatting.DARK_GRAY));
+        tip.add(Component.literal("  Cooldown: " + Math.round(kind.cooldown * com.newuniverse.nusmp.NUGameRules.cooldownShown() / 20) + " s").withStyle(ChatFormatting.DARK_GRAY));
         CustomData d = stack.get(DataComponents.CUSTOM_DATA);
         if (kind == Kind.RIMEHEART) tip.add(Component.literal("  Off-hand magic sword: burst recharges 40% faster, hits freeze longer").withStyle(ChatFormatting.AQUA));
         if (d != null && d.copyTag().contains("ExpiresAt"))

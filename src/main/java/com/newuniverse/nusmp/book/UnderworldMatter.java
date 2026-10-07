@@ -137,7 +137,7 @@ public final class UnderworldMatter {
     /** Puts back everything the session devoured (or leaves it eaten under griefBlocks), newest first. */
     static void end(Session s) {
         SESSIONS.remove(s);
-        boolean keep = NUConfig.GRIEF.get();
+        boolean keep = com.newuniverse.nusmp.NUGameRules.griefBlocks(s.level);
         List<Map.Entry<BlockPos, BlockState>> list = new ArrayList<>(s.eaten.entrySet());
         for (int k = list.size() - 1; k >= 0; k--) {
             BlockPos p = list.get(k).getKey();

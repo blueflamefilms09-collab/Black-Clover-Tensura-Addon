@@ -225,7 +225,7 @@ public final class KotodamaWords {
             ManasSkillInstance inst = SkillAPI.getSkillsFrom(p).getSkill(NUSkills.BOOK_KOTODAMA.getId()).orElse(null);
             if (inst == null) inst = zagredGrimoire(p);
             if (inst != null && inst.getSkill() instanceof GrimoireBook b) { b.hurtAs(inst, p, t, 0, raw, TensuraDamageTypes.DARKNESS_ELEMENTAL); return; }
-            t.hurt(p.damageSources().indirectMagic(p, p), BalanceLaw.damage(t, raw, 0.5));
+            t.hurt(p.damageSources().indirectMagic(p, p), BalanceLaw.damage(p, t, raw, 0.5));
             return;
         }
         t.hurt(c.damageSources().indirectMagic(c, c), raw);
@@ -374,7 +374,7 @@ public final class KotodamaWords {
 
     /** Beating Zagred (with the reward switched on): Kotodama is earned and the five-leaf grimoire comes to the player. */
     public static void reward(ServerPlayer p) {
-        if (!NUConfig.KOTODAMA_BOSS_REWARD.get()) return;
+        if (!com.newuniverse.nusmp.NUGameRules.kotodamaBossReward(p.level())) return;
         setEarned(p);
         var skills = SkillAPI.getSkillsFrom(p);
         var book = NUSkills.BOOK_KOTODAMA.get();

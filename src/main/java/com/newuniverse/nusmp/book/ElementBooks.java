@@ -171,14 +171,6 @@ public final class ElementBooks {
      * and mastery carry over; new spells appended).
      */
     public static GrimoireBook antiMagic() {
-        return new ElementBook(MagicType.ANTI_MAGIC, 0xFF2A0A30, TensuraDamageTypes.MAGIC_GENERIC, List.of(
-                new BookPage("demon_slayer_slash", "Black Slash", "Demon-Dweller Sword: Black Slash", 0, 0, 80, CanonSpells::blackSlash),
-                new BookPage("black_divider", "Black Divider", "Demon-Slayer Sword: Black Divider", 0, 0, 160, CanonSpells::blackDivider),
-                new BookPage("black_meteorite", "Black Meteorite", "Black Meteorite", 0, 0, 300, CanonSpells::blackMeteorite),
-                new BookPage("black_hurricane", "Black Hurricane", "Black Hurricane", 0, 0, 300, CanonSpells::blackHurricane),
-                new BookPage("black_form", "Black Asta", "Black Asta", 0, 0, 1200, CanonSpells::blackAsta),
-                new BookPage("bull_thrust", "Bull Thrust", "Bull Thrust", 0, 0, 160, CanonSpells::bullThrust),
-                new BookPage("infinite_slash", "Infinite Slash", "Demon-Slasher Katana: Infinite Slash", 0, 0, 240, CanonSpells::infiniteSlash),
-                new BookPage("infinite_slash_equinox", "Infinite Slash Equinox", "Demon-Slasher Katana: Infinite Slash Equinox", 0, 0, 900, CanonSpells::infiniteSlashEquinox)));
+        return new AntiMagicBook();          // 0.48: the Anti-Magic Spirit Lord merged into the grimoire itself (same pages, same order)
     }
 }

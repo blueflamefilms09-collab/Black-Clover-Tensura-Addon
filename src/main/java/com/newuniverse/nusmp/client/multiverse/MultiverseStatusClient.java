@@ -33,6 +33,8 @@ public final class MultiverseStatusClient {
     private static CompoundTag status = new CompoundTag();
     /** Where the compact panel goes on each open screen. */
     private static final Map<Screen, int[]> PANELS = new WeakHashMap<>();
+    /** 0.48: screens where only the placeholder text was found: a "Four Kingdoms" label sits in the text's own space instead. */
+    private static final Map<Screen, int[]> LABELS = new WeakHashMap<>();
 
     private MultiverseStatusClient() {}
 
@@ -55,7 +57,7 @@ public final class MultiverseStatusClient {
     /** True while a target screen is open and has no panel yet (the text hook only looks then). */
     public static boolean watching() {
         Screen s = Minecraft.getInstance().screen;
-        return target(s) && !PANELS.containsKey(s);
+        return target(s) && !PANELS.containsKey(s);                 // with a label the text stays hidden every frame
     }
 
     /**
@@ -77,16 +79,14 @@ public final class MultiverseStatusClient {
         if (!target(s)) return false;
         String want = MultiverseClientConfig.get(MultiverseClientConfig.PANEL_TEXT).toLowerCase();
         if (want.isEmpty() || !text.trim().toLowerCase().equals(want)) return false;
-        int[] r = PANELS.get(s);
-        if (r == null) {
-            org.joml.Matrix4f m = g.pose().last().pose();
-            org.joml.Vector4f a = m.transform(new org.joml.Vector4f(x, y, 0, 1));
-            org.joml.Vector4f b = m.transform(new org.joml.Vector4f(x + font.width(text), y + font.lineHeight, 0, 1));
-            float cx = (a.x() + b.x()) / 2, cy = (a.y() + b.y()) / 2;
-            int w = Math.max(130, (int) Math.abs(b.x() - a.x()) + 12), h = Math.max(56, (int) Math.abs(b.y() - a.y()) + 12);
-            r = new int[]{Math.max(0, (int) cx - w / 2), Math.max(0, (int) cy - h / 2), w, h};
-            PANELS.put(s, r);
-        }
+        if (PANELS.containsKey(s)) return true;
+        // 0.48 fix: the placeholder text alone gives no room (a 130 x 56 panel there covered the preset slots and icons), so a small
+        // "Four Kingdoms" label takes exactly the text's place and opens the menu (which has the Status button).
+        org.joml.Matrix4f m = g.pose().last().pose();
+        org.joml.Vector4f a = m.transform(new org.joml.Vector4f(x, y, 0, 1));
+        org.joml.Vector4f b = m.transform(new org.joml.Vector4f(x + font.width(text), y + font.lineHeight, 0, 1));
+        LABELS.put(s, new int[]{(int) Math.min(a.x(), b.x()), (int) Math.min(a.y(), b.y()), (int) Math.max(1, Math.abs(b.x() - a.x())),
+                (int) Math.max(1, Math.abs(b.y() - a.y()))});
         return true;
     }
 
@@ -111,6 +111,7 @@ public final class MultiverseStatusClient {
     private static void onScreenInitUnsafe(ScreenEvent.Init.Post event) {
         Screen s = event.getScreen();
         PANELS.remove(s);
+        LABELS.remove(s);
         if (!target(s)) return;
         int[] rect = parseRect(MultiverseClientConfig.get(MultiverseClientConfig.PANEL_RECT));
         if (rect == null) {
@@ -141,6 +142,20 @@ public final class MultiverseStatusClient {
     }
 
     private static void onScreenRenderUnsafe(ScreenEvent.Render.Post event) {
+        int[] l = LABELS.get(event.getScreen());
+        if (l != null) {                                              // the label: "Four Kingdoms", scaled into the old text's box
+            GuiGraphics g = event.getGuiGraphics();
+            var font = Minecraft.getInstance().font;
+            String label = "Four Kingdoms";
+            float sc = Math.min(1f, Math.min(l[2] / (float) font.width(label), l[3] / (float) font.lineHeight));
+            boolean hover = inside(l, event.getMouseX(), event.getMouseY());
+            g.pose().pushPose();
+            g.pose().translate(l[0] + (l[2] - font.width(label) * sc) / 2f, l[1] + (l[3] - font.lineHeight * sc) / 2f, 200);
+            g.pose().scale(sc, sc, 1f);
+            g.drawString(font, label, 0, 0, hover ? 0xFFFFE9A8 : 0xFFE8C468, true);
+            g.pose().popPose();
+            return;
+        }
         int[] r = PANELS.get(event.getScreen());
         if (r == null) return;
         GuiGraphics g = event.getGuiGraphics();
@@ -153,6 +168,12 @@ public final class MultiverseStatusClient {
     }
 
     private static void onScreenClickUnsafe(ScreenEvent.MouseButtonPressed.Pre event) {
+        int[] l = LABELS.get(event.getScreen());
+        if (l != null && event.getButton() == 0 && inside(l, event.getMouseX(), event.getMouseY())) {
+            Minecraft.getInstance().setScreen(new FourKingdomsScreen(event.getScreen()));
+            event.setCanceled(true);
+            return;
+        }
         int[] r = PANELS.get(event.getScreen());
         if (r == null || event.getButton() != 0 || !inside(r, event.getMouseX(), event.getMouseY())) return;
         Minecraft.getInstance().setScreen(new MultiverseStatusScreen(event.getScreen()));

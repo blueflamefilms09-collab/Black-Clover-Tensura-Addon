@@ -8,8 +8,11 @@ import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.common.Tags;
 
 /**
- * The balance law shared by every addon spell: this mod is a side-grade to Tensura, never a second endgame.
- * - Damage vs players: 4..14 hearts depending on mastery. Mobs: raw x config multiplier.
+ * The balance law shared by every addon spell. 0.48 (the owner's call): addon magic stands level with Tensura's own magic and
+ * skills, or above it, instead of being a side-grade.
+ * - Damage scales with the caster's EP the way Tensura's does ({@link #epScale}: x1 at 1,000 EP up to x11 at 10M), plus a sliver of
+ *   the target's max health so huge Tensura bodies still feel it. Against players one hit takes at most 40% of their max health
+ *   (pvpHitCapPercent / gamerule nusmpPvpHitCapPercent): no one-shots. Mobs: x config multiplier.
  * - Costs: percent of max magicule with a flat floor (big pools can't spam).
  * - Hard control: one shared 12 s cooldown per caster, diminishing returns per target, short caps.
  * - Healing: 50% max-health cap per cast, 40% effectiveness if healed in the last 20 s.
@@ -19,15 +22,38 @@ public final class BalanceLaw {
 
     // ------------------------------------------------------------------ damage
     /**
+     * 0.48: how hard the caster's existence hits, from their EP like Tensura's own scaling: x1 at 1,000 EP, x3.5 at 10k, x6 at 100k,
+     * x8.5 at 1M, x11 at 10M (at most x12).
+     */
+    public static double epScale(LivingEntity caster) {
+        double ep = 0;
+        try { ep = EnergyHelper.getMaxEP(caster); } catch (Throwable ignored) {}
+        return Math.min(12, 1 + Math.max(0, Math.log10(Math.max(1, ep)) - 3) * 2.5);
+    }
+
+    /**
+     * Damage of an addon spell or weapon technique.
+     * @param caster         who casts it (its EP scales the hit)
      * @param raw            the spell's base damage (HP)
      * @param masteryFrac    0..1 mastery of the casting skill
      */
+    public static float damage(LivingEntity caster, LivingEntity target, float raw, double masteryFrac) {
+        double m = Math.max(0, Math.min(1, masteryFrac));
+        double r = raw * epScale(caster) * (0.85 + 0.3 * m) * com.newuniverse.nusmp.NUGameRules.spellDamage(target.level());
+        r += target.getMaxHealth() * 0.01 * raw / 10.0;                      // a sliver of the target's max health
+        return cap(target, (float) r);
+    }
+
+    /** The same without a known caster (old call sites): mastery scaling only, then the same caps. */
     public static float damage(LivingEntity target, float raw, double masteryFrac) {
-        if (target instanceof Player) {
-            float capHearts = (float) (4 + 10 * Math.max(0, Math.min(1, masteryFrac)));
-            return Math.min(raw, capHearts * 2f);
-        }
-        return (float) (raw * NUConfig.BAL_MOB_DAMAGE_MULT.get());
+        double m = Math.max(0, Math.min(1, masteryFrac));
+        return cap(target, (float) (raw * (1 + m) * com.newuniverse.nusmp.NUGameRules.spellDamage(target.level())));
+    }
+
+    /** Players: at most pvpHitCap of their max health per hit. Mobs: the config multiplier. */
+    static float cap(LivingEntity target, float r) {
+        if (target instanceof Player) return (float) Math.min(r, target.getMaxHealth() * com.newuniverse.nusmp.NUGameRules.pvpHitCap(target.level()));
+        return (float) (r * NUConfig.BAL_MOB_DAMAGE_MULT.get());
     }
 
     public static boolean isBoss(LivingEntity e) {

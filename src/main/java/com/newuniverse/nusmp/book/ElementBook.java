@@ -272,17 +272,8 @@ public class ElementBook extends GrimoireBook {
     }
 
     // ------------------------------------------------------------------ Anti-Magic awakening
-    /** Mastering the Anti-Magic grimoire awakens the Anti-Magic Spirit Lord. */
-    @Override
-    public void onSkillMastered(ManasSkillInstance i, LivingEntity e) {
-        super.onSkillMastered(i, e);
-        if (magic == MagicType.ANTI_MAGIC && e instanceof ServerPlayer p) {
-            var skills = io.github.manasmods.manascore.skill.api.SkillAPI.getSkillsFrom(p);
-            if (skills.getSkill(com.newuniverse.nusmp.skill.NUSkills.ANTI_MAGIC_LORD.getId()).isEmpty())
-                skills.learnSkill(com.newuniverse.nusmp.skill.NUSkills.ANTI_MAGIC_LORD.get().createDefaultInstance(),
-                        net.minecraft.network.chat.Component.literal("You have become an Anti-Magic Spirit Lord.").withStyle(net.minecraft.ChatFormatting.DARK_GRAY, net.minecraft.ChatFormatting.BOLD));
-        }
-    }
+    // 0.48: mastering the Anti-Magic grimoire awakens the Anti-Magic Lord inside the grimoire itself (book.AntiMagicBook), no longer a
+    // separate skill.
 
     // ------------------------------------------------------------------ passives
     @Override

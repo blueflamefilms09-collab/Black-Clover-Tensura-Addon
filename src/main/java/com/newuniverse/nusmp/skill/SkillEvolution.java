@@ -44,7 +44,7 @@ public final class SkillEvolution {
 
     public static void onPlayerTick(PlayerTickEvent.Post event) {
         if (!(event.getEntity() instanceof ServerPlayer player) || player.tickCount % 100 != 0) return;
-        if (!NUConfig.EVOLUTION_ENABLED.get()) return;
+        if (!com.newuniverse.nusmp.NUGameRules.skillEvolution(player.level())) return;
         Skills skills = SkillAPI.getSkillsFrom(player);
 
         for (var path : paths().entrySet()) {

@@ -250,7 +250,7 @@ public final class PaintStudio {
 
     static void hurt(ServerPlayer p, LivingEntity t, float raw) {
         if (t == p || t.isAlliedTo(p)) return;
-        t.hurt(p.damageSources().indirectMagic(p, p), BalanceLaw.damage(t, raw, 0.5));
+        t.hurt(p.damageSources().indirectMagic(p, p), BalanceLaw.damage(p, t, raw, 0.5));
     }
 
     /** What each paint does to what it touches (with Tensura's effects where they exist). */

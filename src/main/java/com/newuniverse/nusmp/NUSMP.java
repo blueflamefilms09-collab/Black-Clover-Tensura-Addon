@@ -26,6 +26,7 @@ public class NUSMP {
 
     public NUSMP(IEventBus modEventBus, ModContainer modContainer) {
         NUSkills.SKILLS.register(modEventBus);
+        modEventBus.addListener((net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent e) -> e.enqueueWork(NUGameRules::init));   // 0.48: config switches as gamerules
         BlackCloverRegistry.ITEMS.register(modEventBus);
         com.newuniverse.nusmp.grimoire.GrimoireComponents.COMPONENTS.register(modEventBus);
         com.newuniverse.nusmp.blackclover.GrimoireSlot.ATTACHMENTS.register(modEventBus);
@@ -101,6 +102,9 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.PaintStudio::onUseItemFinish);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.SlashBook::onIncomingDamage);              // 0.45: forearm blades
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.KotodamaWords::onChat);                    // 0.47: Kotodama command words
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.antimagic.AntiMagic::migrate);                  // 0.48: old Spirit Lords fold into the grimoire
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.GrimoireBook::onPlayerTick);               // 0.48: book upkeep without relying on skill ticks
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.TreeRestore::onServerTick);                // 0.48: World Tree trees taken back (saved)
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.UnderworldMatter::onServerTick);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.UnderworldMatter::onServerStopping);
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent e) -> {

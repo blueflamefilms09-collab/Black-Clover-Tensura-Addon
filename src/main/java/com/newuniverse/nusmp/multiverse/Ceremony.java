@@ -133,7 +133,7 @@ public final class Ceremony {
         Kingdom home = Convergence.kingdomOf(p);
         if (home != null) {
             grantForKingdom(p, home, tier, soul);                            // 0.39: the anomaly's kingdom picks the covers
-        } else if (tier == Tier.BLACK) {
+        } else if (tier == Tier.BLACK && !com.newuniverse.nusmp.NUGameRules.antiMagicEventOnly(p.level())) {
             GrimoireAcceptance.grantExact(p, com.newuniverse.nusmp.blackclover.GrimoireCover.BLACK_MAGIC, MagicType.ANTI_MAGIC, Devil.LIEBE);
         } else if (tier == Tier.GOD) {
             var pool = GrimoireAcceptance.starterPool(soul);
@@ -157,7 +157,7 @@ public final class Ceremony {
      * tops out at the devil-inhabited Triple Spade; Heart and Diamond have no devil covers (Diamond's rarest is Five-Sided).
      */
     static void grantForKingdom(ServerPlayer p, Kingdom kingdom, Tier tier, String soul) {
-        if (kingdom == Kingdom.CLOVER && tier == Tier.BLACK) {
+        if (kingdom == Kingdom.CLOVER && tier == Tier.BLACK && !com.newuniverse.nusmp.NUGameRules.antiMagicEventOnly(p.level())) {
             GrimoireAcceptance.grantExact(p, com.newuniverse.nusmp.blackclover.GrimoireCover.BLACK_MAGIC, MagicType.ANTI_MAGIC, Devil.LIEBE);
             return;
         }

@@ -33,7 +33,7 @@ final class GodTier {
 
     /** True if absolute effects (instant kill, erase) may fully apply to this target. */
     static boolean fullyAffected(LivingEntity e) {
-        if (e instanceof Player) return NUConfig.GOD_TIER_AFFECTS_PLAYERS.get();
+        if (e instanceof Player) return com.newuniverse.nusmp.NUGameRules.godTierAffectsPlayers(e.level());
         return !isBoss(e);
     }
 

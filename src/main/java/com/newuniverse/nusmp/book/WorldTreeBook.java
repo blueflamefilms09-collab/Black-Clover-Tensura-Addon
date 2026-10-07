@@ -82,8 +82,8 @@ public class WorldTreeBook extends GrimoireBook {
         if (holder.isEmpty()) return false;
         BlockPos ground = level.getHeightmapPos(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BlockPos.containing(at));
         if (Math.abs(ground.getY() - at.y) > 6) ground = BlockPos.containing(at);
-        // snapshot the space the tree can reach (mega trees: ~8 out, ~32 up), grow it, and remember what changed
-        int rx = 9, up = 34;
+        // snapshot the space the tree can reach (mega trees: ~8 out, ~32 up, with margin), grow it, and remember what changed
+        int rx = 12, up = 40;
         java.util.Map<BlockPos, BlockState> before = new java.util.HashMap<>();
         for (BlockPos q : BlockPos.betweenClosed(ground.offset(-rx, -2, -rx), ground.offset(rx, up, rx))) before.put(q.immutable(), level.getBlockState(q));
         boolean grew = holder.get().value().place(level, level.getChunkSource().getGenerator(), level.getRandom(), ground);
@@ -94,13 +94,9 @@ public class WorldTreeBook extends GrimoireBook {
             if (now != e.getValue()) placed.put(e.getKey(), now);
         }
         level.playSound(null, ground, SoundEvents.ROOTED_DIRT_PLACE, SoundSource.BLOCKS, 1.6f, 0.7f);
-        if (com.newuniverse.nusmp.NUConfig.WORLD_TREE_PERMANENT.get() || placed.isEmpty()) return true;
-        SpellRuntime.later(level, ticks, () -> {
-            for (var e : placed.entrySet())                                         // undo only what is still the tree's
-                if (level.isLoaded(e.getKey()) && level.getBlockState(e.getKey()) == e.getValue())
-                    level.setBlock(e.getKey(), before.get(e.getKey()), 2 | 16);
-            VfxSpawn.send(level, VfxShape.TREE_ROOTS, Vec3.atBottomCenterOf(placed.keySet().iterator().next()), at, EMERALD, 30, 2f);
-        });
+        if (com.newuniverse.nusmp.NUGameRules.worldTreeTreesStay(level) || placed.isEmpty()) return true;
+        // 0.48 fix: undone by kind of block (leaves change state as they settle, which left them behind) and saved across restarts
+        TreeRestore.get(level.getServer()).add(level, level.getGameTime() + ticks, placed, before);
         return true;
     }
 

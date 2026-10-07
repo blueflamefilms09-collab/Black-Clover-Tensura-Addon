@@ -52,7 +52,7 @@ public class FireBook extends GrimoireBook {
         b.vfx(p, VfxShape.FLAME_TRAIL, start, start.add(dir.scale(30)), 25, 0.8f * s);
         SpellRuntime.bolt(p, start, dir.scale(1.2), 0.6, 25, false, null, (bolt, t) -> {}, (bolt, at) -> {
             for (LivingEntity t : around(p, at, 3 * s)) { b.hurt(i, p, t, mode, 10f); t.igniteForSeconds(4); }
-            if (com.newuniverse.nusmp.NUConfig.GRIEF.get()) p.serverLevel().explode(p, at.x, at.y, at.z, 1.5f, false, net.minecraft.world.level.Level.ExplosionInteraction.MOB);
+            if (com.newuniverse.nusmp.NUGameRules.griefBlocks(p.level())) p.serverLevel().explode(p, at.x, at.y, at.z, 1.5f, false, net.minecraft.world.level.Level.ExplosionInteraction.MOB);
             b.vfx(p, VfxShape.FLAME_EXPLOSION, at, at, 22, 0.8f * s);
             b.impact(p, at, 0.6f);
         });

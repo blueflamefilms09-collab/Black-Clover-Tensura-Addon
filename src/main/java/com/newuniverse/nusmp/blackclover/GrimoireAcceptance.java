@@ -45,7 +45,7 @@ public final class GrimoireAcceptance {
     // ---- automatic roll once a soul type exists ----
     public static void onPlayerTick(PlayerTickEvent.Post event) {
         if (!(event.getEntity() instanceof ServerPlayer player) || player.tickCount % 100 != 0) return;
-        if (!NUConfig.GRIMOIRE_ENABLED.get()) return;
+        if (!com.newuniverse.nusmp.NUGameRules.grimoireRolls(player.level())) return;
         if (hasRolled(player)) {
             if (player.tickCount % 400 == 0) GrimoirePages.migrateStarter(player);
             return;
@@ -66,7 +66,7 @@ public final class GrimoireAcceptance {
         double five = NUConfig.FIVE_LEAF_CHANCE.get(), four = NUConfig.FOUR_LEAF_CHANCE.get(), three = NUConfig.THREE_LEAF_CHANCE.get();
         int leaves = x < five ? 5 : x < five + four ? 4 : x < five + four + three ? 3 : 0;
         // Balance law: a devil cover is never a starting roll (only despair or a devil contract).
-        if (leaves == 5 && !NUConfig.ALLOW_FORBIDDEN_START.get()) leaves = 4;
+        if (leaves == 5 && !com.newuniverse.nusmp.NUGameRules.forbiddenStart(player.level())) leaves = 4;
 
         if (leaves == 0) {
             player.displayClientMessage(Component.literal("You climbed the Grimoire Tower... but no grimoire answered your call.")
@@ -86,7 +86,8 @@ public final class GrimoireAcceptance {
         GrimoireCover cover = kingdom.coverFor(leaves);
         MagicType magic;
         Devil devil = null;
-        if (leaves >= 5 && "EMPTY".equals(soul)) {
+        // 0.48: Anti-Magic is event-only (gamerule nusmpAntiMagicEventOnly / config antiMagicEventOnly): an empty soul rolls like any other
+        if (leaves >= 5 && "EMPTY".equals(soul) && !com.newuniverse.nusmp.NUGameRules.antiMagicEventOnly(player.level())) {
             magic = MagicType.ANTI_MAGIC;
             devil = Devil.LIEBE;
         } else {
@@ -182,7 +183,7 @@ public final class GrimoireAcceptance {
             // 0.39: the Convergence keeps anomalies secret: the details are theirs, the world only feels a disturbance
             player.displayClientMessage(msg, false);
             com.newuniverse.nusmp.multiverse.Convergence.announceGrimoire(player.getServer());
-        } else if (leaves >= 4 || NUConfig.ANNOUNCE_THREE_LEAF.get()) {
+        } else if (leaves >= 4 || com.newuniverse.nusmp.NUGameRules.announceThreeLeaf(player.level())) {
             player.getServer().getPlayerList().broadcastSystemMessage(msg, false);
         } else {
             player.displayClientMessage(msg, false);
