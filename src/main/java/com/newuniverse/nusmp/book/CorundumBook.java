@@ -35,7 +35,10 @@ public class CorundumBook extends GrimoireBook {
                     () -> new MobEffectInstance(MobEffects.ABSORPTION, 400, 1))),
             BookPage.zone("corundum_bastion", "Corundum Bastion", CorundumArts::bastion),
             BookPage.signature("ideal_closer", "Ideal Closer", CorundumArts::idealCloser).withAnim("signature"),
-            BookPage.daily("star_corundum", "Star Corundum", CorundumArts::starCorundum).withCooldown(6000));
+            BookPage.daily("star_corundum", "Star Corundum", CorundumArts::starCorundum).withCooldown(6000),
+            // 0.54: the summoned models and the gem armour layer
+            BookPage.mid("ideal_closer_fist", "Ideal Closer Fist", CorundumSummons::idealCloserFist).withCooldown(40),
+            BookPage.signature("gem_plate_armour", "Gem Plate Armour", CorundumSummons::gemPlateArmour).withAnim("signature"));
 
     public CorundumBook() { super(MagicType.CORUNDUM, COLOR); }
     @Override protected List<BookPage> familyPages() { return pages; }

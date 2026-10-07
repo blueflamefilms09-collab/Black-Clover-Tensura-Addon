@@ -1,0 +1,4 @@
+{
+ "nusmp.page.book_beast.spirit_beast_summon": "A beast of living flame steps out of the grimoire: a spectral lion-wolf with a ragged flame mane. It runs at your side and pounces on the nearest hostile within 12 blocks, biting for 7 damage (scaled by EP) and slowing what it hits, for 20 to 30 s (longer with EP). From 3.5x EP a spirit bear joins it and from 6x a spirit rhino. Casting again calls the pack anew.",
+ "nusmp.page.book_beast.primal_beast_form": "The beast inside breaks the surface. For 30 s fur, ears, a flaming tail and claws grow over you: Strength II, Speed II and your melee hits deal 4.5 extra damage (scaled by EP). Cast while sneaking it becomes the great-beast shape: a ghost beast head and shoulders hover over you, the bonus is 6 and you gain Resistance I. Signature page; the older Beast Form page stays as it was."
+}

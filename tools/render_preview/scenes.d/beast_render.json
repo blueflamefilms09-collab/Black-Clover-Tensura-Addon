@@ -1,0 +1,690 @@
+{
+ "beast_spirit_beast_idle": {
+  "kind": "geo",
+  "model": "beast_spirit_beast",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "80FFFFFF",
+  "anim": "idle",
+  "ages": [
+   0,
+   25
+  ],
+  "tile": [
+   400,
+   330
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6
+   },
+   {
+    "name": "front3q",
+    "yaw": -40,
+    "pitch": 12
+   }
+  ]
+ },
+ "beast_spirit_beast_run": {
+  "kind": "geo",
+  "model": "beast_spirit_beast",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "80FFFFFF",
+  "anim": "run",
+  "ages": [
+   0,
+   4,
+   8,
+   12
+  ],
+  "tile": [
+   400,
+   330
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6
+   },
+   {
+    "name": "front3q",
+    "yaw": -40,
+    "pitch": 12
+   }
+  ]
+ },
+ "beast_spirit_beast_attack": {
+  "kind": "geo",
+  "model": "beast_spirit_beast",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "80FFFFFF",
+  "anim": "attack",
+  "ages": [
+   0,
+   6,
+   10,
+   14,
+   18
+  ],
+  "tile": [
+   400,
+   330
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6
+   },
+   {
+    "name": "front3q",
+    "yaw": -40,
+    "pitch": 12
+   }
+  ]
+ },
+ "beast_spirit_beast_appear": {
+  "kind": "geo",
+  "model": "beast_spirit_beast",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "80FFFFFF",
+  "anim": "appear",
+  "ages": [
+   0,
+   4,
+   8,
+   12
+  ],
+  "tile": [
+   400,
+   330
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6
+   },
+   {
+    "name": "front3q",
+    "yaw": -40,
+    "pitch": 12
+   }
+  ]
+ },
+ "beast_spirit_beast_vanish": {
+  "kind": "geo",
+  "model": "beast_spirit_beast",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "80FFFFFF",
+  "anim": "vanish",
+  "ages": [
+   0,
+   4,
+   8,
+   12
+  ],
+  "tile": [
+   400,
+   330
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6
+   },
+   {
+    "name": "front3q",
+    "yaw": -40,
+    "pitch": 12
+   }
+  ]
+ },
+ "beast_spirit_bear_clips": {
+  "kind": "geo",
+  "model": "beast_spirit_bear",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "80FFFFFF",
+  "anim": "run",
+  "ages": [
+   0,
+   4,
+   8
+  ],
+  "tile": [
+   400,
+   330
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6
+   },
+   {
+    "name": "front3q",
+    "yaw": -40,
+    "pitch": 12
+   }
+  ]
+ },
+ "beast_spirit_bear_idle": {
+  "kind": "geo",
+  "model": "beast_spirit_bear",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "80FFFFFF",
+  "anim": "idle",
+  "ages": [
+   0,
+   25
+  ],
+  "tile": [
+   400,
+   330
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6
+   },
+   {
+    "name": "front3q",
+    "yaw": -40,
+    "pitch": 12
+   }
+  ]
+ },
+ "beast_spirit_bear_attack": {
+  "kind": "geo",
+  "model": "beast_spirit_bear",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "80FFFFFF",
+  "anim": "attack",
+  "ages": [
+   6,
+   10,
+   14
+  ],
+  "tile": [
+   400,
+   330
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6
+   },
+   {
+    "name": "front3q",
+    "yaw": -40,
+    "pitch": 12
+   }
+  ]
+ },
+ "beast_spirit_rhino_clips": {
+  "kind": "geo",
+  "model": "beast_spirit_rhino",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "80FFFFFF",
+  "anim": "run",
+  "ages": [
+   0,
+   4,
+   8
+  ],
+  "tile": [
+   400,
+   330
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6
+   },
+   {
+    "name": "front3q",
+    "yaw": -40,
+    "pitch": 12
+   }
+  ]
+ },
+ "beast_spirit_rhino_idle": {
+  "kind": "geo",
+  "model": "beast_spirit_rhino",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "80FFFFFF",
+  "anim": "idle",
+  "ages": [
+   0,
+   25
+  ],
+  "tile": [
+   400,
+   330
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6
+   },
+   {
+    "name": "front3q",
+    "yaw": -40,
+    "pitch": 12
+   }
+  ]
+ },
+ "beast_spirit_rhino_attack": {
+  "kind": "geo",
+  "model": "beast_spirit_rhino",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "80FFFFFF",
+  "anim": "attack",
+  "ages": [
+   6,
+   10,
+   14
+  ],
+  "tile": [
+   400,
+   330
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6
+   },
+   {
+    "name": "front3q",
+    "yaw": -40,
+    "pitch": 12
+   }
+  ]
+ },
+ "beast_prop_lion": {
+  "kind": "prop",
+  "attr": "Beast",
+  "propKind": "BEAST_1",
+  "param": 0,
+  "seed": 3,
+  "scale": 1.0,
+  "maxLife": 300,
+  "ages": [
+   4,
+   9,
+   40,
+   150,
+   292
+  ],
+  "tile": [
+   380,
+   330
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 8
+   },
+   {
+    "name": "front3q",
+    "yaw": -40,
+    "pitch": 14
+   }
+  ]
+ },
+ "beast_prop_lion_bite": {
+  "kind": "prop",
+  "attr": "Beast",
+  "propKind": "BEAST_1",
+  "param": 36,
+  "seed": 3,
+  "scale": 1.0,
+  "maxLife": 300,
+  "ages": [
+   100,
+   140
+  ],
+  "tile": [
+   380,
+   330
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 8
+   },
+   {
+    "name": "front3q",
+    "yaw": -40,
+    "pitch": 14
+   }
+  ]
+ },
+ "beast_prop_bear": {
+  "kind": "prop",
+  "attr": "Beast",
+  "propKind": "BEAST_1",
+  "param": 1,
+  "seed": 4,
+  "scale": 1.0,
+  "maxLife": 300,
+  "ages": [
+   4,
+   9,
+   40,
+   150,
+   292
+  ],
+  "tile": [
+   380,
+   330
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 8
+   },
+   {
+    "name": "front3q",
+    "yaw": -40,
+    "pitch": 14
+   }
+  ]
+ },
+ "beast_prop_bear_bite": {
+  "kind": "prop",
+  "attr": "Beast",
+  "propKind": "BEAST_1",
+  "param": 37,
+  "seed": 4,
+  "scale": 1.0,
+  "maxLife": 300,
+  "ages": [
+   100,
+   140
+  ],
+  "tile": [
+   380,
+   330
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 8
+   },
+   {
+    "name": "front3q",
+    "yaw": -40,
+    "pitch": 14
+   }
+  ]
+ },
+ "beast_prop_rhino": {
+  "kind": "prop",
+  "attr": "Beast",
+  "propKind": "BEAST_1",
+  "param": 2,
+  "seed": 5,
+  "scale": 1.0,
+  "maxLife": 300,
+  "ages": [
+   4,
+   9,
+   40,
+   150,
+   292
+  ],
+  "tile": [
+   380,
+   330
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 8
+   },
+   {
+    "name": "front3q",
+    "yaw": -40,
+    "pitch": 14
+   }
+  ]
+ },
+ "beast_prop_rhino_bite": {
+  "kind": "prop",
+  "attr": "Beast",
+  "propKind": "BEAST_1",
+  "param": 38,
+  "seed": 5,
+  "scale": 1.0,
+  "maxLife": 300,
+  "ages": [
+   100,
+   140
+  ],
+  "tile": [
+   380,
+   330
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 8
+   },
+   {
+    "name": "front3q",
+    "yaw": -40,
+    "pitch": 14
+   }
+  ]
+ },
+ "beast_prop_claw": {
+  "kind": "prop",
+  "attr": "Beast",
+  "propKind": "BEAST_2",
+  "param": 0,
+  "seed": 5,
+  "scale": 1.0,
+  "maxLife": 14,
+  "ages": [
+   1,
+   4,
+   8,
+   12
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 5
+   }
+  ]
+ },
+ "beast_aura_form": {
+  "kind": "aura",
+  "attr": "Beast",
+  "aura": "BEAST",
+  "total": 600,
+  "ages": [
+   20,
+   100,
+   300
+  ],
+  "style": 0,
+  "tile": [
+   330,
+   430
+  ]
+ },
+ "beast_aura_great": {
+  "kind": "aura",
+  "attr": "Beast",
+  "aura": "BEAST",
+  "total": 600,
+  "ages": [
+   20,
+   100,
+   300
+  ],
+  "style": 1,
+  "tile": [
+   330,
+   430
+  ]
+ },
+ "beast_form_ghost_model": {
+  "kind": "geo",
+  "model": "beast_form_ghost",
+  "space": "PLAYER",
+  "layer": "TRANSLUCENT",
+  "argb": "FFFFFFFF",
+  "glow": "80FFFFFF",
+  "anim": "idle",
+  "ages": [
+   0,
+   30
+  ],
+  "tile": [
+   330,
+   430
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6
+   },
+   {
+    "name": "front3q",
+    "yaw": -40,
+    "pitch": 12
+   }
+  ]
+ },
+ "beast_form_parts_model": {
+  "kind": "geo",
+  "model": "beast_form_body",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "80FFFFFF",
+  "anim": "idle",
+  "ages": [
+   0,
+   30
+  ],
+  "tile": [
+   330,
+   430
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6
+   },
+   {
+    "name": "front3q",
+    "yaw": -40,
+    "pitch": 12
+   }
+  ]
+ },
+ "beast_form_head_model": {
+  "kind": "geo",
+  "model": "beast_form_head",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "80FFFFFF",
+  "anim": "idle",
+  "ages": [
+   0,
+   30
+  ],
+  "tile": [
+   330,
+   430
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6
+   },
+   {
+    "name": "front3q",
+    "yaw": -40,
+    "pitch": 12
+   }
+  ]
+ },
+ "beast_form_claw_model": {
+  "kind": "geo",
+  "model": "beast_form_claw",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "80FFFFFF",
+  "anim": "idle",
+  "ages": [
+   0
+  ],
+  "tile": [
+   330,
+   430
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6
+   },
+   {
+    "name": "front3q",
+    "yaw": -40,
+    "pitch": 12
+   }
+  ]
+ }
+}

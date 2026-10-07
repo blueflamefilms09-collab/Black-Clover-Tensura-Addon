@@ -1,17 +1,558 @@
 {
+ "_comment": "Key Magic render scenes. The prop scenes draw geo models: run them in the same call AFTER a geo scene, e.g. RENDER_PREVIEW_BUILD=<scratch> python3 -B tools/render_preview/preview.py key_gate_closed key_prop_gate_fire key_prop_guard_idle key_prop_guard_stab key_aura",
  "key_gate_closed": {
-  "kind": "geo", "model": "key_gate", "anim": "idle", "glow": "FFFFD890", "scale": 1.0,
-  "ages": [0, 40, 80], "tile": [360, 420],
-  "views": [{"name": "front", "yaw": 0, "pitch": 8}, {"name": "three_quarter", "yaw": 35, "pitch": 14}, {"name": "back", "yaw": 180, "pitch": 10}]
+  "kind": "geo",
+  "model": "key_gate",
+  "anim": "idle",
+  "glow": "FFFFD890",
+  "scale": 1.0,
+  "ages": [
+   0,
+   40,
+   80
+  ],
+  "tile": [
+   360,
+   420
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8
+   },
+   {
+    "name": "three_quarter",
+    "yaw": 35,
+    "pitch": 14
+   },
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 10
+   }
+  ]
  },
  "key_gate_open": {
-  "kind": "geo", "model": "key_gate", "anim": "open", "glow": "FFFFD890", "scale": 1.0,
-  "ages": [0, 6, 12, 18, 30], "tile": [360, 420],
-  "views": [{"name": "front", "yaw": 0, "pitch": 8}, {"name": "three_quarter", "yaw": 40, "pitch": 14}]
+  "kind": "geo",
+  "model": "key_gate",
+  "anim": "open",
+  "glow": "FFFFD890",
+  "scale": 1.0,
+  "ages": [
+   0,
+   6,
+   12,
+   18,
+   30
+  ],
+  "tile": [
+   360,
+   420
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8
+   },
+   {
+    "name": "three_quarter",
+    "yaw": 40,
+    "pitch": 14
+   }
+  ]
  },
  "key_great_key": {
-  "kind": "geo", "model": "key_great_key", "anim": "idle", "glow": "FFFFD890",
-  "ages": [0, 20, 40, 60], "tile": [420, 300],
-  "views": [{"name": "side", "yaw": 90, "pitch": 6}, {"name": "front", "yaw": 0, "pitch": 6}, {"name": "top", "yaw": 90, "pitch": 60}]
+  "kind": "geo",
+  "model": "key_great_key",
+  "anim": "idle",
+  "glow": "FFFFD890",
+  "ages": [
+   0,
+   20,
+   40,
+   60
+  ],
+  "tile": [
+   480,
+   320
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 8,
+    "target": [
+     0,
+     0.75,
+     0
+    ],
+    "dist": 6.5
+   },
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     0.75,
+     0
+    ],
+    "dist": 5
+   },
+   {
+    "name": "above",
+    "yaw": 60,
+    "pitch": 50,
+    "target": [
+     0,
+     0.75,
+     0
+    ],
+    "dist": 6.5
+   }
+  ]
+ },
+ "key_great_thrust": {
+  "kind": "geo",
+  "model": "key_great_key",
+  "anim": "thrust",
+  "glow": "FFFFD890",
+  "ages": [
+   0,
+   4,
+   7,
+   9,
+   12,
+   16
+  ],
+  "tile": [
+   480,
+   320
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 8,
+    "target": [
+     0,
+     0.75,
+     0
+    ],
+    "dist": 6.5
+   },
+   {
+    "name": "34",
+    "yaw": 40,
+    "pitch": 14,
+    "target": [
+     0,
+     0.75,
+     0
+    ],
+    "dist": 6.5
+   }
+  ]
+ },
+ "key_prop_gate_fire": {
+  "kind": "prop",
+  "attr": "Key",
+  "propKind": "KEY_1",
+  "param": 0,
+  "seed": 3,
+  "scale": 0.85,
+  "maxLife": 160,
+  "ages": [
+   2,
+   6,
+   10,
+   14,
+   18,
+   24,
+   60,
+   100,
+   148,
+   156
+  ],
+  "tile": [
+   360,
+   400
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 10
+   },
+   {
+    "name": "side",
+    "yaw": 50,
+    "pitch": 22
+   }
+  ]
+ },
+ "key_prop_gate_ice": {
+  "kind": "prop",
+  "attr": "Key",
+  "propKind": "KEY_1",
+  "param": 1,
+  "seed": 3,
+  "scale": 0.85,
+  "maxLife": 160,
+  "ages": [
+   60,
+   100
+  ],
+  "tile": [
+   360,
+   400
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 10
+   },
+   {
+    "name": "side",
+    "yaw": 50,
+    "pitch": 22
+   }
+  ]
+ },
+ "key_prop_gate_lightning": {
+  "kind": "prop",
+  "attr": "Key",
+  "propKind": "KEY_1",
+  "param": 2,
+  "seed": 3,
+  "scale": 0.85,
+  "maxLife": 160,
+  "ages": [
+   60,
+   100
+  ],
+  "tile": [
+   360,
+   400
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 10
+   },
+   {
+    "name": "side",
+    "yaw": 50,
+    "pitch": 22
+   }
+  ]
+ },
+ "key_prop_gate_wind": {
+  "kind": "prop",
+  "attr": "Key",
+  "propKind": "KEY_1",
+  "param": 3,
+  "seed": 3,
+  "scale": 0.85,
+  "maxLife": 160,
+  "ages": [
+   60,
+   100
+  ],
+  "tile": [
+   360,
+   400
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 10
+   },
+   {
+    "name": "side",
+    "yaw": 50,
+    "pitch": 22
+   }
+  ]
+ },
+ "key_prop_gate_ground": {
+  "kind": "prop",
+  "attr": "Key",
+  "propKind": "KEY_1",
+  "param": 0,
+  "seed": 3,
+  "scale": 0.85,
+  "maxLife": 160,
+  "ages": [
+   40
+  ],
+  "tile": [
+   360,
+   400
+  ],
+  "views": [
+   {
+    "name": "top",
+    "yaw": 30,
+    "pitch": 58
+   }
+  ]
+ },
+ "key_prop_guard_idle": {
+  "kind": "prop",
+  "attr": "Key",
+  "propKind": "KEY_2",
+  "param": 12,
+  "seed": 5,
+  "scale": 0.55,
+  "maxLife": 300,
+  "ages": [
+   4,
+   8,
+   40,
+   90,
+   140,
+   292
+  ],
+  "tile": [
+   420,
+   320
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 8,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 5.5
+   },
+   {
+    "name": "front",
+    "yaw": 15,
+    "pitch": 12,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 5.5
+   }
+  ]
+ },
+ "key_prop_guard_windup": {
+  "kind": "prop",
+  "attr": "Key",
+  "propKind": "KEY_2",
+  "param": 780,
+  "seed": 5,
+  "scale": 0.55,
+  "maxLife": 300,
+  "ages": [
+   60
+  ],
+  "tile": [
+   420,
+   320
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 8,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 5.5
+   },
+   {
+    "name": "front",
+    "yaw": 15,
+    "pitch": 12,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 5.5
+   }
+  ],
+  "target": [
+   0,
+   0.2,
+   6
+  ]
+ },
+ "key_prop_guard_stab": {
+  "kind": "prop",
+  "attr": "Key",
+  "propKind": "KEY_2",
+  "param": 2316,
+  "seed": 5,
+  "scale": 0.55,
+  "maxLife": 300,
+  "ages": [
+   60
+  ],
+  "tile": [
+   420,
+   320
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 8,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 5.5
+   },
+   {
+    "name": "front",
+    "yaw": 15,
+    "pitch": 12,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 5.5
+   }
+  ],
+  "target": [
+   0,
+   0.2,
+   6
+  ]
+ },
+ "key_prop_guard_recover": {
+  "kind": "prop",
+  "attr": "Key",
+  "propKind": "KEY_2",
+  "param": 3852,
+  "seed": 5,
+  "scale": 0.55,
+  "maxLife": 300,
+  "ages": [
+   60
+  ],
+  "tile": [
+   420,
+   320
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 8,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 5.5
+   },
+   {
+    "name": "front",
+    "yaw": 15,
+    "pitch": 12,
+    "target": [
+     0,
+     0,
+     0
+    ],
+    "dist": 5.5
+   }
+  ],
+  "target": [
+   0,
+   0.2,
+   6
+  ]
+ },
+ "key_aura": {
+  "kind": "aura",
+  "attr": "Key",
+  "aura": "KEY",
+  "total": 300,
+  "ages": [
+   6,
+   14,
+   40,
+   90,
+   200,
+   290
+  ],
+  "style": 0,
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 12
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6
+   },
+   {
+    "name": "back",
+    "yaw": 200,
+    "pitch": 10
+   }
+  ]
+ },
+ "key_mini_key": {
+  "kind": "geo",
+  "model": "key_mini_key",
+  "anim": "idle",
+  "glow": "FFFFD890",
+  "ages": [
+   0,
+   20,
+   40,
+   60
+  ],
+  "tile": [
+   480,
+   320
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 8,
+    "target": [
+     0,
+     0.75,
+     0
+    ],
+    "dist": 3.5
+   },
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     0.75,
+     0
+    ],
+    "dist": 3.5
+   }
+  ]
  }
 }

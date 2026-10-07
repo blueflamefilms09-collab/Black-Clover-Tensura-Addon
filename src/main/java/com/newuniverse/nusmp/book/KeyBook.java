@@ -35,7 +35,10 @@ public class KeyBook extends GrimoireBook {
             BookPage.zone("locked_domain", "Locked Domain", KeyArts::lockedDomain),
             BookPage.zone("key_armory", "Key Armory", KeyArts::keyArmory),
             BookPage.signature("janus_abigail", "Janus Abigail", KeyArts::janusAbigail).withAnim("signature"),
-            BookPage.daily("doom_s_gate", "Doom's Gate", KeyArts::doomsGate).withCooldown(24000).withAnim("signature"));
+            BookPage.daily("doom_s_gate", "Doom's Gate", KeyArts::doomsGate).withCooldown(24000).withAnim("signature"),
+            // 0.54: summoned models and a render layer (KeySummons, prop.KeyProps, client.prop.KeyPropPainter, client.aura.KeyAura)
+            BookPage.zone("gate_of_keys", "Gate of Keys", KeySummons::gateOfKeys).withAnim("out"),
+            BookPage.zone("key_guard", "Key Guard", KeySummons::keyGuard).withCooldown(400).withAnim("up"));
 
     public KeyBook() { super(MagicType.KEY, COLOR); }
     @Override protected List<BookPage> familyPages() { return pages; }

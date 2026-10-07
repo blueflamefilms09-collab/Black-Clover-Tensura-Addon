@@ -1,0 +1,473 @@
+{
+ "corundum_gauntlet_idle": {
+  "kind": "geo",
+  "model": "corundum_gauntlet",
+  "anim": "idle",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   30
+  ],
+  "tile": [
+   520,
+   440
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 28,
+    "pitch": 14,
+    "target": [
+     0,
+     1.5,
+     0.5
+    ],
+    "dist": 5.2
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.5,
+     0.5
+    ],
+    "dist": 7.2
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 155,
+    "pitch": 18,
+    "target": [
+     0,
+     1.5,
+     1.0
+    ],
+    "dist": 6.2
+   }
+  ]
+ },
+ "corundum_gauntlet_punch": {
+  "kind": "geo",
+  "model": "corundum_gauntlet",
+  "anim": "punch",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   6,
+   8.4,
+   12,
+   20
+  ],
+  "tile": [
+   380,
+   330
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.5,
+     0.5
+    ],
+    "dist": 8.5
+   }
+  ]
+ },
+ "corundum_gauntlet_slam": {
+  "kind": "geo",
+  "model": "corundum_gauntlet",
+  "anim": "slam",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   6,
+   8.4,
+   12,
+   20
+  ],
+  "tile": [
+   380,
+   330
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.5,
+     0.5
+    ],
+    "dist": 8.5
+   }
+  ]
+ },
+ "corundum_gem_shard_idle": {
+  "kind": "geo",
+  "model": "corundum_gem_shard",
+  "anim": "idle",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   10,
+   20,
+   30
+  ],
+  "tile": [
+   330,
+   330
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 8,
+    "target": [
+     0,
+     1.0,
+     0.3
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 30,
+    "pitch": 16,
+    "target": [
+     0,
+     1.0,
+     0.3
+    ],
+    "dist": 3.4
+   }
+  ]
+ },
+ "corundum_gem_shard_fire": {
+  "kind": "geo",
+  "model": "corundum_gem_shard",
+  "anim": "fire",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   4,
+   8,
+   12
+  ],
+  "tile": [
+   330,
+   330
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 8,
+    "target": [
+     0,
+     1.0,
+     0.3
+    ],
+    "dist": 3.8
+   }
+  ]
+ },
+ "corundum_armour_view": {
+  "kind": "geo",
+  "model": "corundum_armour",
+  "space": "PLAYER",
+  "anim": "idle",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   30
+  ],
+  "tile": [
+   300,
+   420
+  ]
+ },
+ "corundum_wings_view": {
+  "kind": "geo",
+  "model": "corundum_wings",
+  "space": "PLAYER",
+  "anim": "idle",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   30
+  ],
+  "tile": [
+   300,
+   420
+  ]
+ },
+ "corundum_crown_view": {
+  "kind": "geo",
+  "model": "corundum_crown",
+  "space": "PLAYER",
+  "anim": "idle",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   30
+  ],
+  "tile": [
+   300,
+   420
+  ]
+ },
+ "corundum_prop_fist_punch": {
+  "kind": "prop",
+  "attr": "Corundum",
+  "propKind": "CORUNDUM_1",
+  "param": 0,
+  "scale": 0.9,
+  "maxLife": 64,
+  "pos": [
+   0,
+   1.45,
+   0
+  ],
+  "figure": false,
+  "ages": [
+   3,
+   10,
+   16,
+   20,
+   22,
+   26,
+   40,
+   58
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 14,
+    "target": [
+     0,
+     1.4,
+     0
+    ],
+    "dist": 6.2
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.4,
+     0
+    ],
+    "dist": 6.6
+   }
+  ]
+ },
+ "corundum_prop_fist_slam": {
+  "kind": "prop",
+  "attr": "Corundum",
+  "propKind": "CORUNDUM_1",
+  "param": 3,
+  "scale": 0.9,
+  "maxLife": 64,
+  "pos": [
+   0,
+   1.45,
+   0
+  ],
+  "figure": false,
+  "ages": [
+   3,
+   12,
+   18,
+   22,
+   24,
+   27,
+   40,
+   58
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 14,
+    "target": [
+     0,
+     1.4,
+     0
+    ],
+    "dist": 6.2
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.4,
+     0
+    ],
+    "dist": 6.6
+   }
+  ]
+ },
+ "corundum_prop_shard": {
+  "kind": "prop",
+  "attr": "Corundum",
+  "propKind": "CORUNDUM_2",
+  "param": 65,
+  "scale": 0.45,
+  "maxLife": 400,
+  "pos": [
+   0,
+   1.3,
+   0
+  ],
+  "figure": false,
+  "ages": [
+   6,
+   40,
+   100,
+   200
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 14,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 2.8
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 2.8
+   }
+  ]
+ },
+ "corundum_prop_shard_dart": {
+  "kind": "prop",
+  "attr": "Corundum",
+  "propKind": "CORUNDUM_2",
+  "param": 321,
+  "scale": 0.45,
+  "maxLife": 400,
+  "pos": [
+   0,
+   1.3,
+   0
+  ],
+  "target": [
+   0.0,
+   2.0,
+   4.0
+  ],
+  "figure": false,
+  "ages": [
+   100,
+   101
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.5,
+     1
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 14,
+    "target": [
+     0,
+     1.5,
+     1
+    ],
+    "dist": 3.4
+   }
+  ]
+ },
+ "corundum_aura_armour": {
+  "kind": "aura",
+  "attr": "Corundum",
+  "aura": "CORUNDUM",
+  "style": 0,
+  "total": 120,
+  "ages": [
+   4,
+   14,
+   40,
+   80
+  ],
+  "tile": [
+   300,
+   420
+  ]
+ },
+ "corundum_aura_crown": {
+  "kind": "aura",
+  "attr": "Corundum",
+  "aura": "CORUNDUM",
+  "style": 1,
+  "total": 120,
+  "ages": [
+   14,
+   40,
+   80
+  ],
+  "tile": [
+   300,
+   420
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 12
+   },
+   {
+    "name": "back",
+    "yaw": 160,
+    "pitch": 10
+   }
+  ]
+ }
+}

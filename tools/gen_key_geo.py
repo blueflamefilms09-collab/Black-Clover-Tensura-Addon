@@ -111,8 +111,8 @@ GLOWGOLD = [(0.0, (0.75, 0.5, 0.14)), (0.6, (1.0, 0.82, 0.38)), (1.0, (1.0, 0.97
 VOID = [(0.0, (0.02, 0.0, 0.06)), (0.5, (0.12, 0.04, 0.26)), (1.0, (0.36, 0.16, 0.62))]
 
 MATS = {
-    "gold": dict(stops=GOLD, grain=0.07, streak=0.10, spot=0.0),
-    "gold_old": dict(stops=GOLD_OLD, grain=0.09, streak=0.06, spot=0.12),
+    "gold": dict(stops=GOLD, grain=0.07, streak=0.10, spot=0.0, bias=0.14),
+    "gold_old": dict(stops=GOLD_OLD, grain=0.09, streak=0.06, spot=0.12, bias=0.10),
     "stone": dict(stops=STONE, grain=0.08, bricks=8, spot=0.0),
     "stone_dark": dict(stops=STONE_DARK, grain=0.08, bricks=0, spot=0.1),
     "wood": dict(stops=WOOD, grain=0.06, vgrain=0.18),
@@ -130,7 +130,7 @@ def mat_face(name, face, w, h, seed):
     m = MATS[name]
     w, h = max(1, w), max(1, h)
     lo = vnoise(w, h, seed, 4.0)
-    t = 0.50 + (lo - 0.5) * 0.55
+    t = 0.50 + m.get("bias", 0.0) + (lo - 0.5) * 0.55
     t += (np.random.RandomState(seed + 1).rand(h, w).astype(np.float32) - 0.5) * m.get("grain", 0.05) * 2
     yy = np.linspace(0.12, -0.12, h, dtype=np.float32)[:, None]
     t = t + yy
@@ -450,10 +450,12 @@ def build_gate():
           rotation=(0, 0, th - 90), pivot=(cx, cy, 0))
     # keystone gem and the crown above it
     c("frame", (-2.5, 70.2, -5.2), (5, 5, 2), "gem", rotation=(0, 0, 45), pivot=(0, 72.7, -4.2), glow=(0.7, 0.4, 1.0))
-    c("frame", (-1, 77.5, -1), (2, 4, 2), "gold", inflate=0.1)
-    c("frame", (-0.5, 81, -0.5), (1, 2, 1), "glowgold")
+    c("frame", (-4, 67.5, -3.5), (8, 3, 7), "gold", inflate=0.1)                 # the pedestal the crown stands on
+    c("frame", (-2.5, 70, -2.5), (5, 2, 5), "gold_old")
+    c("frame", (-1, 72, -1), (2, 5, 2), "gold", inflate=0.1)
+    c("frame", (-0.5, 77, -0.5), (1, 2, 1), "glowgold")
     for sg, ang in ((-1, 32), (1, -32)):
-        c("frame", (sg * 5.5 - 0.75, 75.5, -1), (2, 6, 2), "gold", rotation=(0, 0, ang), pivot=(sg * 5.5, 75.5, 0))
+        c("frame", (sg * 4.5 - 0.75, 71.5, -1), (2, 6, 2), "gold", rotation=(0, 0, ang), pivot=(sg * 4.5, 71.5, 0))
 
     # ---- the tympanum: a half disc of dark inlaid slabs filling the arch above the leaves
     for j in range(7):
@@ -526,26 +528,36 @@ def build_gate():
         an.pos("idle", nm, pts)
         an.rot("idle", nm, {0.0: (0, 0, 0), 4.0: (0, 0, 0)})
     an.clip("open", length=0.9, loop=False)
-    an.rot("open", "door_l", {0.0: (0, 0, 0), 0.15: (0, -4, 0), 0.9: (0, 100, 0)})
-    an.rot("open", "door_r", {0.0: (0, 0, 0), 0.15: (0, 4, 0), 0.9: (0, -100, 0)})
+    an.rot("open", "door_l", {0.0: (0, 0, 0), 0.15: (0, 4, 0), 0.9: (0, -78, 0)})
+    an.rot("open", "door_r", {0.0: (0, 0, 0), 0.15: (0, -4, 0), 0.9: (0, 78, 0)})
     for nm in ("hang_l", "hang_c", "hang_r"):
         an.rot("open", nm, {0.0: (0, 0, 0), 0.3: (0, 0, 9), 0.9: (0, 0, 0)})
     for i in range(4):
         an.pos("open", "rune_%d" % (i + 1), {0.0: (0, 0, 0), 0.9: (0, 4 + i, 0)})
     an.clip("open_hold", length=2.0, loop=True)
-    an.rot("open_hold", "door_l", {0.0: (0, 100, 0), 1.0: (0, 98, 0), 2.0: (0, 100, 0)})
-    an.rot("open_hold", "door_r", {0.0: (0, -100, 0), 1.0: (0, -98, 0), 2.0: (0, -100, 0)})
+    an.rot("open_hold", "door_l", {0.0: (0, -78, 0), 1.0: (0, -76, 0), 2.0: (0, -78, 0)})
+    an.rot("open_hold", "door_r", {0.0: (0, 78, 0), 1.0: (0, 76, 0), 2.0: (0, 78, 0)})
     for nm, sg in (("hang_l", 1), ("hang_c", -1), ("hang_r", 1)):
         an.rot("open_hold", nm, {0.0: (0, 0, 4 * sg), 1.0: (0, 0, -4 * sg), 2.0: (0, 0, 4 * sg)})
     for i in range(4):
         y0 = 4 + i
         an.pos("open_hold", "rune_%d" % (i + 1), {0.0: (0, y0, 0), 1.0: (0, y0 + 3, 0), 2.0: (0, y0, 0)})
     an.clip("close", length=0.8, loop=False)
-    an.rot("close", "door_l", {0.0: (0, 100, 0), 0.65: (0, 0, 0), 0.72: (0, -3, 0), 0.8: (0, 0, 0)})
-    an.rot("close", "door_r", {0.0: (0, -100, 0), 0.65: (0, 0, 0), 0.72: (0, 3, 0), 0.8: (0, 0, 0)})
+    an.rot("close", "door_l", {0.0: (0, -78, 0), 0.65: (0, 0, 0), 0.72: (0, 3, 0), 0.8: (0, 0, 0)})
+    an.rot("close", "door_r", {0.0: (0, 78, 0), 0.65: (0, 0, 0), 0.72: (0, -3, 0), 0.8: (0, 0, 0)})
     for i in range(4):
         an.pos("close", "rune_%d" % (i + 1), {0.0: (0, 4 + i, 0), 0.8: (0, 0, 0)})
     return k, an
+
+
+def lift(k, dy):
+    """Raises the whole model by dy pixels (cubes, cube pivots and bone pivots)."""
+    for b in k.m.bones.values():
+        b["pivot"][1] += dy
+        for cu in b["cubes"]:
+            cu["origin"][1] += dy
+            if "pivot" in cu:
+                cu["pivot"][1] += dy
 
 
 # ================================================================================================ THE GREAT KEY
@@ -606,6 +618,7 @@ def build_key():
     c("key", (-0.8, -0.8, -31), (2, 2, 3), "gold")
     c("key", (-0.5, -0.5, -34), (1, 1, 3), "glowgold", glow=(1.0, 0.95, 0.75))
 
+    lift(k, 12)                                              # the key's centre hovers 0.75 block over the model's origin
     an = Anim()
     an.clip("idle", length=4.0, loop=True)
     an.rot("idle", "key", {0.0: (0, 0, 0), 1.0: (0, 0, 90), 2.0: (0, 0, 180), 3.0: (0, 0, 270), 4.0: (0, 0, 360)})
@@ -615,6 +628,32 @@ def build_key():
     an.pos("thrust", "root", {0.0: (0, 0, 0), 0.22: (0, 0, 10), 0.34: (0, 0, -16), 0.4: (0, 0, -16), 0.6: (0, 0, 0)})
     an.rot("thrust", "key", {0.0: (0, 0, 0), 0.22: (0, 0, 0), 0.34: (0, 0, 120), 0.6: (0, 0, 360)})
     an.rot("thrust", "root", {0.0: (0, 0, 0), 0.22: (-6, 0, 0), 0.34: (4, 0, 0), 0.6: (0, 0, 0)})
+    return k, an
+
+
+# ================================================================================================ THE MINI KEY (the aura's orbiting keys)
+def build_mini():
+    """A light version of the great key (about 16 cubes) for the three keys that orbit a player: same silhouette, same materials."""
+    k = KeyModel("mini_key", 64, 64)
+    k.bone("root", pivot=(0, 0, 0))
+    k.bone("key", parent="root", pivot=(0, 0, 0))
+    c = k.cube
+    BZ, RR, NSEG = 17.0, 5.0, 8
+    for i in range(NSEG):
+        a = i * 360.0 / NSEG
+        px, py = RR * math.cos(math.radians(a)), RR * math.sin(math.radians(a))
+        c("key", (px - 2, py - 2, BZ - 1.5), (4, 4, 3), "gold", rotation=(0, 0, a + 90), pivot=(px, py, BZ), inflate=0.1)
+    c("key", (-2, -2, BZ - 1.2), (4, 4, 2), "gem", rotation=(0, 0, 45), pivot=(0, 0, BZ), glow=(0.75, 0.45, 1.0))
+    c("key", (-2.5, -2.5, 9), (5, 5, 2), "gold_old", inflate=0.2)
+    c("key", (-1.5, -1.5, -20), (3, 3, 29), custom=shaft_face, inflate=0.3)
+    for i, hgt in enumerate((5, 3, 5)):
+        c("key", (-1, 1.5, -19 + i * 4), (2, hgt, 3), custom=bit_face)
+    c("key", (-1, -1, -23), (2, 2, 3), "gold")
+    c("key", (-0.5, -0.5, -25), (1, 1, 2), "glowgold", glow=(1.0, 0.95, 0.75))
+    lift(k, 12)
+    an = Anim()
+    an.clip("idle", length=4.0, loop=True)
+    an.rot("idle", "key", {0.0: (0, 0, 0), 1.0: (0, 0, 90), 2.0: (0, 0, 180), 3.0: (0, 0, 270), 4.0: (0, 0, 360)})
     return k, an
 
 
@@ -662,12 +701,15 @@ def aura_textures():
     soft = glyph.filter(ImageFilter.GaussianBlur(5))
     comp = Image.alpha_composite(soft, glyph)
     comp = Image.alpha_composite(comp, glyph)
+    a = np.asarray(comp).copy()
+    a[a[..., 3] < 10] = 0                                          # no faint haze in the empty middle
+    comp = Image.fromarray(a, "RGBA")
     comp.save(os.path.join(out, "key_aura_glyph.png"))
     print("key_aura_glyph  %dx%d" % comp.size)
 
 
 def main():
-    for build in (build_gate, build_key):
+    for build in (build_gate, build_key, build_mini):
         k, an = build()
         k.save(an)
     aura_textures()
