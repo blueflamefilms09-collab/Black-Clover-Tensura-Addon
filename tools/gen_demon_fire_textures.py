@@ -235,7 +235,7 @@ def orb():
     d = np.maximum((r0 + 0.012 * (ang_noise(th, 20, 3) - 0.5) * 2 - r) * px, licks_d(r, th, r0 - 0.02, specs, px))
     alpha = np.clip(d / 1.2 + 0.5, 0, 1)
     inside = np.clip(d, 0, None)
-    light = np.clip(np.cos(th + 2.356), 0, 1) ** 1.3                            # light from the upper left
+    light = 0.55 + 0.45 * np.clip(np.cos(th + 2.356), 0, 1)                            # light from the upper left
     swirl = 0.5 + 0.5 * np.sin(5 * (th - 2.0 * r) + 7 * r)
     lum = (0.02 + 0.05 * swirl * sstep(0.1, 0.55, r) + 0.14 * np.exp(-((r - 0.42) / 0.012) ** 2)
            + (0.30 + 0.70 * light) * (0.95 * np.exp(-inside / 2.2) + 0.40 * np.exp(-inside / 7.0)) + 0.22 * np.exp(-inside / 1.8))
@@ -408,14 +408,14 @@ def wall():
     w, h = 256, 128
     rng = np.random.default_rng(9)
     tongues = []
-    n = 7
+    n = 4
     for k in range(n):
         x0 = (k + 0.5 + rng.uniform(-0.12, 0.12)) / n * w
-        tongues.append(dict(x0=x0, v0=0.0, hh=rng.uniform(0.62, 1.0), w0=rng.uniform(17, 24), lean=rng.uniform(-9, 9), sway=rng.uniform(3, 8),
+        tongues.append(dict(x0=x0, v0=0.0, hh=rng.uniform(0.62, 1.0), w0=rng.uniform(30, 40), lean=rng.uniform(-14, 14), sway=rng.uniform(5, 12),
                             freq=rng.uniform(2.4, 3.6), phase=rng.uniform(0, 6.28), pw=1.5, pq=0.8))
     for k in range(n):                                                              # small tongues filling the gaps, lower
         x0 = (k + 1.0) / n * w + rng.uniform(-3, 3)
-        tongues.append(dict(x0=x0, v0=0.0, hh=rng.uniform(0.30, 0.52), w0=rng.uniform(10, 14), lean=rng.uniform(-6, 6), sway=2,
+        tongues.append(dict(x0=x0, v0=0.0, hh=rng.uniform(0.34, 0.58), w0=rng.uniform(16, 22), lean=rng.uniform(-6, 6), sway=2,
                             freq=2.2, phase=rng.uniform(0, 6.28), pw=1.4, pq=0.8))
     lum, alpha = flame_sprite(w, h, tongues, 303, periodic=True, base_fade=0.10)
     save(lum, alpha, "wall")

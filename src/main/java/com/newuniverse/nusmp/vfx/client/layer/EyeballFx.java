@@ -28,7 +28,9 @@ final class EyeballFx {
     static int tint(VfxInstance inst) { return VfxVertexBuffer.lerpColor(BLOOD, 0xFF000000 | inst.color, 0.4f); }
 
     /** Colour with its alpha scaled (clamped to 0..1). */
-    static int a(int argb, float k) { return VfxVertexBuffer.withAlpha(argb, Mth.clamp(k, 0f, 1f)); }
+    static int col(int argb, float k) { return VfxVertexBuffer.withAlpha(argb, Mth.clamp(k, 0f, 1f)); }
+
+    static float sq(float x) { return x * x; }
 
     static int mix(int c0, int c1, float t) { return VfxVertexBuffer.lerpColor(c0, c1, Mth.clamp(t, 0f, 1f)); }
 
@@ -138,6 +140,12 @@ final class EyeballFx {
                     pose.point(Mth.cos(a1) * radius, Mth.sin(a1) * radius).add(n), pose.point(Mth.cos(a0) * radius, Mth.sin(a0) * radius).add(n),
                     u0, 0, u1, 1, col, col);
         }
+    }
+
+    /** A flat ring sprite: facing the camera when {@code axis} is null, otherwise lying across that axis (a ring the beam passes through). */
+    static void ring(VfxVertexBuffer buf, VfxRenderContext ctx, ResourceLocation tex, VfxBlend blend, Vector3f c, Vector3f axis, float size, float rot, int argb) {
+        if (axis == null || axis.lengthSquared() < 1e-6f) buf.billboard(ctx, tex, blend, c, size, rot, argb);
+        else buf.plane(tex, blend, VfxPose.facing(c, axis).spin(rot), size * 0.5f, argb);
     }
 
     // ------------------------------------------------------------------ the eyeball

@@ -108,7 +108,7 @@ public class CurseLayer extends AbstractVfxLayer {
             inkGlow(buf, SIGIL, face, r, al(INK, 0.85f * sigA), al(pal.hi, 0.95f * sigA));
             VfxPose back = VfxPose.facing(new Vector3f(mc).add(new Vector3f(dir).mul(0.22f * p)), dir).spin(-age * 0.4f + 1f);
             buf.plane(SIGIL, VfxBlend.ADD, back, r * 0.6f, al(pal.hot, 0.6f * sigA));
-            buf.billboard(ctx, FLASH, VfxBlend.ADD, mc, p * (0.4f + 1.1f * chg * chg), age * 0.3f, al(pal.hot, sigA * chg));
+            buf.billboard(ctx, FLASH, VfxBlend.ADD, mc, p * (0.25f + 0.55f * chg * chg), age * 0.3f, al(pal.hot, 0.8f * sigA * chg));
             VfxBloom.glow(ctx, buf, mc, 0.45f * p * (0.4f + 0.6f * chg), pal.glow, sigA);
             int nm = ctx.seg(5, 3);
             float moteA = (float) Math.sin(Mth.PI * clamp01(age / (0.3f * D)));
@@ -127,7 +127,7 @@ public class CurseLayer extends AbstractVfxLayer {
             if (l2 > 0.1f) {
                 Vector3f h2 = new Vector3f(dir).mul(len * s2).add(a);
                 Vector3f[] pts = new Vector3f[3];
-                float[] wd = {1.3f * p, 1.3f * p, 1.3f * p};
+                float[] wd = {1.5f * p, 1.5f * p, 1.5f * p};
                 int[] cg = new int[3];
                 for (int k = 0; k < 3; k++) {
                     float f = k / 2f;
@@ -150,17 +150,17 @@ public class CurseLayer extends AbstractVfxLayer {
                 pts[k] = new Vector3f(head).sub(new Vector3f(dir).mul(bodyLen * (1 - f)))
                         .add(new Vector3f(sd).mul(Mth.sin(age * 0.85f + k * 1.7f) * 0.10f * p * env))
                         .add(new Vector3f(up2).mul(Mth.cos(age * 0.7f + k * 2.3f) * 0.08f * p * env));
-                wdI[k] = 0.84f * p;
-                wdG[k] = 0.80f * p;
+                wdI[k] = 1.0f * p;
+                wdG[k] = 0.96f * p;
                 ci[k] = al(INK, 0.97f * bodyA * (0.45f + 0.55f * f));
                 cg[k] = al(VfxVertexBuffer.lerpColor(pal.deep, pal.hot, f * f), bodyA * (0.30f + 0.70f * f));
             }
             ribbon(buf, BOLT, VfxBlend.ALPHA, pts, wdI, ci);
             ribbon(buf, BOLT, VfxBlend.ADD, pts, wdG, cg);
             float hf = launched * arrive * fade;
-            buf.billboard(ctx, FLASH, VfxBlend.ADD, head, 1.5f * p, age * 0.45f, al(pal.hot, 0.95f * hf));
-            buf.billboard(ctx, FLASH, VfxBlend.ADD, head, 1.05f * p, -age * 0.6f, al(pal.hi, 0.8f * hf));
-            VfxBloom.glow(ctx, buf, head, 0.75f * p, pal.glow, hf);
+            buf.billboard(ctx, FLASH, VfxBlend.ADD, head, 0.95f * p, age * 0.45f, al(pal.hot, 0.95f * hf));
+            buf.billboard(ctx, FLASH, VfxBlend.ADD, head, 0.65f * p, -age * 0.6f, al(pal.hi, 0.8f * hf));
+            VfxBloom.glow(ctx, buf, head, 0.5f * p, pal.glow, hf);
 
             // five runes cork-screwing round the shaft, flickering through the alphabet
             for (int k = 0; k < 5; k++) {
@@ -201,8 +201,8 @@ public class CurseLayer extends AbstractVfxLayer {
             float k = clamp01((age - ti) / (D - ti)), pop = VfxAnim.easeOutBack(clamp01((age - ti) / 3.2f));
             float vis = 1f - k * k;
             float fl = 1f - sstep(0f, 0.5f, k);
-            buf.billboard(ctx, FLASH, VfxBlend.ADD, b, 2.1f * p * pop, age * 0.3f, al(pal.hot, fl));
-            buf.billboard(ctx, FLASH, VfxBlend.ADD, b, 1.4f * p * pop, -age * 0.4f, al(pal.hi, 0.85f * fl));
+            buf.billboard(ctx, FLASH, VfxBlend.ADD, b, 1.6f * p * pop, age * 0.3f, al(pal.hot, fl));
+            buf.billboard(ctx, FLASH, VfxBlend.ADD, b, 1.1f * p * pop, -age * 0.4f, al(pal.hi, 0.85f * fl));
             VfxBloom.glow(ctx, buf, b, 1.0f * p, pal.glow, vis);
             inkGlow(buf, ctx, BRAND, b, 1.6f * p * pop, age * 0.07f, al(INK, 0.9f * vis), al(VfxVertexBuffer.lerpColor(pal.glow, pal.hot, 0.25f), 0.95f * vis));
             float rr = 0.35f * p + 1.5f * p * VfxAnim.easeOutCubic(k);
@@ -232,14 +232,14 @@ public class CurseLayer extends AbstractVfxLayer {
         float blightR = R * (0.35f + 0.80f * open);
         VfxPose vp = g.spin(0.6f + age * 0.0015f);
         buf.plane(VEINS, VfxBlend.ALPHA, vp, blightR, al(INK, 0.82f * fade));
-        buf.plane(VEINS, VfxBlend.ADD, vp.lift(0.012f), blightR, al(pal.glow, (0.42f + 0.35f * beat) * fade));
+        buf.plane(VEINS, VfxBlend.ADD, vp.lift(0.012f), blightR, al(pal.glow, (0.30f + 0.30f * beat) * fade));
 
         // ---- the sigil: a ring of runes, and a smaller one turning against it
         float sr = R * open;
         VfxPose sp = g.lift(0.02f).spin(age * 0.012f);
-        inkGlow(buf, SIGIL, sp, sr, al(INK, 0.92f * fade), al(pal.hi, 0.9f * fade));
+        inkGlow(buf, SIGIL, sp, sr, al(INK, 0.95f * fade), al(pal.hi, 0.78f * fade));
         VfxPose sp2 = g.lift(0.035f).spin(-age * 0.03f + 1f);
-        inkGlow(buf, SIGIL, sp2, sr * 0.56f, al(INK, 0.6f * fade), al(pal.glow, 0.7f * fade));
+        inkGlow(buf, SIGIL, sp2, sr * 0.56f, al(INK, 0.7f * fade), al(pal.glow, 0.55f * fade));
 
         // ---- the brand at the heart of it, beating
         float bs = Math.min(R * 0.32f, 2.8f) * (1f + 0.05f * Mth.sin(age * 0.35f)) * pop;
@@ -256,14 +256,14 @@ public class CurseLayer extends AbstractVfxLayer {
         }
 
         // ---- the wall: black thorns with glowing cracks and a row of runes, leaning inward
-        float hFull = Mth.clamp(0.7f + 0.2f * R, 1.2f, 3.6f);
+        float hFull = Mth.clamp(0.9f + 0.26f * R, 1.6f, 4.6f);
         float hh = hFull * VfxAnim.easeOutCubic(clamp01((age - 2f) / 12f));
         if (hh > 0.05f) {
             int seg = ctx.seg(12, 8);
             float rep = Math.max(2f, Math.round(Mth.TWO_PI * R / (4f * hFull)));
             VfxPose wp = VfxPose.ground(new Vector3f(c).add(0, hh * 0.5f + 0.03f, 0));
-            hoop(buf, WALL, VfxBlend.ALPHA, wp, R * 0.995f, R * 0.93f, hh * 0.5f, seg, rep, age * 0.0015f, al(INK, 0.85f * fade));
-            hoop(buf, WALL, VfxBlend.ADD, wp, R * 0.995f, R * 0.93f, hh * 0.5f, seg, rep, age * 0.0015f, al(pal.glow, (0.70f + 0.3f * beat) * fade));
+            hoop(buf, WALL, VfxBlend.ALPHA, wp, R * 0.995f, R * 0.80f, hh * 0.5f, seg, rep, age * 0.0015f, al(INK, 0.92f * fade));
+            hoop(buf, WALL, VfxBlend.ADD, wp, R * 0.995f, R * 0.80f, hh * 0.5f, seg, rep, age * 0.0015f, al(pal.glow, (0.50f + 0.20f * beat) * fade));
         }
 
         // ---- thorns rising out of the earth along the rim
@@ -341,31 +341,31 @@ public class CurseLayer extends AbstractVfxLayer {
                 buf.billboard(ctx, FLAKES, VfxBlend.ADD, q, 0.4f * p, hash(inst.seed, i, 3) * Mth.TWO_PI + age * 0.4f, al(pal.hi, 0.35f + 0.65f * an));
             }
             buf.plane(RING, VfxBlend.ADD, VfxPose.facing(c, new Vector3f(ctx.camRight).cross(ctx.camUp)), ringHalf(p * (2.2f * (1f - an) + 0.3f)), al(pal.glow, 0.9f * an));
-            buf.billboard(ctx, SMOKE, VfxBlend.ALPHA, c, p * (0.2f + 0.7f * an), age * 0.2f, al(INK, 0.95f));
+            buf.billboard(ctx, SMOKE, VfxBlend.ALPHA, c, p * (0.2f + 0.6f * an), age * 0.2f, al(INK, 0.95f));
             VfxBloom.glow(ctx, buf, c, 0.5f * p * an, pal.glow, an);
         }
 
-        // ---- the black sun: a mass of black smoke with a violet corona behind the flash
+        // ---- the black sun: a mass of black smoke ringed by a violet corona (hollow in the middle, so the black body reads), a hot flash at the hit
         float sun = VfxAnim.easeOutCubic(clamp01((age - ta + 1f) / 6f));
-        float sunSize = p * (0.6f + 2.0f * sun) * (1f - 0.35f * sstep(0.35f, 1f, k));
-        float sunA = 0.97f * (1f - sstep(0.55f, 1f, k));
+        float sunSize = p * (0.5f + 1.7f * sun) * (1f - 0.3f * sstep(0.35f, 1f, k));
+        float sunA = 0.97f * (1f - sstep(0.62f, 1f, k));
         if (sun > 0f && sunA > 0.01f) {
             buf.billboard(ctx, SMOKE, VfxBlend.ALPHA, c, sunSize, age * 0.05f, al(INK, sunA));
             buf.billboard(ctx, SMOKE, VfxBlend.ALPHA, c, sunSize * 0.72f, -age * 0.07f + 1.3f, al(INK, sunA));
-            float cor = 1f - sstep(0.15f, 0.85f, k);
-            buf.billboard(ctx, FLASH, VfxBlend.ADD, c, p * (2.6f + 3.2f * sun), age * 0.05f, al(pal.glow, 0.85f * cor));
-            buf.billboard(ctx, FLASH, VfxBlend.ADD, c, p * (1.9f + 2.3f * sun), -age * 0.08f, al(pal.hi, 0.7f * cor));
-            VfxBloom.glow(ctx, buf, c, 1.4f * p * (1f - 0.4f * k), pal.glow, (1f - k) * 1.1f);
-            float core = 1f - sstep(0f, 0.32f, k);
-            buf.billboard(ctx, FLASH, VfxBlend.ADD, c, p * (1.1f + 1.2f * sun), age * 0.2f, al(pal.hot, core));
+            float cor = 1f - sstep(0.30f, 0.92f, k);
+            buf.billboard(ctx, CORONA, VfxBlend.ADD, c, sunSize * 2.15f, age * 0.04f, al(pal.glow, 0.95f * cor));
+            buf.billboard(ctx, CORONA, VfxBlend.ADD, c, sunSize * 1.7f, -age * 0.07f + 0.8f, al(pal.hi, 0.8f * cor));
+            VfxBloom.glow(ctx, buf, c, 1.1f * p * (1f - 0.4f * k), pal.glow, (1f - k) * 0.8f);
+            float core = 1f - sstep(0f, 0.22f, k);
+            buf.billboard(ctx, FLASH, VfxBlend.ADD, c, p * (1.0f + 1.4f * sun), age * 0.2f, al(pal.hot, core));
             if (age - ta < 4.5f) {                                               // the hit: the world inverts for a few ticks
                 float inv = 1f - clamp01((age - ta + 1f) / 5.5f);
-                buf.billboard(ctx, FLASH, VfxBlend.NEGATIVE, c, p * (3.6f + 2.4f * sun), age * 0.1f, dim(pal.glow, 0.85f * inv));
+                buf.billboard(ctx, FLASH, VfxBlend.NEGATIVE, c, p * (3.2f + 2.0f * sun), age * 0.1f, dim(pal.glow, 0.75f * inv));
             }
             if (directed) {                                                      // a streak of light along the hint
                 float roll = (float) Math.atan2(hint.dot(ctx.camUp), hint.dot(ctx.camRight)) - Mth.HALF_PI;
                 Vector3f mid = new Vector3f(c).add(new Vector3f(hint).mul(1.2f * p * e));
-                tall(buf, ctx, FLASH, VfxBlend.ADD, mid, 0.9f * p * (1f - k), 5.0f * p * e, roll, al(pal.hot, 0.9f * (1f - sstep(0f, 0.55f, k))));
+                tall(buf, ctx, FLASH, VfxBlend.ADD, mid, 0.8f * p * (1f - k), 4.6f * p * e, roll, al(pal.hot, 0.9f * (1f - sstep(0f, 0.5f, k))));
             }
         }
 

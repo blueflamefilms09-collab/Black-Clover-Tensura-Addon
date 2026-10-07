@@ -88,17 +88,17 @@ public class DemonFireLayer extends AbstractVfxLayer {
         final float travel = flightCurve(fly);
         final Vector3f head = new Vector3f(dir).mul(len * travel).add(a);
         final float orbS = 0.95f * p * VfxAnim.easeOutBack(sat(age / (0.2f * D))) * (1f - 0.92f * hit);
-        final float tailLen = Math.min(len * travel, 5.2f * p);
+        final float tailLen = Math.min(len * travel, 6.5f * p);
         final float live = 1f - hit;
 
         // ---- ALPHA layer: everything black
         if (len * travel > 1.0f && live > 0.02f) {                          // the long faint scar left along the whole path
             float afL = Math.min(len * travel, 24f);
-            buf.beam(ctx, TRAIL, VfxBlend.ALPHA, new Vector3f(head).sub(new Vector3f(dir).mul(afL)), head, 0.20f * p, 0.46f * p, 1, -age * 0.07f,
-                    VfxVertexBuffer.withAlpha(rim, 0f), VfxVertexBuffer.withAlpha(rim, 0.55f * live));
+            stream(buf, ctx, TRAIL, VfxBlend.ALPHA, new Vector3f(head).sub(new Vector3f(dir).mul(afL)), head, 0.20f * p, 0.50f * p, 1, -age * 0.07f,
+                    VfxVertexBuffer.withAlpha(rim, 0f), VfxVertexBuffer.withAlpha(rim, 0.6f * live));
         }
         if (charge < 1f) {                                                  // the black vortex opening in front of the caster
-            float s = 1.5f * p * (1f - 0.45f * charge) * VfxAnim.easeOutCubic(sat(age / 4f));
+            float s = 1.1f * p * (1f - 0.45f * charge) * VfxAnim.easeOutCubic(sat(age / 4f));
             VfxPose vp = VfxPose.facing(new Vector3f(a).add(new Vector3f(dir).mul(0.12f * p)), dir).spin(age * 0.55f);
             buf.plane(SWIRL, VfxBlend.ALPHA, vp, s * 0.5f, VfxVertexBuffer.withAlpha(rim, 0.95f * (1f - charge * charge)));
             buf.plane(SWIRL, VfxBlend.ADD, vp, s * 0.5f, VfxVertexBuffer.withAlpha(hot, 0.8f * (1f - charge * charge)));
@@ -106,18 +106,18 @@ public class DemonFireLayer extends AbstractVfxLayer {
         if (tailLen > 0.15f) {
             Vector3f tail = new Vector3f(head).sub(new Vector3f(dir).mul(tailLen));
             float tf = sat(travel * 12f) * live;
-            buf.beam(ctx, TRAIL, VfxBlend.ALPHA, tail, head, 0.12f * p, 1.15f * p, 3, -age * 0.28f, VfxVertexBuffer.withAlpha(rim, 0f), VfxVertexBuffer.withAlpha(rim, 0.97f * tf));
+            stream(buf, ctx, TRAIL, VfxBlend.ALPHA, tail, head, 0.25f * p, 1.7f * p, 4, -age * 0.30f, VfxVertexBuffer.withAlpha(rim, 0f), VfxVertexBuffer.withAlpha(rim, 0.97f * tf));
             // tongues of flame streaming back off the head: each grows, flickers and dies on its own beat
-            int nt = ctx.seg(8, 4);
+            int nt = ctx.seg(6, 3);
             for (int i = 0; i < nt; i++) {
-                float s = (i + 0.4f + 0.4f * hash(inst.seed, i, 8)) / nt;
+                float s = sat(0.12f + 0.85f * hash(inst.seed, i, 8));
                 float cyc = (age * 0.085f + hash(inst.seed, i, 1)) % 1f;
                 float env = Mth.sin(Mth.PI * cyc);
                 if (env < 0.05f) continue;
                 Vector3f base = new Vector3f(head).sub(new Vector3f(dir).mul(0.15f * p + s * tailLen * 0.85f))
                         .add(new Vector3f(sd).mul((hash(inst.seed, i, 2) - 0.5f) * 0.55f * p)).add(new Vector3f(up).mul((hash(inst.seed, i, 3) - 0.5f) * 0.4f * p));
-                Vector3f td = new Vector3f(dir).negate().add(new Vector3f(up).mul(0.30f + 0.3f * hash(inst.seed, i, 4))).add(new Vector3f(sd).mul((hash(inst.seed, i, 5) - 0.5f) * 0.6f)).normalize();
-                float h = (0.75f + 0.95f * hash(inst.seed, i, 6)) * p * (1f - 0.45f * s) * (0.35f + 0.65f * env);
+                Vector3f td = new Vector3f(dir).negate().add(new Vector3f(up).mul(0.25f + 0.6f * hash(inst.seed, i, 4))).add(new Vector3f(sd).mul((hash(inst.seed, i, 5) - 0.5f) * 0.6f)).normalize();
+                float h = (0.9f + 1.9f * hash(inst.seed, i, 6) * hash(inst.seed, i, 6)) * p * (1f - 0.3f * s) * (0.35f + 0.65f * env);
                 tongue(buf, VfxBlend.ALPHA, i & 1, base, td, h, h * 0.58f, (i & 2) != 0, VfxVertexBuffer.withAlpha(rim, 0.95f * tf * Math.min(1f, env * 2f)), VfxVertexBuffer.withAlpha(rim, 0.8f * tf * env));
             }
         }
@@ -141,7 +141,7 @@ public class DemonFireLayer extends AbstractVfxLayer {
         if (u < 0.5f) {                                                      // the muzzle sigil and its counter-turning twin
             float sa = (float) Math.pow(Mth.sin(Mth.PI * sat(u / 0.5f)), 0.7);
             float sr = 0.78f * p * (0.55f + 0.45f * VfxAnim.easeOutCubic(sat(u / 0.18f)));
-            buf.plane(SIGIL, VfxBlend.ADD, VfxPose.facing(new Vector3f(a).add(new Vector3f(dir).mul(0.28f * p)), dir).spin(age * 0.22f), sr, VfxVertexBuffer.withAlpha(hot, 0.9f * sa));
+            buf.plane(SIGIL, VfxBlend.ADD, VfxPose.facing(new Vector3f(a).add(new Vector3f(dir).mul(0.28f * p)), dir).spin(age * 0.22f), sr, VfxVertexBuffer.withAlpha(VfxVertexBuffer.whiten(rim, 0.2f), 0.9f * sa));
             buf.plane(SIGIL, VfxBlend.ADD, VfxPose.facing(new Vector3f(a).add(new Vector3f(dir).mul(0.50f * p)), dir).spin(-age * 0.36f), sr * 0.62f, VfxVertexBuffer.withAlpha(rim, 0.7f * sa));
         }
         if (charge < 1f) {                                                   // violet motes spiralling into the black sun
@@ -152,7 +152,7 @@ public class DemonFireLayer extends AbstractVfxLayer {
                 float ang = hash(inst.seed, i, 12) * Mth.TWO_PI + k * 2.6f, el = (hash(inst.seed, i, 13) - 0.5f) * 2.0f;
                 Vector3f o = new Vector3f(sd).mul(Mth.cos(ang)).add(new Vector3f(up).mul(Mth.sin(ang))).add(new Vector3f(dir).mul(el * 0.6f)).normalize();
                 float rr = (1.5f + 0.8f * hash(inst.seed, i, 14)) * p * (1f - k * k);
-                ember(buf, ctx, new Vector3f(o).mul(rr).add(a), 0.30f * p * (1f - 0.5f * k), screenAngle(ctx, o), VfxVertexBuffer.withAlpha(hot, (float) Math.pow(Mth.sin(Mth.PI * k), 0.6)));
+                ember(buf, ctx, new Vector3f(o).mul(rr).add(a), 0.46f * p * (1f - 0.5f * k), screenAngle(ctx, o), VfxVertexBuffer.withAlpha(hot, (float) Math.pow(Mth.sin(Mth.PI * k), 0.6)));
             }
         }
         if (u > 0.17f && u < 0.34f) {                                       // the launch: a ring thrown forward off the muzzle
@@ -162,22 +162,22 @@ public class DemonFireLayer extends AbstractVfxLayer {
         if (tailLen > 0.15f) {
             Vector3f tail = new Vector3f(head).sub(new Vector3f(dir).mul(tailLen));
             float tf = sat(travel * 12f) * live;
-            buf.beam(ctx, TRAIL, VfxBlend.ADD, tail, head, 0.12f * p, 1.15f * p, 3, -age * 0.28f, VfxVertexBuffer.withAlpha(rim, 0f), VfxVertexBuffer.withAlpha(hot, 0.9f * tf));
-            int nt = ctx.seg(8, 4);
-            for (int i = 0; i < nt; i += 2) {                               // the rim light of the biggest tongues
-                float s = (i + 0.4f + 0.4f * hash(inst.seed, i, 8)) / nt;
+            stream(buf, ctx, TRAIL, VfxBlend.ADD, tail, head, 0.25f * p, 1.7f * p, 4, -age * 0.30f, VfxVertexBuffer.withAlpha(rim, 0f), VfxVertexBuffer.withAlpha(rim, 0.8f * tf));
+            int nt = ctx.seg(6, 3);
+            for (int i = 0; i < nt; i++) {                                    // the rim light of the biggest tongues
+                float s = sat(0.12f + 0.85f * hash(inst.seed, i, 8));
                 float cyc = (age * 0.085f + hash(inst.seed, i, 1)) % 1f;
                 float env = Mth.sin(Mth.PI * cyc);
                 if (env < 0.2f) continue;
                 Vector3f base = new Vector3f(head).sub(new Vector3f(dir).mul(0.15f * p + s * tailLen * 0.85f))
                         .add(new Vector3f(sd).mul((hash(inst.seed, i, 2) - 0.5f) * 0.55f * p)).add(new Vector3f(up).mul((hash(inst.seed, i, 3) - 0.5f) * 0.4f * p));
-                Vector3f td = new Vector3f(dir).negate().add(new Vector3f(up).mul(0.30f + 0.3f * hash(inst.seed, i, 4))).add(new Vector3f(sd).mul((hash(inst.seed, i, 5) - 0.5f) * 0.6f)).normalize();
-                float h = (0.75f + 0.95f * hash(inst.seed, i, 6)) * p * (1f - 0.45f * s) * (0.35f + 0.65f * env);
-                tongue(buf, VfxBlend.ADD, i & 1, base, td, h, h * 0.58f, (i & 2) != 0, VfxVertexBuffer.withAlpha(hot, 0.8f * tf * env), VfxVertexBuffer.withAlpha(hot, 0.6f * tf * env));
+                Vector3f td = new Vector3f(dir).negate().add(new Vector3f(up).mul(0.25f + 0.6f * hash(inst.seed, i, 4))).add(new Vector3f(sd).mul((hash(inst.seed, i, 5) - 0.5f) * 0.6f)).normalize();
+                float h = (0.9f + 1.9f * hash(inst.seed, i, 6) * hash(inst.seed, i, 6)) * p * (1f - 0.3f * s) * (0.35f + 0.65f * env);
+                tongue(buf, VfxBlend.ADD, i & 1, base, td, h, h * 0.58f, (i & 2) != 0, VfxVertexBuffer.withAlpha(rim, 0.55f * tf * env), VfxVertexBuffer.withAlpha(rim, 0.4f * tf * env));
             }
         }
         if (orbS > 0.02f) {
-            buf.billboard(ctx, ORB, VfxBlend.ADD, head, orbS, age * 0.30f, VfxVertexBuffer.withAlpha(hot, 0.9f));
+            buf.billboard(ctx, ORB, VfxBlend.ADD, head, orbS, age * 0.30f, VfxVertexBuffer.withAlpha(rim, 0.8f));
             float breathe = 0.9f + 0.1f * Mth.sin(age * 0.9f);
             buf.billboard(ctx, CORONA, VfxBlend.ADD, head, orbS * 3f * breathe, -age * 0.17f, VfxVertexBuffer.withAlpha(rim, 0.85f));
             for (int k = 1; k <= 4; k++) {                                   // afterimage: echoes of the sun, each a little smaller and fainter
@@ -192,10 +192,10 @@ public class DemonFireLayer extends AbstractVfxLayer {
             int ne = ctx.seg(10, 5);
             for (int i = 0; i < ne; i++) {
                 float life = (age * 0.075f + hash(inst.seed, i, 21)) % 1f;
-                float back = (0.2f + 1.6f * hash(inst.seed, i, 22)) * tailLen / Math.max(0.5f, 5.2f * p);
+                float back = (0.2f + 1.6f * hash(inst.seed, i, 22)) * tailLen / Math.max(0.5f, 6.5f * p);
                 Vector3f drift = new Vector3f(sd).mul((hash(inst.seed, i, 23) - 0.5f) * 1.4f).add(new Vector3f(up).mul(0.5f + hash(inst.seed, i, 24))).add(0, 0.5f, 0);
                 Vector3f q = new Vector3f(head).sub(new Vector3f(dir).mul(back * p * 3f)).add(new Vector3f(drift).mul(life * 1.1f * p));
-                ember(buf, ctx, q, 0.24f * p * (1f - 0.6f * life), screenAngle(ctx, new Vector3f(drift).negate()), VfxVertexBuffer.withAlpha(life < 0.5f ? hot : rim, (1f - life) * live));
+                ember(buf, ctx, q, 0.38f * p * (1f - 0.6f * life), screenAngle(ctx, new Vector3f(drift).negate()), VfxVertexBuffer.withAlpha(life < 0.5f ? hot : rim, (1f - life) * live));
             }
         }
         if (hit > 0f) {                                                       // the arrival: a star of light, a shock ring, sparks
@@ -231,18 +231,18 @@ public class DemonFireLayer extends AbstractVfxLayer {
         // ---- ALPHA layer: the burnt ground, the wall, the twister, loose flames, ash
         buf.plane(SCORCH, VfxBlend.ALPHA, ground.spin(0.4f), r * 1.06f, VfxVertexBuffer.withAlpha(rim, 0.92f * fade));
         int seg = ctx.seg(Mth.clamp(Math.round(R * 1.6f), 12, 20), 8);
-        float repeats = Math.max(3, Math.round(Mth.TWO_PI * r / (2f * Math.max(0.8f, H))));
+        float repeats = Math.max(2, Math.round(Mth.TWO_PI * r / (3.2f * Math.max(0.8f, H))));
         if (H > 0.2f) hoop(buf, WALL, VfxBlend.ALPHA, VfxPose.ground(new Vector3f(c).add(0, H * 0.5f, 0)), r * 0.97f, H * 0.5f, seg, repeats, age * 0.0035f, VfxVertexBuffer.withAlpha(rim, 0.97f * fade));
 
         final float Ht = Mth.clamp(0.85f * R, 2.6f, 7.5f) * rise;
-        final int nTw = ctx.seg(9, 5);
+        final int nTw = ctx.seg(10, 5);
         for (int i = 0; i < nTw; i++) {                                      // the twister: tongues on a rising spiral, trailing their own spin
             float f = (i + 0.5f) / nTw;
-            float rho = 0.10f * R + 0.25f + (0.20f * R + 0.5f) * (float) Math.pow(f, 1.15f);
+            float rho = 0.22f * R + 0.4f + (0.18f * R + 0.3f) * (float) Math.pow(f, 1.15f);
             float th = i * 2.39996f + age * 0.22f + f * 2.4f;
             Vector3f base = new Vector3f(Mth.cos(th) * rho, f * Ht * 0.75f, Mth.sin(th) * rho).mul(open).add(c);
             Vector3f td = new Vector3f(Mth.sin(th), 0.8f, -Mth.cos(th)).normalize();
-            float h = sz * (1.4f + 1.3f * f) * (0.85f + 0.3f * Mth.sin(age * 0.5f + i * 1.7f)) * rise;
+            float h = sz * (2.0f + 1.6f * f) * (0.85f + 0.3f * Mth.sin(age * 0.5f + i * 1.7f)) * rise;
             tongue(buf, VfxBlend.ALPHA, i & 1, base, td, h, h * 0.60f, (i & 2) != 0, VfxVertexBuffer.withAlpha(rim, 0.95f * fade), VfxVertexBuffer.withAlpha(rim, 0.85f * fade));
         }
         final int nLone = ctx.seg(6, 3);
@@ -255,6 +255,11 @@ public class DemonFireLayer extends AbstractVfxLayer {
             tongue(buf, VfxBlend.ALPHA, (i + 1) & 1, base, new Vector3f(0.12f * Mth.sin(age * 0.3f + i), 1f, 0.1f).normalize(), h, h * 0.62f, (i & 1) != 0,
                     VfxVertexBuffer.withAlpha(rim, 0.9f * fade * Math.min(1f, env * 2f)), VfxVertexBuffer.withAlpha(rim, 0.8f * fade * env));
         }
+        for (int k = 0; k < 3; k++) {                                        // whirlpools stacked up the funnel, turning against each other
+            float f = (k + 1f) / 3.6f;
+            float rr = (0.30f * R + 0.6f) * (0.7f + 0.8f * f);
+            buf.plane(SWIRL, VfxBlend.ALPHA, ground.lift(f * Ht * 0.8f).spin((k % 2 == 0 ? 1f : -1f) * age * 0.16f + k), rr, VfxVertexBuffer.withAlpha(rim, 0.55f * fade * rise));
+        }
         final int nAsh = ctx.seg(5, 2);
         for (int i = 0; i < nAsh; i++) {                                     // ash flakes of burnt glass drifting up
             float life = (age * 0.022f + hash(inst.seed, i, 61)) % 1f;
@@ -264,23 +269,28 @@ public class DemonFireLayer extends AbstractVfxLayer {
         }
 
         // ---- ADD layer: the light
-        VfxBloom.planeGlow(buf, ground, r, rim, 0.55f * fade);
-        buf.plane(SCORCH, VfxBlend.ADD, ground.lift(0.004f).spin(0.4f), r * 1.06f, VfxVertexBuffer.withAlpha(hot, (0.5f + 0.35f * Mth.sin(age * 0.17f)) * fade));
+        VfxBloom.planeGlow(buf, ground, r, rim, 0.35f * fade);
+        buf.plane(SCORCH, VfxBlend.ADD, ground.lift(0.004f).spin(0.4f), r * 1.06f, VfxVertexBuffer.withAlpha(rim, (0.4f + 0.3f * Mth.sin(age * 0.17f)) * fade));
         buf.plane(SIGIL, VfxBlend.ADD, ground.lift(0.008f).spin(age * 0.014f), r * 0.99f, VfxVertexBuffer.withAlpha(hot, 0.88f * fade));
         buf.plane(SIGIL, VfxBlend.ADD, ground.lift(0.012f).spin(-age * 0.034f + 0.7f), r * 0.56f, VfxVertexBuffer.withAlpha(rim, 0.6f * fade));
         for (int k = 0; k < 2; k++) {                                        // a pulse ring sweeping out from the middle, two staggered
             float ph = ((age + k * 12f) % 24f) / 24f;
             buf.plane(RING, VfxBlend.ADD, ground.lift(0.016f + 0.002f * k), r * (0.12f + 0.88f * VfxAnim.easeOutCubic(ph)), VfxVertexBuffer.withAlpha(hot, (1f - ph) * 0.8f * fade));
         }
-        if (H > 0.2f) hoop(buf, WALL, VfxBlend.ADD, VfxPose.ground(new Vector3f(c).add(0, H * 0.5f, 0)), r * 0.97f, H * 0.5f, seg, repeats, age * 0.0035f, VfxVertexBuffer.withAlpha(hot, 0.85f * fade * flick));
+        if (H > 0.2f) hoop(buf, WALL, VfxBlend.ADD, VfxPose.ground(new Vector3f(c).add(0, H * 0.5f, 0)), r * 0.97f, H * 0.5f, seg, repeats, age * 0.0035f, VfxVertexBuffer.withAlpha(rim, 0.55f * fade * flick));
         for (int i = 0; i < nTw; i += 2) {                                   // the rim light of the twister
             float f = (i + 0.5f) / nTw;
-            float rho = 0.10f * R + 0.25f + (0.20f * R + 0.5f) * (float) Math.pow(f, 1.15f);
+            float rho = 0.22f * R + 0.4f + (0.18f * R + 0.3f) * (float) Math.pow(f, 1.15f);
             float th = i * 2.39996f + age * 0.22f + f * 2.4f;
             Vector3f base = new Vector3f(Mth.cos(th) * rho, f * Ht * 0.75f, Mth.sin(th) * rho).mul(open).add(c);
             Vector3f td = new Vector3f(Mth.sin(th), 0.8f, -Mth.cos(th)).normalize();
-            float h = sz * (1.4f + 1.3f * f) * (0.85f + 0.3f * Mth.sin(age * 0.5f + i * 1.7f)) * rise;
-            tongue(buf, VfxBlend.ADD, i & 1, base, td, h, h * 0.60f, (i & 2) != 0, VfxVertexBuffer.withAlpha(hot, 0.75f * fade), VfxVertexBuffer.withAlpha(hot, 0.55f * fade));
+            float h = sz * (2.0f + 1.6f * f) * (0.85f + 0.3f * Mth.sin(age * 0.5f + i * 1.7f)) * rise;
+            tongue(buf, VfxBlend.ADD, i & 1, base, td, h, h * 0.60f, (i & 2) != 0, VfxVertexBuffer.withAlpha(rim, 0.55f * fade), VfxVertexBuffer.withAlpha(rim, 0.4f * fade));
+        }
+        for (int k = 0; k < 3; k++) {
+            float f = (k + 1f) / 3.6f;
+            float rr = (0.30f * R + 0.6f) * (0.7f + 0.8f * f);
+            buf.plane(SWIRL, VfxBlend.ADD, ground.lift(f * Ht * 0.8f).spin((k % 2 == 0 ? 1f : -1f) * age * 0.16f + k), rr, VfxVertexBuffer.withAlpha(rim, 0.5f * fade * rise));
         }
         final int nRune = ctx.seg(6, 3);
         for (int i = 0; i < nRune; i++) {                                    // runes orbiting at mid height
@@ -445,6 +455,24 @@ public class DemonFireLayer extends AbstractVfxLayer {
         float u0 = (variant & 1) * 0.5f, u1 = u0 + 0.5f;
         if (flip) { float s = u0; u0 = u1; u1 = s; }
         buf.quad(TONGUE, blend, new Vector3f(base).sub(side), new Vector3f(base).add(side), new Vector3f(tip).add(side), new Vector3f(tip).sub(side), u0, 0f, u1, 1f, cBase, cTip);
+    }
+
+    /** Camera-facing ribbon a (tail) -> b (head) with continuous texture V (0 at the head, 1 at the tail, plus vScroll) and tapering width / colour. */
+    private static void stream(VfxVertexBuffer buf, VfxRenderContext ctx, ResourceLocation tex, VfxBlend blend, Vector3f a, Vector3f b, float wTail, float wHead,
+                               int segments, float vScroll, int cTail, int cHead) {
+        Vector3f dir = new Vector3f(b).sub(a);
+        if (dir.lengthSquared() < 1e-6f) return;
+        Vector3f toCam = new Vector3f(a).add(b).mul(-0.5f);
+        Vector3f side = new Vector3f(dir).cross(toCam);
+        if (side.lengthSquared() < 1e-8f) return;
+        side.normalize();
+        for (int i = 0; i < segments; i++) {
+            float t0 = (float) i / segments, t1 = (float) (i + 1) / segments;
+            Vector3f c0 = new Vector3f(dir).mul(t0).add(a), c1 = new Vector3f(dir).mul(t1).add(a);
+            Vector3f s0 = new Vector3f(side).mul(Mth.lerp(t0, wTail, wHead) * 0.5f), s1 = new Vector3f(side).mul(Mth.lerp(t1, wTail, wHead) * 0.5f);
+            buf.quad(tex, blend, new Vector3f(c0).sub(s0), new Vector3f(c0).add(s0), new Vector3f(c1).add(s1), new Vector3f(c1).sub(s1),
+                    0f, vScroll + 1f - t1, 1f, vScroll + 1f - t0, VfxVertexBuffer.lerpColor(cTail, cHead, t0), VfxVertexBuffer.lerpColor(cTail, cHead, t1));
+        }
     }
 
     /** A spark whose tail trails along screen angle {@code tailAngle} (0 = screen right, PI/2 = up). */

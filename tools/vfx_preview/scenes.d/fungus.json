@@ -102,9 +102,9 @@
   "power": 2.2,
   "duration": 20,
   "cam": [
-   6,
+   9,
    2.6,
-   4
+   8
   ],
   "target": [
    0,
@@ -112,10 +112,10 @@
    8
   ],
   "ages": [
-   3,
+   3.5,
    8,
    13,
-   17
+   17.5
   ],
   "figures": [
    [
@@ -439,6 +439,125 @@
     2,
     0,
     2,
+    1.8
+   ]
+  ]
+ },
+ "fungus_cast_small": {
+  "layer": "FungusLayer",
+  "shape": "FUNGUS_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.2,
+   7
+  ],
+  "power": 0.6,
+  "duration": 14,
+  "cam": [
+   4,
+   1.8,
+   3.5
+  ],
+  "target": [
+   0,
+   1.4,
+   3.5
+  ],
+  "ages": [
+   2,
+   5,
+   9,
+   12.5
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    7.3,
+    1.8
+   ]
+  ]
+ },
+ "fungus_burst_huge": {
+  "layer": "FungusLayer",
+  "shape": "FUNGUS_FX3",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 3.0,
+  "duration": 28,
+  "seed": 4,
+  "cam": [
+   0,
+   4,
+   -15
+  ],
+  "target": [
+   0,
+   2.5,
+   0
+  ],
+  "ages": [
+   3,
+   8,
+   14,
+   24
+  ],
+  "figures": [
+   [
+    4,
+    0,
+    0.5,
+    1.8
+   ]
+  ]
+ },
+ "fungus_zone_tiny": {
+  "layer": "FungusLayer",
+  "shape": "FUNGUS_FX2",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 1.5,
+  "duration": 60,
+  "cam": [
+   0,
+   2.2,
+   -4.2
+  ],
+  "target": [
+   0,
+   0.5,
+   0
+  ],
+  "ages": [
+   20,
+   45
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
     1.8
    ]
   ]

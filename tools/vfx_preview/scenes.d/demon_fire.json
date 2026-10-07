@@ -1,0 +1,375 @@
+{
+ "_comment": "Demon Fire Magic preview scenes (layer DemonFireLayer). FX1 = cast / projectile, FX2 = zone / field, FX3 = impact / burst.",
+ "demon_fire_cast": {
+  "layer": "DemonFireLayer",
+  "shape": "DEMON_FIRE_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.5,
+   14
+  ],
+  "power": 1.0,
+  "duration": 16,
+  "cam": [
+   8.5,
+   2.6,
+   7.0
+  ],
+  "target": [
+   0,
+   1.5,
+   7.0
+  ],
+  "ages": [
+   4,
+   8,
+   11,
+   14.5
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -0.6,
+    1.8
+   ],
+   [
+    0,
+    0,
+    14.6,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.22,
+   0.2,
+   0.3
+  ],
+  "horizon": [
+   0.5,
+   0.45,
+   0.48
+  ]
+ },
+ "demon_fire_cast_charge": {
+  "layer": "DemonFireLayer",
+  "shape": "DEMON_FIRE_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.5,
+   14
+  ],
+  "power": 1.0,
+  "duration": 16,
+  "cam": [
+   2.0,
+   1.9,
+   -2.4
+  ],
+  "target": [
+   0,
+   1.5,
+   0.6
+  ],
+  "ages": [
+   1,
+   2.5,
+   3.8,
+   5
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -0.6,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.22,
+   0.2,
+   0.3
+  ],
+  "horizon": [
+   0.5,
+   0.45,
+   0.48
+  ]
+ },
+ "demon_fire_cast_big": {
+  "layer": "DemonFireLayer",
+  "shape": "DEMON_FIRE_FX1",
+  "from": [
+   0,
+   1.6,
+   0
+  ],
+  "to": [
+   4,
+   1.6,
+   22
+  ],
+  "power": 2.4,
+  "duration": 20,
+  "cam": [
+   9,
+   3.4,
+   4
+  ],
+  "target": [
+   1.5,
+   1.8,
+   9
+  ],
+  "ages": [
+   3,
+   8,
+   14,
+   19
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -0.6,
+    1.8
+   ],
+   [
+    4,
+    0,
+    22.6,
+    1.8
+   ]
+  ]
+ },
+ "demon_fire_zone": {
+  "layer": "DemonFireLayer",
+  "shape": "DEMON_FIRE_FX2",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 6.0,
+  "duration": 80,
+  "cam": [
+   0,
+   5.2,
+   -14
+  ],
+  "target": [
+   0,
+   1.4,
+   0
+  ],
+  "ages": [
+   5,
+   24,
+   50,
+   74
+  ],
+  "figures": [
+   [
+    1.5,
+    0,
+    -2.5,
+    1.8
+   ],
+   [
+    -2,
+    0,
+    1.5,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.22,
+   0.2,
+   0.3
+  ],
+  "horizon": [
+   0.5,
+   0.45,
+   0.48
+  ]
+ },
+ "demon_fire_zone_small": {
+  "layer": "DemonFireLayer",
+  "shape": "DEMON_FIRE_FX2",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 3.0,
+  "duration": 80,
+  "cam": [
+   0,
+   3.4,
+   -8.5
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   6,
+   30,
+   70
+  ],
+  "figures": [
+   [
+    0.6,
+    0,
+    -0.8,
+    1.8
+   ]
+  ]
+ },
+ "demon_fire_burst": {
+  "layer": "DemonFireLayer",
+  "shape": "DEMON_FIRE_FX3",
+  "from": [
+   0,
+   1,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.0,
+  "duration": 28,
+  "cam": [
+   0,
+   2.4,
+   -8.5
+  ],
+  "target": [
+   0,
+   1.6,
+   0
+  ],
+  "ages": [
+   1.5,
+   4,
+   8,
+   14,
+   23
+  ],
+  "figures": [
+   [
+    3.2,
+    0,
+    1.5,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.22,
+   0.2,
+   0.3
+  ],
+  "horizon": [
+   0.5,
+   0.45,
+   0.48
+  ]
+ },
+ "demon_fire_burst_jet": {
+  "layer": "DemonFireLayer",
+  "shape": "DEMON_FIRE_FX3",
+  "from": [
+   0,
+   1,
+   0
+  ],
+  "to": [
+   3,
+   1.6,
+   4
+  ],
+  "power": 1.8,
+  "duration": 28,
+  "cam": [
+   -7,
+   3.4,
+   -9
+  ],
+  "target": [
+   1,
+   1.8,
+   1.5
+  ],
+  "ages": [
+   2,
+   6,
+   12,
+   22
+  ]
+ },
+ "demon_fire_cast_close": {
+  "layer": "DemonFireLayer",
+  "shape": "DEMON_FIRE_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.5,
+   14
+  ],
+  "power": 1.0,
+  "duration": 16,
+  "cam": [
+   3.6,
+   2.0,
+   9.6
+  ],
+  "target": [
+   0,
+   1.5,
+   8.2
+  ],
+  "ages": [
+   6,
+   9,
+   11,
+   13
+  ],
+  "sky": [
+   0.22,
+   0.2,
+   0.3
+  ],
+  "horizon": [
+   0.5,
+   0.45,
+   0.48
+  ]
+ }
+}

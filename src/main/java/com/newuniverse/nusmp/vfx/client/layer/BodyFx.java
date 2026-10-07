@@ -31,7 +31,7 @@ public final class BodyFx {
     static int glow(VfxInstance inst) { return VfxVertexBuffer.lerpColor(ORANGE, inst.color | 0xFF000000, 0.35f) | 0xFF000000; }
 
     /** argb with its alpha scaled (0..1). */
-    static int a(int argb, float alpha) { return VfxVertexBuffer.withAlpha(argb, Mth.clamp(alpha, 0f, 1f)); }
+    static int alpha(int argb, float amount) { return VfxVertexBuffer.withAlpha(argb, Mth.clamp(amount, 0f, 1f)); }
 
     /** 1 while running, ramping 0 -> 1 over the first {@code in} ticks and 1 -> 0 over the last {@code out}. */
     static float life(VfxInstance inst, float age, float in, float out) {

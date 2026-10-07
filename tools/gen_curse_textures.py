@@ -23,10 +23,11 @@ strokes, cracks and rims light up). One texture, two passes: a black body with l
   curse_tendril  64 x 256 (base at the bottom, tip at the top) a thorned, sinuous black tendril with a glowing seam
   curse_smoke    256 ragged ash smoke puff with rim light
   curse_flakes   128 a cloud of ash flakes and embers
-  curse_flash    128 jagged starburst flash (hot core, uneven spikes, four long needles)
+  curse_flash    128 jagged starburst flash (hot core, uneven spikes, four long needles, fine sparks)
+  curse_corona   256 an eclipse: hollow centre, hard bright limb, jagged streamers (additive, over a black body)
   curse_ring     256 jagged shock ring: a bright line with spikes, a hatched inner shock band
   curse_wisp     64 x 128 a drained soul: teardrop head with hollow eyes and a flowing tail
-  curse_shards   256 atlas (2 x 2 cells of 128): tall thorn, fang cluster, broken splinter, hooked barb
+  curse_shards   256 atlas (2 x 2 cells of 128): tall thorn, fang cluster, obsidian dagger, hooked barb
 """
 import math
 import os
@@ -300,8 +301,8 @@ def tex_sigil(S=256):
     def P(r, a):
         return (c + math.cos(a) * r * R, c + math.sin(a) * r * R)
 
-    fill.disc((c, c), 0.985 * R, 64)                           # a faint dark ground under everything
-    fill.arc((c, c), 0.795 * R, 0, math.tau, 0.19 * R, 150)   # a darker band behind the runes
+    fill.disc((c, c), 0.985 * R, 118)                           # a faint dark ground under everything
+    fill.arc((c, c), 0.795 * R, 0, math.tau, 0.19 * R, 205)   # a darker band behind the runes
 
     def rail(r, n, gap, w, spike):
         step = math.tau / n
@@ -603,23 +604,61 @@ def tex_flash(S=128):
     c = S / 2.0
     R = c - 2.0
     core = Mask(S, S)
-    n = 13
+    n = 15
     for i in range(n):
-        a = math.tau * i / n + rng.uniform(-0.18, 0.18)
-        length = R * rng.uniform(0.42, 0.88)
-        core.blade((c, c), (c + math.cos(a) * length, c + math.sin(a) * length), rng.uniform(2.6, 5.2), 0.14)
+        a = math.tau * i / n + rng.uniform(-0.16, 0.16)
+        length = R * rng.uniform(0.40, 0.86)
+        core.blade((c, c), (c + math.cos(a) * length, c + math.sin(a) * length), rng.uniform(1.8, 3.8), 0.14)
     for k in range(4):                                         # four long needles
         a = math.pi / 2 * k + 0.35
-        core.blade((c, c), (c + math.cos(a) * R, c + math.sin(a) * R), 2.8, 0.1)
-    core.disc((c, c), 0.13 * R)
+        core.blade((c, c), (c + math.cos(a) * R, c + math.sin(a) * R), 2.3, 0.1)
+    for i in range(24):                                        # fine sparks between the spikes
+        a = rng.uniform(0, math.tau)
+        length = R * rng.uniform(0.18, 0.42)
+        core.blade((c + math.cos(a) * 3, c + math.sin(a) * 3), (c + math.cos(a) * length, c + math.sin(a) * length), 1.1, 0.2)
+    core.disc((c, c), 0.10 * R)
     cr = core.arr()
     yy, xx = np.mgrid[0:S, 0:S].astype(np.float32)
     rr = np.hypot(xx - c, yy - c) / R
-    radial = np.exp(-(rr / 0.22) ** 2)
+    radial = np.exp(-(rr / 0.17) ** 2)
     h1, h2 = blur(cr, 2.0), blur(cr, 7.0)
     grey = np.clip(cr + 0.7 * h1 + 0.5 * radial, 0, 1)
-    alpha = np.maximum.reduce([cr, h1 * 1.2, h2 * 0.85, radial * 0.95]) * (1 - sstep(0.85, 1.0, rr))
+    alpha = np.maximum.reduce([cr, h1 * 1.2, h2 * 0.8, radial * 0.95]) * (1 - sstep(0.85, 1.0, rr))
     save(rgba(grey, alpha), "curse_flash")
+
+
+def tex_corona(S=256):
+    """An eclipse: a hollow, black centre ringed by a hard bright limb and jagged streamers (additive, over a black body)."""
+    rng = np.random.default_rng(4242)
+    c = (S - 1) / 2.0
+    yy, xx = np.mgrid[0:S, 0:S].astype(np.float32)
+    r = np.hypot(xx - c, yy - c) / c
+    th = np.arctan2(yy - c, xx - c)
+    limb = 0.40
+    reach_n = np.zeros_like(th)
+    for k, amp in ((3, 1.0), (5, 0.9), (8, 0.8), (13, 0.7), (21, 0.55), (34, 0.4)):
+        reach_n += amp * np.cos(k * th + rng.uniform(0, math.tau))
+    reach_n = (reach_n / 4.35) * 0.5 + 0.5
+    reach = limb + 0.10 + 0.50 * reach_n ** 1.6
+    along = np.clip(1 - (r - limb) / np.maximum(reach - limb, 1e-3), 0, 1)
+    rays = np.zeros_like(th)
+    for k in (29, 47, 61):
+        rays += np.clip(np.cos(k * th + rng.uniform(0, math.tau) + 2.5 * vnoise(S, S, 16, 4300 + k)) * 1.8 - 0.55, 0, 1)
+    streamers = along ** 1.5 * np.clip(0.25 + rays * 0.6, 0, 1) * (r > limb)
+    glow = np.exp(-np.maximum(r - limb, 0) / 0.065) * 0.85
+    limb_line = np.exp(-(((r - limb - 0.012) / 0.011) ** 2))
+    hole = sstep(limb - 0.012, limb + 0.004, r)
+    fl = Mask(S, S)
+    n = 26
+    for i in range(n):                                         # jagged flares, a few of them long
+        a = math.tau * i / n + rng.uniform(-0.12, 0.12)
+        reach_px = rng.uniform(0.10, 0.22) if i % 3 else rng.uniform(0.36, 0.58)
+        r0, r1 = (limb - 0.012) * c, (limb + reach_px) * c
+        fl.blade((c + math.cos(a) * r0, c + math.sin(a) * r0), (c + math.cos(a) * r1, c + math.sin(a) * r1),
+                 rng.uniform(1.8, 3.6) * (1.5 if reach_px > 0.3 else 1.0), 0.22)
+    flares = fl.arr()
+    intensity = np.clip(glow * hole + streamers * 0.45 + flares * 0.95 + blur(flares, 2.5) * 0.4 + limb_line, 0, 1) * (1 - sstep(0.82, 1.0, r))
+    save(rgba(intensity, np.clip(intensity * 1.1, 0, 1) * hole), "curse_corona")
 
 
 def tex_ring(S=256):
@@ -649,26 +688,30 @@ def tex_ring(S=256):
 
 def tex_wisp():
     W, H = 64, 128
+    rng = np.random.default_rng(3301)
     m = Mask(W, H)
-    head = (32.0, 33.0)
-    m.disc(head, 17.5)
-    m.poly([(16, 38), (48, 38), (40, 58), (24, 58)])
-    tail = [(32 + 8 * math.sin(i / 7.0) * (i / 62.0), 52 + i * 1.18) for i in range(0, 63)]
-    m.path(tail, 22, 0.8)
-    m.path([(20, 52), (14, 76), (18, 98)], 7, 0.5)               # two thin arms of ghost-flame
-    m.path([(44, 52), (52, 74), (47, 96)], 6, 0.5)
+    m.disc((32, 30), 12.5)                                     # an elongated skull of mist
+    m.poly([(21, 28), (43, 28), (40, 46), (34, 56), (30, 56), (24, 46)])
+    m.disc((32, 24), 13.0)
+    m.path([(32 + 4 * math.sin(i / 8.0) * (i / 70.0), 48 + i * 1.18) for i in range(0, 69)], 20, 0.8)     # the body, tapering to a point
+    m.path([(24, 50), (12, 72), (18, 96), (12, 118)], 8, 0.4)  # tattered strands
+    m.path([(41, 50), (54, 70), (46, 94), (53, 116)], 7, 0.4)
+    m.path([(29, 54), (24, 86), (28, 120)], 5, 0.3)
     eyes = Mask(W, H)
-    eyes.poly([(21, 28), (30, 31), (28, 38), (21, 37)])
-    eyes.poly([(43, 28), (34, 31), (36, 38), (43, 37)])
-    eyes.poly([(28, 46), (32, 44), (36, 46), (32, 51)])
+    eyes.poly([(20, 24), (30, 28), (29, 34), (21, 32)])        # slanted, sunken eyes
+    eyes.poly([(44, 24), (34, 28), (35, 34), (43, 32)])
+    eyes.poly([(31, 36), (33, 36), (33.5, 40), (30.5, 40)])    # a nose notch
+    eyes.path([(26, 46), (28.5, 44.5), (30, 47), (32, 44.5), (34, 47), (35.5, 44.5), (38, 46)], 1.5)   # a jagged mouth
     body, hole = m.arr(), eyes.arr()
     yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
-    n = vnoise(W, H, 8, 3301) * 0.5 + vnoise(W, H, 4, 3302) * 0.5
-    fall = np.clip(1 - (yy - 30) / 98.0, 0, 1) ** 0.8
-    a = np.clip(body * (0.35 + 0.65 * fall) * (0.75 + 0.5 * n), 0, 1) * (1 - hole)
-    g = np.clip((0.55 + 0.45 * fall) * (0.7 + 0.5 * n) * body, 0, 1) * (1 - hole)
+    n = vnoise(W, H, 8, 3301) * 0.55 + vnoise(W, H, 4, 3302) * 0.45
+    fall = np.clip(1 - (yy - 34) / 94.0, 0, 1)
+    ragged = sstep(0.28, 0.5, n + 0.55 * fall - 0.15 + 0.25)             # the tail is eaten away into tatters
+    a = np.clip(body * (0.30 + 0.70 * fall ** 0.8) * np.where(yy > 48, ragged, 1.0), 0, 1) * (1 - hole)
+    g = np.clip((0.50 + 0.5 * fall) * (0.75 + 0.45 * n) * body, 0, 1) * (1 - hole)
     edge = np.clip(blur(body, 1.4) - body * 0.8, 0, 1)
-    save(rgba(np.clip(g + edge * 0.4, 0, 1), np.clip(a + edge * 0.3, 0, 1)), "curse_wisp")
+    eye_rim = np.clip(blur(hole, 1.6) - hole * 0.9, 0, 1)
+    save(rgba(np.clip(g + edge * 0.35 + eye_rim * 0.9, 0, 1), np.clip(a + edge * 0.3 + eye_rim * 0.7, 0, 1)), "curse_wisp")
 
 
 def tex_shards():
@@ -708,14 +751,15 @@ def tex_shards():
     thorn(1, 34, 24, 84, -6)
     thorn(1, 66, 34, 118, 4)
     thorn(1, 98, 22, 70, 10)
-    pts = [(20, 100), (34, 38), (64, 8), (86, 38), (98, 92), (60, 120)]            # broken splinter
-    ctr = (58, 62)
-    for i in range(len(pts)):
-        facet(2, [pts[i], pts[(i + 1) % len(pts)], ctr], [40, 96, 62, 30, 78, 52][i])
-    line(2, pts + [pts[0]], 1.5, 225)
-    line(2, [ctr, pts[1]], 1.3, 255)
-    line(2, [ctr, pts[4]], 1.1, 190)
-    line(2, jag(rng, ctr, pts[2], 4, 3), 1.0, 170)
+    left = [(66, 6), (52, 38), (40, 70), (46, 92), (38, 100), (44, 122), (64, 122)]                # a jagged dagger of obsidian
+    right = [(66, 6), (78, 40), (86, 70), (82, 76), (92, 112), (80, 122), (64, 122)]
+    facet(2, left, 46)
+    facet(2, right, 92)
+    line(2, [(66, 6), (65, 60), (64, 122)], 1.7, 245)
+    line(2, left[:-1], 1.4, 215)
+    line(2, right[:-1], 1.4, 215)
+    line(2, jag(rng, (56, 100), (64, 70), 4, 3), 1.1, 190)
+    line(2, jag(rng, (74, 60), (66, 36), 3, 2.5), 1.0, 170)
     spine = [(34 + 38 * math.sin(s * 1.5) * 0.0 + s * 60, 122 - 98 * math.sin(s * 1.45) ** 1.1) for s in np.linspace(0, 1, 18)]   # hooked barb
     hook = [(x + 0, y) for x, y in spine]
     for i in range(len(hook) - 1):
@@ -738,7 +782,7 @@ def tex_shards():
 
 ALL = {"glyphs": tex_glyphs, "band": tex_band, "sigil": tex_sigil, "brand": tex_brand, "veins": tex_veins, "wall": tex_wall,
        "bolt": tex_bolt, "tendril": tex_tendril, "smoke": tex_smoke, "flakes": tex_flakes, "flash": tex_flash, "ring": tex_ring,
-       "wisp": tex_wisp, "shards": tex_shards}
+       "wisp": tex_wisp, "shards": tex_shards, "corona": tex_corona}
 
 if __name__ == "__main__":
     names = [a.replace("curse_", "") for a in sys.argv[1:]] or list(ALL)

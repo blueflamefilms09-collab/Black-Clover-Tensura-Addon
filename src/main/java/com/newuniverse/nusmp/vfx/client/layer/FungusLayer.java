@@ -286,7 +286,7 @@ public class FungusLayer extends AbstractVfxLayer {
 
         // --- the ground: a stain and a mycelium patch that spreads and lingers
         float spread = easeOut(c01(age / 9f));
-        buf.plane(PUFF2, VfxBlend.ALPHA, ground.spin(inst.seed % 7), 2.6f * S * spread, a(SOIL, 0.45f * patch));
+        buf.plane(PUFF2, VfxBlend.ALPHA, ground.spin(inst.seed % 7), 2.6f * S * spread, a(SOIL, 0.30f * patch));
         buf.plane(MYCELIUM, VfxBlend.ADD, ground.lift(0.01f).spin(inst.seed % 5), 2.4f * S * spread, a(cream, 0.75f * patch * (0.7f + 0.3f * Mth.sin(age * 0.4f))));
         buf.plane(RING, VfxBlend.ADD, ground.lift(0.02f).spin(-age * 0.03f), 1.5f * S * spread, a(gold, 0.35f * patch));
         float r1 = c01(age / 13f), r2 = c01(age / 9f);
