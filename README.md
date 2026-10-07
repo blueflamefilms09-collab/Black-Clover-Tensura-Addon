@@ -205,6 +205,28 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
 - **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
 
+## 0.49 - Zagred after the reference art, Game Magic, mob skill casting, smarter summons, more spells
+- **Replacement: Zagred's look, reshaped to the owner's two images.**
+  - **Body:** very tall and thin and black, with a pale long face, red eyes with dark streaks, long ears, and messy black hair with two horns.
+  - **Chest:** a pale neck and ribcage in a V.
+  - **Limbs:** long thin arms with long curved claws, very long legs on clawed feet.
+  - **Wings and tail:** huge dark wings and a whip tail curling round to the front.
+  - **Effects:** black flakes and smoke shed from the shoulders, and a crimson aura (no more violet).
+  - **Hitbox:** now 3.6 blocks tall.
+- **New: mobs cast Tensura's own magic** (`entity/TensuraCaster.java`).
+  - Zagred learns up to five dark, void or elemental Tensura spells and casts them between its words. Each cast is telegraphed.
+  - A Tensura skill that can't be cast by a mob is dropped from its kit with a log line.
+- **New: smarter summons** (painted constructs, mirror doubles, spirit lords).
+  - **Targeting:** they pick targets by threat: whoever attacks their owner first.
+  - **Casting:** they cast Tensura spells or a mana bolt. Mirror doubles hold casting range.
+  - **Healing:** they heal their owner below 40% health.
+- **New: Game Magic (Gifso).** Pages: Game Board, Monster Toy, Temple Shuffle, Initiative, Dungeon Master's Verdict, Trap Squares. D&D d20 rolls throughout. Guide: `docs/game_magic_spec.md`.
+- **New: random painted beasts.** Each Painted Menagerie or Monster Toy beast is a random wolf, panther, bear, boar, griffin, dragon or lion, or a chimera mixing heads, builds, wings, manes, spikes and tails. Stats and on-hit effects match what it was drawn with.
+- **Replacement: Rouge.** Rouge is now a red-thread cat model sitting on her summoner's head, seen by everyone nearby, instead of the old VFX.
+- **New: 26 spells for the thinnest magics:** Ice, Gravity, Steel, Magma, Star, Sand, Reinforcement, Beast, Bone, Blood, Copy, Illusion. They are appended, so existing pages are unchanged.
+- **Replacement: the anti-magic slash VFX** (every demon sword): a black crescent, a coloured rim, afterimages, torn flakes, a shock streak and an end crack.
+- **Fix:** the Time Magic passive (Reversal, Deceleration) now ticks every tick. The Time VFX are untouched.
+
 ## 0.48 - Genesis Demon-Slayer, Word Soul counter-words, Zagred's true form, global buff, gamerules
 - **Replacement: the Demon-Slayer Sword is now Genesis-grade** (same item id; Black Divider kept). Guide: `docs/demon_slayer_genesis_spec.md`.
   - **Conceptual Severance:** a full swing does EP-scaled true damage that ignores armour, enchantments and hit cooldowns, plus spiritual damage.
