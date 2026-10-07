@@ -103,6 +103,7 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.PaintStudio::onUseItemFinish);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.SlashBook::onIncomingDamage);              // 0.45: forearm blades
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.KotodamaWords::onChat);                    // 0.47: Kotodama command words
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.KotodamaWords::onIncomingDamage);          // 0.48: "Reverse"
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.antimagic.AntiMagic::migrate);                  // 0.48: old Spirit Lords fold into the grimoire
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.GrimoireBook::onPlayerTick);               // 0.48: book upkeep without relying on skill ticks
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.TreeRestore::onServerTick);                // 0.48: World Tree trees taken back (saved)

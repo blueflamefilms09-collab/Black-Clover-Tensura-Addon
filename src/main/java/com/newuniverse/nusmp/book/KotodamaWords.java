@@ -72,7 +72,18 @@ public final class KotodamaWords {
         HEAL("Heal", 0.25, 30_000, 900, true, "heal", "mend", "restore"),
         SLUDGE("Devour", 0.35, 60_000, 1200, false, "underworld", "sludge", "devour", "drown"),
         TRIDENT("Trident", 0.25, 25_000, 1200, false, "trident", "spear", "pierce"),
-        SWORDS("Swords", 0.40, 80_000, 900, false, "swords", "blades", "storm");
+        SWORDS("Swords", 0.40, 80_000, 900, false, "swords", "blades", "storm"),
+        // 0.48: counter-words against Tensura's skills. Every one of them wears off: nothing here is ever a lasting nerf.
+        SEAL("Seal", 0.30, 40_000, 600, true, "seal", "lock", "silence"),
+        REJECT("Reject", 0.25, 30_000, 600, false, "reject", "deny", "dispel"),
+        FALL("Fall", 0.20, 20_000, 400, true, "fall", "down", "ground"),
+        REVEAL("Reveal", 0.10, 10_000, 300, true, "reveal", "expose", "show"),
+        SLEEP("Sleep", 0.30, 40_000, 900, false, "sleep", "slumber", "rest"),
+        PETRIFY("Petrify", 0.35, 60_000, 1200, false, "petrify", "stone"),
+        FEAR("Cower", 0.20, 25_000, 600, true, "cower", "fear", "tremble"),
+        BANISH("Banish", 0.30, 40_000, 900, false, "banish", "begone", "dismiss"),
+        REVERSE("Reverse", 0.30, 40_000, 900, false, "reverse", "reflect", "rebound"),
+        DRAIN("Drain", 0.25, 30_000, 600, false, "drain", "siphon", "wither");
 
         public final String spoken;
         final double frac, floor;
@@ -162,7 +173,7 @@ public final class KotodamaWords {
                 GrimoireBook.fail(p, "The Word Soul does not answer. Kotodama is creative-only until Zagred is defeated.");
                 return false;
             }
-            if (src == Source.DEVIL && !w.devil) { GrimoireBook.fail(p, "Zagred lends you only Halt, Shatter and Heal."); return false; }
+            if (src == Source.DEVIL && !w.devil) { GrimoireBook.fail(p, "Zagred lends you only " + devilWords() + "."); return false; }
             long ready = p.getPersistentData().getLong(K_CD + w.name());
             if (now < ready) { GrimoireBook.fail(p, w.spoken + " still echoes (" + (ready - now + 19) / 20 + "s)."); return false; }
             double cost = src == Source.DEVIL ? BalanceLaw.cost(p, 10, 500) : BalanceLaw.cost(p, w.frac * 100, w.floor);
@@ -176,11 +187,21 @@ public final class KotodamaWords {
             case SLUDGE -> sludge(caster, pw);
             case TRIDENT -> trident(caster, pw);
             case SWORDS -> swords(caster, pw);
+            case SEAL -> seal(caster, pw, src);
+            case REJECT -> reject(caster, pw);
+            case FALL -> fall(caster, pw, src);
+            case REVEAL -> reveal(caster, pw);
+            case SLEEP -> control(caster, pw, src, "sleep", 100);
+            case PETRIFY -> control(caster, pw, src, "petrification", 80);
+            case FEAR -> fear(caster, pw, src);
+            case BANISH -> banish(caster, pw);
+            case REVERSE -> reverse(caster, pw);
+            case DRAIN -> drain(caster, pw);
         };
         if (!done) return false;
         glyphs(caster, w, src, pw);
         if (p != null) {
-            int cd = (int) (w.cooldown * (src == Source.DEVIL ? 1.5 : 1) * (p.isCreative() ? 0.25 : 1));
+            int cd = (int) (w.cooldown * (src == Source.DEVIL ? 1.5 : 1) * (p.isCreative() ? 0.25 : 1) * com.newuniverse.nusmp.NUGameRules.spellCooldown(level));
             p.getPersistentData().putLong(K_CD + w.name(), now + cd);
             Component line = Component.literal("「" + w.spoken + "」").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD);
             for (ServerPlayer o : level.players()) if (o.distanceToSqr(p) < 48 * 48) o.displayClientMessage(line, true);
@@ -363,6 +384,161 @@ public final class KotodamaWords {
                 level.playSound(null, BlockPos.containing(ground), SoundEvents.TRIDENT_HIT_GROUND, SoundSource.HOSTILE, 0.8f, 0.6f);
             });
         }
+        return true;
+    }
+
+    // ---------------------------------------------------------------- 0.48 counter-words (temporary effects only)
+    static String devilWords() {
+        StringBuilder sb = new StringBuilder();
+        for (Word w : Word.values()) if (w.devil) sb.append(sb.length() == 0 ? "" : ", ").append(w.spoken);
+        return sb.toString();
+    }
+
+    static double reach(float pw, Source src) { return src == Source.DEVIL ? 8 + 4 * pw : 12 + 6 * pw; }
+
+    static void burst(LivingEntity c, double r, int color) {
+        VfxSpawn.sendFollowing((ServerLevel) c.level(), VfxShape.KOTO_AURA, c, c.position(), color, 30, (float) (r / 6));
+    }
+
+    /** "Seal": every skill and spell of everyone around is locked (forced cooldowns, Tensura silence) for a few seconds. */
+    static boolean seal(LivingEntity c, float pw, Source src) {
+        double r = reach(pw, src);
+        for (LivingEntity t : foes(c, c.position(), r)) {
+            int ticks = BalanceLaw.controlTicks(t, (int) (80 * pw));
+            com.newuniverse.nusmp.antimagic.Nullification.jamAll(t, Math.max(1, ticks / 20), 0.5f);
+            EnergyBridge.effect(t, "silence", ticks, 1);
+            VfxSpawn.send((ServerLevel) c.level(), VfxShape.KOTO_SHATTER, t.getBoundingBox().getCenter(), t.position(), VIOLET, 20, 0.6f);
+        }
+        burst(c, r, VIOLET);
+        c.level().playSound(null, c.blockPosition(), SoundEvents.CHAIN_PLACE, SoundSource.HOSTILE, 1.5f, 0.5f);
+        return true;
+    }
+
+    /** "Reject": every blessing on the foes around is torn off, and their barriers and spell constructs shatter. */
+    static boolean reject(LivingEntity c, float pw) {
+        ServerLevel level = (ServerLevel) c.level();
+        double r = 12 + 6 * pw;
+        for (LivingEntity t : foes(c, c.position(), r))
+            for (MobEffectInstance e : new ArrayList<>(t.getActiveEffects())) if (e.getEffect().value().isBeneficial()) t.removeEffect(e.getEffect());
+        com.newuniverse.nusmp.antimagic.Nullification.shatterBarriers(level, c.position(), r, c);
+        burst(c, r, ABYSS);
+        level.playSound(null, c.blockPosition(), SoundEvents.GLASS_BREAK, SoundSource.HOSTILE, 1.5f, 0.4f);
+        return true;
+    }
+
+    /** "Fall": everything flying is thrown to the ground (flight switched off, a crushing burden). */
+    static boolean fall(LivingEntity c, float pw, Source src) {
+        double r = reach(pw, src);
+        for (LivingEntity t : foes(c, c.position(), r)) {
+            t.removeEffect(net.minecraft.world.effect.MobEffects.LEVITATION);
+            t.removeEffect(net.minecraft.world.effect.MobEffects.SLOW_FALLING);
+            if (t instanceof ServerPlayer sp && sp.getAbilities().flying && !sp.isCreative()) { sp.getAbilities().flying = false; sp.onUpdateAbilities(); }
+            if (t instanceof Player pl) pl.stopFallFlying();
+            t.setDeltaMovement(t.getDeltaMovement().x * 0.2, -2.5, t.getDeltaMovement().z * 0.2);
+            t.hurtMarked = true;
+            EnergyBridge.effect(t, "burden", BalanceLaw.controlTicks(t, (int) (80 * pw)), 1);
+        }
+        burst(c, r, ABYSS);
+        c.level().playSound(null, c.blockPosition(), SoundEvents.ANVIL_LAND, SoundSource.HOSTILE, 1.2f, 0.5f);
+        return true;
+    }
+
+    static final net.minecraft.resources.ResourceLocation REVEALED = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("nusmp", "koto_reveal");
+
+    /** "Reveal": the hidden are dragged into the light for 20 s (glowing, invisibility gone, presence concealment off). */
+    static boolean reveal(LivingEntity c, float pw) {
+        double r = 24 + 8 * pw;
+        for (LivingEntity t : foes(c, c.position(), r)) {
+            t.removeEffect(net.minecraft.world.effect.MobEffects.INVISIBILITY);
+            t.addEffect(new MobEffectInstance(net.minecraft.world.effect.MobEffects.GLOWING, 400, 0));
+            net.minecraft.core.registries.BuiltInRegistries.ATTRIBUTE.getHolder(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("tensura", "presence_concealment"))
+                    .ifPresent(h -> com.newuniverse.nusmp.blackclover.TimedModifiers.apply(t, h, REVEALED, -1.0, 400,
+                            net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+        }
+        burst(c, r, 0xFFE0D0FF);
+        c.level().playSound(null, c.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.HOSTILE, 1.2f, 1.4f);
+        return true;
+    }
+
+    /** "Sleep" / "Petrify": a Tensura control effect on everyone around (balance-law caps and diminishing returns). */
+    static boolean control(LivingEntity c, float pw, Source src, String effect, int base) {
+        double r = reach(pw, src);
+        for (LivingEntity t : foes(c, c.position(), r)) {
+            EnergyBridge.effect(t, effect, BalanceLaw.controlTicks(t, (int) (base * pw)), 0);
+            if (t instanceof Mob m) { m.getNavigation().stop(); m.setTarget(null); }
+            spirit(c, t, 1);
+        }
+        burst(c, r, effect.equals("sleep") ? 0xFFB0A0FF : 0xFF9A9090);
+        c.level().playSound(null, c.blockPosition(), effect.equals("sleep") ? SoundEvents.ALLAY_AMBIENT_WITHOUT_ITEM : SoundEvents.STONE_PLACE,
+                SoundSource.HOSTILE, 1.4f, 0.5f);
+        return true;
+    }
+
+    /** "Cower": terror (Tensura fear, weakness); mobs drop their target. */
+    static boolean fear(LivingEntity c, float pw, Source src) {
+        double r = reach(pw, src);
+        for (LivingEntity t : foes(c, c.position(), r)) {
+            int ticks = BalanceLaw.controlTicks(t, (int) (100 * pw));
+            EnergyBridge.effect(t, "fear", ticks, 1);
+            t.addEffect(new MobEffectInstance(net.minecraft.world.effect.MobEffects.WEAKNESS, ticks, 1));
+            if (t instanceof Mob m) m.setTarget(null);
+        }
+        burst(c, r, ABYSS);
+        c.level().playSound(null, c.blockPosition(), SoundEvents.WARDEN_ROAR, SoundSource.HOSTILE, 1.2f, 0.7f);
+        return true;
+    }
+
+    /** "Banish": summoned beings of the foes are sent back (they can be called again); everything else is hurled away. */
+    static boolean banish(LivingEntity c, float pw) {
+        double r = 12 + 6 * pw;
+        for (LivingEntity t : foes(c, c.position(), r)) {
+            boolean summon;
+            try { summon = io.github.manasmods.tensura.storage.ep.ExistenceStorage.isSummon(t); } catch (Throwable ignored) { summon = false; }
+            if (summon && !(t instanceof Player)) {
+                VfxSpawn.send((ServerLevel) c.level(), VfxShape.KOTO_SHATTER, t.getBoundingBox().getCenter(), t.position(), VIOLET, 24, 1f);
+                t.discard();
+                continue;
+            }
+            Vec3 away = t.position().subtract(c.position()).normalize();
+            t.knockback(2.5 * pw, -away.x, -away.z);
+            t.hurtMarked = true;
+        }
+        burst(c, r, VIOLET);
+        c.level().playSound(null, c.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.HOSTILE, 1.5f, 0.5f);
+        return true;
+    }
+
+    static final String K_REVERSE = "nusmp_koto_reverse_until";
+
+    /** "Reverse": for a few seconds, half of every blow struck at the speaker is turned back on the attacker. */
+    static boolean reverse(LivingEntity c, float pw) {
+        c.getPersistentData().putLong(K_REVERSE, c.level().getGameTime() + (long) (100 + 40 * pw));
+        burst(c, 3, 0xFFD8C4FF);
+        c.level().playSound(null, c.blockPosition(), SoundEvents.SHIELD_BLOCK, SoundSource.HOSTILE, 1.5f, 0.5f);
+        return true;
+    }
+
+    /** Reverse at work: halves the hit and sends that half back. */
+    public static void onIncomingDamage(net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent e) {
+        LivingEntity t = e.getEntity();
+        if (t.level().isClientSide || t.level().getGameTime() >= t.getPersistentData().getLong(K_REVERSE)) return;
+        if (!(e.getSource().getEntity() instanceof LivingEntity a) || a == t) return;
+        float back = e.getAmount() * 0.5f;
+        e.setAmount(e.getAmount() - back);
+        a.hurt(t.damageSources().indirectMagic(t, t), back);
+        VfxSpawn.send((ServerLevel) t.level(), VfxShape.KOTO_SHATTER, a.getBoundingBox().getCenter(), t.getBoundingBox().getCenter(), VIOLET, 16, 0.5f);
+    }
+
+    /** "Drain": a tenth of every foe's magicules and some spirit flow into the speaker, who is healed by it. */
+    static boolean drain(LivingEntity c, float pw) {
+        double r = 12 + 6 * pw, total = 0;
+        for (LivingEntity t : foes(c, c.position(), r)) {
+            total += EnergyBridge.drain(t, c, 0.1);
+            spirit(c, t, 1 + pw);
+            VfxSpawn.send((ServerLevel) c.level(), VfxShape.KOTO_SHATTER, t.getBoundingBox().getCenter(), c.getBoundingBox().getCenter(), VIOLET, 24, 0.7f);
+        }
+        if (total > 0) BalanceLaw.heal(c, (float) Math.min(c.getMaxHealth() * 0.3, 4 + total / 1000));
+        c.level().playSound(null, c.blockPosition(), SoundEvents.WITHER_SHOOT, SoundSource.HOSTILE, 1.0f, 0.5f);
         return true;
     }
 

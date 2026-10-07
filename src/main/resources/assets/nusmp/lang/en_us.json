@@ -634,5 +634,15 @@
   "gamerule.nusmpSpellCooldownPercent.description": "Cooldown length for grimoire pages, magic weapons and Kotodama words (default 60 = 40% shorter than before 0.48).",
   "death.attack.nusmp.conceptual_severance": "%1$s was severed from existence by %2$s",
   "death.attack.nusmp.conceptual_severance.item": "%1$s was severed from existence by %2$s using %3$s",
-  "death.attack.nusmp.conceptual_severance.player": "%1$s was severed from existence whilst fighting %2$s"
+  "death.attack.nusmp.conceptual_severance.player": "%1$s was severed from existence whilst fighting %2$s",
+  "nusmp.page.book_kotodama.seal": "Seal - \"Seal\" / \"Lock\": every skill and spell of everyone around you is locked for a few seconds (forced cooldowns, Magic Jamming).",
+  "nusmp.page.book_kotodama.reject": "Reject - \"Reject\" / \"Dispel\": every blessing on the foes around you is torn off and their barriers and spell constructs shatter.",
+  "nusmp.page.book_kotodama.fall": "Fall - \"Fall\": everything flying around you is thrown to the ground, flight cut and a crushing burden laid on it.",
+  "nusmp.page.book_kotodama.reveal": "Reveal - \"Reveal\": the hidden are dragged into the light for 20 seconds: glowing, invisibility gone, presence concealment off.",
+  "nusmp.page.book_kotodama.sleep": "Sleep - \"Sleep\": everyone around you falls asleep (balance-law caps apply).",
+  "nusmp.page.book_kotodama.petrify": "Petrify - \"Petrify\": everyone around you turns to stone for a moment, their spirit struck.",
+  "nusmp.page.book_kotodama.cower": "Cower - \"Cower\" / \"Fear\": terror grips everyone around you; they weaken and monsters lose their target.",
+  "nusmp.page.book_kotodama.banish": "Banish - \"Banish\": your foes' summoned beings are sent back (they can be called again) and everything else is hurled away.",
+  "nusmp.page.book_kotodama.reverse": "Reverse - \"Reverse\" / \"Reflect\": for a few seconds half of every blow struck at you is turned back on the attacker.",
+  "nusmp.page.book_kotodama.drain": "Drain - \"Drain\": a tenth of every foe's magicules flows into you and heals you, their spirit struck."
 }

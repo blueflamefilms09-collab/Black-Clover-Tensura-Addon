@@ -28,7 +28,18 @@ public class KotodamaBook extends GrimoireBook {
             word("heal", "Heal", Word.HEAL),
             word("underworld", "Devour", Word.SLUDGE),
             word("trident", "Trident", Word.TRIDENT),
-            word("demon_swords", "Swords", Word.SWORDS));
+            word("demon_swords", "Swords", Word.SWORDS),
+            // 0.48 counter-words (appended)
+            word("seal", "Seal", Word.SEAL),
+            word("reject", "Reject", Word.REJECT),
+            word("fall", "Fall", Word.FALL),
+            word("reveal", "Reveal", Word.REVEAL),
+            word("sleep", "Sleep", Word.SLEEP),
+            word("petrify", "Petrify", Word.PETRIFY),
+            word("cower", "Cower", Word.FEAR),
+            word("banish", "Banish", Word.BANISH),
+            word("reverse", "Reverse", Word.REVERSE),
+            word("drain", "Drain", Word.DRAIN));
 
     public KotodamaBook() { super(MagicType.KOTODAMA, KotodamaWords.VIOLET, Skill.SkillType.ULTIMATE); }
 

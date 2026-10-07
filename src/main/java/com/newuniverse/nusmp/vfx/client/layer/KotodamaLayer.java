@@ -38,8 +38,9 @@ public class KotodamaLayer extends AbstractVfxLayer {
             CRACK = t("koto_crack"), SWORD = t("koto_sword"), TRIDENT = t("koto_trident"), POOL = t("koto_sludge"), SHARD = VfxTextures.SHARD,
             GLOW = VfxTextures.GLOW;
     static final int VIOLET = 0xFF8A4CFF, INDIGO = 0xFF3A2A9A, INK = 0xFF0C0814, PALE = 0xFFD8C4FF;
-    /** Glyph counts for HALT, SHATTER, HEAL, SLUDGE, TRIDENT, SWORDS (the spoken word's letters). */
-    static final int[] LETTERS = {4, 7, 4, 6, 7, 6};
+    /** Glyph counts (the spoken word's letters): HALT, SHATTER, HEAL, SLUDGE, TRIDENT, SWORDS, then the 0.48 words SEAL, REJECT,
+     *  FALL, REVEAL, SLEEP, PETRIFY, COWER, BANISH, REVERSE, DRAIN. */
+    static final int[] LETTERS = {4, 7, 4, 6, 7, 6, 4, 6, 4, 6, 5, 7, 5, 6, 7, 5};
 
     @Override
     public Set<VfxShape> shapes() {
