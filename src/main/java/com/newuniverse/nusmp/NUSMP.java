@@ -52,6 +52,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.DreamSkyClient.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireSlotClient.init(modEventBus);
             com.newuniverse.nusmp.client.multiverse.MultiverseStatusClient.init(modEventBus);
+            com.newuniverse.nusmp.client.multiverse.FourKingdomsSlot.init();                                   // 0.46: the slot in Tensura's magic screen
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.multiverse.MultiverseClientConfig.SPEC, "nusmp-multiverse-client.toml");
             // Spirit Lords are small floating orbs for now (SpiritLordRenderer, the full Tensura body, is kept for later)
             modEventBus.addListener(com.newuniverse.nusmp.client.SpiritOrbRenderer::register);

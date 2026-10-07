@@ -205,6 +205,19 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
 - **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
 
+## 0.46 - Four Kingdoms menu, real World Tree trees
+- **New: the Four Kingdoms menu.** The grey "?" slot in Tensura's Magic tab is now a Four Kingdoms logo button that opens the mod's own menu.
+  - The menu has the logo, your grimoire's summary and a Status button.
+  - Your unlocked grimoire pages appear as an open book: each page shows its name, cost, cooldown and what it does.
+  - Turning pages plays a page-flip animation with sound.
+  - Guide: `docs/four_kingdoms_menu.md`.
+- **Replacement: World Tree Magic grows real Minecraft trees.**
+  - Mistilteinn Seed grows a small tree where it lands.
+  - Magic Tree Descent grows a great tree: fancy oak, then dark oak or mega spruce, then mega jungle as your EP grows.
+  - Budding of Yggdrasil raises a ring of trees with a giant in front.
+  - The trees are taken back when the spell ends, block by block, only where they're still the tree's own. Set `worldTreeTreesStay = true` in the server config to keep them.
+  - The drawn tree effect stays registered but is unused.
+
 ## 0.45 - Light, World Tree, Dice, Slash, Compass, Mercury
 - **Replacements:**
   - **Light Magic** is the fastest magic in the mod. Light hits ignore armour and cut the spirit; only an Aura barrier halves them. Its two pages were remade, and three were added: Healing Ray, Lamp of Avior Gloria and Light Speed.

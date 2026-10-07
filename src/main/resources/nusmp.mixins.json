@@ -3,7 +3,14 @@
   "minVersion": "0.8",
   "package": "com.newuniverse.nusmp.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": ["OverlordUndeadHandlerMixin"],
-  "client": ["client.ComingSoonTextMixin"],
-  "injectors": { "defaultRequire": 0 }
+  "mixins": [
+    "OverlordUndeadHandlerMixin"
+  ],
+  "client": [
+    "client.ComingSoonTextMixin",
+    "client.FourKingdomsSlotMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 0
+  }
 }

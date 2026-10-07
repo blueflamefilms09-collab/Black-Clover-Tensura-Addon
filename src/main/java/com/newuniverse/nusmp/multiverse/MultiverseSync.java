@@ -76,6 +76,23 @@ public final class MultiverseSync {
                 g.putInt("Pages", book.familyCount());
                 g.putInt("Slots", MasteryPages.slots(p, inst.get(), book));
                 g.putInt("Mastery", (int) Math.round(book.masteryFrac(inst.get()) * 100));
+                // 0.46: the unlocked pages themselves, for the Four Kingdoms menu's grimoire (name, lang key, cost, cooldown)
+                net.minecraft.nbt.ListTag pages = new net.minecraft.nbt.ListTag();
+                for (int m = 0; m < book.familyCount(); m++) {
+                    if (!GrimoireBook.isUnlocked(inst.get(), m)) continue;
+                    var page = book.page(m);
+                    if (page == null) continue;
+                    CompoundTag e = new CompoundTag();
+                    e.putString("Id", page.id());
+                    e.putString("Name", page.name());
+                    e.putString("Key", "nusmp.page." + book.getRegistryName().getPath() + "." + page.id());
+                    e.putInt("Cost", (int) Math.round(page.costPercent()));
+                    e.putInt("Cooldown", page.cooldown() / 20);
+                    e.putInt("Mode", m);
+                    pages.add(e);
+                }
+                g.put("PageList", pages);
+                g.putString("MagicId", GrimoirePages.magicOf(inst.get()).name());
             }
         }
         t.put("Grimoire", g);
