@@ -41,11 +41,11 @@ public class DiceBook extends GrimoireBook {
     static final String[] FACE = {"", "Fire", "Earth", "Water", "Wind", "Lightning", "Light"};
     static final int[] FACE_COLOR = {0, 0xFFFF5A2A, 0xFF6AD06A, 0xFF3A8CFF, 0xFFE8F4FF, 0xFFFFE65A, 0xFFFFF6C8};
 
-    private final List<BookPage> pages = List.of(
+    private final List<BookPage> pages = com.newuniverse.nusmp.book.ext.Ext.join(List.of(
             BookPage.starter("elemental_dice", "Elemental Dice", DiceBook::elementalDice),
             BookPage.mid("fate_die", "Fate Die", DiceBook::fateDie),
             BookPage.signature("gamblers_fallacy", "Gambler's Fallacy", DiceBook::gamblersFallacy).withCooldown(600),
-            BookPage.mid("loaded_dice", "Loaded Dice", DiceBook::loadedDice).withCooldown(900));
+            BookPage.mid("loaded_dice", "Loaded Dice", DiceBook::loadedDice).withCooldown(900)), com.newuniverse.nusmp.book.ext.DiceExt.pages());
 
     public DiceBook() { super(MagicType.DICE, GOLD); }
     @Override protected List<BookPage> familyPages() { return pages; }

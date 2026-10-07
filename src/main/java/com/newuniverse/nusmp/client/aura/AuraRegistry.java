@@ -42,5 +42,12 @@ final class AuraRegistry {
         IceWedgeAura.register();
         LegionAura.register();
         LightAura.register();
+        PaintingAura.register();
+        KotodamaAura.register();
+        WorldTreeAura.register();
+        DiceAura.register();
+        SlashAura.register();
+        CompassAura.register();
+        MercuryAura.register();
     }
 }

@@ -58,6 +58,13 @@ import com.newuniverse.nusmp.vfx.client.layer.IceLayer;
 import com.newuniverse.nusmp.vfx.client.layer.IceWedgeLayer;
 import com.newuniverse.nusmp.vfx.client.layer.LegionLayer;
 import com.newuniverse.nusmp.vfx.client.layer.LightLayer;
+import com.newuniverse.nusmp.vfx.client.layer.PaintingLayer;
+import com.newuniverse.nusmp.vfx.client.layer.KotodamaFxLayer;
+import com.newuniverse.nusmp.vfx.client.layer.WorldTreeLayer;
+import com.newuniverse.nusmp.vfx.client.layer.DiceFxLayer;
+import com.newuniverse.nusmp.vfx.client.layer.SlashLayer;
+import com.newuniverse.nusmp.vfx.client.layer.CompassLayer;
+import com.newuniverse.nusmp.vfx.client.layer.MercuryLayer;
 import com.newuniverse.nusmp.vfx.client.layer.TimeMagicLayer;
 import com.newuniverse.nusmp.vfx.client.layer.FireSpellLayer;
 import com.newuniverse.nusmp.vfx.client.layer.WaterSpellLayer;
@@ -151,6 +158,13 @@ public final class VfxManager {
         register(new IceWedgeLayer());
         register(new LegionLayer());
         register(new LightLayer());
+        register(new PaintingLayer());
+        register(new KotodamaFxLayer());
+        register(new WorldTreeLayer());
+        register(new DiceFxLayer());
+        register(new SlashLayer());
+        register(new CompassLayer());
+        register(new MercuryLayer());
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }

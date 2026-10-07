@@ -60,7 +60,7 @@ public final class PaintingBook {
                 signature("painted_menagerie", "Painted Menagerie", PaintStudio::menagerie).withCooldown(900),   // 0.44: living painted beasts
                 // 0.44: appended (page order is the unlock order; old pages keep their places)
                 mid("living_illustration", "Living Illustration", PaintStudio::livingIllustration).withCooldown(400),
-                mid("counter_palette", "Counter Palette", PaintStudio::counterPalette).withCooldown(300)));
+                mid("counter_palette", "Counter Palette", PaintStudio::counterPalette).withCooldown(300))).plus(com.newuniverse.nusmp.book.ext.PaintingExt.pages());
     }
 
     // ---------------------------------------------------------------- shared

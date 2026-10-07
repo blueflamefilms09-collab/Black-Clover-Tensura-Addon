@@ -99,3 +99,10 @@ spell:Lamp of Avior Gloria
 spell:Healing Ray of Light
 spell:Elemental Quintet
 spell:Trinity Seal Magic
+magic:Painting Magic
+magic:Kotodama Magic
+magic:World Tree Magic
+magic:Dice Magic
+magic:Slash Magic
+magic:Compass Magic
+magic:Mercury Magic

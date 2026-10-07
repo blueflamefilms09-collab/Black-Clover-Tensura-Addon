@@ -3,7 +3,7 @@
 Used by tools/gen_attribute_icons.py and by the scaffold of the expansion. One row per attribute:
 
   key        the MagicType name (new) or the existing MagicType it extends (upgrade)
-  pascal     class-name stem: book/<Pascal>Book.java, vfx/client/layer/<Pascal>Layer.java, client/aura/<Pascal>Aura.java,
+  pascal     class-name stem: book/<Pascal>Book.java, vfx/client/layer/<layer>.java (the 'layer' field: <Pascal>Layer, except DiceFxLayer / KotodamaFxLayer), client/aura/<Pascal>Aura.java,
              prop/<Pascal>Props.java, client/prop/<Pascal>PropPainter.java (upgrades: book/ext/<Pascal>Ext.java)
   new        True = a new MagicType and Book; False = an upgrade: new spells appended to the existing book through its Ext class
   display, word, soul, hit, particle, guard   the MagicType constructor arguments (new ones)
@@ -119,12 +119,53 @@ _ROWS = [
      "Summons swarms of low-poly, faceless humanoid constructs (prop kinds) to overwhelm targets. Scales in quantity with the caster's total "
      "magicule pool."),
     ("LIGHT", "Light", False, "Light Magic", "Light", "LIGHT", "PIERCE", "END_ROD", "MOVEMENT_SPEED", 0xDDBE58, 0xFFE680, "GOLD", False, "Light Magic",
-     "UPGRADE. The highest-velocity travel and projectile speed in the framework, high-bloom photon geometry, inflicting Spiritual Damage."),
+     "UPGRADE and AUDIT of the existing Light Magic (0.45 remake; book/LightBook.java). Unmatched movement and projectile velocity (the highest in the "
+     "framework). The Photon pipeline manifests blinding, high-bloom geometric constructs (swords, arrows, whips). Direct hits inflict Spiritual Damage "
+     "and bypass standard physical defense."),
+    # ---- 4. Primary core attributes (already built in earlier versions): AUDITS. Compare the existing implementation with the spec; add what is
+    # missing (new pages through Ext, new effects, models, render layers), never remove or simplify what exists.
+    ("PAINTING", "Painting", False, "Painting Magic", "Canvas", "FANTASY", "SLOW", "DRIPPING_WATER", "ABSORPTION", 0x3A5AA0, 0x3A7BFF, "GOLD", False, "Painting Magic",
+     "AUDIT of the existing Painting Magic (0.40 / 0.44: book/PaintingBook.java, book/PaintStudio.java, entity/PaintedConstructEntity, the paint_brush and "
+     "paint_palette items). Spec: INVOCATION and ASSETS: manifests a physical wooden palette and paintbrush; the palette holds glowing, viscous pools of "
+     "multi-coloured mana paint using custom wet-surface shaders and Photon particle splatters. MECHANICS: Emotional Scaling: enjoyment / happiness boosts "
+     "spell scale and imagination potency, frustration / anger stifles creative manifestation. Elemental Transformation: paint can transform into any element "
+     "to counter incoming magic attributes. Living Illustrations: 2D painted strokes erupt into solid 3D entities with glowing wet-paint particle outlines."),
+    ("KOTODAMA", "Kotodama", False, "Kotodama Magic", "Word Soul", "EMPTY", "NULLIFY", "SQUID_INK", "DAMAGE_RESISTANCE", 0x1E1640, 0x8A4CFF, "DARK", True, "Kotodama Magic",
+     "AUDIT of the existing Kotodama Magic (0.47 / 0.48 / 0.52: book/KotodamaBook.java, book/KotodamaWords.java, book/UnderworldMatter.java, vfx KotodamaLayer, the "
+     "Zagred boss). Spec: Creative Mode ONLY for now; a God-Class Ultimate Skill; standard survival access stays reserved for the future 4-level multiphase boss "
+     "fight against Zagred (built, off by default: keep it that way). VFX and MECHANICS: speaking commands generates glowing demonic typography in mid-air via "
+     "Photon particles. Spawns life-draining underworld sludge using advanced fluid / distortion shaders that cause continuous Spiritual Damage and Energy Drain. "
+     "Operates like Tensura's Intrinsic Skill: Material Creation."),
+    ("WORLD_TREE", "WorldTree", False, "World Tree Magic", "Yggdrasil", "EARTH", "SLOW", "HAPPY_VILLAGER", "REGENERATION", 0x2A6A3A, 0x3CE08A, "BRONZE", False, "World Tree Magic",
+     "AUDIT of the existing World Tree Magic (0.45 / 0.46: book/WorldTreeBook.java, book/TreeRestore.java, vfx LightTreeLayer). Spec: spawns massive ancient roots and "
+     "emerald foliage across terrain. Roots apply Energy Drain to siphon enemy Magicules back to the caster or allies."),
+    ("DICE", "Dice", False, "Dice Magic", "Fortune", "FANTASY", "PUSH", "ENCHANT", "LUCK", 0xB03A3A, 0xFFD060, "GOLD", False, "Dice Magic",
+     "AUDIT of the existing Dice Magic (0.45: book/DiceBook.java, vfx DiceLayer, tools/blender/build_dice_compass.py, the fortune_die item). Spec: 3D ASSETS: physical "
+     "3D-modeled dice with glossy resin textures, internal particle systems, and glowing engraved numbers. PATH 1 (2x D6): rolls two 6-sided dice etched with "
+     "elemental symbols to determine spell elemental affinity and damage multipliers via Tensura elemental mechanics. PATH 2 (1x D20, D&D hybrid): rolls a single "
+     "20-sided fate die and operates strictly on D&D rules: rolling a 1 triggers a Critical Fumble (Magic Jamming on self); rolling a 20 triggers a Critical Hit "
+     "(maximum EP scaling, ignores all defenses, applies heavy Spiritual Damage). Base rolls modify with the caster's stat points."),
+    ("SLASH", "Slash", False, "Slash Magic", "Ripper", "BATTLE", "PIERCE", "SWEEP_ATTACK", "DAMAGE_BOOST", 0x2A6A3A, 0x6AFF8A, "SILVER", False, "Slash Magic",
+     "AUDIT of the existing Slash Magic (0.45: book/SlashBook.java, vfx SlashCompassMercuryLayer). Spec: generates jagged green energy blades on the forearms. Integrates "
+     "dynamic resistance shredding: every successive hit against an enemy continuously lowers their resistance to Slash Magic until defenses are completely bypassed."),
+    ("COMPASS", "Compass", False, "Compass Magic", "Bearing", "SPACE", "PULL", "WAX_ON", "MOVEMENT_SPEED", 0x8A6A2A, 0xFFC84A, "GOLD", False, "Compass Magic",
+     "AUDIT of the existing Compass Magic (0.45: book/CompassBook.java, vfx SlashCompassMercuryLayer, tools/blender/build_dice_compass.py). Spec: 3D ASSETS and VFX: "
+     "summons floating 3D brass / gold compasses hovering behind the caster with glowing needles under reflective glass casings. MECHANICS: locks onto enemy Magicule "
+     "signatures for homing attacks or alters vector trajectories to redirect incoming spells."),
+    ("MERCURY", "Mercury", False, "Mercury Magic", "Silver", "WATER", "SLOW", "WHITE_ASH", "DAMAGE_RESISTANCE", 0x8A92A0, 0xC8D0E0, "SILVER", False, "Mercury Magic",
+     "AUDIT of the existing Mercury Magic (0.45 remake: book/MercuryBook.java, vfx SlashCompassMercuryLayer). Spec: 3D ASSETS and VFX: liquid metallic shaders with high "
+     "specular highlights. Seamlessly morphs between defensive liquid domes and razor-sharp physical constructs (spears, giant eagles) scaling with EP."),
 ]
 
 ATTRS = [dict(zip(("key", "pascal", "new", "display", "word", "soul", "hit", "particle", "guard", "cover", "glow", "trim", "restricted", "wiki", "spec"), r)) for r in _ROWS]
+AUDIT_KEYS = ("PAINTING", "KOTODAMA", "WORLD_TREE", "DICE", "SLASH", "COMPASS", "MERCURY")
+for _a in ATTRS:
+    _a["audit"] = _a["key"] in AUDIT_KEYS or _a["key"] == "LIGHT"          # Light is an upgrade AND an audit (its spec is in section 4 of the owner's framework)
+for _a in ATTRS:                                                           # the VFX layer class: vfx/client/layer/<layer>.java (Dice and Kotodama already own DiceLayer / KotodamaLayer)
+    _a["layer"] = {"DICE": "DiceFxLayer", "KOTODAMA": "KotodamaFxLayer"}.get(_a["key"], _a["pascal"] + "Layer")
 NEW = [a for a in ATTRS if a["new"]]
-UPGRADES = [a for a in ATTRS if not a["new"]]
+UPGRADES = [a for a in ATTRS if not a["new"] and a["key"] not in AUDIT_KEYS]       # the 8 upgrades of the expansion (incl. Light)
+AUDITS = [a for a in ATTRS if a["key"] in AUDIT_KEYS]                              # the 7 core magics audited against the master framework
 
 
 def by_key(k):

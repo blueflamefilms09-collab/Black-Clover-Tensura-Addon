@@ -74,6 +74,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.DemonSlayerRenderer.init(modEventBus);
             com.newuniverse.nusmp.client.aura.PlayerAuraClient.init(modEventBus);                             // 0.53: player render layers
             modEventBus.addListener(com.newuniverse.nusmp.client.prop.MagicPropRenderer::register);           // 0.53: props
+            com.newuniverse.nusmp.client.geo.GeoModels.init(modEventBus);                                      // 0.53: geo.json models re-read on a resource reload
             com.newuniverse.nusmp.client.SwordDrawClient.init();                                              // 0.52: the draw animation
             com.newuniverse.nusmp.client.WeaponRenderer.init(modEventBus);                                  // 0.50: every weapon in 3D
             modEventBus.addListener(com.newuniverse.nusmp.client.RougeCatLayer::layers);                    // 0.49: Rouge's cat model

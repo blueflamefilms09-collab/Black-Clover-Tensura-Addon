@@ -77,5 +77,19 @@ public enum PropKind {
     LEGION_1,
     LEGION_2,
     LIGHT_1,
-    LIGHT_2
+    LIGHT_2,
+    PAINTING_1,
+    PAINTING_2,
+    KOTODAMA_1,
+    KOTODAMA_2,
+    WORLD_TREE_1,
+    WORLD_TREE_2,
+    DICE_1,
+    DICE_2,
+    SLASH_1,
+    SLASH_2,
+    COMPASS_1,
+    COMPASS_2,
+    MERCURY_1,
+    MERCURY_2
 }

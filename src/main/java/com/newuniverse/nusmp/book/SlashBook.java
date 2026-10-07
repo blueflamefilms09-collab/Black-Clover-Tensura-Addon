@@ -38,11 +38,11 @@ public class SlashBook extends GrimoireBook {
     static final int GREEN = 0xFF48FF7A;
     static final String K_ADAPT = "nusmp_slash_adapt", K_BLADES = "nusmp_slash_blades_until";
 
-    private final List<BookPage> pages = List.of(
+    private final List<BookPage> pages = com.newuniverse.nusmp.book.ext.Ext.join(List.of(
             BookPage.starter("slash_wave", "Slash Wave", SlashBook::slashWave),
             BookPage.mid("forearm_blades", "Forearm Blades", SlashBook::forearmBlades).withCooldown(400),
             BookPage.mid("ripper_dash", "Ripper Dash", SlashBook::ripperDash).withCooldown(100),
-            BookPage.signature("death_scythe", "Death Scythe", SlashBook::deathScythe).withCooldown(900));
+            BookPage.signature("death_scythe", "Death Scythe", SlashBook::deathScythe).withCooldown(900)), com.newuniverse.nusmp.book.ext.SlashExt.pages());
 
     public SlashBook() { super(MagicType.SLASH, GREEN); }
     @Override protected List<BookPage> familyPages() { return pages; }

@@ -40,5 +40,12 @@ public enum Aura {
     ICE,
     ICE_WEDGE,
     LEGION,
-    LIGHT
+    LIGHT,
+    PAINTING,
+    KOTODAMA,
+    WORLD_TREE,
+    DICE,
+    SLASH,
+    COMPASS,
+    MERCURY
 }

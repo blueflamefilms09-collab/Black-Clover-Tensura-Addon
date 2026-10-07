@@ -41,11 +41,11 @@ import java.util.List;
 public class WorldTreeBook extends GrimoireBook {
     static final int EMERALD = 0xFF3CE08A, BARK = 0xFF7A5232;
 
-    private final List<BookPage> pages = List.of(
+    private final List<BookPage> pages = com.newuniverse.nusmp.book.ext.Ext.join(List.of(
             BookPage.starter("mistilteinn_seed", "Mistilteinn Seed", WorldTreeBook::seed),
             BookPage.mid("root_bind", "Root Bind", WorldTreeBook::rootBind),
             BookPage.zone("magic_tree_descent", "Magic Tree Descent", WorldTreeBook::treeDescent).withCooldown(900),
-            BookPage.signature("budding_of_yggdrasil", "Budding of Yggdrasil", WorldTreeBook::yggdrasil).withCooldown(1200));
+            BookPage.signature("budding_of_yggdrasil", "Budding of Yggdrasil", WorldTreeBook::yggdrasil).withCooldown(1200)), com.newuniverse.nusmp.book.ext.WorldTreeExt.pages());
 
     public WorldTreeBook() { super(MagicType.WORLD_TREE, 0xFF3CE08A); }
     @Override protected List<BookPage> familyPages() { return pages; }

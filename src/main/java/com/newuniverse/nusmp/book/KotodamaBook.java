@@ -22,7 +22,7 @@ import java.util.List;
  * the per-word cooldowns, so chat and pages share them.
  */
 public class KotodamaBook extends GrimoireBook {
-    private final List<BookPage> pages = List.of(
+    private final List<BookPage> pages = com.newuniverse.nusmp.book.ext.Ext.join(List.of(
             word("halt", "Halt", Word.HALT),
             word("shatter", "Shatter", Word.SHATTER),
             word("heal", "Heal", Word.HEAL),
@@ -39,7 +39,7 @@ public class KotodamaBook extends GrimoireBook {
             word("cower", "Cower", Word.FEAR),
             word("banish", "Banish", Word.BANISH),
             word("reverse", "Reverse", Word.REVERSE),
-            word("drain", "Drain", Word.DRAIN));
+            word("drain", "Drain", Word.DRAIN)), com.newuniverse.nusmp.book.ext.KotodamaExt.pages());
 
     public KotodamaBook() { super(MagicType.KOTODAMA, KotodamaWords.VIOLET, Skill.SkillType.ULTIMATE); }
 

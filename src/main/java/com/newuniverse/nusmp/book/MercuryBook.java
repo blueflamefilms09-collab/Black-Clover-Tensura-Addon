@@ -33,13 +33,13 @@ import java.util.List;
 public class MercuryBook extends GrimoireBook {
     static final int SILVER = 0xFFE4E8F0;
 
-    private final List<BookPage> pages = List.of(
+    private final List<BookPage> pages = com.newuniverse.nusmp.book.ext.Ext.join(List.of(
             BookPage.starter("silver_blade", "Silver Blade", MercuryBook::blade),
             BookPage.signature("mercury_shield", "Silver Guardian", MercuryBook::shield),
             // 0.34: Nozel Silva's character spell (0.45: remade, the old WikiSpells version stays in the code)
             BookPage.signature("mercury_rain", "Mercury Magic: Silver Rain", MercuryBook::silverRain),
             // 0.45: appended
-            BookPage.signature("silver_eagle", "Silver Eagle", MercuryBook::silverEagle).withCooldown(600));
+            BookPage.signature("silver_eagle", "Silver Eagle", MercuryBook::silverEagle).withCooldown(600)), com.newuniverse.nusmp.book.ext.MercuryExt.pages());
 
     public MercuryBook() { super(MagicType.MERCURY, 0xFFC9D1DB); }
     @Override protected List<BookPage> familyPages() { return pages; }

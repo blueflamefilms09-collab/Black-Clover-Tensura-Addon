@@ -42,5 +42,12 @@ final class PropRegistry {
         IceWedgeProps.init();
         LegionProps.init();
         LightProps.init();
+        PaintingProps.init();
+        KotodamaProps.init();
+        WorldTreeProps.init();
+        DiceProps.init();
+        SlashProps.init();
+        CompassProps.init();
+        MercuryProps.init();
     }
 }

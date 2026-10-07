@@ -42,11 +42,11 @@ public class CompassBook extends GrimoireBook {
     static final int GOLD = 0xFFFFC94A, GREEN = 0xFF4AD08A;
     static final String K_MARK = "nusmp_compass_mark", K_MARK_UNTIL = "nusmp_compass_mark_until", K_TURNED = "nusmp_compass_turned";
 
-    private final List<BookPage> pages = List.of(
+    private final List<BookPage> pages = com.newuniverse.nusmp.book.ext.Ext.join(List.of(
             BookPage.starter("useless_north", "Useless North", CompassBook::uselessNorth),
             BookPage.mid("willful_compass", "Willful Compass", CompassBook::willfulCompass).withCooldown(500),
             BookPage.mid("another_atlas", "Another Atlas", CompassBook::anotherAtlas).withCooldown(600),
-            BookPage.signature("compass_rose", "Compass Rose", CompassBook::compassRose).withCooldown(900));
+            BookPage.signature("compass_rose", "Compass Rose", CompassBook::compassRose).withCooldown(900)), com.newuniverse.nusmp.book.ext.CompassExt.pages());
 
     public CompassBook() { super(MagicType.COMPASS, GOLD); }
     @Override protected List<BookPage> familyPages() { return pages; }

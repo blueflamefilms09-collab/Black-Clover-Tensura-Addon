@@ -42,5 +42,12 @@ final class PropPainterRegistry {
         IceWedgePropPainter.register();
         LegionPropPainter.register();
         LightPropPainter.register();
+        PaintingPropPainter.register();
+        KotodamaPropPainter.register();
+        WorldTreePropPainter.register();
+        DicePropPainter.register();
+        SlashPropPainter.register();
+        CompassPropPainter.register();
+        MercuryPropPainter.register();
     }
 }
