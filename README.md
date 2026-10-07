@@ -60,7 +60,7 @@ Chanted magics: use **Chant** mode until the chant is complete, then switch to *
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.56.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.57.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -204,6 +204,13 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Anti-Magic kit**: new pages **Black Hurricane** (a whirling field that drags foes in and strips their magic) and **Black Form** (30 s of strength, speed, resistance and jump, with an anti-magic burst); mastering the Anti-Magic Lord now also grants the **Demon-Slasher** katana next to Demon-Dweller and Demon-Destroyer.
 - **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
 - **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
+
+## 0.57 - Real grimoires for the new magics, bug fixes
+
+- Fixed: the new magics' skills showed raw ids (language entries were never merged); the red "Coming Soon" tooltip over the Four Kingdoms slot; the Spirit Lord skill stayed after losing the spirit or the Anti-Magic magic (it is now checked every 10 seconds).
+- New: the new grimoires now hold about 12 pages each (themed: gel slows and holds, ice slows and freezes, ...), with page descriptions in the read-page menu. Done so far: Gel, Demon Ice, Ice Wedge, Bubble, Glass, Crystal, Demon Fire, Demon Water, Demon Light, Demon Beast, Curse, Curse Warding, Barrier, Key, Chain, Butoh, Cherry Blossom, Corundum, Bronze. Still one page: Iron, Copper, Food, Fungus, Black Oil, Briar, Eye, Eyeball, Body, Legion.
+- Replaced: the new magics' cast and impact effects draw three times bigger (zones 1.5x).
+- Not verified: nothing was run in game.
 
 ## 0.56 - Yami's dark slashes, Dimension Slash shader, Sealing amp, Secre's Seal Magic
 
