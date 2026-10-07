@@ -78,6 +78,20 @@ public final class SpellRuntime {
         if (wall.getType() != HitResult.Type.MISS || --b.life <= 0) end(b, b.pos);
     }
 
+    /**
+     * 0.47 (Kotodama "Shatter"): ends every bolt within r of 'at' that isn't the keeper's or an ally's, without its end effect
+     * (the spell comes apart). Returns how many.
+     */
+    public static int dissolveBolts(ServerLevel level, Vec3 at, double r, LivingEntity keeper) {
+        int n = 0;
+        for (Bolt b : BOLTS) {
+            if (b.dead || b.level != level || b.owner == keeper || b.owner.isAlliedTo(keeper) || b.pos.distanceToSqr(at) > r * r) continue;
+            b.dead = true;
+            n++;
+        }
+        return n;
+    }
+
     private static void end(Bolt b, Vec3 at) {
         if (b.dead) return;
         b.dead = true;

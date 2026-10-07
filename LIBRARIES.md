@@ -16,7 +16,7 @@ time you build, from the repositories named in `source/build.gradle` and `source
 - Tests: JUnit Jupiter 5.10.2 (Maven Central)
 - Texture regeneration only (optional): Python 3 with Pillow and numpy -> `python tools/gen_grimoire_book_textures.py`
 
-Build:  `cd source` then `gradlew.bat build`  (Mac/Linux `./gradlew build`)  ->  `source/build/libs/multiverse-of-anime-0.46.0.jar`
+Build:  `cd source` then `gradlew.bat build`  (Mac/Linux `./gradlew build`)  ->  `source/build/libs/multiverse-of-anime-0.47.0.jar`
 
 ## Needed to RUN the mod (put the jar from `mod/` in the game's `mods` folder)
 NeoForge 21.1.x for Minecraft 1.21.1 plus: Tensura: Reincarnated 2.0.1.0+, ManasCore 4.0.0.2+, Architectury, GeckoLib,

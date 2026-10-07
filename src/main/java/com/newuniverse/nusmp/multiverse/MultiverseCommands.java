@@ -168,6 +168,15 @@ public final class MultiverseCommands {
         root.then(spirit);
 
         // ---------------------------------------------------------------- anti-magic
+        // 0.47: the Zagred boss (server config zagredBossEnabled, off by default)
+        root.then(Commands.literal("boss").requires(MultiverseCommands::admin)
+                .then(Commands.literal("zagred").executes(ctx -> {
+                    if (!com.newuniverse.nusmp.NUConfig.ZAGRED_BOSS_ENABLED.get())
+                        return fail(ctx, "The Zagred boss is off. Set zagredBossEnabled = true in the server config to allow it.");
+                    var z = com.newuniverse.nusmp.entity.ZagredBossEntity.summon(ctx.getSource().getLevel(), ctx.getSource().getPosition());
+                    return z == null ? fail(ctx, "Zagred could not be summoned here.") : ok(ctx, "Zagred descends. The arena is here.");
+                })));
+
         root.then(Commands.literal("antimode").requires(MultiverseCommands::admin).then(Commands.argument("player", EntityArgument.player())
                 .then(Commands.argument("mode", IntegerArgumentType.integer(0, 3)).executes(ctx -> {
                     ServerPlayer p = EntityArgument.getPlayer(ctx, "player");

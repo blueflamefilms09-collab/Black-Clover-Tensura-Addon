@@ -23,9 +23,14 @@ public final class NUEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<PaintedConstructEntity>> PAINTED_CONSTRUCT = ENTITIES.register("painted_construct",
             () -> EntityType.Builder.of(PaintedConstructEntity::new, MobCategory.MISC).sized(0.6f, 1.95f).clientTrackingRange(10).build("painted_construct"));
 
+    /** 0.47: Zagred, the Kotodama devil, as a 4-phase boss (off by default; /multiverse boss zagred). */
+    public static final DeferredHolder<EntityType<?>, EntityType<ZagredBossEntity>> ZAGRED = ENTITIES.register("zagred",
+            () -> EntityType.Builder.of(ZagredBossEntity::new, MobCategory.MONSTER).sized(0.9f, 2.7f).fireImmune().clientTrackingRange(16).build("zagred"));
+
     public static void attributes(EntityAttributeCreationEvent e) {
         e.put(SPIRIT_LORD.get(), SpiritLordEntity.createAttributes().build());
         e.put(MIRROR_DOUBLE.get(), MirrorDoubleEntity.createAttributes().build());
         e.put(PAINTED_CONSTRUCT.get(), PaintedConstructEntity.createAttributes().build());
+        e.put(ZAGRED.get(), ZagredBossEntity.createAttributes().build());
     }
 }

@@ -18,6 +18,9 @@ public final class NUBlocks {
     public static final DeferredItem<BlockItem> GRIMOIRE_ALTAR_ITEM = NUItems.ITEMS.register("grimoire_altar",
             () -> new BlockItem(GRIMOIRE_ALTAR.get(), new Item.Properties()));
 
+    /** 0.47: Kotodama's underworld matter (temporary; see book.UnderworldMatter). No item. */
+    public static final DeferredBlock<UnderworldMatterBlock> UNDERWORLD_MATTER = BLOCKS.register("underworld_matter", UnderworldMatterBlock::new);
+
     /** Touch the class so its entries are added before the registers are attached. */
     public static void init() {}
 }

@@ -593,5 +593,17 @@
   "nusmp.page.book_compass.useless_north": "Useless North - the compasses turn to your target and loose needles that follow it wherever it goes.",
   "nusmp.page.book_compass.willful_compass": "Willful Compass - for 10 seconds the compasses wrench every incoming shot round and send it back at whoever fired it.",
   "nusmp.page.book_compass.another_atlas": "Another Atlas - chart a foe's magicule signature for 15 seconds: it glows, your needles always find it, and the array fires on it by itself.",
-  "nusmp.page.book_compass.compass_rose": "Compass Rose - every needle swings at once: each foe within 20 blocks is locked and struck by two homing needles."
+  "nusmp.page.book_compass.compass_rose": "Compass Rose - every needle swings at once: each foe within 20 blocks is locked and struck by two homing needles.",
+  "nusmp.skill.book_kotodama": "Kotodama Magic",
+  "nusmp.skill.book_kotodama.description": "Zagred's Word Soul: what you say becomes law. A God-class magic of astronomical magicule cost (Aura pays what magicules can't). Speak a command word alone in chat or cast its page. Creative only, or for one who has defeated Zagred.",
+  "nusmp.page.book_kotodama.halt": "Halt - \"Halt\" / \"Bind\": everyone around you is paralysed in place and their magic jammed (Absolute Paralysis, Magic Jamming), their spirit struck.",
+  "nusmp.page.book_kotodama.shatter": "Shatter - \"Shatter\" / \"Return\": every attack flying at you breaks apart and returns to magicules, a share of which flows back to you.",
+  "nusmp.page.book_kotodama.heal": "Heal - \"Heal\": your health and Aura to full and every harmful effect gone, and your allies' nearby too.",
+  "nusmp.page.book_kotodama.underworld": "Devour - \"Devour\" / \"Underworld\": underworld sludge floods out where you look, swallowing the ground; whoever wades in it is hurt, spiritually wounded and drained into you.",
+  "nusmp.page.book_kotodama.trident": "Trident - \"Trident\": an otherworldly trident forms in your hand for 60 seconds: crushing blows that cut the spirit, and right-click hurls a void bolt.",
+  "nusmp.page.book_kotodama.demon_swords": "Swords - \"Swords\": a storm of demon swords falls where you look, each blow cutting body and spirit.",
+  "entity.nusmp.zagred": "Zagred",
+  "block.nusmp.underworld_matter": "Underworld Matter",
+  "item.nusmp.otherworld_trident": "Otherworldly Trident",
+  "item.nusmp.otherworld_trident.desc": "Spoken into being by Kotodama. Right-click: hurl a void bolt. Fades after 60 s or if it leaves your hands."
 }

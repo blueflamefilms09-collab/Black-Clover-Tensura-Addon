@@ -24,10 +24,11 @@ public final class NUCreativeTab {
                     output.accept(GrimoireItem.createUnbound(c, m, c.isForbidden() ? Devil.MEGICULA : null));
                 }
                 output.accept(GrimoireItem.createUnbound(GrimoireCover.FIVE_LEAF, MagicType.ANTI_MAGIC, Devil.LIEBE));
+                output.accept(GrimoireItem.createUnbound(GrimoireCover.FIVE_LEAF, MagicType.KOTODAMA, Devil.ZAGRED));   // 0.47: creative only
                 for (var it : com.newuniverse.nusmp.item.NUItems.all()) output.accept(it.get());
                 output.accept(com.newuniverse.nusmp.block.NUBlocks.GRIMOIRE_ALTAR_ITEM.get());
                 for (MagicType m : MagicType.values()) {
-                    if (m == MagicType.ANTI_MAGIC) continue;
+                    if (m == MagicType.ANTI_MAGIC || m == MagicType.KOTODAMA) continue;   // Kotodama: only Zagred's five-leaf below
                     output.accept(GrimoireItem.createUnbound(GrimoireCover.THREE_LEAF, m, null));
                 }
                 // the named canon grimoires (Fuegoleon, Yuno, Asta, Noelle, ...)

@@ -84,6 +84,8 @@ MAGIC = {
     "dice":          ("Dice Magic", 0xB070FF, 0xFFE8A0, "translucent violet resin and gold", "Gambler's Fallacy"),
     "slash":         ("Slash Magic", 0x48FF7A, 0xD8FFE0, "jagged mantis green", "Death Scythe"),
     "compass":       ("Compass Magic", 0xFFC94A, 0xFFF0C0, "brass, gold and compass green", "Useless North"),
+    # 0.47 (appended so every existing icon keeps its seed)
+    "kotodama":      ("Kotodama Magic", 0x8A4CFF, 0x1E1640, "corrupted indigo, violet and ink black", "Halt"),
 }
 
 
@@ -559,6 +561,17 @@ def g_compass(d):
         rr = (math.cos(a - 0.35) * 1.8, math.sin(a - 0.35) * 1.8)
         d.polygon(P([l, tip, rr]), fill=255 if k % 2 == 0 else 170)
     d.ellipse(box(-1.4, -1.4, 1.4, 1.4), fill=255)
+
+
+def g_kotodama(d):
+    """The spoken word: corner brackets round a demonic rune (a spine, hooked arms, a diamond)."""
+    w = int(1.6 * U)
+    d.line(P([(-10, -6), (-10, -10), (-6, -10)]), fill=255, width=w)
+    d.line(P([(10, 6), (10, 10), (6, 10)]), fill=255, width=w)
+    d.line(P([(0.8, -8), (0, 0), (-0.8, 8)]), fill=255, width=int(1.8 * U))
+    d.line(P([(0, -4), (5, -5), (6, -2)]), fill=220, width=int(1.3 * U))
+    d.line(P([(0, 3), (-5, 2), (-6, 5)]), fill=220, width=int(1.3 * U))
+    d.polygon(P([(0, -1.8), (1.8, 0.5), (0, 2.8), (-1.8, 0.5)]), fill=150)
 
 
 GLYPHS = {k: globals()["g_" + k] for k in MAGIC}

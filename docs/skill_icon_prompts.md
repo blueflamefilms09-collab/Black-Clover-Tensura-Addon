@@ -903,3 +903,23 @@ Template: `[Spell/Magic description] in Black Clover anime magic spell icon styl
    ```
    ultimate compass magic: Useless North at full power, complex multi-layered magic circles with a star seal, celestial and abyssal energy, intense particle storm, black iron border lit from within in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing brass, gold and compass green magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
    ```
+
+## Kotodama Magic
+
+1. **Active spell / attack** (`textures/skill/grimoire/kotodama.png`)
+
+   ```
+   Halt unleashed as a dynamic kotodama magic attack, energy discharge bursting from an open grimoire, motion streaks, gold embossed frame with clover runes in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing corrupted indigo, violet and ink black magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```
+
+2. **Buff / grimoire page rune** (`textures/skill/icons/kotodama_buff.png`)
+
+   ```
+   a glowing kotodama magic rune sigil on an ancient parchment grimoire page, mystical glyph circle, binding chains and a faint defensive shield, silver stone border in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing corrupted indigo, violet and ink black magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```
+
+3. **Ultimate / forbidden** (`textures/skill/icons/kotodama_ultimate.png`)
+
+   ```
+   ultimate kotodama magic: Halt at full power, complex multi-layered magic circles with a star seal, celestial and abyssal energy, intense particle storm, black iron border lit from within in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing corrupted indigo, violet and ink black magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```

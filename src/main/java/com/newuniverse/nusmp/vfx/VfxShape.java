@@ -119,7 +119,14 @@ public enum VfxShape {
     COMPASS_LOCK,            // a compass-rose lock sigil on 'from' (the target's magicule signature); power = size
     MERCURY_DOME,            // a flowing liquid-silver dome round 'from'; power = radius
     MERCURY_SPEAR,           // a hyper-dense chrome spear 'from' -> 'to' with a liquid tail; power = size
-    MERCURY_EAGLE;           // a giant liquid-silver eagle swoops 'from' -> 'to'; power = wingspan
+    MERCURY_EAGLE,           // a giant liquid-silver eagle swoops 'from' -> 'to'; power = wingspan
+    // 0.47 Kotodama (Word Soul) Magic, Zagred
+    KOTO_WORDS,              // a spoken command: demonic glyphs flash in a line before 'from' facing 'to', then burst; seed & 7 = word; power = size
+    KOTO_AURA,               // billowing purple-black smoke round the followed caster (or 'from'); power = size
+    KOTO_SHATTER,            // a spell stripped back to magicules at 'from': it cracks and dissolves into motes drawn to 'to'; power = size
+    KOTO_SWORDS,             // a storm of demon swords falls out of a void rift over 'from'; power = radius
+    KOTO_TRIDENT,            // the otherworldly trident drawn out of a void rift at 'from' (pointing 'to'); power = size
+    KOTO_SLUDGE;             // underworld matter boiling up at 'from': black bubbles, violet tendrils, drain motes; power = size
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

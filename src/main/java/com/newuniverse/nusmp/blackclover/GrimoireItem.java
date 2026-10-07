@@ -155,6 +155,11 @@ public class GrimoireItem extends Item {
             sp.displayClientMessage(Component.literal("This grimoire has not chosen you.").withStyle(ChatFormatting.GRAY), true);
             return InteractionResultHolder.fail(stack);
         }
+        // 0.47: Kotodama (Zagred's Word Soul) binds only in creative, or for someone who has beaten Zagred
+        if (MagicType.byName(tag.getString("Magic")) == MagicType.KOTODAMA && !sp.isCreative() && !com.newuniverse.nusmp.book.KotodamaWords.earned(sp)) {
+            sp.displayClientMessage(Component.literal("The Word Soul answers only in creative, or to one who has defeated Zagred.").withStyle(ChatFormatting.DARK_PURPLE), true);
+            return InteractionResultHolder.fail(stack);
+        }
         // A grimoire chooses one mage. Someone who already has one keeps it (pages, mastery and all) and keeps this
         // unbound copy too: binding would otherwise wipe their own grimoire. Admins reset first: /multiverse ceremony reset <player>.
         var existing = GrimoirePages.grimoireOf(sp);

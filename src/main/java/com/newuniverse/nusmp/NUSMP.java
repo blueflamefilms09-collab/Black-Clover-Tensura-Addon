@@ -59,6 +59,8 @@ public class NUSMP {
             modEventBus.addListener(com.newuniverse.nusmp.client.MirrorDoubleRenderer::register);
             modEventBus.addListener(com.newuniverse.nusmp.client.PaintedConstructRenderer::register);      // 0.44
             modEventBus.addListener(com.newuniverse.nusmp.client.PaintedConstructRenderer::layers);
+            modEventBus.addListener(com.newuniverse.nusmp.client.ZagredRenderer::register);              // 0.47
+            modEventBus.addListener(com.newuniverse.nusmp.client.ZagredRenderer::layers);
         }
         modContainer.registerConfig(ModConfig.Type.SERVER, NUConfig.SPEC);
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.multiverse.MultiverseConfig.SPEC, "nusmp-multiverse-server.toml");
@@ -98,6 +100,9 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.PaintStudio::onDeath);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.PaintStudio::onUseItemFinish);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.SlashBook::onIncomingDamage);              // 0.45: forearm blades
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.KotodamaWords::onChat);                    // 0.47: Kotodama command words
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.UnderworldMatter::onServerTick);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.UnderworldMatter::onServerStopping);
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent e) -> {
             if (e.getSource().getEntity() instanceof net.minecraft.server.level.ServerPlayer sp) com.newuniverse.nusmp.book.PaintingBook.breakCamouflage(sp);
         });

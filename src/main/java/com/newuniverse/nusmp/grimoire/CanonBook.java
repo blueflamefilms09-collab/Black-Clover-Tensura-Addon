@@ -53,7 +53,9 @@ public enum CanonBook {
     GORDON("Gordon Agrippa", "THREE_LEAF", "POISON", 0x3A4A2A, 0xB0C890, 0, null),            // Black Bull; Poison Magic
     HENRY("Henry Legolant", "THREE_LEAF", "RECOMBINATION", 0x3A3430, 0xC8A050, 0, null),      // Black Bull; Recombination Magic
     // 0.45: appended
-    LETOILE("Letoile Becquerel", "THREE_LEAF", "COMPASS", 0x3A6A4A, 0xD8B860, 0, null);       // Golden Dawn; Compass Magic
+    LETOILE("Letoile Becquerel", "THREE_LEAF", "COMPASS", 0x3A6A4A, 0xD8B860, 0, null),       // Golden Dawn; Compass Magic
+    // 0.47: appended. Zagred's corrupted five-leaf grimoire: indigo cover, black clover, Word Soul
+    ZAGRED("Zagred", "FIVE_LEAF", "KOTODAMA", 0x1E1640, 0x6A5AB0, 0x0A0610, null);              // the five-leaf art design, black clover
 
     public final String owner, cover, magic;
     public final int coverColor, trimColor, emblemColor;

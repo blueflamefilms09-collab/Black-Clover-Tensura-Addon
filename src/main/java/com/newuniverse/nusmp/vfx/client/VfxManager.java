@@ -18,6 +18,7 @@ import com.newuniverse.nusmp.vfx.client.layer.PaintStudioLayer;
 import com.newuniverse.nusmp.vfx.client.layer.LightTreeLayer;
 import com.newuniverse.nusmp.vfx.client.layer.DiceLayer;
 import com.newuniverse.nusmp.vfx.client.layer.SlashCompassMercuryLayer;
+import com.newuniverse.nusmp.vfx.client.layer.KotodamaLayer;
 import com.newuniverse.nusmp.vfx.client.layer.TimeMagicLayer;
 import com.newuniverse.nusmp.vfx.client.layer.FireSpellLayer;
 import com.newuniverse.nusmp.vfx.client.layer.WaterSpellLayer;
@@ -70,6 +71,7 @@ public final class VfxManager {
         register(new LightTreeLayer());       // 0.45
         register(new DiceLayer());
         register(new SlashCompassMercuryLayer());
+        register(new KotodamaLayer());        // 0.47
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }

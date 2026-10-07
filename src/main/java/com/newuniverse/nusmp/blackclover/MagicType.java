@@ -73,7 +73,9 @@ public enum MagicType {
     WORLD_TREE("World Tree Magic", "Yggdrasil", "EARTH", HitEffect.SLOW, () -> ParticleTypes.HAPPY_VILLAGER, () -> MobEffects.REGENERATION),
     DICE("Dice Magic", "Fortune", "FANTASY", HitEffect.PUSH, () -> ParticleTypes.ENCHANT, () -> MobEffects.LUCK),
     SLASH("Slash Magic", "Ripper", "BATTLE", HitEffect.PIERCE, () -> ParticleTypes.SWEEP_ATTACK, () -> MobEffects.DAMAGE_BOOST),
-    COMPASS("Compass Magic", "Bearing", "SPACE", HitEffect.PULL, () -> ParticleTypes.WAX_ON, () -> MobEffects.MOVEMENT_SPEED);
+    COMPASS("Compass Magic", "Bearing", "SPACE", HitEffect.PULL, () -> ParticleTypes.WAX_ON, () -> MobEffects.MOVEMENT_SPEED),
+    // 0.47: Kotodama (Word Soul) Magic, Zagred's - God-class, creative only (never rolled; see book.KotodamaWords); appended
+    KOTODAMA("Kotodama Magic", "Word Soul", "EMPTY", HitEffect.NULLIFY, () -> ParticleTypes.SQUID_INK, () -> MobEffects.DAMAGE_RESISTANCE);
 
     public final String displayName;
     public final String word;
@@ -99,10 +101,10 @@ public enum MagicType {
     public static List<MagicType> forSoul(String soul) {
         List<MagicType> list = new ArrayList<>();
         for (MagicType t : values()) {
-            if (t != ANTI_MAGIC && t.soulType.equals(soul)) list.add(t);
+            if (t != ANTI_MAGIC && t != KOTODAMA && t.soulType.equals(soul)) list.add(t);
         }
         if (list.isEmpty()) {
-            for (MagicType t : values()) if (t != ANTI_MAGIC) list.add(t);
+            for (MagicType t : values()) if (t != ANTI_MAGIC && t != KOTODAMA) list.add(t);
         }
         return list;
     }

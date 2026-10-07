@@ -415,7 +415,7 @@ public final class GrimoireFloatClient {
 
     private static Style style(ItemStack stack) {
         MagicType m = MagicType.byName(GrimoireItem.data(stack).getString("Magic"));
-        if (m == MagicType.ANTI_MAGIC || GrimoireItem.cover(stack).isForbidden()) return Style.ANTI;
+        if (m == MagicType.ANTI_MAGIC || m == MagicType.KOTODAMA || GrimoireItem.cover(stack).isForbidden()) return Style.ANTI;   // 0.47: Zagred's corrupted book
         return switch (m.soulType) {
             case "FLAME" -> Style.EMBER;
             case "WATER" -> Style.DROPLET;

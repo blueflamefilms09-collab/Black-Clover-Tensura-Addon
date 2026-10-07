@@ -105,14 +105,14 @@ public final class GrimoireAcceptance {
     public static List<MagicType> starterPool(String soul) {
         List<MagicType> starters = new java.util.ArrayList<>();
         for (String s : com.newuniverse.nusmp.multiverse.MultiverseConfig.get(com.newuniverse.nusmp.multiverse.MultiverseConfig.STARTER_MAGICS)) {
-            try { MagicType t = MagicType.valueOf(s.trim().toUpperCase()); if (t != MagicType.ANTI_MAGIC && !starters.contains(t)) starters.add(t); }
+            try { MagicType t = MagicType.valueOf(s.trim().toUpperCase()); if (t != MagicType.ANTI_MAGIC && t != MagicType.KOTODAMA && !starters.contains(t)) starters.add(t); }   // 0.47: Kotodama is never rolled
             catch (IllegalArgumentException ignored) {}
         }
         if (starters.isEmpty()) starters.addAll(List.of(MagicType.FLAME, MagicType.WATER, MagicType.WIND, MagicType.EARTH));
         List<MagicType> soulPool = MagicType.forSoul(soul == null ? NightmareSouls.NO_NIGHTMARE : soul);
         List<MagicType> both = new java.util.ArrayList<>(starters);
         both.retainAll(soulPool);
-        return both.isEmpty() || soulPool.size() == MagicType.values().length - 1 ? starters : both;
+        return both.isEmpty() || soulPool.size() == MagicType.values().length - 2 ? starters : both;   // all but Anti-Magic and Kotodama
     }
 
     /** Weighted kingdom roll (config). */

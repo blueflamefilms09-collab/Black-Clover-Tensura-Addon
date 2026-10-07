@@ -112,6 +112,9 @@ public final class NUItems {
     public static final DeferredItem<PaintToolItem> PAINT_BRUSH = ITEMS.register("paint_brush", () -> new PaintToolItem(PaintToolItem.Kind.BRUSH));
     public static final DeferredItem<PaintToolItem> PAINT_PALETTE = ITEMS.register("paint_palette", () -> new PaintToolItem(PaintToolItem.Kind.PALETTE));
 
+    // 0.47: Kotodama's otherworldly trident (spoken into being, bound; see book.KotodamaWords). Not in the creative tab.
+    public static final DeferredItem<OtherworldTridentItem> OTHERWORLD_TRIDENT = ITEMS.register("otherworld_trident", OtherworldTridentItem::new);
+
     /** Spirit Lord Skill: grants the non-grimoire Spirit Lord path. */
     public static final DeferredItem<SpiritLordSkillItem> SPIRIT_LORD_SKILL = ITEMS.register("spirit_lord_skill", SpiritLordSkillItem::new);
 

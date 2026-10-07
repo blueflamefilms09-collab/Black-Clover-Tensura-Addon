@@ -90,6 +90,7 @@ public final class GrimoireSummon {
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 0.6f, 1.2f);
         p.displayClientMessage(Component.literal("Your grimoire answers. (sneak + ability key to stow it)").withStyle(ChatFormatting.GOLD), true);
         PaintStudio.onSummon(p, book.magic);                                                    // 0.44: a Painting grimoire brings its palette & brush
+        if (book.magic == MagicType.KOTODAMA) KotodamaWords.aura(p);                           // 0.47: the corrupted purple-black aura
     }
 
     public static void dismiss(ServerPlayer p, boolean effects) {
@@ -121,7 +122,8 @@ public final class GrimoireSummon {
         if (!(event.getEntity() instanceof ServerPlayer p)) return;
         State s = FLOATING.get(p.getUUID());
         if (s == null) return;
-        if (find(p, s.magic).isEmpty() || !p.isAlive()) dismiss(p, false);
+        if (find(p, s.magic).isEmpty() || !p.isAlive()) { dismiss(p, false); return; }
+        if (s.magic == MagicType.KOTODAMA && p.tickCount % 60 == 0) KotodamaWords.aura(p);   // 0.47: the aura keeps billowing
     }
 
     /** A spell switch on a book of this magic: if that grimoire is out, its pages flip for everyone who can see it. */

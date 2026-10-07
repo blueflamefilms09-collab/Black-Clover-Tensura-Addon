@@ -59,6 +59,14 @@ public abstract class GrimoireBook extends Skill {
         this.icon = icon;
     }
 
+    /** 0.47: a book of another Tensura skill class (Kotodama is God-class: ULTIMATE). */
+    protected GrimoireBook(MagicType magic, int color, Skill.SkillType type) {
+        super(type);
+        this.magic = magic;
+        this.color = color;
+        this.icon = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/skill/grimoire/" + magic.name().toLowerCase() + ".png");
+    }
+
     /** The family's own pages, mode order (mode 0 = starter). */
     protected abstract List<BookPage> familyPages();
 

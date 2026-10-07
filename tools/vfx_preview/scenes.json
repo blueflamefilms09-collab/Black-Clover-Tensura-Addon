@@ -3142,5 +3142,279 @@
         1.8
       ]
     ]
+  },
+  "koto_words": {
+    "layer": "KotodamaLayer",
+    "shape": "KOTO_WORDS",
+    "from": [
+      0,
+      2.2,
+      2.2
+    ],
+    "to": [
+      0,
+      2.2,
+      6
+    ],
+    "power": 1.2,
+    "duration": 40,
+    "seed": 31489,
+    "cam": [
+      1.2,
+      2.0,
+      -2.5
+    ],
+    "target": [
+      0,
+      2.1,
+      2.2
+    ],
+    "ages": [
+      5,
+      16,
+      34
+    ],
+    "figures": [
+      [
+        0,
+        0,
+        0,
+        1.8
+      ]
+    ]
+  },
+  "koto_aura": {
+    "layer": "KotodamaLayer",
+    "shape": "KOTO_AURA",
+    "from": [
+      0,
+      0,
+      0
+    ],
+    "to": [
+      0,
+      0,
+      0
+    ],
+    "power": 1,
+    "duration": 70,
+    "cam": [
+      4,
+      2.2,
+      5
+    ],
+    "target": [
+      0,
+      1,
+      0
+    ],
+    "ages": [
+      12,
+      35,
+      58
+    ],
+    "figures": [
+      [
+        0,
+        0,
+        0,
+        1.8
+      ]
+    ]
+  },
+  "koto_halt": {
+    "layer": "KotodamaLayer",
+    "shape": "KOTO_AURA",
+    "from": [
+      0,
+      0,
+      0
+    ],
+    "to": [
+      0,
+      0,
+      0
+    ],
+    "power": 3,
+    "duration": 30,
+    "cam": [
+      12,
+      7,
+      12
+    ],
+    "target": [
+      0,
+      0,
+      0
+    ],
+    "ages": [
+      4,
+      10,
+      22
+    ],
+    "figures": [
+      [
+        0,
+        0,
+        0,
+        1.8
+      ]
+    ]
+  },
+  "koto_shatter": {
+    "layer": "KotodamaLayer",
+    "shape": "KOTO_SHATTER",
+    "from": [
+      0,
+      1.5,
+      4
+    ],
+    "to": [
+      0,
+      1.2,
+      0
+    ],
+    "power": 1,
+    "duration": 24,
+    "cam": [
+      5,
+      2,
+      3
+    ],
+    "target": [
+      0,
+      1.4,
+      2
+    ],
+    "ages": [
+      2,
+      8,
+      16
+    ],
+    "figures": [
+      [
+        0,
+        0,
+        0,
+        1.8
+      ]
+    ]
+  },
+  "koto_swords": {
+    "layer": "KotodamaLayer",
+    "shape": "KOTO_SWORDS",
+    "from": [
+      0.5,
+      14,
+      0.5
+    ],
+    "to": [
+      0,
+      0,
+      0
+    ],
+    "power": 1,
+    "duration": 14,
+    "cam": [
+      6,
+      3,
+      6
+    ],
+    "target": [
+      0,
+      2,
+      0
+    ],
+    "ages": [
+      5,
+      8,
+      11
+    ],
+    "figures": [
+      [
+        2,
+        0,
+        1,
+        1.8
+      ]
+    ]
+  },
+  "koto_trident": {
+    "layer": "KotodamaLayer",
+    "shape": "KOTO_TRIDENT",
+    "from": [
+      0,
+      1.6,
+      0
+    ],
+    "to": [
+      0,
+      1.6,
+      28
+    ],
+    "power": 1,
+    "duration": 14,
+    "cam": [
+      12,
+      3,
+      10
+    ],
+    "target": [
+      0,
+      1.6,
+      10
+    ],
+    "ages": [
+      1,
+      2,
+      4
+    ],
+    "figures": [
+      [
+        0,
+        0,
+        0,
+        1.8
+      ]
+    ]
+  },
+  "koto_sludge": {
+    "layer": "KotodamaLayer",
+    "shape": "KOTO_SLUDGE",
+    "from": [
+      0,
+      0.55,
+      0
+    ],
+    "to": [
+      0,
+      0,
+      0
+    ],
+    "power": 3,
+    "duration": 200,
+    "cam": [
+      10,
+      6,
+      10
+    ],
+    "target": [
+      0,
+      0,
+      0
+    ],
+    "ages": [
+      20,
+      80,
+      180
+    ],
+    "figures": [
+      [
+        3,
+        0,
+        2,
+        1.8
+      ]
+    ]
   }
 }

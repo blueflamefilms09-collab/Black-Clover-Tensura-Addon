@@ -235,7 +235,7 @@ public class GrimoireMagicSkill extends Skill {
         ServerLevel level = player.serverLevel();
         for (LivingEntity t : DMUtil.around(player, player.position(), 8)) {
             switch (devil) {
-                case ZAGRED -> { t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 4)); t.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 40, 2)); }
+                case ZAGRED -> { }   // 0.47: replaced by Kotodama commands (book.KotodamaWords, spoken in Devil Union)
                 case MEGICULA -> t.addEffect(new MobEffectInstance(MobEffects.WITHER, 60, 1));
                 case LUCIFERO -> { t.setDeltaMovement(0, -1.5, 0); t.hurtMarked = true; t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 5)); }
                 case ASTAROTH -> t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 6));

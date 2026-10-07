@@ -3,7 +3,7 @@ package com.newuniverse.nusmp.blackclover;
 /** Devils that can inhabit a five-leaf grimoire. */
 public enum Devil {
     LIEBE("Liebe", "Anti-Magic: magic and spell damage can't touch you."),
-    ZAGRED("Zagred", "Word Soul: enemies around you are commanded to kneel."),
+    ZAGRED("Zagred", "Word Soul (Kotodama): in Devil Union, speak \"Halt\", \"Shatter\" or \"Heal\" and reality obeys."),   // 0.47: was the kneel aura
     MEGICULA("Megicula", "Curse: your foes wither, and the curse spreads."),
     LUCIFERO("Lucifero", "Gravity: everything around you is crushed down."),
     BEELZEBUB("Beelzebub", "Spatial: your attacks tear through space for extra damage."),

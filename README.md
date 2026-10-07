@@ -60,7 +60,7 @@ Chanted magics: use **Chant** mode until the chant is complete, then switch to *
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.46.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.47.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -204,6 +204,25 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Anti-Magic kit**: new pages **Black Hurricane** (a whirling field that drags foes in and strips their magic) and **Black Form** (30 s of strength, speed, resistance and jump, with an anti-magic burst); mastering the Anti-Magic Lord now also grants the **Demon-Slasher** katana next to Demon-Dweller and Demon-Destroyer.
 - **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
 - **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
+
+## 0.47 - Kotodama Magic (Word Soul), the Zagred boss
+- **Replacement: Zagred's devil power.** Zagred's old kneel aura (Devil Union) is gone. In Devil Union, Zagred now lends three Kotodama words: **Halt**, **Shatter** and **Heal**, at reduced power. The `ZAGRED` devil entry stays.
+- **New: Kotodama Magic (Word Soul)**, Zagred's magic, a God-class (Tensura Ultimate) grimoire.
+  - **Creative only.** It is never rolled in survival, and only binds or answers in creative or for someone who has beaten Zagred.
+  - **Speaking:** type a command word alone in chat ("Halt!", "Shatter.") or cast its page. The word flashes in mid-air as demonic glyphs.
+  - **Cost:** an astronomical share of max magicules with a very high floor; Aura pays whatever magicules can't. Free in creative.
+  - **Scaling:** EP drives the radius, damage and counts.
+  - **Words:** Halt / Bind (mass Absolute Paralysis + Magic Jamming), Shatter / Return (enemy shots break back into magicules, some refunded to you), Heal (health and Aura to full, debuffs cleared, allies too), Devour (spreading underworld sludge), Trident (an otherworldly trident for 60 s), Swords (a demon sword storm).
+  - **Effects:** Tensura paralysis and silence, spiritual damage, and Soul Annihilation when a target's spirit is driven to its floor.
+  - **Underworld sludge** devours the ground it spreads over, hurts and drains whoever wades in it, and puts every block back when it ends (unless `griefBlocks` is on).
+  - **Summoned grimoire:** a purple-black smoke aura and a glowing five-leaf emblem.
+  - **Zagred** joins as a canon five-leaf grimoire (creative tab).
+- **New: the Zagred boss (off by default).** Turn on `zagredBossEnabled` in the server config, then an op runs `/multiverse boss zagred`.
+  - Four phases: words, then elemental adaptation, then void flooding, then only anti-magic or three elements at once can wound it.
+  - Set `kotodamaBossReward = true` to give Kotodama to everyone who fought it; it is off by default.
+- **New VFX:** spoken glyphs, the grimoire aura, a Halt / Heal burst, shatter, demon swords, the trident and sludge. Previews are in `docs/vfx_previews/koto_*.png`.
+- **New Blender script:** `tools/blender/build_zagred_grimoire.py` builds Zagred's grimoire: rigged, etched starbursts, the black clover, spine panels, a pulsing shader and smoke. Preview: `docs/blender/previews/zagred_grimoire.png`.
+- Guide: `docs/kotodama_spec.md`.
 
 ## 0.46 - Four Kingdoms menu, real World Tree trees
 - **New: the Four Kingdoms menu.** The grey "?" slot in Tensura's Magic tab is now a Four Kingdoms logo button that opens the mod's own menu.
