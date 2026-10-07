@@ -1,0 +1,15 @@
+{
+ "_comment": "Bubble Magic preview scenes (BubbleLayer). FX1 cast / projectile, FX2 zone (Bubble Refresher shell), FX3 impact / burst.",
+ "bubble_cast": {"layer": "BubbleLayer", "shape": "BUBBLE_FX1", "from": [0, 1.5, 0], "to": [0, 1.3, 9], "power": 1.0, "duration": 16,
+  "cam": [4.5, 2.0, 4.5], "target": [0, 1.4, 4.5], "ages": [2, 6, 10, 15], "figures": [[0, 0, 0, 1.8]]},
+ "bubble_cast_big": {"layer": "BubbleLayer", "shape": "BUBBLE_FX1", "from": [0, 1.5, 0], "to": [0, 1.3, 12], "power": 2.2, "duration": 20,
+  "cam": [7, 2.5, 6], "target": [0, 1.4, 6], "ages": [3, 9, 14, 19], "figures": [[0, 0, 0, 1.8]]},
+ "bubble_zone": {"layer": "BubbleLayer", "shape": "BUBBLE_FX2", "from": [0, 0, 0], "to": [0, 0, 0], "power": 4.0, "duration": 80,
+  "cam": [0, 3.2, -7.5], "target": [0, 1.2, 0], "ages": [6, 30, 60, 76], "figures": [[0, 0, 0, 1.8], [1.5, 0, 1, 1.8]]},
+ "bubble_zone_small": {"layer": "BubbleLayer", "shape": "BUBBLE_FX2", "from": [0, 0, 0], "to": [0, 0, 0], "power": 1.8, "duration": 80,
+  "cam": [0, 2.6, -5.5], "target": [0, 0.7, 0], "ages": [20, 50], "figures": [[0, 0, 0, 1.8]]},
+ "bubble_burst": {"layer": "BubbleLayer", "shape": "BUBBLE_FX3", "from": [0, 1.2, 0], "to": [0, 1.2, 0], "power": 2.0, "duration": 28,
+  "cam": [0, 2.2, -8], "target": [0, 1.2, 0], "ages": [2, 7, 14, 24], "figures": [[0, 0, 0, 1.8]]},
+ "bubble_burst_dir": {"layer": "BubbleLayer", "shape": "BUBBLE_FX3", "from": [0, 1.2, 0], "to": [3, 1.2, 0], "power": 1.0, "duration": 28,
+  "cam": [1, 2.0, -5], "target": [1, 1.2, 0], "ages": [5, 12, 22], "figures": [[0, 0, 0, 1.8]]}
+}

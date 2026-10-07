@@ -45,9 +45,13 @@ public class BronzeLayer extends AbstractVfxLayer {
     public static final ResourceLocation LIZARD = t("bronze_lizard");
     public static final ResourceLocation PATINA = t("bronze_patina");
     public static final ResourceLocation BURST = t("bronze_burst");
+    public static final ResourceLocation FIGURE = t("bronze_figure");
+    public static final ResourceLocation HAZE = t("bronze_haze");
 
     private static final int BRONZE = 0xFFD09A4A;
     private static final int VERDI = 0xFF4FB08E;
+    /** The glow colour of the owner's still: a cyan-green verdigris light wrapped in white haze. */
+    private static final int TEAL = 0xFF3FD9BC;
     private static final int WHITE = 0xFFFFFFFF;
 
     @Override public Set<VfxShape> shapes() { return EnumSet.of(VfxShape.BRONZE_FX1, VfxShape.BRONZE_FX2, VfxShape.BRONZE_FX3); }
@@ -74,7 +78,9 @@ public class BronzeLayer extends AbstractVfxLayer {
     }
 
     // ------------------------------------------------------------------ small helpers
-    private static int tint(VfxInstance inst) { return VfxVertexBuffer.lerpColor(BRONZE, inst.color | 0xFF000000, 0.3f); }
+    private static int tint(VfxInstance inst) {
+        return VfxVertexBuffer.lerpColor(VfxVertexBuffer.lerpColor(TEAL, BRONZE, 0.3f), inst.color | 0xFF000000, 0.2f);
+    }
     private static int a(int argb, float k) { return VfxVertexBuffer.withAlpha(argb, Mth.clamp(k, 0f, 1f)); }
     private static float h(VfxInstance inst, int i, int salt) { return ElementFx.hash(inst.seed, i, salt); }
 
@@ -192,6 +198,7 @@ public class BronzeLayer extends AbstractVfxLayer {
             for (int i = 0; i < 3; i++) {
                 buf.billboard(ctx, FLECKS, VfxBlend.ADD, new Vector3f(dir).mul(-0.3f * P * i).add(head), 1.7f * P, h(inst, i, 10) * 6.28f + age * 0.05f * (i - 1), a(hot, 0.25f * live));
             }
+            buf.billboard(ctx, HAZE, VfxBlend.ADD, head, 2.2f * P, age * 0.05f, a(VfxVertexBuffer.lerpColor(WHITE, col, 0.4f), 0.4f * live));
             // the ball itself: engraved translucent sphere, spikes turning, a glow of hammered light over it
             float sz = P * (age < ta ? 1f : 1f - VfxAnim.easeInCubic(ti));
             buf.billboard(ctx, SPHERE, VfxBlend.ALPHA, head, sz, age * 0.22f, a(VfxVertexBuffer.lerpColor(col, hot, 0.1f), live));
@@ -283,6 +290,7 @@ public class BronzeLayer extends AbstractVfxLayer {
             Vector3f pos = new Vector3f(g).add(Mth.cos(ang) * rr, f * 2.2f + 0.1f, Mth.sin(ang) * rr);
             buf.billboard(ctx, CHIP, VfxBlend.ALPHA, pos, 0.2f, h(inst, i, 11) * 6f + age * 0.15f, a(col, Mth.sin(f * Mth.PI) * fade));
         }
+        buf.billboard(ctx, HAZE, VfxBlend.ADD, new Vector3f(g).add(0, 0.6f, 0), Math.max(2.2f, 1.1f * Ro), -age * 0.012f, a(hot, 0.35f * fade * open));
         // the hub
         buf.billboard(ctx, BURST, VfxBlend.ADD, new Vector3f(g).add(0, 0.3f, 0), Math.max(1.2f, 0.5f * Ro), age * 0.015f, a(hot, 0.5f * fade * open));
         VfxBloom.glow(ctx, buf, new Vector3f(g).add(0, 0.3f, 0), 0.5f + 0.1f * R, col, 0.5f * fade * open);
@@ -333,6 +341,13 @@ public class BronzeLayer extends AbstractVfxLayer {
             strut(buf, SPIKE, VfxBlend.ALPHA, base, new Vector3f(pd).mul(len).add(c), len * 0.16f, a(col, fade));
         }
 
+        // the cast statuette sweeping through a white haze (the still): verdigris figure, dark outline, haze behind it
+        float fg = Mth.clamp((age - 1f) / 4f, 0, 1) * (1f - sm(0.5f, 0.9f, tt));
+        if (fg > 0.02f) {
+            Vector3f fc = new Vector3f(c).add(hd.x * 0.8f * S * e16, (0.9f + 0.6f * e16) * S, hd.z * 0.8f * S * e16);
+            buf.billboard(ctx, HAZE, VfxBlend.ADD, fc, 3.8f * S * (0.7f + 0.3f * e16), age * 0.01f, a(VfxVertexBuffer.lerpColor(WHITE, col, 0.35f), 0.75f * fg));
+            buf.billboard(ctx, FIGURE, VfxBlend.ALPHA, fc, 2.0f * S, 0, a(VfxVertexBuffer.lerpColor(col, VERDI, 0.4f), fg));
+        }
         // white-hot flash, starburst and ground shock rings
         float flash = (1f - VfxAnim.easeOutCubic(Mth.clamp(age / 10f, 0, 1)));
         buf.billboard(ctx, VfxTextures.GLOW, VfxBlend.ADD, c, 4.5f * S * (0.4f + 0.6f * e6), 0, a(hot, flash));

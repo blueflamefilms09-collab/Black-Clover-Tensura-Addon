@@ -590,6 +590,40 @@ def burst(n=256):
     return grey(lum, alpha)
 
 
+def figure(n=256):
+    """A cast-metal statuette in a flying pose (the owner's still: a small verdigris figure sweeping through a haze). Cel shaded:
+    a dark outline, a bright lit side, a flat shadow side, a few hammered flecks. Grey with alpha so the tint makes it verdigris."""
+    def body(d, k):
+        P = lambda pts: [(x * n * k, y * n * k) for x, y in pts]
+        d.polygon(P([(0.08, 0.30), (0.30, 0.40), (0.52, 0.47), (0.60, 0.42), (0.58, 0.52), (0.40, 0.56), (0.20, 0.38), (0.06, 0.34)]), fill=255)   # outstretched arm
+        d.polygon(P([(0.50, 0.40), (0.62, 0.43), (0.70, 0.60), (0.92, 0.80), (0.90, 0.86), (0.66, 0.74), (0.56, 0.58)]), fill=255)               # torso + leg sweep
+        d.polygon(P([(0.60, 0.60), (0.74, 0.50), (0.80, 0.54), (0.66, 0.68)]), fill=255)                                                     # bent knee
+        d.ellipse([0.50 * n * k, 0.26 * n * k, 0.64 * n * k, 0.42 * n * k], fill=255)                                                          # head
+        d.polygon(P([(0.49, 0.30), (0.50, 0.19), (0.54, 0.25), (0.57, 0.15), (0.60, 0.24), (0.66, 0.17), (0.65, 0.30)]), fill=255)       # spiky hair
+    m = mask_of(body, (n, n))
+    edge = m - np.asarray(Image.fromarray((m * 255).astype(np.uint8)).filter(ImageFilter.MinFilter(7)), np.float32) / 255.0
+    xx, yy = grid(n, n)
+    lit = np.clip(0.5 + 0.5 * np.sin((xx * 0.7 - yy) / n * 5.0), 0, 1)
+    fl = fbm(n, n, 16, 7301, 3)
+    lum = np.where(lit > 0.55, 250, 170) - 40 * fl
+    lum = np.where(edge > 0.4, 40, lum)
+    return grey(lum, np.clip(m * 1.2, 0, 1))
+
+
+def haze(n=256):
+    """Soft white cloud with faint radial light streaks, the glow that wraps the figure in the still (additive)."""
+    xx, yy = grid(n, n)
+    c = (n - 1) / 2
+    x, y = (xx - c) / c, (yy - c) / c
+    r = np.sqrt(x * x + y * y)
+    th = np.arctan2(y, x)
+    f = fbm(n, n, 32, 7302, 4)
+    a = np.exp(-(r / 0.55) ** 2) * (0.55 + 0.7 * f)
+    rays = np.clip(np.sin(th * 14 + f * 6) , 0, 1) ** 6 * np.exp(-(r / 0.8) ** 2) * 0.5
+    a = np.clip(a + rays, 0, 1) * (1 - smooth(0.8, 1.0, r))
+    return grey(235 + 20 * f, a)
+
+
 if __name__ == "__main__":
     save(sphere(), "bronze_sphere")
     save(streak(), "bronze_streak")
@@ -603,3 +637,5 @@ if __name__ == "__main__":
     save(lizard(), "bronze_lizard")
     save(patina(), "bronze_patina")
     save(burst(), "bronze_burst")
+    save(figure(), "bronze_figure")
+    save(haze(), "bronze_haze")

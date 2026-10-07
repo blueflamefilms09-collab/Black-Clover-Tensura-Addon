@@ -1,0 +1,217 @@
+{
+ "_comment": "Iron Magic preview scenes (IronLayer). FX1 Iron Bullet, FX2 Immovable Guardian Deity, FX3 Iron God of War.",
+ "iron_cast": {
+  "layer": "IronLayer",
+  "shape": "IRON_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.3,
+   10
+  ],
+  "power": 1.0,
+  "duration": 16,
+  "cam": [
+   4.5,
+   2.0,
+   5.5
+  ],
+  "target": [
+   0,
+   1.4,
+   5.5
+  ],
+  "ages": [
+   2,
+   4,
+   7,
+   10,
+   13,
+   15
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -0.4,
+    1.8
+   ]
+  ]
+ },
+ "iron_cast_big": {
+  "layer": "IronLayer",
+  "shape": "IRON_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.3,
+   12
+  ],
+  "power": 2.2,
+  "duration": 16,
+  "cam": [
+   7,
+   3,
+   6
+  ],
+  "target": [
+   0,
+   1.4,
+   6
+  ],
+  "ages": [
+   3,
+   8,
+   12,
+   14
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -0.4,
+    1.8
+   ]
+  ]
+ },
+ "iron_zone": {
+  "layer": "IronLayer",
+  "shape": "IRON_FX2",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 4.0,
+  "duration": 80,
+  "cam": [
+   9,
+   5,
+   9
+  ],
+  "target": [
+   0,
+   1.5,
+   0
+  ],
+  "ages": [
+   4,
+   10,
+   40,
+   72
+  ],
+  "figures": []
+ },
+ "iron_zone_small": {
+  "layer": "IronLayer",
+  "shape": "IRON_FX2",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 2.0,
+  "duration": 80,
+  "cam": [
+   5,
+   3,
+   5.5
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   10,
+   40
+  ],
+  "figures": []
+ },
+ "iron_impact": {
+  "layer": "IronLayer",
+  "shape": "IRON_FX3",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 1.0,
+  "duration": 28,
+  "cam": [
+   5,
+   2.8,
+   6
+  ],
+  "target": [
+   0,
+   1.3,
+   0
+  ],
+  "ages": [
+   3,
+   7,
+   9,
+   12,
+   18,
+   26
+  ],
+  "figures": []
+ },
+ "iron_impact_big": {
+  "layer": "IronLayer",
+  "shape": "IRON_FX3",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   2,
+   0,
+   0
+  ],
+  "power": 2.2,
+  "duration": 28,
+  "cam": [
+   9,
+   5,
+   11
+  ],
+  "target": [
+   0,
+   2.4,
+   0
+  ],
+  "ages": [
+   6,
+   9,
+   14,
+   24
+  ],
+  "figures": []
+ }
+}
