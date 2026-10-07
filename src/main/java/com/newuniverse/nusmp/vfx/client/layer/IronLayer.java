@@ -157,12 +157,12 @@ public class IronLayer extends AbstractVfxLayer {
         if (cf > 0.01f) {
             float e = VfxAnim.easeOutCubic(c);
             Vector3f hand = new Vector3f(dir).mul(0.25f * P).add(from);
-            bb(ctx, buf, HALO, VfxBlend.ADD, hand, P * Mth.lerp(e, 2.6f, 0.9f), age * 0.35f, a(col, 0.8f * c * cf));
-            bb(ctx, buf, HALO, VfxBlend.ADD, hand, P * Mth.lerp(e, 1.5f, 0.5f), -age * 0.5f, a(hot, 0.7f * c * cf));
+            bb(ctx, buf, HALO, VfxBlend.ADD, hand, P * Mth.lerp(e, 2.6f, 0.9f), age * 0.35f, a(col, 0.4f * c * cf));
+            bb(ctx, buf, HALO, VfxBlend.ADD, hand, P * Mth.lerp(e, 1.5f, 0.5f), -age * 0.5f, a(hot, 0.35f * c * cf));
             buf.plane(SIGIL, VfxBlend.ADD, VfxPose.facing(new Vector3f(dir).mul(0.45f * P).add(from), dir).spin(age * 0.45f), P * (0.35f + 0.5f * e), a(col, 0.85f * cf));
             bb(ctx, buf, BURST, VfxBlend.ADD, hand, P * (0.2f + 1.0f * e * e), age * 0.2f, a(hot, 0.55f * c * cf));
             bb(ctx, buf, VfxTextures.GLOW, VfxBlend.ADD, hand, P * (0.4f + 1.1f * e), 0f, a(col, 0.6f * c * cf));
-            bb(ctx, buf, FLECKS, VfxBlend.ADD, hand, P * 1.8f * (1.2f - 0.5f * e), age * 0.1f, a(hot, 0.7f * c * cf));
+            bb(ctx, buf, FLECKS, VfxBlend.ADD, hand, P * 1.8f * (1.2f - 0.5f * e), age * 0.1f, a(hot, 0.35f * c * cf));
             for (int i = 0; i < 4; i++) {
                 Vector3f u = dirOf(h(inst, i, 1), h(inst, i, 2), false);
                 float rr = (1f - e) * (0.9f + 0.9f * h(inst, i, 3)) * P;
@@ -246,7 +246,7 @@ public class IronLayer extends AbstractVfxLayer {
         float bellW = 1.8f * R, drop = (1f - Math.min(1f, fe)) * R * 2.4f;
         float pul = 1f + 0.015f * Mth.sin(age * 0.5f);
         Vector3f bc = new Vector3f(c0).add(0, bellW * 0.5f + drop, 0);
-        bb(ctx, buf, HALO, VfxBlend.ADD, new Vector3f(c0).add(0, bellW * 0.62f, 0), bellW * 1.45f, age * 0.012f, a(col, 0.42f * L));
+        bb(ctx, buf, HALO, VfxBlend.ADD, new Vector3f(c0).add(0, bellW * 0.62f, 0), bellW * 1.3f, age * 0.012f, a(col, 0.16f * L));
         bb(ctx, buf, VfxTextures.GLOW, VfxBlend.ADD, new Vector3f(c0).add(0, bellW * 0.4f, 0), bellW * 1.3f, 0f, a(col, (0.14f + 0.06f * Mth.sin(age * 0.25f)) * L));
 
         // ---- chains from the rim to the bell knob, iron spikes around the rim
@@ -303,8 +303,8 @@ public class IronLayer extends AbstractVfxLayer {
         // ---- crown halo behind (opens during the wind-up)
         float open = sm(0f, th, age);
         Vector3f hc = new Vector3f(c0).add(0, 1.5f * P + 0.4f * P * ti, 0);
-        bb(ctx, buf, HALO, VfxBlend.ADD, hc, P * (2.2f + 3.0f * open + 1.2f * ti), age * 0.03f, a(col, 0.75f * open * (1f - ti * ti)));
-        bb(ctx, buf, HALO, VfxBlend.ADD, hc, P * (1.3f + 1.6f * open), -age * 0.06f, a(hot, 0.5f * open * fo));
+        bb(ctx, buf, HALO, VfxBlend.ADD, hc, P * (1.8f + 2.0f * open + 0.8f * ti), age * 0.03f, a(col, 0.3f * open * (1f - ti * ti)));
+        bb(ctx, buf, HALO, VfxBlend.ADD, hc, P * (1.3f + 1.6f * open), -age * 0.06f, a(hot, 0.2f * open * fo));
 
         // ---- the fist: anticipation (a small rise), then the slam
         float rise = tp < 0.22f ? -0.22f * Mth.sin(tp / 0.22f * Mth.HALF_PI) : -0.22f + 1.22f * VfxAnim.easeInCubic((tp - 0.22f) / 0.78f);
