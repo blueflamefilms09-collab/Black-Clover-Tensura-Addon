@@ -1,0 +1,244 @@
+{
+ "_comment": "Corundum Magic preview scenes (CorundumLayer). FX1 lance, FX2 fortress, FX3 Ideal Closer.",
+ "corundum_cast": {
+  "layer": "CorundumLayer",
+  "shape": "CORUNDUM_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.3,
+   6
+  ],
+  "power": 1.0,
+  "duration": 16,
+  "cam": [
+   2.5,
+   1.8,
+   4.0
+  ],
+  "target": [
+   0,
+   1.4,
+   4.0
+  ],
+  "ages": [
+   2,
+   5,
+   8,
+   11,
+   13,
+   15
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "corundum_cast_big": {
+  "layer": "CorundumLayer",
+  "shape": "CORUNDUM_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.3,
+   10
+  ],
+  "power": 2.2,
+  "duration": 16,
+  "cam": [
+   7,
+   3,
+   6
+  ],
+  "target": [
+   0,
+   1.4,
+   5
+  ],
+  "ages": [
+   3,
+   8,
+   12,
+   15
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "corundum_zone": {
+  "layer": "CorundumLayer",
+  "shape": "CORUNDUM_FX2",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 5.0,
+  "duration": 80,
+  "cam": [
+   8,
+   5,
+   9
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   6,
+   16,
+   40,
+   72
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "corundum_zone_small": {
+  "layer": "CorundumLayer",
+  "shape": "CORUNDUM_FX2",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 2.5,
+  "duration": 80,
+  "cam": [
+   5,
+   3.5,
+   6
+  ],
+  "target": [
+   0,
+   0.8,
+   0
+  ],
+  "ages": [
+   16,
+   40
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "corundum_impact": {
+  "layer": "CorundumLayer",
+  "shape": "CORUNDUM_FX3",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 1.0,
+  "duration": 28,
+  "cam": [
+   4.5,
+   2.5,
+   5.5
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   1,
+   4,
+   8,
+   14,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "corundum_impact_big": {
+  "layer": "CorundumLayer",
+  "shape": "CORUNDUM_FX3",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   3,
+   0,
+   0
+  ],
+  "power": 2.2,
+  "duration": 28,
+  "cam": [
+   8,
+   4,
+   9
+  ],
+  "target": [
+   0,
+   1.5,
+   0
+  ],
+  "ages": [
+   2,
+   6,
+   12,
+   20
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ }
+}

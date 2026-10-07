@@ -19,11 +19,13 @@ final class CurseFx {
     static final ResourceLocation SIGIL = t("curse_sigil"), BRAND = t("curse_brand"), GLYPHS = t("curse_glyphs"), BAND = t("curse_band"),
             VEINS = t("curse_veins"), WALL = t("curse_wall"), BOLT = t("curse_bolt"), TENDRIL = t("curse_tendril"), SMOKE = t("curse_smoke"),
             FLAKES = t("curse_flakes"), FLASH = t("curse_flash"), RING = t("curse_ring"), WISP = t("curse_wisp"), SHARDS = t("curse_shards"),
-            CORONA = t("curse_corona");
+            CORONA = t("curse_corona"), SPIRAL = t("curse_spiral");
 
     /** The palette: black with a violet cast, the owner's glow violet, an orchid rim, a white-violet core, a magenta accent. */
     static final int INK = 0xFF060209, SHADE = 0xFF2E1A46, DEEP = 0xFF4B158F, VIOLET = 0xFF9A2AFF, ORCHID = 0xFFC864FF,
-            HOT = 0xFFF4E4FF, MAGENTA = 0xFFE0309A;
+            HOT = 0xFFF4E4FF, MAGENTA = 0xFFE0309A,
+            /** The anime mark: a fuzzy indigo spiral with pale-blue flecks. */
+            INDIGO = 0xFF15146E, FLECK = 0xFF8C9BFF;
 
     /** The palette colour pulled a little toward the spell's own tint (so a white tint still reads as this magic). */
     static int mix(int palette, int tint, float amount) {

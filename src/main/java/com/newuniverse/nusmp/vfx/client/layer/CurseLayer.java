@@ -108,6 +108,8 @@ public class CurseLayer extends AbstractVfxLayer {
             inkGlow(buf, SIGIL, face, r, al(INK, 0.85f * sigA), al(pal.hi, 0.95f * sigA));
             VfxPose back = VfxPose.facing(new Vector3f(mc).add(new Vector3f(dir).mul(0.22f * p)), dir).spin(-age * 0.4f + 1f);
             buf.plane(SIGIL, VfxBlend.ADD, back, r * 0.6f, al(pal.hot, 0.6f * sigA));
+            VfxPose spin = VfxPose.facing(new Vector3f(mc).add(new Vector3f(dir).mul(0.08f * p)), dir).spin(-age * 0.3f);
+            inkGlow(buf, SPIRAL, spin, r * 0.62f, al(INDIGO, 0.9f * sigA), al(FLECK, 0.75f * sigA));
             buf.billboard(ctx, FLASH, VfxBlend.ADD, mc, p * (0.25f + 0.55f * chg * chg), age * 0.3f, al(pal.hot, 0.8f * sigA * chg));
             VfxBloom.glow(ctx, buf, mc, 0.45f * p * (0.4f + 0.6f * chg), pal.glow, sigA);
             int nm = ctx.seg(5, 3);
@@ -230,6 +232,7 @@ public class CurseLayer extends AbstractVfxLayer {
             buf.billboard(ctx, FLASH, VfxBlend.ADD, b, 1.6f * p * pop, age * 0.3f, al(pal.hot, fl));
             buf.billboard(ctx, FLASH, VfxBlend.ADD, b, 1.1f * p * pop, -age * 0.4f, al(pal.hi, 0.85f * fl));
             VfxBloom.glow(ctx, buf, b, 1.0f * p, pal.glow, vis);
+            inkGlow(buf, ctx, SPIRAL, b, 1.25f * p * pop, -age * 0.12f, al(INDIGO, 0.9f * vis), al(FLECK, 0.8f * vis));
             inkGlow(buf, ctx, BRAND, b, 1.6f * p * pop, age * 0.07f, al(INK, 0.9f * vis), al(VfxVertexBuffer.lerpColor(pal.glow, pal.hot, 0.25f), 0.95f * vis));
             float rr = 0.35f * p + 1.5f * p * VfxAnim.easeOutCubic(k);
             buf.plane(RING, VfxBlend.ADD, VfxPose.facing(b, dir).spin(age * 0.2f), ringHalf(rr), al(pal.hi, 0.9f * (1f - k)));
@@ -266,6 +269,10 @@ public class CurseLayer extends AbstractVfxLayer {
         inkGlow(buf, SIGIL, sp, sr, al(INK, 0.95f * fade), al(pal.glow, 0.85f * fade));
         VfxPose sp2 = g.lift(0.035f).spin(-age * 0.03f + 1f);
         inkGlow(buf, SIGIL, sp2, sr * 0.56f, al(INK, 0.7f * fade), al(pal.glow, 0.55f * fade));
+
+        // ---- the Mark of Megicula's Curse: a fuzzy indigo spiral under the brand, turning slowly
+        VfxPose mp = g.lift(0.04f).spin(-age * 0.03f);
+        inkGlow(buf, SPIRAL, mp, Math.min(R * 0.5f, 4.2f) * pop, al(INDIGO, 0.9f * fade), al(FLECK, (0.55f + 0.3f * beat) * fade));
 
         // ---- the brand at the heart of it, beating
         float bs = Math.min(R * 0.32f, 2.8f) * (1f + 0.05f * Mth.sin(age * 0.35f)) * pop;
@@ -410,6 +417,7 @@ public class CurseLayer extends AbstractVfxLayer {
         // ---- the signature: the five-bladed curse brand burns in the air, then fades as the afterglow
         float bvis = sstep(0.03f, 0.18f, k) * (1f - sstep(0.62f, 1f, k));
         if (bvis > 0.01f) {
+            inkGlow(buf, ctx, SPIRAL, c, p * 3.9f * VfxAnim.easeOutBack(clamp01((age - ta) / 8f)), -age * 0.05f, al(INDIGO, 0.85f * bvis), al(FLECK, 0.7f * bvis));
             float bsz = p * 3.4f * VfxAnim.easeOutBack(clamp01((age - ta) / 7f)) * (1f + 0.04f * Mth.sin(age * 0.5f));
             inkGlow(buf, ctx, BRAND, c, bsz, age * 0.035f, al(INK, 0.9f * bvis), al(VfxVertexBuffer.lerpColor(pal.glow, pal.hot, 0.3f), (0.65f + 0.35f * Mth.sin(age * 0.45f)) * bvis));
         }

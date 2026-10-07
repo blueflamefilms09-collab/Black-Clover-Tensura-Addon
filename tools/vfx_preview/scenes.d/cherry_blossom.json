@@ -1,0 +1,237 @@
+{
+ "_comment": "Cherry Blossom Magic previews: FX1 cast, FX2 zone, FX3 burst.",
+ "cherry_blossom_cast": {
+  "layer": "CherryBlossomLayer",
+  "shape": "CHERRY_BLOSSOM_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.5,
+   9
+  ],
+  "power": 1.0,
+  "duration": 16,
+  "cam": [
+   7,
+   2.2,
+   4.5
+  ],
+  "target": [
+   0,
+   1.5,
+   4.5
+  ],
+  "ages": [
+   2,
+   6,
+   10,
+   13,
+   15
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "cherry_blossom_cast_big": {
+  "layer": "CherryBlossomLayer",
+  "shape": "CHERRY_BLOSSOM_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.5,
+   9
+  ],
+  "power": 2.2,
+  "duration": 16,
+  "cam": [
+   9,
+   3,
+   4.5
+  ],
+  "target": [
+   0,
+   1.5,
+   4.5
+  ],
+  "ages": [
+   4,
+   9,
+   14
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "cherry_blossom_zone": {
+  "layer": "CherryBlossomLayer",
+  "shape": "CHERRY_BLOSSOM_FX2",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 5.0,
+  "duration": 80,
+  "cam": [
+   9,
+   5,
+   9
+  ],
+  "target": [
+   0,
+   0.8,
+   0
+  ],
+  "ages": [
+   6,
+   30,
+   60
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "cherry_blossom_zone_small": {
+  "layer": "CherryBlossomLayer",
+  "shape": "CHERRY_BLOSSOM_FX2",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 2.5,
+  "duration": 80,
+  "cam": [
+   5,
+   3,
+   5
+  ],
+  "target": [
+   0,
+   0.7,
+   0
+  ],
+  "ages": [
+   30
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "cherry_blossom_burst": {
+  "layer": "CherryBlossomLayer",
+  "shape": "CHERRY_BLOSSOM_FX3",
+  "from": [
+   0,
+   1.2,
+   0
+  ],
+  "to": [
+   0,
+   1.2,
+   0
+  ],
+  "power": 1.0,
+  "duration": 28,
+  "cam": [
+   5,
+   2.5,
+   5
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   3,
+   8,
+   16,
+   26
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "cherry_blossom_burst_big": {
+  "layer": "CherryBlossomLayer",
+  "shape": "CHERRY_BLOSSOM_FX3",
+  "from": [
+   0,
+   1.2,
+   0
+  ],
+  "to": [
+   3,
+   1.2,
+   0
+  ],
+  "power": 2.0,
+  "duration": 28,
+  "cam": [
+   8,
+   3.5,
+   8
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   8,
+   18
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ }
+}

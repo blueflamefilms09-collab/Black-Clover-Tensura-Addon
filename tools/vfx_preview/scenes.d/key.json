@@ -1,0 +1,255 @@
+{
+ "_comment": "Key Magic previews: FX1 cast, FX2 zone, FX3 signature.",
+ "key_cast": {
+  "layer": "KeyLayer",
+  "shape": "KEY_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.5,
+   11
+  ],
+  "power": 1.0,
+  "duration": 16,
+  "cam": [
+   6,
+   2.2,
+   5.5
+  ],
+  "target": [
+   0,
+   1.5,
+   5.5
+  ],
+  "ages": [
+   2,
+   4,
+   7,
+   11,
+   14
+  ],
+  "figures": [
+   [
+    -0.5,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    11,
+    1.8
+   ]
+  ]
+ },
+ "key_cast_big": {
+  "layer": "KeyLayer",
+  "shape": "KEY_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.5,
+   14
+  ],
+  "power": 2.0,
+  "duration": 20,
+  "cam": [
+   8,
+   3,
+   7
+  ],
+  "target": [
+   0,
+   1.5,
+   7
+  ],
+  "ages": [
+   3,
+   8,
+   13,
+   18
+  ],
+  "figures": [
+   [
+    -0.5,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    14,
+    1.8
+   ]
+  ]
+ },
+ "key_zone": {
+  "layer": "KeyLayer",
+  "shape": "KEY_FX2",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 4.0,
+  "duration": 80,
+  "cam": [
+   9,
+   6,
+   9
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   4,
+   14,
+   40,
+   72
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "key_zone_small": {
+  "layer": "KeyLayer",
+  "shape": "KEY_FX2",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 2.0,
+  "duration": 80,
+  "cam": [
+   5,
+   3.5,
+   5
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   10,
+   40
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "key_burst": {
+  "layer": "KeyLayer",
+  "shape": "KEY_FX3",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 1.0,
+  "duration": 28,
+  "cam": [
+   6,
+   3,
+   6
+  ],
+  "target": [
+   0,
+   1.5,
+   0
+  ],
+  "ages": [
+   2,
+   5,
+   7,
+   11,
+   20
+  ],
+  "figures": [
+   [
+    3,
+    0,
+    2,
+    1.8
+   ]
+  ]
+ },
+ "key_burst_big": {
+  "layer": "KeyLayer",
+  "shape": "KEY_FX3",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   4,
+   0,
+   0
+  ],
+  "power": 2.2,
+  "duration": 28,
+  "cam": [
+   10,
+   5,
+   10
+  ],
+  "target": [
+   0,
+   2,
+   0
+  ],
+  "ages": [
+   4,
+   7,
+   12,
+   24
+  ],
+  "figures": [
+   [
+    5,
+    0,
+    3,
+    1.8
+   ]
+  ]
+ }
+}

@@ -782,9 +782,37 @@ def tex_shards():
     save(rgba(grey, alpha), "curse_shards")
 
 
+def tex_spiral(S=256):
+    """The Mark of Megicula's Curse as the anime draws it: one thick soft-edged spiral arm (a rose-like coil of about two turns),
+    its edge fuzzy like ink bled into skin, its inside speckled with lighter flecks. ALPHA = the arm, GREY = the flecks."""
+    c = S / 2.0
+    yy, xx = np.mgrid[0:S, 0:S].astype(np.float32)
+    dx, dy = xx - c, yy - c
+    r = np.sqrt(dx * dx + dy * dy)
+    th = np.arctan2(dy, dx)
+    wob = 1.0 + 0.07 * np.sin(th * 3 + 0.6) + 0.04 * np.sin(th * 5 + 2.0)
+    turns, r0, r1 = 2.15, 0.07 * S, 0.37 * S
+    # distance (in radius) from the nearest spiral arm: r = r0 + (r1-r0) * (th + 2*pi*k) / (2*pi*turns)
+    pitch = (r1 - r0) / turns
+    ph = (r / wob - r0) / pitch - th / math.tau
+    d = np.abs(ph - np.round(ph)) * pitch                      # distance across the arm, in px
+    k = np.round(ph)
+    inside = (r / wob > r0 * 0.4) & (k >= 0) & (k < turns + 0.35)
+    wid = pitch * (0.30 + 0.05 * fbm(S, S, 48, 11, 3))
+    fuzz = (fbm(S, S, 6, 21, 4) - 0.5) * pitch * 0.34
+    arm = sstep(wid + pitch * 0.12, wid - pitch * 0.06, d + fuzz) * inside
+    cap = sstep(r0 * 0.3, r0 * 1.0, r)                          # round the inner tip
+    arm = arm * np.where(k == 0, cap, 1.0)
+    alpha = np.clip(blur(arm.astype(np.float32), 2.2) * 1.15, 0, 1)
+    flecks = sstep(0.56, 0.78, fbm(S, S, 5, 33, 4)) * 0.8 + sstep(0.62, 0.9, fbm(S, S, 12, 44, 3)) * 0.5
+    core = sstep(wid * 0.95, 0.0, d + fuzz * 0.5) * 0.45 + 0.25
+    grey = np.clip(blur(arm.astype(np.float32), 3.0) * (0.22 + flecks * core * 0.9), 0, 1)
+    save(rgba(grey, alpha), "curse_spiral")
+
+
 ALL = {"glyphs": tex_glyphs, "band": tex_band, "sigil": tex_sigil, "brand": tex_brand, "veins": tex_veins, "wall": tex_wall,
        "bolt": tex_bolt, "tendril": tex_tendril, "smoke": tex_smoke, "flakes": tex_flakes, "flash": tex_flash, "ring": tex_ring,
-       "wisp": tex_wisp, "shards": tex_shards, "corona": tex_corona}
+       "wisp": tex_wisp, "shards": tex_shards, "corona": tex_corona, "spiral": tex_spiral}
 
 if __name__ == "__main__":
     names = [a.replace("curse_", "") for a in sys.argv[1:]] or list(ALL)

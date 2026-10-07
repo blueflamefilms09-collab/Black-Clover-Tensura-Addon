@@ -1,0 +1,242 @@
+{
+ "_comment": "Demon Light Magic preview scenes (DemonLightLayer): FX1 black lance cast, FX2 shard-wall zone, FX3 starburst impact.",
+ "demon_light_cast": {
+  "layer": "DemonLightLayer",
+  "shape": "DEMON_LIGHT_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.3,
+   10
+  ],
+  "power": 1.0,
+  "duration": 16,
+  "cam": [
+   8,
+   2.4,
+   5
+  ],
+  "target": [
+   0,
+   1.4,
+   5
+  ],
+  "ages": [
+   2,
+   5,
+   9,
+   12,
+   15
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "demon_light_cast_big": {
+  "layer": "DemonLightLayer",
+  "shape": "DEMON_LIGHT_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.3,
+   14
+  ],
+  "power": 2.2,
+  "duration": 16,
+  "cam": [
+   12,
+   3.5,
+   7
+  ],
+  "target": [
+   0,
+   1.4,
+   7
+  ],
+  "ages": [
+   4,
+   9,
+   13,
+   15
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "demon_light_zone": {
+  "layer": "DemonLightLayer",
+  "shape": "DEMON_LIGHT_FX2",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 4.0,
+  "duration": 80,
+  "cam": [
+   9,
+   5,
+   -7
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   6,
+   20,
+   45,
+   70
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    2,
+    0,
+    1,
+    1.8
+   ]
+  ]
+ },
+ "demon_light_zone_small": {
+  "layer": "DemonLightLayer",
+  "shape": "DEMON_LIGHT_FX2",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 2.0,
+  "duration": 80,
+  "cam": [
+   5,
+   3,
+   -5
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   10,
+   40,
+   72
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "demon_light_impact": {
+  "layer": "DemonLightLayer",
+  "shape": "DEMON_LIGHT_FX3",
+  "from": [
+   0,
+   1.4,
+   0
+  ],
+  "to": [
+   0,
+   1.4,
+   0
+  ],
+  "power": 1.0,
+  "duration": 28,
+  "cam": [
+   6,
+   2,
+   -5
+  ],
+  "target": [
+   0,
+   1.4,
+   0
+  ],
+  "ages": [
+   2,
+   6,
+   12,
+   20
+  ],
+  "figures": [
+   [
+    3,
+    0,
+    2,
+    1.8
+   ]
+  ]
+ },
+ "demon_light_impact_dir": {
+  "layer": "DemonLightLayer",
+  "shape": "DEMON_LIGHT_FX3",
+  "from": [
+   0,
+   1.4,
+   0
+  ],
+  "to": [
+   4,
+   2.4,
+   0
+  ],
+  "power": 1.8,
+  "duration": 28,
+  "cam": [
+   2,
+   3,
+   -9
+  ],
+  "target": [
+   0,
+   1.6,
+   0
+  ],
+  "ages": [
+   4,
+   10,
+   18,
+   26
+  ],
+  "figures": []
+ }
+}
