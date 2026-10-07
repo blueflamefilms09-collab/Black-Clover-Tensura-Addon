@@ -106,3 +106,38 @@ magic:Dice Magic
 magic:Slash Magic
 magic:Compass Magic
 magic:Mercury Magic
+spell:Deux Tempêtes of Fire and Ice
+spell:Phantom Dragon Vouivre's Shout
+spell:Four-Headed Lindworm
+spell:Souterrain Giant's Strong Arm
+spell:Souterrain Groundswell
+spell:Sirène's Game
+spell:Master of Valhalla
+spell:God's Game
+spell:Souterrain Giant
+spell:Twilight of Valhalla
+spell:Spring of Restriction
+spell:Invasion of Heat-Infused Ice
+spell:Mistilteinn Seed
+spell:Dracaena Formation
+spell:Magic Tree Descent
+spell:Great Tree Mistilteinn
+spell:Magic Warding Ash
+spell:Budding of Yggdrasil
+spell:Mistilteinn Blade
+spell:Demon-Dweller Sword: Spirit Light Tree
+spell:Gambler's Fallacy
+spell:Death Scythe
+spell:Death Scythe: Lunatic Slash
+spell:Useless North
+spell:Willful Compass
+spell:Another Atlas
+spell:Silver Rain
+spell:Silver Spear
+spell:Silver Bullet
+spell:Silver Blade
+spell:Silver Shining Regal Spear
+spell:Silver Star of Execution
+spell:Silver Guardian
+spell:Silver Eagle (spell)
+spell:Dimension Slash Scorching Light
