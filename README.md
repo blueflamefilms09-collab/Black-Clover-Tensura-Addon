@@ -60,7 +60,7 @@ Chanted magics: use **Chant** mode until the chant is complete, then switch to *
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.50.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.51.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -204,6 +204,9 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Anti-Magic kit**: new pages **Black Hurricane** (a whirling field that drags foes in and strips their magic) and **Black Form** (30 s of strength, speed, resistance and jump, with an anti-magic burst); mastering the Anti-Magic Lord now also grants the **Demon-Slasher** katana next to Demon-Dweller and Demon-Destroyer.
 - **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
 - **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
+
+## 0.51 - Zagred boss design document
+- **New: `docs/zagred_boss_gdd.md`** (design only, nothing in the game changes). It expands Zagred into acts, with four Word Soul attacks (Halt, Redact, Fall, Overwrite), the 50% and 25% phase changes, three drops with engravings, and the code logic for the Multilayer Barrier and Thought Acceleration. It also lists what is new and what already exists.
 
 ## 0.50 - every weapon and relic in 3D (the Demon-Slayer standard), Tensura engravings
 - **Replacement: the in-hand look of 12 weapons and 11 relics.** Each is now a real 3D model like the Genesis Demon-Slayer; the inventory keeps its old icon.
