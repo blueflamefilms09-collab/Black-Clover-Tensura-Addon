@@ -1,0 +1,3 @@
+-- intro: Gravity Magic: Presence of the Demon King is a Gravity Magic spell.
+-- Description:
+    With an open grimoire, the user dramatically increases the strength of gravity in an area in front of them. Any objects in the area are slammed into the ground. It is capable of stopping a large projectile, bending magical light, and snapping trees in half, but cannot affect Anti Magic attacks.

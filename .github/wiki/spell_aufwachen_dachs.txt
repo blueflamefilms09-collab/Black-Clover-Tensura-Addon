@@ -1,0 +1,3 @@
+-- intro: Poison Curse Magic: Aufwachen Dachs is a poison-based Curse Magic spell.
+-- Description:
+    With an open grimoire, the user creates multiple badgers composed of poison. These badgers are strong enough to chew through the limbs of magically reinforced corpses.

@@ -1,0 +1,3 @@
+-- intro: Bubble Healing Magic: Bubble Refresher is a bubble-based Healing Magic spell.
+-- Description:
+    With an open grimoire, the user creates a large seashell filled with countless bubbles under the target. One shell is capable of handling multiple targets at the same time.

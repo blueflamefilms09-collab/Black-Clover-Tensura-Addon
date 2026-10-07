@@ -1,8 +1,4 @@
--- intro: {{Infobox/Magic |image= Patolli releases seal.png  |title= Seal Magic |kanji= 封印魔法 |romaji= Fūin Mahō |english= Sealing Magic (VIZ, Funimation)  |user= #Fana #Patolli #Rhya #Vetto }} :For the magic attribute that opens and closes objects, see Sealing Magic.  {{Nihongo|Seal Magic|封印魔法|Fūin Mahō}} is a form of magic that allows the users to seal objects and mana.
+-- intro: :For the magic attribute that opens and closes objects, see Sealing Magic.  Seal Magic is a form of magic that allows the users to seal objects and mana.
 -- Description:
-    This form of magic allows the user to place magical seals on a target. These seals have myriad purposes, including containing magic power and crystallizing mana.
-    Seals can be broken by Anti Magic, and some can be released by the one on whom they are placed.{{Clr}}
--- Spells:
-    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Supplementary}}
-    |-
-    |{{Portalbox/MagicPage|Trinity Sealing Magic.png|link=Trinity Seal Magic|Trinity Seal Magic}}
+    This form of magic allows the user to place magical seals on a target. These seals have myriad purposes, including containing magic power and crystallizing mana. Seals can be broken by Anti Magic, and some can be released by the one on whom they are placed.
+-- spell pages: Trinity Seal Magic

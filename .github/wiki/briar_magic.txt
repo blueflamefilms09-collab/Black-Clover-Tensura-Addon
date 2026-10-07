@@ -1,15 +1,6 @@
--- intro: {{Infobox/Magic |image= Charlotte restrains Balman.png  |title= Briar Magic |kanji= 荊魔法 |romaji= Ibara Mahō |english= Briar Magic (VIZ, Funimation)  |user= #Charla #Charlotte Roselei }} {{Nihongo|Briar Magic|荊魔法|Ibara Mahō}} is a magic attribute that allows the user to generate and manipulate briars, a type of prickly shrub, most commonly wild roses.
+-- intro: Briar Magic is a magic attribute that allows the user to generate and manipulate briars, a type of prickly shrub, most commonly wild roses.
 -- Description:
-    This magic attribute allows the user to generate and manipulate briars at will. In order to use it to its full potential, specific spells are required, which are stored within grimoires.
-    These briars are good for binding and their prickles cause damage to those who come into contact with them. Additionally, the roses can produce a scent that inhibits others' senses.
-    This element is weak to fire.
--- True Briar Magic:
-    With the Heart Kingdom's magic technique, the user can cast {{Nihongo|True Briar Magic|真荊魔法|Shin Ibara Mahō}} by using runes to channel natural mana into a spell and to create real briars with red roses.{{Clr}}
--- Spells:
-    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Offensive}}
-    |-
-    |{{Portalbox/MagicPage|Corpse hunting briar trees.png|link=Corpse-Hunting Briar Tree|Corpse-Hunting Briar Tree}}
+    This magic attribute allows the user to generate and manipulate briars at will. In order to use it to its full potential, specific spells are required, which are stored within grimoires. These briars are good for binding and their prickles cause damage to those who come into contact with them. Additionally, the roses can produce a scent that inhibits others' senses. This element is weak to fire.
 -- True Briar Spells:
-    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Supplementary}}
-    |-
-    |{{Portalbox/MagicPage|Queen of Briars.png|link=Queen of Briars|Queen of Briars}}
+    
+-- spell pages: Corpse-Hunting Briar Tree; Scarlet-Braided Beautiful Battle Spear; Blue Rose Paradise; Queen of Briars

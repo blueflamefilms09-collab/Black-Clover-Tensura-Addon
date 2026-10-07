@@ -1,12 +1,4 @@
--- intro: {{Infobox/Magic |image= Demon Beast Magic.png  |title= Demon Beast Magic |kanji= 魔獣魔法 |romaji= Majū Mahō |english= Mythical Beast Magic (VIZ, Funimation)  |user= #Vetto }} {{Nihongo|Demon Beast Magic|魔獣魔法|Majū Mahō}} is a magic attribute that allows the user to manipulate a sinister form of Beast Magic.
+-- intro: Demon Beast Magic is a magic attribute that allows the user to manipulate a sinister form of Beast Magic.
 -- Description:
-    This magic attribute allows the user to generate and manipulate a sinister form of mana at will. When in use, two magic circles appear near the user. In order to use it to its full potential, specific spells are required
-    This magic is capable of incredible feats, such as completely regenerating a person's arm, which regular Healing Magic is not capable of doing. This magic is also capable of imparting curses through contact.{{Clr}}
--- Spells:
-    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color:#702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Offensive}}
-    |-
-    |{{Portalbox/MagicPage|Demon Beast attack spell.png|link=Chimera's Roar|Chimera's Roar}}
-    |-
-    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Supplementary}}
-    |-
-    |{{Portalbox/MagicPage|Demon Beast healing spell.png|link=Hydra's Regrowth|Hydra's Regrowth}}
+    This magic attribute allows the user to generate and manipulate a sinister form of mana at will. When in use, two magic circles appear near the user. In order to use it to its full potential, specific spells are required, which are stored within grimoires. This magic is capable of incredible feats, such as completely regenerating a person's arm, which regular Healing Magic is not capable of doing. This magic is also capable of imparting curses through contact.
+-- spell pages: Chimera's Roar; Demon Porcupine's Stingers; Hydra's Regrowth

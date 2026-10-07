@@ -1,0 +1,3 @@
+-- intro: Beast Magic: Bear Claw is a Beast Magic spell.
+-- Description:
+    With an open grimoire, the user surrounds their arms with a magic aura shaped like the paws and claws of a bear. The aura greatly enhances the strength of the user, allowing punches to break swords. This aura can also be extended and enlarged.

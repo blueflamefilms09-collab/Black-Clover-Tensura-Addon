@@ -1,0 +1,3 @@
+-- intro: Light Healing Magic: Healing Ray of Light is a light-based Healing Magic spell.
+-- Description:
+    With an open grimoire, the user emits light from a hand, and the beads of light surround the wound while it heals.

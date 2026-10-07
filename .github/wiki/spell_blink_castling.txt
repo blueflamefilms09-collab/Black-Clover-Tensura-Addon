@@ -1,0 +1,3 @@
+-- intro: Legion Magic: Blink Castling is a Legion Magic spell.
+-- Description:
+    With an open grimoire, the user instantly switches places with one of their magic soldiers, enabling the user to dodge attacks and to place themselves in a more advantageous position. This spell cannot be utilized if all of the magic soldiers are destroyed.

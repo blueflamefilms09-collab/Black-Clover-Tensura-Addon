@@ -1,0 +1,3 @@
+-- intro: Eyeball Magic: Catoblepas's Evil Eye is an Eyeball Magic spell.
+-- Description:
+    With an open grimoire, the user manifests numerous floating eyes and spreads them out over a large area. These eyes allow the user to see from multiple angles and over great distances as well as to perceive the target's magic, stamina, and muscle movements. This information allows the user to predict the target's actions and more accurately snipe the target.

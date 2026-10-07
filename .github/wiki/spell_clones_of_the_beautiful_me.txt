@@ -1,0 +1,3 @@
+-- intro: Cherry Blossom Magic: Clones of the Beautiful Me is a Cherry Blossom Magic spell.
+-- Description:
+    With an open grimoire, the user creates multiple clones composed of cherry blossoms and in the user's likeness. They are so lifelike that they can trick even experienced Magic Knights. The clones can fly unaided and can be used to set off traps.

@@ -1,0 +1,3 @@
+-- intro: Curse-Warding Magic: Exploding Life is a Curse-Warding Magic spell.
+-- Description:
+    The user detonates the devil power that they have bestowed in the target. Two magic circles appear around a dark mass in the target's stomach, meanwhile the target's body swells as their magic power builds up inside of them. The target begins to shine right before they become a massive explosion.

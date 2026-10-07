@@ -1,0 +1,3 @@
+-- intro: Gel Magic: Sticky Salamander is a Gel Magic spell.
+-- Description:
+    With an open grimoire, the user creates a salamander composed solely of a gel material. Additionally, the user could alter the size of the salamander at will. Furthermore, the user could control the salamander's movements with ease through simple arm gestures. The user could also use this spell to transport objects by taking advantage of the gel material, whose viscosity is capable of steadily holding an object within it. The material could also refract light and neutralize poison.

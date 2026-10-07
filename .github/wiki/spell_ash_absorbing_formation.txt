@@ -1,0 +1,3 @@
+-- intro: Ash Curse Magic: Ash Absorbing Formation is an ash-based Curse Magic spell.
+-- Description:
+    With an open grimoire, the user extends streams of cursed ash from their hands. These streams drain the mana of those who touch them, and the user absorbs this mana. Victims undergo rapid physiological wasting and eventually death. The streams could branch out to strike multiple targets.

@@ -1,0 +1,3 @@
+-- intro: Barrier Magic: Voodoo Regalia is a Barrier Magic spell.
+-- Description:
+    With an open grimoire, the user shapes a barrier into a weapon, which can then be fired as a projectile or wielded by hand. Various weapons can be crafted, such as arrows, swords, axes, and tridents, and the user can create multiple different weapons simultaneously.

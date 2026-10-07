@@ -1,0 +1,3 @@
+-- intro: Demon Beast Magic: Chimera's Roar is a Demon Beast Magic spell.
+-- Description:
+    With an open grimoire, the user holds out their arm, creates a pair of magic circles behind them, and generates a magic aura shaped like the head of a horned lion. The user then unleashes a blast of magic from the beast's mouth.

@@ -1,0 +1,3 @@
+-- intro: Briar Creation Magic: Corpse-Hunting Briar Tree is a briar-based Creation Magic spell.
+-- Description:
+    With an open grimoire, the user unsheathes their weapon and transforms it into several prickle-covered vines, which extend to considerable length as they surround the user. These prickly vines actively hunt the user's targets. Once these vines have caught them, they converge together and rise to create a tall trees of briars while the targets are still trapped between the prickles. Additionally, the user can create multiple trees at once to defeat a large number of opponents. These prickles are sharp enough to shred the targets that are trapped within the vines.

@@ -1,0 +1,3 @@
+-- intro: Jets of Blood is a Blood Magic spell.
+-- Description:
+    The user releases high pressure streams of blood from their body. These streams can be used to bolster the speed and power of projectiles.

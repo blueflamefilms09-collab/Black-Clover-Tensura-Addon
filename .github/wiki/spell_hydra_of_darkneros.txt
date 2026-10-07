@@ -1,0 +1,3 @@
+-- intro: Demon Water Magic: Hydra of Darkneros is a Demon Water Magic spell.
+-- Description:
+    The user generates a large sphere of water around themselves and then extends multiple large serpents from the surface of the sphere. These eyeless, spiked serpents try to crush their target in their sharp-toothed mouths.

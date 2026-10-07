@@ -1,20 +1,4 @@
--- intro: {{Infobox/Magic |image= Patolli rescues Sally.png  |title= Light Magic |kanji= 光魔法 |romaji= Hikari Mahō |english= Light Magic (VIZ, Funimation)  |user= #Adramelech #Augustus Kira Clover XIII #Lemiel Silvamillion Clover #Lucius Zogratis #Morgen Faust #Patolli #Rhya #Yami Sukehiro }} {{Nihongo|Light Magic|光魔法|Hikari Mahō}} is a rare magic attribute that allows the user to generate and manipulate light.
+-- intro: Light Magic is a rare magic attribute that allows the user to generate and manipulate light.
 -- Description:
-    This magic attribute allows the user to generate and manipulate light at will. In order to use it to its full potential, specific spells are required, which are stored within the grimoire.
-    Light Magic has been described as the polar opposite of Dark Magic, and one of the magic's fundamental characteristics is its high-speed property, which grants its users the ability to move and attack at light speed. It 
--- Spells:
-    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color:#702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Offensive}}
-    |-
-    |{{Portalbox/MagicPage|Gauche struck down.png|link=Light Sword of Judgment|Light Sword of Judgment}}
-    |-
-    |{{Portalbox/MagicPage|Light Shaft of Divine Punishment.png|link=Light Shaft of Divine Punishment|Light Shaft of Divine Punishment}}
-    |-
-    |{{Portalbox/MagicPage|Lemiel and Licht attack creature.png|link=Lamp of Avior Gloria|Lamp of Avior Gloria}}
-    |-
-    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Supplementary}}
-    |-
-    |{{Portalbox/MagicPage|Healing Ray of Light.png|link=Healing Ray of Light|Healing Ray of Light}}
-    |-
-    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Compound}}
-    |-
-    |{{Portalbox/MagicPage|Elemental Quintet.png|link=Elemental Quintet|Elemental Quintet}}
+    This magic attribute allows the user to generate and manipulate light at will. In order to use it to its full potential, specific spells are required, which are stored within the grimoire. Light Magic has been described as the polar opposite of Dark Magic, and one of the magic's fundamental characteristics is its high-speed property, which grants its users the ability to move and attack at light speed. It is, however, somewhat compatible with Dark Magic, with the darkness causing the light to shine the brightest.
+-- spell pages: Light Sword of Judgment; Bright Judgment Whip; Heaven-Splitting Flash; Light Shaft of Divine Punishment; Arrows of Judgment; Lamp of Avior; Lamp of Avior Gloria; Healing Ray of Light; Absolute Monarch of Divine Brilliance; Elemental Quintet; Storm of Light Imperial Swords of Conviction; Demon-Dweller Sword: Protecting Light

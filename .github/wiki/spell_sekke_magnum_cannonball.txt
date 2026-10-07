@@ -1,0 +1,3 @@
+-- intro: Bronze Creation Magic: Sekke Magnum Cannonball is a bronze-based Creation Magic spell.
+-- Description:
+    With an open grimoire, the user manifests a transparent sphere around himself. The sphere has several peaks at random positions. It also has an intricate pattern across its surface. The full potential of the spell is unknown.

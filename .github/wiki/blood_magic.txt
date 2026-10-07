@@ -1,16 +1,4 @@
--- intro: {{Infobox/Magic |image= Blood Magic.png  |title= Blood Magic |kanji= 血液魔法 |romaji= Ketsueki Mahō |english= Blood Magic (VIZ, Funimation)  |user= #Lucius Zogratis #Megicula #Ursula Bloodlord #Vanica Zogratis }} {{Nihongo|Blood Magic|血液魔法|Ketsueki Mahō}} is a magic attribute that allows the user to generate and manipulate their own blood.
+-- intro: Blood Magic is a magic attribute that allows the user to generate and manipulate their own blood.
 -- Description:
-    This magic attribute allows the user to generate and manipulate their own blood at will. In order to use it to its full potential, specific spells are required, which are stored within grimoires.
-    By congealing the blood, the user can shape it into various weapons and creatures for cutting and piercing attacks or into rigid restraints. Water Magic can weaken the blood's ability to harden, weakening the creations.
-    The user is also capable of controlling other people and animals by manipulating the blood in their body, after they have used their magic on them first.
-    When this attribute is combined with Soul, Body and Bone Magic, it can be used to actually create a human body and allows for recovery that goes far beyond ordinary Healing Magic. It can even grant sight to the blind and
--- Spells:
-    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Offensive}}
-    |-
-    |{{Portalbox/MagicPage|Blood Scythe.png|link=Lifeblood Scythe|Lifeblood Scythe}}
-    |-
-    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Supplementary}}
-    |-
-    |{{Portalbox/MagicPage|Blood Magic.png|link=Curse-Breaking Blood Cocoon|Curse-Breaking Blood Cocoon}}
-    |-
-    |{{Portalbox/MagicPage|Jets of Blood and Bone Bullets.png|link=Jets of Blood|Jets of Blood}}
+    This magic attribute allows the user to generate and manipulate their own blood at will. In order to use it to its full potential, specific spells are required, which are stored within grimoires. By congealing the blood, the user can shape it into various weapons and creatures for cutting and piercing attacks or into rigid restraints. Water Magic can weaken the blood's ability to harden, weakening the creations. The user is also capable of controlling other people and animals by manipulating the blood in their body, after they have used their magic on them first. When this attribute is combined with Soul, Body and Bone Magic, it can be used to actually create a human body and allows for recovery that goes far beyond ordinary Healing Magic. It can even grant sight to the blind and regrow lost limbs, and create physical clones of a person.
+-- spell pages: Lifeblood Scythe; Red Beast; Herd of Red Beasts; Curse-Breaking Blood Cocoon; Scaffold of Fresh Blood; Puppet Bloodflow; Jets of Blood

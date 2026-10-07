@@ -1,16 +1,4 @@
--- intro: {{Infobox/Magic |image= Rhinoceros Armor.png  |title= Beast Magic |kanji= 獣魔法 |romaji= Kemono Mahō |english= Beast Magic (VIZ, Funimation)  |user= #Vetto #Yrul }} {{Nihongo|Beast Magic|獣魔法|Kemono Mahō}} is a magic attribute that allows the user to manipulate their mana to give them animal-like traits and powers.
+-- intro: Beast Magic is a magic attribute that allows the user to manipulate their mana to give them animal-like traits and powers.
 -- Description:
-    This magic attribute allows the user to surround either a part of or their whole body with mana to mirror a certain animal and gain a magically enhanced version of that animal's traits and powers. The users are able to u
-    Some mages are able use their magic to summon animals with special abilities and to assert control over other animals.{{Clr}}
--- Spells:
-    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color:#702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Offensive}}
-    |-
-    |{{Portalbox/MagicPage|Bear Claw.png|link=Bear Claw|Bear Claw}}
-    |-
-    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Defensive}}
-    |-
-    |{{Portalbox/MagicPage|Rhinoceros Armor.png|link=Rhinoceros Armor|Rhinoceros Armor}}
-    |-
-    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Supplementary}}
-    |-
-    |{{Portalbox/MagicPage|Cheetah Charge.png|link=Cheetah Charge|Cheetah Charge}}
+    This magic attribute allows the user to surround either a part of or their whole body with mana to mirror a certain animal and gain a magically enhanced version of that animal's traits and powers. The users are able to use this magic without the need of a grimoire. However, in order to use it to its full potential, specific spells are required, which are stored within grimoires. Some mages are able use their magic to summon animals with special abilities and to assert control over other animals.
+-- spell pages: Bear Claw; Holy Hunting; Rhinoceros Armor; Cheetah Charge; Holy Howling; Bogeyman

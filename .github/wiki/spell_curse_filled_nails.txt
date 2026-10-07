@@ -1,0 +1,3 @@
+-- intro: Black Oil Creation Magic: Curse-Filled Nails is a black oil-based Creation Magic spell.
+-- Description:
+    With an open grimoire, the user shapes black oil into long fingernails on one of their hands. Upon contact with a person, these fingernails allow the user to sense the person's physical condition, including body temperature and magic power.

@@ -1,0 +1,3 @@
+-- intro: Glass Magic: Verre Détection is a Glass Magic spell.
+-- Description:
+    With an open grimoire, the user creates several panes of glass and spreads them around an area. Using reflected light between the panes, the user is able to search in multiple directions and over a wide area.

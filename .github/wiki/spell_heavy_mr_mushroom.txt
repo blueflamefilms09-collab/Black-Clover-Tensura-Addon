@@ -1,0 +1,3 @@
+-- intro: Fungus Magic: Heavy Mr. Mushroom is a Fungus Magic spell.
+-- Description:
+    The user puts spores on their target which later sprouts into a large mushroom with an old, tired face. The weight of the mushroom increases until the target is pinned to the ground.

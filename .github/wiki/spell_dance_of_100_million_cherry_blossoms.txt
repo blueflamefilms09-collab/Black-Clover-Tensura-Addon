@@ -1,0 +1,3 @@
+-- intro: Cherry Blossom Magic: Dance of 100 Million Cherry Blossoms is a Cherry Blossom Magic spell.
+-- Description:
+    With an open grimoire, the user creates a large folding fan made of cherry blossoms. Swinging the fan launches multiple streams of cherry blossoms, which are extremely sharp and can invade any defenses with small openings.

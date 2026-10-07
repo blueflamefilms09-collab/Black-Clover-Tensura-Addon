@@ -1,0 +1,3 @@
+-- intro: Ice Wedge Magic: World End Church is an Ice Wedge Magic spell.
+-- Description:
+    With an opened grimoire, the user takes control of the surrounding mana and generates a gigantic church made out of ice, causing the nearby temperature to drop to absolute zero. This spell is capable of freezing even lava and a portion of the Ultime-Volcano Mountain Trail.

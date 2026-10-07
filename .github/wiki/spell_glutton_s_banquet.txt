@@ -1,0 +1,3 @@
+-- intro: Food Magic: Glutton's Banquet is a Food Magic spell.
+-- Description:
+    With an open grimoire, the user manifests a giant wolf with a fork and knife. The wolf uses the utensils to stab and drag spells into its mouth. The consumed magic is then converted into energy for the user.

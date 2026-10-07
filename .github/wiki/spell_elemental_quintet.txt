@@ -1,0 +1,3 @@
+-- intro: Compound Magic: Elemental Quintet is a five element-based Compound Magic spell.
+-- Description:
+    The Light Magic user creates a giant Light Sword of Judgment, and the four other mages hold out a hand and create streams from their different magic types. Once complete, the sword is launched at the target and the streams swirl around the sword.

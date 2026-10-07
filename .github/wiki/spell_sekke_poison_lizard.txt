@@ -1,0 +1,3 @@
+-- intro: Bronze Curse Magic: Sekke Poison Lizard is a bronze-based Curse Magic spell.
+-- Description:
+    With an open grimoire, the user creates a lizard that emerges from inside of the grimoire. The lizard is covered in a dark-colored matter and is composed of bronze and can move as if it is a living being. Upon its creation, the user can command it to move towards the target. The full potential of the spell is unknown.

@@ -1,12 +1,4 @@
--- intro: {{Infobox/Magic |image= Cherry Blossom Magic.png  |title= Cherry Blossom Magic |kanji= 桜魔法 |romaji= Sakura Mahō |english= Cherry Blossom Magic (VIZ, Funimation)  |user= #Kirsch Vermillion }} {{Nihongo|Cherry Blossom Magic|桜魔法|Sakura Mahō}} is a magic attribute that allows the user to generate and manipulate cherry blossoms.
+-- intro: Cherry Blossom Magic is a magic attribute that allows the user to generate and manipulate cherry blossoms.
 -- Description:
-    This magic attribute allows the user to generate and manipulate cherry blossoms at will. The user is able to use this magic without the need of a grimoire. However, in order to use it to its full potential, specific spel
-    Dense swarms of cherry blossoms can be used to create illusions and to obscure opponents' vision and mana-sensing, thus concealing the user and their allies, as well as disorienting opponents. Additionally, the individua
--- Spells:
-    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Offensive}}
-    |-
-    |{{Portalbox/MagicPage|Kirsch's cherry blossom dance.png|link=Dance of 100 Million Cherry Blossoms|Dance of 100 Million Cherry Blossoms}}
-    |-
-    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Supplementary}}
-    |-
-    |{{Portalbox/MagicPage|Cherry Blossom Magic.png|link=Clones of the Beautiful Me|Clones of the Beautiful Me}}
+    This magic attribute allows the user to generate and manipulate cherry blossoms at will. The user is able to use this magic without the need of a grimoire. However, in order to use it to its full potential, specific spells are required, which are stored within grimoires. Dense swarms of cherry blossoms can be used to create illusions and to obscure opponents' vision and mana-sensing, thus concealing the user and their allies, as well as disorienting opponents. Additionally, the individual petals are incredibly sharp and thin, allowing them to slip through small openings in defenses and strike at an opponent.
+-- spell pages: Dance of 100 Million Cherry Blossoms; Clones of the Beautiful Me; Magic Cherry Blossom Blizzard

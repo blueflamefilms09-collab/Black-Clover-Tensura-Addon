@@ -1,0 +1,3 @@
+-- intro: Demon Beast Magic: Hydra's Regrowth is a Demon Beast Magic spell.
+-- Description:
+    With an open grimoire, the user creates a pair of magic circles and then regenerates from any injury. It can regenerate entire limbs, something even the greatest Healing Magic cannot achieve. This self-healing can be prevented by severing the magic currents in the user's body.

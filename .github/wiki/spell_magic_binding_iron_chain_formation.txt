@@ -1,0 +1,3 @@
+-- intro: Chain Creation Magic: Magic Binding Iron Chain Formation is a chain-based Creation Magic spell.
+-- Description:
+    With an open grimoire, the user creates several chains, which wrap themselves around the target's torso several times and embed their arrow-tipped ends into the ground or walls, thus holding the target in place. This spell also restrains the target from using any magic, even if the target has greater magic power than the user.

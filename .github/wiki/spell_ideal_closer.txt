@@ -1,0 +1,3 @@
+-- intro: Corundum Magic: Ideal Closer is a Corundum Magic spell.
+-- Description:
+    With an open grimoire, the user's body is completely covered by corundum with only a Y-shaped opening for their eyes and mouth. The armor takes a larger humanoid shape, complete with arms and legs. The user is able to control the armor and use the limbs to attack a target.

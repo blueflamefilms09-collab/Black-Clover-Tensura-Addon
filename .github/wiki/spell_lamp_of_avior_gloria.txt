@@ -1,0 +1,3 @@
+-- intro: Light Magic Mana Zone: Lamp of Avior Gloria is a Light Magic spell.
+-- Description:
+    After taking control of the surrounding mana, the user unleashes multiple concentrated blasts of light.

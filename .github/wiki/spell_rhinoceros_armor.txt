@@ -1,0 +1,3 @@
+-- intro: Beast Magic: Rhinoceros Armor is a Beast Magic spell.
+-- Description:
+    With an open grimoire, the user generates a magic aura around their body. The aura takes the shape of a rhinoceros and is able to stop powerful impacts.

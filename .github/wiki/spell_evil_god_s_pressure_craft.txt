@@ -1,0 +1,3 @@
+-- intro: Gravity Magic: Evil God's Pressure Craft is a Gravity Magic spell.
+-- Description:
+    With an open grimoire, the user pulls a large rock up out of the ground and then uses immense gravitational pressure to compress the rock into the shape of a large sword. The user can control the sword through hand gestures and can launch it at a target.

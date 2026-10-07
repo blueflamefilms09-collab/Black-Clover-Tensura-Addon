@@ -1,0 +1,3 @@
+-- intro: Ice Magic: Dissolve is an Ice Magic spell.
+-- Description:
+    With an open grimoire, the user raises their hand and instantly melts any ice, be it physical or magical in nature. As such, this spell can be used to defend against an enemy's magic, as well as the user's own magic in the event that their spell is reflected back at them.

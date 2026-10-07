@@ -1,0 +1,3 @@
+-- intro: Curse-Warding Magic: Decaying World is a Curse-Warding Magic spell.
+-- Description:
+    The user generates numerous strands of runes that can dismantle and destroy opponents' spells, wrap around and bind opponents, and apply curses. While this spell is active, any rune arrays that are applied to or directed at the user become corrupted and weakened. However, spells of significant power and speed can be too large to weaken completely. It is even effective against Arcane and Saint Stage magic.

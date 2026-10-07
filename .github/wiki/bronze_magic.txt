@@ -1,15 +1,4 @@
--- intro: {{Infobox/Magic |image= Bronze Magic.png  |title= Bronze Magic |kanji= 青銅魔法 |romaji= Seidō Mahō |english= Bronze Magic (VIZ, Funimation)  |user= #Sekke Bronzazza }} :For the magic used by Cesc, see Shakudo Magic.  {{Nihongo|Bronze Magic|青銅魔法|Seidō Mahō}} is a magic attribute that allows the user to generate and manipulate bronze.
+-- intro: :For the magic used by Cesc, see Shakudo Magic.  Bronze Magic is a magic attribute that allows the user to generate and manipulate bronze.
 -- Description:
-    This magic attribute allows the user to generate and manipulate bronze at will. The users are able to use this magic without the need of a grimoire. However, in order to use it to its full potential, specific spells are 
--- Spells:
-    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Offensive}}
-    |-
-    |{{Portalbox/MagicPage|Sekke releasing a poison lizard.png|link=Sekke Poison Lizard|Sekke Poison Lizard}}
-    |-
-    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Defensive}}
-    |-
-    |{{Portalbox/MagicPage|Sekke activating his magic.png|link=Sekke Magnum Cannonball|Sekke Magnum Cannonball}}
-    |-
-    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Supplementary}}
-    |-
-    |{{Portalbox/MagicPage|Sekke summoning his shooting star.png|link=Sekke Shooting Star|Sekke Shooting Star}}
+    This magic attribute allows the user to generate and manipulate bronze at will. The users are able to use this magic without the need of a grimoire. However, in order to use it to its full potential, specific spells are required, which are stored within grimoires.
+-- spell pages: Sekke Poison Lizard; Sekke Magnum Cannonball; Super Sekke Magnum Cannonball; Sekke Shooting Star

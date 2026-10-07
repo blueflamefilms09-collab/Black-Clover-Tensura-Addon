@@ -1,0 +1,3 @@
+-- intro: Legion Magic: Gehenna Game is a Legion Magic spell.
+-- Description:
+    With an open grimoire, the user creates a handheld circular chessboard and pieces. Subsequently, the user can summon the pieces off of the board and transform them into larger versions with which to attack enemies. As soldiers are destroyed, new ones can be created and sent out.

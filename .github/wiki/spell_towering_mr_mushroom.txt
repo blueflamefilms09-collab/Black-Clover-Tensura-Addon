@@ -1,0 +1,3 @@
+-- intro: Fungus Magic: Towering Mr. Mushroom is Fungus Magic spell.
+-- Description:
+    With an open grimoire, the user grows a giant Pleurotus eryngii mushroom, which has arms, legs, and a face. The destructive capabilities of the spell are unknown.

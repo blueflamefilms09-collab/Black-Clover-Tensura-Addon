@@ -1,0 +1,3 @@
+-- intro: Beast Magic: Cheetah Charge is a Beast Magic spell.
+-- Description:
+    With an open grimoire, the user wraps their legs and feet with a magical aura shaped like the legs of a cheetah. This aura greatly enhances the speed of the user, allowing them to close distances with extreme speed.

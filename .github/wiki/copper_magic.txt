@@ -1,7 +1,4 @@
--- intro: {{Infobox/Magic |image= Red Shine Mace.png  |title= Copper Magic |kanji= 銅魔法 |romaji= Akagane Mahō |english= Copper Magic (VIZ, Funimation)  |user= #Ben Benfunk #Unnamed elf }} :For the magic used by Cesc, see Shakudo Magic.  {{Nihongo|Copper Magic|銅魔法|Akagane Mahō}} is a magic attribute that allows the user to generate and manipulate copper.
+-- intro: :For the magic used by Cesc, see Shakudo Magic.  Copper Magic is a magic attribute that allows the user to generate and manipulate copper.
 -- Description:
-    This magic attribute allows the user to generate and manipulate copper at will. The users are able to use this magic without the need of a grimoire. However, in order to use it to its full potential, specific spells are 
--- Spells:
-    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Offensive}}
-    |-
-    |{{Portalbox/MagicPage|Red Shine Mace.png|link=Red Shine Mace|Red Shine Mace}}
+    This magic attribute allows the user to generate and manipulate copper at will. The users are able to use this magic without the need of a grimoire. However, in order to use it to its full potential, specific spells are required, which are stored within grimoires.
+-- spell pages: Red Shine Mace

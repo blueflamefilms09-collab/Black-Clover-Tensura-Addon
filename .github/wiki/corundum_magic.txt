@@ -1,7 +1,4 @@
--- intro: {{Infobox/Magic |image= Ideal Closer.png  |title= Corundum Magic |kanji= 鋼玉魔法 |romaji= Kōgyoku Mahō |english= Corundum Magic (VIZ, Funimation)  |user= #Unnamed elf #Unnamed Golden Dawn }} {{Nihongo|Corundum Magic|鋼玉魔法|Kōgyoku Mahō}} is a magic attribute that allows the user to generate and manipulate corundum. It is derived from the Earth Magic attribute.
+-- intro: Corundum Magic is a magic attribute that allows the user to generate and manipulate corundum. It is derived from the Earth Magic attribute.
 -- Description:
-    This magic attribute allows the user to generate and manipulate corundum at will. In order to use it to its full potential, specific spells are required, which are stored within grimoires.{{Clr}}
--- Spells:
-    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Supplementary}}
-    |-
-    |{{Portalbox/MagicPage|Ideal Closer.png|link=Ideal Closer|Ideal Closer}}
+    This magic attribute allows the user to generate and manipulate corundum at will. In order to use it to its full potential, specific spells are required, which are stored within grimoires.
+-- spell pages: Ideal Closer

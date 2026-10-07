@@ -1,0 +1,3 @@
+-- intro: Trinity Seal Magic: Twilight Chamber is a Compound Seal Magic spell.
+-- Description:
+    Three mages surround their target and create multiple rings of writing that encompass the target and seal it away. This spell is capable of containing and crystallizing large amounts of mana.

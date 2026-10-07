@@ -1,0 +1,3 @@
+-- intro: Iron Creation Magic: Iron Bullet is an Iron Magic spell.
+-- Description:
+    With an open grimoire, the user forms a large iron casing around their arm and then thrusts their arm toward their target. Propelled by mana, the casing is launched from the user's arm and explodes on contact.

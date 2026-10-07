@@ -1,7 +1,4 @@
--- intro: {{Infobox/Magic |image= Demon Light Sword of Judgment.png  |title= Demon Light Magic |kanji= 魔光魔法 |romaji= Makō Mahō |english= Demon Light Magic (VIZ, Funimation)  |user= #Patolli }} {{Nihongo|Demon Light Magic|魔光魔法|Makō Mahō}} is a magic attribute that allows the user to generate and manipulate a sinister form of Light Magic.
+-- intro: Demon Light Magic is a magic attribute that allows the user to generate and manipulate a sinister form of Light Magic.
 -- Description:
-    This magic attribute allows the user to generate and manipulate a sinister form of light at will. This black-colored light makes spells faster, stronger, and denser than their Light Magic counterparts and more effective 
--- Spells:
-    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color:#702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Offensive}}
-    |-
-    |{{Portalbox/MagicPage|Demon Light Sword of Judgment.png|link=Light Sword of Judgment|Light Sword of Judgment}}
+    This magic attribute allows the user to generate and manipulate a sinister form of light at will. This black-colored light makes spells faster, stronger, and denser than their Light Magic counterparts and more effective against magic from the underworld. The user can use this magic without the need for a grimoire.
+-- spell pages: Light Sword of Judgment; Light Shaft of Divine Punishment; Bright Judgment Whip

@@ -1,11 +1,4 @@
--- intro: {{Infobox/Magic |image= Iron God of War.png  |title= Iron Magic |kanji= 鉄魔法 |romaji= Kurogane Mahō |english= Iron Magic (VIZ, Funimation)  |user= #Gareth (Anime) #Yosuga Musyogatake }} {{Nihongo|Iron Magic|鉄魔法|Kurogane Mahō}} is a magic attribute that allows the users to generate and manipulate iron.
+-- intro: Iron Magic is a magic attribute that allows the users to generate and manipulate iron.
 -- Description:
-    This magic attribute allows the users to generate and manipulate iron at will. In order to use it to its full potential, specific spells are required, which are stored within grimoires.{{Clr}}
--- Spells:
-    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Offensive}}
-    |-
-    |{{Portalbox/MagicPage|Iron Bullet.png|link=Iron Bullet|Iron Bullet}}
-    |-
-    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Defensive}}
-    |-
-    |{{Portalbox/MagicPage|Iron Maiden.png|link=Immovable Guardian Deity|Immovable Guardian Deity}}
+    This magic attribute allows the users to generate and manipulate iron at will. In order to use it to its full potential, specific spells are required, which are stored within grimoires.
+-- spell pages: Iron Bullet; Immovable Guardian Deity; Iron God of War

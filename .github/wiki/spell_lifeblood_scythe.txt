@@ -1,0 +1,3 @@
+-- intro: Blood Creation Magic: Lifeblood Scythe is a blood-based Creation Magic spell.
+-- Description:
+    With an open grimoire, the user shapes a large amount of blood into a giant scythe, which the user swings by hand.

@@ -1,3 +1,4 @@
--- intro: {{Infobox/Magic |image= Black Blade Rhya.png  |title= Imitation Magic |kanji= 模倣魔法 |romaji= Mohō Mahō |english= Copy Magic (VIZ, Funimation)  |user= #Rhya }} {{Nihongo|Imitation Magic|模倣魔法|Mohō Mahō}} is a magic attribute that allows a user to copy another mage's spells.
+-- intro: Imitation Magic is a magic attribute that allows a user to copy another mage's spells.
 -- Description:
-    This magic attribute allows the user to copy another mage's spells at will. In order for the user to use another mage's spells, they are first required to touch that mage's grimoire. The spells that are copied are able t
+    This magic attribute allows the user to copy another mage's spells at will. In order for the user to use another mage's spells, they are first required to touch that mage's grimoire. The spells that are copied are able to match those of the original owner, and power of the spells themselves are based on the Imitation Magic user's magic power rather than those of the original owner. The only known exception is Anti Magic.
+-- spell pages: (none listed)

@@ -1,0 +1,3 @@
+-- intro: Bone × Spatial Magic: Demon Sword Dainsleif is a bone and space-based Union Magic spell.
+-- Description:
+    The user creates a bone sword and then coats the blade in offensive Spatial Magic. Swinging the sword can create flying slashes of offensive Spatial Magic.

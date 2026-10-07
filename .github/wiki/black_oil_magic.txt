@@ -1,7 +1,4 @@
--- intro: {{Infobox/Magic |image= Curse Candle Map.png  |title= Black Oil Magic |kanji= 黒油魔法 |romaji= Kokuyu Mahō |english= Black Oil Magic (VIZ, Funimation)  |user= #Nathan Agrippa }} {{Nihongo|Black Oil Magic|黒油魔法|Kokuyu Mahō}} is a magic attribute that allows the user to generate and manipulate black oil.
+-- intro: Black Oil Magic is a magic attribute that allows the user to generate and manipulate black oil.
 -- Description:
-    This magic attribute allows the user to generate and manipulate a dark oily substance at will. The oil can shift rapidly between liquid and solid states. In order to use it to its full potential, specific spells are requ
--- Spells:
-    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Supplementary}}
-    |-
-    |{{Portalbox/MagicPage|Black Oil Nails.png|link=Curse-Filled Nails|Curse-Filled Nails}}
+    This magic attribute allows the user to generate and manipulate a dark oily substance at will. The oil can shift rapidly between liquid and solid states. In order to use it to its full potential, specific spells are required, which are stored within grimoires.
+-- spell pages: Curse-Filled Nails; Curse Candle Ritual Disk

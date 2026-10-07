@@ -1,0 +1,3 @@
+-- intro: Crystal Magic: Crystal Scope is a Crystal Magic spell.
+-- Description:
+    The user creates a helm that has two telescopes built within the helm to accurately location a target with. The helm also has a strap that is connected to a mic that allows the user to speak with their allies. The spell can also determine the physical condition of a target.

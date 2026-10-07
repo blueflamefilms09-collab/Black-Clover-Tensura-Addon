@@ -1,0 +1,3 @@
+-- intro: Copper Magic: Red Shine Mace is a Copper Magic spell.
+-- Description:
+    The user creates a large polearm, with a large head piece. The user would then slam the head piece to a target to defeat them.

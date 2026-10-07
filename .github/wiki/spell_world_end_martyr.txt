@@ -1,0 +1,3 @@
+-- intro: Ice Wedge Magic: World End Martyr is an Ice Wedge Magic spell.
+-- Description:
+    Using an open grimoire, the user builds an enormous creature out of extremely sharp ice. The creature boasts a set of wings similar to an angel, strong talons, and two halo-like rings hovering above its head, with a cross replacing its face and one adorning its chest. This gigantic creature is formidable enough to decimate the battlefield with its might alone, and is capable of unleashing powerful ice beams that freeze anything in its path.

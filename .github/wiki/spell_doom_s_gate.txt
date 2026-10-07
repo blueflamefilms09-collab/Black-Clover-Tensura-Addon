@@ -1,0 +1,3 @@
+-- intro: Key Magic: Doom's Gate is a forbidden Key Magic spell.
+-- Description:
+    With an open grimoire, the user sacrifices all of their remaining life span and consumes all of the magic stored by their Key Magic, then fuses it into a single gargantuan attack which will then be unleashed on the summoned door. This spell is strong enough to threaten the entirety of the Clover Kingdom.

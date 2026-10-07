@@ -1,0 +1,3 @@
+-- intro: Union Magic: Le Château de Verre is a steel and glass-based Union Magic spell.
+-- Description:
+    The Steel Magic user creates a large steel structure, consisting of a multi-panel wall, a set of tank treads, and a several spinning, conical drills. The Glass Magic user covers the upper portion of the wall with glass flowers and creates several large glass flowers that float around the structure. The spell's destructive capabilities are unknown.

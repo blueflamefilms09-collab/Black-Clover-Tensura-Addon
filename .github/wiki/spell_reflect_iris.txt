@@ -1,0 +1,3 @@
+-- intro: Union Magic: Reflect Iris is a mirror and eye-based Union Magic spell.
+-- Description:
+    The Mirror Magic user creates an array of mirrors that reflect the appearance of the Eye Magic user. Any targets that look into the mirrors are caught in an enchantment, physically paralyzing them and blocking their magic. The array could then be used to strike the immobile targets with Reflect Refrain.

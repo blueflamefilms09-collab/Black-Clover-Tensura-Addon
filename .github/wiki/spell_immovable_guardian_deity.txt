@@ -1,0 +1,3 @@
+-- intro: Immovable Guardian Deity is a defensive magic spell.
+-- Description:
+    With an open grimoire, the user forms a large metallic bell that can be used to cover and protect a target. The outside of the bell is decorated with a Buddhist figure. Despite its durability, it cannot defend against offensive Spatial Magic and fails to stand up to the crushing power of Air Magic.

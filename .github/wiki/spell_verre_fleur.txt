@@ -1,0 +1,3 @@
+-- intro: Glass Creation Magic: Verre Fleur is a glass-based Creation Magic spell.
+-- Description:
+    Upon activating the spell, the user throws his hands up in the air and a series of sharp glass spikes rises from the ground. These spikes are of similar blade-like shapes but appear in different sizes as they form together into the shape of a flower. The glass is sharp enough to easily cut through the user's targets. Additionally, the user could summon glass in any location they desire. Due to the sheer size of the spell, the user is able to attack multiple targets gathered in a single place at once.
