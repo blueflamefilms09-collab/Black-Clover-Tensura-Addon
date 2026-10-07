@@ -25,11 +25,22 @@ public final class VfxInstance {
         this.layer = layer;
         this.color = color;
         this.duration = Math.max(1, duration);
-        this.power = payload.power() <= 0 ? 1 : payload.power();
+        this.power = (payload.power() <= 0 ? 1 : payload.power()) * scaleFor(shape);
         this.seed = payload.seed();
         Entity e = payload.followEntity() >= 0 ? level.getEntity(payload.followEntity()) : null;
         this.followOffsetFrom = e == null ? null : payload.from().subtract(e.position());
         this.followOffsetTo = e == null ? null : payload.to().subtract(e.position());
+    }
+
+    /**
+     * 0.57: the owner wanted the new magics' effects three times bigger: cast and impact shapes (FX1 / FX3 of the new attributes)
+     * draw at 3x, zone shapes (FX2, power = radius) at 1.5x so the sigil stays readable next to the real area.
+     */
+    static float scaleFor(VfxShape s) {
+        String n = s == null ? "" : s.name();
+        if (n.endsWith("_FX1") || n.endsWith("_FX3")) return 3.0f;
+        if (n.endsWith("_FX2")) return 1.5f;
+        return 1f;
     }
 
     public int age() { return age; }

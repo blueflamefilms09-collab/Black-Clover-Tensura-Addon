@@ -91,6 +91,28 @@ public class SpiritLordSkill extends Skill {
         return null;
     }
 
+    /**
+     * 0.57: the skill only stays while its source does. An elemental lord needs the spirit to still be bound to this player (the
+     * server's spirit slots), the Anti-Magic lord needs the Anti-Magic grimoire or Anti-Magic Lord skill. Otherwise the skill is
+     * forgotten (checked every 10 s from SpiritBond.onPlayerTick), so a player whose spirit was released or whose magic was
+     * removed does not keep a dead skill.
+     */
+    public static void validate(ServerPlayer p) {
+        Optional<ManasSkillInstance> inst = instance(p);
+        if (inst.isEmpty()) return;
+        String type = type(inst.get());
+        boolean ok;
+        if ("Anti".equals(type)) {
+            var skills = SkillAPI.getSkillsFrom(p);
+            ok = skills.getSkill(NUSkills.ANTI_MAGIC_LORD.getId()).isPresent() || skills.getSkill(NUSkills.BOOK_ANTI_MAGIC.getId()).isPresent();
+        } else {
+            ok = p.getUUID().equals(SpiritSlots.get(p.getServer()).owner(type));
+        }
+        if (ok) return;
+        SkillAPI.getSkillsFrom(p).forgetSkill(NUSkills.SPIRIT_LORD.getId());
+        MultiverseSync.markDirty(p);
+    }
+
     private static String type(ManasSkillInstance i) { String t = i.getOrCreateTag().getString("Spirit"); return t.isEmpty() ? "Salamander" : t; }
 
     private static boolean anti(ManasSkillInstance i) { return "Anti".equals(type(i)); }

@@ -289,6 +289,7 @@ public final class SpiritBond {
 
     /** Every 5 minutes: surroundings and habits. */
     public static void onPlayerTick(PlayerTickEvent.Post e) {
+        if (e.getEntity() instanceof ServerPlayer sp && sp.tickCount % 200 == 0) com.newuniverse.nusmp.multiverse.SpiritLordSkill.validate(sp);   // 0.57
         if (!(e.getEntity() instanceof ServerPlayer p) || p.tickCount % 6000 != 0 || !bonded(p)) return;
         var lvl = p.serverLevel();
         if (p.getY() > 200) notify(p, "high_altitude");

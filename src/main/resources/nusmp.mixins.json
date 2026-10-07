@@ -8,6 +8,7 @@
   ],
   "client": [
     "client.ComingSoonTextMixin",
+    "client.ComingSoonTooltipMixin",
     "client.FourKingdomsSlotMixin",
     "client.PlayerModelMixin"
   ],
