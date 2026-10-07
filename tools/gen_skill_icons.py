@@ -842,6 +842,66 @@ def variant_ultimate(name, seed):
     return frame(img, IRON, rim_glow=glow, corner="spike")
 
 
+def variant_active_anti_magic(seed):
+    """0.48: the Anti-Magic grimoire's own icon: the Demon-Slayer Sword across a black five-leaf clover with a neon crimson rim,
+    anti-magic tendrils tearing out of a cracked crimson void, gold frame."""
+    crimson = np.array([0.86, 0.07, 0.18])
+    yy, xx = YY / S, XX / S
+    n = fbm(S, S, 32, 480 + seed)
+    rays = (0.5 + 0.5 * np.cos(ANG * 9 + n * 3)) ** 8 * np.clip(1.05 - R, 0, 1)
+    col = np.array([0.02, 0.0, 0.015]) + crimson * (np.exp(-(R / 0.5) ** 2) * 0.12 + rays * 0.10)[..., None]
+    img = np.dstack([np.clip(col, 0, 1), np.ones((S, S))]).astype(np.float32)
+    # torn black tendrils (anti-magic) curling out from the centre
+    rng = np.random.default_rng(4800 + seed)
+    tim = L(); d = ImageDraw.Draw(tim)
+    for k in range(9):
+        a = k * 2 * math.pi / 9 + rng.uniform(-0.2, 0.2)
+        pts = []
+        for s in np.linspace(0, 1, 14):
+            r = 3 + s * 12
+            pts.append((math.cos(a + s * 1.3) * r, math.sin(a + s * 1.3) * r))
+        d.line(P(pts), fill=255, width=int((1.6 - 0.0) * U), joint="curve")
+    tm = to_arr(tim)
+    img[..., :3] = img[..., :3] * (1 - tm[..., None] * 0.85)
+    add_glow(img, np.clip(blur(tm, 1.2 * U) * 2, 0, 1) * (1 - tm), 0xC0102A, 0.35)
+    # the black five-leaf clover with a neon rim
+    cm = to_arr(clover_mask(5, 1.12, seams=True))
+    solid = (cm > 0.4).astype(np.float32)
+    rim = np.clip(blur(solid, 0.9 * U) * 3, 0, 1) * (1 - solid)
+    img[..., :3] = img[..., :3] * (1 - solid[..., None]) + np.array([0.035, 0.02, 0.03]) * solid[..., None]
+    add_glow(img, rim, 0xFF1E5A, 1.0)
+    add_glow(img, np.clip(blur(solid, 2.4 * U) * 1.6, 0, 1) * (1 - solid), 0xC0102A, 0.5)
+    # the Demon-Slayer Sword, pommel bottom-left to tip top-right
+    sim = L(); d = ImageDraw.Draw(sim)
+    def along(u, v):            # u along the blade (pommel -12 .. tip 12), v across
+        return (u * 0.7071 + v * 0.7071, -u * 0.7071 + v * 0.7071)
+    blade = [along(-3.2, -2.4), along(11.8, -2.0), along(12.6, 0.4), along(11.2, 2.0), along(-3.2, 2.4)]
+    d.polygon(P(blade), fill=255)
+    d.polygon(P([along(-4.4, -5.0), along(-3.2, -5.0), along(-3.2, 5.0), along(-4.4, 5.0)]), fill=200)     # crossguard
+    d.line(P([along(-4.4, 0), along(-11.0, 0)]), fill=170, width=int(1.7 * U))                              # grip
+    px, py = along(-12.0, 0)
+    d.ellipse(box(px - 1.4, py - 1.4, px + 1.4, py + 1.4), fill=255)                                                # pommel
+    sm = to_arr(sim)
+    body = (sm > 0.9).astype(np.float32)
+    guard = ((sm > 0.7) & (sm <= 0.9)).astype(np.float32)
+    grip = ((sm > 0.6) & (sm <= 0.7)).astype(np.float32)
+    outline = np.clip(blur((sm > 0.5).astype(np.float32), 0.7 * U) * 3, 0, 1) * (sm <= 0.5)
+    img[..., :3] = img[..., :3] * (1 - outline[..., None]) + np.array([0.0, 0.0, 0.0]) * outline[..., None]
+    grad = np.clip(0.5 - (xx - yy) * 0.6, 0, 1)[..., None]                   # lit along the upper edge
+    metal = np.array([0.20, 0.18, 0.20]) * (0.7 + 0.6 * grad) + (n[..., None] - 0.5) * 0.08
+    img[..., :3] = img[..., :3] * (1 - body[..., None]) + metal * body[..., None]
+    edge = np.clip(body - np.roll(np.roll(body, int(1.0 * U), 0), -int(1.0 * U), 1), 0, 1)
+    add_glow(img, edge, 0xFF3A4A, 0.45)                                         # the crimson-lit cutting edge
+    slot = L(); ImageDraw.Draw(slot).line(P([along(-2.4, 0), along(4.2, 0)]), fill=255, width=int(0.9 * U))
+    sl = to_arr(slot) * body
+    img[..., :3] = img[..., :3] * (1 - sl[..., None]) + crimson * 0.95 * sl[..., None]   # the split, glowing
+    add_glow(img, blur(sl, 1.0 * U), 0xFF1E5A, 0.8)
+    img[..., :3] = img[..., :3] * (1 - guard[..., None]) + np.array([0.30, 0.28, 0.32]) * guard[..., None]
+    img[..., :3] = img[..., :3] * (1 - grip[..., None]) + np.array([0.42, 0.27, 0.16]) * grip[..., None]
+    particles(img, 0xFF1E5A, 6, seed + 1)
+    return frame(img, GOLD, corner="clover")
+
+
 def reduce(img):
     a = (np.clip(img, 0, 1) * 255).astype(np.uint8)
     im = Image.fromarray(a, "RGBA").resize((N, N), Image.LANCZOS)
@@ -932,6 +992,8 @@ def main():
     icons = {}
     for i, name in enumerate(MAGIC):
         act, buf, ult = reduce(variant_active(name, i * 7 + 1)), reduce(variant_buff(name, i * 7 + 2)), reduce(variant_ultimate(name, i * 7 + 3))
+        if name == "anti_magic":                                    # 0.48: its own, more detailed active icon
+            act = reduce(variant_active_anti_magic(i * 7 + 1))
         save(act, os.path.join(TEX, "grimoire", name + ".png"))
         save(buf, os.path.join(OUT, name + "_buff.png"))
         save(ult, os.path.join(OUT, name + "_ultimate.png"))
