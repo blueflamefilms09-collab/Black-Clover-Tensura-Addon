@@ -1,5 +1,4 @@
-# Cast animation guide: how Tensura poses the player body while casting (player animator? own pose code? GeckoLib?)
-list:manasmods/tensura/.*([Aa]nimat|ArmPose|[Pp]ose[A-Z]|[Cc]asting|[Cc]harg)
-list:(dev/kosmx|playeranim|zigythebird|software/bernie)
-list:manasmods/(tensura|manascore)/.*(client/(model|render)/.*[Pp]layer|mixin/.*(Player|HumanoidModel|ItemInHand))
-strings:manasmods/tensura/.*mixin/.*HumanoidModel
+# 0.46 custom menu: Tensura's magic screen ("Magic" tab with the hexagon of category icons; one shows "?")
+list:manasmods/tensura/.*client/.*([Ss]creen|[Mm]enu|[Gg]ui).*[Mm]agic
+list:manasmods/tensura/.*client/(gui|screen)/[A-Za-z]*\.class
+strings:manasmods/tensura/.*client/.*([Ss]creen|[Gg]ui)/.*[Mm]agic[A-Za-z]*Screen\.class
