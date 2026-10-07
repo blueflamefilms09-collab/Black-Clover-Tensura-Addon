@@ -100,15 +100,17 @@ public class DarkMagicLayer extends AbstractVfxLayer {
         Vector3f n = new Vector3f(toCam).mul(0.55f).add(0f, 0.83f, 0f).normalize();
         VfxPose pose = VfxPose.facing(c, n);
 
-        // the shadow it casts on the air and the violet halo round it
-        buf.billboard(ctx, VIGNETTE, VfxBlend.ALPHA, c, 3.0f * P * (0.4f + 0.6f * sc), 0f, col(WHITE, 0.62f * vis * saturate(open)));
-        buf.billboard(ctx, STARS, VfxBlend.ADD, c, 3.4f * P * (0.5f + 0.5f * sc), age * 0.004f, col(RIM, 0.55f * vis * sc));
-        buf.billboard(ctx, VfxTextures.GLOW, VfxBlend.ADD, c, 3.2f * P * sc, 0f, col(violet, 0.32f * vis * pulse));
+        // the shadow it casts on the air, the stars behind it and the corona round the sphere (rays and a violet halo, nothing over the black)
+        float rc = 0.34f * P * sc;
+        buf.billboard(ctx, VIGNETTE, VfxBlend.ALPHA, c, 3.0f * P * (0.4f + 0.6f * sc), 0f, col(WHITE, 0.5f * vis * saturate(open)));
+        buf.billboard(ctx, STARS, VfxBlend.ADD, c, 3.4f * P * (0.5f + 0.5f * sc), age * 0.004f, col(RIM, 0.3f * vis * sc));
+        buf.billboard(ctx, CORONA, VfxBlend.ADD, c, 5.0f * rc * 1.15f, age * 0.01f, col(violet, 0.85f * vis * pulse));
+        buf.billboard(ctx, CORONA, VfxBlend.ADD, c, 5.0f * rc * 1.7f, -age * 0.006f + 0.7f, col(magenta, 0.35f * vis));
 
         // lensing ripples spreading from it
         for (int k = 0; k < 2; k++) {
             float p = frac(age / 26f + k * 0.5f);
-            buf.billboard(ctx, RIPPLE, VfxBlend.ADD, c, P * (0.9f + 2.6f * VfxAnim.easeOutCubic(p)) * sc, k * 1.9f + age * 0.01f, col(k == 0 ? violet : magenta, (1f - p) * saturate(p * 6f) * 0.55f * vis));
+            buf.billboard(ctx, RIPPLE, VfxBlend.ADD, c, P * (1.2f + 2.4f * VfxAnim.easeOutCubic(p)) * sc, k * 1.9f + age * 0.01f, col(k == 0 ? violet : magenta, (1f - p) * saturate(p * 6f) * 0.32f * vis));
         }
 
         // anticipation: a bright ring collapses into the point, then the sphere snaps open with a flash
@@ -120,15 +122,15 @@ public class DarkMagicLayer extends AbstractVfxLayer {
         float burst = saturate((age - lead - 2f) / 9f);
         if (burst > 0f && burst < 1f) buf.billboard(ctx, FLARE, VfxBlend.ADD, c, P * 3.6f * (0.4f + 0.6f * burst), 0f, col(RIM, (1f - burst) * (1f - burst)));
 
-        // the accretion disk: two counter-rotating skins, and the lensed copy of its far side wrapped round the sphere
-        buf.plane(DISK, VfxBlend.ADD, pose.spin(age * 0.07f), P * sc, col(WHITE, 0.95f * vis));
-        buf.plane(DISK, VfxBlend.ADD, pose.lift(0.02f * P).spin(1.1f - age * 0.045f), P * 0.82f * sc, col(magenta, 0.75f * vis * (1.35f - pulse)));
-        buf.billboard(ctx, DISK, VfxBlend.ADD, c, 1.3f * P * sc, -age * 0.05f, col(violet, 0.4f * vis));
+        // the accretion disk (its hole is the sphere): two counter-rotating skins, and the lensed copy of its far side wrapped round the sphere
+        buf.plane(DISK, VfxBlend.ADD, pose.spin(age * 0.07f), 1.19f * P * sc, col(WHITE, 0.85f * vis));
+        buf.plane(DISK, VfxBlend.ADD, pose.lift(0.02f * P).spin(1.1f - age * 0.045f), 1.0f * P * sc, col(magenta, 0.5f * vis * (1.35f - pulse)));
+        buf.billboard(ctx, DISK, VfxBlend.ADD, c, 2.4f * P * sc, -age * 0.05f, col(violet, 0.3f * vis));
 
         // the sphere itself, and the photon ring hugging it
-        buf.billboard(ctx, ORB, VfxBlend.ALPHA, c, 0.69f * P * sc * (1f + 0.02f * Mth.sin(age * 0.7f)), 0f, col(WHITE, vis));
-        buf.billboard(ctx, PHOTON, VfxBlend.ADD, c, 0.97f * P * sc, age * 0.03f, col(RIM, 0.95f * vis * pulse));
-        buf.billboard(ctx, PHOTON, VfxBlend.ADD, c, 1.35f * P * sc, -age * 0.02f + 2f, col(violet, 0.5f * vis));
+        buf.billboard(ctx, ORB, VfxBlend.ALPHA, c, 0.872f * P * sc * (1f + 0.02f * Mth.sin(age * 0.7f)), 0f, col(WHITE, vis));
+        buf.billboard(ctx, PHOTON, VfxBlend.ADD, c, 1.1f * P * sc, age * 0.03f, col(RIM, 0.95f * vis * pulse));
+        buf.billboard(ctx, PHOTON, VfxBlend.ADD, c, 1.5f * P * sc, -age * 0.02f + 2f, col(violet, 0.4f * vis));
 
         // debris spiralling in: chunks, with a streak behind each of the nearer ones
         for (int k = 0; k < 12; k++) {
