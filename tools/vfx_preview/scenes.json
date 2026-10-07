@@ -3533,5 +3533,85 @@
     1.8
    ]
   ]
+ },
+ "anti_magic_slash": {
+  "layer": "AntiMagicLayer",
+  "shape": "ANTI_MAGIC_SLASH",
+  "from": [
+   -3,
+   1.2,
+   0
+  ],
+  "to": [
+   3,
+   1.2,
+   0
+  ],
+  "power": 1.6,
+  "duration": 18,
+  "color": "FF2A0A30",
+  "cam": [
+   0,
+   2,
+   6
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   3,
+   7,
+   12
+  ],
+  "figures": [
+   [
+    3.5,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "anti_magic_slash_crimson": {
+  "layer": "AntiMagicLayer",
+  "shape": "ANTI_MAGIC_SLASH",
+  "from": [
+   -3,
+   1.2,
+   0
+  ],
+  "to": [
+   3,
+   1.2,
+   0
+  ],
+  "power": 1.6,
+  "duration": 18,
+  "color": "FFC0102A",
+  "cam": [
+   0,
+   2,
+   6
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   3,
+   7,
+   12
+  ],
+  "figures": [
+   [
+    3.5,
+    0,
+    0,
+    1.8
+   ]
+  ]
  }
 }
