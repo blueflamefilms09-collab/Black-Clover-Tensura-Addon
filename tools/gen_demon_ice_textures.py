@@ -661,11 +661,11 @@ def burst(size=256):
     for i in range(N):
         a = 2 * math.pi * i / N + rng.uniform(-0.1, 0.1)
         length = R * (0.97 if i % 3 == 0 else (0.62 if i % 3 == 1 else 0.78)) * rng.uniform(0.85, 1.0)
-        wb = R * (0.065 if i % 3 == 0 else 0.045)
+        wb = R * (0.034 if i % 3 == 0 else 0.022)
         p0 = (c[0] + math.cos(a) * R * 0.06, c[1] + math.sin(a) * R * 0.06)
         tip = (c[0] + math.cos(a) * length, c[1] + math.sin(a) * length)
         nx, ny = -math.sin(a), math.cos(a)
-        mid = (c[0] + math.cos(a) * length * 0.22, c[1] + math.sin(a) * length * 0.22)
+        mid = (c[0] + math.cos(a) * length * 0.16, c[1] + math.sin(a) * length * 0.16)
         pen.poly([(mid[0] + nx * wb, mid[1] + ny * wb), tip, (mid[0] - nx * wb, mid[1] - ny * wb), p0], 255 if i % 3 == 0 else 215)
         pen.line(p0, tip, 1.2, 255)
     for i in range(46):
@@ -676,8 +676,8 @@ def burst(size=256):
     a = pen.array()
     xx, yy = grid(S, S)
     r = np.sqrt(((xx - S / 2) / R) ** 2 + ((yy - S / 2) / R) ** 2)
-    core = np.exp(-(r / 0.16) ** 2)
-    out = np.clip(glowed(a, 2.4, 0.7) + core * 1.1, 0, 1)
+    core = np.exp(-(r / 0.09) ** 2)
+    out = np.clip(glowed(a, 2.4, 0.55) + core * 0.9, 0, 1)
     finish(0.6 + 0.4 * out, out, "demon_ice_burst", bleed=False)
 
 
@@ -696,7 +696,7 @@ def ring(size=256):
     teeth_n = 44
     ph = (th / (2 * math.pi) * teeth_n) % 1.0
     tooth = 1 - np.abs(ph - 0.5) * 2
-    heights = 0.045 + 0.05 * (0.5 + 0.5 * np.sin(np.floor(th / (2 * math.pi) * teeth_n) * 2.1 + 1.3))
+    heights = 0.015 + 0.06 * (0.5 + 0.5 * np.sin(np.floor(th / (2 * math.pi) * teeth_n) * 2.7 + 1.3)) ** 2
     teeth = np.clip((tooth * heights + 0.915 - r) / 0.012, 0, 1) * (r > 0.9)
     A = np.clip(band + trail + teeth, 0, 1) * (r < 1.0)
     A = A * (0.8 + 0.4 * n)
