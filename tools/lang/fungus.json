@@ -1,0 +1,7 @@
+{
+ "nusmp.skill.grimoire_fungus": "Fungus Magic",
+ "nusmp.skill.grimoire_fungus.description": "Grimoire magic: Fungus Magic. Hold your grimoire to cast. Four-leaf and five-leaf grimoires hold the strongest pages.",
+ "nusmp.skill.book_fungus": "Fungus Magic",
+ "nusmp.skill.book_fungus.description": "The grimoire of Fungus Magic. Hold the grimoire, hold the skill key to chant, release to cast.",
+ "nusmp.page.book_fungus.fungus_strike": "Spore Strike - a stub spell of Fungus Magic."
+}

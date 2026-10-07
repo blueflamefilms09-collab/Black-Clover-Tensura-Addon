@@ -256,7 +256,7 @@ public final class KotodamaWords {
             t.hurt(p.damageSources().indirectMagic(p, p), BalanceLaw.damage(p, t, raw, 0.5));
             return;
         }
-        t.hurt(c.damageSources().indirectMagic(c, c), raw);
+        t.hurt(c.damageSources().indirectMagic(c, c), c instanceof com.newuniverse.nusmp.entity.ZagredBossEntity ? raw * 0.8f : raw);   // 0.53: Zagred hits 20 % softer
     }
 
     /**
@@ -516,7 +516,7 @@ public final class KotodamaWords {
         for (LivingEntity t : foes(c, c.position(), r)) {
             boolean summon;
             try { summon = io.github.manasmods.tensura.storage.ep.ExistenceStorage.isSummon(t); } catch (Throwable ignored) { summon = false; }
-            if (summon && !(t instanceof Player)) {
+            if (summon && !(t instanceof Player) && !(c instanceof com.newuniverse.nusmp.entity.ZagredBossEntity)) {   // 0.53: Zagred only shoves summons, he no longer sends them away
                 VfxSpawn.send((ServerLevel) c.level(), VfxShape.KOTO_SHATTER, t.getBoundingBox().getCenter(), t.position(), VIOLET, 24, 1f);
                 t.discard();
                 continue;

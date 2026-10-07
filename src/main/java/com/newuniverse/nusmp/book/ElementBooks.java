@@ -127,7 +127,7 @@ public final class ElementBooks {
                 signature("beast_form", "Beast Form", empower(160, 6, false, VfxShape.SPIRIT_AURA, () -> new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 160, 1), () -> new MobEffectInstance(MobEffects.JUMP, 160, 1))),
                 // 0.49 (appended)
                 mid("feral_claws", "Feral Claws", cone(13, 4, 1.0, VfxShape.WIND_SLASH, effect(() -> new MobEffectInstance(MobEffects.WEAKNESS, 60, 0)))),
-                zone("pack_hunt", "Pack Hunt", constructs(6, 4, 160))));
+                zone("pack_hunt", "Pack Hunt", constructs(6, 4, 160)))).plus(com.newuniverse.nusmp.book.ext.BeastExt.pages());
     }
 
     public static GrimoireBook bone() {
@@ -137,7 +137,7 @@ public final class ElementBooks {
                 signature("ossuary", "Ossuary", line(14, 10, 1.4, VfxShape.EARTH_SPIKES, lift(0.6))),
                 // 0.49 (appended)
                 starter("rib_cage", "Rib Cage", bind(6, 14, false, VfxShape.EARTH_SPIKES, NONE)),
-                zone("bone_rain", "Bone Rain", field(4, 4.5, 80, 15, true, VfxShape.THREAD_LINE, NONE))));
+                zone("bone_rain", "Bone Rain", field(4, 4.5, 80, 15, true, VfxShape.THREAD_LINE, NONE)))).plus(com.newuniverse.nusmp.book.ext.BoneExt.pages());
     }
 
     public static GrimoireBook blood() {
@@ -154,7 +154,7 @@ public final class ElementBooks {
                 signature("blood_pact", "Blood Pact", nova(10, 5, false, VfxShape.MAGIC_CIRCLE_EXPLOSION, leech(1.5f))),
                 // 0.49 (appended)
                 mid("blood_whip", "Blood Whip", line(11, 9, 1.0, VfxShape.THREAD_LINE, leech(1))),
-                mid("hemorrhage", "Hemorrhage", nova(8, 5, true, VfxShape.WATER_SPLASH, all(leech(1), effect(() -> new MobEffectInstance(MobEffects.WEAKNESS, 80, 1)))))));
+                mid("hemorrhage", "Hemorrhage", nova(8, 5, true, VfxShape.WATER_SPLASH, all(leech(1), effect(() -> new MobEffectInstance(MobEffects.WEAKNESS, 80, 1))))))).plus(com.newuniverse.nusmp.book.ext.BloodExt.pages());
     }
 
     public static GrimoireBook creation() {
@@ -171,7 +171,7 @@ public final class ElementBooks {
                 zone("copy", "Copy", copy()),
                 // 0.49 (appended)
                 mid("mimic_volley", "Mimic Volley", volley(4, 6, 1.6, true, VfxShape.MIRROR_PANE, NONE)),
-                mid("reflection_double", "Reflection Double", decoy())));
+                mid("reflection_double", "Reflection Double", decoy()))).plus(com.newuniverse.nusmp.book.ext.ImitationExt.pages());
     }
 
     public static GrimoireBook illusion() {

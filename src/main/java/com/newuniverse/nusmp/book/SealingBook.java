@@ -26,13 +26,13 @@ import java.util.List;
 
 /** Sealing Magic. */
 public class SealingBook extends GrimoireBook {
-    private final List<BookPage> pages = List.of(
+    private final List<BookPage> pages = com.newuniverse.nusmp.book.ext.Ext.join(List.of(
             BookPage.zone("seal", "Seal", SealingBook::seal),
             BookPage.signature("grand_seal", "Grand Seal", SealingBook::grandSeal),
             // 0.34: wiki spells, appended
             BookPage.mid("sealing_chains", "Seal Magic: Sealing Chains", WikiSpells::sealingChains),
             BookPage.signature("trinity_seal", "Trinity Seal Magic", WikiSpells::trinitySeal),
-            BookPage.zone("seal_barrier", "Seal Magic: Barrier", WikiSpells::sealBarrier));
+            BookPage.zone("seal_barrier", "Seal Magic: Barrier", WikiSpells::sealBarrier)), com.newuniverse.nusmp.book.ext.SealExt.pages());
 
     public SealingBook() { super(MagicType.SEALING, 0xFFE8C26A); }
     @Override protected List<BookPage> familyPages() { return pages; }

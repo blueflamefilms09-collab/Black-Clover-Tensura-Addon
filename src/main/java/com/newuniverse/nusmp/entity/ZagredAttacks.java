@@ -249,7 +249,7 @@ public final class ZagredAttacks {
     /** One second of rule-breaking: spiritual damage plus a short bruise. */
     static void punish(ZagredBossEntity z, LivingEntity who) {
         KotodamaWords.spirit(z, who, 2);
-        who.hurt(z.damageSources().indirectMagic(z, z), 4f);
+        who.hurt(z.damageSources().indirectMagic(z, z), 3f);
         VfxSpawn.send((ServerLevel) z.level(), VfxShape.KOTO_SHATTER, who.getBoundingBox().getCenter(), z.getBoundingBox().getCenter(), KotodamaWords.ABYSS, 12, 0.6f);
     }
 

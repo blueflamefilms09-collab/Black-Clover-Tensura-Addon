@@ -21,6 +21,43 @@ import com.newuniverse.nusmp.vfx.client.layer.SlashCompassMercuryLayer;
 import com.newuniverse.nusmp.vfx.client.layer.KotodamaLayer;
 import com.newuniverse.nusmp.vfx.client.layer.DemonSlayerLayer;
 import com.newuniverse.nusmp.vfx.client.layer.GameLayer;
+import com.newuniverse.nusmp.vfx.client.layer.BeastLayer;
+import com.newuniverse.nusmp.vfx.client.layer.DemonBeastLayer;
+import com.newuniverse.nusmp.vfx.client.layer.BodyLayer;
+import com.newuniverse.nusmp.vfx.client.layer.BloodLayer;
+import com.newuniverse.nusmp.vfx.client.layer.BoneLayer;
+import com.newuniverse.nusmp.vfx.client.layer.EyeLayer;
+import com.newuniverse.nusmp.vfx.client.layer.EyeballLayer;
+import com.newuniverse.nusmp.vfx.client.layer.CurseLayer;
+import com.newuniverse.nusmp.vfx.client.layer.CurseWardingLayer;
+import com.newuniverse.nusmp.vfx.client.layer.DemonFireLayer;
+import com.newuniverse.nusmp.vfx.client.layer.DemonIceLayer;
+import com.newuniverse.nusmp.vfx.client.layer.DemonLightLayer;
+import com.newuniverse.nusmp.vfx.client.layer.DemonWaterLayer;
+import com.newuniverse.nusmp.vfx.client.layer.GravityLayer;
+import com.newuniverse.nusmp.vfx.client.layer.SealLayer;
+import com.newuniverse.nusmp.vfx.client.layer.BarrierLayer;
+import com.newuniverse.nusmp.vfx.client.layer.ImitationLayer;
+import com.newuniverse.nusmp.vfx.client.layer.KeyLayer;
+import com.newuniverse.nusmp.vfx.client.layer.ChainLayer;
+import com.newuniverse.nusmp.vfx.client.layer.ButohLayer;
+import com.newuniverse.nusmp.vfx.client.layer.BriarLayer;
+import com.newuniverse.nusmp.vfx.client.layer.CherryBlossomLayer;
+import com.newuniverse.nusmp.vfx.client.layer.FungusLayer;
+import com.newuniverse.nusmp.vfx.client.layer.FoodLayer;
+import com.newuniverse.nusmp.vfx.client.layer.CrystalLayer;
+import com.newuniverse.nusmp.vfx.client.layer.CorundumLayer;
+import com.newuniverse.nusmp.vfx.client.layer.BronzeLayer;
+import com.newuniverse.nusmp.vfx.client.layer.CopperLayer;
+import com.newuniverse.nusmp.vfx.client.layer.IronLayer;
+import com.newuniverse.nusmp.vfx.client.layer.BlackOilLayer;
+import com.newuniverse.nusmp.vfx.client.layer.GelLayer;
+import com.newuniverse.nusmp.vfx.client.layer.GlassLayer;
+import com.newuniverse.nusmp.vfx.client.layer.BubbleLayer;
+import com.newuniverse.nusmp.vfx.client.layer.IceLayer;
+import com.newuniverse.nusmp.vfx.client.layer.IceWedgeLayer;
+import com.newuniverse.nusmp.vfx.client.layer.LegionLayer;
+import com.newuniverse.nusmp.vfx.client.layer.LightLayer;
 import com.newuniverse.nusmp.vfx.client.layer.TimeMagicLayer;
 import com.newuniverse.nusmp.vfx.client.layer.FireSpellLayer;
 import com.newuniverse.nusmp.vfx.client.layer.WaterSpellLayer;
@@ -76,6 +113,44 @@ public final class VfxManager {
         register(new KotodamaLayer());        // 0.47
         register(new DemonSlayerLayer());     // 0.48
         register(new GameLayer());            // 0.49
+        // 0.53: the Black Clover Magic and VFX expansion
+        register(new BeastLayer());
+        register(new DemonBeastLayer());
+        register(new BodyLayer());
+        register(new BloodLayer());
+        register(new BoneLayer());
+        register(new EyeLayer());
+        register(new EyeballLayer());
+        register(new CurseLayer());
+        register(new CurseWardingLayer());
+        register(new DemonFireLayer());
+        register(new DemonIceLayer());
+        register(new DemonLightLayer());
+        register(new DemonWaterLayer());
+        register(new GravityLayer());
+        register(new SealLayer());
+        register(new BarrierLayer());
+        register(new ImitationLayer());
+        register(new KeyLayer());
+        register(new ChainLayer());
+        register(new ButohLayer());
+        register(new BriarLayer());
+        register(new CherryBlossomLayer());
+        register(new FungusLayer());
+        register(new FoodLayer());
+        register(new CrystalLayer());
+        register(new CorundumLayer());
+        register(new BronzeLayer());
+        register(new CopperLayer());
+        register(new IronLayer());
+        register(new BlackOilLayer());
+        register(new GelLayer());
+        register(new GlassLayer());
+        register(new BubbleLayer());
+        register(new IceLayer());
+        register(new IceWedgeLayer());
+        register(new LegionLayer());
+        register(new LightLayer());
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }

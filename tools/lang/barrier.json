@@ -1,0 +1,7 @@
+{
+ "nusmp.skill.grimoire_barrier": "Barrier Magic",
+ "nusmp.skill.grimoire_barrier.description": "Grimoire magic: Barrier Magic. Hold your grimoire to cast. Four-leaf and five-leaf grimoires hold the strongest pages.",
+ "nusmp.skill.book_barrier": "Barrier Magic",
+ "nusmp.skill.book_barrier.description": "The grimoire of Barrier Magic. Hold the grimoire, hold the skill key to chant, release to cast.",
+ "nusmp.page.book_barrier.barrier_strike": "Barrier Strike - a stub spell of Barrier Magic."
+}

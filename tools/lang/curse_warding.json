@@ -1,0 +1,7 @@
+{
+ "nusmp.skill.grimoire_curse_warding": "Curse-Warding Magic",
+ "nusmp.skill.grimoire_curse_warding.description": "Grimoire magic: Curse-Warding Magic. Hold your grimoire to cast. Four-leaf and five-leaf grimoires hold the strongest pages.",
+ "nusmp.skill.book_curse_warding": "Curse-Warding Magic",
+ "nusmp.skill.book_curse_warding.description": "The grimoire of Curse-Warding Magic. Hold the grimoire, hold the skill key to chant, release to cast.",
+ "nusmp.page.book_curse_warding.curse_warding_strike": "Ward Strike - a stub spell of Curse-Warding Magic."
+}

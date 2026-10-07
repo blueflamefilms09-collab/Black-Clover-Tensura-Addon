@@ -28,6 +28,35 @@ public final class BookPalette {
             case "PAINTING" -> 0x2E5C8A;
             case "WORLD_TREE" -> 0x4A3A22; case "DICE" -> 0x5A2A7A; case "SLASH" -> 0x1E5A3A; case "COMPASS" -> 0x3A6A4A; case "GAME" -> 0x2A2A6A;
             case "KOTODAMA" -> 0x1E1640;
+            case "DEMON_BEAST" -> 0x3A0F2E;
+            case "BODY" -> 0xA05A3A;
+            case "EYE" -> 0x6A2A4A;
+            case "EYEBALL" -> 0x5A1A2A;
+            case "CURSE" -> 0x1E0A24;
+            case "CURSE_WARDING" -> 0x3A2A5A;
+            case "DEMON_FIRE" -> 0x1A0A1A;
+            case "DEMON_ICE" -> 0x10182A;
+            case "DEMON_LIGHT" -> 0x1A1A0A;
+            case "DEMON_WATER" -> 0x0A141A;
+            case "BARRIER" -> 0x2A6A8A;
+            case "KEY" -> 0x8A6A1A;
+            case "CHAIN" -> 0x4A4A52;
+            case "BUTOH" -> 0x6A1A3A;
+            case "BRIAR" -> 0x3A5A2A;
+            case "CHERRY_BLOSSOM" -> 0xD87AA0;
+            case "FUNGUS" -> 0x6A5A3A;
+            case "FOOD" -> 0xC8803A;
+            case "CRYSTAL" -> 0x6A9AD0;
+            case "CORUNDUM" -> 0xB02A3A;
+            case "BRONZE" -> 0x8A5A2A;
+            case "COPPER" -> 0xB0602A;
+            case "IRON" -> 0x5A5E66;
+            case "BLACK_OIL" -> 0x101018;
+            case "GEL" -> 0x4AA0A0;
+            case "GLASS" -> 0x8AC0D0;
+            case "BUBBLE" -> 0x6A9AE0;
+            case "ICE_WEDGE" -> 0x6AB0D8;
+            case "LEGION" -> 0x6A5A3A;
             default -> 0x8A6A4A;
         };
     }
@@ -35,9 +64,9 @@ public final class BookPalette {
     /** Frame and ornament metal, RGB: gold for most books, silver for cold and metal magics, bronze for earthy ones. */
     public static int trim(String magic) {
         return switch (magic) {
-            case "WATER", "ICE", "MERCURY", "MIST", "MIRROR", "STEEL", "SWORD", "CREATION", "LIGHTNING", "SEALING" -> SILVER;
-            case "EARTH", "SAND", "BEAST", "BONE" -> BRONZE;
-            case "ANTI_MAGIC" -> DARK;
+            case "WATER", "ICE", "MERCURY", "MIST", "MIRROR", "STEEL", "SWORD", "CREATION", "LIGHTNING", "SEALING", "CURSE_WARDING", "BARRIER", "CHAIN", "CHERRY_BLOSSOM", "CRYSTAL", "CORUNDUM", "IRON", "GEL", "GLASS", "BUBBLE", "ICE_WEDGE" -> SILVER;
+            case "EARTH", "SAND", "BEAST", "BONE", "BODY", "BRIAR", "FUNGUS", "BRONZE", "COPPER", "LEGION" -> BRONZE;
+            case "ANTI_MAGIC", "DEMON_BEAST", "EYEBALL", "CURSE", "DEMON_FIRE", "DEMON_ICE", "DEMON_LIGHT", "DEMON_WATER", "BLACK_OIL" -> DARK;
             default -> GOLD;
         };
     }
@@ -61,6 +90,35 @@ public final class BookPalette {
             case "PAINTING" -> 0x7AE0FF;
             case "WORLD_TREE" -> 0x3CE08A; case "DICE" -> 0xB070FF; case "SLASH" -> 0x48FF7A; case "COMPASS" -> 0xFFC94A; case "GAME" -> 0xE8C04A;
             case "KOTODAMA" -> 0x8A4CFF;
+            case "DEMON_BEAST" -> 0xB02A6A;
+            case "BODY" -> 0xFF8A4A;
+            case "EYE" -> 0xFF4A9A;
+            case "EYEBALL" -> 0xFF3A3A;
+            case "CURSE" -> 0x9A2AFF;
+            case "CURSE_WARDING" -> 0xC08AFF;
+            case "DEMON_FIRE" -> 0x8A2AD0;
+            case "DEMON_ICE" -> 0x3A6AFF;
+            case "DEMON_LIGHT" -> 0xFF3AD0;
+            case "DEMON_WATER" -> 0x20D0A0;
+            case "BARRIER" -> 0x6AD0FF;
+            case "KEY" -> 0xFFD04A;
+            case "CHAIN" -> 0xC0C8E0;
+            case "BUTOH" -> 0xFF5A8A;
+            case "BRIAR" -> 0x8AFF4A;
+            case "CHERRY_BLOSSOM" -> 0xFFB0D0;
+            case "FUNGUS" -> 0xC0A04A;
+            case "FOOD" -> 0xFFC04A;
+            case "CRYSTAL" -> 0xA0E0FF;
+            case "CORUNDUM" -> 0xFF6A7A;
+            case "BRONZE" -> 0xD09A4A;
+            case "COPPER" -> 0xFF9A4A;
+            case "IRON" -> 0xB0B8C8;
+            case "BLACK_OIL" -> 0x40E0A0;
+            case "GEL" -> 0x7AFFD8;
+            case "GLASS" -> 0xE0FFFF;
+            case "BUBBLE" -> 0xA0D8FF;
+            case "ICE_WEDGE" -> 0xC0F0FF;
+            case "LEGION" -> 0xD0C080;
             default -> 0xFFFFFF;
         };
     }

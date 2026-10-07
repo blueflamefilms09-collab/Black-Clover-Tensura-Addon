@@ -143,6 +143,36 @@ public final class NUSkills {
     public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_SLASH = book("book_slash", com.newuniverse.nusmp.book.SlashBook::new);
     public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_COMPASS = book("book_compass", com.newuniverse.nusmp.book.CompassBook::new);
     public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_GAME = book("book_game", com.newuniverse.nusmp.book.GameBook::new);   // 0.49
+    // 0.53: the Black Clover Magic and VFX expansion
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_DEMON_BEAST = book("book_demon_beast", com.newuniverse.nusmp.book.DemonBeastBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_BODY = book("book_body", com.newuniverse.nusmp.book.BodyBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_EYE = book("book_eye", com.newuniverse.nusmp.book.EyeBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_EYEBALL = book("book_eyeball", com.newuniverse.nusmp.book.EyeballBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_CURSE = book("book_curse", com.newuniverse.nusmp.book.CurseBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_CURSE_WARDING = book("book_curse_warding", com.newuniverse.nusmp.book.CurseWardingBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_DEMON_FIRE = book("book_demon_fire", com.newuniverse.nusmp.book.DemonFireBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_DEMON_ICE = book("book_demon_ice", com.newuniverse.nusmp.book.DemonIceBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_DEMON_LIGHT = book("book_demon_light", com.newuniverse.nusmp.book.DemonLightBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_DEMON_WATER = book("book_demon_water", com.newuniverse.nusmp.book.DemonWaterBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_BARRIER = book("book_barrier", com.newuniverse.nusmp.book.BarrierBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_KEY = book("book_key", com.newuniverse.nusmp.book.KeyBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_CHAIN = book("book_chain", com.newuniverse.nusmp.book.ChainBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_BUTOH = book("book_butoh", com.newuniverse.nusmp.book.ButohBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_BRIAR = book("book_briar", com.newuniverse.nusmp.book.BriarBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_CHERRY_BLOSSOM = book("book_cherry_blossom", com.newuniverse.nusmp.book.CherryBlossomBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_FUNGUS = book("book_fungus", com.newuniverse.nusmp.book.FungusBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_FOOD = book("book_food", com.newuniverse.nusmp.book.FoodBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_CRYSTAL = book("book_crystal", com.newuniverse.nusmp.book.CrystalBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_CORUNDUM = book("book_corundum", com.newuniverse.nusmp.book.CorundumBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_BRONZE = book("book_bronze", com.newuniverse.nusmp.book.BronzeBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_COPPER = book("book_copper", com.newuniverse.nusmp.book.CopperBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_IRON = book("book_iron", com.newuniverse.nusmp.book.IronBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_BLACK_OIL = book("book_black_oil", com.newuniverse.nusmp.book.BlackOilBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_GEL = book("book_gel", com.newuniverse.nusmp.book.GelBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_GLASS = book("book_glass", com.newuniverse.nusmp.book.GlassBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_BUBBLE = book("book_bubble", com.newuniverse.nusmp.book.BubbleBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_ICE_WEDGE = book("book_ice_wedge", com.newuniverse.nusmp.book.IceWedgeBook::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_LEGION = book("book_legion", com.newuniverse.nusmp.book.LegionBook::new);
     // 0.47: Kotodama (Word Soul) Magic - creative only
     public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_KOTODAMA = book("book_kotodama", com.newuniverse.nusmp.book.KotodamaBook::new);
     /** Anti-Magic Spirit Lord: awakened by mastering the Anti-Magic grimoire (or /nusmp grimoire awaken_anti). */
@@ -160,7 +190,12 @@ public final class NUSkills {
             BOOK_SWORD, BOOK_EXPLOSION, BOOK_MAGMA, BOOK_MIST, BOOK_STAR, BOOK_STORM, BOOK_SAND, BOOK_SHADOW, BOOK_POISON,
             BOOK_REINFORCEMENT, BOOK_BEAST, BOOK_BONE, BOOK_BLOOD, BOOK_CREATION, BOOK_COPY, BOOK_ILLUSION, BOOK_DREAM, BOOK_ANTI_MAGIC,
             BOOK_TRANSMUTATION, BOOK_ASH, BOOK_COTTON, BOOK_RECOMBINATION, BOOK_PAINTING,
-            BOOK_WORLD_TREE, BOOK_DICE, BOOK_SLASH, BOOK_COMPASS, BOOK_KOTODAMA, BOOK_GAME);
+            BOOK_WORLD_TREE, BOOK_DICE, BOOK_SLASH, BOOK_COMPASS, BOOK_KOTODAMA, BOOK_GAME,
+            BOOK_DEMON_BEAST, BOOK_BODY, BOOK_EYE, BOOK_EYEBALL, BOOK_CURSE, BOOK_CURSE_WARDING,
+            BOOK_DEMON_FIRE, BOOK_DEMON_ICE, BOOK_DEMON_LIGHT, BOOK_DEMON_WATER, BOOK_BARRIER, BOOK_KEY,
+            BOOK_CHAIN, BOOK_BUTOH, BOOK_BRIAR, BOOK_CHERRY_BLOSSOM, BOOK_FUNGUS, BOOK_FOOD,
+            BOOK_CRYSTAL, BOOK_CORUNDUM, BOOK_BRONZE, BOOK_COPPER, BOOK_IRON, BOOK_BLACK_OIL,
+            BOOK_GEL, BOOK_GLASS, BOOK_BUBBLE, BOOK_ICE_WEDGE, BOOK_LEGION);
 
     /** The Unique book for a magic type, or null if that family isn't ported yet. */
     public static com.newuniverse.nusmp.book.GrimoireBook bookFor(com.newuniverse.nusmp.blackclover.MagicType m) {

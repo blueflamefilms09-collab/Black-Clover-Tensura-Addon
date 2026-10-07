@@ -26,7 +26,7 @@ import java.util.List;
 
 /** Ice Magic: stop, then shatter. */
 public class IceBook extends GrimoireBook {
-    private final List<BookPage> pages = List.of(
+    private final List<BookPage> pages = com.newuniverse.nusmp.book.ext.Ext.join(List.of(
             BookPage.starter("frost_lance", "Frost Lance", TensuraShots.shot(TensuraShots.Shot.ICE_LANCE, 9, 2.0f, 0.4f, 0)),
             BookPage.signature("ice_prison", "Ice Prison", IceBook::prison),
             // 0.49: more spells for a thin magic (appended)
@@ -34,7 +34,7 @@ public class IceBook extends GrimoireBook {
             BookPage.zone("frozen_ground", "Frozen Ground", ElementBook.field(4, 4.5, 80, 20, true, VfxShape.WATER_RING,
                     ElementBook.all(ElementBook.effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 2)), (t, p) -> t.setTicksFrozen(t.getTicksRequiredToFreeze() + 40)))),
             BookPage.mid("blizzard_crown", "Blizzard Crown", ElementBook.nova(10, 6, false, VfxShape.WATER_BURST,
-                    ElementBook.all(ElementBook.knock(1.0), (t, p) -> t.setTicksFrozen(t.getTicksRequiredToFreeze() + 80)))));
+                    ElementBook.all(ElementBook.knock(1.0), (t, p) -> t.setTicksFrozen(t.getTicksRequiredToFreeze() + 80))))), com.newuniverse.nusmp.book.ext.IceExt.pages());
 
     public IceBook() { super(MagicType.ICE, 0xFF9FE6FF); }
     @Override protected List<BookPage> familyPages() { return pages; }

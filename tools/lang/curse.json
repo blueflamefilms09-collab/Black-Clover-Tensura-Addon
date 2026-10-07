@@ -1,0 +1,7 @@
+{
+ "nusmp.skill.grimoire_curse": "Curse Magic",
+ "nusmp.skill.grimoire_curse.description": "Grimoire magic: Curse Magic. Hold your grimoire to cast. Four-leaf and five-leaf grimoires hold the strongest pages.",
+ "nusmp.skill.book_curse": "Curse Magic",
+ "nusmp.skill.book_curse.description": "The grimoire of Curse Magic. Hold the grimoire, hold the skill key to chant, release to cast.",
+ "nusmp.page.book_curse.curse_strike": "Curse Strike - a stub spell of Curse Magic."
+}

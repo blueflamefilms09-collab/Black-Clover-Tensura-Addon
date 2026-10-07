@@ -40,13 +40,13 @@ public class LightBook extends GrimoireBook {
     static final double SPEED = 6.0;
     static final int GOLD = 0xFFFFE8A0, WHITE = 0xFFFFFFF0;
 
-    private final List<BookPage> pages = List.of(
+    private final List<BookPage> pages = com.newuniverse.nusmp.book.ext.Ext.join(List.of(
             BookPage.starter("judgment", "Light Sword of Judgment", LightBook::sword),
             BookPage.zone("divine_punishment", "Light Shaft of Divine Punishment", LightBook::rays),
             // 0.45: appended
             BookPage.mid("healing_ray", "Healing Ray of Light", LightBook::healingRay).withCooldown(300),
             BookPage.signature("lamp_of_avior", "Lamp of Avior Gloria", LightBook::lamp).withCooldown(900),
-            BookPage.mid("light_speed", "Light Speed", LightBook::lightSpeed).withCooldown(60));
+            BookPage.mid("light_speed", "Light Speed", LightBook::lightSpeed).withCooldown(60)), com.newuniverse.nusmp.book.ext.LightExt.pages());
 
     public LightBook() { super(MagicType.LIGHT, 0xFFFFF2A8); }
     @Override protected List<BookPage> familyPages() { return pages; }

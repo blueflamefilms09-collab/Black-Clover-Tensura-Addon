@@ -1,0 +1,13 @@
+package com.newuniverse.nusmp.client.aura;
+
+import com.newuniverse.nusmp.aura.Aura;
+
+/** 0.53 Glass Magic: the player render layer (Aura.GLASS). STUB until the attribute needs one. */
+public final class GlassAura {
+    private GlassAura() {}
+
+    /** Called once by AuraRegistry on the client. */
+    public static void register() {
+        // PlayerAuraClient.register(Aura.GLASS, c -> { ... });
+    }
+}

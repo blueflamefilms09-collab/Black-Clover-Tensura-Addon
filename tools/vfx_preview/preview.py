@@ -256,6 +256,13 @@ def run_scene(name, scene, classes):
 def main():
     with open(os.path.join(HERE, "scenes.json")) as f:
         scenes = {k: v for k, v in json.load(f).items() if not k.startswith("_")}
+    # 0.53: per-attribute scenes live one file each in scenes.d/ (so parallel authors never touch the same file)
+    extra = os.path.join(HERE, "scenes.d")
+    if os.path.isdir(extra):
+        for name in sorted(os.listdir(extra)):
+            if name.endswith(".json"):
+                with open(os.path.join(extra, name)) as f:
+                    scenes.update({k: v for k, v in json.load(f).items() if not k.startswith("_")})
     wanted = sys.argv[1:] or list(scenes)
     os.makedirs(BUILD, exist_ok=True)
     classes = build([scenes[n]["layer"] for n in wanted])

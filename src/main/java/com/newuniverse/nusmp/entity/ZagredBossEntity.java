@@ -615,6 +615,11 @@ public class ZagredBossEntity extends Monster {
         if (source.getEntity() instanceof ServerPlayer p) fighters.add(p.getUUID());
         String el = element(source);
         ZagredDefense.Kind kind = ZagredDefense.classify(source, el);
+        boolean summoned = ZagredDefense.isSummon(source.getEntity());                // 0.53: summons can hurt him (as arcane blows) and credit their owner
+        if (summoned) {
+            if (kind == ZagredDefense.Kind.PHYSICAL) kind = ZagredDefense.Kind.MAGIC;
+            if (source.getEntity() instanceof net.minecraft.world.entity.OwnableEntity oe && oe.getOwnerUUID() != null) fighters.add(oe.getOwnerUUID());
+        }
         int ph = phase();
         if (ruleKind != null && t < ruleUntil && ruleKind.element != null && ruleKind.element.equals(el)
                 && source.getEntity() instanceof LivingEntity a && a != this) ZagredAttacks.punish(this, a);   // Overwrite: the banned element burns its caster
@@ -630,7 +635,7 @@ public class ZagredBossEntity extends Monster {
         amount *= ZagredDefense.resistance(el);
         if (ph >= 2) {
             elementDamage.merge(el, amount, Float::sum);
-            if (el.equals(adapted)) amount *= 0.2f;
+            if (el.equals(adapted)) amount *= 0.35f;
         }
         if (ph == 4 && !el.equals("physical") && !el.equals("projectile") && !el.equals("magic")) {
             lastElementHit.put(el, t);
@@ -642,9 +647,10 @@ public class ZagredBossEntity extends Monster {
                 VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, getBoundingBox().getCenter(), position(), 0xFFFFFFFF, 30, 2.5f);
             }
         }
-        if (reflex.out(t)) amount *= 1.2f;                                           // out of thought
-        if (archCount > 0) amount *= 0.75f;                                          // an Arch Daemon anchors him
-        float through = barrier.absorb(amount, ZagredDefense.grainOf(kind, el), kind == ZagredDefense.Kind.ANTI_MAGIC, t);
+        if (reflex.out(t)) amount *= 1.35f;                                          // out of thought
+        if (archCount > 0) amount *= 0.85f;                                          // an Arch Daemon anchors him
+        ZagredDefense.Grain grain = summoned && (el.equals("physical") || el.equals("projectile")) ? ZagredDefense.Grain.KINETIC : ZagredDefense.grainOf(kind, el);
+        float through = barrier.absorb(amount, grain, kind == ZagredDefense.Kind.ANTI_MAGIC, t);
         if (barrier.broken > 0 && level() instanceof ServerLevel sl) {
             VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, getBoundingBox().getCenter(), position(), 0xFFFFFFFF, 14, 1.6f);
             sl.playSound(null, blockPosition(), SoundEvents.GLASS_BREAK, SoundSource.HOSTILE, 1.5f, 0.8f);
@@ -656,7 +662,7 @@ public class ZagredBossEntity extends Monster {
             return false;
         }
         amount = through;
-        if (ph == 4 && !antiMagic(source) && t >= exposedUntil) amount *= 0.15f;
+        if (ph == 4 && !antiMagic(source) && t >= exposedUntil) amount *= 0.3f;
         return super.hurt(source, clampToThreshold(amount));
     }
 

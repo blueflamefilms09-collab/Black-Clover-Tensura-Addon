@@ -46,6 +46,13 @@ public final class ZagredDefense {
         return false;
     }
 
+    /** 0.53: a summoned being (a Tensura summon, a tamed or owned creature, a grimoire daemon): its blows are conjured, so they are never "plain physical". */
+    static boolean isSummon(net.minecraft.world.entity.Entity e) {
+        if (!(e instanceof LivingEntity) || e instanceof net.minecraft.world.entity.player.Player || e instanceof ZagredBossEntity) return false;
+        if (e instanceof net.minecraft.world.entity.OwnableEntity o && o.getOwnerUUID() != null) return true;
+        try { return io.github.manasmods.tensura.storage.ep.ExistenceStorage.isSummon((LivingEntity) e); } catch (Throwable ignored) { return false; }
+    }
+
     static Kind classify(DamageSource s, String element) {
         if (ZagredBossEntity.antiMagic(s)) return Kind.ANTI_MAGIC;
         if (element.equals("physical") || element.equals("projectile")) return mythical(s) ? Kind.MYTHICAL : Kind.PHYSICAL;
@@ -61,15 +68,15 @@ public final class ZagredDefense {
     /** Resistances stacked under adaptation: holy and demonic half, the natural four 60%. */
     static float resistance(String element) {
         return switch (element) {
-            case "light", "dark" -> 0.5f;
-            case "fire", "water", "wind", "earth" -> 0.6f;
+            case "light", "dark" -> 0.65f;
+            case "fire", "water", "wind", "earth" -> 0.75f;
             default -> 1f;
         };
     }
 
     static int layersFor(int phase) { return phase <= 2 ? 3 : phase == 3 ? 4 : 5; }
-    static int tokensFor(int phase) { return phase == 1 ? 4 : phase == 2 ? 5 : phase == 3 ? 6 : 8; }
-    static int regenTicks(int phase) { return phase == 1 ? 40 : phase == 2 ? 32 : phase == 3 ? 24 : 20; }
+    static int tokensFor(int phase) { return phase == 1 ? 3 : phase == 2 ? 4 : phase == 3 ? 5 : 6; }
+    static int regenTicks(int phase) { return phase == 1 ? 56 : phase == 2 ? 44 : phase == 3 ? 34 : 28; }
 
     // ================================================================ the barrier
     public static final class Barrier {
@@ -84,11 +91,11 @@ public final class ZagredDefense {
 
         void set(int layers, float maxHealth, long now) {
             count = Math.max(1, Math.min(MAX, layers));
-            cap = Math.max(1, maxHealth * 0.06f);
+            cap = Math.max(1, maxHealth * 0.045f);
             reformUntil = 0;
             penaltyUntil = 0;
             for (int i = 0; i < MAX; i++) hp[i] = i < count ? cap : 0;
-            nextRefresh = now + 160;
+            nextRefresh = now + 220;
         }
 
         int effective(long now) { return now < penaltyUntil ? Math.max(1, count - 1) : count; }
@@ -144,15 +151,15 @@ public final class ZagredDefense {
                 penaltyUntil = now + 400;
                 int n = effective(now);
                 for (int i = 0; i < MAX; i++) hp[i] = i < n ? cap : 0;
-                nextRefresh = now + 160;
+                nextRefresh = now + 220;
                 return;
             }
             if (now < reformUntil || channeling) return;
             if (now >= nextRefresh) {
                 int n = effective(now), weakest = -1;
                 for (int i = 0; i < n; i++) if (hp[i] < cap - 0.01f && (weakest < 0 || hp[i] < hp[weakest])) weakest = i;
-                if (weakest >= 0) hp[weakest] = Math.min(cap, hp[weakest] + cap * 0.5f);
-                nextRefresh = now + (anchored ? 80 : 160);
+                if (weakest >= 0) hp[weakest] = Math.min(cap, hp[weakest] + cap * 0.35f);
+                nextRefresh = now + (anchored ? 120 : 220);
             }
         }
 
@@ -207,8 +214,9 @@ public final class ZagredDefense {
         boolean dodgeHit(ZagredBossEntity b, DamageSource s, long now, boolean busy, Kind kind) {
             if (busy || tokens <= 0 || now < noDodgeUntil || now < outUntil) return false;
             if (kind == Kind.ANTI_MAGIC) return false;                      // it cannot be read
+            if (isSummon(s.getEntity())) return false;                      // 0.53: he does not sidestep a summon's blows (they are the answer to his reflexes)
             if (!(s.getEntity() instanceof LivingEntity a) || a.distanceToSqr(b) > 100) return false;
-            if (b.getRandom().nextFloat() > 0.75f) return false;
+            if (b.getRandom().nextFloat() > 0.6f) return false;
             Vec3 dir = b.position().subtract(a.position());
             spend(b, now, dir.lengthSqr() < 1e-4 ? b.getViewVector(1f) : dir.normalize());
             if (a.distanceToSqr(b) < 36 && b.getRandom().nextBoolean()) counter(b, a);

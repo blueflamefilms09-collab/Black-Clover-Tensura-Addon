@@ -1,0 +1,7 @@
+{
+ "nusmp.skill.grimoire_key": "Key Magic",
+ "nusmp.skill.grimoire_key.description": "Grimoire magic: Key Magic. Hold your grimoire to cast. Four-leaf and five-leaf grimoires hold the strongest pages.",
+ "nusmp.skill.book_key": "Key Magic",
+ "nusmp.skill.book_key.description": "The grimoire of Key Magic. Hold the grimoire, hold the skill key to chant, release to cast.",
+ "nusmp.page.book_key.key_strike": "Key Strike - a stub spell of Key Magic."
+}

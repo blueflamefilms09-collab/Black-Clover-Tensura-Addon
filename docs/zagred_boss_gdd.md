@@ -288,3 +288,13 @@ and do not drop loot. Grimoire daemons' leaf counts match the mod's grimoire tie
 - Whether to restyle the model to the two new reference images (a second skin) or keep the 0.49 look.
 - Whether to build the daemon models first or the barrier and reflex first.
 - Exact numbers: all values above are first guesses to be tuned in play.
+
+## 6. 0.53 balance pass (nerf, and summons count)
+- **Summons hurt him.** A summoned being (a Tensura summon, a tamed or owner-bound creature, a grimoire daemon of yours, a Real Double, a painted
+  construct) no longer bounces off Physical Attack Nullification: its blows count as arcane (magic), wear down the kinetic barrier layers, are never
+  sidestepped by Thought Acceleration, and credit their owner for the loot. Zagred's Banish no longer sends summons away: it only shoves them.
+- **Defences softer:** barrier layers hold 4.5 % of his health (was 6 %) and refresh every 11 s for 35 % (was 8 s for 50 %); Thought Acceleration tokens
+  3 / 4 / 5 / 6 per act (was 4 / 5 / 6 / 8), regenerating 40 % slower, and a dodge fires 60 % of the time (was 75 %); element resistances 0.65 / 0.75 (was
+  0.5 / 0.6); adaptation leaves 35 % of the damage (was 20 %); the act 4 word-shield lets 30 % through (was 15 %); out of thought he takes +35 % (was +20 %);
+  an Arch Daemon's anchor takes 15 % off (was 25 %).
+- **Attacks softer:** his word and letter damage is 20 % lower, and the counter-strike after a sidestep does 3 instead of 4.

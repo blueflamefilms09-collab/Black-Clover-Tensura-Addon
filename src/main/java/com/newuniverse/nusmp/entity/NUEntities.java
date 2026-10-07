@@ -37,6 +37,11 @@ public final class NUEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<CottonCloudEntity>> COTTON_CLOUD = ENTITIES.register("cotton_cloud",
             () -> EntityType.Builder.<CottonCloudEntity>of(CottonCloudEntity::new, MobCategory.MISC).sized(2.6f, 0.6f).clientTrackingRange(10).updateInterval(1).build("cotton_cloud"));
 
+    /** 0.53: every real 3D thing of the Black Clover Magic and VFX expansion (floating eyes, keys, chains, food, soldiers, bubbles ...): see prop.MagicProps. */
+    public static final DeferredHolder<EntityType<?>, EntityType<com.newuniverse.nusmp.prop.MagicPropEntity>> MAGIC_PROP = ENTITIES.register("magic_prop",
+            () -> EntityType.Builder.<com.newuniverse.nusmp.prop.MagicPropEntity>of(com.newuniverse.nusmp.prop.MagicPropEntity::new, MobCategory.MISC)
+                    .sized(1.0f, 1.0f).clientTrackingRange(12).updateInterval(1).build("magic_prop"));
+
     public static void attributes(EntityAttributeCreationEvent e) {
         e.put(SPIRIT_LORD.get(), SpiritLordEntity.createAttributes().build());
         e.put(MIRROR_DOUBLE.get(), MirrorDoubleEntity.createAttributes().build());

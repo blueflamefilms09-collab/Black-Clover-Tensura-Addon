@@ -131,7 +131,45 @@ public enum VfxShape {
     DEMON_METEOR,            // Black Meteorite: an anti-magic meteor 'from' -> 'to' (black core, crimson rim, torn void streaks, shed shards); power = size
     NIHILITY_ZONE,           // a Nihility zone round 'from': a black dome edge with crimson cracks, magic motes snuffed out; power = radius
     // 0.49 Game Magic
-    GAME_BOARD;              // a glowing game board of squares on the ground round 'from' (gold, pulsing); power = radius
+    GAME_BOARD,              // a glowing game board of squares on the ground round 'from' (gold, pulsing); power = radius
+    // 0.53 the Black Clover Magic and VFX expansion: three effects per attribute (their meaning is in <Name>Layer's javadoc)
+    BEAST_FX1, BEAST_FX2, BEAST_FX3,
+    DEMON_BEAST_FX1, DEMON_BEAST_FX2, DEMON_BEAST_FX3,
+    BODY_FX1, BODY_FX2, BODY_FX3,
+    BLOOD_FX1, BLOOD_FX2, BLOOD_FX3,
+    BONE_FX1, BONE_FX2, BONE_FX3,
+    EYE_FX1, EYE_FX2, EYE_FX3,
+    EYEBALL_FX1, EYEBALL_FX2, EYEBALL_FX3,
+    CURSE_FX1, CURSE_FX2, CURSE_FX3,
+    CURSE_WARDING_FX1, CURSE_WARDING_FX2, CURSE_WARDING_FX3,
+    DEMON_FIRE_FX1, DEMON_FIRE_FX2, DEMON_FIRE_FX3,
+    DEMON_ICE_FX1, DEMON_ICE_FX2, DEMON_ICE_FX3,
+    DEMON_LIGHT_FX1, DEMON_LIGHT_FX2, DEMON_LIGHT_FX3,
+    DEMON_WATER_FX1, DEMON_WATER_FX2, DEMON_WATER_FX3,
+    GRAVITY_FX1, GRAVITY_FX2, GRAVITY_FX3,
+    SEALING_FX1, SEALING_FX2, SEALING_FX3,
+    BARRIER_FX1, BARRIER_FX2, BARRIER_FX3,
+    IMITATION_FX1, IMITATION_FX2, IMITATION_FX3,
+    KEY_FX1, KEY_FX2, KEY_FX3,
+    CHAIN_FX1, CHAIN_FX2, CHAIN_FX3,
+    BUTOH_FX1, BUTOH_FX2, BUTOH_FX3,
+    BRIAR_FX1, BRIAR_FX2, BRIAR_FX3,
+    CHERRY_BLOSSOM_FX1, CHERRY_BLOSSOM_FX2, CHERRY_BLOSSOM_FX3,
+    FUNGUS_FX1, FUNGUS_FX2, FUNGUS_FX3,
+    FOOD_FX1, FOOD_FX2, FOOD_FX3,
+    CRYSTAL_FX1, CRYSTAL_FX2, CRYSTAL_FX3,
+    CORUNDUM_FX1, CORUNDUM_FX2, CORUNDUM_FX3,
+    BRONZE_FX1, BRONZE_FX2, BRONZE_FX3,
+    COPPER_FX1, COPPER_FX2, COPPER_FX3,
+    IRON_FX1, IRON_FX2, IRON_FX3,
+    BLACK_OIL_FX1, BLACK_OIL_FX2, BLACK_OIL_FX3,
+    GEL_FX1, GEL_FX2, GEL_FX3,
+    GLASS_FX1, GLASS_FX2, GLASS_FX3,
+    BUBBLE_FX1, BUBBLE_FX2, BUBBLE_FX3,
+    ICE_FX1, ICE_FX2, ICE_FX3,
+    ICE_WEDGE_FX1, ICE_WEDGE_FX2, ICE_WEDGE_FX3,
+    LEGION_FX1, LEGION_FX2, LEGION_FX3,
+    LIGHT_FX1, LIGHT_FX2, LIGHT_FX3;
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

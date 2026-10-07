@@ -37,6 +37,11 @@ public class ElementBook extends GrimoireBook {
         this.pages = pages;
     }
 
+    /** 0.53: this book with extra pages appended (an attribute upgrade, see book.ext). */
+    public ElementBook plus(List<BookPage> extra) {
+        return extra.isEmpty() ? this : new ElementBook(magic, color, damage, com.newuniverse.nusmp.book.ext.Ext.join(pages, extra));
+    }
+
     @Override protected List<BookPage> familyPages() { return pages; }
     @Override public ResourceKey<DamageType> damageType() { return damage; }
 

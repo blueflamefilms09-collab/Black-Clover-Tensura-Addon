@@ -1,0 +1,7 @@
+{
+ "nusmp.skill.grimoire_food": "Food Magic",
+ "nusmp.skill.grimoire_food.description": "Grimoire magic: Food Magic. Hold your grimoire to cast. Four-leaf and five-leaf grimoires hold the strongest pages.",
+ "nusmp.skill.book_food": "Food Magic",
+ "nusmp.skill.book_food.description": "The grimoire of Food Magic. Hold the grimoire, hold the skill key to chant, release to cast.",
+ "nusmp.page.book_food.food_strike": "Feast Strike - a stub spell of Food Magic."
+}

@@ -60,7 +60,7 @@ Chanted magics: use **Chant** mode until the chant is complete, then switch to *
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.52.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.53.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -204,6 +204,16 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Anti-Magic kit**: new pages **Black Hurricane** (a whirling field that drags foes in and strips their magic) and **Black Form** (30 s of strength, speed, resistance and jump, with an anti-magic burst); mastering the Anti-Magic Lord now also grants the **Demon-Slasher** katana next to Demon-Dweller and Demon-Destroyer.
 - **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
 - **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
+
+## 0.53 - Zagred nerf and summons that hurt him; the groundwork of the 37-attribute expansion
+- **Replacement: Zagred's balance** (details in `docs/zagred_boss_gdd.md`, section 6).
+  - **Summons can hurt him now.** A summon (Tensura summon, tamed or owner-bound creature, daemon, Real Double, painted construct) no longer bounces off Physical Attack Nullification: its blows count as arcane, wear the kinetic barrier layers, are never sidestepped, and credit their owner for the loot. His Banish only shoves summons now; it no longer sends them away.
+  - **Softer defences:** barrier layers 4.5% of his health (was 6%) refreshing every 11 s for 35%; Thought Acceleration tokens 3 / 4 / 5 / 6 per act, 40% slower regeneration, dodges 60% of the time (was 75%); elemental resistances 0.65 / 0.75; adaptation leaves 35%; the act 4 shield lets 30% through; out-of-thought +35%.
+  - **Softer attacks:** his word and letter damage is 20% lower and the counter-strike after a sidestep does 3.
+- **New (groundwork, the spells come next):** the 29 new Black Clover attributes are registered with a book, a grimoire cover, a skill icon (placeholder symbol), three VFX shapes and a one-spell placeholder page each: Demon Beast, Body, Eye, Eyeball, Curse, Curse-Warding, Demon Fire / Ice / Light / Water, Barrier, Key, Chain, Butoh, Briar, Cherry Blossom, Fungus, Food, Crystal, Corundum, Bronze, Copper, Iron, Black Oil, Gel, Glass, Bubble, Ice Wedge, Legion. Curse, the Demon magics and Demon Beast are command or admin only, like Anti-Magic. Eight existing magics (Beast, Blood, Bone, Gravity, Sealing, Imitation, Ice, Light) get their new pages appended in the next build; nothing of them changes now.
+- **New: two generic render systems for those attributes.** `PlayerAuras` draws a custom layer over a posed player (additive spectral auras, translucent ethereal bodies, entity-cutout muscle or bone overlays, bubbles), synced to everyone nearby; `MagicProps` is a networked 3D entity (never saved) with server behaviours and client painters built from boxes, spheres, cylinders, tori, crystals and tubes (beast bodies, eyes, keys, chains, crystals, shields, gel, bubbles, constructs). Authoring guide: `docs/attribute_authoring_guide.md`; the table of the 37: `tools/attribute_table.py`.
+- **Tools:** `tools/gen_attribute_icons.py` (icons for the new magics only, never touches the old set), per-attribute preview scenes in `tools/vfx_preview/scenes.d/`.
+- **Not verified:** nothing was run in game. Whether the summons' damage numbers feel right against him, the nerf values, and that the 29 placeholder magics register and roll cleanly are the things to check; the real spells, effects and render layers of the 37 attributes arrive in the next build.
 
 ## 0.52 - Zagred as designed, better weapon abilities, Cotton sheep and cloud, the grimoire sword draw, fixes
 - **New: Zagred's defences and acts** (design: `docs/zagred_boss_gdd.md`).

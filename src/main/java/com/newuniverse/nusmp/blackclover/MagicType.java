@@ -77,7 +77,37 @@ public enum MagicType {
     // 0.47: Kotodama (Word Soul) Magic, Zagred's - God-class, creative only (never rolled; see book.KotodamaWords); appended
     KOTODAMA("Kotodama Magic", "Word Soul", "EMPTY", HitEffect.NULLIFY, () -> ParticleTypes.SQUID_INK, () -> MobEffects.DAMAGE_RESISTANCE),
     // 0.49: Game Magic (Gifso, Spade Kingdom); appended
-    GAME("Game Magic", "Gamemaster", "FANTASY", HitEffect.SLOW, () -> ParticleTypes.ENCHANT, () -> MobEffects.LUCK);
+    GAME("Game Magic", "Gamemaster", "FANTASY", HitEffect.SLOW, () -> ParticleTypes.ENCHANT, () -> MobEffects.LUCK),
+    // 0.53: the Black Clover Magic and VFX expansion (29 attributes); appended. Restricted ones are never rolled for a soul.
+    DEMON_BEAST("Demon Beast Magic", "Underworld Beast", "DARKNESS", HitEffect.PIERCE, () -> ParticleTypes.SOUL_FIRE_FLAME, () -> MobEffects.DAMAGE_RESISTANCE),
+    BODY("Body Magic", "Titan", "BATTLE", HitEffect.PUSH, () -> ParticleTypes.CRIT, () -> MobEffects.DAMAGE_BOOST),
+    EYE("Eye Magic", "Eye", "FANTASY", HitEffect.BLIND, () -> ParticleTypes.ENCHANT, () -> MobEffects.NIGHT_VISION),
+    EYEBALL("Eyeball Magic", "Eyeball", "DARKNESS", HitEffect.BLIND, () -> ParticleTypes.WITCH, () -> MobEffects.NIGHT_VISION),
+    CURSE("Curse Magic", "Curse", "DARKNESS", HitEffect.WITHER, () -> ParticleTypes.SQUID_INK, () -> MobEffects.DAMAGE_BOOST),
+    CURSE_WARDING("Curse-Warding Magic", "Ward", "TIME", HitEffect.WEAKEN, () -> ParticleTypes.ENCHANT, () -> MobEffects.DAMAGE_RESISTANCE),
+    DEMON_FIRE("Demon Fire Magic", "Demon Flame", "DARKNESS", HitEffect.BURN, () -> ParticleTypes.SOUL_FIRE_FLAME, () -> MobEffects.FIRE_RESISTANCE),
+    DEMON_ICE("Demon Ice Magic", "Demon Frost", "DARKNESS", HitEffect.FREEZE, () -> ParticleTypes.SNOWFLAKE, () -> MobEffects.DAMAGE_RESISTANCE),
+    DEMON_LIGHT("Demon Light Magic", "Demon Light", "DARKNESS", HitEffect.PIERCE, () -> ParticleTypes.END_ROD, () -> MobEffects.MOVEMENT_SPEED),
+    DEMON_WATER("Demon Water Magic", "Demon Tide", "DARKNESS", HitEffect.PUSH, () -> ParticleTypes.SPLASH, () -> MobEffects.WATER_BREATHING),
+    BARRIER("Barrier Magic", "Barrier", "SPACE", HitEffect.PUSH, () -> ParticleTypes.PORTAL, () -> MobEffects.DAMAGE_RESISTANCE),
+    KEY("Key Magic", "Key", "SPACE", HitEffect.PULL, () -> ParticleTypes.ENCHANT, () -> MobEffects.MOVEMENT_SPEED),
+    CHAIN("Chain Magic", "Chain", "BATTLE", HitEffect.SLOW, () -> ParticleTypes.CRIT, () -> MobEffects.DAMAGE_RESISTANCE),
+    BUTOH("Butoh Magic", "Dance", "FANTASY", HitEffect.PUSH, () -> ParticleTypes.NOTE, () -> MobEffects.MOVEMENT_SPEED),
+    BRIAR("Briar Magic", "Briar", "EARTH", HitEffect.POISON, () -> ParticleTypes.COMPOSTER, () -> MobEffects.REGENERATION),
+    CHERRY_BLOSSOM("Cherry Blossom Magic", "Sakura", "EARTH", HitEffect.BLIND, () -> ParticleTypes.CHERRY_LEAVES, () -> MobEffects.REGENERATION),
+    FUNGUS("Fungus Magic", "Spore", "EARTH", HitEffect.POISON, () -> ParticleTypes.SPORE_BLOSSOM_AIR, () -> MobEffects.REGENERATION),
+    FOOD("Food Magic", "Feast", "FANTASY", HitEffect.DRAIN, () -> ParticleTypes.COMPOSTER, () -> MobEffects.REGENERATION),
+    CRYSTAL("Crystal Magic", "Crystal", "EARTH", HitEffect.PIERCE, () -> ParticleTypes.END_ROD, () -> MobEffects.DAMAGE_RESISTANCE),
+    CORUNDUM("Corundum Magic", "Corundum", "EARTH", HitEffect.WEAKEN, () -> ParticleTypes.CRIT, () -> MobEffects.DAMAGE_RESISTANCE),
+    BRONZE("Bronze Magic", "Bronze", "EARTH", HitEffect.PUSH, () -> ParticleTypes.CRIT, () -> MobEffects.DAMAGE_RESISTANCE),
+    COPPER("Copper Magic", "Copper", "EARTH", HitEffect.SHOCK, () -> ParticleTypes.ELECTRIC_SPARK, () -> MobEffects.DAMAGE_RESISTANCE),
+    IRON("Iron Magic", "Iron", "BATTLE", HitEffect.PUSH, () -> ParticleTypes.CRIT, () -> MobEffects.DAMAGE_RESISTANCE),
+    BLACK_OIL("Black Oil Magic", "Black Oil", "DARKNESS", HitEffect.SLOW, () -> ParticleTypes.SQUID_INK, () -> MobEffects.DAMAGE_RESISTANCE),
+    GEL("Gel Magic", "Gel", "WATER", HitEffect.SLOW, () -> ParticleTypes.SPLASH, () -> MobEffects.DAMAGE_RESISTANCE),
+    GLASS("Glass Magic", "Glass", "EARTH", HitEffect.PIERCE, () -> ParticleTypes.END_ROD, () -> MobEffects.DAMAGE_RESISTANCE),
+    BUBBLE("Bubble Magic", "Bubble", "WATER", HitEffect.LEVITATE, () -> ParticleTypes.BUBBLE, () -> MobEffects.SLOW_FALLING),
+    ICE_WEDGE("Ice Wedge Magic", "Wedge", "WATER", HitEffect.FREEZE, () -> ParticleTypes.SNOWFLAKE, () -> MobEffects.DAMAGE_RESISTANCE),
+    LEGION("Legion Magic", "Legion", "FANTASY", HitEffect.PUSH, () -> ParticleTypes.ENCHANT, () -> MobEffects.ABSORPTION);
 
     public final String displayName;
     public final String word;
@@ -96,6 +126,11 @@ public enum MagicType {
         this.guardEffect = guardEffect;
     }
 
+    /** 0.53: never rolled for a soul (devil, command or admin only), like Anti-Magic and Kotodama. */
+    public boolean restricted() {
+        return switch (this) { case ANTI_MAGIC, KOTODAMA, DEMON_BEAST, CURSE, DEMON_FIRE, DEMON_ICE, DEMON_LIGHT, DEMON_WATER -> true; default -> false; };
+    }
+
     public SimpleParticleType particle() { return particle.get(); }
     public Holder<MobEffect> guardEffect() { return guardEffect.get(); }
 
@@ -106,7 +141,7 @@ public enum MagicType {
             if (t != ANTI_MAGIC && t != KOTODAMA && t.soulType.equals(soul)) list.add(t);
         }
         if (list.isEmpty()) {
-            for (MagicType t : values()) if (t != ANTI_MAGIC && t != KOTODAMA) list.add(t);
+            for (MagicType t : values()) if (!t.restricted()) list.add(t);
         }
         return list;
     }

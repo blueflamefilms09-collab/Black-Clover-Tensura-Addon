@@ -26,7 +26,7 @@ import java.util.List;
 
 /** Gravity Magic (Dante). Singularity is a forbidden ritual, not a page. */
 public class GravityBook extends GrimoireBook {
-    private final List<BookPage> pages = List.of(
+    private final List<BookPage> pages = com.newuniverse.nusmp.book.ext.Ext.join(List.of(
             BookPage.starter("heavy_infighting", "Heavy Infighting", GravityBook::infighting),
             BookPage.signature("demon_king", "Presence of the Demon King", GravityBook::presence),
             BookPage.mid("gravity_sphere", "Gravity Sphere", TensuraShots.shot(TensuraShots.Shot.GRAVITY_SPHERE, 11, 1.2f, 0.2f, 0)),
@@ -34,7 +34,7 @@ public class GravityBook extends GrimoireBook {
             BookPage.zone("gravity_well", "Gravity Well", ElementBook.field(3, 5, 100, 10, true, VfxShape.SPATIAL_RIFT,
                     ElementBook.all(ElementBook.lift(-0.6), ElementBook.effect(() -> new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN, 30, 3))))),
             BookPage.mid("crushing_weight", "Crushing Weight", ElementBook.nova(12, 6, true, VfxShape.EARTH_SPIKES,
-                    ElementBook.effect(() -> new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN, 80, 4)))));
+                    ElementBook.effect(() -> new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN, 80, 4))))), com.newuniverse.nusmp.book.ext.GravityExt.pages());
 
     public GravityBook() { super(MagicType.GRAVITY, 0xFF7A3CC8); }
     @Override protected List<BookPage> familyPages() { return pages; }

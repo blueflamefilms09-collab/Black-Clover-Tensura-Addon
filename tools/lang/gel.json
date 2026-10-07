@@ -1,0 +1,7 @@
+{
+ "nusmp.skill.grimoire_gel": "Gel Magic",
+ "nusmp.skill.grimoire_gel.description": "Grimoire magic: Gel Magic. Hold your grimoire to cast. Four-leaf and five-leaf grimoires hold the strongest pages.",
+ "nusmp.skill.book_gel": "Gel Magic",
+ "nusmp.skill.book_gel.description": "The grimoire of Gel Magic. Hold the grimoire, hold the skill key to chant, release to cast.",
+ "nusmp.page.book_gel.gel_strike": "Gel Strike - a stub spell of Gel Magic."
+}
