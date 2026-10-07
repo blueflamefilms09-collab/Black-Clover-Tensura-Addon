@@ -1,0 +1,15 @@
+{
+ "_comment": "Blood Magic preview scenes (BloodLayer). FX1 jet of blood, FX2 blood cage (sphere + threads), FX3 blood burst.",
+ "blood_cast": {"layer": "BloodLayer", "shape": "BLOOD_FX1", "from": [0, 1.5, 0], "to": [0, 1.3, 9], "power": 1.0, "duration": 16,
+  "cam": [5, 2.2, 5], "target": [0, 1.4, 4.5], "ages": [2, 5, 9, 13, 15], "figures": [[0, 0, 0, 1.8]]},
+ "blood_cast_big": {"layer": "BloodLayer", "shape": "BLOOD_FX1", "from": [0, 1.5, 0], "to": [0, 1.3, 9], "power": 2.0, "duration": 16,
+  "cam": [6, 2.5, 6], "target": [0, 1.4, 4.5], "ages": [4, 9, 15], "figures": [[0, 0, 0, 1.8]]},
+ "blood_zone": {"layer": "BloodLayer", "shape": "BLOOD_FX2", "from": [0, 0, 0], "to": [0, 0, 0], "power": 4.0, "duration": 80,
+  "cam": [0, 3.5, 13], "target": [0, 3, 0], "ages": [6, 20, 45, 70], "figures": [[0, 0, 0, 1.8]]},
+ "blood_zone_small": {"layer": "BloodLayer", "shape": "BLOOD_FX2", "from": [0, 0, 0], "to": [0, 0, 0], "power": 2.0, "duration": 80,
+  "cam": [0, 2.5, 8], "target": [0, 1.8, 0], "ages": [30], "figures": [[0, 0, 0, 1.8]]},
+ "blood_burst": {"layer": "BloodLayer", "shape": "BLOOD_FX3", "from": [0, 1.2, 0], "to": [0, 1.2, 0], "power": 1.5, "duration": 28,
+  "cam": [4, 2.5, 6.5], "target": [0, 1.3, 0], "ages": [3, 7, 12, 20, 26], "figures": [[0, 0, 0, 1.8]]},
+ "blood_burst_lean": {"layer": "BloodLayer", "shape": "BLOOD_FX3", "from": [0, 0.5, 0], "to": [3, 1.5, 0], "power": 1.0, "duration": 28,
+  "cam": [2, 2.5, 7], "target": [0.5, 1, 0], "ages": [8, 16], "figures": [[0, 0, 0, 1.8]]}
+}
