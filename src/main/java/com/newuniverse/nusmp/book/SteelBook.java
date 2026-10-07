@@ -29,7 +29,11 @@ public class SteelBook extends GrimoireBook {
     private final List<BookPage> pages = List.of(
             BookPage.starter("steel_shot", "Blazing Steel Shot", SteelBook::shot),
             BookPage.signature("returning_lance", "Returning Lance", SteelBook::lance),
-            BookPage.mid("obsidian_shot", "Steel Cannon", TensuraShots.shot(TensuraShots.Shot.OBSIDIAN_SHOT, 12, 1.8f, 1.0f, 0)));
+            BookPage.mid("obsidian_shot", "Steel Cannon", TensuraShots.shot(TensuraShots.Shot.OBSIDIAN_SHOT, 12, 1.8f, 1.0f, 0)),
+            // 0.49 (appended)
+            BookPage.starter("steel_spikes", "Steel Spikes", ElementBook.line(10, 12, 1.2, VfxShape.EARTH_SPIKES, ElementBook.lift(0.5))),
+            BookPage.mid("iron_maiden", "Iron Maiden", ElementBook.bind(8, 14, false, VfxShape.WEAPON_CONSTRUCTS,
+                    ElementBook.effect(() -> new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.WEAKNESS, 80, 1)))));
 
     public SteelBook() { super(MagicType.STEEL, 0xFFB8C2CC); }
     @Override protected List<BookPage> familyPages() { return pages; }
