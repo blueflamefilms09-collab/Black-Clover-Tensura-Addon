@@ -1,0 +1,17 @@
+{
+ "key_gate_closed": {
+  "kind": "geo", "model": "key_gate", "anim": "idle", "glow": "FFFFD890", "scale": 1.0,
+  "ages": [0, 40, 80], "tile": [360, 420],
+  "views": [{"name": "front", "yaw": 0, "pitch": 8}, {"name": "three_quarter", "yaw": 35, "pitch": 14}, {"name": "back", "yaw": 180, "pitch": 10}]
+ },
+ "key_gate_open": {
+  "kind": "geo", "model": "key_gate", "anim": "open", "glow": "FFFFD890", "scale": 1.0,
+  "ages": [0, 6, 12, 18, 30], "tile": [360, 420],
+  "views": [{"name": "front", "yaw": 0, "pitch": 8}, {"name": "three_quarter", "yaw": 40, "pitch": 14}]
+ },
+ "key_great_key": {
+  "kind": "geo", "model": "key_great_key", "anim": "idle", "glow": "FFFFD890",
+  "ages": [0, 20, 40, 60], "tile": [420, 300],
+  "views": [{"name": "side", "yaw": 90, "pitch": 6}, {"name": "front", "yaw": 0, "pitch": 6}, {"name": "top", "yaw": 90, "pitch": 60}]
+ }
+}
