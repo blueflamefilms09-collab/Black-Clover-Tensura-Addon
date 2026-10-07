@@ -194,6 +194,11 @@ public final class MultiverseCommands {
                         return fail(ctx, "The Zagred boss is off. Turn it on with /gamerule nusmpZagredBoss true (or zagredBossEnabled in the server config).");
                     var z = com.newuniverse.nusmp.entity.ZagredBossEntity.summon(ctx.getSource().getLevel(), ctx.getSource().getPosition());
                     return z == null ? fail(ctx, "Zagred could not be summoned here.") : ok(ctx, "Zagred descends. The arena is here.");
+                }))
+                // 0.53: Sylph, the Wind Spirit Lord (no game rule: an admin starts it where they stand)
+                .then(Commands.literal("sylph").executes(ctx -> {
+                    var s = com.newuniverse.nusmp.entity.WindSpiritLordEntity.summon(ctx.getSource().getLevel(), ctx.getSource().getPosition());
+                    return s == null ? fail(ctx, "Sylph could not be summoned here.") : ok(ctx, "Sylph, the Wind Spirit Lord, rides in on the gale.");
                 })));
 
         root.then(Commands.literal("antimode").requires(MultiverseCommands::admin).then(Commands.argument("player", EntityArgument.player())

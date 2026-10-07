@@ -37,6 +37,10 @@ public final class NUEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<CottonCloudEntity>> COTTON_CLOUD = ENTITIES.register("cotton_cloud",
             () -> EntityType.Builder.<CottonCloudEntity>of(CottonCloudEntity::new, MobCategory.MISC).sized(2.6f, 0.6f).clientTrackingRange(10).updateInterval(1).build("cotton_cloud"));
 
+    /** 0.53: Sylph, the Wind Spirit Lord, as a boss (command only: /multiverse boss sylph). */
+    public static final DeferredHolder<EntityType<?>, EntityType<WindSpiritLordEntity>> WIND_SPIRIT_LORD = ENTITIES.register("wind_spirit_lord",
+            () -> EntityType.Builder.of(WindSpiritLordEntity::new, MobCategory.MONSTER).sized(1.0f, 2.2f).fireImmune().clientTrackingRange(16).updateInterval(1).build("wind_spirit_lord"));
+
     /** 0.53: every real 3D thing of the Black Clover Magic and VFX expansion (floating eyes, keys, chains, food, soldiers, bubbles ...): see prop.MagicProps. */
     public static final DeferredHolder<EntityType<?>, EntityType<com.newuniverse.nusmp.prop.MagicPropEntity>> MAGIC_PROP = ENTITIES.register("magic_prop",
             () -> EntityType.Builder.<com.newuniverse.nusmp.prop.MagicPropEntity>of(com.newuniverse.nusmp.prop.MagicPropEntity::new, MobCategory.MISC)
@@ -49,5 +53,6 @@ public final class NUEntities {
         e.put(ZAGRED.get(), ZagredBossEntity.createAttributes().build());
         e.put(GRIMOIRE_DAEMON.get(), GrimoireDaemonEntity.createAttributes().build());
         e.put(COTTON_SHEEP.get(), CottonSheepEntity.createAttributes().build());
+        e.put(WIND_SPIRIT_LORD.get(), WindSpiritLordEntity.createAttributes().build());
     }
 }

@@ -71,6 +71,7 @@ public class NUSMP {
             modEventBus.addListener(com.newuniverse.nusmp.client.GrimoireDaemonRenderer::layers);
             modEventBus.addListener(com.newuniverse.nusmp.client.CottonSheepRenderer::register);        // 0.52: Cotton Magic's sheep and cloud
             modEventBus.addListener(com.newuniverse.nusmp.client.CottonSheepRenderer::layers);
+            modEventBus.addListener(com.newuniverse.nusmp.client.WindSpiritLordRenderer::register);          // 0.53: Sylph, the Wind Spirit Lord boss
             com.newuniverse.nusmp.client.DemonSlayerRenderer.init(modEventBus);
             com.newuniverse.nusmp.client.aura.PlayerAuraClient.init(modEventBus);                             // 0.53: player render layers
             modEventBus.addListener(com.newuniverse.nusmp.client.prop.MagicPropRenderer::register);           // 0.53: props
