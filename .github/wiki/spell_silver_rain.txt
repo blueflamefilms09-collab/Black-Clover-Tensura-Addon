@@ -1,0 +1,3 @@
+-- intro: Mercury Magic: Silver Rain is a Mercury Magic spell.
+-- Description:
+    With an open grimoire, the user summons countless droplets of mercury down from the sky. Due to the high density of mercury and the momentum it gathers as it falls from the sky, each droplets has enough force to break through anything on its path. The user is able to use this spell to take out numerous targets that are gathered in a single location at once. Additionally, the user can control the droplets so that they are not hit when standing in the middle of the silver rain.

@@ -1,0 +1,3 @@
+-- intro: Compass Magic: Willful Compass is a Compass Magic spell.
+-- Description:
+    With an open grimoire, the user creates a large compass in front of a target. Any incoming attack is redirected in the direction of the compass's needle. Redirecting multiple spells requires creating multiple compasses. The compass's control can be resisted and overcome by close-ranged spells.

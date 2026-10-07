@@ -1,0 +1,3 @@
+-- intro: Mercury Magic: Silver Bullet is a Mercury Magic spell.
+-- Description:
+    With an open grimoire, the user condenses mercury into small spheres and launches them at a target.

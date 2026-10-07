@@ -1,0 +1,3 @@
+-- intro: Mercury Magic: Silver Shining Regal Spear is a Mercury Magic spell.
+-- Description:
+    With an open grimoire, the user holds out the palm and extends from it a long beam made of shining mercury. The beam follows the movement of the user's palm. It is sharp enough to pierce and slice through several feet of rock.

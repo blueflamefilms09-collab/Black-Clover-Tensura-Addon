@@ -1,0 +1,3 @@
+-- intro: Painting Magic: Four-Headed Lindworm is a Painting Magic spell.
+-- Description:
+    With an open grimoire, the user manifests a paint brush and a palette and, with a swipe of the brush, creates a large serpentine creature with four heads. The heads could release different elemental blasts from their mouths.

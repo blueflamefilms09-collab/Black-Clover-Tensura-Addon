@@ -1,0 +1,3 @@
+-- intro: :For the similar spell used by Lira, see Souterrain Giant's Strong Arm.  Painting Magic: Souterrain Giant is a Painting Magic spell.
+-- Description:
+    With an open grimoire, the user manifests a paint brush and a palette and, with a swipe of the brush, creates the upper body of a giant humanoid that is rising from the ground. Although it is made of dense earth, it can be broken apart if hit with an attack of sufficient force.

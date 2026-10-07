@@ -1,0 +1,3 @@
+-- intro: Painting Magic: Phantom Dragon Vouivre's Shout is a Painting Magic spell.
+-- Description:
+    With an open grimoire, the user manifests a paint brush and a palette and, with a swipe of the brush, creates a large creature with the head and torso of a woman, bat-like wings, two bird-like legs, and a long scaly tail. The user then points their brush and the creature releases a magical blast in that direction. The vouivre could be used to carry the user up into the air and is strong enough to sustain flight while doing so.

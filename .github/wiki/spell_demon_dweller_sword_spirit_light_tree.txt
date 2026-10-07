@@ -1,0 +1,3 @@
+-- intro: Union Magic: Demon-Dweller Sword: Spirit Light Tree is a sword and world tree-based Union Magic spell.
+-- Description:
+    The World Tree Magic user holds out their hands and creates a seed that sprouts into several twisting branches. The Sword Magic user places a hand on the other's back and then uses the Demon-Dweller Sword to create connections to their allies. These connections are then tied together into a gigantic shining tree. The tree could then be used to disseminate information or magic to the connected allies.

@@ -1,0 +1,3 @@
+-- intro: World Tree Creation Magic: Magic Tree Descent is a world tree-based Creation Magic spell.
+-- Description:
+    With an open grimoire, the user calls forth the roots of a giant tree from the clouds overhead. From these roots, the user could craft a multitude of wooden objects, including broomsticks. Once the user is done, the roots retreat back up into the clouds.

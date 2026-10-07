@@ -1,0 +1,3 @@
+-- intro: World Tree Magic: Great Tree Mistilteinn is a World Tree Magic spell.
+-- Description:
+    With an open grimoire, the user spreads roots over a wide area. These roots absorb the mana of everyone within the area. Once enough mana is absorbed, the user creates a large tree that can capture the enemy and engulf a city.

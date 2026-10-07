@@ -1,0 +1,3 @@
+-- intro: Compass Magic: Another Atlas is a Compass Magic spell.
+-- Description:
+    With an open grimoire, the user creates a small compass in front of them and large compass face above an area. The needle on the small compass spins rapidly, which is mirrored by the needle on the large compass. As they spin, the mana in the area beneath the large compass is disrupted, causing other spells to dissolve and disperse while also impeding others' magic. The user's magic is unaffected. This spell could also be used defensively, protecting the user in a shield of spinning mana and its size can also be affected by the magic around it. This spell's effects can be resisted by Mana Skin.

@@ -1,0 +1,3 @@
+-- intro: Compass Magic: Useless North is a Compass Magic spell.
+-- Description:
+    With an open grimoire, the user creates a dark sphere of mana with a large compass needle suspended inside. The user chooses a target and the needle moves to point at that target and is then launched from the sphere. The needle will pursue the target over any distance and can identify the true target's location in a crowd of copies.

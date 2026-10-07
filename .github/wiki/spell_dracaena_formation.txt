@@ -1,0 +1,3 @@
+-- intro: World Tree Magic: Dracaena Formation is a World Tree Magic spell.
+-- Description:
+    With an open grimoire, the user touches their hand to the ground and summons multiple large roots to wrap around a target, squeezing and twisting the target until they break.

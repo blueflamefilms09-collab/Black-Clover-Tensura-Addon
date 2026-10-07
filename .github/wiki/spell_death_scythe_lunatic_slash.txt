@@ -1,0 +1,3 @@
+-- intro: Slash Magic: Death Scythe: Lunatic Slash is a Slash Magic spell.
+-- Description:
+    Using the blades that the user created on their forearms with their mana, the user unleashes a chaotic flurry of flying slashes.

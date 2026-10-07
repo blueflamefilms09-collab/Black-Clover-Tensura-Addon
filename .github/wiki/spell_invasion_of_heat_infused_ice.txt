@@ -1,0 +1,3 @@
+-- intro: Painting Magic: Invasion of Heat-Infused Ice is a Painting Magic spell.
+-- Description:
+    With an open grimoire, the user creates a magic circle from which pours ice that can be directed to cover a target, immobilizing it. The ice can also cover a large area or target and weaken the target by making it more brittle.

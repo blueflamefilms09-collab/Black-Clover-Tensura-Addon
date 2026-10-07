@@ -1,0 +1,3 @@
+-- intro: World Tree Creation Magic: Mistilteinn Blade is a world tree-based Creation Magic spell.
+-- Description:
+    With an open grimoire, the user shapes a world tree into a sword, which has a hilt with a braided appearance and a guard formed from small branches. The user can pour their magic power into the sword and then hand it to an ally to wield.

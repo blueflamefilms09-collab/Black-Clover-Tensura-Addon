@@ -1,0 +1,3 @@
+-- intro: Combo Spell: Dimension Slash Scorching Light is a dark-, mercury-, and fire spirit-based Compound Magic spell.
+-- Description:
+    The Mercury Magic user extends the length of the Dark Magic user's blade, and the Fire Magic user ignites the extended blade with flames from Salamander. The Dark Magic user then cuts down their opponent with their enhanced magic blade.

@@ -1,0 +1,3 @@
+-- intro: Painting Magic: God's Game is a Painting Magic spell.
+-- Description:
+    With an open grimoire, the user manifests a paint brush and a palette and, with a swipe of the brush, creates a large bearded figure. Any spell fired at the user bends around the figure and is sent back at the attacker.

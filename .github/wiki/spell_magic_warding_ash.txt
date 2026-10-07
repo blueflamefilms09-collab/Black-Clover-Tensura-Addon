@@ -1,0 +1,3 @@
+-- intro: World Tree Magic: Magic Warding Ash is a World Tree Magic spell.
+-- Description:
+    With an open grimoire, the user creates a giant ash tree and directs branches from it to wrap around and block spells. This spell is powerful enough to block devil-enhanced Bone Magic.

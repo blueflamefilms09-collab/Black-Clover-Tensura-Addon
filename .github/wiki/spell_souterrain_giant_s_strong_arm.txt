@@ -1,0 +1,3 @@
+-- intro: :For the similar spell used by Rill Boismortier, see Souterrain Giant.  Painting Magic: Souterrain Giant's Strong Arm is a Painting Magic spell.
+-- Description:
+    With an open grimoire, the user manifests a paint brush and a palette and, with a swipe of the brush, creates a giant humanoid that is partially risen from the ground. The giant then throws a punch at the target. The fist is incredibly dense, able to withstand multiple strong attacks without breaking.

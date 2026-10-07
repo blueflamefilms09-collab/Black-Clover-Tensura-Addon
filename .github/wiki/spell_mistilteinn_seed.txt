@@ -1,0 +1,3 @@
+-- intro: World Tree Magic: Mistilteinn Seed is a World Tree Magic spell.
+-- Description:
+    With an open grimoire, the user throws a seed at a target. The seed drains the target's magic and rapidly grows into a large tree around the target, immobilizing them.

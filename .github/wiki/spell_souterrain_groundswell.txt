@@ -1,0 +1,3 @@
+-- intro: Painting Magic: Souterrain Groundswell is a Painting Magic spell.
+-- Description:
+    With an open grimoire, the user manifests a paint brush and a palette and, with a swipe of the brush, creates several humanoid figures that ride waves of dirt. The figures crash into a target, covering them in dirt.

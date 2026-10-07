@@ -1,0 +1,3 @@
+-- intro: Mercury Creation Magic: Silver Star of Execution is a mercury-based Creation Magic spell.
+-- Description:
+    With an open grimoire, the user spreads strands and drops of mercury throughout an area. The mercury is then gathered together and shaped into a giant cage. Like other Mercury Magic spells, the bars can fluidly switch between offense and defense: forming and launching Silver Spears at the target or blocking escape and counterattacks with silver shields. Areas of chaotic mana can make the spell impossible due to the size and the precise nature of the spell.
