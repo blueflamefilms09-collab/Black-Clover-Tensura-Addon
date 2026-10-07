@@ -1,0 +1,26 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "minecraft:iron_sword",
+      "required": false
+    },
+    {
+      "id": "minecraft:diamond_sword",
+      "required": false
+    },
+    {
+      "id": "minecraft:netherite_sword",
+      "required": false
+    },
+    {
+      "id": "nusmp:magic_tool_sword",
+      "required": false
+    },
+    "#nusmp:katanas",
+    {
+      "id": "nusmp:spell_forged_rapier",
+      "required": false
+    }
+  ]
+}

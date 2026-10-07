@@ -312,6 +312,30 @@ def shard():
     save("eye_shard", g, inside * np.clip(edge * 2.5, 0, 1) * 0.95)
 
 
+def curl():
+    """The curled face-mark of the anime still: a tendril that loops into a hook with a small bead at the end (two mirrored
+    copies, a rosy cel-shaded line with a soft glow)."""
+    w = 256
+    im = canvas(w)
+    d = ImageDraw.Draw(im)
+    S = w * SS
+    for side in (-1, 1):
+        pts = []
+        for i in range(120):
+            u = i / 119.0
+            ang = -0.6 + u * 4.6
+            r = (0.42 - 0.3 * u) * S * 0.5
+            cx = S * (0.5 + side * 0.17)
+            pts.append((cx + side * r * math.cos(ang) + side * u * S * 0.12, S * 0.5 + r * math.sin(ang) - (1 - u) * S * 0.06))
+        d.line(pts, fill=255, width=int(S * 0.028), joint="curve")
+        ex, ey = pts[-1]
+        rr = S * 0.026
+        d.ellipse([ex - rr, ey - rr, ex + rr, ey + rr], fill=255)
+    line = finish(im, w, blur=0.0)
+    halo = finish(im, w, blur=5.0)
+    save("eye_curl", np.clip(0.75 + 0.25 * line, 0, 1), np.clip(line + halo * 0.7, 0, 1))
+
+
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
-    iris(); lid_outline(); sclera(); slit(); flare(); rays(); glint(); reticle(); sigil(); trail(); shard()
+    iris(); lid_outline(); sclera(); slit(); flare(); rays(); glint(); reticle(); sigil(); trail(); shard(); curl()

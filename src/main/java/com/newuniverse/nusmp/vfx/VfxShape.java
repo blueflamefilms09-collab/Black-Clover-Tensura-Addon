@@ -177,7 +177,17 @@ public enum VfxShape {
     DICE_FX1, DICE_FX2, DICE_FX3,
     SLASH_FX1, SLASH_FX2, SLASH_FX3,
     COMPASS_FX1, COMPASS_FX2, COMPASS_FX3,
-    MERCURY_FX1, MERCURY_FX2, MERCURY_FX3;
+    MERCURY_FX1, MERCURY_FX2, MERCURY_FX3,
+    // 0.56: Yami's dark slashes (DarkSlashLayer) and Secre's sealing magic (SealSecreLayer), appended
+    DARK_SLASH_DIMENSION,    // Dark Cloaked Dimension Slash: a spatial fracture cut from 'from' to 'to' (pitch-black core, purple aura, shader); power = width
+    DARK_SLASH_BLADE,        // Dark Cloaked Black Blade: darkness coats the blade and grows a long black blade; 'from' = hand, 'to' = tip; power = size
+    DARK_SLASH_AVIDYA,       // Dark Cloaked Avidya Slash: a wide crescent of darkness thrown from 'from' towards 'to'; power = size
+    DARK_SLASH_WILD,         // Yami slashing wildly: a flurry of crossed dark cuts round 'from'; power = size
+    SEAL_BASIC,              // Basic seal: a magic circle (power = radius) with orbiting orbs; colour = elemental tint; duration = seal time
+    SEAL_BRANCH,             // Secre's Branching Array: cyan square-edged lines branching in a 3D web from 'from'; power = reach
+    SEAL_CUBE,               // Secre's Eternal Prison: a translucent glowing cube round 'from' with speed lines on its edges; power = edge length
+    SEAL_WOUND,              // Secre's Wound Sealing: a gentle blue stream from 'from' (grimoire) to 'to' (the ally) that closes wounds
+    SEAL_ORBIT;              // Secre's Orbital Bind: fast blue rings orbiting a sphere round 'from'; power = radius
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

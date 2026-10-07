@@ -36,6 +36,8 @@ import com.newuniverse.nusmp.vfx.client.layer.DemonLightLayer;
 import com.newuniverse.nusmp.vfx.client.layer.DemonWaterLayer;
 import com.newuniverse.nusmp.vfx.client.layer.GravityLayer;
 import com.newuniverse.nusmp.vfx.client.layer.SealLayer;
+import com.newuniverse.nusmp.vfx.client.layer.DarkSlashLayer;
+import com.newuniverse.nusmp.vfx.client.layer.SealSecreLayer;
 import com.newuniverse.nusmp.vfx.client.layer.BarrierLayer;
 import com.newuniverse.nusmp.vfx.client.layer.ImitationLayer;
 import com.newuniverse.nusmp.vfx.client.layer.KeyLayer;
@@ -136,6 +138,8 @@ public final class VfxManager {
         register(new DemonWaterLayer());
         register(new GravityLayer());
         register(new SealLayer());
+        register(new DarkSlashLayer());
+        register(new SealSecreLayer());
         register(new BarrierLayer());
         register(new ImitationLayer());
         register(new KeyLayer());

@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "nusmp:miasma_infused_katana",
+      "required": false
+    },
+    {
+      "id": "nusmp:demon_slasher_katana",
+      "required": false
+    },
+    {
+      "id": "nusmp:dark_katana",
+      "required": false
+    },
+    {
+      "id": "nusmp:ceremonial_katana",
+      "required": false
+    }
+  ]
+}

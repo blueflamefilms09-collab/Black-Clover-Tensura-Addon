@@ -44,6 +44,7 @@ public class EyeLayer extends AbstractVfxLayer {
     public static final ResourceLocation SIGIL = t("eye_sigil");
     public static final ResourceLocation TRAIL = t("eye_trail");
     public static final ResourceLocation SHARD = t("eye_shard");
+    public static final ResourceLocation CURL = t("eye_curl");
 
     private static final int PINK = 0xFFFF4A9A;
     private static final int GOLD = 0xFFFFC85A;
@@ -197,6 +198,7 @@ public class EyeLayer extends AbstractVfxLayer {
         // ground: light, sigil, counter-rotating reticle
         VfxBloom.planeGlow(buf, floor, R, col, 0.55f * life);
         buf.plane(SIGIL, VfxBlend.ADD, floor.lift(0.01f).spin(age * 0.012f), R * open, a(col, 0.95f * life * pulse));
+        buf.plane(CURL, VfxBlend.ADD, floor.lift(0.015f).spin(age * 0.02f), R * 0.5f * open, a(VfxVertexBuffer.whiten(col, 0.25f), 0.8f * life));
         buf.plane(RETICLE, VfxBlend.ADD, floor.lift(0.02f).spin(-age * 0.03f), R * 0.64f * open, a(VfxVertexBuffer.whiten(col, 0.35f), 0.85f * life));
         buf.ring(VfxTextures.GLOW, VfxBlend.ADD, floor.lift(0.03f), R * 0.965f, R * 1.02f, ctx.seg(16, 8), 1, 0, a(GOLD, 0.7f * life * pulse));
         // pulse ring: a reticle shockwave every 30 ticks
@@ -264,6 +266,7 @@ public class EyeLayer extends AbstractVfxLayer {
         float gy = -Math.min(0.9f * P, 1.4f);
         VfxPose gp = VfxPose.ground(new Vector3f(c).add(0, gy + 0.05f, 0));
         if (t > 0.05f) buf.plane(SIGIL, VfxBlend.ADD, gp.spin(age * 0.05f), P * (1.2f + 2.4f * ease(t * 2f)), a(col, 0.9f * fade));
+        if (t > 0.1f) buf.plane(CURL, VfxBlend.ADD, gp.lift(0.005f).spin(-age * 0.04f), P * (0.8f + 1.6f * ease(t * 2f)), a(VfxVertexBuffer.whiten(col, 0.3f), 0.8f * fade));
         for (int k = 0; k < 2; k++) {
             float s = Mth.clamp((t - 0.3f - k * 0.1f) / 0.55f, 0f, 1f);
             if (s > 0f) buf.plane(RETICLE, VfxBlend.ADD, gp.lift(0.01f * (k + 1)).spin(k == 0 ? s * 1.5f : -s * 1.2f), P * (0.4f + (4.2f - k * 1.0f) * ease(s)), a(k == 0 ? WHITE : GOLD, 0.8f * (1f - s)));

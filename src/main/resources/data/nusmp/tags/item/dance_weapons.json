@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "nusmp:sea_dragon_fan",
+      "required": false
+    },
+    {
+      "id": "nusmp:rhythm_blade",
+      "required": false
+    },
+    {
+      "id": "nusmp:song_wand",
+      "required": false
+    }
+  ]
+}

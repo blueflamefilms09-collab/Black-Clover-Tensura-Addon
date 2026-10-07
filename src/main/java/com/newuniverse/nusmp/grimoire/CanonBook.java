@@ -55,7 +55,8 @@ public enum CanonBook {
     // 0.45: appended
     LETOILE("Letoile Becquerel", "THREE_LEAF", "COMPASS", 0x3A6A4A, 0xD8B860, 0, null),       // Golden Dawn; Compass Magic
     // 0.47: appended. Zagred's corrupted five-leaf grimoire: indigo cover, black clover, Word Soul
-    ZAGRED("Zagred", "FIVE_LEAF", "KOTODAMA", 0x1E1640, 0x6A5AB0, 0x0A0610, null);              // the five-leaf art design, black clover
+    ZAGRED("Zagred", "FIVE_LEAF", "KOTODAMA", 0x1E1640, 0x6A5AB0, 0x0A0610, null),              // the five-leaf art design, black clover
+    SECRE("Secre Swallowtail", "THREE_LEAF", "SEALING", 0x1E4E7A, 0x8AE8FF, 0, null);           // 0.56: the swallowtail grimoire of Seal Magic, cyan neon
 
     public final String owner, cover, magic;
     public final int coverColor, trimColor, emblemColor;

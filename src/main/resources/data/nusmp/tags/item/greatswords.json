@@ -1,0 +1,33 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "nusmp:demon_slayer_sword",
+      "required": false
+    },
+    {
+      "id": "nusmp:demon_dweller_sword",
+      "required": false
+    },
+    {
+      "id": "nusmp:demon_destroyer_sword",
+      "required": false
+    },
+    {
+      "id": "nusmp:severing_greatsword",
+      "required": false
+    },
+    {
+      "id": "nusmp:licht_dweller_sword",
+      "required": false
+    },
+    {
+      "id": "nusmp:licht_destroyer_sword",
+      "required": false
+    },
+    {
+      "id": "nusmp:rimeheart_runeblade",
+      "required": false
+    }
+  ]
+}
