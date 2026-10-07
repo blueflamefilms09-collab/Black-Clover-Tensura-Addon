@@ -1,38 +1,101 @@
-Beast Magic
-Demon Beast Magic
-Body Magic
-Blood Magic
-Bone Magic
-Eye Magic
-Eyeball Magic
-Curse Magic
-Curse-Warding Magic
-Demon Fire Magic
-Demon Ice Magic
-Demon Light Magic
-Demon Water Magic
-Gravity Magic
-Seal Magic
-Barrier Magic (attribute)
-Imitation Magic
-Key Magic
-Chain Magic
-Butoh Magic
-Briar Magic
-Cherry Blossom Magic
-Fungus Magic
-Food Magic
-Crystal Magic
-Corundum Magic
-Bronze Magic
-Copper Magic
-Iron Magic
-Black Oil Magic
-Gel Magic
-Glass Magic
-Bubble Magic
-Ice Magic
-Ice Wedge Magic
-Legion Magic
-Light Magic
-
+magic:Beast Magic
+magic:Demon Beast Magic
+magic:Body Magic
+magic:Blood Magic
+magic:Bone Magic
+magic:Eye Magic
+magic:Eyeball Magic
+magic:Curse Magic
+magic:Curse-Warding Magic
+magic:Demon Fire Magic
+magic:Demon Ice Magic
+magic:Demon Light Magic
+magic:Demon Water Magic
+magic:Gravity Magic
+magic:Seal Magic
+magic:Barrier Magic (attribute)
+magic:Imitation Magic
+magic:Key Magic
+magic:Chain Magic
+magic:Butoh Magic
+magic:Briar Magic
+magic:Cherry Blossom Magic
+magic:Fungus Magic
+magic:Food Magic
+magic:Crystal Magic
+magic:Corundum Magic
+magic:Bronze Magic
+magic:Copper Magic
+magic:Iron Magic
+magic:Black Oil Magic
+magic:Gel Magic
+magic:Glass Magic
+magic:Bubble Magic
+magic:Ice Magic
+magic:Ice Wedge Magic
+magic:Legion Magic
+magic:Light Magic
+spell:Voodoo Regalia
+spell:Voodoo Shangrila
+spell:Bear Claw
+spell:Rhinoceros Armor
+spell:Cheetah Charge
+spell:Curse-Filled Nails
+spell:Lifeblood Scythe
+spell:Curse-Breaking Blood Cocoon
+spell:Jets of Blood
+spell:Body Compression
+spell:Eternal Fangs
+spell:Demon Sword Dainsleif
+spell:Corpse-Hunting Briar Tree
+spell:Queen of Briars
+spell:Sekke Poison Lizard
+spell:Sekke Magnum Cannonball
+spell:Sekke Shooting Star
+spell:Bubble Refresher
+spell:Sea God Slash
+spell:Dance of the Pitless Viper
+spell:Magic Binding Iron Chain Formation
+spell:Dance of 100 Million Cherry Blossoms
+spell:Clones of the Beautiful Me
+spell:Red Shine Mace
+spell:Ideal Closer
+spell:Crystal Scope
+spell:Ash Absorbing Formation
+spell:Aufwachen Dachs
+spell:Ultra Giant Bull
+spell:Exploding Life
+spell:Decaying World
+spell:Chimera's Roar
+spell:Hydra's Regrowth
+spell:Light Sword of Judgment
+spell:Hydra of Darkneros
+spell:Reflect Iris
+spell:Catoblepas's Evil Eye
+spell:Glutton's Banquet
+spell:Towering Mr. Mushroom
+spell:Heavy Mr. Mushroom
+spell:Sticky Salamander
+spell:Verre Fleur
+spell:Verre Détection
+spell:Le Château de Verre
+spell:Presence of the Demon King
+spell:Gravity Singularity
+spell:Evil God's Pressure Craft
+spell:Heavenly Ice Fang
+spell:Icicle Bridge
+spell:Dissolve
+spell:Cage of Infinite Hail
+spell:World End Martyr
+spell:World End Church
+spell:Iron Bullet
+spell:Immovable Guardian Deity
+spell:Doom's Gate
+spell:Janus Abigail
+spell:Gehenna Game
+spell:Blink Castling
+spell:Light Shaft of Divine Punishment
+spell:Lamp of Avior Gloria
+spell:Healing Ray of Light
+spell:Elemental Quintet
+spell:Trinity Seal Magic

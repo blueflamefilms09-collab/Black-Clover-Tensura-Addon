@@ -1,6 +1,6 @@
 # Developer helper: reads Black Clover wiki pages (wikitext, via the MediaWiki API) from a session that cannot reach the wiki.
 # Runs when .github/wiki-request.txt changes (one page title per line; a "tensura:" prefix reads the Tensura Reincarnated wiki,
-# tensura.wiki.gg, instead). The extract of each page is printed into the job log AND committed to .github/wiki/<slug>.txt
+# tensura.wiki.gg, instead; "magic:" and "spell:" prefixes use the fuller extractor for a magic page or a spell page). The extract of each page is printed into the job log AND committed to .github/wiki/<slug>.txt
 # (by the workflow's own token, which does not start other workflows), so a session can read the files after a pull.
 name: Fetch wiki reference
 
@@ -22,14 +22,19 @@ jobs:
           mkdir -p .github/wiki
           while IFS= read -r page; do
             [ -z "$page" ] && continue
-            echo "=================== PAGE: $page ==================="
+            mode=old
+            case "$page" in magic:*) mode=magic; page="${page#magic:}";; spell:*) mode=spell; page="${page#spell:}";; esac
+            echo "=================== PAGE ($mode): $page ==================="
             host="https://blackclover.fandom.com/api.php"
             title="$page"
             case "$page" in tensura:*) host="https://tensura.wiki.gg/api.php"; title="${page#tensura:}";; esac
             slug=$(python3 -c 'import re,sys;print(re.sub(r"[^a-z0-9]+","_",sys.argv[1].lower()).strip("_"))' "$page")
+            [ "$mode" = spell ] && slug="spell_$slug"
+            if [ "$mode" = old ]; then ext="python3 .github/scripts/wiki_extract.py"; else ext="python3 .github/scripts/wiki_extract2.py $mode"; fi
             curl -sSL --max-time 60 -A "Mozilla/5.0 (reference fetch for a fan mod)" \
               "$host?action=parse&page=$(python3 -c 'import sys,urllib.parse;print(urllib.parse.quote(sys.argv[1]))' "$title")&prop=wikitext&format=json&formatversion=2" \
-              | python3 .github/scripts/wiki_extract.py | tee ".github/wiki/$slug.txt"
+              | $ext > ".github/wiki/$slug.txt"
+            head -c 1200 ".github/wiki/$slug.txt"; echo
           done < .github/wiki-request.txt
       - name: Commit the extracts
         run: |
