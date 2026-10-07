@@ -164,6 +164,8 @@ This project pulls mods from CurseMaven (see `build.gradle`). Add Player Animato
 implementation "curse.maven:playeranimator-658587:<fileId of the 1.21.1 NeoForge build>"
 ```
 Then add a dependency block for it in `META-INF/neoforge.mods.toml` (`type = "required"`, `side = "BOTH"`).
+Its mod id is `playeranimator`. Better Combat (supported since 0.43) already requires it, so servers running Better Combat
+already have it installed.
 
 Check the project id and the file id on the CurseForge page before committing. CI (`build.yml`) will fail fast if they're wrong.
 
@@ -196,7 +198,7 @@ Register it next to the others (`r.playToClient(...)`, as in `GrimoireSummon.reg
 static final ResourceLocation LAYER = ResourceLocation.fromNamespaceAndPath("nusmp", "cast");
 
 static void init(FMLClientSetupEvent e) {
-    // priority 42: above walking and vanilla arm poses, below emote mods
+    // priority 42: above Better Combat's held-weapon poses (layers 1-4), below its attack swings (2000), so a swing always wins
     PlayerAnimationFactory.ANIMATION_DATA_FACTORY.registerFactory(LAYER, 42, player -> new ModifierLayer<>());
 }
 

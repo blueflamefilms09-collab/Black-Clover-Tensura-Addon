@@ -60,7 +60,7 @@ Chanted magics: use **Chant** mode until the chant is complete, then switch to *
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.42.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.43.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -204,6 +204,13 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Anti-Magic kit**: new pages **Black Hurricane** (a whirling field that drags foes in and strips their magic) and **Black Form** (30 s of strength, speed, resistance and jump, with an anti-magic burst); mastering the Anti-Magic Lord now also grants the **Demon-Slasher** katana next to Demon-Dweller and Demon-Destroyer.
 - **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
 - **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
+
+## 0.43 - Better Combat compatibility
+- **New: Better Combat support.** With [Better Combat](https://modrinth.com/mod/better-combat) installed, every Black Clover sword gets combo swings, attack hitboxes and dual wielding. The files are in `data/nusmp/weapon_attributes`. Without Better Combat nothing changes: the files are just ignored, and the dependency is optional.
+  - **Asta's and Licht's blades** (Demon-Slasher, Demon-Slayer, Demon-Dweller, Demon-Destroyer and Licht's two) are one-handed, so you can dual-wield them as in canon. The big blades reach further.
+  - **Rimeheart Runeblade** is one-handed, so its "second magic sword in the off hand" bonus works with Better Combat's dual wielding.
+  - **Other weapons:** the Miasma-Infused Katana uses the two-handed katana set (Yami's style), the Spell-Forged Rapier the rapier set, the Severing Greatsword the claymore set, and the magic tool sword and spear the sword and spear sets.
+  - **Unchanged:** right-click weapon skills, grimoire casting, and the hit effects (crit bursts, anti-magic stripping) all work as before, because Better Combat still lands hits through the normal player attack.
 
 ## 0.42 - Mirror Magic overhaul (Gauche Adlai)
 - **Real mirrors:** every Mirror spell now summons an ornate silver mirror. Frames come in five shapes (oval, arch, round, gothic crest and diamond), with glass, a flickering violet mana corona, distortion ripples and an edge glow.

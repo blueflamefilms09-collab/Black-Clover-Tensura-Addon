@@ -4,7 +4,7 @@ license="All rights reserved"
 
 [[mods]]
 modId="nusmp"
-version="0.42.0"
+version="0.43.0"
 displayName="Multiverse"
 logoFile="logo.png"
 logoBlur=false
@@ -36,6 +36,14 @@ modId="manascore_storage"
 type="required"
 versionRange="[4.0.0.2,)"
 ordering="AFTER"
+side="BOTH"
+
+# 0.43: Better Combat support is data-only (data/nusmp/weapon_attributes); optional, so the mod runs with or without it
+[[dependencies.nusmp]]
+modId="bettercombat"
+type="optional"
+versionRange="[0,)"
+ordering="NONE"
 side="BOTH"
 
 [[mixins]]
