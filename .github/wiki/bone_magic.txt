@@ -1,0 +1,13 @@
+-- intro: {{Infobox/Magic |image= Eternal Fangs.png  |title= Bone Magic |kanji= 骨魔法 |romaji= Hone Mahō |english= Bone Magic (VIZ, Funimation)  |user= #Lucius Zogratis #Zenon Zogratis }} {{Nihongo|Bone Magic|骨魔法|Hone Mahō}} is a magic attribute that allows the user to generate and manipulate their own bones.
+-- Description:
+    This magic attribute allows the user to generate and manipulate bones from their body at will. In order to use it to its full potential, specific spells are required, which are stored within grimoires.
+    The user can sprout bones from various parts of their body. These bones can merge, extend to great lengths, and branch out in multiple directions. Additionally, the ends of the bones can be sharpened into points for pier
+    When this attribute is combined with Soul, Body and Blood Magic, it can be used to actually create a human body and allows for recovery that goes far beyond ordinary Healing Magic. It can even grant sight to the blind an
+-- Spells:
+    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Offensive}}
+    |-
+    |{{Portalbox/MagicPage|Eternal Fangs.png|link=Eternal Fangs|Eternal Fangs}}
+    |-
+    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Union}}
+    |-
+    |{{Portalbox/MagicPage|Dainsleif.png|link=Demon Sword Dainsleif|Demon Sword Dainsleif}}

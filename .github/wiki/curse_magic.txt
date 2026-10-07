@@ -1,0 +1,19 @@
+-- intro: {{Infobox/Magic |image= Sekke releasing a poison lizard.png  |title= Curse Magic |kanji= 呪詛魔法 |romaji= Juso Mahō |english= Curse Magic (VIZ, Funimation)  |user= #Catherine #Gordon Agrippa #No.4 - Jimmy #Sekke Bronzazza #Vetto }} :For the variety of curses used by Megicula, see Curse-Warding Magic.  {{Nihongo|Curse Magic |呪詛魔法|Juso Mahō}}, or {{Nihongo|Hex Magic|呪術魔法|Jujutsu Mahō}}, is a form of magic that allows the user to include additional lasting negative effects to spells.
+-- Description:
+    This form of magic allows the user to include additional lasting negative effects to spells. The effects can range from dulled senses to debilitating sickness and even death. The user is able to use this magic without th
+    Curses placed on humans do not affect elves, even if they inhabit the same body.
+    All curses derive from Megicula's power. The Agrippa Family has studied curses for hundreds of years and is infamous for its Curse Magic.{{Clr}}
+-- Spells:
+    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Ash-based}}
+    |-
+    |{{Portalbox/MagicPage|Ash Absorbing Formation.png|link=Ash Absorbing Formation|Ash Absorbing Formation}}
+    |-
+    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Bronze-based}}
+    |-
+    |{{Portalbox/MagicPage|Sekke releasing a poison lizard.png|link=Sekke Poison Lizard|Sekke Poison Lizard}}
+    |-
+    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Poison-based}}
+    |-
+    |{{Portalbox/MagicPage|Aufwachen Dachs.png|link=Aufwachen Dachs|Aufwachen Dachs}}
+    |-
+    |{{Portalbox/MagicPage|Ultra Giant Bull punches Lucifero.png|link=Ultra Giant Bull|Ultra Giant Bull}}

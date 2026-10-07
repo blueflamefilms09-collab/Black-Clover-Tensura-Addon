@@ -1,0 +1,12 @@
+-- intro: {{Infobox/Magic |image= Ice Wedge Magic.png  |title= Ice Wedge Magic |kanji= 氷楔魔法 |romaji= Hyōsetsu Mahō |english= Ice Wedge Magic (Netflix)  |user= #Edward Avalaché #Lucius Zogratis }} {{Nihongo|Ice Wedge Magic|氷楔魔法|Hyōsetsu Mahō}} is a magic attribute that allows the user to generate and manipulate ice. It is unclear what differentiates it from normal Ice Magic.
+-- Description:
+    This magic attribute allows the user to generate and manipulate ice at will. In order to use it to its full potential, specific spells are required, which are stored within grimoires.
+    Like regular Ice Magic, the user can shape the ice into a multitude of whatever form they wish, like deadly weapons, shields, icy blades, and projectiles. They can encase people and their surroundings within a dense laye
+-- Spells:
+    | colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;" |{{Color|#F8F8FF|Offensive}}
+    |-
+    |{{Portalbox/MagicPage|World End Martyr.png|link=World End Martyr|World End Martyr}}
+    |-
+    | colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;" |{{Color|#F8F8FF|Supplementary}}
+    |-
+    |{{Portalbox/MagicPage|World End Church.png|link=World End Church|World End Church}}

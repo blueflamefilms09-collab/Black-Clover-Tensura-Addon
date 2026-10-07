@@ -1,0 +1,13 @@
+-- intro: {{Infobox/Magic |image= Mark of Megicula's Curse.png  |title= Curse-Warding Magic |kanji= 呪符魔法 |romaji= Jufu Mahō |english= Curse-Warding Magic (VIZ, Funimation)  |user= #Megicula #Vanica Zogratis }} {{Nihongo|Curse-Warding Magic |呪符魔法|Jufu Mahō}} is a magic attribute that allows the user to create powerful curses.
+-- Description:
+    This magic attribute allows the user to create powerful curses which they can cast on themselves and others. The user is able to use this magic without the need of a grimoire. However, in order to use it to its full pote
+    These curses can be either harmful or beneficial and can have various effects: deteriorating a person's body, continually resurrecting a person, weakening and disabling enemy spells, detonating a person's magic power, hi
+    The curses' power and effects can be cut off by defeating the user or placing the user in a space that separates them from the world.{{Clr}}
+-- Spells:
+    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:white; text-align: center;"|Offensive
+    |-
+    |{{Portalbox/MagicPage|Exploding Life.png|link=Exploding Life|Exploding Life}}
+    |-
+    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:white; text-align: center;"|Supplementary
+    |-
+    |{{Portalbox/MagicPage|Megicula corrupts Secre's arrays.png|link=Decaying World|Decaying World}}

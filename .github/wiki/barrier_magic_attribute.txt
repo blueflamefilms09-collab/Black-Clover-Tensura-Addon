@@ -1,0 +1,13 @@
+-- intro: {{Infobox/Magic |image= Barrier Magic.png  |title= Barrier Magic |kanji= 結界魔法 |romaji= Kekkai Mahō |english= Barrier Magic (Netflix)  |user= #Jester Garandros #Lucius Zogratis }} :For the magic form, see Barrier Magic.  {{Nihongo|Barrier Magic|結界魔法|Kekkai Mahō}} is a magic attribute that allows the user to generate and shape barriers.
+-- Description:
+    This magic attribute allows the user to create and control barriers at will, which usually take the form of honeycomb-like walls made from smaller, tessellated hexagons. In order to use the magic to its full potential, s
+    While regular magic barriers are typically in the shape of a dome or wall and anchored in place, the barriers deployed through this magic are more in flux and versatile, seeing as the user can freely resize, reshape, and
+    Additionally, these barriers can be adjusted to interfere with Spatial Magic, making it difficult for an enemy to teleport in and out.{{Clr}}
+-- Spells:
+    | style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;" colspan="3" |{{Color|#F8F8FF|Offensive}}
+    |-
+    |{{Portalbox/MagicPage|Voodoo Regalia.png|link=Voodoo Regalia|Voodoo Regalia}}
+    |-
+    | style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;" colspan="3" |{{Color|#F8F8FF|Defensive}}
+    |-
+    |{{Portalbox/MagicPage|Voodoo Shangrila.png|link=Voodoo Shangrila|Voodoo Shangrila}}

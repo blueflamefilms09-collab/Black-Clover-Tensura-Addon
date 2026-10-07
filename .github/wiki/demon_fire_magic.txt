@@ -1,0 +1,4 @@
+-- intro: {{Infobox/Magic |image= Demon Fire Magic.png  |title= Demon Fire Magic |kanji= 魔炎魔法 |romaji= Maen Mahō |english= Devil Flame Magic (VIZ)  |user= #Nahamah }} {{Nihongo|Demon Fire Magic|魔炎魔法|Maen Mahō}} is a magic attribute that allows the user to generate and manipulate a sinister form of Fire Magic.
+-- Description:
+    This magic attribute allows the user to generate and manipulate a sinister form of fire at will. The flames are capable of burning anything and everything, including shadows, light, and even invisible concepts. The user 
+    Superior overall to its regular Fire Magic counterpart, this fire is extremely deadly and versatile, from shooting a barrage of flame bullets, releasing waves of blazing fire, creating a twister that incinerates anything

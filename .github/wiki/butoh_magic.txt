@@ -1,0 +1,8 @@
+-- intro: {{Infobox/Magic |image= Butoh Magic.png  |title= Butoh Magic |kanji= 舞踏魔法 |romaji= Butō Mahō |english= Dance Magic (VIZ, Funimation)  |user= #Kiato }} {{Nihongo|Butoh Magic|舞踏魔法|Butō Mahō}} is a magic attribute that allows the user to cast spells through dancing.
+-- Description:
+    This magic attribute allows the user to cast spells through dancing. The user is able to use this magic without the need of a grimoire. However, in order to use it to its full potential, specific spells are required, whi
+    As the user dances, they enter a trance-like state and their attacks become unpredictable.{{Clr}}
+-- Spells:
+    | colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;" |{{Color|#F8F8FF|Union}}
+    |-
+    |{{Portalbox/MagicPage|Sea God Invocation.png|link=Sea God Slash|Sea God Slash}}

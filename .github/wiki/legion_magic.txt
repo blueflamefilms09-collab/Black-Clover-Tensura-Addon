@@ -1,0 +1,18 @@
+-- intro: {{Infobox/Magic |image= Gehenna Game.png  |title= Legion Magic |kanji= {{Ruby|軍隊|レギオン}}魔法 |romaji= Region Mahō |english= Legion Magic (Netflix)  |user= #Princia Funnybunny #Lucius Zogratis }} {{Nihongo|Legion Magic|{{Ruby|軍隊|レギオン}}魔法|Region Mahō}} is a magic attribute that allows a user to create and manipulate magical soldiers.
+-- Description:
+    This magic attribute allows the user to create and manipulate magical soldiers at will. In order to use it to its full potential, specific spells are required, which are stored within grimoires.
+    Pawn soldier.png|Pawn
+    Rook soldier.png|Rook
+    Knight soldier.png|Knight
+    Fourth soldier.png
+    The soldiers created by this magic resemble suits of armor shaped like chess pieces, and are much taller and larger than normal humans. These soldiers, filled with the user's magic power, are able to levitate and will ca
+    The user is also able to make a suit of armor for themself and remotely receive information from their soldiers. Additionally, the user can switch locations with any of their magical soldiers as a means to avoid an attac
+    If used correctly and by someone powerful, this magic potentially grants the user the equivalent military power of an entire country, allowing them to wage and fight an entire war all on their own. A multitude of soldier
+-- Spells:
+    | style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;" colspan="3" |{{Color|#F8F8FF|Offensive}}
+    |-
+    |{{Portalbox/MagicPage|Gehenna Game.png|link=Gehenna Game|Gehenna Game}}
+    |-
+    | style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;" colspan="3" |{{Color|#F8F8FF|Supplementary}}
+    |-
+    |{{Portalbox/MagicPage|Blink Castling.gif|link=Blink Castling|Blink Castling}}

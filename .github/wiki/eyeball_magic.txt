@@ -1,0 +1,8 @@
+-- intro: {{Infobox/Magic |image= Catoblepas eyes.png  |title= Eyeball Magic |kanji= 眼魔法 |romaji= Manako Mahō |english= Eye Magic (VIZ, Funimation)  |user= #Sivoir Snyle }} :For the similar magic used by Marie Adlai, see Eye Magic.  {{Nihongo|Eyeball Magic|眼魔法|Manako Mahō}} is a magic attribute that allows the user to manifest eyeballs.
+-- Description:
+    This magic attribute allows the user to manifest additional eyeballs that are free-floating, can turn and move in midair, and share vision with the user. In order to use it to its full potential, specific spells are requ
+    These eyes could be spread out over a large area, allowing the user to see from multiple angles and over great distances. The eyesight could also be enhanced in order to perceive a target's magic, stamina, and muscle mov
+-- Spells:
+    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Supplementary}}
+    |-
+    |{{Portalbox/MagicPage|Catoblepas eyes.png|link=Catoblepas's Evil Eye|Catoblepas's Evil Eye}}

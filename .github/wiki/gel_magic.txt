@@ -1,0 +1,9 @@
+-- intro: {{Infobox/Magic |image= Sally's Salamander redirecting Gauche's attacks.png  |title= Gel Magic |kanji= ゲル魔法 |romaji= Geru Mahō |english= Gel Magic (VIZ, Funimation)  |user= #Rhya (Anime) #Sally }} {{Nihongo|Gel Magic|ゲル魔法|Geru Mahō}} is a magic attribute that allows the user to generate and manipulate a gelatinous substance.
+-- Description:
+    This magic attribute allows the user to generate and manipulate a gelatinous substance at will. In order to use it to its full potential, specific spells are required, which are stored within grimoires.
+    The gel is permeable, but also very thick, meaning it can be used to smother and entrap the users targets. The viscous nature of the gel also allows it to absorb and defend against enemy attacks.
+    The gel can refract light and neutralize poison.{{Clr}}
+-- Spells:
+    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Supplementary}}
+    |-
+    |{{Portalbox/MagicPage|Sticky salamander spell.png|link=Sticky Salamander|Sticky Salamander}}

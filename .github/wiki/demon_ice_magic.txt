@@ -1,0 +1,4 @@
+-- intro: {{Infobox/Magic |image= Demon Ice Magic.png  |title= Demon Ice Magic |kanji= 魔氷魔法 |romaji= Mahyō Mahō |english= Devil Ice Magic (VIZ)  |user= #Lilith }} {{Nihongo|Demon Ice Magic|魔氷魔法|Mahyō Mahō}} is a magic attribute that allows the user to generate and manipulate a sinister form of Ice Magic.
+-- Description:
+    This magic attribute allows the user to generate and manipulate a sinister form of ice at will. The frost is capable of freezing anything and everything, including shadows, light, and even invisible concepts. The user is
+    Superior overall to its regular Ice Magic counterpart, this ice is extremely deadly and versatile, being able to freeze targets on impact, shooting a barrage of ice shards faster than the eye can see, releasing waves of 

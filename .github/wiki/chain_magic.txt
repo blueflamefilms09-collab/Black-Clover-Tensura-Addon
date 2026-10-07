@@ -1,0 +1,12 @@
+-- intro: {{Infobox/Magic |image= Creation Magic.png  |title= Chain Magic |kanji= 鎖魔法 |romaji= Kusari Mahō |english= Chain Magic (VIZ, Funimation)  |user= #Revchi Salik #Lucius Zogratis #Zarick }} {{Nihongo|Chain Magic|鎖魔法|Kusari Mahō}} is a magic attribute that allows the user to create and manipulate chains.
+-- Description:
+    This magic attribute allows the user to create and manipulate chains at will. In order to use it to its full potential, specific spells are required, which are stored within grimoires.
+    These chains are good for binding, and the ends of the chains can be equipped with weapons, such as knives and weights, enhancing the chain's attack power.{{Clr}}
+-- Spells:
+    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Offensive}}
+    |-
+    |{{Portalbox/MagicPage|Asta attacked by chains.png|link=Dance of the Pitless Viper|Dance of the Pitless Viper}}
+    |-
+    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Supplementary}}
+    |-
+    |{{Portalbox/MagicPage|Revchi binds Yuno.png|link=Magic Binding Iron Chain Formation|Magic Binding Iron Chain Formation}}

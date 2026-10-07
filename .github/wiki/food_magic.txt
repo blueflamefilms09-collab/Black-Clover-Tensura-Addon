@@ -1,0 +1,8 @@
+-- intro: {{Infobox/Magic |image= Glutton's Banquet.png  |title= Food Magic |kanji= 食魔法 |romaji= Shoku Mahō |english= Food Magic (VIZ, Funimation)  |user= #Charmy Pappitson }} {{Nihongo|Food Magic|食魔法|Shoku Mahō}} is a magic attribute that allows the user to consume other types of magic.
+-- Description:
+    This magic attribute allows the user to consume other types of magic and convert that energy into their own. In order to use it to its full potential, specific spells are required, which are stored within grimoires.
+    When combined with Mana Method, this magic can be used to cook the opponent's magic before consuming it.{{Clr}}
+-- Spells:
+    |colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;"|{{Color|#F8F8FF|Offensive}}
+    |-
+    |{{Portalbox/MagicPage|Glutton's Banquet.png|link=Glutton's Banquet|Glutton's Banquet}}

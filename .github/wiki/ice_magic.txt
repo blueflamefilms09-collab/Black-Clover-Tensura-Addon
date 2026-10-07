@@ -1,0 +1,19 @@
+-- intro: {{Infobox/Magic |image= Heavenly Ice Fang.png  |title= Ice Magic |kanji= 氷魔法 |romaji= Kōri Mahō |english= Ice Magic (VIZ, Funimation)  |user= #Cabra (Anime) #Heath Graice #Lucius Zogratis #Mariella #Nils Ragus #Rhya (Anime) #Wainsley #Xerx Lugner #Unnamed elf #Unnamed Spade Kingdom soldier (Anime) }} {{Nihongo|Ice Magic|氷魔法|Kōri Mahō}} is a magic attribute that allows the user to generate and manipulate ice. It is derived from the Water Magic attribute.
+-- Description:
+    This magic attribute allows the user to generate and manipulate ice at will. Without the use of a grimoire, the users are still able to use this magic. However, in order to use it to its full potential, specific spells a
+    Reflected spells could be melted before hitting the users.
+    Ice Magic is considered weak against Fire Magic.{{Clr}}
+-- Spells:
+    | colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;" |{{Color|#F8F8FF|Offensive}}
+    |-
+    |{{Portalbox/MagicPage|Heavenly Ice Fang.png|link=Heavenly Ice Fang|Heavenly Ice Fang}}
+    |-
+    |{{Portalbox/MagicPage|Icicle Bridge.png|link=Icicle Bridge|Icicle Bridge}}
+    |-
+    | colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;" |{{Color|#F8F8FF|Defensive}}
+    |-
+    |{{Portalbox/MagicPage|Heath melts ice.png|link=Dissolve|Dissolve}}
+    |-
+    | colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;" |{{Color|#F8F8FF|Compound}}
+    |-
+    |{{Portalbox/MagicPage|Cage of Infinite Hail.png|link=Cage of Infinite Hail|Cage of Infinite Hail}}

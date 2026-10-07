@@ -1,0 +1,14 @@
+-- intro: {{Infobox/Magic |image= Key Magic.png  |title= Key Magic |kanji= 鍵魔法 |romaji= Kagi Mahō |english= Key Magic (Netflix)  |user= #Conrad Leto }} {{Nihongo|Key Magic|鍵魔法|Kagi Mahō}}is a magic attribute that allows the user to create and manipulate keys.
+-- Description:
+    This magic attribute allows the user to create and manipulate keys at will. In order to use it to its full potential, specific spells are required, which are stored within grimoires.
+    These keys can be used to lock and unlock other objects. When one of the keys is used to lock or unlock something, it manifests a keyhole, either in midair or on the object being locked. When used in midair, the key mani
+    The user can also steal another mage's magic by using a key to lock that mage's grimoire, which causes it to turn to stone. After locking someone's magic, the user can unlock it for themselves and copy that mage's spells
+    This magic is noted to be highly compatible with Imperial Sword: Elsdocia, so much so that it dramatically increased the user's magic power and allowed the user to share magic power with the souls of those who reside in 
+-- Spells:
+    | colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;" |{{Color|#F8F8FF|Offensive}}
+    |-
+    |{{Portalbox/MagicPage|Doom's Gate.png|link=Doom's Gate|Doom's Gate}}
+    |-
+    | colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;" |{{Color|#F8F8FF|Supplementary}}
+    |-
+    |{{Portalbox/MagicPage|Janus Abigail.png|link=Janus Abigail|Janus Abigail}}

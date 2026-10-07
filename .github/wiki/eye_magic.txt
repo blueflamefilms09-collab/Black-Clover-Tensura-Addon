@@ -1,0 +1,7 @@
+-- intro: {{Infobox/Magic |image= Reflect Iris.png  |title= Eye Magic |kanji= 瞳魔法 |romaji= Hitomi Mahō |english= Eye Magic (VIZ, Funimation)  |user= #Eclat #Marie Adlai }} :For the similar magic used by Sivoir Snyle, see Eyeball Magic.  {{Nihongo|Eye Magic|瞳魔法|Hitomi Mahō}} is a magic attribute that allows the user to cast enchantments through their eyes.
+-- Description:
+    This magic attribute allows the user to cast magical enchantments through their eyes. The users are able to use this magic without the need of a grimoire. However, in order to use it to its full potential, specific spell
+-- Spells:
+    | colspan="3" style="border-radius: 2ex; -moz-border-radius: 2ex; -webkit-border-radius: 2ex; background-color: #702963; padding:5px; color:black; text-align: center;" |{{Color|#F8F8FF|Union}}
+    |-
+    |{{Portalbox/MagicPage|Reflect Iris.png|link=Reflect Iris|Reflect Iris}}
