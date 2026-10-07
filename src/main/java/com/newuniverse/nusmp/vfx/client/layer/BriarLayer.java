@@ -133,7 +133,7 @@ public class BriarLayer extends AbstractVfxLayer {
         if (r.lengthSquared() < 1e-6f) r.set(1, 0, 0); else r.normalize();
         Vector3f hw = new Vector3f(r).mul(w * 0.5f);
         Vector3f up = new Vector3f(r).mul(lean).add(0, hgt, 0);
-        int top = blend.grade(argb, 0.8f), bot = blend.grade(blend == VfxBlend.ALPHA ? shade(argb, 0.68f) : argb, 0.5f);
+        int top = blend.grade(argb, 0.8f), bot = blend.grade(blend == VfxBlend.ALPHA ? shade(argb, 0.86f) : argb, 0.5f);
         buf.quad(tex, blend, new Vector3f(base).sub(hw), new Vector3f(base).add(hw), new Vector3f(base).add(hw).add(up), new Vector3f(base).sub(hw).add(up),
                 flip ? 1 : 0, 0, flip ? 0 : 1, 1, bot, top);
     }
@@ -184,7 +184,7 @@ public class BriarLayer extends AbstractVfxLayer {
         float tail = Mth.clamp((p - 0.55f) / 0.4f, 0f, 1f);
         tail = Math.min(tail * tail, hp - 0.04f);
         if (hp > 0.02f && tail < hp) {
-            float vwid = 0.2f * pw;
+            float vwid = 0.34f * pw;
             int n = ctx.seg(10, 5);
             float amp = 0.3f * pw, spin = age * 0.7f;
             for (int st = 0; st < 2; st++) {
@@ -358,9 +358,9 @@ public class BriarLayer extends AbstractVfxLayer {
             float gk = VfxAnim.easeOutBack(Mth.clamp((age - 0.5f - k) / 8f, 0f, 1f));
             if (gk < 0.01f) continue;
             Vector3f b = new Vector3f(C).add(hint.x * 0.15f * sc * (k - 0.5f) + (k == 0 ? -0.5f : 0.5f) * sc, 0, hint.z * 0.15f * sc);
-            standing(buf, ctx, TANGLE, VfxBlend.ALPHA, b, 2.4f * sc, 2.8f * sc * gk, k == 1, lean * 0.5f * gk, a(shade(strap, 0.62f), out));
+            standing(buf, ctx, TANGLE, VfxBlend.ALPHA, b, 2.6f * sc, 3.8f * sc * gk, k == 1, lean * 0.5f * gk, a(shade(strap, 0.62f), out));
         }
-        float[] w = {2.5f, 1.9f, 1.35f}, hh = {1.7f, 1.5f, 1.2f}, y0 = {0f, 1.25f, 2.35f};
+        float[] w = {2.5f, 1.9f, 1.35f}, hh = {2.3f, 2.0f, 1.6f}, y0 = {0f, 1.7f, 3.2f};
         for (int k = 0; k < 3; k++) {
             float gk = VfxAnim.easeOutBack(Mth.clamp((age - k * 1.6f) / 7f, 0f, 1f));
             if (gk < 0.01f) continue;
@@ -387,7 +387,7 @@ public class BriarLayer extends AbstractVfxLayer {
             for (int i = 1; i <= 6; i++) {
                 float s = i / 6f, aa = ang + swirl * s;
                 Vector3f cur = new Vector3f(C).add(Mth.cos(aa) * reach * s, 0.1f + Mth.sin(s * Mth.PI * 0.85f) * rise * ex * (1f - 0.25f * s), Mth.sin(aa) * reach * s);
-                float w0 = 0.2f * sc * (1.05f - 0.7f * (i - 1f) / 6f), w1 = 0.2f * sc * (1.05f - 0.7f * i / 6f);
+                float w0 = 0.3f * sc * (1.05f - 0.7f * (i - 1f) / 6f), w1 = 0.3f * sc * (1.05f - 0.7f * i / 6f);
                 strip(buf, STRAP, VfxBlend.ALPHA, prev, cur, w0, w1, (i - 1f) * 1.2f + k, i * 1.2f + k, a(strap, out), a(strap, out * 0.85f));
                 prev = cur;
             }
