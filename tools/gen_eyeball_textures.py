@@ -102,26 +102,28 @@ def mix(a, b, t):
     return a + (b - a) * t[..., None]
 
 
-def grow_veins(rng, roots, step, curv, branch, max_depth, shrink, min_w, inside, child_len=(0.30, 0.60), child_w=0.62, spread=(0.45, 1.05)):
-    """Random-walk vein growth. roots = [(x, y, angle, length, width)] in px; returns [(x0, y0, x1, y1, w)]; 'inside(x, y)' bounds the walk."""
+def grow_veins(rng, roots, step, wander, branch, max_depth, taper, min_w, inside, child_len=(0.35, 0.65), child_w=0.6, spread=(0.35, 0.85), inertia=0.86):
+    """Tapering random-walk vein growth. roots = [(x, y, angle, length, width)] in px; the width falls to 'taper' x its start at the tip;
+    'wander' is the std of the smooth angular drift per step. Returns [(x0, y0, x1, y1, w)]; 'inside(x, y)' bounds the walk."""
     segs = []
     stack = [(x, y, a, ln, w, 0) for (x, y, a, ln, w) in roots]
     while stack:
-        x, y, a, ln, w, d = stack.pop()
-        n = max(1, int(ln / step))
-        turn = 0.0
+        x, y, a, ln, w0, d = stack.pop()
+        n = max(2, int(ln / step))
+        drift = 0.0
         for i in range(n):
-            turn = turn * 0.78 + rng.normal(0.0, curv)
-            a += turn * 0.5
+            t = i / n
+            w = max(min_w, w0 * (1 - (1 - taper) * t))
+            drift = drift * inertia + rng.normal(0.0, wander)
+            a += drift
             nx, ny = x + math.cos(a) * step, y + math.sin(a) * step
             if not inside(nx, ny):
                 break
             segs.append((x, y, nx, ny, w))
-            if d < max_depth and rng.random() < branch:
+            if d < max_depth and i > 2 and rng.random() < branch:
                 side = 1 if rng.random() < 0.5 else -1
-                stack.append((nx, ny, a + side * rng.uniform(*spread), ln * rng.uniform(*child_len) * (1 - 0.5 * i / n) + step * 3, w * child_w, d + 1))
+                stack.append((nx, ny, a + side * rng.uniform(*spread), (n - i) * step * rng.uniform(*child_len) + step * 3, w * child_w, d + 1))
             x, y = nx, ny
-            w = max(min_w, w * shrink)
     return segs
 
 
@@ -163,23 +165,30 @@ def sclera_arrays(size):
     col = col + np.array([8, -6, -20], np.float32)[None, None, :] * (yellow - 0.5)[..., None]
     col = col * shade[..., None]
     col = col + (maroon - col) * np.clip((1 - z) ** 3.0 * 0.62, 0, 1)[..., None]
-    # capillaries: thin red vessels creeping in from the limb, a few fat ones, hair-fine branches
+    # capillaries: red vessels creeping in from the limb, thick where they leave it and thinning to hair-fine tips, plus a pale haze of threads
     rng = np.random.default_rng(1101)
-    roots = []
-    for k in range(34):
-        a = rng.uniform(0, 2 * math.pi)
-        rr = c * rng.uniform(0.80, 0.97)
-        wd = rng.uniform(1.4, 3.0) * size / 256
-        roots.append((c + math.cos(a) * rr, c + math.sin(a) * rr, a + math.pi + rng.normal(0, 0.28), c * rng.uniform(0.30, 0.78), wd))
+    k = size / 256
     inside = lambda x, y: (x - c) ** 2 + (y - c) ** 2 < (c * 0.985) ** 2
-    segs = grow_veins(rng, roots, 3.0 * size / 256, 0.20, 0.055, 4, 0.985, 0.55 * size / 256, inside)
-    m = draw_segments((size, size), segs)
-    halo = blur_mask(m, 2.4 * size / 256)
-    vein_col = np.array([188, 28, 46], np.float32)
-    deep_col = np.array([120, 14, 34], np.float32)
-    col = mix(col, np.array([232, 112, 120], np.float32)[None, None, :] * np.ones_like(col), halo * 0.38)
-    col = mix(col, vein_col[None, None, :] * np.ones_like(col), np.clip(m * 0.92, 0, 1))
-    col = mix(col, deep_col[None, None, :] * np.ones_like(col), np.clip((m - 0.8) * 2.0, 0, 1) * 0.5)
+    roots = []
+    for _ in range(26):
+        a = rng.uniform(0, 2 * math.pi)
+        rr = c * rng.uniform(0.86, 0.98)
+        roots.append((c + math.cos(a) * rr, c + math.sin(a) * rr, a + math.pi + rng.normal(0, 0.22), c * rng.uniform(0.35, 0.85), rng.uniform(1.6, 2.6) * k))
+    main = grow_veins(rng, roots, 2.0 * k, 0.040, 0.075, 3, 0.18, 0.40 * k, inside, spread=(0.30, 0.75))
+    thr = []
+    for _ in range(46):
+        a = rng.uniform(0, 2 * math.pi)
+        rr = c * rng.uniform(0.55, 0.95)
+        thr.append((c + math.cos(a) * rr, c + math.sin(a) * rr, a + math.pi + rng.normal(0, 0.6), c * rng.uniform(0.10, 0.30), rng.uniform(0.7, 1.1) * k))
+    fine = grow_veins(rng, thr, 1.8 * k, 0.07, 0.06, 1, 0.3, 0.35 * k, inside)
+    m = draw_segments((size, size), main)
+    mf = draw_segments((size, size), fine)
+    halo = blur_mask(np.maximum(m, mf * 0.6), 2.2 * k)
+    ones = np.ones_like(col)
+    col = mix(col, np.array([236, 120, 126], np.float32)[None, None, :] * ones, halo * 0.34)
+    col = mix(col, np.array([214, 92, 104], np.float32)[None, None, :] * ones, np.clip(mf * 0.55, 0, 1))
+    col = mix(col, np.array([182, 24, 44], np.float32)[None, None, :] * ones, np.clip(m * 0.95, 0, 1))
+    col = mix(col, np.array([116, 12, 32], np.float32)[None, None, :] * ones, np.clip((m - 0.75) * 2.4, 0, 1) * 0.55)
     # wet sheen: a soft window highlight and a faint rim light low right
     sheen = np.exp(-(((nx + 0.40) / 0.22) ** 2 + ((ny + 0.44) / 0.15) ** 2)) * 0.30
     rim = np.exp(-((r - 0.90) / 0.05) ** 2) * smooth(0.15, 0.75, nx * 0.6 + ny * 0.8) * 0.18
@@ -255,8 +264,7 @@ def gloss(size=128):
     r = np.sqrt(nx ** 2 + ny ** 2)
     ca, sa = math.cos(-0.45), math.sin(-0.45)
     px, py = (nx + 0.36) * ca - (ny + 0.40) * sa, (nx + 0.36) * sa + (ny + 0.40) * ca
-    box = np.clip(1 - (np.maximum(np.abs(px) / 0.20, np.abs(py) / 0.11) ** 4), 0, 1)
-    box = np.clip(box * 1.4, 0, 1) ** 0.8
+    box = smooth(1.0, 0.40, (np.abs(px) / 0.21) ** 3 + (np.abs(py) / 0.12) ** 3)
     soft = np.exp(-((px / 0.34) ** 2 + (py / 0.2) ** 2)) * 0.35
     dot = np.exp(-(((nx - 0.34) / 0.075) ** 2 + ((ny - 0.30) / 0.075) ** 2)) * 0.8
     ang = np.arctan2(ny, nx)
@@ -284,87 +292,100 @@ def corona(size=256):
 
 
 # ---------------------------------------------------------------------------------------------------- the lids
-def lid(w=256, h=128):
-    """Fleshy eyelids round an almond opening (transparent, so the eyeball shows through): wet pink margin, deep creases, wrinkles,
-    a caruncle in the inner corner, ragged torn edge so it floats like a wound in the air. Baked colour."""
+def lid(w=256, h=192):
+    """Fleshy eyelids round an almond opening (transparent, so the eyeball shows through): rolled wet-pink margins, a heavy upper fold,
+    creases and wrinkles, a caruncle in the inner corner, veins, and a ragged torn outer edge so it floats like a wound in the air.
+    Baked colour. The opening is a little taller than a plain almond so a whole iris fits."""
     xx, yy = grid(w, h)
     x = (xx - (w - 1) / 2) / ((w - 1) / 2)
     y = (yy - (h - 1) / 2) / ((h - 1) / 2)
-    half = 0.72
+    half = 0.56
+    tilt = -0.07 * (x / half)                                           # the outer corner sits a little higher
+    yt = y - tilt
     xa = x / half
-    prof = np.clip(1 - np.abs(xa) ** 1.7, 0, 1) ** 0.85
-    up_ap, lo_ap = 0.47 * prof, 0.31 * prof
-    dy_up, dy_lo = (-y) - up_ap, y - lo_ap
+    prof = np.clip(1 - np.abs(xa) ** 1.9, 0, 1) ** 0.80
+    up_ap, lo_ap = 0.50 * prof, 0.40 * prof
+    dy_up, dy_lo = (-yt) - up_ap, yt - lo_ap
     d_vert = np.maximum(dy_up, dy_lo)
     tipx = np.clip(np.abs(x) - half, 0, None)
-    d = np.where(np.abs(x) <= half, d_vert, np.sqrt(tipx ** 2 + y ** 2))
-    noise = fbm(w, h, 8, 4, 31, 4)
-    fine = fbm(w, h, 32, 16, 37, 3)
-    hole = smooth(-0.012, 0.014, d)
-    reach = 0.42 * (1 - 0.30 * x ** 2) * (0.85 + 0.30 * noise)
-    outer = 1 - smooth(reach * 0.52, reach, d + 0.05 * (noise - 0.5))
-    edge = smooth(1.0, 0.88, np.abs(x)) * smooth(1.0, 0.82, np.abs(y))
-    t = smooth(0.0, 0.40, d)
-    flesh = np.array([168, 58, 76], np.float32)
-    deep = np.array([92, 26, 44], np.float32)
+    d = np.where(np.abs(x) <= half, d_vert, np.sqrt(tipx ** 2 + yt ** 2))
+    noise = fbm(w, h, 6, 5, 31, 4)
+    fine = fbm(w, h, 24, 18, 37, 3)
+    hole = smooth(-0.012, 0.016, d)
+    reach = 0.62 * (1 - 0.22 * x ** 2) * (0.82 + 0.36 * noise)
+    outer = 1 - smooth(reach * 0.50, reach, d + 0.06 * (noise - 0.5))
+    edge = smooth(1.0, 0.86, np.abs(x)) * smooth(1.0, 0.86, np.abs(y))
+    t = smooth(0.0, 0.5, d)
+    ones = np.ones((h, w, 3), np.float32)
+    flesh = np.array([206, 82, 100], np.float32)
+    deep = np.array([122, 36, 58], np.float32)
     col = flesh[None, None, :] + (deep - flesh)[None, None, :] * t[..., None]
-    col = col * (0.92 + 0.16 * fine)[..., None]
-    ridge = (1 - np.abs(2 * fbm(w, h, 12, 6, 53, 3) - 1)) ** 7
-    col = col * (1 - 0.34 * ridge)[..., None]
-    crease_up = np.exp(-((dy_up - 0.13 - 0.04 * (noise - 0.5)) / 0.013) ** 2) * (y < 0) * smooth(0.95, 0.55, np.abs(xa))
-    crease_lo = np.exp(-((dy_lo - 0.11 - 0.03 * (noise - 0.5)) / 0.011) ** 2) * (y > 0) * smooth(0.9, 0.5, np.abs(xa)) * 0.6
-    col = mix(col, np.array([52, 12, 26], np.float32)[None, None, :] * np.ones_like(col), np.clip(crease_up * 0.85 + crease_lo, 0, 0.9))
-    margin = np.exp(-(np.clip(d, 0, None) / 0.026) ** 2) * (d > -0.02)
-    col = mix(col, np.array([238, 150, 160], np.float32)[None, None, :] * np.ones_like(col), np.clip(margin * 0.9, 0, 1))
-    wet = np.exp(-(((d - 0.012) / 0.012) ** 2)) * smooth(0.2, 0.9, -y + 0.3 * np.sin(xa * 3)) * 0.35
+    col = col * (0.90 + 0.20 * fine)[..., None]
+    ridge = (1 - np.abs(2 * fbm(w, h, 10, 7, 53, 3) - 1)) ** 6
+    col = col * (1 - 0.30 * ridge)[..., None]
+    col = col * (0.82 + 0.18 * smooth(-0.8, 0.5, -y))[..., None]              # the upper lid is lit from above
+    fold_up = np.exp(-((dy_up - 0.20 - 0.05 * (noise - 0.5)) / 0.018) ** 2) * (yt < 0) * smooth(0.95, 0.5, np.abs(xa))
+    fold_up2 = np.exp(-((dy_up - 0.34 - 0.06 * (noise - 0.5)) / 0.014) ** 2) * (yt < 0) * smooth(0.8, 0.3, np.abs(xa)) * 0.55
+    crease_lo = np.exp(-((dy_lo - 0.16 - 0.04 * (noise - 0.5)) / 0.013) ** 2) * (yt > 0) * smooth(0.9, 0.5, np.abs(xa)) * 0.6
+    col = mix(col, np.array([58, 12, 28], np.float32)[None, None, :] * ones, np.clip(fold_up * 0.9 + fold_up2 + crease_lo, 0, 0.92))
+    puff = np.exp(-((dy_up - 0.27) / 0.09) ** 2) * (yt < 0) * 0.20
+    col = col + puff[..., None] * np.array([255, 150, 150], np.float32)[None, None, :] * 0.5
+    margin = np.exp(-(np.clip(d, 0, None) / 0.034) ** 2) * (d > -0.02)
+    col = mix(col, np.array([244, 158, 168], np.float32)[None, None, :] * ones, np.clip(margin * 0.92, 0, 1))
+    wet = np.exp(-(((d - 0.016) / 0.012) ** 2)) * smooth(0.2, 0.9, -y + 0.3 * np.sin(xa * 3)) * 0.35
     col = col + wet[..., None] * 255 * 0.6
-    cx, cy = -0.665, 0.02
-    carun = np.exp(-(((x - cx) / 0.075) ** 2 + ((y - cy) / 0.068) ** 2))
-    col = mix(col, np.array([212, 92, 106], np.float32)[None, None, :] * np.ones_like(col), np.clip(carun * 1.6, 0, 1) * (hole > 0.5))
-    col = col + (np.exp(-(((x - cx + 0.02) / 0.02) ** 2 + ((y - cy + 0.02) / 0.02) ** 2)) * 90)[..., None]
-    # veins on the lids
+    cx, cy = -0.50, 0.03
+    carun = np.exp(-(((x - cx) / 0.060) ** 2 + ((y - cy) / 0.085) ** 2))
+    col = mix(col, np.array([218, 96, 110], np.float32)[None, None, :] * ones, np.clip(carun * 1.6, 0, 1) * (hole > 0.5))
+    col = col + (np.exp(-(((x - cx + 0.02) / 0.02) ** 2 + ((y - cy + 0.03) / 0.025) ** 2)) * 100)[..., None]
     rng = np.random.default_rng(1303)
     roots = []
-    for k in range(16):
-        ax = rng.uniform(-0.78, 0.78)
+    for k in range(22):
+        ax = rng.uniform(-0.95, 0.95)
         top = rng.random() < 0.6
-        roots.append(((ax + 1) * (w - 1) / 2, (h - 1) / 2 + (-1 if top else 1) * rng.uniform(0.34, 0.50) * (h - 1) / 2, rng.uniform(-0.5, 0.5) + (-math.pi / 2 if not top else math.pi / 2), rng.uniform(10, 28), rng.uniform(0.7, 1.4)))
-    segs = grow_veins(rng, roots, 2.0, 0.25, 0.08, 2, 0.98, 0.5, lambda px, py: 2 < px < w - 2 and 2 < py < h - 2)
-    vm = draw_segments((w, h), segs) * (d > 0.05) * outer
-    col = mix(col, np.array([196, 40, 58], np.float32)[None, None, :] * np.ones_like(col), np.clip(vm * 0.7, 0, 1))
+        px = (ax + 1) * (w - 1) / 2
+        py = (h - 1) / 2 + (-1 if top else 1) * rng.uniform(0.62, 0.92) * (h - 1) / 2
+        roots.append((px, py, (math.pi / 2 if top else -math.pi / 2) + rng.normal(0, 0.5), rng.uniform(14, 40), rng.uniform(1.0, 1.9)))
+    segs = grow_veins(rng, roots, 2.0, 0.05, 0.09, 2, 0.3, 0.4, lambda px, py: 2 < px < w - 2 and 2 < py < h - 2)
+    vm = draw_segments((w, h), segs) * (d > 0.04) * outer
+    col = mix(col, np.array([208, 44, 64], np.float32)[None, None, :] * ones, np.clip(vm * 0.75, 0, 1))
     alpha = hole * outer * edge
     save(np.dstack([np.clip(col, 0, 255), alpha * 255]), "eyeball_lid")
 
 
 # ---------------------------------------------------------------------------------------------------- tendrils
 def nerve(w=64, h=256):
-    """An optic-nerve tendril: wet pink strand with red vessels spiralling round it, thick at the eyeball end (v = 0), thinning to
-    a point (v = 1). Baked colour; drawn as a ribbon whose V runs along the strand."""
+    """An optic-nerve tendril: a wet translucent pink strand with swelling bulges, dark vessels winding unevenly under the skin and
+    a red core glowing through, thick at the eyeball end (v = 0) and thinning to a point (v = 1). Baked colour; drawn as a ribbon
+    whose V runs along the strand."""
     xx, yy = grid(w, h)
     u = xx / (w - 1)
     v = yy / (h - 1)
-    cu = 0.5 + 0.045 * np.sin(v * 9.0 + 0.6) * (0.25 + v)
-    hw = 0.34 * (1 - 0.74 * v ** 0.85) + 0.035
+    bulge = 1 + 0.10 * np.sin(v * 21 + 1.3) + 0.07 * np.sin(v * 53) + 0.10 * (fbm(w, h, 1, 12, 62, 3, tile_x=False) - 0.5)
+    cu = 0.5 + 0.06 * np.sin(v * 7.0 + 0.4) * (0.3 + v)
+    hw = (0.34 * (1 - 0.74 * v ** 0.8) + 0.03) * bulge
     s = (u - cu) / hw
     inside = np.abs(s) < 1
     z = np.sqrt(np.clip(1 - s ** 2, 0, 1))
-    diff = np.clip(-0.55 * s + 0.85 * z, 0, 1)
-    shade = 0.50 + 0.50 * diff
-    base = np.array([238, 184, 178], np.float32)
-    dark = np.array([128, 48, 66], np.float32)
-    col = base[None, None, :] * shade[..., None] + dark[None, None, :] * (1 - shade)[..., None] * 0.9
-    n = fbm(w, h, 4, 16, 61, 3, tile_x=False)
-    col = col * (0.92 + 0.16 * n)[..., None]
+    diff = np.clip(-0.50 * s + 0.85 * z, 0, 1)
+    lit = np.array([232, 170, 168], np.float32)
+    mid = np.array([186, 104, 116], np.float32)
+    shadow = np.array([96, 34, 54], np.float32)
+    k = diff[..., None]
+    col = np.where(k > 0.5, mid + (lit - mid) * np.clip((k - 0.5) * 2, 0, 1), shadow + (mid - shadow) * np.clip(k * 2, 0, 1))
+    col = col + (np.array([210, 60, 74], np.float32) * (z ** 3 * 0.22)[..., None])               # blood glowing through
+    noise = fbm(w, h, 3, 14, 63, 3, tile_x=False)
+    col = col * (0.90 + 0.20 * noise)[..., None]
     vess = np.zeros_like(s)
-    for k in range(3):
-        ph = v * 15.0 + k * 2.1
-        sk = 0.72 * np.sin(ph)
-        front = np.clip(np.cos(ph) * 2.2 + 0.4, 0, 1)
-        vess = np.maximum(vess, np.exp(-((s - sk) / 0.10) ** 2) * front)
-    col = mix(col, np.array([172, 22, 44], np.float32)[None, None, :] * np.ones_like(col), np.clip(vess * 0.85, 0, 1) * inside)
-    glint = np.exp(-((s + 0.38) / 0.10) ** 2) * (0.5 + 0.5 * np.sin(v * 31.0)) ** 2 * 0.45
+    for j in range(2):
+        ph = v * (9.5 + 2.5 * j) + j * 2.4 + 1.6 * fbm(w, h, 1, 8, 64 + j, 2, tile_x=False)
+        sk = 0.62 * np.sin(ph)
+        front = np.clip(np.cos(ph) * 2.0 + 0.3, 0, 1)
+        vess = np.maximum(vess, np.exp(-((s - sk) / 0.075) ** 2) * front)
+    col = mix(col, np.array([124, 14, 36], np.float32)[None, None, :] * np.ones_like(col), np.clip(vess * 0.78, 0, 1) * inside)
+    glint = np.exp(-((s + 0.40) / 0.09) ** 2) * (0.5 + 0.5 * np.sin(v * 27.0 + 2 * noise)) ** 2 * 0.5
     col = col + glint[..., None] * 255 * 0.6
-    alpha = smooth(1.0, 0.80, np.abs(s)) * smooth(1.0, 0.86, v) * smooth(0.0, 0.025, v)
+    alpha = smooth(1.0, 0.82, np.abs(s)) * smooth(1.0, 0.88, v) * smooth(0.0, 0.02, v)
     save(np.dstack([np.clip(col, 0, 255), alpha * 255]), "eyeball_nerve")
 
 
@@ -383,50 +404,76 @@ def beam(w=32, h=128):
 
 
 # ---------------------------------------------------------------------------------------------------- vein webs
+def _web_arcs(rng, c, size, radii, per_ring, width):
+    """Wobbly partial rings between the trunks of a web: returns segments."""
+    segs = []
+    for rr in radii:
+        for _ in range(per_ring):
+            a0 = rng.uniform(0, 2 * math.pi)
+            span = rng.uniform(0.25, 0.9)
+            n = max(3, int(span * rr / 4))
+            pts = []
+            for i in range(n + 1):
+                a = a0 + span * i / n
+                wr = rr * (1 + 0.025 * math.sin(a * 7 + rr) + rng.normal(0, 0.004))
+                pts.append((c + math.cos(a) * wr, c + math.sin(a) * wr))
+            for (p, q) in zip(pts[:-1], pts[1:]):
+                segs.append((p[0], p[1], q[0], q[1], width))
+    return segs
+
+
 def vein_web(size=512):
-    """A capillary web spreading from the centre across a disc (ground membrane, burst veins). Grey, tinted by the vertex colour."""
+    """A capillary web spreading from the centre across a disc: forked trunks that thin out towards the rim, linked by wobbly rings
+    like a spider's web (ground membrane, burst veins). Grey, tinted by the vertex colour."""
     rng = np.random.default_rng(404)
+    k = size / 512
     c = (size - 1) / 2
-    inside = lambda x, y: (x - c) ** 2 + (y - c) ** 2 < (c * 0.975) ** 2
+    inside = lambda x, y: (x - c) ** 2 + (y - c) ** 2 < (c * 0.985) ** 2
     roots = []
-    for k in range(10):
-        a = 2 * math.pi * k / 10 + rng.normal(0, 0.18)
-        roots.append((c + math.cos(a) * 6, c + math.sin(a) * 6, a, c * rng.uniform(0.78, 1.0), rng.uniform(5.0, 6.8) * size / 512))
-    segs = grow_veins(rng, roots, 5.0 * size / 512, 0.17, 0.085, 4, 0.9935, 0.8 * size / 512, inside, child_len=(0.38, 0.70))
-    for k in range(70):                                                # capillary bits linking the trunks
-        a = rng.uniform(0, 2 * math.pi)
-        rr = c * math.sqrt(rng.uniform(0.04, 0.80))
-        roots = [(c + math.cos(a) * rr, c + math.sin(a) * rr, rng.uniform(0, 2 * math.pi), c * rng.uniform(0.08, 0.26), rng.uniform(1.0, 2.0) * size / 512)]
-        segs += grow_veins(rng, roots, 4.0 * size / 512, 0.30, 0.10, 2, 0.99, 0.6 * size / 512, inside)
+    for i in range(9):
+        a = 2 * math.pi * i / 9 + rng.normal(0, 0.14)
+        roots.append((c + math.cos(a) * 5, c + math.sin(a) * 5, a, c * rng.uniform(0.86, 1.0), rng.uniform(8.0, 10.0) * k))
+    segs = grow_veins(rng, roots, 4.0 * k, 0.020, 0.062, 4, 0.16, 0.9 * k, inside, child_len=(0.40, 0.75), child_w=0.56, spread=(0.30, 0.65), inertia=0.92)
+    arcs = _web_arcs(rng, c, size, [c * f for f in (0.12, 0.2, 0.3, 0.41, 0.53, 0.65, 0.77, 0.89)], 3, 1.3 * k)
     m = draw_segments((size, size), segs, scale=3)
+    ma = draw_segments((size, size), arcs, scale=3)
     xx, yy = grid(size, size)
     r = np.sqrt(((xx - c) / c) ** 2 + ((yy - c) / c) ** 2)
-    membrane = fbm(size, size, 4, 4, 17, 4)
-    membrane = np.clip((membrane - 0.30) * 1.6, 0, 1) * 0.30
-    glow = blur_mask(m, 3.0 * size / 512)
-    a = np.clip(m + glow * 0.30 + membrane, 0, 1) * smooth(1.0, 0.90, r)
-    g = np.clip(150 + 105 * m, 0, 255)
+    membrane = np.clip((fbm(size, size, 4, 4, 17, 4) - 0.30) * 1.6, 0, 1) * 0.28
+    glow = blur_mask(np.maximum(m, ma * 0.7), 3.0 * k)
+    a = np.clip(m + ma * 0.65 + glow * 0.30 + membrane, 0, 1) * smooth(1.0, 0.88, r)
+    g = np.clip(150 + 105 * np.maximum(m, ma * 0.8), 0, 255)
     save(np.dstack([g, g, g, a * 255]), "eyeball_vein_web")
 
 
-def vein_band(w=512, h=64):
-    """A tileable band of veins running up from the bottom edge (a wall of flesh): thick at the base, thinning and fading upward. Grey."""
+def vein_band(w=512, h=128):
+    """A tileable band of veined membrane standing on the ground (a wall of flesh): thick veins forking up from the base edge and thin
+    ones hanging from the top, a net of cross-links, a mottled translucent fleshy fill that thins out towards the top. Grey, tinted
+    by the vertex colour."""
     rng = np.random.default_rng(505)
+    k = h / 128
     segs = []
-    for k in range(15):
-        x = (k + rng.uniform(0.1, 0.9)) * w / 15
-        roots = [(x, h - 1, -math.pi / 2 + rng.normal(0, 0.15), h * rng.uniform(0.55, 1.05), rng.uniform(2.6, 3.8))]
-        segs += grow_veins(rng, roots, 2.5, 0.22, 0.10, 3, 0.985, 0.6, lambda px, py: -4 < py < h + 2)
-    for k in range(12):                                                # cross links
+    for i in range(18):
+        x = (i + rng.uniform(0.15, 0.85)) * w / 18
+        roots = [(x, h - 1, -math.pi / 2 + rng.normal(0, 0.12), h * rng.uniform(0.85, 1.15), rng.uniform(4.0, 5.4) * k)]
+        segs += grow_veins(rng, roots, 3.0 * k, 0.030, 0.095, 3, 0.20, 0.7 * k, lambda px, py: -4 < py < h + 2, child_len=(0.4, 0.85), child_w=0.58, spread=(0.30, 0.65), inertia=0.9)
+    for i in range(22):
         x = rng.uniform(0, w)
-        y = rng.uniform(h * 0.25, h * 0.9)
-        segs += grow_veins(rng, [(x, y, rng.choice([0, math.pi]) + rng.normal(0, 0.3), rng.uniform(20, 60), 1.0)], 2.5, 0.22, 0.06, 1, 0.99, 0.5, lambda px, py: 0 < py < h)
+        roots = [(x, 0, math.pi / 2 + rng.normal(0, 0.2), h * rng.uniform(0.35, 0.7), rng.uniform(1.4, 2.4) * k)]
+        segs += grow_veins(rng, roots, 3.0 * k, 0.04, 0.08, 2, 0.25, 0.5 * k, lambda px, py: -4 < py < h + 2, child_len=(0.4, 0.8), child_w=0.6, spread=(0.3, 0.7), inertia=0.9)
+    links = []
+    for j in range(7):
+        yy0 = h * (0.90 - 0.13 * j)
+        x0 = rng.uniform(0, w)
+        links += grow_veins(rng, [(x0, yy0, 0.0, w * 1.05, 1.3 * k)], 4.0 * k, 0.05, 0.0, 0, 1.0, 0.8 * k, lambda px, py: 0 < py < h, inertia=0.95)
     m = draw_segments((w, h), segs, wrap_w=w)
+    ml = draw_segments((w, h), links, wrap_w=w)
     xx, yy = grid(w, h)
     v = 1 - yy / (h - 1)                                               # 0 at the bottom, 1 at the top
-    membrane = np.clip((fbm(w, h, 8, 2, 71, 4, tile_y=False) - 0.3) * 1.6, 0, 1) * 0.32
-    a = np.clip(m * 1.05 + membrane, 0, 1) * smooth(1.0, 0.45, v) * smooth(0.0, 0.05, v + 0.04)
-    g = np.clip(160 + 95 * m, 0, 255)
+    blotch = fbm(w, h, 10, 3, 71, 4, tile_y=False)
+    membrane = np.clip((blotch - 0.22) * 1.6, 0, 1) * (0.62 - 0.30 * v)
+    a = np.clip(m * 1.05 + ml * 0.60 + membrane, 0, 1) * smooth(1.0, 0.72, v) * smooth(0.0, 0.03, v)
+    g = np.clip(120 + 135 * np.maximum(m, ml * 0.8) + 40 * blotch, 0, 255)
     save(np.dstack([g, g, g, a * 255]), "eyeball_vein_band")
 
 
@@ -557,8 +604,8 @@ def scan(size=512):
     r = np.sqrt(nx ** 2 + ny ** 2)
     th = np.arctan2(ny, nx)
     ang = np.mod(-th, 2 * math.pi)                                          # 0 at the head, growing opposite to the screen angle
-    wedge = np.exp(-ang / 0.80) * smooth(0.05, 0.25, r) * smooth(1.0, 0.93, r) * (ang > 0.0)
-    head = np.exp(-((np.minimum(ang, 2 * math.pi - ang)) / 0.012) ** 2) * smooth(0.04, 0.12, r) * smooth(1.0, 0.97, r)
+    wedge = np.exp(-ang / 0.50) * smooth(0.05, 0.25, r) * smooth(1.0, 0.93, r) * (ang > 0.0)
+    head = np.exp(-((np.minimum(ang, 2 * math.pi - ang)) / 0.016) ** 2) * smooth(0.04, 0.12, r) * smooth(1.0, 0.97, r)
     rings = np.zeros_like(r)
     for rr, wd, k in ((0.25, 0.004, 0.35), (0.5, 0.004, 0.40), (0.75, 0.004, 0.40), (0.97, 0.010, 0.85), (0.90, 0.003, 0.30)):
         rings = np.maximum(rings, np.exp(-((r - rr) / wd) ** 2) * k)
@@ -618,20 +665,32 @@ def warp(size=256):
     save(np.dstack([g, g, g, np.clip(v * 6, 0, 1) * 255]), "eyeball_warp")
 
 
-def drop(w=64, h=64):
-    """A glossy teardrop (a tear, a bead of blood), point up, in grey so the vertex colour tints it."""
-    xx, yy = grid(w, h)
-    nx = (xx - (w - 1) / 2) / ((w - 1) / 2)
-    t = yy / (h - 1)                                                      # 0 top (point) .. 1 bottom
-    hw = np.sin(np.clip(t, 0, 1) ** 0.62 * math.pi * 0.5) ** 1.15 * 0.78 * np.clip(1.0 - np.clip((t - 0.92) / 0.08, 0, 1) ** 2, 0, 1)
-    hw = np.where(t < 0.86, hw, 0.78 * np.sqrt(np.clip(1 - ((t - 0.64) / 0.34) ** 2, 0, 1)))
-    d = (np.abs(nx) - hw) / 0.12
-    a = np.clip(1 - d, 0, 1) * (t < 0.99)
-    s = nx / np.maximum(hw, 0.05)
-    shade = 0.50 + 0.50 * np.clip(-0.6 * s + 0.8 * np.sqrt(np.clip(1 - np.minimum(s ** 2, 1), 0, 1)), 0, 1)
-    hl = np.exp(-(((nx + 0.30) / 0.10) ** 2 + ((t - 0.62) / 0.10) ** 2)) * 0.9
-    g = np.clip((shade * 0.80 + hl) * 255, 0, 255)
-    save(np.dstack([g, g, g, a * 255]), "eyeball_drop")
+def drop(size=64):
+    """A glossy teardrop (a tear, a bead of blood), point up, in grey so the vertex colour tints it: lit from the upper left, a bright
+    caustic low right, a sharp glint."""
+    k = 8
+    n = 220
+    pts = []
+    for i in range(n):
+        th = 2 * math.pi * i / n
+        x = math.sin(th) * math.sin(th / 2) ** 1.25
+        y = -math.cos(th)
+        pts.append(((size / 2 + x * size * 0.46) * k, (size / 2 + y * size * 0.45) * k))
+    im = Image.new("L", (size * k, size * k), 0)
+    ImageDraw.Draw(im).polygon(pts, fill=255)
+    m = mask_of(down(im, (size, size)))
+    hgt = blur_mask(m, size * 0.075) ** 0.8
+    gy, gx = np.gradient(hgt)
+    nz = np.full_like(hgt, 1.0)
+    nxn, nyn = -gx * 9.0, -gy * 9.0
+    ln = np.sqrt(nxn ** 2 + nyn ** 2 + nz ** 2)
+    nxn, nyn, nzn = nxn / ln, nyn / ln, nz / ln
+    diff = np.clip(nxn * -0.45 + nyn * -0.55 + nzn * 0.70, 0, 1)
+    xx, yy = grid(size, size)
+    glint = np.exp(-(((xx - size * 0.38) / (size * 0.05)) ** 2 + ((yy - size * 0.50) / (size * 0.085)) ** 2)) * 0.95
+    caustic = np.exp(-(((xx - size * 0.60) / (size * 0.09)) ** 2 + ((yy - size * 0.76) / (size * 0.06)) ** 2)) * 0.45
+    g = np.clip((0.30 + 0.62 * diff + glint + caustic) * 255, 0, 255)
+    save(np.dstack([g, g, g, np.clip(m * 1.1, 0, 1) * 255]), "eyeball_drop")
 
 
 def frag(size=64):
