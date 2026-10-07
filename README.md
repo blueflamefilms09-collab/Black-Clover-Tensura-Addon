@@ -205,6 +205,38 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
 - **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
 
+## 0.48 - Genesis Demon-Slayer, Word Soul counter-words, Zagred's true form, global buff, gamerules
+- **Replacement: the Demon-Slayer Sword is now Genesis-grade** (same item id; Black Divider kept). Guide: `docs/demon_slayer_genesis_spec.md`.
+  - **Conceptual Severance:** a full swing does EP-scaled true damage that ignores armour, enchantments and hit cooldowns, plus spiritual damage.
+  - **Unbreakable.**
+  - **Nullification field (15 blocks, while held):** foes' Ultimate skills jam, their magicules bleed away, and you can't be time-stopped.
+  - **Black Meteorite — Void Severance (sneak + right-click):** locks on up to 100 blocks, charges as a meteor, cuts twice, and leaves a Nihility zone that shatters barriers.
+    - Costs 80% aura, with a 2-minute cooldown.
+    - Its max-EP cut is temporary for players.
+  - **New look:** a 3D model in hand (the inventory icon is unchanged), with crimson void parallax in its split and spots (a custom shader), a five-leaf pommel bloom that pulses near strong beings, and a shard fracture during Black Meteorite.
+  - **New VFX:** meteor and Nihility zone.
+- **New: ten Word Soul counter-words:** Seal, Reject, Fall, Reveal, Sleep, Petrify, Cower, Banish, Reverse, Drain.
+  - All of them wear off, so none is a lasting nerf to a player.
+  - The old words and their look are unchanged.
+- **Replacement: Zagred's boss look and AI.**
+  - **Look:** a cuboid true-form devil (wings, horns, claws, whip tail) with a violet-to-crimson fresnel aura shader, a glow pass, a target reticle and embers.
+  - **Sync:** a state packet.
+  - **AI:** a utility AI that reads the fight and telegraphs each word.
+- **Buff (the owner's call): addon magic now stands with or above Tensura's.**
+  - **Damage:** spell and weapon damage scales with the caster's EP.
+  - **PvP cap:** one hit takes at most 40% of a player's max health (`pvpHitCapPercent`).
+  - **Cooldowns:** 40% shorter (`spellCooldownPercent` = 60).
+- **Replacement: Anti-Magic Spirit Lord merged into the Anti-Magic grimoire.**
+  - Old Lords migrate automatically.
+  - Anti-Magic is now event only: an op gives it with `/multiverse event antimagic <player>`.
+  - **New:** a new Anti-Magic icon.
+- **New: gamerules** for the per-world switches: `/gamerule nusmp...`. Examples: `nusmpZagredBoss`, `nusmpAntiMagicEventOnly`, `nusmpPvpHitCapPercent`, `nusmpSpellCooldownPercent`.
+- **Fixes:**
+  - Charmy's Cotton/Food pages no longer stay sealed.
+  - World Tree trees are taken back fully, even after a restart.
+  - The Four Kingdoms label no longer covers the preset slots.
+  - Grimoire upkeep no longer depends on skill ticks.
+
 ## 0.47 - Kotodama Magic (Word Soul), the Zagred boss
 - **Replacement: Zagred's devil power.** Zagred's old kneel aura (Devil Union) is gone. In Devil Union, Zagred now lends three Kotodama words: **Halt**, **Shatter** and **Heal**, at reduced power. The `ZAGRED` devil entry stays.
 - **New: Kotodama Magic (Word Soul)**, Zagred's magic, a God-class (Tensura Ultimate) grimoire.

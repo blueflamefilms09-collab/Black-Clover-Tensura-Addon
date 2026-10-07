@@ -157,7 +157,76 @@ blender --background --python tools/blender/build_zagred_grimoire.py -- --render
 ```
 Other options: `--glb`, `--save`, `--res`, `--samples`.
 
-## Not verified
+## 0.48 additions
+
+### New: ten counter-words
+Every one of these effects wears off; none is ever a lasting nerf to a player. The existing words and their VFX are unchanged. The new pages are appended to the grimoire.
+
+| Word (aliases) | Cooldown | Devil | Effect |
+|---|---|---|---|
+| **Seal** (lock, silence) | 30 s | yes | Every skill and spell of everyone around is locked: forced cooldowns and Tensura silence, under the control caps. |
+| **Reject** (deny, dispel) | 30 s | no | All buffs are stripped from the foes around, and their barriers, jails and area spells shatter. |
+| **Fall** (down, ground) | 20 s | yes | Fliers are thrown to the ground: flight and elytra cut, levitation gone, Tensura burden. |
+| **Reveal** (expose, show) | 15 s | yes | Invisibility gone; Glowing for 20 s; presence concealment set to zero for 20 s. |
+| **Sleep** (slumber, rest) | 45 s | no | Tensura sleep. |
+| **Petrify** (stone) | 60 s | no | Tensura petrification and spiritual damage. |
+| **Cower** (fear, tremble) | 30 s | yes | Tensura fear and weakness; monsters drop their target. |
+| **Banish** (begone, dismiss) | 45 s | no | Foes' Tensura summons are sent back (they can be called again); everything else is hurled away. |
+| **Reverse** (reflect, rebound) | 45 s | no | For 5 s or more, half of every blow on the speaker is turned back on the attacker. |
+| **Drain** (siphon, wither) | 30 s | no | A tenth of each foe's magicules flows to the speaker, who is healed by it. |
+
+**Cooldowns:**
+- Every word's cooldown now follows the global factor `spellCooldownPercent` (60% by default).
+- The cooldowns in the table are before that factor.
+
+### Replacement: the Zagred boss's look and AI
+The entity id `zagred` is kept.
+
+**Model** (`client/ZagredModel.java`, cuboids, generated with its textures by `tools/gen_zagred_true_form.py`):
+- a pale face with red eyes under black hair;
+- pointed ears and segmented swept horns;
+- a pale ribcage over an ink-black body with violet runes;
+- long arms with long claws, and clawed feet;
+- two-segment tattered bat wings;
+- a five-segment whip tail with a spade.
+
+**Animation:**
+- It hovers on a sine wave and floats higher from phase 2.
+- The wings beat slowly at rest and fast in combat; the tail sways in a wave.
+- Casting raises both claws; a melee swing rakes down.
+
+Preview: `docs/vfx_previews/zagred_true_form.png`.
+
+**Rendering:**
+- a glow pass for the eyes, horn and hair tips and veins;
+- the fresnel aura shader `nusmp:rendertype_zagred_aura`: a rim pulsing violet to crimson, additive, with an eyes fallback;
+- a turning target reticle at its target's feet;
+- dark magenta and black embers.
+
+**Sync:** `ZagredStatePayload` carries the state, the word, the target and the phase.
+
+**Utility AI:** every half second it scores every word against the situation and speaks the best one above a threshold. It telegraphs each word for 0.75 s (Shatter at once) with the reticle and the casting pose. Situations it reads:
+- fliers → Fall;
+- hidden foes → Reveal;
+- buffed foes → Reject;
+- summons → Banish;
+- high-EP players → Seal;
+- clusters → Halt, Cower, Sleep;
+- incoming shots → Shatter;
+- heavy recent damage → Reverse;
+- low health → Drain, and Heal once below 10%.
+
+Phases unlock more words. Facing anti-magic up close, it backs off and throws lances sooner. Elemental adaptation, flooding and the phase-4 rule are as before.
+
+### Not verified
+- **Untested in game:**
+  - the boss's state packet;
+  - the model's poses;
+  - the aura shader on a real driver (it compiled as GLSL ES 3.00 in headless Chromium);
+  - Tensura's `burden`, `sleep` and `petrification` effect ids.
+- **Not done: casting Tensura's own skills.** The prompt asked for summons and Zagred to cast Tensura skills. The boss uses this mod's words and Tensura's effects instead.
+
+## Not verified (0.47)
 
 - **Compile:** CI compiles it and runs the unit tests (green from build 49 on). It was never compiled locally (no Gradle offline here).
 - **Untested in game:**
