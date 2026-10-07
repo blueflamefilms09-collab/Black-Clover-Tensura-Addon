@@ -75,7 +75,9 @@ public enum MagicType {
     SLASH("Slash Magic", "Ripper", "BATTLE", HitEffect.PIERCE, () -> ParticleTypes.SWEEP_ATTACK, () -> MobEffects.DAMAGE_BOOST),
     COMPASS("Compass Magic", "Bearing", "SPACE", HitEffect.PULL, () -> ParticleTypes.WAX_ON, () -> MobEffects.MOVEMENT_SPEED),
     // 0.47: Kotodama (Word Soul) Magic, Zagred's - God-class, creative only (never rolled; see book.KotodamaWords); appended
-    KOTODAMA("Kotodama Magic", "Word Soul", "EMPTY", HitEffect.NULLIFY, () -> ParticleTypes.SQUID_INK, () -> MobEffects.DAMAGE_RESISTANCE);
+    KOTODAMA("Kotodama Magic", "Word Soul", "EMPTY", HitEffect.NULLIFY, () -> ParticleTypes.SQUID_INK, () -> MobEffects.DAMAGE_RESISTANCE),
+    // 0.49: Game Magic (Gifso, Spade Kingdom); appended
+    GAME("Game Magic", "Gamemaster", "FANTASY", HitEffect.SLOW, () -> ParticleTypes.ENCHANT, () -> MobEffects.LUCK);
 
     public final String displayName;
     public final String word;

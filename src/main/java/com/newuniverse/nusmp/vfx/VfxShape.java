@@ -129,7 +129,9 @@ public enum VfxShape {
     KOTO_SLUDGE,             // underworld matter boiling up at 'from': black bubbles, violet tendrils, drain motes; power = size
     // 0.48 Genesis Demon-Slayer
     DEMON_METEOR,            // Black Meteorite: an anti-magic meteor 'from' -> 'to' (black core, crimson rim, torn void streaks, shed shards); power = size
-    NIHILITY_ZONE;           // a Nihility zone round 'from': a black dome edge with crimson cracks, magic motes snuffed out; power = radius
+    NIHILITY_ZONE,           // a Nihility zone round 'from': a black dome edge with crimson cracks, magic motes snuffed out; power = radius
+    // 0.49 Game Magic
+    GAME_BOARD;              // a glowing game board of squares on the ground round 'from' (gold, pulsing); power = radius
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

@@ -923,3 +923,23 @@ Template: `[Spell/Magic description] in Black Clover anime magic spell icon styl
    ```
    ultimate kotodama magic: Halt at full power, complex multi-layered magic circles with a star seal, celestial and abyssal energy, intense particle storm, black iron border lit from within in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing corrupted indigo, violet and ink black magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
    ```
+
+## Game Magic
+
+1. **Active spell / attack** (`textures/skill/grimoire/game.png`)
+
+   ```
+   Monster Toy unleashed as a dynamic game magic attack, energy discharge bursting from an open grimoire, motion streaks, gold embossed frame with clover runes in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing game-board gold and ivory magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```
+
+2. **Buff / grimoire page rune** (`textures/skill/icons/game_buff.png`)
+
+   ```
+   a glowing game magic rune sigil on an ancient parchment grimoire page, mystical glyph circle, binding chains and a faint defensive shield, silver stone border in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing game-board gold and ivory magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```
+
+3. **Ultimate / forbidden** (`textures/skill/icons/game_ultimate.png`)
+
+   ```
+   ultimate game magic: Monster Toy at full power, complex multi-layered magic circles with a star seal, celestial and abyssal energy, intense particle storm, black iron border lit from within in Black Clover anime magic spell icon style, RPG user interface asset, centered composition, dark fantasy aesthetic, glowing game-board gold and ivory magic aura, intricate rune borders, clean lines, highly detailed digital painting, vibrant magical particle effects --ar 1:1
+   ```

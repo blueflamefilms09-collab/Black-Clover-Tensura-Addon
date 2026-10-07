@@ -86,6 +86,7 @@ MAGIC = {
     "compass":       ("Compass Magic", 0xFFC94A, 0xFFF0C0, "brass, gold and compass green", "Useless North"),
     # 0.47 (appended so every existing icon keeps its seed)
     "kotodama":      ("Kotodama Magic", 0x8A4CFF, 0x1E1640, "corrupted indigo, violet and ink black", "Halt"),
+    "game":          ("Game Magic", 0xE8C04A, 0xF4ECD8, "game-board gold and ivory", "Monster Toy"),
 }
 
 
@@ -561,6 +562,19 @@ def g_compass(d):
         rr = (math.cos(a - 0.35) * 1.8, math.sin(a - 0.35) * 1.8)
         d.polygon(P([l, tip, rr]), fill=255 if k % 2 == 0 else 170)
     d.ellipse(box(-1.4, -1.4, 1.4, 1.4), fill=255)
+
+
+def g_game(d):
+    """0.49 Game Magic: a d20 standing on a tilted game board."""
+    for i in range(4):
+        for j in range(4):
+            if (i + j) % 2 == 0:
+                x0, y0 = -10 + i * 5, 2 + j * 2.2
+                d.polygon(P([(x0 + j * 0.6, y0), (x0 + 5 + j * 0.6, y0), (x0 + 5 + (j + 1) * 0.6, y0 + 2.2), (x0 + (j + 1) * 0.6, y0 + 2.2)]), fill=150)
+    hexa = [(math.cos(math.pi / 6 + k * math.pi / 3) * 7.5, -3 + math.sin(math.pi / 6 + k * math.pi / 3) * 7.5) for k in range(6)]
+    d.polygon(P(hexa), fill=255)
+    d.polygon(P([(0, -8.5), (5.2, 0.2), (-5.2, 0.2)]), fill=170)
+    d.line(P([(0, -8.5), (0, -10.5)]), fill=120, width=int(0.8 * U))
 
 
 def g_kotodama(d):
