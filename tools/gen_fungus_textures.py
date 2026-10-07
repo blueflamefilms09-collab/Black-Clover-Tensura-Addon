@@ -637,6 +637,287 @@ def haze(w=256, h=64):
     save(rgba_img(255 * shade, a), "fungus_haze")
 
 
+# ------------------------------------------------------------------------------------------------ mushrooms (real colours)
+LIGHT = np.array([-0.50, -0.55, 0.67], np.float32)
+LIGHT /= np.linalg.norm(LIGHT)
+
+KINDS = {
+    # stem colour, stem half-widths (top, foot) / bulb / lean, cap: y of the margin, width, height, exponent, centre / edge colour
+    "oyster": dict(stem=(238, 226, 194), sw=(0.150, 0.175), bulb=0.02, cap_y=0.20, cap_w=0.86, cap_h=0.15, e=2.7, c0=(122, 80, 46), c1=(204, 164, 112), lip=0.030),
+    "amanita": dict(stem=(244, 240, 228), sw=(0.085, 0.100), bulb=0.07, cap_y=0.42, cap_w=0.92, cap_h=0.30, e=2.1, c0=(168, 24, 26), c1=(226, 58, 44), lip=0.040, warts=16, skirt=True),
+    "brown": dict(stem=(226, 204, 164), sw=(0.150, 0.180), bulb=0.06, cap_y=0.40, cap_w=0.94, cap_h=0.30, e=2.0, c0=(108, 64, 34), c1=(176, 118, 64), lip=0.040),
+    "honey": dict(stem=(214, 188, 130), sw=(0.075, 0.095), bulb=0.03, cap_y=0.34, cap_w=0.80, cap_h=0.24, e=2.1, c0=(176, 132, 60), c1=(220, 176, 92), lip=0.035, scales=True),
+    "glow": dict(stem=(208, 244, 176), sw=(0.055, 0.075), bulb=0.0, cap_y=0.30, cap_w=0.92, cap_h=0.24, e=2.0, c0=(150, 226, 120), c1=(236, 255, 168), lip=0.040, glow=True),
+}
+
+
+def mushroom(w, h, kind, seed, lean=0.0, cap_shift=0.0):
+    """One upright mushroom (side view, base at the bottom centre), shaded analytically from the upper left. Returns (rgb, a) at (w, h)."""
+    P = KINDS[kind]
+    rng = np.random.default_rng(seed)
+    yy, xx = np.mgrid[0:h, 0:w].astype(np.float32) + 0.5
+    cx = w * 0.5
+    base_y = h * 0.965
+    cap_y = h * P["cap_y"]
+    cv = Canvas(w, h)
+    # --- stem
+    t = np.clip((yy - cap_y) / max(base_y - cap_y, 1), 0, 1)
+    hw = w * (P["sw"][0] + (P["sw"][1] - P["sw"][0]) * t) + w * P["bulb"] * smooth(0.78, 1.0, t)
+    scx = cx + w * lean * t ** 2 + (value_noise(w, h, (w * 0.5, h * 0.12), seed + 1, False) - 0.5) * w * 0.025
+    dx = (xx - scx) / np.maximum(hw, 1)
+    m = np.clip((1 - np.abs(dx)) * hw, 0, 1) * np.clip(base_y - yy, 0, 1) * (yy > cap_y - h * 0.04)
+    nz = np.sqrt(np.clip(1 - dx ** 2, 0, 1))
+    lam = np.clip(dx * LIGHT[0] + nz * LIGHT[2], 0, 1)
+    shade = 0.34 + 0.80 * lam
+    fib = 0.86 + 0.28 * value_noise(w, h, (w * 0.03, h * 0.55), seed + 2, False)
+    shade = shade * fib * (0.50 + 0.50 * smooth(0.0, 0.30, t))
+    col = np.array(P["stem"], np.float32)[None, None, :] * shade[..., None]
+    if P.get("glow"):
+        col = col + 40 * (1 - np.abs(dx))[..., None]
+    cv.over(col, m)
+    # --- skirt (fly agaric)
+    if P.get("skirt"):
+        ys = cap_y + h * 0.085
+        sx = scx
+        a_, b_ = w * 0.20, h * 0.030
+        q = ((xx - sx) / a_) ** 2 + ((yy - ys) / b_) ** 2
+        mk = np.clip((1 - q) * 2.5, 0, 1)
+        sh = 0.62 + 0.38 * smooth(1.0, -1.0, (yy - ys) / b_)
+        cv.over(np.array([246, 242, 232], np.float32)[None, None, :] * sh[..., None], mk)
+    # --- underside of the cap (gills seen from a little below)
+    A = w * P["cap_w"] * 0.5
+    B = h * P["cap_h"]
+    cxc = cx + w * cap_shift
+    lip = h * P["lip"]
+    nxu = (xx - cxc) / A
+    nyu = (yy - cap_y) / max(lip, 1)
+    mu = np.clip((1 - (nxu ** 2 + nyu ** 2)) * lip * 0.9, 0, 1) * (yy >= cap_y)
+    gl = 0.80 + 0.20 * np.sin(np.arctan2(nyu, nxu) * 46)
+    ucol = np.array(P["stem"], np.float32) * 0.80 if not P.get("glow") else np.array([255, 255, 190], np.float32)
+    cv.over(ucol[None, None, :] * (gl * (0.55 + 0.45 * smooth(0.0, 0.8, np.abs(nxu))))[..., None], mu)
+    # --- the dome
+    nx = (xx - cxc) / A
+    ny = (cap_y - yy) / B
+    sd = (np.abs(nx) ** P["e"] + np.maximum(ny, 0) ** P["e"]) ** (1 / P["e"])
+    md = np.clip((1 - sd) * min(A, B) * 0.8, 0, 1) * (yy <= cap_y + 1)
+    nzz = np.sqrt(np.clip(1 - np.minimum(nx ** 2 + ny ** 2, 1), 0, 1))
+    lamd = np.clip(-0.50 * nx + 0.55 * ny + 0.67 * nzz, 0, 1)
+    c0, c1 = np.array(P["c0"], np.float32), np.array(P["c1"], np.float32)
+    tt = smooth(0.15, 1.0, sd)[..., None]
+    ccol = c0 * (1 - tt) + c1 * tt
+    th = np.arctan2(ny, nx)
+    fibre = 0.90 + 0.20 * circ_noise(th, 70, seed + 5) * (0.4 + sd)
+    ccol = ccol * fibre[..., None] * (0.42 + 0.88 * lamd)[..., None]
+    spec = (np.clip(lamd, 0, 1) ** 16 * 0.55)[..., None] * np.array([255, 245, 220], np.float32)
+    ccol = ccol + spec * smooth(0.0, 0.5, ny)[..., None]
+    if P.get("glow"):
+        ccol = ccol + 38 * (sd[..., None])
+    cv.over(ccol, md)
+    for _ in range(P.get("warts", 0)):                                    # white warts on the red cap
+        u, v = rng.uniform(-0.82, 0.82), rng.uniform(0.10, 0.86)
+        if u * u + v * v > 0.80:
+            continue
+        zc = math.sqrt(max(0.05, 1 - u * u - v * v))
+        wr = (0.065 + 0.05 * rng.random()) * zc
+        q = ((nx - u) / (wr * 1.0 / 1.0) / (A / B)) ** 2
+        qx = ((xx - (cxc + u * A)) / (A * wr * 1.15)) ** 2 + ((yy - (cap_y - v * B)) / (B * wr * 1.6)) ** 2
+        mk = np.clip((1 - qx) * 3, 0, 1) * md
+        wl = 0.78 + 0.22 * smooth(0.6, -0.4, -(u - 0.0) * LIGHT[0] * 0 + (xx - (cxc + u * A)) / (A * wr * 1.15))
+        cv.over(np.array([252, 248, 236], np.float32)[None, None, :] * wl[..., None] * (0.7 + 0.3 * lamd)[..., None], mk)
+    if P.get("scales"):                                                    # honey fungus: dark scales
+        for _ in range(26):
+            u, v = rng.uniform(-0.85, 0.85), rng.uniform(0.05, 0.9)
+            if u * u + v * v > 0.8:
+                continue
+            qx = ((xx - (cxc + u * A)) / (A * 0.045)) ** 2 + ((yy - (cap_y - v * B)) / (B * 0.05)) ** 2
+            cv.over(np.array([96, 62, 28], np.float32), np.clip((1 - qx) * 2, 0, 1) * md * 0.8)
+    return cv.rgb, cv.a
+
+
+def mushroom_sheet(name, cells, cw=128, ch=256, glow_halo=False):
+    """cells: list (one per cell) of lists of (kind, x_frac, height_frac, lean, seed): the mushrooms of that cell, back to front."""
+    W = cw * len(cells) * HS
+    H = ch * HS
+    cv = Canvas(W, H)
+    for ci, items in enumerate(cells):
+        for kind, xf, hf, lean, seed in items:
+            hh = int(ch * HS * hf)
+            ww = int(hh * 0.5)
+            rgb, a = mushroom(ww, hh, kind, seed, lean)
+            x0 = int(ci * cw * HS + xf * cw * HS - ww / 2)
+            y0 = int(ch * HS * 0.975 - hh)
+            cv.over(rgb, a, x0, y0)
+    if glow_halo:
+        pass
+    im = cv.image(HS)
+    arr = np.asarray(im, np.float32)
+    cwp = cw
+    for ci in range(len(cells)):                                         # clear margin around every cell
+        arr[:, ci * cwp:ci * cwp + 4, 3] = 0
+        arr[:, ci * cwp + cwp - 4:(ci + 1) * cwp, 3] = 0
+    arr[:3, :, 3] = 0
+    arr[-2:, :, 3] = 0
+    save(Image.fromarray(np.rint(arr).astype(np.uint8), "RGBA"), name)
+
+
+def shrooms():
+    """The four species atlas (see the module docstring)."""
+    mushroom_sheet("fungus_shrooms", [
+        [("oyster", 0.5, 0.97, 0.0, 11)],
+        [("amanita", 0.5, 0.80, 0.0, 21), ("amanita", 0.80, 0.46, 0.05, 22)],
+        [("brown", 0.34, 0.60, -0.06, 31), ("brown", 0.66, 0.74, 0.07, 32), ("honey", 0.52, 0.46, 0.02, 33)],
+        [("glow", 0.28, 0.50, -0.08, 41), ("glow", 0.52, 0.85, 0.0, 42), ("glow", 0.76, 0.58, 0.09, 43)],
+    ])
+
+
+# ------------------------------------------------------------------------------------------------ Mr. Mushroom
+def mr_mushroom(name, heavy=False, w=128, h=256):
+    """The mushroom folk of the canon spells: Towering Mr. Mushroom (a king oyster with arms, legs and a calm face, arms raised) or Heavy Mr.
+    Mushroom (the same, old and tired: drooping lids, bags, a long frown, arms hanging). Real colours."""
+    W, H = w * HS, h * HS
+    cv = Canvas(W, H)
+    yy, xx = np.mgrid[0:H, 0:W].astype(np.float32) + 0.5
+    cx = W * 0.5
+    skin = np.array([240, 228, 198], np.float32)
+    dark = np.array([84, 52, 34], np.float32)
+
+    def tube(p0, p1, r0, r1, col):
+        """A shaded capsule from p0 to p1."""
+        dx, dy = p1[0] - p0[0], p1[1] - p0[1]
+        L2 = dx * dx + dy * dy
+        t = np.clip(((xx - p0[0]) * dx + (yy - p0[1]) * dy) / L2, 0, 1)
+        px, py = p0[0] + dx * t, p0[1] + dy * t
+        r = r0 + (r1 - r0) * t
+        dist = np.sqrt((xx - px) ** 2 + (yy - py) ** 2)
+        m = np.clip((r - dist), 0, 1)
+        nxn = (xx - px) / np.maximum(r, 1)
+        nyn = (yy - py) / np.maximum(r, 1)
+        nzn = np.sqrt(np.clip(1 - nxn ** 2 - nyn ** 2, 0, 1))
+        lam = np.clip(nxn * LIGHT[0] + nyn * LIGHT[1] + nzn * LIGHT[2], 0, 1)
+        cv.over(np.asarray(col, np.float32)[None, None, :] * (0.38 + 0.78 * lam)[..., None], m)
+
+    s = HS
+    body_top, body_bot = H * 0.30, H * 0.80
+    # legs
+    for sx in (-1, 1):
+        tube((cx + sx * W * 0.10, body_bot - H * 0.04), (cx + sx * W * 0.13, H * 0.93), W * 0.058, W * 0.050, skin)
+        tube((cx + sx * W * 0.13, H * 0.945), (cx + sx * W * 0.19, H * 0.955), W * 0.050, W * 0.058, skin * 0.97)
+    # arms
+    for sx in (-1, 1):
+        if heavy:
+            tube((cx + sx * W * 0.19, H * 0.50), (cx + sx * W * 0.31, H * 0.64), W * 0.036, W * 0.034, skin)
+            tube((cx + sx * W * 0.31, H * 0.64), (cx + sx * W * 0.30, H * 0.80), W * 0.034, W * 0.040, skin)
+        else:
+            tube((cx + sx * W * 0.19, H * 0.52), (cx + sx * W * 0.33, H * 0.42), W * 0.036, W * 0.034, skin)
+            tube((cx + sx * W * 0.33, H * 0.42), (cx + sx * W * 0.36, H * 0.27), W * 0.034, W * 0.042, skin)
+    # trunk (a fat cylinder, slightly narrower at the top)
+    t = np.clip((yy - body_top) / (body_bot - body_top), 0, 1)
+    hw = W * (0.175 + 0.035 * t) * (1 + 0.04 * np.sin(t * 9 + 1))
+    dx = (xx - cx) / np.maximum(hw, 1)
+    m = np.clip((1 - np.abs(dx)) * hw, 0, 1) * np.clip(yy - (body_top - H * 0.02), 0, 1) * np.clip(body_bot - yy + H * 0.02, 0, 1)
+    nz = np.sqrt(np.clip(1 - dx ** 2, 0, 1))
+    lam = np.clip(dx * LIGHT[0] + nz * LIGHT[2], 0, 1)
+    fib = 0.88 + 0.24 * value_noise(W, H, (W * 0.03, H * 0.5), 91, False)
+    cv.over(skin[None, None, :] * ((0.40 + 0.78 * lam) * fib * (0.62 + 0.38 * smooth(0.0, 0.2, t)))[..., None], m)
+    # the face
+    fy = H * (0.44 if heavy else 0.43)
+    for sx in (-1, 1):
+        ex, ey = cx + sx * W * 0.085, fy
+        if heavy:                                                          # drooping half-lids, bags under them
+            lid = np.clip(1 - np.abs(((xx - ex) / (W * 0.052))) ** 2.2, 0, 1)
+            lidline = np.abs((yy - (ey + (xx - ex) * sx * 0.20 * 0 + 0)) ) < H * 0.0045
+            cv.over(dark, np.clip(1 - np.abs(yy - (ey + 0.012 * H * (1 - lid))) / (H * 0.0065), 0, 1) * (lid > 0.02))
+            cv.over(np.array([196, 176, 150], np.float32), np.clip(1 - np.abs(yy - (ey + H * 0.026 + 0.008 * H * (1 - lid))) / (H * 0.0045), 0, 1) * (lid > 0.1) * 0.8)
+            cv.over(dark, np.clip(1 - np.abs(yy - (ey - H * 0.024 - sx * (xx - ex) * 0.0 + (xx - ex) * sx * 0.12)) / (H * 0.0050), 0, 1) * (lid > 0.2))
+        else:                                                              # calm closed eyes: upward arcs
+            arc = ey + H * 0.012 - H * 0.016 * np.clip(1 - ((xx - ex) / (W * 0.050)) ** 2, 0, 1)
+            cv.over(dark, np.clip(1 - np.abs(yy - arc) / (H * 0.0055), 0, 1) * (np.abs(xx - ex) < W * 0.052))
+    if heavy:                                                              # long frown, wrinkles on the brow
+        fr = fy + H * 0.075 + H * 0.010 * np.clip(((xx - cx) / (W * 0.07)) ** 2, 0, 1) * -1 + 0.0
+        fr = fy + H * 0.092 - H * 0.016 * np.clip(1 - ((xx - cx) / (W * 0.075)) ** 2, 0, 1)
+        cv.over(dark, np.clip(1 - np.abs(yy - fr) / (H * 0.0055), 0, 1) * (np.abs(xx - cx) < W * 0.075))
+        for k in range(3):
+            wy = body_top + H * (0.035 + 0.016 * k)
+            cv.over(np.array([176, 150, 120], np.float32), np.clip(1 - np.abs(yy - wy - H * 0.004 * np.sin((xx - cx) / W * 30)) / (H * 0.0032), 0, 1) * (np.abs(xx - cx) < W * (0.14 - 0.02 * k)) * 0.8)
+    else:
+        sm = fy + H * 0.060 + H * 0.014 * np.clip(1 - ((xx - cx) / (W * 0.055)) ** 2, 0, 1)
+        cv.over(dark, np.clip(1 - np.abs(yy - sm) / (H * 0.0055), 0, 1) * (np.abs(xx - cx) < W * 0.055))
+    cv.over(np.array([236, 150, 132], np.float32), np.exp(-(((xx - cx - W * 0.135) / (W * 0.035)) ** 2 + ((yy - fy - H * 0.035) / (H * 0.018)) ** 2)) * 0.55 * m)
+    cv.over(np.array([236, 150, 132], np.float32), np.exp(-(((xx - cx + W * 0.135) / (W * 0.035)) ** 2 + ((yy - fy - H * 0.035) / (H * 0.018)) ** 2)) * 0.55 * m)
+    # cap: wide, flat, brown, with a lighter rim
+    cap_y = body_top + H * 0.01
+    A, B = W * (0.44 if not heavy else 0.46), H * (0.115 if not heavy else 0.13)
+    lip = H * 0.028
+    nxu, nyu = (xx - cx) / A, (yy - cap_y) / lip
+    cv.over(np.array([196, 174, 134], np.float32)[None, None, :] * (0.7 + 0.2 * np.sin(np.arctan2(nyu, nxu) * 40))[..., None],
+            np.clip((1 - (nxu ** 2 + nyu ** 2)) * lip * 0.9, 0, 1) * (yy >= cap_y))
+    nx, ny = (xx - cx) / A, (cap_y - yy) / B
+    sd = (np.abs(nx) ** 2.6 + np.maximum(ny, 0) ** 2.6) ** (1 / 2.6)
+    md = np.clip((1 - sd) * min(A, B) * 0.8, 0, 1) * (yy <= cap_y + 1)
+    nzz = np.sqrt(np.clip(1 - np.minimum(nx ** 2 + ny ** 2, 1), 0, 1))
+    lamd = np.clip(-0.50 * nx + 0.55 * ny + 0.67 * nzz, 0, 1)
+    tt = smooth(0.2, 1.0, sd)[..., None]
+    ccol = np.array([118, 74, 42], np.float32) * (1 - tt) + np.array([200, 158, 108], np.float32) * tt
+    ccol = ccol * (0.40 + 0.90 * lamd)[..., None] * (0.92 + 0.16 * circ_noise(np.arctan2(ny, nx), 60, 7))[..., None]
+    ccol = ccol + (np.clip(lamd, 0, 1) ** 16 * 0.5)[..., None] * 255 * smooth(0.0, 0.5, ny)[..., None]
+    cv.over(ccol, md)
+    save(cv.image(HS), name)
+
+
+# ------------------------------------------------------------------------------------------------ debris
+def debris(size=128):
+    """Atlas 2x2 (64 px cells): 0 cap chunk, 1 stem chunk, 2 spore pod, 3 baby mushroom. Real colours, thrown out of a burst."""
+    cell = 64
+    H = cell * HS
+    cv = Canvas(size * HS, size * HS)
+    rng = np.random.default_rng(12)
+
+    def chunk(ci, cj, kind):
+        yy, xx = np.mgrid[0:H, 0:H].astype(np.float32) + 0.5
+        c = H / 2
+        x, y = (xx - c) / (H * 0.36), (yy - c) / (H * 0.36)
+        wob = (fbm(H, H, 28, 5 + ci * 3 + cj, 3, tile=False) - 0.5) * 0.5
+        if kind == "cap":                      # a curved shell fragment: brown outside, cream gilled inside
+            r = np.sqrt(x * x + y * y)
+            shell = (r < 1.0 + wob) & (r > 0.52 + wob * 0.5) & (y < 0.35 + x * 0.25)
+            m = np.clip(shell.astype(np.float32), 0, 1)
+            m = gblur(m, 1.4)
+            lam = np.clip(-0.5 * x / np.maximum(r, 0.1) * 0.8 - 0.55 * y / np.maximum(r, 0.1) * 0.8 + 0.45, 0, 1)
+            out = np.array([128, 82, 46], np.float32)[None, None, :] * (0.5 + 0.8 * lam)[..., None]
+            inner = smooth(0.52, 0.72, r)
+            gill = (0.7 + 0.3 * np.sin(np.arctan2(y, x) * 34))[..., None] * np.array([226, 206, 164], np.float32)
+            out = out * inner[..., None] + gill * (1 - inner[..., None])
+            out = np.where((r > 0.90 + wob)[..., None], out * 0.8 + np.array([204, 164, 112], np.float32) * 0.2, out)
+        elif kind == "stem":                   # a fibrous torn chunk of stem
+            m = np.clip(1 - (np.abs(x) / (0.52 + wob)) ** 3 - (np.abs(y) / (0.80 + wob)) ** 3, 0, 1) ** 0.5
+            m = gblur((m > 0.35).astype(np.float32), 1.4)
+            lam = np.clip(0.5 - 0.6 * x, 0, 1)
+            fib = 0.86 + 0.28 * value_noise(H, H, (H * 0.04, H * 0.5), 9, False)
+            out = np.array([238, 226, 194], np.float32)[None, None, :] * ((0.45 + 0.7 * lam) * fib)[..., None]
+        else:                                  # spore pod: a warty olive bulb
+            r = np.sqrt(x * x + y * y)
+            m = np.clip((0.82 - r) * H * 0.36, 0, 1)
+            z = np.sqrt(np.clip(1 - (r / 0.82) ** 2, 0, 1))
+            lam = np.clip(-0.45 * x / 0.82 - 0.5 * y / 0.82 + 0.74 * z, 0, 1)
+            warts = np.exp(-((((x * 7) % 1) - 0.5) ** 2 + (((y * 7) % 1) - 0.5) ** 2) / 0.06)
+            out = np.array([150, 160, 70], np.float32)[None, None, :] * (0.42 + 0.78 * lam + 0.2 * warts * lam)[..., None]
+            out = out + (np.clip(lam, 0, 1) ** 12 * 80)[..., None]
+        cv.over(out, m, int((cj * cell) * HS), int((ci * cell) * HS))
+
+    chunk(0, 0, "cap")
+    chunk(0, 1, "stem")
+    chunk(1, 0, "pod")
+    rgb, a = mushroom(int(cell * HS * 0.62), int(cell * HS * 0.92), "brown", 61)
+    cv.over(rgb, a, int(cell * HS + (cell * HS - rgb.shape[1]) / 2), int(cell * HS + cell * HS * 0.04))
+    im = cv.image(HS)
+    arr = np.asarray(im, np.float32)
+    for k in range(2):
+        for edge in (k * cell, k * cell + cell - 3):
+            arr[edge:edge + 3, :, 3] = 0 if edge < size else arr[edge:edge + 3, :, 3]
+            arr[:, edge:edge + 3, 3] = 0
+    save(Image.fromarray(np.rint(arr).astype(np.uint8), "RGBA"), "fungus_debris")
+
+
 MAKERS = {
     "puff": lambda: (puff("fungus_puff", 256, 1), puff("fungus_puff2", 256, 7, 0.72, 0.7, 0.9)),
     "spores": spores,
@@ -649,6 +930,9 @@ MAKERS = {
     "hypha": hypha,
     "trail": trail,
     "haze": haze,
+    "shrooms": shrooms,
+    "mr": lambda: (mr_mushroom("fungus_mr_mushroom", False), mr_mushroom("fungus_mr_heavy", True)),
+    "debris": debris,
 }
 
 

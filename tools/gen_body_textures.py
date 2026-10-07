@@ -155,9 +155,9 @@ def steam_cell(n, seed, kind):
     dens = np.zeros((n, n), np.float32)
     blobs = []
     for _ in range(count):                                   # the body of the cloud
-        a, d = rng.uniform(0, TAU), rng.uniform(0.0, 0.40)
+        a, d = rng.uniform(0, TAU), rng.uniform(0.0, 0.46)
         cx, cy = math.cos(a) * d, math.sin(a) * d * squash
-        rr = rng.uniform(0.26, 0.40) * (0.62 + 0.38 * squash)
+        rr = rng.uniform(0.32, 0.46) * (0.62 + 0.38 * squash)
         blobs.append((cx, cy, rr))
         q = ((xw - cx) ** 2 + ((yw - cy) / squash) ** 2) / (rr * rr)
         dens += np.clip(1 - q, 0, 1) ** 1.6 * rng.uniform(0.8, 1.1)
@@ -169,7 +169,8 @@ def steam_cell(n, seed, kind):
         q = ((xw - cx) ** 2 + ((yw - cy) / squash) ** 2) / (rr * rr)
         dens += np.clip(1 - q, 0, 1) ** 1.4 * rng.uniform(0.6, 1.0)
     dens *= 0.80 + 0.40 * fbm(n, n, 10, seed + 3, 4, wrap=False)
-    alpha = smoothstep(0.12, 0.50, dens) * (1 - smoothstep(0.80, 0.97, np.maximum(np.abs(x), np.abs(y))))
+    wisp = 0.78 + 0.22 * fbm(n, n, 6, seed + 5, 3, wrap=False)
+    alpha = smoothstep(0.03, 0.78, dens) ** 1.15 * wisp * (1 - smoothstep(0.78, 0.97, np.maximum(np.abs(x), np.abs(y))))
     return shade_from_density(dens), alpha
 
 
@@ -204,7 +205,7 @@ def steam_jet(w=128, h=256):
         q = ((uw - cx) ** 2 + (Yw - cy) ** 2) / (rr * rr)
         dens += np.clip(1 - q, 0, 1) ** 1.6 * rng.uniform(0.75, 1.15)
     dens *= 0.80 + 0.40 * fbm(w, h, 10, seed + 3, 4, wrap=False)
-    alpha = smoothstep(0.12, 0.52, dens) * (1 - smoothstep(0.80, 1.0, v)) * smoothstep(0.0, 0.025, v)
+    alpha = smoothstep(0.03, 0.80, dens) ** 1.1 * (0.80 + 0.20 * fbm(w, h, 6, seed + 5, 3, wrap=False)) * (1 - smoothstep(0.80, 1.0, v)) * smoothstep(0.0, 0.025, v)
     alpha *= 1 - smoothstep(0.84, 0.99, np.abs(u))
     save(shade_from_density(dens), alpha, "body_steam_jet")
 
@@ -280,11 +281,11 @@ def flesh(size=256):
     g1 = fbm(W, H, 8, 311, 4, ch=96)           # fine fibres, long in the radial direction (the swirl turns them)
     g2 = fbm(W, H, 24, 331, 3, ch=128)
     g3 = fbm(W, H, 64, 351, 3, ch=64)
-    twist = 0.30 * r + 0.035 * np.sin(r * 9)
+    twist = 0.20 * r + 0.03 * np.sin(r * 9)
     f = ((u + twist) % 1.0) * W, r * (H - 1)
     grain, bundle, mott = sample_wrapx(g1, *f), sample_wrapx(g2, *f), sample_wrapx(g3, *f)
     crease = smoothstep(0.60, 0.78, sample_wrapx(fbm(W, H, 20, 371, 3, ch=160), *f))
-    lum = 0.28 + 0.36 * grain + 0.22 * bundle + 0.16 * mott - 0.34 * crease
+    lum = 0.34 + 0.34 * grain + 0.20 * bundle + 0.16 * mott - 0.20 * crease
     lum = lum * (1.0 - 0.30 * smoothstep(0.55, 0.95, r)) + 0.12 * np.exp(-(r / 0.30) ** 2)
     rim = np.exp(-((r - 0.955) / 0.012) ** 2) * 0.5
     alpha = (0.80 + 0.20 * grain) * (1 - smoothstep(0.935, 0.975, r)) + rim
@@ -555,53 +556,45 @@ def spark(size=64):
 
 
 # ------------------------------------------------------------------------------------------------ emblem
+def catmull(points, n=14):
+    """Closed Catmull-Rom spline through the points."""
+    out = []
+    m = len(points)
+    for i in range(m):
+        p0, p1, p2, p3 = (np.array(points[(i + k) % m], np.float64) for k in (-1, 0, 1, 2))
+        for t in np.linspace(0, 1, n, endpoint=False):
+            out.append(tuple(0.5 * ((2 * p1) + (-p0 + p2) * t + (2 * p0 - 5 * p1 + 4 * p2 - p3) * t * t + (-p0 + 3 * p1 - 3 * p2 + p3) * t ** 3)))
+    return out
+
+
 def flex(size=256):
-    """A flexed arm (the strength sign): shoulder and bicep on the left, forearm rising to a fist, with a rim light, an inner bevel line,
-    fibre striation across the bicep and a vein down the forearm. The emblem of the field and of the burst."""
-    x, y, r, _ = polar(size)
-    X, Y = x, -y
-
-    def capsule(ax, ay, bx, by, ra, rb):
-        pax, pay, bax, bay = X - ax, Y - ay, bx - ax, by - ay
-        h = np.clip((pax * bax + pay * bay) / (bax * bax + bay * bay), 0, 1)
-        return np.hypot(pax - bax * h, pay - bay * h) - (ra + (rb - ra) * h)
-
-    def ellipse(cx, cy, rx, ry, rot=0.0):
-        c, s = math.cos(rot), math.sin(rot)
-        px, py = X - cx, Y - cy
-        qx, qy = px * c + py * s, -px * s + py * c
-        return (np.sqrt((qx / rx) ** 2 + (qy / ry) ** 2) - 1) * min(rx, ry)
-
-    def smin(a, b, k):
-        h = np.clip(0.5 + 0.5 * (b - a) / k, 0, 1)
-        return b * (1 - h) + a * h - k * h * (1 - h)
-
-    upper = capsule(-0.60, -0.12, 0.14, -0.50, 0.20, 0.15)           # upper arm, shoulder to elbow
-    fore = capsule(0.14, -0.50, 0.30, 0.22, 0.16, 0.125)             # forearm up to the wrist
-    bicep = ellipse(-0.20, -0.10, 0.37, 0.26, -0.50)                 # the bulge on top of the upper arm
-    delt = ellipse(-0.64, 0.0, 0.22, 0.25)                           # shoulder cap
-    fist = ellipse(0.335, 0.43, 0.20, 0.19, 0.1)
-    d = smin(upper, fore, 0.10)
-    d = smin(d, smin(bicep, delt, 0.12), 0.10)
-    d = smin(d, fist, 0.08)
-    for kx, ky in ((0.255, 0.58), (0.335, 0.62), (0.415, 0.57)):     # knuckles
-        d = smin(d, np.hypot(X - kx, Y - ky) - 0.075, 0.05)
-    gy, gx = np.gradient(blur(d, 1.2))
-    g = np.sqrt(gx * gx + gy * gy) + 1e-5
-    lit = np.clip((gx * 0.6 + gy * 0.8) / g, -1, 1)                   # light from the upper left (image coordinates)
-    inner = np.clip(-d / 0.26, 0, 1)
-    bevel = np.exp(-((d + 0.055) / 0.010) ** 2) * (0.35 + 0.65 * np.clip(lit, 0, 1))
-    stri = np.cos(46 * (np.sqrt(((X + 0.20) / 0.37) ** 2 + ((Y + 0.10) / 0.26) ** 2)))
-    bicep_in = np.clip(-ellipse(-0.20, -0.10, 0.37, 0.26, -0.50) / 0.1, 0, 1) * np.clip(-d / 0.03, 0, 1)
-    vein = np.exp(-((X - (0.215 + 0.022 * np.sin(Y * 16 + 1.0))) / 0.009) ** 2) * (Y > -0.30) * (Y < 0.24) * np.clip(-d / 0.05, 0, 1)
-    rimline = np.exp(-(d / 0.013) ** 2)
-    lum = 0.46 + 0.28 * inner + 0.20 * np.clip(lit, -0.3, 1) + 0.10 * stri * bicep_in + 0.30 * vein + 0.55 * bevel
-    lum = np.clip(lum + rimline * 0.9, 0, 1)
-    cover = smoothstep(0.012, -0.006, d)
-    glow = np.exp(-(np.maximum(d, 0) / 0.055) ** 2) * 0.42
-    a = np.maximum(cover * 0.86, glow) * (1 - smoothstep(0.93, 1.0, r))
-    a = np.clip(a + 0.14 * cover * (0.5 + 0.5 * stri * bicep_in) + 0.25 * bevel + 0.3 * vein, 0, 1)
-    save(np.where(cover > 0.5, lum, 1.0), a, "body_flex")
+    """A flexed arm (the strength sign): shoulder and bicep on the left, forearm rising to a fist. Embossed like a medal: rim light, inner
+    bevel line, a soft inner glow and fibre lines across the bicep. The emblem of the field and of the burst."""
+    S = size * SS
+    outline = [(0.07, 0.60), (0.10, 0.47), (0.18, 0.36), (0.30, 0.28), (0.43, 0.27), (0.53, 0.32), (0.59, 0.40), (0.60, 0.30), (0.60, 0.20),
+               (0.57, 0.12), (0.62, 0.05), (0.73, 0.03), (0.83, 0.07), (0.87, 0.16), (0.84, 0.26), (0.80, 0.36), (0.80, 0.50),
+               (0.80, 0.64), (0.75, 0.76), (0.63, 0.84), (0.46, 0.88), (0.28, 0.86), (0.15, 0.80), (0.08, 0.71)]
+    img = Image.new("L", (S, S), 0)
+    d = ImageDraw.Draw(img)
+    d.polygon([(px * S, py * S) for px, py in catmull(outline)], fill=255)
+    m = to_arr(img, size)
+    # emboss: a smooth height field from the blurred mask, lit from the upper left
+    h = blur(m, 7.0)
+    gy, gx = np.gradient(h)
+    g = np.sqrt(gx * gx + gy * gy) + 1e-6
+    lit = np.clip((gx * 0.62 + gy * 0.78) / g, -1, 1) * np.clip(g / 0.035, 0, 1)
+    inner = np.clip((blur(m, 5.0) - 0.5) * 2.0, 0, 1)
+    bevel = np.exp(-((blur(m, 3.5) - 0.78) / 0.07) ** 2) * m
+    rim = np.clip(m - blur(m, 1.6) * 0.98, 0, 1) * 3.0
+    xx, yy = grid(size, size)
+    X, Y = xx / size, yy / size
+    stri = 0.5 + 0.5 * np.cos(2 * math.pi * 11 * np.sqrt(((X - 0.36) / 0.26) ** 2 + ((Y - 0.58) / 0.20) ** 2))
+    bic = np.exp(-((np.sqrt(((X - 0.36) / 0.26) ** 2 + ((Y - 0.58) / 0.20) ** 2)) / 0.9) ** 6)
+    lum = np.clip(0.45 + 0.25 * inner + 0.22 * lit + 0.45 * bevel + 0.16 * stri * bic * m + rim, 0, 1)
+    glow = np.exp(-(np.maximum(0, blur(1 - m, 6.0) - 0.5) / 0.05) ** 2) * 0.0
+    halo = blur(m, 9.0) * (1 - m)
+    a = np.clip(m * (0.84 + 0.16 * stri * bic) + halo * 0.9 + 0.3 * bevel, 0, 1)
+    save(np.where(m > 0.5, lum, 1.0), a, "body_flex")
 
 
 ALL = [steam, steam_jet, veins, flesh, ring, pulse, wall, fibre, slug, muzzle, rifling, strand, burst, spark, flex]
