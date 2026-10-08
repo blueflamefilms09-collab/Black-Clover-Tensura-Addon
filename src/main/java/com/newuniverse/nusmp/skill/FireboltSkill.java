@@ -31,7 +31,7 @@ public class FireboltSkill extends Skill {
     @Override public ResourceLocation getSkillIcon() { return ICON; }
 
     @Override
-    public void onPressed(ManasSkillInstance instance, LivingEntity entity, int slot, int mode) {
+    public void onRelease(ManasSkillInstance instance, LivingEntity entity, int heldTicks, int slot, int mode) {
         if (!(entity instanceof ServerPlayer player)) return;
         if (instance.onCoolDown(mode)) { SkillUtil.fail(player, "Firebolt is on cooldown."); return; }
         if (!SkillUtil.spendMagicules(player, NUConfig.FIREBOLT_MAGICULE_COST.get())) return;

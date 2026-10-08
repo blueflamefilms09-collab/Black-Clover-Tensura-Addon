@@ -49,7 +49,7 @@ God-tier balance: config `[god_tier]` (affectsPlayers, bossHealthThreshold, inst
 
 Config `[ultimate_evolution]`: enabled, minimumEP, replacesBase.
 
-Magic spells cast on one press; grimoire pages no longer require holding the skill key to charge or chant.
+Magic spells fire when the skill key is released; holding the key does not trigger them early.
 
 ## Build
 
@@ -60,7 +60,7 @@ Magic spells cast on one press; grimoire pages no longer require holding the ski
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.82.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.83.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -207,13 +207,13 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 
 ## 0.62.0 - Instant casting, identity VFX, and stored Key Magic
 
-- Changed: grimoire spells, crossover chant skills, and Spirit Burst now resolve from one press instead of hold-to-charge casting. Existing grimoire page ids remain in place.
+- Changed: grimoire spells and crossover chant skills resolve when the ability key is released; holding the key does not cast early. Existing grimoire page ids remain in place.
 - New: Star, Sand, and Mist have dedicated layered VFX; Slash has distinct cast, impact, and reaping effects. Bone and Blood spells now route through their existing attribute layers.
 - New: Key Magic collects physical Magic Keys for Janus Abigail's extra gates; legacy stored-charge data is still read. Key pages use a key-turn cast pose.
 - New: Legion has an appended chessboard toggle page, and Dice/Game grimoires use a looping dice-fiddle idle pose while summoned.
 - Fixed: cast poses no longer rotate the torso root independently of the limbs, avoiding the visible body split.
 - Existing: Key gate and Recombination construct visuals continue using their dedicated layers and summon implementations.
-- Not implemented: the repository has no standalone Steal Magic type; stealing remains part of Key Magic. Bone/Sand/Slash/Legion do not yet summon dedicated modeled entity props.
+- The repository has no standalone Steal Magic type; stealing remains part of Key Magic.
 - Build status: `gradlew.bat build` succeeded; in-game visual checks are still pending.
 
 ## 0.82.0 - Modeled magic constructs and robe upgrades
@@ -224,6 +224,12 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - Existing: Star, Bone, Blood, Sand, Mist, Recombination, Slash, and Key rune designs are generated with magic-specific palettes and glyphs.
 - Note: there is no standalone Steal Magic attribute; stealing remains a Key Magic mechanic. In-game appearance and multiplayer rendering still need runtime verification.
 - Build status: `gradlew.bat build` succeeded; in-game visual verification is still pending.
+
+## 0.83.0 - Key textures, safe prop rendering, and release casting
+
+- Fixed modeled magic props acquiring render buffers in an order that could crash the client when rendering Sand Magic.
+- Added the physical Magic Key texture to the item atlas, and changed orbiting Key Magic visuals to smaller, fully textured Great Keys.
+- Grimoire spells, crossover chant spells, and Firebolt now fire when the ability key is released rather than on press.
 
 ## 0.61.0 - Julius Time Magic expansion and client crash fix
 

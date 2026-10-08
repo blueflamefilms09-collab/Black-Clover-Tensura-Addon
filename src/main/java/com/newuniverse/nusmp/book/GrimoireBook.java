@@ -34,7 +34,7 @@ import java.util.List;
 
 /**
  * A grimoire = a Tensura UNIQUE skill (gold name, Unique list). The book item is only the key.
- * Select a page and press the Tensura skill key to cast immediately. Cost goes
+ * Select a page and release the Tensura skill key to cast immediately. Cost goes
  * through getMagiculeCost + EnergyHelper.isOutOfEnergy, damage through createSource with Tensura
  * damage types, cooldowns through instance.setCoolDown(cooldown, mode) only after a successful cast.
  *
@@ -180,7 +180,7 @@ public abstract class GrimoireBook extends Skill {
 
     public int castTicks(ManasSkillInstance i, LivingEntity e) { return i.isMastered(e) ? CAST_TICKS_MASTERED : CAST_TICKS; }
 
-    /** Every page resolves from a single press; holding the key never delays or cancels a spell. */
+    /** Utility pages act on press; spell pages wait for release so the cast fires only after the key is let go. */
     @Override
     public void onPressed(ManasSkillInstance instance, LivingEntity entity, int keyNumber, int mode) {
         if (!(entity instanceof ServerPlayer p)) return;
@@ -192,14 +192,15 @@ public abstract class GrimoireBook extends Skill {
                 LegionArts.toggleChessboard(p);
             return;
         }
-        castPage(instance, p, mode);
     }
 
     @Override
     public boolean onHeld(ManasSkillInstance instance, LivingEntity entity, int heldTicks, int mode) { return true; }
 
     @Override
-    public void onRelease(ManasSkillInstance instance, LivingEntity entity, int heldTicks, int keyNumber, int mode) { }
+    public void onRelease(ManasSkillInstance instance, LivingEntity entity, int heldTicks, int keyNumber, int mode) {
+        if (entity instanceof ServerPlayer player && !instant(mode)) castPage(instance, player, mode);
+    }
 
     private void castPage(ManasSkillInstance instance, ServerPlayer player, int mode) {
         BookPage p = page(mode);

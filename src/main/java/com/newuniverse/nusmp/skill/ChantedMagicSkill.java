@@ -8,7 +8,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 
 /**
- * Single-press spells from the DanMachi crossover. Mastery still affects each spell's own cast.
+ * Release-to-cast spells from the DanMachi crossover. Mastery still affects each spell's own cast.
  */
 public abstract class ChantedMagicSkill extends Skill {
     protected static final int CAST = 0;
@@ -30,7 +30,7 @@ public abstract class ChantedMagicSkill extends Skill {
     @Override public Component getModeName(ManasSkillInstance i, int mode) { return Component.translatable("nusmp.skill.mode.magic.cast"); }
 
     @Override
-    public void onPressed(ManasSkillInstance instance, LivingEntity entity, int slot, int mode) {
+    public void onRelease(ManasSkillInstance instance, LivingEntity entity, int heldTicks, int slot, int mode) {
         if (!(entity instanceof ServerPlayer player)) return;
         ServerLevel level = player.serverLevel();
         if (instance.onCoolDown(CAST)) { SkillUtil.fail(player, "This magic is on cooldown."); return; }
