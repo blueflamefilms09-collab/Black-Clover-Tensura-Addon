@@ -1,0 +1,17 @@
+{
+  "skills": [
+    {"id": "nusmp:tensura_magicule_bolt", "anime": "tensura", "name": "Magicule Bolt", "tier": 1, "cast_ticks": 10, "range": 22,
+     "primitives": ["projectile", "magic_damage"], "counters": ["low_armor", "physical_immune"], "resisted_by": ["magic_null"], "animation": "eldritch_blast"},
+    {"id": "nusmp:tensura_barrier_pierce", "anime": "tensura", "name": "Barrier Pierce", "tier": 2, "cast_ticks": 14, "range": 18,
+     "primitives": ["projectile", "magic_damage"], "counters": ["barrier", "tank"], "resisted_by": ["magic_null"], "animation": "cast_grimoire",
+     "line": "Barriers are just suggestions."},
+    {"id": "nusmp:tensura_steel_thread", "anime": "tensura", "name": "Steel Thread", "tier": 2, "cast_ticks": 12, "range": 16,
+     "primitives": ["pull", "physical_damage"], "counters": ["kiter", "flier", "speedster"], "resisted_by": ["physical_immune"], "animation": "cast_grimoire"},
+    {"id": "nusmp:tensura_severance", "anime": "tensura", "name": "Severance Edge", "tier": 2, "cast_ticks": 10, "range": 5,
+     "primitives": ["melee_arc", "magic_damage"], "counters": ["barrier", "physical_immune", "spiritual", "tank"], "resisted_by": ["magic_null"],
+     "animation": "sword_combo_3", "line": "Cutting through."},
+    {"id": "nusmp:tensura_predation_copy", "anime": "tensura", "name": "Predator's Echo", "tier": 3, "cast_ticks": 16, "range": 18,
+     "primitives": ["copy_codex_skill", "magic_damage"], "counters": ["healer", "caster"], "resisted_by": ["magic_null"], "animation": "cast_grimoire",
+     "line": "I'll borrow that.", "cooldown_ticks": 200}
+  ]
+}

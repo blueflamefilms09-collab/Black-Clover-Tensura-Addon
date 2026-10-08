@@ -39,7 +39,7 @@ public final class WikiMagicLayer extends AbstractVfxLayer {
         int style = style(magic);
 
         switch (inst.shape) {
-            case WIKI_MAGIC_CAST -> cast(ctx, buf, from, to, age, fade, size, tint, pale, style);
+            case WIKI_MAGIC_CAST -> cast(ctx, buf, from, to, age, inst.duration, fade, size, tint, pale, style);
             case WIKI_MAGIC_FIELD -> field(ctx, buf, from, to, age, fade, size, tint, pale, style);
             case WIKI_MAGIC_BURST -> burst(ctx, buf, from, to, age, progress, fade, size, tint, pale, style);
             default -> { }
@@ -84,8 +84,13 @@ public final class WikiMagicLayer extends AbstractVfxLayer {
     }
 
     private static void cast(VfxRenderContext ctx, VfxVertexBuffer buf, Vector3f from, Vector3f to,
-                             float age, float fade, float size, int tint, int pale, int style) {
-        Vector3f tip = new Vector3f(from).lerp(to, Mth.clamp(age / 22f, 0, 1));
+                             float age, float duration, float fade, float size, int tint, int pale, int style) {
+        // the bolt travels over most of its life, with a short tail behind it (not a beam from the caster to the tip)
+        Vector3f tip = new Vector3f(from).lerp(to, Mth.clamp(age / Math.max(4f, duration * 0.8f), 0, 1));
+        float length = tip.distance(from);
+        Vector3f tail = new Vector3f(from);
+        if (length > 1e-3f) tail.set(tip).lerp(from, Math.min(1f, (3.2f * size + 0.8f) / length));
+        from = tail;
         ResourceChoice choice = resource(style);
         float width = (0.34f + (style % 5) * 0.055f) * size;
         float spin = age * (0.04f + (style % 7) * 0.009f);
@@ -109,7 +114,7 @@ public final class WikiMagicLayer extends AbstractVfxLayer {
         Vector3f center = new Vector3f(from).lerp(to, 0.5f);
         VfxPose plane = VfxPose.ground(center);
         float pulse = 0.88f + 0.12f * Mth.sin(age * 0.14f);
-        float radius = size * pulse;
+        float radius = size * 3f * pulse;                       // callers pass the damage radius / 3, as every other layer reads it
         buf.ring(resource(style).texture, resource(style).blend, plane.spin(age * (style % 2 == 0 ? 0.018f : -0.018f)),
                 radius * (0.68f + (style % 4) * 0.04f), radius, 28 + style % 12, 2.4f,
                 age * (0.012f + (style % 5) * 0.004f), VfxVertexBuffer.withAlpha(tint, fade * 0.8f));
@@ -130,7 +135,7 @@ public final class WikiMagicLayer extends AbstractVfxLayer {
     private static void burst(VfxRenderContext ctx, VfxVertexBuffer buf, Vector3f from, Vector3f to,
                               float age, float progress, float fade, float size, int tint, int pale, int style) {
         Vector3f center = new Vector3f(from).lerp(to, 0.5f);
-        float radius = size * (0.28f + progress * 0.9f);
+        float radius = size * 3f * (0.28f + progress * 0.9f);
         VfxPose face = VfxPose.facing(center, new Vector3f(ctx.camera.getLookVector()));
         ResourceChoice choice = resource(style);
         buf.arc(choice.texture, choice.blend, face.spin(age * (style % 2 == 0 ? 0.025f : -0.025f)), radius,

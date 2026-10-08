@@ -1,0 +1,7 @@
+{
+  "skills": [
+    {"id": "nusmp:fire_force_flame_step", "anime": "fire_force", "name": "Flame Step", "tier": 1, "cast_ticks": 8, "range": 16,
+     "primitives": ["blink", "melee_arc", "physical_damage"], "counters": ["kiter", "caster"], "resisted_by": ["fire_resist", "physical_immune"],
+     "animation": "sword_combo_2", "line": "Burning bright!"}
+  ]
+}

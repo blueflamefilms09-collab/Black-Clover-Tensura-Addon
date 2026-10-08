@@ -60,7 +60,7 @@ Magic spells fire when the skill key is released; holding the key does not trigg
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.91.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.93.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -208,6 +208,18 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - Added magic-specific grimoire cover sigils for the newly added wiki attributes and textured both sides of loose page flips.
 - Added held spell buildup to grimoire magic; releasing the skill starts the cast windup, and a fully charged spell gains up to 20% size and damage.
 - Brought Zagred close to player height and shortened his arm/forearm and leg proportions while preserving his horns, wings, claws, and tail.
+
+## 0.93.0 - Riven Remake, the Black Bulls' Bard; generated grimoire designs; wiki VFX scale fixes
+
+- **New boss: Riven Remake** (`/nusmp riven summon`, op level 2; spawn egg in the creative tab). An adaptive bard boss: every `replanTicks` (40) he scans his target (gear, armour, anti-magic / Nihility, grimoire magic, Tensura barrier and immunity skills, flying, mounted) and scores every skill of the Anime Skill Codex against it, commits to the best plan for up to four seconds and replans at once when the target changes gear, raises a barrier or pops anti-magic. Damage that does nothing teaches him to stop using that kind. Plans are logged at debug. Phases: I The Black Bulls' Bard, II Fictional Remake (70%, Story Manifestation constructs), III Final Form (30%, lethal skills x1.5, a tier up, two-skill chains). The quirk: a player with anti-magic, Nihility or a raised guard resists his rewrite (silence, slow, soul bond, song debuffs) unless he spends story charge. Health scales with players (`baseHealth` 600, `perPlayerHealth` 200), constructs +1 per extra player up to 4.
+- **Anime Skill Codex** (`data/nusmp/skills/codex/*.json`, 38 skills: his own bard kit plus Black Clover, Tensura, DanMachi, Fire Force, Jujutsu Kaisen, JoJo and a generic pool). A skill is data only: a name, numbers and sandbox primitives (`SkillSandbox`); anything unknown is rejected at load. `/nusmp riven research <anime> <ability>` (off by default, `enableResearch`) runs off-thread against a configured https endpoint, never a private address, and only writes a candidate JSON into `config/nusmp/codex-inbox/`; `/nusmp riven accept <file>` moves it into the live codex. With no endpoint it just tells the op to drop a JSON file in the inbox. `config/nusmp-riven.toml` holds the settings.
+- **Model, animations and boss bar.** A player-proportioned geo model (messy black hair, violet-blue eyes, black high-collar coat with silver filigree and the Black Bull skull, coat tails) with 18 clips (idle, walk, talk, cast_grimoire, cast_song, eldritch_blast, shadow_step, manifest weapon / shield, soul_bond, three sword combos, hit, stagger, phase2, final_form, death); Final Form swaps to a model of the same entity with page-wings and a bull-skull crown. His five-leaf-styled grimoire floats on his left. The boss bar is a custom overlay (crown, name, phase subtitle, violet-blue fill with a travelling lightning shimmer, a Black Bull skull that cracks at 70% and 30%, the casting skill typing on, a story-charge pip row from phase II, HP number and phase numeral); vanilla's bar for him is hidden. Assets come from `java tools/GenRiven.java`.
+- **Generated grimoire designs.** Magics without a hand-made palette (all 30 wiki attributes fell back to one brown cover, gold trim and white glow) now get a cover, glow, metal and frame-stud pattern generated from their name (`GrimoireDesignGenerator`): stable per magic, visibly distinct, hand-made books unchanged.
+- **Wiki-magic VFX fixes.** Fields and bursts were drawn at a third of their real radius (callers pass radius / 3); bolts drew a beam from the caster to the tip instead of a short tail and never finished for short effects; the guard aura was sized for the old scale. Bone and Sand no longer auto-spawn the shared construct wall props on every construct-shaped spell (Recombination keeps its walls).
+
+## 0.92.0
+
+- Version bump with a first `GrimoireDesignGenerator` stub (superseded by 0.93.0).
 
 ## 0.89.0 - Missing Black Clover attributes and Unique-skill icons
 

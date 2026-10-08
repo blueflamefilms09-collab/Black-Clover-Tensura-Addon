@@ -1,0 +1,27 @@
+{
+  "skills": [
+    {"id": "nusmp:page_of_severance", "anime": "black_clover", "name": "Page of Severance", "tier": 2, "cast_ticks": 12, "range": 16,
+     "primitives": ["projectile", "magic_damage", "silence"], "counters": ["barrier", "caster", "healer"], "resisted_by": ["anti_magic", "magic_null"],
+     "animation": "cast_grimoire", "line": "This page wasn't in your story."},
+    {"id": "nusmp:voltage_page", "anime": "black_clover", "name": "Voltage Page", "tier": 1, "cast_ticks": 10, "range": 20,
+     "primitives": ["projectile", "magic_damage"], "counters": ["low_armor", "speedster"], "resisted_by": ["magic_null"], "animation": "cast_grimoire"},
+    {"id": "nusmp:crimson_page", "anime": "black_clover", "name": "Crimson Page", "tier": 1, "cast_ticks": 12, "range": 18,
+     "primitives": ["projectile", "magic_damage"], "counters": ["low_armor"], "resisted_by": ["fire_resist", "magic_null"], "animation": "cast_grimoire"},
+    {"id": "nusmp:spatial_page", "anime": "black_clover", "name": "Spatial Page: Step", "tier": 2, "cast_ticks": 10, "range": 20,
+     "primitives": ["blink", "magic_damage"], "counters": ["kiter", "flier"], "resisted_by": ["magic_null"], "animation": "shadow_step",
+     "line": "Wrong place, wrong chapter."},
+    {"id": "nusmp:radiant_page", "anime": "black_clover", "name": "Radiant Page", "tier": 2, "cast_ticks": 14, "range": 22,
+     "primitives": ["projectile", "magic_damage", "slow"], "counters": ["speedster", "flier"], "resisted_by": ["magic_null"], "animation": "cast_grimoire"},
+    {"id": "nusmp:curse_page", "anime": "black_clover", "name": "Curse Page", "tier": 3, "cast_ticks": 18, "range": 16,
+     "primitives": ["magic_damage", "slow", "silence"], "counters": ["caster", "healer"], "resisted_by": ["anti_magic", "magic_null"],
+     "animation": "cast_grimoire", "line": "Page 666. Don't read aloud."},
+    {"id": "nusmp:black_bull_ward", "anime": "black_clover", "name": "Black Bull Ward", "tier": 2, "cast_ticks": 10, "range": 8,
+     "primitives": ["shield"], "counters": ["caster", "ranged"], "resisted_by": [], "animation": "cast_grimoire", "cooldown_ticks": 240},
+    {"id": "nusmp:black_bull_charge", "anime": "black_clover", "name": "Black Bull Charge", "tier": 2, "cast_ticks": 8, "range": 14,
+     "primitives": ["blink", "melee_arc", "physical_damage"], "counters": ["caster", "kiter"], "resisted_by": ["physical_immune"],
+     "animation": "sword_combo_2", "line": "Black Bulls, charge!"},
+    {"id": "nusmp:grimoire_construct_bull", "anime": "black_clover", "name": "Grimoire Construct: Bull", "tier": 3, "cast_ticks": 16, "range": 12,
+     "primitives": ["summon_construct"], "construct": "weapon", "counters": ["tank", "melee"], "resisted_by": [], "animation": "manifest_weapon",
+     "line": "Bull on the page!", "cooldown_ticks": 300}
+  ]
+}

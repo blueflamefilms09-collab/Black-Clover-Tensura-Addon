@@ -1,116 +1,65 @@
 package com.newuniverse.nusmp.grimoire;
 
-import java.util.Random;
-
 /**
- * Procedural grimoire design generator: randomizes cover patterns, color overlays, page motifs,
- * and rune styling to give each grimoire unique visual variation instead of hard-fixed designs.
- * 
- * v0.92.0: Added for future integration into BookLook design pipeline. Currently provides:
- * - Cover pattern variants (geometric overlay styles)
- * - Page motif variations (decorative borders and corners)
- * - Rune styling options (font/glyph styles for signature runes)
- * - Accent color tints (procedurally picked hues)
- * - Metallic finish variations (spine and trim aesthetics)
- * - Edge decoration complexity levels
- * 
- * Usage: Call GrimoireDesignGenerator.forMagic(magicName, coverName) to get a seeded,
- * deterministic generator for a given magic type + cover combination. Each combination
- * produces a stable, repeatable set of design variations.
+ * Procedural grimoire design: for a magic that has no hand-made palette entry in {@link BookPalette}, the cover leather, glow, trim
+ * metal and the frame's stud pattern are generated from the magic's name, so every such grimoire looks its own and always the same.
+ * Pure (no game classes). The hue is spread with the golden ratio from a stable FNV-1a hash of the name; lightness, saturation, metal
+ * and stud pattern come from other bits of the same hash.
  *
- * Used by {@link BookLook} to generate per-magic procedurally varied cover ornament, page motif,
- * and rune frames.
+ * @param cover   leather RGB
+ * @param trim    frame / ornament metal RGB
+ * @param glow    glow while the book is in use, RGB
+ * @param studs   0..3: how many studs ring the covers (none, corners, corners + top / bottom, a full ring of eight)
  */
 public final class GrimoireDesignGenerator {
-    private final Random rng;
-    private final long seed;
+    public record Design(int cover, int trim, int glow, int studs) {}
 
-    public GrimoireDesignGenerator(long seed) {
-        this.seed = seed;
-        this.rng = new Random(seed);
+    private static final int[] METALS = {BookPalette.GOLD, BookPalette.SILVER, BookPalette.BRONZE, 0xB8734A};
+    private static final double GOLDEN = 0.6180339887498949;
+
+    private GrimoireDesignGenerator() {}
+
+    public static Design forMagic(String magic) {
+        long h = fnv(magic == null ? "" : magic);
+        double hue = unit(h, 1);
+        double sat = 0.40 + unit(h, 2) * 0.42;
+        double light = 0.26 + unit(h, 3) * 0.24;
+        int cover = hsl(hue, sat, light);
+        int glow = hsl(frac(hue + 0.02), 0.70 + unit(h, 6) * 0.28, 0.52 + unit(h, 7) * 0.16);
+        int trim = METALS[(int) (unit(h, 4) * 4) & 3];
+        int studs = (int) (unit(h, 5) * 4) & 3;
+        return new Design(cover, trim, glow, studs);
     }
 
-    /**
-     * Cover pattern variation: selects from a palette of geometric overlays to apply over the
-     * base art cover (filigree density, frame complexity, ornament symmetry).
-     * Returns an index 0-15 describing the cover's procedural pattern style.
-     */
-    public int coverPatternVariant() {
-        return rng.nextInt(16);
+    /** An independent uniform value in [0, 1) for the k-th property of a hash (splitmix64). */
+    private static double unit(long h, int k) {
+        long z = h + k * 0x9E3779B97F4A7C15L;
+        z = (z ^ (z >>> 30)) * 0xBF58476D1CE4E5B9L;
+        z = (z ^ (z >>> 27)) * 0x94D049BB133111EBL;
+        z ^= z >>> 31;
+        return (z >>> 11) / (double) (1L << 53);
     }
 
-    /**
-     * Page motif variation: selects the decorative motif applied to page edges and corners
-     * (corner flourishes, page-rule styles, rune borders). Returns 0-31 for motif selection.
-     */
-    public int pageMotifVariant() {
-        return rng.nextInt(32);
+    private static long fnv(String s) {
+        long h = 0xcbf29ce484222325L;
+        for (int i = 0; i < s.length(); i++) { h ^= s.charAt(i); h *= 0x100000001b3L; }
+        h ^= h >>> 29; h *= 0xbf58476d1ce4e5b9L; h ^= h >>> 32;
+        return h & 0x7FFFFFFFFFFFFFFFL;
     }
 
-    /**
-     * Rune styling variation: pick the font/glyph style for the signature runes on the cover
-     * (angular, flowing, arcane, rigid). Returns 0-7.
-     */
-    public int runeStyleVariant() {
-        return rng.nextInt(8);
-    }
+    private static double frac(double v) { return v - Math.floor(v); }
 
-    /**
-     * Accent color overlay tint: a procedurally picked accent hue to overlay on the cover design
-     * while keeping the base art intact. Returns a packed ARGB where full alpha = apply tint,
-     * lower alpha = blend lightly (0xFF = opaque accent, 0x00 = no tint, use base only).
-     * Excludes the alpha channel itself; call withAlpha() to set it.
-     */
-    public int accentTint() {
-        // Procedurally pick a hue from a palette biased toward magic-book colors
-        int hue = rng.nextInt(360);
-        float saturation = 0.4f + rng.nextFloat() * 0.3f;  // moderate saturation for overlay
-        float lightness = 0.5f + rng.nextFloat() * 0.2f;
-        return hslToRgb(hue, saturation, lightness);
-    }
-
-    /**
-     * Spine and trim metallic finish: returns a variation (0-3) for spine rendering.
-     * 0 = bronze, 1 = silver, 2 = gold, 3 = copper.
-     */
-    public int metalFinish() {
-        return rng.nextInt(4);
-    }
-
-    /**
-     * Edge decoration complexity: returns 0-3 describing how ornate the frame bars are.
-     */
-    public int edgeComplexity() {
-        return rng.nextInt(4);
-    }
-
-    // ---------------------------------------------------------------- helpers
-    private static int hslToRgb(int hue, float sat, float light) {
-        float h = hue / 360f;
-        float c = (1 - Math.abs(2 * light - 1)) * sat;
-        float x = c * (1 - Math.abs(h * 6 % 2 - 1));
-        float m = light - c / 2;
-        float r, g, b;
-
-        if (h < 1f / 6) { r = c; g = x; b = 0; }
-        else if (h < 2f / 6) { r = x; g = c; b = 0; }
-        else if (h < 3f / 6) { r = 0; g = c; b = x; }
-        else if (h < 4f / 6) { r = 0; g = x; b = c; }
-        else if (h < 5f / 6) { r = x; g = 0; b = c; }
-        else { r = c; g = 0; b = x; }
-
-        int R = Math.round((r + m) * 255);
-        int G = Math.round((g + m) * 255);
-        int B = Math.round((b + m) * 255);
-        return (R << 16) | (G << 8) | B;
-    }
-
-    /**
-     * Seed-based determinism: each magic type + cover type produces a stable, repeatable design.
-     * Call this with the book's magic type and cover enum to generate a stable generator.
-     */
-    public static GrimoireDesignGenerator forMagic(String magicName, String coverName) {
-        long seed = (long) magicName.hashCode() * 31 + (long) coverName.hashCode();
-        return new GrimoireDesignGenerator(seed);
+    static int hsl(double h, double s, double l) {
+        double c = (1 - Math.abs(2 * l - 1)) * s, x = c * (1 - Math.abs(h * 6 % 2 - 1)), m = l - c / 2, r, g, b;
+        int sector = (int) (h * 6) % 6;
+        switch (sector) {
+            case 0 -> { r = c; g = x; b = 0; }
+            case 1 -> { r = x; g = c; b = 0; }
+            case 2 -> { r = 0; g = c; b = x; }
+            case 3 -> { r = 0; g = x; b = c; }
+            case 4 -> { r = x; g = 0; b = c; }
+            default -> { r = c; g = 0; b = x; }
+        }
+        return (Math.round((float) ((r + m) * 255)) << 16) | (Math.round((float) ((g + m) * 255)) << 8) | Math.round((float) ((b + m) * 255));
     }
 }

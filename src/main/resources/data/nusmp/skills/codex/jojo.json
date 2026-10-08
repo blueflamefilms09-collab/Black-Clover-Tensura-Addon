@@ -1,0 +1,7 @@
+{
+  "skills": [
+    {"id": "nusmp:jojo_stand_barrage", "anime": "jojo", "name": "Stand Barrage", "tier": 2, "cast_ticks": 10, "range": 5,
+     "primitives": ["melee_arc", "physical_damage"], "counters": ["low_armor", "caster"], "resisted_by": ["physical_immune", "tank"], "animation": "sword_combo_2",
+     "line": "ORA ORA ORA!"}
+  ]
+}

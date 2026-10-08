@@ -1,0 +1,9 @@
+{
+  "skills": [
+    {"id": "nusmp:danmachi_firebolt", "anime": "danmachi", "name": "Firebolt", "tier": 1, "cast_ticks": 8, "range": 20,
+     "primitives": ["projectile", "magic_damage"], "counters": ["low_armor"], "resisted_by": ["fire_resist", "magic_null"], "animation": "eldritch_blast",
+     "line": "Firebolt!"},
+    {"id": "nusmp:danmachi_hestia_knife", "anime": "danmachi", "name": "Hestia Knife", "tier": 2, "cast_ticks": 8, "range": 4,
+     "primitives": ["melee_arc", "physical_damage", "slow"], "counters": ["caster", "low_armor"], "resisted_by": ["physical_immune"], "animation": "sword_combo_1"}
+  ]
+}

@@ -46,7 +46,15 @@ public final class NUEntities {
             () -> EntityType.Builder.<com.newuniverse.nusmp.prop.MagicPropEntity>of(com.newuniverse.nusmp.prop.MagicPropEntity::new, MobCategory.MISC)
                     .sized(1.0f, 1.0f).clientTrackingRange(12).updateInterval(1).build("magic_prop"));
 
+    /** 0.92: Riven Remake, the Black Bulls' Bard (adaptive raid boss) and the story constructs he manifests. */
+    public static final DeferredHolder<EntityType<?>, EntityType<com.newuniverse.nusmp.entity.riven.RivenBossEntity>> RIVEN = ENTITIES.register("riven_remake",
+            () -> EntityType.Builder.of(com.newuniverse.nusmp.entity.riven.RivenBossEntity::new, MobCategory.MONSTER).sized(0.6f, 1.8f).fireImmune().clientTrackingRange(16).updateInterval(1).build("riven_remake"));
+    public static final DeferredHolder<EntityType<?>, EntityType<com.newuniverse.nusmp.entity.riven.StoryConstructEntity>> STORY_CONSTRUCT = ENTITIES.register("story_construct",
+            () -> EntityType.Builder.of(com.newuniverse.nusmp.entity.riven.StoryConstructEntity::new, MobCategory.MONSTER).sized(0.6f, 1.8f).fireImmune().clientTrackingRange(12).build("story_construct"));
+
     public static void attributes(EntityAttributeCreationEvent e) {
+        e.put(RIVEN.get(), com.newuniverse.nusmp.entity.riven.RivenBossEntity.createAttributes().build());
+        e.put(STORY_CONSTRUCT.get(), com.newuniverse.nusmp.entity.riven.StoryConstructEntity.createAttributes().build());
         e.put(SPIRIT_LORD.get(), SpiritLordEntity.createAttributes().build());
         e.put(MIRROR_DOUBLE.get(), MirrorDoubleEntity.createAttributes().build());
         e.put(PAINTED_CONSTRUCT.get(), PaintedConstructEntity.createAttributes().build());

@@ -68,14 +68,7 @@ public class ElementBook extends GrimoireBook {
         super.vfx(player, identity, from, to, ticks, power);
         float scale = Math.max(0.35f, Math.min(3.5f, Math.abs(power)));
         float yaw = (float) Math.toDegrees(Math.atan2(-(to.x - from.x), to.z - from.z));
-        boolean construct = shape == VfxShape.EARTH_RISE || shape == VfxShape.EARTH_SPIKES || shape == VfxShape.WATER_RING;
-        if (magic == MagicType.BONE && construct) {
-            PropKind prop = identity == VfxShape.BONE_FX2 ? PropKind.BONE_2 : PropKind.BONE_1;
-            MagicProps.spawn(player.serverLevel(), prop, from, yaw, scale, Math.max(8, Math.min(ticks, 80)), 0, player);
-        } else if (magic == MagicType.SAND && construct) {
-            PropKind prop = ticks >= 30 ? PropKind.SAND_2 : PropKind.SAND_1;
-            MagicProps.spawn(player.serverLevel(), prop, from, yaw, scale, Math.max(8, Math.min(ticks, 80)), 0, player);
-        } else if (magic == MagicType.RECOMBINATION) {
+        if (magic == MagicType.RECOMBINATION) {
             PropKind prop = identity == VfxShape.RECOMBINE_CONSTRUCT ? PropKind.RECOMBINATION_1 : PropKind.RECOMBINATION_2;
             MagicProps.spawn(player.serverLevel(), prop, from, yaw, Math.max(0.8f, Math.min(scale, 2.5f)),
                     Math.max(12, Math.min(ticks, 100)), 0, player);
@@ -261,7 +254,7 @@ public class ElementBook extends GrimoireBook {
             for (Supplier<MobEffectInstance> e : effects) p.addEffect(e.get());
             if (b.magic == MagicType.BONE) com.newuniverse.nusmp.aura.PlayerAuras.set(p, com.newuniverse.nusmp.aura.Aura.BONE, ticks);
             b.castCircle(p, 1f);
-            VfxSpawn.sendFollowing(p.serverLevel(), shape, p, p.position().add(0, 1, 0), b.color, ticks, 1f);
+            VfxSpawn.sendFollowing(p.serverLevel(), shape, p, p.position().add(0, 1, 0), b.color, ticks, shape == VfxShape.WIKI_MAGIC_FIELD ? 0.45f : 1f);   // 0.92: a body-sized aura (the wiki field layer reads power as radius / 3)
             return true;
         };
     }

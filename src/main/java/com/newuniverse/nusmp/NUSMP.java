@@ -51,6 +51,9 @@ public class NUSMP {
         modEventBus.addListener(com.newuniverse.nusmp.anim.SwordDrawPayload::register);
         modEventBus.addListener(com.newuniverse.nusmp.anim.CastAnimPayload::register);                      // 0.54: casting body animations                      // 0.52: the grimoire sword draw
         modEventBus.addListener(com.newuniverse.nusmp.entity.ZagredStatePayload::register);                 // 0.48: Zagred's state, word and reticle
+        modEventBus.addListener(com.newuniverse.nusmp.entity.riven.RivenStatePayload::register);            // 0.92: Riven Remake's boss-bar state
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.entity.riven.RivenCommands::register);
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.AddReloadListenerEvent e) -> e.addListener(new com.newuniverse.nusmp.skill.codex.AnimeSkillCodex.Loader()));
         if (FMLEnvironment.dist == Dist.CLIENT) {
             com.newuniverse.nusmp.vfx.client.VfxClientEvents.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireClient.init(modEventBus);
@@ -70,6 +73,8 @@ public class NUSMP {
             modEventBus.addListener(com.newuniverse.nusmp.client.ZagredRenderer::register);              // 0.47
             modEventBus.addListener(com.newuniverse.nusmp.client.ZagredRenderer::layers);
             modEventBus.addListener(com.newuniverse.nusmp.client.GrimoireDaemonRenderer::register);      // 0.52: Zagred's daemons
+            modEventBus.addListener(com.newuniverse.nusmp.client.riven.RivenRenderer::register);          // 0.92: Riven Remake and his story constructs
+            com.newuniverse.nusmp.client.riven.RivenBossBar.init(modEventBus);
             modEventBus.addListener(com.newuniverse.nusmp.client.GrimoireDaemonRenderer::layers);
             modEventBus.addListener(com.newuniverse.nusmp.client.CottonSheepRenderer::register);        // 0.52: Cotton Magic's sheep and cloud
             modEventBus.addListener(com.newuniverse.nusmp.client.CottonSheepRenderer::layers);
@@ -84,6 +89,7 @@ public class NUSMP {
             modEventBus.addListener(com.newuniverse.nusmp.client.RougeCatLayer::addLayers);                            // 0.48: the Genesis Demon-Slayer's 3D model and shaders
         }
         modContainer.registerConfig(ModConfig.Type.SERVER, NUConfig.SPEC);
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.entity.riven.RivenConfig.SPEC, "nusmp-riven.toml");
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.multiverse.MultiverseConfig.SPEC, "nusmp-multiverse-server.toml");
         // Multiverse: /multiverse commands, ceremony, mastery pages, ranks & stars, squads, status sync, world sites
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.MultiverseCommands::register);
