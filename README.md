@@ -60,7 +60,7 @@ Chanted magics: use **Chant** mode until the chant is complete, then switch to *
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.60.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.61.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -100,7 +100,7 @@ Custom immediate-mode renderer (no vanilla particles): `com.newuniverse.nusmp.vf
 - Acceptance rolls a kingdom (Clover 40 / Spade 20 / Heart 20 / Diamond 20) and a tier; the kingdom decides the cover.
 - Covers: three/four/five-leaf, spade/double/triple spade, heart/two-heart/cracked heart, diamond/five-sided/cracked diamond. Each changes spell power and cost.
 - Pages open by mastery only (0.24: the old kill rolls are gone; see "0.24" below).
-- Time Magic pages: Chrono Stasis (starter), Chrono Stasis Grigora, Time Acceleration, Time Reversal, Stolen Time.
+- Time Magic pages: Chrono Stasis (starter), Chrono Stasis Grigora, Time Acceleration, Time Reversal, Stolen Time, Chrono Anastasis, Hourglass Step, Borrowed Future, Pendulum Ward, Age Breaker, Moment Reprise and Hourglass Storm.
 - Admin: `/multiverse grimoire ...` (the old `/nusmp grimoire setcover|page|info|give|roll|reset` stays as a hidden admin alias).
 
 ## Grimoires as Tensura Unique skills (0.13)
@@ -204,6 +204,11 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Anti-Magic kit**: new pages **Black Hurricane** (a whirling field that drags foes in and strips their magic) and **Black Form** (30 s of strength, speed, resistance and jump, with an anti-magic burst); mastering the Anti-Magic Lord now also grants the **Demon-Slasher** katana next to Demon-Dweller and Demon-Destroyer.
 - **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
 - **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
+
+## 0.61.0 - Julius Time Magic expansion and client crash fix
+
+- New: six appended Time Magic pages, preserving all previous page indices; the added spells use the existing balance, time-stop and VFX systems.
+- Fixed: floating grimoire page rendering now reacquires the active render buffer when switching textures, preventing the reported `BufferBuilder: Not building!` client crash.
 
 ## 0.58 - Every new magic has a real grimoire; Ice and Dark VFX, sounds, summons
 

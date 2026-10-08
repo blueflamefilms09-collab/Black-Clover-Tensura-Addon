@@ -441,8 +441,8 @@ public final class GrimoireFloatClient {
      */
     private static void pages(PoseStack pose, MultiBufferSource buffers, Vec3 cam, ItemStack stack, float age, boolean reverse, int light) {
         Style style = style(stack);
-        VertexConsumer vc = buffers.getBuffer(RenderType.entityTranslucent(style == Style.ANTI ? LEAF_TATTERED : LEAF));
-        VertexConsumer runes = buffers.getBuffer(RenderType.entityTranslucent(runeTexture(stack)));
+        RenderType pageType = RenderType.entityTranslucent(style == Style.ANTI ? LEAF_TATTERED : LEAF);
+        RenderType runeType = RenderType.entityTranslucent(runeTexture(stack));
         int[] tint = switch (style) {
             case ANTI -> new int[]{120, 104, 108};
             case EMBER -> new int[]{255, 226, 196};
@@ -465,10 +465,11 @@ public final class GrimoireFloatClient {
             float x1 = x0 + Mth.cos(a1) * half + jx, z1 = z0 + Mth.sin(a1) * half + jz;
             float x2 = x1 + Mth.cos(a2) * half, z2 = z1 + Mth.sin(a2) * half;
             int a = (int) (alpha * (style == Style.ANTI ? 230 : 245));
-            strip(vc, pose.last(), x0, z0, x1, z1, y0, y1, 0f, 0.5f, tint, a, light);
-            strip(vc, pose.last(), x1, z1, x2, z2, y0, y1, 0.5f, 1f, tint, a, light);
-            strip(runes, pose.last(), x0, z0, x1, z1, y0, y1, 0f, 0.5f, tint, a, light);
-            strip(runes, pose.last(), x1, z1, x2, z2, y0, y1, 0.5f, 1f, tint, a, light);
+            // BufferSource may flush the previously selected RenderType when switching texture.
+            strip(buffers.getBuffer(pageType), pose.last(), x0, z0, x1, z1, y0, y1, 0f, 0.5f, tint, a, light);
+            strip(buffers.getBuffer(pageType), pose.last(), x1, z1, x2, z2, y0, y1, 0.5f, 1f, tint, a, light);
+            strip(buffers.getBuffer(runeType), pose.last(), x0, z0, x1, z1, y0, y1, 0f, 0.5f, tint, a, light);
+            strip(buffers.getBuffer(runeType), pose.last(), x1, z1, x2, z2, y0, y1, 0.5f, 1f, tint, a, light);
             if (RNG.nextFloat() < 0.4f) particle(pose.last().pose(), cam, style, x2, (y0 + y1) * 0.5f + (RNG.nextFloat() - 0.5f) * 10f, z2);
         }
         pose.popPose();
