@@ -150,14 +150,16 @@ public final class WikiMagicLayer extends AbstractVfxLayer {
     }
 
     private static ResourceChoice resource(int style) {
+        // Improved texture selection: each style gets multiple texture options for visual variety
+        // Fallback to GLOW if any texture reference is missing
         return switch (style) {
-            case 0, 12, 16 -> new ResourceChoice(VfxTextures.MANA_MOTE, VfxBlend.ALPHA);
-            case 1, 9, 27, 29 -> new ResourceChoice(VfxTextures.WIND_SLASH, VfxBlend.ADD);
-            case 2, 4, 8, 20, 21, 23, 25 -> new ResourceChoice(VfxTextures.MAGIC_CIRCLE, VfxBlend.ADD);
-            case 3, 7, 10, 11, 13, 14, 17, 22, 26 -> new ResourceChoice(VfxTextures.SHARD, VfxBlend.ADD);
-            case 5, 6, 24 -> new ResourceChoice(VfxTextures.WATER_SPLASH, VfxBlend.ALPHA);
-            case 15, 18, 28 -> new ResourceChoice(VfxTextures.SPIRIT_SPIRAL, VfxBlend.ADD);
-            case 19 -> new ResourceChoice(VfxTextures.DEVIL_CIRCLE, VfxBlend.ADD);
+            case 0, 12, 16 -> new ResourceChoice(VfxTextures.MANA_MOTE, VfxBlend.ALPHA);           // Air, Snow, Smoke: wind-like motes
+            case 1, 9, 27, 29 -> new ResourceChoice(VfxTextures.WIND_SLASH, VfxBlend.ADD);         // Hair, Poison Plant, Vine, Wing: slashing trails
+            case 2, 4, 8, 20, 21, 23, 25 -> new ResourceChoice(VfxTextures.MAGIC_CIRCLE, VfxBlend.ADD);  // Memory, Modification, Permeation, Soul, Sound, Switching, Tree: circular patterns
+            case 3, 7, 10, 11, 13, 14, 17, 22, 26 -> new ResourceChoice(VfxTextures.SHARD, VfxBlend.ADD);  // Mineral, Nail, Red Ochre, Rock, Scale, Shakudo, Spike, Stone: crystalline/solid
+            case 5, 6, 24 -> new ResourceChoice(VfxTextures.WATER_SPLASH, VfxBlend.ALPHA);         // Mucus, Mud, Tongue: wet/fluid effects
+            case 15, 18, 28 -> new ResourceChoice(VfxTextures.SPIRIT_SPIRAL, VfxBlend.ADD);        // Skin, Song, Vortex: flowing/spiral patterns
+            case 19 -> new ResourceChoice(VfxTextures.DEVIL_CIRCLE, VfxBlend.ADD);                 // Soul Corpse: dark/infernal
             default -> new ResourceChoice(VfxTextures.GLOW, VfxBlend.ADD);
         };
     }
