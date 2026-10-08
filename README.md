@@ -60,7 +60,7 @@ Magic spells fire when the skill key is released; holding the key does not trigg
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.85.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.86.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -238,6 +238,10 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 ## 0.85.0 - Zagred true-form detail and voice
 - Added layered rib and spine anatomy, facial contours, horn and arm spurs, wing spars, and a defined tail spade to Zagred's existing model.
 - Added processed synthetic voice lines for spell words, combat attacks, healing, Overwrite, and phase changes, with subtitles.
+
+## 0.86.0 - Bone Magic textures and armor
+- Fixed Bone Magic modeled props using a nonexistent vanilla bone-block texture; props now use the bone block's actual side texture.
+- Added Bone Armor as a timed player render layer with textured rib plates, a spine, arm guards, shin plates, and a subtle magic glow.
 
 ## 0.61.0 - Julius Time Magic expansion and client crash fix
 

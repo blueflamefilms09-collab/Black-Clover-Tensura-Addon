@@ -10,7 +10,7 @@ import net.minecraft.util.Mth;
 
 /** Shared real-geometry models for Bone, Sand, Slash, Legion and Recombination spell props. */
 final class ModeledMagicProps {
-    private static final ResourceLocation BONE = mcBlock("bone_block");
+    private static final ResourceLocation BONE = mcBlock("bone_block_side");
     private static final ResourceLocation SAND = mcBlock("sand");
     private static final ResourceLocation SLASH = mcBlock("lime_concrete");
     private static final ResourceLocation WOOD = mcBlock("oak_planks");

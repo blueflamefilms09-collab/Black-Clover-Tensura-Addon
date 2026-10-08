@@ -240,6 +240,7 @@ public class ElementBook extends GrimoireBook {
             tag.putFloat("EmpowerBonus", bonus);
             if (thorns) tag.putLong("ThornsUntil", p.level().getGameTime() + ticks);
             for (Supplier<MobEffectInstance> e : effects) p.addEffect(e.get());
+            if (b.magic == MagicType.BONE) com.newuniverse.nusmp.aura.PlayerAuras.set(p, com.newuniverse.nusmp.aura.Aura.BONE, ticks);
             b.castCircle(p, 1f);
             VfxSpawn.sendFollowing(p.serverLevel(), shape, p, p.position().add(0, 1, 0), b.color, ticks, 1f);
             return true;
