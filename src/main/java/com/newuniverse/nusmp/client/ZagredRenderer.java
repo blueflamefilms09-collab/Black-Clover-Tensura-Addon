@@ -66,11 +66,27 @@ public class ZagredRenderer extends MobRenderer<ZagredBossEntity, ZagredModel> {
     public void render(ZagredBossEntity e, float yaw, float partial, PoseStack pose, MultiBufferSource buffers, int light) {
         super.render(e, yaw, partial, pose, buffers, light);
         int state = e.clientState();
+        if (state == ZagredBossEntity.STATE_PORTAL) {
+            portal(pose, buffers.getBuffer(RenderType.eyes(RING)), e.tickCount + partial);
+            return;
+        }
         if (state < ZagredBossEntity.STATE_COMBAT || e.clientTarget() < 0) return;
         Entity t = e.level().getEntity(e.clientTarget());
         if (t == null || !t.isAlive()) return;
         Vec3 off = t.getPosition(partial).subtract(e.getPosition(partial));
         reticle(pose, buffers.getBuffer(RenderType.eyes(RING)), off, t.getBbWidth(), e.tickCount + partial, state == ZagredBossEntity.STATE_CASTING);
+    }
+
+    /** The bored portal: two counter-turning violet rings swirling and closing in on the boss's feet, independent of the model. */
+    static void portal(PoseStack pose, VertexConsumer vc, float age) {
+        for (int i = 0; i < 3; i++) {
+            pose.pushPose();
+            pose.translate(0, 0.08 + i * 0.9, 0);
+            pose.mulPose(Axis.YP.rotation((i % 2 == 0 ? 1 : -1) * age * (0.25f + 0.1f * i)));
+            float r = (2.4f - 0.5f * i) * (0.85f + 0.15f * Mth.sin(age * 0.7f + i));
+            flat(pose.last(), vc, r, 170, 70, 255);
+            pose.popPose();
+        }
     }
 
     /** A turning rune ring at the target's feet; casting adds four marks closing in and a brighter, faster ring. */
