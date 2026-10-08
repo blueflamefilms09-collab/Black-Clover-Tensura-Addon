@@ -132,7 +132,7 @@ public class SpiritLordSkill extends Skill {
     @Override public int nextMode(LivingEntity e, ManasSkillInstance i, int mode, boolean reverse) { return mode == CHANNEL ? CALL : CHANNEL; }
     @Override public String getModeId(ManasSkillInstance i, int mode) { return mode == CHANNEL ? "spirit_channeling" : "call_spirit"; }
     @Override public Component getModeName(ManasSkillInstance i, int mode) {
-        return Component.literal(mode == CHANNEL ? "Spirit Channeling" : "Call " + (anti(i) ? "the Anti-Magic Lord" : type(i)));
+        return Component.literal(mode == CHANNEL ? "Spirit Burst" : "Call " + (anti(i) ? "the Anti-Magic Lord" : type(i)));
     }
     @Override public double getMagiculeCost(LivingEntity entity, ManasSkillInstance instance, int mode) { return 0; }
     @Override public int getMaxHeldTime(ManasSkillInstance instance, LivingEntity entity) { return 400; }
@@ -140,7 +140,20 @@ public class SpiritLordSkill extends Skill {
 
     @Override
     public void onPressed(ManasSkillInstance i, LivingEntity e, int key, int mode) {
-        if (mode != CALL || !(e instanceof ServerPlayer p)) return;
+        if (!(e instanceof ServerPlayer p)) return;
+        if (mode == CHANNEL) {
+            if (i.onCoolDown(CHANNEL)) {
+                p.displayClientMessage(Component.literal("Your spirit is still gathering itself (" + i.getCoolDown(CHANNEL) + "s).").withStyle(ChatFormatting.RED), true);
+                return;
+            }
+            if (!SpiritBond.willAnswer(p)) {
+                p.displayClientMessage(Component.literal("Your spirit will not answer you.").withStyle(ChatFormatting.RED), true);
+                return;
+            }
+            castSpiritBurst(i, p);
+            return;
+        }
+        if (mode != CALL) return;
         if (!anti(i) && !SpiritBond.incarnate(p)) {
             p.displayClientMessage(Component.literal(type(i) + " has no body yet. Earn its full trust and give it a True Name (Spirit Charm).")
                     .withStyle(ChatFormatting.GRAY), true);
@@ -150,63 +163,23 @@ public class SpiritLordSkill extends Skill {
     }
 
     @Override
-    public boolean onHeld(ManasSkillInstance i, LivingEntity e, int heldTicks, int mode) {
-        if (mode != CHANNEL || !(e instanceof ServerPlayer p)) return true;
-        if (!SpiritBond.willAnswer(p)) {
-            if (heldTicks == 1) p.displayClientMessage(Component.literal("Your spirit will not answer you.").withStyle(ChatFormatting.RED), true);
-            return true;
-        }
-        int gauge = Math.min(100, heldTicks);
-        i.getOrCreateTag().putInt("Gauge", gauge);
-        if (heldTicks % 5 == 0) p.displayClientMessage(Component.literal("Spirit Channeling " + gauge + "%"
-                + (gauge >= 100 ? "  CATACLYSM" : gauge >= 50 ? "  Nova" : gauge >= 25 ? "  Overdrive" : "")).withStyle(ChatFormatting.AQUA, ChatFormatting.BOLD), true);
-        if (heldTicks % 10 == 0) {
-            double r = 2 + 6 * gauge / 100.0;        // the aura grows and drags enemies in
-            for (LivingEntity t : enemies(p, p.position(), r)) {
-                t.setDeltaMovement(p.position().subtract(t.position()).normalize().scale(0.25));
-                t.hurtMarked = true;
-                hit(p, t, 1.5f);
-            }
-            fx(p, i, anti(i) ? VfxShape.SPIRIT_AURA : VfxShape.FX_SPIRIT_AURA, p.position(), p.position(), (float) (0.6 + gauge / 100.0), true);
-        }
-        MasteryPages.onChanneling(p, i, heldTicks);
-        return true;
-    }
+    public boolean onHeld(ManasSkillInstance i, LivingEntity e, int heldTicks, int mode) { return true; }
 
     @Override
-    public void onRelease(ManasSkillInstance i, LivingEntity e, int heldTicks, int keyNumber, int mode) {
-        if (mode != CHANNEL || !(e instanceof ServerPlayer p)) return;
-        int gauge = Math.min(100, heldTicks);
-        i.getOrCreateTag().putInt("Gauge", 0);
+    public void onRelease(ManasSkillInstance i, LivingEntity e, int heldTicks, int keyNumber, int mode) { }
+
+    private void castSpiritBurst(ManasSkillInstance i, ServerPlayer p) {
         MultiverseSync.markDirty(p);
-        if (!SpiritBond.willAnswer(p) || gauge < 25) { if (gauge < 25) p.displayClientMessage(Component.literal("The channel fades.").withStyle(ChatFormatting.GRAY), true); return; }
-        if (i.onCoolDown(CHANNEL)) { p.displayClientMessage(Component.literal("Your spirit is still gathering itself (" + i.getCoolDown(CHANNEL) + "s).").withStyle(ChatFormatting.RED), true); return; }
         Vec3 look = p.getViewVector(1f);
-        if (gauge >= 100) {                                        // Cataclysm: six seconds as a living conduit
-            i.getOrCreateTag().putLong("CataclysmUntil", p.level().getGameTime() + 120);
-            p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 120, 1));
-            fx(p, i, anti(i) ? VfxShape.SPIRIT_AURA : VfxShape.FX_SPIRIT_CATACLYSM, p.position(), p.position(), 1.5f, true);
-            i.setCoolDown(com.newuniverse.nusmp.NUSMP.ticksToSeconds(600), CHANNEL);
-            SpiritBond.heavyUse(p);
-        } else if (gauge >= 50) {                                  // Nova: a burst round you
-            for (LivingEntity t : enemies(p, p.position(), 6)) {
-                hit(p, t, 12f);
-                Vec3 away = t.position().subtract(p.position()).normalize();
-                t.knockback(1.6, -away.x, -away.z);
-            }
-            fx(p, i, anti(i) ? VfxShape.ANTI_MAGIC_SLASH : VfxShape.FX_SPIRIT_NOVA, p.position(), p.position().add(0, 1, 0), 1.2f, false);
-            i.setCoolDown(com.newuniverse.nusmp.NUSMP.ticksToSeconds(240), CHANNEL);
-            SpiritBond.heavyUse(p);
-        } else {                                                   // Overdrive: a spirit dash
-            Vec3 from = p.position(), to = from.add(look.multiply(1, 0.3, 1).normalize().scale(8));
-            for (LivingEntity t : p.serverLevel().getEntitiesOfClass(LivingEntity.class, new AABB(from, to).inflate(1.5), x -> x != p && x.isAlive() && !x.isAlliedTo(p))) hit(p, t, 8f);
-            p.setDeltaMovement(look.scale(2.2));
-            p.hurtMarked = true;
-            p.fallDistance = 0;
-            fx(p, i, anti(i) ? VfxShape.ANTI_MAGIC_SLASH : VfxShape.FX_SPIRIT_OVERDRIVE, from.add(0, 1, 0), to.add(0, 1, 0), 1f, false);
-            i.setCoolDown(com.newuniverse.nusmp.NUSMP.ticksToSeconds(80), CHANNEL);
+        for (LivingEntity t : enemies(p, p.position(), 6)) {
+            hit(p, t, 12f);
+            Vec3 away = t.position().subtract(p.position()).normalize();
+            t.knockback(1.6, -away.x, -away.z);
         }
-        addMasteryPoint(i, e);
+        fx(p, i, anti(i) ? VfxShape.ANTI_MAGIC_SLASH : VfxShape.FX_SPIRIT_NOVA, p.position(), p.position().add(0, 1, 0), 1.2f, false);
+        i.setCoolDown(com.newuniverse.nusmp.NUSMP.ticksToSeconds(240), CHANNEL);
+        SpiritBond.heavyUse(p);
+        addMasteryPoint(i, p);
         i.markDirty();
     }
 

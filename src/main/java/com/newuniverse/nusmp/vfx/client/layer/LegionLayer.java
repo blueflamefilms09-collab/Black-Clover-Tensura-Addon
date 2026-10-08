@@ -49,13 +49,14 @@ public class LegionLayer extends AbstractVfxLayer {
     private static final int GOLD = 0xFFD0C080;
     private static final int WHITE = 0xFFFFFFFF;
 
-    @Override public Set<VfxShape> shapes() { return EnumSet.of(VfxShape.LEGION_FX1, VfxShape.LEGION_FX2, VfxShape.LEGION_FX3); }
+    @Override public Set<VfxShape> shapes() { return EnumSet.of(VfxShape.LEGION_FX1, VfxShape.LEGION_FX2, VfxShape.LEGION_FX3, VfxShape.LEGION_BOARD); }
 
     @Override
     public int defaultDuration(VfxShape s) {
         return switch (s) {
             case LEGION_FX1 -> 16;
             case LEGION_FX2 -> 80;
+            case LEGION_BOARD -> 24;
             default -> 28;
         };
     }
@@ -68,7 +69,32 @@ public class LegionLayer extends AbstractVfxLayer {
             case LEGION_FX1 -> cast(inst, ctx, buf);
             case LEGION_FX2 -> field(inst, ctx, buf);
             case LEGION_FX3 -> burst(inst, ctx, buf);
+            case LEGION_BOARD -> boardBehindHead(inst, ctx, buf);
             default -> { }
+        }
+    }
+
+    private void boardBehindHead(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {
+        float age = inst.ageTicks(ctx.partialTick);
+        float fade = Mth.clamp(Math.min(age / 5f, (inst.duration - age) / 5f), 0f, 1f);
+        float yaw = inst.followYaw(ctx);
+        if (Float.isNaN(yaw)) yaw = 0f;
+        float r = yaw * Mth.DEG_TO_RAD;
+        Vector3f rear = new Vector3f(Mth.sin(r), 0, -Mth.cos(r));
+        Vector3f centre = ctx.rel(inst.from(ctx).add(0, 2.25, 0).add(rear.x * 0.55, 0, rear.z * 0.55));
+        Vector3f facing = new Vector3f(-rear.x, 0, -rear.z);
+        VfxPose plane = VfxPose.facing(centre, facing).spin(age * 0.12f);
+        float size = Math.max(1.3f, inst.power * 0.8f);
+        int glass = VfxVertexBuffer.withAlpha(glass(inst), fade * 0.86f);
+        int crimson = VfxVertexBuffer.withAlpha(crimson(inst), fade * 0.62f);
+        buf.plane(BOARD, VfxBlend.ALPHA, plane, size, glass);
+        buf.plane(RING, VfxBlend.ADD, plane.lift(0.025f).spin(-age * 0.2f), size * 1.14f, crimson);
+        for (int n = 0; n < 6; n++) {
+            float x = (n % 3 - 1) * size * 0.48f;
+            float y = (n / 3 == 0 ? -1 : 1) * size * 0.43f;
+            Vector3f pos = plane.point(x, y);
+            ResourceLocation tex = n % 3 == 0 ? PAWN : n % 3 == 1 ? ROOK : KNIGHT;
+            buf.billboard(ctx, tex, VfxBlend.ALPHA, pos, size * 0.25f, 0f, VfxVertexBuffer.withAlpha(glass, fade));
         }
     }
 

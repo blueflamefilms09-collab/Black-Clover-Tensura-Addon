@@ -6,8 +6,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 /**
- * 0.54: the spell-casting body animations (docs/cast_animation_guide.md). The server decides which clip plays when (the chant while the
- * key is held, the release on the cast, the fail flinch when it fizzles); every client that sees the player plays it
+ * 0.54: the spell-casting body animations (docs/cast_animation_guide.md). The server selects one-shot release poses and
+ * looping idle poses; every client that sees the player plays them
  * ({@code client.CastAnimClient}, keyframes in assets/nusmp/animations/player/cast.animation.json made by tools/gen_cast_animations.py).
  * Nothing here delays or changes a spell: the clips attach to moments that already exist.
  */
@@ -18,9 +18,9 @@ public final class CastAnim {
     public static final String CHANT = "cast_chant", MANA_ZONE = "cast_mana_zone", THRUST = "cast_release_thrust", SWEEP = "cast_release_sweep",
             SIDE = "cast_release_side", UP = "cast_release_up", SLAM = "cast_release_slam", SIGNATURE = "cast_signature", FAIL = "cast_fail",
             WEAPON_SWORD = "cast_weapon_sword", WEAPON_HEAVY = "cast_weapon_heavy", WEAPON_KATANA = "cast_weapon_katana",
-            WEAPON_DANCE = "cast_weapon_dance";
+            WEAPON_DANCE = "cast_weapon_dance", KEY_TURN = "key_turn", DICE_FIDDLE = "dice_fiddle", DICE_TOSS = "dice_toss";
 
-    /** Plays a clip on the player for everyone who sees them. The chant and the mana zone loop until another clip or {@link #stop}. */
+    /** Plays a clip on the player for everyone who sees them; a one-shot returns to the previous loop when it finishes. */
     public static void play(ServerPlayer p, String clip) {
         PacketDistributor.sendToPlayersTrackingEntityAndSelf(p, new CastAnimPayload(p.getId(), clip));
     }

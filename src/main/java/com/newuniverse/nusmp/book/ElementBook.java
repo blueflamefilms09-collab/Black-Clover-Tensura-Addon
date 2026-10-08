@@ -45,6 +45,27 @@ public class ElementBook extends GrimoireBook {
     @Override protected List<BookPage> familyPages() { return pages; }
     @Override public ResourceKey<DamageType> damageType() { return damage; }
 
+    @Override
+    public void vfx(ServerPlayer player, VfxShape shape, Vec3 from, Vec3 to, int ticks, float power) {
+        VfxShape identity = switch (magic) {
+            case STAR -> VfxShape.STAR_MAGIC;
+            case SAND -> VfxShape.SAND_MAGIC;
+            case MIST -> VfxShape.MIST_MAGIC;
+            case BONE -> switch (shape) {
+                case WATER_RING, WIND_RING, EARTH_SPIKES -> VfxShape.BONE_FX2;
+                case WATER_SPLASH, MAGIC_CIRCLE_EXPLOSION, FLAME_EXPLOSION -> VfxShape.BONE_FX3;
+                default -> VfxShape.BONE_FX1;
+            };
+            case BLOOD -> switch (shape) {
+                case WATER_RING, WIND_RING, EARTH_SPIKES -> VfxShape.BLOOD_FX2;
+                case WATER_SPLASH, MAGIC_CIRCLE_EXPLOSION, FLAME_EXPLOSION -> VfxShape.BLOOD_FX3;
+                default -> VfxShape.BLOOD_FX1;
+            };
+            default -> shape;
+        };
+        super.vfx(player, identity, from, to, ticks, power);
+    }
+
     /** What a hit does on top of damage. */
     @FunctionalInterface public interface Rider { void apply(LivingEntity target, ServerPlayer caster); }
     public static final Rider NONE = (t, p) -> {};

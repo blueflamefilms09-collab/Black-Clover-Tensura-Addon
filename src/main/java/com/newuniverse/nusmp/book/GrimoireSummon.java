@@ -91,12 +91,17 @@ public final class GrimoireSummon {
         p.displayClientMessage(Component.literal("Your grimoire answers. (sneak + ability key to stow it)").withStyle(ChatFormatting.GOLD), true);
         PaintStudio.onSummon(p, book.magic);                                                    // 0.44: a Painting grimoire brings its palette & brush
         if (book.magic == MagicType.KOTODAMA) KotodamaWords.aura(p);                           // 0.47: the corrupted purple-black aura
+        if (book.magic == MagicType.DICE || book.magic == MagicType.GAME)
+            com.newuniverse.nusmp.anim.CastAnim.play(p, com.newuniverse.nusmp.anim.CastAnim.DICE_FIDDLE);
     }
 
     public static void dismiss(ServerPlayer p, boolean effects) {
-        if (FLOATING.remove(p.getUUID()) == null) return;
+        State state = FLOATING.remove(p.getUUID());
+        if (state == null) return;
         broadcast(p, ItemStack.EMPTY);
         PaintStudio.onDismiss(p);                                                               // 0.44: the palette & brush dissolve
+        if (state.magic == MagicType.DICE || state.magic == MagicType.GAME)
+            com.newuniverse.nusmp.anim.CastAnim.stop(p);
         if (effects) {
             p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.BOOK_PUT, SoundSource.PLAYERS, 0.9f, 1.0f);
             p.displayClientMessage(Component.literal("Your grimoire returns to your side.").withStyle(ChatFormatting.GRAY), true);

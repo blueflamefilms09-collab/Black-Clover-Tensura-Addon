@@ -16,11 +16,11 @@ Custom Tensura: Reincarnated skills for NeoForge 1.21.1.
 | Freya (god) | `nusmp:freya` | Charm: mobs drop aggro, enemies dazed |
 | Hephaestus (god) | `nusmp:hephaestus` | Repair held item (+ armor when mastered) |
 | Loki (god) | `nusmp:loki` | Vanish + blink forward |
-| Wynn Fimbulvetr (magic) | `nusmp:wynn_fimbulvetr` | 3-chant ice blizzard at target |
-| Rea Laevateinn (magic) | `nusmp:rea_laevateinn` | 3-chant flame pillars around you |
-| Arcs Ray (magic) | `nusmp:arcs_ray` | 1-chant piercing light beam |
-| Futsunomitama (magic) | `nusmp:futsunomitama` | 2-chant gravity field |
-| Uchide no Kozuchi (magic) | `nusmp:uchide_no_kozuchi` | 3-chant Level Boost on an ally |
+| Wynn Fimbulvetr (magic) | `nusmp:wynn_fimbulvetr` | Instant ice blizzard at target |
+| Rea Laevateinn (magic) | `nusmp:rea_laevateinn` | Instant flame pillars around you |
+| Arcs Ray (magic) | `nusmp:arcs_ray` | Instant piercing light beam |
+| Futsunomitama (magic) | `nusmp:futsunomitama` | Instant gravity field |
+| Uchide no Kozuchi (magic) | `nusmp:uchide_no_kozuchi` | Instant Level Boost on an ally |
 
 | Hell Walker | `nusmp:hell_walker` | Toggle: more damage the lower your health |
 | Hawk Eye (Allen) | `nusmp:hawk_eye` | Toggle: night vision + hostile mobs glow |
@@ -49,7 +49,7 @@ God-tier balance: config `[god_tier]` (affectsPlayers, bossHealthThreshold, inst
 
 Config `[ultimate_evolution]`: enabled, minimumEP, replacesBase.
 
-Chanted magics: use **Chant** mode until the chant is complete, then switch to **Cast**. Mastery shortens the chant by one line.
+Magic spells cast on one press; grimoire pages no longer require holding the skill key to charge or chant.
 
 ## Build
 
@@ -60,7 +60,7 @@ Chanted magics: use **Chant** mode until the chant is complete, then switch to *
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.61.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.62.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -204,6 +204,17 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Anti-Magic kit**: new pages **Black Hurricane** (a whirling field that drags foes in and strips their magic) and **Black Form** (30 s of strength, speed, resistance and jump, with an anti-magic burst); mastering the Anti-Magic Lord now also grants the **Demon-Slasher** katana next to Demon-Dweller and Demon-Destroyer.
 - **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
 - **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
+
+## 0.62.0 - Instant casting, identity VFX, and stored Key Magic
+
+- Changed: grimoire spells, crossover chant skills, and Spirit Burst now resolve from one press instead of hold-to-charge casting. Existing grimoire page ids remain in place.
+- New: Star, Sand, and Mist have dedicated layered VFX; Slash has distinct cast, impact, and reaping effects. Bone and Blood spells now route through their existing attribute layers.
+- New: Key Magic collects physical Magic Keys for Janus Abigail's extra gates; legacy stored-charge data is still read. Key pages use a key-turn cast pose.
+- New: Legion has an appended chessboard toggle page, and Dice/Game grimoires use a looping dice-fiddle idle pose while summoned.
+- Fixed: cast poses no longer rotate the torso root independently of the limbs, avoiding the visible body split.
+- Existing: Key gate and Recombination construct visuals continue using their dedicated layers and summon implementations.
+- Not implemented: the repository has no standalone Steal Magic type; stealing remains part of Key Magic. Bone/Sand/Slash/Legion do not yet summon dedicated modeled entity props.
+- Build status: `gradlew.bat build` succeeded; in-game visual checks are still pending.
 
 ## 0.61.0 - Julius Time Magic expansion and client crash fix
 

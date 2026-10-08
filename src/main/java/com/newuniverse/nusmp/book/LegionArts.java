@@ -1,7 +1,10 @@
 package com.newuniverse.nusmp.book;
 
 import com.newuniverse.nusmp.balance.BalanceLaw;
+import com.newuniverse.nusmp.blackclover.MagicType;
+import com.newuniverse.nusmp.book.GrimoireSummon;
 import com.newuniverse.nusmp.vfx.VfxShape;
+import com.newuniverse.nusmp.vfx.VfxSpawn;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
@@ -50,6 +53,29 @@ public final class LegionArts {
     }
 
     private static final Map<UUID, List<Soldier>> ARMY = new HashMap<>();
+
+    /** Toggle the optional chessboard aura; its page was appended to preserve every existing mode id. */
+    public static void toggleChessboard(ServerPlayer player) {
+        var skill = io.github.manasmods.manascore.skill.api.SkillAPI.getSkillsFrom(player)
+                .getSkill(com.newuniverse.nusmp.skill.NUSkills.BOOK_LEGION.getId());
+        if (skill.isEmpty()) return;
+        var tag = skill.get().getOrCreateTag();
+        boolean enabled = !tag.getBoolean("LegionChessboard");
+        tag.putBoolean("LegionChessboard", enabled);
+        skill.get().markDirty();
+        player.displayClientMessage(net.minecraft.network.chat.Component.literal(
+                enabled ? "Legion chessboard enabled." : "Legion chessboard disabled.")
+                .withStyle(enabled ? net.minecraft.ChatFormatting.GOLD : net.minecraft.ChatFormatting.GRAY), true);
+        if (enabled) updateChessboard(skill.get(), player);
+    }
+
+    /** Refresh the short-lived following effect only while the board is enabled and the grimoire is summoned. */
+    static void updateChessboard(io.github.manasmods.manascore.skill.api.ManasSkillInstance instance, ServerPlayer player) {
+        if (!instance.getOrCreateTag().getBoolean("LegionChessboard")
+                || !GrimoireSummon.isFloating(player, MagicType.LEGION)) return;
+        VfxSpawn.sendFollowing(player.serverLevel(), VfxShape.LEGION_BOARD, player,
+                player.position().add(0, 0.04, 0), 0xFFD0C080, 24, 2.2f);
+    }
 
     /** Drops the army of a player who left (called from LegionProps). */
     public static void forget(ServerPlayer p) { ARMY.remove(p.getUUID()); }

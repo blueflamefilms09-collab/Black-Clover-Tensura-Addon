@@ -192,7 +192,12 @@ public enum VfxShape {
     DARK_BLACK_HOLE,         // Black Hole: a black sphere with a violet accretion ring at 'from'; power = radius; pulls motes inward
     DARK_BLACK_MOON,         // Black Moon: a black moon overhead at 'from' with a violet corona and falling dark motes; power = radius
     DARK_THRUST,             // Death Thrust: a spear of darkness from 'from' to 'to' with a shock cone at the tip; power = size
-    DARK_IAI;                // Iai Slash: one bright cut line from 'from' to 'to' with black afterimage and a sheath flash; power = size
+    DARK_IAI,                // Iai Slash: one bright cut line from 'from' to 'to' with black afterimage and a sheath flash; power = size
+    // 0.62: distinct visual identities for Star, Sand, and Mist Magic (append-only network ids)
+    STAR_MAGIC,              // starlight projectiles and constellations from 'from' to 'to'
+    SAND_MAGIC,              // rolling grains, dust veils and cutting grit from 'from' to 'to'
+    MIST_MAGIC,              // layered drifting vapor and soft water-light from 'from' to 'to'
+    LEGION_BOARD;            // toggleable upright checkerboard and chess sprites following the summoned grimoire's owner
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

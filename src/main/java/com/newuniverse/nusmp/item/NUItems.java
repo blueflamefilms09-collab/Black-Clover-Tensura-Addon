@@ -124,6 +124,9 @@ public final class NUItems {
 
     /** Spirit Lord Skill: grants the non-grimoire Spirit Lord path. */
     public static final DeferredItem<SpiritLordSkillItem> SPIRIT_LORD_SKILL = ITEMS.register("spirit_lord_skill", SpiritLordSkillItem::new);
+    /** Physical key charge collected through Key Magic and consumed by Janus Abigail. */
+    public static final DeferredItem<Item> MAGIC_KEY = ITEMS.register("magic_key",
+            () -> new MagicKeyItem(new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
 
     public static List<DeferredItem<? extends Item>> all() {
         List<DeferredItem<? extends Item>> l = new java.util.ArrayList<>();
@@ -133,6 +136,7 @@ public final class NUItems {
                 GRIMOIRE_CHAIN, ANTI_BIRD_CHARM, RECOVERY_SALVE, WRITTEN_CONSENT, DEVIL_CONTRACT, GAUCHE_MIRROR, MAGIC_TOOL_SWORD, MAGIC_TOOL_SPEAR, MAGIC_TOOL_BOW, SPIRIT_LORD_SKILL));
         l.addAll(List.of(PAINT_BRUSH, PAINT_PALETTE));                                          // 0.44
         l.addAll(List.of(LAST_WORD, SHROUD_OF_MARGINS, CIRCLET_OF_THOUGHT, HEART_OF_WORDS));    // 0.52
+        l.add(MAGIC_KEY);
         return l;
     }
 }

@@ -18,6 +18,7 @@ import java.util.List;
 /** Legion Magic: summoned chess-piece soldiers that strike, hold, guard and swap places with the mage (spells in LegionArts). */
 public class LegionBook extends GrimoireBook {
     static final int COLOR = 0xFFD0C080;
+    public static final String CHESSBOARD_ID = "legion_chessboard";
 
     private final List<BookPage> pages = List.of(
             BookPage.starter("legion_strike", "Legion Strike", ElementBook.bolt(8f, 1.6, 0.5, 14, true, 0, VfxShape.LEGION_FX1, VfxShape.LEGION_FX3,
@@ -32,7 +33,8 @@ public class LegionBook extends GrimoireBook {
             BookPage.mid("blink_castling", "Blink Castling", LegionArts::blinkCastling).withCooldown(100),
             BookPage.zone("gehenna_game", "Gehenna Game", LegionArts::gehenna),
             BookPage.signature("endless_domination", "Endless Domination", LegionArts::domination).withAnim("signature"),
-            BookPage.daily("end_empress", "End Empress", LegionArts::endEmpress).withAnim("signature").withCooldown(24000));
+            BookPage.daily("end_empress", "End Empress", LegionArts::endEmpress).withAnim("signature").withCooldown(24000),
+            BookPage.starter(CHESSBOARD_ID, "Chessboard Toggle", (b, i, p, mode) -> true));
 
     public LegionBook() { super(MagicType.LEGION, COLOR); }
     @Override protected List<BookPage> familyPages() { return pages; }

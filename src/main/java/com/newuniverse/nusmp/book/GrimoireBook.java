@@ -34,7 +34,7 @@ import java.util.List;
 
 /**
  * A grimoire = a Tensura UNIQUE skill (gold name, Unique list). The book item is only the key.
- * Hold the Tensura skill key to chant (20 ticks, 8 when mastered), release to cast. Cost goes
+ * Select a page and press the Tensura skill key to cast immediately. Cost goes
  * through getMagiculeCost + EnergyHelper.isOutOfEnergy, damage through createSource with Tensura
  * damage types, cooldowns through instance.setCoolDown(cooldown, mode) only after a successful cast.
  *
@@ -83,7 +83,7 @@ public abstract class GrimoireBook extends Skill {
             List<BookPage> l = new ArrayList<>(familyPages());
             if (spiritElement() != null) {
                 l.add(BookPage.signature("spirit_dive", "Spirit Dive", GrimoireBook::spiritDive).withCooldown(0));
-                l.add(BookPage.signature("spirit_channeling", "Spirit Channeling", GrimoireBook::channel));
+                l.add(BookPage.signature("spirit_channeling", "Spirit Burst", GrimoireBook::channel));
             }
             if (!(this instanceof ForbiddenBook)) l.add(BookPage.signature("devil_union", "Devil Union", GrimoireBook::devilUnion));
             // base ability, last so every existing page keeps its mode number: free, instant, no chant
@@ -108,7 +108,6 @@ public abstract class GrimoireBook extends Skill {
     }
     public BookPage page(int mode) { return mode >= 0 && mode < pages().size() ? pages().get(mode) : null; }
     private boolean isDive(int mode) { return page(mode) != null && (page(mode).id().equals("spirit_dive") || page(mode).id().equals("spirit_channeling")); }
-    private boolean isChannel(int mode) { return page(mode) != null && page(mode).id().equals("spirit_channeling"); }
     private boolean isUnion(int mode) { return page(mode) != null && page(mode).id().equals("devil_union"); }
     public static final String SUMMON_ID = "summon_grimoire";
     private boolean isSummon(int mode) { return page(mode) != null && page(mode).id().equals(SUMMON_ID); }
@@ -116,8 +115,11 @@ public abstract class GrimoireBook extends Skill {
     public static final String STORE_ID = "store_weapon", DRAW_ID = "draw_weapon";
     private boolean isStore(int mode) { return page(mode) != null && page(mode).id().equals(STORE_ID); }
     private boolean isDrawWeapon(int mode) { return page(mode) != null && page(mode).id().equals(DRAW_ID); }
-    /** Pages that act on the key press itself (no chant, no cost, no cooldown). */
-    private boolean instant(int mode) { return isSummon(mode) || isStore(mode) || isDrawWeapon(mode); }
+    /** Pages that act on the key press itself without magicule cost or a cooldown. */
+    private boolean instant(int mode) {
+        return isSummon(mode) || isStore(mode) || isDrawWeapon(mode)
+                || this instanceof LegionBook && page(mode) != null && page(mode).id().equals(LegionBook.CHESSBOARD_ID);
+    }
 
     public static boolean isUnlocked(ManasSkillInstance i, int mode) { return mode == 0 || (i.getOrCreateTag().getInt("Unlocked") & (1 << mode)) != 0; }
 
@@ -169,7 +171,6 @@ public abstract class GrimoireBook extends Skill {
         if (p == null) return 0;
         double c = BalanceLaw.cost(entity, p.costPercent(), p.costFloor()) * cover(instance).cost;
         if (p.costPercent() <= 0 && p.costFloor() <= 0) return 0;                       // e.g. Anti-Magic costs nothing
-        if (instance.getOrCreateTag().getBoolean("ManaZone")) c *= 1.5;                   // Mana Zone costs more
         if (cover(instance).kingdom == com.newuniverse.nusmp.blackclover.Kingdom.HEART && p.costPercent() >= 20) c *= 0.85; // Mana Method
         if (entity instanceof ServerPlayer sp) c *= com.newuniverse.nusmp.item.MagicGear.costMult(sp) * (1 + ForbiddenMagic.manaTax(sp));
         return c;
@@ -179,63 +180,31 @@ public abstract class GrimoireBook extends Skill {
 
     public int castTicks(ManasSkillInstance i, LivingEntity e) { return i.isMastered(e) ? CAST_TICKS_MASTERED : CAST_TICKS; }
 
-    /** Summon Grimoire acts on the key press itself (no chant). Every other page is chanted in onHeld / cast in onRelease. */
+    /** Every page resolves from a single press; holding the key never delays or cancels a spell. */
     @Override
     public void onPressed(ManasSkillInstance instance, LivingEntity entity, int keyNumber, int mode) {
-        if (!instant(mode)) { super.onPressed(instance, entity, keyNumber, mode); return; }
         if (!(entity instanceof ServerPlayer p)) return;
-        if (isSummon(mode)) GrimoireSummon.toggle(p, this);
-        else if (isStore(mode)) com.newuniverse.nusmp.anim.WeaponStore.store(p, this, instance);
-        else com.newuniverse.nusmp.anim.WeaponStore.draw(p, this, instance);
+        if (isSummon(mode)) { GrimoireSummon.toggle(p, this); return; }
+        if (isStore(mode)) { com.newuniverse.nusmp.anim.WeaponStore.store(p, this, instance); return; }
+        if (isDrawWeapon(mode)) { com.newuniverse.nusmp.anim.WeaponStore.draw(p, this, instance); return; }
+        if (instant(mode)) {
+            if (this instanceof LegionBook && page(mode) != null && page(mode).id().equals(LegionBook.CHESSBOARD_ID))
+                LegionArts.toggleChessboard(p);
+            return;
+        }
+        castPage(instance, p, mode);
     }
 
     @Override
-    public boolean onHeld(ManasSkillInstance instance, LivingEntity entity, int heldTicks, int mode) {
-        if (!(entity instanceof ServerPlayer p) || instant(mode)) return true;
-        int need = castTicks(instance, entity);
-        BookPage page = page(mode);
-        if (page == null) return true;
-        if (isChannel(mode)) {   // Spirit Channeling: a 0-100% gauge and an aura that grows and pulls
-            int gauge = Math.min(100, heldTicks);
-            if (usable(instance, entity, mode)) com.newuniverse.nusmp.multiverse.MasteryPages.onChanneling(p, instance, heldTicks);   // channeling trains mastery
-            if (heldTicks % 5 == 0) p.displayClientMessage(Component.literal("Spirit Channeling " + gauge + "%"
-                    + (gauge >= 100 ? "  CATACLYSM" : gauge >= 50 ? "  Spirit Nova" : gauge >= 25 ? "  Overdrive" : "")).withStyle(ChatFormatting.AQUA, ChatFormatting.BOLD), true);
-            if (heldTicks % 10 == 0 && usable(instance, entity, mode)) {
-                double r = 2 + 6 * gauge / 100.0;
-                for (LivingEntity t : around(p, p.position(), r)) {
-                    t.setDeltaMovement(p.position().subtract(t.position()).normalize().scale(0.25));
-                    t.hurtMarked = true;
-                    hurt(instance, p, t, mode, 1.5f);
-                }
-                spiritFx(p, VfxShape.FX_SPIRIT_AURA, p.position(), p.position(), (float) (0.6 + gauge / 100.0), true);
-            }
-            return true;
-        }
-        if (heldTicks == 1) {
-            com.newuniverse.nusmp.anim.CastAnim.play(p, com.newuniverse.nusmp.anim.CastAnim.CHANT);          // 0.54: the chant pose
-            VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.MANA_CHARGE, p, p.position().add(0, 1, 0), color, need * 2, 1f);
-            // 0.27: the floating spell card in front of the face is no longer shown (owner's request); the shape stays registered
-        }
-        if (heldTicks == need * 2 && !instance.getOrCreateTag().getBoolean("ManaZone")) {
-            instance.getOrCreateTag().putBoolean("ManaZone", true);
-            p.displayClientMessage(Component.literal("Mana Zone! " + page.name() + " overcharged (+25% size, +50% cost)").withStyle(ChatFormatting.AQUA, ChatFormatting.BOLD), true);
-            VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.WIND_RING, p, p.position().add(0, 1, 0), color, 20, 1.2f);
-            com.newuniverse.nusmp.anim.CastAnim.play(p, com.newuniverse.nusmp.anim.CastAnim.MANA_ZONE);       // 0.54: the overcharge stance
-        } else if (heldTicks % 4 == 0 && heldTicks <= need) {
-            int pct = Math.min(100, heldTicks * 100 / need);
-            p.displayClientMessage(Component.literal("[" + stage(instance) + "] Chanting " + page.name() + "... " + pct + "%").withStyle(ChatFormatting.LIGHT_PURPLE), true);
-        }
-        return true;
-    }
+    public boolean onHeld(ManasSkillInstance instance, LivingEntity entity, int heldTicks, int mode) { return true; }
 
     @Override
-    public void onRelease(ManasSkillInstance instance, LivingEntity entity, int heldTicks, int keyNumber, int mode) {
-        if (!(entity instanceof ServerPlayer player) || instant(mode)) return;
+    public void onRelease(ManasSkillInstance instance, LivingEntity entity, int heldTicks, int keyNumber, int mode) { }
+
+    private void castPage(ManasSkillInstance instance, ServerPlayer player, int mode) {
         BookPage p = page(mode);
         if (p == null) return;
-        if (heldTicks < castTicks(instance, entity)) { fail(player, "The chant broke off."); instance.getOrCreateTag().putBoolean("ManaZone", false); return; }   // fail() plays the flinch
-        instance.getOrCreateTag().putInt("HeldTicks", heldTicks);
-        if (!usable(instance, entity, mode)) { fail(player, "That page is still sealed."); return; }
+        if (!usable(instance, player, mode)) { fail(player, "That page is still sealed."); return; }
         if (!holdingBook(player)) { fail(player, "Your pages are sealed shut. Summon your " + magic.displayName + " grimoire first (Summon Grimoire)."); return; }
         if (p.weaponTag() != null && !com.newuniverse.nusmp.item.WeaponMagicHelper.holdsAny(player, p.weaponTag())) {
             fail(player, "You must hold the required weapon to cast " + p.name() + ".");
@@ -243,17 +212,20 @@ public abstract class GrimoireBook extends Skill {
         }
         if (player.getPersistentData().getLong("nusmp_sealed_until") > player.level().getGameTime()) { fail(player, "Your grimoire has been sealed!"); return; }
         if (instance.onCoolDown(mode)) { fail(player, p.name() + " is recharging (" + instance.getCoolDown(mode) + "s)."); return; }
-        if (EnergyHelper.isOutOfEnergy(entity, instance, mode)) return;   // Tensura checks and spends
+        instance.getOrCreateTag().putBoolean("ManaZone", false);
+        if (EnergyHelper.isOutOfEnergy(player, instance, mode)) return;
         if (!p.cast().cast(this, instance, player, mode)) { com.newuniverse.nusmp.anim.CastAnim.play(player, com.newuniverse.nusmp.anim.CastAnim.FAIL); return; }
-        com.newuniverse.nusmp.anim.CastAnim.play(player, com.newuniverse.nusmp.anim.CastAnim.releaseFor(p));   // 0.54: the release body animation
+        String clip = magic == MagicType.KEY ? com.newuniverse.nusmp.anim.CastAnim.KEY_TURN
+                : magic == MagicType.DICE || magic == MagicType.GAME ? com.newuniverse.nusmp.anim.CastAnim.DICE_TOSS
+                : com.newuniverse.nusmp.anim.CastAnim.releaseFor(p);
+        com.newuniverse.nusmp.anim.CastAnim.play(player, clip);
         shout(player, p.incantation());
         if (p.cooldown() > 0) {
             int ticks = (int) (p.cooldown() * com.newuniverse.nusmp.item.MagicGear.cooldownMult(player) * com.newuniverse.nusmp.NUGameRules.spellCooldown(player.level()));   // 0.48: 40% shorter by default
             instance.setCoolDown(com.newuniverse.nusmp.NUSMP.ticksToSeconds(ticks), mode);
         }
-        addMasteryPoint(instance, entity);
+        addMasteryPoint(instance, player);
         instance.getOrCreateTag().putInt("LastMode", mode);
-        instance.getOrCreateTag().putBoolean("ManaZone", false);
         com.newuniverse.nusmp.item.MagicGear.onCast(player);
         com.newuniverse.nusmp.multiverse.SecretQuests.onCast(player);              // 0.39: secret quest progress
         DreamWorld.onCast(player, magic);                                         // 0.41: Spatial / Time / Anti-Magic / Dream tear a dream open
@@ -269,7 +241,7 @@ public abstract class GrimoireBook extends Skill {
     /** Spirit Dive makes this book's spells 20% bigger. */
     public static float size(ManasSkillInstance i, LivingEntity e) {
         float s = e.level().getGameTime() < i.getOrCreateTag().getLong("DiveUntil") ? 1.2f : 1f;
-        return i.getOrCreateTag().getBoolean("ManaZone") ? s * 1.25f : s;   // Mana Zone: overcharged chant
+        return s;
     }
     public static boolean inUnion(ManasSkillInstance i, LivingEntity e) { return inDevilState(e); }
 
@@ -415,8 +387,7 @@ public abstract class GrimoireBook extends Skill {
     /** Spirit Channeling release: 25%+ Overdrive dash, 50%+ Spirit Nova, 100% Spirit Sovereign's Cataclysm. */
     private static boolean channel(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         if (!SpiritBond.willAnswer(p)) { fail(p, b.spiritName() + " will not answer you."); return false; }
-        int gauge = Math.min(100, i.getOrCreateTag().getInt("HeldTicks"));
-        if (gauge < 25) { fail(p, "The spirit energy disperses (" + gauge + "%)."); return false; }
+        int gauge = 50;
         SpiritBond.heavyUse(p);
         net.minecraft.world.phys.Vec3 eye = p.getEyePosition(), from = p.position();
         if (gauge < 50) {          // Elemental Overdrive: a dash cloaked in the element
@@ -480,6 +451,7 @@ public abstract class GrimoireBook extends Skill {
         long last = stamp.getLong("SecondAt");
         if (last <= now && now - last < 20) return;
         stamp.putLong("SecondAt", now);
+        if (this instanceof LegionBook) LegionArts.updateChessboard(i, p);
         // Spirit Dive upkeep: magicule each second; ends if the Lord contract is lost.
         if (now < i.getOrCreateTag().getLong("DiveUntil")) {
             if (!spiritGateOpen(p) || !drain(p, EnergyHelper.getMaxMagicule(p) * 0.02)) {
