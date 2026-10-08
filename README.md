@@ -60,7 +60,7 @@ Magic spells fire when the skill key is released; holding the key does not trigg
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.83.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.84.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -230,6 +230,10 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - Fixed modeled magic props acquiring render buffers in an order that could crash the client when rendering Sand Magic.
 - Added the physical Magic Key texture to the item atlas, and changed orbiting Key Magic visuals to smaller, fully textured Great Keys.
 - Grimoire spells, crossover chant spells, and Firebolt now fire when the ability key is released rather than on press.
+
+## 0.84.0 - Legion skill-menu toggle
+- Legion Magic can now be toggled from the Tensura Unique-skill menu; the existing appended grimoire page uses the same toggle callbacks.
+- The Legion render-buffer fix is included; the supplied crash log shows the game was still loading the older `0.82.0` jar.
 
 ## 0.61.0 - Julius Time Magic expansion and client crash fix
 

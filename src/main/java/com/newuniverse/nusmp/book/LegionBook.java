@@ -6,12 +6,15 @@ import com.newuniverse.nusmp.balance.BalanceLaw;
 import io.github.manasmods.manascore.network.api.util.Changeable;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import io.github.manasmods.tensura.damage.TensuraDamageTypes;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.server.level.ServerPlayer;
 
 import java.util.List;
 
@@ -39,6 +42,27 @@ public class LegionBook extends GrimoireBook {
     public LegionBook() { super(MagicType.LEGION, COLOR); }
     @Override protected List<BookPage> familyPages() { return pages; }
     @Override public ResourceKey<DamageType> damageType() { return TensuraDamageTypes.MAGIC_GENERIC; }
+
+    /** Expose Legion's board state through Tensura's normal Unique-skill toggle control. */
+    @Override public boolean canBeToggled(ManasSkillInstance instance, LivingEntity entity) { return true; }
+
+    @Override
+    public void onToggleOn(ManasSkillInstance instance, LivingEntity entity) {
+        instance.getOrCreateTag().putBoolean("LegionChessboard", true);
+        instance.markDirty();
+        if (entity instanceof ServerPlayer player) {
+            player.displayClientMessage(Component.literal("Legion chessboard enabled.").withStyle(ChatFormatting.GOLD), true);
+            LegionArts.updateChessboard(instance, player);
+        }
+    }
+
+    @Override
+    public void onToggleOff(ManasSkillInstance instance, LivingEntity entity) {
+        instance.getOrCreateTag().putBoolean("LegionChessboard", false);
+        instance.markDirty();
+        if (entity instanceof ServerPlayer player)
+            player.displayClientMessage(Component.literal("Legion chessboard disabled.").withStyle(ChatFormatting.GRAY), true);
+    }
 
     /** Commander's Banner: while it flies, your melee blows deal extra damage. */
     @Override

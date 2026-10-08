@@ -65,15 +65,9 @@ public final class LegionArts {
         var skill = io.github.manasmods.manascore.skill.api.SkillAPI.getSkillsFrom(player)
                 .getSkill(com.newuniverse.nusmp.skill.NUSkills.BOOK_LEGION.getId());
         if (skill.isEmpty()) return;
-        var tag = skill.get().getOrCreateTag();
         boolean enabled = !skill.get().isToggled();
         skill.get().setToggled(enabled);
-        tag.putBoolean("LegionChessboard", enabled);
-        skill.get().markDirty();
-        player.displayClientMessage(net.minecraft.network.chat.Component.literal(
-                enabled ? "Legion chessboard enabled." : "Legion chessboard disabled.")
-                .withStyle(enabled ? net.minecraft.ChatFormatting.GOLD : net.minecraft.ChatFormatting.GRAY), true);
-        if (enabled) updateChessboard(skill.get(), player);
+        if (enabled) skill.get().onToggleOn(player); else skill.get().onToggleOff(player);
     }
 
     /** Refresh the short-lived following effect only while the board is enabled and the grimoire is summoned. */
