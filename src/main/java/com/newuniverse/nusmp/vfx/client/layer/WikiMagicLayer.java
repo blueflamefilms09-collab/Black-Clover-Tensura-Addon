@@ -49,14 +49,36 @@ public final class WikiMagicLayer extends AbstractVfxLayer {
     private static int style(MagicType magic) {
         if (magic == null) return 0;
         return switch (magic) {
-            case AIR, SMOKE, VORTEX, WING -> 0;
-            case HAIR, POISON_PLANT, TONGUE, TREE, VINE -> 1;
-            case MINERAL, NAIL, RED_OCHRE, ROCK, SANDSTONE, SCALE, SHAKUDO, SKIN, SPIKE, STONE -> 2;
-            case MUCUS, MUD -> 3;
-            case MEMORY, PERMEATION, SOUL_CORPSE, SOUL, SWITCHING -> 4;
-            case SNOW -> 5;
-            case SONG, SOUND -> 6;
-            case MODIFICATION -> 7;
+            case AIR -> 0;
+            case HAIR -> 1;
+            case MEMORY -> 2;
+            case MINERAL -> 3;
+            case MODIFICATION -> 4;
+            case MUCUS -> 5;
+            case MUD -> 6;
+            case NAIL -> 7;
+            case PERMEATION -> 8;
+            case POISON_PLANT -> 9;
+            case RED_OCHRE -> 10;
+            case ROCK -> 11;
+            case SANDSTONE -> 12;
+            case SCALE -> 13;
+            case SHAKUDO -> 14;
+            case SKIN -> 15;
+            case SMOKE -> 16;
+            case SNOW -> 17;
+            case SONG -> 18;
+            case SOUL_CORPSE -> 19;
+            case SOUL -> 20;
+            case SOUND -> 21;
+            case SPIKE -> 22;
+            case SWITCHING -> 23;
+            case TONGUE -> 24;
+            case TREE -> 25;
+            case STONE -> 26;
+            case VINE -> 27;
+            case VORTEX -> 28;
+            case WING -> 29;
             default -> 0;
         };
     }
@@ -65,17 +87,20 @@ public final class WikiMagicLayer extends AbstractVfxLayer {
                              float age, float fade, float size, int tint, int pale, int style) {
         Vector3f tip = new Vector3f(from).lerp(to, Mth.clamp(age / 22f, 0, 1));
         ResourceChoice choice = resource(style);
-        buf.beam(ctx, choice.texture, choice.blend, from, tip, 0.48f * size, 0.05f, 5, age * 0.07f, tint, pale);
-        int motes = ctx.seg(7, 3);
+        float width = (0.34f + (style % 5) * 0.055f) * size;
+        float spin = age * (0.04f + (style % 7) * 0.009f);
+        buf.beam(ctx, choice.texture, choice.blend, from, tip, width, 0.05f, 5, spin, tint, pale);
+        int motes = ctx.seg(4 + style % 4, 2 + style % 3);
         for (int i = 0; i < motes; i++) {
             float t = (i + 0.5f) / motes;
             Vector3f center = new Vector3f(from).lerp(tip, t);
-            float angle = age * 0.14f + i * 2.399f;
-            center.add(ctx.camRight.x * Mth.cos(angle) * size * 0.34f + ctx.camUp.x * Mth.sin(angle) * size * 0.26f,
-                    ctx.camRight.y * Mth.cos(angle) * size * 0.34f + ctx.camUp.y * Mth.sin(angle) * size * 0.26f,
-                    ctx.camRight.z * Mth.cos(angle) * size * 0.34f + ctx.camUp.z * Mth.sin(angle) * size * 0.26f);
-            buf.billboard(ctx, style == 2 || style == 5 ? VfxTextures.SHARD : VfxTextures.GLOW,
-                    VfxBlend.ADD, center, 0.34f * size, angle, VfxVertexBuffer.withAlpha(pale, fade));
+            float angle = spin + i * 2.399f;
+            float radial = 0.22f + (style % 4) * 0.055f;
+            center.add(ctx.camRight.x * Mth.cos(angle) * size * radial + ctx.camUp.x * Mth.sin(angle) * size * 0.26f,
+                    ctx.camRight.y * Mth.cos(angle) * size * radial + ctx.camUp.y * Mth.sin(angle) * size * 0.26f,
+                    ctx.camRight.z * Mth.cos(angle) * size * radial + ctx.camUp.z * Mth.sin(angle) * size * 0.26f);
+            buf.billboard(ctx, choice.texture, choice.blend, center, (0.24f + (style % 3) * 0.05f) * size,
+                    angle + style * 0.17f, VfxVertexBuffer.withAlpha(pale, fade));
         }
     }
 
@@ -85,15 +110,19 @@ public final class WikiMagicLayer extends AbstractVfxLayer {
         VfxPose plane = VfxPose.ground(center);
         float pulse = 0.88f + 0.12f * Mth.sin(age * 0.14f);
         float radius = size * pulse;
-        buf.ring(VfxTextures.RUNE_RING, VfxBlend.ALPHA, plane.spin(age * (style % 2 == 0 ? 0.018f : -0.018f)),
-                radius * 0.78f, radius, 36, 2.4f, age * 0.025f, VfxVertexBuffer.withAlpha(tint, fade * 0.8f));
+        buf.ring(resource(style).texture, resource(style).blend, plane.spin(age * (style % 2 == 0 ? 0.018f : -0.018f)),
+                radius * (0.68f + (style % 4) * 0.04f), radius, 28 + style % 12, 2.4f,
+                age * (0.012f + (style % 5) * 0.004f), VfxVertexBuffer.withAlpha(tint, fade * 0.8f));
         buf.ring(VfxTextures.GLOW, VfxBlend.ADD, plane.spin(-age * 0.025f),
                 radius * 0.34f, radius * 0.39f, 28, 1f, 0, VfxVertexBuffer.withAlpha(pale, fade * 0.58f));
-        if (style == 2 || style == 5) {
-            for (int i = 0; i < 6; i++) {
-                float a = age * 0.025f + i * Mth.TWO_PI / 6f;
+        if (style == 3 || style == 7 || style == 10 || style == 11 || style == 12 || style == 13
+                || style == 14 || style == 17 || style == 22 || style == 26) {
+            int count = 4 + style % 5;
+            for (int i = 0; i < count; i++) {
+                float a = age * 0.025f + i * Mth.TWO_PI / count;
                 Vector3f point = plane.point(Mth.cos(a) * radius * 0.85f, Mth.sin(a) * radius * 0.85f);
-                buf.billboard(ctx, VfxTextures.SHARD, VfxBlend.ADD, point, 0.35f, a, VfxVertexBuffer.withAlpha(pale, fade));
+                buf.billboard(ctx, resource(style).texture, VfxBlend.ADD, point,
+                        0.24f + (style % 3) * 0.1f, a, VfxVertexBuffer.withAlpha(pale, fade));
             }
         }
     }
@@ -103,27 +132,32 @@ public final class WikiMagicLayer extends AbstractVfxLayer {
         Vector3f center = new Vector3f(from).lerp(to, 0.5f);
         float radius = size * (0.28f + progress * 0.9f);
         VfxPose face = VfxPose.facing(center, new Vector3f(ctx.camera.getLookVector()));
-        buf.arc(VfxTextures.GLOW, VfxBlend.ADD, face.spin(age * 0.025f), radius, 0.22f * size,
-                age * 0.06f, Mth.TWO_PI * 0.78f, 24, VfxVertexBuffer.withAlpha(tint, fade * 0.85f));
-        int rays = 5 + style % 4;
+        ResourceChoice choice = resource(style);
+        buf.arc(choice.texture, choice.blend, face.spin(age * (style % 2 == 0 ? 0.025f : -0.025f)), radius,
+                (0.15f + (style % 4) * 0.035f) * size, age * (0.035f + (style % 5) * 0.012f),
+                Mth.TWO_PI * (0.58f + (style % 4) * 0.1f), 20 + style % 12,
+                VfxVertexBuffer.withAlpha(tint, fade * 0.85f));
+        int rays = 4 + style % 7;
         for (int i = 0; i < rays; i++) {
             float a = age * 0.04f + i * Mth.TWO_PI / rays;
             Vector3f mote = new Vector3f(center)
                     .add(ctx.camRight.x * Mth.cos(a) * radius + ctx.camUp.x * Mth.sin(a) * radius,
                             ctx.camRight.y * Mth.cos(a) * radius + ctx.camUp.y * Mth.sin(a) * radius,
                             ctx.camRight.z * Mth.cos(a) * radius + ctx.camUp.z * Mth.sin(a) * radius);
-            buf.billboard(ctx, style == 2 || style == 5 ? VfxTextures.SHARD : VfxTextures.SPARK,
-                    VfxBlend.ADD, mote, 0.5f * size, a, VfxVertexBuffer.withAlpha(pale, fade));
+            buf.billboard(ctx, choice.texture, choice.blend, mote, (0.32f + (style % 4) * 0.08f) * size,
+                    a, VfxVertexBuffer.withAlpha(pale, fade));
         }
     }
 
     private static ResourceChoice resource(int style) {
         return switch (style) {
-            case 1 -> new ResourceChoice(VfxTextures.WIND_SLASH, VfxBlend.ADD);
-            case 2, 5 -> new ResourceChoice(VfxTextures.SHARD, VfxBlend.ADD);
-            case 3 -> new ResourceChoice(VfxTextures.WATER_SPLASH, VfxBlend.ALPHA);
-            case 4, 7 -> new ResourceChoice(VfxTextures.MAGIC_CIRCLE, VfxBlend.ADD);
-            case 6 -> new ResourceChoice(VfxTextures.SPIRIT_SPIRAL, VfxBlend.ADD);
+            case 0, 12, 16 -> new ResourceChoice(VfxTextures.MANA_MOTE, VfxBlend.ALPHA);
+            case 1, 9, 27, 29 -> new ResourceChoice(VfxTextures.WIND_SLASH, VfxBlend.ADD);
+            case 2, 4, 8, 20, 21, 23, 25 -> new ResourceChoice(VfxTextures.MAGIC_CIRCLE, VfxBlend.ADD);
+            case 3, 7, 10, 11, 13, 14, 17, 22, 26 -> new ResourceChoice(VfxTextures.SHARD, VfxBlend.ADD);
+            case 5, 6, 24 -> new ResourceChoice(VfxTextures.WATER_SPLASH, VfxBlend.ALPHA);
+            case 15, 18, 28 -> new ResourceChoice(VfxTextures.SPIRIT_SPIRAL, VfxBlend.ADD);
+            case 19 -> new ResourceChoice(VfxTextures.DEVIL_CIRCLE, VfxBlend.ADD);
             default -> new ResourceChoice(VfxTextures.GLOW, VfxBlend.ADD);
         };
     }

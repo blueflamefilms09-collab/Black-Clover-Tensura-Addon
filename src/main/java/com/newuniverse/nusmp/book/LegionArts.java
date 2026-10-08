@@ -80,9 +80,9 @@ public final class LegionArts {
         }
         UUID id = player.getUUID();
         MagicPropEntity board = CHESSBOARDS.get(id);
-        float yaw = player.getYRot() * 0.017453292f;
-        Vec3 rear = new Vec3(Math.sin(yaw), 0, -Math.cos(yaw));
-        Vec3 at = player.position().add(0, 2.25, 0).add(rear.scale(0.9));
+        float yaw = player.yBodyRot * 0.017453292f;
+        Vec3 right = new Vec3(-Math.cos(yaw), 0, -Math.sin(yaw));
+        Vec3 at = GrimoireSummon.handPoint(player).subtract(right.scale(1.05)).add(0, 0.15, 0);
         if (board == null || board.isRemoved() || board.level() != player.level()) {
             if (board != null && !board.isRemoved()) board.discard();
             board = MagicProps.spawn(player.serverLevel(), PropKind.LEGION_2, at, player.getYRot(), 0.78f, 80, 0, player);

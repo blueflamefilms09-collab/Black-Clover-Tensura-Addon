@@ -60,7 +60,7 @@ Magic spells fire when the skill key is released; holding the key does not trigg
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.90.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.91.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -200,6 +200,14 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 
 - Fixed the Legion chessboard and chess-piece models reusing render buffers after switching render types, which caused a client crash while rendering the board.
 - Scaled Zagred's existing detailed model to player height while keeping his horns, wings, claws, and tail; reduced the oversized shadow.
+
+## 0.91.0 - Wizard King's legacy blade and grimoire finish
+
+- Added Elsdocia as a modeled God-Tier sword: it absorbs magic on hit, stores up to 1,000 charge, and releases it in a spatial rift; the sneak technique requires a summoned Key Magic grimoire and drains more magic.
+- Added the `Legacy of the Wizard Kings` Tensura engraving, applied with Elsdocia's other engravings when the sword enters a player's inventory.
+- Added magic-specific grimoire cover sigils for the newly added wiki attributes and textured both sides of loose page flips.
+- Added held spell buildup to grimoire magic; releasing the skill starts the cast windup, and a fully charged spell gains up to 20% size and damage.
+- Brought Zagred close to player height and shortened his arm/forearm and leg proportions while preserving his horns, wings, claws, and tail.
 
 ## 0.89.0 - Missing Black Clover attributes and Unique-skill icons
 

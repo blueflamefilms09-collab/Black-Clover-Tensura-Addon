@@ -51,7 +51,8 @@ public final class WeaponEngravings {
             Map.entry("magic_tool_sword", List.of(e("magic_weapon", 1))),                                   // mana-forged tools
             Map.entry("magic_tool_spear", List.of(e("magic_weapon", 1))),
             Map.entry("magic_tool_bow", List.of(e("magic_weapon", 1))),
-            Map.entry("last_word", List.of(e("barrier_piercing", 2), e("severance", 1))));                  // 0.52: Zagred's quill-blade
+            Map.entry("last_word", List.of(e("barrier_piercing", 2), e("severance", 1))),                   // 0.52: Zagred's quill-blade
+            Map.entry("elsdocia", List.of(e("nusmp:legacy_of_the_wizard_kings", 1), e("magic_interference", 2), e("magicule_absorption", 2), e("barrier_piercing", 1))));
 
     static final String FLAG = "NUEngraved";
 

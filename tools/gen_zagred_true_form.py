@@ -37,49 +37,48 @@ def part(name, parent, pivot, rot, *boxes):
 # messy black hair with two upswept horns, long pointed ears, pale neck and spine, a pale ribcage in a V of black, black smoke
 # clumps on the shoulders, very long thin arms with long curved claws, very long legs on clawed feet, huge plain dark wings and a
 # long whip tail curling round to the front.
-part("root", None, (0, -25.5, 0), (0, 0, 0))
+part("root", None, (0, 0, 0), (0, 0, 0))
 part("body", "root", (0, 0, 0), (0, 0, 0),
-     (-1.25, -0.5, -1.25, 2.5, 5, 2.5, False, "neck"),
-     (-3.5, 4, -2, 7, 8, 4, False, "chest"),
-     (-2, 4.5, -2.4, 4, 8, 1, False, "ribs"),
-     (-2.25, 12, -1.5, 4.5, 5, 3, False, "black"),
-     (-3, 17, -1.75, 6, 3, 3.5, False, "black"),
-     (-6, 2.6, -2, 4, 4, 4, False, "smoke"), (2, 2.6, -2, 4, 4, 4, True, "smoke"),
-     (-4.5, 2, 0, 2, 2, 2, False, "smoke"), (2.5, 2, 0, 2, 2, 2, True, "smoke"),
-     (-4.5, 6.5, -2.2, 2, 2, 2, False, "smoke"), (2.5, 6.5, -2.2, 2, 2, 2, True, "smoke"),
-     (-5, 8.5, 0.5, 3, 3, 3, False, "smoke"), (2, 8.5, 0.5, 3, 3, 3, True, "smoke"))
+     (-1.2, -2, -1.2, 2.4, 3, 2.4, False, "neck"),
+     (-4, 0, -2, 8, 11, 4, False, "chest"),
+     (-3, 1.5, -2.35, 6, 8.5, 0.8, False, "ribs"),
+     (-2.2, 10, -1.7, 4.4, 4, 3.4, False, "black"),
+     (-3, 14, -1.8, 6, 4, 3.6, False, "black"),
+     (-5, 0, -1.5, 3, 3, 3, False, "smoke"), (2, 0, -1.5, 3, 3, 3, True, "smoke"),
+     (-4.5, 1, 0.8, 2, 2, 2, False, "smoke"), (2.5, 1, 0.8, 2, 2, 2, True, "smoke"),
+     (-4.3, 5, -1.8, 2, 2, 2, False, "smoke"), (2.3, 5, -1.8, 2, 2, 2, True, "smoke"))
 part("head", "root", (0, 0, 0), (0, 0, 0),
-     (-3, -8, -3.2, 6, 8, 6, False, "face"),
-     (-3.5, -9, -3.6, 7, 4, 7, False, "hair"),
-     (-3.4, -6.5, 2.4, 7, 7, 2, False, "hair"))
+     (-3.5, -8, -3.3, 7, 8, 6.6, False, "face"),
+     (-4, -9, -3.7, 8, 3, 7.4, False, "hair"),
+     (-3.5, -6.5, 2.8, 7, 6.5, 1.4, False, "hair"))
 for k, (x, y, z, rx, rz) in enumerate([(-2.5, -8.5, -2, -0.4, 0.5), (1.5, -9, -1, 0.2, -0.4), (-0.5, -9.5, 1, 0.5, 0.1), (2.5, -7.5, 1.5, 0.6, -0.8),
                                        (-3.5, -7, 1, 0.3, 0.9), (0.5, -9, -2.5, -0.7, -0.2)]):
-    part("hair_spike%d" % k, "head", (x, y, z), (rx, 0, rz), (-1, -3, -1, 2, 3, 2, False, "hair"))
+    part("hair_spike%d" % k, "head", (x, y, z), (rx, 0, rz), (-0.65, -2, -0.65, 1.3, 2, 1.3, False, "hair"))
 for side, sx in (("r", -1), ("l", 1)):
     m = side == "l"
-    part("ear_" + side, "head", (3 * sx, -4.8, 0), (0, 0, 0.15 * sx), (0 if m else -6, -0.5, -0.5, 6, 1, 1, m, "pale"))
-    part("horn_" + side, "head", (1.8 * sx, -8.6, -0.5), (-0.15, 0, 0.35 * sx), (-1, -3, -1, 2, 3, 2, m, "horn"))
-    part("horn_" + side + "_mid", "horn_" + side, (0, -2.8, 0), (0.1, 0, -0.35 * sx), (-0.5, -3, -0.5, 1, 3, 1, m, "horn"))
-    part("horn_" + side + "_tip", "horn_" + side + "_mid", (0, -2.8, 0), (0.15, 0, -0.45 * sx), (-0.5, -2, -0.5, 1, 2, 1, m, "horn"))
-    part("arm_" + side, "root", (4.5 * sx, 5.5, 0), (0, 0, -0.22 * sx), (-1, -1, -1, 2, 13, 2, m, "black"))
-    part("forearm_" + side, "arm_" + side, (0, 12, 0), (-0.15, 0, 0), (-1, 0, -1, 2, 12, 2, m, "black"))
-    part("hand_" + side, "forearm_" + side, (0, 12, 0), (0, 0, 0), (-1.25, 0, -1.25, 2.5, 2.5, 2.5, m, "black"))
+    part("ear_" + side, "head", (3.2 * sx, -4.2, 0), (0, 0, 0.15 * sx), (0 if m else -3, -0.5, -0.5, 3, 1, 1, m, "pale"))
+    part("horn_" + side, "head", (1.8 * sx, -6.5, -0.5), (-0.15, 0, 0.35 * sx), (-0.7, -2.5, -0.7, 1.4, 2.5, 1.4, m, "horn"))
+    part("horn_" + side + "_mid", "horn_" + side, (0, -2.2, 0), (0.1, 0, -0.35 * sx), (-0.5, -1.8, -0.5, 1, 1.8, 1, m, "horn"))
+    part("horn_" + side + "_tip", "horn_" + side + "_mid", (0, -1.6, 0), (0.15, 0, -0.45 * sx), (-0.4, -1.2, -0.4, 0.8, 1.2, 0.8, m, "horn"))
+    part("arm_" + side, "root", (5 * sx, 1.5, 0), (0, 0, -0.12 * sx), (-1.5, -1, -1.2, 3, 6, 2.4, m, "black"))
+    part("forearm_" + side, "arm_" + side, (0, 5, 0), (-0.1, 0, 0), (-1.2, 0, -1, 2.4, 7, 2, m, "black"))
+    part("hand_" + side, "forearm_" + side, (0, 6.5, 0), (0, 0, 0), (-1.2, 0, -1.2, 2.4, 2.4, 2.4, m, "black"))
     for k, cx in enumerate((-0.9, -0.3, 0.3, 0.9)):
-        part("claw_%s%d" % (side, k), "hand_" + side, (cx, 2.2, -0.5), (-0.35, 0, 0.18 * (k - 1.5)), (-0.5, 0, -0.5, 1, 5, 1, m, "claw"))
-        part("claw_%s%d_tip" % (side, k), "claw_%s%d" % (side, k), (0, 4.8, 0), (-0.75, 0, 0), (-0.5, 0, -0.5, 1, 4, 1, m, "clawtip"))
-    part("leg_" + side, "root", (1.5 * sx, 20, 0), (0, 0, 0), (-1.25, 0, -1.25, 2.5, 14, 2.5, m, "black"))
-    part("shin_" + side, "leg_" + side, (0, 14, 0), (0, 0, 0), (-1, 0, -1, 2, 14, 2, m, "black"))
-    part("foot_" + side, "shin_" + side, (0, 14, 0), (0, 0, 0), (-1, 0, -2.5, 2, 1.5, 3.5, m, "black"))
+        part("claw_%s%d" % (side, k), "hand_" + side, (cx, 1.8, -0.5), (-0.35, 0, 0.18 * (k - 1.5)), (-0.4, 0, -0.4, 0.8, 2.8, 0.8, m, "claw"))
+        part("claw_%s%d_tip" % (side, k), "claw_%s%d" % (side, k), (0, 2.6, 0), (-0.75, 0, 0), (-0.35, 0, -0.35, 0.7, 1.8, 0.7, m, "clawtip"))
+    part("leg_" + side, "root", (1.9 * sx, 12, 0), (0, 0, 0), (-1.5, 0, -1.3, 3, 6, 2.6, m, "black"))
+    part("shin_" + side, "leg_" + side, (0, 6, 0), (0, 0, 0), (-1.25, 0, -1.1, 2.5, 6, 2.2, m, "black"))
+    part("foot_" + side, "shin_" + side, (0, 6, 0), (0, 0, 0), (-1.25, 0, -2, 2.5, 1.5, 3, m, "black"))
     for k, cx in enumerate((-0.7, 0, 0.7)):
-        part("toe_%s%d" % (side, k), "foot_" + side, (cx, 0.8, -2.5), (0.25, 0.25 * (k - 1), 0), (-0.5, -0.5, -4, 1, 1, 4, m, "claw"))
-    part("wing_" + side, "body", (2 * sx, 6, 2), (0, -0.3 * sx, -0.32 * sx), (0 if m else -24, -1, -1, 24, 2, 2, m, "wingbone"))
-    part("membrane_" + side, "wing_" + side, (0, 0.5, 0), (0, 0, 0), (0 if m else -24, 0, 0, 24, 20, 0, m, "membrane"))
-    part("wing2_" + side, "wing_" + side, (24 * sx, 0, 0), (0, 0, -0.18 * sx), (0 if m else -20, -1, -1, 20, 2, 2, m, "wingbone"))
-    part("membrane2_" + side, "wing2_" + side, (0, 0.5, 0), (0, 0, 0), (0 if m else -20, 0, 0, 20, 26, 0, m, "membrane"))
+        part("toe_%s%d" % (side, k), "foot_" + side, (cx, 0.8, -2), (0.25, 0.25 * (k - 1), 0), (-0.4, -0.4, -2, 0.8, 0.8, 2, m, "claw"))
+    part("wing_" + side, "body", (3.2 * sx, 2, 1.6), (0, -0.25 * sx, -0.25 * sx), (0 if m else -13, -0.8, -0.8, 13, 1.6, 1.6, m, "wingbone"))
+    part("membrane_" + side, "wing_" + side, (0, 0.4, 0), (0, 0, 0), (0 if m else -13, 0, 0, 13, 12, 0, m, "membrane"))
+    part("wing2_" + side, "wing_" + side, (13 * sx, 0, 0), (0, 0, -0.15 * sx), (0 if m else -10, -0.7, -0.7, 10, 1.4, 1.4, m, "wingbone"))
+    part("membrane2_" + side, "wing2_" + side, (0, 0.4, 0), (0, 0, 0), (0 if m else -10, 0, 0, 10, 14, 0, m, "membrane"))
 TAIL = 8
-part("tail1", "body", (0, 18.5, 1.5), (-1.0, 0, 0), (-0.75, -0.75, 0, 1.5, 1.5, 7, False, "black"))
+part("tail1", "body", (0, 15.5, 1.5), (-1.0, 0, 0), (-0.6, -0.6, 0, 1.2, 1.2, 4, False, "black"))
 for k in range(2, TAIL + 1):
-    part("tail%d" % k, "tail%d" % (k - 1), (0, 0, 6.6), (0.18 if k < 4 else 0.05, 0.42, 0), (-0.5, -0.5, 0, 1, 1, 7, False, "black"))
+    part("tail%d" % k, "tail%d" % (k - 1), (0, 0, 3.8), (0.18 if k < 4 else 0.05, 0.42, 0), (-0.4, -0.4, 0, 0.8, 0.8, 4, False, "black"))
 
 
 def pack():

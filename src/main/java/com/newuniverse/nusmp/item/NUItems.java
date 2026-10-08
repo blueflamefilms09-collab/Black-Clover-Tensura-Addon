@@ -114,6 +114,8 @@ public final class NUItems {
     public static final DeferredItem<MagicWeaponItem> RIMEHEART_RUNEBLADE = weapon("rimeheart_runeblade", MagicWeaponItem.Kind.RIMEHEART);
     // 0.52: Zagred's quill-blade
     public static final DeferredItem<MagicWeaponItem> LAST_WORD = weapon("last_word", MagicWeaponItem.Kind.LAST_WORD);
+    // 0.91: the first Wizard King's legacy sword
+    public static final DeferredItem<MagicWeaponItem> ELSDOCIA = weapon("elsdocia", MagicWeaponItem.Kind.ELSDOCIA);
 
     // 0.44: Painting Magic's palette & brush (manifested by a Painting grimoire; see book.PaintStudio)
     public static final DeferredItem<PaintToolItem> PAINT_BRUSH = ITEMS.register("paint_brush", () -> new PaintToolItem(PaintToolItem.Kind.BRUSH));
@@ -131,7 +133,7 @@ public final class NUItems {
     public static List<DeferredItem<? extends Item>> all() {
         List<DeferredItem<? extends Item>> l = new java.util.ArrayList<>();
         for (RobeSet s : SETS) { l.add(s.hood()); l.add(s.chest()); l.add(s.legs()); l.add(s.boots()); }
-        l.addAll(List.of(DEMON_SLASHER_KATANA, MIASMA_KATANA, SPELL_FORGED_RAPIER, SEVERING_GREATSWORD, DEMON_SLAYER, DEMON_DWELLER, DEMON_DESTROYER, LICHT_DWELLER, LICHT_DESTROYER, RIMEHEART_RUNEBLADE));
+        l.addAll(List.of(DEMON_SLASHER_KATANA, MIASMA_KATANA, SPELL_FORGED_RAPIER, SEVERING_GREATSWORD, DEMON_SLAYER, DEMON_DWELLER, DEMON_DESTROYER, LICHT_DWELLER, LICHT_DESTROYER, RIMEHEART_RUNEBLADE, ELSDOCIA));
         l.addAll(List.of(COMMUNICATION_DEVICE, RUNE_STONE, SPIRIT_CHARM, BOND_THREAD, FORTUNE_DIE,
                 GRIMOIRE_CHAIN, ANTI_BIRD_CHARM, RECOVERY_SALVE, WRITTEN_CONSENT, DEVIL_CONTRACT, GAUCHE_MIRROR, MAGIC_TOOL_SWORD, MAGIC_TOOL_SPEAR, MAGIC_TOOL_BOW, SPIRIT_LORD_SKILL));
         l.addAll(List.of(PAINT_BRUSH, PAINT_PALETTE));                                          // 0.44

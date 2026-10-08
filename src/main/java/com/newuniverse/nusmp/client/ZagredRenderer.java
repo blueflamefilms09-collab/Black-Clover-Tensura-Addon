@@ -44,7 +44,7 @@ public class ZagredRenderer extends MobRenderer<ZagredBossEntity, ZagredModel> {
     private final ItemInHandRenderer items;
 
     public ZagredRenderer(EntityRendererProvider.Context ctx) {
-        super(ctx, new ZagredModel(ctx.bakeLayer(ZagredModel.LAYER)), 0.45f);
+        super(ctx, new ZagredModel(ctx.bakeLayer(ZagredModel.LAYER)), 0.6f);
         this.items = ctx.getItemInHandRenderer();
         addLayer(new Glow(this));
         addLayer(new Aura(this));
@@ -64,7 +64,7 @@ public class ZagredRenderer extends MobRenderer<ZagredBossEntity, ZagredModel> {
 
     @Override
     protected void scale(ZagredBossEntity entity, PoseStack pose, float partialTick) {
-        pose.scale(0.70f, 0.70f, 0.70f);
+        pose.scale(0.9f, 0.9f, 0.9f);
     }
 
     @Override

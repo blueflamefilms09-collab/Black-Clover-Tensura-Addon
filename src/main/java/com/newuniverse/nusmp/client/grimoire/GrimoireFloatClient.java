@@ -472,7 +472,7 @@ public final class GrimoireFloatClient {
      */
     private static void pages(PoseStack pose, MultiBufferSource buffers, Vec3 cam, ItemStack stack, float age, boolean reverse, int light) {
         Style style = style(stack);
-        RenderType pageType = RenderType.entityTranslucent(style == Style.ANTI ? LEAF_TATTERED : LEAF);
+        RenderType pageType = RenderType.entityCutoutNoCull(style == Style.ANTI ? LEAF_TATTERED : LEAF);
         RenderType runeType = RenderType.entityTranslucent(runeTexture(stack));
         int[] tint = switch (style) {
             case ANTI -> new int[]{120, 104, 108};
@@ -513,10 +513,13 @@ public final class GrimoireFloatClient {
         float len = Mth.sqrt(nx * nx + nz * nz);
         if (len < 1e-4f) return;
         nx /= len; nz /= len;
-        vertex(vc, last, xa, y1, za, u0, 0f, c, a, light, nx, nz);
-        vertex(vc, last, xa, y0, za, u0, 1f, c, a, light, nx, nz);
-        vertex(vc, last, xb, y0, zb, u1, 1f, c, a, light, nx, nz);
-        vertex(vc, last, xb, y1, zb, u1, 0f, c, a, light, nx, nz);
+        for (int side = 0; side < 2; side++) {
+            float normal = side == 0 ? 1f : -1f;
+            vertex(vc, last, xa, y1, za, u0, 0f, c, a, light, nx * normal, nz * normal);
+            vertex(vc, last, xb, y1, zb, u1, 0f, c, a, light, nx * normal, nz * normal);
+            vertex(vc, last, xb, y0, zb, u1, 1f, c, a, light, nx * normal, nz * normal);
+            vertex(vc, last, xa, y0, za, u0, 1f, c, a, light, nx * normal, nz * normal);
+        }
     }
 
     private static void vertex(VertexConsumer vc, PoseStack.Pose last, float x, float y, float z, float u, float v, int[] c, int a, int light, float nx, float nz) {

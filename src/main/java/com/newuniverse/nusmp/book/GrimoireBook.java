@@ -184,6 +184,12 @@ public abstract class GrimoireBook extends Skill {
     @Override
     public void onPressed(ManasSkillInstance instance, LivingEntity entity, int keyNumber, int mode) {
         if (!(entity instanceof ServerPlayer p)) return;
+        if (!instant(mode)) {
+            instance.getOrCreateTag().putInt("ChargeMode", mode);
+            instance.getOrCreateTag().putInt("ChargeTicks", 0);
+            instance.markDirty();
+            com.newuniverse.nusmp.anim.CastAnim.play(p, com.newuniverse.nusmp.anim.CastAnim.CHANT);
+        }
         if (isSummon(mode)) { GrimoireSummon.toggle(p, this); return; }
         if (isStore(mode)) { com.newuniverse.nusmp.anim.WeaponStore.store(p, this, instance); return; }
         if (isDrawWeapon(mode)) { com.newuniverse.nusmp.anim.WeaponStore.draw(p, this, instance); return; }
@@ -195,7 +201,19 @@ public abstract class GrimoireBook extends Skill {
     }
 
     @Override
-    public boolean onHeld(ManasSkillInstance instance, LivingEntity entity, int heldTicks, int mode) { return true; }
+    public boolean onHeld(ManasSkillInstance instance, LivingEntity entity, int heldTicks, int mode) {
+        if (!(entity instanceof ServerPlayer p) || instant(mode)) return true;
+        int charge = Math.min(castTicks(instance, p), Math.max(0, heldTicks));
+        instance.getOrCreateTag().putInt("ChargeMode", mode);
+        instance.getOrCreateTag().putInt("ChargeTicks", charge);
+        instance.markDirty();
+        if (charge > 0 && charge % 4 == 0) {
+            float power = 0.45f + 0.7f * charge / castTicks(instance, p);
+            VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.MAGIC_CIRCLE, p,
+                    p.position().add(0, 0.08, 0), color, 6, power);
+        }
+        return true;
+    }
 
     @Override
     public void onRelease(ManasSkillInstance instance, LivingEntity entity, int heldTicks, int keyNumber, int mode) {
@@ -203,13 +221,18 @@ public abstract class GrimoireBook extends Skill {
         long now = player.level().getGameTime();
         long pendingUntil = instance.getOrCreateTag().getLong("PendingCastUntil");
         if (pendingUntil > now) return;
+        int charge = Math.min(castTicks(instance, player), Math.max(0, heldTicks));
+        float chargePower = charge / (float) castTicks(instance, player);
         int windup = instance.isMastered(player) ? 4 : 7;
         long castAt = now + windup;
         instance.getOrCreateTag().putLong("PendingCastUntil", castAt);
+        instance.getOrCreateTag().putFloat("MagicBuildUp", chargePower);
+        instance.getOrCreateTag().putLong("MagicBuildUpUntil", castAt + 60);
+        instance.getOrCreateTag().putInt("ChargeTicks", 0);
         instance.markDirty();
         com.newuniverse.nusmp.anim.CastAnim.play(player, com.newuniverse.nusmp.anim.CastAnim.CHANT);
         VfxSpawn.sendFollowing(player.serverLevel(), VfxShape.MAGIC_CIRCLE, player,
-                player.position().add(0, 0.08, 0), color, windup + 2, 0.48f);
+                player.position().add(0, 0.08, 0), color, windup + 2, 0.48f + chargePower * 0.7f);
         SpellRuntime.later(player.serverLevel(), windup, () -> {
             if (instance.getOrCreateTag().getLong("PendingCastUntil") != castAt) return;
             instance.getOrCreateTag().putLong("PendingCastUntil", 0);
@@ -259,7 +282,12 @@ public abstract class GrimoireBook extends Skill {
     /** Spirit Dive makes this book's spells 20% bigger. */
     public static float size(ManasSkillInstance i, LivingEntity e) {
         float s = e.level().getGameTime() < i.getOrCreateTag().getLong("DiveUntil") ? 1.2f : 1f;
-        return s;
+        return s * buildUpMultiplier(i, e);
+    }
+
+    private static float buildUpMultiplier(ManasSkillInstance instance, LivingEntity entity) {
+        if (entity.level().getGameTime() > instance.getOrCreateTag().getLong("MagicBuildUpUntil")) return 1f;
+        return 1f + Math.max(0f, Math.min(1f, instance.getOrCreateTag().getFloat("MagicBuildUp"))) * 0.2f;
     }
     public static boolean inUnion(ManasSkillInstance i, LivingEntity e) { return inDevilState(e); }
 
@@ -280,6 +308,7 @@ public abstract class GrimoireBook extends Skill {
     public void hurtAs(ManasSkillInstance i, ServerPlayer caster, LivingEntity target, int mode, float raw, ResourceKey<DamageType> type) {
         if (target == caster || target.isAlliedTo(caster)) return;
         float r = raw * (float) cover(i).damage * (inUnion(i, caster) ? 1.1f : 1f)
+                * buildUpMultiplier(i, caster)
                 * (float) com.newuniverse.nusmp.item.MagicGear.damageMult(caster, magic);
         // Dark Magic is Arcane Stage: strong against devils and devil-tainted mages.
         if ((magic == MagicType.DARK || magic == MagicType.SHADOW) && (inDevilState(target)

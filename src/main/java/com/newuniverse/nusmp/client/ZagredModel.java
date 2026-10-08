@@ -29,7 +29,7 @@ import net.minecraft.world.entity.HumanoidArm;
  */
 public class ZagredModel extends EntityModel<ZagredBossEntity> implements ArmedModel {
     public static final ModelLayerLocation LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("nusmp", "zagred_true"), "main");
-    private static final float BODY_SCALE = 0.62f;
+    private static final float BODY_SCALE = 0.55f;
 
     private final ModelPart root, body, head, armR, armL, forearmR, forearmL, handR, handL, legR, legL, shinR, shinL,
             wingR, wingL, wing2R, wing2L;
@@ -126,49 +126,49 @@ public class ZagredModel extends EntityModel<ZagredBossEntity> implements ArmedM
 
         // Sculpted accents stay outside the generated block so regenerating the base mesh preserves them.
         for (int row = 0; row < 5; row++) {
-            float y = 5.1f + row * 1.35f;
+            float y = 2.2f + row * 1.35f;
             float tilt = (row - 2) * 0.045f;
             CubeListBuilder ribs = CubeListBuilder.create().texOffs(82, 26)
-                    .addBox(-3.1f, -0.28f, -2.72f, 2.25f, 0.56f, 0.45f)
-                    .mirror().addBox(0.85f, -0.28f, -2.72f, 2.25f, 0.56f, 0.45f);
+                    .addBox(-3.1f, -0.28f, -2.42f, 2.25f, 0.56f, 0.45f)
+                    .mirror().addBox(0.85f, -0.28f, -2.42f, 2.25f, 0.56f, 0.45f);
             p_body.addOrReplaceChild("raised_ribs_" + row, ribs,
                     PartPose.offsetAndRotation(0f, y, 0f, 0f, 0f, tilt));
         }
         CubeListBuilder vertebrae = CubeListBuilder.create().texOffs(82, 26);
         for (int bone = 0; bone < 8; bone++) {
-            vertebrae.addBox(-0.45f, 4.4f + bone * 1.35f, 1.85f, 0.9f, 0.82f, 0.55f);
+            vertebrae.addBox(-0.45f, 1.5f + bone * 1.05f, 1.85f, 0.9f, 0.82f, 0.55f);
         }
         p_body.addOrReplaceChild("spinal_ridge", vertebrae, PartPose.ZERO);
         p_body.addOrReplaceChild("sternum",
-                CubeListBuilder.create().texOffs(82, 26).addBox(-0.45f, 4.6f, -2.83f, 0.9f, 8.1f, 0.4f),
+                CubeListBuilder.create().texOffs(82, 26).addBox(-0.45f, 1.6f, -2.53f, 0.9f, 8.1f, 0.4f),
                 PartPose.ZERO);
         p_body.addOrReplaceChild("abdominal_ridges",
                 CubeListBuilder.create().texOffs(82, 26)
-                        .addBox(-2.1f, 13.3f, -2.02f, 1.35f, 0.55f, 0.48f)
-                        .addBox(-1.55f, 14.55f, -2.02f, 1.05f, 0.55f, 0.48f)
-                        .addBox(-1.05f, 15.8f, -2.02f, 0.55f, 0.5f, 0.48f)
+                        .addBox(-2.1f, 10.4f, -2.02f, 1.35f, 0.55f, 0.48f)
+                        .addBox(-1.55f, 11.65f, -2.02f, 1.05f, 0.55f, 0.48f)
+                        .addBox(-1.05f, 12.9f, -2.02f, 0.55f, 0.5f, 0.48f)
                         .mirror()
-                        .addBox(0.75f, 13.3f, -2.02f, 1.35f, 0.55f, 0.48f)
-                        .addBox(0.5f, 14.55f, -2.02f, 1.05f, 0.55f, 0.48f)
-                        .addBox(0.5f, 15.8f, -2.02f, 0.55f, 0.5f, 0.48f),
+                        .addBox(0.75f, 10.4f, -2.02f, 1.35f, 0.55f, 0.48f)
+                        .addBox(0.5f, 11.65f, -2.02f, 1.05f, 0.55f, 0.48f)
+                        .addBox(0.5f, 12.9f, -2.02f, 0.55f, 0.5f, 0.48f),
                 PartPose.ZERO);
 
         p_head.addOrReplaceChild("nose_bridge",
-                CubeListBuilder.create().texOffs(0, 26).addBox(-0.35f, -4.8f, -3.48f, 0.7f, 2.5f, 0.45f),
+                CubeListBuilder.create().texOffs(0, 26).addBox(-0.35f, -5.5f, -3.68f, 0.7f, 2.5f, 0.45f),
                 PartPose.ZERO);
         p_head.addOrReplaceChild("cheek_ridges",
                 CubeListBuilder.create().texOffs(0, 26)
-                        .addBox(-3.1f, -3.3f, -3.34f, 1.65f, 1.15f, 0.35f)
-                        .mirror().addBox(1.45f, -3.3f, -3.34f, 1.65f, 1.15f, 0.35f),
+                        .addBox(-3.1f, -3.3f, -3.54f, 1.65f, 1.15f, 0.35f)
+                        .mirror().addBox(1.45f, -3.3f, -3.54f, 1.65f, 1.15f, 0.35f),
                 PartPose.ZERO);
         p_head.addOrReplaceChild("jaw_teeth",
-                CubeListBuilder.create().texOffs(0, 40).addBox(-1.45f, -1.55f, -3.5f, 2.9f, 0.45f, 0.3f),
+                CubeListBuilder.create().texOffs(0, 40).addBox(-1.45f, -1.55f, -3.7f, 2.9f, 0.45f, 0.3f),
                 PartPose.ZERO);
         for (int side : new int[]{-1, 1}) {
             String suffix = side < 0 ? "r" : "l";
             p_head.addOrReplaceChild("horn_branch_" + suffix,
-                    CubeListBuilder.create().texOffs(0, 48).addBox(-0.5f, -2.5f, -0.5f, 1f, 2.5f, 1f),
-                    PartPose.offsetAndRotation(side * 2.35f, -7.8f, -0.25f, 0.15f, 0f, side * -0.55f));
+                    CubeListBuilder.create().texOffs(0, 48).addBox(-0.5f, -2f, -0.5f, 1f, 2f, 1f),
+                    PartPose.offsetAndRotation(side * 2.35f, -6.5f, -0.25f, 0.15f, 0f, side * -0.55f));
             PartDefinition forearm = side < 0 ? p_forearm_r : p_forearm_l;
             forearm.addOrReplaceChild("elbow_spur_" + suffix,
                     CubeListBuilder.create().texOffs(0, 48).addBox(-0.5f, 0f, -0.5f, 1f, 3f, 1f),
@@ -178,20 +178,20 @@ public class ZagredModel extends EntityModel<ZagredBossEntity> implements ArmedM
                 CubeListBuilder.create().texOffs(0, 48)
                         .addBox(-1.7f, -1.1f, -0.5f, 3.4f, 2.2f, 1.6f)
                         .addBox(-0.8f, -1.7f, -0.35f, 1.6f, 3.4f, 1.3f),
-                PartPose.offset(0f, 0f, 6.2f));
+                PartPose.offset(0f, 0f, 3.7f));
         for (int side : new int[]{-1, 1}) {
             String suffix = side < 0 ? "r" : "l";
             PartDefinition wing = side < 0 ? p_wing_r : p_wing_l;
             PartDefinition outerWing = side < 0 ? p_wing2_r : p_wing2_l;
             for (int spar = 0; spar < 4; spar++) {
-                float x = side * (5f + spar * 4.5f);
-                float length = 11f + (spar % 2) * 2f;
+                float x = side * (2.5f + spar * 2.2f);
+                float length = 6f + (spar % 2) * 2f;
                 wing.addOrReplaceChild("inner_spar_" + suffix + spar,
                         CubeListBuilder.create().texOffs(34, 48).addBox(-0.55f, 0f, -0.65f, 1.1f, length, 1.3f),
                         PartPose.offsetAndRotation(x, 0f, 0f, 0f, 0f, side * (0.12f + spar * 0.035f)));
-                float outerX = side * (4f + spar * 3.8f);
+                float outerX = side * (2f + spar * 1.8f);
                 outerWing.addOrReplaceChild("outer_spar_" + suffix + spar,
-                        CubeListBuilder.create().texOffs(0, 53).addBox(-0.5f, 0f, -0.6f, 1f, 13f + (spar % 2) * 2f, 1.2f),
+                        CubeListBuilder.create().texOffs(0, 53).addBox(-0.5f, 0f, -0.6f, 1f, 7f + (spar % 2) * 2f, 1.2f),
                         PartPose.offsetAndRotation(outerX, 0f, 0f, 0f, 0f, side * (0.15f + spar * 0.04f)));
             }
         }
@@ -206,7 +206,10 @@ public class ZagredModel extends EntityModel<ZagredBossEntity> implements ArmedM
         root.xScale = BODY_SCALE;
         root.yScale = BODY_SCALE;
         root.zScale = BODY_SCALE;
-        root.y = (-25.5f + Mth.sin(age * 0.1f) * 1.2f - (e.phase() >= 2 ? 3f : 0f)) * BODY_SCALE;
+        armR.yScale = armL.yScale = 0.85f;
+        forearmR.yScale = forearmL.yScale = 0.9f;
+        legR.yScale = legL.yScale = 0.9f;
+        root.y = (Mth.sin(age * 0.1f) * 0.55f - (e.phase() >= 2 ? 1.5f : 0f)) * BODY_SCALE;
         head.yRot = yaw * Mth.DEG_TO_RAD;
         head.xRot = pitch * Mth.DEG_TO_RAD;
         if (state == ZagredBossEntity.STATE_IDLE) head.yRot += Mth.sin(age * 0.03f) * 0.25f;            // a slow, curious look round
