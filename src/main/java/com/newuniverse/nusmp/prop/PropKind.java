@@ -91,5 +91,9 @@ public enum PropKind {
     COMPASS_1,
     COMPASS_2,
     MERCURY_1,
-    MERCURY_2
+    MERCURY_2,
+    SAND_1,
+    SAND_2,
+    RECOMBINATION_1,
+    RECOMBINATION_2
 }

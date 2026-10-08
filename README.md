@@ -60,7 +60,7 @@ Magic spells cast on one press; grimoire pages no longer require holding the ski
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.72.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.82.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -216,13 +216,14 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - Not implemented: the repository has no standalone Steal Magic type; stealing remains part of Key Magic. Bone/Sand/Slash/Legion do not yet summon dedicated modeled entity props.
 - Build status: `gradlew.bat build` succeeded; in-game visual checks are still pending.
 
-## 0.72.0 - Magic rune identities and Legion board refresh
+## 0.82.0 - Modeled magic constructs and robe upgrades
 
-- Improved: the rune generator now produces distinct central glyphs and palettes for Star, Bone, Blood, Sand, Mist, Recombination, Slash, and Key Magic.
-- Fixed: Legion's optional grimoire-back chessboard refreshes while the book is summoned instead of expiring between the slower upkeep ticks.
-- Improved: Legion's summoned-piece visuals distinguish queens as well as pawns, rooks, and knights.
-- Note: Key Magic remains the mod's existing stealing mechanic; no separate Steal Magic type was added. Dedicated modeled entity props for Bone, Sand, Slash, and Legion remain unfinished.
-- Build status: `gradlew.bat build` pending; in-game visual checks are still required.
+- New: Bone Spear/Ossuary, Sand Spear/Sandstorm, Slash Wave/Death Scythe, Recombination constructs, and Legion's soldiers/Gehenna Game board now use 3D model props and layered materials.
+- Improved: junior and senior Magic Knight robes have a raised collar, shoulder mantle, tailored waist trim, and split coat tails; all existing robe items and set effects are preserved.
+- Fixed: Legion's toggleable board refreshes independently of slow upkeep, its modeled pieces follow their soldier positions, and the board prop appears with Gehenna Game.
+- Existing: Star, Bone, Blood, Sand, Mist, Recombination, Slash, and Key rune designs are generated with magic-specific palettes and glyphs.
+- Note: there is no standalone Steal Magic attribute; stealing remains a Key Magic mechanic. In-game appearance and multiplayer rendering still need runtime verification.
+- Build status: `gradlew.bat build` succeeded; in-game visual verification is still pending.
 
 ## 0.61.0 - Julius Time Magic expansion and client crash fix
 

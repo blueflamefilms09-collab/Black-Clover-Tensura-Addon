@@ -49,5 +49,7 @@ final class PropPainterRegistry {
         SlashPropPainter.register();
         CompassPropPainter.register();
         MercuryPropPainter.register();
+        SandPropPainter.register();
+        RecombinationPropPainter.register();
     }
 }

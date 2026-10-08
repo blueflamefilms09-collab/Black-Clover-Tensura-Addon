@@ -5,6 +5,9 @@ import com.newuniverse.nusmp.blackclover.MagicType;
 import com.newuniverse.nusmp.book.GrimoireSummon;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
+import com.newuniverse.nusmp.prop.MagicPropEntity;
+import com.newuniverse.nusmp.prop.MagicProps;
+import com.newuniverse.nusmp.prop.PropKind;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
@@ -49,7 +52,10 @@ public final class LegionArts {
         Vec3 pos;
         final long until;
         final int kind;
-        Soldier(ResourceKey<Level> dim, Vec3 pos, long until, int kind) { this.dim = dim; this.pos = pos; this.until = until; this.kind = kind; }
+        final MagicPropEntity model;
+        Soldier(ResourceKey<Level> dim, Vec3 pos, long until, int kind, MagicPropEntity model) {
+            this.dim = dim; this.pos = pos; this.until = until; this.kind = kind; this.model = model;
+        }
     }
 
     private static final Map<UUID, List<Soldier>> ARMY = new HashMap<>();
@@ -60,7 +66,8 @@ public final class LegionArts {
                 .getSkill(com.newuniverse.nusmp.skill.NUSkills.BOOK_LEGION.getId());
         if (skill.isEmpty()) return;
         var tag = skill.get().getOrCreateTag();
-        boolean enabled = !tag.getBoolean("LegionChessboard");
+        boolean enabled = !skill.get().isToggled();
+        skill.get().setToggled(enabled);
         tag.putBoolean("LegionChessboard", enabled);
         skill.get().markDirty();
         player.displayClientMessage(net.minecraft.network.chat.Component.literal(
@@ -71,14 +78,17 @@ public final class LegionArts {
 
     /** Refresh the short-lived following effect only while the board is enabled and the grimoire is summoned. */
     static void updateChessboard(io.github.manasmods.manascore.skill.api.ManasSkillInstance instance, ServerPlayer player) {
-        if (!instance.getOrCreateTag().getBoolean("LegionChessboard")
+        if (!instance.isToggled()
                 || !GrimoireSummon.isFloating(player, MagicType.LEGION)) return;
         VfxSpawn.sendFollowing(player.serverLevel(), VfxShape.LEGION_BOARD, player,
                 player.position().add(0, 0.04, 0), 0xFFD0C080, 24, 2.2f);
     }
 
     /** Drops the army of a player who left (called from LegionProps). */
-    public static void forget(ServerPlayer p) { ARMY.remove(p.getUUID()); }
+    public static void forget(ServerPlayer p) {
+        List<Soldier> removed = ARMY.remove(p.getUUID());
+        if (removed != null) for (Soldier soldier : removed) if (soldier.model != null) soldier.model.expire();
+    }
 
     /** The live soldiers of a caster (expired ones are dropped here). */
     private static List<Soldier> army(ServerPlayer p) {
@@ -90,10 +100,20 @@ public final class LegionArts {
 
     private static Soldier raise(ServerPlayer p, Vec3 at, int kind, int ticks) {
         List<Soldier> l = army(p);
-        Soldier s = new Soldier(p.level().dimension(), at, p.level().getGameTime() + ticks, kind);
+        MagicPropEntity model = MagicProps.spawn(p.serverLevel(), PropKind.LEGION_1, at, p.getYRot(),
+                0.72f * EnergyBridge.scale(p), ticks, kind, p);
+        Soldier s = new Soldier(p.level().dimension(), at, p.level().getGameTime() + ticks, kind, model);
         l.add(s);
-        while (l.size() > MAX_ARMY) l.remove(0);
+        while (l.size() > MAX_ARMY) {
+            Soldier removed = l.remove(0);
+            if (removed.model != null) removed.model.expire();
+        }
         return s;
+    }
+
+    private static void move(Soldier soldier, Vec3 at) {
+        soldier.pos = at;
+        if (soldier.model != null && !soldier.model.isRemoved()) soldier.model.setPos(at);
     }
 
     // ------------------------------------------------------------------ small helpers
@@ -331,7 +351,7 @@ public final class LegionArts {
             dest = dest.add(0, 1, 0);
             if (!p.level().noCollision(p, p.getBoundingBox().move(dest.subtract(from)))) { GrimoireBook.fail(p, "No room to stand there."); return false; }
         }
-        best.pos = from;
+        move(best, from);
         b.castCircle(p, 0.8f);
         b.vfx(p, VfxShape.LEGION_FX1, from.add(0, 1, 0), dest.add(0, 1, 0), 12, 1f);
         b.vfx(p, VfxShape.LEGION_FX3, from, from.add(0, 1, 0), 20, 0.6f);
@@ -353,13 +373,14 @@ public final class LegionArts {
         int[] kinds = {ROOK, KNIGHT, BISHOP, PAWN, PAWN, BISHOP, KNIGHT, ROOK};
         b.castCircle(p, 1.2f);
         b.vfx(p, VfxShape.LEGION_FX2, c.add(0, 0.05, 0), c.add(0, 1, 0), ticks, (float) r);
+        MagicProps.spawn(p.serverLevel(), PropKind.LEGION_2, c, 0f, (float) r, ticks, 0, p);
         List<Soldier> pieces = new ArrayList<>();
         for (int n = 0; n < 8; n++) pieces.add(raise(p, ring(c, r * 0.75, n * Math.PI / 4), kinds[n], ticks + 20));
         presence(b, p, pieces, ticks);
         SpellRuntime.zone(p.serverLevel(), ticks, 10, age -> {
             if (!p.isAlive()) return;
             double ang = age * 0.06;
-            for (int n = 0; n < 8; n++) pieces.get(n).pos = ring(c, r * 0.75, n * Math.PI / 4 + ang);
+            for (int n = 0; n < 8; n++) move(pieces.get(n), ring(c, r * 0.75, n * Math.PI / 4 + ang));
             sweep(b, i, p, mode, pieces, 2.2, 3f, t -> slow(t, 30, 1));
             for (LivingEntity t : GrimoireBook.around(p, c, r)) slow(t, 25, 0);
             if (age % 40 == 0) b.vfx(p, VfxShape.LEGION_FX3, c, c.add(0, 1, 0), 22, (float) (r / 6));
@@ -384,7 +405,7 @@ public final class LegionArts {
             if (!p.isAlive()) return;
             Vec3 c = p.position();
             double ang = age * 0.1;
-            for (int n = 0; n < 8; n++) host.get(n).pos = ring(c, r, n * Math.PI / 4 + ang);
+            for (int n = 0; n < 8; n++) move(host.get(n), ring(c, r, n * Math.PI / 4 + ang));
             sweep(b, i, p, mode, host, 3.0, 4.5f, t -> slow(t, 30, 1));
             if (age % 60 != 0) return;
             List<LivingEntity> foes = new ArrayList<>(GrimoireBook.around(p, c, 20));
@@ -409,6 +430,7 @@ public final class LegionArts {
         int merged = Math.min(8, live.size());
         for (int n = 0; n < merged; n++) b.vfx(p, VfxShape.LEGION_FX1, live.get(n).pos.add(0, 1, 0), c.add(0, 2, 0), 30, 0.7f);
         army(p).removeAll(live);
+        for (Soldier soldier : live) if (soldier.model != null) soldier.model.expire();
         b.castCircle(p, 1.6f);
         b.vfx(p, VfxShape.LEGION_FX2, c.add(0, 0.05, 0), c.add(0, 1, 0), 30, 4f);
         ServerLevel sl = p.serverLevel();

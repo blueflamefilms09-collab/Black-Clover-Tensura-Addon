@@ -5,6 +5,8 @@ import com.newuniverse.nusmp.blackclover.MagicType;
 import com.newuniverse.nusmp.blackclover.TimeStop;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
+import com.newuniverse.nusmp.prop.MagicProps;
+import com.newuniverse.nusmp.prop.PropKind;
 import io.github.manasmods.manascore.network.api.util.Changeable;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import net.minecraft.core.BlockPos;
@@ -64,6 +66,19 @@ public class ElementBook extends GrimoireBook {
             default -> shape;
         };
         super.vfx(player, identity, from, to, ticks, power);
+        float scale = Math.max(0.35f, Math.min(3.5f, Math.abs(power)));
+        float yaw = (float) Math.toDegrees(Math.atan2(-(to.x - from.x), to.z - from.z));
+        if (magic == MagicType.BONE) {
+            PropKind prop = identity == VfxShape.BONE_FX2 ? PropKind.BONE_2 : PropKind.BONE_1;
+            MagicProps.spawn(player.serverLevel(), prop, from, yaw, scale, Math.max(8, Math.min(ticks, 80)), 0, player);
+        } else if (magic == MagicType.SAND) {
+            PropKind prop = ticks >= 30 ? PropKind.SAND_2 : PropKind.SAND_1;
+            MagicProps.spawn(player.serverLevel(), prop, from, yaw, scale, Math.max(8, Math.min(ticks, 80)), 0, player);
+        } else if (magic == MagicType.RECOMBINATION) {
+            PropKind prop = identity == VfxShape.RECOMBINE_CONSTRUCT ? PropKind.RECOMBINATION_1 : PropKind.RECOMBINATION_2;
+            MagicProps.spawn(player.serverLevel(), prop, from, yaw, Math.max(0.8f, Math.min(scale, 2.5f)),
+                    Math.max(12, Math.min(ticks, 100)), 0, player);
+        }
     }
 
     /** What a hit does on top of damage. */
