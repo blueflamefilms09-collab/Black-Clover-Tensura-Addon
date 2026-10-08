@@ -60,7 +60,7 @@ Magic spells cast on one press; grimoire pages no longer require holding the ski
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.62.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.72.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -215,6 +215,14 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - Existing: Key gate and Recombination construct visuals continue using their dedicated layers and summon implementations.
 - Not implemented: the repository has no standalone Steal Magic type; stealing remains part of Key Magic. Bone/Sand/Slash/Legion do not yet summon dedicated modeled entity props.
 - Build status: `gradlew.bat build` succeeded; in-game visual checks are still pending.
+
+## 0.72.0 - Magic rune identities and Legion board refresh
+
+- Improved: the rune generator now produces distinct central glyphs and palettes for Star, Bone, Blood, Sand, Mist, Recombination, Slash, and Key Magic.
+- Fixed: Legion's optional grimoire-back chessboard refreshes while the book is summoned instead of expiring between the slower upkeep ticks.
+- Improved: Legion's summoned-piece visuals distinguish queens as well as pawns, rooks, and knights.
+- Note: Key Magic remains the mod's existing stealing mechanic; no separate Steal Magic type was added. Dedicated modeled entity props for Bone, Sand, Slash, and Legion remain unfinished.
+- Build status: `gradlew.bat build` pending; in-game visual checks are still required.
 
 ## 0.61.0 - Julius Time Magic expansion and client crash fix
 

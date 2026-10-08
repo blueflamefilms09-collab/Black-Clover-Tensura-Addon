@@ -13,6 +13,9 @@ const colors = {
   FLAME: [255, 116, 42], WATER: [104, 205, 255], WIND: [156, 255, 199], EARTH: [183, 227, 115],
   LIGHT: [255, 230, 116], DARKNESS: [203, 127, 255], SPACE: [135, 154, 255], TIME: [97, 239, 218],
   BATTLE: [255, 151, 103], FANTASY: [255, 158, 222], EMPTY: [255, 82, 116],
+  STAR: [255, 236, 145], SAND: [226, 184, 111], MIST: [202, 222, 238],
+  BONE: [244, 237, 216], BLOOD: [222, 35, 54], RECOMBINATION: [213, 150, 94],
+  SLASH: [134, 255, 155], KEY: [190, 125, 246],
 };
 
 function crc32(bytes) {
@@ -51,9 +54,65 @@ function line(pixels, x0, y0, x1, y1, color, alpha = 255) {
   }
 }
 
+function motif(pixels, name, color) {
+  const c = hi / 2, r = 9 * scale, ink = color;
+  const stroke = (x1, y1, x2, y2, alpha = 255) => line(pixels, x1, y1, x2, y2, ink, alpha);
+  if (name === "STAR") {
+    for (let i = 0; i < 8; i++) {
+      const a = Math.PI * i / 4;
+      stroke(c, c, Math.round(c + Math.cos(a) * r), Math.round(c + Math.sin(a) * r), 255);
+    }
+  } else if (name === "SAND") {
+    for (let y = -2; y <= 2; y++) {
+      const yy = c + y * 4 * scale;
+      stroke(c - r, yy + 2 * scale, c, yy - 2 * scale, 220);
+      stroke(c, yy - 2 * scale, c + r, yy + 2 * scale, 220);
+    }
+  } else if (name === "MIST") {
+    for (let y = -1; y <= 1; y++) {
+      const yy = c + y * 5 * scale, offset = (y & 1) ? 2 * scale : 0;
+      stroke(c - r + offset, yy, c - 2 * scale + offset, yy - 2 * scale, 235);
+      stroke(c - 2 * scale + offset, yy - 2 * scale, c + 2 * scale + offset, yy - 2 * scale, 235);
+      stroke(c + 2 * scale + offset, yy - 2 * scale, c + r + offset, yy, 235);
+    }
+  } else if (name === "BONE") {
+    for (const side of [-1, 1]) {
+      const x = c + side * 5 * scale;
+      stroke(x - 2 * scale, c - r, x + 2 * scale, c - r + 4 * scale);
+      stroke(x, c - r + 2 * scale, x, c + r - 2 * scale);
+      stroke(x - 2 * scale, c + r - 4 * scale, x + 2 * scale, c + r);
+    }
+  } else if (name === "BLOOD") {
+    stroke(c, c - r, c, c + r);
+    stroke(c - 2 * scale, c - 3 * scale, c + 2 * scale, c - 3 * scale);
+    stroke(c - 2 * scale, c + 2 * scale, c + 2 * scale, c + 2 * scale);
+  } else if (name === "SLASH") {
+    for (const offset of [-4, 0, 4]) {
+      const x = c + offset * scale;
+      stroke(x - 5 * scale, c + 7 * scale, x + 5 * scale, c - 7 * scale);
+    }
+  } else if (name === "KEY") {
+    for (let i = 0; i < 16; i++) {
+      const a = Math.PI * 2 * i / 16;
+      const b = Math.PI * 2 * (i + 1) / 16;
+      stroke(Math.round(c + Math.cos(a) * 4 * scale), Math.round(c + Math.sin(a) * 4 * scale),
+        Math.round(c + Math.cos(b) * 4 * scale), Math.round(c + Math.sin(b) * 4 * scale));
+    }
+    stroke(c + 4 * scale, c, c + r, c);
+    stroke(c + 7 * scale, c, c + 7 * scale, c + 3 * scale);
+    stroke(c + 9 * scale, c, c + 9 * scale, c + 3 * scale);
+  } else if (name === "RECOMBINATION") {
+    for (let i = 0; i < 8; i++) {
+      const a = Math.PI * 2 * i / 8, b = Math.PI * 2 * (i + 1) / 8;
+      stroke(Math.round(c + Math.cos(a) * r), Math.round(c + Math.sin(a) * r),
+        Math.round(c + Math.cos(b) * r), Math.round(c + Math.sin(b) * r));
+    }
+  }
+}
+
 function makePng(name, soul) {
   const seed = crypto.createHash("sha256").update(name).digest();
-  const color = colors[soul], pixels = new Uint8Array(hi * hi * 4);
+  const color = colors[name] ?? colors[soul], pixels = new Uint8Array(hi * hi * 4);
   const cx = hi / 2, cy = hi / 2, r = 25 * scale;
   const polygon = [];
   const corners = 3 + seed[0] % 6, phase = seed.readUInt16BE(1) / 65535 * Math.PI * 2;
@@ -73,6 +132,7 @@ function makePng(name, soul) {
       line(pixels, Math.round(cx + Math.cos(a) * r1), Math.round(cy + Math.sin(a) * r1),
         Math.round(cx + Math.cos(a2) * r * 0.78), Math.round(cy + Math.sin(a2) * r * 0.78), color, 190);
     }
+    motif(pixels, name, color);
   }
   // The high-resolution line art is reduced with area averaging for crisp transparent edges.
   const rgba = Buffer.alloc(size * size * 4);

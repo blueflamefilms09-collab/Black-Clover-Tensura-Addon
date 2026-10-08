@@ -129,10 +129,11 @@ public class LegionLayer extends AbstractVfxLayer {
     }
 
     private static ResourceLocation pieceTex(int k) {
-        return switch (Math.floorMod(k, 3)) {
+        return switch (Math.floorMod(k, 5)) {
             case 0 -> PAWN;
             case 1 -> ROOK;
-            default -> KNIGHT;
+            case 2 -> KNIGHT;
+            default -> QUEEN;
         };
     }
 

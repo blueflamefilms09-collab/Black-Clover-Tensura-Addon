@@ -49,6 +49,13 @@ MAGICS = {
  "spatial":        ((130,200,255),(255,255,255), "hex",     "angular", "portal"),
  "kotodama":       ((255,255,255),(255,120,120), "stars",   "mixed",   "brush"),
  "world_tree":     ((120,230,120),(255,230,150), "petals",  "curved",  "tree"),
+ "star":           ((255,236,145),(132,157,255),  "stars",   "angular", "star"),
+ "bone":           ((245,239,218),(173,162,188),  "claws",   "angular", "skull"),
+ "blood":          ((226,28,48),(255,138,180),    "drops",   "curved",  "drop"),
+ "sand":           ((220,177,105),(255,226,157),  "blades",  "mixed",   "dune"),
+ "mist":           ((194,213,230),(230,246,255),  "drops",   "curved",  "moon"),
+ "recombination":  ((206,139,83),(248,212,142),   "gear",    "angular", "gear"),
+ "slash":          ((115,255,150),(232,255,237),  "blades",  "angular", "blade"),
 }
 
 S = 1024  # supersample canvas; downscaled to 512
@@ -149,12 +156,21 @@ def center_sigil(d, symbol, col, col2, w, r):
     """central emblem, tuned loosely to the magic"""
     def poly(n, rad, rot=0, fill=None, outline=None, width=w):
         d.regular_polygon((C, C, rad), n, rotation=rot, fill=fill, outline=outline, width=width)
-    if symbol in ("snow", "wedge", "shard", "gem", "hex", "portal", "ward", "seal"):
-        n = {"snow": 6, "wedge": 3, "shard": 4, "gem": 6, "hex": 6, "portal": 8, "ward": 5, "seal": 5}[symbol]
+    if symbol in ("snow", "wedge", "shard", "gem", "hex", "portal", "ward", "seal", "star"):
+        n = {"snow": 6, "wedge": 3, "shard": 4, "gem": 6, "hex": 6, "portal": 8, "ward": 5, "seal": 5, "star": 8}[symbol]
         poly(n, r, 0, outline=rgba(col)); poly(n, r * .72, 180 / n, outline=rgba(col2))
         for i in range(n):
             a = i / n * math.tau
             d.line([pol(C, C, r * .15, a), pol(C, C, r, a)], fill=rgba(col, 200), width=w)
+    elif symbol == "dune":
+        for y in (-.45, 0, .45):
+            points = [(C + x * r, C + (y + .18 * math.sin(x * math.pi * 2)) * r)
+                      for x in (-1, -.75, -.5, -.25, 0, .25, .5, .75, 1)]
+            d.line(points, fill=rgba(col if y else col2), width=w + 2, joint="curve")
+    elif symbol == "blade":
+        d.polygon([(C - r * .7, C + r * .7), (C - r * .35, C - r * .1), (C + r * .75, C - r * .75),
+                   (C + r * .1, C + r * .35)], outline=rgba(col), fill=rgba(col, 65))
+        d.line([(C - r * .7, C + r * .7), (C + r * .75, C - r * .75)], fill=rgba(col2), width=w + 2)
     elif symbol in ("blob", "bubble", "drop", "moon", "blossom", "leaf", "cap", "vine"):
         for k in range(5 if symbol in ("blossom",) else 3):
             a = k / (5 if symbol == "blossom" else 3) * math.tau
@@ -238,7 +254,9 @@ def main():
         if a.startswith("--only"): only = a.split("=", 1)[1].split(",") if "=" in a else None
     if "--only" in sys.argv:
         only = sys.argv[sys.argv.index("--only") + 1].split(",")
-    out = args[0] if args and (not only or args[0] != ",".join(only)) else "out"
+    default_out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources",
+                               "assets", "nusmp", "textures", "particle", "magic_runes")
+    out = args[0] if args and (not only or args[0] != ",".join(only)) else default_out
     os.makedirs(out, exist_ok=True)
     for mid, spec in MAGICS.items():
         if only and mid not in only: continue

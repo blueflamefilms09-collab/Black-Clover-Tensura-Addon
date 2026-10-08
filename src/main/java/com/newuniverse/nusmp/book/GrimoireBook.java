@@ -479,8 +479,13 @@ public abstract class GrimoireBook extends Skill {
 
     /** Every second: each grimoire book the player has gets its upkeep (see {@link #second}). */
     public static void onPlayerTick(net.neoforged.neoforge.event.tick.PlayerTickEvent.Post e) {
-        if (!(e.getEntity() instanceof ServerPlayer p) || p.tickCount % 20 != 3) return;
+        if (!(e.getEntity() instanceof ServerPlayer p)) return;
         var skills = io.github.manasmods.manascore.skill.api.SkillAPI.getSkillsFrom(p);
+        if (p.tickCount % 10 == 3) {
+            skills.getSkill(com.newuniverse.nusmp.skill.NUSkills.BOOK_LEGION.getId())
+                    .ifPresent(i -> LegionArts.updateChessboard(i, p));
+        }
+        if (p.tickCount % 20 != 3) return;
         for (var h : com.newuniverse.nusmp.skill.NUSkills.BOOKS)
             skills.getSkill(h.getId()).ifPresent(i -> { if (i.getSkill() instanceof GrimoireBook b) b.second(i, p); });
     }
