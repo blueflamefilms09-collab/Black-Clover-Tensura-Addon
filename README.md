@@ -60,7 +60,7 @@ Magic spells fire when the skill key is released; holding the key does not trigg
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.84.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.85.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -234,6 +234,10 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 ## 0.84.0 - Legion skill-menu toggle
 - Legion Magic can now be toggled from the Tensura Unique-skill menu; the existing appended grimoire page uses the same toggle callbacks.
 - The Legion render-buffer fix is included; the supplied crash log shows the game was still loading the older `0.82.0` jar.
+
+## 0.85.0 - Zagred true-form detail and voice
+- Added layered rib and spine anatomy, facial contours, horn and arm spurs, wing spars, and a defined tail spade to Zagred's existing model.
+- Added processed synthetic voice lines for spell words, combat attacks, healing, Overwrite, and phase changes, with subtitles.
 
 ## 0.61.0 - Julius Time Magic expansion and client crash fix
 

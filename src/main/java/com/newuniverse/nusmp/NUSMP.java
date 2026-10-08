@@ -38,6 +38,7 @@ public class NUSMP {
         com.newuniverse.nusmp.item.NUItems.ITEMS.register(modEventBus);
         com.newuniverse.nusmp.item.NUItems.MATERIALS.register(modEventBus);
         com.newuniverse.nusmp.entity.NUEntities.ENTITIES.register(modEventBus);
+        com.newuniverse.nusmp.sound.NUSounds.SOUNDS.register(modEventBus);
         modEventBus.addListener(com.newuniverse.nusmp.entity.NUEntities::attributes);
         NUCreativeTab.TABS.register(modEventBus);
         modEventBus.addListener(VfxSpawn::registerPayloads);

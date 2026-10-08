@@ -5,7 +5,8 @@
 A tall black devil in Minecraft cuboids: pale face with red eyes under black hair, pointed ears, segmented swept horns, a pale
 ribcage over an ink-black body with violet rune lines, long arms ending in long claws, clawed feet, huge tattered bat wings in two
 segments, and a long whip tail with a spade. The geometry block between the "generated" markers in ZagredModel.java is rewritten
-from PARTS below, so texture and model always agree. Old 0.47 textures (entity/zagred*.png) are left in place.
+from PARTS below, so texture and generated model always agree. Additional sculpted detail layers live outside that block and
+survive regeneration. Old 0.47 textures (entity/zagred*.png) are left in place.
 """
 import math
 import os

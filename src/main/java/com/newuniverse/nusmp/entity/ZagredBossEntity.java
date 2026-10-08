@@ -9,6 +9,7 @@ import com.newuniverse.nusmp.book.KotodamaWords.Source;
 import com.newuniverse.nusmp.book.KotodamaWords.Word;
 import com.newuniverse.nusmp.book.SpellRuntime;
 import com.newuniverse.nusmp.book.UnderworldMatter;
+import com.newuniverse.nusmp.sound.NUSounds;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
 import net.minecraft.ChatFormatting;
@@ -23,6 +24,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
@@ -104,6 +106,7 @@ public class ZagredBossEntity extends Monster {
     private int state = STATE_IDLE, stateWord = -1, stateTarget = -1;
     private Word pending;
     private long castAt, nextThink;
+    private long nextVoiceLine;
     private float recentDamage;
     // 0.49: Tensura's own magic (TensuraCaster), learned on its first tick, cast between words
     private List<net.minecraft.resources.ResourceLocation> tensuraKit;
@@ -208,6 +211,7 @@ public class ZagredBossEntity extends Monster {
         if (pending != null) {                                                   // a telegraphed word lands
             if (t >= castAt) {
                 KotodamaWords.speak(this, pending, Source.BOSS);
+                voice(sl, voiceFor(pending), 60, false);
                 if (pending == Word.HEAL) { healed = true; say(sl, "\"Heal.\""); }
                 pending = null;
                 setState(sl, STATE_COMBAT, null, target);
@@ -234,7 +238,10 @@ public class ZagredBossEntity extends Monster {
                 LivingEntity tg = getTarget();
                 if (!isAlive() || tg == null || !tg.isAlive()) return;
                 var id = TensuraCaster.cast(this, tg, tensuraKit, 10);
-                if (id != null) VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, getEyePosition(), tg.getBoundingBox().getCenter(), VIOLET, 20, 1.2f);
+                if (id != null) {
+                    voice(sl, NUSounds.ZAGRED_WORD.get(), 60, false);
+                    VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, getEyePosition(), tg.getBoundingBox().getCenter(), VIOLET, 20, 1.2f);
+                }
                 setState(sl, STATE_COMBAT, null, tg);
             });
         }
@@ -526,6 +533,7 @@ public class ZagredBossEntity extends Monster {
             default -> "Zagred speaks.";
         };
         say(sl, line);
+        voice(sl, NUSounds.ZAGRED_PHASE.get(), 0, true);
         VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, getBoundingBox().getCenter(), position(), VIOLET, 40, 3f);
         sl.playSound(null, blockPosition(), SoundEvents.WITHER_SPAWN, SoundSource.HOSTILE, 2f, 0.6f);
         if (ph >= 3) nextFlood = tickCount;
@@ -551,9 +559,28 @@ public class ZagredBossEntity extends Monster {
         for (ServerPlayer p : sl.players()) if (p.distanceToSqr(this) < 64 * 64) p.sendSystemMessage(c);
     }
 
+    private static SoundEvent voiceFor(Word word) {
+        if (word == null) return NUSounds.ZAGRED_WORD.get();
+        return switch (word) {
+            case HALT, SEAL, SLEEP, FEAR, PETRIFY -> NUSounds.ZAGRED_SEAL.get();
+            case FALL, SLUDGE -> NUSounds.ZAGRED_FALL.get();
+            case SHATTER, TRIDENT, SWORDS, REJECT, BANISH -> NUSounds.ZAGRED_SHATTER.get();
+            case HEAL -> NUSounds.ZAGRED_HEAL.get();
+            case REDACT, OVERWRITE -> NUSounds.ZAGRED_OVERWRITE.get();
+            default -> NUSounds.ZAGRED_WORD.get();
+        };
+    }
+
+    private void voice(ServerLevel sl, SoundEvent sound, long cooldown, boolean force) {
+        if (!force && tickCount < nextVoiceLine) return;
+        nextVoiceLine = tickCount + cooldown;
+        sl.playSound(null, this, sound, SoundSource.HOSTILE, 1.35f, 0.96f + getRandom().nextFloat() * 0.08f);
+    }
+
     /** A void lance: a black-violet spear thrown along a line, striking everything on it a moment later. */
     void lance(ServerLevel sl, LivingEntity target) {
         Vec3 from = getEyePosition(), to = target.getBoundingBox().getCenter(), dir = to.subtract(from).normalize(), end = from.add(dir.scale(28));
+        voice(sl, NUSounds.ZAGRED_SHATTER.get(), 60, false);
         VfxSpawn.send(sl, VfxShape.KOTO_TRIDENT, from, end, VIOLET, 14, 1.2f);
         sl.playSound(null, blockPosition(), SoundEvents.TRIDENT_THROW.value(), SoundSource.HOSTILE, 1.5f, 0.5f);
         SpellRuntime.later(sl, 5, () -> {

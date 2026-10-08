@@ -1,4 +1,11 @@
 {
+  "subtitles.entity.nusmp.zagred_word": "Zagred speaks",
+  "subtitles.entity.nusmp.zagred_seal": "Zagred commands stillness",
+  "subtitles.entity.nusmp.zagred_fall": "Zagred commands the fall",
+  "subtitles.entity.nusmp.zagred_shatter": "Zagred commands destruction",
+  "subtitles.entity.nusmp.zagred_heal": "Zagred speaks a healing word",
+  "subtitles.entity.nusmp.zagred_overwrite": "Zagred rewrites the law",
+  "subtitles.entity.nusmp.zagred_phase": "Zagred declares his dominion",
   "nusmp.skill.summoner": "Summoner",
   "nusmp.skill.summoner.description": "A Unique Skill born from Hell. Call forth summon cards to fight beside you. Mastery raises how many can answer your call.",
   "nusmp.skill.mode.summoner.beast": "Beast Card",

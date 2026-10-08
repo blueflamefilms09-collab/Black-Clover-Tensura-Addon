@@ -17,8 +17,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 
 /**
- * 0.48: Zagred's true form in Minecraft cuboids (replaces the 0.47 humanoid). Geometry comes from tools/gen_zagred_true_form.py
- * (the same part list paints textures/entity/zagred_true*.png), animation is here:
+ * Zagred's true form in Minecraft cuboids. Base geometry comes from tools/gen_zagred_true_form.py; sculpted anatomy and wing
+ * spars are layered outside its generated block. Animation is here:
  * <ul>
  *   <li>Hover: the whole body bobs on a sine wave (y = sin(t * 0.1) * 1.2 px) and floats higher from phase 2.</li>
  *   <li>Wings: two segments each, slow beats at rest, fast in combat; the outer segment trails the inner one.</li>
@@ -122,6 +122,78 @@ public class ZagredModel extends EntityModel<ZagredBossEntity> implements ArmedM
         PartDefinition p_tail7 = p_tail6.addOrReplaceChild("tail7", CubeListBuilder.create().texOffs(44, 40).addBox(-0.5f, -0.5f, 0f, 1f, 1f, 7f), PartPose.offsetAndRotation(0f, 0f, 6.6f, 0.05f, 0.42f, 0f));
         PartDefinition p_tail8 = p_tail7.addOrReplaceChild("tail8", CubeListBuilder.create().texOffs(44, 40).addBox(-0.5f, -0.5f, 0f, 1f, 1f, 7f), PartPose.offsetAndRotation(0f, 0f, 6.6f, 0.05f, 0.42f, 0f));
         // </generated>
+
+        // Sculpted accents stay outside the generated block so regenerating the base mesh preserves them.
+        for (int row = 0; row < 5; row++) {
+            float y = 5.1f + row * 1.35f;
+            float tilt = (row - 2) * 0.045f;
+            CubeListBuilder ribs = CubeListBuilder.create().texOffs(82, 26)
+                    .addBox(-3.1f, -0.28f, -2.72f, 2.25f, 0.56f, 0.45f)
+                    .mirror().addBox(0.85f, -0.28f, -2.72f, 2.25f, 0.56f, 0.45f);
+            p_body.addOrReplaceChild("raised_ribs_" + row, ribs,
+                    PartPose.offsetAndRotation(0f, y, 0f, 0f, 0f, tilt));
+        }
+        CubeListBuilder vertebrae = CubeListBuilder.create().texOffs(82, 26);
+        for (int bone = 0; bone < 8; bone++) {
+            vertebrae.addBox(-0.45f, 4.4f + bone * 1.35f, 1.85f, 0.9f, 0.82f, 0.55f);
+        }
+        p_body.addOrReplaceChild("spinal_ridge", vertebrae, PartPose.ZERO);
+        p_body.addOrReplaceChild("sternum",
+                CubeListBuilder.create().texOffs(82, 26).addBox(-0.45f, 4.6f, -2.83f, 0.9f, 8.1f, 0.4f),
+                PartPose.ZERO);
+        p_body.addOrReplaceChild("abdominal_ridges",
+                CubeListBuilder.create().texOffs(82, 26)
+                        .addBox(-2.1f, 13.3f, -2.02f, 1.35f, 0.55f, 0.48f)
+                        .addBox(-1.55f, 14.55f, -2.02f, 1.05f, 0.55f, 0.48f)
+                        .addBox(-1.05f, 15.8f, -2.02f, 0.55f, 0.5f, 0.48f)
+                        .mirror()
+                        .addBox(0.75f, 13.3f, -2.02f, 1.35f, 0.55f, 0.48f)
+                        .addBox(0.5f, 14.55f, -2.02f, 1.05f, 0.55f, 0.48f)
+                        .addBox(0.5f, 15.8f, -2.02f, 0.55f, 0.5f, 0.48f),
+                PartPose.ZERO);
+
+        p_head.addOrReplaceChild("nose_bridge",
+                CubeListBuilder.create().texOffs(0, 26).addBox(-0.35f, -4.8f, -3.48f, 0.7f, 2.5f, 0.45f),
+                PartPose.ZERO);
+        p_head.addOrReplaceChild("cheek_ridges",
+                CubeListBuilder.create().texOffs(0, 26)
+                        .addBox(-3.1f, -3.3f, -3.34f, 1.65f, 1.15f, 0.35f)
+                        .mirror().addBox(1.45f, -3.3f, -3.34f, 1.65f, 1.15f, 0.35f),
+                PartPose.ZERO);
+        p_head.addOrReplaceChild("jaw_teeth",
+                CubeListBuilder.create().texOffs(0, 40).addBox(-1.45f, -1.55f, -3.5f, 2.9f, 0.45f, 0.3f),
+                PartPose.ZERO);
+        for (int side : new int[]{-1, 1}) {
+            String suffix = side < 0 ? "r" : "l";
+            p_head.addOrReplaceChild("horn_branch_" + suffix,
+                    CubeListBuilder.create().texOffs(0, 48).addBox(-0.5f, -2.5f, -0.5f, 1f, 2.5f, 1f),
+                    PartPose.offsetAndRotation(side * 2.35f, -7.8f, -0.25f, 0.15f, 0f, side * -0.55f));
+            PartDefinition forearm = side < 0 ? p_forearm_r : p_forearm_l;
+            forearm.addOrReplaceChild("elbow_spur_" + suffix,
+                    CubeListBuilder.create().texOffs(0, 48).addBox(-0.5f, 0f, -0.5f, 1f, 3f, 1f),
+                    PartPose.offsetAndRotation(side * 0.8f, 1.4f, 0f, 0.5f, 0f, side * 0.45f));
+        }
+        p_tail8.addOrReplaceChild("tail_spade",
+                CubeListBuilder.create().texOffs(0, 48)
+                        .addBox(-1.7f, -1.1f, -0.5f, 3.4f, 2.2f, 1.6f)
+                        .addBox(-0.8f, -1.7f, -0.35f, 1.6f, 3.4f, 1.3f),
+                PartPose.offset(0f, 0f, 6.2f));
+        for (int side : new int[]{-1, 1}) {
+            String suffix = side < 0 ? "r" : "l";
+            PartDefinition wing = side < 0 ? p_wing_r : p_wing_l;
+            PartDefinition outerWing = side < 0 ? p_wing2_r : p_wing2_l;
+            for (int spar = 0; spar < 4; spar++) {
+                float x = side * (5f + spar * 4.5f);
+                float length = 11f + (spar % 2) * 2f;
+                wing.addOrReplaceChild("inner_spar_" + suffix + spar,
+                        CubeListBuilder.create().texOffs(34, 48).addBox(-0.55f, 0f, -0.65f, 1.1f, length, 1.3f),
+                        PartPose.offsetAndRotation(x, 0f, 0f, 0f, 0f, side * (0.12f + spar * 0.035f)));
+                float outerX = side * (4f + spar * 3.8f);
+                outerWing.addOrReplaceChild("outer_spar_" + suffix + spar,
+                        CubeListBuilder.create().texOffs(0, 53).addBox(-0.5f, 0f, -0.6f, 1f, 13f + (spar % 2) * 2f, 1.2f),
+                        PartPose.offsetAndRotation(outerX, 0f, 0f, 0f, 0f, side * (0.15f + spar * 0.04f)));
+            }
+        }
         return LayerDefinition.create(mesh, 128, 128);
     }
 
