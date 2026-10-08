@@ -29,6 +29,7 @@ import net.minecraft.world.entity.HumanoidArm;
  */
 public class ZagredModel extends EntityModel<ZagredBossEntity> implements ArmedModel {
     public static final ModelLayerLocation LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("nusmp", "zagred_true"), "main");
+    private static final float BODY_SCALE = 0.62f;
 
     private final ModelPart root, body, head, armR, armL, forearmR, forearmL, handR, handL, legR, legL, shinR, shinL,
             wingR, wingL, wing2R, wing2L;
@@ -202,7 +203,10 @@ public class ZagredModel extends EntityModel<ZagredBossEntity> implements ArmedM
         root.getAllParts().forEach(ModelPart::resetPose);
         int state = e.clientState();
         boolean fighting = state >= ZagredBossEntity.STATE_COMBAT;
-        root.y += Mth.sin(age * 0.1f) * 1.2f - (e.phase() >= 2 ? 3f : 0f);
+        root.xScale = BODY_SCALE;
+        root.yScale = BODY_SCALE;
+        root.zScale = BODY_SCALE;
+        root.y = (-25.5f + Mth.sin(age * 0.1f) * 1.2f - (e.phase() >= 2 ? 3f : 0f)) * BODY_SCALE;
         head.yRot = yaw * Mth.DEG_TO_RAD;
         head.xRot = pitch * Mth.DEG_TO_RAD;
         if (state == ZagredBossEntity.STATE_IDLE) head.yRot += Mth.sin(age * 0.03f) * 0.25f;            // a slow, curious look round

@@ -60,7 +60,7 @@ Magic spells fire when the skill key is released; holding the key does not trigg
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.87.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.88.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -242,6 +242,12 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 ## 0.86.0 - Bone Magic textures and armor
 - Fixed Bone Magic modeled props using a nonexistent vanilla bone-block texture; props now use the bone block's actual side texture.
 - Added Bone Armor as a timed player render layer with textured rib plates, a spine, arm guards, shin plates, and a subtle magic glow.
+
+## 0.88.0 - Zagred's louder, expanded battle voice
+
+- Added over 50 original context-specific Zagred battle lines for Kotodama spells, phase changes, magic casts, adaptation, barrier breaks, lances, and defeat; the existing synthetic vocal clips accompany the lines.
+- Increased Zagred's voice mix from 1.35x to 2.4x while retaining slight pitch variation and the existing sound cooldown to avoid constant overlapping playback.
+- Rescaled Zagred's detailed devil body to player height and hitbox while retaining his horns, wings, claws, ribs, and tail; his open five-leaf grimoire now hovers and moves with his casting animation.
 
 ## 0.87.0 - Legion chessboard and Anti-Magic weapon passives
 - Rebuilt Legion's board toggle as a following 3D chessboard and Gehenna Game as a circular, crimson-rimmed platform with a full modeled army; pieces distinguish pawns, rooks, knights, bishops, queens, and kings.
