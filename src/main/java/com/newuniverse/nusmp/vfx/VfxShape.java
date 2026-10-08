@@ -197,7 +197,9 @@ public enum VfxShape {
     STAR_MAGIC,              // starlight projectiles and constellations from 'from' to 'to'
     SAND_MAGIC,              // rolling grains, dust veils and cutting grit from 'from' to 'to'
     MIST_MAGIC,              // layered drifting vapor and soft water-light from 'from' to 'to'
-    LEGION_BOARD;            // toggleable upright checkerboard and chess sprites following the summoned grimoire's owner
+    LEGION_BOARD,             // toggleable upright checkerboard and chess sprites following the summoned grimoire's owner
+    // 0.89: shared layered spell families for the newly covered wiki attributes; each book supplies its own palette.
+    WIKI_MAGIC_CAST, WIKI_MAGIC_FIELD, WIKI_MAGIC_BURST;
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

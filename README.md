@@ -60,7 +60,7 @@ Magic spells fire when the skill key is released; holding the key does not trigg
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.88.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.90.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -193,6 +193,20 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - The floating spell card shown while chanting picks the icon by spell: Ultimate for signature-tier spells, Buff for defensive / buff / debuff spells, Active otherwise, with the archetype badge in its corner (`core/magic/grimoire/SpellArchetype`).
 - `docs/skill_icon_prompts.md`: the brief's three image-generator prompts (Midjourney / DALL-E) for every magic, each naming the file it would replace, if you want hand-painted icons instead.
 - Sneaking alone does not stow it (only sneak + the ability key), so sneaking (and Grigora's sneak-to-spare-players) still works while it floats.
+
+`node tools/gen_grimoire_icons.mjs` creates the distinct skill-menu icons for the newer wiki attributes using Node.js only; existing art is preserved unless `--force` is passed.
+
+## 0.90.0 - Legion render crash and player-sized Zagred
+
+- Fixed the Legion chessboard and chess-piece models reusing render buffers after switching render types, which caused a client crash while rendering the board.
+- Scaled Zagred's existing detailed model to player height while keeping his horns, wings, claws, and tail; reduced the oversized shadow.
+
+## 0.89.0 - Missing Black Clover attributes and Unique-skill icons
+
+- Added standalone grimoires for Air, Hair, Memory, Mineral, Modification, Mucus, Mud, Nail, Permeation, Poison Plant, Red Ochre, Rock, Sandstone, Scale, Shakudo, Skin, Smoke, Snow, Song, Soul Corpse, Soul, Sound, Spike, Switching, Tongue, Tree, Stone, Vine, Vortex, and Wing Magic. Each has a distinct palette, five typed spell pages, and a Unique-skill menu entry.
+- Added a shared layered VFX renderer for those attributes with visual families for wind, vines, stone/crystal, fluid, soul/space, snow, sound, and transformation effects.
+- Added a dependency-free Node.js generator for their distinct Tensura Unique-skill icons.
+- Imitation Magic is already represented by Copy Magic; the wiki's True-element attributes are upgrades of existing elemental magics and were not duplicated as standalone types.
 
 ## 0.24 - the brief: art-pack covers, slot-only grimoire, summon to cast, mastery-only pages
 - **Covers from the art pack.** Every grimoire's covers now wear one of the owner's cover designs (`tools/art/covers`, `tools/gen_cover_art_textures.py`): the design's background shading tinted to the magic's colour, its ornament in the art's own colours, glowing while the book is held. Three-Leaf (blue, gold filigree), Four-Leaf (green, gilded vines), Five-Leaf (royal flourishes), Spade (crown of spears), Triple Spade (arcane wheels), Heart (cloud swirls), Two-Heart (sea serpent), Diamond (stained crystal), and the two new top tiers **Black Magic** (black book, blood-red burst, blood-red metal) and **God-Tier** (ivory and gold, golden sunburst, white-gold glow). Only Asta's tattered book and Karna's straps keep their own look. The procedural 0.21 ornaments (filigree, ornate, wheels, lattice, floral, stars, plain) are gone.

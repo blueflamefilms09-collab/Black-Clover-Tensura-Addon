@@ -82,6 +82,24 @@ public class ElementBook extends GrimoireBook {
         }
     }
 
+    @Override
+    public void castCircle(ServerPlayer player, float power) {
+        if (WikiBooks.isNewAttribute(magic)) {
+            vfx(player, VfxShape.WIKI_MAGIC_CAST, player.position().add(0, 0.05, 0), player.getEyePosition(), 22, power);
+            return;
+        }
+        super.castCircle(player, power);
+    }
+
+    @Override
+    public void impact(ServerPlayer player, Vec3 at, float power) {
+        if (WikiBooks.isNewAttribute(magic)) {
+            vfx(player, VfxShape.WIKI_MAGIC_BURST, at, at.add(0, 1, 0), 20, power);
+            return;
+        }
+        super.impact(player, at, power);
+    }
+
     /** What a hit does on top of damage. */
     @FunctionalInterface public interface Rider { void apply(LivingEntity target, ServerPlayer caster); }
     public static final Rider NONE = (t, p) -> {};

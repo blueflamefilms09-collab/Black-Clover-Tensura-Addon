@@ -164,6 +164,7 @@ public final class VfxManager {
         register(new IceWedgeLayer());
         register(new LegionLayer());
         register(new com.newuniverse.nusmp.vfx.client.layer.ElementIdentityLayer());
+        register(new com.newuniverse.nusmp.vfx.client.layer.WikiMagicLayer());
         register(new LightLayer());
         register(new PaintingLayer());
         register(new KotodamaFxLayer());
