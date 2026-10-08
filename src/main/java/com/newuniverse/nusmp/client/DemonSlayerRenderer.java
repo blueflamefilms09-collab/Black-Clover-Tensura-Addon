@@ -92,7 +92,15 @@ public class DemonSlayerRenderer extends BlockEntityWithoutLevelRenderer {
         long until = data.getLong("MeteorUntil");
         float fracture = until > 0 && mc.level != null ? DemonSlayerMesh.fracture(until - time) : 0;
         GameSink sink = new GameSink(pose);
+        long growthUntil = data.getLong("BladeGrowthUntil");
+        if (mc.level != null && growthUntil > time) {
+            pose.pushPose();
+            pose.translate(0.5f, 0.5f, 0.5f);
+            pose.scale(1.6f, 1.6f, 1.6f);
+            pose.translate(-0.5f, -0.5f, -0.5f);
+        }
         DemonSlayerMesh.draw(sink, data.getInt("Resonance"), fracture, time);
+        if (mc.level != null && growthUntil > time) pose.popPose();
         sink.flush(buffers, stack.hasFoil(), light, overlay);
     }
 

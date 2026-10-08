@@ -157,7 +157,7 @@ public class MagicWeaponItem extends SwordItem {
             WeaponArts.tryAlt(p, kind);
             return InteractionResultHolder.success(stack);
         }
-        if (!technique(p)) return InteractionResultHolder.fail(stack);
+        if (!technique(p, stack)) return InteractionResultHolder.fail(stack);
         p.getCooldowns().addCooldown(this, cooldownFor(p));
         p.displayClientMessage(Component.literal(kind.ability + "!").withStyle(kind.demon ? ChatFormatting.DARK_GRAY : ChatFormatting.AQUA, ChatFormatting.BOLD), true);
         return InteractionResultHolder.success(stack);
@@ -176,7 +176,7 @@ public class MagicWeaponItem extends SwordItem {
         for (Projectile pr : p.serverLevel().getEntitiesOfClass(Projectile.class, box)) if (pr.getOwner() != p) pr.discard();
     }
 
-    private boolean technique(ServerPlayer p) {
+    private boolean technique(ServerPlayer p, ItemStack stack) {
         Vec3 eye = p.getEyePosition(), look = p.getViewVector(1f);
         switch (kind) {
             case DEMON_SLASHER_KATANA -> {
@@ -238,10 +238,13 @@ public class MagicWeaponItem extends SwordItem {
             case DEMON_DWELLER -> {
                 Vec3 end = eye.add(look.scale(16));
                 eraseProjectiles(p, new AABB(eye, end).inflate(1.2));
+                CustomData storedData = stack.get(DataComponents.CUSTOM_DATA);
+                int stored = storedData == null ? 0 : Math.min(5, storedData.copyTag().getInt("DwellerCharge"));
+                if (stored > 0) CustomData.update(DataComponents.CUSTOM_DATA, stack, t -> t.putInt("DwellerCharge", 0));
                 SpellRuntime.bolt(p, eye, look.scale(1.8), 1.0, 9, true, null, (b, t) -> {
-                    hit(p, t, 10);
+                    hit(p, t, 10 + stored * 2);
                     stripOne(t);
-                    t.knockback(1.0, p.getX() - t.getX(), p.getZ() - t.getZ());
+                    t.knockback(1.0 + stored * 0.1, p.getX() - t.getX(), p.getZ() - t.getZ());
                 }, null);
                 VfxSpawn.send(p.serverLevel(), VfxShape.ANTI_MAGIC_SLASH, eye, end, 0xFF2A0A30, 16, 1.4f);
             }
@@ -325,11 +328,12 @@ public class MagicWeaponItem extends SwordItem {
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         boolean r = super.hurtEnemy(stack, target, attacker);
-        if (attacker instanceof ServerPlayer p) {
+        if (attacker instanceof ServerPlayer p && usableBy(stack, p)) {
             switch (kind) {
                 case MIASMA_KATANA -> target.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 60, 0));
-                case DEMON_SLAYER, DEMON_DWELLER, DEMON_SLASHER_KATANA -> stripOne(target);
-                case DEMON_DESTROYER, LICHT_DESTROYER -> { for (int k = 0; k < 3; k++) stripOne(target); }
+                case DEMON_SLAYER, DEMON_DWELLER, DEMON_SLASHER_KATANA -> { if (AntiMagic.isUser(p)) stripOne(target); }
+                case DEMON_DESTROYER -> { if (AntiMagic.isUser(p)) for (int k = 0; k < 3; k++) stripOne(target); }
+                case LICHT_DESTROYER -> { for (int k = 0; k < 3; k++) stripOne(target); }
                 case RIMEHEART -> {
                     target.setTicksFrozen(Math.min(target.getTicksRequiredToFreeze() + 100, target.getTicksFrozen() + (pairedBlade(p) ? 80 : 50)));
                     target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 0));
@@ -341,10 +345,25 @@ public class MagicWeaponItem extends SwordItem {
                 case LAST_WORD -> redactMark(p, target);
                 default -> {}
             }
+            if (kind == Kind.DEMON_DWELLER && AntiMagic.isUser(p)) absorbDweller(stack, target, p);
             WeaponArts.fullSwing(p, target, kind);                                 // 0.52: the weapon's signature strike on a full swing
-            if (kind.demon) AntiMagic.addAmp(p, 10);
+            if (kind.demon && AntiMagic.isUser(p)) AntiMagic.addAmp(p, 10);
         }
         return r;
+    }
+
+    private static void absorbDweller(ItemStack stack, LivingEntity target, ServerPlayer wielder) {
+        CustomData currentData = stack.get(DataComponents.CUSTOM_DATA);
+        if (currentData != null && currentData.copyTag().getInt("DwellerCharge") >= 5) return;
+        var existence = TensuraStorages.getExistenceFrom(target);
+        if (existence == null) return;
+        double max = EnergyHelper.getMaxMagicule(target), current = existence.getMagicule();
+        if (max <= 0 || current <= 0) return;
+        double absorbed = Math.min(current, Math.max(1, max * 0.015));
+        existence.setMagicule(current - absorbed);
+        existence.markDirty();
+        CustomData.update(DataComponents.CUSTOM_DATA, stack, t -> t.putInt("DwellerCharge", Math.min(5, t.getInt("DwellerCharge") + 1)));
+        AntiMagic.addAmp(wielder, Math.max(1, (int) (absorbed / Math.max(1, max) * 100)));
     }
 
     @Override
@@ -361,6 +380,10 @@ public class MagicWeaponItem extends SwordItem {
         }
         CustomData d = stack.get(DataComponents.CUSTOM_DATA);
         if (kind == Kind.RIMEHEART) tip.add(Component.literal("  Off-hand magic sword: burst recharges 40% faster, hits freeze longer").withStyle(ChatFormatting.AQUA));
+        if (kind == Kind.DEMON_DWELLER) {
+            int charge = d == null ? 0 : Math.min(5, d.copyTag().getInt("DwellerCharge"));
+            tip.add(Component.literal("Anti-Magic users absorb magic on hit; Black Slash releases up to 5 charges (" + charge + "/5)").withStyle(ChatFormatting.DARK_RED));
+        }
         if (d != null && d.copyTag().contains("ExpiresAt"))
             tip.add(Component.literal("Drawn from a grimoire: fades after a minute").withStyle(ChatFormatting.AQUA));
         if (kind.demon && d != null && d.copyTag().contains("OwnerName"))

@@ -38,8 +38,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -83,8 +85,10 @@ public class DemonSlayerSwordItem extends MagicWeaponItem {
     public static final ResourceKey<DamageType> SEVERANCE =
             ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath("nusmp", "conceptual_severance"));
     static final ResourceLocation VOID_CUT = ResourceLocation.fromNamespaceAndPath("nusmp", "void_severance");
+    static final ResourceLocation BLADE_GROWTH = ResourceLocation.fromNamespaceAndPath("nusmp", "demon_slayer_growth");
     public static final int CRIMSON = 0xFFC0102A, VOID = 0xFF0A0408;
     public static final double FIELD = 15, LOCK_RANGE = 100, ZONE_RADIUS = 12;
+    private static final int GROWTH_TICKS = 160;
     static final int METEOR_COOLDOWN = 2400, ZONE_TICKS = 200, CUT_TICKS = 1200;
     static final String K_METEOR = "nusmp_black_meteorite_ready", K_JAM_TOLD = "nusmp_field_jam_told";
 
@@ -155,7 +159,7 @@ public class DemonSlayerSwordItem extends MagicWeaponItem {
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         boolean r = super.hurtEnemy(stack, target, attacker);
-        if (attacker instanceof ServerPlayer p && usableBy(stack, p)) {
+        if (attacker instanceof ServerPlayer p && usableBy(stack, p) && AntiMagic.isUser(p)) {
             Float charge = CHARGE.remove(p.getUUID());
             if (charge != null && charge >= 0.9f && sever(p, target, 1f) > 0) {
                 Vec3 c = target.getBoundingBox().getCenter(), look = p.getViewVector(1f);
@@ -173,8 +177,40 @@ public class DemonSlayerSwordItem extends MagicWeaponItem {
         if ((p.tickCount + 7) % 20 != 0) return;
         if (stack.getDamageValue() > 0) stack.setDamageValue(0);                 // infinite durability: old wear mends
         boolean held = p.getMainHandItem() == stack || p.getOffhandItem() == stack;
-        if (held && usableBy(stack, p)) field(p, stack);
-        else setResonance(stack, 0);
+        if (held && usableBy(stack, p)) {
+            if (AntiMagic.isUser(p)) field(p, stack);
+            else setResonance(stack, 0);
+            updateBladeGrowth(p, stack);
+        } else {
+            setResonance(stack, 0);
+            removeBladeGrowth(p);
+        }
+    }
+
+    private static void growBlade(ServerPlayer p, ItemStack stack) {
+        long until = p.level().getGameTime() + GROWTH_TICKS;
+        CustomData.update(DataComponents.CUSTOM_DATA, stack, t -> t.putLong("BladeGrowthUntil", until));
+        updateBladeGrowth(p, stack);
+        SpellRuntime.later(p.serverLevel(), GROWTH_TICKS, () -> {
+            CustomData d = stack.get(DataComponents.CUSTOM_DATA);
+            if (d == null || d.copyTag().getLong("BladeGrowthUntil") <= p.level().getGameTime()) removeBladeGrowth(p);
+        });
+    }
+
+    private static void updateBladeGrowth(ServerPlayer p, ItemStack stack) {
+        CustomData d = stack.get(DataComponents.CUSTOM_DATA);
+        long until = d == null ? 0 : d.copyTag().getLong("BladeGrowthUntil");
+        if (until <= p.level().getGameTime() || !AntiMagic.isUser(p)) { removeBladeGrowth(p); return; }
+        var range = p.getAttribute(Attributes.ENTITY_INTERACTION_RANGE);
+        if (range != null) {
+            range.removeModifier(BLADE_GROWTH);
+            range.addTransientModifier(new AttributeModifier(BLADE_GROWTH, 1.5, AttributeModifier.Operation.ADD_VALUE));
+        }
+    }
+
+    private static void removeBladeGrowth(ServerPlayer p) {
+        var range = p.getAttribute(Attributes.ENTITY_INTERACTION_RANGE);
+        if (range != null) range.removeModifier(BLADE_GROWTH);
     }
 
     /** Conceptual Nullification Field, once a second while held. */
@@ -182,6 +218,12 @@ public class DemonSlayerSwordItem extends MagicWeaponItem {
         ServerLevel level = p.serverLevel();
         long now = level.getGameTime();
         TimeStop.immune(p, 40);
+        for (Projectile projectile : level.getEntitiesOfClass(Projectile.class, p.getBoundingBox().inflate(4),
+                x -> x.getOwner() != p && (x.getOwner() == null || !p.isAlliedTo(x.getOwner())))) {
+            projectile.setDeltaMovement(projectile.getDeltaMovement().scale(-1.1));
+            projectile.setOwner(p);
+            projectile.hurtMarked = true;
+        }
         double strongest = 0;
         boolean jamTurn = (now / 20) % 2 == 0;
         for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, p.getBoundingBox().inflate(FIELD),
@@ -221,7 +263,12 @@ public class DemonSlayerSwordItem extends MagicWeaponItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (!player.isShiftKeyDown()) return super.use(level, player, hand);       // Black Divider
+        if (!player.isShiftKeyDown()) {
+            InteractionResultHolder<ItemStack> result = super.use(level, player, hand); // Black Divider
+            if (result.getResult().consumesAction() && player instanceof ServerPlayer p && AntiMagic.isUser(p))
+                growBlade(p, stack);
+            return result;
+        }
         if (level.isClientSide || !(player instanceof ServerPlayer p)) return InteractionResultHolder.pass(stack);
         if (!usableBy(stack, p)) { GrimoireBook.fail(p, "This sword answers only to its owner."); return InteractionResultHolder.fail(stack); }
         return blackMeteorite(p, stack) ? InteractionResultHolder.success(stack) : InteractionResultHolder.fail(stack);
@@ -355,6 +402,7 @@ public class DemonSlayerSwordItem extends MagicWeaponItem {
         tip.add(Component.literal("  Costs 80% of your aura. Cooldown: " + Math.round(METEOR_COOLDOWN * NUGameRules.cooldownShown() / 0.6 / 20) + " s").withStyle(ChatFormatting.DARK_GRAY));
         tip.add(Component.literal("Conceptual Severance: full swings cut EP-scaled true damage through armour, enchantments and hit cooldowns").withStyle(ChatFormatting.DARK_RED));
         tip.add(Component.literal("Conceptual Nullification Field (15 blocks): Ultimate skills jam, magicules bleed away, stopped time can't hold you").withStyle(ChatFormatting.DARK_RED));
+        tip.add(Component.literal("Black Divider grows the blade for 8 s (Anti-Magic users: +1.5 block reach)").withStyle(ChatFormatting.DARK_RED));
         CustomData d = stack.get(DataComponents.CUSTOM_DATA);
         int res = d == null ? 0 : d.copyTag().getInt("Resonance");
         if (res > 0) tip.add(Component.literal("Resonance " + "●".repeat(res) + "○".repeat(4 - res) + " — a great existence is near").withStyle(ChatFormatting.RED));

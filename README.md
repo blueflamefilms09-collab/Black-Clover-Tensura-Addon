@@ -60,7 +60,7 @@ Magic spells fire when the skill key is released; holding the key does not trigg
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.86.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.87.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -242,6 +242,13 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 ## 0.86.0 - Bone Magic textures and armor
 - Fixed Bone Magic modeled props using a nonexistent vanilla bone-block texture; props now use the bone block's actual side texture.
 - Added Bone Armor as a timed player render layer with textured rib plates, a spine, arm guards, shin plates, and a subtle magic glow.
+
+## 0.87.0 - Legion chessboard and Anti-Magic weapon passives
+- Rebuilt Legion's board toggle as a following 3D chessboard and Gehenna Game as a circular, crimson-rimmed platform with a full modeled army; pieces distinguish pawns, rooks, knights, bishops, queens, and kings.
+- Reduced Legion's repeat/ambient VFX while retaining spell impacts and queen signatures.
+- Added a custom Anti-Magic Tensura engraving to the Anti-Magic swords. Anti-Magic-only passives now include projectile reflection, Demon-Dweller magic absorption and charged release, and the Demon-Destroyer / Slasher enchantment-stripping effects.
+- Black Divider briefly enlarges the Demon-Slayer and extends reach for Anti-Magic users.
+- Added a short post-release casting wind-up (4 ticks when mastered, 7 otherwise); spells still only begin after key release. Suppressed incidental Bone/Sand construct props on non-construct casts; Recombination constructs remain unchanged.
 
 ## 0.61.0 - Julius Time Magic expansion and client crash fix
 

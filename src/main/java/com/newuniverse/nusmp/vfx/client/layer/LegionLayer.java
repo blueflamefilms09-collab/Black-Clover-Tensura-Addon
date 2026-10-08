@@ -89,12 +89,12 @@ public class LegionLayer extends AbstractVfxLayer {
         int crimson = VfxVertexBuffer.withAlpha(crimson(inst), fade * 0.62f);
         buf.plane(BOARD, VfxBlend.ALPHA, plane, size, glass);
         buf.plane(RING, VfxBlend.ADD, plane.lift(0.025f).spin(-age * 0.2f), size * 1.14f, crimson);
-        for (int n = 0; n < 6; n++) {
+        for (int n = 0; n < 5; n++) {
             float x = (n % 3 - 1) * size * 0.48f;
             float y = (n / 3 == 0 ? -1 : 1) * size * 0.43f;
             Vector3f pos = plane.point(x, y);
             ResourceLocation tex = n % 3 == 0 ? PAWN : n % 3 == 1 ? ROOK : KNIGHT;
-            buf.billboard(ctx, tex, VfxBlend.ALPHA, pos, size * 0.25f, 0f, VfxVertexBuffer.withAlpha(glass, fade));
+            buf.billboard(ctx, tex, VfxBlend.ALPHA, pos, size * 0.3f, 0f, VfxVertexBuffer.withAlpha(glass, fade));
         }
     }
 
@@ -192,7 +192,7 @@ public class LegionLayer extends AbstractVfxLayer {
                         VfxVertexBuffer.withAlpha(crim, 0.5f));
             }
             // afterimages: soldiers left behind in the order pawn, rook, knight, pawn, each in its own halo
-            for (int k = 4; k >= 1; k--) {
+            for (int k = 2; k >= 1; k--) {
                 float eg = e - k * 0.075f * (len > 4 ? 4f / len : 1f) * (1f + 0.4f * k);
                 if (eg <= 0f) continue;
                 float fade = (1f - k / 5f) * 0.75f * (1f - smooth(0.8f, 1f, u));
@@ -210,7 +210,7 @@ public class LegionLayer extends AbstractVfxLayer {
             tall(ctx, buf, KNIGHT, VfxBlend.ADD, head, hw * 1.05f, hh * 1.05f, -0.3f, VfxVertexBuffer.withAlpha(VfxVertexBuffer.whiten(crim, 0.5f), 0.28f));
             buf.billboard(ctx, RAYS, VfxBlend.ADD, head, 0.9f * pw, age * 0.4f, VfxVertexBuffer.withAlpha(VfxVertexBuffer.whiten(crim, 0.5f), 0.55f));
             // glints shed along the path
-            int n = ctx.seg(5, 2);
+            int n = ctx.seg(3, 1);
             for (int i = 0; i < n; i++) {
                 float back = (i + 1f) / (n + 1f) * Math.min(len * e, 3.2f * pw);
                 float tw = Mth.sin(age * 0.9f + i * 2.1f) * 0.5f + 0.5f;
@@ -265,7 +265,7 @@ public class LegionLayer extends AbstractVfxLayer {
         // ranks of soldiers: halos first (they sit behind), then the glass bodies
         float ph = Mth.clamp(0.6f + 0.3f * R, 0.9f, 2.0f);
         float[] radii = {0.30f, 0.60f, 0.86f};
-        int[] counts = {5, 9, 14};
+        int[] counts = {3, 5, 8};
         for (int pass = 0; pass < 2; pass++) {
             for (int ring = 0; ring < 3; ring++) {
                 int n = ctx.seg(counts[ring], 3);
@@ -289,7 +289,7 @@ public class LegionLayer extends AbstractVfxLayer {
         }
 
         // the crimson curtain standing on the rim
-        int rim = ctx.seg(8, 4);
+        int rim = ctx.seg(5, 3);
         for (int i = 0; i < rim && buf.hasBudget(24); i++) {
             float ang = Mth.TWO_PI * (i + 0.5f) / rim - spin * 0.5f;
             Vector3f p = new Vector3f(Mth.cos(ang) * R * open, 0.05f, Mth.sin(ang) * R * open).add(c);
@@ -306,7 +306,7 @@ public class LegionLayer extends AbstractVfxLayer {
         }
 
         // diamonds drifting up
-        int m = ctx.seg(12, 4);
+        int m = ctx.seg(6, 2);
         for (int i = 0; i < m && buf.hasBudget(4); i++) {
             float a = r.nextFloat() * Mth.TWO_PI, d = Mth.sqrt(r.nextFloat()) * R * 0.95f, ph0 = r.nextFloat();
             float v = (age * 0.018f + ph0) % 1f;
@@ -360,7 +360,7 @@ public class LegionLayer extends AbstractVfxLayer {
         if (age > 4f) buf.billboard(ctx, RING, VfxBlend.ADD, c, pw * (0.4f + 3.2f * ex2), -prog * 0.5f, VfxVertexBuffer.withAlpha(GOLD, 0.7f * (1f - ex2)));
 
         // ---- soldiers thrown out of the burst
-        int pieces = ctx.seg(12, 5);
+        int pieces = ctx.seg(6, 3);
         for (int i = 0; i < pieces; i++) {
             Vector3f v = unit(r);
             if (hasHint) v.add(new Vector3f(hint).mul(1.1f)).normalize();

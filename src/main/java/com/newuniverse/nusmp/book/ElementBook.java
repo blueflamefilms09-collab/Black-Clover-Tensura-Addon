@@ -68,10 +68,11 @@ public class ElementBook extends GrimoireBook {
         super.vfx(player, identity, from, to, ticks, power);
         float scale = Math.max(0.35f, Math.min(3.5f, Math.abs(power)));
         float yaw = (float) Math.toDegrees(Math.atan2(-(to.x - from.x), to.z - from.z));
-        if (magic == MagicType.BONE) {
+        boolean construct = shape == VfxShape.EARTH_RISE || shape == VfxShape.EARTH_SPIKES || shape == VfxShape.WATER_RING;
+        if (magic == MagicType.BONE && construct) {
             PropKind prop = identity == VfxShape.BONE_FX2 ? PropKind.BONE_2 : PropKind.BONE_1;
             MagicProps.spawn(player.serverLevel(), prop, from, yaw, scale, Math.max(8, Math.min(ticks, 80)), 0, player);
-        } else if (magic == MagicType.SAND) {
+        } else if (magic == MagicType.SAND && construct) {
             PropKind prop = ticks >= 30 ? PropKind.SAND_2 : PropKind.SAND_1;
             MagicProps.spawn(player.serverLevel(), prop, from, yaw, scale, Math.max(8, Math.min(ticks, 80)), 0, player);
         } else if (magic == MagicType.RECOMBINATION) {

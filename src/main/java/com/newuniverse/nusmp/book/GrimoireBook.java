@@ -199,7 +199,24 @@ public abstract class GrimoireBook extends Skill {
 
     @Override
     public void onRelease(ManasSkillInstance instance, LivingEntity entity, int heldTicks, int keyNumber, int mode) {
-        if (entity instanceof ServerPlayer player && !instant(mode)) castPage(instance, player, mode);
+        if (!(entity instanceof ServerPlayer player) || instant(mode)) return;
+        long now = player.level().getGameTime();
+        long pendingUntil = instance.getOrCreateTag().getLong("PendingCastUntil");
+        if (pendingUntil > now) return;
+        int windup = instance.isMastered(player) ? 4 : 7;
+        long castAt = now + windup;
+        instance.getOrCreateTag().putLong("PendingCastUntil", castAt);
+        instance.markDirty();
+        com.newuniverse.nusmp.anim.CastAnim.play(player, com.newuniverse.nusmp.anim.CastAnim.CHANT);
+        VfxSpawn.sendFollowing(player.serverLevel(), VfxShape.MAGIC_CIRCLE, player,
+                player.position().add(0, 0.08, 0), color, windup + 2, 0.48f);
+        SpellRuntime.later(player.serverLevel(), windup, () -> {
+            if (instance.getOrCreateTag().getLong("PendingCastUntil") != castAt) return;
+            instance.getOrCreateTag().putLong("PendingCastUntil", 0);
+            instance.markDirty();
+            com.newuniverse.nusmp.anim.CastAnim.stop(player);
+            if (player.isAlive()) castPage(instance, player, mode);
+        });
     }
 
     private void castPage(ManasSkillInstance instance, ServerPlayer player, int mode) {

@@ -60,8 +60,10 @@ public class LegionBook extends GrimoireBook {
     public void onToggleOff(ManasSkillInstance instance, LivingEntity entity) {
         instance.getOrCreateTag().putBoolean("LegionChessboard", false);
         instance.markDirty();
-        if (entity instanceof ServerPlayer player)
+        if (entity instanceof ServerPlayer player) {
+            LegionArts.clearChessboard(player);
             player.displayClientMessage(Component.literal("Legion chessboard disabled.").withStyle(ChatFormatting.GRAY), true);
+        }
     }
 
     /** Commander's Banner: while it flies, your melee blows deal extra damage. */

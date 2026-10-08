@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.item;
 
 import com.newuniverse.nusmp.NUGameRules;
+import com.newuniverse.nusmp.antimagic.AntiMagic;
 import com.newuniverse.nusmp.antimagic.Nullification;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.book.GrimoireBook;
@@ -76,7 +77,7 @@ public final class WeaponArts {
     /** On a hit: if it was a full swing, the weapon's signature strike lands too. */
     public static void fullSwing(ServerPlayer p, LivingEntity t, Kind k) {
         Float c = CHARGE.remove(p.getUUID());
-        if (c == null || c < 0.9f || k == Kind.DEMON_SLAYER) return;
+        if (c == null || c < 0.9f || k == Kind.DEMON_SLAYER || k.demon && !AntiMagic.isUser(p)) return;
         ServerLevel sl = p.serverLevel();
         Vec3 mid = t.getBoundingBox().getCenter(), look = p.getViewVector(1f);
         switch (k) {

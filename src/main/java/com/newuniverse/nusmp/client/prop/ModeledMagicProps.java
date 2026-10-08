@@ -122,35 +122,84 @@ final class ModeledMagicProps {
 
     static void legionPiece(MagicPropEntity e, PoseStack pose, MultiBufferSource buffers, int light) {
         float s = e.scale();
-        int piece = Math.floorMod(e.param(), 5);
-        VertexConsumer solid = cutout(buffers, piece == 0 || piece == 2 ? STONE : WOOD);
-        PropDraw.cylinder(pose, solid, 0, 0, 0, 0, 0.1f * s, 0, 0.27f * s, 0.21f * s, 12, true, 0xFFE8D6D8, light);
-        float tall = (piece == 4 ? 0.92f : piece == 1 ? 0.78f : 0.64f) * s;
-        if (piece == 0) {
-            PropDraw.sphere(pose, solid, 0, tall * 0.72f, 0, 0.15f * s, 8, 12, 0xFFF7E7E8, light);
-            PropDraw.cylinder(pose, solid, 0, 0.12f * s, 0, 0, tall * 0.65f, 0, 0.13f * s, 0.09f * s, 10, true, 0xFFE8D6D8, light);
-        } else if (piece == 1) {
-            PropDraw.cylinder(pose, solid, 0, 0.12f * s, 0, 0, tall * 0.8f, 0, 0.16f * s, 0.12f * s, 10, true, 0xFFE8D6D8, light);
-            PropDraw.box(pose, solid, -0.22f * s, tall * 0.8f, -0.22f * s, 0.22f * s, tall, 0.22f * s, 0xFFF7E7E8, light);
-        } else {
-            PropDraw.cylinder(pose, solid, 0, 0.12f * s, 0, 0, tall * 0.75f, 0, 0.15f * s, 0.07f * s, 10, true, 0xFFE8D6D8, light);
-            PropDraw.sphere(pose, solid, 0, tall * 0.82f, 0, (piece == 2 ? 0.21f : 0.18f) * s, 8, 12, 0xFFF7E7E8, light);
-        }
-        VertexConsumer emissive = glow(buffers);
-        PropDraw.torus(pose, emissive, 0, 0.13f * s, 0, 0, 1, 0, 0.22f * s, 0.025f * s, 16, 5, 0xFFFF3658, PropDraw.FULL_BRIGHT);
-        if (piece == 3 || piece == 4)
-            PropDraw.torus(pose, emissive, 0, tall * 0.82f, 0, 0, 1, 0, 0.24f * s, 0.025f * s, 16, 5, 0xFFFF5270, PropDraw.FULL_BRIGHT);
+        chessPiece(Math.floorMod(e.param(), 6), s, pose, cutout(buffers, STONE), glow(buffers), light);
     }
 
     static void legionBoard(MagicPropEntity e, PoseStack pose, MultiBufferSource buffers, int light) {
-        float s = e.scale(), tile = s / 4f, y = 0.015f * s;
+        float s = e.scale(), tile = s / 4f, y = 0.04f * s;
+        VertexConsumer base = cutout(buffers, STONE), wood = cutout(buffers, WOOD), emissive = glow(buffers);
+        PropDraw.cylinder(pose, base, 0, 0, 0, 0, y, 0, 1.52f * s, 1.52f * s, 64, true, 0xFF17151D, light);
         for (int x = 0; x < 8; x++) for (int z = 0; z < 8; z++) {
             float x0 = (x - 3.5f) * tile, z0 = (z - 3.5f) * tile;
             boolean dark = ((x + z) & 1) == 0;
-            PropDraw.box(pose, cutout(buffers, dark ? STONE : WOOD), x0, y, z0, x0 + tile, y + 0.025f * s, z0 + tile,
-                    ((x + z) & 1) == 0 ? 0xFF322D3A : 0xFFE5D7C8, light);
+            PropDraw.box(pose, dark ? base : wood, x0, y, z0, x0 + tile, y + 0.025f * s, z0 + tile,
+                    dark ? 0xFF302B35 : 0xFFE9DDCF, light);
+            if (z == 0 || z == 7) {
+                int[] backRank = {1, 2, 3, 4, 5, 3, 2, 1};
+                pose.pushPose();
+                pose.translate(x0 + tile * 0.5f, y + 0.025f * s, z0 + tile * 0.5f);
+                chessPiece(backRank[x], tile * 0.62f, pose, base, emissive, light);
+                pose.popPose();
+            } else if (z == 1 || z == 6) {
+                pose.pushPose();
+                pose.translate(x0 + tile * 0.5f, y + 0.025f * s, z0 + tile * 0.5f);
+                chessPiece(0, tile * 0.58f, pose, base, emissive, light);
+                pose.popPose();
+            }
         }
-        PropDraw.torus(pose, glow(buffers), 0, y, 0, 0, 1, 0, s * 1.02f, 0.025f * s, 48, 6, 0xFFFF3658, PropDraw.FULL_BRIGHT);
+        PropDraw.torus(pose, emissive, 0, y, 0, 0, 1, 0, s * 1.50f, 0.04f * s, 64, 8, 0xFFFF3658, PropDraw.FULL_BRIGHT);
+        PropDraw.torus(pose, emissive, 0, y + 0.025f * s, 0, 0, 1, 0, s * 1.36f, 0.018f * s, 64, 5, 0xFFD2AC62, PropDraw.FULL_BRIGHT);
+    }
+
+    private static void chessPiece(int piece, float s, PoseStack pose, VertexConsumer solid, VertexConsumer emissive, int light) {
+        int ivory = 0xFFF3E8DE, shadow = 0xFFD5C4B5;
+        PropDraw.cylinder(pose, solid, 0, 0, 0, 0, 0.09f * s, 0, 0.34f * s, 0.31f * s, 16, true, shadow, light);
+        PropDraw.torus(pose, emissive, 0, 0.10f * s, 0, 0, 1, 0, 0.29f * s, 0.025f * s, 20, 5, 0xFFFF3658, PropDraw.FULL_BRIGHT);
+        float h = switch (piece) { case 1 -> 1.18f; case 2 -> 1.2f; case 3 -> 1.34f; case 4 -> 1.48f; case 5 -> 1.58f; default -> 0.94f; } * s;
+        PropDraw.cylinder(pose, solid, 0, 0.10f * s, 0, 0, h * 0.36f, 0, 0.23f * s, 0.14f * s, 14, true, ivory, light);
+        PropDraw.torus(pose, emissive, 0, 0.34f * h, 0, 0, 1, 0, 0.19f * s, 0.018f * s, 16, 4, 0xFFFF5270, PropDraw.FULL_BRIGHT);
+        switch (piece) {
+            case 0 -> {
+                PropDraw.cylinder(pose, solid, 0, 0.35f * h, 0, 0, 0.78f * h, 0, 0.14f * s, 0.08f * s, 12, true, ivory, light);
+                PropDraw.sphere(pose, solid, 0, 0.82f * h, 0, 0.14f * s, 8, 12, ivory, light);
+            }
+            case 1 -> {
+                PropDraw.cylinder(pose, solid, 0, 0.34f * h, 0, 0, 0.91f * h, 0, 0.17f * s, 0.22f * s, 12, true, ivory, light);
+                PropDraw.box(pose, solid, -0.24f * s, 0.88f * h, -0.24f * s, 0.24f * s, h, 0.24f * s, ivory, light);
+                for (int n = 0; n < 4; n++) {
+                    float a = n * Mth.HALF_PI;
+                    float x = Mth.cos(a) * 0.16f * s, z = Mth.sin(a) * 0.16f * s;
+                    PropDraw.box(pose, solid, x - 0.055f * s, 0.92f * h, z - 0.055f * s, x + 0.055f * s, 1.08f * h, z + 0.055f * s, ivory, light);
+                }
+            }
+            case 2 -> {
+                PropDraw.cylinder(pose, solid, 0, 0.38f * h, 0, 0.10f * s, 0.72f * h, 0, 0.16f * s, 0.10f * s, 12, true, ivory, light);
+                PropDraw.sphere(pose, solid, 0.11f * s, 0.78f * h, 0, 0.16f * s, 8, 12, ivory, light);
+                PropDraw.box(pose, solid, 0.17f * s, 0.72f * h, -0.09f * s, 0.38f * s, 0.80f * h, 0.09f * s, ivory, light);
+                PropDraw.crystal(pose, solid, 0.04f * s, 0.88f * h, -0.07f * s, 0.06f * s, 0.12f * s, 0.08f * s, ivory, light);
+                PropDraw.crystal(pose, solid, 0.04f * s, 0.88f * h, 0.07f * s, 0.06f * s, 0.12f * s, 0.08f * s, ivory, light);
+            }
+            case 3 -> {
+                PropDraw.cylinder(pose, solid, 0, 0.38f * h, 0, 0, 0.78f * h, 0, 0.16f * s, 0.10f * s, 12, true, ivory, light);
+                PropDraw.crystal(pose, solid, 0, 0.74f * h, 0, 0.15f * s, 0.18f * h, 0.22f * h, ivory, light);
+                PropDraw.box(pose, solid, -0.11f * s, 0.77f * h, -0.11f * s, 0.11f * s, 0.81f * h, 0.11f * s, 0xFF5A2635, light);
+            }
+            case 4 -> {
+                PropDraw.cylinder(pose, solid, 0, 0.38f * h, 0, 0, 0.78f * h, 0, 0.16f * s, 0.12f * s, 12, true, ivory, light);
+                PropDraw.sphere(pose, solid, 0, 0.78f * h, 0, 0.14f * s, 8, 12, ivory, light);
+                for (int n = 0; n < 5; n++) {
+                    float a = Mth.TWO_PI * n / 5f;
+                    PropDraw.crystal(pose, solid, Mth.cos(a) * 0.15f * s, 0.79f * h, Mth.sin(a) * 0.15f * s,
+                            0.045f * s, 0.14f * h, 0.12f * h, ivory, light);
+                }
+            }
+            default -> {
+                PropDraw.cylinder(pose, solid, 0, 0.38f * h, 0, 0, 0.80f * h, 0, 0.17f * s, 0.13f * s, 12, true, ivory, light);
+                PropDraw.box(pose, solid, -0.075f * s, 0.80f * h, -0.075f * s, 0.075f * s, 1.03f * h, 0.075f * s, ivory, light);
+                PropDraw.box(pose, solid, -0.18f * s, 0.91f * h, -0.075f * s, 0.18f * s, 0.97f * h, 0.075f * s, ivory, light);
+            }
+        }
+        if (piece >= 3) PropDraw.torus(pose, emissive, 0, 0.80f * h, 0, 0, 1, 0, 0.22f * s, 0.024f * s, 20, 5, 0xFFFF5270, PropDraw.FULL_BRIGHT);
     }
 
     static void recombination(MagicPropEntity e, float age, PoseStack pose, MultiBufferSource buffers, int light) {
