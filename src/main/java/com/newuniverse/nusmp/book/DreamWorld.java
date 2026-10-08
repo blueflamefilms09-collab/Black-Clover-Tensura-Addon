@@ -36,6 +36,7 @@ import net.neoforged.neoforge.event.entity.EntityTeleportEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import java.util.ArrayList;
@@ -164,6 +165,7 @@ public final class DreamWorld {
     }
 
     private static void enter(MinecraftServer server, ServerLevel dream, Session s, ServerPlayer caster, List<LivingEntity> caught) {
+        if (s.over || BY_CASTER.get(s.caster) != s) return;
         if (!caster.isAlive() || caster.hasDisconnected()) { abort(s); return; }
         ServerLevel origin = caster.serverLevel();
         buildArena(dream, s);
@@ -178,7 +180,7 @@ public final class DreamWorld {
             int n = 0;
             for (LivingEntity e : caught) {
                 BY_MEMBER.remove(e.getUUID());
-                if (!e.isAlive() || e.level() != origin && !(e instanceof ServerPlayer)) continue;
+                if (!e.isAlive() || e.level() != origin) continue;
                 if (e instanceof ServerPlayer sp && sp.hasDisconnected()) continue;
                 float ang = Mth.TWO_PI * n / Math.max(1, caught.size()) + Mth.PI;
                 Vec3 to = c.add(Mth.sin(ang) * s.radius * 0.35, 0, -Mth.cos(ang) * s.radius * 0.35 - s.radius * 0.1);
@@ -215,9 +217,9 @@ public final class DreamWorld {
 
     /** The caster could not finish the spell: release the reserved dreamers and the arena. */
     private static void abort(Session s) {
-        BY_CASTER.remove(s.caster);
+        boolean active = BY_CASTER.remove(s.caster, s);
         BY_MEMBER.values().removeIf(x -> x == s);
-        USED[s.slot] = false;
+        if (active) USED[s.slot] = false;
         s.over = true;
     }
 
@@ -304,8 +306,11 @@ public final class DreamWorld {
             ServerLevel dream = server.getLevel(DIMENSION);
             if (dream == null) continue;
             float rate = s.grand ? 6f : 8f;
-            for (Iterator<UUID> it = s.dreamers.iterator(); it.hasNext(); ) {
-                UUID id = it.next();
+            // Snapshot the dreamer list: mentalBreak() can remove a dreamer or kill them while this tick is running, and the direct
+            // iterator from s.dreamers would throw ConcurrentModificationException on the server thread.
+            List<UUID> dreamers = new ArrayList<>(s.dreamers);
+            for (UUID id : dreamers) {
+                if (!s.dreamers.contains(id)) continue;
                 Entity ent = dream.getEntity(id);
                 if (!(ent instanceof LivingEntity le) || !le.isAlive()) continue;
                 float load = s.load.getOrDefault(id, 0f) + rate;
@@ -313,6 +318,7 @@ public final class DreamWorld {
                     mentalBreak(s, caster, le);
                     load = 30f;
                 }
+
                 s.load.put(id, load);
                 if (le instanceof ServerPlayer sp) sp.displayClientMessage(loadBar(load, s), true);
             }
@@ -324,6 +330,19 @@ public final class DreamWorld {
                 VfxSpawn.send(dream, VfxShape.DREAM_MANIFEST, at, at.add(0, 1, 0), 0xFFB8E0FF, 20, 0.6f);
             }
         }
+    }
+
+    /** Release static session and forced-chunk state when an integrated or dedicated server closes. */
+    public static void onServerStopping(ServerStoppingEvent e) {
+        ServerLevel dream = e.getServer().getLevel(DIMENSION);
+        for (Session s : new ArrayList<>(BY_CASTER.values())) {
+            s.over = true;
+            if (dream != null) releaseArena(dream, s);
+            else USED[s.slot] = false;
+        }
+        BY_CASTER.clear();
+        BY_MEMBER.clear();
+        java.util.Arrays.fill(USED, false);
     }
 
     private static Component loadBar(float load, Session s) {

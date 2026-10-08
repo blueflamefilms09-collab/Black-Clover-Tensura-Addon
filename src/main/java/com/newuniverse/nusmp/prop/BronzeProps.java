@@ -211,7 +211,7 @@ public final class BronzeProps {
                     }
                     return;
                 }
-                if (d > 3 && d < 9 && st == IDLE && since > 60 && e.hasLineOfSight(target)) {         // spit
+                if (d > 3 && d < 9 && st == IDLE && since > 60 && target.hasLineOfSight(e)) {         // spit
                     setState(e, ACT2);
                     face(e, target.position());
                     final LivingEntity tt = target;

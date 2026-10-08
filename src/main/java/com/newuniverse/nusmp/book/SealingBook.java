@@ -4,6 +4,7 @@ import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.blackclover.MagicType;
 import com.newuniverse.nusmp.blackclover.TimeStop;
 import com.newuniverse.nusmp.vfx.VfxShape;
+import com.newuniverse.nusmp.vfx.VfxSpawn;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import io.github.manasmods.tensura.ability.magic.Element;
 import io.github.manasmods.tensura.damage.TensuraDamageTypes;
@@ -27,11 +28,11 @@ import java.util.List;
 /** Sealing Magic. */
 public class SealingBook extends GrimoireBook {
     private final List<BookPage> pages = com.newuniverse.nusmp.book.ext.Ext.join(List.of(
-            BookPage.zone("seal", "Seal", SealingBook::seal),
-            BookPage.signature("grand_seal", "Grand Seal", SealingBook::grandSeal),
+            BookPage.zone("seal", "Seal", SealingBook::seal).withAnim("seal_crush"),
+            BookPage.signature("grand_seal", "Grand Seal", SealingBook::grandSeal).withAnim("seal_crush"),
             // 0.34: wiki spells, appended
-            BookPage.mid("sealing_chains", "Seal Magic: Sealing Chains", WikiSpells::sealingChains),
-            BookPage.signature("trinity_seal", "Trinity Seal Magic", WikiSpells::trinitySeal),
+            BookPage.mid("sealing_chains", "Seal Magic: Sealing Chains", WikiSpells::sealingChains).withAnim("seal_crush"),
+            BookPage.signature("trinity_seal", "Trinity Seal Magic", WikiSpells::trinitySeal).withAnim("seal_crush"),
             BookPage.zone("seal_barrier", "Seal Magic: Barrier", WikiSpells::sealBarrier)), com.newuniverse.nusmp.book.ext.SealExt.pages());
 
     public SealingBook() { super(MagicType.SEALING, 0xFFE8C26A); }
@@ -51,6 +52,7 @@ public class SealingBook extends GrimoireBook {
         LivingEntity t = target(p, 16);
         if (t == null) { fail(p, "Nothing to seal."); return false; }
         b.castCircle(p, 0.7f);
+        VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.SEAL_ORBIT, p, p.position().add(0, 1.35, 0), 0xFFFFD580, 18, 0.8f);
         apply(b, i, p, t, mode, 100);
         return true;
     }
@@ -59,6 +61,7 @@ public class SealingBook extends GrimoireBook {
         List<LivingEntity> ts = around(p, p.position(), 6);
         if (ts.isEmpty()) { fail(p, "Nothing to seal."); return false; }
         b.castCircle(p, 1.4f);
+        VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.SEAL_ORBIT, p, p.position().add(0, 1.35, 0), 0xFFFFD580, 18, 1.0f);
         for (LivingEntity t : ts) apply(b, i, p, t, mode, 80);
         return true;
     }

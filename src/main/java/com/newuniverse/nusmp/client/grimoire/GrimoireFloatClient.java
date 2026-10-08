@@ -62,6 +62,13 @@ import java.util.Set;
 public final class GrimoireFloatClient {
     private static final ResourceLocation LEAF = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/item/grimoire_book/page_leaf.png");
     private static final ResourceLocation LEAF_TATTERED = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/item/grimoire_book/page_leaf_tattered.png");
+    private static ResourceLocation runeTexture(ItemStack stack) {
+        MagicType magic = MagicType.byName(GrimoireItem.data(stack).getString("Magic"));
+        String id = magic.name().toLowerCase(java.util.Locale.ROOT);
+        ResourceLocation ring = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/particle/magic_runes/" + id + "_rune_ring.png");
+        if (Minecraft.getInstance().getResourceManager().getResource(ring).isPresent()) return ring;
+        return ResourceLocation.fromNamespaceAndPath("nusmp", "textures/particle/magic_runes/" + id + ".png");
+    }
 
     private static final class Entry {
         ItemStack stack;
@@ -223,11 +230,13 @@ public final class GrimoireFloatClient {
             } else {
                 double yaw = Math.toRadians(Mth.rotLerp(partial, owner.yBodyRotO, owner.yBodyRot));
                 Vec3 fwd = new Vec3(-Math.sin(yaw), 0, Math.cos(yaw)), right = new Vec3(-Math.cos(yaw), 0, -Math.sin(yaw));
-                Vec3 at = owner.getPosition(partial).add(right.scale(p.right())).add(fwd.scale(p.forward())).add(0, p.up() + bob, 0);
+                Vec3 at = julius(stack)
+                        ? owner.getPosition(partial).add(fwd.scale(-0.42)).add(0, owner.getBbHeight() + 0.28 + bob, 0)
+                        : owner.getPosition(partial).add(right.scale(p.right())).add(fwd.scale(p.forward())).add(0, p.up() + bob, 0);
                 pose.translate(at.x - cam.x, at.y - cam.y, at.z - cam.z);
-                pose.mulPose(Axis.YP.rotationDegrees(-(float) Math.toDegrees(yaw) + p.yaw() + sway));
-                pose.mulPose(Axis.XP.rotationDegrees(p.pitch()));
-                pose.mulPose(Axis.ZP.rotationDegrees(p.roll()));
+                pose.mulPose(Axis.YP.rotationDegrees(-(float) Math.toDegrees(yaw) + (julius(stack) ? 0f : p.yaw()) + sway));
+                pose.mulPose(Axis.XP.rotationDegrees(julius(stack) ? 0f : p.pitch()));
+                pose.mulPose(Axis.ZP.rotationDegrees(julius(stack) ? 0f : p.roll()));
                 float s = p.scale() * fade;
                 if (s <= 0.01f) { pose.popPose(); continue; }
                 pose.scale(s, s, s);
@@ -433,6 +442,7 @@ public final class GrimoireFloatClient {
     private static void pages(PoseStack pose, MultiBufferSource buffers, Vec3 cam, ItemStack stack, float age, boolean reverse, int light) {
         Style style = style(stack);
         VertexConsumer vc = buffers.getBuffer(RenderType.entityTranslucent(style == Style.ANTI ? LEAF_TATTERED : LEAF));
+        VertexConsumer runes = buffers.getBuffer(RenderType.entityTranslucent(runeTexture(stack)));
         int[] tint = switch (style) {
             case ANTI -> new int[]{120, 104, 108};
             case EMBER -> new int[]{255, 226, 196};
@@ -457,6 +467,8 @@ public final class GrimoireFloatClient {
             int a = (int) (alpha * (style == Style.ANTI ? 230 : 245));
             strip(vc, pose.last(), x0, z0, x1, z1, y0, y1, 0f, 0.5f, tint, a, light);
             strip(vc, pose.last(), x1, z1, x2, z2, y0, y1, 0.5f, 1f, tint, a, light);
+            strip(runes, pose.last(), x0, z0, x1, z1, y0, y1, 0f, 0.5f, tint, a, light);
+            strip(runes, pose.last(), x1, z1, x2, z2, y0, y1, 0.5f, 1f, tint, a, light);
             if (RNG.nextFloat() < 0.4f) particle(pose.last().pose(), cam, style, x2, (y0 + y1) * 0.5f + (RNG.nextFloat() - 0.5f) * 10f, z2);
         }
         pose.popPose();

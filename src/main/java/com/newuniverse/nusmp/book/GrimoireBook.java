@@ -237,6 +237,10 @@ public abstract class GrimoireBook extends Skill {
         instance.getOrCreateTag().putInt("HeldTicks", heldTicks);
         if (!usable(instance, entity, mode)) { fail(player, "That page is still sealed."); return; }
         if (!holdingBook(player)) { fail(player, "Your pages are sealed shut. Summon your " + magic.displayName + " grimoire first (Summon Grimoire)."); return; }
+        if (p.weaponTag() != null && !com.newuniverse.nusmp.item.WeaponMagicHelper.holdsAny(player, p.weaponTag())) {
+            fail(player, "You must hold the required weapon to cast " + p.name() + ".");
+            return;
+        }
         if (player.getPersistentData().getLong("nusmp_sealed_until") > player.level().getGameTime()) { fail(player, "Your grimoire has been sealed!"); return; }
         if (instance.onCoolDown(mode)) { fail(player, p.name() + " is recharging (" + instance.getCoolDown(mode) + "s)."); return; }
         if (EnergyHelper.isOutOfEnergy(entity, instance, mode)) return;   // Tensura checks and spends

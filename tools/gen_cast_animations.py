@@ -113,6 +113,44 @@ CLIPS = {
         (1.00, dict(body=((-14, 0, 0), (0, 1.5, 0)), left_arm=(-30, 0, -95), right_arm=(-30, 0, 95), left_leg=(6, 0, 0), right_leg=(6, 0, 0))),
         (1.60, dict(body=(REST, REST), left_arm=REST, right_arm=REST, left_leg=REST, right_leg=REST)),
     ]),
+    # Sealing Magic: form a sphere between both hands, then squeeze the hands together around it.
+    "seal_crush": clip(1.1, False, [
+        (0.00, dict(body=(6, 0, 0), left_arm=(-90, 0, -28), right_arm=(-90, 0, 28))),
+        (0.15, dict(body=(2, 0, 0), left_arm=(-82, 0, -24), right_arm=(-82, 0, 24))),
+        (0.40, dict(body=(-3, 0, 0), left_arm=(-72, 0, -18), right_arm=(-72, 0, 18))),
+        (0.68, dict(body=(4, 0, 0), left_arm=(-58, 0, -10), right_arm=(-58, 0, 10))),
+        (0.82, dict(body=(10, 0, 0), left_arm=(-42, 0, -5), right_arm=(-42, 0, 5))),
+        (1.10, dict(body=REST, left_arm=REST, right_arm=REST)),
+    ]),
+    # Weapon-gated pages use a distinct release pose; the held weapon arm leads the motion.
+    "cast_weapon_sword": clip(0.85, False, [
+        (0.00, dict(body=(4, 18, 0), left_arm=(-105, 0, -10), right_arm=(-35, 0, 4))),
+        (0.12, dict(body=(-5, -22, 0), left_arm=(-98, -8, 0), right_arm=(-115, -12, 8))),
+        (0.32, dict(body=(-2, -28, 0), left_arm=(-75, -5, 6), right_arm=(-105, -8, 8))),
+        (0.55, dict(body=(3, -8, 0), left_arm=(-82, 0, -6), right_arm=(-70, 0, 0))),
+        (0.85, dict(body=REST, left_arm=REST, right_arm=REST)),
+    ]),
+    "cast_weapon_heavy": clip(1.0, False, [
+        (0.00, dict(body=((-10, 0, 0), (0, 1, 0)), left_arm=(-160, 0, -8), right_arm=(-160, 0, 8))),
+        (0.20, dict(body=((-12, 0, 0), (0, 2, 0)), left_arm=(-170, 0, -8), right_arm=(-170, 0, 8))),
+        (0.38, dict(body=((16, 0, 0), (0, -2, 0)), left_arm=(-45, 0, -5), right_arm=(-45, 0, 5))),
+        (0.62, dict(body=((10, 0, 0), (0, -1, 0)), left_arm=(-32, 0, -4), right_arm=(-32, 0, 4))),
+        (1.00, dict(body=(REST, REST), left_arm=REST, right_arm=REST)),
+    ]),
+    "cast_weapon_katana": clip(0.75, False, [
+        (0.00, dict(body=(4, 18, 0), left_arm=(-102, 0, -8), right_arm=(-35, 0, 2))),
+        (0.10, dict(body=(2, -30, 0), left_arm=(-95, -8, -12), right_arm=(-120, -15, 20))),
+        (0.28, dict(body=(0, -55, 0), left_arm=(-82, -12, -22), right_arm=(-105, -18, 28))),
+        (0.48, dict(body=(4, -20, 0), left_arm=(-74, 0, -8), right_arm=(-78, 0, 8))),
+        (0.75, dict(body=REST, left_arm=REST, right_arm=REST)),
+    ]),
+    "cast_weapon_dance": clip(1.0, False, [
+        (0.00, dict(body=(4, 20, 0), left_arm=(-95, 0, -35), right_arm=(-35, 0, 12))),
+        (0.16, dict(body=(0, -30, 0), left_arm=(-72, -12, -70), right_arm=(-65, 12, 55))),
+        (0.38, dict(body=(2, 35, 0), left_arm=(-58, 12, -75), right_arm=(-82, -12, 65))),
+        (0.64, dict(body=(0, -12, 0), left_arm=(-80, 0, -38), right_arm=(-62, 0, 30))),
+        (1.00, dict(body=REST, left_arm=REST, right_arm=REST)),
+    ]),
     # the chant broke off, the page was sealed, or the spell fizzled: the hand drops, the body flinches back
     "cast_fail": clip(0.5, False, [
         (0.00, dict(body=(6, 10, 0), left_arm=(-110, 0, -10), right_arm=(-30, 0, 0))),
