@@ -4,6 +4,7 @@ import com.newuniverse.nusmp.skill.codex.AnimeSkill;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /** Damage and phase rules for Riven's raised-ceiling encounter. */
 public final class RivenCombat {
@@ -53,11 +54,28 @@ public final class RivenCombat {
         return "";
     }
 
-    static String newOrder(boolean melee, boolean kiter, boolean caster, boolean playerTarget) {
+    static String newOrder(boolean melee, boolean kiter, boolean caster, boolean playerTarget, boolean flier) {
         if (melee) return "HEAVY_WEAPON";
         if (kiter) return "GEARSHIFT_LOW";
         if (caster && playerTarget) return "SLOW_GRIMOIRE_CASTS";
+        if (flier) return "GROUND_STONE";
         return "GEARSHIFT_TOP";
+    }
+
+    static String arceusCounter(String magic) {
+        String normalized = magic == null ? "" : magic.toLowerCase(Locale.ROOT);
+        if (normalized.contains("flame") || normalized.contains("fire") || normalized.contains("magma")) return "water";
+        if (normalized.contains("water") || normalized.contains("ice") || normalized.contains("snow")
+                || normalized.contains("gel") || normalized.contains("mucus")) return "lightning";
+        if (normalized.contains("plant") || normalized.contains("tree") || normalized.contains("vine")
+                || normalized.contains("briar")) return "flame";
+        if (normalized.contains("lightning") || normalized.contains("storm") || normalized.contains("electric")) return "earth";
+        if (normalized.contains("earth") || normalized.contains("stone") || normalized.contains("rock")
+                || normalized.contains("mineral")) return "water";
+        if (normalized.contains("dark") || normalized.contains("shadow")) return "light";
+        if (normalized.contains("light")) return "dark";
+        if (normalized.contains("wind") || normalized.contains("air")) return "earth";
+        return "arcane";
     }
 
     public static int slowedWarmup(int ticks) { return (int) Math.ceil(Math.max(0, ticks) * 1.5); }

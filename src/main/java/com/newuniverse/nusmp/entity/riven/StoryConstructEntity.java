@@ -10,6 +10,8 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -169,9 +171,35 @@ public class StoryConstructEntity extends Monster {
                 VfxSpawn.send(level, VfxShape.DREAM_MANIFEST, position(), position().add(0, 0.1, 0), 0xFF482C70, 16, 1.1f);
             }
             case "Arceus" -> {
-                boss.addStory(10f);
-                VfxSpawn.send(level, VfxShape.ALCHEMY_CIRCLE, boss.position(), boss.position().add(0, 0.1, 0),
-                        0xFFFFD86A, 12, 1.2f);
+                String counter = RivenCombat.arceusCounter(target == null ? "" : ThreatScan.of(boss, target).magic);
+                int color = switch (counter) {
+                    case "water" -> 0xFF55C9E8;
+                    case "lightning" -> 0xFFFFFF55;
+                    case "flame" -> 0xFFFF7040;
+                    case "earth" -> 0xFFBE9B62;
+                    case "light" -> 0xFFFFF1A8;
+                    case "dark" -> 0xFF8B62D8;
+                    default -> 0xFFE2D8FF;
+                };
+                VfxSpawn.send(level, VfxShape.ALCHEMY_CIRCLE, position(), position().add(0, 0.1, 0),
+                        color, 10, 1.0f);
+                if (target != null && target.isAlive() && distanceToSqr(target) <= 196 && hasLineOfSight(target)) {
+                    Vec3 from = getEyePosition();
+                    Vec3 to = target.getBoundingBox().getCenter();
+                    VfxSpawn.send(level, VfxShape.LIGHTNING_SPEAR, from, to, color, 8, 0.85f);
+                    target.hurt(damageSources().indirectMagic(this, this), 10f);
+                    target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 0));
+                    var particle = switch (counter) {
+                        case "water" -> ParticleTypes.SPLASH;
+                        case "lightning" -> ParticleTypes.ELECTRIC_SPARK;
+                        case "flame" -> ParticleTypes.FLAME;
+                        case "earth" -> ParticleTypes.CRIT;
+                        case "light" -> ParticleTypes.END_ROD;
+                        case "dark" -> ParticleTypes.SOUL;
+                        default -> ParticleTypes.ENCHANT;
+                    };
+                    level.sendParticles(particle, to.x, to.y, to.z, 12, 0.35, 0.35, 0.35, 0.02);
+                }
             }
             case "Grand Zeno" -> {
                 if (target instanceof ServerPlayer player && MarquisStatus.evilEyeActive(player)) {

@@ -47,12 +47,22 @@ class RivenCombatTest {
 
     @Test
     void newOrderChoosesOneSafeRuleFromThreatScanTagsAndSlowsTwoPageWarmupsByHalf() {
-        assertEquals("HEAVY_WEAPON", RivenCombat.newOrder(true, true, true, true));
-        assertEquals("GEARSHIFT_LOW", RivenCombat.newOrder(false, true, true, true));
-        assertEquals("SLOW_GRIMOIRE_CASTS", RivenCombat.newOrder(false, false, true, true));
-        assertEquals("GEARSHIFT_TOP", RivenCombat.newOrder(false, false, true, false));
+        assertEquals("HEAVY_WEAPON", RivenCombat.newOrder(true, true, true, true, true));
+        assertEquals("GEARSHIFT_LOW", RivenCombat.newOrder(false, true, true, true, true));
+        assertEquals("SLOW_GRIMOIRE_CASTS", RivenCombat.newOrder(false, false, true, true, true));
+        assertEquals("GROUND_STONE", RivenCombat.newOrder(false, false, false, true, true));
+        assertEquals("GEARSHIFT_TOP", RivenCombat.newOrder(false, false, true, false, false));
         assertEquals(6, RivenCombat.slowedWarmup(4));
         assertEquals(11, RivenCombat.slowedWarmup(7));
+    }
+
+    @Test
+    void arceusSelectsCounterElementFromDetectedMagic() {
+        assertEquals("water", RivenCombat.arceusCounter("Flame"));
+        assertEquals("lightning", RivenCombat.arceusCounter("Gel"));
+        assertEquals("flame", RivenCombat.arceusCounter("Plant"));
+        assertEquals("earth", RivenCombat.arceusCounter("Storm"));
+        assertEquals("arcane", RivenCombat.arceusCounter(""));
     }
 
     @Test

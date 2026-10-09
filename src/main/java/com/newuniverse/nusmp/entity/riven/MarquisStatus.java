@@ -9,6 +9,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.entity.living.LivingHealEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
@@ -91,6 +92,7 @@ public final class MarquisStatus {
             data.remove(SLOW_CASTS_UNTIL);
             return false;
         }
+
         int left = data.getInt(SLOW_CASTS);
         if (left <= 0) return false;
         data.putInt(SLOW_CASTS, left - 1);
@@ -99,6 +101,18 @@ public final class MarquisStatus {
             data.remove(SLOW_CASTS_UNTIL);
         }
         return true;
+    }
+
+    public static void createStonePlatform(ServerLevel level, LivingEntity target, net.minecraft.core.BlockPos arena) {
+        net.minecraft.core.BlockPos base = target.blockPosition().below();
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dz = -1; dz <= 1; dz++) {
+                net.minecraft.core.BlockPos pos = base.offset(dx, 0, dz);
+                if (pos.distSqr(arena) > 48L * 48L || !level.getWorldBorder().isWithinBounds(pos)
+                        || !level.getBlockState(pos).isAir()) continue;
+                SpellRuntime.tempBlock(level, pos, Blocks.COBBLESTONE.defaultBlockState(), 80);
+            }
+        }
     }
 
     public static boolean compress(ServerPlayer player, Vec3 anchor, int ticks) {

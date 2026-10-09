@@ -379,12 +379,13 @@ public class RivenBossEntity extends Monster {
         nextNewOrderAt = tickCount + 160;
         ThreatScan threat = ThreatScan.of(this, target);
         String orderId = RivenCombat.newOrder(threat.has("melee") && target.getAttribute(Attributes.ATTACK_SPEED) != null,
-                threat.has("kiter"), threat.has("caster"), target instanceof ServerPlayer);
+                threat.has("kiter"), threat.has("caster"), target instanceof ServerPlayer, threat.has("flier"));
         boolean heavy = "HEAVY_WEAPON".equals(orderId);
         boolean low = "GEARSHIFT_LOW".equals(orderId);
         boolean slowCasts = "SLOW_GRIMOIRE_CASTS".equals(orderId);
+        boolean ground = "GROUND_STONE".equals(orderId);
         String order = heavy ? "That weapon is heavy." : low ? "Your escape is slower."
-                : slowCasts ? "Your magic takes longer to form." : "I am faster.";
+                : slowCasts ? "Your magic takes longer to form." : ground ? "The ground is stone." : "I am faster.";
         statusText = "New Order";
         statusUntil = tickCount + 180;
         say(sl, order);
@@ -401,9 +402,11 @@ public class RivenBossEntity extends Monster {
             if (heavy) MarquisStatus.applyHeavyWeaponOrder(target, 120);
             else if (low) MarquisStatus.applyGearshift(target, false, 80);
             else if (slowCasts && target instanceof ServerPlayer player) MarquisStatus.slowNextGrimoireCasts(player, 2, 160);
+            else if (ground) MarquisStatus.createStonePlatform(sl, target, arenaPosition());
             else MarquisStatus.applyGearshift(this, true, 80);
             sl.playSound(null, blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.HOSTILE, 1.2f, 1.4f);
-            statusText = "New Order · " + (heavy ? "Heavy" : low ? "Gearshift Low" : slowCasts ? "Slow next two pages" : "Gearshift Top");
+            statusText = "New Order · " + (heavy ? "Heavy" : low ? "Gearshift Low" : slowCasts ? "Slow next two pages"
+                    : ground ? "Stone footing" : "Gearshift Top");
             statusUntil = tickCount + 160;
         });
     }
