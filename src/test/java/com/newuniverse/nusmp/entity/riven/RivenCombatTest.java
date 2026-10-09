@@ -61,6 +61,17 @@ class RivenCombatTest {
     }
 
     @Test
+    void multiHitAttackDelaysMatchTheirReadableTelegraphs() {
+        assertEquals(0, RivenCombat.eldritchBoltDelay(0));
+        assertEquals(4, RivenCombat.eldritchBoltDelay(1));
+        assertEquals(8, RivenCombat.eldritchBoltDelay(2));
+        assertEquals(0, RivenCombat.hexbladeSwingDelay(0));
+        assertEquals(4, RivenCombat.hexbladeSwingDelay(1));
+        assertEquals(8, RivenCombat.hexbladeSwingDelay(2));
+        assertEquals(2, RivenCombat.firstPhase(skill("hexblade_waltz", 3)));
+    }
+
+    @Test
     void audienceCollapseScalesByLivingPartySizeAndCrownShardsStayNormal() {
         assertEquals(48f, RivenCombat.audienceDamage(0));
         assertEquals(48f, RivenCombat.audienceDamage(1));

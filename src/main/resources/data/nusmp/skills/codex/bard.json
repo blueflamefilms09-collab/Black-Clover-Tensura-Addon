@@ -1,6 +1,6 @@
 {
   "skills": [
-    {"id": "nusmp:eldritch_blast", "anime": "original", "name": "Eldritch Blast", "tier": 1, "cast_ticks": 9, "range": 22,
+    {"id": "nusmp:eldritch_blast", "anime": "original", "name": "Eldritch Verse", "tier": 1, "cast_ticks": 9, "range": 22, "native": "eldritch_verse",
      "primitives": ["projectile", "magic_damage"], "counters": ["low_armor", "healer", "kiter"], "resisted_by": ["magic_null"],
      "animation": "eldritch_blast", "line": "Eldritch Blast!", "cooldown_ticks": 40},
     {"id": "nusmp:hex", "anime": "original", "name": "Hex", "tier": 1, "cast_ticks": 10, "range": 18, "native": "hex",
@@ -84,6 +84,9 @@
      "animation": "final_form", "line": "The crown comes down.", "cooldown_ticks": 360},
     {"id": "nusmp:rewrite_round", "anime": "original", "name": "Rewrite Round", "tier": 5, "cast_ticks": 12, "range": 24, "native": "rewrite_round",
      "primitives": ["magic_damage"], "counters": ["caster", "low_health"], "resisted_by": ["magic_null"],
-     "animation": "cast_grimoire", "line": "I remember that move. My turn.", "cooldown_ticks": 600}
+     "animation": "cast_grimoire", "line": "I remember that move. My turn.", "cooldown_ticks": 600},
+    {"id": "nusmp:hexblade_waltz", "anime": "original", "name": "Hexblade Waltz", "tier": 3, "cast_ticks": 20, "range": 6, "native": "hexblade_waltz",
+     "primitives": ["melee_arc", "physical_damage"], "counters": ["barrier", "low_armor"], "resisted_by": ["physical_immune"],
+     "animation": "sword_combo_3", "line": "Three beats. One broken ward.", "cooldown_ticks": 300}
   ]
 }

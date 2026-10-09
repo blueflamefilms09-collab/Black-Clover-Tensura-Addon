@@ -13,7 +13,7 @@ final class RivenCombat {
     static boolean signature(AnimeSkill skill) {
         if (skill == null || skill.nativeId().equals("crown_break")) return false;
         return switch (skill.nativeId()) {
-            case "page_tear", "severance_aria", "island_fall", "maw_of_the_rift", "final_page", "unwritten_ending",
+            case "page_tear", "hexblade_waltz", "severance_aria", "island_fall", "maw_of_the_rift", "final_page", "unwritten_ending",
                     "gold_ring", "two_moons", "doom_gate", "discord" -> true;
             default -> skill.tier() >= 4;
         };
@@ -21,9 +21,9 @@ final class RivenCombat {
 
     static int firstPhase(AnimeSkill skill) {
         return switch (skill.nativeId()) {
-            case "page_tear", "bull_ward", "soul_note" -> 1;
+            case "page_tear", "bull_ward", "soul_note", "eldritch_verse" -> 1;
             case "discord" -> 2;
-            case "severance_aria", "legion_knight" -> 2;
+            case "severance_aria", "legion_knight", "hexblade_waltz" -> 2;
             case "island_fall", "maw_of_the_rift", "gold_ring", "two_moons", "doom_gate" -> 3;
             case "final_page", "unwritten_ending", "audience_collapse", "crown_break", "rewrite_round" -> 4;
             default -> 1;
@@ -54,4 +54,6 @@ final class RivenCombat {
 
     static long nextSignatureAt(long tick) { return tick + 80; }
     static boolean signatureReady(long tick, long readyAt) { return tick >= readyAt; }
+    static int eldritchBoltDelay(int boltIndex) { return Math.max(0, boltIndex) * 4; }
+    static int hexbladeSwingDelay(int swingIndex) { return Math.max(0, swingIndex) * 4; }
 }

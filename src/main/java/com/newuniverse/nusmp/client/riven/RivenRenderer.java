@@ -4,7 +4,12 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.newuniverse.nusmp.blackclover.GrimoireItem;
 import com.newuniverse.nusmp.client.geo.GeoDraw;
+import com.newuniverse.nusmp.client.geo.GeoAnim;
+import com.newuniverse.nusmp.client.geo.GeoModelData;
+import com.newuniverse.nusmp.client.geo.GeoModels;
 import com.newuniverse.nusmp.client.geo.GeoSpec;
+import com.newuniverse.nusmp.client.NURenderTypes;
+import com.newuniverse.nusmp.client.NUShaders;
 import com.newuniverse.nusmp.core.magic.grimoire.GrimoireCarry;
 import com.newuniverse.nusmp.entity.NUEntities;
 import com.newuniverse.nusmp.entity.riven.RivenBossEntity;
@@ -61,6 +66,17 @@ public final class RivenRenderer extends EntityRenderer<RivenBossEntity> {
         int g = (int) (255 * glowPulse);
         GeoDraw.paint(pose, buffers, e.phase() >= 3 ? FINAL : BASE, clip, seconds, GeoDraw.Space.PROP, GeoDraw.Layer.CUTOUT, light, 0xFFFFFFFF,
                 0xFF000000 | (g << 16) | (g << 8) | g);
+        if (e.signatureCasting() && NUShaders.zagredAura() != null) {
+            GeoSpec aura = e.phase() >= 3 ? FINAL : BASE;
+            GeoModelData model = GeoModels.model(aura.model());
+            GeoAnim animations = GeoModels.animations(aura.animations());
+            GeoAnim.Clip auraClip = animations == null ? null : animations.clip(clip);
+            pose.pushPose();
+            pose.scale(1.035f, 1.025f, 1.035f);
+            GeoDraw.draw(pose, buffers.getBuffer(NURenderTypes.zagredAura(aura.texture())), model, auraClip, seconds,
+                    GeoDraw.Space.PROP, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, 0xAA756EFF);
+            pose.popPose();
+        }
         if (!e.isDeadOrDying() || e.deathTime < 30) renderBook(e, age, light, pose, buffers, clip);
         pose.popPose();
         super.render(e, yaw, partial, pose, buffers, light);

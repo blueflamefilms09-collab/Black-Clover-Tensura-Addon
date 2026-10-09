@@ -57,12 +57,21 @@ class RivenAssetsTest {
             natives.add(skill.nativeId());
             skills.put(skill.nativeId(), skill);
         }
-        for (String nativeId : new String[]{"bull_ward", "soul_note", "legion_knight", "discord", "gold_ring", "two_moons",
+        for (String nativeId : new String[]{"eldritch_verse", "hexblade_waltz", "bull_ward", "soul_note", "legion_knight", "discord", "gold_ring", "two_moons",
                 "doom_gate", "unwritten_ending", "audience_collapse", "crown_break", "rewrite_round"})
             assertTrue(natives.contains(nativeId), "missing native attack " + nativeId);
         assertEquals(2, RivenCombat.firstPhase(skills.get("discord")));
         assertEquals(3, RivenCombat.firstPhase(skills.get("gold_ring")));
+        assertEquals(1, RivenCombat.firstPhase(skills.get("eldritch_verse")));
+        assertEquals(2, RivenCombat.firstPhase(skills.get("hexblade_waltz")));
         assertEquals(4, RivenCombat.firstPhase(skills.get("rewrite_round")));
+    }
+
+    @Test
+    void newBossVfxIdIsAppendOnly() {
+        com.newuniverse.nusmp.vfx.VfxShape[] shapes = com.newuniverse.nusmp.vfx.VfxShape.values();
+        assertEquals(com.newuniverse.nusmp.vfx.VfxShape.RIVEN_VOID_GATE, shapes[shapes.length - 1]);
+        assertEquals("RIVEN_VOID_GATE", shapes[shapes.length - 1].name());
     }
 
     @Test

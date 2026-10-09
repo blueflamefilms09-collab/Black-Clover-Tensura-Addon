@@ -199,7 +199,8 @@ public enum VfxShape {
     MIST_MAGIC,              // layered drifting vapor and soft water-light from 'from' to 'to'
     LEGION_BOARD,             // toggleable upright checkerboard and chess sprites following the summoned grimoire's owner
     // 0.89: shared layered spell families for the newly covered wiki attributes; each book supplies its own palette.
-    WIKI_MAGIC_CAST, WIKI_MAGIC_FIELD, WIKI_MAGIC_BURST;
+    WIKI_MAGIC_CAST, WIKI_MAGIC_FIELD, WIKI_MAGIC_BURST,
+    RIVEN_VOID_GATE;          // Riven's boss-scale rift disk; shader-backed with a textured fallback
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

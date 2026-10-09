@@ -89,6 +89,7 @@ final class RivenAttacks {
                 VfxSpawn.send(sl, VfxShape.SPACE_PORTAL, mark, mark.add(0, 1, 0), 0xFF7357B8, 24, 3.0f);
                 sl.sendParticles(ParticleTypes.REVERSE_PORTAL, mark.x, mark.y + 0.15, mark.z, 48, 1.3, 0.08, 1.3, 0.01);
             } else {
+                VfxSpawn.send(sl, VfxShape.RIVEN_VOID_GATE, b.position(), b.position().add(0, 0.08, 0), 0xFF766DFF, 25, 3f);
                 VfxSpawn.send(sl, VfxShape.SHADOW_POOL, mark, mark.add(0, 0.1, 0), 0xFF321544, 20, 3.0f);
                 VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE_EXPLOSION, mark, mark.add(0, 0.1, 0), 0xFFB088FF, 10, 2.0f);
             }
@@ -111,6 +112,42 @@ final class RivenAttacks {
 
     private static boolean specialAttack(RivenBossEntity b, AnimeSkill s, LivingEntity target, ServerLevel sl) {
         switch (s.nativeId()) {
+            case "eldritch_verse" -> {
+                if (target == null) return true;
+                Vec3 origin = b.getEyePosition();
+                for (int bolt = 0; bolt < 3; bolt++) {
+                    int index = bolt;
+                    SpellRuntime.later(sl, RivenCombat.eldritchBoltDelay(index), () -> {
+                        if (!b.isAlive() || !target.isAlive()) return;
+                        Vec3 from = b.getEyePosition();
+                        Vec3 to = target.getBoundingBox().getCenter();
+                        VfxSpawn.send(sl, VfxShape.LIGHTNING_SPEAR, from, to, VIOLET, 6, 0.8f);
+                        if (b.hasLineOfSight(target) && from.distanceTo(to) <= 22)
+                            applyDirect(b, s, target, b.damageSources().indirectMagic(b, b), true,
+                                    RivenCombat.damage(b.phase(), false, b.getRandom().nextFloat()));
+                    });
+                }
+                VfxSpawn.send(sl, VfxShape.DARK_SLASH_AVIDYA, origin, target.getBoundingBox().getCenter(), VIOLET, 16, 0.45f);
+                return true;
+            }
+            case "hexblade_waltz" -> {
+                if (target == null) return true;
+                for (int swing = 0; swing < 3; swing++) {
+                    int index = swing;
+                    SpellRuntime.later(sl, RivenCombat.hexbladeSwingDelay(index), () -> {
+                        if (!b.isAlive() || !target.isAlive() || b.distanceTo(target) > 6.5 || !b.hasLineOfSight(target)) return;
+                        VfxShape slash = index == 2 ? VfxShape.DARK_SLASH_DIMENSION : VfxShape.DARK_SLASH_AVIDYA;
+                        VfxSpawn.send(sl, slash, b.getEyePosition(), target.getBoundingBox().getCenter(), 0xFFB18CFF, 8, 0.7f);
+                        boolean hit = applyDirect(b, s, target, b.damageSources().mobAttack(b), false, RivenCombat.damage(b.phase(), true, 0));
+                        if (index == 2 && hit) {
+                            boolean popped = popMultilayerBarrier(target);
+                            VfxSpawn.send(sl, VfxShape.BARRIER_FX3, target.getBoundingBox().getCenter(),
+                                    target.getBoundingBox().getCenter().add(0, 0.2, 0), 0xFFD8C8FF, 8, popped ? 1.35f : 0.8f);
+                        }
+                    });
+                }
+                return true;
+            }
             case "bull_ward" -> {
                 b.startBullWard(600);
                 b.setAbsorptionAmount(Math.max(b.getAbsorptionAmount(), 40f));
@@ -210,6 +247,7 @@ final class RivenAttacks {
                 if (!b.startAudienceCollapse()) return true;
                 int players = (int) sl.players().stream().filter(p -> enemy(p) && p.distanceToSqr(b) < 48 * 48).count();
                 float damage = RivenCombat.audienceDamage(players);
+                VfxSpawn.send(sl, VfxShape.FX_SPIRIT_NOVA, b.position(), b.position().add(0, 0.1, 0), 1, 12, 4f);
                 for (ServerPlayer p : sl.players()) {
                     if (!enemy(p) || p.distanceToSqr(b) >= 48 * 48) continue;
                     VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE_EXPLOSION, p.position(), p.position().add(0, 0.1, 0), 0xFFB088FF, 8, 1.2f);
@@ -282,14 +320,35 @@ final class RivenAttacks {
         }
     }
 
-    private static void applyDirect(RivenBossEntity b, AnimeSkill skill, LivingEntity victim, DamageSource source, boolean magic, float damage) {
-        if (!victim.isAlive()) return;
+    private static boolean applyDirect(RivenBossEntity b, AnimeSkill skill, LivingEntity victim, DamageSource source, boolean magic, float damage) {
+        if (!victim.isAlive()) return false;
         boolean hit = victim.hurt(source, damage);
         if (hit && skill != null && RivenCombat.signature(skill)) b.signatureHit();
         if (hit) {
             Vec3 at = victim.getBoundingBox().getCenter();
             VfxSpawn.send((ServerLevel) b.level(), VfxShape.LIGHT_FLARE, at, at.add(0, 0.2, 0), 0xFFE0D7FF, 4, 0.7f);
+            VfxSpawn.send((ServerLevel) b.level(), VfxShape.BARRIER_FX3, at, at.add(0, 0.2, 0), 0xFFE0D7FF, 5,
+                    skill != null && RivenCombat.signature(skill) ? 1.35f : 0.75f);
+            if (skill != null && RivenCombat.signature(skill)) {
+                VfxSpawn.send((ServerLevel) b.level(), VfxShape.DARK_SLASH_DIMENSION, b.getEyePosition(), at, 0xFF8F76FF, 10, 0.55f);
+            }
         }
+        return hit;
+    }
+
+    private static boolean popMultilayerBarrier(LivingEntity target) {
+        var attribute = target.getAttribute(io.github.manasmods.tensura.registry.attribute.TensuraAttributes.MULTILAYER_BARRIER);
+        if (attribute == null || attribute.getValue() <= 0) return false;
+        for (String path : List.of("multilayer_barrier", "ally_multilayer_barrier")) {
+            var id = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("tensura", path);
+            var modifier = attribute.getModifier(id);
+            if (modifier == null || modifier.amount() <= 0) continue;
+            if (modifier.amount() <= 1) attribute.removeModifier(modifier.id());
+            else attribute.addOrReplacePermanentModifier(new net.minecraft.world.entity.ai.attributes.AttributeModifier(
+                    modifier.id(), modifier.amount() - 1, modifier.operation()));
+            return true;
+        }
+        return false;
     }
 
     // ---------------------------------------------------------------- damage
@@ -376,14 +435,23 @@ final class RivenAttacks {
         }
     }
 
-    /** The afterimage left behind casts once: a weak eldritch blast fired from where he stood. */
+    /** The afterimage repeats Page Tear from where he blinked, at half signature damage. */
     private static void afterimage(RivenBossEntity b, Vec3 at, LivingEntity target, ServerLevel sl) {
         SpellRuntime.later(sl, 14, () -> {
             if (!b.isAlive() || !target.isAlive() || at.distanceTo(target.position()) > 28) return;
             Vec3 from = at.add(0, 1.6, 0), to = target.getBoundingBox().getCenter();
-            VfxSpawn.send(sl, VfxShape.LIGHTNING_SPEAR, from, to, VIOLET, 8, 0.9f);
-            if (b.level().getEntity(target.getId()) instanceof LivingEntity t && enemy(t) && b.hasLineOfSight(t))
-                t.hurt(b.damageSources().indirectMagic(b, b), (float) b.getAttributeValue(Attributes.ATTACK_DAMAGE) * 0.45f);
+            VfxSpawn.send(sl, VfxShape.DARK_SLASH_AVIDYA, from, to, VIOLET, 10, 0.9f);
+            VfxSpawn.send(sl, VfxShape.WIND_SLASH, from, to, VIOLET, 8, 1.1f);
+            Vec3 look = to.subtract(from).multiply(1, 0, 1).normalize();
+            for (Player p : sl.getEntitiesOfClass(Player.class, new AABB(at, at.add(look.scale(6))).inflate(2, 1.5, 2), RivenAttacks::enemy)) {
+                Vec3 delta = p.position().subtract(at).multiply(1, 0, 1);
+                if (delta.length() > 6 || delta.lengthSqr() < 1e-5 || delta.normalize().dot(look) < 0.65
+                        || sl.clip(new net.minecraft.world.level.ClipContext(from, p.getBoundingBox().getCenter(),
+                        net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, b))
+                        .getType() == net.minecraft.world.phys.HitResult.Type.BLOCK) continue;
+                applyDirect(b, null, p, b.damageSources().indirectMagic(b, b), true,
+                        RivenCombat.damage(b.phase(), true, 0) * 0.5f);
+            }
         });
     }
 

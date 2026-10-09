@@ -137,6 +137,7 @@ public class RivenBossEntity extends Monster {
     public int phase() { return entityData.get(PHASE); }
     public int clip() { return entityData.get(CLIP); }
     public int clipStartTick() { return clientClipStart; }
+    public boolean signatureCasting() { return RivenCombat.signature(casting); }
     public float story() { return story; }
     AnimeSkill lastCastSkill() { return lastCast; }
     BlockPos arenaPosition() { return arena == null ? blockPosition() : arena; }
@@ -336,6 +337,7 @@ public class RivenBossEntity extends Monster {
             Vec3 tell = target.position();
             VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE, tell, tell.add(0, 0.05, 0), 0xFF39224F, ticks + 4, 1.8f);
             VfxSpawn.sendFollowing(sl, VfxShape.SPIRIT_AURA, this, position().add(0, 1, 0), 0xFF7058C8, ticks + 4, 1.4f);
+            VfxSpawn.send(sl, VfxShape.ALCHEMY_CIRCLE, tell, tell.add(0, 0.05, 0), 0xFF4B3D68, ticks + 4, 1.8f);
             sl.playSound(null, blockPosition(), SoundEvents.BOOK_PAGE_TURN, SoundSource.HOSTILE, 1.4f, 0.7f);
         }
         if (!s.line().isBlank() && tickCount >= nextBark) { say(sl, s.line()); nextBark = tickCount + 90; }
@@ -478,7 +480,12 @@ public class RivenBossEntity extends Monster {
             teleportTo(pos.x, lowest.getY(), pos.z);
             setInvisible(false);
             VfxSpawn.send(sl, VfxShape.SLASH_WAVE, position().add(0, 1, 0), lowest.getBoundingBox().getCenter(), 0xFFF1E9FF, 8, 2.2f);
-            lowest.hurt(damageSources().mobAttack(this), 85f);
+            boolean hit = lowest.hurt(damageSources().mobAttack(this), 85f);
+            if (hit) {
+                Vec3 at = lowest.getBoundingBox().getCenter();
+                VfxSpawn.send(sl, VfxShape.DARK_SLASH_DIMENSION, getEyePosition(), at, 0xFF8F76FF, 10, 0.55f);
+                VfxSpawn.send(sl, VfxShape.BARRIER_FX3, at, at.add(0, 0.2, 0), 0xFFE0D7FF, 5, 1.35f);
+            }
             signatureHit();
             sl.playSound(null, blockPosition(), SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.HOSTILE, 1.6f, 0.65f);
         });
@@ -581,9 +588,9 @@ public class RivenBossEntity extends Monster {
         }
         if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return super.hurt(source, amount);
         if (source.getEntity() instanceof ServerPlayer p) fighters.add(p.getUUID());
-        if (source.getEntity() instanceof ServerPlayer p) addSoulNoteDamage(p, amount);
         brain.noteTaken(category(source));
         amount *= 0.92f;                                                           // Jack of All Trades
+        float totalBefore = getHealth() + getAbsorptionAmount();
         float absorptionBefore = getAbsorptionAmount();
         if (tickCount < guardUntil || bullWardActive()) amount *= 0.5f;
         if (bondTarget != null && tickCount < bondUntil && level() instanceof ServerLevel sl && sl.getEntity(bondTarget) instanceof LivingEntity b && b.isAlive() && b != source.getEntity()) {
@@ -594,6 +601,8 @@ public class RivenBossEntity extends Monster {
                 : phase() == 3 ? 0.25f * getMaxHealth() : 0f;   // one burst can't skip a phase
         if (floor > 0 && getHealth() - amount < floor) amount = Math.max(0f, getHealth() - floor + 0.5f);
         boolean hurt = super.hurt(source, amount);
+        if (hurt && source.getEntity() instanceof ServerPlayer p)
+            addSoulNoteDamage(p, Math.max(0, totalBefore - getHealth() - getAbsorptionAmount()));
         if (bullWardActive() && absorptionBefore > 0 && getAbsorptionAmount() <= 0) {
             bullWardUntil = 0;
             guardFor(0);
@@ -627,6 +636,8 @@ public class RivenBossEntity extends Monster {
         rewritePending = false;
         playClip("stagger");
         brain.invalidate();
+        VfxSpawn.send(sl, VfxShape.ANTI_MAGIC_SLASH, getEyePosition(), getEyePosition().add(getLookAngle().scale(2.5)),
+                0xFF8A70FF, 8, 0.9f);
         sl.playSound(null, blockPosition(), SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.HOSTILE, 1.5f, 0.7f);
         if (tickCount >= nextBark) {
             say(sl, "That page... wasn't in my story.");

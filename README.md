@@ -60,7 +60,7 @@ Magic spells fire when the skill key is released; holding the key does not trigg
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.96.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.97.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -217,6 +217,14 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - Tensura EP is initialized at 300,000,000 through EnergyHelper / ExistenceStorage, its normal magicule pool is kept topped up, and Tensura's `no_max_ep_plunder` entity tag excludes Riven from EP plunder rewards. His existence is marked to skip EP drops.
 - The boredom portal from 0.94.0 remains enabled.
 - Not implemented or verified in-game: the full 15-move attack list, partial resistance bypass, Gold Ring null, Unwritten Ending, Rewrite Round, the exact 60-second rift pull and all requested shader-specific boss visuals. EP display, magicule scaling, and no-plunder behavior use Tensura APIs/tags but have not been exercised in a running game.
+
+## 0.97.0 - Riven signature/VFX audit
+
+- Added executable Eldritch Verse (three bolts with the third eight ticks after the first), phase-II Hexblade Waltz (three timed swings and a one-point reduction of Tensura's multilayer-barrier modifier), and made Shadow Step's afterimage repeat Page Tear at half signature damage.
+- Signature casts now layer a dark arc-rune ground tell with Riven's violet-tinted Zagred-aura shader pass; signature hits use the Dark Slash shader and Barrier impact layer. Maw of the Rift uses the existing Demon Void shader on a floor disk, with the existing textured vortex fallback when that optional shader is unavailable.
+- Soul Note now records damage actually removed from Riven's health/absorption, rather than the pre-mitigation incoming amount.
+- Partial resistance bypass remains blocked: Tensura 2.0.1.0's `ResistSkill.isResistanceBypass` treats `tensura$getResistanceBypassLevel()` as a boolean threshold (`>= 1.0`), while `onTakenDamage` applies the configured resistance multiplier as a binary result. No supported partial reduction hook was found; using full bypass would violate the null/resistance rules.
+- `nusmp:story_rift` is not registered in the worktree or reachable history, so the existing arena-local pull is retained. Rewrite Round still replays Riven's last cast because this combat path does not expose dependable player codex-skill attribution. Riven's current Bard relic drop remains; the historical `RivenPassives` implementation is not compatible with the current boss architecture.
 
 ## 0.96.0 - Riven attack roster continuation
 
