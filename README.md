@@ -60,7 +60,7 @@ Magic spells fire when the skill key is released; holding the key does not trigg
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.95.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.96.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -217,6 +217,13 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - Tensura EP is initialized at 300,000,000 through EnergyHelper / ExistenceStorage, its normal magicule pool is kept topped up, and Tensura's `no_max_ep_plunder` entity tag excludes Riven from EP plunder rewards. His existence is marked to skip EP drops.
 - The boredom portal from 0.94.0 remains enabled.
 - Not implemented or verified in-game: the full 15-move attack list, partial resistance bypass, Gold Ring null, Unwritten Ending, Rewrite Round, the exact 60-second rift pull and all requested shader-specific boss visuals. EP display, magicule scaling, and no-plunder behavior use Tensura APIs/tags but have not been exercised in a running game.
+
+## 0.96.0 - Riven attack roster continuation
+
+- Added executable native attacks for Bull Ward (absorption shield and break shockwave), Soul Note (returns damage dealt by its marked player after five seconds), Legion Knight (construct spawn and position swap), Discord (42 damage plus two-second silence if its tell completes), Gold Ring (three-second magic null and delayed arena strike), Two Moons (second sky strike delayed ten ticks), Doom Gate (pull then close slash), Unwritten Ending (1.5-second untargetable window and 85-damage reappearance strike), Audience Collapse (25 story charge and 48 + 8 per additional living player), Crown Break (four non-tracking, block-occluded normal-damage shard rays), and one-use Rewrite Round.
+- Phase II's Discord unlock is phase-gated. Phase IV signatures are separated by 80 ticks; Audience Collapse and Final Page are separated by 120 ticks. Anti-magic can shorten/cancel active invulnerability and cancels a pending Rewrite Round startup. Rewrite use persists when the boss is saved and reloaded.
+- Fixed an Audience Collapse charge double-spend and kept Crown Break shards on the normal damage band. Added focused checks for the attack roster, phase unlocks, party damage formula, signature spacing, and normal Crown Break classification.
+- Incomplete/unverified: Rewrite Round currently replays Riven's last cast, not a player spell that hit him; the damage-source API does not expose a reliable codex skill identity in this combat path. The 60-second pull is centered on the local arena, not an actual `nusmp:story_rift` dimension (no such dimension is registered in the current repo/history). The historical `RivenPassives` suite from commit `848f9de` is not integrated in this newer boss architecture; current boss-bound Tensura marker skills are granted and stripped on death, but are not themselves active passives. Signature resistance bypass and shader-specific boss VFX remain unimplemented; resistance bypass was not added without a safe Tensura API path. Runtime/in-game behavior has not been exercised.
 
 ## 0.94.0 - Riven Remake, the Black Bulls' Bard; generated grimoire designs; wiki VFX scale fixes
 

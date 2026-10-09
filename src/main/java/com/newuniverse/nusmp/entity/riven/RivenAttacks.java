@@ -37,6 +37,7 @@ final class RivenAttacks {
         if (target == null || !target.isAlive()) target = b.getTarget();
         List<String> prim = s.primitives();
         hook(b, s, target, sl);
+        if (specialAttack(b, s, target, sl)) return;
         if (prim.contains("blink")) blink(b, s, target, sl);
         if (prim.contains("song_buff")) songBuff(b, sl);
         if (prim.contains("song_debuff")) songDebuff(b, sl);
@@ -108,6 +109,189 @@ final class RivenAttacks {
         if (delay > 0) SpellRuntime.later(sl, delay, apply); else apply.run();
     }
 
+    private static boolean specialAttack(RivenBossEntity b, AnimeSkill s, LivingEntity target, ServerLevel sl) {
+        switch (s.nativeId()) {
+            case "bull_ward" -> {
+                b.startBullWard(600);
+                b.setAbsorptionAmount(Math.max(b.getAbsorptionAmount(), 40f));
+                b.guardFor(600);
+                VfxSpawn.sendFollowing(sl, VfxShape.MAGIC_CIRCLE, b, b.position().add(0, 0.05, 0), BLUE, 600, 1.6f);
+                return true;
+            }
+            case "soul_note" -> {
+                if (target instanceof ServerPlayer p) {
+                    b.startSoulNote(p);
+                    VfxSpawn.send(sl, VfxShape.THREAD_LINE, b.getBoundingBox().getCenter(), p.getBoundingBox().getCenter(), VIOLET, 100, 0.3f);
+                    p.sendSystemMessage(net.minecraft.network.chat.Component.literal("Soul Note: damage you deal to Riven will ring back in five seconds.")
+                            .withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE));
+                    p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 0));
+                }
+                return true;
+            }
+            case "legion_knight" -> {
+                if (!b.canManifest()) return true;
+                Vec3 old = b.position();
+                Vec3 soldierAt = target.position().add(target.getLookAngle().multiply(-2, 0, -2));
+                StoryConstructEntity knight = StoryConstructEntity.spawn(sl, b, StoryConstructEntity.CLONE, soldierAt);
+                if (knight == null) return true;
+                VfxSpawn.send(sl, VfxShape.SPACE_PORTAL, target.position(), target.position().add(0, 1.5, 0), 0xFFFFD66E, 20, 1.1f);
+                SpellRuntime.later(sl, 12, () -> {
+                    if (!b.isAlive() || !knight.isAlive() || !target.isAlive()) return;
+                    Vec3 knightPos = knight.position();
+                    b.teleportTo(knightPos.x, knightPos.y, knightPos.z);
+                    knight.teleportTo(old.x, old.y, old.z);
+                    b.getLookControl().setLookAt(target, 60, 60);
+                    if (enemy(target) && b.hasLineOfSight(target)) applyDirect(b, s, target, b.damageSources().mobAttack(b), false,
+                            RivenCombat.damage(b.phase(), false, b.getRandom().nextFloat()));
+                });
+                return true;
+            }
+            case "discord" -> {
+                if (target instanceof ServerPlayer p) {
+                    p.getPersistentData().putLong("nusmp_sealed_until", p.level().getGameTime() + 40);
+                    p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 1));
+                    applyDirect(b, s, p, b.damageSources().indirectMagic(b, b), true, 42f);
+                }
+                return true;
+            }
+            case "gold_ring" -> {
+                Vec3 center = Vec3.atBottomCenterOf(b.arenaPosition());
+                b.startNullWindowForAttack("magic", 60, sl, "Gold Ring: magic is null for three seconds. Leave the ring or strike physically.");
+                VfxSpawn.send(sl, VfxShape.SPACE_PORTAL, center, center.add(0, 0.1, 0), 0xFFFFD66E, 60, 16f);
+                VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE, center, center.add(0, 0.1, 0), 0xFF8265B5, 60, 16f);
+                SpellRuntime.later(sl, 20, () -> {
+                    for (ServerPlayer p : sl.players()) {
+                        if (!enemy(p) || p.distanceToSqr(center) > 16 * 16 || !p.hasLineOfSight(b)) continue;
+                        VfxSpawn.send(sl, VfxShape.SLASH_WAVE, center.add(0, 1, 0), p.getBoundingBox().getCenter(), 0xFFFFE3A1, 8, 2.0f);
+                        applyDirect(b, s, p, b.damageSources().indirectMagic(b, b), true, RivenCombat.damage(b.phase(), true, 0));
+                    }
+                });
+                return true;
+            }
+            case "two_moons" -> {
+                Vec3 mark = target.position();
+                for (int moon = 0; moon < 2; moon++) {
+                    int which = moon;
+                    SpellRuntime.later(sl, moon == 0 ? 0 : 10, () -> {
+                        if (!b.isAlive()) return;
+                        Vec3 strike = mark.add(which == 0 ? -2.5 : 2.5, 0, 0);
+                        Vec3 sky = strike.add(0, 18, 0);
+                        VfxSpawn.send(sl, VfxShape.LIGHTNING_GOD, sky, strike, 0xFFB5A5FF, 8, 0.8f);
+                        for (ServerPlayer p : sl.players()) if (enemy(p) && p.distanceToSqr(strike) <= 3.5 * 3.5 && p.hasLineOfSight(b))
+                            applyDirect(b, s, p, b.damageSources().indirectMagic(b, b), true, RivenCombat.damage(b.phase(), true, 0));
+                    });
+                }
+                return true;
+            }
+            case "doom_gate" -> {
+                for (ServerPlayer p : sl.players()) {
+                    if (!enemy(p) || p.distanceToSqr(b) > 16 * 16) continue;
+                    Vec3 delta = b.position().subtract(p.position());
+                    double distance = delta.length();
+                    if (distance > 6) {
+                        p.setDeltaMovement(p.getDeltaMovement().add(delta.normalize().scale(Math.min(1.0, (distance - 6) * 0.12)).add(0, 0.2, 0)));
+                        p.hurtMarked = true;
+                    }
+                }
+                VfxSpawn.send(sl, VfxShape.SPACE_PORTAL, b.position(), b.position().add(0, 1.5, 0), VIOLET, 16, 3f);
+                SpellRuntime.later(sl, 12, () -> {
+                    if (!b.isAlive()) return;
+                    VfxSpawn.send(sl, VfxShape.WIND_SLASH, b.getEyePosition(), b.getEyePosition().add(b.getLookAngle().scale(6)), 0xFFB99CFF, 8, 2f);
+                    for (ServerPlayer p : sl.players()) if (enemy(p) && p.distanceToSqr(b) <= 6 * 6 && b.hasLineOfSight(p))
+                        applyDirect(b, s, p, b.damageSources().indirectMagic(b, b), true, RivenCombat.damage(b.phase(), true, 0));
+                });
+                return true;
+            }
+            case "unwritten_ending" -> {
+                b.beginUnwrittenEnding(sl);
+                return true;
+            }
+            case "audience_collapse" -> {
+                if (!b.startAudienceCollapse()) return true;
+                int players = (int) sl.players().stream().filter(p -> enemy(p) && p.distanceToSqr(b) < 48 * 48).count();
+                float damage = RivenCombat.audienceDamage(players);
+                for (ServerPlayer p : sl.players()) {
+                    if (!enemy(p) || p.distanceToSqr(b) >= 48 * 48) continue;
+                    VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE_EXPLOSION, p.position(), p.position().add(0, 0.1, 0), 0xFFB088FF, 8, 1.2f);
+                    applyDirect(b, s, p, b.damageSources().indirectMagic(b, b), true, damage);
+                }
+                return true;
+            }
+            case "crown_break" -> {
+                Vec3[] aims = new Vec3[4];
+                for (int i = 0; i < aims.length; i++) aims[i] = target.getBoundingBox().getCenter();
+                for (int i = 0; i < aims.length; i++) {
+                    Vec3 aim = aims[i];
+                    SpellRuntime.later(sl, i * 4, () -> {
+                        Vec3 start = b.position().add((b.getRandom().nextDouble() - 0.5) * 1.5, 2.6, (b.getRandom().nextDouble() - 0.5) * 1.5);
+                        VfxSpawn.send(sl, VfxShape.EARTH_SPIKES, start, aim, 0xFFFFD66E, 8, 0.65f);
+                        for (ServerPlayer p : sl.players()) {
+                            if (!enemy(p) || p.getBoundingBox().getCenter().distanceToSqr(aim) > 1.5 * 1.5) continue;
+                            Vec3 now = p.getBoundingBox().getCenter();
+                            if (sl.clip(new net.minecraft.world.level.ClipContext(start, now,
+                                    net.minecraft.world.level.ClipContext.Block.COLLIDER,
+                                    net.minecraft.world.level.ClipContext.Fluid.NONE, b)).getType() != net.minecraft.world.phys.HitResult.Type.BLOCK)
+                                applyDirect(b, s, p, b.damageSources().mobAttack(b), false, RivenCombat.damage(b.phase(), false, b.getRandom().nextFloat()));
+                        }
+                    });
+                }
+                return true;
+            }
+            case "rewrite_round" -> {
+                if (!b.canRewriteRound()) return true;
+                b.startRewriteStartup();
+                AnimeSkill reprise = b.lastCastSkill();
+                long startupEnds = b.rewriteStartupEndsAt();
+                VfxSpawn.sendFollowing(sl, VfxShape.MAGIC_CIRCLE, b, b.position().add(0, 1, 0), 0xFF39224F, 12, 1.5f);
+                SpellRuntime.later(sl, 12, () -> {
+                    if (!b.isAlive() || !target.isAlive() || b.rewriteStartupEndsAt() != startupEnds || b.isStaggeredNow()) {
+                        b.cancelRewriteStartup();
+                        return;
+                    }
+                    b.markRewriteRoundUsed();
+                    if (reprise != null && !reprise.nativeId().equals("rewrite_round"))
+                        execute(b, reprise, target, sl, 1);
+                    else
+                        applyDirect(b, s, target, b.damageSources().indirectMagic(b, b), true,
+                                RivenCombat.damage(b.phase(), false, b.getRandom().nextFloat()));
+                });
+                return true;
+            }
+            default -> { return false; }
+        }
+    }
+
+    static void paySoulNote(RivenBossEntity b, ServerLevel sl) {
+        java.util.UUID id = b.soulNoteTarget();
+        float amount = b.takeSoulNoteDamage();
+        if (id == null) return;
+        if (sl.getServer().getPlayerList().getPlayer(id) instanceof ServerPlayer p && p.isAlive()) {
+            float payout = amount;
+            if (payout > 0) {
+                VfxSpawn.send(sl, VfxShape.SPATIAL_RIFT, p.getBoundingBox().getCenter(), b.getBoundingBox().getCenter(), VIOLET, 12, 0.8f);
+                p.hurt(b.damageSources().indirectMagic(b, b), payout);
+            }
+        }
+    }
+
+    static void bullWardBreak(RivenBossEntity b, ServerLevel sl) {
+        VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE_EXPLOSION, b.position(), b.position().add(0, 0.1, 0), BLUE, 10, 4.0f);
+        for (ServerPlayer p : sl.players()) {
+            if (!enemy(p) || p.distanceToSqr(b) > 5 * 5) continue;
+            applyDirect(b, null, p, b.damageSources().mobAttack(b), false, RivenCombat.damage(b.phase(), false, b.getRandom().nextFloat()));
+        }
+    }
+
+    private static void applyDirect(RivenBossEntity b, AnimeSkill skill, LivingEntity victim, DamageSource source, boolean magic, float damage) {
+        if (!victim.isAlive()) return;
+        boolean hit = victim.hurt(source, damage);
+        if (hit && skill != null && RivenCombat.signature(skill)) b.signatureHit();
+        if (hit) {
+            Vec3 at = victim.getBoundingBox().getCenter();
+            VfxSpawn.send((ServerLevel) b.level(), VfxShape.LIGHT_FLARE, at, at.add(0, 0.2, 0), 0xFFE0D7FF, 4, 0.7f);
+        }
+    }
+
     // ---------------------------------------------------------------- damage
     static float damage(RivenBossEntity b, AnimeSkill s, LivingEntity victim) {
         return RivenCombat.damage(b.phase(), RivenCombat.signature(s), b.getRandom().nextFloat());
@@ -115,17 +299,10 @@ final class RivenAttacks {
 
     private static void deal(RivenBossEntity b, AnimeSkill s, LivingEntity h, DamageSource src, boolean magic) {
         float before = h.getHealth() + h.getAbsorptionAmount();
-        boolean hit = h.hurt(src, damage(b, s, h));
+        applyDirect(b, s, h, src, magic, damage(b, s, h));
         float dealt = before - (h.getHealth() + h.getAbsorptionAmount());
-        if (hit && dealt > 0 && b.level() instanceof ServerLevel sl) {
-            Vec3 impact = h.getBoundingBox().getCenter();
-            VfxSpawn.send(sl, VfxShape.LIGHT_FLARE, impact, impact.add(0, 0.2, 0), RivenCombat.signature(s) ? 0xFFE0D7FF : BLUE,
-                    RivenCombat.signature(s) ? 5 : 3, RivenCombat.signature(s) ? 0.75f : 0.4f);
-            if (RivenCombat.signature(s)) {
-                b.signatureHit();
-                sl.playSound(null, h.blockPosition(), SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.HOSTILE, 1.0f, 1.5f);
-            }
-        }
+        if (dealt > 0 && RivenCombat.signature(s) && b.level() instanceof ServerLevel sl)
+            sl.playSound(null, h.blockPosition(), SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.HOSTILE, 1.0f, 1.5f);
         if (dealt < 0.5f) b.brain().bounced(s, b.tickCount);
     }
 

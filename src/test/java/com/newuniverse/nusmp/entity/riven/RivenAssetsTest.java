@@ -14,6 +14,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.Reader;
 import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -44,6 +46,23 @@ class RivenAssetsTest {
                 "nusmp:story_manifestation", "nusmp:soul_bond", "nusmp:grimoire_manipulation", "nusmp:song_of_valor", "nusmp:final_chapter",
                 "nusmp:page_tear", "nusmp:severance_aria", "nusmp:island_fall", "nusmp:maw_of_the_rift", "nusmp:final_page"})
             assertTrue(ids.contains(need), "first-party skill " + need);
+    }
+
+    @Test
+    void raisedCeilingAttackRosterIsShippedAndPhaseGated() throws Exception {
+        Set<String> natives = new HashSet<>();
+        Map<String, AnimeSkill> skills = new HashMap<>();
+        for (JsonElement e : read(new File(CODEX, "bard.json")).getAsJsonObject().getAsJsonArray("skills")) {
+            AnimeSkill skill = AnimeSkill.parse(e.getAsJsonObject());
+            natives.add(skill.nativeId());
+            skills.put(skill.nativeId(), skill);
+        }
+        for (String nativeId : new String[]{"bull_ward", "soul_note", "legion_knight", "discord", "gold_ring", "two_moons",
+                "doom_gate", "unwritten_ending", "audience_collapse", "crown_break", "rewrite_round"})
+            assertTrue(natives.contains(nativeId), "missing native attack " + nativeId);
+        assertEquals(2, RivenCombat.firstPhase(skills.get("discord")));
+        assertEquals(3, RivenCombat.firstPhase(skills.get("gold_ring")));
+        assertEquals(4, RivenCombat.firstPhase(skills.get("rewrite_round")));
     }
 
     @Test

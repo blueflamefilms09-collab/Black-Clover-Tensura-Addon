@@ -12,9 +12,10 @@ public final class SkillSandbox {
     public static final Set<String> PRIMITIVES = Set.of("projectile", "melee_arc", "magic_damage", "physical_damage", "heal", "shield",
             "blink", "pull", "silence", "slow", "summon_construct", "song_buff", "song_debuff", "copy_codex_skill");
     public static final Set<String> NATIVES = Set.of("", "hex", "soul_bond", "inspire", "page_flip", "page_tear", "severance_aria",
-            "island_fall", "maw_of_the_rift", "final_page", "unwritten_ending");
+            "island_fall", "maw_of_the_rift", "final_page", "unwritten_ending", "bull_ward", "soul_note", "legion_knight",
+            "discord", "gold_ring", "two_moons", "doom_gate", "audience_collapse", "crown_break", "rewrite_round");
     public static final Set<String> ANIMATIONS = Set.of("idle", "talk", "cast_grimoire", "cast_song", "eldritch_blast", "shadow_step",
-            "manifest_weapon", "manifest_shield", "soul_bond", "sword_combo_1", "sword_combo_2", "sword_combo_3");
+            "manifest_weapon", "manifest_shield", "soul_bond", "sword_combo_1", "sword_combo_2", "sword_combo_3", "final_form");
     public static final Set<String> CONSTRUCTS = Set.of("weapon", "shield", "clone");
 
     /** Null when the skill is acceptable, otherwise why it was rejected. */

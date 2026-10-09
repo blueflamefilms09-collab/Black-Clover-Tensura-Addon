@@ -11,18 +11,21 @@ final class RivenCombat {
     }
 
     static boolean signature(AnimeSkill skill) {
+        if (skill == null || skill.nativeId().equals("crown_break")) return false;
         return switch (skill.nativeId()) {
-            case "page_tear", "severance_aria", "island_fall", "maw_of_the_rift", "final_page", "unwritten_ending" -> true;
+            case "page_tear", "severance_aria", "island_fall", "maw_of_the_rift", "final_page", "unwritten_ending",
+                    "gold_ring", "two_moons", "doom_gate", "discord" -> true;
             default -> skill.tier() >= 4;
         };
     }
 
     static int firstPhase(AnimeSkill skill) {
         return switch (skill.nativeId()) {
-            case "page_tear" -> 1;
-            case "severance_aria" -> 2;
-            case "island_fall", "maw_of_the_rift" -> 3;
-            case "final_page", "unwritten_ending" -> 4;
+            case "page_tear", "bull_ward", "soul_note" -> 1;
+            case "discord" -> 2;
+            case "severance_aria", "legion_knight" -> 2;
+            case "island_fall", "maw_of_the_rift", "gold_ring", "two_moons", "doom_gate" -> 3;
+            case "final_page", "unwritten_ending", "audience_collapse", "crown_break", "rewrite_round" -> 4;
             default -> 1;
         };
     }
@@ -44,4 +47,11 @@ final class RivenCombat {
         float speed = 1f + 0.08f * (phase - 1);
         return Math.max(14, Math.min(28, Math.round(baseTicks / speed)));
     }
+
+    static float audienceDamage(int livingPlayers) {
+        return 48f + Math.max(0, livingPlayers - 1) * 8f;
+    }
+
+    static long nextSignatureAt(long tick) { return tick + 80; }
+    static boolean signatureReady(long tick, long readyAt) { return tick >= readyAt; }
 }

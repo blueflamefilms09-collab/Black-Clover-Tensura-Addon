@@ -36,6 +36,9 @@ public final class KillPlan {
             if (ready.getOrDefault(s.id(), 0L) > now) continue;                   // cooldown
             if (s.tier() >= 3 && boss.story() < RivenBossEntity.STORY_COST) continue;   // can't afford it
             if (s.has("summon_construct") && !boss.canManifest()) continue;
+            if (s.nativeId().equals("audience_collapse") && !boss.canStartAudienceCollapse()) continue;
+            if (s.nativeId().equals("rewrite_round") && !boss.canRewriteRound()) continue;
+            if (s.nativeId().equals("final_page") && !boss.finalPageReady()) continue;
             if (s.has("heal") && boss.getHealth() > boss.getMaxHealth() * 0.9f && s.primitives().size() == 1) continue;
             StringBuilder why = new StringBuilder();
             float score = 1f + s.tier() * 0.6f;

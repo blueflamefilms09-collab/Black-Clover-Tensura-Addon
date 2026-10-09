@@ -72,6 +72,15 @@ public final class NUSkills {
     public static final DeferredHolder<ManasSkill, TheAlmightySkill> THE_ALMIGHTY = SKILLS.register("the_almighty", TheAlmightySkill::new);
     public static final DeferredHolder<ManasSkill, TheVisionarySkill> THE_VISIONARY = SKILLS.register("the_visionary", TheVisionarySkill::new);
 
+    /** Boss-only Riven hacks. Riven removes these from his own Tensura skill storage before dying. */
+    public static final java.util.Map<String, DeferredHolder<ManasSkill, BossBoundSkill>> RIVEN_PASSIVES = new java.util.LinkedHashMap<>();
+    static {
+        for (String id : java.util.List.of("fictional_remake", "audience", "counter_author", "unbelieved", "emotional_high",
+                "soul_bond", "page_memory", "jack", "unwritten_ending", "black_bull")) {
+            RIVEN_PASSIVES.put(id, SKILLS.register("riven_" + id, BossBoundSkill::new));
+        }
+    }
+
     // ---- Black Clover ----
     /** Granted automatically with a grimoire. Magic, leaves and devil are stored on the skill. */
     public static final DeferredHolder<ManasSkill, GrimoireMagicSkill> GRIMOIRE_MAGIC = SKILLS.register("grimoire_magic", () -> new GrimoireMagicSkill()); // legacy

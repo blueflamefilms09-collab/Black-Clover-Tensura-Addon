@@ -16,7 +16,7 @@ time you build, from the repositories named in `source/build.gradle` and `source
 - Tests: JUnit Jupiter 5.10.2 (Maven Central)
 - Texture regeneration only (optional): Python 3 with Pillow and numpy -> `python tools/gen_grimoire_book_textures.py`
 
-Build:  `gradlew.bat build`  (Mac/Linux `./gradlew build`)  ->  `build/libs/multiverse-of-anime-0.95.0.jar`
+Build:  `gradlew.bat build`  (Mac/Linux `./gradlew build`)  ->  `build/libs/multiverse-of-anime-0.96.0.jar`
 
 Magic rune textures: Node.js (no external packages) -> `node tools/gen_magic_runes.mjs`; optional high-detail ring and band textures use Pillow -> `python tools/gen_magic_runes.py src/main/resources/assets/nusmp/textures/particle/magic_runes`
 
