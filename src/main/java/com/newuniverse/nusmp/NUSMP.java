@@ -145,6 +145,14 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.aura.PlayerAuras::onLogout);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.aura.PlayerAuras::onStartTracking);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.entity.ZagredAttacks::onHeal);                 // 0.52: Overwrite's "No healing"              // 0.50: Tensura engravings on the weapons
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.entity.riven.MarquisStatus::onHeal);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.entity.riven.MarquisStatus::onIncomingDamage);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.entity.riven.MarquisStatus::onPlayerTick);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.entity.riven.MarquisStatus::onAttack);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.entity.riven.MarquisStatus::onUseItem);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.entity.riven.MarquisStatus::onUseBlock);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.entity.riven.MarquisStatus::onLogout);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.entity.riven.MarquisStatus::onLogin);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.TreeRestore::onServerTick);                // 0.48: World Tree trees taken back (saved)
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.antimagic.NihilityZone::onServerTick);          // 0.48: Black Meteorite's Nihility zones
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.server.ServerStoppingEvent e) -> com.newuniverse.nusmp.antimagic.NihilityZone.clear());

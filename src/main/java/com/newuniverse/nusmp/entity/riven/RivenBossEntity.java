@@ -58,7 +58,7 @@ import java.util.Set;
 import java.util.UUID;
 
 /**
- * Riven Remake, the Black Bulls' Bard: an adaptive raid boss. A utility brain ({@link RivenBrain}) rescans the target
+ * Marquis Remake, the Black Bulls' Bard: an adaptive raid boss. A utility brain ({@link RivenBrain}) rescans the target
  * ({@link ThreatScan}), scores every codex skill ({@link KillPlan}) and casts the best one ({@link RivenAttacks}). Four phases by
  * health: I The Black Bulls' Bard, II Fictional Remake, III Rift, and IV Final Form. Quirk: he rewrites the fight, but not for a player who does not
  * believe: anti-magic, Nihility or a raised guard resists the rewrite unless he spends story charge.
@@ -76,7 +76,7 @@ public class RivenBossEntity extends Monster {
     private static final EntityDataAccessor<Integer> CLIP = SynchedEntityData.defineId(RivenBossEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> CLIP_SEQ = SynchedEntityData.defineId(RivenBossEntity.class, EntityDataSerializers.INT);
 
-    private final ServerBossEvent bar = new ServerBossEvent(Component.literal("Riven Remake"), BossEvent.BossBarColor.PURPLE, BossEvent.BossBarOverlay.NOTCHED_10);
+    private final ServerBossEvent bar = new ServerBossEvent(Component.literal("Marquis Remake"), BossEvent.BossBarColor.PURPLE, BossEvent.BossBarOverlay.NOTCHED_10);
     private final RivenBrain brain = new RivenBrain(this);
     private final Set<UUID> fighters = new HashSet<>();
     private BlockPos arena;
@@ -102,11 +102,36 @@ public class RivenBossEntity extends Monster {
     private float soulNoteDamage;
     private long soulNotePayoutAt, bullWardUntil;
     private final Set<net.minecraft.resources.ResourceLocation> bossBoundSkills = new LinkedHashSet<>();
+    private long fightTicks, nextCombatRoll = 200, compressAt, phaseThreeAt, statusUntil;
+    private String combatType = "Caster", drawnGrimoire = "", statusText = "";
+    private boolean newOrderUsed, compressUsed, creatorUsed;
+    private int evilEyePhase;
+    private int kineticCharge;
+    private long faJinExpires;
+    private boolean avatarPending;
+    private int avatarScheduledPhase;
+    private long avatarSpawnAt;
 
     public RivenBossEntity(EntityType<? extends Monster> type, Level level) {
         super(type, level);
         this.xpReward = 500;
         setPersistenceRequired();
+    }
+
+    boolean faJinReady() {
+        if (tickCount >= faJinExpires) kineticCharge = 0;
+        return kineticCharge >= 5;
+    }
+
+    void addFaJinCharge() {
+        if (tickCount >= faJinExpires) kineticCharge = 0;
+        kineticCharge = Math.min(5, kineticCharge + 1);
+        faJinExpires = tickCount + 200;
+    }
+
+    void clearFaJin() {
+        kineticCharge = 0;
+        faJinExpires = 0;
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -210,7 +235,8 @@ public class RivenBossEntity extends Monster {
 
     private RivenStatePayload statePayload() {
         int left = casting == null ? 0 : (int) Math.max(0, castAt - tickCount);
-        return new RivenStatePayload(getId(), phase(), getHealth() / getMaxHealth(), (int) story, casting == null ? "" : casting.name(), left, maxConstructs());
+        return new RivenStatePayload(getId(), phase(), getHealth() / getMaxHealth(), (int) story, casting == null ? "" : casting.name(), left,
+                maxConstructs(), combatType, drawnGrimoire, statusText);
     }
 
     private String subtitle() {
@@ -228,22 +254,28 @@ public class RivenBossEntity extends Monster {
         super.customServerAiStep();
         if (!(level() instanceof ServerLevel sl)) return;
         long t = tickCount;
+        fightTicks++;
         if (arena == null) arena = blockPosition();
         if (!initializedExistence) initializeExistence();
+        if (NihilityZone.inside(sl, position()) && tickCount >= stagger) staggerByAntiMagic(sl);
         float frac = getHealth() / getMaxHealth();
-        int ph = RivenCombat.phase(frac);
-        if (ph > phase()) enterPhase(sl, ph);
+        int ph = RivenCombat.phase(frac, fightTicks, phase());
+        int nextPhase = RivenCombat.nextPhase(phase(), ph);
+        if (nextPhase > phase()) enterPhase(sl, nextPhase);
+        rollCombatType(sl);
         bar.setProgress(frac);
-        String combatType = casting == null ? "" : casting.has("physical_damage") ? "PHYSICAL "
+        String damageType = casting == null ? "" : casting.has("physical_damage") ? "PHYSICAL "
                 : casting.has("magic_damage") ? "MAGIC " : "UTILITY ";
-        String castName = casting == null ? "" : " · " + combatType + casting.name();
+        String castName = casting == null ? "" : " · " + damageType + casting.name();
         String nullName = tickCount < nullUntil ? " · NULL: " + nullType.toUpperCase(java.util.Locale.ROOT) : "";
-        bar.setName(Component.literal("Riven Remake — " + subtitle() + castName + nullName));
+        bar.setName(Component.literal("Marquis Remake — " + subtitle() + " · " + this.combatType
+                + (drawnGrimoire.isEmpty() ? "" : " · " + drawnGrimoire)
+                + (statusText.isEmpty() ? "" : " · " + statusText) + castName + nullName));
         recentDamage *= 0.97f;
         calmDamage *= 0.99f;
         if (t % 100 == 0) scaleForPlayers(sl);
         if (t % 200 == 0) TensuraCaster.ensureMana(this, Math.max(1_000_000, EnergyHelper.getMaxMagicule(this)));
-        if (phase() == 2 && !phaseTwoMagicNullStarted && t - phaseTwoAt >= 240) {
+        if (phase() == 2 && !phaseTwoMagicNullStarted && fightTicks - phaseTwoAt >= 240) {
             phaseTwoMagicNullStarted = true;
             startNullWindow("magic", 80, sl, "Hack roll: magic is out. Try another page.");
         }
@@ -266,6 +298,7 @@ public class RivenBossEntity extends Monster {
         if (blockPosition().distSqr(arena) > 48 * 48) { teleportTo(arena.getX() + 0.5, arena.getY(), arena.getZ() + 0.5); brain.invalidate(); }
         if (t >= nextSync) { nextSync = t + 10; PacketDistributor.sendToPlayersTrackingEntity(this, statePayload()); }
         if (bondTarget != null && t >= bondUntil) bondTarget = null;
+        if (!statusText.isEmpty() && t >= statusUntil) statusText = "";
         if (portalAt > 0 && t >= portalAt) {
             portalAt = 0;
             LivingEntity pt = getTarget();
@@ -278,9 +311,13 @@ public class RivenBossEntity extends Monster {
 
         LivingEntity target = getTarget();
         if (target == null || !target.isAlive()) { casting = null; return; }
+        processAvatarSummon(sl, target);
         fighters.add(target.getUUID());
         if (!opened) { opened = true; open(sl, target); return; }
         checkBored(sl, target);
+        tryNewOrder(sl, target);
+        tryEvilEye(sl, target);
+        tryCompress(sl, target);
         if (t < transitionUntil) return;
 
         if (casting != null) {
@@ -289,11 +326,130 @@ public class RivenBossEntity extends Monster {
             if (t >= castAt) finishCast(sl, target);
             return;
         }
+
         if (t < nextThink) return;
         nextThink = t + 8;
         AnimeSkill pick = forced != null ? forced : brain.choose(target, t);
         forced = null;
         if (pick != null) beginCast(sl, pick, target);
+    }
+
+    private void rollCombatType(ServerLevel sl) {
+        if (fightTicks < nextCombatRoll || phase() >= 4) return;
+        combatType = RivenCombat.combatType(getRandom().nextInt(6));
+        nextCombatRoll = fightTicks + RivenCombat.rollInterval(phase());
+        var pages = RivenCombat.grimoirePages(AnimeSkillCodex.all(), phase());
+        if (pages.isEmpty()) {
+            drawnGrimoire = "";
+            LOG.warn("[marquis] no validated Black Clover codex pages are available for this draw.");
+            return;
+        }
+        AnimeSkill page = pages.get(getRandom().nextInt(pages.size()));
+        drawnGrimoire = page.name();
+        forced = page;
+        brain.invalidate();
+        statusText = "Grimoire drawn";
+        statusUntil = tickCount + 40;
+        VfxSpawn.send(sl, VfxShape.SPELL_CARD, position().add(0, 1.5, 0), position().add(0, 2, 0),
+                getRandom().nextInt(), 24, 1.0f);
+        LivingEntity target = getTarget();
+        if (phase() >= 2 && "Hack".equals(combatType) && target != null && target.isAlive()) {
+            boolean kiting = ThreatScan.of(this, target).has("kiter");
+            MarquisStatus.applyGearshift(kiting ? target : this, !kiting, 80);
+            statusText = "Gearshift · " + (kiting ? "Low" : "Top");
+            statusUntil = tickCount + 80;
+            VfxSpawn.send(sl, VfxShape.THREAD_LINE, kiting ? target.getEyePosition() : getEyePosition(),
+                    kiting ? target.getEyePosition().add(0, 0.1, 0) : getEyePosition().add(getLookAngle().scale(3)),
+                    kiting ? 0xFFFF5555 : 0xFF4C9FFF, 12, 0.7f);
+        }
+    }
+
+    private void tryNewOrder(ServerLevel sl, LivingEntity target) {
+        if (newOrderUsed || phase() != 1 || fightTicks < 40 || distanceToSqr(target) > 36 || casting != null) return;
+        newOrderUsed = true;
+        boolean heavy = !target.getMainHandItem().isEmpty() && target.getAttribute(Attributes.ATTACK_SPEED) != null;
+        String order = heavy ? "That weapon is heavy." : "I am faster.";
+        statusText = "New Order";
+        statusUntil = tickCount + 180;
+        say(sl, order);
+        playClip("cast_grimoire");
+        VfxSpawn.send(sl, VfxShape.ALCHEMY_CIRCLE, target.position(), target.position().add(0, 0.05, 0), 0xFFF2E5FF, 20, 1.5f);
+        SpellRuntime.later(sl, 20, () -> {
+            if (!isAlive() || isStaggeredNow() || !target.isAlive() || distanceToSqr(target) > 64
+                    || target instanceof Player p && rewriteShield(p)) {
+                statusText = "New Order fizzled";
+                statusUntil = tickCount + 30;
+                return;
+            }
+            if (heavy) MarquisStatus.applyHeavyWeaponOrder(target, 120);
+            else MarquisStatus.applyGearshift(this, true, 80);
+            sl.playSound(null, blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.HOSTILE, 1.2f, 1.4f);
+            statusText = "New Order · " + (heavy ? "Heavy" : "Gearshift Top");
+            statusUntil = tickCount + 120;
+        });
+    }
+
+    private void tryEvilEye(ServerLevel sl, LivingEntity target) {
+        if (phase() < 2 || evilEyePhase == phase() || (phase() == 2 && fightTicks < phaseTwoAt + 160)
+                || (phase() == 3 && fightTicks < phaseThreeAt + 40)
+                || distanceToSqr(target) > 18 * 18 || !hasLineOfSight(target) || casting != null) return;
+        evilEyePhase = phase();
+        int duration = phase() == 4 ? 160 : 120;
+        statusText = "Evil Eye";
+        statusUntil = tickCount + duration;
+        playClip("cast_grimoire");
+        say(sl, "This page ends.");
+        VfxSpawn.send(sl, VfxShape.ANTI_MAGIC_SLASH, getEyePosition(), target.getEyePosition(), 0xFF9F76FF, 16, 1.2f);
+        MarquisStatus.markEvilEye(target, duration);
+    }
+
+    private void tryCompress(ServerLevel sl, LivingEntity target) {
+        if (phase() < 2 || compressUsed || fightTicks < compressAt || casting != null
+                || !(target instanceof ServerPlayer player) || player.isCreative() || player.isSpectator()
+                || distanceToSqr(player) > 8 * 8 || !hasLineOfSight(player)) return;
+        compressUsed = true;
+        statusText = "Compress";
+        statusUntil = tickCount + 80;
+        say(sl, "A moment between the pages.");
+        VfxSpawn.send(sl, VfxShape.DREAM_MANIFEST, player.position(), player.position().add(0, 1, 0), 0xFF4B285F, 20, 0.7f);
+        SpellRuntime.later(sl, 20, () -> {
+            if (!isAlive() || isStaggeredNow() || !player.isAlive() || player.isCreative() || player.isSpectator()
+                    || player.distanceToSqr(this) > 10 * 10) {
+                statusText = "";
+                return;
+            }
+            Vec3 anchor = position().add(getLookAngle().multiply(1.0, 0, 1.0));
+            if (MarquisStatus.compress(player, anchor, 60)) {
+                statusText = "Compress · 3s";
+                statusUntil = tickCount + 60;
+                VfxSpawn.send(sl, VfxShape.DREAM_TRANSITION, anchor, anchor.add(0, 0.8, 0), 0xFF4B285F, 60, 0.65f);
+            }
+        });
+    }
+
+    private void processAvatarSummon(ServerLevel sl, LivingEntity target) {
+        if (!avatarPending || fightTicks < avatarSpawnAt || target == null || !target.isAlive()) return;
+        avatarPending = false;
+        if (isStaggeredNow()) return;
+        if (!sl.getEntitiesOfClass(StoryConstructEntity.class, getBoundingBox().inflate(48),
+                c -> c.ownedBy(getUUID()) && c.isAvatar()).isEmpty()) return;
+        String name;
+        if (avatarScheduledPhase == 2) {
+            ThreatScan scan = ThreatScan.of(this, target);
+            name = scan.has("tank") ? "Beerus" : scan.has("caster") ? "Ultimate Madoka" : "Zeus";
+        } else if (avatarScheduledPhase == 3) {
+            ThreatScan scan = ThreatScan.of(this, target);
+            name = scan.has("flier") ? "Anti-Spiral" : scan.has("magic_null") ? "Grand Zeno" : "Arceus";
+        } else {
+            name = "The Creator";
+        }
+        Vec3 at = position().add(getLookAngle().multiply(-2, 0, -2));
+        StoryConstructEntity avatar = StoryConstructEntity.spawnAvatar(sl, this, name, at);
+        if (avatar != null) {
+            statusText = "Avatar · " + name;
+            statusUntil = tickCount + 240;
+            say(sl, name + ", take the stage.");
+        }
     }
 
     /**
@@ -382,15 +538,37 @@ public class RivenBossEntity extends Monster {
         });
         if (ph == 2) forced = AnimeSkillCodex.get("nusmp:story_manifestation");
         if (ph == 2) {
-            phaseTwoAt = tickCount;
+            phaseTwoAt = fightTicks;
+            compressAt = fightTicks + 240;
             phaseTwoMagicNullStarted = false;
+            nextCombatRoll = fightTicks + 240;
+            scheduleAvatar(2);
             startNullWindow("physical", 80, sl, "Hack roll: physical force is nullified.");
         }
         if (ph == 3) {
+            phaseThreeAt = fightTicks;
+            nextCombatRoll = fightTicks + 160;
+            scheduleAvatar(3);
             startNullWindow("spatial", 80, sl, "Rift entry: spatial magic is nullified.");
             openStoryRift(sl);
         }
-        if (ph == 4) finalNullStarted = false;
+        if (ph == 4) {
+            finalNullStarted = false;
+            if (!creatorUsed) {
+                creatorUsed = true;
+                scheduleAvatar(4);
+            }
+            statusText = "The Creator · Healing sealed";
+            statusUntil = tickCount + 160;
+            MarquisStatus.suppressHealingInArena(sl.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(48),
+                    e -> e != this && e.isAlive()), 160);
+        }
+    }
+
+    private void scheduleAvatar(int ph) {
+        avatarPending = true;
+        avatarScheduledPhase = ph;
+        avatarSpawnAt = fightTicks + 28;
     }
 
     private void startNullWindow(String type, int ticks, ServerLevel sl, String line) {
@@ -634,6 +812,16 @@ public class RivenBossEntity extends Monster {
         unwrittenUntil = Math.max(tickCount, unwrittenUntil - 20);
         rewriteUntil = Math.max(tickCount, rewriteUntil - 20);
         rewritePending = false;
+        avatarPending = false;
+        clearFaJin();
+        for (StoryConstructEntity construct : sl.getEntitiesOfClass(StoryConstructEntity.class, getBoundingBox().inflate(48),
+                c -> c.ownedBy(getUUID()) && c.isAvatar())) construct.breakAvatar();
+        if (!drawnGrimoire.isEmpty()) {
+            if (forced != null && forced.anime().equals("black_clover")) forced = null;
+            drawnGrimoire = "";
+            statusText = "Grimoire burned";
+            statusUntil = tickCount + 40;
+        }
         playClip("stagger");
         brain.invalidate();
         VfxSpawn.send(sl, VfxShape.ANTI_MAGIC_SLASH, getEyePosition(), getEyePosition().add(getLookAngle().scale(2.5)),
@@ -683,7 +871,7 @@ public class RivenBossEntity extends Monster {
 
     // ---------------------------------------------------------------- talk
     public void say(ServerLevel sl, String line) {
-        Component msg = Component.literal("<Riven Remake> ").withStyle(ChatFormatting.LIGHT_PURPLE).append(Component.literal(line).withStyle(ChatFormatting.WHITE));
+        Component msg = Component.literal("<Marquis Remake> ").withStyle(ChatFormatting.LIGHT_PURPLE).append(Component.literal(line).withStyle(ChatFormatting.WHITE));
         for (ServerPlayer p : sl.players()) if (p.distanceToSqr(this) < 48 * 48) p.sendSystemMessage(msg);
         sl.playSound(null, blockPosition(), SoundEvents.NOTE_BLOCK_CHIME.value(), SoundSource.HOSTILE, 1.4f, 1.0f + getRandom().nextFloat() * 0.4f);
         playClipIfFree("talk");
@@ -700,6 +888,19 @@ public class RivenBossEntity extends Monster {
         tag.putBoolean("Opened", opened);
         tag.putBoolean("Scaled", healedOnScale);
         tag.putBoolean("RewriteUsed", rewriteUsed);
+        tag.putLong("FightTicks", fightTicks);
+        tag.putBoolean("NewOrderUsed", newOrderUsed);
+        tag.putBoolean("CompressUsed", compressUsed);
+        tag.putBoolean("CreatorUsed", creatorUsed);
+        tag.putInt("EvilEyePhase", evilEyePhase);
+        tag.putInt("Phase", phase());
+        tag.putLong("PhaseTwoAt", phaseTwoAt);
+        tag.putLong("PhaseThreeAt", phaseThreeAt);
+        tag.putLong("CompressAt", compressAt);
+        tag.putLong("NextCombatRoll", nextCombatRoll);
+        tag.putBoolean("AvatarPending", avatarPending);
+        tag.putInt("AvatarScheduledPhase", avatarScheduledPhase);
+        tag.putLong("AvatarSpawnAt", avatarSpawnAt);
     }
 
     @Override
@@ -710,8 +911,19 @@ public class RivenBossEntity extends Monster {
         opened = tag.getBoolean("Opened");
         healedOnScale = tag.getBoolean("Scaled");
         rewriteUsed = tag.getBoolean("RewriteUsed");
-        float frac = getHealth() / Math.max(1f, getMaxHealth());
-        entityData.set(PHASE, RivenCombat.phase(frac));
+        fightTicks = tag.getLong("FightTicks");
+        newOrderUsed = tag.getBoolean("NewOrderUsed");
+        compressUsed = tag.getBoolean("CompressUsed");
+        creatorUsed = tag.getBoolean("CreatorUsed");
+        evilEyePhase = tag.getInt("EvilEyePhase");
+        phaseTwoAt = tag.getLong("PhaseTwoAt");
+        phaseThreeAt = tag.getLong("PhaseThreeAt");
+        compressAt = tag.getLong("CompressAt");
+        nextCombatRoll = tag.contains("NextCombatRoll") ? tag.getLong("NextCombatRoll") : fightTicks + 200;
+        avatarPending = tag.getBoolean("AvatarPending");
+        avatarScheduledPhase = tag.getInt("AvatarScheduledPhase");
+        avatarSpawnAt = tag.getLong("AvatarSpawnAt");
+        entityData.set(PHASE, Math.max(1, Math.min(4, tag.contains("Phase") ? tag.getInt("Phase") : 1)));
         if (hasCustomName()) bar.setName(getDisplayName());
     }
 

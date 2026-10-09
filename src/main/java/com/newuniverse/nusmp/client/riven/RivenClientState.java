@@ -6,14 +6,14 @@ import net.minecraft.client.Minecraft;
 import java.util.HashMap;
 import java.util.Map;
 
-/** What the boss bar knows about each Riven Remake: the last payload, interpolated on the client clock. */
+/** What the boss bar knows about Marquis Remake: the last payload, interpolated on the client clock. */
 public final class RivenClientState {
     private RivenClientState() {}
 
     public static final class State {
         public int phase = 1, story, castTicks, maxConstructs;
         public float hp = 1f, hpShown = 1f;
-        public String cast = "";
+        public String cast = "", combatType = "", grimoire = "", status = "";
         public long castStart = Long.MIN_VALUE, castEnd = Long.MIN_VALUE, spawnedAt;
         public String lastCast = "";
     }
@@ -30,6 +30,9 @@ public final class RivenClientState {
         s.hp = p.hp();
         s.story = p.story();
         s.maxConstructs = p.maxConstructs();
+        s.combatType = p.combatType();
+        s.grimoire = p.grimoire();
+        s.status = p.status();
         if (!p.cast().isEmpty()) {
             if (!p.cast().equals(s.cast) || now > s.castEnd) s.castStart = now;
             s.cast = p.cast();

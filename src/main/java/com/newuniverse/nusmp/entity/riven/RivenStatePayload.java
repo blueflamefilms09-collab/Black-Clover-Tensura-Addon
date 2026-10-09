@@ -10,17 +10,20 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
  * Riven's state for the client's boss bar: phase, health fraction, story charge, and the skill he is casting (name, cast length in
  * ticks). Sent to everyone tracking him when something changes, and every 10 ticks otherwise; the bar interpolates between them.
  */
-public record RivenStatePayload(int entity, int phase, float hp, int story, String cast, int castTicks, int maxConstructs) implements CustomPacketPayload {
+public record RivenStatePayload(int entity, int phase, float hp, int story, String cast, int castTicks, int maxConstructs,
+                                String combatType, String grimoire, String status) implements CustomPacketPayload {
     public static final Type<RivenStatePayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "riven_state"));
     public static final StreamCodec<FriendlyByteBuf, RivenStatePayload> STREAM_CODEC = StreamCodec.of(
             (buf, p) -> { buf.writeVarInt(p.entity()); buf.writeByte(p.phase()); buf.writeFloat(p.hp()); buf.writeByte(p.story());
-                          buf.writeUtf(p.cast(), 64); buf.writeVarInt(p.castTicks()); buf.writeByte(p.maxConstructs()); },
-            buf -> new RivenStatePayload(buf.readVarInt(), buf.readByte(), buf.readFloat(), buf.readByte(), buf.readUtf(64), buf.readVarInt(), buf.readByte()));
+                          buf.writeUtf(p.cast(), 64); buf.writeVarInt(p.castTicks()); buf.writeByte(p.maxConstructs());
+                          buf.writeUtf(p.combatType(), 32); buf.writeUtf(p.grimoire(), 64); buf.writeUtf(p.status(), 64); },
+            buf -> new RivenStatePayload(buf.readVarInt(), buf.readByte(), buf.readFloat(), buf.readByte(), buf.readUtf(64),
+                    buf.readVarInt(), buf.readByte(), buf.readUtf(32), buf.readUtf(64), buf.readUtf(64)));
 
     @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
 
     public static void register(RegisterPayloadHandlersEvent event) {
-        event.registrar("1").optional().playToClient(TYPE, STREAM_CODEC,
+        event.registrar("2").optional().playToClient(TYPE, STREAM_CODEC,
                 (p, ctx) -> ctx.enqueueWork(() -> com.newuniverse.nusmp.client.riven.RivenClientState.accept(p)));
     }
 }

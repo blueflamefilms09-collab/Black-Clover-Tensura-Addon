@@ -2,12 +2,46 @@ package com.newuniverse.nusmp.entity.riven;
 
 import com.newuniverse.nusmp.skill.codex.AnimeSkill;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /** Damage and phase rules for Riven's raised-ceiling encounter. */
 final class RivenCombat {
     private RivenCombat() {}
 
-    static int phase(float healthFraction) {
-        return healthFraction > 0.75f ? 1 : healthFraction > 0.50f ? 2 : healthFraction > 0.25f ? 3 : 4;
+    static int phase(float healthFraction, long fightTicks, int currentPhase) {
+        if (currentPhase >= 4 || healthFraction <= 0.25f) return 4;
+        if (currentPhase >= 3 || fightTicks >= 1200) return 3;
+        if (currentPhase >= 2 || fightTicks >= 400 || healthFraction <= 0.75f) return 2;
+        return 1;
+    }
+
+    static int nextPhase(int currentPhase, int desiredPhase) {
+        return Math.min(4, Math.max(currentPhase, Math.min(desiredPhase, currentPhase + 1)));
+    }
+
+    static int rollInterval(int phase) {
+        return phase >= 3 ? 160 : phase >= 2 ? 240 : 240;
+    }
+
+    static String combatType(int roll) {
+        return switch (Math.floorMod(roll, 6)) {
+            case 0 -> "Caster";
+            case 1 -> "Hexblade";
+            case 2 -> "Legion";
+            case 3 -> "Rift";
+            case 4 -> "Song";
+            default -> "Hack";
+        };
+    }
+
+    static List<AnimeSkill> grimoirePages(Iterable<AnimeSkill> skills, int phase) {
+        List<AnimeSkill> pages = new ArrayList<>();
+        for (AnimeSkill skill : skills) {
+            if ("black_clover".equals(skill.anime()) && firstPhase(skill) <= phase
+                    && !skill.id().contains("anti_magic") && !skill.nativeId().contains("anti_magic")) pages.add(skill);
+        }
+        return List.copyOf(pages);
     }
 
     static boolean signature(AnimeSkill skill) {

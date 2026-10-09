@@ -110,7 +110,7 @@ public final class RivenRenderer extends EntityRenderer<RivenBossEntity> {
             pose.pushPose();
             pose.mulPose(Axis.YP.rotationDegrees(-Mth.rotLerp(partial, e.yBodyRotO, e.yBodyRot)));
             switch (e.kind()) {
-                case StoryConstructEntity.CLONE -> GeoDraw.paint(pose, buffers, BASE, "idle", age / 20f, GeoDraw.Space.PROP, GeoDraw.Layer.TRANSLUCENT,
+                case StoryConstructEntity.CLONE, StoryConstructEntity.AVATAR -> GeoDraw.paint(pose, buffers, BASE, "idle", age / 20f, GeoDraw.Space.PROP, GeoDraw.Layer.TRANSLUCENT,
                         LightTexture.FULL_BRIGHT, 0x99B8A8FF, 0);
                 default -> {
                     boolean shield = e.kind() == StoryConstructEntity.SHIELD;

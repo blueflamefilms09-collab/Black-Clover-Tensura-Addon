@@ -31,7 +31,7 @@ import java.util.UUID;
  * anti-magic apply to its blows. Allied with Riven and with each other.
  */
 public class StoryConstructEntity extends Monster {
-    public static final int WEAPON = 0, SHIELD = 1, CLONE = 2;
+    public static final int WEAPON = 0, SHIELD = 1, CLONE = 2, AVATAR = 3;
     private static final EntityDataAccessor<Integer> KIND = SynchedEntityData.defineId(StoryConstructEntity.class, EntityDataSerializers.INT);
     private UUID owner;
     private int life = 400;
@@ -61,6 +61,13 @@ public class StoryConstructEntity extends Monster {
     }
 
     public int kind() { return entityData.get(KIND); }
+    public boolean isAvatar() { return kind() == AVATAR; }
+    public void breakAvatar() {
+        if (!isAvatar()) return;
+        if (level() instanceof ServerLevel sl)
+            VfxSpawn.send(sl, VfxShape.MIRROR_SHATTER, position(), position().add(0, 1, 0), 0xFFD5C8FF, 10, 1.2f);
+        discard();
+    }
 
     public static StoryConstructEntity spawn(ServerLevel sl, RivenBossEntity boss, int kind, Vec3 at) {
         StoryConstructEntity e = NUEntities.STORY_CONSTRUCT.get().create(sl);
@@ -73,6 +80,16 @@ public class StoryConstructEntity extends Monster {
         sl.addFreshEntity(e);
         VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE_EXPLOSION, at, at.add(0, 1, 0), 0xFF8A6AFF, 20, 0.8f);
         return e;
+    }
+
+    public static StoryConstructEntity spawnAvatar(ServerLevel sl, RivenBossEntity boss, String name, Vec3 at) {
+        StoryConstructEntity avatar = spawn(sl, boss, AVATAR, at);
+        if (avatar == null) return null;
+        avatar.life = 240;
+        avatar.setCustomName(net.minecraft.network.chat.Component.literal(name));
+        avatar.setCustomNameVisible(true);
+        avatar.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(8);
+        return avatar;
     }
 
     @Override

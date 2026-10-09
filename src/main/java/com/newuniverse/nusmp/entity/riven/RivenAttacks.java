@@ -323,6 +323,10 @@ final class RivenAttacks {
     private static boolean applyDirect(RivenBossEntity b, AnimeSkill skill, LivingEntity victim, DamageSource source, boolean magic, float damage) {
         if (!victim.isAlive()) return false;
         boolean hit = victim.hurt(source, damage);
+        if (hit && !magic && source.getEntity() == b) {
+            if (b.faJinReady()) releaseFaJin(b, (ServerLevel) b.level(), victim);
+            else b.addFaJinCharge();
+        }
         if (hit && skill != null && RivenCombat.signature(skill)) b.signatureHit();
         if (hit) {
             Vec3 at = victim.getBoundingBox().getCenter();
@@ -334,6 +338,23 @@ final class RivenAttacks {
             }
         }
         return hit;
+    }
+
+    private static void releaseFaJin(RivenBossEntity boss, ServerLevel level, LivingEntity target) {
+        boss.clearFaJin();
+        Vec3 direction = target.position().subtract(boss.position()).multiply(1, 0, 1);
+        if (direction.lengthSqr() < 1.0e-4) direction = boss.getLookAngle().multiply(1, 0, 1);
+        direction = direction.normalize();
+        VfxSpawn.send(level, VfxShape.WATER_RING, boss.position().add(0, 0.1, 0), boss.position().add(0, 0.2, 0),
+                0xFFF3F0FF, 8, 4.0f);
+        for (ServerPlayer player : level.getEntitiesOfClass(ServerPlayer.class, boss.getBoundingBox().inflate(4, 2, 4), RivenAttacks::enemy)) {
+            Vec3 to = player.position().subtract(boss.position()).multiply(1, 0, 1);
+            if (to.lengthSqr() > 16 || to.lengthSqr() < 1.0e-4 || direction.dot(to.normalize()) < 0.25) continue;
+            player.hurt(boss.damageSources().mobAttack(boss), RivenCombat.damage(boss.phase(), false, boss.getRandom().nextFloat()));
+            player.push(direction.x * 1.1, 0.35, direction.z * 1.1);
+            player.hurtMarked = true;
+        }
+        level.playSound(null, boss.blockPosition(), SoundEvents.ANVIL_LAND, SoundSource.HOSTILE, 1.1f, 1.45f);
     }
 
     private static boolean popMultilayerBarrier(LivingEntity target) {

@@ -60,7 +60,7 @@ Magic spells fire when the skill key is released; holding the key does not trigg
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.97.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.98.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -225,6 +225,14 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - Soul Note now records damage actually removed from Riven's health/absorption, rather than the pre-mitigation incoming amount.
 - Partial resistance bypass remains blocked: Tensura 2.0.1.0's `ResistSkill.isResistanceBypass` treats `tensura$getResistanceBypassLevel()` as a boolean threshold (`>= 1.0`), while `onTakenDamage` applies the configured resistance multiplier as a binary result. No supported partial reduction hook was found; using full bypass would violate the null/resistance rules.
 - `nusmp:story_rift` is not registered in the worktree or reachable history, so the existing arena-local pull is retained. Rewrite Round still replays Riven's last cast because this combat path does not expose dependable player codex-skill attribution. Riven's current Bard relic drop remains; the historical `RivenPassives` implementation is not compatible with the current boss architecture.
+
+## 0.98.0 - Marquis Remake v2 foundation
+
+- Rebranded the existing `nusmp:riven_remake` entity in-game as Marquis Remake without changing its save ID, 1,200 + 400-per-player health scaling, 300-million Tensura EP setup, no-plunder tag, or boredom portal.
+- Phase II now begins at 20 seconds or 75% HP, phase III at 60 seconds, and phase IV at 25% HP. Phase transitions remain sequential and retain the 1.5-second phase-change window. Phase-II/III combat-type rolls use the requested 12s/8s cadence and show their type and selected page on the custom bar.
+- Combat rolls draw from validated Black Clover Anime Skill Codex pages; anti-magic/Nihility burns the selected page. Added the phase-I New Order weapon-speed effect, Gearshift Low/Top, Fa Jin charge/release, arena-bounded Compress for players, and an Evil Eye healing block on its marked target.
+- Added one 12-second, boss-owned story-avatar construct per unlocked phase; The Creator is one-use in phase IV and suppresses healing for eight seconds among nearby arena entities. Anti-magic breaks an active avatar.
+- Still incomplete: the sheet/skin overlay model and exact supplied Minecraft skin, full distinct movesets for all ten avatars, arbitrary-block/construct Compress with restoration, warmup orders for mod/Tensura spells, a random registered grimoire *book* cast through a boss-safe SpellRuntime path, and the requested loot table/cosmetic items. `nusmp:story_rift` is not registered; the existing 60-second arena-local pull remains. No in-game render/combat session was available for verification.
 
 ## 0.96.0 - Riven attack roster continuation
 

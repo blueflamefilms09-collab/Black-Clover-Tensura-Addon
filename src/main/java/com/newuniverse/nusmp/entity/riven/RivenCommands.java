@@ -16,7 +16,7 @@ public final class RivenCommands {
         event.getDispatcher().register(Commands.literal("nusmp").then(Commands.literal("riven").requires(s -> s.hasPermission(2))
                 .then(Commands.literal("summon").executes(ctx -> {
                     var r = RivenBossEntity.summon(ctx.getSource().getLevel(), ctx.getSource().getPosition());
-                    ctx.getSource().sendSuccess(() -> Component.literal(r == null ? "Riven Remake could not be summoned here." : "Riven Remake takes the stage."), true);
+                    ctx.getSource().sendSuccess(() -> Component.literal(r == null ? "Marquis Remake could not be summoned here." : "Marquis Remake takes the stage."), true);
                     return r == null ? 0 : 1;
                 }))
                 .then(Commands.literal("codex").executes(ctx -> {

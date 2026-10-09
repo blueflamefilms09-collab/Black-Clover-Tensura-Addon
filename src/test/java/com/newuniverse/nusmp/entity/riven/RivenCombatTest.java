@@ -11,11 +11,31 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RivenCombatTest {
     @Test
-    void healthThresholdsUseAllFourPhasesWithoutHealing() {
-        assertEquals(1, RivenCombat.phase(0.751f));
-        assertEquals(2, RivenCombat.phase(0.75f));
-        assertEquals(3, RivenCombat.phase(0.50f));
-        assertEquals(4, RivenCombat.phase(0.25f));
+    void phaseTwoCanStartByTimeOrHealthAndRiftStartsAtSixtySeconds() {
+        assertEquals(1, RivenCombat.phase(0.9f, 399, 1));
+        assertEquals(2, RivenCombat.phase(0.9f, 400, 1));
+        assertEquals(2, RivenCombat.phase(0.75f, 100, 1));
+        assertEquals(3, RivenCombat.phase(0.9f, 1200, 2));
+        assertEquals(4, RivenCombat.phase(0.25f, 1200, 3));
+        assertEquals(3, RivenCombat.nextPhase(2, 4));
+        assertEquals(4, RivenCombat.nextPhase(3, 4));
+    }
+
+    @Test
+    void combatRollCadenceAndStylesMatchTheSpec() {
+        assertEquals(240, RivenCombat.rollInterval(2));
+        assertEquals(160, RivenCombat.rollInterval(3));
+        assertEquals("Caster", RivenCombat.combatType(0));
+        assertEquals("Hack", RivenCombat.combatType(5));
+        assertEquals("Caster", RivenCombat.combatType(6));
+    }
+
+    @Test
+    void grimoireDrawUsesOnlyValidatedBlackCloverPages() {
+        AnimeSkill blackClover = skill("voltage_page", 1, "black_clover");
+        AnimeSkill antiMagic = skill("anti_magic_lord", 1, "black_clover");
+        AnimeSkill generic = skill("generic_page", 1, "original");
+        assertEquals(List.of(blackClover), RivenCombat.grimoirePages(List.of(blackClover, antiMagic, generic), 1));
     }
 
     @Test
@@ -84,7 +104,11 @@ class RivenCombatTest {
     }
 
     private static AnimeSkill skill(String nativeId, int tier) {
-        return new AnimeSkill("nusmp:" + nativeId, "original", nativeId, tier, 20, 10, List.of(), List.of(), List.of(),
+        return skill(nativeId, tier, "original");
+    }
+
+    private static AnimeSkill skill(String nativeId, int tier, String anime) {
+        return new AnimeSkill("nusmp:" + nativeId, anime, nativeId, tier, 20, 10, List.of(), List.of(), List.of(),
                 "cast_grimoire", "", nativeId, "weapon", 100);
     }
 }

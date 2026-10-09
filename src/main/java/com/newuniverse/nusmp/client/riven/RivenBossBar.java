@@ -14,8 +14,8 @@ import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.common.NeoForge;
 
 /**
- * Riven Remake's animated boss bar, drawn over the HUD (vanilla's bar for him is hidden, the BossEvent still exists for the locator
- * and sound ducking). Crown, RIVEN REMAKE and a subtitle that follows the phase; a violet-to-blue fill with a travelling lightning
+ * Marquis Remake's animated boss bar, drawn over the HUD (vanilla's bar for him is hidden, the BossEvent still exists for the locator
+ * and sound ducking). Crown, MARQUIS REMAKE and a subtitle that follows the phase; a violet-to-blue fill with a travelling lightning
  * shimmer; the Black Bull skull that cracks at 70% and 30%; the skill name typing on while he casts and burning out after;
  * a story-charge pip row from phase II; a pulsing frame in phase III; HP as a number and the phase as a numeral.
  */
@@ -34,12 +34,12 @@ public final class RivenBossBar {
             "..XXXXXXXX..",
             "..X.X..X.X..",
             "..X.XXXX.X.."};
-    private static final String[] NUMERALS = {"", "I", "II", "III"};
+    private static final String[] NUMERALS = {"", "I", "II", "III", "IV"};
 
     public static void init(IEventBus modBus) {
         modBus.addListener((RegisterGuiLayersEvent e) -> e.registerAboveAll(ResourceLocation.fromNamespaceAndPath("nusmp", "riven_bar"), RivenBossBar::render));
         NeoForge.EVENT_BUS.addListener((CustomizeGuiOverlayEvent.BossEventProgress e) -> {
-            if (e.getBossEvent().getName().getString().startsWith("Riven Remake")) e.setCanceled(true);
+            if (e.getBossEvent().getName().getString().startsWith("Marquis Remake")) e.setCanceled(true);
         });
     }
 
@@ -64,7 +64,7 @@ public final class RivenBossBar {
         if (st == null) return;
         float time = mc.level.getGameTime() + delta.getGameTimeDeltaPartialTick(false);
         st.hpShown += (st.hp - st.hpShown) * 0.12f;
-        int phase = Mth.clamp(st.phase, 1, 3);
+        int phase = Mth.clamp(st.phase, 1, 4);
         Font font = mc.font;
         int sw = g.guiWidth(), cx = sw / 2, w = 260, x0 = cx - w / 2, y = 30, h = 10;
 
@@ -78,10 +78,10 @@ public final class RivenBossBar {
         g.pose().pushPose();
         g.pose().translate(cx, 9, 0);
         g.pose().scale(1.5f, 1.5f, 1f);
-        g.drawCenteredString(font, "RIVEN REMAKE", 0, 0, 0xFFE8E0FF);
+        g.drawCenteredString(font, "MARQUIS REMAKE", 0, 0, 0xFFE8E0FF);
         g.pose().popPose();
-        String sub = phase == 1 ? "THE BLACK BULLS' BARD" : phase == 2 ? "FICTIONAL REMAKE" : "FINAL FORM";
-        g.drawCenteredString(font, sub, cx, 22, phase == 3 ? lerpColor(0xFFB89AFF, 0xFFFFFFFF, pulse) : 0xFFB89AFF);
+        String sub = phase == 1 ? "THE BLACK BULLS' BARD" : phase == 2 ? "FICTIONAL REMAKE" : phase == 3 ? "THE RIFT" : "FINAL FORM";
+        g.drawCenteredString(font, sub, cx, 22, phase >= 3 ? lerpColor(0xFFB89AFF, 0xFFFFFFFF, pulse) : 0xFFB89AFF);
 
         // frame and track
         int frame = lerpColor(0xFF2A1F4A, 0xFF8A6AFF, pulse);
@@ -131,7 +131,13 @@ public final class RivenBossBar {
             }
             textY += 6;
         }
-        g.drawCenteredString(font, "Fictional Remake", cx, textY + 1, 0x88B89AFF);
+        if (!st.combatType.isEmpty() || !st.grimoire.isEmpty()) {
+            String page = st.combatType + (st.grimoire.isEmpty() ? "" : " · " + st.grimoire);
+            g.drawCenteredString(font, page, cx, textY + 1, 0xFFE3D6FF);
+            textY += 10;
+        }
+        if (!st.status.isEmpty()) g.drawCenteredString(font, st.status, cx, textY + 1, 0xFFFFD68A);
+        else g.drawCenteredString(font, "A Dreamer · A Fighter · A Story Still Being Written", cx, textY + 1, 0x88B89AFF);
     }
 
     private static void drawSkull(GuiGraphics g, int x, int y, boolean crack1, boolean crack2, int color) {
