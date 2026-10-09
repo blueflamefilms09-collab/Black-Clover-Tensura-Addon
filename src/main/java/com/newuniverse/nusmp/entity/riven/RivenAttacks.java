@@ -51,18 +51,47 @@ final class RivenAttacks {
         if (!effectful || target == null) return;
         List<LivingEntity> hits = new ArrayList<>();
         int delay = 0;
-        if (ranged) {
+        switch (s.nativeId()) {
+            case "page_tear" -> hits.addAll(cone(b, 6.0, 0.35));
+            case "severance_aria" -> hits.addAll(along(b, b.getEyePosition(), target.getBoundingBox().getCenter(), 14));
+            case "island_fall" -> hits.addAll(sl.getEntitiesOfClass(Player.class,
+                    target.getBoundingBox().inflate(4, 2, 4), RivenAttacks::enemy));
+            case "maw_of_the_rift" -> hits.addAll(sl.getEntitiesOfClass(Player.class,
+                    b.getBoundingBox().inflate(3, 1.5, 3), RivenAttacks::enemy));
+            case "final_page" -> hits.addAll(cone(b, 10.0, 0.55));
+            default -> { }
+        }
+        if (ranged && hits.isEmpty()) {
             Vec3 from = b.getEyePosition(), to = target.getBoundingBox().getCenter();
             hits.addAll(along(b, from, to, s.range()));
             delay = Math.max(1, (int) (from.distanceTo(to) / 2.5));
             VfxSpawn.send(sl, VfxShape.LIGHTNING_SPEAR, from, to, VIOLET, delay + 6, 1.1f);
         }
-        if (arc) {
+        if (arc && hits.isEmpty()) {
             hits.addAll(arc(b, 4.2));
             Vec3 c = b.position().add(b.getLookAngle().multiply(1, 0, 1).scale(1.8)).add(0, 1, 0);
             VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE_EXPLOSION, c, c.add(0, 1, 0), BLUE, 12, 0.7f);
         }
-        if (!ranged && !arc && b.distanceTo(target) <= s.range() * 1.5) hits.add(target);
+        if (s.nativeId().equals("page_tear")) {
+            Vec3 a = b.getEyePosition(), c = target.getBoundingBox().getCenter();
+            VfxSpawn.send(sl, VfxShape.WIND_SLASH, a, c, 0xFF9A83FF, 10, 1.7f);
+            VfxSpawn.send(sl, VfxShape.THREAD_LINE, a, c, 0xFFD9D2FF, 8, 0.2f);
+        } else if (s.nativeId().equals("severance_aria") || s.nativeId().equals("final_page")) {
+            Vec3 a = b.position().add(0, 1.1, 0), c = target.getBoundingBox().getCenter();
+            VfxSpawn.send(sl, VfxShape.SLASH_WAVE, a, c, s.nativeId().equals("final_page") ? 0xFFF1E9FF : 0xFFB18CFF,
+                    s.nativeId().equals("final_page") ? 8 : 10, s.nativeId().equals("final_page") ? 2.4f : 1.7f);
+        }
+        if (!ranged && !arc && hits.isEmpty() && b.distanceTo(target) <= s.range() * 1.5) hits.add(target);
+        if (s.nativeId().equals("island_fall") || s.nativeId().equals("maw_of_the_rift")) {
+            Vec3 mark = s.nativeId().equals("island_fall") ? target.position() : b.position();
+            if (s.nativeId().equals("island_fall")) {
+                VfxSpawn.send(sl, VfxShape.SPACE_PORTAL, mark, mark.add(0, 1, 0), 0xFF7357B8, 24, 3.0f);
+                sl.sendParticles(ParticleTypes.REVERSE_PORTAL, mark.x, mark.y + 0.15, mark.z, 48, 1.3, 0.08, 1.3, 0.01);
+            } else {
+                VfxSpawn.send(sl, VfxShape.SHADOW_POOL, mark, mark.add(0, 0.1, 0), 0xFF321544, 20, 3.0f);
+                VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE_EXPLOSION, mark, mark.add(0, 0.1, 0), 0xFFB088FF, 10, 2.0f);
+            }
+        }
         final LivingEntity primary = target;
         Runnable apply = () -> {
             for (LivingEntity h : hits) {
@@ -81,16 +110,22 @@ final class RivenAttacks {
 
     // ---------------------------------------------------------------- damage
     static float damage(RivenBossEntity b, AnimeSkill s, LivingEntity victim) {
-        float base = (float) b.getAttributeValue(Attributes.ATTACK_DAMAGE) * (0.35f + 0.25f * s.tier());
-        if (b.phase() >= 3) base *= 1.25f;                                   // the emotional high upgrades every skill a tier
-        if (b.isHexed(victim)) base *= 1.25f;
-        return base;
+        return RivenCombat.damage(b.phase(), RivenCombat.signature(s), b.getRandom().nextFloat());
     }
 
     private static void deal(RivenBossEntity b, AnimeSkill s, LivingEntity h, DamageSource src, boolean magic) {
         float before = h.getHealth() + h.getAbsorptionAmount();
-        h.hurt(src, damage(b, s, h));
+        boolean hit = h.hurt(src, damage(b, s, h));
         float dealt = before - (h.getHealth() + h.getAbsorptionAmount());
+        if (hit && dealt > 0 && b.level() instanceof ServerLevel sl) {
+            Vec3 impact = h.getBoundingBox().getCenter();
+            VfxSpawn.send(sl, VfxShape.LIGHT_FLARE, impact, impact.add(0, 0.2, 0), RivenCombat.signature(s) ? 0xFFE0D7FF : BLUE,
+                    RivenCombat.signature(s) ? 5 : 3, RivenCombat.signature(s) ? 0.75f : 0.4f);
+            if (RivenCombat.signature(s)) {
+                b.signatureHit();
+                sl.playSound(null, h.blockPosition(), SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.HOSTILE, 1.0f, 1.5f);
+            }
+        }
         if (dealt < 0.5f) b.brain().bounced(s, b.tickCount);
     }
 
@@ -114,6 +149,21 @@ final class RivenAttacks {
         for (Player p : b.level().getEntitiesOfClass(Player.class, b.getBoundingBox().inflate(reach, 1.5, reach), RivenAttacks::enemy)) {
             Vec3 d = p.position().subtract(b.position()).multiply(1, 0, 1);
             if (d.length() <= reach && (d.length() < 1.2 || d.normalize().dot(look) > 0.35)) out.add(p);
+        }
+
+        return out;
+    }
+
+    private static List<LivingEntity> cone(RivenBossEntity b, double reach, double halfWidth) {
+        List<LivingEntity> out = new ArrayList<>();
+        Vec3 look = b.getLookAngle().multiply(1, 0, 1);
+        if (look.lengthSqr() < 1.0e-5) return out;
+        look = look.normalize();
+        for (Player p : b.level().getEntitiesOfClass(Player.class, b.getBoundingBox().inflate(reach, 2, reach), RivenAttacks::enemy)) {
+            Vec3 delta = p.position().subtract(b.position()).multiply(1, 0, 1);
+            double distance = delta.length();
+            if (distance > 0.1 && distance <= reach && delta.normalize().dot(look) >= 1.0 - halfWidth)
+                out.add(p);
         }
         return out;
     }

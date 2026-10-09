@@ -41,7 +41,8 @@ class RivenAssetsTest {
             }
         }
         for (String need : new String[]{"nusmp:eldritch_blast", "nusmp:hex", "nusmp:bardic_inspiration", "nusmp:shadow_step",
-                "nusmp:story_manifestation", "nusmp:soul_bond", "nusmp:grimoire_manipulation", "nusmp:song_of_valor", "nusmp:final_chapter"})
+                "nusmp:story_manifestation", "nusmp:soul_bond", "nusmp:grimoire_manipulation", "nusmp:song_of_valor", "nusmp:final_chapter",
+                "nusmp:page_tear", "nusmp:severance_aria", "nusmp:island_fall", "nusmp:maw_of_the_rift", "nusmp:final_page"})
             assertTrue(ids.contains(need), "first-party skill " + need);
     }
 
@@ -87,5 +88,12 @@ class RivenAssetsTest {
         assertTrue(fin.cubeCount() > base.cubeCount());
         for (String png : new String[]{"riven_remake", "riven_remake_glow", "riven_remake_final", "riven_remake_final_glow"})
             assertTrue(new File(ASSETS, "textures/entity/" + png + ".png").isFile(), png);
+    }
+
+    @Test
+    void tensuraNeverIncludesRivenInMaxEpPlunderRewards() throws Exception {
+        JsonObject tag = read(new File("src/main/resources/data/tensura/tags/entity_types/no_max_ep_plunder.json")).getAsJsonObject();
+        assertFalse(tag.get("replace").getAsBoolean());
+        assertTrue(tag.getAsJsonArray("values").asList().stream().anyMatch(v -> v.getAsString().equals("nusmp:riven_remake")));
     }
 }

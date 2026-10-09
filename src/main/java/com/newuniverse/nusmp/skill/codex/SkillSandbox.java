@@ -11,7 +11,8 @@ public final class SkillSandbox {
 
     public static final Set<String> PRIMITIVES = Set.of("projectile", "melee_arc", "magic_damage", "physical_damage", "heal", "shield",
             "blink", "pull", "silence", "slow", "summon_construct", "song_buff", "song_debuff", "copy_codex_skill");
-    public static final Set<String> NATIVES = Set.of("", "hex", "soul_bond", "inspire", "page_flip");
+    public static final Set<String> NATIVES = Set.of("", "hex", "soul_bond", "inspire", "page_flip", "page_tear", "severance_aria",
+            "island_fall", "maw_of_the_rift", "final_page", "unwritten_ending");
     public static final Set<String> ANIMATIONS = Set.of("idle", "talk", "cast_grimoire", "cast_song", "eldritch_blast", "shadow_step",
             "manifest_weapon", "manifest_shield", "soul_bond", "sword_combo_1", "sword_combo_2", "sword_combo_3");
     public static final Set<String> CONSTRUCTS = Set.of("weapon", "shield", "clone");
@@ -21,7 +22,7 @@ public final class SkillSandbox {
         if (!s.id().matches("[a-z0-9_.-]+:[a-z0-9_./-]+")) return "bad id '" + s.id() + "'";
         if (s.name().isBlank() || s.name().length() > 48) return "bad name";
         if (s.line().length() > 120) return "line too long";
-        if (s.tier() < 1 || s.tier() > 4) return "tier must be 1..4";
+        if (s.tier() < 1 || s.tier() > 5) return "tier must be 1..5";
         if (s.castTicks() < 1 || s.castTicks() > 80) return "cast_ticks must be 1..80";
         if (s.range() < 2 || s.range() > 32) return "range must be 2..32";
         if (s.cooldownTicks() < 10 || s.cooldownTicks() > 1200) return "cooldown_ticks must be 10..1200";

@@ -5,6 +5,7 @@ import com.newuniverse.nusmp.antimagic.AntiMagic;
 import com.newuniverse.nusmp.antimagic.NihilityZone;
 import com.newuniverse.nusmp.book.SpellRuntime;
 import com.newuniverse.nusmp.entity.NUEntities;
+import com.newuniverse.nusmp.entity.TensuraCaster;
 import com.newuniverse.nusmp.entity.ZagredBossEntity;
 import com.newuniverse.nusmp.item.NUItems;
 import com.newuniverse.nusmp.skill.codex.AnimeSkill;
@@ -43,6 +44,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import io.github.manasmods.tensura.storage.TensuraStorages;
+import io.github.manasmods.tensura.util.EnergyHelper;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.slf4j.Logger;
 
@@ -53,9 +56,8 @@ import java.util.UUID;
 
 /**
  * Riven Remake, the Black Bulls' Bard: an adaptive raid boss. A utility brain ({@link RivenBrain}) rescans the target
- * ({@link ThreatScan}), scores every codex skill ({@link KillPlan}) and casts the best one ({@link RivenAttacks}). Three phases by
- * health: I The Black Bulls' Bard, II Fictional Remake (70%, Story Manifestation), III Final Form (30%, the emotional high: lethal
- * skills score x1.5, damage is a tier up, and two skills can chain). Quirk: he rewrites the fight, but not for a player who does not
+ * ({@link ThreatScan}), scores every codex skill ({@link KillPlan}) and casts the best one ({@link RivenAttacks}). Four phases by
+ * health: I The Black Bulls' Bard, II Fictional Remake, III Rift, and IV Final Form. Quirk: he rewrites the fight, but not for a player who does not
  * believe: anti-magic, Nihility or a raised guard resists the rewrite unless he spends story charge.
  */
 public class RivenBossEntity extends Monster {
@@ -82,9 +84,14 @@ public class RivenBossEntity extends Monster {
     private float story = 20f, recentDamage;
     private int chainLeft, lastPlayers = 1, clientClipStart;
     private boolean opened, healedOnScale;
+    private boolean initializedExistence;
     private float calmDamage;
     private int boredSeconds;
-    private long portalAt, portalReadyAt;
+    private long portalAt, portalReadyAt, phaseIFramesUntil, phaseTwoAt;
+    private long nextSignatureAt;
+    private String nullType = "";
+    private long nullUntil;
+    private boolean phaseTwoMagicNullStarted, finalNullStarted;
 
     public RivenBossEntity(EntityType<? extends Monster> type, Level level) {
         super(type, level);
@@ -93,7 +100,7 @@ public class RivenBossEntity extends Monster {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 600).add(Attributes.ATTACK_DAMAGE, 10).add(Attributes.ATTACK_KNOCKBACK, 0.6)
+        return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 1200).add(Attributes.ATTACK_DAMAGE, 10).add(Attributes.ATTACK_KNOCKBACK, 0.6)
                 .add(Attributes.MOVEMENT_SPEED, 0.30).add(Attributes.FOLLOW_RANGE, 48).add(Attributes.ARMOR, 6).add(Attributes.KNOCKBACK_RESISTANCE, 0.6)
                 .add(Attributes.STEP_HEIGHT, 1.0);
     }
@@ -123,6 +130,8 @@ public class RivenBossEntity extends Monster {
     public float story() { return story; }
     public RivenBrain brain() { return brain; }
     public boolean emotionalHigh() { return phase() >= 3; }
+    public boolean signatureReady() { return tickCount >= nextSignatureAt; }
+    public void signatureHit() { nextSignatureAt = tickCount + 80; }
     public boolean hasSongBuff() { return tickCount < songUntil; }
     public void markSongBuff(int ticks) { songUntil = tickCount + ticks; }
     public void guardFor(int ticks) { guardUntil = tickCount + ticks; }
@@ -191,7 +200,12 @@ public class RivenBossEntity extends Monster {
     }
 
     private String subtitle() {
-        return switch (phase()) { case 1 -> "The Black Bulls' Bard"; case 2 -> "Fictional Remake"; default -> "Fictional Remake — Final Form"; };
+        return switch (phase()) {
+            case 1 -> "I · The Black Bulls' Bard";
+            case 2 -> "II · Fictional Remake";
+            case 3 -> "III · Rift";
+            default -> "IV · Fictional Remake — Final Form";
+        };
     }
 
     // ---------------------------------------------------------------- the fight
@@ -201,14 +215,31 @@ public class RivenBossEntity extends Monster {
         if (!(level() instanceof ServerLevel sl)) return;
         long t = tickCount;
         if (arena == null) arena = blockPosition();
+        if (!initializedExistence) initializeExistence();
         float frac = getHealth() / getMaxHealth();
-        int ph = frac > 0.7f ? 1 : frac > 0.3f ? 2 : 3;
+        int ph = RivenCombat.phase(frac);
         if (ph > phase()) enterPhase(sl, ph);
         bar.setProgress(frac);
-        bar.setName(Component.literal("Riven Remake — " + subtitle()));
+        String combatType = casting == null ? "" : casting.has("physical_damage") ? "PHYSICAL "
+                : casting.has("magic_damage") ? "MAGIC " : "UTILITY ";
+        String castName = casting == null ? "" : " · " + combatType + casting.name();
+        String nullName = tickCount < nullUntil ? " · NULL: " + nullType.toUpperCase(java.util.Locale.ROOT) : "";
+        bar.setName(Component.literal("Riven Remake — " + subtitle() + castName + nullName));
         recentDamage *= 0.97f;
         calmDamage *= 0.99f;
         if (t % 100 == 0) scaleForPlayers(sl);
+        if (t % 200 == 0) TensuraCaster.ensureMana(this, Math.max(1_000_000, EnergyHelper.getMaxMagicule(this)));
+        if (phase() == 2 && !phaseTwoMagicNullStarted && t - phaseTwoAt >= 240) {
+            phaseTwoMagicNullStarted = true;
+            startNullWindow("magic", 80, sl, "Hack roll: magic is out. Try another page.");
+        }
+        if (phase() == 4 && !finalNullStarted && getHealth() <= getMaxHealth() * 0.25f) {
+            finalNullStarted = true;
+            startNullWindow("physical", 40, sl, "The final rewrite nullifies physical force.");
+            SpellRuntime.later(sl, 40, () -> {
+                if (isAlive() && phase() == 4) startNullWindow("magic", 40, sl, "The rewrite turns. Magic is nullified.");
+            });
+        }
         story = Math.min(100f, story + 0.03f + lastPlayers * 0.01f + (emotionalHigh() ? 0.03f : 0f));
         if (t % 400 == 0) maybeBanterWithZagred(sl);
         if (t >= clipEnd && clip() != 0 && !isDeadOrDying()) entityData.set(CLIP, 0);
@@ -267,13 +298,21 @@ public class RivenBossEntity extends Monster {
     }
 
     private void beginCast(ServerLevel sl, AnimeSkill s, LivingEntity target) {
+        if (RivenCombat.signature(s) && !signatureReady()) { forced = s; nextThink = tickCount + 10; return; }
         casting = s;
         castTarget = target;
-        int ticks = emotionalHigh() ? Math.max(4, (int) (s.castTicks() * 0.8f)) : s.castTicks();
+        int ticks = s.lethal() ? RivenCombat.castTicks(s.castTicks(), phase()) : Math.max(4, s.castTicks());
         castAt = tickCount + ticks;
         nextSync = 0;
         playClip(s.has("melee_arc") && !s.has("projectile") ? "sword_combo_" + (1 + getRandom().nextInt(3)) : s.animation());
         VfxSpawn.sendFollowing(sl, VfxShape.MAGIC_CIRCLE, this, position().add(0, 1.2, 0), RivenAttacks.VIOLET, ticks + 6, 0.8f);
+        if (RivenCombat.signature(s)) {
+            if (phase() == 4) nextSignatureAt = tickCount + 80;
+            Vec3 tell = target.position();
+            VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE, tell, tell.add(0, 0.05, 0), 0xFF39224F, ticks + 4, 1.8f);
+            VfxSpawn.sendFollowing(sl, VfxShape.SPIRIT_AURA, this, position().add(0, 1, 0), 0xFF7058C8, ticks + 4, 1.4f);
+            sl.playSound(null, blockPosition(), SoundEvents.BOOK_PAGE_TURN, SoundSource.HOSTILE, 1.4f, 0.7f);
+        }
         if (!s.line().isBlank() && tickCount >= nextBark) { say(sl, s.line()); nextBark = tickCount + 90; }
     }
 
@@ -289,9 +328,9 @@ public class RivenBossEntity extends Monster {
         if (s.tier() >= 3) story = Math.max(0, story - STORY_COST);
         lastCast = s;
         // phase 3: the story where he wins: sometimes two skills back to back
-        if (emotionalHigh() && chainLeft == 0 && getRandom().nextFloat() < 0.45f && brain.plan() != null) {
+        if (phase() == 4 && chainLeft == 0 && s.tier() >= 4 && brain.plan() != null) {
             KillPlan.Option next = brain.plan().next(s);
-            if (next != null && target.isAlive()) { chainLeft = 1; beginCast(sl, next.skill(), target); return; }
+            if (next != null && target.isAlive() && !RivenCombat.signature(next.skill())) { chainLeft = 1; beginCast(sl, next.skill(), target); return; }
         }
         chainLeft = 0;
         nextThink = tickCount + 10;
@@ -299,30 +338,68 @@ public class RivenBossEntity extends Monster {
 
     private void enterPhase(ServerLevel sl, int ph) {
         entityData.set(PHASE, ph);
-        transitionUntil = tickCount + (ph == 2 ? 28 : 44);
+        transitionUntil = tickCount + 30;
+        phaseIFramesUntil = tickCount + 30;
+        var speed = getAttribute(Attributes.MOVEMENT_SPEED);
+        if (speed != null) speed.setBaseValue(0.30 * (1 + 0.10 * (ph - 1)));
         casting = null;
-        playClip(ph == 2 ? "phase2" : "final_form");
-        heal(getMaxHealth() * 0.05f);
+        playClip(ph >= 4 ? "final_form" : ph == 2 ? "phase2" : "phase2");
         addStory(40f);
         brain.invalidate();
         VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE_EXPLOSION, position(), position().add(0, 1, 0), RivenAttacks.VIOLET, 34, 2.4f);
         sl.playSound(null, blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.HOSTILE, 2.5f, ph == 2 ? 1.0f : 0.7f);
-        if (ph == 2) { say(sl, "I might not be the strongest, but I'll make sure my story hits harder than anyone expected."); forced = AnimeSkillCodex.get("nusmp:story_manifestation"); }
-        else say(sl, "It's not just a game. It's my other life.");
+        say(sl, switch (ph) {
+            case 2 -> "Act two. Now the story starts to bite.";
+            case 3 -> "The rift opens. Try not to get lost.";
+            default -> "Final chapter. No more rehearsal.";
+        });
+        if (ph == 2) forced = AnimeSkillCodex.get("nusmp:story_manifestation");
+        if (ph == 2) {
+            phaseTwoAt = tickCount;
+            phaseTwoMagicNullStarted = false;
+            startNullWindow("physical", 80, sl, "Hack roll: physical force is nullified.");
+        }
+        if (ph == 3) {
+            startNullWindow("spatial", 80, sl, "Rift entry: spatial magic is nullified.");
+        }
+        if (ph == 4) finalNullStarted = false;
     }
 
-    /** +20% of base health (perPlayerHealth) per extra player in the arena, kept as a health fraction. */
+    private void startNullWindow(String type, int ticks, ServerLevel sl, String line) {
+        nullType = type;
+        nullUntil = tickCount + ticks;
+        say(sl, line);
+        sl.playSound(null, blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.HOSTILE, 1.4f, 0.6f);
+    }
+
+    private void initializeExistence() {
+        initializedExistence = true;
+        try {
+            EnergyHelper.setBaseMaxEP(this, 300_000_000d);
+            var existence = TensuraStorages.getExistenceFrom(this);
+            if (existence != null) {
+                existence.setEP(300_000_000d);
+                existence.setSkippingEPDrop(true);
+                existence.markDirty();
+            }
+            TensuraCaster.ensureMana(this, Math.max(1_000_000, EnergyHelper.getMaxMagicule(this)));
+        } catch (RuntimeException e) {
+            LOG.warn("[riven] Tensura EP initialization unavailable: {}", e.toString());
+        }
+    }
+
+    /** Health scales linearly to four players and retains the same fraction when party size changes. */
     private void scaleForPlayers(ServerLevel sl) {
-        int n = Math.max(1, (int) sl.players().stream().filter(p -> !p.isSpectator() && p.blockPosition().distSqr(arena) < 48 * 48).count());
+        int n = Math.min(4, Math.max(1, (int) sl.players().stream().filter(p -> !p.isSpectator() && p.blockPosition().distSqr(arena) < 48 * 48).count()));
         lastPlayers = n;
         double max = RivenConfig.BASE_HEALTH.get() + (double) RivenConfig.PER_PLAYER_HEALTH.get() * (n - 1);
         var attr = getAttribute(Attributes.MAX_HEALTH);
         if (attr != null && Math.abs(attr.getBaseValue() - max) > 0.5) {
             float frac = getHealth() / getMaxHealth();
             attr.setBaseValue(max);
-            setHealth((float) (max * (healedOnScale ? frac : 1f)));
-            healedOnScale = true;
+            setHealth((float) (max * frac));
         }
+        healedOnScale = true;
     }
 
     private void maybeBanterWithZagred(ServerLevel sl) {
@@ -341,38 +418,72 @@ public class RivenBossEntity extends Monster {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (level().isClientSide || source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return super.hurt(source, amount);
-        if (tickCount < transitionUntil) return false;
+        if (level().isClientSide) return super.hurt(source, amount);
+        if (tickCount < phaseIFramesUntil) return false;
         if (source.getEntity() instanceof StoryConstructEntity || source.getEntity() instanceof RivenBossEntity) return false;
+        boolean antiMagic = isAntiMagicSource(source);
+        if (antiMagic && level() instanceof ServerLevel sl) staggerByAntiMagic(sl);
+        if (tickCount < nullUntil) {
+            boolean nullifies = switch (nullType) {
+                case "magic" -> AntiMagic.isMagic(source);
+                case "physical" -> !AntiMagic.isMagic(source);
+                case "spatial" -> isSpatialDamage(source);
+                default -> false;
+            };
+            if (nullifies) return false;
+        }
+        if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return super.hurt(source, amount);
         if (source.getEntity() instanceof ServerPlayer p) fighters.add(p.getUUID());
         brain.noteTaken(category(source));
         amount *= 0.92f;                                                           // Jack of All Trades
         if (tickCount < guardUntil) amount *= 0.5f;
-        boolean antiMagic = source.getEntity() instanceof Player pl && (AntiMagic.isUser(pl)
-                || BuiltInRegistries.ITEM.getKey(pl.getMainHandItem().getItem()).getPath().startsWith("demon_")) && !source.is(DamageTypeTags.IS_PROJECTILE);
         if (bondTarget != null && tickCount < bondUntil && level() instanceof ServerLevel sl && sl.getEntity(bondTarget) instanceof LivingEntity b && b.isAlive() && b != source.getEntity()) {
             b.hurt(damageSources().indirectMagic(this, this), amount * 0.25f);       // Soul Bond: a quarter of it falls on the bonded
             amount *= 0.75f;
         }
-        float floor = phase() == 1 ? 0.7f * getMaxHealth() : phase() == 2 ? 0.3f * getMaxHealth() : 0f;   // one burst can't skip a phase
+        float floor = phase() == 1 ? 0.75f * getMaxHealth() : phase() == 2 ? 0.5f * getMaxHealth()
+                : phase() == 3 ? 0.25f * getMaxHealth() : 0f;   // one burst can't skip a phase
         if (floor > 0 && getHealth() - amount < floor) amount = Math.max(0f, getHealth() - floor + 0.5f);
         boolean hurt = super.hurt(source, amount);
         if (!hurt || !(level() instanceof ServerLevel sl)) return hurt;
         recentDamage += amount;
         calmDamage += amount;
-        if (antiMagic && tickCount >= stagger) {                                    // anti-magic and barrier pierce: stagger, then replan
-            stagger = tickCount + 20;
-            casting = null;
-            playClip("stagger");
-            brain.invalidate();
-            sl.playSound(null, blockPosition(), SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.HOSTILE, 1.5f, 0.7f);
-            if (tickCount >= nextBark) { say(sl, "That page... wasn't in my story."); nextBark = tickCount + 100; }
-        } else if (casting == null && clip() == 0) playClip("hit");
+        if (casting == null && clip() == 0) playClip("hit");
         if (recentDamage > getMaxHealth() * 0.1f && getTarget() != null && tickCount >= nextThink - 4) {   // Shadow Step out of trouble
             AnimeSkill step = AnimeSkillCodex.get("nusmp:shadow_step");
             if (step != null && casting == null) { recentDamage = 0; forced = step; nextThink = 0; }
         }
         return hurt;
+    }
+
+    private static boolean isAntiMagicSource(DamageSource source) {
+        if (!(source.getEntity() instanceof Player player) || source.is(DamageTypeTags.IS_PROJECTILE)) return false;
+        return AntiMagic.isUser(player)
+                || BuiltInRegistries.ITEM.getKey(player.getMainHandItem().getItem()).getPath().startsWith("demon_");
+    }
+
+    private void staggerByAntiMagic(ServerLevel sl) {
+        if (tickCount < stagger) return;
+        stagger = tickCount + 16;
+        casting = null;
+        nullUntil = Math.max(tickCount, nullUntil - 20);
+        playClip("stagger");
+        brain.invalidate();
+        sl.playSound(null, blockPosition(), SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.HOSTILE, 1.5f, 0.7f);
+        if (tickCount >= nextBark) {
+            say(sl, "That page... wasn't in my story.");
+            nextBark = tickCount + 100;
+        }
+    }
+
+    private static boolean isSpatialDamage(DamageSource source) {
+        String type = source.type().msgId();
+        if (type.contains("spatial") || type.contains("rift") || type.contains("teleport")) return true;
+        if (source.getDirectEntity() != null) {
+            String entity = BuiltInRegistries.ENTITY_TYPE.getKey(source.getDirectEntity().getType()).getPath();
+            return entity.contains("spatial") || entity.contains("rift") || entity.contains("portal");
+        }
+        return false;
     }
 
     @Override
@@ -428,7 +539,7 @@ public class RivenBossEntity extends Monster {
         opened = tag.getBoolean("Opened");
         healedOnScale = tag.getBoolean("Scaled");
         float frac = getHealth() / Math.max(1f, getMaxHealth());
-        entityData.set(PHASE, frac > 0.7f ? 1 : frac > 0.3f ? 2 : 3);
+        entityData.set(PHASE, RivenCombat.phase(frac));
         if (hasCustomName()) bar.setName(getDisplayName());
     }
 

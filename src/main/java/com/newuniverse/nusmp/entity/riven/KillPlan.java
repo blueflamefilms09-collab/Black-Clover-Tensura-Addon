@@ -32,6 +32,7 @@ public final class KillPlan {
         int phase = boss.phase();
         for (AnimeSkill s : pool) {
             if (s.tier() > phase + 1) continue;                                   // the story unlocks as it goes
+            if (RivenCombat.firstPhase(s) > phase) continue;
             if (ready.getOrDefault(s.id(), 0L) > now) continue;                   // cooldown
             if (s.tier() >= 3 && boss.story() < RivenBossEntity.STORY_COST) continue;   // can't afford it
             if (s.has("summon_construct") && !boss.canManifest()) continue;

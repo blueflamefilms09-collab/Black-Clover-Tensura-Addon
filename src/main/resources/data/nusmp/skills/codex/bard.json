@@ -36,6 +36,21 @@
      "animation": "sword_combo_1", "line": "", "cooldown_ticks": 24},
     {"id": "nusmp:final_chapter", "anime": "original", "name": "The Story Where He Wins", "tier": 4, "cast_ticks": 30, "range": 26,
      "primitives": ["projectile", "magic_damage", "slow", "silence"], "counters": ["barrier", "healer", "caster"], "resisted_by": ["magic_null"],
-     "animation": "cast_grimoire", "line": "Final page. Make it count.", "cooldown_ticks": 400}
+     "animation": "cast_grimoire", "line": "Final page. Make it count.", "cooldown_ticks": 400},
+    {"id": "nusmp:page_tear", "anime": "original", "name": "Page Tear", "tier": 2, "cast_ticks": 18, "range": 6, "native": "page_tear",
+     "primitives": ["melee_arc", "magic_damage"], "counters": ["low_armor", "caster"], "resisted_by": ["magic_null"],
+     "animation": "cast_grimoire", "line": "Let's turn the page.", "cooldown_ticks": 180},
+    {"id": "nusmp:severance_aria", "anime": "original", "name": "Severance Aria", "tier": 3, "cast_ticks": 22, "range": 14, "native": "severance_aria",
+     "primitives": ["melee_arc", "physical_damage"], "counters": ["barrier", "low_armor"], "resisted_by": ["physical_immune"],
+     "animation": "sword_combo_2", "line": "One clean cut through the chorus.", "cooldown_ticks": 240},
+    {"id": "nusmp:island_fall", "anime": "original", "name": "Island Fall", "tier": 4, "cast_ticks": 25, "range": 22, "native": "island_fall",
+     "primitives": ["projectile", "magic_damage"], "counters": ["mounted", "low_armor"], "resisted_by": ["magic_null"],
+     "animation": "cast_grimoire", "line": "Look up. The sky is falling.", "cooldown_ticks": 320},
+    {"id": "nusmp:maw_of_the_rift", "anime": "original", "name": "Maw of the Rift", "tier": 4, "cast_ticks": 24, "range": 8, "native": "maw_of_the_rift",
+     "primitives": ["magic_damage", "pull"], "counters": ["melee", "barrier"], "resisted_by": ["magic_null"],
+     "animation": "cast_grimoire", "line": "The rift has a mouth. You're standing in it.", "cooldown_ticks": 360},
+    {"id": "nusmp:final_page", "anime": "original", "name": "Final Page", "tier": 5, "cast_ticks": 28, "range": 10, "native": "final_page",
+     "primitives": ["melee_arc", "physical_damage"], "counters": ["low_armor", "caster"], "resisted_by": ["physical_immune"],
+     "animation": "sword_combo_3", "line": "This is where the story ends.", "cooldown_ticks": 400}
   ]
 }

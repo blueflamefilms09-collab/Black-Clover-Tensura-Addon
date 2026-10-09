@@ -60,7 +60,7 @@ Magic spells fire when the skill key is released; holding the key does not trigg
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.94.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.95.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -208,6 +208,15 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - Added magic-specific grimoire cover sigils for the newly added wiki attributes and textured both sides of loose page flips.
 - Added held spell buildup to grimoire magic; releasing the skill starts the cast windup, and a fully charged spell gains up to 20% size and damage.
 - Brought Zagred close to player height and shortened his arm/forearm and leg proportions while preserving his horns, wings, claws, and tail.
+
+## 0.95.0 - Riven Remake raised ceiling
+
+- Riven now has four health phases, 1,200 base health plus 400 per additional arena player (capped at four), without phase-change healing. Movement speed rises 10% per phase; lethal casts have 0.7–1.4 second telegraphs and cast speed rises by 8% per phase.
+- Riven's hits use the requested damage bands: phases I–IV normal 12–18 / 22–34 / 34–48 / 48–64 and signature 22 / 42 / 62 / 85. New signature entries: Page Tear, Severance Aria, Island Fall, Maw of the Rift and Final Page; their tells and hit effects use the existing VFX layers. Phase IV signature hits are separated by at least four seconds.
+- Phase transition invulnerability lasts 1.5 seconds; anti-magic interrupts casting, staggers for 0.8 seconds and shortens a live null window. Added named phase II physical/magic null windows, phase III spatial-source null and phase IV rotating physical/magic null.
+- Tensura EP is initialized at 300,000,000 through EnergyHelper / ExistenceStorage, its normal magicule pool is kept topped up, and Tensura's `no_max_ep_plunder` entity tag excludes Riven from EP plunder rewards. His existence is marked to skip EP drops.
+- The boredom portal from 0.94.0 remains enabled.
+- Not implemented or verified in-game: the full 15-move attack list, partial resistance bypass, Gold Ring null, Unwritten Ending, Rewrite Round, the exact 60-second rift pull and all requested shader-specific boss visuals. EP display, magicule scaling, and no-plunder behavior use Tensura APIs/tags but have not been exercised in a running game.
 
 ## 0.94.0 - Riven Remake, the Black Bulls' Bard; generated grimoire designs; wiki VFX scale fixes
 
