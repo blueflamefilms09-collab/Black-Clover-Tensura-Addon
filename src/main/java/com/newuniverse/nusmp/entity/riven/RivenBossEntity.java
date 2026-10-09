@@ -82,6 +82,9 @@ public class RivenBossEntity extends Monster {
     private float story = 20f, recentDamage;
     private int chainLeft, lastPlayers = 1, clientClipStart;
     private boolean opened, healedOnScale;
+    private float calmDamage;
+    private int boredSeconds;
+    private long portalAt, portalReadyAt;
 
     public RivenBossEntity(EntityType<? extends Monster> type, Level level) {
         super(type, level);
@@ -204,6 +207,7 @@ public class RivenBossEntity extends Monster {
         bar.setProgress(frac);
         bar.setName(Component.literal("Riven Remake — " + subtitle()));
         recentDamage *= 0.97f;
+        calmDamage *= 0.99f;
         if (t % 100 == 0) scaleForPlayers(sl);
         story = Math.min(100f, story + 0.03f + lastPlayers * 0.01f + (emotionalHigh() ? 0.03f : 0f));
         if (t % 400 == 0) maybeBanterWithZagred(sl);
@@ -211,12 +215,19 @@ public class RivenBossEntity extends Monster {
         if (blockPosition().distSqr(arena) > 48 * 48) { teleportTo(arena.getX() + 0.5, arena.getY(), arena.getZ() + 0.5); brain.invalidate(); }
         if (t >= nextSync) { nextSync = t + 10; PacketDistributor.sendToPlayersTrackingEntity(this, statePayload()); }
         if (bondTarget != null && t >= bondUntil) bondTarget = null;
+        if (portalAt > 0 && t >= portalAt) {
+            portalAt = 0;
+            LivingEntity pt = getTarget();
+            if (pt != null && pt.isAlive()) RivenPortal.emerge(this, sl, pt);
+        }
         if (t < transitionUntil || t < stagger) { getNavigation().stop(); return; }
 
         LivingEntity target = getTarget();
         if (target == null || !target.isAlive()) { casting = null; return; }
         fighters.add(target.getUUID());
         if (!opened) { opened = true; open(sl, target); return; }
+        checkBored(sl, target);
+        if (t < transitionUntil) return;
 
         if (casting != null) {
             getNavigation().stop();
@@ -229,6 +240,24 @@ public class RivenBossEntity extends Monster {
         AnimeSkill pick = forced != null ? forced : brain.choose(target, t);
         forced = null;
         if (pick != null) beginCast(sl, pick, target);
+    }
+
+    /**
+     * Boredom: counts seconds in which the fight poses no threat (little damage taken lately, a live target, phase 1-2). Once past
+     * {@code boredSeconds} he rolls {@code boredChance} each second; a hit that hurts him properly cools the boredom down.
+     */
+    private void checkBored(ServerLevel sl, LivingEntity target) {
+        if (!RivenConfig.BORED_PORTAL.get() || phase() >= 3 || casting != null || tickCount % 20 != 0) return;
+        if (calmDamage > getMaxHealth() * 0.05f) { boredSeconds = Math.max(0, boredSeconds - 3); return; }
+        boredSeconds++;
+        if (boredSeconds < RivenConfig.BORED_SECONDS.get() || tickCount < portalReadyAt) return;
+        if (getRandom().nextDouble() >= RivenConfig.BORED_CHANCE.get() || distanceToSqr(target) > 40 * 40) return;
+        boredSeconds = 0;
+        portalReadyAt = tickCount + RivenConfig.BORED_COOLDOWN.get() * 20L;
+        transitionUntil = tickCount + RivenPortal.LOCK_TICKS;
+        portalAt = tickCount + RivenPortal.OPEN_TICKS;
+        casting = null;
+        RivenPortal.open(this, sl, target);
     }
 
     private void open(ServerLevel sl, LivingEntity target) {
@@ -330,6 +359,7 @@ public class RivenBossEntity extends Monster {
         boolean hurt = super.hurt(source, amount);
         if (!hurt || !(level() instanceof ServerLevel sl)) return hurt;
         recentDamage += amount;
+        calmDamage += amount;
         if (antiMagic && tickCount >= stagger) {                                    // anti-magic and barrier pierce: stagger, then replan
             stagger = tickCount + 20;
             casting = null;
