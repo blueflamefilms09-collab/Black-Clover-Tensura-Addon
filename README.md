@@ -60,7 +60,7 @@ Chanted magics: use **Chant** mode until the chant is complete, then switch to *
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.60.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.61.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -204,6 +204,13 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Anti-Magic kit**: new pages **Black Hurricane** (a whirling field that drags foes in and strips their magic) and **Black Form** (30 s of strength, speed, resistance and jump, with an anti-magic burst); mastering the Anti-Magic Lord now also grants the **Demon-Slasher** katana next to Demon-Dweller and Demon-Destroyer.
 - **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
 - **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
+
+## 0.61 - Riven Remake passives, boss-bound skills and engravings
+New (nothing replaced, nothing removed):
+- Tensura intrinsics granted through ManasCore by phase (11 / 7 / 3), skipped and logged once if an id is missing; resistances only reduce (hard floor, no nullification).
+- The ten exclusive `nusmp:riven_*` passives (Fictional Remake, Audience, Counter Author, Unbelieved, Emotional High, Soul Bond, Page Memory, Jack of All Trades, Unwritten Ending, Black Bulls' Bard), boss-bound: his skill storage is stripped before death so plunder returns nothing (logged).
+- `RivenEngravings` (+ 7 manifested weapon items), config `phase2Passives`, `phase3Passives`, `engravingDropStripped`, gold story-rift and arena ring particles.
+- Not done yet: Legion, Key, Mirror and Painting constructs, Bardic Inspiration aura, Tensura barrier check for Unbelieved beyond the scan, 3D models for the weapons (they use a placeholder icon).
 
 ## 0.60 - Riven Remake, the Black Bulls' Bard (boss) and the Anime Skill Codex
 - **New: the Riven Remake boss** (`entity/riven`). `/multiverse boss riven`, `/nusmp riven summon` or the spawn egg. He threat-scans his target (gear, anti-magic, Tensura barriers and resistances read soft through ManasCore, the last 8 hit outcomes) every 10 ticks, builds a scored kill plan from the codex and commits to it for `replanTicks`. Phase 2 (70%): Story Manifestation and a story-charge row. Phase 3 (30%): Final Form texture, every skill one tier up, lethal plans x1.5, two skills may chain. Anti-magic staggers him and forces a replan; anti-magic or a Tensura barrier resists his rewrite unless he spends 25 story charge. +health per extra player (config).

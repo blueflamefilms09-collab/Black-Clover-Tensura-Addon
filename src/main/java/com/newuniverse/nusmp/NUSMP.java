@@ -54,6 +54,8 @@ public class NUSMP {
         modContainer.registerConfig(ModConfig.Type.COMMON, com.newuniverse.nusmp.entity.riven.RivenConfig.SPEC, "nusmp-riven.toml");
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.AddReloadListenerEvent e) -> e.addListener(new com.newuniverse.nusmp.skill.codex.AnimeSkillCodex()));
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.entity.riven.RivenCommands::register);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.item.RivenEngravings::onToss);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.item.RivenEngravings::onTooltip);
         if (FMLEnvironment.dist == Dist.CLIENT) {
             modEventBus.addListener(com.newuniverse.nusmp.client.riven.RivenRenderer::register);              // 0.60
             modEventBus.addListener(com.newuniverse.nusmp.client.riven.RivenBossBar::register);

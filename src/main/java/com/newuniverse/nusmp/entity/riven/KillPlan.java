@@ -34,6 +34,8 @@ public final class KillPlan {
             if (s.has("heal") || s.has("song_buff")) score += boss.getHealth() < boss.getMaxHealth() * 0.7f ? 20 : -15;
             if (s.has("shield") || s.has("summon_construct")) score += scan.traits.contains("rusher") || scan.traits.contains("melee") ? 12 : -10;
             if (phase >= 3 && s.lethal()) score *= 1.5;
+            if (boss.passives().forcedCounter != null && s.has(boss.passives().forcedCounter)) score += 40;      // Counter Author: his next plan is the counter
+            if (!boss.passives().canRewrite(scan) && s.has("silence")) score = 0;                             // Unbelieved: a plan that cannot land is worthless
             score += rng.nextDouble() * 6;                                                     // a bard improvises a little
             plan.entries.add(new Entry(s, score));
         }

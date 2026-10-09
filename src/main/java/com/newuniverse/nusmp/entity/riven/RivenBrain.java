@@ -31,6 +31,9 @@ public final class RivenBrain {
 
     RivenBrain(RivenBossEntity boss) { this.boss = boss; }
 
+    ThreatScan scan() { return scan; }
+    String planName() { return pending != null ? pending.id() : plan != null && !plan.entries.isEmpty() ? plan.entries.get(0).skill().id() : "none"; }
+
     /** Forces a replan at once (anti-magic hit, barrier, target swap). */
     void abort() { pending = null; replanAt = 0; nextScan = 0; boss.setClip("", ""); }
 
@@ -73,6 +76,7 @@ public final class RivenBrain {
         move(tg, t);
         if (plan == null || t >= replanAt) {
             plan = KillPlan.build(boss, scan, boss.phase(), s -> ready.getOrDefault(s.id(), 0L) <= t && boss.canAfford(cost(s)), boss.getRandom());
+            boss.passives().forcedCounter = null;
             replanAt = t + RivenConfig.REPLAN_TICKS.get();
             if (LOG.isDebugEnabled() && plan.best() != null) LOG.debug("[nusmp] Riven plan vs {}: {} (traits {}, resists {})", tg.getName().getString(),
                     plan.entries.stream().limit(3).map(e -> e.skill().id() + "=" + Math.round(e.score())).toList(), scan.traits, scan.resists);

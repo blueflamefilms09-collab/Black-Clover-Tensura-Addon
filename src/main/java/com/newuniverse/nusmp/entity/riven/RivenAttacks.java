@@ -56,18 +56,21 @@ final class RivenAttacks {
                     t.hurtMarked = true;
                 }
                 case "silence" -> {                                                                // no Tensura "silence" id is assumed: weakness + a short darkness stand in
-                    if (!resisted(b, t, scan)) {
+                    if (!b.passives().canRewrite(scan)) b.unbelieved(sl, t);                      // Unbelieved: this one cannot be rewritten
+                    else if (!resisted(b, t, scan)) {
                         t.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 60, 1));
                         t.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 40, 0));
                     }
                 }
                 case "slow" -> { if (!resisted(b, t, scan)) t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 50 + 10 * tier, 1)); }
                 case "song_buff" -> {
+                    b.passives().songStarted(b.tickCount, 120);
                     b.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 120, 0));
                     b.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 80, 0));
                     VfxSpawn.sendFollowing(sl, VfxShape.KOTO_AURA, b, b.position(), BLUE_VIOLET, 40, 1.4f);
                 }
                 case "song_debuff" -> {
+                    b.passives().songStarted(b.tickCount, 100);
                     if (!resisted(b, t, scan)) {
                         t.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 80, 1));
                         t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 0));

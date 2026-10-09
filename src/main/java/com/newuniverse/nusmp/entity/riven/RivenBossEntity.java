@@ -20,7 +20,9 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -49,6 +51,8 @@ public class RivenBossEntity extends Monster {
 
     private final ServerBossEvent bar = new ServerBossEvent(Component.literal("Riven Remake"), BossEvent.BossBarColor.PURPLE, BossEvent.BossBarOverlay.NOTCHED_10);
     private final RivenBrain brain = new RivenBrain(this);
+    private final RivenPassives passives = new RivenPassives(this);
+    private boolean untargetable, riftOpen, aggroSeen;
     private final Set<UUID> fighters = new HashSet<>();
     private BlockPos arena;
     private float charge = 40f;
@@ -88,6 +92,28 @@ public class RivenBossEntity extends Monster {
 
     @Override public boolean removeWhenFarAway(double d) { return false; }
     @Override protected boolean shouldDespawnInPeaceful() { return false; }
+
+    RivenPassives passives() { return passives; }
+    BlockPos arenaPos() { return arena != null ? arena : blockPosition(); }
+    boolean isStaggered(long t) { return t < staggerUntil; }
+    void replan() { brain.abort(); }
+    void setUntargetable(boolean b) { untargetable = b; }
+    boolean canRewriteNow() { ThreatScan sc = brain.scan(); return sc == null || passives.canRewrite(sc); }
+
+    /** Unbelieved: a target he cannot rewrite is told by a bark, and he replans. */
+    void unbelieved(ServerLevel sl, LivingEntity t) {
+        say(sl, "...You're not in my story. Fine. Different page.");
+        brain.abort();
+    }
+
+    /** Unwritten Ending: the grimoire closes and he cannot be targeted for 1.5 s (the final_form clip plays). */
+    void beginUnwrittenEnding() {
+        setUntargetable(true);
+        brain.abort();
+        staggerUntil = tickCount + 30;
+        setClip("final_form", "Unwritten Ending");
+        if (level() instanceof ServerLevel sl) say(sl, "The grimoire closes.");
+    }
 
     public int phase() { return entityData.get(PHASE); }
     public void setArena(BlockPos p) { arena = p.immutable(); }
@@ -154,13 +180,19 @@ public class RivenBossEntity extends Monster {
         if (ph != phase()) enterPhase(sl, ph, t);
         bar.setProgress(frac);
         bar.setName(Component.literal("Riven Remake  \u00b7  " + (ph == 1 ? "The Black Bulls' Bard" : ph == 2 ? "Fictional Remake" : "Final Form")).withStyle(ChatFormatting.DARK_PURPLE));
-        if (t % 6 == 0) charge = Math.min(100f, charge + (ph >= 2 ? 0.8f : 0.5f));
+        if (t % 6 == 0) charge = Math.min(100f, charge + (ph >= 2 ? 0.8f : 0.5f) * passives.chargeGain(sl, t));
         if (t % 20 == 0) { sync(); scaleForPlayers(sl); }
         if (distanceToSqr(Vec3.atBottomCenterOf(arena)) > 48 * 48) {                         // leash: he does not spawn-camp or wander off
             teleportTo(arena.getX() + 0.5, arena.getY(), arena.getZ() + 0.5);
             getNavigation().stop();
         }
-        if (t < staggerUntil) { getNavigation().stop(); return; }
+        if (t == 1) passives.grantUpTo(phase());
+        LivingEntity tg = getTarget();
+        if (!aggroSeen && tg != null) { aggroSeen = true; collapseRift(sl); }
+        if (riftOpen && t % 10 == 0) arenaBarrier(sl);
+        passives.tick(sl, t, tg);
+        passives.jack(sl, t, brain.scan());
+        if (untargetable || t < staggerUntil) { getNavigation().stop(); return; }
         brain.tick(sl, t);
     }
 
@@ -181,6 +213,9 @@ public class RivenBossEntity extends Monster {
     private void enterPhase(ServerLevel sl, int ph, long t) {
         entityData.set(PHASE, ph);
         brain.abort();
+        passives.grantUpTo(ph);
+        if (ph == 3) passives.emotionalHigh(t);
+        VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, position().add(0, 1.4, 0), position(), 0xFFFFC94A, 40, 1.4f);   // the Black Bulls' emblem cracks
         if (ph == 2) {
             say(sl, "I might not be the strongest, but I'll make sure my story hits harder than anyone expected.");
             busyUntil = t + 28;
@@ -189,6 +224,8 @@ public class RivenBossEntity extends Monster {
             say(sl, "It's not just a game. It's my other life.");
             busyUntil = t + 44;
             charge = 100f;
+            passives.finalFormReset();
+            passives.doomsGate(sl);
             setClip("final_form", "???");
         }
         VfxSpawn.sendFollowing(sl, VfxShape.LIGHTNING_FIEND, this, position(), RivenAttacks.BLUE_VIOLET, 60, 2f);
@@ -207,11 +244,20 @@ public class RivenBossEntity extends Monster {
                 if (level() instanceof ServerLevel sl) sl.playSound(null, blockPosition(), SoundEvents.GLASS_BREAK, SoundSource.HOSTILE, 1.2f, 1.2f);
             }
         }
+        if (!level().isClientSide) {
+            if (untargetable && tickCount >= staggerUntil) setUntargetable(false);
+            float out = passives.damage(source, amount, tickCount);
+            if (out < 0f) return false;
+            amount = out;
+        }
         return super.hurt(source, amount);
     }
 
     @Override
     public void die(DamageSource source) {
+        passives.denyPlunder();
+        passives.clear();
+        riftOpen = false;
         super.die(source);
         if (!(level() instanceof ServerLevel sl)) return;
         setClip("death", "");
@@ -224,17 +270,71 @@ public class RivenBossEntity extends Monster {
         }
     }
 
+    /** Tensura resistances shorten harmful effects instead of nullifying them; his own script effects (beneficial) pass untouched. */
+    @Override
+    public boolean addEffect(MobEffectInstance e, net.minecraft.world.entity.Entity cause) {
+        if (!level().isClientSide && e.getEffect().value().getCategory() == net.minecraft.world.effect.MobEffectCategory.HARMFUL) {
+            e = new MobEffectInstance(e.getEffect(), passives.effectDuration(e), e.getAmplifier(), e.isAmbient(), e.isVisible(), e.showIcon());
+        }
+        return super.addEffect(e, cause);
+    }
+
+    /** Pain Nullification (Final Form only): no knockback. Below that he flinches like anyone else. */
+    @Override
+    public void knockback(double strength, double x, double z) {
+        if (phase() >= 3 && !level().isClientSide) return;
+        super.knockback(strength, x, z);
+    }
+
+    @Override
+    public boolean doHurtTarget(net.minecraft.world.entity.Entity target) {
+        boolean ok = super.doHurtTarget(target);
+        if (ok && target instanceof LivingEntity le) com.newuniverse.nusmp.item.RivenEngravings.onHit(this, le, getMainHandItem(), passives.isBondTarget(le), tickCount);
+        return ok;
+    }
+
+    @Override
+    public boolean killedEntity(ServerLevel sl, LivingEntity victim) {
+        if (victim instanceof ServerPlayer p) passives.logKill(p, brain.planName());            // Page Memory: the one passive that writes to the debug log
+        return super.killedEntity(sl, victim);
+    }
+
+    /** The forest rift: a vertical gold story-rift in the treeline. Particles only, no dimension. */
+    void openRift(ServerLevel sl) {
+        riftOpen = true;
+        Vec3 at = position().add(0, 1.4, 0);
+        VfxSpawn.send(sl, VfxShape.SPATIAL_RIFT, at, at, 0xFFFFC94A, 80, 2.4f);
+    }
+
+    /** On aggro the rift collapses into the arena barrier (a particle ring) and the page-shards shimmer. */
+    private void collapseRift(ServerLevel sl) {
+        riftOpen = true;
+        VfxSpawn.send(sl, VfxShape.SPACE_PORTAL, position().add(0, 1.2, 0), position(), 0xFFFFC94A, 50, 2.2f);
+        sl.playSound(null, blockPosition(), SoundEvents.END_PORTAL_SPAWN, SoundSource.HOSTILE, 1.4f, 1.1f);
+    }
+
+    private void arenaBarrier(ServerLevel sl) {
+        Vec3 c = Vec3.atBottomCenterOf(arenaPos());
+        double a = (tickCount % 360) * Math.PI / 18;
+        for (int i = 0; i < 6; i++) {
+            double ang = a + i * Math.PI / 3;
+            sl.sendParticles(net.minecraft.core.particles.ParticleTypes.END_ROD, c.x + Math.cos(ang) * 40, c.y + 1 + (i % 3), c.z + Math.sin(ang) * 40, 1, 0, 0.4, 0, 0.01);
+        }
+    }
+
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         if (arena != null) tag.put("Arena", NbtUtils.writeBlockPos(arena));
         tag.putFloat("Charge", charge);
+        passives.save(tag);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         NbtUtils.readBlockPos(tag, "Arena").ifPresent(p -> arena = p);
+        passives.load(tag);
         charge = tag.contains("Charge") ? tag.getFloat("Charge") : 40f;
         float frac = getHealth() / getMaxHealth();
         entityData.set(PHASE, frac > 0.7f ? 1 : frac > 0.3f ? 2 : 3);
@@ -248,6 +348,8 @@ public class RivenBossEntity extends Monster {
         r.moveTo(at.x, at.y, at.z, 0, 0);
         r.setArena(BlockPos.containing(at));
         sl.addFreshEntity(r);
+        r.passives.grantUpTo(1);
+        r.openRift(sl);
         VfxSpawn.send(sl, VfxShape.SPACE_PORTAL, at.add(0, 1.2, 0), at, RivenAttacks.BLUE_VIOLET, 60, 2f);
         sl.playSound(null, r.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.HOSTILE, 2f, 0.7f);
         return r;
