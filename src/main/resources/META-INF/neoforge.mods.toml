@@ -4,11 +4,11 @@ license="All rights reserved"
 
 [[mods]]
 modId="nusmp"
-version="0.61.0"
+version="0.98.0"
 displayName="Multiverse"
 logoFile="logo.png"
 logoBlur=false
-description='''Anime powers for Tensura: Reincarnated - Hell Mode, DanMachi, Black Clover grimoires, Fire Force, Jujutsu Kaisen, JoJo and more, with Unique to Ultimate evolutions.'''
+description='''Anime powers for Tensura: Reincarnated - Hell Mode, DanMachi, Black Clover grimoires, Fire Force, Jujutsu Kaisen, JoJo and more, with Unique to Ultimate evolutions. Raid bosses: Zagred, Marquis Remake.'''
 
 [[dependencies.nusmp]]
 modId="neoforge"
