@@ -35,6 +35,22 @@ final class RivenCombat {
         };
     }
 
+    static String avatarFor(int phase, boolean tank, boolean healer, boolean flier, boolean magicNull, boolean caster) {
+        if (phase >= 4) return "The Creator";
+        if (phase == 3) {
+            if (flier) return "Anti-Spiral";
+            if (magicNull) return "Arceus";
+            if (healer || caster) return "Lord of Nightmares";
+            return "Grand Zeno";
+        }
+        if (phase == 2) {
+            if (tank) return "Beerus";
+            if (healer) return "Ultimate Madoka";
+            return "Zeus";
+        }
+        return "";
+    }
+
     static List<AnimeSkill> grimoirePages(Iterable<AnimeSkill> skills, int phase) {
         List<AnimeSkill> pages = new ArrayList<>();
         for (AnimeSkill skill : skills) {

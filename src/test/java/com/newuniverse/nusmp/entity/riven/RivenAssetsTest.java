@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.newuniverse.nusmp.client.geo.GeoAnim;
 import com.newuniverse.nusmp.client.geo.GeoModelData;
+import com.newuniverse.nusmp.grimoire.CanonBook;
 import com.newuniverse.nusmp.skill.codex.AnimeSkill;
 import com.newuniverse.nusmp.skill.codex.SkillForge;
 import com.newuniverse.nusmp.skill.codex.SkillSandbox;
@@ -17,6 +18,7 @@ import java.util.HashSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import javax.imageio.ImageIO;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -116,6 +118,42 @@ class RivenAssetsTest {
         assertTrue(fin.cubeCount() > base.cubeCount());
         for (String png : new String[]{"riven_remake", "riven_remake_glow", "riven_remake_final", "riven_remake_final_glow"})
             assertTrue(new File(ASSETS, "textures/entity/" + png + ".png").isFile(), png);
+    }
+
+    @Test
+    void marquisSkinAndCoatAreSeparatePlayerScaleLayers() throws Exception {
+        GeoModelData skin = GeoModelData.parse("marquis_skin", read(new File(ASSETS, "geo/entity/marquis_skin.geo.json")).getAsJsonObject());
+        GeoModelData coat = GeoModelData.parse("marquis_coat", read(new File(ASSETS, "geo/entity/marquis_coat.geo.json")).getAsJsonObject());
+        GeoModelData finalForm = GeoModelData.parse("marquis_final", read(new File(ASSETS, "geo/entity/marquis_final.geo.json")).getAsJsonObject());
+        for (String bone : new String[]{"head", "torso", "armR", "armL", "legR", "legL"}) assertTrue(skin.bones.containsKey(bone), bone);
+        assertTrue(coat.cubeCount() >= 5);
+        assertTrue(finalForm.bones.containsKey("wingL") && finalForm.bones.containsKey("wingR") && finalForm.bones.containsKey("crown"));
+        assertEquals(128, ImageIO.read(new File(ASSETS, "textures/entity/marquis_skin.png")).getWidth());
+        assertEquals(128, ImageIO.read(new File(ASSETS, "textures/entity/marquis_coat.png")).getHeight());
+        assertEquals(16, ImageIO.read(new File(ASSETS, "textures/item/marquis_crest_cape.png")).getWidth());
+    }
+
+    @Test
+    void registeredCanonBooksAreAvailableForTheRenderedDraw() {
+        assertTrue(CanonBook.values().length > 35);
+        assertTrue(java.util.Arrays.stream(CanonBook.values()).anyMatch(book -> book.owner.equals("Julius Novachrono")));
+        assertTrue(java.util.Arrays.stream(CanonBook.values()).anyMatch(book -> book.owner.equals("Riven Remake")));
+    }
+
+    @Test
+    void entityLootUsesTheStableEntityIdAndIncludesOnlyRegisteredMarquisItems() throws Exception {
+        JsonObject loot = read(new File("src/main/resources/data/nusmp/loot_table/entities/riven_remake.json")).getAsJsonObject();
+        assertEquals("minecraft:entity", loot.get("type").getAsString());
+        assertEquals(4, loot.getAsJsonArray("pools").size());
+        Set<String> names = new HashSet<>();
+        for (JsonElement pool : loot.getAsJsonArray("pools")) {
+            JsonObject firstEntry = pool.getAsJsonObject().getAsJsonArray("entries").get(0).getAsJsonObject();
+            names.add(firstEntry.get("name").getAsString());
+        }
+        assertTrue(names.contains("nusmp:black_bull_bard_relic"));
+        assertTrue(names.contains("nusmp:marquis_story_page"));
+        assertTrue(names.contains("nusmp:marquis_crest_cape"));
+        assertTrue(names.contains("nusmp:marquis_final_crown"));
     }
 
     @Test

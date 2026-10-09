@@ -28,6 +28,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Riven Remake: the geo model (player proportions: messy hair, black high-collar coat with the Black Bull skull, tails, a violet glow)
  * played with the clips of assets/nusmp/animations/entity/riven_remake.animation.json (idle, walk, talk, casts, combos, hit, stagger,
@@ -36,7 +39,13 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
  */
 public final class RivenRenderer extends EntityRenderer<RivenBossEntity> {
     private static final GeoSpec BASE = GeoSpec.of("riven", "remake"), FINAL = GeoSpec.of("riven", "remake_final");
-    private static ItemStack book = ItemStack.EMPTY;
+    private static final GeoSpec SKIN_MODEL = GeoSpec.of("marquis", "skin");
+    private static final GeoSpec COAT_MODEL = GeoSpec.of("marquis", "coat");
+    private static final GeoSpec FINAL_MODEL = GeoSpec.of("marquis", "final");
+    private static final GeoSpec SKIN = new GeoSpec(SKIN_MODEL.model(), BASE.animations(), SKIN_MODEL.texture(), null);
+    private static final GeoSpec COAT = new GeoSpec(COAT_MODEL.model(), BASE.animations(), COAT_MODEL.texture(), null);
+    private static final GeoSpec FINAL_OVERLAY = new GeoSpec(FINAL_MODEL.model(), FINAL.animations(), FINAL.texture(), FINAL.glow());
+    private static final Map<String, ItemStack> BOOKS = new HashMap<>();
 
     public RivenRenderer(EntityRendererProvider.Context ctx) { super(ctx); this.shadowRadius = 0.5f; }
 
@@ -64,10 +73,32 @@ public final class RivenRenderer extends EntityRenderer<RivenBossEntity> {
         }
         float glowPulse = 0.7f + 0.3f * Mth.sin(age * (e.phase() >= 3 ? 0.35f : 0.12f));
         int g = (int) (255 * glowPulse);
-        GeoDraw.paint(pose, buffers, e.phase() >= 3 ? FINAL : BASE, clip, seconds, GeoDraw.Space.PROP, GeoDraw.Layer.CUTOUT, light, 0xFFFFFFFF,
-                0xFF000000 | (g << 16) | (g << 8) | g);
+        if (e.phase() == 1) {
+            GeoDraw.paint(pose, buffers, SKIN, clip, seconds, GeoDraw.Space.PROP, GeoDraw.Layer.CUTOUT, light, 0xFFFFFFFF, 0);
+        } else if (e.phase() >= 2 && e.phase() < 4) {
+            GeoDraw.paint(pose, buffers, SKIN, clip, seconds, GeoDraw.Space.PROP, GeoDraw.Layer.CUTOUT, light, 0xFFFFFFFF, 0);
+            float coatAlpha = e.phase() == 2 && clip.equals("phase2") ? Mth.clamp(seconds / 1.4f, 0f, 1f) : 1f;
+            int alpha = (int) (255 * coatAlpha);
+            GeoDraw.paint(pose, buffers, COAT, clip, seconds, GeoDraw.Space.PROP, GeoDraw.Layer.TRANSLUCENT, light,
+                    (alpha << 24) | 0x00FFFFFF, 0);
+        } else {
+            GeoDraw.paint(pose, buffers, SKIN, clip, seconds, GeoDraw.Space.PROP, GeoDraw.Layer.CUTOUT, light, 0xFFFFFFFF, 0);
+            GeoDraw.paint(pose, buffers, COAT, clip, seconds, GeoDraw.Space.PROP, GeoDraw.Layer.CUTOUT, light, 0xFFFFFFFF, 0);
+            GeoDraw.paint(pose, buffers, FINAL_OVERLAY, clip, seconds, GeoDraw.Space.PROP, GeoDraw.Layer.CUTOUT, light, 0xFFFFFFFF,
+                    0xFF000000 | (g << 16) | (g << 8) | g);
+        }
+        if (e.phase() >= 3 && e.phase() < 4 && e.tickCount % 3 == 0) {
+            for (int i = 0; i < 3; i++) {
+                double angle = age * 0.08 + i * Math.PI * 2 / 3;
+                e.level().addParticle(net.minecraft.core.particles.ParticleTypes.ELECTRIC_SPARK,
+                        e.getX() + Math.cos(angle) * 0.9, e.getY() + 0.7 + (i % 2) * 0.55, e.getZ() + Math.sin(angle) * 0.9,
+                        0, 0.03, 0);
+                e.level().addParticle(net.minecraft.core.particles.ParticleTypes.WAX_ON,
+                        e.getX() + Math.cos(angle) * 1.6, e.getY() + 0.05, e.getZ() + Math.sin(angle) * 1.6, 0, 0.02, 0);
+            }
+        }
         if (e.signatureCasting() && NUShaders.zagredAura() != null) {
-            GeoSpec aura = e.phase() >= 3 ? FINAL : BASE;
+            GeoSpec aura = e.phase() >= 4 ? FINAL_OVERLAY : e.phase() == 1 ? SKIN : COAT;
             GeoModelData model = GeoModels.model(aura.model());
             GeoAnim animations = GeoModels.animations(aura.animations());
             GeoAnim.Clip auraClip = animations == null ? null : animations.clip(clip);
@@ -83,10 +114,28 @@ public final class RivenRenderer extends EntityRenderer<RivenBossEntity> {
     }
 
     private void renderBook(RivenBossEntity e, float age, int light, PoseStack pose, MultiBufferSource buffers, String clip) {
-        if (book.isEmpty()) book = GrimoireItem.withOpenView(GrimoireItem.createCanon(CanonBook.RIVEN), GrimoireCarry.OPEN_STEPS);
+        CanonBook selection = CanonBook.byId(e.drawnGrimoire());
+        if (selection == null) {
+            selection = CanonBook.RIVEN;
+            for (CanonBook candidate : CanonBook.values()) {
+                if (candidate.owner.equals(e.drawnGrimoire())) {
+                    selection = candidate;
+                    break;
+                }
+            }
+        }
+        boolean open = e.phase() >= 2;
+        CanonBook bookType = selection;
+        String cacheKey = bookType.name() + (open ? "_open" : "_closed");
+        ItemStack book = BOOKS.computeIfAbsent(cacheKey, key -> {
+            ItemStack stack = GrimoireItem.createCanon(bookType);
+            return open ? GrimoireItem.withOpenView(stack, GrimoireCarry.OPEN_STEPS) : stack;
+        });
         boolean casting = clip.startsWith("cast") || clip.equals("manifest_weapon") || clip.equals("soul_bond");
         pose.pushPose();
-        pose.translate(0.62, 1.15 + Mth.sin(age * 0.08f) * 0.05, 0.1);                       // his left, hip-high, floating
+        float orbit = e.phase() >= 2 ? 0.22f : 0f;
+        pose.translate(0.28 + Mth.sin(age * 0.04f) * orbit, e.phase() >= 2 ? 2.05 + Mth.sin(age * 0.08f) * 0.08 : 1.05,
+                e.phase() >= 2 ? -0.42 + Mth.cos(age * 0.04f) * orbit : 0.1);
         pose.mulPose(Axis.YP.rotationDegrees(-8f + Mth.sin(age * 0.05f) * 4f));
         pose.mulPose(Axis.ZP.rotationDegrees(casting ? Mth.sin(age * 0.6f) * 8f : Mth.sin(age * 0.04f) * 2f));
         pose.scale(0.85f, 0.85f, 0.85f);

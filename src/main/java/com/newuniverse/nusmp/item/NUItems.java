@@ -88,6 +88,12 @@ public final class NUItems {
     public static final DeferredItem<Item> HEART_OF_WORDS = ITEMS.register("heart_of_words", () -> new Item(new Item.Properties().stacksTo(16).rarity(Rarity.EPIC).fireResistant()));
     // 0.92: Riven Remake's relic and spawn egg
     public static final DeferredItem<Item> BARD_RELIC = ITEMS.register("black_bull_bard_relic", () -> new Item(new Item.Properties().stacksTo(16).rarity(Rarity.EPIC).fireResistant()));
+    public static final DeferredItem<Item> MARQUIS_STORY_PAGE = ITEMS.register("marquis_story_page",
+            () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    public static final DeferredItem<Item> MARQUIS_CREST_CAPE = ITEMS.register("marquis_crest_cape",
+            () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    public static final DeferredItem<Item> MARQUIS_CROWN = ITEMS.register("marquis_final_crown",
+            () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
     public static final DeferredItem<net.minecraft.world.item.SpawnEggItem> RIVEN_SPAWN_EGG = ITEMS.register("riven_remake_spawn_egg",
             () -> new net.minecraft.world.item.SpawnEggItem(com.newuniverse.nusmp.entity.NUEntities.RIVEN.get(), 0x14101F, 0x8A6AFF, new Item.Properties()));
 

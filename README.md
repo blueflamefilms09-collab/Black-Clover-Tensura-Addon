@@ -60,7 +60,7 @@ Magic spells fire when the skill key is released; holding the key does not trigg
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.98.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-0.99.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -233,6 +233,14 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - Combat rolls draw from validated Black Clover Anime Skill Codex pages; anti-magic/Nihility burns the selected page. Added the phase-I New Order weapon-speed effect, Gearshift Low/Top, Fa Jin charge/release, arena-bounded Compress for players, and an Evil Eye healing block on its marked target.
 - Added one 12-second, boss-owned story-avatar construct per unlocked phase; The Creator is one-use in phase IV and suppresses healing for eight seconds among nearby arena entities. Anti-magic breaks an active avatar.
 - Still incomplete: the sheet/skin overlay model and exact supplied Minecraft skin, full distinct movesets for all ten avatars, arbitrary-block/construct Compress with restoration, warmup orders for mod/Tensura spells, a random registered grimoire *book* cast through a boss-safe SpellRuntime path, and the requested loot table/cosmetic items. `nusmp:story_rift` is not registered; the existing 60-second arena-local pull remains. No in-game render/combat session was available for verification.
+
+## 0.99.0 - Marquis visual, book draw, avatars, and loot
+
+- Replaced the phase-I body with original Minecraft-scale pixel geometry/textures reflecting the supplied skin reference (brown hair, blue sweatshirt, white crest, gray trousers, white shoes). Phase II fades the coat overlay in during the existing phase clip; phase III adds gold-ring/electric particles; phase IV keeps the skin and coat and layers the existing page wings/crown over them.
+- Combat-type rolls now select an actual registered `CanonBook` cover for the floating grimoire and show its owner on the boss bar, while the existing validated Black Clover codex skill remains the boss's cast. This is a visual book draw, not player-grimoire SpellRuntime casting.
+- Avatar selection now branches on tank/healer/flyer/caster/nullification reads. Zeus has a geared punch, Beerus a bounded damaging burst, Madoka removes one harmful boss effect and one beneficial target effect, Anti-Spiral fires a line hit, Lord of Nightmares creates a bounded healing-denial field, Arceus accelerates Marquis, and Zeno can dismiss one nearby owned construct. Each special has a short VFX tell; the existing 12-second/one-avatar ownership limit remains. Truth and Kami Tenchi are not implemented as distinct mechanics.
+- Added entity loot tables at both the requested Marquis name and the preserved `nusmp:riven_remake` registry key. Real entity death drops the existing bard relic, a story page, and a crest-cape token; a cracked crown vanity has an 8% roll. The cape is currently an inventory cosmetic token, not a wearable/rendered cape.
+- Still incomplete: Page Edge/Bull Brand engravings and a single-use rift key are absent because those enchantments and `nusmp:story_rift` are not registered. A boss-safe arbitrary book spell path is also unavailable: SpellRuntime's projectile owner is a `ServerPlayer`; the boss continues to cast its validated codex skill. New Order still implements weapon slowdown and Gearshift only; there is no reliable cast-warmup event hook for the two-cast slow rule. Ground-is-stone is not implemented. Only six avatar translations have special mechanics; Truth, Kami Tenchi, the Creator's distinct visual, and several requested combat interactions remain incomplete. No in-game client render/combat verification was run.
 
 ## 0.96.0 - Riven attack roster continuation
 

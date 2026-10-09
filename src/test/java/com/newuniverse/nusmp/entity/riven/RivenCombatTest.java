@@ -31,6 +31,19 @@ class RivenCombatTest {
     }
 
     @Test
+    void avatarsAreUnlockedInOrderAndCounterTheObservedThreat() {
+        assertEquals("", RivenCombat.avatarFor(1, false, false, false, false, false));
+        assertEquals("Beerus", RivenCombat.avatarFor(2, true, false, false, false, false));
+        assertEquals("Ultimate Madoka", RivenCombat.avatarFor(2, false, true, false, false, false));
+        assertEquals("Zeus", RivenCombat.avatarFor(2, false, false, false, false, false));
+        assertEquals("Anti-Spiral", RivenCombat.avatarFor(3, false, false, true, false, false));
+        assertEquals("Arceus", RivenCombat.avatarFor(3, false, false, false, true, false));
+        assertEquals("Lord of Nightmares", RivenCombat.avatarFor(3, false, true, false, false, false));
+        assertEquals("Grand Zeno", RivenCombat.avatarFor(3, false, false, false, false, false));
+        assertEquals("The Creator", RivenCombat.avatarFor(4, false, false, false, false, false));
+    }
+
+    @Test
     void grimoireDrawUsesOnlyValidatedBlackCloverPages() {
         AnimeSkill blackClover = skill("voltage_page", 1, "black_clover");
         AnimeSkill antiMagic = skill("anti_magic_lord", 1, "black_clover");

@@ -7,7 +7,7 @@ import com.newuniverse.nusmp.book.SpellRuntime;
 import com.newuniverse.nusmp.entity.NUEntities;
 import com.newuniverse.nusmp.entity.TensuraCaster;
 import com.newuniverse.nusmp.entity.ZagredBossEntity;
-import com.newuniverse.nusmp.item.NUItems;
+import com.newuniverse.nusmp.grimoire.CanonBook;
 import com.newuniverse.nusmp.skill.codex.AnimeSkill;
 import com.newuniverse.nusmp.skill.codex.AnimeSkillCodex;
 import com.newuniverse.nusmp.skill.NUSkills;
@@ -42,7 +42,6 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import io.github.manasmods.manascore.skill.api.SkillAPI;
@@ -92,6 +91,7 @@ public class RivenBossEntity extends Monster {
     private int boredSeconds;
     private long portalAt, portalReadyAt, phaseIFramesUntil, phaseTwoAt;
     private long nextSignatureAt;
+    private long nextNewOrderAt;
     private String nullType = "";
     private long nullUntil;
     private boolean phaseTwoMagicNullStarted, finalNullStarted;
@@ -163,6 +163,7 @@ public class RivenBossEntity extends Monster {
     public int clip() { return entityData.get(CLIP); }
     public int clipStartTick() { return clientClipStart; }
     public boolean signatureCasting() { return RivenCombat.signature(casting); }
+    public String drawnGrimoire() { return drawnGrimoire; }
     public float story() { return story; }
     AnimeSkill lastCastSkill() { return lastCast; }
     BlockPos arenaPosition() { return arena == null ? blockPosition() : arena; }
@@ -345,7 +346,8 @@ public class RivenBossEntity extends Monster {
             return;
         }
         AnimeSkill page = pages.get(getRandom().nextInt(pages.size()));
-        drawnGrimoire = page.name();
+        CanonBook tome = CanonBook.values()[getRandom().nextInt(CanonBook.values().length)];
+        drawnGrimoire = tome.owner;
         forced = page;
         brain.invalidate();
         statusText = "Grimoire drawn";
@@ -365,8 +367,9 @@ public class RivenBossEntity extends Monster {
     }
 
     private void tryNewOrder(ServerLevel sl, LivingEntity target) {
-        if (newOrderUsed || phase() != 1 || fightTicks < 40 || distanceToSqr(target) > 36 || casting != null) return;
+        if (phase() != 1 || fightTicks < 40 || tickCount < nextNewOrderAt || distanceToSqr(target) > 36 || casting != null) return;
         newOrderUsed = true;
+        nextNewOrderAt = tickCount + 160;
         boolean heavy = !target.getMainHandItem().isEmpty() && target.getAttribute(Attributes.ATTACK_SPEED) != null;
         String order = heavy ? "That weapon is heavy." : "I am faster.";
         statusText = "New Order";
@@ -376,6 +379,7 @@ public class RivenBossEntity extends Monster {
         VfxSpawn.send(sl, VfxShape.ALCHEMY_CIRCLE, target.position(), target.position().add(0, 0.05, 0), 0xFFF2E5FF, 20, 1.5f);
         SpellRuntime.later(sl, 20, () -> {
             if (!isAlive() || isStaggeredNow() || !target.isAlive() || distanceToSqr(target) > 64
+                    || target.blockPosition().distSqr(arenaPosition()) > 48L * 48L
                     || target instanceof Player p && rewriteShield(p)) {
                 statusText = "New Order fizzled";
                 statusUntil = tickCount + 30;
@@ -385,7 +389,7 @@ public class RivenBossEntity extends Monster {
             else MarquisStatus.applyGearshift(this, true, 80);
             sl.playSound(null, blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.HOSTILE, 1.2f, 1.4f);
             statusText = "New Order · " + (heavy ? "Heavy" : "Gearshift Top");
-            statusUntil = tickCount + 120;
+            statusUntil = tickCount + 160;
         });
     }
 
@@ -433,22 +437,23 @@ public class RivenBossEntity extends Monster {
         if (isStaggeredNow()) return;
         if (!sl.getEntitiesOfClass(StoryConstructEntity.class, getBoundingBox().inflate(48),
                 c -> c.ownedBy(getUUID()) && c.isAvatar()).isEmpty()) return;
-        String name;
-        if (avatarScheduledPhase == 2) {
-            ThreatScan scan = ThreatScan.of(this, target);
-            name = scan.has("tank") ? "Beerus" : scan.has("caster") ? "Ultimate Madoka" : "Zeus";
-        } else if (avatarScheduledPhase == 3) {
-            ThreatScan scan = ThreatScan.of(this, target);
-            name = scan.has("flier") ? "Anti-Spiral" : scan.has("magic_null") ? "Grand Zeno" : "Arceus";
-        } else {
-            name = "The Creator";
-        }
+        ThreatScan scan = ThreatScan.of(this, target);
+        String name = RivenCombat.avatarFor(avatarScheduledPhase, scan.has("tank"), scan.has("healer"), scan.has("flier"),
+                scan.has("magic_null"), scan.has("caster"));
+        if (name.isEmpty()) return;
         Vec3 at = position().add(getLookAngle().multiply(-2, 0, -2));
         StoryConstructEntity avatar = StoryConstructEntity.spawnAvatar(sl, this, name, at);
         if (avatar != null) {
             statusText = "Avatar · " + name;
             statusUntil = tickCount + 240;
             say(sl, name + ", take the stage.");
+            if ("Zeus".equals(name)) MarquisStatus.applyGearshift(avatar, true, 80);
+            if ("The Creator".equals(name)) {
+                statusText = "The Creator · Healing sealed";
+                statusUntil = tickCount + 160;
+                MarquisStatus.suppressHealingInArena(sl.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(48),
+                        e -> e != this && e.isAlive()), 160);
+            }
         }
     }
 
@@ -558,10 +563,6 @@ public class RivenBossEntity extends Monster {
                 creatorUsed = true;
                 scheduleAvatar(4);
             }
-            statusText = "The Creator · Healing sealed";
-            statusUntil = tickCount + 160;
-            MarquisStatus.suppressHealingInArena(sl.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(48),
-                    e -> e != this && e.isAlive()), 160);
         }
     }
 
@@ -850,14 +851,6 @@ public class RivenBossEntity extends Monster {
         if (!(level() instanceof ServerLevel sl)) return;
         playClip("death");
         say(sl, "Huh. So that's how it ends. ...Good story.");
-        for (UUID id : fighters) {
-            ServerPlayer p = sl.getServer().getPlayerList().getPlayer(id);
-            if (p == null) continue;
-            ItemStack relic = new ItemStack(NUItems.BARD_RELIC.get());
-            if (!p.getInventory().add(relic)) p.drop(relic, false);
-            p.sendSystemMessage(Component.literal("The Black Bulls' Bard leaves you his page: ").withStyle(ChatFormatting.LIGHT_PURPLE)
-                    .append(new ItemStack(NUItems.BARD_RELIC.get()).getHoverName()));
-        }
     }
 
     @Override

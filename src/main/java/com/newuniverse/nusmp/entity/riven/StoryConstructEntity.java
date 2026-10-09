@@ -12,6 +12,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -35,6 +36,8 @@ public class StoryConstructEntity extends Monster {
     private static final EntityDataAccessor<Integer> KIND = SynchedEntityData.defineId(StoryConstructEntity.class, EntityDataSerializers.INT);
     private UUID owner;
     private int life = 400;
+    private int avatarActionAt = -1;
+    private int avatarFieldUntil;
 
     public StoryConstructEntity(EntityType<? extends Monster> type, Level level) {
         super(type, level);
@@ -105,6 +108,71 @@ public class StoryConstructEntity extends Monster {
         if (kind() == SHIELD && boss.getTarget() != null && tickCount % 10 == 0) {          // stands between Riven and his target
             Vec3 mid = boss.position().add(boss.getTarget().position().subtract(boss.position()).normalize().scale(2.2));
             getNavigation().moveTo(mid.x, mid.y, mid.z, 1.3);
+        }
+        if (isAvatar()) tickAvatar(boss, (ServerLevel) level());
+    }
+
+    private void tickAvatar(RivenBossEntity boss, ServerLevel level) {
+        String name = getCustomName() == null ? "" : getCustomName().getString();
+        if ("Lord of Nightmares".equals(name) && tickCount < avatarFieldUntil) {
+            for (Player player : level.getEntitiesOfClass(Player.class, getBoundingBox().inflate(4))) {
+                if (player.isAlive()) MarquisStatus.markEvilEye(player, 2);
+            }
+        }
+        if (avatarActionAt < 0 && tickCount % 50 == 1) {
+            avatarActionAt = tickCount + 8;
+            VfxSpawn.send(level, VfxShape.THREAD_LINE, position(), position().add(0, 1.5, 0),
+                    0xFFD9B8FF, 8, 1.1f);
+        }
+        if (avatarActionAt < 0 || tickCount < avatarActionAt) return;
+        avatarActionAt = -1;
+        LivingEntity target = boss.getTarget();
+        switch (name) {
+            case "Zeus" -> {
+                if (target != null && target.isAlive() && distanceToSqr(target) <= 16
+                        && getLookAngle().normalize().dot(target.getEyePosition().subtract(getEyePosition()).normalize()) > 0.45) {
+                    target.hurt(damageSources().mobAttack(this), 12f);
+                    target.knockback(0.7, getX() - target.getX(), getZ() - target.getZ());
+                }
+                VfxSpawn.send(level, VfxShape.ANTI_MAGIC_SLASH, getEyePosition(), getEyePosition().add(getLookAngle().scale(4)),
+                        0xFF85C8FF, 8, 0.9f);
+            }
+            case "Beerus" -> {
+                VfxSpawn.send(level, VfxShape.MAGIC_CIRCLE_EXPLOSION, position(), position().add(0, 0.1, 0),
+                        0xFFB37AFF, 10, 1.4f);
+                for (Player player : level.getEntitiesOfClass(Player.class, getBoundingBox().inflate(3))) {
+                    if (player.isAlive()) player.hurt(damageSources().mobAttack(this), 14f);
+                }
+            }
+            case "Ultimate Madoka" -> {
+                var harmful = boss.getActiveEffects().stream().filter(effect -> !effect.getEffect().value().isBeneficial()).findFirst();
+                harmful.ifPresent(effect -> boss.removeEffect(effect.getEffect()));
+                if (target != null) target.getActiveEffects().stream().filter(effect -> effect.getEffect().value().isBeneficial())
+                        .findFirst().ifPresent(effect -> target.removeEffect(effect.getEffect()));
+                VfxSpawn.send(level, VfxShape.MIRROR_SHATTER, position(), position().add(0, 1, 0), 0xFFFFD8FF, 10, 0.8f);
+            }
+            case "Anti-Spiral" -> {
+                if (target != null && target.isAlive() && distanceToSqr(target) <= 144 && hasLineOfSight(target))
+                    target.hurt(damageSources().mobAttack(this), 10f);
+                VfxSpawn.send(level, VfxShape.DARK_SLASH_DIMENSION, getEyePosition(), target == null ? getEyePosition() : target.getEyePosition(),
+                        0xFF8C6AFF, 12, 1.0f);
+            }
+            case "Lord of Nightmares" -> {
+                avatarFieldUntil = tickCount + 80;
+                VfxSpawn.send(level, VfxShape.DREAM_MANIFEST, position(), position().add(0, 0.1, 0), 0xFF482C70, 16, 1.1f);
+            }
+            case "Arceus" -> {
+                MarquisStatus.applyGearshift(boss, true, 80);
+                VfxSpawn.send(level, VfxShape.ALCHEMY_CIRCLE, boss.position(), boss.position().add(0, 0.1, 0),
+                        0xFFFFD86A, 12, 1.2f);
+            }
+            case "Grand Zeno" -> {
+                var constructs = level.getEntitiesOfClass(StoryConstructEntity.class, getBoundingBox().inflate(8),
+                        construct -> construct.ownedBy(owner) && construct != this);
+                if (!constructs.isEmpty()) constructs.get(0).discard();
+                VfxSpawn.send(level, VfxShape.MIRROR_SHATTER, position(), position().add(0, 1, 0), 0xFFFFF1FF, 10, 0.7f);
+            }
+            default -> { }
         }
     }
 
