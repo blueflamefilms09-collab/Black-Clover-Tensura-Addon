@@ -1,0 +1,21 @@
+{
+  "id": "nusmp:bc_lightning",
+  "anime": "black_clover",
+  "name": "Lightning Page",
+  "tier": 2,
+  "cast_ticks": 10,
+  "range": 18,
+  "primitives": [
+    "projectile",
+    "magic_damage"
+  ],
+  "counters": [
+    "armored",
+    "kiter"
+  ],
+  "resisted_by": [
+    "anti_magic"
+  ],
+  "animation": "cast_grimoire",
+  "line": "Blue-violet and fast."
+}

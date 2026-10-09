@@ -1,0 +1,19 @@
+{
+  "id": "nusmp:story_shield",
+  "anime": "fictional_remake",
+  "name": "Story Manifestation: Bull-Crest Ward",
+  "tier": 2,
+  "cast_ticks": 10,
+  "range": 6,
+  "primitives": [
+    "summon_construct",
+    "shield"
+  ],
+  "counters": [
+    "rusher",
+    "melee"
+  ],
+  "resisted_by": [],
+  "animation": "manifest_shield",
+  "line": "Chapter two: you cannot reach me."
+}

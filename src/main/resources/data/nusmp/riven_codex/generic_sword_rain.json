@@ -1,0 +1,22 @@
+{
+  "id": "nusmp:generic_sword_rain",
+  "anime": "generic",
+  "name": "Sword Rain",
+  "tier": 3,
+  "cast_ticks": 20,
+  "range": 16,
+  "primitives": [
+    "projectile",
+    "physical_damage"
+  ],
+  "counters": [
+    "armored",
+    "tank",
+    "kiter"
+  ],
+  "resisted_by": [
+    "physical_null"
+  ],
+  "animation": "manifest_weapon",
+  "line": "Fifty swords, one story."
+}

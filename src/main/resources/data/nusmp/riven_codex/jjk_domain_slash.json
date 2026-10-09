@@ -1,0 +1,23 @@
+{
+  "id": "nusmp:jjk_domain_slash",
+  "anime": "jujutsu_kaisen",
+  "name": "Dismantle",
+  "tier": 3,
+  "cast_ticks": 12,
+  "range": 12,
+  "primitives": [
+    "melee_arc",
+    "physical_damage",
+    "magic_damage"
+  ],
+  "counters": [
+    "tank",
+    "barrier"
+  ],
+  "resisted_by": [
+    "physical_null",
+    "anti_magic"
+  ],
+  "animation": "sword_combo_3",
+  "line": "Know your place."
+}

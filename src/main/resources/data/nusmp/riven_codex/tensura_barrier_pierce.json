@@ -1,0 +1,21 @@
+{
+  "id": "nusmp:tensura_barrier_pierce",
+  "anime": "tensura",
+  "name": "Barrier Pierce",
+  "tier": 3,
+  "cast_ticks": 14,
+  "range": 14,
+  "primitives": [
+    "projectile",
+    "magic_damage"
+  ],
+  "counters": [
+    "barrier",
+    "tank"
+  ],
+  "resisted_by": [
+    "anti_magic"
+  ],
+  "animation": "cast_grimoire",
+  "line": "Barriers are just paragraphs."
+}

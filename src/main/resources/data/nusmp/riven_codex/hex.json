@@ -1,0 +1,21 @@
+{
+  "id": "nusmp:hex",
+  "anime": "dnd",
+  "name": "Hex",
+  "tier": 1,
+  "cast_ticks": 10,
+  "range": 18,
+  "primitives": [
+    "slow",
+    "silence"
+  ],
+  "counters": [
+    "caster",
+    "rusher"
+  ],
+  "resisted_by": [
+    "anti_magic"
+  ],
+  "animation": "cast_grimoire",
+  "line": "You look cursed. Let me help."
+}

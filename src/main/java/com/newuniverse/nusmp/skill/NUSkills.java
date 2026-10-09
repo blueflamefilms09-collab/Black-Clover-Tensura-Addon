@@ -83,6 +83,12 @@ public final class NUSkills {
         }
     }
 
+    // ---- 0.61: Riven Remake's exclusive, boss-bound passives (no skill item, no plunder, no page drop) ----
+    public static final java.util.Map<String, DeferredHolder<ManasSkill, BossBoundSkill>> RIVEN_PASSIVES = new java.util.LinkedHashMap<>();
+    static {
+        for (String id : com.newuniverse.nusmp.entity.riven.RivenPassives.EXCLUSIVE) RIVEN_PASSIVES.put(id, SKILLS.register("riven_" + id, BossBoundSkill::new));
+    }
+
     // ---- Grimoire pages: Time ----
     public static final DeferredHolder<ManasSkill, TimePages.ChronoStasis> PAGE_CHRONO_STASIS = SKILLS.register("page_chrono_stasis", () -> new TimePages.ChronoStasis());
     public static final DeferredHolder<ManasSkill, TimePages.ChronoStasisGrigora> PAGE_CHRONO_STASIS_GRIGORA = SKILLS.register("page_chrono_stasis_grigora", () -> new TimePages.ChronoStasisGrigora());
