@@ -159,11 +159,6 @@ public class ZagredModel extends EntityModel<ZagredBossEntity> implements ArmedM
             forearmR.xRot = -0.35f; forearmL.xRot = -0.35f;
             for (int k = 0; k < 4; k++) { clawsR[k].xRot = -0.9f; clawsR[k].zRot = (k - 1.5f) * 0.3f; clawsL[k].xRot = -0.9f; clawsL[k].zRot = (k - 1.5f) * 0.3f; }
         }
-        if (state == ZagredBossEntity.STATE_PORTAL) {                         // frozen mid-stride, arms thrown wide and twisting into the portal
-            legR.xRot = legL.xRot = shinR.xRot = shinL.xRot = 0f;
-            armR.xRot = -0.4f; armL.xRot = -0.4f; armR.zRot = 1.1f; armL.zRot = -1.1f;
-            root.yRot += Mth.sin(age * 0.5f) * 0.18f;
-        }
         if (attackTime > 0) {                                                // a raking claw swing
             float s = Mth.sin(attackTime * Mth.PI);
             armR.xRot = -2.4f + s * 2.6f;

@@ -1,0 +1,22 @@
+{
+  "id": "nusmp:bc_flame",
+  "anime": "black_clover",
+  "name": "Flame Page",
+  "tier": 2,
+  "cast_ticks": 12,
+  "range": 16,
+  "primitives": [
+    "projectile",
+    "magic_damage"
+  ],
+  "counters": [
+    "melee",
+    "rusher"
+  ],
+  "resisted_by": [
+    "fire_immune",
+    "anti_magic"
+  ],
+  "animation": "cast_grimoire",
+  "line": "Burn bright."
+}

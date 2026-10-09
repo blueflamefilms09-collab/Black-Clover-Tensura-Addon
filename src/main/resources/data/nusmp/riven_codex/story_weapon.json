@@ -1,0 +1,21 @@
+{
+  "id": "nusmp:story_weapon",
+  "anime": "fictional_remake",
+  "name": "Story Manifestation: Blade of Pages",
+  "tier": 2,
+  "cast_ticks": 12,
+  "range": 6,
+  "primitives": [
+    "summon_construct",
+    "physical_damage"
+  ],
+  "counters": [
+    "caster",
+    "kiter"
+  ],
+  "resisted_by": [
+    "physical_null"
+  ],
+  "animation": "manifest_weapon",
+  "line": "Written in, just now."
+}

@@ -1,0 +1,24 @@
+{
+  "id": "nusmp:final_form_barrage",
+  "anime": "fictional_remake",
+  "name": "The Story Where He Wins",
+  "tier": 4,
+  "cast_ticks": 20,
+  "range": 20,
+  "primitives": [
+    "projectile",
+    "magic_damage",
+    "magic_damage"
+  ],
+  "counters": [
+    "barrier",
+    "tank",
+    "armored"
+  ],
+  "resisted_by": [
+    "anti_magic",
+    "magic_null"
+  ],
+  "animation": "cast_grimoire",
+  "line": "This is the story where I win."
+}

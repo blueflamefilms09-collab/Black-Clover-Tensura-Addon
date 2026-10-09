@@ -1,0 +1,21 @@
+{
+  "id": "nusmp:jojo_time_slow",
+  "anime": "jojo",
+  "name": "Zero Time",
+  "tier": 3,
+  "cast_ticks": 16,
+  "range": 14,
+  "primitives": [
+    "slow",
+    "song_debuff"
+  ],
+  "counters": [
+    "rusher",
+    "kiter"
+  ],
+  "resisted_by": [
+    "anti_magic"
+  ],
+  "animation": "cast_grimoire",
+  "line": "Za Warudo, kind of."
+}

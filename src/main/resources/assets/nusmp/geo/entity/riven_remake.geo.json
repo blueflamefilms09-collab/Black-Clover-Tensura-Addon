@@ -1,0 +1,342 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.riven_remake",
+    "texture_width": 128,
+    "texture_height": 96,
+    "visible_bounds_width": 4,
+    "visible_bounds_height": 4,
+    "visible_bounds_offset": [
+     0,
+     1,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "root",
+     "pivot": [
+      0,
+      0,
+      0
+     ]
+    },
+    {
+     "name": "body",
+     "parent": "root",
+     "pivot": [
+      0,
+      12,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -4,
+        12,
+        -2
+       ],
+       "size": [
+        8,
+        12,
+        4
+       ],
+       "uv": [
+        0,
+        16
+       ]
+      }
+     ]
+    },
+    {
+     "name": "head",
+     "parent": "body",
+     "pivot": [
+      0,
+      24,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -4,
+        24,
+        -4
+       ],
+       "size": [
+        8,
+        8,
+        8
+       ],
+       "uv": [
+        0,
+        0
+       ]
+      },
+      {
+       "origin": [
+        -4.5,
+        31,
+        -4.5
+       ],
+       "size": [
+        9,
+        2,
+        9
+       ],
+       "uv": [
+        32,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "name": "crown",
+     "parent": "head",
+     "pivot": [
+      0,
+      32,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -2.5,
+        32.5,
+        -1.5
+       ],
+       "size": [
+        5,
+        4,
+        3
+       ],
+       "uv": [
+        64,
+        44
+       ]
+      }
+     ]
+    },
+    {
+     "name": "arm_r",
+     "parent": "body",
+     "pivot": [
+      -6,
+      22,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -7.5,
+        10,
+        -1.5
+       ],
+       "size": [
+        3,
+        12,
+        3
+       ],
+       "uv": [
+        24,
+        32
+       ]
+      }
+     ]
+    },
+    {
+     "name": "arm_l",
+     "parent": "body",
+     "pivot": [
+      6,
+      22,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        4.5,
+        10,
+        -1.5
+       ],
+       "size": [
+        3,
+        12,
+        3
+       ],
+       "uv": [
+        24,
+        32
+       ]
+      }
+     ]
+    },
+    {
+     "name": "leg_r",
+     "parent": "root",
+     "pivot": [
+      -2,
+      12,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -4,
+        0,
+        -2
+       ],
+       "size": [
+        4,
+        12,
+        4
+       ],
+       "uv": [
+        0,
+        32
+       ]
+      }
+     ]
+    },
+    {
+     "name": "leg_l",
+     "parent": "root",
+     "pivot": [
+      2,
+      12,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        0,
+        0,
+        -2
+       ],
+       "size": [
+        4,
+        12,
+        4
+       ],
+       "uv": [
+        0,
+        32
+       ]
+      }
+     ]
+    },
+    {
+     "name": "coat",
+     "parent": "body",
+     "pivot": [
+      0,
+      13,
+      2
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -4,
+        3,
+        2
+       ],
+       "size": [
+        8,
+        10,
+        1
+       ],
+       "uv": [
+        40,
+        16
+       ]
+      }
+     ]
+    },
+    {
+     "name": "grimoire",
+     "parent": "root",
+     "pivot": [
+      10,
+      17,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        8,
+        14,
+        -2.5
+       ],
+       "size": [
+        5,
+        7,
+        1
+       ],
+       "uv": [
+        64,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "name": "wing_r",
+     "parent": "body",
+     "pivot": [
+      -3,
+      22,
+      2.5
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -4,
+        12,
+        2.5
+       ],
+       "size": [
+        1,
+        14,
+        10
+       ],
+       "uv": [
+        64,
+        16
+       ]
+      }
+     ]
+    },
+    {
+     "name": "wing_l",
+     "parent": "body",
+     "pivot": [
+      3,
+      22,
+      2.5
+     ],
+     "cubes": [
+      {
+       "origin": [
+        3,
+        12,
+        2.5
+       ],
+       "size": [
+        1,
+        14,
+        10
+       ],
+       "uv": [
+        64,
+        16
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

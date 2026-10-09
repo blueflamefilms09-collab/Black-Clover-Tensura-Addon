@@ -1,0 +1,21 @@
+{
+  "id": "nusmp:soul_bond",
+  "anime": "fictional_remake",
+  "name": "Soul Bond",
+  "tier": 2,
+  "cast_ticks": 14,
+  "range": 16,
+  "primitives": [
+    "pull",
+    "song_debuff"
+  ],
+  "counters": [
+    "kiter",
+    "flyer"
+  ],
+  "resisted_by": [
+    "anti_magic"
+  ],
+  "animation": "soul_bond",
+  "line": "We're in this together. Whether you like it or not."
+}

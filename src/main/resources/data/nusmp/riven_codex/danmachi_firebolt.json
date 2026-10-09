@@ -1,0 +1,21 @@
+{
+  "id": "nusmp:danmachi_firebolt",
+  "anime": "danmachi",
+  "name": "Firebolt",
+  "tier": 1,
+  "cast_ticks": 6,
+  "range": 18,
+  "primitives": [
+    "projectile",
+    "magic_damage"
+  ],
+  "counters": [
+    "kiter"
+  ],
+  "resisted_by": [
+    "fire_immune",
+    "anti_magic"
+  ],
+  "animation": "eldritch_blast",
+  "line": "Firebolt!"
+}

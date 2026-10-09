@@ -73,7 +73,7 @@ import java.util.UUID;
  */
 public class ZagredBossEntity extends Monster {
     /** 0.48: what it is doing (synced with ZagredStatePayload for the model's pose and the target reticle). */
-    public static final int STATE_IDLE = 0, STATE_STALK = 1, STATE_COMBAT = 2, STATE_CASTING = 3, STATE_PORTAL = 4;
+    public static final int STATE_IDLE = 0, STATE_STALK = 1, STATE_COMBAT = 2, STATE_CASTING = 3;
     private static final EntityDataAccessor<Integer> PHASE = SynchedEntityData.defineId(ZagredBossEntity.class, EntityDataSerializers.INT);
     public static final int VIOLET = KotodamaWords.VIOLET;
 
@@ -108,9 +108,6 @@ public class ZagredBossEntity extends Monster {
     // 0.49: Tensura's own magic (TensuraCaster), learned on its first tick, cast between words
     private List<net.minecraft.resources.ResourceLocation> tensuraKit;
     private long nextTensura = 120;
-    // bored portal: when the fight drags on he opens a spatial portal, steps through and reappears behind his target
-    static final int PORTAL_WINDUP = 20, PORTAL_RECOVERY = 10;
-    private long nextBoredCheck = 100, portalAt, recoverUntil, lastDamaged, lastHitPlayer;
     private int clientState = STATE_IDLE, clientWord = -1, clientTarget = -1;
 
     /** Client copies, set by ZagredStatePayload. */
@@ -202,29 +199,12 @@ public class ZagredBossEntity extends Monster {
             pending = null; castAt = 0;
             return;
         }
-        if (portalAt > 0) {                                                      // the portal is open: he holds still, then steps through
-            getNavigation().stop();
-            setDeltaMovement(Vec3.ZERO);
-            if (t < portalAt) { setState(sl, STATE_PORTAL, null, target); return; }
-            portalAt = 0;
-            portalTeleport(sl, target, t);
-            return;
-        }
-        if (t < recoverUntil) {                                                  // brief recovery after the teleport
-            getNavigation().stop();
-            setState(sl, STATE_CASTING, null, target);
-            return;
-        }
         if (t < transitionUntil || t < staggerUntil || barrier.reforming(t)) {        // no attack while he changes act, is staggered or rewrites the barrier
             getNavigation().stop();
             setState(sl, STATE_CASTING, null, target);
             return;
         }
         if (ph >= 3 && t % 40 == 0) retarget(sl, ph);
-        if (pending == null && t >= nextBoredCheck) {
-            nextBoredCheck = t + 60 + getRandom().nextInt(41);                   // every 3-5 s
-            if (bored(target, t) && getRandom().nextFloat() < 0.3f) { startPortal(sl, target, t); return; }
-        }
         if (pending != null) {                                                   // a telegraphed word lands
             if (t >= castAt) {
                 KotodamaWords.speak(this, pending, Source.BOSS);
@@ -274,53 +254,6 @@ public class ZagredBossEntity extends Monster {
             UnderworldMatter.start(sl, this, arena, 14 + 2 * (ph - 3), 500);
             nextFlood = t + 600;
         }
-    }
-
-    // ---------------------------------------------------------------- the bored portal
-    /** Bored: no damage taken for 8 s, or the target above 80% health, or no hit landed on a player for 10 s. */
-    boolean bored(LivingEntity target, long t) {
-        return t - lastDamaged > 160 || target.getHealth() > target.getMaxHealth() * 0.8f || t - lastHitPlayer > 200;
-    }
-
-    void startPortal(ServerLevel sl, LivingEntity target, long t) {
-        portalAt = t + PORTAL_WINDUP;
-        getNavigation().stop();
-        setState(sl, STATE_PORTAL, null, target);
-        VfxSpawn.send(sl, VfxShape.SPACE_PORTAL, position().add(0, 1.2, 0), target.position(), VIOLET, PORTAL_WINDUP + 20, 1.6f);
-        VfxSpawn.sendFollowing(sl, VfxShape.SPATIAL_RIFT, this, position().add(0, 0.1, 0), VIOLET, PORTAL_WINDUP + 10, 1.8f);
-        sl.playSound(null, blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.HOSTILE, 1.6f, 0.5f);
-        sl.playSound(null, blockPosition(), SoundEvents.PORTAL_TRIGGER, SoundSource.HOSTILE, 0.8f, 1.6f);
-    }
-
-    /** Steps behind the target (or to a random safe spot within 15 blocks), closes the portal and recovers for 0.5 s. */
-    void portalTeleport(ServerLevel sl, LivingEntity target, long t) {
-        Vec3 from = position();
-        Vec3 look = new Vec3(target.getLookAngle().x, 0, target.getLookAngle().z);
-        Vec3 back = look.lengthSqr() < 1.0E-4 ? new Vec3(0, 0, -1) : look.normalize().scale(-2.5);
-        Vec3 dest = null;
-        for (int i = 0; i < 12 && dest == null; i++) {
-            Vec3 c = i == 0 ? target.position().add(back)
-                    : target.position().add((getRandom().nextDouble() * 2 - 1) * 15, 0, (getRandom().nextDouble() * 2 - 1) * 15);
-            if (i > 0 && c.distanceToSqr(target.position()) > 15 * 15) continue;
-            Vec3 g = ZagredAttacks.ground(sl, c, target.getY());
-            if (sl.noCollision(this, getBoundingBox().move(g.subtract(from)))) dest = g;
-        }
-        if (dest == null) dest = from;
-        VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, from.add(0, 1.2, 0), dest, VIOLET, 20, 2f);               // the old portal collapses
-        teleportTo(dest.x, dest.y, dest.z);
-        lookAt(target, 360f, 360f);
-        VfxSpawn.send(sl, VfxShape.SPACE_PORTAL, dest.add(0, 1.2, 0), target.position(), VIOLET, 20, 1.2f);   // the new one fades out
-        VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, dest.add(0, 1.2, 0), dest.add(0, 3, 0), VIOLET, 25, 2f);
-        sl.playSound(null, blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.HOSTILE, 1.6f, 0.7f);
-        recoverUntil = t + PORTAL_RECOVERY;
-        setState(sl, STATE_CASTING, null, target);
-    }
-
-    @Override
-    public boolean doHurtTarget(net.minecraft.world.entity.Entity target) {
-        boolean hit = super.doHurtTarget(target);
-        if (hit && target instanceof Player) lastHitPlayer = tickCount;
-        return hit;
     }
 
     // ---------------------------------------------------------------- 0.52: defences, daemons, the acts
@@ -730,9 +663,7 @@ public class ZagredBossEntity extends Monster {
         }
         amount = through;
         if (ph == 4 && !antiMagic(source) && t >= exposedUntil) amount *= 0.3f;
-        boolean hurt = super.hurt(source, clampToThreshold(amount));
-        if (hurt) lastDamaged = t;
-        return hurt;
+        return super.hurt(source, clampToThreshold(amount));
     }
 
     /** A single burst can't carry him past the next act: it stops just under the threshold. */

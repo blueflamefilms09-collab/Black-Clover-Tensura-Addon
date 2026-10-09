@@ -1,0 +1,21 @@
+{
+  "id": "nusmp:fireforce_ignition",
+  "anime": "fire_force",
+  "name": "Ignition Kick",
+  "tier": 2,
+  "cast_ticks": 9,
+  "range": 6,
+  "primitives": [
+    "melee_arc",
+    "magic_damage"
+  ],
+  "counters": [
+    "melee",
+    "armored"
+  ],
+  "resisted_by": [
+    "fire_immune"
+  ],
+  "animation": "sword_combo_3",
+  "line": "Ignite."
+}

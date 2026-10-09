@@ -85,6 +85,10 @@ public final class NUItems {
     // 0.52: Zagred's drops (see BossRelics)
     public static final DeferredItem<RelicItem> SHROUD_OF_MARGINS = relic("shroud_of_margins", RelicItem.Kind.MARGINS, Rarity.EPIC);
     public static final DeferredItem<RelicItem> CIRCLET_OF_THOUGHT = relic("circlet_of_quickened_thought", RelicItem.Kind.QUICKENED, Rarity.EPIC);
+    // 0.60: Riven Remake's drop and spawn egg
+    public static final DeferredItem<Item> BLACK_BULL_BARD_RELIC = ITEMS.register("black_bull_bard_relic", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> RIVEN_REMAKE_SPAWN_EGG = ITEMS.register("riven_remake_spawn_egg",
+            () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(com.newuniverse.nusmp.entity.NUEntities.RIVEN_REMAKE, 0x14101F, 0x7A5CFF, new Item.Properties()));
     public static final DeferredItem<Item> HEART_OF_WORDS = ITEMS.register("heart_of_words", () -> new Item(new Item.Properties().stacksTo(16).rarity(Rarity.EPIC).fireResistant()));
 
     // ---------------------------------------------------------------- magic tools (attribute conduction)
@@ -133,6 +137,7 @@ public final class NUItems {
                 GRIMOIRE_CHAIN, ANTI_BIRD_CHARM, RECOVERY_SALVE, WRITTEN_CONSENT, DEVIL_CONTRACT, GAUCHE_MIRROR, MAGIC_TOOL_SWORD, MAGIC_TOOL_SPEAR, MAGIC_TOOL_BOW, SPIRIT_LORD_SKILL));
         l.addAll(List.of(PAINT_BRUSH, PAINT_PALETTE));                                          // 0.44
         l.addAll(List.of(LAST_WORD, SHROUD_OF_MARGINS, CIRCLET_OF_THOUGHT, HEART_OF_WORDS));    // 0.52
+        l.addAll(List.of(RIVEN_REMAKE_SPAWN_EGG, BLACK_BULL_BARD_RELIC));                       // 0.60
         return l;
     }
 }

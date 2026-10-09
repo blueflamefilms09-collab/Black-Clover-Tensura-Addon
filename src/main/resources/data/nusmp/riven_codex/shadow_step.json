@@ -1,0 +1,18 @@
+{
+  "id": "nusmp:shadow_step",
+  "anime": "dnd",
+  "name": "Shadow Step",
+  "tier": 2,
+  "cast_ticks": 7,
+  "range": 18,
+  "primitives": [
+    "blink"
+  ],
+  "counters": [
+    "kiter",
+    "flyer"
+  ],
+  "resisted_by": [],
+  "animation": "shadow_step",
+  "line": "Next page."
+}

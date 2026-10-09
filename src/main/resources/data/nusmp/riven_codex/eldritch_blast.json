@@ -1,0 +1,22 @@
+{
+  "id": "nusmp:eldritch_blast",
+  "anime": "dnd",
+  "name": "Eldritch Blast",
+  "tier": 1,
+  "cast_ticks": 9,
+  "range": 24,
+  "primitives": [
+    "projectile",
+    "magic_damage"
+  ],
+  "counters": [
+    "kiter",
+    "caster"
+  ],
+  "resisted_by": [
+    "anti_magic",
+    "magic_null"
+  ],
+  "animation": "eldritch_blast",
+  "line": "Two fingers. One bad idea."
+}
