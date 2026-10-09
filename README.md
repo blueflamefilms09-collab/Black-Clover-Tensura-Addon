@@ -60,7 +60,7 @@ Magic spells fire when the skill key is released; holding the key does not trigg
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.99.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-1.0.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -241,6 +241,12 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - Avatar selection now branches on tank/healer/flyer/caster/nullification reads. Zeus has a geared punch, Beerus a bounded damaging burst, Madoka removes one harmful boss effect and one beneficial target effect, Anti-Spiral fires a line hit, Lord of Nightmares creates a bounded healing-denial field, Arceus accelerates Marquis, and Zeno can dismiss one nearby owned construct. Each special has a short VFX tell; the existing 12-second/one-avatar ownership limit remains. Truth and Kami Tenchi are not implemented as distinct mechanics.
 - Added entity loot tables at both the requested Marquis name and the preserved `nusmp:riven_remake` registry key. Real entity death drops the existing bard relic, a story page, and a crest-cape token; a cracked crown vanity has an 8% roll. The cape is currently an inventory cosmetic token, not a wearable/rendered cape.
 - Still incomplete: Page Edge/Bull Brand engravings and a single-use rift key are absent because those enchantments and `nusmp:story_rift` are not registered. A boss-safe arbitrary book spell path is also unavailable: SpellRuntime's projectile owner is a `ServerPlayer`; the boss continues to cast its validated codex skill. New Order still implements weapon slowdown and Gearshift only; there is no reliable cast-warmup event hook for the two-cast slow rule. Ground-is-stone is not implemented. Only six avatar translations have special mechanics; Truth, Kami Tenchi, the Creator's distinct visual, and several requested combat interactions remain incomplete. No in-game client render/combat verification was run.
+
+## 1.0.0 - Marquis New Order and avatar mechanics
+
+- New Order now chooses one bounded rule from target analysis: halve a melee weapon's attack speed for six seconds, apply Gearshift Low to a kiter, delay the next two nusmp grimoire release warmups by 50% for a caster, or give Marquis Gearshift Top. Slow-page state lasts eight seconds and expires/clears after two grimoire casts. The cast hook is `GrimoireBook.onRelease`; this does not affect Tensura skill casts.
+- Avatar selection now uses the phase tier and ThreatScan: Zeus/Truth/Beerus/Madoka in phase II; Anti-Spiral/Arceus/Grand Zeno/Lord of Nightmares/Kami Tenchi in phase III; The Creator remains the once-only phase-IV summon. Truth mirrors capped damage to the last player who hit Marquis, Zeno removes one owned construct or safely compresses an Evil-Eye-marked player for three seconds, and Kami Tenchi suppresses elytra flight nearby and prevents the next phase-change i-frames while present. Avatar tints and Creator's book-shaped body distinguish them visually.
+- Still incomplete: Ground-is-stone, New Order slow for Tensura casts, the full requested native combat translations for every avatar (especially Arceus's weakest-element judgment), and exact custom equipment cosmetics/engraving rewards. The rift key and `nusmp:story_rift` cannot be implemented safely because that dimension is not registered. Random CanonBook covers are displayed, but the boss's actual cast remains a separate validated codex skill; no player-owned grimoire cast has been fabricated.
 
 ## 0.96.0 - Riven attack roster continuation
 

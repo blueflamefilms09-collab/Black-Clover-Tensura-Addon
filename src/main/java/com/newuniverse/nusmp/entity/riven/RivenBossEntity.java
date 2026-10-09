@@ -31,6 +31,7 @@ import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -83,6 +84,7 @@ public class RivenBossEntity extends Monster {
     private LivingEntity castTarget;
     private long castAt, nextThink, nextBark, clipEnd, stagger, transitionUntil, guardUntil, songUntil, hexUntil, bondUntil, nextSync, nextZagredBanter;
     private UUID hexTarget, bondTarget;
+    private UUID lastPlayerAttacker;
     private float story = 20f, recentDamage;
     private int chainLeft, lastPlayers = 1, clientClipStart;
     private boolean opened, healedOnScale;
@@ -164,6 +166,11 @@ public class RivenBossEntity extends Monster {
     public int clipStartTick() { return clientClipStart; }
     public boolean signatureCasting() { return RivenCombat.signature(casting); }
     public String drawnGrimoire() { return drawnGrimoire; }
+    public LivingEntity lastPlayerAttacker() {
+        if (lastPlayerAttacker == null || !(level() instanceof ServerLevel sl)) return null;
+        Entity attacker = sl.getEntity(lastPlayerAttacker);
+        return attacker instanceof LivingEntity living && living.isAlive() ? living : null;
+    }
     public float story() { return story; }
     AnimeSkill lastCastSkill() { return lastCast; }
     BlockPos arenaPosition() { return arena == null ? blockPosition() : arena; }
@@ -370,8 +377,14 @@ public class RivenBossEntity extends Monster {
         if (phase() != 1 || fightTicks < 40 || tickCount < nextNewOrderAt || distanceToSqr(target) > 36 || casting != null) return;
         newOrderUsed = true;
         nextNewOrderAt = tickCount + 160;
-        boolean heavy = !target.getMainHandItem().isEmpty() && target.getAttribute(Attributes.ATTACK_SPEED) != null;
-        String order = heavy ? "That weapon is heavy." : "I am faster.";
+        ThreatScan threat = ThreatScan.of(this, target);
+        String orderId = RivenCombat.newOrder(threat.has("melee") && target.getAttribute(Attributes.ATTACK_SPEED) != null,
+                threat.has("kiter"), threat.has("caster"), target instanceof ServerPlayer);
+        boolean heavy = "HEAVY_WEAPON".equals(orderId);
+        boolean low = "GEARSHIFT_LOW".equals(orderId);
+        boolean slowCasts = "SLOW_GRIMOIRE_CASTS".equals(orderId);
+        String order = heavy ? "That weapon is heavy." : low ? "Your escape is slower."
+                : slowCasts ? "Your magic takes longer to form." : "I am faster.";
         statusText = "New Order";
         statusUntil = tickCount + 180;
         say(sl, order);
@@ -386,9 +399,11 @@ public class RivenBossEntity extends Monster {
                 return;
             }
             if (heavy) MarquisStatus.applyHeavyWeaponOrder(target, 120);
+            else if (low) MarquisStatus.applyGearshift(target, false, 80);
+            else if (slowCasts && target instanceof ServerPlayer player) MarquisStatus.slowNextGrimoireCasts(player, 2, 160);
             else MarquisStatus.applyGearshift(this, true, 80);
             sl.playSound(null, blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.HOSTILE, 1.2f, 1.4f);
-            statusText = "New Order · " + (heavy ? "Heavy" : "Gearshift Top");
+            statusText = "New Order · " + (heavy ? "Heavy" : low ? "Gearshift Low" : slowCasts ? "Slow next two pages" : "Gearshift Top");
             statusUntil = tickCount + 160;
         });
     }
@@ -527,7 +542,9 @@ public class RivenBossEntity extends Monster {
     private void enterPhase(ServerLevel sl, int ph) {
         entityData.set(PHASE, ph);
         transitionUntil = tickCount + 30;
-        phaseIFramesUntil = tickCount + 30;
+        boolean kamiTenchi = !sl.getEntitiesOfClass(StoryConstructEntity.class, getBoundingBox().inflate(24),
+                avatar -> avatar.ownedBy(getUUID()) && avatar.isAvatar() && "Kami Tenchi".equals(avatar.getCustomName() == null ? "" : avatar.getCustomName().getString())).isEmpty();
+        phaseIFramesUntil = kamiTenchi ? tickCount : tickCount + 30;
         var speed = getAttribute(Attributes.MOVEMENT_SPEED);
         if (speed != null) speed.setBaseValue(0.30 * (1 + 0.10 * (ph - 1)));
         casting = null;
@@ -767,6 +784,9 @@ public class RivenBossEntity extends Monster {
         }
         if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return super.hurt(source, amount);
         if (source.getEntity() instanceof ServerPlayer p) fighters.add(p.getUUID());
+        if (source.getEntity() instanceof ServerPlayer p) lastPlayerAttacker = p.getUUID();
+        else if (source.getDirectEntity() instanceof net.minecraft.world.entity.projectile.Projectile projectile
+                && projectile.getOwner() instanceof ServerPlayer p) lastPlayerAttacker = p.getUUID();
         brain.noteTaken(category(source));
         amount *= 0.92f;                                                           // Jack of All Trades
         float totalBefore = getHealth() + getAbsorptionAmount();

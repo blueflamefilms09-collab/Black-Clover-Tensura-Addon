@@ -9,6 +9,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -38,6 +39,7 @@ public class StoryConstructEntity extends Monster {
     private int life = 400;
     private int avatarActionAt = -1;
     private int avatarFieldUntil;
+    private long truthMirrorAt;
 
     public StoryConstructEntity(EntityType<? extends Monster> type, Level level) {
         super(type, level);
@@ -114,6 +116,11 @@ public class StoryConstructEntity extends Monster {
 
     private void tickAvatar(RivenBossEntity boss, ServerLevel level) {
         String name = getCustomName() == null ? "" : getCustomName().getString();
+        if ("Kami Tenchi".equals(name)) {
+            for (Player player : level.getEntitiesOfClass(Player.class, getBoundingBox().inflate(24))) {
+                if (player.isFallFlying()) player.stopFallFlying();
+            }
+        }
         if ("Lord of Nightmares".equals(name) && tickCount < avatarFieldUntil) {
             for (Player player : level.getEntitiesOfClass(Player.class, getBoundingBox().inflate(4))) {
                 if (player.isAlive()) MarquisStatus.markEvilEye(player, 2);
@@ -162,14 +169,19 @@ public class StoryConstructEntity extends Monster {
                 VfxSpawn.send(level, VfxShape.DREAM_MANIFEST, position(), position().add(0, 0.1, 0), 0xFF482C70, 16, 1.1f);
             }
             case "Arceus" -> {
-                MarquisStatus.applyGearshift(boss, true, 80);
+                boss.addStory(10f);
                 VfxSpawn.send(level, VfxShape.ALCHEMY_CIRCLE, boss.position(), boss.position().add(0, 0.1, 0),
                         0xFFFFD86A, 12, 1.2f);
             }
             case "Grand Zeno" -> {
-                var constructs = level.getEntitiesOfClass(StoryConstructEntity.class, getBoundingBox().inflate(8),
-                        construct -> construct.ownedBy(owner) && construct != this);
-                if (!constructs.isEmpty()) constructs.get(0).discard();
+                if (target instanceof ServerPlayer player && MarquisStatus.evilEyeActive(player)) {
+                    Vec3 anchor = boss.position().add(boss.getLookAngle().multiply(1.5, 0, 1.5));
+                    MarquisStatus.compress(player, anchor, 60);
+                } else {
+                    var constructs = level.getEntitiesOfClass(StoryConstructEntity.class, getBoundingBox().inflate(8),
+                            construct -> construct.ownedBy(owner) && construct != this);
+                    if (!constructs.isEmpty()) constructs.get(0).discard();
+                }
                 VfxSpawn.send(level, VfxShape.MIRROR_SHATTER, position(), position().add(0, 1, 0), 0xFFFFF1FF, 10, 0.7f);
             }
             default -> { }
@@ -188,7 +200,21 @@ public class StoryConstructEntity extends Monster {
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if (source.getEntity() instanceof RivenBossEntity || source.getEntity() instanceof StoryConstructEntity) return false;
-        return super.hurt(source, amount);
+        float before = getHealth();
+        boolean hurt = super.hurt(source, amount);
+        if (hurt && isAvatar() && "Truth".equals(getCustomName() == null ? "" : getCustomName().getString())
+                && level() instanceof ServerLevel sl && sl.getGameTime() >= truthMirrorAt
+                && source.getEntity() instanceof Player attacker) {
+            truthMirrorAt = sl.getGameTime() + 20;
+            RivenBossEntity boss = ownerBoss();
+            if (boss != null) {
+                float taken = Math.max(0, before - getHealth());
+                attacker.hurt(damageSources().indirectMagic(this, this), Math.min(taken, RivenCombat.damage(boss.phase(), true, 0)));
+                VfxSpawn.send(sl, VfxShape.MIRROR_SHATTER, getBoundingBox().getCenter(), attacker.getBoundingBox().getCenter(),
+                        0xFFFFE3C4, 8, 0.8f);
+            }
+        }
+        return hurt;
     }
 
     @Override public boolean removeWhenFarAway(double d) { return false; }

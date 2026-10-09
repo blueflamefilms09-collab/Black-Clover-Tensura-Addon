@@ -146,7 +146,7 @@ public final class RivenRenderer extends EntityRenderer<RivenBossEntity> {
 
     /** Story constructs: a floating sword, the bull-crest shield, or a pale clone of him. */
     public static final class ConstructRenderer extends EntityRenderer<StoryConstructEntity> {
-        private static final ItemStack SWORD = new ItemStack(Items.IRON_SWORD), SHIELD = new ItemStack(Items.SHIELD);
+        private static final ItemStack SWORD = new ItemStack(Items.IRON_SWORD), SHIELD = new ItemStack(Items.SHIELD), BOOK = new ItemStack(Items.WRITTEN_BOOK);
 
         public ConstructRenderer(EntityRendererProvider.Context ctx) { super(ctx); this.shadowRadius = 0.3f; }
 
@@ -159,8 +159,32 @@ public final class RivenRenderer extends EntityRenderer<RivenBossEntity> {
             pose.pushPose();
             pose.mulPose(Axis.YP.rotationDegrees(-Mth.rotLerp(partial, e.yBodyRotO, e.yBodyRot)));
             switch (e.kind()) {
-                case StoryConstructEntity.CLONE, StoryConstructEntity.AVATAR -> GeoDraw.paint(pose, buffers, BASE, "idle", age / 20f, GeoDraw.Space.PROP, GeoDraw.Layer.TRANSLUCENT,
+                case StoryConstructEntity.CLONE -> GeoDraw.paint(pose, buffers, BASE, "idle", age / 20f, GeoDraw.Space.PROP, GeoDraw.Layer.TRANSLUCENT,
                         LightTexture.FULL_BRIGHT, 0x99B8A8FF, 0);
+                case StoryConstructEntity.AVATAR -> {
+                    String name = e.getCustomName() == null ? "" : e.getCustomName().getString();
+                    if ("The Creator".equals(name)) {
+                        pose.translate(0, 1.1 + Mth.sin(age * 0.1f) * 0.08, 0);
+                        pose.mulPose(Axis.YP.rotationDegrees(age * 4f));
+                        pose.scale(1.2f, 1.2f, 1.2f);
+                        Minecraft.getInstance().getItemRenderer().renderStatic(BOOK, ItemDisplayContext.FIXED, LightTexture.FULL_BRIGHT,
+                                OverlayTexture.NO_OVERLAY, pose, buffers, e.level(), e.getId());
+                    } else {
+                        int tint = switch (name) {
+                            case "Truth" -> 0x99FFE1B5;
+                            case "Kami Tenchi" -> 0x99FFE8A0;
+                            case "Grand Zeno" -> 0x99F4ECFF;
+                            case "Beerus" -> 0x99C88CFF;
+                            case "Anti-Spiral" -> 0x998D75FF;
+                            case "Arceus" -> 0x99FFE68A;
+                            case "Ultimate Madoka" -> 0x99FFD8F4;
+                            default -> 0x99B8D6FF;
+                        };
+                        if ("Grand Zeno".equals(name)) pose.scale(0.58f, 0.58f, 0.58f);
+                        GeoDraw.paint(pose, buffers, BASE, "idle", age / 20f, GeoDraw.Space.PROP, GeoDraw.Layer.TRANSLUCENT,
+                                LightTexture.FULL_BRIGHT, tint, 0);
+                    }
+                }
                 default -> {
                     boolean shield = e.kind() == StoryConstructEntity.SHIELD;
                     pose.translate(0, 1.0 + Mth.sin(age * 0.1f) * 0.12, 0);

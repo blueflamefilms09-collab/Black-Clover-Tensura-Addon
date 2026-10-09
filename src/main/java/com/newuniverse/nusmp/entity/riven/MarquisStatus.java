@@ -24,6 +24,8 @@ import java.util.concurrent.ConcurrentHashMap;
 /** Temporary, arena-bounded Marquis effects. */
 public final class MarquisStatus {
     private static final String COMPRESSED_TAG = "nusmpMarquisCompressed";
+    private static final String SLOW_CASTS = "nusmpMarquisSlowCasts";
+    private static final String SLOW_CASTS_UNTIL = "nusmpMarquisSlowCastsUntil";
     private static final Map<UUID, Long> EVIL_EYE = new ConcurrentHashMap<>();
     private static final Map<UUID, Long> HEAL_LOCK = new ConcurrentHashMap<>();
     private static final Map<UUID, Marble> COMPRESSED = new ConcurrentHashMap<>();
@@ -74,6 +76,29 @@ public final class MarquisStatus {
         speed.removeModifier(GEARSHIFT);
         speed.addTransientModifier(new AttributeModifier(GEARSHIFT, top ? 1.0 : -0.6, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
         if (target.level() instanceof ServerLevel sl) SpellRuntime.later(sl, ticks, () -> speed.removeModifier(GEARSHIFT));
+    }
+
+    public static void slowNextGrimoireCasts(Player target, int casts, int ticks) {
+        target.getPersistentData().putInt(SLOW_CASTS, Math.max(0, casts));
+        target.getPersistentData().putLong(SLOW_CASTS_UNTIL, target.level().getGameTime() + ticks);
+    }
+
+    public static boolean consumeSlowedGrimoireCast(ServerPlayer player) {
+        var data = player.getPersistentData();
+        long now = player.level().getGameTime();
+        if (now >= data.getLong(SLOW_CASTS_UNTIL)) {
+            data.remove(SLOW_CASTS);
+            data.remove(SLOW_CASTS_UNTIL);
+            return false;
+        }
+        int left = data.getInt(SLOW_CASTS);
+        if (left <= 0) return false;
+        data.putInt(SLOW_CASTS, left - 1);
+        if (left == 1) {
+            data.remove(SLOW_CASTS);
+            data.remove(SLOW_CASTS_UNTIL);
+        }
+        return true;
     }
 
     public static boolean compress(ServerPlayer player, Vec3 anchor, int ticks) {

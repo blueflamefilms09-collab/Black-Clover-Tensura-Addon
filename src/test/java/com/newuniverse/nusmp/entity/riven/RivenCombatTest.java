@@ -35,12 +35,24 @@ class RivenCombatTest {
         assertEquals("", RivenCombat.avatarFor(1, false, false, false, false, false));
         assertEquals("Beerus", RivenCombat.avatarFor(2, true, false, false, false, false));
         assertEquals("Ultimate Madoka", RivenCombat.avatarFor(2, false, true, false, false, false));
-        assertEquals("Zeus", RivenCombat.avatarFor(2, false, false, false, false, false));
+        assertEquals("Zeus", RivenCombat.avatarFor(2, false, false, true, false, false));
+        assertEquals("Truth", RivenCombat.avatarFor(2, false, false, false, false, false));
         assertEquals("Anti-Spiral", RivenCombat.avatarFor(3, false, false, true, false, false));
         assertEquals("Arceus", RivenCombat.avatarFor(3, false, false, false, true, false));
         assertEquals("Lord of Nightmares", RivenCombat.avatarFor(3, false, true, false, false, false));
-        assertEquals("Grand Zeno", RivenCombat.avatarFor(3, false, false, false, false, false));
+        assertEquals("Grand Zeno", RivenCombat.avatarFor(3, true, false, false, false, false));
+        assertEquals("Kami Tenchi", RivenCombat.avatarFor(3, false, false, false, false, false));
         assertEquals("The Creator", RivenCombat.avatarFor(4, false, false, false, false, false));
+    }
+
+    @Test
+    void newOrderChoosesOneSafeRuleFromThreatScanTagsAndSlowsTwoPageWarmupsByHalf() {
+        assertEquals("HEAVY_WEAPON", RivenCombat.newOrder(true, true, true, true));
+        assertEquals("GEARSHIFT_LOW", RivenCombat.newOrder(false, true, true, true));
+        assertEquals("SLOW_GRIMOIRE_CASTS", RivenCombat.newOrder(false, false, true, true));
+        assertEquals("GEARSHIFT_TOP", RivenCombat.newOrder(false, false, true, false));
+        assertEquals(6, RivenCombat.slowedWarmup(4));
+        assertEquals(11, RivenCombat.slowedWarmup(7));
     }
 
     @Test

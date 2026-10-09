@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** Damage and phase rules for Riven's raised-ceiling encounter. */
-final class RivenCombat {
+public final class RivenCombat {
     private RivenCombat() {}
 
     static int phase(float healthFraction, long fightTicks, int currentPhase) {
@@ -41,15 +41,26 @@ final class RivenCombat {
             if (flier) return "Anti-Spiral";
             if (magicNull) return "Arceus";
             if (healer || caster) return "Lord of Nightmares";
-            return "Grand Zeno";
+            if (tank) return "Grand Zeno";
+            return "Kami Tenchi";
         }
         if (phase == 2) {
             if (tank) return "Beerus";
             if (healer) return "Ultimate Madoka";
-            return "Zeus";
+            if (flier) return "Zeus";
+            return "Truth";
         }
         return "";
     }
+
+    static String newOrder(boolean melee, boolean kiter, boolean caster, boolean playerTarget) {
+        if (melee) return "HEAVY_WEAPON";
+        if (kiter) return "GEARSHIFT_LOW";
+        if (caster && playerTarget) return "SLOW_GRIMOIRE_CASTS";
+        return "GEARSHIFT_TOP";
+    }
+
+    public static int slowedWarmup(int ticks) { return (int) Math.ceil(Math.max(0, ticks) * 1.5); }
 
     static List<AnimeSkill> grimoirePages(Iterable<AnimeSkill> skills, int phase) {
         List<AnimeSkill> pages = new ArrayList<>();

@@ -224,6 +224,8 @@ public abstract class GrimoireBook extends Skill {
         int charge = Math.min(castTicks(instance, player), Math.max(0, heldTicks));
         float chargePower = charge / (float) castTicks(instance, player);
         int windup = instance.isMastered(player) ? 4 : 7;
+        if (com.newuniverse.nusmp.entity.riven.MarquisStatus.consumeSlowedGrimoireCast(player))
+            windup = com.newuniverse.nusmp.entity.riven.RivenCombat.slowedWarmup(windup);
         long castAt = now + windup;
         instance.getOrCreateTag().putLong("PendingCastUntil", castAt);
         instance.getOrCreateTag().putFloat("MagicBuildUp", chargePower);
