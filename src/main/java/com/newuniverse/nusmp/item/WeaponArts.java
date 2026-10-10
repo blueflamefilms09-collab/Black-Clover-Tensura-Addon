@@ -9,6 +9,8 @@ import com.newuniverse.nusmp.entity.ZagredAttacks;
 import com.newuniverse.nusmp.item.MagicWeaponItem.Kind;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
+import io.github.manasmods.tensura.storage.TensuraStorages;
+import io.github.manasmods.tensura.util.EnergyHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -19,6 +21,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -63,6 +66,7 @@ public final class WeaponArts {
             case LICHT_DESTROYER -> new Alt("Light Verdict", "A beam 25 blocks long: everything in it loses every buff and takes a heavy blow.", 1000);
             case RIMEHEART -> new Alt("Absolute Zero", "Freezes everything within 9 blocks solid, then shatters it a second later.", 1400);
             case LAST_WORD -> new Alt("Long Sentence", "Writes a long sentence of eight glyph letters that detonates in reading order.", 1000);
+            case ELSDOCIA -> new Alt("Legacy Gate", "With Key Magic summoned, opens a long spatial rift that releases stored legacy power and drains magic from foes.", 1200);
             default -> null;
         };
     }
@@ -135,19 +139,22 @@ public final class WeaponArts {
 
     // ---------------------------------------------------------------- the second technique
     /** Sneak + right-click. Always handles the click (returns true) so the normal technique does not also fire. */
-    public static boolean tryAlt(ServerPlayer p, Kind k) {
+    public static boolean tryAlt(ServerPlayer p, Kind k) { return tryAlt(p, k, ItemStack.EMPTY); }
+
+    /** 0.99: passes the actual held stack so offhand alt-techs spend the right sword's reserve. */
+    public static boolean tryAlt(ServerPlayer p, Kind k, ItemStack stack) {
         Alt a = alt(k);
         if (a == null) return false;
         long now = p.level().getGameTime(), ready = p.getPersistentData().getLong(K_ALT + k.name());
         if (now < ready) { GrimoireBook.fail(p, a.name() + " is gathering again (" + (ready - now + 19) / 20 + "s)."); return true; }
-        if (!cast(p, k)) return true;
+        if (!cast(p, k, stack)) return true;
         int cd = (int) Math.round(a.cooldown() * NUGameRules.spellCooldown(p.level()));
         p.getPersistentData().putLong(K_ALT + k.name(), now + (p.isCreative() ? cd / 4 : cd));
         p.displayClientMessage(Component.literal(a.name() + "!").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD), true);
         return true;
     }
 
-    private static boolean cast(ServerPlayer p, Kind k) {
+    private static boolean cast(ServerPlayer p, Kind k, ItemStack stack) {
         ServerLevel sl = p.serverLevel();
         Vec3 eye = p.getEyePosition(), look = p.getViewVector(1f);
         switch (k) {
@@ -321,6 +328,42 @@ public final class WeaponArts {
                 List<Vec3> pts = ZagredAttacks.plan(p, 8);
                 ZagredAttacks.telegraph(p, pts);
                 ZagredAttacks.redact(p, 2.4f, pts, 14);
+                return true;
+            }
+            case ELSDOCIA -> {                                                          // 0.99: the Key Magic gate
+                if (!com.newuniverse.nusmp.book.GrimoireSummon.isFloating(p, com.newuniverse.nusmp.blackclover.MagicType.KEY)) {
+                    GrimoireBook.fail(p, "Summon your Key Magic grimoire to shape Elsdocia's gate.");
+                    return false;
+                }
+                // use the stack the alt was actually invoked with (MagicWeaponItem.use passes the held hand's);
+                // fall back to the main/offhand Elsdocia for the legacy no-stack caller
+                ItemStack sword = stack.getItem() instanceof MagicWeaponItem w && w.kind == Kind.ELSDOCIA ? stack : ItemStack.EMPTY;
+                if (sword.isEmpty()) {
+                    if (p.getMainHandItem().getItem() instanceof MagicWeaponItem main && main.kind == Kind.ELSDOCIA) sword = p.getMainHandItem();
+                    else if (p.getOffhandItem().getItem() instanceof MagicWeaponItem off && off.kind == Kind.ELSDOCIA) sword = p.getOffhandItem();
+                }
+                if (sword.isEmpty()) { GrimoireBook.fail(p, "Hold Elsdocia to open its Key Magic gate."); return false; }
+                var data = sword.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
+                int charge = data == null ? 0 : Math.max(0, Math.min(MagicWeaponItem.ELSDOCIA_MAX, data.copyTag().getInt("ElsdociaCharge")));
+                if (charge < 100) { GrimoireBook.fail(p, "Elsdocia needs at least 100 stored magic to open a gate."); return false; }
+                int spent = Math.max(100, charge / 2);
+                net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, sword,
+                        tag -> tag.putInt("ElsdociaCharge", charge - spent));
+                Vec3 end = eye.add(look.scale(32));
+                MagicWeaponItem.eraseProjectiles(p, new AABB(eye, end).inflate(2));
+                for (LivingEntity target : GrimoireBook.along(p, eye, end, 2.2)) {
+                    hit(p, target, 12 + spent * 0.025f);
+                    var existence = TensuraStorages.getExistenceFrom(target);
+                    if (existence != null) {
+                        double max = EnergyHelper.getMaxMagicule(target);
+                        if (max > 0) {
+                            double drain = Math.min(existence.getMagicule(), max * 0.04);
+                            existence.setMagicule(existence.getMagicule() - drain);
+                            existence.markDirty();
+                        }
+                    }
+                }
+                VfxSpawn.send(sl, VfxShape.SPATIAL_RIFT, eye, end, 0xFFFFD66E, 28, 1.6f + spent / 900f);
                 return true;
             }
             default -> { return false; }

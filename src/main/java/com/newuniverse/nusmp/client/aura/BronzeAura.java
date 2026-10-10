@@ -84,7 +84,7 @@ public final class BronzeAura {
         pose.pushPose();
         pose.translate(part.x / 16f, part.y / 16f, part.z / 16f);
         if (part.xRot != 0f || part.yRot != 0f || part.zRot != 0f) pose.mulPose(new Quaternionf().rotationZYX(part.zRot, part.yRot, part.xRot));
-        pose.translate(-rest.x() / 16f, -rest.y() / 16f, -rest.z() / 16f);
+        pose.translate(-rest.x / 16f, -rest.y / 16f, -rest.z / 16f);
         GeoDraw.paint(pose, c.buffers(), spec, "idle", c.age() / 20f, GeoDraw.Space.PLAYER, GeoDraw.Layer.CUTOUT, c.light(), 0xFFFFFFFF, glow);
         pose.popPose();
     }

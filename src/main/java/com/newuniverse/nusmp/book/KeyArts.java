@@ -15,6 +15,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
@@ -58,11 +59,30 @@ final class KeyArts {
         t.addEffect(slow(ticks, 1));
         t.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, ticks, 0));
         EnergyBridge.drain(t, p, 0.06);
-        var tag = i.getOrCreateTag();
-        tag.putInt(STOLEN, Math.min(4, tag.getInt(STOLEN) + 1));
-        i.markDirty();
-        p.displayClientMessage(net.minecraft.network.chat.Component.literal("Stolen magic stored: " + tag.getInt(STOLEN) + "/4"), true);
+        ItemStack key = new ItemStack(com.newuniverse.nusmp.item.NUItems.MAGIC_KEY.get());   // 0.99: the physical key is back
+        if (!p.getInventory().add(key)) p.drop(key, false);
+        int stored = Math.min(4, Math.min(4, i.getOrCreateTag().getInt(STOLEN)) + keyCount(p));
+        p.displayClientMessage(net.minecraft.network.chat.Component.literal("Magic keys collected: " + stored + "/4"), true);
         return true;
+    }
+
+    /** 0.99 (restored): how many Magic Keys the player holds. */
+    private static int keyCount(ServerPlayer player) {
+        int count = 0;
+        for (ItemStack stack : player.getInventory().items)
+            if (stack.is(com.newuniverse.nusmp.item.NUItems.MAGIC_KEY.get())) count += stack.getCount();
+        return count;
+    }
+
+    /** 0.99 (restored): consumes up to count Magic Keys from the player's inventory. */
+    private static void consumeKeys(ServerPlayer player, int count) {
+        for (ItemStack stack : player.getInventory().items) {
+            if (count <= 0) return;
+            if (!stack.is(com.newuniverse.nusmp.item.NUItems.MAGIC_KEY.get())) continue;
+            int consumed = Math.min(count, stack.getCount());
+            stack.shrink(consumed);
+            count -= consumed;
+        }
     }
 
     // ================================================================ Keyhole Prison
@@ -215,12 +235,17 @@ final class KeyArts {
     }
 
     // ================================================================ Janus Abigail
-    /** Janus Abigail: the magical space opens: 6 doors (+1 per stolen charge, up to 10) appear around you and each looses a different stolen spell. */
+    /** Janus Abigail: the magical space opens: 6 doors (+1 per stolen charge or held Magic Key, up to 10) appear around you and each looses a different stolen spell. */
     static boolean janusAbigail(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         LivingEntity first = GrimoireBook.target(p, 40);
         Vec3 aim = first != null ? centre(first) : GrimoireBook.aim(p, 40);
         var tag = i.getOrCreateTag();
-        int doors = 6 + Math.min(4, tag.getInt(STOLEN));
+        // 0.99 (restored): the physical Magic Keys the player holds add doors and are spent
+        int collected = keyCount(p);
+        int legacyCharges = Math.min(4, tag.getInt(STOLEN));
+        int usedKeys = Math.min(4 - legacyCharges, collected);
+        int doors = 6 + Math.min(4, legacyCharges + usedKeys);
+        consumeKeys(p, usedKeys);
         tag.putInt(STOLEN, 0);
         i.markDirty();
         Vec3 dir = p.getViewVector(1f).multiply(1, 0, 1).normalize();

@@ -211,7 +211,16 @@ public final class BronzeProps {
                     }
                     return;
                 }
-                if (d > 3 && d < 9 && st == IDLE && since > 60 && e.hasLineOfSight(target)) {         // spit
+                // 0.99 (build fix): the original code used a nonexistent hasLineOfSight on MagicPropEntity;
+                // replace with a block raycast between the prop and its target (same effect as line-of-sight)
+                boolean los = false;
+                if (target != null && target.isAlive()) {
+                    Vec3 from = e.position().add(0, 0.5 * s, 0), to = target.getBoundingBox().getCenter();
+                    var hit = sl.clip(new net.minecraft.world.level.ClipContext(from, to,
+                            net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, e));
+                    los = hit.getType() == net.minecraft.world.phys.HitResult.Type.MISS;
+                }
+                if (d > 3 && d < 9 && st == IDLE && since > 60 && los) {         // spit
                     setState(e, ACT2);
                     face(e, target.position());
                     final LivingEntity tt = target;
