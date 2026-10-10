@@ -1,5 +1,37 @@
 # Changelog
 
+## [0.99.0] — Elsdocia + Key Magic Restoration
+
+**Release Date:** 2026-10-10
+
+### Added
+
+#### Elsdocia: the first Wizard King's legacy sword
+- New God-tier weapon: **Elsdocia** (`nusmp:elsdocia`) — broad crystal-like blade with a clover emblem near the golden hilt (per the Black Clover wiki)
+- Custom engraving: **Legacy of the Wizard Kings** (Tensura enchantment, level 1) — additive damage in main hand
+- Standard Tensura engravings: Magic Interference 2, Magicule Absorption 2, Barrier Piercing 1
+- 3D in-hand mesh (broad crystal blade, clover-crest plate on both faces, ornate gold hilt), 16×16 sprite stays the inventory icon
+- Mechanics:
+  - **Absorbs/stores/releases magic:** hitting a foe drains 2% of their magicule pool into the sword's charge (`ElsdociaCharge`, 0-1000)
+  - **Legacy Release** (right-click): releases stored charge as a broad spatial rift; heals the wielder proportional to spent charge; boosted by Key Magic grimoire
+  - **Legacy Gate** (sneak+right-click): requires a floating Key Magic grimoire + ≥100 stored charge; opens a 32-block spatial rift that drains 4% of each hit foe's magicules
+  - **Key Magic synergy:** with a Key Magic grimoire floating, Legacy Release reaches 28 blocks (vs 22), hits for ×1.35 damage, and Legacy Gate becomes usable
+  - Country-destroying lore scale is lore-only (tooltip); no terrain destruction
+- Lore tooltips (per wiki): broad crystal-like blade / clover emblem; crafted by Lemiel Silvamillion Clover; used by Asta to defeat Conrad; contains a piece of the past Wizard Kings' souls
+- EPIC rarity, Netherite tier, unbreakable legacy blade
+
+#### Key Magic restoration
+- Restored the physical **Magic Key** item (`nusmp:magic_key`) — uses the mini-key model's 64x64 texture as its item icon, dropped by Janus Baptism, consumed by Janus Abigail for extra gates
+- Restored `KeyArts.janusBaptism` to drop a Magic Key on cast (was a tag-charge-only system)
+- Restored `KeyArts.janusAbigail` to consume held Magic Keys (keys fill the door slots after the legacy charges, with four extra doors total) to extend to 10 doors
+- Improved `KeyAura` to use the textured `great_key` model at 0.08 scale (was `mini_key` at 0.3) — the later approved improvement, not an exact recreation of `v0.82.0-b126`
+
+### Fixed
+- `WeaponEngravings` now parses fully-qualified enchantment ids (e.g. `nusmp:legacy_of_the_wizard_kings`); short ids still resolve to the `tensura` namespace
+- Build fix: `BronzeAura.piece` used nonexistent `PartPose.x()/y()/z()` accessors — now uses the public `x/y/z` fields
+- Build fix: `BronzeProps` used nonexistent `MagicPropEntity.hasLineOfSight` — now uses a block raycast between the prop and its target (same behavior)
+- These Bronze build errors were pre-existing on the default branch (`760f10a`) and prevented any build before 0.99.0
+
 ## [0.98.0] — Marquis Remake Raid Boss
 
 **Release Date:** 2026-10-09

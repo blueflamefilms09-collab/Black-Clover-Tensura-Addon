@@ -31,7 +31,13 @@ import java.util.Optional;
 public final class WeaponEngravings {
     private WeaponEngravings() {}
 
+    /** id is "tensura:<id>" (short) or fully qualified "namespace:path" (Elsdocia's custom one). */
     record Engraving(String id, int level) {}
+
+    /** 0.99: parses fully qualified ids; short ids keep resolving to the tensura namespace. */
+    private static ResourceLocation id(String id) {
+        return id.contains(":") ? ResourceLocation.parse(id) : ResourceLocation.fromNamespaceAndPath("tensura", id);
+    }
 
     static Engraving e(String id, int level) { return new Engraving(id, level); }
 
@@ -51,7 +57,8 @@ public final class WeaponEngravings {
             Map.entry("magic_tool_sword", List.of(e("magic_weapon", 1))),                                   // mana-forged tools
             Map.entry("magic_tool_spear", List.of(e("magic_weapon", 1))),
             Map.entry("magic_tool_bow", List.of(e("magic_weapon", 1))),
-            Map.entry("last_word", List.of(e("barrier_piercing", 2), e("severance", 1))));                  // 0.52: Zagred's quill-blade
+            Map.entry("last_word", List.of(e("barrier_piercing", 2), e("severance", 1))),                   // 0.52: Zagred's quill-blade
+            Map.entry("elsdocia", List.of(e("nusmp:legacy_of_the_wizard_kings", 1), e("magic_interference", 2), e("magicule_absorption", 2), e("barrier_piercing", 1)))); // 0.99: the legacy blade
 
     static final String FLAG = "NUEngraved";
 
@@ -66,7 +73,7 @@ public final class WeaponEngravings {
         if (cd != null && cd.copyTag().getBoolean(FLAG)) return false;
         HolderLookup.RegistryLookup<Enchantment> lookup = registries.lookupOrThrow(Registries.ENCHANTMENT);
         for (Engraving g : list) {
-            Optional<? extends Holder<Enchantment>> h = lookup.get(ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath("tensura", g.id())));
+            Optional<? extends Holder<Enchantment>> h = lookup.get(ResourceKey.create(Registries.ENCHANTMENT, id(g.id())));
             if (h.isEmpty()) continue;
             int level = Math.max(1, Math.min(g.level(), h.get().value().getMaxLevel()));
             if (stack.getEnchantments().getLevel(h.get()) < level) stack.enchant(h.get(), level);
