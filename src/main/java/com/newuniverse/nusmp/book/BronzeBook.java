@@ -26,7 +26,10 @@ public class BronzeBook extends GrimoireBook {
             BookPage.zone("statue_garrison", "Statue Garrison", BronzeArts::sentinels),
             BookPage.zone("molten_bronze", "Molten Bronze", BronzeArts::molten).withAnim("slam"),
             BookPage.signature("super_sekke_magnum_cannonball", "Super Sekke Magnum Cannonball", BronzeArts::superCannonball).withAnim("signature"),
-            BookPage.daily("bronze_colossus", "Bronze Colossus", BronzeArts::colossus).withCooldown(24000));
+            BookPage.daily("bronze_colossus", "Bronze Colossus", BronzeArts::colossus).withCooldown(24000),
+            // 0.59: the summoned models and the bronze armour layer
+            BookPage.mid("bronze_guardian", "Bronze Guardian", BronzeSummons::guardian).withCooldown(400),
+            BookPage.signature("bronze_armour", "Bronze Armour", BronzeSummons::armour).withAnim("signature"));
 
     public BronzeBook() { super(MagicType.BRONZE, COLOR); }
     @Override protected List<BookPage> familyPages() { return pages; }

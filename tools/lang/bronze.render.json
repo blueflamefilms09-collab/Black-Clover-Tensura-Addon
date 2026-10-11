@@ -1,0 +1,4 @@
+{
+ "nusmp.page.book_bronze.bronze_guardian": "A guardian cast in bronze, green with verdigris along its edges, steps out of the ground beside you with a round shield and a short sword. For 25 seconds it follows you, walks up to the nearest hostile within 12 blocks and cuts it for 6 damage, and its shield turns back arrows and spells that fly at it or you. One to three poison lizards (more with your EP) scuttle at its feet and bite for poison; damage and duration scale with your EP.",
+ "nusmp.page.book_bronze.bronze_armour": "Plates and rivets of polished bronze, green with verdigris at the rims, forge themselves over your body, shoulders and brow. For 20 seconds you gain Resistance II, every blow is softened by a quarter and each attacker takes thorns damage. A well-mastered grimoire (or a devil state) casts your whole body in smooth bronze instead; the thorns and the duration scale with your EP."
+}
