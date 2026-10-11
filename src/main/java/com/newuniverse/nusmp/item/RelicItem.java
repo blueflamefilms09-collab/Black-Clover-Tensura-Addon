@@ -30,7 +30,8 @@ public class RelicItem extends Item {
         COMMUNICATION(1), RUNE_STONE(16), SPIRIT_CHARM(16), BOND_THREAD(16), FORTUNE_DIE(16), GRIMOIRE_CHAIN(1),
         ANTI_BIRD(1), RECOVERY_SALVE(16), CONSENT(1), DEVIL_CONTRACT(1),
         GAUCHE_MIRROR(1),                     // 0.34: Gauche Adlai's hand mirror (Mirror Magic tool), appended
-        MARGINS(1), QUICKENED(1);             // 0.52: Zagred's Shroud of Margins and Circlet of Quickened Thought (see BossRelics)
+        MARGINS(1), QUICKENED(1),
+        BARD_RELIC(1), STORY_PAGE(16), GALE_FEATHER(1);   // 0.100: boss drops of Riven Remake and Sylph (BossDrops)             // 0.52: Zagred's Shroud of Margins and Circlet of Quickened Thought (see BossRelics)
         final int stack;
         Kind(int stack) { this.stack = stack; }
     }
@@ -129,6 +130,23 @@ public class RelicItem extends Item {
                 if (!p.isShiftKeyDown()) return InteractionResultHolder.pass(stack);
                 BossRelics.overclock(p);
                 p.getCooldowns().addCooldown(this, 1800);
+                return InteractionResultHolder.success(stack);
+            }
+            case BARD_RELIC -> {                                                              // 0.100: Riven Remake's relic
+                if (!p.isShiftKeyDown()) return InteractionResultHolder.pass(stack);
+                BossDrops.bardicInspiration(p);
+                p.getCooldowns().addCooldown(this, 2400);
+                return InteractionResultHolder.success(stack);
+            }
+            case STORY_PAGE -> {
+                BossDrops.rewrite(p);
+                stack.shrink(1);
+                p.getCooldowns().addCooldown(this, 600);
+                return InteractionResultHolder.success(stack);
+            }
+            case GALE_FEATHER -> {                                                            // 0.100: Sylph's feather
+                BossDrops.galeLeap(p);
+                p.getCooldowns().addCooldown(this, 240);
                 return InteractionResultHolder.success(stack);
             }
             default -> { return InteractionResultHolder.pass(stack); }

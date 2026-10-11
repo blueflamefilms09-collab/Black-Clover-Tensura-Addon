@@ -606,7 +606,7 @@
   "entity.nusmp.riven_remake": "Riven Remake",
   "item.nusmp.riven_remake_spawn_egg": "Riven Remake Spawn Egg",
   "item.nusmp.black_bull_bard_relic": "Black Bull Bard Relic",
-  "item.nusmp.black_bull_bard_relic.desc": "A grimoire page that rewrote itself: Riven Remake's mark, \"Fictional Remake\".",
+  "item.nusmp.black_bull_bard_relic.desc": "A grimoire page that rewrote itself: Riven Remake's mark, \"Fictional Remake\". Sneak + use: Bardic Inspiration, Strength, Speed and Regeneration for you and allies within 12 blocks for 20 s (2 min cooldown).",
   "block.nusmp.underworld_matter": "Underworld Matter",
   "item.nusmp.otherworld_trident": "Otherworldly Trident",
   "item.nusmp.otherworld_trident.desc": "Spoken into being by Kotodama. Right-click: hurl a void bolt. Fades after 60 s or if it leaves your hands.",
@@ -1180,5 +1180,16 @@
   "nusmp.skill.riven_black_bull": "Black Bulls' Bard",
   "nusmp.skill.riven_fictional_remake.subtitle": "The story hits harder than anyone expected.",
   "nusmp.riven.manifest": "This page wasn't in your story.",
-  "nusmp.skill.riven_boss_bound": "Boss-bound. It cannot be plundered, copied or learned."
+  "nusmp.skill.riven_boss_bound": "Boss-bound. It cannot be plundered, copied or learned.",
+  "item.nusmp.quicklings_ivy": "Quickling's Ivy",
+  "item.nusmp.magebane_longsword": "Magebane Longsword",
+  "item.nusmp.prism_blade": "Prism Blade",
+  "item.nusmp.thundercleave": "Thundercleave",
+  "item.nusmp.bloodbound_katana": "Bloodbound Katana",
+  "item.nusmp.permafrost_sabre": "Permafrost Sabre",
+  "item.nusmp.cyclone_rapier": "Cyclone Rapier",
+  "item.nusmp.story_page": "Story Page",
+  "item.nusmp.story_page.desc": "A page torn from Riven Remake's story. Use it: Rewrite, every negative effect is erased and you mend 40% of your health. Consumed.",
+  "item.nusmp.gale_feather": "Gale Feather",
+  "item.nusmp.gale_feather.desc": "Sylph's wind-spirit feather. Use it: Gale Leap, a gust flings you forward and up and slows your fall for 8 s (12 s cooldown)."
 }

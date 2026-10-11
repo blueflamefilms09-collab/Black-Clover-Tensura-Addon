@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.101.0] — Reference weapons, boss drops, the Codex (NOT yet compiled)
+
+**New:**
+- 7 weapons from the "Custom weapon i want added" sheets, each with a 3D in-hand model, glow layer, inventory icon, Tensura engravings, a right-click technique, a sneak-click second technique and a full-swing strike (logic in `item/ReferenceWeapons.java`): **Quickling's Ivy** (rapier: rooting poison ivy), **Magebane Longsword** (strips buffs, jams casters), **Prism Blade** (blinding flash, seven-colour beam), **Thundercleave** (thunder arc, thunderstorm, hits arc to a second foe), **Bloodbound Katana** (Blood Charges, Bloodflare), **Permafrost Sabre** and **Cyclone Rapier** (the Boreal Blades; hold both for Boreal Fusion).
+- Boss drops: **Story Page** (Riven Remake; Rewrite: cleanse + heal 40%), **Gale Feather** (Sylph; Gale Leap), loot tables `entities/riven_remake.json` and `entities/wind_spirit_lord.json`.
+- **The Codex** (`client/ui`): an open book with page-turn animation, mouse-wheel scrolling, tabs, and on the first spread your own figure in a random pose (standing, sitting, bowing, casting, floating, meditating, victory, salute, on guard) next to the magic this mod has given you. Pages are registered in `CodexPages`, so the book grows without touching the screen.
+
+**Replacement:** the Multiverse Status screen is replaced by the Codex everywhere it opened (hotkey, Tensura-menu button, panel click). Its status blocks are the Codex's Status page; the old class stays only for the compact Tensura-menu panel. The **Black Bull Bard Relic** (an inert trophy) is now usable (sneak-use: Bardic Inspiration); same item id.
+
+**Build note:** this session could not reach maven.neoforged.net, so none of 0.100/0.101 was compiled. Build with `gradlew.bat build` and send me any errors.
+
 ## [0.100.0] — Elsdocia remake + boss spawn guard (NOT yet compiled)
 
 **Replacement:** Elsdocia's 3D model skin, glow layer and inventory sprite (the wiki/reference look: long straight crystal blade, deep azure with a cyan core and light motes, gold clover emblem above a gold guard, dark grip). The old sprite is kept as `textures/item/elsdocia_v099.png`.

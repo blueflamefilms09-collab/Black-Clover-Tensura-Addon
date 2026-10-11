@@ -86,7 +86,9 @@ public final class NUItems {
     public static final DeferredItem<RelicItem> SHROUD_OF_MARGINS = relic("shroud_of_margins", RelicItem.Kind.MARGINS, Rarity.EPIC);
     public static final DeferredItem<RelicItem> CIRCLET_OF_THOUGHT = relic("circlet_of_quickened_thought", RelicItem.Kind.QUICKENED, Rarity.EPIC);
     // 0.60: Riven Remake's drop and spawn egg
-    public static final DeferredItem<Item> BLACK_BULL_BARD_RELIC = ITEMS.register("black_bull_bard_relic", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    public static final DeferredItem<Item> BLACK_BULL_BARD_RELIC = ITEMS.register("black_bull_bard_relic", () -> new RelicItem(RelicItem.Kind.BARD_RELIC, new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));   // 0.100: now usable (BossDrops)
+    public static final DeferredItem<RelicItem> STORY_PAGE = relic("story_page", RelicItem.Kind.STORY_PAGE, Rarity.RARE);                 // 0.100
+    public static final DeferredItem<RelicItem> GALE_FEATHER = relic("gale_feather", RelicItem.Kind.GALE_FEATHER, Rarity.EPIC);          // 0.100: Sylph's drop
     public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> RIVEN_REMAKE_SPAWN_EGG = ITEMS.register("riven_remake_spawn_egg",
             () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(com.newuniverse.nusmp.entity.NUEntities.RIVEN_REMAKE, 0x14101F, 0x7A5CFF, new Item.Properties()));
     public static final DeferredItem<Item> HEART_OF_WORDS = ITEMS.register("heart_of_words", () -> new Item(new Item.Properties().stacksTo(16).rarity(Rarity.EPIC).fireResistant()));
@@ -122,6 +124,15 @@ public final class NUItems {
     // 0.99: the first Wizard King's legacy sword (Lemiel Silvamillion Clover's Elsdocia), God-class and unbreakable
     public static final DeferredItem<MagicWeaponItem> ELSDOCIA = ITEMS.register("elsdocia", ElsdociaSwordItem::new);
 
+    // 0.100: the weapons of the "Custom weapon i want added" reference sheets (see ReferenceWeapons)
+    public static final DeferredItem<MagicWeaponItem> QUICKLINGS_IVY = weapon("quicklings_ivy", MagicWeaponItem.Kind.QUICKLINGS_IVY);
+    public static final DeferredItem<MagicWeaponItem> MAGEBANE_LONGSWORD = weapon("magebane_longsword", MagicWeaponItem.Kind.MAGEBANE_LONGSWORD);
+    public static final DeferredItem<MagicWeaponItem> PRISM_BLADE = weapon("prism_blade", MagicWeaponItem.Kind.PRISM_BLADE);
+    public static final DeferredItem<MagicWeaponItem> THUNDERCLEAVE = weapon("thundercleave", MagicWeaponItem.Kind.THUNDERCLEAVE);
+    public static final DeferredItem<MagicWeaponItem> BLOODBOUND_KATANA = weapon("bloodbound_katana", MagicWeaponItem.Kind.BLOODBOUND_KATANA);
+    public static final DeferredItem<MagicWeaponItem> PERMAFROST_SABRE = weapon("permafrost_sabre", MagicWeaponItem.Kind.PERMAFROST_SABRE);
+    public static final DeferredItem<MagicWeaponItem> CYCLONE_RAPIER = weapon("cyclone_rapier", MagicWeaponItem.Kind.CYCLONE_RAPIER);
+
     // 0.44: Painting Magic's palette & brush (manifested by a Painting grimoire; see book.PaintStudio)
     public static final DeferredItem<PaintToolItem> PAINT_BRUSH = ITEMS.register("paint_brush", () -> new PaintToolItem(PaintToolItem.Kind.BRUSH));
     public static final DeferredItem<PaintToolItem> PAINT_PALETTE = ITEMS.register("paint_palette", () -> new PaintToolItem(PaintToolItem.Kind.PALETTE));
@@ -155,6 +166,7 @@ public final class NUItems {
         l.add(MAGIC_KEY);                                                                       // 0.99: restored
         l.addAll(List.of(LAST_WORD, SHROUD_OF_MARGINS, CIRCLET_OF_THOUGHT, HEART_OF_WORDS));    // 0.52
         l.addAll(List.of(RIVEN_REMAKE_SPAWN_EGG, BLACK_BULL_BARD_RELIC));                       // 0.60
+        l.addAll(List.of(QUICKLINGS_IVY, MAGEBANE_LONGSWORD, PRISM_BLADE, THUNDERCLEAVE, BLOODBOUND_KATANA, PERMAFROST_SABRE, CYCLONE_RAPIER, STORY_PAGE, GALE_FEATHER));   // 0.100
         // 0.61: the manifested weapons are held in the registry only, not listed in the creative tab
         return l;
     }

@@ -1040,6 +1040,224 @@ def elsdocia(m, a):
     return dict(glow=("7FDFFF", 0.09, 0.45, 1.0))
 
 
+# ================================================================ 0.100: the weapons of "Custom weapon i want added" (reference sheets)
+def _hsv(h, sat, val):
+    import colorsys
+    r, g, b = colorsys.hsv_to_rgb(h % 1.0, sat, val)
+    return np.array((r * 255, g * 255, b * 255), np.float32)
+
+
+def magebane_longsword(m, a):
+    """Magebane Longsword: a translucent turquoise blade with brown rune bands, a dark mage-scorched crossguard, black grip."""
+    L = 52
+    st = straight_stations(L, 3.4, 3.0, 8, steps=4, ridge=0)
+
+    def paint(x, y, front, e, rd):
+        if x is None:
+            return col((70, 150, 150)), None
+        c = np.array((40, 135, 138), np.float32) * (1 + 0.25 * math.sin((x + y * 0.3) * 1.1)) + fz(int(x * 2), int(y * 2), 5) * 22
+        g = None
+        if 6 < y < L - 10 and int(y) % 9 in (0, 1) and abs(x) < 2.2:
+            c = np.array((196, 142, 74), np.float32) + fz(int(x), int(y), 9) * 20           # rune band
+            g = col((255, 190, 100), 0.55)
+        if e < 0.9:
+            c = np.array((190, 245, 240), np.float32)
+        elif abs(x) < 0.6:
+            c = c * 1.25 + 10
+        return col(np.clip(c, 0, 255)), g
+    Blade(st, 0.7, 1.4, paint).build(m, a)
+    dark = (44, 38, 44)
+    box(m, a, -8.5, -2, -1.4, 8.5, 0.6, 1.4, metal_paint((70, 62, 72), rivets=True))
+    for sx in (-1, 1):
+        lo, hi = sorted((sx * 6.5, sx * 10.2))
+        box(m, a, lo, -3.6, -1.1, hi, 1.2, 1.1, metal_paint((54, 48, 56)))
+    box(m, a, -1.5, -14, -1.4, 1.5, -2, 1.4, wrap_paint((20, 18, 24), (70, 62, 72), diamonds=True))
+    box(m, a, -2.4, -17, -2.1, 2.4, -14, 2.1, metal_paint((70, 62, 72), gem=(80, 220, 210), glow_rgb=(90, 235, 225)))
+    return dict(glow=("5FEBDD", 0.08, 0.35, 0.95))
+
+
+def prism_blade(m, a):
+    """Prism Blade: a crystalline longsword whose body shifts through the whole spectrum from hilt to tip, set in a midnight-blue hilt."""
+    L = 56
+    st = straight_stations(L, 3.6, 3.2, 9, steps=4, ridge=0)
+
+    def paint(x, y, front, e, rd):
+        if x is None:
+            return col((220, 220, 255)), col((220, 220, 255), 0.4)
+        hue = (y / L) * 0.85 + (0.05 if front else 0.0) + 0.04 * math.sin(x)
+        c = _hsv(hue, 0.55 + 0.25 * (abs(x) / 3.6), 0.78 + 0.2 * math.sin(y * 0.7 + x))
+        g = col(c * 0.9 + 25, 0.45)
+        if e < 0.9:
+            c = np.array((250, 250, 255), np.float32)
+        elif abs(x) < 0.7:
+            c = c * 0.6 + 100
+        h = hsh(int(x * 2), int(y * 2), 77)
+        if h > 0.96:
+            c = np.array((255, 255, 255), np.float32)
+            g = col((255, 255, 255), 0.95)
+        return col(np.clip(c, 0, 255)), g
+    Blade(st, 0.8, 1.6, paint).build(m, a)
+    navy = (34, 44, 96)
+    box(m, a, -9, -2, -1.3, 9, 0.8, 1.3, metal_paint((200, 168, 70), gem=(120, 200, 255), glow_rgb=(150, 220, 255)))
+    for sx in (-1, 1):
+        lo, hi = sorted((sx * 7.0, sx * 10.5))
+        box(m, a, lo, -3.2, -1.1, hi, 1.8, 1.1, metal_paint((200, 168, 70)))
+    box(m, a, -1.6, -14, -1.5, 1.6, -2, 1.5, wrap_paint((26, 36, 88), (120, 190, 255), diamonds=True))
+    box(m, a, -2.6, -17.2, -2.2, 2.6, -14, 2.2, metal_paint((200, 168, 70), gem=(255, 140, 220), glow_rgb=(255, 170, 235)))
+    return dict(glow=("F0F4FF", 0.1, 0.5, 1.0))
+
+
+def thundercleave(m, a):
+    """Thundercleave: a broad dark-steel greatsword, gold-inlaid, veined with a lit, crackling thunder-blue fracture."""
+    L = 56
+    st = straight_stations(L, 6.0, 5.6, 9, steps=4, ridge=0)
+
+    def paint(x, y, front, e, rd):
+        if x is None:
+            return col((50, 70, 84)), None
+        c = np.array((54, 78, 92), np.float32) + nz(x, y, 3) * 26
+        g = None
+        w = math.sin(y * 0.42 + (2.0 if front else 0.0)) * 1.6                   # a jagged vein snaking up the blade
+        if abs(x - w) < 0.75 and y < L - 4:
+            c = np.array((130, 235, 255), np.float32)
+            g = col((120, 235, 255), 0.95)
+        elif abs(x - w) < 1.5 and y < L - 4:
+            c = c * 0.7
+            g = col((60, 170, 255), 0.35)
+        if abs(x) > 4.4 and int(y) % 6 < 2:
+            c = np.array((214, 170, 70), np.float32)                              # gold inlay along the edge
+        if e < 0.9:
+            c = np.array((176, 220, 240), np.float32)
+        return col(np.clip(c, 0, 255)), g
+    Blade(st, 0.7, 1.5, paint).build(m, a)
+    gold = (206, 160, 60)
+    box(m, a, -12, -2.5, -2, 12, 0.8, 2, metal_paint(gold, rivets=True))
+    for sx in (-1, 1):
+        lo, hi = sorted((sx * 10, sx * 14))
+        box(m, a, lo, -4, -2.2, hi, 2, 2.2, metal_paint(gold))
+    box(m, a, -2.8, -2, -2.6, 2.8, 2.4, 2.6, metal_paint(gold, gem=(60, 170, 250), glow_rgb=(110, 220, 255)))
+    box(m, a, -1.7, -20, -1.7, 1.7, -2.5, 1.7, wrap_paint((30, 40, 56), (206, 160, 60), diamonds=True))
+    box(m, a, -2.8, -24, -2.8, 2.8, -20, 2.8, metal_paint(gold, gem=(60, 170, 250), glow_rgb=(110, 220, 255)))
+    return dict(glow=("7FE6FF", 0.14, 0.45, 1.0))
+
+
+def bloodbound_katana(m, a):
+    """Bloodbound Katana: an obsidian blade, long and curved, crimson veins pulsing, a wrapped hilt and a bleeding tsuba."""
+    L = 58
+    st = katana_stations(L, 4.6, 3.4, 4.0, kissaki=6.0, steps=10)
+
+    def paint(x, y, front, e, rd):
+        if x is None:
+            return col((24, 18, 24)), col((200, 20, 40), 0.3)
+        c = np.array((22, 18, 26), np.float32) + nz(x, y, 6) * 14
+        g = None
+        v = math.sin(y * 0.33 + x * 1.3 + (1.0 if front else 4.0))
+        if v > 0.82 and y < L - 3:
+            c = np.array((210, 20, 44), np.float32)
+            g = col((255, 40, 70), 0.9)
+        elif v > 0.6 and y < L - 3:
+            c = np.array((120, 12, 30), np.float32)
+            g = col((200, 20, 50), 0.35)
+        if e < 0.9:
+            c = np.array((150, 50, 70), np.float32)                             # the honed edge
+        return col(np.clip(c, 0, 255)), g
+    Blade(st, 0.6, 1.1, paint).build(m, a)
+    plate(m, a, disc_mask(5.2, inner=0, lobes=4, lobe_r=1.6), -5.2, -5.2, 0.5, lambda i, j, f: (col(shade((60, 20, 28), 1.3 if (i + j) % 3 == 0 else 1.0)), col((220, 30, 50), 0.35) if (i + j) % 5 == 0 else None), "xz", -0.4)
+    box(m, a, -1.2, -17, -1.2, 1.2, -1, 1.2, wrap_paint((28, 20, 28), (160, 24, 44), diamonds=True))
+    box(m, a, -1.9, -19, -1.9, 1.9, -17, 1.9, metal_paint((120, 20, 36), gem=(255, 60, 90), glow_rgb=(255, 60, 90)))
+    return dict(glow=("FF2846", 0.12, 0.35, 1.0))
+
+
+def quicklings_ivy(m, a):
+    """Quickling's Ivy: a slim rapier of living green with an ivy-wrapped gold guard; leaves sprout along the blade."""
+    L = 56
+    st = straight_stations(L, 1.6, 1.0, 6, steps=3, ridge=0)
+
+    def paint(x, y, front, e, rd):
+        if x is None:
+            return col((90, 170, 70)), None
+        c = np.array((84, 170, 66), np.float32) + fz(int(x * 3), int(y * 2), 8) * 24
+        g = None
+        if abs(x) < 0.5 and 4 < y < L - 6:
+            c = np.array((190, 255, 120), np.float32)
+            g = col((170, 255, 110), 0.7)
+        if int(y) % 7 == 3 and abs(x) > 0.7:
+            c = np.array((40, 120, 40), np.float32)                              # a leaf
+        if e < 0.7:
+            c = np.array((220, 250, 190), np.float32)
+        return col(np.clip(c, 0, 255)), g
+    Blade(st, 0.3, 0.7, paint).build(m, a)
+    gold = (206, 162, 60)
+    box(m, a, -6.5, -1.6, -0.6, 6.5, -0.4, 0.6, metal_paint(gold))
+    ring = disc_mask(5.2, inner=3.8)
+    plate(m, a, ring, -5.2, -5.2, 0.5, lambda i, j, f: (col(shade((80, 150, 60), 1.2 if (i + j) % 3 == 0 else 0.9)), None), "xz", -0.8)
+    box(m, a, -5.8, -13.5, -0.5, -4.4, -0.8, 0.5, metal_paint(gold))
+    box(m, a, -1.1, -13, -1.1, 1.1, -1.4, 1.1, wrap_paint((50, 100, 40), (206, 162, 60), diamonds=False))
+    box(m, a, -1.8, -15.6, -1.8, 1.8, -13, 1.8, metal_paint(gold, gem=(120, 255, 100), glow_rgb=(150, 255, 120)))
+    return dict(glow=("96FF78", 0.1, 0.4, 1.0))
+
+
+def permafrost_sabre(m, a):
+    """Permafrost Sabre: a curved icy sabre, pale blue with frosted grain, a gold basket hilt set with a frost gem."""
+    L = 52
+    st = katana_stations(L, 4.0, 3.0, 3.5, kissaki=7.0, steps=9, spine_frac=0.7)
+
+    def paint(x, y, front, e, rd):
+        if x is None:
+            return col((200, 235, 255)), col((170, 230, 255), 0.35)
+        c = np.array((150, 205, 240), np.float32) + fz(int(x * 3), int(y * 3), 12) * 34
+        g = col((150, 225, 255), 0.18)
+        if (int(x * 2) + int(y)) % 11 == 0:
+            c = np.array((240, 252, 255), np.float32)                          # frost crystals
+            g = col((220, 250, 255), 0.8)
+        if e < 0.9:
+            c = np.array((240, 252, 255), np.float32)
+        return col(np.clip(c, 0, 255)), g
+    Blade(st, 0.55, 1.0, paint).build(m, a)
+    gold = (212, 170, 64)
+    box(m, a, -5, -1.4, -0.9, 5, 0.6, 0.9, metal_paint(gold, gem=(150, 235, 255), glow_rgb=(170, 240, 255)))
+    ring = disc_mask(6.0, inner=4.6)
+    plate(m, a, ring[:7], -6.0, -12, 0.5, lambda i, j, f: (col(shade(gold, 1.15)), None), "xy")
+    box(m, a, -1.2, -13, -1.2, 1.2, -1.4, 1.2, wrap_paint((30, 60, 110), (212, 170, 64), diamonds=True))
+    box(m, a, -1.9, -15.4, -1.9, 1.9, -13, 1.9, metal_paint(gold))
+    return dict(glow=("AEEBFF", 0.09, 0.4, 0.95))
+
+
+def cyclone_rapier(m, a):
+    """Cyclone Rapier: a silver rapier etched with a spiral gale, a swirling gold guard and a teal wind-gem."""
+    L = 56
+    st = straight_stations(L, 1.7, 1.1, 6, steps=3, ridge=0)
+
+    def paint(x, y, front, e, rd):
+        if x is None:
+            return col((200, 215, 225)), None
+        c = np.array((184, 202, 216), np.float32) + fz(int(x * 3), int(y * 2), 14) * 22
+        g = None
+        sp = math.sin(y * 0.55 + x * 1.7)
+        if sp > 0.75 and 4 < y < L - 6:
+            c = np.array((90, 220, 210), np.float32)                             # the gale spiral
+            g = col((120, 245, 235), 0.8)
+        if e < 0.7:
+            c = np.array((236, 244, 250), np.float32)
+        return col(np.clip(c, 0, 255)), g
+    Blade(st, 0.3, 0.7, paint).build(m, a)
+    gold = (210, 168, 62)
+    swirl = ascii_mask([
+        ".####.",
+        "##..##",
+        "#..#.#",
+        "#.##.#",
+        "##....",
+        ".####.",
+    ])
+    plate(m, a, swirl, -9.5, -3, 0.5, lambda i, j, f: (col(shade(gold, 1.2 if (i + j) % 3 == 0 else 0.92)), None), "xy")
+    plate(m, a, swirl[:, ::-1], 3.5, -3, 0.5, lambda i, j, f: (col(shade(gold, 1.2 if (i + j) % 3 == 0 else 0.92)), None), "xy")
+    box(m, a, -3.2, -1.4, -0.7, 3.2, -0.4, 0.7, metal_paint(gold))
+    box(m, a, -1.1, -13, -1.1, 1.1, -1.4, 1.1, wrap_paint((40, 70, 80), (210, 168, 62), diamonds=False))
+    box(m, a, -1.9, -15.6, -1.9, 1.9, -13, 1.9, metal_paint(gold, gem=(90, 235, 220), glow_rgb=(120, 250, 235)))
+    return dict(glow=("78F5E8", 0.11, 0.4, 1.0))
+
+
 def shroud_of_margins(m, a):
     """The Shroud of Margins: a folded violet-black cloak with a white margin and lines of writing, a glowing clasp."""
     def cloth(rgb):
@@ -1085,7 +1303,9 @@ RELICS = [
     ("shroud_of_margins", shroud_of_margins),
     ("circlet_of_quickened_thought", circlet_of_thought),
 ]
-SPECS += [("gauches_hand_mirror", hand_mirror), ("grimoire_chain", grimoire_chain), ("last_word", last_word), ("elsdocia", elsdocia)]                     # diagonal sprites: placed like the weapons
+SPECS += [("gauches_hand_mirror", hand_mirror), ("grimoire_chain", grimoire_chain), ("last_word", last_word), ("elsdocia", elsdocia),
+          ("magebane_longsword", magebane_longsword), ("prism_blade", prism_blade), ("thundercleave", thundercleave), ("bloodbound_katana", bloodbound_katana),
+          ("quicklings_ivy", quicklings_ivy), ("permafrost_sabre", permafrost_sabre), ("cyclone_rapier", cyclone_rapier)]                     # diagonal sprites: placed like the weapons
 
 
 # ================================================================ placement on the old sprite

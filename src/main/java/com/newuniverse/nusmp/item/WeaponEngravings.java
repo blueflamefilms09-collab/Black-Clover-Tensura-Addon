@@ -58,7 +58,15 @@ public final class WeaponEngravings {
             Map.entry("magic_tool_spear", List.of(e("magic_weapon", 1))),
             Map.entry("magic_tool_bow", List.of(e("magic_weapon", 1))),
             Map.entry("last_word", List.of(e("barrier_piercing", 2), e("severance", 1))),                   // 0.52: Zagred's quill-blade
-            Map.entry("elsdocia", List.of(e("nusmp:legacy_of_the_wizard_kings", 1), e("magic_interference", 2), e("magicule_absorption", 2), e("barrier_piercing", 1)))); // 0.99: the legacy blade
+            Map.entry("elsdocia", List.of(e("nusmp:legacy_of_the_wizard_kings", 1), e("magic_interference", 2), e("magicule_absorption", 2), e("barrier_piercing", 1)),                // 0.99: the legacy blade
+            // 0.100: the reference-sheet weapons
+            Map.entry("quicklings_ivy", List.of(e("swift", 2), e("magic_weapon", 1), e("enervation", 1))),               // living ivy, poisons and slows
+            Map.entry("magebane_longsword", List.of(e("magic_interference", 2), e("barrier_piercing", 2), e("magicule_absorption", 1))), // bane of mages
+            Map.entry("prism_blade", List.of(e("holy_weapon", 2), e("elemental_boost", 2), e("barrier_piercing", 1))),   // a blade of refracted light
+            Map.entry("thundercleave", List.of(e("elemental_boost", 2), e("crushing", 2), e("severance", 1))),           // a thunder-struck greatsword
+            Map.entry("bloodbound_katana", List.of(e("energy_steal", 2), e("severance", 1), e("soul_eater", 1))),        // drinks the blood it draws
+            Map.entry("permafrost_sabre", List.of(e("elemental_boost", 2), e("swift", 1), e("sturdy", 1))),              // frost-grained, one of the Boreal Blades
+            Map.entry("cyclone_rapier", List.of(e("swift", 2), e("elemental_boost", 1), e("magic_weapon", 1))));        // gale-etched, one of the Boreal Blades
 
     static final String FLAG = "NUEngraved";
 

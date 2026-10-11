@@ -46,7 +46,7 @@ public final class MultiverseStatusClient {
     public static void init(IEventBus modBus) {
         modBus.addListener((RegisterKeyMappingsEvent e) -> e.register(KEY));
         NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post e) -> {
-            while (KEY.consumeClick()) Minecraft.getInstance().setScreen(new MultiverseStatusScreen(Minecraft.getInstance().screen));
+            while (KEY.consumeClick()) Minecraft.getInstance().setScreen(new com.newuniverse.nusmp.client.ui.CodexScreen(Minecraft.getInstance().screen));
         });
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> status = new CompoundTag());
         NeoForge.EVENT_BUS.addListener(MultiverseStatusClient::onScreenInit);
@@ -132,7 +132,7 @@ public final class MultiverseStatusClient {
             return;
         }
         if (MultiverseClientConfig.get(MultiverseClientConfig.BUTTON_FALLBACK)) {
-            event.addListener(Button.builder(Component.literal("Multiverse"), b -> Minecraft.getInstance().setScreen(new MultiverseStatusScreen(s)))
+            event.addListener(Button.builder(Component.literal("Multiverse"), b -> Minecraft.getInstance().setScreen(new com.newuniverse.nusmp.client.ui.CodexScreen(s)))
                     .bounds(s.width - 84, 4, 80, 16).build());
         }
     }
@@ -176,7 +176,7 @@ public final class MultiverseStatusClient {
         }
         int[] r = PANELS.get(event.getScreen());
         if (r == null || event.getButton() != 0 || !inside(r, event.getMouseX(), event.getMouseY())) return;
-        Minecraft.getInstance().setScreen(new MultiverseStatusScreen(event.getScreen()));
+        Minecraft.getInstance().setScreen(new com.newuniverse.nusmp.client.ui.CodexScreen(event.getScreen()));
         event.setCanceled(true);
     }
 
