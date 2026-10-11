@@ -1,0 +1,938 @@
+{
+ "spirit_salamander_idle": {
+  "kind": "geo",
+  "model": "spirit_salamander",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "C0FFFFFF",
+  "anim": "idle",
+  "ages": [
+   0,
+   12
+  ],
+  "tile": [
+   420,
+   380
+  ],
+  "views": [
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     1.0,
+     0
+    ],
+    "dist": 5.2
+   },
+   {
+    "name": "side",
+    "yaw": -70,
+    "pitch": 12,
+    "target": [
+     0,
+     1.0,
+     0
+    ],
+    "dist": 5.2
+   },
+   {
+    "name": "back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.0,
+     0
+    ],
+    "dist": 5.2
+   }
+  ]
+ },
+ "spirit_salamander_move": {
+  "kind": "geo",
+  "model": "spirit_salamander",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "C0FFFFFF",
+  "anim": "move",
+  "ages": [
+   0,
+   12
+  ],
+  "tile": [
+   420,
+   380
+  ],
+  "views": [
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     1.0,
+     0
+    ],
+    "dist": 5.2
+   },
+   {
+    "name": "side",
+    "yaw": -70,
+    "pitch": 12,
+    "target": [
+     0,
+     1.0,
+     0
+    ],
+    "dist": 5.2
+   },
+   {
+    "name": "back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.0,
+     0
+    ],
+    "dist": 5.2
+   }
+  ]
+ },
+ "spirit_salamander_cast": {
+  "kind": "geo",
+  "model": "spirit_salamander",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "C0FFFFFF",
+  "anim": "cast",
+  "ages": [
+   0,
+   12
+  ],
+  "tile": [
+   420,
+   380
+  ],
+  "views": [
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     1.0,
+     0
+    ],
+    "dist": 5.2
+   },
+   {
+    "name": "side",
+    "yaw": -70,
+    "pitch": 12,
+    "target": [
+     0,
+     1.0,
+     0
+    ],
+    "dist": 5.2
+   },
+   {
+    "name": "back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.0,
+     0
+    ],
+    "dist": 5.2
+   }
+  ]
+ },
+ "spirit_undine_idle": {
+  "kind": "geo",
+  "model": "spirit_undine",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "C0FFFFFF",
+  "anim": "idle",
+  "ages": [
+   0,
+   12
+  ],
+  "tile": [
+   420,
+   380
+  ],
+  "views": [
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 4.2
+   },
+   {
+    "name": "side",
+    "yaw": -70,
+    "pitch": 12,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 4.2
+   },
+   {
+    "name": "back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 4.2
+   }
+  ]
+ },
+ "spirit_undine_water_idle": {
+  "kind": "geo",
+  "model": "spirit_undine_water",
+  "space": "PROP",
+  "layer": "TRANSLUCENT",
+  "argb": "FFFFFFFF",
+  "glow": "C0FFFFFF",
+  "anim": "idle",
+  "ages": [
+   0,
+   12
+  ],
+  "tile": [
+   420,
+   380
+  ],
+  "views": [
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     0.6,
+     0
+    ],
+    "dist": 4.2
+   },
+   {
+    "name": "side",
+    "yaw": -70,
+    "pitch": 12,
+    "target": [
+     0,
+     0.6,
+     0
+    ],
+    "dist": 4.2
+   },
+   {
+    "name": "back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     0.6,
+     0
+    ],
+    "dist": 4.2
+   }
+  ]
+ },
+ "spirit_undine_move": {
+  "kind": "geo",
+  "model": "spirit_undine",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "C0FFFFFF",
+  "anim": "move",
+  "ages": [
+   0,
+   12
+  ],
+  "tile": [
+   420,
+   380
+  ],
+  "views": [
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 4.2
+   },
+   {
+    "name": "side",
+    "yaw": -70,
+    "pitch": 12,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 4.2
+   },
+   {
+    "name": "back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 4.2
+   }
+  ]
+ },
+ "spirit_undine_water_move": {
+  "kind": "geo",
+  "model": "spirit_undine_water",
+  "space": "PROP",
+  "layer": "TRANSLUCENT",
+  "argb": "FFFFFFFF",
+  "glow": "C0FFFFFF",
+  "anim": "move",
+  "ages": [
+   0,
+   12
+  ],
+  "tile": [
+   420,
+   380
+  ],
+  "views": [
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     0.6,
+     0
+    ],
+    "dist": 4.2
+   },
+   {
+    "name": "side",
+    "yaw": -70,
+    "pitch": 12,
+    "target": [
+     0,
+     0.6,
+     0
+    ],
+    "dist": 4.2
+   },
+   {
+    "name": "back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     0.6,
+     0
+    ],
+    "dist": 4.2
+   }
+  ]
+ },
+ "spirit_undine_cast": {
+  "kind": "geo",
+  "model": "spirit_undine",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "C0FFFFFF",
+  "anim": "cast",
+  "ages": [
+   0,
+   12
+  ],
+  "tile": [
+   420,
+   380
+  ],
+  "views": [
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 4.2
+   },
+   {
+    "name": "side",
+    "yaw": -70,
+    "pitch": 12,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 4.2
+   },
+   {
+    "name": "back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 4.2
+   }
+  ]
+ },
+ "spirit_undine_water_cast": {
+  "kind": "geo",
+  "model": "spirit_undine_water",
+  "space": "PROP",
+  "layer": "TRANSLUCENT",
+  "argb": "FFFFFFFF",
+  "glow": "C0FFFFFF",
+  "anim": "cast",
+  "ages": [
+   0,
+   12
+  ],
+  "tile": [
+   420,
+   380
+  ],
+  "views": [
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     0.6,
+     0
+    ],
+    "dist": 4.2
+   },
+   {
+    "name": "side",
+    "yaw": -70,
+    "pitch": 12,
+    "target": [
+     0,
+     0.6,
+     0
+    ],
+    "dist": 4.2
+   },
+   {
+    "name": "back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     0.6,
+     0
+    ],
+    "dist": 4.2
+   }
+  ]
+ },
+ "spirit_sylph_idle": {
+  "kind": "geo",
+  "model": "spirit_sylph",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "C0FFFFFF",
+  "anim": "idle",
+  "ages": [
+   0,
+   12
+  ],
+  "tile": [
+   420,
+   380
+  ],
+  "views": [
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "side",
+    "yaw": -70,
+    "pitch": 12,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 3.4
+   }
+  ]
+ },
+ "spirit_sylph_wings_idle": {
+  "kind": "geo",
+  "model": "spirit_sylph_wings",
+  "space": "PROP",
+  "layer": "TRANSLUCENT",
+  "argb": "FFFFFFFF",
+  "glow": "C0FFFFFF",
+  "anim": "idle",
+  "ages": [
+   0,
+   12
+  ],
+  "tile": [
+   420,
+   380
+  ],
+  "views": [
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 4.2
+   },
+   {
+    "name": "side",
+    "yaw": -70,
+    "pitch": 12,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 4.2
+   },
+   {
+    "name": "back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 4.2
+   }
+  ]
+ },
+ "spirit_gnome_idle": {
+  "kind": "geo",
+  "model": "spirit_gnome",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "C0FFFFFF",
+  "anim": "idle",
+  "ages": [
+   0,
+   12
+  ],
+  "tile": [
+   420,
+   380
+  ],
+  "views": [
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     1.5,
+     0
+    ],
+    "dist": 7.5
+   },
+   {
+    "name": "side",
+    "yaw": -70,
+    "pitch": 12,
+    "target": [
+     0,
+     1.5,
+     0
+    ],
+    "dist": 7.5
+   },
+   {
+    "name": "back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.5,
+     0
+    ],
+    "dist": 7.5
+   }
+  ]
+ },
+ "spirit_sylph_move": {
+  "kind": "geo",
+  "model": "spirit_sylph",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "C0FFFFFF",
+  "anim": "move",
+  "ages": [
+   0,
+   12
+  ],
+  "tile": [
+   420,
+   380
+  ],
+  "views": [
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "side",
+    "yaw": -70,
+    "pitch": 12,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 3.4
+   }
+  ]
+ },
+ "spirit_sylph_wings_move": {
+  "kind": "geo",
+  "model": "spirit_sylph_wings",
+  "space": "PROP",
+  "layer": "TRANSLUCENT",
+  "argb": "FFFFFFFF",
+  "glow": "C0FFFFFF",
+  "anim": "move",
+  "ages": [
+   0,
+   12
+  ],
+  "tile": [
+   420,
+   380
+  ],
+  "views": [
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 4.2
+   },
+   {
+    "name": "side",
+    "yaw": -70,
+    "pitch": 12,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 4.2
+   },
+   {
+    "name": "back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 4.2
+   }
+  ]
+ },
+ "spirit_gnome_move": {
+  "kind": "geo",
+  "model": "spirit_gnome",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "C0FFFFFF",
+  "anim": "move",
+  "ages": [
+   0,
+   12
+  ],
+  "tile": [
+   420,
+   380
+  ],
+  "views": [
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     1.5,
+     0
+    ],
+    "dist": 7.5
+   },
+   {
+    "name": "side",
+    "yaw": -70,
+    "pitch": 12,
+    "target": [
+     0,
+     1.5,
+     0
+    ],
+    "dist": 7.5
+   },
+   {
+    "name": "back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.5,
+     0
+    ],
+    "dist": 7.5
+   }
+  ]
+ },
+ "spirit_sylph_cast": {
+  "kind": "geo",
+  "model": "spirit_sylph",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "C0FFFFFF",
+  "anim": "cast",
+  "ages": [
+   0,
+   12
+  ],
+  "tile": [
+   420,
+   380
+  ],
+  "views": [
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "side",
+    "yaw": -70,
+    "pitch": 12,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 3.4
+   }
+  ]
+ },
+ "spirit_sylph_wings_cast": {
+  "kind": "geo",
+  "model": "spirit_sylph_wings",
+  "space": "PROP",
+  "layer": "TRANSLUCENT",
+  "argb": "FFFFFFFF",
+  "glow": "C0FFFFFF",
+  "anim": "cast",
+  "ages": [
+   0,
+   12
+  ],
+  "tile": [
+   420,
+   380
+  ],
+  "views": [
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 4.2
+   },
+   {
+    "name": "side",
+    "yaw": -70,
+    "pitch": 12,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 4.2
+   },
+   {
+    "name": "back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     0.8,
+     0
+    ],
+    "dist": 4.2
+   }
+  ]
+ },
+ "spirit_gnome_cast": {
+  "kind": "geo",
+  "model": "spirit_gnome",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "C0FFFFFF",
+  "anim": "cast",
+  "ages": [
+   0,
+   12
+  ],
+  "tile": [
+   420,
+   380
+  ],
+  "views": [
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     1.5,
+     0
+    ],
+    "dist": 7.5
+   },
+   {
+    "name": "side",
+    "yaw": -70,
+    "pitch": 12,
+    "target": [
+     0,
+     1.5,
+     0
+    ],
+    "dist": 7.5
+   },
+   {
+    "name": "back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.5,
+     0
+    ],
+    "dist": 7.5
+   }
+  ]
+ }
+}

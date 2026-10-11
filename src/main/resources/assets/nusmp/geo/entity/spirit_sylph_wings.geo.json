@@ -1,0 +1,350 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.spirit_sylph_wings",
+    "texture_width": 128,
+    "texture_height": 128,
+    "visible_bounds_width": 4,
+    "visible_bounds_height": 4,
+    "visible_bounds_offset": [
+     0,
+     1,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "root",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": []
+    },
+    {
+     "name": "wings",
+     "pivot": [
+      0,
+      15,
+      2
+     ],
+     "cubes": [],
+     "parent": "root"
+    },
+    {
+     "name": "wing_ul",
+     "pivot": [
+      1.2,
+      16,
+      2.2
+     ],
+     "cubes": [
+      {
+       "origin": [
+        1.2,
+        15,
+        2
+       ],
+       "size": [
+        12,
+        17,
+        1
+       ],
+       "uv": [
+        0,
+        0
+       ],
+       "rotation": [
+        0,
+        -18,
+        0
+       ],
+       "pivot": [
+        1.2,
+        16,
+        2.2
+       ]
+      }
+     ],
+     "parent": "wings"
+    },
+    {
+     "name": "wing_dl",
+     "pivot": [
+      1.2,
+      13,
+      2.4
+     ],
+     "cubes": [
+      {
+       "origin": [
+        1.2,
+        6,
+        2.4
+       ],
+       "size": [
+        9,
+        11,
+        1
+       ],
+       "uv": [
+        27,
+        0
+       ],
+       "rotation": [
+        0,
+        -26,
+        0
+       ],
+       "pivot": [
+        1.2,
+        13,
+        2.4
+       ]
+      }
+     ],
+     "parent": "wings"
+    },
+    {
+     "name": "wing_ur",
+     "pivot": [
+      -1.2,
+      16,
+      2.2
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -13.2,
+        15,
+        2
+       ],
+       "size": [
+        12,
+        17,
+        1
+       ],
+       "uv": [
+        48,
+        0
+       ],
+       "rotation": [
+        0,
+        18,
+        0
+       ],
+       "pivot": [
+        -1.2,
+        16,
+        2.2
+       ]
+      }
+     ],
+     "parent": "wings"
+    },
+    {
+     "name": "wing_dr",
+     "pivot": [
+      -1.2,
+      13,
+      2.4
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -9.2,
+        6,
+        2.4
+       ],
+       "size": [
+        9,
+        11,
+        1
+       ],
+       "uv": [
+        75,
+        0
+       ],
+       "rotation": [
+        0,
+        26,
+        0
+       ],
+       "pivot": [
+        -1.2,
+        13,
+        2.4
+       ]
+      }
+     ],
+     "parent": "wings"
+    },
+    {
+     "name": "bub0",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        9.0,
+        3.0,
+        -1.0
+       ],
+       "size": [
+        2.0,
+        2.0,
+        2.0
+       ],
+       "uv": [
+        96,
+        0
+       ]
+      }
+     ],
+     "parent": "root"
+    },
+    {
+     "name": "bub1",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        11.5,
+        6.4,
+        -1.45
+       ],
+       "size": [
+        2.9,
+        2.9,
+        2.9
+       ],
+       "uv": [
+        105,
+        0
+       ]
+      }
+     ],
+     "parent": "root"
+    },
+    {
+     "name": "bub2",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        14.0,
+        9.8,
+        -1.9
+       ],
+       "size": [
+        3.8,
+        3.8,
+        3.8
+       ],
+       "uv": [
+        0,
+        19
+       ]
+      }
+     ],
+     "parent": "root"
+    },
+    {
+     "name": "bub3",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        9.0,
+        13.2,
+        -1.0
+       ],
+       "size": [
+        2.0,
+        2.0,
+        2.0
+       ],
+       "uv": [
+        17,
+        19
+       ]
+      }
+     ],
+     "parent": "root"
+    },
+    {
+     "name": "bub4",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        11.5,
+        16.6,
+        -1.45
+       ],
+       "size": [
+        2.9,
+        2.9,
+        2.9
+       ],
+       "uv": [
+        26,
+        19
+       ]
+      }
+     ],
+     "parent": "root"
+    },
+    {
+     "name": "bub5",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        14.0,
+        20.0,
+        -1.9
+       ],
+       "size": [
+        3.8,
+        3.8,
+        3.8
+       ],
+       "uv": [
+        39,
+        19
+       ]
+      }
+     ],
+     "parent": "root"
+    }
+   ]
+  }
+ ]
+}

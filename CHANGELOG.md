@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.102.0] — The Black Clover Spirit Lords get their bodies (NOT yet compiled)
+
+**New (from "Spirit Lord model Ideas"):** `ElementalSpiritLordEntity` with four hand-built models: **Salamander** (winged fire dragon), **Undine** (woman of water with foam hair, wave dress, fin ears and orbiting drops), **Sylph** (green fairy with dragonfly wings and bubbles) and **Gnome** (hunched stone giant). Each has idle / move / cast / hit animations, a glow layer, a technique and an aura for its master (see `docs/spirit_lords.md`). Exclusive as in Black Clover: one mage per element (`SpiritSlots`), only that mage can call it, one body per element. Models by `tools/gen_spirit_lords.py` (+ `tools/spirit_geo.py`), previews in `tools/render_preview/scenes.d/spirit_lords.json`.
+**Tensura-style spirits stay small floating orbs** that follow the player (`SpiritLordEntity`, unchanged); without a Black Clover bond the Spirit Charm now calls one (use: pick the element, sneak-use: call). Admin: `spirit_body <player> <kind>` calls a body.
+**Also:** a Spirit Lords page in the Codex.
+**Replacement:** the Spirit Charm no longer turns a bonded mage's lord into an orb; it calls the real body (the orb entity is untouched).
+**Build note:** still not compiled (maven.neoforged.net blocked in the session); build with `gradlew.bat build` and send me any errors.
+
 ## [0.101.0] — Reference weapons, boss drops, the Codex (NOT yet compiled)
 
 **New:**

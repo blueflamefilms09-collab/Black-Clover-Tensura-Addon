@@ -283,7 +283,7 @@
   "item.nusmp.magic_tool_bow": "Magic Tool Bow",
   "item.nusmp.communication_magic_device.desc": "Right-click another device holder to link. Start a chat message with % to speak through it.",
   "item.nusmp.mana_method_rune_stone.desc": "Use in the air to store your last grimoire page, then use on the ground to arm it as a 5-minute trap.",
-  "item.nusmp.spirit_charm.desc": "First Spirit Dive: consumed when the spirit chooses you. At 100 Trust, rename a charm at an anvil (its True Name) and sneak-use it to incarnate your spirit. After that, sneak-use to call or dismiss it.",
+  "item.nusmp.spirit_charm.desc": "First Spirit Dive: consumed when the spirit chooses you. At 100 Trust, rename a charm at an anvil (its True Name) and sneak-use it to incarnate your spirit. After that, sneak-use to call or dismiss it. Without a Black Clover bond it calls a Tensura-style spirit instead, a small floating orb: use to pick the element, sneak-use to call it.",
   "item.nusmp.bond_thread.desc": "Sneak-use on another player; if they do the same within 10 s, a red thread binds you. Heart grimoires become two hearts.",
   "item.nusmp.fortune_die.desc": "Roll it with a single-diamond grimoire: Good Fortune, or great misfortune.",
   "item.nusmp.grimoire_chain.desc": "While you carry it, nobody else can pick up your grimoire.",
@@ -1191,5 +1191,6 @@
   "item.nusmp.story_page": "Story Page",
   "item.nusmp.story_page.desc": "A page torn from Riven Remake's story. Use it: Rewrite, every negative effect is erased and you mend 40% of your health. Consumed.",
   "item.nusmp.gale_feather": "Gale Feather",
-  "item.nusmp.gale_feather.desc": "Sylph's wind-spirit feather. Use it: Gale Leap, a gust flings you forward and up and slows your fall for 8 s (12 s cooldown)."
+  "item.nusmp.gale_feather.desc": "Sylph's wind-spirit feather. Use it: Gale Leap, a gust flings you forward and up and slows your fall for 8 s (12 s cooldown).",
+  "entity.nusmp.elemental_spirit_lord": "Spirit Lord"
 }

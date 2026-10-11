@@ -82,16 +82,37 @@ public class RelicItem extends Item {
                 return InteractionResultHolder.success(stack);
             }
             case SPIRIT_CHARM -> {
-                if (!p.isShiftKeyDown()) return InteractionResultHolder.pass(stack);
                 var slots = com.newuniverse.nusmp.book.SpiritSlots.get(p.getServer());
-                com.newuniverse.nusmp.entity.SpiritLordEntity.Kind kind = null;
+                com.newuniverse.nusmp.entity.ElementalSpiritLordEntity.Kind lord = null;                         // 0.102: the Black Clover lord this mage holds
                 for (String sp : new String[]{"Salamander", "Undine", "Sylph", "Gnome"})
-                    if (p.getUUID().equals(slots.owner(sp))) kind = com.newuniverse.nusmp.entity.SpiritLordEntity.Kind.forSpirit(sp);
-                if (kind == null && com.newuniverse.nusmp.antimagic.AntiMagic.lord(p).isPresent()) kind = com.newuniverse.nusmp.entity.SpiritLordEntity.Kind.BLACK_DEVIL;
-                if (kind == null) { GrimoireBook.fail(p, "No spirit has chosen you yet. Spirit Dive with a Spirit Lord contract first."); return InteractionResultHolder.fail(stack); }
-                if (kind != com.newuniverse.nusmp.entity.SpiritLordEntity.Kind.BLACK_DEVIL && !com.newuniverse.nusmp.book.SpiritBond.incarnate(p, stack))
-                    return InteractionResultHolder.fail(stack);
-                com.newuniverse.nusmp.entity.SpiritLordEntity.toggle(p, kind);
+                    if (p.getUUID().equals(slots.owner(sp))) lord = com.newuniverse.nusmp.entity.ElementalSpiritLordEntity.Kind.forSpirit(sp);
+                boolean anti = com.newuniverse.nusmp.antimagic.AntiMagic.lord(p).isPresent();
+                if (lord == null && !anti) {
+                    // no Black Clover bond: the charm calls a Tensura-style spirit, a small floating orb anyone can have. Use: pick the element; sneak-use: call it
+                    net.minecraft.nbt.CompoundTag tag = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
+                            net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
+                    com.newuniverse.nusmp.entity.SpiritLordEntity.Kind[] orbs = {com.newuniverse.nusmp.entity.SpiritLordEntity.Kind.SALAMANDER,
+                            com.newuniverse.nusmp.entity.SpiritLordEntity.Kind.UNDINE, com.newuniverse.nusmp.entity.SpiritLordEntity.Kind.SYLPH,
+                            com.newuniverse.nusmp.entity.SpiritLordEntity.Kind.GNOME};
+                    int pick = Math.floorMod(tag.getInt("TensuraSpirit"), orbs.length);
+                    if (!p.isShiftKeyDown()) {
+                        pick = (pick + 1) % orbs.length;
+                        tag.putInt("TensuraSpirit", pick);
+                        stack.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(tag));
+                        p.displayClientMessage(Component.literal("Tensura spirit: " + orbs[pick].display + " (sneak-use to call it)").withStyle(ChatFormatting.AQUA), true);
+                        return InteractionResultHolder.success(stack);
+                    }
+                    com.newuniverse.nusmp.entity.SpiritLordEntity.toggle(p, orbs[pick]);
+                    p.getCooldowns().addCooldown(this, 100);
+                    return InteractionResultHolder.success(stack);
+                }
+                if (!p.isShiftKeyDown()) return InteractionResultHolder.pass(stack);
+                if (lord != null) {
+                    if (!com.newuniverse.nusmp.book.SpiritBond.incarnate(p, stack)) return InteractionResultHolder.fail(stack);
+                    com.newuniverse.nusmp.entity.ElementalSpiritLordEntity.toggle(p, lord, false);
+                } else {
+                    com.newuniverse.nusmp.entity.SpiritLordEntity.toggle(p, com.newuniverse.nusmp.entity.SpiritLordEntity.Kind.BLACK_DEVIL);   // the Anti-Magic lord stays an orb
+                }
                 p.getCooldowns().addCooldown(this, 100);
                 return InteractionResultHolder.success(stack);
             }

@@ -46,6 +46,13 @@ public final class CodexPages {
                 new String[]{"Zagred, the Word-Eater", "A boss of spoken words, barrier layers and a dream dimension. Drops the Heart of Words and one of: Last Word, Shroud of Margins, Circlet of Quickened Thought."},
                 new String[]{"Riven Remake, the Black Bulls' Bard", "Counter-picks your magic from the anime skill codex. Anti-magic staggers him. Drops the Black Bull Bard Relic (sneak-use: Bardic Inspiration) and Story Pages."},
                 new String[]{"Sylph, the Wind Spirit Lord", "A wind spirit of the gale. Drops the Gale Feather (use: Gale Leap)."})));
+        register(new TextPage("Spirit Lords", "L", List.of(
+                new String[]{"Salamander", "A winged fire dragon. Flame Breath burns everything in a cone; its master resists fire."},
+                new String[]{"Undine", "A woman of water. Tidal Lance slows foes, and she mends her master when they are hurt."},
+                new String[]{"Sylph", "A green fairy on dragonfly wings. Gale Cut throws foes into the air; her master moves faster and lands softly."},
+                new String[]{"Gnome", "A hunched stone giant. Earth Slam raises stone claws round a foe; his master takes less damage."},
+                new String[]{"One mage each", "As in Black Clover, each elemental Spirit Lord answers to a single mage on the server. At 100 Trust and with a True Name, sneak-use the Spirit Charm to call yours."},
+                new String[]{"Tensura spirits", "Anyone can call a Tensura-style spirit: a small floating orb that follows you. Use the Spirit Charm to pick its element, sneak-use to call it."})));
         register(new TextPage("Guide", "?", List.of(
                 new String[]{"Turning pages", "Use the mouse wheel over the book, the arrow keys or A and D, or click a tab. Long pages scroll with the wheel; hold Shift to turn the page instead."},
                 new String[]{"The figure", "Click the figure for a new pose, drag it to turn it."},
