@@ -72,6 +72,15 @@ public final class NUSkills {
     public static final DeferredHolder<ManasSkill, TheAlmightySkill> THE_ALMIGHTY = SKILLS.register("the_almighty", TheAlmightySkill::new);
     public static final DeferredHolder<ManasSkill, TheVisionarySkill> THE_VISIONARY = SKILLS.register("the_visionary", TheVisionarySkill::new);
 
+    /** Boss-only Riven hacks. Riven removes these from his own Tensura skill storage before dying. */
+    public static final java.util.Map<String, DeferredHolder<ManasSkill, BossBoundSkill>> RIVEN_PASSIVES = new java.util.LinkedHashMap<>();
+    static {
+        for (String id : java.util.List.of("fictional_remake", "audience", "counter_author", "unbelieved", "emotional_high",
+                "soul_bond", "page_memory", "jack", "unwritten_ending", "black_bull")) {
+            RIVEN_PASSIVES.put(id, SKILLS.register("riven_" + id, BossBoundSkill::new));
+        }
+    }
+
     // ---- Black Clover ----
     /** Granted automatically with a grimoire. Magic, leaves and devil are stored on the skill. */
     public static final DeferredHolder<ManasSkill, GrimoireMagicSkill> GRIMOIRE_MAGIC = SKILLS.register("grimoire_magic", () -> new GrimoireMagicSkill()); // legacy
@@ -81,12 +90,6 @@ public final class NUSkills {
         for (com.newuniverse.nusmp.blackclover.MagicType m : com.newuniverse.nusmp.blackclover.MagicType.values()) {
             GRIMOIRES.put(m, SKILLS.register("grimoire_" + m.name().toLowerCase(), () -> new GrimoireMagicSkill(m)));
         }
-    }
-
-    // ---- 0.61: Riven Remake's exclusive, boss-bound passives (no skill item, no plunder, no page drop) ----
-    public static final java.util.Map<String, DeferredHolder<ManasSkill, BossBoundSkill>> RIVEN_PASSIVES = new java.util.LinkedHashMap<>();
-    static {
-        for (String id : com.newuniverse.nusmp.entity.riven.RivenPassives.EXCLUSIVE) RIVEN_PASSIVES.put(id, SKILLS.register("riven_" + id, BossBoundSkill::new));
     }
 
     // ---- Grimoire pages: Time ----
@@ -181,6 +184,16 @@ public final class NUSkills {
     public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_LEGION = book("book_legion", com.newuniverse.nusmp.book.LegionBook::new);
     // 0.47: Kotodama (Word Soul) Magic - creative only
     public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_KOTODAMA = book("book_kotodama", com.newuniverse.nusmp.book.KotodamaBook::new);
+    /** Remaining standalone wiki attributes share the generic, palette-specific spell family. */
+    public static final java.util.Map<com.newuniverse.nusmp.blackclover.MagicType,
+            DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook>> WIKI_ATTRIBUTE_BOOKS =
+            new java.util.EnumMap<>(com.newuniverse.nusmp.blackclover.MagicType.class);
+    static {
+        for (var magic : com.newuniverse.nusmp.book.WikiBooks.newAttributes()) {
+            WIKI_ATTRIBUTE_BOOKS.put(magic, book("book_" + magic.name().toLowerCase(),
+                    () -> com.newuniverse.nusmp.book.WikiBooks.attribute(magic)));
+        }
+    }
     /** Anti-Magic Spirit Lord: awakened by mastering the Anti-Magic grimoire (or /nusmp grimoire awaken_anti). */
     public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.antimagic.AntiMagicLordSkill> ANTI_MAGIC_LORD =
             SKILLS.register("anti_magic_spirit_lord", () -> new com.newuniverse.nusmp.antimagic.AntiMagicLordSkill());
@@ -190,7 +203,10 @@ public final class NUSkills {
     /** Forbidden Magic: written by a devil contract (not a grimoire family). */
     public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook> BOOK_FORBIDDEN = book("forbidden_magic", com.newuniverse.nusmp.book.ForbiddenBook::new);
 
-    public static final java.util.List<DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook>> BOOKS = java.util.List.of(
+    public static final java.util.List<DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook>> BOOKS = allBooks();
+
+    private static java.util.List<DeferredHolder<ManasSkill, com.newuniverse.nusmp.book.GrimoireBook>> allBooks() {
+        var books = new java.util.ArrayList<>(java.util.List.of(
             BOOK_TIME, BOOK_FIRE, BOOK_WATER, BOOK_WIND, BOOK_EARTH, BOOK_LIGHT, BOOK_DARK, BOOK_SPATIAL, BOOK_LIGHTNING,
             BOOK_STEEL, BOOK_MIRROR, BOOK_THREAD, BOOK_PLANT, BOOK_SEALING, BOOK_GRAVITY, BOOK_ICE, BOOK_MERCURY,
             BOOK_SWORD, BOOK_EXPLOSION, BOOK_MAGMA, BOOK_MIST, BOOK_STAR, BOOK_STORM, BOOK_SAND, BOOK_SHADOW, BOOK_POISON,
@@ -201,7 +217,10 @@ public final class NUSkills {
             BOOK_DEMON_FIRE, BOOK_DEMON_ICE, BOOK_DEMON_LIGHT, BOOK_DEMON_WATER, BOOK_BARRIER, BOOK_KEY,
             BOOK_CHAIN, BOOK_BUTOH, BOOK_BRIAR, BOOK_CHERRY_BLOSSOM, BOOK_FUNGUS, BOOK_FOOD,
             BOOK_CRYSTAL, BOOK_CORUNDUM, BOOK_BRONZE, BOOK_COPPER, BOOK_IRON, BOOK_BLACK_OIL,
-            BOOK_GEL, BOOK_GLASS, BOOK_BUBBLE, BOOK_ICE_WEDGE, BOOK_LEGION);
+            BOOK_GEL, BOOK_GLASS, BOOK_BUBBLE, BOOK_ICE_WEDGE, BOOK_LEGION));
+        books.addAll(WIKI_ATTRIBUTE_BOOKS.values());
+        return java.util.List.copyOf(books);
+    }
 
     /** The Unique book for a magic type, or null if that family isn't ported yet. */
     public static com.newuniverse.nusmp.book.GrimoireBook bookFor(com.newuniverse.nusmp.blackclover.MagicType m) {

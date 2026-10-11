@@ -3,6 +3,8 @@ package com.newuniverse.nusmp.book;
 import com.newuniverse.nusmp.blackclover.MagicType;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
+import com.newuniverse.nusmp.prop.MagicProps;
+import com.newuniverse.nusmp.prop.PropKind;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import io.github.manasmods.tensura.damage.TensuraDamageTypes;
 import net.minecraft.ChatFormatting;
@@ -79,6 +81,8 @@ public class SlashBook extends GrimoireBook {
         Vec3 eye = p.getEyePosition(), dir = p.getViewVector(1f);
         var hit = p.level().clip(new ClipContext(eye, eye.add(dir.scale(24)), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, p));
         b.vfx(p, VfxShape.SLASH_WAVE, eye.add(0, -0.2, 0), hit.getLocation(), 12, 1.1f * EnergyBridge.scale(p));
+        MagicProps.spawn(p.serverLevel(), PropKind.SLASH_1, eye.add(dir.scale(0.8)), p.getYRot(),
+                0.9f * EnergyBridge.scale(p), 10, 0, p);
         SpellRuntime.bolt(p, eye, dir.scale(2.4), 1.2, 10, true, null, (bolt, t) -> cut(b, i, p, t, mode, 8f), null);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 1.2f, 0.7f);
         return true;
@@ -129,6 +133,8 @@ public class SlashBook extends GrimoireBook {
         float r = 7 * GrimoireBook.size(i, p) * (0.9f + 0.1f * EnergyBridge.power(p));
         b.castCircle(p, 1.6f);
         b.vfx(p, VfxShape.SLASH_SCYTHE, p.position().add(0, 1, 0), p.position().add(p.getViewVector(1f)).add(0, 1, 0), 18, r);
+        MagicProps.spawn(p.serverLevel(), PropKind.SLASH_2, p.position().add(0, 0.8, 0), p.getYRot(),
+                Math.max(1.0f, Math.min(3.0f, r / 4f)), 18, 0, p);
         SpellRuntime.later(p.serverLevel(), 5, () -> {
             for (LivingEntity t : around(p, p.position(), r)) cut(b, i, p, t, mode, 15f);
         });

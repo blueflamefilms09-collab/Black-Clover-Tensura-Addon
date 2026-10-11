@@ -31,25 +31,19 @@ import java.util.Optional;
 public final class WeaponEngravings {
     private WeaponEngravings() {}
 
-    /** id is "tensura:<id>" (short) or fully qualified "namespace:path" (Elsdocia's custom one). */
     record Engraving(String id, int level) {}
-
-    /** 0.99: parses fully qualified ids; short ids keep resolving to the tensura namespace. */
-    private static ResourceLocation id(String id) {
-        return id.contains(":") ? ResourceLocation.parse(id) : ResourceLocation.fromNamespaceAndPath("tensura", id);
-    }
 
     static Engraving e(String id, int level) { return new Engraving(id, level); }
 
     /** Item id (nusmp:) -> its engravings. */
     static final Map<String, List<Engraving>> ENGRAVINGS = Map.ofEntries(
-            Map.entry("demon_slasher_katana", List.of(e("barrier_piercing", 2), e("swift", 1))),           // Asta's: cuts through magic
+            Map.entry("demon_slasher_katana", List.of(e("nusmp:anti_magic", 1), e("barrier_piercing", 2), e("swift", 1))), // Asta's: cuts through magic
             Map.entry("miasma_infused_katana", List.of(e("severance", 2), e("enervation", 1))),             // Yami: dimension-cutting darkness
             Map.entry("spell_forged_rapier", List.of(e("swift", 2), e("magic_weapon", 1))),                 // spatial edge, spell-forged
             Map.entry("severing_greatsword", List.of(e("severance", 2), e("crushing", 1))),                 // Sword Rain, a heavy cleaver
-            Map.entry("demon_slayer_sword", List.of(e("barrier_piercing", 3), e("magic_interference", 1))), // the Genesis anti-magic blade
-            Map.entry("demon_dweller_sword", List.of(e("barrier_piercing", 2), e("energy_steal", 1))),      // drinks the magic it cuts
-            Map.entry("demon_destroyer_sword", List.of(e("magic_interference", 1), e("sturdy", 2))),        // undoes spell effects
+            Map.entry("demon_slayer_sword", List.of(e("nusmp:anti_magic", 1), e("barrier_piercing", 3), e("magic_interference", 1))), // the Genesis anti-magic blade
+            Map.entry("demon_dweller_sword", List.of(e("nusmp:anti_magic", 1), e("barrier_piercing", 2), e("energy_steal", 1))), // drinks the magic it cuts
+            Map.entry("demon_destroyer_sword", List.of(e("nusmp:anti_magic", 1), e("magic_interference", 1), e("sturdy", 2))), // undoes spell effects
             Map.entry("licht_dweller_sword", List.of(e("holy_weapon", 2), e("elemental_boost", 1))),        // Licht's white blades
             Map.entry("licht_destroyer_sword", List.of(e("holy_weapon", 2), e("barrier_piercing", 1))),
             Map.entry("rimeheart_runeblade", List.of(e("elemental_boost", 2), e("magicule_absorption", 1))), // a cryo mana lattice
@@ -58,7 +52,15 @@ public final class WeaponEngravings {
             Map.entry("magic_tool_spear", List.of(e("magic_weapon", 1))),
             Map.entry("magic_tool_bow", List.of(e("magic_weapon", 1))),
             Map.entry("last_word", List.of(e("barrier_piercing", 2), e("severance", 1))),                   // 0.52: Zagred's quill-blade
-            Map.entry("elsdocia", List.of(e("nusmp:legacy_of_the_wizard_kings", 1), e("magic_interference", 2), e("magicule_absorption", 2), e("barrier_piercing", 1)))); // 0.99: the legacy blade
+            Map.entry("elsdocia", List.of(e("nusmp:legacy_of_the_wizard_kings", 1), e("magic_interference", 2), e("magicule_absorption", 2), e("barrier_piercing", 1))),
+            // 0.100: the reference-sheet weapons
+            Map.entry("quicklings_ivy", List.of(e("swift", 2), e("magic_weapon", 1), e("enervation", 1))),               // living ivy, poisons and slows
+            Map.entry("magebane_longsword", List.of(e("magic_interference", 2), e("barrier_piercing", 2), e("magicule_absorption", 1))), // bane of mages
+            Map.entry("prism_blade", List.of(e("holy_weapon", 2), e("elemental_boost", 2), e("barrier_piercing", 1))),   // a blade of refracted light
+            Map.entry("thundercleave", List.of(e("elemental_boost", 2), e("crushing", 2), e("severance", 1))),           // a thunder-struck greatsword
+            Map.entry("bloodbound_katana", List.of(e("energy_steal", 2), e("severance", 1), e("soul_eater", 1))),        // drinks the blood it draws
+            Map.entry("permafrost_sabre", List.of(e("elemental_boost", 2), e("swift", 1), e("sturdy", 1))),              // frost-grained, one of the Boreal Blades
+            Map.entry("cyclone_rapier", List.of(e("swift", 2), e("elemental_boost", 1), e("magic_weapon", 1))));        // gale-etched, one of the Boreal Blades
 
     static final String FLAG = "NUEngraved";
 
@@ -73,7 +75,9 @@ public final class WeaponEngravings {
         if (cd != null && cd.copyTag().getBoolean(FLAG)) return false;
         HolderLookup.RegistryLookup<Enchantment> lookup = registries.lookupOrThrow(Registries.ENCHANTMENT);
         for (Engraving g : list) {
-            Optional<? extends Holder<Enchantment>> h = lookup.get(ResourceKey.create(Registries.ENCHANTMENT, id(g.id())));
+            ResourceLocation id = g.id().contains(":") ? ResourceLocation.parse(g.id())
+                    : ResourceLocation.fromNamespaceAndPath("tensura", g.id());
+            Optional<? extends Holder<Enchantment>> h = lookup.get(ResourceKey.create(Registries.ENCHANTMENT, id));
             if (h.isEmpty()) continue;
             int level = Math.max(1, Math.min(g.level(), h.get().value().getMaxLevel()));
             if (stack.getEnchantments().getLevel(h.get()) < level) stack.enchant(h.get(), level);

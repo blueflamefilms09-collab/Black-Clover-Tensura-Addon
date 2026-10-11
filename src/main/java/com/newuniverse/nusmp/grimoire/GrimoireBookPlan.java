@@ -107,6 +107,25 @@ public final class GrimoireBookPlan {
         } else {
             quad(out, face, x0, y0, x1, y1, z + dir * 0.02f, m.texture(), BookLook.TINT_TRIM, false);
         }
+        if (com.newuniverse.nusmp.book.WikiBooks.isNewAttribute(
+                com.newuniverse.nusmp.blackclover.MagicType.byName(key.magic()))) {
+            quad(out, face, x0, y0, x1, y1, z + dir * 0.045f,
+                    "magic_sigil_" + key.magic().toLowerCase(java.util.Locale.ROOT), -1, key.held());
+        }
+        if (!key.magic().isEmpty() && !BookPalette.handMade(key.magic()) && !key.tattered())
+            studs(out, GrimoireDesignGenerator.forMagic(key.magic()).studs(), x0, y0, x1, y1, z, dir);
+    }
+
+    /** The generated frame studs (see {@link GrimoireDesignGenerator}): 1 = four corners, 2 = + top and bottom middle, 3 = a ring of eight. */
+    private static void studs(List<Quad> out, int pattern, float x0, float y0, float x1, float y1, float z, int dir) {
+        if (pattern <= 0) return;
+        float h = 0.45f * dir, za = Math.min(z, z + h), zb = Math.max(z, z + h);
+        float ax = x0 + 1.1f, bx = x1 - 1.1f, ay = y0 + 1.1f, by = y1 - 1.1f, mx = (x0 + x1) / 2f, my = (y0 + y1) / 2f;
+        List<float[]> pts = new ArrayList<>(List.of(new float[]{ax, ay}, new float[]{bx, ay}, new float[]{ax, by}, new float[]{bx, by}));
+        if (pattern >= 2) { pts.add(new float[]{mx, ay}); pts.add(new float[]{mx, by}); }
+        if (pattern >= 3) { pts.add(new float[]{ax, my}); pts.add(new float[]{bx, my}); }
+        Face[] faces = dir > 0 ? BAR_FACES_FRONT : BAR_FACES_BACK;
+        for (float[] p : pts) box(out, p[0] - 0.4f, p[1] - 0.4f, za, p[0] + 0.4f, p[1] + 0.4f, zb, "trim_metal", BookLook.TINT_TRIM, false, true, faces);
     }
 
     /** A single quad facing SOUTH or NORTH at depth z over [x0,x1] x [y0,y1], full texture. */
@@ -236,6 +255,8 @@ public final class GrimoireBookPlan {
             t.add(m.texture());
             if (m.base() != null) t.add(m.base());
         }
+        for (com.newuniverse.nusmp.blackclover.MagicType magic : com.newuniverse.nusmp.book.WikiBooks.newAttributes())
+            t.add("magic_sigil_" + magic.name().toLowerCase(java.util.Locale.ROOT));
         for (String e : new String[]{"three_leaf", "four_leaf", "five_leaf", "spade", "double_spade", "triple_spade",
                 "heart", "two_heart", "cracked_heart", "diamond", "five_sided", "cracked_diamond", "black_magic", "god_tier"}) t.add("emblem_" + e);
         return t;

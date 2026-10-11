@@ -49,10 +49,16 @@ public final class CastAnimClient {
         float now = e.tickCount;
         State s = STATES.computeIfAbsent(entityId, k -> new State());
         if (clip == null || clip.isEmpty()) {
+            s.prev = null;
             if (s.clip != null && Float.isNaN(s.stopAt)) s.stopAt = now;
             return;
         }
-        if (s.clip != null && Float.isNaN(s.stopAt)) { s.prev = s.clip; s.prevStart = s.start; } else s.prev = null;
+        if (s.clip != null && Float.isNaN(s.stopAt)) {
+            GeoAnim.Clip current = clip(GeoModels.animations(FILE), s.clip);
+            if (current != null && current.loop) { s.prev = s.clip; s.prevStart = s.start; }
+        } else {
+            s.prev = null;
+        }
         s.clip = clip;
         s.start = now;
         s.stopAt = Float.NaN;
@@ -95,6 +101,13 @@ public final class CastAnimClient {
         if (cur == null) { STATES.remove(e.getId()); return; }
         float since = age - s.start;
         if (since < -2f) { STATES.remove(e.getId()); return; }                            // the player respawned / the tick counter reset
+        if (!cur.loop && finished(cur, since) && s.prev != null) {
+            s.clip = s.prev;
+            s.start = age;
+            s.prev = null;
+            s.stopAt = Float.NaN;
+            return;
+        }
         float stopAt = Float.isNaN(s.stopAt) && finished(cur, since) ? s.start + cur.length * 20f + HOLD_AFTER_END : s.stopAt;
         float out = Float.isNaN(stopAt) ? 1f : 1f - Mth.clamp((age - stopAt) / FADE_OUT, 0f, 1f);
         if (out <= 0f) { STATES.remove(e.getId()); return; }
@@ -110,15 +123,9 @@ public final class CastAnimClient {
         // arms: replaced
         blendArm(m.leftArm, v[1], w);
         blendArm(m.rightArm, v[2], w);
-        // body and legs: added to vanilla
-        m.body.xRot += v[0][0] * w; m.body.yRot += v[0][1] * w; m.body.zRot += v[0][2] * w;
+        // Body parts are separate roots in vanilla's player model, so rotating the torso alone creates visible gaps at the joints.
         m.leftLeg.xRot += v[3][0] * w; m.leftLeg.yRot += v[3][1] * w; m.leftLeg.zRot += v[3][2] * w;
         m.rightLeg.xRot += v[4][0] * w; m.rightLeg.yRot += v[4][1] * w; m.rightLeg.zRot += v[4][2] * w;
-        // the body position moves the whole figure up / down (the model's y points down)
-        float dy = -v[0][3] * w;
-        if (dy != 0f) {
-            m.head.y += dy; m.body.y += dy; m.leftArm.y += dy; m.rightArm.y += dy; m.leftLeg.y += dy; m.rightLeg.y += dy;
-        }
         m.rightSleeve.copyFrom(m.rightArm);
         m.leftSleeve.copyFrom(m.leftArm);
         m.rightPants.copyFrom(m.rightLeg);

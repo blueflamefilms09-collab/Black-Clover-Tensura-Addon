@@ -70,7 +70,7 @@ public final class GrimoireBakedModel implements BakedModel {
         View held() {
             if (key.held()) return this;
             View v = heldView;
-            if (v == null) heldView = v = viewFor(new BookLook.Key(key.emblem(), key.motif(), key.tattered(), true, key.open()));
+            if (v == null) heldView = v = viewFor(new BookLook.Key(key.emblem(), key.motif(), key.tattered(), true, key.open(), key.magic()));
             return v;
         }
 

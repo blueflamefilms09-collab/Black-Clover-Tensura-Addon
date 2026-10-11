@@ -16,11 +16,11 @@ Custom Tensura: Reincarnated skills for NeoForge 1.21.1.
 | Freya (god) | `nusmp:freya` | Charm: mobs drop aggro, enemies dazed |
 | Hephaestus (god) | `nusmp:hephaestus` | Repair held item (+ armor when mastered) |
 | Loki (god) | `nusmp:loki` | Vanish + blink forward |
-| Wynn Fimbulvetr (magic) | `nusmp:wynn_fimbulvetr` | 3-chant ice blizzard at target |
-| Rea Laevateinn (magic) | `nusmp:rea_laevateinn` | 3-chant flame pillars around you |
-| Arcs Ray (magic) | `nusmp:arcs_ray` | 1-chant piercing light beam |
-| Futsunomitama (magic) | `nusmp:futsunomitama` | 2-chant gravity field |
-| Uchide no Kozuchi (magic) | `nusmp:uchide_no_kozuchi` | 3-chant Level Boost on an ally |
+| Wynn Fimbulvetr (magic) | `nusmp:wynn_fimbulvetr` | Instant ice blizzard at target |
+| Rea Laevateinn (magic) | `nusmp:rea_laevateinn` | Instant flame pillars around you |
+| Arcs Ray (magic) | `nusmp:arcs_ray` | Instant piercing light beam |
+| Futsunomitama (magic) | `nusmp:futsunomitama` | Instant gravity field |
+| Uchide no Kozuchi (magic) | `nusmp:uchide_no_kozuchi` | Instant Level Boost on an ally |
 
 | Hell Walker | `nusmp:hell_walker` | Toggle: more damage the lower your health |
 | Hawk Eye (Allen) | `nusmp:hawk_eye` | Toggle: night vision + hostile mobs glow |
@@ -49,7 +49,7 @@ God-tier balance: config `[god_tier]` (affectsPlayers, bossHealthThreshold, inst
 
 Config `[ultimate_evolution]`: enabled, minimumEP, replacesBase.
 
-Chanted magics: use **Chant** mode until the chant is complete, then switch to **Cast**. Mastery shortens the chant by one line.
+Magic spells fire when the skill key is released; holding the key does not trigger them early.
 
 ## Build
 
@@ -60,7 +60,7 @@ Chanted magics: use **Chant** mode until the chant is complete, then switch to *
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-0.99.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-1.1.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -100,7 +100,7 @@ Custom immediate-mode renderer (no vanilla particles): `com.newuniverse.nusmp.vf
 - Acceptance rolls a kingdom (Clover 40 / Spade 20 / Heart 20 / Diamond 20) and a tier; the kingdom decides the cover.
 - Covers: three/four/five-leaf, spade/double/triple spade, heart/two-heart/cracked heart, diamond/five-sided/cracked diamond. Each changes spell power and cost.
 - Pages open by mastery only (0.24: the old kill rolls are gone; see "0.24" below).
-- Time Magic pages: Chrono Stasis (starter), Chrono Stasis Grigora, Time Acceleration, Time Reversal, Stolen Time.
+- Time Magic pages: Chrono Stasis (starter), Chrono Stasis Grigora, Time Acceleration, Time Reversal, Stolen Time, Chrono Anastasis, Hourglass Step, Borrowed Future, Pendulum Ward, Age Breaker, Moment Reprise and Hourglass Storm.
 - Admin: `/multiverse grimoire ...` (the old `/nusmp grimoire setcover|page|info|give|roll|reset` stays as a hidden admin alias).
 
 ## Grimoires as Tensura Unique skills (0.13)
@@ -194,6 +194,97 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - `docs/skill_icon_prompts.md`: the brief's three image-generator prompts (Midjourney / DALL-E) for every magic, each naming the file it would replace, if you want hand-painted icons instead.
 - Sneaking alone does not stow it (only sneak + the ability key), so sneaking (and Grigora's sneak-to-spare-players) still works while it floats.
 
+`node tools/gen_grimoire_icons.mjs` creates the distinct skill-menu icons for the newer wiki attributes using Node.js only; existing art is preserved unless `--force` is passed.
+
+## 0.90.0 - Legion render crash and player-sized Zagred
+
+- Fixed the Legion chessboard and chess-piece models reusing render buffers after switching render types, which caused a client crash while rendering the board.
+- Scaled Zagred's existing detailed model to player height while keeping his horns, wings, claws, and tail; reduced the oversized shadow.
+
+## 0.91.0 - Wizard King's legacy blade and grimoire finish
+
+- Added Elsdocia as a modeled God-Tier sword: it absorbs magic on hit, stores up to 1,000 charge, and releases it in a spatial rift; the sneak technique requires a summoned Key Magic grimoire and drains more magic.
+- Added the `Legacy of the Wizard Kings` Tensura engraving, applied with Elsdocia's other engravings when the sword enters a player's inventory.
+- Added magic-specific grimoire cover sigils for the newly added wiki attributes and textured both sides of loose page flips.
+- Added held spell buildup to grimoire magic; releasing the skill starts the cast windup, and a fully charged spell gains up to 20% size and damage.
+- Brought Zagred close to player height and shortened his arm/forearm and leg proportions while preserving his horns, wings, claws, and tail.
+
+## 0.95.0 - Riven Remake raised ceiling
+
+- Riven now has four health phases, 1,200 base health plus 400 per additional arena player (capped at four), without phase-change healing. Movement speed rises 10% per phase; lethal casts have 0.7–1.4 second telegraphs and cast speed rises by 8% per phase.
+- Riven's hits use the requested damage bands: phases I–IV normal 12–18 / 22–34 / 34–48 / 48–64 and signature 22 / 42 / 62 / 85. New signature entries: Page Tear, Severance Aria, Island Fall, Maw of the Rift and Final Page; their tells and hit effects use the existing VFX layers. Phase IV signature hits are separated by at least four seconds.
+- Phase transition invulnerability lasts 1.5 seconds; anti-magic interrupts casting, staggers for 0.8 seconds and shortens a live null window. Added named phase II physical/magic null windows, phase III spatial-source null and phase IV rotating physical/magic null.
+- Tensura EP is initialized at 300,000,000 through EnergyHelper / ExistenceStorage, its normal magicule pool is kept topped up, and Tensura's `no_max_ep_plunder` entity tag excludes Riven from EP plunder rewards. His existence is marked to skip EP drops.
+- The boredom portal from 0.94.0 remains enabled.
+- Not implemented or verified in-game: the full 15-move attack list, partial resistance bypass, Gold Ring null, Unwritten Ending, Rewrite Round, the exact 60-second rift pull and all requested shader-specific boss visuals. EP display, magicule scaling, and no-plunder behavior use Tensura APIs/tags but have not been exercised in a running game.
+
+## 0.97.0 - Riven signature/VFX audit
+
+- Added executable Eldritch Verse (three bolts with the third eight ticks after the first), phase-II Hexblade Waltz (three timed swings and a one-point reduction of Tensura's multilayer-barrier modifier), and made Shadow Step's afterimage repeat Page Tear at half signature damage.
+- Signature casts now layer a dark arc-rune ground tell with Riven's violet-tinted Zagred-aura shader pass; signature hits use the Dark Slash shader and Barrier impact layer. Maw of the Rift uses the existing Demon Void shader on a floor disk, with the existing textured vortex fallback when that optional shader is unavailable.
+- Soul Note now records damage actually removed from Riven's health/absorption, rather than the pre-mitigation incoming amount.
+- Partial resistance bypass remains blocked: Tensura 2.0.1.0's `ResistSkill.isResistanceBypass` treats `tensura$getResistanceBypassLevel()` as a boolean threshold (`>= 1.0`), while `onTakenDamage` applies the configured resistance multiplier as a binary result. No supported partial reduction hook was found; using full bypass would violate the null/resistance rules.
+- `nusmp:story_rift` is not registered in the worktree or reachable history, so the existing arena-local pull is retained. Rewrite Round still replays Riven's last cast because this combat path does not expose dependable player codex-skill attribution. Riven's current Bard relic drop remains; the historical `RivenPassives` implementation is not compatible with the current boss architecture.
+
+## 0.98.0 - Marquis Remake v2 foundation
+
+- Rebranded the existing `nusmp:riven_remake` entity in-game as Marquis Remake without changing its save ID, 1,200 + 400-per-player health scaling, 300-million Tensura EP setup, no-plunder tag, or boredom portal.
+- Phase II now begins at 20 seconds or 75% HP, phase III at 60 seconds, and phase IV at 25% HP. Phase transitions remain sequential and retain the 1.5-second phase-change window. Phase-II/III combat-type rolls use the requested 12s/8s cadence and show their type and selected page on the custom bar.
+- Combat rolls draw from validated Black Clover Anime Skill Codex pages; anti-magic/Nihility burns the selected page. Added the phase-I New Order weapon-speed effect, Gearshift Low/Top, Fa Jin charge/release, arena-bounded Compress for players, and an Evil Eye healing block on its marked target.
+- Added one 12-second, boss-owned story-avatar construct per unlocked phase; The Creator is one-use in phase IV and suppresses healing for eight seconds among nearby arena entities. Anti-magic breaks an active avatar.
+- Still incomplete: the sheet/skin overlay model and exact supplied Minecraft skin, full distinct movesets for all ten avatars, arbitrary-block/construct Compress with restoration, warmup orders for mod/Tensura spells, a random registered grimoire *book* cast through a boss-safe SpellRuntime path, and the requested loot table/cosmetic items. `nusmp:story_rift` is not registered; the existing 60-second arena-local pull remains. No in-game render/combat session was available for verification.
+
+## 0.99.0 - Marquis visual, book draw, avatars, and loot
+
+- Replaced the phase-I body with original Minecraft-scale pixel geometry/textures reflecting the supplied skin reference (brown hair, blue sweatshirt, white crest, gray trousers, white shoes). Phase II fades the coat overlay in during the existing phase clip; phase III adds gold-ring/electric particles; phase IV keeps the skin and coat and layers the existing page wings/crown over them.
+- Combat-type rolls now select an actual registered `CanonBook` cover for the floating grimoire and show its owner on the boss bar, while the existing validated Black Clover codex skill remains the boss's cast. This is a visual book draw, not player-grimoire SpellRuntime casting.
+- Avatar selection now branches on tank/healer/flyer/caster/nullification reads. Zeus has a geared punch, Beerus a bounded damaging burst, Madoka removes one harmful boss effect and one beneficial target effect, Anti-Spiral fires a line hit, Lord of Nightmares creates a bounded healing-denial field, Arceus accelerates Marquis, and Zeno can dismiss one nearby owned construct. Each special has a short VFX tell; the existing 12-second/one-avatar ownership limit remains. Truth and Kami Tenchi are not implemented as distinct mechanics.
+- Added entity loot tables at both the requested Marquis name and the preserved `nusmp:riven_remake` registry key. Real entity death drops the existing bard relic, a story page, and a crest-cape token; a cracked crown vanity has an 8% roll. The cape is currently an inventory cosmetic token, not a wearable/rendered cape.
+- Still incomplete: Page Edge/Bull Brand engravings and a single-use rift key are absent because those enchantments and `nusmp:story_rift` are not registered. A boss-safe arbitrary book spell path is also unavailable: SpellRuntime's projectile owner is a `ServerPlayer`; the boss continues to cast its validated codex skill. New Order still implements weapon slowdown and Gearshift only; there is no reliable cast-warmup event hook for the two-cast slow rule. Ground-is-stone is not implemented. Only six avatar translations have special mechanics; Truth, Kami Tenchi, the Creator's distinct visual, and several requested combat interactions remain incomplete. No in-game client render/combat verification was run.
+
+## 1.1.0 - Reference weapons, boss drops, the Codex, the Spirit Lords' bodies, Elsdocia remade (built on 1.0.0)
+
+Ported onto the 1.0.0 line from the 0.100-0.102 work. **Nothing in this version has been compiled or run in game**: the session that wrote it could not reach `maven.neoforged.net`. Build with `gradlew.bat build` and report errors.
+
+- **New weapons** (3D in-hand model, glow layer, inventory icon, Tensura engravings, right-click technique, sneak-click second technique, full-swing strike; logic in `item/ReferenceWeapons.java`, models by `tools/gen_weapon_models.py`, icons by `tools/gen_reference_weapon_icons.py`): Quickling's Ivy (rooting poison ivy), Magebane Longsword (buff strip, caster jam), Prism Blade (blinding flash, seven-colour beam), Thundercleave (thunder arc, thunderstorm, arcing hits), Bloodbound Katana (Blood Charges, Bloodflare, Crimson Reaping), Permafrost Sabre + Cyclone Rapier (the Boreal Blades; hold both for Boreal Fusion).
+- **Elsdocia remade (replacement):** a long straight azure crystal blade with a cyan core, light motes and a gold clover above a gold guard; new sprite (old one kept as `textures/item/elsdocia_v099.png`).
+- **Boss drops:** the Black Bull Bard Relic is now usable (sneak-use: Bardic Inspiration); new **Story Page** (Rewrite: cleanse + heal 40%, a Marquis/Riven drop) and **Gale Feather** (Sylph: Gale Leap; `entities/wind_spirit_lord.json`). Marquis/Riven now have a 60-tick spawn grace (damage and deaths are blocked and logged) in case something kills it on spawn.
+- **The Codex** (`client/ui`) replaces the Multiverse Status screen everywhere it opened: an open book with a page-turn animation, mouse-wheel scrolling, tabs, your own figure in random poses (standing, sitting, bowing, casting, floating, meditating, victory, salute, on guard) beside the magic this mod has given you, plus Status, Weapons, Relics, Bestiary, Spirit Lords and Guide pages. Add a page with `CodexPages.register`.
+- **Spirit Lords:** the four exclusive Black Clover lords get true bodies from the reference art (`entity/ElementalSpiritLordEntity`, `client/ElementalSpiritRenderer`, `tools/gen_spirit_lords.py`): Salamander (winged fire dragon), Undine (woman of water), Sylph (green fairy), Gnome (stone giant). One mage per element. The Tensura-style spirits stay small floating orbs; without a Black Clover bond the Spirit Charm calls one (use: pick the element, sneak-use: call). See `docs/spirit_lords.md`.
+- Version note: the git tag `v1.1.0` already exists on an unrelated older commit; this version is untagged.
+
+## 1.0.0 - Marquis New Order and avatar mechanics
+
+- New Order now chooses one bounded rule from target analysis: halve a melee weapon's attack speed for six seconds, apply Gearshift Low to a kiter, delay the next two nusmp grimoire release warmups by 50% for a caster, or give Marquis Gearshift Top. Slow-page state lasts eight seconds and expires/clears after two grimoire casts. The cast hook is `GrimoireBook.onRelease`; this does not affect Tensura skill casts.
+- Avatar selection now uses the phase tier and ThreatScan: Zeus/Truth/Beerus/Madoka in phase II; Anti-Spiral/Arceus/Grand Zeno/Lord of Nightmares/Kami Tenchi in phase III; The Creator remains the once-only phase-IV summon. Truth mirrors capped damage to the last player who hit Marquis, Zeno removes one owned construct or safely compresses an Evil-Eye-marked player for three seconds, and Kami Tenchi suppresses elytra flight nearby and prevents the next phase-change i-frames while present. Avatar tints and Creator's book-shaped body distinguish them visually.
+- Still incomplete: Ground-is-stone, New Order slow for Tensura casts, the full requested native combat translations for every avatar (especially Arceus's weakest-element judgment), and exact custom equipment cosmetics/engraving rewards. The rift key and `nusmp:story_rift` cannot be implemented safely because that dimension is not registered. Random CanonBook covers are displayed, but the boss's actual cast remains a separate validated codex skill; no player-owned grimoire cast has been fabricated.
+
+## 0.96.0 - Riven attack roster continuation
+
+- Added executable native attacks for Bull Ward (absorption shield and break shockwave), Soul Note (returns damage dealt by its marked player after five seconds), Legion Knight (construct spawn and position swap), Discord (42 damage plus two-second silence if its tell completes), Gold Ring (three-second magic null and delayed arena strike), Two Moons (second sky strike delayed ten ticks), Doom Gate (pull then close slash), Unwritten Ending (1.5-second untargetable window and 85-damage reappearance strike), Audience Collapse (25 story charge and 48 + 8 per additional living player), Crown Break (four non-tracking, block-occluded normal-damage shard rays), and one-use Rewrite Round.
+- Phase II's Discord unlock is phase-gated. Phase IV signatures are separated by 80 ticks; Audience Collapse and Final Page are separated by 120 ticks. Anti-magic can shorten/cancel active invulnerability and cancels a pending Rewrite Round startup. Rewrite use persists when the boss is saved and reloaded.
+- Fixed an Audience Collapse charge double-spend and kept Crown Break shards on the normal damage band. Added focused checks for the attack roster, phase unlocks, party damage formula, signature spacing, and normal Crown Break classification.
+- Incomplete/unverified: Rewrite Round currently replays Riven's last cast, not a player spell that hit him; the damage-source API does not expose a reliable codex skill identity in this combat path. The 60-second pull is centered on the local arena, not an actual `nusmp:story_rift` dimension (no such dimension is registered in the current repo/history). The historical `RivenPassives` suite from commit `848f9de` is not integrated in this newer boss architecture; current boss-bound Tensura marker skills are granted and stripped on death, but are not themselves active passives. Signature resistance bypass and shader-specific boss VFX remain unimplemented; resistance bypass was not added without a safe Tensura API path. Runtime/in-game behavior has not been exercised.
+
+## 0.94.0 - Riven Remake, the Black Bulls' Bard; generated grimoire designs; wiki VFX scale fixes
+
+- **New boss: Riven Remake** (`/nusmp riven summon`, op level 2; spawn egg in the creative tab). An adaptive bard boss: every `replanTicks` (40) he scans his target (gear, armour, anti-magic / Nihility, grimoire magic, Tensura barrier and immunity skills, flying, mounted) and scores every skill of the Anime Skill Codex against it, commits to the best plan for up to four seconds and replans at once when the target changes gear, raises a barrier or pops anti-magic. Damage that does nothing teaches him to stop using that kind. Plans are logged at debug. Phases: I The Black Bulls' Bard, II Fictional Remake (70%, Story Manifestation constructs), III Final Form (30%, lethal skills x1.5, a tier up, two-skill chains). The quirk: a player with anti-magic, Nihility or a raised guard resists his rewrite (silence, slow, soul bond, song debuffs) unless he spends story charge. Health scales with players (`baseHealth` 600, `perPlayerHealth` 200), constructs +1 per extra player up to 4.
+- **Anime Skill Codex** (`data/nusmp/skills/codex/*.json`, 38 skills: his own bard kit plus Black Clover, Tensura, DanMachi, Fire Force, Jujutsu Kaisen, JoJo and a generic pool). A skill is data only: a name, numbers and sandbox primitives (`SkillSandbox`); anything unknown is rejected at load. `/nusmp riven research <anime> <ability>` (off by default, `enableResearch`) runs off-thread against a configured https endpoint, never a private address, and only writes a candidate JSON into `config/nusmp/codex-inbox/`; `/nusmp riven accept <file>` moves it into the live codex. With no endpoint it just tells the op to drop a JSON file in the inbox. `config/nusmp-riven.toml` holds the settings.
+- **Model, animations and boss bar.** A player-proportioned geo model (messy black hair, violet-blue eyes, black high-collar coat with silver filigree and the Black Bull skull, coat tails) with 18 clips (idle, walk, talk, cast_grimoire, cast_song, eldritch_blast, shadow_step, manifest weapon / shield, soul_bond, three sword combos, hit, stagger, phase2, final_form, death); Final Form swaps to a model of the same entity with page-wings and a bull-skull crown. His five-leaf-styled grimoire floats on his left. The boss bar is a custom overlay (crown, name, phase subtitle, violet-blue fill with a travelling lightning shimmer, a Black Bull skull that cracks at 70% and 30%, the casting skill typing on, a story-charge pip row from phase II, HP number and phase numeral); vanilla's bar for him is hidden. Assets come from `java tools/GenRiven.java`.
+- **Generated grimoire designs.** Magics without a hand-made palette (all 30 wiki attributes fell back to one brown cover, gold trim and white glow) now get a cover, glow, metal and frame-stud pattern generated from their name (`GrimoireDesignGenerator`): stable per magic, visibly distinct, hand-made books unchanged.
+- **Wiki-magic VFX fixes.** Fields and bursts were drawn at a third of their real radius (callers pass radius / 3); bolts drew a beam from the caster to the tip instead of a short tail and never finished for short effects; the guard aura was sized for the old scale. Bone and Sand no longer auto-spawn the shared construct wall props on every construct-shaped spell (Recombination keeps its walls).
+
+## 0.92.0
+
+- Version bump with a first `GrimoireDesignGenerator` stub (superseded by 0.94.0).
+
+## 0.89.0 - Missing Black Clover attributes and Unique-skill icons
+
+- Added standalone grimoires for Air, Hair, Memory, Mineral, Modification, Mucus, Mud, Nail, Permeation, Poison Plant, Red Ochre, Rock, Sandstone, Scale, Shakudo, Skin, Smoke, Snow, Song, Soul Corpse, Soul, Sound, Spike, Switching, Tongue, Tree, Stone, Vine, Vortex, and Wing Magic. Each has a distinct palette, five typed spell pages, and a Unique-skill menu entry.
+- Added a shared layered VFX renderer for those attributes with visual families for wind, vines, stone/crystal, fluid, soul/space, snow, sound, and transformation effects.
+- Added a dependency-free Node.js generator for their distinct Tensura Unique-skill icons.
+- Imitation Magic is already represented by Copy Magic; the wiki's True-element attributes are upgrades of existing elemental magics and were not duplicated as standalone types.
+
 ## 0.24 - the brief: art-pack covers, slot-only grimoire, summon to cast, mastery-only pages
 - **Covers from the art pack.** Every grimoire's covers now wear one of the owner's cover designs (`tools/art/covers`, `tools/gen_cover_art_textures.py`): the design's background shading tinted to the magic's colour, its ornament in the art's own colours, glowing while the book is held. Three-Leaf (blue, gold filigree), Four-Leaf (green, gilded vines), Five-Leaf (royal flourishes), Spade (crown of spears), Triple Spade (arcane wheels), Heart (cloud swirls), Two-Heart (sea serpent), Diamond (stained crystal), and the two new top tiers **Black Magic** (black book, blood-red burst, blood-red metal) and **God-Tier** (ivory and gold, golden sunburst, white-gold glow). Only Asta's tattered book and Karna's straps keep their own look. The procedural 0.21 ornaments (filigree, ornate, wheels, lattice, floral, stars, plain) are gone.
 - **Rarity ladder** at the ceremony / altar: Three-Leaf -> Four-Leaf / kingdom covers -> Five-Leaf -> Black Magic (Anti-Magic, the devil Liebe; `weightBlack` 0.5) / God-Tier (`weightGod` 0.1).
@@ -205,18 +296,61 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
 - **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
 
-## 0.61 - Riven Remake passives, boss-bound skills and engravings
-New (nothing replaced, nothing removed):
-- Tensura intrinsics granted through ManasCore by phase (11 / 7 / 3), skipped and logged once if an id is missing; resistances only reduce (hard floor, no nullification).
-- The ten exclusive `nusmp:riven_*` passives (Fictional Remake, Audience, Counter Author, Unbelieved, Emotional High, Soul Bond, Page Memory, Jack of All Trades, Unwritten Ending, Black Bulls' Bard), boss-bound: his skill storage is stripped before death so plunder returns nothing (logged).
-- `RivenEngravings` (+ 7 manifested weapon items), config `phase2Passives`, `phase3Passives`, `engravingDropStripped`, gold story-rift and arena ring particles.
-- Not done yet: Legion, Key, Mirror and Painting constructs, Bardic Inspiration aura, Tensura barrier check for Unbelieved beyond the scan, 3D models for the weapons (they use a placeholder icon).
+## 0.62.0 - Instant casting, identity VFX, and stored Key Magic
 
-## 0.60 - Riven Remake, the Black Bulls' Bard (boss) and the Anime Skill Codex
-- **New: the Riven Remake boss** (`entity/riven`). `/multiverse boss riven`, `/nusmp riven summon` or the spawn egg. He threat-scans his target (gear, anti-magic, Tensura barriers and resistances read soft through ManasCore, the last 8 hit outcomes) every 10 ticks, builds a scored kill plan from the codex and commits to it for `replanTicks`. Phase 2 (70%): Story Manifestation and a story-charge row. Phase 3 (30%): Final Form texture, every skill one tier up, lethal plans x1.5, two skills may chain. Anti-magic staggers him and forces a replan; anti-magic or a Tensura barrier resists his rewrite unless he spends 25 story charge. +health per extra player (config).
-- **New: the Anime Skill Codex** (`data/nusmp/riven_codex/*.json`, 32 skills: first-party kit, Black Clover, Tensura, DanMachi, Fire Force, Jujutsu Kaisen, JoJo, a generic pool). Data only: every skill is checked against the primitive allow-list (`SkillSandbox`) and an unknown primitive is rejected at load. Ops can add skills with `/nusmp riven accept <file>` (inbox `config/nusmp/codex-inbox/`); `/nusmp riven research` is off by default, runs off-thread and only writes validated candidates.
-- **New: model, 19 animation clips, Final Form texture, animated boss bar** (`tools/gen_riven_remake.py`, `client/riven`). Config: `config/nusmp-riven.toml`.
-- **Replacement: the bored-portal teleport is no longer on Zagred** (it was added there in 0.59 by mistake); Zagred is as in 0.58. Not done yet: manifested constructs are wards (absorption), not their own entities; the boss's lines are chat lines, not sounds with subtitles; the Better Combat weapon file; the Tensura race read.
+- Changed: grimoire spells and crossover chant skills resolve when the ability key is released; holding the key does not cast early. Existing grimoire page ids remain in place.
+- New: Star, Sand, and Mist have dedicated layered VFX; Slash has distinct cast, impact, and reaping effects. Bone and Blood spells now route through their existing attribute layers.
+- New: Key Magic collects physical Magic Keys for Janus Abigail's extra gates; legacy stored-charge data is still read. Key pages use a key-turn cast pose.
+- New: Legion has an appended chessboard toggle page, and Dice/Game grimoires use a looping dice-fiddle idle pose while summoned.
+- Fixed: cast poses no longer rotate the torso root independently of the limbs, avoiding the visible body split.
+- Existing: Key gate and Recombination construct visuals continue using their dedicated layers and summon implementations.
+- The repository has no standalone Steal Magic type; stealing remains part of Key Magic.
+- Build status: `gradlew.bat build` succeeded; in-game visual checks are still pending.
+
+## 0.82.0 - Modeled magic constructs and robe upgrades
+
+- New: Bone Spear/Ossuary, Sand Spear/Sandstorm, Slash Wave/Death Scythe, Recombination constructs, and Legion's soldiers/Gehenna Game board now use 3D model props and layered materials.
+- Improved: junior and senior Magic Knight robes have a raised collar, shoulder mantle, tailored waist trim, and split coat tails; all existing robe items and set effects are preserved.
+- Fixed: Legion's toggleable board refreshes independently of slow upkeep, its modeled pieces follow their soldier positions, and the board prop appears with Gehenna Game.
+- Existing: Star, Bone, Blood, Sand, Mist, Recombination, Slash, and Key rune designs are generated with magic-specific palettes and glyphs.
+- Note: there is no standalone Steal Magic attribute; stealing remains a Key Magic mechanic. In-game appearance and multiplayer rendering still need runtime verification.
+- Build status: `gradlew.bat build` succeeded; in-game visual verification is still pending.
+
+## 0.83.0 - Key textures, safe prop rendering, and release casting
+
+- Fixed modeled magic props acquiring render buffers in an order that could crash the client when rendering Sand Magic.
+- Added the physical Magic Key texture to the item atlas, and changed orbiting Key Magic visuals to smaller, fully textured Great Keys.
+- Grimoire spells, crossover chant spells, and Firebolt now fire when the ability key is released rather than on press.
+
+## 0.84.0 - Legion skill-menu toggle
+- Legion Magic can now be toggled from the Tensura Unique-skill menu; the existing appended grimoire page uses the same toggle callbacks.
+- The Legion render-buffer fix is included; the supplied crash log shows the game was still loading the older `0.82.0` jar.
+
+## 0.85.0 - Zagred true-form detail and voice
+- Added layered rib and spine anatomy, facial contours, horn and arm spurs, wing spars, and a defined tail spade to Zagred's existing model.
+- Added processed synthetic voice lines for spell words, combat attacks, healing, Overwrite, and phase changes, with subtitles.
+
+## 0.86.0 - Bone Magic textures and armor
+- Fixed Bone Magic modeled props using a nonexistent vanilla bone-block texture; props now use the bone block's actual side texture.
+- Added Bone Armor as a timed player render layer with textured rib plates, a spine, arm guards, shin plates, and a subtle magic glow.
+
+## 0.88.0 - Zagred's louder, expanded battle voice
+
+- Added over 50 original context-specific Zagred battle lines for Kotodama spells, phase changes, magic casts, adaptation, barrier breaks, lances, and defeat; the existing synthetic vocal clips accompany the lines.
+- Increased Zagred's voice mix from 1.35x to 2.4x while retaining slight pitch variation and the existing sound cooldown to avoid constant overlapping playback.
+- Rescaled Zagred's detailed devil body to player height and hitbox while retaining his horns, wings, claws, ribs, and tail; his open five-leaf grimoire now hovers and moves with his casting animation.
+
+## 0.87.0 - Legion chessboard and Anti-Magic weapon passives
+- Rebuilt Legion's board toggle as a following 3D chessboard and Gehenna Game as a circular, crimson-rimmed platform with a full modeled army; pieces distinguish pawns, rooks, knights, bishops, queens, and kings.
+- Reduced Legion's repeat/ambient VFX while retaining spell impacts and queen signatures.
+- Added a custom Anti-Magic Tensura engraving to the Anti-Magic swords. Anti-Magic-only passives now include projectile reflection, Demon-Dweller magic absorption and charged release, and the Demon-Destroyer / Slasher enchantment-stripping effects.
+- Black Divider briefly enlarges the Demon-Slayer and extends reach for Anti-Magic users.
+- Added a short post-release casting wind-up (4 ticks when mastered, 7 otherwise); spells still only begin after key release. Suppressed incidental Bone/Sand construct props on non-construct casts; Recombination constructs remain unchanged.
+
+## 0.61.0 - Julius Time Magic expansion and client crash fix
+
+- New: six appended Time Magic pages, preserving all previous page indices; the added spells use the existing balance, time-stop and VFX systems.
+- Fixed: floating grimoire page rendering now reacquires the active render buffer when switching textures, preventing the reported `BufferBuilder: Not building!` client crash.
 
 ## 0.58 - Every new magic has a real grimoire; Ice and Dark VFX, sounds, summons
 

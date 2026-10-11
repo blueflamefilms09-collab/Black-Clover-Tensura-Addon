@@ -6,52 +6,65 @@ import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
- * One skill of the Anime Skill Codex: data, never executable code. Fields as in the boss spec: id, anime, name, tier, cast_ticks, range,
- * primitives (checked against {@link SkillSandbox}), counters (what target traits make it score higher), resisted_by (what blunts it),
- * animation (a clip name) and the spoken line.
+ * One skill of the Anime Skill Codex. Pure data: a skill is a name, a few numbers and a list of sandbox primitives
+ * ({@link SkillSandbox#PRIMITIVES}); nothing here is executable. {@code nativeId} names an optional first-party pre-hook
+ * (hex, soul bond, inspiration, page flip) that the boss implements itself.
  */
-public record AnimeSkill(String id, String anime, String name, int tier, int castTicks, double range, List<String> primitives, List<String> counters,
-                         List<String> resistedBy, String animation, String line) {
+public record AnimeSkill(String id, String anime, String name, int tier, int castTicks, int range, List<String> primitives,
+                         List<String> counters, List<String> resistedBy, String animation, String line, String nativeId,
+                         String constructKind, int cooldownTicks) {
 
     public boolean has(String primitive) { return primitives.contains(primitive); }
 
-    /** True for the skills that deal damage (the ones the emotional high multiplies). */
-    public boolean lethal() { return has("magic_damage") || has("physical_damage") || has("projectile") || has("melee_arc"); }
+    /** True if it hurts: used by the planner to weigh lethal skills. */
+    public boolean lethal() { return has("magic_damage") || has("physical_damage"); }
 
-    /** Parses and validates one skill; throws IllegalArgumentException with the reason when it is not acceptable. */
     public static AnimeSkill parse(JsonObject o) {
-        String id = str(o, "id");
-        if (!id.contains(":")) throw new IllegalArgumentException("id must be namespaced: " + id);
-        List<String> prims = list(o, "primitives");
-        if (prims.isEmpty()) throw new IllegalArgumentException(id + ": no primitives");
-        for (String p : prims) if (!SkillSandbox.allowed(p)) throw new IllegalArgumentException(id + ": unknown primitive '" + p + "'");
-        String anim = o.has("animation") ? str(o, "animation") : "cast_grimoire";
-        if (!SkillSandbox.CLIPS.contains(anim)) throw new IllegalArgumentException(id + ": unknown animation '" + anim + "'");
-        int tier = clamp(o.has("tier") ? o.get("tier").getAsInt() : 1, 1, 4);
-        int cast = clamp(o.has("cast_ticks") ? o.get("cast_ticks").getAsInt() : 12, 1, 80);
-        double range = Math.max(2, Math.min(32, o.has("range") ? o.get("range").getAsDouble() : 16));
-        return new AnimeSkill(id, o.has("anime") ? str(o, "anime") : "generic", o.has("name") ? str(o, "name") : id, tier, cast, range, prims,
-                list(o, "counters"), list(o, "resisted_by"), anim, o.has("line") ? str(o, "line") : "");
+        String id = str(o, "id", "");
+        String name = str(o, "name", id);
+        int cast = num(o, "cast_ticks", 12);
+        return new AnimeSkill(id.toLowerCase(Locale.ROOT), str(o, "anime", "generic").toLowerCase(Locale.ROOT), name, num(o, "tier", 1), cast,
+                num(o, "range", 12), list(o, "primitives"), list(o, "counters"), list(o, "resisted_by"),
+                str(o, "animation", "cast_grimoire"), str(o, "line", ""), str(o, "native", ""), str(o, "construct", "weapon"),
+                num(o, "cooldown_ticks", 60 + cast));
     }
 
-    private static int clamp(int v, int lo, int hi) { return Math.max(lo, Math.min(hi, v)); }
-
-    private static String str(JsonObject o, String key) {
-        JsonElement e = o.get(key);
-        if (e == null || !e.isJsonPrimitive()) throw new IllegalArgumentException("missing '" + key + "'");
-        String s = e.getAsString();
-        if (s.length() > 120) throw new IllegalArgumentException("'" + key + "' too long");
-        return s;
+    public JsonObject toJson() {
+        JsonObject o = new JsonObject();
+        o.addProperty("id", id);
+        o.addProperty("anime", anime);
+        o.addProperty("name", name);
+        o.addProperty("tier", tier);
+        o.addProperty("cast_ticks", castTicks);
+        o.addProperty("range", range);
+        o.add("primitives", array(primitives));
+        o.add("counters", array(counters));
+        o.add("resisted_by", array(resistedBy));
+        o.addProperty("animation", animation);
+        o.addProperty("line", line);
+        return o;
     }
 
-    private static List<String> list(JsonObject o, String key) {
+    private static JsonArray array(List<String> l) {
+        JsonArray a = new JsonArray();
+        l.forEach(a::add);
+        return a;
+    }
+
+    private static String str(JsonObject o, String k, String d) {
+        return o.has(k) && o.get(k).isJsonPrimitive() ? o.get(k).getAsString() : d;
+    }
+
+    private static int num(JsonObject o, String k, int d) {
+        try { return o.has(k) ? o.get(k).getAsInt() : d; } catch (RuntimeException e) { return d; }
+    }
+
+    private static List<String> list(JsonObject o, String k) {
         List<String> out = new ArrayList<>();
-        if (o.has(key) && o.get(key).isJsonArray()) {
-            JsonArray a = o.getAsJsonArray(key);
-            for (JsonElement e : a) if (e.isJsonPrimitive()) out.add(e.getAsString());
-        }
-        return out;
+        if (o.has(k) && o.get(k).isJsonArray()) for (JsonElement e : o.getAsJsonArray(k)) if (e.isJsonPrimitive()) out.add(e.getAsString().toLowerCase(Locale.ROOT));
+        return List.copyOf(out);
     }
 }

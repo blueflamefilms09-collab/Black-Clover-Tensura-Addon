@@ -1,5 +1,34 @@
 # Changelog
 
+## [1.1.0] — Resumed from v1.0.0 (NOT yet compiled)
+
+The tree is v1.0.0 (the Marquis / Riven line) with the 0.100-0.102 work ported onto it; the older line's own Riven implementation (`RivenPassives`, `riven_codex/`, story weapons) is superseded by v1.0.0's and is not restored. Details are in README.md under "1.1.0". In short: seven reference-sheet weapons, Elsdocia remade, the usable Bard Relic, Story Page and Gale Feather, the Codex UI, and the four Black Clover Spirit Lords with true bodies (Tensura spirits stay orbs).
+
+## [0.102.0] — The Black Clover Spirit Lords get their bodies (NOT yet compiled)
+
+**New (from "Spirit Lord model Ideas"):** `ElementalSpiritLordEntity` with four hand-built models: **Salamander** (winged fire dragon), **Undine** (woman of water with foam hair, wave dress, fin ears and orbiting drops), **Sylph** (green fairy with dragonfly wings and bubbles) and **Gnome** (hunched stone giant). Each has idle / move / cast / hit animations, a glow layer, a technique and an aura for its master (see `docs/spirit_lords.md`). Exclusive as in Black Clover: one mage per element (`SpiritSlots`), only that mage can call it, one body per element. Models by `tools/gen_spirit_lords.py` (+ `tools/spirit_geo.py`), previews in `tools/render_preview/scenes.d/spirit_lords.json`.
+**Tensura-style spirits stay small floating orbs** that follow the player (`SpiritLordEntity`, unchanged); without a Black Clover bond the Spirit Charm now calls one (use: pick the element, sneak-use: call). Admin: `spirit_body <player> <kind>` calls a body.
+**Also:** a Spirit Lords page in the Codex.
+**Replacement:** the Spirit Charm no longer turns a bonded mage's lord into an orb; it calls the real body (the orb entity is untouched).
+**Build note:** still not compiled (maven.neoforged.net blocked in the session); build with `gradlew.bat build` and send me any errors.
+
+## [0.101.0] — Reference weapons, boss drops, the Codex (NOT yet compiled)
+
+**New:**
+- 7 weapons from the "Custom weapon i want added" sheets, each with a 3D in-hand model, glow layer, inventory icon, Tensura engravings, a right-click technique, a sneak-click second technique and a full-swing strike (logic in `item/ReferenceWeapons.java`): **Quickling's Ivy** (rapier: rooting poison ivy), **Magebane Longsword** (strips buffs, jams casters), **Prism Blade** (blinding flash, seven-colour beam), **Thundercleave** (thunder arc, thunderstorm, hits arc to a second foe), **Bloodbound Katana** (Blood Charges, Bloodflare), **Permafrost Sabre** and **Cyclone Rapier** (the Boreal Blades; hold both for Boreal Fusion).
+- Boss drops: **Story Page** (Riven Remake; Rewrite: cleanse + heal 40%), **Gale Feather** (Sylph; Gale Leap), loot tables `entities/riven_remake.json` and `entities/wind_spirit_lord.json`.
+- **The Codex** (`client/ui`): an open book with page-turn animation, mouse-wheel scrolling, tabs, and on the first spread your own figure in a random pose (standing, sitting, bowing, casting, floating, meditating, victory, salute, on guard) next to the magic this mod has given you. Pages are registered in `CodexPages`, so the book grows without touching the screen.
+
+**Replacement:** the Multiverse Status screen is replaced by the Codex everywhere it opened (hotkey, Tensura-menu button, panel click). Its status blocks are the Codex's Status page; the old class stays only for the compact Tensura-menu panel. The **Black Bull Bard Relic** (an inert trophy) is now usable (sneak-use: Bardic Inspiration); same item id.
+
+**Build note:** this session could not reach maven.neoforged.net, so none of 0.100/0.101 was compiled. Build with `gradlew.bat build` and send me any errors.
+
+## [0.100.0] — Elsdocia remake + boss spawn guard (NOT yet compiled)
+
+**Replacement:** Elsdocia's 3D model skin, glow layer and inventory sprite (the wiki/reference look: long straight crystal blade, deep azure with a cyan core and light motes, gold clover emblem above a gold guard, dark grip). The old sprite is kept as `textures/item/elsdocia_v099.png`.
+**Fix (unverified in-game):** Riven Remake spawn guard. Damage and deaths in his first 60 ticks are blocked and logged (`[nusmp] Riven: ignored ...` in latest.log, which names the real killer), Tensura passive grants are wrapped in try/catch, and he is given a magicule pool like Zagred so Tensura skills cannot starve and hurt him.
+**Build note:** this session could not reach maven.neoforged.net, so 0.100.0 was not compiled. Build it locally with `gradlew.bat build`.
+
 ## [0.99.0] — Elsdocia + Key Magic Restoration
 
 **Release Date:** 2026-10-10

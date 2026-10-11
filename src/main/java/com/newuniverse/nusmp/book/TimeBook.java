@@ -51,7 +51,14 @@ public class TimeBook extends GrimoireBook {
             BookPage.zone("reversal", "Time Reversal", TimeBook::reversal).withCooldown(400),
             BookPage.starter("stolen_time", "Stolen Time", TimeBook::stolen).withCooldown(160),
             // appended last so the existing pages keep their mode numbers and unlock bits
-            BookPage.signature("chrono_anastasis", "Chrono Anastasis", TimeBook::anastasis).withCooldown(1200));
+            BookPage.signature("chrono_anastasis", "Chrono Anastasis", TimeBook::anastasis).withCooldown(1200),
+            // 0.61: new Julius-inspired time techniques are appended to preserve every existing mode index.
+            BookPage.mid("hourglass_step", "Hourglass Step", TimeBook::hourglassStep).withCooldown(180),
+            BookPage.mid("future_sight", "Borrowed Future", TimeBook::futureSight).withCooldown(320),
+            BookPage.zone("pendulum_ward", "Pendulum Ward", TimeBook::pendulumWard).withCooldown(500),
+            BookPage.zone("age_breaker", "Age Breaker", TimeBook::ageBreaker).withCooldown(280),
+            BookPage.signature("moment_reprise", "Moment Reprise", TimeBook::momentReprise).withCooldown(700),
+            BookPage.signature("hourglass_storm", "Hourglass Storm", TimeBook::hourglassStorm).withCooldown(900));
 
     public TimeBook() { super(MagicType.TIME, 0xFFF5D76E); }
     @Override protected List<BookPage> familyPages() { return pages; }
@@ -152,6 +159,134 @@ public class TimeBook extends GrimoireBook {
         level.playSound(null, BlockPos.containing(at), SoundEvents.BELL_RESONATE, SoundSource.PLAYERS, 2.0f, 0.5f);
         p.displayClientMessage(net.minecraft.network.chat.Component.literal("Time turns back: " + blocks + " blocks, " + healed + " wounds, "
                 + uncast + " spells undone.").withStyle(net.minecraft.ChatFormatting.GOLD), true);
+        return true;
+    }
+
+    /** Short, collision-safe rewind along the caster's horizontal line of sight. */
+    static boolean hourglassStep(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
+        Vec3 from = p.position();
+        Vec3 dir = p.getViewVector(1f).multiply(1, 0, 1);
+        if (dir.lengthSqr() < 1.0e-4) dir = new Vec3(0, 0, 1);
+        dir = dir.normalize();
+        Vec3 destination = null;
+        for (double distance = 7; distance >= 1; distance -= 0.5) {
+            Vec3 candidate = from.add(dir.scale(distance));
+            if (p.serverLevel().noCollision(p, p.getBoundingBox().move(candidate.subtract(from)))) {
+                destination = candidate;
+                break;
+            }
+        }
+        if (destination == null) {
+            fail(p, "There is no room to step through time.");
+            return false;
+        }
+        p.teleportTo(destination.x, destination.y, destination.z);
+        p.fallDistance = 0;
+        b.castCircle(p, 0.7f);
+        VfxSpawn.send(p.serverLevel(), VfxShape.TIME_REWIND, from.add(0, 1, 0), destination.add(0, 1, 0), 0, 18, 0.8f);
+        return true;
+    }
+
+    /** Briefly accelerates the caster's reactions without granting damage immunity. */
+    static boolean futureSight(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
+        int duration = i.isMastered(p) ? 220 : 160;
+        p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, duration, 1));
+        p.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, duration, 1));
+        p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, duration, 0));
+        b.castCircle(p, 0.9f);
+        VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.TIME_ACCEL, p, p.position().add(0, 1, 0), 0, duration, 1.15f);
+        return true;
+    }
+
+    /** A short-lived field that catches hostile projectiles and repeatedly slows nearby foes. */
+    static boolean pendulumWard(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
+        ServerLevel level = p.serverLevel();
+        Vec3 center = p.position();
+        int duration = i.isMastered(p) ? 100 : 80;
+        b.castCircle(p, 1.0f);
+        VfxSpawn.sendFollowing(level, VfxShape.TIME_CLOCK, p, center.add(0, 1, 0), 0, duration, 3.5f);
+        SpellRuntime.zone(level, duration, 5, age -> {
+            if (!p.isAlive() || p.serverLevel() != level) return;
+            AABB area = new AABB(p.position(), p.position()).inflate(5);
+            for (Projectile projectile : level.getEntitiesOfClass(Projectile.class, area)) {
+                Entity owner = projectile.getOwner();
+                if (owner == p || (owner != null && p.isAlliedTo(owner))) continue;
+                projectile.setDeltaMovement(projectile.getDeltaMovement().scale(0.55));
+                projectile.hurtMarked = true;
+            }
+            if (age % 20 == 0) {
+                for (LivingEntity target : around(p, p.position(), 4.5)) {
+                    target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 30, 1));
+                }
+            }
+        });
+        return true;
+    }
+
+    /** A time-shearing line that damages and briefly slows enemies, scaled by the normal grimoire damage law. */
+    static boolean ageBreaker(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
+        Vec3 eye = p.getEyePosition(), look = p.getViewVector(1f), end = eye.add(look.scale(14));
+        int hits = 0;
+        for (LivingEntity target : along(p, eye, end, 1.25)) {
+            b.hurt(i, p, target, mode, 12f);
+            target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 80, 1));
+            target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 60, 0));
+            hits++;
+        }
+        if (hits == 0) {
+            fail(p, "The time-shear found no target.");
+            return false;
+        }
+        b.castCircle(p, 0.9f);
+        VfxSpawn.send(p.serverLevel(), VfxShape.TIME_REWIND, eye, end, 0, 24, 1.1f);
+        return true;
+    }
+
+    /** Restores the caster and nearby allies, clearing fire and harmful status effects. */
+    static boolean momentReprise(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
+        int restored = 0;
+        double radius = i.isMastered(p) ? 8 : 6;
+        for (Player ally : p.serverLevel().getEntitiesOfClass(Player.class, new AABB(p.position(), p.position()).inflate(radius),
+                candidate -> candidate.isAlive() && !candidate.isSpectator()
+                        && (candidate == p || candidate.isAlliedTo(p) || (p.getTeam() == null && candidate.getTeam() == null)))) {
+            float healing = Math.max(4f, ally.getMaxHealth() * 0.18f);
+            BalanceLaw.heal(ally, healing);
+            ally.clearFire();
+            for (MobEffectInstance effect : new java.util.ArrayList<>(ally.getActiveEffects())) {
+                if (!effect.getEffect().value().isBeneficial()) ally.removeEffect(effect.getEffect());
+            }
+            restored++;
+        }
+        if (restored == 0) {
+            fail(p, "No allied moment could be restored.");
+            return false;
+        }
+        b.castCircle(p, 1.15f);
+        VfxSpawn.send(p.serverLevel(), VfxShape.TIME_REWIND, p.position().add(0, 0.1, 0), p.position().add(0, 2, 0), 0, 50, 2.2f);
+        p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.4f, 0.7f);
+        return true;
+    }
+
+    /** Delayed golden strikes converge on the aimed point; each enemy can be hit only once per pulse. */
+    static boolean hourglassStorm(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
+        ServerLevel level = p.serverLevel();
+        Vec3 center = aim(p, 20);
+        double radius = i.isMastered(p) ? 5 : 4;
+        b.castCircle(p, 1.2f);
+        VfxSpawn.send(level, VfxShape.TIME_CLOCK, center.add(0, 7, 0), center, 0, 70, (float) radius);
+        for (int strike = 0; strike < 5; strike++) {
+            int index = strike;
+            SpellRuntime.later(level, 8 + strike * 8, () -> {
+                if (!p.isAlive() || p.serverLevel() != level) return;
+                double angle = index * Math.PI * 2 / 5;
+                Vec3 impact = center.add(Math.cos(angle) * radius * 0.55, 0, Math.sin(angle) * radius * 0.55);
+                VfxSpawn.send(level, VfxShape.LIGHTNING_SPEAR, impact.add(0, 8, 0), impact, 0xFFFFD66E, 10, 1.0f);
+                for (LivingEntity target : around(p, impact, 2.0)) {
+                    b.hurt(i, p, target, mode, 8f);
+                    target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 1));
+                }
+            });
+        }
         return true;
     }
 

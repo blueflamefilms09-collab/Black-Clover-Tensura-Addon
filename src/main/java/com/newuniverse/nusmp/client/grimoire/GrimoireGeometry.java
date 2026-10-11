@@ -25,7 +25,9 @@ import java.util.function.Function;
 public final class GrimoireGeometry implements IUnbakedGeometry<GrimoireGeometry> {
     public static final IGeometryLoader<GrimoireGeometry> LOADER = (json, context) -> new GrimoireGeometry();
 
-    static ResourceLocation texture(String name) { return ResourceLocation.fromNamespaceAndPath("nusmp", "item/grimoire_book/" + name); }
+    static ResourceLocation texture(String name) {
+        return ResourceLocation.fromNamespaceAndPath("nusmp", "item/grimoire_book/" + name);
+    }
 
     @Override
     public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter,

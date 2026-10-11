@@ -50,14 +50,19 @@ public class AntiMagicBook extends ElementBook {
 
     public AntiMagicBook() {
         super(MagicType.ANTI_MAGIC, 0xFF2A0A30, TensuraDamageTypes.MAGIC_GENERIC, List.of(
-                new BookPage("demon_slayer_slash", "Black Slash", "Demon-Dweller Sword: Black Slash", 0, 0, 80, CanonSpells::blackSlash),
-                new BookPage("black_divider", "Black Divider", "Demon-Slayer Sword: Black Divider", 0, 0, 160, CanonSpells::blackDivider),
+                new BookPage("demon_slayer_slash", "Black Slash", "Demon-Dweller Sword: Black Slash", 0, 0, 80, CanonSpells::blackSlash)
+                        .withWeapon(com.newuniverse.nusmp.item.WeaponMagicHelper.GREATSWORDS),
+                new BookPage("black_divider", "Black Divider", "Demon-Slayer Sword: Black Divider", 0, 0, 160, CanonSpells::blackDivider)
+                        .withWeapon(com.newuniverse.nusmp.item.WeaponMagicHelper.GREATSWORDS),
                 new BookPage("black_meteorite", "Black Meteorite", "Black Meteorite", 0, 0, 300, CanonSpells::blackMeteorite),
                 new BookPage("black_hurricane", "Black Hurricane", "Black Hurricane", 0, 0, 300, CanonSpells::blackHurricane),
                 new BookPage("black_form", "Black Asta", "Black Asta", 0, 0, 0, AntiMagicBook::blackForm),
-                new BookPage("bull_thrust", "Bull Thrust", "Bull Thrust", 0, 0, 160, CanonSpells::bullThrust),
-                new BookPage("infinite_slash", "Infinite Slash", "Demon-Slasher Katana: Infinite Slash", 0, 0, 240, CanonSpells::infiniteSlash),
-                new BookPage("infinite_slash_equinox", "Infinite Slash Equinox", "Demon-Slasher Katana: Infinite Slash Equinox", 0, 0, 900, CanonSpells::infiniteSlashEquinox)));
+                new BookPage("bull_thrust", "Bull Thrust", "Bull Thrust", 0, 0, 160, CanonSpells::bullThrust)
+                        .withWeapon(com.newuniverse.nusmp.item.WeaponMagicHelper.GREATSWORDS),
+                new BookPage("infinite_slash", "Infinite Slash", "Demon-Slasher Katana: Infinite Slash", 0, 0, 240, CanonSpells::infiniteSlash)
+                        .withWeapon(com.newuniverse.nusmp.item.WeaponMagicHelper.KATANAS),
+                new BookPage("infinite_slash_equinox", "Infinite Slash Equinox", "Demon-Slasher Katana: Infinite Slash Equinox", 0, 0, 900, CanonSpells::infiniteSlashEquinox)
+                        .withWeapon(com.newuniverse.nusmp.item.WeaponMagicHelper.KATANAS)));
     }
 
     public static boolean isLord(ManasSkillInstance i) { return i.getOrCreateTag().getBoolean(K_LORD); }

@@ -40,6 +40,13 @@ public class MultiverseStatusScreen extends Screen {
 
     record Block(String title, List<String> lines, boolean warn) {}
 
+    /** 0.100: the status blocks for the Codex ({@code client.ui}): each entry is {title, lines joined by '\n', "warn" or ""}. */
+    public static List<String[]> summary(CompoundTag s) {
+        List<String[]> out = new ArrayList<>();
+        for (Block b : blocks(s)) out.add(new String[]{b.title(), String.join("\n", b.lines()), b.warn() ? "warn" : ""});
+        return out;
+    }
+
     static List<Block> blocks(CompoundTag s) {
         List<Block> out = new ArrayList<>();
         // 0.39: The Convergence. Until the Clover Kingdom manifests, a Tensura-origin player sees nothing of Black Clover.

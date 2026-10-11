@@ -8,6 +8,8 @@ import com.newuniverse.nusmp.blackclover.GrimoireItem;
 import com.newuniverse.nusmp.blackclover.MagicType;
 import com.newuniverse.nusmp.core.magic.grimoire.GrimoireCarry;
 import com.newuniverse.nusmp.core.magic.grimoire.GrimoireShelfLayout;
+import com.newuniverse.nusmp.entity.ZagredBossEntity;
+import com.newuniverse.nusmp.grimoire.CanonBook;
 import com.newuniverse.nusmp.grimoire.GrimoireBookPlan;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -60,8 +62,17 @@ import java.util.Set;
  * Everything is computed every frame from game time + partial tick; no entities, nothing ticked over the network.
  */
 public final class GrimoireFloatClient {
+    private static ItemStack zagredBook = ItemStack.EMPTY;
+
     private static final ResourceLocation LEAF = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/item/grimoire_book/page_leaf.png");
     private static final ResourceLocation LEAF_TATTERED = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/item/grimoire_book/page_leaf_tattered.png");
+    private static ResourceLocation runeTexture(ItemStack stack) {
+        MagicType magic = MagicType.byName(GrimoireItem.data(stack).getString("Magic"));
+        String id = magic.name().toLowerCase(java.util.Locale.ROOT);
+        ResourceLocation ring = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/particle/magic_runes/" + id + "_rune_ring.png");
+        if (Minecraft.getInstance().getResourceManager().getResource(ring).isPresent()) return ring;
+        return ResourceLocation.fromNamespaceAndPath("nusmp", "textures/particle/magic_runes/" + id + ".png");
+    }
 
     private static final class Entry {
         ItemStack stack;
@@ -144,7 +155,7 @@ public final class GrimoireFloatClient {
 
     // ---------------------------------------------------------------- rendering
     private static void onRender(RenderLevelStageEvent event) {
-        if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_PARTICLES || (FLOATING.isEmpty() && HIP.isEmpty())) return;
+        if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_PARTICLES) return;
         Minecraft mc = Minecraft.getInstance();
         if (mc.level == null) return;
         float partial = event.getPartialTick().getGameTimeDeltaPartialTick(false);
@@ -159,6 +170,8 @@ public final class GrimoireFloatClient {
         RenderSystem.applyModelViewMatrix();
         MultiBufferSource.BufferSource buffers = mc.renderBuffers().bufferSource();
         PoseStack pose = new PoseStack();
+
+        renderZagredBook(mc, buffers, pose, cam, partial);
 
         Set<Integer> ids = new HashSet<>(HIP.keySet());
         ids.addAll(FLOATING.keySet());
@@ -223,11 +236,13 @@ public final class GrimoireFloatClient {
             } else {
                 double yaw = Math.toRadians(Mth.rotLerp(partial, owner.yBodyRotO, owner.yBodyRot));
                 Vec3 fwd = new Vec3(-Math.sin(yaw), 0, Math.cos(yaw)), right = new Vec3(-Math.cos(yaw), 0, -Math.sin(yaw));
-                Vec3 at = owner.getPosition(partial).add(right.scale(p.right())).add(fwd.scale(p.forward())).add(0, p.up() + bob, 0);
+                Vec3 at = julius(stack)
+                        ? owner.getPosition(partial).add(fwd.scale(-0.42)).add(0, owner.getBbHeight() + 0.28 + bob, 0)
+                        : owner.getPosition(partial).add(right.scale(p.right())).add(fwd.scale(p.forward())).add(0, p.up() + bob, 0);
                 pose.translate(at.x - cam.x, at.y - cam.y, at.z - cam.z);
-                pose.mulPose(Axis.YP.rotationDegrees(-(float) Math.toDegrees(yaw) + p.yaw() + sway));
-                pose.mulPose(Axis.XP.rotationDegrees(p.pitch()));
-                pose.mulPose(Axis.ZP.rotationDegrees(p.roll()));
+                pose.mulPose(Axis.YP.rotationDegrees(-(float) Math.toDegrees(yaw) + (julius(stack) ? 0f : p.yaw()) + sway));
+                pose.mulPose(Axis.XP.rotationDegrees(julius(stack) ? 0f : p.pitch()));
+                pose.mulPose(Axis.ZP.rotationDegrees(julius(stack) ? 0f : p.roll()));
                 float s = p.scale() * fade;
                 if (s <= 0.01f) { pose.popPose(); continue; }
                 pose.scale(s, s, s);
@@ -265,6 +280,31 @@ public final class GrimoireFloatClient {
         buffers.endBatch();
         modelView.popMatrix();
         RenderSystem.applyModelViewMatrix();
+    }
+
+    private static void renderZagredBook(Minecraft mc, MultiBufferSource.BufferSource buffers, PoseStack pose, Vec3 camera, float partial) {
+        for (var entity : mc.level.entitiesForRendering()) {
+            if (!(entity instanceof ZagredBossEntity zagred) || !zagred.isAlive() || zagred.isInvisible()
+                    || zagred.distanceToSqr(camera) > 96 * 96) continue;
+            if (zagredBook.isEmpty())
+                zagredBook = GrimoireItem.withOpenView(GrimoireItem.createCanon(CanonBook.ZAGRED), GrimoireCarry.OPEN_STEPS);
+
+            float age = zagred.tickCount + partial;
+            boolean casting = zagred.clientState() == ZagredBossEntity.STATE_CASTING;
+            double yaw = Math.toRadians(Mth.rotLerp(partial, zagred.yBodyRotO, zagred.yBodyRot));
+            Vec3 forward = new Vec3(-Math.sin(yaw), 0, Math.cos(yaw));
+            Vec3 right = new Vec3(-Math.cos(yaw), 0, -Math.sin(yaw));
+            Vec3 at = zagred.getPosition(partial).add(forward.scale(-0.4)).add(right.scale(0.28))
+                    .add(0, zagred.getBbHeight() + 0.08 + Mth.sin(age * 0.09f) * 0.045f, 0);
+            pose.pushPose();
+            pose.translate(at.x - camera.x, at.y - camera.y, at.z - camera.z);
+            pose.mulPose(Axis.YP.rotationDegrees(-(float) Math.toDegrees(yaw) + Mth.sin(age * 0.05f) * 3f));
+            pose.mulPose(Axis.ZP.rotationDegrees(casting ? Mth.sin(age * 0.3f) * 7f : Mth.sin(age * 0.04f) * 2f));
+            pose.scale(0.85f, 0.85f, 0.85f);
+            mc.getItemRenderer().renderStatic(zagredBook, ItemDisplayContext.THIRD_PERSON_RIGHT_HAND,
+                    LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, pose, buffers, mc.level, zagred.getId());
+            pose.popPose();
+        }
     }
 
     /** The grimoire model's third-person right-hand display transform (models/item/grimoire.json), then the item renderer's centring. */
@@ -432,7 +472,8 @@ public final class GrimoireFloatClient {
      */
     private static void pages(PoseStack pose, MultiBufferSource buffers, Vec3 cam, ItemStack stack, float age, boolean reverse, int light) {
         Style style = style(stack);
-        VertexConsumer vc = buffers.getBuffer(RenderType.entityTranslucent(style == Style.ANTI ? LEAF_TATTERED : LEAF));
+        RenderType pageType = RenderType.entityCutoutNoCull(style == Style.ANTI ? LEAF_TATTERED : LEAF);
+        RenderType runeType = RenderType.entityTranslucent(runeTexture(stack));
         int[] tint = switch (style) {
             case ANTI -> new int[]{120, 104, 108};
             case EMBER -> new int[]{255, 226, 196};
@@ -455,8 +496,11 @@ public final class GrimoireFloatClient {
             float x1 = x0 + Mth.cos(a1) * half + jx, z1 = z0 + Mth.sin(a1) * half + jz;
             float x2 = x1 + Mth.cos(a2) * half, z2 = z1 + Mth.sin(a2) * half;
             int a = (int) (alpha * (style == Style.ANTI ? 230 : 245));
-            strip(vc, pose.last(), x0, z0, x1, z1, y0, y1, 0f, 0.5f, tint, a, light);
-            strip(vc, pose.last(), x1, z1, x2, z2, y0, y1, 0.5f, 1f, tint, a, light);
+            // BufferSource may flush the previously selected RenderType when switching texture.
+            strip(buffers.getBuffer(pageType), pose.last(), x0, z0, x1, z1, y0, y1, 0f, 0.5f, tint, a, light);
+            strip(buffers.getBuffer(pageType), pose.last(), x1, z1, x2, z2, y0, y1, 0.5f, 1f, tint, a, light);
+            strip(buffers.getBuffer(runeType), pose.last(), x0, z0, x1, z1, y0, y1, 0f, 0.5f, tint, a, light);
+            strip(buffers.getBuffer(runeType), pose.last(), x1, z1, x2, z2, y0, y1, 0.5f, 1f, tint, a, light);
             if (RNG.nextFloat() < 0.4f) particle(pose.last().pose(), cam, style, x2, (y0 + y1) * 0.5f + (RNG.nextFloat() - 0.5f) * 10f, z2);
         }
         pose.popPose();
@@ -469,10 +513,13 @@ public final class GrimoireFloatClient {
         float len = Mth.sqrt(nx * nx + nz * nz);
         if (len < 1e-4f) return;
         nx /= len; nz /= len;
-        vertex(vc, last, xa, y1, za, u0, 0f, c, a, light, nx, nz);
-        vertex(vc, last, xa, y0, za, u0, 1f, c, a, light, nx, nz);
-        vertex(vc, last, xb, y0, zb, u1, 1f, c, a, light, nx, nz);
-        vertex(vc, last, xb, y1, zb, u1, 0f, c, a, light, nx, nz);
+        for (int side = 0; side < 2; side++) {
+            float normal = side == 0 ? 1f : -1f;
+            vertex(vc, last, xa, y1, za, u0, 0f, c, a, light, nx * normal, nz * normal);
+            vertex(vc, last, xb, y1, zb, u1, 0f, c, a, light, nx * normal, nz * normal);
+            vertex(vc, last, xb, y0, zb, u1, 1f, c, a, light, nx * normal, nz * normal);
+            vertex(vc, last, xa, y0, za, u0, 1f, c, a, light, nx * normal, nz * normal);
+        }
     }
 
     private static void vertex(VertexConsumer vc, PoseStack.Pose last, float x, float y, float z, float u, float v, int[] c, int a, int light, float nx, float nz) {

@@ -1,0 +1,7 @@
+{
+  "skills": [
+    {"id": "nusmp:jjk_cursed_slash", "anime": "jujutsu_kaisen", "name": "Cursed Slash", "tier": 2, "cast_ticks": 8, "range": 5,
+     "primitives": ["melee_arc", "physical_damage", "slow"], "counters": ["caster", "healer"], "resisted_by": ["physical_immune"], "animation": "sword_combo_3",
+     "line": "Throughput!"}
+  ]
+}

@@ -304,7 +304,7 @@ public class SealSecreLayer extends AbstractVfxLayer {
         float f = life(inst, age, 6, 10), pop = VfxAnim.easeOutBack(Mth.clamp(age / 8f, 0, 1));
         Vector3f c = ctx.rel(inst.from(ctx));
         int col = inst.color, light = VfxVertexBuffer.whiten(col, 0.5f), hot = VfxVertexBuffer.whiten(col, 0.9f);
-        float r = p * pop;
+        float r = p * pop * (inst.duration <= 20 ? 1f - Mth.clamp(age / inst.duration, 0f, 1f) : 1f);
         // the sphere
         buf.billboard(ctx, VfxTextures.GLOW, VfxBlend.ADD, c, 2.1f * r, 0f, VfxVertexBuffer.withAlpha(col, f * 0.3f));
         buf.billboard(ctx, ORB, VfxBlend.ADD, c, 0.5f * r, 0f, VfxVertexBuffer.withAlpha(hot, f * 0.7f));

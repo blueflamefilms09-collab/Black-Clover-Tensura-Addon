@@ -2,6 +2,15 @@ package com.newuniverse.nusmp.vfx.client.layer;
 
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.client.*;
+import com.newuniverse.nusmp.client.NURenderTypes;
+import com.newuniverse.nusmp.client.NUShaders;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.MeshData;
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.VertexFormat;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import org.joml.Vector3f;
@@ -29,10 +38,10 @@ public class DemonSlayerLayer extends AbstractVfxLayer {
     static final int CRIMSON = 0xFFC0102A, EMBER = 0xFFFF3A4A, INK = 0xFF070305;
 
     @Override
-    public Set<VfxShape> shapes() { return EnumSet.of(VfxShape.DEMON_METEOR, VfxShape.NIHILITY_ZONE); }
+    public Set<VfxShape> shapes() { return EnumSet.of(VfxShape.DEMON_METEOR, VfxShape.NIHILITY_ZONE, VfxShape.RIVEN_VOID_GATE); }
 
     @Override
-    public int defaultDuration(VfxShape s) { return s == VfxShape.NIHILITY_ZONE ? 200 : 24; }
+    public int defaultDuration(VfxShape s) { return s == VfxShape.NIHILITY_ZONE ? 200 : s == VfxShape.RIVEN_VOID_GATE ? 25 : 24; }
 
     @Override
     public int defaultColor(VfxShape s) { return CRIMSON; }
@@ -40,7 +49,58 @@ public class DemonSlayerLayer extends AbstractVfxLayer {
     @Override
     public void render(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {
         if (inst.shape == VfxShape.DEMON_METEOR) meteor(inst, ctx, buf);
-        else zone(inst, ctx, buf);
+        else if (inst.shape == VfxShape.NIHILITY_ZONE) zone(inst, ctx, buf);
+        else rivenGate(inst, ctx, buf);
+    }
+
+    private void rivenGate(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {
+        float age = inst.ageTicks(ctx.partialTick), radius = Math.max(1f, inst.power);
+        float open = VfxAnim.easeOutCubic(Mth.clamp(age / 7f, 0f, 1f));
+        float fade = life(inst, age, 0, 5), r = radius * open;
+        Vector3f center = ctx.rel(inst.from(ctx)).add(0, 0.06f, 0);
+        VfxPose ground = VfxPose.ground(center);
+        int violet = 0xFF665DFF, pale = 0xFFBCB5FF;
+
+        buf.plane(GROUND, VfxBlend.ALPHA, ground, r, VfxVertexBuffer.withAlpha(0xFF100D20, 0.88f * fade));
+        buf.ring(RING, VfxBlend.ALPHA, ground, r * 0.88f, r, ctx.seg(40, 20), 8, age * 0.012f,
+                VfxVertexBuffer.withAlpha(violet, 0.92f * fade));
+        buf.ring(CRACKS, VfxBlend.ADD, ground.lift(0.02f).spin(-age * 0.018f), r * 0.67f, r * 0.82f,
+                ctx.seg(28, 14), 5, age * 0.02f, VfxVertexBuffer.withAlpha(pale, 0.7f * fade));
+        for (int i = 0; i < 8; i++) {
+            float angle = Mth.TWO_PI * i / 8f + age * 0.012f;
+            float orbit = r * (0.78f + 0.08f * Mth.sin(age * 0.12f + i));
+            Vector3f point = new Vector3f(center).add(Mth.cos(angle) * orbit, 0.04f, Mth.sin(angle) * orbit);
+            buf.billboard(ctx, SHARD, VfxBlend.ADD, point, 0.34f, angle, VfxVertexBuffer.withAlpha(pale, fade));
+            buf.billboard(ctx, GLOW, VfxBlend.ADD, point, 0.22f, -angle, VfxVertexBuffer.withAlpha(violet, fade));
+        }
+        if (NUShaders.demonVoid() != null && fade > 0.01f) drawVoidDisk(ctx, center, r);
+    }
+
+    private static void drawVoidDisk(VfxRenderContext ctx, Vector3f center, float radius) {
+        RenderType type = NURenderTypes.demonVoid();
+        RenderSystem.getModelViewStack().pushMatrix();
+        RenderSystem.getModelViewStack().identity();
+        RenderSystem.applyModelViewMatrix();
+        try {
+            BufferBuilder builder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION);
+            Vector3f transformedCenter = ctx.modelView.transformPosition(center, new Vector3f());
+            for (int i = 0; i < 36; i++) {
+                float a0 = Mth.TWO_PI * i / 36f, a1 = Mth.TWO_PI * (i + 1) / 36f;
+                Vector3f p0 = new Vector3f(center).add(Mth.cos(a0) * radius, 0, Mth.sin(a0) * radius);
+                Vector3f p1 = new Vector3f(center).add(Mth.cos(a1) * radius, 0, Mth.sin(a1) * radius);
+                Vector3f v0 = ctx.modelView.transformPosition(p0, new Vector3f());
+                Vector3f v1 = ctx.modelView.transformPosition(p1, new Vector3f());
+                builder.addVertex(transformedCenter.x, transformedCenter.y, transformedCenter.z);
+                builder.addVertex(v0.x, v0.y, v0.z);
+                builder.addVertex(v1.x, v1.y, v1.z);
+                builder.addVertex(transformedCenter.x, transformedCenter.y, transformedCenter.z);
+            }
+            MeshData mesh = builder.build();
+            if (mesh != null) type.draw(mesh);
+        } finally {
+            RenderSystem.getModelViewStack().popMatrix();
+            RenderSystem.applyModelViewMatrix();
+        }
     }
 
     private void meteor(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {

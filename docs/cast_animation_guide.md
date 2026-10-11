@@ -5,7 +5,7 @@ Tensura's casting, from Blockbench to in-game. Written for **this** mod: NeoForg
 (already a dependency), the existing chant / Mana Zone / release flow in `book/GrimoireBook.java`, and the VFX layers that
 already draw the magic circles.
 
-> Status (0.54): built, without Player Animator. Clips live in `assets/nusmp/animations/player/cast.animation.json` (made by `tools/gen_cast_animations.py`), the server picks them in `anim/CastAnim`, `client/CastAnimClient` plays them from `PlayerModelMixin`. Chant and Mana Zone loop; releases are thrust (hand out), side, up, sweep, slam; the signature finisher and the fail flinch have their own clips. A page can pick its own with `BookPage.withAnim("out"|"side"|"up"|"sweep"|"slam"|"signature")`. The rest of this guide is the original plan and still the reference for new clips.
+> Status (0.59): built, without Player Animator. Clips live in `assets/nusmp/animations/player/cast.animation.json` (made by `tools/gen_cast_animations.py`), the server picks them in `anim/CastAnim`, `client/CastAnimClient` plays them from `PlayerModelMixin`. Chant and Mana Zone loop; releases include thrust, side, up, sweep, slam, the signature finisher, the fail flinch, sealing's two-handed crush, and weapon-specific motions. A page can pick its own with `BookPage.withAnim(...)`; `BookPage.withWeapon(...)` gates it on a held tagged weapon and overrides that ordinary release with the matching weapon clip.
 
 ---
 
@@ -40,6 +40,11 @@ Every cast has five beats. The mod already has the server-side moments for each 
 **The key rule: no new input lag.** The chant already makes the player wait 20 ticks, so do the wind-up inside the chant and put the
 release animation's contact frame at **0-2 ticks**. Never delay the damage to wait for the animation. If a pose needs a longer
 release, start it *before* release, in the chant's last 4 ticks.
+
+The generated attribute-specific rune overlays are stored under `assets/nusmp/textures/particle/magic_runes/`; regenerate them after
+adding a `MagicType` with `node tools/gen_magic_runes.mjs`. High-detail ring and band textures are also available for selected attributes;
+generate them with `python tools/gen_magic_runes.py <output-directory>` (requires Pillow). Open-book page flips prefer the high-detail ring
+when one is available and keep the base overlay for the other attributes.
 
 ### 1.1 Keyframing principles (Blockbench)
 

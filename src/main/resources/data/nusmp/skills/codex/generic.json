@@ -1,0 +1,20 @@
+{
+  "skills": [
+    {"id": "nusmp:generic_sword_rain", "anime": "generic", "name": "Sword Rain", "tier": 2, "cast_ticks": 14, "range": 20,
+     "primitives": ["projectile", "physical_damage"], "counters": ["low_armor", "healer"], "resisted_by": ["physical_immune", "tank"], "animation": "cast_grimoire",
+     "line": "It's raining swords."},
+    {"id": "nusmp:generic_domain_arena", "anime": "generic", "name": "Domain: The Stage", "tier": 4, "cast_ticks": 40, "range": 24,
+     "primitives": ["slow", "silence", "magic_damage", "song_debuff"], "counters": ["caster", "speedster", "healer"], "resisted_by": ["anti_magic", "magic_null"],
+     "animation": "cast_song", "line": "Welcome to my stage.", "cooldown_ticks": 600},
+    {"id": "nusmp:generic_healing_aria", "anime": "generic", "name": "Healing Aria", "tier": 1, "cast_ticks": 24, "range": 8,
+     "primitives": ["heal", "shield"], "counters": [], "resisted_by": [], "animation": "cast_song", "cooldown_ticks": 360},
+    {"id": "nusmp:generic_time_slow_field", "anime": "generic", "name": "Time-Slow Field", "tier": 3, "cast_ticks": 20, "range": 18,
+     "primitives": ["slow", "song_debuff"], "counters": ["speedster", "melee"], "resisted_by": ["anti_magic", "magic_null"], "animation": "cast_grimoire",
+     "line": "Slow down. Enjoy the scene.", "cooldown_ticks": 360},
+    {"id": "nusmp:generic_clone_gambit", "anime": "generic", "name": "Clone Gambit", "tier": 2, "cast_ticks": 14, "range": 12,
+     "primitives": ["summon_construct", "blink"], "construct": "clone", "counters": ["kiter", "caster"], "resisted_by": [], "animation": "manifest_weapon",
+     "cooldown_ticks": 320},
+    {"id": "nusmp:generic_grapple_chain", "anime": "generic", "name": "Grapple Chain", "tier": 1, "cast_ticks": 10, "range": 18,
+     "primitives": ["pull", "physical_damage"], "counters": ["kiter", "flier", "speedster"], "resisted_by": ["physical_immune"], "animation": "cast_grimoire"}
+  ]
+}

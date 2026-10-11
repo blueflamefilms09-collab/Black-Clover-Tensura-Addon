@@ -15,6 +15,10 @@ public final class NUEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<SpiritLordEntity>> SPIRIT_LORD = ENTITIES.register("spirit_lord",
             () -> EntityType.Builder.of(SpiritLordEntity::new, MobCategory.CREATURE).sized(0.6f, 1.4f).clientTrackingRange(10).build("spirit_lord"));
 
+    /** 0.102: the four Black Clover Spirit Lords in their true bodies (exclusive: one mage per element), see ElementalSpiritLordEntity. */
+    public static final DeferredHolder<EntityType<?>, EntityType<ElementalSpiritLordEntity>> ELEMENTAL_SPIRIT_LORD = ENTITIES.register("elemental_spirit_lord",
+            () -> EntityType.Builder.of(ElementalSpiritLordEntity::new, MobCategory.CREATURE).sized(1.0f, 2.0f).clientTrackingRange(12).build("elemental_spirit_lord"));
+
     /** 0.42: Mirror Magic's Real Double (a tangible mirror clone of its owner). */
     public static final DeferredHolder<EntityType<?>, EntityType<MirrorDoubleEntity>> MIRROR_DOUBLE = ENTITIES.register("mirror_double",
             () -> EntityType.Builder.of(MirrorDoubleEntity::new, MobCategory.MISC).sized(0.6f, 1.8f).clientTrackingRange(10).build("mirror_double"));
@@ -25,11 +29,7 @@ public final class NUEntities {
 
     /** 0.47: Zagred, the Kotodama devil, as a 4-phase boss (off by default; /multiverse boss zagred). */
     public static final DeferredHolder<EntityType<?>, EntityType<ZagredBossEntity>> ZAGRED = ENTITIES.register("zagred",
-            () -> EntityType.Builder.of(ZagredBossEntity::new, MobCategory.MONSTER).sized(1.0f, 3.6f).fireImmune().clientTrackingRange(16).build("zagred"));
-
-    /** 0.60: Riven Remake, the Black Bulls' Bard, an adaptive raid boss (see entity.riven). */
-    public static final DeferredHolder<EntityType<?>, EntityType<com.newuniverse.nusmp.entity.riven.RivenBossEntity>> RIVEN_REMAKE = ENTITIES.register("riven_remake",
-            () -> EntityType.Builder.of(com.newuniverse.nusmp.entity.riven.RivenBossEntity::new, MobCategory.MONSTER).sized(0.6f, 1.8f).clientTrackingRange(16).build("riven_remake"));
+            () -> EntityType.Builder.of(ZagredBossEntity::new, MobCategory.MONSTER).sized(0.6f, 1.95f).fireImmune().clientTrackingRange(16).build("zagred"));
 
     /** 0.52: Zagred's Grimoire Daemons (lesser, greater, arch, and the Overwrite rule stones). */
     public static final DeferredHolder<EntityType<?>, EntityType<GrimoireDaemonEntity>> GRIMOIRE_DAEMON = ENTITIES.register("grimoire_daemon",
@@ -50,12 +50,20 @@ public final class NUEntities {
             () -> EntityType.Builder.<com.newuniverse.nusmp.prop.MagicPropEntity>of(com.newuniverse.nusmp.prop.MagicPropEntity::new, MobCategory.MISC)
                     .sized(1.0f, 1.0f).clientTrackingRange(12).updateInterval(1).build("magic_prop"));
 
+    /** 0.92: Riven Remake, the Black Bulls' Bard (adaptive raid boss) and the story constructs he manifests. */
+    public static final DeferredHolder<EntityType<?>, EntityType<com.newuniverse.nusmp.entity.riven.RivenBossEntity>> RIVEN = ENTITIES.register("riven_remake",
+            () -> EntityType.Builder.of(com.newuniverse.nusmp.entity.riven.RivenBossEntity::new, MobCategory.MONSTER).sized(0.6f, 1.8f).fireImmune().clientTrackingRange(16).updateInterval(1).build("riven_remake"));
+    public static final DeferredHolder<EntityType<?>, EntityType<com.newuniverse.nusmp.entity.riven.StoryConstructEntity>> STORY_CONSTRUCT = ENTITIES.register("story_construct",
+            () -> EntityType.Builder.of(com.newuniverse.nusmp.entity.riven.StoryConstructEntity::new, MobCategory.MONSTER).sized(0.6f, 1.8f).fireImmune().clientTrackingRange(12).build("story_construct"));
+
     public static void attributes(EntityAttributeCreationEvent e) {
+        e.put(RIVEN.get(), com.newuniverse.nusmp.entity.riven.RivenBossEntity.createAttributes().build());
+        e.put(STORY_CONSTRUCT.get(), com.newuniverse.nusmp.entity.riven.StoryConstructEntity.createAttributes().build());
         e.put(SPIRIT_LORD.get(), SpiritLordEntity.createAttributes().build());
+        e.put(ELEMENTAL_SPIRIT_LORD.get(), ElementalSpiritLordEntity.createAttributes().build());
         e.put(MIRROR_DOUBLE.get(), MirrorDoubleEntity.createAttributes().build());
         e.put(PAINTED_CONSTRUCT.get(), PaintedConstructEntity.createAttributes().build());
         e.put(ZAGRED.get(), ZagredBossEntity.createAttributes().build());
-        e.put(RIVEN_REMAKE.get(), com.newuniverse.nusmp.entity.riven.RivenBossEntity.createAttributes().build());
         e.put(GRIMOIRE_DAEMON.get(), GrimoireDaemonEntity.createAttributes().build());
         e.put(COTTON_SHEEP.get(), CottonSheepEntity.createAttributes().build());
         e.put(WIND_SPIRIT_LORD.get(), WindSpiritLordEntity.createAttributes().build());

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    { "rolls": 1, "entries": [{ "type": "minecraft:item", "name": "nusmp:black_bull_bard_relic" }] },
+    { "rolls": 1, "entries": [{ "type": "minecraft:item", "name": "nusmp:marquis_story_page" }] },
+    { "rolls": 1, "entries": [{ "type": "minecraft:item", "name": "nusmp:marquis_crest_cape" }] },
+    {
+      "rolls": 1,
+      "entries": [{ "type": "minecraft:item", "name": "nusmp:marquis_final_crown" }],
+      "conditions": [{ "condition": "minecraft:random_chance", "chance": 0.08 }]
+    }
+  ],
+  "random_sequence": "nusmp:entities/marquis_remake"
+}
