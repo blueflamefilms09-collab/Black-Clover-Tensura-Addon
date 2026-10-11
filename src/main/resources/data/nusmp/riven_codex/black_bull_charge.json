@@ -1,0 +1,22 @@
+{
+  "id": "nusmp:black_bull_charge",
+  "anime": "black_clover",
+  "name": "Black Bull Charge",
+  "tier": 3,
+  "cast_ticks": 10,
+  "range": 10,
+  "primitives": [
+    "blink",
+    "melee_arc",
+    "physical_damage"
+  ],
+  "counters": [
+    "caster",
+    "healer"
+  ],
+  "resisted_by": [
+    "physical_null"
+  ],
+  "animation": "sword_combo_2",
+  "line": "Black Bulls never retreat."
+}

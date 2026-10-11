@@ -1,0 +1,21 @@
+{
+  "id": "nusmp:generic_grapple_chain",
+  "anime": "generic",
+  "name": "Grapple Chain",
+  "tier": 2,
+  "cast_ticks": 10,
+  "range": 14,
+  "primitives": [
+    "pull",
+    "physical_damage"
+  ],
+  "counters": [
+    "kiter",
+    "flyer"
+  ],
+  "resisted_by": [
+    "physical_null"
+  ],
+  "animation": "soul_bond",
+  "line": "Get over here."
+}

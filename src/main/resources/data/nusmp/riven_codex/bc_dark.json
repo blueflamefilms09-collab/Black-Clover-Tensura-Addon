@@ -1,0 +1,21 @@
+{
+  "id": "nusmp:bc_dark",
+  "anime": "black_clover",
+  "name": "Dark Page",
+  "tier": 2,
+  "cast_ticks": 14,
+  "range": 14,
+  "primitives": [
+    "magic_damage",
+    "slow"
+  ],
+  "counters": [
+    "tank",
+    "armored"
+  ],
+  "resisted_by": [
+    "anti_magic"
+  ],
+  "animation": "cast_grimoire",
+  "line": "The ink bleeds."
+}

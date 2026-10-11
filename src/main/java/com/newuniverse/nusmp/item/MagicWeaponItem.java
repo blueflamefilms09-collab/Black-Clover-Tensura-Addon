@@ -13,6 +13,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -28,6 +29,7 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.CustomData;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -55,7 +57,9 @@ public class MagicWeaponItem extends SwordItem {
         // 0.32: a cryo-lattice mana runeblade (docs/runeblade_spec.md)
         RIMEHEART(Tiers.NETHERITE, 5, -2.4f, "Glacial Matrix Burst", "Vents the blade's stored mana as a frost shockwave: erases spells within 5 blocks, freezes and slows everything caught. Critical hits shatter a smaller burst around the target; paired with a second magic sword the burst recharges 40% faster.", 200, false),
         // 0.52: Zagred's quill-blade (docs/zagred_boss_gdd.md 3.1)
-        LAST_WORD(Tiers.NETHERITE, 5, -1.8f, "Sentence", "Writes a short sentence of glyph letters along your line of sight that detonates in reading order. Every hit leaves a struck-out mark: three marks within 5 s strip a buff and one layer of a barrier (20 s cooldown).", 400, false);
+        LAST_WORD(Tiers.NETHERITE, 5, -1.8f, "Sentence", "Writes a short sentence of glyph letters along your line of sight that detonates in reading order. Every hit leaves a struck-out mark: three marks within 5 s strip a buff and one layer of a barrier (20 s cooldown).", 400, false),
+        // 0.99: the first Wizard King's legacy sword (Lemiel Silvamillion Clover's Elsdocia)
+        ELSDOCIA(Tiers.NETHERITE, 6, -2.8f, "Legacy Release", "Absorbs magic from struck foes, stores the charge, and releases it as a broad arcane rift. The stored souls lend their strength; Key Magic opens the rift farther.", 360, false);
 
         final Tier tier; final int damage; final float speed; final String ability, desc; final int cooldown; final boolean demon;
         Kind(Tier t, int d, float s, String a, String desc, int cd, boolean demon) {
@@ -67,7 +71,7 @@ public class MagicWeaponItem extends SwordItem {
 
     public MagicWeaponItem(Kind kind) {
         super(kind.tier, new Item.Properties().attributes(attributes(kind))
-                .rarity(kind.demon || kind == Kind.RIMEHEART ? Rarity.EPIC : Rarity.RARE).fireResistant());
+                .rarity(kind.demon || kind == Kind.RIMEHEART || kind == Kind.ELSDOCIA ? Rarity.EPIC : Rarity.RARE).fireResistant());
         this.kind = kind;
     }
 
@@ -154,10 +158,10 @@ public class MagicWeaponItem extends SwordItem {
         if (level.isClientSide || !(player instanceof ServerPlayer p)) return InteractionResultHolder.pass(stack);
         if (!usableBy(stack, p)) { GrimoireBook.fail(p, "This sword answers only to its owner."); return InteractionResultHolder.fail(stack); }
         if (p.isShiftKeyDown() && WeaponArts.alt(kind) != null) {                    // 0.52: the second technique (sneak + right-click)
-            WeaponArts.tryAlt(p, kind);
+            WeaponArts.tryAlt(p, kind, stack);
             return InteractionResultHolder.success(stack);
         }
-        if (!technique(p)) return InteractionResultHolder.fail(stack);
+        if (!technique(p, stack)) return InteractionResultHolder.fail(stack);
         p.getCooldowns().addCooldown(this, cooldownFor(p));
         p.displayClientMessage(Component.literal(kind.ability + "!").withStyle(kind.demon ? ChatFormatting.DARK_GRAY : ChatFormatting.AQUA, ChatFormatting.BOLD), true);
         return InteractionResultHolder.success(stack);
@@ -176,7 +180,8 @@ public class MagicWeaponItem extends SwordItem {
         for (Projectile pr : p.serverLevel().getEntitiesOfClass(Projectile.class, box)) if (pr.getOwner() != p) pr.discard();
     }
 
-    private boolean technique(ServerPlayer p) {
+    /** 0.99: the stack being used (Elsdocia reads/writes its stored charge in it). */
+    private boolean technique(ServerPlayer p, ItemStack stack) {
         Vec3 eye = p.getEyePosition(), look = p.getViewVector(1f);
         switch (kind) {
             case DEMON_SLASHER_KATANA -> {
@@ -280,6 +285,27 @@ public class MagicWeaponItem extends SwordItem {
                 com.newuniverse.nusmp.entity.ZagredAttacks.telegraph(p, pts);
                 com.newuniverse.nusmp.entity.ZagredAttacks.redact(p, 1.9f, pts, 12);
             }
+            case ELSDOCIA -> {
+                CustomData data = stack.get(DataComponents.CUSTOM_DATA);
+                int charge = data == null ? 0 : Mth.clamp(data.copyTag().getInt("ElsdociaCharge"), 0, ELSDOCIA_MAX);
+                if (charge <= 0) {
+                    GrimoireBook.fail(p, "Elsdocia has not absorbed enough magic to release.");
+                    return false;
+                }
+                CustomData.update(DataComponents.CUSTOM_DATA, stack, tag -> tag.putInt("ElsdociaCharge", 0));
+                boolean keyed = com.newuniverse.nusmp.book.GrimoireSummon.isFloating(p, com.newuniverse.nusmp.blackclover.MagicType.KEY);
+                Vec3 end = eye.add(look.scale(keyed ? 28 : 22));
+                eraseProjectiles(p, new AABB(eye, end).inflate(1.5 + charge / 700f));
+                float raw = 8f + charge * 0.024f;
+                for (LivingEntity target : GrimoireBook.along(p, eye, end, 1.25 + charge / 800f)) {
+                    hit(p, target, raw * (keyed ? 1.35f : 1f));
+                    target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 30, 0));
+                }
+                BalanceLaw.heal(p, 2f + charge * 0.006f);
+                p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 60, 0));
+                VfxSpawn.send(p.serverLevel(), VfxShape.SPATIAL_RIFT, eye, end, 0xFF82DFFF, 20, 1.1f + charge / 550f);
+                if (keyed) VfxSpawn.send(p.serverLevel(), VfxShape.SPATIAL_RIFT, end, end.add(0, 1.2, 0), 0xFFFFD66E, 26, 1.35f);
+            }
             case LICHT_DESTROYER -> {
                 eraseProjectiles(p, p.getBoundingBox().inflate(5));
                 for (LivingEntity t : GrimoireBook.around(p, p.position(), 5)) {
@@ -341,10 +367,39 @@ public class MagicWeaponItem extends SwordItem {
                 case LAST_WORD -> redactMark(p, target);
                 default -> {}
             }
+            if (kind == Kind.ELSDOCIA) absorbElsdocia(stack, target);   // 0.99: the legacy blade drinks the magic it cuts
             WeaponArts.fullSwing(p, target, kind);                                 // 0.52: the weapon's signature strike on a full swing
             if (kind.demon) AntiMagic.addAmp(p, 10);
         }
         return r;
+    }
+
+    /** 0.99: Elsdocia's stored charge cap (the CustomData tag "ElsdociaCharge"). */
+    public static final int ELSDOCIA_MAX = 1000;
+
+    /** 0.99: absorbs a fraction of the struck foe's magicule pool into the sword's charge (Elsdocia).
+     *  Quantized: the drain and the charge use the same conversion (energy per charge point = maxMagicule / ELSDOCIA_MAX,
+     *  so a full drain = ELSDOCIA_MAX points), capped at 20 points (2% of maxMagicule) per hit. */
+    private static void absorbElsdocia(ItemStack stack, LivingEntity target) {
+        CustomData data = stack.get(DataComponents.CUSTOM_DATA);
+        int current = data == null ? 0 : Math.max(0, Math.min(ELSDOCIA_MAX, data.copyTag().getInt("ElsdociaCharge")));
+        int headroom = ELSDOCIA_MAX - current;
+        if (headroom <= 0) return;
+        var existence = TensuraStorages.getExistenceFrom(target);
+        if (existence == null) return;
+        double max = EnergyHelper.getMaxMagicule(target), currentMagic = existence.getMagicule();
+        if (max <= 0 || currentMagic <= 0) return;
+        double perPoint = max / ELSDOCIA_MAX;                                      // the energy one charge point represents
+        int available = (int) Math.floor(currentMagic / perPoint);               // whole points the target can give
+        int gained = Math.min(Math.min(available, headroom), 20);                 // cap per-hit absorption at 20 points (2% of max)
+        if (gained <= 0) return;                                                  // too little to charge anything: don't drain
+        double drain = gained * perPoint;
+        if (drain > currentMagic) { gained = (int) Math.floor(currentMagic / perPoint); if (gained <= 0) return; drain = gained * perPoint; }
+        existence.setMagicule(currentMagic - drain);
+        existence.markDirty();
+        final int add = gained;
+        CustomData.update(DataComponents.CUSTOM_DATA, stack,
+                tag -> tag.putInt("ElsdociaCharge", Math.min(ELSDOCIA_MAX, Math.max(0, Math.min(ELSDOCIA_MAX, tag.getInt("ElsdociaCharge"))) + add)));
     }
 
     @Override
@@ -361,6 +416,23 @@ public class MagicWeaponItem extends SwordItem {
         }
         CustomData d = stack.get(DataComponents.CUSTOM_DATA);
         if (kind == Kind.RIMEHEART) tip.add(Component.literal("  Off-hand magic sword: burst recharges 40% faster, hits freeze longer").withStyle(ChatFormatting.AQUA));
+        if (kind == Kind.ELSDOCIA) {                                                  // 0.99: the legacy sword's lore and charge
+            tip.add(Component.literal("Legacy engraving: Legacy of the Wizard Kings").withStyle(ChatFormatting.LIGHT_PURPLE));
+            tip.add(Component.translatable("item.nusmp.elsdocia.lore.description").withStyle(ChatFormatting.GRAY));
+            tip.add(Component.translatable("item.nusmp.elsdocia.lore.history").withStyle(ChatFormatting.DARK_GRAY));
+            tip.add(Component.translatable("item.nusmp.elsdocia.lore.history2").withStyle(ChatFormatting.DARK_GRAY));
+            tip.add(Component.translatable("item.nusmp.elsdocia.lore.history3").withStyle(ChatFormatting.DARK_GRAY));
+            tip.add(Component.translatable("item.nusmp.elsdocia.lore.history4").withStyle(ChatFormatting.DARK_GRAY));
+            tip.add(Component.translatable("item.nusmp.elsdocia.lore.history5").withStyle(ChatFormatting.DARK_GRAY));
+            tip.add(Component.translatable("item.nusmp.elsdocia.lore.abilities").withStyle(ChatFormatting.DARK_AQUA));
+            tip.add(Component.translatable("item.nusmp.elsdocia.lore.abilities2").withStyle(ChatFormatting.DARK_AQUA));
+            tip.add(Component.translatable("item.nusmp.elsdocia.lore.souls").withStyle(ChatFormatting.LIGHT_PURPLE));
+            tip.add(Component.translatable("item.nusmp.elsdocia.lore.souls2").withStyle(ChatFormatting.LIGHT_PURPLE));
+            tip.add(Component.translatable("item.nusmp.elsdocia.lore.key_magic").withStyle(ChatFormatting.GOLD));
+            tip.add(Component.translatable("item.nusmp.elsdocia.lore.scale").withStyle(ChatFormatting.DARK_PURPLE));
+            int charge = d == null ? 0 : Mth.clamp(d.copyTag().getInt("ElsdociaCharge"), 0, ELSDOCIA_MAX);
+            tip.add(Component.literal("Stored magic: " + charge + "/" + ELSDOCIA_MAX).withStyle(ChatFormatting.AQUA));
+        }
         if (d != null && d.copyTag().contains("ExpiresAt"))
             tip.add(Component.literal("Drawn from a grimoire: fades after a minute").withStyle(ChatFormatting.AQUA));
         if (kind.demon && d != null && d.copyTag().contains("OwnerName"))

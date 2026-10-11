@@ -1,0 +1,22 @@
+{
+  "id": "nusmp:tensura_steel_thread",
+  "anime": "tensura",
+  "name": "Steel Thread",
+  "tier": 2,
+  "cast_ticks": 10,
+  "range": 12,
+  "primitives": [
+    "pull",
+    "slow"
+  ],
+  "counters": [
+    "kiter",
+    "flyer",
+    "rusher"
+  ],
+  "resisted_by": [
+    "anti_magic"
+  ],
+  "animation": "soul_bond",
+  "line": "Caught."
+}

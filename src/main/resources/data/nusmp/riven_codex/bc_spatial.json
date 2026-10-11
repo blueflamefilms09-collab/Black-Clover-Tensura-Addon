@@ -1,0 +1,21 @@
+{
+  "id": "nusmp:bc_spatial",
+  "anime": "black_clover",
+  "name": "Spatial Page",
+  "tier": 2,
+  "cast_ticks": 10,
+  "range": 18,
+  "primitives": [
+    "blink",
+    "magic_damage"
+  ],
+  "counters": [
+    "kiter",
+    "flyer"
+  ],
+  "resisted_by": [
+    "anti_magic"
+  ],
+  "animation": "shadow_step",
+  "line": "Wrong room."
+}

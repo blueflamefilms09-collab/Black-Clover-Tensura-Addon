@@ -1,0 +1,22 @@
+{
+  "id": "nusmp:generic_domain_arena",
+  "anime": "generic",
+  "name": "Domain of the Story",
+  "tier": 3,
+  "cast_ticks": 24,
+  "range": 10,
+  "primitives": [
+    "slow",
+    "song_debuff",
+    "magic_damage"
+  ],
+  "counters": [
+    "rusher",
+    "melee"
+  ],
+  "resisted_by": [
+    "anti_magic"
+  ],
+  "animation": "cast_song",
+  "line": "Welcome to my chapter."
+}

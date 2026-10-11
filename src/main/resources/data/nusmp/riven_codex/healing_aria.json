@@ -1,0 +1,16 @@
+{
+  "id": "nusmp:healing_aria",
+  "anime": "generic",
+  "name": "Healing Aria",
+  "tier": 2,
+  "cast_ticks": 20,
+  "range": 0,
+  "primitives": [
+    "heal",
+    "song_buff"
+  ],
+  "counters": [],
+  "resisted_by": [],
+  "animation": "cast_song",
+  "line": "Intermission."
+}

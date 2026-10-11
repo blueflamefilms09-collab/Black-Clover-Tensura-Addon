@@ -1,0 +1,15 @@
+{
+  "id": "nusmp:jack_of_all_trades",
+  "anime": "dnd",
+  "name": "Jack of All Trades",
+  "tier": 3,
+  "cast_ticks": 12,
+  "range": 16,
+  "primitives": [
+    "copy_codex_skill"
+  ],
+  "counters": [],
+  "resisted_by": [],
+  "animation": "cast_grimoire",
+  "line": "Never read the same story twice."
+}

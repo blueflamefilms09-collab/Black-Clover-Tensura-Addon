@@ -195,6 +195,11 @@ public final class MultiverseCommands {
                     var z = com.newuniverse.nusmp.entity.ZagredBossEntity.summon(ctx.getSource().getLevel(), ctx.getSource().getPosition());
                     return z == null ? fail(ctx, "Zagred could not be summoned here.") : ok(ctx, "Zagred descends. The arena is here.");
                 }))
+                // 0.60: Riven Remake, the Black Bulls' Bard
+                .then(Commands.literal("riven").executes(ctx -> {
+                    var r = com.newuniverse.nusmp.entity.riven.RivenBossEntity.summon(ctx.getSource().getLevel(), ctx.getSource().getPosition());
+                    return r == null ? fail(ctx, "Riven Remake could not be summoned here.") : ok(ctx, "Riven Remake takes the stage. The arena is here.");
+                }))
                 // 0.53: Sylph, the Wind Spirit Lord (no game rule: an admin starts it where they stand)
                 .then(Commands.literal("sylph").executes(ctx -> {
                     var s = com.newuniverse.nusmp.entity.WindSpiritLordEntity.summon(ctx.getSource().getLevel(), ctx.getSource().getPosition());

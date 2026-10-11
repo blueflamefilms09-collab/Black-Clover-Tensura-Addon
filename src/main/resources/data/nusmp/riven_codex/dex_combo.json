@@ -1,0 +1,21 @@
+{
+  "id": "nusmp:dex_combo",
+  "anime": "dnd",
+  "name": "Dex Combo",
+  "tier": 1,
+  "cast_ticks": 8,
+  "range": 4,
+  "primitives": [
+    "melee_arc",
+    "physical_damage"
+  ],
+  "counters": [
+    "caster",
+    "healer"
+  ],
+  "resisted_by": [
+    "physical_null"
+  ],
+  "animation": "sword_combo_1",
+  "line": "Light on my feet, heavy on the plot."
+}

@@ -1,0 +1,16 @@
+{
+  "id": "nusmp:bardic_inspiration",
+  "anime": "dnd",
+  "name": "Bardic Inspiration",
+  "tier": 1,
+  "cast_ticks": 16,
+  "range": 0,
+  "primitives": [
+    "song_buff",
+    "heal"
+  ],
+  "counters": [],
+  "resisted_by": [],
+  "animation": "cast_song",
+  "line": "Every story needs a good opening."
+}

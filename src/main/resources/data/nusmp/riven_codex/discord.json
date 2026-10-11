@@ -1,0 +1,21 @@
+{
+  "id": "nusmp:discord",
+  "anime": "dnd",
+  "name": "Discord",
+  "tier": 2,
+  "cast_ticks": 18,
+  "range": 14,
+  "primitives": [
+    "song_debuff",
+    "slow"
+  ],
+  "counters": [
+    "rusher",
+    "melee"
+  ],
+  "resisted_by": [
+    "anti_magic"
+  ],
+  "animation": "cast_song",
+  "line": "A dissonant chord, just for you."
+}

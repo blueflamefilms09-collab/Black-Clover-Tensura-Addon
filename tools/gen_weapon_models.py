@@ -985,6 +985,50 @@ def last_word(m, a):
     return dict(glow=("FF3C5A", 0.1, 0.5, 1.0))
 
 
+def elsdocia(m, a):
+    """Elsdocia: a broad crystalline legacy blade, clover crest, and ornate gold hilt."""
+    length = 48
+    stations = [
+        (0, -3.8, 0, 3.8), (4, -5.2, 0, 5.2), (10, -6.4, 0, 6.4),
+        (20, -6.8, 0, 6.8), (30, -5.8, 0, 5.8), (39, -3.8, 0, 3.8),
+        (46, -1.2, 0, 1.2), (length, 0, 0, 0),
+    ]
+
+    def crystal(x, y, front, edge, ridge):
+        if x is None:
+            return col((94, 132, 176)), None
+        facet = 24 if ridge < 1.2 else -8
+        shine = 30 if front and x < 0 else 0
+        base = np.array((150, 203, 236), np.float32) + facet + shine + fz(int(x * 2), int(y * 2), 19) * 8
+        glow = col((125, 220, 255), 0.22) if abs(x) < 0.7 and y > 10 else None
+        return col(base), glow
+
+    Blade(stations, 0.45, 1.7, crystal).build(m, a)
+    gold = (222, 178, 66)
+    gold_paint = metal_paint(gold, gem=(145, 232, 250), glow_rgb=(145, 232, 250))
+    box(m, a, -7.2, -1.5, -1.1, 7.2, 0.7, 1.1, gold_paint)
+    for sx in (-1, 1):
+        # mirrored swept guard tips: |x| from 5.1 to 9.5, on this side of the guard
+        lo, hi = sorted((sx * 5.1, sx * 9.5))
+        box(m, a, lo, -0.8, -1.25, hi, 1.5, 1.25, gold_paint)
+    box(m, a, -1.65, -13, -1.35, 1.65, -1.4, 1.35, wrap_paint((88, 38, 54), (148, 66, 66), diamonds=True))
+    box(m, a, -2.3, -15.2, -2, 2.3, -12.6, 2, gold_paint)
+    box(m, a, -1.2, -16.3, -1.1, 1.2, -15.2, 1.1, gold_paint)
+    clover = ascii_mask([
+        "..##...##..",
+        ".####.####.",
+        "###########",
+        "###########",
+        ".#########.",
+        "...#####...",
+        ".....#.....",
+    ])
+    crest = lambda i, j, front: (col(shade(gold, 1.2 if (i + j) % 3 == 0 else 0.92)), col((255, 219, 112), 0.3))
+    plate(m, a, clover, -5.5, 3.5, 0.35, crest, "xy", 2.15)
+    plate(m, a, clover, -5.5, 3.5, 0.35, crest, "xy", -2.15)
+    return dict(glow=("91E8FF", 0.07, 0.4, 1.0))
+
+
 def shroud_of_margins(m, a):
     """The Shroud of Margins: a folded violet-black cloak with a white margin and lines of writing, a glowing clasp."""
     def cloth(rgb):
@@ -1030,7 +1074,7 @@ RELICS = [
     ("shroud_of_margins", shroud_of_margins),
     ("circlet_of_quickened_thought", circlet_of_thought),
 ]
-SPECS += [("gauches_hand_mirror", hand_mirror), ("grimoire_chain", grimoire_chain), ("last_word", last_word)]                     # diagonal sprites: placed like the weapons
+SPECS += [("gauches_hand_mirror", hand_mirror), ("grimoire_chain", grimoire_chain), ("last_word", last_word), ("elsdocia", elsdocia)]                     # diagonal sprites: placed like the weapons
 
 
 # ================================================================ placement on the old sprite

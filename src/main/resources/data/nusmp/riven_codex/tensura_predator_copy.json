@@ -1,0 +1,15 @@
+{
+  "id": "nusmp:tensura_predator_copy",
+  "anime": "tensura",
+  "name": "Predator Copy",
+  "tier": 3,
+  "cast_ticks": 16,
+  "range": 16,
+  "primitives": [
+    "copy_codex_skill"
+  ],
+  "counters": [],
+  "resisted_by": [],
+  "animation": "cast_grimoire",
+  "line": "I'll borrow that."
+}

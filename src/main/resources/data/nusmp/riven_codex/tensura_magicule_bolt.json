@@ -1,0 +1,22 @@
+{
+  "id": "nusmp:tensura_magicule_bolt",
+  "anime": "tensura",
+  "name": "Magicule Bolt",
+  "tier": 2,
+  "cast_ticks": 10,
+  "range": 20,
+  "primitives": [
+    "projectile",
+    "magic_damage"
+  ],
+  "counters": [
+    "melee",
+    "rusher"
+  ],
+  "resisted_by": [
+    "anti_magic",
+    "magic_null"
+  ],
+  "animation": "eldritch_blast",
+  "line": "Pure magicules."
+}

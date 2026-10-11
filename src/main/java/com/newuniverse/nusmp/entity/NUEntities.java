@@ -27,6 +27,10 @@ public final class NUEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<ZagredBossEntity>> ZAGRED = ENTITIES.register("zagred",
             () -> EntityType.Builder.of(ZagredBossEntity::new, MobCategory.MONSTER).sized(1.0f, 3.6f).fireImmune().clientTrackingRange(16).build("zagred"));
 
+    /** 0.60: Riven Remake, the Black Bulls' Bard, an adaptive raid boss (see entity.riven). */
+    public static final DeferredHolder<EntityType<?>, EntityType<com.newuniverse.nusmp.entity.riven.RivenBossEntity>> RIVEN_REMAKE = ENTITIES.register("riven_remake",
+            () -> EntityType.Builder.of(com.newuniverse.nusmp.entity.riven.RivenBossEntity::new, MobCategory.MONSTER).sized(0.6f, 1.8f).clientTrackingRange(16).build("riven_remake"));
+
     /** 0.52: Zagred's Grimoire Daemons (lesser, greater, arch, and the Overwrite rule stones). */
     public static final DeferredHolder<EntityType<?>, EntityType<GrimoireDaemonEntity>> GRIMOIRE_DAEMON = ENTITIES.register("grimoire_daemon",
             () -> EntityType.Builder.of(GrimoireDaemonEntity::new, MobCategory.MONSTER).sized(0.8f, 1.9f).fireImmune().clientTrackingRange(12).build("grimoire_daemon"));
@@ -51,6 +55,7 @@ public final class NUEntities {
         e.put(MIRROR_DOUBLE.get(), MirrorDoubleEntity.createAttributes().build());
         e.put(PAINTED_CONSTRUCT.get(), PaintedConstructEntity.createAttributes().build());
         e.put(ZAGRED.get(), ZagredBossEntity.createAttributes().build());
+        e.put(RIVEN_REMAKE.get(), com.newuniverse.nusmp.entity.riven.RivenBossEntity.createAttributes().build());
         e.put(GRIMOIRE_DAEMON.get(), GrimoireDaemonEntity.createAttributes().build());
         e.put(COTTON_SHEEP.get(), CottonSheepEntity.createAttributes().build());
         e.put(WIND_SPIRIT_LORD.get(), WindSpiritLordEntity.createAttributes().build());

@@ -1,0 +1,21 @@
+{
+  "id": "nusmp:bc_light",
+  "anime": "black_clover",
+  "name": "Light Page",
+  "tier": 2,
+  "cast_ticks": 12,
+  "range": 16,
+  "primitives": [
+    "projectile",
+    "magic_damage",
+    "heal"
+  ],
+  "counters": [
+    "caster"
+  ],
+  "resisted_by": [
+    "anti_magic"
+  ],
+  "animation": "cast_grimoire",
+  "line": "Let there be a plot."
+}

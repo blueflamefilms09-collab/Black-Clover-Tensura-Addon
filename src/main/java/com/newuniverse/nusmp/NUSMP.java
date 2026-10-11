@@ -50,7 +50,15 @@ public class NUSMP {
         modEventBus.addListener(com.newuniverse.nusmp.anim.SwordDrawPayload::register);
         modEventBus.addListener(com.newuniverse.nusmp.anim.CastAnimPayload::register);                      // 0.54: casting body animations                      // 0.52: the grimoire sword draw
         modEventBus.addListener(com.newuniverse.nusmp.entity.ZagredStatePayload::register);                 // 0.48: Zagred's state, word and reticle
+        modEventBus.addListener(com.newuniverse.nusmp.entity.riven.RivenStatePayload::register);            // 0.60: Riven Remake's phase, clip and charge
+        modContainer.registerConfig(ModConfig.Type.COMMON, com.newuniverse.nusmp.entity.riven.RivenConfig.SPEC, "nusmp-riven.toml");
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.AddReloadListenerEvent e) -> e.addListener(new com.newuniverse.nusmp.skill.codex.AnimeSkillCodex()));
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.entity.riven.RivenCommands::register);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.item.RivenEngravings::onToss);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.item.RivenEngravings::onTooltip);
         if (FMLEnvironment.dist == Dist.CLIENT) {
+            modEventBus.addListener(com.newuniverse.nusmp.client.riven.RivenRenderer::register);              // 0.60
+            modEventBus.addListener(com.newuniverse.nusmp.client.riven.RivenBossBar::register);
             com.newuniverse.nusmp.vfx.client.VfxClientEvents.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireClient.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireShelfClient.init(modEventBus);

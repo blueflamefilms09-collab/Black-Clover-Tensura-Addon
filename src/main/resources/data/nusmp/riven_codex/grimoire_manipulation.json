@@ -1,0 +1,21 @@
+{
+  "id": "nusmp:grimoire_manipulation",
+  "anime": "black_clover",
+  "name": "Grimoire Manipulation",
+  "tier": 2,
+  "cast_ticks": 12,
+  "range": 16,
+  "primitives": [
+    "pull",
+    "magic_damage"
+  ],
+  "counters": [
+    "kiter",
+    "caster"
+  ],
+  "resisted_by": [
+    "anti_magic"
+  ],
+  "animation": "cast_grimoire",
+  "line": "Flip. Rewrite. Read."
+}
