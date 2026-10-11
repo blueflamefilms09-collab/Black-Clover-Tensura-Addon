@@ -186,7 +186,12 @@ public class RivenBossEntity extends Monster {
             teleportTo(arena.getX() + 0.5, arena.getY(), arena.getZ() + 0.5);
             getNavigation().stop();
         }
-        if (t == 1) passives.grantUpTo(phase());
+        if (t == 1) {
+            try { passives.grantUpTo(phase()); } catch (Throwable ex) { LOG.warn("[nusmp] Riven: passive grant failed: {}", ex.toString()); }
+            com.newuniverse.nusmp.entity.TensuraCaster.ensureMana(this, 2_000_000);        // 0.100: Tensura skills spend magicules; an empty pool must never hurt him (Zagred does the same)
+        }
+        if (t % 200 == 0) com.newuniverse.nusmp.entity.TensuraCaster.ensureMana(this, 2_000_000);
+        if (t < 100 && (getHealth() <= 0f || getHealth() < getMaxHealth() * 0.5f) && !dead) setHealth(getMaxHealth());   // 0.100: spawn grace
         LivingEntity tg = getTarget();
         if (!aggroSeen && tg != null) { aggroSeen = true; collapseRift(sl); }
         if (riftOpen && t % 10 == 0) arenaBarrier(sl);
@@ -233,8 +238,16 @@ public class RivenBossEntity extends Monster {
         sync();
     }
 
+    private static final org.slf4j.Logger LOG = com.mojang.logging.LogUtils.getLogger();
+
     @Override
     public boolean hurt(DamageSource source, float amount) {
+        if (!level().isClientSide && tickCount < 60 && !source.is(net.minecraft.world.damagesource.DamageTypes.GENERIC_KILL)
+                && !source.is(net.minecraft.world.damagesource.DamageTypes.FELL_OUT_OF_WORLD)
+                && !(source.getEntity() instanceof Player pl && (pl.isCreative() || tickCount > 20))) {
+            LOG.warn("[nusmp] Riven: ignored {} damage ({}) during the spawn grace (tick {})", source.getMsgId(), amount, tickCount);   // 0.100: the boss used to die on spawn
+            return false;
+        }
         if (!level().isClientSide && source.getEntity() instanceof ServerPlayer p) {
             fighters.add(p.getUUID());
             if (AntiMagic.lord(p).isPresent() && tickCount >= staggerUntil + 60) {            // anti-magic staggers him and forces a replan; he can still Shadow Step out
@@ -255,6 +268,11 @@ public class RivenBossEntity extends Monster {
 
     @Override
     public void die(DamageSource source) {
+        if (!level().isClientSide && tickCount < 60 && !(source.getEntity() instanceof Player) && !source.is(net.minecraft.world.damagesource.DamageTypes.GENERIC_KILL)) {
+            LOG.warn("[nusmp] Riven: blocked a death by {} at tick {} (spawn grace); health restored", source.getMsgId(), tickCount);
+            setHealth(getMaxHealth());
+            return;
+        }
         passives.denyPlunder();
         passives.clear();
         riftOpen = false;

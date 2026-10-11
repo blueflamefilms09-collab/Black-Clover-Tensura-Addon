@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.100.0] — Elsdocia remake + boss spawn guard (NOT yet compiled)
+
+**Replacement:** Elsdocia's 3D model skin, glow layer and inventory sprite (the wiki/reference look: long straight crystal blade, deep azure with a cyan core and light motes, gold clover emblem above a gold guard, dark grip). The old sprite is kept as `textures/item/elsdocia_v099.png`.
+**Fix (unverified in-game):** Riven Remake spawn guard. Damage and deaths in his first 60 ticks are blocked and logged (`[nusmp] Riven: ignored ...` in latest.log, which names the real killer), Tensura passive grants are wrapped in try/catch, and he is given a magicule pool like Zagred so Tensura skills cannot starve and hurt him.
+**Build note:** this session could not reach maven.neoforged.net, so 0.100.0 was not compiled. Build it locally with `gradlew.bat build`.
+
 ## [0.99.0] — Elsdocia + Key Magic Restoration
 
 **Release Date:** 2026-10-10
