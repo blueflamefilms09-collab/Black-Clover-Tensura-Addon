@@ -37,6 +37,15 @@ jobs:
           name: multiverse-of-anime-${{ steps.ver.outputs.version }}
           path: build/libs/*.jar
 
+      - name: Release notes (the newest CHANGELOG section)
+        run: |
+          {
+            echo "Mod jar built from \`${{ github.ref_name }}\` at ${{ github.sha }}."
+            echo "Put \`multiverse-of-anime-${{ steps.ver.outputs.version }}.jar\` in your \`mods\` folder and remove any older multiverse-of-anime jar."
+            echo
+            awk '/^## \[/{n++} n==1{print}' CHANGELOG.md
+          } > release-notes.md
+
       - name: Publish release
         uses: softprops/action-gh-release@v2
         with:
@@ -44,7 +53,5 @@ jobs:
           name: Multiverse ${{ steps.ver.outputs.version }} (build ${{ github.run_number }})
           target_commitish: ${{ github.sha }}
           prerelease: true
-          body: |
-            Mod jar built from `${{ github.ref_name }}` at ${{ github.sha }}.
-            Put `multiverse-of-anime-${{ steps.ver.outputs.version }}.jar` in your `mods` folder and remove any older multiverse-of-anime jar.
+          body_path: release-notes.md
           files: build/libs/multiverse-of-anime-${{ steps.ver.outputs.version }}.jar
