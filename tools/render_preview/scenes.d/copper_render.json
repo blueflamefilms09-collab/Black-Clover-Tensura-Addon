@@ -1,0 +1,230 @@
+{
+ "copper_mace_idle": {
+  "kind": "geo",
+  "model": "copper_mace",
+  "anim": "idle",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   30
+  ],
+  "tile": [
+   360,
+   520
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 28,
+    "pitch": 10,
+    "target": [
+     0,
+     3.0,
+     0
+    ],
+    "dist": 8.5
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     3.0,
+     0
+    ],
+    "dist": 8.5
+   }
+  ]
+ },
+ "copper_mace_swing": {
+  "kind": "geo",
+  "model": "copper_mace",
+  "anim": "swing",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   6,
+   9,
+   12,
+   20
+  ],
+  "tile": [
+   360,
+   420
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     2.6,
+     0
+    ],
+    "dist": 9.0
+   }
+  ]
+ },
+ "copper_mace_slam": {
+  "kind": "geo",
+  "model": "copper_mace",
+  "anim": "slam",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   7,
+   10,
+   14,
+   20
+  ],
+  "tile": [
+   360,
+   420
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     2.6,
+     0
+    ],
+    "dist": 9.0
+   }
+  ]
+ },
+ "copper_coil_golem_idle": {
+  "kind": "geo",
+  "model": "copper_coil_golem",
+  "anim": "idle",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   10,
+   20,
+   30
+  ],
+  "tile": [
+   360,
+   400
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 28,
+    "pitch": 12,
+    "target": [
+     0,
+     1.6,
+     0
+    ],
+    "dist": 5.2
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 155,
+    "pitch": 16,
+    "target": [
+     0,
+     1.6,
+     0
+    ],
+    "dist": 5.2
+   }
+  ]
+ },
+ "copper_coil_golem_walk": {
+  "kind": "geo",
+  "model": "copper_coil_golem",
+  "anim": "walk",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   5,
+   10,
+   15
+  ],
+  "tile": [
+   320,
+   360
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.6,
+     0
+    ],
+    "dist": 5.6
+   }
+  ]
+ },
+ "copper_coil_golem_shock": {
+  "kind": "geo",
+  "model": "copper_coil_golem",
+  "anim": "shock",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   6,
+   10,
+   14,
+   18,
+   22
+  ],
+  "tile": [
+   320,
+   360
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.6,
+     0
+    ],
+    "dist": 5.6
+   }
+  ]
+ },
+ "copper_pauldrons_view": {
+  "kind": "geo",
+  "model": "copper_pauldrons",
+  "space": "PLAYER",
+  "anim": "idle",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   30
+  ],
+  "tile": [
+   300,
+   420
+  ]
+ },
+ "copper_crown_view": {
+  "kind": "geo",
+  "model": "copper_crown",
+  "space": "PLAYER",
+  "anim": "idle",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   30
+  ],
+  "tile": [
+   300,
+   420
+  ]
+ }
+}
