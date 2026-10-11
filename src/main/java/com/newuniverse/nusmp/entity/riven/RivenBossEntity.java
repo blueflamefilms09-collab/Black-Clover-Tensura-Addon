@@ -766,6 +766,35 @@ public class RivenBossEntity extends Monster {
         return s.is(DamageTypeTags.IS_PROJECTILE) ? "projectile" : "physical";
     }
 
+    /** 1.2.0: the spawn grace (ticks) in which nothing may kill him: damage, setHealth(0), kill() and invulnerability checks are all covered. */
+    private static final int SPAWN_GRACE = 100;
+
+    @Override
+    public void setHealth(float health) {
+        if (health <= 0f && tickCount < SPAWN_GRACE && !level().isClientSide) {
+            LOG.warn("[nusmp] Marquis/Riven: ignored setHealth({}) at tick {} (spawn grace)", health, tickCount);
+            return;
+        }
+        super.setHealth(health);
+    }
+
+    @Override
+    public void kill() {
+        if (tickCount < SPAWN_GRACE && !level().isClientSide) {
+            LOG.warn("[nusmp] Marquis/Riven: ignored kill() at tick {} (spawn grace)", tickCount);
+            return;
+        }
+        super.kill();
+    }
+
+    @Override
+    public boolean isInvulnerableTo(DamageSource source) {
+        if (tickCount < 60 && !level().isClientSide && !source.is(net.minecraft.world.damagesource.DamageTypes.GENERIC_KILL)
+                && !source.is(net.minecraft.world.damagesource.DamageTypes.FELL_OUT_OF_WORLD)
+                && !(source.getEntity() instanceof net.minecraft.world.entity.player.Player pl && pl.isCreative())) return true;
+        return super.isInvulnerableTo(source);
+    }
+
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if (level().isClientSide) return super.hurt(source, amount);

@@ -144,7 +144,7 @@ class RivenAssetsTest {
     void entityLootUsesTheStableEntityIdAndIncludesOnlyRegisteredMarquisItems() throws Exception {
         JsonObject loot = read(new File("src/main/resources/data/nusmp/loot_table/entities/riven_remake.json")).getAsJsonObject();
         assertEquals("minecraft:entity", loot.get("type").getAsString());
-        assertEquals(4, loot.getAsJsonArray("pools").size());
+        assertEquals(5, loot.getAsJsonArray("pools").size());                    // 1.2.0: + the Story Page drop
         Set<String> names = new HashSet<>();
         for (JsonElement pool : loot.getAsJsonArray("pools")) {
             JsonObject firstEntry = pool.getAsJsonObject().getAsJsonArray("entries").get(0).getAsJsonObject();
@@ -154,6 +154,7 @@ class RivenAssetsTest {
         assertTrue(names.contains("nusmp:marquis_story_page"));
         assertTrue(names.contains("nusmp:marquis_crest_cape"));
         assertTrue(names.contains("nusmp:marquis_final_crown"));
+        assertTrue(names.contains("nusmp:story_page"));
     }
 
     @Test

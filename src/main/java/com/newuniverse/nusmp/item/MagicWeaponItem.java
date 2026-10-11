@@ -417,6 +417,7 @@ public class MagicWeaponItem extends SwordItem {
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
+        int firstLine = tip.size();
         tip.add(Component.literal("Right-click: " + kind.ability).withStyle(ChatFormatting.GOLD));
         tip.add(Component.literal("  " + kind.desc).withStyle(ChatFormatting.GRAY));
         tip.add(Component.literal("  Cooldown: " + Math.round(kind.cooldown * com.newuniverse.nusmp.NUGameRules.cooldownShown() / 20) + " s").withStyle(ChatFormatting.DARK_GRAY));
@@ -440,10 +441,34 @@ public class MagicWeaponItem extends SwordItem {
             tip.add(Component.literal("Legacy engraving: Legacy of the Wizard Kings").withStyle(ChatFormatting.LIGHT_PURPLE));
             tip.add(Component.literal("Stored magic: " + charge + "/1000").withStyle(ChatFormatting.AQUA));
             tip.add(Component.literal("Key Magic grimoire summoned: extended rift").withStyle(ChatFormatting.GOLD));
+            tip.add(Component.literal("The first Wizard King's legacy: a broad crystal blade with a clover emblem, crafted by Lemiel Silvamillion Clover. It holds a piece of the past Wizard Kings' souls and was used by Asta to defeat Conrad.").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
         }
         if (d != null && d.copyTag().contains("ExpiresAt"))
             tip.add(Component.literal("Drawn from a grimoire: fades after a minute").withStyle(ChatFormatting.AQUA));
         if (kind.demon && d != null && d.copyTag().contains("OwnerName"))
             tip.add(Component.literal("Bound to " + d.copyTag().getString("OwnerName")).withStyle(ChatFormatting.DARK_PURPLE));
+        wrapTooltip(tip, firstLine);
+    }
+
+    /** 1.2.0: tooltip lines do not wrap by themselves: long lines (Elsdocia's description ran off the screen) are split at word breaks, continuation lines indented. */
+    static void wrapTooltip(List<Component> tip, int from) {
+        final int width = 44;
+        for (int i = from; i < tip.size(); i++) {
+            Component c = tip.get(i);
+            String text = c.getString();
+            if (text.length() <= width) continue;
+            String indent = text.startsWith("  ") ? "  " : "";
+            List<Component> lines = new java.util.ArrayList<>();
+            StringBuilder line = new StringBuilder();
+            for (String word : text.trim().split(" +")) {
+                if (line.length() > 0 && line.length() + 1 + word.length() > width) { lines.add(Component.literal((lines.isEmpty() ? indent : indent + "  ") + line).withStyle(c.getStyle())); line.setLength(0); }
+                if (line.length() > 0) line.append(' ');
+                line.append(word);
+            }
+            if (line.length() > 0) lines.add(Component.literal((lines.isEmpty() ? indent : indent + "  ") + line).withStyle(c.getStyle()));
+            tip.remove(i);
+            tip.addAll(i, lines);
+            i += lines.size() - 1;
+        }
     }
 }
