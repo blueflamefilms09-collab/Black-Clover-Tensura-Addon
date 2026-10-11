@@ -986,57 +986,82 @@ def last_word(m, a):
 
 
 def elsdocia(m, a):
-    """Elsdocia (0.100 remake after the wiki / the reference render): a long straight crystal blade, deep azure with a bright cyan
-    core and drifting light motes, a golden clover emblem on the blade just above a gold guard, dark grip, gold pommel."""
-    length = 62
+    """Elsdocia (1.2.0 remake after the wiki and the owner's reference render): a broad blade whose top quarter is worked bronze-gold
+    with a clover cut out of it, then shattered-glass crystal in deep azure with bright cracks and white-hot cells down to a long
+    pointed tip; a thin gold cross guard with swept tips, a slender dark grip, a gold pommel."""
+    length = 86
     stations = [
-        (0, -3.6, 0, 3.6), (6, -3.9, 0, 3.9), (30, -4.1, 0, 4.1), (50, -3.8, 0, 3.8),
-        (56, -2.7, 0, 2.7), (59, -1.4, 0, 1.4), (length, 0, 0, 0),
+        (0, -7.2, 0, 7.2), (6, -7.8, 0, 7.8), (58, -7.8, 0, 7.8), (68, -6.4, 0, 6.4),
+        (77, -3.8, 0, 3.8), (83, -1.6, 0, 1.6), (length, 0, 0, 0),
     ]
+    clover_rows = ["..##.##..", ".#######.", "#########", ".#######.", "..#####..", "...###...", "....#...."]
 
-    def crystal(x, y, front, edge, ridge):
-        if x is None:                                                      # the spine / edge walls
-            return col((120, 196, 250)), col((120, 220, 255), 0.35)
-        facet = math.sin((x * 1.1 + y * 0.42) * 1.3) * 0.5 + math.sin((x * -0.7 + y * 0.9) * 0.8) * 0.5     # crossing crystal planes
-        base = np.array((38, 92, 190), np.float32) * (1.0 + facet * 0.28) + fz(int(x * 2), int(y * 2), 19) * 26
-        core = max(0.0, 1.0 - ridge / 2.2)                                 # the lit core down the middle
-        base = base + np.array((95, 140, 62), np.float32) * core * (0.75 + 0.25 * math.sin(y * 0.55))
+    def clover_hit(x, y):
+        c = int((x + 7.2) / 1.6)
+        r = int((19.0 - y) / 1.6)
+        return 0 <= r < len(clover_rows) and 0 <= c < 9 and clover_rows[r][c] == "#"
+
+    def voronoi(x, y):
+        cell = 3.6
+        gx, gy = math.floor(x / cell), math.floor(y / cell)
+        best = []
+        for dx in (-1, 0, 1):
+            for dy in (-1, 0, 1):
+                ix, iy = gx + dx, gy + dy
+                px = (ix + 0.15 + 0.7 * hsh(ix, iy, 7)) * cell
+                py = (iy + 0.15 + 0.7 * hsh(ix, iy, 8)) * cell
+                best.append((math.hypot(x - px, y - py), ix, iy))
+        best.sort()
+        return best[1][0] - best[0][0], best[0][1], best[0][2]
+
+    def paint(x, y, front, edge, ridge):
+        if x is None:
+            return (col((196, 150, 58)) if y < 22 else col((150, 215, 255), 0.95)), (None if y < 22 else col((120, 215, 255), 0.4))
+        seam = 22.0 + 2.4 * math.sin(x * 1.0) + (hsh(int(x * 2), 3) - 0.5) * 1.8
+        if y < seam:                                                     # worked bronze-gold
+            base = np.array((192, 142, 52), np.float32) * (1.0 + nz(x, y, 3) * 0.55) + fz(x, y, 4) * 24
+            if int(y * 2) % 7 == 0:
+                base = base * 0.86
+            if edge < 0.9:
+                base = np.array((236, 196, 92), np.float32)
+            elif edge < 1.8:
+                base = base * 0.82
+            if clover_hit(x, y):
+                return col((18, 24, 52)), None
+            return col(np.clip(base, 0, 255)), None
+        d, ix, iy = voronoi(x, y)
+        h1, hot = hsh(ix, iy, 11), hsh(ix, iy, 13)
+        t = (y - seam) / max(1.0, length - seam)
+        base = np.array((22, 66, 172), np.float32) * (1 - h1) + np.array((72, 172, 250), np.float32) * h1
+        base = base * (0.82 + 0.34 * hsh(ix, iy, 17)) * (0.92 + 0.3 * math.sin(t * 3.1 + h1 * 6))
+        glow = col((100, 215, 255), 0.30 + 0.25 * h1)
+        if hot > 0.84:                                                   # white-hot cells
+            base = np.array((228, 248, 255), np.float32) * (0.88 + 0.12 * h1)
+            glow = col((205, 246, 255), 0.95)
+        if d < 0.30:                                                     # bright crack lines between the shards
+            base = np.array((214, 240, 255), np.float32)
+            glow = col((190, 240, 255), 0.7)
+        elif d < 0.75:
+            base = base * 0.62
         if edge < 0.9:
-            base = np.array((205, 238, 255), np.float32)                   # bright bevel
-        elif edge < 1.9:
-            base = base * 1.22 + 14
-        glow = col((90, 205, 255), 0.45 * core + 0.1) if core > 0.15 else None
-        h = hsh(int(x * 2), int(y * 2), 41 if front else 43)               # drifting light motes inside the crystal
-        if h > 0.955 and edge > 1.0:
-            base = np.array((230, 250, 255), np.float32)
-            glow = col((200, 245, 255), 0.95)
-        if y > length - 5:
-            base = base * 1.12 + 10
+            base = np.array((205, 238, 255), np.float32)
+            glow = col((170, 235, 255), 0.6)
+        if y > length - 6:
+            base = base * 1.1 + 12
         return col(np.clip(base, 0, 255)), glow
 
-    Blade(stations, 0.9, 1.8, crystal).build(m, a)
+    Blade(stations, 1.0, 1.9, paint).build(m, a)
     gold = (226, 178, 62)
     gold_paint = metal_paint(gold, gem=(150, 236, 255), glow_rgb=(150, 236, 255))
     dark_gold = metal_paint((168, 122, 40))
-    box(m, a, -4.4, -1.6, -2.1, 4.4, 4.2, 2.1, dark_gold)                  # collar the blade grows from
-    box(m, a, -8.2, -1.8, -1.2, 8.2, 0.4, 1.2, gold_paint)                 # the cross guard
+    box(m, a, -8.0, -1.8, -2.6, 8.0, 0.2, 2.6, dark_gold)                  # the collar the blade grows from
+    box(m, a, -14.0, -2.4, -1.3, 14.0, -0.2, 1.3, gold_paint)              # the thin, wide cross guard
     for sx in (-1, 1):
-        lo, hi = sorted((sx * 6.0, sx * 10.6))
-        box(m, a, lo, -0.6, -1.0, hi, 2.4, 1.0, gold_paint)                # swept tips
-    box(m, a, -1.6, -13.5, -1.4, 1.6, -1.8, 1.4, wrap_paint((24, 30, 58), (58, 88, 150), diamonds=True))
-    box(m, a, -2.2, -15.6, -1.9, 2.2, -13.5, 1.9, gold_paint)              # pommel
-    box(m, a, -1.1, -16.6, -1.1, 1.1, -15.6, 1.1, gold_paint)
-    clover = ascii_mask([
-        ".##.##.",
-        "#######",
-        "#######",
-        ".#####.",
-        "..###..",
-        "...#...",
-    ])
-    crest = lambda i, j, front: (col(shade(gold, 1.25 if (i + j) % 3 == 0 else 0.95)), col((255, 222, 120), 0.5))
-    plate(m, a, clover, -3.5, 6.0, 0.3, crest, "xy", 2.1)
-    plate(m, a, clover, -3.5, 6.0, 0.3, crest, "xy", -2.1)
+        lo, hi = sorted((sx * 11.0, sx * 17.0))
+        box(m, a, lo, -1.6, -1.1, hi, 2.4, 1.1, gold_paint)                # swept tips
+    box(m, a, -1.5, -20.0, -1.5, 1.5, -2.4, 1.5, wrap_paint((24, 28, 40), (52, 62, 90), diamonds=True))   # slender dark grip
+    box(m, a, -2.4, -22.8, -2.2, 2.4, -20.0, 2.2, gold_paint)              # pommel
+    box(m, a, -1.3, -24.2, -1.3, 1.3, -22.8, 1.3, gold_paint)
     return dict(glow=("7FDFFF", 0.09, 0.45, 1.0))
 
 
@@ -1332,8 +1357,8 @@ def sprite_box(item_id):
 # 0.52: the katana blades faced the wrong way in hand: their meshes are mirrored across x (edge forward, curve forward)
 FLIP = {"demon_slasher_katana", "miasma_infused_katana"}
 # 0.52: scale about a grip point (fraction along the sprite axis); the trident was too small in hand
-SIZE = {"otherworld_trident": 1.65}
-GRIP = {"otherworld_trident": 0.42}
+SIZE = {"otherworld_trident": 1.65, "elsdocia": 2.0}         # 1.2.0: Elsdocia is a greatsword the size of the Wizard King's legend
+GRIP = {"otherworld_trident": 0.42, "elsdocia": 0.2}
 
 
 def mirror_x(mesh):
