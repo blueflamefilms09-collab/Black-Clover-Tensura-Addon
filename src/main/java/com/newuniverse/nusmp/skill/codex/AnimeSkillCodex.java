@@ -12,90 +12,98 @@ import net.neoforged.fml.loading.FMLPaths;
 import org.slf4j.Logger;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Stream;
 
 /**
- * The Anime Skill Codex: skills loaded from {@code data/nusmp/riven_codex/*.json} (a data reload listener, so it works on a dedicated server),
- * plus the ones an op accepted from {@code config/nusmp/codex-inbox/}. Every skill is validated against {@link SkillSandbox}; a bad file is
- * logged and skipped.
+ * The live Anime Skill Codex. Shipped skills load from {@code data/nusmp/skills/codex/*.json} (a file holds one skill, or
+ * {"skills": [...]}); skills an op accepted from the inbox load from {@code config/nusmp/codex/}. Every skill is validated by
+ * {@link SkillSandbox}; a rejected one is logged and skipped, never half-loaded.
  */
-public final class AnimeSkillCodex extends SimpleJsonResourceReloadListener {
+public final class AnimeSkillCodex {
+    private AnimeSkillCodex() {}
+
     private static final Logger LOG = LogUtils.getLogger();
-    private static final Map<String, AnimeSkill> SHIPPED = new ConcurrentHashMap<>();
-    private static final Map<String, AnimeSkill> ACCEPTED = new ConcurrentHashMap<>();
-
-    public AnimeSkillCodex() { super(new Gson(), "riven_codex"); }
-
-    @Override
-    protected void apply(Map<ResourceLocation, JsonElement> files, ResourceManager rm, ProfilerFiller profiler) {
-        SHIPPED.clear();
-        for (var e : files.entrySet()) {
-            try {
-                if (!e.getValue().isJsonObject()) throw new IllegalArgumentException("not an object");
-                AnimeSkill s = AnimeSkill.parse(e.getValue().getAsJsonObject());
-                SHIPPED.put(s.id(), s);
-            } catch (RuntimeException ex) {
-                LOG.warn("Riven codex: skipped {}: {}", e.getKey(), ex.getMessage());
-            }
-        }
-        loadAccepted();
-        LOG.info("Riven codex: {} skills ({} accepted from the inbox)", all().size(), ACCEPTED.size());
-    }
+    private static volatile Map<String, AnimeSkill> skills = Collections.emptyMap();
 
     public static Path inbox() { return FMLPaths.CONFIGDIR.get().resolve("nusmp").resolve("codex-inbox"); }
+    public static Path accepted() { return FMLPaths.CONFIGDIR.get().resolve("nusmp").resolve("codex"); }
 
-    public static Path accepted() { return FMLPaths.CONFIGDIR.get().resolve("nusmp").resolve("codex-accepted"); }
+    public static Collection<AnimeSkill> all() { return skills.values(); }
+    public static AnimeSkill get(String id) { return skills.get(id); }
 
-    /** Every skill the boss may use. */
-    public static List<AnimeSkill> all() {
-        List<AnimeSkill> l = new ArrayList<>(SHIPPED.values());
-        l.addAll(ACCEPTED.values());
-        return l;
-    }
+    /** Registered with AddReloadListenerEvent: re-reads the codex whenever data packs reload. */
+    public static final class Loader extends SimpleJsonResourceReloadListener {
+        public Loader() { super(new Gson(), "skills/codex"); }
 
-    public static AnimeSkill get(String id) {
-        AnimeSkill s = ACCEPTED.get(id);
-        return s != null ? s : SHIPPED.get(id);
-    }
-
-    /** /nusmp riven accept: validates inbox/&lt;file&gt;.json, moves it to the accepted folder and puts it in the live codex. */
-    public static String accept(String name) {
-        if (!name.matches("[a-z0-9_\\-]+")) return "Bad file name.";
-        Path from = inbox().resolve(name + ".json");
-        if (!Files.isRegularFile(from)) return "No such file in " + inbox();
-        try {
-            JsonObject o = com.google.gson.JsonParser.parseString(Files.readString(from, StandardCharsets.UTF_8)).getAsJsonObject();
-            AnimeSkill s = AnimeSkill.parse(o);
-            Files.createDirectories(accepted());
-            Files.move(from, accepted().resolve(name + ".json"), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-            ACCEPTED.put(s.id(), s);
-            return "Accepted " + s.id() + " (" + s.name() + ").";
-        } catch (IOException | RuntimeException ex) {
-            return "Rejected: " + ex.getMessage();
+        @Override
+        protected void apply(Map<ResourceLocation, JsonElement> files, ResourceManager manager, ProfilerFiller profiler) {
+            Map<String, AnimeSkill> out = new LinkedHashMap<>();
+            files.forEach((file, json) -> readInto(out, json, file.toString()));
+            readAccepted(out);
+            skills = out;
+            LOG.info("[nusmp] Anime Skill Codex: {} skills", out.size());
         }
     }
 
-    private static void loadAccepted() {
-        ACCEPTED.clear();
+    static void readInto(Map<String, AnimeSkill> out, JsonElement json, String source) {
+        List<JsonObject> objects = new ArrayList<>();
+        if (json.isJsonObject() && json.getAsJsonObject().has("skills") && json.getAsJsonObject().get("skills").isJsonArray())
+            json.getAsJsonObject().getAsJsonArray("skills").forEach(e -> { if (e.isJsonObject()) objects.add(e.getAsJsonObject()); });
+        else if (json.isJsonObject()) objects.add(json.getAsJsonObject());
+        for (JsonObject o : objects) {
+            try {
+                AnimeSkill s = AnimeSkill.parse(o);
+                String why = SkillSandbox.validate(s);
+                if (why != null) LOG.warn("[nusmp] codex skill rejected ({}): {}", source, why);
+                else out.put(s.id(), s);
+            } catch (RuntimeException e) {
+                LOG.warn("[nusmp] codex skill unreadable ({}): {}", source, e.toString());
+            }
+        }
+    }
+
+    private static void readAccepted(Map<String, AnimeSkill> out) {
         Path dir = accepted();
         if (!Files.isDirectory(dir)) return;
-        try (var files = Files.list(dir)) {
-            files.filter(f -> f.toString().endsWith(".json")).forEach(f -> {
-                try {
-                    AnimeSkill s = AnimeSkill.parse(com.google.gson.JsonParser.parseString(Files.readString(f, StandardCharsets.UTF_8)).getAsJsonObject());
-                    ACCEPTED.put(s.id(), s);
-                } catch (IOException | RuntimeException ex) {
-                    LOG.warn("Riven codex: skipped accepted {}: {}", f.getFileName(), ex.getMessage());
+        try (Stream<Path> files = Files.list(dir)) {
+            files.filter(p -> p.toString().endsWith(".json")).forEach(p -> {
+                try (Reader r = Files.newBufferedReader(p)) {
+                    readInto(out, com.google.gson.JsonParser.parseReader(r), p.getFileName().toString());
+                } catch (IOException | RuntimeException e) {
+                    LOG.warn("[nusmp] codex file {} unreadable: {}", p.getFileName(), e.toString());
                 }
             });
-        } catch (IOException ex) {
-            LOG.warn("Riven codex: cannot read {}: {}", dir, ex.getMessage());
+        } catch (IOException e) {
+            LOG.warn("[nusmp] codex folder unreadable: {}", e.toString());
+        }
+    }
+
+    /** Moves inbox/{id}.json to the accepted folder and adds it to the live codex. Returns an error message, or null on success. */
+    public static String accept(String file) {
+        if (!file.matches("[A-Za-z0-9_.-]+")) return "bad file name";
+        Path from = inbox().resolve(file.endsWith(".json") ? file : file + ".json");
+        if (!Files.isRegularFile(from)) return "no such file in config/nusmp/codex-inbox";
+        try (Reader r = Files.newBufferedReader(from)) {
+            Map<String, AnimeSkill> add = new LinkedHashMap<>();
+            readInto(add, com.google.gson.JsonParser.parseReader(r), from.getFileName().toString());
+            if (add.isEmpty()) return "the skill failed validation (see the log)";
+            Files.createDirectories(accepted());
+            Files.move(from, accepted().resolve(from.getFileName()), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+            Map<String, AnimeSkill> merged = new LinkedHashMap<>(skills);
+            merged.putAll(add);
+            skills = merged;
+            return null;
+        } catch (IOException | RuntimeException e) {
+            return e.getMessage() == null ? e.toString() : e.getMessage();
         }
     }
 }

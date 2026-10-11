@@ -2,7 +2,7 @@
   "description": {
     "translate": "enchantment.nusmp.legacy_of_the_wizard_kings"
   },
-  "supported_items": "nusmp:elsdocia",
+  "supported_items": "#minecraft:enchantable/sword",
   "weight": 1,
   "max_level": 1,
   "min_cost": {
@@ -17,18 +17,5 @@
   "slots": [
     "mainhand"
   ],
-  "effects": {
-    "minecraft:damage": [
-      {
-        "effect": {
-          "type": "minecraft:add",
-          "value": {
-            "type": "minecraft:linear",
-            "base": 1.5,
-            "per_level_above_first": 0
-          }
-        }
-      }
-    ]
-  }
+  "effects": {}
 }

@@ -1,0 +1,30 @@
+{
+  "zagred_word": {
+    "subtitle": "subtitles.entity.nusmp.zagred_word",
+    "sounds": [{ "name": "nusmp:entity/zagred/word", "stream": true }]
+  },
+  "zagred_seal": {
+    "subtitle": "subtitles.entity.nusmp.zagred_seal",
+    "sounds": [{ "name": "nusmp:entity/zagred/seal", "stream": true }]
+  },
+  "zagred_fall": {
+    "subtitle": "subtitles.entity.nusmp.zagred_fall",
+    "sounds": [{ "name": "nusmp:entity/zagred/fall", "stream": true }]
+  },
+  "zagred_shatter": {
+    "subtitle": "subtitles.entity.nusmp.zagred_shatter",
+    "sounds": [{ "name": "nusmp:entity/zagred/shatter", "stream": true }]
+  },
+  "zagred_heal": {
+    "subtitle": "subtitles.entity.nusmp.zagred_heal",
+    "sounds": [{ "name": "nusmp:entity/zagred/heal", "stream": true }]
+  },
+  "zagred_overwrite": {
+    "subtitle": "subtitles.entity.nusmp.zagred_overwrite",
+    "sounds": [{ "name": "nusmp:entity/zagred/overwrite", "stream": true }]
+  },
+  "zagred_phase": {
+    "subtitle": "subtitles.entity.nusmp.zagred_phase",
+    "sounds": [{ "name": "nusmp:entity/zagred/phase", "stream": true }]
+  }
+}

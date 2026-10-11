@@ -187,7 +187,15 @@ final class ReferenceWeapons {
         };
     }
 
-    static boolean cast(ServerPlayer p, Kind k, ItemStack stack) {
+    /** The held stack of this weapon (main hand first, then off hand), for weapons that keep state in it. */
+    static ItemStack held(ServerPlayer p, Kind k) {
+        for (ItemStack s : new ItemStack[]{p.getMainHandItem(), p.getOffhandItem()})
+            if (s.getItem() instanceof MagicWeaponItem w && w.kind == k) return s;
+        return ItemStack.EMPTY;
+    }
+
+    static boolean cast(ServerPlayer p, Kind k) {
+        ItemStack stack = held(p, k);
         ServerLevel sl = p.serverLevel();
         Vec3 eye = p.getEyePosition(), look = p.getViewVector(1f);
         switch (k) {

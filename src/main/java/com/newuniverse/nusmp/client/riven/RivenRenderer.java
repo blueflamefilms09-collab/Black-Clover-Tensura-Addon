@@ -2,35 +2,56 @@ package com.newuniverse.nusmp.client.riven;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import com.newuniverse.nusmp.client.geo.GeoAnim;
+import com.newuniverse.nusmp.blackclover.GrimoireItem;
 import com.newuniverse.nusmp.client.geo.GeoDraw;
+import com.newuniverse.nusmp.client.geo.GeoAnim;
+import com.newuniverse.nusmp.client.geo.GeoModelData;
 import com.newuniverse.nusmp.client.geo.GeoModels;
 import com.newuniverse.nusmp.client.geo.GeoSpec;
+import com.newuniverse.nusmp.client.NURenderTypes;
+import com.newuniverse.nusmp.client.NUShaders;
+import com.newuniverse.nusmp.core.magic.grimoire.GrimoireCarry;
 import com.newuniverse.nusmp.entity.NUEntities;
 import com.newuniverse.nusmp.entity.riven.RivenBossEntity;
+import com.newuniverse.nusmp.entity.riven.StoryConstructEntity;
+import com.newuniverse.nusmp.grimoire.CanonBook;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
-/**
- * Riven Remake: the geo model (assets/nusmp/geo/entity/riven_remake.geo.json, built by tools/gen_riven_remake.py) drawn with client.geo.GeoDraw, plus
- * the emissive glow (eyes, emblem, lightning, grimoire). Phase 3 swaps to the Final Form texture on the same model, so the boss bar never changes
- * entity. The clip comes from RivenStatePayload (casts and phase changes); otherwise death, hit, walk or idle by what the entity is doing.
- */
-public class RivenRenderer extends EntityRenderer<RivenBossEntity> {
-    static final GeoSpec BASE = GeoSpec.of("riven", "remake");
-    static final GeoSpec FINAL = BASE.skin("riven_remake_final");
+import java.util.HashMap;
+import java.util.Map;
 
-    public RivenRenderer(EntityRendererProvider.Context ctx) {
-        super(ctx);
-        this.shadowRadius = 0.5f;
-    }
+/**
+ * Riven Remake: the geo model (player proportions: messy hair, black high-collar coat with the Black Bull skull, tails, a violet glow)
+ * played with the clips of assets/nusmp/animations/entity/riven_remake.animation.json (idle, walk, talk, casts, combos, hit, stagger,
+ * phase2, final_form, death). Phase III swaps to the final-form model of the same entity (page-wings and the bull-skull crown), so the
+ * boss bar never changes entity. His five-leaf-styled grimoire floats on his left side, bobbing and shaking when he casts from it.
+ */
+public final class RivenRenderer extends EntityRenderer<RivenBossEntity> {
+    private static final GeoSpec BASE = GeoSpec.of("riven", "remake"), FINAL = GeoSpec.of("riven", "remake_final");
+    private static final GeoSpec SKIN_MODEL = GeoSpec.of("marquis", "skin");
+    private static final GeoSpec COAT_MODEL = GeoSpec.of("marquis", "coat");
+    private static final GeoSpec FINAL_MODEL = GeoSpec.of("marquis", "final");
+    private static final GeoSpec SKIN = new GeoSpec(SKIN_MODEL.model(), BASE.animations(), SKIN_MODEL.texture(), null);
+    private static final GeoSpec COAT = new GeoSpec(COAT_MODEL.model(), BASE.animations(), COAT_MODEL.texture(), null);
+    private static final GeoSpec FINAL_OVERLAY = new GeoSpec(FINAL_MODEL.model(), FINAL.animations(), FINAL.texture(), FINAL.glow());
+    private static final Map<String, ItemStack> BOOKS = new HashMap<>();
+
+    public RivenRenderer(EntityRendererProvider.Context ctx) { super(ctx); this.shadowRadius = 0.5f; }
 
     public static void register(EntityRenderersEvent.RegisterRenderers e) {
-        e.registerEntityRenderer(NUEntities.RIVEN_REMAKE.get(), RivenRenderer::new);
+        e.registerEntityRenderer(NUEntities.RIVEN.get(), RivenRenderer::new);
+        e.registerEntityRenderer(NUEntities.STORY_CONSTRUCT.get(), ConstructRenderer::new);
     }
 
     @Override
@@ -38,29 +59,143 @@ public class RivenRenderer extends EntityRenderer<RivenBossEntity> {
 
     @Override
     public void render(RivenBossEntity e, float yaw, float partial, PoseStack pose, MultiBufferSource buffers, int light) {
-        GeoSpec spec = e.clientPhase() >= 3 ? FINAL : BASE;
         float age = e.tickCount + partial;
-        String anim;
-        float secs;
-        GeoAnim anims = GeoModels.animations(spec.animations());
-        if (e.deathTime > 0 || e.isDeadOrDying()) { anim = "death"; secs = (e.deathTime + partial) / 20f; }
-        else if (!e.clientClip().isEmpty() && playing(anims, e.clientClip(), e.clientClipAge() + partial)) { anim = e.clientClip(); secs = (e.clientClipAge() + partial) / 20f; }
-        else if (e.hurtTime > 0) { anim = "hit"; secs = (e.hurtDuration - e.hurtTime + partial) / 20f; }
-        else if (e.walkAnimation.speed() > 0.05f) { anim = "walk"; secs = age / 20f; }
-        else { anim = "idle"; secs = age / 20f; }
-        float glow = 0.75f + 0.25f * Mth.sin(age * (0.1f + 0.05f * e.clientPhase()));
-        int g = (int) (255 * glow);
         pose.pushPose();
         pose.mulPose(Axis.YP.rotationDegrees(-Mth.rotLerp(partial, e.yBodyRotO, e.yBodyRot)));
-        GeoDraw.paint(pose, buffers, spec, anim, secs, GeoDraw.Space.PROP, GeoDraw.Layer.CUTOUT, light, 0xFFFFFFFF, 0xFF000000 | (g << 16) | (g << 8) | g);
+        String clip;
+        float seconds;
+        if (e.isDeadOrDying()) { clip = "death"; seconds = (e.deathTime + partial) / 20f; }
+        else if (e.clip() != 0) { clip = RivenBossEntity.CLIPS[e.clip()]; seconds = Math.max(0f, age - e.clipStartTick()) / 20f; }
+        else {
+            double dx = e.getX() - e.xo, dz = e.getZ() - e.zo;
+            clip = dx * dx + dz * dz > 0.0004 ? "walk" : "idle";
+            seconds = age / 20f;
+        }
+        float glowPulse = 0.7f + 0.3f * Mth.sin(age * (e.phase() >= 3 ? 0.35f : 0.12f));
+        int g = (int) (255 * glowPulse);
+        if (e.phase() == 1) {
+            GeoDraw.paint(pose, buffers, SKIN, clip, seconds, GeoDraw.Space.PROP, GeoDraw.Layer.CUTOUT, light, 0xFFFFFFFF, 0);
+        } else if (e.phase() >= 2 && e.phase() < 4) {
+            GeoDraw.paint(pose, buffers, SKIN, clip, seconds, GeoDraw.Space.PROP, GeoDraw.Layer.CUTOUT, light, 0xFFFFFFFF, 0);
+            float coatAlpha = e.phase() == 2 && clip.equals("phase2") ? Mth.clamp(seconds / 1.4f, 0f, 1f) : 1f;
+            int alpha = (int) (255 * coatAlpha);
+            GeoDraw.paint(pose, buffers, COAT, clip, seconds, GeoDraw.Space.PROP, GeoDraw.Layer.TRANSLUCENT, light,
+                    (alpha << 24) | 0x00FFFFFF, 0);
+        } else {
+            GeoDraw.paint(pose, buffers, SKIN, clip, seconds, GeoDraw.Space.PROP, GeoDraw.Layer.CUTOUT, light, 0xFFFFFFFF, 0);
+            GeoDraw.paint(pose, buffers, COAT, clip, seconds, GeoDraw.Space.PROP, GeoDraw.Layer.CUTOUT, light, 0xFFFFFFFF, 0);
+            GeoDraw.paint(pose, buffers, FINAL_OVERLAY, clip, seconds, GeoDraw.Space.PROP, GeoDraw.Layer.CUTOUT, light, 0xFFFFFFFF,
+                    0xFF000000 | (g << 16) | (g << 8) | g);
+        }
+        if (e.phase() >= 3 && e.phase() < 4 && e.tickCount % 3 == 0) {
+            for (int i = 0; i < 3; i++) {
+                double angle = age * 0.08 + i * Math.PI * 2 / 3;
+                e.level().addParticle(net.minecraft.core.particles.ParticleTypes.ELECTRIC_SPARK,
+                        e.getX() + Math.cos(angle) * 0.9, e.getY() + 0.7 + (i % 2) * 0.55, e.getZ() + Math.sin(angle) * 0.9,
+                        0, 0.03, 0);
+                e.level().addParticle(net.minecraft.core.particles.ParticleTypes.WAX_ON,
+                        e.getX() + Math.cos(angle) * 1.6, e.getY() + 0.05, e.getZ() + Math.sin(angle) * 1.6, 0, 0.02, 0);
+            }
+        }
+        if (e.signatureCasting() && NUShaders.zagredAura() != null) {
+            GeoSpec aura = e.phase() >= 4 ? FINAL_OVERLAY : e.phase() == 1 ? SKIN : COAT;
+            GeoModelData model = GeoModels.model(aura.model());
+            GeoAnim animations = GeoModels.animations(aura.animations());
+            GeoAnim.Clip auraClip = animations == null ? null : animations.clip(clip);
+            pose.pushPose();
+            pose.scale(1.035f, 1.025f, 1.035f);
+            GeoDraw.draw(pose, buffers.getBuffer(NURenderTypes.zagredAura(aura.texture())), model, auraClip, seconds,
+                    GeoDraw.Space.PROP, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, 0xAA756EFF);
+            pose.popPose();
+        }
+        if (!e.isDeadOrDying() || e.deathTime < 30) renderBook(e, age, light, pose, buffers, clip);
         pose.popPose();
         super.render(e, yaw, partial, pose, buffers, light);
     }
 
-    /** A one-shot clip is over when its length has passed; a looping one plays until the next payload. */
-    private static boolean playing(GeoAnim anims, String name, float ageTicks) {
-        if (anims == null) return false;
-        GeoAnim.Clip c = anims.clip(name);
-        return c != null && (c.loop || ageTicks / 20f < c.length + 0.05f);
+    private void renderBook(RivenBossEntity e, float age, int light, PoseStack pose, MultiBufferSource buffers, String clip) {
+        CanonBook selection = CanonBook.byId(e.drawnGrimoire());
+        if (selection == null) {
+            selection = CanonBook.RIVEN;
+            for (CanonBook candidate : CanonBook.values()) {
+                if (candidate.owner.equals(e.drawnGrimoire())) {
+                    selection = candidate;
+                    break;
+                }
+            }
+        }
+        boolean open = e.phase() >= 2;
+        CanonBook bookType = selection;
+        String cacheKey = bookType.name() + (open ? "_open" : "_closed");
+        ItemStack book = BOOKS.computeIfAbsent(cacheKey, key -> {
+            ItemStack stack = GrimoireItem.createCanon(bookType);
+            return open ? GrimoireItem.withOpenView(stack, GrimoireCarry.OPEN_STEPS) : stack;
+        });
+        boolean casting = clip.startsWith("cast") || clip.equals("manifest_weapon") || clip.equals("soul_bond");
+        pose.pushPose();
+        float orbit = e.phase() >= 2 ? 0.22f : 0f;
+        pose.translate(0.28 + Mth.sin(age * 0.04f) * orbit, e.phase() >= 2 ? 2.05 + Mth.sin(age * 0.08f) * 0.08 : 1.05,
+                e.phase() >= 2 ? -0.42 + Mth.cos(age * 0.04f) * orbit : 0.1);
+        pose.mulPose(Axis.YP.rotationDegrees(-8f + Mth.sin(age * 0.05f) * 4f));
+        pose.mulPose(Axis.ZP.rotationDegrees(casting ? Mth.sin(age * 0.6f) * 8f : Mth.sin(age * 0.04f) * 2f));
+        pose.scale(0.85f, 0.85f, 0.85f);
+        Minecraft.getInstance().getItemRenderer().renderStatic(book, ItemDisplayContext.THIRD_PERSON_RIGHT_HAND, LightTexture.FULL_BRIGHT,
+                OverlayTexture.NO_OVERLAY, pose, buffers, e.level(), e.getId());
+        pose.popPose();
+    }
+
+    /** Story constructs: a floating sword, the bull-crest shield, or a pale clone of him. */
+    public static final class ConstructRenderer extends EntityRenderer<StoryConstructEntity> {
+        private static final ItemStack SWORD = new ItemStack(Items.IRON_SWORD), SHIELD = new ItemStack(Items.SHIELD), BOOK = new ItemStack(Items.WRITTEN_BOOK);
+
+        public ConstructRenderer(EntityRendererProvider.Context ctx) { super(ctx); this.shadowRadius = 0.3f; }
+
+        @Override
+        public ResourceLocation getTextureLocation(StoryConstructEntity e) { return BASE.texture(); }
+
+        @Override
+        public void render(StoryConstructEntity e, float yaw, float partial, PoseStack pose, MultiBufferSource buffers, int light) {
+            float age = e.tickCount + partial;
+            pose.pushPose();
+            pose.mulPose(Axis.YP.rotationDegrees(-Mth.rotLerp(partial, e.yBodyRotO, e.yBodyRot)));
+            switch (e.kind()) {
+                case StoryConstructEntity.CLONE -> GeoDraw.paint(pose, buffers, BASE, "idle", age / 20f, GeoDraw.Space.PROP, GeoDraw.Layer.TRANSLUCENT,
+                        LightTexture.FULL_BRIGHT, 0x99B8A8FF, 0);
+                case StoryConstructEntity.AVATAR -> {
+                    String name = e.getCustomName() == null ? "" : e.getCustomName().getString();
+                    if ("The Creator".equals(name)) {
+                        pose.translate(0, 1.1 + Mth.sin(age * 0.1f) * 0.08, 0);
+                        pose.mulPose(Axis.YP.rotationDegrees(age * 4f));
+                        pose.scale(1.2f, 1.2f, 1.2f);
+                        Minecraft.getInstance().getItemRenderer().renderStatic(BOOK, ItemDisplayContext.FIXED, LightTexture.FULL_BRIGHT,
+                                OverlayTexture.NO_OVERLAY, pose, buffers, e.level(), e.getId());
+                    } else {
+                        int tint = switch (name) {
+                            case "Truth" -> 0x99FFE1B5;
+                            case "Kami Tenchi" -> 0x99FFE8A0;
+                            case "Grand Zeno" -> 0x99F4ECFF;
+                            case "Beerus" -> 0x99C88CFF;
+                            case "Anti-Spiral" -> 0x998D75FF;
+                            case "Arceus" -> 0x99FFE68A;
+                            case "Ultimate Madoka" -> 0x99FFD8F4;
+                            default -> 0x99B8D6FF;
+                        };
+                        if ("Grand Zeno".equals(name)) pose.scale(0.58f, 0.58f, 0.58f);
+                        GeoDraw.paint(pose, buffers, BASE, "idle", age / 20f, GeoDraw.Space.PROP, GeoDraw.Layer.TRANSLUCENT,
+                                LightTexture.FULL_BRIGHT, tint, 0);
+                    }
+                }
+                default -> {
+                    boolean shield = e.kind() == StoryConstructEntity.SHIELD;
+                    pose.translate(0, 1.0 + Mth.sin(age * 0.1f) * 0.12, 0);
+                    pose.mulPose(Axis.YP.rotationDegrees(shield ? 180f : age * 12f));
+                    pose.scale(shield ? 1.8f : 1.6f, shield ? 1.8f : 1.6f, shield ? 1.8f : 1.6f);
+                    Minecraft.getInstance().getItemRenderer().renderStatic(shield ? SHIELD : SWORD, ItemDisplayContext.FIXED, LightTexture.FULL_BRIGHT,
+                            OverlayTexture.NO_OVERLAY, pose, buffers, e.level(), e.getId());
+                }
+            }
+            pose.popPose();
+            super.render(e, yaw, partial, pose, buffers, light);
+        }
     }
 }

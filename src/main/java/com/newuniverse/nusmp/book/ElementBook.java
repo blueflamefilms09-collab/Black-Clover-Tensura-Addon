@@ -5,6 +5,8 @@ import com.newuniverse.nusmp.blackclover.MagicType;
 import com.newuniverse.nusmp.blackclover.TimeStop;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
+import com.newuniverse.nusmp.prop.MagicProps;
+import com.newuniverse.nusmp.prop.PropKind;
 import io.github.manasmods.manascore.network.api.util.Changeable;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import net.minecraft.core.BlockPos;
@@ -44,6 +46,52 @@ public class ElementBook extends GrimoireBook {
 
     @Override protected List<BookPage> familyPages() { return pages; }
     @Override public ResourceKey<DamageType> damageType() { return damage; }
+
+    @Override
+    public void vfx(ServerPlayer player, VfxShape shape, Vec3 from, Vec3 to, int ticks, float power) {
+        VfxShape identity = switch (magic) {
+            case STAR -> VfxShape.STAR_MAGIC;
+            case SAND -> VfxShape.SAND_MAGIC;
+            case MIST -> VfxShape.MIST_MAGIC;
+            case BONE -> switch (shape) {
+                case WATER_RING, WIND_RING, EARTH_SPIKES -> VfxShape.BONE_FX2;
+                case WATER_SPLASH, MAGIC_CIRCLE_EXPLOSION, FLAME_EXPLOSION -> VfxShape.BONE_FX3;
+                default -> VfxShape.BONE_FX1;
+            };
+            case BLOOD -> switch (shape) {
+                case WATER_RING, WIND_RING, EARTH_SPIKES -> VfxShape.BLOOD_FX2;
+                case WATER_SPLASH, MAGIC_CIRCLE_EXPLOSION, FLAME_EXPLOSION -> VfxShape.BLOOD_FX3;
+                default -> VfxShape.BLOOD_FX1;
+            };
+            default -> shape;
+        };
+        super.vfx(player, identity, from, to, ticks, power);
+        float scale = Math.max(0.35f, Math.min(3.5f, Math.abs(power)));
+        float yaw = (float) Math.toDegrees(Math.atan2(-(to.x - from.x), to.z - from.z));
+        if (magic == MagicType.RECOMBINATION) {
+            PropKind prop = identity == VfxShape.RECOMBINE_CONSTRUCT ? PropKind.RECOMBINATION_1 : PropKind.RECOMBINATION_2;
+            MagicProps.spawn(player.serverLevel(), prop, from, yaw, Math.max(0.8f, Math.min(scale, 2.5f)),
+                    Math.max(12, Math.min(ticks, 100)), 0, player);
+        }
+    }
+
+    @Override
+    public void castCircle(ServerPlayer player, float power) {
+        if (WikiBooks.isNewAttribute(magic)) {
+            vfx(player, VfxShape.WIKI_MAGIC_CAST, player.position().add(0, 0.05, 0), player.getEyePosition(), 22, power);
+            return;
+        }
+        super.castCircle(player, power);
+    }
+
+    @Override
+    public void impact(ServerPlayer player, Vec3 at, float power) {
+        if (WikiBooks.isNewAttribute(magic)) {
+            vfx(player, VfxShape.WIKI_MAGIC_BURST, at, at.add(0, 1, 0), 20, power);
+            return;
+        }
+        super.impact(player, at, power);
+    }
 
     /** What a hit does on top of damage. */
     @FunctionalInterface public interface Rider { void apply(LivingEntity target, ServerPlayer caster); }
@@ -204,8 +252,9 @@ public class ElementBook extends GrimoireBook {
             tag.putFloat("EmpowerBonus", bonus);
             if (thorns) tag.putLong("ThornsUntil", p.level().getGameTime() + ticks);
             for (Supplier<MobEffectInstance> e : effects) p.addEffect(e.get());
+            if (b.magic == MagicType.BONE) com.newuniverse.nusmp.aura.PlayerAuras.set(p, com.newuniverse.nusmp.aura.Aura.BONE, ticks);
             b.castCircle(p, 1f);
-            VfxSpawn.sendFollowing(p.serverLevel(), shape, p, p.position().add(0, 1, 0), b.color, ticks, 1f);
+            VfxSpawn.sendFollowing(p.serverLevel(), shape, p, p.position().add(0, 1, 0), b.color, ticks, shape == VfxShape.WIKI_MAGIC_FIELD ? 0.45f : 1f);   // 0.92: a body-sized aura (the wiki field layer reads power as radius / 3)
             return true;
         };
     }

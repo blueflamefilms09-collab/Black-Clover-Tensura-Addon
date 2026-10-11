@@ -29,6 +29,9 @@ public final class AntiMagic {
         return SkillAPI.getSkillsFrom(p).getSkill(NUSkills.ANTI_MAGIC_LORD.getId());
     }
 
+    /** True for either the current Anti-Magic grimoire or a legacy Lord skill. */
+    public static boolean isUser(Player p) { return book(p).isPresent() || lord(p).isPresent(); }
+
     /** Where AMP is kept: the Anti-Magic grimoire, else the old Lord skill. */
     static Optional<ManasSkillInstance> ampHolder(Player p) {
         var b = book(p);

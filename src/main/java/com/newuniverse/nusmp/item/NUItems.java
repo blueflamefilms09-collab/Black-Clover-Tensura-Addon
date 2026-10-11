@@ -85,13 +85,19 @@ public final class NUItems {
     // 0.52: Zagred's drops (see BossRelics)
     public static final DeferredItem<RelicItem> SHROUD_OF_MARGINS = relic("shroud_of_margins", RelicItem.Kind.MARGINS, Rarity.EPIC);
     public static final DeferredItem<RelicItem> CIRCLET_OF_THOUGHT = relic("circlet_of_quickened_thought", RelicItem.Kind.QUICKENED, Rarity.EPIC);
-    // 0.60: Riven Remake's drop and spawn egg
-    public static final DeferredItem<Item> BLACK_BULL_BARD_RELIC = ITEMS.register("black_bull_bard_relic", () -> new RelicItem(RelicItem.Kind.BARD_RELIC, new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));   // 0.100: now usable (BossDrops)
-    public static final DeferredItem<RelicItem> STORY_PAGE = relic("story_page", RelicItem.Kind.STORY_PAGE, Rarity.RARE);                 // 0.100
-    public static final DeferredItem<RelicItem> GALE_FEATHER = relic("gale_feather", RelicItem.Kind.GALE_FEATHER, Rarity.EPIC);          // 0.100: Sylph's drop
-    public static final DeferredItem<net.neoforged.neoforge.common.DeferredSpawnEggItem> RIVEN_REMAKE_SPAWN_EGG = ITEMS.register("riven_remake_spawn_egg",
-            () -> new net.neoforged.neoforge.common.DeferredSpawnEggItem(com.newuniverse.nusmp.entity.NUEntities.RIVEN_REMAKE, 0x14101F, 0x7A5CFF, new Item.Properties()));
     public static final DeferredItem<Item> HEART_OF_WORDS = ITEMS.register("heart_of_words", () -> new Item(new Item.Properties().stacksTo(16).rarity(Rarity.EPIC).fireResistant()));
+    // 0.92: Riven Remake's relic and spawn egg
+    public static final DeferredItem<Item> BARD_RELIC = ITEMS.register("black_bull_bard_relic", () -> new RelicItem(RelicItem.Kind.BARD_RELIC, new Item.Properties().stacksTo(16).rarity(Rarity.EPIC).fireResistant()));   // 0.100: now usable (BossDrops)
+    public static final DeferredItem<RelicItem> STORY_PAGE = relic("story_page", RelicItem.Kind.STORY_PAGE, Rarity.RARE);                 // 0.100: Riven's consumable page
+    public static final DeferredItem<RelicItem> GALE_FEATHER = relic("gale_feather", RelicItem.Kind.GALE_FEATHER, Rarity.EPIC);          // 0.100: Sylph's drop
+    public static final DeferredItem<Item> MARQUIS_STORY_PAGE = ITEMS.register("marquis_story_page",
+            () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    public static final DeferredItem<Item> MARQUIS_CREST_CAPE = ITEMS.register("marquis_crest_cape",
+            () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    public static final DeferredItem<Item> MARQUIS_CROWN = ITEMS.register("marquis_final_crown",
+            () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    public static final DeferredItem<net.minecraft.world.item.SpawnEggItem> RIVEN_SPAWN_EGG = ITEMS.register("riven_remake_spawn_egg",
+            () -> new net.minecraft.world.item.SpawnEggItem(com.newuniverse.nusmp.entity.NUEntities.RIVEN.get(), 0x14101F, 0x8A6AFF, new Item.Properties()));
 
     // ---------------------------------------------------------------- magic tools (attribute conduction)
     public static final DeferredItem<SwordItem> MAGIC_TOOL_SWORD = ITEMS.register("magic_tool_sword",
@@ -120,9 +126,8 @@ public final class NUItems {
     public static final DeferredItem<MagicWeaponItem> RIMEHEART_RUNEBLADE = weapon("rimeheart_runeblade", MagicWeaponItem.Kind.RIMEHEART);
     // 0.52: Zagred's quill-blade
     public static final DeferredItem<MagicWeaponItem> LAST_WORD = weapon("last_word", MagicWeaponItem.Kind.LAST_WORD);
-
-    // 0.99: the first Wizard King's legacy sword (Lemiel Silvamillion Clover's Elsdocia), God-class and unbreakable
-    public static final DeferredItem<MagicWeaponItem> ELSDOCIA = ITEMS.register("elsdocia", ElsdociaSwordItem::new);
+    // 0.91: the first Wizard King's legacy sword
+    public static final DeferredItem<MagicWeaponItem> ELSDOCIA = weapon("elsdocia", MagicWeaponItem.Kind.ELSDOCIA);
 
     // 0.100: the weapons of the "Custom weapon i want added" reference sheets (see ReferenceWeapons)
     public static final DeferredItem<MagicWeaponItem> QUICKLINGS_IVY = weapon("quicklings_ivy", MagicWeaponItem.Kind.QUICKLINGS_IVY);
@@ -142,19 +147,9 @@ public final class NUItems {
 
     /** Spirit Lord Skill: grants the non-grimoire Spirit Lord path. */
     public static final DeferredItem<SpiritLordSkillItem> SPIRIT_LORD_SKILL = ITEMS.register("spirit_lord_skill", SpiritLordSkillItem::new);
-
-    /** Physical key charge collected through Key Magic and consumed by Janus Abigail. Restored in 0.99. */
+    /** Physical key charge collected through Key Magic and consumed by Janus Abigail. */
     public static final DeferredItem<Item> MAGIC_KEY = ITEMS.register("magic_key",
             () -> new MagicKeyItem(new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
-
-    // 0.61: Riven Remake's manifested weapons (engraved by RivenEngravings; never in a creative tab or the enchanting table)
-    public static final DeferredItem<Item> STORY_RAPIER = ITEMS.register("story_rapier", () -> new SwordItem(Tiers.IRON, new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).attributes(SwordItem.createAttributes(Tiers.IRON, 3, -2.4f))));
-    public static final DeferredItem<Item> STORY_BLADE = ITEMS.register("story_blade", () -> new SwordItem(Tiers.IRON, new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).attributes(SwordItem.createAttributes(Tiers.IRON, 3, -2.4f))));
-    public static final DeferredItem<Item> HEXBLADE = ITEMS.register("hexblade", () -> new SwordItem(Tiers.IRON, new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).attributes(SwordItem.createAttributes(Tiers.IRON, 3, -2.4f))));
-    public static final DeferredItem<Item> GRIMOIRE_EDGE = ITEMS.register("grimoire_edge", () -> new SwordItem(Tiers.IRON, new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).attributes(SwordItem.createAttributes(Tiers.IRON, 3, -2.4f))));
-    public static final DeferredItem<Item> SHADOW_KNIFE = ITEMS.register("shadow_knife", () -> new SwordItem(Tiers.IRON, new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).attributes(SwordItem.createAttributes(Tiers.IRON, 3, -2.4f))));
-    public static final DeferredItem<Item> SEVER_QUILL = ITEMS.register("sever_quill", () -> new SwordItem(Tiers.IRON, new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).attributes(SwordItem.createAttributes(Tiers.IRON, 3, -2.4f))));
-    public static final DeferredItem<Item> LAST_LINE = ITEMS.register("last_line", () -> new SwordItem(Tiers.IRON, new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).attributes(SwordItem.createAttributes(Tiers.IRON, 3, -2.4f))));
 
     public static List<DeferredItem<? extends Item>> all() {
         List<DeferredItem<? extends Item>> l = new java.util.ArrayList<>();
@@ -163,11 +158,10 @@ public final class NUItems {
         l.addAll(List.of(COMMUNICATION_DEVICE, RUNE_STONE, SPIRIT_CHARM, BOND_THREAD, FORTUNE_DIE,
                 GRIMOIRE_CHAIN, ANTI_BIRD_CHARM, RECOVERY_SALVE, WRITTEN_CONSENT, DEVIL_CONTRACT, GAUCHE_MIRROR, MAGIC_TOOL_SWORD, MAGIC_TOOL_SPEAR, MAGIC_TOOL_BOW, SPIRIT_LORD_SKILL));
         l.addAll(List.of(PAINT_BRUSH, PAINT_PALETTE));                                          // 0.44
-        l.add(MAGIC_KEY);                                                                       // 0.99: restored
         l.addAll(List.of(LAST_WORD, SHROUD_OF_MARGINS, CIRCLET_OF_THOUGHT, HEART_OF_WORDS));    // 0.52
-        l.addAll(List.of(RIVEN_REMAKE_SPAWN_EGG, BLACK_BULL_BARD_RELIC));                       // 0.60
+        l.addAll(List.of(BARD_RELIC, RIVEN_SPAWN_EGG));                                         // 0.92
         l.addAll(List.of(QUICKLINGS_IVY, MAGEBANE_LONGSWORD, PRISM_BLADE, THUNDERCLEAVE, BLOODBOUND_KATANA, PERMAFROST_SABRE, CYCLONE_RAPIER, STORY_PAGE, GALE_FEATHER));   // 0.100
-        // 0.61: the manifested weapons are held in the registry only, not listed in the creative tab
+        l.add(MAGIC_KEY);
         return l;
     }
 }

@@ -5,41 +5,68 @@ import com.newuniverse.nusmp.skill.codex.AnimeSkill;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
-/** One scored action list for one target: every legal codex skill, best first. The top entry is the plan; it is kept for at most replanTicks. */
+/**
+ * A scored list of the skills Riven could use on one target right now. Higher is better. A skill scores up from its tier and from
+ * every {@code counters} tag the target carries, and down for every {@code resisted_by} tag, for a gap it can't cover, for a cast
+ * slower than a speedster allows, and for damage kinds that have already bounced off this target in this fight.
+ */
 public final class KillPlan {
-    public record Entry(AnimeSkill skill, double score) {}
+    public record Option(AnimeSkill skill, float score, String why) {}
 
-    public final List<Entry> entries = new ArrayList<>();
+    public final List<Option> options = new ArrayList<>();
 
-    public Entry best() { return entries.isEmpty() ? null : entries.get(0); }
+    public Option best() { return options.isEmpty() ? null : options.get(0); }
 
-    /**
-     * Score = tier weight + 15 per matching target trait ("counters") - 45 per resisted_by match + range fit (out of range is illegal) -
-     * a little for cast time against a fast mover. Lethal skills x1.5 in the emotional high. Unaffordable or cooling-down skills are left out.
-     */
-    public static KillPlan build(RivenBossEntity boss, ThreatScan scan, int phase, java.util.function.Predicate<AnimeSkill> legal, net.minecraft.util.RandomSource rng) {
+    /** Best option that is not {@code not}, for the second skill of a phase 3 chain. */
+    public Option next(AnimeSkill not) {
+        for (Option o : options) if (o.skill() != not) return o;
+        return null;
+    }
+
+    public static KillPlan build(RivenBossEntity boss, ThreatScan scan, Iterable<AnimeSkill> pool, long now, Map<String, Long> ready,
+                                 Map<String, Long> resistedUntil) {
         KillPlan plan = new KillPlan();
-        for (AnimeSkill s : com.newuniverse.nusmp.skill.codex.AnimeSkillCodex.all()) {
-            if (!legal.test(s)) continue;
-            if (s.has("copy_codex_skill") && phase < 2) continue;
-            if (scan.distance > s.range() && s.range() > 0) continue;                         // out of reach
-            if (s.range() == 0 && !s.has("heal") && !s.has("song_buff") && !s.has("summon_construct")) continue;
-            double score = 10 * s.tier();
-            for (String c : s.counters()) if (scan.traits.contains(c)) score += 15;
-            for (String r : s.resistedBy()) if (scan.resists.contains(r)) score -= 45;
-            if (s.range() > 0 && scan.distance <= 4 && s.range() > 10 && !s.has("blink")) score -= 6;   // a bard doesn't want to cast point-blank
-            if (s.range() > 0 && s.range() <= 6 && scan.distance > 6) score -= 20;
-            if (scan.traits.contains("kiter") && s.castTicks() > 16 && !s.has("song_debuff")) score -= 8;
-            if (s.has("heal") || s.has("song_buff")) score += boss.getHealth() < boss.getMaxHealth() * 0.7f ? 20 : -15;
-            if (s.has("shield") || s.has("summon_construct")) score += scan.traits.contains("rusher") || scan.traits.contains("melee") ? 12 : -10;
-            if (phase >= 3 && s.lethal()) score *= 1.5;
-            if (boss.passives().forcedCounter != null && s.has(boss.passives().forcedCounter)) score += 40;      // Counter Author: his next plan is the counter
-            if (!boss.passives().canRewrite(scan) && s.has("silence")) score = 0;                             // Unbelieved: a plan that cannot land is worthless
-            score += rng.nextDouble() * 6;                                                     // a bard improvises a little
-            plan.entries.add(new Entry(s, score));
+        int phase = boss.phase();
+        for (AnimeSkill s : pool) {
+            if (s.tier() > phase + 1) continue;                                   // the story unlocks as it goes
+            if (RivenCombat.firstPhase(s) > phase) continue;
+            if (ready.getOrDefault(s.id(), 0L) > now) continue;                   // cooldown
+            if (s.tier() >= 3 && boss.story() < RivenBossEntity.STORY_COST) continue;   // can't afford it
+            if (s.has("summon_construct") && !boss.canManifest()) continue;
+            if (s.nativeId().equals("audience_collapse") && !boss.canStartAudienceCollapse()) continue;
+            if (s.nativeId().equals("rewrite_round") && !boss.canRewriteRound()) continue;
+            if (s.nativeId().equals("final_page") && !boss.finalPageReady()) continue;
+            if (s.has("heal") && boss.getHealth() > boss.getMaxHealth() * 0.9f && s.primitives().size() == 1) continue;
+            StringBuilder why = new StringBuilder();
+            float score = 1f + s.tier() * 0.6f;
+            for (String c : s.counters()) if (scan(scan, c)) { score += 2.2f; why.append("+").append(c).append(' '); }
+            for (String r : s.resistedBy()) if (scan(scan, r)) { score -= 3.2f; why.append("-").append(r).append(' '); }
+            if (s.has("magic_damage") && resisted(resistedUntil, "magic", now)) { score -= 2.5f; why.append("-magic_bounced "); }
+            if (s.has("physical_damage") && (scan.has("physical_immune") || resisted(resistedUntil, "physical", now))) { score -= 3f; why.append("-physical_bounced "); }
+            if (s.has("magic_damage") && (scan.has("magic_null") || scan.has("anti_magic"))) { score -= 2f; why.append("-anti_magic "); }
+            float gap = scan.distance - s.range();
+            boolean gapCloser = s.has("blink") || s.has("pull");
+            if (gap > 0 && !gapCloser) { score -= Math.min(4f, gap * 0.4f); why.append("-out_of_range "); }
+            else if (s.range() >= 8 && scan.distance <= 4f && !gapCloser) { score += scan.has("melee") ? 0.4f : 0f; }
+            if (s.has("melee_arc") && scan.distance > 5f && !s.has("blink")) { score -= 3f; why.append("-too_far "); }
+            if (s.has("melee_arc") && scan.distance <= 4f) { score += 1.2f; why.append("+close "); }
+            if (scan.has("speedster") && s.castTicks() > 20 && !s.has("summon_construct")) { score -= 1.5f; why.append("-slow_cast "); }
+            if (s.has("blink") && scan.distance < 5f && scan.has("kiter")) { score += 0.8f; }
+            if (!scan.lineOfSight && (s.has("projectile") || s.has("pull"))) { score -= 2f; why.append("-no_los "); }
+            if (s.has("heal") || s.has("shield")) score += (1f - boss.getHealth() / boss.getMaxHealth()) * 3f;
+            if (s.has("song_buff") && boss.hasSongBuff()) score -= 3f;
+            if (boss.emotionalHigh() && s.lethal()) { score *= 1.5f; why.append("x1.5(emotional) "); }
+            score += boss.getRandom().nextFloat() * 0.6f;                         // never the same script twice
+            plan.options.add(new Option(s, score, why.toString().trim()));
         }
-        plan.entries.sort(Comparator.comparingDouble((Entry e) -> e.score).reversed());
+        plan.options.sort(Comparator.comparingDouble((Option o) -> o.score()).reversed());
         return plan;
     }
+
+    private static boolean scan(ThreatScan scan, String tag) { return scan.has(tag.toLowerCase(Locale.ROOT)); }
+
+    private static boolean resisted(Map<String, Long> map, String kind, long now) { return map.getOrDefault(kind, 0L) > now; }
 }

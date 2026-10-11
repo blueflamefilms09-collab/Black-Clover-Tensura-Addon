@@ -49,5 +49,7 @@ final class PropRegistry {
         SlashProps.init();
         CompassProps.init();
         MercuryProps.init();
+        SandProps.init();
+        RecombinationProps.init();
     }
 }

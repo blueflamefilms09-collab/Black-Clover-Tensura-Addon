@@ -6,18 +6,24 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
-/** Riven's state for the client: phase, the animation clip being played, the skill name for the bar, and the story charge (0-100). Sent when it changes. */
-public record RivenStatePayload(int entity, int phase, String clip, String skill, int charge) implements CustomPacketPayload {
+/**
+ * Riven's state for the client's boss bar: phase, health fraction, story charge, and the skill he is casting (name, cast length in
+ * ticks). Sent to everyone tracking him when something changes, and every 10 ticks otherwise; the bar interpolates between them.
+ */
+public record RivenStatePayload(int entity, int phase, float hp, int story, String cast, int castTicks, int maxConstructs,
+                                String combatType, String grimoire, String status) implements CustomPacketPayload {
     public static final Type<RivenStatePayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "riven_state"));
     public static final StreamCodec<FriendlyByteBuf, RivenStatePayload> STREAM_CODEC = StreamCodec.of(
-            (buf, p) -> { buf.writeVarInt(p.entity()); buf.writeByte(p.phase()); buf.writeUtf(p.clip(), 40); buf.writeUtf(p.skill(), 80); buf.writeByte(p.charge()); },
-            buf -> new RivenStatePayload(buf.readVarInt(), buf.readByte(), buf.readUtf(40), buf.readUtf(80), buf.readByte()));
+            (buf, p) -> { buf.writeVarInt(p.entity()); buf.writeByte(p.phase()); buf.writeFloat(p.hp()); buf.writeByte(p.story());
+                          buf.writeUtf(p.cast(), 64); buf.writeVarInt(p.castTicks()); buf.writeByte(p.maxConstructs());
+                          buf.writeUtf(p.combatType(), 32); buf.writeUtf(p.grimoire(), 64); buf.writeUtf(p.status(), 64); },
+            buf -> new RivenStatePayload(buf.readVarInt(), buf.readByte(), buf.readFloat(), buf.readByte(), buf.readUtf(64),
+                    buf.readVarInt(), buf.readByte(), buf.readUtf(32), buf.readUtf(64), buf.readUtf(64)));
 
     @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
 
     public static void register(RegisterPayloadHandlersEvent event) {
-        event.registrar("1").optional().playToClient(TYPE, STREAM_CODEC, (p, ctx) -> ctx.enqueueWork(() -> {
-            if (ctx.player() != null && ctx.player().level().getEntity(p.entity()) instanceof RivenBossEntity r) r.applyState(p.phase(), p.clip(), p.skill(), p.charge());
-        }));
+        event.registrar("2").optional().playToClient(TYPE, STREAM_CODEC,
+                (p, ctx) -> ctx.enqueueWork(() -> com.newuniverse.nusmp.client.riven.RivenClientState.accept(p)));
     }
 }

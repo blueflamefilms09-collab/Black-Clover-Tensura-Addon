@@ -1,11 +1,12 @@
 package com.newuniverse.nusmp.prop;
 
-/** 0.53 Bone Magic: the server behaviours of this magic's props (PropKind.BONE_1, PropKind.BONE_2). STUB until the attribute needs props. */
+/** Server lifetime and movement for Bone Magic's summoned spear and ossuary props. */
 public final class BoneProps {
     private BoneProps() {}
 
     /** Called once by PropRegistry. */
     public static void init() {
-        // MagicProps.register(PropKind.BONE_1, (e, sl) -> { ... });
+        MagicProps.register(PropKind.BONE_1, (e, sl) -> e.setNoGravity(true));
+        MagicProps.register(PropKind.BONE_2, (e, sl) -> e.setNoGravity(true));
     }
 }

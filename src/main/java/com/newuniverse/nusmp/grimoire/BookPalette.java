@@ -9,8 +9,17 @@ public final class BookPalette {
 
     private BookPalette() {}
 
-    /** Cover leather, RGB. */
+    /** Cover leather, RGB: the hand-made colour of the magic, or a generated one ({@link GrimoireDesignGenerator}) for magics without an entry. */
     public static int cover(String magic) {
+        int fixed = fixedCover(magic);
+        if (fixed >= 0) return fixed;
+        return magic.isEmpty() ? 0x8A6A4A : GrimoireDesignGenerator.forMagic(magic).cover();
+    }
+
+    /** True if this magic has a hand-made palette (everything else is generated); a book with no magic keeps the old default look. */
+    public static boolean handMade(String magic) { return magic.isEmpty() || fixedCover(magic) >= 0; }
+
+    private static int fixedCover(String magic) {
         return switch (magic) {
             case "FLAME" -> 0x9C2117; case "EXPLOSION" -> 0xC4561C; case "MAGMA" -> 0x8A2A12;
             case "WATER" -> 0x3F78C8; case "ICE" -> 0x8CC6E6; case "MERCURY" -> 0xB8BECC; case "MIST" -> 0xA7B6C8;
@@ -57,12 +66,13 @@ public final class BookPalette {
             case "BUBBLE" -> 0x6A9AE0;
             case "ICE_WEDGE" -> 0x6AB0D8;
             case "LEGION" -> 0x6A5A3A;
-            default -> 0x8A6A4A;
+            default -> -1;
         };
     }
 
     /** Frame and ornament metal, RGB: gold for most books, silver for cold and metal magics, bronze for earthy ones. */
     public static int trim(String magic) {
+        if (!handMade(magic)) return GrimoireDesignGenerator.forMagic(magic).trim();
         return switch (magic) {
             case "WATER", "ICE", "MERCURY", "MIST", "MIRROR", "STEEL", "SWORD", "CREATION", "LIGHTNING", "SEALING", "CURSE_WARDING", "BARRIER", "CHAIN", "CHERRY_BLOSSOM", "CRYSTAL", "CORUNDUM", "IRON", "GEL", "GLASS", "BUBBLE", "ICE_WEDGE" -> SILVER;
             case "EARTH", "SAND", "BEAST", "BONE", "BODY", "BRIAR", "FUNGUS", "BRONZE", "COPPER", "LEGION" -> BRONZE;
@@ -73,6 +83,7 @@ public final class BookPalette {
 
     /** Glow while the book is out and in use, RGB. Anti-Magic is a dark, light-eating red. */
     public static int glow(String magic) {
+        if (!handMade(magic)) return GrimoireDesignGenerator.forMagic(magic).glow();
         return switch (magic) {
             case "FLAME" -> 0xFF4A1F; case "EXPLOSION" -> 0xFF8A2A; case "MAGMA" -> 0xFF5A14;
             case "WATER" -> 0x3F8CFF; case "ICE" -> 0x9FE8FF; case "MERCURY" -> 0xC8D0E0; case "MIST" -> 0xD0DCEC;

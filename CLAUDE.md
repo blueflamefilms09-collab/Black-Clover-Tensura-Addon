@@ -24,6 +24,9 @@
    models in hand (built in `tools/gen_weapon_models.py`, drawn by `client/WeaponRenderer.java`, previewed with
    `python tools/item_preview/preview_weapons.py`), keep their old sprite as the inventory icon, and get glow / void / effects
    that fit them.
+8. **Always publish completed updates and fixes.** Commit and push the completed change to the current working branch, then
+   publish its build as a GitHub pre-release with the mod JAR attached. Do not push directly to `main` or `master` unless
+   the owner explicitly asks; if build or release publication is blocked, report the blocker clearly.
 
 Build: `gradlew.bat build` (JDK 21) -> `build/libs/multiverse-of-anime-<version>.jar`.
 Preview VFX without the game: `python tools/vfx_preview/preview.py`.

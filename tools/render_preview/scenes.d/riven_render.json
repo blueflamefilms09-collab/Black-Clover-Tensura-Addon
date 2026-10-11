@@ -1,0 +1,20 @@
+{
+ "riven_idle": {
+  "kind": "geo", "model": "riven_remake", "anim": "idle", "glow": "FFFFFFFF", "ages": [0],
+  "tile": [520, 700],
+  "views": [{"name": "front", "yaw": 0, "pitch": 6}, {"name": "3/4", "yaw": 38, "pitch": 14}, {"name": "back", "yaw": 160, "pitch": 10}],
+  "space": "PROP", "layer": "CUTOUT"
+ },
+ "riven_cast": {
+  "kind": "geo", "model": "riven_remake", "anim": "cast_grimoire", "glow": "FFFFFFFF", "ages": [0, 6, 10, 14],
+  "tile": [420, 560],
+  "views": [{"name": "3/4", "yaw": 38, "pitch": 10}],
+  "space": "PROP", "layer": "CUTOUT"
+ },
+ "riven_final": {
+  "kind": "geo", "model": "riven_remake_final", "anim": "final_form", "glow": "FFFFFFFF", "ages": [20, 36],
+  "tile": [480, 640],
+  "views": [{"name": "front", "yaw": 0, "pitch": 8}, {"name": "back", "yaw": 160, "pitch": 10}],
+  "space": "PROP", "layer": "CUTOUT"
+ }
+}

@@ -38,6 +38,7 @@ public class NUSMP {
         com.newuniverse.nusmp.item.NUItems.ITEMS.register(modEventBus);
         com.newuniverse.nusmp.item.NUItems.MATERIALS.register(modEventBus);
         com.newuniverse.nusmp.entity.NUEntities.ENTITIES.register(modEventBus);
+        com.newuniverse.nusmp.sound.NUSounds.SOUNDS.register(modEventBus);
         modEventBus.addListener(com.newuniverse.nusmp.entity.NUEntities::attributes);
         NUCreativeTab.TABS.register(modEventBus);
         modEventBus.addListener(VfxSpawn::registerPayloads);
@@ -50,15 +51,10 @@ public class NUSMP {
         modEventBus.addListener(com.newuniverse.nusmp.anim.SwordDrawPayload::register);
         modEventBus.addListener(com.newuniverse.nusmp.anim.CastAnimPayload::register);                      // 0.54: casting body animations                      // 0.52: the grimoire sword draw
         modEventBus.addListener(com.newuniverse.nusmp.entity.ZagredStatePayload::register);                 // 0.48: Zagred's state, word and reticle
-        modEventBus.addListener(com.newuniverse.nusmp.entity.riven.RivenStatePayload::register);            // 0.60: Riven Remake's phase, clip and charge
-        modContainer.registerConfig(ModConfig.Type.COMMON, com.newuniverse.nusmp.entity.riven.RivenConfig.SPEC, "nusmp-riven.toml");
-        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.AddReloadListenerEvent e) -> e.addListener(new com.newuniverse.nusmp.skill.codex.AnimeSkillCodex()));
+        modEventBus.addListener(com.newuniverse.nusmp.entity.riven.RivenStatePayload::register);            // 0.92: Riven Remake's boss-bar state
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.entity.riven.RivenCommands::register);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.item.RivenEngravings::onToss);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.item.RivenEngravings::onTooltip);
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.AddReloadListenerEvent e) -> e.addListener(new com.newuniverse.nusmp.skill.codex.AnimeSkillCodex.Loader()));
         if (FMLEnvironment.dist == Dist.CLIENT) {
-            modEventBus.addListener(com.newuniverse.nusmp.client.riven.RivenRenderer::register);              // 0.60
-            modEventBus.addListener(com.newuniverse.nusmp.client.riven.RivenBossBar::register);
             com.newuniverse.nusmp.vfx.client.VfxClientEvents.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireClient.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireShelfClient.init(modEventBus);
@@ -78,6 +74,8 @@ public class NUSMP {
             modEventBus.addListener(com.newuniverse.nusmp.client.ZagredRenderer::register);              // 0.47
             modEventBus.addListener(com.newuniverse.nusmp.client.ZagredRenderer::layers);
             modEventBus.addListener(com.newuniverse.nusmp.client.GrimoireDaemonRenderer::register);      // 0.52: Zagred's daemons
+            modEventBus.addListener(com.newuniverse.nusmp.client.riven.RivenRenderer::register);          // 0.92: Riven Remake and his story constructs
+            com.newuniverse.nusmp.client.riven.RivenBossBar.init(modEventBus);
             modEventBus.addListener(com.newuniverse.nusmp.client.GrimoireDaemonRenderer::layers);
             modEventBus.addListener(com.newuniverse.nusmp.client.CottonSheepRenderer::register);        // 0.52: Cotton Magic's sheep and cloud
             modEventBus.addListener(com.newuniverse.nusmp.client.CottonSheepRenderer::layers);
@@ -92,6 +90,7 @@ public class NUSMP {
             modEventBus.addListener(com.newuniverse.nusmp.client.RougeCatLayer::addLayers);                            // 0.48: the Genesis Demon-Slayer's 3D model and shaders
         }
         modContainer.registerConfig(ModConfig.Type.SERVER, NUConfig.SPEC);
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.entity.riven.RivenConfig.SPEC, "nusmp-riven.toml");
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.multiverse.MultiverseConfig.SPEC, "nusmp-multiverse-server.toml");
         // Multiverse: /multiverse commands, ceremony, mastery pages, ranks & stars, squads, status sync, world sites
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.MultiverseCommands::register);
@@ -120,6 +119,7 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.DreamWorld::onLogout);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.DreamWorld::onLogin);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.DreamWorld::onChat);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.DreamWorld::onServerStopping);
         // 0.42: Mirror Magic (array interception, lethal-hit shatter, Full Reflection)
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.MirrorWorks::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.MirrorWorks::onIncomingDamage);
@@ -146,6 +146,14 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.aura.PlayerAuras::onLogout);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.aura.PlayerAuras::onStartTracking);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.entity.ZagredAttacks::onHeal);                 // 0.52: Overwrite's "No healing"              // 0.50: Tensura engravings on the weapons
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.entity.riven.MarquisStatus::onHeal);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.entity.riven.MarquisStatus::onIncomingDamage);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.entity.riven.MarquisStatus::onPlayerTick);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.entity.riven.MarquisStatus::onAttack);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.entity.riven.MarquisStatus::onUseItem);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.entity.riven.MarquisStatus::onUseBlock);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.entity.riven.MarquisStatus::onLogout);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.entity.riven.MarquisStatus::onLogin);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.TreeRestore::onServerTick);                // 0.48: World Tree trees taken back (saved)
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.antimagic.NihilityZone::onServerTick);          // 0.48: Black Meteorite's Nihility zones
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.server.ServerStoppingEvent e) -> com.newuniverse.nusmp.antimagic.NihilityZone.clear());

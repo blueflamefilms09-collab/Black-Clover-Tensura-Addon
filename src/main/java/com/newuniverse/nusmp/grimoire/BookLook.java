@@ -6,7 +6,7 @@ package com.newuniverse.nusmp.grimoire;
  * with no conversion. Pure: no game classes.
  */
 public record BookLook(String emblem, BookMotif motif, boolean tattered, int coverColor, int trimColor, int emblemColor, int glowColor,
-                       CanonBook canon) {
+                       CanonBook canon, String magic) {
 
     /** Tint layers the model and the item colour handler share. */
     public static final int TINT_COVER = 0, TINT_TRIM = 1, TINT_EMBLEM = 2;
@@ -24,7 +24,8 @@ public record BookLook(String emblem, BookMotif motif, boolean tattered, int cov
         String emblem = cover == null || cover.isEmpty() ? "THREE_LEAF" : cover;
         if (c != null) {
             return new BookLook(c.cover, c.motif, c.motif == BookMotif.TATTERED, c.coverColor, c.trimColor,
-                    c.emblemColor != 0 ? c.emblemColor : BookPalette.emblem(c.cover), BookPalette.glow(c.magic), c);
+                    c.emblemColor != 0 ? c.emblemColor : BookPalette.emblem(c.cover), BookPalette.glow(c.magic), c,
+                    magic == null ? "" : magic);
         }
         String m = magic == null ? "" : magic;
         int coverColor = BookPalette.cover(m);
@@ -42,7 +43,7 @@ public record BookLook(String emblem, BookMotif motif, boolean tattered, int cov
             trim = BookPalette.GOD_TIER_TRIM;
             glow = BookPalette.GOD_TIER_GLOW;
         }
-        return new BookLook(emblem, motif, motif == BookMotif.TATTERED, coverColor, trim, BookPalette.emblem(emblem), glow, null);
+        return new BookLook(emblem, motif, motif == BookMotif.TATTERED, coverColor, trim, BookPalette.emblem(emblem), glow, null, m);
     }
 
     /** RGB for a tint layer, or -1 for none. */
@@ -59,11 +60,19 @@ public record BookLook(String emblem, BookMotif motif, boolean tattered, int cov
      * What the geometry depends on (colours are tints, not geometry). {@code open}: 0 = the closed book; 1..3 = the summoned book
      * opening into a V, spine towards the onlookers ({@link GrimoireBookPlan#OPEN_DEGREES}).
      */
-    public record Key(String emblem, BookMotif motif, boolean tattered, boolean held, int open) {
-        public Key(String emblem, BookMotif motif, boolean tattered, boolean held) { this(emblem, motif, tattered, held, 0); }
+    public record Key(String emblem, BookMotif motif, boolean tattered, boolean held, int open, String magic) {
+        public Key(String emblem, BookMotif motif, boolean tattered, boolean held, int open) {
+            this(emblem, motif, tattered, held, open, "");
+        }
+
+        public Key(String emblem, BookMotif motif, boolean tattered, boolean held) {
+            this(emblem, motif, tattered, held, 0, "");
+        }
     }
 
-    public Key key(boolean held) { return new Key(emblem, motif, tattered, held); }
+    public Key key(boolean held) { return new Key(emblem, motif, tattered, held, 0, magic); }
 
-    public Key key(boolean held, int open) { return new Key(emblem, motif, tattered, held, Math.max(0, Math.min(GrimoireBookPlan.OPEN_STEPS, open))); }
+    public Key key(boolean held, int open) {
+        return new Key(emblem, motif, tattered, held, Math.max(0, Math.min(GrimoireBookPlan.OPEN_STEPS, open)), magic);
+    }
 }

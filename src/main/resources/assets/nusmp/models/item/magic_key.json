@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "nusmp:entity/key_mini_key"
+    "layer0": "nusmp:item/magic_key"
   }
 }

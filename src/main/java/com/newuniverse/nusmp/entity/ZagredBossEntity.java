@@ -9,6 +9,7 @@ import com.newuniverse.nusmp.book.KotodamaWords.Source;
 import com.newuniverse.nusmp.book.KotodamaWords.Word;
 import com.newuniverse.nusmp.book.SpellRuntime;
 import com.newuniverse.nusmp.book.UnderworldMatter;
+import com.newuniverse.nusmp.sound.NUSounds;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
 import net.minecraft.ChatFormatting;
@@ -23,6 +24,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
@@ -104,6 +106,7 @@ public class ZagredBossEntity extends Monster {
     private int state = STATE_IDLE, stateWord = -1, stateTarget = -1;
     private Word pending;
     private long castAt, nextThink;
+    private long nextVoiceLine;
     private float recentDamage;
     // 0.49: Tensura's own magic (TensuraCaster), learned on its first tick, cast between words
     private List<net.minecraft.resources.ResourceLocation> tensuraKit;
@@ -208,7 +211,8 @@ public class ZagredBossEntity extends Monster {
         if (pending != null) {                                                   // a telegraphed word lands
             if (t >= castAt) {
                 KotodamaWords.speak(this, pending, Source.BOSS);
-                if (pending == Word.HEAL) { healed = true; say(sl, "\"Heal.\""); }
+                voiceLine(sl, voiceFor(pending), wordLine(pending), 60, false);
+                if (pending == Word.HEAL) healed = true;
                 pending = null;
                 setState(sl, STATE_COMBAT, null, target);
             }
@@ -234,7 +238,13 @@ public class ZagredBossEntity extends Monster {
                 LivingEntity tg = getTarget();
                 if (!isAlive() || tg == null || !tg.isAlive()) return;
                 var id = TensuraCaster.cast(this, tg, tensuraKit, 10);
-                if (id != null) VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, getEyePosition(), tg.getBoundingBox().getCenter(), VIOLET, 20, 1.2f);
+                if (id != null) {
+                    voiceLine(sl, NUSounds.ZAGRED_WORD.get(), randomLine(
+                            "Your borrowed arts are still subject to my words.",
+                            "A different spell, the same inevitable ending.",
+                            "Show me a power worth remembering."), 60, false);
+                    VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, getEyePosition(), tg.getBoundingBox().getCenter(), VIOLET, 20, 1.2f);
+                }
                 setState(sl, STATE_COMBAT, null, tg);
             });
         }
@@ -520,12 +530,12 @@ public class ZagredBossEntity extends Monster {
     void enterPhase(ServerLevel sl, int ph) {
         entityData.set(PHASE, ph);
         String line = switch (ph) {
-            case 2 -> "Zagred: \"Your magic... I have heard it before.\" (it adapts to the element that hurts it most)";
-            case 3 -> "Zagred: \"Sink.\" (the arena floods with underworld matter)";
-            case 4 -> "Zagred: \"Words are the only law.\" (only anti-magic, or three elements at once, can wound it now)";
-            default -> "Zagred speaks.";
+            case 2 -> randomLine("Your magic... I have heard it before.", "Did you think that element could surprise me?", "I learn every weakness you reveal.");
+            case 3 -> randomLine("Sink beneath the world you know.", "Let the underworld rise around you.", "The ground itself answers my words.");
+            case 4 -> randomLine("Words are the only law.", "Now, even the laws of this world are mine.", "You will need more than courage to break my word.");
+            default -> "You have earned my attention.";
         };
-        say(sl, line);
+        voiceLine(sl, NUSounds.ZAGRED_PHASE.get(), line, 0, true);
         VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, getBoundingBox().getCenter(), position(), VIOLET, 40, 3f);
         sl.playSound(null, blockPosition(), SoundEvents.WITHER_SPAWN, SoundSource.HOSTILE, 2f, 0.6f);
         if (ph >= 3) nextFlood = tickCount;
@@ -551,9 +561,63 @@ public class ZagredBossEntity extends Monster {
         for (ServerPlayer p : sl.players()) if (p.distanceToSqr(this) < 64 * 64) p.sendSystemMessage(c);
     }
 
+    private static SoundEvent voiceFor(Word word) {
+        if (word == null) return NUSounds.ZAGRED_WORD.get();
+        return switch (word) {
+            case HALT, SEAL, SLEEP, FEAR, PETRIFY -> NUSounds.ZAGRED_SEAL.get();
+            case FALL, SLUDGE -> NUSounds.ZAGRED_FALL.get();
+            case SHATTER, TRIDENT, SWORDS, REJECT, BANISH -> NUSounds.ZAGRED_SHATTER.get();
+            case HEAL -> NUSounds.ZAGRED_HEAL.get();
+            case REDACT, OVERWRITE -> NUSounds.ZAGRED_OVERWRITE.get();
+            default -> NUSounds.ZAGRED_WORD.get();
+        };
+    }
+
+    private String wordLine(Word word) {
+        return switch (word) {
+            case HALT -> randomLine("Halt. Your body has heard me.", "Be still and witness your defeat.", "Not one step further.");
+            case SHATTER -> randomLine("Break apart and return to nothing.", "Your defense ends with this word.", "All things yield when I name their end.");
+            case HEAL -> randomLine("A minor correction. I will not fall here.", "I refuse the ending you chose for me.", "Even my wounds obey my words.");
+            case SLUDGE -> randomLine("Let the underworld swallow you.", "Sink into the black tide.", "There is no ground beneath you now.");
+            case TRIDENT -> randomLine("Pierce through every defense.", "A word made into a blade.", "Run from this, if you can.");
+            case SWORDS -> randomLine("A thousand edges answer me.", "Be carved from this world.", "My blades will find you all.");
+            case SEAL -> randomLine("Your power ends here.", "I close the path before you.", "Silence. Your spell is finished.");
+            case REJECT -> randomLine("Denied.", "Your magic has no place here.", "I reject your defiance.");
+            case FALL -> randomLine("Fall.", "The earth calls you down.", "Even the sky will not save you.");
+            case REVEAL -> randomLine("There you are.", "No hiding from the word soul.", "I see through every illusion.");
+            case SLEEP -> randomLine("Close your eyes.", "Rest now; the fight is over.", "Sleep beneath my command.");
+            case PETRIFY -> randomLine("Become stone.", "Let your defiance harden into silence.", "You will stand there forever.");
+            case FEAR -> randomLine("Tremble.", "Look upon me and despair.", "Your courage is only another word I can erase.");
+            case BANISH -> randomLine("Begone from my sight.", "I cast you out.", "Leave this place.");
+            case REVERSE -> randomLine("Your attack returns to its source.", "Turn against the hand that sent you.", "What you give, I send back.");
+            case DRAIN -> randomLine("Your strength belongs to me now.", "I will take what little power you have.", "Wither beneath my gaze.");
+            case REDACT -> randomLine("I erase your advantage.", "That power no longer exists.", "Let the page forget you.");
+            case OVERWRITE -> randomLine("I rewrite the law of this world.", "Your rules end where my words begin.", "The world will obey my version.");
+        };
+    }
+
+    private String randomLine(String... lines) {
+        return lines[getRandom().nextInt(lines.length)];
+    }
+
+    private void voiceLine(ServerLevel sl, SoundEvent sound, String line, long cooldown, boolean force) {
+        if (voice(sl, sound, cooldown, force)) say(sl, "Zagred: \"" + line + "\"");
+    }
+
+    private boolean voice(ServerLevel sl, SoundEvent sound, long cooldown, boolean force) {
+        if (!force && tickCount < nextVoiceLine) return false;
+        nextVoiceLine = tickCount + cooldown;
+        sl.playSound(null, this, sound, SoundSource.HOSTILE, 2.4f, 0.96f + getRandom().nextFloat() * 0.08f);
+        return true;
+    }
+
     /** A void lance: a black-violet spear thrown along a line, striking everything on it a moment later. */
     void lance(ServerLevel sl, LivingEntity target) {
         Vec3 from = getEyePosition(), to = target.getBoundingBox().getCenter(), dir = to.subtract(from).normalize(), end = from.add(dir.scale(28));
+        voiceLine(sl, NUSounds.ZAGRED_SHATTER.get(), randomLine(
+                "A lance through the heart of your defense.",
+                "I have already chosen where this ends.",
+                "Run. The word will still find you."), 60, false);
         VfxSpawn.send(sl, VfxShape.KOTO_TRIDENT, from, end, VIOLET, 14, 1.2f);
         sl.playSound(null, blockPosition(), SoundEvents.TRIDENT_THROW.value(), SoundSource.HOSTILE, 1.5f, 0.5f);
         SpellRuntime.later(sl, 5, () -> {
@@ -575,7 +639,7 @@ public class ZagredBossEntity extends Monster {
         elementDamage.clear();
         if (best.isEmpty() || best.equals(adapted)) return;
         adapted = best;
-        say(sl, "Zagred adapts: " + best + " barely touches it now.");
+        voiceLine(sl, NUSounds.ZAGRED_WORD.get(), "I have learned your " + best + " magic. It will not save you again.", 100, false);
         VfxSpawn.sendFollowing(sl, VfxShape.KOTO_AURA, this, position(), 0xFFC8A0FF, 30, 2f);
     }
 
@@ -654,6 +718,10 @@ public class ZagredBossEntity extends Monster {
         if (barrier.broken > 0 && level() instanceof ServerLevel sl) {
             VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, getBoundingBox().getCenter(), position(), 0xFFFFFFFF, 14, 1.6f);
             sl.playSound(null, blockPosition(), SoundEvents.GLASS_BREAK, SoundSource.HOSTILE, 1.5f, 0.8f);
+            voiceLine(sl, NUSounds.ZAGRED_SHATTER.get(), randomLine(
+                    "You have broken one layer. There are more.",
+                    "That was only the outer shell.",
+                    "A little progress. Do not mistake it for victory."), 60, false);
             if (barrier.reformStarted) say(sl, "Zagred: \"Again.\"");
         }
         if (through <= 0) {                                                          // the layers took all of it
@@ -680,7 +748,10 @@ public class ZagredBossEntity extends Monster {
         super.die(source);
         if (!(level() instanceof ServerLevel sl)) return;
         UnderworldMatter.endAll(this);
-        say(sl, "Zagred: \"...So words can be broken.\"");
+        voiceLine(sl, NUSounds.ZAGRED_PHASE.get(), randomLine(
+                "So... words can be broken.",
+                "This silence... cannot be...",
+                "You have written an ending I did not foresee."), 0, true);
         for (UUID id : fighters) {
             ServerPlayer p = sl.getServer().getPlayerList().getPlayer(id);
             if (p != null) { KotodamaWords.reward(p); com.newuniverse.nusmp.item.BossRelics.give(p); }

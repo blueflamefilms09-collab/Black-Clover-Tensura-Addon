@@ -7,10 +7,7 @@ import net.minecraft.world.item.TooltipFlag;
 
 import java.util.List;
 
-/**
- * A physical Key Magic token collected by Janus Baptism and spent to open Janus Abigail gates.
- * Restored in 0.99 after being removed in the grimoire refactor; the item is kept (rule 2: add new, keep old).
- */
+/** A physical Key Magic token collected by Janus Baptism and spent to open Janus Abigail gates. */
 public final class MagicKeyItem extends Item {
     public MagicKeyItem(Properties properties) { super(properties); }
 
