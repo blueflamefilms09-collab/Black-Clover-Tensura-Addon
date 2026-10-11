@@ -315,7 +315,7 @@
   "item.nusmp.magic_tool_bow": "Magic Tool Bow",
   "item.nusmp.communication_magic_device.desc": "Right-click another device holder to link. Start a chat message with % to speak through it.",
   "item.nusmp.mana_method_rune_stone.desc": "Use in the air to store your last grimoire page, then use on the ground to arm it as a 5-minute trap.",
-  "item.nusmp.spirit_charm.desc": "First Spirit Dive: consumed when the spirit chooses you. At 100 Trust, rename a charm at an anvil (its True Name) and sneak-use it to incarnate your spirit. After that, sneak-use to call or dismiss it.",
+  "item.nusmp.spirit_charm.desc": "First Spirit Dive: consumed when the spirit chooses you. At 100 Trust, rename a charm at an anvil (its True Name) and sneak-use it to incarnate your spirit. After that, sneak-use to call or dismiss it. Without a Black Clover bond it calls a Tensura-style spirit instead, a small floating orb: use to pick the element, sneak-use to call it.",
   "item.nusmp.bond_thread.desc": "Sneak-use on another player; if they do the same within 10 s, a red thread binds you. Heart grimoires become two hearts.",
   "item.nusmp.fortune_die.desc": "Roll it with a single-diamond grimoire: Good Fortune, or great misfortune.",
   "item.nusmp.grimoire_chain.desc": "While you carry it, nobody else can pick up your grimoire.",
@@ -1178,5 +1178,18 @@
   "nusmp.page.book_corundum.ideal_closer_fist": "A gauntlet of ruby and sapphire as big as a cart rises beside you, draws back in front of the foe you are looking at and punches it. The blow deals 14 damage and throws the foe back and slows it (Slowness III, 3 seconds); you can call it twice in 12 seconds, and the second one is a sapphire hammer-fist that deals 12 and also shoves everything within 3.4 blocks for 7. Damage, size and how long the gauntlet hovers scale with your EP.",
   "nusmp.page.book_corundum.gem_plate_armour": "Faceted red and blue corundum plates grow over your shoulders, chest, forearms and shins, and gem shards circle you. For 20 seconds you gain Resistance III and Strength, and every shard darts at the nearest hostile within 12 blocks, piercing everything in its path for 3.5 damage and Slowness II. A well-mastered grimoire (or a devil state) also grows a crystal crown and wings of shards; the shard count, damage and duration scale with your EP.",
   "nusmp.page.book_key.gate_of_keys": "A tall gate of violet stone and gold rises out of the ground ahead of you, its keyhole alight, and its doors swing open on a well of stolen magic. For 8 seconds (longer with more EP, up to half again) it turns to the nearest foe within 14 blocks and looses a bolt every half second for 4 damage (scales with your EP; bosses take half): fire (burning), ice (frozen and slowed), lightning (silenced and weakened) or wind (lifts the foe), and the element changes with each cast. Needs a foe within 16 blocks; a new gate replaces the old one.",
-  "nusmp.page.book_key.key_guard": "Three great keys with gem-set bows leave the grimoire and circle you like a guard, and a golden-violet keyhole glows on your back with three small keys orbiting your body. For 15 seconds (longer with more EP, up to half again) each great key stabs the nearest foe within 12 blocks of you for 5 damage (scales with your EP; bosses take half), slows it (Slowness II, 1.2 seconds) and knocks it back a little. Needs a foe within 16 blocks; a new cast replaces the old guard."
+  "nusmp.page.book_key.key_guard": "Three great keys with gem-set bows leave the grimoire and circle you like a guard, and a golden-violet keyhole glows on your back with three small keys orbiting your body. For 15 seconds (longer with more EP, up to half again) each great key stabs the nearest foe within 12 blocks of you for 5 damage (scales with your EP; bosses take half), slows it (Slowness II, 1.2 seconds) and knocks it back a little. Needs a foe within 16 blocks; a new cast replaces the old guard.",
+  "item.nusmp.quicklings_ivy": "Quickling's Ivy",
+  "item.nusmp.magebane_longsword": "Magebane Longsword",
+  "item.nusmp.prism_blade": "Prism Blade",
+  "item.nusmp.thundercleave": "Thundercleave",
+  "item.nusmp.bloodbound_katana": "Bloodbound Katana",
+  "item.nusmp.permafrost_sabre": "Permafrost Sabre",
+  "item.nusmp.cyclone_rapier": "Cyclone Rapier",
+  "item.nusmp.story_page": "Story Page",
+  "item.nusmp.story_page.desc": "A page torn from Riven Remake's story. Use it: Rewrite, every negative effect is erased and you mend 40% of your health. Consumed.",
+  "item.nusmp.gale_feather": "Gale Feather",
+  "item.nusmp.gale_feather.desc": "Sylph's wind-spirit feather. Use it: Gale Leap, a gust flings you forward and up and slows your fall for 8 s (12 s cooldown).",
+  "entity.nusmp.elemental_spirit_lord": "Spirit Lord",
+  "item.nusmp.black_bull_bard_relic.desc": "A grimoire page that rewrote itself: Riven Remake's mark, \"Fictional Remake\". Sneak + use: Bardic Inspiration, Strength, Speed and Regeneration for you and allies within 12 blocks for 20 s (2 min cooldown)."
 }

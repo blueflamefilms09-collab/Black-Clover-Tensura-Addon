@@ -15,6 +15,10 @@ public final class NUEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<SpiritLordEntity>> SPIRIT_LORD = ENTITIES.register("spirit_lord",
             () -> EntityType.Builder.of(SpiritLordEntity::new, MobCategory.CREATURE).sized(0.6f, 1.4f).clientTrackingRange(10).build("spirit_lord"));
 
+    /** 0.102: the four Black Clover Spirit Lords in their true bodies (exclusive: one mage per element), see ElementalSpiritLordEntity. */
+    public static final DeferredHolder<EntityType<?>, EntityType<ElementalSpiritLordEntity>> ELEMENTAL_SPIRIT_LORD = ENTITIES.register("elemental_spirit_lord",
+            () -> EntityType.Builder.of(ElementalSpiritLordEntity::new, MobCategory.CREATURE).sized(1.0f, 2.0f).clientTrackingRange(12).build("elemental_spirit_lord"));
+
     /** 0.42: Mirror Magic's Real Double (a tangible mirror clone of its owner). */
     public static final DeferredHolder<EntityType<?>, EntityType<MirrorDoubleEntity>> MIRROR_DOUBLE = ENTITIES.register("mirror_double",
             () -> EntityType.Builder.of(MirrorDoubleEntity::new, MobCategory.MISC).sized(0.6f, 1.8f).clientTrackingRange(10).build("mirror_double"));
@@ -56,6 +60,7 @@ public final class NUEntities {
         e.put(RIVEN.get(), com.newuniverse.nusmp.entity.riven.RivenBossEntity.createAttributes().build());
         e.put(STORY_CONSTRUCT.get(), com.newuniverse.nusmp.entity.riven.StoryConstructEntity.createAttributes().build());
         e.put(SPIRIT_LORD.get(), SpiritLordEntity.createAttributes().build());
+        e.put(ELEMENTAL_SPIRIT_LORD.get(), ElementalSpiritLordEntity.createAttributes().build());
         e.put(MIRROR_DOUBLE.get(), MirrorDoubleEntity.createAttributes().build());
         e.put(PAINTED_CONSTRUCT.get(), PaintedConstructEntity.createAttributes().build());
         e.put(ZAGRED.get(), ZagredBossEntity.createAttributes().build());

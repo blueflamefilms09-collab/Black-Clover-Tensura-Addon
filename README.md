@@ -60,7 +60,7 @@ Magic spells fire when the skill key is released; holding the key does not trigg
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-1.0.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-1.1.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -241,6 +241,17 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - Avatar selection now branches on tank/healer/flyer/caster/nullification reads. Zeus has a geared punch, Beerus a bounded damaging burst, Madoka removes one harmful boss effect and one beneficial target effect, Anti-Spiral fires a line hit, Lord of Nightmares creates a bounded healing-denial field, Arceus accelerates Marquis, and Zeno can dismiss one nearby owned construct. Each special has a short VFX tell; the existing 12-second/one-avatar ownership limit remains. Truth and Kami Tenchi are not implemented as distinct mechanics.
 - Added entity loot tables at both the requested Marquis name and the preserved `nusmp:riven_remake` registry key. Real entity death drops the existing bard relic, a story page, and a crest-cape token; a cracked crown vanity has an 8% roll. The cape is currently an inventory cosmetic token, not a wearable/rendered cape.
 - Still incomplete: Page Edge/Bull Brand engravings and a single-use rift key are absent because those enchantments and `nusmp:story_rift` are not registered. A boss-safe arbitrary book spell path is also unavailable: SpellRuntime's projectile owner is a `ServerPlayer`; the boss continues to cast its validated codex skill. New Order still implements weapon slowdown and Gearshift only; there is no reliable cast-warmup event hook for the two-cast slow rule. Ground-is-stone is not implemented. Only six avatar translations have special mechanics; Truth, Kami Tenchi, the Creator's distinct visual, and several requested combat interactions remain incomplete. No in-game client render/combat verification was run.
+
+## 1.1.0 - Reference weapons, boss drops, the Codex, the Spirit Lords' bodies, Elsdocia remade (built on 1.0.0)
+
+Ported onto the 1.0.0 line from the 0.100-0.102 work. **Nothing in this version has been compiled or run in game**: the session that wrote it could not reach `maven.neoforged.net`. Build with `gradlew.bat build` and report errors.
+
+- **New weapons** (3D in-hand model, glow layer, inventory icon, Tensura engravings, right-click technique, sneak-click second technique, full-swing strike; logic in `item/ReferenceWeapons.java`, models by `tools/gen_weapon_models.py`, icons by `tools/gen_reference_weapon_icons.py`): Quickling's Ivy (rooting poison ivy), Magebane Longsword (buff strip, caster jam), Prism Blade (blinding flash, seven-colour beam), Thundercleave (thunder arc, thunderstorm, arcing hits), Bloodbound Katana (Blood Charges, Bloodflare, Crimson Reaping), Permafrost Sabre + Cyclone Rapier (the Boreal Blades; hold both for Boreal Fusion).
+- **Elsdocia remade (replacement):** a long straight azure crystal blade with a cyan core, light motes and a gold clover above a gold guard; new sprite (old one kept as `textures/item/elsdocia_v099.png`).
+- **Boss drops:** the Black Bull Bard Relic is now usable (sneak-use: Bardic Inspiration); new **Story Page** (Rewrite: cleanse + heal 40%, a Marquis/Riven drop) and **Gale Feather** (Sylph: Gale Leap; `entities/wind_spirit_lord.json`). Marquis/Riven now have a 60-tick spawn grace (damage and deaths are blocked and logged) in case something kills it on spawn.
+- **The Codex** (`client/ui`) replaces the Multiverse Status screen everywhere it opened: an open book with a page-turn animation, mouse-wheel scrolling, tabs, your own figure in random poses (standing, sitting, bowing, casting, floating, meditating, victory, salute, on guard) beside the magic this mod has given you, plus Status, Weapons, Relics, Bestiary, Spirit Lords and Guide pages. Add a page with `CodexPages.register`.
+- **Spirit Lords:** the four exclusive Black Clover lords get true bodies from the reference art (`entity/ElementalSpiritLordEntity`, `client/ElementalSpiritRenderer`, `tools/gen_spirit_lords.py`): Salamander (winged fire dragon), Undine (woman of water), Sylph (green fairy), Gnome (stone giant). One mage per element. The Tensura-style spirits stay small floating orbs; without a Black Clover bond the Spirit Charm calls one (use: pick the element, sneak-use: call). See `docs/spirit_lords.md`.
+- Version note: the git tag `v1.1.0` already exists on an unrelated older commit; this version is untagged.
 
 ## 1.0.0 - Marquis New Order and avatar mechanics
 

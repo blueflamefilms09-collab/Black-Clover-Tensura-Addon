@@ -769,6 +769,11 @@ public class RivenBossEntity extends Monster {
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if (level().isClientSide) return super.hurt(source, amount);
+        if (tickCount < 60 && !source.is(net.minecraft.world.damagesource.DamageTypes.GENERIC_KILL) && !source.is(net.minecraft.world.damagesource.DamageTypes.FELL_OUT_OF_WORLD)
+                && !(source.getEntity() instanceof net.minecraft.world.entity.player.Player pl && (pl.isCreative() || tickCount > 20))) {
+            LOG.warn("[nusmp] Marquis/Riven: ignored {} damage ({}) during the spawn grace (tick {})", source.getMsgId(), amount, tickCount);   // 0.100: a boss must not die on spawn
+            return false;
+        }
         boolean antiMagic = isAntiMagicSource(source);
         if (antiMagic && level() instanceof ServerLevel sl) staggerByAntiMagic(sl);
         if (tickCount < phaseIFramesUntil || tickCount < unwrittenUntil || tickCount < rewriteUntil) return false;
@@ -866,6 +871,11 @@ public class RivenBossEntity extends Monster {
 
     @Override
     public void die(DamageSource source) {
+        if (tickCount < 60 && !(source.getEntity() instanceof net.minecraft.world.entity.player.Player) && !source.is(net.minecraft.world.damagesource.DamageTypes.GENERIC_KILL)) {
+            LOG.warn("[nusmp] Marquis/Riven: blocked a death by {} at tick {} (spawn grace); health restored", source.getMsgId(), tickCount);
+            setHealth(getMaxHealth());
+            return;
+        }
         denyBossBoundPlunder();
         super.die(source);
         if (!(level() instanceof ServerLevel sl)) return;

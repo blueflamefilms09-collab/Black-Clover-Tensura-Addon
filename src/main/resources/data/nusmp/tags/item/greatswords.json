@@ -28,6 +28,10 @@
     {
       "id": "nusmp:rimeheart_runeblade",
       "required": false
+    },
+    {
+      "id": "nusmp:thundercleave",
+      "required": false
     }
   ]
 }

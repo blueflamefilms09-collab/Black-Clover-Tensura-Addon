@@ -57,7 +57,15 @@ public class MagicWeaponItem extends SwordItem {
         RIMEHEART(Tiers.NETHERITE, 5, -2.4f, "Glacial Matrix Burst", "Vents the blade's stored mana as a frost shockwave: erases spells within 5 blocks, freezes and slows everything caught. Critical hits shatter a smaller burst around the target; paired with a second magic sword the burst recharges 40% faster.", 200, false),
         // 0.52: Zagred's quill-blade (docs/zagred_boss_gdd.md 3.1)
         LAST_WORD(Tiers.NETHERITE, 5, -1.8f, "Sentence", "Writes a short sentence of glyph letters along your line of sight that detonates in reading order. Every hit leaves a struck-out mark: three marks within 5 s strip a buff and one layer of a barrier (20 s cooldown).", 400, false),
-        ELSDOCIA(Tiers.NETHERITE, 6, -2.8f, "Legacy Release", "Absorbs magic from struck foes, stores the charge, and releases it as a broad arcane rift. The stored souls lend their strength; Key Magic opens the rift farther.", 360, false);
+        ELSDOCIA(Tiers.NETHERITE, 6, -2.8f, "Legacy Release", "Absorbs magic from struck foes, stores the charge, and releases it as a broad arcane rift. The stored souls lend their strength; Key Magic opens the rift farther.", 360, false),
+        // 0.100: the weapons of the "Custom weapon i want added" reference sheets (logic in ReferenceWeapons)
+        QUICKLINGS_IVY(Tiers.DIAMOND, 2, -1.6f, "Ensnaring Ivy", "Ivy lashes out 12 blocks: everything it catches is rooted and poisoned. Critical hits ensnare for free.", 160, false),
+        MAGEBANE_LONGSWORD(Tiers.NETHERITE, 4, -2.4f, "Dispel Surge", "A turquoise surge strips a buff from foes ahead, jams their casting, erases spells around you and hardens you for 5 s.", 200, false),
+        PRISM_BLADE(Tiers.NETHERITE, 4, -2.4f, "Blinding Flash", "The blade flares through the whole spectrum: every foe within 10 blocks is burned, blinded and lit up.", 240, false),
+        THUNDERCLEAVE(Tiers.NETHERITE, 7, -3.2f, "Thunder Arc", "A thunderous arc 8 blocks wide hurls foes back, slows and deafens them. Every hit arcs to a second foe.", 260, false),
+        BLOODBOUND_KATANA(Tiers.NETHERITE, 5, -2.1f, "Bloodflare", "Hits store Blood Charges (max 10) that bite on every blow. Bloodflare spends them all in a 14-block crimson slash and heals you.", 100, false),
+        PERMAFROST_SABRE(Tiers.NETHERITE, 4, -2.0f, "Whirlwind Frost", "A freezing spin hits everything within 5 blocks. Held with the Cyclone Rapier in the other hand: Boreal Fusion, 8 blocks and lifting.", 180, false),
+        CYCLONE_RAPIER(Tiers.DIAMOND, 2, -1.6f, "Cyclone Thrust", "Spin through up to 5 blocks, flinging foes into the air. With the Permafrost Sabre in the other hand: Boreal Fusion.", 160, false);
 
         final Tier tier; final int damage; final float speed; final String ability, desc; final int cooldown; final boolean demon;
         Kind(Tier t, int d, float s, String a, String desc, int cd, boolean demon) {
@@ -69,7 +77,7 @@ public class MagicWeaponItem extends SwordItem {
 
     public MagicWeaponItem(Kind kind) {
         super(kind.tier, new Item.Properties().attributes(attributes(kind))
-                .rarity(kind.demon || kind == Kind.RIMEHEART || kind == Kind.ELSDOCIA ? Rarity.EPIC : Rarity.RARE).fireResistant());
+                .rarity(kind.demon || kind == Kind.RIMEHEART || kind == Kind.ELSDOCIA || kind == Kind.PRISM_BLADE || kind == Kind.THUNDERCLEAVE || kind == Kind.BLOODBOUND_KATANA ? Rarity.EPIC : Rarity.RARE).fireResistant());
         this.kind = kind;
     }
 
@@ -315,6 +323,7 @@ public class MagicWeaponItem extends SwordItem {
                 }
                 VfxSpawn.send(p.serverLevel(), VfxShape.WIND_SLASH, eye, eye.add(look.scale(5)), 0xFFF4F8FF, 16, 1.6f);
             }
+            default -> { if (!ReferenceWeapons.technique(p, kind, stack)) return false; }          // 0.100
         }
         return true;
     }
@@ -368,6 +377,7 @@ public class MagicWeaponItem extends SwordItem {
                 case LAST_WORD -> redactMark(p, target);
                 default -> {}
             }
+            if (ReferenceWeapons.isReference(kind)) ReferenceWeapons.onHit(p, stack, target, kind);   // 0.100
             if (kind == Kind.ELSDOCIA) absorbElsdocia(stack, target);
             if (kind == Kind.DEMON_DWELLER && AntiMagic.isUser(p)) absorbDweller(stack, target, p);
             WeaponArts.fullSwing(p, target, kind);                                 // 0.52: the weapon's signature strike on a full swing
@@ -418,6 +428,8 @@ public class MagicWeaponItem extends SwordItem {
             tip.add(Component.literal("Full swing: the weapon's signature strike lands too").withStyle(ChatFormatting.DARK_AQUA));
         }
         CustomData d = stack.get(DataComponents.CUSTOM_DATA);
+        if (kind == Kind.BLOODBOUND_KATANA) tip.add(Component.literal("  Blood Charges: " + ReferenceWeapons.blood(stack) + "/" + ReferenceWeapons.BLOOD_MAX).withStyle(ChatFormatting.DARK_RED));
+        if (kind == Kind.PERMAFROST_SABRE || kind == Kind.CYCLONE_RAPIER) tip.add(Component.literal("  The Boreal Blades: hold both, one in each hand, for Boreal Fusion").withStyle(ChatFormatting.AQUA));
         if (kind == Kind.RIMEHEART) tip.add(Component.literal("  Off-hand magic sword: burst recharges 40% faster, hits freeze longer").withStyle(ChatFormatting.AQUA));
         if (kind == Kind.DEMON_DWELLER) {
             int charge = d == null ? 0 : Math.min(5, d.copyTag().getInt("DwellerCharge"));

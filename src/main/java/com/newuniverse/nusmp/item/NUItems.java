@@ -87,7 +87,9 @@ public final class NUItems {
     public static final DeferredItem<RelicItem> CIRCLET_OF_THOUGHT = relic("circlet_of_quickened_thought", RelicItem.Kind.QUICKENED, Rarity.EPIC);
     public static final DeferredItem<Item> HEART_OF_WORDS = ITEMS.register("heart_of_words", () -> new Item(new Item.Properties().stacksTo(16).rarity(Rarity.EPIC).fireResistant()));
     // 0.92: Riven Remake's relic and spawn egg
-    public static final DeferredItem<Item> BARD_RELIC = ITEMS.register("black_bull_bard_relic", () -> new Item(new Item.Properties().stacksTo(16).rarity(Rarity.EPIC).fireResistant()));
+    public static final DeferredItem<Item> BARD_RELIC = ITEMS.register("black_bull_bard_relic", () -> new RelicItem(RelicItem.Kind.BARD_RELIC, new Item.Properties().stacksTo(16).rarity(Rarity.EPIC).fireResistant()));   // 0.100: now usable (BossDrops)
+    public static final DeferredItem<RelicItem> STORY_PAGE = relic("story_page", RelicItem.Kind.STORY_PAGE, Rarity.RARE);                 // 0.100: Riven's consumable page
+    public static final DeferredItem<RelicItem> GALE_FEATHER = relic("gale_feather", RelicItem.Kind.GALE_FEATHER, Rarity.EPIC);          // 0.100: Sylph's drop
     public static final DeferredItem<Item> MARQUIS_STORY_PAGE = ITEMS.register("marquis_story_page",
             () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
     public static final DeferredItem<Item> MARQUIS_CREST_CAPE = ITEMS.register("marquis_crest_cape",
@@ -127,6 +129,15 @@ public final class NUItems {
     // 0.91: the first Wizard King's legacy sword
     public static final DeferredItem<MagicWeaponItem> ELSDOCIA = weapon("elsdocia", MagicWeaponItem.Kind.ELSDOCIA);
 
+    // 0.100: the weapons of the "Custom weapon i want added" reference sheets (see ReferenceWeapons)
+    public static final DeferredItem<MagicWeaponItem> QUICKLINGS_IVY = weapon("quicklings_ivy", MagicWeaponItem.Kind.QUICKLINGS_IVY);
+    public static final DeferredItem<MagicWeaponItem> MAGEBANE_LONGSWORD = weapon("magebane_longsword", MagicWeaponItem.Kind.MAGEBANE_LONGSWORD);
+    public static final DeferredItem<MagicWeaponItem> PRISM_BLADE = weapon("prism_blade", MagicWeaponItem.Kind.PRISM_BLADE);
+    public static final DeferredItem<MagicWeaponItem> THUNDERCLEAVE = weapon("thundercleave", MagicWeaponItem.Kind.THUNDERCLEAVE);
+    public static final DeferredItem<MagicWeaponItem> BLOODBOUND_KATANA = weapon("bloodbound_katana", MagicWeaponItem.Kind.BLOODBOUND_KATANA);
+    public static final DeferredItem<MagicWeaponItem> PERMAFROST_SABRE = weapon("permafrost_sabre", MagicWeaponItem.Kind.PERMAFROST_SABRE);
+    public static final DeferredItem<MagicWeaponItem> CYCLONE_RAPIER = weapon("cyclone_rapier", MagicWeaponItem.Kind.CYCLONE_RAPIER);
+
     // 0.44: Painting Magic's palette & brush (manifested by a Painting grimoire; see book.PaintStudio)
     public static final DeferredItem<PaintToolItem> PAINT_BRUSH = ITEMS.register("paint_brush", () -> new PaintToolItem(PaintToolItem.Kind.BRUSH));
     public static final DeferredItem<PaintToolItem> PAINT_PALETTE = ITEMS.register("paint_palette", () -> new PaintToolItem(PaintToolItem.Kind.PALETTE));
@@ -149,6 +160,7 @@ public final class NUItems {
         l.addAll(List.of(PAINT_BRUSH, PAINT_PALETTE));                                          // 0.44
         l.addAll(List.of(LAST_WORD, SHROUD_OF_MARGINS, CIRCLET_OF_THOUGHT, HEART_OF_WORDS));    // 0.52
         l.addAll(List.of(BARD_RELIC, RIVEN_SPAWN_EGG));                                         // 0.92
+        l.addAll(List.of(QUICKLINGS_IVY, MAGEBANE_LONGSWORD, PRISM_BLADE, THUNDERCLEAVE, BLOODBOUND_KATANA, PERMAFROST_SABRE, CYCLONE_RAPIER, STORY_PAGE, GALE_FEATHER));   // 0.100
         l.add(MAGIC_KEY);
         return l;
     }

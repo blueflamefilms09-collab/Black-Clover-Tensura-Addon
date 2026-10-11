@@ -66,7 +66,7 @@ public final class WeaponArts {
             case RIMEHEART -> new Alt("Absolute Zero", "Freezes everything within 9 blocks solid, then shatters it a second later.", 1400);
             case LAST_WORD -> new Alt("Long Sentence", "Writes a long sentence of eight glyph letters that detonates in reading order.", 1000);
             case ELSDOCIA -> new Alt("Legacy Gate", "With Key Magic summoned, opens a long spatial rift that releases stored legacy power and drains magic from foes.", 1200);
-            default -> null;
+            default -> ReferenceWeapons.alt(k);                                                           // 0.100
         };
     }
 
@@ -132,7 +132,7 @@ public final class WeaponArts {
                 }
                 VfxSpawn.send(sl, VfxShape.WATER_BURST, mid, t.position(), 0xFF8FE9FF, 12, 0.6f);
             }
-            default -> { }
+            default -> ReferenceWeapons.fullSwing(p, t, k);                                              // 0.100
         }
     }
 
@@ -363,7 +363,7 @@ public final class WeaponArts {
                 VfxSpawn.send(sl, VfxShape.SPATIAL_RIFT, eye, end, 0xFFFFD66E, 28, 1.6f + spent / 900f);
                 return true;
             }
-            default -> { return false; }
+            default -> { return ReferenceWeapons.cast(p, k); }                                  // 0.100
         }
     }
 

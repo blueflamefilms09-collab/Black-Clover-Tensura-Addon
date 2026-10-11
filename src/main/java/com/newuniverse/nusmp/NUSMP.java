@@ -65,8 +65,9 @@ public class NUSMP {
             com.newuniverse.nusmp.client.multiverse.MultiverseStatusClient.init(modEventBus);
             com.newuniverse.nusmp.client.multiverse.FourKingdomsSlot.init();                                   // 0.46: the slot in Tensura's magic screen
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.multiverse.MultiverseClientConfig.SPEC, "nusmp-multiverse-client.toml");
-            // Spirit Lords are small floating orbs for now (SpiritLordRenderer, the full Tensura body, is kept for later)
+            // 0.102: the Tensura-style Spirit Lords are small floating orbs (SpiritLordEntity); the exclusive Black Clover ones have bodies (below)
             modEventBus.addListener(com.newuniverse.nusmp.client.SpiritOrbRenderer::register);
+            modEventBus.addListener(com.newuniverse.nusmp.client.ElementalSpiritRenderer::register);        // 0.102: the Black Clover Spirit Lords' true bodies
             modEventBus.addListener(com.newuniverse.nusmp.client.MirrorDoubleRenderer::register);
             modEventBus.addListener(com.newuniverse.nusmp.client.PaintedConstructRenderer::register);      // 0.44
             modEventBus.addListener(com.newuniverse.nusmp.client.PaintedConstructRenderer::layers);

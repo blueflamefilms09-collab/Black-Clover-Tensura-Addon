@@ -137,6 +137,15 @@ public final class GrimoireCommand {
                                     ctx.getSource().sendSuccess(() -> Component.literal("Trust now " + com.newuniverse.nusmp.book.SpiritBond.trust(p)), true);
                                     return 1;
                                 }))))
+                        .then(Commands.literal("spirit_body").then(Commands.argument("player", EntityArgument.player())
+                                .then(Commands.argument("kind", com.mojang.brigadier.arguments.StringArgumentType.word())
+                                        .suggests((c, b) -> { for (var k : com.newuniverse.nusmp.entity.ElementalSpiritLordEntity.Kind.values()) b.suggest(k.name().toLowerCase()); return b.buildFuture(); })
+                                        .executes(ctx -> {                                                                             // 0.102: admin: call a Black Clover Spirit Lord's body
+                                            ServerPlayer p = EntityArgument.getPlayer(ctx, "player");
+                                            var k = com.newuniverse.nusmp.entity.ElementalSpiritLordEntity.Kind.byName(com.mojang.brigadier.arguments.StringArgumentType.getString(ctx, "kind").toUpperCase());
+                                            com.newuniverse.nusmp.entity.ElementalSpiritLordEntity.toggle(p, k, true);
+                                            return 1;
+                                        }))))
                         .then(Commands.literal("spirit_lord").then(Commands.argument("player", EntityArgument.player())
                                 .then(Commands.argument("kind", com.mojang.brigadier.arguments.StringArgumentType.word())
                                         .suggests((c, b) -> { for (var k : com.newuniverse.nusmp.entity.SpiritLordEntity.Kind.values()) b.suggest(k.name().toLowerCase()); return b.buildFuture(); })
