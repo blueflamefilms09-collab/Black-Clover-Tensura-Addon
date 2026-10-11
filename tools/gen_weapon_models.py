@@ -986,47 +986,58 @@ def last_word(m, a):
 
 
 def elsdocia(m, a):
-    """Elsdocia: a broad crystalline legacy blade, clover crest, and ornate gold hilt."""
-    length = 48
+    """Elsdocia (0.100 remake after the wiki / the reference render): a long straight crystal blade, deep azure with a bright cyan
+    core and drifting light motes, a golden clover emblem on the blade just above a gold guard, dark grip, gold pommel."""
+    length = 62
     stations = [
-        (0, -3.8, 0, 3.8), (4, -5.2, 0, 5.2), (10, -6.4, 0, 6.4),
-        (20, -6.8, 0, 6.8), (30, -5.8, 0, 5.8), (39, -3.8, 0, 3.8),
-        (46, -1.2, 0, 1.2), (length, 0, 0, 0),
+        (0, -3.6, 0, 3.6), (6, -3.9, 0, 3.9), (30, -4.1, 0, 4.1), (50, -3.8, 0, 3.8),
+        (56, -2.7, 0, 2.7), (59, -1.4, 0, 1.4), (length, 0, 0, 0),
     ]
 
     def crystal(x, y, front, edge, ridge):
-        if x is None:
-            return col((94, 132, 176)), None
-        facet = 24 if ridge < 1.2 else -8
-        shine = 30 if front and x < 0 else 0
-        base = np.array((150, 203, 236), np.float32) + facet + shine + fz(int(x * 2), int(y * 2), 19) * 8
-        glow = col((125, 220, 255), 0.22) if abs(x) < 0.7 and y > 10 else None
-        return col(base), glow
+        if x is None:                                                      # the spine / edge walls
+            return col((120, 196, 250)), col((120, 220, 255), 0.35)
+        facet = math.sin((x * 1.1 + y * 0.42) * 1.3) * 0.5 + math.sin((x * -0.7 + y * 0.9) * 0.8) * 0.5     # crossing crystal planes
+        base = np.array((38, 92, 190), np.float32) * (1.0 + facet * 0.28) + fz(int(x * 2), int(y * 2), 19) * 26
+        core = max(0.0, 1.0 - ridge / 2.2)                                 # the lit core down the middle
+        base = base + np.array((95, 140, 62), np.float32) * core * (0.75 + 0.25 * math.sin(y * 0.55))
+        if edge < 0.9:
+            base = np.array((205, 238, 255), np.float32)                   # bright bevel
+        elif edge < 1.9:
+            base = base * 1.22 + 14
+        glow = col((90, 205, 255), 0.45 * core + 0.1) if core > 0.15 else None
+        h = hsh(int(x * 2), int(y * 2), 41 if front else 43)               # drifting light motes inside the crystal
+        if h > 0.955 and edge > 1.0:
+            base = np.array((230, 250, 255), np.float32)
+            glow = col((200, 245, 255), 0.95)
+        if y > length - 5:
+            base = base * 1.12 + 10
+        return col(np.clip(base, 0, 255)), glow
 
-    Blade(stations, 0.45, 1.7, crystal).build(m, a)
-    gold = (222, 178, 66)
-    gold_paint = metal_paint(gold, gem=(145, 232, 250), glow_rgb=(145, 232, 250))
-    box(m, a, -7.2, -1.5, -1.1, 7.2, 0.7, 1.1, gold_paint)
+    Blade(stations, 0.9, 1.8, crystal).build(m, a)
+    gold = (226, 178, 62)
+    gold_paint = metal_paint(gold, gem=(150, 236, 255), glow_rgb=(150, 236, 255))
+    dark_gold = metal_paint((168, 122, 40))
+    box(m, a, -4.4, -1.6, -2.1, 4.4, 4.2, 2.1, dark_gold)                  # collar the blade grows from
+    box(m, a, -8.2, -1.8, -1.2, 8.2, 0.4, 1.2, gold_paint)                 # the cross guard
     for sx in (-1, 1):
-        # mirrored swept guard tips: |x| from 5.1 to 9.5, on this side of the guard
-        lo, hi = sorted((sx * 5.1, sx * 9.5))
-        box(m, a, lo, -0.8, -1.25, hi, 1.5, 1.25, gold_paint)
-    box(m, a, -1.65, -13, -1.35, 1.65, -1.4, 1.35, wrap_paint((88, 38, 54), (148, 66, 66), diamonds=True))
-    box(m, a, -2.3, -15.2, -2, 2.3, -12.6, 2, gold_paint)
-    box(m, a, -1.2, -16.3, -1.1, 1.2, -15.2, 1.1, gold_paint)
+        lo, hi = sorted((sx * 6.0, sx * 10.6))
+        box(m, a, lo, -0.6, -1.0, hi, 2.4, 1.0, gold_paint)                # swept tips
+    box(m, a, -1.6, -13.5, -1.4, 1.6, -1.8, 1.4, wrap_paint((24, 30, 58), (58, 88, 150), diamonds=True))
+    box(m, a, -2.2, -15.6, -1.9, 2.2, -13.5, 1.9, gold_paint)              # pommel
+    box(m, a, -1.1, -16.6, -1.1, 1.1, -15.6, 1.1, gold_paint)
     clover = ascii_mask([
-        "..##...##..",
-        ".####.####.",
-        "###########",
-        "###########",
-        ".#########.",
-        "...#####...",
-        ".....#.....",
+        ".##.##.",
+        "#######",
+        "#######",
+        ".#####.",
+        "..###..",
+        "...#...",
     ])
-    crest = lambda i, j, front: (col(shade(gold, 1.2 if (i + j) % 3 == 0 else 0.92)), col((255, 219, 112), 0.3))
-    plate(m, a, clover, -5.5, 3.5, 0.35, crest, "xy", 2.15)
-    plate(m, a, clover, -5.5, 3.5, 0.35, crest, "xy", -2.15)
-    return dict(glow=("91E8FF", 0.07, 0.4, 1.0))
+    crest = lambda i, j, front: (col(shade(gold, 1.25 if (i + j) % 3 == 0 else 0.95)), col((255, 222, 120), 0.5))
+    plate(m, a, clover, -3.5, 6.0, 0.3, crest, "xy", 2.1)
+    plate(m, a, clover, -3.5, 6.0, 0.3, crest, "xy", -2.1)
+    return dict(glow=("7FDFFF", 0.09, 0.45, 1.0))
 
 
 def shroud_of_margins(m, a):
