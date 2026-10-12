@@ -33,6 +33,16 @@ public final class PowerCurve {
         return Math.max(Math.max(0, Math.min(FULL, previousPower)), target(healthFraction));
     }
 
+    /**
+     * The next real step above 'power' (20 -> 40 -> 60 -> 80 -> 100; a rage value like 50 goes to 60); a power already at 100 stays.
+     * A boss that is due several steps in one tick (two hits in the same tick) climbs them one at a time, so every step is announced
+     * and no step is skipped.
+     */
+    public static int stepUp(int power) {
+        for (int g : GATE_POWER) if (g > power) return g;
+        return FULL;
+    }
+
     /** One step of Triad rage: +10, never past the 80% cap (a power already at or above the cap is unchanged). */
     public static int rage(int power) {
         return power >= CAP ? power : Math.min(CAP, power + RAGE_STEP);
@@ -53,12 +63,16 @@ public final class PowerCurve {
 
     /**
      * Caps a hit so that it ends at most half a point under the next step's health line: the hit that crosses a line cannot
-     * carry on past it, the next one can. Once power is 100 there is no line and the hit is unchanged.
+     * carry on past it, the next one can. Once power is 100 there is no line and the hit is unchanged. A boss that stands in the
+     * sliver between that landing point and the line (or exactly on it) is still held at the landing point, so the step
+     * ({@link #target} fires strictly under the line) cannot be skipped by rounding.
      */
     public static float clampDamage(float health, float maxHealth, int power, float amount) {
         float floor = nextGateHealth(power) * maxHealth;
-        if (floor <= 0f || amount <= 0f || health - amount >= floor || health <= floor) return amount;
-        return Math.min(amount, health - floor + 0.5f);
+        if (floor <= 0f || amount <= 0f || health - amount >= floor) return amount;
+        float landing = floor - Math.max(0.5f, maxHealth * 1e-5f);
+        if (health <= landing) return amount;                      // already past the line: the power update catches up next tick
+        return Math.min(amount, health - landing);
     }
 
     /** The share of its devil's power a Dark Disciple carries: up to 40%, scaled by the owner's power fraction. */

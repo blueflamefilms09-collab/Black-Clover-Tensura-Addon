@@ -11,7 +11,7 @@ Models (GeoSpec.of("zogratis", "<name>")), original pixel-art interpretations of
     vanica_base vanica_hybrid    Vanica: slim, crown, black bob, red eye + black eyepatch with a gold emblem, open smile, belted short dress
                                  with a ring buckle, black sleeves + thigh-high boots; hybrid = 100% Megicula: glowing curse sigils, horns,
                                  long red claws, a halo of floating blood droplets
-    zenon_base zenon_hybrid      Zenon: lean, crown, short black hair, vertical scar with cross bars through the forehead and one eye, pale eyes,
+    zenon_base zenon_hybrid      Zenon: lean, no crown (as in the references), short black hair, vertical scar with cross bars through the forehead and one eye, pale eyes,
                                  maroon belted vest; hybrid = 100% Beelzebub: bone spines and ribs through the cloak, a bone crest, insect wing
                                  remnants, hollow glowing eyes
     disciple                     one hooded humanoid (Dark Disciple); the devil tint is a texture variant: disciple_lucifero / _megicula /
@@ -1022,21 +1022,22 @@ D_TROUSER, D_TROUSER_D = (72, 62, 58), (44, 38, 36)
 DANTE_FACE = [
     "HHHHHHHHHHHHHHHH",
     "HHHhHHHHHHhHHHHH",
-    "HH.....k......HH",
     "HH..kkkkkkkk..HH",
-    "Hs.....k......sH",
+    "HH.....k......HH",
     "Hs..kkkkkkkk..sH",
-    "H......k.......H",
+    "Hs.....k......sH",
+    "H...kkkkkkkk...H",
     "H.s..........s.H",
     "H..bbbb..bbbb..H",
     "s..lGGl..lGGl..s",
     "s..wggw..wggw..s",
     "...s..........s.",
-    "...s.n....n.s...",
+    "...smn....nm.s..",
     "....mMMMMMMm....",
-    "s...ttttttt....s",
     "s....tttttt....s",
+    "s.....tttt.....s",
 ]
+
 DANTE_LEG = {
     "H": (22, 22, 30), "h": (56, 60, 88), "k": (12, 10, 14), "b": (30, 24, 24), "l": (56, 40, 38), "w": (210, 212, 202),
     "g": ((78, 168, 90), (90, 230, 120, 70)), "G": ((36, 100, 56), (50, 160, 80, 50)), "n": (200, 160, 144), "m": (176, 96, 92),
@@ -1521,7 +1522,7 @@ def build_zenon(form):
     collar_and_fur(h, P, lambda s: fur(s, FUR_RAMP, root=0.7, tip=0.2, saw=4, deep=0.15), solid_collar(), lambda s: fur(s, FUR_RAMP, root=0.6, tip=0.8, width=1.4), rng_salt=500)
     cp, hem = cloak_painters(glow_edge=(140, 170, 255, 150) if form == "hybrid" else None, dark=form == "hybrid")
     cloak_parts(h, P, cp, hem)
-    crown(h, P, gem=(90, 120, 220) if form == "hybrid" else (220, 40, 56), gem_glow=(150, 180, 255) if form == "hybrid" else (255, 96, 96))
+    # no crown: in both Triad references only Dante and Vanica wear one; Zenon's bare head shows his short messy hair
     hp = pt["hair"]
     # short messy hair: a cap, spikes, a ragged fringe, the nape
     h.box("hair", (-4.25, 30.5, -4.25), (8.5, 2.5, 8.5), hp)
@@ -2143,13 +2144,14 @@ def scene(model, anim=None, ages=(0,), tile=(360, 520), views=None, figure=False
 def humanoid_scenes(name, h=1.1):
     t = (0, h, 0)
     sc = {}
-    sc["triad_%s_views" % name] = scene(name, "idle", (0,), (440, 620), [view("front", 0, 3, t, 4.3), view("front 3/4", 35, 8, t, 4.3)])
-    sc["triad_%s_views2" % name] = scene(name, "idle", (0,), (440, 620), [view("back", 180, 6, t, 4.3), view("side", 90, 4, t, 4.3)])
+    ex = () if name in ("disciple", "zenon_base") else ("BUDGET",)       # the bosses draw 6.5k - 9k vertices a frame in two passes: expected, an entity is not a prop (Zenon's base has no crown: under 6k)
+    sc["triad_%s_views" % name] = scene(name, "idle", (0,), (440, 620), [view("front", 0, 3, t, 4.3), view("front 3/4", 35, 8, t, 4.3)], expect=ex)
+    sc["triad_%s_views2" % name] = scene(name, "idle", (0,), (440, 620), [view("back", 180, 6, t, 4.3), view("side", 90, 4, t, 4.3)], expect=ex)
     sc["triad_%s_head" % name] = scene(name, "idle", (0,), (420, 420), [view("face", 0, 2, (0, 1.72, 0), 1.7), view("face 3/4", 30, 6, (0, 1.72, 0), 1.7),
-                                                                         view("head side", 90, 4, (0, 1.72, 0), 1.9)])
+                                                                         view("head side", 90, 4, (0, 1.72, 0), 1.9)], expect=ex)
     for clip, ages in (("attack", (0, 6, 9, 12, 18)), ("cast", (0, 10, 20, 30)), ("cast_big", (0, 14, 28, 40, 54)), ("transform", (0, 20, 40, 55)),
                        ("walk", (0, 5, 10, 15)), ("run", (0, 3, 6, 9)), ("death", (0, 12, 26, 40, 50)), ("hurt", (0, 3, 6)), ("idle", (0, 20, 40, 60))):
-        sc["triad_%s_%s" % (name, clip)] = scene(name, clip, ages, (300, 440), [view("front 3/4", 35, 6, t, 5.0), view("side", 90, 4, t, 5.0)])
+        sc["triad_%s_%s" % (name, clip)] = scene(name, clip, ages, (300, 440), [view("front 3/4", 35, 6, t, 5.0), view("side", 90, 4, t, 5.0)], expect=ex)
     return sc
 
 
@@ -2333,11 +2335,14 @@ def write_manifest(infos, path):
         ],
     }
     produced = []
-    for sub in ("geo/entity", "animations/entity", "textures/entity"):
-        d = os.path.join(ROOT, sub)
-        for fn in sorted(os.listdir(d)):
-            if fn.startswith(KEY + "_"):
-                produced.append(os.path.relpath(os.path.join(d, fn), REPO).replace(os.sep, "/"))
+    for n in BUILDERS:
+        mid = "%s_%s" % (KEY, n)
+        stems = [mid] + (["%s_%s" % (mid, d) for d in DEVILS] if n == "disciple" else [])
+        for stem in stems:
+            for sub, fn in (("geo/entity", stem + ".geo.json"), ("animations/entity", stem + ".animation.json"), ("textures/entity", stem + ".png"), ("textures/entity", stem + "_glow.png")):
+                full = os.path.join(ROOT, sub, fn)
+                if os.path.exists(full):
+                    produced.append(os.path.relpath(full, REPO).replace(os.sep, "/"))
     produced += ["tools/gen_zogratis_triad.py", "tools/render_preview/scenes.d/zogratis_triad.json"]
     manifest["files_produced"] = produced
     with open(path, "w") as f:
@@ -2373,7 +2378,7 @@ def model_info(name, h, img, glow):
         info["humanoid_bones"] = ["root", "body", "head", "hair", "crown", "fur", "cloak", "cloak_top", "cloak_bottom", "arm_l", "arm_r", "forearm_l", "forearm_r", "leg_l", "leg_r", "shin_l", "shin_r"]
         info["design"] = {"dante": "broad and heavy, crown, swept-back black hair, cross scar marks, goatee, green eyes, brown tunic, red scarf, brown boots",
                           "vanica": "slim, crown, black bob, red eye + black eyepatch with a gold emblem on the viewer's left, open smile, belted maroon dress with a gold ring buckle, black sleeves and thigh-high boots",
-                          "zenon": "lean, crown, short messy black hair, vertical scar with cross bars through the forehead and the viewer's right eye, pale eyes, maroon vest with crossed straps over a dark shirt"}[name.split("_")[0]]
+                          "zenon": "lean, no crown (only Dante and Vanica wear one in the references), short messy black hair, vertical scar with cross bars through the forehead and the viewer's right eye, pale eyes, maroon vest with crossed straps over a dark shirt"}[name.split("_")[0]]
     if name in EXTRAS:
         info["extras"] = EXTRAS[name]
     if name == "disciple":

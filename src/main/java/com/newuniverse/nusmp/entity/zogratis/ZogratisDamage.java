@@ -1,9 +1,12 @@
 package com.newuniverse.nusmp.entity.zogratis;
 
+import com.newuniverse.nusmp.NUGameRules;
 import com.newuniverse.nusmp.antimagic.Nullification;
 import com.newuniverse.nusmp.balance.BalanceLaw;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 
 /**
  * How every Zogratis hit (the bosses, their disciples, blood beasts, clones) becomes damage: the base number goes through
@@ -29,6 +32,10 @@ public final class ZogratisDamage {
     public static boolean hit(LivingEntity from, LivingEntity victim, float base, double powerMultiplier, double bossScale, double mastery, boolean magic) {
         if (victim == null || !victim.isAlive()) return false;
         DamageSource src = magic ? from.damageSources().indirectMagic(from, from) : from.damageSources().mobAttack(from);
-        return victim.hurt(src, amount(from, victim, base, powerMultiplier, bossScale, mastery));
+        float dealt = amount(from, victim, base, powerMultiplier, bossScale, mastery);
+        // on Hard the game multiplies a mob's damage to a player by 1.5 after the balance cap: keep the cap true to what lands
+        if (victim instanceof Player && src.scalesWithDifficulty() && victim.level().getDifficulty() == Difficulty.HARD)
+            dealt = Math.min(dealt, (float) (victim.getMaxHealth() * NUGameRules.pvpHitCap(victim.level()) / 1.5));
+        return victim.hurt(src, dealt);
     }
 }

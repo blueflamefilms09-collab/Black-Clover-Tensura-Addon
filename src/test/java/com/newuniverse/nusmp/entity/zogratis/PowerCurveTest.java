@@ -101,6 +101,47 @@ class PowerCurveTest {
     }
 
     @Test
+    void stepsAreClimbedOneAtATime() {
+        assertEquals(40, PowerCurve.stepUp(20));
+        assertEquals(40, PowerCurve.stepUp(30));
+        assertEquals(60, PowerCurve.stepUp(40));
+        assertEquals(60, PowerCurve.stepUp(50));
+        assertEquals(80, PowerCurve.stepUp(60));
+        assertEquals(100, PowerCurve.stepUp(80));
+        assertEquals(100, PowerCurve.stepUp(100));
+        // two hits in one tick can leave the health asking for 80 while the power is 40: the climb passes through 60
+        int power = 40, due = PowerCurve.next(0.4f, power), climbed = 0;
+        assertEquals(80, due);
+        while (due > power) { power = Math.min(due, PowerCurve.stepUp(power)); climbed++; }
+        assertEquals(80, power);
+        assertEquals(2, climbed);
+        // every power from 0 to 100 reaches 100 in at most five steps
+        for (int p = 0; p <= 100; p++) {
+            int q = p, n = 0;
+            while (q < 100) { q = PowerCurve.stepUp(q); n++; }
+            assertTrue(n <= 5, "from " + p);
+        }
+    }
+
+    @Test
+    void aBossOnTheLineOrInTheSliverUnderItIsStillHeld() {
+        // line at 850 of 1000, landing point 849.5
+        assertEquals(0.5f, PowerCurve.clampDamage(850f, 1000f, 20, 900f), 0.001f, "exactly on the line: the step has not fired yet (it needs strictly under)");
+        assertEquals(0.3f, PowerCurve.clampDamage(849.8f, 1000f, 20, 900f), 0.001f, "in the sliver: held at the landing point");
+        assertEquals(900f, PowerCurve.clampDamage(849.5f, 1000f, 20, 900f), "at the landing point: the step has fired");
+        // every held boss ends strictly under the line, so the next power update sees it
+        for (float h = 851f; h >= 849.5f; h -= 0.1f) {
+            float after = h - PowerCurve.clampDamage(h, 1000f, 20, 5000f);
+            assertTrue(PowerCurve.target(after / 1000f) >= 40, "health " + h + " ended at " + after);
+        }
+        // huge health pools keep a margin above float resolution
+        float big = 1.0e9f, line = 0.85f * big, start = line + 1000f;
+        float end = start - PowerCurve.clampDamage(start, big, 20, 5.0e8f);
+        assertTrue(end < line, "a 1e9 pool ends under the line");
+        assertEquals(40, PowerCurve.target(end / big), "a 1e9 pool still steps");
+    }
+
+    @Test
     void tuningGrowsWithPower() {
         PowerCurve.Tuning prev = PowerCurve.tuning(0);
         for (int p = 1; p <= 100; p++) {

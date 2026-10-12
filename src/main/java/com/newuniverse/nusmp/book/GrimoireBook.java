@@ -257,6 +257,7 @@ public abstract class GrimoireBook extends Skill {
     private void castPage(ManasSkillInstance instance, ServerPlayer player, int mode) {
         BookPage p = page(mode);
         if (p == null) return;
+        if (com.newuniverse.nusmp.entity.zogratis.SpellSeal.sealed(player)) { fail(player, com.newuniverse.nusmp.entity.zogratis.SpellSeal.MESSAGE); return; }   // 1.20.0: Spatial Mana Domination
         if (!usable(instance, player, mode)) { fail(player, "That page is still sealed."); return; }
         if (!holdingBook(player)) { fail(player, "Your pages are sealed shut. Summon your " + magic.displayName + " grimoire first (Summon Grimoire)."); return; }
         if (p.weaponTag() != null && !com.newuniverse.nusmp.item.WeaponMagicHelper.holdsAny(player, p.weaponTag())) {
@@ -484,6 +485,7 @@ public abstract class GrimoireBook extends Skill {
     }
 
     private static boolean devilUnion(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
+        if (p.hasEffect(com.newuniverse.nusmp.entity.zogratis.ZogratisEffects.PURIFIED)) { fail(p, "Lucius's Soul Purge has stripped your devil's power for now."); return false; }   // 1.20.0
         startDevilState(p, 160);
         p.getPersistentData().putString("nusmp_devil_src", "union");
         p.getServer().getPlayerList().broadcastSystemMessage(Component.literal(p.getName().getString() + " has entered Devil Union.")

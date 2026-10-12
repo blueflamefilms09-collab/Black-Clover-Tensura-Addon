@@ -45,6 +45,12 @@ public class NUSMP {
         com.newuniverse.nusmp.dungeon.DungeonEffects.EFFECTS.register(modEventBus);
         com.newuniverse.nusmp.dungeon.LivingDungeon.ATTACHMENTS.register(modEventBus);
         com.newuniverse.nusmp.dungeon.wild.Dweller.ATTACHMENTS.register(modEventBus);                      // 1.19.0: the real mobs of the Dungeon (hunger, home, sleep)
+        com.newuniverse.nusmp.entity.zogratis.ZogratisEntities.init();                                    // 1.20.0: the Zogratis bosses
+        com.newuniverse.nusmp.entity.zogratis.ZogratisEffects.init();
+        com.newuniverse.nusmp.entity.zogratis.ZogratisEntities.ENTITIES.register(modEventBus);
+        modEventBus.addListener(com.newuniverse.nusmp.entity.zogratis.ZogratisEntities::attributes);
+        com.newuniverse.nusmp.entity.zogratis.ZogratisEffects.EFFECTS.register(modEventBus);
+        com.newuniverse.nusmp.entity.zogratis.VanicaCurse.EFFECTS.register(modEventBus);
         com.newuniverse.nusmp.world.NUWorldgen.FEATURES.register(modEventBus);
         com.newuniverse.nusmp.item.NUItems.ITEMS.register(modEventBus);
         com.newuniverse.nusmp.item.NUItems.MATERIALS.register(modEventBus);
@@ -86,6 +92,7 @@ public class NUSMP {
             modEventBus.addListener(com.newuniverse.nusmp.client.wizard.TowerWizardClient::register);        // 1.6.0
             modEventBus.addListener(com.newuniverse.nusmp.client.dungeon.DungeonMobsClient::register);          // 1.18.0: the Living Dungeon's creatures
             modEventBus.addListener(com.newuniverse.nusmp.client.dungeon.DungeonSky::registerEffects);         // 1.19.0: the Dungeon's own sky and fog
+            modEventBus.addListener(com.newuniverse.nusmp.client.zogratis.ZogratisClient::register);            // 1.20.0: the Zogratis renderers
             NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.client.dungeon.DungeonSky::onFogColor);
             NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.client.dungeon.DungeonSky::onRenderFog);
             NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.client.dungeon.DungeonSky::onClientTick);
@@ -133,6 +140,13 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.wild.WildDriver::onServerTick);           // the food web sweep
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.wild.WildDriver::onDeath);                // kills feed the killer
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.wild.WildDriver::onServerStarted);        // logs the roster at start-up
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.entity.zogratis.VanicaCurse::onHeal);              // 1.20.0: Megicula's Decay cuts healing
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.entity.zogratis.SpellSeal::onIncomingDamage);       // Spatial Mana Domination
+        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGH, com.newuniverse.nusmp.entity.zogratis.SoulPaladins::onDeath);   // Lucius's immortal Paladins
+        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGH, com.newuniverse.nusmp.entity.zogratis.SoulPaladins::onIncomingDamage);
+        io.github.manasmods.manascore.skill.api.SkillEvents.ACTIVATE_SKILL.register((sealSkill, sealUser, sealKey, sealMode) -> com.newuniverse.nusmp.entity.zogratis.SpellSeal.vetoesSkill(sealSkill.get(), sealUser) ? dev.architectury.event.EventResult.interruptFalse() : dev.architectury.event.EventResult.pass());
+        io.github.manasmods.manascore.skill.api.SkillEvents.RELEASE_SKILL.register((sealSkill, sealUser, sealKey, sealMode, sealHeld) -> com.newuniverse.nusmp.entity.zogratis.SpellSeal.vetoesSkill(sealSkill.get(), sealUser) ? dev.architectury.event.EventResult.interruptFalse() : dev.architectury.event.EventResult.pass());
+        io.github.manasmods.manascore.skill.api.SkillEvents.TOGGLE_SKILL.register((sealSkill, sealUser) -> com.newuniverse.nusmp.entity.zogratis.SpellSeal.vetoesSkill(sealSkill.get(), sealUser) ? dev.architectury.event.EventResult.interruptFalse() : dev.architectury.event.EventResult.pass());
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST, com.newuniverse.nusmp.dungeon.DungeonGuard::onBreak);                // 1.19.0: the unbreakable Dungeon
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST, com.newuniverse.nusmp.dungeon.DungeonGuard::onBreakSpeed);
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST, com.newuniverse.nusmp.dungeon.DungeonGuard::onLeftClick);

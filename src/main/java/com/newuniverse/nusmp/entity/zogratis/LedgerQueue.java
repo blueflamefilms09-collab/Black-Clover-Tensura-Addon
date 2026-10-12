@@ -49,6 +49,22 @@ public final class LedgerQueue<K, V> {
 
     public List<Entry<K, V>> takeAll() { return take(Integer.MAX_VALUE); }
 
+    /**
+     * Removes and returns up to 'max' entries whose key passes 'ready', oldest first; entries that do not pass stay where they are
+     * (so a block in a chunk that is not loaded yet never blocks the ones behind it).
+     */
+    public List<Entry<K, V>> takeWhere(java.util.function.Predicate<K> ready, int max) {
+        List<Entry<K, V>> out = new ArrayList<>();
+        var it = entries.values().iterator();
+        while (it.hasNext() && out.size() < max) {
+            Entry<K, V> e = it.next();
+            if (!ready.test(e.key())) continue;
+            out.add(e);
+            it.remove();
+        }
+        return out;
+    }
+
     /** Puts an entry back at the end (a block in a chunk that was not loaded yet). */
     public void putBack(Entry<K, V> e) { entries.putIfAbsent(e.key(), e); }
 

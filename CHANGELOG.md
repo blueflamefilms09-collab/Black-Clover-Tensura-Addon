@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.20.0] — The Zogratis bosses: Dante, Vanica, Zenon and Lucius
+
+**State:** written without a compiler; CI is the first compile. Nothing run in game: no boss was ever spawned, so every number (health, damage, cooldowns, telegraph timing) is a first estimate. All **new**; nothing replaced. The request was phrased for Bedrock JSON packs; this mod is a NeoForge Java mod, so the bosses are Java classes plus GeoLite models in this repo (see `docs/zogratis_bosses.md` for the file map).
+
+### How to fight them
+- Spawn with `/multiverse boss dante | vanica | zenon | lucius | triad` (ops) or the spawn eggs in the creative tab. `triad` brings the three Dark Triad rulers of the Spade Kingdom together; when one falls the others rage (+10% power).
+- **The Percentage Power System** (`entity/zogratis/PowerCurve`, `ZogratisBoss`): each boss draws out its devil's power as its health falls: 20% at the start, 40%, 60%, 80%; at 25% health the **Gates of the Tree of Qliphoth** open: 100% power and a transformation (the Triad become partial devil hybrids with new models; Lucius takes his divine form). From 60% power the boss's mana is unbound. The boss bar shows name, devil and percentage.
+- **Fair by design:** every move has a telegraph (at least 8 ticks), ultimates are spaced out and leave the boss exposed for 3 seconds, a single hit cannot skip a power step, damage scales with the victim's EP but is capped by the pvp hit cap. World damage (craters, rot, bone, domains) only happens with the `griefBlocks` rule on, is budgeted per tick, and every changed block is put back when the fight ends (also inside the Living Dungeon).
+- **Dark Disciples:** elite followers infused with up to 40% of the boss's devil power (Lucifero: gravity slam; Megicula: weakening curse; Beelzebub: blink strike; Astaroth: slow-then-dash), capped, gone when their master dies, nothing dropped but XP.
+
+### The bosses
+- **Dante Zogratis (Lucifero, 1200 health):** Body Magic passive (a rate-limited mortal-wound regeneration pulse: cut by anti-magic or a burst of damage), Gravity Magic fields that slow, pin and crush, compressed rock sword volleys, 12 moves, and the Gravity Singularity ultimate (black spheres over telegraphed rings; bites terrain only with griefBlocks, restored afterwards).
+- **Vanica Zogratis (Megicula):** Blood Magic lances, scythe and whip with blood drain (healing capped), summoned **Blood Beasts** (new minions), Curse-Warding **Curse of Decay** (new effect *Megicula's Decay*: weakness, cut healing, a growing bite; broken by leaving the sigil, anti-magic or a cleanse) and a spreading Rotting Field, 13 moves, ultimate Crimson Crown.
+- **Zenon Zogratis (Beelzebub):** Bone Magic spears, blades and bone gardens, Spatial Magic portals and blinks, 11 moves, and **Spatial Mana Domination** (Absolute Space): a telegraphed cubic domain that severs mana: no grimoire spells (a check at the top of `GrimoireBook.castPage`), no Tensura skills (ManasCore skill events), spell damage cut to a fifth; weapons, items and movement still work; it can be left, and shatters if Zenon takes enough damage.
+- **Lucius Zogratis (Astaroth, 3600 health, the endgame boss):** Soul Magic (soul drain, **Soul Purge** that strips Devil Union and attunement and cuts the Triad off from their devils, memory manipulation, resurrection of his clones), **Soul Paladins** (powerful mobs made loyal and immortal until their soul is cut with anti-magic/holy/soul damage or Lucius falls; new effects *Soul Paladin* and *Purified*), **Two Souls** (at 75/55/35/12% Julius Novachrono's will surfaces for 8 s: Lucius stumbles, takes more damage, the party is blessed), Time Magic (precognition dodges, light-speed steps, Chrono Stasis, Time Stop up to 3 s, Time Reversal, acceleration; the existing Time Magic effects are called, not changed), absorbed Gravity and assimilated Body/Blood/Bone through the siblings' own moves, **Grimoire Tower Access** (casts a real page of any magic, 'The towers answer'), realistic clones, 20 moves, four ultimates, divine form at the Gates.
+
+### Look
+- New GeoLite models, textures, glow layers and animations (idle, walk, run, attack, cast, cast_big, hurt, transform, death) from your reference images (`tools/gen_zogratis_triad.py`, `tools/gen_zogratis_lucius.py`): base and devil-hybrid forms of the Triad, Lucius human and divine forms (six wings, gear halo, antlers, floating golden grimoire), the Dark Disciple (four devil tints), the Blood Beast and the Soul Paladin. The faces and clothes are original pixel-art interpretations.
+
+### Not done / unverified
+- No loot drops, no boss music or custom sounds, no advancement; Lucius's Time Reversal rewinds only himself.
+- Unverified in game: all balance numbers, the fight loops, the renderers, the ManasCore skill-event veto of the domain (a refused release of a channelled skill), and the look of every model.
+
 ## [1.19.0] — The Living Dungeon, polish: real Tensura mobs, Ice and Fire compatibility, unbreakable blocks, the Golden City, its own sky and sounds, meals that lend skills, a Maw reward
 
 **State:** written without a compiler; CI is the first compile. Nothing run in game. Every part below is **new** except where it says **replacement**.

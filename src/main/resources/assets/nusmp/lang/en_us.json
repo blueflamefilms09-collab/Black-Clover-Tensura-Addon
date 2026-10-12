@@ -1222,5 +1222,19 @@
   "item.nusmp.seared_monster_meat": "Seared Monster Meat",
   "block.nusmp.aurelian_altar": "Aurelian Altar",
   "item.nusmp.aurelian_core": "Aurelian Core",
-  "item.nusmp.maw_fruit": "Maw Fruit"
+  "item.nusmp.maw_fruit": "Maw Fruit",
+  "effect.nusmp.soul_paladin": "Soul Paladin",
+  "effect.nusmp.purified": "Purified",
+  "entity.nusmp.dante_zogratis": "Dante Zogratis",
+  "entity.nusmp.vanica_zogratis": "Vanica Zogratis",
+  "entity.nusmp.zenon_zogratis": "Zenon Zogratis",
+  "entity.nusmp.lucius_zogratis": "Lucius Zogratis",
+  "entity.nusmp.dark_disciple": "Dark Disciple",
+  "entity.nusmp.blood_beast": "Blood Beast",
+  "entity.nusmp.zogratis_clone": "Zogratis Clone",
+  "item.nusmp.dante_zogratis_spawn_egg": "Dante Zogratis Spawn Egg",
+  "item.nusmp.vanica_zogratis_spawn_egg": "Vanica Zogratis Spawn Egg",
+  "item.nusmp.zenon_zogratis_spawn_egg": "Zenon Zogratis Spawn Egg",
+  "item.nusmp.lucius_zogratis_spawn_egg": "Lucius Zogratis Spawn Egg",
+  "effect.nusmp.megicula_decay": "Megicula's Decay"
 }

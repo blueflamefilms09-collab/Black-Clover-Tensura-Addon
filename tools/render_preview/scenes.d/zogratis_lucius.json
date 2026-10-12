@@ -1,0 +1,1330 @@
+{
+ "lucius_base_front": {
+  "kind": "geo",
+  "model": "zogratis_lucius_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     1.05,
+     0
+    ],
+    "dist": 4.3
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 8,
+    "target": [
+     0,
+     1.05,
+     0
+    ],
+    "dist": 4.3
+   }
+  ]
+ },
+ "lucius_base_back": {
+  "kind": "geo",
+  "model": "zogratis_lucius_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 5,
+    "target": [
+     0,
+     1.05,
+     0
+    ],
+    "dist": 4.3
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.05,
+     0
+    ],
+    "dist": 4.3
+   }
+  ]
+ },
+ "lucius_base_face": {
+  "kind": "geo",
+  "model": "zogratis_lucius_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     1.75,
+     0
+    ],
+    "dist": 2.1
+   },
+   {
+    "name": "face 3/4",
+    "yaw": 32,
+    "pitch": 6,
+    "target": [
+     0,
+     1.75,
+     0
+    ],
+    "dist": 2.1
+   }
+  ]
+ },
+ "lucius_base_cast": {
+  "kind": "geo",
+  "model": "zogratis_lucius_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   6.0,
+   12.0,
+   18.0
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "cast",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0
+    ],
+    "dist": 4.515
+   }
+  ]
+ },
+ "lucius_base_cast_big": {
+  "kind": "geo",
+  "model": "zogratis_lucius_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   10.0,
+   20.0,
+   30.0
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "cast_big",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 5.805
+   },
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 5.805
+   }
+  ]
+ },
+ "lucius_base_attack": {
+  "kind": "geo",
+  "model": "zogratis_lucius_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   3.6,
+   7.2,
+   10.8,
+   14.4
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "attack",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0
+    ],
+    "dist": 4.515
+   }
+  ]
+ },
+ "lucius_base_transform": {
+  "kind": "geo",
+  "model": "zogratis_lucius_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   10.7,
+   21.3,
+   32.0,
+   42.7,
+   53.3
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "transform",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 5.805
+   }
+  ]
+ },
+ "lucius_base_death": {
+  "kind": "geo",
+  "model": "zogratis_lucius_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   11.2,
+   22.4,
+   33.6,
+   44.8
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "death",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0
+    ],
+    "dist": 4.515
+   }
+  ]
+ },
+ "lucius_base_walk": {
+  "kind": "geo",
+  "model": "zogratis_lucius_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   5.5,
+   11.0,
+   16.5
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "walk",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.05,
+     0
+    ],
+    "dist": 4.515
+   }
+  ]
+ },
+ "lucius_divine_front": {
+  "kind": "geo",
+  "model": "zogratis_lucius_divine",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [
+   "BUDGET"
+  ],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 7.6
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 8,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 7.6
+   }
+  ]
+ },
+ "lucius_divine_back": {
+  "kind": "geo",
+  "model": "zogratis_lucius_divine",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [
+   "BUDGET"
+  ],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 5,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 7.6
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 7.6
+   }
+  ]
+ },
+ "lucius_divine_face": {
+  "kind": "geo",
+  "model": "zogratis_lucius_divine",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [
+   "BUDGET"
+  ],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     2.1,
+     0
+    ],
+    "dist": 2.1
+   },
+   {
+    "name": "face 3/4",
+    "yaw": 32,
+    "pitch": 6,
+    "target": [
+     0,
+     2.1,
+     0
+    ],
+    "dist": 2.1
+   }
+  ]
+ },
+ "lucius_divine_cast": {
+  "kind": "geo",
+  "model": "zogratis_lucius_divine",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   6.0,
+   12.0,
+   18.0
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [
+   "BUDGET"
+  ],
+  "anim": "cast",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 7.9799999999999995
+   }
+  ]
+ },
+ "lucius_divine_cast_big": {
+  "kind": "geo",
+  "model": "zogratis_lucius_divine",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   10.0,
+   20.0,
+   30.0
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [
+   "BUDGET"
+  ],
+  "anim": "cast_big",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.95,
+     0
+    ],
+    "dist": 10.26
+   },
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     1.95,
+     0
+    ],
+    "dist": 10.26
+   }
+  ]
+ },
+ "lucius_divine_attack": {
+  "kind": "geo",
+  "model": "zogratis_lucius_divine",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   3.6,
+   7.2,
+   10.8,
+   14.4
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [
+   "BUDGET"
+  ],
+  "anim": "attack",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 7.9799999999999995
+   }
+  ]
+ },
+ "lucius_divine_transform": {
+  "kind": "geo",
+  "model": "zogratis_lucius_divine",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   12.0,
+   24.0,
+   36.0,
+   48.0,
+   60.0
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [
+   "BUDGET"
+  ],
+  "anim": "transform",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.95,
+     0
+    ],
+    "dist": 10.26
+   }
+  ]
+ },
+ "lucius_divine_death": {
+  "kind": "geo",
+  "model": "zogratis_lucius_divine",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   11.2,
+   22.4,
+   33.6,
+   44.8
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [
+   "BUDGET"
+  ],
+  "anim": "death",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 7.9799999999999995
+   }
+  ]
+ },
+ "lucius_divine_walk": {
+  "kind": "geo",
+  "model": "zogratis_lucius_divine",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   5.5,
+   11.0,
+   16.5
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [
+   "BUDGET"
+  ],
+  "anim": "walk",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 7.9799999999999995
+   }
+  ]
+ },
+ "soul_paladin_front": {
+  "kind": "geo",
+  "model": "zogratis_soul_paladin",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 8,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.6
+   }
+  ]
+ },
+ "soul_paladin_back": {
+  "kind": "geo",
+  "model": "zogratis_soul_paladin",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 5,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.6
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.6
+   }
+  ]
+ },
+ "soul_paladin_cast": {
+  "kind": "geo",
+  "model": "zogratis_soul_paladin",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   6.0,
+   12.0,
+   18.0
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "cast",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.83
+   }
+  ]
+ },
+ "soul_paladin_cast_big": {
+  "kind": "geo",
+  "model": "zogratis_soul_paladin",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   10.0,
+   20.0,
+   30.0
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "cast_big",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.35,
+     0
+    ],
+    "dist": 6.21
+   }
+  ]
+ },
+ "soul_paladin_attack": {
+  "kind": "geo",
+  "model": "zogratis_soul_paladin",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   3.6,
+   7.2,
+   10.8,
+   14.4
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "attack",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.83
+   }
+  ]
+ },
+ "soul_paladin_transform": {
+  "kind": "geo",
+  "model": "zogratis_soul_paladin",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   10.7,
+   21.3,
+   32.0,
+   42.7,
+   53.3
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "transform",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.35,
+     0
+    ],
+    "dist": 6.21
+   }
+  ]
+ },
+ "soul_paladin_death": {
+  "kind": "geo",
+  "model": "zogratis_soul_paladin",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   11.2,
+   22.4,
+   33.6,
+   44.8
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "death",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.83
+   }
+  ]
+ },
+ "soul_paladin_walk": {
+  "kind": "geo",
+  "model": "zogratis_soul_paladin",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   5.5,
+   11.0,
+   16.5
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "walk",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.83
+   }
+  ]
+ },
+ "grimoire_prop_front": {
+  "kind": "geo",
+  "model": "zogratis_grimoire_prop",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     0.65,
+     0
+    ],
+    "dist": 2.8
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 8,
+    "target": [
+     0,
+     0.65,
+     0
+    ],
+    "dist": 2.8
+   }
+  ]
+ },
+ "grimoire_prop_back": {
+  "kind": "geo",
+  "model": "zogratis_grimoire_prop",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 5,
+    "target": [
+     0,
+     0.65,
+     0
+    ],
+    "dist": 2.8
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     0.65,
+     0
+    ],
+    "dist": 2.8
+   }
+  ]
+ },
+ "grimoire_prop_cast": {
+  "kind": "geo",
+  "model": "zogratis_grimoire_prop",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   6.0,
+   12.0,
+   18.0
+  ],
+  "tile": [
+   340,
+   340
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "cast",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     0.65,
+     0
+    ],
+    "dist": 2.94
+   }
+  ]
+ },
+ "grimoire_prop_cast_big": {
+  "kind": "geo",
+  "model": "zogratis_grimoire_prop",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   10.0,
+   20.0,
+   30.0
+  ],
+  "tile": [
+   340,
+   340
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "cast_big",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 3.78
+   }
+  ]
+ },
+ "grimoire_prop_attack": {
+  "kind": "geo",
+  "model": "zogratis_grimoire_prop",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   3.6,
+   7.2,
+   10.8,
+   14.4
+  ],
+  "tile": [
+   340,
+   340
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "attack",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     0.65,
+     0
+    ],
+    "dist": 2.94
+   }
+  ]
+ },
+ "grimoire_prop_transform": {
+  "kind": "geo",
+  "model": "zogratis_grimoire_prop",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   10.7,
+   21.3,
+   32.0,
+   42.7,
+   53.3
+  ],
+  "tile": [
+   340,
+   340
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [
+   "ZERO_AREA"
+  ],
+  "anim": "transform",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 3.78
+   }
+  ]
+ },
+ "grimoire_prop_death": {
+  "kind": "geo",
+  "model": "zogratis_grimoire_prop",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   11.2,
+   22.4,
+   33.6,
+   44.8
+  ],
+  "tile": [
+   340,
+   340
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "death",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     0.65,
+     0
+    ],
+    "dist": 2.94
+   }
+  ]
+ },
+ "grimoire_prop_walk": {
+  "kind": "geo",
+  "model": "zogratis_grimoire_prop",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   5.5,
+   11.0,
+   16.5
+  ],
+  "tile": [
+   340,
+   340
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "walk",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     0.65,
+     0
+    ],
+    "dist": 2.94
+   }
+  ]
+ }
+}

@@ -74,6 +74,20 @@ class LedgerQueueTest {
     }
 
     @Test
+    void takeWhereSkipsWhatIsNotReadyAndKeepsIt() {
+        LedgerQueue<Long, Integer> q = new LedgerQueue<>(100);
+        for (long i = 0; i < 10; i++) q.record(i, (int) i, -1);
+        var odd = q.takeWhere(k -> k % 2 == 1, 3);
+        assertEquals(List.of(1L, 3L, 5L), odd.stream().map(LedgerQueue.Entry::key).toList());
+        assertEquals(7, q.size(), "the evens and the odd ones past the limit stay");
+        assertTrue(q.contains(0L) && q.contains(7L) && q.contains(9L));
+        assertTrue(q.takeWhere(k -> false, 10).isEmpty());
+        assertEquals(7, q.size(), "nothing ready: nothing lost");
+        assertEquals(7, q.takeWhere(k -> true, 100).size());
+        assertTrue(q.isEmpty());
+    }
+
+    @Test
     void snapshotDoesNotDrain() {
         LedgerQueue<Long, String> q = new LedgerQueue<>(5);
         q.record(1L, "a", "x");

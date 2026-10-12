@@ -58,7 +58,7 @@ public class DarkDiscipleEntity extends Monster {
     private double share = 0.08;
     private long nextAbility = 60;
     private Vec3 aim = Vec3.ZERO;
-    private int dashLeft;
+    private int dashLeft, orphanChecks;
 
     public DarkDiscipleEntity(EntityType<? extends Monster> type, Level level) {
         super(type, level);
@@ -159,11 +159,14 @@ public class DarkDiscipleEntity extends Monster {
         long t = tickCount;
         ZogratisBoss boss = t % 10 == 0 ? owner(sl) : null;
         if (t % 10 == 0) {
-            if (boss == null) {                                           // the owner fell or is gone
-                Tells.burst(sl, position().add(0, 1, 0), glowColor(), 16);
-                discard();
-                return;
-            }
+            if (boss == null) {                                           // the owner fell or is gone (a few checks of grace: its chunk may still be loading)
+                if (++orphanChecks >= 4) {
+                    Tells.burst(sl, position().add(0, 1, 0), glowColor(), 16);
+                    discard();
+                    return;
+                }
+            } else orphanChecks = 0;
+            if (boss == null) return;
             LivingEntity bt = boss.getTarget();
             if ((getTarget() == null || !getTarget().isAlive()) && bt != null && bt.isAlive()) setTarget(bt);
         }
@@ -336,6 +339,6 @@ public class DarkDiscipleEntity extends Monster {
         super.readAdditionalSaveData(tag);
         if (tag.hasUUID("Owner")) ownerId = tag.getUUID("Owner");
         if (tag.contains("Share")) share = tag.getDouble("Share");
-        entityData.set(DEVIL, tag.getInt("Devil"));
+        if (tag.contains("Devil")) entityData.set(DEVIL, tag.getInt("Devil"));
     }
 }

@@ -26,6 +26,7 @@ public final class NUCreativeTab {
                 output.accept(GrimoireItem.createUnbound(GrimoireCover.FIVE_LEAF, MagicType.ANTI_MAGIC, Devil.LIEBE));
                 output.accept(GrimoireItem.createUnbound(GrimoireCover.FIVE_LEAF, MagicType.KOTODAMA, Devil.ZAGRED));   // 0.47: creative only
                 for (var it : com.newuniverse.nusmp.item.NUItems.all()) output.accept(it.get());
+                for (var egg : com.newuniverse.nusmp.entity.zogratis.ZogratisEntities.spawnEggs()) output.accept(egg.get());      // 1.20.0: the Zogratis bosses
                 output.accept(com.newuniverse.nusmp.block.NUBlocks.GRIMOIRE_ALTAR_ITEM.get());
                 output.accept(com.newuniverse.nusmp.dungeon.DungeonBlocks.DUNGEON_MAW_ITEM.get());           // 1.17.0
                 output.accept(com.newuniverse.nusmp.dungeon.DungeonBlocks.DUNGEON_GATE_ITEM.get());

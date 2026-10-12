@@ -91,6 +91,8 @@ public abstract class ZogratisBoss extends Monster {
 
     /** Shortest telegraph of any move that has one: nobody gets less than 8 ticks to react, whatever the power. */
     public static final int MIN_WINDUP = 8;
+    /** Shortest telegraph of an ultimate (1.5 s), whatever the move says and whatever the power. */
+    public static final int MIN_ULTIMATE_WINDUP = 30;
     /** Blocks the boss may change per tick, at most. */
     public static final int BLOCKS_PER_TICK = 48;
     /** The arena: a boss further than this from its centre is called back, players further than twice this are pulled in. */
@@ -124,7 +126,7 @@ public abstract class ZogratisBoss extends Monster {
 
     private BlockPos arena;
     private boolean initialised, fightActive, fightEnded;
-    private long nextThink, recoveryUntil, nextMelee, castEnd;
+    private long nextThink, recoveryUntil, nextMelee, castEnd, transformDeadline, nextRestore;
     private int transformLeft, blockBudget, emptySeconds;
     private Move casting;
     private UUID castTarget;
@@ -424,12 +426,16 @@ public abstract class ZogratisBoss extends Monster {
         if (!initialised) initialise(sl, t);
         blockBudget = BLOCKS_PER_TICK;
         drainEdits();
-        if (!fightActive && !ledger.isEmpty()) ledger.restoreStep(sl, 160);
+        if (!fightActive && !ledger.isEmpty() && t >= nextRestore) {
+            int before = ledger.size();
+            ledger.restoreStep(sl, 160);
+            if (ledger.size() >= before) nextRestore = t + 40;            // what is left waits for its chunks: look again in two seconds
+        }
         mana.tick();
         float frac = getHealth() / getMaxHealth();
         bar.setProgress(Math.max(0f, Math.min(1f, frac)));
         int np = PowerCurve.next(frac, power());
-        if (np != power()) raisePower(sl, np, null);
+        while (np > power() && transformLeft <= 0) raisePower(sl, Math.min(np, PowerCurve.stepUp(power())), null);   // one step at a time, each announced
         if (t % 20 == 0) upkeep(sl, t);
         if (transformLeft > 0) {
             tickTransform(sl);
@@ -459,8 +465,10 @@ public abstract class ZogratisBoss extends Monster {
         TriadBond.register(this);
         if (arena == null) arena = blockPosition();
         scheduler.reset(t);
-        tuning = PowerCurve.tuning(power());
-        mana.retune(tuning);
+        if (tuning.power() != power()) {                                  // a power set from outside (a command, a subclass): the pool follows it
+            tuning = PowerCurve.tuning(power());
+            mana.retune(tuning);
+        }
         applyTuning();
         refreshBar();
         if (gatesOpen() && form() == FORM_BASE) setForm(gatesForm());
@@ -493,7 +501,8 @@ public abstract class ZogratisBoss extends Monster {
             if (fightActive && fighters.contains(p.getUUID()) && d2 > (2.0 * ARENA_RADIUS) * (2.0 * ARENA_RADIUS) && d2 < 200 * 200
                     && t >= p.getPersistentData().getLong("nusmp_zogratis_leash")) {
                 p.getPersistentData().putLong("nusmp_zogratis_leash", t + 200);
-                Vec3 to = ground(sl, c.add(p.position().subtract(c).multiply(1, 0, 1).normalize().scale(12)));
+                Vec3 to = groundOrNull(sl, c.add(p.position().subtract(c).multiply(1, 0, 1).normalize().scale(12)));
+                if (to == null) to = ground(sl, c);                        // no standing room on the way in: the middle of the arena, never inside a wall
                 say("Return.");
                 p.teleportTo(to.x, to.y, to.z);
             }
@@ -575,6 +584,7 @@ public abstract class ZogratisBoss extends Monster {
 
     private void beginGates(ServerLevel sl) {
         transformLeft = PowerCurve.TRANSFORM_TICKS;
+        transformDeadline = sl.getGameTime() + PowerCurve.TRANSFORM_TICKS + 40;    // the cutscene shield can never outlast this, whatever happens to the AI tick
         cancelCast();
         setState(STATE_TRANSFORMING);
         entityData.set(PHASE_TOTAL, PowerCurve.TRANSFORM_TICKS);
@@ -636,6 +646,7 @@ public abstract class ZogratisBoss extends Monster {
     }
 
     private int windUpOf(Move m) {
+        if (m.ultimate()) return Math.max(MIN_ULTIMATE_WINDUP, Math.round(m.windUpTicks() * (float) tuning.windUpMultiplier()));   // a big attack is never instant
         return m.windUpTicks() <= 0 ? 0 : Math.max(MIN_WINDUP, Math.round(m.windUpTicks() * (float) tuning.windUpMultiplier()));
     }
 
@@ -713,7 +724,7 @@ public abstract class ZogratisBoss extends Monster {
     private void melee(ServerLevel sl, LivingEntity target, long t) {
         if (casting != null || t < nextMelee || t < recoveryUntil) return;
         if (!getBoundingBox().inflate(0.8, 0.4, 0.8).intersects(target.getBoundingBox())) return;
-        nextMelee = t + Math.max(10, Math.round(20 * (float) tuning.cooldownMultiplier()));
+        nextMelee = t + Math.max(16, Math.round(20 * (float) tuning.cooldownMultiplier()));
         swing(InteractionHand.MAIN_HAND);
         if (strike(target, meleeDamage(), false)) {
             Vec3 away = target.position().subtract(position()).multiply(1, 0, 1);
@@ -787,14 +798,21 @@ public abstract class ZogratisBoss extends Monster {
         return true;
     }
 
-    /** The floor near 'p': the first air block with solid ground below, searching from 3 above to 6 below (p itself if none). */
+    /** The floor near 'p': the first spot with two blocks of air above solid ground, searching from 3 above to 6 below (p itself if none). */
     public static Vec3 ground(Level level, Vec3 p) {
+        Vec3 found = groundOrNull(level, p);
+        return found == null ? p : found;
+    }
+
+    /** Like {@link #ground}, but null when there is no standing room within reach (so a caller can choose a safer spot). */
+    public static Vec3 groundOrNull(Level level, Vec3 p) {
         BlockPos base = BlockPos.containing(p);
         for (int dy = 3; dy >= -6; dy--) {
             BlockPos b = base.offset(0, dy, 0);
-            if (level.getBlockState(b).isAir() && level.getBlockState(b.below()).blocksMotion()) return new Vec3(p.x, b.getY(), p.z);
+            if (level.getBlockState(b).isAir() && level.getBlockState(b.above()).isAir() && level.getBlockState(b.below()).blocksMotion())
+                return new Vec3(p.x, b.getY(), p.z);
         }
-        return p;
+        return null;
     }
 
     // ---------------------------------------------------------------- Tensura's own magic
@@ -858,7 +876,7 @@ public abstract class ZogratisBoss extends Monster {
     public List<DarkDiscipleEntity> disciples() {
         if (!(level() instanceof ServerLevel sl)) return List.of();
         UUID me = getUUID();
-        return sl.getEntitiesOfClass(DarkDiscipleEntity.class, getBoundingBox().inflate(96), d -> d.isAlive() && me.equals(d.ownerId()));
+        return sl.getEntitiesOfClass(DarkDiscipleEntity.class, getBoundingBox().inflate(128), d -> d.isAlive() && me.equals(d.ownerId()));
     }
 
     /** Summons up to 'count' elite followers around the boss, never more than the power's disciple cap. Returns how many came. */
@@ -884,14 +902,18 @@ public abstract class ZogratisBoss extends Monster {
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if (level().isClientSide || source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return super.hurt(source, amount);
-        if (transformLeft > 0 || fightEnded) return false;
+        if (fightEnded || (transformLeft > 0 && level().getGameTime() < transformDeadline)) return false;
         Entity attacker = source.getEntity();
         if (attacker != null && ZogratisEntities.isFamily(attacker)) return false;
+        // the power the health already asks for: a second hit in the tick of a crossing is bounded by the line after it, and a boss
+        // that has crossed the last line is shielded until this tick's AI step opens the Gates (nothing can finish it in between)
+        int due = PowerCurve.next(getHealth() / getMaxHealth(), power());
+        if (due >= PowerCurve.FULL && power() < PowerCurve.FULL) return false;
         noteFighter(attacker);
         float a = filterDamage(source, amount);
         if (a <= 0f) return false;
         if (exposed()) a *= EXPOSED_BONUS;
-        a = PowerCurve.clampDamage(getHealth(), getMaxHealth(), power(), a);
+        a = PowerCurve.clampDamage(getHealth(), getMaxHealth(), due, a);
         return a > 0f && super.hurt(source, a);
     }
 
@@ -906,7 +928,7 @@ public abstract class ZogratisBoss extends Monster {
     @Override
     public void die(DamageSource source) {
         super.die(source);
-        if (!(level() instanceof ServerLevel sl) || fightEnded) return;
+        if (!(level() instanceof ServerLevel sl) || fightEnded || !dead) return;       // 'dead' stays false when another mod cancelled the death
         fightEnded = true;
         fightActive = false;
         cancelCast();

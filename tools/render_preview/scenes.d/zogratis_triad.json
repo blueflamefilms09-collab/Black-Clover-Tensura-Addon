@@ -15,7 +15,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "idle",
   "views": [
    {
@@ -58,7 +60,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "idle",
   "views": [
    {
@@ -101,7 +105,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "idle",
   "views": [
    {
@@ -159,7 +165,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "attack",
   "views": [
    {
@@ -205,7 +213,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "cast",
   "views": [
    {
@@ -252,7 +262,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "cast_big",
   "views": [
    {
@@ -298,7 +310,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "transform",
   "views": [
    {
@@ -344,7 +358,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "walk",
   "views": [
    {
@@ -390,7 +406,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "run",
   "views": [
    {
@@ -437,7 +455,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "death",
   "views": [
    {
@@ -482,7 +502,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "hurt",
   "views": [
    {
@@ -528,7 +550,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "idle",
   "views": [
    {
@@ -571,7 +595,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "idle",
   "views": [
    {
@@ -614,7 +640,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "idle",
   "views": [
    {
@@ -657,7 +685,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "idle",
   "views": [
    {
@@ -715,7 +745,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "attack",
   "views": [
    {
@@ -761,7 +793,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "cast",
   "views": [
    {
@@ -808,7 +842,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "cast_big",
   "views": [
    {
@@ -854,7 +890,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "transform",
   "views": [
    {
@@ -900,7 +938,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "walk",
   "views": [
    {
@@ -946,7 +986,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "run",
   "views": [
    {
@@ -993,7 +1035,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "death",
   "views": [
    {
@@ -1038,7 +1082,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "hurt",
   "views": [
    {
@@ -1084,7 +1130,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "idle",
   "views": [
    {
@@ -1127,7 +1175,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "idle",
   "views": [
    {
@@ -1170,7 +1220,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "idle",
   "views": [
    {
@@ -1213,7 +1265,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "idle",
   "views": [
    {
@@ -1271,7 +1325,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "attack",
   "views": [
    {
@@ -1317,7 +1373,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "cast",
   "views": [
    {
@@ -1364,7 +1422,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "cast_big",
   "views": [
    {
@@ -1410,7 +1470,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "transform",
   "views": [
    {
@@ -1456,7 +1518,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "walk",
   "views": [
    {
@@ -1502,7 +1566,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "run",
   "views": [
    {
@@ -1549,7 +1615,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "death",
   "views": [
    {
@@ -1594,7 +1662,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "hurt",
   "views": [
    {
@@ -1640,7 +1710,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "idle",
   "views": [
    {
@@ -1683,7 +1755,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "idle",
   "views": [
    {
@@ -1726,7 +1800,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "idle",
   "views": [
    {
@@ -1769,7 +1845,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "idle",
   "views": [
    {
@@ -1827,7 +1905,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "attack",
   "views": [
    {
@@ -1873,7 +1953,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "cast",
   "views": [
    {
@@ -1920,7 +2002,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "cast_big",
   "views": [
    {
@@ -1966,7 +2050,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "transform",
   "views": [
    {
@@ -2012,7 +2098,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "walk",
   "views": [
    {
@@ -2058,7 +2146,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "run",
   "views": [
    {
@@ -2105,7 +2195,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "death",
   "views": [
    {
@@ -2150,7 +2242,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "hurt",
   "views": [
    {
@@ -2196,7 +2290,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "idle",
   "views": [
    {
@@ -2795,7 +2891,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "idle",
   "views": [
    {
@@ -2838,7 +2936,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "idle",
   "views": [
    {
@@ -2881,7 +2981,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "idle",
   "views": [
    {
@@ -2939,7 +3041,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "attack",
   "views": [
    {
@@ -2985,7 +3089,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "cast",
   "views": [
    {
@@ -3032,7 +3138,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "cast_big",
   "views": [
    {
@@ -3078,7 +3186,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "transform",
   "views": [
    {
@@ -3124,7 +3234,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "walk",
   "views": [
    {
@@ -3170,7 +3282,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "run",
   "views": [
    {
@@ -3217,7 +3331,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "death",
   "views": [
    {
@@ -3262,7 +3378,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "hurt",
   "views": [
    {
@@ -3308,7 +3426,9 @@
   ],
   "floor": false,
   "figure": false,
-  "expect": [],
+  "expect": [
+   "BUDGET"
+  ],
   "anim": "idle",
   "views": [
    {

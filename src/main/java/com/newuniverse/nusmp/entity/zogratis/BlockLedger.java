@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.entity.zogratis;
 
+import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.dungeon.DungeonGuard;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderGetter;
@@ -67,20 +68,25 @@ public final class BlockLedger {
     }
 
     private int restore(ServerLevel level, int budget, boolean force) {
-        if (queue.isEmpty()) return 0;
-        List<LedgerQueue.Entry<Long, BlockState>> batch = queue.take(budget);
+        if (queue.isEmpty() || budget <= 0) return 0;
+        // a step only takes blocks whose chunk is loaded (the rest wait where they are, behind nothing); the final restore takes all
+        List<LedgerQueue.Entry<Long, BlockState>> batch = force ? queue.take(budget) : queue.takeWhere(k -> level.isLoaded(BlockPos.of(k)), budget);
+        if (batch.isEmpty()) return 0;
         batch.sort(Comparator.comparingInt(e -> BlockPos.getY(e.key())));        // bottom up, so supported blocks find their support
         int[] restored = {0};
         DungeonGuard.internal(() -> {
             for (LedgerQueue.Entry<Long, BlockState> e : batch) {
-                BlockPos p = BlockPos.of(e.key());
-                if (!force && !level.isLoaded(p)) { queue.putBack(e); continue; }
-                BlockState now = level.getBlockState(p), placed = e.placed();
-                if (now == e.old()) continue;
-                boolean ours = placed == null || now.is(placed.getBlock()) || (placed.isAir() && (now.isAir() || now.canBeReplaced()));
-                if (!ours) continue;                                              // someone built or broke here since: leave it
-                level.setBlock(p, e.old(), 3);
-                restored[0]++;
+                try {
+                    BlockPos p = BlockPos.of(e.key());
+                    BlockState now = level.getBlockState(p), placed = e.placed();
+                    if (now == e.old()) continue;
+                    boolean ours = placed == null || now.is(placed.getBlock()) || (placed.isAir() && (now.isAir() || now.canBeReplaced()));
+                    if (!ours) continue;                                          // someone built or broke here since: leave it
+                    level.setBlock(p, e.old(), 3);
+                    restored[0]++;
+                } catch (RuntimeException failed) {
+                    LogUtils.getLogger().warn("[nusmp] a Zogratis block could not be put back at {}: {}", BlockPos.of(e.key()), failed.toString());
+                }
             }
         });
         return restored[0];

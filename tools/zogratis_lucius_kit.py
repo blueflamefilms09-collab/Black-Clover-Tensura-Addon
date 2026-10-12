@@ -256,6 +256,17 @@ def canvas_paint(canvas, face_name, fallback):
     return p
 
 
+def canvas_plate(canvas):
+    """A painter for a thin plate: the canvas on the front face and, mirrored, on the back face (so it reads right from behind); other faces stay clear."""
+    def p(face, i, j, fw, fh):
+        if face == "front":
+            return canvas.at(i, j)
+        if face == "back":
+            return canvas.at(fw - 1 - i, j)
+        return None, None
+    return p
+
+
 # ------------------------------------------------------------------------------------------------------------- strand / folds
 def strand_id(across, along, salt, width=2.0, wander=1.0):
     x = across / width + wander * SIN(along * 0.13 + across * 0.31 + salt) / width * 2 + 0.4 * SIN(along * 0.37 + salt * 2.3)
@@ -358,11 +369,11 @@ def solid(c, g=None, noise=0.0, salt=0):
     return p
 
 
-def metal(cols, salt=0, glow=None, band=True, emboss=True, rim=True):
+def metal(cols, salt=0, glow=None, band=True, emboss=True, rim=True, lift=0.0):
     """Gold or steel in a hard-edged palette: lit top rows, dark bottom rows, a bright rim line, engraved dashes; glow = (r, g, b, a) for the glow layer."""
     def p(face, i, j, fw, fh):
         v = j / max(1, fh - 1)
-        t = 0.78 - 0.55 * v + FACE_T[face] * 0.5 + 0.06 * fz(i, j, salt)
+        t = 0.78 - 0.55 * v + FACE_T[face] * 0.5 + 0.06 * fz(i, j, salt) + lift
         if face in ("top",):
             t = 0.92
         if rim and (i == 0 or j == 0) and face in SIDES and fw > 3 and fh > 3:
@@ -454,6 +465,8 @@ def keys(a, clip, bone, kind, pts, fps=20, smooth_=True):
         frames = {t: tuple(round(v, 3) for v in catmull(pts, t)) for t in times}
     else:
         frames = {t: tuple(round(v, 3) for v in x) for t, x in pts}
+    if kind == "scale":                                                      # the spline may undershoot: a scale must never reach zero or turn negative (mirrored quads)
+        frames = {t: tuple(max(0.01, v) for v in x) for t, x in frames.items()}
     (a.rot if kind == "rot" else a.pos if kind == "pos" else a.scale)(clip, bone, frames)
 
 

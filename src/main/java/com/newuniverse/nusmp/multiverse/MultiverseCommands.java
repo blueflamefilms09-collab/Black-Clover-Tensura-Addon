@@ -188,7 +188,7 @@ public final class MultiverseCommands {
                         .then(Commands.literal("replace").executes(ctx -> eventAntiMagic(ctx, true))))));
 
         // 0.47: the Zagred boss (server config zagredBossEnabled, off by default)
-        root.then(Commands.literal("boss").requires(MultiverseCommands::admin)
+        var bossNode = Commands.literal("boss").requires(MultiverseCommands::admin)
                 .then(Commands.literal("zagred").executes(ctx -> {
                     if (!com.newuniverse.nusmp.NUGameRules.zagredBoss(ctx.getSource().getLevel()))
                         return fail(ctx, "The Zagred boss is off. Turn it on with /gamerule nusmpZagredBoss true (or zagredBossEnabled in the server config).");
@@ -199,7 +199,9 @@ public final class MultiverseCommands {
                 .then(Commands.literal("sylph").executes(ctx -> {
                     var s = com.newuniverse.nusmp.entity.WindSpiritLordEntity.summon(ctx.getSource().getLevel(), ctx.getSource().getPosition());
                     return s == null ? fail(ctx, "Sylph could not be summoned here.") : ok(ctx, "Sylph, the Wind Spirit Lord, rides in on the gale.");
-                })));
+                }));
+        com.newuniverse.nusmp.entity.zogratis.ZogratisCommand.addTo(bossNode);                       // 1.20.0: dante | vanica | zenon | lucius | triad
+        root.then(bossNode);
 
         root.then(Commands.literal("antimode").requires(MultiverseCommands::admin).then(Commands.argument("player", EntityArgument.player())
                 .then(Commands.argument("mode", IntegerArgumentType.integer(0, 3)).executes(ctx -> {
