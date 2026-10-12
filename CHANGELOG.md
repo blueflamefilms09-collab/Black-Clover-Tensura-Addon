@@ -1,6 +1,21 @@
 # Changelog
 
-## [1.1.0] — Resumed from v1.0.0 (NOT yet compiled)
+## [1.2.0] — Compiled: the 1.1.0 line builds, Elsdocia grand, boss spawn grace, tooltip wrapping
+
+**State:** the merge of the three lines (the owner's 1.0.0 Marquis / Riven line, the 0.99 Elsdocia + Key restoration line, and the 0.58 line with every new grimoire, VFX, sounds and summons) compiles in CI and passes its tests. Nothing here was run in game.
+
+### Fixed
+- **Build:** the Codex UI imported `net.minecraft.client.renderer.Lighting`; in 1.21.1 it is `com.mojang.blaze3d.platform.Lighting` (this broke the 1.1.0 build). The Riven loot test now expects the 5-pool table the Story Page drop made.
+- **Boss dies on spawn (Marquis / Riven Remake):** on top of the 0.100 damage guard, for the first 100 ticks `setHealth(<= 0)`, `kill()` and every damage source that is not a creative player, `/kill` or the void are ignored (and logged with the real source: look for `Marquis/Riven: ignored` in `latest.log`). Unverified in game.
+- **Elsdocia description ran off the screen:** every weapon tooltip is now wrapped at word breaks (44 characters, continuation lines indented); Elsdocia gained its wiki lore line.
+- **Release notes:** the CI release body is now the newest section of this file.
+
+### Replaced
+- **Elsdocia remade again (owner reference image + the Black Clover Movie scale):** the blade top is worked bronze-gold with the clover cut out of it, the rest is shattered-glass crystal in deep azure with bright cracks and white-hot cells down to a long pointed tip; a thin, wide cross guard with swept tips; a slender dark grip; gold pommel. **Twice the size in hand** (a greatsword). New 16x16 inventory sprite (`tools/gen_elsdocia_icon.py`); the earlier sprites stay as `elsdocia_v099.png`.
+
+### Version gap check (1.0.0 -> 1.1.0 -> 1.2.0): see `docs/version_gap_1.2.md`
+
+## [1.1.0] — Resumed from v1.0.0 (compiled in 1.2.0)
 
 The tree is v1.0.0 (the Marquis / Riven line) with the 0.100-0.102 work ported onto it; the older line's own Riven implementation (`RivenPassives`, `riven_codex/`, story weapons) is superseded by v1.0.0's and is not restored. Details are in README.md under "1.1.0". In short: seven reference-sheet weapons, Elsdocia remade, the usable Bard Relic, Story Page and Gale Feather, the Codex UI, and the four Black Clover Spirit Lords with true bodies (Tensura spirits stay orbs).
 
