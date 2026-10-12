@@ -1,9 +1,6 @@
-# 1.19.0 check: which mobs does base Tensura register, and what are their ids, classes and base classes?
-list:tensura/registry/entity/
-list:tensura/entity/[^/]+\.class$
-list:tensura/entity/(mob|living|monster|animal|beast|hostile|neutral|passive|slime|undead|demon)[a-z]*/[^/]+\.class$
-strings:tensura/registry/entity/Tensura[A-Za-z]*Entit
-files:^assets/tensura/textures/entity/[^/]+/$
-files:^data/tensura/loot_table/entities/[a-z_/]+\.json$
-files:^data/tensura/tags/entity_type/
-files:^data/tensura/(neoforge/biome_modifier|worldgen)/.*spawn
+# 1.19.0 check: the API of the base Tensura mobs the Living Dungeon will use
+monster/(Slime|Direwolf|Basilisk|Armorsaurus|HoundDog|BlackSpider|KnightSpider|GiantAnt|MetalSlime|BladeTiger|GiantBear|HornedBear)Entity\.class$
+registry/entity/(MonsterEntityTypes|TensuraEntityTypes)\.class$
+strings:registry/entity/MonsterEntityTypes
+list:tensura/entity/(ai|goal|brain)/
+list:tensura/entity/[a-z]+/[A-Za-z]*(Tameable|Tamable|Base|Abstract|Mob)[A-Za-z]*\.class$
