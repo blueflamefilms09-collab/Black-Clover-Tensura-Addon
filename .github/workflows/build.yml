@@ -26,7 +26,13 @@ jobs:
       - name: Build (compiles, runs the tests, makes the jar)
         run: |
           chmod +x gradlew
-          ./gradlew build --stacktrace --no-daemon
+          set -o pipefail
+          ./gradlew build --no-daemon --console=plain 2>&1 | tee build.log
+
+      - name: Compile and test errors as annotations
+        if: failure()
+        run: |
+          grep -E "error:|FAILED|AssertionFailedError|expected:" build.log | sort -u | head -40 | while IFS= read -r l; do echo "::error::${l}"; done || true
 
       - name: Read version
         id: ver

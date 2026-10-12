@@ -31,7 +31,7 @@ public final class DungeonEffects {
             .addAttributeModifier(Attributes.BLOCK_BREAK_SPEED, id("suffocation_mining"), -0.2, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
 
     /** Magicule radiation: maximum health falls 10% per level (five levels). */
-    public static final DeferredHolder<MobEffect, MobEffect> MAGICULE_POISONING = EFFECTS.register("magicule_poisoning", () -> new MobEffect(MobEffectCategory.HARMFUL, 0xE0B341)
+    public static final DeferredHolder<MobEffect, MobEffect> MAGICULE_POISONING = EFFECTS.register("magicule_poisoning", () -> new Plain(MobEffectCategory.HARMFUL, 0xE0B341)
             .addAttributeModifier(Attributes.MAX_HEALTH, id("magicule_poisoning_health"), -0.10, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
 
     /** Raw monster meat: queasy and weak, hungry on top of it. */
@@ -44,6 +44,11 @@ public final class DungeonEffects {
 
         @Override public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) { return duration % 20 == 0; }
     }.addAttributeModifier(Attributes.ATTACK_DAMAGE, id("magicule_sickness_attack"), -0.25, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+
+    /** An effect with nothing but attribute modifiers (MobEffect's constructor is protected). */
+    private static final class Plain extends MobEffect {
+        Plain(MobEffectCategory category, int color) { super(category, color); }
+    }
 
     private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, path); }
 }
