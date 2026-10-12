@@ -173,7 +173,7 @@ public final class Ceremony {
         for (MagicType m : GrimoireAcceptance.starterPool(NightmareSouls.soulTypeOf(p))) {
             p.sendSystemMessage(Component.literal("  [" + m.displayName + "]").withStyle(s -> s.withColor(ChatFormatting.AQUA)
                     .withClickEvent(new net.minecraft.network.chat.ClickEvent(net.minecraft.network.chat.ClickEvent.Action.RUN_COMMAND, "/multiverse choose " + m.name()))
-                    .withHoverEvent(new net.minecraft.network.chat.HoverEvent(net.minecraft.network.chat.HoverEvent.Action.SHOW_TEXT, Component.literal("Take " + m.displayName() + " Magic")))));
+                    .withHoverEvent(new net.minecraft.network.chat.HoverEvent(net.minecraft.network.chat.HoverEvent.Action.SHOW_TEXT, Component.literal("Take " + m.displayName + " Magic")))));
         }
     }
 
