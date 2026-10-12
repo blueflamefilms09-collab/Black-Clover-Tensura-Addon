@@ -5,10 +5,16 @@
 **State:** written without a compiler; CI is the first compile. Nothing run in game. Every part below is **new** except where it says **replacement**.
 
 ### Replacements (owner request: "not custom ones")
-<!--WILD-->
+- **The Dungeon's creatures are now the real mobs of base Tensura** (and of Ice and Fire Community Edition when it is installed), not the custom ones. **Replacement:** the ecosystem no longer spawns the custom Dungeon Slime, Living Armor, Direwolf and Basilisk of 1.18.0; those classes, renderers and assets stay registered (old worlds may hold them, and they count as roster members and are the fallback if no roster mob exists).
+- **Roster by entity-type tags** (`data/nusmp/tags/entity_type/dungeon/`: `tier1`, `tier2`, `tier3`, `legendary`, `grazers`, `aquatic`, `excluded`): every entry is optional, so a mod that is not installed is skipped and a modpack can edit the lists. Tier 1 holds slimes and small things, tier 2 the Armorsaurus (it takes the old Living Armor's place), Lizardmen, Orcs, hound dogs, ants and the like, tier 3 the Direwolf, Basilisk, Black and Knight Spiders, Blade Tiger, Giant Bear and more; Ice and Fire's Pixie to Hydra, Cyclops, Gorgon, Sea Serpent etc. sit in the same tiers (their ids are from memory: a wrong one is skipped, the log shows the real counts). Fire, Ice and Lightning dragons are **legendary**: one at a time, only where the chunk is rich in life, the fire dragon in the Vents, the ice dragon in the waterways, the lightning dragon in the Golden City. Bosses and story mobs are excluded.
+- **Driven from outside** (`dungeon/wild/WildDriver`): Tensura's mobs think with brains, not goals, so a server sweep gives them the food web: hunger (with starvation), hungry tier 2+ creatures hunting a weaker tier within 16 blocks, tier 1 and grazers eating carcasses and mycelium, a full apex predator resting (and waking on hunger, damage or a player coming near), the same breeding gates as 1.18.0 (slimes where magicules are dense, tier 2 where there are slimes, apex where there is something to hunt). Births now stand on the floor nearest the players, not the highest one in the column. Their own AI keeps deciding about players; nothing new is aggressive to players.
+- **Carcasses by kind**: Tensura slimes leave the slime carcass, the Armorsaurus the armor one, the Basilisk and Direwolf theirs, everything else the generic one. The Butcher Cleaver's Anatomical Cut marks any roster creature for an extra portion.
+- `/multiverse dungeon spawn slime|armor|direwolf|basilisk` now spawn the Tensura equivalents; new `spawn mob <entity_type>` and `spawn custom slime|armor|direwolf|basilisk` (the old ones); `census` counts by tier.
 
 ### Unbreakable (owner request: "unbreakable by any means")
-<!--GUARD-->
+- **Every block of the Dungeon is unbreakable** (`dungeon/DungeonGuard`, config `unbreakable`, default true): mining (creative too; the crack never starts), explosions, mob griefing, pistons, axe/shovel/hoe changes, farmland trampling, and a mixin on `Level.destroyBlock/removeBlock/setBlock` and `LevelChunk.setBlockState` that catches mods, spells and skills that break blocks directly. Fire cannot take a protected block either. Carcasses, Dungeon Mycelium, fluids and fire are exempt on purpose (the ecosystem eats them). The mod's own builders (city, floor cutting, the Root Gate, spell blocks being taken back) run inside `DungeonGuard.internal(...)`.
+- Side effects, on purpose: falling blocks and lit TNT do nothing in the Dungeon (they would copy blocks), placed sand hovers, `/setblock`, `/fill` and `/clone` are refused there (turn the switch off to edit), and a player who walls themselves in can use `/multiverse dungeon exit`.
+- Not covered, honestly: writes below the chunk API (world generation, WorldEdit-style section editors), a protected block swapped for another solid block (spreading sculk, a spell turning stone to ice), and mods that drop items and then fail to remove the block. Mobs' griefing is off for every entity in the Dungeon, which also stops loot pickup and villager farming there.
 
 ### The Golden City
 - **A real place** (`dungeon/city/*`): when a player in the Dungeon comes within 56 blocks of a city cell (`DungeonTier.isCityCell`, an addition), the city builds itself over a few seconds of ticks, resumable after a restart (`CitySave`): a sealed vault with a carved cavern, a broken outer wall with two golden gates, four avenues, a plaza with a glowing moat and a dais, 8 to 14 buildings (towers with stairs, halls, shrines, obelisks, arches, some ruined), lamp posts and chandeliers. The layout is deterministic per cell (`CityPlan`, pure and tested).
@@ -27,8 +33,8 @@
 - A custom biome `nusmp:dungeon_depths` (new chunks only; existing chunks keep their stored biomes) joins the two vanilla cave biomes.
 
 ### Not done
-- Predator dens as structures and the pack AI for the real mobs; the custom Living Armor model was dropped on request (the real mobs are used instead).
-- Everything above is unverified in game. Honest list: the biome file, the fog hook, the Level mixin, the Tensura and Ice and Fire mob driving, and the city's look.
+- Predator den structures and pack behaviour for the real mobs (Tensura's Direwolf spawns as a pack by itself); the custom Living Armor model was dropped on request (the real mobs are used instead).
+- Everything above is unverified in game. Honest list: the biome file, the fog hook, the Level/LevelChunk mixins, whether Tensura's brain-driven mobs obey the driver (hunting, resting), Ice and Fire's ids and dragons, and the city's look.
 
 ## [1.18.0] — The Living Dungeon, stages 2 and 3: the food web, carcasses, the Butcher Cleaver and cooking
 

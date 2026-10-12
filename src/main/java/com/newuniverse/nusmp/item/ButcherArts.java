@@ -3,6 +3,7 @@ package com.newuniverse.nusmp.item;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.book.GrimoireBook;
 import com.newuniverse.nusmp.dungeon.DungeonCreature;
+import com.newuniverse.nusmp.dungeon.wild.Wildlife;
 import com.newuniverse.nusmp.item.MagicWeaponItem.Kind;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
@@ -40,7 +41,7 @@ final class ButcherArts {
         ServerLevel sl = p.serverLevel();
         t.hurt(p.damageSources().indirectMagic(p, p), BalanceLaw.damage(p, t, 9f, 0.6));           // armour does not stop a cut at the weak point
         t.addEffect(new MobEffectInstance(MobEffects.WITHER, 100, 0));                              // it bleeds
-        if (t instanceof DungeonCreature dc) dc.dress();
+        Wildlife.dress(t);                                                                 // marks a Dungeon creature (custom or a real Tensura mob) for an extra portion
         VfxSpawn.send(sl, VfxShape.WIND_SLASH, eye.add(look.scale(0.5)), t.getBoundingBox().getCenter(), 0xFF8E1B2A, 8, 1.2f);
         sl.playSound(null, p.blockPosition(), SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.PLAYERS, 1.2f, 0.7f);
         return true;

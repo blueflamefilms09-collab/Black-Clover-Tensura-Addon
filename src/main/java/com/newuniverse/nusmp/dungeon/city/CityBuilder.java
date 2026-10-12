@@ -1,24 +1,20 @@
 package com.newuniverse.nusmp.dungeon.city;
 
 import com.newuniverse.nusmp.dungeon.DungeonConfig;
-import com.newuniverse.nusmp.dungeon.DungeonEntities;
+import com.newuniverse.nusmp.dungeon.DungeonGuard;
 import com.newuniverse.nusmp.dungeon.DungeonTier;
-import com.newuniverse.nusmp.dungeon.LivingArmorEntity;
 import com.newuniverse.nusmp.dungeon.LivingDungeon;
-import net.minecraft.ChatFormatting;
+import com.newuniverse.nusmp.dungeon.wild.Wildlife;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
@@ -32,7 +28,8 @@ import java.util.Map;
  * Builds the Golden Cities where players come near them. Every 40 ticks it looks for a player of the Dungeon within 56 blocks of the centre
  * of a city cell that is not built yet; it then applies the city's plan ({@link CityPlan}) over several ticks, a few thousand blocks at a
  * time, only while every chunk of the district is loaded, and saves its progress ({@link CitySave}) so a restart carries on. When the last
- * op is placed it stands the Gilded Sentinels on the plaza.
+ * op is placed it opens the ways in ({@link CityWays}) and stands the plaza's guards, creatures of the base Tensura mod ({@link Wildlife}).
+ * It writes only into the Dungeon's own level.
  */
 public final class CityBuilder {
     private CityBuilder() {}
@@ -43,12 +40,17 @@ public final class CityBuilder {
     private static final long BUDGET = 12_000L;
     private static final double RANGE = 56.0;
     private static final int SCAN_EVERY = 40;
+    /** A built city that has no way in yet is looked at again, near a player, this often (ticks): the caves round it may only now be loaded. */
+    private static final long WAYS_EVERY = 1200L;
+    private static final org.slf4j.Logger LOG = com.mojang.logging.LogUtils.getLogger();
 
     private static final Map<Long, CityPlan> PLANS = new LinkedHashMap<Long, CityPlan>(8, 0.75f, true) {
         @Override
         protected boolean removeEldestEntry(Map.Entry<Long, CityPlan> eldest) { return size() > 6; }
     };
     private static final Map<Integer, BlockState> STATES = new HashMap<>();
+    /** When each city was last looked at for ways in (game ticks; not saved: a restart looks again). */
+    private static final Map<Long, Long> WAYS_TRIED = new HashMap<>();
     private static Job job;
     /** After a failure the builder rests until this tick, so one bad spot cannot flood the log. */
     private static long pausedFrom, pausedUntil;
@@ -101,9 +103,10 @@ public final class CityBuilder {
                 if (!work(server, level, job)) job = null;
             } else if (tick % SCAN_EVERY == 29) {
                 job = start(server, level);
+                if (job == null) retryWays(server, level, tick);
             }
         } catch (RuntimeException failure) {
-            com.mojang.logging.LogUtils.getLogger().error("[nusmp] The Golden City builder failed; the job is dropped and tried again in a minute", failure);
+            LOG.error("[nusmp] The Golden City builder failed; the job is dropped and tried again in a minute", failure);
             job = null;
             pausedFrom = tick;
             pausedUntil = tick + 1200;
@@ -144,7 +147,7 @@ public final class CityBuilder {
         }
         for (int[] c : j.chunks) if (level.getChunkSource().getChunkNow(c[0], c[1]) == null) return true;      // waits until the district is loaded
         CitySave save = CitySave.get(server);
-        j.cursor.run(j.sink, BUDGET);
+        building(() -> j.cursor.run(j.sink, BUDGET));
         if (!j.cursor.done()) {
             save.progress(j.key, j.cursor.op(), j.cursor.cell());
             return true;
@@ -173,26 +176,109 @@ public final class CityBuilder {
     }
 
     // ---------------------------------------------------------------- finishing
-    private static void finish(ServerLevel level, CityPlan plan, long key, CitySave save, boolean sentinels) {
-        if (sentinels) placeSentinels(level, plan);
-        rescue(level, plan);
+    /**
+     * Every block the builder writes is written inside this call, which tells the Dungeon's guard (the rule that its blocks cannot be
+     * broken) that the mod itself is building, so that the guard lets the carve, the shell, the water of the moat and the ways in through.
+     */
+    private static void building(Runnable work) { DungeonGuard.internal(work); }
+
+    private static void finish(ServerLevel level, CityPlan plan, long key, CitySave save, boolean guards) {
         save.progress(key, plan.ops.size(), 0);
-        save.finish(key);
+        save.finish(key);                                                   // first: whatever fails below, the city is never built twice
+        try {
+            openWays(level, plan, key, save);
+        } catch (RuntimeException failure) {
+            LOG.warn("[nusmp] The ways into the Golden City of cell ({}, {}) could not be opened", plan.cellX, plan.cellZ, failure);
+        }
+        rescue(level, plan);
+        if (guards) placeGuards(level, plan);
     }
 
-    /** Two to four Living Armors in the golden set stand on the plaza (they are creatures of the Dungeon like any other, and may starve). */
-    private static void placeSentinels(ServerLevel level, CityPlan plan) {
-        EquipmentSlot[] slots = {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
-        ItemStack[] gear = {new ItemStack(Items.GOLDEN_HELMET), new ItemStack(Items.GOLDEN_CHESTPLATE), new ItemStack(Items.GOLDEN_LEGGINGS), new ItemStack(Items.GOLDEN_BOOTS)};
-        int n = 0;
+    /** Two to four mid-tier creatures of the base Tensura mod stand guard on the plaza (the Dungeon's own, they may starve like the rest). */
+    private static void placeGuards(ServerLevel level, CityPlan plan) {
+        int spawned = 0;
         for (int[] s : plan.sentinels) {
-            LivingArmorEntity guard = DungeonEntities.LIVING_ARMOR.get().create(level);
-            if (guard == null) continue;
-            guard.moveTo(s[0] + 0.5, s[1], s[2] + 0.5, 90f * (n++ % 4), 0f);
-            guard.finalizeSpawn(level, level.getCurrentDifficultyAt(guard.blockPosition()), MobSpawnType.EVENT, null);
-            for (int i = 0; i < slots.length; i++) guard.setItemSlot(slots[i], gear[i].copy());                  // a Dungeon creature drops no equipment
-            guard.setCustomName(Component.literal("Gilded Sentinel").withStyle(ChatFormatting.GOLD));
-            level.addFreshEntity(guard);
+            try {
+                if (Wildlife.spawnGuard(level, new BlockPos(s[0], s[1], s[2]))) spawned++;
+            } catch (RuntimeException | LinkageError failure) {
+                LOG.warn("[nusmp] A guard of the Golden City could not be spawned", failure);
+            }
+        }
+        if (spawned == 0) LOG.warn("[nusmp] The Golden City of cell ({}, {}) has no guards", plan.cellX, plan.cellZ);
+    }
+
+    // ---------------------------------------------------------------- the ways in
+    /**
+     * Opens the ways into a built city (see {@link CityWays}): a passage through the wall and the shell, and through the rock between
+     * them and a cave when the cave is not at the wall, ending in an open iron door. The door cell cannot hold water, so the flooded caves
+     * stay out. The doors are saved. Returns how many ways were opened; 0 if no cave was close enough, or the caves round the city are not loaded.
+     */
+    static int openWays(ServerLevel level, CityPlan plan, long key, CitySave save) {
+        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
+        List<CityWays.Way> ways = CityWays.choose(plan, (x, y, z) -> {
+            if (level.getChunkSource().getChunkNow(x >> 4, z >> 4) == null) return CityWays.UNKNOWN;
+            BlockState s = level.getBlockState(pos.set(x, y, z));
+            return s.isAir() || s.is(Blocks.WATER) ? CityWays.OPEN : CityWays.SOLID;
+        });
+        if (ways.isEmpty()) return 0;
+        long[] doors = new long[ways.size()];
+        building(() -> {
+            BlockState air = Blocks.AIR.defaultBlockState();
+            for (int w = 0; w < ways.size(); w++) {
+                CityWays.Way way = ways.get(w);
+                Direction facing = way.dx() > 0 ? Direction.EAST : way.dx() < 0 ? Direction.WEST : way.dz() > 0 ? Direction.SOUTH : Direction.NORTH;
+                int y1 = plan.floorY + 1, y2 = plan.floorY + 2;
+                int doorAt = Math.abs(way.doorX() - way.fromX()) + Math.abs(way.doorZ() - way.fromZ());      // the cells up to the door are the city's, the ones beyond it rock
+                for (int i = 0; i < way.length(); i++) {
+                    int x = way.fromX() + way.dx() * i, z = way.fromZ() + way.dz() * i;
+                    for (int y = y1; y <= y2; y++) {
+                        pos.set(x, y, z);
+                        if (i == doorAt) {
+                            level.setBlock(pos, doorState(facing, y == y2), FLAGS);
+                        } else {
+                            BlockState cur = level.getBlockState(pos);
+                            if (cur.isAir() || (i > doorAt && cur.is(Blocks.WATER))) continue;               // wall, shell and rock are cut; the water of a cave is left alone
+                            level.setBlock(pos, air, FLAGS);
+                        }
+                    }
+                }
+                doors[w] = BlockPos.asLong(way.doorX(), y1, way.doorZ());
+            }
+        });
+        save.setWays(key, doors);
+        return doors.length;
+    }
+
+    /** One half of an iron door, standing open along the passage: it keeps the water out of its cell and lets a swimmer through. */
+    private static BlockState doorState(Direction facing, boolean upper) {
+        return Blocks.IRON_DOOR.defaultBlockState().setValue(DoorBlock.FACING, facing).setValue(DoorBlock.OPEN, true)
+                .setValue(DoorBlock.HALF, upper ? DoubleBlockHalf.UPPER : DoubleBlockHalf.LOWER);
+    }
+
+    /** A built city with no way in is looked at again when a player is near it, now and then: the caves round it may not have been loaded before. */
+    private static void retryWays(MinecraftServer server, ServerLevel level, long tick) {
+        CitySave save = null;
+        for (ServerPlayer p : level.players()) {
+            BlockPos at = p.blockPosition();
+            int pcx = Math.floorDiv(at.getX(), CityPlan.CELL), pcz = Math.floorDiv(at.getZ(), CityPlan.CELL);
+            for (int dx = -1; dx <= 1; dx++) {
+                for (int dz = -1; dz <= 1; dz++) {
+                    int cx = pcx + dx, cz = pcz + dz;
+                    if (!DungeonTier.isCityCell(cx, cz)) continue;
+                    if (save == null) save = CitySave.get(server);
+                    long key = CitySave.key(cx, cz);
+                    if (!save.isDone(key) || save.ways(key).length > 0) continue;
+                    Long last = WAYS_TRIED.get(key);
+                    if (last != null && tick - last < WAYS_EVERY && tick >= last) continue;
+                    CityPlan plan = plan(cx, cz);
+                    double ex = at.getX() - plan.centreX, ez = at.getZ() - plan.centreZ;
+                    if (ex * ex + ez * ez > 80.0 * 80.0) continue;
+                    for (int[] c : plan.chunks()) if (level.getChunkSource().getChunkNow(c[0], c[1]) == null) return;
+                    WAYS_TRIED.put(key, tick);
+                    openWays(level, plan, key, save);
+                    return;                                                     // one city a pass
+                }
+            }
         }
     }
 
@@ -202,21 +288,22 @@ public final class CityBuilder {
             if (p.isSpectator() || !plan.contains(p.blockPosition().getX(), p.blockPosition().getZ())) continue;
             BlockPos feet = p.blockPosition();
             if (feet.getY() < plan.floorY - 4 || feet.getY() > CityPlan.CAP_Y) continue;
-            boolean stuck = !level.getBlockState(feet).getCollisionShape(level, feet).isEmpty() || !level.getBlockState(feet.above()).getCollisionShape(level, feet.above()).isEmpty();
-            if (stuck) p.teleportTo(level, plan.centreX + 0.5, plan.floorY + 1, plan.centreZ + 5.5, p.getYRot(), p.getXRot());
+            if (!level.noCollision(p, p.getBoundingBox())) p.teleportTo(level, plan.centreX + 0.5, plan.floorY + 1, plan.centreZ + 5.5, p.getYRot(), p.getXRot());
         }
     }
 
     // ---------------------------------------------------------------- for the admin command
     /** Builds a city right now, in one go: loads and generates its chunks, places every op, saves it as built. Returns the number of ops. */
     public static int buildNow(ServerLevel level, int cellX, int cellZ) {
+        if (!LivingDungeon.in(level)) return 0;                             // the Golden Cities exist in the Dungeon and nowhere else
         CityPlan plan = plan(cellX, cellZ);
         long key = CitySave.key(cellX, cellZ);
         if (job != null && job.key == key) job = null;
         for (int[] c : plan.chunks()) level.getChunk(c[0], c[1]);
         CitySave save = CitySave.get(level.getServer());
         boolean rebuilt = save.isDone(key);
-        new CityCursor(plan, 0, 0).run(new WorldSink(level), Long.MAX_VALUE);
+        WorldSink sink = new WorldSink(level);
+        building(() -> new CityCursor(plan, 0, 0).run(sink, Long.MAX_VALUE));
         finish(level, plan, key, save, !rebuilt);
         return plan.ops.size();
     }

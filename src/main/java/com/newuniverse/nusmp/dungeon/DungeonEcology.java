@@ -224,8 +224,8 @@ public final class DungeonEcology {
                 }
             }
             case GOLDEN_CITY -> {
-                if (!ManaLaw.zoneActive(p)) rad += 1;                                              // a Mana Zone keeps the radiation out
-                else rad = Math.max(0, rad - 1);
+                int shift = RadiationShield.step(p);                                               // a Mana Zone or a Golden Ward shuts it out, Magic Sense dulls it
+                rad = shift < 0 ? Math.max(0, rad - 1) : rad + shift;
             }
             default -> { }
         }

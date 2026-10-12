@@ -5,6 +5,7 @@ import com.newuniverse.nusmp.dungeon.DungeonTier;
 import com.newuniverse.nusmp.dungeon.LivingDungeon;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.phys.Vec3;
@@ -45,11 +46,18 @@ public final class CityCommand {
         long key = CitySave.key(cell[0], cell[1]);
         CitySave.Entry e = CitySave.get(src.getServer()).lookup(key);
         String state = e == null ? "not built yet" : e.state == CitySave.DONE ? "built" : "building (" + (100L * e.op / Math.max(1, plan.ops.size())) + "%)";
-        int[][] gates = plan.gateFaces();
+        StringBuilder ways = new StringBuilder();
+        if (e != null) {
+            for (long door : e.ways) {
+                BlockPos d = BlockPos.of(door);
+                ways.append(ways.length() == 0 ? "" : ", ").append("(").append(d.getX()).append(", ").append(d.getY()).append(", ").append(d.getZ()).append(")");
+            }
+        }
         return ok(src, "Nearest Golden City: centre (" + plan.centreX + ", " + plan.floorY + ", " + plan.centreZ + ") in the Dungeon, " + Math.round(Math.sqrt(dx * dx + dz * dz))
                 + " blocks away, " + plan.semiX * 2 + " by " + plan.semiZ * 2 + " blocks, cell (" + cell[0] + ", " + cell[1] + "): " + state
                 + (e == null || e.claims.isEmpty() ? "" : "; " + e.claims.size() + " player(s) have taken the altar's gift")
-                + ". Sealed gates (dig in here): (" + gates[0][0] + ", " + (plan.floorY + 3) + ", " + gates[0][1] + ") and (" + gates[1][0] + ", " + (plan.floorY + 3) + ", " + gates[1][1] + ").");
+                + ". " + (ways.length() == 0 ? "No way in is open yet (the city is sealed; one opens where a cave comes close, once the caves round it are loaded)."
+                : "Ways in (open iron doors): " + ways + "."));
     }
 
     private static int buildNearest(CommandSourceStack src) {
@@ -59,7 +67,9 @@ public final class CityCommand {
         if (dungeon == null) return fail(src, "The Dungeon is not loaded.");
         int ops = CityBuilder.buildNow(dungeon, cell[0], cell[1]);
         CityPlan plan = CityBuilder.plan(cell[0], cell[1]);
-        return ok(src, "Built the Golden City of cell (" + cell[0] + ", " + cell[1] + ") at (" + plan.centreX + ", " + plan.floorY + ", " + plan.centreZ + "): " + ops + " ops.");
+        int ways = CitySave.get(src.getServer()).ways(CitySave.key(cell[0], cell[1])).length;
+        return ok(src, "Built the Golden City of cell (" + cell[0] + ", " + cell[1] + ") at (" + plan.centreX + ", " + plan.floorY + ", " + plan.centreZ + "): " + ops + " ops, "
+                + ways + " way(s) in (/multiverse dungeon city where lists them).");
     }
 
     private static int reset(CommandSourceStack src) {

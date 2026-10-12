@@ -15,16 +15,17 @@ import java.util.UUID;
 
 /**
  * What the Golden Cities remember (saved with the world, in the Overworld's data storage as "nusmp_golden_city"): for each city cell, how far
- * its building got (so a restart picks it up again) and which players have already taken the gift of its altar.
+ * its building got (so a restart picks it up again), where the doors of its ways in are, and which players have already taken the gift of its altar.
  */
 public final class CitySave extends SavedData {
     public static final int BUILDING = 1, DONE = 2;
 
-    /** One city: its state, the next op and cell to build, and the players whose claim on the altar is spent. */
+    /** One city: its state, the next op and cell to build, the doors of its ways in (block positions), and the players whose claim on the altar is spent. */
     public static final class Entry {
         public int state = BUILDING;
         public int op;
         public long cell;
+        public long[] ways = new long[0];
         public final Set<UUID> claims = new LinkedHashSet<>();
     }
 
@@ -45,6 +46,18 @@ public final class CitySave extends SavedData {
     public Entry lookup(long key) { return cities.get(key); }
 
     private Entry entry(long key) { return cities.computeIfAbsent(key, k -> new Entry()); }
+
+    /** The doors of a city's ways in, as block positions (BlockPos.asLong); empty if none was opened. */
+    public long[] ways(long key) {
+        Entry e = cities.get(key);
+        return e == null ? new long[0] : e.ways;
+    }
+
+    /** Remembers the doors of a city's ways in. */
+    public void setWays(long key, long[] doors) {
+        entry(key).ways = doors;
+        setDirty();
+    }
 
     public boolean isDone(long key) {
         Entry e = cities.get(key);
@@ -93,6 +106,7 @@ public final class CitySave extends SavedData {
             e.state = t.getInt("State");
             e.op = t.getInt("Op");
             e.cell = t.getLong("Cell");
+            e.ways = t.getLongArray("Ways");
             ListTag claims = t.getList("Claims", Tag.TAG_COMPOUND);
             for (int c = 0; c < claims.size(); c++) {
                 try { e.claims.add(UUID.fromString(claims.getCompound(c).getString("U"))); } catch (IllegalArgumentException bad) { /* a damaged claim is dropped */ }
@@ -111,6 +125,7 @@ public final class CitySave extends SavedData {
             t.putInt("State", me.getValue().state);
             t.putInt("Op", me.getValue().op);
             t.putLong("Cell", me.getValue().cell);
+            t.putLongArray("Ways", me.getValue().ways);
             ListTag claims = new ListTag();
             for (UUID id : me.getValue().claims) {
                 CompoundTag c = new CompoundTag();

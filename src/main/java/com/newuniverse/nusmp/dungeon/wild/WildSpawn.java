@@ -9,6 +9,7 @@ import com.newuniverse.nusmp.dungeon.LivingDungeon;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -43,14 +44,16 @@ public final class WildSpawn {
         if (roster.count(tier) == 0) return custom(d, c, tier);                // neither Tensura nor Ice and Fire gave this tier anything
         RandomSource r = d.getRandom();
         boolean water = roster.hasAquatic(tier) && r.nextFloat() < WATER_SHARE;
+        int floor = playerFloor(d, c, r);                                       // the height the players near this chunk are at
         for (int t = 0; t < 4; t++) {
             int x = c.getPos().getMinBlockX() + r.nextInt(16), z = c.getPos().getMinBlockZ() + r.nextInt(16);
-            BlockPos p = water ? waterColumn(d, x, z) : LivingDungeon.column(d, x, z);
+            BlockPos p = floor == Integer.MIN_VALUE ? (water ? waterNear(d, x, z, d.getMaxBuildHeight()) : LivingDungeon.column(d, x, z))
+                    : water ? waterNear(d, x, z, floor) : standingNear(d, x, z, floor);
             if (p == null) {
                 water = false;                                                  // no water here: try the floor
                 continue;
             }
-            if (d.getNearestPlayer(p.getX() + 0.5, p.getY(), p.getZ() + 0.5, 8, false) != null) continue;
+            if (d.getNearestPlayer(p.getX() + 0.5, p.getY(), p.getZ() + 0.5, 10, false) != null) continue;
             Roster.Entry e = roster.pick(tier, DungeonTier.at(p.getX(), p.getY(), p.getZ()).ordinal(), water, r.nextDouble());
             if (e == null) {
                 water = false;
@@ -157,12 +160,57 @@ public final class WildSpawn {
         return null;
     }
 
-    /** Water at least three blocks deep in this column, found from the roof down (so just under the surface); null if there is none. */
-    private static BlockPos waterColumn(ServerLevel d, int x, int z) {
+    /** Water at least three blocks deep in this column, the spot nearest to the height y0 (so just under a surface); null if there is none. */
+    private static BlockPos waterNear(ServerLevel d, int x, int z, int y0) {
+        BlockPos best = null;
+        int bestGap = Integer.MAX_VALUE;
         for (int y = d.getMaxBuildHeight() - 8; y > d.getMinBuildHeight() + 4; y--) {
+            int gap = Math.abs(y - y0);
+            if (best != null && gap >= bestGap) {
+                if (y <= y0) break;
+                continue;
+            }
             BlockPos p = new BlockPos(x, y, z);
-            if (d.getFluidState(p).is(FluidTags.WATER) && d.getFluidState(p.above()).is(FluidTags.WATER) && d.getFluidState(p.below()).is(FluidTags.WATER)) return p;
+            if (d.getFluidState(p).is(FluidTags.WATER) && d.getFluidState(p.above()).is(FluidTags.WATER) && d.getFluidState(p.below()).is(FluidTags.WATER)) {
+                best = p;
+                bestGap = gap;
+            }
         }
-        return null;
+        return best;
+    }
+
+    /** A standing place in this column, the one nearest to the height y0, so life appears on the floor the players are on and not only under the roof; null if there is none. */
+    private static BlockPos standingNear(ServerLevel d, int x, int z, int y0) {
+        BlockPos best = null;
+        int bestGap = Integer.MAX_VALUE;
+        for (int y = d.getMaxBuildHeight() - 8; y > d.getMinBuildHeight() + 4; y--) {
+            int gap = Math.abs(y - y0);
+            if (best != null && gap >= bestGap) {
+                if (y <= y0) break;
+                continue;
+            }
+            BlockPos p = new BlockPos(x, y, z);
+            if (standable(d, p)) {
+                best = p;
+                bestGap = gap;
+            }
+        }
+        return best;
+    }
+
+    /** The height of the player nearest to the chunk, with a little scatter so the neighbouring floors fill too; Integer.MIN_VALUE if nobody is near. */
+    private static int playerFloor(ServerLevel d, LevelChunk c, RandomSource r) {
+        ChunkPos cp = c.getPos();
+        ServerPlayer near = null;
+        double best = Double.MAX_VALUE;
+        for (ServerPlayer p : d.players()) {
+            if (p.isSpectator()) continue;
+            double dx = p.getX() - cp.getMiddleBlockX(), dz = p.getZ() - cp.getMiddleBlockZ(), dist = dx * dx + dz * dz;
+            if (dist < best) {
+                best = dist;
+                near = p;
+            }
+        }
+        return near == null ? Integer.MIN_VALUE : near.blockPosition().getY() + r.nextInt(25) - 12;
     }
 }

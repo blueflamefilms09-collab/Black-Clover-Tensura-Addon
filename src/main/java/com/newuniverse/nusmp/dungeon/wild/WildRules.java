@@ -17,6 +17,8 @@ public final class WildRules {
     /** What a kill, a carcass and a veil of mycelium give back, and the magicules a meal returns to the chunk. */
     public static final int KILL_FEED = 50, CARCASS_FEED = 30, MYCELIUM_FEED = 25;
     public static final float KILL_MAGICULE = 20f, CARCASS_MAGICULE = 8f;
+    /** The weight a dressed creature's carcass gains (the same as dungeon.DungeonCreature). */
+    public static final float DRESSED_BONUS = 10f;
 
     // ---------------------------------------------------------------- grazing the magicules of the air (tier 1)
     public static final int GRAZE_INTERVAL = 200;

@@ -88,6 +88,7 @@ public final class DungeonCommand {
             return ok(ctx.getSource(), "Within 96 blocks: " + n[1] + " tier 1 (slimes, scavengers, grazers), " + n[2] + " tier 2 (armoured, mid predators), " + n[3] + " apex predators"
                     + (legends > 0 ? " (" + legends + " legendary)" : "") + "; biomass " + Math.round(mass) + ".");
         }));
+        root.then(com.newuniverse.nusmp.dungeon.city.CityCommand.build());                      // 1.19.0: /multiverse dungeon city where|build|reset
         return root;
     }
 

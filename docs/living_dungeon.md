@@ -151,17 +151,20 @@ public class HuntForSustenanceGoal extends Goal {
 | **1.17.0** | Foundation | this document; the dimension and its type; `EcosystemData` and its tick (oxygen, magicule); tiers and their hazards (heat, suffocation, magicule radiation, conductive water, fire eating oxygen); spawn bypass; mined-terrain regrowth; the Dungeon Maw (ambient density, roots, entry, Root Gate); global broadcasts; the three effects; `/multiverse dungeon ...`; `nusmp-dungeon-server.toml` |
 | **1.18.0** | The food web | Hunger; Dungeon Slime, Living Armor, Basilisk, Direwolf; the goals; breeding, starvation, extinction; carcasses; no drops |
 | **1.18.0** | Table | Butcher Cleaver; cuts, raw toxicity, Holy Water, cooked meals with buffs and temporary skills/attributes |
-| later | Polish | models for the creatures, ambience, a Golden City structure, rewards for closing a Maw |
+| **1.19.0** | Polish | the Dungeon uses the **real mobs of base Tensura** (and Ice and Fire if installed) through an entity-type-tag roster instead of the custom 1.18.0 creatures; every block of the Dungeon is **unbreakable** (events plus a Level mixin); the **Golden City** is built; Magic Sense blunts the radiation; cooked meals lend a skill and a second magic; a reward for cutting a Maw's roots; the Dungeon's own sky, fog and sounds |
+| later | Polish | predator den structures, pack behaviour for the real mobs |
 
 ---------------------------------------------------------------------------------------------------------------------------
 
-## 7. What exists now (1.18.0) and what is not done
+## 7. What exists now (1.19.0) and what is not done
 
-Done: everything in sections 1 to 5 except the items below. Never run in game; CI compiles it, a headless preview checked the two geo models.
+Done: everything in sections 1 to 5, and the 1.19.0 polish (see the stage table). Never run in game; CI compiles it.
+
+The roster: `data/nusmp/tags/entity_type/dungeon/*.json` (tier1, tier2, tier3, legendary, grazers, aquatic, excluded) lists the entity types that live in the Dungeon; every entry is optional, so a mod that is not installed (Tensura, Ice and Fire) is simply skipped, and a modpack can edit the tags. The custom 1.18.0 creatures stay registered (old worlds may hold them) but nothing spawns them any more.
+
+Unbreakable: `dungeon/DungeonGuard` (config `unbreakable`, default true) refuses every break, explosion, mob grief, piston, tool change and fire/fluid/air replacement of a Dungeon block, and a mixin on `Level`/`LevelChunk` catches mods that call `destroyBlock`, `removeBlock` or `setBlock` directly. The mod's own builders run inside `DungeonGuard.internal(...)`. Carcasses and mycelium are exempt on purpose (the ecosystem eats them).
 
 Not done yet:
-- the Golden City itself (a structure with its own loot-free rewards): the tier and its radiation exist, nothing is built there;
-- Magic Sense (Tensura's skill) as protection against magicule radiation: only a Mana Zone protects;
-- temporary skills or secondary Black Clover attributes from cooked meals (only timed spell power and cost changes);
-- predators' den structures and pack behaviour; a Maw reward when its roots are cut; the Dungeon's own sky/fog colours and ambient sounds;
-- the Living Armor is drawn with the game's humanoid model: a bespoke model would suit it better.
+- predator den structures and pack behaviour for the real mobs (Tensura's Direwolf already spawns as a pack by itself);
+- the Golden City's loot-free rewards beyond the Aurelian Core;
+- the Dungeon has no custom sound files (vanilla sounds only).

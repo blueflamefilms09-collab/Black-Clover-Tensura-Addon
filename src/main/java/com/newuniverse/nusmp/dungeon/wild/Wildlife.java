@@ -48,11 +48,11 @@ public final class Wildlife {
     public static int tierOf(Entity e) {
         if (e == null) return 0;
         if (e instanceof DungeonCreature c) return c.tier();
-        return tierOf(e.getType());
+        return tierOfType(e.getType());
     }
 
-    /** The same for an entity type. */
-    public static int tierOf(EntityType<?> t) {
+    /** The same for an entity type (named apart so that tierOf(null) stays unambiguous). */
+    public static int tierOfType(EntityType<?> t) {
         return Roster.tierFor(t.is(TIER1), t.is(TIER2), t.is(TIER3), t.is(LEGENDARY), t.is(EXCLUDED));
     }
 
@@ -79,9 +79,18 @@ public final class Wildlife {
         return e == null ? 4 : WildRules.carcassKind(idOf(e.getType()));
     }
 
-    /** The weight its Carcass is left with (its maximum health: bigger things leave more meat). */
+    /** The weight its Carcass is left with: its maximum health (bigger things leave more meat), and a portion more if it was dressed. */
     public static float carcassWeight(Entity e) {
-        return e instanceof LivingEntity l ? WildRules.carcassWeight(l.getMaxHealth()) : 0f;
+        if (!(e instanceof LivingEntity l)) return 0f;
+        float w = WildRules.carcassWeight(l.getMaxHealth());
+        if (!(e instanceof DungeonCreature) && e.hasData(Dweller.DWELLER.get()) && e.getData(Dweller.DWELLER).dressed) w += WildRules.DRESSED_BONUS;
+        return w;
+    }
+
+    /** A Butcher Cleaver's Anatomical Cut marks a creature of the Dungeon as dressed: its carcass carries an extra portion of meat. */
+    public static void dress(Entity e) {
+        if (e instanceof DungeonCreature c) c.dress();
+        else if (e != null && tierOf(e) > 0) e.getData(Dweller.DWELLER).dressed = true;
     }
 
     /** What it weighs in the chunk's biomass. */

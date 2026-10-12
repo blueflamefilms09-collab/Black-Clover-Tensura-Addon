@@ -242,6 +242,10 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - Added entity loot tables at both the requested Marquis name and the preserved `nusmp:riven_remake` registry key. Real entity death drops the existing bard relic, a story page, and a crest-cape token; a cracked crown vanity has an 8% roll. The cape is currently an inventory cosmetic token, not a wearable/rendered cape.
 - Still incomplete: Page Edge/Bull Brand engravings and a single-use rift key are absent because those enchantments and `nusmp:story_rift` are not registered. A boss-safe arbitrary book spell path is also unavailable: SpellRuntime's projectile owner is a `ServerPlayer`; the boss continues to cast its validated codex skill. New Order still implements weapon slowdown and Gearshift only; there is no reliable cast-warmup event hook for the two-cast slow rule. Ground-is-stone is not implemented. Only six avatar translations have special mechanics; Truth, Kami Tenchi, the Creator's distinct visual, and several requested combat interactions remain incomplete. No in-game client render/combat verification was run.
 
+## 1.19.0 - The Living Dungeon, polish: real Tensura mobs, Ice and Fire compatibility, unbreakable blocks, the Golden City, sky and sounds
+
+See `CHANGELOG.md` (1.19.0).
+
 ## 1.18.0 - The Living Dungeon: the food web, carcasses, the Butcher Cleaver and cooking
 
 See `CHANGELOG.md` (1.18.0).

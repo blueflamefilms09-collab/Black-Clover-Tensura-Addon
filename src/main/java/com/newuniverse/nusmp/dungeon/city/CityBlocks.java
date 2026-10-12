@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.dungeon.city;
 
 import com.newuniverse.nusmp.NUSMP;
+import com.newuniverse.nusmp.dungeon.LivingDungeon;
 import com.newuniverse.nusmp.item.NUItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -62,6 +63,10 @@ public final class CityBlocks {
         @Override
         protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
             if (level.isClientSide || !(level instanceof ServerLevel sl)) return InteractionResult.SUCCESS;
+            if (!LivingDungeon.in(sl)) {                                    // an altar set down anywhere else belongs to no city: it has nothing to give
+                player.displayClientMessage(Component.literal("The altar is dark: it wakes only in the Dungeon.").withStyle(ChatFormatting.GRAY), true);
+                return InteractionResult.CONSUME;
+            }
             long key = CitySave.key(Math.floorDiv(pos.getX(), CityPlan.CELL), Math.floorDiv(pos.getZ(), CityPlan.CELL));
             if (!CitySave.get(sl.getServer()).claim(key, player.getUUID())) {
                 player.displayClientMessage(Component.literal("The altar is quiet. It has already given you all this city had to give.").withStyle(ChatFormatting.GRAY), true);

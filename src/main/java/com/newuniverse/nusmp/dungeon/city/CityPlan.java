@@ -12,7 +12,8 @@ import java.util.List;
  * <p>The district is an oval of 72 to 96 blocks across, sealed in a black vault: a carved cavern with a flat roof and a two-block shell, so
  * the flooded caves round it cannot pour in. Inside the shell stands a broken outer wall with two gates, then four avenues running to a
  * round plaza with a moat (the magicule reservoir) and a dais with the Aurelian Altar, with towers, halls, shrines and arches between the
- * avenues, some of them ruined. Ops are ordered: carve, then floor and shell, then walls and buildings, then details.
+ * avenues, some of them ruined. Ops are ordered: carve, then floor and shell, then walls and buildings, then details. The two gates are
+ * sealed doors; the ways in are not part of the plan: {@link CityWays} opens them where a cave comes close once the city stands.
  */
 public final class CityPlan {
     /** The width of a map cell (DungeonTier.CITY_CELL). */
@@ -66,7 +67,7 @@ public final class CityPlan {
     public final List<Op> ops;
     private final int[] phaseStart;
     public final int altarX, altarY, altarZ;
-    /** Where the Gilded Sentinels stand (the block their feet are in). */
+    /** Where the plaza's guards stand, two to four (the block their feet are in; the guards are spawned by CityBuilder). */
     public final List<int[]> sentinels;
     public final List<Building> buildings;
     private final long seed;

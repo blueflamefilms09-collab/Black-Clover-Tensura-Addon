@@ -44,6 +44,7 @@ public class NUSMP {
         modEventBus.addListener(com.newuniverse.nusmp.dungeon.DungeonEntities::attributes);
         com.newuniverse.nusmp.dungeon.DungeonEffects.EFFECTS.register(modEventBus);
         com.newuniverse.nusmp.dungeon.LivingDungeon.ATTACHMENTS.register(modEventBus);
+        com.newuniverse.nusmp.dungeon.wild.Dweller.ATTACHMENTS.register(modEventBus);                      // 1.19.0: the real mobs of the Dungeon (hunger, home, sleep)
         com.newuniverse.nusmp.world.NUWorldgen.FEATURES.register(modEventBus);
         com.newuniverse.nusmp.item.NUItems.ITEMS.register(modEventBus);
         com.newuniverse.nusmp.item.NUItems.MATERIALS.register(modEventBus);
@@ -128,6 +129,10 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.MealSkills::onClone);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.MealAttunement::onDamage);                // 1.19.0: a second magic's rider from a meal
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.MawReward::onBreak);                      // 1.19.0: who cut a Maw's roots
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.wild.WildDriver::onJoin);                 // 1.19.0: roster mobs get their record
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.wild.WildDriver::onServerTick);           // the food web sweep
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.wild.WildDriver::onDeath);                // kills feed the killer
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.wild.WildDriver::onServerStarted);        // logs the roster at start-up
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST, com.newuniverse.nusmp.dungeon.DungeonGuard::onBreak);                // 1.19.0: the unbreakable Dungeon
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST, com.newuniverse.nusmp.dungeon.DungeonGuard::onBreakSpeed);
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST, com.newuniverse.nusmp.dungeon.DungeonGuard::onLeftClick);

@@ -192,6 +192,7 @@ public final class WildDriver {
             if (w.asleep) wake(m, w, now);
             return;
         }
+        if (w.asleep && !m.isNoAi()) w.asleep = false;                                           // somebody switched it back on
         if (m.isNoAi() && !w.asleep) return;                                                     // switched off by somebody else
 
         boolean legend = Wildlife.isLegendary(m);
@@ -199,7 +200,10 @@ public final class WildDriver {
         if (!m.isAlive()) return;
 
         if (w.asleep) {
-            if (WildRules.mustWake(w.appetite.hunger(), WildRules.hurtSince(w.sleepHealth, m.getHealth()), playerInDen(d, m, w))) wake(m, w, now);
+            float health = m.getHealth();
+            boolean hurt = WildRules.hurtSince(w.sleepHealth, health);
+            if (health > w.sleepHealth) w.sleepHealth = health;                                  // it healed in its sleep: the next blow still counts
+            if (WildRules.mustWake(w.appetite.hunger(), hurt, playerInDen(d, m, w))) wake(m, w, now);
             return;
         }
 
@@ -211,7 +215,7 @@ public final class WildDriver {
         } else if (w.appetite.hungry()) {
             if (now >= w.nextHunt) hunt(d, m, w, tier, legend, now);
         } else if (WildRules.mayFallAsleep(tier >= 3, legend, w.appetite.hunger(), false, false, m.onGround(),
-                playerWithin(d, m, WildRules.SLEEP_CLEAR), WildRules.justWoken(now, w.wokenAt))) {
+                playerWithin(d, m, WildRules.SLEEP_CLEAR) || playerNearHome(d, w), WildRules.justWoken(now, w.wokenAt))) {
             sleep(m, w);
         }
     }
@@ -249,7 +253,10 @@ public final class WildDriver {
 
     /** Is a player inside the den: near the sleeper, or near the place it calls home? */
     private static boolean playerInDen(ServerLevel d, Mob m, Dweller w) {
-        if (playerWithin(d, m, WildRules.DEN_RADIUS)) return true;
+        return playerWithin(d, m, WildRules.DEN_RADIUS) || playerNearHome(d, w);
+    }
+
+    private static boolean playerNearHome(ServerLevel d, Dweller w) {
         if (!w.hasHome()) return false;
         BlockPos h = w.home();
         double r2 = (double) WildRules.DEN_RADIUS * WildRules.DEN_RADIUS;
