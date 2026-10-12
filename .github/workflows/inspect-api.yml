@@ -53,7 +53,7 @@ jobs:
                 for c in $(unzip -Z1 "$j" | grep -E '\.class$' | grep -E "${pat#strings:}" | head -10); do
                   cls=${c%.class}; cls=${cls//\//.}
                   echo "----- $cls"
-                  javap -c -p -cp "$j" "$cls" 2>/dev/null | grep -E 'ldc|putstatic|getstatic' | head -120
+                  javap -c -p -cp "$j" "$cls" 2>/dev/null | grep -E 'ldc|putstatic|getstatic' | head -900
                 done
               done
               continue
