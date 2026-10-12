@@ -24,10 +24,10 @@ tree**, and the deliverable is Java classes plus assets inside it. The equivalen
 |---|---|
 | Behaviour pack: entity definitions, components, events, AI goals | Java classes in `entity/zogratis/` (`ZogratisBoss` is the shared fight framework; one class per boss). Stats are `createAttributes()` in each boss class. |
 | Behaviour pack: scripts, animation controllers, state machines | The move scheduler and the state constants of `ZogratisBoss` (`STATE_COMBAT`, `STATE_CASTING`, `STATE_TRANSFORMING`, `STATE_RECOVERING`), plus the pure classes listed in section 3. |
-| Resource pack: geometry, animations, textures, render controllers | GeoLite assets `assets/nusmp/geo|animations|textures/entity/zogratis_*` built by `tools/gen_zogratis_triad.py` and `tools/gen_zogratis_lucius.py`, drawn by `client/zogratis/`. |
+| Resource pack: geometry, animations, textures, render controllers | GeoLite assets `assets/nusmp/{geo,animations,textures}/entity/zogratis_*` built by `tools/gen_zogratis_triad.py` and `tools/gen_zogratis_lucius.py`, drawn by `client/zogratis/`. |
 | Spawn eggs, `spawn_rules` | Spawn eggs registered through `NUItems.ITEMS` (`ZogratisEntities`) and the command `/multiverse boss ...`. **No natural spawning** (there is no spawn rule). |
 | Loot tables | **None.** The bosses drop experience only (`xpReward = 1000` on the bosses). See section 14. |
-| `lang/*.lang` | A flat JSON fragment per package, merged by the lead into `assets/nusmp/lang/en_us.json` (section 3.6). |
+| `lang/*.lang` | 14 keys in `assets/nusmp/lang/en_us.json` (section 3.6). |
 | `manifest.json` | `META-INF/neoforge.mods.toml` and `gradle.properties` (`mod_version=1.20.0`), owned by the lead. |
 
 The two "reference image" sets supplied with the request (Lucius base and divine; the Triad close-ups and the Triad full body) were used only
@@ -46,8 +46,8 @@ pasted from the images.
 | Armor / toughness | 14 / 8 | 8 / 4 | 8 / 4 | 22 / 12 |
 | Attack damage (plain blow base) | 18 (x0.75 in the plain blow) | 13 (x0.7) | 15 (x0.7) | 22 (x0.7, zero during Julius) |
 | Movement speed attribute | 0.30 | 0.36 | 0.34 | 0.36 |
-| Damage scale on top of the power tuning | 1.1 | 1.15 (x1.15 more while his own cube stands for Zenon) | 1.15 | 1.25 |
-| Distance it keeps | 2.5 to 4.5 blocks | 4.5 to 9 | 6 to 11 | 7 to 14 (5 to 11 divine) |
+| Damage scale on top of the power tuning | 1.1 | 1.15 | 1.15 (x1.15 more while his own cube stands) | 1.25 |
+| Preferred distance (the middle of its band is clamped to this; it strafes within 3 blocks of it) | 2.5 to 4.5 blocks | 4.5 to 9 | 6 to 11 | 7 to 14 (5 to 11 divine) |
 | Form at 100% | `FORM_HYBRID` (model scale 1.18) | `FORM_HYBRID` (1.10) | `FORM_HYBRID` (1.10) | `FORM_DIVINE` (1.20; the human form is 1.05) |
 | Ultimate(s) | Gravity Singularity (60%) | Crimson Crown (60%) | Spatial Mana Domination (60%) | Soul Purge (40%), Sibling Assimilation (60%), Time Stop (80%), Grimoire Tower Storm (80%) |
 | Followers | Dark Disciples (Lucifero) | Dark Disciples (Megicula) and Blood Beasts | Dark Disciples (Beelzebub) | Soul Paladins and clones (no Dark Disciples) |
@@ -169,11 +169,11 @@ No `net.minecraft.client.*` import exists in `entity/zogratis/`.
 
 ### 3.5 Tests (JUnit, pure classes only)
 
-`entity/zogratis/`: `BodyRegenTest`, `BoneMathTest`, `ChronoMathTest`, `ChronoRingTest`, `CurseBrandTest`, `DanteTableTest`, `DiscipleStatsTest` (also covers `DamageMath` and `DevilStyle`), `DomainCubeTest`, `DomainRulesTest` (clock, size and integrity of the domain), `GravityMathTest`, `JuliusWillTest`, `LedgerQueueTest`, `LuciusTableTest`, `ManaPoolTest`, `MoveBookTest`, `MoveSchedulerTest`, `PaladinLedgerTest`, `PortalMathTest`, `PowerCurveTest`, `PrecognitionTest`, `SoulMathTest`, `TowerMathTest`, `VanicaMathTest`, `VanicaTableTest`, `ZenonTableTest`. `client/zogratis/`: `ZogratisGlowTest`, `ZogratisPoseTest`. The four `*TableTest` classes also play a whole fight through the scheduler and check what each boss does at each power and distance. 30 classes, 284 tests. `TriadBond`, `VolleyBudget`'s hit budget under load, the entities and every world-touching class have no unit test (they need the game).
+`entity/zogratis/`: `BodyRegenTest`, `BoneMathTest`, `ChronoMathTest`, `ChronoRingTest`, `CurseBrandTest`, `DanteTableTest`, `DiscipleStatsTest` (also covers `DamageMath` and `DevilStyle`), `DomainCubeTest`, `DomainRulesTest` (clock, size and integrity of the domain), `GravityMathTest`, `JuliusWillTest`, `LedgerQueueTest`, `LuciusTableTest`, `ManaPoolTest`, `MoveBookTest`, `MoveSchedulerTest`, `PaladinLedgerTest`, `PortalMathTest`, `PowerCurveTest`, `PrecognitionTest`, `SoulMathTest`, `TowerMathTest`, `VanicaMathTest`, `VanicaTableTest`, `ZenonTableTest`. `client/zogratis/`: `ZogratisGlowTest`, `ZogratisPoseTest`. The four `*TableTest` classes also play a whole fight through the scheduler and check what each boss does at each power and distance. 30 classes, 284 tests. `TriadBond`, the entities, the commands and every world-touching class have no unit test (they need the game). `BoneMathTest` also covers `VolleyBudget`.
 
-### 3.6 Lang fragments (for the lead to merge)
+### 3.6 Lang keys
 
-Written to the session scratchpad as flat JSON (`frag_zog/core.lang.json`, `vanica.lang.json`, `lucius.lang.json`; `dante` and `zenon` are empty): `entity.nusmp.{dante_zogratis, vanica_zogratis, zenon_zogratis, lucius_zogratis, dark_disciple, blood_beast, zogratis_clone}`, `item.nusmp.{dante,vanica,zenon,lucius}_zogratis_spawn_egg`, `effect.nusmp.{megicula_decay, soul_paladin, purified}`. Boss speech, move names and chat warnings are literals in the code, not lang keys.
+The 14 keys were written as flat JSON fragments (in the session scratchpad, not in the repository) and are now merged into `assets/nusmp/lang/en_us.json`: `entity.nusmp.{dante_zogratis, vanica_zogratis, zenon_zogratis, lucius_zogratis, dark_disciple, blood_beast, zogratis_clone}`, `item.nusmp.{dante,vanica,zenon,lucius}_zogratis_spawn_egg`, `effect.nusmp.{megicula_decay, soul_paladin, purified}`. Boss speech, move names and chat warnings are literals in the code, not lang keys.
 
 ## 4. Spawning and server settings
 
@@ -184,9 +184,9 @@ Written to the session scratchpad as flat JSON (`frag_zog/core.lang.json`, `vani
 | `/multiverse boss dante` / `vanica` / `zenon` / `lucius` | Spawns that boss at the executor with a summoning circle and a sound; **the arena is that spot**. |
 | `/multiverse boss triad` | Spawns Dante, Vanica and Zenon on a ring of 8 blocks round the executor, facing them, sharing one arena (the executor's spot). They are linked by `TriadBond`. |
 
-Unlike Zagred, the Zogratis commands are **not** behind a gamerule or config switch (`ZogratisCommand` has no gate). `ZogratisCommand.addTo(...)` must be called inside the existing `boss` node (section 13).
+Unlike Zagred, the Zogratis commands are **not** behind a gamerule or config switch (`ZogratisCommand` has no gate). `ZogratisCommand.addTo(...)` is called on the existing `boss` node of `MultiverseCommands` (section 13).
 
-**Spawn eggs** (creative tab, once the lead adds `ZogratisEntities.spawnEggs()`): `dante_zogratis_spawn_egg`, `vanica_...`, `zenon_...`, `lucius_...`. An egg-spawned boss has no summoning circle; its arena is the block it stands on at its first tick. Use the `triad` command to get the three in a shared arena.
+**Spawn eggs** (in the mod's main creative tab, through `ZogratisEntities.spawnEggs()`): `dante_zogratis_spawn_egg`, `vanica_zogratis_spawn_egg`, `zenon_zogratis_spawn_egg`, `lucius_zogratis_spawn_egg`. An egg-spawned boss has no summoning circle; its arena is the block it stands on at its first tick. Use the `triad` command to get the three in a shared arena.
 
 **Gamerules and config that matter** (facts from `NUGameRules` / `NUConfig`):
 
@@ -194,13 +194,13 @@ Unlike Zagred, the Zogratis commands are **not** behind a gamerule or config swi
 |---|---|---|
 | `/gamerule nusmpGriefBlocks` or server config `griefBlocks` (either one on is enough) | off | Gates all terrain changes (`NUGameRules.griefBlocks`). **Off: effects only**, no block is ever changed. |
 | `/gamerule nusmpPvpHitCapPercent` (config `pvpHitCapPercent`) | 40 | The most one hit may take from a player, as a share of their max health. |
-| `/gamerule nusmpSpellDamagePercent` | 100 | Global addon spell damage factor, inside `BalanceLaw.damage`. |
+| `/gamerule nusmpSpellDamagePercent` (config `spellDamagePercent`) | 100 | Global addon spell damage factor, inside `BalanceLaw.damage`. |
 
 No `ModConfigSpec` entries were added: every tunable is a `private static final` constant (section 12).
 
 **Immunities.** A Zogratis boss never takes a *harmful* effect whose id contains `paraly`, `stun`, `petrif`, `sleep`, `fear`, `freez`, `restrain`, `stasis` or `time_stop` (`canBeAffected`). Members of the family (`ZogratisEntities.isFamily`: the four bosses, Disciples, Blood Beasts, clones) never hurt each other, and bosses are allied to each other.
 
-**Boss bar and chat.** The bar is "Name - Devil NN%" (plus " - Gates open"), coloured by devil (Lucifero purple, Megicula red, Beelzebub blue, Astaroth yellow). Each big move is also named on the action bar for ultimates. The bosses speak in chat in their own voices; each power step, the Gates and death have a line.
+**Boss bar and chat.** The bar is "Name - Devil NN%" (plus " - Gates open"), coloured by devil (Lucifero purple, Megicula red, Beelzebub blue, Astaroth yellow). An ultimate is named on the action bar of everyone within 64 blocks when its wind-up begins. The bosses speak in chat in their own voices; each power step, the Gates and death have a line.
 
 ## 5. The shared fight framework
 
@@ -211,7 +211,7 @@ Each boss "draws out" its devil's power in percentages. Power is a pure function
 | Health | Power | What happens |
 |---|---|---|
 | 100% to 85% | **20%** | Opening. Finite mana. |
-| under 85% | **40%** | First step. Hard-hitting moves unlock (`minPower 40`). |
+| under 85% | **40%** | First step. The moves marked 40 in the tables below unlock. |
 | under 65% | **60%** | **Mana is unbound** (infinite). The 60%-ultimates unlock. |
 | under 45% | **80%** | The cap. Stays 80% while the Gates are shut. |
 | under 25% | **100%** | **The Gates of the Tree of Qliphoth open**: the transformation. |
@@ -221,7 +221,7 @@ Rules that keep the steps honest (all in `PowerCurve` / `ZogratisBoss.hurt`):
 - **No step is skipped.** A boss that is due several steps in one tick climbs them one at a time (`stepUp`), each announced in chat, each with a ring of the devil's colour. `clampDamage` makes one hit stop half a point under the next line, so a big blow cannot carry the boss past a step.
 - **No death between the last line and the Gates.** A boss that has crossed the 25% line but whose AI has not yet opened the Gates is unhittable (`hurt` returns false) until it does, and during the 60-tick transformation it is invulnerable (with a game-time deadline so the shield can never outlast it).
 - **Triad rage.** When a sibling falls, each living Triad member takes one 10-point step (`PowerCurve.rage`: 20 to 30, 40 to 50, 70 to 80), **never past 80%**; 100% is only ever reached by the Gates. The tuning interpolates between the anchors, so 30, 50 and 70 are real values. Lucius is not part of the bond.
-- A reset (everyone left, section 5.6) sets power back to 20%.
+- A reset (everyone left, section 5.7) sets power back to 20%.
 
 ### 5.2 What power means: the tuning table (`PowerCurve.tuning`)
 
@@ -241,7 +241,7 @@ Anchors at 20, 40, 60, 80, 100; values between are linear.
 
 ### 5.3 Mana scaling (`ManaPool`)
 
-Below 60% power a boss has a **finite pool** and every move costs mana (`6 + cooldown/16`, at most 32; an ultimate 60). A boss that chains its big moves runs dry and has to wait for the pool to refill, which is the party's window. Each power step re-sizes the pool and **fills it**. **From 60% the pool is unbound**: moves cost nothing, `available()` is infinite. (The ultimates of the Triad need 60% anyway; Lucius's Soul Purge at 40% is the one ultimate that spends 60 mana.) Bosses that learn Tensura skills are also topped up to 2,000,000 Tensura magicules every 10 seconds, so those never run dry.
+Below 60% power a boss has a **finite pool** and every move costs mana (`6 + cooldown/16`, at most 32; an ultimate 60). A boss that chains its big moves runs dry and has to wait for the pool to refill, which is the party's window. Each power step re-sizes the pool and **fills it**. **From 60% the pool is unbound**: moves cost nothing, `available()` is infinite. (The ultimates of the Triad need 60% anyway; Lucius's Soul Purge at 40% is the one ultimate that spends 60 mana.) Bosses that learn Tensura skills are also topped up to 2,000,000 of Tensura mana every 10 seconds, so those skills never run dry.
 
 ### 5.4 The Gates of the Tree of Qliphoth: the 100% transformation (`ZogratisBoss`)
 
@@ -262,7 +262,7 @@ Below 60% power a boss has a **finite pool** and every move costs mana (`6 + coo
 - **A telegraph for every big attack.** Every move with a wind-up has at least **8 ticks** (`MIN_WINDUP`) at every power; **an ultimate at least 30** (`MIN_ULTIMATE_WINDUP`), and all the ultimates actually wind up for 56 to 72 ticks before the power scaling. Each move has its own tell (`Move.tell`), called every third tick; a move without one gets the default ring of the devil's colour.
 - **Locked marks.** The big moves record their ground marks when the wind-up starts and land exactly there, whoever moves: moving off the mark is always the answer.
 - **Cooldown** = `max(10, move cooldown x cooldown multiplier)`; **wind-up** = `max(8, wind-up x wind-up multiplier)`.
-- **Recovery.** After a move the boss starts nothing for `recoveryTicks` (8 by default). An ultimate leaves it **exposed for 60 ticks (3 s)**: state `STATE_RECOVERING`, it takes **x1.25 damage** (`EXPOSED_BONUS`), and no counter-passive works at full strength (Dante's regeneration is halved, Lucius's precognition is off, Zenon never slips a blow).
+- **Recovery.** After a move the boss starts nothing for `recoveryTicks` (8 by default). An ultimate leaves it **exposed for 60 ticks (3 s)**: state `STATE_RECOVERING`, it takes **x1.25 damage** (`EXPOSED_BONUS`), and the passives weaken: Dante's pulse and trickle are halved, Lucius's precognition does not work, Zenon never slips a blow.
 - **Pacing.** A move is allowed when power, range band, cooldown and mana allow it; ultimates only after the first 400 ticks of a fight, never twice in a row, and not closer than the tuned gap; the same ordinary move never a third time in a row; ultimates get likelier as health falls (up to x3), crowd moves are preferred against two or more foes (x1.8) and shunned against one (x0.5), and a repeat is discouraged (x0.35). The boss walks to the distance its ready moves ask for (clamped per boss, section 1), strafing inside the band.
 - When no move fits, the boss closes in and uses its plain blow (about once a second).
 - Every move and every tell is wrapped in a try/catch: a move that throws is logged once and the fight carries on.
@@ -278,7 +278,7 @@ Every Zogratis hit (bosses, Disciples, Blood Beasts, clones) is: `base x power d
 
 ### 5.7 Arena, leash, reset
 
-- The arena is the spot the boss was summoned at (`setArena`), radius `ARENA_RADIUS = 56`. A boss further out is called back by a spatial rift. A fighter further than 112 blocks (and nearer than 200) is teleported to 12 blocks inside the edge, at most once every 10 s, with the line "Return." A target further than 90 blocks from the arena is dropped.
+- The arena is the spot the boss was summoned at (`setArena`), radius `ARENA_RADIUS = 56`. A boss further out is called back by a spatial rift. A fighter further than 112 blocks (and nearer than 200) from the centre is teleported to a spot 12 blocks from the centre on the side they were on, at most once every 10 s, with the line "Return." A target further than 90 blocks from the arena is dropped.
 - A fighter is a player who came within 40 blocks or hit the boss (or whose summon did).
 - **Abandon rule.** If no player (survival) has been within 100 blocks of the arena centre for **10 seconds** the fight resets: full health, power 20%, base form, Disciples removed, pending edits dropped, and the world put back (section 10).
 - The boss is saved and loaded with its power, form, fight flag, mana, arena, ledger and its boss-specific state.
@@ -311,7 +311,7 @@ Superhuman strength is in the moves; the **near-instant regeneration** is a puls
 
 - **Pulse.** A hit that would leave him at or under **30%** of max health (judged before armour, ignoring blows the invulnerability frames swallow) closes at once and restores a share of max health: **8% / 10% / 12% / 14% / 26%** at power 20 / 40 / 60 / 80 / 100 (stage steps). Then it needs **800 / 760 / 700 / 640 / 520 ticks** (40 s down to 26 s) and **each pulse is 25% weaker than the last** (x0.75 per pulse used).
 - **Trickle.** 0.04% / 0.05% / 0.06% / 0.075% / 0.15% of max health per second on top of the framework's regeneration.
-- **Counters.** (1) **Anti-magic** (a demon sword, the Anti-Magic Lord, or the floating Anti-Magic grimoire) cuts the Body Magic for **8 s**: no pulse, no trickle, no framework regeneration, and the pulse cooldown restarts. (2) **Burst damage**: damage dealt in the last ~1.5 s (a faded counter) of 10% of max health halves the pulse; 20% denies it; a blow bigger than health plus pulse is simply lethal. (3) **Exposed** after the Singularity (or while staggered): the pulse and the trickle are halved. (4) Waiting out the cooldown.
+- **Counters.** (1) **Anti-magic** (a demon sword, the Anti-Magic Lord, or the floating Anti-Magic grimoire) cuts the Body Magic for **8 s**: no pulse, no trickle, no framework regeneration, and the pulse cooldown restarts. (2) **Burst damage**: damage dealt in the last ~1.5 s (a faded counter) of 10% of max health halves the pulse; 20% denies it; a blow bigger than health plus pulse is simply lethal. (3) **Exposed** after the Singularity: the pulse and the trickle are halved. (4) Waiting out the cooldown.
 - **Body Magic: Surge** (move, 40%+): for 8 s his blows hit 25% harder, Speed I, and he heals 3% (not while cut).
 
 ### 6.2 Moves (`DanteTable`, `DanteMoves`)
@@ -323,7 +323,7 @@ Base damages are before the damage law. "Wind/CD" are ticks before the power sca
 | Compressed Rock Swords | 20 | 22 / 120 | 6 to 34 | 6.5 per sword; 3 / 3 / 5 / 7 / 9 swords at 20-100% | Aim lines of the fan drawn from his hands | Sidestep; swords stop at the first wall; a raised shield stops them |
 | Titan Fist | 20 | 14 / 70 | 0 to 5.5 | 19 (x1.25 in a surge) | A red ring growing to 4.6 blocks and a line along his facing | Step out of the half-circle; it throws you up |
 | Crushing Stomp | 20 | 20 / 150 | 0 to 9 (crowd) | 13 | A ring growing to the reach (9; 11 at the Gates) and a steady red edge | Jump the wave (feet 0.75 blocks off the floor) or leave the radius |
-| Lucifero's Domain | 20 | 28 / 280 | 5 to 32 (crowd) | field: crush tick 1.2 x strength x weight | A ring on the spot where you stood when the wind-up began, with a shrinking inner ring and a column | Walk out: strongest at the core (weight 1) and 0.35 at the rim, nothing outside; anti-magic halves it |
+| Lucifero's Domain | 20 | 28 / 280 | 5 to 32 (crowd) | field: one crush a second of 1.2 x strength x weight x build-up | A ring on the spot where you stood when the wind-up began, with a shrinking inner ring and a column | Walk out: strongest at the core (weight 1) and 0.35 at the rim, nothing outside; anti-magic halves it |
 | Gravity Pull | 40 | 22 / 220 | 8 to 30 (crowd) | slam 14 | A red ring of 5.5 blocks and a line from each foe to him | Resist with anti-magic (pull x0.5), jump the slam wave, leave the ring |
 | Weighted Leap | 20 | 26 / 200 | 9 to 40 | 15 | A ring (7 blocks) at your feet, locked | Leave the ring; jump the wave. He lands on the mark only if there is floor there |
 | Stone Spikes | 20 | 18 / 130 | 4 to 26 | 12 | Two parallel lines along the locked direction | Step off the line (3.4 blocks wide, one block per two ticks, up to 30 blocks) |
@@ -333,10 +333,10 @@ Base damages are before the damage law. "Wind/CD" are ticks before the power sca
 | Gravity Magic | 20 | 16 / 260 | 6 to 30 | n/a | Default | Casts one of the learned Tensura gravity / burden / earth skills (falls back to 3 rock swords) |
 | **Gravity Singularity** (ultimate) | **60** | **56** / 1200, recovery 60 | 0 to 40 | 25.5 / 34 / 42.5 at 60 / 80 / 100% | Black spheres rise over his head; a red ring on the ground at **every** mark with a shrinking inner ring and a column; a chat line | See below |
 
-**Lucifero's Domain** numbers: radius `(8 + stage)` blocks (x1.35 at the Gates, so 8 to 12, then 16.2), strength `min(3.4, 1.2 + 0.6 x stage)`, 100 ticks (120 at the Gates), builds up over 16 ticks, up to Slowness VI at the core, forces foes down and crushes once a second, never causes fall damage. At the Gates a second field follows 60 ticks later on another foe, shown for 24 ticks first.
+**Lucifero's Domain** numbers: radius `(8 + stage)` blocks (8, 9, 10 and 11 by stage, and 12 x 1.35 = 16.2 at the Gates), strength `min(3.4, 1.2 + 0.6 x stage)`, 100 ticks (120 at the Gates), builds up over 16 ticks, up to Slowness VI at the core, forces foes down and crushes once a second, never causes fall damage. At the Gates a second field is announced 60 ticks later on another foe, shown for 24 more ticks, and then lasts 80 ticks.
 
-**Gravity Singularity** (60%+, when his mana is unbound): the marks are **2 spheres at 60-79%, 3 at 80-99%, 4 at 100%**; the first on the target, the next on the other foes, then on a ring round the target, never stacked (`GravityMath.planMarks`). The zone radius is `5.5 + 1.5 x p` blocks with `p = power / 80` (6.6 at 60%, 7.0 at 80%, 7.4 at 100%). The wind-up is shown for the whole 56 ticks (about 2.3 s at 60%), and **he releases every running gravity field first**, so nobody is pinned while dodging the spheres, and starts no new chained field. After the wind-up each sphere gathers for **30 ticks**; in the last 18 it drags foes towards it (gently: running works; fliers are brought down). At tick 30 it collapses: everyone in the zone takes the hit, once per collapse.
-**Counters:** leave the ring; **jump on the last tick** (feet more than 1.1 blocks off the floor); raise a shield (x0.35); hold anti-magic (x0.40). With `griefBlocks` on, each sphere bites a bowl (radius 4 to 5, at most 420 blocks, ordered centre-out) queued through the boss's ledger; sand-like blocks are skipped. At the Gates he casts a second set of spheres once per fight, 60 ticks after the first. The recovery leaves him **exposed for 3 s**: that is the window to hit him.
+**Gravity Singularity** (60%+, when his mana is unbound): the marks are **2 spheres at 60-79%, 3 at 80-99%, 4 at 100%**; the first on the target, the next on the other foes, then on a ring round the target, never stacked (`GravityMath.planMarks`). The zone radius is `5.5 + 1.5 x p` blocks with `p = power / 80` (6.6 at 60%, 7.0 at 80%, 7.4 at 100%). The wind-up is shown for the whole of its 56 ticks (about 2.7 s at 60% power, 2.1 s at 100% after the wind-up scaling), and **he releases every running gravity field first**, so nobody is pinned while dodging the spheres, and starts no new chained field. After the wind-up each sphere gathers for **30 ticks**; in the last 18 it drags foes towards it (gently: running works; fliers are brought down). At tick 30 it collapses: everyone in the zone takes the hit, once per collapse.
+**Counters:** leave the ring; **jump on the last tick** (feet more than 1.1 blocks off the floor); raise a shield (x0.35); hold anti-magic (x0.40). With `griefBlocks` on, each sphere bites a bowl (radius 4 to 5, at most 420 blocks, ordered centre-out) queued through the boss's ledger; sand-like blocks are skipped. At the Gates he casts a second set of spheres once per fight, 60 ticks after the first set appears (30 ticks after it collapses), with its rings drawn from the first tick. The recovery leaves him **exposed for 3 s**: that is the window to hit him.
 
 ## 7. Vanica Zogratis (Megicula: curse-warding; native magic: Blood Magic)
 
@@ -344,7 +344,7 @@ Base damages are before the damage law. "Wind/CD" are ticks before the power sca
 
 ### 7.1 Blood drain (passive)
 
-She heals by a share of the damage she deals: **15% at 20% power up to 40% at the Gates** (`VanicaMath.drainShare`), at most **1% of her max health per hit** and **4% per 2 seconds** (doubled in a Blood Frenzy), so a many-hit move never refills her. Her Blood Beasts heal on their bites too. **Counters:** burst her while she cannot drain (the Crimson Crown leaves her exposed), and kill the beasts.
+She heals by a share of the damage she deals: **15% at 20% power up to 40% at the Gates** (`VanicaMath.drainShare`), at most **1% of her max health per hit** and **4% per 2 seconds** (doubled in a Blood Frenzy), so a many-hit move never refills her. Her Blood Beasts heal on their bites too. **Counters:** burst her while she is not hitting anyone (the Crimson Crown leaves her exposed for 3 s and she starts nothing else meanwhile), and kill the beasts.
 
 ### 7.2 Moves (`VanicaTable`, `VanicaMoves`, `VanicaCurse`)
 
@@ -401,17 +401,17 @@ A cube of warped space that severs the mana of everyone inside who is not a Zogr
 | Side of the cube | 16 blocks | 19 | 22 |
 | Time it stands | 7 s | 9 s | 13 s |
 | Portal chain waves inside it | none | none | 2 |
-| Integrity (hurt Zenon to break it) | 8% of his max health (76 for 950) | about 11% (104.5) | 14% (133) |
+| Integrity (hurt Zenon to break it) | 8% of his max health (76 for 950) | 11% (104.5) | 14% (133) |
 
 - **Shape.** An axis-aligned box centred on the spot where the target stood when the wind-up began (locked), its floor 3 blocks under the ground, so it reaches `2 x half - 3` blocks above it. Zenon is moved inside it first if he is not. A caster has one cube at a time (a new one replaces the old); at most six cubes exist at once.
-- **Timeline.** The twelve edges are drawn in dust from the start of the *wind-up*. When the move fires the cube **closes for 16 ticks** during which nothing is sealed (and the action bar names the way out); then the seal bites until the cube's last tick, then it ends ("Mana flows again"). The wind-up plus the closing is always longer than the time a walking player (4.3 blocks per second) needs to reach the nearest wall from the middle (`DomainMath.leavableOnFoot`), so **it can always be walked out of**.
-- **What is sealed** (everything inside, except the Zogratis family, spectators and the dead): (1) **grimoire spells** cannot be cast: the cube writes the mod's `nusmp_sealed_until` flag into each player inside every two ticks, which the existing grimoire cast path already checks ("Your grimoire has been sealed!"); (2) **Tensura and ManasCore skills** are vetoed (`SpellSeal.vetoesSkill`, which must be bound by the lead; grimoire pages are exempt from this veto because the cast path above handles them and leaves the grimoire's utility pages alone); (3) **spell damage** a sealed attacker still lands (a spell in flight, a summon's spell) is cut to **a fifth** (`onIncomingDamage`; spell damage = vanilla magic or any non-physical Tensura damage type). **Weapons, items, movement and ordinary blows are untouched.**
+- **Timeline.** The edges are drawn in dust, four at a time, from the start of the *wind-up*. When the move fires the cube **closes for 16 ticks** during which nothing is sealed (and the action bar names the way out); then the seal bites until the cube's last tick, then it ends ("Mana flows again"). The wind-up plus the closing is always longer than the time a walking player (4.3 blocks per second) needs to reach the nearest wall from the middle (`DomainMath.leavableOnFoot`), so **it can always be walked out of**.
+- **What is sealed** (everything inside, except the Zogratis family, spectators and the dead): (1) **grimoire spells** cannot be cast: the cube writes the mod's `nusmp_sealed_until` flag into each player inside every two ticks, which the existing grimoire cast path already checks ("Your grimoire has been sealed!"), and `GrimoireBook.castPage` also asks `SpellSeal.sealed(player)` directly; (2) **Tensura and ManasCore skills** are vetoed (`SpellSeal.vetoesSkill`, bound to the three ManasCore skill events in `NUSMP`; grimoire pages are exempt from this veto because the cast path above handles them and leaves the grimoire's utility pages alone); (3) **spell damage** a sealed attacker still lands (a spell in flight, a summon's spell) is cut to **a fifth** (`onIncomingDamage`; spell damage = vanilla magic or any non-physical Tensura damage type). **Weapons, items, movement and ordinary blows are untouched.**
 - **Counter-play.** (1) Leave on foot: the nearest side wall and the distance are shown on the action bar, and the wall nearest you shimmers when you are within 3.5 blocks. (2) **Break it:** every point of damage dealt to Zenon while the cube stands also wears the cube down (anti-magic counts **double**), from inside or outside; when the integrity is gone it shatters and Zenon is staggered (Slowness III for 3 s). (3) It ends with its master (death, reset, removal). (4) He is exposed for 3 s after opening it.
 - **While it stands** Zenon deals 15% more damage ("he rules the space"). State is in memory only (a world reload ends every cube).
 
 ## 9. Lucius Zogratis (Astaroth: time; two souls in one body)
 
-3600 health, armor 22, toughness 12, the fastest thing in the mod. A calm duel with a god who answers everything and who is not quite alone in his body. He has 20 moves, four of them ultimates.
+3600 health, armor 22, toughness 12, speed 0.36 and steps beyond light. A calm duel with a god who answers everything and who is not quite alone in his body. He has 20 moves, four of them ultimates.
 
 ### 9.1 Soul Magic (innate)
 
@@ -422,7 +422,7 @@ A cube of warped space that severs the mana of everyone inside who is not a Zogr
 | Memory Manipulation | 40 | 30 / 520 | 0 to 40 (crowd) | Every player in 40 blocks without anti-magic takes a touch (4) and **the grimoire spell they cast last goes on a 6 s cooldown** | Lines from his eye to every foe. Hold anti-magic; Julius gives the spell back |
 | Soul Magic: Paladins | 40 | 40 / 900 | any | Turns hostile mobs within 40 blocks into Soul Paladins (section 9.5); if there are none he calls a Vindicator knight | Lines and rings on the mobs he will take |
 | Resurrection | 60 | 44 / 800 | any | Raises his kneeling Paladins and his fallen clones at once: 2 per cast (3 at the Gates), from a **budget of 3 + stage souls per fight** (3 to 7) | Rings on the kneeling; cut the Paladins' souls or spend his budget |
-| **Soul Purge** (ultimate) | **40** | **64** / 1500, recovery 60 | 0 to 30 (crowd) | A wave of white and gold crosses the ground at one block per tick to 28 blocks. It strips devil power: ends Devil Union and meal attunement, removes this mod's blessings and any beneficial effect named for a devil / contract / attunement / union (the `purified` effect is shown). 18 base damage (x1.5 in Devil Union, x0.5 behind a raised shield). It also **cuts the Dark Triad off from its devils**: each living sibling's mana is made finite and empty and its Disciples are unmade for 8 s (12 s from 80%). He heals 1.5% of max health per power stripped, at most 6% | A ring grows on the ground with the edge marked in red and a chat line. **Jump over the wave** (airborne above the ground when it passes); each foe is touched once |
+| **Soul Purge** (ultimate) | **40** | **64** / 1500, recovery 60 | 0 to 30 (crowd) | A wave of white and gold crosses the ground at one block per tick to 28 blocks. It strips devil power: ends Devil Union and meal attunement, removes this mod's blessings and any beneficial effect named for a devil / contract / attunement / union (a player who lost something is given the `purified` effect for 8 s, and while it lasts the grimoire refuses to enter Devil Union again: "Lucius's Soul Purge has stripped your devil's power for now."). 18 base damage (x1.5 in Devil Union, x0.5 behind a raised shield). It also **cuts the Dark Triad off from its devils**: each living sibling's mana is made finite and emptied for 8 s (12 s from 80%), so it can only use its fists, and its Dark Disciples are unmade. He heals 1.5% of max health per power stripped, at most 6% | A ring grows on the ground with the edge marked in red and a chat line. **Jump over the wave** (airborne above the ground when it passes); each foe is touched once |
 
 ### 9.2 Two Souls: Julius Novachrono (`JuliusWill`)
 
@@ -452,11 +452,11 @@ This is the "sleeper agent / memory manipulation" mechanic of the request, and i
 | Move | Power | Wind/CD | What it does | Tell / counter |
 |---|---|---|---|---|
 | Beyond Light (steps beyond the speed of light) | 20 | 16 / 110 | He crosses up to 32 blocks along a line, hitting everything in the strip (20, plain blow, 1.5 blocks to each side) and shoving it along; walls shorten it | The line, both strip edges and an end ring are drawn for the wind-up. Step out of the strip |
-| Beyond Light: Barrage | 60 | 18 / 380 | The step, then 1 / 1 / 1 / 2 / 3 more (2 steps below 80%, 3 from 80, 4 at the Gates), each through a different foe, each shown **14 ticks** ahead | Same, for each step |
+| Beyond Light: Barrage | 60 | 18 / 380 | The step, then more: 2 steps in all below 80%, 3 from 80%, 4 at the Gates; each further step goes through a different foe and is shown **14 ticks** ahead | Same, for each step |
 | Chrono Stasis | 40 | 34 / 420 | Stops **one** foe for 1.5 s (2 s from 80%; the balance law's control caps apply), steps in front of it and a mark closes on the spot; when the stop ends the mark strikes everything inside (24, radius 2.3). If the foe cannot be stopped the blow comes anyway | A clock effect on the foe and a ring that turns red in the last 14 ticks. Leave the ring when you can move; anti-magic prevents the stop |
 | Chrono Acceleration | 40 | 20 / 700 | 8 s of +45% speed, plain blows x1.2, and **a precognition charge back** | Time ribbons on him and gathering motes |
 | Time Reversal | 60 | 36 / 900 | He returns to where he was 3 to 5 s ago (60 ticks at the opening up to 100 at the Gates; the ring remembers 6 s), takes back some wounds (**at most 6% / 8% / 10% of max health**), and every harmful effect on him is unmade | A gold ring and column mark where he will reappear, and a chat line. **Anti-magic struck during the wind-up refuses it** |
-| **Time Stop** (ultimate) | **80** | **64** / 1500, recovery 60 | Everyone who can see him and holds no anti-magic (up to 8) is stopped for **2.5 s (3 s at the Gates), never longer**. Nothing hurts them while stopped. When it ends they get **6 s of immunity to being stopped again**, then 2 (3 at the Gates) marked blows arrive: the first 18 ticks after the release, then every 14, **each marked on the ground 14 ticks ahead** under every foe, 16 base, radius 2.3 | A banner on the action bar ("hold anti-magic or break his line of sight"), a clock effect over each foe. **Anti-magic or cover prevents it; an ally's blow of 8 damage breaks it** (the existing `TimeStop`); leave the marks |
+| **Time Stop** (ultimate) | **80** | **64** / 1500, recovery 60 | Everyone who can see him and holds no anti-magic (up to 8) is stopped for **2.5 s (3 s at the Gates), never longer**. Nothing hurts them while stopped (that is what the in-game message says; the stop itself is the mod's existing `TimeStop` effect). When it ends they get **6 s of immunity to being stopped again**, then 2 (3 at the Gates) marked blows arrive: the first 18 ticks after the release, then every 14, **each marked on the ground 14 ticks ahead** under every foe, 16 base, radius 2.3 | A banner on the action bar ("hold anti-magic or break his line of sight"), a clock effect over each foe. **Anti-magic or cover prevents it; an ally's blow of 8 damage breaks it** (the existing `TimeStop`); leave the marks |
 
 His own timing effects reuse the mod's existing Time Magic effects (stasis sphere, clock, rewind dial, acceleration ribbons); none of the Time Magic VFX was edited.
 
@@ -482,7 +482,7 @@ Not a new entity: an ordinary hostile mob (health 30 or more, **never a boss: 30
 - **Immortal while Lucius lives.** A blow that would kill a Paladin does not: it is **struck down**, kneeling at 1 health with no AI, immune to everything, with a soul tether drawn to Lucius, and **rises with full health after 12 s (8 s at the Gates)**. The first time, the chat explains how to keep it down.
 - **Cutting the soul (the counter).** While a Paladin kneels, one **anti-magic** blow (a demon sword, the Anti-Magic Lord, the Anti-Magic grimoire) or one **holy / soul / severance / spirit** damage type kills it for real, with its drops. A kneeling Paladin takes no other damage.
 - **Lucius falls or leaves the world:** every Paladin is freed (the mob it was before, mortal, its numbers back); a kneeling one dies with its tether.
-- Resurrection can raise kneeling Paladins at once (spending the souls budget). The effect is renewed every second so milk does not free a Paladin.
+- A Paladin fights with the mob's own attack (raised as above); that blow does **not** go through the Zogratis damage law of section 5.6, so its numbers come only from `SoulMath.paladinAttack`. Resurrection can raise kneeling Paladins at once (spending the souls budget). The effect is renewed every half second so milk does not free a Paladin, and the Paladins are pointed at Lucius's foes whenever they have no valid target.
 
 ### 9.6 Clones (`ZogratisCloneEntity`, `LuciusMoves`)
 
@@ -513,6 +513,33 @@ Not a new entity: an ordinary hostile mob (health 30 or more, **never a boss: 30
 
 Human (`lucius_base`) until the Gates; at the middle of the 3 s transformation the renderer swaps to the divine body (`lucius_divine`: three pairs of wings, gear halo, antlers), which **hovers about 0.4 blocks** above the ground. His grimoire floats before him in both forms (and on his clones). The glow turns white while Julius holds the body. Lucius's numbers are all at their peak at 100%.
 
+### 9.10 All twenty moves at a glance
+
+In the order of the move list (the client reads move names by index). Wind-up and cooldown are ticks before the power scaling of section 5.2; the minimum wind-up of any move is 8 ticks, of an ultimate 30.
+
+| Move | Power | Wind/CD | Range | Kind | Described in |
+|---|---|---|---|---|---|
+| Soul Motes | 20 | 16 / 80 | 0 to 38 |  | 9.1 |
+| Soul Drain | 20 | 26 / 240 | 3 to 20 |  | 9.1 |
+| Beyond Light | 20 | 16 / 110 | 5 to 34 |  | 9.3 |
+| The Towers Answer | 20 | 26 / 130 | 6 to 40 |  | 9.4 |
+| Bone Arsenal | 20 | 22 / 170 | 4 to 34 |  | 9.7 |
+| Mirror Court | 20 | 28 / 640 | 0 to 48 | crowd | 9.6 |
+| Blood Tide | 40 | 24 / 240 | 3 to 30 |  | 9.7 |
+| Lucifero's Weight | 40 | 30 / 290 | 3 to 34 | crowd | 9.7 |
+| Swap Strike | 40 | 26 / 260 | 6 to 40 |  | 9.6 |
+| Memory Manipulation | 40 | 30 / 520 | 0 to 40 | crowd | 9.1 |
+| Chrono Stasis | 40 | 34 / 420 | 4 to 30 |  | 9.3 |
+| Chrono Acceleration | 40 | 20 / 700 | 0 to 48 |  | 9.3 |
+| Soul Magic: Paladins | 40 | 40 / 900 | 0 to 48 |  | 9.1 and 9.5 |
+| Time Reversal | 60 | 36 / 900 | 0 to 48 |  | 9.3 |
+| Resurrection | 60 | 44 / 800 | 0 to 48 |  | 9.1 |
+| Beyond Light: Barrage | 60 | 18 / 380 | 5 to 30 |  | 9.3 |
+| Soul Purge | 40 | 64 / 1500 | 0 to 30 | ultimate, crowd | 9.1 |
+| Sibling Assimilation | 60 | 70 / 1500 | 0 to 40 | ultimate, crowd | 9.7 |
+| Time Stop | 80 | 64 / 1500 | 0 to 30 | ultimate, crowd | 9.3 |
+| Grimoire Tower Storm | 80 | 72 / 1500 | 0 to 44 | ultimate, crowd | 9.4 |
+
 ## 10. World safety (griefBlocks, budget, ledger, restore)
 
 Only **three** moves change blocks: Dante's Singularity bite, Vanica's rot (the Rotting Field and the Crimson Crown's field) and Zenon's bone columns. **Lucius changes no blocks at all** (he reuses only the siblings' non-block moves), and neither do Disciples, Beasts or clones. The cube of Spatial Mana Domination is a rule in memory, not blocks.
@@ -534,7 +561,7 @@ Only **three** moves change blocks: Dante's Singularity bite, Vanica's rot (the 
 
 ## 12. Tuning guide
 
-Everything is a constant in code (no config entries). Change it, build, test with the commands in section 4.
+Everything is a constant in code (no config entries). Most numbers live in the tables and math classes named below; a few move details are literals inside the boss's own move code (for example the radius and strength of Dante's Domain in `DanteBoss.fieldRadius` and `fieldStrength`, or the thorn damage in `VanicaTable`). Change it, build, and try it with the commands in section 4.
 
 | To change | Edit |
 |---|---|
@@ -555,48 +582,48 @@ Everything is a constant in code (no config entries). Change it, build, test wit
 | World-change limits | `ZogratisBoss.BLOCKS_PER_TICK`, `BlockLedger.MAX_ENTRIES`, the caps listed in section 10 |
 | Looks | The generator scripts in section 3.4, then re-run them; the glow feel in `client/zogratis/ZogratisGlow` |
 
-After editing a pure class, run its test (the tests assert the shape of the numbers: for example, that every ultimate has a wind-up of at least 30 ticks, that no step is skipped, that the cube can be left on foot).
+After editing a pure class, run its test. The tests assert the shape of the numbers, for example: every move has a telegraph that keeps at least 8 ticks even at the Gates, an ultimate's table wind-up is at least 40 ticks (56 for Lucius's), no power step is skipped, power never falls, and a cube can be left on foot in the time its telegraph gives.
 
-## 13. Wiring checklist (for the lead; shared files, not edited by this package)
+## 13. Where the bosses are wired into the rest of the mod
 
-The classes below carry the instructions in their own Javadoc. **At the time this document was written, none of these were present in `NUSMP.java`, `NUCreativeTab.java`, `MultiverseCommands.java` or `assets/nusmp/lang/en_us.json`** (a search for `Zogratis` in them found nothing); until the lead adds them, the bosses cannot be spawned. Search for the class names to see whether it has been done.
+The Zogratis package owns its own registrations; the shared files were edited by the lead in the 1.20.0 release commit. As found in the checkout when this document was written:
 
-| Where | What |
+| File | What it holds |
 |---|---|
-| `NUSMP` constructor | `ZogratisEntities.init()` (before the item register's event, it registers the eggs), `ZogratisEntities.ENTITIES.register(modEventBus)`, `modEventBus.addListener(ZogratisEntities::attributes)` |
-| `NUSMP` constructor | `ZogratisEffects.init()` and `ZogratisEffects.EFFECTS.register(modEventBus)`; `VanicaCurse.init()` and `VanicaCurse.EFFECTS.register(modEventBus)` |
-| Game bus | `VanicaCurse::onHeal` (`LivingHealEvent`), `SoulPaladins::onDeath` (`LivingDeathEvent`), `SoulPaladins::onIncomingDamage` and `SpellSeal::onIncomingDamage` (`LivingIncomingDamageEvent`) |
-| ManasCore skill events | Call `SpellSeal.vetoesSkill(instance, user)` where a skill is activated / released / toggled and refuse when it returns true (without it the cube still blocks grimoire spells and cuts spell damage, but not Tensura skills) |
-| Client mod bus | `ZogratisClient.register(EntityRenderersEvent.RegisterRenderers)` |
-| `MultiverseCommands` | `ZogratisCommand.addTo(bossNode)` on the existing `boss` node |
-| `NUCreativeTab` | The four eggs from `ZogratisEntities.spawnEggs()` |
-| `en_us.json` | Merge the lang fragments (section 3.6) |
+| `NUSMP.java` (constructor) | `ZogratisEntities.init()`, `ZogratisEffects.init()`, `ZogratisEntities.ENTITIES.register(modEventBus)`, `modEventBus.addListener(ZogratisEntities::attributes)`, `ZogratisEffects.EFFECTS.register(modEventBus)`, `VanicaCurse.EFFECTS.register(modEventBus)` |
+| `NUSMP.java` (client only) | `modEventBus.addListener(ZogratisClient::register)` |
+| `NUSMP.java` (game bus) | `VanicaCurse::onHeal` (Megicula's Decay cuts healing), `SpellSeal::onIncomingDamage` (a sealed attacker's spell damage is cut to a fifth), `SoulPaladins::onDeath` and `SoulPaladins::onIncomingDamage` (both at `EventPriority.HIGH`, so a Paladin is struck down before other handlers see the death) |
+| `NUSMP.java` (ManasCore skill events) | `SkillEvents.ACTIVATE_SKILL`, `RELEASE_SKILL` and `TOGGLE_SKILL` each call `SpellSeal.vetoesSkill(skill, user)` and return `EventResult.interruptFalse()` when it is true, so Tensura and ManasCore skills cannot be used inside Spatial Mana Domination |
+| `MultiverseCommands.java` | `ZogratisCommand.addTo(bossNode)` on the `boss` node (then `root.then(bossNode)`) |
+| `NUCreativeTab.java` | the four eggs from `ZogratisEntities.spawnEggs()` in the main tab |
+| `GrimoireBook.java` | In `castPage`: `SpellSeal.sealed(player)` refuses the cast with the seal's message (so the cube's refusal does not depend only on the `nusmp_sealed_until` flag it also writes). In the Devil Union entry: a player with `ZogratisEffects.PURIFIED` is refused ("Lucius's Soul Purge has stripped your devil's power for now.") |
+| `assets/nusmp/lang/en_us.json` | the 14 keys of section 3.6 |
 
-No edit is needed in `GrimoireBook`: its cast path already refuses a sealed player's spell through the `nusmp_sealed_until` flag the cube writes (`GrimoireBook.castPage`).
+Nothing else in the mod calls into the package. To find every hook, search the source for `entity.zogratis`.
 
 ## 14. Unverified and not done
 
 **Verified by the author of this document**
 
-- The pure classes (every file marked pure in section 3, except `TriadBond` which needs the game) and all 30 test classes were compiled with `javac` in a throwaway directory outside the repository and run with the JUnit console launcher: **284 tests, all passed**. The numbers in the tables of this document for the tuning, Disciples, Body Magic, domain, Zenon, Vanica and Lucius were produced by running those classes (not retyped).
-- All JSON assets and preview scenes of the family parse. The texture sizes and the animation clip names were read from the files.
-- Every behavioural statement was checked against the Java source on disk at the time of writing.
+- The pure classes (every file marked pure in section 3, except `TriadBond` which needs the game) and all 30 test classes were compiled with `javac` in a throwaway directory outside the repository and run with the JUnit console launcher: **284 tests, all passed**. The numbers in the tables of this document for the tuning, Disciples, Body Magic, domain, Zenon, Vanica and Lucius were read off the output of running those classes, and every row of the Dante, Vanica, Zenon and Lucius move tables (power, wind-up, cooldown, range) was compared with the move tables by a script.
+- All JSON assets, preview scenes and lang fragments of the family parse. The texture sizes and the animation clip names were read from the files.
+- Every behavioural statement was written from reading the Java source on disk at the time of writing (not from the request or from other summaries). A few figures are plain arithmetic on those numbers (for example 12 x 1.35 = 16.2, or ticks turned into seconds).
 
 **Not verified (nobody has run these in a game)**
 
-- **Nothing has been compiled or run inside Minecraft.** The entities, renderers, commands, effects, event handlers and every move's world effect are written against 1.21.1 / NeoForge 21.1.x APIs but were not built by this document's author; a type-check harness and the CI compile are the checks. Gameplay, balance and visual quality are therefore unverified: the numbers are starting values.
+- **Nothing has been compiled or run inside Minecraft.** The entities, renderers, commands, effects, event handlers and every move's world effect are written against 1.21.1 / NeoForge 21.1.x APIs but were not built by this document's author; the type-check harness and the CI compile are the checks. Gameplay, balance and visual quality are therefore unverified: the numbers are starting values.
 - **Tensura / ManasCore integration** (the learned Tensura skills through `TensuraCaster`, Tensura's gravity and curse damage types, `Nullification.maxEP`, `TimeStop`, the grimoire library read by `TowerSpells`) depends on the installed Tensura and mod versions; the fallbacks exist (plain magic damage, a fixed library of four tiers per magic, volleys instead of a skill) but were not exercised.
 - **The Living Dungeon guard** and the boss's block writes: the claim that a refused write leaves the ledger empty follows from the code order, not from a test.
-- Whether the `nusmp_sealed_until` flag and `SpellSeal.vetoesSkill` stop every route to a spell (another mod casting through its own path is not covered).
-- The model animations were checked in the headless preview harness only by their authors' scene files; I did not view them.
+- Whether the cast refusal in `GrimoireBook`, the `nusmp_sealed_until` flag and `SpellSeal.vetoesSkill` together stop every route to a spell (another mod casting through its own path is not covered). The ManasCore event signatures used by the veto lambdas in `NUSMP.java` were written by the lead and are not checked here.
+- I did not render or look at any model, animation or texture: how the bosses look in game, and whether the animations fit the models, is unverified by me (the preview scene files exist for that).
 
 **Not done / known gaps**
 
-- **Not wired in** at the time of writing (section 13): no spawn is possible until the lead adds the registrations.
+- **Boss behaviour inside the game is unobserved.** The wiring of section 13 exists in the source, but nobody has spawned a boss in a running game yet.
 - **No loot, no advancement, no structure, no natural spawn.** The bosses give experience only; nothing was requested to drop, and nothing drops. A loot table (for example `data/nusmp/loot_table/entities/lucius_zogratis.json`) would be the next step.
 - **Lucius has no Dark Disciples** (the request's shared "each boss can summon Dark Disciples" is met by the Triad; Lucius has Paladins and clones). The Astaroth-tinted Disciple skin and ability exist in the entity, but no boss summons it.
 - **The Soul Paladin model is not used.** `zogratis_soul_paladin` (geo, animation, textures) is generated and previewed, but a Paladin is the original mob with an effect, gold dust and a kneel; no client code redraws it in white and gold. The effect, its icon and the server-side particles are what the player sees.
 - **No sound events of their own:** the fights use vanilla sounds.
 - **No Bedrock JSON files** were produced (section 0): there is no `.mcpack` / `.mcaddon` output, by design.
-- **Turn-key per-boss lang entries for boss speech were not added**: speech, move names and warnings are literals in the code.
+- **Boss speech, move names and warnings are literals in the code**, so they cannot be translated through lang files.
 - The Time Magic VFX files were not touched (they are the quality standard); Lucius only calls the existing Time shapes.
