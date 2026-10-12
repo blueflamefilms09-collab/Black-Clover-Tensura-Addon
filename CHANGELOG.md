@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.3.0] — Riven Remake removed, eight reference weapons, high-resolution weapon skins, real-life sizes
+
+**State:** every commit of this line compiled in CI up to the Riven removal and the size/skin pass; the Brooch Pin / Hand of Providence wiring is new in this release. Nothing here was run in game.
+
+### Removed (on the owner's request)
+- **Riven Remake / Marquis Remake** completely: the boss and its story constructs, renderer, boss bar, config (`nusmp-riven.toml`), `/nusmp riven` commands, combat code, models, textures, animations, loot tables, the Black Bull Bard Relic, Story Page, Crest Cape token, Cracked Crown and spawn egg, the Riven canon grimoire, its boss VFX shape (`RIVEN_VOID_GATE`) and all lang entries. The anime-skill codex (`skill/codex`, `data/nusmp/skills/codex`) existed only for Riven's research tools and went with him. Sylph's Gale Feather stays.
+
+### Fixed
+- **Codex weapons page ran over the frame:** a normal (not turning) page was drawn without a clip, so long weapon lists spilled over the book edges and the page title. Pages are now clipped to the paper; the per-weapon line cap is gone; indented tooltip lines stay indented and wrap under themselves.
+
+### New (from the reference sheets)
+- **Magebane Shield, Weapon of Resurgence, Bolt Thrower, Crossbow of Swift Death, Club of Rot, Doom Hammer** (3D models, engravings, techniques, full-swing strikes, VFX, icons), plus **Brooch Pin** (folds into a brooch / unfolds into a dagger; Hidden in Plain Sight, Pinprick Lunge) and **The Hand of Providence** (Mage Hand lay on hands / holy strike, Lay on Hands on yourself). The Brooch Pin and Hand meshes are first versions.
+
+### Replaced
+- **Weapon skins raised to 512x512, Elsdocia to 1024x1024** (`tools/hires_weapon_textures.py`, called by `gen_weapon_models.py`; the 128 originals are kept in `tools/weapon_tex_128/`). Elsdocia's blade is repainted as faceted blue crystal with white-hot cores and bright fractures, the bronze section keeps its clover cut-out. The other skins are smoothed and sharpened with surface grain, not repainted: they are higher resolution, not new artwork.
+- **Real-life sizes:** katanas about 1 m, longsword 1.25 m, greatsword 1.8 m, trident 1.9 m, spear 2.1 m, Elsdocia 2.3 m (`REAL` table in `gen_weapon_models.py`; 1 block = 1 m).
+
+### Not done
+- The older weapon meshes are still 40-170 flat quads; they are not sculpted high-poly models like the tensuranoindex jar's. The Brooch Pin does not animate its fold.
+
 ## [1.2.0] — Compiled: the 1.1.0 line builds, Elsdocia grand, boss spawn grace, tooltip wrapping
 
 **State:** the merge of the three lines (the owner's 1.0.0 Marquis / Riven line, the 0.99 Elsdocia + Key restoration line, and the 0.58 line with every new grimoire, VFX, sounds and summons) compiles in CI and passes its tests. Nothing here was run in game.

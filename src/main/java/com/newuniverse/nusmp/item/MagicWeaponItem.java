@@ -74,7 +74,10 @@ public class MagicWeaponItem extends SwordItem {
         DOOM_HAMMER(Tiers.NETHERITE, 8, -3.3f, "Doom Slam", "Leap and slam down: a ring of cracks and a shockwave 6 blocks wide throws foes up and stuns them briefly (bosses are only staggered). Used in mid-air it dives instead, and the longer the fall the harder it lands.", 240, false),
         // the Magebane Shield and the Weapon of Resurgence (logic in MagebaneShieldArts / ResurgenceArts, reached through ReferenceWeapons)
         MAGEBANE_SHIELD(Tiers.IRON, 0, -2.4f, "Spellbreak Parry", "Raises the shield for 2 s: projectiles are turned back at their caster, spell bolts are erased and returned, and magic or missile damage is cancelled and thrown back. Held in either hand, magic damage you take is cut by a third.", 360, false),
-        WEAPON_OF_RESURGENCE(Tiers.DIAMOND, 3, -2.4f, "Resurgent Smite", "A radiant burst 7 blocks wide mends you and your allies (more the fuller your Lay on Hands pool) and cleanses an affliction; undead and demons are burned, everyone else is dazzled. Every hit mends you and a wounded ally.", 220, false);
+        WEAPON_OF_RESURGENCE(Tiers.DIAMOND, 3, -2.4f, "Resurgent Smite", "A radiant burst 7 blocks wide mends you and your allies (more the fuller your Lay on Hands pool) and cleanses an affliction; undead and demons are burned, everyone else is dazzled. Every hit mends you and a wounded ally.", 220, false),
+        // the Brooch Pin and the Hand of Providence (logic in PinProvidenceArts, reached through ReferenceWeapons)
+        BROOCH_PIN(Tiers.IRON, 1, -1.2f, "Fold / Unfold", "Click it open into a dagger (+1 to hit and damage, its blows find the gap in armour) or fold it back into a brooch that passes for jewellery.", 10, false),
+        HAND_OF_PROVIDENCE(Tiers.IRON, 3, -1.8f, "Mage Hand", "A spectral golden hand reaches 12 blocks: it lays on hands, mending an ally or you and cleansing an affliction, or strikes the wicked with holy fire and drags them in.", 160, false);
 
         final Tier tier; final int damage; final float speed; final String ability, desc; final int cooldown; final boolean demon;
         Kind(Tier t, int d, float s, String a, String desc, int cd, boolean demon) {
@@ -444,6 +447,7 @@ public class MagicWeaponItem extends SwordItem {
         if (RotDoomArts.isMine(kind)) RotDoomArts.tooltip(stack, kind, tip);            // the Club of Rot and the Doom Hammer
         if (kind == Kind.MAGEBANE_SHIELD) MagebaneShieldArts.tooltip(tip);               // the Magebane Shield
         if (kind == Kind.WEAPON_OF_RESURGENCE) ResurgenceArts.tooltip(stack, ctx, tip);  // the Weapon of Resurgence
+        if (PinProvidenceArts.isMine(kind)) PinProvidenceArts.tooltip(stack, kind, tip); // the Brooch Pin and the Hand of Providence
         if (kind == Kind.RIMEHEART) tip.add(Component.literal("  Off-hand magic sword: burst recharges 40% faster, hits freeze longer").withStyle(ChatFormatting.AQUA));
         if (kind == Kind.DEMON_DWELLER) {
             int charge = d == null ? 0 : Math.min(5, d.copyTag().getInt("DwellerCharge"));

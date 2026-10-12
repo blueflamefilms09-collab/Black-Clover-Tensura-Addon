@@ -135,6 +135,9 @@ public final class NUItems {
     // the Magebane Shield (off-hand shield) and the Weapon of Resurgence of the paladin sheet (see MagebaneShieldArts, ResurgenceArts)
     public static final DeferredItem<MagicWeaponItem> MAGEBANE_SHIELD = weapon("magebane_shield", MagicWeaponItem.Kind.MAGEBANE_SHIELD);
     public static final DeferredItem<MagicWeaponItem> WEAPON_OF_RESURGENCE = weapon("weapon_of_resurgence", MagicWeaponItem.Kind.WEAPON_OF_RESURGENCE);
+    // the Brooch Pin and the Hand of Providence (see PinProvidenceArts)
+    public static final DeferredItem<MagicWeaponItem> BROOCH_PIN = weapon("brooch_pin", MagicWeaponItem.Kind.BROOCH_PIN);
+    public static final DeferredItem<MagicWeaponItem> HAND_OF_PROVIDENCE = weapon("hand_of_providence", MagicWeaponItem.Kind.HAND_OF_PROVIDENCE);
 
     // 0.44: Painting Magic's palette & brush (manifested by a Painting grimoire; see book.PaintStudio)
     public static final DeferredItem<PaintToolItem> PAINT_BRUSH = ITEMS.register("paint_brush", () -> new PaintToolItem(PaintToolItem.Kind.BRUSH));
@@ -160,6 +163,7 @@ public final class NUItems {
         l.addAll(List.of(QUICKLINGS_IVY, MAGEBANE_LONGSWORD, PRISM_BLADE, THUNDERCLEAVE, BLOODBOUND_KATANA, PERMAFROST_SABRE, CYCLONE_RAPIER, GALE_FEATHER));   // 0.100
         l.addAll(List.of(BOLT_THROWER, CROSSBOW_OF_SWIFT_DEATH));                                // the two crossbows
         l.addAll(List.of(CLUB_OF_ROT, DOOM_HAMMER));                                             // the Club of Rot and the Doom Hammer
+        l.addAll(List.of(BROOCH_PIN, HAND_OF_PROVIDENCE));                                       // the Brooch Pin and the Hand of Providence
         l.addAll(List.of(MAGEBANE_SHIELD, WEAPON_OF_RESURGENCE));                                // the Magebane Shield and the Weapon of Resurgence
         l.add(MAGIC_KEY);
         return l;

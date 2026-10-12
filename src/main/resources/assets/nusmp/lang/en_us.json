@@ -1187,5 +1187,7 @@
   "item.nusmp.weapon_of_resurgence": "Weapon of Resurgence",
   "item.nusmp.gale_feather": "Gale Feather",
   "item.nusmp.gale_feather.desc": "Sylph's wind-spirit feather. Use it: Gale Leap, a gust flings you forward and up and slows your fall for 8 s (12 s cooldown).",
+  "item.nusmp.brooch_pin": "Brooch Pin",
+  "item.nusmp.hand_of_providence": "The Hand of Providence",
   "entity.nusmp.elemental_spirit_lord": "Spirit Lord"
 }

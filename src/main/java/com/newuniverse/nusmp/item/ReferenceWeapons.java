@@ -49,6 +49,7 @@ final class ReferenceWeapons {
             case BOLT_THROWER, CROSSBOW_OF_SWIFT_DEATH -> true;                                          // the two crossbows (BoltArts)
             case CLUB_OF_ROT, DOOM_HAMMER -> true;                                                       // the Club of Rot and the Doom Hammer (RotDoomArts)
             case MAGEBANE_SHIELD, WEAPON_OF_RESURGENCE -> true;                                          // the Magebane Shield and the Weapon of Resurgence
+            case BROOCH_PIN, HAND_OF_PROVIDENCE -> true;                                                 // PinProvidenceArts
             default -> false;
         };
     }
@@ -176,6 +177,7 @@ final class ReferenceWeapons {
             case CLUB_OF_ROT, DOOM_HAMMER -> { return RotDoomArts.technique(p, k, stack); }
             case MAGEBANE_SHIELD -> { return MagebaneShieldArts.technique(p, stack); }
             case WEAPON_OF_RESURGENCE -> { return ResurgenceArts.technique(p, stack); }
+            case BROOCH_PIN, HAND_OF_PROVIDENCE -> { return PinProvidenceArts.technique(p, k, stack); }
             default -> { return false; }
         }
         return true;
@@ -195,6 +197,7 @@ final class ReferenceWeapons {
             case CLUB_OF_ROT, DOOM_HAMMER -> RotDoomArts.alt(k);
             case MAGEBANE_SHIELD -> MagebaneShieldArts.ALT;
             case WEAPON_OF_RESURGENCE -> ResurgenceArts.ALT;
+            case BROOCH_PIN, HAND_OF_PROVIDENCE -> PinProvidenceArts.alt(k);
             default -> null;
         };
     }
@@ -306,6 +309,7 @@ final class ReferenceWeapons {
             case CLUB_OF_ROT, DOOM_HAMMER -> { return RotDoomArts.cast(p, k, stack); }
             case MAGEBANE_SHIELD -> { return MagebaneShieldArts.cast(p); }
             case WEAPON_OF_RESURGENCE -> { return ResurgenceArts.cast(p); }
+            case BROOCH_PIN, HAND_OF_PROVIDENCE -> { return PinProvidenceArts.cast(p, k, stack); }
             default -> { return false; }
         }
         return true;
@@ -350,6 +354,7 @@ final class ReferenceWeapons {
             case CLUB_OF_ROT, DOOM_HAMMER -> RotDoomArts.onHit(p, stack, t, k);
             case MAGEBANE_SHIELD -> MagebaneShieldArts.onHit(p, t);
             case WEAPON_OF_RESURGENCE -> ResurgenceArts.onHit(p, stack, t);
+            case BROOCH_PIN, HAND_OF_PROVIDENCE -> PinProvidenceArts.onHit(p, stack, t, k);
             default -> { }
         }
     }
@@ -394,6 +399,7 @@ final class ReferenceWeapons {
             case CLUB_OF_ROT, DOOM_HAMMER -> RotDoomArts.fullSwing(p, t, k);
             case MAGEBANE_SHIELD -> MagebaneShieldArts.fullSwing(p, t);
             case WEAPON_OF_RESURGENCE -> ResurgenceArts.fullSwing(p, t);
+            case BROOCH_PIN, HAND_OF_PROVIDENCE -> PinProvidenceArts.fullSwing(p, t, k);
             default -> { }
         }
     }
