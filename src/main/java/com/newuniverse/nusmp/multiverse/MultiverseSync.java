@@ -57,6 +57,7 @@ public final class MultiverseSync {
         t.putInt("Gold", MultiverseProfile.goldStars(p));
         t.putInt("Black", MultiverseProfile.blackStars(p));
         t.putInt("Net", MultiverseProfile.netStars(p));
+        t.put("Mana", com.newuniverse.nusmp.mana.ManaLaw.summary(p));                // 1.5.0
         // squad
         t.put("Squad", Squads.summary(p));
         // social class & race

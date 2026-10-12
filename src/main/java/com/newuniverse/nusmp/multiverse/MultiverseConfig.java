@@ -40,6 +40,7 @@ public final class MultiverseConfig {
     public static final ModConfigSpec.ConfigValue<List<? extends Integer>> STAGE_DAYS;
     public static final ModConfigSpec.DoubleValue SPIRIT_PHYSICAL_REDUCTION;
     public static final ModConfigSpec.BooleanValue SPIRIT_FALL_IMMUNE;
+    public static final ModConfigSpec.BooleanValue LETHAL_EXHAUSTION, CHOOSE_MAGIC;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -125,6 +126,10 @@ public final class MultiverseConfig {
         b.push("spirit_lord");
         SPIRIT_PHYSICAL_REDUCTION = b.comment("Physical damage reduction for Spirit Lords.").defineInRange("physicalReduction", 0.30, 0, 0.95);
         SPIRIT_FALL_IMMUNE = b.define("fallImmune", true);
+        b.pop();
+        b.push("mana");
+        LETHAL_EXHAUSTION = b.comment("Mana is life force: when true, burning every last drop of mana can kill. Default false: the collapse never kills by itself.").define("lethalExhaustion", false);
+        CHOOSE_MAGIC = b.comment("The Grimoire Acceptance Ceremony offers a choice of magics instead of rolling one (no magic is a bad draw: every grimoire has Mana Strike and Mana Zone).").define("chooseMagic", true);
         b.pop();
         SPEC = b.build();
     }

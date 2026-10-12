@@ -128,50 +128,106 @@ public final class Ceremony {
     /** A grimoire chooses this player. Returns false if they already have one. */
     public static boolean choose(ServerPlayer p, String where) {
         if (GrimoirePages.grimoireOf(p).isPresent()) return false;
+        if (!com.newuniverse.nusmp.mana.ManaLaw.offerCover(p).isEmpty()) {                    // a choice is already waiting
+            if (com.newuniverse.nusmp.mana.ManaLaw.offerDue(p)) sendOffer(p);
+            return true;
+        }
         Tier tier = rollTier(p);
         String soul = NightmareSouls.soulTypeOf(p);
         Kingdom home = Convergence.kingdomOf(p);
         if (home != null) {
-            grantForKingdom(p, home, tier, soul);                            // 0.39: the anomaly's kingdom picks the covers
+            if (grantForKingdom(p, home, tier, soul, where)) return true;     // 0.39: the anomaly's kingdom picks the covers (1.5.0: you pick the magic)
         } else if (tier == Tier.BLACK && !com.newuniverse.nusmp.NUGameRules.antiMagicEventOnly(p.level())) {
             GrimoireAcceptance.grantExact(p, com.newuniverse.nusmp.blackclover.GrimoireCover.BLACK_MAGIC, MagicType.ANTI_MAGIC, Devil.LIEBE);
         } else if (tier == Tier.GOD) {
             var pool = GrimoireAcceptance.starterPool(soul);
             GrimoireAcceptance.grantExact(p, com.newuniverse.nusmp.blackclover.GrimoireCover.GOD_TIER, pool.get(p.getRandom().nextInt(pool.size())), null);
         } else {
-            GrimoireAcceptance.grant(p, tier == Tier.COMMON ? 3 : tier == Tier.UNCOMMON ? 4 : 5, soul == null ? "" : soul);
+            int leaves = tier == Tier.COMMON ? 3 : tier == Tier.UNCOMMON ? 4 : 5;
+            boolean antiSoul = leaves >= 5 && "EMPTY".equals(soul) && !com.newuniverse.nusmp.NUGameRules.antiMagicEventOnly(p.level());
+            if (MultiverseConfig.get(MultiverseConfig.CHOOSE_MAGIC) && !antiSoul) {
+                var rng = p.getRandom();
+                var kingdom = GrimoireAcceptance.rollKingdom(rng);
+                if (leaves >= 5 && (kingdom == Kingdom.HEART || kingdom == Kingdom.DIAMOND)) kingdom = Kingdom.CLOVER;
+                offer(p, kingdom.coverFor(leaves), where);
+                return true;
+            }
+            GrimoireAcceptance.grant(p, leaves, soul == null ? "" : soul);
         }
         if (GrimoirePages.grimoireOf(p).isEmpty()) return false;       // the grant did not go through (another mod refused the skill)
         MultiverseProfile.setAccepted(p, true, where);
+        finish(p, where);
+        return true;
+    }
+
+    /** 1.5.0: the grimoire has chosen you; you choose which magic it holds. No roll decides what kind of mage you are. */
+    static void offer(ServerPlayer p, com.newuniverse.nusmp.blackclover.GrimoireCover cover, String where) {
+        com.newuniverse.nusmp.mana.ManaLaw.setOffer(p, cover.name(), where);
+        sendOffer(p);
+    }
+
+    static void sendOffer(ServerPlayer p) {
+        var cover = coverOf(com.newuniverse.nusmp.mana.ManaLaw.offerCover(p));
+        if (cover == null) return;
+        p.sendSystemMessage(Component.literal("A " + cover.displayName() + " grimoire chooses you. Choose your magic (every magic is a combat magic):").withStyle(ChatFormatting.GOLD));
+        for (MagicType m : GrimoireAcceptance.starterPool(NightmareSouls.soulTypeOf(p))) {
+            p.sendSystemMessage(Component.literal("  [" + m.displayName + "]").withStyle(s -> s.withColor(ChatFormatting.AQUA)
+                    .withClickEvent(new net.minecraft.network.chat.ClickEvent(net.minecraft.network.chat.ClickEvent.Action.RUN_COMMAND, "/multiverse choose " + m.name()))
+                    .withHoverEvent(new net.minecraft.network.chat.HoverEvent(net.minecraft.network.chat.HoverEvent.Action.SHOW_TEXT, Component.literal("Take " + m.displayName() + " Magic")))));
+        }
+    }
+
+    private static com.newuniverse.nusmp.blackclover.GrimoireCover coverOf(String name) {
+        try { return com.newuniverse.nusmp.blackclover.GrimoireCover.valueOf(name); } catch (IllegalArgumentException e) { return null; }
+    }
+
+    /** /multiverse choose <magic>: takes the waiting offer. */
+    public static boolean pick(ServerPlayer p, String magicName) {
+        var cover = coverOf(com.newuniverse.nusmp.mana.ManaLaw.offerCover(p));
+        if (cover == null || GrimoirePages.grimoireOf(p).isPresent()) return false;
+        MagicType magic;
+        try { magic = MagicType.valueOf(magicName.toUpperCase()); } catch (IllegalArgumentException e) { return false; }
+        if (!GrimoireAcceptance.starterPool(NightmareSouls.soulTypeOf(p)).contains(magic)) return false;
+        String where = com.newuniverse.nusmp.mana.ManaLaw.offerWhere(p);
+        GrimoireAcceptance.grantExact(p, cover, magic, cover.isForbidden() ? GrimoireAcceptance.randomDevil(p.getRandom()) : null);
+        if (GrimoirePages.grimoireOf(p).isEmpty()) return false;
+        com.newuniverse.nusmp.mana.ManaLaw.clearOffer(p);
+        MultiverseProfile.setAccepted(p, true, where);
+        finish(p, where);
+        return true;
+    }
+
+    private static void finish(ServerPlayer p, String where) {
         GrimoireAcceptance.markRolled(p, true);
         Vec3 above = p.position().add(0, 3.2, 0);
         VfxSpawn.send(p.serverLevel(), VfxShape.MAGIC_CIRCLE, above, p.position(), 0xFFFFD86B, 50, 1.4f);
         VfxSpawn.send(p.serverLevel(), VfxShape.MAGIC_CIRCLE_EXPLOSION, p.position().add(0, 1, 0), p.position().add(0, 2, 0), 0xFFFFD86B, 30, 1.0f);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.BOOK_PAGE_TURN, SoundSource.PLAYERS, 1.2f, 0.7f);
         p.sendSystemMessage(Component.literal("A grimoire drifts down from the shelves of " + where + " and chooses you.").withStyle(ChatFormatting.GOLD));
-        return true;
     }
 
     /**
      * 0.39: a grimoire from the anomaly's own kingdom. Clover keeps the whole ladder (3/4/5-leaf, Black Magic, God-Tier); Spade
      * tops out at the devil-inhabited Triple Spade; Heart and Diamond have no devil covers (Diamond's rarest is Five-Sided).
      */
-    static void grantForKingdom(ServerPlayer p, Kingdom kingdom, Tier tier, String soul) {
+    static boolean grantForKingdom(ServerPlayer p, Kingdom kingdom, Tier tier, String soul, String where) {
         if (kingdom == Kingdom.CLOVER && tier == Tier.BLACK && !com.newuniverse.nusmp.NUGameRules.antiMagicEventOnly(p.level())) {
             GrimoireAcceptance.grantExact(p, com.newuniverse.nusmp.blackclover.GrimoireCover.BLACK_MAGIC, MagicType.ANTI_MAGIC, Devil.LIEBE);
-            return;
+            return false;
         }
         if (kingdom == Kingdom.CLOVER && tier == Tier.GOD) {
             var pool = GrimoireAcceptance.starterPool(soul);
             GrimoireAcceptance.grantExact(p, com.newuniverse.nusmp.blackclover.GrimoireCover.GOD_TIER, pool.get(p.getRandom().nextInt(pool.size())), null);
-            return;
+            return false;
         }
         int leaves = tier == Tier.COMMON ? 3 : tier == Tier.UNCOMMON ? 4 : 5;
         if (leaves >= 5 && (kingdom == Kingdom.HEART || kingdom == Kingdom.DIAMOND)) leaves = 4;
         var cover = kingdom.coverFor(leaves);                                // Heart stays Heart (Two-Heart only comes from a love bond)
+        if (MultiverseConfig.get(MultiverseConfig.CHOOSE_MAGIC)) { offer(p, cover, where); return true; }
         var pool = GrimoireAcceptance.starterPool(soul);
         MagicType magic = pool.get(p.getRandom().nextInt(pool.size()));
         GrimoireAcceptance.grantExact(p, cover, magic, cover.isForbidden() ? GrimoireAcceptance.randomDevil(p.getRandom()) : null);
+        return false;
     }
 
     /** Admin reset: the grimoire (skill and bound items) is taken back and the player may be chosen again. */

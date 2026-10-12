@@ -380,6 +380,11 @@ public final class MultiverseCommands {
                 .then(Commands.literal("tower").executes(ctx -> locate(ctx, WorldSites.Kind.TOWER)))
                 .then(Commands.literal("ruins").executes(ctx -> locate(ctx, WorldSites.Kind.RUINS))));
 
+        root.then(com.newuniverse.nusmp.mana.ManaCommands.build());                                           // 1.5.0: the mana system
+        root.then(Commands.literal("choose").then(Commands.argument("magic", StringArgumentType.word()).executes(ctx -> {    // 1.5.0: the ceremony's choice
+            ServerPlayer p = ctx.getSource().getPlayerOrException();
+            return Ceremony.pick(p, StringArgumentType.getString(ctx, "magic")) ? 1 : fail(ctx, "There is no such choice waiting for you.");
+        })));
         d.register(root);
     }
 

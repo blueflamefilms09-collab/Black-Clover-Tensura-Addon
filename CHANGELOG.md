@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.5.0] — The mana system of the video, with no bad draws
+
+**State:** written without a compiler in the session; CI is the first compile. Nothing run in game. Full table (video vs. mod): `docs/mana_system.md`.
+
+### New
+- **Mana as life force** (shock at 5%, black-out at 0.5%; lethal only with `mana.lethalExhaustion`), **Mage Stages 9-0 / Arcane / Saint** from rank and class (power from training, not from the draw), **Affinity** (loved / ordinary / hated: a balanced trade you can change any time), **Mana Zone** (page in every grimoire; thick mana in the deep sea, the Nether, mountains, the deep dark and the End makes it stronger: Grand Magic Zones), **Magic Stone** and negative mana with corruption, `/multiverse mana ...`, a Mana block in the status panel.
+- **Mana Strike**: a universal combat page in every grimoire, so a healing, sealing or trap magic is never a dud.
+
+### Replaced
+- **The ceremony no longer rolls your magic: you choose it** (`mana.chooseMagic`, default on; chat buttons or `/multiverse choose <magic>`). The cover (rarity), Black Magic, God-Tier and Convergence paths are unchanged. Set `chooseMagic=false` for the old roll.
+- The old fixed exhaustion at 5% mana is now `ManaLaw.exhaust` (same shock, plus the black-out).
+
+### Not done
+- Dungeons made of mana; mana inherited from parents; Mana Method runes do not scale with stage yet.
+
 ## [1.4.0] — Brooch Pin and Hand of Providence get their own abilities
 
 **State:** not yet compiled when written; CI is the first compile. Nothing run in game.

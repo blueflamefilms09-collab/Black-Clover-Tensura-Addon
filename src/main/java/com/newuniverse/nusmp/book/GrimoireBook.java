@@ -91,6 +91,9 @@ public abstract class GrimoireBook extends Skill {
             if (!(this instanceof ForbiddenBook)) {                                 // 0.54: as in the show, a weapon goes back into the book and comes out again
                 l.add(new BookPage(STORE_ID, "Store Weapon", "Store Weapon", 0, 0, 0, (b, i, p, m) -> true));
                 l.add(new BookPage(DRAW_ID, "Draw Weapon", "Draw Weapon", 0, 0, 0, (b, i, p, m) -> true));
+                // 1.5.0: every magic is a combat magic: raw mana as a bolt, and the Mana Zone (appended last, so no mode number moves)
+                l.add(new BookPage(STRIKE_ID, "Mana Strike", "Mana Strike", 5, 100, 40, (b, i, p, m) -> com.newuniverse.nusmp.mana.ManaLaw.manaStrike(b, p)));
+                l.add(new BookPage(ZONE_ID, "Mana Zone", "Mana Zone", 0, 0, 0, (b, i, p, m) -> true));
             }
             all = l;
         }
@@ -114,10 +117,13 @@ public abstract class GrimoireBook extends Skill {
     /** 0.54: the last two pages of every grimoire: put the weapon in your hand back into the book, and draw a stored one (anim.WeaponStore). */
     public static final String STORE_ID = "store_weapon", DRAW_ID = "draw_weapon";
     private boolean isStore(int mode) { return page(mode) != null && page(mode).id().equals(STORE_ID); }
+    /** 1.5.0: the universal pages (mana.ManaLaw). */
+    public static final String STRIKE_ID = "mana_strike", ZONE_ID = "mana_zone";
+    private boolean isManaZone(int mode) { return page(mode) != null && page(mode).id().equals(ZONE_ID); }
     private boolean isDrawWeapon(int mode) { return page(mode) != null && page(mode).id().equals(DRAW_ID); }
     /** Pages that act on the key press itself without magicule cost or a cooldown. */
     private boolean instant(int mode) {
-        return isSummon(mode) || isStore(mode) || isDrawWeapon(mode)
+        return isSummon(mode) || isStore(mode) || isDrawWeapon(mode) || isManaZone(mode)
                 || this instanceof LegionBook && page(mode) != null && page(mode).id().equals(LegionBook.CHESSBOARD_ID);
     }
 
@@ -134,6 +140,7 @@ public abstract class GrimoireBook extends Skill {
         if (isDive(mode)) return e instanceof ServerPlayer p ? spiritGateOpen(p) : true;
         if (isUnion(mode)) return cover(i).isForbidden();
         if (instant(mode)) return true;
+        if (page(mode) != null && page(mode).id().equals(STRIKE_ID)) return true;      // 1.5.0: Mana Strike, in every grimoire
         return false;
     }
 
@@ -172,7 +179,7 @@ public abstract class GrimoireBook extends Skill {
         double c = BalanceLaw.cost(entity, p.costPercent(), p.costFloor()) * cover(instance).cost;
         if (p.costPercent() <= 0 && p.costFloor() <= 0) return 0;                       // e.g. Anti-Magic costs nothing
         if (cover(instance).kingdom == com.newuniverse.nusmp.blackclover.Kingdom.HEART && p.costPercent() >= 20) c *= 0.85; // Mana Method
-        if (entity instanceof ServerPlayer sp) c *= com.newuniverse.nusmp.item.MagicGear.costMult(sp) * (1 + ForbiddenMagic.manaTax(sp));
+        if (entity instanceof ServerPlayer sp) c *= com.newuniverse.nusmp.item.MagicGear.costMult(sp) * (1 + ForbiddenMagic.manaTax(sp)) * com.newuniverse.nusmp.mana.ManaLaw.costMult(sp);   // 1.5.0
         return c;
     }
 
@@ -193,6 +200,7 @@ public abstract class GrimoireBook extends Skill {
         if (isSummon(mode)) { GrimoireSummon.toggle(p, this); return; }
         if (isStore(mode)) { com.newuniverse.nusmp.anim.WeaponStore.store(p, this, instance); return; }
         if (isDrawWeapon(mode)) { com.newuniverse.nusmp.anim.WeaponStore.draw(p, this, instance); return; }
+        if (isManaZone(mode)) { com.newuniverse.nusmp.mana.ManaLaw.toggleZone(p); return; }
         if (instant(mode)) {
             if (this instanceof LegionBook && page(mode) != null && page(mode).id().equals(LegionBook.CHESSBOARD_ID))
                 LegionArts.toggleChessboard(p);
@@ -262,7 +270,7 @@ public abstract class GrimoireBook extends Skill {
         com.newuniverse.nusmp.anim.CastAnim.play(player, clip);
         shout(player, p.incantation());
         if (p.cooldown() > 0) {
-            int ticks = (int) (p.cooldown() * com.newuniverse.nusmp.item.MagicGear.cooldownMult(player) * com.newuniverse.nusmp.NUGameRules.spellCooldown(player.level()));   // 0.48: 40% shorter by default
+            int ticks = (int) (p.cooldown() * com.newuniverse.nusmp.mana.ManaLaw.cooldownMult(player) * com.newuniverse.nusmp.item.MagicGear.cooldownMult(player) * com.newuniverse.nusmp.NUGameRules.spellCooldown(player.level()));   // 0.48: 40% shorter by default
             instance.setCoolDown(com.newuniverse.nusmp.NUSMP.ticksToSeconds(ticks), mode);
         }
         addMasteryPoint(instance, player);
@@ -271,6 +279,7 @@ public abstract class GrimoireBook extends Skill {
         com.newuniverse.nusmp.multiverse.SecretQuests.onCast(player);              // 0.39: secret quest progress
         DreamWorld.onCast(player, magic);                                         // 0.41: Spatial / Time / Anti-Magic / Dream tear a dream open
         MirrorWorks.echo(player);                                                 // 0.42: Real Doubles cast with you
+        com.newuniverse.nusmp.mana.ManaLaw.onCast(player);                          // 1.5.0: negative mana corrupts
         exhaustion(player);
         instance.markDirty();
     }
@@ -553,16 +562,7 @@ public abstract class GrimoireBook extends Skill {
     }
 
     /** Spending your mana to nearly nothing exhausts you (Black Clover: empty mana = collapse). */
-    private static void exhaustion(ServerPlayer p) {
-        var ex = TensuraStorages.getExistenceFrom(p);
-        if (ex == null) return;
-        if (ex.getMagicule() < EnergyHelper.getMaxMagicule(p) * 0.05) {
-            p.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN, 100, 1));
-            p.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.WEAKNESS, 100, 1));
-            p.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.DIG_SLOWDOWN, 100, 1));
-            p.displayClientMessage(Component.literal("Your mana is spent. Exhaustion takes you.").withStyle(ChatFormatting.GRAY), true);
-        }
-    }
+    private static void exhaustion(ServerPlayer p) { com.newuniverse.nusmp.mana.ManaLaw.exhaust(p); }   // 1.5.0: mana is life force (mana.ManaLaw)
 
     /** Mana Skin: while you hold at least half your magicule, incoming damage is reduced 10%. */
     @Override

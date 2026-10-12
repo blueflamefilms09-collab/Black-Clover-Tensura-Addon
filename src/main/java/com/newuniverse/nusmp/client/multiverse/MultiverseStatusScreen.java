@@ -86,6 +86,17 @@ public class MultiverseStatusScreen extends Screen {
             if (g.contains("Pages")) l.add("Pages " + g.getInt("Unlocked") + "/" + g.getInt("Pages") + "  slots " + g.getInt("Slots") + "  mastery " + g.getInt("Mastery") + "%");
             out.add(new Block("Grimoire", l, false));
         } else out.add(new Block("Grimoire", List.of("None yet"), false));
+        CompoundTag mn = s.getCompound("Mana");                                                  // 1.5.0
+        if (mn.contains("Stage")) {
+            List<String> ml = new ArrayList<>();
+            ml.add(mn.getString("Stage") + "  |  " + mn.getString("Affinity"));
+            ml.add("Spells cost " + mn.getInt("Cost") + "%, hit for " + mn.getInt("Power") + "%");
+            ml.add("Mana density " + mn.getString("Density") + (mn.getBoolean("Grand") ? " (Grand Magic Zone)" : "")
+                    + (mn.getBoolean("Zone") ? "  |  Mana Zone ON" : "") + (mn.getBoolean("Negative") ? "  |  Negative mana" : ""));
+            if (mn.getInt("Corruption") > 0) ml.add("Corruption " + mn.getInt("Corruption") + "/100");
+            if (!mn.getString("Offer").isEmpty()) ml.add("A grimoire waits: choose your magic (see chat, /multiverse choose)");
+            out.add(new Block("Mana", ml, mn.getInt("Corruption") >= 70));
+        }
         CompoundTag sp = s.getCompound("Spirit");
         if (sp.contains("Type")) out.add(new Block("Spirit Lord", List.of(sp.getString("Type") + "  trust " + sp.getInt("Trust") + "/100",
                 "Energy " + sp.getInt("Energy") + "%", sp.getBoolean("Incarnated") ? "Incarnated: " + sp.getString("Name") : "Not incarnated"), false));
