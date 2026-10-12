@@ -1,0 +1,126 @@
+{
+ "tower_wizard_idle": {
+  "kind": "geo",
+  "model": "tower_wizard",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "anim": "idle",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 0,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "front3q",
+    "yaw": 28,
+    "pitch": 3,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "side",
+    "yaw": -90,
+    "pitch": 3,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "low",
+    "yaw": 15,
+    "pitch": -12,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 2.4
+   }
+  ]
+ },
+ "tower_wizard_talk": {
+  "kind": "geo",
+  "model": "tower_wizard",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "anim": "talk",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 0,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "front3q",
+    "yaw": 28,
+    "pitch": 3,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "side",
+    "yaw": -90,
+    "pitch": 3,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "low",
+    "yaw": 15,
+    "pitch": -12,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 2.4
+   }
+  ]
+ }
+}
