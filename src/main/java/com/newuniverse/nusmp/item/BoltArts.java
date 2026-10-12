@@ -29,11 +29,10 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.Comparator;
 import java.util.List;
 
 /**
- * 1.3.0: the two crossbows of the "Magic Item Compendium I" sheet. Both load themselves (no ammunition): a right-click looses one
+ * The two crossbows of the "Magic Item Compendium I" sheet. Both load themselves (no ammunition): a right-click looses one
  * hitscan bolt of force, drawn as a lightning streak from the muzzle. Force damage is magic damage, so armour does not turn it,
  * and it goes through the balance law like every other weapon technique. Reached from {@link ReferenceWeapons}.
  * <ul>
@@ -128,8 +127,10 @@ final class BoltArts {
         return t.hurt(p.damageSources().indirectMagic(p, p), BalanceLaw.damage(p, t, raw, 0.6));
     }
 
+    /** The bash of a full swing: its own hit (the hurt timer is reset, since the swing's own blow has just landed). */
     private static void melee(ServerPlayer p, LivingEntity t, float raw) {
         if (t == p || t.isAlliedTo(p)) return;
+        t.invulnerableTime = 0;
         t.hurt(p.damageSources().playerAttack(p), BalanceLaw.damage(p, t, raw, 0.6));
     }
 
@@ -241,7 +242,7 @@ final class BoltArts {
     static boolean technique(ServerPlayer p, Kind k, ItemStack stack) {
         Vec3 look = p.getViewVector(1f);
         switch (k) {
-            case BOLT_THROWER -> thrower(p, look, 7f, 0);
+            case BOLT_THROWER -> thrower(p, look, 6f, 0);
             case CROSSBOW_OF_SWIFT_DEATH -> swift(p, stack, look, 9f, 0);
             default -> { return false; }
         }
@@ -269,7 +270,7 @@ final class BoltArts {
                         if (!p.isAlive()) return;
                         Vec3 e2 = p.getEyePosition(), l2 = p.getViewVector(1f);
                         Vec3 dir = lock != null && lock.isAlive() ? lock.getBoundingBox().getCenter().subtract(e2).normalize() : l2.yRot((n - 1) * 0.1f);
-                        thrower(p, dir, 6f, (n - 1) * 0.4);
+                        thrower(p, dir, 5f, (n - 1) * 0.4);
                     });
                 }
             }

@@ -53,6 +53,9 @@ public final class WeaponEngravings {
             Map.entry("magic_tool_bow", List.of(e("magic_weapon", 1))),
             Map.entry("last_word", List.of(e("barrier_piercing", 2), e("severance", 1))),                   // 0.52: Zagred's quill-blade
             Map.entry("elsdocia", List.of(e("nusmp:legacy_of_the_wizard_kings", 1), e("magic_interference", 2), e("magicule_absorption", 2), e("barrier_piercing", 1))),
+            // the two crossbows of the "Magic Item Compendium I" sheet
+            Map.entry("bolt_thrower", List.of(e("barrier_piercing", 2), e("severance", 1), e("elemental_boost", 1), e("magic_weapon", 1))), // bolts of force that go through wards and cut cleanly
+            Map.entry("crossbow_of_swift_death", List.of(e("severance", 2), e("barrier_piercing", 1), e("enervation", 1), e("soul_eater", 1))), // a quick death: cuts, saps, takes the soul
             // 0.100: the reference-sheet weapons
             Map.entry("quicklings_ivy", List.of(e("swift", 2), e("magic_weapon", 1), e("enervation", 1))),               // living ivy, poisons and slows
             Map.entry("magebane_longsword", List.of(e("magic_interference", 2), e("barrier_piercing", 2), e("magicule_absorption", 1))), // bane of mages

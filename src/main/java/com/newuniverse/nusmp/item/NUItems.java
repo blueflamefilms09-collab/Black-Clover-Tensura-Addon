@@ -137,6 +137,9 @@ public final class NUItems {
     public static final DeferredItem<MagicWeaponItem> BLOODBOUND_KATANA = weapon("bloodbound_katana", MagicWeaponItem.Kind.BLOODBOUND_KATANA);
     public static final DeferredItem<MagicWeaponItem> PERMAFROST_SABRE = weapon("permafrost_sabre", MagicWeaponItem.Kind.PERMAFROST_SABRE);
     public static final DeferredItem<MagicWeaponItem> CYCLONE_RAPIER = weapon("cyclone_rapier", MagicWeaponItem.Kind.CYCLONE_RAPIER);
+    // the two crossbows of the "Magic Item Compendium I" sheet (see BoltArts)
+    public static final DeferredItem<MagicWeaponItem> BOLT_THROWER = weapon("bolt_thrower", MagicWeaponItem.Kind.BOLT_THROWER);
+    public static final DeferredItem<MagicWeaponItem> CROSSBOW_OF_SWIFT_DEATH = weapon("crossbow_of_swift_death", MagicWeaponItem.Kind.CROSSBOW_OF_SWIFT_DEATH);
 
     // 0.44: Painting Magic's palette & brush (manifested by a Painting grimoire; see book.PaintStudio)
     public static final DeferredItem<PaintToolItem> PAINT_BRUSH = ITEMS.register("paint_brush", () -> new PaintToolItem(PaintToolItem.Kind.BRUSH));
@@ -161,6 +164,7 @@ public final class NUItems {
         l.addAll(List.of(LAST_WORD, SHROUD_OF_MARGINS, CIRCLET_OF_THOUGHT, HEART_OF_WORDS));    // 0.52
         l.addAll(List.of(BARD_RELIC, RIVEN_SPAWN_EGG));                                         // 0.92
         l.addAll(List.of(QUICKLINGS_IVY, MAGEBANE_LONGSWORD, PRISM_BLADE, THUNDERCLEAVE, BLOODBOUND_KATANA, PERMAFROST_SABRE, CYCLONE_RAPIER, STORY_PAGE, GALE_FEATHER));   // 0.100
+        l.addAll(List.of(BOLT_THROWER, CROSSBOW_OF_SWIFT_DEATH));                                // the two crossbows
         l.add(MAGIC_KEY);
         return l;
     }

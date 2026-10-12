@@ -65,7 +65,10 @@ public class MagicWeaponItem extends SwordItem {
         THUNDERCLEAVE(Tiers.NETHERITE, 7, -3.2f, "Thunder Arc", "A thunderous arc 8 blocks wide hurls foes back, slows and deafens them. Every hit arcs to a second foe.", 260, false),
         BLOODBOUND_KATANA(Tiers.NETHERITE, 5, -2.1f, "Bloodflare", "Hits store Blood Charges (max 10) that bite on every blow. Bloodflare spends them all in a 14-block crimson slash and heals you.", 100, false),
         PERMAFROST_SABRE(Tiers.NETHERITE, 4, -2.0f, "Whirlwind Frost", "A freezing spin hits everything within 5 blocks. Held with the Cyclone Rapier in the other hand: Boreal Fusion, 8 blocks and lifting.", 180, false),
-        CYCLONE_RAPIER(Tiers.DIAMOND, 2, -1.6f, "Cyclone Thrust", "Spin through up to 5 blocks, flinging foes into the air. With the Permafrost Sabre in the other hand: Boreal Fusion.", 160, false);
+        CYCLONE_RAPIER(Tiers.DIAMOND, 2, -1.6f, "Cyclone Thrust", "Spin through up to 5 blocks, flinging foes into the air. With the Permafrost Sabre in the other hand: Boreal Fusion.", 160, false),
+        // the two crossbows of the "Magic Item Compendium I" sheet (logic in BoltArts, reached through ReferenceWeapons)
+        BOLT_THROWER(Tiers.DIAMOND, 1, -2.0f, "Force Bolt", "Looses a bolt of pure force up to 48 blocks: no ammunition, and armour does not turn it. Every bolt leaves a Thrower's Mark on the foe.", 24, false),
+        CROSSBOW_OF_SWIFT_DEATH(Tiers.DIAMOND, 2, -2.2f, "Notched Bolt", "Looses a bolt that may crit, likelier the more wounded the foe. A crit is Swift Death: it executes a foe under 15% health and frightens the rest.", 40, false);
 
         final Tier tier; final int damage; final float speed; final String ability, desc; final int cooldown; final boolean demon;
         Kind(Tier t, int d, float s, String a, String desc, int cd, boolean demon) {
@@ -431,6 +434,7 @@ public class MagicWeaponItem extends SwordItem {
         CustomData d = stack.get(DataComponents.CUSTOM_DATA);
         if (kind == Kind.BLOODBOUND_KATANA) tip.add(Component.literal("  Blood Charges: " + ReferenceWeapons.blood(stack) + "/" + ReferenceWeapons.BLOOD_MAX).withStyle(ChatFormatting.DARK_RED));
         if (kind == Kind.PERMAFROST_SABRE || kind == Kind.CYCLONE_RAPIER) tip.add(Component.literal("  The Boreal Blades: hold both, one in each hand, for Boreal Fusion").withStyle(ChatFormatting.AQUA));
+        if (BoltArts.isBolt(kind)) BoltArts.tooltip(stack, kind, tip);                  // the two crossbows
         if (kind == Kind.RIMEHEART) tip.add(Component.literal("  Off-hand magic sword: burst recharges 40% faster, hits freeze longer").withStyle(ChatFormatting.AQUA));
         if (kind == Kind.DEMON_DWELLER) {
             int charge = d == null ? 0 : Math.min(5, d.copyTag().getInt("DwellerCharge"));

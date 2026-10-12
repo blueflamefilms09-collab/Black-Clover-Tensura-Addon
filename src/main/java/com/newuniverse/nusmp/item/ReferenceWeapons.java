@@ -46,6 +46,7 @@ final class ReferenceWeapons {
     static boolean isReference(Kind k) {
         return switch (k) {
             case QUICKLINGS_IVY, MAGEBANE_LONGSWORD, PRISM_BLADE, THUNDERCLEAVE, BLOODBOUND_KATANA, PERMAFROST_SABRE, CYCLONE_RAPIER -> true;
+            case BOLT_THROWER, CROSSBOW_OF_SWIFT_DEATH -> true;                                          // the two crossbows (BoltArts)
             default -> false;
         };
     }
@@ -168,6 +169,7 @@ final class ReferenceWeapons {
                 VfxSpawn.send(sl, VfxShape.WIND_GALE, from.add(0, 1, 0), dest.add(0, 1, 0), 0xFF78F5E8, 14, 1.6f);
                 VfxSpawn.send(sl, VfxShape.WIND_RING, from, from.add(0, 1, 0), 0xFF78F5E8, 16, 1.4f);
             }
+            case BOLT_THROWER, CROSSBOW_OF_SWIFT_DEATH -> { return BoltArts.technique(p, k, stack); }
             default -> { return false; }
         }
         return true;
@@ -183,6 +185,7 @@ final class ReferenceWeapons {
             case BLOODBOUND_KATANA -> new WeaponArts.Alt("Crimson Reaping", "Spends 3 Blood Charges: a ring of blood cuts everything within 6 blocks and bleeds its magic away.", 800);
             case PERMAFROST_SABRE -> new WeaponArts.Alt("Permafrost Sweep", "A frozen crescent cut 10 blocks long: foes are chilled and slowed. With the Cyclone Rapier in the other hand it becomes a glacial gale.", 800);
             case CYCLONE_RAPIER -> new WeaponArts.Alt("Gale Lance", "A cone of cyclone wind 10 blocks long hurls foes back. With the Permafrost Sabre in the other hand the gale carries frost.", 800);
+            case BOLT_THROWER, CROSSBOW_OF_SWIFT_DEATH -> BoltArts.alt(k);
             default -> null;
         };
     }
@@ -290,6 +293,7 @@ final class ReferenceWeapons {
                 }
                 VfxSpawn.send(sl, VfxShape.WIND_GALE, eye, end, 0xFF78F5E8, 18, 2f);
             }
+            case BOLT_THROWER, CROSSBOW_OF_SWIFT_DEATH -> { return BoltArts.cast(p, k, stack); }
             default -> { return false; }
         }
         return true;
@@ -330,6 +334,7 @@ final class ReferenceWeapons {
             case CYCLONE_RAPIER -> {
                 if (fusion(p)) t.setDeltaMovement(t.getDeltaMovement().add(0, 0.35, 0));
             }
+            case BOLT_THROWER, CROSSBOW_OF_SWIFT_DEATH -> BoltArts.onHit(p, stack, t, k);
             default -> { }
         }
     }
@@ -370,6 +375,7 @@ final class ReferenceWeapons {
                 t.setDeltaMovement(t.getDeltaMovement().add(look.x * 0.6, 0.4, look.z * 0.6));
                 t.hurtMarked = true;
             }
+            case BOLT_THROWER, CROSSBOW_OF_SWIFT_DEATH -> BoltArts.fullSwing(p, t, k);
             default -> { }
         }
     }
