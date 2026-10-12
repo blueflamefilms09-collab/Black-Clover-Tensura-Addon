@@ -129,7 +129,11 @@ public final class DungeonSky {
         Minecraft mc = Minecraft.getInstance();
         ClientLevel level = mc.level;
         LocalPlayer player = mc.player;
-        if (level == null || player == null || mc.isPaused() || !LivingDungeon.in(level)) return;
+        if (level == null || player == null) {                                       // no world open: the next one starts from its own mood
+            fog = null;
+            return;
+        }
+        if (mc.isPaused() || !LivingDungeon.in(level)) return;
         ParticleStatus status = mc.options.particles().get();
         if (status == ParticleStatus.MINIMAL) return;
         DungeonAtmosphere.Mood mood = DungeonAtmosphere.mood(DungeonTier.at(player.getBlockX(), player.getBlockY(), player.getBlockZ()).ordinal());

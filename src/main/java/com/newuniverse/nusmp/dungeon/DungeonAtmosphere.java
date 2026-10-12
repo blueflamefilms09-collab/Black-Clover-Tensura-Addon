@@ -20,7 +20,7 @@ public final class DungeonAtmosphere {
     public static final double SOUND_MIN_DISTANCE = 12, SOUND_MAX_DISTANCE = 28;
     /** A volume above 1 widens the range a sound carries (16 blocks per unit); this is the most we ever ask for. */
     public static final float MAX_VOLUME = 4f;
-    /** A Direwolf or Basilisk this close (blocks) can be heard growling in the dark, a rarer sound than the tier's own. */
+    /** An awake apex predator (the Dungeon's Direwolf and Basilisk, or a top-tier Tensura mob) this close (blocks) can be heard growling in the dark, a rarer sound than the tier's own. */
     public static final int GROWL_RANGE = 40;
     public static final int GROWL_MIN_DISTANCE = 12, GROWL_MIN_TICKS = 700, GROWL_MAX_TICKS = 1500, GROWL_RECHECK_MIN_TICKS = 200, GROWL_RECHECK_MAX_TICKS = 400;
     /** Ticks before the first ambient sound after a player arrives: some quiet to start with, then the Dungeon speaks. */
@@ -87,7 +87,7 @@ public final class DungeonAtmosphere {
 
     private static final Mood[] MOODS = {UPPER_CATACOMBS, DEEP_WATERWAYS, VOLCANIC_VENTS, GOLDEN_CITY};
 
-    /** What a Direwolf's growl and a Basilisk's sound like from far off in the dark. */
+    /** What a wolf-like or big-cat apex growls, and what a Basilisk sounds like, from far off in the dark. */
     public static final List<Sound> DIREWOLF_GROWLS = List.of(
             new Sound("minecraft:entity.wolf.growl", 4, 2.4f, 2.9f, 0.5f, 0.65f),
             new Sound("minecraft:entity.ravager.ambient", 1, 2.2f, 2.6f, 0.6f, 0.8f));

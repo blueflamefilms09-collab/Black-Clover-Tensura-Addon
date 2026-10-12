@@ -51,6 +51,7 @@ public final class MealAttunement {
 
     /** The magic with this constant name, or null if there is none (a table entry the game does not know does nothing). */
     public static MagicType parse(String name) {
+        if (name == null) return null;
         try {
             return MagicType.valueOf(name);
         } catch (IllegalArgumentException unknown) { /* no such magic */ }
@@ -58,6 +59,11 @@ public final class MealAttunement {
     }
 
     public static void clear() { RIDERS.clear(); }
+
+    /** Blood Magic hits through Tensura's blood damage, which AntiMagic.isMagic does not count as magic. */
+    private static boolean bloodRay(DamageSource src) {
+        return src.typeHolder().unwrapKey().map(k -> k.location().getNamespace().equals("tensura") && k.location().getPath().contains("blood")).orElse(false);
+    }
 
     // ---------------------------------------------------------------- game bus
     public static void onDamage(LivingDamageEvent.Post e) {
@@ -68,7 +74,7 @@ public final class MealAttunement {
         LivingEntity target = e.getEntity();
         if (target == p || !target.isAlive() || target.isAlliedTo(p)) return;
         MagicType magic = active(p);
-        if (magic == null || src.is(DamageTypes.THORNS) || !AntiMagic.isMagic(src)) return;
+        if (magic == null || src.is(DamageTypes.THORNS) || !(AntiMagic.isMagic(src) || bloodRay(src))) return;
         if (!RIDERS.tryUse(new Key(p.getUUID(), target.getUUID()), p.level().getGameTime())) return;
         applying = true;
         try {

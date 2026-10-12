@@ -19,7 +19,7 @@ public final class MealTable {
 
     /** Jelly of a magicule-fed slime: it opens the senses to magicules, and its gel slows what it touches. */
     public static final Perk CANDIED_SLIME_JELLY = new Perk("candied_slime_jelly", "tensura:magic_sense", "Magic Sense", 6000, "GEL", 6000);
-    /** The Living Armor's shell: a skin that turns blows, and iron that shoves. */
+    /** The armoured creature's shell: a skin that turns blows, and iron that shoves. */
     public static final Perk GRILLED_ARMOR_FLANK = new Perk("grilled_armor_flank", "tensura:physical_attack_resistance", "Physical Attack Resistance", 4800, "IRON", 4800);
     /** The Basilisk's venom, borne without harm and lent on. */
     public static final Perk ROAST_BASILISK_FILLET = new Perk("roast_basilisk_fillet", "tensura:poison_resistance", "Poison Resistance", 3600, "POISON", 3600);

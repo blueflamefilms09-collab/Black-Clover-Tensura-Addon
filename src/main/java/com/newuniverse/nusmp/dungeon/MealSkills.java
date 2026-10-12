@@ -90,8 +90,9 @@ public final class MealSkills {
         if (id == null) return true;
         try {
             Skills skills = SkillAPI.getSkillsFrom(p);
-            if (skills != null && skills.getSkill(id).isPresent()) skills.forgetSkill(id);
-            return true;
+            if (skills == null || skills.getSkill(id).isEmpty()) return true;
+            skills.forgetSkill(id);
+            return skills.getSkill(id).isEmpty();                        // an event that vetoed the forgetting leaves the lease in place, to be tried again
         } catch (Throwable noSkills) { /* try again next time */ }
         return false;
     }

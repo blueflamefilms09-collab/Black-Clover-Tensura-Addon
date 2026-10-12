@@ -76,7 +76,9 @@ public final class MawReward {
         for (UUID id : cutters) {
             ServerPlayer p = level.getServer().getPlayerList().getPlayer(id);
             if (p == null || p.level() != level || p.distanceToSqr(at.getX() + 0.5, at.getY() + 0.5, at.getZ() + 0.5) > REACH * REACH) continue;
-            reward(p, fruit, xp);
+            try {
+                reward(p, fruit, xp);
+            } catch (RuntimeException failed) { /* a reward must never keep the Maw from closing */ }
         }
     }
 
