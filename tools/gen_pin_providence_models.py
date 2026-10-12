@@ -159,10 +159,8 @@ def brooch_pin(m, a):
         c = np.array((132, 144, 166), np.float32) + fz(int(x * 2), int(y * 0.6), 21) * 30      # brushed steel
         if abs(x) < 0.45:
             c = np.array((226, 233, 246), np.float32)                                   # the bright ridge
-        elif abs(x) > 1.25 and y < 22:
-            c = c * 0.7                                                                 # a shadowed bevel either side of it
-        elif abs(x) < 1.0:
-            c = c * 1.18
+        else:
+            c = c * (1.22 if x < 0 else 0.7)                                            # the two bevels of the ridge catch the light differently
         g = None
         if y < 7:
             g = col((255, 52, 84), 0.3 * (1.0 - max(0.0, y) / 7.0))                    # the ruby's light on the foot of the pin
