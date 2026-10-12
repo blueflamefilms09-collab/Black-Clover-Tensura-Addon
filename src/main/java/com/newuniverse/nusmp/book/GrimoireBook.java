@@ -276,7 +276,6 @@ public abstract class GrimoireBook extends Skill {
         addMasteryPoint(instance, player);
         instance.getOrCreateTag().putInt("LastMode", mode);
         com.newuniverse.nusmp.item.MagicGear.onCast(player);
-        com.newuniverse.nusmp.multiverse.SecretQuests.onCast(player);              // 0.39: secret quest progress
         DreamWorld.onCast(player, magic);                                         // 0.41: Spatial / Time / Anti-Magic / Dream tear a dream open
         MirrorWorks.echo(player);                                                 // 0.42: Real Doubles cast with you
         com.newuniverse.nusmp.mana.ManaLaw.onCast(player);                          // 1.5.0: negative mana corrupts

@@ -106,16 +106,8 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.MultiverseSync::onLogin);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.MultiverseSync::onLogout);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.WorldSites::onServerTick);
-        // 0.39: The Convergence (origin roll, stages, awakening), secret quests, grimoire guard
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.Convergence::onLogin);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.Convergence::onPlayerTick);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.Convergence::onServerTick);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.Convergence::onServerStarted);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.SecretQuests::onPlayerTick);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.SecretQuests::onKill);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.blackclover.GrimoireGuard::onPlayerTick);
         com.newuniverse.nusmp.blackclover.GrimoireGuard.registerTensuraHooks();
-        com.newuniverse.nusmp.multiverse.FtbQuestsChapter.install();
         // 0.41: Dream Magic's pocket dimension, Painting Magic's camouflage
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.DreamWorld::onServerTick);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.DreamWorld::onDamage);

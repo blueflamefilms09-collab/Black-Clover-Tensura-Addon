@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.14.0] — The Convergence system is removed (on the owner's request)
+
+**State:** written without a compiler; CI is the first compile. Nothing run in game.
+
+### Removed
+- **The Convergence** (`multiverse/Convergence.java`): the 5% anomaly roll, the origin and stages (SIGNS to SPADE), the rumours, the anonymous announcements, and the rule that only anomalies could be chosen by a grimoire. **Secret Quests** (`SecretQuests.java`) and the **FTB Quests "Convergence" chapter** (`FtbQuestsChapter.java`) that only served it, the `/multiverse convergence ...` and `/multiverse quests ...` commands, the status panel's Origin and Secret Quests blocks, `docs/convergence.md`, and every `convergence.*` config entry (the grimoire guard moved to its own `[guard]` section: `guard.grimoireGuard`, still on by default).
+- Because of this the Grimoire Towers generate from the start (they used to wait for the Clover stage), `/multiverse locate tower` works for everyone, and any player without a grimoire is eligible for the old ceremony as well as the Tower Wizard. A grimoire granted by the old ceremony is announced like any other (3-leaf quietly, 4-leaf and up to the server).
+- Old worlds keep a harmless saved-data file for the removed system; nothing reads it.
+
 ## [1.13.0] — The Tower Wizard calls every mage, whatever the Convergence says
 
 ### Fixed

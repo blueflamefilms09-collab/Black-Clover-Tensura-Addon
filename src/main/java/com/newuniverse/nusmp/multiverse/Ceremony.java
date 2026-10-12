@@ -94,7 +94,6 @@ public final class Ceremony {
         if (GrimoirePages.grimoireOf(p).isPresent()) return false;
         if (MultiverseConfig.get(MultiverseConfig.WIZARD_MODE))                // 1.13.0: the Tower Wizard calls every mage, the Convergence does not gate him
             return MultiverseConfig.get(MultiverseConfig.EVERYONE_ELIGIBLE) || MultiverseProfile.eligibleFlag(p);
-        if (Convergence.enabled()) return Convergence.isAnomaly(p);         // 0.39: only anomalies are ever chosen
         return MultiverseConfig.get(MultiverseConfig.EVERYONE_ELIGIBLE) || MultiverseProfile.eligibleFlag(p);
     }
 
@@ -137,10 +136,7 @@ public final class Ceremony {
         }
         Tier tier = rollTier(p);
         String soul = NightmareSouls.soulTypeOf(p);
-        Kingdom home = Convergence.kingdomOf(p);
-        if (home != null) {
-            if (grantForKingdom(p, home, tier, soul, where)) return true;     // 0.39: the anomaly's kingdom picks the covers (1.5.0: you pick the magic)
-        } else if (tier == Tier.BLACK && !com.newuniverse.nusmp.NUGameRules.antiMagicEventOnly(p.level())) {
+        if (tier == Tier.BLACK && !com.newuniverse.nusmp.NUGameRules.antiMagicEventOnly(p.level())) {
             GrimoireAcceptance.grantExact(p, com.newuniverse.nusmp.blackclover.GrimoireCover.BLACK_MAGIC, MagicType.ANTI_MAGIC, Devil.LIEBE);
         } else if (tier == Tier.GOD) {
             var pool = GrimoireAcceptance.starterPool(soul);
