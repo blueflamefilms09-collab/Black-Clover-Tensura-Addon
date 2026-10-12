@@ -15,5 +15,5 @@
   "min_y": -64,
   "height": 192,
   "infiniburn": "#minecraft:infiniburn_overworld",
-  "effects": "minecraft:the_nether"
+  "effects": "nusmp:living_dungeon"
 }

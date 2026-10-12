@@ -8,7 +8,8 @@
       "scale": 3,
       "biomes": [
         "minecraft:dripstone_caves",
-        "minecraft:lush_caves"
+        "minecraft:lush_caves",
+        "nusmp:dungeon_depths"
       ]
     }
   }

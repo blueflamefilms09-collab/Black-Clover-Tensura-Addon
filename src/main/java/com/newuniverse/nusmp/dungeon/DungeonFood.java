@@ -45,14 +45,15 @@ public final class DungeonFood {
             new FoodProperties.Builder().nutrition(5).saturationModifier(0.4f).build())));
 
     // ---------------------------------------------------------------- cooked meals
+    // 1.19.0: each cooked meal but the plain one also lends a skill and attunes its eater to a second magic for a while (MealTable)
     public static final DeferredItem<Item> CANDIED_SLIME_JELLY = meal("candied_slime_jelly", 5, 0.5f, 1.00, 0.85, 6000,
-            "Clear-headed: spells cost 15% less mana for 5 minutes", () -> new MobEffectInstance(MobEffects.REGENERATION, 100, 0));
+            "Clear-headed: spells cost 15% less mana for 5 minutes", () -> new MobEffectInstance(MobEffects.REGENERATION, 100, 0), MealTable.CANDIED_SLIME_JELLY);
     public static final DeferredItem<Item> GRILLED_ARMOR_FLANK = meal("grilled_armor_flank", 8, 0.7f, 1.05, 1.00, 4800,
-            "Shell-hardened: spells hit 5% harder for 4 minutes, and the skin toughens", () -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 2400, 0));
+            "Shell-hardened: spells hit 5% harder for 4 minutes, and the skin toughens", () -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 2400, 0), MealTable.GRILLED_ARMOR_FLANK);
     public static final DeferredItem<Item> ROAST_BASILISK_FILLET = meal("roast_basilisk_fillet", 10, 0.8f, 1.20, 1.00, 3600,
-            "Venom in the blood: spells hit 20% harder for 3 minutes, and poison cannot take hold", () -> new MobEffectInstance(MobEffects.NIGHT_VISION, 3600, 0));
+            "Venom in the blood: spells hit 20% harder for 3 minutes, and poison cannot take hold", () -> new MobEffectInstance(MobEffects.NIGHT_VISION, 3600, 0), MealTable.ROAST_BASILISK_FILLET);
     public static final DeferredItem<Item> ROAST_DIREWOLF_HAUNCH = meal("roast_direwolf_haunch", 10, 0.8f, 1.10, 0.95, 3600,
-            "Pack hunger: faster and stronger, spells hit 10% harder for 3 minutes", () -> new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 3600, 0));
+            "Pack hunger: faster and stronger, spells hit 10% harder for 3 minutes", () -> new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 3600, 0), MealTable.ROAST_DIREWOLF_HAUNCH);
     public static final DeferredItem<Item> SEARED_MONSTER_MEAT = meal("seared_monster_meat", 7, 0.6f, 1.00, 1.00, 0,
             "Plain, filling, and not poisonous", () -> new MobEffectInstance(MobEffects.SATURATION, 20, 0));
 
@@ -63,8 +64,14 @@ public final class DungeonFood {
 
     private static DeferredItem<Item> meal(String id, int nutrition, float saturation, double power, double cost, int buffTicks, String text,
                                            java.util.function.Supplier<MobEffectInstance> effect) {
+        return meal(id, nutrition, saturation, power, cost, buffTicks, text, effect, null);
+    }
+
+    /** A meal that also lends a skill and attunes its eater to a second magic (see {@link MealTable}); a null perk is a plain meal. */
+    private static DeferredItem<Item> meal(String id, int nutrition, float saturation, double power, double cost, int buffTicks, String text,
+                                           java.util.function.Supplier<MobEffectInstance> effect, MealTable.Perk perk) {
         return NUItems.ITEMS.register(id, () -> new Meal(new Item.Properties().food(new FoodProperties.Builder().nutrition(nutrition).saturationModifier(saturation)
-                .effect(effect, 1f).build()).rarity(Rarity.RARE), power, cost, buffTicks, text));
+                .effect(effect, 1f).build()).rarity(Rarity.RARE), power, cost, buffTicks, text, perk));
     }
 
     public static void init() {}
@@ -110,18 +117,24 @@ public final class DungeonFood {
         }
     }
 
-    /** A cooked meal: feeds, and bends the eater's magic for a while. */
+    /** A cooked meal: feeds, bends the eater's magic for a while, and (1.19.0) may lend a skill and attune the eater to a second magic. */
     public static final class Meal extends Item {
         private final double power, cost;
         private final int buffTicks;
         private final String text;
+        private final MealTable.Perk perk;
 
         Meal(Item.Properties props, double power, double cost, int buffTicks, String text) {
+            this(props, power, cost, buffTicks, text, null);
+        }
+
+        Meal(Item.Properties props, double power, double cost, int buffTicks, String text, MealTable.Perk perk) {
             super(props);
             this.power = power;
             this.cost = cost;
             this.buffTicks = buffTicks;
             this.text = text;
+            this.perk = perk;
         }
 
         @Override
@@ -130,6 +143,7 @@ public final class DungeonFood {
             if (!level.isClientSide && eater instanceof Player p && buffTicks > 0) {
                 MealBuffs.give(p, power, cost, buffTicks);
                 p.displayClientMessage(Component.literal(text).withStyle(ChatFormatting.GOLD), true);
+                if (perk != null) MealPerks.eat(p, perk);
             }
             return out;
         }
@@ -137,6 +151,7 @@ public final class DungeonFood {
         @Override
         public void appendHoverText(ItemStack stack, Item.TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
             tip.add(Component.literal(text).withStyle(ChatFormatting.GOLD));
+            if (perk != null) MealPerks.tooltip(perk, tip);
         }
     }
 }

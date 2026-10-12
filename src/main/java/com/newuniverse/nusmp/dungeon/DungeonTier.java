@@ -31,4 +31,7 @@ public enum DungeonTier {
     }
 
     public static DungeonTier at(Level level, BlockPos p) { return at(p.getX(), p.getY(), p.getZ()); }
+
+    /** Is the 128-block cell (cellX, cellZ) of the map one of the Golden City's cells? About 18% of them are; the same test {@link #at} uses below y=-40. */
+    public static boolean isCityCell(int cellX, int cellZ) { return cell(cellX, cellZ, 7) < 18; }
 }
