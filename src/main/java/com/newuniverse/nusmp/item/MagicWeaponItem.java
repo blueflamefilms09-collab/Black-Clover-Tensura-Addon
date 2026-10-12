@@ -178,7 +178,7 @@ public class MagicWeaponItem extends SwordItem {
     public UseAnim getUseAnimation(ItemStack stack) { return kind == Kind.MAGEBANE_SHIELD ? UseAnim.BLOCK : super.getUseAnimation(stack); }
 
     @Override
-    public int getUseDuration(ItemStack stack) { return kind == Kind.MAGEBANE_SHIELD ? 72000 : super.getUseDuration(stack); }
+    public int getUseDuration(ItemStack stack, LivingEntity user) { return kind == Kind.MAGEBANE_SHIELD ? 72000 : super.getUseDuration(stack, user); }
 
     @Override
     public boolean canPerformAction(ItemStack stack, ItemAbility ability) {
