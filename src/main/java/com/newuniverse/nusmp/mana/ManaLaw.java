@@ -289,8 +289,7 @@ public final class ManaLaw {
         CompoundTag d = data(p);
         long now = sl.getGameTime();
         if (com.newuniverse.nusmp.multiverse.WizardKing.isKing(p)) {                      // the awakening: mana and life return by themselves
-            var kx = TensuraStorages.getExistenceFrom(p);
-            if (kx != null) { kx.setMagicule(Math.min(EnergyHelper.getMaxMagicule(p), kx.getMagicule() + EnergyHelper.getMaxMagicule(p) * 0.015)); kx.markDirty(); }
+            EnergyHelper.gainMagicule(p, EnergyHelper.getMaxMagicule(p) * 0.015, EnergyHelper.GainType.NORMAL);      // Tensura's own gain path (respects its gain multipliers)
             if (p.getHealth() < p.getMaxHealth()) p.heal(0.5f);
         }
         // Mana Zone: it drinks a little mana a second; its owner flies light on the mana around them

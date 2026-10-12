@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.9.0] — Kingdom and blood buffs and debuffs use Tensura's own attributes
+
+**State:** written without a compiler, against the Tensura 2.0.1.3 signatures the owner supplied; CI is the first compile. Nothing run in game.
+
+### New
+- **Each kingdom and each mixed-in blood now also has a buff and a debuff on a Tensura attribute** (`TensuraAttributes`): magicule / aura regeneration and gain, skill learning and mastery gain, dodge strength, magic and elemental resistance, elemental power (e.g. Spade +10% darkness power, -10% magic resistance; Elf +10% wind power, -10% earth resistance; Undead +10% darkness resistance, -10% light resistance). They are percentages of the attribute's base (so they scale with Tensura whatever its units), added next to the earlier health / attack / speed modifiers, and shown in the status panel and the result of the questionnaire. **Unverified:** the real base values of these attributes in Tensura; a percentage of a base of zero does nothing.
+- The Wizard King's mana regeneration now goes through Tensura's `EnergyHelper.gainMagicule` instead of writing the magicule value, so it respects Tensura's own gain rules.
+
+### Not changed
+- Mana Zone and the Negative-Mana cost still write the magicule value directly: the signature of Tensura's consume helper (`isOutOfMagiculeConsuming`) does not say what its double means, and `drainEnergy` is for taking energy from another entity, not for paying a cost.
+
 ## [1.8.0] — The Wizard King's awakening runs through Tensura's own numbers
 
 **State:** written without a compiler in the session, against the Tensura 2.0.1.3 API signatures the owner supplied; CI is the first compile. Nothing run in game.

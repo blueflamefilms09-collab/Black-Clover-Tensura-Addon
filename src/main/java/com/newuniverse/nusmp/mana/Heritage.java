@@ -2,6 +2,7 @@ package com.newuniverse.nusmp.mana;
 
 import com.newuniverse.nusmp.blackclover.Kingdom;
 import com.newuniverse.nusmp.multiverse.Race;
+import io.github.manasmods.tensura.registry.attribute.TensuraAttributes;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -70,6 +71,12 @@ public final class Heritage {
     }
 
     public static Trait kingdomTrait(Kingdom k) {
+        Trait base = kingdomBase(k);
+        TMod[] t = kingdomTensura(k);
+        return new Trait(base.buff() + "; " + t[0].label(), base.debuff() + "; " + t[1].label());
+    }
+
+    private static Trait kingdomBase(Kingdom k) {
         return switch (k) {
             case CLOVER -> new Trait("+2 max health, +3% attack: hardy, stubborn", "-1 armor: poor at defence");
             case SPADE -> new Trait("+8% attack, spells hit 5% harder: ruthless", "-2 max health: reckless");
@@ -98,6 +105,12 @@ public final class Heritage {
     }
 
     public static Trait bloodTrait(Race r) {
+        Trait base = bloodBase(r);
+        TMod[] t = bloodTensura(r);
+        return new Trait(base.buff() + "; " + t[0].label(), base.debuff() + "; " + t[1].label());
+    }
+
+    private static Trait bloodBase(Race r) {
         return switch (r) {
             case HUMAN -> new Trait("+1 luck: adaptable", "-1 max health: frail");
             case ELF -> new Trait("+4% speed: agile", "-2 max health: fragile");
@@ -113,6 +126,40 @@ public final class Heritage {
             case VAMPIRE -> new Trait("+4% attack: a predator", "-1 armor: thin skin");
             case UNDEAD -> new Trait("+0.15 knockback resistance: unfeeling", "-2 max health: brittle");
             case DAEMON, DEVIL -> new Trait("+5% attack: a fiend's blood", "-2 max health: a fiend's price");
+        };
+    }
+
+    // ---------------------------------------------------------------- Tensura's own attributes (multipliers: a percentage of the base)
+    private record TMod(Holder<Attribute> attr, double pct, String label) {}
+
+    private static TMod tm(Holder<Attribute> a, double pct, String label) { return new TMod(a, pct, label); }
+
+    /** buff, debuff */
+    private static TMod[] kingdomTensura(Kingdom k) {
+        return switch (k) {
+            case CLOVER -> new TMod[]{tm(TensuraAttributes.MAGICULE_REGENERATION_MULTIPLIER, 0.10, "+10% magicule regeneration"), tm(TensuraAttributes.ABILITY_LEARNING_GAIN, -0.05, "-5% skill learning")};
+            case SPADE -> new TMod[]{tm(TensuraAttributes.DARKNESS_BOOST, 0.10, "+10% darkness-element power"), tm(TensuraAttributes.MAGIC_RESISTANCE, -0.10, "-10% magic resistance")};
+            case HEART -> new TMod[]{tm(TensuraAttributes.ABILITY_MASTERY_GAIN, 0.10, "+10% skill mastery gain"), tm(TensuraAttributes.AURA_REGENERATION_MULTIPLIER, -0.05, "-5% aura regeneration")};
+            case DIAMOND -> new TMod[]{tm(TensuraAttributes.MAGICULE_GAIN, 0.10, "+10% magicule gain"), tm(TensuraAttributes.DODGE_STRENGTH, -0.05, "-5% dodge strength")};
+        };
+    }
+
+    private static TMod[] bloodTensura(Race r) {
+        return switch (r) {
+            case HUMAN -> new TMod[]{tm(TensuraAttributes.ABILITY_LEARNING_GAIN, 0.10, "+10% skill learning"), tm(TensuraAttributes.AURA_REGENERATION_MULTIPLIER, -0.05, "-5% aura regeneration")};
+            case ELF -> new TMod[]{tm(TensuraAttributes.WIND_BOOST, 0.10, "+10% wind-element power"), tm(TensuraAttributes.EARTH_RESISTANCE, -0.10, "-10% earth resistance")};
+            case DWARF -> new TMod[]{tm(TensuraAttributes.EARTH_BOOST, 0.10, "+10% earth-element power"), tm(TensuraAttributes.WIND_RESISTANCE, -0.10, "-10% wind resistance")};
+            case BEASTFOLK -> new TMod[]{tm(TensuraAttributes.DODGE_STRENGTH, 0.10, "+10% dodge strength"), tm(TensuraAttributes.MAGIC_RESISTANCE, -0.05, "-5% magic resistance")};
+            case OGRE -> new TMod[]{tm(TensuraAttributes.AURA_REGENERATION_MULTIPLIER, 0.10, "+10% aura regeneration"), tm(TensuraAttributes.MAGICULE_REGENERATION_MULTIPLIER, -0.05, "-5% magicule regeneration")};
+            case GOBLIN -> new TMod[]{tm(TensuraAttributes.ABILITY_MASTERY_GAIN, 0.10, "+10% skill mastery gain"), tm(TensuraAttributes.MAGIC_RESISTANCE, -0.05, "-5% magic resistance")};
+            case GIANT -> new TMod[]{tm(TensuraAttributes.AURA_GAIN, 0.10, "+10% aura gain"), tm(TensuraAttributes.DODGE_STRENGTH, -0.10, "-10% dodge strength")};
+            case ORC -> new TMod[]{tm(TensuraAttributes.FLAME_RESISTANCE, 0.10, "+10% flame resistance"), tm(TensuraAttributes.WATER_RESISTANCE, -0.10, "-10% water resistance")};
+            case DRAGONEWT -> new TMod[]{tm(TensuraAttributes.FLAME_BOOST, 0.10, "+10% flame-element power"), tm(TensuraAttributes.WATER_RESISTANCE, -0.05, "-5% water resistance")};
+            case MERFOLK -> new TMod[]{tm(TensuraAttributes.WATER_BOOST, 0.10, "+10% water-element power"), tm(TensuraAttributes.FLAME_RESISTANCE, -0.10, "-10% flame resistance")};
+            case SLIME -> new TMod[]{tm(TensuraAttributes.MAGICULE_GAIN, 0.10, "+10% magicule gain"), tm(TensuraAttributes.ABILITY_LEARNING_GAIN, -0.05, "-5% skill learning")};
+            case VAMPIRE -> new TMod[]{tm(TensuraAttributes.DARKNESS_BOOST, 0.10, "+10% darkness-element power"), tm(TensuraAttributes.LIGHT_RESISTANCE, -0.10, "-10% light resistance")};
+            case UNDEAD -> new TMod[]{tm(TensuraAttributes.DARKNESS_RESISTANCE, 0.10, "+10% darkness resistance"), tm(TensuraAttributes.LIGHT_RESISTANCE, -0.10, "-10% light resistance")};
+            case DAEMON, DEVIL -> new TMod[]{tm(TensuraAttributes.MAGICULE_REGENERATION_MULTIPLIER, 0.10, "+10% magicule regeneration"), tm(TensuraAttributes.LIGHT_RESISTANCE, -0.10, "-10% light resistance")};
         };
     }
 
@@ -152,14 +199,17 @@ public final class Heritage {
         AttributeInstance marker = p.getAttribute(Attributes.MOVEMENT_SPEED);
         boolean present = marker != null && marker.hasModifier(MARKER);
         if (present && sig.equals(data(p).getString("Applied"))) return;
-        for (Holder<Attribute> a : TOUCHED) {
+        java.util.Set<Holder<Attribute>> cleanup = new java.util.LinkedHashSet<>(TOUCHED);
+        for (Kingdom kk : Kingdom.values()) for (TMod t : kingdomTensura(kk)) cleanup.add(t.attr());
+        for (Race rr : Race.values()) for (TMod t : bloodTensura(rr)) cleanup.add(t.attr());
+        for (Holder<Attribute> a : cleanup) {
             AttributeInstance inst = p.getAttribute(a);
             if (inst == null) continue;
             for (int i = 0; i < 24; i++) inst.removeModifier(id(i));
         }
         List<Mod> all = new ArrayList<>();
-        if (k != null) all.addAll(kingdomMods(k));
-        if (b != null) all.addAll(bloodMods(b));
+        if (k != null) { all.addAll(kingdomMods(k)); for (TMod t : kingdomTensura(k)) all.add(pct(t.attr(), t.pct())); }
+        if (b != null) { all.addAll(bloodMods(b)); for (TMod t : bloodTensura(b)) all.add(pct(t.attr(), t.pct())); }
         all.addAll(stageMods(st));
         if (com.newuniverse.nusmp.multiverse.WizardKing.isKing(p)) all.addAll(crownMods());
         int n = 0;
