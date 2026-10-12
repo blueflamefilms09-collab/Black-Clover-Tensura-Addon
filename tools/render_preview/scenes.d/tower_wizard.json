@@ -8,56 +8,47 @@
   "glow": "FFFFFFFF",
   "anim": "idle",
   "ages": [
-   0
+   0,
+   20,
+   40
   ],
   "tile": [
-   420,
-   420
+   340,
+   380
   ],
   "views": [
    {
     "name": "front",
     "yaw": 0,
-    "pitch": 0,
-    "target": [
-     0,
-     1.1,
-     0
-    ],
-    "dist": 3.4
-   },
-   {
-    "name": "front3q",
-    "yaw": 28,
-    "pitch": 3,
-    "target": [
-     0,
-     1.1,
-     0
-    ],
-    "dist": 3.4
-   },
-   {
-    "name": "side",
-    "yaw": -90,
-    "pitch": 3,
-    "target": [
-     0,
-     1.1,
-     0
-    ],
-    "dist": 3.4
-   },
-   {
-    "name": "low",
-    "yaw": 15,
-    "pitch": -12,
+    "pitch": -4,
     "target": [
      0,
      1.2,
      0
     ],
-    "dist": 2.4
+    "dist": 2.6
+   },
+   {
+    "name": "front3q",
+    "yaw": 30,
+    "pitch": 2,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "back",
+    "yaw": 160,
+    "pitch": 5,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 3.4
    }
   ]
  },
@@ -70,56 +61,47 @@
   "glow": "FFFFFFFF",
   "anim": "talk",
   "ages": [
-   0
+   0,
+   20,
+   40
   ],
   "tile": [
-   420,
-   420
+   340,
+   380
   ],
   "views": [
    {
     "name": "front",
     "yaw": 0,
-    "pitch": 0,
-    "target": [
-     0,
-     1.1,
-     0
-    ],
-    "dist": 3.4
-   },
-   {
-    "name": "front3q",
-    "yaw": 28,
-    "pitch": 3,
-    "target": [
-     0,
-     1.1,
-     0
-    ],
-    "dist": 3.4
-   },
-   {
-    "name": "side",
-    "yaw": -90,
-    "pitch": 3,
-    "target": [
-     0,
-     1.1,
-     0
-    ],
-    "dist": 3.4
-   },
-   {
-    "name": "low",
-    "yaw": 15,
-    "pitch": -12,
+    "pitch": -4,
     "target": [
      0,
      1.2,
      0
     ],
-    "dist": 2.4
+    "dist": 2.6
+   },
+   {
+    "name": "front3q",
+    "yaw": 30,
+    "pitch": 2,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "back",
+    "yaw": 160,
+    "pitch": 5,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 3.4
    }
   ]
  }
