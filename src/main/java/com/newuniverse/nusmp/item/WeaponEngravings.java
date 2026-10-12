@@ -63,8 +63,8 @@ public final class WeaponEngravings {
             Map.entry("magebane_shield", List.of(e("magic_interference", 1), e("magicule_absorption", 2), e("magic_protection", 1), e("sturdy", 2))),   // made in the Spellplague days to absorb and repel magic
             Map.entry("weapon_of_resurgence", List.of(e("holy_weapon", 2), e("restoration", 1), e("vitality", 1), e("sturdy", 1))),                       // a paladin's blade: holy, mending, bonded
             // the Brooch Pin and the Hand of Providence
-            Map.entry("brooch_pin", List.of(e("swift", 1), e("severance", 1), e("magic_weapon", 1))),                    // a hidden blade: quick and clean
-            Map.entry("hand_of_providence", List.of(e("holy_weapon", 2), e("restoration", 2), e("magic_protection", 1), e("sturdy", 1))), // a god's hand: holy, mending, warding
+            Map.entry("brooch_pin", List.of(e("severance", 2), e("barrier_piercing", 2))),                               // a pin that cuts clean and goes through wards
+            Map.entry("hand_of_providence", List.of(e("holy_weapon", 2), e("restoration", 2), e("magic_protection", 1), e("sturdy", 1), e("crushing", 1))), // a god's fist: holy, mending, warding, hard-hitting
             // 0.100: the reference-sheet weapons
             Map.entry("quicklings_ivy", List.of(e("swift", 2), e("magic_weapon", 1), e("enervation", 1))),               // living ivy, poisons and slows
             Map.entry("magebane_longsword", List.of(e("magic_interference", 2), e("barrier_piercing", 2), e("magicule_absorption", 1))), // bane of mages

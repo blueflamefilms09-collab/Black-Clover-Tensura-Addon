@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0] — Brooch Pin and Hand of Providence get their own abilities
+
+**State:** not yet compiled when written; CI is the first compile. Nothing run in game.
+
+### Replaced
+- The stopgap `PinProvidenceArts` (fold / unfold, Mage Hand) is no longer wired (the file is kept). **Brooch Pin**: Piercing Pin, a lunge of up to 7 blocks that runs through every foe on the line (armour does not stop it) and slows them, striking the first from behind; Ruby Ward absorbs damage (`BroochPinArts`). **The Hand of Providence**: Laying On of Hands, a big mend, Regeneration and every curse and poison cleansed on the ally you look at within 6 blocks or on yourself (`HandOfProvidenceArts`). Engravings updated.
+
 ## [1.3.0] — Riven Remake removed, eight reference weapons, high-resolution weapon skins, real-life sizes
 
 **State:** every commit of this line compiled in CI up to the Riven removal and the size/skin pass; the Brooch Pin / Hand of Providence wiring is new in this release. Nothing here was run in game.
