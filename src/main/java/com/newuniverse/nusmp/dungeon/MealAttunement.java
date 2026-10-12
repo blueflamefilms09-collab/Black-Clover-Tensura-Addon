@@ -7,6 +7,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
@@ -62,7 +63,8 @@ public final class MealAttunement {
     public static void onDamage(LivingDamageEvent.Post e) {
         if (applying || e.getNewDamage() <= 0f) return;
         DamageSource src = e.getSource();
-        if (!(src.getEntity() instanceof ServerPlayer p)) return;
+        Entity cause = src.getEntity() != null ? src.getEntity() : src.getDirectEntity();
+        if (!(cause instanceof ServerPlayer p)) return;
         LivingEntity target = e.getEntity();
         if (target == p || !target.isAlive() || target.isAlliedTo(p)) return;
         MagicType magic = active(p);
@@ -71,7 +73,8 @@ public final class MealAttunement {
         applying = true;
         try {
             WikiBooks.rider(magic).apply(target, p);
-        } catch (RuntimeException riderFailed) { /* a rider must never break the hit that carried it */
+        } catch (RuntimeException riderFailed) {
+            /* a rider must never break the hit that carried it */
         } finally {
             applying = false;
         }
