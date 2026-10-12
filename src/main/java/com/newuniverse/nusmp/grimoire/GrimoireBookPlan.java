@@ -62,6 +62,7 @@ public final class GrimoireBookPlan {
         box(out, PX0, PY0, BACK1, PX1, PY1, FRONT0, "pages", -1, held, true, new Face[]{Face.UP, Face.DOWN, Face.EAST});
         box(out, SX0, SY0, SZ0, SX1, SY1, SZ1, "spine", cover, false, true, ALL);
         for (float y : new float[]{3.95f, 8.0f, 12.05f}) box(out, SX0 - 0.2f, y - 0.25f, SZ0 + 0.2f, SX0 + 0.05f, y + 0.25f, SZ1 - 0.2f, "trim_metal", trim, false, true, ALL);
+        spineGems(out, key);
 
         // front cover: raised double frame (outer bars; the inner line is part of the ornament texture), ornament, medallion, emblem
         if (!key.tattered()) frame(out, FRONT1, BAR_H, trim);
@@ -114,6 +115,45 @@ public final class GrimoireBookPlan {
         }
         if (!key.magic().isEmpty() && !BookPalette.handMade(key.magic()) && !key.tattered())
             studs(out, GrimoireDesignGenerator.forMagic(key.magic()).studs(), x0, y0, x1, y1, z, dir);
+        if (!key.tattered()) fusionFiligree(out, key, x0, y0, x1, y1, z, dir);
+    }
+
+    /**
+     * 1.16.0: the generated filigree of a fused grimoire (see {@link FusionDesign}): a ring of gems round the medallion, alternating the
+     * two parents' metals (the trim tint and the emblem tint), and a gilt bracket in each corner. Nothing for a single-attribute book.
+     */
+    private static void fusionFiligree(List<Quad> out, BookLook.Key key, float x0, float y0, float x1, float y1, float z, int dir) {
+        FusionDesign.Spec sp = FusionDesign.of(key.fusion());
+        if (sp == null) return;
+        float cx = (x0 + x1) / 2f, cy = (y0 + y1) / 2f, h = 0.5f * dir, za = Math.min(z, z + h), zb = Math.max(z, z + h);
+        Face[] faces = dir > 0 ? BAR_FACES_FRONT : BAR_FACES_BACK;
+        boolean glow = key.held();
+        for (int i = 0; i < sp.gems(); i++) {
+            double a = Math.PI * 2 * i / sp.gems() + sp.phase();
+            float r = sp.ring() + (sp.style() == 2 && i % 2 == 1 ? 0.8f : 0f);
+            float gx = cx + (float) Math.cos(a) * r, gy = cy + (float) Math.sin(a) * r * 1.15f, w = i % 2 == 0 ? 0.55f : 0.4f;
+            box(out, gx - w, gy - w, za, gx + w, gy + w, zb, "trim_metal", i % 2 == 0 ? BookLook.TINT_TRIM : BookLook.TINT_EMBLEM, glow, false, faces);
+        }
+        float bz = Math.min(z, z + 0.35f * dir), bt = Math.max(z, z + 0.35f * dir), L = sp.bracketLen(), t = 0.32f, in = 1.55f;
+        for (int sx = -1; sx <= 1; sx += 2) {
+            for (int sy = -1; sy <= 1; sy += 2) {
+                float px = sx < 0 ? x0 + in : x1 - in, py = sy < 0 ? y0 + in : y1 - in;       // the corner point of the L
+                float hx0 = sx < 0 ? px : px - L, hx1 = sx < 0 ? px + L : px;
+                float vy0 = sy < 0 ? py : py - L, vy1 = sy < 0 ? py + L : py;
+                box(out, hx0, py - t / 2, bz, hx1, py + t / 2, bt, "trim_metal", BookLook.TINT_TRIM, false, true, faces);
+                box(out, px - t / 2, vy0, bz, px + t / 2, vy1, bt, "trim_metal", BookLook.TINT_TRIM, false, true, faces);
+            }
+        }
+    }
+
+    /** 1.16.0: gems down the spine of a fused grimoire. */
+    private static void spineGems(List<Quad> out, BookLook.Key key) {
+        FusionDesign.Spec sp = FusionDesign.of(key.fusion());
+        if (sp == null) return;
+        for (int i = 0; i < sp.spineGems(); i++) {
+            float y = SY0 + 1.6f + (SY1 - SY0 - 3.2f) * (i + 0.5f) / sp.spineGems();
+            box(out, SX0 - 0.35f, y - 0.3f, SZ0 + 0.8f, SX0, y + 0.3f, SZ1 - 0.8f, "trim_metal", i % 2 == 0 ? BookLook.TINT_EMBLEM : BookLook.TINT_TRIM, key.held(), false, ALL);
+        }
     }
 
     /** The generated frame studs (see {@link GrimoireDesignGenerator}): 1 = four corners, 2 = + top and bottom middle, 3 = a ring of eight. */

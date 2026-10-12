@@ -105,19 +105,19 @@ public final class ManaLaw {
     // ---------------------------------------------------------------- the numbers every spell passes through
     /** Multiplies a grimoire spell's mana cost. */
     public static double costMult(ServerPlayer p) {
-        double c = stage(p).cost() * affinity(p).cost * Heritage.costMult(p) * (com.newuniverse.nusmp.multiverse.WizardKing.isKing(p) ? 0.8 : 1.0);
+        double c = stage(p).cost() * affinity(p).cost * Heritage.costMult(p) * Signature.cost(p) * (com.newuniverse.nusmp.multiverse.WizardKing.isKing(p) ? 0.8 : 1.0);
         if (zoneActive(p)) c *= 0.8;
         if (negativeActive(p)) c *= 0.7;
         return c;
     }
 
     /** Multiplies a spell's cooldown. */
-    public static double cooldownMult(ServerPlayer p) { return affinity(p).cooldown; }
+    public static double cooldownMult(ServerPlayer p) { return affinity(p).cooldown * Signature.cooldown(p); }
 
     /** Multiplies the damage of a spell. */
     public static double powerMult(LivingEntity e) {
         if (!(e instanceof ServerPlayer p)) return 1.0;
-        double m = stage(p).power() * Heritage.powerMult(p) * (com.newuniverse.nusmp.multiverse.WizardKing.isKing(p) ? 1.25 : 1.0);
+        double m = stage(p).power() * Heritage.powerMult(p) * Signature.power(p) * (com.newuniverse.nusmp.multiverse.WizardKing.isKing(p) ? 1.25 : 1.0);
         if (zoneActive(p)) m *= 1.0 + 0.2 * Math.min(2.0, density(p.level(), p.blockPosition()));
         if (negativeActive(p)) m *= 1.6;
         return m;
@@ -245,6 +245,7 @@ public final class ManaLaw {
         t.putString("Density", String.format("%.1f", density(p.level(), p.blockPosition())));
         t.putBoolean("Grand", isGrandZone(p.level(), p.blockPosition()));
         t.putString("Offer", offerCover(p));
+        t.putString("Signature", Signature.describe(p));
         var sc = com.newuniverse.nusmp.multiverse.MultiverseProfile.socialClass(p);
         var st = Heritage.socialTrait(sc);
         t.putString("SocialName", sc.displayName);

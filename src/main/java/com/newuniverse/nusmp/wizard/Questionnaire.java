@@ -21,31 +21,57 @@ import java.util.Map;
  * what an answer will do: every option quietly adds points to a magic attribute, a kingdom, a Tensura race's blood or your resolve,
  * and the totals decide:
  * <ul>
- *   <li>the magic attribute (one, and now and then a second when two natures are nearly tied),</li>
+ *   <li>the magic attribute: any of them (see {@link MagicFlavors}); when two natures are nearly tied they fuse into one grimoire,</li>
  *   <li>the kingdom you hail from (its grimoire suit, a buff and a debuff),</li>
  *   <li>the blood of a Tensura race mixed into yours (a buff and a debuff),</li>
  *   <li>how far your resolve takes the grimoire (3, 4 or 5 leaves; the five-leaf cover still needs the forbidden-start rule).</li>
  * </ul>
- * Option strings read "text|TOKEN:points,TOKEN:points": tokens are E:&lt;magic&gt;, K:&lt;kingdom&gt;, R:&lt;race&gt;, T (resolve).
+ * Option strings read "text|TOKEN:points,TOKEN:points": tokens are F:&lt;flavor&gt; (the nature questions), E:&lt;magic&gt; (a magic by name, old sheets), K:&lt;kingdom&gt;, R:&lt;race&gt;, S:&lt;class&gt;, T (resolve).
  */
 public final class Questionnaire {
     private Questionnaire() {}
 
     private static final String[][] NATURE = {
             {"A wildfire sweeps the field you work in. What do you do?",
-                    "Charge in and beat it back|E:FLAME:2", "Run to the river and bring water|E:WATER:2", "Climb the hill and let the wind show you its path|E:WIND:2", "Dig a trench and starve it|E:EARTH:2"},
+                    "Charge in and beat it back|F:HOT:2", "Run to the river and bring water|F:FLOW:2", "Climb the hill and let the wind show you its path|F:GUST:2", "Dig a trench and starve it|F:STONE:2"},
             {"Which place feels most like home?",
-                    "A forge, loud and warm|E:FLAME:2", "A quiet lakeshore|E:WATER:2", "A cliff above the clouds|E:WIND:2", "A cave deep in the hills|E:EARTH:2"},
+                    "A forge, loud and warm|F:HOT:1,F:METAL:1", "A quiet lakeshore|F:FLOW:2", "A cliff above the clouds|F:GUST:2", "A cave deep in the hills, glittering|F:STONE:1,F:GEM:1"},
+            {"You find a door in a ruin. What do you do?",
+                    "Step through without a light|F:SHADE:2", "Read every carving on the frame first|F:MIND:2", "Feel for the draught and follow where it leads|F:SPACE:2", "Wait until the sun has crossed the floor|F:TIME:2"},
+            {"Someone is badly hurt. What do you reach for?",
+                    "Whatever grows nearby: leaf, root, moss|F:GREEN:2", "A long watch at their side until the fever breaks|F:SOUL:2", "My own arms: I carry them, whatever it takes|F:BODY:2", "A litter and a shelter, built quickly|F:MAKER:2"},
+            {"A locked iron chest, and no key.",
+                    "Hammer at the hinges|F:METAL:2", "Turn it over in my head until the lock gives|F:MIND:2", "Ask it politely. Sing to it, if I must|F:MAKER:2", "Slip a hand through where the wall is thin|F:SPACE:2"},
+            {"Pick a gift from a jeweller's stall.",
+                    "A raw, uncut gemstone|F:GEM:2", "A bright silver blade|F:BRIGHT:1,F:METAL:1", "A moth-wing brooch|F:SHADE:2", "A tiny hourglass|F:TIME:2"},
+            {"What would you most like to master?",
+                    "The old fighting arts|F:BODY:2", "A language nobody speaks any more|F:MIND:2", "A craft the whole village needs|F:MAKER:2", "The art of going unseen|F:SHADE:2"},
+            {"A storm rolls in over the sea. You...",
+                    "Stand in the open and feel the charge in the air|F:BRIGHT:1,F:GUST:1", "Walk down to the waterline|F:FLOW:2", "Tie everything down and wait it out|F:STONE:2", "Light a lantern and watch the dark|F:SHADE:1,F:HOT:1"},
             {"A friend is trapped across a gap. How do you reach them?",
-                    "Blast through whatever stands in the way|E:FLAME:2", "Swim the current beneath|E:WATER:2", "Ride the gale across|E:WIND:2", "Raise the ground to meet them|E:EARTH:2"},
+                    "Blast through whatever stands in the way|F:HOT:2", "Wade or swim the current beneath|F:FLOW:2", "Ride the gale across|F:GUST:2", "Raise the ground to meet them|F:STONE:2"},
+            {"In a quiet hour you most like to...",
+                    "Tend a garden and watch it grow|F:GREEN:2", "Sit with old stories of the dead|F:SOUL:2", "Polish a keepsake until it shines|F:GEM:1,F:METAL:1", "Draw, paint or write whatever comes|F:MAKER:1,F:MIND:1"},
             {"What do you value most in a fight?",
-                    "Overwhelming power|E:FLAME:2", "Adapting to the opponent|E:WATER:2", "Speed|E:WIND:2", "Staying power|E:EARTH:2"},
-            {"You may take one gift from the festival stalls.",
-                    "An ember lantern|E:FLAME:2", "A silver flask of spring water|E:WATER:2", "A feather kite|E:WIND:2", "A polished river stone|E:EARTH:2"},
+                    "Overwhelming power|F:HOT:1,F:BODY:1", "Adapting to the opponent|F:FLOW:1,F:MIND:1", "Speed|F:GUST:1,F:SPACE:1", "Staying power|F:STONE:1,F:METAL:1"},
             {"A rival taunts you in front of the whole guild. You...",
-                    "Answer in kind, loudly|E:FLAME:2", "Stay calm and let it flow past you|E:WATER:2", "Laugh and walk away|E:WIND:2", "Stand your ground and say nothing|E:EARTH:2"},
+                    "Answer in kind, loudly|F:HOT:2", "Stay calm and let it flow past you|F:FLOW:2", "Laugh and walk away|F:GUST:2", "Wait. Time will settle it|F:TIME:2"},
+            {"You are lost in a forest at dusk.",
+                    "Follow the moss and the roots|F:GREEN:2", "Climb the highest tree and watch the horizon|F:BRIGHT:1,F:GUST:1", "Sit still and listen for what is out there|F:SOUL:1,F:SHADE:1", "Mark a trail with whatever is in my pockets|F:MAKER:1,F:SPACE:1"},
             {"What do you do with a free afternoon?",
-                    "Train until you are drenched in sweat, then train more|E:FLAME:1,E:EARTH:1", "Read by the water, then nap|E:WATER:1,E:WIND:1", "Wander wherever the road goes|E:WIND:1,E:FLAME:1", "Tend a garden and watch it grow|E:EARTH:1,E:WATER:1"},
+                    "Train until drenched in sweat, then train more|F:BODY:2", "Read by the water, then nap|F:FLOW:1,F:MIND:1", "Wander wherever the road goes|F:SPACE:1,F:GUST:1", "Take something apart to see how it works|F:METAL:1,F:MAKER:1"},
+            {"Which of these sounds would you stop to hear?",
+                    "A blacksmith's hammer|F:METAL:1,F:HOT:1", "Rain on a tin roof|F:FLOW:2", "A choir in a stone hall|F:MAKER:1,F:GEM:1", "A clock that has stopped|F:TIME:2"},
+            {"A child asks you what the moon is made of.",
+                    "Silver, and a little light|F:BRIGHT:2", "Cold stone, like the mountains|F:STONE:1,F:COLD:1", "Old dreams that never came true|F:MIND:1,F:SOUL:1", "Pull their sleeve: \"Come, let me show you\"|F:SPACE:2"},
+            {"Winter has come early. What do you do?",
+                    "Welcome it: snow is a fine thing to fight in|F:COLD:2", "Stack the hearth high and sing|F:HOT:1,F:MAKER:1", "Wrap up, watch the frost on the glass|F:COLD:1,F:GEM:1", "Go on as usual: the cold only slows the weak|F:BODY:1,F:COLD:1"},
+            {"Someone you trusted lied to you.",
+                    "Confront them, loud and hot|F:HOT:1,F:SOUL:1", "Say nothing, remember everything|F:MIND:1,F:TIME:1", "Cut them off, quietly and completely|F:SHADE:1,F:COLD:1", "Ask them why, and listen to the answer|F:SOUL:1,F:GREEN:1"},
+            {"Pick a charm for the road.",
+                    "A feather|F:GUST:1,F:GREEN:1", "A coin that is always warm|F:HOT:1,F:METAL:1", "A shard of cold glass|F:GEM:1,F:COLD:1", "A key that fits nothing yet|F:SPACE:1,F:MIND:1"},
+            {"What do you want people to see in you?",
+                    "A bright, clear conviction|F:BRIGHT:2", "Nothing they could take away|F:SHADE:1,F:SPACE:1", "A hard worker with steady hands|F:BODY:1,F:METAL:1", "A keeper of old, good things|F:SOUL:1,F:GREEN:1"},
     };
 
     private static final String[][] HEARTH = {
@@ -86,7 +112,7 @@ public final class Questionnaire {
                     "The crown, the court and the line of succession|S:ROYALTY:2", "Land, titles and who owes whom|S:NOBLE:2", "The week's work and the market|S:COMMONER:2", "Whether the harvest will last the winter|S:PEASANT:2"},
     };
 
-    private static final int[] DRAW = {3, 2, 3, 1, 1};
+    private static final int[] DRAW = {6, 2, 2, 1, 1};     // 1.16.0: six questions about your nature now reach every magic, the rest as before
     private static final String[][][] POOLS = {NATURE, HEARTH, BLOOD, RESOLVE, SOCIAL};
 
     // ---------------------------------------------------------------- one questionnaire
@@ -137,12 +163,21 @@ public final class Questionnaire {
     }
 
     // ---------------------------------------------------------------- the result
-    public record Result(MagicType primary, MagicType secondary, Kingdom kingdom, Race blood, int leaves, SocialClass social) {}
+    /**
+     * What the questionnaire decided. {@code primary} is the attribute of the grimoire that is granted. When two attributes were nearly
+     * tied they fuse instead of coming as two grimoires: {@code parentA} and {@code parentB} are the pair (both null for a single
+     * attribute), {@code primary} is the attribute they blend into if the game has one (Fire and Water give Glass), and {@code born} says
+     * they have no blend in the game: a new magic is born of the pair (see grimoire.BornMagic).
+     */
+    public record Result(MagicType primary, MagicType parentA, MagicType parentB, boolean born, Kingdom kingdom, Race blood, int leaves, SocialClass social) {
+        public boolean fused() { return parentA != null && parentB != null; }
+    }
 
     /** Reads the answers (the index of the chosen shown option for each question). Null if they do not fit the sheet. */
     public static Result result(Sheet sheet, int[] answers, List<MagicType> pool, boolean allowFive, double dualChance, RandomSource rng) {
         if (answers == null || answers.length != sheet.texts().size()) return null;
         Map<MagicType, Integer> magic = new EnumMap<>(MagicType.class);
+        Map<MagicFlavors.Flavor, Integer> flavor = new EnumMap<>(MagicFlavors.Flavor.class);
         Map<Kingdom, Integer> kingdom = new EnumMap<>(Kingdom.class);
         Map<Race, Integer> blood = new EnumMap<>(Race.class);
         Map<SocialClass, Integer> social = new EnumMap<>(SocialClass.class);
@@ -154,7 +189,8 @@ public final class Questionnaire {
                 int pts = Integer.parseInt(p[p.length - 1]);
                 try {
                     switch (p[0]) {
-                        case "E" -> magic.merge(MagicType.valueOf(p[1]), pts, Integer::sum);
+                        case "E" -> magic.merge(MagicType.valueOf(p[1]), pts, Integer::sum);                       // a magic by name (old sheets)
+                        case "F" -> flavor.merge(MagicFlavors.Flavor.valueOf(p[1]), pts, Integer::sum);          // a flavor (1.16.0)
                         case "K" -> kingdom.merge(Kingdom.valueOf(p[1]), pts, Integer::sum);
                         case "R" -> blood.merge(Race.valueOf(p[1]), pts, Integer::sum);
                         case "S" -> social.merge(SocialClass.valueOf(p[1]), pts, Integer::sum);
@@ -164,11 +200,19 @@ public final class Questionnaire {
                 } catch (IllegalArgumentException ignored) { }
             }
         }
-        List<MagicType> ranked = rank(pool, magic, rng);
-        MagicType primary = ranked.get(0), secondary = null;
-        if (ranked.size() > 1) {
-            int a = magic.getOrDefault(primary, 0), b = magic.getOrDefault(ranked.get(1), 0);
-            if (b >= 2 && b >= 0.6 * a && rng.nextDouble() < dualChance) secondary = ranked.get(1);
+        List<MagicType> ranked = rank(pool, magic, flavor, rng);
+        MagicType primary = ranked.get(0), grimoire = primary, pa = null, pb = null;
+        boolean born = false;
+        double top = score(primary, magic, flavor);
+        for (MagicType m : ranked) {                                                   // the best attribute that shares nothing with the first
+            if (m == primary || MagicFlavors.shares(primary, m)) continue;
+            if (score(m, magic, flavor) >= Math.max(1.5, 0.6 * top) && rng.nextDouble() < dualChance) {
+                pa = primary;
+                pb = m;
+                MagicType blend = MagicFlavors.blendOf(MagicFlavors.main(primary), MagicFlavors.main(m));
+                if (blend != null) grimoire = blend; else born = true;
+            }
+            break;
         }
         Kingdom k = best(kingdom, Kingdom.values(), rng);
         Race r = best(blood, Race.values(), rng);
@@ -176,13 +220,25 @@ public final class Questionnaire {
         int score = resolve + rng.nextInt(3);                                          // 0..6: practice counts, a little fortune too
         int leaves = score >= 5 ? 5 : score >= 3 ? 4 : 3;
         if (leaves >= 5 && !allowFive) leaves = 4;
-        return new Result(primary, secondary, k, r, leaves, best(social, SocialClass.values(), rng));
+        return new Result(grimoire, pa, pb, born, k, r, leaves, best(social, SocialClass.values(), rng));
     }
 
-    private static List<MagicType> rank(List<MagicType> pool, Map<MagicType, Integer> score, RandomSource rng) {
+    /** An attribute's score: the points of its flavors (shared out, so a two-flavor attribute needs both) and any points given by name, tilted by rarity. */
+    private static double score(MagicType m, Map<MagicType, Integer> direct, Map<MagicFlavors.Flavor, Integer> flavor) {
+        MagicFlavors.Flavor[] fl = MagicFlavors.flavors(m);
+        double s = direct.getOrDefault(m, 0);
+        if (fl.length > 0) {
+            double f = 0;
+            for (MagicFlavors.Flavor x : fl) f += flavor.getOrDefault(x, 0);
+            s += f / Math.sqrt(fl.length);
+        }
+        return s * MagicFlavors.rarity(m);
+    }
+
+    private static List<MagicType> rank(List<MagicType> pool, Map<MagicType, Integer> direct, Map<MagicFlavors.Flavor, Integer> flavor, RandomSource rng) {
         List<MagicType> l = new ArrayList<>(pool);
         Collections.shuffle(l, new java.util.Random(rng.nextLong()));                    // ties break at random
-        l.sort((x, y) -> Integer.compare(score.getOrDefault(y, 0), score.getOrDefault(x, 0)));
+        l.sort((x, y) -> Double.compare(score(y, direct, flavor), score(x, direct, flavor)));
         return l;
     }
 

@@ -88,6 +88,14 @@ public class GrimoireItem extends Item {
         stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
     }
 
+    /** 1.16.0: marks a grimoire as the fused one of a two-attribute mage ("FLAME:WATER", empty for none) and names a magic born of the pair. */
+    public static void setFusion(ItemStack stack, String fusion, String bornName) {
+        CompoundTag tag = data(stack);
+        if (fusion == null || fusion.isEmpty()) tag.remove("Fusion"); else tag.putString("Fusion", fusion);
+        if (bornName == null || bornName.isEmpty()) tag.remove("BornName"); else tag.putString("BornName", bornName);
+        stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
+    }
+
     private static final ThreadLocal<Object[]> LAST_LOOK = ThreadLocal.withInitial(() -> new Object[3]);
 
     /**
@@ -122,7 +130,7 @@ public class GrimoireItem extends Item {
         CompoundTag t = d.copyTag();
         int seed = t.contains("LookSeed") ? t.getInt("LookSeed")
                 : t.hasUUID("Owner") ? (int) (t.getUUID("Owner").getMostSignificantBits() ^ t.getUUID("Owner").getLeastSignificantBits()) | 1 : 0;
-        BookLook look = BookLook.resolve(cover(stack).name(), t.getString("Magic"), t.getString("Canon"), seed);
+        BookLook look = BookLook.resolve(cover(stack).name(), t.getString("Magic"), t.getString("Canon"), seed, t.getString("Fusion"));
         memo[0] = d;
         memo[1] = look;
         memo[2] = t.getInt(OPEN_VIEW);
@@ -236,7 +244,15 @@ public class GrimoireItem extends Item {
         if (!tag.contains("Magic")) return;
         if (!tag.hasUUID("Owner")) tooltip.add(Component.literal("Unbound - right-click to bind (creative/admin)").withStyle(ChatFormatting.DARK_GRAY));
         GrimoireCover cover = cover(stack);
-        tooltip.add(Component.literal(MagicType.byName(tag.getString("Magic")).displayName).withStyle(ChatFormatting.AQUA));
+        String[] fused = tag.getString("Fusion").split(":");
+        boolean fusion = fused.length == 2;
+        if (tag.contains("BornName") && fusion) {
+            tooltip.add(Component.literal(tag.getString("BornName") + " Magic").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD));
+            tooltip.add(Component.literal("Born of " + MagicType.byName(fused[0]).displayName + " and " + MagicType.byName(fused[1]).displayName).withStyle(ChatFormatting.LIGHT_PURPLE));
+        } else {
+            tooltip.add(Component.literal(MagicType.byName(tag.getString("Magic")).displayName).withStyle(ChatFormatting.AQUA));
+            if (fusion) tooltip.add(Component.literal("Fused: " + MagicType.byName(fused[0]).displayName + " + " + MagicType.byName(fused[1]).displayName).withStyle(ChatFormatting.LIGHT_PURPLE));
+        }
         tooltip.add(Component.literal(cover.kingdom.displayName).withStyle(ChatFormatting.GOLD));
         tooltip.add(Component.literal(cover.lore).withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
         tooltip.add(Component.literal(String.format("Spell power x%.2f, cost x%.2f", cover.damage, cover.cost)).withStyle(ChatFormatting.DARK_GRAY));

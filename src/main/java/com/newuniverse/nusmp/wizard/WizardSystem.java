@@ -132,7 +132,7 @@ public final class WizardSystem {
         Pending pend = PENDING.remove(p.getUUID());
         if (pend == null || p.level().getGameTime() - pend.at() > 6000 || p.position().distanceToSqr(pend.where()) > 20 * 20) { say(p, "You took too long. Speak to me again."); return; }
         if (GrimoirePages.grimoireOf(p).isPresent()) return;
-        var pool = GrimoireAcceptance.starterPool(NightmareSouls.soulTypeOf(p));
+        var pool = MultiverseConfig.get(MultiverseConfig.ALL_MAGICS) ? MagicFlavors.pool() : GrimoireAcceptance.starterPool(NightmareSouls.soulTypeOf(p));   // 1.16.0: every magic
         var r = Questionnaire.result(pend.sheet(), answers, pool, NUGameRules.forbiddenStart(p.level()),
                 MultiverseConfig.get(MultiverseConfig.DUAL_ATTRIBUTE_CHANCE), p.getRandom());
         if (r == null) { say(p, "That is not an answer I asked for."); return; }
@@ -173,7 +173,10 @@ public final class WizardSystem {
     private static void arrive(ServerPlayer p, Questionnaire.Result r, GrimoireCover cover, Devil devil) {
         GrimoireAcceptance.grantExact(p, cover, r.primary(), devil);
         if (GrimoirePages.grimoireOf(p).isEmpty()) return;                                    // another mod refused the skill
-        if (r.secondary() != null) GrimoireAcceptance.grantExtra(p, cover, r.secondary());
+        // 1.16.0: two attributes fuse into the one grimoire (no second book): its fused look, its Signature Spell and, when the pair has no
+        // blend in the game, a magic of its own born of them
+        String bornName = r.born() ? BornMagic.nameOf(r.parentA(), r.parentB()) : null;
+        String signature = GrimoireAcceptance.applyFusion(p, r.primary(), r.parentA(), r.parentB(), bornName);
         for (int i = 0; i < p.getInventory().getContainerSize(); i++)                  // the summons has done its work
             if (p.getInventory().getItem(i).is(NUItems.GRIMOIRE_SUMMONS.get())) p.getInventory().setItem(i, ItemStack.EMPTY);
         MultiverseProfile.setSocialClass(p, r.social());
@@ -181,8 +184,15 @@ public final class WizardSystem {
         Ceremony.finish(p, "the Tower Wizard");
         var kt = Heritage.kingdomTrait(r.kingdom());
         var bt = Heritage.bloodTrait(r.blood());
-        p.sendSystemMessage(Component.literal("Your magic: " + r.primary().displayName + (r.secondary() != null ? " and " + r.secondary().displayName : "")
-                + "  |  " + cover.displayName()).withStyle(ChatFormatting.AQUA));
+        if (r.fused()) {
+            p.sendSystemMessage(Component.literal("Two attributes answered you: " + r.parentA().displayName + " and " + r.parentB().displayName + ". They have fused into one grimoire.")
+                    .withStyle(ChatFormatting.LIGHT_PURPLE));
+            p.sendSystemMessage(Component.literal(r.born() ? "A magic that did not exist before is born: " + bornName + " Magic."
+                    : "Together they are " + r.primary().displayName + ".").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD));
+        }
+        p.sendSystemMessage(Component.literal("Your magic: " + (r.born() ? bornName + " Magic" : r.primary().displayName) + "  |  " + cover.displayName()).withStyle(ChatFormatting.AQUA));
+        p.sendSystemMessage(Component.literal("No two wizards' magic is the same. Yours is called " + signature + ": " + com.newuniverse.nusmp.mana.Signature.describe(p)
+                + ". Its Signature Spell is the last page of your grimoire.").withStyle(ChatFormatting.AQUA));
         var sct = Heritage.socialTrait(r.social());
         p.sendSystemMessage(Component.literal("Your family stands among the " + r.social().displayName + ".  + " + sct.buff() + "  - " + sct.debuff()).withStyle(ChatFormatting.YELLOW));
         p.sendSystemMessage(Component.literal("You hail from the " + r.kingdom().displayName + ".  + " + kt.buff() + "  - " + kt.debuff()).withStyle(ChatFormatting.GOLD));

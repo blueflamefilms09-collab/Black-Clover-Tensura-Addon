@@ -173,6 +173,7 @@ public final class VfxManager {
         register(new SlashLayer());
         register(new CompassLayer());
         register(new MercuryLayer());
+        register(new com.newuniverse.nusmp.vfx.client.layer.BornMagicLayer());     // 1.16.0
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }

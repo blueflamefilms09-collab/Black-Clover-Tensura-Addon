@@ -94,6 +94,7 @@ public abstract class GrimoireBook extends Skill {
                 // 1.5.0: every magic is a combat magic: raw mana as a bolt, and the Mana Zone (appended last, so no mode number moves)
                 l.add(new BookPage(STRIKE_ID, "Mana Strike", "Mana Strike", 5, 100, 40, (b, i, p, m) -> com.newuniverse.nusmp.mana.ManaLaw.manaStrike(b, p)));
                 l.add(new BookPage(ZONE_ID, "Mana Zone", "Mana Zone", 0, 0, 0, (b, i, p, m) -> true));
+                l.addAll(SignatureSpell.pages());                                       // 1.16.0: the wizard's own spells, appended last
             }
             all = l;
         }
@@ -141,6 +142,8 @@ public abstract class GrimoireBook extends Skill {
         if (isUnion(mode)) return cover(i).isForbidden();
         if (instant(mode)) return true;
         if (page(mode) != null && page(mode).id().equals(STRIKE_ID)) return true;      // 1.5.0: Mana Strike, in every grimoire
+        if (page(mode) != null && SignatureSpell.isSig(page(mode).id()))                // 1.16.0: the Signature Spell for every wizard, the born spells for a fused book
+            return page(mode).id().equals(SignatureSpell.SIG_ID) || SignatureSpell.fused(i);
         return false;
     }
 
@@ -168,7 +171,8 @@ public abstract class GrimoireBook extends Skill {
         if (p == null) return Component.literal("?");
         if (mode < familyCount() && !isUnlocked(instance, mode)) return Component.literal("Sealed Page").withStyle(ChatFormatting.DARK_GRAY);
         int cd = instance.getCoolDown(mode);   // ManasCore cooldowns are in seconds
-        return Component.literal(cd > 0 ? p.name() + " (" + cd + "s)" : p.name());
+        String shown = SignatureSpell.pageName(instance, p);                           // 1.16.0: a signature page shows the wizard's own spell name
+        return Component.literal(cd > 0 ? shown + " (" + cd + "s)" : shown);
     }
 
     // ---------------------------------------------------------------- cost & cast loop

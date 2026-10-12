@@ -168,6 +168,7 @@ public final class GrimoireAcceptance {
         if (!has) inv.placeItemBackInInventory(GrimoireItem.create(player, cover, magic, devil));
         markRolled(player, true);
         GrimoirePages.grantStarter(player, magic);
+        com.newuniverse.nusmp.mana.Signature.assign(player, magic);                     // 1.16.0: every wizard's magic is their own
 
         player.serverLevel().playSound(null, player.blockPosition(),
                 leaves >= 5 ? SoundEvents.WITHER_SPAWN : SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundSource.PLAYERS, 0.8F, 1.0F);
@@ -203,6 +204,39 @@ public final class GrimoireAcceptance {
         }
         if (!has) inv.placeItemBackInInventory(GrimoireItem.create(player, cover, magic, null));
         GrimoirePages.grantStarter(player, magic);
+    }
+
+    /**
+     * 1.16.0: a mage with two attributes does not get two grimoires: the one grimoire is fused. This writes the fusion onto the grimoire
+     * skill and onto the mage's grimoire item(s) (so the book takes its fused look), gives the mage a Signature (mana.Signature) and, for
+     * a magic born of the pair, remembers its name. Call it right after {@link #grantExact}; with no parents it only makes the signature.
+     *
+     * @param grimoire  the attribute of the granted grimoire (the blend, if the game has one)
+     * @param bornName  the name of a magic born of the pair, or null
+     * @return the signature's name
+     */
+    public static String applyFusion(ServerPlayer player, MagicType grimoire, MagicType parentA, MagicType parentB, String bornName) {
+        String fusion = parentA == null || parentB == null ? "" : parentA.name() + ":" + parentB.name();
+        String sig = com.newuniverse.nusmp.mana.Signature.assign(player, grimoire, bornName != null ? bornName : grimoire.word, true);
+        GrimoirePages.grimoireOf(player).ifPresent(i -> {
+            CompoundTag t = i.getOrCreateTag();
+            if (fusion.isEmpty()) t.remove("Fusion"); else t.putString("Fusion", fusion);
+            if (bornName == null) t.remove("BornName"); else t.putString("BornName", bornName);
+            t.putString("SigName", sig);
+            t.putInt("SigShape", com.newuniverse.nusmp.mana.Signature.shape(player).ordinal());
+            i.markDirty();
+        });
+        var inv = player.getInventory();
+        for (int slot = 0; slot < inv.getContainerSize(); slot++) {
+            ItemStack st = inv.getItem(slot);
+            if (GrimoireItem.isOwnedBy(st, player.getUUID()) && grimoire.name().equals(GrimoireItem.data(st).getString("Magic"))) GrimoireItem.setFusion(st, fusion, bornName);
+        }
+        if (GrimoireSlot.holdsOwn(player, grimoire)) {
+            ItemStack held = GrimoireSlot.get(player).copy();
+            GrimoireItem.setFusion(held, fusion, bornName);
+            GrimoireSlot.set(player, held);
+        }
+        return sig;
     }
 
     public static Devil randomDevil(RandomSource r) {

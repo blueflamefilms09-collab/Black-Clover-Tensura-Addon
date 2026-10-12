@@ -90,7 +90,8 @@ public final class WikiBooks {
         return null;
     }
 
-    private static ElementBook.Rider rider(MagicType magic) {
+    /** What a hit of this attribute does besides damage (also used by book.SignatureSpell). */
+    public static ElementBook.Rider rider(MagicType magic) {
         return switch (magic.hit) {
             case BURN -> ElementBook.ignite(3);
             case FREEZE -> ElementBook.effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 70, 2));

@@ -72,6 +72,7 @@ public class MultiverseStatusScreen extends Screen {
             ml.add("Mana density " + mn.getString("Density") + (mn.getBoolean("Grand") ? " (Grand Magic Zone)" : "")
                     + (mn.getBoolean("Zone") ? "  |  Mana Zone ON" : "") + (mn.getBoolean("Negative") ? "  |  Negative mana" : ""));
             if (mn.contains("SocialName")) { ml.add("Social class: " + mn.getString("SocialName")); ml.add("  + " + mn.getString("SocialBuff")); ml.add("  - " + mn.getString("SocialDebuff")); }
+            if (mn.contains("Signature") && !mn.getString("Signature").isEmpty()) ml.add("Signature: " + mn.getString("Signature"));   // 1.16.0
             if (mn.contains("Kingdom")) { ml.add("Hails from the " + mn.getString("Kingdom")); ml.add("  + " + mn.getString("KingdomBuff")); ml.add("  - " + mn.getString("KingdomDebuff")); }
             if (mn.contains("Blood")) { ml.add("Blood of the " + mn.getString("Blood") + " mixed into yours"); ml.add("  + " + mn.getString("BloodBuff")); ml.add("  - " + mn.getString("BloodDebuff")); }
             if (mn.getInt("Corruption") > 0) ml.add("Corruption " + mn.getInt("Corruption") + "/100");

@@ -199,7 +199,12 @@ public enum VfxShape {
     MIST_MAGIC,              // layered drifting vapor and soft water-light from 'from' to 'to'
     LEGION_BOARD,             // toggleable upright checkerboard and chess sprites following the summoned grimoire's owner
     // 0.89: shared layered spell families for the newly covered wiki attributes; each book supplies its own palette.
-    WIKI_MAGIC_CAST, WIKI_MAGIC_FIELD, WIKI_MAGIC_BURST;
+    WIKI_MAGIC_CAST, WIKI_MAGIC_FIELD, WIKI_MAGIC_BURST,
+    // 1.16.0: a wizard's own spells (BornMagicLayer): the payload's colour is the first parent's, the seed's high 32 bits the second parent's, its low byte a style
+    BORN_BEAM,               // a lance / orb / corkscrew from 'from' to 'to' (style bit 3 = orb, bit 4 = corkscrew); power = size
+    BORN_NOVA,               // a two-colour circle, a shock ring and thrown motes at 'from'; power = radius
+    BORN_WAVE,               // rings alternating the two colours racing out from 'from' towards 'to'
+    BORN_RAIN;               // a bolt falling from 'from' to 'to' with a ring, motes and a flash where it lands; power = size
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();
