@@ -55,6 +55,8 @@ public class DarkDiscipleEntity extends Monster {
     private static final EntityDataAccessor<Integer> CAST = SynchedEntityData.defineId(DarkDiscipleEntity.class, EntityDataSerializers.INT);
 
     private UUID ownerId;
+    /** 1.21.0: a disciple of a place (the Underworld Gate), not of a boss: it has no owner to follow and never fades for lack of one. */
+    private boolean free;
     private double share = 0.08;
     private long nextAbility = 60;
     private Vec3 aim = Vec3.ZERO;
@@ -123,6 +125,33 @@ public class DarkDiscipleEntity extends Monster {
         return d;
     }
 
+    /**
+     * 1.21.0: a free-standing Dark Disciple of 'devil' infused with 'fraction' (0.08 .. 0.4) of its power, for the Underworld Gate zone of
+     * the Variable Core: no boss serves it, it hunts players itself and stays until something removes it. Never null for a loaded level
+     * except when the entity type cannot be created.
+     */
+    public static DarkDiscipleEntity spawnFree(ServerLevel level, Vec3 at, Devil devil, float fraction) {
+        DarkDiscipleEntity d = ZogratisEntities.DARK_DISCIPLE.get().create(level);
+        if (d == null) return null;
+        d.moveTo(at.x, at.y, at.z, level.getRandom().nextFloat() * 360f, 0);
+        d.free = true;
+        d.share = Math.max(0.08, Math.min(DiscipleStats.MAX_SHARE, fraction));
+        d.entityData.set(DEVIL, devil.ordinal());
+        d.setBase(Attributes.MAX_HEALTH, DiscipleStats.health(d.share));
+        d.setBase(Attributes.ATTACK_DAMAGE, DiscipleStats.attack(d.share));
+        d.setBase(Attributes.MOVEMENT_SPEED, DiscipleStats.speed(d.share));
+        d.setBase(Attributes.ARMOR, DiscipleStats.armor(d.share));
+        d.setHealth(d.getMaxHealth());
+        d.nextAbility = 40 + d.getRandom().nextInt(40);
+        level.addFreshEntity(d);
+        Tells.burst(level, at.add(0, 1, 0), DevilStyle.color(devil), 24);
+        Tells.ring(level, at, 1.6, DevilStyle.accent(devil));
+        return d;
+    }
+
+    /** Is this a disciple of a place rather than of a boss? */
+    public boolean isFree() { return free; }
+
     private void infuse(ZogratisBoss boss) {
         ownerId = boss.getUUID();
         share = PowerCurve.discipleShare(boss.power());
@@ -158,7 +187,7 @@ public class DarkDiscipleEntity extends Monster {
         if (!(level() instanceof ServerLevel sl)) return;
         long t = tickCount;
         ZogratisBoss boss = t % 10 == 0 ? owner(sl) : null;
-        if (t % 10 == 0) {
+        if (t % 10 == 0 && !free) {
             if (boss == null) {                                           // the owner fell or is gone (a few checks of grace: its chunk may still be loading)
                 if (++orphanChecks >= 4) {
                     Tells.burst(sl, position().add(0, 1, 0), glowColor(), 16);
@@ -332,6 +361,7 @@ public class DarkDiscipleEntity extends Monster {
         if (ownerId != null) tag.putUUID("Owner", ownerId);
         tag.putDouble("Share", share);
         tag.putInt("Devil", entityData.get(DEVIL));
+        if (free) tag.putBoolean("Free", true);
     }
 
     @Override
@@ -340,5 +370,6 @@ public class DarkDiscipleEntity extends Monster {
         if (tag.hasUUID("Owner")) ownerId = tag.getUUID("Owner");
         if (tag.contains("Share")) share = tag.getDouble("Share");
         if (tag.contains("Devil")) entityData.set(DEVIL, tag.getInt("Devil"));
+        free = tag.getBoolean("Free");
     }
 }
