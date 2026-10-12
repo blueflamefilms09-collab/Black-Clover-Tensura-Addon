@@ -1,0 +1,24 @@
+{
+  "replace": false,
+  "values": [
+    "nusmp:demon_slasher_katana",
+    "nusmp:miasma_infused_katana",
+    "nusmp:spell_forged_rapier",
+    "nusmp:demon_slayer_sword",
+    "nusmp:demon_dweller_sword",
+    "nusmp:demon_destroyer_sword",
+    "nusmp:licht_dweller_sword",
+    "nusmp:licht_destroyer_sword",
+    "nusmp:rimeheart_runeblade",
+    "nusmp:last_word",
+    "nusmp:quicklings_ivy",
+    "nusmp:magebane_longsword",
+    "nusmp:prism_blade",
+    "nusmp:bloodbound_katana",
+    "nusmp:permafrost_sabre",
+    "nusmp:cyclone_rapier",
+    "nusmp:club_of_rot",
+    "nusmp:magic_tool_sword",
+    "nusmp:brooch_pin"
+  ]
+}

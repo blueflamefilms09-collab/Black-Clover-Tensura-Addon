@@ -27,11 +27,14 @@ import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.common.ItemAbilities;
+import net.neoforged.neoforge.common.ItemAbility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -169,10 +172,33 @@ public class MagicWeaponItem extends SwordItem {
         return o.equals(p.getUUID());
     }
 
+    // ---------------------------------------------------------------- the shield: a real shield (1.15.0)
+    /** The Magebane Shield blocks like a vanilla shield: hold right-click; LivingEntity#isBlocking reads these three. */
+    @Override
+    public UseAnim getUseAnimation(ItemStack stack) { return kind == Kind.MAGEBANE_SHIELD ? UseAnim.BLOCK : super.getUseAnimation(stack); }
+
+    @Override
+    public int getUseDuration(ItemStack stack) { return kind == Kind.MAGEBANE_SHIELD ? 72000 : super.getUseDuration(stack); }
+
+    @Override
+    public boolean canPerformAction(ItemStack stack, ItemAbility ability) {
+        if (kind == Kind.MAGEBANE_SHIELD && ability == ItemAbilities.SHIELD_BLOCK) return true;
+        return super.canPerformAction(stack, ability);
+    }
+
     // ---------------------------------------------------------------- technique
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
+        if (kind == Kind.MAGEBANE_SHIELD) {                                           // hold to block; the parry and the surge are extras on top
+            if (!level.isClientSide && player instanceof ServerPlayer p) {
+                if (!usableBy(stack, p)) { GrimoireBook.fail(p, "This shield answers only to its owner."); return InteractionResultHolder.fail(stack); }
+                if (p.isShiftKeyDown() && MagebaneShieldArts.surge(p)) return InteractionResultHolder.success(stack);
+                MagebaneShieldArts.raised(p);
+            }
+            player.startUsingItem(hand);
+            return InteractionResultHolder.consume(stack);
+        }
         if (level.isClientSide || !(player instanceof ServerPlayer p)) return InteractionResultHolder.pass(stack);
         if (!usableBy(stack, p)) { GrimoireBook.fail(p, "This sword answers only to its owner."); return InteractionResultHolder.fail(stack); }
         if (p.isShiftKeyDown() && WeaponArts.alt(kind) != null) {                    // 0.52: the second technique (sneak + right-click)
@@ -430,8 +456,13 @@ public class MagicWeaponItem extends SwordItem {
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
         int firstLine = tip.size();
-        tip.add(Component.literal("Right-click: " + kind.ability).withStyle(ChatFormatting.GOLD));
-        tip.add(Component.literal("  " + kind.desc).withStyle(ChatFormatting.GRAY));
+        if (kind == Kind.MAGEBANE_SHIELD) {
+            tip.add(Component.literal("Hold right-click: block like a shield (an axe knocks it down)").withStyle(ChatFormatting.GOLD));
+            tip.add(Component.literal("  Raising it also opens " + kind.ability + " when it is ready: " + kind.desc).withStyle(ChatFormatting.GRAY));
+        } else {
+            tip.add(Component.literal("Right-click: " + kind.ability).withStyle(ChatFormatting.GOLD));
+            tip.add(Component.literal("  " + kind.desc).withStyle(ChatFormatting.GRAY));
+        }
         tip.add(Component.literal("  Cooldown: " + Math.round(kind.cooldown * com.newuniverse.nusmp.NUGameRules.cooldownShown() / 20) + " s").withStyle(ChatFormatting.DARK_GRAY));
         WeaponArts.Alt alt = WeaponArts.alt(kind);
         if (alt != null) {                                                          // 0.52
@@ -449,6 +480,7 @@ public class MagicWeaponItem extends SwordItem {
         if (kind == Kind.WEAPON_OF_RESURGENCE) ResurgenceArts.tooltip(stack, ctx, tip);  // the Weapon of Resurgence
         if (BroochPinArts.isMine(kind)) BroochPinArts.tooltip(stack, tip);               // the Brooch Pin
         if (HandOfProvidenceArts.isMine(kind)) HandOfProvidenceArts.tooltip(stack, tip); // the Hand of Providence
+        CuriosLink.tooltip(kind, tip);                                                   // 1.15.0: worn in a Curios slot
         if (kind == Kind.RIMEHEART) tip.add(Component.literal("  Off-hand magic sword: burst recharges 40% faster, hits freeze longer").withStyle(ChatFormatting.AQUA));
         if (kind == Kind.DEMON_DWELLER) {
             int charge = d == null ? 0 : Math.min(5, d.copyTag().getInt("DwellerCharge"));

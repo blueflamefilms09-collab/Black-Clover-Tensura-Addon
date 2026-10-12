@@ -99,6 +99,7 @@ public class NUSMP {
                 entity instanceof net.minecraft.world.entity.player.Player pl && com.newuniverse.nusmp.multiverse.WizardKing.isKing(pl)
                         ? dev.architectury.event.EventResult.interruptFalse() : dev.architectury.event.EventResult.pass());
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.WizardKing::onPlayerTick);            // 1.6.0: one Wizard King
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.item.CuriosLink::onPlayerTick);                  // 1.15.0: weapons worn in Curios slots
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.mana.Heritage::onPlayerTick);                   // 1.6.0: kingdom, blood, stage buffs
         modEventBus.addListener(com.newuniverse.nusmp.wizard.WizardNet::registerPayloads);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.mana.ManaLaw::onPlayerTick);                    // 1.5.0: mana zone, corruption

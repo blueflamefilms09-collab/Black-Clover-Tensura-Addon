@@ -61,15 +61,21 @@ public class QuestionnaireScreen extends Screen {
         }
     }
 
+    /** The sheet is part of the background layer: Screen.render calls this once before the buttons, so the blur only covers what is behind the sheet. */
     @Override
-    public void render(GuiGraphics g, int mx, int my, float partial) {
-        renderBackground(g, mx, my, partial);
+    public void renderBackground(GuiGraphics g, int mx, int my, float partial) {
+        super.renderBackground(g, mx, my, partial);
         int w = Math.min(360, width - 20), x = (width - w) / 2, top = height / 2 - 100, bottom = height / 2 + 90;
         g.fill(x - 4, top - 4, x + w + 4, bottom + 4, UiDraw.COVER);
         g.fill(x, top, x + w, bottom, UiDraw.PAPER);
+    }
+
+    @Override
+    public void render(GuiGraphics g, int mx, int my, float partial) {
+        super.render(g, mx, my, partial);                      // background + sheet, then the answer buttons
+        int w = Math.min(360, width - 20), x = (width - w) / 2, top = height / 2 - 100;
         g.drawCenteredString(font, "The Tower Wizard asks  (" + (index + 1) + " / " + texts.size() + ")", width / 2, top + 6, UiDraw.GOLD_INK);
         UiDraw.wrapped(g, font, texts.get(index), x + 12, top + 22, w - 24, UiDraw.INK);
-        super.render(g, mx, my, partial);
     }
 
     @Override public boolean isPauseScreen() { return false; }

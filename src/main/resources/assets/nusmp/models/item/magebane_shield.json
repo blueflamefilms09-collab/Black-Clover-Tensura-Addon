@@ -141,5 +141,13 @@
         1
       ]
     }
-  }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "blocking": 1
+      },
+      "model": "nusmp:item/magebane_shield_blocking"
+    }
+  ]
 }

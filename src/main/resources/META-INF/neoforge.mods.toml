@@ -4,7 +4,7 @@ license="All rights reserved"
 
 [[mods]]
 modId="nusmp"
-version="1.14.0"
+version="1.15.0"
 displayName="Multiverse"
 logoFile="logo.png"
 logoBlur=false
@@ -44,6 +44,14 @@ modId="bettercombat"
 type="optional"
 versionRange="[0,)"
 ordering="NONE"
+side="BOTH"
+
+# 1.15.0: the weapons fit Curios slots (data tags under data/curios); optional, the weapons work in hand without it
+[[dependencies.nusmp]]
+modId="curios"
+type="optional"
+versionRange="[0,)"
+ordering="AFTER"
 side="BOTH"
 
 [[mixins]]

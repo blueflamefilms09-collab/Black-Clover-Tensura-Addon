@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -20,6 +21,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
@@ -77,6 +79,10 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         modBus.addListener(WeaponRenderer::registerExtensions);
         modBus.addListener(WeaponRenderer::registerModels);
         modBus.addListener((ModelEvent.BakingCompleted e) -> MESHES.clear());     // a resource reload re-reads the meshes
+        // 1.15.0: the Magebane Shield is a real shield; this is vanilla's own "blocking" predicate, which swaps in the raised-shield model
+        modBus.addListener((FMLClientSetupEvent e) -> e.enqueueWork(() -> ItemProperties.register(NUItems.MAGEBANE_SHIELD.get(),
+                ResourceLocation.withDefaultNamespace("blocking"),
+                (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F)));
     }
 
     static void registerExtensions(RegisterClientExtensionsEvent e) {

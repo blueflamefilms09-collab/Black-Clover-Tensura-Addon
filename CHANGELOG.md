@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.15.0] — The Magebane Shield is a real shield, the weapons fit Curios slots, and the questionnaire is no longer blurred
+
+**State:** written without a compiler; CI is the first compile. Nothing run in game. The Curios integration reads Curios by reflection and has never met the real mod.
+
+### Fixed
+- **The Tower Wizard's questionnaire was blurred** (sheet, title and question): the screen drew its parchment and text and then called `Screen.render`, whose background pass blurs everything already on screen, so only the buttons stayed sharp. The sheet is now part of the background layer and the text is drawn after it.
+
+### Replaced (the shield's use)
+- **Magebane Shield: hold right-click to block, like a vanilla shield.** It reports `SHIELD_BLOCK`, `UseAnim.BLOCK` and a 72000-tick use, so blocking, the lowered arm pose, durability loss on blocked hits and an axe knocking it down are the game's own. The old one-press, 6 s-cooldown Spellbreak Parry no longer locks the shield: raising the shield opens the Parry whenever it has recharged (its own timer, 18 s by default), lasting 2 s (3 s with the Magebane Longsword in a hand) only while the shield stays up; otherwise the shield is simply a shield. Sneak + raise fires Absorb Surge when it is ready and a caster is near, else you just block. A client item model override (`blocking`) raises the shield in front of the first-person view (`models/item/magebane_shield_blocking.json`; the transform is a guess, not seen in game). Nothing removed: the passive magic cut, Aegis Slam, the bash and the paired Dispel Surge parry are unchanged (the latter no longer needs the shield up).
+
+### New
+- **Curios support.** Every weapon is listed in `data/curios/tags/item/` so Curios can socket it: blades on the **belt**, greatswords, hammers, crossbows, the trident, tools and the Magebane Shield on the **back**, the Hand of Providence in the **hands** slot, the Brooch Pin as a **charm**, and all of them in the generic **curio** slot. `neoforge.mods.toml` lists Curios as an optional dependency. With Curios installed, a weapon worn in a slot (and not also in a hand) grants a small sheathed bonus shown in its tooltip (e.g. katanas +4% speed, Elsdocia +4 health, the Magebane Shield keeps its magic cut and +1 armour); `item/CuriosLink.java`. The numbers are first guesses to tune. Curios draws nothing on the body for them (no worn renderers yet).
+
 ## [1.14.0] — The Convergence system is removed (on the owner's request)
 
 **State:** written without a compiler; CI is the first compile. Nothing run in game.
