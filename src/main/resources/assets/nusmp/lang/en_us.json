@@ -1189,6 +1189,8 @@
   "item.nusmp.gale_feather.desc": "Sylph's wind-spirit feather. Use it: Gale Leap, a gust flings you forward and up and slows your fall for 8 s (12 s cooldown).",
   "item.nusmp.brooch_pin": "Brooch Pin",
   "item.nusmp.hand_of_providence": "The Hand of Providence",
+  "item.nusmp.grimoire_summons": "Grimoire Summons",
+  "entity.nusmp.tower_wizard": "Tower Wizard",
   "item.nusmp.magic_stone": "Magic Stone",
   "item.nusmp.magic_stone.desc": "One of the ancient Magic Stones. Use it (Arcane Stage only): negative mana for 60 s, spells +60% power and -30% cost, every cast corrupts you.",
   "entity.nusmp.elemental_spirit_lord": "Spirit Lord"

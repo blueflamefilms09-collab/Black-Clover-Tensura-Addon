@@ -21,3 +21,18 @@ Commands: `/multiverse mana info`, `affinity <loved|normal|hated>` (anyone, abou
 `mana stone <player>`, `mana corruption <player> <n>`. The status panel (Codex "Status") has a Mana block.
 Code: `mana/ManaLaw.java`, `mana/MagicStoneItem.java`, `mana/ManaCommands.java`; hooks in `GrimoireBook` (cost, cooldown, pages, exhaustion),
 `BalanceLaw.damage` (power), `multiverse/Ceremony` (the choice), `MultiverseSync` (panel).
+
+## 1.6.0: the Tower Wizard, the summons and the questionnaire (replaces the 1.5.0 plain "choose your magic" offer as the default)
+
+Tensura stats stay as they are (EP, magicules, Tensura race and skills); Black Clover adds buffs and debuffs on top.
+
+1. **The summons.** When you come of age (`wizard.minMinutes` of play time, default 30) and/or have grown enough (`wizard.minLevel` experience levels, default 5; `needBoth` decides "and" or "or"), a **Grimoire Summons** arrives. Read it to learn where the nearest Grimoire Tower is. Admin: `/multiverse wizard summon <player>`.
+2. **The Tower Wizard** stands at the tower (spawned when an eligible mage comes near; `/multiverse wizard spawn`). Speak to him with the summons in your pack.
+3. **The questionnaire:** nine questions drawn at random (nature, hearth, family story, resolve), the answers in random order, nothing tells you what an answer does. It decides:
+   - **magic attribute(s)**: one, and a second (a second grimoire) when two natures are nearly tied (`wizard.dualAttributeChance`);
+   - **grimoire type**: the kingdom's suit and the leaves (3 / 4 / 5; five still needs the forbidden-start rule) from your resolve;
+   - **kingdom** you hail from: a buff and a debuff (Clover: +2 health, +3% attack / -1 armor; Spade: +8% attack and spell power / -2 health; Heart: spells 5% cheaper / -5% attack; Diamond: +1 luck, +4% speed / -1 armor);
+   - **blood of a Tensura race** mixed into yours: a buff and a debuff per race (Heritage table in `mana/Heritage.java`).
+4. **The book floats to you** from the wizard to the player, then the grimoire is yours. Mage Stage also gives health and speed.
+`wizard.enabled=false` brings back the older ceremony (and `mana.chooseMagic` its choose-or-roll).
+Code: `wizard/*`, `mana/Heritage.java`, `client/wizard/*`.

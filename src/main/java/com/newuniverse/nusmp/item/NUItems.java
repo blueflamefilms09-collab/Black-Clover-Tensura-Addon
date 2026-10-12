@@ -85,6 +85,7 @@ public final class NUItems {
     // 0.52: Zagred's drops (see BossRelics)
     public static final DeferredItem<RelicItem> SHROUD_OF_MARGINS = relic("shroud_of_margins", RelicItem.Kind.MARGINS, Rarity.EPIC);
     public static final DeferredItem<RelicItem> CIRCLET_OF_THOUGHT = relic("circlet_of_quickened_thought", RelicItem.Kind.QUICKENED, Rarity.EPIC);
+    public static final DeferredItem<Item> GRIMOIRE_SUMMONS = ITEMS.register("grimoire_summons", () -> new com.newuniverse.nusmp.wizard.GrimoireSummonsItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));   // 1.6.0
     public static final DeferredItem<Item> MAGIC_STONE = ITEMS.register("magic_stone", () -> new com.newuniverse.nusmp.mana.MagicStoneItem(new Item.Properties().stacksTo(16).rarity(Rarity.EPIC).fireResistant()));   // 1.5.0: negative mana
     public static final DeferredItem<Item> HEART_OF_WORDS = ITEMS.register("heart_of_words", () -> new Item(new Item.Properties().stacksTo(16).rarity(Rarity.EPIC).fireResistant()));
     public static final DeferredItem<RelicItem> GALE_FEATHER = relic("gale_feather", RelicItem.Kind.GALE_FEATHER, Rarity.EPIC);          // 0.100: Sylph's drop
@@ -166,6 +167,7 @@ public final class NUItems {
         l.addAll(List.of(CLUB_OF_ROT, DOOM_HAMMER));                                             // the Club of Rot and the Doom Hammer
         l.addAll(List.of(BROOCH_PIN, HAND_OF_PROVIDENCE));                                       // the Brooch Pin and the Hand of Providence
         l.addAll(List.of(MAGEBANE_SHIELD, WEAPON_OF_RESURGENCE));                                // the Magebane Shield and the Weapon of Resurgence
+        l.add(GRIMOIRE_SUMMONS);                                                                  // 1.6.0
         l.add(MAGIC_STONE);                                                                       // 1.5.0
         l.add(MAGIC_KEY);
         return l;

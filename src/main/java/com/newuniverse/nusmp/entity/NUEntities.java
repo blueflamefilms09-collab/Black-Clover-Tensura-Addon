@@ -50,7 +50,12 @@ public final class NUEntities {
             () -> EntityType.Builder.<com.newuniverse.nusmp.prop.MagicPropEntity>of(com.newuniverse.nusmp.prop.MagicPropEntity::new, MobCategory.MISC)
                     .sized(1.0f, 1.0f).clientTrackingRange(12).updateInterval(1).build("magic_prop"));
 
+    /** 1.6.0: the keeper of a Grimoire Tower (see wizard.TowerWizardEntity). */
+    public static final DeferredHolder<EntityType<?>, EntityType<com.newuniverse.nusmp.wizard.TowerWizardEntity>> TOWER_WIZARD = ENTITIES.register("tower_wizard",
+            () -> EntityType.Builder.of(com.newuniverse.nusmp.wizard.TowerWizardEntity::new, MobCategory.MISC).sized(0.6f, 1.95f).clientTrackingRange(10).build("tower_wizard"));
+
     public static void attributes(EntityAttributeCreationEvent e) {
+        e.put(TOWER_WIZARD.get(), net.minecraft.world.entity.monster.Witch.createAttributes().build());
         e.put(SPIRIT_LORD.get(), SpiritLordEntity.createAttributes().build());
         e.put(ELEMENTAL_SPIRIT_LORD.get(), ElementalSpiritLordEntity.createAttributes().build());
         e.put(MIRROR_DOUBLE.get(), MirrorDoubleEntity.createAttributes().build());

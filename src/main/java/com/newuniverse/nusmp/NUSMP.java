@@ -72,6 +72,7 @@ public class NUSMP {
             modEventBus.addListener(com.newuniverse.nusmp.client.ZagredRenderer::layers);
             modEventBus.addListener(com.newuniverse.nusmp.client.GrimoireDaemonRenderer::register);      // 0.52: Zagred's daemons
             modEventBus.addListener(com.newuniverse.nusmp.client.GrimoireDaemonRenderer::layers);
+            modEventBus.addListener(com.newuniverse.nusmp.client.wizard.TowerWizardClient::register);        // 1.6.0
             modEventBus.addListener(com.newuniverse.nusmp.client.CottonSheepRenderer::register);        // 0.52: Cotton Magic's sheep and cloud
             modEventBus.addListener(com.newuniverse.nusmp.client.CottonSheepRenderer::layers);
             modEventBus.addListener(com.newuniverse.nusmp.client.WindSpiritLordRenderer::register);          // 0.53: Sylph, the Wind Spirit Lord boss
@@ -91,6 +92,9 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.Ceremony::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.MasteryPages::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.Squads::onPlayerTick);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.wizard.WizardSystem::onPlayerTick);              // 1.6.0: the summons
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.mana.Heritage::onPlayerTick);                   // 1.6.0: kingdom, blood, stage buffs
+        modEventBus.addListener(com.newuniverse.nusmp.wizard.WizardNet::registerPayloads);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.mana.ManaLaw::onPlayerTick);                    // 1.5.0: mana zone, corruption
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.MultiverseSync::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.MultiverseSync::onLogin);

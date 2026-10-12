@@ -104,6 +104,7 @@ public final class Ceremony {
         if (site.isEmpty()) return;
         int radius = MultiverseConfig.get(MultiverseConfig.CEREMONY_TOWER_RADIUS);
         if (site.get().pos().distSqr(p.blockPosition()) > (double) radius * radius) return;
+        if (MultiverseConfig.get(MultiverseConfig.WIZARD_MODE)) { com.newuniverse.nusmp.wizard.WizardSystem.ensureWizard(p.serverLevel(), site.get().pos()); return; }   // 1.6.0: the Tower Wizard
         if (isActive(p.getServer())) choose(p, "the Grimoire Tower");
         else if (p.tickCount % 600 == 0)
             p.displayClientMessage(Component.literal("The tower is quiet. Pray at the altar on its top floor to be chosen.").withStyle(ChatFormatting.GOLD), true);
@@ -197,7 +198,7 @@ public final class Ceremony {
         return true;
     }
 
-    private static void finish(ServerPlayer p, String where) {
+    public static void finish(ServerPlayer p, String where) {
         GrimoireAcceptance.markRolled(p, true);
         Vec3 above = p.position().add(0, 3.2, 0);
         VfxSpawn.send(p.serverLevel(), VfxShape.MAGIC_CIRCLE, above, p.position(), 0xFFFFD86B, 50, 1.4f);

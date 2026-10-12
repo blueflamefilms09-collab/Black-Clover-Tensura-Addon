@@ -40,7 +40,9 @@ public final class MultiverseConfig {
     public static final ModConfigSpec.ConfigValue<List<? extends Integer>> STAGE_DAYS;
     public static final ModConfigSpec.DoubleValue SPIRIT_PHYSICAL_REDUCTION;
     public static final ModConfigSpec.BooleanValue SPIRIT_FALL_IMMUNE;
-    public static final ModConfigSpec.BooleanValue LETHAL_EXHAUSTION, CHOOSE_MAGIC;
+    public static final ModConfigSpec.BooleanValue LETHAL_EXHAUSTION, CHOOSE_MAGIC, WIZARD_MODE, SUMMONS_NEED_BOTH;
+    public static final ModConfigSpec.IntValue SUMMONS_MIN_LEVEL, SUMMONS_MIN_MINUTES;
+    public static final ModConfigSpec.DoubleValue DUAL_ATTRIBUTE_CHANCE;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -130,6 +132,13 @@ public final class MultiverseConfig {
         b.push("mana");
         LETHAL_EXHAUSTION = b.comment("Mana is life force: when true, burning every last drop of mana can kill. Default false: the collapse never kills by itself.").define("lethalExhaustion", false);
         CHOOSE_MAGIC = b.comment("The Grimoire Acceptance Ceremony offers a choice of magics instead of rolling one (no magic is a bad draw: every grimoire has Mana Strike and Mana Zone).").define("chooseMagic", true);
+        b.pop();
+        b.push("wizard");
+        WIZARD_MODE = b.comment("Grimoires are claimed from the Tower Wizard: a summons arrives when you are old and grown enough, the wizard sets a questionnaire, and your grimoire floats to you. false = the older ceremony.").define("enabled", true);
+        SUMMONS_MIN_LEVEL = b.comment("Experience levels that earn the summons (0 = ignore levels).").defineInRange("minLevel", 5, 0, 1000);
+        SUMMONS_MIN_MINUTES = b.comment("Minutes of play time (the mage's age) that earn the summons (0 = ignore age).").defineInRange("minMinutes", 30, 0, 100000);
+        SUMMONS_NEED_BOTH = b.comment("true = both the level and the age are needed; false = either one is enough. With both set to 0 the summons comes at once.").define("needBoth", false);
+        DUAL_ATTRIBUTE_CHANCE = b.comment("When two magic attributes are nearly tied in the questionnaire, the chance the mage gets both (a second grimoire).").defineInRange("dualAttributeChance", 0.5, 0.0, 1.0);
         b.pop();
         SPEC = b.build();
     }

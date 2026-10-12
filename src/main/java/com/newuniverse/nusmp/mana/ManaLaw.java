@@ -104,7 +104,7 @@ public final class ManaLaw {
     // ---------------------------------------------------------------- the numbers every spell passes through
     /** Multiplies a grimoire spell's mana cost. */
     public static double costMult(ServerPlayer p) {
-        double c = stage(p).cost() * affinity(p).cost;
+        double c = stage(p).cost() * affinity(p).cost * Heritage.costMult(p);
         if (zoneActive(p)) c *= 0.8;
         if (negativeActive(p)) c *= 0.7;
         return c;
@@ -116,7 +116,7 @@ public final class ManaLaw {
     /** Multiplies the damage of a spell. */
     public static double powerMult(LivingEntity e) {
         if (!(e instanceof ServerPlayer p)) return 1.0;
-        double m = stage(p).power();
+        double m = stage(p).power() * Heritage.powerMult(p);
         if (zoneActive(p)) m *= 1.0 + 0.2 * Math.min(2.0, density(p.level(), p.blockPosition()));
         if (negativeActive(p)) m *= 1.6;
         return m;
@@ -230,6 +230,10 @@ public final class ManaLaw {
         t.putString("Density", String.format("%.1f", density(p.level(), p.blockPosition())));
         t.putBoolean("Grand", isGrandZone(p.level(), p.blockPosition()));
         t.putString("Offer", offerCover(p));
+        var k = Heritage.kingdom(p);
+        var b = Heritage.blood(p);
+        if (k != null) { var tr = Heritage.kingdomTrait(k); t.putString("Kingdom", k.displayName); t.putString("KingdomBuff", tr.buff()); t.putString("KingdomDebuff", tr.debuff()); }
+        if (b != null) { var tr = Heritage.bloodTrait(b); t.putString("Blood", b.displayName); t.putString("BloodBuff", tr.buff()); t.putString("BloodDebuff", tr.debuff()); }
         return t;
     }
 

@@ -380,6 +380,20 @@ public final class MultiverseCommands {
                 .then(Commands.literal("tower").executes(ctx -> locate(ctx, WorldSites.Kind.TOWER)))
                 .then(Commands.literal("ruins").executes(ctx -> locate(ctx, WorldSites.Kind.RUINS))));
 
+        root.then(Commands.literal("wizard").requires(MultiverseCommands::admin)                              // 1.6.0: the Tower Wizard
+                .then(Commands.literal("summon").then(Commands.argument("player", EntityArgument.player()).executes(ctx -> {
+                    ServerPlayer p = EntityArgument.getPlayer(ctx, "player");
+                    com.newuniverse.nusmp.wizard.WizardSystem.summon(p);
+                    return ok(ctx, "A summons for " + p.getName().getString() + ".");
+                })))
+                .then(Commands.literal("spawn").executes(ctx -> {
+                    ServerPlayer p = ctx.getSource().getPlayerOrException();
+                    var w = com.newuniverse.nusmp.entity.NUEntities.TOWER_WIZARD.get().create(p.serverLevel());
+                    if (w == null) return fail(ctx, "Could not create the wizard.");
+                    w.moveTo(p.getX(), p.getY(), p.getZ(), p.getYRot(), 0f);
+                    p.serverLevel().addFreshEntity(w);
+                    return ok(ctx, "The Tower Wizard appears.");
+                })));
         root.then(com.newuniverse.nusmp.mana.ManaCommands.build());                                           // 1.5.0: the mana system
         root.then(Commands.literal("choose").then(Commands.argument("magic", StringArgumentType.word()).executes(ctx -> {    // 1.5.0: the ceremony's choice
             ServerPlayer p = ctx.getSource().getPlayerOrException();

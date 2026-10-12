@@ -48,6 +48,12 @@ public class GrimoireAltarBlock extends Block {
         if (level.isClientSide || !(player instanceof ServerPlayer p)) return InteractionResult.SUCCESS;
         com.newuniverse.nusmp.multiverse.WorldSites.record(com.newuniverse.nusmp.multiverse.WorldSites.Kind.TOWER, level.dimension(), pos);
         // Missed the ceremony? Any altar accepts an eligible mage (a grimoire always answers here).
+        if (com.newuniverse.nusmp.multiverse.Ceremony.isEligible(p) && com.newuniverse.nusmp.multiverse.MultiverseConfig.get(com.newuniverse.nusmp.multiverse.MultiverseConfig.WIZARD_MODE)) {
+            glow(p, pos, 0xFFFFD86B, 1.0f);
+            com.newuniverse.nusmp.wizard.WizardSystem.ensureWizard(p.serverLevel(), pos);                   // 1.6.0: the Tower Wizard hands out grimoires
+            p.displayClientMessage(Component.literal("Speak to the Tower Wizard. Bring your summons.").withStyle(ChatFormatting.GOLD), true);
+            return InteractionResult.CONSUME;
+        }
         if (com.newuniverse.nusmp.multiverse.Ceremony.isEligible(p)) {
             glow(p, pos, 0xFFFFD86B, 1.4f);
             com.newuniverse.nusmp.multiverse.Ceremony.choose(p, "a Grimoire Altar");

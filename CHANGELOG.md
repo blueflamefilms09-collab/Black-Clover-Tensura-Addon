@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.6.0] — The Tower Wizard: a summons, a questionnaire, a grimoire that floats to you; kingdom and blood buffs and debuffs
+
+**State:** written without a compiler in the session; CI is the first compile. Nothing run in game. Details: `docs/mana_system.md`.
+
+### New
+- **Grimoire Summons** (item) given when you are old and grown enough (play time and/or experience levels, configurable), **Tower Wizard** (a witch-model NPC at the tower), a randomly drawn **questionnaire** (a screen) that decides your magic attribute(s) (a second grimoire for a dual mage), your grimoire type, the **kingdom** you hail from (buff and debuff) and the **blood of a Tensura race** mixed into yours (buff and debuff). The grimoire then floats from the wizard to you.
+- **Heritage** (`mana/Heritage.java`): the kingdom and blood modifiers and Mage Stage buffs, as transient attribute modifiers on top of the player's Tensura stats. Shown in the status panel.
+- `/multiverse wizard summon|spawn`.
+
+### Replaced
+- At a Grimoire Tower or Altar an eligible mage is now sent to the Tower Wizard instead of being chosen at once (`wizard.enabled`, default on). The 1.5.0 choose-your-magic list and the old roll remain for `wizard.enabled=false` and for admin grants.
+
+### Not done
+- The wizard has no custom model or skin (he is the vanilla witch); the questionnaire screen is plain parchment with buttons; towers that were never visited are not found by the summons.
+
 ## [1.5.0] — The mana system of the video, with no bad draws
 
 **State:** written without a compiler in the session; CI is the first compile. Nothing run in game. Full table (video vs. mod): `docs/mana_system.md`.

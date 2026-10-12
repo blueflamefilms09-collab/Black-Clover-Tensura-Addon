@@ -190,6 +190,26 @@ public final class GrimoireAcceptance {
         }
     }
 
+    /** 1.6.0: a second attribute (a dual mage): its own grimoire beside the first, without taking the first away. */
+    public static void grantExtra(ServerPlayer player, GrimoireCover cover, MagicType magic) {
+        Skills skills = SkillAPI.getSkillsFrom(player);
+        GrimoireGuard.markLegit(player, true);
+        ManasSkillInstance inst = NUSkills.grimoireSkillFor(magic).createDefaultInstance();
+        CompoundTag tag = inst.getOrCreateTag();
+        tag.putInt("Leaves", cover.tier);
+        tag.putString("Cover", cover.name());
+        tag.putString("Magic", magic.name());
+        skills.learnSkill(inst, Component.literal("A second grimoire answers you.").withStyle(ChatFormatting.GOLD));
+        var inv = player.getInventory();
+        boolean has = false;
+        for (int slot = 0; slot < inv.getContainerSize(); slot++) {
+            var st = inv.getItem(slot);
+            if (GrimoireItem.isOwnedBy(st, player.getUUID()) && magic.name().equals(GrimoireItem.data(st).getString("Magic"))) { has = true; break; }
+        }
+        if (!has) inv.placeItemBackInInventory(GrimoireItem.create(player, cover, magic, null));
+        GrimoirePages.grantStarter(player, magic);
+    }
+
     public static Devil randomDevil(RandomSource r) {
         Devil[] options = Devil.values();
         Devil d;

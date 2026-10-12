@@ -93,6 +93,8 @@ public class MultiverseStatusScreen extends Screen {
             ml.add("Spells cost " + mn.getInt("Cost") + "%, hit for " + mn.getInt("Power") + "%");
             ml.add("Mana density " + mn.getString("Density") + (mn.getBoolean("Grand") ? " (Grand Magic Zone)" : "")
                     + (mn.getBoolean("Zone") ? "  |  Mana Zone ON" : "") + (mn.getBoolean("Negative") ? "  |  Negative mana" : ""));
+            if (mn.contains("Kingdom")) { ml.add("Hails from the " + mn.getString("Kingdom")); ml.add("  + " + mn.getString("KingdomBuff")); ml.add("  - " + mn.getString("KingdomDebuff")); }
+            if (mn.contains("Blood")) { ml.add("Blood of the " + mn.getString("Blood") + " mixed into yours"); ml.add("  + " + mn.getString("BloodBuff")); ml.add("  - " + mn.getString("BloodDebuff")); }
             if (mn.getInt("Corruption") > 0) ml.add("Corruption " + mn.getInt("Corruption") + "/100");
             if (!mn.getString("Offer").isEmpty()) ml.add("A grimoire waits: choose your magic (see chat, /multiverse choose)");
             out.add(new Block("Mana", ml, mn.getInt("Corruption") >= 70));
