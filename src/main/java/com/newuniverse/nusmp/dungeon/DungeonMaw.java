@@ -137,11 +137,13 @@ public final class DungeonMaw {
 
     private static void close(MinecraftServer server, ServerLevel level, DungeonSave.Maw m, String why) {
         BlockPos at = BlockPos.of(m.pos());
-        if (level.getBlockState(at).is(DungeonBlocks.DUNGEON_MAW.get())) level.setBlock(at, Blocks.AIR.defaultBlockState(), 3);
-        for (long r : m.roots()) {
-            BlockPos rp = BlockPos.of(r);
-            if (level.getBlockState(rp).is(DungeonBlocks.MAW_ROOT.get())) level.setBlock(rp, Blocks.AIR.defaultBlockState(), 3);
-        }
+        DungeonGuard.internal(() -> {                                               // a Maw opened with the admin command inside the Dungeon must still be able to close
+            if (level.getBlockState(at).is(DungeonBlocks.DUNGEON_MAW.get())) level.setBlock(at, Blocks.AIR.defaultBlockState(), 3);
+            for (long r : m.roots()) {
+                BlockPos rp = BlockPos.of(r);
+                if (level.getBlockState(rp).is(DungeonBlocks.MAW_ROOT.get())) level.setBlock(rp, Blocks.AIR.defaultBlockState(), 3);
+            }
+        });
         level.playSound(null, at, SoundEvents.SCULK_SHRIEKER_SHRIEK, SoundSource.AMBIENT, 1.5f, 0.5f);
         level.sendParticles(ParticleTypes.SCULK_SOUL, at.getX() + 0.5, at.getY() + 1, at.getZ() + 0.5, 40, 1.0, 1.0, 1.0, 0.05);
         broadcast(server, Component.literal("The Dungeon Maw near (" + round(at.getX()) + ", " + round(at.getZ()) + ") has closed: " + why + ".").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));

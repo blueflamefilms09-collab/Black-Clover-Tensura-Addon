@@ -146,7 +146,8 @@ public final class SpellRuntime {
 
         TEMP.removeIf(t -> {
             if (t.level().getGameTime() < t.until()) return false;
-            if (t.level().getBlockState(t.pos()).is(t.state().getBlock())) t.level().removeBlock(t.pos(), false);
+            if (t.level().getBlockState(t.pos()).is(t.state().getBlock()))
+                com.newuniverse.nusmp.dungeon.DungeonGuard.internal(() -> t.level().removeBlock(t.pos(), false));      // the spell's own block, even in the unbreakable Dungeon
             return true;
         });
     }

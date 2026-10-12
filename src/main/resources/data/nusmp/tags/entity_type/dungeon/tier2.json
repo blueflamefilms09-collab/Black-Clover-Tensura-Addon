@@ -1,0 +1,133 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "tensura:armorsaurus",
+      "required": false
+    },
+    {
+      "id": "tensura:lizardman",
+      "required": false
+    },
+    {
+      "id": "tensura:orc",
+      "required": false
+    },
+    {
+      "id": "tensura:hound_dog",
+      "required": false
+    },
+    {
+      "id": "tensura:hell_moth",
+      "required": false
+    },
+    {
+      "id": "tensura:giant_ant",
+      "required": false
+    },
+    {
+      "id": "tensura:army_wasp",
+      "required": false
+    },
+    {
+      "id": "tensura:horned_bear",
+      "required": false
+    },
+    {
+      "id": "tensura:barghest",
+      "required": false
+    },
+    {
+      "id": "tensura:leech_lizard",
+      "required": false
+    },
+    {
+      "id": "tensura:salamander",
+      "required": false
+    },
+    {
+      "id": "tensura:undine",
+      "required": false
+    },
+    {
+      "id": "tensura:sylphide",
+      "required": false
+    },
+    {
+      "id": "tensura:dragon_peacock",
+      "required": false
+    },
+    {
+      "id": "tensura:feathered_serpent",
+      "required": false
+    },
+    {
+      "id": "tensura:phantaspore",
+      "required": false
+    },
+    {
+      "id": "tensura:akash",
+      "required": false
+    },
+    {
+      "id": "tensura:supermassive_slime",
+      "required": false
+    },
+    {
+      "id": "tensura:pegasus",
+      "required": false
+    },
+    {
+      "id": "tensura:pegacorn",
+      "required": false
+    },
+    {
+      "id": "tensura:unicorn",
+      "required": false
+    },
+    {
+      "id": "tensura:spear_toro",
+      "required": false
+    },
+    {
+      "id": "iceandfire:troll",
+      "required": false
+    },
+    {
+      "id": "iceandfire:amphithere",
+      "required": false
+    },
+    {
+      "id": "iceandfire:cockatrice",
+      "required": false
+    },
+    {
+      "id": "iceandfire:siren",
+      "required": false
+    },
+    {
+      "id": "iceandfire:ghost",
+      "required": false
+    },
+    {
+      "id": "iceandfire:myrmex_soldier",
+      "required": false
+    },
+    {
+      "id": "iceandfire:myrmex_royal",
+      "required": false
+    },
+    {
+      "id": "iceandfire:dread_ghoul",
+      "required": false
+    },
+    {
+      "id": "iceandfire:dread_beast",
+      "required": false
+    },
+    {
+      "id": "iceandfire:dread_scuttler",
+      "required": false
+    }
+  ]
+}

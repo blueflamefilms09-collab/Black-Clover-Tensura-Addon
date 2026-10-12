@@ -1,0 +1,85 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "tensura:ifrit",
+      "required": false
+    },
+    {
+      "id": "tensura:ifrit_clone",
+      "required": false
+    },
+    {
+      "id": "tensura:arch_daemon",
+      "required": false
+    },
+    {
+      "id": "tensura:greater_daemon",
+      "required": false
+    },
+    {
+      "id": "tensura:orc_lord",
+      "required": false
+    },
+    {
+      "id": "tensura:orc_disaster",
+      "required": false
+    },
+    {
+      "id": "tensura:charybdis",
+      "required": false
+    },
+    {
+      "id": "tensura:elemental_colossus",
+      "required": false
+    },
+    {
+      "id": "tensura:tempest_serpent",
+      "required": false
+    },
+    {
+      "id": "tensura:tempest_serpent_body",
+      "required": false
+    },
+    {
+      "id": "tensura:evil_centipede_body",
+      "required": false
+    },
+    {
+      "id": "iceandfire:dread_queen",
+      "required": false
+    },
+    {
+      "id": "iceandfire:dragon_egg",
+      "required": false
+    },
+    {
+      "id": "iceandfire:dragon_skull",
+      "required": false
+    },
+    {
+      "id": "iceandfire:dragon_arrow",
+      "required": false
+    },
+    {
+      "id": "iceandfire:stone_statue",
+      "required": false
+    },
+    {
+      "id": "iceandfire:myrmex_egg",
+      "required": false
+    },
+    {
+      "id": "iceandfire:cockatrice_egg",
+      "required": false
+    },
+    {
+      "id": "iceandfire:hippogryph_egg",
+      "required": false
+    },
+    {
+      "id": "iceandfire:death_worm_egg",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "tensura:direwolf",
+      "required": false
+    },
+    {
+      "id": "tensura:basilisk",
+      "required": false
+    },
+    {
+      "id": "tensura:black_spider",
+      "required": false
+    },
+    {
+      "id": "tensura:knight_spider",
+      "required": false
+    },
+    {
+      "id": "tensura:blade_tiger",
+      "required": false
+    },
+    {
+      "id": "tensura:giant_bear",
+      "required": false
+    },
+    {
+      "id": "tensura:war_gnome",
+      "required": false
+    },
+    {
+      "id": "tensura:beast_gnome",
+      "required": false
+    },
+    {
+      "id": "tensura:lesser_daemon",
+      "required": false
+    },
+    {
+      "id": "tensura:evil_centipede",
+      "required": false
+    },
+    {
+      "id": "tensura:megalodon",
+      "required": false
+    },
+    {
+      "id": "tensura:sissie",
+      "required": false
+    },
+    {
+      "id": "iceandfire:sea_serpent",
+      "required": false
+    },
+    {
+      "id": "iceandfire:gorgon",
+      "required": false
+    },
+    {
+      "id": "iceandfire:cyclops",
+      "required": false
+    },
+    {
+      "id": "iceandfire:hydra",
+      "required": false
+    },
+    {
+      "id": "iceandfire:myrmex_sentinel",
+      "required": false
+    },
+    {
+      "id": "iceandfire:myrmex_queen",
+      "required": false
+    },
+    {
+      "id": "iceandfire:dread_knight",
+      "required": false
+    },
+    {
+      "id": "iceandfire:dread_lich",
+      "required": false
+    }
+  ]
+}

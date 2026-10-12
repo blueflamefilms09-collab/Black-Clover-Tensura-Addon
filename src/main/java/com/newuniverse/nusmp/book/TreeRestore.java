@@ -74,7 +74,7 @@ public final class TreeRestore extends SavedData {
             if (u.before() == null) continue;
             BlockState now = level.getBlockState(u.pos());
             if (!now.is(u.placed().getBlock())) continue;                     // replaced by someone: leave it
-            level.setBlock(u.pos(), u.before(), 2 | 16);
+            com.newuniverse.nusmp.dungeon.DungeonGuard.internal(() -> level.setBlock(u.pos(), u.before(), 2 | 16));   // taking back the spell's own trees, even in the unbreakable Dungeon
             if (at == null) at = Vec3.atBottomCenterOf(u.pos());
         }
         if (at != null) VfxSpawn.send(level, VfxShape.TREE_ROOTS, at, at.add(0, 1, 0), WorldTreeBook.EMERALD, 30, 2f);

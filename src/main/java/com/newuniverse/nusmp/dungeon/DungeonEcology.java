@@ -1,5 +1,8 @@
 package com.newuniverse.nusmp.dungeon;
 
+import com.newuniverse.nusmp.dungeon.wild.WildRules;
+import com.newuniverse.nusmp.dungeon.wild.WildSpawn;
+import com.newuniverse.nusmp.dungeon.wild.Wildlife;
 import com.newuniverse.nusmp.mana.ManaLaw;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -98,25 +101,30 @@ public final class DungeonEcology {
     }
 
     // ---------------------------------------------------------------- the food web: births gated by what is below, collapse
+    /**
+     * 1.19.0: the creatures are the real mobs of Tensura (and Ice and Fire), chosen from the roster tags by {@link WildSpawn}; the tiers are
+     * counted with {@link Wildlife#tierOf}, so the surviving 1.18.0 creatures still count. The gates are those of {@link WildRules}.
+     */
     private static void population(ServerLevel d, LevelChunk c, EcosystemData e) {
         ChunkPos cp = c.getPos();
         AABB box = new AABB(cp.getMinBlockX(), d.getMinBuildHeight(), cp.getMinBlockZ(), cp.getMaxBlockX() + 1, d.getMaxBuildHeight(), cp.getMaxBlockZ() + 1);
-        List<DungeonCreature> life = d.getEntitiesOfClass(DungeonCreature.class, box);
+        List<Mob> life = d.getEntitiesOfClass(Mob.class, box, m -> Wildlife.tierOf(m) > 0);
         int n1 = 0, n2 = 0, n3 = 0;
         float mass = 0;
-        for (DungeonCreature m : life) {
-            switch (m.tier()) { case 1 -> n1++; case 2 -> n2++; default -> n3++; }
-            mass += m.weight();
+        for (Mob m : life) {
+            switch (Wildlife.tierOf(m)) { case 1 -> n1++; case 2 -> n2++; default -> n3++; }
+            mass += Wildlife.massOf(m);
         }
         e.biomass = Math.min(EcosystemData.BIOMASS_MAX, mass);
         RandomSource rnd = d.getRandom();
         // slimes are born of dense magicules, as many as the air can feed; each birth costs some
-        if (e.magicule >= 150f && n1 < Math.min(10, 2 + (int) (e.magicule / 100f)) && rnd.nextFloat() < 0.5f && spawn(d, c, DungeonEntities.SLIME.get())) { e.magicule -= 40f; n1++; }
-        // armour is taken over by mollusks where slimes are plentiful and the air is fit to breathe
-        if (n1 >= 4 && n2 < 3 && e.oxygen >= 50f && rnd.nextFloat() < 0.15f && spawn(d, c, DungeonEntities.LIVING_ARMOR.get())) n2++;
+        if (WildRules.slimeBirth(e.magicule, n1, rnd.nextFloat()) && WildSpawn.birth(d, c, 1)) { e.magicule -= 40f; n1++; }
+        // armoured things come where slimes are plentiful and the air is fit to breathe
+        if (WildRules.midBirth(n1, n2, e.oxygen, rnd.nextFloat()) && WildSpawn.birth(d, c, 2)) n2++;
         // and the predators come where there is something worth hunting
-        if (n2 >= 2 && n3 < 2 && e.oxygen >= 50f && rnd.nextFloat() < 0.08f
-                && spawn(d, c, rnd.nextBoolean() ? DungeonEntities.DIREWOLF.get() : DungeonEntities.BASILISK.get())) n3++;
+        if (WildRules.apexBirth(n2, n3, e.oxygen, rnd.nextFloat()) && WildSpawn.birth(d, c, 3)) n3++;
+        // a dragon-class creature only where the chunk is thick with life, and very rarely
+        if (WildRules.legendBirth(e.biomass, n3, e.oxygen, rnd.nextFloat()) && WildSpawn.birthLegend(d, c)) n3++;
         int total = n1 + n2 + n3;
         e.peak = Math.max(e.peak, total);
         if (total == 0 && e.peak >= 6) {                                                           // everything that lived here is gone
@@ -148,7 +156,7 @@ public final class DungeonEcology {
         LivingEntity v = e.getEntity();
         if (!(v.level() instanceof ServerLevel sl) || !LivingDungeon.in(sl) || v instanceof Player || !DungeonConfig.get(DungeonConfig.NO_LOOT)) return;
         e.getDrops().clear();
-        if (v instanceof Mob && !(v instanceof DungeonCreature)) CarcassBlock.leave(sl, v.blockPosition(), 4, v.getMaxHealth());
+        if (v instanceof Mob && !(v instanceof DungeonCreature)) CarcassBlock.leave(sl, v.blockPosition(), Wildlife.carcassKind(v), Wildlife.carcassWeight(v));   // 1.19.0: the matching kind (Tensura slimes, Armorsaurus, Basilisk, Direwolf), the generic one for the rest
     }
 
     // ---------------------------------------------------------------- mined terrain grows back

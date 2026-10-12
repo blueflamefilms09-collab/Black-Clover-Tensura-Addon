@@ -1,0 +1,37 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "tensura:spear_toro",
+      "required": false
+    },
+    {
+      "id": "tensura:sissie",
+      "required": false
+    },
+    {
+      "id": "tensura:megalodon",
+      "required": false
+    },
+    {
+      "id": "tensura:giant_cod",
+      "required": false
+    },
+    {
+      "id": "tensura:giant_salmon",
+      "required": false
+    },
+    {
+      "id": "iceandfire:hippocampus",
+      "required": false
+    },
+    {
+      "id": "iceandfire:sea_serpent",
+      "required": false
+    },
+    {
+      "id": "iceandfire:siren",
+      "required": false
+    }
+  ]
+}

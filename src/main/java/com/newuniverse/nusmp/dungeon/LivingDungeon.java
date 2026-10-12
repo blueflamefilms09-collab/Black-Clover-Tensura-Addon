@@ -115,11 +115,13 @@ public final class LivingDungeon {
             }
         }
         BlockPos c = new BlockPos(x, 40, z);                                         // nothing open anywhere near: cut a chamber
-        for (int dx = -2; dx <= 2; dx++)
-            for (int dz = -2; dz <= 2; dz++) {
-                d.setBlock(c.offset(dx, -1, dz), Blocks.STONE_BRICKS.defaultBlockState(), 3);
-                for (int dy = 0; dy < 4; dy++) d.setBlock(c.offset(dx, dy, dz), Blocks.AIR.defaultBlockState(), 3);
-            }
+        DungeonGuard.internal(() -> {                                                // the unbreakable Dungeon lets its own builders through
+            for (int dx = -2; dx <= 2; dx++)
+                for (int dz = -2; dz <= 2; dz++) {
+                    d.setBlock(c.offset(dx, -1, dz), Blocks.STONE_BRICKS.defaultBlockState(), 3);
+                    for (int dy = 0; dy < 4; dy++) d.setBlock(c.offset(dx, dy, dz), Blocks.AIR.defaultBlockState(), 3);
+                }
+        });
         return c;
     }
 
@@ -144,8 +146,10 @@ public final class LivingDungeon {
             }
         }
         BlockPos g = floor.east(2);                                                  // no room: make some
-        d.setBlock(g.below(), Blocks.STONE_BRICKS.defaultBlockState(), 3);
-        d.setBlock(g, DungeonBlocks.DUNGEON_GATE.get().defaultBlockState(), 3);
-        d.setBlock(g.above(), Blocks.AIR.defaultBlockState(), 3);
+        DungeonGuard.internal(() -> {
+            d.setBlock(g.below(), Blocks.STONE_BRICKS.defaultBlockState(), 3);
+            d.setBlock(g, DungeonBlocks.DUNGEON_GATE.get().defaultBlockState(), 3);
+            d.setBlock(g.above(), Blocks.AIR.defaultBlockState(), 3);
+        });
     }
 }

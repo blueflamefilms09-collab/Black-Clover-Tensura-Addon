@@ -1,0 +1,41 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "tensura:cattledeer",
+      "required": false
+    },
+    {
+      "id": "tensura:horned_rabbit",
+      "required": false
+    },
+    {
+      "id": "tensura:pegasus",
+      "required": false
+    },
+    {
+      "id": "tensura:pegacorn",
+      "required": false
+    },
+    {
+      "id": "tensura:unicorn",
+      "required": false
+    },
+    {
+      "id": "tensura:spear_toro",
+      "required": false
+    },
+    {
+      "id": "tensura:phantaspore",
+      "required": false
+    },
+    {
+      "id": "iceandfire:hippogryph",
+      "required": false
+    },
+    {
+      "id": "iceandfire:pixie",
+      "required": false
+    }
+  ]
+}

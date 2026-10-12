@@ -139,12 +139,14 @@ public final class UnderworldMatter {
         SESSIONS.remove(s);
         boolean keep = com.newuniverse.nusmp.NUGameRules.griefBlocks(s.level);
         List<Map.Entry<BlockPos, BlockState>> list = new ArrayList<>(s.eaten.entrySet());
-        for (int k = list.size() - 1; k >= 0; k--) {
-            BlockPos p = list.get(k).getKey();
-            BlockState now = s.level.getBlockState(p), was = list.get(k).getValue();
-            if (now.is(NUBlocks.UNDERWORLD_MATTER.get())) s.level.setBlock(p, keep ? Blocks.AIR.defaultBlockState() : was, 3);
-            else if (now.isAir() && !keep && !was.is(NUBlocks.UNDERWORLD_MATTER.get())) s.level.setBlock(p, was, 3);   // a devoured plant
-        }
+        com.newuniverse.nusmp.dungeon.DungeonGuard.internal(() -> {                                   // putting the spell's own matter away, even in the unbreakable Dungeon
+            for (int k = list.size() - 1; k >= 0; k--) {
+                BlockPos p = list.get(k).getKey();
+                BlockState now = s.level.getBlockState(p), was = list.get(k).getValue();
+                if (now.is(NUBlocks.UNDERWORLD_MATTER.get())) s.level.setBlock(p, keep ? Blocks.AIR.defaultBlockState() : was, 3);
+                else if (now.isAir() && !keep && !was.is(NUBlocks.UNDERWORLD_MATTER.get())) s.level.setBlock(p, was, 3);   // a devoured plant
+            }
+        });
     }
 
     /** Ends every session this entity owns (the boss dying, a player logging out). */

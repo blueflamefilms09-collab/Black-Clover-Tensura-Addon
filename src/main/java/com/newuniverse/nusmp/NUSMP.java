@@ -128,6 +128,16 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.MealSkills::onClone);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.MealAttunement::onDamage);                // 1.19.0: a second magic's rider from a meal
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.MawReward::onBreak);                      // 1.19.0: who cut a Maw's roots
+        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST, com.newuniverse.nusmp.dungeon.DungeonGuard::onBreak);                // 1.19.0: the unbreakable Dungeon
+        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST, com.newuniverse.nusmp.dungeon.DungeonGuard::onBreakSpeed);
+        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST, com.newuniverse.nusmp.dungeon.DungeonGuard::onLeftClick);
+        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST, com.newuniverse.nusmp.dungeon.DungeonGuard::onExplosion);
+        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST, com.newuniverse.nusmp.dungeon.DungeonGuard::onLivingDestroy);
+        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST, com.newuniverse.nusmp.dungeon.DungeonGuard::onMobGriefing);     // LOWEST on purpose: setCanGrief is not a cancel, the last listener wins
+        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST, com.newuniverse.nusmp.dungeon.DungeonGuard::onPiston);
+        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST, com.newuniverse.nusmp.dungeon.DungeonGuard::onToolUse);
+        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST, com.newuniverse.nusmp.dungeon.DungeonGuard::onFarmlandTrample);
+        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST, com.newuniverse.nusmp.dungeon.DungeonGuard::onEntityJoin);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.item.CuriosLink::onPlayerTick);                  // 1.15.0: weapons worn in Curios slots
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.mana.Heritage::onPlayerTick);                   // 1.6.0: kingdom, blood, stage buffs
         modEventBus.addListener(com.newuniverse.nusmp.wizard.WizardNet::registerPayloads);

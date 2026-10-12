@@ -1,0 +1,89 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "tensura:slime",
+      "required": false
+    },
+    {
+      "id": "tensura:metal_slime",
+      "required": false
+    },
+    {
+      "id": "tensura:horned_rabbit",
+      "required": false
+    },
+    {
+      "id": "tensura:hell_caterpillar",
+      "required": false
+    },
+    {
+      "id": "tensura:goblin",
+      "required": false
+    },
+    {
+      "id": "tensura:giant_bat",
+      "required": false
+    },
+    {
+      "id": "tensura:cattledeer",
+      "required": false
+    },
+    {
+      "id": "tensura:one_eyed_owl",
+      "required": false
+    },
+    {
+      "id": "tensura:winged_cat",
+      "required": false
+    },
+    {
+      "id": "tensura:aqua_frog",
+      "required": false
+    },
+    {
+      "id": "tensura:landfish",
+      "required": false
+    },
+    {
+      "id": "tensura:hover_lizard",
+      "required": false
+    },
+    {
+      "id": "tensura:giant_cod",
+      "required": false
+    },
+    {
+      "id": "tensura:giant_salmon",
+      "required": false
+    },
+    {
+      "id": "iceandfire:pixie",
+      "required": false
+    },
+    {
+      "id": "iceandfire:hippocampus",
+      "required": false
+    },
+    {
+      "id": "iceandfire:hippogryph",
+      "required": false
+    },
+    {
+      "id": "iceandfire:stymphalian_bird",
+      "required": false
+    },
+    {
+      "id": "iceandfire:death_worm",
+      "required": false
+    },
+    {
+      "id": "iceandfire:myrmex_worker",
+      "required": false
+    },
+    {
+      "id": "iceandfire:dread_thrall",
+      "required": false
+    }
+  ]
+}
