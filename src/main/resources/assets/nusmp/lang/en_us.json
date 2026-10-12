@@ -1219,5 +1219,8 @@
   "item.nusmp.grilled_armor_flank": "Grilled Armor Flank",
   "item.nusmp.roast_basilisk_fillet": "Roast Basilisk Fillet",
   "item.nusmp.roast_direwolf_haunch": "Roast Direwolf Haunch",
-  "item.nusmp.seared_monster_meat": "Seared Monster Meat"
+  "item.nusmp.seared_monster_meat": "Seared Monster Meat",
+  "block.nusmp.aurelian_altar": "Aurelian Altar",
+  "item.nusmp.aurelian_core": "Aurelian Core",
+  "item.nusmp.maw_fruit": "Maw Fruit"
 }

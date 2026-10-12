@@ -36,7 +36,10 @@ public class NUSMP {
         com.newuniverse.nusmp.block.NUBlocks.BLOCKS.register(modEventBus);
         com.newuniverse.nusmp.dungeon.DungeonBlocks.init();                                                // 1.17.0: the Living Dungeon
         com.newuniverse.nusmp.dungeon.DungeonFood.init();                                                  // 1.19.0: its food
+        com.newuniverse.nusmp.dungeon.city.CityBlocks.init();                                              // 1.19.0: the Golden City's altar and core
+        com.newuniverse.nusmp.dungeon.MawReward.init();                                                    // 1.19.0: the Maw Fruit
         com.newuniverse.nusmp.dungeon.DungeonBlocks.BLOCKS.register(modEventBus);
+        com.newuniverse.nusmp.dungeon.city.CityBlocks.BLOCKS.register(modEventBus);
         com.newuniverse.nusmp.dungeon.DungeonEntities.ENTITIES.register(modEventBus);
         modEventBus.addListener(com.newuniverse.nusmp.dungeon.DungeonEntities::attributes);
         com.newuniverse.nusmp.dungeon.DungeonEffects.EFFECTS.register(modEventBus);
@@ -81,6 +84,10 @@ public class NUSMP {
             modEventBus.addListener(com.newuniverse.nusmp.client.GrimoireDaemonRenderer::layers);
             modEventBus.addListener(com.newuniverse.nusmp.client.wizard.TowerWizardClient::register);        // 1.6.0
             modEventBus.addListener(com.newuniverse.nusmp.client.dungeon.DungeonMobsClient::register);          // 1.18.0: the Living Dungeon's creatures
+            modEventBus.addListener(com.newuniverse.nusmp.client.dungeon.DungeonSky::registerEffects);         // 1.19.0: the Dungeon's own sky and fog
+            NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.client.dungeon.DungeonSky::onFogColor);
+            NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.client.dungeon.DungeonSky::onRenderFog);
+            NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.client.dungeon.DungeonSky::onClientTick);
             modEventBus.addListener(com.newuniverse.nusmp.client.CottonSheepRenderer::register);        // 0.52: Cotton Magic's sheep and cloud
             modEventBus.addListener(com.newuniverse.nusmp.client.CottonSheepRenderer::layers);
             modEventBus.addListener(com.newuniverse.nusmp.client.WindSpiritLordRenderer::register);          // 0.53: Sylph, the Wind Spirit Lord boss
@@ -114,6 +121,13 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.DungeonEcology::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.DungeonEcology::onIncomingDamage);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.DungeonEcology::onDrops);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.city.CityBuilder::onServerTick);          // 1.19.0: the Golden City builds where players come near
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.DungeonAmbience::onServerTick);           // 1.19.0: the Dungeon's ambient sounds
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.MealSkills::onPlayerTick);                // 1.19.0: skills lent by cooked meals
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.MealSkills::onLogin);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.MealSkills::onClone);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.MealAttunement::onDamage);                // 1.19.0: a second magic's rider from a meal
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.MawReward::onBreak);                      // 1.19.0: who cut a Maw's roots
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.item.CuriosLink::onPlayerTick);                  // 1.15.0: weapons worn in Curios slots
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.mana.Heritage::onPlayerTick);                   // 1.6.0: kingdom, blood, stage buffs
         modEventBus.addListener(com.newuniverse.nusmp.wizard.WizardNet::registerPayloads);

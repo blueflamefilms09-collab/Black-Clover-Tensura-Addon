@@ -1,5 +1,35 @@
 # Changelog
 
+## [1.19.0] — The Living Dungeon, polish: real Tensura mobs, Ice and Fire compatibility, unbreakable blocks, the Golden City, its own sky and sounds, meals that lend skills, a Maw reward
+
+**State:** written without a compiler; CI is the first compile. Nothing run in game. Every part below is **new** except where it says **replacement**.
+
+### Replacements (owner request: "not custom ones")
+<!--WILD-->
+
+### Unbreakable (owner request: "unbreakable by any means")
+<!--GUARD-->
+
+### The Golden City
+- **A real place** (`dungeon/city/*`): when a player in the Dungeon comes within 56 blocks of a city cell (`DungeonTier.isCityCell`, an addition), the city builds itself over a few seconds of ticks, resumable after a restart (`CitySave`): a sealed vault with a carved cavern, a broken outer wall with two golden gates, four avenues, a plaza with a glowing moat and a dais, 8 to 14 buildings (towers with stairs, halls, shrines, obelisks, arches, some ruined), lamp posts and chandeliers. The layout is deterministic per cell (`CityPlan`, pure and tested).
+- **The Aurelian Altar** (new block): each player may claim one **Aurelian Core** from each city; using the Core in the air spends it and grants a 20 minute **Golden Ward** (no magicule radiation). Gilded Sentinels (real mid-tier mobs) stand on the plaza. Nothing in the city is a chest.
+- Admin: `/multiverse dungeon city where|build|reset`.
+
+### Magic Sense, meals that lend skills, the Maw reward
+- **Magic Sense blunts the city's radiation** (it builds only every other second, with a one-time hint); a Mana Zone or a Golden Ward shuts it out completely and lets it drain (`dungeon/RadiationShield.java`).
+- **Cooked meals lend a Tensura skill for a few minutes** (`MealSkills`): Candied Slime Jelly = Magic Sense, Grilled Armor Flank = Physical Attack Resistance, Roast Basilisk Fillet = Poison Resistance, Roast Direwolf Haunch = Danger Sense. Taken back when the time is up; relogging, dying or restarting cannot make it permanent; a skill you already own is never touched. Every skill id is checked against the registry at run time.
+- **Meals attune you to a second magic** (`MealAttunement`): Gel, Iron, Poison or Blood. While attuned your spell hits also carry that magic's rider, at most once a second per target. Tooltips and the action bar say what and for how long.
+- **Maw reward** (`MawReward`): everyone who chopped a Maw's roots and stands within 32 blocks when it closes gets experience and 1 to 3 **Maw Fruit** (the faster the cut, the more). Maw Fruit feeds, gives a short Regeneration and +15% spell power for 3 minutes.
+
+### The Dungeon's own sky, fog and sounds
+- **Sky and fog** (`client/dungeon/DungeonSky`, effects id `nusmp:living_dungeon` in `dimension_type/living_dungeon.json`: **replaces** the Nether look it used): each tier has its own mood, blended smoothly: cold grey-blue dust in the Upper Catacombs, deep teal in the Deep Waterways, red-black smoke and embers in the Volcanic Vents, warm gold haze and gold motes in the Golden City. Lava, water, powder snow, Blindness and Darkness fog are left to the game.
+- **Ambient sounds** (`dungeon/DungeonAmbience`): tier-specific vanilla sounds near each player, and a far growl when an awake apex predator is within 40 blocks.
+- A custom biome `nusmp:dungeon_depths` (new chunks only; existing chunks keep their stored biomes) joins the two vanilla cave biomes.
+
+### Not done
+- Predator dens as structures and the pack AI for the real mobs; the custom Living Armor model was dropped on request (the real mobs are used instead).
+- Everything above is unverified in game. Honest list: the biome file, the fog hook, the Level mixin, the Tensura and Ice and Fire mob driving, and the city's look.
+
 ## [1.18.0] — The Living Dungeon, stages 2 and 3: the food web, carcasses, the Butcher Cleaver and cooking
 
 **State:** written without a compiler; CI is the first compile. Nothing run in game. The creatures' AI, the births and the harvesting have never been seen working; the Direwolf and Basilisk models were checked with the repo's headless preview only. All **new** (nothing replaced). The weapon is the Butcher Cleaver (3D model, engravings, Curios belt slot).
