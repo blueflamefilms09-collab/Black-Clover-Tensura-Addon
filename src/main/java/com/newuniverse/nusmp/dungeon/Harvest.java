@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.dungeon;
 
+import com.newuniverse.nusmp.dungeon.nexus.nav.CutZone;
+import com.newuniverse.nusmp.dungeon.nexus.nav.Organs;
 import com.newuniverse.nusmp.item.MagicWeaponItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -16,6 +18,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.BlockHitResult;
 
 /**
  * Cutting meat out of a carcass (docs/living_dungeon.md section 4): right-click a Carcass. The tool decides what comes out. A
@@ -30,12 +33,23 @@ public final class Harvest {
 
     private static boolean cleaver(ItemStack s) { return s.getItem() instanceof MagicWeaponItem w && w.kind == MagicWeaponItem.Kind.BUTCHER_CLEAVER; }
 
-    /** One cut. Returns false if nothing was cut (the block is not a carcass). */
-    public static boolean cut(ServerLevel level, BlockPos pos, Player p, ItemStack tool) {
+    /** One cut, with no click position: always the meat cut. Returns false if nothing was cut (the block is not a carcass). */
+    public static boolean cut(ServerLevel level, BlockPos pos, Player p, ItemStack tool) { return cut(level, pos, p, tool, null); }
+
+    /**
+     * One cut. Returns false if nothing was cut (the block is not a carcass). 1.21.0: with a Butcher Cleaver the height of the click
+     * decides the cut (docs/living_dungeon.md section 6): the upper third of the carcass is its organs, the lower third hide and bone
+     * ({@link Organs}); the middle, a click on top, any other tool and a carcass with no organs are the meat cut below, as ever.
+     */
+    public static boolean cut(ServerLevel level, BlockPos pos, Player p, ItemStack tool, BlockHitResult hit) {
         var state = level.getBlockState(pos);
         if (!state.is(DungeonBlocks.CARCASS.get())) return false;
         int kind = state.getValue(CarcassBlock.KIND);
         boolean prime = cleaver(tool), blade = prime || tool.is(BLADES) || tool.is(ItemTags.SWORDS) || tool.is(ItemTags.AXES);
+        if (prime && hit != null) {
+            CutZone zone = Organs.zoneOf(hit, pos, kind);
+            if (zone != CutZone.MEAT) return Organs.cut(level, pos, p, tool, kind, zone);
+        }
         ItemStack main = blade ? new ItemStack(DungeonFood.rawFor(kind)) : new ItemStack(DungeonFood.RUINED_MEAT.get());
         if (prime && level.getRandom().nextFloat() < 0.4f) main.setCount(2);
         drop(level, pos, main);

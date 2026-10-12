@@ -25,8 +25,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * Dungeon Mycelium veil grows where it lay, which the slimes graze. A Butcher Cleaver (stage 3) cuts the meat out of it first.
  */
 public class CarcassBlock extends Block {
-    /** 0 slime, 1 Living Armor, 2 Basilisk, 3 Direwolf, 4 anything else. */
-    public static final IntegerProperty KIND = IntegerProperty.create("kind", 0, 4);
+    /** 0 slime, 1 Living Armor, 2 Basilisk, 3 Direwolf, 4 anything else, 5 a spider (1.21.0: its organs hold a Venom Gland; it looks like the generic carcass). */
+    public static final IntegerProperty KIND = IntegerProperty.create("kind", 0, 5);
     /** Portions of meat left (1-3). */
     public static final IntegerProperty MEAT = IntegerProperty.create("meat", 1, 3);
     /** Decay stage (0 fresh .. 3 rotten, which is the end). */
@@ -48,7 +48,7 @@ public class CarcassBlock extends Block {
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (level.isClientSide) return ItemInteractionResult.SUCCESS;
-        return level instanceof ServerLevel sl && Harvest.cut(sl, pos, player, stack) ? ItemInteractionResult.CONSUME : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return level instanceof ServerLevel sl && Harvest.cut(sl, pos, player, stack, hit) ? ItemInteractionResult.CONSUME : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     @Override
@@ -91,7 +91,7 @@ public class CarcassBlock extends Block {
     public static void leave(ServerLevel level, BlockPos at, int kind, float weight) {
         if (!LivingDungeon.in(level)) return;
         int meat = weight >= 20 ? 3 : weight >= 6 ? 2 : 1;
-        BlockState state = DungeonBlocks.CARCASS.get().defaultBlockState().setValue(KIND, Math.max(0, Math.min(4, kind))).setValue(MEAT, meat);
+        BlockState state = DungeonBlocks.CARCASS.get().defaultBlockState().setValue(KIND, Math.max(0, Math.min(5, kind))).setValue(MEAT, meat);
         for (BlockPos p : new BlockPos[]{at, at.above(), at.north(), at.south(), at.east(), at.west()}) {
             BlockState cur = level.getBlockState(p);
             if ((cur.isAir() || cur.canBeReplaced()) && level.getBlockState(p.below()).isFaceSturdy(level, p.below(), net.minecraft.core.Direction.UP)) {

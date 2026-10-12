@@ -14,6 +14,9 @@
     },
     "kind=4": {
       "model": "nusmp:block/carcass_4"
+    },
+    "kind=5": {
+      "model": "nusmp:block/carcass_4"
     }
   }
 }

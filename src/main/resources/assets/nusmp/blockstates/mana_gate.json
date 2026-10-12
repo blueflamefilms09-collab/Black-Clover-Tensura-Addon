@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "open=false": {
+      "model": "nusmp:block/mana_gate"
+    },
+    "open=true": {
+      "model": "nusmp:block/mana_gate_open"
+    }
+  }
+}

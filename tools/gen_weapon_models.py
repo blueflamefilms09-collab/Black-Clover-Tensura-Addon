@@ -3083,6 +3083,11 @@ def _bc_write_icon():
     dump("butcher_cleaver", src)
 
 
+# ================================================================ 1.21.0: the relics and the navigation gear of the Dimensional Nexus (tools/gen_nexus_relic_models.py)
+# Executed in this namespace like the 1.3.0 models above; run tools/gen_nexus_relic_icons.py first (their meshes are placed on those sprites).
+exec(compile(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "gen_nexus_relic_models.py"), encoding="utf-8").read(), "gen_nexus_relic_models.py", "exec"))
+
+
 
 def mirror_x(mesh):
     out = []

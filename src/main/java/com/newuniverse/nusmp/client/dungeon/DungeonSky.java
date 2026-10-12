@@ -32,7 +32,9 @@ import org.joml.Vector3f;
  * The Living Dungeon's own sky, fog and drifting air (docs/living_dungeon.md section 7; moods in {@link DungeonAtmosphere}). The dimension type
  * names the effects "nusmp:living_dungeon" (it used to borrow "minecraft:the_nether"): no sky, thick fog. While the camera is in the Dungeon the fog
  * colour and distance ease toward the mood of the tier it is in, over about three seconds, and the tier's particles drift round the player.
- * Fog under lava, water and powder snow, and under Blindness or Darkness, is left to the game.
+ * Fog under lava, water and powder snow, and under Blindness or Darkness, is left to the game. Since 1.21.0 the mood of the deepest tier (the
+ * Variable Core) is that of the zone of the core cell under the camera ({@code DungeonAtmosphere#mood(int, int, int)}), from the stable hash
+ * of the cell alone: a zone an admin forced shows the fog of the cell's hash zone.
  */
 public final class DungeonSky {
     private DungeonSky() {}
@@ -50,6 +52,9 @@ public final class DungeonSky {
     private static final DustParticleOptions CATACOMB_DUST = new DustParticleOptions(new Vector3f(0.62f, 0.70f, 0.80f), 0.7f);
     private static final DustParticleOptions EMBER_DUST = new DustParticleOptions(new Vector3f(1.0f, 0.42f, 0.12f), 0.8f);
     private static final DustParticleOptions GOLD_DUST = new DustParticleOptions(new Vector3f(0.98f, 0.78f, 0.28f), 0.9f);
+    /** 1.21.0, the Variable Core: violet motes (Monarch's Vault, Underworld Gate) and green spores (Tempest Mirage). */
+    private static final DustParticleOptions VOID_DUST = new DustParticleOptions(new Vector3f(0.46f, 0.28f, 0.72f), 0.8f);
+    private static final DustParticleOptions SPORE_DUST = new DustParticleOptions(new Vector3f(0.36f, 0.82f, 0.62f), 0.8f);
 
     /** The fog colour on show and how much of the usual fog distances it keeps; the colour is null while the camera is outside the Dungeon. */
     private static float[] fog;
@@ -108,7 +113,7 @@ public final class DungeonSky {
 
     /** Moves the colour and distances on show toward the mood of the tier at this position by the time since the last frame; the first frame in the Dungeon starts on the mood. */
     private static void ease(Vec3 at) {
-        DungeonAtmosphere.Mood mood = DungeonAtmosphere.mood(DungeonTier.at(Mth.floor(at.x), Mth.floor(at.y), Mth.floor(at.z)).ordinal());
+        DungeonAtmosphere.Mood mood = DungeonAtmosphere.mood(DungeonTier.at(Mth.floor(at.x), Mth.floor(at.y), Mth.floor(at.z)).ordinal(), Mth.floor(at.x), Mth.floor(at.z));
         long now = System.nanoTime();
         float dt = lastFrame == 0L ? 0f : Math.min(MAX_FRAME_SECONDS, (now - lastFrame) / 1.0e9f);
         lastFrame = now;
@@ -136,7 +141,7 @@ public final class DungeonSky {
         if (mc.isPaused() || !LivingDungeon.in(level)) return;
         ParticleStatus status = mc.options.particles().get();
         if (status == ParticleStatus.MINIMAL) return;
-        DungeonAtmosphere.Mood mood = DungeonAtmosphere.mood(DungeonTier.at(player.getBlockX(), player.getBlockY(), player.getBlockZ()).ordinal());
+        DungeonAtmosphere.Mood mood = DungeonAtmosphere.mood(DungeonTier.at(player.getBlockX(), player.getBlockY(), player.getBlockZ()).ordinal(), player.getBlockX(), player.getBlockZ());
         RandomSource random = level.random;
         float share = status == ParticleStatus.DECREASED ? 0.5f : 1f;
         for (DungeonAtmosphere.Drift d : mood.particles()) {
@@ -162,6 +167,8 @@ public final class DungeonSky {
                 case DungeonAtmosphere.EMBER -> level.addParticle(EMBER_DUST, x, y, z, sway, 0.06, sway);
                 case DungeonAtmosphere.GOLD -> level.addParticle(GOLD_DUST, x, y, z, sway, 0.004, sway);
                 case DungeonAtmosphere.GLINT -> level.addParticle(ParticleTypes.WAX_ON, x, y, z, 0.0, 0.0, 0.0);
+                case DungeonAtmosphere.VOID -> level.addParticle(VOID_DUST, x, y, z, sway, 0.006, sway);
+                case DungeonAtmosphere.SPORE -> level.addParticle(SPORE_DUST, x, y, z, sway, 0.012, sway);
                 default -> { }
             }
             return;

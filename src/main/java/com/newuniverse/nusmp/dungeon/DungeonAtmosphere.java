@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.dungeon;
 
+import com.newuniverse.nusmp.dungeon.nexus.NexusZone;
+
 import java.util.List;
 
 /**
@@ -13,6 +15,8 @@ public final class DungeonAtmosphere {
 
     // ---------------------------------------------------------------- the kinds of ambient particle (DungeonSky draws each of them)
     public static final String DUST = "dust", DRIP = "drip", BUBBLE = "bubble", SMOKE = "smoke", EMBER = "ember", GOLD = "gold", GLINT = "glint";
+    /** 1.21.0, the faces of the Variable Core: violet motes of the Monarch's Vault and the Underworld Gate, green spores of the Tempest Mirage. */
+    public static final String VOID = "void", SPORE = "spore";
 
     /** The most particles of one kind a client tick may add, whatever the rate says. */
     public static final int MAX_PARTICLES_PER_KIND = 3;
@@ -86,6 +90,56 @@ public final class DungeonAtmosphere {
             140, 320);
 
     private static final Mood[] MOODS = {UPPER_CATACOMBS, DEEP_WATERWAYS, VOLCANIC_VENTS, GOLDEN_CITY};
+
+    // ---------------------------------------------------------------- 1.21.0: the faces of the Variable Core
+    // The deepest tier (GOLDEN_CITY, "The Variable Core") is tinted by the zone of the core cell: the Golden City keeps the warm gold above.
+
+    /** The Monarch's Vault: a cold violet-black, the dark of obsidian, with glints of gold and a slow heartbeat under the floor. */
+    public static final Mood MONARCH_VAULT = new Mood("GOLDEN_CITY", 0.05f, 0.03f, 0.09f, 0.8f, 1.0f,
+            List.of(new Drift(VOID, 0.30f), new Drift(GLINT, 0.16f), new Drift(GOLD, 0.06f)),
+            List.of(new Sound("minecraft:ambient.soul_sand_valley.mood", 3, 2.0f, 2.5f, 0.6f, 0.8f),
+                    new Sound("minecraft:entity.warden.heartbeat", 2, 2.2f, 2.8f, 0.5f, 0.7f),
+                    new Sound("minecraft:block.bone_block.step", 3, 1.6f, 2.0f, 0.5f, 0.8f),
+                    new Sound("minecraft:block.chain.step", 2, 1.6f, 2.0f, 0.5f, 0.7f),
+                    new Sound("minecraft:block.deepslate.break", 2, 1.7f, 2.1f, 0.5f, 0.7f)),
+            140, 320);
+
+    /** The Underworld Gate: a deep crimson-violet, smoke and embers rising where gravity gives way, a portal humming far off. */
+    public static final Mood UNDERWORLD_GATE = new Mood("GOLDEN_CITY", 0.20f, 0.03f, 0.13f, 0.45f, 0.6f,
+            List.of(new Drift(SMOKE, 0.22f), new Drift(VOID, 0.25f), new Drift(EMBER, 0.15f)),
+            List.of(new Sound("minecraft:ambient.crimson_forest.mood", 3, 2.0f, 2.5f, 0.6f, 0.8f),
+                    new Sound("minecraft:block.respawn_anchor.ambient", 3, 1.8f, 2.3f, 0.5f, 0.8f),
+                    new Sound("minecraft:block.portal.ambient", 2, 1.8f, 2.3f, 0.5f, 0.8f),
+                    new Sound("minecraft:entity.warden.nearby_close", 1, 2.0f, 2.6f, 0.6f, 0.8f)),
+            100, 260);
+
+    /** The Tempest Mirage: a humid green-teal haze, spores in the air and wet things moving in the overgrowth. */
+    public static final Mood TEMPEST_MIRAGE = new Mood("GOLDEN_CITY", 0.05f, 0.21f, 0.18f, 0.35f, 0.55f,
+            List.of(new Drift(SPORE, 0.50f), new Drift(DRIP, 0.06f), new Drift(GLINT, 0.05f)),
+            List.of(new Sound("minecraft:ambient.warped_forest.mood", 3, 2.0f, 2.5f, 0.6f, 0.8f),
+                    new Sound("minecraft:block.moss.step", 2, 1.5f, 1.9f, 0.5f, 0.8f),
+                    new Sound("minecraft:block.mud.step", 2, 1.5f, 1.9f, 0.5f, 0.8f),
+                    new Sound("minecraft:entity.frog.ambient", 2, 1.7f, 2.2f, 0.6f, 0.9f),
+                    new Sound("minecraft:block.slime_block.step", 2, 1.6f, 2.0f, 0.5f, 0.8f)),
+            110, 280);
+
+    /** The ordinal of the tier whose mood the zones tint (DungeonTier.GOLDEN_CITY). */
+    private static final int CORE_TIER = 3;
+
+    /** The mood of a zone of the Variable Core. */
+    public static Mood zoneMood(NexusZone zone) {
+        return switch (zone) {
+            case MONARCH_VAULT -> MONARCH_VAULT;
+            case UNDERWORLD_GATE -> UNDERWORLD_GATE;
+            case TEMPEST_MIRAGE -> TEMPEST_MIRAGE;
+            case GOLDEN_CITY -> GOLDEN_CITY;
+        };
+    }
+
+    /** The mood at column (x, z) of the tier with this ordinal: in the Variable Core it is the mood of the zone of the core cell, elsewhere that of the tier. */
+    public static Mood mood(int tierOrdinal, int x, int z) {
+        return tierOrdinal == CORE_TIER ? zoneMood(NexusZone.at(x, z)) : mood(tierOrdinal);
+    }
 
     /** What a wolf-like or big-cat apex growls, and what a Basilisk sounds like, from far off in the dark. */
     public static final List<Sound> DIREWOLF_GROWLS = List.of(

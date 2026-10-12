@@ -241,6 +241,7 @@ def main():
                    {"parent": "minecraft:block/block", "textures": {"particle": "nusmp:block/carcass_%d" % k, "t": "nusmp:block/carcass_%d" % k},
                     "elements": [{"from": [1, 0, 1], "to": [15, 6, 15], "faces": faces}]})
         variants["kind=%d" % k] = {"model": "nusmp:block/carcass_%d" % k}
+    variants["kind=5"] = {"model": "nusmp:block/carcass_4"}     # 1.21.0: a spider's carcass (CarcassBlock.KIND 5) looks like the generic one
     write_json(os.path.join(ASSETS, "blockstates", "carcass.json"), {"variants": variants})
     itex = os.path.join(ASSETS, "textures", "item")
     os.makedirs(itex, exist_ok=True)

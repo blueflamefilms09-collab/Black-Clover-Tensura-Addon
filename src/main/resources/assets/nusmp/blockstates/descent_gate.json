@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "rising=false": {
+      "model": "nusmp:block/descent_gate"
+    },
+    "rising=true": {
+      "model": "nusmp:block/descent_gate_up"
+    }
+  }
+}
