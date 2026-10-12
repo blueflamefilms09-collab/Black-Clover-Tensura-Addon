@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.12.0] — The Tower Wizard has his own model
+
+**State:** the model was checked with the repo's headless preview only (geo check OK, 0 errors); the Java renderer is new and uncompiled until CI; nothing run in game.
+
+### Replaced
+- **The Tower Wizard is no longer the vanilla witch.** From the owner's design (`docs/attributes/art_reference/tower_wizard_design.png`): a 60-cube model about 1.9 blocks tall with the hat (`tools/gen_tower_wizard.py` -> `geo/entity/tower_wizard.geo.json`, `animations/entity/tower_wizard.animation.json`, 256x128 `tower_wizard.png` and `_glow.png`): a wide-brimmed, tipped-back brown hat with a floppy cone and a band, a larger head with heavy lids, bushy brows, a nose and moustache, a long grey beard of stacked blocks, a flared layered robe with a belt and mantle, wide sleeves, and a glowing green orb at chest height with orbiting motes and a halo. Idle (breathing, beard and hat sway, orb bob) and talk (a nod and a hand gesture, played while a player stands within four blocks). `client/wizard/TowerWizardRenderer.java` draws it through the GeoLite pipeline with the glow pass. The vanilla-witch renderer is no longer registered for him (the entity class still extends the witch for its behaviour).
+- Preview scenes: `python3 -B tools/render_preview/preview.py tower_wizard_idle` (front, three-quarter, full body, side).
+
 ## [1.11.0] — The wizard's library dimension, next-step hints, one menu, social class buffs and debuffs
 
 **State:** written without a compiler; CI is the first compile. Nothing run in game. The Tower Wizard's custom model comes in a later version.
