@@ -123,9 +123,11 @@ public final class DungeonMaw {
             int left = 0;
             for (long r : m.roots()) if (level.getBlockState(BlockPos.of(r)).is(DungeonBlocks.MAW_ROOT.get())) left++;
             if (gone || left == 0 || level.getGameTime() >= m.closeAt()) {
-                close(server, level, m, left == 0 && !gone ? "its roots were cut down" : "its time ran out");
+                boolean cut = left == 0 && !gone;
+                close(server, level, m, cut ? "its roots were cut down" : "its time ran out");
                 it.remove();
                 changed = true;
+                MawReward.onClosed(level, at, cut, m.closeAt(), level.getGameTime());       // 1.19.0: whoever cut the roots is rewarded
             } else if (level.getGameTime() % 100 < 20) {
                 level.sendParticles(ParticleTypes.PORTAL, at.getX() + 0.5, at.getY() + 0.7, at.getZ() + 0.5, 12, 0.7, 0.7, 0.7, 0.4);
             }
@@ -151,7 +153,10 @@ public final class DungeonMaw {
         int n = s.maws.size();
         for (DungeonSave.Maw m : new ArrayList<>(s.maws)) {
             ServerLevel level = server.getLevel(ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse(m.dim())));
-            if (level != null) close(server, level, m, "an admin closed it");
+            if (level != null) {
+                close(server, level, m, "an admin closed it");
+                MawReward.onClosed(level, BlockPos.of(m.pos()), false, m.closeAt(), level.getGameTime());   // drops the credits, no reward
+            }
         }
         s.maws.clear();
         s.setDirty();
