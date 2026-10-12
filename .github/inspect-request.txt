@@ -1,6 +1,5 @@
-# 1.19.0 check: the API of the base Tensura mobs the Living Dungeon will use
-monster/(Slime|Direwolf|Basilisk|Armorsaurus|HoundDog|BlackSpider|KnightSpider|GiantAnt|MetalSlime|BladeTiger|GiantBear|HornedBear)Entity\.class$
-registry/entity/(MonsterEntityTypes|TensuraEntityTypes)\.class$
-strings:registry/entity/MonsterEntityTypes
-list:tensura/entity/(ai|goal|brain)/
-list:tensura/entity/[a-z]+/[A-Za-z]*(Tameable|Tamable|Base|Abstract|Mob)[A-Za-z]*\.class$
+# 1.21.0 check: Tensura items for the Ki-Resonance Lantern fuel (magic stones, slime gel) and avian mobs
+files:^assets/tensura/models/item/[a-z_0-9]*(magic|stone|ore|gel|slime|crystal|core|shard|spar|feather|wing|egg|compass|lantern|bird|owl|peacock)[a-z_0-9]*\.json$
+files:^data/tensura/tags/item/
+files:^data/tensura/recipe/[a-z_0-9/]*(gel|slime|magic_stone)[a-z_0-9]*\.json$
+cat:^data/tensura/loot_table/entities/(one_eyed_owl|dragon_peacock|giant_bat|slime)\.json$
