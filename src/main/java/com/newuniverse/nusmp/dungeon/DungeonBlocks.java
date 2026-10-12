@@ -43,6 +43,10 @@ public final class DungeonBlocks {
     public static final DeferredBlock<Block> DUNGEON_MYCELIUM = BLOCKS.register("dungeon_mycelium", () -> new MyceliumVeilBlock(
             BlockBehaviour.Properties.of().noCollission().replaceable().instabreak().lightLevel(s -> 5).noLootTable().sound(SoundType.MOSS).pushReaction(PushReaction.DESTROY)));
 
+    /** What a creature of the Dungeon leaves behind (see CarcassBlock). No item: it is not carried. */
+    public static final DeferredBlock<CarcassBlock> CARCASS = BLOCKS.register("carcass", () -> new CarcassBlock(
+            BlockBehaviour.Properties.of().strength(0.6f).sound(SoundType.SLIME_BLOCK).noOcclusion().noLootTable().pushReaction(PushReaction.DESTROY)));
+
     public static final DeferredItem<BlockItem> DUNGEON_MAW_ITEM = NUItems.ITEMS.register("dungeon_maw", () -> new BlockItem(DUNGEON_MAW.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> DUNGEON_GATE_ITEM = NUItems.ITEMS.register("dungeon_gate", () -> new BlockItem(DUNGEON_GATE.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> MAW_ROOT_ITEM = NUItems.ITEMS.register("maw_root", () -> new BlockItem(MAW_ROOT.get(), new Item.Properties()));

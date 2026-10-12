@@ -50,6 +50,7 @@ final class ReferenceWeapons {
             case CLUB_OF_ROT, DOOM_HAMMER -> true;                                                       // the Club of Rot and the Doom Hammer (RotDoomArts)
             case MAGEBANE_SHIELD, WEAPON_OF_RESURGENCE -> true;                                          // the Magebane Shield and the Weapon of Resurgence
             case BROOCH_PIN, HAND_OF_PROVIDENCE -> true;                                                 // BroochPinArts, HandOfProvidenceArts
+            case BUTCHER_CLEAVER -> true;                                                                // ButcherArts
             default -> false;
         };
     }
@@ -179,6 +180,7 @@ final class ReferenceWeapons {
             case WEAPON_OF_RESURGENCE -> { return ResurgenceArts.technique(p, stack); }
             case BROOCH_PIN -> { return BroochPinArts.technique(p, stack); }
             case HAND_OF_PROVIDENCE -> { return HandOfProvidenceArts.technique(p, stack); }
+            case BUTCHER_CLEAVER -> { return ButcherArts.technique(p, stack); }
             default -> { return false; }
         }
         return true;

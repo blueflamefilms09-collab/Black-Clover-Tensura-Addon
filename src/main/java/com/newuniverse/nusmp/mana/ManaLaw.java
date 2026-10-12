@@ -105,7 +105,7 @@ public final class ManaLaw {
     // ---------------------------------------------------------------- the numbers every spell passes through
     /** Multiplies a grimoire spell's mana cost. */
     public static double costMult(ServerPlayer p) {
-        double c = stage(p).cost() * affinity(p).cost * Heritage.costMult(p) * Signature.cost(p) * (com.newuniverse.nusmp.multiverse.WizardKing.isKing(p) ? 0.8 : 1.0);
+        double c = stage(p).cost() * affinity(p).cost * Heritage.costMult(p) * Signature.cost(p) * com.newuniverse.nusmp.dungeon.MealBuffs.cost(p) * (com.newuniverse.nusmp.multiverse.WizardKing.isKing(p) ? 0.8 : 1.0);
         if (zoneActive(p)) c *= 0.8;
         if (negativeActive(p)) c *= 0.7;
         return c;
@@ -117,7 +117,7 @@ public final class ManaLaw {
     /** Multiplies the damage of a spell. */
     public static double powerMult(LivingEntity e) {
         if (!(e instanceof ServerPlayer p)) return 1.0;
-        double m = stage(p).power() * Heritage.powerMult(p) * Signature.power(p) * (com.newuniverse.nusmp.multiverse.WizardKing.isKing(p) ? 1.25 : 1.0);
+        double m = stage(p).power() * Heritage.powerMult(p) * Signature.power(p) * com.newuniverse.nusmp.dungeon.MealBuffs.power(p) * (com.newuniverse.nusmp.multiverse.WizardKing.isKing(p) ? 1.25 : 1.0);
         if (zoneActive(p)) m *= 1.0 + 0.2 * Math.min(2.0, density(p.level(), p.blockPosition()));
         if (negativeActive(p)) m *= 1.6;
         return m;

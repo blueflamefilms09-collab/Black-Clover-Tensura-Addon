@@ -36,3 +36,16 @@ Tensura stats stay as they are (EP, magicules, Tensura race and skills); Black C
 4. **The book floats to you** from the wizard to the player, then the grimoire is yours. Mage Stage also gives health and speed.
 `wizard.enabled=false` brings back the older ceremony (and `mana.chooseMagic` its choose-or-roll).
 Code: `wizard/*`, `mana/Heritage.java`, `client/wizard/*`.
+
+---
+
+## Every magic at the tower, fused grimoires and signatures (1.16.0)
+
+**The questionnaire reaches every magic.** The Tower Wizard's nature questions add points to sixteen *flavors* (Hot, Cold, Flow, Gust, Stone, Metal, Gem, Green, Bright, Shade, Soul, Space, Time, Body, Mind, Maker), never to a magic by name. Each attribute carries one or two flavors (`wizard/MagicFlavors.java`); its score is the points of its flavors (shared out, so Glass, which is Gem and Hot, needs both) tilted a little against the rarest attributes. All attributes that can be rolled for a soul are possible; `wizard.allMagics = false` brings back the old four.
+
+**Two attributes fuse.** If a second attribute from different flavors is nearly tied (`wizard.dualAttributeChance`), the mage gets **one fused grimoire**, not two:
+- the pair's blend, if the game has one (`MagicFlavors.blendOf`: Hot + Flow = Glass, Hot + Stone = Magma, Hot + Gust = Explosion, Flow + Stone = Mud, Gust + Stone = Sand, Green + Maker = Cotton as for Charmy, Hot + Maker = Food, ...), is the grimoire's attribute;
+- otherwise a **magic is born** of the pair (`wizard/BornMagic.java`): named from the two (prefix of the first, suffix of the second: Hydro + fire = Hydrofire), drawn in the two parents' colours.
+The grimoire item and skill carry `Fusion = "FLAME:WATER"` (and `BornName`). Its cover is generated from the pair (`grimoire/FusionDesign.java`): blended leather, one parent's metal each, a ring of gems, corner brackets, spine gems.
+
+**A signature for every wizard** (`mana/Signature.java`): a name unique on the server (a registry in the world's saved data), two traits (small trades of power, cost and recharge applied by `ManaLaw`), and a shape. **Custom spells** (`book/SignatureSpell.java`): the Signature Spell on every grimoire, and on a fused grimoire the Fusion Spell and the Born Spell too; their effects are drawn by `vfx/client/layer/BornMagicLayer.java` from two colours and a style, so a magic born of any pair has effects.

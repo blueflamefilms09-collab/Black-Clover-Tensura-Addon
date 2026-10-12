@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smelting",
+  "category": "food",
+  "ingredient": {
+    "item": "nusmp:raw_armor_flank"
+  },
+  "result": {
+    "id": "nusmp:grilled_armor_flank"
+  },
+  "experience": 0.35,
+  "cookingtime": 200
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "category": "food",
+  "ingredient": {
+    "item": "nusmp:raw_basilisk_fillet"
+  },
+  "result": {
+    "id": "nusmp:roast_basilisk_fillet"
+  },
+  "experience": 0.35,
+  "cookingtime": 600
+}

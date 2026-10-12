@@ -31,6 +31,11 @@ public final class NUCreativeTab {
                 output.accept(com.newuniverse.nusmp.dungeon.DungeonBlocks.DUNGEON_GATE_ITEM.get());
                 output.accept(com.newuniverse.nusmp.dungeon.DungeonBlocks.MAW_ROOT_ITEM.get());
                 output.accept(com.newuniverse.nusmp.dungeon.DungeonBlocks.DUNGEON_MYCELIUM_ITEM.get());
+                for (var f : new net.neoforged.neoforge.registries.DeferredItem[]{com.newuniverse.nusmp.dungeon.DungeonFood.RAW_SLIME_JELLY, com.newuniverse.nusmp.dungeon.DungeonFood.RAW_ARMOR_FLANK,   // 1.19.0
+                        com.newuniverse.nusmp.dungeon.DungeonFood.RAW_BASILISK_FILLET, com.newuniverse.nusmp.dungeon.DungeonFood.RAW_DIREWOLF_HAUNCH, com.newuniverse.nusmp.dungeon.DungeonFood.RAW_MONSTER_MEAT,
+                        com.newuniverse.nusmp.dungeon.DungeonFood.RUINED_MEAT, com.newuniverse.nusmp.dungeon.DungeonFood.PURIFIED_MEAT, com.newuniverse.nusmp.dungeon.DungeonFood.CANDIED_SLIME_JELLY,
+                        com.newuniverse.nusmp.dungeon.DungeonFood.GRILLED_ARMOR_FLANK, com.newuniverse.nusmp.dungeon.DungeonFood.ROAST_BASILISK_FILLET, com.newuniverse.nusmp.dungeon.DungeonFood.ROAST_DIREWOLF_HAUNCH,
+                        com.newuniverse.nusmp.dungeon.DungeonFood.SEARED_MONSTER_MEAT}) output.accept((net.minecraft.world.item.Item) f.get());
                 for (MagicType m : MagicType.values()) {
                     if (m == MagicType.ANTI_MAGIC || m == MagicType.KOTODAMA) continue;   // Kotodama: only Zagred's five-leaf below
                     output.accept(GrimoireItem.createUnbound(GrimoireCover.THREE_LEAF, m, null));

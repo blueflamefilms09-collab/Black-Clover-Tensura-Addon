@@ -123,7 +123,8 @@ public final class LivingDungeon {
         return c;
     }
 
-    private static BlockPos column(ServerLevel d, int x, int z) {
+    /** A standing place (two air above a solid floor, no fluid) in this column of the Dungeon, searching down from just under the roof; null if there is none. */
+    public static BlockPos column(ServerLevel d, int x, int z) {
         d.getChunk(x >> 4, z >> 4);                                                  // generates the chunk if it is new
         for (int y = d.getMaxBuildHeight() - 8; y > d.getMinBuildHeight() + 4; y--) {
             BlockPos p = new BlockPos(x, y, z);

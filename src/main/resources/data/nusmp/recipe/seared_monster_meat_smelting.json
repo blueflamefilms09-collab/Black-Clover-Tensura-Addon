@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smelting",
+  "category": "food",
+  "ingredient": {
+    "item": "nusmp:raw_monster_meat"
+  },
+  "result": {
+    "id": "nusmp:seared_monster_meat"
+  },
+  "experience": 0.35,
+  "cookingtime": 200
+}

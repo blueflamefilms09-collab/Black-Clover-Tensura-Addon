@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smelting",
+  "category": "food",
+  "ingredient": {
+    "item": "nusmp:raw_slime_jelly"
+  },
+  "result": {
+    "id": "nusmp:candied_slime_jelly"
+  },
+  "experience": 0.35,
+  "cookingtime": 200
+}

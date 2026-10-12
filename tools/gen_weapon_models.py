@@ -2509,6 +2509,581 @@ REAL = {
 exec(compile(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "gen_pin_providence_models.py"), encoding="utf-8").read(), "gen_pin_providence_models.py", "exec"))
 
 
+# ================================================================ 1.19.0: the Butcher Cleaver
+# Executed in this namespace like the 1.3.0 models above (np, math, Image, Mesh, Atlas, box, col, nz, fz, hsh, REAL, GRIP and _xb_packed all
+# exist here). The in-hand model of the cook's cleaver of the Living Dungeon:
+#
+#     python3 -B tools/gen_weapon_models.py butcher_cleaver        (writes the inventory icon and the item models first, then the mesh and skins)
+#     python3 -B tools/item_preview/preview_weapons.py butcher_cleaver
+#
+# The model is built at four model units (and four skin texels) to the centimetre: the tool is 36 cm, so the mesh is 144 units long and ``REAL``
+# below scales it to 0.36 m in hand. y runs along the tool (the grip below 0, the blade from 0 to 20 cm), x across it with the spine at +x and the
+# honed edge leading at -x (like the Doom Hammer's face), z through it.
+#   blade   a broad slab 20 x 10 cm of dark blued steel: a thick chamfered spine, a flat face hammered into facets, a ground bevel with a bright
+#           honed edge, a hanging hole near the spine, three nicks in the edge, a maker's stamp, and small cooking runes etched along the spine
+#           (they glow faintly teal, and a thin glint runs along the edge)
+#   grip    dark wood with a worn leather cord wound round its middle, brass rivets, a brass ferrule and a brass pommel cap
+BC_U = 4.0                                     # model units (= skin texels) to the centimetre
+BC_XS, BC_XE, BC_XB = 1.7, -8.3, -6.3          # spine, honed edge and the shoulder where the bevel starts (cm)
+BC_LEN = 20.0                                  # blade length (cm)
+BC_TS, BC_TB, BC_TE = 0.46, 0.30, 0.05         # half thickness at the spine, at the shoulder and on the edge (cm)
+BC_CH, BC_CHZ = 0.25, 0.14                     # the chamfer of the spine: how far it runs across the face, how much thinner the spine's top is
+BC_HOLE = (-0.7, 15.9, 0.95)                   # the hanging hole: x, y, radius (cm)
+BC_NICKS = ((5.4, 0.80, 0.42), (10.6, 1.00, 0.58), (14.0, 0.50, 0.26))   # nicks in the edge: y, width, depth (cm)
+BC_RH, BC_RT = 0.9, 1.5                        # corner radii at the heel and the toe of the edge (cm)
+
+_BC_STEEL_FLAT = np.array((60, 74, 100), np.float32)
+_BC_RUNES = [                                  # 5 x 5 cooking runes: heat, cut, salt, bone, water, herb, fire
+    ["..#..", ".#.#.", "#.#.#", ".#.#.", "..#.."],
+    ["#...#", ".#.#.", "..#..", ".#.#.", "#...#"],
+    ["#.#.#", ".###.", "..#..", "..#..", "..#.."],
+    ["#....", "####.", "#..#.", "####.", "#...."],
+    [".#...", ".#.#.", ".###.", ".#.#.", ".#..."],
+    ["..#..", ".###.", "#.#.#", "..#..", "..#.."],
+    ["#.#..", "###..", "#.###", "###..", "#.#.."],
+]
+
+
+def _bc_edge_x(y):
+    """x of the cutting edge at height y (cm): a slight belly, rounded corners and three nicks (each a steep chip: a long ramp in, a short fall out)."""
+    x = BC_XE - 0.3 * math.sin(math.pi * y / BC_LEN)
+    if y < BC_RH:
+        x += BC_RH - math.sqrt(max(0.0, BC_RH ** 2 - (BC_RH - y) ** 2))
+    if y > BC_LEN - BC_RT:
+        x += BC_RT - math.sqrt(max(0.0, BC_RT ** 2 - (y - (BC_LEN - BC_RT)) ** 2))
+    for (yc, w, d) in BC_NICKS:
+        y0, ap, y1 = yc - w / 2, yc + 0.2 * w, yc + w / 2
+        if y0 <= y <= ap:
+            x += d * (y - y0) / (ap - y0)
+        elif ap < y <= y1:
+            x += d * (y1 - y) / (y1 - ap)
+    return x
+
+
+def _bc_spine_x(y):
+    """x of the spine (the top corner at the toe is rounded)."""
+    r = 0.5
+    if y > BC_LEN - r:
+        return BC_XS - r + math.sqrt(max(0.0, r * r - (y - (BC_LEN - r)) ** 2))
+    return BC_XS
+
+
+def _bc_zf(x):
+    """Half thickness of the flat face at x: it thins a little from the spine's chamfer to the shoulder."""
+    return BC_TB + (BC_TS - BC_TB) * min(1.0, max(0.0, (x - BC_XB) / (BC_XS - BC_CH - BC_XB)))
+
+
+def _bc_hammer_map(w, h, seed, spacing=4.4):
+    """The hammer marks as a shading map (about -1 .. 1): a jittered grid of shallow round dimples, lit from the upper left, every facet a
+    little lighter or darker than its neighbours."""
+    rng = np.random.default_rng(seed)
+    hgt = np.zeros((h, w), np.float32)
+    tint = np.zeros((h, w), np.float32)
+    ys, xs = np.mgrid[0:h, 0:w].astype(np.float32) + 0.5
+    for gy in range(-1, int(h / spacing) + 2):
+        for gx in range(-1, int(w / spacing) + 2):
+            cx = (gx + 0.5 + (rng.random() - 0.5) * 0.95) * spacing
+            cy = (gy + 0.5 + (rng.random() - 0.5) * 0.95) * spacing
+            r = spacing * (0.60 + 0.24 * rng.random())
+            dep = 0.7 + 0.5 * rng.random()
+            tn = (rng.random() - 0.5) * 0.3
+            xa, xb = int(max(0, cx - r - 1)), int(min(w, cx + r + 2))
+            ya, yb = int(max(0, cy - r - 1)), int(min(h, cy + r + 2))
+            if xa >= xb or ya >= yb:
+                continue
+            d = np.hypot(xs[ya:yb, xa:xb] - cx, ys[ya:yb, xa:xb] - cy)
+            bowl = np.clip(1.0 - (d / r) ** 2, 0.0, 1.0) * dep
+            win = bowl > hgt[ya:yb, xa:xb]
+            hgt[ya:yb, xa:xb] = np.where(win, bowl, hgt[ya:yb, xa:xb])
+            tint[ya:yb, xa:xb] = np.where(win & (bowl > 0.04), tn, tint[ya:yb, xa:xb])
+    gy_, gx_ = np.gradient(hgt)
+    return np.clip(-(gx_ + gy_) * 1.5 + tint, -1.0, 1.0)
+
+
+def _bc_scratch_map(w, h, seed, n=22):
+    """Fine scratches: a (h, w) map of how much lighter each texel is (0 .. 1), mostly along the blade with a few across."""
+    rng = np.random.default_rng(seed)
+    out = np.zeros((h, w), np.float32)
+    for k in range(n):
+        x, y = rng.random() * w, rng.random() * h
+        ln = (3.0 + rng.random() * 11.0)
+        ang = math.pi / 2 + (rng.random() - 0.5) * (0.5 if k % 5 else 3.0)
+        for s in np.arange(0.0, ln, 0.5):
+            px, py = int(x + math.cos(ang) * s), int(y - math.sin(ang) * s)
+            if 0 <= px < w and 0 <= py < h:
+                out[py, px] = max(out[py, px], 0.55 + 0.45 * rng.random())
+    return out
+
+
+def _bc_rune_bit(lx, ly, front, h, spine_col):
+    """Is this blade-face texel part of an etched rune? The runes read along the blade, 7 of them between the heel and the hanging hole."""
+    r = lx - (spine_col - 6) if front else 6 - lx
+    if not 0 <= r <= 4:
+        return False
+    yi = h - 1 - ly                                        # texels above the heel
+    k, c = divmod(yi - 6, 7)
+    if not (0 <= k < len(_BC_RUNES) and 0 <= c <= 4):
+        return False
+    if not front:
+        k, c = len(_BC_RUNES) - 1 - k, 4 - c               # the back reads the other way, with the runes in the other order
+    return _BC_RUNES[k][r][c] == "#"
+
+
+def _bc_blade_painter(front, w, h, x0, x1, spine_col):
+    """The skin of one face of the blade: hammered blued steel, a ground bevel, the honed edge, wear, and the runes (with their glow)."""
+    U = BC_U
+    salt = 0 if front else 5
+    hm = _bc_hammer_map(w, h, 1190 + salt)
+    scr = _bc_scratch_map(w, h, 77 + salt)
+    hx, hy, hr = BC_HOLE
+
+    def f(fx, fy):
+        lx, ly = int(fx), int(fy)
+        xc = x0 + (lx + 0.5) / U if front else x1 - (lx + 0.5) / U
+        yc = BC_LEN - (ly + 0.5) / U
+        yq = min(max(yc, 0.0), BC_LEN)
+        xe, xs = _bc_edge_x(yq), _bc_spine_x(yq)
+        de, ds = xc - xe, xs - xc
+        tx, ty = xc * U + salt * 31, yc * U
+        g = None
+        sh = float(hm[ly, lx])
+        if de < 0.14:                                                                  # the very edge: a hairline of white
+            c = np.array((250, 253, 255), np.float32) + fz(tx, ty, 11) * 10
+        elif de < 0.7:                                                                 # the honed band
+            c = np.array((232, 241, 251), np.float32) * (0.93 + 0.1 * math.sin(yc * 1.7 + salt)) + fz(tx * 0.4, ty, 12) * 26
+        elif xc < BC_XB:                                                               # the ground bevel: polished steel, grinding streaks along the blade
+            t = (xc - xe) / (BC_XB - xe)
+            c = np.array((170, 186, 208), np.float32) * (1 - t) + np.array((98, 114, 140), np.float32) * t
+            c = c + fz(tx * 0.35, ty * 0.05, 31) * 44 + fz(tx * 0.8, ty * 0.12, 32) * 18 + sh * 7
+            if t > 0.84:
+                c = c * 0.78                                                           # a soft shadow where the bevel meets the flat
+        else:                                                                          # the flat: dark blued steel, hammered into facets
+            c = _BC_STEEL_FLAT * (1.0 + 0.55 * sh) + nz(tx * 0.8, ty * 0.8, 21) * 22 + fz(tx, ty * 0.3, 22) * 8
+            if ds < 1.3:                                                               # forge scale towards the spine
+                k = 1.0 - ds / 1.3
+                c = c * (1.0 - 0.34 * k)
+                if nz(tx * 0.9, ty * 0.9, 23) > 0.06:
+                    c = c * 0.72
+            ts_ = BC_XB + 0.8 - xc
+            if ts_ > 0:
+                c = c * (1 - 0.3 * ts_ / 0.8) + np.array((88, 76, 116), np.float32) * 0.3 * ts_ / 0.8     # a faint heat tint above the shoulder
+            if abs(xc - BC_XB) < 0.1:
+                c = np.array((26, 33, 50), np.float32)                                 # the shoulder line
+            elif ds < BC_CH:
+                c = c * 1.5 + 10                                                       # the chamfer of the spine
+        dh = math.hypot(xc - hx, yc - hy)
+        if hr < dh < hr + 0.2:
+            c = np.array((150, 166, 192), np.float32) * (0.85 + 0.3 * math.sin(math.atan2(yc - hy, xc - hx) + salt))   # the bright rim of the hole
+        elif hr + 0.2 <= dh < hr + 0.7:
+            c = c * 0.82
+        if front:                                                                      # a maker's stamp near the heel: a ring round a cross
+            ds_ = math.hypot(xc + 2.6, yc - 3.5)
+            if 0.62 < ds_ < 0.86 or (ds_ < 0.56 and (abs(xc + 2.6) < 0.1 or abs(yc - 3.5) < 0.1)):
+                c = c * 0.5
+        if scr[ly, lx] > 0 and de > 0.7:                                              # scratches
+            c = c + 34 * scr[ly, lx]
+        rust = nz(tx * 0.55, ty * 0.55, 41 + salt)
+        if rust > 0.18 and de > 0.14 and (dh < 2.2 or yc < 3.4 or (de < 1.6 and xc > BC_XB)):   # rust freckles round the hole and the heel
+            k = min(1.0, (rust - 0.18) * 7.0)
+            c = c * (1 - 0.55 * k) + np.array((118, 70, 40), np.float32) * 0.55 * k
+        blood = nz(tx * 0.4, ty * 0.4, 43 + salt)
+        if blood > 0.12 and 0.14 < de < 3.0 and yc > 7.0:                              # a dull dried-blood film along the edge
+            c = c * 0.78 + np.array((88, 32, 34), np.float32) * 0.22 * min(1.0, (blood - 0.12) * 8)
+        if de < 0.9 and hsh(int(tx), int(ty), 61 + salt) > 0.965:                      # a few bright fleck-chips on the edge
+            c = np.array((255, 255, 255), np.float32)
+        if _bc_rune_bit(lx, ly, front, h, spine_col) and de > 1.0:                     # the etched cooking runes
+            c = np.array((34, 118, 118), np.float32) + fz(tx, ty, 71) * 22
+            g = col((196, 255, 244), 0.62)
+        elif 0.14 <= de < 0.36 and 1.0 < yc < 19.2:                                    # the glint along the edge, broken up by the nicks
+            near = min(abs(yc - nk[0]) for nk in BC_NICKS)
+            g = col((176, 255, 240), (0.14 + 0.26 * (0.5 + 0.5 * math.sin(yc * 0.9 + salt))) * min(1.0, near / 0.7))
+        return col(np.clip(c, 0, 255)), g
+    return f
+
+
+def _bc_tube(m, a, st, sides, paint, sw=2, p=2.6, caps=(False, False)):
+    """A lathe with a rounded-rectangle (superellipse) section: stations (y, rx, rz) in model units, bottom to top; paint(k, s, y, t) -> (rgba, glow)
+    for side k at fraction s across it and fraction t round the tube."""
+    y0, y1 = st[0][0], st[-1][0]
+    H = int(math.ceil(y1 - y0)) + 1
+    W = sides * sw
+    u0, v0 = a.alloc(W, H)
+
+    def f(lx, ly):
+        k = min(sides - 1, int(lx // sw))
+        s = (lx - k * sw) / sw
+        return paint(k, s, y1 - ly, (k + s) / sides)
+    a.paint(u0, v0, W, H, f)
+    e = 2.0 / p
+
+    def ring(i, k):
+        y, rx, rz = st[i]
+        th = 2 * math.pi * (k % sides) / sides
+        c, s_ = math.cos(th), math.sin(th)
+        return (rx * math.copysign(abs(c) ** e, c), y, rz * math.copysign(abs(s_) ** e, s_))
+
+    def vtex(y):
+        return v0 + (y1 - y)
+    for i in range(len(st) - 1):
+        for k in range(sides):
+            A, B, C, D = ring(i, k), ring(i, k + 1), ring(i + 1, k + 1), ring(i + 1, k)
+            ua, ub = u0 + k * sw + 0.02, u0 + (k + 1) * sw - 0.02
+            va, vb = min(vtex(st[i][0]), v0 + H - 0.02), max(vtex(st[i + 1][0]), v0 + 0.02)
+            m.quad(0, [A + (ua, va), B + (ub, va), C + (ub, vb), D + (ua, vb)], ((A[0] + C[0]) / 2, 0.0, (A[2] + C[2]) / 2))
+    for (idx, sgn, on) in ((0, -1, caps[0]), (len(st) - 1, 1, caps[1])):
+        if not on:
+            continue
+        cu, cv = u0 + W / 2, min(max(vtex(st[idx][0]), v0 + 0.02), v0 + H - 0.02)
+        for k in range(sides):
+            m.quad(0, [(0.0, st[idx][0], 0.0, cu, cv), ring(idx, k) + (cu, cv), ring(idx, k + 1) + (cu, cv), ring(idx, k + 1) + (cu, cv)], (0.0, sgn, 0.0))
+
+
+def _bc_wood(k, s, y, t):
+    """Dark wood: long grain with pores, lighter where hands have worn it."""
+    x = (k + s) * 2.0
+    yy = y * BC_U
+    grain = math.sin(x * 1.6 + nz(x * 0.4, yy * 0.06, 301) * 10.0)
+    c = np.array((92, 60, 40), np.float32) * (0.8 + 0.22 * grain) + nz(x, yy, 302) * 16 + fz(x * 2, yy * 0.5, 303) * 10
+    if fz(x * 3, yy * 0.9, 304) < -0.3:
+        c = c * 0.66                                                         # pores
+    c = c * (0.86 + 0.24 * math.cos(2 * math.pi * t - 2.2))
+    return col(np.clip(c, 0, 255)), None
+
+
+def _bc_cord(k, s, y, t):
+    """Worn leather cord, wound in tight coils: a bright crest and a dark valley to every coil, sweat-dark patches, a few loose fibres."""
+    x = (k + s) * 2.0
+    yy = y * BC_U
+    pitch = 0.6 * BC_U
+    ph = ((yy - (-12.0 * BC_U)) / pitch + 0.1 * t * 12) % 1.0
+    prof = max(0.0, 1.0 - (abs(ph - 0.5) * 2.0) ** 2)
+    c = np.array((62, 38, 22), np.float32) * (1 - prof) + np.array((166, 118, 74), np.float32) * prof
+    c = c + nz(x, yy, 311) * 30 + fz(x * 2, yy * 2, 312) * 12
+    if nz(x * 0.5, yy * 0.4, 313) > 0.08:
+        c = c * 0.72                                                         # sweat and grease
+    if prof > 0.7 and hsh(int(x), int(yy), 314) > 0.93:
+        c = np.array((204, 164, 112), np.float32)                            # a loose fibre
+    c = c * (0.86 + 0.24 * math.cos(2 * math.pi * t - 2.2))
+    return col(np.clip(c, 0, 255)), None
+
+
+def _bc_brass(k, s, y, t):
+    """Worn brass: brushed round the tube, bright on the lit side, a faint green patina in the crevices, a few dents."""
+    x = (k + s) * 2.0
+    yy = y * BC_U
+    c = np.array((214, 154, 56), np.float32) + fz(x * 0.4, yy * 2.5, 321) * 34 + nz(x, yy, 322) * 16
+    c = c * (0.74 + 0.34 * math.cos(2 * math.pi * t - 2.0))
+    if nz(x * 0.7, yy * 0.7, 323) > 0.17:
+        c = c * 0.78 + np.array((92, 124, 92), np.float32) * 0.22             # verdigris
+    if hsh(int(x), int(yy), 324) > 0.97:
+        c = c * 1.3 + 20
+    return col(np.clip(c, 0, 255)), None
+
+
+def _bc_brass_box(face, i, j, fw, fh):
+    c = np.array((236, 176, 66), np.float32) * (1.15 if face == 0 else 0.8 if face == 1 else 1.0) + fz(i * 1.9, j * 1.3, face + 331) * 22
+    if i == 0 or j == 0 or i == fw - 1 or j == fh - 1:
+        c = c * 1.18
+    return col(np.clip(c, 0, 255)), None
+
+
+@_xb_packed
+def butcher_cleaver(m, a):
+    """Butcher Cleaver: a broad slab of dark blued steel, hammered, with a ground bevel and a bright honed edge, a hanging hole, three nicks, cooking
+    runes etched along the spine (they glow faintly teal, and a glint runs along the edge); a dark wood grip wound with worn leather cord, brass
+    rivets, ferrule and pommel cap. The edge leads at -x."""
+    U = BC_U
+
+    def P(x, y, z):
+        return (x * U, y * U, z * U)
+
+    # ---- the blade's skin regions
+    xe_min = min(_bc_edge_x(i * BC_LEN / 400) for i in range(401))
+    x0 = math.floor(xe_min * U) / U
+    w = int(math.ceil((BC_XS - x0) * U - 1e-9))
+    x1 = x0 + w / U
+    h = int(round(BC_LEN * U))
+    spine_col = w - 1
+    fu, fv = a.alloc(w, h)
+    bu, bv = a.alloc(w, h)
+    a.paint(fu, fv, w, h, _bc_blade_painter(True, w, h, x0, x1, spine_col))
+    a.paint(bu, bv, w, h, _bc_blade_painter(False, w, h, x0, x1, spine_col))
+    TSP = BC_TS - BC_CHZ                                   # half thickness of the spine's top
+    sw_ = int(math.ceil(2 * TSP * U))
+    su, sv = a.alloc(sw_, h)
+    eu, ev = a.alloc(1, h)
+    tu, tv = a.alloc(w, 1)
+    hu, hv = a.alloc(w, 1)
+    N = 16
+    wu, wv = a.alloc(N, 3)
+
+    def spine_paint(fx, fy):
+        lx, ly = int(fx), int(fy)
+        c = np.array((40, 50, 74), np.float32) + fz(lx * 2, ly * 0.5, 81) * 16 + nz(lx, ly, 82) * 10
+        if lx in (0, sw_ - 1):
+            c = c * 1.45 + 8
+        if nz(lx * 0.8, ly * 0.8, 83) > 0.08:
+            c = c * 0.7
+        return col(np.clip(c, 0, 255)), None
+
+    def edge_paint(fx, fy):
+        lx, ly = int(fx), int(fy)
+        return col(np.clip(np.array((236, 244, 252), np.float32) + fz(lx, ly, 84) * 16, 0, 255)), None
+
+    def end_paint(salt):
+        def fn(fx, fy):
+            lx = int(fx)
+            xc = x0 + (lx + 0.5) / U
+            c = np.array((52, 64, 90), np.float32) + fz(lx * 1.5, salt, 85) * 22
+            if xc < BC_XB:
+                c = np.array((176, 190, 210), np.float32) + fz(lx * 1.5, salt, 86) * 22
+            return col(np.clip(c, 0, 255)), None
+        return fn
+
+    def wall_paint(fx, fy):
+        k, row = int(fx), int(fy)
+        ang = 2 * math.pi * k / N
+        c = np.array((176, 190, 210), np.float32) * (0.62 + 0.38 * (0.5 + 0.5 * math.cos(ang - 2.3))) + fz(k * 2, row, 87) * 14
+        if row != 1:
+            c = c * 1.12
+        if nz(k * 3.0, row, 88) > 0.1:
+            c = c * 0.75 + np.array((110, 66, 38), np.float32) * 0.25               # rust inside the hole
+        return col(np.clip(c, 0, 255)), None
+    a.paint(su, sv, sw_, h, spine_paint)
+    a.paint(eu, ev, 1, h, edge_paint)
+    a.paint(tu, tv, w, 1, end_paint(1))
+    a.paint(hu, hv, w, 1, end_paint(2))
+    a.paint(wu, wv, N, 3, wall_paint)
+
+    def uv(x, y, front):
+        if front:
+            return (min(max(fu + (x - x0) * U, fu + 0.02), fu + w - 0.02), min(max(fv + (BC_LEN - y) * U, fv + 0.02), fv + h - 0.02))
+        return (min(max(bu + (x1 - x) * U, bu + 0.02), bu + w - 0.02), min(max(bv + (BC_LEN - y) * U, bv + 0.02), bv + h - 0.02))
+
+    def V(x, y, z, front):
+        return P(x, y, z) + uv(x, y, front)
+
+    # ---- the blade: bands between stations along y, a main face, a bevel, the edge, the chamfer and the spine on each side
+    hx, hy, hr = BC_HOLE
+    RB = hr * 1.45
+    ys = {0.0, BC_LEN, hy - RB, hy + RB}
+    for k in range(5):
+        ys.add(BC_RH * k / 4)
+    for k in range(7):
+        ys.add(BC_LEN - BC_RT + BC_RT * k / 6)
+    for k in range(1, 20):
+        ys.add(float(k))
+    for (yc, wd, d) in BC_NICKS:
+        ys.update({yc - wd / 2, yc + 0.2 * wd, yc + wd / 2})
+    ys = sorted(ys)
+    ys = [y for i, y in enumerate(ys) if i == 0 or y - ys[i - 1] > 0.04]
+    for ya, yb in zip(ys, ys[1:]):
+        xea, xeb = _bc_edge_x(ya), _bc_edge_x(yb)
+        xsa, xsb = _bc_spine_x(ya), _bc_spine_x(yb)
+        xca, xcb = xsa - BC_CH, xsb - BC_CH                                                # where the flat face meets the spine's chamfer
+        inbox = ya >= hy - RB - 1e-6 and yb <= hy + RB + 1e-6
+        for s in (1, -1):
+            fr = s > 0
+            if inbox:                                                                     # the main face either side of the hole
+                m.quad(0, [V(BC_XB, ya, s * _bc_zf(BC_XB), fr), V(hx - RB, ya, s * _bc_zf(hx - RB), fr), V(hx - RB, yb, s * _bc_zf(hx - RB), fr),
+                           V(BC_XB, yb, s * _bc_zf(BC_XB), fr)], (0, 0, s))
+                m.quad(0, [V(hx + RB, ya, s * _bc_zf(hx + RB), fr), V(xca, ya, s * _bc_zf(xca), fr), V(xcb, yb, s * _bc_zf(xcb), fr),
+                           V(hx + RB, yb, s * _bc_zf(hx + RB), fr)], (0, 0, s))
+            else:
+                m.quad(0, [V(BC_XB, ya, s * _bc_zf(BC_XB), fr), V(xca, ya, s * _bc_zf(xca), fr), V(xcb, yb, s * _bc_zf(xcb), fr),
+                           V(BC_XB, yb, s * _bc_zf(BC_XB), fr)], (0, 0, s))
+            m.quad(0, [V(xca, ya, s * BC_TS, fr), V(xsa, ya, s * TSP, fr), V(xsb, yb, s * TSP, fr), V(xcb, yb, s * BC_TS, fr)], (0.5, 0, s))     # the chamfer
+            m.quad(0, [V(xea, ya, s * BC_TE, fr), V(BC_XB, ya, s * BC_TB, fr), V(BC_XB, yb, s * BC_TB, fr), V(xeb, yb, s * BC_TE, fr)], (0, 0, s))
+        # the edge: a hairline wall, one texel wide
+        ea = (eu + 0.5, ev + min(max((BC_LEN - ya) * U, 0.02), h - 0.02))
+        eb = (eu + 0.5, ev + min(max((BC_LEN - yb) * U, 0.02), h - 0.02))
+        m.quad(0, [P(xea, ya, BC_TE) + ea, P(xea, ya, -BC_TE) + ea, P(xeb, yb, -BC_TE) + eb, P(xeb, yb, BC_TE) + eb], (-(yb - ya), xeb - xea, 0.0))
+        # the spine: a strip across its thickness
+        sa = (lambda z: su + min(max((TSP - z) * U, 0.02), sw_ - 0.02))
+        va_, vb_ = sv + min(max((BC_LEN - ya) * U, 0.02), h - 0.02), sv + min(max((BC_LEN - yb) * U, 0.02), h - 0.02)
+        m.quad(0, [P(xsa, ya, TSP) + (sa(TSP), va_), P(xsa, ya, -TSP) + (sa(-TSP), va_), P(xsb, yb, -TSP) + (sa(-TSP), vb_), P(xsb, yb, TSP) + (sa(TSP), vb_)], (1, 0, 0))
+    # the two ends of the slab (the heel is half inside the ferrule)
+    for (yy_, sgn, ru, rv) in ((BC_LEN, 1, tu, tv), (0.0, -1, hu, hv)):
+        xe_, xs_ = _bc_edge_x(yy_), _bc_spine_x(yy_)
+        xc_ = xs_ - BC_CH
+        va_ = rv + 0.5
+
+        def ue(x, ru=ru):
+            return ru + min(max((x - x0) * U, 0.02), w - 0.02)
+        m.quad(0, [P(xs_, yy_, TSP) + (ue(xs_), va_), P(xc_, yy_, BC_TS) + (ue(xc_), va_), P(xc_, yy_, -BC_TS) + (ue(xc_), va_),
+                   P(xs_, yy_, -TSP) + (ue(xs_), va_)], (0, sgn, 0))
+        m.quad(0, [P(xc_, yy_, BC_TS) + (ue(xc_), va_), P(BC_XB, yy_, BC_TB) + (ue(BC_XB), va_), P(BC_XB, yy_, -BC_TB) + (ue(BC_XB), va_),
+                   P(xc_, yy_, -BC_TS) + (ue(xc_), va_)], (0, sgn, 0))
+        m.quad(0, [P(BC_XB, yy_, BC_TB) + (ue(BC_XB), va_), P(xe_, yy_, BC_TE) + (ue(xe_), va_), P(xe_, yy_, -BC_TE) + (ue(xe_), va_),
+                   P(BC_XB, yy_, -BC_TB) + (ue(BC_XB), va_)], (0, sgn, 0))
+    # ---- the hanging hole: a ring of facets round it on each face, and its wall
+    for k in range(N):
+        t0, t1 = 2 * math.pi * k / N, 2 * math.pi * (k + 1) / N
+        c0 = (hx + hr * math.cos(t0), hy + hr * math.sin(t0))
+        c1 = (hx + hr * math.cos(t1), hy + hr * math.sin(t1))
+        q0, q1 = max(abs(math.cos(t0)), abs(math.sin(t0))), max(abs(math.cos(t1)), abs(math.sin(t1)))
+        s0 = (hx + RB * math.cos(t0) / q0, hy + RB * math.sin(t0) / q0)
+        s1 = (hx + RB * math.cos(t1) / q1, hy + RB * math.sin(t1) / q1)
+        for s in (1, -1):
+            fr = s > 0
+            m.quad(0, [V(c0[0], c0[1], s * _bc_zf(c0[0]), fr), V(c1[0], c1[1], s * _bc_zf(c1[0]), fr), V(s1[0], s1[1], s * _bc_zf(s1[0]), fr),
+                       V(s0[0], s0[1], s * _bc_zf(s0[0]), fr)], (0, 0, s))
+        tm = (t0 + t1) / 2
+        z0, z1 = _bc_zf(c0[0]), _bc_zf(c1[0])
+        m.quad(0, [P(c0[0], c0[1], z0) + (wu + k + 0.02, wv + 0.02), P(c1[0], c1[1], z1) + (wu + k + 0.98, wv + 0.02),
+                   P(c1[0], c1[1], -z1) + (wu + k + 0.98, wv + 2.98), P(c0[0], c0[1], -z0) + (wu + k + 0.02, wv + 2.98)], (-math.cos(tm), -math.sin(tm), 0.0))
+
+    # ---- the grip, from the ferrule to the pommel (cm in, model units out)
+    ytop, ybot, cord0, cord1 = -1.9, -14.4, -12.0, -4.3
+
+    def core(y):
+        u = (y - (ybot + ytop) / 2) / ((ytop - ybot) / 2)
+        rx = 1.58 + 0.13 * u * u
+        return rx, rx * 0.78
+
+    def S(y, d=0.0):
+        rx, rz = core(y)
+        return (y * U, (rx + d) * U, (rz + d) * U)
+    stg = [S(ybot), S(ybot + 0.8), S(cord0 - 0.45)]
+    j = 0
+    y = cord0
+    while y < cord1 - 0.01:                                                              # the coils of the cord: valley, crest, valley ...
+        stg.append(S(y, 0.0 if j % 2 == 0 else 0.15))
+        y += 0.3
+        j += 1
+    stg += [S(cord1, 0.05), S(cord1 + 0.5), S(ytop)]
+
+    def grip_paint(k, s, yc, t):
+        return _bc_cord(k, s, yc, t) if cord0 - 0.2 < yc < cord1 + 0.2 else _bc_wood(k, s, yc, t)
+
+    def tube_paint(fn):
+        return lambda k, s, y, t: fn(k, s, y / U, t)
+    _bc_tube(m, a, stg, 12, tube_paint(grip_paint), sw=2)
+    # rivets: brass studs through the wood either side of the cord
+    for yr in (-3.1, -13.2):
+        rz = core(yr)[1]
+        for s in (1, -1):
+            lo, hi = sorted((s * (rz - 0.04) * U, s * (rz + 0.2) * U))
+            box(m, a, -0.3 * U, (yr - 0.3) * U, lo, 0.3 * U, (yr + 0.3) * U, hi, _bc_brass_box)
+    # the loose end of the cord: a strip lying down the flat of the grip from the top of the wrap, frayed at its tip
+    def cord_end(face, i, j, fw, fh):
+        c = np.array((152, 106, 66), np.float32) + fz(i * 2, j * 2, 341) * 26
+        if j >= fh - 3 and (i + j) % 2 == 0:
+            c = c * 0.55 + 20                                                                # fray
+        if i == 0 or i == fw - 1:
+            c = c * 0.7
+        return col(np.clip(c, 0, 255)), None
+    rzt = core(-5.8)[1]
+    box(m, a, 0.2 * U, -7.4 * U, (rzt + 0.17) * U, 0.7 * U, -4.35 * U, (rzt + 0.23) * U, cord_end)
+    # the brass ferrule: rim rings and a waist, closed on top where the blade enters it
+    fe = [(-2.0, 1.70, 1.32), (-1.93, 1.88, 1.50), (-1.55, 1.88, 1.50), (-1.47, 1.76, 1.38), (-0.65, 1.76, 1.38), (-0.57, 1.88, 1.50), (0.15, 1.88, 1.50),
+          (0.25, 1.76, 1.38)]
+    _bc_tube(m, a, [(y_ * U, rx_ * U, rz_ * U) for (y_, rx_, rz_) in fe], 12, tube_paint(_bc_brass), sw=2, caps=(False, True))
+    # the pommel cap: flared, domed, closed
+    pc = [(-14.3, 1.78, 1.38), (-14.5, 1.94, 1.54), (-15.0, 2.02, 1.62), (-15.5, 1.92, 1.52), (-15.85, 1.5, 1.16), (-16.0, 1.0, 0.8)]
+    _bc_tube(m, a, [(y_ * U, rx_ * U, rz_ * U) for (y_, rx_, rz_) in pc][::-1], 12, tube_paint(_bc_brass), sw=2, caps=(True, False))
+    return dict(glow=("6BF0E0", 0.09, 0.3, 0.8))
+
+
+SPECS += [("butcher_cleaver", butcher_cleaver)]
+REAL.update({"butcher_cleaver": 0.36})               # metres: the whole tool, the blade 20 cm and the grip 16 cm
+GRIP.update({"butcher_cleaver": 0.30})               # the middle of the grip (a fifth of the tool's length from the butt) rests 0.27 of the way up the icon's diagonal, where the hand is
+
+
+# ---------------------------------------------------------------- the inventory icon and the item models
+def _bc_icon_pixels():
+    """The 16 x 16 inventory icon on the usual bottom-left to top-right diagonal: the cleaver's broad slab on the upper right with its bright honed edge
+    on the upper-left side, a hanging hole and three teal runes near the spine, the brass-capped, cord-wound grip below. {(x, y): (r, g, b)}."""
+    R2 = math.sqrt(2.0)
+
+    def frame(px, py):
+        dx, dy = px - 0.5, py - 15.5
+        return (dx - dy) / R2, (-dx - dy) / R2                         # t along the tool (up and to the right), s across it (towards the edge)
+
+    def rr(t, s, t0, t1, s0, s1, r):
+        cx, cy, hx, hy = (t0 + t1) / 2, (s0 + s1) / 2, (t1 - t0) / 2, (s1 - s0) / 2
+        qx, qy = abs(t - cx) - hx + r, abs(s - cy) - hy + r
+        return math.hypot(max(qx, 0.0), max(qy, 0.0)) + min(max(qx, qy), 0.0) - r
+    px = {}
+    steel_e, steel_l, blue, blue_d, spine = (240, 247, 255), (166, 188, 212), (76, 94, 128), (56, 70, 100), (40, 50, 76)
+    teal = (96, 240, 220)
+    for y in range(16):
+        for x in range(16):
+            t, s = frame(x + 0.5, y + 0.5)
+            if rr(t, s, 7.0, 16.8, -1.7, 3.8, 0.4) <= 0:                # the slab
+                c = steel_e if s > 2.65 else steel_l if s > 1.75 else (blue if (x + y) % 3 else blue_d) if s > -0.2 else spine
+                px[(x, y)] = c
+            elif rr(t, s, 0.0, 7.5, -1.2, 1.2, 0.2) <= 0:               # the grip: pommel, wound cord, ferrule
+                if t > 6.5:
+                    c = (255, 228, 130) if s > 0 else (224, 168, 62)
+                elif t < 1.7:
+                    c = (224, 168, 62) if s > 0 else (150, 100, 34)
+                else:
+                    c = (150, 104, 64) if int((t - 1.7) * 0.95) % 2 == 0 else (100, 66, 42)
+                    c = tuple(min(255, int(v * 1.14)) for v in c) if s > 0.3 else tuple(int(v * 0.78) for v in c) if s < -0.4 else c
+                px[(x, y)] = c
+    for (x, y) in list(px):
+        t, s = frame(x + 0.5, y + 0.5)
+        if 0.0 < s < 1.1 and px[(x, y)] in (blue, blue_d, spine) and any(abs(t - tt) < 0.55 for tt in (9.2, 10.9, 12.5)):
+            px[(x, y)] = teal                                          # the runes
+        if abs(t - 14.4) < 0.7 and abs(s - 0.9) < 0.7 and px[(x, y)] != teal:
+            del px[(x, y)]                                              # the hanging hole
+    cells = set(px)
+    for (x, y) in cells:
+        for dx in (-1, 0, 1):
+            for dy in (-1, 0, 1):
+                q = (x + dx, y + dy)
+                if q not in cells and 0 <= q[0] < 16 and 0 <= q[1] < 16:
+                    px[q] = (24, 20, 34)
+    return px
+
+
+_bc_sprite_axis = sprite_axis
+
+
+def sprite_axis(item_id):                                                            # noqa: F811
+    """The cleaver's icon is not a thin diagonal bar (its slab hangs off one side of the grip, which would tilt a fitted axis): the axis is the exact
+    bottom-left to top-right diagonal the grip is drawn on, from the icon's lowest-left pixel to its highest-right one."""
+    if item_id != "butcher_cleaver":
+        return _bc_sprite_axis(item_id)
+    a = np.asarray(Image.open(os.path.join(ASSETS, "textures", "item", item_id + ".png")).convert("RGBA"))
+    S = a.shape[0]
+    ys, xs = np.nonzero(a[..., 3] > 40)
+    u = ((xs + 0.5) / S + 1 - (ys + 0.5) / S) / math.sqrt(2)
+    o = float(u.min()) / math.sqrt(2)
+    return np.array([o, o]), 45.0, float(u.max() - u.min())
+
+
+def _bc_write_icon():
+    """Writes textures/item/butcher_cleaver.png, models/item/butcher_cleaver_icon.json (the flat icon) and models/item/butcher_cleaver.json (the
+    3D in-hand model drawn by client/WeaponRenderer; the display transforms are the Magebane Longsword's, the mesh is placed on the icon's diagonal; only
+    the ground and frame transforms are recentred)."""
+    import json
+    icons = os.path.join(ASSETS, "textures", "item")
+    models = os.path.join(ASSETS, "models", "item")
+    os.makedirs(icons, exist_ok=True)
+    os.makedirs(models, exist_ok=True)
+    im = Image.new("RGBA", (16, 16), (0, 0, 0, 0))
+    for (x, y), c in _bc_icon_pixels().items():
+        im.putpixel((x, y), (int(c[0]), int(c[1]), int(c[2]), 255))
+    im.save(os.path.join(icons, "butcher_cleaver.png"))
+
+    def dump(name, data):
+        with open(os.path.join(models, name + ".json"), "w", newline="\n") as f:
+            json.dump(data, f, indent=2)
+            f.write("\n")
+    dump("butcher_cleaver_icon", {"parent": "minecraft:item/handheld", "textures": {"layer0": "nusmp:item/butcher_cleaver"}})
+    src = json.load(open(os.path.join(models, "magebane_longsword.json")))
+    src["textures"] = {"particle": "nusmp:item/butcher_cleaver"}
+    # In hand the standard transforms hold (the mesh is placed so the middle of its grip is where the hand takes the icon's diagonal). The cleaver is
+    # only a third of the icon's length and sits low on the diagonal, so on the ground and in a frame it is moved to the middle of the model
+    # space (its box is centred at 0.325, 0.351 of the 0.5, 0.5 the transforms turn about; a frame turns the model 180 degrees about y, so x flips).
+    src["display"]["ground"]["translation"] = [1.4, 3.2, 0]
+    src["display"]["fixed"]["translation"] = [-2.8, 2.4, 0]
+    dump("butcher_cleaver", src)
+
+
+
 def mirror_x(mesh):
     out = []
     for (layer, pts, n) in mesh.quads:
@@ -2582,6 +3157,8 @@ def write(item_id, mesh, atlas, extra, fit=False):
 
 
 def main(only=None):
+    if not only or "butcher_cleaver" in only:                      # 1.19.0: its sprite must exist before the mesh is placed on it
+        _bc_write_icon()
     for fit, specs in ((False, SPECS), (True, RELICS)):
         for item_id, fn in specs:
             if only and item_id not in only:

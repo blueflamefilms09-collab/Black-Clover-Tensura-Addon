@@ -149,6 +149,19 @@ public class HuntForSustenanceGoal extends Goal {
 | Version | Stage | What |
 |---|---|---|
 | **1.17.0** | Foundation | this document; the dimension and its type; `EcosystemData` and its tick (oxygen, magicule); tiers and their hazards (heat, suffocation, magicule radiation, conductive water, fire eating oxygen); spawn bypass; mined-terrain regrowth; the Dungeon Maw (ambient density, roots, entry, Root Gate); global broadcasts; the three effects; `/multiverse dungeon ...`; `nusmp-dungeon-server.toml` |
-| 1.18.0 | The food web | Hunger; Dungeon Slime, Living Armor, Basilisk, Direwolf; the goals; breeding, starvation, extinction; carcasses; no drops |
-| 1.19.0 | Table | Butcher Cleaver; cuts, raw toxicity, Holy Water, cooked meals with buffs and temporary skills/attributes |
+| **1.18.0** | The food web | Hunger; Dungeon Slime, Living Armor, Basilisk, Direwolf; the goals; breeding, starvation, extinction; carcasses; no drops |
+| **1.18.0** | Table | Butcher Cleaver; cuts, raw toxicity, Holy Water, cooked meals with buffs and temporary skills/attributes |
 | later | Polish | models for the creatures, ambience, a Golden City structure, rewards for closing a Maw |
+
+---------------------------------------------------------------------------------------------------------------------------
+
+## 7. What exists now (1.18.0) and what is not done
+
+Done: everything in sections 1 to 5 except the items below. Never run in game; CI compiles it, a headless preview checked the two geo models.
+
+Not done yet:
+- the Golden City itself (a structure with its own loot-free rewards): the tier and its radiation exist, nothing is built there;
+- Magic Sense (Tensura's skill) as protection against magicule radiation: only a Mana Zone protects;
+- temporary skills or secondary Black Clover attributes from cooked meals (only timed spell power and cost changes);
+- predators' den structures and pack behaviour; a Maw reward when its roots are cut; the Dungeon's own sky/fog colours and ambient sounds;
+- the Living Armor is drawn with the game's humanoid model: a bespoke model would suit it better.

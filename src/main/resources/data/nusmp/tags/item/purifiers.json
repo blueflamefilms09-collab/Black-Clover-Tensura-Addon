@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "tensura:holy_water",
+      "required": false
+    },
+    "minecraft:honey_bottle"
+  ]
+}

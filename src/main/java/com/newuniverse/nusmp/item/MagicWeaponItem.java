@@ -80,7 +80,9 @@ public class MagicWeaponItem extends SwordItem {
         WEAPON_OF_RESURGENCE(Tiers.DIAMOND, 3, -2.4f, "Resurgent Smite", "A radiant burst 7 blocks wide mends you and your allies (more the fuller your Lay on Hands pool) and cleanses an affliction; undead and demons are burned, everyone else is dazzled. Every hit mends you and a wounded ally.", 220, false),
         // the Brooch Pin and the Hand of Providence (logic in BroochPinArts / HandOfProvidenceArts, reached through ReferenceWeapons; the first stopgap, PinProvidenceArts, is kept but no longer wired)
         BROOCH_PIN(Tiers.DIAMOND, 0, -0.8f, "Piercing Pin", "A quick lunge of up to 7 blocks: every foe on the line is run through (armour does not stop the pin) and slowed, and the first is struck from behind as you land past it.", 100, false),
-        HAND_OF_PROVIDENCE(Tiers.NETHERITE, 2, -1.8f, "Laying On of Hands", "Lays the gauntlet on the ally you are looking at within 6 blocks, or on yourself: a big mend, Regeneration, and every curse and poison cleansed.", 200, false);
+        HAND_OF_PROVIDENCE(Tiers.NETHERITE, 2, -1.8f, "Laying On of Hands", "Lays the gauntlet on the ally you are looking at within 6 blocks, or on yourself: a big mend, Regeneration, and every curse and poison cleansed.", 200, false),
+        // 1.19.0: the cook's tool of the Living Dungeon (logic in ButcherArts; cuts prime meat out of carcasses, see dungeon.Harvest)
+        BUTCHER_CLEAVER(Tiers.IRON, 4, -2.4f, "Anatomical Cut", "A precise cut at the weak point: armour does not stop it, the wound bleeds, and a creature of the Dungeon cut this way leaves an extra portion of meat. On a carcass the cleaver finds the prime cuts.", 160, false);
 
         final Tier tier; final int damage; final float speed; final String ability, desc; final int cooldown; final boolean demon;
         Kind(Tier t, int d, float s, String a, String desc, int cd, boolean demon) {
@@ -476,6 +478,7 @@ public class MagicWeaponItem extends SwordItem {
         if (kind == Kind.PERMAFROST_SABRE || kind == Kind.CYCLONE_RAPIER) tip.add(Component.literal("  The Boreal Blades: hold both, one in each hand, for Boreal Fusion").withStyle(ChatFormatting.AQUA));
         if (BoltArts.isBolt(kind)) BoltArts.tooltip(stack, kind, tip);                  // the two crossbows
         if (RotDoomArts.isMine(kind)) RotDoomArts.tooltip(stack, kind, tip);            // the Club of Rot and the Doom Hammer
+        if (kind == Kind.BUTCHER_CLEAVER) ButcherArts.tooltip(tip);                       // 1.19.0
         if (kind == Kind.MAGEBANE_SHIELD) MagebaneShieldArts.tooltip(tip);               // the Magebane Shield
         if (kind == Kind.WEAPON_OF_RESURGENCE) ResurgenceArts.tooltip(stack, ctx, tip);  // the Weapon of Resurgence
         if (BroochPinArts.isMine(kind)) BroochPinArts.tooltip(stack, tip);               // the Brooch Pin

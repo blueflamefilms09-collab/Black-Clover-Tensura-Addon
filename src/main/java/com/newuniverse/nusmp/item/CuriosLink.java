@@ -122,6 +122,7 @@ public final class CuriosLink {
         put(Kind.MAGEBANE_SHIELD, Attributes.ARMOR, 1, add, "Magic damage taken is cut by a third (a half with the Magebane Longsword in a hand); +1 armour");
         put(Kind.WEAPON_OF_RESURGENCE, Attributes.MAX_HEALTH, 2, add, "Resurgent: +2 health");
         put(Kind.BROOCH_PIN, Attributes.LUCK, 1, add, "Lucky pin: +1 luck");
+        put(Kind.BUTCHER_CLEAVER, Attributes.LUCK, 0.5, add, "A cook's luck: +0.5 luck");
         put(Kind.HAND_OF_PROVIDENCE, Attributes.MAX_HEALTH, 4, add, "Providence: +4 health");
     }
 

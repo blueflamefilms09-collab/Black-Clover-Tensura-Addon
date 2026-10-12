@@ -15,7 +15,13 @@ import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.AABB;
+import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.Blocks;
@@ -29,6 +35,7 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -71,13 +78,13 @@ public final class DungeonEcology {
                     long key = ChunkPos.asLong(cp.x + dx, cp.z + dz);
                     if (!done.add(key)) continue;
                     LevelChunk c = d.getChunkSource().getChunkNow(cp.x + dx, cp.z + dz);
-                    if (c != null) ecoTick(c);
+                    if (c != null) ecoTick(d, c);
                 }
             }
         }
     }
 
-    private static void ecoTick(LevelChunk c) {
+    private static void ecoTick(ServerLevel d, LevelChunk c) {
         EcosystemData e = c.getData(LivingDungeon.ECOSYSTEM);
         ChunkPos cp = c.getPos();
         float ceiling = DungeonTier.at(cp.getMiddleBlockX(), 0, cp.getMiddleBlockZ()).oxygenCeiling;
@@ -85,7 +92,63 @@ public final class DungeonEcology {
         else if (e.oxygen > ceiling) e.oxygen = Math.max(ceiling, e.oxygen - 2f);
         e.magicule += 4f - e.biomass * 0.02f;                                                      // the roots feed it, life eats it
         e.clamp();
+        if (DungeonConfig.get(DungeonConfig.LIFE)) population(d, c, e);
+        e.clamp();
         c.setUnsaved(true);
+    }
+
+    // ---------------------------------------------------------------- the food web: births gated by what is below, collapse
+    private static void population(ServerLevel d, LevelChunk c, EcosystemData e) {
+        ChunkPos cp = c.getPos();
+        AABB box = new AABB(cp.getMinBlockX(), d.getMinBuildHeight(), cp.getMinBlockZ(), cp.getMaxBlockX() + 1, d.getMaxBuildHeight(), cp.getMaxBlockZ() + 1);
+        List<DungeonCreature> life = d.getEntitiesOfClass(DungeonCreature.class, box);
+        int n1 = 0, n2 = 0, n3 = 0;
+        float mass = 0;
+        for (DungeonCreature m : life) {
+            switch (m.tier()) { case 1 -> n1++; case 2 -> n2++; default -> n3++; }
+            mass += m.weight();
+        }
+        e.biomass = Math.min(EcosystemData.BIOMASS_MAX, mass);
+        RandomSource rnd = d.getRandom();
+        // slimes are born of dense magicules, as many as the air can feed; each birth costs some
+        if (e.magicule >= 150f && n1 < Math.min(10, 2 + (int) (e.magicule / 100f)) && rnd.nextFloat() < 0.5f && spawn(d, c, DungeonEntities.SLIME.get())) { e.magicule -= 40f; n1++; }
+        // armour is taken over by mollusks where slimes are plentiful and the air is fit to breathe
+        if (n1 >= 4 && n2 < 3 && e.oxygen >= 50f && rnd.nextFloat() < 0.15f && spawn(d, c, DungeonEntities.LIVING_ARMOR.get())) n2++;
+        // and the predators come where there is something worth hunting
+        if (n2 >= 2 && n3 < 2 && e.oxygen >= 50f && rnd.nextFloat() < 0.08f
+                && spawn(d, c, rnd.nextBoolean() ? DungeonEntities.DIREWOLF.get() : DungeonEntities.BASILISK.get())) n3++;
+        int total = n1 + n2 + n3;
+        e.peak = Math.max(e.peak, total);
+        if (total == 0 && e.peak >= 6) {                                                           // everything that lived here is gone
+            e.peak = 0;
+            DungeonMaw.broadcast(d.getServer(), Component.literal("Deep below, a whole stretch of the Dungeon has gone silent near (" + (Math.round(cp.getMiddleBlockX() / 100f) * 100)
+                    + ", " + (Math.round(cp.getMiddleBlockZ() / 100f) * 100) + "): its ecosystem has collapsed.").withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
+        }
+    }
+
+    /** Brings one creature into a chunk at a floor out of sight of the players. */
+    public static boolean spawn(ServerLevel d, LevelChunk c, EntityType<? extends DungeonCreature> type) {
+        RandomSource r = d.getRandom();
+        for (int t = 0; t < 4; t++) {
+            int x = c.getPos().getMinBlockX() + r.nextInt(16), z = c.getPos().getMinBlockZ() + r.nextInt(16);
+            BlockPos p = LivingDungeon.column(d, x, z);
+            if (p == null || d.getNearestPlayer(p.getX() + 0.5, p.getY(), p.getZ() + 0.5, 6, false) != null) continue;
+            DungeonCreature m = type.create(d);
+            if (m == null) return false;
+            m.moveTo(p.getX() + 0.5, p.getY(), p.getZ() + 0.5, r.nextFloat() * 360f, 0f);
+            m.finalizeSpawn(d, d.getCurrentDifficultyAt(p), MobSpawnType.EVENT, null);
+            d.addFreshEntity(m);
+            return true;
+        }
+        return false;
+    }
+
+    // ---------------------------------------------------------------- nothing drops loot here; what dies leaves a carcass
+    public static void onDrops(LivingDropsEvent e) {
+        LivingEntity v = e.getEntity();
+        if (!(v.level() instanceof ServerLevel sl) || !LivingDungeon.in(sl) || v instanceof Player || !DungeonConfig.get(DungeonConfig.NO_LOOT)) return;
+        e.getDrops().clear();
+        if (v instanceof Mob && !(v instanceof DungeonCreature)) CarcassBlock.leave(sl, v.blockPosition(), 4, v.getMaxHealth());
     }
 
     // ---------------------------------------------------------------- mined terrain grows back

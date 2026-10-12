@@ -1,0 +1,802 @@
+{
+ "direwolf_rest_a": {
+  "kind": "geo",
+  "model": "dungeon_direwolf",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   800,
+   440
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     0.7,
+     0.1
+    ],
+    "dist": 6.0
+   },
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 14,
+    "target": [
+     0,
+     0.7,
+     0.1
+    ],
+    "dist": 6.0
+   }
+  ],
+  "figure": false
+ },
+ "direwolf_rest_b": {
+  "kind": "geo",
+  "model": "dungeon_direwolf",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   800,
+   440
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 2,
+    "target": [
+     0,
+     0.7,
+     0.1
+    ],
+    "dist": 6.0
+   },
+   {
+    "name": "top",
+    "yaw": 0,
+    "pitch": 80,
+    "target": [
+     0,
+     0.7,
+     0.1
+    ],
+    "dist": 6.0
+   }
+  ],
+  "figure": false
+ },
+ "direwolf_rest_c": {
+  "kind": "geo",
+  "model": "dungeon_direwolf",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   800,
+   440
+  ],
+  "views": [
+   {
+    "name": "back3q",
+    "yaw": -145,
+    "pitch": 14,
+    "target": [
+     0,
+     0.7,
+     0.1
+    ],
+    "dist": 6.0
+   },
+   {
+    "name": "low3q",
+    "yaw": -35,
+    "pitch": -4,
+    "target": [
+     0,
+     0.7,
+     0.1
+    ],
+    "dist": 6.0
+   }
+  ],
+  "figure": false
+ },
+ "direwolf_scale": {
+  "kind": "geo",
+  "model": "dungeon_direwolf",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   520,
+   400
+  ],
+  "views": [
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 14,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 6.5
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 2,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 6.5
+   }
+  ],
+  "figure": true,
+  "anim": "idle"
+ },
+ "direwolf_idle": {
+  "kind": "geo",
+  "model": "dungeon_direwolf",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   40,
+   80
+  ],
+  "tile": [
+   440,
+   330
+  ],
+  "views": [
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 14,
+    "target": [
+     0,
+     0.7,
+     0.1
+    ],
+    "dist": 6.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 2,
+    "target": [
+     0,
+     0.7,
+     0.1
+    ],
+    "dist": 6.0
+   }
+  ],
+  "figure": false,
+  "anim": "idle"
+ },
+ "direwolf_walk": {
+  "kind": "geo",
+  "model": "dungeon_direwolf",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   5,
+   10,
+   15
+  ],
+  "tile": [
+   360,
+   270
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 2,
+    "target": [
+     0,
+     0.7,
+     0.1
+    ],
+    "dist": 6.0
+   },
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 14,
+    "target": [
+     0,
+     0.7,
+     0.1
+    ],
+    "dist": 6.0
+   }
+  ],
+  "figure": false,
+  "anim": "walk"
+ },
+ "direwolf_attack": {
+  "kind": "geo",
+  "model": "dungeon_direwolf",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   4,
+   8,
+   12,
+   16
+  ],
+  "tile": [
+   330,
+   260
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 2,
+    "target": [
+     0,
+     0.7,
+     0.1
+    ],
+    "dist": 6.0
+   },
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 14,
+    "target": [
+     0,
+     0.7,
+     0.1
+    ],
+    "dist": 6.0
+   }
+  ],
+  "figure": false,
+  "anim": "attack"
+ },
+ "direwolf_sleep": {
+  "kind": "geo",
+  "model": "dungeon_direwolf",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   40
+  ],
+  "tile": [
+   500,
+   340
+  ],
+  "views": [
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 14,
+    "target": [
+     0,
+     0.7,
+     0.1
+    ],
+    "dist": 6.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 2,
+    "target": [
+     0,
+     0.7,
+     0.1
+    ],
+    "dist": 6.0
+   },
+   {
+    "name": "top3q",
+    "yaw": 40,
+    "pitch": 48,
+    "target": [
+     0,
+     0.7,
+     0.1
+    ],
+    "dist": 6.0
+   }
+  ],
+  "figure": false,
+  "anim": "sleep"
+ },
+ "direwolf_hurt": {
+  "kind": "geo",
+  "model": "dungeon_direwolf",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   2,
+   5
+  ],
+  "tile": [
+   420,
+   300
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 2,
+    "target": [
+     0,
+     0.7,
+     0.1
+    ],
+    "dist": 6.0
+   }
+  ],
+  "figure": false,
+  "anim": "hurt"
+ },
+ "basilisk_rest_a": {
+  "kind": "geo",
+  "model": "dungeon_basilisk",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   800,
+   440
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     0.3,
+     0
+    ],
+    "dist": 6.0
+   },
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 14,
+    "target": [
+     0,
+     0.3,
+     0
+    ],
+    "dist": 6.0
+   }
+  ],
+  "figure": false
+ },
+ "basilisk_rest_b": {
+  "kind": "geo",
+  "model": "dungeon_basilisk",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   800,
+   440
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 2,
+    "target": [
+     0,
+     0.3,
+     0
+    ],
+    "dist": 6.0
+   },
+   {
+    "name": "top",
+    "yaw": 0,
+    "pitch": 80,
+    "target": [
+     0,
+     0.3,
+     0
+    ],
+    "dist": 6.0
+   }
+  ],
+  "figure": false
+ },
+ "basilisk_rest_c": {
+  "kind": "geo",
+  "model": "dungeon_basilisk",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   800,
+   440
+  ],
+  "views": [
+   {
+    "name": "back3q",
+    "yaw": -145,
+    "pitch": 14,
+    "target": [
+     0,
+     0.3,
+     0
+    ],
+    "dist": 6.0
+   },
+   {
+    "name": "low3q",
+    "yaw": -35,
+    "pitch": -4,
+    "target": [
+     0,
+     0.3,
+     0
+    ],
+    "dist": 6.0
+   }
+  ],
+  "figure": false
+ },
+ "basilisk_scale": {
+  "kind": "geo",
+  "model": "dungeon_basilisk",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   520,
+   400
+  ],
+  "views": [
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 14,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 6.5
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 2,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 6.5
+   }
+  ],
+  "figure": true,
+  "anim": "idle"
+ },
+ "basilisk_idle": {
+  "kind": "geo",
+  "model": "dungeon_basilisk",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   40,
+   80
+  ],
+  "tile": [
+   440,
+   330
+  ],
+  "views": [
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 14,
+    "target": [
+     0,
+     0.3,
+     0
+    ],
+    "dist": 6.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 2,
+    "target": [
+     0,
+     0.3,
+     0
+    ],
+    "dist": 6.0
+   }
+  ],
+  "figure": false,
+  "anim": "idle"
+ },
+ "basilisk_walk": {
+  "kind": "geo",
+  "model": "dungeon_basilisk",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   5,
+   10,
+   15
+  ],
+  "tile": [
+   360,
+   270
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 2,
+    "target": [
+     0,
+     0.3,
+     0
+    ],
+    "dist": 6.0
+   },
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 14,
+    "target": [
+     0,
+     0.3,
+     0
+    ],
+    "dist": 6.0
+   }
+  ],
+  "figure": false,
+  "anim": "walk"
+ },
+ "basilisk_attack": {
+  "kind": "geo",
+  "model": "dungeon_basilisk",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   4,
+   8,
+   12,
+   16
+  ],
+  "tile": [
+   330,
+   260
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 2,
+    "target": [
+     0,
+     0.3,
+     0
+    ],
+    "dist": 6.0
+   },
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 14,
+    "target": [
+     0,
+     0.3,
+     0
+    ],
+    "dist": 6.0
+   }
+  ],
+  "figure": false,
+  "anim": "attack"
+ },
+ "basilisk_sleep": {
+  "kind": "geo",
+  "model": "dungeon_basilisk",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   40
+  ],
+  "tile": [
+   500,
+   340
+  ],
+  "views": [
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 14,
+    "target": [
+     0,
+     0.3,
+     0
+    ],
+    "dist": 6.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 2,
+    "target": [
+     0,
+     0.3,
+     0
+    ],
+    "dist": 6.0
+   },
+   {
+    "name": "top3q",
+    "yaw": 40,
+    "pitch": 48,
+    "target": [
+     0,
+     0.3,
+     0
+    ],
+    "dist": 6.0
+   }
+  ],
+  "figure": false,
+  "anim": "sleep"
+ },
+ "basilisk_hurt": {
+  "kind": "geo",
+  "model": "dungeon_basilisk",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   2,
+   5
+  ],
+  "tile": [
+   420,
+   300
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 2,
+    "target": [
+     0,
+     0.3,
+     0
+    ],
+    "dist": 6.0
+   }
+  ],
+  "figure": false,
+  "anim": "hurt"
+ },
+ "direwolf_run": {
+  "kind": "geo",
+  "model": "dungeon_direwolf",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   3,
+   6,
+   9
+  ],
+  "tile": [
+   360,
+   270
+  ],
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 2,
+    "target": [
+     0,
+     0.7,
+     0.1
+    ],
+    "dist": 6.0
+   },
+   {
+    "name": "front3q",
+    "yaw": 35,
+    "pitch": 14,
+    "target": [
+     0,
+     0.7,
+     0.1
+    ],
+    "dist": 6.0
+   }
+  ],
+  "figure": false,
+  "anim": "run"
+ }
+}

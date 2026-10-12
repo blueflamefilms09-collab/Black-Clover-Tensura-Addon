@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "nusmp:raw_armor_flank"
+    },
+    {
+      "tag": "nusmp:purifiers"
+    }
+  ],
+  "result": {
+    "id": "nusmp:purified_monster_meat",
+    "count": 1
+  }
+}

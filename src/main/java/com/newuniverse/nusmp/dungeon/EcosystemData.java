@@ -17,19 +17,25 @@ public final class EcosystemData {
     public static final float MAGICULE_MAX = 1000f, BIOMASS_MAX = 400f, OXYGEN_MAX = 100f, THIN_AIR = 35f;
 
     public float magicule = 400f, biomass = 20f, oxygen = 100f;
+    /** The most creatures this chunk has held at once (a chunk that held at least six and is now empty has collapsed). */
+    public int peak;
 
     public static final Codec<EcosystemData> CODEC = RecordCodecBuilder.create(i -> i.group(
             Codec.FLOAT.optionalFieldOf("magicule", 400f).forGetter(d -> d.magicule),
             Codec.FLOAT.optionalFieldOf("biomass", 20f).forGetter(d -> d.biomass),
-            Codec.FLOAT.optionalFieldOf("oxygen", 100f).forGetter(d -> d.oxygen)
+            Codec.FLOAT.optionalFieldOf("oxygen", 100f).forGetter(d -> d.oxygen),
+            Codec.INT.optionalFieldOf("peak", 0).forGetter(d -> d.peak)
     ).apply(i, EcosystemData::new));
 
     public EcosystemData() {}
 
-    public EcosystemData(float magicule, float biomass, float oxygen) {
+    public EcosystemData(float magicule, float biomass, float oxygen) { this(magicule, biomass, oxygen, 0); }
+
+    public EcosystemData(float magicule, float biomass, float oxygen, int peak) {
         this.magicule = magicule;
         this.biomass = biomass;
         this.oxygen = oxygen;
+        this.peak = Math.max(0, peak);
         clamp();
     }
 

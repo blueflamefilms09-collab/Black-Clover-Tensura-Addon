@@ -35,7 +35,10 @@ public class NUSMP {
         com.newuniverse.nusmp.block.NUBlocks.init();
         com.newuniverse.nusmp.block.NUBlocks.BLOCKS.register(modEventBus);
         com.newuniverse.nusmp.dungeon.DungeonBlocks.init();                                                // 1.17.0: the Living Dungeon
+        com.newuniverse.nusmp.dungeon.DungeonFood.init();                                                  // 1.19.0: its food
         com.newuniverse.nusmp.dungeon.DungeonBlocks.BLOCKS.register(modEventBus);
+        com.newuniverse.nusmp.dungeon.DungeonEntities.ENTITIES.register(modEventBus);
+        modEventBus.addListener(com.newuniverse.nusmp.dungeon.DungeonEntities::attributes);
         com.newuniverse.nusmp.dungeon.DungeonEffects.EFFECTS.register(modEventBus);
         com.newuniverse.nusmp.dungeon.LivingDungeon.ATTACHMENTS.register(modEventBus);
         com.newuniverse.nusmp.world.NUWorldgen.FEATURES.register(modEventBus);
@@ -77,6 +80,7 @@ public class NUSMP {
             modEventBus.addListener(com.newuniverse.nusmp.client.GrimoireDaemonRenderer::register);      // 0.52: Zagred's daemons
             modEventBus.addListener(com.newuniverse.nusmp.client.GrimoireDaemonRenderer::layers);
             modEventBus.addListener(com.newuniverse.nusmp.client.wizard.TowerWizardClient::register);        // 1.6.0
+            modEventBus.addListener(com.newuniverse.nusmp.client.dungeon.DungeonMobsClient::register);          // 1.18.0: the Living Dungeon's creatures
             modEventBus.addListener(com.newuniverse.nusmp.client.CottonSheepRenderer::register);        // 0.52: Cotton Magic's sheep and cloud
             modEventBus.addListener(com.newuniverse.nusmp.client.CottonSheepRenderer::layers);
             modEventBus.addListener(com.newuniverse.nusmp.client.WindSpiritLordRenderer::register);          // 0.53: Sylph, the Wind Spirit Lord boss
@@ -109,6 +113,7 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.DungeonEcology::onBreak);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.DungeonEcology::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.DungeonEcology::onIncomingDamage);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.DungeonEcology::onDrops);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.item.CuriosLink::onPlayerTick);                  // 1.15.0: weapons worn in Curios slots
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.mana.Heritage::onPlayerTick);                   // 1.6.0: kingdom, blood, stage buffs
         modEventBus.addListener(com.newuniverse.nusmp.wizard.WizardNet::registerPayloads);

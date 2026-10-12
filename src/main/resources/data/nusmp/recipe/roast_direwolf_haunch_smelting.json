@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smelting",
+  "category": "food",
+  "ingredient": {
+    "item": "nusmp:raw_direwolf_haunch"
+  },
+  "result": {
+    "id": "nusmp:roast_direwolf_haunch"
+  },
+  "experience": 0.35,
+  "cookingtime": 200
+}
