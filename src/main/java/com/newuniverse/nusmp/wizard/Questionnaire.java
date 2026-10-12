@@ -3,6 +3,7 @@ package com.newuniverse.nusmp.wizard;
 import com.newuniverse.nusmp.blackclover.Kingdom;
 import com.newuniverse.nusmp.blackclover.MagicType;
 import com.newuniverse.nusmp.multiverse.Race;
+import com.newuniverse.nusmp.multiverse.SocialClass;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -78,8 +79,15 @@ public final class Questionnaire {
                     "I train harder the same night|T:2", "I sulk, then I train|T:1", "I shrug and try something else|T:0", "I make a plan and come back stronger|T:2"},
     };
 
-    private static final int[] DRAW = {3, 2, 3, 1};
-    private static final String[][][] POOLS = {NATURE, HEARTH, BLOOD, RESOLVE};
+    private static final String[][] SOCIAL = {
+            {"Which of these was your childhood?",
+                    "A manor with servants and a tutor|S:ROYALTY:2,S:NOBLE:1", "An estate with a name worth keeping|S:NOBLE:2,S:ROYALTY:1", "A house in town, and a trade|S:COMMONER:2", "A field, a roof that leaked, and a crowd of brothers and sisters|S:PEASANT:2,S:COMMONER:1"},
+            {"At the family table the talk was usually about...",
+                    "The crown, the court and the line of succession|S:ROYALTY:2", "Land, titles and who owes whom|S:NOBLE:2", "The week's work and the market|S:COMMONER:2", "Whether the harvest will last the winter|S:PEASANT:2"},
+    };
+
+    private static final int[] DRAW = {3, 2, 3, 1, 1};
+    private static final String[][][] POOLS = {NATURE, HEARTH, BLOOD, RESOLVE, SOCIAL};
 
     // ---------------------------------------------------------------- one questionnaire
     /** The questions as shown (random order), kept on the server to read the answers back. */
@@ -129,7 +137,7 @@ public final class Questionnaire {
     }
 
     // ---------------------------------------------------------------- the result
-    public record Result(MagicType primary, MagicType secondary, Kingdom kingdom, Race blood, int leaves) {}
+    public record Result(MagicType primary, MagicType secondary, Kingdom kingdom, Race blood, int leaves, SocialClass social) {}
 
     /** Reads the answers (the index of the chosen shown option for each question). Null if they do not fit the sheet. */
     public static Result result(Sheet sheet, int[] answers, List<MagicType> pool, boolean allowFive, double dualChance, RandomSource rng) {
@@ -137,6 +145,7 @@ public final class Questionnaire {
         Map<MagicType, Integer> magic = new EnumMap<>(MagicType.class);
         Map<Kingdom, Integer> kingdom = new EnumMap<>(Kingdom.class);
         Map<Race, Integer> blood = new EnumMap<>(Race.class);
+        Map<SocialClass, Integer> social = new EnumMap<>(SocialClass.class);
         int resolve = 0;
         for (int i = 0; i < answers.length; i++) {
             if (answers[i] < 0 || answers[i] >= sheet.tokens().get(i).size()) return null;
@@ -148,6 +157,7 @@ public final class Questionnaire {
                         case "E" -> magic.merge(MagicType.valueOf(p[1]), pts, Integer::sum);
                         case "K" -> kingdom.merge(Kingdom.valueOf(p[1]), pts, Integer::sum);
                         case "R" -> blood.merge(Race.valueOf(p[1]), pts, Integer::sum);
+                        case "S" -> social.merge(SocialClass.valueOf(p[1]), pts, Integer::sum);
                         case "T" -> resolve += pts;
                         default -> { }
                     }
@@ -166,7 +176,7 @@ public final class Questionnaire {
         int score = resolve + rng.nextInt(3);                                          // 0..6: practice counts, a little fortune too
         int leaves = score >= 5 ? 5 : score >= 3 ? 4 : 3;
         if (leaves >= 5 && !allowFive) leaves = 4;
-        return new Result(primary, secondary, k, r, leaves);
+        return new Result(primary, secondary, k, r, leaves, best(social, SocialClass.values(), rng));
     }
 
     private static List<MagicType> rank(List<MagicType> pool, Map<MagicType, Integer> score, RandomSource rng) {

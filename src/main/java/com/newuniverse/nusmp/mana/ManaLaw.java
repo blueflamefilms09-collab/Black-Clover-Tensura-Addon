@@ -245,6 +245,11 @@ public final class ManaLaw {
         t.putString("Density", String.format("%.1f", density(p.level(), p.blockPosition())));
         t.putBoolean("Grand", isGrandZone(p.level(), p.blockPosition()));
         t.putString("Offer", offerCover(p));
+        var sc = com.newuniverse.nusmp.multiverse.MultiverseProfile.socialClass(p);
+        var st = Heritage.socialTrait(sc);
+        t.putString("SocialName", sc.displayName);
+        t.putString("SocialBuff", st.buff());
+        t.putString("SocialDebuff", st.debuff());
         var k = Heritage.kingdom(p);
         var b = Heritage.blood(p);
         if (k != null) { var tr = Heritage.kingdomTrait(k); t.putString("Kingdom", k.displayName); t.putString("KingdomBuff", tr.buff()); t.putString("KingdomDebuff", tr.debuff()); }

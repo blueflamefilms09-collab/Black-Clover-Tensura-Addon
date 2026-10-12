@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.11.0] — The wizard's library dimension, next-step hints, one menu, social class buffs and debuffs
+
+**State:** written without a compiler; CI is the first compile. Nothing run in game. The Tower Wizard's custom model comes in a later version.
+
+### New
+- **The Tower Wizard's library** (`wizard/WizardLibrary.java`, dimension `nusmp:grimoire_library`): right-click the Grimoire Summons and it carries you to a round reading room in the void (shelves, lanterns, a rug, a lectern, the wizard at the centre) with 26 books flying around whoever stands in it (they exist only while someone is inside). Nothing there can be broken. Sneak + right-click the wizard, or finish the questionnaire, and you are sent back to where you stood.
+- **Next-step hints:** when you reach the age / level the summons arrives with a chat message and a title ("You are summoned: right-click the Grimoire Summons"); a reminder every two minutes until you go; "click an answer" and "sneak to leave" in the library; after the grimoire arrives, what to do next. The summons item is used up.
+- **Social class has buffs and debuffs** (it was flavour only): Royalty (spells 5% cheaper, +1 luck / -2 max health, 10% fewer gold stars), Noble (spells hit 4% harder and cost 3% less, +5% skill mastery gain / -1 armor), Commoner (+5% skill learning), Peasant (+4 max health, +3% speed, 10% more gold stars / spells cost 5% more and hit 4% weaker). The questionnaire has a childhood question that sets it; `/multiverse profile class` still works. Shown in the status panel.
+
+### Replaced
+- **One menu:** the Four Kingdoms slot in Tensura's magic screen (and its label) now opens the Codex, which holds every page (overview, status, grimoire, weapons, relics, bestiary, spirit lords), and the small "Multiverse" button in the corner of Tensura's screens is gone. The older Four Kingdoms screen is kept in the code but no longer opened from the menu.
+
 ## [1.10.0] — Costs through Tensura's consume helpers; resistances as flat modifiers
 
 **State:** written without a compiler, from the owner's reading of the Tensura 2.0.1.3 bytecode; CI is the first compile. Nothing run in game.

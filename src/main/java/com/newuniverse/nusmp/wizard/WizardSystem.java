@@ -74,13 +74,19 @@ public final class WizardSystem {
     public static void summon(ServerPlayer p) {
         data(p).putBoolean("Summoned", true);
         p.getInventory().placeItemBackInInventory(new ItemStack(NUItems.GRIMOIRE_SUMMONS.get()));
-        p.sendSystemMessage(Component.literal("A summons arrives: you are called to a Grimoire Tower to claim your grimoire. Read it to learn where the tower stands.").withStyle(ChatFormatting.GOLD));
+        p.sendSystemMessage(Component.literal("You have come of age: a Grimoire Summons is in your pack. NEXT: right-click it. It carries you to the Tower Wizard's library, where you answer his questions and your grimoire comes to you.").withStyle(ChatFormatting.GOLD));
+        p.connection.send(new net.minecraft.network.protocol.game.ClientboundSetTitlesAnimationPacket(10, 100, 20));
+        p.connection.send(new net.minecraft.network.protocol.game.ClientboundSetSubtitleTextPacket(Component.literal("Right-click the Grimoire Summons in your pack").withStyle(ChatFormatting.YELLOW)));
+        p.connection.send(new net.minecraft.network.protocol.game.ClientboundSetTitleTextPacket(Component.literal("You are summoned").withStyle(ChatFormatting.GOLD)));
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.BOOK_PAGE_TURN, SoundSource.PLAYERS, 1.2f, 0.8f);
     }
 
     /** Every 5 s: come of age and you are summoned. */
     public static void onPlayerTick(PlayerTickEvent.Post event) {
-        if (!(event.getEntity() instanceof ServerPlayer p) || p.tickCount % 100 != 41 || !MultiverseConfig.get(MultiverseConfig.WIZARD_MODE)) return;
+        if (!(event.getEntity() instanceof ServerPlayer p) || !MultiverseConfig.get(MultiverseConfig.WIZARD_MODE)) return;
+        if (p.tickCount % 2400 == 41 && summoned(p) && !WizardLibrary.inLibrary(p) && GrimoirePages.grimoireOf(p).isEmpty())                  // a reminder of the next step
+            p.displayClientMessage(Component.literal("Your Grimoire Summons is waiting: right-click it to visit the Tower Wizard.").withStyle(ChatFormatting.YELLOW), true);
+        if (p.tickCount % 100 != 41) return;
         if (summoned(p) || !Ceremony.isEligible(p) || !grownEnough(p)) return;
         summon(p);
     }
@@ -101,13 +107,19 @@ public final class WizardSystem {
 
     /** The player speaks to the wizard. */
     public static void talk(ServerPlayer p, TowerWizardEntity wizard) {
-        if (GrimoirePages.grimoireOf(p).isPresent()) { say(p, "You already carry a grimoire. Go, and use it well."); return; }
+        if (WizardLibrary.inLibrary(p) && p.isShiftKeyDown()) { say(p, "Go, then. The door is always open."); WizardLibrary.leave(p); return; }
+        if (GrimoirePages.grimoireOf(p).isPresent()) {
+            say(p, "You already carry a grimoire. Go, and use it well.");
+            if (WizardLibrary.inLibrary(p)) WizardLibrary.leave(p);
+            return;
+        }
         if (!MultiverseConfig.get(MultiverseConfig.WIZARD_MODE)) { say(p, "The tower chooses its mages in the old way now: pray at the altar."); return; }
         if (!Ceremony.isEligible(p)) { say(p, "The grimoires have not called you."); return; }
         if (!summoned(p) && !p.hasPermissions(2)) { say(p, "You come without a summons. Grow a little more, and one will find you."); return; }
         var sheet = Questionnaire.draw(p.getRandom());
         PENDING.put(p.getUUID(), new Pending(sheet, p.level().getGameTime(), wizard.position()));
         say(p, "Answer honestly, child. The grimoire reads the heart.");
+        p.displayClientMessage(Component.literal("Click an answer for each question. (Sneak and right-click the wizard to leave.)").withStyle(ChatFormatting.GRAY), true);
         PacketDistributor.sendToPlayer(p, new WizardNet.OpenPayload(sheet.toTag()));
     }
 
@@ -162,13 +174,23 @@ public final class WizardSystem {
         GrimoireAcceptance.grantExact(p, cover, r.primary(), devil);
         if (GrimoirePages.grimoireOf(p).isEmpty()) return;                                    // another mod refused the skill
         if (r.secondary() != null) GrimoireAcceptance.grantExtra(p, cover, r.secondary());
+        for (int i = 0; i < p.getInventory().getContainerSize(); i++)                  // the summons has done its work
+            if (p.getInventory().getItem(i).is(NUItems.GRIMOIRE_SUMMONS.get())) p.getInventory().setItem(i, ItemStack.EMPTY);
+        MultiverseProfile.setSocialClass(p, r.social());
         MultiverseProfile.setAccepted(p, true, "the Grimoire Tower");
         Ceremony.finish(p, "the Tower Wizard");
         var kt = Heritage.kingdomTrait(r.kingdom());
         var bt = Heritage.bloodTrait(r.blood());
         p.sendSystemMessage(Component.literal("Your magic: " + r.primary().displayName + (r.secondary() != null ? " and " + r.secondary().displayName : "")
                 + "  |  " + cover.displayName()).withStyle(ChatFormatting.AQUA));
+        var sct = Heritage.socialTrait(r.social());
+        p.sendSystemMessage(Component.literal("Your family stands among the " + r.social().displayName + ".  + " + sct.buff() + "  - " + sct.debuff()).withStyle(ChatFormatting.YELLOW));
         p.sendSystemMessage(Component.literal("You hail from the " + r.kingdom().displayName + ".  + " + kt.buff() + "  - " + kt.debuff()).withStyle(ChatFormatting.GOLD));
         p.sendSystemMessage(Component.literal("The blood of the " + r.blood().displayName + " is mixed into yours.  + " + bt.buff() + "  - " + bt.debuff()).withStyle(ChatFormatting.LIGHT_PURPLE));
+        p.sendSystemMessage(Component.literal("NEXT: your grimoire is in your pack. Open the Tensura menu and click the Four Kingdoms slot to see everything about yourself in one book. Summon your grimoire with its first page, and train: your stage rises with your rank.").withStyle(ChatFormatting.GREEN));
+        if (WizardLibrary.inLibrary(p)) {
+            p.sendSystemMessage(Component.literal("The wizard will send you home in a few seconds.").withStyle(ChatFormatting.GRAY));
+            SpellRuntime.later(p.serverLevel(), 160, () -> { if (p.isAlive()) WizardLibrary.leave(p); });
+        }
     }
 }

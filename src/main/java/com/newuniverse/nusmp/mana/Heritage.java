@@ -1,7 +1,9 @@
 package com.newuniverse.nusmp.mana;
 
 import com.newuniverse.nusmp.blackclover.Kingdom;
+import com.newuniverse.nusmp.multiverse.MultiverseProfile;
 import com.newuniverse.nusmp.multiverse.Race;
+import com.newuniverse.nusmp.multiverse.SocialClass;
 import io.github.manasmods.tensura.registry.attribute.TensuraAttributes;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
@@ -129,6 +131,40 @@ public final class Heritage {
         };
     }
 
+    // ---------------------------------------------------------------- social class (1.11.0): a trade, never a tier
+    static List<Mod> socialMods(SocialClass c) {
+        return switch (c) {
+            case ROYALTY -> List.of(add(Attributes.LUCK, 1), add(Attributes.MAX_HEALTH, -2));
+            case NOBLE -> List.of(pct(TensuraAttributes.ABILITY_MASTERY_GAIN, 0.05), add(Attributes.ARMOR, -1));
+            case COMMONER -> List.of(pct(TensuraAttributes.ABILITY_LEARNING_GAIN, 0.05));
+            case PEASANT -> List.of(add(Attributes.MAX_HEALTH, 4), pct(Attributes.MOVEMENT_SPEED, 0.03));
+        };
+    }
+
+    public static Trait socialTrait(SocialClass c) {
+        return switch (c) {
+            case ROYALTY -> new Trait("spells cost 5% less, +1 luck: magic is a birthright", "-2 max health, 10% fewer gold stars: sheltered, and much is expected");
+            case NOBLE -> new Trait("spells hit 4% harder and cost 3% less, +5% skill mastery gain: schooled", "-1 armor: never learned to take a blow");
+            case COMMONER -> new Trait("+5% skill learning: adaptable", "none");
+            case PEASANT -> new Trait("+4 max health, +3% speed, 10% more gold stars: hard years teach", "spells cost 5% more and hit 4% weaker: no tutors");
+        };
+    }
+
+    /** Multiplies spell costs. */
+    public static double socialCost(Player p) {
+        return switch (MultiverseProfile.socialClass(p)) { case ROYALTY -> 0.95; case NOBLE -> 0.97; case PEASANT -> 1.05; default -> 1.0; };
+    }
+
+    /** Multiplies spell damage. */
+    public static double socialPower(Player p) {
+        return switch (MultiverseProfile.socialClass(p)) { case NOBLE -> 1.04; case PEASANT -> 0.96; default -> 1.0; };
+    }
+
+    /** Multiplies the gold stars a mission earns. */
+    public static double starMult(Player p) {
+        return switch (MultiverseProfile.socialClass(p)) { case ROYALTY -> 0.9; case PEASANT -> 1.1; default -> 1.0; };
+    }
+
     // ---------------------------------------------------------------- Tensura's own attributes (multipliers: a percentage of the base)
     private record TMod(Holder<Attribute> attr, double amount, boolean flat, String label) {}
 
@@ -189,9 +225,9 @@ public final class Heritage {
     private static ResourceLocation id(int i) { return ResourceLocation.fromNamespaceAndPath("nusmp", "heritage_" + i); }
 
     // ---------------------------------------------------------------- numbers other systems read
-    public static double costMult(Player p) { return kingdom(p) == Kingdom.HEART ? 0.95 : 1.0; }
+    public static double costMult(Player p) { return (kingdom(p) == Kingdom.HEART ? 0.95 : 1.0) * socialCost(p); }
 
-    public static double powerMult(Player p) { return kingdom(p) == Kingdom.SPADE ? 1.05 : 1.0; }
+    public static double powerMult(Player p) { return (kingdom(p) == Kingdom.SPADE ? 1.05 : 1.0) * socialPower(p); }
 
     // ---------------------------------------------------------------- applying
     public static void onPlayerTick(PlayerTickEvent.Post event) {
@@ -199,7 +235,7 @@ public final class Heritage {
         Kingdom k = kingdom(p);
         Race b = blood(p);
         ManaLaw.Stage st = ManaLaw.stage(p);
-        String sig = (k == null ? "-" : k.name()) + "|" + (b == null ? "-" : b.name()) + "|" + st.label() + (com.newuniverse.nusmp.multiverse.WizardKing.isKing(p) ? "|WK" : "");
+        String sig = (k == null ? "-" : k.name()) + "|" + (b == null ? "-" : b.name()) + "|" + st.label() + "|" + MultiverseProfile.socialClass(p).name() + (com.newuniverse.nusmp.multiverse.WizardKing.isKing(p) ? "|WK" : "");
         AttributeInstance marker = p.getAttribute(Attributes.MOVEMENT_SPEED);
         boolean present = marker != null && marker.hasModifier(MARKER);
         if (present && sig.equals(data(p).getString("Applied"))) return;
@@ -215,6 +251,7 @@ public final class Heritage {
         if (k != null) { all.addAll(kingdomMods(k)); for (TMod t : kingdomTensura(k)) all.add(t.flat() ? add(t.attr(), t.amount()) : pct(t.attr(), t.amount())); }
         if (b != null) { all.addAll(bloodMods(b)); for (TMod t : bloodTensura(b)) all.add(t.flat() ? add(t.attr(), t.amount()) : pct(t.attr(), t.amount())); }
         all.addAll(stageMods(st));
+        all.addAll(socialMods(MultiverseProfile.socialClass(p)));
         if (com.newuniverse.nusmp.multiverse.WizardKing.isKing(p)) all.addAll(crownMods());
         int n = 0;
         for (Mod m : all) {

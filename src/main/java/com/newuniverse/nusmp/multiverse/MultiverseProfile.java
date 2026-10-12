@@ -67,6 +67,7 @@ public final class MultiverseProfile {
     /** Positive = gold stars (merit), negative = black stars (demerit). Auto-promotes when enabled. */
     public static void addStars(ServerPlayer p, int amount) {
         if (amount == 0) return;
+        if (amount > 0) amount = Math.max(1, (int) Math.round(amount * com.newuniverse.nusmp.mana.Heritage.starMult(p)));   // 1.11.0: social class
         CompoundTag t = read(p);
         if (amount > 0) t.putInt("Gold", t.getInt("Gold") + amount);
         else t.putInt("Black", t.getInt("Black") - amount);

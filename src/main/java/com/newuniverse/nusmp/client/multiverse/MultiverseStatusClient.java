@@ -131,10 +131,6 @@ public final class MultiverseStatusClient {
             PANELS.put(s, rect);
             return;
         }
-        if (MultiverseClientConfig.get(MultiverseClientConfig.BUTTON_FALLBACK)) {
-            event.addListener(Button.builder(Component.literal("Multiverse"), b -> Minecraft.getInstance().setScreen(new com.newuniverse.nusmp.client.ui.CodexScreen(s)))
-                    .bounds(s.width - 84, 4, 80, 16).build());
-        }
     }
 
     private static void onScreenRender(ScreenEvent.Render.Post event) {
@@ -170,7 +166,7 @@ public final class MultiverseStatusClient {
     private static void onScreenClickUnsafe(ScreenEvent.MouseButtonPressed.Pre event) {
         int[] l = LABELS.get(event.getScreen());
         if (l != null && event.getButton() == 0 && inside(l, event.getMouseX(), event.getMouseY())) {
-            Minecraft.getInstance().setScreen(new FourKingdomsScreen(event.getScreen()));
+            Minecraft.getInstance().setScreen(new com.newuniverse.nusmp.client.ui.CodexScreen(event.getScreen()));      // 1.11.0: one menu
             event.setCanceled(true);
             return;
         }

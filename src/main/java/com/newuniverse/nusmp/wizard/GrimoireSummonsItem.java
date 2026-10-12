@@ -24,6 +24,13 @@ public class GrimoireSummonsItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (level.isClientSide || !(player instanceof ServerPlayer p)) return InteractionResultHolder.pass(stack);
+        if (com.newuniverse.nusmp.multiverse.MultiverseConfig.get(com.newuniverse.nusmp.multiverse.MultiverseConfig.WIZARD_MODE)) {
+            if (WizardLibrary.inLibrary(p)) {
+                p.displayClientMessage(Component.literal("Speak to the Tower Wizard in the middle of the room (right-click him).").withStyle(ChatFormatting.GOLD), true);
+                return InteractionResultHolder.success(stack);
+            }
+            if (WizardLibrary.enter(p)) return InteractionResultHolder.success(stack);       // 1.11.0: the letter carries you to his library
+        }
         Optional<WorldSites.Site> site = WorldSites.get(p.getServer()).nearest(WorldSites.Kind.TOWER, level.dimension(), p.blockPosition());
         if (site.isEmpty()) {
             p.displayClientMessage(Component.literal("The summons names a Grimoire Tower, but you do not know where it stands yet. Ask around, or find one.").withStyle(ChatFormatting.GRAY), true);
@@ -40,6 +47,6 @@ public class GrimoireSummonsItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
         tip.add(Component.literal("You are summoned to the Grimoire Tower to claim your grimoire.").withStyle(ChatFormatting.GOLD));
-        tip.add(Component.literal("  Use: shows the way to the nearest tower. Speak to the Tower Wizard there.").withStyle(ChatFormatting.GRAY));
+        tip.add(Component.literal("  Right-click: the letter carries you to the Tower Wizard's library. Speak to him there.").withStyle(ChatFormatting.GRAY));
     }
 }

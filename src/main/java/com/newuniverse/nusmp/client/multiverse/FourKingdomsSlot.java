@@ -74,7 +74,7 @@ public final class FourKingdomsSlot {
     private static void onClick(ScreenEvent.MouseButtonPressed.Pre e) {
         int[] r = SLOTS.get(e.getScreen());
         if (e.getButton() != 0 || !inside(r, e.getMouseX(), e.getMouseY())) return;
-        Minecraft.getInstance().setScreen(new FourKingdomsScreen(e.getScreen()));
+        Minecraft.getInstance().setScreen(new com.newuniverse.nusmp.client.ui.CodexScreen(e.getScreen()));      // 1.11.0: one menu
         e.setCanceled(true);
     }
 
@@ -83,6 +83,6 @@ public final class FourKingdomsSlot {
         if (!inside(r, e.getMouseX(), e.getMouseY())) return;
         GuiGraphics g = e.getGuiGraphics();
         g.fill(r[0], r[1], r[0] + r[2], r[1] + r[3], 0x30FFFFFF);          // hover highlight
-        g.renderTooltip(Minecraft.getInstance().font, Component.literal("Four Kingdoms"), e.getMouseX(), e.getMouseY());
+        g.renderTooltip(Minecraft.getInstance().font, Component.literal("Four Kingdoms: every menu is in here"), e.getMouseX(), e.getMouseY());
     }
 }
