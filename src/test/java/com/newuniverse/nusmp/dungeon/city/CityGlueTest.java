@@ -74,4 +74,19 @@ class CityGlueTest {
         assertTrue(save.claim(city, a), "a reset gives the gift again");
         assertFalse(save.forget(CitySave.key(99, 99)));
     }
+
+    @Test
+    void theDoorsOfTheWaysInAreRememberedPerCityAndForgottenWithIt() {
+        CitySave save = new CitySave();
+        long city = CitySave.key(4, 4), other = CitySave.key(4, 5);
+        assertEquals(0, save.ways(city).length, "nothing opened yet");
+        save.setWays(city, new long[]{11L, 22L});
+        assertEquals(2, save.ways(city).length);
+        assertEquals(22L, save.ways(city)[1]);
+        assertEquals(0, save.ways(other).length, "another city has its own");
+        save.finish(city);
+        assertEquals(2, save.ways(city).length, "finishing keeps them");
+        assertTrue(save.forget(city));
+        assertEquals(0, save.ways(city).length, "a reset forgets them with the city");
+    }
 }
