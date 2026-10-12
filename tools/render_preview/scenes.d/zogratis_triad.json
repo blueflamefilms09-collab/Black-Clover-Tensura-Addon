@@ -1,0 +1,4466 @@
+{
+ "triad_dante_base_views": {
+  "kind": "geo",
+  "model": "zogratis_dante_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   440,
+   620
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 3,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.3
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 8,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.3
+   }
+  ]
+ },
+ "triad_dante_base_views2": {
+  "kind": "geo",
+  "model": "zogratis_dante_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   440,
+   620
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.3
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.3
+   }
+  ]
+ },
+ "triad_dante_base_head": {
+  "kind": "geo",
+  "model": "zogratis_dante_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     1.72,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "face 3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.72,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "head side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.72,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "triad_dante_base_attack": {
+  "kind": "geo",
+  "model": "zogratis_dante_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   6,
+   9,
+   12,
+   18
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "attack",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_dante_base_cast": {
+  "kind": "geo",
+  "model": "zogratis_dante_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   10,
+   20,
+   30
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "cast",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_dante_base_cast_big": {
+  "kind": "geo",
+  "model": "zogratis_dante_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   14,
+   28,
+   40,
+   54
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "cast_big",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_dante_base_transform": {
+  "kind": "geo",
+  "model": "zogratis_dante_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   20,
+   40,
+   55
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "transform",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_dante_base_walk": {
+  "kind": "geo",
+  "model": "zogratis_dante_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   5,
+   10,
+   15
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "walk",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_dante_base_run": {
+  "kind": "geo",
+  "model": "zogratis_dante_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   3,
+   6,
+   9
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "run",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_dante_base_death": {
+  "kind": "geo",
+  "model": "zogratis_dante_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   12,
+   26,
+   40,
+   50
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "death",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_dante_base_hurt": {
+  "kind": "geo",
+  "model": "zogratis_dante_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   3,
+   6
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "hurt",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_dante_base_idle": {
+  "kind": "geo",
+  "model": "zogratis_dante_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   20,
+   40,
+   60
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_dante_hybrid_views": {
+  "kind": "geo",
+  "model": "zogratis_dante_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   440,
+   620
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 3,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.3
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 8,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.3
+   }
+  ]
+ },
+ "triad_dante_hybrid_views2": {
+  "kind": "geo",
+  "model": "zogratis_dante_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   440,
+   620
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.3
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.3
+   }
+  ]
+ },
+ "triad_dante_hybrid_head": {
+  "kind": "geo",
+  "model": "zogratis_dante_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     1.72,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "face 3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.72,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "head side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.72,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "triad_dante_hybrid_attack": {
+  "kind": "geo",
+  "model": "zogratis_dante_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   6,
+   9,
+   12,
+   18
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "attack",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_dante_hybrid_cast": {
+  "kind": "geo",
+  "model": "zogratis_dante_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   10,
+   20,
+   30
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "cast",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_dante_hybrid_cast_big": {
+  "kind": "geo",
+  "model": "zogratis_dante_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   14,
+   28,
+   40,
+   54
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "cast_big",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_dante_hybrid_transform": {
+  "kind": "geo",
+  "model": "zogratis_dante_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   20,
+   40,
+   55
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "transform",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_dante_hybrid_walk": {
+  "kind": "geo",
+  "model": "zogratis_dante_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   5,
+   10,
+   15
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "walk",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_dante_hybrid_run": {
+  "kind": "geo",
+  "model": "zogratis_dante_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   3,
+   6,
+   9
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "run",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_dante_hybrid_death": {
+  "kind": "geo",
+  "model": "zogratis_dante_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   12,
+   26,
+   40,
+   50
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "death",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_dante_hybrid_hurt": {
+  "kind": "geo",
+  "model": "zogratis_dante_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   3,
+   6
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "hurt",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_dante_hybrid_idle": {
+  "kind": "geo",
+  "model": "zogratis_dante_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   20,
+   40,
+   60
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_vanica_base_views": {
+  "kind": "geo",
+  "model": "zogratis_vanica_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   440,
+   620
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 3,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.3
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 8,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.3
+   }
+  ]
+ },
+ "triad_vanica_base_views2": {
+  "kind": "geo",
+  "model": "zogratis_vanica_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   440,
+   620
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.3
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.3
+   }
+  ]
+ },
+ "triad_vanica_base_head": {
+  "kind": "geo",
+  "model": "zogratis_vanica_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     1.72,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "face 3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.72,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "head side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.72,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "triad_vanica_base_attack": {
+  "kind": "geo",
+  "model": "zogratis_vanica_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   6,
+   9,
+   12,
+   18
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "attack",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_vanica_base_cast": {
+  "kind": "geo",
+  "model": "zogratis_vanica_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   10,
+   20,
+   30
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "cast",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_vanica_base_cast_big": {
+  "kind": "geo",
+  "model": "zogratis_vanica_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   14,
+   28,
+   40,
+   54
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "cast_big",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_vanica_base_transform": {
+  "kind": "geo",
+  "model": "zogratis_vanica_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   20,
+   40,
+   55
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "transform",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_vanica_base_walk": {
+  "kind": "geo",
+  "model": "zogratis_vanica_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   5,
+   10,
+   15
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "walk",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_vanica_base_run": {
+  "kind": "geo",
+  "model": "zogratis_vanica_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   3,
+   6,
+   9
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "run",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_vanica_base_death": {
+  "kind": "geo",
+  "model": "zogratis_vanica_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   12,
+   26,
+   40,
+   50
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "death",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_vanica_base_hurt": {
+  "kind": "geo",
+  "model": "zogratis_vanica_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   3,
+   6
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "hurt",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_vanica_base_idle": {
+  "kind": "geo",
+  "model": "zogratis_vanica_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   20,
+   40,
+   60
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_vanica_hybrid_views": {
+  "kind": "geo",
+  "model": "zogratis_vanica_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   440,
+   620
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 3,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.3
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 8,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.3
+   }
+  ]
+ },
+ "triad_vanica_hybrid_views2": {
+  "kind": "geo",
+  "model": "zogratis_vanica_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   440,
+   620
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.3
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.3
+   }
+  ]
+ },
+ "triad_vanica_hybrid_head": {
+  "kind": "geo",
+  "model": "zogratis_vanica_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     1.72,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "face 3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.72,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "head side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.72,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "triad_vanica_hybrid_attack": {
+  "kind": "geo",
+  "model": "zogratis_vanica_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   6,
+   9,
+   12,
+   18
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "attack",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_vanica_hybrid_cast": {
+  "kind": "geo",
+  "model": "zogratis_vanica_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   10,
+   20,
+   30
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "cast",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_vanica_hybrid_cast_big": {
+  "kind": "geo",
+  "model": "zogratis_vanica_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   14,
+   28,
+   40,
+   54
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "cast_big",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_vanica_hybrid_transform": {
+  "kind": "geo",
+  "model": "zogratis_vanica_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   20,
+   40,
+   55
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "transform",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_vanica_hybrid_walk": {
+  "kind": "geo",
+  "model": "zogratis_vanica_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   5,
+   10,
+   15
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "walk",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_vanica_hybrid_run": {
+  "kind": "geo",
+  "model": "zogratis_vanica_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   3,
+   6,
+   9
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "run",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_vanica_hybrid_death": {
+  "kind": "geo",
+  "model": "zogratis_vanica_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   12,
+   26,
+   40,
+   50
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "death",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_vanica_hybrid_hurt": {
+  "kind": "geo",
+  "model": "zogratis_vanica_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   3,
+   6
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "hurt",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_vanica_hybrid_idle": {
+  "kind": "geo",
+  "model": "zogratis_vanica_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   20,
+   40,
+   60
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_zenon_base_views": {
+  "kind": "geo",
+  "model": "zogratis_zenon_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   440,
+   620
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 3,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.3
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 8,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.3
+   }
+  ]
+ },
+ "triad_zenon_base_views2": {
+  "kind": "geo",
+  "model": "zogratis_zenon_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   440,
+   620
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.3
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.3
+   }
+  ]
+ },
+ "triad_zenon_base_head": {
+  "kind": "geo",
+  "model": "zogratis_zenon_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     1.72,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "face 3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.72,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "head side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.72,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "triad_zenon_base_attack": {
+  "kind": "geo",
+  "model": "zogratis_zenon_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   6,
+   9,
+   12,
+   18
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "attack",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_zenon_base_cast": {
+  "kind": "geo",
+  "model": "zogratis_zenon_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   10,
+   20,
+   30
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "cast",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_zenon_base_cast_big": {
+  "kind": "geo",
+  "model": "zogratis_zenon_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   14,
+   28,
+   40,
+   54
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "cast_big",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_zenon_base_transform": {
+  "kind": "geo",
+  "model": "zogratis_zenon_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   20,
+   40,
+   55
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "transform",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_zenon_base_walk": {
+  "kind": "geo",
+  "model": "zogratis_zenon_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   5,
+   10,
+   15
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "walk",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_zenon_base_run": {
+  "kind": "geo",
+  "model": "zogratis_zenon_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   3,
+   6,
+   9
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "run",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_zenon_base_death": {
+  "kind": "geo",
+  "model": "zogratis_zenon_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   12,
+   26,
+   40,
+   50
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "death",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_zenon_base_hurt": {
+  "kind": "geo",
+  "model": "zogratis_zenon_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   3,
+   6
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "hurt",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_zenon_base_idle": {
+  "kind": "geo",
+  "model": "zogratis_zenon_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   20,
+   40,
+   60
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_zenon_hybrid_views": {
+  "kind": "geo",
+  "model": "zogratis_zenon_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   440,
+   620
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 3,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.3
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 8,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.3
+   }
+  ]
+ },
+ "triad_zenon_hybrid_views2": {
+  "kind": "geo",
+  "model": "zogratis_zenon_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   440,
+   620
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.3
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 4.3
+   }
+  ]
+ },
+ "triad_zenon_hybrid_head": {
+  "kind": "geo",
+  "model": "zogratis_zenon_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     1.72,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "face 3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.72,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "head side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.72,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "triad_zenon_hybrid_attack": {
+  "kind": "geo",
+  "model": "zogratis_zenon_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   6,
+   9,
+   12,
+   18
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "attack",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_zenon_hybrid_cast": {
+  "kind": "geo",
+  "model": "zogratis_zenon_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   10,
+   20,
+   30
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "cast",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_zenon_hybrid_cast_big": {
+  "kind": "geo",
+  "model": "zogratis_zenon_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   14,
+   28,
+   40,
+   54
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "cast_big",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_zenon_hybrid_transform": {
+  "kind": "geo",
+  "model": "zogratis_zenon_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   20,
+   40,
+   55
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "transform",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_zenon_hybrid_walk": {
+  "kind": "geo",
+  "model": "zogratis_zenon_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   5,
+   10,
+   15
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "walk",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_zenon_hybrid_run": {
+  "kind": "geo",
+  "model": "zogratis_zenon_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   3,
+   6,
+   9
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "run",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_zenon_hybrid_death": {
+  "kind": "geo",
+  "model": "zogratis_zenon_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   12,
+   26,
+   40,
+   50
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "death",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_zenon_hybrid_hurt": {
+  "kind": "geo",
+  "model": "zogratis_zenon_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   3,
+   6
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "hurt",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_zenon_hybrid_idle": {
+  "kind": "geo",
+  "model": "zogratis_zenon_hybrid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   20,
+   40,
+   60
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.1,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_disciple_views": {
+  "kind": "geo",
+  "model": "zogratis_disciple",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   440,
+   620
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 3,
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "dist": 4.3
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 8,
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "dist": 4.3
+   }
+  ]
+ },
+ "triad_disciple_views2": {
+  "kind": "geo",
+  "model": "zogratis_disciple",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   440,
+   620
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 6,
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "dist": 4.3
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "dist": 4.3
+   }
+  ]
+ },
+ "triad_disciple_head": {
+  "kind": "geo",
+  "model": "zogratis_disciple",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     1.72,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "face 3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.72,
+     0
+    ],
+    "dist": 1.7
+   },
+   {
+    "name": "head side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.72,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "triad_disciple_attack": {
+  "kind": "geo",
+  "model": "zogratis_disciple",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   6,
+   9,
+   12,
+   18
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "attack",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_disciple_cast": {
+  "kind": "geo",
+  "model": "zogratis_disciple",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   10,
+   20,
+   30
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "cast",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_disciple_cast_big": {
+  "kind": "geo",
+  "model": "zogratis_disciple",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   14,
+   28,
+   40,
+   54
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "cast_big",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_disciple_transform": {
+  "kind": "geo",
+  "model": "zogratis_disciple",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   20,
+   40,
+   55
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "transform",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_disciple_walk": {
+  "kind": "geo",
+  "model": "zogratis_disciple",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   5,
+   10,
+   15
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "walk",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_disciple_run": {
+  "kind": "geo",
+  "model": "zogratis_disciple",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   3,
+   6,
+   9
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "run",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_disciple_death": {
+  "kind": "geo",
+  "model": "zogratis_disciple",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   12,
+   26,
+   40,
+   50
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "death",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_disciple_hurt": {
+  "kind": "geo",
+  "model": "zogratis_disciple",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   3,
+   6
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "hurt",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_disciple_idle": {
+  "kind": "geo",
+  "model": "zogratis_disciple",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   20,
+   40,
+   60
+  ],
+  "tile": [
+   300,
+   440
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 6,
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "dist": 5.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "dist": 5.0
+   }
+  ]
+ },
+ "triad_disciple_lucifero": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/zogratis_disciple.geo.json",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   40
+  ],
+  "tile": [
+   330,
+   480
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "dist": 4.2
+   }
+  ],
+  "texture": "nusmp:textures/entity/zogratis_disciple_lucifero.png",
+  "animations": "nusmp:animations/entity/zogratis_disciple.animation.json"
+ },
+ "triad_disciple_megicula": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/zogratis_disciple.geo.json",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   40
+  ],
+  "tile": [
+   330,
+   480
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "dist": 4.2
+   }
+  ],
+  "texture": "nusmp:textures/entity/zogratis_disciple_megicula.png",
+  "animations": "nusmp:animations/entity/zogratis_disciple.animation.json"
+ },
+ "triad_disciple_beelzebub": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/zogratis_disciple.geo.json",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   40
+  ],
+  "tile": [
+   330,
+   480
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "dist": 4.2
+   }
+  ],
+  "texture": "nusmp:textures/entity/zogratis_disciple_beelzebub.png",
+  "animations": "nusmp:animations/entity/zogratis_disciple.animation.json"
+ },
+ "triad_disciple_astaroth": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/zogratis_disciple.geo.json",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   40
+  ],
+  "tile": [
+   330,
+   480
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     0.95,
+     0
+    ],
+    "dist": 4.2
+   }
+  ],
+  "texture": "nusmp:textures/entity/zogratis_disciple_astaroth.png",
+  "animations": "nusmp:animations/entity/zogratis_disciple.animation.json"
+ },
+ "triad_blood_beast_views": {
+  "kind": "geo",
+  "model": "zogratis_blood_beast",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   460,
+   380
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 5,
+    "target": [
+     0,
+     0.7,
+     0
+    ],
+    "dist": 5.2
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 12,
+    "target": [
+     0,
+     0.7,
+     0
+    ],
+    "dist": 5.2
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     0.7,
+     0
+    ],
+    "dist": 5.2
+   },
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 6,
+    "target": [
+     0,
+     0.7,
+     0
+    ],
+    "dist": 5.2
+   }
+  ]
+ },
+ "triad_blood_beast_walk": {
+  "kind": "geo",
+  "model": "zogratis_blood_beast",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   5,
+   10,
+   15
+  ],
+  "tile": [
+   360,
+   300
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "walk",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     0.7,
+     0
+    ],
+    "dist": 5.6
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     0.7,
+     0
+    ],
+    "dist": 5.6
+   }
+  ]
+ },
+ "triad_blood_beast_run": {
+  "kind": "geo",
+  "model": "zogratis_blood_beast",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   3,
+   6,
+   9
+  ],
+  "tile": [
+   360,
+   300
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "run",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     0.7,
+     0
+    ],
+    "dist": 5.6
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     0.7,
+     0
+    ],
+    "dist": 5.6
+   }
+  ]
+ },
+ "triad_blood_beast_attack": {
+  "kind": "geo",
+  "model": "zogratis_blood_beast",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   4,
+   7,
+   10,
+   14,
+   18
+  ],
+  "tile": [
+   360,
+   300
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "attack",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     0.7,
+     0
+    ],
+    "dist": 5.6
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     0.7,
+     0
+    ],
+    "dist": 5.6
+   }
+  ]
+ },
+ "triad_blood_beast_death": {
+  "kind": "geo",
+  "model": "zogratis_blood_beast",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   6,
+   18,
+   32
+  ],
+  "tile": [
+   360,
+   300
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "death",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     0.7,
+     0
+    ],
+    "dist": 5.6
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     0.7,
+     0
+    ],
+    "dist": 5.6
+   }
+  ]
+ },
+ "triad_blood_beast_spawn": {
+  "kind": "geo",
+  "model": "zogratis_blood_beast",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   10,
+   19,
+   28
+  ],
+  "tile": [
+   360,
+   300
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "spawn",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     0.7,
+     0
+    ],
+    "dist": 5.6
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     0.7,
+     0
+    ],
+    "dist": 5.6
+   }
+  ]
+ },
+ "triad_blood_beast_hurt": {
+  "kind": "geo",
+  "model": "zogratis_blood_beast",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   2,
+   4,
+   8
+  ],
+  "tile": [
+   360,
+   300
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "hurt",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     0.7,
+     0
+    ],
+    "dist": 5.6
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     0.7,
+     0
+    ],
+    "dist": 5.6
+   }
+  ]
+ },
+ "triad_blood_beast_idle": {
+  "kind": "geo",
+  "model": "zogratis_blood_beast",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   20,
+   40,
+   60
+  ],
+  "tile": [
+   360,
+   300
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 10,
+    "target": [
+     0,
+     0.7,
+     0
+    ],
+    "dist": 5.6
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     0.7,
+     0
+    ],
+    "dist": 5.6
+   }
+  ]
+ },
+ "triad_blood_beast_head": {
+  "kind": "geo",
+  "model": "zogratis_blood_beast",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   380
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     1.0,
+     1.55
+    ],
+    "dist": 2.6
+   },
+   {
+    "name": "face 3/4",
+    "yaw": 40,
+    "pitch": 8,
+    "target": [
+     0,
+     1.0,
+     1.55
+    ],
+    "dist": 2.6
+   }
+  ]
+ }
+}
