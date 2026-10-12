@@ -1315,6 +1315,367 @@ def circlet_of_thought(m, a):
     return dict(glow=("96F0FF", 0.1, 0.45, 1.0))
 
 
+# ================================================================ the two crossbows of "Magic Item Compendium I" (Bolt Thrower, Crossbow of Swift Death)
+class _XbAtlas(Atlas):
+    """An Atlas that packs first-fit into free space (the shelf packer wastes the area beside tall parts): the crossbows have many parts."""
+
+    def __init__(self):
+        super().__init__()
+        self.occ = np.zeros((TS, TS), bool)
+
+    def alloc(self, w, h):
+        w, h = int(math.ceil(w)), int(math.ceil(h))
+        for y in range(0, TS - h + 1):
+            blocked = self.occ[y:y + h].any(axis=0)
+            run = 0
+            for x in range(TS):
+                run = 0 if blocked[x] else run + 1
+                if run >= w:
+                    x0 = x - w + 1
+                    self.occ[y:y + h + 1, x0:x0 + w + 1] = True
+                    return x0, y
+        raise RuntimeError("atlas full")
+
+
+def _xb_packed(fn):
+    """Builds a weapon on a packed atlas, then copies the skin and glow into the one the generator hands over."""
+    def build(m, a):
+        t = _XbAtlas()
+        extra = fn(m, t)
+        a.img[:] = t.img
+        a.glow[:] = t.glow
+        return extra
+    build.__doc__ = fn.__doc__
+    return build
+
+
+def _xb_stroke_mask(w, h, pts, hws, ss=4):
+    """Pixel mask (rows top first, y up from the bottom row) of a tapered stroke through pts [(x, y)] in mask pixels, half widths hws."""
+    ys, xs = np.mgrid[0:h * ss, 0:w * ss]
+    X = (xs + 0.5) / ss
+    Y = h - (ys + 0.5) / ss
+    inside = np.zeros(X.shape, bool)
+    for (x0, y0), (x1, y1), w0, w1 in zip(pts, pts[1:], hws, hws[1:]):
+        dx, dy = x1 - x0, y1 - y0
+        t = np.clip(((X - x0) * dx + (Y - y0) * dy) / max(dx * dx + dy * dy, 1e-9), 0, 1)
+        d = np.hypot(X - (x0 + t * dx), Y - (y0 + t * dy))
+        inside |= d <= (w0 + (w1 - w0) * t)
+    return inside.reshape(h, ss, w, ss).mean(axis=(1, 3)) > 0.5
+
+
+def _xb_edge_flags(m):
+    """Per pixel: is the pixel above empty (a leading edge), below empty (a trailing edge)."""
+    p = np.pad(m, 1, constant_values=False)
+    return m & ~p[:-2, 1:-1], m & ~p[2:, 1:-1]
+
+
+def _xb_prod(span, back, root_hw, tip_hw, hook=1.5, bow=1.7):
+    """The flat shape of a crossbow prod: two limbs from the middle out to +-span, tips swept back by 'back' and flicked up by 'hook'.
+    Returns (mask, x offset of the mask's left edge, y of the root centre inside the mask, centre-line function of |x|)."""
+    w = int(2 * (span + hook + 2))
+    yroot = back + root_hw + hook + 2
+    h = int(math.ceil(yroot + root_hw + 2))
+    cx = w / 2
+    pts, hws = [], []
+    n = 16
+    for k in range(-n, n + 1):
+        u = abs(k) / n
+        y = yroot - back * u ** bow + (hook * max(0.0, (u - 0.8) / 0.2) ** 2 if u > 0.8 else 0)
+        pts.append((cx + math.copysign(u * span, k), y))
+        hws.append(root_hw + (tip_hw - root_hw) * u ** 0.8)
+    m = _xb_stroke_mask(w, h, pts, hws)
+
+    def centre(ax):
+        u = min(1.0, abs(ax) / span)
+        return yroot - back * u ** bow + (hook * max(0.0, (u - 0.8) / 0.2) ** 2 if u > 0.8 else 0)
+    return m, -cx, yroot, centre
+
+
+def _xb_core(m, a, S):
+    """The parts both crossbows share: stock, prod, string, bolt on its rail, grip and trigger. S holds the style numbers and painters."""
+    st = S["stations"]
+    Blade(st, S["te"], S["tr"], S["stock_paint"]).build(m, a)
+    # ---- the prod
+    mask, x0, yr, centre = _xb_prod(S["span"], S["back"], S["root_hw"], S["tip_hw"], S["hook"])
+    h, w = mask.shape
+    lead, trail = _xb_edge_flags(mask)
+    yroot = S["prod_y"]
+
+    def prod_paint(i, j, front):
+        ii = i if front else w - 1 - i                    # the back face is mirrored; the shape is symmetric
+        x = ii + 0.5 + x0
+        return S["prod_paint"](x, h - j - 0.5, ii, j, bool(lead[j, ii]), bool(trail[j, ii]), centre(x), front)
+    plate(m, a, mask, x0, yroot - yr, S["prod_t"], prod_paint, "xy", 0)
+    # ---- the string: from tip to tip through the latch, a hair above the stock
+    tip_x = S["span"] - 0.6
+    tip_y = yroot - yr + centre(tip_x) + 0.0
+    pts = [(-tip_x, tip_y), (0, S["latch_y"]), (tip_x, tip_y)]
+    sw, sh = int(2 * tip_x + 4), int(abs(tip_y - S["latch_y"]) + 4)
+    sy0 = min(tip_y, S["latch_y"]) - 1.5
+    spts = [(sw / 2 + p[0], p[1] - sy0) for p in pts]
+    smask = _xb_stroke_mask(sw, sh, spts, [0.5, 0.5, 0.5], ss=6)
+    plate(m, a, smask, -sw / 2, sy0, 0.22, S["string_paint"], "xy", S["string_z"])
+
+
+def _xb_arc_plate(m, a, rows, x0, y0, z, color, glow, plane="xy", t=0.16, flip=False):
+    mask = ascii_mask(rows)
+    if flip:
+        mask = mask[:, ::-1]
+    plate(m, a, mask, x0, y0, t, lambda i, j, f: (col(color), col(glow, 0.95)), plane, z)
+
+
+@_xb_packed
+def bolt_thrower(m, a):
+    """Bolt Thrower: a dark blued-steel crossbow with brass trim after the reference art: a long tapered stock with a glowing bolt channel
+    and a loaded bolt of crackling force, a skull prow, limbs swept back, a cyan orb at the butt and lightning arcing over the frame."""
+    cy, wh = (110, 232, 255), (236, 252, 255)
+    st = [(-19, -2.1, 0, 2.1), (-15, -2.6, 0, 2.6), (-9, -3.0, 0, 3.0), (-1, -3.2, 0, 3.2), (6, -3.7, 0, 3.7), (14, -3.4, 0, 3.4),
+          (20, -4.2, 0, 4.2), (26, -4.7, 0, 4.7), (30, -3.8, 0, 3.8)]
+
+    def stock_paint(x, y, front, e, rd):
+        if x is None:
+            return col(shade((30, 38, 54), 1.15 if int(y) % 6 == 0 else 1.0)), None
+        c = np.array((32, 40, 58), np.float32) + nz(x, y, 2) * 20 + fz(x, y, 1) * 10
+        g = None
+        if e < 0.9:
+            c = np.array((212, 172, 70), np.float32) + fz(x, y, 6) * 22            # the brass edge line
+        elif e < 1.7:
+            c = c * 0.62
+        elif int(y) % 9 == 0:
+            c = c * 0.7                                                              # panel seams
+        if front:
+            if 8 <= y <= 31 and rd < 1.0:                                            # the bolt channel
+                c = np.array((6, 16, 28), np.float32)
+                if rd < 0.5:
+                    c = np.array((70, 190, 230), np.float32)
+                    g = col(cy, 0.85)
+            elif rd < 0.55 and -14 <= y < 8 and int(y) % 4 in (0, 1):                # a glowing seam down the tiller
+                c = np.array((60, 170, 215), np.float32)
+                g = col(cy, 0.6)
+            elif 1.5 < rd < 2.6 and e > 1.9 and hsh(int(y / 2), 5) > 0.55 and y > -12:   # etched runes
+                c = np.array((90, 200, 240), np.float32)
+                g = col(cy, 0.8)
+            elif e < 2.6 and e >= 1.7 and int(y) % 7 == 3 and int(x * 2) % 2 == 0:  # rivets
+                c = np.array((226, 184, 78), np.float32)
+        return col(np.clip(c, 0, 255)), g
+    brass, dbrass = (206, 166, 66), (146, 108, 38)
+
+    def prod_paint(x, y, i, j, lead, trail, yc, front):
+        c = np.array((30, 38, 56), np.float32) + nz(x, y, 4) * 22 + fz(x, y, 3) * 10
+        g = None
+        if lead:
+            c = np.array((214, 174, 72), np.float32) + fz(x, y, 6) * 20            # brass along the leading edge
+        elif trail:
+            c = c * 0.55
+        if abs(y - yc) < 0.55 and abs(x) > 4 and (int(abs(x) * 1.3) % 3 != 2):       # a charged vein down each limb
+            c = np.array((120, 225, 250), np.float32)
+            g = col(cy, 0.95)
+        if abs(x) < 4.2:
+            c = np.array((196, 156, 62), np.float32) * (0.85 + 0.2 * (j % 2)) + fz(x, y, 8) * 14   # the saddle
+        return col(np.clip(c, 0, 255)), g
+
+    def string_paint(i, j, f):
+        return col((200, 244, 255)), col(cy, 1.0)
+
+    S = dict(stations=st, te=1.0, tr=2.0, stock_paint=stock_paint, span=19.5, back=6.0, root_hw=3.2, tip_hw=1.5, hook=1.2,
+             prod_y=22.5, prod_t=0.95, prod_paint=prod_paint, latch_y=8.5, string_paint=string_paint, string_z=2.45)
+    _xb_core(m, a, S)
+    # ---- the loaded bolt: a bar of caged force on the rail, a stepped head, small vanes
+    def energy(face, i, j, fw, fh):
+        return col(wh, 1.0), col(cy, 1.0)
+    box(m, a, -0.6, 9, 2.0, 0.6, 31, 3.2, energy)
+    for (lo, hi, hw) in ((31, 32.6, 1.15), (32.6, 34.0, 0.8), (34.0, 35.0, 0.4)):
+        box(m, a, -hw, lo, 2.0, hw, hi, 3.2, energy)
+    for sx in (-1, 1):
+        box(m, a, sx * 0.6 if sx > 0 else -2.1, 9.2, 2.4, 2.1 if sx > 0 else -0.6, 12.4, 2.8, energy)     # the vanes
+    for sx in (-1, 1):                                                                        # brass rail guides either side of the channel
+        lo, hi = sorted((sx * 1.0, sx * 1.8))
+        box(m, a, lo, 8, 2.0, hi, 30, 2.9, metal_paint(brass, rivets=True))
+    # ---- brass bands round the stock
+    for (y, hw) in ((-5.5, 3.6), (15.5, 3.9), (26.5, 5.1)):
+        box(m, a, -hw, y - 0.9, -2.5, hw, y + 0.9, 2.5, metal_paint(brass))
+    # ---- the grip and trigger below the stock
+    box(m, a, -1.6, -13.5, -8.4, 1.6, -5.5, -1.6, wrap_paint((26, 32, 46), (200, 160, 62), diamonds=True))
+    box(m, a, -1.9, -14.6, -8.8, 1.9, -13.5, -1.2, metal_paint(brass))
+    box(m, a, -0.5, -2.6, -4.4, 0.5, -1.2, -1.6, metal_paint(dbrass))                       # the trigger
+    box(m, a, -0.6, 2.4, -5.0, 0.6, 3.4, -1.6, metal_paint(brass))                          # the trigger guard: front post, floor
+    box(m, a, -0.6, -4.2, -5.0, 0.6, 3.4, -4.0, metal_paint(brass))
+    box(m, a, -0.6, -4.2, -5.0, 0.6, -3.2, -1.6, metal_paint(brass))
+    box(m, a, -0.7, -3, -3.8, 0.7, 19, -2.0, metal_paint((34, 42, 62)))                     # the keel under the tiller
+    # ---- the cyan orb at the butt, held in a brass collar
+    box(m, a, -2.8, -20.6, -2.8, 2.8, -19, 2.8, metal_paint(brass))
+    box(m, a, -2.3, -21.6, -2.3, 2.3, -20.6, 2.3, metal_paint(dbrass))
+
+    def orb(face, i, j, fw, fh):
+        k = 1.3 if (i + j) % 3 == 0 else 1.0
+        return col(np.array(cy) * 0.55 * k + 70), col(cy, 1.0)
+    box(m, a, -2.6, -25.6, -2.6, 2.6, -21.6, 2.6, orb)
+    # ---- the skull prow at the muzzle: a horned plate with eye sockets and fangs
+    skull = ascii_mask([
+        "#.......#",
+        "##.....##",
+        ".###.###.",
+        ".#######.",
+        "##.###.##",
+        "#########",
+        "#.#.#.#.#",
+        "..#...#..",
+        "..#.#.#..",
+    ])
+
+    def skull_paint(i, j, f):
+        c = np.array((40, 50, 72), np.float32) + fz(i, j, 11) * 16
+        g = None
+        if j in (4,) and i in (2, 6):
+            return col((20, 230, 255)), col(cy, 1.0)                                          # eyes
+        if j >= 6:
+            c = np.array((226, 220, 200), np.float32)                                         # fangs
+        if i in (0, 8) and j < 2:
+            c = np.array((214, 174, 72), np.float32)                                          # gilded horn tips
+        return col(c), g
+    plate(m, a, skull, -4.5, 30.5, 1.2, skull_paint, "xy", 0)
+    # ---- lightning: jagged arcs of force crawling over the frame
+    arcs = [
+        (["..#......", ".#.......", "#..#.....", "...#.#...", "....#.#..", ".....#.#.", "......#.#"], -9.5, 26.0, 3.4),
+        (["#......", ".#.....", "..#.#..", "...#.#.", ".....#."], -8.5, 4.0, 3.4),
+        (["..#.....", ".#.#....", "#...#...", "....#.#.", ".....#.#"], 2.0, -8.0, 3.4),
+        (["#.....", ".#.#..", "..#.#.", "....#.", "...#.."], 4.0, 15.0, 3.0),
+    ]
+    for rows, ax, ay, az in arcs:
+        _xb_arc_plate(m, a, rows, ax, ay, az, wh, cy)
+    _xb_arc_plate(m, a, ["#.....", ".#.#..", "..#.#.", "....#.", "...#.."], -22.0, 19.0, 0.0, wh, cy, "xz")
+    return dict(glow=("78E6FF", 0.14, 0.45, 1.0))
+
+
+
+def _xb_jaw_mask(R, thick, teeth, tooth_h, span_deg, ss=4):
+    """A toothed horseshoe, open to the back: the stirrup jaw at the front of the Crossbow of Swift Death. Returns (mask, x offset, centre y inside the mask)."""
+    w = int(2 * (R + tooth_h) + 3)
+    h = int(R + tooth_h + 3)
+    cx, cy = w / 2, 1.5
+    ys, xs = np.mgrid[0:h * ss, 0:w * ss]
+    X = (xs + 0.5) / ss - cx
+    Y = h - (ys + 0.5) / ss - cy
+    r = np.hypot(X, Y)
+    ang = np.degrees(np.arctan2(X, Y))
+    ph = (ang / span_deg * teeth / 2 + 0.5 * teeth) % 1.0
+    tri = 1 - np.abs(ph - 0.5) * 2
+    inside = (np.abs(ang) <= span_deg) & (r >= R - thick) & (r <= R + tooth_h * tri ** 0.8 * (np.abs(ang) < span_deg - 4) + 0.3)
+    return inside.reshape(h, ss, w, ss).mean(axis=(1, 3)) > 0.45, -cx, cy
+
+
+@_xb_packed
+def crossbow_of_swift_death(m, a):
+    """Crossbow of Swift Death: a dark crossbow after the reference art: a long blackened-wood tiller notched above the trigger (each notch a dull red slit),
+    a wide dark prod with red ferrules, a toothed jaw at the muzzle, two crank handles at the rear, an arrowhead butt, a black bolt with a barbed crimson head."""
+    red, redl = (255, 44, 70), (255, 120, 130)
+    iron, irond = (52, 54, 68), (30, 31, 42)
+    st = [(-21, -2.6, 0, 2.6), (-14, -3.0, 0, 3.0), (-6, -3.3, 0, 3.3), (2, -3.6, 0, 3.6), (12, -3.6, 0, 3.6), (20, -4.1, 0, 4.1),
+          (27, -4.5, 0, 4.5), (31, -3.6, 0, 3.6), (34, -2.4, 0, 2.4)]
+    notch_y = [-3.2 + n * 1.85 for n in range(10)]
+
+    def stock_paint(x, y, front, e, rd):
+        if x is None:
+            return col(shade((46, 32, 30), 1.2 if int(y) % 5 == 0 else 1.0)), None
+        grain = math.sin(x * 2.4 + nz(x * 0.5, y * 0.07, 3) * 7)
+        c = np.array((66, 44, 38), np.float32) * (0.82 + 0.2 * grain) + nz(x, y, 5) * 14 + fz(x, y, 2) * 10
+        g = None
+        if e < 0.9:
+            c = np.array((84, 84, 104), np.float32) + fz(x, y, 9) * 18                       # the iron edge strip
+        elif e < 1.7:
+            c = c * 0.66
+        if front:
+            if rd < 0.5 and 9 <= y <= 33:                                                     # the bolt groove
+                c = np.array((12, 10, 14), np.float32)
+            for n, yn in enumerate(notch_y):                                                  # the notches above the trigger
+                if abs(y - yn) < 0.5 and 1.0 < abs(x) < 2.9 and e > 1.2:
+                    c = np.array((10, 4, 6), np.float32)
+                    g = col(red, 0.45 + 0.5 * hsh(n, 3))
+                elif abs(y - yn) < 1.1 and 1.0 < abs(x) < 2.9 and e > 1.2 and abs(y - yn) >= 0.5:
+                    c = c * 0.55
+            if y > 15 and e < 2.4 and int(y) % 6 == 1 and e >= 1.7:
+                c = np.array((150, 150, 172), np.float32)                                     # rivets
+        return col(np.clip(c, 0, 255)), g
+
+    def prod_paint(x, y, i, j, lead, trail, yc, front):
+        c = np.array((38, 40, 54), np.float32) + nz(x, y, 6) * 20 + fz(x, y, 4) * 10
+        g = None
+        if lead:
+            c = np.array((104, 106, 130), np.float32) + fz(x, y, 7) * 20
+        elif trail:
+            c = c * 0.55
+        if abs(y - yc) < 0.5 and 5 < abs(x) < 20 and int(abs(x) * 1.1) % 3 != 1:
+            c = np.array((190, 30, 52), np.float32)                                           # a blood-red inlay down each limb
+            g = col(red, 0.55)
+        if abs(x) > 21.2:
+            c = np.array((210, 30, 56), np.float32)                                           # red ferrules at the tips
+            g = col(red, 0.9)
+        if abs(x) < 5.0:
+            c = np.array((58, 60, 78), np.float32) * (0.9 + 0.2 * (j % 2)) + fz(x, y, 8) * 14
+        return col(np.clip(c, 0, 255)), g
+
+    def string_paint(i, j, f):
+        return col((224, 214, 188)), col(red, 0.3)
+
+    S = dict(stations=st, te=1.4, tr=2.3, stock_paint=stock_paint, span=22.5, back=5.5, root_hw=2.9, tip_hw=1.3, hook=0.8,
+             prod_y=21.5, prod_t=1.0, prod_paint=prod_paint, latch_y=8.0, string_paint=string_paint, string_z=2.75)
+    _xb_core(m, a, S)
+    # ---- the toothed jaw: a horseshoe of fangs round the front of the stock
+    jm, jx, jc = _xb_jaw_mask(8.8, 2.3, 9, 2.0, 66)
+    jh, jw = jm.shape
+
+    def jaw_paint(i, j, f):
+        ii = i if f else jw - 1 - i
+        X, Y = ii + 0.5 + jx, jh - j - 0.5 - jc
+        r = math.hypot(X, Y)
+        if r > 8.8 + 0.3:
+            return col((228, 218, 194)), None             # the fangs
+        c = np.array((50, 52, 68), np.float32) + fz(i, j, 5) * 18
+        if r < 6.8:
+            c = c * 0.7
+        return col(c), None
+    plate(m, a, jm, jx, 25.0 - jc, 1.15, jaw_paint, "xy", 0)
+    # ---- the bolt: black iron, white fletching, a barbed crimson head
+    def shaft(face, i, j, fw, fh):
+        return col((30, 28, 36) + fz(i, j, 3) * 10), (col(red, 0.35) if j % 3 == 0 else None)
+    box(m, a, -0.6, 9, 2.3, 0.6, 33.5, 3.5, shaft)
+    for sx in (-1, 1):
+        lo, hi = sorted((sx * 0.6, sx * 2.3))
+        box(m, a, lo, 9.2, 2.5, hi, 13.4, 2.9, flat((232, 228, 214), 8))
+    head = ascii_mask(["..#..", ".###.", ".###.", "#####", "#.#.#"])
+    plate(m, a, head, -2.5, 33.5, 0.5, lambda i, j, f: (col((190, 24, 48)), col(red, 1.0)), "xy", 2.9)
+    # ---- iron bands round the stock
+    for (y, hw) in ((-10.5, 3.7), (6.5, 4.0), (17.5, 4.4), (29.0, 4.9)):
+        box(m, a, -hw, y - 0.9, -2.9, hw, y + 0.9, 2.9, metal_paint(iron, rivets=True))
+    # ---- the latch, a blood-red stone set in iron
+    box(m, a, -1.9, 6.4, 2.2, 1.9, 9.6, 3.4, metal_paint(iron, gem=(210, 30, 56), glow_rgb=red))
+    # ---- grip, trigger and guard
+    box(m, a, -1.6, -13.0, -8.6, 1.6, -5.0, -2.0, wrap_paint((30, 24, 28), (130, 26, 40), diamonds=True))
+    box(m, a, -1.9, -14.0, -9.0, 1.9, -13.0, -1.6, metal_paint(iron))
+    box(m, a, -0.5, -2.4, -4.6, 0.5, -1.0, -2.0, metal_paint(irond))
+    box(m, a, -0.6, 2.2, -5.2, 0.6, 3.2, -2.0, metal_paint(iron))
+    box(m, a, -0.6, -4.0, -5.2, 0.6, 3.2, -4.0, metal_paint(iron))
+    box(m, a, -0.6, -4.0, -5.2, 0.6, -3.0, -2.0, metal_paint(iron))
+    # ---- the crank handles at the rear: iron arms out to ridged grips
+    box(m, a, -4.2, -19.4, -3.0, 4.2, -13.6, 3.0, metal_paint(irond, rivets=True))
+    for sx in (-1, 1):
+        lo, hi = sorted((sx * 3.8, sx * 10.2))
+        box(m, a, lo, -17.0, -0.6, hi, -16.0, 0.6, metal_paint(iron))
+        lo, hi = sorted((sx * 10.2, sx * 12.8))
+        box(m, a, lo, -21.2, -1.4, hi, -12.4, 1.4, wrap_paint((26, 22, 26), (150, 30, 44), diamonds=False))
+        lo, hi = sorted((sx * 12.8, sx * 13.8))
+        box(m, a, lo, -19.6, -0.9, hi, -14.0, 0.9, metal_paint(iron))
+    # ---- the arrowhead butt: a steel spike plate with a red gem
+    spike = ascii_mask([".#######.", ".#######.", "..#####..", "..#####..", "...###...", "....#...."])
+    plate(m, a, spike, -4.5, -28.5, 1.3, lambda i, j, f: (col(shade((86, 88, 108), 1.25 if (i + j) % 3 == 0 else 1.0)) if j else col((52, 54, 68)),
+                                                      col(red, 0.9) if (j == 1 and i in (4,)) else None), "xy", 0)
+    box(m, a, -2.8, -22.0, -2.4, 2.8, -20.0, 2.4, metal_paint(iron, rivets=True))
+    return dict(glow=("FF3A54", 0.1, 0.35, 1.0))
+
+
+SPECS += [("bolt_thrower", bolt_thrower), ("crossbow_of_swift_death", crossbow_of_swift_death)]
+
+
 RELICS = [
     ("anti_bird_charm", anti_bird_charm),
     ("bond_thread", bond_thread),
