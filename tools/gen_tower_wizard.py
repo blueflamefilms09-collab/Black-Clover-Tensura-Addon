@@ -128,27 +128,26 @@ def hair(salt=0):
 
 
 def head_paint(face, i, j, fw, fh):
+    """A 9 x 8 face: the brim shades row 0, then brow, heavy lid, two rows of wide eyes, eye bags, and the moustache and beard below."""
     skin = mx(SKIN, SKIN_D, 0.15 + 0.2 * (0.5 + fz(i, j, 2))) + fz(i, j, 6) * 8
     if face == "front":
-        shadow = 1.0
-        if j <= 1:
-            shadow = 0.62 + 0.14 * j                                       # the hat's brim shades the forehead
-        c = skin * shadow
-        if j == 2:
+        eyes = i in (1, 2, 3, 5, 6, 7)
+        iris = i in (2, 6)
+        c = skin * (0.66 if j == 0 else 1.0)                               # the hat's brim shades the forehead
+        if j == 1:
             return rgba(mix(WHITE, GREY, 0.3 + 0.3 * hsh(i, 1, 2))), None  # the brow line (the brow cubes sit over it)
-        if j == 3 and i in (1, 2, 4, 5):
+        if j == 2 and eyes:
             return rgba(np.array(SKIN_D) * 0.62), None                     # a heavy, tired upper lid
-        if j == 4 and i in (1, 2, 4, 5):
-            if i in (2, 4):
-                return rgba((52, 42, 38)), rgba((120, 255, 150), 80)      # the iris, with a faint green glint from the orb
-            return rgba((222, 214, 200)), None                             # the white
-        if j == 5 and i in (1, 2, 4, 5):
-            return rgba(np.array(SKIN_D) * 0.85), None                     # eye bags
-        if j >= 5 and i in (0, 6):
+        if j in (3, 4) and eyes:
+            if iris:
+                return rgba((52, 42, 38)), rgba((120, 255, 150), 70 if j == 3 else 110)    # the iris, a faint green glint from the orb
+            return rgba((226, 218, 204) if j == 3 else (200, 192, 180)), None             # the white
+        if j == 5 and eyes:
+            return rgba(np.array(SKIN_D) * 0.82), None                     # eye bags
+        if j >= 5 and i in (0, 8):
             return rgba(mix(LGREY, WHITE, hsh(i, j, 3))), None             # the beard rising up the cheeks
         if j >= 6:
             return rgba(mix(LGREY, GREY, hsh(i, j, 5))), None
-        # crow's-feet and forehead wrinkles
         if j == 1 and i % 2 == 0:
             c = c * 0.9
         return rgba(c), None
@@ -157,7 +156,7 @@ def head_paint(face, i, j, fw, fh):
     if face == "bottom":
         return rgba(np.array(SKIN_D) * 0.8), None
     # sides and back: grey hair, an ear on the side
-    if face in ("left", "right") and 3 <= j <= 4 and 2 <= i <= 4:
+    if face in ("left", "right") and 3 <= j <= 5 and 3 <= i <= 5:
         return rgba(np.array(SKIN) * (0.88 if j == 3 else 0.8)), None
     return hair(7)(face, i, j, fw, fh)
 
@@ -225,6 +224,9 @@ def hat_band(face, i, j, fw, fh):
     return rgba(c), None
 
 
+HB = 8.5                                                                  # half width of the brim
+
+
 def brim(x0, z0, w, d, up=True):
     """The brim is made of five plates; this paints one of them using the brim's own coordinates (the middle plate or a drooping edge)."""
     base, dark = np.array(HAT, np.float32), np.array(HAT_D, np.float32)
@@ -233,7 +235,7 @@ def brim(x0, z0, w, d, up=True):
         if face in ("top", "bottom"):
             x = x0 + i + 0.5
             z = z0 + d - j - 0.5                                           # j = 0 is the +z edge
-            de = min(11.5 - abs(x), 11.5 - abs(z))
+            de = min(HB - abs(x), HB - abs(z))
             weave = (3.0 if ((i // 2 + j // 2) % 2) else -3.0) + (2.0 if (i + j) % 2 == 0 else -2.0)
             c = base + weave + fz(x, z, 21) * 18 + nz(x * 0.4, z * 0.4, 9) * 18
             if face == "bottom":
@@ -241,12 +243,12 @@ def brim(x0, z0, w, d, up=True):
                 if int(de) in (3, 7) and int(x + z) % 2 == 0:
                     c = c * 0.9
                 return rgba(c), None
-            c = c * (1.04 + 0.06 * (de / 11.5))                            # a little lighter out at the rim where the sun wore it
+            c = c * (1.04 + 0.06 * (de / HB))                            # a little lighter out at the rim where the sun wore it
             if de < 0.9:
                 c = dark * 1.05                                            # a wired, darker rim
             elif 1.5 <= de < 2.5 and int(x + z + 100) % 2 == 0:
                 c = np.array(HAT_L, np.float32) * 0.95                     # the dashed stitch ring near the rim
-            elif 5.5 <= de < 6.5 and int(x - z + 100) % 3 != 0:
+            elif 4.5 <= de < 5.5 and int(x - z + 100) % 3 != 0:
                 c = c * 0.86                                               # a second, shadowy ring
             return rgba(c), None
         return rgba(dark * (1.0 + 0.1 * fz(i, j, 12))), None
@@ -301,7 +303,7 @@ def build():
 
     # ---------------------------------------------------------------- the robe skirt: four layers that flare towards the hem
     m.bone("skirt", "root", pivot=(0, 12, 0))
-    layers = ((0, 3, 14, 11), (2.5, 3, 13, 10), (5, 3, 12, 10), (7.5, 3, 11, 9))
+    layers = ((0, 3, 14, 11), (2, 3, 13, 10), (4, 3, 12, 10), (6, 3, 11, 9))
     for n, (y, h, w, d) in enumerate(layers):
         hem = TRIM if n == 0 else None
         sh.box(m, "skirt", (-w / 2, y, -d / 2), (w, h, d), robe_front(ROBE if n % 2 == 0 else (126, 90, 98), ROBE_D, ROBE_L, n + 1, hem=hem))
@@ -319,49 +321,49 @@ def build():
 
     # ---------------------------------------------------------------- head
     m.bone("head", "upper", pivot=(0, 17, 0), rotation=(-3, 0, 0))
-    sh.box(m, "head", (-3.5, 16.3, -3.5), (7, 7, 7), head_paint)
-    sh.box(m, "head", (-4.4, 14.4, -2.4), (1, 8, 6), hair(3))                                  # long grey hair at the sides ...
-    sh.box(m, "head", (3.4, 14.4, -2.4), (1, 8, 6), hair(4))
-    sh.box(m, "head", (-4, 13.6, 2.6), (8, 9, 2), hair(5))                                     # ... and down the back
-    sh.box(m, "head", (-0.9, 17.5, -4.4), (2, 3, 1), skin_paint(9), rotation=(-12, 0, 0), pivot=(0, 19.5, -3.6))    # nose
-    sh.box(m, "head", (-0.9, 17.3, -4.9), (2, 1, 1), skin_paint(10))                                                # the nose tip
-    # bushy brows: a heavy ridge and two bushes whose outer ends droop (tired, kind)
-    sh.box(m, "head", (-3.6, 20.5, -4.0), (7, 1, 1), beard(21, 0.0, False))
-    sh.box(m, "head", (0.4, 20.7, -4.6), (3, 1, 1), beard(22, 0.0, False), rotation=(0, 0, -10), pivot=(0.4, 21, -4.1))
-    sh.box(m, "head", (-3.4, 20.7, -4.6), (3, 1, 1), beard(23, 0.0, False), rotation=(0, 0, 10), pivot=(-0.4, 21, -4.1))
-    sh.box(m, "head", (0.8, 21.5, -4.2), (2, 1, 1), beard(24, 0.0, False), rotation=(0, 0, -6), pivot=(0.8, 21.8, -3.9))
-    sh.box(m, "head", (-2.8, 21.5, -4.2), (2, 1, 1), beard(25, 0.0, False), rotation=(0, 0, 6), pivot=(-0.8, 21.8, -3.9))
+    sh.box(m, "head", (-4.5, 16.3, -4), (9, 8, 8), head_paint)
+    sh.box(m, "head", (-5.4, 14.4, -3), (1, 9, 6), hair(3))                                    # long grey hair at the sides ...
+    sh.box(m, "head", (4.4, 14.4, -3), (1, 9, 6), hair(4))
+    sh.box(m, "head", (-4.5, 13.6, 3.1), (9, 10, 2), hair(5))                                  # ... and down the back
+    sh.box(m, "head", (-1, 18.8, -5.0), (2, 3, 1), skin_paint(9), rotation=(-12, 0, 0), pivot=(0, 21, -4.2))     # nose
+    sh.box(m, "head", (-1, 18.4, -5.6), (2, 1, 1), skin_paint(10))                                                # the nose tip
+    # bushy brows: a heavy ridge and bushes whose outer ends droop (tired, kind)
+    sh.box(m, "head", (-4.0, 22.2, -4.5), (8, 1, 1), beard(21, 0.0, False))
+    sh.box(m, "head", (0.6, 22.2, -5.1), (4, 1, 1), beard(22, 0.0, False), rotation=(0, 0, -10), pivot=(0.6, 22.7, -4.6))
+    sh.box(m, "head", (-4.6, 22.2, -5.1), (4, 1, 1), beard(23, 0.0, False), rotation=(0, 0, 10), pivot=(-0.6, 22.7, -4.6))
+    sh.box(m, "head", (1.0, 23.0, -4.8), (3, 1, 1), beard(24, 0.0, False), rotation=(0, 0, -6), pivot=(1.0, 23.4, -4.4))
+    sh.box(m, "head", (-4.0, 23.0, -4.8), (3, 1, 1), beard(25, 0.0, False), rotation=(0, 0, 6), pivot=(-1.0, 23.4, -4.4))
     # moustache
-    sh.box(m, "head", (0, 17.2, -4.8), (4, 1, 2), beard(26, 0.12, False), rotation=(0, 0, -9), pivot=(0, 17.7, -4.2))
-    sh.box(m, "head", (-4, 17.2, -4.8), (4, 1, 2), beard(27, 0.12, False), rotation=(0, 0, 9), pivot=(0, 17.7, -4.2))
+    sh.box(m, "head", (0, 17.7, -5.8), (5, 1, 2), beard(26, 0.12, False), rotation=(0, 0, -9), pivot=(0, 18.2, -5.0))
+    sh.box(m, "head", (-5, 17.7, -5.8), (5, 1, 2), beard(27, 0.12, False), rotation=(0, 0, 9), pivot=(0, 18.2, -5.0))
 
     # the beard: a chain of stacked, tapering blocks hung from the cheeks that sway in the idle clip
-    m.bone("beard1", "head", pivot=(0, 17, -4))
-    sh.box(m, "beard1", (-4, 13.6, -5.4), (8, 4, 2), beard(30, 0.1))
-    sh.box(m, "beard1", (-4.5, 15.4, -4.4), (9, 3, 1), beard(31, 0.05))                          # the cheeks, wider than the chin
-    sh.box(m, "beard1", (-4.2, 12.6, -3.2), (1, 5, 3), beard(36))                                # side locks falling beside the chest
-    sh.box(m, "beard1", (3.2, 12.6, -3.2), (1, 5, 3), beard(37))
-    m.bone("beard2", "beard1", pivot=(0, 14.0, -4.4))
-    sh.box(m, "beard2", (-3.5, 11.2, -5.4), (7, 3, 2), beard(32))
-    sh.box(m, "beard2", (-2.2, 11.8, -6.0), (2, 2, 1), beard(38), rotation=(0, 0, 8), pivot=(-1.2, 13.6, -5.5))   # two loose locks
-    sh.box(m, "beard2", (0.2, 11.4, -6.0), (2, 2, 1), beard(39), rotation=(0, 0, -8), pivot=(1.2, 13.6, -5.5))
-    m.bone("beard3", "beard2", pivot=(0, 11.6, -4.4))
-    sh.box(m, "beard3", (-3, 8.8, -5.2), (6, 3, 2), beard(33))
-    m.bone("beard4", "beard3", pivot=(0, 9.2, -4.2))
-    sh.box(m, "beard4", (-2, 7.6, -5.0), (4, 2, 2), beard(34))
-    m.bone("beard5", "beard4", pivot=(0, 8.0, -4.0))
-    sh.box(m, "beard5", (-1, 6.0, -4.8), (2, 2, 1), beard(35))
+    m.bone("beard1", "head", pivot=(0, 17, -4.5))
+    sh.box(m, "beard1", (-4, 13.6, -5.9), (8, 4, 2), beard(30, 0.1))
+    sh.box(m, "beard1", (-5, 15.4, -4.9), (10, 3, 1), beard(31, 0.05))                           # the cheeks, wider than the chin
+    sh.box(m, "beard1", (-5.0, 12.6, -3.7), (1, 5, 3), beard(36))                                # side locks falling beside the chest
+    sh.box(m, "beard1", (4.0, 12.6, -3.7), (1, 5, 3), beard(37))
+    m.bone("beard2", "beard1", pivot=(0, 14.0, -4.9))
+    sh.box(m, "beard2", (-3.5, 11.2, -5.9), (7, 3, 2), beard(32))
+    sh.box(m, "beard2", (-2.2, 11.8, -6.5), (2, 2, 1), beard(38), rotation=(0, 0, 8), pivot=(-1.2, 13.6, -6.0))   # two loose locks
+    sh.box(m, "beard2", (0.2, 11.4, -6.5), (2, 2, 1), beard(39), rotation=(0, 0, -8), pivot=(1.2, 13.6, -6.0))
+    m.bone("beard3", "beard2", pivot=(0, 11.6, -4.9))
+    sh.box(m, "beard3", (-3, 8.8, -5.7), (6, 3, 2), beard(33))
+    m.bone("beard4", "beard3", pivot=(0, 9.2, -4.7))
+    sh.box(m, "beard4", (-2, 7.6, -5.5), (4, 2, 2), beard(34))
+    m.bone("beard5", "beard4", pivot=(0, 8.0, -4.5))
+    sh.box(m, "beard5", (-1, 6.0, -5.3), (2, 2, 1), beard(35))
 
     # ---------------------------------------------------------------- the hat: a wide thin drooping brim and a cone of five bent blocks
-    m.bone("hat", "head", pivot=(0, 22.6, 0), rotation=(9, 0, 0))                        # tipped back so the face shows under the brim
-    sh.box(m, "hat", (-7, 22, -7), (14, 1, 14), brim(-7, -7, 14, 14))
-    sh.box(m, "hat", (-11.5, 22, -11.5), (23, 1, 5), brim(-11.5, -11.5, 23, 5), rotation=(-4, 0, 0), pivot=(0, 22.5, -6.8))   # front edge, drooping
-    sh.box(m, "hat", (-11.5, 22, 6.5), (23, 1, 5), brim(-11.5, 6.5, 23, 5), rotation=(7, 0, 0), pivot=(0, 22.5, 6.8))        # back edge
-    sh.box(m, "hat", (6.5, 22, -6.5), (5, 1, 13), brim(6.5, -6.5, 5, 13), rotation=(0, 0, -6), pivot=(6.8, 22.5, 0))        # the +x edge
-    sh.box(m, "hat", (-11.5, 22, -6.5), (5, 1, 13), brim(-11.5, -6.5, 5, 13), rotation=(0, 0, 6), pivot=(-6.8, 22.5, 0))      # the -x edge
-    sh.box(m, "hat", (-5, 22.6, -5), (10, 3, 10), hat_cloth(41, patch=True))
-    sh.box(m, "hat", (-5, 22.6, -5), (10, 1, 10), hat_band, inflate=0.3)
-    cone = ((25.0, 8, 3, 2, 0.0, 2), (27.6, 6, 3, 3, 0.0, 3), (30.2, 4, 3, 5, 0.0, 4), (32.8, 2, 2, 8, 0.0, 5))
+    m.bone("hat", "head", pivot=(0, 22.6, 0), rotation=(13, 0, 0))                       # tipped well back so the face shows under the brim
+    sh.box(m, "hat", (-5, 22, -5), (10, 1, 10), brim(-5, -5, 10, 10))
+    sh.box(m, "hat", (-8.5, 22, -8.5), (17, 1, 4), brim(-8.5, -8.5, 17, 4), rotation=(-3, 0, 0), pivot=(0, 22.5, -4.8))    # front edge, drooping
+    sh.box(m, "hat", (-8.5, 22, 4.5), (17, 1, 4), brim(-8.5, 4.5, 17, 4), rotation=(6, 0, 0), pivot=(0, 22.5, 4.8))        # back edge
+    sh.box(m, "hat", (4.5, 22, -4.5), (4, 1, 9), brim(4.5, -4.5, 4, 9), rotation=(0, 0, -5), pivot=(4.8, 22.5, 0))         # the +x edge
+    sh.box(m, "hat", (-8.5, 22, -4.5), (4, 1, 9), brim(-8.5, -4.5, 4, 9), rotation=(0, 0, 5), pivot=(-4.8, 22.5, 0))       # the -x edge
+    sh.box(m, "hat", (-5.5, 22.6, -5.5), (11, 3, 11), hat_cloth(41, patch=True))
+    sh.box(m, "hat", (-5.5, 22.6, -5.5), (11, 1, 11), hat_band, inflate=0.3)
+    cone = ((25.2, 9, 3, 2, 0.0, 2), (27.4, 7, 2, 3, 0.0, 3), (28.8, 5, 2, 5, 0.0, 4), (30.2, 3, 2, 8, 0.0, 5))
     prev = "hat"
     for n, (y, w, h, rx, ry, rz) in enumerate(cone):
         name = "hat%d" % (n + 2)
@@ -371,22 +373,22 @@ def build():
 
     # ---------------------------------------------------------------- arms: wide sleeves, the hands cupped round the orb
     for sx, nm in ((1, "arm_l"), (-1, "arm_r")):
-        px = sx * 5.5
-        m.bone(nm, "upper", pivot=(px, 15.8, 0), rotation=(32, sx * 4, 0))
+        px = sx * 5.0
+        m.bone(nm, "upper", pivot=(px, 15.8, 0), rotation=(32, sx * 2, 0))
         sh.box(m, nm, (px - 2, 11, -2), (4, 5, 4), cloth(ROBE, ROBE_D, ROBE_L, 50 + sx, folds=2, stitch=(170, 138, 120), seam_top=False))
         m.bone(nm + "2", nm, pivot=(px, 11.2, 0), rotation=(72, 0, 0))
-        sh.box(m, nm + "2", (px - 2.5, 8, -2.5), (5, 3, 5), cloth(ROBE, ROBE_D, ROBE_L, 52 + sx, folds=2, stitch=(170, 138, 120), seam_top=False))
+        sh.box(m, nm + "2", (px - 2, 8, -2), (4, 3, 4), cloth(ROBE, ROBE_D, ROBE_L, 52 + sx, folds=2, stitch=(170, 138, 120), seam_top=False))
         sh.box(m, nm + "2", (px - 2.5, 5.2, -2.5), (5, 3, 5), cloth((132, 98, 104), ROBE_D, ROBE_L, 54 + sx, folds=3, hem=TRIM, hem_rows=2, seam_top=False))   # the wide cuff
         m.bone(nm + "_hand", nm + "2", pivot=(px, 5.6, 0))
-        sh.box(m, nm + "_hand", (px - 1.5, 3.2, -1.5), (3, 3, 3), skin_paint(60 + sx, knuckles=True))
-        sh.box(m, nm + "_hand", (px - sx * 1.5 - 0.5, 3.6, -2.2), (1, 2, 2), skin_paint(62 + sx))     # the thumb
+        sh.box(m, nm + "_hand", (px - 1, 3.2, -1), (2, 3, 2), skin_paint(60 + sx, knuckles=True))
+        sh.box(m, nm + "_hand", (px - sx * 1.0 - 0.5, 3.6, -1.6), (1, 2, 1), skin_paint(62 + sx))     # the thumb
 
     # ---------------------------------------------------------------- the orb, floating at chest / mouth height between the hands
-    OY, OZ = 16.0, -9.0                                                                          # (before the figure is lowered by 2)
+    OY, OZ = 15.4, -9.0                                                                          # (before the figure is lowered by 3)
     m.bone("orb", "root", pivot=(0, OY, OZ))
     sh.box(m, "orb", (-1.5, OY - 1.5, OZ - 1.5), (3, 3, 3), orb_paint(True))
     sh.box(m, "orb", (-1, OY - 1, OZ - 1), (2, 2, 2), orb_paint(False), rotation=(45, 45, 0), pivot=(0, OY, OZ), inflate=0.5)
-    sh.box(m, "orb", (-2, OY - 2, OZ - 2), (4, 4, 4), halo_paint, inflate=0.3)                     # the soft halo (glow layer only)
+    sh.box(m, "orb", (-1.5, OY - 1.5, OZ - 1.5), (3, 3, 3), halo_paint, inflate=0.9)                     # the soft halo (glow layer only)
     for k, (dx, dy, dz) in enumerate(((2.9, 0.4, 0), (-2.0, -0.6, 2.4), (-1.2, 1.2, -2.6))):
         m.bone("mote%d" % (k + 1), "orb", pivot=(0, OY, OZ))
         sh.box(m, "mote%d" % (k + 1), (dx - 0.5, OY + dy - 0.5, OZ + dz - 0.5), (1, 1, 1), mote_paint)
@@ -403,7 +405,7 @@ def build():
     for n, b in hat_base.items():
         wave3(A, "idle", "hat%d" % n, b, (1.0 + 0.4 * n, 0.5 * n, 1.2 + 0.4 * n), 4.0, (-0.6 * n, 0.3 * n, -0.5 * n), L)
     for nm, sx in (("arm_l", 1), ("arm_r", -1)):
-        wave3(A, "idle", nm, (32, sx * 4, 0), (1.2, 0, 0), 4.0, (1.0, 0, 0), L)
+        wave3(A, "idle", nm, (32, sx * 2, 0), (1.2, 0, 0), 4.0, (1.0, 0, 0), L)
     wave(A, "idle", "orb", (0, 0, 0), 0.45, 2.0, 0, 1, L, "pos")
     wave3(A, "idle", "orb", (1, 1, 1), (0.1, 0.1, 0.1), 2.0, (0, 0, 0), L, "scale")
     for k in (1, 2, 3):
@@ -419,7 +421,7 @@ def build():
     for n in range(1, 6):
         wave3(A, "talk", "beard%d" % n, (0, 0, 0), (2.2 + 0.7 * n, 0, 0.8 + 0.5 * n), 1.0, (-math.pi / 2 - 0.6 * n, 0, 0), L)
     # the -x hand lets go of the orb and makes a small gesture, then comes back
-    A.rot("talk", "arm_r", {0.0: (32, -4, 0), 0.5: (46, -4, 0), 1.0: (54, 12, -8), 1.5: (46, 4, -2), 2.0: (54, 14, -8), 2.5: (46, 4, -2), 3.0: (40, -6, 0), 4.0: (32, -4, 0)})
+    A.rot("talk", "arm_r", {0.0: (32, -2, 0), 0.5: (46, -4, 0), 1.0: (54, 12, -8), 1.5: (46, 4, -2), 2.0: (54, 14, -8), 2.5: (46, 4, -2), 3.0: (40, -6, 0), 4.0: (32, -2, 0)})
     A.rot("talk", "arm_r2", {0.0: (72, 0, 0), 0.5: (66, 0, 0), 1.0: (50, 0, 0), 1.5: (62, 0, 0), 2.0: (48, 0, 0), 2.5: (62, 0, 0), 3.0: (68, 0, 0), 4.0: (72, 0, 0)})
     return m, sh, A
 
@@ -429,7 +431,7 @@ def lower(m, dy):
     for n, b in m.bones.items():
         if n == "skirt":
             continue
-        d = dy + (1.0 if n.startswith("hat") else 0.0)                 # the hat sits a pixel above the head, so the face shows under the brim
+        d = dy + (1.5 if n.startswith("hat") else 0.0)                 # the hat sits a pixel above the head, so the face shows under the brim
         b["pivot"][1] += d
         for c in b["cubes"]:
             c["origin"][1] += d
@@ -439,7 +441,7 @@ def lower(m, dy):
 
 def main():
     m, sh, A = build()
-    lower(m, -2.0)
+    lower(m, -3.0)
     img, glow = sh.images()
     m.save(A)
     m.save_texture(img, glow)
