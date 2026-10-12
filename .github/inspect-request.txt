@@ -1,13 +1,5 @@
-# 0.50: Tensura engravings (enchantments) for this mod's weapons: ids, definitions, tags, the engrave event and helpers
-files:data/tensura/enchantment/
-files:data/tensura/tags/(enchantment|item)/
-cat:data/tensura/enchantment/.*\.json
-cat:data/tensura/tags/enchantment/.*\.json
-cat:data/tensura/tags/item/enchantable/.*\.json
-cat:data/tensura/tags/item/.*(weapon|sword|engrav|enchant).*\.json
-cat:assets/tensura/lang/en_us\.json
-io/github/manasmods/tensura/event/TensuraEntityEvents\$EngraveEvent\.class
-list:io/github/manasmods/tensura/.*([Ee]ngrav|[Ee]nchant).*
-strings:io/github/manasmods/tensura/registry/.*[Ee]nchant.*
-io/github/manasmods/tensura/data/TensuraTags\$Enchantments\.class
-io/github/manasmods/tensura/data/TensuraTags\$Items\.class
+# 1.17.0 check: do the vanilla data files the Living Dungeon dimension names exist, and what do they look like?
+files:data/minecraft/worldgen/noise_settings/caves\.json
+cat:data/minecraft/worldgen/noise_settings/caves\.json
+cat:data/minecraft/dimension_type/overworld\.json
+files:data/minecraft/worldgen/biome/(dripstone|lush)_caves\.json
