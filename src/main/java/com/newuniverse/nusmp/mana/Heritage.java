@@ -130,15 +130,19 @@ public final class Heritage {
     }
 
     // ---------------------------------------------------------------- Tensura's own attributes (multipliers: a percentage of the base)
-    private record TMod(Holder<Attribute> attr, double pct, String label) {}
+    private record TMod(Holder<Attribute> attr, double amount, boolean flat, String label) {}
 
-    private static TMod tm(Holder<Attribute> a, double pct, String label) { return new TMod(a, pct, label); }
+    /** A percentage of the attribute's base (attributes whose base is 1 or more). */
+    private static TMod tm(Holder<Attribute> a, double pct, String label) { return new TMod(a, pct, false, label); }
+
+    /** A flat amount, for the resistances whose base is 0 (a percentage of zero is nothing). */
+    private static TMod fl(Holder<Attribute> a, double v, String label) { return new TMod(a, v, true, label); }
 
     /** buff, debuff */
     private static TMod[] kingdomTensura(Kingdom k) {
         return switch (k) {
             case CLOVER -> new TMod[]{tm(TensuraAttributes.MAGICULE_REGENERATION_MULTIPLIER, 0.10, "+10% magicule regeneration"), tm(TensuraAttributes.ABILITY_LEARNING_GAIN, -0.05, "-5% skill learning")};
-            case SPADE -> new TMod[]{tm(TensuraAttributes.DARKNESS_BOOST, 0.10, "+10% darkness-element power"), tm(TensuraAttributes.MAGIC_RESISTANCE, -0.10, "-10% magic resistance")};
+            case SPADE -> new TMod[]{tm(TensuraAttributes.DARKNESS_BOOST, 0.10, "+10% darkness-element power"), fl(TensuraAttributes.MAGIC_RESISTANCE, -0.1, "-0.1 magic resistance")};
             case HEART -> new TMod[]{tm(TensuraAttributes.ABILITY_MASTERY_GAIN, 0.10, "+10% skill mastery gain"), tm(TensuraAttributes.AURA_REGENERATION_MULTIPLIER, -0.05, "-5% aura regeneration")};
             case DIAMOND -> new TMod[]{tm(TensuraAttributes.MAGICULE_GAIN, 0.10, "+10% magicule gain"), tm(TensuraAttributes.DODGE_STRENGTH, -0.05, "-5% dodge strength")};
         };
@@ -147,19 +151,19 @@ public final class Heritage {
     private static TMod[] bloodTensura(Race r) {
         return switch (r) {
             case HUMAN -> new TMod[]{tm(TensuraAttributes.ABILITY_LEARNING_GAIN, 0.10, "+10% skill learning"), tm(TensuraAttributes.AURA_REGENERATION_MULTIPLIER, -0.05, "-5% aura regeneration")};
-            case ELF -> new TMod[]{tm(TensuraAttributes.WIND_BOOST, 0.10, "+10% wind-element power"), tm(TensuraAttributes.EARTH_RESISTANCE, -0.10, "-10% earth resistance")};
-            case DWARF -> new TMod[]{tm(TensuraAttributes.EARTH_BOOST, 0.10, "+10% earth-element power"), tm(TensuraAttributes.WIND_RESISTANCE, -0.10, "-10% wind resistance")};
-            case BEASTFOLK -> new TMod[]{tm(TensuraAttributes.DODGE_STRENGTH, 0.10, "+10% dodge strength"), tm(TensuraAttributes.MAGIC_RESISTANCE, -0.05, "-5% magic resistance")};
+            case ELF -> new TMod[]{tm(TensuraAttributes.WIND_BOOST, 0.10, "+10% wind-element power"), fl(TensuraAttributes.EARTH_RESISTANCE, -0.1, "-0.1 earth resistance")};
+            case DWARF -> new TMod[]{tm(TensuraAttributes.EARTH_BOOST, 0.10, "+10% earth-element power"), fl(TensuraAttributes.WIND_RESISTANCE, -0.1, "-0.1 wind resistance")};
+            case BEASTFOLK -> new TMod[]{tm(TensuraAttributes.DODGE_STRENGTH, 0.10, "+10% dodge strength"), fl(TensuraAttributes.MAGIC_RESISTANCE, -0.05, "-0.05 magic resistance")};
             case OGRE -> new TMod[]{tm(TensuraAttributes.AURA_REGENERATION_MULTIPLIER, 0.10, "+10% aura regeneration"), tm(TensuraAttributes.MAGICULE_REGENERATION_MULTIPLIER, -0.05, "-5% magicule regeneration")};
-            case GOBLIN -> new TMod[]{tm(TensuraAttributes.ABILITY_MASTERY_GAIN, 0.10, "+10% skill mastery gain"), tm(TensuraAttributes.MAGIC_RESISTANCE, -0.05, "-5% magic resistance")};
+            case GOBLIN -> new TMod[]{tm(TensuraAttributes.ABILITY_MASTERY_GAIN, 0.10, "+10% skill mastery gain"), fl(TensuraAttributes.MAGIC_RESISTANCE, -0.05, "-0.05 magic resistance")};
             case GIANT -> new TMod[]{tm(TensuraAttributes.AURA_GAIN, 0.10, "+10% aura gain"), tm(TensuraAttributes.DODGE_STRENGTH, -0.10, "-10% dodge strength")};
-            case ORC -> new TMod[]{tm(TensuraAttributes.FLAME_RESISTANCE, 0.10, "+10% flame resistance"), tm(TensuraAttributes.WATER_RESISTANCE, -0.10, "-10% water resistance")};
-            case DRAGONEWT -> new TMod[]{tm(TensuraAttributes.FLAME_BOOST, 0.10, "+10% flame-element power"), tm(TensuraAttributes.WATER_RESISTANCE, -0.05, "-5% water resistance")};
-            case MERFOLK -> new TMod[]{tm(TensuraAttributes.WATER_BOOST, 0.10, "+10% water-element power"), tm(TensuraAttributes.FLAME_RESISTANCE, -0.10, "-10% flame resistance")};
+            case ORC -> new TMod[]{fl(TensuraAttributes.FLAME_RESISTANCE, 0.1, "+0.1 flame resistance"), fl(TensuraAttributes.WATER_RESISTANCE, -0.1, "-0.1 water resistance")};
+            case DRAGONEWT -> new TMod[]{tm(TensuraAttributes.FLAME_BOOST, 0.10, "+10% flame-element power"), fl(TensuraAttributes.WATER_RESISTANCE, -0.05, "-0.05 water resistance")};
+            case MERFOLK -> new TMod[]{tm(TensuraAttributes.WATER_BOOST, 0.10, "+10% water-element power"), fl(TensuraAttributes.FLAME_RESISTANCE, -0.1, "-0.1 flame resistance")};
             case SLIME -> new TMod[]{tm(TensuraAttributes.MAGICULE_GAIN, 0.10, "+10% magicule gain"), tm(TensuraAttributes.ABILITY_LEARNING_GAIN, -0.05, "-5% skill learning")};
-            case VAMPIRE -> new TMod[]{tm(TensuraAttributes.DARKNESS_BOOST, 0.10, "+10% darkness-element power"), tm(TensuraAttributes.LIGHT_RESISTANCE, -0.10, "-10% light resistance")};
-            case UNDEAD -> new TMod[]{tm(TensuraAttributes.DARKNESS_RESISTANCE, 0.10, "+10% darkness resistance"), tm(TensuraAttributes.LIGHT_RESISTANCE, -0.10, "-10% light resistance")};
-            case DAEMON, DEVIL -> new TMod[]{tm(TensuraAttributes.MAGICULE_REGENERATION_MULTIPLIER, 0.10, "+10% magicule regeneration"), tm(TensuraAttributes.LIGHT_RESISTANCE, -0.10, "-10% light resistance")};
+            case VAMPIRE -> new TMod[]{tm(TensuraAttributes.DARKNESS_BOOST, 0.10, "+10% darkness-element power"), fl(TensuraAttributes.LIGHT_RESISTANCE, -0.1, "-0.1 light resistance")};
+            case UNDEAD -> new TMod[]{fl(TensuraAttributes.DARKNESS_RESISTANCE, 0.1, "+0.1 darkness resistance"), fl(TensuraAttributes.LIGHT_RESISTANCE, -0.1, "-0.1 light resistance")};
+            case DAEMON, DEVIL -> new TMod[]{tm(TensuraAttributes.MAGICULE_REGENERATION_MULTIPLIER, 0.10, "+10% magicule regeneration"), fl(TensuraAttributes.LIGHT_RESISTANCE, -0.1, "-0.1 light resistance")};
         };
     }
 
@@ -208,8 +212,8 @@ public final class Heritage {
             for (int i = 0; i < 24; i++) inst.removeModifier(id(i));
         }
         List<Mod> all = new ArrayList<>();
-        if (k != null) { all.addAll(kingdomMods(k)); for (TMod t : kingdomTensura(k)) all.add(pct(t.attr(), t.pct())); }
-        if (b != null) { all.addAll(bloodMods(b)); for (TMod t : bloodTensura(b)) all.add(pct(t.attr(), t.pct())); }
+        if (k != null) { all.addAll(kingdomMods(k)); for (TMod t : kingdomTensura(k)) all.add(t.flat() ? add(t.attr(), t.amount()) : pct(t.attr(), t.amount())); }
+        if (b != null) { all.addAll(bloodMods(b)); for (TMod t : bloodTensura(b)) all.add(t.flat() ? add(t.attr(), t.amount()) : pct(t.attr(), t.amount())); }
         all.addAll(stageMods(st));
         if (com.newuniverse.nusmp.multiverse.WizardKing.isKing(p)) all.addAll(crownMods());
         int n = 0;

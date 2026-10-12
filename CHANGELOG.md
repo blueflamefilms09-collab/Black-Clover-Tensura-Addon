@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.10.0] — Costs through Tensura's consume helpers; resistances as flat modifiers
+
+**State:** written without a compiler, from the owner's reading of the Tensura 2.0.1.3 bytecode; CI is the first compile. Nothing run in game.
+
+### Replaced
+- **Mana Zone and Negative Mana now pay through Tensura.** `EnergyHelper.isOutOfMagiculeConsuming(entity, cost, min)` deducts the cost itself and returns the unpaid shortfall (0 = paid): the Mana Zone's per-second upkeep uses it with a 5% floor and the zone collapses (and the mage faints) on a shortfall; opening a Mana Zone costs 5% the same way. Attuning to a Magic Stone now costs 20% of the magicule through `EnergyHelper.isOutOfEnergy` (true = cannot afford, nothing deducted; the stone is then not used up). No more direct writes of the magicule value for these.
+- **Kingdom and blood resistances are flat modifiers.** Tensura's resistances have a base of 0, where a percentage does nothing: they are now flat additions (+/-0.05 to 0.1). Attributes with a base of 1 or more (element power, regeneration, gain, dodge strength, learning and mastery gain) stay percentages of the base.
+
 ## [1.9.0] — Kingdom and blood buffs and debuffs use Tensura's own attributes
 
 **State:** written without a compiler, against the Tensura 2.0.1.3 signatures the owner supplied; CI is the first compile. Nothing run in game.

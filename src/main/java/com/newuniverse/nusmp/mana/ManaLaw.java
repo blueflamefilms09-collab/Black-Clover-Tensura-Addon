@@ -165,6 +165,7 @@ public final class ManaLaw {
             p.displayClientMessage(Component.literal("Not enough mana to open a Mana Zone.").withStyle(ChatFormatting.RED), true);
             return false;
         }
+        if (!p.isCreative() && ex != null) EnergyHelper.isOutOfMagiculeConsuming(p, EnergyHelper.getMaxMagicule(p) * 0.05);   // opening it costs 5%: Tensura deducts it (the 15% check above guarantees it is paid)
         int ticks = (int) (600 * Mth.clamp(density(sl, p.blockPosition()), 1.0, 2.0));
         d.putLong("ZoneUntil", sl.getGameTime() + ticks);
         VfxSpawn.sendFollowing(sl, VfxShape.MAGIC_CIRCLE, p, p.position().add(0, 0.08, 0), 0xFF7A5CFF, Math.min(200, ticks), 2.4f);
@@ -189,6 +190,10 @@ public final class ManaLaw {
             p.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 80, 0));
             p.displayClientMessage(Component.literal("The stone tears at you: only an Arcane Stage mage can hold negative mana.").withStyle(ChatFormatting.DARK_RED), true);
             return true;                                                          // the stone is spent
+        }
+        if (!p.isCreative() && EnergyHelper.isOutOfEnergy(p, 0, EnergyHelper.getMaxMagicule(p) * 0.2)) {       // Tensura: true = cannot afford (nothing deducted)
+            p.displayClientMessage(Component.literal("You do not have the mana to open yourself to negative mana (20% of your magicule).").withStyle(ChatFormatting.RED), true);
+            return false;
         }
         data(p).putLong("NegUntil", sl.getGameTime() + 1200);
         data(p).putBoolean("Pact", true);
@@ -294,16 +299,14 @@ public final class ManaLaw {
         }
         // Mana Zone: it drinks a little mana a second; its owner flies light on the mana around them
         if (now < d.getLong("ZoneUntil")) {
-            var ex = TensuraStorages.getExistenceFrom(p);
-            if (ex != null && !p.isCreative()) {
+            if (!p.isCreative() && !com.newuniverse.nusmp.multiverse.WizardKing.isKing(p)) {
                 double max = EnergyHelper.getMaxMagicule(p);
-                if (ex.getMagicule() < max * 0.05 && !com.newuniverse.nusmp.multiverse.WizardKing.isKing(p)) {
+                // Tensura deducts the upkeep and floors the pool at 5%; a shortfall means the zone cannot be held any longer
+                double unpaid = EnergyHelper.isOutOfMagiculeConsuming(p, max * 0.012 / Math.max(1.0, density(sl, p.blockPosition())), max * 0.05);
+                if (unpaid > 0) {
                     d.putLong("ZoneUntil", 0);
                     p.displayClientMessage(Component.literal("The Mana Zone collapses: you have no mana left to hold it.").withStyle(ChatFormatting.GRAY), true);
                     collapse(p);
-                } else if (!com.newuniverse.nusmp.multiverse.WizardKing.isKing(p)) {
-                    ex.setMagicule(ex.getMagicule() - max * 0.012 / Math.max(1.0, density(sl, p.blockPosition())));
-                    ex.markDirty();
                 }
             }
             p.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 60, 0, false, false));
