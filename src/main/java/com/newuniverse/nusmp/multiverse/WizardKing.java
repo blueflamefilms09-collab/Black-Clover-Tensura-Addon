@@ -101,6 +101,7 @@ public final class WizardKing {
     private static void crown(ServerPlayer p) {
         appointing = true;
         try { MultiverseProfile.setRank(p, KnightRank.WIZARD_KING, 0); } finally { appointing = false; }
+        CrownAwakening.apply(p);                                                  // Tensura's awakening numbers, without hero or demon lord
         var skills = SkillAPI.getSkillsFrom(p);
         if (skills.getSkill(NUSkills.WIZARD_KING.getId()).isEmpty()) {
             ManasSkillInstance inst = NUSkills.WIZARD_KING.get().createDefaultInstance();
@@ -118,6 +119,7 @@ public final class WizardKing {
             if (MultiverseProfile.rank(p) == KnightRank.WIZARD_KING) MultiverseProfile.setRank(p, KnightRank.GRAND, 0);
         } finally { appointing = false; }
         SkillAPI.getSkillsFrom(p).forgetSkill(NUSkills.WIZARD_KING.getId());
+        CrownAwakening.revert(p);
         p.sendSystemMessage(Component.literal("You are no longer the Wizard King. The awakening leaves you.").withStyle(ChatFormatting.GRAY));
         MultiverseSync.markDirty(p);
     }
@@ -127,6 +129,7 @@ public final class WizardKing {
         MinecraftServer server = p.getServer();
         if (isKing(p)) return "You already wear the crown.";
         if (MultiverseProfile.step(p) < 15) return "Only a Grand Magic Knight may stand for the crown.";
+        if (CrownAwakening.hasTensuraAwakening(p)) return "You have already awakened as a true hero or a true demon lord: the crown is a different awakening.";
         int min = MultiverseConfig.get(MultiverseConfig.WK_MIN_STARS), stars = MultiverseProfile.netStars(p);
         if (stars < min) return "The crown needs at least " + min + " net stars (you have " + stars + ").";
         Registry r = Registry.get(server);

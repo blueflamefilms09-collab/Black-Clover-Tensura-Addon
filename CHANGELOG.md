@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.0] — The Wizard King's awakening runs through Tensura's own numbers
+
+**State:** written without a compiler in the session, against the Tensura 2.0.1.3 API signatures the owner supplied; CI is the first compile. Nothing run in game.
+
+### Replaced
+- **The crown's awakening now uses Tensura's awakening mechanics** (`multiverse/CrownAwakening.java`) instead of only this mod's attribute buffs: it multiplies the base of Max Aura and Max Magicule (`TensuraAttributes`) by the bigger of the hero and demon-lord EP multipliers from Tensura's race config, refills both, and evolves the Tensura race to its awakening evolution (once), exactly as `RaceHelper.awakening` does for a hero or demon lord, **without** setting the true-hero or true-demon-lord flag. Tensura's `AWAKENING_EVENT` is refused for the Wizard King, so the crown holder cannot also awaken as a hero or a demon lord, and a mage who already is one cannot take the crown. Losing the crown divides the multiplier back out (the evolved race stays). Since Tensura's EP follows those attributes, every EP-scaled number of this mod (spell damage, balance law) rises with the crown. The earlier attribute buffs, Saint Stage casting and the Wizard King skill stay.
+
 ## [1.7.0] — The Wizard King: one holder, an awakening of its own, its own skill
 
 **State:** written without a compiler in the session; CI is the first compile. Nothing run in game.
