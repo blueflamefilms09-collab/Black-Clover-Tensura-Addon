@@ -143,6 +143,7 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.ext.AttributeEvents::onLogout);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.item.WeaponEngravings::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.item.BossRelics::onIncomingDamage);              // 0.52: Shroud of Margins
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.item.MagebaneShieldArts::onIncomingDamage);     // the Magebane Shield: magic damage cut, Spellbreak Parry
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.aura.PlayerAuras::onLogout);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.aura.PlayerAuras::onStartTracking);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.entity.ZagredAttacks::onHeal);                 // 0.52: Overwrite's "No healing"              // 0.50: Tensura engravings on the weapons

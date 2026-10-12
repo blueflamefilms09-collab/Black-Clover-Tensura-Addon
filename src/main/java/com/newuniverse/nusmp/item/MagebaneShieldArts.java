@@ -46,7 +46,7 @@ import java.util.List;
  * </ul>
  * Damage goes through the balance law; the Parry's reflected damage is capped like any other addon hit.
  */
-final class MagebaneShieldArts {
+public final class MagebaneShieldArts {
     private MagebaneShieldArts() {}
 
     static final String K_PARRY = "nusmp_magebane_parry_until";

@@ -15,6 +15,7 @@ Parts:
   box     an axis-aligned block (grips, pommels, guard bars, shafts)
   plate   an extruded pixel sprite (guards, clover guards, tsuba, prongs): cut-out faces plus walls round every opaque pixel
   void    rectangles on a blade face drawn with the crimson dimensional void (Asta's and the demon swords)
+  lathe   a surface of revolution round +y (a round club, a haft, a thorn, a mushroom), turned to any direction and its skin painted per side
 Mesh file format:
   place <ox> <oy> <angle> <scale> <ymin>      item-space origin of y=ymin, the axis angle (deg), the pixel size in item units
   glow <rgb hex> <speed> <min> <max>          the emissive layer's tint and pulse (absent = no glow)
@@ -1676,6 +1677,358 @@ def crossbow_of_swift_death(m, a):
 SPECS += [("bolt_thrower", bolt_thrower), ("crossbow_of_swift_death", crossbow_of_swift_death)]
 
 
+# ================================================================ the Club of Rot and the Doom Hammer (reference sheet "Magic Item Compendium I")
+def _lathe_dir(direction):
+    """A rotation matrix taking +y to 'direction'."""
+    d = np.array(direction, np.float64)
+    d = d / np.linalg.norm(d)
+    y = np.array([0.0, 1.0, 0.0])
+    c = float(np.dot(y, d))
+    if c > 0.99999:
+        return np.eye(3)
+    if c < -0.99999:
+        return np.diag([1.0, -1.0, -1.0])
+    v = np.cross(y, d)
+    s = np.linalg.norm(v)
+    K = np.array([[0, -v[2], v[1]], [v[2], 0, -v[0]], [-v[1], v[0], 0]])
+    return np.eye(3) + K + K @ K * ((1 - c) / (s * s))
+
+
+def lathe(mesh, atlas, stations, sides, paint, base=(0.0, 0.0, 0.0), direction=(0.0, 1.0, 0.0), sw=3, jitter=0.0, salt=0, caps=(True, True)):
+    """A surface of revolution (a round club, a haft, a thorn, a mushroom): rings of 'sides' points at each station (y, r[, ox, oz]) along +y,
+    turned so that +y points along 'direction' and moved to 'base'. paint(k, s, y, theta) -> (rgba, glow) for side k at fraction s round it
+    (its own skin strip, sw pixels per side). jitter roughens the rings (a gnarled bone); a zero radius closes the end to a point."""
+    st = [tuple(s) + (0.0,) * (4 - len(s)) for s in stations]
+    y0, y1 = st[0][0], st[-1][0]
+    H = int(math.ceil(y1 - y0)) + 1
+    W = sides * sw
+    u0, v0 = atlas.alloc(W, H)
+
+    def f(lx, ly):
+        k = min(sides - 1, int(lx // sw))
+        s = (lx - k * sw) / sw
+        return paint(k, s, y1 - ly, (k + s) / sides * 2 * math.pi)
+    atlas.paint(u0, v0, W, H, f)
+    R = _lathe_dir(direction)
+    org = np.array(base, np.float64)
+
+    def ring(i, k):
+        y, r, ox, oz = st[i]
+        th = 2 * math.pi * (k % sides) / sides
+        rr = r * (1 + jitter * (hsh(k % sides, int(y * 2), salt) - 0.5) * 2) if r > 0 else 0.0
+        p = np.array([ox + rr * math.cos(th), y, oz + rr * math.sin(th)])
+        return tuple(org + R @ p)
+
+    def vtex(y):
+        return v0 + (y1 - y)
+    for i in range(len(st) - 1):
+        for k in range(sides):
+            a, b = ring(i, k), ring(i, k + 1)
+            c, d = ring(i + 1, k + 1), ring(i + 1, k)
+            ua, ub = u0 + k * sw, u0 + (k + 1) * sw
+            thm = 2 * math.pi * (k + 0.5) / sides
+            out = R @ np.array([math.cos(thm), 0.0, math.sin(thm)])
+            mesh.quad(0, [a + (ua, vtex(st[i][0])), b + (ub, vtex(st[i][0])), c + (ub, vtex(st[i + 1][0])), d + (ua, vtex(st[i + 1][0]))], tuple(out))
+    for (idx, sgn, on) in ((0, -1, caps[0]), (len(st) - 1, 1, caps[1])):
+        if not on or st[idx][1] <= 0.05:
+            continue
+        cu, cv = u0 + W / 2, vtex(st[idx][0]) + (0.5 if idx == 0 else -0.5)
+        ctr = tuple(org + R @ np.array([st[idx][2], st[idx][0], st[idx][3]]))
+        for k in range(sides):
+            mesh.quad(0, [ctr + (cu, cv), ring(idx, k) + (cu, cv), ring(idx, k + 1) + (cu, cv), ring(idx, k + 1) + (cu, cv)], tuple(R @ np.array([0.0, sgn, 0.0])))
+
+
+def _quarter_noise(x, y, salt):
+    return nz(x * 0.6, y * 0.35, salt)
+
+
+def club_of_rot_paint():
+    """The skin of the club: ivory bone with grain, cracks and pits, rot spreading up the bulb in olive-green and brown patches, ooze veins that glow, grave linen on the grip."""
+    def p(k, s, y, th):
+        x = (k + s) * 3.0
+        grain = fz(x * 1.3, y * 0.25, 3) * 24
+        c = np.array((232, 220, 186), np.float32) + nz(x, y, 9) * 64 + grain
+        g = None
+        if abs(nz(x * 0.45, y * 0.32, 6)) < 0.024:                                  # cracks
+            c = np.array((78, 58, 40), np.float32) + fz(x, y, 4) * 14
+        elif fz(x * 2.2, y * 2.2, 8) < -0.36:
+            c = c * 0.76                                                             # pits
+        rot = nz(x * 0.5, y * 0.3, 5) + (y - 18) * 0.0065                          # the rot creeps up towards the head
+        if rot > 0.08 and y > 3:
+            t = min(1.0, (rot - 0.08) * 6)
+            patch = np.array((118, 128, 62), np.float32) + fz(x, y, 16) * 26
+            if rot > 0.2:
+                patch = np.array((78, 92, 46), np.float32) + fz(x * 2, y * 2, 17) * 18
+                if hsh(int(x * 1.5), int(y * 1.5), 21) > 0.9:
+                    g = col((170, 255, 90), 0.8)
+            c = c * (1 - t) + patch * t
+        if fz(x * 3.0, y * 0.12, 22) > 0.33 and y > 4:                              # ooze veins running down
+            c = np.array((132, 200, 74), np.float32)
+            g = col((150, 255, 80), 0.7)
+        if y > 38.2:
+            c = np.array((176, 56, 46), np.float32) + fz(x, y, 23) * 24            # the marrow at the head: raw
+            g = col((255, 90, 70), 0.55)
+        return col(np.clip(c, 0, 255)), g
+    return p
+
+
+def _linen_paint(k, s, y, th):
+    """Grave linen wound round the bone in diagonal bands, stained here and there."""
+    x = (k + s) * 3.0
+    band = int(x * 1.0 + y * 1.4) % 4
+    c = np.array((220, 208, 172), np.float32) + fz(x * 2, y * 2, 7) * 18 + nz(x, y, 12) * 30
+    if band == 0:
+        c = c * 0.66
+    elif band == 1:
+        c = c * 1.08
+    if nz(x * 0.7, y * 0.5, 14) > 0.16:
+        c = np.array((142, 128, 82), np.float32) + fz(x, y, 15) * 18                 # grave stains
+    return col(np.clip(c, 0, 255)), None
+
+
+def _growth_paint(cap_rgb=(150, 192, 74), spot=(236, 244, 176)):
+    def p(k, s, y, th):
+        x = (k + s) * 3.0
+        c = np.array(cap_rgb, np.float32) + fz(x * 2, y * 2, 31) * 30
+        g = None
+        if hsh(int(x), int(y * 1.5), 33) > 0.7:
+            c = np.array(spot, np.float32)
+            g = col((220, 255, 120), 0.95)
+        elif y < 0.6:
+            c = np.array((96, 120, 52), np.float32)
+        return col(np.clip(c, 0, 255)), g
+    return p
+
+
+def _bone_paint(rgb=(222, 208, 170), tip=(200, 180, 140)):
+    def p(k, s, y, th):
+        x = (k + s) * 3.0
+        c = np.array(rgb, np.float32) + nz(x, y, 41) * 56 + fz(x * 2, y * 2, 42) * 18
+        if (k + s) / 3.0 % 1.0 > 0.5:
+            c = c * 0.86
+        return col(np.clip(c, 0, 255)), None
+    return p
+
+
+def _condyle_paint(k, s, y, th):
+    x = (k + s) * 2.0
+    t = max(0.0, min(1.0, (y - 0.6) / 3.6))
+    c = np.array((232, 220, 186), np.float32) * (1 - t) + np.array((214, 128, 76), np.float32) * t + nz(x, y, 43) * 36 + fz(x * 2, y * 2, 44) * 14
+    g = None
+    if fz(x * 2.5, y * 0.5, 45) > 0.16 and y > 1.2:
+        c = np.array((176, 50, 42), np.float32)
+        g = col((255, 96, 64), 0.4)
+    return col(np.clip(c, 0, 255)), g
+
+
+def _ooze_paint(k, s, y, th):
+    return col((84, 150, 52)), col((150, 255, 80), 0.7 + 0.25 * (int(y) % 2))
+
+
+@_xb_packed
+def club_of_rot(m, a):
+    """Club of Rot (after the reference art): a gnarled bone-white club, a femur's knob for a pommel, grave linen wound round the grip and
+    left hanging in tatters, the head a swollen bulb of bone eaten by rot: green-black patches, cracks, bone spurs, fungal growths with
+    glowing spots, ooze veins and drips, raw marrow at the crown."""
+    # the bone itself: a round, gnarled shaft that swells into the head
+    shaft = [(-22.0, 1.6), (-21.0, 3.1), (-19.0, 3.5), (-17.0, 2.7), (-15.0, 1.9), (-2.0, 1.9), (0.0, 2.2), (4.0, 3.0, 0.15, 0.0), (9.0, 3.9, 0.3, 0.1),
+             (14.0, 4.9, 0.2, -0.2), (19.0, 6.0, -0.2, -0.1), (24.0, 6.9, -0.3, 0.1), (28.0, 7.3, -0.2, 0.3), (32.0, 7.0, 0.0, 0.2), (35.0, 6.0),
+             (37.5, 4.4), (39.5, 2.4), (40.6, 0.0)]
+    lathe(m, a, shaft, 8, club_of_rot_paint(), jitter=0.07, salt=3)
+    # the wrapped grip: a thicker sleeve of linen, bound at both ends
+    wrap = [(-15.2, 2.0), (-14.6, 2.9), (-13.4, 2.65), (-3.6, 2.65), (-2.4, 2.95), (-1.8, 2.1)]
+    lathe(m, a, wrap, 8, _linen_paint, jitter=0.05, salt=5, caps=(False, False))
+    neck = [(7.6, 3.5), (8.1, 4.55), (9.0, 4.4), (11.2, 4.4), (11.8, 4.55), (12.3, 3.9)]
+    lathe(m, a, neck, 8, _linen_paint, jitter=0.04, salt=6, caps=(False, False))
+    # the tattered tails of the linen: three strips hanging off the lower binding
+    for (x0, z0, hgt, off) in ((2.5, 0.0, 12.0, 0.0), (-2.7, 1.0, 9.0, 0.3), (0.4, -2.8, 10.0, -0.2)):
+        def tail(face, i, j, fw, fh, hgt=hgt):
+            c = np.array((190, 176, 140), np.float32) + fz(i * 2, j * 2, 51) * 26
+            if j > fh - 3 or (i + j) % 7 == 0:
+                c = c * 0.6
+            return col(np.clip(c, 0, 255)), None
+        box(m, a, x0 - 0.9, -14.0 - hgt, z0 - 0.25, x0 + 0.9, -14.0 + off, z0 + 0.25, tail)
+    # the knob at the butt: two condyles like the end of a femur
+    for sx in (-1, 1):
+        lathe(m, a, [(0.0, 1.5), (1.4, 1.9), (2.6, 1.4), (3.4, 0.0)], 6, _bone_paint(), base=(sx * 2.0, -21.2, 0.0), direction=(sx * 0.5, -1.0, 0.0), sw=2)
+    # the head: two condyles at the crown, tilted out
+    for sx in (-1, 1):
+        lathe(m, a, [(0.0, 2.7), (1.8, 3.0), (3.4, 2.2), (4.6, 0.0)], 8, _condyle_paint, base=(sx * 3.2, 36.2, 0.2), direction=(sx * 0.42, 1.0, 0.0), sw=2, jitter=0.08, salt=9)
+    # bone spurs and thorns growing out of the rot
+    spurs = [(13, 0.1, 4.7, 3.2), (17, 2.6, 5.4, 3.6), (20, 4.2, 6.0, 4.2), (23, 5.4, 6.6, 3.4), (25, 0.7, 6.9, 3.8), (27, 3.3, 7.2, 4.4),
+             (29, 5.0, 7.3, 3.6), (31, 1.8, 7.1, 4.0)]
+    for (y, ang, r, ln) in spurs:
+        d = (math.cos(ang), 0.55, math.sin(ang))
+        base = (math.cos(ang) * (r - 0.9), y, math.sin(ang) * (r - 0.9))
+        lathe(m, a, [(0.0, 1.25), (ln * 0.5, 0.8), (ln, 0.0)], 4, _bone_paint((236, 226, 196)), base=base, direction=d, sw=2)
+    # fungal growths: stalks with pale-green caps, spots that glow
+    growths = [(8, 0.9, 3.6, 0.8), (12, 3.9, 4.4, 0.9), (16, 5.6, 5.3, 1.0), (19, 1.9, 6.0, 1.1), (22, 4.7, 6.5, 0.9), (26, 2.4, 7.0, 1.2),
+               (28, 5.8, 7.2, 1.0), (33, 0.4, 6.6, 0.9)]
+    for (y, ang, r, sc) in growths:
+        d = (math.cos(ang), 0.3, math.sin(ang))
+        base = (math.cos(ang) * (r - 0.7), y, math.sin(ang) * (r - 0.7))
+        lathe(m, a, [(0.0, 0.8 * sc), (1.3 * sc, 0.9 * sc), (2.1 * sc, 1.8 * sc), (3.1 * sc, 1.6 * sc), (4.0 * sc, 0.0)], 5, _growth_paint(), base=base, direction=d, sw=2)
+    # ooze dripping off the growths
+    for (y, ang, r, ln) in ((14.0, 1.2, 4.9, 7.0), (21.0, 5.1, 6.3, 9.0), (27.0, 0.2, 7.2, 8.0), (18.0, 3.3, 5.6, 6.0), (24.0, 2.3, 6.8, 7.0)):
+        base = (math.cos(ang) * (r + 0.4), y, math.sin(ang) * (r + 0.4))
+        lathe(m, a, [(0.0, 0.5), (ln * 0.6, 0.38), (ln * 0.86, 0.85), (ln, 0.0)], 4, _ooze_paint, base=base, direction=(0.0, -1.0, 0.0), sw=2)
+    return dict(glow=("96FF50", 0.1, 0.4, 1.0))
+
+
+EMBER_RGB = (255, 98, 40)
+
+
+def _iron_paint(base=(34, 34, 46), rivets=False, edge=1.35):
+    """Black iron: grain, pitting, a lit edge on every face, optional rivets."""
+    def p(face, i, j, fw, fh):
+        c = np.array(base, np.float32) * (1.12 if face == 0 else 0.84 if face == 1 else 1.0) + nz(i * 1.4, j * 1.4, face + 60) * 26 + fz(i * 2.1, j * 1.7, face + 61) * 12
+        if i == 0 or j == 0 or i == fw - 1 or j == fh - 1:
+            c = c * edge + 14
+        if rivets and fw >= 4 and fh >= 4 and i % 4 == 1 and j % 4 == 1 and 0 < i < fw - 1 and 0 < j < fh - 1:
+            c = c * 1.7 + 24
+        return col(np.clip(c, 0, 255)), None
+    return p
+
+
+def _seg_dist(px, py, ax, ay, bx, by):
+    vx, vy = bx - ax, by - ay
+    t = max(0.0, min(1.0, ((px - ax) * vx + (py - ay) * vy) / max(1e-9, vx * vx + vy * vy)))
+    return math.hypot(px - (ax + t * vx), py - (ay + t * vy))
+
+
+def _doom_rune(i, j, n=13):
+    """The doom rune on a plate n pixels across: a broken ring round an algiz (a plumb line with two raised arms). True where the rune is cut (and lit)."""
+    c = (n - 1) / 2.0
+    dx, dy = i - c, j - c
+    r = math.hypot(dx, dy)
+    ang = math.atan2(dy, dx)
+    if c - 1.35 < r < c + 0.45 and not (abs(math.sin(ang * 2 + 0.7)) < 0.16):           # the ring, broken in four places
+        return True
+    k = c * 0.78
+    if _seg_dist(dx, dy, 0, -k * 0.9, 0, k) < 0.78:                                        # the stem
+        return True
+    if _seg_dist(dx, dy, 0, -k * 0.05, -k * 0.62, -k) < 0.78 or _seg_dist(dx, dy, 0, -k * 0.05, k * 0.62, -k) < 0.78:   # the arms
+        return True
+    return False
+
+
+def _haft_paint(k, s, y, th):
+    x = (k + s) * 2.0
+    grain = math.sin(x * 2.0 + nz(x * 0.3, y * 0.05, 71) * 9)
+    c = np.array((52, 42, 44), np.float32) * (0.8 + 0.22 * grain) + nz(x, y, 72) * 22 + fz(x, y, 73) * 10
+    g = None
+    if -33 < y < -12:                                                                 # the grip: black leather, wound
+        band = int(x * 1.0 + y * 1.3) % 4
+        c = np.array((30, 26, 30), np.float32) + fz(x * 2, y * 2, 74) * 14
+        if band == 0:
+            c = c * 0.6
+        elif band == 1:
+            c = c * 1.4 + 10
+        if band == 2 and int(y) % 5 == 0:
+            c = np.array((170, 40, 28), np.float32)                                   # red stitching
+            g = col(EMBER_RGB, 0.25)
+    elif -52 < y < -36 and k % 4 == 1 and 0.2 < s < 0.8 and int(y) % 4 in (0, 1):    # runes down the coffin-wood
+        c = np.array((255, 140, 70), np.float32)
+        g = col(EMBER_RGB, 0.9)
+    elif y > -9:
+        c = np.array((44, 44, 58), np.float32) + fz(x, y, 75) * 12
+    return col(np.clip(c, 0, 255)), g
+
+
+def _spike_paint(k, s, y, th):
+    c = np.array((46, 46, 60), np.float32) + fz((k + s) * 3, y * 2, 81) * 14
+    return col(np.clip(c, 0, 255)), None
+
+
+@_xb_packed
+def doom_hammer(m, a):
+    """Doom Hammer (after the reference art, a black-iron war pick): a haft carved from coffin-wood, black leather wound round the grip, runes
+    cut down it; a heavy iron head with a hammer face (a lit doom sigil) at the front, a long hooked pick at the back, a spike on top, rune
+    discs on both sides, studs and corner spikes, an iron pommel with a spike. The weapon's front is -x: the face leads, the pick trails."""
+    # the haft with its pommel and spike
+    hs = [(-60.0, 0.0), (-55.5, 1.1), (-52.5, 2.1), (-51.0, 3.3), (-49.6, 3.2), (-48.0, 2.2), (-46.0, 2.0)]
+    for (yb, yt) in ((-12.0, -9.8), (-24.0, -22.2), (-35.0, -33.2), (-43.5, -41.7)):
+        hs += [(yb - 0.15, 2.0), (yb, 2.7), (yt, 2.7), (yt + 0.15, 2.0)]
+    hs += [(-7.0, 2.0), (-5.5, 2.5)]
+    hs = sorted(hs, key=lambda t: t[0])
+    lathe(m, a, hs, 8, _haft_paint, sw=2, caps=(False, False))
+    # the head: a collar between two rings
+    box(m, a, -5.9, -7.0, -5.9, 5.9, 14.0, 5.9, _iron_paint((36, 36, 50), rivets=True))
+    box(m, a, -6.6, -8.6, -6.6, 6.6, -6.4, 6.6, _iron_paint((26, 26, 36)))
+    box(m, a, -6.6, 12.8, -6.6, 6.6, 15.2, 6.6, _iron_paint((26, 26, 36)))
+    # the hammer face at the front (-x): a core and a flange; its striking face is a lit doom sigil
+    def face_paint(face, i, j, fw, fh):
+        c, g = _iron_paint((30, 30, 42), rivets=True)(face, i, j, fw, fh)
+        if face == 2 and fw >= 12 and fh >= 12:
+            n = min(fw, fh) - 2
+            if _doom_rune(i - (fw - n) / 2.0, j - (fh - n) / 2.0, n):
+                return col((255, 150, 80)), col(EMBER_RGB, 0.95)
+        return c, g
+    box(m, a, -17.0, -6.4, -7.4, -5.9, 12.8, 7.4, _iron_paint((32, 32, 44), rivets=True))
+    box(m, a, -19.4, -8.2, -8.2, -17.0, 14.6, 8.2, face_paint)
+    for (sy, sz) in ((-8.2, -8.2), (-8.2, 8.2), (14.6, -8.2), (14.6, 8.2)):                    # corner spikes on the flange
+        zdir = 0.35 if sz > 0 else -0.35
+        ydir = -0.35 if sy < 0 else 0.35
+        lathe(m, a, [(0.0, 1.9), (1.8, 1.4), (4.2, 0.0)], 6, _spike_paint, base=(-18.4, sy, sz), direction=(-0.9, ydir, zdir), sw=2, caps=(True, False))
+    # the pick at the back (+x): a root block, then a long curved beak built as one extruded slab
+    box(m, a, 5.9, -3.0, -5.2, 13.5, 12.4, 5.2, _iron_paint((32, 32, 44), rivets=True))
+    pts = [(0, 14.5), (9, 15.2), (19, 14.2), (28, 11.4), (35.5, 8.0)]
+    pts = [(x, y - 3.5) for (x, y) in pts]
+    hws = [6.6, 5.6, 4.2, 2.6, 0.5]
+    pm = _xb_stroke_mask(38, 22, pts, hws)
+    ph, pw = pm.shape
+    lead, trail = _xb_edge_flags(pm)
+    spine = [11.0, 11.7, 10.7, 7.9, 4.5]
+    sx = [0, 9, 19, 28, 35.5]
+
+    def beak_paint(i, j, front):
+        ii = i if front else pw - 1 - i
+        c = np.array((34, 34, 48), np.float32) + nz(i * 1.2, j * 1.2, 90) * 24 + fz(i * 2, j * 2, 91) * 10
+        g = None
+        if lead[j, ii]:
+            c = np.array((124, 128, 152), np.float32) + fz(i, j, 92) * 18
+        elif trail[j, ii]:
+            c = c * 0.55
+        if ii > 7 and abs((ph - j - 0.5) - np.interp(ii + 0.5, sx, spine)) < 0.65 and ii % 4 != 0:
+            c = np.array((255, 140, 70), np.float32)
+            g = col(EMBER_RGB, 0.85)
+        return col(np.clip(c, 0, 255)), g
+    plate(m, a, pm, 13.0, 4.2 - 11.0, 2.4, beak_paint, "xy", 0)
+    # the spike on top
+    sp = [(15.2, -3.1, 0.0, 3.1), (19.0, -2.3, 0.0, 2.3), (36.0, 0.0, 0.0, 0.0)]
+
+    def spike_blade(x, y, front, e, rd):
+        if x is None:
+            return col((50, 50, 66)), col(EMBER_RGB, 0.5)
+        c = np.array((38, 38, 52), np.float32) + nz(x, y, 95) * 20
+        g = None
+        if e < 0.9:
+            c = np.array((118, 122, 148), np.float32)
+        if y > 31:
+            c = np.array((255, 130, 60), np.float32)
+            g = col(EMBER_RGB, 0.9)
+        return col(np.clip(c, 0, 255)), g
+    Blade(sp, 2.0, 3.1, spike_blade).build(m, a)
+    # the rune discs on both sides of the head
+    disc = disc_mask(7.5)
+    dn = disc.shape[0]
+
+    def rune_plate(i, j, front):
+        r = math.hypot(i + 0.5 - dn / 2, j + 0.5 - dn / 2)
+        c = np.array((40, 40, 56), np.float32) + nz(i * 1.3, j * 1.3, 96) * 20
+        if r > dn / 2 - 1.2:
+            c = np.array((110, 114, 140), np.float32)
+        if _doom_rune(i, j, dn):
+            return col((255, 150, 80)), col(EMBER_RGB, 1.0)
+        return col(np.clip(c, 0, 255)), None
+    plate(m, a, disc, -dn / 2, 3.5 - dn / 2, 0.45, rune_plate, "xy", 6.0)
+    plate(m, a, disc, -dn / 2, 3.5 - dn / 2, 0.45, rune_plate, "xy", -6.0)
+    return dict(glow=("FF6A30", 0.12, 0.4, 1.0))
+
+
+SPECS += [("club_of_rot", club_of_rot), ("doom_hammer", doom_hammer)]
+
+
 RELICS = [
     ("anti_bird_charm", anti_bird_charm),
     ("bond_thread", bond_thread),
@@ -1692,6 +2045,419 @@ RELICS = [
 SPECS += [("gauches_hand_mirror", hand_mirror), ("grimoire_chain", grimoire_chain), ("last_word", last_word), ("elsdocia", elsdocia),
           ("magebane_longsword", magebane_longsword), ("prism_blade", prism_blade), ("thundercleave", thundercleave), ("bloodbound_katana", bloodbound_katana),
           ("quicklings_ivy", quicklings_ivy), ("permafrost_sabre", permafrost_sabre), ("cyclone_rapier", cyclone_rapier)]                     # diagonal sprites: placed like the weapons
+
+
+# ================================================================ 1.2.0: the Magebane Shield and the Weapon of Resurgence
+# Executed in gen_weapon_models' namespace (np, math, Image, Mesh, Atlas, box, plate, Blade, ascii_mask, col, shade, nz, fz, hsh, fbm ... exist).
+from PIL import ImageDraw  # noqa: E402
+
+SH_FACE_NOISE = fbm(256, 256, 24, 7001)          # low-frequency blotches: soot on the rim, patina on the face
+
+
+def _heater_outline(m=33, hw=12.5, top=15.2, arch=0.9, corner=2.8, y1=-0.5, bottom=-15.8, p=1.65):
+    """The convex outline of a heater shield: 2 (m - 1) points equally spaced along its length, from the top centre round the right
+    side to the tip (clockwise) and back up the left."""
+    xe = hw - corner
+
+    def ytop(x):
+        return top + arch * (1 - (x / hw) ** 2)
+
+    dense = []
+    N = 240
+    for i in range(N):                                         # the top edge, slightly arched
+        x = xe * i / N
+        dense.append((x, ytop(x)))
+    cy = ytop(xe) - corner
+    for i in range(N // 3 + 1):                                # the corner
+        ang = (math.pi / 2) * i / (N // 3)
+        dense.append((xe + corner * math.sin(ang), cy + corner * math.cos(ang)))
+    for i in range(1, N // 2):                                 # the straight side
+        dense.append((hw, cy + (y1 - cy) * i / (N // 2)))
+    for i in range(N * 2 + 1):                                 # the convex curve down to the tip
+        t = i / (N * 2)
+        dense.append((hw * (1 - t ** p), y1 + (bottom - y1) * t))
+    d = np.array(dense)
+    seg = np.hypot(*np.diff(d, axis=0).T)
+    cum = np.concatenate([[0], np.cumsum(seg)])
+    right = []
+    for k in range(m):
+        target = cum[-1] * k / (m - 1)
+        j = min(np.searchsorted(cum, target), len(cum) - 1)
+        right.append(tuple(d[j]))
+    right[0] = (0.0, top + arch)
+    right[-1] = (0.0, bottom)
+    left = [(-x, y) for (x, y) in right[-2:0:-1]]
+    return right + left
+
+
+def _petal(draw, S, base, ang, length, width, curve, fill=255):
+    """A leaf-shaped feather from `base` (shield units) at angle `ang`, drawn through S(x, y) -> canvas xy."""
+    n = 14
+    left, right = [], []
+    dx, dy = math.cos(ang), math.sin(ang)
+    px, py = -dy, dx
+    for k in range(n + 1):
+        t = k / n
+        cx = base[0] + dx * length * t + px * curve * length * t * t
+        cy = base[1] + dy * length * t + py * curve * length * t * t
+        w = width * (1 - t) ** 0.5 * min(1.0, 0.5 + t * 4)
+        left.append(S(cx + px * w, cy + py * w))
+        right.append(S(cx - px * w, cy - py * w))
+    draw.polygon(left + right[::-1], fill=fill)
+
+
+def _bez(p0, p1, p2, n=10):
+    return [((1 - t) ** 2 * p0[0] + 2 * (1 - t) * t * p1[0] + t * t * p2[0], (1 - t) ** 2 * p0[1] + 2 * (1 - t) * t * p1[1] + t * t * p2[1]) for t in (k / n for k in range(n + 1))]
+
+
+def _scallop(tips, pull, toward):
+    """The ragged feather edge of a wing: the tips in order, a notch between each pair pulled a little toward `toward`."""
+    pts = []
+    for k, tp in enumerate(tips):
+        pts.append(tp)
+        if k + 1 < len(tips):
+            mx, my = (tp[0] + tips[k + 1][0]) / 2, (tp[1] + tips[k + 1][1]) / 2
+            pts.append((mx + (toward[0] - mx) * pull, my + (toward[1] - my) * pull))
+    return pts
+
+
+def _phoenix(fw, fh, x0, y1, tpu, ss=6):
+    """The shield's phoenix over the face region, as a category map: 1 wing coverts, 2 tail, 3 wing, 4 body / head / beak / crest,
+    5 eye, 6 feather lines. Wings are single scalloped shapes with a line to every feather tip; later shapes lie over earlier ones."""
+    W, H = fw * ss, fh * ss
+    cats = Image.new("L", (W, H), 0)
+    dc = ImageDraw.Draw(cats)
+
+    def S(x, y):
+        return ((x - x0) * tpu * ss, (y1 - y) * tpu * ss)
+
+    def Sm(x, y):
+        return S(-x, y)
+
+    # the tail: five long feathers fanned from the rump
+    for off, ln, wd in ((-24, 7.4, 1.2), (24, 7.4, 1.2), (-11, 8.6, 1.2), (11, 8.6, 1.2), (0, 9.6, 1.3)):
+        _petal(dc, S, (0, -2.6), math.radians(-90 + off), ln, wd, 0.08 * (1 if off > 0 else -1 if off < 0 else 0), 2)
+    for T in (S, Sm):
+        sh = (1.4, 3.3)
+        tips = [(9.6, 9.6), (10.2, 7.0), (9.9, 4.5), (8.7, 2.2), (6.9, 0.2), (4.8, -1.2)]
+        edge = _bez(sh, (3.6, 10.8), tips[0], 12) + _scallop(tips, 0.16, sh)[1:] + [(1.9, -1.0)]
+        dc.polygon([T(*q) for q in edge], fill=3)
+        cov = [(6.3, 6.6), (6.7, 4.7), (6.1, 2.8), (4.9, 1.3), (3.5, 0.2)]
+        cedge = _bez((1.6, 5.0), (3.2, 6.8), cov[0], 8) + _scallop(cov, 0.18, sh)[1:] + [(2.0, 0.0)]
+        dc.polygon([T(*q) for q in cedge], fill=1)
+        for tp in tips:                                                    # a line from the wing's root to each feather tip
+            dc.line([T(2.4, 3.0), T(tp[0] - (tp[0] - 2.4) * 0.12, tp[1] - (tp[1] - 3.0) * 0.12)], fill=6, width=max(1, int(ss * 0.34)))
+    # body, head, beak, crest
+    ex0, ey0 = S(-2.1, 5.7)
+    ex1, ey1 = S(2.1, -2.9)
+    dc.ellipse([ex0, ey0, ex1, ey1], fill=4)
+    hx0, hy0 = S(-1.95, 8.4)
+    hx1, hy1 = S(1.3, 5.0)
+    dc.ellipse([hx0, hy0, hx1, hy1], fill=4)
+    dc.polygon([S(-1.2, 7.2), S(-3.5, 6.2), S(-2.5, 5.7), S(-1.2, 5.9)], fill=4)
+    for an, ln in ((62, 3.4), (90, 2.9), (118, 2.4)):
+        _petal(dc, S, (0.6, 7.3), math.radians(an), ln, 0.5, 0.1 if an < 90 else -0.1, 4)
+    e0, e1 = S(-1.15, 7.05), S(-0.7, 6.6)
+    dc.ellipse([e0[0], e0[1], e1[0], e1[1]], fill=5)
+    return {"cat": np.asarray(cats.resize((fw, fh), Image.NEAREST))}
+
+
+def _shift(mask, dx, dy):
+    out = np.zeros_like(mask)
+    h, w = mask.shape
+    ys, xs = slice(max(0, dy), min(h, h + dy)), slice(max(0, dx), min(w, w + dx))
+    yd, xd = slice(max(0, -dy), min(h, h - dy)), slice(max(0, -dx), min(w, w - dx))
+    out[ys, xs] = mask[yd, xd]
+    return out
+
+
+def magebane_shield(m, a):
+    """Magebane Shield: a turquoise heater shield in the Spellplague style. A convex, slightly domed face of etched turquoise holds a bronze
+    phoenix with spread wings; a raised rim of worn silver-bronze, scorched black in patches with arcane light in the cracks, carries
+    gold rivets and glowing turquoise studs; the back is dark leather with an arm strap and a hand grip. Built upright, the face toward +z."""
+    pts = _heater_outline()
+    n = len(pts)
+    P = np.array(pts, np.float64)
+    ccx, ccy = 0.0, -0.3
+    cen = np.array([ccx, ccy])
+    rel = P - cen
+    seg = np.hypot(*(np.roll(P, -1, 0) - P).T)
+    cum = np.concatenate([[0], np.cumsum(seg)])
+    s_of = cum / cum[-1]
+    K_RIM, NR, TPU = 0.84, 8, 2.0
+    Z_BACK, ZT_O, ZT_I, Z_F0, DOME = -1.5, 1.7, 1.3, 0.2, 1.6
+    inner = cen + rel * K_RIM
+    # polar radius of the rim's inner edge, for the face painter
+    th = np.arctan2(rel[:, 1], rel[:, 0])
+    rr = np.hypot(rel[:, 0], rel[:, 1]) * K_RIM
+    order = np.argsort(th)
+    th_s, rr_s = th[order], rr[order]
+    th_x = np.concatenate([th_s - 2 * math.pi, th_s, th_s + 2 * math.pi])
+    rr_x = np.concatenate([rr_s, rr_s, rr_s])
+
+    def R_inner(t):
+        return np.interp(t, th_x, rr_x)
+
+    # ---- the atlas regions
+    fx0, fx1 = inner[:, 0].min() - 0.5, inner[:, 0].max() + 0.5
+    fy0, fy1 = inner[:, 1].min() - 0.5, inner[:, 1].max() + 0.5
+    fw, fh = int(math.ceil((fx1 - fx0) * TPU)), int(math.ceil((fy1 - fy0) * TPU))
+    fu, fv = a.alloc(fw, fh)
+    RW = 122
+    ru, rv = a.alloc(RW, 6)
+    wu, wv = a.alloc(RW, 4)
+    iu, iv = a.alloc(RW, 3)
+    bx0, bx1 = P[:, 0].min() - 0.5, P[:, 0].max() + 0.5
+    by0, by1 = P[:, 1].min() - 0.5, P[:, 1].max() + 0.5
+    bw, bh = int(math.ceil(bx1 - bx0)), int(math.ceil(by1 - by0))
+    bu, bv = a.alloc(bw, bh)
+
+    # ---- the face: turquoise field, bronze border and studs, the phoenix
+    ph = _phoenix(fw, fh, fx0, fy1, TPU)
+    cat = ph["cat"]
+    union = cat > 0
+    shadow = _shift(union, 1, 1) & ~union
+    hh, ww = cat.shape
+    outline = union & ~(_shift(union, 1, 0) & _shift(union, -1, 0) & _shift(union, 0, 1) & _shift(union, 0, -1))
+
+    def face_paint(lx, ly):
+        x, y = fx0 + lx / TPU, fy1 - ly / TPU
+        dx, dy = x - ccx, y - ccy
+        t = math.atan2(dy, dx)
+        rho = math.hypot(dx, dy) / float(R_inner(t))
+        if rho > 1.04:
+            return None, None
+        ix, iy = int(lx), int(ly)
+        v = (fy1 - y) / (fy1 - fy0)
+        c = np.array((98, 212, 202), np.float32) * (1 - v) + np.array((52, 132, 138), np.float32) * v
+        c = c * (1 - 0.14 * min(1.0, rho) ** 2) + nz(lx, ly, 3) * 24 + fz(lx * 1.3, ly, 4) * 12
+        sn = SH_FACE_NOISE[(iy * 2 + 40) % 256, (ix * 2 + 90) % 256]
+        if sn > 0.6:
+            c = c * 0.88 + np.array((8, 22, 16), np.float32)                                          # verdigris blotches
+        g = None
+        if 0.92 < rho <= 0.97:                                                                        # the bronze border line
+            c = np.array((184, 146, 92), np.float32) * (1.12 if (iy + ix) % 4 else 0.92) + fz(lx, ly, 5) * 12
+            studs = ((t + math.pi) / (2 * math.pi)) * 40
+            if abs(studs - round(studs)) < 0.16 and 0.935 < rho < 0.955:
+                c = np.array((236, 206, 140), np.float32)
+        elif rho > 0.97:
+            c = np.array((22, 62, 68), np.float32) + fz(lx, ly, 6) * 8
+        elif 0.80 < rho <= 0.825:
+            c = c * 0.62 + np.array((78, 60, 40), np.float32) * 0.5                                   # a thin etched ring
+        elif 0.86 < rho <= 0.9:
+            tick = ((t + math.pi) / (2 * math.pi)) * 56                                              # arcane tick marks round the field
+            if abs(tick - round(tick)) < 0.22 and hsh(round(tick), 3) > 0.35:
+                c = np.array((150, 232, 218), np.float32)
+                g = col((130, 255, 235), 0.35)
+        cc = int(cat[iy, ix]) if iy < hh and ix < ww else 0
+        if shadow[iy, ix] and rho < 0.9:
+            c = np.array((24, 66, 72), np.float32)
+        if cc:
+            lit = 1.0 + 0.22 * (1 - v) - 0.12                                                         # warmer toward the top
+            base = {1: (244, 210, 148), 2: (196, 150, 84), 3: (200, 150, 80), 4: (232, 194, 126), 5: (210, 255, 248), 6: (140, 98, 52)}[cc]
+            c = np.array(base, np.float32) * lit + fz(lx * 1.4, ly, 7) * 12
+            if cc == 4 and iy % 3 == 0 and ix % 2 == 0:
+                c = c * 0.86                                                                          # breast feathers
+            if cc == 2 and (ix + iy) % 5 == 0:
+                c = c * 0.86
+            if outline[iy, ix] and cc != 5:
+                c = np.array((76, 50, 28), np.float32)
+                g = col((120, 255, 232), 0.4)
+            if cc == 5:
+                c = np.array(base, np.float32)
+                g = col((190, 255, 248), 1.0)
+        return col(np.clip(c, 0, 255)), g
+
+    a.paint(fu, fv, fw, fh, face_paint)
+
+    # ---- the rim (top strip), its outer wall and inner wall: scorched worn silver-bronze
+    def soot(u, v, band):
+        s = SH_FACE_NOISE[(int(v * 3) + 170) % 256, (int(u * 1.05) + band * 55) % 256]
+        return s
+
+    def rim_paint(lx, ly):
+        c = np.array((172, 154, 124), np.float32) + nz(lx, ly, 5) * 34 + fz(lx * 1.7, ly * 1.3, 6) * 16
+        g = None
+        if ly < 1:
+            c = np.array((222, 206, 170), np.float32) + fz(lx, ly, 2) * 18
+        elif ly > 4.6:
+            c = c * 0.66
+        elif 2.3 < ly < 3.3:
+            c = c * 0.8
+        s = soot(lx, ly, 0)
+        if s > 0.62:
+            k = min(1.0, (s - 0.62) / 0.1)
+            c = c * (1 - 0.88 * k) + np.array((30, 24, 26), np.float32) * 0.88 * k + fz(lx, ly, 3) * 8
+        elif 0.60 < s <= 0.62:
+            c = np.array((72, 214, 200), np.float32)                                                 # arcane light in the scorch cracks
+        return col(np.clip(c, 0, 255)), g
+
+    def wall_paint(lx, ly):
+        c = np.array((98, 84, 68), np.float32) * (1 - 0.1 * ly) + nz(lx, ly, 7) * 22
+        s = soot(lx, ly + 7, 1)
+        if s > 0.6:
+            c = c * 0.45
+        return col(np.clip(c, 0, 255)), None
+
+    def inner_paint(lx, ly):
+        c = np.array((120, 104, 82), np.float32) * (1.0 if ly < 1 else 0.7) + nz(lx, ly, 8) * 22
+        if soot(lx, ly + 11, 2) > 0.62:
+            c = c * 0.4
+        return col(np.clip(c, 0, 255)), None
+
+    a.paint(ru, rv, RW, 6, rim_paint)
+    a.paint(wu, wv, RW, 4, wall_paint)
+    a.paint(iu, iv, RW, 3, inner_paint)
+
+    def back_paint(lx, ly):
+        x, y = bx1 - lx, by1 - ly                                                                     # seen from behind: mirrored
+        c = np.array((74, 54, 42), np.float32) + nz(lx, ly, 10) * 24
+        if int(lx) % 5 == 0:
+            c = c * 0.72                                                                              # plank seams
+        if hsh(int(lx), int(ly), 4) > 0.97:
+            c = c * 1.3
+        if math.hypot(x - ccx, y - ccy) > 12.5:
+            c = c * 0.78
+        return col(np.clip(c, 0, 255)), None
+
+    a.paint(bu, bv, bw, bh, back_paint)
+
+    # ---- the quads
+    def V(p, z):
+        return (float(p[0]), float(p[1]), z)
+
+    for i in range(n):
+        j = (i + 1) % n
+        u0, u1 = s_of[i] * RW, s_of[i + 1] * RW
+        po, pj, qi, qj = P[i], P[j], inner[i], inner[j]
+        radial = (float((po[0] + pj[0]) / 2 - ccx), float((po[1] + pj[1]) / 2 - ccy), 0.0)
+        m.quad(0, [V(po, ZT_O) + (ru + u0, rv), V(pj, ZT_O) + (ru + u1, rv), V(qj, ZT_I) + (ru + u1, rv + 6), V(qi, ZT_I) + (ru + u0, rv + 6)], (0, 0, 1))
+        m.quad(0, [V(po, ZT_O) + (wu + u0, wv), V(pj, ZT_O) + (wu + u1, wv), V(pj, Z_BACK) + (wu + u1, wv + 4), V(po, Z_BACK) + (wu + u0, wv + 4)], radial)
+        m.quad(0, [V(qi, ZT_I) + (iu + u0, iv), V(qj, ZT_I) + (iu + u1, iv), V(qj, Z_F0) + (iu + u1, iv + 3), V(qi, Z_F0) + (iu + u0, iv + 3)], (-radial[0], -radial[1], 0))
+
+        def bk(p):
+            return (bu + (bx1 - p[0]), bv + (by1 - p[1]))
+        m.quad(0, [V(cen, Z_BACK) + bk(cen), V(po, Z_BACK) + bk(po), V(pj, Z_BACK) + bk(pj), V(pj, Z_BACK) + bk(pj)], (0, 0, -1))
+
+    def fpt(i, jj):
+        s = K_RIM * jj / NR
+        p = cen + rel[i % n] * s
+        z = Z_F0 + DOME * (1 - (jj / NR) ** 2)
+        return (float(p[0]), float(p[1]), z, fu + (float(p[0]) - fx0) * TPU, fv + (fy1 - float(p[1])) * TPU)
+
+    for i in range(n):
+        for jj in range(NR):
+            m.quad(0, [fpt(i, jj), fpt(i + 1, jj), fpt(i + 1, jj + 1), fpt(i, jj + 1)], (0, 0, 1))
+
+    # ---- rivets and glowing studs along the rim
+    def rivet(gem):
+        def p(face, i, j, fw_, fh_):
+            if gem:
+                return col(np.array((86, 230, 214), np.float32) * (1.0 if face == 5 else 0.7)), (col((140, 255, 238), 0.6) if face == 5 else None)
+            return col(np.array((214, 172, 92), np.float32) * (1.2 if face == 0 else 0.8 if face == 1 else 1.0)), None
+        return p
+
+    for i in range(0, n, 4):
+        mid = cen + rel[i] * (1 + K_RIM) / 2
+        z0 = (ZT_O + ZT_I) / 2 - 0.1
+        gem = (i // 4) % 2 == 1
+        box(m, a, mid[0] - 0.45, mid[1] - 0.45, z0, mid[0] + 0.45, mid[1] + 0.45, z0 + (0.9 if gem else 0.7), rivet(gem))
+
+    # ---- the back: an arm strap, a second strap, a hand grip, and their iron anchors
+    leather = (86, 58, 40)
+    box(m, a, -7.5, 3.4, Z_BACK - 1.0, 7.5, 6.0, Z_BACK, wrap_paint(leather, (140, 98, 62)))
+    box(m, a, -6.5, -5.4, Z_BACK - 0.9, 6.5, -3.4, Z_BACK, wrap_paint(leather, (140, 98, 62)))
+    box(m, a, -1.2, -4.6, Z_BACK - 2.7, 1.2, 4.6, Z_BACK - 0.9, wrap_paint((46, 32, 28), (96, 70, 48)))
+    for (x, y) in ((-7.0, 4.7), (7.0, 4.7), (-6.0, -4.4), (6.0, -4.4)):
+        box(m, a, x - 0.9, y - 0.9, Z_BACK - 1.4, x + 0.9, y + 0.9, Z_BACK - 0.6, metal_paint((120, 112, 100), rivets=True))
+    return dict(glow=("C8FFF6", 0.09, 0.4, 1.0))
+
+
+# ---------------------------------------------------------------- the Weapon of Resurgence
+def weapon_of_resurgence(m, a):
+    """Weapon of Resurgence: a long jade-teal sword wound from the hilt up with a holy gold chain, a gold cross-guard with a radiant cross at its
+    heart, a dark jade grip ringed with chain, a gold pommel; the end of the chain hangs loose beside it. Gold light in the links and runes."""
+    L = 54
+    st = straight_stations(L, 3.0, 2.6, 8, steps=4, ridge=0)
+
+    def paint(x, y, front, e, rd):
+        if x is None:
+            return col((62, 150, 128)), None
+        t = y / L
+        c = np.array((34, 112, 98), np.float32) * (1 - t) + np.array((84, 186, 158), np.float32) * t
+        c = c + nz(x, y, 4) * 22 + fz(int(x * 2), int(y * 2), 5) * 12
+        g = None
+        if abs(x) < 0.55 and 4 < y < L - 8:
+            c = np.array((170, 240, 210), np.float32)                                                  # the bright ridge
+        if abs(x) < 0.5 and 8 < y < L - 10 and int(y) % 6 in (0, 1):
+            c = np.array((236, 196, 86), np.float32)                                                   # a gold rune dash on the fuller
+            g = col((255, 224, 130), 0.65)
+        if 0.9 < abs(x) < 1.4 and 6 < y < L - 6:
+            c = c * 0.78                                                                               # the fuller's edges
+        if e < 0.9:
+            c = np.array((206, 255, 232), np.float32)
+        return col(np.clip(c, 0, 255)), g
+    Blade(st, 0.7, 1.4, paint).build(m, a)
+    gold, goldl = (226, 182, 70), (255, 232, 140)
+
+    def link_paint(face, i, j, fw, fh):
+        c = np.array(gold, np.float32) * (1.25 if face in (0, 5) else 0.8 if face == 1 else 1.0) + fz(i * 2, j * 2, 12) * 16
+        return col(np.clip(c, 0, 255)), (col((255, 226, 130), 0.55) if face == 5 else None)
+
+    # the chain: a helix round the blade, links alternating long and short
+    turns, y_lo, y_hi = 4.5, 3.0, 41.0
+    pitch = (y_hi - y_lo) / turns
+    path_len = 20.0
+    steps = int(turns * path_len / 1.55)
+    for k in range(steps):
+        ph = 2 * math.pi * turns * k / steps
+        y = y_lo + pitch * ph / (2 * math.pi)
+        hw = lerp(3.0, 2.6, y / L)
+        x = (hw + 0.8) * math.cos(ph)
+        z = 2.3 * math.sin(ph)
+        tx, tz = -(hw + 0.8) * math.sin(ph), 2.3 * math.cos(ph)
+        if k % 2 == 0:
+            ex, ez = (0.95, 0.55) if abs(tx) > abs(tz) else (0.55, 0.95)
+        else:
+            ex, ez = (0.6, 0.55) if abs(tx) > abs(tz) else (0.55, 0.6)
+        box(m, a, x - ex, y - 0.62, z - ez, x + ex, y + 0.62, z + ez, link_paint)
+    # ---- the cross-guard: swept quillons with spiked ends round a block, a radiant cross on its face
+    jade = (30, 96, 84)
+    half = ascii_mask([
+        "###...........",
+        "####..........",
+        ".#####........",
+        "..#######.....",
+        "...##########.",
+        "....##########",
+        ".....#########",
+        "......########",
+    ])
+    full = np.concatenate([half, half[:, ::-1]], axis=1)
+
+    def guard_paint(i, j, f):
+        c = np.array(gold, np.float32) * (1.25 if (i + j) % 4 == 0 else 1.0 if j else 0.8)
+        return col(np.clip(c, 0, 255)), (col((255, 226, 130), 0.4) if j == 3 else None)
+    plate(m, a, full, -14.0, -5.4, 1.1, guard_paint, "xy", 0)
+    box(m, a, -3.2, -3.4, -1.7, 3.2, 1.6, 1.7, metal_paint(jade, rivets=True))
+    cross = ascii_mask(["..#..", "#####", "..#..", "..#..", "..#.."])
+    plate(m, a, cross, -2.5, -3.4, 0.5, lambda i, j, f: (col(goldl), col((255, 236, 160), 0.95)), "xy", 1.9)
+    # ---- the grip: dark jade leather, rings of chain, a gold pommel and a white-gold gem
+    box(m, a, -1.5, -17.0, -1.5, 1.5, -3.4, 1.5, wrap_paint((22, 74, 64), (230, 190, 80), diamonds=True))
+    def ring_paint(face, i, j, fw, fh):
+        return col(np.clip(np.array(gold, np.float32) * (1.2 if face == 0 else 0.8 if face == 1 else 1.0) + fz(i * 2, j * 2, 13) * 14, 0, 255)), None
+    for yy in (-5.0, -8.4, -11.8, -15.2):
+        box(m, a, -1.95, yy - 0.55, -1.95, 1.95, yy + 0.55, 1.95, ring_paint)
+    box(m, a, -2.6, -20.4, -2.6, 2.6, -17.0, 2.6, metal_paint(gold, gem=(255, 246, 200), glow_rgb=(255, 236, 160)))
+    box(m, a, -1.5, -22.0, -1.5, 1.5, -20.4, 1.5, metal_paint(gold))
+    for k, (x, y) in enumerate(((3.6, -19.2), (4.5, -21.2), (4.2, -23.4), (3.3, -25.2))):       # the loose end of the chain
+        ex, ez = (0.55, 0.9) if k % 2 == 0 else (0.9, 0.55)
+        box(m, a, x - ex, y - 0.8, -ez, x + ex, y + 0.8, ez, link_paint)
+    return dict(glow=("FFEBB0", 0.1, 0.35, 0.9))
+
+
+SPECS += [("weapon_of_resurgence", weapon_of_resurgence)]
+RELICS += [("magebane_shield", magebane_shield)]                  # upright: placed on its sprite's box like a relic
 
 
 # ================================================================ placement on the old sprite
@@ -1722,6 +2488,23 @@ SIZE = {"otherworld_trident": 1.65, "elsdocia": 2.0}         # 1.2.0: Elsdocia i
 GRIP = {"otherworld_trident": 0.42, "elsdocia": 0.2}
 
 
+# the Club of Rot and the Doom Hammer are two-handed: bigger in hand, held where their grips are (fractions along the sprite axis)
+SIZE.update({"club_of_rot": 1.3, "doom_hammer": 1.25})
+GRIP.update({"club_of_rot": 0.21, "doom_hammer": 0.39})
+
+
+# 1.3.0: weapons at the size they have in real life / in the anime (metres, whole weapon). 1 block = 1 m and the hand scale is 0.85.
+REAL = {
+    "demon_slasher_katana": 1.05, "miasma_infused_katana": 1.05, "bloodbound_katana": 1.05,        # a katana is about a metre
+    "demon_dweller_sword": 1.5, "licht_dweller_sword": 1.5,                                          # the black / white broadswords
+    "demon_destroyer_sword": 1.7, "licht_destroyer_sword": 1.7,                                      # the great ones
+    "magebane_longsword": 1.25, "rimeheart_runeblade": 1.3, "prism_blade": 1.1, "permafrost_sabre": 1.0,
+    "spell_forged_rapier": 1.15, "cyclone_rapier": 1.15,                                             # rapiers
+    "severing_greatsword": 1.8, "thundercleave": 1.6, "elsdocia": 2.3,                              # two-handed greatswords; Elsdocia as in the movie
+    "otherworld_trident": 1.9, "magic_tool_spear": 2.1, "magic_tool_sword": 1.0,
+}
+
+
 def mirror_x(mesh):
     out = []
     for (layer, pts, n) in mesh.quads:
@@ -1746,6 +2529,8 @@ def write(item_id, mesh, atlas, extra, fit=False):
         origin, angle, length = sprite_axis(item_id)
         scale = length / (ymax - ymin)
         k = SIZE.get(item_id, 1.0)
+        if item_id in REAL:                                           # 1.3.0: the length it has in real life (m, blade and hilt), 1 block = 1 m
+            k = REAL[item_id] / (0.85 * length)
         if k != 1.0:                                                  # grow about the grip, not the butt
             d = np.array([math.cos(math.radians(angle)), math.sin(math.radians(angle))])
             origin = origin + d * (GRIP.get(item_id, 0.4) * length) * (1 - k)
@@ -1781,6 +2566,14 @@ def write(item_id, mesh, atlas, extra, fit=False):
     Image.fromarray(np.clip(atlas.img, 0, 255).astype(np.uint8), "RGBA").save(os.path.join(tdir, item_id + ".png"), optimize=True)
     if glow_any:
         Image.fromarray(np.clip(atlas.glow, 0, 255).astype(np.uint8), "RGBA").save(os.path.join(tdir, item_id + "_glow.png"), optimize=True)
+    try:                                                         # 1.3.0: every skin is raised to 512 (Elsdocia 1024), meshes unchanged
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import hires_weapon_textures
+        hires_weapon_textures.process(os.path.join(tdir, item_id + ".png"))
+        if glow_any:
+            hires_weapon_textures.process(os.path.join(tdir, item_id + "_glow.png"))
+    except ImportError:
+        pass
     print(f"{item_id}: {n} quads, length {ymax - ymin:.1f}px, angle {angle:.1f}, glow {bool(glow_any)}")
 
 

@@ -62,19 +62,21 @@ SHIELD = [
     "..OOOOOOOOOOOO..",
     ".ORrrrRRRRrrrRO.",
     ".OrFFFFFFFFFFrO.",
-    ".ORFhFFFFFFhFRO.",
-    ".ORFBFFBBFFBFRO.",
-    ".ORFFBFBBFBFFRO.",
-    ".ORFFBBBBBBFFRO.",
-    ".ORfFFBeeBFFfRO.",
-    "..ORfFFBBFFfRO..",
-    "..ORfFFBBFFfRO..",
-    "...ORffBBffRO...",
-    "....ORfFBFfRO...",
+    ".ORFFhFFFFhFFRO.",
+    ".ORFFFFFFFFFFRO.",
+    ".ORFFFFFFFFFFRO.",
+    ".ORFFFFFFFFFFRO.",
+    "..ORfFFFFFFfRO..",
+    "..ORfFFFFFFfRO..",
+    "...ORfFFFFfRO...",
+    "...ORffFFffRO...",
+    "....ORfFFfRO....",
     ".....ORffRO.....",
-    "......OORO......",
+    "......OROO......",
     ".......OO.......",
 ]
+# the phoenix, left half (x, y); mirrored to the right half across the shield's axis
+PHOENIX_L = [(7, 4), (7, 5), (7, 6), (7, 7), (7, 8), (6, 6), (5, 5), (4, 4), (3, 3), (6, 7), (5, 6), (4, 5), (3, 4), (5, 7), (4, 6), (6, 9), (5, 9), (6, 10), (7, 10), (6, 11), (4, 3)]
 PALETTE = {
     "O": (14, 40, 44),         # outline
     "R": (150, 132, 104),      # rim, worn silver-bronze
@@ -95,6 +97,13 @@ def shield():
         for x, ch in enumerate(row):
             if ch != ".":
                 px[x, y] = rgba(PALETTE[ch])
+    for (x, y) in PHOENIX_L:
+        px[x, y] = rgba(PALETTE["B"])
+        px[S - 1 - x, y] = rgba(PALETTE["B"])
+    for (x, y) in [(7, 4), (8, 4)]:
+        px[x, y] = rgba(PALETTE["e"])                  # the eyes
+    for (x, y) in [(5, 5), (10, 5), (4, 4), (11, 4)]:
+        px[x, y] = rgba((236, 196, 128))                 # feather highlights
     im.save(os.path.join(ICONS, "magebane_shield.png"))
 
 

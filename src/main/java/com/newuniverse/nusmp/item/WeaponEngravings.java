@@ -56,6 +56,12 @@ public final class WeaponEngravings {
             // the two crossbows of the "Magic Item Compendium I" sheet
             Map.entry("bolt_thrower", List.of(e("barrier_piercing", 2), e("severance", 1), e("elemental_boost", 1), e("magic_weapon", 1))), // bolts of force that go through wards and cut cleanly
             Map.entry("crossbow_of_swift_death", List.of(e("severance", 2), e("barrier_piercing", 1), e("enervation", 1), e("soul_eater", 1))), // a quick death: cuts, saps, takes the soul
+            // the Club of Rot and the Doom Hammer of the same sheet
+            Map.entry("club_of_rot", List.of(e("enervation", 2), e("soul_eater", 1), e("crushing", 1), e("energy_steal", 1))),   // rot saps strength and takes the life: a bone club that does not heal clean
+            Map.entry("doom_hammer", List.of(e("crushing", 3), e("severance", 2), e("sturdy", 1), e("barrier_piercing", 1))),   // a coffin-wood haft, a black-iron head: it breaks what it strikes
+            // the Magebane Shield and the Weapon of Resurgence
+            Map.entry("magebane_shield", List.of(e("magic_interference", 1), e("magicule_absorption", 2), e("magic_protection", 1), e("sturdy", 2))),   // made in the Spellplague days to absorb and repel magic
+            Map.entry("weapon_of_resurgence", List.of(e("holy_weapon", 2), e("restoration", 1), e("vitality", 1), e("sturdy", 1))),                       // a paladin's blade: holy, mending, bonded
             // 0.100: the reference-sheet weapons
             Map.entry("quicklings_ivy", List.of(e("swift", 2), e("magic_weapon", 1), e("enervation", 1))),               // living ivy, poisons and slows
             Map.entry("magebane_longsword", List.of(e("magic_interference", 2), e("barrier_piercing", 2), e("magicule_absorption", 1))), // bane of mages

@@ -140,6 +140,12 @@ public final class NUItems {
     // the two crossbows of the "Magic Item Compendium I" sheet (see BoltArts)
     public static final DeferredItem<MagicWeaponItem> BOLT_THROWER = weapon("bolt_thrower", MagicWeaponItem.Kind.BOLT_THROWER);
     public static final DeferredItem<MagicWeaponItem> CROSSBOW_OF_SWIFT_DEATH = weapon("crossbow_of_swift_death", MagicWeaponItem.Kind.CROSSBOW_OF_SWIFT_DEATH);
+    // the Club of Rot and the Doom Hammer of the same sheet (see RotDoomArts)
+    public static final DeferredItem<MagicWeaponItem> CLUB_OF_ROT = weapon("club_of_rot", MagicWeaponItem.Kind.CLUB_OF_ROT);
+    public static final DeferredItem<MagicWeaponItem> DOOM_HAMMER = weapon("doom_hammer", MagicWeaponItem.Kind.DOOM_HAMMER);
+    // the Magebane Shield (off-hand shield) and the Weapon of Resurgence of the paladin sheet (see MagebaneShieldArts, ResurgenceArts)
+    public static final DeferredItem<MagicWeaponItem> MAGEBANE_SHIELD = weapon("magebane_shield", MagicWeaponItem.Kind.MAGEBANE_SHIELD);
+    public static final DeferredItem<MagicWeaponItem> WEAPON_OF_RESURGENCE = weapon("weapon_of_resurgence", MagicWeaponItem.Kind.WEAPON_OF_RESURGENCE);
 
     // 0.44: Painting Magic's palette & brush (manifested by a Painting grimoire; see book.PaintStudio)
     public static final DeferredItem<PaintToolItem> PAINT_BRUSH = ITEMS.register("paint_brush", () -> new PaintToolItem(PaintToolItem.Kind.BRUSH));
@@ -165,6 +171,8 @@ public final class NUItems {
         l.addAll(List.of(BARD_RELIC, RIVEN_SPAWN_EGG));                                         // 0.92
         l.addAll(List.of(QUICKLINGS_IVY, MAGEBANE_LONGSWORD, PRISM_BLADE, THUNDERCLEAVE, BLOODBOUND_KATANA, PERMAFROST_SABRE, CYCLONE_RAPIER, STORY_PAGE, GALE_FEATHER));   // 0.100
         l.addAll(List.of(BOLT_THROWER, CROSSBOW_OF_SWIFT_DEATH));                                // the two crossbows
+        l.addAll(List.of(CLUB_OF_ROT, DOOM_HAMMER));                                             // the Club of Rot and the Doom Hammer
+        l.addAll(List.of(MAGEBANE_SHIELD, WEAPON_OF_RESURGENCE));                                // the Magebane Shield and the Weapon of Resurgence
         l.add(MAGIC_KEY);
         return l;
     }

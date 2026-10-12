@@ -167,7 +167,9 @@ public class CodexScreen extends Screen {
         int x = innerX(), y = innerY(), w = innerW(), h = innerH(), spine = x + w / 2;
         CodexPage cur = pages().get(index);
         if (flipAge < 0f) {
+            g.enableScissor(x - 4, y, x + w + 4, y + h);                       // long pages are clipped to the paper, never drawn over the frame
             cur.render(ctx, g, x, y, w, h, Math.round(scrollCur), mx, my, now);
+            g.disableScissor();
             drawScrollbar(g, x + w + 6, y, h);
         } else {
             float t = Mth.clamp((flipAge + partial) / FLIP_TICKS, 0f, 1f);

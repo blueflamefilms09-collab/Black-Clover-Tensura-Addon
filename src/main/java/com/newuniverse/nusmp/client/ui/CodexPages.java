@@ -232,9 +232,9 @@ public final class CodexPages {
                 List<String> lines = new ArrayList<>();
                 try {
                     List<Component> tip = st.getTooltipLines(Item.TooltipContext.of(ctx.mc.level), ctx.mc.player, TooltipFlag.NORMAL);
-                    for (int k = 1; k < tip.size() && lines.size() < 6; k++) {
+                    for (int k = 1; k < tip.size() && lines.size() < 40; k++) {
                         String t = tip.get(k).getString();
-                        if (!t.isBlank()) lines.add(t);
+                        if (!t.isBlank()) lines.add(t.stripTrailing());
                     }
                 } catch (Throwable ignored) {}
                 entries.add(new Entry(st, st.getHoverName().getString(), lines));
@@ -243,7 +243,7 @@ public final class CodexPages {
 
         private int entryHeight(CodexContext ctx, Entry e, int cw) {
             int hgt = 22;
-            for (String l : e.lines()) hgt += UiDraw.wrappedHeight(ctx.font(), l, cw - 8);
+            for (String l : e.lines()) hgt += UiDraw.wrappedHeight(ctx.font(), l.strip(), cw - 8 - (l.startsWith(" ") ? 8 : 0));
             return hgt + 8;
         }
 
@@ -265,12 +265,15 @@ public final class CodexPages {
                 int col = i % 2, bx = col == 0 ? x : x + w / 2 + 8;
                 Entry e = entries.get(i);
                 int top = cy[col];
-                if (top + 200 > y && top < y + h) {                            // only what is on the page is drawn
+                if (top + entryHeight(ctx, e, cw) > y && top < y + h) {                            // only what is on the page is drawn
                     g.renderItem(e.stack(), bx, top);
                     g.drawString(font, font.plainSubstrByWidth(e.name(), cw - 26), bx + 20, top + 4, UiDraw.GOLD_INK, false);
                     g.hLine(bx, bx + cw - 6, top + 18, UiDraw.RULE);
                     int ly = top + 22;
-                    for (String l : e.lines()) ly = UiDraw.wrapped(g, font, l, bx + 2, ly, cw - 12, UiDraw.INK);
+                    for (String l : e.lines()) {
+                        int in = l.startsWith(" ") ? 8 : 0;                    // the tooltip's indented lines stay indented, wrapped under themselves
+                        ly = UiDraw.wrapped(g, font, l.strip(), bx + 2 + in, ly, cw - 12 - in, in > 0 ? UiDraw.INK_DIM : UiDraw.INK);
+                    }
                 }
                 cy[col] += entryHeight(ctx, e, cw);
             }

@@ -68,7 +68,13 @@ public class MagicWeaponItem extends SwordItem {
         CYCLONE_RAPIER(Tiers.DIAMOND, 2, -1.6f, "Cyclone Thrust", "Spin through up to 5 blocks, flinging foes into the air. With the Permafrost Sabre in the other hand: Boreal Fusion.", 160, false),
         // the two crossbows of the "Magic Item Compendium I" sheet (logic in BoltArts, reached through ReferenceWeapons)
         BOLT_THROWER(Tiers.DIAMOND, 1, -2.0f, "Force Bolt", "Looses a bolt of pure force up to 48 blocks: no ammunition, and armour does not turn it. Every bolt leaves a Thrower's Mark on the foe.", 24, false),
-        CROSSBOW_OF_SWIFT_DEATH(Tiers.DIAMOND, 2, -2.2f, "Notched Bolt", "Looses a bolt that may crit, likelier the more wounded the foe. A crit is Swift Death: it executes a foe under 15% health and frightens the rest.", 40, false);
+        CROSSBOW_OF_SWIFT_DEATH(Tiers.DIAMOND, 2, -2.2f, "Notched Bolt", "Looses a bolt that may crit, likelier the more wounded the foe. A crit is Swift Death: it executes a foe under 15% health and frightens the rest.", 40, false),
+        // the Club of Rot and the Doom Hammer of the same sheet (logic in RotDoomArts, reached through ReferenceWeapons)
+        CLUB_OF_ROT(Tiers.DIAMOND, 6, -3.0f, "Putrid Slam", "A green shockwave rots everything within 5 blocks (two Rot stacks) and withers the plants and crops under it. Every hit inflicts Rot: Poison, Weakness and a rotting maximum health, spreading to nearby foes.", 180, false),
+        DOOM_HAMMER(Tiers.NETHERITE, 8, -3.3f, "Doom Slam", "Leap and slam down: a ring of cracks and a shockwave 6 blocks wide throws foes up and stuns them briefly (bosses are only staggered). Used in mid-air it dives instead, and the longer the fall the harder it lands.", 240, false),
+        // the Magebane Shield and the Weapon of Resurgence (logic in MagebaneShieldArts / ResurgenceArts, reached through ReferenceWeapons)
+        MAGEBANE_SHIELD(Tiers.IRON, 0, -2.4f, "Spellbreak Parry", "Raises the shield for 2 s: projectiles are turned back at their caster, spell bolts are erased and returned, and magic or missile damage is cancelled and thrown back. Held in either hand, magic damage you take is cut by a third.", 360, false),
+        WEAPON_OF_RESURGENCE(Tiers.DIAMOND, 3, -2.4f, "Resurgent Smite", "A radiant burst 7 blocks wide mends you and your allies (more the fuller your Lay on Hands pool) and cleanses an affliction; undead and demons are burned, everyone else is dazzled. Every hit mends you and a wounded ally.", 220, false);
 
         final Tier tier; final int damage; final float speed; final String ability, desc; final int cooldown; final boolean demon;
         Kind(Tier t, int d, float s, String a, String desc, int cd, boolean demon) {
@@ -435,6 +441,9 @@ public class MagicWeaponItem extends SwordItem {
         if (kind == Kind.BLOODBOUND_KATANA) tip.add(Component.literal("  Blood Charges: " + ReferenceWeapons.blood(stack) + "/" + ReferenceWeapons.BLOOD_MAX).withStyle(ChatFormatting.DARK_RED));
         if (kind == Kind.PERMAFROST_SABRE || kind == Kind.CYCLONE_RAPIER) tip.add(Component.literal("  The Boreal Blades: hold both, one in each hand, for Boreal Fusion").withStyle(ChatFormatting.AQUA));
         if (BoltArts.isBolt(kind)) BoltArts.tooltip(stack, kind, tip);                  // the two crossbows
+        if (RotDoomArts.isMine(kind)) RotDoomArts.tooltip(stack, kind, tip);            // the Club of Rot and the Doom Hammer
+        if (kind == Kind.MAGEBANE_SHIELD) MagebaneShieldArts.tooltip(tip);               // the Magebane Shield
+        if (kind == Kind.WEAPON_OF_RESURGENCE) ResurgenceArts.tooltip(stack, ctx, tip);  // the Weapon of Resurgence
         if (kind == Kind.RIMEHEART) tip.add(Component.literal("  Off-hand magic sword: burst recharges 40% faster, hits freeze longer").withStyle(ChatFormatting.AQUA));
         if (kind == Kind.DEMON_DWELLER) {
             int charge = d == null ? 0 : Math.min(5, d.copyTag().getInt("DwellerCharge"));

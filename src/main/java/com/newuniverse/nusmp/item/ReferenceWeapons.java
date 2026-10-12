@@ -47,6 +47,8 @@ final class ReferenceWeapons {
         return switch (k) {
             case QUICKLINGS_IVY, MAGEBANE_LONGSWORD, PRISM_BLADE, THUNDERCLEAVE, BLOODBOUND_KATANA, PERMAFROST_SABRE, CYCLONE_RAPIER -> true;
             case BOLT_THROWER, CROSSBOW_OF_SWIFT_DEATH -> true;                                          // the two crossbows (BoltArts)
+            case CLUB_OF_ROT, DOOM_HAMMER -> true;                                                       // the Club of Rot and the Doom Hammer (RotDoomArts)
+            case MAGEBANE_SHIELD, WEAPON_OF_RESURGENCE -> true;                                          // the Magebane Shield and the Weapon of Resurgence
             default -> false;
         };
     }
@@ -98,6 +100,7 @@ final class ReferenceWeapons {
                     Nullification.interfere(t, 4, 0.5f, 0.2f);
                 }
                 p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 100, 0));
+                MagebaneShieldArts.pairedSurge(p);                                                  // the Magebane Shield in the other hand answers with a parry
                 VfxSpawn.send(sl, VfxShape.ANTI_MAGIC_SLASH, eye, eye.add(look.scale(6)), 0xFF2FB6AE, 16, 1.6f);
             }
             case PRISM_BLADE -> {
@@ -170,6 +173,9 @@ final class ReferenceWeapons {
                 VfxSpawn.send(sl, VfxShape.WIND_RING, from, from.add(0, 1, 0), 0xFF78F5E8, 16, 1.4f);
             }
             case BOLT_THROWER, CROSSBOW_OF_SWIFT_DEATH -> { return BoltArts.technique(p, k, stack); }
+            case CLUB_OF_ROT, DOOM_HAMMER -> { return RotDoomArts.technique(p, k, stack); }
+            case MAGEBANE_SHIELD -> { return MagebaneShieldArts.technique(p, stack); }
+            case WEAPON_OF_RESURGENCE -> { return ResurgenceArts.technique(p, stack); }
             default -> { return false; }
         }
         return true;
@@ -186,6 +192,9 @@ final class ReferenceWeapons {
             case PERMAFROST_SABRE -> new WeaponArts.Alt("Permafrost Sweep", "A frozen crescent cut 10 blocks long: foes are chilled and slowed. With the Cyclone Rapier in the other hand it becomes a glacial gale.", 800);
             case CYCLONE_RAPIER -> new WeaponArts.Alt("Gale Lance", "A cone of cyclone wind 10 blocks long hurls foes back. With the Permafrost Sabre in the other hand the gale carries frost.", 800);
             case BOLT_THROWER, CROSSBOW_OF_SWIFT_DEATH -> BoltArts.alt(k);
+            case CLUB_OF_ROT, DOOM_HAMMER -> RotDoomArts.alt(k);
+            case MAGEBANE_SHIELD -> MagebaneShieldArts.ALT;
+            case WEAPON_OF_RESURGENCE -> ResurgenceArts.ALT;
             default -> null;
         };
     }
@@ -294,6 +303,9 @@ final class ReferenceWeapons {
                 VfxSpawn.send(sl, VfxShape.WIND_GALE, eye, end, 0xFF78F5E8, 18, 2f);
             }
             case BOLT_THROWER, CROSSBOW_OF_SWIFT_DEATH -> { return BoltArts.cast(p, k, stack); }
+            case CLUB_OF_ROT, DOOM_HAMMER -> { return RotDoomArts.cast(p, k, stack); }
+            case MAGEBANE_SHIELD -> { return MagebaneShieldArts.cast(p); }
+            case WEAPON_OF_RESURGENCE -> { return ResurgenceArts.cast(p); }
             default -> { return false; }
         }
         return true;
@@ -335,6 +347,9 @@ final class ReferenceWeapons {
                 if (fusion(p)) t.setDeltaMovement(t.getDeltaMovement().add(0, 0.35, 0));
             }
             case BOLT_THROWER, CROSSBOW_OF_SWIFT_DEATH -> BoltArts.onHit(p, stack, t, k);
+            case CLUB_OF_ROT, DOOM_HAMMER -> RotDoomArts.onHit(p, stack, t, k);
+            case MAGEBANE_SHIELD -> MagebaneShieldArts.onHit(p, t);
+            case WEAPON_OF_RESURGENCE -> ResurgenceArts.onHit(p, stack, t);
             default -> { }
         }
     }
@@ -376,6 +391,9 @@ final class ReferenceWeapons {
                 t.hurtMarked = true;
             }
             case BOLT_THROWER, CROSSBOW_OF_SWIFT_DEATH -> BoltArts.fullSwing(p, t, k);
+            case CLUB_OF_ROT, DOOM_HAMMER -> RotDoomArts.fullSwing(p, t, k);
+            case MAGEBANE_SHIELD -> MagebaneShieldArts.fullSwing(p, t);
+            case WEAPON_OF_RESURGENCE -> ResurgenceArts.fullSwing(p, t);
             default -> { }
         }
     }
