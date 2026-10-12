@@ -188,6 +188,9 @@ public final class NUSkills {
     /** Anti-Magic Spirit Lord: awakened by mastering the Anti-Magic grimoire (or /nusmp grimoire awaken_anti). */
     public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.antimagic.AntiMagicLordSkill> ANTI_MAGIC_LORD =
             SKILLS.register("anti_magic_spirit_lord", () -> new com.newuniverse.nusmp.antimagic.AntiMagicLordSkill());
+    /** 1.6.0: the Wizard King's own skill (only the holder of the crown has it; multiverse.WizardKing). */
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.multiverse.WizardKingSkill> WIZARD_KING =
+            SKILLS.register("wizard_king", () -> new com.newuniverse.nusmp.multiverse.WizardKingSkill());
     /** Spirit Lord (Unique): the non-grimoire path (multiverse.SpiritLordSkill). */
     public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.multiverse.SpiritLordSkill> SPIRIT_LORD =
             SKILLS.register("spirit_lord", () -> new com.newuniverse.nusmp.multiverse.SpiritLordSkill());

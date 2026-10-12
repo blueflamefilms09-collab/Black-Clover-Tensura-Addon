@@ -41,7 +41,7 @@ public final class MultiverseConfig {
     public static final ModConfigSpec.DoubleValue SPIRIT_PHYSICAL_REDUCTION;
     public static final ModConfigSpec.BooleanValue SPIRIT_FALL_IMMUNE;
     public static final ModConfigSpec.BooleanValue LETHAL_EXHAUSTION, CHOOSE_MAGIC, WIZARD_MODE, SUMMONS_NEED_BOTH;
-    public static final ModConfigSpec.IntValue SUMMONS_MIN_LEVEL, SUMMONS_MIN_MINUTES;
+    public static final ModConfigSpec.IntValue SUMMONS_MIN_LEVEL, SUMMONS_MIN_MINUTES, WK_MIN_STARS;
     public static final ModConfigSpec.DoubleValue DUAL_ATTRIBUTE_CHANCE;
 
     static {
@@ -138,6 +138,7 @@ public final class MultiverseConfig {
         SUMMONS_MIN_LEVEL = b.comment("Experience levels that earn the summons (0 = ignore levels).").defineInRange("minLevel", 5, 0, 1000);
         SUMMONS_MIN_MINUTES = b.comment("Minutes of play time (the mage's age) that earn the summons (0 = ignore age).").defineInRange("minMinutes", 30, 0, 100000);
         SUMMONS_NEED_BOTH = b.comment("true = both the level and the age are needed; false = either one is enough. With both set to 0 the summons comes at once.").define("needBoth", false);
+        WK_MIN_STARS = b.comment("Net stars a Grand Magic Knight needs to stand for the Wizard King's crown (one holder on the server; more stars than the holder takes it).").defineInRange("wizardKingMinStars", 100, 0, 100000);
         DUAL_ATTRIBUTE_CHANCE = b.comment("When two magic attributes are nearly tied in the questionnaire, the chance the mage gets both (a second grimoire).").defineInRange("dualAttributeChance", 0.5, 0.0, 1.0);
         b.pop();
         SPEC = b.build();

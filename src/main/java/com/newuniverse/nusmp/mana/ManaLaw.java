@@ -94,7 +94,8 @@ public final class ManaLaw {
         int number = 9 - Mth.clamp(Math.round(step * 9f / 16f), 0, 9);
         CompoundTag d = data(p);
         boolean arcane = d.getBoolean("Arcane") || d.getBoolean("Pact") || AntiMagic.isUser(p);   // magic that defies what magic can do
-        return new Stage(number, arcane, d.getBoolean("Saint"));
+        boolean king = com.newuniverse.nusmp.multiverse.WizardKing.isKing(p);       // the crown is a Saint Stage awakening
+        return new Stage(number, arcane || king, d.getBoolean("Saint") || king);
     }
 
     public static void setArcane(Player p, boolean v) { data(p).putBoolean("Arcane", v); }
@@ -104,7 +105,7 @@ public final class ManaLaw {
     // ---------------------------------------------------------------- the numbers every spell passes through
     /** Multiplies a grimoire spell's mana cost. */
     public static double costMult(ServerPlayer p) {
-        double c = stage(p).cost() * affinity(p).cost * Heritage.costMult(p);
+        double c = stage(p).cost() * affinity(p).cost * Heritage.costMult(p) * (com.newuniverse.nusmp.multiverse.WizardKing.isKing(p) ? 0.8 : 1.0);
         if (zoneActive(p)) c *= 0.8;
         if (negativeActive(p)) c *= 0.7;
         return c;
@@ -116,7 +117,7 @@ public final class ManaLaw {
     /** Multiplies the damage of a spell. */
     public static double powerMult(LivingEntity e) {
         if (!(e instanceof ServerPlayer p)) return 1.0;
-        double m = stage(p).power() * Heritage.powerMult(p);
+        double m = stage(p).power() * Heritage.powerMult(p) * (com.newuniverse.nusmp.multiverse.WizardKing.isKing(p) ? 1.25 : 1.0);
         if (zoneActive(p)) m *= 1.0 + 0.2 * Math.min(2.0, density(p.level(), p.blockPosition()));
         if (negativeActive(p)) m *= 1.6;
         return m;
@@ -140,6 +141,15 @@ public final class ManaLaw {
 
     // ---------------------------------------------------------------- Mana Zone
     public static boolean zoneActive(Player p) { return p.level().getGameTime() < data(p).getLong("ZoneUntil"); }
+
+    /** A Mana Zone that costs nothing (the Wizard King's Crown of Mana). */
+    public static void forceZone(ServerPlayer p, int ticks) {
+        ServerLevel sl = p.serverLevel();
+        data(p).putLong("ZoneUntil", sl.getGameTime() + ticks);
+        VfxSpawn.sendFollowing(sl, VfxShape.MAGIC_CIRCLE, p, p.position().add(0, 0.08, 0), 0xFFFFD86B, Math.min(200, ticks), 3.2f);
+        sl.playSound(null, p.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.4f, 1.2f);
+        p.displayClientMessage(Component.literal("Crown of Mana: the mana of the whole land answers you.").withStyle(ChatFormatting.GOLD), true);
+    }
 
     /** The Mana Zone page: tap all the mana around you for half a minute. Toggles. */
     public static boolean toggleZone(ServerPlayer p) {
@@ -246,7 +256,7 @@ public final class ManaLaw {
     /** Spending your mana to nothing: the shock, then the collapse. Mana is life force. */
     public static void exhaust(ServerPlayer p) {
         var ex = TensuraStorages.getExistenceFrom(p);
-        if (ex == null || p.isCreative()) return;
+        if (ex == null || p.isCreative() || com.newuniverse.nusmp.multiverse.WizardKing.isKing(p)) return;        // the Wizard King never collapses
         double frac = ex.getMagicule() / Math.max(1.0, EnergyHelper.getMaxMagicule(p));
         if (frac < 0.05) {
             p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 1));
@@ -278,16 +288,21 @@ public final class ManaLaw {
         ServerLevel sl = p.serverLevel();
         CompoundTag d = data(p);
         long now = sl.getGameTime();
+        if (com.newuniverse.nusmp.multiverse.WizardKing.isKing(p)) {                      // the awakening: mana and life return by themselves
+            var kx = TensuraStorages.getExistenceFrom(p);
+            if (kx != null) { kx.setMagicule(Math.min(EnergyHelper.getMaxMagicule(p), kx.getMagicule() + EnergyHelper.getMaxMagicule(p) * 0.015)); kx.markDirty(); }
+            if (p.getHealth() < p.getMaxHealth()) p.heal(0.5f);
+        }
         // Mana Zone: it drinks a little mana a second; its owner flies light on the mana around them
         if (now < d.getLong("ZoneUntil")) {
             var ex = TensuraStorages.getExistenceFrom(p);
             if (ex != null && !p.isCreative()) {
                 double max = EnergyHelper.getMaxMagicule(p);
-                if (ex.getMagicule() < max * 0.05) {
+                if (ex.getMagicule() < max * 0.05 && !com.newuniverse.nusmp.multiverse.WizardKing.isKing(p)) {
                     d.putLong("ZoneUntil", 0);
                     p.displayClientMessage(Component.literal("The Mana Zone collapses: you have no mana left to hold it.").withStyle(ChatFormatting.GRAY), true);
                     collapse(p);
-                } else {
+                } else if (!com.newuniverse.nusmp.multiverse.WizardKing.isKing(p)) {
                     ex.setMagicule(ex.getMagicule() - max * 0.012 / Math.max(1.0, density(sl, p.blockPosition())));
                     ex.markDirty();
                 }

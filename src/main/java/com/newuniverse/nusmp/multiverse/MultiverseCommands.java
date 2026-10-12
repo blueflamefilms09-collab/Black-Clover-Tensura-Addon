@@ -394,6 +394,21 @@ public final class MultiverseCommands {
                     p.serverLevel().addFreshEntity(w);
                     return ok(ctx, "The Tower Wizard appears.");
                 })));
+        root.then(Commands.literal("wizardking")                                                           // 1.6.0: the one-holder title
+                .then(Commands.literal("info").executes(ctx -> {
+                    var s = ctx.getSource().getServer();
+                    return ok(ctx, WizardKing.holder(s).isPresent() ? "The Wizard King is " + WizardKing.holderName(s) + "." : "The crown is vacant.");
+                }))
+                .then(Commands.literal("claim").executes(ctx -> {
+                    String why = WizardKing.claim(ctx.getSource().getPlayerOrException());
+                    return why == null ? 1 : fail(ctx, why);
+                }))
+                .then(Commands.literal("appoint").requires(MultiverseCommands::admin).then(Commands.argument("player", EntityArgument.player()).executes(ctx -> {
+                    ServerPlayer p = EntityArgument.getPlayer(ctx, "player");
+                    WizardKing.appoint(ctx.getSource().getServer(), p);
+                    return 1;
+                })))
+                .then(Commands.literal("dethrone").requires(MultiverseCommands::admin).executes(ctx -> { WizardKing.dethrone(ctx.getSource().getServer()); return 1; })));
         root.then(com.newuniverse.nusmp.mana.ManaCommands.build());                                           // 1.5.0: the mana system
         root.then(Commands.literal("choose").then(Commands.argument("magic", StringArgumentType.word()).executes(ctx -> {    // 1.5.0: the ceremony's choice
             ServerPlayer p = ctx.getSource().getPlayerOrException();

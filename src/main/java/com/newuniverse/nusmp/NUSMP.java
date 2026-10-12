@@ -93,6 +93,7 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.MasteryPages::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.Squads::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.wizard.WizardSystem::onPlayerTick);              // 1.6.0: the summons
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.WizardKing::onPlayerTick);            // 1.6.0: one Wizard King
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.mana.Heritage::onPlayerTick);                   // 1.6.0: kingdom, blood, stage buffs
         modEventBus.addListener(com.newuniverse.nusmp.wizard.WizardNet::registerPayloads);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.mana.ManaLaw::onPlayerTick);                    // 1.5.0: mana zone, corruption

@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.7.0] — The Wizard King: one holder, an awakening of its own, its own skill
+
+**State:** written without a compiler in the session; CI is the first compile. Nothing run in game.
+
+### New
+- **The Wizard King is a title only one player on the server can hold** (`multiverse/WizardKing.java`, saved with the world). Take the crown with `/multiverse wizardking claim` (a Grand Magic Knight with at least `wizard.wizardKingMinStars` net stars, default 100, and more net stars than the holder), or an admin `appoint` / `dethrone`s. Setting the rank to Wizard King any other way goes through the crown, so there can never be two. Losing it (also while offline) takes everything back.
+- **It counts as an awakening, a third path beside a true hero and a demon lord (you cannot choose those: the crown is its own).** The holder gets the same *kind* of power an awakening gives: +20 max health, +4 armor, +2 toughness, +15% attack, +10% speed, +0.3 knockback resistance, +2 luck; Saint Stage casting (spells 20% cheaper and 25% stronger on top); mana that refills itself (1.5% a second) and life that mends; and no black-out from spent mana. Tensura's own EP and its hero / demon lord awakening are not touched (no safe API for it): the crown's power is this mod's own, on top of the Tensura stats.
+- **The Wizard King's skill** (Unique; only the holder has it; mode key cycles): *Sovereign Decree* (16 blocks: foes slowed, weakened and lit up, allies resistant and regenerating), *Crown of Mana* (a free Mana Zone for 60 s), *Sovereign Strike* (a 40-block piercing bolt), *Royal Guard* (8 s of immunity to spells, plus absorption), *Return to the Capital* (home at once, 5 minutes). Passive: all damage -10%.
+- `/multiverse wizardking info|claim|appoint|dethrone`.
+
 ## [1.6.0] — The Tower Wizard: a summons, a questionnaire, a grimoire that floats to you; kingdom and blood buffs and debuffs
 
 **State:** written without a compiler in the session; CI is the first compile. Nothing run in game. Details: `docs/mana_system.md`.

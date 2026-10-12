@@ -46,6 +46,7 @@ public final class MultiverseProfile {
     public static String describeRank(Player p) { return KnightRank.describe(rank(p), rankClass(p)); }
 
     public static void setRank(ServerPlayer p, KnightRank rank, int cls) {
+        if (rank == KnightRank.WIZARD_KING && !WizardKing.appointing) { WizardKing.appoint(p.getServer(), p); return; }   // 1.6.0: one Wizard King on the server
         CompoundTag t = read(p);
         int before = KnightRank.step(rank(p), rankClass(p));
         t.putString("Rank", rank.name());
@@ -74,6 +75,7 @@ public final class MultiverseProfile {
                 .withStyle(amount > 0 ? ChatFormatting.GOLD : ChatFormatting.DARK_GRAY), true);
         Squads.onStarsChanged(p);
         if (amount > 0) MasteryPages.onMissionStars(p, amount);
+        WizardKing.onStars(p);
         autoPromote(p);
     }
 

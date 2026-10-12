@@ -126,6 +126,12 @@ public final class Heritage {
         return l;
     }
 
+    /** The Wizard King's awakening: a leap in body, the way a true hero's or a demon lord's awakening is. */
+    private static List<Mod> crownMods() {
+        return List.of(add(Attributes.MAX_HEALTH, 20), add(Attributes.ARMOR, 4), add(Attributes.ARMOR_TOUGHNESS, 2), pct(Attributes.ATTACK_DAMAGE, 0.15),
+                pct(Attributes.MOVEMENT_SPEED, 0.10), add(Attributes.KNOCKBACK_RESISTANCE, 0.3), add(Attributes.LUCK, 2));
+    }
+
     private static final List<Holder<Attribute>> TOUCHED = List.of(Attributes.MAX_HEALTH, Attributes.ATTACK_DAMAGE, Attributes.ARMOR, Attributes.LUCK,
             Attributes.MOVEMENT_SPEED, Attributes.ARMOR_TOUGHNESS, Attributes.KNOCKBACK_RESISTANCE, Attributes.WATER_MOVEMENT_EFFICIENCY);
 
@@ -142,23 +148,24 @@ public final class Heritage {
         Kingdom k = kingdom(p);
         Race b = blood(p);
         ManaLaw.Stage st = ManaLaw.stage(p);
-        String sig = (k == null ? "-" : k.name()) + "|" + (b == null ? "-" : b.name()) + "|" + st.label();
+        String sig = (k == null ? "-" : k.name()) + "|" + (b == null ? "-" : b.name()) + "|" + st.label() + (com.newuniverse.nusmp.multiverse.WizardKing.isKing(p) ? "|WK" : "");
         AttributeInstance marker = p.getAttribute(Attributes.MOVEMENT_SPEED);
         boolean present = marker != null && marker.hasModifier(MARKER);
         if (present && sig.equals(data(p).getString("Applied"))) return;
         for (Holder<Attribute> a : TOUCHED) {
             AttributeInstance inst = p.getAttribute(a);
             if (inst == null) continue;
-            for (int i = 0; i < 12; i++) inst.removeModifier(id(i));
+            for (int i = 0; i < 24; i++) inst.removeModifier(id(i));
         }
         List<Mod> all = new ArrayList<>();
         if (k != null) all.addAll(kingdomMods(k));
         if (b != null) all.addAll(bloodMods(b));
         all.addAll(stageMods(st));
+        if (com.newuniverse.nusmp.multiverse.WizardKing.isKing(p)) all.addAll(crownMods());
         int n = 0;
         for (Mod m : all) {
             AttributeInstance inst = p.getAttribute(m.attr());
-            if (inst != null && n < 12) inst.addTransientModifier(new AttributeModifier(id(n++), m.amount(), m.op()));
+            if (inst != null && n < 24) inst.addTransientModifier(new AttributeModifier(id(n++), m.amount(), m.op()));
         }
         if (marker != null) { marker.removeModifier(MARKER); marker.addTransientModifier(new AttributeModifier(MARKER, 0, Operation.ADD_VALUE)); }
         data(p).putString("Applied", sig);
