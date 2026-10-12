@@ -74,6 +74,7 @@ _PP_RUBY_L = (255, 138, 150)
 _PP_GOLD = (210, 154, 52)
 _PP_LIGHT = np.array((-0.45, 0.62, 0.65))
 _PP_LIGHT = _PP_LIGHT / np.linalg.norm(_PP_LIGHT)
+_PP_TILT = math.radians(22)                                                          # the stone leans to the upper right (image rows run down)
 
 
 def _pp_gem_paint(base=_PP_RUBY, dark=_PP_RUBY_D, light=_PP_RUBY_L, glow_rgb=(255, 52, 84), glow_a=0.5):
@@ -110,11 +111,11 @@ def _pp_brooch_frame(m, a):
         ang = 2 * math.pi * k / 12 + 0.26
         px_, py_ = cx + math.cos(ang) * 9.0 * 0.96, cy + math.sin(ang) * 8.5 * 0.96
         outer |= np.hypot(xx - px_, yy - py_) <= 1.55
-    hole = _pp_mask_ellipse(W, H, cx, cy, 5.5, 6.6, math.radians(-22))
+    hole = _pp_mask_ellipse(W, H, cx, cy, 5.5, 6.6, _PP_TILT)
     ring = outer & ~hole
     up, down, left, right = _pp_edge(ring)
     # the collar: frame pixels beside the hole are the sockets of the teeth
-    hole_big = _pp_mask_ellipse(W, H, cx, cy, 6.6, 7.7, math.radians(-22))
+    hole_big = _pp_mask_ellipse(W, H, cx, cy, 6.6, 7.7, _PP_TILT)
     collar = ring & hole_big
 
     def paint(i, j, front):
@@ -172,18 +173,17 @@ def brooch_pin(m, a):
     # ---- the brooch
     cx, cy = _pp_brooch_frame(m, a)
     ox, oy = -9.5 + cx, -17.5 + (18 - cy)                                            # the centre of the frame in model units
-    tilt = math.radians(-22)
+    tilt = -_PP_TILT                                                                 # the same lean in model space (y up)
     # the ruby: a faceted cabochon domed out of both faces of the frame, glowing
-    _pp_dome(m, a, (ox, oy, 0.9), 5.9, 7.0, 3.5, -tilt, 12, 4, _pp_gem_paint(glow_a=0.6), sign=1)
-    _pp_dome(m, a, (ox, oy, -0.9), 5.9, 7.0, 2.6, -tilt, 12, 3, _pp_gem_paint(glow_a=0.45), sign=-1)
+    _pp_dome(m, a, (ox, oy, 0.9), 5.9, 7.0, 3.5, tilt, 12, 4, _pp_gem_paint(glow_a=0.6), sign=1)
+    _pp_dome(m, a, (ox, oy, -0.9), 5.9, 7.0, 2.6, tilt, 12, 3, _pp_gem_paint(glow_a=0.45), sign=-1)
     # the teeth of the collar standing up out of the frame's face, round the stone
     for k in range(16):
         ang = 2 * math.pi * k / 16
-        ex, ey = 6.5 * math.cos(ang), 7.6 * math.sin(ang)
-        px_, py_ = ex * math.cos(-tilt) - ey * math.sin(-tilt), ex * math.sin(-tilt) + ey * math.cos(-tilt)
-        for s in (1, -1):
-            box(m, a, ox + px_ - 0.45, oy + py_ - 0.45, 0.9 * s - (0.0 if s > 0 else 0.9), ox + px_ + 0.45, oy + py_ + 0.45, 0.9 * s + (0.9 if s > 0 else 0.0),
-                _pp_gold_box((250, 240, 214), salt=k))
+        ex, ey = 6.1 * math.cos(ang), 7.2 * math.sin(ang)
+        px_, py_ = ex * math.cos(tilt) - ey * math.sin(tilt), ex * math.sin(tilt) + ey * math.cos(tilt)
+        for (z0, z1) in ((0.9, 1.9), (-1.9, -0.9)):
+            box(m, a, ox + px_ - 0.45, oy + py_ - 0.45, z0, ox + px_ + 0.45, oy + py_ + 0.45, z1, _pp_gold_box((250, 240, 214), salt=k))
     # the hinge barrel at the lower left and the catch at the lower right
     box(m, a, -10.8, -17.2, -1.0, -8.0, -14.2, 1.0, _pp_gold_box((224, 170, 64), rivets=True, salt=7))
     box(m, a, 7.6, -17.0, -0.9, 10.2, -14.6, 0.9, _pp_gold_box((196, 142, 46), salt=8))
@@ -191,23 +191,13 @@ def brooch_pin(m, a):
     box(m, a, -2.5, -20.2, -1.7, 2.5, -17.4, 1.7, _pp_gold_box(rivets=True, salt=9))
     box(m, a, -1.4, -28.6, -1.4, 1.4, -20.2, 1.4, wrap_paint((98, 24, 36), (226, 172, 62), diamonds=True))
     box(m, a, -2.6, -31.0, -2.1, 2.6, -28.6, 2.1, _pp_gold_box((230, 178, 66), salt=10))
-    _pp_dome(m, a, (0.0, -31.0, 0.0), 2.0, 2.0, 2.0, 0.0, 8, 3, _pp_gem_paint(glow_a=0.7), sign=1)
+    _pp_dome(m, a, (0.0, -29.8, 2.0), 1.9, 1.9, 1.6, 0.0, 8, 3, _pp_gem_paint(glow_a=0.7), sign=1)
+    _pp_dome(m, a, (0.0, -29.8, -2.0), 1.9, 1.9, 1.6, 0.0, 8, 3, _pp_gem_paint(glow_a=0.7), sign=-1)
     return dict(glow=("FF3358", 0.1, 0.4, 1.0))
 
 
 # ================================================================ the Hand of Providence
 _PP_BLUE = (62, 148, 232)
-
-
-def _pp_gold_plate(base=(222, 168, 60), grooves=(), salt=0):
-    """A painter for a gold plate: vertical streaks like the painted gold of the sheet, bevelled edges, optional dark groove rows."""
-    def p(i, j, front, mask=None):
-        x, y = i + 0.5, j + 0.5
-        c = np.array(base, np.float32) + fz(x * 3.1, y * 0.3, salt + 5) * 38 + nz(x, y, salt + 6) * 14
-        if j in grooves:
-            c = c * 0.62
-        return col(np.clip(c, 0, 255)), None
-    return p
 
 
 def _pp_flare_mask(w, h, hw_top, hw_bot, round_bot=0):
@@ -222,16 +212,11 @@ def _pp_flare_mask(w, h, hw_top, hw_bot, round_bot=0):
 
 
 def _pp_rect_round(w, h, r):
+    """A w x h rectangle with its corners rounded to radius r."""
     m = np.ones((h, w), bool)
-    for (ci, cj) in ((0, 0), (w - 1, 0), (0, h - 1), (w - 1, h - 1)):
-        for j in range(h):
-            for i in range(w):
-                if abs(i - ci) < r and abs(j - cj) < r and math.hypot(max(0, r - 1 - abs(i - ci)) if False else 0, 0) == 0:
-                    pass
     for j in range(h):
         for i in range(w):
-            di = min(i, w - 1 - i)
-            dj = min(j, h - 1 - j)
+            di, dj = min(i, w - 1 - i), min(j, h - 1 - j)
             if di < r and dj < r and math.hypot(r - 0.5 - di, r - 0.5 - dj) > r:
                 m[j, i] = False
     return m
@@ -277,12 +262,11 @@ def hand_of_providence(m, a):
         return col(np.clip(c, 0, 255)), None
     box(m, a, -5.2, -6.0, -3.6, 5.2, -1.6, 3.6, leather)
     # ---- the hand: a core plate with the thumb on its right, and the back plate over it
-    core = np.zeros((15, 20), bool)                                                  # x -7.8 .. 12.2, y -1.6 .. 13.4 (row 0 on top)
+    core = np.zeros((15, 18), bool)                                                  # x -7.8 .. 10.2, y -1.6 .. 13.4 (row 0 on top)
     core[0:15, 0:16] = True
     core[0:2, 0:1] = core[0:2, 15:16] = False
     core[13:15, 0:1] = False
-    core[2:12, 16:19] = True                                                         # the thumb's base, a bump on the right
-    core[3:11, 19:20] = True
+    core[2:12, 16:18] = True                                                         # the thumb's base, a bump on the right
 
     def core_paint(i, j, front):
         c = np.array(gold, np.float32) * (0.9 if i > 14 else 1.0) + fz(i * 2.7, j * 0.4, 44) * 30
@@ -344,13 +328,13 @@ def hand_of_providence(m, a):
         if math.hypot(x, y) > 12.8:
             return col((255, 226, 140)), col((255, 226, 140), 0.9)
         return col((196, 236, 255)), col((150, 220, 255), 0.85)
-    plate(m, a, ring_mask, -(R + 1.0), -(R + 1.0) + 4.0, 0.35, ring_paint, "xz", 4.0)
+    plate(m, a, ring_mask, -(R + 1.0), -(R + 1.0) + 0.75, 0.35, ring_paint, "xz", 4.0)
     return dict(glow=("8CD2FF", 0.08, 0.45, 1.0))
 
 
 SPECS += [("brooch_pin", brooch_pin), ("hand_of_providence", hand_of_providence)]
-SIZE.update({"brooch_pin": 0.88})
-GRIP.update({"brooch_pin": 0.2})
+REAL.update({"brooch_pin": 0.55, "hand_of_providence": 0.5})                           # metres: a dagger, and a gauntlet from the elbow to the fist
+GRIP.update({"brooch_pin": 0.9, "hand_of_providence": 0.47})                         # held by the wound grip / the wrist band
 
 _pp_sprite_axis = sprite_axis
 

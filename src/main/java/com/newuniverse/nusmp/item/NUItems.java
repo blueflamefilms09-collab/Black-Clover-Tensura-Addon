@@ -86,18 +86,7 @@ public final class NUItems {
     public static final DeferredItem<RelicItem> SHROUD_OF_MARGINS = relic("shroud_of_margins", RelicItem.Kind.MARGINS, Rarity.EPIC);
     public static final DeferredItem<RelicItem> CIRCLET_OF_THOUGHT = relic("circlet_of_quickened_thought", RelicItem.Kind.QUICKENED, Rarity.EPIC);
     public static final DeferredItem<Item> HEART_OF_WORDS = ITEMS.register("heart_of_words", () -> new Item(new Item.Properties().stacksTo(16).rarity(Rarity.EPIC).fireResistant()));
-    // 0.92: Riven Remake's relic and spawn egg
-    public static final DeferredItem<Item> BARD_RELIC = ITEMS.register("black_bull_bard_relic", () -> new RelicItem(RelicItem.Kind.BARD_RELIC, new Item.Properties().stacksTo(16).rarity(Rarity.EPIC).fireResistant()));   // 0.100: now usable (BossDrops)
-    public static final DeferredItem<RelicItem> STORY_PAGE = relic("story_page", RelicItem.Kind.STORY_PAGE, Rarity.RARE);                 // 0.100: Riven's consumable page
     public static final DeferredItem<RelicItem> GALE_FEATHER = relic("gale_feather", RelicItem.Kind.GALE_FEATHER, Rarity.EPIC);          // 0.100: Sylph's drop
-    public static final DeferredItem<Item> MARQUIS_STORY_PAGE = ITEMS.register("marquis_story_page",
-            () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
-    public static final DeferredItem<Item> MARQUIS_CREST_CAPE = ITEMS.register("marquis_crest_cape",
-            () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
-    public static final DeferredItem<Item> MARQUIS_CROWN = ITEMS.register("marquis_final_crown",
-            () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
-    public static final DeferredItem<net.minecraft.world.item.SpawnEggItem> RIVEN_SPAWN_EGG = ITEMS.register("riven_remake_spawn_egg",
-            () -> new net.minecraft.world.item.SpawnEggItem(com.newuniverse.nusmp.entity.NUEntities.RIVEN.get(), 0x14101F, 0x8A6AFF, new Item.Properties()));
 
     // ---------------------------------------------------------------- magic tools (attribute conduction)
     public static final DeferredItem<SwordItem> MAGIC_TOOL_SWORD = ITEMS.register("magic_tool_sword",
@@ -168,8 +157,7 @@ public final class NUItems {
                 GRIMOIRE_CHAIN, ANTI_BIRD_CHARM, RECOVERY_SALVE, WRITTEN_CONSENT, DEVIL_CONTRACT, GAUCHE_MIRROR, MAGIC_TOOL_SWORD, MAGIC_TOOL_SPEAR, MAGIC_TOOL_BOW, SPIRIT_LORD_SKILL));
         l.addAll(List.of(PAINT_BRUSH, PAINT_PALETTE));                                          // 0.44
         l.addAll(List.of(LAST_WORD, SHROUD_OF_MARGINS, CIRCLET_OF_THOUGHT, HEART_OF_WORDS));    // 0.52
-        l.addAll(List.of(BARD_RELIC, RIVEN_SPAWN_EGG));                                         // 0.92
-        l.addAll(List.of(QUICKLINGS_IVY, MAGEBANE_LONGSWORD, PRISM_BLADE, THUNDERCLEAVE, BLOODBOUND_KATANA, PERMAFROST_SABRE, CYCLONE_RAPIER, STORY_PAGE, GALE_FEATHER));   // 0.100
+        l.addAll(List.of(QUICKLINGS_IVY, MAGEBANE_LONGSWORD, PRISM_BLADE, THUNDERCLEAVE, BLOODBOUND_KATANA, PERMAFROST_SABRE, CYCLONE_RAPIER, GALE_FEATHER));   // 0.100
         l.addAll(List.of(BOLT_THROWER, CROSSBOW_OF_SWIFT_DEATH));                                // the two crossbows
         l.addAll(List.of(CLUB_OF_ROT, DOOM_HAMMER));                                             // the Club of Rot and the Doom Hammer
         l.addAll(List.of(MAGEBANE_SHIELD, WEAPON_OF_RESURGENCE));                                // the Magebane Shield and the Weapon of Resurgence

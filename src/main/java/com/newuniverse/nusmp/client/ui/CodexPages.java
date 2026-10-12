@@ -44,7 +44,6 @@ public final class CodexPages {
         register(new CatalogPage("Relics", "R", i -> i instanceof RelicItem));
         register(new TextPage("Bestiary", "B", List.of(
                 new String[]{"Zagred, the Word-Eater", "A boss of spoken words, barrier layers and a dream dimension. Drops the Heart of Words and one of: Last Word, Shroud of Margins, Circlet of Quickened Thought."},
-                new String[]{"Marquis Remake, the Black Bulls' Bard", "Counter-picks your magic: New Order, Gearshift, Compress, Evil Eye and one god avatar at a time. Anti-magic staggers him. Drops the Black Bull Bard Relic (sneak-use: Bardic Inspiration), a Story Page, his Crest Cape token and, rarely, the Final Crown."},
                 new String[]{"Sylph, the Wind Spirit Lord", "A wind spirit of the gale. Drops the Gale Feather (use: Gale Leap)."})));
         register(new TextPage("Spirit Lords", "L", List.of(
                 new String[]{"Salamander", "A winged fire dragon. Flame Breath burns everything in a cone; its master resists fire."},

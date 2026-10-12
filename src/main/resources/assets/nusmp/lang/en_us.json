@@ -6,13 +6,6 @@
   "subtitles.entity.nusmp.zagred_heal": "Zagred speaks a healing word",
   "subtitles.entity.nusmp.zagred_overwrite": "Zagred rewrites the law",
   "subtitles.entity.nusmp.zagred_phase": "Zagred declares his dominion",
-  "entity.nusmp.riven_remake": "Marquis Remake",
-  "entity.nusmp.story_construct": "Story Construct",
-  "item.nusmp.riven_remake_spawn_egg": "Marquis Remake Spawn Egg",
-  "item.nusmp.black_bull_bard_relic": "Black Bull Bard's Page",
-  "item.nusmp.marquis_story_page": "Marquis Remake Story Page",
-  "item.nusmp.marquis_crest_cape": "Black Bull Crest Cape Token",
-  "item.nusmp.marquis_final_crown": "Cracked Bull Crown",
   "nusmp.skill.summoner": "Summoner",
   "nusmp.skill.summoner.description": "A Unique Skill born from Hell. Call forth summon cards to fight beside you. Mastery raises how many can answer your call.",
   "nusmp.skill.mode.summoner.beast": "Beast Card",
@@ -1192,10 +1185,7 @@
   "item.nusmp.doom_hammer": "Doom Hammer",
   "item.nusmp.magebane_shield": "Magebane Shield",
   "item.nusmp.weapon_of_resurgence": "Weapon of Resurgence",
-  "item.nusmp.story_page": "Story Page",
-  "item.nusmp.story_page.desc": "A page torn from Riven Remake's story. Use it: Rewrite, every negative effect is erased and you mend 40% of your health. Consumed.",
   "item.nusmp.gale_feather": "Gale Feather",
   "item.nusmp.gale_feather.desc": "Sylph's wind-spirit feather. Use it: Gale Leap, a gust flings you forward and up and slows your fall for 8 s (12 s cooldown).",
-  "entity.nusmp.elemental_spirit_lord": "Spirit Lord",
-  "item.nusmp.black_bull_bard_relic.desc": "A grimoire page that rewrote itself: Riven Remake's mark, \"Fictional Remake\". Sneak + use: Bardic Inspiration, Strength, Speed and Regeneration for you and allies within 12 blocks for 20 s (2 min cooldown)."
+  "entity.nusmp.elemental_spirit_lord": "Spirit Lord"
 }

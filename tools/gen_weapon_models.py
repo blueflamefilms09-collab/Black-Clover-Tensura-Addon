@@ -2505,6 +2505,10 @@ REAL = {
 }
 
 
+# 1.3.0: the Brooch Pin and the Hand of Providence (their spec functions live in tools/gen_pin_providence_models.py, run in this namespace)
+exec(compile(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "gen_pin_providence_models.py"), encoding="utf-8").read(), "gen_pin_providence_models.py", "exec"))
+
+
 def mirror_x(mesh):
     out = []
     for (layer, pts, n) in mesh.quads:
