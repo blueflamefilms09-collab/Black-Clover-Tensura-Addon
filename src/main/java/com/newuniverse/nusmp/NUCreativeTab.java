@@ -27,6 +27,10 @@ public final class NUCreativeTab {
                 output.accept(GrimoireItem.createUnbound(GrimoireCover.FIVE_LEAF, MagicType.KOTODAMA, Devil.ZAGRED));   // 0.47: creative only
                 for (var it : com.newuniverse.nusmp.item.NUItems.all()) output.accept(it.get());
                 output.accept(com.newuniverse.nusmp.block.NUBlocks.GRIMOIRE_ALTAR_ITEM.get());
+                output.accept(com.newuniverse.nusmp.dungeon.DungeonBlocks.DUNGEON_MAW_ITEM.get());           // 1.17.0
+                output.accept(com.newuniverse.nusmp.dungeon.DungeonBlocks.DUNGEON_GATE_ITEM.get());
+                output.accept(com.newuniverse.nusmp.dungeon.DungeonBlocks.MAW_ROOT_ITEM.get());
+                output.accept(com.newuniverse.nusmp.dungeon.DungeonBlocks.DUNGEON_MYCELIUM_ITEM.get());
                 for (MagicType m : MagicType.values()) {
                     if (m == MagicType.ANTI_MAGIC || m == MagicType.KOTODAMA) continue;   // Kotodama: only Zagred's five-leaf below
                     output.accept(GrimoireItem.createUnbound(GrimoireCover.THREE_LEAF, m, null));

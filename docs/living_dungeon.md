@@ -52,7 +52,7 @@ regrows the terrain. So a kill is never free: it moves matter around the loop.
 
 ### Terrain regrowth
 Mined blocks are not gone for good. Each block an adventurer breaks (stone, deepslate, ores, dripstone) is remembered
-(`DungeonRepairs`, saved with the world) and put back after a number of days (`dungeon.regrowDays`, default 2), never while a
+(`DungeonSave`, saved with the world) and put back after a number of days (`dungeon.regrowDays`, default 2), never while a
 player stands close. Meanwhile a `Dungeon Mycelium` veil grows in the hole. Mycelium also appears where carcasses decay and is what
 the slimes graze.
 
@@ -60,7 +60,7 @@ the slimes graze.
 
 ## 2. Dynamic portals: the Dungeon Maw
 
-The Overworld's *ambient magicule density* is tracked per region of 4x4 chunks (`DungeonMaw.Ambient`, saved with the world). Every
+The Overworld's *ambient magicule density* is tracked per region of 4x4 chunks (`DungeonSave`, saved with the world). Every
 big spell adds to it (the cast hook in `GrimoireBook` adds `cost%^2 / 100`), it decays by itself, and when a region crosses
 `dungeon.mawThreshold` (default 600) the ground there tears open: a **Dungeon Maw**, a mouth of dense mana wrapped in living roots.
 

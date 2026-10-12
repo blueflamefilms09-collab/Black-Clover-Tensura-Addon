@@ -1,0 +1,15 @@
+{
+  "type": "nusmp:living_dungeon",
+  "generator": {
+    "type": "minecraft:noise",
+    "settings": "minecraft:caves",
+    "biome_source": {
+      "type": "minecraft:checkerboard",
+      "scale": 3,
+      "biomes": [
+        "minecraft:dripstone_caves",
+        "minecraft:lush_caves"
+      ]
+    }
+  }
+}

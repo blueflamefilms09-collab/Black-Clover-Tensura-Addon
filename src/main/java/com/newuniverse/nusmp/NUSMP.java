@@ -34,6 +34,10 @@ public class NUSMP {
         modEventBus.addListener(com.newuniverse.nusmp.blackclover.GrimoireSlot::registerPayloads);
         com.newuniverse.nusmp.block.NUBlocks.init();
         com.newuniverse.nusmp.block.NUBlocks.BLOCKS.register(modEventBus);
+        com.newuniverse.nusmp.dungeon.DungeonBlocks.init();                                                // 1.17.0: the Living Dungeon
+        com.newuniverse.nusmp.dungeon.DungeonBlocks.BLOCKS.register(modEventBus);
+        com.newuniverse.nusmp.dungeon.DungeonEffects.EFFECTS.register(modEventBus);
+        com.newuniverse.nusmp.dungeon.LivingDungeon.ATTACHMENTS.register(modEventBus);
         com.newuniverse.nusmp.world.NUWorldgen.FEATURES.register(modEventBus);
         com.newuniverse.nusmp.item.NUItems.ITEMS.register(modEventBus);
         com.newuniverse.nusmp.item.NUItems.MATERIALS.register(modEventBus);
@@ -87,6 +91,7 @@ public class NUSMP {
         }
         modContainer.registerConfig(ModConfig.Type.SERVER, NUConfig.SPEC);
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.multiverse.MultiverseConfig.SPEC, "nusmp-multiverse-server.toml");
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.dungeon.DungeonConfig.SPEC, "nusmp-dungeon-server.toml");
         // Multiverse: /multiverse commands, ceremony, mastery pages, ranks & stars, squads, status sync, world sites
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.MultiverseCommands::register);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.Ceremony::onPlayerTick);
@@ -99,6 +104,11 @@ public class NUSMP {
                 entity instanceof net.minecraft.world.entity.player.Player pl && com.newuniverse.nusmp.multiverse.WizardKing.isKing(pl)
                         ? dev.architectury.event.EventResult.interruptFalse() : dev.architectury.event.EventResult.pass());
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.WizardKing::onPlayerTick);            // 1.6.0: one Wizard King
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.DungeonEcology::onFinalizeSpawn);          // 1.17.0: the Living Dungeon
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.DungeonEcology::onServerTick);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.DungeonEcology::onBreak);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.DungeonEcology::onPlayerTick);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.DungeonEcology::onIncomingDamage);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.item.CuriosLink::onPlayerTick);                  // 1.15.0: weapons worn in Curios slots
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.mana.Heritage::onPlayerTick);                   // 1.6.0: kingdom, blood, stage buffs
         modEventBus.addListener(com.newuniverse.nusmp.wizard.WizardNet::registerPayloads);

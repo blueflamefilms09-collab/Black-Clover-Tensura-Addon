@@ -1194,5 +1194,12 @@
   "entity.nusmp.tower_wizard": "Tower Wizard",
   "item.nusmp.magic_stone": "Magic Stone",
   "item.nusmp.magic_stone.desc": "One of the ancient Magic Stones. Use it (Arcane Stage only): negative mana for 60 s, spells +60% power and -30% cost, every cast corrupts you.",
-  "entity.nusmp.elemental_spirit_lord": "Spirit Lord"
+  "entity.nusmp.elemental_spirit_lord": "Spirit Lord",
+  "block.nusmp.dungeon_maw": "Dungeon Maw",
+  "block.nusmp.dungeon_gate": "Root Gate",
+  "block.nusmp.maw_root": "Maw Root",
+  "block.nusmp.dungeon_mycelium": "Dungeon Mycelium",
+  "effect.nusmp.suffocation": "Suffocation",
+  "effect.nusmp.magicule_poisoning": "Magicule Poisoning",
+  "effect.nusmp.magicule_sickness": "Magicule Sickness"
 }
