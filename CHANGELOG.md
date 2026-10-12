@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.13.0] — The Tower Wizard calls every mage, whatever the Convergence says
+
+### Fixed
+- **Almost nobody could get a summons.** The Convergence (on by default) made only its 5% "anomaly" players eligible for a grimoire, so with the Tower Wizard on (`wizard.enabled`) the summons, the library and the questionnaire were closed to everyone else. In wizard mode eligibility is now just "no grimoire yet" plus `everyoneEligible` (or an admin's eligible flag); the Convergence's anomaly rule applies only to the older ceremony (`wizard.enabled=false`) and to the Convergence's own staged grant for anomalies. A player who receives a grimoire from the wizard counts as revealed to the Black Clover side (the Convergence already treats every grimoire holder so). Not run in game.
+
 ## [1.12.0] — The Tower Wizard has his own model
 
 **State:** the model was checked with the repo's headless preview only (geo check OK, 0 errors); the Java renderer is new and uncompiled until CI; nothing run in game.

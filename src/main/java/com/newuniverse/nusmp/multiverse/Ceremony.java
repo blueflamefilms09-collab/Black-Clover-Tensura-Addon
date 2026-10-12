@@ -92,6 +92,8 @@ public final class Ceremony {
 
     public static boolean isEligible(ServerPlayer p) {
         if (GrimoirePages.grimoireOf(p).isPresent()) return false;
+        if (MultiverseConfig.get(MultiverseConfig.WIZARD_MODE))                // 1.13.0: the Tower Wizard calls every mage, the Convergence does not gate him
+            return MultiverseConfig.get(MultiverseConfig.EVERYONE_ELIGIBLE) || MultiverseProfile.eligibleFlag(p);
         if (Convergence.enabled()) return Convergence.isAnomaly(p);         // 0.39: only anomalies are ever chosen
         return MultiverseConfig.get(MultiverseConfig.EVERYONE_ELIGIBLE) || MultiverseProfile.eligibleFlag(p);
     }
