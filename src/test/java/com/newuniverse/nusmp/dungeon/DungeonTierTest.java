@@ -28,6 +28,17 @@ class DungeonTierTest {
     }
 
     @Test
+    void theVariableCoreReachesUpToItsCoreTop() {
+        for (int cx = -8; cx <= 8; cx++) for (int cz = -8; cz <= 8; cz++) {
+            int x = cx * DungeonTier.CITY_CELL + 5, z = cz * DungeonTier.CITY_CELL + 5;
+            if (!DungeonTier.isCityCell(cx, cz)) continue;
+            assertEquals(DungeonTier.GOLDEN_CITY, DungeonTier.at(x, DungeonTier.CORE_TOP - 1, z), "the roof garden is core");
+            assertEquals(DungeonTier.GOLDEN_CITY, DungeonTier.at(x, -60, z));
+            assertNotEquals(DungeonTier.GOLDEN_CITY, DungeonTier.at(x, DungeonTier.CORE_TOP + 4, z), "above the core top it is an ordinary tier");
+        }
+    }
+
+    @Test
     void volcanicAirIsThinnerThanTheRest() {
         assertTrue(DungeonTier.VOLCANIC_VENTS.oxygenCeiling < DungeonTier.UPPER_CATACOMBS.oxygenCeiling);
     }

@@ -48,7 +48,10 @@ public final class Wildlife {
     public static int tierOf(Entity e) {
         if (e == null) return 0;
         if (e instanceof DungeonCreature c) return c.tier();
-        return tierOfType(e.getType());
+        int t = tierOfType(e.getType());
+        // 1.21.0: a Monarch's shadow soldier or an Underworld Gate servant is a servant of a place, not a member of the roster
+        if (t > 0 && e instanceof net.minecraft.world.entity.Mob && (e.getPersistentData().contains("nusmp_shadow") || e.getTags().contains("nusmp_underworld"))) return 0;
+        return t;
     }
 
     /** The same for an entity type (named apart so that tierOf(null) stays unambiguous). */

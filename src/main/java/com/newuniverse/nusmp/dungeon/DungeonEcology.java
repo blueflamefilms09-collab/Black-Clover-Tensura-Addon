@@ -108,7 +108,7 @@ public final class DungeonEcology {
      * counted with {@link Wildlife#tierOf}, so the surviving 1.18.0 creatures still count. The gates are those of {@link WildRules}.
      */
     private static void population(ServerLevel d, LevelChunk c, EcosystemData e) {
-        if (!NexusZones.lifeAllowed(d, c.getPos())) return;                                        // 1.21.0: no breeding inside a Nexus that does not allow life
+        if (!NexusZones.lifeAllowed(d, c.getPos()) || com.newuniverse.nusmp.dungeon.nexus.collapse.CollapseManager.suppressesLife(d, c.getPos())) return;                                        // 1.21.0: no breeding inside a Nexus that does not allow life
         ChunkPos cp = c.getPos();
         AABB box = new AABB(cp.getMinBlockX(), d.getMinBuildHeight(), cp.getMinBlockZ(), cp.getMaxBlockX() + 1, d.getMaxBuildHeight(), cp.getMaxBlockZ() + 1);
         List<Mob> life = d.getEntitiesOfClass(Mob.class, box, m -> Wildlife.tierOf(m) > 0);

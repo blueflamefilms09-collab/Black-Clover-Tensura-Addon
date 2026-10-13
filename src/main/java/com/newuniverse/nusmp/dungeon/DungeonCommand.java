@@ -28,6 +28,12 @@ public final class DungeonCommand {
 
     private static int fail(CommandSourceStack s, String msg) { s.sendFailure(Component.literal(msg)); return 0; }
 
+    private static int openMaw(CommandSourceStack src, MawShapes.Kind forced) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
+        ServerPlayer p = src.getPlayerOrException();
+        MawShapes.Kind made = p.level() instanceof ServerLevel sl ? DungeonMaw.openKind(sl, p.blockPosition(), forced) : null;
+        return made == null ? fail(src, "No ground to tear open here.") : ok(src, "A Maw has opened near you as a " + made.word.toLowerCase(java.util.Locale.ROOT) + ".");
+    }
+
     public static LiteralArgumentBuilder<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> root = Commands.literal("dungeon");
         root.then(Commands.literal("enter").requires(s -> s.hasPermission(2)).executes(ctx -> {
@@ -41,10 +47,11 @@ public final class DungeonCommand {
             return 1;
         }));
         root.then(Commands.literal("maw").requires(s -> s.hasPermission(2))
-                .then(Commands.literal("open").executes(ctx -> {
-                    ServerPlayer p = ctx.getSource().getPlayerOrException();
-                    return p.level() instanceof ServerLevel sl && DungeonMaw.open(sl, p.blockPosition()) ? 1 : fail(ctx.getSource(), "No ground to tear open here.");
-                }))
+                .then(Commands.literal("open").executes(ctx -> openMaw(ctx.getSource(), null))                                  // 1.21.0: the hash picks the manifestation
+                        .then(Commands.literal("tower").executes(ctx -> openMaw(ctx.getSource(), MawShapes.Kind.TOWER)))
+                        .then(Commands.literal("ruin").executes(ctx -> openMaw(ctx.getSource(), MawShapes.Kind.RUINS)))
+                        .then(Commands.literal("gate").executes(ctx -> openMaw(ctx.getSource(), MawShapes.Kind.GATE)))
+                        .then(Commands.literal("hole").executes(ctx -> openMaw(ctx.getSource(), MawShapes.Kind.HOLE))))
                 .then(Commands.literal("close").executes(ctx -> ok(ctx.getSource(), DungeonMaw.closeAll(ctx.getSource().getServer()) + " Maw(s) closed."))));
         root.then(Commands.literal("status").executes(ctx -> {
             ServerPlayer p = ctx.getSource().getPlayerOrException();
@@ -89,6 +96,10 @@ public final class DungeonCommand {
                     + (legends > 0 ? " (" + legends + " legendary)" : "") + "; biomass " + Math.round(mass) + ".");
         }));
         root.then(com.newuniverse.nusmp.dungeon.city.CityCommand.build());                      // 1.19.0: /multiverse dungeon city where|build|reset
+        com.newuniverse.nusmp.dungeon.nexus.collapse.CollapseCommand.addTo(root);                                                   // dungeon collapse start | stop | status
+        com.newuniverse.nusmp.dungeon.nexus.NexusCommand.addTo(root);                                                       // 1.21.0: /multiverse dungeon nexus ...
+        com.newuniverse.nusmp.dungeon.nexus.vault.VaultCommand.addTo(root);                                                 // dungeon vault ..., dungeon gate ...
+        com.newuniverse.nusmp.dungeon.nexus.relic.RelicCommand.addTo(root);                                                 // dungeon relic ...
         return root;
     }
 

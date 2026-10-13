@@ -19,6 +19,9 @@ public enum DungeonTier {
 
     public static final int UPPER_Y = 24, CITY_Y = -40, VENT_CELL = 112, CITY_CELL = 128;
 
+    /** 1.21.0: the Variable Core's zones stand taller than the old city: inside a core cell everything below this height is the core tier (roof gardens, skywalks, domes). */
+    public static final int CORE_TOP = -26;
+
     /** A stable hash of a cell of the map, 0..99. */
     private static int cell(int cx, int cz, int salt) {
         long h = cx * 0x9E3779B97F4A7C15L ^ cz * 0xC2B2AE3D27D4EB4FL ^ salt * 0x165667B19E3779F9L;
@@ -29,7 +32,7 @@ public enum DungeonTier {
     }
 
     public static DungeonTier at(int x, int y, int z) {
-        if (y < CITY_Y && cell(Math.floorDiv(x, CITY_CELL), Math.floorDiv(z, CITY_CELL), 7) < 18) return GOLDEN_CITY;
+        if (y < CORE_TOP && cell(Math.floorDiv(x, CITY_CELL), Math.floorDiv(z, CITY_CELL), 7) < 18) return GOLDEN_CITY;
         if (y >= CITY_Y && cell(Math.floorDiv(x, VENT_CELL), Math.floorDiv(z, VENT_CELL), 3) < 28) return VOLCANIC_VENTS;
         return y >= UPPER_Y ? UPPER_CATACOMBS : DEEP_WATERWAYS;
     }

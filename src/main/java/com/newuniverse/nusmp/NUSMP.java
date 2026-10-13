@@ -51,6 +51,16 @@ public class NUSMP {
         modEventBus.addListener(com.newuniverse.nusmp.entity.zogratis.ZogratisEntities::attributes);
         com.newuniverse.nusmp.entity.zogratis.ZogratisEffects.EFFECTS.register(modEventBus);
         com.newuniverse.nusmp.entity.zogratis.VanicaCurse.EFFECTS.register(modEventBus);
+        com.newuniverse.nusmp.dungeon.nexus.vault.NexusBlocks.init();                                                    // 1.21.0: the Variable Core (vault blocks)
+        com.newuniverse.nusmp.dungeon.nexus.vault.NexusBlocks.BLOCKS.register(modEventBus);
+        com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.init();                                                     // the Treasury's five Relics
+        com.newuniverse.nusmp.dungeon.nexus.relic.RelicBlocks.init();
+        com.newuniverse.nusmp.dungeon.nexus.relic.RelicBlocks.BLOCKS.register(modEventBus);
+        com.newuniverse.nusmp.dungeon.nexus.relic.RelicComponents.COMPONENTS.register(modEventBus);
+        com.newuniverse.nusmp.dungeon.nexus.nav.NavComponents.COMPONENTS.register(modEventBus);                          // lantern and compass
+        com.newuniverse.nusmp.dungeon.nexus.nav.NavItems.init();
+        com.newuniverse.nusmp.dungeon.nexus.zone.GoldenBlocks.init();                                                    // the Golden City's leaves
+        com.newuniverse.nusmp.dungeon.nexus.zone.GoldenBlocks.BLOCKS.register(modEventBus);
         com.newuniverse.nusmp.world.NUWorldgen.FEATURES.register(modEventBus);
         com.newuniverse.nusmp.item.NUItems.ITEMS.register(modEventBus);
         com.newuniverse.nusmp.item.NUItems.MATERIALS.register(modEventBus);
@@ -93,6 +103,7 @@ public class NUSMP {
             modEventBus.addListener(com.newuniverse.nusmp.client.dungeon.DungeonMobsClient::register);          // 1.18.0: the Living Dungeon's creatures
             modEventBus.addListener(com.newuniverse.nusmp.client.dungeon.DungeonSky::registerEffects);         // 1.19.0: the Dungeon's own sky and fog
             modEventBus.addListener(com.newuniverse.nusmp.client.zogratis.ZogratisClient::register);            // 1.20.0: the Zogratis renderers
+            modEventBus.addListener(com.newuniverse.nusmp.client.nexus.NavClient::registerProperties);                              // 1.21.0: lantern flame, compass needle
             NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.client.dungeon.DungeonSky::onFogColor);
             NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.client.dungeon.DungeonSky::onRenderFog);
             NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.client.dungeon.DungeonSky::onClientTick);
@@ -129,7 +140,38 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.DungeonEcology::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.DungeonEcology::onIncomingDamage);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.DungeonEcology::onDrops);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.city.CityBuilder::onServerTick);          // 1.19.0: the Golden City builds where players come near
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.NexusBuilder::onServerTick);                      // 1.21.0: replaces CityBuilder::onServerTick: a core cell builds as one of four zones (the Golden City is one)
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.NexusBuilder::onServerStopping);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.vault.VaultDirector::onServerTick);              // hidden vaults, descent gates
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.vault.Distortion::onPlayerTick);                 // spatial distortion
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.vault.Distortion::onPlace);
+        com.newuniverse.nusmp.dungeon.nexus.relic.RelicEvents.register(NeoForge.EVENT_BUS);                                  // the five Relics
+        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST, com.newuniverse.nusmp.dungeon.nexus.nav.AvianDrops::onDrops);   // the Anti-Bird Compass
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.nav.NavTicker::onPlayerTick);                    // the Ki-Resonance Lantern
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.MonarchDriver::onJoin);                     // Monarch's Vault
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.MonarchDriver::onServerTick);
+        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGH, com.newuniverse.nusmp.dungeon.nexus.zone.MonarchDriver::onIncomingDamage);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.MonarchDriver::onDeath);
+        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGH, com.newuniverse.nusmp.dungeon.nexus.zone.MonarchDriver::onDrops);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.MonarchDriver::onCollapse);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.MonarchDriver::onServerStopping);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.GravityWarp::onServerTick);                 // Underworld Gate
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.GravityWarp::onIncomingDamage);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.GravityWarp::onServerStopping);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.UnderworldGateSite::onCollapse);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.HiveDriver::onServerTick);                  // Tempest Mirage
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.HiveDriver::onJoin);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.HiveDriver::onLeave);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.HiveDriver::onDeath);
+        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGH, com.newuniverse.nusmp.dungeon.nexus.zone.HiveDriver::onDrops);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.HiveDriver::onIncomingDamage);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.HiveDriver::onCollapse);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.HiveDriver::onServerStopping);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.collapse.CollapseManager::onCollapse);                      // the Treasury Collapse
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.collapse.CollapseManager::onServerTick);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.collapse.CollapseManager::onEntityJoin);
+        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST, true, com.newuniverse.nusmp.dungeon.nexus.collapse.CollapseManager::onFallingBlockJoin);   // takes back the guard's cancel for the collapse's own falling blocks
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.collapse.CollapseManager::onServerStopping);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.DungeonAmbience::onServerTick);           // 1.19.0: the Dungeon's ambient sounds
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.MealSkills::onPlayerTick);                // 1.19.0: skills lent by cooked meals
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.MealSkills::onLogin);

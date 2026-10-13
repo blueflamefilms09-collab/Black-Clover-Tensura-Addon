@@ -70,7 +70,7 @@ public final class DungeonAmbience {
             return;
         }
         if (now < due) return;
-        DungeonAtmosphere.Mood mood = DungeonAtmosphere.mood(DungeonTier.at(level, p.blockPosition()).ordinal());
+        DungeonAtmosphere.Mood mood = DungeonAtmosphere.mood(DungeonTier.at(level, p.blockPosition()).ordinal(), p.getBlockX(), p.getBlockZ());
         NEXT_SOUND.put(p.getUUID(), now + DungeonAtmosphere.soundInterval(mood, random.nextLong()));
         DungeonAtmosphere.Sound sound = DungeonAtmosphere.pick(mood.sounds(), random.nextLong());
         if (sound == null) return;

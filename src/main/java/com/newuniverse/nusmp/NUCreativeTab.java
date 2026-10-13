@@ -35,6 +35,20 @@ public final class NUCreativeTab {
                 output.accept(com.newuniverse.nusmp.dungeon.city.CityBlocks.AURELIAN_ALTAR_ITEM.get());          // 1.19.0
                 output.accept(com.newuniverse.nusmp.dungeon.city.CityBlocks.AURELIAN_CORE.get());
                 output.accept(com.newuniverse.nusmp.dungeon.MawReward.MAW_FRUIT.get());
+                output.accept(com.newuniverse.nusmp.dungeon.nexus.vault.NexusBlocks.ILLUSION_STONE_ITEM.get());                      // 1.21.0: the Variable Core
+                output.accept(com.newuniverse.nusmp.dungeon.nexus.vault.NexusBlocks.ILLUSION_DEEPSLATE_ITEM.get());
+                output.accept(com.newuniverse.nusmp.dungeon.nexus.vault.NexusBlocks.DESCENT_GATE_ITEM.get());
+                output.accept(com.newuniverse.nusmp.dungeon.nexus.vault.NexusBlocks.WARP_TRAP_ITEM.get());
+                output.accept(com.newuniverse.nusmp.dungeon.nexus.vault.NexusBlocks.NUTRIENT_BLOOM_ITEM.get());
+                output.accept(com.newuniverse.nusmp.dungeon.nexus.vault.NexusBlocks.NUTRIENT_NECTAR.get());
+                output.accept(com.newuniverse.nusmp.dungeon.nexus.relic.RelicBlocks.ARTIFACT_BLOCK_ITEM.get());
+                output.accept(com.newuniverse.nusmp.dungeon.nexus.relic.RelicBlocks.MANA_GATE_ITEM.get());
+                for (var relic : new net.neoforged.neoforge.registries.DeferredItem[]{com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.GLUTTON_CHALICE, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.MANTLE_OF_THE_SCAVENGER,
+                        com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.BAND_OF_THE_SPATIAL_ANCHOR, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.DEVIL_BOUND_SHEATH, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.GAMBLERS_GRIMOIRE_PAGE}) output.accept((net.minecraft.world.item.Item) relic.get());
+                output.accept(com.newuniverse.nusmp.dungeon.nexus.zone.GoldenBlocks.GOLDEN_LEAVES_ITEM.get());
+                output.accept(com.newuniverse.nusmp.dungeon.nexus.nav.NavItems.KI_RESONANCE_LANTERN.get());
+                output.accept(com.newuniverse.nusmp.dungeon.nexus.nav.NavItems.ANTI_BIRD_COMPASS.get());
+                output.accept(com.newuniverse.nusmp.dungeon.nexus.nav.NavItems.VENOM_GLAND.get());
                 for (var f : new net.neoforged.neoforge.registries.DeferredItem[]{com.newuniverse.nusmp.dungeon.DungeonFood.RAW_SLIME_JELLY, com.newuniverse.nusmp.dungeon.DungeonFood.RAW_ARMOR_FLANK,   // 1.19.0
                         com.newuniverse.nusmp.dungeon.DungeonFood.RAW_BASILISK_FILLET, com.newuniverse.nusmp.dungeon.DungeonFood.RAW_DIREWOLF_HAUNCH, com.newuniverse.nusmp.dungeon.DungeonFood.RAW_MONSTER_MEAT,
                         com.newuniverse.nusmp.dungeon.DungeonFood.RUINED_MEAT, com.newuniverse.nusmp.dungeon.DungeonFood.PURIFIED_MEAT, com.newuniverse.nusmp.dungeon.DungeonFood.CANDIED_SLIME_JELLY,

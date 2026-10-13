@@ -64,7 +64,9 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             NUItems.QUICKLINGS_IVY, NUItems.MAGEBANE_LONGSWORD, NUItems.PRISM_BLADE, NUItems.THUNDERCLEAVE, NUItems.BLOODBOUND_KATANA,
             NUItems.PERMAFROST_SABRE, NUItems.CYCLONE_RAPIER, NUItems.BOLT_THROWER, NUItems.CROSSBOW_OF_SWIFT_DEATH,
             NUItems.CLUB_OF_ROT, NUItems.DOOM_HAMMER,
-            NUItems.MAGEBANE_SHIELD, NUItems.WEAPON_OF_RESURGENCE, NUItems.BROOCH_PIN, NUItems.HAND_OF_PROVIDENCE, NUItems.BUTCHER_CLEAVER);
+            NUItems.MAGEBANE_SHIELD, NUItems.WEAPON_OF_RESURGENCE, NUItems.BROOCH_PIN, NUItems.HAND_OF_PROVIDENCE, NUItems.BUTCHER_CLEAVER,
+            com.newuniverse.nusmp.dungeon.nexus.nav.NavItems.KI_RESONANCE_LANTERN, com.newuniverse.nusmp.dungeon.nexus.nav.NavItems.ANTI_BIRD_COMPASS,      // 1.21.0
+            com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.GLUTTON_CHALICE, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.DEVIL_BOUND_SHEATH, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.GAMBLERS_GRIMOIRE_PAGE);
 
     static final int BODY = 0, VOID = 1, GLOW = 2;
 
@@ -106,9 +108,9 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
     public void renderByItem(ItemStack stack, ItemDisplayContext ctx, PoseStack pose, MultiBufferSource buffers, int light, int overlay) {
         Minecraft mc = Minecraft.getInstance();
         String id = BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath();
-        Mesh mesh = ctx == ItemDisplayContext.GUI ? null : mesh(id);
+        Mesh mesh = ctx == ItemDisplayContext.GUI ? null : mesh(com.newuniverse.nusmp.client.nexus.NavClient.meshId(stack, id, ctx));
         if (mesh == null) {                                                        // the inventory (or a missing mesh): the old icon
-            BakedModel icon = mc.getModelManager().getModel(icon(id));
+            BakedModel icon = com.newuniverse.nusmp.client.nexus.NavClient.resolveIcon(mc.getModelManager().getModel(icon(id)), stack);
             pose.pushPose();
             pose.translate(0.5f, 0.5f, 0.5f);                                      // render() translates by -0.5 again
             mc.getItemRenderer().render(stack, ctx, false, pose, buffers, light, overlay, icon);

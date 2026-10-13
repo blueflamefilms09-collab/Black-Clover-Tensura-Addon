@@ -1236,5 +1236,22 @@
   "item.nusmp.vanica_zogratis_spawn_egg": "Vanica Zogratis Spawn Egg",
   "item.nusmp.zenon_zogratis_spawn_egg": "Zenon Zogratis Spawn Egg",
   "item.nusmp.lucius_zogratis_spawn_egg": "Lucius Zogratis Spawn Egg",
-  "effect.nusmp.megicula_decay": "Megicula's Decay"
+  "effect.nusmp.megicula_decay": "Megicula's Decay",
+  "block.nusmp.golden_leaves": "Golden Leaves",
+  "item.nusmp.ki_resonance_lantern": "Ki-Resonance Lantern",
+  "item.nusmp.anti_bird_compass": "Anti-Bird Compass",
+  "item.nusmp.venom_gland": "Venom Gland",
+  "block.nusmp.artifact_block": "Relic Pedestal",
+  "block.nusmp.mana_gate": "Mana Gate",
+  "item.nusmp.glutton_chalice": "The Glutton's Chalice",
+  "item.nusmp.mantle_of_the_scavenger": "Mantle of the Scavenger",
+  "item.nusmp.band_of_the_spatial_anchor": "Band of the Spatial Anchor",
+  "item.nusmp.devil_bound_sheath": "Devil-Bound Weapon Sheath",
+  "item.nusmp.gamblers_grimoire_page": "The Gambler's Grimoire Page",
+  "block.nusmp.illusion_stone": "Illusion Stone",
+  "block.nusmp.illusion_deepslate": "Illusion Deepslate",
+  "block.nusmp.descent_gate": "Descent Gate",
+  "block.nusmp.warp_trap": "Warp Trap",
+  "block.nusmp.nutrient_bloom": "Nutrient Bloom",
+  "item.nusmp.nutrient_nectar": "Nutrient Nectar"
 }

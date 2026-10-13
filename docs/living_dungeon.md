@@ -152,6 +152,8 @@ public class HuntForSustenanceGoal extends Goal {
 | **1.18.0** | The food web | Hunger; Dungeon Slime, Living Armor, Basilisk, Direwolf; the goals; breeding, starvation, extinction; carcasses; no drops |
 | **1.18.0** | Table | Butcher Cleaver; cuts, raw toxicity, Holy Water, cooked meals with buffs and temporary skills/attributes |
 | **1.19.0** | Polish | the Dungeon uses the **real mobs of base Tensura** (and Ice and Fire if installed) through an entity-type-tag roster instead of the custom 1.18.0 creatures; every block of the Dungeon is **unbreakable** (events plus a Level mixin); the **Golden City** is built; Magic Sense blunts the radiation; cooked meals lend a skill and a second magic; a reward for cutting a Maw's roots; the Dungeon's own sky, fog and sounds |
+| **1.20.0** | Bosses | the four Zogratis bosses (docs/zogratis_bosses.md) |
+| **1.21.0** | The Variable Core | the deepest floor builds one of four zones per core cell; hidden vaults and Descent Gates; spatial distortion; the lantern, the compass and organ extraction; five Relics; the Treasury Collapse; Maw portals as towers, ruins and gates (section 8) |
 | later | Polish | predator den structures, pack behaviour for the real mobs |
 
 ---------------------------------------------------------------------------------------------------------------------------
@@ -168,3 +170,44 @@ Not done yet:
 - predator den structures and pack behaviour for the real mobs (Tensura's Direwolf already spawns as a pack by itself);
 - the Golden City's loot-free rewards beyond the Aurelian Core;
 - the Dungeon has no custom sound files (vanilla sounds only).
+
+---------------------------------------------------------------------------------------------------------------------------
+
+## 8. The Variable Core (1.21.0): the Procedural Dimensional Nexus
+
+Source: the owner's design document "The Living Dungeon, the Variable Core, Hidden Vaults and Navigation Mechanics", translated from Forge 1.20.1 to NeoForge 1.21.1 (`dungeon/nexus/**`). Never run in game; CI compiles it.
+
+### 8.1 Cells and zones
+The deepest tier (y below -40, in the 128 x 128 block cells that were the Golden City's) is called **The Variable Core** (enum name `GOLDEN_CITY` is kept for saved data). `NexusBuilder` builds a core cell when a player in the Dungeon comes within 56 blocks of it: lazy, resumable after a restart, budgeted per tick, loaded chunks only, written through `DungeonGuard.internal`. A stable hash of the cell chooses one of four zones (`NexusZone`), the same on the server and the clients. A Golden City built by 1.19.0/1.20.0 is adopted as it stands, never built over. State is `nusmp_nexus` (`NexusSave`): PENDING, BUILDING, DONE, COLLAPSING, COLLAPSED.
+
+| Zone | Source | What |
+|---|---|---|
+| **Monarch's Vault** | Solo Leveling | a hollow obsidian hall piled with gold, artifacts and bones; the arch daemon (4800 health) sleeps on the dais, five telegraphed attacks, three phases (66% and 33%), real lesser and greater daemons as the "shadow soldiers". It wakes when someone comes within 18 blocks, hits it, enters the Treasury or takes the central relic |
+| **Underworld Gate** | Spade Kingdom | a gravity-warped ruin round a vast Gate; gravity zones press down, let go and flip on a visible cycle (telegraphed 4 s ahead, never lethal); a Gatekeeper daemon, lesser daemons and Dark Disciples (10 to 40% of a Devil's power: Lucifero, Megicula, Beelzebub) |
+| **Tempest Mirage** | Tensura | an illusion of a monster village (plaza, town hall, 18 houses, fake houses that dissolve into ambushes) held by a hive-mind swarm of mutated Tensura orcs, lizardmen, slimes, goblins and hound dogs (cap 40, waves of 8 while non-creative players are inside); scouts, tanks, flankers, skirmishers; the hive announces every change of state; damage per blow is capped at 10% of max health and 20% per second |
+| **Golden City** | Delicious in Dungeon | the 1.19.0 city inside a pristine sealed biosphere of golden and azalea great trees, glow berries, waterfalls and giant mushrooms; apex and legendary predators over herds of grazers; the Biosphere cycle shifts the garden near players |
+
+The Dungeon's own breeding is **switched off** in the Monarch, Underworld and Mirage zones and in the Golden City's garden: only what the zone makes lives there (the hive, `GoldenWild` with caps of 8 apex and 40 prey). Creative and spectating players are never fought and spring no fake house. Every zone opens ways in from the caves (the Dungeon is unbreakable, so the builder cuts them) and retries while players are near. Each zone has a **Treasury** behind a Mana Gate, minor relic pedestals, and exactly one **central** relic. Taking the central relic, or killing the Monarch, collapses the Nexus.
+
+Admin: `/multiverse dungeon nexus where | build | zone <monarch|underworld|mirage|golden> | reset`.
+
+### 8.2 Hidden vaults, Descent Gates, spatial distortion
+Illusion Stone and Illusion Deepslate (no collision, block light, water cannot pass) hide Puzzle Vaults, Nutrient Gardens, Guardian Vaults and Descent Shrines. A Descent Gate sends the player to the next floor at the same x/z (Upper y 24 and up, Deep 24 to -40, Core below); Deep to Core only above a built Nexus. Warp Traps throw the player 8 to 24 blocks; gravity pulses lift or slam without damage; blocks placed in a pocket are refused. The Band of the Spatial Anchor ignores all of it; `dungeon.hazards = false` switches it off. Admin: `dungeon vault where | build`, `dungeon gate where`.
+
+### 8.3 Navigation and organs
+Ki-Resonance Lantern: off-hand, fuelled (tag `nusmp:lantern_fuel`), amber / blue (illusion wall within 14 blocks) / red (descent gate within 96 blocks). Anti-Bird Compass: rare drop of avian creatures in the Upper Catacombs; points at the nearest cluster of life, spins in distortions. Butcher Cleaver organ cuts by click height: Venom Gland (basilisk, spider), Magic Stone (anything above tier 1).
+
+### 8.4 Relics
+Five Relics, worn (Curios, else off-hand) and attuned (sneak 10 s holding it; max 3; death breaks them), each with a curse: Glutton's Chalice (Symbiotic Hunger), Mantle of the Scavenger (Prey's Weakness), Band of the Spatial Anchor (none), Devil-Bound Weapon Sheath (Mana Siphon), Gambler's Grimoire Page (Wild Magic Surge). Commands: `dungeon relic give | attune | release | status`.
+
+### 8.5 Maw portals
+A Maw manifests as a stone tower, ruins or an isolated gate (`MawShapes`, `MawFit`, `MawStyle`, `MawManifest`), picked by a hash of the place and the biome; if it does not fit, the other two are tried, then the 1.17.0 plain mouth. `MawFit` checks the whole patch before anything is written (loaded chunks, slope, soft blocks only, no fluid, no creature, write cap); `MawManifest` writes with a ledger and rolls back on failure. At least 8 roots always stand; closing removes only the roots and the Maw, so the stone stays. Wordings: "[Server] A spatial distortion has materialized. A new Dungeon Tower|Ruin|Gate has breached the <Biome> biome near (x, z)..." and "[Server] A localized famine in the <tier> has caused a mass predator die-off." Admin: `dungeon maw open [tower|ruin|gate|hole]`.
+
+### 8.6 The Treasury Collapse
+`DungeonCollapseEvent` (central relic taken, the Monarch killed, a Wild Magic Surge) starts a three minute collapse (`CollapseManager`, saved as `nusmp_collapse`): the cell is marked COLLAPSED at once; 3:00 broadcast; cracks; from 2:00 the stone falls bottom-up from the far side towards the exits (the exit corridors stand until the end); a Root Gate at each exit; five waves of mutated guards (cap 10 alive, 3 per exit, 24 in all); at 0:00 the Nexus is wiped and whoever remains is expelled with 75% max health in damage (never lethal) and Magicule Poisoning III. A collapse outside any Nexus is a pocket (no terrain removed). Admin: `dungeon collapse start | stop [all] | status`.
+
+### 8.7 Known limits (1.21.0)
+- Never run in game. The Tensura mobs are driven from outside their brains; a brain may undo an order between two passes.
+- Zone ways in are cut from nearby caves; a core cell with no cave near it may stay closed until one is brought close.
+- `DungeonTier.CORE_TOP` (-26): everything below it inside a core cell is the core tier.
+- Release and re-attune of a relic resets its curse clock; the Mantle's physical-blow curse and the Sheath's slash interact (the Mantle cancels first).

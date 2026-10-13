@@ -174,6 +174,6 @@ public final class DungeonGuard {
     public static void onEntityJoin(EntityJoinLevelEvent e) {
         if (e.loadedFromDisk()) return;
         Class<?> type = e.getEntity().getClass();
-        if (((FREEZE_GRAVITY && type == FallingBlockEntity.class) || (FREEZE_TNT && type == PrimedTnt.class)) && on(e.getLevel())) e.setCanceled(true);
+        if (((FREEZE_GRAVITY && type == FallingBlockEntity.class) || (FREEZE_TNT && type == PrimedTnt.class)) && on(e.getLevel()) && !inInternal()) e.setCanceled(true);          // 1.21.0: the Treasury Collapse's own falling blocks are spawned inside the guard's internal scope
     }
 }
