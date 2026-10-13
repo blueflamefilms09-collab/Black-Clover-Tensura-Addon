@@ -281,6 +281,7 @@ public abstract class GrimoireBook extends Skill {
         addMasteryPoint(instance, player);
         instance.getOrCreateTag().putInt("LastMode", mode);
         com.newuniverse.nusmp.item.MagicGear.onCast(player);
+        com.newuniverse.nusmp.relics.wave.Wave6Events.onSpellCast(player);      // 1.24.0: Neket's robe stores a Mage Armor per cast
         DreamWorld.onCast(player, magic);                                         // 0.41: Spatial / Time / Anti-Magic / Dream tear a dream open
         MirrorWorks.echo(player);                                                 // 0.42: Real Doubles cast with you
         com.newuniverse.nusmp.mana.ManaLaw.onCast(player);                          // 1.5.0: negative mana corrupts

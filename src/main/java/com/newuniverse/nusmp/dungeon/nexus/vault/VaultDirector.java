@@ -413,6 +413,8 @@ public final class VaultDirector {
         loot.add(new ItemStack(v < 2 ? DungeonFood.GRILLED_ARMOR_FLANK.get() : DungeonFood.ROAST_DIREWOLF_HAUNCH.get(), 2));
         loot.add(new ItemStack(DungeonFood.SEARED_MONSTER_MEAT.get(), 3));
         for (int i = 0; i < loot.size(); i++) box.setItem(i + 2, loot.get(i));
+        ItemStack seal = com.newuniverse.nusmp.relics.djinn.DjinnSources.vaultSeal(level, level.getRandom());           // 1.24.0: rarely a Djinn Seal
+        if (!seal.isEmpty()) box.setItem(8, seal);
         box.setChanged();
     }
 

@@ -54,7 +54,7 @@ import java.util.function.Supplier;
  */
 public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
     /** The weapons and relics drawn this way (each needs a mesh, a skin, and an &lt;id&gt;_icon model). */
-    static final List<Supplier<? extends Item>> WEAPONS = List.of(
+    static final List<Supplier<? extends Item>> BASE_WEAPONS = List.of(
             NUItems.DEMON_SLASHER_KATANA, NUItems.MIASMA_KATANA, NUItems.SPELL_FORGED_RAPIER, NUItems.SEVERING_GREATSWORD,
             NUItems.DEMON_DWELLER, NUItems.DEMON_DESTROYER, NUItems.LICHT_DWELLER, NUItems.LICHT_DESTROYER,
             NUItems.RIMEHEART_RUNEBLADE, NUItems.OTHERWORLD_TRIDENT, NUItems.MAGIC_TOOL_SWORD, NUItems.MAGIC_TOOL_SPEAR,
@@ -68,6 +68,9 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             com.newuniverse.nusmp.dungeon.nexus.nav.NavItems.KI_RESONANCE_LANTERN, com.newuniverse.nusmp.dungeon.nexus.nav.NavItems.ANTI_BIRD_COMPASS,      // 1.21.0
             com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.GLUTTON_CHALICE, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.DEVIL_BOUND_SHEATH, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.GAMBLERS_GRIMOIRE_PAGE,
             com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.AMULET_OF_THE_JUGGERNAUTS_BLINDNESS);      // 1.22.0
+
+    /** 1.24.0: the old list plus every 3D relic of Relics of Many Worlds. */
+    static final List<Supplier<? extends Item>> WEAPONS = java.util.stream.Stream.concat(BASE_WEAPONS.stream(), com.newuniverse.nusmp.relics.RelicCatalog.model3dItems().stream()).toList();
 
     static final int BODY = 0, VOID = 1, GLOW = 2;
 

@@ -87,6 +87,10 @@ public final class NavClient {
      * is held; lying on the ground or hung in a frame it burns no more, whatever its stack still says. Everything else is just {@code id}.
      */
     public static String meshId(ItemStack stack, String id, ItemDisplayContext ctx) {
+        if (id.equals("marids_valor")) {          // 1.24.0: Marid's Valor in its liquid state draws the liquid blade
+            net.minecraft.world.item.component.CustomData d = stack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
+            if (d != null && d.copyTag().getCompound("nusmp_w1").getLong("state") == 1L) return "marids_valor_liquid";
+        }
         if (stack.getItem() != NavItems.KI_RESONANCE_LANTERN.get()) return id;
         boolean held = ctx.firstPerson() || ctx == ItemDisplayContext.THIRD_PERSON_LEFT_HAND || ctx == ItemDisplayContext.THIRD_PERSON_RIGHT_HAND;
         return (held ? FlameMode.ofProperty(LanternItem.flameValue(stack)) : FlameMode.OFF).meshId();

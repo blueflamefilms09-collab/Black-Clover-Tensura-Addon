@@ -28,6 +28,10 @@ public final class NUCreativeTab {
                 for (var it : com.newuniverse.nusmp.item.NUItems.all()) output.accept(it.get());
                 for (var egg : com.newuniverse.nusmp.dungeon.floor.goliath.GoliathEntities.spawnEggs()) output.accept(egg.get());                                 // 1.23.0
                 for (var egg : com.newuniverse.nusmp.dungeon.floor.charybdis.CharybdisEntities.spawnEggs()) output.accept(egg.get());
+                for (var it : com.newuniverse.nusmp.relics.RelicCatalog.creativeItems()) output.accept(it.get());                                  // 1.24.0: Relics of Many Worlds
+                for (var egg : com.newuniverse.nusmp.relics.order.OrderEntities.spawnEggs()) output.accept(egg.get());
+                output.accept(com.newuniverse.nusmp.relics.order.OrderEntities.NOTICE.get());
+                for (var d : com.newuniverse.nusmp.relics.djinn.Djinn.values()) output.accept(com.newuniverse.nusmp.relics.djinn.DjinnItems.sealStack(d));
                 for (var egg : com.newuniverse.nusmp.entity.avatar.AvatarEntities.spawnEggs()) output.accept(egg.get());              // 1.22.0
                 for (var egg : com.newuniverse.nusmp.entity.zogratis.ZogratisEntities.spawnEggs()) output.accept(egg.get());      // 1.20.0: the Zogratis bosses
                 output.accept(com.newuniverse.nusmp.block.NUBlocks.GRIMOIRE_ALTAR_ITEM.get());

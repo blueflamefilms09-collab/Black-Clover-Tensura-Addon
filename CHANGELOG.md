@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.24.0] — Relics of Many Worlds and the Djinn
+
+**State:** written without a compiler; CI is the first compile. Nothing run in game. Built from the owner's 78 card images (87 distinct cards), the Magi Djinn guide and the Tensura equipment rarity guide.
+
+### Replacements (owner request: "remake the 16 in my mod to work with this new system")
+- **The 16 existing items** (Quickling's Ivy, Magebane Longsword, Magebane Shield, Bolt Thrower, Brooch Pin, Club of Rot, Crossbow of Swift Death, Doom Hammer, Weapon of Resurgence, Hand of Providence, Infernal/Devil Contract, Prism Blade, Permafrost Sabre, Cyclone Rapier, Bloodbound Katana, Thundercleave) now carry a Tensura grade, attunement, the abilities of their cards and the uniqueness rule. Item ids, sprites, engravings and old techniques stay registered. Bloodbound Katana: undead and constructs no longer feed the blade. Devil Contract is named **Infernal Contract**, gains four contracts and the Damned curse, and its hand model is the card's scroll (the old book mesh is kept as `devil_contract_book`). Boreal Blades = the Permafrost Sabre + Cyclone Rapier set ability (Fusion).
+- 15 of the 16 are now **unique**: a second copy is retrieved by the God of Order (a 10-minute census runs first in existing worlds).
+
+### New
+- **Seven Tensura grades** (Normal, Special, Rare, Unique, Legend, God, Genesis) with grade colours, glow and particles, EP lift, attunement (3 at a time), passives, actives with magicule/aura, EP, cooldown and per-day costs, a Use Worn Relic key (V), and a tooltip that wraps, shrinks and pages so it never leaves the screen.
+- **70 new relics** in seven waves (weapons and staves with 3D models; charms and cloaks; headwear, gloves, belt and drinks; amulets and pendants; armors and robes). Card abilities became real mechanics; what base Minecraft cannot do uses lent Tensura skills (checked against the Tensura id list), Tensura stats, or an invented mechanic. See the docs for each card.
+- **The Order**: one copy of each relic per world; a second copy summons the **God of Order**, who retrieves it (not farmable, no loot); works with chests, shulkers, ender chests, Lootr per-player chests, mobs and item entities. Commands `/multiverse relic order ...`.
+- **Loot and Mimics**: unissued relics appear in dungeon-type chests (Lootr-safe through the ledger) and drop from Mimics (any mimic entity).
+- **The Djinn**: 12 Djinn Seals, a one-owner-per-Djinn ledger, a binding ritual into a Legend-grade vessel, household sharing, four phases (Lesser Summon, Half Equip, Full Equip/Maso, Extreme Magic), per-Djinn armor drawn as render layers, HUD and keys (J/K/H). A player holds only one of Black Clover Spirit, Devil Contract or Djinn; Astralis is the multi-bond exception at a price. Magoi = Tensura magicules.
+- Commands `/multiverse relic ...`, `/multiverse djinn ...`. Mesh loader accepts smoothed per-vertex normals (`qn`).
+
+### Honest list
+Everything is unverified in game: relic abilities, all 3D looks (previews only), the God of Order fight, the Djinn render layers and first-person arms, networking, balance numbers. Heavy meshes (Catstaff about 7,000 quads, each Djinn armor 3,500 to 4,900) may cost frame time. Many Tensura skill, effect and damage ids are looked up at run time and skipped silently if absent. Admin grants bypass the one-bond rule.
+
 ## [1.23.0] — The floor arenas: Goliath's Pit (Upper Catacombs) and the Charybdis Basin (Deep Waterways)
 
 **State:** written without a compiler; CI is the first compile. Nothing run in game: no arena built, no boss fought. Charybdis' model is rough. **All new** (nothing replaced).

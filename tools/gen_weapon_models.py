@@ -2033,7 +2033,7 @@ RELICS = [
     ("anti_bird_charm", anti_bird_charm),
     ("bond_thread", bond_thread),
     ("communication_magic_device", comm_device),
-    ("devil_contract", devil_contract),
+    ("devil_contract_book", devil_contract),
     ("fortune_die", fortune_die),
     ("mana_method_rune_stone", rune_stone),
     ("recovery_salve", recovery_salve),

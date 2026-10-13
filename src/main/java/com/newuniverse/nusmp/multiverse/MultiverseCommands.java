@@ -204,6 +204,9 @@ public final class MultiverseCommands {
         com.newuniverse.nusmp.dungeon.floor.charybdis.CharybdisCommand.addTo(bossNode);                                    // 1.23.0
         com.newuniverse.nusmp.entity.avatar.AvatarCommand.addTo(bossNode);                           // 1.22.0: avatar [lucifero|megicula]
         com.newuniverse.nusmp.entity.zogratis.ZogratisCommand.addTo(bossNode);                       // 1.20.0: dante | vanica | zenon | lucius | triad
+        com.newuniverse.nusmp.relics.RelicCommands.addTo(root);                                                       // 1.24.0: relic list|info|give|attune|unattune|grade
+        com.newuniverse.nusmp.relics.order.RelicOrderCommand.addTo(root);                                              // relic order census|enforce|status|release|summon
+        com.newuniverse.nusmp.relics.djinn.DjinnCommand.addTo(root);                                                   // djinn status|release|share|grant|phase
         root.then(bossNode);
 
         root.then(Commands.literal("antimode").requires(MultiverseCommands::admin).then(Commands.argument("player", EntityArgument.player())

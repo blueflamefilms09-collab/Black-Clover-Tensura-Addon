@@ -53,6 +53,14 @@ public class NUSMP {
         com.newuniverse.nusmp.entity.zogratis.VanicaCurse.EFFECTS.register(modEventBus);
         com.newuniverse.nusmp.dungeon.nexus.vault.NexusBlocks.init();                                                    // 1.21.0: the Variable Core (vault blocks)
         com.newuniverse.nusmp.dungeon.nexus.vault.NexusBlocks.BLOCKS.register(modEventBus);
+        com.newuniverse.nusmp.relics.order.OrderEntities.init();                                                                  // 1.24.0: Relics of Many Worlds, the God of Order, the Djinn
+        com.newuniverse.nusmp.relics.order.OrderEntities.ENTITIES.register(modEventBus);
+        modEventBus.addListener(com.newuniverse.nusmp.relics.order.OrderEntities::attributes);
+        com.newuniverse.nusmp.relics.djinn.DjinnItems.init();
+        com.newuniverse.nusmp.relics.djinn.DjinnComponents.COMPONENTS.register(modEventBus);
+        com.newuniverse.nusmp.relics.djinn.DjinnAttachments.ATTACHMENTS.register(modEventBus);
+        modEventBus.addListener(com.newuniverse.nusmp.relics.djinn.DjinnNet::registerPayloads);
+        com.newuniverse.nusmp.relics.RelicSystem.registerContent(modEventBus);                                                     // runs RelicCatalog.init: every relic into NUItems.ITEMS
         com.newuniverse.nusmp.dungeon.sentient.SentientItems.init();                                                     // 1.22.0: the twelve synthesis materials
         com.newuniverse.nusmp.dungeon.floor.goliath.GoliathEntities.init();                                                                  // 1.23.0: the floor arenas and their bosses
         com.newuniverse.nusmp.dungeon.floor.goliath.GoliathEntities.ENTITIES.register(modEventBus);
@@ -114,6 +122,9 @@ public class NUSMP {
             modEventBus.addListener(com.newuniverse.nusmp.client.dungeon.DungeonMobsClient::register);          // 1.18.0: the Living Dungeon's creatures
             modEventBus.addListener(com.newuniverse.nusmp.client.dungeon.DungeonSky::registerEffects);         // 1.19.0: the Dungeon's own sky and fog
             modEventBus.addListener(com.newuniverse.nusmp.client.zogratis.ZogratisClient::register);            // 1.20.0: the Zogratis renderers
+            com.newuniverse.nusmp.client.relics.RelicClient.init(modEventBus);                                                   // 1.24.0
+            modEventBus.addListener(com.newuniverse.nusmp.client.relics.order.OrderClient::register);
+            com.newuniverse.nusmp.client.relics.djinn.DjinnClient.init(modEventBus);
             modEventBus.addListener(com.newuniverse.nusmp.client.floor.goliath.GoliathClient::register);                            // 1.23.0
             modEventBus.addListener(com.newuniverse.nusmp.client.floor.charybdis.CharybdisClient::register);
             modEventBus.addListener(com.newuniverse.nusmp.client.avatar.AvatarClient::register);                                    // 1.22.0: the Devil Avatar
@@ -197,6 +208,10 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.wild.WildDriver::onJoin);                 // 1.19.0: roster mobs get their record
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.wild.WildDriver::onServerTick);           // the food web sweep
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.wild.WildDriver::onDeath);                // kills feed the killer
+        // 1.24.0: Relics of Many Worlds (engine + every wave's hooks), the Order, the Djinn
+        com.newuniverse.nusmp.relics.RelicSystem.registerGame(NeoForge.EVENT_BUS);
+        com.newuniverse.nusmp.relics.order.OrderEvents.register(NeoForge.EVENT_BUS);
+        com.newuniverse.nusmp.relics.djinn.DjinnEvents.register(NeoForge.EVENT_BUS);
         // 1.23.0: the floor arenas (Goliath's Pit, the Charybdis Basin)
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.floor.goliath.GoliathPitSite::onCollapse);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.floor.goliath.GoliathPitSite::onServerStopping);
