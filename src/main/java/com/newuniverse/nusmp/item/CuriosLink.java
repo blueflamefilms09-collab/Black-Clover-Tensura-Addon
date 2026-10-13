@@ -55,6 +55,9 @@ public final class CuriosLink {
         return loaded;
     }
 
+    /** Is Curios installed and its inventory readable? (The Nexus relics fall back to the off-hand when it is not.) */
+    public static boolean available() { return loaded() && !broken; }
+
     // ---------------------------------------------------------------- reading the Curios inventory
     /** Every stack worn in a Curios slot of this entity (empty without Curios, or if its API is not what was expected). */
     public static List<ItemStack> equipped(LivingEntity e) {

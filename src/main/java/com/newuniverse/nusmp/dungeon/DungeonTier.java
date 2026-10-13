@@ -3,9 +3,13 @@ package com.newuniverse.nusmp.dungeon;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 
-/** The atmospheric tiers of the Living Dungeon (docs/living_dungeon.md section 3): a function of depth and place. */
+/**
+ * The atmospheric tiers of the Living Dungeon (docs/living_dungeon.md section 3): a function of depth and place. The deepest tier keeps its
+ * enum name GOLDEN_CITY (saved data and the moods are keyed by it) but is shown as "The Variable Core": since 1.21.0 each of its core cells
+ * is one of four zones (dungeon/nexus/NexusZone), the Golden City being one of them.
+ */
 public enum DungeonTier {
-    UPPER_CATACOMBS("Upper Catacombs", 100f), DEEP_WATERWAYS("Deep Waterways", 100f), VOLCANIC_VENTS("Volcanic Vents", 60f), GOLDEN_CITY("Golden City", 100f);
+    UPPER_CATACOMBS("Upper Catacombs", 100f), DEEP_WATERWAYS("Deep Waterways", 100f), VOLCANIC_VENTS("Volcanic Vents", 60f), GOLDEN_CITY("The Variable Core", 100f);
 
     public final String label;
     /** The most oxygen the air of this tier can hold. */

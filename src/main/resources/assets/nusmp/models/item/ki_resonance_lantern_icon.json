@@ -1,0 +1,26 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "nusmp:item/ki_resonance_lantern_off"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "nusmp:flame": 0.17
+      },
+      "model": "nusmp:item/ki_resonance_lantern_flame_amber"
+    },
+    {
+      "predicate": {
+        "nusmp:flame": 0.5
+      },
+      "model": "nusmp:item/ki_resonance_lantern_flame_blue"
+    },
+    {
+      "predicate": {
+        "nusmp:flame": 0.84
+      },
+      "model": "nusmp:item/ki_resonance_lantern_flame_red"
+    }
+  ]
+}

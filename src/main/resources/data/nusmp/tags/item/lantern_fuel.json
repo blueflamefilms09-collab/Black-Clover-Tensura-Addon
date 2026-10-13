@@ -1,0 +1,33 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "tensura:magic_stone",
+      "required": false
+    },
+    {
+      "id": "tensura:magic_ore_shard",
+      "required": false
+    },
+    {
+      "id": "tensura:low_quality_magic_crystal",
+      "required": false
+    },
+    {
+      "id": "tensura:medium_quality_magic_crystal",
+      "required": false
+    },
+    {
+      "id": "tensura:high_quality_magic_crystal",
+      "required": false
+    },
+    {
+      "id": "minecraft:slime_ball",
+      "required": false
+    },
+    {
+      "id": "tensura:chilled_slime",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "nusmp:block/illusion_stone"
+      },
+      {
+        "model": "nusmp:block/illusion_stone",
+        "y": 90
+      },
+      {
+        "model": "nusmp:block/illusion_stone",
+        "y": 180
+      },
+      {
+        "model": "nusmp:block/illusion_stone",
+        "y": 270
+      }
+    ]
+  }
+}

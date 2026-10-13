@@ -50,7 +50,8 @@ public final class WildRules {
     public static float carcassWeight(float maxHealth) { return Math.max(0f, maxHealth); }
 
     /**
-     * Which Carcass (CarcassBlock.KIND) an entity type leaves: 0 slime, 1 Armorsaurus (the old Living Armor), 2 Basilisk, 3 Direwolf, 4 anything else.
+     * Which Carcass (CarcassBlock.KIND) an entity type leaves: 0 slime, 1 Armorsaurus (the old Living Armor), 2 Basilisk, 3 Direwolf, 4 anything else,
+     * 5 a spider (1.21.0: the Black and Knight Spiders of Tensura, and the vanilla ones; their organs hold a Venom Gland).
      * The Supermassive Slime is a slime and leaves jelly like the others.
      */
     public static int carcassKind(String id) {
@@ -60,6 +61,7 @@ public final class WildRules {
             case "tensura:armorsaurus" -> 1;
             case "tensura:basilisk" -> 2;
             case "tensura:direwolf" -> 3;
+            case "tensura:black_spider", "tensura:knight_spider", "minecraft:spider", "minecraft:cave_spider" -> 5;
             default -> 4;
         };
     }

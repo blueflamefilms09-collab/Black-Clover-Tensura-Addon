@@ -27,10 +27,14 @@ import java.util.List;
  * The Dungeon Maw (docs/living_dungeon.md section 2). Casting spends magicules into the air; the thickness of the air over a region of
  * 4x4 chunks is tracked ({@link #add}); when it crosses the threshold the ground there tears open into a mouth of dense mana wrapped in
  * roots. Walk in (through a gap you chop with an axe) and you fall into the Dungeon. When every root is gone, or the Maw's time is out,
- * it closes.
+ * it closes. Since 1.21.0 the mouth manifests as a plain stone tower, ruins or an isolated gate ({@link MawManifest}, {@link MawShapes})
+ * where the ground fits one, and as the plain 1.17 mouth in the ground where it does not; when it closes the roots and the Maw vanish and
+ * the stone stays.
  */
 public final class DungeonMaw {
     private DungeonMaw() {}
+
+    private static final org.slf4j.Logger LOGGER = com.mojang.logging.LogUtils.getLogger();
 
     /** Decay of the ambient density per tick (0.025 = 30 a minute). */
     private static final double DECAY = 0.025;
@@ -60,8 +64,16 @@ public final class DungeonMaw {
 
     // ---------------------------------------------------------------- opening
     /** Tears a Maw open on the surface near this position. Returns false if no fitting ground was found. */
-    public static boolean open(ServerLevel level, BlockPos near) {
+    public static boolean open(ServerLevel level, BlockPos near) { return openKind(level, near, null) != null; }
+
+    /**
+     * Tears a Maw open on the surface near this position and says how it manifested: a tower, ruins or a gate where the ground fits one
+     * (the one the hash of the place and the biome picks first), the plain mouth in the ground where none does. {@code forced}: the one an
+     * admin asked for (null: by the hash). Returns null if no ground was found at all.
+     */
+    public static MawShapes.Kind openKind(ServerLevel level, BlockPos near, MawShapes.Kind forced) {
         var rnd = level.getRandom();
+        BlockPos plain = null;                                                      // the first spot the 1.17 search took: the plain mouth goes there if nothing taller fits anywhere
         for (int tries = 0; tries < 12; tries++) {
             int x = near.getX() + rnd.nextInt(25) - 12, z = near.getZ() + rnd.nextInt(25) - 12;
             if (!level.hasChunk(x >> 4, z >> 4)) continue;
@@ -70,14 +82,21 @@ public final class DungeonMaw {
             BlockState below = level.getBlockState(at.below());
             if (!below.getFluidState().isEmpty() || below.isAir() || !below.isFaceSturdy(level, at.below(), Direction.UP)) continue;
             if (!level.getBlockState(at).canBeReplaced() && !level.getBlockState(at).isAir()) continue;
-            build(level, at);
-            return true;
+            if (plain == null) plain = at;
+            MawManifest.Built built = MawManifest.tryBuild(level, at, forced);       // 1.21.0: a tower, ruins or a gate if this ground fits one
+            if (built != null) {
+                announce(level, built);
+                return built.kind();
+            }
         }
-        return false;
+        if (plain == null) return null;
+        if (forced != MawShapes.Kind.HOLE && !LivingDungeon.in(level)) LOGGER.info("Dungeon Maw: no tower, ruin or gate fits the ground near {}: the plain mouth opens", plain);
+        announce(level, buildHole(level, plain));
+        return MawShapes.Kind.HOLE;
     }
 
-    private static void build(ServerLevel level, BlockPos at) {
-        MinecraftServer server = level.getServer();
+    /** The plain mouth of 1.17 in the ground, wrapped in roots: what a Maw is where no tower, ruin or gate fits. */
+    private static MawManifest.Built buildHole(ServerLevel level, BlockPos at) {
         BlockState root = DungeonBlocks.MAW_ROOT.get().defaultBlockState();
         level.setBlock(at, DungeonBlocks.DUNGEON_MAW.get().defaultBlockState(), 3);
         List<Long> roots = new ArrayList<>();
@@ -95,14 +114,21 @@ public final class DungeonMaw {
         }
         BlockPos cap = at.above();                                                  // a cap over the mouth: the roots must be cut to get in
         if (level.getBlockState(cap).isAir() || level.getBlockState(cap).canBeReplaced()) { level.setBlock(cap, root, 3); roots.add(cap.asLong()); }
+        return new MawManifest.Built(MawShapes.Kind.HOLE, at, roots.stream().mapToLong(Long::longValue).toArray());
+    }
+
+    /** A Maw has opened: it is remembered (with its roots, the only thing that goes when it closes), it roars, and the server is told. */
+    private static void announce(ServerLevel level, MawManifest.Built built) {
+        MinecraftServer server = level.getServer();
+        BlockPos at = built.maw();
         long now = level.getGameTime(), close = now + DungeonConfig.get(DungeonConfig.MAW_MINUTES) * 1200L;
         DungeonSave s = DungeonSave.get(server);
-        s.maws.add(new DungeonSave.Maw(level.dimension().location().toString(), at.asLong(), close, roots.stream().mapToLong(Long::longValue).toArray()));
+        s.maws.add(new DungeonSave.Maw(level.dimension().location().toString(), at.asLong(), close, built.roots()));
         s.setDirty();
         level.playSound(null, at, SoundEvents.WARDEN_EMERGE, SoundSource.AMBIENT, 2.5f, 0.6f);
         level.sendParticles(ParticleTypes.SCULK_SOUL, at.getX() + 0.5, at.getY() + 1, at.getZ() + 0.5, 60, 1.5, 1.2, 1.5, 0.05);
-        broadcast(server, Component.literal("The ground groans. A Dungeon Maw has torn open somewhere near (" + round(at.getX()) + ", " + round(at.getZ())
-                + "). Cut its roots down before whatever lives below finds the way up.").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
+        broadcast(server, Component.literal(MawText.opened(built.kind(), MawManifest.biomePath(level, at), round(at.getX()), round(at.getZ())))
+                .withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
     }
 
     private static int round(int v) { return Math.round(v / 100f) * 100; }

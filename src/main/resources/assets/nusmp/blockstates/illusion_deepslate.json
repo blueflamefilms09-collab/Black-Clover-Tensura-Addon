@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "nusmp:block/illusion_deepslate"
+      },
+      {
+        "model": "nusmp:block/illusion_deepslate_mirrored"
+      }
+    ]
+  }
+}

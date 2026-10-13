@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.dungeon;
 
+import com.newuniverse.nusmp.dungeon.nexus.NexusText;
+import com.newuniverse.nusmp.dungeon.nexus.NexusZones;
 import com.newuniverse.nusmp.dungeon.wild.WildRules;
 import com.newuniverse.nusmp.dungeon.wild.WildSpawn;
 import com.newuniverse.nusmp.dungeon.wild.Wildlife;
@@ -106,6 +108,7 @@ public final class DungeonEcology {
      * counted with {@link Wildlife#tierOf}, so the surviving 1.18.0 creatures still count. The gates are those of {@link WildRules}.
      */
     private static void population(ServerLevel d, LevelChunk c, EcosystemData e) {
+        if (!NexusZones.lifeAllowed(d, c.getPos())) return;                                        // 1.21.0: no breeding inside a Nexus that does not allow life
         ChunkPos cp = c.getPos();
         AABB box = new AABB(cp.getMinBlockX(), d.getMinBuildHeight(), cp.getMinBlockZ(), cp.getMaxBlockX() + 1, d.getMaxBuildHeight(), cp.getMaxBlockZ() + 1);
         List<Mob> life = d.getEntitiesOfClass(Mob.class, box, m -> Wildlife.tierOf(m) > 0);
@@ -129,8 +132,8 @@ public final class DungeonEcology {
         e.peak = Math.max(e.peak, total);
         if (total == 0 && e.peak >= 6) {                                                           // everything that lived here is gone
             e.peak = 0;
-            DungeonMaw.broadcast(d.getServer(), Component.literal("Deep below, a whole stretch of the Dungeon has gone silent near (" + (Math.round(cp.getMiddleBlockX() / 100f) * 100)
-                    + ", " + (Math.round(cp.getMiddleBlockZ() / 100f) * 100) + "): its ecosystem has collapsed.").withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
+            DungeonMaw.broadcast(d.getServer(), Component.literal(MawText.famine(DungeonTier.at(cp.getMiddleBlockX(), 0, cp.getMiddleBlockZ()).label))      // 1.21.0: the owner's wording, the tier the chunk's ecosystem runs under
+                    .withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
         }
     }
 
@@ -209,8 +212,8 @@ public final class DungeonEcology {
             if (!s.cityBreached) {
                 s.cityBreached = true;
                 s.setDirty();
-                DungeonMaw.broadcast(level.getServer(), Component.literal("Something very old has stopped sleeping: the seal of the Golden City is broken. "
-                        + p.getName().getString() + " walks its streets.").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
+                DungeonMaw.broadcast(level.getServer(), Component.literal(NexusText.sealBreached(p.getName().getString(), NexusZones.zoneAt(level, p.getBlockX(), p.getBlockZ()).label))
+                        .withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));         // 1.21.0: the owner's wording; the Nexus names the zone the player walks
             }
         }
         if (!DungeonConfig.get(DungeonConfig.HAZARDS) || p.isCreative()) return;

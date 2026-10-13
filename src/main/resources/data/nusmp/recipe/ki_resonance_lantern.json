@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "N": {
+      "item": "minecraft:iron_nugget"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "S": {
+      "tag": "nusmp:lantern_cores"
+    }
+  },
+  "pattern": [
+    "NIN",
+    "GSG",
+    "NIN"
+  ],
+  "result": {
+    "id": "nusmp:ki_resonance_lantern",
+    "count": 1
+  }
+}

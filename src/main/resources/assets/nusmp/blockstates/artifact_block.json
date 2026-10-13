@@ -1,0 +1,76 @@
+{
+  "variants": {
+    "central=false,relic=band_of_the_spatial_anchor,taken=false": {
+      "model": "nusmp:block/artifact_block_band"
+    },
+    "central=false,relic=band_of_the_spatial_anchor,taken=true": {
+      "model": "nusmp:block/artifact_block_empty"
+    },
+    "central=false,relic=devil_bound_sheath,taken=false": {
+      "model": "nusmp:block/artifact_block_sheath"
+    },
+    "central=false,relic=devil_bound_sheath,taken=true": {
+      "model": "nusmp:block/artifact_block_empty"
+    },
+    "central=false,relic=empty,taken=false": {
+      "model": "nusmp:block/artifact_block_empty"
+    },
+    "central=false,relic=empty,taken=true": {
+      "model": "nusmp:block/artifact_block_empty"
+    },
+    "central=false,relic=gamblers_grimoire_page,taken=false": {
+      "model": "nusmp:block/artifact_block_page"
+    },
+    "central=false,relic=gamblers_grimoire_page,taken=true": {
+      "model": "nusmp:block/artifact_block_empty"
+    },
+    "central=false,relic=glutton_chalice,taken=false": {
+      "model": "nusmp:block/artifact_block_chalice"
+    },
+    "central=false,relic=glutton_chalice,taken=true": {
+      "model": "nusmp:block/artifact_block_empty"
+    },
+    "central=false,relic=mantle_of_the_scavenger,taken=false": {
+      "model": "nusmp:block/artifact_block_mantle"
+    },
+    "central=false,relic=mantle_of_the_scavenger,taken=true": {
+      "model": "nusmp:block/artifact_block_empty"
+    },
+    "central=true,relic=band_of_the_spatial_anchor,taken=false": {
+      "model": "nusmp:block/artifact_block_central_band"
+    },
+    "central=true,relic=band_of_the_spatial_anchor,taken=true": {
+      "model": "nusmp:block/artifact_block_central_empty"
+    },
+    "central=true,relic=devil_bound_sheath,taken=false": {
+      "model": "nusmp:block/artifact_block_central_sheath"
+    },
+    "central=true,relic=devil_bound_sheath,taken=true": {
+      "model": "nusmp:block/artifact_block_central_empty"
+    },
+    "central=true,relic=empty,taken=false": {
+      "model": "nusmp:block/artifact_block_central_empty"
+    },
+    "central=true,relic=empty,taken=true": {
+      "model": "nusmp:block/artifact_block_central_empty"
+    },
+    "central=true,relic=gamblers_grimoire_page,taken=false": {
+      "model": "nusmp:block/artifact_block_central_page"
+    },
+    "central=true,relic=gamblers_grimoire_page,taken=true": {
+      "model": "nusmp:block/artifact_block_central_empty"
+    },
+    "central=true,relic=glutton_chalice,taken=false": {
+      "model": "nusmp:block/artifact_block_central_chalice"
+    },
+    "central=true,relic=glutton_chalice,taken=true": {
+      "model": "nusmp:block/artifact_block_central_empty"
+    },
+    "central=true,relic=mantle_of_the_scavenger,taken=false": {
+      "model": "nusmp:block/artifact_block_central_mantle"
+    },
+    "central=true,relic=mantle_of_the_scavenger,taken=true": {
+      "model": "nusmp:block/artifact_block_central_empty"
+    }
+  }
+}
