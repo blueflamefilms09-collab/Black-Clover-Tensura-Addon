@@ -8,9 +8,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class NexusTextTest {
     @Test
     void theSealBroadcastIsTheOwnersLineThenWhoWalksWhat() {
-        assertEquals("An immense Mana presence is felt as a Spatial Nexus seal is breached. Steve walks the Monarch's Vault.",
+        assertEquals("[Server] An immense Mana presence is felt as a Spatial Nexus seal is breached. Steve walks the Monarch's Vault.",
                 NexusText.sealBreached("Steve", NexusZone.MONARCH_VAULT.label));
-        assertEquals("An immense Mana presence is felt as a Spatial Nexus seal is breached. Alex walks the Golden City.", NexusText.sealBreached("Alex", NexusZone.GOLDEN_CITY.label));
+        assertEquals("[Server] An immense Mana presence is felt as a Spatial Nexus seal is breached. Alex walks the Golden City.", NexusText.sealBreached("Alex", NexusZone.GOLDEN_CITY.label));
         for (NexusZone z : NexusZone.values()) {
             String text = NexusText.sealBreached("Someone", z.label);
             assertTrue(text.startsWith(NexusText.SEAL_LINE + " Someone walks the "), text);

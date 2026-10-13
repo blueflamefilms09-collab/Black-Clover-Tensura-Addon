@@ -7,7 +7,7 @@ public final class NexusText {
     private NexusText() {}
 
     /** The owner's wording for a Spatial Nexus seal giving way (docs/living_dungeon.md section 2, "Deep Delving"). */
-    public static final String SEAL_LINE = "An immense Mana presence is felt as a Spatial Nexus seal is breached.";
+    public static final String SEAL_LINE = "[Server] An immense Mana presence is felt as a Spatial Nexus seal is breached.";
 
     /** "the Monarch's Vault" from "The Monarch's Vault". */
     public static String the(String label) {

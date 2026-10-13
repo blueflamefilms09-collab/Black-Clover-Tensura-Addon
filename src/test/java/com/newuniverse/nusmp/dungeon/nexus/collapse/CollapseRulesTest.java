@@ -135,4 +135,19 @@ class CollapseRulesTest {
         assertTrue(CollapseRules.frontAhead(CollapsePlan.Stage.FINAL, 10, 0, 20));
         assertFalse(CollapseRules.frontAhead(roll, 5, 5, 5), "an empty window");
     }
+
+    @Test
+    void groundThatCouldFreezeTheServerIsNotWorkedOn() {
+        assertTrue(CollapseRules.sane(Footprint.oval(0, 0, 47, 47), -52, -13));
+        assertTrue(CollapseRules.sane(Footprint.rect(-1280, 64, 56, 56), -53, -12), "the biggest Nexus (a Golden City, 113 wide)");
+        assertTrue(CollapseRules.sane(CollapseRules.pocket(5, 5, 5).fp(), 4, 19));
+        assertFalse(CollapseRules.sane(Footprint.oval(0, 0, 101, 40), -52, -13), "wider than a core cell by far");
+        assertFalse(CollapseRules.sane(Footprint.oval(0, 0, 40, 5000), -52, -13));
+        assertFalse(CollapseRules.sane(Footprint.oval(0, 0, 40, 40), -52, -52), "no height");
+        assertFalse(CollapseRules.sane(Footprint.oval(0, 0, 40, 40), -52, -60), "upside down");
+        assertFalse(CollapseRules.sane(Footprint.oval(0, 0, 40, 40), -52, 1_000_000), "a roof a million blocks up");
+        assertFalse(CollapseRules.sane(Footprint.oval(0, 0, 40, 40), Integer.MIN_VALUE, 0));
+        assertFalse(CollapseRules.sane(Footprint.oval(2_000_000_000, 0, 40, 40), -52, -13), "beyond the world border");
+        assertFalse(CollapseRules.sane(null, -52, -13));
+    }
 }

@@ -13,6 +13,9 @@ import java.util.List;
  * the same footprint and exits always give the same order, which is what lets a restart carry on from a saved cursor.
  */
 public final class CollapseSweep {
+    /** The most columns an order may have (a 200 by 200 area): a footprint beyond it is refused, so a damaged record cannot ask for billions. */
+    public static final int MAX_COLUMNS = 45_000;
+
     private final int[] xs, zs;
     private final int open;
     /** The index of the column at (minX + i, minZ + j) is grid[i * depth + j], or -1 where the footprint has none. */
@@ -55,6 +58,7 @@ public final class CollapseSweep {
             System.arraycopy(exitXs, 0, ex, 0, n);
             System.arraycopy(exitZs, 0, ez, 0, n);
         }
+        if ((2L * (fp.halfX() + (long) margin) + 1L) * (2L * (fp.halfZ() + (long) margin) + 1L) > MAX_COLUMNS) throw new IllegalArgumentException("a collapse of " + fp + " is too big to sweep");
         long r2 = (long) radius * radius;
         List<long[]> far = new ArrayList<>(), near = new ArrayList<>();                       // {distance squared, x, z}
         for (int x = fp.minX() - margin; x <= fp.maxX() + margin; x++) {

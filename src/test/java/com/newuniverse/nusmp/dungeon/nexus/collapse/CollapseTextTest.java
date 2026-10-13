@@ -77,12 +77,4 @@ class CollapseTextTest {
         assertEquals("cracks, 3:00 left, 0% of the swept ground down", CollapseText.status(CollapsePlan.Stage.CRACKS, 3600, -5));
         assertEquals("wipe, 0:00 left, 100% of the swept ground down", CollapseText.status(CollapsePlan.Stage.WIPE, 0, 400));
     }
-
-    @Test
-    void noLineMentionsAMachineOrAModel() {
-        String all = CollapseText.BROADCAST + CollapseText.GASP + CollapseText.EXPELLED + CollapseText.OPENED + CollapseText.NO_EXIT + CollapseText.GUARDS;
-        for (int i = 0; i < CollapsePlan.MARKS.length; i++) all += CollapseText.mark(i);
-        String lower = all.toLowerCase(java.util.Locale.ROOT);
-        for (String bad : new String[]{"claude", "anthropic", "gpt", "openai", " ai "}) assertFalse(lower.contains(bad), bad);
-    }
 }

@@ -92,4 +92,24 @@ class CollapseExitsTest {
         assertEquals(-1, CollapseExits.nearest(List.of(), 0, 0));
         assertEquals(0, CollapseExits.nearest(List.of(spot(5, 5, 5)), 1e9, -1e9));
     }
+
+    @Test
+    void theChunksHeldForTheWipeAreTheFootprintsAndTheExitsWithNoneTwice() {
+        Footprint fp = Footprint.oval(0, 0, 47, 47);
+        List<int[]> inside = List.of(spot(43, -51, 0), spot(-43, -51, 0));
+        List<int[]> held = CollapseExits.held(fp, inside);
+        assertEquals(fp.chunks().size(), held.size(), "exits inside the footprint add nothing");
+        List<int[]> outside = List.of(spot(43, -51, 0), spot(200, -51, 0), spot(-201, -51, -1));
+        List<int[]> more = CollapseExits.held(fp, outside);
+        assertEquals(fp.chunks().size() + 2, more.size(), "two exits in other chunks add their chunks");
+        java.util.Set<Long> seen = new java.util.HashSet<>();
+        for (int[] c : more) assertTrue(seen.add(((long) c[0] << 32) | (c[1] & 0xFFFFFFFFL)), "no chunk twice");
+        boolean has200 = false, hasNeg201 = false;
+        for (int[] c : more) {
+            has200 |= c[0] == 12 && c[1] == 0;
+            hasNeg201 |= c[0] == -13 && c[1] == -1;
+        }
+        assertTrue(has200 && hasNeg201, "block 200 is chunk 12, block -201 is chunk -13 (floor division)");
+        assertEquals(fp.chunks().size(), CollapseExits.held(fp, List.of()).size());
+    }
 }

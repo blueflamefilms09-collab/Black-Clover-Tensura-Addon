@@ -22,6 +22,15 @@ public final class CollapseRules {
     /** The ground of a collapse: where it stands and how high. */
     public record Ground(Footprint fp, int floorY, int topY) {}
 
+    /** The largest ground a collapse will take on: half-widths of this many blocks (a core cell is 128 wide, so 64 at the most) and this many blocks high (a world is 320). A saved record beyond it is damaged. */
+    public static final int MAX_HALF = 100, MAX_HEIGHT = 330;
+
+    /** Is this ground one a collapse can work on without freezing the server: a footprint that fits a core cell with room to spare, and a sane height above the floor? */
+    public static boolean sane(Footprint fp, int floorY, int topY) {
+        return fp != null && fp.halfX() <= MAX_HALF && fp.halfZ() <= MAX_HALF && topY > floorY && (long) topY - floorY <= MAX_HEIGHT
+                && Math.abs((long) floorY) < 4096L && Math.abs((long) fp.centreX()) < 30_000_000L && Math.abs((long) fp.centreZ()) < 30_000_000L;
+    }
+
     /** The pocket round a spot where a collapse starts outside a standing Nexus: its floor is the block under the feet. */
     public static Ground pocket(int x, int y, int z) {
         int floor = y - 1;

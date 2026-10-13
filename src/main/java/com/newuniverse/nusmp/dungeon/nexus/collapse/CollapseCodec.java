@@ -107,7 +107,7 @@ public final class CollapseCodec {
             s.fp = new Footprint(shapes[shape], fx, fz, hx, hz);
             s.floorY = a[i++];
             s.topY = a[i++];
-            if (s.topY <= s.floorY) return null;
+            if (!CollapseRules.sane(s.fp, s.floorY, s.topY)) return null;
             s.cursor = Math.max(0, a[i++]);
             s.wipeCursor = Math.max(0, a[i++]);
             s.nextMsg = Math.max(0, a[i++]);

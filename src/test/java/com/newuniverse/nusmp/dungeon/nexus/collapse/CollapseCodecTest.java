@@ -145,6 +145,12 @@ class CollapseCodecTest {
         upsideDown[13] = 40;
         upsideDown[14] = 30;
         assertNull(CollapseCodec.decode(upsideDown, longs));
+        int[] huge = ints.clone();
+        huge[11] = 1_000_000;
+        assertNull(CollapseCodec.decode(huge, longs), "a footprint a million blocks wide");
+        int[] tall = ints.clone();
+        tall[14] = 2_000_000_000;
+        assertNull(CollapseCodec.decode(tall, longs), "a roof two billion blocks up");
         int[] hugeExits = ints.clone();
         hugeExits[20] = 100_000;
         assertNull(CollapseCodec.decode(hugeExits, longs));

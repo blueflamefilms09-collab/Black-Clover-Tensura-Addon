@@ -113,4 +113,11 @@ class CollapseSweepTest {
         assertEquals(115 * 115, s.size());
         assertTrue(ms < 2000, "built in " + ms + " ms");
     }
+
+    @Test
+    void aFootprintTooBigToSweepIsRefusedNotTried() {
+        assertThrows(IllegalArgumentException.class, () -> CollapseSweep.build(Footprint.oval(0, 0, 100_000, 100_000), 1, new int[]{0}, new int[]{0}, 7));
+        assertThrows(IllegalArgumentException.class, () -> CollapseSweep.build(Footprint.rect(0, 0, 5000, 5), 1, new int[]{0}, new int[]{0}, 7));
+        assertTrue(CollapseSweep.build(Footprint.rect(0, 0, 100, 100), 1, new int[]{0}, new int[]{0}, 7).size() <= CollapseSweep.MAX_COLUMNS);
+    }
 }

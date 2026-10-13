@@ -34,6 +34,8 @@ import java.util.List;
 public final class DungeonMaw {
     private DungeonMaw() {}
 
+    private static final org.slf4j.Logger LOGGER = com.mojang.logging.LogUtils.getLogger();
+
     /** Decay of the ambient density per tick (0.025 = 30 a minute). */
     private static final double DECAY = 0.025;
 
@@ -88,6 +90,7 @@ public final class DungeonMaw {
             }
         }
         if (plain == null) return null;
+        if (forced != MawShapes.Kind.HOLE && !LivingDungeon.in(level)) LOGGER.info("Dungeon Maw: no tower, ruin or gate fits the ground near {}: the plain mouth opens", plain);
         announce(level, buildHole(level, plain));
         return MawShapes.Kind.HOLE;
     }

@@ -45,6 +45,12 @@ import java.util.UUID;
 final class CollapseRun implements CollapseRunner.Events {
     private static final org.slf4j.Logger LOG = LogUtils.getLogger();
     private static final int SECOND = 20, HOLD_EVERY = 100, FAILURES = 100, WIPE_PATIENCE = 6000;
+    /**
+     * Whether the wipe asks for its chunks to be loaded (region tickets that expire by themselves, from the moment the wipe starts to its
+     * end) so that the Nexus is gone even when everyone has left. false: the wipe waits for a player to bring the chunks back instead.
+     * Not "force-loading per tick": a few dozen tickets, renewed every five seconds, for the few seconds the wipe takes.
+     */
+    private static final boolean HOLD_CHUNKS = true;
     /** The pocket's ring of candidate exits: how far out, how many candidates, how many to keep, how far apart they must be. */
     private static final int RING_RADIUS = 14, RING_COUNT = 8, RING_KEEP = 2, RING_GAP = 12;
 
@@ -116,15 +122,9 @@ final class CollapseRun implements CollapseRunner.Events {
         runner = new CollapseRunner(s, order, s.sweep(order));
         world = new CollapseWorld(level, s.nexus, order);
         air.clear();
+        air.addAll(s.fp.chunks());
         held.clear();
-        Set<Long> seen = new HashSet<>();
-        for (int[] c : s.fp.chunks()) {
-            if (seen.add(ChunkPos.asLong(c[0], c[1]))) {
-                air.add(c);
-                held.add(c);
-            }
-        }
-        for (int[] e : s.exits) if (seen.add(ChunkPos.asLong(e[0] >> 4, e[2] >> 4))) held.add(new int[]{e[0] >> 4, e[2] >> 4});
+        held.addAll(CollapseExits.held(s.fp, s.exits));
     }
 
     // ---------------------------------------------------------------- the opening
@@ -275,6 +275,7 @@ final class CollapseRun implements CollapseRunner.Events {
 
     /** For the wipe only: the chunks of the collapse are asked to stay (or come) loaded for a little while, so that the Nexus is gone even if everyone left. */
     private void hold() {
+        if (!HOLD_CHUNKS) return;
         ServerChunkCache cache = level.getChunkSource();
         BlockPos at = centre();
         for (int[] c : held) cache.addRegionTicket(TicketType.PORTAL, new ChunkPos(c[0], c[1]), 1, at);

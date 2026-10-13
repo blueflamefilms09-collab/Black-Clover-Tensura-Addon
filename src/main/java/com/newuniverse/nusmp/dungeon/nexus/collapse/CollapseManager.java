@@ -11,6 +11,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.level.ChunkPos;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
@@ -81,6 +82,10 @@ public final class CollapseManager {
         if (mode == CollapseRules.Mode.NOT_READY) return Result.NOT_READY;
         if (mode == CollapseRules.Mode.GONE) return Result.GONE;
         boolean nexus = mode == CollapseRules.Mode.NEXUS;
+        if (nexus && !CollapseRules.sane(info.footprint, info.floorY, info.topY)) {
+            LOG.warn("[nusmp] The {} at {} has ground no collapse can work on (footprint {}, floor {}, roof {}); it is treated as a pocket", info.zone.label, centre.toShortString(), info.footprint, info.floorY, info.topY);
+            nexus = false;
+        }
         BlockPos at = nexus ? info.centre() : centre;
         for (CollapseRun r : ACTIVE) {
             if (!r.done() && r.level == level && CollapseRules.sameArea(at.getX(), at.getZ(), r.s.centreX, r.s.centreZ)) return Result.ALREADY;
@@ -171,6 +176,16 @@ public final class CollapseManager {
         } catch (RuntimeException | LinkageError failure) {
             LOG.warn("[nusmp] Could not place a mutated guard that came into the world", failure);
         }
+    }
+
+    /**
+     * The Dungeon's guard ({@code DungeonGuard.onEntityJoin}, highest priority) cancels the join of every plain falling block, to keep sand
+     * and gravity from copying blocks it refused to remove. The ones this collapse starts are made on purpose, after it has taken their
+     * block away itself: while {@link CollapseWorld#spawning} says so, the cancel is taken back. Register this one at the LOWEST priority,
+     * receiving cancelled events, so that it runs after the guard's.
+     */
+    public static void onFallingBlockJoin(EntityJoinLevelEvent e) {
+        if (CollapseWorld.spawning && e.isCanceled() && e.getEntity() instanceof FallingBlockEntity && !e.loadedFromDisk()) e.setCanceled(false);
     }
 
     // ---------------------------------------------------------------- questions from outside

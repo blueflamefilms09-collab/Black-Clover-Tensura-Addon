@@ -63,6 +63,18 @@ public final class CollapseExits {
         return out;
     }
 
+    /** The chunks {cx, cz} a collapse asks to be held loaded for its wipe: those of the footprint, then those of any exit outside them. No chunk twice. */
+    public static List<int[]> held(Footprint fp, List<int[]> exits) {
+        List<int[]> out = new ArrayList<>(fp.chunks());
+        java.util.Set<Long> seen = new java.util.HashSet<>();
+        for (int[] c : out) seen.add(((long) c[0] << 32) | (c[1] & 0xFFFFFFFFL));
+        for (int[] e : exits) {
+            int cx = Math.floorDiv(e[0], 16), cz = Math.floorDiv(e[2], 16);
+            if (seen.add(((long) cx << 32) | (cz & 0xFFFFFFFFL))) out.add(new int[]{cx, cz});
+        }
+        return out;
+    }
+
     /** The index of the spot nearest to (x, z) in the flat plane, or -1 if there are none. */
     public static int nearest(List<int[]> spots, double x, double z) {
         int best = -1;

@@ -11,7 +11,7 @@ public final class CollapsePlan {
 
     /** The whole countdown: 3:00 from the trigger to the final wipe. */
     public static final long TOTAL = 3600L;
-    /** Cracks only until 2:00 are left; the rolling fall lasts until 0:30; the front reaches the exit corridors at 0:15. */
+    /** Cracks only until 2:00 are left; the rolling stage lasts until 0:30; the front has covered every swept column by 0:15 (the exit corridors are never swept: they stand until the wipe). */
     public static final long CRACKS_END = 1200L, ROLL_END = 3000L, FRONT_END = 3300L;
 
     /** CRACKS: dust, rumbles, a block now and then. ROLLING: the far walls and ceilings come down, sweeping toward the exits. FINAL: the last half minute, the corridors rained on a little. WIPE: whatever stands is removed. */

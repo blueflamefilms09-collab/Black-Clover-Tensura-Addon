@@ -19,7 +19,9 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -29,10 +31,13 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.phys.AABB;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -51,13 +56,16 @@ final class CollapseGuards {
     private static final int HUNGER = 60;
     private static boolean rosterWarned;
     private static final double SIGHT = 40.0, SIGHT_SQ = SIGHT * SIGHT;
-    private static final int AIM_EVERY = 10, TELEGRAPH_EVERY = 8, WAITS = 3, SWEEP_RADIUS = 64, SWEEP_HEIGHT = 24;
+    private static final int AIM_EVERY = 10, TELEGRAPH_EVERY = 8, WAITS = 3, SWEEP_RADIUS = 64, SWEEP_HEIGHT = 24, STRIKE_EVERY = 40;
 
     private final ServerLevel level;
     private final CollapseState s;
     /** The guards of this collapse that are alive and loaded, with the exit each was made for (-1 for one found again after a restart). */
     private final Map<UUID, Integer> alive = new LinkedHashMap<>();
     private final List<Pending> pending = new ArrayList<>();
+    /** When each guard may strike next, and the kinds whose attack threw (they are left to their own brains). */
+    private final Map<UUID, Long> nextStrike = new HashMap<>();
+    private final Set<EntityType<?>> cannotStrike = new HashSet<>();
 
     /** A guard that has been announced by its ring of light and will stand there at `due`. */
     private record Pending(int exit, int x, int y, int z, long due, int tier, int waits) {}
@@ -136,7 +144,7 @@ final class CollapseGuards {
                 stand(p, now);
             }
         }
-        if (!alive.isEmpty() && (now + s.id) % AIM_EVERY == 0) aim();
+        if (!alive.isEmpty() && (now + s.id) % AIM_EVERY == 0) aim(now);
     }
 
     /** The ring of light has burned its time: the guard steps out, unless a player has walked up to the spot (it waits a little, then gives up). */
@@ -223,9 +231,9 @@ final class CollapseGuards {
     }
 
     /** Every few ticks: the guards that have lost their target take the nearest player (bounded: a handful of guards, a handful of players). */
-    private void aim() {
+    private void aim(long now) {
         prune();
-        for (UUID id : alive.keySet()) {
+        for (UUID id : new ArrayList<>(alive.keySet())) {                                   // a copy: a blow that kills can set other things off
             if (!(level.getEntity(id) instanceof Mob m)) continue;
             pinHunger(m);                                                                   // it falls by one every five seconds: held, it never gets hungry or full
             ServerPlayer target = nearest(m);
@@ -236,9 +244,26 @@ final class CollapseGuards {
                     m.getBrain().setMemory(MemoryModuleType.ATTACK_TARGET, target);
                 }
                 m.getNavigation().moveTo(target, 1.15);
+                strike(m, target, now);
             } catch (RuntimeException | LinkageError ignored) {
                 // a creature of an unexpected shape just keeps its own mind
             }
+        }
+        nextStrike.keySet().retainAll(alive.keySet());
+    }
+
+    /** Strikes once in two seconds when in reach, unless the creature's own brain has just done so (as WildDriver and the Monarch's driver do). */
+    private void strike(Mob m, ServerPlayer target, long now) {
+        if (now < nextStrike.getOrDefault(m.getUUID(), 0L) || cannotStrike.contains(m.getType())) return;
+        if (!m.getBoundingBox().inflate(1.1, 0.7, 1.1).intersects(target.getBoundingBox())) return;
+        nextStrike.put(m.getUUID(), now + STRIKE_EVERY);
+        if (target.getLastHurtByMob() == m && target.tickCount - target.getLastHurtByMobTimestamp() < 30) return;
+        m.swing(InteractionHand.MAIN_HAND);
+        try {
+            m.doHurtTarget(target);
+        } catch (RuntimeException | LinkageError failure) {
+            cannotStrike.add(m.getType());
+            LOG.warn("[nusmp] {} could not strike for the collapse; its own brain will have to", m.getType().getDescriptionId(), failure);
         }
     }
 
@@ -262,7 +287,7 @@ final class CollapseGuards {
     /** Removes every guard of this collapse that can be reached: the ones kept track of, and any more found near the exits by their mark. */
     void dismiss() {
         pending.clear();
-        for (UUID id : alive.keySet()) {
+        for (UUID id : new ArrayList<>(alive.keySet())) {
             Entity en = level.getEntity(id);
             if (en != null) en.discard();
         }

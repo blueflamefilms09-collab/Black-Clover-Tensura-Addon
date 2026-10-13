@@ -241,6 +241,37 @@ class CollapseRunnerTest {
     }
 
     @Test
+    void aRestartThroughTheSavedFormatFinishesTheSameToo() {
+        for (long cut : new long[]{0, 650, 1250, 2300, 3100, 3590, 3602}) {
+            CollapseState s = state();
+            s.gates.set(0, new int[]{43, FLOOR + 1, 1, 1});
+            s.inside.add(new java.util.UUID(7, 8));
+            Hall hall = new Hall();
+            Log log = new Log();
+            CollapseRunner r = runner(s);
+            for (long t = 0; t < cut; t++) {
+                hall.tick = log.tick = t;
+                r.tick(START + t, hall, log);
+            }
+            CollapseState loaded = CollapseCodec.decode(CollapseCodec.ints(s), CollapseCodec.longs(s));          // what the world file holds
+            assertNotNull(loaded, "the saved record loads at " + cut);
+            assertEquals(s.cursor, loaded.cursor);
+            assertEquals(s.nextMsg, loaded.nextMsg);
+            assertEquals(s.nextWave, loaded.nextWave);
+            CollapseRunner again = runner(loaded);
+            for (long t = cut; t < CollapsePlan.TOTAL + 200 && !again.ended(); t++) {
+                hall.tick = log.tick = t;
+                again.tick(START + t, hall, log);
+            }
+            assertTrue(again.ended(), "ends after a restart through the saved format at " + cut);
+            assertTrue(hall.solids.isEmpty());
+            assertEquals(List.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9), log.lines);
+            assertEquals(List.of(0, 1, 2, 3, 4), log.waves);
+            assertEquals(1, log.expelFirst);
+        }
+    }
+
+    @Test
     void aLongStallJumpsStraightToTheWipeAndSaysOnlyTheNewestMark() {
         CollapseState s = state();
         Hall hall = new Hall();

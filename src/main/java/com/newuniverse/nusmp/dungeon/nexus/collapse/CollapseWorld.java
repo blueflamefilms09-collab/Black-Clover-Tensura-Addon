@@ -38,6 +38,8 @@ final class CollapseWorld implements ColumnSweep.Sink {
     private int puffs, crumbled, started, refused;
     /** Falling blocks are turned off for the rest of the collapse once the Dungeon's guard refuses them (see {@link #spawn}). */
     private boolean debrisOn = true;
+    /** True only while this collapse is making a falling block, so that {@link CollapseManager#onFallingBlockJoin} lets that one (and no other) past the Dungeon's guard. */
+    static boolean spawning;
 
     CollapseWorld(ServerLevel level, boolean destroys, CollapseSweep order) {
         this.level = level;
@@ -116,13 +118,21 @@ final class CollapseWorld implements ColumnSweep.Sink {
     /**
      * Starts a falling block at `at` (where the block was, or the free cell under it in a pocket). It lands without placing itself again
      * and without dropping an item, so it can never pile up and wall a corridor; it hurts whoever it lands on a little. Returns false if
-     * the world refused it (the Dungeon's guard cancels the join of a plain falling block unless it is let through while the mod's own
-     * builders work; then falling blocks are switched off here and the blocks crumble instead).
+     * the world refused it: {@code DungeonGuard.onEntityJoin} cancels every plain falling block in the Dungeon, even inside
+     * {@code DungeonGuard.internal}. {@link CollapseManager#onFallingBlockJoin} (registered after it, receiving cancelled events) lets the
+     * blocks made here through while {@link #spawning} is set; if it is not registered, falling blocks are switched off after three
+     * refusals and the blocks crumble in dust instead.
      */
     private boolean spawn(BlockPos at, BlockState state, int x, int z) {
         BlockState shown = state.hasProperty(BlockStateProperties.WATERLOGGED) ? state.setValue(BlockStateProperties.WATERLOGGED, Boolean.FALSE) : state;
         if (!shown.getFluidState().isEmpty()) return false;                           // kelp and the like hold water of their own: falling, they would leave a block of it behind
-        FallingBlockEntity fall = FallingBlockEntity.fall(level, at, shown);
+        FallingBlockEntity fall;
+        spawning = true;
+        try {
+            fall = FallingBlockEntity.fall(level, at, shown);
+        } finally {
+            spawning = false;
+        }
         fall.disableDrop();
         int i = order.indexOf(x, z);
         fall.setHurtsEntities(1.0f, CollapseRules.hit(stage == CollapsePlan.Stage.CRACKS || (i >= 0 && order.spared(i))));
@@ -130,7 +140,7 @@ final class CollapseWorld implements ColumnSweep.Sink {
             refused++;
             if (refused == 3) {
                 debrisOn = false;
-                LOG.warn("[nusmp] The Dungeon refuses falling blocks (DungeonGuard.onEntityJoin cancels them even inside DungeonGuard.internal); the collapse crumbles its blocks instead");
+                LOG.warn("[nusmp] The Dungeon refuses the collapse's falling blocks (DungeonGuard.onEntityJoin cancels them; register CollapseManager.onFallingBlockJoin at LOWEST priority receiving cancelled events); the collapse crumbles its blocks instead");
             }
             return false;
         }
