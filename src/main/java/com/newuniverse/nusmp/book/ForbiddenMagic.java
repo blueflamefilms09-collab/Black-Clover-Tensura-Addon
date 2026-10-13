@@ -84,6 +84,7 @@ public final class ForbiddenMagic {
     // ---------------------------------------------------------------- contract
     /** Price: "maxhp" (-2 hearts permanently), "seal" (a random page sealed for good), or "tax" (+15% cost on all grimoire magic). */
     public static boolean bind(ServerPlayer p, String price) {
+        if (com.newuniverse.nusmp.relics.djinn.Bonds.refuse(p, com.newuniverse.nusmp.relics.djinn.Bonds.Kind.DEVIL, "a devil contract")) return false;   // 1.24.0: one bond, a Spirit, a Devil or a Djinn
         var g = GrimoirePages.grimoireOf(p);
         if (g.isEmpty()) { GrimoireBook.fail(p, "You need a grimoire to bargain with."); return false; }
         if (devilOf(p) != null) { GrimoireBook.fail(p, "A devil already lives in your grimoire."); return false; }

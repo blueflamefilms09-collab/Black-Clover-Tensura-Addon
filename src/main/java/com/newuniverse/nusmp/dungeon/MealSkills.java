@@ -41,7 +41,13 @@ public final class MealSkills {
     }
 
     /** Lends a skill for {@code ticks}. A skill the player already owns is left alone; one already lent has its time extended, never cut. */
-    public static Outcome grant(Player p, String skillId, int ticks) {
+    public static Outcome grant(Player p, String skillId, int ticks) { return grant(p, skillId, ticks, null); }
+
+    /**
+     * The same, but the chat lines name {@code lender} instead of "The meal" ("Your relic lends you X." / "Your relic's gift fades: X."): for the
+     * relics, whose lent skills are not food. A null lender is the meal wording of {@link #grant(Player, String, int)}; nothing else differs.
+     */
+    public static Outcome grant(Player p, String skillId, int ticks, String lender) {
         ResourceLocation id = ResourceLocation.tryParse(skillId);
         if (id == null) return Outcome.UNAVAILABLE;
         try {
@@ -55,11 +61,12 @@ public final class MealSkills {
             if (plan.action() == SkillLease.Action.NONE) return have ? Outcome.OWNED : Outcome.UNAVAILABLE;
             CompoundTag lease = new CompoundTag();
             lease.putLong("Until", plan.until());
+            if (lender != null && !lender.isBlank()) lease.putString("By", lender);          // the fade line names the same giver
             leases.put(skillId, lease);                                  // written before the skill is: whatever happens next, it cannot stay for good
             if (plan.action() == SkillLease.Action.EXTEND) return Outcome.EXTENDED;
             boolean learned;
             try {
-                learned = skills.learnSkill(skill.createDefaultInstance(), Component.literal("The meal lends you ").append(skill.getName()).append(".").withStyle(ChatFormatting.AQUA));
+                learned = skills.learnSkill(skill.createDefaultInstance(), Component.literal(lender == null || lender.isBlank() ? "The meal lends you " : lender + " lends you ").append(skill.getName()).append(".").withStyle(ChatFormatting.AQUA));
             } catch (RuntimeException refused) {
                 learned = skills.getSkill(id).isPresent();
             }
@@ -79,9 +86,10 @@ public final class MealSkills {
         Map<String, Long> until = new LinkedHashMap<>();
         for (String id : leases.getAllKeys()) until.put(id, leases.getCompound(id).getLong("Until"));
         for (String id : SkillLease.expired(until, p.level().getGameTime())) {
+            String by = leases.getCompound(id).getString("By");
             if (!forget(p, id)) continue;                                // the skill list would not let go: the lease stays and it is tried again
             leases.remove(id);
-            p.displayClientMessage(Component.literal("The meal's gift fades: " + label(id) + ".").withStyle(ChatFormatting.GRAY), true);
+            p.displayClientMessage(Component.literal((by.isBlank() ? "The meal's" : by + "'s") + " gift fades: " + label(id) + ".").withStyle(ChatFormatting.GRAY), true);
         }
     }
 

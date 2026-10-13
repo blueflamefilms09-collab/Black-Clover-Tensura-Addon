@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "nusmp:item/astralis_the_eye_of_the_universe"
+  }
+}

@@ -72,6 +72,8 @@ public class SpiritLordSkill extends Skill {
      */
     public static String bond(ServerPlayer p, String type) {
         if (instance(p).isPresent()) return "You are already bound to a spirit lord.";
+        if (!"Anti".equalsIgnoreCase(type) && !com.newuniverse.nusmp.relics.djinn.Bonds.canBind(p, com.newuniverse.nusmp.relics.djinn.Bonds.Kind.SPIRIT))   // 1.24.0: one bond (the Anti-Magic lord is the grimoire's devil, not a second bond)
+            return "You already hold a Devil or a Djinn: a mage holds one bond, a Spirit, a Devil or a Djinn.";
         SpiritSlots slots = SpiritSlots.get(p.getServer());
         if (type == null) {
             for (int k = 0; k < 4 && type == null; k++) if (slots.owner(TYPES[k]) == null) type = TYPES[k];

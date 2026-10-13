@@ -1,0 +1,1222 @@
+{
+ "god_base_front": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   640
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "model": "god_of_order_base",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 7.6
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 8,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 7.6
+   }
+  ]
+ },
+ "god_base_back": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   640
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "model": "god_of_order_base",
+  "views": [
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 5,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 7.6
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 7.6
+   }
+  ]
+ },
+ "god_base_face": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "model": "god_of_order_base",
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     2.95,
+     0
+    ],
+    "dist": 2.6
+   },
+   {
+    "name": "face 3/4",
+    "yaw": 32,
+    "pitch": 6,
+    "target": [
+     0,
+     2.95,
+     0
+    ],
+    "dist": 2.6
+   }
+  ]
+ },
+ "god_base_walk": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   5,
+   10,
+   15
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "walk",
+  "model": "god_of_order_base",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "god_base_run": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   3,
+   6,
+   9
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "run",
+  "model": "god_of_order_base",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "god_base_attack": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   4,
+   8,
+   12
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "attack",
+  "model": "god_of_order_base",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "god_base_cast": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   6,
+   12,
+   18,
+   24
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "cast",
+  "model": "god_of_order_base",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "god_base_cast_big": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   14,
+   28,
+   42,
+   52,
+   60
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "cast_big",
+  "model": "god_of_order_base",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "god_base_hurt": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   2,
+   4,
+   6
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "hurt",
+  "model": "god_of_order_base",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "god_base_transform": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   12,
+   24,
+   36,
+   48,
+   60
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "transform",
+  "model": "god_of_order_base",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "god_base_death": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   5,
+   10,
+   15,
+   20
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "death",
+  "model": "god_of_order_base",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "god_base_read": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   20,
+   40,
+   60
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "read",
+  "model": "god_of_order_base",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "god_base_beam": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   8,
+   16,
+   24
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "beam",
+  "model": "god_of_order_base",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "god_base_bow": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   14,
+   28,
+   42
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "bow",
+  "model": "god_of_order_base",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "god_base_idle": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   20,
+   40,
+   60,
+   80
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "model": "god_of_order_base",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "god_base_beam_side": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   8
+  ],
+  "tile": [
+   420,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "beam",
+  "model": "god_of_order_base",
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   },
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   },
+   {
+    "name": "top",
+    "yaw": 60,
+    "pitch": 50,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "god_gates_front": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   640
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "model": "god_of_order_gates",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 7.6
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 8,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 7.6
+   }
+  ]
+ },
+ "god_gates_back": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   640
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "model": "god_of_order_gates",
+  "views": [
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 5,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 7.6
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 7.6
+   }
+  ]
+ },
+ "god_gates_face": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "model": "god_of_order_gates",
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     2.95,
+     0
+    ],
+    "dist": 2.6
+   },
+   {
+    "name": "face 3/4",
+    "yaw": 32,
+    "pitch": 6,
+    "target": [
+     0,
+     2.95,
+     0
+    ],
+    "dist": 2.6
+   }
+  ]
+ },
+ "god_gates_walk": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   5,
+   10,
+   15
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "walk",
+  "model": "god_of_order_gates",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "god_gates_run": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   3,
+   6,
+   9
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "run",
+  "model": "god_of_order_gates",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "god_gates_attack": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   4,
+   8,
+   12
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "attack",
+  "model": "god_of_order_gates",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "god_gates_cast": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   6,
+   12,
+   18,
+   24
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "cast",
+  "model": "god_of_order_gates",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "god_gates_cast_big": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   14,
+   28,
+   42,
+   52,
+   60
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "cast_big",
+  "model": "god_of_order_gates",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "god_gates_hurt": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   2,
+   4,
+   6
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "hurt",
+  "model": "god_of_order_gates",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "god_gates_transform": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   12,
+   24,
+   36,
+   48,
+   60
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "transform",
+  "model": "god_of_order_gates",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "god_gates_death": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   5,
+   10,
+   15,
+   20
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "death",
+  "model": "god_of_order_gates",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "god_gates_read": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   20,
+   40,
+   60
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "read",
+  "model": "god_of_order_gates",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "god_gates_beam": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   8,
+   16,
+   24
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "beam",
+  "model": "god_of_order_gates",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "god_gates_bow": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   14,
+   28,
+   42
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "bow",
+  "model": "god_of_order_gates",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "god_gates_idle": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   20,
+   40,
+   60,
+   80
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "model": "god_of_order_gates",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ },
+ "god_gates_beam_side": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   8
+  ],
+  "tile": [
+   420,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "beam",
+  "model": "god_of_order_gates",
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   },
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   },
+   {
+    "name": "top",
+    "yaw": 60,
+    "pitch": 50,
+    "target": [
+     0,
+     1.7,
+     0
+    ],
+    "dist": 8.0
+   }
+  ]
+ }
+}

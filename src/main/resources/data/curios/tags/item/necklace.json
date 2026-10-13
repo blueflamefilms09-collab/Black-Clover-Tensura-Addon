@@ -1,0 +1,65 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "nusmp:amulet_of_dragon_rage",
+      "required": false
+    },
+    {
+      "id": "nusmp:amulet_of_safeguarding",
+      "required": false
+    },
+    {
+      "id": "nusmp:amulet_of_the_coven",
+      "required": false
+    },
+    {
+      "id": "nusmp:amulet_of_the_forest",
+      "required": false
+    },
+    {
+      "id": "nusmp:amulet_of_the_huntress",
+      "required": false
+    },
+    {
+      "id": "nusmp:amulet_of_the_sea_of_stars",
+      "required": false
+    },
+    {
+      "id": "nusmp:amulet_of_the_warmage",
+      "required": false
+    },
+    {
+      "id": "nusmp:arcane_glass_of_seeing",
+      "required": false
+    },
+    {
+      "id": "nusmp:beast_masters_amulet",
+      "required": false
+    },
+    {
+      "id": "nusmp:hemlocks_amulet",
+      "required": false
+    },
+    {
+      "id": "nusmp:lovelorn_locket",
+      "required": false
+    },
+    {
+      "id": "nusmp:pendant_of_echoed_souls",
+      "required": false
+    },
+    {
+      "id": "nusmp:pendant_of_the_dreamer",
+      "required": false
+    },
+    {
+      "id": "nusmp:the_amulet_of_lost_souls",
+      "required": false
+    },
+    {
+      "id": "nusmp:voice_of_the_mountain",
+      "required": false
+    }
+  ]
+}

@@ -424,6 +424,7 @@ public abstract class GrimoireBook extends Skill {
         }
         if (!SpiritBond.willAnswer(p)) { fail(p, b.spiritName() + " will not answer you. Earn back its trust."); return false; }
         SpiritSlots slots = SpiritSlots.get(p.getServer());
+        if (!p.getUUID().equals(slots.owner(b.spiritName())) && com.newuniverse.nusmp.relics.djinn.Bonds.refuse(p, com.newuniverse.nusmp.relics.djinn.Bonds.Kind.SPIRIT, "a spirit bond")) return false;   // 1.24.0: one bond
         if (slots.owner(b.spiritName()) == null && !com.newuniverse.nusmp.item.MagicGear.consumeSpiritCharm(p)) {
             fail(p, "You need a Spirit Charm to reach " + b.spiritName() + " the first time.");
             return false;

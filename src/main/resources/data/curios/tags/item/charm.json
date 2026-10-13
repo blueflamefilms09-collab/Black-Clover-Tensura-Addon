@@ -1,6 +1,26 @@
 {
   "replace": false,
   "values": [
-    "nusmp:brooch_pin"
+    "nusmp:brooch_pin",
+    {
+      "id": "nusmp:holy_chains",
+      "required": false
+    },
+    {
+      "id": "nusmp:pact_of_the_deck",
+      "required": false
+    },
+    {
+      "id": "nusmp:phantom_steps",
+      "required": false
+    },
+    {
+      "id": "nusmp:sand_of_the_pocket",
+      "required": false
+    },
+    {
+      "id": "nusmp:the_tome_of_wait_thats_illegal",
+      "required": false
+    }
   ]
 }

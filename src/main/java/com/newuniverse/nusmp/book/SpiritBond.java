@@ -121,6 +121,7 @@ public final class SpiritBond {
     }
 
     public static void addTrust(ServerPlayer p, int amount, String why) {
+        if (amount > 0) amount = com.newuniverse.nusmp.relics.djinn.Bonds.scaleTrustGain(p, amount);   // 1.24.0: each extra bond halves the trust a bond gains
         CompoundTag d = data(p);
         int before = d.getInt("nusmp_spirit_trust"), after = Math.max(0, Math.min(100, before + amount));
         if (after == before) return;

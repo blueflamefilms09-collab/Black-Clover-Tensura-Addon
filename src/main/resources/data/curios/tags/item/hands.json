@@ -1,6 +1,26 @@
 {
   "replace": false,
   "values": [
-    "nusmp:hand_of_providence"
+    "nusmp:hand_of_providence",
+    {
+      "id": "nusmp:claws_of_greed",
+      "required": false
+    },
+    {
+      "id": "nusmp:elemental_hand_wraps",
+      "required": false
+    },
+    {
+      "id": "nusmp:gauntlets_of_eldritch_ferocity",
+      "required": false
+    },
+    {
+      "id": "nusmp:gloves_of_instant_cleanliness",
+      "required": false
+    },
+    {
+      "id": "nusmp:thermo_gloves",
+      "required": false
+    }
   ]
 }

@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    { "id": "artifacts:mimic", "required": false },
+    { "id": "relics:mimic", "required": false }
+  ]
+}

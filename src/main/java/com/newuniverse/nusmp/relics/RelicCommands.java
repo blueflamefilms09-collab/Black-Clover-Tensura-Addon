@@ -1,0 +1,141 @@
+package com.newuniverse.nusmp.relics;
+
+import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.suggestion.Suggestions;
+import com.mojang.brigadier.suggestion.SuggestionsBuilder;
+import com.newuniverse.nusmp.relics.order.UniqueLedger;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+
+import java.util.concurrent.CompletableFuture;
+
+/**
+ * /multiverse relic ...: {@code list [grade]}, {@code info <id>}, {@code grade} (what you wear and what it lifts) and {@code unattune} for everyone;
+ * {@code give <player> <id>} and {@code attune} (binds the relic in the main hand at once, within the cap of three) for admins (permission 2).
+ * The node is attached by the multiverse command: {@code RelicCommands.addTo(root)}. The Order's own commands hang below the same "relic" word.
+ */
+public final class RelicCommands {
+    private RelicCommands() {}
+
+    private static int ok(CommandSourceStack s, String msg) { s.sendSuccess(() -> Component.literal(msg), false); return 1; }
+
+    private static int fail(CommandSourceStack s, String msg) { s.sendFailure(Component.literal(msg)); return 0; }
+
+    public static void addTo(LiteralArgumentBuilder<CommandSourceStack> root) {
+        root.then(Commands.literal("relic")
+                .then(Commands.literal("list")
+                        .executes(ctx -> list(ctx.getSource(), null))
+                        .then(Commands.argument("grade", StringArgumentType.word()).suggests(RelicCommands::suggestGrades)
+                                .executes(ctx -> list(ctx.getSource(), StringArgumentType.getString(ctx, "grade")))))
+                .then(Commands.literal("info")
+                        .then(Commands.argument("id", StringArgumentType.word()).suggests(RelicCommands::suggestIds)
+                                .executes(ctx -> info(ctx.getSource(), StringArgumentType.getString(ctx, "id")))))
+                .then(Commands.literal("give").requires(s -> s.hasPermission(2))
+                        .then(Commands.argument("player", EntityArgument.player())
+                                .then(Commands.argument("id", StringArgumentType.word()).suggests(RelicCommands::suggestIds)
+                                        .executes(ctx -> give(ctx.getSource(), EntityArgument.getPlayer(ctx, "player"), StringArgumentType.getString(ctx, "id"))))))
+                .then(Commands.literal("attune").requires(s -> s.hasPermission(2))
+                        .executes(ctx -> attune(ctx.getSource(), ctx.getSource().getPlayerOrException())))
+                .then(Commands.literal("unattune")
+                        .executes(ctx -> unattune(ctx.getSource(), ctx.getSource().getPlayerOrException())))
+                .then(Commands.literal("grade")
+                        .executes(ctx -> grade(ctx.getSource(), ctx.getSource().getPlayerOrException()))));
+    }
+
+    private static CompletableFuture<Suggestions> suggestIds(CommandContext<CommandSourceStack> ctx, SuggestionsBuilder b) {
+        return SharedSuggestionProvider.suggest(Relics.all().stream().map(RelicDef::id), b);
+    }
+
+    private static CompletableFuture<Suggestions> suggestGrades(CommandContext<CommandSourceStack> ctx, SuggestionsBuilder b) {
+        return SharedSuggestionProvider.suggest(java.util.Arrays.stream(Grade.values()).map(g -> g.shortName().toLowerCase(java.util.Locale.ROOT)), b);
+    }
+
+    private static int list(CommandSourceStack src, String gradeName) {
+        if (Relics.all().isEmpty()) return fail(src, "No relics are registered.");
+        if (gradeName == null) {
+            StringBuilder b = new StringBuilder("Relics of Many Worlds (" + Relics.all().size() + "):");
+            for (Grade g : Grade.values()) {
+                long n = Relics.all().stream().filter(d -> d.grade() == g).count();
+                if (n > 0) b.append("  ").append(g.shortName()).append(' ').append(n);
+            }
+            return ok(src, b.append("  - /multiverse relic list <grade> names them.").toString());
+        }
+        Grade g = Grade.byName(gradeName);
+        if (g == null) return fail(src, "Unknown grade \"" + gradeName + "\" (normal, special, rare, unique, legend, god, genesis).");
+        StringBuilder b = new StringBuilder(g.label() + ":");
+        int n = 0;
+        for (RelicDef d : Relics.all()) {
+            if (d.grade() != g) continue;
+            b.append("\n  ").append(d.id()).append(" - ").append(d.cardName()).append(" (").append(d.slot().label()).append(')');
+            n++;
+        }
+        return n == 0 ? fail(src, "No " + g.label() + " relics.") : ok(src, b.toString());
+    }
+
+    private static int info(CommandSourceStack src, String id) {
+        RelicDef d = Relics.byId(id);
+        if (d == null) return fail(src, "Unknown relic \"" + id + "\".");
+        StringBuilder b = new StringBuilder(d.cardName() + " (" + d.id() + ")\n  " + d.grade().label() + ", " + d.slot().label());
+        if (d.needsAttunement()) b.append(", requires attunement");
+        if (d.isVessel()) b.append(", can be a Djinn's Metal Vessel");
+        if (d.isAdopted()) b.append(", a remake of an item the mod already had");
+        if (!d.desc().isEmpty()) b.append("\n  ").append(d.desc());
+        for (Act a : d.acts()) {
+            b.append("\n  Act ").append(a.displayName());
+            if (a.cooldownTicks() > 0) b.append(", cooldown ").append(UseRules.span(a.cooldownTicks()));
+            if (a.manaPercent() > 0) b.append(", mana ").append(a.manaPercent()).append('%');
+            if (a.epPercentCost() > 0) b.append(", EP ").append(a.epPercentCost()).append('%');
+            if (a.usesPerDay() > 0) b.append(", ").append(a.usesPerDay()).append(" a day");
+        }
+        if (!d.engravings().isEmpty()) b.append("\n  Engravings: ").append(String.join(", ", d.engravings()));
+        return ok(src, b.toString());
+    }
+
+    private static int give(CommandSourceStack src, ServerPlayer to, String id) {
+        RelicDef d = Relics.byId(id);
+        if (d == null) return fail(src, "Unknown relic \"" + id + "\".");
+        ItemStack stack = RelicCatalog.newStack(d);
+        if (stack.isEmpty()) return fail(src, d.cardName() + " has no item.");
+        if (d.isUnique() && !UniqueLedger.issue(to.serverLevel(), d.id(), stack))
+            return fail(src, d.cardName() + " already exists in this world: only one of each relic may live. (Release it with /multiverse relic order release " + d.id() + ".)");
+        if (!to.getInventory().add(stack)) to.drop(stack, false);
+        return ok(src, "Gave " + d.cardName() + " to " + to.getName().getString() + ".");
+    }
+
+    private static int attune(CommandSourceStack src, ServerPlayer p) {
+        ItemStack held = p.getMainHandItem();
+        RelicDef d = Relics.defOf(held);
+        if (d == null) return fail(src, "Hold a relic in the main hand.");
+        if (Attune.isMine(held, p)) return ok(src, d.cardName() + " was already attuned to you.");
+        if (!Attune.bind(p, held)) return fail(src, "You already have " + AttuneRules.CAP + " relics attuned: let one go first.");
+        return ok(src, d.cardName() + " is now attuned to you (" + Attune.carried(p, null) + " of " + AttuneRules.CAP + ").");
+    }
+
+    private static int unattune(CommandSourceStack src, ServerPlayer p) {
+        ItemStack held = p.getMainHandItem();
+        RelicDef d = Relics.defOf(held);
+        if (d == null) return fail(src, "Hold a relic in the main hand.");
+        if (!Attune.isMine(held, p) || Attune.owner(held) == null) return fail(src, d.cardName() + " is not attuned to you.");
+        Attune.release(p, held);
+        return ok(src, "You let go of " + d.cardName() + ".");
+    }
+
+    private static int grade(CommandSourceStack src, ServerPlayer p) {
+        Relics.Loadout lo = Relics.loadoutFresh(p);
+        StringBuilder b = new StringBuilder("Attuned relics: " + Attune.carried(p, null) + " of " + AttuneRules.CAP + ".");
+        if (Relics.wornList(p).isEmpty()) b.append("\n  You wear or hold no relic.");
+        for (Relics.Worn w : Relics.wornList(p)) {
+            boolean works = lo.active().stream().anyMatch(a -> a.def() == w.def());
+            b.append("\n  ").append(w.def().cardName()).append(" - ").append(w.def().grade().label()).append(works ? "" : "  (not working: not attuned to you)");
+        }
+        if (lo.epBonus() > 0) b.append("\n  Existence points lifted by ").append(Math.round(lo.epBonus() * 1000) / 10.0).append("%.");
+        return ok(src, b.toString());
+    }
+}

@@ -78,6 +78,7 @@ public final class GrimoireAcceptance {
 
     /** Gives a grimoire with the chosen leaf count, picking magic from the soul type. */
     public static void grant(ServerPlayer player, int leaves, String soul) {
+        if (leaves >= 5 && !com.newuniverse.nusmp.relics.djinn.Bonds.canBind(player, com.newuniverse.nusmp.relics.djinn.Bonds.Kind.DEVIL)) leaves = 4;   // 1.24.0: a Djinn or a Spirit holder is not given a devil
         RandomSource r = player.getRandom();
         Kingdom kingdom = rollKingdom(r);
         // Devil covers only exist for Clover and Spade; a forbidden roll elsewhere is accepted by Clover.

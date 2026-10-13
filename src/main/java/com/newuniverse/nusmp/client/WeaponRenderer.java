@@ -210,6 +210,14 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
                             Float.parseFloat(v[o + 3]), Float.parseFloat(v[o + 4]), nx, ny, nz});
                 }
             }
+            case "qn" -> {      // 1.24.0: per-vertex smoothed normals (tools/relics/mesh_lib.py, normals="vertex")
+                int layer = Integer.parseInt(v[1]);
+                for (int k = 0; k < 4; k++) {
+                    int o = 2 + k * 8;
+                    mesh.layers[layer].add(new float[]{Float.parseFloat(v[o]), Float.parseFloat(v[o + 1]), Float.parseFloat(v[o + 2]),
+                            Float.parseFloat(v[o + 3]), Float.parseFloat(v[o + 4]), Float.parseFloat(v[o + 5]), Float.parseFloat(v[o + 6]), Float.parseFloat(v[o + 7])});
+                }
+            }
             default -> { }
         }
     }
