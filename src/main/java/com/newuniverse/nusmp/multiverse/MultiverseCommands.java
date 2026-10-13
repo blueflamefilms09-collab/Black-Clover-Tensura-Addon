@@ -200,6 +200,8 @@ public final class MultiverseCommands {
                     var s = com.newuniverse.nusmp.entity.WindSpiritLordEntity.summon(ctx.getSource().getLevel(), ctx.getSource().getPosition());
                     return s == null ? fail(ctx, "Sylph could not be summoned here.") : ok(ctx, "Sylph, the Wind Spirit Lord, rides in on the gale.");
                 }));
+        com.newuniverse.nusmp.dungeon.floor.goliath.GoliathCommand.addTo(bossNode);                                       // 1.23.0: goliath [rise]
+        com.newuniverse.nusmp.dungeon.floor.charybdis.CharybdisCommand.addTo(bossNode);                                    // 1.23.0
         com.newuniverse.nusmp.entity.avatar.AvatarCommand.addTo(bossNode);                           // 1.22.0: avatar [lucifero|megicula]
         com.newuniverse.nusmp.entity.zogratis.ZogratisCommand.addTo(bossNode);                       // 1.20.0: dante | vanica | zenon | lucius | triad
         root.then(bossNode);

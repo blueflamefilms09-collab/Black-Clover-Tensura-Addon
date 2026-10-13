@@ -41,4 +41,19 @@ public enum DungeonTier {
 
     /** Is the 128-block cell (cellX, cellZ) of the map one of the Golden City's cells? About 18% of them are; the same test {@link #at} uses below y=-40. */
     public static boolean isCityCell(int cellX, int cellZ) { return cell(cellX, cellZ, 7) < 18; }
+
+    /** What an arena cell holds: nothing, a Goliath's Pit (the Upper Catacombs' floor boss), a Charybdis Basin (the Deep Waterways'). */
+    public static final int ARENA_NONE = 0, ARENA_GOLIATH = 1, ARENA_CHARYBDIS = 2;
+
+    /**
+     * The floor boss arenas: of the 128-block cells that are not core cells about 8% hold a Goliath's Pit (1) and about 8% a Charybdis Basin (2);
+     * every other cell holds nothing (0). A core cell is never an arena cell, and one cell is never both (the pit's roll wins). A stable
+     * hash with salts of its own, so the arenas do not follow the core cells, the vents or any other hash of the Dungeon.
+     */
+    public static int arenaOf(int cellX, int cellZ) {
+        if (isCityCell(cellX, cellZ)) return ARENA_NONE;
+        if (cell(cellX, cellZ, 19) < 8) return ARENA_GOLIATH;
+        if (cell(cellX, cellZ, 23) < 8) return ARENA_CHARYBDIS;
+        return ARENA_NONE;
+    }
 }

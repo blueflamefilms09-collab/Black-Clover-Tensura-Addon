@@ -126,13 +126,16 @@ public final class DungeonAtmosphere {
     /** The ordinal of the tier whose mood the zones tint (DungeonTier.GOLDEN_CITY). */
     private static final int CORE_TIER = 3;
 
-    /** The mood of a zone of the Variable Core. */
+    /** The mood of a zone of the Variable Core. The floor boss arenas (1.22) have no mood of their own: they keep that of the tier they stand in (the pit the Upper Catacombs', the basin the Deep Waterways'). */
     public static Mood zoneMood(NexusZone zone) {
         return switch (zone) {
             case MONARCH_VAULT -> MONARCH_VAULT;
             case UNDERWORLD_GATE -> UNDERWORLD_GATE;
             case TEMPEST_MIRAGE -> TEMPEST_MIRAGE;
             case GOLDEN_CITY -> GOLDEN_CITY;
+            case GOLIATH_PIT -> mood(0);
+            case CHARYBDIS_BASIN -> mood(1);
+            default -> mood(0);
         };
     }
 

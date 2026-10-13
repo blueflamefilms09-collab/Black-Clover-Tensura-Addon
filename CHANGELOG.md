@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.23.0] — The floor arenas: Goliath's Pit (Upper Catacombs) and the Charybdis Basin (Deep Waterways)
+
+**State:** written without a compiler; CI is the first compile. Nothing run in game: no arena built, no boss fought. Charybdis' model is rough. **All new** (nothing replaced).
+
+- **Arena cells.** About 8 percent of the non-core cells of the Upper Catacombs and the Deep Waterways build a 64-block arena instead of nothing (the Variable Core's four zones are unchanged; two zones appended to the Nexus framework: `GOLIATH_PIT`, `CHARYBDIS_BASIN`). Admin: `/multiverse dungeon nexus zone goliath|charybdis`.
+- **Goliath's Pit** (Floor A): a pale stone-brick colosseum sealed in bedrock, three gates, a Treasury behind a mana gate. **The Goliath** (1500 health) rises from the seal; Ground Slam, Twin Stomp, Roaring Shockwave, Bedrock Fist, Seismic Line, Rubble Fall, Bedrock Quake at 60 percent power, a cracked Gates form at 25 percent. Its fall starts the Treasury Collapse.
+- **The Charybdis Basin** (Floor B): a drowned, flooded circular basin with kelp-wrapped pillars, prismarine and sea lanterns, a dry Treasury behind a mana gate. **Charybdis Spawn** (1100 health) surfaces when a player nears the dais: Magicule Scale Volley (parry with a shield or the Magebane parry window, or strike a scale to send it back for about 4 percent of its health), Tentacle Sweep, Whirlpool, Beak Lunge, Summon Megalodons (real Tensura megalodons, at most 4), Tidal Crush, Maelstrom of Scales at 60 percent. Water conducts lightning as before.
+- Both pools hold the four relics of the Sentient design; floor bosses leave Magic Stones through the Sentient death rules.
+- Commands: `/multiverse boss goliath [rise]`, `/multiverse boss charybdis`; spawn eggs. 
+- **Honest list:** Charybdis collapse leaves its water standing, which pours into the caves; the flooded plan, the deflect rules, the Goliath rise and every fight are unverified in game; the Charybdis art is rough (thin fins, undefined head). With `dungeon.sentient=false` a Goliath kill still leaves one carcass block.
+
 ## [1.22.0] — The Sentient Dungeon: wall births, the immune system, ash and Magic Stones, two relic slots, the Blood-Red Commander, the Devil Avatar, Collapse v2
 
 **State:** written without a compiler; CI is the first compile. Nothing run in game: no wall birth seen, no Juggernaut woken, no boss fought, no relic worn; every number and look is a first estimate. Built from the owner's "Technical Design Document: The Sentient Dungeon".

@@ -25,15 +25,17 @@ import java.util.Map;
 
 /**
  * Builds the Variable Core where players come near it: the Golden City's lazy builder (dungeon/city/CityBuilder), made zone-agnostic. Every
- * 40 ticks it looks for a player of the Dungeon within 56 blocks of the centre of a core cell that is not built yet; it picks the zone of
- * the cell ({@link NexusSave#zoneOf}), asks that zone's {@link ZoneSite} for its pure {@link ZonePlan}, and applies the plan's ops and the
- * zone's extra stages ({@link StageSequence}) over several ticks, a few thousand blocks at a time, only while every chunk of the footprint
- * is loaded, saving its progress so a restart carries on. When the last stage is done the cell is DONE and the site populates it.
- * It writes only into the Dungeon's own level, and every write is inside {@link DungeonGuard#internal}.
+ * 40 ticks it looks for a player of the Dungeon within 56 blocks of the centre of a Nexus cell (a core cell, or since 1.22 a floor boss
+ * arena: {@link NexusCells#isNexusCell}) that is not built yet; it picks the zone of the cell ({@link NexusSave#zoneOf}), asks that zone's
+ * {@link ZoneSite} for its pure {@link ZonePlan}, and applies the plan's ops and the zone's extra stages ({@link StageSequence}) over several
+ * ticks, a few thousand blocks at a time, only while every chunk of the footprint is loaded, saving its progress so a restart carries on.
+ * When the last stage is done the cell is DONE and the site populates it. It writes only into the Dungeon's own level, and every write is
+ * inside {@link DungeonGuard#internal}. An arena is only built for a player who is near it in height too ({@link NexusCells#arenaInReach}):
+ * the Upper Catacombs' pit is not built for someone in the deep layers under the same columns.
  *
- * <p>The same tick handler watches the seals (the first player into a core cell breaks its seal: a server-wide broadcast) and calls the
- * sites' {@link ZoneSite#tickPlayers} and {@link ZoneSite#tickNear}. It replaces {@code CityBuilder.onServerTick}, which must no
- * longer be registered; a Golden City of the older builder is adopted ({@link NexusZones#resolve}).
+ * <p>The same tick handler watches the seals (the first player into a core cell breaks its seal: a server-wide broadcast; the arenas have
+ * no seal) and calls the sites' {@link ZoneSite#tickPlayers} and {@link ZoneSite#tickNear}. It replaces {@code CityBuilder.onServerTick},
+ * which must no longer be registered; a Golden City of the older builder is adopted ({@link NexusZones#resolve}).
  */
 public final class NexusBuilder {
     private NexusBuilder() {}
@@ -167,7 +169,7 @@ public final class NexusBuilder {
             for (int dx = -1; dx <= 1; dx++) {
                 for (int dz = -1; dz <= 1; dz++) {
                     int cx = pcx + dx, cz = pcz + dz;
-                    if (!DungeonTier.isCityCell(cx, cz)) continue;
+                    if (!NexusCells.isNexusCell(cx, cz)) continue;
                     if (save == null) save = NexusSave.get(server);
                     NexusSave.Entry e = NexusZones.resolve(server, save, cx, cz);
                     if (e == null || e.state != NexusState.DONE || e.fp == null) continue;
@@ -208,12 +210,13 @@ public final class NexusBuilder {
             for (int dx = -1; dx <= 1; dx++) {
                 for (int dz = -1; dz <= 1; dz++) {
                     int cx = pcx + dx, cz = pcz + dz;
-                    if (!DungeonTier.isCityCell(cx, cz)) continue;
+                    if (!NexusCells.isNexusCell(cx, cz)) continue;
                     if (save == null) save = NexusSave.get(server);
                     NexusSave.Entry e = NexusZones.resolve(server, save, cx, cz);
                     if (e != null && e.state.built()) continue;
                     NexusZone zone = save.zoneOf(cx, cz);
                     ZonePlan plan = NexusZones.plan(zone, cx, cz);
+                    if (zone.isArena() && !NexusCells.arenaInReach(at.getY(), plan.floorY)) continue;               // someone far above or below it does not start a pit
                     double ex = at.getX() - plan.centreX(), ez = at.getZ() - plan.centreZ();
                     boolean close = ex * ex + ez * ez <= RANGE * RANGE || plan.footprint.contains(at.getX(), at.getZ(), TRIGGER_MARGIN);        // a wide Nexus is more than RANGE from its middle to its edge
                     if (!close || someoneInside(level, plan)) continue;

@@ -225,3 +225,7 @@ Switch `dungeon.sentient` (server config, default on). Off: the 1.21.0 ecosystem
 - **The Devil Avatar.** 900 health, speed 0.34; Ceiling Pull, Floor Crush, Inversion Field, Hex Volley, Dread Brand, Curse Nova, Shadow Step, Call the Disciples; Abyssal Collapse at 60 percent power; Gates form at 25 percent.
 - **Collapse v2.** Six waves of a frenzied horde born from the walls (24/6/56 caps); Spatial Surge every 12-20 s per player, never lethal.
 - **Known limits.** Nothing was run in game; Juggernauts that unload with their chunk stop counting against the cap of three; old halls need `nexus reset` for the Avatar.
+
+## 10. The floor arenas (1.23.0)
+
+Arena cells (`DungeonTier.arenaOf`, about 8 percent of non-core cells of the Upper Catacombs and the Deep Waterways) are built by the same Nexus builder as the core zones: Goliath's Pit (`dungeon/floor/goliath`) on Floor A, the Charybdis Basin (`dungeon/floor/charybdis`) on Floor B. Each has gates, a mana-gated Treasury with relic pedestals (the Sentient pool), and a boss on `ZogratisBoss` with the framework's Percentage Power System and Gates form. The fight posts a `DungeonCollapseEvent` once. Charybdis steers by velocity (no gravity, not pushed by fluid); its scales are deflected by shield, Magebane parry or a melee strike (`ParryRules`).

@@ -88,6 +88,9 @@ public final class MagebaneShieldArts {
         return d.getLong(K_PARRY) > p.level().getGameTime() && (d.getBoolean(K_PARRY_FREE) || raisedNow(p));
     }
 
+    /** Is this player inside the Spellbreak Parry window right now? The public face of {@link #parrying}, for other systems (the Charybdis Spawn's scales). */
+    public static boolean parryOpen(Player p) { return p != null && parrying(p); }
+
     // ---------------------------------------------------------------- damage classes
     /** Spell damage: vanilla magic, or any Tensura damage type that is not physical. */
     static boolean isMagic(DamageSource s) {

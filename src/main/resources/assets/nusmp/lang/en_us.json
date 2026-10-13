@@ -1270,5 +1270,10 @@
   "curios.identifier.dungeon_relic": "Dungeon Relic",
   "key.nusmp.use_relic": "Use Relic (worn Gambler's Grimoire Page)",
   "entity.nusmp.devil_avatar": "Devil Avatar",
-  "item.nusmp.devil_avatar_spawn_egg": "Devil Avatar Spawn Egg"
+  "item.nusmp.devil_avatar_spawn_egg": "Devil Avatar Spawn Egg",
+  "entity.nusmp.goliath": "The Goliath",
+  "item.nusmp.goliath_spawn_egg": "Goliath Spawn Egg",
+  "entity.nusmp.charybdis_spawn": "Charybdis Spawn",
+  "entity.nusmp.magicule_scale": "Magicule Scale",
+  "item.nusmp.charybdis_spawn_egg": "Charybdis Spawn Egg"
 }

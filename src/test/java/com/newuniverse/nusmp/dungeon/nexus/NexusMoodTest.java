@@ -14,13 +14,20 @@ class NexusMoodTest {
     @Test
     void everyZoneHasAMoodOfItsOwn() {
         Set<String> colours = new HashSet<>();
-        for (NexusZone z : NexusZone.values()) {
+        for (NexusZone z : NexusZone.coreZones()) {
             DungeonAtmosphere.Mood m = DungeonAtmosphere.zoneMood(z);
             assertNotNull(m, z.name());
             assertEquals("GOLDEN_CITY", m.tier(), "all four belong to the deepest tier");
             assertTrue(colours.add(m.red() + "/" + m.green() + "/" + m.blue()), "each zone has its own fog colour: " + z);
         }
         assertSame(DungeonAtmosphere.GOLDEN_CITY, DungeonAtmosphere.zoneMood(NexusZone.GOLDEN_CITY), "the Golden City keeps its warm gold");
+    }
+
+    @Test
+    void theFloorBossArenasKeepTheMoodOfTheTierTheyStandIn() {
+        assertSame(DungeonAtmosphere.mood(0), DungeonAtmosphere.zoneMood(NexusZone.GOLIATH_PIT), "the pit is in the Upper Catacombs");
+        assertSame(DungeonAtmosphere.mood(1), DungeonAtmosphere.zoneMood(NexusZone.CHARYBDIS_BASIN), "the basin is in the Deep Waterways");
+        for (NexusZone z : NexusZone.values()) assertNotNull(DungeonAtmosphere.zoneMood(z), z.name());
     }
 
     @Test
