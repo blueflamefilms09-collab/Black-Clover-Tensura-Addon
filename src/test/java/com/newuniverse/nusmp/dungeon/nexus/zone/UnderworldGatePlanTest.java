@@ -388,6 +388,54 @@ class UnderworldGatePlanTest {
         }
     }
 
+    @Test
+    void theAvatarStandsOnTheWayInFrontOfTheGateWithRoomToFight() {
+        final int leash = 56;                                                  // ZogratisBoss.ARENA_RADIUS: the boss is called back from further than this
+        for (int[] c : CELLS) {
+            Sim s = sim(c[0], c[1]);
+            ZonePlan p = s.plan;
+            assertEquals(1, p.spawns(ROLE_AVATAR).size(), "one floor boss");
+            ZonePlan.Spot a = p.spawns(ROLE_AVATAR).get(0);
+            assertArrayEquals(world(c[0], c[1], 0, 1, AVATAR_V), new int[]{a.x(), a.y(), a.z()}, "on the way, " + AVATAR_V + " blocks in front of the Gate");
+            assertTrue(AVATAR_V > DAIS_FRONT + 3, "past the foot of the steps, on the level way");
+            for (int dy = 0; dy < 6; dy++) assertTrue(s.passable(a.x(), a.y() + dy, a.z()), "headroom for a body of 3.7 blocks at +" + dy);
+            // the arena of a boss is a place it can be put back on: in the Gate's own frame, floor under it and clear air over it in the half disc of
+            // five blocks on the way's side (the other half is the foot of the steps: stairs of the dais, which are ground to climb, not air)
+            for (int lu = -5; lu <= 5; lu++) {
+                for (int lv = AVATAR_V - 2; lv <= AVATAR_V + 5; lv++) {
+                    if (lu * lu + (lv - AVATAR_V) * (lv - AVATAR_V) > 25) continue;
+                    int[] floor = world(c[0], c[1], lu, 0, lv);
+                    assertFalse(s.passable(floor[0], floor[1], floor[2]), "floor round the post at " + lu + "," + lv);
+                    for (int h = 1; h <= 3; h++) {
+                        int[] at = world(c[0], c[1], lu, h, lv);
+                        assertTrue(s.passable(at[0], at[1], at[2]), "clear air round the post at " + lu + "," + lv + " layer " + h + ": " + s.at(at[0], at[1], at[2]));
+                    }
+                }
+            }
+            ZonePlan.Spot k = p.spawns(ROLE_GATEKEEPER).get(0), arrival = p.spawns(ZonePlan.ROLE_ARRIVAL).get(0);
+            assertTrue(Math.hypot(a.x() - k.x(), a.z() - k.z()) >= 8, "the Gatekeeper's fight and the Avatar's are two fights");
+            assertTrue(Math.hypot(a.x() - arrival.x(), a.z() - arrival.z()) >= 15, "and the Avatar is not on top of the arrival");
+            assertTrue(Math.hypot(a.x() - p.centreX(), a.z() - p.centreZ()) > DAIS_FRONT, "it stands outside the Gate, not in it");
+            // the leash of its arena (56 blocks) covers the yard of the Gate, the vestibule, the way in and the three gates of the sides and the front
+            assertTrue(Math.hypot(k.x() - a.x(), k.z() - a.z()) <= leash);
+            assertTrue(Math.hypot(arrival.x() - a.x(), arrival.z() - a.z()) <= leash);
+            for (Gate g : UnderworldGatePlan.gates(c[0], c[1])) {
+                if (g.side() == (gateSide(c[0], c[1]) + 2) % 4) continue;       // the gate behind the Gate is further than the leash: nobody is fought from there
+                assertTrue(Math.hypot(g.doorX() - a.x(), g.doorZ() - a.z()) <= leash, "gate " + g.side() + " is within the arena");
+            }
+        }
+    }
+
+    @Test
+    void theAvatarSpotDoesNotMoveAnyOtherCreaturesPlace() {
+        // the Avatar's role was added last: every other role keeps its spots, in the order of 1.21.0
+        for (int[] c : CELLS) {
+            ZonePlan p = UnderworldGatePlan.of(c[0], c[1]);
+            java.util.List<String> roles = new java.util.ArrayList<>(p.allSpawns().keySet());
+            assertEquals(java.util.List.of(ROLE_GATEKEEPER, ZonePlan.ROLE_ELITE, ZonePlan.ROLE_MINION, ZonePlan.ROLE_ARRIVAL, ROLE_AVATAR), roles);
+        }
+    }
+
     // ---------------------------------------------------------------- the gravity zones
     @Test
     void theFiveZonesLieInsideTheHallAndAreMarkedInItsFloor() {

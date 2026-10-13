@@ -60,7 +60,7 @@ class CollapseRunnerTest {
         final List<String> events = new ArrayList<>();
         final List<CollapsePlan.Stage> stages = new ArrayList<>();
         final List<Integer> lines = new ArrayList<>(), waves = new ArrayList<>();
-        final List<Long> linesLeft = new ArrayList<>();
+        final List<Long> linesLeft = new ArrayList<>(), waveTicks = new ArrayList<>();
         final List<long[]> dusts = new ArrayList<>();         // {tick, x, z}
         int expelFirst, expelLater, cracks;
         long tick;
@@ -81,7 +81,10 @@ class CollapseRunnerTest {
         public void dust(int x, int z) { dusts.add(new long[]{tick, x, z}); }
 
         @Override
-        public void wave(int index) { waves.add(index); }
+        public void wave(int index) {
+            waves.add(index);
+            waveTicks.add(tick);
+        }
 
         @Override
         public void expel(boolean first) {
@@ -142,7 +145,8 @@ class CollapseRunnerTest {
         assertEquals(List.of(CollapsePlan.Stage.CRACKS, CollapsePlan.Stage.ROLLING, CollapsePlan.Stage.FINAL, CollapsePlan.Stage.WIPE), log.stages);
         assertEquals(List.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9), log.lines, "every countdown mark once, in order");
         for (int i = 0; i < log.lines.size(); i++) assertEquals((long) CollapsePlan.MARKS[i], log.linesLeft.get(i), "each said on time: " + i);
-        assertEquals(List.of(0, 1, 2, 3, 4), log.waves, "every guard wave once, in order");
+        assertEquals(List.of(0, 1, 2, 3, 4, 5), log.waves, "every wave of the horde once, in order");
+        assertEquals(List.of(400L, 1000L, 1600L, 2100L, 2500L, 2900L), log.waveTicks, "at 0:20, 1:00 ... and the last 35 seconds before the end");
         assertEquals(1, log.expelFirst, "the expulsion starts once");
         assertTrue(log.expelLater >= 1, "and catches whoever walks back in while the wipe runs");
         assertTrue(log.cracks > 100);
@@ -235,7 +239,7 @@ class CollapseRunnerTest {
             assertTrue(cur.ended(), "ends after a restart at " + cut);
             assertTrue(hall.solids.isEmpty(), "nothing left after a restart at " + cut);
             assertEquals(List.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9), log.lines, "no mark twice or missed after a restart at " + cut);
-            assertEquals(List.of(0, 1, 2, 3, 4), log.waves, "no wave twice or missed after a restart at " + cut);
+            assertEquals(List.of(0, 1, 2, 3, 4, 5), log.waves, "no wave twice or missed after a restart at " + cut);
             assertEquals(1, log.expelFirst, "one expulsion after a restart at " + cut);
         }
     }
@@ -266,7 +270,7 @@ class CollapseRunnerTest {
             assertTrue(again.ended(), "ends after a restart through the saved format at " + cut);
             assertTrue(hall.solids.isEmpty());
             assertEquals(List.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9), log.lines);
-            assertEquals(List.of(0, 1, 2, 3, 4), log.waves);
+            assertEquals(List.of(0, 1, 2, 3, 4, 5), log.waves);
             assertEquals(1, log.expelFirst);
         }
     }
@@ -285,7 +289,7 @@ class CollapseRunnerTest {
         while (!r.ended() && t < 200_100) r.tick(START + ++t, hall, log);
         assertTrue(r.ended());
         assertTrue(hall.solids.isEmpty());
-        assertTrue(log.waves.size() <= 1, "no guard waves for a collapse that is already over");
+        assertTrue(log.waves.size() <= 1, "no waves of the horde for a collapse that is already over");
     }
 
     @Test

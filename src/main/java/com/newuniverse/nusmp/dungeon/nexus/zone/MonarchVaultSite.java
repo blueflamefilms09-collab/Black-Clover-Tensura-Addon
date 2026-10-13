@@ -7,6 +7,7 @@ import com.newuniverse.nusmp.dungeon.nexus.ZonePlan;
 import com.newuniverse.nusmp.dungeon.nexus.ZoneSite;
 import com.newuniverse.nusmp.dungeon.nexus.relic.Relic;
 import com.newuniverse.nusmp.dungeon.nexus.relic.Relics;
+import com.newuniverse.nusmp.dungeon.sentient.SentientMode;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -64,9 +65,12 @@ public final class MonarchVaultSite implements ZoneSite {
         MonarchGates.openAll(level, plan);
     }
 
-    /** The central pedestal holds one of the five relics (a different one in each hall), the four others hold the rest. */
+    /**
+     * The central pedestal holds one of the Treasury's relics (a different one in each hall), the others hold the rest. The pool is the four relics
+     * of the Sentient Dungeon, or the five of 1.21.0 (in their old order, so a hall keeps its central relic) when it is switched off.
+     */
     private static void placeRelics(ServerLevel level, ZonePlan plan, int cellX, int cellZ) {
-        Relic[] all = Relic.values();
+        Relic[] all = Relic.pool(SentientMode.active());
         if (all.length == 0) return;
         int central = MonarchVaultPlan.centralRelicIndex(cellX, cellZ, all.length);
         if (plan.centralRelic != null) Relics.placePedestal(level, pos(plan.centralRelic), all[central], true);

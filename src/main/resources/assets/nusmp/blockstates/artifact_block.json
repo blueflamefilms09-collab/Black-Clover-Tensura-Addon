@@ -1,5 +1,11 @@
 {
   "variants": {
+    "central=false,relic=amulet_of_the_juggernauts_blindness,taken=false": {
+      "model": "nusmp:block/artifact_block_amulet"
+    },
+    "central=false,relic=amulet_of_the_juggernauts_blindness,taken=true": {
+      "model": "nusmp:block/artifact_block_empty"
+    },
     "central=false,relic=band_of_the_spatial_anchor,taken=false": {
       "model": "nusmp:block/artifact_block_band"
     },
@@ -35,6 +41,12 @@
     },
     "central=false,relic=mantle_of_the_scavenger,taken=true": {
       "model": "nusmp:block/artifact_block_empty"
+    },
+    "central=true,relic=amulet_of_the_juggernauts_blindness,taken=false": {
+      "model": "nusmp:block/artifact_block_central_amulet"
+    },
+    "central=true,relic=amulet_of_the_juggernauts_blindness,taken=true": {
+      "model": "nusmp:block/artifact_block_central_empty"
     },
     "central=true,relic=band_of_the_spatial_anchor,taken=false": {
       "model": "nusmp:block/artifact_block_central_band"

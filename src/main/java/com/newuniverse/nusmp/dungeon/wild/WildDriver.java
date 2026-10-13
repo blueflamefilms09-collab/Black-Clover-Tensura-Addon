@@ -7,6 +7,7 @@ import com.newuniverse.nusmp.dungeon.DungeonConfig;
 import com.newuniverse.nusmp.dungeon.DungeonCreature;
 import com.newuniverse.nusmp.dungeon.EcosystemData;
 import com.newuniverse.nusmp.dungeon.LivingDungeon;
+import com.newuniverse.nusmp.dungeon.sentient.SentientMode;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -103,6 +104,14 @@ public final class WildDriver {
             return;
         }
         if (Wildlife.tierOf(m) == 0) return;
+        if (SentientMode.active()) {                                                              // the Sentient Dungeon: no food web, no home, no hunger; a sleeper of an old world is woken
+            if (m.isNoAi() && m.hasData(Dweller.DWELLER.get())) {
+                Dweller sleeper = m.getData(Dweller.DWELLER);
+                if (sleeper.asleep) wake(m, sleeper, 0L);
+            }
+            m.setPersistenceRequired();
+            return;
+        }
         Dweller w = m.getData(Dweller.DWELLER);
         if (!w.hasHome()) w.setHome(m.blockPosition());
         m.setPersistenceRequired();
@@ -110,6 +119,7 @@ public final class WildDriver {
 
     /** Whatever kills in the Dungeon, if it is a creature of the roster, eats. */
     public static void onDeath(LivingDeathEvent e) {
+        if (SentientMode.active()) return;                                                        // the Sentient Dungeon has no food web: a kill feeds nobody
         LivingEntity victim = e.getEntity();
         if (!(victim.level() instanceof ServerLevel d) || !LivingDungeon.in(d)) return;
         if (!(e.getSource().getEntity() instanceof Mob m) || m == victim || m instanceof DungeonCreature) return;
@@ -131,6 +141,12 @@ public final class WildDriver {
             return;
         }
         int tick = server.getTickCount();
+        if (SentientMode.active()) {                                                              // the Sentient Dungeon: the food-web sweep is off; whatever slept is woken now and then
+            crowd.clear();
+            errands.clear();
+            if (tick % 200 == 7) wakeAll(d);
+            return;
+        }
         if (!DungeonConfig.get(DungeonConfig.ENABLED)) {
             if (tick % 100 == 7) {                                                                // switched off: nothing is left asleep
                 crowd.clear();

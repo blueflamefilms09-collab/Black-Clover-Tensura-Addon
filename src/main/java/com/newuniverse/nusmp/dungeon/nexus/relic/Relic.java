@@ -8,19 +8,25 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * The five Relics of the Treasury (docs/living_dungeon.md section 7), after D&amp;D 5e homebrew artifacts. Each is worn in its own slot and
- * works only while worn and attuned to its wearer. Append new relics at the end: the ordinal is part of the bit mask {@link Worn} keeps.
+ * The Relics of the Treasury (docs/living_dungeon.md section 7), after D&amp;D 5e homebrew artifacts. Every relic is worn in one of the two Dungeon
+ * Relic Curios slots ({@code dungeon_relic}) and works only while worn and attuned to its wearer. Append new relics at the end: the ordinal is
+ * part of the bit mask {@link Worn} keeps. The owner's design lists four ({@link #treasury()}): the Chalice and the Mantle of the removed food web
+ * stay registered and usable, but no Treasury holds them any more.
  */
 public enum Relic {
-    GLUTTONS_CHALICE("glutton_chalice", "The Glutton's Chalice", Slot.CHARM, "Symbiotic Hunger"),
-    MANTLE_OF_THE_SCAVENGER("mantle_of_the_scavenger", "Mantle of the Scavenger", Slot.BACK, "Prey's Weakness"),
-    BAND_OF_THE_SPATIAL_ANCHOR("band_of_the_spatial_anchor", "Band of the Spatial Anchor", Slot.RING, null),
-    DEVIL_BOUND_SHEATH("devil_bound_sheath", "Devil-Bound Weapon Sheath", Slot.BELT, "Mana Siphon"),
-    GAMBLERS_GRIMOIRE_PAGE("gamblers_grimoire_page", "The Gambler's Grimoire Page", Slot.OFF_HAND, "Wild Magic Surge");
+    GLUTTONS_CHALICE("glutton_chalice", "The Glutton's Chalice", Slot.RELIC, "Symbiotic Hunger"),
+    MANTLE_OF_THE_SCAVENGER("mantle_of_the_scavenger", "Mantle of the Scavenger", Slot.RELIC, "Prey's Weakness"),
+    BAND_OF_THE_SPATIAL_ANCHOR("band_of_the_spatial_anchor", "Band of the Spatial Anchor", Slot.RELIC, null),
+    DEVIL_BOUND_SHEATH("devil_bound_sheath", "Devil-Bound Weapon Sheath", Slot.RELIC, "Mana Siphon"),
+    GAMBLERS_GRIMOIRE_PAGE("gamblers_grimoire_page", "The Gambler's Grimoire Page", Slot.RELIC, "Wild Magic Surge"),
+    AMULET_OF_THE_JUGGERNAUTS_BLINDNESS("amulet_of_the_juggernauts_blindness", "Amulet of the Juggernaut's Blindness", Slot.RELIC, "Muffled Mana");
 
-    /** Where a relic is worn: a Curios slot (their ids), or the off-hand. */
+    /**
+     * Where a relic is worn: a Curios slot (their ids), or the off-hand. Since the Sentient Dungeon every relic is {@link #RELIC}; the older
+     * entries stay so nothing that named them breaks.
+     */
     public enum Slot {
-        CHARM("charm"), BACK("back"), RING("ring"), BELT("belt"), OFF_HAND("the off-hand");
+        CHARM("charm"), BACK("back"), RING("ring"), BELT("belt"), OFF_HAND("the off-hand"), RELIC("dungeon_relic");
 
         public final String label;
 
@@ -49,6 +55,22 @@ public enum Relic {
 
     /** This relic's bit in the mask of what is worn. */
     public int bit() { return 1 << ordinal(); }
+
+    /**
+     * The four relics of the owner's design, in its order: what the Treasuries and the vaults hold. (The Chalice and the Mantle are not among them.)
+     * A new array each time.
+     */
+    public static Relic[] treasury() {
+        return new Relic[]{BAND_OF_THE_SPATIAL_ANCHOR, DEVIL_BOUND_SHEATH, GAMBLERS_GRIMOIRE_PAGE, AMULET_OF_THE_JUGGERNAUTS_BLINDNESS};
+    }
+
+    /** The five relics the Treasuries held before the Sentient Dungeon, in their old order (for a server that runs with {@code dungeon.sentient = false}). A new array each time. */
+    public static Relic[] legacyTreasury() {
+        return new Relic[]{GLUTTONS_CHALICE, MANTLE_OF_THE_SCAVENGER, BAND_OF_THE_SPATIAL_ANCHOR, DEVIL_BOUND_SHEATH, GAMBLERS_GRIMOIRE_PAGE};
+    }
+
+    /** What a Treasury or a vault draws from: {@link #treasury()} under the Sentient Dungeon's rules, {@link #legacyTreasury()} without them. */
+    public static Relic[] pool(boolean sentient) { return sentient ? treasury() : legacyTreasury(); }
 
     /** The relic with this registry path or enum name (any case), or null. */
     public static Relic byName(String name) {

@@ -4,7 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 
-/** Two questions about the ground the collapse puts things on (Root Gates, mutated guards): is the chunk there, and can a person stand there? */
+/** Two questions about the ground the collapse puts things on (Root Gates, the horde): is the chunk there, and can a person stand there? */
 final class CollapseGround {
     private CollapseGround() {}
 

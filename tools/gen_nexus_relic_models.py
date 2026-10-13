@@ -6,7 +6,7 @@ sprite_axis / sprite_box all exist here.
 
     python3 -B tools/gen_nexus_relic_icons.py                       (the 16x16 sprites first: the meshes are placed on them)
     python3 -B tools/gen_weapon_models.py ki_resonance_lantern ki_resonance_lantern_off ki_resonance_lantern_blue ki_resonance_lantern_red \\
-        anti_bird_compass glutton_chalice devil_bound_sheath gamblers_grimoire_page
+        anti_bird_compass glutton_chalice devil_bound_sheath gamblers_grimoire_page amulet_of_the_juggernauts_blindness
     python3 -B tools/item_preview/preview_weapons.py ki_resonance_lantern  (the headless preview)
 
 Model units are texels of the 128 skin; y runs up the item (along the sheath for the sheath), x across it, z through it, the front faces +z.
@@ -21,6 +21,9 @@ Model units are texels of the 128 skin; y runs up the item (along the sheath for
                         chain lanyard from the mouth.
   gamblers_grimoire_page one torn parchment page with a curled corner, a d20 inked in glowing violet and gold, runes down its margins in shifting colours and a
                         few motes of light floating round it.
+  amulet_of_the_juggernauts_blindness
+                        a tarnished dark-gold medallion on a V of chain links and a small ring, a gold-rimmed dish holding a closed, slit eye: a heavy
+                        lid over a seam of violet light that glows and bleeds onto the lower lid, four violet cabochons on the rim, a ring of grooves round it.
 """
 import colorsys
 
@@ -790,9 +793,168 @@ def gamblers_grimoire_page(m, a):
     return dict(glow=("FFFFFF", 0.09, 0.45, 1.0))
 
 
+# ================================================================ the Amulet of the Juggernaut's Blindness
+_RC_AM_GOLD = (200, 154, 66)
+_RC_AM_VIO = (176, 120, 255)
+_RC_AM_FIELD = (28, 20, 44)
+
+
+def _rc_am_gold(x, d, th, salt=0, lo=0.7, amp=0.4):
+    """Tarnished dark gold: grain, a darker side, a little violet-black tarnish in patches and a few bright wear marks."""
+    c = np.array(_RC_AM_GOLD, np.float32) * _rc_shade(th, lo, amp) + nz(x, d * 1.3, 150 + salt) * 28 + fz(x * 2, d * 2, 151 + salt) * 13
+    if nz(x * 0.7, d * 0.8, 152 + salt) > 0.2:
+        c = c * 0.8 + np.array((40, 30, 56), np.float32) * 0.2
+    if hsh(int(x), int(d), 153 + salt) > 0.96:
+        c = c * 1.2 + 18
+    return c
+
+
+def _rc_am_lens(x):
+    """The closed eye's curves at x in -1..1 (y up, in card units): the crease on top of the lid, the seam of the lashes, and the lower lid's edge. The
+    almond's peak sits a little towards the inner (left) corner, and both corners come to a point."""
+    f = max(0.0, 1.0 - abs(x) ** 2.0) ** 0.85
+    top = max(0.0, 1.0 - abs((x + 0.14) / 1.14) ** 2.0) ** 0.85
+    return 0.92 * top, -0.30 * f, -0.30 * f - 0.17 * max(0.0, 1.0 - x * x) ** 0.7
+
+
+@_xb_packed
+def amulet_of_the_juggernauts_blindness(m, a):
+    """Amulet of the Juggernaut's Blindness: a tarnished dark-gold medallion (a ring of grooves on its rim, four violet cabochons, a recessed dish of dark violet
+    glass-black) with a closed, slit eye: a heavy gold lid that glows faintly violet from within, a seam of violet light that glows and bleeds onto the lower
+    lid, lashes; a ring on a small boss on top, and a V of chain links. The glow pulses slowly, as if the eye were dreaming."""
+    prof = [(-2.8, 0.0), (-2.8, 11.6), (-2.2, 13.0), (1.6, 13.4), (2.8, 12.2), (2.8, 10.0), (2.0, 9.4), (1.0, 9.1), (1.0, 0.0)]
+    cum = _rc_cum(prof)
+    sides = 32
+
+    def body(k, s, d, seg, th):
+        x = (k + s) * 2.0
+        if seg == 7:                                                              # the dish: dark violet, brighter towards the eye, a thin gold ring
+            rr = max(0.0, 9.1 - (d - cum[7])) / 9.1
+            c = np.array(_RC_AM_FIELD, np.float32) + (1 - rr) ** 2 * np.array((48, 30, 88), np.float32) + fz(x * 2, d * 2, 154) * 8
+            if abs(rr - 0.92) < 0.025:
+                c = np.array((168, 124, 56), np.float32)
+            return col(_rc_clip(c)), col((150, 100, 230), 0.24 * (1 - rr) ** 1.5)
+        if seg == 4:                                                              # the rim's face: a ring of fine grooves
+            c = _rc_am_gold(x, d, th, 5, 0.78, 0.36) * 1.1
+            if 0.34 < (th * 32) % 1.0 < 0.66:                                      # the middle texel of every side is a groove
+                c = c * 0.42
+            return col(_rc_clip(c)), None
+        if seg in (5, 6):                                                         # the dish's wall: shadowed
+            return col(_rc_clip(_rc_am_gold(x, d, th, 6, 0.6, 0.3) * 0.6)), None
+        if seg == 0:                                                              # the back: engraved rings, four rune dots
+            c = _rc_am_gold(x, d, th, 7, 0.6, 0.34) * 0.84
+            rr = max(0.0, 11.6 - d) / 11.6
+            if abs(rr - 0.78) < 0.025 or abs(rr - 0.36) < 0.025:
+                c = c * 0.55
+            if abs(rr - 0.58) < 0.04 and min((th * 4) % 1.0, 1 - (th * 4) % 1.0) < 0.05:
+                c = np.array((190, 140, 255), np.float32)
+            return col(_rc_clip(c)), None
+        if seg == 2 and (th * 64) % 1.0 < 0.2:                                    # the outer wall: finely reeded
+            return col(_rc_clip(_rc_am_gold(x, d, th, 8) * 0.64)), None
+        return col(_rc_clip(_rc_am_gold(x, d, th, seg))), None
+    _rc_lathe(m, a, prof, sides, body, sw=3, direction=(0.0, 0.0, 1.0))
+
+    # ---- four violet cabochons set in the rim, on the diagonals (the top is the ring's)
+    def gem(k, s, d, seg, th):
+        c = mix((120, 70, 214), (226, 190, 255), 0.25 + 0.55 * (d / 1.9) ** 2)
+        return col(c), col((176, 120, 255), 0.7)
+    for (gx, gy) in ((1, 1), (-1, 1), (-1, -1), (1, -1)):
+        _rc_lathe(m, a, [(0.0, 0.0), (0.0, 0.95), (0.25, 0.95), (0.62, 0.7), (0.9, 0.0)], 6, gem, sw=2, base=(gx * 7.85, gy * 7.85, 2.8), direction=(0.0, 0.0, 1.0))
+
+    # ---- the closed eye on the dish: a card with the lids, a raised rim round the almond, the seam as a glowing tube, lashes
+    zc = 1.12
+    ew, eh, cw, ch = 8.4, 4.9, 44, 26
+
+    def eye(i, j, w, h):
+        x = (i + 0.5 - w / 2) / (w / 2)
+        y = 1.0 - 2.0 * (j + 0.5) / h
+        crease, seam, low = _rc_am_lens(x)
+        if y > crease or y < low or abs(x) > 1.0:
+            return None, None
+        gx_ = (x + 1.0) * 8.4
+        if y >= seam:                                                            # the upper lid: a heavy dome, lit from the upper left, two folds, glowing faintly from within
+            t = (y - seam) / max(1e-6, crease - seam)
+            lit = 0.58 + 0.66 * math.sin(math.pi * min(1.0, t * 0.92 + 0.04)) ** 1.0 - 0.14 * x
+            c = np.array(_RC_AM_GOLD, np.float32) * lit + nz(gx_, y * 9, 160) * 20
+            for tc in (0.50, 0.80):
+                if abs(t - tc) < 0.045 * (1.0 + 0.5 * abs(x)):
+                    c = c * 0.62
+            if t < 0.13:                                                          # the shadow the seam's light eats into
+                c = c * (0.55 + 0.45 * t / 0.13)
+            glow = None
+            pupil = ((x + 0.04) / 0.2) ** 2 + ((t - 0.5) / 0.46) ** 2                  # a faint, tall pupil under the lid
+            if pupil < 1.0:
+                k = (1 - pupil) ** 1.2
+                c = c * (1 - 0.4 * k) + np.array(_RC_AM_VIO, np.float32) * 0.4 * k
+                glow = col(_RC_AM_VIO, 0.3 * k)
+            near = abs(y - seam)
+            if near < 0.16:                                                       # the seam's light on the lid
+                k = (1 - near / 0.16) ** 1.5
+                c = c * (1 - 0.55 * k) + np.array(_RC_AM_VIO, np.float32) * 0.55 * k
+                glow = col(_RC_AM_VIO, max(0.4 * k, glow[3] / 255 if glow is not None else 0.0))
+            return col(_rc_clip(c)), glow
+        t = (y - low) / max(1e-6, seam - low)                                     # the lower lid: a thin band, lit from the seam above it
+        c = np.array((124, 90, 46), np.float32) * (0.72 + 0.3 * t) + nz(gx_, y * 9, 161) * 12
+        k = max(0.0, t) ** 2.0
+        c = c * (1 - 0.5 * k) + np.array((130, 90, 214), np.float32) * 0.5 * k
+        return col(_rc_clip(c)), col(_RC_AM_VIO, 0.34 * k)
+    _rc_card(m, a, (-ew, -eh, zc), (ew, -eh, zc), (ew, eh, zc), (-ew, eh, zc), cw, ch, eye, both=False)
+
+    def to_xy(x, y, dz=0.3):
+        return (x * ew * 0.97, y * eh, zc + dz)
+    outline = []
+    for q in range(0, 13):                                                        # along the crease, left to right
+        xq = -1.0 + q / 6.0
+        outline.append(to_xy(xq, _rc_am_lens(xq)[0]))
+    for q in range(1, 12):                                                        # back along the lower lid's edge
+        xq = 1.0 - q / 6.0
+        outline.append(to_xy(xq, _rc_am_lens(xq)[2]))
+    outline = [outline[0]] + [p for i, p in enumerate(outline[1:], 1) if p != outline[i - 1]]
+    if outline[-1] == outline[0]:
+        outline.pop()
+    _rc_tube(m, a, outline, 0.4, 5, lambda k, s, d, th: (col(_rc_clip(_rc_am_gold(k + s, d * 1.5, th, 12, 0.8, 0.45))), None), sw=1, closed=True)
+    seam_pts = [to_xy(-1.0 + q / 6.0, _rc_am_lens(-1.0 + q / 6.0)[1], 0.36) for q in range(0, 13)]
+    seam_r = [0.2, 0.38, 0.52, 0.62, 0.68, 0.72, 0.74, 0.72, 0.68, 0.62, 0.52, 0.38, 0.2]
+
+    def seam_paint(k, s, d, th):
+        t = d / 17.0
+        core = max(0.0, 1.0 - abs(t - 0.5) * 2.0)
+        c = mix(_RC_AM_VIO, (246, 232, 255), 0.55 * core ** 2.0)
+        return col(c), col(c, 1.0)
+    _rc_tube(m, a, seam_pts, seam_r, 5, seam_paint, sw=1, caps=(True, True))
+
+    def lash(k, s, d, seg, th):
+        return col(_rc_clip(np.array((92, 62, 34), np.float32) * (0.8 + 0.5 * (1 - d / 2.6)))), None
+    for q in range(7):                                                            # lashes: seven fine cones hanging from the lower lid, longest in the middle
+        xq = -0.72 + 0.24 * q
+        ln = 1.6 + 1.5 * (1 - abs(xq) ** 1.5)
+        px_, py_, pz_ = to_xy(xq * 0.96, _rc_am_lens(xq)[2], 0.18)
+        _rc_lathe(m, a, [(0.0, 0.0), (0.0, 0.34), (ln * 0.5, 0.26), (ln, 0.0)], 4, lash, sw=1, base=(px_, py_, pz_), direction=(xq * 0.5, -1.0, 0.25))
+
+    # ---- the ring on its boss, and the chain: a V of links hanging from two sides of the ring
+    def boss(k, s, d, seg, th):
+        return col(_rc_clip(_rc_am_gold(k + s, d * 2, th, 20 + seg, 0.7, 0.4))), None
+    _rc_lathe(m, a, [(0.0, 0.0), (0.0, 2.7), (1.2, 2.5), (3.0, 1.9), (3.9, 1.0), (4.2, 0.0)], 10, boss, sw=2, base=(0.0, 12.4, 0.0), direction=(0.0, 1.0, 0.0))
+    ring_c = 17.6
+    ring = [(3.1 * math.cos(2 * math.pi * q / 18), ring_c + 3.1 * math.sin(2 * math.pi * q / 18), 0.0) for q in range(18)]
+    _rc_tube(m, a, ring, 0.95, 6, lambda k, s, d, th: (col(_rc_clip(_rc_am_gold(k + s, d * 1.6, th, 30, 0.72, 0.42))), None), sw=2, closed=True)
+
+    def link(k, s, d, th):
+        c = np.array((226, 180, 84) if int(d / 2.4) % 2 == 0 else (140, 100, 46), np.float32) * (0.62 + 0.5 * math.sin(math.pi * ((d % 2.4) / 2.4))) \
+            * (0.8 + 0.3 * math.cos(2 * math.pi * th - 1.6)) + fz(k + s, d * 2, 155) * 10
+        return col(_rc_clip(c)), None
+    for sx in (-1, 1):
+        ang = math.radians(38)
+        direction = (-sx * math.sin(ang), math.cos(ang), 0.0)
+        start = (sx * 2.2, ring_c + 2.2, 0.0)
+        _rc_chain(m, a, start, direction, 7, 3.4, 4.4, 2.9, 0.55, link)
+    return dict(glow=("D8B8FF", 0.055, 0.5, 1.0))
+
+
 # ================================================================ registration
 SPECS += [("devil_bound_sheath", devil_bound_sheath)]
 RELICS += [("anti_bird_compass", anti_bird_compass), ("glutton_chalice", glutton_chalice), ("gamblers_grimoire_page", gamblers_grimoire_page)]
+RELICS += [("amulet_of_the_juggernauts_blindness", amulet_of_the_juggernauts_blindness)]
 RELICS += [(i, _rc_lantern_fn(s)) for i, s in _RC_LANTERN_IDS.items()]
 REAL.update({"devil_bound_sheath": 1.1})              # metres: the scabbard 0.88 m and the lanyard
 GRIP.update({"devil_bound_sheath": 0.25})             # held round the mouth

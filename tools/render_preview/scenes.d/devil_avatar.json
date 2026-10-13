@@ -1,0 +1,1830 @@
+{
+ "devil_base_front": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   640
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.2
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 8,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.2
+   }
+  ],
+  "model": "devil_avatar_base"
+ },
+ "devil_base_back": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   640
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 5,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.2
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.2
+   }
+  ],
+  "model": "devil_avatar_base"
+ },
+ "devil_base_face": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     2.95,
+     0
+    ],
+    "dist": 2.6
+   },
+   {
+    "name": "face 3/4",
+    "yaw": 32,
+    "pitch": 6,
+    "target": [
+     0,
+     2.95,
+     0
+    ],
+    "dist": 2.6
+   }
+  ],
+  "model": "devil_avatar_base"
+ },
+ "devil_base_walk": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   5,
+   10,
+   15
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "walk",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "devil_avatar_base"
+ },
+ "devil_base_run": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   3,
+   6,
+   9
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "run",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "devil_avatar_base"
+ },
+ "devil_base_attack": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   4,
+   8,
+   12
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "attack",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "devil_avatar_base"
+ },
+ "devil_base_cast": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   6,
+   12,
+   18,
+   24
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "cast",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "devil_avatar_base"
+ },
+ "devil_base_cast_big": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   14,
+   28,
+   42,
+   52,
+   60
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "cast_big",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "devil_avatar_base"
+ },
+ "devil_base_hurt": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   2,
+   4,
+   6
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "hurt",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "devil_avatar_base"
+ },
+ "devil_base_transform": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   12,
+   24,
+   36,
+   48,
+   60
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "transform",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "devil_avatar_base"
+ },
+ "devil_base_death": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   5,
+   10,
+   15,
+   20
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "death",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "devil_avatar_base"
+ },
+ "devil_base_idle": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   20,
+   40,
+   60,
+   80
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "devil_avatar_base"
+ },
+ "devil_base_m_front": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   640
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.2
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 8,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.2
+   }
+  ],
+  "model": "nusmp:geo/entity/devil_avatar_base.geo.json",
+  "texture": "nusmp:textures/entity/devil_avatar_base_megicula.png"
+ },
+ "devil_base_m_back": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   640
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 5,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.2
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.2
+   }
+  ],
+  "model": "nusmp:geo/entity/devil_avatar_base.geo.json",
+  "texture": "nusmp:textures/entity/devil_avatar_base_megicula.png"
+ },
+ "devil_base_m_face": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     2.95,
+     0
+    ],
+    "dist": 2.6
+   },
+   {
+    "name": "face 3/4",
+    "yaw": 32,
+    "pitch": 6,
+    "target": [
+     0,
+     2.95,
+     0
+    ],
+    "dist": 2.6
+   }
+  ],
+  "model": "nusmp:geo/entity/devil_avatar_base.geo.json",
+  "texture": "nusmp:textures/entity/devil_avatar_base_megicula.png"
+ },
+ "devil_base_m_walk": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   5,
+   10,
+   15
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "walk",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "nusmp:geo/entity/devil_avatar_base.geo.json",
+  "texture": "nusmp:textures/entity/devil_avatar_base_megicula.png"
+ },
+ "devil_base_m_run": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   3,
+   6,
+   9
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "run",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "nusmp:geo/entity/devil_avatar_base.geo.json",
+  "texture": "nusmp:textures/entity/devil_avatar_base_megicula.png"
+ },
+ "devil_base_m_attack": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   4,
+   8,
+   12
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "attack",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "nusmp:geo/entity/devil_avatar_base.geo.json",
+  "texture": "nusmp:textures/entity/devil_avatar_base_megicula.png"
+ },
+ "devil_base_m_cast": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   6,
+   12,
+   18,
+   24
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "cast",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "nusmp:geo/entity/devil_avatar_base.geo.json",
+  "texture": "nusmp:textures/entity/devil_avatar_base_megicula.png"
+ },
+ "devil_base_m_cast_big": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   14,
+   28,
+   42,
+   52,
+   60
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "cast_big",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "nusmp:geo/entity/devil_avatar_base.geo.json",
+  "texture": "nusmp:textures/entity/devil_avatar_base_megicula.png"
+ },
+ "devil_base_m_hurt": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   2,
+   4,
+   6
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "hurt",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "nusmp:geo/entity/devil_avatar_base.geo.json",
+  "texture": "nusmp:textures/entity/devil_avatar_base_megicula.png"
+ },
+ "devil_base_m_transform": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   12,
+   24,
+   36,
+   48,
+   60
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "transform",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "nusmp:geo/entity/devil_avatar_base.geo.json",
+  "texture": "nusmp:textures/entity/devil_avatar_base_megicula.png"
+ },
+ "devil_base_m_death": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   5,
+   10,
+   15,
+   20
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "death",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "nusmp:geo/entity/devil_avatar_base.geo.json",
+  "texture": "nusmp:textures/entity/devil_avatar_base_megicula.png"
+ },
+ "devil_base_m_idle": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   20,
+   40,
+   60,
+   80
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "nusmp:geo/entity/devil_avatar_base.geo.json",
+  "texture": "nusmp:textures/entity/devil_avatar_base_megicula.png"
+ },
+ "devil_gates_front": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   640
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.2
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 8,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.2
+   }
+  ],
+  "model": "devil_avatar_gates"
+ },
+ "devil_gates_back": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   640
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 5,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.2
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.2
+   }
+  ],
+  "model": "devil_avatar_gates"
+ },
+ "devil_gates_face": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     2.95,
+     0
+    ],
+    "dist": 2.6
+   },
+   {
+    "name": "face 3/4",
+    "yaw": 32,
+    "pitch": 6,
+    "target": [
+     0,
+     2.95,
+     0
+    ],
+    "dist": 2.6
+   }
+  ],
+  "model": "devil_avatar_gates"
+ },
+ "devil_gates_walk": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   5,
+   10,
+   15
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "walk",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "devil_avatar_gates"
+ },
+ "devil_gates_run": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   3,
+   6,
+   9
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "run",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "devil_avatar_gates"
+ },
+ "devil_gates_attack": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   4,
+   8,
+   12
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "attack",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "devil_avatar_gates"
+ },
+ "devil_gates_cast": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   6,
+   12,
+   18,
+   24
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "cast",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "devil_avatar_gates"
+ },
+ "devil_gates_cast_big": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   14,
+   28,
+   42,
+   52,
+   60
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "cast_big",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "devil_avatar_gates"
+ },
+ "devil_gates_hurt": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   2,
+   4,
+   6
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "hurt",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "devil_avatar_gates"
+ },
+ "devil_gates_transform": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   12,
+   24,
+   36,
+   48,
+   60
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "transform",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "devil_avatar_gates"
+ },
+ "devil_gates_death": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   5,
+   10,
+   15,
+   20
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "death",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "devil_avatar_gates"
+ },
+ "devil_gates_idle": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   20,
+   40,
+   60,
+   80
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "devil_avatar_gates"
+ },
+ "devil_gates_m_front": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   640
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.2
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 8,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.2
+   }
+  ],
+  "model": "nusmp:geo/entity/devil_avatar_gates.geo.json",
+  "texture": "nusmp:textures/entity/devil_avatar_gates_megicula.png"
+ },
+ "devil_gates_m_back": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   640
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 5,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.2
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.2
+   }
+  ],
+  "model": "nusmp:geo/entity/devil_avatar_gates.geo.json",
+  "texture": "nusmp:textures/entity/devil_avatar_gates_megicula.png"
+ },
+ "devil_gates_m_face": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     2.95,
+     0
+    ],
+    "dist": 2.6
+   },
+   {
+    "name": "face 3/4",
+    "yaw": 32,
+    "pitch": 6,
+    "target": [
+     0,
+     2.95,
+     0
+    ],
+    "dist": 2.6
+   }
+  ],
+  "model": "nusmp:geo/entity/devil_avatar_gates.geo.json",
+  "texture": "nusmp:textures/entity/devil_avatar_gates_megicula.png"
+ },
+ "devil_gates_m_walk": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   5,
+   10,
+   15
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "walk",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "nusmp:geo/entity/devil_avatar_gates.geo.json",
+  "texture": "nusmp:textures/entity/devil_avatar_gates_megicula.png"
+ },
+ "devil_gates_m_run": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   3,
+   6,
+   9
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "run",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "nusmp:geo/entity/devil_avatar_gates.geo.json",
+  "texture": "nusmp:textures/entity/devil_avatar_gates_megicula.png"
+ },
+ "devil_gates_m_attack": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   4,
+   8,
+   12
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "attack",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "nusmp:geo/entity/devil_avatar_gates.geo.json",
+  "texture": "nusmp:textures/entity/devil_avatar_gates_megicula.png"
+ },
+ "devil_gates_m_cast": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   6,
+   12,
+   18,
+   24
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "cast",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "nusmp:geo/entity/devil_avatar_gates.geo.json",
+  "texture": "nusmp:textures/entity/devil_avatar_gates_megicula.png"
+ },
+ "devil_gates_m_cast_big": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   14,
+   28,
+   42,
+   52,
+   60
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "cast_big",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "nusmp:geo/entity/devil_avatar_gates.geo.json",
+  "texture": "nusmp:textures/entity/devil_avatar_gates_megicula.png"
+ },
+ "devil_gates_m_hurt": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   2,
+   4,
+   6
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "hurt",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "nusmp:geo/entity/devil_avatar_gates.geo.json",
+  "texture": "nusmp:textures/entity/devil_avatar_gates_megicula.png"
+ },
+ "devil_gates_m_transform": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   12,
+   24,
+   36,
+   48,
+   60
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "transform",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "nusmp:geo/entity/devil_avatar_gates.geo.json",
+  "texture": "nusmp:textures/entity/devil_avatar_gates_megicula.png"
+ },
+ "devil_gates_m_death": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   5,
+   10,
+   15,
+   20
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "death",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "nusmp:geo/entity/devil_avatar_gates.geo.json",
+  "texture": "nusmp:textures/entity/devil_avatar_gates_megicula.png"
+ },
+ "devil_gates_m_idle": {
+  "kind": "geo",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   20,
+   40,
+   60,
+   80
+  ],
+  "tile": [
+   340,
+   520
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.65,
+     0
+    ],
+    "dist": 7.6
+   }
+  ],
+  "model": "nusmp:geo/entity/devil_avatar_gates.geo.json",
+  "texture": "nusmp:textures/entity/devil_avatar_gates_megicula.png"
+ }
+}

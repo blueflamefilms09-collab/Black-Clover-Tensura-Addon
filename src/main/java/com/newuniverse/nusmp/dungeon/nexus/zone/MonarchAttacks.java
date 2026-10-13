@@ -33,18 +33,19 @@ import java.util.Set;
 import java.util.UUID;
 
 /**
- * The Monarch's five moves and its roar between phases, as things set going in the world (docs/living_dungeon.md section 5, zone 1). Each is
- * a {@link Hazard}: it draws its own warning in particles and a shape of the mod's VFX for the whole wind-up, then lands once, and every one has
- * a counter: the Domain Slam is a ring on the floor that a jump clears, the Shadow Rain is circles that erupt a moment after they are marked,
- * Soul Rend is a line drawn before it is cut, the Authority is a field that can be left (or held back by a Mana Zone), and the soldiers are
- * real daemons that can be killed. Damage is a bounded share of the victim's health ({@link MonarchRules#hit}), spares anyone struck in the
- * last {@link MonarchRules#HIT_GRACE} ticks, and is dealt as magic from the Monarch so a death is credited to it. The numbers are in
- * {@link MonarchRules}, the geometry in {@link MonarchShapes}; this class is only the glue to the world.
+ * The Blood-Red Commander's five shadow moves and its roar between phases, as things set going in the world (docs/living_dungeon.md section 5,
+ * zone 1; its three fast weapon arts are in {@link MonarchArts}). Each is a {@link Hazard}: it draws its own warning in particles and a shape of
+ * the mod's VFX for the whole wind-up, then lands once, and every one has a counter: the Domain Slam is a ring on the floor that a jump clears,
+ * the Shadow Rain is circles that erupt a moment after they are marked, Soul Rend is a line drawn before it is cut, the Authority is a field
+ * that can be left (or held back by a Mana Zone), and the soldiers are real daemons that can be killed. Damage is a bounded share of the
+ * victim's health ({@link MonarchRules#hit}), spares anyone struck in the last {@link MonarchRules#HIT_GRACE} ticks, and is dealt as magic from
+ * the Commander so a death is credited to it. The numbers are in {@link MonarchRules}, the geometry in {@link MonarchShapes}; this class is
+ * only the glue to the world.
  */
 final class MonarchAttacks {
     private MonarchAttacks() {}
 
-    private static final int VIOLET = 0xFFB026FF;
+    private static final int VIOLET = 0xFFB026FF, BLOOD = 0xFFE0182C;
     private static final DustParticleOptions DUST_VIOLET = new DustParticleOptions(new Vector3f(0.62f, 0.12f, 0.95f), 1.5f);
     private static final DustParticleOptions DUST_RED = new DustParticleOptions(new Vector3f(1.0f, 0.1f, 0.18f), 1.6f);
     private static final DustParticleOptions DUST_WHITE = new DustParticleOptions(new Vector3f(1.0f, 0.85f, 0.95f), 1.2f);
@@ -100,9 +101,11 @@ final class MonarchAttacks {
         level.playSound(null, BlockPos.containing(x, y, z), sound, SoundSource.HOSTILE, volume, pitch);
     }
 
-    /** Tells the players round the Monarch what it is doing, on the action bar. */
-    static void warn(ServerLevel level, Mob boss, String text) {
-        Component c = Component.literal(text).withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD);
+    /** Tells the players round the Commander what it is doing, on the action bar: in violet for its shadow moves, in red for its weapon arts. */
+    static void warn(ServerLevel level, Mob boss, String text) { warn(level, boss, text, ChatFormatting.LIGHT_PURPLE); }
+
+    static void warn(ServerLevel level, Mob boss, String text, ChatFormatting colour) {
+        Component c = Component.literal(text).withStyle(colour, ChatFormatting.BOLD);
         for (ServerPlayer p : foesNear(level, boss.getX(), boss.getZ(), MonarchRules.ARENA_RADIUS)) p.displayClientMessage(c, true);
     }
 
@@ -346,15 +349,19 @@ final class MonarchAttacks {
     }
 
     // ---------------------------------------------------------------- the roar between phases
-    /** The roar: a ring closing in for most of a second while it cannot be hurt, then a shove that clears the foes from it (no damage) and a fresh troop of soldiers. */
+    /**
+     * The roar at half its health and at a quarter: a ring closing in for most of a second while it cannot be hurt, then a shove that clears the
+     * foes from it (no damage). The soldiers do not come out of the roar itself: the fight follows it with a forced Summon Shadow Soldiers (the
+     * driver starts it as soon as the roar is over), with its own gathering of shadow for them to be seen coming.
+     */
     static Hazard roar(ServerLevel level, Mob boss, MonarchFight f, int toPhase, long now) {
         final long end = now + MonarchRules.TRANSITION;
         sound(level, boss.getX(), boss.getY(), boss.getZ(), SoundEvents.WARDEN_ROAR, 5.0f, 0.7f);
         sound(level, boss.getX(), boss.getY(), boss.getZ(), SoundEvents.ENDER_DRAGON_GROWL, 4.0f, 0.6f);
-        VfxSpawn.sendFollowing(level, VfxShape.KOTO_AURA, boss, boss.position(), VIOLET, MonarchRules.TRANSITION + 20, 3.0f);
+        VfxSpawn.sendFollowing(level, VfxShape.KOTO_AURA, boss, boss.position(), BLOOD, MonarchRules.TRANSITION + 20, 3.0f);
         String line = MonarchText.phase(toPhase);
         if (!line.isEmpty()) {
-            Component c = Component.literal(line).withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD);
+            Component c = Component.literal(line).withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD);
             for (ServerPlayer p : foesNear(level, boss.getX(), boss.getZ(), MonarchRules.ARENA_RADIUS)) p.displayClientMessage(c, true);
         }
         return (l, b, fight, t) -> {
@@ -368,7 +375,6 @@ final class MonarchAttacks {
             }
             for (ServerPlayer p : foesNear(l, b.getX(), b.getZ(), 14.0)) shove(p, b.getX(), b.getZ(), 1.1, 0.4);
             l.sendParticles(ParticleTypes.EXPLOSION_EMITTER, b.getX(), b.getY() + 1.0, b.getZ(), 1, 0, 0, 0, 0);
-            spawnSoldiers(l, b, fight, MonarchRules.summonCount(fight.phase, alive(l, fight)));
             return true;
         };
     }

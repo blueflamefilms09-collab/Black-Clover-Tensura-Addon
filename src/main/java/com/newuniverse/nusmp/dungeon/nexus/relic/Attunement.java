@@ -32,8 +32,9 @@ import java.util.Set;
 import java.util.UUID;
 
 /**
- * Attunement (docs/living_dungeon.md section 7): a relic is held in the main hand while its holder sneaks, ten seconds without a break
- * ({@link AttuneClock}), and then its stack carries the player's id (the {@code attuned_to} component) and a bond id that is also written
+ * Attunement (docs/living_dungeon.md section 7): a relic is held in the main hand while its holder sneaks, ten seconds without a break and
+ * standing still ({@link AttuneClock}: a blow, or a step of more than a quarter block, starts the ten seconds over), and then its stack
+ * carries the player's id (the {@code attuned_to} component) and a bond id that is also written
  * in the player's own list ({@link Bonds}, saved in the player's persistent data). Both must agree, so another player's relic is
  * unattuned for you, and a relic whose bond was released is unattuned for its old owner too. Three at once; a fourth needs one released
  * (sneak-use it, drop it, or the release command). Death breaks every attunement (unless the inventory is kept).
@@ -46,7 +47,8 @@ public final class Attunement {
     private static final Set<UUID> HURT = new HashSet<>();
 
     // ---------------------------------------------------------------- the player's list of bonds
-    private static CompoundTag data(Player p, boolean create) {
+    /** The relics' own corner of the player's persistent data (the bonds, the Wild Surge's expiry); null if there is none and {@code create} is false. */
+    static CompoundTag data(Player p, boolean create) {
         CompoundTag pd = p.getPersistentData();
         if (!pd.contains(Player.PERSISTED_NBT_TAG, Tag.TAG_COMPOUND)) {
             if (!create) return null;
@@ -188,16 +190,16 @@ public final class Attunement {
         }
         int before = clock.progress();
         int ordinal = r != null && !p.isSpectator() && !isAttuned(held, p) ? r.ordinal() : -1;
-        switch (clock.tick(p.isShiftKeyDown(), p.getInventory().selected, ordinal, hurt)) {
+        switch (clock.tick(p.isShiftKeyDown(), p.getInventory().selected, ordinal, hurt, p.getX(), p.getZ())) {
             case RUNNING -> {
                 if (clock.progress() % 4 == 1) {
-                    p.displayClientMessage(Component.literal("Attuning to " + r.label + "  " + AttuneClock.bar(clock.fraction(), 20) + "  " + clock.secondsLeft() + " s")
+                    p.displayClientMessage(Component.literal("Attuning to " + r.label + "  " + AttuneClock.bar(clock.fraction(), 20) + "  " + clock.secondsLeft() + " s  -  stand still")
                             .withStyle(ChatFormatting.LIGHT_PURPLE), true);
                 }
             }
             case DONE -> finish(p, held, r);
             case RESET -> {
-                if (before >= 20) p.displayClientMessage(Component.literal("The attunement slips away. Hold still, sneaking, and begin again.").withStyle(ChatFormatting.GRAY), true);
+                if (before >= 20) p.displayClientMessage(Component.literal(RelicText.reset(clock.why())).withStyle(ChatFormatting.GRAY), true);
             }
             default -> {
                 if (before == 0) CLOCKS.remove(id);

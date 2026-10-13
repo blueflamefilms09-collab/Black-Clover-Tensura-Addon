@@ -4,7 +4,8 @@
 belongs to tools/gen_nexus_relic_icons.py and gen_weapon_models.py.)
 
   Relic Pedestal   a dark basalt plinth with a gold-inlaid plate; a small glowing relic core floats above it, in the colour of the relic it
-                   holds (six block states by relic x central x taken: the central pedestal has violet-and-gold stonework)
+                   holds (the block states by relic x central x taken: the central pedestal has violet-and-gold stonework; the Sentient Dungeon made it six relics:
+                   the Amulet of the Juggernaut's Blindness has a violet core)
   Mana Gate        a wall of dark stone with a glowing sigil (an animated pulse); open (a Mana Zone or Magic Sense near) it is a faint,
                    translucent outline you can walk through
 
@@ -34,6 +35,7 @@ RELICS = [
     ("band_of_the_spatial_anchor", "band", (96, 204, 255)),
     ("devil_bound_sheath", "sheath", (255, 150, 232)),
     ("gamblers_grimoire_page", "page", (255, 236, 190)),
+    ("amulet_of_the_juggernauts_blindness", "amulet", (168, 112, 255)),            # the Sentient Dungeon's, appended: the seam of its closed eye
 ]
 
 
@@ -270,6 +272,7 @@ def main():
             "item.nusmp.band_of_the_spatial_anchor": "Band of the Spatial Anchor",
             "item.nusmp.devil_bound_sheath": "Devil-Bound Weapon Sheath",
             "item.nusmp.gamblers_grimoire_page": "The Gambler's Grimoire Page",
+            "item.nusmp.amulet_of_the_juggernauts_blindness": "Amulet of the Juggernaut's Blindness",
         })
 
 

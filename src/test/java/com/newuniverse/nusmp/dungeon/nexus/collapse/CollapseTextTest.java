@@ -2,13 +2,56 @@ package com.newuniverse.nusmp.dungeon.nexus.collapse;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The words of the Treasury Collapse: the owner's broadcast, the clock, the compass. */
+/** The words of the Treasury Collapse: the owner's broadcast, the Dungeon that speaks, the clock, the compass. */
 class CollapseTextTest {
     @Test
     void theBroadcastIsTheOwnersWording() {
-        assertEquals("[Server] The Mana Zone has destabilized! The Nexus is collapsing!", CollapseText.BROADCAST);
+        assertEquals("[Server] The Dungeon wails in agony! The floor is collapsing!", CollapseText.BROADCAST);
+        assertTrue(CollapseText.BROADCAST.startsWith("[Server] "));
+    }
+
+    /** Every line a player can read in the course of a collapse. */
+    private static List<String> everyLine() {
+        List<String> out = new ArrayList<>(List.of(CollapseText.BROADCAST, CollapseText.TITLE, CollapseText.TITLE_SUB, CollapseText.GASP, CollapseText.EXPEL_TITLE,
+                CollapseText.EXPEL_SUB, CollapseText.EXPELLED, CollapseText.OPENED, CollapseText.NO_EXIT, CollapseText.GUARDS, CollapseText.WARN, CollapseText.SURGE,
+                CollapseText.SURGE_LAND, CollapseText.SURGE_HELD, CollapseText.SURGE_CLOSED, CollapseText.SURGE_FIZZLED));
+        for (int i = 0; i < CollapsePlan.MARKS.length; i++) out.add(CollapseText.mark(i));
+        for (long left : new long[]{3600, 2400, 1200, 600, 200, 20}) {
+            out.add(CollapseText.bar(left, Double.NaN, ""));
+            out.add(CollapseText.bar(left, 31.4, "NE"));
+        }
+        return out;
+    }
+
+    @Test
+    void itIsTheDungeonThatCollapsesAndNoLineSaysNexus() {
+        for (String line : everyLine()) {
+            assertFalse(line.isEmpty(), "no empty line");
+            assertFalse(line.toLowerCase(java.util.Locale.ROOT).contains("nexus"), "the Dungeon speaks of itself, not of a Nexus: " + line);
+            assertFalse(line.toLowerCase(java.util.Locale.ROOT).contains("mana zone"), "the old broadcast is gone: " + line);
+            assertFalse(line.toLowerCase(java.util.Locale.ROOT).contains("mutated"), "the guards are frenzied now: " + line);
+        }
+    }
+
+    @Test
+    void theOtherLinesAreTheNewWordsOfADungeonThatIsComingDown() {
+        assertEquals("THE DUNGEON IS COLLAPSING", CollapseText.TITLE);
+        assertEquals("3:00 to reach a Root Gate", CollapseText.TITLE_SUB);
+        assertTrue(CollapseText.EXPELLED.startsWith("The Dungeon is done with you"));
+        assertEquals("THE DUNGEON IS DONE WITH YOU", CollapseText.EXPEL_TITLE);
+        assertEquals("Something frenzied stirs in the walls.", CollapseText.GUARDS);
+        assertTrue(CollapseText.OPENED.startsWith("The Dungeon has opened a Root Gate"));
+        assertTrue(CollapseText.OPENED.contains("Reach one"));
+        assertTrue(CollapseText.WARN.contains("ceiling") && CollapseText.WARN.endsWith("move!"));
+        assertEquals("Space tears open under you!", CollapseText.SURGE, "the design's line for the spatial tear");
+        assertTrue(CollapseText.mark(0).startsWith("The Dungeon is coming down."));
+        assertTrue(CollapseText.GASP.contains("Chalice"), "the line about the air is kept");
+        assertTrue(CollapseText.NO_EXIT.contains("Root Gate"));
     }
 
     @Test
@@ -66,9 +109,10 @@ class CollapseTextTest {
 
     @Test
     void theBarShowsTheClockAndTheWayToTheNearestGate() {
-        assertEquals("Nexus collapse 2:30", CollapseText.bar(3000, Double.NaN, "N"));
-        assertEquals("Nexus collapse 0:20 | Root Gate 37 m NE", CollapseText.bar(400, 37.2, "NE"));
-        assertEquals("Nexus collapse 0:20 | Root Gate 0 m here", CollapseText.bar(400, 0.0, "here"));
+        assertEquals("Collapse 2:30", CollapseText.bar(3000, Double.NaN, "N"));
+        assertEquals("Collapse 0:20 | Root Gate 37 m NE", CollapseText.bar(400, 37.2, "NE"));
+        assertEquals("Collapse 0:20 | Root Gate 0 m here", CollapseText.bar(400, 0.0, "here"));
+        assertEquals("Collapse 2:41 | Root Gate 31 m NE", CollapseText.bar(3220, 31.0, "NE"), "the example line of the brief");
     }
 
     @Test

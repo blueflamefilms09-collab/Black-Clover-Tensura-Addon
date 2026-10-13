@@ -106,6 +106,27 @@ class UnderworldRulesTest {
     }
 
     @Test
+    void theHallPlacesItsOwnDevilsAndDisciplesOnlyWhileTheSentientDungeonIsOff() {
+        assertFalse(UnderworldRules.staticPopulation(true), "the Sentient Dungeon brings Type C's low-tier Devils and Disciples out of its walls");
+        assertTrue(UnderworldRules.staticPopulation(false), "with it off the hall is the hall of 1.21.0");
+    }
+
+    @Test
+    void aHallIsGuardedByTheSameAvatarForeverAndBothAreMetAcrossTheCore() {
+        int lucifero = 0, megicula = 0;
+        for (int cx = -12; cx <= 12; cx++) {
+            for (int cz = -12; cz <= 12; cz++) {
+                int v = UnderworldRules.avatarVariant(cx, cz);
+                assertTrue(v == 0 || v == 1, "0 the Avatar of Lucifero, 1 the Avatar of Megicula");
+                assertEquals(v, UnderworldRules.avatarVariant(cx, cz), "a hall always has the same Avatar");
+                if (v == 0) lucifero++;
+                else megicula++;
+            }
+        }
+        assertTrue(lucifero > 150 && megicula > 150, "both Avatars are met across the Variable Core: " + lucifero + " and " + megicula);
+    }
+
+    @Test
     void theNamesAreWritten() {
         assertEquals("Dark Disciple of Lucifero (25%)", UnderworldText.discipleName("Lucifero", 25));
         assertFalse(UnderworldText.GATEKEEPER.isEmpty());

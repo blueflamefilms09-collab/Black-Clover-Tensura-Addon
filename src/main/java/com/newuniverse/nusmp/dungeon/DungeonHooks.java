@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.dungeon;
 
 import com.newuniverse.nusmp.blackclover.MagicType;
+import com.newuniverse.nusmp.dungeon.sentient.ImmuneSystem;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 
@@ -18,6 +19,7 @@ public final class DungeonHooks {
             DungeonMaw.add(p, costPercent * costPercent / 100.0);
             return;
         }
+        ImmuneSystem.onSpell(p, costPercent);                                                      // a massive spell in the Dungeon is a lethal threat to its immune system (the Amulet of the Juggernaut's Blindness masks it)
         EcosystemData eco = LivingDungeon.eco(level, p.blockPosition());
         if (eco == null) return;
         eco.magicule -= (float) (costPercent * 2.0);

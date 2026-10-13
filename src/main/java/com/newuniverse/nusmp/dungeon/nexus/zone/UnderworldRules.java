@@ -84,6 +84,25 @@ public final class UnderworldRules {
         return n == 0 ? -1 : ok[(int) Math.floorMod(salt, (long) n)];
     }
 
+    /**
+     * Does the hall place its own Devils of lesser rank and Dark Disciples when it is built, and bring Disciples back while players are in it?
+     * Not while the Sentient Dungeon is on: then the rooms of the Dungeon are born from their walls, and Type C's low-tier Devils and Disciples
+     * come from those births. With the sentient switch off it is exactly the hall of 1.21.0. The Gatekeeper and the Devil Avatar stay either way.
+     */
+    public static boolean staticPopulation(boolean sentient) { return !sentient; }
+
+    /**
+     * Which Devil Avatar guards the hall of a core cell: 0 the Avatar of Lucifero (violet, gravity), 1 the Avatar of Megicula (crimson, curses),
+     * by a hash of the cell, so a hall is always guarded by the same one and both are met across the Variable Core.
+     */
+    public static int avatarVariant(int cellX, int cellZ) {
+        long h = cellX * 0x9E3779B97F4A7C15L ^ cellZ * 0xC2B2AE3D27D4EB4FL ^ 0x5851F42D4C957F2DL;
+        h ^= h >>> 32;
+        h *= 0xD6E8FEB86659FD93L;
+        h ^= h >>> 29;
+        return (int) (h & 1L);
+    }
+
     /** Should the Gatekeeper walk back to its post: it has no target and is farther from it than the leash? */
     public static boolean shouldReturn(double distanceToPost, boolean hasTarget) { return !hasTarget && distanceToPost > KEEPER_LEASH; }
 

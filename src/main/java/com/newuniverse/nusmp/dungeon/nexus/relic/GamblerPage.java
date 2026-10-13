@@ -1,21 +1,20 @@
 package com.newuniverse.nusmp.dungeon.nexus.relic;
 
 import com.newuniverse.nusmp.balance.BalanceLaw;
-import com.newuniverse.nusmp.blackclover.TimedModifiers;
 import com.newuniverse.nusmp.book.GrimoireBook;
 import com.newuniverse.nusmp.book.SpellRuntime;
 import com.newuniverse.nusmp.dungeon.LivingDungeon;
 import com.newuniverse.nusmp.dungeon.nexus.DungeonCollapseEvent;
+import com.newuniverse.nusmp.dungeon.sentient.ImmuneSystem;
+import com.newuniverse.nusmp.dungeon.sentient.SentientMode;
 import com.newuniverse.nusmp.dungeon.wild.Wildlife;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
-import io.github.manasmods.tensura.registry.attribute.TensuraAttributes;
 import io.github.manasmods.tensura.storage.TensuraStorages;
 import io.github.manasmods.tensura.util.EnergyHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -24,7 +23,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
@@ -37,29 +35,30 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * The Gambler's Grimoire Page (docs/living_dungeon.md section 7). Held in the off-hand and attuned, using it casts a random, overpowered
- * spell from the curated list {@link PageSpell}. The spells are direct effects, not a real grimoire page: a real page needs the caster's own
+ * The Gambler's Grimoire Page (docs/living_dungeon.md section 7). Worn in a Dungeon Relic slot and attuned (or held in the off-hand), using it
+ * casts a random, overpowered spell from the curated list {@link PageSpell}: from a slot with the Use Relic key ({@link RelicNet}), from the hand
+ * by using the item. The spells are direct effects, not a real grimoire page: a real page needs the caster's own
  * grimoire, the right magic and an unsealed book, and the page must work for any mage. Every cast is a second of wind-up (the page flares,
  * the outcome is still hidden), then the spell shows where it will land ({@link PageSpell#telegraph} ticks) and lands, with damage through
  * the balance law and no change to any block. The page rests for a minute after every use.
  *
  * <p>Its curse, Wild Magic Surge: every use rolls a hidden d20 ({@link WildSurge}); on a 1 there is no spell: the page backfires, a tenth of
- * the user's mana pool is lost until the day ends (a transient modifier on Tensura's maximum magicule, gone with a relog or a death), and
- * inside the Dungeon a {@link DungeonCollapseEvent} is posted at the user's position. Outside the Dungeon only the mana penalty and a
- * harmless burst.
+ * the user's mana pool is lost until the day ends ({@link SurgeHandler}: it survives a relog and a death), and inside the Dungeon its immune
+ * system is set on the user at once ({@code ImmuneSystem.aggro}: a Juggernaut is born from the walls). With the Sentient Dungeon's rules off
+ * ({@code dungeon.sentient = false}) the 1.21.0 consequence stays instead: a {@link DungeonCollapseEvent} at the user's position. Outside the
+ * Dungeon only the mana penalty and a harmless burst.
  */
 final class GamblerPage {
     private GamblerPage() {}
 
     private static final int GOLD = 0xFFFFD36B, VIOLET = 0xFF9B6BFF, RED = 0xFFFF3030, BONE = 0xFFE8E0C8, BOLT = 0xFFBFD8FF;
     private static final int HIT_CAP = 16;
-    private static final ResourceLocation PENALTY_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "relic_wild_surge");
 
     /** The page is used. */
     static void use(ServerPlayer p, ItemStack page) {
         if (!Worn.has(p, Relic.GAMBLERS_GRIMOIRE_PAGE)) {
-            p.displayClientMessage(Component.literal("The page stays blank: attune to it first (hold it in the main hand and sneak for 10 s), then hold it in the off-hand.")
-                    .withStyle(ChatFormatting.GRAY), true);
+            p.displayClientMessage(Component.literal("The page stays blank: attune to it first (hold it in the main hand, sneak and stand still for 10 s), "
+                    + "then wear it in a Dungeon Relic slot (you may wear two relics).").withStyle(ChatFormatting.GRAY), true);
             return;
         }
         ServerLevel level = p.serverLevel();
@@ -222,22 +221,49 @@ final class GamblerPage {
     }
 
     // ---------------------------------------------------------------- Wild Magic Surge
-    /** A 1: no spell. A tenth of the mana pool is lost for the day, and inside the Dungeon its structure starts to come down. */
+    /**
+     * A 1: no spell. A tenth of the mana pool is drained for the day, and inside the Dungeon its immune system turns on the user (the Sentient
+     * Dungeon), or, with those rules off, its structure starts to come down (1.21.0).
+     */
     private static void backfire(ServerPlayer p, ServerLevel level) {
         Vec3 c = p.position().add(0, 1.0, 0);
         VfxSpawn.send(level, VfxShape.MAGIC_CIRCLE_EXPLOSION, c, c, RED, 16, 2.2f);
         VfxSpawn.send(level, VfxShape.DARK_BLACK_HOLE, c.add(0, 0.6, 0), c, RED, 16, 1.4f);
         level.playSound(null, p.blockPosition(), SoundEvents.GENERIC_EXPLODE.value(), SoundSource.PLAYERS, 0.9f, 1.4f);
         level.playSound(null, p.blockPosition(), SoundEvents.WITHER_SPAWN, SoundSource.PLAYERS, 0.6f, 1.6f);
-        TimedModifiers.apply(p, TensuraAttributes.MAX_MAGICULE, PENALTY_ID, -WildSurge.PENALTY, WildSurge.PENALTY_TICKS, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+        SurgeHandler.start(p);
         var ex = TensuraStorages.getExistenceFrom(p);
         if (ex != null) {
             ex.setMagicule(Math.min(ex.getMagicule(), EnergyHelper.getMaxMagicule(p)));
             ex.markDirty();
         }
         boolean dungeon = LivingDungeon.in(level);
-        p.displayClientMessage(Component.literal("WILD MAGIC SURGE! The page tears itself apart: a tenth of your mana pool is gone until the day ends"
-                + (dungeon ? ", and the Dungeon shudders around you." : ".")).withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD), true);
-        if (dungeon) NeoForge.EVENT_BUS.post(new DungeonCollapseEvent(level, p.blockPosition(), Relics.zoneAt(level, p.getBlockX(), p.getBlockZ()), p, false));
+        boolean hunted = dungeon && provoke(p, level);
+        p.displayClientMessage(Component.literal("WILD MAGIC SURGE! The page tears itself apart: a tenth of your mana pool is drained until the day ends"
+                + (hunted ? ", and the Dungeon's immune system turns on you!" : dungeon ? ", and the Dungeon shudders around you." : "."))
+                .withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD), true);
+    }
+
+    /**
+     * What the Dungeon does about a 1: with the Sentient Dungeon's rules on, its immune system takes the user for a lethal threat now (a Juggernaut
+     * is born from the walls; true if one is coming). With them off, or if that package is absent, the 1.21.0 consequence: a Treasury Collapse
+     * event at the user's position. Never throws, so the page cannot break on it.
+     */
+    private static boolean provoke(ServerPlayer p, ServerLevel level) {
+        boolean sentient;
+        try {
+            sentient = SentientMode.active();
+        } catch (LinkageError | RuntimeException absent) {
+            sentient = false;
+        }
+        if (!sentient) {
+            NeoForge.EVENT_BUS.post(new DungeonCollapseEvent(level, p.blockPosition(), Relics.zoneAt(level, p.getBlockX(), p.getBlockZ()), p, false));
+            return false;
+        }
+        try {
+            return ImmuneSystem.aggro(p, "wild_surge");
+        } catch (LinkageError | RuntimeException failed) {
+            return false;
+        }
     }
 }

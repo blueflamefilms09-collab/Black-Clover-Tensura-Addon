@@ -21,16 +21,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The Treasury Collapse (docs/living_dungeon.md section 8): when the central relic leaves its pedestal, the boss of a zone dies or a Wild
- * Magic Surge backfires, a {@link DungeonCollapseEvent} is posted and this class answers it. The Nexus has three minutes: its air goes,
- * its stone comes down in bounded waves from the far side toward the exits, mutated guards step out at the Root Gates that open there, and
- * whoever is still inside at the end is thrown out (see {@link CollapseExpel}), not killed.
+ * The Treasury Collapse (docs/living_dungeon.md section 8): when the central relic leaves its pedestal or the floor boss of a zone dies, a
+ * {@link DungeonCollapseEvent} is posted and this class answers it (an admin can start one too: {@link CollapseCommand}). The Dungeon wails
+ * and has three minutes to come down: its air goes, its stone falls in bounded waves from the far side toward the exits, a frenzied horde
+ * is born from its walls round the players and the Root Gates that open at the exits, space surges under the players' feet and throws them
+ * across the floor (the Band of the Spatial Anchor holds), and whoever is still inside at the end is thrown out (see {@link CollapseExpel}),
+ * not killed. Any zone's Nexus can fall: nothing here names a zone, the Nexus is the one {@code NexusZones.containing} finds.
  *
  * <p>Three game-bus handlers drive it: {@link #onCollapse} (the event), {@link #onServerTick} (every tick, bounded work) and
- * {@link #onEntityJoin} (a guard that outlives its collapse is removed when its chunk loads); {@link #onServerStopping} lets go of the
- * statics. A collapse is saved ({@link CollapseSave}) and carries on after a restart. A Nexus is marked COLLAPSED in the Nexus save the
- * moment its collapse starts, so it is never rebuilt and breeds nothing; a collapse outside any standing Nexus is a "pocket": a show of
- * falling rubble that takes nothing from the Dungeon, with the same clock, guards and expulsion.
+ * {@link #onEntityJoin} (a creature of the horde that outlives its collapse is removed when its chunk loads); {@link #onServerStopping}
+ * lets go of the statics. A collapse is saved ({@link CollapseSave}) and carries on after a restart. A Nexus is marked COLLAPSED in the
+ * Nexus save the moment its collapse starts, so it is never rebuilt and breeds nothing; a collapse outside any standing Nexus is a "pocket":
+ * a show of falling rubble that takes nothing from the Dungeon, with the same clock, horde, surges and expulsion.
  */
 public final class CollapseManager {
     private CollapseManager() {}
@@ -161,8 +163,8 @@ public final class CollapseManager {
         }
     }
 
-    // ---------------------------------------------------------------- guards that outlive their collapse
-    /** A mutated guard coming into the world: one of a collapse that is over is removed, one of a collapse under way is taken back into its count. */
+    // ---------------------------------------------------------------- horde that outlives its collapse
+    /** A creature of the horde coming into the world (loaded from disk): one of a collapse that is over is removed, one of a collapse under way is taken back into its count. */
     public static void onEntityJoin(EntityJoinLevelEvent e) {
         if (!(e.getLevel() instanceof ServerLevel level) || !(e.getEntity() instanceof Mob m) || !m.getPersistentData().contains(CollapseGuards.KEY)) return;
         if (!LivingDungeon.in(level)) return;
@@ -174,7 +176,7 @@ public final class CollapseManager {
             if (owner == null) e.setCanceled(true);
             else owner.guards.adopt(m.getUUID());
         } catch (RuntimeException | LinkageError failure) {
-            LOG.warn("[nusmp] Could not place a mutated guard that came into the world", failure);
+            LOG.warn("[nusmp] Could not place a creature of the collapse's horde that came into the world", failure);
         }
     }
 

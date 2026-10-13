@@ -4,8 +4,11 @@ import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.NUSMP;
 import com.newuniverse.nusmp.dungeon.wild.Dweller;
 import com.newuniverse.nusmp.dungeon.wild.Wildlife;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -18,15 +21,20 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.scores.PlayerTeam;
+import net.minecraft.world.scores.Scoreboard;
+import org.joml.Vector3f;
 
 import java.util.UUID;
 
 /**
- * The Monarch itself and its shadow soldiers, made out of the real mobs of Tensura (docs/living_dungeon.md section 5, zone 1): The Monarch is
- * a {@code tensura:arch_daemon} (a {@code tensura:greater_daemon} if the archdaemon is missing), grown into a god-tier boss with attribute
- * modifiers; the soldiers are {@code tensura:lesser_daemon} and {@code tensura:greater_daemon}, buffed and marked. The types are looked up by
- * id at run time. A creature is recognised by marks in its persistent data, so it is found again after a restart. This class makes and marks
- * them; {@link MonarchDriver} runs the fight.
+ * The Blood-Red Commander itself (the Monarch of the Monarch's Vault, whose persistent marks keep their old names so old worlds load) and its
+ * shadow soldiers, made out of the real mobs of Tensura (docs/living_dungeon.md section 5, zone 1): The Commander is a
+ * {@code tensura:arch_daemon} (a {@code tensura:greater_daemon} if the archdaemon is missing), grown into a god-tier boss with attribute
+ * modifiers, dressed in red (a red team for its glowing outline and name, crimson dust off its body) and tagged {@link #FLOOR_BOSS} so the
+ * Dungeon's stones know it for a floor boss; the soldiers are {@code tensura:lesser_daemon} and {@code tensura:greater_daemon}, buffed and
+ * marked. The types are looked up by id at run time. A creature is recognised by marks in its persistent data, so it is found again after a
+ * restart. This class makes and marks them; {@link MonarchDriver} runs the fight.
  */
 public final class MonarchBoss {
     private MonarchBoss() {}
@@ -36,6 +44,11 @@ public final class MonarchBoss {
     /** Persistent-data keys: the Monarch itself, the floor block in the middle of its Nexus, asleep, has woken once, has fallen (its fall is seen to once), and (on a soldier) the Monarch it serves. */
     static final String KEY = "nusmp_monarch", CENTRE = "nusmp_monarch_centre", ASLEEP = "nusmp_monarch_asleep", WOKEN = "nusmp_monarch_woken",
             FELL = "nusmp_monarch_fell", SHADOW = "nusmp_shadow", BORN = "nusmp_shadow_born";
+    /** The scoreboard tag every floor boss of the Dungeon carries (the Dungeon's stones give a mob that has it a boss's share), and the name of the red team that colours the Commander's outline. */
+    public static final String FLOOR_BOSS = "nusmp_floor_boss";
+    static final String TEAM = "nusmp_commander";
+    /** Crimson dust shed by its body. */
+    private static final DustParticleOptions CRIMSON = new DustParticleOptions(new Vector3f(0.86f, 0.05f, 0.10f), 1.5f);
 
     // ---------------------------------------------------------------- finding out
     public static boolean is(Entity e) { return e instanceof Mob && e.getPersistentData().getBoolean(KEY); }
@@ -79,6 +92,7 @@ public final class MonarchBoss {
         Mob m = make(level, type, anchor(centre));
         if (m == null) return null;
         configure(m, centre);
+        dress(level, m);
         sleep(m, centre);
         level.addFreshEntity(m);
         return m;
@@ -140,11 +154,58 @@ public final class MonarchBoss {
         m.getPersistentData().putLong(CENTRE, centre.asLong());
     }
 
+    // ---------------------------------------------------------------- the red of it
+    /**
+     * Gives the Commander its looks and its tag, and does it again whenever it joins the level (a Monarch made by 1.21.0 is renamed and tagged
+     * when its chunk loads): its name, the {@link #FLOOR_BOSS} tag, and a place in a team coloured red, which is what makes the outline of its
+     * glow red (and its name). Safe to call any number of times; a failure of the team is logged once and costs only the colour.
+     */
+    static void dress(ServerLevel level, Mob m) {
+        m.setCustomName(Component.literal(MonarchText.NAME));
+        m.setCustomNameVisible(true);
+        if (!m.getTags().contains(FLOOR_BOSS)) m.addTag(FLOOR_BOSS);
+        try {
+            Scoreboard board = level.getScoreboard();
+            PlayerTeam team = board.getPlayerTeam(TEAM);
+            if (team == null) team = board.addPlayerTeam(TEAM);
+            if (team.getColor() != ChatFormatting.RED) team.setColor(ChatFormatting.RED);
+            String who = m.getScoreboardName();
+            if (board.getPlayersTeam(who) != team) board.addPlayerToTeam(who, team);
+        } catch (RuntimeException | LinkageError ex) {
+            if (!teamWarned) {
+                teamWarned = true;
+                LOG.warn("[nusmp] The Blood-Red Commander could not be put in its red team (its outline stays white)", ex);
+            }
+        }
+    }
+
+    private static boolean teamWarned;
+
+    /** Takes the Commander out of its team (it has fallen: the scoreboard keeps no name of a dead mob). */
+    static void undress(ServerLevel level, Mob m) {
+        try {
+            Scoreboard board = level.getScoreboard();
+            PlayerTeam team = board.getPlayerTeam(TEAM);
+            String who = m.getScoreboardName();
+            if (team != null && board.getPlayersTeam(who) == team) board.removePlayerFromTeam(who, team);
+        } catch (RuntimeException | LinkageError ignored) {
+            // a stale name in a team harms nothing
+        }
+    }
+
+    /** A little crimson dust and a few spores off the body: bounded (two packets), called every few ticks while it is awake and rarely while it sleeps. */
+    static void shed(ServerLevel level, Mob m, boolean awake) {
+        double w = Math.max(0.4, m.getBbWidth() * 0.5), h = Math.max(1.0, m.getBbHeight());
+        level.sendParticles(CRIMSON, m.getX(), m.getY() + h * 0.55, m.getZ(), awake ? 6 : 2, w, h * 0.4, w, 0.0);
+        level.sendParticles(ParticleTypes.CRIMSON_SPORE, m.getX(), m.getY() + h * 0.5, m.getZ(), awake ? 2 : 1, w, h * 0.4, w, 0.0);
+    }
+
     // ---------------------------------------------------------------- sleeping and waking
     /** Puts it to sleep on its dais: no brain, no target, full health, back on its mark. */
     static void sleep(Mob m, BlockPos centre) {
         Vec3 at = anchor(centre);
         m.getPersistentData().putBoolean(ASLEEP, true);
+        m.setGlowingTag(false);                                                  // it glows red only while it fights
         m.setNoAi(true);
         m.setTarget(null);
         m.getNavigation().stop();
@@ -157,6 +218,7 @@ public final class MonarchBoss {
     static boolean wake(Mob m) {
         boolean was = asleep(m);
         m.getPersistentData().putBoolean(ASLEEP, false);
+        m.setGlowingTag(true);
         m.setNoAi(false);
         return was;
     }

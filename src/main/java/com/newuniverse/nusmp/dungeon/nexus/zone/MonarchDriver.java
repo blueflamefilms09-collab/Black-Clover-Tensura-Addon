@@ -10,6 +10,7 @@ import com.newuniverse.nusmp.dungeon.nexus.NexusState;
 import com.newuniverse.nusmp.dungeon.nexus.NexusZone;
 import com.newuniverse.nusmp.dungeon.nexus.NexusZones;
 import com.newuniverse.nusmp.dungeon.nexus.ZonePlan;
+import com.newuniverse.nusmp.dungeon.sentient.SentientMode;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
 import net.minecraft.ChatFormatting;
@@ -53,14 +54,18 @@ import java.util.Set;
 import java.util.UUID;
 
 /**
- * Runs the Monarch of the Monarch's Vault from outside (docs/living_dungeon.md section 5, zone 1). Its body is a real mob of Tensura, driven
- * by a brain of its own, so this does what dungeon/wild/WildDriver does: one handler on the server tick, with nothing but the public API of a
- * mob (a target, the navigation, a strike). The Monarch sleeps standing on its dais (no brain, no target, not to be hurt) until a player comes
- * within eighteen blocks, hits it, or a relic is taken; then it roars and the fight is a play of area attacks ({@link MonarchAttacks}) chosen
- * by {@link MonarchScheduler} in three phases (at 66% and 33% of its health), with shadow soldiers to manage. Every attack is telegraphed and
- * can be dodged or answered. If everybody leaves or falls it goes back to sleep, healed, its soldiers gone. When it dies it posts the Nexus's
- * {@link DungeonCollapseEvent} and drops nothing but experience. All state is kept while its chunk is loaded and nothing but the marks on the
- * entity is saved, so a restart or a relog clears every temporary effect.
+ * Runs the Blood-Red Commander of the Monarch's Vault from outside (docs/living_dungeon.md section 5, zone 1 and section 8). Its body is a real
+ * mob of Tensura, driven by a brain of its own, so this does what dungeon/wild/WildDriver does: one handler on the server tick, with nothing but
+ * the public API of a mob (a target, the navigation, a strike). The Commander sleeps standing on its dais (no brain, no target, not to be hurt)
+ * until a player comes within eighteen blocks, hits it, or a relic is taken; then it roars and the fight is a play of weapon arts
+ * ({@link MonarchArts}: the Crimson Cross, the Blood-Red Lunge, the Executioner's Arc) and shadow moves ({@link MonarchAttacks}) chosen by
+ * {@link MonarchScheduler} in three phases, which turn at half its health and at a quarter. At each turn it roars (and cannot be hurt for a
+ * moment), then calls its shadow soldiers at once (a forced Summon Shadow Soldiers: the scheduler never picks that move at random), with one
+ * refill of an empty field in the last phase. Every attack is telegraphed and can be dodged or answered. If everybody leaves or falls it goes back
+ * to sleep, healed, its soldiers gone. When it dies it posts the Nexus's {@link DungeonCollapseEvent} and drops nothing but experience (the
+ * Dungeon's stones are added to its drops by the sentient package, see {@link #onDrops}). It is red: a red glowing outline while it fights and
+ * crimson dust off its body ({@link MonarchBoss#dress}, {@link MonarchBoss#shed}). All state is kept while its chunk is loaded and nothing but
+ * the marks on the entity is saved, so a restart or a relog clears every temporary effect.
  */
 public final class MonarchDriver {
     private MonarchDriver() {}
@@ -76,6 +81,8 @@ public final class MonarchDriver {
     private static final int ORPHAN_AFTER = 200;
     /** How far from the middle of a hall a block still belongs to it (its shell and the edge the Nexus counts as inside). */
     private static final double HALL = MonarchVaultPlan.OUTER + 2;
+    /** The colour of the Commander for the mod's VFX (ARGB). */
+    private static final int BLOOD = 0xFFE0182C;
 
     // ---------------------------------------------------------------- events
     /** A Monarch (or a soldier) joins the Dungeon's level, new or loaded from disk: it is taken into the driver. */
@@ -84,15 +91,15 @@ public final class MonarchDriver {
         Entity en = e.getEntity();
         if (MonarchBoss.is(en)) {
             Mob m = (Mob) en;
+            MonarchBoss.dress(l, m);                                          // a Monarch of 1.21.0 is renamed, tagged and put in the red team as it loads
             MonarchFight f = fightOf(l, m);
             if (MonarchBoss.asleep(m)) {
                 m.setNoAi(true);
+                m.setGlowingTag(false);
             } else {                                                          // it was fighting when the world was saved: the fight starts again where its health is
                 m.setNoAi(false);
-                f.awake = true;
-                f.phase = MonarchRules.phaseOf(m.getHealth(), m.getMaxHealth());
-                f.scheduler.reset(l.getGameTime(), 80);
-                f.lastFoe = l.getGameTime();
+                m.setGlowingTag(true);
+                resume(l, m, f, l.getGameTime());
             }
         } else if (MonarchBoss.isSoldier(en)) {
             SOLDIERS.putIfAbsent(en.getUUID(), l.getGameTime());
@@ -105,14 +112,24 @@ public final class MonarchDriver {
         if (f == null) {
             f = new MonarchFight(m.getUUID(), MonarchBoss.centreOf(m));
             FIGHTS.put(m.getUUID(), f);
-            if (!MonarchBoss.asleep(m)) {
-                f.awake = true;
-                f.phase = MonarchRules.phaseOf(m.getHealth(), m.getMaxHealth());
-                f.scheduler.reset(l.getGameTime(), 80);
-                f.lastFoe = l.getGameTime();
-            }
+            if (!MonarchBoss.asleep(m)) resume(l, m, f, l.getGameTime());
         }
         return f;
+    }
+
+    /**
+     * A fight that goes on from where the Commander's health is (it was saved mid-fight, or the driver was not told of it): the phase its health
+     * is in, and the summonings of the thresholds that health has already passed counted as made (one for half the bar, two for a quarter), so
+     * a reloaded fight neither calls them again nor forgets that the last phase has its refill.
+     */
+    private static void resume(ServerLevel l, Mob m, MonarchFight f, long now) {
+        f.awake = true;
+        f.phase = MonarchRules.phaseOf(m.getHealth(), m.getMaxHealth());
+        f.summons = f.phase - 1;
+        f.lastSummonAt = now;
+        f.summonPending = false;
+        f.scheduler.reset(now, 80);
+        f.lastFoe = now;
     }
 
     public static void onServerStopping(ServerStoppingEvent e) { clear(); }
@@ -196,10 +213,20 @@ public final class MonarchDriver {
         }
     }
 
-    /** Loot-free: neither the Monarch nor its soldiers leave anything behind (nor a carcass: the Dungeon's own drop handler comes after this one). */
+    /**
+     * Loot-free. The shadow soldiers leave nothing behind, not even a stone (the event is cancelled, so no later handler sees it). The
+     * Commander has no loot of its own either, but with the sentient Dungeon on, its drops are only CLEARED here, not cancelled: the Dungeon's
+     * stones (a floor boss gives more of them) are added to the list by a later handler, so a cancelled event would take them too. With it off
+     * (1.21.0 rules) the event is cancelled, so no carcass is left either: the Dungeon's own drop handler comes after this one.
+     */
     public static void onDrops(LivingDropsEvent e) {
         Entity v = e.getEntity();
-        if (MonarchBoss.is(v) || MonarchBoss.isSoldier(v)) e.setCanceled(true);
+        if (MonarchBoss.isSoldier(v)) {
+            e.setCanceled(true);
+        } else if (MonarchBoss.is(v)) {
+            if (SentientMode.active()) e.getDrops().clear();
+            else e.setCanceled(true);
+        }
     }
 
     /**
@@ -299,6 +326,7 @@ public final class MonarchDriver {
             if (now % 10 == 0) sleeping(l, m, f, now);
             return;
         }
+        f.awake = true;                                                           // awake by its marks, so the fight is on (a fight the Dungeon's switch released starts again, and its soldiers are not taken for orphans)
         if (m.isNoAi() && !f.frozen(now)) m.setNoAi(false);                       // awake and not held still for a move: its brain is on, whatever left it off
         Vec3 centre = f.centreVec();
         List<ServerPlayer> foes = MonarchAttacks.hallFoes(l, f);
@@ -318,12 +346,16 @@ public final class MonarchDriver {
             }
             if (over) it.remove();
         }
-        if (now % 60 == 0) VfxSpawn.sendFollowing(l, VfxShape.KOTO_AURA, m, m.position(), 0xFFB026FF, 70, 2.2f);
+        if (now % 60 == 0) VfxSpawn.sendFollowing(l, VfxShape.KOTO_AURA, m, m.position(), BLOOD, 70, 2.2f);
+        if (now % 5 == 0) MonarchBoss.shed(l, m, true);
         if (f.transitioning(now) || f.frozen(now)) return;
 
         ServerPlayer target = MonarchAttacks.nearest(foes, m);
         if (target != null && now % 5 == 0) pursue(l, m, f, target, now);
-        if (target != null && now >= f.scheduler.nextAt()) {
+        MonarchMove owed = target == null ? null : owedMove(l, f, now);
+        if (owed != null) {                                                       // the shadows are called: as soon as the roar is over, or to fill an empty field
+            start(l, m, f, owed, target, foes, now);
+        } else if (target != null && now >= f.scheduler.nextAt()) {
             MonarchScheduler.Situation s = new MonarchScheduler.Situation(f.phase, MonarchAttacks.alive(l, f), foes.size(), Math.sqrt(m.distanceToSqr(target)));
             MonarchMove move = f.scheduler.pick(now, s, l.random.nextDouble());
             if (move != null) start(l, m, f, move, target, foes, now);
@@ -362,6 +394,7 @@ public final class MonarchDriver {
         f.bar.removeAllPlayers();
         FIGHTS.remove(f.boss);
         l.sendParticles(ParticleTypes.SQUID_INK, m.getX(), m.getY() + 1.0, m.getZ(), 40, 0.8, 1.2, 0.8, 0.08);
+        MonarchBoss.undress(l, m);
         m.discard();
     }
 
@@ -372,6 +405,7 @@ public final class MonarchDriver {
         if (m.getHealth() < m.getMaxHealth()) m.setHealth(m.getMaxHealth());
         if (m.getTarget() != null) m.setTarget(null);
         if (!m.isNoAi()) m.setNoAi(true);
+        if (now % 40 == 0) MonarchBoss.shed(l, m, false);                       // a few crimson embers, so the sleeper can be seen to be something
         for (ServerPlayer p : MonarchAttacks.hallFoes(l, f)) {                  // only someone in the hall wakes it (not a cave under the floor), and never a creative one
             if (MonarchRules.wakes(p.getX() - a.x, p.getZ() - a.z, p.getY() - a.y)) {
                 rouse(l, m, f, p);
@@ -384,26 +418,23 @@ public final class MonarchDriver {
     static void rouse(ServerLevel l, Mob m, MonarchFight f, ServerPlayer cause) {
         if (!MonarchBoss.wake(m)) return;
         long now = l.getGameTime();
-        f.awake = true;
-        f.phase = MonarchRules.phaseOf(m.getHealth(), m.getMaxHealth());
-        f.scheduler.reset(now, 80);
-        f.lastFoe = now;
+        resume(l, m, f, now);
         f.lastHit.clear();
         stand(m, f, now + 30);
         MonarchAttacks.sound(l, m.getX(), m.getY(), m.getZ(), SoundEvents.WARDEN_ROAR, 6.0f, 0.6f);
         MonarchAttacks.sound(l, m.getX(), m.getY(), m.getZ(), SoundEvents.ENDER_DRAGON_GROWL, 5.0f, 0.5f);
-        VfxSpawn.sendFollowing(l, VfxShape.KOTO_AURA, m, m.position(), 0xFFB026FF, 90, 3.0f);
+        VfxSpawn.sendFollowing(l, VfxShape.KOTO_AURA, m, m.position(), BLOOD, 90, 3.0f);
         l.sendParticles(ParticleTypes.EXPLOSION_EMITTER, m.getX(), m.getY() + 1.0, m.getZ(), 1, 0, 0, 0, 0);
         Vec3 c = f.centreVec();
         for (ServerPlayer p : l.players()) {
             if (p.isSpectator() || !MonarchShapes.inside(p.getX(), p.getZ(), c.x, c.z, MonarchRules.BAR_RANGE)) continue;
             p.connection.send(new ClientboundSetTitlesAnimationPacket(10, 50, 20));
-            p.connection.send(new ClientboundSetTitleTextPacket(Component.literal(MonarchText.title()).withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD)));
-            p.connection.send(new ClientboundSetSubtitleTextPacket(Component.literal(MonarchText.subtitle()).withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC)));
+            p.connection.send(new ClientboundSetTitleTextPacket(Component.literal(MonarchText.title()).withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD)));
+            p.connection.send(new ClientboundSetSubtitleTextPacket(Component.literal(MonarchText.subtitle()).withStyle(ChatFormatting.RED, ChatFormatting.ITALIC)));
         }
         if (!m.getPersistentData().getBoolean(MonarchBoss.WOKEN)) {
             m.getPersistentData().putBoolean(MonarchBoss.WOKEN, true);
-            DungeonMaw.broadcast(l.getServer(), Component.literal(MonarchText.woken(cause == null ? null : cause.getName().getString())).withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD));
+            DungeonMaw.broadcast(l.getServer(), Component.literal(MonarchText.woken(cause == null ? null : cause.getName().getString())).withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD));
         }
     }
 
@@ -415,6 +446,9 @@ public final class MonarchDriver {
         f.bar.removeAllPlayers();
         f.awake = false;
         f.phase = 1;
+        f.summons = 0;
+        f.summonPending = false;
+        f.lastSummonAt = 0;
         f.frozenUntil = 0;
         f.transitionUntil = 0;
         f.lastHit.clear();
@@ -448,30 +482,63 @@ public final class MonarchDriver {
     }
 
     // ---------------------------------------------------------------- the phases
-    /** The roar: the Monarch stands still and cannot be hurt for a moment, then pushes everyone back and brings more soldiers. */
+    /**
+     * The roar at half its health and at a quarter: the Commander stands still and cannot be hurt for a moment, then pushes everyone back; the
+     * summoning of the shadow soldiers is owed, and starts the moment the roar is over (see {@link #owedMove}).
+     */
     private static void transition(ServerLevel l, Mob m, MonarchFight f, int toPhase, long now) {
+        int from = f.phase;
         f.phase = toPhase;
         f.hazards.clear();
         clearEffects(l, f);
         f.transitionUntil = now + MonarchRules.TRANSITION;
         stand(m, f, f.transitionUntil);
         f.scheduler.holdUntil(f.transitionUntil + MonarchRules.gap(toPhase));
+        f.summonPending = MonarchRules.summonDue(from, toPhase, MonarchAttacks.alive(l, f), now - f.lastSummonAt);
         f.hazards.add(MonarchAttacks.roar(l, m, f, toPhase, now));
+    }
+
+    /**
+     * The summoning the fight owes now, or null. The one that follows a roar (the first at half its health, the second at a quarter) is owed at
+     * once. In the last phase an empty field is refilled once the soldiers are all dead and 25 seconds have passed since the last summoning,
+     * never more than {@link MonarchRules#MAX_SUMMONINGS} summonings in one fight, and only looked at every half second.
+     */
+    private static MonarchMove owedMove(ServerLevel l, MonarchFight f, long now) {
+        if (f.summonPending) return MonarchMove.SUMMON;
+        if (f.phase < 3 || now % 10 != 0) return null;
+        return MonarchRules.refillDue(f.phase, f.summons, MonarchAttacks.alive(l, f), now - f.lastSummonAt) ? MonarchMove.SUMMON : null;
     }
 
     // ---------------------------------------------------------------- a move
     private static void start(ServerLevel l, Mob m, MonarchFight f, MonarchMove move, ServerPlayer target, List<ServerPlayer> foes, long now) {
+        MonarchFight.Hazard hazard = null;
+        if (move == MonarchMove.LUNGE) {                                          // a lane is left, not jumped: never for someone too slowed to leave it; and it needs a run
+            MobEffectInstance slow = target.getEffect(MobEffects.MOVEMENT_SLOWDOWN);
+            if (MonarchRules.lungeMayTarget(slow == null ? -1 : slow.getAmplifier())) hazard = MonarchArts.lunge(l, m, f, target, now);
+            if (hazard == null) move = MonarchMove.CROSS_SLASH;                   // so a cross instead
+        }
+        if (hazard == null) {
+            hazard = switch (move) {
+                case SLAM -> MonarchAttacks.slam(l, m, f, now);
+                case RAIN -> MonarchAttacks.rain(l, m, f, foes, now);
+                case SUMMON -> MonarchAttacks.summon(l, m, f, now);
+                case BEAM -> MonarchAttacks.beam(l, m, f, target, now);
+                case AUTHORITY -> MonarchAttacks.authority(l, m, f, now);
+                case CROSS_SLASH -> MonarchArts.cross(l, m, f, target, now);
+                case SWEEP -> MonarchArts.sweep(l, m, f, target, now);
+                default -> (lv, boss, fight, t) -> true;                           // a move this driver does not know ends at once
+            };
+        }
+        if (move == MonarchMove.SUMMON) {
+            f.summons++;
+            f.lastSummonAt = now;
+            f.summonPending = false;
+        }
         f.scheduler.started(move, now, f.phase);
         face(m, target);
         stand(m, f, now + MonarchRules.freeze(move, f.phase));
-        MonarchAttacks.warn(l, m, MonarchText.warning(move));
-        f.hazards.add(switch (move) {
-            case SLAM -> MonarchAttacks.slam(l, m, f, now);
-            case RAIN -> MonarchAttacks.rain(l, m, f, foes, now);
-            case SUMMON -> MonarchAttacks.summon(l, m, f, now);
-            case BEAM -> MonarchAttacks.beam(l, m, f, target, now);
-            case AUTHORITY -> MonarchAttacks.authority(l, m, f, now);
-        });
+        MonarchAttacks.warn(l, m, MonarchText.warning(move), move.isArt() ? ChatFormatting.RED : ChatFormatting.LIGHT_PURPLE);
+        f.hazards.add(hazard);
     }
 
     /** Stands it still (brain off) until the given tick. */
@@ -588,8 +655,9 @@ public final class MonarchDriver {
             MonarchAttacks.sound(l, m.getX(), m.getY(), m.getZ(), SoundEvents.WARDEN_ROAR, 6.0f, 0.4f);
             l.sendParticles(ParticleTypes.EXPLOSION_EMITTER, m.getX(), m.getY() + 1.0, m.getZ(), 2, 1.0, 1.0, 1.0, 0.0);
             ExperienceOrb.award(l, m.position(), MonarchRules.XP);
+            MonarchBoss.undress(l, m);
             String who = killer == null ? null : killer.getName().getString();
-            DungeonMaw.broadcast(l.getServer(), Component.literal(already ? MonarchText.fallenDuringCollapse(who) : MonarchText.fallen(who)).withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD));
+            DungeonMaw.broadcast(l.getServer(), Component.literal(already ? MonarchText.fallenDuringCollapse(who) : MonarchText.fallen(who)).withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD));
         } catch (RuntimeException | LinkageError ex) {
             warn("seeing the Monarch fall", ex);
         }

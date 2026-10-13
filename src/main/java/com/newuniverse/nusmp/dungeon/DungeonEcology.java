@@ -2,6 +2,8 @@ package com.newuniverse.nusmp.dungeon;
 
 import com.newuniverse.nusmp.dungeon.nexus.NexusText;
 import com.newuniverse.nusmp.dungeon.nexus.NexusZones;
+import com.newuniverse.nusmp.dungeon.sentient.SentientDeath;
+import com.newuniverse.nusmp.dungeon.sentient.SentientMode;
 import com.newuniverse.nusmp.dungeon.wild.WildRules;
 import com.newuniverse.nusmp.dungeon.wild.WildSpawn;
 import com.newuniverse.nusmp.dungeon.wild.Wildlife;
@@ -97,7 +99,7 @@ public final class DungeonEcology {
         else if (e.oxygen > ceiling) e.oxygen = Math.max(ceiling, e.oxygen - 2f);
         e.magicule += 4f - e.biomass * 0.02f;                                                      // the roots feed it, life eats it
         e.clamp();
-        if (DungeonConfig.get(DungeonConfig.LIFE)) population(d, c, e);
+        if (DungeonConfig.get(DungeonConfig.LIFE) && !SentientMode.active()) population(d, c, e);           // the Sentient Dungeon breeds nothing: its mobs are born from the walls of the rooms players enter
         e.clamp();
         c.setUnsaved(true);
     }
@@ -158,6 +160,10 @@ public final class DungeonEcology {
     public static void onDrops(LivingDropsEvent e) {
         LivingEntity v = e.getEntity();
         if (!(v.level() instanceof ServerLevel sl) || !LivingDungeon.in(sl) || v instanceof Player || !DungeonConfig.get(DungeonConfig.NO_LOOT)) return;
+        if (SentientMode.active()) {                                                                  // the Sentient Dungeon: no carcass; what dies turns to ash and leaves Magic Stones
+            SentientDeath.onDrops(e, sl, v);
+            return;
+        }
         e.getDrops().clear();
         if (v instanceof Mob && !(v instanceof DungeonCreature)) CarcassBlock.leave(sl, v.blockPosition(), Wildlife.carcassKind(v), Wildlife.carcassWeight(v));   // 1.19.0: the matching kind (Tensura slimes, Armorsaurus, Basilisk, Direwolf), the generic one for the rest
     }

@@ -64,7 +64,7 @@ public final class CollapseRules {
             case DONE -> Mode.NEXUS;
             case PLAN, BUILDING -> Mode.NOT_READY;
             case COLLAPSED -> bossDefeated ? Mode.GONE : Mode.POCKET;
-            case UNBUILT -> Mode.POCKET;
+            default -> Mode.POCKET;                                                 // UNBUILT, and any state added later: nothing stands there to bring down
         };
     }
 
@@ -75,6 +75,9 @@ public final class CollapseRules {
         if (now == NexusState.COLLAPSED) return Watch.KEEP;
         return sawCollapsed ? Watch.END : Watch.MARK;
     }
+
+    /** May the frenzied horde go for this player: alive, in survival or adventure (not creative, not spectating), and inside the collapsing ground at whatever distance? */
+    public static boolean isTarget(boolean alive, boolean spectator, boolean creative, boolean inside) { return alive && !spectator && !creative && inside; }
 
     /** Is the rolling front about to come down on the column at `index` of the order: past the cursor, inside what it reaches in the next few seconds, and not while it only cracks? */
     public static boolean frontAhead(CollapsePlan.Stage stage, int index, int cursor, int limit) {

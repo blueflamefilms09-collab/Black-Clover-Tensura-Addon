@@ -36,7 +36,7 @@ final class CollapseExpel {
                 one(level, p);
                 n++;
             } catch (RuntimeException | LinkageError failure) {
-                LOG.warn("[nusmp] Could not expel {} from the collapsing Nexus", p.getName().getString(), failure);
+                LOG.warn("[nusmp] Could not expel {} from the collapsing Dungeon", p.getName().getString(), failure);
             }
         }
         return n;
@@ -51,7 +51,7 @@ final class CollapseExpel {
         }
         if (!p.isAlive()) return;                                                       // only reachable with LETHAL
         p.addEffect(new MobEffectInstance(DungeonEffects.MAGICULE_POISONING, CollapseRules.POISON_TICKS, CollapseRules.POISON_LEVEL, false, true));
-        CollapseUi.title(p, "THE NEXUS IS GONE", "the roots throw you out", 50, ChatFormatting.DARK_RED, ChatFormatting.BOLD);
+        CollapseUi.title(p, CollapseText.EXPEL_TITLE, CollapseText.EXPEL_SUB, 50, ChatFormatting.DARK_RED, ChatFormatting.BOLD);
         CollapseUi.chat(p, CollapseText.EXPELLED, ChatFormatting.DARK_RED);
         LivingDungeon.leave(p);
     }

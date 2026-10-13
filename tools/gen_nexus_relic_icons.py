@@ -9,8 +9,9 @@ Writes assets/nusmp/textures/item/
   ki_resonance_lantern.png (amber flame, the default sprite), ki_resonance_lantern_off.png, _blue.png, _red.png     the four flame states
   anti_bird_compass.png (the needle pointing up) and anti_bird_compass_00.png .. _31.png                            the 32 needle frames
   glutton_chalice.png, mantle_of_the_scavenger.png, band_of_the_spatial_anchor.png, devil_bound_sheath.png, gamblers_grimoire_page.png
-and under assets/nusmp/models/item/ the item models: <id>.json (the 3D marker client/WeaponRenderer draws in hand: the lantern, the compass, the chalice, the sheath
-and the page; the flat model for the mantle and the band), <id>_icon.json (the inventory icon, with the overrides of the lantern's flame, "nusmp:flame", and
+  amulet_of_the_juggernauts_blindness.png (the Sentient Dungeon's fourth relic)
+and under assets/nusmp/models/item/ the item models: <id>.json (the 3D marker client/WeaponRenderer draws in hand: the lantern, the compass, the chalice, the sheath,
+the page and the amulet; the flat model for the mantle and the band), <id>_icon.json (the inventory icon, with the overrides of the lantern's flame, "nusmp:flame", and
 the compass's needle, "nusmp:angle") and the flat sub-models those overrides point to.
 tools/gen_nexus_relic_models.py (run through tools/gen_weapon_models.py) builds the in-hand 3D models and reads these sprites for placement, so run
 this script first. Idempotent: running it again rewrites the same files.
@@ -417,6 +418,53 @@ def page():
     return out
 
 
+# ================================================================ the Amulet of the Juggernaut's Blindness
+# A tarnished dark-gold medallion hung on a chain (a V of links to a small ring), a closed, slit eye in its dish: a heavy gold lid over a seam of
+# violet light that bleeds a little onto the lower lid, and a few violet motes round it (the Dungeon cannot see what this eye hides).
+AMULET_GOLD = {"H": (244, 214, 128), "L": (206, 160, 70), "M": (152, 110, 48), "D": (98, 68, 34), "S": (58, 40, 28)}
+AMULET_EYE_LID = {          # row: {x: gold shade}
+    8: {6: "L", 7: "H", 8: "L", 9: "M"},
+    9: {5: "M", 6: "L", 7: "L", 8: "M", 9: "M", 10: "D"},
+    11: {6: "D", 7: "D", 8: "S", 9: "S"},
+    12: {6: "S", 9: "S"},
+}
+AMULET_SEAM = {4: (104, 62, 196), 5: (104, 62, 196), 6: (184, 132, 255), 7: (246, 232, 255), 8: (246, 232, 255), 9: (184, 132, 255), 10: (104, 62, 196), 11: (104, 62, 196)}
+AMULET_SEAM_BLEED = {5: (84, 52, 128), 6: (118, 78, 168), 7: (150, 104, 206), 8: (150, 104, 206), 9: (118, 78, 168), 10: (84, 52, 128)}
+
+
+def amulet():
+    px = {}
+    g = AMULET_GOLD
+    cx, cy, radius, rim = 8.0, 10.0, 5.0, 1.3
+    for y in range(16):
+        for x in range(16):
+            dx, dy = x + 0.5 - cx, y + 0.5 - cy
+            d = math.hypot(dx, dy)
+            if d > radius:
+                continue
+            lit = (-dx - dy) / (d + 1e-6)
+            if d > radius - rim:                                              # the rim: a gold ring lit from the upper left
+                px[(x, y)] = g["H"] if lit > 0.8 else g["L"] if lit > 0.2 else g["M"] if lit > -0.55 else g["D"]
+            else:                                                             # the dish: a dark violet field, a shade lighter on the lit side
+                px[(x, y)] = (30, 22, 46) if lit < 0.4 else (44, 30, 68)
+    for y, row in AMULET_EYE_LID.items():                                     # the closed eye: the lids, the seam of light between them, its bleed
+        for x, shade in row.items():
+            px[(x, y)] = g[shade]
+    for x, c in AMULET_SEAM.items():
+        px[(x, 10)] = c
+    for x, c in AMULET_SEAM_BLEED.items():
+        px[(x, 11)] = c
+    for (x, y, shade) in ((7, 3, "L"), (8, 3, "M"), (6, 4, "H"), (9, 4, "D"), (7, 5, "M"), (8, 5, "D")):      # the ring the chain hangs from
+        px[(x, y)] = g[shade]
+    for i, (x, y) in enumerate(((2, 0), (3, 1), (4, 2), (5, 3), (6, 4))):     # the chain: a V of links, alternately lit and in shadow
+        px[(x, y)] = g["L"] if i % 2 == 0 else g["D"]
+        px[(15 - x, y)] = g["M"] if i % 2 == 0 else g["S"]
+    out = add_outline(px)
+    for (x, y, c) in ((14, 6, (200, 160, 255)), (1, 9, (150, 100, 240)), (14, 12, (150, 100, 240))):       # motes of violet light
+        out.setdefault((x, y), c)
+    return out
+
+
 # ================================================================ the item models
 GENERATED_DISPLAY = {                                  # minecraft:item/generated's transforms
     "ground": {"rotation": [0, 0, 0], "translation": [0, 2, 0], "scale": [0.5, 0.5, 0.5]},
@@ -465,7 +513,7 @@ def write_models():
     icon["overrides"] += [{"predicate": {"nusmp:angle": round((k - 0.5) / 32, 6)}, "model": "nusmp:item/anti_bird_compass_%02d" % k} for k in range(1, 32)]
     icon["overrides"].append({"predicate": {"nusmp:angle": round(31.5 / 32, 6)}, "model": "nusmp:item/anti_bird_compass_00"})
     write_model("anti_bird_compass_icon", icon)
-    for item_id in ("glutton_chalice", "gamblers_grimoire_page"):
+    for item_id in ("glutton_chalice", "gamblers_grimoire_page", "amulet_of_the_juggernauts_blindness"):
         write_model(item_id, marker_model(item_id, GENERATED_DISPLAY))
         write_model(item_id + "_icon", flat_model(item_id))
     # the sheath is long and diagonal like a sword: the Magebane Longsword's transforms
@@ -490,6 +538,7 @@ def main():
     save(band(), "band_of_the_spatial_anchor")
     save(sheath(), "devil_bound_sheath")
     save(page(), "gamblers_grimoire_page")
+    save(amulet(), "amulet_of_the_juggernauts_blindness")
     write_models()
     print("wrote the relic sprites and item models under", os.path.normpath(ASSETS))
 

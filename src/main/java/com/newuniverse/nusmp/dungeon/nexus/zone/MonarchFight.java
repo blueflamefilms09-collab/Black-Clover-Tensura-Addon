@@ -17,9 +17,9 @@ import java.util.Set;
 import java.util.UUID;
 
 /**
- * What {@link MonarchDriver} keeps about one awake or sleeping Monarch while its chunk is loaded: its boss bar, its scheduler, the phase it
- * is in, the attacks in the air ({@link Hazard}s), the soldiers that serve it, who was struck when. Nothing here is saved: a Monarch that is
- * loaded again starts a fresh fight from its health, and its marks in the entity's own data.
+ * What {@link MonarchDriver} keeps about one awake or sleeping Blood-Red Commander while its chunk is loaded: its boss bar, its scheduler, the
+ * phase it is in, the attacks in the air ({@link Hazard}s), the soldiers that serve it and how many times they were called, who was struck
+ * when. Nothing here is saved: a Commander that is loaded again starts a fresh fight from its health, and its marks in the entity's own data.
  */
 final class MonarchFight {
     /** A thing the Monarch has set going: a telegraphed ring, circles, a line, a field, a summoning. Ticked every game tick until it says it is over. */
@@ -30,7 +30,8 @@ final class MonarchFight {
 
     final UUID boss;
     final BlockPos centre;
-    final ServerBossEvent bar = new ServerBossEvent(Component.literal(MonarchText.NAME), BossEvent.BossBarColor.PURPLE, BossEvent.BossBarOverlay.NOTCHED_10);
+    /** A red bar with twenty notches, so the two thresholds of the fight (half the bar and a quarter of it) both stand on a notch. */
+    final ServerBossEvent bar = new ServerBossEvent(Component.literal(MonarchText.NAME), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.NOTCHED_20);
     final MonarchScheduler scheduler = new MonarchScheduler();
     final List<Hazard> hazards = new ArrayList<>();
     final List<UUID> soldiers = new ArrayList<>();
@@ -47,6 +48,10 @@ final class MonarchFight {
     UUID lastAttacker;
     /** A melee strike that threw once is not tried again. */
     boolean cannotStrike;
+    /** How many times the soldiers have been called in this fight, the tick of the last time, and whether a threshold was crossed that the roar has not yet been followed by the summoning. */
+    int summons;
+    long lastSummonAt;
+    boolean summonPending;
 
     MonarchFight(UUID boss, BlockPos centre) {
         this.boss = boss;

@@ -1,0 +1,53 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "nusmp:goblin_dagger",
+      "required": false
+    },
+    {
+      "id": "nusmp:kobold_fang",
+      "required": false
+    },
+    {
+      "id": "nusmp:slime_core",
+      "required": false
+    },
+    {
+      "id": "nusmp:aqua_slime_gel",
+      "required": false
+    },
+    {
+      "id": "nusmp:direwolf_pelt",
+      "required": false
+    },
+    {
+      "id": "nusmp:lizardman_scale",
+      "required": false
+    },
+    {
+      "id": "nusmp:water_spirit_essence",
+      "required": false
+    },
+    {
+      "id": "nusmp:megalodon_tooth",
+      "required": false
+    },
+    {
+      "id": "nusmp:devil_horn",
+      "required": false
+    },
+    {
+      "id": "nusmp:disciple_sigil",
+      "required": false
+    },
+    {
+      "id": "nusmp:beast_hide",
+      "required": false
+    },
+    {
+      "id": "nusmp:juggernaut_heart",
+      "required": false
+    }
+  ]
+}

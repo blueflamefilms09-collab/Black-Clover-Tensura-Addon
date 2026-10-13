@@ -4,9 +4,12 @@ import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.blackclover.Devil;
 import com.newuniverse.nusmp.dungeon.nexus.NexusCells;
 import com.newuniverse.nusmp.dungeon.nexus.ZonePlan;
+import com.newuniverse.nusmp.dungeon.sentient.SentientMode;
 import com.newuniverse.nusmp.dungeon.wild.Dweller;
 import com.newuniverse.nusmp.dungeon.wild.WildSpawn;
 import com.newuniverse.nusmp.dungeon.wild.Wildlife;
+import com.newuniverse.nusmp.entity.avatar.AvatarEntities;
+import com.newuniverse.nusmp.entity.avatar.DevilAvatarBoss;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
@@ -35,18 +38,22 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * The creatures of the Underworld Gate: a Gatekeeper (a greater daemon of Tensura, buffed and named) in the vestibule in front of the
- * Treasury's gate, lesser daemons at their posts on the floor, and Dark Disciples (the Zogratis family's followers, each channelling a share of
- * Lucifero, Megicula or Beelzebub, the share rising toward the Gate) that come back slowly, up to a cap, while players are in the hall. The
- * creatures are marked with scoreboard tags, so every one of them is found again after a restart and removed when the Nexus collapses.
- * Nothing here is saved by itself: the hall is rebuilt by populate, and everything else is read off the live creatures. Server thread only.
+ * The creatures of the Underworld Gate: the floor boss, a Devil Avatar (Lucifero's or Megicula's, see {@link #populateAvatar}) on the way in front
+ * of the Gate; a Gatekeeper (a greater daemon of Tensura, buffed and named) in the vestibule in front of the Treasury's gate; lesser daemons at
+ * their posts on the floor, and Dark Disciples (the Zogratis family's followers, each channelling a share of Lucifero, Megicula or Beelzebub, the
+ * share rising toward the Gate) that come back slowly, up to a cap, while players are in the hall. While the Sentient Dungeon is on, the lesser
+ * daemons and the Disciples are not placed here and no Disciple comes back: the rooms of the Dungeon bring Type C's low-tier Devils and Disciples
+ * out of their own walls ({@link UnderworldRules#staticPopulation}). The creatures are marked with scoreboard tags, so every one of them is
+ * found again after a restart and removed when the Nexus collapses. Nothing here is saved by itself: the hall is rebuilt by populate, and
+ * everything else is read off the live creatures. Server thread only.
  */
 final class UnderworldDirector {
     private UnderworldDirector() {}
 
     private static final org.slf4j.Logger LOG = LogUtils.getLogger();
 
-    static final String TAG = "nusmp_underworld", TAG_KEEPER = "nusmp_underworld_keeper", TAG_DEVIL = "nusmp_underworld_devil", TAG_DISCIPLE = "nusmp_underworld_disciple";
+    static final String TAG = "nusmp_underworld", TAG_KEEPER = "nusmp_underworld_keeper", TAG_DEVIL = "nusmp_underworld_devil", TAG_DISCIPLE = "nusmp_underworld_disciple",
+            TAG_AVATAR = "nusmp_underworld_avatar";
     private static final ResourceLocation HEALTH = ResourceLocation.fromNamespaceAndPath("nusmp", "underworld_keeper_health"),
             DAMAGE = ResourceLocation.fromNamespaceAndPath("nusmp", "underworld_keeper_damage"),
             KNOCK = ResourceLocation.fromNamespaceAndPath("nusmp", "underworld_keeper_knockback"),
@@ -78,6 +85,7 @@ final class UnderworldDirector {
         } catch (RuntimeException | LinkageError failure) {
             LOG.warn("[nusmp] The Gatekeeper of the Underworld Gate of cell ({}, {}) could not be made", cellX, cellZ, failure);
         }
+        if (!staticPopulation()) return;                                  // the Sentient Dungeon brings the Devils and Disciples out of the walls
         try {
             spawnDevils(level, plan);
         } catch (RuntimeException | LinkageError failure) {
@@ -93,6 +101,37 @@ final class UnderworldDirector {
                 break;
             }
         }
+    }
+
+    /** Is the hall's own static population on (the Sentient Dungeon off, or its class not there)? */
+    private static boolean staticPopulation() {
+        boolean sentient = false;
+        try {
+            sentient = SentientMode.active();
+        } catch (LinkageError | RuntimeException noSentientDungeon) { /* the Sentient Dungeon is not in this build: the hall is the hall of 1.21.0 */ }
+        return UnderworldRules.staticPopulation(sentient);
+    }
+
+    /**
+     * The floor boss: one Devil Avatar on the way in front of the Gate (the plan's avatar spot), facing the way in, its arena there and its
+     * collapse centred on the middle of the hall, tagged like every creature of the hall so a rebuild or a collapse removes it. Never two:
+     * if one of this hall is already standing, nothing is made. Called once when the hall is built, after {@link #populate}.
+     */
+    static void populateAvatar(ServerLevel level, ZonePlan plan, int cellX, int cellZ) {
+        List<ZonePlan.Spot> spots = plan.spawns(UnderworldGatePlan.ROLE_AVATAR);
+        if (spots.isEmpty() || !mine(level, plan, TAG_AVATAR).isEmpty()) return;
+        ZonePlan.Spot s = spots.get(0), mid = plan.centre();
+        float yaw = 0f;
+        List<ZonePlan.Spot> in = plan.spawns(ZonePlan.ROLE_ARRIVAL);
+        if (!in.isEmpty()) yaw = (float) Math.toDegrees(Math.atan2(-(in.get(0).x() - s.x()), in.get(0).z() - s.z()));
+        DevilAvatarBoss boss = AvatarEntities.spawn(level, new Vec3(s.x() + 0.5, s.y(), s.z() + 0.5), yaw, UnderworldRules.avatarVariant(cellX, cellZ),
+                new BlockPos(s.x(), s.y(), s.z()), new BlockPos(mid.x(), mid.y(), mid.z()), false);
+        if (boss == null) {
+            LOG.warn("[nusmp] The Devil Avatar of the Underworld Gate of cell ({}, {}) could not be made", cellX, cellZ);
+            return;
+        }
+        boss.addTag(TAG);
+        boss.addTag(TAG_AVATAR);
     }
 
     private static Mob spawnType(ServerLevel level, String id, ZonePlan.Spot at) {
@@ -194,6 +233,10 @@ final class UnderworldDirector {
             }
         }
         for (LivingEntity devil : devils) feed(devil);
+        if (!staticPopulation()) {                                        // the rooms of the Dungeon bring the Disciples, not the hall
+            NEXT_DISCIPLE.remove(key);
+            return;
+        }
         int cap = UnderworldRules.discipleCap(inside.size());
         int delay = UnderworldRules.respawnDelay(disciples, cap);
         if (delay < 0) {
@@ -285,6 +328,7 @@ final class UnderworldDirector {
     /** Removes every creature the hall made (the Nexus collapsed, or is being made again) and puts their bars away. */
     static void clear(ServerLevel level, ZonePlan plan) {
         for (LivingEntity e : mine(level, plan, TAG)) {
+            if (e.getTags().contains(TAG_AVATAR) && e.isDeadOrDying()) continue;       // its own fall started this collapse: the body stays for its death throes
             ServerBossEvent bar = BARS.remove(e.getUUID());
             if (bar != null) bar.removeAllPlayers();
             e.discard();

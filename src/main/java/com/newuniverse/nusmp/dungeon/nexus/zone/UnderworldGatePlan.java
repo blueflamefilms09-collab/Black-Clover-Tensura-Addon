@@ -90,6 +90,15 @@ public final class UnderworldGatePlan {
     /** The role of the one Devil that guards the Treasury's gate. */
     public static final String ROLE_GATEKEEPER = "gatekeeper";
 
+    /**
+     * The role of the floor boss, the Devil Avatar: it stands on the way in front of the Gate, at the foot of the dais steps (the steps end 16
+     * blocks in front of the Gate's middle; the way, 11 blocks wide, begins at 17), so the Treasury behind the vestibule is reached past it.
+     * Its fight is the whole front yard: the gravity zones of the way, the colonnade, 56 blocks of leash round this spot.
+     */
+    public static final String ROLE_AVATAR = "avatar";
+    /** How far in front of the Gate's middle (local +v) the Avatar stands: two blocks past the foot of the steps. */
+    public static final int AVATAR_V = 19;
+
     // ---------------------------------------------------------------- the four sides
     /**
      * A side seen as a local frame in which "outward" is +v and the ground to the right is +u: the same mapping NexusOps applies for
@@ -402,6 +411,7 @@ public final class UnderworldGatePlan {
         for (int[] e : posts) b.spawn(ZonePlan.ROLE_ELITE, l.wx(e[0], e[1]), f + 1, l.wz(e[0], e[1]));
         for (int[] m : minionSpots(obstacles, posts)) b.spawn(ZonePlan.ROLE_MINION, l.wx(m[0], m[1]), f + 1, l.wz(m[0], m[1]));
         b.spawn(ZonePlan.ROLE_ARRIVAL, l.wx(0, 41), f + 1, l.wz(0, 41));
+        b.spawn(ROLE_AVATAR, l.wx(0, AVATAR_V), f + 1, l.wz(0, AVATAR_V));
         return b.build();
     }
 

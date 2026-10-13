@@ -98,4 +98,100 @@ public final class MonarchShapes {
 
     /** Is a body at (px, pz) inside a circle of radius r about (cx, cz)? */
     public static boolean inside(double px, double pz, double cx, double cz, double r) { return (px - cx) * (px - cx) + (pz - cz) * (pz - cz) <= r * r; }
+
+    // ---------------------------------------------------------------- the fast arts
+    /** An angle brought into (-pi, pi]. */
+    public static double wrap(double a) {
+        double w = a % (Math.PI * 2);
+        if (w > Math.PI) w -= Math.PI * 2;
+        else if (w <= -Math.PI) w += Math.PI * 2;
+        return w;
+    }
+
+    /** The smallest difference between two headings, 0 to pi. */
+    public static double angleBetween(double a, double b) { return Math.abs(wrap(a - b)); }
+
+    /**
+     * The two lines of a cross centred on (cx, cz): the first along `angle`, the second at a right angle to it, each `halfLen` either side of the
+     * centre. Each is {ax, az, bx, bz}.
+     */
+    public static double[][] crossLines(double cx, double cz, double angle, double halfLen) {
+        double[][] out = new double[2][];
+        for (int i = 0; i < 2; i++) {
+            double a = angle + i * Math.PI / 2, dx = Math.cos(a) * halfLen, dz = Math.sin(a) * halfLen;
+            out[i] = new double[]{cx - dx, cz - dz, cx + dx, cz + dz};
+        }
+        return out;
+    }
+
+    /** Does a body at (px, pz) stand on either line of the cross? `halfWidth` is half the width of a line, with whatever allowance for the body the caller adds. */
+    public static boolean crossHits(double px, double pz, double cx, double cz, double angle, double halfLen, double halfWidth) {
+        for (double[] l : crossLines(cx, cz, angle, halfLen)) if (distToSegment(px, pz, l[0], l[1], l[2], l[3]) <= halfWidth) return true;
+        return false;
+    }
+
+    /**
+     * The points {x, z} that draw a strip between (ax, az) and (bx, bz), `halfWidth` either side: its two edges and its middle, evenly spaced about
+     * `spacing` apart along each, never more than `maxPerRow` to a row (so a long lane costs no more than a short one past the cap). Edges first
+     * (left, then right), the middle last.
+     */
+    public static List<double[]> strip(double ax, double az, double bx, double bz, double halfWidth, double spacing, int maxPerRow) {
+        List<double[]> out = new ArrayList<>();
+        double dx = bx - ax, dz = bz - az, len = Math.hypot(dx, dz);
+        if (len < 1e-9 || maxPerRow < 2) return out;
+        double nx = -dz / len, nz = dx / len;
+        int n = (int) Math.max(2, Math.min(maxPerRow, Math.floor(len / Math.max(0.1, spacing)) + 1));
+        for (int row = 0; row < 3; row++) {
+            double off = row == 0 ? -halfWidth : row == 1 ? halfWidth : 0.0;
+            for (int i = 0; i < n; i++) {
+                double t = (double) i / (n - 1);
+                out.add(new double[]{ax + dx * t + nx * off, az + dz * t + nz * off});
+            }
+        }
+        return out;
+    }
+
+    /**
+     * Does a body at (px, pz) stand in the fan centred on (cx, cz) that opens `half` either side of `heading` out to `radius`? A body counts by
+     * its edge: the radius is stretched by `margin` (the body's half-width), and a body that close to the centre is in whatever way it lies.
+     */
+    public static boolean inFan(double px, double pz, double cx, double cz, double heading, double half, double radius, double margin) {
+        double d = Math.hypot(px - cx, pz - cz);
+        if (d > radius + margin) return false;
+        if (d <= margin) return true;
+        return angleBetween(Math.atan2(pz - cz, px - cx), heading) <= half + Math.asin(Math.min(1.0, margin / d));
+    }
+
+    /**
+     * Where the blade of a cut has got to, as an angle from the heading, at the end of tick `tick` (0 is the first) of a cut that takes `total`
+     * ticks: it sweeps from -half to +half, or back from +half to -half when `reverse`. After the last tick it has reached the far edge exactly.
+     */
+    public static double bladeAt(int tick, int total, double half, boolean reverse) {
+        double f = Math.max(0, Math.min(total, tick + 1)) / (double) Math.max(1, total);
+        double a = -half + 2.0 * half * f;
+        return reverse ? -a : a;
+    }
+
+    /**
+     * Did the blade, in the tick that took it from the angle a0 to the angle a1 (from the heading), pass over a body at (px, pz)? The union of
+     * the slices of a cut is the whole fan, with no body skipped and none outside it.
+     */
+    public static boolean inSlice(double px, double pz, double cx, double cz, double heading, double a0, double a1, double radius, double margin) {
+        double d = Math.hypot(px - cx, pz - cz);
+        if (d > radius + margin) return false;
+        if (d <= margin) return true;
+        double rel = wrap(Math.atan2(pz - cz, px - cx) - heading), slack = Math.asin(Math.min(1.0, margin / d));
+        return rel >= Math.min(a0, a1) - slack && rel <= Math.max(a0, a1) + slack;
+    }
+
+    /** The points {x, z} of an arc of radius r about (cx, cz), from `heading + from` to `heading + to`, about `spacing` apart, at least two and at most `max`. */
+    public static List<double[]> arc(double cx, double cz, double heading, double from, double to, double r, double spacing, int max) {
+        List<double[]> out = new ArrayList<>();
+        int n = (int) Math.max(2, Math.min(Math.max(2, max), Math.ceil(Math.abs(to - from) * r / Math.max(0.1, spacing)) + 1));
+        for (int i = 0; i < n; i++) {
+            double a = heading + from + (to - from) * i / (n - 1);
+            out.add(new double[]{cx + Math.cos(a) * r, cz + Math.sin(a) * r});
+        }
+        return out;
+    }
 }

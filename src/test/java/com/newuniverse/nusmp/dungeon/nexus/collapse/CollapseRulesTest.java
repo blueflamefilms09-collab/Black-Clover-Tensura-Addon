@@ -123,6 +123,26 @@ class CollapseRulesTest {
     }
 
     @Test
+    void theHordeGoesForSurvivalAndAdventurePlayersInsideTheGroundAtAnyDistance() {
+        assertTrue(CollapseRules.isTarget(true, false, false, true));
+        assertFalse(CollapseRules.isTarget(false, false, false, true), "the dead are not gone for");
+        assertFalse(CollapseRules.isTarget(true, true, false, true), "a spectator is not");
+        assertFalse(CollapseRules.isTarget(true, false, true, true), "nor is a creative player");
+        assertFalse(CollapseRules.isTarget(true, false, false, false), "nor is anyone who got out of the collapsing ground");
+        Footprint fp = Footprint.oval(0, 0, 60, 60);
+        assertTrue(CollapseRules.isTarget(true, false, false, CollapseRules.inside(fp, -52, -13, 55, -50, 0)), "a long way from the creatures is still a target");
+        assertFalse(CollapseRules.isTarget(true, false, false, CollapseRules.inside(fp, -52, -13, 80, -50, 0)), "outside the footprint");
+    }
+
+    @Test
+    void aStateAddedLaterIsNotSomethingToBringDown() {
+        assertEquals(CollapseRules.Mode.NEXUS, CollapseRules.modeFor(NexusState.DONE, false));
+        assertEquals(CollapseRules.Mode.POCKET, CollapseRules.modeFor(NexusState.UNBUILT, true));
+        assertEquals(CollapseRules.Mode.POCKET, CollapseRules.modeFor(null, true));
+        for (NexusState st : NexusState.values()) assertNotNull(CollapseRules.modeFor(st, false), "every state, including ones added later, has a mode: " + st);
+    }
+
+    @Test
     void theFrontWarnsOnlyWhereItIsAboutToComeDown() {
         CollapsePlan.Stage roll = CollapsePlan.Stage.ROLLING;
         assertTrue(CollapseRules.frontAhead(roll, 100, 100, 400), "at the cursor");

@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "tensura:giant_bear",
+      "required": false
+    },
+    {
+      "id": "tensura:horned_bear",
+      "required": false
+    },
+    {
+      "id": "tensura:war_gnome",
+      "required": false
+    },
+    {
+      "id": "tensura:orc",
+      "required": false
+    },
+    {
+      "id": "tensura:direwolf",
+      "required": false
+    }
+  ]
+}

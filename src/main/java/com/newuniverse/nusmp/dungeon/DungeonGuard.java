@@ -1,13 +1,18 @@
 package com.newuniverse.nusmp.dungeon;
 
+import com.newuniverse.nusmp.dungeon.sentient.ImmuneSystem;
+import com.newuniverse.nusmp.dungeon.sentient.SentientMode;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.level.block.Blocks;
@@ -124,6 +129,7 @@ public final class DungeonGuard {
     public static void onBreak(BlockEvent.BreakEvent e) {
         if (!(e.getLevel() instanceof Level level) || !on(level) || !isProtected(e.getState())) return;
         e.setCanceled(true);
+        if (SentientMode.active() && e.getPlayer() instanceof ServerPlayer sp) ImmuneSystem.onWallHit(sp, e.getPos());          // the immune system takes note of blows at its walls
         tell(e.getPlayer());
     }
 
@@ -137,13 +143,20 @@ public final class DungeonGuard {
         Level level = e.getLevel();
         if (!watches(level) || !isProtected(level.getBlockState(e.getPos()))) return;
         e.setCanceled(true);
+        if (SentientMode.active() && e.getAction() == PlayerInteractEvent.LeftClickBlock.Action.START && e.getEntity() instanceof ServerPlayer sp) ImmuneSystem.onWallHit(sp, e.getPos());          // a held button fires this again and again: the immune system counts one blow in four ticks
         tell(e.getEntity());
     }
 
     // ---------------------------------------------------------------- explosions, mobs, pistons, tools
     /** The blast still hurts whoever is in it; it takes no block. */
     public static void onExplosion(ExplosionEvent.Detonate e) {
-        if (on(e.getLevel())) e.getAffectedBlocks().clear();
+        if (!on(e.getLevel())) return;
+        int refused = e.getAffectedBlocks().size();
+        e.getAffectedBlocks().clear();
+        if (refused > 0 && SentientMode.active() && e.getLevel() instanceof ServerLevel sl) {                                      // the immune system takes note of blasts at its walls
+            Explosion blast = e.getExplosion();
+            ImmuneSystem.onWallBlast(sl, BlockPos.containing(blast.center()), refused, blast.getIndirectSourceEntity());
+        }
     }
 
     public static void onLivingDestroy(LivingDestroyBlockEvent e) {

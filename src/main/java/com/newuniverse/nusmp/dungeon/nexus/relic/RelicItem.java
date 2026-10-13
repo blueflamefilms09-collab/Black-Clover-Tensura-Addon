@@ -15,9 +15,10 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * One of the Treasury's five relics (docs/living_dungeon.md section 7). The item carries the attunement in its data components and
+ * One of the Treasury's six relics (docs/living_dungeon.md section 7). The item carries the attunement in its data components and
  * explains itself in its tooltip; the effects live in the handlers ({@link RelicEvents}). In the hand, using a relic does the one thing it
- * can: sneak-use lets go of an attunement, a Chalice with raw meat in the off-hand is fed, the Page in the off-hand is cast.
+ * can: sneak-use lets go of an attunement, a Chalice with raw meat in the off-hand is fed, the Page in the off-hand is cast (worn in a
+ * Dungeon Relic slot it is cast with the Use Relic key, {@link RelicNet}).
  */
 public class RelicItem extends Item {
     public final Relic relic;
@@ -50,7 +51,8 @@ public class RelicItem extends Item {
             }
             case FEED -> ChaliceHandler.feedByHand(sp, stack);
             case CAST -> GamblerPage.use(sp, stack);
-            case WRONG_HAND -> sp.displayClientMessage(Component.literal("The page answers only from the off-hand.").withStyle(ChatFormatting.GRAY), true);
+            case WRONG_HAND -> sp.displayClientMessage(Component.literal("The page answers from a Dungeon Relic slot (press ")
+                    .append(Component.keybind("key.nusmp.use_relic")).append(") or from the off-hand.").withStyle(ChatFormatting.GRAY), true);
             default -> { }
         }
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
@@ -61,8 +63,7 @@ public class RelicItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
-        tip.add(Component.literal(relic.slot == Relic.Slot.OFF_HAND ? "Artifact - held in the off-hand" : "Wondrous item - worn in the " + relic.slot.label + " slot")
-                .withStyle(ChatFormatting.GRAY));
+        tip.add(Component.literal(RelicText.where(relic)).withStyle(ChatFormatting.GRAY));
         tip.add(Component.literal(RelicText.effect(relic)).withStyle(ChatFormatting.AQUA));
         String curse = RelicText.curse(relic);
         if (curse != null) tip.add(Component.literal("Curse - " + relic.curse + ": " + curse).withStyle(ChatFormatting.RED));
@@ -76,7 +77,7 @@ public class RelicItem extends Item {
             tip.add(Component.literal("Attuned to " + (name == null ? "someone" : name)).withStyle(ChatFormatting.GOLD));
             tip.add(Component.literal("It works only for the one it is attuned to. Sneak-use it to let go.").withStyle(ChatFormatting.DARK_GRAY));
         } else {
-            tip.add(Component.literal("Unattuned: hold and sneak for 10 s").withStyle(ChatFormatting.LIGHT_PURPLE));
+            tip.add(Component.literal("Unattuned: hold it, sneak and stand still for 10 s").withStyle(ChatFormatting.LIGHT_PURPLE));
         }
     }
 

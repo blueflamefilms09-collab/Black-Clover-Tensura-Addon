@@ -2,14 +2,18 @@ package com.newuniverse.nusmp.dungeon.nexus.relic;
 
 import net.minecraft.util.StringRepresentable;
 
-/** What a relic pedestal ({@link ArtifactBlock}) holds: nothing, or one of the five relics. The serialized names are the relics' item ids. */
+/**
+ * What a relic pedestal ({@link ArtifactBlock}) holds: nothing, or one of the six relics. The serialized names are the relics' item ids. Append
+ * new values at the end: the artifact_block blockstate names every one.
+ */
 public enum RelicSlot implements StringRepresentable {
     EMPTY("empty", null),
     GLUTTONS_CHALICE("glutton_chalice", Relic.GLUTTONS_CHALICE),
     MANTLE_OF_THE_SCAVENGER("mantle_of_the_scavenger", Relic.MANTLE_OF_THE_SCAVENGER),
     BAND_OF_THE_SPATIAL_ANCHOR("band_of_the_spatial_anchor", Relic.BAND_OF_THE_SPATIAL_ANCHOR),
     DEVIL_BOUND_SHEATH("devil_bound_sheath", Relic.DEVIL_BOUND_SHEATH),
-    GAMBLERS_GRIMOIRE_PAGE("gamblers_grimoire_page", Relic.GAMBLERS_GRIMOIRE_PAGE);
+    GAMBLERS_GRIMOIRE_PAGE("gamblers_grimoire_page", Relic.GAMBLERS_GRIMOIRE_PAGE),
+    AMULET_OF_THE_JUGGERNAUTS_BLINDNESS("amulet_of_the_juggernauts_blindness", Relic.AMULET_OF_THE_JUGGERNAUTS_BLINDNESS);
 
     private final String name;
     private final Relic relic;

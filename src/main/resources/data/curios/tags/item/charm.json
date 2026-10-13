@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "nusmp:brooch_pin",
-    "nusmp:glutton_chalice"
+    "nusmp:brooch_pin"
   ]
 }

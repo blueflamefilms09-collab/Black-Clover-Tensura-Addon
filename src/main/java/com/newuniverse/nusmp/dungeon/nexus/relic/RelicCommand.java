@@ -17,7 +17,8 @@ import java.util.concurrent.CompletableFuture;
 /**
  * /multiverse dungeon relic ...: {@code give <name> [player]} and {@code attune [player]} for admins (permission 2: the first hands over an
  * unattuned relic, the second binds the relic in the main hand at once, still within the cap of three); {@code release [all]} and
- * {@code status} for everyone (let go of the relic in the main hand, or of the oldest attunement, or of all; see what is attuned).
+ * {@code status} for everyone (let go of the relic in the main hand, or of the oldest attunement, or of all; see what is attuned, what is worn
+ * in the two relic slots, and how long a Wild Surge still drains the mana pool).
  * The node is attached by the dungeon command: {@code RelicCommand.addTo(root)}.
  */
 public final class RelicCommand {
@@ -82,6 +83,9 @@ public final class RelicCommand {
         StringBuilder b = new StringBuilder("Attuned relics: " + n + " of " + Bonds.CAP + ".");
         int worn = Worn.mask(p, true);
         for (Relic r : Relic.values()) if ((worn & r.bit()) != 0) b.append(" Worn: ").append(r.label).append('.');
+        b.append(" At most ").append(RelicLimit.CAP).append(" relics work at once.");
+        long now = p.level().getGameTime(), until = SurgeHandler.stored(p);
+        if (SurgePenalty.active(now, until)) b.append(" The Wild Surge drains a tenth of your mana pool for ").append(SurgePenalty.minutesLeft(now, until)).append(" more min.");
         return ok(src, b.toString());
     }
 }

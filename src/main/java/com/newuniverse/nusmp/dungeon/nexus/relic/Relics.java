@@ -9,8 +9,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * The relics' face to the rest of the Nexus (docs/living_dungeon.md section 7): the vault and zone code ask whether a player is anchored,
- * and place pedestals and mana gates. Everything else about the relics happens by itself, through the events of {@link RelicEvents}.
+ * The relics' face to the rest of the Dungeon (docs/living_dungeon.md section 7): the vault and zone code ask whether a player is anchored,
+ * the immune system asks whether their mana is masked, and the builders place pedestals and mana gates. Everything else about the relics
+ * happens by itself, through the events of {@link RelicEvents}.
  */
 public final class Relics {
     private Relics() {}
@@ -20,6 +21,12 @@ public final class Relics {
 
     /** Does this player wear this relic, attuned? */
     public static boolean wears(Player p, Relic relic) { return p != null && Worn.has(p, relic); }
+
+    /**
+     * Does this player wear an attuned Amulet of the Juggernaut's Blindness (one of their two relic slots): is their mana signature masked, so that
+     * the Dungeon's immune system does not answer the massive spells they cast? (The Sentient Dungeon's immune system asks this before it spawns a Juggernaut.)
+     */
+    public static boolean masksMana(Player p) { return p != null && Worn.has(p, Relic.AMULET_OF_THE_JUGGERNAUTS_BLINDNESS); }
 
     /**
      * Writes a relic pedestal holding {@code relic} at {@code at}. A pedestal already there whose relic has been taken is left alone, so a

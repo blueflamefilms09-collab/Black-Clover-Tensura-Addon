@@ -34,17 +34,18 @@ import java.util.UUID;
 
 /**
  * One collapse that is under way, in the world: the {@link CollapseState} that is saved, the {@link CollapseRunner} that plays its clock,
- * the hands ({@link CollapseWorld}), the guards ({@link CollapseGuards}) and everything else that needs a ServerLevel. {@link CollapseManager}
- * ticks it once a tick; the heavy part is bounded by the runner's budgets, the rest happens once a second.
+ * the hands ({@link CollapseWorld}), the frenzied horde ({@link CollapseGuards}), the spatial surges ({@link CollapseSurge}) and everything
+ * else that needs a ServerLevel. {@link CollapseManager} ticks it once a tick; the heavy part is bounded by the runner's budgets, the surges
+ * are looked at a few times a second, the rest happens once a second.
  *
  * <p>The opening (exits, Root Gates, the broadcast, the air) is done on the first tick, saved as {@code started}, and never repeated. The
- * ending removes the guards, the Root Gates this collapse placed and any falling block still in the air, lets go of the chunks it held and
+ * ending removes the horde, the Root Gates this collapse placed and any falling block still in the air, lets go of the chunks it held and
  * forgets the saved state. Everything the collapse owns is cleared there, whether it ends by its own clock or because an admin stopped it
  * or its Nexus was reset.
  */
 final class CollapseRun implements CollapseRunner.Events {
     private static final org.slf4j.Logger LOG = LogUtils.getLogger();
-    private static final int SECOND = 20, HOLD_EVERY = 100, FAILURES = 100, WIPE_PATIENCE = 6000;
+    private static final int SECOND = 20, HOLD_EVERY = 100, FAILURES = 100, WIPE_PATIENCE = 6000, SURGE_EVERY = 4;
     /**
      * Whether the wipe asks for its chunks to be loaded (region tickets that expire by themselves, from the moment the wipe starts to its
      * end) so that the Nexus is gone even when everyone has left. false: the wipe waits for a player to bring the chunks back instead.
@@ -58,6 +59,7 @@ final class CollapseRun implements CollapseRunner.Events {
     final CollapseState s;
     private final CollapseSave save;
     final CollapseGuards guards;
+    final CollapseSurge surge;
     /** The chunks the ground of the collapse is in (the air is held at zero in these), and those plus the exits' (held loaded for the wipe). */
     private final List<int[]> air = new ArrayList<>(), held = new ArrayList<>();
     private final Set<UUID> told = new HashSet<>();
@@ -65,7 +67,7 @@ final class CollapseRun implements CollapseRunner.Events {
     private CollapseSweep order;
     private CollapseRunner runner;
     private CollapseWorld world;
-    private int failures;
+    private int failures, partFailures;
     private boolean done, sawCollapsed;
     private long now, wipeSince = -1L;
 
@@ -74,6 +76,7 @@ final class CollapseRun implements CollapseRunner.Events {
         this.s = s;
         this.save = save;
         this.guards = new CollapseGuards(level, s);
+        this.surge = new CollapseSurge(level, s);
     }
 
     boolean done() { return done; }
@@ -103,7 +106,8 @@ final class CollapseRun implements CollapseRunner.Events {
         }
         save.setDirty();
         try {
-            guards.tick(now);
+            guard(() -> guards.tick(now), "the horde");                                     // a failure of one part never stops the others, nor the wipe
+            if (Math.floorMod(now + s.id, (long) SURGE_EVERY) == 0L && CollapsePlan.stageAt(s.elapsed(now)) != CollapsePlan.Stage.WIPE) guard(() -> surge.tick(now, insidePlayers(), ways(), order), "the surges");
             if (Math.floorMod(now + s.id, (long) SECOND) == 0L) second();
             if (!done && CollapsePlan.stageAt(s.elapsed(now)) == CollapsePlan.Stage.WIPE) {
                 if (wipeSince < 0L) wipeSince = now;
@@ -113,6 +117,15 @@ final class CollapseRun implements CollapseRunner.Events {
             }
         } catch (RuntimeException | LinkageError failure) {
             LOG.warn("[nusmp] The Treasury Collapse at ({}, {}) failed in its upkeep", s.centreX, s.centreZ, failure);
+        }
+    }
+
+    /** Runs one part of the upkeep; if it throws the failure is logged (now and then, not every tick) and the rest goes on. */
+    private void guard(Runnable part, String what) {
+        try {
+            part.run();
+        } catch (RuntimeException | LinkageError failure) {
+            if (partFailures++ % 100 == 0) LOG.warn("[nusmp] The Treasury Collapse at ({}, {}) failed in {}", s.centreX, s.centreZ, what, failure);
         }
     }
 
@@ -144,7 +157,7 @@ final class CollapseRun implements CollapseRunner.Events {
         DungeonMaw.broadcast(level.getServer(), Component.literal(CollapseText.BROADCAST).withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD));
         level.playSound(null, centre(), SoundEvents.WARDEN_EMERGE, SoundSource.AMBIENT, 4.0f, 0.5f);
         for (ServerPlayer p : insidePlayers()) {
-            CollapseUi.title(p, "THE NEXUS IS COLLAPSING", "3:00 to reach a Root Gate", 60, ChatFormatting.DARK_RED, ChatFormatting.BOLD);
+            CollapseUi.title(p, CollapseText.TITLE, CollapseText.TITLE_SUB, 60, ChatFormatting.DARK_RED, ChatFormatting.BOLD);
             CollapseUi.chat(p, CollapseText.GASP, ChatFormatting.GRAY);
             CollapseUi.chat(p, gates ? CollapseText.OPENED : CollapseText.NO_EXIT, ChatFormatting.YELLOW);
             told.add(p.getUUID());
@@ -191,8 +204,7 @@ final class CollapseRun implements CollapseRunner.Events {
         greet(in);
         if (stage == CollapsePlan.Stage.WIPE) return;
         long left = CollapsePlan.remaining(elapsed);
-        List<int[]> ways = CollapseGates.standing(s.gates);
-        if (ways.isEmpty()) ways = s.exits;
+        List<int[]> ways = ways();
         int open = order.open(), limit = Math.min(open, CollapsePlan.warnLimit(elapsed, open));
         for (ServerPlayer p : in) {
             int i = order.indexOf(p.getBlockX(), p.getBlockZ());
@@ -200,6 +212,7 @@ final class CollapseRun implements CollapseRunner.Events {
                 warn(p);
                 continue;
             }
+            if (surge.tearing(p.getUUID())) continue;                                    // the tear's own warning holds the bar for its two seconds
             int near = CollapseExits.nearest(ways, p.getX(), p.getZ());
             if (near < 0) {
                 CollapseUi.bar(p, CollapseText.bar(left, Double.NaN, ""), ChatFormatting.GOLD);
@@ -210,6 +223,12 @@ final class CollapseRun implements CollapseRunner.Events {
             CollapseUi.bar(p, CollapseText.bar(left, Math.sqrt(dx * dx + dz * dz), CollapseText.direction(dx, dz)), left < 600L ? ChatFormatting.RED : ChatFormatting.GOLD);
         }
         warnedAt.keySet().removeIf(id -> level.getPlayerByUUID(id) == null);
+    }
+
+    /** The ways out that count: the Root Gates that stand, else the exits themselves. */
+    private List<int[]> ways() {
+        List<int[]> ways = CollapseGates.standing(s.gates);
+        return ways.isEmpty() ? s.exits : ways;
     }
 
     /** The personal warning: the front is about to come down where this player stands. */
@@ -354,8 +373,9 @@ final class CollapseRun implements CollapseRunner.Events {
         try {
             guards.dismiss();
         } catch (RuntimeException | LinkageError failure) {
-            LOG.warn("[nusmp] Could not remove the guards of a Treasury Collapse", failure);
+            LOG.warn("[nusmp] Could not remove the horde of a Treasury Collapse", failure);
         }
+        surge.clear();
         try {
             CollapseGates.remove(level, s.gates);
         } catch (RuntimeException | LinkageError failure) {
@@ -387,7 +407,8 @@ final class CollapseRun implements CollapseRunner.Events {
         long elapsed = s.elapsed(at);
         String line = CollapseText.status(CollapsePlan.stageAt(elapsed), CollapsePlan.remaining(elapsed), runner == null ? 0 : runner.percent());
         return "#" + s.id + " " + s.zone.label + (s.nexus ? "" : " (pocket)") + " at (" + s.centreX + ", " + s.centreY + ", " + s.centreZ + "): " + line + "; "
-                + s.exits.size() + " exit(s), " + CollapseGates.standing(s.gates).size() + " Root Gate(s), " + guards.aliveCount() + " guard(s) alive of " + s.spawned + " made" + (guards.pendingCount() > 0 ? ", " + guards.pendingCount() + " on the way" : "")
+                + s.exits.size() + " exit(s), " + CollapseGates.standing(s.gates).size() + " Root Gate(s), " + guards.aliveCount() + " of the horde alive of " + s.spawned + " born" + (guards.pendingCount() > 0 ? ", " + guards.pendingCount() + " on the way" : "")
+                + ", " + surge.thrown() + " player(s) thrown by surges" + (surge.fizzled() > 0 ? " (" + surge.fizzled() + " tear(s) found no place)" : "")
                 + (runner == null ? "" : ", " + runner.skipped() + " column(s) passed over")
                 + (world == null ? "" : ", " + world.started() + " falling block(s) started" + (world.refused() > 0 ? " (" + world.refused() + " refused by the Dungeon's guard)" : ""));
     }

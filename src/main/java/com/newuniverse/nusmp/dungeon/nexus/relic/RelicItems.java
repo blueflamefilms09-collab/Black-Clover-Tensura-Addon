@@ -8,7 +8,7 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import java.util.EnumMap;
 import java.util.Map;
 
-/** The five relic items (ids fixed by the Nexus contract), registered with the mod's other items. Their art is the relic-art pass's. */
+/** The six relic items (ids fixed by the Nexus contract), registered with the mod's other items. Their art is the relic-art pass's. */
 public final class RelicItems {
     private RelicItems() {}
 
@@ -19,6 +19,8 @@ public final class RelicItems {
     public static final DeferredItem<RelicItem> BAND_OF_THE_SPATIAL_ANCHOR = reg(Relic.BAND_OF_THE_SPATIAL_ANCHOR, Rarity.RARE);
     public static final DeferredItem<RelicItem> DEVIL_BOUND_SHEATH = reg(Relic.DEVIL_BOUND_SHEATH, Rarity.EPIC);
     public static final DeferredItem<RelicItem> GAMBLERS_GRIMOIRE_PAGE = reg(Relic.GAMBLERS_GRIMOIRE_PAGE, Rarity.EPIC);
+    /** The Sentient Dungeon's fourth relic: it hides its wearer's spells from the Dungeon's immune system. */
+    public static final DeferredItem<RelicItem> AMULET_OF_THE_JUGGERNAUTS_BLINDNESS = reg(Relic.AMULET_OF_THE_JUGGERNAUTS_BLINDNESS, Rarity.EPIC);
 
     private static DeferredItem<RelicItem> reg(Relic relic, Rarity rarity) {
         DeferredItem<RelicItem> d = NUItems.ITEMS.register(relic.id, () -> new RelicItem(relic, new Item.Properties().stacksTo(1).rarity(rarity).fireResistant()));

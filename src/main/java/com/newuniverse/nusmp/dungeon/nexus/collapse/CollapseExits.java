@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Where the ways out of a collapsing Nexus are: the spots the sweep is ordered from, the Root Gates stand at and the mutated guards come
- * to. A spot is {x, y, z}, the block the feet stand in. A standing Nexus gives its own entrances; a pocket (a collapse outside a Nexus)
+ * Where the ways out of a collapsing Nexus are: the spots the sweep is ordered from, the Root Gates stand at and the frenzied horde is
+ * born round. A spot is {x, y, z}, the block the feet stand in. A standing Nexus gives its own entrances; a pocket (a collapse outside a Nexus)
  * tries a ring round its centre. Pure: the world only decides whether a candidate can be stood on.
  */
 public final class CollapseExits {

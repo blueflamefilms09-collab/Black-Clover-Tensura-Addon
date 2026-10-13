@@ -28,7 +28,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.NeoForge;
 
 /**
- * The pedestal a Treasury keeps a relic on (docs/living_dungeon.md sections 7 and 8). The block state says which relic it holds
+ * The pedestal a Treasury keeps a relic on (docs/living_dungeon.md sections 7 and 8; it holds any of the six relics). The block state says which relic it holds
  * ({@link #RELIC}), whether it is the central one ({@link #CENTRAL}) and whether it has been taken ({@link #TAKEN}); there is no block
  * entity. Use it to take the relic: you get the item, unattuned. Taking a central relic robs the Nexus, and a {@link DungeonCollapseEvent}
  * is posted for the Treasury Collapse. Like the rest of the Dungeon it cannot be broken; a glowing relic floats above it until it is taken.
@@ -67,7 +67,7 @@ public class ArtifactBlock extends Block {
         ItemStack stack = relic.stack();
         if (!player.getInventory().add(stack)) player.drop(stack, false);
         level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.BLOCKS, 1.6f, 0.6f);
-        player.displayClientMessage(Component.literal("You take " + relic.label + ". It is unattuned: hold it and sneak for 10 s.").withStyle(ChatFormatting.GOLD), true);
+        player.displayClientMessage(Component.literal("You take " + relic.label + ". It is unattuned: hold it, sneak and stand still for 10 s.").withStyle(ChatFormatting.GOLD), true);
         if (state.getValue(CENTRAL) && level instanceof ServerLevel sl && LivingDungeon.in(sl)) {
             ServerPlayer cause = player instanceof ServerPlayer sp ? sp : null;
             Relics.markCentreRelicTaken(sl, pos);

@@ -152,6 +152,27 @@ public class DarkDiscipleEntity extends Monster {
     /** Is this a disciple of a place rather than of a boss? */
     public boolean isFree() { return free; }
 
+    /**
+     * The Sentient Dungeon's wall births: the same free-standing Dark Disciple as {@link #spawnFree}, made and placed but NOT added to the
+     * level and without the entrance effects, so that a cracking wall can bring it in when it gives way. Null only if the entity type
+     * cannot be created.
+     */
+    public static DarkDiscipleEntity makeFree(ServerLevel level, Vec3 at, Devil devil, float fraction) {
+        DarkDiscipleEntity d = ZogratisEntities.DARK_DISCIPLE.get().create(level);
+        if (d == null) return null;
+        d.moveTo(at.x, at.y, at.z, level.getRandom().nextFloat() * 360f, 0);
+        d.free = true;
+        d.share = Math.max(0.08, Math.min(DiscipleStats.MAX_SHARE, fraction));
+        d.entityData.set(DEVIL, devil.ordinal());
+        d.setBase(Attributes.MAX_HEALTH, DiscipleStats.health(d.share));
+        d.setBase(Attributes.ATTACK_DAMAGE, DiscipleStats.attack(d.share));
+        d.setBase(Attributes.MOVEMENT_SPEED, DiscipleStats.speed(d.share));
+        d.setBase(Attributes.ARMOR, DiscipleStats.armor(d.share));
+        d.setHealth(d.getMaxHealth());
+        d.nextAbility = 40 + d.getRandom().nextInt(40);
+        return d;
+    }
+
     private void infuse(ZogratisBoss boss) {
         ownerId = boss.getUUID();
         share = PowerCurve.discipleShare(boss.power());

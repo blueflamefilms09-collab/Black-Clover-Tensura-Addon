@@ -25,10 +25,12 @@ import java.util.UUID;
 /**
  * The Underworld Gate (docs/living_dungeon.md section 5, zone 2): a dark, gravity-warped ruin of obsidian and blackstone in the Spade
  * Kingdom's manner, with a vast arch at its heart and the Treasury behind a mana-locked gate in the arch's portal wall. Players have to
- * get through gravity zones that press, loosen and flip on a visible slow cycle ({@link GravityWarp}), past high Devils (a Gatekeeper, lesser
- * daemons) and Dark Disciples channelling Lucifero, Megicula and Beelzebub ({@link UnderworldDirector}). Taking the central relic from its
- * pedestal (the pedestal posts the event itself) collapses the Nexus. The plan is {@link UnderworldGatePlan}; the gates of the shell are
- * opened to the caves by {@link UnderworldGates}. Nothing breeds here.
+ * get through gravity zones that press, loosen and flip on a visible slow cycle ({@link GravityWarp}), past high Devils (the floor boss, a Devil
+ * Avatar of Lucifero or of Megicula on the way in front of the Gate; a Gatekeeper; lesser daemons) and Dark Disciples channelling Lucifero,
+ * Megicula and Beelzebub ({@link UnderworldDirector}; while the Sentient Dungeon is on, the lesser daemons and the Disciples come out of the
+ * walls of the Dungeon's rooms instead). Taking the central relic from its pedestal (the pedestal posts the event itself), or killing the
+ * Avatar (it posts the event itself), collapses the Nexus. The plan is {@link UnderworldGatePlan}; the gates of the shell are opened to the
+ * caves by {@link UnderworldGates}. Nothing breeds here.
  */
 public final class UnderworldGateSite implements ZoneSite {
     public static final UnderworldGateSite INSTANCE = new UnderworldGateSite();
@@ -80,6 +82,11 @@ public final class UnderworldGateSite implements ZoneSite {
             LOG.warn("[nusmp] The creatures of the Underworld Gate of cell ({}, {}) could not be placed", cellX, cellZ, failure);
         }
         try {
+            UnderworldDirector.populateAvatar(level, plan, cellX, cellZ);
+        } catch (RuntimeException | LinkageError failure) {
+            LOG.warn("[nusmp] The Devil Avatar of the Underworld Gate of cell ({}, {}) could not be placed", cellX, cellZ, failure);
+        }
+        try {
             UnderworldGates.openAll(level, plan, cellX, cellZ);
         } catch (RuntimeException | LinkageError failure) {
             LOG.warn("[nusmp] The gates of the Underworld Gate of cell ({}, {}) could not be opened", cellX, cellZ, failure);
@@ -126,8 +133,9 @@ public final class UnderworldGateSite implements ZoneSite {
 
     // ---------------------------------------------------------------- the end
     /**
-     * The Nexus collapses: the gravity lets everyone go, and the Devils and Disciples of the ruin go with it, for good (the hall's once-a-second
-     * look stops feeding the gravity and bringing Disciples back). The hall is found by the position of the event, which says where the trouble
+     * The Nexus collapses: the gravity lets everyone go, and the Devils, the Disciples and the Devil Avatar of the ruin go with it, for good (the
+     * hall's once-a-second look stops feeding the gravity and bringing Disciples back; an Avatar that is dying because it fell keeps its body for
+     * its death throes). The hall is found by the position of the event, which says where the trouble
      * is (a pedestal, a player) and carries the cell's hashed zone, not necessarily the zone the cell was built as.
      */
     public static void onCollapse(DungeonCollapseEvent event) {

@@ -19,7 +19,7 @@ import net.minecraft.world.level.chunk.LevelChunk;
  * a falling block that vanishes where it lands or simply crumbling in a puff of dust. Every write is quiet (clients are told, neighbours
  * and shapes are not updated, so nothing cascades or drops) and must run inside {@code DungeonGuard.internal}, which the caller does.
  *
- * <p>A collapse of a standing Nexus really takes the blocks. A "pocket" (a collapse outside any Nexus: a Wild Magic Surge in the
+ * <p>A collapse of a standing Nexus really takes the blocks. A "pocket" (a collapse outside any Nexus: an admin's, in the
  * catacombs) takes nothing: the ceiling's underside rains down as falling blocks that vanish on landing, and the rock stays. The
  * Dungeon's terrain is only ever removed where a Nexus stood.
  */

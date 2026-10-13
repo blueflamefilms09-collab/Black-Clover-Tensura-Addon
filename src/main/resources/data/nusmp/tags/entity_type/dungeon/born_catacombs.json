@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "tensura:goblin",
+      "required": false
+    },
+    {
+      "id": "tensura:slime",
+      "required": false
+    },
+    {
+      "id": "tensura:hound_dog",
+      "required": false
+    }
+  ]
+}

@@ -11,9 +11,11 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * Which relics a player is wearing right now and has attuned (docs/living_dungeon.md section 7): a relic works only while it sits in its
- * Curios slot (the Gambler's Page: in the off-hand) and is attuned to its wearer. Without Curios the off-hand is the only place anything
- * can be worn. Reading the Curios inventory goes through reflection, so the answer is kept for {@link #TTL} ticks per player.
+ * Which relics a player is wearing right now and has attuned (docs/living_dungeon.md section 7): a relic works only while it sits in a Dungeon
+ * Relic Curios slot and is attuned to its wearer, and never more than {@link RelicLimit#CAP} (two) at once: of all the relics a player carries
+ * in Curios slots, in their order, the first two count, whatever the datapack allows. Without Curios the off-hand is the only place anything can
+ * be worn, so one relic at most; and the Gambler's Page, which was always cast from the off-hand, may still be held there beside a relic in a
+ * slot (as one of the two). Reading the Curios inventory goes through reflection, so the answer is kept for {@link #TTL} ticks per player.
  * Server thread (and the client, where only the stack's own data is known).
  */
 public final class Worn {
@@ -34,7 +36,7 @@ public final class Worn {
         int mask = 0;
         for (Place place : places(p)) {
             Relic r = Relic.of(place.stack);
-            if (r != null && fits(r, place.offHand) && Attunement.isAttuned(place.stack, p)) mask |= r.bit();
+            if (r != null && Attunement.isAttuned(place.stack, p)) mask |= r.bit();
         }
         CACHE.put(p.getUUID(), new long[]{now, mask});
         return mask;
@@ -45,7 +47,7 @@ public final class Worn {
     /** The worn, attuned stack of this relic (the real one in the slot, so it can be changed), or EMPTY. Not kept. */
     public static ItemStack stack(Player p, Relic r) {
         for (Place place : places(p)) {
-            if (Relic.of(place.stack) == r && fits(r, place.offHand) && Attunement.isAttuned(place.stack, p)) return place.stack;
+            if (Relic.of(place.stack) == r && Attunement.isAttuned(place.stack, p)) return place.stack;
         }
         return ItemStack.EMPTY;
     }
@@ -56,17 +58,15 @@ public final class Worn {
 
     private record Place(ItemStack stack, boolean offHand) {}
 
+    /** The relics that count: those a Curios slot holds, then the one in the off-hand, as far as {@link RelicLimit} allows. */
     private static List<Place> places(Player p) {
-        List<Place> out = new ArrayList<>();
-        for (ItemStack s : CuriosLink.equipped(p)) if (s.getItem() instanceof RelicItem) out.add(new Place(s, false));
+        List<Place> found = new ArrayList<>();
+        for (ItemStack s : CuriosLink.equipped(p)) if (s.getItem() instanceof RelicItem) found.add(new Place(s, false));
         ItemStack off = p.getOffhandItem();
-        if (off.getItem() instanceof RelicItem) out.add(new Place(off, true));
-        return out;
+        if (off.getItem() instanceof RelicItem) found.add(new Place(off, true));
+        return RelicLimit.counted(found, place -> fits(((RelicItem) place.stack.getItem()).relic, place.offHand));
     }
 
-    /** May this relic work from here? The Page only from the off-hand; the others from a Curios slot, or from the off-hand when there is no Curios. */
-    private static boolean fits(Relic r, boolean offHand) {
-        if (r == Relic.GAMBLERS_GRIMOIRE_PAGE) return offHand;
-        return offHand ? !CuriosLink.available() : true;
-    }
+    /** May this relic work from here? See {@link RelicLimit#fits}. */
+    private static boolean fits(Relic r, boolean offHand) { return RelicLimit.fits(r, offHand, CuriosLink.available()); }
 }

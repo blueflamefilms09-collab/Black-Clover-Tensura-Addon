@@ -16,12 +16,12 @@ import java.util.UUID;
  * from the server thread; the save is marked dirty by its owner.
  */
 public final class CollapseState {
-    /** A collapse's number, stable for its life (guards and falling blocks carry it). */
+    /** A collapse's number, stable for its life (the horde and falling blocks carry it). */
     public long id;
     /** Where the event said the trouble is (a pedestal, a boss, a player). */
     public int centreX, centreY, centreZ;
     public NexusZone zone = NexusZone.GOLDEN_CITY;
-    /** True when a standing Nexus of core cell (cellX, cellZ) collapses; false for a pocket of the Dungeon (a Wild Magic Surge outside a Nexus). */
+    /** True when a standing Nexus of core cell (cellX, cellZ) collapses; false for a pocket of the Dungeon (a collapse outside any Nexus: an admin's). */
     public boolean nexus;
     public int cellX, cellZ;
     /** The Dungeon's game time at the trigger. */
