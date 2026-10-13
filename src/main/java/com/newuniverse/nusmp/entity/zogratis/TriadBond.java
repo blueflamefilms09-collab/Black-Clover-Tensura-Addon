@@ -1,7 +1,5 @@
 package com.newuniverse.nusmp.entity.zogratis;
 
-import com.newuniverse.nusmp.blackclover.Devil;
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +17,12 @@ public final class TriadBond {
 
     private static final List<WeakReference<ZogratisBoss>> MEMBERS = new ArrayList<>();
 
-    /** Is this boss one of the three siblings (by its devil)? */
-    public static boolean isTriad(ZogratisBoss b) {
-        Devil d = b.devil();
-        return d == Devil.LUCIFERO || d == Devil.MEGICULA || d == Devil.BEELZEBUB;
-    }
+    /**
+     * Is this boss one of the three siblings? Dante, Vanica and Zenon are, whatever else is built on the framework: a floor boss that is lent a
+     * devil only for its colour (the Charybdis Spawn, with Beelzebub's blue) is not bonded to them. For the three this is what asking for their
+     * devil used to say.
+     */
+    public static boolean isTriad(ZogratisBoss b) { return b instanceof DanteBoss || b instanceof VanicaBoss || b instanceof ZenonBoss; }
 
     public static void register(ZogratisBoss b) {
         if (b.level().isClientSide || !isTriad(b)) return;

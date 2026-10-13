@@ -49,6 +49,29 @@ class ZoneChoiceTest {
     }
 
     @Test
+    void theTwoArenasWereAppendedToTheWordsAndNothingBeforeThemMoved() {
+        assertEquals(java.util.List.of("monarch", "underworld", "mirage", "golden", "goliath", "charybdis"), ZoneChoice.WORDS);
+        assertEquals("goliath", ZoneChoice.word(NexusZone.GOLIATH_PIT));
+        assertEquals("charybdis", ZoneChoice.word(NexusZone.CHARYBDIS_BASIN));
+        assertSame(NexusZone.GOLIATH_PIT, ZoneChoice.parse("Goliath"));
+        assertSame(NexusZone.GOLIATH_PIT, ZoneChoice.parse("pit"));
+        assertSame(NexusZone.GOLIATH_PIT, ZoneChoice.parse("goliath_pit"));
+        assertSame(NexusZone.CHARYBDIS_BASIN, ZoneChoice.parse("CHARYBDIS"));
+        assertSame(NexusZone.CHARYBDIS_BASIN, ZoneChoice.parse("basin"));
+        assertSame(NexusZone.CHARYBDIS_BASIN, ZoneChoice.parse("charybdis_basin"));
+        for (String old : new String[]{"monarch", "vault", "monarch_vault", "underworld", "gate", "underworld_gate", "mirage", "tempest", "tempest_mirage", "golden", "city", "golden_city"}) {
+            assertTrue(ZoneChoice.parse(old).isCore(), old + " still names a core zone");
+        }
+    }
+
+    @Test
+    void aForcedArenaOnACoreCellOrACoreZoneOnAnArenaCellHolds() {
+        assertSame(NexusZone.GOLIATH_PIT, ZoneChoice.pick(0, 0, null, NexusZone.GOLIATH_PIT));
+        assertSame(NexusZone.MONARCH_VAULT, ZoneChoice.pick(7, 7, null, NexusZone.MONARCH_VAULT));
+        assertSame(NexusZone.CHARYBDIS_BASIN, ZoneChoice.pick(7, 7, NexusZone.CHARYBDIS_BASIN, NexusZone.GOLIATH_PIT), "a started build beats a forced zone");
+    }
+
+    @Test
     void theStatesKeepTheirSavedNumbers() {
         assertEquals(0, NexusState.UNBUILT.id);
         assertEquals(1, NexusState.PLAN.id);

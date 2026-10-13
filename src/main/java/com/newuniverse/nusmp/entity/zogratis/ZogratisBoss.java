@@ -354,7 +354,7 @@ public abstract class ZogratisBoss extends Monster {
         bar.removePlayer(p);
     }
 
-    private BossEvent.BossBarColor barColor() {
+    protected BossEvent.BossBarColor barColor() {
         Devil d = devil();
         if (d == Devil.LUCIFERO) return BossEvent.BossBarColor.PURPLE;
         if (d == Devil.MEGICULA) return BossEvent.BossBarColor.RED;

@@ -1,11 +1,26 @@
 package com.newuniverse.nusmp.dungeon.nexus;
 
-/** Finding the nearest core cell to a position (the admin commands use it). Pure; the cell test is passed in. */
+import com.newuniverse.nusmp.dungeon.DungeonTier;
+
+/** Finding the nearest cell that holds a Nexus to a position (the admin commands use it), and the question which cells those are. Pure; the cell test is passed in. */
 public final class NexusCells {
     private NexusCells() {}
 
-    /** Is this 128-block cell one of the Variable Core's? (DungeonTier.isCityCell in the game; or that and more.) */
+    /** Is this 128-block cell one the caller is looking for? (isNexusCell below in the game; or DungeonTier.isCityCell for the core cells alone.) */
     public interface CellTest { boolean test(int cellX, int cellZ); }
+
+    /**
+     * Does this 128-block cell hold a Nexus: is it one of the Variable Core's cells (a core cell) or one of the floor bosses' arenas (a Goliath's
+     * Pit or a Charybdis Basin)? The two kinds never overlap. This is the question the builder, the lookups by position and the admin command ask;
+     * what is only about the deepest floor (the seals, the descent gates, the other zones' ways) still asks {@link DungeonTier#isCityCell}.
+     */
+    public static boolean isNexusCell(int cellX, int cellZ) { return DungeonTier.isCityCell(cellX, cellZ) || DungeonTier.arenaOf(cellX, cellZ) != DungeonTier.ARENA_NONE; }
+
+    /** How far above or below an arena's floor (blocks) a player may be and still start its building: the Upper tier alone is more than 100 deep. */
+    public static final int ARENA_REACH_Y = 70;
+
+    /** Is a player at height playerY near enough, in height, to an arena whose floor is at floorY to start building it? */
+    public static boolean arenaInReach(int playerY, int floorY) { return Math.abs((long) playerY - floorY) <= ARENA_REACH_Y; }
 
     /**
      * The nearest cell to column (x, z) that passes the test, looking at the cells within `rings` of the column's own and measuring to the

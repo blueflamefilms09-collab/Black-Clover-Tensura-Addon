@@ -5,6 +5,8 @@ import com.newuniverse.nusmp.dungeon.LegacySeal;
 import com.newuniverse.nusmp.dungeon.city.CityBuilder;
 import com.newuniverse.nusmp.dungeon.city.CityPlan;
 import com.newuniverse.nusmp.dungeon.city.CitySave;
+import com.newuniverse.nusmp.dungeon.floor.charybdis.CharybdisBasinSite;
+import com.newuniverse.nusmp.dungeon.floor.goliath.GoliathPitSite;
 import com.newuniverse.nusmp.dungeon.nexus.zone.GoldenCitySite;
 import com.newuniverse.nusmp.dungeon.nexus.zone.MonarchVaultSite;
 import com.newuniverse.nusmp.dungeon.nexus.zone.TempestMirageSite;
@@ -20,7 +22,9 @@ import java.util.Map;
 /**
  * The front door of the Variable Core for the rest of the mod: which site answers for which zone, the plan of any cell, what stands at
  * a position, whether the Dungeon's ecosystem may breed there, and the few facts other systems write back (the central relic was
- * taken, the Nexus collapsed). All of it is server side and needs the Dungeon's saved data; nothing here builds anything.
+ * taken, the Nexus collapsed). All of it is server side and needs the Dungeon's saved data; nothing here builds anything. Since 1.22 a
+ * "Nexus cell" is a core cell or a floor boss arena ({@link NexusCells#isNexusCell}); only the adoption of an older Golden City stays
+ * with the core cells.
  */
 public final class NexusZones {
     private NexusZones() {}
@@ -36,6 +40,9 @@ public final class NexusZones {
             case UNDERWORLD_GATE -> UnderworldGateSite.INSTANCE;
             case TEMPEST_MIRAGE -> TempestMirageSite.INSTANCE;
             case GOLDEN_CITY -> GoldenCitySite.INSTANCE;
+            case GOLIATH_PIT -> GoliathPitSite.INSTANCE;
+            case CHARYBDIS_BASIN -> CharybdisBasinSite.INSTANCE;
+            default -> throw new IllegalStateException("no site answers for the zone " + zone);
         };
     }
 
@@ -66,9 +73,9 @@ public final class NexusZones {
 
     // ---------------------------------------------------------------- zones and records
     /**
-     * The record of a core cell, with a Golden City of an older version adopted on the way: the old builder's saved city (done, or part
-     * built) becomes a Golden City record here, whatever zone the hash would give the cell, so it is never built over. Null if nothing is
-     * recorded. An unstarted record (a forced zone, a broken seal) is returned as it is.
+     * The record of a Nexus cell, with a Golden City of an older version adopted on the way (a core cell only: an arena cell never held the old
+     * city): the old builder's saved city (done, or part built) becomes a Golden City record here, whatever zone the hash would give the cell,
+     * so it is never built over. Null if nothing is recorded. An unstarted record (a forced zone, a broken seal) is returned as it is.
      */
     public static NexusSave.Entry resolve(MinecraftServer server, NexusSave save, int cellX, int cellZ) {
         long key = NexusSave.key(cellX, cellZ);
@@ -119,10 +126,10 @@ public final class NexusZones {
         return new NexusInfo(cellX, cellZ, zone, e == null ? NexusState.UNBUILT : e.state, plan.footprint, plan.floorY, plan.topY, e != null && e.relicTaken, e != null && e.sealBroken);
     }
 
-    /** The Nexus whose volume holds this block (planned, being built, standing or collapsed); null if the block is in no Nexus. */
+    /** The Nexus (a core cell's zone or a floor boss arena) whose volume holds this block (planned, being built, standing or collapsed); null if the block is in no Nexus. */
     public static NexusInfo containing(ServerLevel level, BlockPos pos) {
         int cx = Math.floorDiv(pos.getX(), NexusZone.CELL), cz = Math.floorDiv(pos.getZ(), NexusZone.CELL);
-        if (!DungeonTier.isCityCell(cx, cz)) return null;
+        if (!NexusCells.isNexusCell(cx, cz)) return null;
         MinecraftServer server = level.getServer();
         NexusSave save = NexusSave.get(server);
         NexusSave.Entry e = resolve(server, save, cx, cz);
@@ -141,11 +148,11 @@ public final class NexusZones {
     /**
      * May the Dungeon's ecosystem breed in this chunk? True outside every Nexus. Inside one: not while it is planned, being built or
      * collapsed; once it stands, whatever its zone says ({@link ZoneSite#lifeAllowed}). A cheap test for the common case, a chunk that is
-     * in no core cell.
+     * in no Nexus cell.
      */
     public static boolean lifeAllowed(ServerLevel level, ChunkPos chunk) {
         int cx = Math.floorDiv(chunk.getMinBlockX(), NexusZone.CELL), cz = Math.floorDiv(chunk.getMinBlockZ(), NexusZone.CELL);
-        if (!DungeonTier.isCityCell(cx, cz)) return true;
+        if (!NexusCells.isNexusCell(cx, cz)) return true;
         NexusSave.Entry e = NexusSave.get(level.getServer()).lookup(NexusSave.key(cx, cz));
         if (e == null || !e.state.started() || e.fp == null || !e.fp.touchesChunk(chunk.x, chunk.z)) return true;
         if (e.state != NexusState.DONE) return false;

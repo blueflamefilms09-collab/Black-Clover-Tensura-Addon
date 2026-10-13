@@ -4,14 +4,14 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Which zone a core cell gets, as a pure rule: a build that has started fixes the zone for good; before that an admin's forced zone
- * wins; before that the stable hash of the cell ({@link NexusZone#of}). Also the words the admin command takes.
+ * Which zone a cell that holds a Nexus gets, as a pure rule: a build that has started fixes the zone for good; before that an admin's
+ * forced zone wins; before that the stable hash of the cell ({@link NexusZone#of}). Also the words the admin command takes.
  */
 public final class ZoneChoice {
     private ZoneChoice() {}
 
-    /** The words of {@code /multiverse dungeon nexus zone <word>}, in the order of {@link NexusZone}. */
-    public static final List<String> WORDS = List.of("monarch", "underworld", "mirage", "golden");
+    /** The words of {@code /multiverse dungeon nexus zone <word>}, in the order of {@link NexusZone} (the two arenas were appended). */
+    public static final List<String> WORDS = List.of("monarch", "underworld", "mirage", "golden", "goliath", "charybdis");
 
     /**
      * @param built    the zone a started build fixed, or null
@@ -37,6 +37,8 @@ public final class ZoneChoice {
             case "underworld", "gate", "underworld_gate" -> { return NexusZone.UNDERWORLD_GATE; }
             case "mirage", "tempest", "tempest_mirage" -> { return NexusZone.TEMPEST_MIRAGE; }
             case "golden", "city", "golden_city" -> { return NexusZone.GOLDEN_CITY; }
+            case "goliath", "pit", "goliath_pit" -> { return NexusZone.GOLIATH_PIT; }
+            case "charybdis", "basin", "charybdis_basin" -> { return NexusZone.CHARYBDIS_BASIN; }
             default -> { return null; }
         }
     }
