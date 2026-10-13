@@ -66,7 +66,8 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             NUItems.CLUB_OF_ROT, NUItems.DOOM_HAMMER,
             NUItems.MAGEBANE_SHIELD, NUItems.WEAPON_OF_RESURGENCE, NUItems.BROOCH_PIN, NUItems.HAND_OF_PROVIDENCE, NUItems.BUTCHER_CLEAVER,
             com.newuniverse.nusmp.dungeon.nexus.nav.NavItems.KI_RESONANCE_LANTERN, com.newuniverse.nusmp.dungeon.nexus.nav.NavItems.ANTI_BIRD_COMPASS,      // 1.21.0
-            com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.GLUTTON_CHALICE, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.DEVIL_BOUND_SHEATH, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.GAMBLERS_GRIMOIRE_PAGE);
+            com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.GLUTTON_CHALICE, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.DEVIL_BOUND_SHEATH, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.GAMBLERS_GRIMOIRE_PAGE,
+            com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.AMULET_OF_THE_JUGGERNAUTS_BLINDNESS);      // 1.22.0
 
     static final int BODY = 0, VOID = 1, GLOW = 2;
 

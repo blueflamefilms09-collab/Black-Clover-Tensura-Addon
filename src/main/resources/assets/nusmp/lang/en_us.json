@@ -1253,5 +1253,22 @@
   "block.nusmp.descent_gate": "Descent Gate",
   "block.nusmp.warp_trap": "Warp Trap",
   "block.nusmp.nutrient_bloom": "Nutrient Bloom",
-  "item.nusmp.nutrient_nectar": "Nutrient Nectar"
+  "item.nusmp.nutrient_nectar": "Nutrient Nectar",
+  "item.nusmp.goblin_dagger": "Goblin Dagger",
+  "item.nusmp.kobold_fang": "Kobold Fang",
+  "item.nusmp.slime_core": "Slime Core",
+  "item.nusmp.aqua_slime_gel": "Aqua Slime Gel",
+  "item.nusmp.direwolf_pelt": "Direwolf Pelt",
+  "item.nusmp.lizardman_scale": "Lizardman Scale",
+  "item.nusmp.water_spirit_essence": "Water Spirit Essence",
+  "item.nusmp.megalodon_tooth": "Megalodon Tooth",
+  "item.nusmp.devil_horn": "Devil Horn",
+  "item.nusmp.disciple_sigil": "Disciple Sigil",
+  "item.nusmp.beast_hide": "Beast Hide",
+  "item.nusmp.juggernaut_heart": "Juggernaut Heart",
+  "item.nusmp.amulet_of_the_juggernauts_blindness": "Amulet of the Juggernaut's Blindness",
+  "curios.identifier.dungeon_relic": "Dungeon Relic",
+  "key.nusmp.use_relic": "Use Relic (worn Gambler's Grimoire Page)",
+  "entity.nusmp.devil_avatar": "Devil Avatar",
+  "item.nusmp.devil_avatar_spawn_egg": "Devil Avatar Spawn Egg"
 }

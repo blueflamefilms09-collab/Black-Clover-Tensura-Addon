@@ -95,12 +95,16 @@ public final class UnderworldGateSite implements ZoneSite {
 
     /** The central pedestal holds one of the five relics (a different one in each ruin), the four others hold the rest. */
     private static void placeRelics(ServerLevel level, ZonePlan plan, int cellX, int cellZ) {
-        Relic[] all = Relic.values();
+        Relic[] all = Relic.pool(com.newuniverse.nusmp.dungeon.sentient.SentientMode.active());
         if (all.length == 0) return;
         int central = UnderworldGatePlan.centralRelicIndex(cellX, cellZ, all.length);
         if (plan.centralRelic != null) Relics.placePedestal(level, pos(plan.centralRelic), all[central], true);
         int i = 0;
-        for (ZonePlan.Spot s : plan.minorRelics) Relics.placePedestal(level, pos(s), all[(central + 1 + i++) % all.length], false);
+        for (ZonePlan.Spot s : plan.minorRelics) {
+            int off = 1 + i++;
+            if (off % all.length == 0) continue;     // 1.22.0: never a twin of the central relic
+            Relics.placePedestal(level, pos(s), all[(central + off) % all.length], false);
+        }
     }
 
     /** The doorway is two high; if the gate the relics agent places fills one cell, the cell above it is filled too. */

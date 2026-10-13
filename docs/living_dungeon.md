@@ -182,7 +182,7 @@ The deepest tier (y below -40, in the 128 x 128 block cells that were the Golden
 
 | Zone | Source | What |
 |---|---|---|
-| **Monarch's Vault** | Solo Leveling | a hollow obsidian hall piled with gold, artifacts and bones; the arch daemon (4800 health) sleeps on the dais, five telegraphed attacks, three phases (66% and 33%), real lesser and greater daemons as the "shadow soldiers". It wakes when someone comes within 18 blocks, hits it, enters the Treasury or takes the central relic |
+| **Monarch's Vault** | Solo Leveling | a hollow obsidian hall piled with gold, artifacts and bones; since 1.22.0 the Blood-Red Commander (4800 health) sleeps on the dais: arts Lunge, Cross and Executioner's Arc besides Domain Slam, Shadow Rain, Soul Rend and the Authority, two phases (50% and 25%), forced summoning of soldiers; its fall collapses the Nexus |
 | **Underworld Gate** | Spade Kingdom | a gravity-warped ruin round a vast Gate; gravity zones press down, let go and flip on a visible cycle (telegraphed 4 s ahead, never lethal); a Gatekeeper daemon, lesser daemons and Dark Disciples (10 to 40% of a Devil's power: Lucifero, Megicula, Beelzebub) |
 | **Tempest Mirage** | Tensura | an illusion of a monster village (plaza, town hall, 18 houses, fake houses that dissolve into ambushes) held by a hive-mind swarm of mutated Tensura orcs, lizardmen, slimes, goblins and hound dogs (cap 40, waves of 8 while non-creative players are inside); scouts, tanks, flankers, skirmishers; the hive announces every change of state; damage per blow is capped at 10% of max health and 20% per second |
 | **Golden City** | Delicious in Dungeon | the 1.19.0 city inside a pristine sealed biosphere of golden and azalea great trees, glow berries, waterfalls and giant mushrooms; apex and legendary predators over herds of grazers; the Biosphere cycle shifts the garden near players |
@@ -211,3 +211,17 @@ A Maw manifests as a stone tower, ruins or an isolated gate (`MawShapes`, `MawFi
 - Zone ways in are cut from nearby caves; a core cell with no cave near it may stay closed until one is brought close.
 - `DungeonTier.CORE_TOP` (-26): everything below it inside a core cell is the core tier.
 - Release and re-attune of a relic resets its curse clock; the Mantle's physical-blow curse and the Sheath's slash interact (the Mantle cancels first).
+
+## 9. The Sentient Dungeon (1.22.0)
+
+Switch `dungeon.sentient` (server config, default on). Off: the 1.21.0 ecosystem returns unchanged.
+
+- **Rooms and births.** A room is a 16-block cell of the floor; the first time a player enters it, it is rolled (70 percent Catacombs, 60 percent Waterways and Underworld); a populated room cracks its walls (block-break sounds, dust, ash) and births 3 to 8 creatures from the floor's roster, never more than 8 alive in a room; empty and cleared rooms refill after `roomRebirthMinutes`. Born creatures hunt the player who woke them and let go when alone.
+- **Floors.** A Upper Catacombs (Goblins, slimes, hound dogs as Kobolds; boss Goliath, 1.23.0), B Deep Waterways (lizardmen, aqua slimes, water spirits; boss Charybdis Spawn, 1.23.0), C Underworld Gate (lesser devils, Dark Disciples; boss Devil Avatar), D Monarch's Vault (boss only: the Blood-Red Commander).
+- **Immune system.** Threat per player: refused wall blow 4, refused blast block 1, massive spell (cost c percent) c*c/10; decays 1.5 a second; warnings at 50 and 80 percent; at the limit a Juggernaut is born near the player; the Amulet masks spells; the Wild Magic Surge aggroes it on purpose.
+- **Ash and stones.** Death turns the creature to ash; stones by tier (floor bosses and Juggernauts more); a kill by anything but a player leaves a stone one time in four; the 12 materials drop 4 percent.
+- **Relics.** Two `dungeon_relic` Curios slots (data in `data/nusmp/curios`); code cap of two; Use Relic key R; attunement needs 10 s of sneaking and standing still (0.25 block drift) and is reset by damage.
+- **The Blood-Red Commander.** Lunge (a marked lane, 18-tick wind-up), Cross (20), Executioner's Arc (two cuts); summons 3 then 4 soldiers at 50 and 25 percent and refills; caps 4/6/8.
+- **The Devil Avatar.** 900 health, speed 0.34; Ceiling Pull, Floor Crush, Inversion Field, Hex Volley, Dread Brand, Curse Nova, Shadow Step, Call the Disciples; Abyssal Collapse at 60 percent power; Gates form at 25 percent.
+- **Collapse v2.** Six waves of a frenzied horde born from the walls (24/6/56 caps); Spatial Surge every 12-20 s per player, never lethal.
+- **Known limits.** Nothing was run in game; Juggernauts that unload with their chunk stop counting against the cap of three; old halls need `nexus reset` for the Avatar.

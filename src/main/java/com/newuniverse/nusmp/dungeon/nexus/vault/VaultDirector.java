@@ -348,7 +348,7 @@ public final class VaultDirector {
 
     // ---------------------------------------------------------------- what lives in a finished room
     private static Relic relicOf(VaultSite s) {
-        Relic[] all = Relic.values();
+        Relic[] all = Relic.pool(com.newuniverse.nusmp.dungeon.sentient.SentientMode.active());
         return all[Math.floorMod(s.variant() >>> 4, all.length)];
     }
 

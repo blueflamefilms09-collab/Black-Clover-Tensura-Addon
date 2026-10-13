@@ -26,6 +26,7 @@ public final class NUCreativeTab {
                 output.accept(GrimoireItem.createUnbound(GrimoireCover.FIVE_LEAF, MagicType.ANTI_MAGIC, Devil.LIEBE));
                 output.accept(GrimoireItem.createUnbound(GrimoireCover.FIVE_LEAF, MagicType.KOTODAMA, Devil.ZAGRED));   // 0.47: creative only
                 for (var it : com.newuniverse.nusmp.item.NUItems.all()) output.accept(it.get());
+                for (var egg : com.newuniverse.nusmp.entity.avatar.AvatarEntities.spawnEggs()) output.accept(egg.get());              // 1.22.0
                 for (var egg : com.newuniverse.nusmp.entity.zogratis.ZogratisEntities.spawnEggs()) output.accept(egg.get());      // 1.20.0: the Zogratis bosses
                 output.accept(com.newuniverse.nusmp.block.NUBlocks.GRIMOIRE_ALTAR_ITEM.get());
                 output.accept(com.newuniverse.nusmp.dungeon.DungeonBlocks.DUNGEON_MAW_ITEM.get());           // 1.17.0
@@ -44,7 +45,9 @@ public final class NUCreativeTab {
                 output.accept(com.newuniverse.nusmp.dungeon.nexus.relic.RelicBlocks.ARTIFACT_BLOCK_ITEM.get());
                 output.accept(com.newuniverse.nusmp.dungeon.nexus.relic.RelicBlocks.MANA_GATE_ITEM.get());
                 for (var relic : new net.neoforged.neoforge.registries.DeferredItem[]{com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.GLUTTON_CHALICE, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.MANTLE_OF_THE_SCAVENGER,
-                        com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.BAND_OF_THE_SPATIAL_ANCHOR, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.DEVIL_BOUND_SHEATH, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.GAMBLERS_GRIMOIRE_PAGE}) output.accept((net.minecraft.world.item.Item) relic.get());
+                        com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.BAND_OF_THE_SPATIAL_ANCHOR, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.DEVIL_BOUND_SHEATH, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.GAMBLERS_GRIMOIRE_PAGE,
+                        com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.AMULET_OF_THE_JUGGERNAUTS_BLINDNESS}) output.accept((net.minecraft.world.item.Item) relic.get());
+                for (var it : com.newuniverse.nusmp.dungeon.sentient.SentientItems.all()) output.accept(it.get());                    // 1.22.0: synthesis materials
                 output.accept(com.newuniverse.nusmp.dungeon.nexus.zone.GoldenBlocks.GOLDEN_LEAVES_ITEM.get());
                 output.accept(com.newuniverse.nusmp.dungeon.nexus.nav.NavItems.KI_RESONANCE_LANTERN.get());
                 output.accept(com.newuniverse.nusmp.dungeon.nexus.nav.NavItems.ANTI_BIRD_COMPASS.get());

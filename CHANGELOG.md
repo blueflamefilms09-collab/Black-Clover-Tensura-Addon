@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.22.0] — The Sentient Dungeon: wall births, the immune system, ash and Magic Stones, two relic slots, the Blood-Red Commander, the Devil Avatar, Collapse v2
+
+**State:** written without a compiler; CI is the first compile. Nothing run in game: no wall birth seen, no Juggernaut woken, no boss fought, no relic worn; every number and look is a first estimate. Built from the owner's "Technical Design Document: The Sentient Dungeon".
+
+### Replacements (the owner's design replaces these; the old code stays in the repo and runs again with `dungeon.sentient=false`)
+- **Ecosystem spawning -> wall births.** With `dungeon.sentient` on (default) nothing in the Dungeon breeds, hunts or sleeps by itself any more: the food web (`population`, `WildDriver`) is switched off. Every room a player enters is rolled once and, if populated, its walls crack and birth a capped group (Catacombs: goblins, slimes, hound dogs [the Kobold stand-in]; Waterways: lizardmen, aqua slimes, water spirits; Underworld: lesser devils and Dark Disciples; never more than 8 a room; refill after 30 minutes).
+- **Carcasses -> ash and Magic Stones.** Dead creatures turn to ash and leave Tensura Magic Stones/crystals by tier; 12 new rare materials drop (4 percent, plus Looting).
+- **Wild Magic Surge** of the Gambler's Page now aggroes the immune system (the 1.21.0 collapse trigger stays for `sentient=false`); its mana toll now persists through relog and death.
+- **Relic slots.** All Relics move from ring/charm/back/belt to two dedicated Curios slots `dungeon_relic` (never more than two work). Relics worn in the old slots return to the inventory at the next login.
+- **Treasuries and vaults** hold the four relics of the design (Band, Sheath, Page, Amulet); Chalice and Mantle stay in the game but are no longer placed. Minor pedestals never carry a twin of the central relic.
+- **Collapse wording and guards.** "[Server] The Dungeon wails in agony! The floor is collapsing!"; the guard waves become a frenzied horde born from the walls (caps 24 alive, 6 per exit, 56 total), six waves.
+- **The Monarch -> the Blood-Red Commander.** Two phases (50 percent and 25 percent), forced summoning of minions, three new telegraphed arts (Lunge, Cross, Executioner's Arc), red look; rule update in place (not gated by `dungeon.sentient`).
+
+### New
+- **The immune system.** Threat from hammering unbreakable walls (4), blasting them (1 a block) and casting massive spells (cost c percent adds c*c/10), decaying 1.5 a second; the walls tremble at half the limit, at 100 a **Juggernaut** is born (health x4 up to 1024, damage x2.2, boss bar), cooldown per player, at most 3 alive; boss rooms and Nexus volumes are sealed from passive threat.
+- **Amulet of the Juggernaut's Blindness** (masks mana signature; curse Muffled Mana halves natural mana regeneration). Use Relic key R casts the Gambler's Page from the relic slot. Attunement (10 s sneak) now resets if you move more than a quarter block or are hurt.
+- **The Devil Avatar** (Avatar of Lucifero / of Megicula): Underworld Gate floor boss with gravity (Ceiling Pull, Floor Crush, Inversion Field) and fast curses (Hex Volley, Dread Brand, Curse Nova, Shadow Step); killing it starts the Treasury Collapse. Halls built before this version get one after `/multiverse dungeon nexus reset`.
+- **Collapse v2:** Spatial Surge (a 2 s tear, then a throw of 8-24 blocks toward safe ground, never lethal; off with `dungeon.hazards=false`).
+- New commands: `/multiverse dungeon sentient status|birth|threat|juggernaut|rooms forget`, `/multiverse boss avatar [lucifero|megicula]`. New server config: sentient, roomPopulation, roomRebirthMinutes, maxBornPerPlayer, juggernaut, juggernautThreat, juggernautCooldownMinutes, stoneDrops. New tags `nusmp:dungeon/born_*` and `juggernaut_*`.
+
+### Honest list
+Unverified in game: wall-crack visuals and births, how Tensura's brain mobs react to the driver, Juggernaut behaviour, every boss fight, the Curios slots with the real mod, the Amulet's effect on Tensura's regeneration attribute, the 3D look of the Avatar and Amulet (previews only). The 12 materials are plain sprites without 3D hand models. The Avatar and the Commander rework are not gated by `dungeon.sentient`. With 4 treasury relics the fifth pedestal is left empty.
+
 ## [1.21.0] — The Variable Core: the Procedural Dimensional Nexus, hidden vaults, delving gear, five Relics and the Treasury Collapse
 
 **State:** written without a compiler; CI is the first compile. Nothing run in game: no zone was ever built, no boss woken, no relic attuned; every number and every look is a first estimate (see the end for the honest list). Built from the owner's design document (`living_dungeon_complete_tdd.md`), translated from Forge 1.20.1 to NeoForge 1.21.1. **Replacement (owner request):** the static Golden City is no longer built by itself: the deepest floor's core cells now pull one of four zones from the multiverse. The 1.19.0 city code, its Altar and Aurelian Core stay in the repo and are the heart of the Golden City zone (a city built by an older version is adopted, never built over). Everything else below is **new**.

@@ -53,6 +53,10 @@ public class NUSMP {
         com.newuniverse.nusmp.entity.zogratis.VanicaCurse.EFFECTS.register(modEventBus);
         com.newuniverse.nusmp.dungeon.nexus.vault.NexusBlocks.init();                                                    // 1.21.0: the Variable Core (vault blocks)
         com.newuniverse.nusmp.dungeon.nexus.vault.NexusBlocks.BLOCKS.register(modEventBus);
+        com.newuniverse.nusmp.dungeon.sentient.SentientItems.init();                                                     // 1.22.0: the twelve synthesis materials
+        com.newuniverse.nusmp.entity.avatar.AvatarEntities.init();                                                       // 1.22.0: the Devil Avatar
+        com.newuniverse.nusmp.entity.avatar.AvatarEntities.ENTITIES.register(modEventBus);
+        modEventBus.addListener(com.newuniverse.nusmp.entity.avatar.AvatarEntities::attributes);
         com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.init();                                                     // the Treasury's five Relics
         com.newuniverse.nusmp.dungeon.nexus.relic.RelicBlocks.init();
         com.newuniverse.nusmp.dungeon.nexus.relic.RelicBlocks.BLOCKS.register(modEventBus);
@@ -72,6 +76,7 @@ public class NUSMP {
         modEventBus.addListener(com.newuniverse.nusmp.book.GrimoireSummon::registerPayloads);
         modEventBus.addListener(com.newuniverse.nusmp.blackclover.ModeArmor::registerPayloads);
         modEventBus.addListener(com.newuniverse.nusmp.multiverse.MultiverseSync::registerPayloads);
+        modEventBus.addListener(com.newuniverse.nusmp.dungeon.nexus.relic.RelicNet::registerPayloads);                  // 1.22.0: the Use Relic key
         modEventBus.addListener(com.newuniverse.nusmp.book.RougeCat::register);                             // 0.49: Rouge on her summoner's head
         modEventBus.addListener(com.newuniverse.nusmp.aura.PlayerAuraPayload::register);                     // 0.53: player render layers
         com.newuniverse.nusmp.prop.MagicProps.init();                                                      // 0.53: props of the attribute expansion
@@ -103,6 +108,9 @@ public class NUSMP {
             modEventBus.addListener(com.newuniverse.nusmp.client.dungeon.DungeonMobsClient::register);          // 1.18.0: the Living Dungeon's creatures
             modEventBus.addListener(com.newuniverse.nusmp.client.dungeon.DungeonSky::registerEffects);         // 1.19.0: the Dungeon's own sky and fog
             modEventBus.addListener(com.newuniverse.nusmp.client.zogratis.ZogratisClient::register);            // 1.20.0: the Zogratis renderers
+            modEventBus.addListener(com.newuniverse.nusmp.client.avatar.AvatarClient::register);                                    // 1.22.0: the Devil Avatar
+            modEventBus.addListener(com.newuniverse.nusmp.client.nexus.RelicKeys::register);                                         // 1.22.0: Use Relic (R)
+            NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.client.nexus.RelicKeys::onClientTick);
             modEventBus.addListener(com.newuniverse.nusmp.client.nexus.NavClient::registerProperties);                              // 1.21.0: lantern flame, compass needle
             NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.client.dungeon.DungeonSky::onFogColor);
             NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.client.dungeon.DungeonSky::onRenderFog);
@@ -181,6 +189,19 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.wild.WildDriver::onJoin);                 // 1.19.0: roster mobs get their record
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.wild.WildDriver::onServerTick);           // the food web sweep
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.wild.WildDriver::onDeath);                // kills feed the killer
+        // 1.22.0: the Sentient Dungeon (room births, born mobs, the immune system)
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.sentient.DungeonRoomManager::onServerTick);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.sentient.DungeonRoomManager::onLogout);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.sentient.DungeonRoomManager::onServerStopping);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.sentient.WallBirth::onServerTick);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.sentient.WallBirth::onServerStopping);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.sentient.BornDriver::onServerTick);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.sentient.BornDriver::onJoin);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.sentient.BornDriver::onServerStopping);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.sentient.ImmuneSystem::onServerTick);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.sentient.ImmuneSystem::onDeath);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.sentient.ImmuneSystem::onLogout);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.sentient.ImmuneSystem::onServerStopping);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.wild.WildDriver::onServerStarted);        // logs the roster at start-up
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.entity.zogratis.VanicaCurse::onHeal);              // 1.20.0: Megicula's Decay cuts healing
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.entity.zogratis.SpellSeal::onIncomingDamage);       // Spatial Mana Domination

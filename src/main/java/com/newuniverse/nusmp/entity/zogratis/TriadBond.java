@@ -21,6 +21,7 @@ public final class TriadBond {
 
     /** Is this boss one of the three siblings (by its devil)? */
     public static boolean isTriad(ZogratisBoss b) {
+        if (b instanceof com.newuniverse.nusmp.entity.avatar.DevilAvatarBoss) return false;     // 1.22.0: a floor boss, not a sibling
         Devil d = b.devil();
         return d == Devil.LUCIFERO || d == Devil.MEGICULA || d == Devil.BEELZEBUB;
     }
