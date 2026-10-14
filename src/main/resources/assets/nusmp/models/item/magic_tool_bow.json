@@ -1,1 +1,10 @@
-{"parent": "minecraft:item/bow", "textures": {"layer0": "nusmp:item/magic_tool_bow"}}
+{
+  "parent": "minecraft:item/bow",
+  "textures": {"layer0": "nusmp:item/magic_tool_bow"},
+  "display": {
+    "thirdperson_righthand": {"rotation": [-80, 260, -40], "translation": [-1, -2, 2.5], "scale": [1.4, 1.4, 1.4]},
+    "thirdperson_lefthand": {"rotation": [-80, -280, 40], "translation": [-1, -2, 2.5], "scale": [1.4, 1.4, 1.4]},
+    "firstperson_righthand": {"rotation": [0, -90, 25], "translation": [1.13, 3.2, 1.13], "scale": [0.95, 0.95, 0.95]},
+    "firstperson_lefthand": {"rotation": [0, 90, -25], "translation": [1.13, 3.2, 1.13], "scale": [0.95, 0.95, 0.95]}
+  }
+}

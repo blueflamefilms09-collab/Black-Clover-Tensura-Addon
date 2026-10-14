@@ -41,8 +41,19 @@ public final class WeaponOrientation {
     /** A pointed weapon whose widest part lies above this share of its length is suspicious (informational). */
     public static final double POINTED_WIDEST_MAX = 0.72;
 
-    /** What the detector reports. TIP_DOWN and HEAD_TOWARD_PLAYER are acted on; the other two are informational. */
-    public enum Flag { TIP_DOWN, HEAD_TOWARD_PLAYER, MIRRORED, TIP_SUSPECT }
+    /**
+     * 1.34.0, the GRIP END (the Windcutter of the owner's screenshot 68 was built with its point at y = 0 and its hilt on top, so the hand held the blade):
+     * a pointed weapon whose widest part lies above {@link #GRIP_FAR_WIDEST} of its length, whose area centroid lies above {@link #GRIP_FAR_CENTROID} and
+     * whose top end is narrower than {@link #GRIP_FAR_TOP} blocks across is held by its blade. A mesh can also say where its grip is with the directive
+     * {@code grip <fraction>}: above {@link #GRIP_FAR_DIRECTIVE} it is reversed, at or below it the grip is trusted (no geometry guess).
+     */
+    public static final double GRIP_FAR_WIDEST = 0.60;
+    public static final double GRIP_FAR_CENTROID = 0.54;
+    public static final double GRIP_FAR_TOP = 0.10;
+    public static final double GRIP_FAR_DIRECTIVE = 0.5;
+
+    /** What the detector reports. TIP_DOWN, HEAD_TOWARD_PLAYER and GRIP_FAR_END (appended 1.34.0) are acted on; MIRRORED and TIP_SUSPECT are informational. */
+    public enum Flag { TIP_DOWN, HEAD_TOWARD_PLAYER, MIRRORED, TIP_SUSPECT, GRIP_FAR_END }
 
     /** Class traits (class name -> traits): handed = the edge / head is on one side (must be -x); pointed; head_heavy; curve_edge; curve_spine. */
     private static final Map<String, Set<String>> TRAITS = new HashMap<>();
@@ -53,6 +64,7 @@ public final class WeaponOrientation {
         t("crescent", "handed", "head_heavy"); t("scythe", "handed", "head_heavy"); t("cleaver", "handed"); t("hook", "handed");
         t("spear", "head_heavy"); t("glaive", "handed", "head_heavy"); t("trident", "head_heavy");
         t("staff", "head_heavy"); t("mace", "handed", "head_heavy"); t("hammer", "handed", "head_heavy"); t("club", "head_heavy");
+        t("greathammer", "handed", "head_heavy");
     }
 
     private static void t(String cls, String... traits) {
@@ -82,6 +94,8 @@ public final class WeaponOrientation {
         /** x of the top slices' centre minus axisX, blocks: the sideways displacement of the tip. */
         public double curve;
         public double shaftWidth, headHeight, reachNeg, reachPos;
+        /** The widest x or z extent over the top {@link #TIP_BINS} slices, blocks: a narrow tip or pommel. */
+        public double topSection;
         public double[] width = new double[BINS];
     }
 
@@ -142,9 +156,11 @@ public final class WeaponOrientation {
         m.lengthMu = len;
         m.length = len * scale;
         double[] area = new double[BINS], ax = new double[BINS], ay = new double[BINS];
-        double[] xmin = new double[BINS], xmax = new double[BINS];
+        double[] xmin = new double[BINS], xmax = new double[BINS], zmin = new double[BINS], zmax = new double[BINS];
         java.util.Arrays.fill(xmin, 1e30);
         java.util.Arrays.fill(xmax, -1e30);
+        java.util.Arrays.fill(zmin, 1e30);
+        java.util.Arrays.fill(zmax, -1e30);
         double bh = len / BINS;
         for (int q = 0; q < nq; q++) {
             List<double[]> p = new ArrayList<>(4);
@@ -167,6 +183,8 @@ public final class WeaponOrientation {
                     sy += pt[1];
                     xmin[b] = Math.min(xmin[b], pt[0]);
                     xmax[b] = Math.max(xmax[b], pt[0]);
+                    zmin[b] = Math.min(zmin[b], pt[2]);
+                    zmax[b] = Math.max(zmax[b], pt[2]);
                 }
                 area[b] += a;
                 ax[b] += a * sx / poly.size();
@@ -207,6 +225,12 @@ public final class WeaponOrientation {
             maxW = Math.max(maxW, m.width[b]);
         }
         m.maxWidth = maxW;
+        double top = 0;
+        for (int b = BINS - TIP_BINS; b < BINS; b++) {
+            if (xmax[b] >= xmin[b]) top = Math.max(top, xmax[b] - xmin[b]);
+            if (zmax[b] >= zmin[b]) top = Math.max(top, zmax[b] - zmin[b]);
+        }
+        m.topSection = top * scale;
         double sumIdx = 0;
         int cnt = 0;
         if (maxW > 0) {
@@ -253,9 +277,21 @@ public final class WeaponOrientation {
      * {@code place} line's angle; 45 = the sprite diagonal).
      */
     public static Set<Flag> detect(Measures m, String cls, double placeAngleDeg) {
+        return detect(m, cls, placeAngleDeg, Double.NaN);
+    }
+
+    /** True when the mesh has its grip at the far (high y) end: its own {@code grip} directive ({@code gripDirective}, NaN = none), else the geometry of a pointed weapon. */
+    public static boolean gripAtFarEnd(Measures m, String cls, double gripDirective) {
+        if (!Double.isNaN(gripDirective)) return gripDirective > GRIP_FAR_DIRECTIVE;
+        return hasTrait(cls, "pointed") && m.widestAt > GRIP_FAR_WIDEST && m.centroid > GRIP_FAR_CENTROID && m.topSection < GRIP_FAR_TOP;
+    }
+
+    /** As {@link #detect(Measures, String, double)} for a mesh with a {@code grip <fraction>} directive ({@code gripDirective}, NaN when it has none). */
+    public static Set<Flag> detect(Measures m, String cls, double placeAngleDeg, double gripDirective) {
         Set<Flag> f = EnumSet.noneOf(Flag.class);
         if (m.empty) return f;
-        boolean known = cls != null && !"item".equals(cls) && !"whip".equals(cls) && !"coilwhip".equals(cls);
+        if (gripAtFarEnd(m, cls, gripDirective)) f.add(Flag.GRIP_FAR_END);
+        boolean known = cls != null && !"item".equals(cls) && !"handitem".equals(cls) && !"whip".equals(cls) && !"coilwhip".equals(cls);
         if (known && Math.sin(Math.toRadians(placeAngleDeg)) < -0.1) f.add(Flag.TIP_DOWN);
         else if (hasTrait(cls, "head_heavy") && m.centroid < HEAD_HEAVY_MAX) f.add(Flag.TIP_DOWN);
         if (hasTrait(cls, "pointed") && m.widestAt > POINTED_WIDEST_MAX) f.add(Flag.TIP_SUSPECT);
@@ -279,6 +315,21 @@ public final class WeaponOrientation {
             float[] b = verts.get(q + 1), d = verts.get(q + 3);
             verts.set(q + 1, d);
             verts.set(q + 3, b);
+        }
+    }
+
+    /**
+     * The grip end swap: a half turn about the x axis through (x, pivotY, 0): y -> 2 pivotY - y, z -> -z, the normals' y and z negated. A proper
+     * rotation, so the winding is kept and every x stays where it was (a blade keeps its edge on the same side). Applied twice it is the identity.
+     */
+    public static void flipY(List<float[]> verts, double pivotY) {
+        for (float[] v : verts) {
+            v[1] = (float) (2 * pivotY - v[1]);
+            v[2] = -v[2];
+            if (v.length >= 8) {
+                v[6] = -v[6];
+                v[7] = -v[7];
+            }
         }
     }
 

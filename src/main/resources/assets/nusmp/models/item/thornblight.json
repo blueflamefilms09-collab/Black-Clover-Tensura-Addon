@@ -47,8 +47,8 @@
       ],
       "translation": [
         1.13,
-        3.2,
-        1.13
+        2.37,
+        0.38
       ],
       "scale": [
         0.68,
@@ -64,8 +64,8 @@
       ],
       "translation": [
         1.13,
-        3.2,
-        1.13
+        2.37,
+        0.38
       ],
       "scale": [
         0.68,
@@ -141,5 +141,10 @@
         1
       ]
     }
+  },
+  "nusmp_display_preset": {
+    "length_blocks": 1.435,
+    "scale": 0.68,
+    "rule": "tools/relics/display_presets.py"
   }
 }

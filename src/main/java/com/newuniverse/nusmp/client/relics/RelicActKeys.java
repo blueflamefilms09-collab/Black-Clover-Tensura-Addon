@@ -30,6 +30,10 @@ public final class RelicActKeys {
     public static final KeyMapping USE = new KeyMapping("key.nusmp.use_worn_relic", InputConstants.Type.KEYSYM,
             org.lwjgl.glfw.GLFW.GLFW_KEY_V, "key.categories.nusmp");
 
+    /** 1.34.0: switches the worn visuals of armour relics (head, chest, feet) off and on; unbound by default. Curios relics use the eye icon of the Curios screen. */
+    public static final KeyMapping TOGGLE_VISUALS = new KeyMapping("key.nusmp.toggle_relic_visuals", InputConstants.Type.KEYSYM,
+            InputConstants.UNKNOWN.getValue(), "key.categories.nusmp");
+
     /** One ability on the ring. */
     record Entry(RelicDef def, Act act) {}
 
@@ -39,7 +43,7 @@ public final class RelicActKeys {
     private static long holdStart;
 
     /** Mod bus. */
-    public static void register(RegisterKeyMappingsEvent e) { e.register(USE); }
+    public static void register(RegisterKeyMappingsEvent e) { e.register(USE); e.register(TOGGLE_VISUALS); }
 
     /** The abilities on the ring, in the order the player carries them. */
     static List<Entry> entries(Player p) {
@@ -61,6 +65,10 @@ public final class RelicActKeys {
         if (mc.player == null || mc.level == null) { holding = null; wasDown = false; return; }
         boolean down = USE.isDown() && mc.screen == null;
         while (USE.consumeClick()) { /* the edge is read from isDown below; clicks are drained so they do not pile up */ }
+        while (TOGGLE_VISUALS.consumeClick()) {
+            boolean hidden = com.newuniverse.nusmp.client.relics.fx.RelicFxOptions.toggleHideArmourRelics();
+            mc.player.displayClientMessage(net.minecraft.network.chat.Component.translatable(hidden ? "nusmp.relic.visuals.hidden" : "nusmp.relic.visuals.shown"), true);
+        }
         long now = mc.level.getGameTime();
         List<Entry> ring = entries(mc.player);
         if (selected >= ring.size()) selected = 0;

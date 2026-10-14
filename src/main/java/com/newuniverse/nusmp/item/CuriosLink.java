@@ -83,6 +83,72 @@ public final class CuriosLink {
         }
     }
 
+    // ---------------------------------------------------------------- the render toggles (the eye icon of the Curios screen)
+    /** One Curios stack and whether its slot's render toggle is on. */
+    public record RenderFlag(ItemStack stack, boolean render) {}
+
+    private static Method getCurios, getStacks, getRenders;
+    private static boolean flagsBroken;
+
+    /**
+     * The worn stacks of this entity with the render flag of the slot each sits in (the eye icon of the Curios screen: ICurioStacksHandler#getRenders, one boolean per
+     * slot index). Empty without Curios or on any failure; an index the list does not cover renders (true).
+     */
+    public static List<RenderFlag> flags(LivingEntity e) {
+        if (e == null || flagsBroken || !loaded()) return List.of();
+        try {
+            if (getInventory == null) {
+                getInventory = Class.forName("top.theillusivec4.curios.api.CuriosApi").getMethod("getCuriosInventory", LivingEntity.class);
+            }
+            if (getCurios == null) {
+                Class<?> handler = Class.forName("top.theillusivec4.curios.api.type.capability.ICuriosItemHandler");
+                Class<?> stacksHandler = Class.forName("top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler");
+                getCurios = handler.getMethod("getCurios");
+                getStacks = stacksHandler.getMethod("getStacks");
+                getRenders = stacksHandler.getMethod("getRenders");
+            }
+            Object opt = getInventory.invoke(null, e);
+            if (!(opt instanceof Optional<?> o) || o.isEmpty()) return List.of();
+            if (!(getCurios.invoke(o.get()) instanceof Map<?, ?> map)) return List.of();
+            List<RenderFlag> out = new ArrayList<>();
+            for (Object sh : map.values()) {
+                if (!(getStacks.invoke(sh) instanceof IItemHandler h)) continue;
+                List<?> renders = getRenders.invoke(sh) instanceof List<?> l ? l : List.of();
+                for (int i = 0; i < h.getSlots(); i++) {
+                    ItemStack s = h.getStackInSlot(i);
+                    if (s.isEmpty()) continue;
+                    boolean on = i >= renders.size() || !(renders.get(i) instanceof Boolean b) || b;
+                    out.add(new RenderFlag(s, on));
+                }
+            }
+            return out;
+        } catch (Throwable t) {
+            flagsBroken = true;
+            LOG.warn("[nusmp] the Curios render toggles could not be read ({}); every worn relic is drawn", t.toString());
+            return List.of();
+        }
+    }
+
+    /** Per worn Curios stack, in the order of {@link #flags}: true if its slot's render toggle is on. True for everything when Curios is absent (the list is empty then). */
+    public static List<Boolean> renderFlags(LivingEntity e) {
+        List<RenderFlag> f = flags(e);
+        List<Boolean> out = new ArrayList<>(f.size());
+        for (RenderFlag r : f) out.add(r.render());
+        return out;
+    }
+
+    /** Is this worn stack to be drawn? True unless Curios says its slot's render toggle is off (identity first, then an equal stack). True on any doubt. */
+    public static boolean isRendered(LivingEntity e, ItemStack stack) {
+        try {
+            List<RenderFlag> f = flags(e);
+            for (RenderFlag r : f) if (r.stack() == stack) return r.render();
+            for (RenderFlag r : f) if (ItemStack.matches(r.stack(), stack)) return r.render();
+        } catch (Throwable ignored) {
+            // draw it
+        }
+        return true;
+    }
+
     /** Is a weapon of this kind worn in a Curios slot? */
     public static boolean carries(LivingEntity e, Kind k) {
         for (ItemStack s : equipped(e)) if (s.getItem() instanceof MagicWeaponItem w && w.kind == k) return true;

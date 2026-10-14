@@ -124,6 +124,46 @@ class WeaponOrientationTest {
     }
 
     @Test
+    void aSwordWithItsHiltAtTheFarEndIsFlaggedAndFlippingFixesIt() {
+        List<float[]> v = WeaponNormaliserTest.reversedSword();
+        WeaponOrientation.Measures m = WeaponOrientation.measure(v, 0.025f);
+        assertTrue(m.topSection < WeaponOrientation.GRIP_FAR_TOP, "the pommel end is narrow: " + m.topSection);
+        assertTrue(WeaponOrientation.detect(m, "longsword", 45).contains(WeaponOrientation.Flag.GRIP_FAR_END));
+        assertFalse(WeaponOrientation.detect(m, "battleaxe", 45).contains(WeaponOrientation.Flag.GRIP_FAR_END), "only a pointed class is judged by the geometry");
+        WeaponOrientation.flipY(v, 30.0);
+        WeaponOrientation.Measures f = WeaponOrientation.measure(v, 0.025f);
+        assertFalse(WeaponOrientation.detect(f, "longsword", 45).contains(WeaponOrientation.Flag.GRIP_FAR_END));
+        WeaponOrientation.flipY(v, 30.0);                                           // an involution
+        assertEquals(m.widestAt, WeaponOrientation.measure(v, 0.025f).widestAt, 1e-9);
+    }
+
+    @Test
+    void theGripDirectiveBeatsTheGeometry() {
+        WeaponOrientation.Measures m = WeaponOrientation.measure(WeaponNormaliserTest.reversedSword(), 0.025f);
+        assertFalse(WeaponOrientation.detect(m, "longsword", 45, 0.12).contains(WeaponOrientation.Flag.GRIP_FAR_END));
+        assertTrue(WeaponOrientation.detect(m, "longsword", 45, 0.88).contains(WeaponOrientation.Flag.GRIP_FAR_END));
+        assertTrue(WeaponOrientation.gripAtFarEnd(m, "longsword", Double.NaN));
+        assertFalse(WeaponOrientation.gripAtFarEnd(m, "longsword", 0.5), "exactly half is not 'far'");
+    }
+
+    @Test
+    void flipYKeepsTheXesTheWindingAndTurnsTheNormals() {
+        List<float[]> v = new ArrayList<>();
+        box(v, -1, 1, 0, 10, -1, 1);
+        float[][] before = new float[v.size()][];
+        for (int i = 0; i < before.length; i++) before[i] = v.get(i).clone();
+        WeaponOrientation.flipY(v, 5.0);
+        for (int i = 0; i < before.length; i++) {
+            assertEquals(before[i][0], v.get(i)[0], 0f);
+            assertEquals(10f - before[i][1], v.get(i)[1], 1e-6f);
+            assertEquals(-before[i][2], v.get(i)[2], 0f);
+            assertEquals(before[i][5], v.get(i)[5], 0f);
+            assertEquals(-before[i][6], v.get(i)[6], 0f);
+            assertEquals(-before[i][7], v.get(i)[7], 0f);
+        }
+    }
+
+    @Test
     void anEmptyMeshHasNoMeasuresAndNoFlags() {
         WeaponOrientation.Measures m = WeaponOrientation.measure(new ArrayList<>(), SC);
         assertTrue(m.empty);

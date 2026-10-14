@@ -18,7 +18,10 @@ public final class WornLibClient {
                     WornModels.clear();
                     WornLibrary.clear();
                     ArmorGlow.clear();
+                    ArmorItems.clear();
                 }));
+        modBus.addListener(ArmorItemRenderer::registerExtensions);
+        modBus.addListener(ArmorItemRenderer::registerModels);
         RelicFxClient.init();
     }
 }

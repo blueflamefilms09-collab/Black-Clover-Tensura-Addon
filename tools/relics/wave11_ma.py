@@ -94,6 +94,8 @@ def wavebreaker():
 
 # ====================================================================================== 2 Encircled Blade
 def encircled_blade():
+    # 1.34.0: this build has its POINT at y = 0 and its hilt on top (the hand held the blade, owner screenshot 68): tools/relics/weapon_fixes.json has `flip_y` for this id,
+    # which write_txt applies after writing (apply_weapon_fixes.op_flip_y). Do not also flip it here (it would be turned twice).
     # ---- 1 measure: card 735 x 826, the sword vertical at x 175 from the pommel (y 20) to the point (y 805): 785 px for a 66 cm short sword.
     K = 66.0 / 785.0
     cm = lambda px: px * K
@@ -147,6 +149,8 @@ def encircled_blade():
 
 # ====================================================================================== 3 Windcutter
 def windcutter():
+    # 1.34.0: this build has its POINT at y = 0 and its hilt on top (the hand held the blade, owner screenshot 68): tools/relics/weapon_fixes.json has `flip_y` for this id,
+    # which write_txt applies after writing (apply_weapon_fixes.op_flip_y). Do not also flip it here (it would be turned twice).
     # ---- 1 measure: card 736 x 1019, the sword vertical at x 575; pommel gem (160) to the point (750): 590 px for a 112 cm longsword.
     K = 112.0 / 590.0
     Y = lambda cy: (750 - cy) * K                       # card y -> model y (point at 0)
@@ -212,6 +216,8 @@ def windcutter():
 
 # ====================================================================================== 4 Tripolar Sword
 def tripolar_sword():
+    # 1.34.0: this build has its POINT at y = 0 and its hilt on top (the hand held the blade, owner screenshot 68): tools/relics/weapon_fixes.json has `flip_y` for this id,
+    # which write_txt applies after writing (apply_weapon_fixes.op_flip_y). Do not also flip it here (it would be turned twice).
     # ---- 1 measure: card 640 wide, art 600 high; the sword runs from the point (45, 590) to the pommel spike (580, 50): 760 px for a 110 cm sword.
     K = 110.0 / 760.0
     L_TOTAL = 110.0

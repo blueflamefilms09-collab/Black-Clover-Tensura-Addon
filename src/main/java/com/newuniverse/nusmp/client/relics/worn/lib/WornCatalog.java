@@ -12,6 +12,9 @@ import java.util.Map;
  * look HEAD CROWN crown_spired            the models of every relic of that slot and look
  * relic tiny_duck_crown crown_duck        a signature relic's own models (they replace the look's)
  * fx tiny_duck_crown ember                the ambient particle theme of a relic
+ * item black_bull_robe chest_mantle ...   an ARMOUR ITEM of the mod (by registry path, or a mode_&lt;name&gt;): the models it wears on the player
+ * ipal black_bull_robe 242424 E4B454 E4B454   its palette (main, trim, glow as hex); itier black_bull_robe 3  its grade tier 1..7
+ * islot glutton_chalice CHARM            a Curios-worn item that is not a relic: the slot it is drawn in (placed and shrunk like a relic of that slot)
  * </pre>
  * A piece is {@code model[@anchor][~]}: {@code @anchor} attaches it to another body part than the one named in the file (head, body, rarm, larm, rleg, lleg),
  * {@code ~} mirrors it left to right (how the left arm gets the right arm's model).
@@ -22,6 +25,10 @@ public final class WornCatalog {
 
     private final Map<String, List<Piece>> looks = new HashMap<>(), relics = new HashMap<>();
     private final Map<String, String> themes = new HashMap<>();
+    private final Map<String, List<Piece>> items = new HashMap<>();
+    private final Map<String, int[]> itemPalettes = new HashMap<>();
+    private final Map<String, Integer> itemTiers = new HashMap<>();
+    private final Map<String, String> itemSlots = new HashMap<>();
 
     public static WornCatalog parse(Iterable<String> lines) {
         WornCatalog c = new WornCatalog();
@@ -39,10 +46,38 @@ public final class WornCatalog {
                 case "fx" -> {
                     if (v.length >= 3) c.themes.put(v[1], v[2].toLowerCase(Locale.ROOT));
                 }
+                case "item" -> {
+                    if (v.length >= 3) c.items.put(v[1], pieces(v, 2));
+                }
+                case "ipal" -> {
+                    if (v.length >= 5) {
+                        int[] pal = {hex(v[2]), hex(v[3]), hex(v[4])};
+                        if (pal[0] >= 0 && pal[1] >= 0 && pal[2] >= 0) c.itemPalettes.put(v[1], pal);
+                    }
+                }
+                case "islot" -> {
+                    if (v.length >= 3) c.itemSlots.put(v[1], v[2].toUpperCase(Locale.ROOT));
+                }
+                case "itier" -> {
+                    if (v.length >= 3) {
+                        try {
+                            c.itemTiers.put(v[1], Math.min(7, Math.max(1, Integer.parseInt(v[2]))));
+                        } catch (NumberFormatException ignored) { }
+                    }
+                }
                 default -> { }
             }
         }
         return c;
+    }
+
+    /** A 0xRRGGBB colour from hex text, or -1 if it is not one. */
+    static int hex(String s) {
+        try {
+            return Integer.parseInt(s, 16) & 0xFFFFFF;
+        } catch (NumberFormatException ex) {
+            return -1;
+        }
     }
 
     private static String key(String slot, String look) { return slot.toUpperCase(Locale.ROOT) + ":" + look.toUpperCase(Locale.ROOT); }
@@ -69,6 +104,23 @@ public final class WornCatalog {
         p = looks.get(key(slot, look));
         return p == null ? List.of() : p;
     }
+
+    /** The pieces an armour item (or mode) wears, by its registry path; empty if the catalog has no entry for it. */
+    public List<Piece> itemPieces(String key) {
+        List<Piece> p = items.get(key);
+        return p == null ? List.of() : p;
+    }
+
+    /** The palette {main, trim, glow} the catalog names for an armour item, or null. */
+    public int[] itemPalette(String key) { return itemPalettes.get(key); }
+
+    /** The grade tier (1..7) the catalog names for an armour item, or {@code fallback}. */
+    public int itemTier(String key, int fallback) { return itemTiers.getOrDefault(key, fallback); }
+
+    /** The Curios slot name ("CHARM" ...) a non-relic worn item is drawn in, or null for an armour item or a mode. */
+    public String itemSlot(String key) { return itemSlots.get(key); }
+
+    public int itemCount() { return items.size(); }
 
     /** The theme named for a relic in the catalog ("ember" ...), or null. */
     public String themeOf(String relicId) { return themes.get(relicId); }

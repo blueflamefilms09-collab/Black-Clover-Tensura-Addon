@@ -4,6 +4,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.newuniverse.nusmp.blackclover.ModeArmor;
+import com.newuniverse.nusmp.client.relics.fx.RelicFxOptions;
+import com.newuniverse.nusmp.client.relics.worn.lib.WornLibDraw;
+import com.newuniverse.nusmp.client.relics.worn.lib.WornLibrary;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -17,6 +20,10 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import org.joml.Vector3f;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * The transformation armour overlays (0.38), drawn on the player model while a mode is active ({@link ModeArmor}). Each piece
@@ -72,7 +79,8 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
         float k = grow * fade;
         if (k <= 0.01f) return;
         PlayerModel<AbstractClientPlayer> m = getParentModel();
-        Ctx c = new Ctx(pose, buffers, light, now, k, limbSwingAmount);
+        WornLibrary.Ensemble lib = RelicFxOptions.models() ? WornLibrary.ofKey("mode_" + mode.name().toLowerCase(Locale.ROOT)) : null;     // 1.34.0: 3D wings, crowns and horns
+        Ctx c = new Ctx(pose, buffers, light, now, k, limbSwingAmount, lib != null);
         switch (mode) {
             case WIND_SPIRIT_DIVE -> wind(c, m);
             case FIRE_SPIRIT_DIVE -> fire(c, m);
@@ -81,10 +89,20 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
             case VALKYRIE -> valkyrie(c, m);
             default -> { }
         }
+        if (lib != null && k > 0.35f) {                                                  // the library's 3D pieces of the mode (wings, crowns, horns, skirt), after the plates
+            MODE_SETS.clear();
+            MODE_SETS.add(lib);
+            double dist = player.distanceToSqr(Minecraft.getInstance().gameRenderer.getMainCamera().getPosition());
+            WornLibDraw.draw(MODE_SETS, pose, buffers, light, m, player.isCrouching(), dist, now, limbSwingAmount, RelicFxOptions.quality());
+            MODE_SETS.clear();
+        }
     }
 
+    /** The one ensemble drawn for the player being rendered (the render thread draws one player at a time). */
+    private static final List<WornLibrary.Ensemble> MODE_SETS = new ArrayList<>(1);
+
     /** What every piece needs. {@code k} = grow-in x fade-out (0..1). */
-    private record Ctx(PoseStack pose, MultiBufferSource buffers, int light, float now, float k, float swing) {
+    private record Ctx(PoseStack pose, MultiBufferSource buffers, int light, float now, float k, float swing, boolean lib) {
         VertexConsumer solid(ResourceLocation t) { return buffers.getBuffer(RenderType.entityCutoutNoCull(t)); }
         VertexConsumer clear(ResourceLocation t) { return buffers.getBuffer(RenderType.entityTranslucent(t)); }
         VertexConsumer glow(ResourceLocation t) { return buffers.getBuffer(RenderType.eyes(t)); }
@@ -115,8 +133,10 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
         flap(c.solid(WIND_PLATE), pose, -4.45f, 11.5f, -2.45f, -0.6f, 11.5f + 7f, -2.45f - tail * 0.2f, a, c.light);
         flap(c.solid(WIND_PLATE), pose, 0.6f, 11.5f, -2.45f, 4.45f, 11.5f + 7f, -2.45f - tail * 0.2f, a, c.light);
         // the wings: blade feathers of wind, semi-transparent
-        float beat = Mth.sin(c.now * 0.18f) * 9f;
-        wings(c, pose, c.clear(WIND_WING), 27f * c.k, 25f * c.k, 30f + beat, -4f + beat * 0.5f, c.alpha(0.75f), FULL, true);
+        if (!c.lib) {                                                               // with the model library on, the 3D wings stand in for the cards
+            float beat = Mth.sin(c.now * 0.18f) * 9f;
+            wings(c, pose, c.clear(WIND_WING), 27f * c.k, 25f * c.k, 30f + beat, -4f + beat * 0.5f, c.alpha(0.75f), FULL, true);
+        }
         pose.popPose();
         // sleeves and fur cuffs
         for (ModelPart arm : new ModelPart[]{m.rightArm, m.leftArm}) {
@@ -127,6 +147,7 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
             pose.popPose();
         }
         // the crown: eight star blades floating over the head, slowly turning
+        if (c.lib) return;
         enter(pose, m.head);
         pose.translate(0, -9.2f - 0.5f * Mth.sin(c.now * 0.1f), 0);
         pose.mulPose(Axis.YP.rotationDegrees(c.now * 1.2f));
@@ -168,6 +189,7 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
         }
         pose.popPose();
         // the dragon wing frame, flame membranes glowing
+        if (c.lib) return;                                                          // the 3D dragon wings and flame hair of the model library stand in for the cards
         enter(pose, m.body);
         float beat = Mth.sin(c.now * 0.22f) * 7f;
         wings(c, pose, c.clear(FIRE_WING), 18f * c.k, 18f * c.k, 38f + beat, 4f, c.alpha(0.95f), FULL, true);
@@ -192,22 +214,24 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
     private static void demon(Ctx c, PlayerModel<AbstractClientPlayer> m) {
         PoseStack pose = c.pose;
         int a = c.alpha(1f);
-        // the horn: four jagged segments from the left of the forehead, curving out and up
-        enter(pose, m.head);
-        pose.translate(2.4f, -7.4f, -2.2f);
-        pose.mulPose(Axis.ZP.rotationDegrees(18f));
-        pose.mulPose(Axis.XP.rotationDegrees(-12f));
-        float w = 1.6f;
-        for (int i = 0; i < 4; i++) {
-            float len = (3.2f - i * 0.3f) * c.k;
-            box(c.solid(DEMON_PLATE), pose, -w, -len, -w, w, 0.2f, w, 255, a, c.light);
-            pose.translate(0, -len, 0);
-            pose.mulPose(Axis.ZP.rotationDegrees(i % 2 == 0 ? 16f : 6f));
-            pose.mulPose(Axis.XP.rotationDegrees(i % 2 == 0 ? -6f : 8f));
-            w *= 0.74f;
+        // the horn: four jagged segments from the left of the forehead, curving out and up (with the model library on, its 3D horn stands in)
+        if (!c.lib) {
+            enter(pose, m.head);
+            pose.translate(2.4f, -7.4f, -2.2f);
+            pose.mulPose(Axis.ZP.rotationDegrees(18f));
+            pose.mulPose(Axis.XP.rotationDegrees(-12f));
+            float w = 1.6f;
+            for (int i = 0; i < 4; i++) {
+                float len = (3.2f - i * 0.3f) * c.k;
+                box(c.solid(DEMON_PLATE), pose, -w, -len, -w, w, 0.2f, w, 255, a, c.light);
+                pose.translate(0, -len, 0);
+                pose.mulPose(Axis.ZP.rotationDegrees(i % 2 == 0 ? 16f : 6f));
+                pose.mulPose(Axis.XP.rotationDegrees(i % 2 == 0 ? -6f : 8f));
+                w *= 0.74f;
+            }
+            spike(c.solid(DEMON_PLATE), pose, 0, 0.2f, 0, w, 0.5f, -3.4f * c.k, 0, a, c.light);
+            pose.popPose();
         }
-        spike(c.solid(DEMON_PLATE), pose, 0, 0.2f, 0, w, 0.5f, -3.4f * c.k, 0, a, c.light);
-        pose.popPose();
         // the black arm (right) with red veins
         enter(pose, m.rightArm);
         box(c.solid(DEMON_PLATE), pose, -3.35f, -2.35f, -2.35f, 1.35f, 10.35f, 2.35f, 255, a, c.light);
@@ -215,13 +239,15 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
         pose.popPose();
         // one tattered wing on the left shoulder
         enter(pose, m.body);
-        float beat = Mth.sin(c.now * 0.12f) * 6f;
-        pose.pushPose();
-        pose.translate(2.2f, 1.5f, 2.2f);
-        pose.mulPose(Axis.YP.rotationDegrees(-(32f + beat)));
-        pose.mulPose(Axis.ZP.rotationDegrees(-6f));
-        card(c.solid(DEMON_WING), pose, 0f, 0f, 24f * c.k, -23f * c.k, 0, a, c.light);
-        pose.popPose();
+        if (!c.lib) {
+            float beat = Mth.sin(c.now * 0.12f) * 6f;
+            pose.pushPose();
+            pose.translate(2.2f, 1.5f, 2.2f);
+            pose.mulPose(Axis.YP.rotationDegrees(-(32f + beat)));
+            pose.mulPose(Axis.ZP.rotationDegrees(-6f));
+            card(c.solid(DEMON_WING), pose, 0f, 0f, 24f * c.k, -23f * c.k, 0, a, c.light);
+            pose.popPose();
+        }
         // dark pixel wisps rising and drifting round the body
         for (int i = 0; i < 14; i++) {
             float t = (c.now * 0.04f + i * 0.137f) % 1f;
@@ -256,7 +282,8 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
             spike(c.solid(BOLT_PLATE), pose, cx, -2.9f, 1.4f, 0.8f, cx + out * 2.0f, -2.9f - 3.6f * c.k, 1.9f, a, c.light);
             pose.popPose();
         }
-        // the crown of crackling bolts, re-striking every two ticks
+        // the crown of crackling bolts, re-striking every two ticks (the library's 3D crown stands in when it is on)
+        if (c.lib) return;
         enter(pose, m.head);
         pose.translate(0, -8.6f, 0);
         int strike = (int) (c.now / 2f);
@@ -281,18 +308,20 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
         enter(pose, m.body);
         box(c.clear(VALK_PLATE), pose, -4.5f, -0.4f, -2.6f, 4.5f, 7.2f, 2.6f, 255, a, c.light);
         box(c.glow(VALK_GLOW), pose, -4.55f, -0.45f, -2.65f, 4.55f, 7.25f, 2.65f, 255, c.alpha(0.7f), FULL);
-        for (int i = 0; i < 6; i++) {
-            pose.pushPose();
-            pose.translate(0, 10f, 0);
-            pose.mulPose(Axis.YP.rotationDegrees(i * 60f + 30f));
-            pose.translate(0, 0, -3.4f);
-            pose.mulPose(Axis.XP.rotationDegrees(-22f - 6f * c.swing));     // flared out, more when running
-            card(c.clear(VALK_PLATE), pose, -2.6f, 0f, 2.6f, 6.5f * c.k, 0, a, c.light);
-            pose.popPose();
+        if (!c.lib) {                                                               // with the model library on, its 3D skirt and wings stand in for these cards
+            for (int i = 0; i < 6; i++) {
+                pose.pushPose();
+                pose.translate(0, 10f, 0);
+                pose.mulPose(Axis.YP.rotationDegrees(i * 60f + 30f));
+                pose.translate(0, 0, -3.4f);
+                pose.mulPose(Axis.XP.rotationDegrees(-22f - 6f * c.swing));     // flared out, more when running
+                card(c.clear(VALK_PLATE), pose, -2.6f, 0f, 2.6f, 6.5f * c.k, 0, a, c.light);
+                pose.popPose();
+            }
+            // avian water wings
+            float beat = Mth.sin(c.now * 0.2f) * 8f;
+            wings(c, pose, c.clear(VALK_WING), 29f * c.k, 27f * c.k, 34f + beat, -2f + beat * 0.4f, c.alpha(0.8f), FULL, true);
         }
-        // avian water wings
-        float beat = Mth.sin(c.now * 0.2f) * 8f;
-        wings(c, pose, c.clear(VALK_WING), 29f * c.k, 27f * c.k, 34f + beat, -2f + beat * 0.4f, c.alpha(0.8f), FULL, true);
         pose.popPose();
         // gauntlets
         for (ModelPart arm : new ModelPart[]{m.rightArm, m.leftArm}) {
@@ -318,6 +347,7 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
             pose.popPose();
         }
         // helmet wings
+        if (c.lib) return;
         enter(pose, m.head);
         for (int side : new int[]{-1, 1}) {
             pose.pushPose();

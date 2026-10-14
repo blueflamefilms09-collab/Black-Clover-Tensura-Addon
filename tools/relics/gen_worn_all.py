@@ -17,12 +17,16 @@ import gen_worn_back  # noqa: E402
 import gen_worn_neck  # noqa: E402
 import gen_worn_body  # noqa: E402
 import gen_worn_sig  # noqa: E402
+import gen_worn_armor  # noqa: E402
+import gen_worn_armor_relics  # noqa: E402
+import gen_worn_modes  # noqa: E402
 
 MODEL_CAP = 2600                 # vertices of one model (all its passes' base geometry)
 ENSEMBLE_CAP = 2600              # vertices of everything one relic wears
+MODE_CAP = 3600                  # vertices of everything a transformation overlay wears (one mode is on at a time)
 
 BUILDERS = {}
-for mod in (gen_worn_head, gen_worn_back, gen_worn_neck, gen_worn_body, gen_worn_sig):          # later modules replace earlier ones of the same name
+for mod in (gen_worn_head, gen_worn_back, gen_worn_neck, gen_worn_body, gen_worn_sig, gen_worn_armor, gen_worn_armor_relics, gen_worn_modes):          # later modules replace earlier ones of the same name
     BUILDERS.update(mod.MODELS)
 
 
@@ -135,6 +139,10 @@ def catalog():
                     ("cloak_of_the_moth_rider", "star"), ("godking_crown", "star"), ("greaves_of_the_wind_walker", "spark"), ("lifes_emergency", "ember"),
                     ("amulet_of_the_sea_of_stars", "star"), ("cloak_mimic_tame", "wisp"), ("urn_of_black_pudding", "ember")):
         cat.theme(rid, th)
+    gen_worn_armor_relics.catalog_relics(cat)              # the armour relics that only had the model of their look
+    gen_worn_armor.catalog_items(cat)                      # the armour items (the robe sets)
+    gen_worn_modes.catalog_modes(cat)                      # the transformation overlays
+    gen_worn_armor.catalog_curios(cat)                     # Curios-worn items that are not relics
     return cat
 
 
@@ -144,6 +152,9 @@ def used_models(cat):
         for p in ps:
             names.add(p.split("@")[0].rstrip("~"))
     for _r, ps in cat.relics:
+        for p in ps:
+            names.add(p.split("@")[0].rstrip("~"))
+    for _r, ps in cat.items:
         for p in ps:
             names.add(p.split("@")[0].rstrip("~"))
     return names
@@ -173,6 +184,11 @@ def main(argv):
         tot = sum(verts[p.split("@")[0].rstrip("~")] for p in ps)
         if tot > ENSEMBLE_CAP:
             print("relic %s wears %d vertices (cap %d)" % (rid, tot, ENSEMBLE_CAP))
+            bad += 1
+    for rid, ps in cat.items:
+        tot = sum(verts[p.split("@")[0].rstrip("~")] for p in ps)
+        if tot > (MODE_CAP if rid.startswith("mode_") else ENSEMBLE_CAP):
+            print("item %s wears %d vertices (cap %d)" % (rid, tot, ENSEMBLE_CAP))
             bad += 1
     if not check:
         cat.write()

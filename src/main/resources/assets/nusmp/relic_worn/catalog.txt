@@ -2,6 +2,9 @@
 # look <SLOT> <LOOK> <piece...>   the models of every relic of that slot and look (piece = model[@anchor][~ mirrored])
 # relic <id> <piece...>           a signature relic's own models (replace the look's)
 # fx <id> <theme>                 ambient particle theme (ember snow spark leaf wisp star bee petal)
+# item <path> <piece...>          an armour item of the mod (or mode_<name>): the models it wears on the player
+# ipal <path> <main> <trim> <glow>  its palette (RRGGBB hex); itier <path> <n>  its grade tier 1..7 (rim, motes, particles)
+# islot <path> <SLOT>             a Curios-worn item that is not a relic: the slot it is drawn in
 look HEAD CROWN crown_spired
 look HEAD CIRCLET circlet_gem
 look HEAD HAT hat_wizard
@@ -96,6 +99,22 @@ relic spellbook_of_concentration charm_tome
 relic martels_magical_bag_of_candy charm_flask
 relic pact_of_the_deck charm_orbit
 relic holy_chains charm_beads
+relic arcane_conduction_armor chest_conduction coil_arm@rarm coil_arm@larm~
+relic armor_of_plot chest_plot pauldron_plate@rarm pauldron_plate@larm~ deco_halo_back
+relic armor_of_the_defiant_dawn chest_dawn pauldron_rays@rarm pauldron_rays@larm~
+relic armour_of_the_stone_sentinel chest_stone pauldron_stone@rarm pauldron_stone@larm~
+relic mistwalker_robe chest_mist sleeves_flared@rarm sleeves_flared@larm~ deco_wisps
+relic nekets_practical_mage_robe chest_neket sleeve_plain@rarm sleeve_plain@larm~
+relic shadow_robes chest_shadow hood_shadow sleeves_flared@rarm sleeves_flared@larm~
+relic skitchs_smuggling_coat coat_smuggler
+relic skycrystal_armor chest_crystal pauldron_crystal@rarm pauldron_crystal@larm~
+relic slime_armour chest_slime pauldron_slime@rarm pauldron_slime@larm~
+relic soul_armor chest_soul pauldron_plate@rarm pauldron_plate@larm~ deco_wisps
+relic suit_of_the_astral_overseer suit_astral
+relic zar_sancuis_plate_of_the_red_prophet chest_prophet pauldron_prophet@rarm pauldron_prophet@larm~
+relic boots_of_the_indomitable boots_war@rleg boots_war@lleg
+relic mudwalkers boots_mud@rleg boots_mud@lleg
+relic waterwalkers boots_water@rleg boots_water@lleg
 fx tiny_duck_crown star
 fx circlet_of_the_phoenix ember
 fx dragon_fire_boots ember
@@ -115,3 +134,258 @@ fx lifes_emergency ember
 fx amulet_of_the_sea_of_stars star
 fx cloak_mimic_tame wisp
 fx urn_of_black_pudding ember
+fx skycrystal_armor snow
+fx slime_armour wisp
+fx soul_armor wisp
+fx shadow_robes wisp
+fx mistwalker_robe wisp
+fx armor_of_the_defiant_dawn star
+fx suit_of_the_astral_overseer star
+fx arcane_conduction_armor spark
+fx zar_sancuis_plate_of_the_red_prophet ember
+fx waterwalkers snow
+fx armour_of_the_stone_sentinel spark
+fx magic_knight_robe_senior_hood petal
+fx magic_knight_robe_senior petal
+fx magic_knight_robe_senior_leggings petal
+fx magic_knight_robe_senior_boots petal
+fx golden_dawn_mantle_hood star
+fx golden_dawn_mantle star
+fx golden_dawn_mantle_leggings star
+fx golden_dawn_mantle_boots star
+fx black_bull_robe_hood spark
+fx black_bull_robe spark
+fx black_bull_robe_leggings spark
+fx black_bull_robe_boots spark
+fx silver_eagle_cloak_hood star
+fx silver_eagle_cloak star
+fx silver_eagle_cloak_leggings star
+fx silver_eagle_cloak_boots star
+fx crimson_lion_mantle_hood ember
+fx crimson_lion_mantle ember
+fx crimson_lion_mantle_leggings ember
+fx crimson_lion_mantle_boots ember
+fx coral_peacock_robe_hood wisp
+fx coral_peacock_robe wisp
+fx coral_peacock_robe_leggings wisp
+fx coral_peacock_robe_boots wisp
+fx heart_kingdom_uniform_hood petal
+fx heart_kingdom_uniform petal
+fx heart_kingdom_uniform_leggings petal
+fx heart_kingdom_uniform_boots petal
+fx diamond_mage_coat_hood snow
+fx diamond_mage_coat snow
+fx diamond_mage_coat_leggings snow
+fx diamond_mage_coat_boots snow
+fx spade_war_coat_hood spark
+fx spade_war_coat spark
+fx spade_war_coat_leggings spark
+fx spade_war_coat_boots spark
+fx devil_bound_coat_hood ember
+fx devil_bound_coat ember
+fx devil_bound_coat_leggings ember
+fx devil_bound_coat_boots ember
+fx mode_wind_spirit_dive leaf
+fx mode_fire_spirit_dive ember
+fx mode_demon wisp
+fx mode_lightning_god spark
+fx mode_valkyrie snow
+item magic_knight_robe_junior_hood hood_cowl
+item magic_knight_robe_junior chest_tunic sleeve_plain@rarm sleeve_plain@larm~ emblem_clover
+item magic_knight_robe_junior_leggings hip_sash legs_cloth@rleg legs_cloth@lleg
+item magic_knight_robe_junior_boots boots_soft@rleg boots_soft@lleg
+item magic_knight_robe_senior_hood hood_cowl
+item magic_knight_robe_senior chest_robe sleeve_wide@rarm sleeve_wide@larm~ emblem_clover
+item magic_knight_robe_senior_leggings hip_sash legs_wrapped@rleg legs_wrapped@lleg
+item magic_knight_robe_senior_boots boots_tall@rleg boots_tall@lleg
+item golden_dawn_mantle_hood circlet_dawn
+item golden_dawn_mantle chest_mantle sleeve_plain@rarm sleeve_plain@larm~ emblem_sun
+item golden_dawn_mantle_leggings hip_sash legs_cloth@rleg legs_cloth@lleg
+item golden_dawn_mantle_boots boots_tall@rleg boots_tall@lleg
+item black_bull_robe_hood hood_horned
+item black_bull_robe chest_mantle sleeve_plain@rarm sleeve_plain@larm~ emblem_bull
+item black_bull_robe_leggings hip_sash legs_cloth@rleg legs_cloth@lleg
+item black_bull_robe_boots boots_tall@rleg boots_tall@lleg
+item silver_eagle_cloak_hood crest_eagle
+item silver_eagle_cloak chest_robe sleeve_wide@rarm sleeve_wide@larm~ emblem_eagle
+item silver_eagle_cloak_leggings hip_sash legs_wrapped@rleg legs_wrapped@lleg
+item silver_eagle_cloak_boots boots_tall@rleg boots_tall@lleg
+item crimson_lion_mantle_hood hood_mane
+item crimson_lion_mantle chest_mantle sleeve_plated@rarm sleeve_plated@larm~ emblem_lion
+item crimson_lion_mantle_leggings hip_plated legs_plated@rleg legs_plated@lleg
+item crimson_lion_mantle_boots boots_war@rleg boots_war@lleg
+item coral_peacock_robe_hood hat_peacock
+item coral_peacock_robe chest_robe sleeve_wide@rarm sleeve_wide@larm~ emblem_peacock
+item coral_peacock_robe_leggings hip_sash legs_wrapped@rleg legs_wrapped@lleg
+item coral_peacock_robe_boots boots_soft@rleg boots_soft@lleg
+item heart_kingdom_uniform_hood hat_mage
+item heart_kingdom_uniform chest_coat sleeve_plain@rarm sleeve_plain@larm~ emblem_heart
+item heart_kingdom_uniform_leggings hip_sash legs_cloth@rleg legs_cloth@lleg
+item heart_kingdom_uniform_boots boots_tall@rleg boots_tall@lleg
+item diamond_mage_coat_hood crown_diamond
+item diamond_mage_coat chest_tunic sleeve_plain@rarm sleeve_plain@larm~ emblem_diamond
+item diamond_mage_coat_leggings hip_plated legs_cloth@rleg legs_cloth@lleg
+item diamond_mage_coat_boots boots_tall@rleg boots_tall@lleg
+item spade_war_coat_hood helm_war
+item spade_war_coat chest_coat sleeve_plated@rarm sleeve_plated@larm~ emblem_spade
+item spade_war_coat_leggings hip_plated legs_plated@rleg legs_plated@lleg
+item spade_war_coat_boots boots_war@rleg boots_war@lleg
+item devil_bound_coat_hood helm_devil
+item devil_bound_coat chest_devil sleeve_plated@rarm sleeve_plated@larm~ emblem_devil
+item devil_bound_coat_leggings hip_plated legs_devil@rleg legs_devil@lleg
+item devil_bound_coat_boots boots_devil@rleg boots_devil@lleg
+item mode_wind_spirit_dive wings_wind crown_starblades
+item mode_fire_spirit_dive wings_dragon flame_hair
+item mode_demon horn_demon wing_demon
+item mode_lightning_god crown_bolts
+item mode_valkyrie wings_valk skirt_valk helm_valk
+item mantle_of_the_scavenger mantle_shoulder
+item band_of_the_spatial_anchor bracelet_charms@rarm ring_gem@larm~
+item devil_bound_sheath belt_buckled
+item gamblers_grimoire_page charm_tome
+item amulet_of_the_juggernauts_blindness amulet_medallion
+item glutton_chalice charm_flask
+item charter_grimoire_dante charm_tome
+item charter_grimoire_vanica charm_tome
+item charter_grimoire_zenon charm_tome
+item charter_grimoire_lucius charm_tome
+item charter_grimoire_devil_avatar charm_tome
+item charter_grimoire_goliath charm_tome
+item charter_grimoire_charybdis_spawn charm_tome
+ipal magic_knight_robe_junior_hood 54546C CCCCCC 90B4E0
+ipal magic_knight_robe_junior 54546C CCCCCC 90B4E0
+ipal magic_knight_robe_junior_leggings 54546C CCCCCC 90B4E0
+ipal magic_knight_robe_junior_boots 54546C CCCCCC 90B4E0
+ipal magic_knight_robe_senior_hood E6E6EA B42424 FFB0A0
+ipal magic_knight_robe_senior E6E6EA B42424 FFB0A0
+ipal magic_knight_robe_senior_leggings E6E6EA B42424 FFB0A0
+ipal magic_knight_robe_senior_boots E6E6EA B42424 FFB0A0
+ipal golden_dawn_mantle_hood C8AE5C 6C84B4 FFE890
+ipal golden_dawn_mantle C8AE5C 6C84B4 FFE890
+ipal golden_dawn_mantle_leggings C8AE5C 6C84B4 FFE890
+ipal golden_dawn_mantle_boots C8AE5C 6C84B4 FFE890
+ipal black_bull_robe_hood 242424 E4B454 E4B454
+ipal black_bull_robe 242424 E4B454 E4B454
+ipal black_bull_robe_leggings 242424 E4B454 E4B454
+ipal black_bull_robe_boots 242424 E4B454 E4B454
+ipal silver_eagle_cloak_hood 5E9AC8 9C7CD0 B8E8FF
+ipal silver_eagle_cloak 5E9AC8 9C7CD0 B8E8FF
+ipal silver_eagle_cloak_leggings 5E9AC8 9C7CD0 B8E8FF
+ipal silver_eagle_cloak_boots 5E9AC8 9C7CD0 B8E8FF
+ipal crimson_lion_mantle_hood 842424 E0A040 FF6A30
+ipal crimson_lion_mantle 842424 E0A040 FF6A30
+ipal crimson_lion_mantle_leggings 842424 E0A040 FF6A30
+ipal crimson_lion_mantle_boots 842424 E0A040 FF6A30
+ipal coral_peacock_robe_hood 3CB4B4 9C54B4 6CF0E0
+ipal coral_peacock_robe 3CB4B4 9C54B4 6CF0E0
+ipal coral_peacock_robe_leggings 3CB4B4 9C54B4 6CF0E0
+ipal coral_peacock_robe_boots 3CB4B4 9C54B4 6CF0E0
+ipal heart_kingdom_uniform_hood E49CB4 54B49C FFB8D8
+ipal heart_kingdom_uniform E49CB4 54B49C FFB8D8
+ipal heart_kingdom_uniform_leggings E49CB4 54B49C FFB8D8
+ipal heart_kingdom_uniform_boots E49CB4 54B49C FFB8D8
+ipal diamond_mage_coat_hood 6C543C CCB484 9AF0FF
+ipal diamond_mage_coat 6C543C CCB484 9AF0FF
+ipal diamond_mage_coat_leggings 6C543C CCB484 9AF0FF
+ipal diamond_mage_coat_boots 6C543C CCB484 9AF0FF
+ipal spade_war_coat_hood 3C3C3C 9C2424 FF5050
+ipal spade_war_coat 3C3C3C 9C2424 FF5050
+ipal spade_war_coat_leggings 3C3C3C 9C2424 FF5050
+ipal spade_war_coat_boots 3C3C3C 9C2424 FF5050
+ipal devil_bound_coat_hood 0C0C0C CC0C24 FF2038
+ipal devil_bound_coat 0C0C0C CC0C24 FF2038
+ipal devil_bound_coat_leggings 0C0C0C CC0C24 FF2038
+ipal devil_bound_coat_boots 0C0C0C CC0C24 FF2038
+ipal mode_wind_spirit_dive 7FD8B0 F0FFF4 B8FFE0
+ipal mode_fire_spirit_dive 8A2A10 FF9A30 FF5A18
+ipal mode_demon 0C0C10 3A0A12 E02030
+ipal mode_lightning_god D8D060 FFF8B0 FFF060
+ipal mode_valkyrie 90D0F0 F4FCFF 6AE0FF
+ipal mantle_of_the_scavenger 6B5A3A C9A25A FFD27A
+ipal band_of_the_spatial_anchor 3A2E5A B0A0E8 9A7CFF
+ipal devil_bound_sheath 2A1218 8A2030 FF4050
+ipal gamblers_grimoire_page 7A1E2A E8C060 FFD870
+ipal amulet_of_the_juggernauts_blindness 3A3A44 A0A0B0 60E0FF
+ipal glutton_chalice 5A3A6A D0B060 9AFF70
+ipal charter_grimoire_dante 5A1020 D0A040 FF5030
+ipal charter_grimoire_vanica 2A2A5A C0C8E8 7FA8FF
+ipal charter_grimoire_zenon 1A1A2E 9A7CFF C8A0FF
+ipal charter_grimoire_lucius 3A2A10 E8C870 FFE890
+ipal charter_grimoire_devil_avatar 2A0A10 CC1030 FF3050
+ipal charter_grimoire_goliath 3A3A30 A0A090 FFD060
+ipal charter_grimoire_charybdis_spawn 0A3A4A 60C0D0 6AFFE8
+itier magic_knight_robe_junior_hood 2
+itier magic_knight_robe_junior 2
+itier magic_knight_robe_junior_leggings 2
+itier magic_knight_robe_junior_boots 2
+itier magic_knight_robe_senior_hood 3
+itier magic_knight_robe_senior 3
+itier magic_knight_robe_senior_leggings 3
+itier magic_knight_robe_senior_boots 3
+itier golden_dawn_mantle_hood 4
+itier golden_dawn_mantle 4
+itier golden_dawn_mantle_leggings 4
+itier golden_dawn_mantle_boots 4
+itier black_bull_robe_hood 3
+itier black_bull_robe 3
+itier black_bull_robe_leggings 3
+itier black_bull_robe_boots 3
+itier silver_eagle_cloak_hood 4
+itier silver_eagle_cloak 4
+itier silver_eagle_cloak_leggings 4
+itier silver_eagle_cloak_boots 4
+itier crimson_lion_mantle_hood 4
+itier crimson_lion_mantle 4
+itier crimson_lion_mantle_leggings 4
+itier crimson_lion_mantle_boots 4
+itier coral_peacock_robe_hood 4
+itier coral_peacock_robe 4
+itier coral_peacock_robe_leggings 4
+itier coral_peacock_robe_boots 4
+itier heart_kingdom_uniform_hood 3
+itier heart_kingdom_uniform 3
+itier heart_kingdom_uniform_leggings 3
+itier heart_kingdom_uniform_boots 3
+itier diamond_mage_coat_hood 3
+itier diamond_mage_coat 3
+itier diamond_mage_coat_leggings 3
+itier diamond_mage_coat_boots 3
+itier spade_war_coat_hood 5
+itier spade_war_coat 5
+itier spade_war_coat_leggings 5
+itier spade_war_coat_boots 5
+itier devil_bound_coat_hood 6
+itier devil_bound_coat 6
+itier devil_bound_coat_leggings 6
+itier devil_bound_coat_boots 6
+itier mode_wind_spirit_dive 5
+itier mode_fire_spirit_dive 5
+itier mode_demon 6
+itier mode_lightning_god 5
+itier mode_valkyrie 5
+itier mantle_of_the_scavenger 3
+itier band_of_the_spatial_anchor 4
+itier devil_bound_sheath 4
+itier gamblers_grimoire_page 3
+itier amulet_of_the_juggernauts_blindness 4
+itier glutton_chalice 3
+itier charter_grimoire_dante 4
+itier charter_grimoire_vanica 4
+itier charter_grimoire_zenon 4
+itier charter_grimoire_lucius 4
+itier charter_grimoire_devil_avatar 5
+itier charter_grimoire_goliath 4
+itier charter_grimoire_charybdis_spawn 4
+islot mantle_of_the_scavenger BACK
+islot band_of_the_spatial_anchor HANDS
+islot devil_bound_sheath BELT
+islot gamblers_grimoire_page CHARM
+islot amulet_of_the_juggernauts_blindness NECK
+islot glutton_chalice CHARM
+islot charter_grimoire_dante CHARM
+islot charter_grimoire_vanica CHARM
+islot charter_grimoire_zenon CHARM
+islot charter_grimoire_lucius CHARM
+islot charter_grimoire_devil_avatar CHARM
+islot charter_grimoire_goliath CHARM
+islot charter_grimoire_charybdis_spawn CHARM

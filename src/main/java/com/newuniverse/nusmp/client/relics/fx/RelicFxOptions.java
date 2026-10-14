@@ -14,6 +14,7 @@ public final class RelicFxOptions {
     public static final ModConfigSpec.ConfigValue<String> QUALITY;
     public static final ModConfigSpec.BooleanValue PARTICLES;
     public static final ModConfigSpec.BooleanValue MODELS;
+    public static final ModConfigSpec.BooleanValue HIDE_ARMOUR_RELICS;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -25,6 +26,9 @@ public final class RelicFxOptions {
                 .define("particles", true);
         MODELS = b.comment("Draw the worn relics as 3D models. Off = the plain boxes the mod had before.")
                 .define("models", true);
+        HIDE_ARMOUR_RELICS = b.comment("Hide the worn visuals (3D models, glow, particles) of relics worn as head, chest or feet armour. Curios relics have the eye icon of the Curios screen for this; "
+                        + "armour has none, so this is its switch (also the 'Toggle relic visuals' key, unbound by default).")
+                .define("hideArmourRelics", false);
         b.pop();
         SPEC = b.build();
     }
@@ -38,6 +42,23 @@ public final class RelicFxOptions {
     public static boolean particles() { return get(PARTICLES); }
 
     public static boolean models() { return get(MODELS); }
+
+    /** True when the worn visuals of armour relics are switched off ({@code relicfx.hideArmourRelics}); false when the config is not loaded. */
+    public static boolean hideArmourRelics() {
+        try { return HIDE_ARMOUR_RELICS.get(); } catch (IllegalStateException notLoaded) { return false; }
+    }
+
+    /** Flips {@code relicfx.hideArmourRelics} and saves it; returns the new value (false if the config cannot be written). */
+    public static boolean toggleHideArmourRelics() {
+        try {
+            boolean now = !HIDE_ARMOUR_RELICS.get();
+            HIDE_ARMOUR_RELICS.set(now);
+            SPEC.save();
+            return now;
+        } catch (RuntimeException notLoaded) {
+            return false;
+        }
+    }
 
     private static boolean get(ModConfigSpec.BooleanValue v) {
         try { return v.get(); } catch (IllegalStateException notLoaded) { return true; }

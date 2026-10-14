@@ -10,7 +10,9 @@ import java.util.Locale;
  */
 public enum BookMotif {
     STRAPS, TATTERED,
-    THREE_LEAF, FOUR_LEAF, FIVE_LEAF, SPADE, TRIPLE_SPADE, HEART, TWO_HEART, DIAMOND, BLACK_MAGIC, GOD_TIER;
+    THREE_LEAF, FOUR_LEAF, FIVE_LEAF, SPADE, TRIPLE_SPADE, HEART, TWO_HEART, DIAMOND, BLACK_MAGIC, GOD_TIER,
+    /** 1.34.0: the Compatibility Codex (two interlocking rings: two mods linked). Appended; only the codex item uses it. */
+    COMPAT;
 
     /** True for the art-pack cover designs. */
     public boolean isArt() { return this != STRAPS && this != TATTERED; }
@@ -29,6 +31,7 @@ public enum BookMotif {
             case THREE_LEAF -> "gold filigree and shamrock"; case FOUR_LEAF -> "gilded vines"; case FIVE_LEAF -> "royal flourishes";
             case SPADE -> "a crown of spears"; case TRIPLE_SPADE -> "arcane wheels"; case HEART -> "cloud swirls"; case TWO_HEART -> "a sea serpent";
             case DIAMOND -> "stained crystal"; case BLACK_MAGIC -> "a blood-red burst"; case GOD_TIER -> "a golden sunburst";
+            case COMPAT -> "two linked rings";
         };
     }
 

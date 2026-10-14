@@ -217,7 +217,7 @@ class TableTest(unittest.TestCase):
         import glob
         for p in glob.glob(os.path.join(aud.MESHES, "*.txt")):
             i = os.path.basename(p)[:-4]
-            if aud.is_excluded(i, data):
+            if aud.is_excluded(i, data) or i.startswith(aud.SKIP_PREFIXES):
                 continue
             self.assertIn(wc.base_id(i), data["weapons"], i)
 
@@ -242,12 +242,137 @@ class ShippedMeshesTest(unittest.TestCase):
         rows, changed = af.run(apply=False)
         self.assertEqual(changed, [], "run python tools/relics/apply_weapon_fixes.py --apply")
 
-    def test_the_audit_sees_the_known_large_ones_and_does_not_shrink_them(self):
-        large = {r["id"] for r in self.rows if "large" in r["status"]}
-        self.assertIn("severing_greatsword", large)
+    def test_the_audit_never_shrinks_the_big_ones(self):
+        """1.34.0: with the larger table nothing is `large` any more; the biggest of the boss weapons stay as they are (no `apparent` / `scale` entry)."""
         fixes = af.load_fixes()
-        for i in large:
+        by = {r["id"]: r for r in self.rows}
+        for i in ("severing_greatsword", "demon_destroyer_sword", "licht_destroyer_sword", "demon_dweller_sword", "licht_dweller_sword"):
+            self.assertGreaterEqual(by[i]["apparent"], 2.4, i)
             self.assertNotIn("apparent", fixes.get(i, {}), i)
+            self.assertNotIn("scale", fixes.get(i, {}), i)
+        for i in {r["id"] for r in self.rows if "large" in r["status"]}:
+            self.assertNotIn("apparent", fixes.get(i, {}), i)
+
+    # ---------------------------------------------------------------- 1.34.0: the size rule
+    def test_every_class_reaches_the_owners_ranges(self):
+        t = wc.table(self.data)
+        rng = {"dagger": (0.45, 0.70), "shortsword": (1.0, 1.3), "rapier": (1.0, 1.3), "sabre": (1.0, 1.3), "longsword": (1.4, 1.8), "katana": (1.4, 1.8),
+               "greatsword": (2.2, 3.0), "handaxe": (1.1, 1.4), "battleaxe": (1.6, 2.0), "greataxe": (2.4, 3.0), "hammer": (1.3, 1.8), "mace": (1.3, 1.8),
+               "greathammer": (2.2, 2.8), "spear": (2.8, 3.6), "glaive": (2.8, 3.6), "staff": (2.0, 2.6), "whip": (1.6, 2.4), "crossbow": (1.0, 1.2),
+               "bow": (1.3, 1.6), "shield": (0.9, 1.2), "handitem": (0.5, 0.9)}
+        for k, (lo, hi) in rng.items():
+            self.assertEqual((t[k]["min"], t[k]["max"]), (lo, hi), k)
+        self.assertEqual((t["handaxe"]["head_min"], t["battleaxe"]["head_min"], t["greataxe"]["head_min"]), (0.5, 0.75, 1.1))
+
+    def test_no_weapon_is_below_the_new_class_minimum(self):
+        for r in self.rows:
+            if wc.is_item_class(r["class"]):
+                self.assertGreaterEqual(r["extent"], 0.5 * 0.97, r["id"])
+            else:
+                self.assertGreaterEqual(r["apparent"], r["min"] * 0.97, r["id"])
+            if r["head_min"]:
+                self.assertGreaterEqual(r["head"], r["head_min"] * 0.97, r["id"])
+
+    def test_great_things_are_massive_and_daggers_stay_small(self):
+        by = {r["id"]: r for r in self.rows}
+        for i, r in by.items():
+            if r["class"] == "greatsword":
+                self.assertGreaterEqual(r["apparent"], 2.2, i)
+        for i in ("the_stabshroom", "unicorn_dagger", "dagger_of_betrayal"):
+            self.assertLessEqual(by[i]["apparent"], 0.70, i)
+        self.assertGreaterEqual(by["magic_tool_spear"]["apparent"], 2.8)
+        self.assertGreaterEqual(by["elsdocia"]["apparent"], 2.2, "Elsdocia is a greatsword-class blade now")
+
+    def test_every_state_of_one_weapon_has_the_same_scale(self):
+        """A bow / crossbow / pair half in several states grows by one factor (a `scale` entry), so the draw stages do not jump in size."""
+        import glob
+        data = self.data
+        groups = {}
+        for p in glob.glob(os.path.join(aud.MESHES, "*.txt")):
+            i = os.path.basename(p)[:-4]
+            if i.startswith("djinn_weapon_"):
+                continue
+            groups.setdefault(wc.base_id(i), []).append(i)
+        for base, ids in groups.items():
+            if len(ids) < 2:
+                continue
+            fx = af.load_fixes().get(base, {})
+            self.assertNotIn("apparent", fx, base + ": several meshes follow one entry, use `scale`")
+            self.assertNotIn("extent", fx, base)
+
+    # ---------------------------------------------------------------- 1.34.0: the grip end
+    def test_every_mesh_is_held_by_its_hilt(self):
+        bad = [(r["id"], r["grip_at"]) for r in self.rows if r["grip_at"] != "low" or wo.FLAG_GRIP_FAR_END in r["flags"]]
+        self.assertEqual(bad, [])
+
+    def test_the_four_reversed_swords_are_found_in_what_the_generators_wrote(self):
+        """The Windcutter (the owner's screenshot 68), Tripolar Sword, Flamecutter and Encircled Blade were built point first."""
+        pristine = aud.pristine_copy(os.path.join(tempfile.mkdtemp(), "m"))
+        rows = {r["id"]: r for r in aud.audit_all(self.data, pristine)}
+        far = sorted(i for i, r in rows.items() if wo.FLAG_GRIP_FAR_END in r["flags"])
+        self.assertEqual(far, ["encircled_blade", "flamecutter", "tripolar_sword", "windcutter"])
+        fixes = af.load_fixes()
+        for i in far:
+            self.assertTrue(fixes[i].get("flip_y"), i)
+            text = open(os.path.join(aud.MESHES, i + ".txt"), encoding="utf-8").read()
+            self.assertIn("\ngrip 0.120\n", text, i)
+
+    def test_flipping_along_the_length_keeps_the_edge_side_and_is_an_involution(self):
+        q = box(-1, 1, 0, 60, -1, 1) + box(-14, 0, 40, 58, -0.5, 0.5)            # a haft with a head on -x, high up
+        p = (0 + 58) / 2.0
+        f = wo.flip_quads_y(q, p)
+        m0, m1 = wo.measure(q, SC), wo.measure(f, SC)
+        for (_l, P0, _n0), (_l1, P1, _n1) in zip(q, f):
+            self.assertEqual([p[0] for p in P0], [p[0] for p in P1], "no x moves: the edge keeps its side")
+        back = wo.flip_quads_y(f, p)
+        for (l0, P0, N0), (l1, P1, N1) in zip(q, back):
+            for a, b in zip(P0, P1):
+                self.assertTrue(all(abs(x - y) < 1e-9 for x, y in zip(a, b)))
+        for (l0, P0, N0), (l1, P1, N1) in zip(f, wo.flip_quads_y(q, p)):
+            self.assertEqual(P0, P1)
+
+    def test_a_reversed_synthetic_sword_is_flagged_and_the_flip_fixes_it(self):
+        # a blade 0..44 tapering to a point at y = 0 (wide at 30), the guard at 44 (wide), a thin grip 46..58, a pommel at 60: point first = reversed
+        blade = box(-3, 3, 4, 44, -0.4, 0.4) + box(-0.5, 0.5, 0, 4, -0.2, 0.2)
+        guard = box(-9, 9, 40, 52, -3, 3)                                      # an ornate guard: the heavy part of a reversed sword is its guard
+        grip = box(-0.8, 0.8, 52, 58, -0.8, 0.8) + box(-1.2, 1.2, 58, 60, -1.2, 1.2)
+        q = blade + guard + grip
+        m = wo.measure(q, 0.025)
+        self.assertIn(wo.FLAG_GRIP_FAR_END, wo.detect(m, "longsword"))
+        f = wo.measure(wo.flip_quads_y(q, 30.0), 0.025)
+        self.assertNotIn(wo.FLAG_GRIP_FAR_END, wo.detect(f, "longsword"))
+        # the same mesh with the right way up is untouched, and an axe (not a pointed class) is never judged by this rule
+        self.assertNotIn(wo.FLAG_GRIP_FAR_END, wo.detect(wo.measure(axe(-14, 0), SC), "battleaxe"))
+
+    def test_the_grip_directive_beats_the_geometry(self):
+        blade = box(-3, 3, 4, 44, -0.4, 0.4) + box(-0.5, 0.5, 0, 4, -0.2, 0.2)
+        q = blade + box(-9, 9, 40, 52, -3, 3) + box(-0.8, 0.8, 52, 60, -0.8, 0.8)
+        m = wo.measure(q, 0.025)
+        self.assertIn(wo.FLAG_GRIP_FAR_END, wo.detect(m, "longsword"), "without the directive the geometry flags it")
+        self.assertNotIn(wo.FLAG_GRIP_FAR_END, wo.detect(m, "longsword", 45.0, 0.12), "a stated low grip is trusted")
+        self.assertIn(wo.FLAG_GRIP_FAR_END, wo.detect(wo.measure(axe(-14, 0), SC), "item", 45.0, 0.9), "a stated high grip is acted on for any class")
+
+    def test_the_part_names_give_the_grip_fraction(self):
+        import mesh_lib as ml
+        up = [("pommel", 2.0, 10), ("grip", 8.0, 10), ("guard", 20.0, 6), ("blade", 60.0, 40), ("tip", 95.0, 4)]
+        down = [("pommel", 98.0, 10), ("grip", 90.0, 10), ("guard", 80.0, 6), ("blade", 40.0, 40), ("tip", 2.0, 4)]
+        self.assertLess(ml.Mesh.grip_fraction(up), 0.2)
+        self.assertGreater(ml.Mesh.grip_fraction(down), 0.8)
+        self.assertIsNone(ml.Mesh.grip_fraction([("fur", 1.0, 3), ("cloth", 9.0, 4)]), "no grip / blade names: undecided")
+        self.assertIsNone(ml.Mesh.grip_fraction([("grip", 5.0, 2), ("blade", 5.2, 2), ("pommel", 4.9, 1), ("fur", 0.0, 1), ("cloth", 20.0, 1)]), "grip and blade at the same height")
+
+    def test_the_fix_tool_writes_and_restores_the_grip_line(self):
+        txt = mesh_text(box(-3, 3, 4, 44, -0.4, 0.4) + box(-0.5, 0.5, 0, 4, -0.2, 0.2) + box(-9, 9, 44, 46, -1, 1) + box(-0.8, 0.8, 46, 60, -0.8, 0.8))
+        txt = txt.replace("place", "grip 0.870\nplace", 1) if False else txt.replace("\nq ", "\ngrip 0.870\nq ", 1)
+        new, rep = af.apply_to_text(txt, "x_longsword", {"flip_y": True}, wc.load())
+        self.assertIn("grip 0.120", new.split("\n"))
+        self.assertNotIn("grip 0.870", new.split("\n"), "the generator's own line is replaced, not repeated")
+        again, rep2 = af.apply_to_text(new, "x_longsword", {"flip_y": True}, wc.load())
+        self.assertEqual(new, again)
+        back, _ = af.apply_to_text(new, "x_longsword", {}, wc.load())
+        self.assertIn("grip 0.870", back.split("\n"))
+        self.assertNotIn("grip 0.120", back.split("\n"))
+        self.assertEqual(sorted(l for l in back.split("\n") if l.startswith("q ")), sorted(l for l in txt.split("\n") if l.startswith("q ")))
 
 
 if __name__ == "__main__":

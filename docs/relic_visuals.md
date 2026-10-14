@@ -147,3 +147,17 @@ Budget rules (`WornBudget`): the models of the best grades are drawn while they 
 - **Particles are client-only and budgeted**: nothing is synchronised; staggering by entity id and a per-tick cap keep the cost flat however many wearers there are.
 
 Not verified in game (no client here): the draw order and winding in the real renderer, the look of the shimmer and rim, the positions against real armour.
+
+<!-- x1 begin -->
+## 1.34.0: tooltips never vanish, every worn relic is drawn
+
+**Tooltip.** The relic tooltip is built in three places (`RelicTooltip.onGather`, the component's layout, its drawing); each is now guarded, and a failure falls back to the plain grade and slot lines (`RelicTooltipFallback.safe`, pure and tested) instead of losing the tooltip. `onColor` is guarded too. An unattuned relic used to show only a faint "power sleeps" text (no abilities, no passives); it now shows everything plus that line, so nothing is hidden from the player who holds the item. Discovery (`core/discovery`) has no tooltip hook and hides nothing; there is no "worn" suppression in the tooltip code. The cause of the owner's exact screenshot could not be reproduced without the game: the guarded paths and the faint-tooltip rule are the code-level suspects.
+
+**Worn visibility.**
+- `RelicWornLayer` draws every equipped relic with a model. Before, the vertex budget could skip whole models and all relics of one slot/look stood at the same place. Now models are never dropped (only the extras: rim, motes, rings, halo are budgeted), up to 24 relics and 72 pieces.
+- `WornPlacer` (pure, tested) is the anchor allocator: slot + index among the relics of that slot (by id, stable while grades change) -> offset, turn, scale, flip. Index 0 is the untouched look. Charms: hip left, hip right, back, back, then lower; necklaces: each lower, forward and smaller; head: stacked above, then to the sides; hands: along the arm; back: layered outward; belts: lower. Plain-box relics take the places after the ones with models.
+- Visibility toggle: `CuriosLink.flags / renderFlags / isRendered` read the eye icon of the Curios screen (`ICurioStacksHandler#getRenders`, per slot index) reflectively; true on any doubt. A hidden slot draws no model, no plain box, no custom renderer and no particles. Armour relics (head, chest, feet) have no Curios toggle: client option `relicfx.hideArmourRelics` (plain `define`, default false) and the key "Toggle Relic Visuals" (unbound by default) flip it. The painted armour texture of the item itself stays (vanilla armour rendering).
+- Size: all on-body models are drawn at 0.85 (`WornPlacer.BODY_SCALE`); pieces whose model name contains pauldron, shoulder, bracer or gauntlet are pulled 0.7 px toward the body and a little smaller. Head items are untouched.
+
+Not verified in game: the placements (the offsets are estimates against the model files), the Curios reflection against the installed Curios version, the key.
+<!-- x1 end -->

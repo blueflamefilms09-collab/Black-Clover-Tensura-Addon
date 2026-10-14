@@ -17,6 +17,8 @@ CARD2 = "p2/Relics of the world part 2/"
 
 # ====================================================================================== 6 Flamecutter
 def flamecutter():
+    # 1.34.0: this build has its POINT at y = 0 and its hilt on top (the hand held the blade, owner screenshot 68): tools/relics/weapon_fixes.json has `flip_y` for this id,
+    # which write_txt applies after writing (apply_weapon_fixes.op_flip_y). Do not also flip it here (it would be turned twice).
     # ---- 1 measure: card 736 x 1019, the sword down x 560; the pommel's crescent spike (175) to the point (880): 705 px for a 125 cm sword.
     K = 125.0 / 705.0
     Y = lambda cy: (880 - cy) * K                            # card y -> model y (point at 0)

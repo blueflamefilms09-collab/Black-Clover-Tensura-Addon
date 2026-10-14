@@ -11,7 +11,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * {@code /multiverse compat book} gives the Compatibility Codex; {@code /multiverse compat status} prints the live Loaded / Not installed
+ * {@code /multiverse compat book} gives the Compatibility Codex (the grimoire-style item; the written-book copy stays as {@link CompatBookItem#stack}); {@code /multiverse compat status} prints the live Loaded / Not installed
  * list in chat. Both are for everyone (no permission). Attach with {@code root.then(CompatCommand.node())}.
  */
 public final class CompatCommand {
@@ -19,11 +19,12 @@ public final class CompatCommand {
 
     public static LiteralArgumentBuilder<CommandSourceStack> node() {
         return Commands.literal("compat")
-                .then(Commands.literal("book").executes(CompatCommand::book))
+                .then(Commands.literal("book").executes(ctx -> book(ctx, false))
+                        .then(Commands.literal("written").executes(ctx -> book(ctx, true))))          // 1.34.0: the old vanilla written book, kept as the fallback
                 .then(Commands.literal("status").executes(CompatCommand::status));
     }
 
-    private static int book(CommandContext<CommandSourceStack> ctx) {
+    private static int book(CommandContext<CommandSourceStack> ctx, boolean written) {
         ServerPlayer player;
         try {
             player = ctx.getSource().getPlayerOrException();
@@ -31,7 +32,7 @@ public final class CompatCommand {
             ctx.getSource().sendFailure(Component.translatable("nusmp.compat.book.console"));
             return 0;
         }
-        ItemStack book = CompatBookItem.stack();
+        ItemStack book = written ? CompatBookItem.stack() : CompatItems.codexStack();                       // 1.34.0: the grimoire-style item (CompatBookItem.stack() is the written-book fallback)
         if (!player.getInventory().add(book)) player.drop(book, false);
         ctx.getSource().sendSuccess(() -> Component.translatable("nusmp.compat.book.given"), false);
         return 1;

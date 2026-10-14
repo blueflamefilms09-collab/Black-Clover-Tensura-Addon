@@ -64,7 +64,9 @@ import java.util.function.Supplier;
  * {@link WeaponOrientation}). tools/relics/weapon_fixes.json corrects the shipped meshes offline; {@link WeaponNormaliser} is the per-game
  * safety net: when a mesh loads it is checked against its class ({@link WeaponClasses}, assets/nusmp/weapon_classes.json, else a keyword guess of
  * the id) and, if it is far too small, tip-down or has its head toward the player, it is scaled up to the class minimum / turned over / mirrored, with
- * one log line per corrected mesh. A mesh with the directive {@code orient manual} (or a model json with {@code "nusmp_display_preset": "manual"}) is
+ * one log line per corrected mesh. 1.34.0 (the owner's screenshot 68: a sword held by its blade): a sword-like mesh with its hilt at the far end is turned over
+ * along its length (the directive {@code grip <fraction>} states where the grip is; without it the thin-end geometry decides), and the size table is the
+ * larger one of the size rule (greatswords 2.2 to 3 blocks, spears 2.8 to 3.6, items 0.5 to 0.9). A mesh with the directive {@code orient manual} (or a model json with {@code "nusmp_display_preset": "manual"}) is
  * never touched; {@code orient <rotZ degrees> <flipX 0|1>} applies an explicit turn / mirror at load.
  * <p>
  * Preview without the game: python tools/item_preview/preview_weapons.py (sizes and orientation: python tools/relics/audit_weapon_scale.py).
@@ -209,6 +211,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         float ymax = -Float.MAX_VALUE, length, gripX, gripY;                     // 1.25.0: for the oversize guard (client/relics/item/OversizeGuard)
         boolean manual;                                                          // 1.29.0: `orient manual`: hand-tuned, never normalised
         float orientRot, orientFlip;                                             // 1.29.0: `orient <rotZ> <flipX>`
+        float gripAt = Float.NaN;                                                // 1.34.0: `grip <fraction>`: where the grip's middle lies (share of the length from the low-y end); NaN = not stated
         int glowRgb;
         ResourceLocation tex, glowTex;
         @SuppressWarnings("unchecked")
@@ -329,7 +332,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             WeaponClasses c = classes();
             WeaponClasses.Cls cls = c.classOf(id);
             float[] place = {mesh.ox, mesh.oy, mesh.angle, mesh.scale, mesh.ymin};
-            WeaponNormaliser.Result r = WeaponNormaliser.normalise(mesh.layers, place, cls.name(), cls, thirdPersonScale);
+            WeaponNormaliser.Result r = WeaponNormaliser.normalise(mesh.layers, place, cls.name(), cls, thirdPersonScale, mesh.gripAt);
             if (!r.changed()) return;
             mesh.ox = place[0];
             mesh.oy = place[1];
@@ -371,6 +374,9 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
                     mesh.orientRot = Float.parseFloat(v[1]);
                     mesh.orientFlip = Float.parseFloat(v[2]);
                 }
+            }
+            case "grip" -> {                                                         // 1.34.0: `grip <fraction>`; above 0.5 the mesh has its hilt at the far end (WeaponNormaliser turns it over)
+                if (v.length > 1) mesh.gripAt = Float.parseFloat(v[1]);
             }
             case "glow" -> {
                 mesh.glowRgb = Integer.parseInt(v[1], 16);

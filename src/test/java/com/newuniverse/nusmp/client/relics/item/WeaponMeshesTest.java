@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class WeaponMeshesTest {
     static final Path RES = Path.of("src", "main", "resources", "assets", "nusmp");
-    static final String[] SKIP = {"elsdocia", "twin_hook_swords", "twin_swords_of_deflection", "whirling_blades"};
+    static final String[] SKIP = {"djinn_weapon"};                      // 1.34.0: Elsdocia and the pairs are checked now; the Djinn temporary weapons belong to another release
 
     static boolean skipped(String id) {
         for (String s : SKIP) if (id.equals(s) || id.startsWith(s + "_")) return true;
@@ -60,6 +60,7 @@ class WeaponMeshesTest {
         for (String line : Files.readAllLines(mesh)) {
             String[] v = line.trim().split("\\s+");
             if (v[0].equals("place")) for (int i = 0; i < 5; i++) placeOut[i] = Float.parseFloat(v[i + 1]);
+            if (v[0].equals("grip") && v.length > 1 && placeOut.length > 5) placeOut[5] = Float.parseFloat(v[1]);      // 1.34.0: `grip <fraction>`
             if (v[0].equals("q") || v[0].equals("qn")) {
                 int st = v[0].equals("q") ? 5 : 8;
                 int layer = Integer.parseInt(v[1]);
@@ -85,11 +86,12 @@ class WeaponMeshesTest {
                 if (!name.endsWith(".txt")) continue;
                 String id = name.substring(0, name.length() - 4);
                 if (skipped(id)) continue;
-                float[] place = new float[5];
+                float[] place = new float[6];
+                place[5] = Float.NaN;
                 List<float[]>[] layers = readLayers(p, place);
                 if (layers[0].isEmpty()) continue;
                 WeaponClasses.Cls cls = classes.classOf(id);
-                WeaponNormaliser.Result r = WeaponNormaliser.normalise(layers, place, cls.name(), cls, thirdPersonScale(id));
+                WeaponNormaliser.Result r = WeaponNormaliser.normalise(layers, place, cls.name(), cls, thirdPersonScale(id), place[5]);
                 checked++;
                 if (r.changed()) changed.add(id + ": " + r.log());
             }
@@ -100,11 +102,30 @@ class WeaponMeshesTest {
 
     @Test
     void sorrowsEdgeFacesForwardAndIsBold() throws IOException {
-        float[] place = new float[5];
+        float[] place = new float[6];
         List<float[]>[] layers = readLayers(RES.resolve("weapon_meshes/sorrows_edge.txt"), place);
         WeaponOrientation.Measures m = WeaponOrientation.measure(layers[0], place[3]);
         assertTrue(m.imbalance < -0.05, "the crescent's mass is on the forward (-x) side: " + m.imbalance);
-        assertTrue(m.maxWidth * thirdPersonScale("sorrows_edge") >= 0.5, "head at least the crescent minimum");
+        assertTrue(m.maxWidth * thirdPersonScale("sorrows_edge") >= 0.75, "head at least the crescent minimum (1.34.0: 0.75)");
         assertTrue(WeaponOrientation.detect(m, "crescent", place[2]).isEmpty());
+    }
+
+    @Test
+    void theWindcutterIsHeldByItsHiltAndElsdociaIsAGreatsword() throws IOException {
+        WeaponClasses classes = loadClasses();
+        for (String id : new String[]{"windcutter", "tripolar_sword", "flamecutter", "encircled_blade"}) {
+            float[] place = new float[6];
+            place[5] = Float.NaN;
+            List<float[]>[] layers = readLayers(RES.resolve("weapon_meshes/" + id + ".txt"), place);
+            assertEquals(0.12f, place[5], 1e-6f, id + " states its grip");
+            WeaponOrientation.Measures m = WeaponOrientation.measure(layers[0], place[3]);
+            assertTrue(m.widestAt < 0.5, id + ": the guard is in the lower half " + m.widestAt);
+            assertFalse(WeaponOrientation.detect(m, classes.className(id), place[2], Double.NaN).contains(WeaponOrientation.Flag.GRIP_FAR_END), id);
+        }
+        float[] place = new float[6];
+        List<float[]>[] layers = readLayers(RES.resolve("weapon_meshes/elsdocia.txt"), place);
+        float apparent = (float) WeaponOrientation.measure(layers[0], place[3]).length * thirdPersonScale("elsdocia");
+        assertTrue(apparent >= 2.2f, "Elsdocia is at least a greatsword's 2.2 blocks: " + apparent);
+        assertEquals("greatsword", classes.className("elsdocia"));
     }
 }

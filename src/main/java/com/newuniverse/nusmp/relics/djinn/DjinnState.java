@@ -117,6 +117,21 @@ public final class DjinnState {
     public void setStrain(long until, int loss, int total) { t.putLong("strainUntil", until); t.putInt("strainLoss", loss); t.putInt("strainTotal", total); }
     public void clearStrain() { t.remove("strainUntil"); t.remove("strainLoss"); t.remove("strainTotal"); }
 
+    // ---------------------------------------------------------------- the weapon loan
+    /**
+     * The compound the Djinn weapon's loan saves its state in (the hotbar slot the weapon took, the item it displaced, the stash of items that found no
+     * free slot): see {@code relics.djinn.weapon.DjinnWeaponService}. {@link #clearBond()} never touches it: a stash is the player's own item and only
+     * the loan's end gives it back.
+     */
+    public CompoundTag loan() {
+        if (!t.contains("wloan", 10)) t.put("wloan", new CompoundTag());
+        return t.getCompound("wloan");
+    }
+
+    public boolean hasLoan() { return t.contains("wloan", 10) && !t.getCompound("wloan").isEmpty(); }
+
+    public void clearLoan() { t.remove("wloan"); }
+
     // ---------------------------------------------------------------- flight
     /** True while the Maso gave this player the ability to fly (so the end of it must take it back). */
     public boolean flightGranted() { return t.getBoolean("fly"); }

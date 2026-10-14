@@ -10,6 +10,9 @@ import java.util.Set;
  *   <li><b>tip down</b>: the place line points the weapon down the sprite, or a head-heavy class has its weight at the butt: turned over;</li>
  *   <li><b>head toward the player</b>: a class whose edge or head is on one side (axe, crescent, hammer ...) has its mass on +x: mirrored across
  *       the haft axis, so the edge faces forward (see {@link WeaponOrientation});</li>
+ *   <li><b>grip at the far end</b> (1.34.0): a sword-like mesh whose hilt is at the high-y end (the Windcutter of the owner's screenshot 68: the hand held the
+ *       blade), decided by the mesh's own {@code grip <fraction>} directive when it has one, else by the geometry ({@link WeaponOrientation#gripAtFarEnd}):
+ *       turned over along its length (a half turn about the x axis, so the edge keeps its side);</li>
  *   <li><b>too small</b>: the apparent length (mesh length times the third-person display scale) is below {@link WeaponClasses#RUNTIME_SMALL} of the
  *       class minimum (a held item: its largest dimension below that share of {@link WeaponClasses#ITEM_MIN_EXTENT}): scaled up to the minimum
  *       about the point the hand holds.</li>
@@ -23,8 +26,12 @@ public final class WeaponNormaliser {
     /** Largest scale-up the normaliser applies (a mesh more than four times too small is a broken file, not a size problem). */
     public static final float MAX_SCALE_UP = 4f;
 
-    /** What happened: {@code log} is empty when nothing did. */
-    public record Result(boolean changed, boolean rotated, boolean flipped, float scaleFactor, String log) {}
+    /** What happened: {@code log} is empty when nothing did. {@code gripFlipped} (1.34.0, appended): the mesh was turned over along its length. */
+    public record Result(boolean changed, boolean rotated, boolean flipped, float scaleFactor, String log, boolean gripFlipped) {
+        public Result(boolean changed, boolean rotated, boolean flipped, float scaleFactor, String log) {
+            this(changed, rotated, flipped, scaleFactor, log, false);
+        }
+    }
 
     private static final Result NOTHING = new Result(false, false, false, 1f, "");
 
@@ -38,14 +45,19 @@ public final class WeaponNormaliser {
      * @param thirdPersonScale the model json's thirdperson_righthand scale (0.85 when there is none)
      */
     public static Result normalise(List<float[]>[] layers, float[] place, String clsName, WeaponClasses.Cls cls, float thirdPersonScale) {
+        return normalise(layers, place, clsName, cls, thirdPersonScale, Float.NaN);
+    }
+
+    /** As above for a mesh with a {@code grip <fraction>} directive ({@code gripDirective}, NaN when it has none). */
+    public static Result normalise(List<float[]>[] layers, float[] place, String clsName, WeaponClasses.Cls cls, float thirdPersonScale, float gripDirective) {
         List<float[]> body = layers[0].isEmpty() ? layers[2] : layers[0];
         if (body.isEmpty() || cls == null || !(place[3] > 0f) || !(thirdPersonScale > 0f)) return NOTHING;
         WeaponOrientation.Measures m = WeaponOrientation.measure(body, place[3]);
         if (m.empty) return NOTHING;
-        boolean item = "item".equals(clsName);
-        boolean rotated = false, flipped = false;
+        boolean item = WeaponClasses.isItemClass(clsName);
+        boolean rotated = false, flipped = false, gripFlipped = false;
         StringBuilder log = new StringBuilder();
-        Set<WeaponOrientation.Flag> flags = WeaponOrientation.detect(m, clsName, place[2]);
+        Set<WeaponOrientation.Flag> flags = WeaponOrientation.detect(m, clsName, place[2], gripDirective);
         if (flags.contains(WeaponOrientation.Flag.TIP_DOWN)) {
             if (Math.sin(Math.toRadians(place[2])) < -0.1) {
                 place[2] = wrap(place[2] + 180f);
@@ -56,6 +68,13 @@ public final class WeaponNormaliser {
                 log.append("head at the butt: turned over");
             }
             rotated = true;
+            m = WeaponOrientation.measure(body, place[3]);
+        } else if (flags.contains(WeaponOrientation.Flag.GRIP_FAR_END)) {
+            double lo = Double.MAX_VALUE, hi = -Double.MAX_VALUE;                       // the pivot over every layer, as the offline tool does
+            for (List<float[]> layer : layers) for (float[] v : layer) { lo = Math.min(lo, v[1]); hi = Math.max(hi, v[1]); }
+            for (List<float[]> layer : layers) WeaponOrientation.flipY(layer, (lo + hi) / 2.0);
+            gripFlipped = true;
+            log.append("grip at the far end: turned over along its length");
             m = WeaponOrientation.measure(body, place[3]);
         }
         if (WeaponOrientation.hasTrait(clsName, "handed") && m.imbalance > WeaponOrientation.IMBALANCE_MIN) {
@@ -94,8 +113,8 @@ public final class WeaponNormaliser {
         } else {
             k = 1f;
         }
-        if (!rotated && !flipped && k == 1f) return NOTHING;
-        return new Result(true, rotated, flipped, k, log.toString());
+        if (!rotated && !flipped && !gripFlipped && k == 1f) return NOTHING;
+        return new Result(true, rotated, flipped, k, log.toString(), gripFlipped);
     }
 
     private static float wrap(float deg) {

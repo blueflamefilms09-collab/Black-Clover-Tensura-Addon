@@ -24,7 +24,9 @@ public final class CompatBook {
     public static final String LOADED = "Loaded", ABSENT = "Not installed";
 
     /** A piece of text; {@code newPage} starts it on a fresh page (a section start). */
-    record Block(boolean newPage, String text) {}
+    public record Block(boolean newPage, String text, String modId) {
+        Block(boolean newPage, String text) { this(newPage, text, null); }
+    }
 
     public static String word(boolean loaded) { return loaded ? LOADED : ABSENT; }
 
@@ -33,7 +35,8 @@ public final class CompatBook {
         return paginate(blocks(loaded == null ? id -> false : loaded));
     }
 
-    static List<Block> blocks(Predicate<String> loaded) {
+    /** The blocks of the book (also read by the Compatibility Codex screen, so the text lives only here). */
+    public static List<Block> blocks(Predicate<String> loaded) {
         List<Block> out = new ArrayList<>();
         out.add(new Block(true, TITLE + "\n\n" + AUTHOR + "\n\nWhat this mod works with, and what it does not."));
         out.add(new Block(true, "How to read\n\nLoaded or Not installed was read from your mod list when this copy was made.\n\n"
@@ -50,7 +53,8 @@ public final class CompatBook {
 
         boolean pack = CompatCatalog.packActive(loaded);
         out.add(new Block(true, "TENSURA NO INDEX\n" + word(loaded.test(CompatCatalog.TNI_MODID)) + "\nThe built-in data pack "
-                + CompatCatalog.PACK_ID + " is " + (pack ? "ON" : "off (the other mod is not here)") + ". It switches itself on; nothing to configure."));
+                + CompatCatalog.PACK_ID + " is " + (pack ? "ON" : "off (the other mod is not here)") + ". It switches itself on; nothing to configure.",
+                CompatCatalog.TNI_MODID));
         out.add(new Block(true, "The pack adds\n- Our Library Ruins and Grimoire Tower chests: a 25% extra roll of Phase Dust,"
                 + " Name Slip or Canalis Relic.\n- The Tower: 3% for the Philosopher's Stone."));
         out.add(new Block(true, "- Our 8 bosses: 15% Phase Dust or Canalis Relic, 4% Philosopher's Stone, where they roll a loot table"
@@ -66,7 +70,7 @@ public final class CompatBook {
 
     private static Block statusBlock(CompatCatalog.Entry e, Predicate<String> loaded, boolean withLine) {
         String head = e.name() + ": " + word(loaded.test(e.modId()));
-        return new Block(false, withLine ? head + "\n" + e.line() + "\n" : head);
+        return new Block(false, withLine ? head + "\n" + e.line() + "\n" : head, e.modId());
     }
 
     /** Wraps one text at {@code width} characters on word boundaries; explicit newlines are kept; a longer word is cut. */

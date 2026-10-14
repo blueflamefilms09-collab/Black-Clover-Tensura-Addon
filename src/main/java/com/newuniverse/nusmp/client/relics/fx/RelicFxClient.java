@@ -58,12 +58,22 @@ public final class RelicFxClient {
             double dx = p.getX() - cp.x, dy = p.getEyeY() - cp.y, dz = p.getZ() - cp.z, d2 = dx * dx + dy * dy + dz * dz;
             if (d2 > WornFxPlan.CULL_RANGE * WornFxPlan.CULL_RANGE) continue;
             if (d2 > 16.0 && dx * look.x + dy * look.y + dz * look.z < 0.15 * Math.sqrt(d2)) continue;          // behind the camera or far off to the side
+            budget += com.newuniverse.nusmp.client.relics.worn.lib.ArmorFx.tick(level, p, q, tick, q.particlesPerTick - budget);     // the mod's own armour (robe sets ...)
             List<Relics.Worn> worn = Relics.wornList(p);
             if (worn.isEmpty()) continue;
             looked++;
+            List<com.newuniverse.nusmp.item.CuriosLink.RenderFlag> flags = null;
+            boolean hideArmour = RelicFxOptions.hideArmourRelics();
             for (int i = 0; i < worn.size() && budget < q.particlesPerTick; i++) {
                 RelicDef d = worn.get(i).def();
                 if (d.slot().isHand() || d.slot() == RelicSlot.CONSUMABLE) continue;
+                if (d.slot().isArmor() && hideArmour) continue;                                  // switched off with the option / key
+                if (d.slot().isCurio()) {                                                         // the eye icon of the Curios screen: off means no particles either
+                    if (flags == null) flags = com.newuniverse.nusmp.item.CuriosLink.flags(p);
+                    boolean on = true;
+                    for (var f : flags) if (f.stack() == worn.get(i).stack()) { on = f.render(); break; }
+                    if (!on) continue;
+                }
                 WornFxPlan plan = WornFxPlan.of(d.grade().tier(), q, 0.0);
                 if (plan.particleEvery() <= 0 || (tick + p.getId() * 7L + i * 3L) % plan.particleEvery() != 0) continue;
                 FxTheme theme = themeOf(d);

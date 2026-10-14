@@ -72,12 +72,49 @@ public final class DjinnCommand {
                                 .then(Commands.argument("player", EntityArgument.player()).executes(ctx -> dark(ctx, EntityArgument.getPlayer(ctx, "player"), true))))
                         .then(Commands.literal("off").executes(ctx -> dark(ctx, ctx.getSource().getPlayerOrException(), false))
                                 .then(Commands.argument("player", EntityArgument.player()).executes(ctx -> dark(ctx, EntityArgument.getPlayer(ctx, "player"), false)))))
+                .then(weaponNode())
                 .then(Commands.literal("phase").requires(DjinnCommand::admin).then(Commands.argument("phase", IntegerArgumentType.integer(0, 4)).executes(ctx -> {
                     ServerPlayer p = ctx.getSource().getPlayerOrException();
                     int n = IntegerArgumentType.getInteger(ctx, "phase");
                     boolean done = DjinnEngine.go(p, n, true);
                     return done ? ok(ctx, "Phase " + n + ".") : fail(ctx, "Not possible (no Djinn or vessel, or the step is out of order).");
                 }))));
+    }
+
+    // ---------------------------------------------------------------- the Djinn weapons (admin)
+    /** {@code weapon give [player [djinn [dark]]]}: an admin Djinn weapon (outside the Equip's loan, never taken back); {@code weapon clear [player]}: every Djinn weapon off the player and the loan ended. */
+    private static LiteralArgumentBuilder<CommandSourceStack> weaponNode() {
+        return Commands.literal("weapon").requires(DjinnCommand::admin)
+                .then(Commands.literal("give")
+                        .executes(ctx -> weaponGive(ctx, ctx.getSource().getPlayerOrException(), null, false))
+                        .then(Commands.argument("player", EntityArgument.player())
+                                .executes(ctx -> weaponGive(ctx, EntityArgument.getPlayer(ctx, "player"), null, false))
+                                .then(Commands.argument("djinn", StringArgumentType.word())
+                                        .suggests((c, b) -> { for (Djinn d : Djinn.values()) b.suggest(d.id()); return b.buildFuture(); })
+                                        .executes(ctx -> weaponGive(ctx, EntityArgument.getPlayer(ctx, "player"), StringArgumentType.getString(ctx, "djinn"), false))
+                                        .then(Commands.literal("dark").executes(ctx -> weaponGive(ctx, EntityArgument.getPlayer(ctx, "player"), StringArgumentType.getString(ctx, "djinn"), true))))))
+                .then(Commands.literal("clear")
+                        .executes(ctx -> weaponClear(ctx, ctx.getSource().getPlayerOrException()))
+                        .then(Commands.argument("player", EntityArgument.player()).executes(ctx -> weaponClear(ctx, EntityArgument.getPlayer(ctx, "player")))));
+    }
+
+    private static int weaponGive(CommandContext<CommandSourceStack> ctx, ServerPlayer target, String djinnName, boolean dark) {
+        DjinnState s = DjinnState.of(target);
+        Djinn d = djinnName == null ? s.active() : Djinn.byName(djinnName);
+        if (d == null) {
+            ctx.getSource().sendFailure(Component.translatable("djinn_weapon.cmd.nodjinn"));
+            return 0;
+        }
+        boolean isDark = djinnName == null ? DarkDjinn.active(s) : dark;
+        com.newuniverse.nusmp.relics.djinn.weapon.DjinnWeaponService.giveAdmin(target, d, isDark);
+        ctx.getSource().sendSuccess(() -> Component.translatable("djinn_weapon.cmd.given", Component.translatable("item.nusmp." + com.newuniverse.nusmp.relics.djinn.weapon.DjinnWeaponRules.itemPath(d, isDark)), target.getName()), true);
+        return 1;
+    }
+
+    private static int weaponClear(CommandContext<CommandSourceStack> ctx, ServerPlayer target) {
+        int n = com.newuniverse.nusmp.relics.djinn.weapon.DjinnWeaponService.clear(target);
+        ctx.getSource().sendSuccess(() -> Component.translatable("djinn_weapon.cmd.cleared", n, target.getName()), true);
+        return n;
     }
 
     // ---------------------------------------------------------------- status

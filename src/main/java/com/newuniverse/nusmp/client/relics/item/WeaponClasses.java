@@ -19,40 +19,44 @@ public final class WeaponClasses {
     /** One class of the table. */
     public record Cls(String name, float min, float max, float headMin, float grip) {}
 
-    /** Held trinkets, books and charms have no length range: their largest dimension must reach this many blocks. */
-    public static final float ITEM_MIN_EXTENT = 0.40f;
-    /** The runtime normaliser steps in below this share of a class minimum (the offline fixes aim at the whole range). */
-    public static final float RUNTIME_SMALL = 0.60f;
+    /** Held trinkets, books and charms have no length range: their largest dimension must reach this many blocks (1.34.0: was 0.40; the handitem class is 0.5 - 0.9). */
+    public static final float ITEM_MIN_EXTENT = 0.50f;
+    /** The runtime normaliser steps in below this share of a class minimum (1.34.0: was 0.60; the offline fixes aim at the whole range). */
+    public static final float RUNTIME_SMALL = 0.75f;
 
     static final Map<String, Cls> DEFAULTS = new LinkedHashMap<>();
     static {
-        c("dagger", 0.35f, 0.55f, 0f, 0.20f);
-        c("shortsword", 0.80f, 1.00f, 0f, 0.20f);
-        c("longsword", 1.10f, 1.30f, 0f, 0.20f);
-        c("rapier", 1.10f, 1.30f, 0f, 0.20f);
-        c("katana", 1.10f, 1.30f, 0f, 0.20f);
-        c("sabre", 1.00f, 1.25f, 0f, 0.20f);
-        c("dadao", 1.20f, 1.45f, 0f, 0.20f);
-        c("greatsword", 1.50f, 1.90f, 0f, 0.22f);
-        c("handaxe", 0.70f, 0.90f, 0.30f, 0.25f);
-        c("battleaxe", 1.10f, 1.30f, 0.45f, 0.25f);
-        c("greataxe", 1.60f, 2.00f, 0.70f, 0.28f);
-        c("crescent", 1.20f, 1.50f, 0.50f, 0.25f);
-        c("scythe", 1.50f, 1.90f, 0.50f, 0.30f);
-        c("cleaver", 0.55f, 0.80f, 0.25f, 0.25f);
-        c("spear", 1.80f, 2.40f, 0f, 0.33f);
-        c("glaive", 1.80f, 2.40f, 0f, 0.33f);
-        c("trident", 1.80f, 2.40f, 0f, 0.33f);
-        c("staff", 1.60f, 2.00f, 0f, 0.40f);
-        c("whip", 1.50f, 2.00f, 0f, 0.15f);
-        c("coilwhip", 0.90f, 1.40f, 0f, 0.15f);
-        c("crossbow", 0.70f, 0.95f, 0f, 0.50f);
-        c("hammer", 1.10f, 1.50f, 0.40f, 0.25f);
-        c("mace", 0.80f, 1.10f, 0f, 0.25f);
-        c("club", 0.90f, 1.40f, 0f, 0.25f);
-        c("wand", 0.35f, 0.55f, 0f, 0.20f);
-        c("shield", 0.70f, 1.10f, 0f, 0.50f);
+        // 1.34.0: the owner's size rule (docs/weapon_scale_orientation.md section 10): unless a weapon should be small, make it bigger
+        c("dagger", 0.45f, 0.70f, 0f, 0.20f);
+        c("shortsword", 1.00f, 1.30f, 0f, 0.20f);
+        c("longsword", 1.40f, 1.80f, 0f, 0.20f);
+        c("rapier", 1.00f, 1.30f, 0f, 0.20f);
+        c("katana", 1.40f, 1.80f, 0f, 0.20f);
+        c("sabre", 1.00f, 1.30f, 0f, 0.20f);
+        c("dadao", 1.80f, 2.40f, 0f, 0.20f);
+        c("greatsword", 2.20f, 3.00f, 0f, 0.22f);
+        c("handaxe", 1.10f, 1.40f, 0.50f, 0.25f);
+        c("battleaxe", 1.60f, 2.00f, 0.75f, 0.25f);
+        c("greataxe", 2.40f, 3.00f, 1.10f, 0.28f);
+        c("crescent", 1.60f, 2.00f, 0.75f, 0.25f);
+        c("scythe", 2.00f, 2.60f, 0.60f, 0.30f);
+        c("cleaver", 0.90f, 1.20f, 0.45f, 0.25f);
+        c("spear", 2.80f, 3.60f, 0f, 0.33f);
+        c("glaive", 2.80f, 3.60f, 0f, 0.33f);
+        c("trident", 2.80f, 3.60f, 0f, 0.33f);
+        c("staff", 2.00f, 2.60f, 0f, 0.40f);
+        c("whip", 1.60f, 2.40f, 0f, 0.15f);
+        c("coilwhip", 1.10f, 1.70f, 0f, 0.15f);
+        c("crossbow", 1.00f, 1.20f, 0f, 0.50f);
+        c("bow", 1.30f, 1.60f, 0f, 0.50f);
+        c("hammer", 1.30f, 1.80f, 0.50f, 0.25f);
+        c("greathammer", 2.20f, 2.80f, 0.90f, 0.28f);
+        c("mace", 1.30f, 1.80f, 0.50f, 0.25f);
+        c("club", 1.30f, 1.80f, 0f, 0.25f);
+        c("wand", 0.80f, 1.20f, 0f, 0.20f);
+        c("shield", 0.90f, 1.20f, 0f, 0.50f);
         c("item", 0f, 9f, 0f, 0.50f);
+        c("handitem", 0.50f, 0.90f, 0f, 0.50f);
     }
 
     private static void c(String name, float min, float max, float headMin, float grip) {
@@ -66,11 +70,11 @@ public final class WeaponClasses {
             {"saber", "sabre"}, {"scimitar", "sabre"}, {"rapier", "rapier"}, {"longsword", "longsword"}, {"gladius", "shortsword"},
             {"xiphos", "shortsword"}, {"shortsword", "shortsword"}, {"dagger", "dagger"}, {"knife", "dagger"}, {"dirk", "dagger"}, {"stiletto", "dagger"},
             {"cleaver", "cleaver"}, {"trident", "trident"}, {"glaive", "glaive"}, {"halberd", "glaive"}, {"naginata", "glaive"}, {"spear", "spear"},
-            {"lance", "spear"}, {"pike", "spear"}, {"staff", "staff"}, {"wand", "wand"}, {"whip", "whip"}, {"crossbow", "crossbow"}, {"bow", "crossbow"},
-            {"hammer", "hammer"}, {"maul", "hammer"}, {"mace", "mace"}, {"club", "club"}, {"shield", "shield"}, {"sword", "longsword"}, {"blade", "longsword"},
+            {"lance", "spear"}, {"pike", "spear"}, {"staff", "staff"}, {"wand", "wand"}, {"whip", "whip"}, {"crossbow", "crossbow"}, {"longbow", "bow"}, {"shortbow", "bow"}, {"bow", "crossbow"},
+            {"greathammer", "greathammer"}, {"great_hammer", "greathammer"}, {"hammer", "hammer"}, {"maul", "hammer"}, {"mace", "mace"}, {"club", "club"}, {"shield", "shield"}, {"sword", "longsword"}, {"blade", "longsword"},
     };
 
-    private static final Pattern STATE_SUFFIX = Pattern.compile("(_(pull[123]|charged|spent|genesis|5leaf|liquid|off|blue)|(?<=lantern)_red)$");
+    private static final Pattern STATE_SUFFIX = Pattern.compile("(_(pull[123]|charged|spent|genesis|5leaf|liquid|off|blue|left)|(?<=lantern)_red)$");
 
     private final Map<String, Cls> table;
     private final Map<String, String> weapons;
@@ -112,7 +116,12 @@ public final class WeaponClasses {
         return c;
     }
 
+    /** A held item (class item or handitem) is measured by its largest dimension, not its length. */
     public boolean isItem(Cls c) {
-        return "item".equals(c.name());
+        return isItemClass(c.name());
+    }
+
+    public static boolean isItemClass(String name) {
+        return "item".equals(name) || "handitem".equals(name);
     }
 }
