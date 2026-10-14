@@ -93,7 +93,10 @@ final class CharybdisMoves {
             Tells.line(sl, from, from.add(d[0] * reach, d[1] * reach, d[2] * reach), rgb);
         }
         Tells.gather(sl, from, 0.7, GLOW, 6);
-        if (first(left, total)) sl.playSound(null, boss.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.HOSTILE, 1.6f, 1.4f);
+        if (first(left, total)) {
+            sl.playSound(null, boss.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.HOSTILE, 1.6f, 1.4f);
+            CharybdisVfx.volleyTell(boss, from, total);
+        }
     }
 
     /** The arc is locked toward the target when the wind-up begins and drawn from the boss's middle: both edges and the sweep itself. */
@@ -106,7 +109,8 @@ final class CharybdisMoves {
         }
         Vec3 dir = boss.lockedDir();
         if (dir == null) return;
-        double yaw = Math.atan2(dir.z, dir.x), half = CharybdisMath.SWEEP_HALF_ARC, reach = CharybdisMath.SWEEP_REACH;
+        double yaw = Math.atan2(dir.z, dir.x), half = CharybdisMath.SWEEP_HALF_ARC, reach = CharybdisMath.sweepReach(boss.gatesOpen());
+        if (first(left, total)) CharybdisVfx.sweepTell(boss, centre, dir, reach, total, false);
         int rgb = colour(left, total);
         for (double s : new double[]{-half, half}) Tells.line(sl, centre, centre.add(Math.cos(yaw + s) * reach, 0, Math.sin(yaw + s) * reach), rgb);
         DustParticleOptions dust = dust(rgb, 1.2f);
@@ -125,9 +129,11 @@ final class CharybdisMoves {
         Vec3 c = boss.peekPoint(CharybdisTable.WHIRLPOOL);
         if (c == null) return;
         int rgb = colour(left, total);
-        Tells.ring(sl, c, CharybdisMath.WHIRL_RADIUS, rgb, 1.3f, 44);
-        Tells.ring(sl, c, Math.max(0.8, CharybdisMath.WHIRL_RADIUS * left / Math.max(1, total)), GLOW, 1.0f, 24);
-        sl.sendParticles(ParticleTypes.CURRENT_DOWN, c.x, c.y + 1.0, c.z, 6, CharybdisMath.WHIRL_RADIUS * 0.5, 0.8, CharybdisMath.WHIRL_RADIUS * 0.5, 0.02);
+        double wr = CharybdisMath.whirlRadius(boss.gatesOpen());
+        Tells.ring(sl, c, wr, rgb, 1.3f, 44);
+        Tells.ring(sl, c, Math.max(0.8, wr * left / Math.max(1, total)), GLOW, 1.0f, 24);
+        sl.sendParticles(ParticleTypes.CURRENT_DOWN, c.x, c.y + 1.0, c.z, 6, wr * 0.5, 0.8, wr * 0.5, 0.02);
+        if (first(left, total)) CharybdisVfx.whirlTell(boss, c, wr, total);
     }
 
     /** Two lines the width of the dive from the boss along the way it will go, to the first wall. */
@@ -147,6 +153,7 @@ final class CharybdisMoves {
         Tells.line(sl, from.add(side), end.add(side), rgb);
         Tells.line(sl, from.subtract(side), end.subtract(side), rgb);
         Tells.gather(sl, from, 1.0, GLOW, 5);
+        if (first(left, total)) CharybdisVfx.lungeTell(boss, end, total);
     }
 
     /** Rings on the wall where the megalodons will tear loose, chosen when the wind-up begins. */
@@ -154,6 +161,7 @@ final class CharybdisMoves {
         if (!(boss.level() instanceof ServerLevel sl)) return;
         if (first(left, total) || !boss.isLocked(CharybdisTable.SUMMON)) boss.lockSpots(CharybdisMinions.wallSpots(boss, target));
         for (Vec3 s : boss.peekSpots()) {
+            if (first(left, total)) CharybdisVfx.summonTell(boss, s, total);
             Tells.ring(sl, s, 1.6, colour(left, total), 1.3f, 18);
             sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, s.x, s.y, s.z, 5, 0.5, 0.8, 0.5, 0.05);
         }
@@ -168,8 +176,10 @@ final class CharybdisMoves {
         Vec3 c = boss.peekPoint(CharybdisTable.TIDAL_CRUSH);
         if (c == null) return;
         int rgb = colour(left, total);
-        Tells.ring(sl, c, CharybdisMath.CRUSH_RADIUS, rgb, 1.5f, 40);
-        Tells.ring(sl, c, Math.max(0.6, CharybdisMath.CRUSH_RADIUS * left / Math.max(1, total)), WARN, 1.1f, 22);
+        double cr = CharybdisMath.crushRadius(boss.gatesOpen());
+        if (first(left, total)) CharybdisVfx.crushTell(boss, c, cr, total);
+        Tells.ring(sl, c, cr, rgb, 1.5f, 40);
+        Tells.ring(sl, c, Math.max(0.6, cr * left / Math.max(1, total)), WARN, 1.1f, 22);
         Tells.column(sl, c, 6, rgb);
         if (first(left, total)) sl.playSound(null, BlockPos.containing(c), SoundEvents.WARDEN_SONIC_CHARGE, SoundSource.HOSTILE, 2.0f, 0.5f);
     }
@@ -177,6 +187,10 @@ final class CharybdisMoves {
     private static void tellMaelstrom(CharybdisSpawnBoss boss, int left, int total) {
         if (!(boss.level() instanceof ServerLevel sl)) return;
         Vec3 c = boss.position();
+        if (first(left, total)) {
+            CharybdisVfx.whirlTell(boss, c, CharybdisMath.MAELSTROM_RADIUS, total);
+            CharybdisVfx.crushTell(boss, c, CharybdisMath.MAELSTROM_RADIUS, total);
+        }
         Tells.ring(sl, c, CharybdisMath.MAELSTROM_RADIUS, colour(left, total), 1.4f, 52);
         Tells.ring(sl, c, Math.min(14, 2 + (total - left) * 0.2), GLOW, 1.0f, 32);
         Tells.gather(sl, c.add(0, boss.getBbHeight() / 2, 0), 2.0, GLOW, 10);
@@ -194,7 +208,7 @@ final class CharybdisMoves {
             case CharybdisTable.TENTACLE_SWEEP -> (b, t) -> sweep(of(b));
             case CharybdisTable.WHIRLPOOL -> (b, t) -> {
                 Vec3 at = of(b).takePoint(CharybdisTable.WHIRLPOOL);
-                whirl(of(b), at != null ? at : t.position(), CharybdisMath.WHIRL_RADIUS, CharybdisMath.WHIRL_TICKS);
+                whirl(of(b), at != null ? at : t.position(), CharybdisMath.whirlRadius(of(b).gatesOpen()), CharybdisMath.WHIRL_TICKS);
             };
             case CharybdisTable.BEAK_LUNGE -> (b, t) -> lunge(of(b), t);
             case CharybdisTable.SUMMON -> (b, t) -> CharybdisMinions.summon(of(b), t);
@@ -229,30 +243,39 @@ final class CharybdisMoves {
             MagiculeScaleEntity.launch(sl, boss, from.add(d[0] * 0.4, d[1] * 0.4, d[2] * 0.4), new Vec3(d[0], d[1], d[2]), budget, pool);
         }
         sl.sendParticles(ParticleTypes.GLOW, from.x, from.y, from.z, 16, 0.5, 0.5, 0.5, 0.1);
+        CharybdisVfx.volleyStrike(boss, from);
         sl.playSound(null, boss.blockPosition(), SoundEvents.AMETHYST_CLUSTER_BREAK, SoundSource.HOSTILE, 2.0f, 0.8f);
     }
 
     // ---------------------------------------------------------------- Tentacle Sweep
     /** Everything in the 200 degree arc the wind-up drew, within reach and a few blocks up or down, takes the blow and is thrown outward. */
     static void sweep(CharybdisSpawnBoss boss) {
-        if (!(boss.level() instanceof ServerLevel sl)) return;
+        if (!(boss.level() instanceof ServerLevel)) return;
         Vec3 dir = boss.takeDir(CharybdisTable.TENTACLE_SWEEP);
         if (dir == null) dir = boss.facing();
+        sweepBlow(boss, dir);
+        boss.swing(InteractionHand.MAIN_HAND);
+    }
+
+    /** One pass of the tentacles over the arc round 'dir': everything in it takes the blow and is thrown outward. */
+    private static void sweepBlow(CharybdisSpawnBoss boss, Vec3 dir) {
+        if (!(boss.level() instanceof ServerLevel sl)) return;
         Vec3 centre = boss.position().add(0, boss.getBbHeight() / 2, 0);
-        for (LivingEntity f : boss.foesAround(centre, CharybdisMath.SWEEP_REACH + 1.0)) {
+        double reach = CharybdisMath.sweepReach(boss.gatesOpen());
+        CharybdisVfx.sweepStrike(boss, centre, dir, reach);
+        for (LivingEntity f : boss.foesAround(centre, reach + 1.0)) {
             Vec3 at = f.getBoundingBox().getCenter();
             if (Math.abs(at.y - centre.y) > CharybdisMath.SWEEP_HEIGHT) continue;
-            if (!CharybdisMath.inArc(centre.x, centre.z, dir.x, dir.z, f.getX(), f.getZ(), CharybdisMath.SWEEP_REACH, CharybdisMath.SWEEP_HALF_ARC)) continue;
+            if (!CharybdisMath.inArc(centre.x, centre.z, dir.x, dir.z, f.getX(), f.getZ(), reach, CharybdisMath.SWEEP_HALF_ARC)) continue;
             if (boss.strike(f, CharybdisTable.SWEEP, false)) shove(f, f.position().subtract(centre).multiply(1, 0, 1), 0.7, 0.12);
         }
         double yaw = Math.atan2(dir.z, dir.x);
         for (int i = 0; i <= 12; i++) {
-            double a = yaw - CharybdisMath.SWEEP_HALF_ARC + 2 * CharybdisMath.SWEEP_HALF_ARC * i / 12.0, r = CharybdisMath.SWEEP_REACH * 0.8;
+            double a = yaw - CharybdisMath.SWEEP_HALF_ARC + 2 * CharybdisMath.SWEEP_HALF_ARC * i / 12.0, r = reach * 0.8;
             sl.sendParticles(ParticleTypes.SWEEP_ATTACK, centre.x + Math.cos(a) * r, centre.y, centre.z + Math.sin(a) * r, 1, 0, 0, 0, 0);
             sl.sendParticles(ParticleTypes.BUBBLE, centre.x + Math.cos(a) * r, centre.y, centre.z + Math.sin(a) * r, 6, 0.5, 0.5, 0.5, 0.15);
         }
         sl.playSound(null, boss.blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.HOSTILE, 2.0f, 0.5f);
-        boss.swing(InteractionHand.MAIN_HAND);
     }
 
     // ---------------------------------------------------------------- Whirlpool
@@ -260,6 +283,7 @@ final class CharybdisMoves {
     static void whirl(CharybdisSpawnBoss boss, Vec3 centre, double radius, int ticks) {
         if (!(boss.level() instanceof ServerLevel sl)) return;
         sl.playSound(null, BlockPos.containing(centre), SoundEvents.ELDER_GUARDIAN_AMBIENT, SoundSource.HOSTILE, 2.0f, 0.5f);
+        CharybdisVfx.whirlStrike(boss, centre, radius, ticks);
         SpellRuntime.zone(sl, ticks, CharybdisMath.WHIRL_EVERY, safe("whirlpool", age -> whirlStep(boss, sl, centre, radius, age)));
     }
 
@@ -292,6 +316,7 @@ final class CharybdisMoves {
             dir = aim.lengthSqr() < 1e-4 ? boss.getViewVector(1f) : aim.normalize();
         }
         boss.lungeHits().clear();
+        CharybdisVfx.lungeStrike(boss);
         boss.swim().lunge(dir.x, dir.y, dir.z);
         sl.playSound(null, boss.blockPosition(), SoundEvents.GUARDIAN_ATTACK, SoundSource.HOSTILE, 2.0f, 0.7f);
         boss.swing(InteractionHand.MAIN_HAND);
@@ -318,8 +343,10 @@ final class CharybdisMoves {
     /** The marked circle: foes inside it, up to ten blocks above the floor, take the crush and are pressed down. */
     static void crush(CharybdisSpawnBoss boss, Vec3 floorCentre) {
         if (!(boss.level() instanceof ServerLevel sl)) return;
-        for (LivingEntity f : boss.foesAround(floorCentre.add(0, 3, 0), CharybdisMath.CRUSH_RADIUS + 8)) {
-            if (!CharybdisMath.inDisc(floorCentre.x, floorCentre.z, f.getX(), f.getZ(), CharybdisMath.CRUSH_RADIUS)) continue;
+        final double cr = CharybdisMath.crushRadius(boss.gatesOpen());
+        CharybdisVfx.crushStrike(boss, floorCentre, cr);
+        for (LivingEntity f : boss.foesAround(floorCentre.add(0, 3, 0), cr + 8)) {
+            if (!CharybdisMath.inDisc(floorCentre.x, floorCentre.z, f.getX(), f.getZ(), cr)) continue;
             if (f.getY() < floorCentre.y - 1.5 || f.getY() > floorCentre.y + CharybdisMath.CRUSH_HEIGHT) continue;
             if (boss.strike(f, CharybdisTable.CRUSH, true)) {
                 Vec3 v = f.getDeltaMovement();
@@ -328,8 +355,8 @@ final class CharybdisMoves {
                 slow(f, 40, 0);
             }
         }
-        for (int i = 1; i <= 3; i++) Tells.ring(sl, floorCentre.add(0, 0.2 * i, 0), CharybdisMath.CRUSH_RADIUS * (0.5 + 0.25 * i), GLOW, 1.4f, 40);
-        sl.sendParticles(ParticleTypes.BUBBLE_POP, floorCentre.x, floorCentre.y + 1, floorCentre.z, 40, CharybdisMath.CRUSH_RADIUS * 0.6, 1.2, CharybdisMath.CRUSH_RADIUS * 0.6, 0.1);
+        for (int i = 1; i <= 3; i++) Tells.ring(sl, floorCentre.add(0, 0.2 * i, 0), cr * (0.5 + 0.25 * i), GLOW, 1.4f, 40);
+        sl.sendParticles(ParticleTypes.BUBBLE_POP, floorCentre.x, floorCentre.y + 1, floorCentre.z, 40, cr * 0.6, 1.2, cr * 0.6, 0.1);
         sl.playSound(null, BlockPos.containing(floorCentre), SoundEvents.WARDEN_SONIC_BOOM, SoundSource.HOSTILE, 2.5f, 0.6f);
         boss.swing(InteractionHand.MAIN_HAND);
     }
@@ -338,6 +365,7 @@ final class CharybdisMoves {
     /** A whirlpool round the boss for as long as the move lasts, and two fans of scales into it, a second and a half apart. */
     static void maelstrom(CharybdisSpawnBoss boss, LivingEntity target) {
         whirl(boss, boss.position().add(0, 0.5, 0), CharybdisMath.MAELSTROM_RADIUS, CharybdisMath.MAELSTROM_TICKS);
+        CharybdisVfx.crushStrike(boss, boss.position(), CharybdisMath.MAELSTROM_RADIUS);
         fire(boss, target);
         boss.later(30, safe("maelstrom volley", () -> {
             LivingEntity tg = boss.getTarget();

@@ -56,7 +56,7 @@ public class VanicaBoss extends ZogratisBoss {
 
     public VanicaBoss(EntityType<VanicaBoss> type, Level level) { super(type, level); }
 
-    public static AttributeSupplier.Builder createAttributes() { return ZogratisBoss.bossAttributes(900, 13, 0.36, 8, 4); }
+    public static AttributeSupplier.Builder createAttributes() { return ZogratisBoss.bossAttributes(1300, 13, 0.36, 9, 5); }
 
     @Override public String bossName() { return "Vanica Zogratis"; }
     @Override public Devil devil() { return Devil.MEGICULA; }
@@ -136,6 +136,7 @@ public class VanicaBoss extends ZogratisBoss {
 
     @Override
     protected void onGatesOpened() {
+        if (level() instanceof ServerLevel sl) ZogratisVfx.bloodSigil(sl, position(), 9, 70, VanicaMoves.BLOOD_ARGB, false);
         announce("Vanica's veins glow with Megicula's power. Her curses spread in a breath, her beasts grow, and her blood lances multiply.");
         for (int delay : new int[]{80, 260, 460}) {
             later(delay, VanicaMoves.safe("disciple wave", () -> {
@@ -163,9 +164,18 @@ public class VanicaBoss extends ZogratisBoss {
                     .range(s.minRange(), s.maxRange()).weight(s.weight()).mana(s.manaCost()).recovery(s.recovery());
             if (s.ultimate()) b.ultimate();
             if (s.crowd()) b.crowd();
-            Move.MoveTell tell = tellOf(s.id());
-            if (tell != null) b.tell(tell);
-            out.add(b.run(runOf(s.id())));
+            final String mid = s.id();
+            final Move.MoveTell base = tellOf(mid);
+            final Move.MoveRun run = runOf(mid);
+            b.tell((bs, t, left, total) -> {                                  // 1.35.0: the dust telegraph (kept) and the effect that goes with it
+                if (base != null) base.tell(bs, t, left, total);
+                else if (level() instanceof ServerLevel sl && castingMoveOrNull() != null) defaultTell(sl, castingMoveOrNull(), t, left);
+                try { fxTell(mid, t, left, total); } catch (RuntimeException e) { LogUtils.getLogger().warn("[nusmp] Vanica's tell effect failed: {}", e.toString()); }
+            });
+            out.add(b.run((bs, t) -> {
+                try { fxRun(mid); } catch (RuntimeException e) { LogUtils.getLogger().warn("[nusmp] Vanica's strike effect failed: {}", e.toString()); }
+                run.run(bs, t);
+            }));
         }
         return out;
     }
@@ -233,6 +243,28 @@ public class VanicaBoss extends ZogratisBoss {
                 if (!castTensura(t)) VanicaMoves.bloodLances(this, t, 3, VanicaTable.LANCE);
                 quip("A little hex, for flavour~");
             };
+            case VanicaTable.REAPER_DANCE -> (b, t) -> {
+                VanicaMoves.scythe(this, VanicaTable.SCYTHE * 0.8f * frenzyFactor());
+                for (int k = 1; k <= 2; k++) {                                 // two more cuts, each shown 16 ticks before it lands
+                    final int cut = k;
+                    if (level() instanceof ServerLevel sl) {
+                        Vec3 f = VanicaMoves.facing(this), o = position().add(0, 1.1, 0);
+                        ZogratisVfx.crescent(sl, o, o.add(f), VanicaMath.SCYTHE_REACH, 16 * cut + 2, VanicaMoves.BLOOD_ARGB, true);
+                    }
+                    later(16 * cut, VanicaMoves.safe("reaper dance", () -> VanicaMoves.scythe(this, VanicaTable.SCYTHE * 0.8f * frenzyFactor())));
+                }
+                quip("Snip, snip, snip~", "Dance with me!");
+            };
+            case VanicaTable.BLOOD_STORM -> (b, t) -> {
+                int n = VanicaMath.lanceCount(tuning().castSlots(), gatesOpen());
+                VanicaMoves.bloodLances(this, t, n, VanicaTable.LANCE * 0.8f * frenzyFactor());
+                for (int k = 1; k <= 2; k++)
+                    later(18 * k, VanicaMoves.safe("blood storm", () -> {
+                        LivingEntity tg = getTarget();
+                        if (tg != null && tg.isAlive()) VanicaMoves.bloodLances(this, tg, n, VanicaTable.LANCE * 0.8f * frenzyFactor());
+                    }));
+                quip("A storm of blood! Run, run~");
+            };
             case VanicaTable.CRIMSON_CROWN -> (b, t) -> {
                 List<Vec3> thorns = marks.isEmpty() && level() instanceof ServerLevel sl
                         ? VanicaMoves.thornSpots(sl, position(), power(), getRandom().nextDouble() * Math.PI * 2) : marks;
@@ -261,6 +293,58 @@ public class VanicaBoss extends ZogratisBoss {
         List<Vec3> out = new ArrayList<>();
         for (double[] s : plan) out.add(ZogratisBoss.ground(level(), new Vec3(s[0], target.getY(), s[1])));
         return out;
+    }
+
+    // ================================================================ 1.35.0 effects: crimson arcs, lances, crescents, sigils
+    private void fxTell(String id, LivingEntity target, int left, int total) {
+        if (!(level() instanceof ServerLevel sl) || !first(left, total)) return;
+        final int dur = total + 2;
+        final int argb = VanicaMoves.BLOOD_ARGB;
+        switch (id) {
+            case VanicaTable.BLOOD_LANCES, VanicaTable.BLOOD_STORM -> {
+                Vec3 from = position().add(0, getBbHeight() * 0.75, 0), aim = target.getBoundingBox().getCenter().subtract(from);
+                if (aim.lengthSqr() < 1e-4) return;
+                aim = aim.normalize();
+                for (double a : VanicaMath.lanceFan(VanicaMath.lanceCount(tuning().castSlots(), gatesOpen())))
+                    ZogratisVfx.bloodLance(sl, from, from.add(VanicaMoves.rotateY(aim, a).scale(16)), 1.0, dur, argb, true);
+            }
+            case VanicaTable.BLOOD_SCYTHE, VanicaTable.REAPER_DANCE -> {
+                Vec3 f = VanicaMoves.facing(this), o = position().add(0, 1.1, 0);
+                ZogratisVfx.crescent(sl, o, o.add(f), VanicaMath.SCYTHE_REACH, dur, argb, true);
+            }
+            case VanicaTable.BLOOD_WHIP -> {
+                Vec3 from = position().add(0, getBbHeight() * 0.7, 0), aim = target.getBoundingBox().getCenter().subtract(from);
+                if (aim.lengthSqr() > 1e-4) ZogratisVfx.bloodLance(sl, from, from.add(aim.normalize().scale(VanicaMath.WHIP_LENGTH)), 0.8, dur, argb, true);
+            }
+            case VanicaTable.CRIMSON_DASH -> {
+                if (dashEnd == null) return;
+                ZogratisVfx.bloodLance(sl, position().add(0, 1, 0), dashEnd.add(0, 1, 0), 1.6, dur, argb, true);
+                ZogratisVfx.bloodSigil(sl, dashEnd, 1.8, dur, argb, true);
+            }
+            case VanicaTable.BLOOD_BURST -> ZogratisVfx.bloodSigil(sl, position(), burstRadius(), dur, argb, true);
+            case VanicaTable.CRIMSON_RAIN -> { for (Vec3 m : marks) ZogratisVfx.bloodSigil(sl, m, VanicaMath.RAIN_RADIUS + 0.4, dur, argb, true); }
+            case VanicaTable.ROT_FIELD -> { if (!marks.isEmpty()) ZogratisVfx.bloodSigil(sl, marks.get(0), fieldRadius(), dur, VanicaMoves.CURSE_ARGB, true); }
+            case VanicaTable.DECAY_CURSE -> { if (!marks.isEmpty()) ZogratisVfx.bloodSigil(sl, marks.get(0), VanicaMath.sigilRadius(VanicaMath.curseLevel(power())), dur, VanicaMoves.CURSE_ARGB, true); }
+            case VanicaTable.BLOOD_BEASTS -> ZogratisVfx.bloodSigil(sl, position(), 4.5, dur, argb, true);
+            case VanicaTable.BLOOD_FRENZY -> ZogratisVfx.bloodSigil(sl, position(), 2.6, dur, argb, true);
+            case VanicaTable.CALL_DISCIPLES -> ZogratisVfx.bloodSigil(sl, position(), 5, dur, VanicaMoves.CURSE_ARGB, true);
+            case VanicaTable.TENSURA_HEX -> ZogratisVfx.bloodSigil(sl, position(), 2.2, dur, VanicaMoves.CURSE_ARGB, true);
+            case VanicaTable.CRIMSON_CROWN -> {
+                ZogratisVfx.bloodSigil(sl, position(), VanicaMath.crownRadius(power()), dur, argb, true);
+                for (Vec3 m : marks) ZogratisVfx.bloodSigil(sl, m, VanicaMoves.THORN_RADIUS, dur, argb, true);
+            }
+            default -> { }
+        }
+    }
+
+    private void fxRun(String id) {
+        if (!(level() instanceof ServerLevel sl)) return;
+        switch (id) {
+            case VanicaTable.BLOOD_FRENZY -> ZogratisVfx.bloodSigil(sl, position(), 3.2, 60, VanicaMoves.BLOOD_ARGB, false);
+            case VanicaTable.CALL_DISCIPLES -> ZogratisVfx.bloodSigil(sl, position(), 4.5, 30, VanicaMoves.CURSE_ARGB, false);
+            case VanicaTable.BLOOD_BEASTS -> ZogratisVfx.bloodSigil(sl, position(), 5, 30, VanicaMoves.BLOOD_ARGB, false);
+            default -> { }
+        }
     }
 
     // ================================================================ telegraphs

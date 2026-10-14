@@ -17,7 +17,8 @@ public final class VanicaTable {
     public static final String BLOOD_LANCES = "blood_lances", BLOOD_SCYTHE = "blood_scythe", BLOOD_WHIP = "blood_whip", CRIMSON_DASH = "crimson_dash",
             BLOOD_BURST = "blood_burst", CRIMSON_RAIN = "crimson_rain", ROT_FIELD = "rot_field", DECAY_CURSE = "decay_curse",
             BLOOD_BEASTS = "blood_beasts", BLOOD_FRENZY = "blood_frenzy", CALL_DISCIPLES = "call_disciples", TENSURA_HEX = "tensura_hex",
-            CRIMSON_CROWN = "crimson_crown";
+            CRIMSON_CROWN = "crimson_crown",
+            REAPER_DANCE = "reaper_dance", BLOOD_STORM = "blood_storm";
 
     /** Base damage of the moves (before the boss's damage law: power tuning, victim EP, the balance law's caps). */
     public static final float LANCE = 6f, SCYTHE = 11f, WHIP = 8f, DASH = 12f, BURST = 9f, RAIN = 9f, THORN = 14f, ROT_PULSE = 2.5f,
@@ -43,7 +44,10 @@ public final class VanicaTable {
             new Spec(BLOOD_FRENZY, "Blood Frenzy", 40, 20, 520, 0, 48, 1, false, false, 12),
             new Spec(CALL_DISCIPLES, "Call the Disciples", 20, 30, 700, 0, 48, 2, false, false, 10),
             new Spec(TENSURA_HEX, "Hex Magic", 20, 16, 260, 6, 30, 2, false, false, 8),
-            new Spec(CRIMSON_CROWN, "Crimson Crown", 60, 60, 1300, 0, 40, 5, true, false, 60));
+            new Spec(CRIMSON_CROWN, "Crimson Crown", 60, 60, 1300, 0, 40, 5, true, false, 60),
+            // 1.35.0: two late-phase moves appended (the client reads move names by index)
+            new Spec(REAPER_DANCE, "Reaper's Dance", 60, 22, 300, 0, 8, 4, false, false, 14),
+            new Spec(BLOOD_STORM, "Blood Storm", 80, 26, 340, 5, 34, 3, false, true, 14));
 
     /** The table, in the order of the boss's move list (the client reads move names by index). */
     public static List<Spec> specs() { return SPECS; }

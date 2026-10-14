@@ -79,11 +79,11 @@ class CharybdisTableTest {
 
     @Test
     void theBuildIsABigSlowToughLeviathan() {
-        assertEquals(1100, CharybdisTable.HEALTH);
-        assertEquals(6, CharybdisTable.ARMOR);
+        assertEquals(1350, CharybdisTable.HEALTH, "1.35.0: buffed from 1100");
+        assertEquals(7, CharybdisTable.ARMOR);
         assertEquals(4, CharybdisTable.TOUGHNESS);
         assertEquals(0.30, CharybdisTable.SPEED, 1e-9);
-        assertEquals(24, CharybdisTable.ATTACK);
+        assertEquals(25, CharybdisTable.ATTACK);
         assertTrue(CharybdisTable.WIDTH >= 3 && CharybdisTable.WIDTH <= 4 && CharybdisTable.HEIGHT >= 2.5f && CharybdisTable.HEIGHT <= 3.5f);
         assertTrue(CharybdisTable.DAMAGE_SCALE >= 1f && CharybdisTable.DAMAGE_SCALE <= 1.25f);
         assertTrue(CharybdisTable.MELEE_FACTOR > 0.5f && CharybdisTable.MELEE_FACTOR <= 1f);

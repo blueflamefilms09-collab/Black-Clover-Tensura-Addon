@@ -29,7 +29,10 @@ class ZenonTableTest {
             assertTrue(s.recovery() >= 8, "a beat to breathe after every move");
             assertTrue(s.manaCost() > 0);
         }
-        assertSame(ZenonTable.byId(ZenonTable.DOMINATION), SPECS.get(SPECS.size() - 1));
+        assertSame(ZenonTable.byId(ZenonTable.DOMINATION), SPECS.get(10), "the first eleven moves keep their places (the client reads names by index)");
+        assertEquals(ZenonTable.RIFT_CUTS, SPECS.get(11).id(), "1.35.0 moves are appended");
+        assertEquals(ZenonTable.GATE_STORM, SPECS.get(12).id());
+        assertTrue(ZenonTable.byId(ZenonTable.RIFT_CUTS).minPower() >= 60 && ZenonTable.byId(ZenonTable.GATE_STORM).minPower() >= 80, "late-phase moves");
         assertNull(ZenonTable.byId("nope"));
     }
 
@@ -92,7 +95,7 @@ class ZenonTableTest {
 
     @Test
     void theBuildIsAFastMediumHealthAssassin() {
-        assertTrue(ZenonTable.HEALTH >= 800 && ZenonTable.HEALTH < 1200, "medium health, under Dante's 1200");
+        assertTrue(ZenonTable.HEALTH >= 800 && ZenonTable.HEALTH < 1700, "medium health, under Dante's 1700");
         assertTrue(ZenonTable.SPEED >= 0.32, "fast");
         assertTrue(ZenonTable.ARMOR < 14, "lighter than Dante");
         assertTrue(ZenonTable.HYBRID_SCALE > 1f && ZenonTable.HYBRID_SCALE < 1.25f);

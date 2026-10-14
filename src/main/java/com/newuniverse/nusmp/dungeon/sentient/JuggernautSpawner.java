@@ -25,6 +25,11 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import com.newuniverse.nusmp.vfx.VfxShape;
+import com.newuniverse.nusmp.vfx.VfxSpawn;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -56,6 +61,11 @@ final class JuggernautSpawner {
     private static final class Juggernaut {
         final Mob mob;
         final ServerBossEvent bar;
+        /** 1.35.0: the Immune Surge (its second health bar), the Antibody Pulse in the air and when the next may begin. */
+        final com.newuniverse.nusmp.boss.refill.PhaseRefill refill = new com.newuniverse.nusmp.boss.refill.PhaseRefill();
+        boolean surged;
+        long pulseReady, pulseFire = -1;
+        double pulseX, pulseY, pulseZ;
 
         Juggernaut(Mob mob, ServerBossEvent bar) {
             this.mob = mob;
@@ -187,6 +197,9 @@ final class JuggernautSpawner {
             LOG.warn("[nusmp] Could not grow a Juggernaut", failure);
         }
         adopt(m);
+        if (m.level() instanceof ServerLevel birth) {                                 // 1.35.0: the crack of its birth throws ash
+            VfxSpawn.send(birth, VfxShape.JUG_ASH_PULSE, m.position().add(0, 0.05, 0), m.position().add(0, 1, 0), 0xFFB8B2AC, 30, 6f);
+        }
     }
 
     private static void grow(Mob m, FloorKind floor) {
@@ -224,7 +237,90 @@ final class JuggernautSpawner {
     static void adopt(Mob m) {
         if (ALIVE.containsKey(m.getUUID())) return;
         ServerBossEvent bar = new ServerBossEvent(Component.literal(SentientText.JUGGERNAUT).withStyle(ChatFormatting.DARK_RED), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
-        ALIVE.put(m.getUUID(), new Juggernaut(m, bar));
+        Juggernaut j = new Juggernaut(m, bar);
+        j.surged = m.getPersistentData().getBoolean(SURGED);                       // saved with the entity: a reload grants no second surge
+        com.newuniverse.nusmp.boss.refill.RefillTag.read(j.refill, m.getPersistentData());
+        ALIVE.put(m.getUUID(), j);
+    }
+
+    /** The persistent-data mark of a Juggernaut that has used its Immune Surge. */
+    static final String SURGED = "nusmp_juggernaut_surged";
+
+    /** Every tick: the Immune Surge refill, and the Antibody Pulse (marked, then loosed). At most three Juggernauts exist, so this is cheap. */
+    static void tick(long serverTick) {
+        if (ALIVE.isEmpty()) return;
+        for (Juggernaut j : ALIVE.values()) {
+            Mob m = j.mob;
+            if (!m.isAlive() || m.isRemoved() || !(m.level() instanceof ServerLevel level)) continue;
+            long now = level.getGameTime();
+            if (j.refill.active()) {
+                j.refill.retarget(m.getMaxHealth());
+                float hp = j.refill.tick();
+                if (hp >= 0f) m.setHealth(Math.max(m.getHealth(), Math.min(hp, m.getMaxHealth())));
+                j.bar.setColor(j.refill.glow() > 0.3f ? BossEvent.BossBarColor.WHITE : BossEvent.BossBarColor.RED);
+                if (j.refill.active()) {
+                    com.newuniverse.nusmp.boss.refill.RefillFx.fill(level, m.position(), m.getBbHeight(), m.getBbWidth() * 0.8, 0xB8B2AC, 0xFF4B4B, j.refill.progress(), (int) now);
+                } else {
+                    com.newuniverse.nusmp.boss.refill.RefillFx.end(level, m.position(), m.getBbHeight(), 0xB8B2AC, 0xFF4B4B);
+                    j.bar.setColor(BossEvent.BossBarColor.RED);
+                    com.newuniverse.nusmp.boss.refill.RefillTag.write(j.refill, m.getPersistentData());
+                }
+                continue;
+            }
+            if (JuggernautMoves.surgeDue(m.getHealth(), m.getMaxHealth(), j.surged)
+                    && j.refill.begin("surge", m.getHealth(), m.getMaxHealth(), JuggernautMoves.SURGE_TICKS)) {
+                j.surged = true;                                                     // once per Juggernaut: the second bar
+                m.getPersistentData().putBoolean(SURGED, true);
+                com.newuniverse.nusmp.boss.refill.RefillTag.write(j.refill, m.getPersistentData());
+                m.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.DAMAGE_RESISTANCE, JuggernautMoves.SURGE_GUARD, 4, false, false));
+                j.pulseFire = -1;
+                com.newuniverse.nusmp.boss.refill.RefillFx.start(level, m.position(), m.getBbHeight(), 0xB8B2AC, 0xFF4B4B, JuggernautMoves.SURGE_TICKS);
+                VfxSpawn.send(level, VfxShape.JUG_ASH_PULSE, m.position().add(0, 0.05, 0), m.position().add(0, 1, 0), 0xFFB8B2AC, 30, 9f);
+                VfxSpawn.send(level, VfxShape.JUG_ANTIBODY_RING, m.position().add(0, 0.05, 0), m.position().add(0, 1, 0), 0xFFFF4B4B, 40, 10f);
+                Component line = Component.translatable("nusmp.boss.refill.second_bar", SentientText.JUGGERNAUT).withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD);
+                for (ServerPlayer p : level.players()) if (!p.isSpectator() && p.distanceToSqr(m) <= (double) BAR_RANGE * BAR_RANGE) p.sendSystemMessage(line);
+                continue;
+            }
+            pulse(level, j, m, now);
+        }
+    }
+
+    /** The Antibody Pulse: a ring of antibodies marks the floor under it, then a shockwave of ash that catches those standing in it. */
+    private static void pulse(ServerLevel level, Juggernaut j, Mob m, long now) {
+        double r = JuggernautMoves.radius(j.surged);
+        if (j.pulseFire >= 0) {
+            if (now < j.pulseFire) return;
+            j.pulseFire = -1;
+            j.pulseReady = now + JuggernautMoves.cooldown(j.surged);
+            VfxSpawn.send(level, VfxShape.JUG_ASH_PULSE, new Vec3(j.pulseX, j.pulseY + 0.05, j.pulseZ), new Vec3(j.pulseX, j.pulseY + 1, j.pulseZ), 0xFFB8B2AC, 26, (float) r);
+            level.playSound(null, j.pulseX, j.pulseY, j.pulseZ, SoundEvents.GENERIC_EXPLODE.value(), SoundSource.HOSTILE, 2.0f, 0.6f);
+            for (ServerPlayer p : level.players()) {
+                if (!p.isAlive() || p.isSpectator() || p.isCreative()) continue;
+                double dist = Math.hypot(p.getX() - j.pulseX, p.getZ() - j.pulseZ);
+                if (!JuggernautMoves.catches(p.onGround(), dist, r, p.getBbWidth() * 0.5, p.getY() - j.pulseY)) continue;
+                float amount = com.newuniverse.nusmp.balance.BalanceLaw.cap(p, Math.min(Math.max(3f, JuggernautMoves.share(j.surged) * p.getMaxHealth()), p.getMaxHealth() * 0.45f));
+                if (amount > 0f) p.hurt(level.damageSources().mobAttack(m), amount);
+                double dx = p.getX() - j.pulseX, dz = p.getZ() - j.pulseZ, d = Math.max(0.1, Math.hypot(dx, dz));
+                p.push(dx / d * 0.7, 0.35, dz / d * 0.7);
+                p.hurtMarked = true;
+            }
+            return;
+        }
+        ServerPlayer near = null;
+        double best = Double.MAX_VALUE;
+        for (ServerPlayer p : level.players()) {
+            if (!p.isAlive() || p.isSpectator() || p.isCreative()) continue;
+            double d = p.distanceToSqr(m);
+            if (d < best) { best = d; near = p; }
+        }
+        if (near == null || !JuggernautMoves.pulseDue(now, j.pulseReady, false, Math.sqrt(best))) return;
+        j.pulseX = m.getX();
+        j.pulseY = m.getY();
+        j.pulseZ = m.getZ();
+        int windup = Math.max(JuggernautMoves.MIN_WARNING, JuggernautMoves.windup(j.surged));
+        j.pulseFire = now + windup;
+        VfxSpawn.send(level, VfxShape.JUG_ANTIBODY_RING, new Vec3(j.pulseX, j.pulseY + 0.05, j.pulseZ), new Vec3(j.pulseX, j.pulseY + 1, j.pulseZ), 0xFFFF4B4B, windup, (float) r);
+        level.playSound(null, j.pulseX, j.pulseY, j.pulseZ, SoundEvents.WARDEN_NEARBY_CLOSE, SoundSource.HOSTILE, 2.0f, 0.7f);
     }
 
     /** Called every twenty ticks: the bars show the health to the players within 48 blocks, and a Juggernaut that fell or went takes its bar with it. */

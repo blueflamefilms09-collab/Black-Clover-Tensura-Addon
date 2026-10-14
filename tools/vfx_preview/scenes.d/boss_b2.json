@@ -1,0 +1,1371 @@
+{
+ "_comment": "1.35.0 boss move effects (DevilBossLayer, StoneBossLayer, TideBossLayer, OrderBossLayer): every shape as a telegraph (seed bit 0 = 0) and as a strike (seed bit 0 = 1).",
+ "b2_devil_sigil_tell": {
+  "layer": "DevilBossLayer",
+  "shape": "BOSS_DEVIL_SIGIL",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 7,
+  "duration": 40,
+  "cam": [
+   0,
+   6,
+   13
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ],
+  "ages": [
+   4,
+   20,
+   36
+  ],
+  "seed": 12346,
+  "figures": [
+   [
+    3,
+    0,
+    1,
+    1.8
+   ]
+  ]
+ },
+ "b2_devil_sigil_hit": {
+  "layer": "DevilBossLayer",
+  "shape": "BOSS_DEVIL_SIGIL",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 7,
+  "duration": 24,
+  "cam": [
+   0,
+   6,
+   13
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ],
+  "ages": [
+   3,
+   10,
+   20
+  ],
+  "seed": 12345,
+  "figures": [
+   [
+    3,
+    0,
+    1,
+    1.8
+   ]
+  ]
+ },
+ "b2_devil_chains_tell": {
+  "layer": "DevilBossLayer",
+  "shape": "BOSS_DEVIL_CHAINS",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   14,
+   0
+  ],
+  "power": 9,
+  "duration": 30,
+  "cam": [
+   0,
+   5,
+   17
+  ],
+  "target": [
+   0,
+   6,
+   0
+  ],
+  "ages": [
+   4,
+   15,
+   26
+  ],
+  "seed": 12346,
+  "figures": [
+   [
+    3,
+    0,
+    1,
+    1.8
+   ]
+  ]
+ },
+ "b2_devil_chains_hit": {
+  "layer": "DevilBossLayer",
+  "shape": "BOSS_DEVIL_CHAINS",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   14,
+   0
+  ],
+  "power": 9,
+  "duration": 30,
+  "cam": [
+   0,
+   5,
+   17
+  ],
+  "target": [
+   0,
+   6,
+   0
+  ],
+  "ages": [
+   3,
+   10,
+   22
+  ],
+  "seed": 12345,
+  "figures": [
+   [
+    3,
+    0,
+    1,
+    1.8
+   ]
+  ]
+ },
+ "b2_devil_cracks_tell": {
+  "layer": "DevilBossLayer",
+  "shape": "BOSS_DEVIL_CRACKS",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 9,
+  "duration": 24,
+  "cam": [
+   0,
+   7,
+   15
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ],
+  "ages": [
+   4,
+   12,
+   20
+  ],
+  "seed": 12346,
+  "figures": [
+   [
+    3,
+    0,
+    1,
+    1.8
+   ]
+  ]
+ },
+ "b2_devil_cracks_hit": {
+  "layer": "DevilBossLayer",
+  "shape": "BOSS_DEVIL_CRACKS",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 9,
+  "duration": 24,
+  "cam": [
+   0,
+   7,
+   15
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ],
+  "ages": [
+   3,
+   8,
+   18
+  ],
+  "seed": 12345,
+  "figures": [
+   [
+    3,
+    0,
+    1,
+    1.8
+   ]
+  ]
+ },
+ "b2_devil_spokes_tell": {
+  "layer": "DevilBossLayer",
+  "shape": "BOSS_DEVIL_CRACKS",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   7,
+   0,
+   0
+  ],
+  "power": 15,
+  "duration": 24,
+  "cam": [
+   0,
+   11,
+   22
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ],
+  "ages": [
+   4,
+   12,
+   20
+  ],
+  "seed": 12346,
+  "figures": [
+   [
+    6,
+    0,
+    3,
+    1.8
+   ]
+  ]
+ },
+ "b2_devil_spokes_hit": {
+  "layer": "DevilBossLayer",
+  "shape": "BOSS_DEVIL_CRACKS",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   7,
+   0,
+   0
+  ],
+  "power": 15,
+  "duration": 24,
+  "cam": [
+   0,
+   11,
+   22
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ],
+  "ages": [
+   3,
+   8,
+   18
+  ],
+  "seed": 12345,
+  "figures": [
+   [
+    6,
+    0,
+    3,
+    1.8
+   ]
+  ]
+ },
+ "b2_devil_brand_tell": {
+  "layer": "DevilBossLayer",
+  "shape": "BOSS_DEVIL_BRAND",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 3,
+  "duration": 36,
+  "cam": [
+   0,
+   4,
+   8
+  ],
+  "target": [
+   0,
+   3,
+   0
+  ],
+  "ages": [
+   4,
+   18,
+   32
+  ],
+  "seed": 12346,
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "b2_devil_brand_hit": {
+  "layer": "DevilBossLayer",
+  "shape": "BOSS_DEVIL_BRAND",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 3,
+  "duration": 36,
+  "cam": [
+   0,
+   4,
+   8
+  ],
+  "target": [
+   0,
+   3,
+   0
+  ],
+  "ages": [
+   3,
+   10,
+   25
+  ],
+  "seed": 12345,
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "b2_stone_ring_tell": {
+  "layer": "StoneBossLayer",
+  "shape": "BOSS_STONE_RING",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 14,
+  "duration": 40,
+  "cam": [
+   0,
+   12,
+   26
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ],
+  "ages": [
+   6,
+   24,
+   38
+  ],
+  "seed": 12346,
+  "figures": [
+   [
+    4,
+    0,
+    2,
+    1.8
+   ]
+  ],
+  "color": "FFFFAA33"
+ },
+ "b2_stone_ring_hit": {
+  "layer": "StoneBossLayer",
+  "shape": "BOSS_STONE_RING",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 14,
+  "duration": 34,
+  "cam": [
+   0,
+   12,
+   26
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ],
+  "ages": [
+   4,
+   12,
+   28
+  ],
+  "seed": 12345,
+  "figures": [
+   [
+    4,
+    0,
+    2,
+    1.8
+   ]
+  ],
+  "color": "FFFFAA33"
+ },
+ "b2_stone_column_tell": {
+  "layer": "StoneBossLayer",
+  "shape": "BOSS_STONE_COLUMN",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 2,
+  "duration": 30,
+  "cam": [
+   0,
+   3,
+   9
+  ],
+  "target": [
+   0,
+   3,
+   0
+  ],
+  "ages": [
+   5,
+   15,
+   28
+  ],
+  "seed": 12346,
+  "figures": [
+   [
+    2.5,
+    0,
+    1,
+    1.8
+   ]
+  ],
+  "color": "FFFFAA33"
+ },
+ "b2_stone_column_hit": {
+  "layer": "StoneBossLayer",
+  "shape": "BOSS_STONE_COLUMN",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 2,
+  "duration": 26,
+  "cam": [
+   0,
+   3,
+   9
+  ],
+  "target": [
+   0,
+   3,
+   0
+  ],
+  "ages": [
+   3,
+   10,
+   22
+  ],
+  "seed": 12345,
+  "figures": [
+   [
+    2.5,
+    0,
+    1,
+    1.8
+   ]
+  ],
+  "color": "FFFFAA33"
+ },
+ "b2_stone_trail_tell": {
+  "layer": "StoneBossLayer",
+  "shape": "BOSS_STONE_TRAIL",
+  "from": [
+   0,
+   9,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 2,
+  "duration": 30,
+  "cam": [
+   0,
+   5,
+   12
+  ],
+  "target": [
+   0,
+   4,
+   0
+  ],
+  "ages": [
+   5,
+   18,
+   28
+  ],
+  "seed": 12346,
+  "figures": [
+   [
+    2,
+    0,
+    1,
+    1.8
+   ]
+  ],
+  "color": "FFFFAA33"
+ },
+ "b2_stone_trail_hit": {
+  "layer": "StoneBossLayer",
+  "shape": "BOSS_STONE_TRAIL",
+  "from": [
+   0,
+   9,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 2,
+  "duration": 16,
+  "cam": [
+   0,
+   5,
+   12
+  ],
+  "target": [
+   0,
+   4,
+   0
+  ],
+  "ages": [
+   4,
+   8,
+   14
+  ],
+  "seed": 12345,
+  "figures": [
+   [
+    2,
+    0,
+    1,
+    1.8
+   ]
+  ],
+  "color": "FFFFAA33"
+ },
+ "b2_stone_fissure_tell": {
+  "layer": "StoneBossLayer",
+  "shape": "BOSS_STONE_FISSURE",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   18
+  ],
+  "power": 1.2,
+  "duration": 40,
+  "cam": [
+   7,
+   5,
+   2
+  ],
+  "target": [
+   0,
+   0,
+   9
+  ],
+  "ages": [
+   5,
+   20,
+   38
+  ],
+  "seed": 12346,
+  "figures": [
+   [
+    2,
+    0,
+    2,
+    1.8
+   ]
+  ],
+  "color": "FFFFAA33"
+ },
+ "b2_stone_fissure_hit": {
+  "layer": "StoneBossLayer",
+  "shape": "BOSS_STONE_FISSURE",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   18
+  ],
+  "power": 1.2,
+  "duration": 40,
+  "cam": [
+   7,
+   5,
+   2
+  ],
+  "target": [
+   0,
+   0,
+   9
+  ],
+  "ages": [
+   4,
+   10,
+   22
+  ],
+  "seed": 12345,
+  "figures": [
+   [
+    2,
+    0,
+    2,
+    1.8
+   ]
+  ],
+  "color": "FFFFAA33"
+ },
+ "b2_tide_vortex_tell": {
+  "layer": "TideBossLayer",
+  "shape": "BOSS_TIDE_VORTEX",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 6,
+  "duration": 40,
+  "cam": [
+   0,
+   7,
+   13
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ],
+  "ages": [
+   5,
+   20,
+   36
+  ],
+  "seed": 12346,
+  "figures": [
+   [
+    3,
+    0,
+    1,
+    1.8
+   ]
+  ]
+ },
+ "b2_tide_vortex_hit": {
+  "layer": "TideBossLayer",
+  "shape": "BOSS_TIDE_VORTEX",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 6,
+  "duration": 60,
+  "cam": [
+   0,
+   7,
+   13
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ],
+  "ages": [
+   5,
+   25,
+   50
+  ],
+  "seed": 12345,
+  "figures": [
+   [
+    3,
+    0,
+    1,
+    1.8
+   ]
+  ]
+ },
+ "b2_tide_spout_tell": {
+  "layer": "TideBossLayer",
+  "shape": "BOSS_TIDE_SPOUT",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 6,
+  "duration": 30,
+  "cam": [
+   0,
+   4,
+   12
+  ],
+  "target": [
+   0,
+   3,
+   0
+  ],
+  "ages": [
+   5,
+   15,
+   28
+  ],
+  "seed": 12346,
+  "figures": [
+   [
+    3,
+    0,
+    1,
+    1.8
+   ]
+  ]
+ },
+ "b2_tide_spout_hit": {
+  "layer": "TideBossLayer",
+  "shape": "BOSS_TIDE_SPOUT",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 6,
+  "duration": 28,
+  "cam": [
+   0,
+   4,
+   12
+  ],
+  "target": [
+   0,
+   3,
+   0
+  ],
+  "ages": [
+   3,
+   10,
+   22
+  ],
+  "seed": 12345,
+  "figures": [
+   [
+    3,
+    0,
+    1,
+    1.8
+   ]
+  ]
+ },
+ "b2_tide_sweep_tell": {
+  "layer": "TideBossLayer",
+  "shape": "BOSS_TIDE_SWEEP",
+  "from": [
+   0,
+   1.4,
+   0
+  ],
+  "to": [
+   3,
+   1.4,
+   0
+  ],
+  "power": 7.5,
+  "duration": 18,
+  "cam": [
+   -9,
+   10,
+   -6
+  ],
+  "target": [
+   3,
+   0,
+   0
+  ],
+  "ages": [
+   3,
+   9,
+   16
+  ],
+  "seed": 12346,
+  "figures": [
+   [
+    5,
+    0,
+    2,
+    1.8
+   ]
+  ]
+ },
+ "b2_tide_sweep_hit": {
+  "layer": "TideBossLayer",
+  "shape": "BOSS_TIDE_SWEEP",
+  "from": [
+   0,
+   1.4,
+   0
+  ],
+  "to": [
+   3,
+   1.4,
+   0
+  ],
+  "power": 7.5,
+  "duration": 18,
+  "cam": [
+   -9,
+   10,
+   -6
+  ],
+  "target": [
+   3,
+   0,
+   0
+  ],
+  "ages": [
+   2,
+   6,
+   12
+  ],
+  "seed": 12345,
+  "figures": [
+   [
+    5,
+    0,
+    2,
+    1.8
+   ]
+  ]
+ },
+ "b2_tide_ring_tell": {
+  "layer": "TideBossLayer",
+  "shape": "BOSS_TIDE_RING",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 6,
+  "duration": 40,
+  "cam": [
+   0,
+   8,
+   15
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ],
+  "ages": [
+   6,
+   24,
+   38
+  ],
+  "seed": 12346,
+  "figures": [
+   [
+    3,
+    0,
+    1,
+    1.8
+   ]
+  ]
+ },
+ "b2_tide_ring_hit": {
+  "layer": "TideBossLayer",
+  "shape": "BOSS_TIDE_RING",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 6,
+  "duration": 32,
+  "cam": [
+   0,
+   8,
+   15
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ],
+  "ages": [
+   4,
+   12,
+   26
+  ],
+  "seed": 12345,
+  "figures": [
+   [
+    3,
+    0,
+    1,
+    1.8
+   ]
+  ]
+ },
+ "b2_order_sigil_tell": {
+  "layer": "OrderBossLayer",
+  "shape": "BOSS_ORDER_SIGIL",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 5,
+  "duration": 40,
+  "cam": [
+   0,
+   7,
+   12
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ],
+  "ages": [
+   4,
+   20,
+   36
+  ],
+  "seed": 12346,
+  "figures": [
+   [
+    2,
+    0,
+    1,
+    1.8
+   ]
+  ]
+ },
+ "b2_order_sigil_hit": {
+  "layer": "OrderBossLayer",
+  "shape": "BOSS_ORDER_SIGIL",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 5,
+  "duration": 24,
+  "cam": [
+   0,
+   7,
+   12
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ],
+  "ages": [
+   3,
+   10,
+   20
+  ],
+  "seed": 12345,
+  "figures": [
+   [
+    2,
+    0,
+    1,
+    1.8
+   ]
+  ]
+ },
+ "b2_order_grid_tell": {
+  "layer": "OrderBossLayer",
+  "shape": "BOSS_ORDER_GRID",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   1,
+   0,
+   0
+  ],
+  "power": 8,
+  "duration": 36,
+  "cam": [
+   0,
+   10,
+   16
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ],
+  "ages": [
+   4,
+   18,
+   34
+  ],
+  "seed": 12346,
+  "figures": [
+   [
+    2,
+    0,
+    1,
+    1.8
+   ]
+  ]
+ },
+ "b2_order_grid_hit": {
+  "layer": "OrderBossLayer",
+  "shape": "BOSS_ORDER_GRID",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   1,
+   0,
+   0
+  ],
+  "power": 8,
+  "duration": 36,
+  "cam": [
+   0,
+   10,
+   16
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ],
+  "ages": [
+   4,
+   12,
+   26
+  ],
+  "seed": 12345,
+  "figures": [
+   [
+    2,
+    0,
+    1,
+    1.8
+   ]
+  ]
+ },
+ "b2_order_beam_tell": {
+  "layer": "OrderBossLayer",
+  "shape": "BOSS_ORDER_BEAM",
+  "from": [
+   0,
+   1,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   20
+  ],
+  "power": 2,
+  "duration": 30,
+  "cam": [
+   7,
+   5,
+   3
+  ],
+  "target": [
+   0,
+   1,
+   10
+  ],
+  "ages": [
+   5,
+   20,
+   28
+  ],
+  "seed": 12346,
+  "figures": [
+   [
+    0,
+    0,
+    12,
+    1.8
+   ]
+  ]
+ },
+ "b2_order_beam_hit": {
+  "layer": "OrderBossLayer",
+  "shape": "BOSS_ORDER_BEAM",
+  "from": [
+   0,
+   1,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   20
+  ],
+  "power": 2,
+  "duration": 16,
+  "cam": [
+   7,
+   5,
+   3
+  ],
+  "target": [
+   0,
+   1,
+   10
+  ],
+  "ages": [
+   2,
+   6,
+   13
+  ],
+  "seed": 12345,
+  "figures": [
+   [
+    0,
+    0,
+    12,
+    1.8
+   ]
+  ]
+ },
+ "b2_order_ledger_tell": {
+  "layer": "OrderBossLayer",
+  "shape": "BOSS_ORDER_LEDGER",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   3.4,
+   0
+  ],
+  "power": 6,
+  "duration": 60,
+  "cam": [
+   0,
+   4,
+   13
+  ],
+  "target": [
+   0,
+   2,
+   0
+  ],
+  "ages": [
+   6,
+   30,
+   56
+  ],
+  "seed": 12346,
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.9
+   ]
+  ]
+ },
+ "b2_order_ledger_hit": {
+  "layer": "OrderBossLayer",
+  "shape": "BOSS_ORDER_LEDGER",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   3.4,
+   0
+  ],
+  "power": 6,
+  "duration": 40,
+  "cam": [
+   0,
+   4,
+   13
+  ],
+  "target": [
+   0,
+   2,
+   0
+  ],
+  "ages": [
+   4,
+   16,
+   36
+  ],
+  "seed": 12345,
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.9
+   ]
+  ]
+ }
+}

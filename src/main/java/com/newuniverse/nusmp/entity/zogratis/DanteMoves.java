@@ -104,6 +104,7 @@ public final class DanteMoves {
         final Vec3 c = centre;
         final long born = sl.getGameTime();
         VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE, c.add(0, 0.05, 0), c.add(0, 1, 0), VIOLET, life, (float) (r / 1.6));
+        ZogratisVfx.well(sl, c, r, life, VIOLET, false);                       // 1.35.0: the field is a well of warped space
         sl.playSound(null, BlockPos.containing(c), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.HOSTILE, 2f, 0.4f);
         SpellRuntime.zone(sl, life, GravityMath.STEP, safe("gravity field", age -> fieldStep(boss, sl, c, r, s, age, born)));
     }
@@ -184,6 +185,8 @@ public final class DanteMoves {
         final float damage = (float) GravityMath.collapseDamage(p);
         VfxSpawn.send(sl, VfxShape.DARK_BLACK_HOLE, c.add(0, 2.5, 0), c.add(0, 3.5, 0), VIOLET, GravityMath.GATHER + 6, (float) (r * 0.9));
         VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE, c.add(0, 0.05, 0), c.add(0, 1, 0), VIOLET, GravityMath.GATHER, (float) (r / 1.6));
+        ZogratisVfx.well(sl, c, r, GravityMath.GATHER, VIOLET, true);            // 1.35.0: the rim closes as the sphere gathers
+        ZogratisVfx.singularity(sl, c.add(0, 2.8, 0), r, GravityMath.GATHER + 6, VIOLET);
         sl.playSound(null, BlockPos.containing(c), SoundEvents.WARDEN_SONIC_CHARGE, SoundSource.HOSTILE, 3f, 0.5f);
         SpellRuntime.zone(sl, GravityMath.GATHER, 1, safe("singularity", age -> singularityStep(boss, sl, c, r, p, damage, age)));
     }
@@ -221,6 +224,7 @@ public final class DanteMoves {
     private static void collapse(ZogratisBoss boss, ServerLevel sl, Vec3 c, double r, double p, float damage) {
         long now = sl.getGameTime();
         VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE_EXPLOSION, c.add(0, 0.05, 0), c.add(0, 1, 0), VIOLET, 22, (float) (r / 1.4));
+        ZogratisVfx.gravityImpact(sl, c, r, VIOLET);
         sl.playSound(null, BlockPos.containing(c), SoundEvents.WITHER_SPAWN, SoundSource.HOSTILE, 3f, 0.5f);
         Tells.burst(sl, c.add(0, 1.2, 0), ACCENT, 80);
         for (LivingEntity e : boss.foesAround(c.add(0, 4, 0), Math.sqrt(r * r + 100) + 1)) {
@@ -285,6 +289,7 @@ public final class DanteMoves {
         final Vec3 facing = look.normalize();
         Vec3 fist = boss.position().add(facing.scale(reach * 0.6));
         VfxSpawn.send(sl, VfxShape.BODY_FX3, fist.add(0, 1.2, 0), fist.add(0, 1.2, 0).add(facing), BODY, 20, 1.1f);
+        ZogratisVfx.gravityImpact(sl, ZogratisBoss.ground(sl, fist), 3.2, BODY);
         sl.playSound(null, boss.blockPosition(), SoundEvents.STONE_BREAK, SoundSource.HOSTILE, 1.6f, 0.5f);
         for (LivingEntity e : boss.foes(reach + 1.5)) {
             Vec3 to = e.position().subtract(boss.position()).multiply(1, 0, 1);
@@ -310,6 +315,7 @@ public final class DanteMoves {
         final int ticks = GravityMath.waveTicks(reach);
         VfxSpawn.send(sl, VfxShape.EARTH_RISE, centre, centre.add(0, 1, 0), 0xFFFFB45A, 24, (float) Math.max(1.0, reach / 4));
         VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE_EXPLOSION, centre.add(0, 0.05, 0), centre.add(0, 1, 0), VIOLET, 14, (float) (reach / 3));
+        ZogratisVfx.gravityImpact(sl, centre, reach, VIOLET);
         sl.playSound(null, BlockPos.containing(centre), SoundEvents.STONE_BREAK, SoundSource.HOSTILE, 2f, 0.4f);
         SpellRuntime.zone(sl, ticks, 1, safe("stomp wave", age -> {
             if (!boss.isAlive() || boss.isRemoved()) return;
@@ -343,6 +349,7 @@ public final class DanteMoves {
         final List<LivingEntity> victims = caught;
         Vec3 at = boss.position();
         VfxSpawn.send(sl, VfxShape.ASH_FORMATION, at, at.add(0, 1, 0), VIOLET, 28, (float) Math.min(9, radius * 0.35));
+        ZogratisVfx.well(sl, at, 8, 28, VIOLET, false);
         sl.playSound(null, boss.blockPosition(), SoundEvents.WARDEN_SONIC_CHARGE, SoundSource.HOSTILE, 2.5f, 0.6f);
         final int pullTicks = 12;
         SpellRuntime.zone(sl, pullTicks, 1, safe("gravity pull", age -> {
@@ -378,6 +385,7 @@ public final class DanteMoves {
         final double len = Math.max(4, Math.min(30, length));
         Vec3 to = from.add(d.scale(len));
         VfxSpawn.send(sl, VfxShape.STONE_SPIKES, from, to, 0xFFFFFFFF, 44, 1.0f);
+        ZogratisVfx.lane(sl, from, to, 3.4, 30, VIOLET, false);
         sl.playSound(null, boss.blockPosition(), SoundEvents.STONE_BREAK, SoundSource.HOSTILE, 1.5f, 0.5f);
         final Set<Integer> hit = new HashSet<>();
         for (double along = 2; along <= len; along += 2) {
@@ -404,6 +412,8 @@ public final class DanteMoves {
     public static void weightColumn(ZogratisBoss boss, Vec3 mark, double radius, float damage) {
         if (!(boss.level() instanceof ServerLevel sl)) return;
         VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE_EXPLOSION, mark.add(0, 0.05, 0), mark.add(0, 1, 0), VIOLET, 18, (float) (radius / 1.2));
+        ZogratisVfx.gravityImpact(sl, mark, radius * 1.6, VIOLET);
+        ZogratisVfx.singularity(sl, mark.add(0, 2.2, 0), radius * 1.4, 10, VIOLET);
         sl.playSound(null, BlockPos.containing(mark), SoundEvents.WITHER_SPAWN, SoundSource.HOSTILE, 1.6f, 0.7f);
         Tells.burst(sl, mark.add(0, 1, 0), ACCENT, 40);
         List<LivingEntity> slammed = new ArrayList<>();

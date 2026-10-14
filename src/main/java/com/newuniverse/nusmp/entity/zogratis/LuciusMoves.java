@@ -44,6 +44,75 @@ final class LuciusMoves {
     /** The radius the Soul Purge's wave reaches, and the ticks it takes to get there (one block a tick). */
     static final int PURGE_RADIUS = 28;
 
+    // ================================================================ 1.35.0: Judgment of Light and the Chrono Rings
+    /** The columns of the Judgment: on the target, on the other foes, then spread round the target; never closer than 3.6 blocks to each other. */
+    static List<Vec3> judgmentSpots(LuciusBoss b, LivingEntity target) {
+        int want = Math.min(com.newuniverse.nusmp.boss.LuciusNumbers.JUDGMENT_MAX_MARKS, 2 + b.tuning().castSlots());
+        List<Vec3> out = new ArrayList<>();
+        out.add(LuciusBoss.ground(b.level(), target.position()));
+        for (LivingEntity f : b.foes(44)) {
+            if (out.size() >= want) break;
+            if (f == target) continue;
+            Vec3 g = LuciusBoss.ground(b.level(), f.position());
+            if (apart(out, g)) out.add(g);
+        }
+        double phase = b.getRandom().nextDouble() * Math.PI * 2;
+        for (int k = 0; out.size() < want && k < 12; k++) {
+            double a = phase + k * 2.1;
+            Vec3 g = LuciusBoss.ground(b.level(), target.position().add(Math.cos(a) * 4.6, 0, Math.sin(a) * 4.6));
+            if (apart(out, g)) out.add(g);
+        }
+        return out;
+    }
+
+    private static boolean apart(List<Vec3> spots, Vec3 p) {
+        for (Vec3 s : spots) if (s.distanceToSqr(p) < 3.6 * 3.6) return false;
+        return true;
+    }
+
+    /** A column of light on every spot (one every three ticks): everyone within the radius takes 'damage' once in all. */
+    static void judgment(LuciusBoss b, List<Vec3> spots, float damage) {
+        if (!(b.level() instanceof ServerLevel sl)) return;
+        final Set<Integer> struck = new HashSet<>();
+        final int rgb = FxMath.divine(b.power());
+        for (int i = 0; i < spots.size(); i++) {
+            final Vec3 s = spots.get(i);
+            b.later(i * 3, LuciusFx.safe("judgment", () -> {
+                ZogratisVfx.pillar(sl, s, com.newuniverse.nusmp.boss.LuciusNumbers.JUDGMENT_RADIUS, 20, rgb, false);
+                LuciusFx.sparkle(sl, s.add(0, 1, 0), 10, 1.0);
+                LuciusFx.sound(sl, s, SoundEvents.LIGHTNING_BOLT_IMPACT, 1.0f, 1.6f);
+                for (LivingEntity f : b.foesAround(s, com.newuniverse.nusmp.boss.LuciusNumbers.JUDGMENT_RADIUS + 1)) {
+                    double dx = f.getX() - s.x, dz = f.getZ() - s.z;
+                    if (dx * dx + dz * dz > com.newuniverse.nusmp.boss.LuciusNumbers.JUDGMENT_RADIUS * com.newuniverse.nusmp.boss.LuciusNumbers.JUDGMENT_RADIUS
+                            || Math.abs(f.getY() - s.y) > 4 || !struck.add(f.getId())) continue;
+                    b.strike(f, damage, true);
+                }
+            }));
+        }
+    }
+
+    /** One ring of time running out of him to 'reach' (one block per tick or so, like Dante's quake waves); a jump over it avoids it. */
+    static void chronoRing(LuciusBoss b, double reach, float damage) {
+        if (!(b.level() instanceof ServerLevel sl)) return;
+        final Vec3 c = b.position();
+        final Set<Integer> hit = new HashSet<>();
+        final int rgb = FxMath.divine(b.power());
+        ZogratisVfx.divineSigil(sl, c, reach, 16, rgb, false);
+        VfxSpawn.send(sl, VfxShape.TIME_REWIND, c.add(0, 0.05, 0), c.add(0, 1, 0), 0, 18, (float) Math.max(1.0, reach / 4));        // the existing Time ring draw path, called only
+        LuciusFx.sound(sl, c, SoundEvents.AMETHYST_BLOCK_RESONATE, 2f, 0.6f);
+        SpellRuntime.zone(sl, GravityMath.waveTicks(reach), 1, LuciusFx.safe("chrono ring", age -> {
+            if (!b.isAlive() || b.isRemoved()) return;
+            double wr = GravityMath.waveRadius(age);
+            for (LivingEntity f : b.foesAround(c, reach + 3)) {
+                if (hit.contains(f.getId())) continue;
+                double dx = f.getX() - c.x, dz = f.getZ() - c.z, dist = Math.sqrt(dx * dx + dz * dz);
+                if (dist > reach + f.getBbWidth() / 2 || !GravityMath.waveHits(dist, wr) || GravityMath.jumpsWave(DanteMoves.floorHeight(sl, f))) continue;
+                hit.add(f.getId());
+                if (b.strike(f, damage, true)) f.knockback(0.8, -dx / Math.max(1e-3, dist), -dz / Math.max(1e-3, dist));
+            }
+        }));
+    }
+
     // ================================================================ soul motes
     /** Soul motes: 'slots + 2' slow homing motes in a fan, two ticks apart. */
     static void soulMotes(LuciusBoss b, LivingEntity target) {

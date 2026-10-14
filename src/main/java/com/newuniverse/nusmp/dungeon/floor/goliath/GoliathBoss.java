@@ -90,7 +90,7 @@ public class GoliathBoss extends ZogratisBoss {
         addTag(TAG);
     }
 
-    public static AttributeSupplier.Builder createAttributes() { return ZogratisBoss.bossAttributes(1500, 30, 0.20, 12, 6); }
+    public static AttributeSupplier.Builder createAttributes() { return ZogratisBoss.bossAttributes(GoliathTable.HEALTH, GoliathTable.ATTACK, 0.20, GoliathTable.ARMOR, GoliathTable.TOUGHNESS); }
 
     @Override public String bossName() { return GoliathText.NAME; }
 
@@ -205,6 +205,7 @@ public class GoliathBoss extends ZogratisBoss {
     private void crackStep(ServerLevel sl, Vec3 seal, int age) {
         if (age == 0) {
             announce(GoliathText.cracking());
+            GoliathVfx.waking(this, seal);
             for (int k = 0; k < 4; k++) {                                              // four cracks run out of the seal
                 double a = k * Math.PI / 2 + 0.4;
                 VfxSpawn.send(sl, VfxShape.EARTH_FISSURE, seal.add(Math.cos(a) * 1.5, 0.05, Math.sin(a) * 1.5), seal.add(Math.cos(a) * 9.0, 0.05, Math.sin(a) * 9.0),
@@ -234,6 +235,7 @@ public class GoliathBoss extends ZogratisBoss {
         GoliathMoves.sound(sl, seal, SoundEvents.WARDEN_EMERGE, 4.0f, 0.5f);
         GoliathMoves.sound(sl, seal, SoundEvents.ANVIL_LAND, 2.5f, 0.3f);
         GoliathMoves.burst(sl, seal, 60, 2.2);
+        GoliathVfx.emerged(this, seal);
         VfxSpawn.send(sl, VfxShape.EARTH_RISE, seal.add(-2.0, 0.0, 0.0), seal.add(2.0, 0.0, 0.0), 0xFFFFB45A, 30, 1.6f);
         for (ServerPlayer p : sl.players()) {
             if (p.isSpectator() || p.isCreative() || Math.abs(p.getY() - seal.y) > 4.0) continue;
@@ -299,6 +301,7 @@ public class GoliathBoss extends ZogratisBoss {
     @Override
     protected void onGatesOpened() {
         unlock();
+        GoliathVfx.gates(this);
         for (int delay : new int[]{0, 20, 40}) {
             later(delay, GoliathMoves.safe("gates ring", () -> {
                 if (!(level() instanceof ServerLevel sl)) return;
@@ -339,6 +342,7 @@ public class GoliathBoss extends ZogratisBoss {
         fellPosted = true;
         GoliathMoves.sound(sl, position(), SoundEvents.WARDEN_ROAR, 5.0f, 0.4f);
         GoliathMoves.burst(sl, position().add(0, 1.5, 0), 80, 1.6);
+        GoliathVfx.fall(this, position());
         sl.sendParticles(ParticleTypes.EXPLOSION_EMITTER, getX(), getY() + 2.0, getZ(), 1, 0.0, 0.0, 0.0, 0.0);
         if (!LivingDungeon.in(sl)) return;
         BlockPos centre = arena();
@@ -420,9 +424,13 @@ public class GoliathBoss extends ZogratisBoss {
                 List<Vec3> m = lockedFor(id);
                 Vec3[] ends = m.size() == 2 ? new Vec3[]{m.get(0), m.get(1)} : lineTo(t);
                 unlock();
-                Vec3 along = ends[1].subtract(ends[0]);
-                double length = along.length();
-                if (length > 1e-3) GoliathMoves.seismicLine(this, ends[0], along.scale(1.0 / length), length, GoliathTable.LINE);
+                java.util.Set<Integer> forkHit = new java.util.HashSet<>();
+                for (double yaw : GoliathMath.forkAngles(gatesOpen())) {                          // one line, and at the Gates a fork of three that share their hit list
+                    Vec3[] fe = GoliathMoves.rotatedEnds(ends[0], ends[1], yaw);
+                    Vec3 along = fe[1].subtract(fe[0]);
+                    double length = along.length();
+                    if (length > 1e-3) GoliathMoves.seismicLine(this, fe[0], along.scale(1.0 / length), length, GoliathTable.LINE, forkHit);
+                }
             };
             case GoliathTable.RUBBLE_FALL -> (b, t) -> {
                 List<Vec3> spots = lockedFor(id);
@@ -476,7 +484,7 @@ public class GoliathBoss extends ZogratisBoss {
         List<double[]> at = new ArrayList<>();
         for (LivingEntity e : foes) at.add(new double[]{e.getX(), e.getZ()});
         Vec3 c = arenaCenter();
-        List<double[]> plan = GoliathMath.rubbleSpots(at, GoliathMath.rubbleCount(foes.size(), tuning().castSlots()), c.x, c.z, GoliathPitPlan.R, radius * 1.8,
+        List<double[]> plan = GoliathMath.rubbleSpots(at, GoliathMath.rubbleCount(foes.size(), tuning().castSlots(), gatesOpen()), c.x, c.z, GoliathPitPlan.R, radius * 1.8,
                 getX(), getZ(), getRandom().nextDouble() * Math.PI * 2);
         List<Vec3> out = new ArrayList<>();
         for (double[] s : plan) {
@@ -515,6 +523,7 @@ public class GoliathBoss extends ZogratisBoss {
         if (!(level() instanceof ServerLevel sl)) return;
         if (first(left, total)) {
             warn(sl, id);
+            GoliathVfx.ringTell(this, reach, total);
             GoliathMoves.sound(sl, position(), GoliathTable.BEDROCK_QUAKE.equals(id) ? SoundEvents.WARDEN_SONIC_CHARGE : SoundEvents.STONE_HIT, 2.5f, 0.4f);
         }
         GoliathMoves.dustRing(sl, position(), GoliathMath.tellRadius(reach, left, total), GoliathMoves.DUST, 1.3f);
@@ -529,6 +538,8 @@ public class GoliathBoss extends ZogratisBoss {
         if (first(left, total)) {
             warn(sl, GoliathTable.BEDROCK_FIST);
             lock(GoliathTable.BEDROCK_FIST, List.of(fistMark(target)));
+            GoliathVfx.fistTell(this, lockedFor(GoliathTable.BEDROCK_FIST).get(0), radius, total);
+            if (gatesOpen()) GoliathVfx.aftershockTell(this, lockedFor(GoliathTable.BEDROCK_FIST).get(0), GoliathTable.AFTERSHOCK_REACH, total);
             GoliathMoves.sound(sl, position(), SoundEvents.STONE_HIT, 2.5f, 0.4f);
         }
         List<Vec3> ms = lockedFor(GoliathTable.BEDROCK_FIST);
@@ -546,17 +557,24 @@ public class GoliathBoss extends ZogratisBoss {
             warn(sl, GoliathTable.SEISMIC_LINE);
             Vec3[] ends = lineTo(target);
             lock(GoliathTable.SEISMIC_LINE, List.of(ends[0], ends[1]));
+            for (double yaw : GoliathMath.forkAngles(gatesOpen())) {
+                Vec3[] fe = GoliathMoves.rotatedEnds(ends[0], ends[1], yaw);
+                GoliathVfx.lineTell(this, fe[0], fe[1], total);
+            }
             GoliathMoves.sound(sl, position(), SoundEvents.STONE_HIT, 2.5f, 0.4f);
         }
         List<Vec3> ends = lockedFor(GoliathTable.SEISMIC_LINE);
         if (ends.size() != 2) return;
-        Vec3 along = ends.get(1).subtract(ends.get(0));
-        if (along.lengthSqr() < 1e-4) return;
-        Vec3 d = along.normalize(), side = new Vec3(-d.z, 0, d.x).scale(GoliathTable.LINE_HALF_WIDTH);
-        Vec3 a = ends.get(0).add(0, 0.15, 0), b = ends.get(1).add(0, 0.15, 0);
-        Tells.line(sl, a.add(side), b.add(side), GoliathMoves.HOT);
-        Tells.line(sl, a.subtract(side), b.subtract(side), GoliathMoves.HOT);
-        Tells.gather(sl, a, 0.8, GoliathMoves.AMBER, 3);
+        for (double yaw : GoliathMath.forkAngles(gatesOpen())) {
+            Vec3[] fe = GoliathMoves.rotatedEnds(ends.get(0), ends.get(1), yaw);
+            Vec3 along = fe[1].subtract(fe[0]);
+            if (along.lengthSqr() < 1e-4) continue;
+            Vec3 d = along.normalize(), side = new Vec3(-d.z, 0, d.x).scale(GoliathTable.LINE_HALF_WIDTH);
+            Vec3 a = fe[0].add(0, 0.15, 0), b = fe[1].add(0, 0.15, 0);
+            Tells.line(sl, a.add(side), b.add(side), GoliathMoves.HOT);
+            Tells.line(sl, a.subtract(side), b.subtract(side), GoliathMoves.HOT);
+        }
+        Tells.gather(sl, ends.get(0).add(0, 0.15, 0), 0.8, GoliathMoves.AMBER, 3);
     }
 
     /** A circle at each spot the rubble will fall on, locked when the wind-up began, with a smaller ring closing in on every one. */
@@ -566,6 +584,7 @@ public class GoliathBoss extends ZogratisBoss {
         if (first(left, total)) {
             warn(sl, GoliathTable.RUBBLE_FALL);
             lock(GoliathTable.RUBBLE_FALL, rubbleSpots(sl, radius));
+            for (Vec3 s : lockedFor(GoliathTable.RUBBLE_FALL)) GoliathVfx.rubbleTell(this, s, radius, total);
             GoliathMoves.sound(sl, position(), SoundEvents.STONE_HIT, 2.5f, 0.4f);
         }
         int points = (int) Math.max(14, Math.min(28, radius * 6));

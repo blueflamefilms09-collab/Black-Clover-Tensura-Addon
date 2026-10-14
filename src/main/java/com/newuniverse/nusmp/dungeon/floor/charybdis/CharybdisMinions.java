@@ -100,7 +100,7 @@ public final class CharybdisMinions {
     static void summon(CharybdisSpawnBoss boss, LivingEntity target) {
         if (!(boss.level() instanceof ServerLevel level)) return;
         List<Vec3> spots = boss.takeSpots();
-        int room = CharybdisMath.minionsToSummon(alive(level, boss).size());
+        int room = CharybdisMath.minionsToSummon(alive(level, boss).size(), boss.gatesOpen());
         if (spots.size() > room) spots = spots.subList(0, room);
         if (spots.isEmpty() && room > 0) spots = wallSpots(boss, target);
         for (Mob m : alive(level, boss)) aim(m, target);
@@ -114,8 +114,9 @@ public final class CharybdisMinions {
             level.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, s.x, s.y, s.z, 20, 0.7, 1.0, 0.7, 0.1);
             level.playSound(null, BlockPos.containing(s), SoundEvents.STONE_BREAK, SoundSource.HOSTILE, 2.0f, 0.5f);
             final Vec3 at = s;
+            CharybdisVfx.summonStrike(boss, s);
             boss.later(14, CharybdisMoves.safe("megalodon", () -> {
-                if (!boss.isAlive() || alive(level, boss).size() >= CharybdisTable.MINION_CAP) return;
+                if (!boss.isAlive() || alive(level, boss).size() >= CharybdisTable.MINION_CAP + (boss.gatesOpen() ? 1 : 0)) return;
                 LivingEntity tg = boss.getTarget();
                 spawnAt(level, boss, at, tg != null && tg.isAlive() ? tg : target);
             }));

@@ -29,7 +29,10 @@ class DanteTableTest {
             assertTrue(s.recovery() >= 8, "a beat to breathe after every move");
             assertTrue(s.manaCost() > 0);
         }
-        assertSame(DanteTable.byId(DanteTable.SINGULARITY), SPECS.get(SPECS.size() - 1));
+        assertSame(DanteTable.byId(DanteTable.SINGULARITY), SPECS.get(11), "the first twelve moves keep their places (the client reads names by index)");
+        assertEquals(DanteTable.TWIN_WELLS, SPECS.get(12).id(), "1.35.0 moves are appended");
+        assertEquals(DanteTable.TITAN_QUAKE, SPECS.get(13).id());
+        assertTrue(DanteTable.byId(DanteTable.TWIN_WELLS).minPower() >= 60 && DanteTable.byId(DanteTable.TITAN_QUAKE).minPower() >= 80, "late-phase moves");
         assertNull(DanteTable.byId("nope"));
     }
 

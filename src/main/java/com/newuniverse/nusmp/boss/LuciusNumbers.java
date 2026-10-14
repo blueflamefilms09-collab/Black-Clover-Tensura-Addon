@@ -49,5 +49,11 @@ public final class LuciusNumbers {
     /** Base damage per hit (before the boss's damage law): the same band as his Tower Storm bolts (11) and Chrono blows (16 to 24). */
     public static final float MEGIDDO_BLAST = 9f, DARKNESS_TOUCH = 4f, CUTTER_BLADE = 14f;
     public static final int MEGIDDO_MAX_MARKS = 6, MEGIDDO_MAX_HITS_PER_FOE = 2, DARKNESS_BLIND_TICKS = 60, DARKNESS_SPIRIT = 10;
+    // ---- 1.35.0: two late-phase moves (appended after the three spells)
+    public static final String JUDGMENT = "judgment_of_light", CHRONO_RINGS = "chrono_rings";
+    public static final float JUDGMENT_BLAST = 10f, RING_BLOW = 9f;
+    public static final int JUDGMENT_MAX_MARKS = 5;
+    public static final double JUDGMENT_RADIUS = 2.6;
+
     public static final double MEGIDDO_RADIUS = 3.2, DARKNESS_RADIUS = 18, CUTTER_LENGTH = 32, CUTTER_HALF_WIDTH = 1.3;
 }

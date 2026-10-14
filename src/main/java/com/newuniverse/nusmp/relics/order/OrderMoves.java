@@ -77,7 +77,8 @@ final class OrderMoves {
         if (!(god.level() instanceof ServerLevel sl) || target == null) return;
         if (god.mark == null || first(left, total)) god.mark = ZogratisBoss.ground(sl, target.position());
         Vec3 m = god.mark;
-        double r = OrderTable.DECREE_RADIUS;
+        double r = OrderTable.decreeRadius(god.gatesOpen());
+        if (first(left, total)) OrderVfx.decreeTell(god, m, r, total);
         Tells.ring(sl, m, r, OrderFx.GOLD, 1.3f, 40);
         Tells.ring(sl, m, r * (0.3 + 0.7 * left / (double) Math.max(1, total)), OrderFx.WHITE_GOLD, 1.0f, 24);
         sl.sendParticles(ParticleTypes.ENCHANT, m.x, m.y + 0.8, m.z, 8, r * 0.5, 0.5, r * 0.5, 0.3);
@@ -88,7 +89,8 @@ final class OrderMoves {
         if (!(god.level() instanceof ServerLevel sl)) return;
         Vec3 at = god.mark != null ? god.mark : target.position();
         god.mark = null;
-        double r = OrderTable.DECREE_RADIUS;
+        double r = OrderTable.decreeRadius(god.gatesOpen());
+        OrderVfx.decreeStrike(god, at, r);
         for (LivingEntity e : god.foesAround(at, r + 1.0)) {
             if (Math.abs(e.getY() - at.y) > 3.5 || Math.hypot(e.getX() - at.x, e.getZ() - at.z) > r + e.getBbWidth() / 2) continue;
             if (god.strike(e, OrderTable.DECREE_DAMAGE, true))
@@ -111,39 +113,54 @@ final class OrderMoves {
             god.markDir = d.lengthSqr() < 1e-4 ? god.getLookAngle().multiply(1, 0, 1).normalize() : d.normalize();
             god.mark = god.position().add(0, 0.15, 0);
         }
-        Vec3 o = god.mark, d = god.markDir, side = new Vec3(-d.z, 0, d.x).scale(OrderTable.WRIT_HALF_WIDTH);
-        Vec3 end = o.add(d.scale(OrderTable.WRIT_LENGTH));
-        Tells.line(sl, o.add(side), end.add(side), OrderFx.GOLD);
-        Tells.line(sl, o.subtract(side), end.subtract(side), OrderFx.GOLD);
-        sl.sendParticles(ParticleTypes.ENCHANT, o.x + d.x * 1.5, o.y + 1.8, o.z + d.z * 1.5, 6, 0.4, 0.4, 0.4, 0.3);
+        Vec3 o = god.mark;
+        for (Vec3 d : writDirs(god, god.markDir)) {
+            Vec3 side = new Vec3(-d.z, 0, d.x).scale(OrderTable.WRIT_HALF_WIDTH);
+            Vec3 end = o.add(d.scale(OrderTable.WRIT_LENGTH));
+            if (first(left, total)) OrderVfx.writTell(god, o, d, OrderTable.WRIT_LENGTH, total);
+            Tells.line(sl, o.add(side), end.add(side), OrderFx.GOLD);
+            Tells.line(sl, o.subtract(side), end.subtract(side), OrderFx.GOLD);
+            sl.sendParticles(ParticleTypes.ENCHANT, o.x + d.x * 1.5, o.y + 1.8, o.z + d.z * 1.5, 6, 0.4, 0.4, 0.4, 0.3);
+        }
+    }
+
+    /** One line of light, and at the Open Ledger (the Gates) a second one across it, a quarter turn to the side: the wind-up draws both. */
+    private static Vec3[] writDirs(GodOfOrder god, Vec3 d) {
+        return god.gatesOpen() ? new Vec3[]{d, new Vec3(-d.z, 0, d.x)} : new Vec3[]{d};
     }
 
     /** A line of light 20 blocks long and under three wide leaves the staff: whoever stands in it is struck and thrown to the side. */
     private static void writ(GodOfOrder god, LivingEntity target) {
         if (!(god.level() instanceof ServerLevel sl)) return;
         Vec3 o = god.mark != null ? god.mark : god.position();
-        Vec3 d = god.markDir;
-        if (d == null) {
+        Vec3 d0 = god.markDir;
+        if (d0 == null) {
             Vec3 f = god.getLookAngle().multiply(1, 0, 1);
-            d = f.lengthSqr() < 1e-4 ? new Vec3(0, 0, 1) : f.normalize();
+            d0 = f.lengthSqr() < 1e-4 ? new Vec3(0, 0, 1) : f.normalize();
         }
         god.mark = null;
         god.markDir = null;
         god.swing(InteractionHand.MAIN_HAND);
-        Vec3 end = o.add(d.scale(OrderTable.WRIT_LENGTH));
-        Tells.line(sl, o.add(0, 1.0, 0), end.add(0, 1.0, 0), OrderFx.WHITE_GOLD);
-        for (int i = 1; i <= 12; i++) {
-            Vec3 p = o.add(d.scale(OrderTable.WRIT_LENGTH * i / 12.0));
-            sl.sendParticles(ParticleTypes.END_ROD, p.x, p.y + 1.0, p.z, 3, 0.15, 0.4, 0.15, 0.02);
-        }
-        for (LivingEntity e : god.foesAround(o, OrderTable.WRIT_LENGTH + 2.0)) {
-            if (!OrderGeometry.inCorridor(e.getX(), e.getY(), e.getZ(), o.x, o.y, o.z, d.x, d.z, OrderTable.WRIT_LENGTH,
-                    OrderTable.WRIT_HALF_WIDTH + e.getBbWidth() / 2, 3.5)) continue;
-            if (god.strike(e, OrderTable.WRIT_DAMAGE, true)) {
-                double side = Math.signum((e.getX() - o.x) * -d.z + (e.getZ() - o.z) * d.x);
-                Vec3 push = new Vec3(-d.z * (side == 0 ? 1 : side), 0, d.x * (side == 0 ? 1 : side));
-                e.knockback(0.7, -push.x, -push.z);
-                e.hurtMarked = true;
+        java.util.Set<Integer> hit = new java.util.HashSet<>();
+        for (Vec3 d : writDirs(god, d0)) {
+            Vec3 end = o.add(d.scale(OrderTable.WRIT_LENGTH));
+            OrderVfx.writStrike(god, o, d, OrderTable.WRIT_LENGTH);
+            Tells.line(sl, o.add(0, 1.0, 0), end.add(0, 1.0, 0), OrderFx.WHITE_GOLD);
+            for (int i = 1; i <= 12; i++) {
+                Vec3 p = o.add(d.scale(OrderTable.WRIT_LENGTH * i / 12.0));
+                sl.sendParticles(ParticleTypes.END_ROD, p.x, p.y + 1.0, p.z, 3, 0.15, 0.4, 0.15, 0.02);
+            }
+            for (LivingEntity e : god.foesAround(o, OrderTable.WRIT_LENGTH + 2.0)) {
+                if (hit.contains(e.getId())) continue;
+                if (!OrderGeometry.inCorridor(e.getX(), e.getY(), e.getZ(), o.x, o.y, o.z, d.x, d.z, OrderTable.WRIT_LENGTH,
+                        OrderTable.WRIT_HALF_WIDTH + e.getBbWidth() / 2, 3.5)) continue;
+                hit.add(e.getId());
+                if (god.strike(e, OrderTable.WRIT_DAMAGE, true)) {
+                    double side = Math.signum((e.getX() - o.x) * -d.z + (e.getZ() - o.z) * d.x);
+                    Vec3 push = new Vec3(-d.z * (side == 0 ? 1 : side), 0, d.x * (side == 0 ? 1 : side));
+                    e.knockback(0.7, -push.x, -push.z);
+                    e.hurtMarked = true;
+                }
             }
         }
         sl.playSound(null, BlockPos.containing(o), SoundEvents.BEACON_POWER_SELECT, SoundSource.HOSTILE, 1.8f, 1.6f);
@@ -154,7 +171,8 @@ final class OrderMoves {
         if (!(god.level() instanceof ServerLevel sl) || target == null) return;
         if (god.mark == null || first(left, total)) god.mark = ZogratisBoss.ground(sl, target.position());
         Vec3 m = god.mark;
-        double r = OrderTable.JUDGEMENT_RADIUS;
+        double r = OrderTable.judgementRadius(god.gatesOpen());
+        if (first(left, total)) OrderVfx.judgementTell(god, m, r, total);
         float p = 1f - left / (float) Math.max(1, total);
         Tells.ring(sl, m, r, OrderFx.GOLD, 1.5f, 48);
         if (p > 0.5f) Tells.ring(sl, m, r * 0.55, OrderFx.WHITE_GOLD, 1.2f, 28);
@@ -167,7 +185,8 @@ final class OrderMoves {
         if (!(god.level() instanceof ServerLevel sl)) return;
         Vec3 at = god.mark != null ? god.mark : target.position();
         god.mark = null;
-        double r = OrderTable.JUDGEMENT_RADIUS;
+        double r = OrderTable.judgementRadius(god.gatesOpen());
+        OrderVfx.judgementStrike(god, at, r);
         god.swing(InteractionHand.MAIN_HAND);
         for (LivingEntity e : god.foesAround(at, r + 1.0)) {
             if (Math.abs(e.getY() - at.y) > 3.5 || Math.hypot(e.getX() - at.x, e.getZ() - at.z) > r + e.getBbWidth() / 2) continue;
@@ -184,6 +203,7 @@ final class OrderMoves {
     static void tellErasure(GodOfOrder god, int left, int total) {
         if (!(god.level() instanceof ServerLevel sl)) return;
         double r = 3.0 + (total - left) * 0.12;
+        if (first(left, total)) OrderVfx.erasureTell(god, total);
         Tells.ring(sl, god.position(), r, OrderFx.GOLD, 1.4f, 56);
         Tells.column(sl, god.position(), 5.0, OrderFx.WHITE_GOLD);
         sl.sendParticles(ParticleTypes.ENCHANT, god.getX(), god.getY() + 2.0, god.getZ(), 16, 1.2, 1.4, 1.2, 0.6);
@@ -196,6 +216,7 @@ final class OrderMoves {
     static void erasure(GodOfOrder god) {
         if (god.erased || !(god.level() instanceof ServerLevel sl) || sl.getServer() == null) return;
         god.erased = true;
+        OrderVfx.erasureStrike(god);
         List<ServerPlayer> fighters = new ArrayList<>();
         double reach2 = OrderTable.ERASURE_REACH * OrderTable.ERASURE_REACH;
         for (UUID id : god.attackers()) {

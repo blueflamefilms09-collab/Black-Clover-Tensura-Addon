@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class OrderTableTest {
     @Test
     void theBodyIsTheDesignedOne() {
-        assertEquals(1200, OrderTable.HEALTH);
+        assertEquals(1500, OrderTable.HEALTH, "1.35.0: buffed from 1200");
         assertTrue(OrderTable.XP > 0);
     }
 

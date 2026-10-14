@@ -145,6 +145,34 @@ public final class AvatarMath {
     /** The reach of the claws and the half angle of the sweep (140 degrees in all). */
     public static final double CLAW_REACH = 6.0, CLAW_HALF_ANGLE = Math.toRadians(70);
 
+    // ---------------------------------------------------------------- Brimstone Eruption (1.35.0)
+    /** Spokes of brimstone: how long each runs, how wide (half width) and the delay of the second wave at the Gates (ticks). */
+    public static final double ERUPT_LENGTH = 15, ERUPT_HALF_WIDTH = 1.6;
+    public static final int ERUPT_SECOND_AT = 24;
+
+    /** Spokes of one wave: 5 before the Gates, 7 at the Gates (the gaps stay wide enough to stand in: 360/7 degrees). */
+    public static int eruptionSpokes(boolean gates) { return gates ? 7 : 5; }
+
+    /**
+     * Is the offset (dx, dz) from the Avatar inside one of the 'n' evenly spaced spokes, the first of which points at angle 'base' (radians)?
+     * A spoke is a strip 'halfWidth' to each side of its axis that runs 'length' blocks out; near the Avatar the spokes meet.
+     */
+    public static boolean inSpoke(double dx, double dz, double base, int n, double halfWidth, double length) {
+        double dist = Math.hypot(dx, dz);
+        if (dist <= halfWidth) return true;
+        if (dist > length + halfWidth || n < 1) return false;
+        double step = 2 * Math.PI / n;
+        double a = Math.atan2(dz, dx) - base;
+        double d = a - Math.round(a / step) * step;                       // the angle to the nearest spoke, -step/2 .. step/2
+        double along = dist * Math.cos(d), across = Math.abs(dist * Math.sin(d));
+        return along >= 0 && along <= length + 1e-9 && across <= halfWidth + 1e-9;
+    }
+
+    /** How wide the safe gap between two spokes is, at 'dist' blocks from the Avatar (blocks): the chord between the strips; fair when it fits a player. */
+    public static double gapAt(double dist, int n, double halfWidth) {
+        return Math.max(0, 2 * dist * Math.sin(Math.PI / n) - 2 * halfWidth);
+    }
+
     /**
      * Is a body at offset (dx, dz) inside the cone that opens along (fx, fz) with 'halfAngle' and 'reach'? 'radius' is the body's half width:
      * it counts if any of it is in the cone (a body on top of the apex always is).

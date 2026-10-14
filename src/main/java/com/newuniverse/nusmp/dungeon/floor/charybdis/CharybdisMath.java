@@ -73,6 +73,13 @@ public final class CharybdisMath {
     /** The Beak Lunge: how near to its path a foe is struck, once. */
     public static final double LUNGE_REACH = 2.4;
 
+    /** 1.35.0, the Frenzy of the Gates: the sweep reaches a fifth farther, the whirlpool a quarter wider, the crush two fifths wider (the wind-up circles show it). */
+    public static double sweepReach(boolean gates) { return gates ? SWEEP_REACH * 1.2 : SWEEP_REACH; }
+
+    public static double whirlRadius(boolean gates) { return gates ? WHIRL_RADIUS * 1.25 : WHIRL_RADIUS; }
+
+    public static double crushRadius(boolean gates) { return gates ? CRUSH_RADIUS * 1.4 : CRUSH_RADIUS; }
+
     /** Is (px, pz) within 'reach' of (ox, oz) and inside the arc of half-width 'halfArc' round the horizontal direction (dirX, dirZ)? */
     public static boolean inArc(double ox, double oz, double dirX, double dirZ, double px, double pz, double reach, double halfArc) {
         double vx = px - ox, vz = pz - oz, d = Math.sqrt(vx * vx + vz * vz);
@@ -93,6 +100,12 @@ public final class CharybdisMath {
     /** How many megalodons one cast brings when 'alive' are already out: two, but never past the cap of four. */
     public static int minionsToSummon(int alive) {
         return Math.max(0, Math.min(CharybdisTable.MINIONS_PER_CAST, CharybdisTable.MINION_CAP - Math.max(0, alive)));
+    }
+
+    /** 1.35.0: in the Frenzy a cast brings three and the cap is five. */
+    public static int minionsToSummon(int alive, boolean gates) {
+        if (!gates) return minionsToSummon(alive);
+        return Math.max(0, Math.min(CharybdisTable.MINIONS_PER_CAST + 1, CharybdisTable.MINION_CAP + 1 - Math.max(0, alive)));
     }
 
     /**

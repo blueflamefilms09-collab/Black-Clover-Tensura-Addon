@@ -16,7 +16,10 @@ public final class LuciusSpellTable {
     private static final List<LuciusTable.Spec> SPECS = List.of(
             new LuciusTable.Spec(LuciusNumbers.MEGIDDO, "Megiddo", 40, 40, 520, 0, 44, 3, false, true, 12),
             new LuciusTable.Spec(LuciusNumbers.DIMENSION_CUTTER, "Dimension Cutter", 40, 30, 300, 4, 36, 4, false, false, 10),
-            new LuciusTable.Spec(LuciusNumbers.TRUE_DARKNESS, "True Darkness", 60, 48, 780, 0, 30, 2, false, true, 14));
+            new LuciusTable.Spec(LuciusNumbers.TRUE_DARKNESS, "True Darkness", 60, 48, 780, 0, 30, 2, false, true, 14),
+            // 1.35.0: two late-phase moves, appended after the spells (the client reads move names by index)
+            new LuciusTable.Spec(LuciusNumbers.JUDGMENT, "Judgment of Light", 60, 36, 360, 0, 40, 4, false, true, 12),
+            new LuciusTable.Spec(LuciusNumbers.CHRONO_RINGS, "Chrono Rings", 80, 30, 320, 0, 16, 4, false, true, 14));
 
     public static List<LuciusTable.Spec> specs() { return SPECS; }
 
@@ -25,7 +28,7 @@ public final class LuciusSpellTable {
         return false;
     }
 
-    /** His whole move list: the original table, then the three spells. */
+    /** His whole move list: the original table, then the three spells, then the two late-phase moves. */
     public static List<LuciusTable.Spec> allSpecs() {
         List<LuciusTable.Spec> all = new java.util.ArrayList<>(LuciusTable.specs());
         all.addAll(SPECS);

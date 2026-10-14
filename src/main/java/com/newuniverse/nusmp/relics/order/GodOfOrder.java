@@ -185,7 +185,7 @@ public class GodOfOrder extends ZogratisBoss {
         }
         if (fightActive()) {
             if (combatStart == 0L) combatStart = Math.max(1, tickCount);
-            if (!erasing && OrderTable.forcedErasureDue(tickCount - combatStart, getHealth() / getMaxHealth())) startErasure();
+            if (!erasing && OrderTable.forcedErasureDue(tickCount - combatStart, getHealth() / getMaxHealth(), gatesOpen())) startErasure();
         }
     }
 
@@ -213,6 +213,10 @@ public class GodOfOrder extends ZogratisBoss {
 
     @Override
     protected void onFightStart() { combatStart = Math.max(1, tickCount); }
+
+    /** The Open Ledger (the 100% mode): the halo, the grid and the sigil flare, and the bar is full again (the framework's refill). */
+    @Override
+    protected void onGatesOpened() { OrderVfx.gates(this); }
 
     @Override
     public void die(DamageSource source) {

@@ -12,7 +12,7 @@ public final class MonarchRules {
 
     // ---------------------------------------------------------------- body
     /** The Commander's health attribute (the attribute stops at 1024) and how much a blow is divided by before it lands: 1000 x 4.8 = 4800, eight times Zagred's 600. */
-    public static final double BASE_HEALTH = 1000.0, SOAK = 4.8;
+    public static final double BASE_HEALTH = 1000.0, SOAK = 5.4;      // 1.35.0: 4.8 -> 5.4, a tougher Commander
     /** No single blow takes more than this share of the health bar, whatever hit it. */
     public static final float MAX_HIT = 0.10f;
     /** Its size, its attack damage, extra armour and the share of speed it gains over the mob it is made from. */
@@ -45,6 +45,22 @@ public final class MonarchRules {
         float room = health - floorOf(phase, max);
         return Math.max(0f, Math.min(damage, room));
     }
+
+    // ---------------------------------------------------------------- 1.35.0: the second bar (the enraged last phase)
+    /** In the second bar (entered at a quarter of the first, when the health bar refills) the moves come round this much sooner, with this much less rest between them. */
+    public static final double ENRAGE_PACE = 0.80;
+    /** An enraged Domain Slam spreads this much further and warns this many ticks longer (a bigger mark, so it stays fair); an enraged Shadow Rain has this many more circles. */
+    public static final double ENRAGE_SLAM_RADIUS = 2.0;
+    public static final int ENRAGE_SLAM_WINDUP = 8, ENRAGE_RAIN_CIRCLES = 3;
+
+    /** A pause or a cooldown, shortened when enraged (never under 1 tick). */
+    public static int paced(int ticks, boolean enraged) { return enraged ? Math.max(1, (int) Math.round(ticks * ENRAGE_PACE)) : ticks; }
+
+    public static double slamRadius(int phase, boolean enraged) { return slamRadius(phase) + (enraged ? ENRAGE_SLAM_RADIUS : 0.0); }
+
+    public static int slamWindup(boolean enraged) { return SLAM_WINDUP + (enraged ? ENRAGE_SLAM_WINDUP : 0); }
+
+    public static int rainCircles(int phase, int foes, boolean enraged) { return rainCircles(phase, foes) + (enraged ? ENRAGE_RAIN_CIRCLES : 0); }
 
     // ---------------------------------------------------------------- waking and sleeping
     /** A player this close (blocks across the floor, blocks up or down) to the middle of the dais wakes it. */

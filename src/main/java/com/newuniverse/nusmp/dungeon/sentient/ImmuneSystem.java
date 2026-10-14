@@ -228,6 +228,7 @@ public final class ImmuneSystem {
     // ---------------------------------------------------------------- events
     /** Registered on the game bus: keeps the boss bars of the Juggernauts, every twenty ticks. */
     public static void onServerTick(ServerTickEvent.Post event) {
+        JuggernautSpawner.tick(event.getServer().getTickCount());                              // 1.35.0: its Antibody Pulse and Immune Surge
         if (event.getServer().getTickCount() % 20 == 5) JuggernautSpawner.upkeep();
     }
 

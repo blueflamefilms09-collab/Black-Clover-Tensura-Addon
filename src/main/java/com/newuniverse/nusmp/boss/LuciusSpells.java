@@ -1,7 +1,9 @@
 package com.newuniverse.nusmp.boss;
 
 import com.newuniverse.nusmp.book.EnergyBridge;
+import com.newuniverse.nusmp.entity.zogratis.FxMath;
 import com.newuniverse.nusmp.entity.zogratis.LuciusBoss;
+import com.newuniverse.nusmp.entity.zogratis.ZogratisVfx;
 import com.newuniverse.nusmp.entity.zogratis.Move;
 import com.newuniverse.nusmp.entity.zogratis.Tells;
 import com.newuniverse.nusmp.vfx.VfxShape;
@@ -82,6 +84,7 @@ public final class LuciusSpells {
         if (first(left, total) || k.blastMarks.isEmpty()) {
             k.blastMarks = pickMarks(b, target);
             b.announce("Megiddo: suns fall on every ringed spot, one after another. Leave the ring.");
+            for (Vec3 m : k.blastMarks) ZogratisVfx.pillar(sl, m, LuciusNumbers.MEGIDDO_RADIUS, total + 2, FxMath.divine(b.power()), true);
         }
         for (Vec3 m : k.blastMarks) {
             Tells.ring(sl, m, LuciusNumbers.MEGIDDO_RADIUS, WARN, 1.3f, 40);
@@ -102,6 +105,7 @@ public final class LuciusSpells {
             final Vec3 at = m;
             b.later(i * 4, () -> {
                 VfxSpawn.send(sl, VfxShape.FIRE_PILLAR, at, at.add(0, 3, 0), SUN_ARGB, 14, (float) LuciusNumbers.MEGIDDO_RADIUS);
+                ZogratisVfx.pillar(sl, at, LuciusNumbers.MEGIDDO_RADIUS, 18, FxMath.divine(b.power()), false);
                 sl.sendParticles(ParticleTypes.FLAME, at.x, at.y + 1, at.z, 30, 1.2, 1.5, 1.2, 0.05);
                 sl.playSound(null, net.minecraft.core.BlockPos.containing(at), SoundEvents.LIGHTNING_BOLT_IMPACT, SoundSource.HOSTILE, 1.2f, 1.4f);
                 for (LivingEntity f : b.foesAround(at, LuciusNumbers.MEGIDDO_RADIUS)) {
@@ -129,6 +133,7 @@ public final class LuciusSpells {
         if (first(left, total) || k.cutterDir == null) {
             lockLane(b, target);
             b.announce("Dimension Cutter: space is torn along the marked lane. Step out of it.");
+            ZogratisVfx.tear(sl, k.cutterFrom.add(0, 1, 0), k.cutterFrom.add(k.cutterDir.scale(LuciusNumbers.CUTTER_LENGTH)).add(0, 1, 0), 0.5, total + 2, RIFT);
         }
         Vec3 from = k.cutterFrom, dir = k.cutterDir, side = new Vec3(-dir.z, 0, dir.x).scale(LuciusNumbers.CUTTER_HALF_WIDTH);
         Vec3 end = from.add(dir.scale(LuciusNumbers.CUTTER_LENGTH));
@@ -147,6 +152,7 @@ public final class LuciusSpells {
         k.cutterDir = null;
         Vec3 end = from.add(dir.scale(LuciusNumbers.CUTTER_LENGTH));
         VfxSpawn.send(sl, VfxShape.THREAD_LINE, from.add(0, 1.2, 0), end.add(0, 1.2, 0), RIFT_ARGB, 10, 1.4f);
+        ZogratisVfx.tear(sl, from.add(0, 1, 0), end.add(0, 1, 0), 2.6, 18, RIFT);
         for (int s = 4; s <= LuciusNumbers.CUTTER_LENGTH; s += 7) {
             Vec3 at = from.add(dir.scale(s)).add(0, 1.0, 0);
             VfxSpawn.send(sl, VfxShape.SPATIAL_RIFT, at, at.add(0, 0.5, 0), RIFT_ARGB, 10, 0.9f);
@@ -174,6 +180,8 @@ public final class LuciusSpells {
         if (first(left, total)) {
             VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE, b.position().add(0, 0.05, 0), b.position().add(0, 1, 0), DARK_ARGB, total, 5f);
             b.announce("True Darkness: the ring is the reach of the dark. Leave it, or break his line of sight.");
+            ZogratisVfx.soulVortex(sl, b.position(), 9, total + 2, 0x7B3FD0);
+            ZogratisVfx.divineSigil(sl, b.position(), LuciusNumbers.DARKNESS_RADIUS, total + 2, 0x7B3FD0, true);
         }
         double r = SpellMath.cloudRadius(left, total, LuciusNumbers.DARKNESS_RADIUS);
         Tells.ring(sl, b.position(), r, DARK, 1.5f, 72);
@@ -184,6 +192,7 @@ public final class LuciusSpells {
     private static void darkness(LuciusBoss b) {
         if (!(b.level() instanceof ServerLevel sl)) return;
         Tells.burst(sl, b.position().add(0, 1, 0), DARK, 80);
+        ZogratisVfx.divineSigil(sl, b.position(), 14, 24, 0x7B3FD0, false);
         sl.playSound(null, b.blockPosition(), SoundEvents.WARDEN_SONIC_BOOM, SoundSource.HOSTILE, 1.2f, 0.5f);
         for (LivingEntity f : b.foes(LuciusNumbers.DARKNESS_RADIUS)) {
             if (!b.hasLineOfSight(f)) continue;

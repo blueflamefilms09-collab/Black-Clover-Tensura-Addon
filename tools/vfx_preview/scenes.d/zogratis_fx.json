@@ -1,0 +1,841 @@
+{
+ "_comment": "1.35.0 Vanica, Zenon and Lucius effects (ZogratisBloodLayer / ZogratisSpaceLayer / ZogratisDivineLayer).",
+ "vanica_crescent_tell": {
+  "layer": "ZogratisBloodLayer",
+  "shape": "BLOOD_CRESCENT",
+  "from": [
+   0,
+   1,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   6
+  ],
+  "power": 6.5,
+  "duration": 20,
+  "color": "FFD01830",
+  "seed": 12345,
+  "cam": [
+   6,
+   5,
+   -4
+  ],
+  "target": [
+   0,
+   0.5,
+   3
+  ],
+  "ages": [
+   3,
+   8,
+   14,
+   19
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -3,
+    1.8
+   ]
+  ]
+ },
+ "vanica_crescent": {
+  "layer": "ZogratisBloodLayer",
+  "shape": "BLOOD_CRESCENT",
+  "from": [
+   0,
+   1,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   6
+  ],
+  "power": 6.5,
+  "duration": 14,
+  "color": "FFD01830",
+  "seed": 12344,
+  "cam": [
+   6,
+   5,
+   -4
+  ],
+  "target": [
+   0,
+   0.5,
+   3
+  ],
+  "ages": [
+   2,
+   4,
+   7,
+   11
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -3,
+    1.8
+   ]
+  ]
+ },
+ "vanica_lance_tell": {
+  "layer": "ZogratisBloodLayer",
+  "shape": "BLOOD_LANCE",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.2,
+   16
+  ],
+  "power": 1,
+  "duration": 20,
+  "color": "FFD01830",
+  "seed": 12345,
+  "cam": [
+   7,
+   3,
+   -3
+  ],
+  "target": [
+   0,
+   1,
+   8
+  ],
+  "ages": [
+   3,
+   9,
+   15,
+   19
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -3,
+    1.8
+   ]
+  ]
+ },
+ "vanica_lance": {
+  "layer": "ZogratisBloodLayer",
+  "shape": "BLOOD_LANCE",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.2,
+   16
+  ],
+  "power": 1,
+  "duration": 12,
+  "color": "FFD01830",
+  "seed": 12344,
+  "cam": [
+   7,
+   3,
+   -3
+  ],
+  "target": [
+   0,
+   1,
+   8
+  ],
+  "ages": [
+   2,
+   4,
+   7,
+   10
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -3,
+    1.8
+   ]
+  ]
+ },
+ "vanica_sigil": {
+  "layer": "ZogratisBloodLayer",
+  "shape": "BLOOD_SIGIL",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 6,
+  "duration": 40,
+  "color": "FFD01830",
+  "seed": 12344,
+  "cam": [
+   8,
+   6,
+   8
+  ],
+  "target": [
+   0,
+   0.5,
+   0
+  ],
+  "ages": [
+   4,
+   15,
+   30,
+   38
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -3,
+    1.8
+   ]
+  ]
+ },
+ "vanica_arcs": {
+  "layer": "ZogratisBloodLayer",
+  "shape": "BLOOD_ARCS",
+  "from": [
+   0,
+   1,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   10
+  ],
+  "power": 1,
+  "duration": 14,
+  "color": "FFD01830",
+  "seed": 12344,
+  "cam": [
+   8,
+   3,
+   3
+  ],
+  "target": [
+   0,
+   1.5,
+   5
+  ],
+  "ages": [
+   2,
+   5,
+   8,
+   12
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -3,
+    1.8
+   ]
+  ]
+ },
+ "vanica_downpour": {
+  "layer": "ZogratisBloodLayer",
+  "shape": "BLOOD_DOWNPOUR",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 3,
+  "duration": 18,
+  "color": "FFD01830",
+  "seed": 12344,
+  "cam": [
+   8,
+   5,
+   8
+  ],
+  "target": [
+   0,
+   3,
+   0
+  ],
+  "ages": [
+   3,
+   7,
+   11,
+   15
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -3,
+    1.8
+   ]
+  ]
+ },
+ "zenon_crack": {
+  "layer": "ZogratisSpaceLayer",
+  "shape": "SPACE_CRACK",
+  "from": [
+   0,
+   2,
+   0
+  ],
+  "to": [
+   0,
+   2,
+   5
+  ],
+  "power": 3,
+  "duration": 30,
+  "color": "FFB8E8FF",
+  "seed": 12344,
+  "cam": [
+   4,
+   3,
+   -6
+  ],
+  "target": [
+   0,
+   2,
+   0
+  ],
+  "ages": [
+   3,
+   10,
+   20,
+   28
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -3,
+    1.8
+   ]
+  ]
+ },
+ "zenon_crack_ground": {
+  "layer": "ZogratisSpaceLayer",
+  "shape": "SPACE_CRACK",
+  "from": [
+   0,
+   0.1,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 7,
+  "duration": 30,
+  "color": "FFB8E8FF",
+  "seed": 12346,
+  "cam": [
+   9,
+   7,
+   9
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ],
+  "ages": [
+   3,
+   10,
+   20,
+   28
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -3,
+    1.8
+   ]
+  ]
+ },
+ "zenon_tear": {
+  "layer": "ZogratisSpaceLayer",
+  "shape": "SPACE_TEAR",
+  "from": [
+   0,
+   0.5,
+   0
+  ],
+  "to": [
+   0,
+   3.5,
+   12
+  ],
+  "power": 1.6,
+  "duration": 20,
+  "color": "FFB8E8FF",
+  "seed": 12344,
+  "cam": [
+   8,
+   3,
+   3
+  ],
+  "target": [
+   0,
+   2,
+   6
+  ],
+  "ages": [
+   3,
+   7,
+   12,
+   18
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -3,
+    1.8
+   ]
+  ]
+ },
+ "zenon_gate": {
+  "layer": "ZogratisSpaceLayer",
+  "shape": "SPACE_RINGGATE",
+  "from": [
+   0,
+   2,
+   3
+  ],
+  "to": [
+   0,
+   2,
+   6
+  ],
+  "power": 2.2,
+  "duration": 40,
+  "color": "FFB8E8FF",
+  "seed": 12344,
+  "cam": [
+   5,
+   3,
+   -3
+  ],
+  "target": [
+   0,
+   2,
+   3
+  ],
+  "ages": [
+   3,
+   10,
+   25,
+   38
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -3,
+    1.8
+   ]
+  ]
+ },
+ "zenon_shatter": {
+  "layer": "ZogratisSpaceLayer",
+  "shape": "SPACE_SHATTER",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 5,
+  "duration": 20,
+  "color": "FFB8E8FF",
+  "seed": 12344,
+  "cam": [
+   8,
+   4,
+   8
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   2,
+   5,
+   9,
+   15
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -3,
+    1.8
+   ]
+  ]
+ },
+ "lucius_pillar_tell": {
+  "layer": "ZogratisDivineLayer",
+  "shape": "DIVINE_PILLAR",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 3,
+  "duration": 30,
+  "color": "FFFFD24A",
+  "seed": 12345,
+  "cam": [
+   8,
+   5,
+   8
+  ],
+  "target": [
+   0,
+   4,
+   0
+  ],
+  "ages": [
+   3,
+   10,
+   20,
+   28
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -3,
+    1.8
+   ]
+  ]
+ },
+ "lucius_pillar": {
+  "layer": "ZogratisDivineLayer",
+  "shape": "DIVINE_PILLAR",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 3,
+  "duration": 20,
+  "color": "FFFFD24A",
+  "seed": 12344,
+  "cam": [
+   8,
+   5,
+   8
+  ],
+  "target": [
+   0,
+   4,
+   0
+  ],
+  "ages": [
+   2,
+   5,
+   10,
+   17
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -3,
+    1.8
+   ]
+  ]
+ },
+ "lucius_pillar_purple": {
+  "layer": "ZogratisDivineLayer",
+  "shape": "DIVINE_PILLAR",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 3,
+  "duration": 20,
+  "color": "FFA060FF",
+  "seed": 12344,
+  "cam": [
+   8,
+   5,
+   8
+  ],
+  "target": [
+   0,
+   4,
+   0
+  ],
+  "ages": [
+   2,
+   5,
+   10,
+   17
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -3,
+    1.8
+   ]
+  ]
+ },
+ "lucius_halo": {
+  "layer": "ZogratisDivineLayer",
+  "shape": "DIVINE_HALO",
+  "from": [
+   0,
+   2.3,
+   0
+  ],
+  "to": [
+   0,
+   2.3,
+   1
+  ],
+  "power": 1.4,
+  "duration": 40,
+  "color": "FFFFD24A",
+  "seed": 12344,
+  "cam": [
+   0,
+   2.5,
+   6
+  ],
+  "target": [
+   0,
+   2.2,
+   0
+  ],
+  "ages": [
+   10,
+   20,
+   30
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    2.2
+   ]
+  ]
+ },
+ "lucius_vortex": {
+  "layer": "ZogratisDivineLayer",
+  "shape": "SOUL_VORTEX",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 5,
+  "duration": 40,
+  "color": "FFB07CFF",
+  "seed": 12344,
+  "cam": [
+   8,
+   5,
+   8
+  ],
+  "target": [
+   0,
+   1.5,
+   0
+  ],
+  "ages": [
+   4,
+   12,
+   24,
+   36
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -3,
+    1.8
+   ]
+  ]
+ },
+ "lucius_ray_tell": {
+  "layer": "ZogratisDivineLayer",
+  "shape": "DIVINE_RAY",
+  "from": [
+   0,
+   2,
+   0
+  ],
+  "to": [
+   0,
+   1.5,
+   16
+  ],
+  "power": 1,
+  "duration": 20,
+  "color": "FFFFD24A",
+  "seed": 12345,
+  "cam": [
+   8,
+   3,
+   -2
+  ],
+  "target": [
+   0,
+   1.5,
+   8
+  ],
+  "ages": [
+   3,
+   10,
+   19
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -3,
+    1.8
+   ]
+  ]
+ },
+ "lucius_ray": {
+  "layer": "ZogratisDivineLayer",
+  "shape": "DIVINE_RAY",
+  "from": [
+   0,
+   2,
+   0
+  ],
+  "to": [
+   0,
+   1.5,
+   16
+  ],
+  "power": 1,
+  "duration": 12,
+  "color": "FFFFD24A",
+  "seed": 12344,
+  "cam": [
+   8,
+   3,
+   -2
+  ],
+  "target": [
+   0,
+   1.5,
+   8
+  ],
+  "ages": [
+   1,
+   3,
+   6,
+   10
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -3,
+    1.8
+   ]
+  ]
+ },
+ "lucius_sigil": {
+  "layer": "ZogratisDivineLayer",
+  "shape": "DIVINE_SIGIL",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 6,
+  "duration": 40,
+  "color": "FFFFD24A",
+  "seed": 12344,
+  "cam": [
+   8,
+   6,
+   8
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   4,
+   15,
+   30,
+   38
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -3,
+    1.8
+   ]
+  ]
+ }
+}

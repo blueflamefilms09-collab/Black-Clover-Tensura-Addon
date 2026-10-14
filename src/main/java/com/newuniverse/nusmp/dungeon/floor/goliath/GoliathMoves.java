@@ -151,6 +151,7 @@ final class GoliathMoves {
         final Set<Integer> hit = new HashSet<>();
         final int ticks = GoliathMath.waveTicks(reach, speed);
         burst(sl, centre, 24, 0.9);
+        GoliathVfx.ringStrike(boss, centre, reach, speed);
         VfxSpawn.send(sl, VfxShape.EARTH_RISE, centre.add(-1.5, 0, 0), centre.add(1.5, 0, 0), 0xFFFFB45A, 24, (float) Math.min(2.0, Math.max(1.0, reach / 4)));
         sound(sl, centre, SoundEvents.STONE_BREAK, 2.0f, 0.4f);
         SpellRuntime.zone(sl, ticks, 1, safe("ring wave", age -> {
@@ -193,6 +194,11 @@ final class GoliathMoves {
             boss.swing(InteractionHand.OFF_HAND);
             ringWave(boss, boss.position(), reach, GoliathTable.WAVE_SPEED, new Blow(second, 0.45, 0.4, 30, 0), budget);
         }));
+        if (GoliathMath.stompRings(boss.gatesOpen()) > 2) boss.later(2 * GoliathTable.STOMP_GAP, safe("third stomp", () -> {      // the Gates: a third ring, the same budget
+            if (!(boss.level() instanceof ServerLevel)) return;
+            boss.swing(InteractionHand.MAIN_HAND);
+            ringWave(boss, boss.position(), reach, GoliathTable.WAVE_SPEED, new Blow(GoliathTable.STOMP_THIRD, 0.4, 0.4, 30, 0), budget);
+        }));
     }
 
     /** The Roaring Shockwave: a ring that crosses the whole pit, thin enough to be jumped; whoever it catches is slowed for three seconds. */
@@ -228,6 +234,7 @@ final class GoliathMoves {
         if (!(boss.level() instanceof ServerLevel sl)) return;
         boss.swing(InteractionHand.MAIN_HAND);
         burst(sl, mark, 60, radius * 0.5);
+        GoliathVfx.fistStrike(boss, mark, radius);
         VfxSpawn.send(sl, VfxShape.EARTH_RISE, mark.add(-1.5, 0, 0), mark.add(1.5, 0, 0), 0xFFFFB45A, 20, (float) Math.min(2.0, Math.max(1.0, radius / 2.0)));
         sound(sl, mark, SoundEvents.ANVIL_LAND, 3.0f, 0.4f);
         sound(sl, mark, SoundEvents.STONE_BREAK, 2.5f, 0.35f);
@@ -240,6 +247,8 @@ final class GoliathMoves {
             double d = Math.max(1e-3, dist);
             land(boss, e, blow, dx / d, dz / d, null);
         }
+        if (boss.gatesOpen()) boss.later(GoliathTable.AFTERSHOCK_DELAY, safe("fist aftershock", () ->      // the Gates: the ground rings once more round the fist (drawn in the wind-up)
+                ringWave(boss, mark, GoliathTable.AFTERSHOCK_REACH, GoliathTable.WAVE_SPEED, new Blow(GoliathTable.AFTERSHOCK, 0.3, 0.3, 20, 0), null)));
     }
 
     // ================================================================ the Seismic Line
@@ -247,11 +256,20 @@ final class GoliathMoves {
      * A line of stone spikes along the floor from `from` in the direction `dir` (unit, flat) for `length` blocks: one stretch rises every two ticks
      * (a block a tick), and whoever is standing on a stretch when it rises takes the blow and is thrown up. Step off the line and it misses.
      */
-    static void seismicLine(GoliathBoss boss, Vec3 from, Vec3 dir, double length, float damage) {
+    static void seismicLine(GoliathBoss boss, Vec3 from, Vec3 dir, double length, float damage) { seismicLine(boss, from, dir, length, damage, new HashSet<>()); }
+
+    /** The two ends of a line turned by 'yaw' radians about its start (1.35.0: the fork of the Gates). */
+    static Vec3[] rotatedEnds(Vec3 start, Vec3 end, double yaw) {
+        double[] r = GoliathMath.rotate(end.x - start.x, end.z - start.z, yaw);
+        return new Vec3[]{start, new Vec3(start.x + r[0], end.y, start.z + r[1])};
+    }
+
+    /** As above with a hit list shared with the other lines of the same move, so that the fork can never strike one foe twice. */
+    static void seismicLine(GoliathBoss boss, Vec3 from, Vec3 dir, double length, float damage, Set<Integer> hit) {
         if (!(boss.level() instanceof ServerLevel sl)) return;
-        final Set<Integer> hit = new HashSet<>();
         Vec3 to = from.add(dir.scale(length));
         VfxSpawn.send(sl, VfxShape.EARTH_FISSURE, from, to, 0xFFFFFFFF, 44, 1.0f);              // the crack runs ahead of the spikes
+        GoliathVfx.lineStrike(boss, from, to);
         sound(sl, from, SoundEvents.STONE_BREAK, 2.0f, 0.4f);
         Blow blow = new Blow(damage, 0.6, 0.3, 0, 0);
         for (int k = 1; k <= GoliathMath.stretches(length); k++) {
@@ -290,6 +308,7 @@ final class GoliathMoves {
     static void rubbleFall(GoliathBoss boss, List<Vec3> spots, double radius, float damage) {
         if (!(boss.level() instanceof ServerLevel sl) || spots.isEmpty()) return;
         sound(sl, boss.position(), SoundEvents.STONE_BREAK, 3.0f, 0.3f);
+        for (Vec3 s : spots) GoliathVfx.rubbleStrike(boss, s, radius);
         SpellRuntime.zone(sl, GoliathTable.RUBBLE_LAND, 2, safe("falling rubble", age -> {
             if (!boss.isAlive() || boss.isRemoved()) return;
             for (Vec3 s : spots) sl.sendParticles(dustFall(), s.x, s.y + 7.0, s.z, 10, radius * 0.5, 1.5, radius * 0.5, 0.0);

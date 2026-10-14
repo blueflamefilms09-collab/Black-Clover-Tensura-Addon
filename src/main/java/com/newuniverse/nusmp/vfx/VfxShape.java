@@ -213,7 +213,37 @@ public enum VfxShape {
     MERGED_CAST,             // a bolt / trail from 'from' to 'to': one strand of motes per parent in the parent's colour, a blended core; power = size
     MERGED_FIELD,            // a zone at 'from' (power = radius / 3): counter-turning rune rings, one per parent, joined by a blended ring
     MERGED_BURST,            // an impact at 'from': a shock ring that changes colour from parent to parent, sparks alternating the palette
-    MERGED_AURA;             // the caster's casting stance (follows): all parents' circles stacked under the feet, motes rising in the palette; power = size
+    MERGED_AURA,             // the caster's casting stance (follows): all parents' circles stacked under the feet, motes rising in the palette; power = size
+    // 1.35.0: the Zogratis bosses' own effects (ZogratisGravityLayer / ZogratisBloodLayer / ZogratisSpaceLayer / ZogratisDivineLayer). seed bit 0 = the
+    // telegraph form (thin, dim, no flash) of a shape that also has a strike form; the meaning of from / to / power is in each layer's javadoc.
+    GRAVITY_WELL,            // Dante: a well of warped space on the ground at 'from': rings crowd inward, motes fall in; power = radius
+    GRAVITY_IMPACT,          // Dante: a crushing blow at 'from': a warped-space shock ring, ground cracks, a dust ring; power = radius
+    GRAVITY_LANES,           // Dante: a lane of compressing chevrons from 'from' to 'to' (rock swords, spikes, pull lines); power = width
+    GRAVITY_SINGULARITY,     // Dante: a black sphere with a lensing halo over 'from' that swells and collapses; power = radius
+    GRAVITY_AURA,            // Dante: the heat and weight round the followed body (Body Surge, a charged fist); power = size
+    BLOOD_CRESCENT,          // Vanica: a scythe crescent of blood round 'from' facing 'to'; power = radius
+    BLOOD_LANCE,             // Vanica: a lance of blood from 'from' to 'to' (telegraph: a thin dashed aim line and a sigil at the tail); power = width
+    BLOOD_SIGIL,             // Vanica: a thorny crimson sigil on the ground at 'from', thorns rising at the end; power = radius
+    BLOOD_ARCS,              // Vanica: crimson arcs of blood leaping from 'from' to 'to' (whip, dash trail, bonds); power = size
+    BLOOD_DOWNPOUR,          // Vanica: a column of blood falling on 'from' and splashing; power = radius
+    SPACE_CRACK,             // Zenon: a pane of cracked space at 'from' facing 'to' (seed bit 1 = lying on the ground); power = size
+    SPACE_TEAR,              // Zenon: a slit torn in space from 'from' to 'to', its rim glowing, shards at the ends; power = width
+    SPACE_RINGGATE,          // Zenon: a spinning portal ring at 'from' facing 'to'; power = radius
+    SPACE_SHATTER,           // Zenon: space shatters at 'from': glass shards burst out and a ring runs; power = radius
+    DIVINE_PILLAR,           // Lucius: a pillar of light with halo rings at 'from'; colour gold, or purple for the soul form; power = radius
+    DIVINE_HALO,             // Lucius: a halo and feather blades behind the followed body; power = size
+    SOUL_VORTEX,             // Lucius: soul wisps spiralling in to 'from'; power = radius
+    DIVINE_RAY,              // Lucius: a beam of light from 'from' to 'to' (telegraph: thin; strike: wide with a flash at the end); power = width
+    DIVINE_SIGIL,            // Lucius: a holy sigil on the ground at 'from', turning; power = radius
+    // 1.35.0 boss VFX (agent b2): ChronoLayers of the floor, relic and Avatar bosses (DevilBossLayer / StoneBossLayer / TideBossLayer / OrderBossLayer)
+    BOSS_DEVIL_SIGIL, BOSS_DEVIL_CHAINS, BOSS_DEVIL_CRACKS, BOSS_DEVIL_BRAND,
+    BOSS_STONE_RING, BOSS_STONE_COLUMN, BOSS_STONE_TRAIL, BOSS_STONE_FISSURE,
+    BOSS_TIDE_VORTEX, BOSS_TIDE_SPOUT, BOSS_TIDE_SWEEP, BOSS_TIDE_RING,
+    BOSS_ORDER_SIGIL, BOSS_ORDER_GRID, BOSS_ORDER_BEAM, BOSS_ORDER_LEDGER,
+    // 1.35.0 boss VFX (agent b3): Zagred, the Blood-Red Commander and the Juggernaut (ZagredBossLayer / CommanderBossLayer / JuggernautBossLayer)
+    ZAGRED_INK_BARS, ZAGRED_GLYPH_RING, ZAGRED_RULE_STONE, ZAGRED_TEXT_CORRUPT, ZAGRED_REWRITE_STRIKE,
+    CMD_BANNERS, CMD_CHAINS, CMD_VAULT_LIGHT, CMD_CRIMSON_STRIKE,
+    JUG_ASH_PULSE, JUG_ANTIBODY_RING;
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

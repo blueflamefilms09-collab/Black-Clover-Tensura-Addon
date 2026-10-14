@@ -192,6 +192,7 @@ public final class ZenonMoves {
     public static void spatialDomain(ZogratisBoss boss, Vec3 centre, double half, int ticks) {
         if (!(boss.level() instanceof ServerLevel sl) || centre == null) return;
         SpellSeal.seal(sl, centre, half, ticks, boss.getUUID());
+        ZogratisVfx.crack(sl, centre.add(0, 0.1, 0), centre.add(0, 1.1, 0), half, 60, 0xB8E8FF, true);
     }
 
     // ================================================================ Zenon's own moves
@@ -209,7 +210,10 @@ public final class ZenonMoves {
         for (Vec3 s : spots) {
             erupt(boss, sl, s, damage);
             if (again) boss.later(6, safe("bone garden", () -> erupt(boss, sl, s, damage * 0.6f)));
-            if (drawn++ < MAX_GARDEN_VFX) VfxSpawn.send(sl, VfxShape.BONE_FX2, s, s.add(0, 1, 0), BONE, 40, (float) BoneMath.GARDEN_RADIUS);
+            if (drawn++ < MAX_GARDEN_VFX) {
+                VfxSpawn.send(sl, VfxShape.BONE_FX2, s, s.add(0, 1, 0), BONE, 40, (float) BoneMath.GARDEN_RADIUS);
+                ZogratisVfx.spaceShatter(sl, s, BoneMath.GARDEN_RADIUS, 0xB8E8FF);
+            }
         }
         sl.playSound(null, boss.blockPosition(), SoundEvents.STONE_BREAK, SoundSource.HOSTILE, 2f, 1.3f);
         if (!boss.blocksMayChange()) return cells;
@@ -254,6 +258,7 @@ public final class ZenonMoves {
         Vec3 d = dir.normalize();
         Vec3 start = from.add(d.scale(0.8));
         VfxSpawn.send(sl, VfxShape.BONE_FX1, start, rayEnd(sl, boss, start, d, LANCE_SPEED * LANCE_LIFE), BONE, BoneMath.flightTicks(LANCE_SPEED * LANCE_LIFE, LANCE_SPEED), 1.6f);
+        ZogratisVfx.tear(sl, start, rayEnd(sl, boss, start, d, LANCE_SPEED * LANCE_LIFE), 1.6, 14, 0xB8E8FF);
         sl.playSound(null, boss.blockPosition(), SoundEvents.WARDEN_SONIC_BOOM, SoundSource.HOSTILE, 1.6f, 1.6f);
         BoneSpear lance = new BoneSpear(start, d.scale(LANCE_SPEED), LANCE_LIFE, damage, null, (float) LANCE_REACH);
         lance.pierce = true;
@@ -375,6 +380,7 @@ public final class ZenonMoves {
         if (!(boss.level() instanceof ServerLevel sl)) return;
         Vec3 at = boss.position().add(0, 1, 0);
         VfxSpawn.send(sl, VfxShape.BONE_FX3, at, at, BONE, 18, 0.9f);
+        ZogratisVfx.spaceShatter(sl, boss.position(), BoneMath.SHARD_RADIUS, 0xB8E8FF);
         sl.playSound(null, boss.blockPosition(), SoundEvents.GLASS_BREAK, SoundSource.HOSTILE, 1.6f, 1.4f);
         for (LivingEntity e : boss.foesAround(boss.position(), BoneMath.SHARD_RADIUS + 1)) {
             if (e.distanceToSqr(boss) > BoneMath.SHARD_RADIUS * BoneMath.SHARD_RADIUS) continue;
@@ -400,10 +406,54 @@ public final class ZenonMoves {
         return false;
     }
 
+    // ================================================================ 1.35.0: Rift Collapse
+    /** The half-width of a rift cut, in blocks (the tear drawn in the wind-up is the same width). */
+    public static final double CUT_HALF_WIDTH = 1.6, CUT_REACH = 18;
+
+    /** The lines of a Rift Collapse through 'centre': 'count' of them, evenly turned, the first facing along 'baseAngle' (radians); each is [from, to]. */
+    public static List<Vec3[]> cutLines(Vec3 centre, double baseAngle, int count) {
+        List<Vec3[]> out = new ArrayList<>();
+        int n = Math.max(2, Math.min(5, count));
+        for (int i = 0; i < n; i++) {
+            double a = baseAngle + i * Math.PI / n;
+            Vec3 d = new Vec3(Math.cos(a), 0, Math.sin(a)).scale(CUT_REACH);
+            out.add(new Vec3[]{centre.subtract(d), centre.add(d)});
+        }
+        return out;
+    }
+
+    /** Space is cut along each line: whoever stands within the half-width takes 'damage' once in all and is thrown up a little. */
+    public static void riftCuts(ZogratisBoss boss, List<Vec3[]> lines, float damage) {
+        if (!(boss.level() instanceof ServerLevel sl) || lines == null) return;
+        final java.util.Set<Integer> struck = new java.util.HashSet<>();
+        for (Vec3[] ln : lines) {
+            ZogratisVfx.tear(sl, ln[0].add(0, 0.8, 0), ln[1].add(0, 0.8, 0), 1.6, 16, 0xB8E8FF);
+            for (LivingEntity e : boss.foesAround(ln[0].lerp(ln[1], 0.5), CUT_REACH + 3)) {
+                if (struck.contains(e.getId()) || Math.abs(e.getY() - ln[0].y) > 3.5) continue;
+                if (distToLine(e.getX(), e.getZ(), ln[0], ln[1]) > CUT_HALF_WIDTH + e.getBbWidth() / 2) continue;
+                struck.add(e.getId());
+                if (boss.strike(e, damage, true)) {
+                    e.setDeltaMovement(e.getDeltaMovement().add(0, 0.4, 0));
+                    e.hurtMarked = true;
+                }
+            }
+        }
+        sl.playSound(null, boss.blockPosition(), SoundEvents.GLASS_BREAK, SoundSource.HOSTILE, 2f, 0.6f);
+    }
+
+    /** Distance of the point (x, z) from the segment a-b on the ground plane. */
+    static double distToLine(double x, double z, Vec3 a, Vec3 b) {
+        double dx = b.x - a.x, dz = b.z - a.z, len2 = dx * dx + dz * dz;
+        double t = len2 < 1e-9 ? 0 : Math.max(0, Math.min(1, ((x - a.x) * dx + (z - a.z) * dz) / len2));
+        double px = a.x + dx * t - x, pz = a.z + dz * t - z;
+        return Math.sqrt(px * px + pz * pz);
+    }
+
     // ================================================================ portals and places
     /** A dimensional gate standing at 'base' for 'ticks' ticks, facing 'facing', with a ring of dust at its foot. */
     static void portal(ServerLevel sl, Vec3 base, Vec3 facing, int ticks) {
         VfxSpawn.send(sl, VfxShape.SPACE_PORTAL, base, facing, INDIGO, ticks, (float) PORTAL_RADIUS);
+        ZogratisVfx.gate(sl, base.add(0, 1.2, 0), facing.add(0, 1.2, 0), PORTAL_RADIUS * 0.9, ticks, 0xB8E8FF);     // 1.35.0: Zenon's own gate ring
         Tells.ring(sl, base, 0.9, RGB, 1.2f, 16);
     }
 

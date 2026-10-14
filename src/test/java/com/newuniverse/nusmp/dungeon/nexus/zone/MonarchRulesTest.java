@@ -7,11 +7,11 @@ import static org.junit.jupiter.api.Assertions.*;
 /** The Blood-Red Commander's numbers: health and phases, warnings, damage, the three arts, soldiers and when they are called. */
 class MonarchRulesTest {
     @Test
-    void itHasEightTimesZagredsHealthAndAHardBodyCap() {
-        assertEquals(4800.0, MonarchRules.BASE_HEALTH * MonarchRules.SOAK, 1e-6, "eight times Zagred's 600");
+    void itHasNineTimesZagredsOldHealthAndAHardBodyCap() {
+        assertEquals(5400.0, MonarchRules.BASE_HEALTH * MonarchRules.SOAK, 1e-6, "1.35.0: 4800 -> 5400, nine times Zagred's old 600");
         assertTrue(MonarchRules.BASE_HEALTH <= 1024, "the health attribute stops at 1024");
-        assertEquals(1000f / 4.8f * 0.0f, MonarchRules.realDamage(0f, 1000f));
-        assertEquals(10f, MonarchRules.realDamage(48f, 1000f), 1e-4, "a blow of 48 is soaked to 10");
+        assertEquals(0f, MonarchRules.realDamage(0f, 1000f));
+        assertEquals(10f, MonarchRules.realDamage(54f, 1000f), 1e-4, "a blow of 54 is soaked to 10");
         assertEquals(100f, MonarchRules.realDamage(1_000_000f, 1000f), 1e-4, "no blow takes more than a tenth of the bar");
         assertEquals(0f, MonarchRules.realDamage(-5f, 1000f));
         assertEquals(0f, MonarchRules.realDamage(5f, 0f));
@@ -380,5 +380,51 @@ class MonarchRulesTest {
         assertTrue(MonarchRules.SLAM_REACH > 2.0, "the ring catches those on the steps of the dais too");
         assertTrue(MonarchRules.wakes(10, 10, 3) && MonarchRules.wakes(18, 0, 0) && !MonarchRules.wakes(19, 0, 0) && !MonarchRules.wakes(5, 5, 15));
         assertTrue(MonarchRules.SWEEP_REACH >= MonarchRules.SLAM_REACH, "the arc catches those on the steps of the dais too");
+    }
+
+    // ---------------------------------------------------------------- 1.35.0: the second bar
+    @Test
+    void theEnragedSecondBarPacesTheFightFasterWithBiggerMarks() {
+        assertEquals(100, MonarchRules.paced(100, false));
+        assertEquals(80, MonarchRules.paced(100, true));
+        assertEquals(1, MonarchRules.paced(1, true), "never under one tick");
+        for (MonarchMove m : MonarchMove.values()) assertTrue(MonarchRules.paced(MonarchRules.cooldown(m, 3), true) <= MonarchRules.cooldown(m, 3));
+        assertEquals(MonarchRules.slamRadius(3) + 2.0, MonarchRules.slamRadius(3, true), 1e-9);
+        assertEquals(MonarchRules.slamRadius(2), MonarchRules.slamRadius(2, false), 1e-9);
+        assertTrue(MonarchRules.slamWindup(true) > MonarchRules.slamWindup(false), "a bigger mark stays longer, so the enraged slam stays fair");
+        assertTrue(MonarchRules.slamWindup(true) >= MonarchRules.MIN_WARNING);
+        assertEquals(MonarchRules.rainCircles(3, 2) + 3, MonarchRules.rainCircles(3, 2, true));
+        assertEquals(MonarchRules.rainCircles(3, 2), MonarchRules.rainCircles(3, 2, false));
+    }
+
+    @Test
+    void theSchedulerKeepsTheEnragedPace() {
+        MonarchScheduler a = new MonarchScheduler(), b = new MonarchScheduler();
+        a.started(MonarchMove.SLAM, 1000, 3, false);
+        b.started(MonarchMove.SLAM, 1000, 3, true);
+        assertTrue(b.nextAt() < a.nextAt(), "the enraged pause between moves is shorter");
+        assertEquals(a.nextAt(), buildNext(1000, 3, false));
+    }
+
+    private static long buildNext(long now, int phase, boolean enraged) {
+        MonarchScheduler s = new MonarchScheduler();
+        s.started(MonarchMove.SLAM, now, phase);
+        return s.nextAt();
+    }
+
+    @Test
+    void theSecondBarRefillsOnceAndHoldsTheLastPhase() {
+        com.newuniverse.nusmp.boss.refill.PhaseRefill r = new com.newuniverse.nusmp.boss.refill.PhaseRefill();
+        float max = 1000f, hp = 240f;
+        assertEquals(3, MonarchRules.phaseOf(hp, max));
+        assertTrue(r.begin("final", hp, max, com.newuniverse.nusmp.boss.refill.PhaseRefill.DEFAULT_TICKS));
+        assertTrue(com.newuniverse.nusmp.boss.refill.PhaseRefill.DEFAULT_TICKS < MonarchRules.TRANSITION, "the refill ends inside the roar, while it cannot be hurt");
+        float last = hp;
+        while (r.active()) last = Math.max(last, r.tick());
+        assertEquals(max, last, 1e-3f);
+        assertEquals(1, MonarchRules.phaseOf(last, max), "by health alone it would be phase 1 again: the driver holds phase 3 with its saved mark");
+        assertFalse(r.begin("final", 100f, max, 40), "once per fight");
+        r.reset();
+        assertTrue(r.begin("final", 100f, max, 40), "a fight that was reset (it went back to sleep) may refill again");
     }
 }

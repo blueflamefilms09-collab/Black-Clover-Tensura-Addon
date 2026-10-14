@@ -59,6 +59,8 @@ public final class AvatarText {
                     : new String[]{"Feel the weight of every curse this Gate has heard.", "Fall with the wave."};
             case AvatarTable.CALL_DISCIPLES -> m ? new String[]{"Come, my pretty followers!", "Playtime, my darlings!"}
                     : new String[]{"Rise, my Disciples. Show them the Underworld's welcome.", "Come. Kneel them for me."};
+            case AvatarTable.BRIMSTONE_ERUPTION -> m ? new String[]{"Brimstone blooms~ stand in the gaps!", "Hot, hot, hot!"}
+                    : new String[]{"The Underworld splits. Mind the gaps.", "Brimstone: the Gate's own breath."};
             case AvatarTable.ABYSSAL_COLLAPSE -> m ? new String[]{"Abyssal Collapse! Everything comes down in the end~"} : new String[]{"Abyssal Collapse. Fall into the Gate."};
             default -> new String[]{"..."};
         };

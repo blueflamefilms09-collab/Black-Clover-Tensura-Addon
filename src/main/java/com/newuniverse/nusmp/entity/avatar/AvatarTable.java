@@ -24,10 +24,18 @@ public final class AvatarTable {
 
     public static final String VOID_CLAWS = "void_claws", HEX_VOLLEY = "hex_volley", SHADOW_STEP = "shadow_step", CEILING_PULL = "ceiling_pull",
             FLOOR_CRUSH = "floor_crush", DREAD_BRAND = "dread_brand", INVERSION_FIELD = "inversion_field", CURSE_NOVA = "curse_nova",
-            CALL_DISCIPLES = "call_disciples", ABYSSAL_COLLAPSE = "abyssal_collapse";
+            CALL_DISCIPLES = "call_disciples", ABYSSAL_COLLAPSE = "abyssal_collapse",
+            /** 1.35.0: spokes of brimstone from the Avatar (two waves at the Gates), from 60% power. */
+            BRIMSTONE_ERUPTION = "brimstone_eruption";
 
     /** Base damage of the moves (before the boss's damage law: power tuning, victim EP, the balance law's caps). */
-    public static final float CLAWS = 15f, BOLT = 3.5f, CRUSH = 11f, SHADOW = 12f, NOVA = 11f, ULT_CRUSH = 18f, ULT_NOVA = 12f;
+    public static final float CLAWS = 15f, BOLT = 3.5f, CRUSH = 11f, SHADOW = 12f, NOVA = 11f, ULT_CRUSH = 18f, ULT_NOVA = 12f, ERUPT = 13f;
+
+    /** The Avatar's build (1.35.0: 900 health -> 1100, a little more armour and toughness; the damage still goes through the balance law and the 6%/s budget). */
+    public static final double HEALTH = 1100, ATTACK = 15, ARMOR = 9, TOUGHNESS = 5;
+
+    /** The ticks after the Gates open at which a wave of Dark Disciples steps out (1.35.0: a fourth wave, late in the fight). */
+    public static final int[] GATE_WAVES = {80, 260, 460, 640};
 
     /** One row of the table. The record's accessors are the {@link MoveSpec} methods. */
     public record Spec(String id, String label, int minPower, int windUpTicks, int cooldownTicks, double minRange, double maxRange,
@@ -67,6 +75,7 @@ public final class AvatarTable {
         out.add(row(v, INVERSION_FIELD, "Inversion Field", 40, 24, 360, 4, 30, 3, false, true, 12));
         out.add(row(v, CURSE_NOVA, "Curse Nova", 40, 22, 240, 0, 10, 3, false, true, 12));
         out.add(row(v, CALL_DISCIPLES, "Call the Disciples", 20, 30, 700, 0, 48, 2, false, false, 10));
+        out.add(row(v, BRIMSTONE_ERUPTION, "Brimstone Eruption", 60, 24, 200, 0, 22, 3, false, true, 12));
         out.add(row(v, ABYSSAL_COLLAPSE, "Abyssal Collapse", 60, 56, 1300, 0, 40, 5, true, false, 60));
         return List.copyOf(out);
     }

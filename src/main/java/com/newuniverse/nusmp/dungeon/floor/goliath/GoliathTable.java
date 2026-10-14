@@ -22,6 +22,14 @@ public final class GoliathTable {
 
     // ---------------------------------------------------------------- base damage (before the framework's damage law: power tuning, victim EP, the balance law's caps)
     public static final float SLAM = 14f, STOMP_FIRST = 11f, STOMP_SECOND = 7.5f, SHOCKWAVE = 12f, FIST = 30f, LINE = 12f, RUBBLE = 11f, QUAKE = 8f;
+    /** 1.35.0 build: the giant is tougher (1500 -> 1800 health; the damage still goes through the balance law and the budget). */
+    public static final double HEALTH = 1800, ATTACK = 32, ARMOR = 13, TOUGHNESS = 7;
+
+    /** 1.35.0, at the Gates: a third stomp, the fist's aftershock ring, a fork of three Seismic Lines (the side lines turn by FORK_ANGLE radians), one more rubble circle. */
+    public static final float STOMP_THIRD = 6f, AFTERSHOCK = 6f;
+    public static final double AFTERSHOCK_REACH = 6.0, FORK_ANGLE = 0.55;
+    public static final int AFTERSHOCK_DELAY = 10;
+
     /** The plain blow's share of the attack attribute: the giant is slow, and its real hits are the telegraphed ones. */
     public static final float MELEE_SHARE = 0.5f;
 

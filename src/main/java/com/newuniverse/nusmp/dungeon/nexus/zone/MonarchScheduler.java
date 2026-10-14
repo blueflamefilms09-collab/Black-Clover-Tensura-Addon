@@ -77,9 +77,12 @@ public final class MonarchScheduler {
     }
 
     /** Records that a move began now: its cooldown, the pause before the next, and the combo window. */
-    public void started(MonarchMove m, long now, int phase) {
-        readyAt[m.ordinal()] = now + MonarchRules.cooldown(m, phase);
-        nextAt = now + MonarchRules.freeze(m, phase) + MonarchRules.gap(phase);
+    public void started(MonarchMove m, long now, int phase) { started(m, now, phase, false); }
+
+    /** 1.35.0: the same, in the second bar (`enraged`): the cooldown and the pause between moves are shortened by {@link MonarchRules#paced}. */
+    public void started(MonarchMove m, long now, int phase, boolean enraged) {
+        readyAt[m.ordinal()] = now + MonarchRules.paced(MonarchRules.cooldown(m, phase), enraged);
+        nextAt = now + MonarchRules.freeze(m, phase) + MonarchRules.paced(MonarchRules.gap(phase), enraged);
         last = m;
         if (m == MonarchMove.AUTHORITY) authorityAt = now;
     }

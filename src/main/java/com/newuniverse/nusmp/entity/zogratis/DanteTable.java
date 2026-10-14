@@ -17,7 +17,8 @@ public final class DanteTable {
     public static final String ROCK_SWORDS = "rock_swords", TITAN_FIST = "titan_fist", CRUSHING_STOMP = "crushing_stomp",
             GRAVITY_DOMAIN = "gravity_domain", GRAVITY_PULL = "gravity_pull", WEIGHTED_LEAP = "weighted_leap", STONE_SPIKES = "stone_spikes",
             LUCIFERO_WEIGHT = "lucifero_weight", BODY_SURGE = "body_surge", CALL_DISCIPLES = "call_disciples",
-            TENSURA_GRAVITY = "tensura_gravity", SINGULARITY = "singularity";
+            TENSURA_GRAVITY = "tensura_gravity", SINGULARITY = "singularity",
+            TWIN_WELLS = "twin_wells", TITAN_QUAKE = "titan_quake";
 
     /** Base damage of the moves (before the boss's damage law: power tuning, victim EP, the balance law's caps). */
     public static final float FIST = 19f, STOMP = 13f, LEAP = 15f, WEIGHT = 15f, SPIKES = 12f, SWORD = 6.5f, PULL_SLAM = 14f;
@@ -41,7 +42,10 @@ public final class DanteTable {
             new Spec(BODY_SURGE, "Body Magic: Surge", 40, 20, 520, 0, 48, 1, false, false, 12),
             new Spec(CALL_DISCIPLES, "Call the Disciples", 20, 30, 700, 0, 48, 2, false, false, 10),
             new Spec(TENSURA_GRAVITY, "Gravity Magic", 20, 16, 260, 6, 30, 2, false, false, 8),
-            new Spec(SINGULARITY, "Gravity Singularity", 60, 56, 1200, 0, 40, 5, true, false, 60));
+            new Spec(SINGULARITY, "Gravity Singularity", 60, 56, 1200, 0, 40, 5, true, false, 60),
+            // 1.35.0: two late-phase moves appended (never reorder: the client reads move names by index)
+            new Spec(TWIN_WELLS, "Twin Wells", 60, 34, 330, 4, 34, 3, false, true, 12),
+            new Spec(TITAN_QUAKE, "Titan Quake", 80, 30, 300, 0, 14, 4, false, true, 14));
 
     /** The table, in the order of the boss's move list (the client reads move names by index). */
     public static List<Spec> specs() { return SPECS; }

@@ -69,6 +69,20 @@ public final class GoliathMath {
         return Math.abs(along - stretchAlong) <= 1.2 && Math.abs(lateral) <= halfWidth;
     }
 
+    /** 1.35.0: the yaws (radians, about the line's start) of the lines of one Seismic Line: just the one, and at the Gates a fork of three. */
+    public static double[] forkAngles(boolean gates) {
+        return gates ? new double[]{0.0, -GoliathTable.FORK_ANGLE, GoliathTable.FORK_ANGLE} : new double[]{0.0};
+    }
+
+    /** (x, z) turned by 'yaw' radians about the origin (counter-clockwise seen from above when x is east and z is south, as the world's maths go): {x', z'}. */
+    public static double[] rotate(double x, double z, double yaw) {
+        double c = Math.cos(yaw), s = Math.sin(yaw);
+        return new double[]{x * c - z * s, x * s + z * c};
+    }
+
+    /** How many rings a Twin Stomp has: two, and three at the Gates. */
+    public static int stompRings(boolean gates) { return gates ? 3 : 2; }
+
     // ---------------------------------------------------------------- the Bedrock Fist
     /**
      * Where the fist lands for a foe at (fx, fz) when the giant stands at (bx, bz): on the foe, but never farther from the giant than its reach:
@@ -89,6 +103,9 @@ public final class GoliathMath {
     public static int rubbleCount(int foes, int castSlots) {
         return Math.max(3, Math.min(8, Math.max(foes, 0) + 1 + Math.max(1, castSlots)));
     }
+
+    /** {@link #rubbleCount(int, int)} and, at the Gates, one more circle (still at most 8). */
+    public static int rubbleCount(int foes, int castSlots, boolean gates) { return Math.min(8, rubbleCount(foes, castSlots) + (gates ? 1 : 0)); }
 
     /**
      * Where the circles go: one on each foe in the order given (a foe within `minGap` of a circle already placed is covered by it), then the rest

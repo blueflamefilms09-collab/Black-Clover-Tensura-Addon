@@ -43,7 +43,7 @@ public final class MonarchBoss {
 
     /** Persistent-data keys: the Monarch itself, the floor block in the middle of its Nexus, asleep, has woken once, has fallen (its fall is seen to once), and (on a soldier) the Monarch it serves. */
     static final String KEY = "nusmp_monarch", CENTRE = "nusmp_monarch_centre", ASLEEP = "nusmp_monarch_asleep", WOKEN = "nusmp_monarch_woken",
-            FELL = "nusmp_monarch_fell", SHADOW = "nusmp_shadow", BORN = "nusmp_shadow_born";
+            FELL = "nusmp_monarch_fell", FINAL = "nusmp_monarch_final", SHADOW = "nusmp_shadow", BORN = "nusmp_shadow_born";
     /** The scoreboard tag every floor boss of the Dungeon carries (the Dungeon's stones give a mob that has it a boss's share), and the name of the red team that colours the Commander's outline. */
     public static final String FLOOR_BOSS = "nusmp_floor_boss";
     static final String TEAM = "nusmp_commander";

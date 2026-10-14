@@ -153,6 +153,7 @@ public class ZenonBoss extends ZogratisBoss {
 
     @Override
     protected void onGatesOpened() {
+        if (level() instanceof ServerLevel sl) { ZogratisVfx.spaceShatter(sl, position(), 9, 0xB8E8FF); ZogratisVfx.crack(sl, position().add(0, 0.1, 0), position().add(0, 1.1, 0), 12, 70, 0xB8E8FF, true); }
         announce("Space folds round Zenon. His portals chain, his cube widens, and his evasion returns every three seconds.");
         for (int delay : new int[]{80, 260, 460}) {
             later(delay, ZenonMoves.safe("disciple wave", () -> {
@@ -283,9 +284,18 @@ public class ZenonBoss extends ZogratisBoss {
                     .range(s.minRange(), s.maxRange()).weight(s.weight()).mana(s.manaCost()).recovery(s.recovery());
             if (s.ultimate()) b.ultimate();
             if (s.crowd()) b.crowd();
-            Move.MoveTell tell = tellOf(s.id());
-            if (tell != null) b.tell(tell);
-            out.add(b.run(runOf(s.id())));
+            final String mid = s.id();
+            final Move.MoveTell base = tellOf(mid);
+            final Move.MoveRun run = runOf(mid);
+            b.tell((bs, t, left, total) -> {                                  // 1.35.0: the dust telegraph (kept) and the effect that goes with it
+                if (base != null) base.tell(bs, t, left, total);
+                else if (level() instanceof ServerLevel sl && castingMoveOrNull() != null) defaultTell(sl, castingMoveOrNull(), t, left);
+                try { fxTell(mid, t, left, total); } catch (RuntimeException e) { LogUtils.getLogger().warn("[nusmp] Zenon's tell effect failed: {}", e.toString()); }
+            });
+            out.add(b.run((bs, t) -> {
+                try { fxRun(mid, t); } catch (RuntimeException e) { LogUtils.getLogger().warn("[nusmp] Zenon's strike effect failed: {}", e.toString()); }
+                run.run(bs, t);
+            }));
         }
         return out;
     }
@@ -352,6 +362,16 @@ public class ZenonBoss extends ZogratisBoss {
                 } else quip("...All of you.");
             };
             case ZenonTable.DOMINATION -> (b, t) -> runDomain(t);
+            case ZenonTable.RIFT_CUTS -> (b, t) -> {
+                List<Vec3> m = takeMarks(ZenonTable.RIFT_CUTS);
+                Vec3 centre = m.isEmpty() ? ZogratisBoss.ground(level(), t.position()) : m.get(0);
+                ZenonMoves.riftCuts(this, ZenonMoves.cutLines(centre, cutAngle(centre), cutCount()), ZenonTable.GARDEN * 0.9f);
+                quip("Cut.", "Space is not whole.");
+            };
+            case ZenonTable.GATE_STORM -> (b, t) -> {
+                ZenonMoves.portalLink(this, t, PortalMath.linkPairs(power()) + 1, ZenonTable.PORTAL_SPEAR * 0.85f, Math.min(3, PortalMath.linkWaves(power()) + 1));
+                quip("Every gate. At once.", "Count the gates.");
+            };
             default -> (b, t) -> { };
         };
     }
@@ -408,6 +428,76 @@ public class ZenonBoss extends ZogratisBoss {
         List<Vec3> out = new ArrayList<>();
         for (double[] p : plan) out.add(ZogratisBoss.ground(level(), new Vec3(p[0], target.getY(), p[1])));
         return out;
+    }
+
+    /** The lines of a Rift Collapse: three, four at the Gates, the first one turned toward the boss so the star is the same in the wind-up and the cut. */
+    private int cutCount() { return gatesOpen() ? 4 : 3; }
+    private double cutAngle(Vec3 centre) { return Math.atan2(centre.z - getZ(), centre.x - getX()) + Math.PI / 6; }
+
+    // ================================================================ 1.35.0 effects: rifts, portals and glass-crack lines
+    private void fxTell(String id, LivingEntity target, int left, int total) {
+        if (!(level() instanceof ServerLevel sl) || !first(left, total)) return;
+        final int dur = total + 2;
+        final int ice = 0xB8E8FF;
+        switch (id) {
+            case ZenonTable.BONE_SPEARS -> {
+                int n = Math.min(4, BoneMath.spearCount(tuning().castSlots()));
+                for (int i = 0; i < n; i++) {
+                    double[] g = BoneMath.growthPoint(i, n, getYRot());
+                    Vec3 at = position().add(g[0], g[1], g[2]);
+                    ZogratisVfx.gate(sl, at, at.add(look()), 0.55, dur, ice);
+                }
+            }
+            case ZenonTable.BONE_BLADES -> ZogratisVfx.crack(sl, position().add(0, 0.1, 0), position().add(0, 1.1, 0), BoneMath.BLADE_REACH * 0.8, dur, ice, true);
+            case ZenonTable.BONE_GARDEN -> { for (Vec3 s : marks) ZogratisVfx.crack(sl, s.add(0, 0.1, 0), s.add(0, 1.1, 0), BoneMath.GARDEN_RADIUS, dur, ice, true); }
+            case ZenonTable.BACKSTAB -> { if (!marks.isEmpty()) ZogratisVfx.gate(sl, marks.get(0).add(0, 1.2, 0), target.position().add(0, 1.2, 0), 1.2, dur + 10, ice); }
+            case ZenonTable.PORTAL_LINK, ZenonTable.GATE_STORM -> {
+                int pairs = PortalMath.linkPairs(power()) + (id.equals(ZenonTable.GATE_STORM) ? 1 : 0);
+                for (double[] e : PortalMath.entryArc(getX(), getZ(), getYRot(), Math.min(4, pairs), 1.7, 2.2))
+                    ZogratisVfx.gate(sl, new Vec3(e[0], getY() + 1.2, e[1]), position().add(0, 1.2, 0).add(look()), 0.8, dur, ice);
+                ZogratisVfx.crack(sl, target.position().add(0, 0.1, 0), target.position().add(0, 1.1, 0), 6, dur, ice, true);
+            }
+            case ZenonTable.BONE_LANCE -> {
+                Vec3 from = position().add(0, getBbHeight() * 0.75, 0);
+                if (lanceDir != null) ZogratisVfx.tear(sl, from, ZenonMoves.rayEnd(sl, this, from, lanceDir, ZenonMoves.LANCE_RANGE), 0.4, dur, ice);
+            }
+            case ZenonTable.BONE_ARMOR -> ZogratisVfx.crack(sl, position().add(0, 0.1, 0), position().add(0, 1.1, 0), 2.6, dur, ice, true);
+            case ZenonTable.WARP_BARRAGE -> ZogratisVfx.crack(sl, target.position().add(0, 0.1, 0), target.position().add(0, 1.1, 0), 9, dur, ice, true);
+            case ZenonTable.TENSURA_SPACE -> ZogratisVfx.crack(sl, position().add(0, 1.4, 0).add(look().scale(1.5)), target.position().add(0, 1.4, 0), 1.8, dur, ice, false);
+            case ZenonTable.CALL_DISCIPLES -> ZogratisVfx.crack(sl, position().add(0, 0.1, 0), position().add(0, 1.1, 0), 5, dur, ice, true);
+            case ZenonTable.DOMINATION -> { if (!marks.isEmpty()) ZogratisVfx.crack(sl, marks.get(0).add(0, 0.1, 0), marks.get(0).add(0, 1.1, 0), DomainMath.half(power()), dur, ice, true); }
+            case ZenonTable.RIFT_CUTS -> {
+                Vec3 c = ZogratisBoss.ground(sl, target.position());
+                lockMarks(ZenonTable.RIFT_CUTS, List.of(c));
+                for (Vec3[] ln : ZenonMoves.cutLines(c, cutAngle(c), cutCount())) {
+                    ZogratisVfx.tear(sl, ln[0].add(0, 0.8, 0), ln[1].add(0, 0.8, 0), 0.5, dur, ice);
+                    Tells.line(sl, ln[0].add(0, 0.2, 0), ln[1].add(0, 0.2, 0), WARN);
+                }
+                announce("Zenon marks lines of cut space through " + target.getName().getString() + ". Stand between them!");
+            }
+            default -> { }
+        }
+    }
+
+    private Vec3 look() {
+        Vec3 v = getViewVector(1f).multiply(1, 0, 1);
+        return v.lengthSqr() < 1e-4 ? new Vec3(0, 0, 1) : v.normalize();
+    }
+
+    private void fxRun(String id, LivingEntity target) {
+        if (!(level() instanceof ServerLevel sl)) return;
+        final int ice = 0xB8E8FF;
+        switch (id) {
+            case ZenonTable.BONE_SPEARS -> {
+                Vec3 from = position().add(0, getBbHeight() * 0.75, 0), aim = target.getBoundingBox().getCenter().subtract(from);
+                if (aim.lengthSqr() > 1e-4) ZogratisVfx.tear(sl, from, from.add(aim.normalize().scale(Math.min(20, aim.length() + 4))), 0.5, 12, ice);
+            }
+            case ZenonTable.BONE_BLADES -> ZogratisVfx.spaceShatter(sl, position(), 3, ice);
+            case ZenonTable.BONE_ARMOR -> ZogratisVfx.spaceShatter(sl, position(), 2.6, ice);
+            case ZenonTable.CALL_DISCIPLES -> ZogratisVfx.spaceShatter(sl, position(), 4.5, ice);
+            case ZenonTable.TENSURA_SPACE -> ZogratisVfx.tear(sl, position().add(0, 1.4, 0), target.position().add(0, 1.2, 0), 0.8, 14, ice);
+            default -> { }
+        }
     }
 
     // ================================================================ telegraphs

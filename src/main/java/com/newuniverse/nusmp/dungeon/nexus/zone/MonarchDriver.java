@@ -124,7 +124,10 @@ public final class MonarchDriver {
      */
     private static void resume(ServerLevel l, Mob m, MonarchFight f, long now) {
         f.awake = true;
-        f.phase = MonarchRules.phaseOf(m.getHealth(), m.getMaxHealth());
+        f.finalBar = m.getPersistentData().getBoolean(MonarchBoss.FINAL);                 // 1.35.0: the second bar is saved with the entity, so a reload grants no second refill
+        com.newuniverse.nusmp.boss.refill.RefillTag.read(f.refill, m.getPersistentData());
+        f.phase = f.finalBar ? 3 : MonarchRules.phaseOf(m.getHealth(), m.getMaxHealth());
+        if (f.refill.active()) f.transitionUntil = now + f.refill.ticksLeft() + 2;          // a refill that was running when the world saved finishes while it cannot be hurt
         f.summons = f.phase - 1;
         f.lastSummonAt = now;
         f.summonPending = false;
@@ -332,8 +335,9 @@ public final class MonarchDriver {
         List<ServerPlayer> foes = MonarchAttacks.hallFoes(l, f);
         if (!foes.isEmpty()) f.lastFoe = now;
         if (now % 10 == 0) bar(l, m, f);
-        int ph = MonarchRules.phaseOf(m.getHealth(), m.getMaxHealth());
+        int ph = f.finalBar ? 3 : MonarchRules.phaseOf(m.getHealth(), m.getMaxHealth());
         if (ph > f.phase && !f.transitioning(now)) transition(l, m, f, ph, now);
+        refillTick(l, m, f, now);
 
         for (Iterator<MonarchFight.Hazard> it = f.hazards.iterator(); it.hasNext(); ) {
             MonarchFight.Hazard h = it.next();
@@ -445,6 +449,11 @@ public final class MonarchDriver {
         dismissSoldiers(l, f);
         f.bar.removeAllPlayers();
         f.awake = false;
+        f.refill.reset();                                                          // the fight is over and reset: a new fight may refill again
+        f.finalBar = false;
+        m.getPersistentData().remove(MonarchBoss.FINAL);
+        com.newuniverse.nusmp.boss.refill.RefillTag.write(f.refill, m.getPersistentData());
+        f.bar.setColor(net.minecraft.world.BossEvent.BossBarColor.RED);
         f.phase = 1;
         f.summons = 0;
         f.summonPending = false;
@@ -493,9 +502,34 @@ public final class MonarchDriver {
         clearEffects(l, f);
         f.transitionUntil = now + MonarchRules.TRANSITION;
         stand(m, f, f.transitionUntil);
-        f.scheduler.holdUntil(f.transitionUntil + MonarchRules.gap(toPhase));
+        f.scheduler.holdUntil(f.transitionUntil + MonarchRules.paced(MonarchRules.gap(toPhase), toPhase == 3));
         f.summonPending = MonarchRules.summonDue(from, toPhase, MonarchAttacks.alive(l, f), now - f.lastSummonAt);
         f.hazards.add(MonarchAttacks.roar(l, m, f, toPhase, now));
+        if (toPhase == 3 && f.refill.begin("final", m.getHealth(), m.getMaxHealth(), com.newuniverse.nusmp.boss.refill.PhaseRefill.DEFAULT_TICKS)) {
+            f.finalBar = true;                                                      // 1.35.0: the last phase is a second health bar
+            m.getPersistentData().putBoolean(MonarchBoss.FINAL, true);
+            com.newuniverse.nusmp.boss.refill.RefillTag.write(f.refill, m.getPersistentData());
+            com.newuniverse.nusmp.boss.refill.RefillFx.start(l, m.position(), m.getBbHeight(), 0xE0182C, 0xFFB4C8, com.newuniverse.nusmp.boss.refill.PhaseRefill.DEFAULT_TICKS);
+            Component second = Component.translatable("nusmp.boss.refill.second_bar", MonarchText.NAME).withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD);
+            for (ServerPlayer p : MonarchAttacks.foesNear(l, m.getX(), m.getZ(), MonarchRules.ARENA_RADIUS)) p.sendSystemMessage(second);
+            MonarchFx.vault(l, m.getX(), m.getY(), m.getZ(), 7.0, MonarchRules.TRANSITION + 30);
+        }
+    }
+
+    /** 1.35.0: while the refill runs the health eases up to the maximum (a heal, not damage), with the glow and the bar tinted light. */
+    private static void refillTick(ServerLevel l, Mob m, MonarchFight f, long now) {
+        if (!f.refill.active()) return;
+        f.refill.retarget(m.getMaxHealth());
+        float hp = f.refill.tick();
+        if (hp >= 0f) m.setHealth(Math.max(m.getHealth(), Math.min(hp, m.getMaxHealth())));
+        f.bar.setColor(f.refill.glow() > 0.3f ? net.minecraft.world.BossEvent.BossBarColor.WHITE : net.minecraft.world.BossEvent.BossBarColor.RED);
+        if (f.refill.active()) {
+            com.newuniverse.nusmp.boss.refill.RefillFx.fill(l, m.position(), m.getBbHeight(), m.getBbWidth() * 0.8, 0xE0182C, 0xFFB4C8, f.refill.progress(), (int) now);
+        } else {
+            com.newuniverse.nusmp.boss.refill.RefillFx.end(l, m.position(), m.getBbHeight(), 0xE0182C, 0xFFB4C8);
+            f.bar.setColor(net.minecraft.world.BossEvent.BossBarColor.RED);
+            com.newuniverse.nusmp.boss.refill.RefillTag.write(f.refill, m.getPersistentData());
+        }
     }
 
     /**
@@ -534,7 +568,7 @@ public final class MonarchDriver {
             f.lastSummonAt = now;
             f.summonPending = false;
         }
-        f.scheduler.started(move, now, f.phase);
+        f.scheduler.started(move, now, f.phase, f.finalBar);
         face(m, target);
         stand(m, f, now + MonarchRules.freeze(move, f.phase));
         MonarchAttacks.warn(l, m, MonarchText.warning(move), move.isArt() ? ChatFormatting.RED : ChatFormatting.LIGHT_PURPLE);

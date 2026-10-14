@@ -54,7 +54,7 @@ public class DanteBoss extends ZogratisBoss {
 
     public DanteBoss(EntityType<DanteBoss> type, Level level) { super(type, level); }
 
-    public static AttributeSupplier.Builder createAttributes() { return ZogratisBoss.bossAttributes(1200, 18, 0.30, 14, 8); }
+    public static AttributeSupplier.Builder createAttributes() { return ZogratisBoss.bossAttributes(1700, 18, 0.30, 15, 9); }
 
     @Override public String bossName() { return "Dante Zogratis"; }
     @Override public Devil devil() { return Devil.LUCIFERO; }
@@ -68,6 +68,9 @@ public class DanteBoss extends ZogratisBoss {
     @Override protected double preferredRange(double suggested) { return Math.max(2.5, Math.min(4.5, suggested)); }
     @Override protected String[] tensuraKeywords() { return new String[]{"gravity", "burden", "earth"}; }
     @Override protected int tensuraKitSize() { return 3; }
+
+    /** The three rings of the Titan Quake (the Gates widen them). */
+    private double quakeReach(int wave) { return (5.0 + 3.5 * wave) + (gatesOpen() ? 1.5 : 0); }
 
     private boolean surging() { return level().getGameTime() < surgeUntil; }
     private float surgeFactor() { return surging() ? 1.25f : 1f; }
@@ -135,6 +138,7 @@ public class DanteBoss extends ZogratisBoss {
     @Override
     protected void onGatesOpened() {
         announce("Dante's body swells with Lucifero's power. His gravity fields grow, and his flesh mends twice as fast.");
+        if (level() instanceof ServerLevel sl) { ZogratisVfx.gravityAura(sl, this, 1.6, 240, DanteMoves.BODY); ZogratisVfx.well(sl, position(), 14, 70, DanteMoves.VIOLET, false); }
         for (int delay : new int[]{80, 260, 460}) {
             later(delay, DanteMoves.safe("disciple wave", () -> {
                 if (fightActive() && summonDisciples(2) > 0) announce("A wave of Dark Disciples steps out of Lucifero's shadow.");
@@ -227,9 +231,18 @@ public class DanteBoss extends ZogratisBoss {
                     .range(s.minRange(), s.maxRange()).weight(s.weight()).mana(s.manaCost()).recovery(s.recovery());
             if (s.ultimate()) b.ultimate();
             if (s.crowd()) b.crowd();
-            Move.MoveTell tell = tellOf(s.id());
-            if (tell != null) b.tell(tell);
-            out.add(b.run(runOf(s.id())));
+            final String mid = s.id();
+            final Move.MoveTell base = tellOf(mid);
+            final Move.MoveRun run = runOf(mid);
+            b.tell((bs, t, left, total) -> {                                  // 1.35.0: the dust telegraph (kept) and the effect that goes with it
+                if (base != null) base.tell(bs, t, left, total);
+                else if (level() instanceof ServerLevel sl && castingMoveOrNull() != null) defaultTell(sl, castingMoveOrNull(), t, left);
+                try { fxTell(mid, t, left, total); } catch (RuntimeException e) { LogUtils.getLogger().warn("[nusmp] Dante's tell effect failed: {}", e.toString()); }
+            });
+            out.add(b.run((bs, t) -> {
+                try { fxRun(mid, t); } catch (RuntimeException e) { LogUtils.getLogger().warn("[nusmp] Dante's strike effect failed: {}", e.toString()); }
+                run.run(bs, t);
+            }));
         }
         return out;
     }
@@ -298,6 +311,19 @@ public class DanteBoss extends ZogratisBoss {
                 quip("A little extra!");
             };
             case DanteTable.SINGULARITY -> (b, t) -> runSingularity(t);
+            case DanteTable.TWIN_WELLS -> (b, t) -> {
+                List<Vec3> ms = marks.size() >= 2 ? marks : twinMarks(t);
+                marks = List.of();
+                for (Vec3 m : ms) DanteMoves.gravityField(this, m, fieldRadius() * 0.8, 90, fieldStrength() * 0.85f);
+                quip("Two for the price of one!", "Lucifero's weight, doubled!");
+            };
+            case DanteTable.TITAN_QUAKE -> (b, t) -> {
+                for (int k = 0; k < 3; k++) {
+                    final int wave = k;
+                    later(k * 14, DanteMoves.safe("titan quake", () -> DanteMoves.stompWave(this, position(), quakeReach(wave), DanteTable.STOMP * 0.8f * surgeFactor(), 1.0)));
+                }
+                quip("Feel the mountain shake!", "Jump! Jump! Jump!");
+            };
             default -> (b, t) -> { };
         };
     }
@@ -334,6 +360,7 @@ public class DanteBoss extends ZogratisBoss {
                 Tells.ring(sl, m, r, WARN, 1.3f, (int) Math.min(72, 12 + r * 4));
                 Tells.column(sl, m, 4, ACCENT);
             }));
+            ZogratisVfx.well(sl, m, r, 26, RGB, true);
             later(24, DanteMoves.safe("chained field", () -> {
                 if (sl.getGameTime() >= quietUntil) DanteMoves.gravityField(this, m, r, 80, s);
             }));
@@ -359,6 +386,82 @@ public class DanteBoss extends ZogratisBoss {
         List<Vec3> out = new ArrayList<>();
         for (double[] m : plan) out.add(ZogratisBoss.ground(level(), new Vec3(m[0], target.getY(), m[1])));
         return out;
+    }
+
+    /** Two wells: on the target and on the far side of the boss, 120 degrees round him. */
+    private List<Vec3> twinMarks(LivingEntity target) {
+        Vec3 a = ZogratisBoss.ground(level(), target.position());
+        Vec3 off = a.subtract(position()).multiply(1, 0, 1);
+        Vec3 b = ZogratisBoss.ground(level(), position().add(DanteMoves.rotateY(off, 2.1)));
+        return List.of(a, b);
+    }
+
+    // ================================================================ 1.35.0 effects: gravity wells, warped rings, lanes
+    /** The effect of a move's wind-up, started once (the tell runs every third tick); it lasts the wind-up and its rim closes with it. */
+    private void fxTell(String id, LivingEntity target, int left, int total) {
+        if (!(level() instanceof ServerLevel sl) || !first(left, total)) return;
+        final int dur = total + 2;
+        switch (id) {
+            case DanteTable.ROCK_SWORDS -> {
+                Vec3 from = position(), aim = target.position().subtract(from).multiply(1, 0, 1);
+                if (aim.lengthSqr() < 1e-4) return;
+                aim = aim.normalize();
+                for (double a : GravityMath.fan(Math.min(5, GravityMath.swordCount(tuning().castSlots()))))
+                    ZogratisVfx.lane(sl, from, from.add(DanteMoves.rotateY(aim, a).scale(16)), 1.4, dur, RGB, true);
+            }
+            case DanteTable.TITAN_FIST -> {
+                Vec3 look = getViewVector(1f).multiply(1, 0, 1);
+                if (look.lengthSqr() > 1e-4) ZogratisVfx.lane(sl, position(), position().add(look.normalize().scale(FIST_REACH)), 2.6, dur, BODY_RGB, true);
+                ZogratisVfx.gravityAura(sl, this, 1.2, dur + 4, DanteMoves.BODY);
+            }
+            case DanteTable.CRUSHING_STOMP -> ZogratisVfx.well(sl, position(), stompReach(), dur, RGB, true);
+            case DanteTable.GRAVITY_DOMAIN -> { if (!marks.isEmpty()) ZogratisVfx.well(sl, marks.get(0), fieldRadius(), dur, RGB, true); }
+            case DanteTable.GRAVITY_PULL -> {
+                ZogratisVfx.well(sl, position(), 8, dur, RGB, true);
+                int n = 0;
+                for (LivingEntity e : foes(30)) { if (++n > 4) break; ZogratisVfx.lane(sl, e.position(), position(), 1.4, dur, RGB, true); }
+            }
+            case DanteTable.WEIGHTED_LEAP -> { if (!marks.isEmpty()) ZogratisVfx.well(sl, marks.get(0), LEAP_REACH, dur, WARN, true); }
+            case DanteTable.STONE_SPIKES -> {
+                if (marks.isEmpty()) return;
+                Vec3 flat = marks.get(0).subtract(position()).multiply(1, 0, 1);
+                if (flat.lengthSqr() < 1e-4) return;
+                ZogratisVfx.lane(sl, position(), position().add(flat.normalize().scale(Math.min(28, flat.length() + 4))), 3.4, dur, RGB, true);
+            }
+            case DanteTable.LUCIFERO_WEIGHT -> { if (!marks.isEmpty()) ZogratisVfx.well(sl, marks.get(0), WEIGHT_RADIUS, dur, WARN, true); }
+            case DanteTable.BODY_SURGE -> ZogratisVfx.gravityAura(sl, this, 1.4, dur + 6, DanteMoves.BODY);
+            case DanteTable.CALL_DISCIPLES -> ZogratisVfx.well(sl, position(), 5, dur, RGB, true);
+            case DanteTable.TENSURA_GRAVITY -> ZogratisVfx.gravityAura(sl, this, 1.0, dur, DanteMoves.VIOLET);
+            case DanteTable.TWIN_WELLS -> {
+                marks = twinMarks(target);
+                for (Vec3 m : marks) ZogratisVfx.well(sl, m, fieldRadius() * 0.8, dur, RGB, true);
+                announce("Dante opens two gravity wells at once. Leave both rings before they close!");
+            }
+            case DanteTable.TITAN_QUAKE -> {
+                for (int k = 0; k < 3; k++) ZogratisVfx.well(sl, position(), quakeReach(k), dur + 14 * k, k == 2 ? WARN : RGB, true);
+                ZogratisVfx.gravityAura(sl, this, 1.4, dur, DanteMoves.BODY);
+                announce("Dante gathers a Titan Quake: three rings, one after the other. Jump each one!");
+            }
+            default -> { }
+        }
+    }
+
+    /** The strike of a move that DanteMoves does not draw itself. */
+    private void fxRun(String id, LivingEntity target) {
+        if (!(level() instanceof ServerLevel sl)) return;
+        switch (id) {
+            case DanteTable.ROCK_SWORDS -> {
+                Vec3 from = position(), aim = target.position().subtract(from).multiply(1, 0, 1);
+                if (aim.lengthSqr() < 1e-4) return;
+                aim = aim.normalize();
+                for (double a : GravityMath.fan(Math.min(5, GravityMath.swordCount(tuning().castSlots()))))
+                    ZogratisVfx.lane(sl, from, from.add(DanteMoves.rotateY(aim, a).scale(16)), 1.2, 16, DanteMoves.VIOLET, false);
+            }
+            case DanteTable.BODY_SURGE -> ZogratisVfx.gravityAura(sl, this, 1.6, 160, DanteMoves.BODY);
+            case DanteTable.CALL_DISCIPLES -> ZogratisVfx.gravityImpact(sl, position(), 4.5, DanteMoves.VIOLET);
+            case DanteTable.TENSURA_GRAVITY -> ZogratisVfx.lane(sl, position(), target.position(), 1.6, 14, DanteMoves.VIOLET, false);
+            default -> { }
+        }
     }
 
     // ================================================================ telegraphs

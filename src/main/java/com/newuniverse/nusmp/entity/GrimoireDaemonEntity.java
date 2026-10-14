@@ -184,6 +184,7 @@ public class GrimoireDaemonEntity extends Monster {
 
     private void bolt(ServerLevel sl, ZagredBossEntity boss, LivingEntity tg) {
         VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, getEyePosition(), aim, variant == 0 ? 0xFF8A8A92 : 0xFF8A6A3A, 8, 0.4f);
+        ZagredFx.strike(sl, getEyePosition(), aim, variant == 0 ? 0xFFB0B0BA : 0xFFC89A5A, 0.6f, 10);                  // 1.35.0: the ash bolt is a short sentence
         for (LivingEntity t : KotodamaWords.foes(boss, aim, 1.5)) {
             t.hurt(damageSources().indirectMagic(this, boss), 4f);
             t.addEffect(new MobEffectInstance(variant == 0 ? MobEffects.BLINDNESS : MobEffects.MOVEMENT_SLOWDOWN, 40, 0));
@@ -196,6 +197,7 @@ public class GrimoireDaemonEntity extends Monster {
         if (cast > 0) ring(sl, aim, 3.0, cast);
         if (cast == 1) {
             VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, aim.add(0, 0.5, 0), aim, variant == 0 ? 0xFF3A1E5A : 0xFFFF6A20, 14, 2f);
+            ZagredFx.strike(sl, aim.add(0, 7, 0), aim, variant == 0 ? 0xFF8A4CFF : 0xFFFF6A20, 2.4f, 14);
             sl.playSound(null, bp(aim), SoundEvents.FIRECHARGE_USE, SoundSource.HOSTILE, 1f, 0.8f);
             for (LivingEntity v : KotodamaWords.foes(boss, aim, 3.0)) {
                 KotodamaWords.hurt(boss, v, 12f);
@@ -204,6 +206,7 @@ public class GrimoireDaemonEntity extends Monster {
         } else if (cast == 0 && t >= nextAct) {
             aim = tg.position();
             entityData.set(CAST, 30);
+            ZagredFx.ring(sl, aim, 3f, 30, variant == 0 ? ZagredFx.INDIGO : 0xFFFF6A20);
             nextAct = t + 70 + random.nextInt(30);
         }
     }
@@ -227,6 +230,7 @@ public class GrimoireDaemonEntity extends Monster {
         else if (cast == 0 && t >= nextAct) {
             aim = tg.position();
             entityData.set(CAST, 40);
+            ZagredFx.ring(sl, aim, 6f, 40, KotodamaWords.VIOLET);
             nextAct = t + 160 + random.nextInt(40);
         }
         if (t >= nextTensura && distanceToSqr(tg) < 30 * 30 && boss.phase() >= 3) {
@@ -243,6 +247,7 @@ public class GrimoireDaemonEntity extends Monster {
     private void well(ServerLevel sl, ZagredBossEntity boss) {
         Vec3 c = aim;
         VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, c.add(0, 0.5, 0), c, 0xFF7A5AD0, 20, 2.6f);
+        ZagredFx.corrupt(sl, c, 6f, 60, 0xFF7A5AD0);                                                               // 1.35.0: the well reads as corrupted text
         sl.playSound(null, bp(c), SoundEvents.ENDERMAN_TELEPORT, SoundSource.HOSTILE, 1.5f, 0.4f);
         SpellRuntime.zone(sl, 60, 2, age -> {
             for (LivingEntity v : KotodamaWords.foes(boss, c, 6)) {

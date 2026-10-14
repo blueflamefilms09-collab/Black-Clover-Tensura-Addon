@@ -162,7 +162,11 @@ public class CharybdisSpawnBoss extends ZogratisBoss {
         setDeltaMovement(0, y - getY(), 0);
         if (getTarget() != null) setTarget(null);
         if (tickCount % 3 == 0) sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY() + 1.2, getZ(), 8, 1.4, 1.1, 1.4, 0.05);
-        if (riseLeft == 0) sl.playSound(null, blockPosition(), SoundEvents.ELDER_GUARDIAN_CURSE, SoundSource.HOSTILE, 3f, 0.5f);
+        if (riseLeft == riseTotal - 1) CharybdisVfx.surfacing(this, riseTotal);
+        if (riseLeft == 0) {
+            sl.playSound(null, blockPosition(), SoundEvents.ELDER_GUARDIAN_CURSE, SoundSource.HOSTILE, 3f, 0.5f);
+            CharybdisVfx.burst(this);
+        }
     }
 
     // ================================================================ every tick: swim, face, lunge
@@ -324,6 +328,12 @@ public class CharybdisSpawnBoss extends ZogratisBoss {
     }
 
     // ================================================================ the fight's hooks
+    /** The Frenzy (the 100% mode): a ring of cold tide, a vortex and a spout; the numbers of the moves grow with {@link CharybdisMath#sweepReach} and its kin. */
+    @Override
+    protected void onGatesOpened() {
+        CharybdisVfx.frenzy(this);
+    }
+
     @Override
     protected void onFightStart() {
         forgetLock();
@@ -338,6 +348,7 @@ public class CharybdisSpawnBoss extends ZogratisBoss {
         if (swim != null) swim.halt();
         if (!(level() instanceof ServerLevel sl)) return;
         CharybdisMinions.dismiss(sl, this);
+        if (won) CharybdisVfx.burst(this);
         if (won) CharybdisBasinSite.fell(sl, arena(), killer == null ? null : sl.getServer().getPlayerList().getPlayer(killer));
     }
 

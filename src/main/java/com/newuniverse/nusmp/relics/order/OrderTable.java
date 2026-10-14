@@ -10,7 +10,7 @@ import java.util.List;
 public final class OrderTable {
     private OrderTable() {}
 
-    public static final double HEALTH = 1200, ATTACK = 14, SPEED = 0.30, ARMOR = 10, TOUGHNESS = 6;
+    public static final double HEALTH = 1500, ATTACK = 16, SPEED = 0.30, ARMOR = 11, TOUGHNESS = 6;
     /** Experience it gives when it dies (no loot of any kind). */
     public static final int XP = 400;
 
@@ -52,6 +52,25 @@ public final class OrderTable {
     public static boolean forcedErasureDue(long combatTicks, float healthFraction) {
         return combatTicks >= ERASURE_AFTER_TICKS || healthFraction <= ERASURE_HEALTH_FRACTION;
     }
+
+    /**
+     * 1.35.0: the same rule with the Open Ledger in mind. The God used to end the matter at 35% health, which is above the 25% at which its Gates
+     * (the 100% mode, with the refilled health bar) open, so the Gates could hardly ever be seen. Now it ends the matter by time (75 s of combat,
+     * {@link #GATES_EXTRA_TICKS} more once the ledger is open) or, with the ledger open, when it is down to {@link #GATES_ERASURE_FRACTION} of the
+     * refilled bar. Before the ledger opens, health alone never ends the matter.
+     */
+    public static boolean forcedErasureDue(long combatTicks, float healthFraction, boolean gatesOpen) {
+        long limit = ERASURE_AFTER_TICKS + (gatesOpen ? GATES_EXTRA_TICKS : 0);
+        return combatTicks >= limit || (gatesOpen && healthFraction <= GATES_ERASURE_FRACTION);
+    }
+
+    public static final long GATES_EXTRA_TICKS = 600L;
+    public static final float GATES_ERASURE_FRACTION = 0.15f;
+
+    /** 1.35.0, the Open Ledger: the Decree's ring and the Judgement's circle are wider (the wind-up draws them so). */
+    public static double decreeRadius(boolean gates) { return gates ? DECREE_RADIUS * 1.3 : DECREE_RADIUS; }
+
+    public static double judgementRadius(boolean gates) { return gates ? JUDGEMENT_RADIUS * 1.25 : JUDGEMENT_RADIUS; }
 
     // ---- where it appears
     /** Distances from the holder, in blocks, tried in this order for a standing spot (the first is the 8 blocks of the design). */

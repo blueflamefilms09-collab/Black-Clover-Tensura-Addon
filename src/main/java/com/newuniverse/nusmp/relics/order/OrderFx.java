@@ -21,6 +21,7 @@ final class OrderFx {
     /** The start of a telegraph: a spinning circle on the ground and a note that rises. */
     static void telegraphStart(ServerLevel sl, Vec3 spot) {
         VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE, spot.add(0, 0.05, 0), spot.add(0, 1, 0), 0xFF000000 | GOLD, OrderPlan.TELEGRAPH_TICKS, 3.0f);
+        OrderVfx.arrival(sl, spot);
         sl.playSound(null, net.minecraft.core.BlockPos.containing(spot), SoundEvents.BELL_RESONATE, SoundSource.HOSTILE, 2.5f, 0.6f);
     }
 
@@ -35,6 +36,7 @@ final class OrderFx {
 
     /** The God steps out of the column. */
     static void appear(ServerLevel sl, Vec3 spot) {
+        OrderVfx.stepOut(sl, spot);
         Tells.burst(sl, spot.add(0, 1.4, 0), WHITE_GOLD, 40);
         sl.sendParticles(ParticleTypes.END_ROD, spot.x, spot.y + 1.6, spot.z, 30, 0.4, 1.4, 0.4, 0.08);
         sl.playSound(null, net.minecraft.core.BlockPos.containing(spot), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.HOSTILE, 3.0f, 0.5f);
@@ -42,6 +44,7 @@ final class OrderFx {
 
     /** While it reads: a ring of glyphs turning round it. */
     static void reading(ServerLevel sl, Vec3 godAt, int tick) {
+        if (tick < 4) OrderVfx.census(sl, godAt);
         double a0 = tick * 0.12;
         for (int i = 0; i < 6; i++) {
             double a = a0 + i * Math.PI / 3.0;
@@ -52,6 +55,7 @@ final class OrderFx {
 
     /** The beam from the staff to the duplicate (call every couple of ticks). */
     static void beam(ServerLevel sl, Vec3 from, Vec3 to, float progress) {
+        if (progress < 0.06f) OrderVfx.correction(sl, from, to);
         Tells.line(sl, from, to, WHITE_GOLD);
         Vec3 head = from.add(to.subtract(from).scale(Math.min(1.0, 0.3 + progress)));
         sl.sendParticles(ParticleTypes.END_ROD, head.x, head.y, head.z, 3, 0.1, 0.1, 0.1, 0.02);
@@ -60,6 +64,7 @@ final class OrderFx {
 
     /** The duplicate burns to gold dust. */
     static void dust(ServerLevel sl, Vec3 at) {
+        OrderVfx.burned(sl, at);
         Tells.burst(sl, at, GOLD, 50);
         sl.sendParticles(ParticleTypes.WAX_ON, at.x, at.y, at.z, 24, 0.4, 0.5, 0.4, 0.3);
         sl.sendParticles(ParticleTypes.END_ROD, at.x, at.y, at.z, 16, 0.3, 0.4, 0.3, 0.12);
@@ -68,6 +73,7 @@ final class OrderFx {
 
     /** The God goes. */
     static void leave(ServerLevel sl, Vec3 at) {
+        OrderVfx.farewell(sl, at);
         Tells.burst(sl, at.add(0, 1.4, 0), PALE, 30);
         sl.sendParticles(ParticleTypes.END_ROD, at.x, at.y + 1.6, at.z, 20, 0.3, 1.2, 0.3, 0.06);
         sl.playSound(null, net.minecraft.core.BlockPos.containing(at), SoundEvents.BELL_BLOCK, SoundSource.HOSTILE, 2.0f, 0.5f);

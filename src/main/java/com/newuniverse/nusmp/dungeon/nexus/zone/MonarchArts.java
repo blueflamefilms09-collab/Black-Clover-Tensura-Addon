@@ -109,6 +109,8 @@ final class MonarchArts {
             begun[k] = true;
             MonarchAttacks.sound(l, cx[k], cy[k], cz[k], SoundEvents.WITHER_SHOOT, 2.0f, 1.5f);
             mark(l, k, MonarchRules.CROSS_WINDUP);
+            for (double[] ln : MonarchShapes.crossLines(cx[k], cz[k], ang[k], MonarchRules.CROSS_HALF_LEN))
+                MonarchFx.chains(l, new Vec3(ln[0], cy[k] + 0.3, ln[1]), new Vec3(ln[2], cy[k] + 0.3, ln[3]), MonarchRules.CROSS_WINDUP, 0.7f);
         }
 
         private void mark(ServerLevel l, int k, long left) {
@@ -142,6 +144,7 @@ final class MonarchArts {
             MonarchAttacks.sound(l, x, y, z, SoundEvents.PLAYER_ATTACK_CRIT, 3.0f, 0.6f);
             for (double[] ln : MonarchShapes.crossLines(x, z, ang[k], MonarchRules.CROSS_HALF_LEN)) {
                 VfxSpawn.send(l, VfxShape.BLOOD_FX1, new Vec3(ln[0], y + 0.7, ln[1]), new Vec3(ln[2], y + 0.7, ln[3]), BLOOD, 10, 1.2f);
+                MonarchFx.cut(l, new Vec3(ln[0], y + 0.5, ln[1]), new Vec3(ln[2], y + 0.5, ln[3]), 1.0f, 12);
                 for (int i = 0; i <= 6; i++) {
                     double u = i / 6.0;
                     l.sendParticles(ParticleTypes.SWEEP_ATTACK, ln[0] + (ln[2] - ln[0]) * u, y + 0.6, ln[1] + (ln[3] - ln[1]) * u, 1, 0, 0, 0, 0);
@@ -217,6 +220,9 @@ final class MonarchArts {
             this.release = now + MonarchRules.LUNGE_WINDUP;
             this.prev = path.get(0);
             MonarchAttacks.sound(l, prev[0], prev[1], prev[2], SoundEvents.RAVAGER_ROAR, 3.0f, 0.8f);
+            double[] stop = path.get(path.size() - 1);
+            MonarchFx.chains(l, new Vec3(prev[0], prev[1] + 0.3, prev[2]), new Vec3(stop[0], stop[1] + 0.3, stop[2]), MonarchRules.LUNGE_WINDUP, 1.0f);
+            MonarchFx.banners(l, stop[0], stop[1], stop[2], MonarchRules.LUNGE_HALF * 1.6, MonarchRules.LUNGE_WINDUP);
             mark(l, MonarchRules.LUNGE_WINDUP);
         }
 
@@ -239,6 +245,7 @@ final class MonarchArts {
                 double[] a = path.get(0), z = path.get(path.size() - 1);
                 MonarchAttacks.sound(l, a[0], a[1], a[2], SoundEvents.PLAYER_ATTACK_SWEEP, 4.0f, 0.5f);
                 VfxSpawn.send(l, VfxShape.BLOOD_FX1, new Vec3(a[0], a[1] + 1.0, a[2]), new Vec3(z[0], z[1] + 1.0, z[2]), BLOOD, MonarchRules.lungeTicks(len) + 4, 1.6f);
+                MonarchFx.cut(l, new Vec3(a[0], a[1] + 0.8, a[2]), new Vec3(z[0], z[1] + 0.8, z[2]), 1.5f, MonarchRules.lungeTicks(len) + 6);
             }
             travelled = Math.min(len, travelled + MonarchRules.LUNGE_SPEED);
             double[] to = MonarchLunge.at(path, travelled);
@@ -301,6 +308,7 @@ final class MonarchArts {
             this.end = now + MonarchRules.activeUntil(MonarchMove.SWEEP, f.phase);
             for (int k = 0; k < cuts; k++) struck.add(new HashSet<>());
             MonarchAttacks.sound(l, cx, cy, cz, SoundEvents.ENDER_DRAGON_FLAP, 3.0f, 0.7f);
+            MonarchFx.banners(l, cx, cy, cz, radius, MonarchRules.SWEEP_WINDUP);
             mark(l, MonarchRules.SWEEP_WINDUP);
         }
 
@@ -350,6 +358,7 @@ final class MonarchArts {
             double ca = Math.cos(heading + a1), sa = Math.sin(heading + a1);
             for (double r = 2.0; r <= radius; r += 2.5) l.sendParticles(ParticleTypes.SWEEP_ATTACK, cx + ca * r, cy + 0.8, cz + sa * r, 1, 0, 0, 0, 0);
             MonarchAttacks.line(l, HOT, cx + ca * 1.5, cy + 0.6, cz + sa * 1.5, cx + ca * radius, cz + sa * radius, 1.5);
+            if (i == 2) MonarchFx.cut(l, new Vec3(cx + ca * 1.5, cy + 0.7, cz + sa * 1.5), new Vec3(cx + ca * radius, cy + 0.7, cz + sa * radius), 1.3f, 12);
             if (i == MonarchRules.SWEEP_CUT - 1) VfxSpawn.send(l, VfxShape.BLOOD_FX3, new Vec3(cx + ca * radius, cy + 0.1, cz + sa * radius), new Vec3(cx + ca * radius, cy + 1.0, cz + sa * radius), BLOOD, 16, 0.9f);
             Set<UUID> seen = struck.get(k);
             for (ServerPlayer p : MonarchAttacks.foesNear(l, cx, cz, radius + 2.0)) {

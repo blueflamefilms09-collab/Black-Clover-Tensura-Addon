@@ -64,6 +64,8 @@ public class DevilAvatarBoss extends ZogratisBoss {
     List<Vec3> marks = List.of();
     Vec3 stepExit, brandMark;
     int brandTarget = -1;
+    /** The angle of the first spoke the Brimstone Eruption's wind-up drew (NaN when none). */
+    double eruptBase = Double.NaN;
 
     private final Set<String> hinted = new HashSet<>();
     private long lastQuip;
@@ -77,7 +79,7 @@ public class DevilAvatarBoss extends ZogratisBoss {
         if (!level.isClientSide) entityData.set(VARIANT, getRandom().nextBoolean() ? AvatarTable.MEGICULA : AvatarTable.LUCIFERO);
     }
 
-    public static AttributeSupplier.Builder createAttributes() { return ZogratisBoss.bossAttributes(900, 14, 0.34, 8, 4); }
+    public static AttributeSupplier.Builder createAttributes() { return ZogratisBoss.bossAttributes(AvatarTable.HEALTH, AvatarTable.ATTACK, 0.34, AvatarTable.ARMOR, AvatarTable.TOUGHNESS); }
 
     // ================================================================ which Avatar
     @Override
@@ -154,6 +156,7 @@ public class DevilAvatarBoss extends ZogratisBoss {
         stepExit = null;
         brandMark = null;
         brandTarget = -1;
+        eruptBase = Double.NaN;
     }
 
     @Override
@@ -164,8 +167,9 @@ public class DevilAvatarBoss extends ZogratisBoss {
 
     @Override
     protected void onGatesOpened() {
+        AvatarVfx.gates(this);
         announce("The Avatar swells with " + devil().displayName + "'s power. Its pulls reach further, its bolts multiply and its Disciples come in waves.");
-        for (int delay : new int[]{80, 260, 460}) {
+        for (int delay : AvatarTable.GATE_WAVES) {
             later(delay, AvatarFx.safe("disciple wave", () -> {
                 if (fightActive() && summonDisciples(2) > 0) announce("A wave of Dark Disciples steps out of the Avatar's shadow.");
             }));
@@ -269,7 +273,14 @@ public class DevilAvatarBoss extends ZogratisBoss {
             };
             case AvatarTable.CALL_DISCIPLES -> (b, t) -> {
                 int made = summonDisciples(2 + (gatesOpen() ? 1 : 0));
+                AvatarVfx.callStrike(this);
                 if (made > 0) quip(id);
+            };
+            case AvatarTable.BRIMSTONE_ERUPTION -> (b, t) -> {
+                double base = Double.isNaN(eruptBase) ? Math.atan2(t.getZ() - getZ(), t.getX() - getX()) : eruptBase;
+                eruptBase = Double.NaN;
+                AvatarMoves.eruption(this, base);
+                quip(id);
             };
             case AvatarTable.ABYSSAL_COLLAPSE -> (b, t) -> {
                 AvatarMoves.abyssalCollapse(this);
@@ -282,8 +293,8 @@ public class DevilAvatarBoss extends ZogratisBoss {
 
     private Move.MoveTell tellOf(String id) {
         return switch (id) {
-            case AvatarTable.VOID_CLAWS -> (b, t, left, total) -> AvatarMoves.tellClaws(this);
-            case AvatarTable.HEX_VOLLEY -> (b, t, left, total) -> AvatarMoves.tellVolley(this, t);
+            case AvatarTable.VOID_CLAWS -> (b, t, left, total) -> AvatarMoves.tellClaws(this, left, total);
+            case AvatarTable.HEX_VOLLEY -> (b, t, left, total) -> AvatarMoves.tellVolley(this, t, left, total);
             case AvatarTable.SHADOW_STEP -> (b, t, left, total) -> AvatarMoves.tellStep(this, t, left, total);
             case AvatarTable.CEILING_PULL -> (b, t, left, total) -> {
                 if (AvatarMoves.first(left, total))
@@ -295,11 +306,13 @@ public class DevilAvatarBoss extends ZogratisBoss {
             case AvatarTable.INVERSION_FIELD -> (b, t, left, total) -> AvatarMoves.tellField(this, t, left, total);
             case AvatarTable.CURSE_NOVA -> (b, t, left, total) -> AvatarMoves.tellNova(this, AvatarMath.novaReach(gatesOpen()), left, total);
             case AvatarTable.CALL_DISCIPLES -> (b, t, left, total) -> {
+                if (AvatarMoves.first(left, total)) AvatarVfx.callTell(this, total);
                 if (level() instanceof ServerLevel sl) {
                     Tells.ring(sl, position(), 5, AvatarFx.rgb(this));
                     Tells.gather(sl, position().add(0, 1.2, 0), 1.0, AvatarFx.accent(this), 6);
                 }
             };
+            case AvatarTable.BRIMSTONE_ERUPTION -> (b, t, left, total) -> AvatarMoves.tellEruption(this, t, left, total);
             case AvatarTable.ABYSSAL_COLLAPSE -> (b, t, left, total) -> AvatarMoves.tellCollapse(this, left, total);
             default -> null;
         };

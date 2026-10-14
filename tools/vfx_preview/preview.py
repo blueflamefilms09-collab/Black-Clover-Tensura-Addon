@@ -98,6 +98,12 @@ def build(layers):
         for fn in os.listdir(layer_dir):
             if fn.startswith(stem) and fn.endswith(".java"):
                 shutil.copy(os.path.join(layer_dir, fn), os.path.join(pkg, "client", "layer"))
+    for layer in layers:                                                       # 1.35.0: the Devil / Stone / Tide / Order boss layers share BossFx (a helper, not a layer)
+        if layer.split(".")[-1] in ("DevilBossLayer", "StoneBossLayer", "TideBossLayer", "OrderBossLayer"):
+            shutil.copy(os.path.join(layer_dir, "BossFx.java"), os.path.join(pkg, "client", "layer"))
+    for layer in layers:                                                       # 1.35.0: the Zogratis layers share ZogratisFx (a helper, not a layer)
+        if layer.split(".")[-1].startswith("Zogratis"):
+            shutil.copy(os.path.join(layer_dir, "ZogratisFx.java"), os.path.join(pkg, "client", "layer"))
     shutil.copy(os.path.join(HERE, "Preview.java"), gen)
     classes = os.path.join(BUILD, "classes")
     shutil.rmtree(classes, ignore_errors=True)

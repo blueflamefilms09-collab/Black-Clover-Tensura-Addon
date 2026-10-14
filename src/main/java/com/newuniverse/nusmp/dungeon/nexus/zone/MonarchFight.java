@@ -39,6 +39,9 @@ final class MonarchFight {
     /** Players the field of Authority has slowed, so the slowness can be taken off them when the fight ends. */
     final Set<UUID> slowed = new HashSet<>();
     int phase = 1;
+    /** 1.35.0: the second health bar. The refill state machine, and whether the last phase has been entered (then the phase is held at 3 whatever the health, and the moves are enraged). */
+    final com.newuniverse.nusmp.boss.refill.PhaseRefill refill = new com.newuniverse.nusmp.boss.refill.PhaseRefill();
+    boolean finalBar;
     /** Awake and fighting; false while it sleeps. */
     boolean awake;
     /** Stands still (brain off) until this tick; and invulnerable until this other one (the roar between phases). */

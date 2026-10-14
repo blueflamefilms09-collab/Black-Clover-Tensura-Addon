@@ -5,6 +5,7 @@ import com.newuniverse.nusmp.NUSMP;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.blackclover.Devil;
 import com.newuniverse.nusmp.blackclover.TimeStop;
+import com.newuniverse.nusmp.boss.LuciusNumbers;
 import com.newuniverse.nusmp.boss.LuciusProfile;
 import com.newuniverse.nusmp.boss.LuciusSpellTable;
 import com.newuniverse.nusmp.boss.LuciusSpells;
@@ -93,6 +94,7 @@ public class LuciusBoss extends ZogratisBoss {
     private TowerSpells.Entry pendingTower;
     private Vec3 stepMark, haltSpot, fieldMark;
     private List<Vec3> courtSpots = List.of();
+    private List<Vec3> judgeMarks = List.of();
     private UUID swapPartnerId;
     private long reverseStart;
 
@@ -108,7 +110,7 @@ public class LuciusBoss extends ZogratisBoss {
         super(type, level);
     }
 
-    public static AttributeSupplier.Builder createAttributes() { return ZogratisBoss.bossAttributes(3600, 22, 0.36, 22, 12); }
+    public static AttributeSupplier.Builder createAttributes() { return ZogratisBoss.bossAttributes(4800, 22, 0.36, 24, 13); }
 
     @Override public Devil devil() { return Devil.ASTAROTH; }
 
@@ -300,6 +302,7 @@ public class LuciusBoss extends ZogratisBoss {
         pendingTower = null;
         stepMark = haltSpot = fieldMark = null;
         courtSpots = List.of();
+        judgeMarks = List.of();
         swapPartnerId = null;
         reverseStart = 0;
         bodySuppressedUntil = 0;
@@ -318,6 +321,10 @@ public class LuciusBoss extends ZogratisBoss {
 
     @Override
     protected void onGatesOpened() {
+        if (level() instanceof ServerLevel sl) {                                  // 1.35.0: the soul awakens in purple light
+            ZogratisVfx.pillar(sl, position(), 5, 50, FxMath.divine(PowerCurve.FULL), false);
+            ZogratisVfx.halo(sl, this, 1.6, 600, FxMath.divine(PowerCurve.FULL));
+        }
         announce("Lucius's soul awakens: three pairs of wings, a halo of gears, the grimoire of the towers open before him. His precognition and his time magic are at their peak.");
         precog.refill(PowerCurve.FULL, level().getGameTime());
         entityData.set(CHARGES, precog.charges());
@@ -347,6 +354,7 @@ public class LuciusBoss extends ZogratisBoss {
             if (tickCount % 10 == 0) {
                 paladinUpkeep(sl, now);
                 if (form() == FORM_DIVINE) LuciusFx.sparkle(sl, position().add(0, getBbHeight() + 0.2, 0), 3, 0.5);
+                if (form() == FORM_DIVINE && tickCount % 500 == 10) ZogratisVfx.halo(sl, this, 1.6, 520, FxMath.divine(power()));
                 if (precog.charges() > 0 && !julius()) Tells.gather(sl, position().add(0, getBbHeight() + 0.5, 0), 0.35, LuciusFx.GOLD, precog.charges() * 2);
             }
             if (now >= accelUntil && accelUntil != 0) {
@@ -603,11 +611,17 @@ public class LuciusBoss extends ZogratisBoss {
                     .range(s.minRange(), s.maxRange()).weight(s.weight()).mana(s.manaCost()).recovery(s.recovery());
             if (s.ultimate()) mb.ultimate();
             if (s.crowd()) mb.crowd();
-            Move.MoveTell tell = tellOf(s.id());
-            if (tell != null) mb.tell(tell);
-            final Move.MoveRun code = runOf(s.id());
+            final String mid = s.id();
+            final Move.MoveTell base = tellOf(mid);
+            mb.tell((bs, t, left, total) -> {                                 // 1.35.0: the dust telegraph (kept) and the effect that goes with it
+                if (base != null) base.tell(bs, t, left, total);
+                else if (level() instanceof ServerLevel sl && castingMoveOrNull() != null) defaultTell(sl, castingMoveOrNull(), t, left);
+                try { fxTell(mid, t, left, total); } catch (RuntimeException e) { LogUtils.getLogger().warn("[nusmp] Lucius's tell effect failed: {}", e.toString()); }
+            });
+            final Move.MoveRun code = runOf(mid);
             out.add(mb.run((boss, t) -> {
                 if (fizzles()) return;
+                try { fxRun(mid, t); } catch (RuntimeException e) { LogUtils.getLogger().warn("[nusmp] Lucius's strike effect failed: {}", e.toString()); }
                 code.run(boss, t);
             }));
         }
@@ -719,9 +733,25 @@ public class LuciusBoss extends ZogratisBoss {
                 TowerSpells.storm(this, t, 6 + PowerCurve.stage(power()));
                 say("Every tower in the kingdom, answer me.");
             };
+            case LuciusNumbers.JUDGMENT -> (boss, t) -> {
+                List<Vec3> spots = judgeMarks.isEmpty() ? LuciusMoves.judgmentSpots(this, t) : judgeMarks;
+                judgeMarks = List.of();
+                LuciusMoves.judgment(this, spots, LuciusNumbers.JUDGMENT_BLAST);
+                quip("Judged.", "Light does not forgive. It illuminates.");
+            };
+            case LuciusNumbers.CHRONO_RINGS -> (boss, t) -> {
+                for (int k = 0; k < 3; k++) {
+                    final int wave = k;
+                    later(k * 14, LuciusFx.safe("chrono rings", () -> LuciusMoves.chronoRing(this, ringReach(wave), LuciusNumbers.RING_BLOW)));
+                }
+                quip("Time comes in waves. Jump the right one.");
+            };
             default -> LuciusSpells.run(this, id);
         };
     }
+
+    /** The three rings of the Chrono Rings: 5, 9 and 13 blocks, one more at the Gates. */
+    private double ringReach(int wave) { return 5 + 4 * wave + (gatesOpen() ? 1.5 : 0); }
 
     // ---------------------------------------------------------------- marks: where the big moves land
     private Vec3 takeStep(LivingEntity target) {
@@ -876,6 +906,99 @@ public class LuciusBoss extends ZogratisBoss {
             };
             default -> LuciusSpells.tell(this, id);
         };
+    }
+
+    // ================================================================ 1.35.0 effects: divine gold, soul purple, time rings (gold to purple as he enrages)
+    /** His light: gold at the start, drifting to purple at 60, 80 and with the Gates. */
+    private int light() { return FxMath.divine(power()); }
+    private static final int SOUL_PURPLE = 0xB07CFF;
+
+    private void fxTell(String id, LivingEntity target, int left, int total) {
+        if (!(level() instanceof ServerLevel sl) || !first(left, total)) return;
+        final int dur = total + 2;
+        final int gold = light();
+        final Vec3 hand = position().add(0, getBbHeight() * 0.75, 0);
+        switch (id) {
+            case LuciusTable.SOUL_MOTES -> ZogratisVfx.ray(sl, hand, target.getBoundingBox().getCenter(), 0.5, dur, SOUL_PURPLE, true);
+            case LuciusTable.SOUL_DRAIN -> { int n = 0; for (LivingEntity f : foes(22)) { if (++n > 3) break; ZogratisVfx.soulVortex(sl, f.position(), 1.8, dur, SOUL_PURPLE); } }
+            case LuciusTable.LIGHT_STEP, LuciusTable.LIGHT_COMBO -> {
+                if (stepMark == null) return;
+                ZogratisVfx.ray(sl, position().add(0, 1, 0), stepMark.add(0, 1, 0), 1.0, dur, gold, true);
+                ZogratisVfx.divineSigil(sl, stepMark, 1.8, dur, gold, true);
+            }
+            case LuciusTable.TOWER_SPELL -> ZogratisVfx.divineSigil(sl, position(), 2.4, dur, pendingTower != null ? pendingTower.rgb() : gold, true);
+            case LuciusTable.BONE_ARSENAL -> ZogratisVfx.ray(sl, hand, target.getBoundingBox().getCenter(), 0.6, dur, 0xE9E4D4, true);
+            case LuciusTable.MIRROR_COURT -> { for (Vec3 s : courtSpots) ZogratisVfx.divineSigil(sl, s, 1.4, dur, gold, true); }
+            case LuciusTable.BLOOD_TIDE -> ZogratisVfx.bloodLance(sl, hand, target.getBoundingBox().getCenter(), 0.9, dur, 0xB0121E, true);
+            case LuciusTable.GRAVITY_CRUSH -> { if (fieldMark != null) ZogratisVfx.well(sl, fieldMark, 9 + PowerCurve.stage(power()), dur, 0x5B2A8C, true); }
+            case LuciusTable.SWAP_STRIKE -> {
+                if (swapPartnerId != null && sl.getEntity(swapPartnerId) instanceof ZogratisCloneEntity c) {
+                    ZogratisVfx.ray(sl, position().add(0, 1.4, 0), c.position().add(0, 1.4, 0), 0.9, dur, gold, true);
+                    ZogratisVfx.divineSigil(sl, c.position(), 2.0, dur, gold, true);
+                }
+            }
+            case LuciusTable.MEMORY_SCRAMBLE -> { int n = 0; for (LivingEntity f : foes(40)) { if (++n > 4) break; ZogratisVfx.soulVortex(sl, f.position(), 1.4, dur, SOUL_PURPLE); } }
+            case LuciusTable.TIME_HALT -> { if (haltSpot != null) ZogratisVfx.divineSigil(sl, haltSpot, ChronoMath.BLOW_RADIUS, dur, gold, true); }
+            case LuciusTable.ACCELERATE -> ZogratisVfx.halo(sl, this, 1.2, dur + 20, gold);
+            case LuciusTable.PALADIN_CALL -> {
+                int n = 0;
+                for (Mob m : sl.getEntitiesOfClass(Mob.class, getBoundingBox().inflate(40), SoulPaladins::eligible)) { if (++n > 3) break; ZogratisVfx.soulVortex(sl, m.position(), 1.8, dur, SOUL_PURPLE); }
+            }
+            case LuciusTable.TIME_REVERSAL -> {
+                ChronoRing.Snap s = ChronoMoves.rewindTarget(this, sl.getGameTime());
+                if (s != null) ZogratisVfx.divineSigil(sl, new Vec3(s.x(), s.y(), s.z()), 1.8, dur, gold, true);
+            }
+            case LuciusTable.RESURRECTION -> { for (UUID pid : paladins.downedIds()) if (sl.getEntity(pid) instanceof Mob m) ZogratisVfx.soulVortex(sl, m.position(), 2.0, dur, SOUL_PURPLE); }
+            case LuciusTable.SOUL_PURGE -> ZogratisVfx.divineSigil(sl, position(), Math.min(24, LuciusMoves.PURGE_RADIUS), dur, SOUL_PURPLE, true);
+            case LuciusTable.SIBLINGS -> {
+                if (fieldMark != null) ZogratisVfx.well(sl, fieldMark, 11 + PowerCurve.stage(power()) * 0.5, dur, 0x5B2A8C, true);
+                ZogratisVfx.divineSigil(sl, position(), 3.5, dur, gold, true);
+            }
+            case LuciusTable.TIME_STOP -> {
+                int n = 0;
+                for (LivingEntity f : foes(44)) { if (++n > ChronoMath.MAX_HELD) break; ZogratisVfx.divineSigil(sl, f.position(), 1.6, dur, gold, true); }
+                ZogratisVfx.halo(sl, this, 1.4, dur + 20, gold);
+            }
+            case LuciusTable.TOWER_STORM -> ZogratisVfx.divineSigil(sl, position(), 7, dur, gold, true);
+            case LuciusNumbers.JUDGMENT -> {
+                judgeMarks = LuciusMoves.judgmentSpots(this, target);
+                for (Vec3 m : judgeMarks) ZogratisVfx.pillar(sl, m, LuciusNumbers.JUDGMENT_RADIUS, dur, gold, true);
+                announce("Judgment of Light: columns of light fall on every marked ring. Leave the rings!");
+            }
+            case LuciusNumbers.CHRONO_RINGS -> {
+                for (int k = 0; k < 3; k++) ZogratisVfx.divineSigil(sl, position(), ringReach(k), dur + 14 * k, gold, true);
+                announce("Chrono Rings: three waves of time, one after the other. Jump each one!");
+            }
+            default -> { }
+        }
+    }
+
+    /** The strike of a move that LuciusMoves / LuciusSpells does not draw itself. */
+    private void fxRun(String id, LivingEntity target) {
+        if (!(level() instanceof ServerLevel sl)) return;
+        final int gold = light();
+        final Vec3 hand = position().add(0, getBbHeight() * 0.75, 0);
+        switch (id) {
+            case LuciusTable.SOUL_MOTES -> ZogratisVfx.ray(sl, hand, target.getBoundingBox().getCenter(), 0.5, 10, SOUL_PURPLE, false);
+            case LuciusTable.SOUL_DRAIN -> { int n = 0; for (LivingEntity f : foes(22)) { if (++n > 3) break; ZogratisVfx.soulVortex(sl, f.position(), 1.8, 40, SOUL_PURPLE); } }
+            case LuciusTable.LIGHT_STEP, LuciusTable.LIGHT_COMBO -> { if (stepMark != null) ZogratisVfx.ray(sl, position().add(0, 1, 0), stepMark.add(0, 1, 0), 1.2, 9, gold, false); }
+            case LuciusTable.TOWER_SPELL -> ZogratisVfx.ray(sl, hand, target.getBoundingBox().getCenter(), 0.8, 10, pendingTower != null ? pendingTower.rgb() : gold, false);
+            case LuciusTable.BONE_ARSENAL -> ZogratisVfx.ray(sl, hand, target.getBoundingBox().getCenter(), 0.6, 10, 0xE9E4D4, false);
+            case LuciusTable.MIRROR_COURT -> { for (Vec3 s : courtSpots) ZogratisVfx.pillar(sl, s, 1.2, 20, gold, false); }
+            case LuciusTable.BLOOD_TIDE -> ZogratisVfx.bloodArcs(sl, hand, target.getBoundingBox().getCenter(), 1.0, 14, 0xB0121E);
+            case LuciusTable.GRAVITY_CRUSH -> { if (fieldMark != null) { ZogratisVfx.gravityImpact(sl, fieldMark, 9 + PowerCurve.stage(power()), 0x5B2A8C); ZogratisVfx.well(sl, fieldMark, 9 + PowerCurve.stage(power()), 60, 0x5B2A8C, false); } }
+            case LuciusTable.MEMORY_SCRAMBLE -> { int n = 0; for (LivingEntity f : foes(40)) { if (++n > 4) break; ZogratisVfx.soulVortex(sl, f.position(), 1.4, 16, SOUL_PURPLE); } }
+            case LuciusTable.TIME_HALT -> { if (haltSpot != null) ZogratisVfx.pillar(sl, haltSpot, ChronoMath.BLOW_RADIUS, 20, gold, false); }
+            case LuciusTable.ACCELERATE -> ZogratisVfx.halo(sl, this, 1.3, 160, gold);
+            case LuciusTable.PALADIN_CALL -> ZogratisVfx.soulVortex(sl, position(), 5, 30, SOUL_PURPLE);
+            case LuciusTable.TIME_REVERSAL -> ZogratisVfx.divineSigil(sl, position(), 4, 24, gold, false);
+            case LuciusTable.RESURRECTION -> ZogratisVfx.pillar(sl, position(), 3, 30, SOUL_PURPLE, false);
+            case LuciusTable.SOUL_PURGE -> { ZogratisVfx.divineSigil(sl, position(), 14, 24, SOUL_PURPLE, false); ZogratisVfx.pillar(sl, position(), 3.5, 24, SOUL_PURPLE, false); }
+            case LuciusTable.SIBLINGS -> { if (fieldMark != null) ZogratisVfx.gravityImpact(sl, fieldMark, 11, 0x5B2A8C); ZogratisVfx.pillar(sl, position(), 3, 30, gold, false); }
+            case LuciusTable.TIME_STOP -> ZogratisVfx.pillar(sl, position(), 4, 30, gold, false);
+            case LuciusTable.TOWER_STORM -> ZogratisVfx.pillar(sl, position(), 5, 24, gold, false);
+            default -> { }
+        }
     }
 
     private void tellDrain(LivingEntity target) {

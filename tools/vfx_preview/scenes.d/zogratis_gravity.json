@@ -1,0 +1,17 @@
+{
+ "_comment": "1.35.0 Dante's gravity effects (ZogratisGravityLayer).",
+ "dante_well": {"layer": "ZogratisGravityLayer", "shape": "GRAVITY_WELL", "from": [0, 0, 0], "to": [0, 1, 0], "power": 8, "duration": 60, "color": "FF9A5BE0",
+  "cam": [10, 7, 10], "target": [0, 0.5, 0], "ages": [4, 20, 40, 58], "figures": [[3, 0, 2, 1.8]]},
+ "dante_well_tell": {"layer": "ZogratisGravityLayer", "shape": "GRAVITY_WELL", "from": [0, 0, 0], "to": [0, 1, 0], "power": 8, "duration": 28, "color": "FF9A5BE0", "seed": 12345,
+  "cam": [10, 7, 10], "target": [0, 0.5, 0], "ages": [3, 10, 18, 26], "figures": [[3, 0, 2, 1.8]]},
+ "dante_impact": {"layer": "ZogratisGravityLayer", "shape": "GRAVITY_IMPACT", "from": [0, 0, 0], "to": [0, 1, 0], "power": 9, "duration": 22, "color": "FF9A5BE0",
+  "cam": [10, 6, 10], "target": [0, 0.8, 0], "ages": [2, 5, 9, 15, 20], "figures": [[4, 0, 3, 1.8]]},
+ "dante_lanes_tell": {"layer": "ZogratisGravityLayer", "shape": "GRAVITY_LANES", "from": [0, 0, 0], "to": [0, 0, 16], "power": 3.4, "duration": 24, "color": "FF9A5BE0", "seed": 12345,
+  "cam": [8, 6, -4], "target": [0, 0, 8], "ages": [3, 10, 18, 23], "figures": [[0, 0, -1, 1.8]]},
+ "dante_lanes_strike": {"layer": "ZogratisGravityLayer", "shape": "GRAVITY_LANES", "from": [0, 0, 0], "to": [0, 0, 16], "power": 3.4, "duration": 24, "color": "FFC8A0FF", "seed": 12344,
+  "cam": [8, 6, -4], "target": [0, 0, 8], "ages": [2, 6, 12, 20], "figures": [[0, 0, -1, 1.8]]},
+ "dante_singularity": {"layer": "ZogratisGravityLayer", "shape": "GRAVITY_SINGULARITY", "from": [0, 3, 0], "to": [0, 4, 0], "power": 7, "duration": 60, "color": "FF8A4CD0",
+  "cam": [10, 5, 10], "target": [0, 3, 0], "ages": [5, 25, 50, 58], "figures": [[4, 0, 3, 1.8]]},
+ "dante_aura": {"layer": "ZogratisGravityLayer", "shape": "GRAVITY_AURA", "from": [0, 0, 0], "to": [0, 1, 0], "power": 1.4, "duration": 80, "color": "FFFF8A4A",
+  "cam": [5, 2.5, 5], "target": [0, 1.2, 0], "ages": [10, 30, 60], "figures": [[0, 0, 0, 2.4]]}
+}

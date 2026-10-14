@@ -87,6 +87,11 @@ public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.b
     private String adapted = "";
     private long exposedUntil, nextHalt = 100, nextShatter, nextLance = 160, nextFlood, nextSwords = 200, nextAdapt = 200;
     private boolean healed;
+    // 1.35.0: the final act is a second health bar. Entering phase 4 refills the bar once (PhaseRefill), and from then on the bar is the
+    // whole act, so the phase is held at 4 while the refilled health is above the old thresholds.
+    final com.newuniverse.nusmp.boss.refill.PhaseRefill refill = new com.newuniverse.nusmp.boss.refill.PhaseRefill();
+    private boolean finalBar;
+    private List<Vec3> redactEcho;
     // 0.52: the Multilayer Barrier, Thought Acceleration, the acts, the daemons and the signature words (docs/zagred_boss_gdd.md)
     final ZagredDefense.Barrier barrier = new ZagredDefense.Barrier();
     final ZagredDefense.Reflex reflex = new ZagredDefense.Reflex();
@@ -127,7 +132,7 @@ public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.b
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 600).add(Attributes.ATTACK_DAMAGE, 14).add(Attributes.ATTACK_KNOCKBACK, 1.2)
+        return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 800).add(Attributes.ATTACK_DAMAGE, 14).add(Attributes.ATTACK_KNOCKBACK, 1.2)
                 .add(Attributes.MOVEMENT_SPEED, 0.28).add(Attributes.FOLLOW_RANGE, 48).add(Attributes.ARMOR, 12).add(Attributes.ARMOR_TOUGHNESS, 6)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1.0).add(Attributes.STEP_HEIGHT, 1.0);
     }
@@ -197,7 +202,7 @@ public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.b
         if (arena == null) arena = blockPosition();
         long t = tickCount;
         float frac = getHealth() / getMaxHealth();
-        int ph = frac > 0.75f ? 1 : frac > 0.5f ? 2 : frac > 0.25f ? 3 : 4;
+        int ph = ZagredPhases.phaseOf(frac, finalBar);
         if (!defenseReady) {                                                    // first tick: the barrier and the reflex for this act
             defenseReady = true;
             barrier.set(ZagredDefense.layersFor(ph), getMaxHealth(), t);
@@ -205,9 +210,12 @@ public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.b
             applySpeed(ph);
         }
         if (ph != phase()) enterPhase(sl, ph);
+        refillTick(sl, t);
+        frac = getHealth() / getMaxHealth();
         bar.setProgress(frac);
         bar.setName(barName(ph, t));
         if (t % 60 == 0) VfxSpawn.sendFollowing(sl, VfxShape.KOTO_AURA, this, position(), VIOLET, 70, 1.6f);
+        if (ph >= 3 && t % 120 == 0) ZagredFx.corrupt(sl, position(), ph == 4 ? 9f : 6f, 60, ph == 4 ? ZagredFx.RED : VIOLET);     // 1.35.0: the air itself reads wrong
         recentDamage *= 0.97f;
         defenseTick(sl, t, ph);
         if (tensuraKit == null) {
@@ -231,6 +239,11 @@ public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.b
         if (pending != null) {                                                   // a telegraphed word lands
             if (t >= castAt) {
                 KotodamaWords.speak(this, pending, Source.BOSS);
+                landFx(sl, pending, target);
+                if (pending == Word.REDACT && redactEcho != null) {                 // 1.35.0: in the second bar the sentence is written twice
+                    ZagredAttacks.redact(this, 1.6f, redactEcho, 6 * (redactEcho.size() + 1) + 8);
+                    redactEcho = null;
+                }
                 voiceLine(sl, voiceFor(pending), wordLine(pending), 60, false);
                 if (pending == Word.HEAL) healed = true;
                 pending = null;
@@ -254,6 +267,7 @@ public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.b
             nextTensura = t + (ph == 4 ? 100 : 160);
             setState(sl, STATE_CASTING, null, target);
             getNavigation().stop();
+            ZagredFx.ring(sl, position(), 3.5f, 14, ZagredFx.INDIGO);
             SpellRuntime.later(sl, 12, () -> {
                 LivingEntity tg = getTarget();
                 if (!isAlive() || tg == null || !tg.isAlive()) return;
@@ -327,6 +341,40 @@ public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.b
             leash(sl, t);
         }
         if (t % 40 == 0) upkeepDaemons(sl, ph, false);
+        if (t % 50 == 0 && !stones.isEmpty()) ZagredFx.stones(sl, stones, (ruleKind != null ? ruleKind : pendingRule) == null ? 0 : (ruleKind != null ? ruleKind : pendingRule).ordinal());
+    }
+
+    /** 1.35.0: the second health bar. Eases the health up while the refill runs (the DPS budget is bypassed: this is not damage). */
+    private void refillTick(ServerLevel sl, long t) {
+        if (!refill.active()) { if (bar.getColor() != BossEvent.BossBarColor.PURPLE) bar.setColor(BossEvent.BossBarColor.PURPLE); return; }
+        refill.retarget(getMaxHealth());
+        float hp = refill.tick();
+        if (hp >= 0f) {
+            final float to = Math.max(getHealth(), Math.min(hp, getMaxHealth()));
+            dpsBudget.bypass(() -> setHealth(to));
+        }
+        bar.setColor(refill.glow() > 0.3f ? BossEvent.BossBarColor.WHITE : BossEvent.BossBarColor.PURPLE);
+        if (refill.active()) com.newuniverse.nusmp.boss.refill.RefillFx.fill(sl, position(), getBbHeight(), getBbWidth() * 0.8, VIOLET & 0xFFFFFF, 0xF2194D, refill.progress(), (int) t);
+        else com.newuniverse.nusmp.boss.refill.RefillFx.end(sl, position(), getBbHeight(), VIOLET & 0xFFFFFF, 0xF2194D);
+    }
+
+    /** 1.35.0: the strike of a word that has just been spoken. */
+    private void landFx(ServerLevel sl, Word w, LivingEntity target) {
+        Vec3 eye = getEyePosition(), at = target == null ? position() : target.getBoundingBox().getCenter();
+        switch (w) {
+            case HALT -> ZagredFx.corrupt(sl, position(), 12f, 30, VIOLET);
+            case FALL -> ZagredFx.corrupt(sl, position(), 18f, 40, ZagredFx.INDIGO);
+            case HEAL, REDACT, OVERWRITE -> { }
+            default -> ZagredFx.strike(sl, eye, at, ZagredFx.wordColor(w), w == Word.SWORDS ? 2.4f : 1.4f, 14);
+        }
+    }
+
+    /** 1.35.0: black redaction bars laid over a sentence on the floor: one lane from the boss to its middle, one on to the last letter. */
+    private void inkLanes(ServerLevel sl, List<Vec3> plan, int ticks) {
+        if (plan == null || plan.size() < 2) return;
+        Vec3 mid = plan.get(plan.size() / 2), last = plan.get(plan.size() - 1);
+        ZagredFx.inkLane(sl, position(), mid, 1.8f, ticks);
+        ZagredFx.inkLane(sl, mid, last, 2.4f, ticks);
     }
 
     Vec3 arenaCenter() { return arena == null ? position() : Vec3.atBottomCenterOf(arena); }
@@ -343,9 +391,17 @@ public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.b
         archCount = arch;
         int lesserCap = (int) Math.round((ph == 1 ? 4 : ph == 2 ? 6 : ph == 3 ? 8 : 12) * scale), greaterCap = ph == 3 ? 2 : ph == 4 ? 4 : 0;
         if (lesser < lesserCap / 2 || (tickCount % 300 < 40 && lesser < lesserCap))
-            for (int i = 0; i < Math.min(3, lesserCap - lesser); i++) GrimoireDaemonEntity.spawn(sl, this, GrimoireDaemonEntity.LESSER, ringPos(sl, 8 + getRandom().nextDouble() * 5, 2.5));
+            for (int i = 0; i < Math.min(3, lesserCap - lesser); i++) {
+                Vec3 at = ringPos(sl, 8 + getRandom().nextDouble() * 5, 2.5);
+                ZagredFx.ring(sl, at.subtract(0, 2.5, 0), 2f, 16, ZagredFx.INDIGO);
+                GrimoireDaemonEntity.spawn(sl, this, GrimoireDaemonEntity.LESSER, at);
+            }
         if (greater < greaterCap && (force || tickCount % 400 < 40))
-            for (int i = 0; i < Math.min(2, greaterCap - greater); i++) GrimoireDaemonEntity.spawn(sl, this, GrimoireDaemonEntity.GREATER, ringPos(sl, 11, 0.8));
+            for (int i = 0; i < Math.min(2, greaterCap - greater); i++) {
+                Vec3 at = ringPos(sl, 11, 0.8);
+                ZagredFx.ring(sl, at.subtract(0, 0.8, 0), 3f, 20, ZagredFx.RED);
+                GrimoireDaemonEntity.spawn(sl, this, GrimoireDaemonEntity.GREATER, at);
+            }
     }
 
     Vec3 ringPos(ServerLevel sl, double r, double up) {
@@ -392,15 +448,27 @@ public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.b
         switch (w) {
             case HALT -> {
                 ZagredAttacks.ring(sl, position(), 12, 3, 5);
+                ZagredFx.ring(sl, position(), 12f, castTicks(w, ph) + 6, VIOLET);
                 wordReady.merge(Word.REDACT, t + 80, Math::max);
             }
             case REDACT -> {
-                redactPlan = ZagredAttacks.plan(this, 5 + (ph >= 3 ? 2 : 0) + (ph == 4 ? 1 : 0));
+                redactPlan = ZagredAttacks.plan(this, ZagredPhases.redactLetters(ph));
                 ZagredAttacks.telegraph(this, redactPlan);
+                inkLanes(sl, redactPlan, castTicks(w, ph) + 6 * redactPlan.size() + 4);
+                if (finalBar) {                                                  // 1.35.0: the echo, a second sentence on another curve
+                    redactEcho = ZagredAttacks.plan(this, ZagredPhases.echoLetters(ph));
+                    ZagredAttacks.telegraph(this, redactEcho);
+                    inkLanes(sl, redactEcho, castTicks(w, ph) + 6 * (redactEcho.size() + 1) + 14 + 6 * redactEcho.size());
+                }
                 wordReady.merge(Word.HALT, t + 80, Math::max);
             }
-            case OVERWRITE -> ZagredAttacks.overwriteStart(this, sl);
-            default -> { }
+            case OVERWRITE -> {
+                ZagredAttacks.overwriteStart(this, sl);
+                ZagredFx.corrupt(sl, position(), 16f, castTicks(w, ph) + 20, ZagredFx.RED);
+                ZagredFx.ring(sl, position(), 6f, castTicks(w, ph), ZagredFx.RED);
+                ZagredFx.stones(sl, stones, pendingRule == null ? 0 : pendingRule.ordinal());
+            }
+            default -> ZagredFx.ring(sl, position(), w == Word.SHATTER ? 2.5f : 4f, castTicks(w, ph) + 4, ZagredFx.wordColor(w));
         }
     }
 
@@ -445,6 +513,7 @@ public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.b
         stones.clear();
         staggerUntil = tickCount + 40;
         say(sl, "The sentence is cut. Zagred reels.");
+        ZagredFx.corrupt(sl, position(), 10f, 40, ZagredFx.PALE);
         VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, getBoundingBox().getCenter(), position(), 0xFFFFFFFF, 30, 3f);
     }
 
@@ -468,7 +537,7 @@ public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.b
             case REJECT -> 400; case FEAR -> 500; case DRAIN -> 500; case SLEEP -> 600; case BANISH -> 600; case REVERSE -> 600;
             case PETRIFY -> 800; case REDACT -> 160; case OVERWRITE -> 900; default -> 100000;
         };
-        return Math.round(base * (ph <= 2 ? 1f : ph == 3 ? 0.85f : 0.7f));
+        return Math.round(base * ZagredPhases.cooldownScale(ph));                  // 1.35.0: 0.7 -> 0.6 in the last act
     }
 
     boolean ready(Word w) { return tickCount >= wordReady.getOrDefault(w, 0L); }
@@ -559,6 +628,16 @@ public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.b
         VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, getBoundingBox().getCenter(), position(), VIOLET, 40, 3f);
         sl.playSound(null, blockPosition(), SoundEvents.WITHER_SPAWN, SoundSource.HOSTILE, 2f, 0.6f);
         if (ph >= 3) nextFlood = tickCount;
+        ZagredFx.corrupt(sl, position(), 14f, 60, ph == 4 ? ZagredFx.RED : VIOLET);
+        ZagredFx.ring(sl, position(), 8f, 30, ph == 4 ? ZagredFx.RED : VIOLET);
+        if (ZagredPhases.startsSecondBar(ph, finalBar) && refill.begin("final", getHealth(), getMaxHealth(), com.newuniverse.nusmp.boss.refill.PhaseRefill.DEFAULT_TICKS)) {
+            finalBar = true;                                              // 1.35.0: the true Word Soul draws a second bar
+            com.newuniverse.nusmp.boss.refill.RefillFx.start(sl, position(), getBbHeight(), VIOLET & 0xFFFFFF, 0xF2194D, com.newuniverse.nusmp.boss.refill.PhaseRefill.DEFAULT_TICKS);
+            Component second = Component.translatable("nusmp.boss.refill.second_bar", "Zagred").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD);
+            for (ServerPlayer p : sl.players()) if (p.distanceToSqr(this) < 64 * 64) p.sendSystemMessage(second);
+            ZagredFx.corrupt(sl, position(), 20f, 70, ZagredFx.RED);
+            ZagredFx.ring(sl, position(), 14f, 50, ZagredFx.PALE);
+        }
         barrier.set(ZagredDefense.layersFor(ph), getMaxHealth(), tickCount);
         reflex.set(ZagredDefense.tokensFor(ph));
         applySpeed(ph);
@@ -639,8 +718,10 @@ public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.b
                 "I have already chosen where this ends.",
                 "Run. The word will still find you."), 60, false);
         VfxSpawn.send(sl, VfxShape.KOTO_TRIDENT, from, end, VIOLET, 14, 1.2f);
+        ZagredFx.inkLane(sl, from.subtract(0, 0.9, 0), end.subtract(0, 0.9, 0), 1.3f, 12);        // 1.35.0: the lane is drawn before the cut
+        ZagredFx.strike(sl, from, end, ZagredFx.PALE, 1.3f, 16);
         sl.playSound(null, blockPosition(), SoundEvents.TRIDENT_THROW.value(), SoundSource.HOSTILE, 1.5f, 0.5f);
-        SpellRuntime.later(sl, 5, () -> {
+        SpellRuntime.later(sl, 8, () -> {
             for (LivingEntity e : KotodamaWords.foes(this, from.add(dir.scale(14)), 15)) {
                 Vec3 c = e.getBoundingBox().getCenter();
                 double s = Math.max(0, Math.min(28, c.subtract(from).dot(dir)));
@@ -661,6 +742,7 @@ public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.b
         adapted = best;
         voiceLine(sl, NUSounds.ZAGRED_WORD.get(), "I have learned your " + best + " magic. It will not save you again.", 100, false);
         VfxSpawn.sendFollowing(sl, VfxShape.KOTO_AURA, this, position(), 0xFFC8A0FF, 30, 2f);
+        ZagredFx.corrupt(sl, position(), 5f, 36, ZagredFx.PALE);
     }
 
     /** The element of a hit (from its damage type), for adaptation and the phase-4 exposure. */
@@ -791,6 +873,8 @@ public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.b
         super.addAdditionalSaveData(tag);
         if (arena != null) tag.put("Arena", NbtUtils.writeBlockPos(arena));
         tag.putBoolean("Healed", healed);
+        tag.putBoolean("FinalBar", finalBar);
+        com.newuniverse.nusmp.boss.refill.RefillTag.write(refill, tag);
         tag.putString("Adapted", adapted);
         tag.putInt("ArchSpawned", archSpawned);
         tag.putInt("Tokens", reflex.tokens());
@@ -802,6 +886,8 @@ public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.b
         dpsBudget.bypass(() -> super.readAdditionalSaveData(tag));         // loading the saved health is not damage
         NbtUtils.readBlockPos(tag, "Arena").ifPresent(p -> arena = p);
         healed = tag.getBoolean("Healed");
+        finalBar = tag.getBoolean("FinalBar");
+        com.newuniverse.nusmp.boss.refill.RefillTag.read(refill, tag);
         adapted = tag.getString("Adapted");
         archSpawned = tag.getInt("ArchSpawned");
         if (tag.contains("BCount")) { barrier.load(tag); defenseReady = true; reflex.set(Math.max(1, tag.getInt("Tokens"))); }

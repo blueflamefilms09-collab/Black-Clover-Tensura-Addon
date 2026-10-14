@@ -109,6 +109,7 @@ public final class VanicaMoves {
                 final int flight = Math.max(2, (int) Math.ceil(start.distanceTo(stop) / VanicaMath.LANCE_SPEED));
                 int total = Math.max(12, (int) Math.round(flight / 0.75));              // the effect spends its first quarter gathering at the hand
                 VfxSpawn.send(sl, VfxShape.BLOOD_FX1, from, stop, BLOOD_ARGB, total, 1.0f);
+                ZogratisVfx.bloodLance(sl, from, stop, 1.0, Math.max(8, flight + 2), BLOOD_ARGB, false);
                 sl.playSound(null, boss.blockPosition(), SoundEvents.EVOKER_CAST_SPELL, SoundSource.HOSTILE, 0.9f, 1.4f);
                 boss.later(Math.max(1, total - flight), safe("blood lance", () -> {
                     Lance lance = new Lance(start, dir.scale(VanicaMath.LANCE_SPEED));
@@ -144,6 +145,7 @@ public final class VanicaMoves {
         final double[] reached = {-1};
         final int[] rotted = {0};
         VfxSpawn.send(sl, VfxShape.CURSE_FX2, c.add(0, 0.05, 0), c.add(0, 1, 0), CURSE_ARGB, life, (float) max);
+        ZogratisVfx.bloodSigil(sl, c, max, Math.min(life, 120), CURSE_ARGB, true);          // 1.35.0: the sigil of the rot
         sl.playSound(null, BlockPos.containing(c), SoundEvents.SCULK_BLOCK_SPREAD, SoundSource.HOSTILE, 2f, 0.5f);
         SpellRuntime.zone(sl, life, 4, safe("rot field", age -> {
             if (!boss.isAlive() || boss.isRemoved() || !boss.fightActive()) return;        // the boss fell, was removed, or the fight was abandoned: no more rot, no more weakness
@@ -193,6 +195,7 @@ public final class VanicaMoves {
         }
         Vec3 mid = boss.position().add(f.scale(3.0)).add(0, 1.1, 0);
         VfxSpawn.send(sl, VfxShape.BLOOD_FX3, mid, mid.add(f), BLOOD_ARGB, 20, 1.0f);
+        ZogratisVfx.crescent(sl, boss.position().add(0, 1.1, 0), boss.position().add(0, 1.1, 0).add(f), VanicaMath.SCYTHE_REACH, 14, BLOOD_ARGB, false);
         sl.playSound(null, boss.blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.HOSTILE, 1.4f, 0.6f);
         for (LivingEntity e : boss.foes(VanicaMath.SCYTHE_REACH + 1.5)) {
             Vec3 to = e.position().subtract(boss.position());
@@ -233,6 +236,7 @@ public final class VanicaMoves {
         }
         Vec3 tip = first != null ? first.getBoundingBox().getCenter() : end;
         VfxSpawn.send(sl, VfxShape.THREAD_LINE, from, tip, THREAD_ARGB, 8, 1.6f);
+        ZogratisVfx.bloodArcs(sl, from, tip, 1.0, 12, BLOOD_ARGB);
         Tells.line(sl, from, tip, BLOOD);
         splash(sl, tip, 10, 0.25);
         sl.playSound(null, boss.blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.HOSTILE, 1.2f, 1.3f);
@@ -272,6 +276,7 @@ public final class VanicaMoves {
         if (land.distanceToSqr(from) < 2.25) return;
         Vec3 a = from.add(0, 1, 0), b = land.add(0, 1, 0);
         VfxSpawn.send(sl, VfxShape.BLOOD_FX1, a, b, BLOOD_ARGB, 12, 1.6f);
+        ZogratisVfx.bloodArcs(sl, a, b, 1.6, 14, BLOOD_ARGB);
         Tells.line(sl, a, b, BLOOD);
         splash(sl, a, 12, 0.3);
         for (LivingEntity e : boss.foes(len + 4)) {
@@ -295,6 +300,7 @@ public final class VanicaMoves {
         if (!(boss.level() instanceof ServerLevel sl)) return;
         Vec3 at = boss.position();
         VfxSpawn.send(sl, VfxShape.BLOOD_FX3, at.add(0, 0.1, 0), at.add(0, 1.2, 0), BLOOD_ARGB, 24, (float) Math.max(1.2, radius / 3));
+        ZogratisVfx.bloodSigil(sl, at, radius, 26, BLOOD_ARGB, false);
         Tells.ring(sl, at, radius, BLOOD, 1.5f, (int) Math.min(90, 14 + radius * 6));
         splash(sl, at.add(0, 0.8, 0), 30, radius * 0.35);
         sl.playSound(null, boss.blockPosition(), SoundEvents.SLIME_SQUISH, SoundSource.HOSTILE, 2f, 0.4f);
@@ -320,6 +326,7 @@ public final class VanicaMoves {
             final Vec3 s = spots.get(i);
             Runnable fall = () -> {
                 VfxSpawn.send(sl, VfxShape.BLOOD_FX3, s.add(0, 0.05, 0), s.add(0, 1, 0), BLOOD_ARGB, 22, (float) Math.max(0.8, radius / 1.6));
+                ZogratisVfx.downpour(sl, s, radius, 18, BLOOD_ARGB);
                 Tells.line(sl, s.add(0, 10, 0), s.add(0, 0.2, 0), BLOOD);
                 splash(sl, s.add(0, 0.4, 0), 18, radius * 0.4);
                 sl.playSound(null, BlockPos.containing(s), SoundEvents.SLIME_SQUISH, SoundSource.HOSTILE, 1.4f, 0.5f);
@@ -350,6 +357,7 @@ public final class VanicaMoves {
         int p = boss.power();
         Vec3 c = boss.position();
         VfxSpawn.send(sl, VfxShape.DEVIL_CIRCLE, c.add(0, 0.05, 0), c.add(0, 1, 0), 0xFF000000 | RGB, 50, 3.5f);
+        ZogratisVfx.bloodSigil(sl, c, VanicaMath.crownRadius(p), 50, BLOOD_ARGB, false);
         sl.playSound(null, boss.blockPosition(), SoundEvents.WITHER_SPAWN, SoundSource.HOSTILE, 2.5f, 0.7f);
         strikeSpots(boss, thorns, THORN_RADIUS, VanicaTable.THORN, 1, 0.75, true);
         int made = spawnBeasts(boss, VanicaMath.stampedeCount(p), true);

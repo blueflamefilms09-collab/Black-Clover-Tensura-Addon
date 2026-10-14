@@ -123,6 +123,7 @@ public final class ZagredAttacks {
             KotodamaWords.spirit(c, t, 1);
         }
         VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, p.add(0, 0.8, 0), p, KotodamaWords.VIOLET, 16, (float) (r / 2.2));
+        ZagredFx.strike(sl, p.add(0, 4.5, 0), p, last ? ZagredFx.RED : KotodamaWords.VIOLET, (float) (r / 1.6), 12);        // 1.35.0: the letter is struck down
         sl.playSound(null, BlockPos.containing(p), SoundEvents.GLASS_BREAK, SoundSource.HOSTILE, 1.2f, 0.5f);
         if (last) SpellRuntime.zone(sl, 80, 10, age -> {                         // the redacted patch: buffs struck out, mending stopped
             for (LivingEntity t : KotodamaWords.foes(c, p, 4)) {
@@ -161,6 +162,7 @@ public final class ZagredAttacks {
         if (!(c.level() instanceof ServerLevel sl)) return;
         float raw = 11f * pw / 1.9f;
         Vec3 o = c.position();
+        ZagredFx.corrupt(sl, o, 18f, 40, ZagredFx.INDIGO);                                          // 1.35.0: the ground reads 'fall'
         DustParticleOptions d = new DustParticleOptions(new Vector3f(0.2f, 0.1f, 0.35f), 1.8f);
         for (int k = 1; k <= 9; k++) {
             double r = 2.0 * k;
@@ -211,6 +213,7 @@ public final class ZagredAttacks {
         z.say(sl, "Zagred writes: \"" + z.ruleKind.text.toUpperCase() + "\"");
         sl.playSound(null, z.blockPosition(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.HOSTILE, 2f, 0.5f);
         VfxSpawn.sendFollowing(sl, VfxShape.KOTO_AURA, z, z.position(), KotodamaWords.VIOLET, 60, 2.4f);
+        ZagredFx.corrupt(sl, z.position(), 18f, 80, ZagredFx.RED);                                  // 1.35.0: the rule is written into the air
         return true;
     }
 

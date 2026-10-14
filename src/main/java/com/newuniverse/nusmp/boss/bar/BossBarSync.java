@@ -58,7 +58,9 @@ public final class BossBarSync {
         int phase = PowerCurve.stage(power);
         String id = BuiltInRegistries.ENTITY_TYPE.getKey(boss.getType()).getPath();
         BossBarThemes.Tint t = BossBarThemes.tint(id, DevilStyle.color(boss.devil()), DevilStyle.accent(boss.devil()), phase);
-        update(boss, bar, id, t.primary(), t.secondary(), phase, BossBarThemes.rage(power));
+        float glow = com.newuniverse.nusmp.boss.refill.PhaseRefill.glowStep(boss.refillGlow());      // 1.35.0: a refill lightens the tint (the bar morphs, no new packet)
+        update(boss, bar, id, com.newuniverse.nusmp.boss.refill.PhaseRefill.lift(t.primary(), glow),
+                com.newuniverse.nusmp.boss.refill.PhaseRefill.lift(t.secondary(), glow), phase, BossBarThemes.rage(power));
     }
 
     /** Any boss with a {@code ServerBossEvent}: sends the style to everyone who watches the bar now, and again whenever it changes. */

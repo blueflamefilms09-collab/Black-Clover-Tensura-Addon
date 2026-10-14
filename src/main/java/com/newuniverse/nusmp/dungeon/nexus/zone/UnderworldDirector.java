@@ -294,6 +294,8 @@ final class UnderworldDirector {
             BARS.put(keeper.getUUID(), bar);
         }
         bar.setProgress(Math.max(0f, Math.min(1f, keeper.getHealth() / keeper.getMaxHealth())));
+        if (keeper instanceof Mob km && km.getTarget() != null && level.getGameTime() % 40 < 20)          // 1.35.0: a fighting Gatekeeper wears the ring of void glyphs
+            com.newuniverse.nusmp.entity.ZagredFx.ring(level, keeper.position(), 5f, 24, 0xFF8A4CFF);
         double range2 = UnderworldRules.BAR_RANGE * UnderworldRules.BAR_RANGE;
         for (ServerPlayer p : level.players()) {
             if (!p.isSpectator() && p.distanceToSqr(keeper) <= range2) bar.addPlayer(p);

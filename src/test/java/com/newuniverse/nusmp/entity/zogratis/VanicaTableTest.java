@@ -29,7 +29,10 @@ class VanicaTableTest {
             assertTrue(s.recovery() >= 8, "a beat to breathe after every move");
             assertTrue(s.manaCost() > 0);
         }
-        assertSame(VanicaTable.byId(VanicaTable.CRIMSON_CROWN), SPECS.get(SPECS.size() - 1));
+        assertSame(VanicaTable.byId(VanicaTable.CRIMSON_CROWN), SPECS.get(12), "the first thirteen moves keep their places (the client reads names by index)");
+        assertEquals(VanicaTable.REAPER_DANCE, SPECS.get(13).id(), "1.35.0 moves are appended");
+        assertEquals(VanicaTable.BLOOD_STORM, SPECS.get(14).id());
+        assertTrue(VanicaTable.byId(VanicaTable.REAPER_DANCE).minPower() >= 60 && VanicaTable.byId(VanicaTable.BLOOD_STORM).minPower() >= 80, "late-phase moves");
         assertNull(VanicaTable.byId("nope"));
     }
 
@@ -164,6 +167,6 @@ class VanicaTableTest {
         MoveBook<VanicaTable.Spec> book = MoveBook.of(SPECS);
         assertEquals(SPECS.size(), book.moves().size());
         assertTrue(book.dropped().isEmpty());
-        assertEquals(SPECS.size() - 1, book.indexOf(VanicaTable.CRIMSON_CROWN));
+        assertEquals(12, book.indexOf(VanicaTable.CRIMSON_CROWN), "the crown keeps index 12; 1.35.0 moves come after it");
     }
 }

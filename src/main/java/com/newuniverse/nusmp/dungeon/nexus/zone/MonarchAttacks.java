@@ -141,9 +141,11 @@ final class MonarchAttacks {
     /** A ring marked on the floor for a second and a bit, then a shockwave that spreads from the Monarch; anyone standing on the floor when it passes is hurt, anyone in the air is not. */
     static Hazard slam(ServerLevel level, Mob boss, MonarchFight f, long now) {
         final double cx = boss.getX(), cz = boss.getZ(), cy = boss.getY();
-        final double radius = MonarchRules.slamRadius(f.phase);
-        final long release = now + MonarchRules.SLAM_WINDUP;
-        VfxSpawn.send(level, VfxShape.DEVIL_CIRCLE, new Vec3(cx, cy + 0.1, cz), new Vec3(cx, cy + 1.0, cz), VIOLET, MonarchRules.SLAM_WINDUP, (float) (radius / 4.0));
+        final double radius = MonarchRules.slamRadius(f.phase, f.finalBar);
+        final int windup = MonarchRules.slamWindup(f.finalBar);                  // 1.35.0: enraged, the mark is bigger and stays longer
+        final long release = now + windup;
+        VfxSpawn.send(level, VfxShape.DEVIL_CIRCLE, new Vec3(cx, cy + 0.1, cz), new Vec3(cx, cy + 1.0, cz), VIOLET, windup, (float) (radius / 4.0));
+        MonarchFx.banners(level, cx, cy, cz, radius, windup);
         sound(level, cx, cy, cz, SoundEvents.WARDEN_NEARBY_CLOSE, 3.0f, 0.6f);
         return new Hazard() {
             final Set<UUID> struck = new HashSet<>();
@@ -154,7 +156,7 @@ final class MonarchAttacks {
             public boolean tick(ServerLevel l, Mob b, MonarchFight fight, long t) {
                 if (t < release) {
                     if ((release - t) % 4 == 0) {
-                        double shrink = (double) (release - t) / MonarchRules.SLAM_WINDUP;
+                        double shrink = (double) (release - t) / windup;
                         ring(l, DUST_RED, cx, cy + 0.15, cz, radius, 0.9, 0.0);
                         ring(l, DUST_VIOLET, cx, cy + 0.15, cz, Math.max(1.0, radius * shrink), 1.2, t * 0.2);
                     }
@@ -164,6 +166,7 @@ final class MonarchAttacks {
                     loosed = true;
                     sound(l, cx, cy, cz, SoundEvents.WARDEN_ATTACK_IMPACT, 4.0f, 0.5f);
                     l.sendParticles(ParticleTypes.EXPLOSION, cx, cy + 0.3, cz, 6, 1.5, 0.1, 1.5, 0.0);
+                    MonarchFx.cut(l, new Vec3(cx, cy + 7.0, cz), new Vec3(cx, cy, cz), (float) (radius / 5.0), 14);
                 }
                 int ticks = (int) (t - release) + 1;
                 double front = MonarchShapes.front(ticks, MonarchRules.SLAM_SPEED);
@@ -190,12 +193,13 @@ final class MonarchAttacks {
         List<double[]> at = new ArrayList<>();
         for (ServerPlayer p : foes) at.add(new double[]{p.getX(), p.getZ()});
         final Vec3 c = f.centreVec();
-        final List<double[]> spots = MonarchShapes.rain(level.random.nextLong(), at, MonarchRules.rainCircles(f.phase, foes.size()), c.x, c.z, MonarchRules.RAIN_REACH, MonarchRules.RAIN_GAP);
+        final List<double[]> spots = MonarchShapes.rain(level.random.nextLong(), at, MonarchRules.rainCircles(f.phase, foes.size(), f.finalBar), c.x, c.z, MonarchRules.RAIN_REACH, MonarchRules.RAIN_GAP);
         final double[] ys = new double[spots.size()];
         for (int i = 0; i < ys.length; i++) {
             ys[i] = groundY(level, spots.get(i)[0], boss.getY(), spots.get(i)[1]);
             VfxSpawn.send(level, VfxShape.SHADOW_POOL, new Vec3(spots.get(i)[0], ys[i] + 0.05, spots.get(i)[1]), new Vec3(spots.get(i)[0], ys[i] + 1.0, spots.get(i)[1]),
                     VIOLET, MonarchRules.RAIN_MARK, (float) MonarchRules.RAIN_RADIUS);
+            if (i < 4) MonarchFx.banners(level, spots.get(i)[0], ys[i], spots.get(i)[1], MonarchRules.RAIN_RADIUS * 1.3, MonarchRules.RAIN_MARK);
         }
         sound(level, boss.getX(), boss.getY(), boss.getZ(), SoundEvents.SCULK_SHRIEKER_SHRIEK, 3.0f, 0.5f);
         final long erupt = now + MonarchRules.RAIN_MARK;
@@ -212,6 +216,7 @@ final class MonarchAttacks {
                 for (ServerPlayer p : foesNear(l, x, z, MonarchRules.RAIN_RADIUS)) {
                     if (Math.abs(p.getY() - ys[i]) <= 3.0 && strike(l, b, fight, p, MonarchMove.RAIN, t)) shove(p, x, z, 0.3, 0.45);
                 }
+                if (i < 6) MonarchFx.cut(l, new Vec3(x, ys[i] + 6.0, z), new Vec3(x, ys[i], z), 1.2f, 12);
                 l.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, x, ys[i] + 0.2, z, 22, 0.9, 0.2, 0.9, 0.10);
                 l.sendParticles(ParticleTypes.SQUID_INK, x, ys[i] + 0.5, z, 14, 0.8, 0.8, 0.8, 0.06);
             }
@@ -229,6 +234,7 @@ final class MonarchAttacks {
         for (double a : MonarchShapes.fan(base, MonarchRules.beams(f.phase), MonarchRules.BEAM_FAN)) ends.add(MonarchShapes.end(ax, az, a, MonarchRules.BEAM_LENGTH));
         final long fire = now + MonarchRules.BEAM_WINDUP;
         sound(level, ax, ay, az, SoundEvents.ELDER_GUARDIAN_CURSE, 2.0f, 1.4f);
+        for (double[] e : ends) MonarchFx.chains(level, new Vec3(ax, ay - 0.5, az), new Vec3(e[0], ay - 0.5, e[1]), MonarchRules.BEAM_WINDUP, 0.9f);
         return (l, b, fight, t) -> {
             if (t < fire) {
                 if ((fire - t) % 2 == 0) {
@@ -240,6 +246,7 @@ final class MonarchAttacks {
             sound(l, ax, ay, az, SoundEvents.WARDEN_SONIC_BOOM, 4.0f, 0.8f);
             for (double[] e : ends) {
                 VfxSpawn.send(l, VfxShape.DARK_THRUST, new Vec3(ax, ay, az), new Vec3(e[0], ay, e[1]), VIOLET, 12, 1.6f);
+                MonarchFx.cut(l, new Vec3(ax, ay - 0.4, az), new Vec3(e[0], ay - 0.4, e[1]), 1.1f, 14);
                 line(l, ParticleTypes.SOUL_FIRE_FLAME, ax, ay - 0.5, az, e[0], e[1], 1.0);
             }
             for (ServerPlayer p : foesNear(l, ax, az, MonarchRules.BEAM_LENGTH + 2.0)) {
@@ -261,6 +268,7 @@ final class MonarchAttacks {
         final double radius = MonarchRules.AUTHORITY_RADIUS;
         final long begin = now + MonarchRules.AUTHORITY_WINDUP, end = begin + MonarchRules.AUTHORITY_TICKS;
         sound(level, cx, cy, cz, SoundEvents.WITHER_AMBIENT, 3.0f, 0.5f);
+        MonarchFx.banners(level, cx, cy, cz, radius, MonarchRules.AUTHORITY_WINDUP);
         return new Hazard() {
             boolean open;
 
@@ -276,6 +284,7 @@ final class MonarchAttacks {
                 if (!open) {
                     open = true;
                     VfxSpawn.send(l, VfxShape.NIHILITY_ZONE, new Vec3(cx, cy, cz), new Vec3(cx, cy + 1.0, cz), VIOLET, MonarchRules.AUTHORITY_TICKS, (float) radius);
+                    MonarchFx.banners(l, cx, cy, cz, radius, MonarchRules.AUTHORITY_TICKS);
                     sound(l, cx, cy, cz, SoundEvents.ELDER_GUARDIAN_CURSE, 3.0f, 0.4f);
                 }
                 if ((t - begin) % MonarchRules.AUTHORITY_REFRESH == 0) {
@@ -298,6 +307,7 @@ final class MonarchAttacks {
         final long release = now + MonarchRules.SUMMON_CHANNEL;
         VfxSpawn.send(level, VfxShape.SHADOW_POOL, boss.position().add(0, 0.05, 0), boss.position().add(0, 1.0, 0), VIOLET, MonarchRules.SUMMON_CHANNEL, 5.0f);
         sound(level, boss.getX(), boss.getY(), boss.getZ(), SoundEvents.WITHER_SPAWN, 1.5f, 0.6f);
+        MonarchFx.vault(level, boss.getX(), boss.getY(), boss.getZ(), 3.5, MonarchRules.SUMMON_CHANNEL + 20);
         return (l, b, fight, t) -> {
             if (t < release) {
                 if ((release - t) % 3 == 0) {
@@ -359,6 +369,8 @@ final class MonarchAttacks {
         sound(level, boss.getX(), boss.getY(), boss.getZ(), SoundEvents.WARDEN_ROAR, 5.0f, 0.7f);
         sound(level, boss.getX(), boss.getY(), boss.getZ(), SoundEvents.ENDER_DRAGON_GROWL, 4.0f, 0.6f);
         VfxSpawn.sendFollowing(level, VfxShape.KOTO_AURA, boss, boss.position(), BLOOD, MonarchRules.TRANSITION + 20, 3.0f);
+        MonarchFx.vault(level, boss.getX(), boss.getY(), boss.getZ(), 5.0, MonarchRules.TRANSITION + 20);
+        MonarchFx.banners(level, boss.getX(), boss.getY(), boss.getZ(), 12.0, MonarchRules.TRANSITION);
         String line = MonarchText.phase(toPhase);
         if (!line.isEmpty()) {
             Component c = Component.literal(line).withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD);

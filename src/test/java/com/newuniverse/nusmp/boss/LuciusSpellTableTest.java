@@ -15,7 +15,9 @@ class LuciusSpellTableTest {
     @Test
     void theSpellsAreAppendedAndTheOriginalTableIsUntouched() {
         List<LuciusTable.Spec> all = LuciusSpellTable.allSpecs();
-        assertEquals(LuciusTable.specs().size() + 3, all.size());
+        assertEquals(LuciusTable.specs().size() + 5, all.size(), "three spells and the two 1.35.0 late-phase moves");
+        assertEquals(LuciusNumbers.JUDGMENT, all.get(LuciusTable.specs().size() + 3).id(), "the new moves come last");
+        assertEquals(LuciusNumbers.CHRONO_RINGS, all.get(LuciusTable.specs().size() + 4).id());
         for (int i = 0; i < LuciusTable.specs().size(); i++) assertSame(LuciusTable.specs().get(i), all.get(i), "the old moves keep their index");
         Set<String> ids = new HashSet<>();
         for (LuciusTable.Spec s : all) assertTrue(ids.add(s.id()), "unique id " + s.id());
@@ -34,6 +36,7 @@ class LuciusSpellTableTest {
             assertTrue(s.manaCost() > 0);
             assertNotNull(s.label());
         }
+        assertTrue(LuciusNumbers.JUDGMENT_BLAST <= LuciusTable.STORM_BOLT && LuciusNumbers.RING_BLOW <= LuciusTable.STORM_BOLT && LuciusNumbers.JUDGMENT_MAX_MARKS <= 6);
         assertTrue(LuciusNumbers.MEGIDDO_MAX_MARKS <= 6 && LuciusNumbers.MEGIDDO_MAX_HITS_PER_FOE <= 2);
         assertTrue(LuciusNumbers.DARKNESS_BLIND_TICKS <= 60, "at most three seconds of blindness");
         assertTrue(LuciusNumbers.MEGIDDO_BLAST <= LuciusTable.STORM_BOLT && LuciusNumbers.CUTTER_BLADE <= LuciusTable.HALT_BLOW);

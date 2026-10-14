@@ -25,7 +25,7 @@ public final class CharybdisTable {
     public static final String TAG_FLOOR_BOSS = "nusmp_floor_boss", TAG_BOSS = "nusmp_charybdis", TAG_MINION = "nusmp_charybdis_minion";
 
     /** Its build: a big, slow, tough leviathan. The hitbox is square (Minecraft's are), so the long body trails out of it. */
-    public static final double HEALTH = 1100, ATTACK = 24, SPEED = 0.30, ARMOR = 6, TOUGHNESS = 4;
+    public static final double HEALTH = 1350, ATTACK = 25, SPEED = 0.30, ARMOR = 7, TOUGHNESS = 4;
     public static final float WIDTH = 3.4f, HEIGHT = 2.8f, DAMAGE_SCALE = 1.05f, MELEE_FACTOR = 0.75f;
 
     /** Base damage of the moves (before the boss's damage law: power tuning, victim EP, the balance law's caps). */

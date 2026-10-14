@@ -46,6 +46,7 @@ final class AvatarMoves {
     static void voidClaws(DevilAvatarBoss boss, float damage) {
         if (!(boss.level() instanceof ServerLevel sl)) return;
         boss.swing(InteractionHand.MAIN_HAND);
+        AvatarVfx.clawsStrike(boss);
         Vec3 f = AvatarFx.facing(boss);
         double half = AvatarMath.CLAW_HALF_ANGLE, reach = AvatarMath.CLAW_REACH;
         Vec3 o = boss.position().add(0, boss.getBbHeight() * 0.55, 0);
@@ -69,10 +70,11 @@ final class AvatarMoves {
         }
     }
 
-    static void tellClaws(DevilAvatarBoss boss) {
+    static void tellClaws(DevilAvatarBoss boss, int left, int total) {
         if (!(boss.level() instanceof ServerLevel sl)) return;
         Vec3 f = AvatarFx.facing(boss), o = boss.position().add(0, 0.15, 0);
         double half = AvatarMath.CLAW_HALF_ANGLE, reach = AvatarMath.CLAW_REACH;
+        if (first(left, total)) AvatarVfx.clawsTell(boss);
         Vec3 prev = null;
         for (int i = 0; i <= 6; i++) {
             Vec3 p = o.add(AvatarFx.rotateY(f, -half + i * (2 * half / 6)).scale(reach));
@@ -92,11 +94,13 @@ final class AvatarMoves {
         int n = AvatarMath.boltCount(boss.tuning().castSlots());
         List<LivingEntity> aims = new ArrayList<>();
         for (int i = 0; i < n; i++) aims.add(others.isEmpty() || i % 3 != 2 ? target : others.get((i / 3) % others.size()));
+        AvatarVfx.volleyStrike(boss);
         new HexVolley(boss, aims, true).launch(sl);
     }
 
-    static void tellVolley(DevilAvatarBoss boss, LivingEntity target) {
+    static void tellVolley(DevilAvatarBoss boss, LivingEntity target, int left, int total) {
         if (!(boss.level() instanceof ServerLevel sl)) return;
+        if (first(left, total)) AvatarVfx.volleyTell(boss, total);
         Vec3 from = boss.position().add(0, boss.getBbHeight() * 0.78, 0);
         Vec3 aim = target.getBoundingBox().getCenter().subtract(from);
         if (aim.lengthSqr() < 1e-4) return;
@@ -142,6 +146,7 @@ final class AvatarMoves {
     private static void shadowStrike(DevilAvatarBoss boss) {
         if (!(boss.level() instanceof ServerLevel sl)) return;
         boss.swing(InteractionHand.MAIN_HAND);
+        AvatarVfx.stepStrike(boss);
         Vec3 at = boss.position();
         Tells.burst(sl, at.add(0, 1.2, 0), AvatarFx.accent(boss), 36);
         sl.sendParticles(ParticleTypes.SQUID_INK, at.x, at.y + 1.2, at.z, 16, 1.0, 0.6, 1.0, 0.03);
@@ -163,6 +168,7 @@ final class AvatarMoves {
         if (first(left, total)) {
             boss.stepExit = stepExit(boss, target);
             boss.hint(AvatarTable.SHADOW_STEP, "The Avatar marks where it will step out, behind you. Leave the ring before it arrives.");
+            AvatarVfx.stepTell(boss, boss.stepExit, total);
         }
         Tells.gather(sl, boss.position().add(0, boss.getBbHeight() * 0.5, 0), 0.8, AvatarFx.rgb(boss), 6);
         Vec3 x = boss.stepExit;
@@ -196,6 +202,7 @@ final class AvatarMoves {
         if (!(boss.level() instanceof ServerLevel sl)) return lifted;
         Vec3 c = boss.position();
         VfxSpawn.send(sl, VfxShape.ASH_FORMATION, c, c.add(0, 1, 0), AvatarFx.argb(boss), 28, (float) Math.min(9, radius * 0.4));
+        AvatarVfx.pullStrike(boss, radius);
         AvatarFx.sound(sl, c, SoundEvents.WARDEN_SONIC_CHARGE, 2.5f, 0.6f);
         List<Lift> lifts = new ArrayList<>();
         int caught = 0;
@@ -245,7 +252,10 @@ final class AvatarMoves {
     static void tellPull(DevilAvatarBoss boss, double radius, int left, int total) {
         if (!(boss.level() instanceof ServerLevel sl)) return;
         Vec3 c = boss.position();
-        if (first(left, total)) VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE, c.add(0, 0.05, 0), c.add(0, 1, 0), AvatarFx.argb(boss), total, (float) (radius / 1.6));
+        if (first(left, total)) {
+            VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE, c.add(0, 0.05, 0), c.add(0, 1, 0), AvatarFx.argb(boss), total, (float) (radius / 1.6));
+            AvatarVfx.pullTell(boss, radius, total);
+        }
         Tells.ring(sl, c, radius, AvatarFx.rgb(boss), 1.4f, (int) Math.min(96, 16 + radius * 5));
         Tells.ring(sl, c, Math.max(1.0, radius * left / Math.max(1, total)), AvatarFx.accent(boss), 1.1f, 36);
         AvatarFx.motes(sl, ParticleTypes.REVERSE_PORTAL, c, radius, 16, 0.32);
@@ -284,6 +294,7 @@ final class AvatarMoves {
         for (Vec3 m : marks) {
             VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE_EXPLOSION, m.add(0, 0.05, 0), m.add(0, 1, 0), AvatarFx.argb(boss), 18, (float) (radius / 1.2));
             Tells.burst(sl, m.add(0, 1, 0), AvatarFx.accent(boss), 36);
+            AvatarVfx.crushStrike(boss, m);
             AvatarFx.sound(sl, m, SoundEvents.WITHER_SPAWN, 1.6f, 0.7f);
             for (LivingEntity e : boss.foesAround(m.add(0, 8, 0), Math.sqrt(radius * radius + 20 * 20) + 1)) {
                 if (hit.contains(e.getId()) || !AvatarFx.pushable(e)) continue;
@@ -311,8 +322,10 @@ final class AvatarMoves {
         if (first(left, total)) {
             boss.marks = crushMarks(boss, target, AvatarMath.markCount(boss.power()));
             boss.hint(AvatarTable.FLOOR_CRUSH, "The floor is marked under you. Leave the rings before it presses: the air is the worst place to be.");
-            for (Vec3 m : boss.marks)
+            for (Vec3 m : boss.marks) {
                 VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE, m.add(0, 0.05, 0), m.add(0, 1, 0), AvatarFx.argb(boss), total, (float) (AvatarMath.CRUSH_RADIUS / 1.6));
+                AvatarVfx.crushTell(boss, m, total);
+            }
             AvatarFx.sound(sl, boss.position(), SoundEvents.WARDEN_SONIC_CHARGE, 2f, 0.5f);
         }
         for (Vec3 m : boss.marks) {
@@ -334,6 +347,7 @@ final class AvatarMoves {
         if (!(boss.level() instanceof ServerLevel sl) || mark == null) return;
         VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE, mark.add(0, 0.05, 0), mark.add(0, 1, 0), AvatarFx.argb(boss), AvatarMath.FIELD_TICKS, (float) (AvatarMath.FIELD_RADIUS / 1.6));
         AvatarFx.sound(sl, mark, SoundEvents.AMETHYST_BLOCK_RESONATE, 2f, 0.4f);
+        AvatarVfx.fieldStrike(boss, mark);
         SpellRuntime.zone(sl, AvatarMath.FIELD_TICKS, AvatarMath.FIELD_STEP, AvatarFx.safe("inversion field", age -> fieldStep(boss, sl, mark, age)));
     }
 
@@ -383,6 +397,7 @@ final class AvatarMoves {
             Vec3 m = boss.marks.get(0);
             VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE, m.add(0, 0.05, 0), m.add(0, 1, 0), AvatarFx.argb(boss), total, (float) (AvatarMath.FIELD_RADIUS / 1.6));
             boss.hint(AvatarTable.INVERSION_FIELD, "The Avatar opens a field that pulls up and presses down in turn, every second. A Mana Zone halves it; leave the ring if you cannot steer.");
+            AvatarVfx.fieldTell(boss, m, total);
         }
         if (boss.marks.isEmpty()) return;
         Vec3 m = boss.marks.get(0);
@@ -425,6 +440,7 @@ final class AvatarMoves {
             boss.announce("The dread brand closes on empty ground: its mark stepped out in time.");
             return;
         }
+        AvatarVfx.brandStrike(boss, m, r);
         VanicaMoves.weakeningCurse(boss, foe, AvatarMath.DREAD_TICKS, level);
     }
 
@@ -438,6 +454,7 @@ final class AvatarMoves {
             if (boss.brandMark != null)
                 VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE, boss.brandMark.add(0, 0.05, 0), boss.brandMark.add(0, 1, 0), 0xFFFF5A4A, total,
                         (float) (VanicaMath.sigilRadius(VanicaMath.curseLevel(boss.power())) / 1.6));
+            AvatarVfx.brandTell(boss, boss.brandMark, VanicaMath.sigilRadius(VanicaMath.curseLevel(boss.power())), total);
         }
         Tells.gather(sl, boss.position().add(0, boss.getBbHeight() * 0.8, 0), 0.8, AvatarFx.accent(boss), 5);
         Vec3 m = boss.brandMark;
@@ -459,6 +476,7 @@ final class AvatarMoves {
         final Set<Integer> hit = new HashSet<>();
         VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE_EXPLOSION, centre.add(0, 0.05, 0), centre.add(0, 1, 0), AvatarFx.argb(boss), 14, (float) (reach / 3));
         AvatarFx.sound(sl, centre, SoundEvents.ELDER_GUARDIAN_CURSE, 2f, 0.6f);
+        AvatarVfx.novaStrike(boss, centre, reach);
         SpellRuntime.zone(sl, GravityMath.waveTicks(reach), 1, AvatarFx.safe("curse nova", age -> {
             if (!boss.isAlive() || boss.isRemoved()) return;
             double wr = GravityMath.waveRadius(age);
@@ -481,8 +499,66 @@ final class AvatarMoves {
 
     static void tellNova(DevilAvatarBoss boss, double reach, int left, int total) {
         if (!(boss.level() instanceof ServerLevel sl)) return;
+        if (first(left, total)) AvatarVfx.novaTell(boss, reach, total);
         Tells.ring(sl, boss.position(), Math.max(1.5, reach * (total - left) / Math.max(1, total)), AvatarFx.rgb(boss), 1.3f, 48);
         if (left % 6 == 0) Tells.ring(sl, boss.position(), reach, AvatarFx.WARN, 1.1f, 56);
+        Tells.gather(sl, boss.position().add(0, 0.6, 0), 1.2, AvatarFx.accent(boss), 5);
+    }
+
+    // ================================================================ Brimstone Eruption
+    /**
+     * Spokes of brimstone burst out of the floor round the Avatar along the lines the wind-up drew (5 spokes; 7 at the Gates, and then a second wave
+     * on the gaps of the first, {@link AvatarMath#ERUPT_SECOND_AT} ticks later, which the wind-up drew too). Whoever stands on a spoke when it bursts
+     * is struck once per wave and thrown up; the gaps between the spokes are safe. Nothing is placed or broken.
+     */
+    static void eruption(DevilAvatarBoss boss, double base) {
+        if (!(boss.level() instanceof ServerLevel)) return;
+        boss.swing(InteractionHand.MAIN_HAND);
+        final Vec3 c = boss.position();
+        final int n = AvatarMath.eruptionSpokes(boss.gatesOpen());
+        eruptWave(boss, c, base, n);
+        if (boss.gatesOpen()) boss.later(AvatarMath.ERUPT_SECOND_AT, AvatarFx.safe("second eruption", () -> eruptWave(boss, c, base + Math.PI / n, n)));
+    }
+
+    private static void eruptWave(DevilAvatarBoss boss, Vec3 c, double base, int n) {
+        if (!(boss.level() instanceof ServerLevel sl) || !boss.isAlive() || boss.isRemoved()) return;
+        AvatarVfx.eruptionStrike(boss, c, base, n);
+        AvatarFx.sound(sl, c, SoundEvents.GENERIC_EXPLODE.value(), 1.6f, 0.6f);
+        for (int k = 0; k < n; k++) {
+            double a = base + Math.PI * 2 * k / n;
+            for (int s = 1; s <= 4; s++)
+                sl.sendParticles(ParticleTypes.LAVA, c.x + Math.cos(a) * AvatarMath.ERUPT_LENGTH * s / 4, c.y + 0.3, c.z + Math.sin(a) * AvatarMath.ERUPT_LENGTH * s / 4, 1, 0.3, 0.2, 0.3, 0.0);
+        }
+        for (LivingEntity e : boss.foesAround(c, AvatarMath.ERUPT_LENGTH + 3)) {
+            if (Math.abs(e.getY() - c.y) > 4.0 || !AvatarFx.pushable(e)) continue;
+            if (!AvatarMath.inSpoke(e.getX() - c.x, e.getZ() - c.z, base, n, AvatarMath.ERUPT_HALF_WIDTH + e.getBbWidth() / 2, AvatarMath.ERUPT_LENGTH)) continue;
+            if (boss.strike(e, AvatarTable.ERUPT, true)) {
+                Vec3 v = e.getDeltaMovement();
+                AvatarFx.push(e, v.x, 0.5, v.z);
+                e.fallDistance = 0;
+            }
+        }
+    }
+
+    static void tellEruption(DevilAvatarBoss boss, LivingEntity target, int left, int total) {
+        if (!(boss.level() instanceof ServerLevel sl)) return;
+        if (first(left, total) || Double.isNaN(boss.eruptBase)) {
+            Vec3 to = target.position().subtract(boss.position());
+            boss.eruptBase = Math.atan2(to.z, to.x);
+            boss.hint(AvatarTable.BRIMSTONE_ERUPTION, "Brimstone bursts along the lines the Avatar draws: stand in a gap between two lines. At the Gates a second wave bursts in the gaps of the first.");
+            AvatarVfx.eruptionTell(boss, boss.eruptBase, AvatarMath.eruptionSpokes(boss.gatesOpen()), boss.gatesOpen(), total);
+            AvatarFx.sound(sl, boss.position(), SoundEvents.WARDEN_SONIC_CHARGE, 2f, 0.5f);
+        }
+        Vec3 c = boss.position().add(0, 0.15, 0);
+        int n = AvatarMath.eruptionSpokes(boss.gatesOpen());
+        for (int k = 0; k < n; k++) {
+            double a = boss.eruptBase + Math.PI * 2 * k / n;
+            Tells.line(sl, c.add(Math.cos(a) * 1.5, 0, Math.sin(a) * 1.5), c.add(Math.cos(a) * AvatarMath.ERUPT_LENGTH, 0, Math.sin(a) * AvatarMath.ERUPT_LENGTH), AvatarFx.WARN);
+            if (boss.gatesOpen()) {
+                double b = a + Math.PI / n;
+                Tells.line(sl, c.add(Math.cos(b) * 1.5, 0, Math.sin(b) * 1.5), c.add(Math.cos(b) * AvatarMath.ERUPT_LENGTH, 0, Math.sin(b) * AvatarMath.ERUPT_LENGTH), AvatarFx.rgb(boss));
+            }
+        }
         Tells.gather(sl, boss.position().add(0, 0.6, 0), 1.2, AvatarFx.accent(boss), 5);
     }
 
@@ -504,9 +580,11 @@ final class AvatarMoves {
             boss.announce("The floor is marked under everyone still hanging. Steer out of the rings before it presses!");
             for (LivingEntity e : lifted)
                 if (e instanceof ServerPlayer sp) sp.displayClientMessage(Component.literal("The floor will crush! Steer out of the marked rings!").withStyle(ChatFormatting.RED), true);
-            for (Vec3 m : marks)
+            for (Vec3 m : marks) {
                 VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE, m.add(0, 0.05, 0), m.add(0, 1, 0), AvatarFx.argb(boss), AvatarMath.ULT_CRUSH_AT - AvatarMath.ULT_MARK_AT,
                         (float) (AvatarMath.CRUSH_RADIUS / 1.6));
+                AvatarVfx.crushTell(boss, m, AvatarMath.ULT_CRUSH_AT - AvatarMath.ULT_MARK_AT);
+            }
             SpellRuntime.zone(sl, AvatarMath.ULT_CRUSH_AT - AvatarMath.ULT_MARK_AT, 3, AvatarFx.safe("collapse rings", age -> {
                 if (!boss.isAlive() || boss.isRemoved()) return;
                 for (Vec3 m : marks) {
@@ -528,6 +606,7 @@ final class AvatarMoves {
             VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE, c.add(0, 0.05, 0), c.add(0, 1, 0), AvatarFx.argb(boss), total, (float) (AvatarMath.ULT_PULL_RADIUS / 1.6));
             boss.hint(AvatarTable.ABYSSAL_COLLAPSE, "Abyssal Collapse: the Avatar pulls everyone in the ring to the ceiling, then presses the marked floor and sends out a wave of curse. Leave the ring, or steer clear of the marks and jump the wave.");
             AvatarFx.sound(sl, c, SoundEvents.WARDEN_SONIC_CHARGE, 3f, 0.4f);
+            AvatarVfx.pullTell(boss, AvatarMath.ULT_PULL_RADIUS, total);
         }
         Tells.ring(sl, c, AvatarMath.ULT_PULL_RADIUS, AvatarFx.rgb(boss), 1.5f, 96);
         Tells.ring(sl, c, Math.max(1.5, AvatarMath.ULT_PULL_RADIUS * left / Math.max(1, total)), AvatarFx.accent(boss), 1.2f, 40);

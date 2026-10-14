@@ -116,6 +116,10 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
 
     /** 1.29.0 per-second damage budget of this one boss (docs/boss_dps_budget.md); null only while the constructors of Entity run. */
     private final com.newuniverse.nusmp.boss.budget.BossBudget dpsBudget = new com.newuniverse.nusmp.boss.budget.BossBudget();
+    /** 1.35.0: the "second health bar" of the 100% mode (boss/refill/PhaseRefill); persisted, once per mode per fight. */
+    private final com.newuniverse.nusmp.boss.refill.PhaseRefill refill = new com.newuniverse.nusmp.boss.refill.PhaseRefill();
+    private long refillDeadline;
+    private float lastGlowStep;
     private final ServerBossEvent bar = new ServerBossEvent(Component.empty(), BossEvent.BossBarColor.PURPLE, BossEvent.BossBarOverlay.PROGRESS);
     private final Set<UUID> fighters = new HashSet<>();
     private final BlockLedger ledger = new BlockLedger(this::serverLevel);
@@ -193,6 +197,10 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
     /** Keywords of the Tensura magic skills it learns (empty = none); see {@link TensuraCaster#learn}. */
     protected String[] tensuraKeywords() { return new String[0]; }
     protected int tensuraKitSize() { return 4; }
+    /** 1.35.0: whether the Gates (the 100% mode) refill the health bar to full. Every Zogratis boss does; override to opt out. */
+    protected boolean refillOnGates() { return true; }
+    /** 1.35.0: the id under which the Gates refill is recorded (a subclass with several modes calls {@link #refillForMode} with its own ids). */
+    protected String gatesModeId() { return "gates"; }
 
     // ---- lines (overridable)
     protected String openingLine() { return "You stand before the chosen of " + devil().displayName + "."; }
@@ -243,6 +251,54 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
     public boolean fightActive() { return fightActive; }
     public ManaPool mana() { return mana; }
     public BlockLedger ledger() { return ledger; }
+
+    // ---------------------------------------------------------------- 1.35.0: the refill of a final mode
+    /** True while the boss is refilling its health bar (it is invulnerable meanwhile). */
+    public boolean refilling() { return refill.active(); }
+    /** 0..1 glow of the refill (flash at the start, shimmer while it fills, pulse at the end); 0 when idle. The boss bar tint follows it. */
+    public float refillGlow() { return refill.glow(); }
+    /** The refill state machine (read only use: tests, debug). */
+    public com.newuniverse.nusmp.boss.refill.PhaseRefill refillState() { return refill; }
+
+    /**
+     * Enters a final/enraged/true-form mode 'modeId' with a full health bar: health eases up to the maximum over
+     * {@link com.newuniverse.nusmp.boss.refill.PhaseRefill#DEFAULT_TICKS} ticks, the boss takes no damage meanwhile, the refill is exempt from
+     * the per-second damage budget, and the bar flashes. Once per mode per fight (persisted); false if this mode already refilled, another
+     * refill runs, or the boss is dead. Server side only. The Gates call it by themselves ({@link #refillOnGates}).
+     */
+    public boolean refillForMode(String modeId) {
+        return refillForMode(modeId, com.newuniverse.nusmp.boss.refill.PhaseRefill.DEFAULT_TICKS);
+    }
+
+    public boolean refillForMode(String modeId, int ticks) {
+        if (!(level() instanceof ServerLevel sl) || isDeadOrDying() || fightEnded) return false;
+        if (!refill.begin(modeId, getHealth(), getMaxHealth(), ticks)) return false;
+        refillDeadline = sl.getGameTime() + Math.max(1, ticks) + 40;      // the shield can never outlast this, whatever happens to the AI tick
+        com.newuniverse.nusmp.boss.refill.RefillFx.start(sl, position(), getBbHeight(), DevilStyle.color(devil()), DevilStyle.accent(devil()), ticks);
+        broadcast(Component.translatable("nusmp.boss.refill.second_bar", bossName()).withStyle(chatColor(), ChatFormatting.BOLD));
+        refreshBar();
+        return true;
+    }
+
+    private void tickRefill(ServerLevel sl) {
+        if (!refill.active()) { lastGlowStep = 0f; return; }
+        if (refillDeadline == Long.MAX_VALUE) refillDeadline = sl.getGameTime() + refill.ticksLeft() + 40;
+        refill.retarget(getMaxHealth());
+        float hp = refill.tick();
+        if (hp >= 0f) {
+            float to = Math.max(getHealth(), hp);
+            dpsBudget.bypass(() -> setHealth(to));                     // a refill is the boss's own heal, never damage, never counted against the budget
+            bar.setProgress(Math.max(0f, Math.min(1f, getHealth() / getMaxHealth())));
+        }
+        int rgb = DevilStyle.color(devil()), accent = DevilStyle.accent(devil());
+        if (refill.active()) {
+            com.newuniverse.nusmp.boss.refill.RefillFx.fill(sl, position(), getBbHeight(), getBbWidth(), rgb, accent, refill.progress(), tickCount);
+        } else {
+            com.newuniverse.nusmp.boss.refill.RefillFx.end(sl, position(), getBbHeight(), rgb, accent);
+        }
+        float g = com.newuniverse.nusmp.boss.refill.PhaseRefill.glowStep(refill.glow());
+        if (g != lastGlowStep) { lastGlowStep = g; refreshBar(); }
+    }
 
     /** Notes a block the boss has changed some other way (so the fight can undo it). False if the ledger is full. */
     public boolean recordBlock(BlockPos pos, BlockState old) { return ledger.record(pos, old); }
@@ -460,6 +516,7 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
             if (ledger.size() >= before) nextRestore = t + 40;            // what is left waits for its chunks: look again in two seconds
         }
         mana.tick();
+        tickRefill(sl);
         float frac = getHealth() / getMaxHealth();
         bar.setProgress(Math.max(0f, Math.min(1f, frac)));
         int np = PowerCurve.next(frac, power());
@@ -568,6 +625,8 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
         pendingEdits.clear();
         removeDisciples(sl);
         transformLeft = 0;
+        refill.reset();
+        lastGlowStep = 0f;
         setTarget(null);
         entityData.set(POWER, PowerCurve.OPENING);
         entityData.set(FORM, FORM_BASE);
@@ -623,6 +682,7 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
         VfxSpawn.send(sl, VfxShape.DEVIL_CIRCLE, position(), position().add(0, 1, 0), 0xFF000000 | DevilStyle.color(devil()), PowerCurve.TRANSFORM_TICKS, 4f);
         sl.playSound(null, blockPosition(), SoundEvents.WITHER_SPAWN, SoundSource.HOSTILE, 3f, 0.6f);
         onGatesOpened();
+        if (refillOnGates()) refillForMode(gatesModeId());          // 1.35.0: the 100% mode comes with a full health bar
     }
 
     private void tickTransform(ServerLevel sl) {
@@ -932,6 +992,7 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
         if (level().isClientSide) return super.hurt(source, amount);
         if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return dpsBudget.hurt(this, source, amount, x -> super.hurt(source, x));   // /kill and the void are capped too
         if (fightEnded || (transformLeft > 0 && level().getGameTime() < transformDeadline)) return false;
+        if (refill.active() && level().getGameTime() < refillDeadline) return false;                    // 1.35.0: invulnerable while the bar refills
         Entity attacker = source.getEntity();
         if (attacker != null && ZogratisEntities.isFamily(attacker)) return false;
         // the power the health already asks for: a second hit in the tick of a crossing is bounded by the line after it, and a boss
@@ -994,6 +1055,7 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
         tag.putInt("ZForm", form());
         tag.putBoolean("ZFight", fightActive);
         tag.putDouble("ZMana", mana.current());
+        com.newuniverse.nusmp.boss.refill.RefillTag.write(refill, tag);
         if (arena != null) tag.put("ZArena", NbtUtils.writeBlockPos(arena));
         CompoundTag l = new CompoundTag();
         ledger.save(l);
@@ -1010,6 +1072,8 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
         mana.retune(tuning);
         if (tag.contains("ZMana")) mana.set(tag.getDouble("ZMana"));
         fightActive = tag.getBoolean("ZFight");
+        com.newuniverse.nusmp.boss.refill.RefillTag.read(refill, tag);
+        if (refill.active()) refillDeadline = Long.MAX_VALUE;           // resumed after a reload: the shield ends with the refill (tickRefill), set properly on the first tick
         NbtUtils.readBlockPos(tag, "ZArena").ifPresent(pos -> arena = pos);
         if (tag.contains("ZLedger")) ledger.load(tag.getCompound("ZLedger"), level().registryAccess().lookupOrThrow(Registries.BLOCK));
         if (hasCustomName()) bar.setName(getDisplayName());
