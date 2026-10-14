@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.34.0] — Wands, grips, tooltips, Djinn weapons, armour build, boss effects and second health bar
+
+**State:** written without a compiler; CI is the first compile. Nothing run in game.
+
+### NEW
+- **Djinn Half/Full Equip weapons**: 24 real temporary weapon items (light + dark) with two acts each, a safe loan/restore of the displaced hotbar item. `docs/djinn_weapons.md`.
+- **Armour build**: all 11 Magic Knight robe sets, 16 more armour relics, the 5 transformation modes and the dungeon relics / charter grimoires drawn as relic-style 3D models, a generic fallback for future armour, armour engravings. `docs/armor_build.md`.
+- **Boss second health bar** (`PhaseRefill`): every Zogratis boss refills to full at the 100% mode (Gates), shielded while it fills; bar tint glows. Hook for other bosses.
+- **Boss effects**: telegraph and strike effects for every move of Dante, Vanica, Zenon, Lucius; new layers for the Devil Avatar, Goliath, Charybdis, God of Order, Zagred, Commander and Juggernaut. Eight new late-phase moves; health buffs on the four. `docs/boss_vfx_buff_b1.md`.
+- **Compatibility Codex** is now a grimoire-style item and screen (the written book stays).
+- Tooltips shown on relics in Curios slots, worn relics all drawn (toggle respected), `relicfx.hideArmourRelics`.
+
+### FIXED / CHANGED
+- **Weapon grips**: Windcutter, Tripolar Sword, Flamecutter, Encircled Blade were held by the blade; flipped.
+- **Sizes**: class table made larger; Elsdocia bigger. **Wands** 0.55-0.85 -> 0.8-1.2 blocks; the Wand of Bubbles 0.67 -> 1.0.
+
+### REPLACEMENTS
+- Robe sets render with the library model for players (GeckoLib kept for mobs/stands/option off); look-only relic armour models upgraded to signature models. Nothing removed.
+
 ## [1.33.0] — Tensura No Index compatibility pack and the Compatibility Codex
 
 **State:** written without a compiler; CI is the first compile. Nothing run in game. See `docs/compat/README.md`.
