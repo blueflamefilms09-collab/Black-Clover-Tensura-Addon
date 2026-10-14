@@ -60,6 +60,8 @@ public class NUSMP {
         com.newuniverse.nusmp.relics.djinn.DjinnComponents.COMPONENTS.register(modEventBus);
         com.newuniverse.nusmp.relics.djinn.DjinnAttachments.ATTACHMENTS.register(modEventBus);
         modEventBus.addListener(com.newuniverse.nusmp.relics.djinn.DjinnNet::registerPayloads);
+        com.newuniverse.nusmp.core.discovery.Discovery.init(modEventBus, modContainer);                                    // 1.27.0: what a player has not found stays hidden
+        modEventBus.addListener(com.newuniverse.nusmp.core.magic.merge.MergedSync::register);                              // 1.27.0: merged magics
         com.newuniverse.nusmp.charter.CharterItems.init();                                                                 // 1.25.0: Charter Grimoires (before NUItems.ITEMS.register)
         modEventBus.addListener(com.newuniverse.nusmp.charter.CharterNet::registerPayloads);
         modEventBus.addListener(com.newuniverse.nusmp.boss.bar.BossBarNet::registerPayloads);
@@ -113,6 +115,10 @@ public class NUSMP {
             com.newuniverse.nusmp.client.grimoire.GrimoireSlotClient.init(modEventBus);
             com.newuniverse.nusmp.client.multiverse.MultiverseStatusClient.init(modEventBus);
             com.newuniverse.nusmp.client.multiverse.FourKingdomsSlot.init();                                   // 0.46: the slot in Tensura's magic screen
+            com.newuniverse.nusmp.client.discovery.DiscoveryClient.init();                                                    // 1.27.0
+            com.newuniverse.nusmp.client.merge.MergedClient.init(modEventBus);
+            com.newuniverse.nusmp.client.ui.theme.UiThemeClient.init(modEventBus);                                           // 1.27.0: the anime GUI theme
+            modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.ui.theme.UiThemeOptions.SPEC, "nusmp-ui-client.toml");
             com.newuniverse.nusmp.client.gui.bossbar.ModBossBarOverlay.init();                                                      // 1.25.0: animated boss bar
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.gui.bossbar.BossBarOptions.SPEC, "nusmp-bossbar-client.toml");
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.multiverse.MultiverseClientConfig.SPEC, "nusmp-multiverse-client.toml");
@@ -221,6 +227,7 @@ public class NUSMP {
         com.newuniverse.nusmp.relics.order.OrderEvents.register(NeoForge.EVENT_BUS);
         com.newuniverse.nusmp.relics.djinn.DjinnEvents.register(NeoForge.EVENT_BUS);
         // 1.25.0: Mod Boss Global Buff Engine, Charter Grimoires + first-kill lock, boss bar sync, holder flags
+        com.newuniverse.nusmp.core.magic.merge.MergeEvents.register(NeoForge.EVENT_BUS);                                    // 1.27.0 (also runs the magic audit at start)
         com.newuniverse.nusmp.boss.BossHooks.register();
         com.newuniverse.nusmp.charter.CharterEvents.register(NeoForge.EVENT_BUS);
         com.newuniverse.nusmp.boss.bar.BossBarSync.init();

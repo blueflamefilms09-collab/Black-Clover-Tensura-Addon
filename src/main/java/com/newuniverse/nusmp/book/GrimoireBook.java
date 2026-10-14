@@ -198,6 +198,7 @@ public abstract class GrimoireBook extends Skill {
         BookPage p = page(mode);
         if (p == null) return Component.literal("?");
         if (mode < familyCount() && !isUnlocked(instance, mode)) return Component.literal("Sealed Page").withStyle(ChatFormatting.DARK_GRAY);
+        if (mode >= familyCount() && !usable(instance, null, mode)) return Component.literal(com.newuniverse.nusmp.core.discovery.DiscoveryRules.QUESTION).withStyle(ChatFormatting.DARK_GRAY);   // 1.27.0: a base page that cannot be used yet stays hidden
         int cd = instance.getCoolDown(mode);   // ManasCore cooldowns are in seconds
         String shown = SignatureSpell.pageName(instance, p);                           // 1.16.0: a signature page shows the wizard's own spell name
         return Component.literal(cd > 0 ? shown + " (" + cd + "s)" : shown);

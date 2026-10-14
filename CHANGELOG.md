@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.27.0] — Merged magic, a safe magic framework, the anime GUI, discovery, the cast-hold fix
+
+**State:** written without a compiler; CI is the first compile. Nothing run in game. Design notes: `docs/magic_merge.md`, `docs/magic_framework.md`, `docs/gui_theme.md`, `docs/discovery.md`, `docs/wiki_magic_vfx.md`.
+
+### NEW
+- **Magic merge generator**: `/multiverse magic merge <a> <b> [<c> [<d>]] [name]` (plus list, info, remove, grant, revoke, audit). Two to four existing magics become a brand-new magic with a blended spell list, blended VFX (every parent's own effect plus a composite layer), a blended temporary armour layer and a baked 3D emblem. Definitions are saved in the world and synced; the parents are never changed. Up to 64 per world.
+- **Magic framework** (`core/magic/profile`): a `MagicProfile` for every magic with safe defaults, a registry that never returns null, an audit (test, server start, `/multiverse magic audit`) and a runtime `SafeCast` guard that contains a failing cast, logs it once and falls back to a generic effect, so a new magic type no longer needs edge-case fixes.
+- **Discovery**: items, relics, spells, pages and creatures stay hidden (`???` or a silhouette) until a player finds or unlocks them. Existing owners keep everything (migration on first login). Config `discovery.showAll`.
+- **Anime / Tensura GUI** (`ui.theme` = anime or classic): translucent glass panels, animated rune magic circles, Great Sage style analysis text; restyled Codex, Multiverse Status, Four Kingdoms, grimoire slot, questionnaire, relic tooltips, a page-unlock panel and a Great Sage readout on Tensura's ability selection window.
+- **Wiki magic armour auras** for the 30 wiki magics (Guard page).
+
+### REPLACEMENT (old kept where stated)
+- **Wiki magic VFX** (`WikiMagicLayer`): a documented table maps the 30 magics to seven groups with their own texture, blend and shape (Sandstone sits in the shards group), null-safe with a GLOW fallback.
+- **Held cast key**: the spell circle no longer strobes. The cause was a new circle every 4 ticks plus a body-animation restart on every press and fizzle. It is now one continuous circle that refreshes while held and fades out (`CastHold`); a tap behaves as before.
+- **Closed grimoire** sits closer to the body (hip pose right 0.27 instead of 0.42, slightly lower).
+- `MagicType.restricted()` now uses names instead of hard-coded ordinals (same eight values); `WikiBooks.color()` no longer throws for a wiki magic without a colour.
+- The classic GUI drawing is kept behind `ui.theme = classic`.
+
+### Verify in game
+Everything visual (circle, armour, GUI mock-ups were rendered with a PIL re-implementation, not the game), the merged cast end to end, the hold-cast key behaviour with ManasCore, the page-unlock overlay, discovery sync on a server.
+
+
 ## [1.26.0] — Djinn review fixes
 
 - A chained Half Equip hit (Baal) on a player is capped at 6 like a direct hit, also for a Dark Djinn.
