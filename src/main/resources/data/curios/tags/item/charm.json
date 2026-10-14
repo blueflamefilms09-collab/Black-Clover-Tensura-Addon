@@ -197,6 +197,34 @@
     {
       "id": "nusmp:weaversong",
       "required": false
+    },
+    {
+      "id": "nusmp:charter_grimoire_dante",
+      "required": false
+    },
+    {
+      "id": "nusmp:charter_grimoire_vanica",
+      "required": false
+    },
+    {
+      "id": "nusmp:charter_grimoire_zenon",
+      "required": false
+    },
+    {
+      "id": "nusmp:charter_grimoire_lucius",
+      "required": false
+    },
+    {
+      "id": "nusmp:charter_grimoire_devil_avatar",
+      "required": false
+    },
+    {
+      "id": "nusmp:charter_grimoire_goliath",
+      "required": false
+    },
+    {
+      "id": "nusmp:charter_grimoire_charybdis_spawn",
+      "required": false
     }
   ]
 }

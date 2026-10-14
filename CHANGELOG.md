@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.25.0] — Boss overhaul, Charter Grimoires, relics part 2, unique and Dark Djinn
+
+**State:** written without a compiler; CI is the first compile. Nothing run in game. Built from the owner's MAS prompt (`neoforge_mas_prompt.md`), the 143 card images of "Relics of the world" parts 2 and 3, the Magi picture references and the owner's fixes list. Design notes: `docs/boss_overhaul.md`, `docs/relics_of_many_worlds_part2.md`.
+
+### NEW
+- **Mod Boss Global Buff Engine** (`boss/`): permanent Tensura barriers, regeneration and theme skills on this mod's seven bosses only (namespace-checked), `bosses.globalBuffs` / `bosses.buffMultiplier` config. Lucius gets maxed pools, passives and three new telegraphed moves (Megiddo, Dimension Cutter, True Darkness); real nullification skills are replaced by capped damage cuts so he stays killable.
+- **Charter Grimoires** (`charter/`): seven books (Dante, Vanica, Zenon, Lucius, Devil Avatar, Goliath, Charybdis Spawn). A boss drops its book once per world (`ModWorldDropData`, `has_dropped_charter_grimoire_<boss>`), first claim wins and is saved at once; holding or wearing a book lends its skill set temporarily (never `usurper`, never removes anything). `/multiverse charter status|give|reset`.
+- **Animated boss bar** for the mod bosses (phase colours, flames, shine, shake on heavy damage, shatter on phase change); every other bar is drawn like vanilla and falls back to vanilla if anything fails. Client option `bossbar.animations`.
+- **Worn renderers** for Dante's Gravity Crown (head), Zenon's Spatial Ring (arm) and the Artifact Mimic (belt, GeoLite model with bite), with their relics and rare drops from Dante and Zenon.
+- **Relic bows and crossbows** (`RelicBowItem`, `RelicCrossbowItem`, `.bow()`/`.crossbow()`): vanilla draw timing, pull/charged/spent mesh states, acts on sneak+use and the worn-relic key. Genesis and five-leaf item layers with a holder-flag sync.
+- **Boots slot** (`RelicSlot.FEET`, looks Boots/Sandals/Greaves) with a painted worn layer.
+- **158 relics in 12 waves** (8 to 19): 59 weapons (all with 3D hand models and Tensura engravings, three real crossbows), 17 head and boots, 17 back and hand items, 17 neck and charm relics, 17 pouches and charms, 17 bags, 14 scrolls and consumables. Reviewed waves are listed in `docs/relics_of_many_worlds_part2.md`.
+- **Dark Djinn**: the Dark Rukh Shard (dropped by the Blood-Red Commander, Devil Avatar and Lucius at 15%, vault chests 2%) darkens a bound Djinn; Holy Water or `/multiverse djinn dark off` purifies it. Stronger Maso and Extreme Magic, a heavier price (upkeep, assimilation, trust cap 60). Black-and-gold look with thorn halo, brow eye crest, rukh feathers, veins, dark bust, first-person arm and HUD tint.
+
+### REPLACEMENT (old kept as fallback where stated)
+- **Djinn Half and Full Equip looks**: each of the 12 Djinn now has its own helm, wings, weapon, back piece, tail, halo and particles; the old shared rig stays in the repo as the fallback.
+- **First-person display** of 35 long weapons (`tools/relics/display_presets.py`): they no longer fill the view. Third person is untouched. A hand-tuned model can opt out with `"nusmp_display_preset": "manual"`.
+- **Boss bars** of the mod bosses (the vanilla bars of every other entity look the same).
+- **Lucius**: his profile and move list are extended; his old 20 moves keep their indices.
+
+### FIXES
+- **Dying with a Djinn vessel no longer takes the Djinn off.** The owner keeps the bond and the vessel's binding; only the running phase ends.
+- Relic summons are discarded when the server stops and when they load back from disk (they were saved untracked and stayed forever).
+- Review fixes across the new waves: damage caps against players, mayfly/game-mode restores, duplication loopholes (Satchel, Bianca refund, pouch nesting), unique relics refused inside pouches and bags (so the Order can count them), state-mesh skins fall back to the weapon's skin, stack-state changes no longer replay the equip animation.
+
+### Verify in game
+Everything. In particular the boss-bar reflection into `BossHealthOverlay`, worn renderer placement, bow/crossbow draw, the Djinn assets (about 20 MB of new textures), the numbers of the buff engine, Dark Djinn balance, and `gen_curios_tags.py` slot tags.
+
 ## [1.24.0] — Relics of Many Worlds and the Djinn
 
 **State:** written without a compiler; CI is the first compile. Nothing run in game. Built from the owner's 78 card images (87 distinct cards), the Magi Djinn guide and the Tensura equipment rarity guide.

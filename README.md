@@ -60,7 +60,7 @@ Magic spells fire when the skill key is released; holding the key does not trigg
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-1.24.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-1.25.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
@@ -241,6 +241,9 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - Avatar selection now branches on tank/healer/flyer/caster/nullification reads. Zeus has a geared punch, Beerus a bounded damaging burst, Madoka removes one harmful boss effect and one beneficial target effect, Anti-Spiral fires a line hit, Lord of Nightmares creates a bounded healing-denial field, Arceus accelerates Marquis, and Zeno can dismiss one nearby owned construct. Each special has a short VFX tell; the existing 12-second/one-avatar ownership limit remains. Truth and Kami Tenchi are not implemented as distinct mechanics.
 - Added entity loot tables at both the requested Marquis name and the preserved `nusmp:riven_remake` registry key. Real entity death drops the existing bard relic, a story page, and a crest-cape token; a cracked crown vanity has an 8% roll. The cape is currently an inventory cosmetic token, not a wearable/rendered cape.
 - Still incomplete: Page Edge/Bull Brand engravings and a single-use rift key are absent because those enchantments and `nusmp:story_rift` are not registered. A boss-safe arbitrary book spell path is also unavailable: SpellRuntime's projectile owner is a `ServerPlayer`; the boss continues to cast its validated codex skill. New Order still implements weapon slowdown and Gearshift only; there is no reliable cast-warmup event hook for the two-cast slow rule. Ground-is-stone is not implemented. Only six avatar translations have special mechanics; Truth, Kami Tenchi, the Creator's distinct visual, and several requested combat interactions remain incomplete. No in-game client render/combat verification was run.
+
+## 1.25.0 - Boss overhaul, Charter Grimoires, 161 more relics, unique and Dark Djinn
+See `CHANGELOG.md` (1.25.0), `docs/boss_overhaul.md` and `docs/relics_of_many_worlds_part2.md`. Mod-boss global buffs and a stronger Lucius, seven Charter Grimoires with a once-per-world first-kill drop lock, an animated boss bar, worn renderers for Dante's crown, Zenon's ring and the Artifact Mimic, real relic bows and crossbows, a boots slot, 158 new relics in 12 waves, a Djinn that survives its owner's death, a distinct look for every Djinn and the Dark Djinn.
 
 ## 1.24.0 - Relics of Many Worlds and the Djinn
 

@@ -65,6 +65,8 @@ public final class NUConfig {
     public static final ModConfigSpec.DoubleValue BAL_MOB_DAMAGE_MULT;
     public static final ModConfigSpec.BooleanValue GRIEF;
     public static final ModConfigSpec.BooleanValue WORLD_TREE_PERMANENT;   // 0.45
+    public static final ModConfigSpec.BooleanValue BOSS_GLOBAL_BUFFS;                    // 1.25.0: Mod Boss Global Buff Engine
+    public static final ModConfigSpec.DoubleValue BOSS_BUFF_MULTIPLIER;
     public static final ModConfigSpec.BooleanValue ZAGRED_BOSS_ENABLED, KOTODAMA_BOSS_REWARD;   // 0.47
     public static final ModConfigSpec.BooleanValue ANTI_MAGIC_EVENT_ONLY;                       // 0.48
     public static final ModConfigSpec.IntValue PVP_HIT_CAP_PERCENT, SPELL_DAMAGE_PERCENT, SPELL_COOLDOWN_PERCENT;   // 0.48
@@ -180,6 +182,11 @@ public final class NUConfig {
         FORBIDDEN_HP_PRICE = b.comment("HP paid per forbidden cast (stacks +25% per recent cast, decays every 5 min).").defineInRange("hpPrice", 3.0, 0.0, 100.0);
         FORBIDDEN_MAXHP_PRICE = b.comment("Devil contract 'life' price: max HP removed.").defineInRange("maxHpPrice", 4.0, 0.0, 100.0);
         FORBIDDEN_MANA_TAX = b.comment("Devil contract 'mana' price: permanent extra grimoire cost (0.15 = +15%).").defineInRange("manaTax", 0.15, 0.0, 10.0);
+        b.pop();
+
+        b.push("bosses");
+        BOSS_GLOBAL_BUFFS = b.comment("Mod Boss Global Buff Engine: permanent Tensura barriers, regeneration and theme skills on this mod's bosses only.").define("globalBuffs", true);
+        BOSS_BUFF_MULTIPLIER = b.comment("Scales the engine's effect levels and Lucius's damage cuts (0 turns them off, 1 = as designed).").defineInRange("buffMultiplier", 1.0, 0.0, 3.0);
         b.pop();
 
         SPEC = b.build();

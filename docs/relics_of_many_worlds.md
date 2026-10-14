@@ -542,3 +542,7 @@ cooldown-only jam (never touches learned skills or max EP), and it is capped at 
 ## Assets
 `tools/relics/wave7_icons.py` draws the ten 16x16 icons (+ `models/item/<id>.json`, parent item/generated). Rim pixels in the grade colour (1 rare, 2 unique, 3 legend),
 glow pixels on gems and veins.
+
+## 1.25.0 addendum (Djinn)
+* **Death no longer releases a Djinn.** An owner who dies keeps the bond and the vessel keeps its binding (the vessel drops with the rest of their things and is theirs again when picked up); only the running phase ends. Section 6's "the Seal returns when its owner dies" now applies to a deliberate `/multiverse djinn release` or an admin release only.
+* **Unique looks and the Dark Djinn**: see `docs/boss_overhaul.md` (sections "Dark Djinn" and "Djinn visuals"). Part 2 of the relics: `docs/relics_of_many_worlds_part2.md`.

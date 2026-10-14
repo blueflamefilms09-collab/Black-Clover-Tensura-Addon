@@ -30,8 +30,7 @@
         3.49,
         1.0
       ],
-      "tip_out_of_view": false,
-      "rewritten": true
+      "tip_out_of_view": false
     },
     {
       "id": "astralis_the_eye_of_the_universe",
@@ -181,8 +180,7 @@
         3.37,
         0.85
       ],
-      "tip_out_of_view": false,
-      "rewritten": true
+      "tip_out_of_view": false
     },
     {
       "id": "deliverance",
@@ -329,8 +327,7 @@
         2.35,
         1.0
       ],
-      "tip_out_of_view": false,
-      "rewritten": true
+      "tip_out_of_view": false
     },
     {
       "id": "glutton_chalice",
@@ -374,8 +371,12 @@
         3.54,
         1.04
       ],
-      "tip_out_of_view": false,
-      "rewritten": true
+      "tip_out_of_view": false
+    },
+    {
+      "id": "hyperborean_crossbow",
+      "action": "keep",
+      "length_blocks": 1.051
     },
     {
       "id": "jade_xiphos",
@@ -402,8 +403,7 @@
         2.93,
         0.83
       ],
-      "tip_out_of_view": false,
-      "rewritten": true
+      "tip_out_of_view": false
     },
     {
       "id": "last_word",
@@ -508,7 +508,7 @@
     {
       "id": "needler",
       "action": "keep",
-      "length_blocks": 0.729
+      "length_blocks": 0.72
     },
     {
       "id": "null_blade",
@@ -603,8 +603,7 @@
         3.43,
         0.66
       ],
-      "tip_out_of_view": false,
-      "rewritten": true
+      "tip_out_of_view": false
     },
     {
       "id": "severing_greatsword",
@@ -701,8 +700,7 @@
         3.12,
         0.88
       ],
-      "tip_out_of_view": false,
-      "rewritten": true
+      "tip_out_of_view": false
     },
     {
       "id": "sword_crystal",
@@ -782,6 +780,11 @@
       "id": "viola_of_moonlit_spirits",
       "action": "keep",
       "length_blocks": 0.95
+    },
+    {
+      "id": "viper_whip",
+      "action": "keep",
+      "length_blocks": 0.729
     },
     {
       "id": "wand_of_bubbles",

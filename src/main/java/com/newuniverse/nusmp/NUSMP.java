@@ -60,6 +60,12 @@ public class NUSMP {
         com.newuniverse.nusmp.relics.djinn.DjinnComponents.COMPONENTS.register(modEventBus);
         com.newuniverse.nusmp.relics.djinn.DjinnAttachments.ATTACHMENTS.register(modEventBus);
         modEventBus.addListener(com.newuniverse.nusmp.relics.djinn.DjinnNet::registerPayloads);
+        com.newuniverse.nusmp.charter.CharterItems.init();                                                                 // 1.25.0: Charter Grimoires (before NUItems.ITEMS.register)
+        modEventBus.addListener(com.newuniverse.nusmp.charter.CharterNet::registerPayloads);
+        modEventBus.addListener(com.newuniverse.nusmp.boss.bar.BossBarNet::registerPayloads);
+        modEventBus.addListener(com.newuniverse.nusmp.relics.wave.WaveBossNet::register);
+        modEventBus.addListener(com.newuniverse.nusmp.relics.RelicHolderSync::registerPayload);
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.charter.CharterConfig.SPEC, "nusmp-charter-server.toml");
         com.newuniverse.nusmp.relics.RelicSystem.registerContent(modEventBus);                                                     // runs RelicCatalog.init: every relic into NUItems.ITEMS
         com.newuniverse.nusmp.dungeon.sentient.SentientItems.init();                                                     // 1.22.0: the twelve synthesis materials
         com.newuniverse.nusmp.dungeon.floor.goliath.GoliathEntities.init();                                                                  // 1.23.0: the floor arenas and their bosses
@@ -107,6 +113,8 @@ public class NUSMP {
             com.newuniverse.nusmp.client.grimoire.GrimoireSlotClient.init(modEventBus);
             com.newuniverse.nusmp.client.multiverse.MultiverseStatusClient.init(modEventBus);
             com.newuniverse.nusmp.client.multiverse.FourKingdomsSlot.init();                                   // 0.46: the slot in Tensura's magic screen
+            com.newuniverse.nusmp.client.gui.bossbar.ModBossBarOverlay.init();                                                      // 1.25.0: animated boss bar
+            modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.gui.bossbar.BossBarOptions.SPEC, "nusmp-bossbar-client.toml");
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.multiverse.MultiverseClientConfig.SPEC, "nusmp-multiverse-client.toml");
             // 0.102: the Tensura-style Spirit Lords are small floating orbs (SpiritLordEntity); the exclusive Black Clover ones have bodies (below)
             modEventBus.addListener(com.newuniverse.nusmp.client.SpiritOrbRenderer::register);
@@ -212,6 +220,11 @@ public class NUSMP {
         com.newuniverse.nusmp.relics.RelicSystem.registerGame(NeoForge.EVENT_BUS);
         com.newuniverse.nusmp.relics.order.OrderEvents.register(NeoForge.EVENT_BUS);
         com.newuniverse.nusmp.relics.djinn.DjinnEvents.register(NeoForge.EVENT_BUS);
+        // 1.25.0: Mod Boss Global Buff Engine, Charter Grimoires + first-kill lock, boss bar sync, holder flags
+        com.newuniverse.nusmp.boss.BossHooks.register();
+        com.newuniverse.nusmp.charter.CharterEvents.register(NeoForge.EVENT_BUS);
+        com.newuniverse.nusmp.boss.bar.BossBarSync.init();
+        com.newuniverse.nusmp.relics.RelicHolderSync.register(NeoForge.EVENT_BUS);
         // 1.23.0: the floor arenas (Goliath's Pit, the Charybdis Basin)
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.floor.goliath.GoliathPitSite::onCollapse);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.floor.goliath.GoliathPitSite::onServerStopping);
