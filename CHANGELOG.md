@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.29.0] — Hotfix: first launch crash
+
+- **Fixed a crash on the first launch after installing 1.27.0 or 1.28.0.** The new `nusmp-ui-client.toml` declared the menu theme with `defineInList(List.of(...))`; when the file does not exist yet NeoForge checks the missing value (null) against that list, `List.of(..).contains(null)` throws, and the exception aborted the loading of every config. Other mods then crashed reading their own unloaded configs (seen as Tensura No Index `TreeSeal` and `SkyFracture.tick`). The theme is now a plain string with a validator that accepts only `anime` or `classic`. If you hit this crash, update to this build; deleting the `config` folder entries is not needed.
+
+
 ## [1.28.0] — Review fixes for 1.27.0
 
 - A wiki magic inside a merged magic keeps its own colour, so it no longer draws as Air.

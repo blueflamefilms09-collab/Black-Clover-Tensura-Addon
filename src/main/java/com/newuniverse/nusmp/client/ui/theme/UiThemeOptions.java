@@ -2,8 +2,6 @@ package com.newuniverse.nusmp.client.ui.theme;
 
 import net.neoforged.neoforge.common.ModConfigSpec;
 
-import java.util.List;
-
 /**
  * Client options of the menu theme: config/nusmp-ui-client.toml. {@code ui.theme} picks the look ("anime": translucent panels, Great-Sage
  * text, animated magic circles, the default; "classic": the book and parchment drawing the mod had before, kept as it was). {@code ui.motion}
@@ -21,7 +19,7 @@ public final class UiThemeOptions {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
         b.push("ui");
         THEME = b.comment("The look of the mod's menus: 'anime' (translucent panels, Great-Sage analysis text, animated magic circles) or 'classic' (the old book and parchment look).")
-                .defineInList("theme", "anime", List.of("anime", "classic"));
+                .define("theme", "anime", o -> o instanceof String s && (s.equals("anime") || s.equals("classic")));   // not defineInList(List.of(..)): List.of(..).contains(null) throws, which aborted the whole config load when the file did not exist yet
         MOTION = b.comment("Animate the anime look (rotating magic circles, shimmering bars). Off = everything stands still.")
                 .define("motion", true);
         TYPING = b.comment("Type the Great-Sage analysis text out letter by letter. Off = it appears at once.")
