@@ -172,7 +172,10 @@ public final class DiscoveryTracker {
         }
         int phase = Math.floorMod(p.getId(), 40);                               // each player scans on their own tick, so the server never does them all at once
         if (p.tickCount % 20 == phase % 20) scanInventory(p);
-        if (p.tickCount % 40 == (phase + 11) % 40) scanSkills(p, false);
+        if (p.tickCount % 40 == (phase + 11) % 40) {
+            scanSkills(p, false);
+            for (ItemStack worn : CuriosLink.equipped(p)) discoverItem(p, worn);       // a relic put straight into a Curios slot never passed the inventory
+        }
     }
 
     /** The slot scan: the whole inventory (main, armour, off-hand) and the Grimoire Slot, by reference; only a changed slot costs more. */
@@ -246,6 +249,7 @@ public final class DiscoveryTracker {
      * grimoire's open pages, its magic, the bonded spirit) counts as found, so an existing world loses nothing. Runs once (the version is stamped).
      */
     static void migrate(ServerPlayer p, DiscoveryData d) {
+        SHOWN_ALL.put(p.getUUID(), showAll(p));                                  // the full sync that follows carries the state: no lone state packet before it
         scanInventory(p);
         for (ItemStack s : p.getEnderChestInventory().getItems()) discoverItem(p, s);
         try {

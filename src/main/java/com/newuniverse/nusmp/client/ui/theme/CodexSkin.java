@@ -33,7 +33,7 @@ public final class CodexSkin {
     public static void body(GuiGraphics g, int x0, int y0, int x1, int y1, float cx, float cy, float r, float now, float leaf) {
         g.fillGradient(x0, y0, x1, y1, UiMath.withAlpha(0x131E38, 0.78f), UiMath.withAlpha(0x090E1C, 0.82f));
         g.fillGradient(x0, y0, x1, y0 + Math.min(34, (y1 - y0) / 3), UiMath.withAlpha(0xFFFFFF, 0.05f), 0x00FFFFFF);
-        MagicCircle.draw(g, cx, cy, r, now, UiTheme.CYAN, 0.13f, MagicCircle.CALM, 1f);
+        MagicCircle.draw(g, cx, cy, r, UiTheme.motion() ? now : UiTheme.now(), UiTheme.CYAN, 0.13f, MagicCircle.CALM, 1f);     // motion off: the circle stands still
         if (leaf > 0f) g.fill(x0, y0, x1, y1, UiMath.withAlpha(0x000000, 0.25f * leaf));
     }
 
@@ -72,7 +72,7 @@ public final class CodexSkin {
         g.pose().pushPose();
         g.pose().translate(cx, cy, 0f);
         g.pose().scale(1f, 0.28f, 1f);
-        MagicCircle.draw(g, 0f, 0f, radius, now, UiTheme.CYAN, 0.8f, MagicCircle.STANDARD, 1f);
+        MagicCircle.draw(g, 0f, 0f, radius, UiTheme.motion() ? now : UiTheme.now(), UiTheme.CYAN, 0.8f, MagicCircle.STANDARD, 1f);
         g.pose().popPose();
     }
 }

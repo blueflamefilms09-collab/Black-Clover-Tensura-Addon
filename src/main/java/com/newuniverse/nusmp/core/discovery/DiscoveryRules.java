@@ -30,6 +30,8 @@ public final class DiscoveryRules {
 
     public static final String ITEM = "item:", PAGE = "page:", SKILL = "skill:", MAGIC = "magic:", MOB = "mob:", SPIRIT_LORD = "spiritlord:", BOSS = "boss:";
 
+    private static final String[] PREFIXES = {ITEM, PAGE, SKILL, MAGIC, MOB, SPIRIT_LORD, BOSS};
+
     /** Only things of these namespaces are tracked and hidden (the mod's own); everything else is always shown. */
     private static final Set<String> TRACKED = Set.of("nusmp");
 
@@ -54,7 +56,7 @@ public final class DiscoveryRules {
     public static boolean validKey(String key) {
         if (key == null || key.length() < 6 || key.length() > MAX_KEY_LENGTH) return false;
         boolean prefixed = false;
-        for (String p : new String[]{ITEM, PAGE, SKILL, MAGIC, MOB, SPIRIT_LORD, BOSS}) if (key.startsWith(p) && key.length() > p.length()) prefixed = true;
+        for (String p : PREFIXES) if (key.startsWith(p) && key.length() > p.length()) prefixed = true;
         if (!prefixed) return false;
         for (int i = 0; i < key.length(); i++) {
             char c = key.charAt(i);

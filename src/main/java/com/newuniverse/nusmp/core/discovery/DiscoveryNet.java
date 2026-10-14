@@ -33,7 +33,7 @@ public final class DiscoveryNet {
                 },
                 buf -> {
                     boolean replace = buf.readBoolean(), all = buf.readBoolean(), announce = buf.readBoolean();
-                    int n = Math.min(buf.readVarInt(), DiscoveryRules.CHUNK);
+                    int n = Math.max(0, Math.min(buf.readVarInt(), DiscoveryRules.CHUNK));
                     List<String> keys = new ArrayList<>(n);
                     for (int i = 0; i < n; i++) keys.add(buf.readUtf(DiscoveryRules.MAX_KEY_LENGTH));
                     return new Sync(replace, all, announce, keys);

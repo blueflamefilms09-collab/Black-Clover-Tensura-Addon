@@ -73,6 +73,7 @@ public final class MagicCircle {
         float pulse = UiMath.pulse(time, 90f, 0f);
 
         // the additive glow first, under the lines
+        RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
         float gl = alpha * st.glow * (0.65f + 0.35f * pulse) * Math.min(1f, build);
         layer(g, GLOW, cx, cy, radius * 1.32f * Math.min(build, 1.1f), 0f, r, gr, b, gl);

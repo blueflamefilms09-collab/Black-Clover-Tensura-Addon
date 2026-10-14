@@ -20,6 +20,7 @@ public final class MergedRegistry {
 
     private static volatile MergeStore store = new MergeStore();
     private static final Map<String, MergedBlend> BLENDS = new ConcurrentHashMap<>();
+    private static volatile Map<Integer, MergedDef> byKey = Map.of();          // the id keys of the published store (the effect layer asks for one per instance per frame)
 
     /** Publishes a new set of definitions: the profiles of removed ones go, those of new / changed ones are registered. */
     public static synchronized void replace(MergeStore next) {
@@ -31,6 +32,9 @@ public final class MergedRegistry {
             if (was == null || !was.equals(d)) { BLENDS.remove(d.id()); MagicProfiles.register(new MergedProfile(d)); }
         }
         for (MergedDef d : old.all()) if (!keep.contains(d.id())) { BLENDS.remove(d.id()); MagicProfiles.unregister(d.id()); }
+        Map<Integer, MergedDef> keys = new java.util.HashMap<>();
+        for (MergedDef d : next.all()) keys.putIfAbsent(d.key(), d);          // first wins, as the store's own lookup does
+        byKey = keys;
         store = next;
     }
 
@@ -43,7 +47,7 @@ public final class MergedRegistry {
     public static List<MergedDef> all() { return store.all(); }
     public static MergedDef byId(String id) { return store.byId(id); }
     public static MergedDef bySlot(int slot) { return store.bySlot(slot); }
-    public static MergedDef byKey(int key) { return store.byKey(key); }
+    public static MergedDef byKey(int key) { return byKey.get(key); }
     public static int size() { return store.size(); }
 
     /** A number that changes whenever the definition of this slot changes (the page-list version of its book): -1 when the slot is empty. */

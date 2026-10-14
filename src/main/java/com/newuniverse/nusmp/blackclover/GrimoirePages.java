@@ -54,7 +54,7 @@ public final class GrimoirePages {
     }
 
     public static MagicType magicOf(ManasSkillInstance i) {
-        if (i.getSkill() instanceof com.newuniverse.nusmp.book.GrimoireBook b) return b.magic;
+        if (i.getSkill() instanceof com.newuniverse.nusmp.book.GrimoireBook b) return b.magicNow();
         if (i.getSkill() instanceof com.newuniverse.nusmp.skill.GrimoireMagicSkill g && g.fixedMagic() != null) return g.fixedMagic();
         return MagicType.byName(i.getOrCreateTag().getString("Magic"));
     }

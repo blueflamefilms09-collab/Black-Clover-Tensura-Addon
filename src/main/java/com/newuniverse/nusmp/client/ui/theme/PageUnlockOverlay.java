@@ -124,7 +124,8 @@ public final class PageUnlockOverlay {
         MagicCircle.draw(g, x + 34, y + h / 2f, 29f, anim, UiTheme.CYAN, alpha, MagicCircle.STANDARD, ToastTimeline.build(age));
 
         int tx = x + tx0;
-        g.drawString(font, Component.literal(t.name()).withStyle(st -> st.withBold(true)), tx, y + 6, UiMath.scaleAlpha(UiTheme.GOLD, alpha), true);
+        int nameColor = UiMath.scaleAlpha(UiTheme.GOLD, alpha);
+        if ((nameColor >>> 24) >= 8) g.drawString(font, Component.literal(t.name()).withStyle(st -> st.withBold(true)), tx, y + 6, nameColor, true);      // alpha under 4 would draw opaque
         SAGE.draw(g, font, tx, y + 19, anim, alpha);
 
         BAR.update(t.mastery() / 100f, anim, true);

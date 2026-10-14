@@ -45,6 +45,8 @@ public class CodexScreen extends Screen {
     private long lastNs;
     private int bx, by, bw, bh;                 // the book
     private final SageBlock sage = new SageBlock();   // the footer's analysis line (anime look)
+    private int furnitureIdx = -1, furnitureRoom;
+    private String furnitureTitle = "", furnitureLine = "";
 
     public CodexScreen(Screen parent) {
         super(Component.literal("Codex"));
@@ -217,9 +219,15 @@ public class CodexScreen extends Screen {
     /** Anime look: the title line, page number, corner arrows and the Great-Sage analysis line of the current page. */
     private void drawFurniture(GuiGraphics g, float now) {
         CodexPage cur = pages().get(index);
-        CodexSkin.furniture(g, font, bx, by, bw, bh, cur.title().toUpperCase(java.util.Locale.ROOT), index, pages().size());
         int room = Math.max(80, bw - 120);
-        sage.set(font, "", font.plainSubstrByWidth(UiLang.get(UiLang.ANALYSIS_COMPLETE) + " " + UiLang.codexNote(cur.title()), room), "", room, now);
+        if (furnitureIdx != index || furnitureRoom != room) {                  // the strings are built once per page, not every frame
+            furnitureIdx = index;
+            furnitureRoom = room;
+            furnitureTitle = cur.title().toUpperCase(java.util.Locale.ROOT);
+            furnitureLine = font.plainSubstrByWidth(UiLang.get(UiLang.ANALYSIS_COMPLETE) + " " + UiLang.codexNote(cur.title()), room);
+        }
+        CodexSkin.furniture(g, font, bx, by, bw, bh, furnitureTitle, index, pages().size());
+        sage.set(font, "", furnitureLine, "", room, now);
         sage.draw(g, font, bx + 22, by + bh - 15, now, 1f);
     }
 
