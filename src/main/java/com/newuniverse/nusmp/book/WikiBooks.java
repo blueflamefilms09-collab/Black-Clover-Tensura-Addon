@@ -80,7 +80,7 @@ public final class WikiBooks {
             case VINE -> 0xFF6DB743;
             case VORTEX -> 0xFF59B8C9;
             case WING -> 0xFFE6E2F4;
-            default -> throw new IllegalArgumentException("No wiki attribute palette for " + magic);
+            default -> 0xFF000000 | com.newuniverse.nusmp.grimoire.BookPalette.glow(magic.name());   // 1.27.0: a wiki attribute without a case here still gets a (generated) palette; it used to throw while the book registered
         };
     }
 

@@ -1,5 +1,11 @@
 package com.newuniverse.nusmp.client.multiverse;
 
+import com.newuniverse.nusmp.client.ui.theme.MagicCircle;
+import com.newuniverse.nusmp.client.ui.theme.ThemedButton;
+import com.newuniverse.nusmp.client.ui.theme.UiBar;
+import com.newuniverse.nusmp.client.ui.theme.UiMath;
+import com.newuniverse.nusmp.client.ui.theme.UiPanel;
+import com.newuniverse.nusmp.client.ui.theme.UiTheme;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -28,6 +34,9 @@ import java.util.List;
  * <p>
  * The data is the server's status summary (MultiverseSync: Grimoire.PageList), so the menu shows what the server says is
  * unlocked; it never decides anything itself.
+ * <p>
+ * 1.27.0: the anime look (config ui.theme, default) draws the frame as a translucent glowing panel, the pages as glass with a magic circle
+ * turning behind each page's text, an animated mastery bar in the header and a bar for each page's cost; the classic look is the old drawing.
  */
 public class FourKingdomsScreen extends Screen {
     public static final ResourceLocation LOGO = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/gui/four_kingdoms_logo.png");
@@ -42,6 +51,7 @@ public class FourKingdomsScreen extends Screen {
     private int flipDir;                 // +1 forward, -1 back, 0 none
     private long flipStart;
     private int left, top, bookX, bookY;
+    private final UiBar masteryBar = new UiBar();                // anime look: the header's mastery bar
 
     public FourKingdomsScreen(Screen parent) {
         super(Component.literal("Four Kingdoms"));
@@ -59,10 +69,9 @@ public class FourKingdomsScreen extends Screen {
         top = (height - PANEL_H) / 2;
         bookX = left + PANEL_W / 2;                                         // the spine
         bookY = top + 62;
-        addRenderableWidget(Button.builder(Component.literal("<"), b -> turn(-1)).bounds(bookX - PAGE_W - 2, bookY + PAGE_H + 4, 20, 14).build());
-        addRenderableWidget(Button.builder(Component.literal(">"), b -> turn(1)).bounds(bookX + PAGE_W - 18, bookY + PAGE_H + 4, 20, 14).build());
-        addRenderableWidget(Button.builder(Component.literal("Status"), b -> minecraft.setScreen(new MultiverseStatusScreen(this)))
-                .bounds(left + PANEL_W - 64, top + 8, 56, 16).build());
+        addRenderableWidget(new ThemedButton(bookX - PAGE_W - 2, bookY + PAGE_H + 4, 20, 14, Component.literal("<"), b -> turn(-1)));
+        addRenderableWidget(new ThemedButton(bookX + PAGE_W - 18, bookY + PAGE_H + 4, 20, 14, Component.literal(">"), b -> turn(1)));
+        addRenderableWidget(new ThemedButton(left + PANEL_W - 64, top + 8, 56, 16, Component.literal("Status"), b -> minecraft.setScreen(new MultiverseStatusScreen(this))));
     }
 
     int spreads() { return Math.max(1, (pages.size() + 1) / 2); }
@@ -105,13 +114,24 @@ public class FourKingdomsScreen extends Screen {
         Font font = this.font;
         // the header: logo, title, the grimoire it is
         g.blit(LOGO, left + 8, top + 6, 48, 48, 0, 0, 256, 256, 256, 256);
-        g.drawString(font, Component.literal("Four Kingdoms").withStyle(s -> s.withBold(true)), left + 62, top + 12, GOLD, true);
-        g.drawString(font, "Tensura", left + 62, top + 24, 0xFFA0B8FF, true);
+        boolean anime = UiTheme.anime();
+        float now = UiTheme.now();
+        g.drawString(font, Component.literal("Four Kingdoms").withStyle(s -> s.withBold(true)), left + 62, top + 12, anime ? UiTheme.GOLD : GOLD, true);
+        g.drawString(font, "Tensura", left + 62, top + 24, anime ? UiTheme.CYAN : 0xFFA0B8FF, true);
         CompoundTag gr = MultiverseStatusClient.status().getCompound("Grimoire");
         String line = gr.contains("Magic") ? gr.getString("Magic") + "  ·  " + gr.getString("Cover") + "  ·  " + gr.getInt("Unlocked") + "/" + gr.getInt("Pages")
                 + " pages  ·  mastery " + gr.getInt("Mastery") + "%" : "No grimoire yet";
-        g.drawString(font, line, left + 62, top + 38, 0xFFD0D0D8, false);
+        g.drawString(font, line, left + 62, top + 38, anime ? UiTheme.TEXT : 0xFFD0D0D8, false);
+        if (anime && gr.contains("Mastery")) {                                  // the header's mastery bar
+            masteryBar.update(gr.getInt("Mastery") / 100f, now, true);
+            masteryBar.draw(g, left + 62, top + 50, 150, 4, UiTheme.VIOLET, now, 1f);
+        }
         // the book
+        if (anime) {
+            g.fill(bookX - PAGE_W - 4, bookY - 3, bookX + PAGE_W + 4, bookY + PAGE_H + 3, UiMath.withAlpha(0x03050B, 0.85f));
+            g.renderOutline(bookX - PAGE_W - 4, bookY - 3, PAGE_W * 2 + 8, PAGE_H + 6, UiMath.withAlpha(UiTheme.CYAN, 0.55f));
+            UiPanel.brackets(g, bookX - PAGE_W - 4, bookY - 3, PAGE_W * 2 + 8, PAGE_H + 6, 8, UiMath.withAlpha(UiTheme.GOLD, 0.9f));
+        } else
         g.fill(bookX - PAGE_W - 4, bookY - 3, bookX + PAGE_W + 4, bookY + PAGE_H + 3, 0xFF5A2E1A);          // the cover behind the pages
         float p = flipDir == 0 ? 0 : Mth.clamp((System.nanoTime() - flipStart) / (float) FLIP_NS, 0, 1);
         if (flipDir != 0 && p >= 1) { spread += flipDir; flipDir = 0; p = 0; }
@@ -135,8 +155,9 @@ public class FourKingdomsScreen extends Screen {
             }
         }
         // the spine
-        g.fillGradient(bookX - 2, bookY - 2, bookX + 2, bookY + PAGE_H + 2, 0xFF2A1408, 0xFF4A2410);
-        g.drawCenteredString(font, (spread + 1) + " / " + spreads(), bookX, bookY + PAGE_H + 7, 0xFFC8B890);
+        if (anime) g.fillGradient(bookX - 1, bookY - 2, bookX + 1, bookY + PAGE_H + 2, UiMath.withAlpha(UiTheme.CYAN, 0.95f), UiMath.withAlpha(UiTheme.VIOLET, 0.5f));
+        else g.fillGradient(bookX - 2, bookY - 2, bookX + 2, bookY + PAGE_H + 2, 0xFF2A1408, 0xFF4A2410);
+        g.drawCenteredString(font, (spread + 1) + " / " + spreads(), bookX, bookY + PAGE_H + 7, anime ? UiTheme.TEXT_DIM : 0xFFC8B890);
     }
 
     /**
@@ -150,6 +171,11 @@ public class FourKingdomsScreen extends Screen {
         pose.translate(bookX, bookY, flipDir != 0 && shade > 0 && sx < 1 ? 50 : 0);
         pose.scale(sx, 1, 1);
         int x0 = right ? 0 : -PAGE_W;
+        if (UiTheme.anime()) {                                                // glass with a faint circle turning behind the text
+            g.fillGradient(x0, 0, x0 + PAGE_W, PAGE_H, UiMath.withAlpha(0x131E38, 0.80f), UiMath.withAlpha(0x090E1C, 0.84f));
+            g.fillGradient(x0, 0, x0 + PAGE_W, 24, UiMath.withAlpha(0xFFFFFF, 0.05f), 0x00FFFFFF);
+            MagicCircle.draw(g, x0 + PAGE_W / 2f, PAGE_H / 2f, 60f, UiTheme.now(), UiTheme.CYAN, 0.14f, MagicCircle.CALM, 1f);
+        } else
         g.blit(PAGE, x0, 0, PAGE_W, PAGE_H, 0, 0, 128, 160, 128, 160);
         // the gutter shadow by the spine
         if (right) g.fillGradient(x0, 0, x0 + 8, PAGE_H, 0x30000000, 0x30000000);
@@ -159,45 +185,62 @@ public class FourKingdomsScreen extends Screen {
         pose.popPose();
     }
 
+    private static int cTitle() { return UiTheme.anime() ? UiTheme.GOLD : TITLE; }
+
+    private static int cInk() { return UiTheme.anime() ? UiTheme.TEXT : INK; }
+
+    private static int cFaint() { return UiTheme.anime() ? UiTheme.TEXT_DIM : FAINT; }
+
     /** One grimoire page: its name, mode / cost / cooldown, a rule, then what it does. */
     void content(GuiGraphics g, Font font, int index, int x, int y, int w) {
         if (pages.isEmpty() && index == 0) {
-            g.drawString(font, "No pages yet", x, y + 4, TITLE, false);
+            g.drawString(font, "No pages yet", x, y + 4, cTitle(), false);
             int yy = y + 20;
             for (FormattedCharSequence l : font.split(Component.literal("Your grimoire's pages open as your mastery grows. "
-                    + "Each one you unlock appears here with what it does."), w)) { g.drawString(font, l, x, yy, INK, false); yy += 10; }
+                    + "Each one you unlock appears here with what it does."), w)) { g.drawString(font, l, x, yy, cInk(), false); yy += 10; }
             return;
         }
         if (index >= pages.size()) {
-            g.drawCenteredString(font, Component.literal("~"), x + w / 2, y + PAGE_H / 2 - 12, FAINT);
+            g.drawCenteredString(font, Component.literal("~"), x + w / 2, y + PAGE_H / 2 - 12, cFaint());
             return;
         }
         CompoundTag e = pages.get(index);
         int yy = y + 2;
         for (FormattedCharSequence l : font.split(Component.literal(e.getString("Name")).withStyle(s -> s.withBold(true)), w)) {
-            g.drawString(font, l, x, yy, TITLE, false);
+            g.drawString(font, l, x, yy, cTitle(), false);
             yy += 10;
         }
         String meta = "Page " + (e.getInt("Mode") + 1) + "  ·  " + e.getInt("Cost") + "% MP" + (e.getInt("Cooldown") > 0 ? "  ·  " + e.getInt("Cooldown") + "s" : "");
-        g.drawString(font, meta, x, yy + 1, FAINT, false);
+        g.drawString(font, meta, x, yy + 1, cFaint(), false);
         yy += 12;
+        if (UiTheme.anime()) {                                                   // the page's cost as a bar (percent of the player's magicules)
+            UiBar.draw(g, x, yy + 1, w, 3, Math.min(1f, e.getInt("Cost") / 100f), UiTheme.CYAN, UiTheme.now(), 1f);
+            yy += 8;
+        } else {
         g.fill(x, yy, x + w, yy + 1, 0x60402010);
         yy += 4;
+        }
         Component desc = Component.translatable(e.getString("Key"));
         String text = desc.getString();
         int dash = text.indexOf(" - ");                                    // descriptions start "Name - what it does"
         if (dash > 0 && dash < 60) text = text.substring(dash + 3);
         for (FormattedCharSequence l : font.split(Component.literal(text), w)) {
-            if (yy > y + PAGE_H - 26) { g.drawString(font, "...", x, yy, FAINT, false); break; }
-            g.drawString(font, l, x, yy, INK, false);
+            if (yy > y + PAGE_H - 26) { g.drawString(font, "...", x, yy, cFaint(), false); break; }
+            g.drawString(font, l, x, yy, cInk(), false);
             yy += 9;
         }
-        g.drawCenteredString(font, String.valueOf(index + 1), x + w / 2, y + PAGE_H - 18, FAINT);
+        g.drawCenteredString(font, String.valueOf(index + 1), x + w / 2, y + PAGE_H - 18, cFaint());
     }
 
     @Override
     public void renderBackground(GuiGraphics g, int mouseX, int mouseY, float partial) {
         renderTransparentBackground(g);
+        if (UiTheme.anime()) {
+            UiPanel.scrim(g, width, height, 0.8f);
+            MagicCircle.draw(g, left + PANEL_W / 2f, top + PANEL_H / 2f, PANEL_H * 0.62f, UiTheme.now(), UiTheme.VIOLET, 0.20f, MagicCircle.CALM, 1f);
+            UiPanel.panelScan(g, left, top, PANEL_W, PANEL_H, UiTheme.CYAN, 0.9f, 1f, UiTheme.now());
+            return;
+        }
         g.fill(left - 2, top - 2, left + PANEL_W + 2, top + PANEL_H + 2, 0xFFB08A3A);                 // the frame
         g.fillGradient(left, top, left + PANEL_W, top + PANEL_H, 0xF0141824, 0xF0222838);
     }

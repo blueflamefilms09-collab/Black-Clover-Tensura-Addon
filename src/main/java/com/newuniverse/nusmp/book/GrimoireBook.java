@@ -47,6 +47,7 @@ public abstract class GrimoireBook extends Skill {
     public final int color;
     private final ResourceLocation icon;
     private List<BookPage> all;
+    private int builtVersion;
 
     protected GrimoireBook(MagicType magic, int color) {
         this(magic, color, ResourceLocation.fromNamespaceAndPath("nusmp", "textures/skill/grimoire/" + magic.name().toLowerCase() + ".png"));
@@ -67,6 +68,31 @@ public abstract class GrimoireBook extends Skill {
         this.icon = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/skill/grimoire/" + magic.name().toLowerCase() + ".png");
     }
 
+    // ---------------------------------------------------------------- 1.27.0: what a book calls itself (a merged book answers dynamically)
+    /** The magic this book casts RIGHT NOW: its fixed magic, except a merged book (core.magic.merge), which answers its dominant parent. */
+    public MagicType magicNow() { return magic; }
+
+    /** The id the fault guard and the profile registry know this book by: "FLAME", or "merged:flame+water" for a merged book. */
+    public String magicId() { return magic.name(); }
+
+    /** How the book names its magic in messages and chants. */
+    public String magicLabel() { return magic.displayName; }
+
+    /** The glow colour of this book's chant circle (a merged book blends its parents'). */
+    public int colorNow() { return color; }
+
+    /** 1.27.0: changes whenever the book's family pages change (a merged book whose definition changed); fixed for every other book, so their page list is built once. */
+    protected int pagesVersion() { return 0; }
+
+    /** 1.27.0: does this book get the universal pages (Devil Union, Summon, Store / Draw Weapon, Mana Strike / Zone, the wizard's spells)? Not the Forbidden book, not a merged book. */
+    protected boolean universalPages() { return !(this instanceof ForbiddenBook); }
+
+    /** 1.27.0: whose floating grimoire flips its pages when the player switches spell (null = any). */
+    protected MagicType summonMagic() { return this instanceof ForbiddenBook ? null : magic; }
+
+    /** Does learning this book hand over a physical grimoire item? (Not for a merged book: its parents' grimoires stay the keys.) */
+    protected boolean givesGrimoireItem() { return !(this instanceof ForbiddenBook); }
+
     /** The family's own pages, mode order (mode 0 = starter). */
     protected abstract List<BookPage> familyPages();
 
@@ -79,16 +105,18 @@ public abstract class GrimoireBook extends Skill {
 
     // ---------------------------------------------------------------- pages / modes
     public final List<BookPage> pages() {
-        if (all == null) {
+        int version = pagesVersion();
+        if (all == null || version != builtVersion) {
+            builtVersion = version;
             List<BookPage> l = new ArrayList<>(familyPages());
             if (spiritElement() != null) {
                 l.add(BookPage.signature("spirit_dive", "Spirit Dive", GrimoireBook::spiritDive).withCooldown(0));
                 l.add(BookPage.signature("spirit_channeling", "Spirit Burst", GrimoireBook::channel));
             }
-            if (!(this instanceof ForbiddenBook)) l.add(BookPage.signature("devil_union", "Devil Union", GrimoireBook::devilUnion));
+            if (universalPages()) l.add(BookPage.signature("devil_union", "Devil Union", GrimoireBook::devilUnion));
             // base ability, last so every existing page keeps its mode number: free, instant, no chant
-            if (!(this instanceof ForbiddenBook)) l.add(new BookPage(SUMMON_ID, "Summon Grimoire", "Summon Grimoire", 0, 0, 0, (b, i, p, m) -> true));
-            if (!(this instanceof ForbiddenBook)) {                                 // 0.54: as in the show, a weapon goes back into the book and comes out again
+            if (universalPages()) l.add(new BookPage(SUMMON_ID, "Summon Grimoire", "Summon Grimoire", 0, 0, 0, (b, i, p, m) -> true));
+            if (universalPages()) {                                                 // 0.54: as in the show, a weapon goes back into the book and comes out again
                 l.add(new BookPage(STORE_ID, "Store Weapon", "Store Weapon", 0, 0, 0, (b, i, p, m) -> true));
                 l.add(new BookPage(DRAW_ID, "Draw Weapon", "Draw Weapon", 0, 0, 0, (b, i, p, m) -> true));
                 // 1.5.0: every magic is a combat magic: raw mana as a bolt, and the Mana Zone (appended last, so no mode number moves)
@@ -159,7 +187,7 @@ public abstract class GrimoireBook extends Skill {
             if (usable(instance, entity, m)) { next = m; break; }
         }
         // switching spells while the grimoire is summoned flips its pages (server tells everyone watching)
-        if (next != mode && entity instanceof ServerPlayer sp) GrimoireSummon.onSpellSwitch(sp, this instanceof ForbiddenBook ? null : magic, reverse);
+        if (next != mode && entity instanceof ServerPlayer sp) GrimoireSummon.onSpellSwitch(sp, summonMagic(), reverse);
         return next;
     }
 
@@ -199,7 +227,7 @@ public abstract class GrimoireBook extends Skill {
             instance.getOrCreateTag().putInt("ChargeMode", mode);
             instance.getOrCreateTag().putInt("ChargeTicks", 0);
             instance.markDirty();
-            com.newuniverse.nusmp.anim.CastAnim.play(p, com.newuniverse.nusmp.anim.CastAnim.CHANT);
+            if (CastHoldFx.pressed(instance, p.level().getGameTime())) com.newuniverse.nusmp.anim.CastAnim.play(p, com.newuniverse.nusmp.anim.CastAnim.CHANT);   // 1.27.0: a repeated press does not replay the chant
         }
         if (isSummon(mode)) { GrimoireSummon.toggle(p, this); return; }
         if (isStore(mode)) { com.newuniverse.nusmp.anim.WeaponStore.store(p, this, instance); return; }
@@ -219,11 +247,8 @@ public abstract class GrimoireBook extends Skill {
         instance.getOrCreateTag().putInt("ChargeMode", mode);
         instance.getOrCreateTag().putInt("ChargeTicks", charge);
         instance.markDirty();
-        if (charge > 0 && charge % 4 == 0) {
-            float power = 0.45f + 0.7f * charge / castTicks(instance, p);
-            VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.MAGIC_CIRCLE, p,
-                    p.position().add(0, 0.08, 0), color, 6, power);
-        }
+        // 1.27.0: one continuous hold circle (start once, grow with the charge, keep-alive) instead of a new circle every 4 ticks; none for a page that cannot be cast
+        CastHoldFx.held(instance, p, colorNow(), charge, castTicks(instance, p), castReady(instance, p, mode));
         return true;
     }
 
@@ -232,19 +257,19 @@ public abstract class GrimoireBook extends Skill {
         if (!(entity instanceof ServerPlayer player) || instant(mode)) return;
         long now = player.level().getGameTime();
         long pendingUntil = instance.getOrCreateTag().getLong("PendingCastUntil");
-        if (pendingUntil > now) return;
         int charge = Math.min(castTicks(instance, player), Math.max(0, heldTicks));
         float chargePower = charge / (float) castTicks(instance, player);
         int windup = instance.isMastered(player) ? 4 : 7;
+        // 1.27.0: the hold circle ends (or a tap gets its one release circle) even when an earlier cast is still winding up; none for a page that cannot be cast
+        CastHoldFx.released(instance, player, colorNow(), pendingUntil <= now && castReady(instance, player, mode), windup, chargePower);
+        if (pendingUntil > now) return;
         long castAt = now + windup;
         instance.getOrCreateTag().putLong("PendingCastUntil", castAt);
         instance.getOrCreateTag().putFloat("MagicBuildUp", chargePower);
         instance.getOrCreateTag().putLong("MagicBuildUpUntil", castAt + 60);
         instance.getOrCreateTag().putInt("ChargeTicks", 0);
         instance.markDirty();
-        com.newuniverse.nusmp.anim.CastAnim.play(player, com.newuniverse.nusmp.anim.CastAnim.CHANT);
-        VfxSpawn.sendFollowing(player.serverLevel(), VfxShape.MAGIC_CIRCLE, player,
-                player.position().add(0, 0.08, 0), color, windup + 2, 0.48f + chargePower * 0.7f);
+        com.newuniverse.nusmp.anim.CastAnim.play(player, com.newuniverse.nusmp.anim.CastAnim.CHANT);        // (the client ignores it while the chant already plays)
         SpellRuntime.later(player.serverLevel(), windup, () -> {
             if (instance.getOrCreateTag().getLong("PendingCastUntil") != castAt) return;
             instance.getOrCreateTag().putLong("PendingCastUntil", 0);
@@ -254,23 +279,41 @@ public abstract class GrimoireBook extends Skill {
         });
     }
 
+    /** 1.27.0: whether castPage would get past its checks right now (no side effects): the circles of a held key are only shown for a page that can be cast. */
+    private boolean castReady(ManasSkillInstance instance, ServerPlayer player, int mode) {
+        BookPage p = page(mode);
+        if (p == null) return false;
+        if (com.newuniverse.nusmp.entity.zogratis.SpellSeal.sealed(player) || !usable(instance, player, mode) || !holdingBook(player)) return false;
+        if (p.weaponTag() != null && !com.newuniverse.nusmp.item.WeaponMagicHelper.holdsAny(player, p.weaponTag())) return false;
+        if (player.getPersistentData().getLong("nusmp_sealed_until") > player.level().getGameTime()) return false;
+        return !instance.onCoolDown(mode);
+    }
+
     private void castPage(ManasSkillInstance instance, ServerPlayer player, int mode) {
         BookPage p = page(mode);
         if (p == null) return;
         if (com.newuniverse.nusmp.entity.zogratis.SpellSeal.sealed(player)) { fail(player, com.newuniverse.nusmp.entity.zogratis.SpellSeal.MESSAGE); return; }   // 1.20.0: Spatial Mana Domination
         if (!usable(instance, player, mode)) { fail(player, "That page is still sealed."); return; }
-        if (!holdingBook(player)) { fail(player, "Your pages are sealed shut. Summon your " + magic.displayName + " grimoire first (Summon Grimoire)."); return; }
+        if (!holdingBook(player)) { fail(player, "Your pages are sealed shut. Summon your " + magicLabel() + " grimoire first (Summon Grimoire)."); return; }
         if (p.weaponTag() != null && !com.newuniverse.nusmp.item.WeaponMagicHelper.holdsAny(player, p.weaponTag())) {
             fail(player, "You must hold the required weapon to cast " + p.name() + ".");
             return;
         }
         if (player.getPersistentData().getLong("nusmp_sealed_until") > player.level().getGameTime()) { fail(player, "Your grimoire has been sealed!"); return; }
         if (instance.onCoolDown(mode)) { fail(player, p.name() + " is recharging (" + instance.getCoolDown(mode) + "s)."); return; }
+        // 1.27.0: a magic whose code faulted is on a short recovery cooldown (checked BEFORE any mana is spent), and its cast runs
+        // inside SafeCast: an exception in one magic's spell or effect code can not crash the server tick (core.magic.profile.SafeCast)
+        long gameTime = player.level().getGameTime();
+        if (com.newuniverse.nusmp.core.magic.profile.SafeCast.blocked(magicId(), gameTime)) {
+            fail(player, magicLabel() + " is recovering (" + (com.newuniverse.nusmp.core.magic.profile.SafeCast.ticksLeft(magicId(), gameTime) + 19) / 20 + "s).");
+            return;
+        }
         instance.getOrCreateTag().putBoolean("ManaZone", false);
         if (EnergyHelper.isOutOfEnergy(player, instance, mode)) return;
-        if (!p.cast().cast(this, instance, player, mode)) { com.newuniverse.nusmp.anim.CastAnim.play(player, com.newuniverse.nusmp.anim.CastAnim.FAIL); return; }
-        String clip = magic == MagicType.KEY ? com.newuniverse.nusmp.anim.CastAnim.KEY_TURN
-                : magic == MagicType.DICE || magic == MagicType.GAME ? com.newuniverse.nusmp.anim.CastAnim.DICE_TOSS
+        if (!com.newuniverse.nusmp.core.magic.profile.SafeCast.run(magicId(), gameTime, player, () -> p.cast().cast(this, instance, player, mode))) { com.newuniverse.nusmp.anim.CastAnim.play(player, com.newuniverse.nusmp.anim.CastAnim.FAIL); return; }
+        MagicType castMagic = magicNow();
+        String clip = castMagic == MagicType.KEY ? com.newuniverse.nusmp.anim.CastAnim.KEY_TURN
+                : castMagic == MagicType.DICE || castMagic == MagicType.GAME ? com.newuniverse.nusmp.anim.CastAnim.DICE_TOSS
                 : com.newuniverse.nusmp.anim.CastAnim.releaseFor(p);
         com.newuniverse.nusmp.anim.CastAnim.play(player, clip);
         shout(player, p.incantation());
@@ -283,10 +326,10 @@ public abstract class GrimoireBook extends Skill {
         com.newuniverse.nusmp.item.MagicGear.onCast(player);
         com.newuniverse.nusmp.relics.wave.Wave6Events.onSpellCast(player);
         com.newuniverse.nusmp.relics.wave.Wave16.onSpellCast(player, p.costPercent());      // 1.25.0: Brooch of Po'eur's free cast      // 1.24.0: Neket's robe stores a Mage Armor per cast
-        DreamWorld.onCast(player, magic);                                         // 0.41: Spatial / Time / Anti-Magic / Dream tear a dream open
+        DreamWorld.onCast(player, castMagic);                                     // 0.41: Spatial / Time / Anti-Magic / Dream tear a dream open
         MirrorWorks.echo(player);                                                 // 0.42: Real Doubles cast with you
         com.newuniverse.nusmp.mana.ManaLaw.onCast(player);                          // 1.5.0: negative mana corrupts
-        com.newuniverse.nusmp.dungeon.DungeonHooks.onCast(player, magic, p.costPercent());      // 1.17.0: thickens the air (Maws), spends the Dungeon's magicules
+        com.newuniverse.nusmp.dungeon.DungeonHooks.onCast(player, castMagic, p.costPercent());      // 1.17.0: thickens the air (Maws), spends the Dungeon's magicules
         exhaustion(player);
         instance.markDirty();
     }
@@ -331,6 +374,7 @@ public abstract class GrimoireBook extends Skill {
                 || (target instanceof ServerPlayer tp && GrimoirePages.grimoireOf(tp).map(g -> cover(g).isForbidden()).orElse(false)))) r *= 1.25f;
         com.newuniverse.nusmp.blackclover.CopyMemory.remember(target, this, mode);
         target.hurt(createSource(i, caster, type, mode), BalanceLaw.damage(caster, target, r, masteryFrac(i)));
+        com.newuniverse.nusmp.core.magic.merge.MergeContext.onHit(caster, target);      // 1.27.0: a merged cast rides the other parent's hit effect on every hit
     }
 
     public static LivingEntity target(ServerPlayer p, double range) {
@@ -615,7 +659,7 @@ public abstract class GrimoireBook extends Skill {
     @Override
     public void onLearnSkill(ManasSkillInstance instance, LivingEntity entity) {
         super.onLearnSkill(instance, entity);
-        if (entity instanceof ServerPlayer p && !(this instanceof ForbiddenBook)) GrimoireKeeper.ensureGrimoire(p, this, instance);
+        if (entity instanceof ServerPlayer p && givesGrimoireItem()) GrimoireKeeper.ensureGrimoire(p, this, instance);
     }
 
     // ---------------------------------------------------------------- misc
@@ -624,7 +668,7 @@ public abstract class GrimoireBook extends Skill {
      * it on the hotbar, is not enough. The Anti-Magic exception: the Anti-Magic Lord's Black Form toggle and the demon swords work
      * without a summoned book (they are the swords drawn from it), but the Anti-Magic book's pages still need it out.
      */
-    private boolean holdingBook(ServerPlayer p) {
+    protected boolean holdingBook(ServerPlayer p) {
         return GrimoireSummon.isFloating(p, this instanceof ForbiddenBook ? null : magic);
     }
 
@@ -634,7 +678,7 @@ public abstract class GrimoireBook extends Skill {
     }
 
     private void shout(ServerPlayer p, String incantation) {
-        Component line = Component.literal(magic.displayName + ": " + incantation + "!").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD);
+        Component line = Component.literal(magicLabel() + ": " + incantation + "!").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD);
         for (ServerPlayer other : p.serverLevel().players()) if (other.distanceToSqr(p) < 32 * 32) other.displayClientMessage(line, true);
     }
 

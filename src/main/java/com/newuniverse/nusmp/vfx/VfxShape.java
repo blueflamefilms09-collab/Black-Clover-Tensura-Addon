@@ -204,7 +204,16 @@ public enum VfxShape {
     BORN_BEAM,               // a lance / orb / corkscrew from 'from' to 'to' (style bit 3 = orb, bit 4 = corkscrew); power = size
     BORN_NOVA,               // a two-colour circle, a shock ring and thrown motes at 'from'; power = radius
     BORN_WAVE,               // rings alternating the two colours racing out from 'from' towards 'to'
-    BORN_RAIN;               // a bolt falling from 'from' to 'to' with a ring, motes and a flash where it lands; power = size
+    BORN_RAIN,               // a bolt falling from 'from' to 'to' with a ring, motes and a flash where it lands; power = size
+    // 1.27.0: the held cast key (CastHoldLayer): ONE circle follows the caster for the whole hold instead of a new circle every few ticks (anim.CastHold)
+    MAGIC_CIRCLE_HOLD,       // start / charge step / keep-alive of the hold circle (follows the caster); duration = how long it lives without news; power = size
+    MAGIC_CIRCLE_HOLD_END,   // the key was released: the hold circle stays for the wind-up and fades; duration = wind-up + fade
+    // 1.27.0: merged magics (MergedMagicLayer). The payload's colour is the blended primary colour; the seed's high 32 bits are the merged
+    // magic's key (core.magic.merge.MergedKeys), which the client resolves to the synced definition (parents, palette, weights).
+    MERGED_CAST,             // a bolt / trail from 'from' to 'to': one strand of motes per parent in the parent's colour, a blended core; power = size
+    MERGED_FIELD,            // a zone at 'from' (power = radius / 3): counter-turning rune rings, one per parent, joined by a blended ring
+    MERGED_BURST,            // an impact at 'from': a shock ring that changes colour from parent to parent, sparks alternating the palette
+    MERGED_AURA;             // the caster's casting stance (follows): all parents' circles stacked under the feet, motes rising in the palette; power = size
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

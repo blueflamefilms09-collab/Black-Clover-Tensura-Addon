@@ -5,6 +5,9 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
+import com.newuniverse.nusmp.core.discovery.DiscoveryKeys;
+import com.newuniverse.nusmp.core.discovery.DiscoveryRules;
+import com.newuniverse.nusmp.core.discovery.DiscoveryTracker;
 import com.newuniverse.nusmp.relics.order.UniqueLedger;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -49,8 +52,13 @@ public final class RelicCommands {
                         .executes(ctx -> grade(ctx.getSource(), ctx.getSource().getPlayerOrException()))));
     }
 
+    /** 1.27.0 (discovery): an operator or the console sees every relic; a player only the ones they have found (see core.discovery). */
+    private static boolean seen(CommandSourceStack src, RelicDef d) {
+        return DiscoveryTracker.canSee(src, DiscoveryKeys.item(RelicCatalog.newStack(d)));
+    }
+
     private static CompletableFuture<Suggestions> suggestIds(CommandContext<CommandSourceStack> ctx, SuggestionsBuilder b) {
-        return SharedSuggestionProvider.suggest(Relics.all().stream().map(RelicDef::id), b);
+        return SharedSuggestionProvider.suggest(Relics.all().stream().filter(d -> seen(ctx.getSource(), d)).map(RelicDef::id), b);
     }
 
     private static CompletableFuture<Suggestions> suggestGrades(CommandContext<CommandSourceStack> ctx, SuggestionsBuilder b) {
@@ -73,7 +81,8 @@ public final class RelicCommands {
         int n = 0;
         for (RelicDef d : Relics.all()) {
             if (d.grade() != g) continue;
-            b.append("\n  ").append(d.id()).append(" - ").append(d.cardName()).append(" (").append(d.slot().label()).append(')');
+            if (!seen(src, d)) b.append("\n  ").append(DiscoveryRules.QUESTION);                 // not found yet: no id, name or slot
+            else b.append("\n  ").append(d.id()).append(" - ").append(d.cardName()).append(" (").append(d.slot().label()).append(')');
             n++;
         }
         return n == 0 ? fail(src, "No " + g.label() + " relics.") : ok(src, b.toString());
@@ -81,7 +90,7 @@ public final class RelicCommands {
 
     private static int info(CommandSourceStack src, String id) {
         RelicDef d = Relics.byId(id);
-        if (d == null) return fail(src, "Unknown relic \"" + id + "\".");
+        if (d == null || !seen(src, d)) return fail(src, "Unknown relic \"" + id + "\".");       // an undiscovered relic answers exactly like one that does not exist
         StringBuilder b = new StringBuilder(d.cardName() + " (" + d.id() + ")\n  " + d.grade().label() + ", " + d.slot().label());
         if (d.needsAttunement()) b.append(", requires attunement");
         if (d.isVessel()) b.append(", can be a Djinn's Metal Vessel");

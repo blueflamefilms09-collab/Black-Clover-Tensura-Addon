@@ -11,6 +11,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.LivingEntity;
 import org.joml.Quaternionf;
+import com.newuniverse.nusmp.client.ui.theme.UiPanel;
+import com.newuniverse.nusmp.client.ui.theme.UiTheme;
 
 import java.util.List;
 
@@ -40,12 +42,38 @@ public final class UiDraw {
 
     /** A section header: small gold-on-ink title with a rule under it. Returns the y below it. */
     public static int header(GuiGraphics g, Font font, String title, int x, int y, int width) {
+        if (UiTheme.anime()) return UiPanel.heading(g, font, title, x, y, width, UiTheme.GOLD);          // 1.27.0: the anime look; the lines below are the classic look
         g.drawString(font, title, x, y, GOLD_INK, false);
         g.hLine(x, x + width, y + font.lineHeight + 1, RULE);
         return y + font.lineHeight + 5;
     }
 
     public static final int GOLD_INK = 0xFF8A5E10;
+
+    // ---------------------------------------------------------------- 1.27.0: the theme section (anime / classic)
+    // The classic constants above are unchanged. Drawing code that used to name INK, INK_DIM, GOLD_INK, RULE or WARN asks these instead, so one
+    // call gives the parchment colour in the classic look and the light-on-glass colour in the anime look (config ui.theme, see client/ui/theme).
+
+    /** True when the anime look is on. */
+    public static boolean anime() { return UiTheme.anime(); }
+
+    /** Body text colour: dark ink on parchment (classic) or white-blue on glass (anime). */
+    public static int ink() { return UiTheme.anime() ? UiTheme.TEXT : INK; }
+
+    /** Secondary text colour. */
+    public static int inkDim() { return UiTheme.anime() ? UiTheme.TEXT_DIM : INK_DIM; }
+
+    /** Heading / name colour. */
+    public static int goldInk() { return UiTheme.anime() ? UiTheme.GOLD : GOLD_INK; }
+
+    /** Rule and divider colour. */
+    public static int rule() { return UiTheme.anime() ? withAlpha(UiTheme.CYAN, 110) : RULE; }
+
+    /** Warning text colour. */
+    public static int warn() { return UiTheme.anime() ? UiTheme.RED : WARN; }
+
+    /** The accent colour of list markers and highlights. */
+    public static int accent() { return UiTheme.anime() ? UiTheme.CYAN : ACCENT; }
 
     /**
      * Draws the player standing (or sitting, bowing, floating ...) at the centre (cx, cy) of a box of the given height, turned by

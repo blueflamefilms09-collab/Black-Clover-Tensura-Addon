@@ -174,12 +174,25 @@ public final class VfxManager {
         register(new CompassLayer());
         register(new MercuryLayer());
         register(new com.newuniverse.nusmp.vfx.client.layer.BornMagicLayer());     // 1.16.0
+        register(new com.newuniverse.nusmp.vfx.client.layer.MergedMagicLayer());    // 1.27.0: merged magics (core.magic.merge)
+        register(new com.newuniverse.nusmp.vfx.client.layer.CastHoldLayer());      // 1.27.0: the held cast key's one continuous circle
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }
 
-    /** Called from the network handler on the client thread. */
+    /**
+     * Called from the network handler on the client thread. 1.27.0: guarded: one effect's layer that throws is logged once per shape
+     * (core.magic.profile.SafeCast) and skipped; it can no longer crash the client.
+     */
     public void spawn(VfxPayload p) {
+        try {
+            spawnUnguarded(p);
+        } catch (RuntimeException | LinkageError e) {
+            com.newuniverse.nusmp.core.magic.profile.SafeCast.clientFault("vfx:spawn:" + p.shapeType().name(), e);
+        }
+    }
+
+    private void spawnUnguarded(VfxPayload p) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.level == null) return;
         VfxShape shape = p.shapeType();
@@ -214,7 +227,13 @@ public final class VfxManager {
         Iterator<VfxInstance> it = active.iterator();
         while (it.hasNext()) {
             VfxInstance inst = it.next();
-            inst.layer.onTick(inst);
+            try {
+                inst.layer.onTick(inst);
+            } catch (RuntimeException | LinkageError e) {            // 1.27.0: a layer that throws is dropped, not fatal
+                com.newuniverse.nusmp.core.magic.profile.SafeCast.clientFault("vfx:tick:" + inst.shape.name(), e);
+                it.remove();
+                continue;
+            }
             inst.tick();
             if (inst.done()) it.remove();
         }
@@ -230,7 +249,12 @@ public final class VfxManager {
         VfxRenderContext ctx = new VfxRenderContext(camera, modelView, partialTick, mc.level, detail);
         for (VfxInstance inst : active) {
             buffer.beginActivation(inst.layer.vertexBudget(inst.shape));
-            inst.layer.render(inst, ctx, buffer);
+            try {
+                inst.layer.render(inst, ctx, buffer);
+            } catch (RuntimeException | LinkageError e) {           // 1.27.0: a layer that throws ends its effect (logged once per shape), the frame goes on
+                com.newuniverse.nusmp.core.magic.profile.SafeCast.clientFault("vfx:render:" + inst.shape.name(), e);
+                inst.expire();
+            }
         }
         // Vertices are pre-transformed into view space, so the model-view uniform must be identity.
         var mvStack = com.mojang.blaze3d.systems.RenderSystem.getModelViewStack();

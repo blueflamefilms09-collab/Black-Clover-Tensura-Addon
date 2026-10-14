@@ -5,6 +5,9 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
+import com.newuniverse.nusmp.core.magic.profile.MagicKeys;
+import com.newuniverse.nusmp.core.magic.profile.MagicProfile;
+import com.newuniverse.nusmp.core.magic.profile.MagicProfiles;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -157,13 +160,36 @@ public enum MagicType {
         this.guardEffect = guardEffect;
     }
 
-    /** 0.53: never rolled for a soul (devil, command or admin only), like Anti-Magic and Kotodama. */
-    public boolean restricted() {
-        return switch (this) { case ANTI_MAGIC, KOTODAMA, DEMON_BEAST, CURSE, DEMON_FIRE, DEMON_ICE, DEMON_LIGHT, DEMON_WATER -> true; default -> false; };
+    /**
+     * 0.53: never rolled for a soul (devil, command or admin only), like Anti-Magic and Kotodama.
+     * 1.27.0: by NAME ({@link MagicKeys#RESTRICTED}) instead of a switch over the constants, so appending constants can never shift it.
+     * Answers exactly as before for every existing constant.
+     */
+    public boolean restricted() { return profile().restricted(); }
+
+    /** The particle of this magic; GLOW if the supplier is missing or throws (never null). An override registered in MagicProfiles wins. */
+    public SimpleParticleType particle() { return profile().particle(); }
+    /** The guard effect of this magic; Resistance if the supplier is missing or throws (never null). An override registered in MagicProfiles wins. */
+    public Holder<MobEffect> guardEffect() { return profile().guardEffect(); }
+
+    /** The enum's own particle supplier, null if it is missing or throws. Used by the profile; prefer {@link #particle()}. */
+    public SimpleParticleType rawParticle() {
+        try { return particle == null ? null : particle.get(); } catch (RuntimeException | LinkageError e) { return null; }
     }
 
-    public SimpleParticleType particle() { return particle.get(); }
-    public Holder<MobEffect> guardEffect() { return guardEffect.get(); }
+    /** The enum's own guard-effect supplier, null if it is missing or throws. Used by the profile; prefer {@link #guardEffect()}. */
+    public Holder<MobEffect> rawGuardEffect() {
+        try { return guardEffect == null ? null : guardEffect.get(); } catch (RuntimeException | LinkageError e) { return null; }
+    }
+
+    /** 1.27.0: the complete, never-null profile of this magic (core.magic.profile): everything a magic needs, with safe defaults. */
+    public MagicProfile profile() { return MagicProfiles.of(this); }
+
+    // 1.27.0: accessors that go through the profile (same values as the fields unless an override is registered)
+    public String displayName() { return profile().displayName(); }
+    public String word() { return profile().word(); }
+    public String soulType() { return profile().soulType(); }
+    public HitEffect hitEffect() { return profile().hit(); }
 
     /** Magic types available to a soul type. EMPTY (or no Nightmare) can awaken any normal magic. */
     public static List<MagicType> forSoul(String soul) {
@@ -179,6 +205,12 @@ public enum MagicType {
 
     public static MagicType byName(String name) {
         try { return valueOf(name); } catch (Exception e) { return FLAME; }
+    }
+
+    /** 1.27.0: like {@link #byName} but null for an unknown name (byName turns it into Flame, which hides a typo or a merged id). */
+    public static MagicType lookup(String name) {
+        if (name == null) return null;
+        try { return valueOf(MagicKeys.enumKey(name)); } catch (IllegalArgumentException e) { return null; }
     }
 
     /** What a spell does to whatever it hits. */

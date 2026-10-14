@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.client;
 
+import com.newuniverse.nusmp.anim.CastAnimGate;
 import com.newuniverse.nusmp.client.geo.GeoAnim;
 import com.newuniverse.nusmp.client.geo.GeoModels;
 import net.minecraft.client.Minecraft;
@@ -34,6 +35,7 @@ public final class CastAnimClient {
     private static final class State {
         String clip, prev;
         float start = Float.NaN, prevStart, stopAt = Float.NaN;
+        float resumeFrom, resumeAt = Float.NaN;                                          // a looping clip brought back while it faded out (see CastAnimGate)
         int entityTick;
     }
 
@@ -53,8 +55,17 @@ public final class CastAnimClient {
             if (s.clip != null && Float.isNaN(s.stopAt)) s.stopAt = now;
             return;
         }
+        GeoAnim.Clip current = clip(GeoModels.animations(FILE), s.clip);
+        // 1.27.0: naming the clip that already plays (a held or mashed cast key) must not restart it; a looping clip that was fading out is brought back
+        CastAnimGate.Decision decision = CastAnimGate.decide(s.clip, current != null && current.loop, s.start, s.stopAt, clip, now);
+        if (decision == CastAnimGate.Decision.IGNORE) return;
+        if (decision == CastAnimGate.Decision.RESUME) {
+            s.resumeFrom = 1f - Mth.clamp((now - s.stopAt) / FADE_OUT, 0f, 1f);
+            s.resumeAt = now;
+            s.stopAt = Float.NaN;
+            return;
+        }
         if (s.clip != null && Float.isNaN(s.stopAt)) {
-            GeoAnim.Clip current = clip(GeoModels.animations(FILE), s.clip);
             if (current != null && current.loop) { s.prev = s.clip; s.prevStart = s.start; }
         } else {
             s.prev = null;
@@ -62,6 +73,7 @@ public final class CastAnimClient {
         s.clip = clip;
         s.start = now;
         s.stopAt = Float.NaN;
+        s.resumeAt = Float.NaN;
     }
 
     private static GeoAnim.Clip clip(GeoAnim a, String name) { return a == null || name == null ? null : a.clip(name); }
@@ -110,6 +122,11 @@ public final class CastAnimClient {
         }
         float stopAt = Float.isNaN(s.stopAt) && finished(cur, since) ? s.start + cur.length * 20f + HOLD_AFTER_END : s.stopAt;
         float out = Float.isNaN(stopAt) ? 1f : 1f - Mth.clamp((age - stopAt) / FADE_OUT, 0f, 1f);
+        if (!Float.isNaN(s.resumeAt)) {                                                   // brought back mid fade-out: ease up from where it was
+            float k = Mth.clamp((age - s.resumeAt) / FADE_IN, 0f, 1f);
+            out = Mth.lerp(k, s.resumeFrom, out);
+            if (k >= 1f) s.resumeAt = Float.NaN;
+        }
         if (out <= 0f) { STATES.remove(e.getId()); return; }
         float in = Mth.clamp(since / FADE_IN, 0f, 1f);
         float[][] v = sample(cur, since);

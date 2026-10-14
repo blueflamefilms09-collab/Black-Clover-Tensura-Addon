@@ -145,6 +145,8 @@ public final class MultiverseStatusClient {
             String label = "Four Kingdoms";
             float sc = Math.min(1f, Math.min(l[2] / (float) font.width(label), l[3] / (float) font.lineHeight));
             boolean hover = inside(l, event.getMouseX(), event.getMouseY());
+            if (com.newuniverse.nusmp.client.ui.theme.UiTheme.anime())              // 1.27.0: a glass chip behind the label, brighter on hover
+                com.newuniverse.nusmp.client.ui.theme.UiPanel.chip(g, l[0] - 2, l[1] - 1, l[2] + 4, l[3] + 2, hover, hover, com.newuniverse.nusmp.client.ui.theme.UiTheme.GOLD);
             g.pose().pushPose();
             g.pose().translate(l[0] + (l[2] - font.width(label) * sc) / 2f, l[1] + (l[3] - font.lineHeight * sc) / 2f, 200);
             g.pose().scale(sc, sc, 1f);

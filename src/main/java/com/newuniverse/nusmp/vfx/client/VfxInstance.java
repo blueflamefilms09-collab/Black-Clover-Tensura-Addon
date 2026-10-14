@@ -45,6 +45,8 @@ public final class VfxInstance {
 
     public int age() { return age; }
     void tick() { age++; }
+    /** 1.27.0: ends the effect at the next tick (its layer threw while drawing). */
+    void expire() { age = duration; }
     public boolean done() { return age >= duration; }
 
     /** 0..1 progress, smooth between ticks. */

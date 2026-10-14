@@ -1,0 +1,50 @@
+package com.newuniverse.nusmp.client.ui.theme;
+
+import net.neoforged.neoforge.common.ModConfigSpec;
+
+import java.util.List;
+
+/**
+ * Client options of the menu theme: config/nusmp-ui-client.toml. {@code ui.theme} picks the look ("anime": translucent panels, Great-Sage
+ * text, animated magic circles, the default; "classic": the book and parchment drawing the mod had before, kept as it was). {@code ui.motion}
+ * off keeps the anime look but stops the animation (circles stand still, bars do not shimmer, text appears at once). {@code ui.typing} off shows
+ * the analysis text immediately instead of typing it.
+ */
+public final class UiThemeOptions {
+    public static final ModConfigSpec SPEC;
+    public static final ModConfigSpec.ConfigValue<String> THEME;
+    public static final ModConfigSpec.BooleanValue MOTION;
+    public static final ModConfigSpec.BooleanValue TYPING;
+    public static final ModConfigSpec.BooleanValue PAGE_TOAST;
+
+    static {
+        ModConfigSpec.Builder b = new ModConfigSpec.Builder();
+        b.push("ui");
+        THEME = b.comment("The look of the mod's menus: 'anime' (translucent panels, Great-Sage analysis text, animated magic circles) or 'classic' (the old book and parchment look).")
+                .defineInList("theme", "anime", List.of("anime", "classic"));
+        MOTION = b.comment("Animate the anime look (rotating magic circles, shimmering bars). Off = everything stands still.")
+                .define("motion", true);
+        TYPING = b.comment("Type the Great-Sage analysis text out letter by letter. Off = it appears at once.")
+                .define("typing", true);
+        PAGE_TOAST = b.comment("Show the analysis panel with a magic circle when a grimoire page opens through mastery (anime look only).")
+                .define("pageToast", true);
+        b.pop();
+        SPEC = b.build();
+    }
+
+    private UiThemeOptions() {}
+
+    public static UiThemeMode mode() {
+        try { return UiThemeMode.parse(THEME.get()); } catch (IllegalStateException notLoaded) { return UiThemeMode.ANIME; }
+    }
+
+    public static boolean motion() { return get(MOTION); }
+
+    public static boolean typing() { return get(TYPING); }
+
+    public static boolean pageToast() { return get(PAGE_TOAST); }
+
+    private static boolean get(ModConfigSpec.BooleanValue v) {
+        try { return v.get(); } catch (IllegalStateException notLoaded) { return true; }
+    }
+}

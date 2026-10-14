@@ -29,6 +29,9 @@ public final class VfxSpawn {
     }
 
     public static void send(ServerLevel level, VfxPayload payload) {
+        // 1.27.0: while a merged magic is casting, its parents' effects are tinted with the shared palette and joined by the other
+        // parents' own effects and the composite layer (core.magic.merge.MergeContext); any other cast passes through untouched
+        payload = com.newuniverse.nusmp.core.magic.merge.MergeContext.adapt(level, payload);
         PacketDistributor.sendToPlayersNear(level, null, payload.from().x, payload.from().y, payload.from().z, SEND_RANGE, payload);
     }
 }
