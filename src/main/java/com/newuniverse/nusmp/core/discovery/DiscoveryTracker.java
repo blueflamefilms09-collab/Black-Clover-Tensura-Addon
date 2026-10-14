@@ -205,6 +205,19 @@ public final class DiscoveryTracker {
 
     /** Learned skills of the mod, the pages of every grimoire in them, the magic, and the bonded spirit. */
     private static void scanSkills(ServerPlayer p, boolean full) {
+        try {
+            readSkills(p, full);
+        } catch (RuntimeException e) {
+            if (!skillTroubleLogged) {
+                skillTroubleLogged = true;
+                com.mojang.logging.LogUtils.getLogger().warn("[nusmp] Discovery could not read a player's skills this time: {}", e.toString());
+            }
+        }
+    }
+
+    private static boolean skillTroubleLogged;
+
+    private static void readSkills(ServerPlayer p, boolean full) {
         var skills = SkillAPI.getSkillsFrom(p);
         if (skills != null) {
             for (ManasSkillInstance i : new ArrayList<>(skills.getLearnedSkills())) {

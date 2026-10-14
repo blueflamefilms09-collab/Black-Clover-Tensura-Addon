@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.28.0] — Review fixes for 1.27.0
+
+- A wiki magic inside a merged magic keeps its own colour, so it no longer draws as Air.
+- The 64 merged skills are registered last in `NUSkills`, so no existing skill's registry order moves.
+- A failed profile build can no longer change which magics count as restricted; merged skills are not forgotten if the world data fails to load; the merged lookup is a map; the magic audit test cannot fail the build over a missing resource.
+- A merged book reports its dominant parent magic instead of Flame in the grimoire page code.
+- Discovery: relics placed straight into a Curios slot count as found; the first sync no longer flashes an empty cache; a bad packet length cannot throw; the skill read cannot throw out of the tick handler.
+- GUI: the page-unlock toast no longer flashes opaque at the start and end of its fade; the Codex caches its per-frame strings and honours `ui.motion=false`.
+
+
 ## [1.27.0] — Merged magic, a safe magic framework, the anime GUI, discovery, the cast-hold fix
 
 **State:** written without a compiler; CI is the first compile. Nothing run in game. Design notes: `docs/magic_merge.md`, `docs/magic_framework.md`, `docs/gui_theme.md`, `docs/discovery.md`, `docs/wiki_magic_vfx.md`.
