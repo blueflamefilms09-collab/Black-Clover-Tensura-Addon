@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.31.0] — Hotfix: second first-launch config crash
+
+- **Fixed the same crash as 1.29.0 in the new `nusmp-relicfx-client.toml` (1.30.0).** `relicfx.quality` used `defineInList(List.of(...))`; with no file yet NeoForge checks the missing value (null) against that list, `List.of(..).contains(null)` throws and the whole config load aborts, so other mods crashed reading their unloaded configs (SkyFracture). It is now a string with a validator accepting `low`, `medium` or `high`. Every other config of the mod was checked: none uses a list check any more.
+
+
 ## [1.30.0] — Weapon size and orientation, true pairs, worn relic models, tiers, sockets, boss DPS cap, Elsdocia
 
 **State:** written without a compiler; CI is the first compile. Nothing run in game. Design notes (each with a 'Why' per component): `docs/weapon_scale_orientation.md`, `docs/relic_pairs.md`, `docs/relic_visuals.md`, `docs/relic_tiers_and_scaling.md`, `docs/relic_sockets_and_evolution.md`, `docs/boss_dps_budget.md`, `docs/elsdocia_rebuild.md`.
