@@ -1,0 +1,37 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "nusmp:dante_zogratis",
+      "required": false
+    },
+    {
+      "id": "nusmp:vanica_zogratis",
+      "required": false
+    },
+    {
+      "id": "nusmp:zenon_zogratis",
+      "required": false
+    },
+    {
+      "id": "nusmp:lucius_zogratis",
+      "required": false
+    },
+    {
+      "id": "nusmp:devil_avatar",
+      "required": false
+    },
+    {
+      "id": "nusmp:goliath",
+      "required": false
+    },
+    {
+      "id": "nusmp:charybdis_spawn",
+      "required": false
+    },
+    {
+      "id": "nusmp:zagred",
+      "required": false
+    }
+  ]
+}

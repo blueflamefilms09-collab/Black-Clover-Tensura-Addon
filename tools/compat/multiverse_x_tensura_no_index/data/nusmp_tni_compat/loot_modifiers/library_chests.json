@@ -1,0 +1,25 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "tensuranoindex"
+    }
+  ],
+  "type": "neoforge:add_table",
+  "conditions": [
+    {
+      "condition": "minecraft:any_of",
+      "terms": [
+        {
+          "condition": "neoforge:loot_table_id",
+          "loot_table_id": "nusmp:chests/library_ruins"
+        },
+        {
+          "condition": "neoforge:loot_table_id",
+          "loot_table_id": "nusmp:chests/grimoire_tower"
+        }
+      ]
+    }
+  ],
+  "table": "nusmp_tni_compat:chests/tni_shelf"
+}

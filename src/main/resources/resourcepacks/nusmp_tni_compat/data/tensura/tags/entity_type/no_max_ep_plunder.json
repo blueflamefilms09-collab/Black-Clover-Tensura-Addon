@@ -1,0 +1,65 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "nusmp:dante_zogratis",
+      "required": false
+    },
+    {
+      "id": "nusmp:vanica_zogratis",
+      "required": false
+    },
+    {
+      "id": "nusmp:zenon_zogratis",
+      "required": false
+    },
+    {
+      "id": "nusmp:lucius_zogratis",
+      "required": false
+    },
+    {
+      "id": "nusmp:devil_avatar",
+      "required": false
+    },
+    {
+      "id": "nusmp:goliath",
+      "required": false
+    },
+    {
+      "id": "nusmp:charybdis_spawn",
+      "required": false
+    },
+    {
+      "id": "nusmp:zagred",
+      "required": false
+    },
+    {
+      "id": "tensuranoindex:coronzon",
+      "required": false
+    },
+    {
+      "id": "tensuranoindex:fuse_kazakiri",
+      "required": false
+    },
+    {
+      "id": "tensuranoindex:sasha_kruschev",
+      "required": false
+    },
+    {
+      "id": "tensuranoindex:auriel",
+      "required": false
+    },
+    {
+      "id": "tensuranoindex:nokth",
+      "required": false
+    },
+    {
+      "id": "tensuranoindex:warden_of_the_even",
+      "required": false
+    },
+    {
+      "id": "tensuranoindex:innocentius",
+      "required": false
+    }
+  ]
+}

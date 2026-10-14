@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.33.0] — Tensura No Index compatibility pack and the Compatibility Codex
+
+**State:** written without a compiler; CI is the first compile. Nothing run in game. See `docs/compat/README.md`.
+
+### NEW
+- **Compatibility data pack** `nusmp_tni_compat` for Tensura No Index (0.71.0): built into the jar and switched on only when `tensuranoindex` is loaded, and also as a standalone zip `docs/compat/multiverse_x_tensura_no_index.zip` for a world's `datapacks` folder. It adds low-chance Tensura No Index loot (phase dust, name slips, Canalis relic, Philosopher's Stone) to our Library Ruins and Grimoire Tower chests and to our eight bosses, and puts our eight bosses and their seven into the `tensura:no_max_ep_plunder` tag (all optional ids).
+- **Compatibility Codex**: a written book of what has compatibility with a live Loaded / Not installed status per mod (creative tab, `/multiverse compat book`, `/multiverse compat status`).
+
+### Finding about the other mod's own bridge pack
+Its bundled pack does not take effect: it has no `global_loot_modifiers.json`, targets loot tables of ours that no longer exist (`riven_remake`, `marquis_remake`), names a removed item in its loot table, and puts its tag in a misspelled folder. Ours repairs the tag and the chest loot; nothing is rolled twice. We do not edit their jar.
+
+### Not covered
+Their 15 Toaru codex skills (we have no data hook for a skill codex), their relics other than the Philosopher's Stone (not registered items), grimoires as loot.
+
+
 ## [1.32.0] — Ability Selection window: the magic circle goes behind it
 
 - The anime overlay on Tensura's Ability Selection window drew its magic circle on top of the window, so its lines ran across the skill names, the slots and the panel. The circle is now drawn before Tensura's screen (behind it); Tensura's panel covers it and only the part outside the window shows. The corner brackets and the Great Sage readout are unchanged. Applies to the ability, mode and category windows.

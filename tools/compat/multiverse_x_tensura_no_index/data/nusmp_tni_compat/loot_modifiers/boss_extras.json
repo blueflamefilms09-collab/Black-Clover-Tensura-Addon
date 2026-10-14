@@ -1,0 +1,19 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "tensuranoindex"
+    }
+  ],
+  "type": "neoforge:add_table",
+  "conditions": [
+    {
+      "condition": "minecraft:entity_properties",
+      "entity": "this",
+      "predicate": {
+        "type": "#nusmp_tni_compat:bosses"
+      }
+    }
+  ],
+  "table": "nusmp_tni_compat:entities/boss_extras"
+}

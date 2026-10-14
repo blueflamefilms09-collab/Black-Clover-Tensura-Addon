@@ -34,6 +34,7 @@ public final class NUCreativeTab {
                 output.accept(com.newuniverse.nusmp.relics.order.OrderEntities.NOTICE.get());
                 for (var d : com.newuniverse.nusmp.relics.djinn.Djinn.values()) output.accept(com.newuniverse.nusmp.relics.djinn.DjinnItems.sealStack(d));
                 output.accept(com.newuniverse.nusmp.relics.djinn.DjinnItems.darkShardStack());
+                output.accept(com.newuniverse.nusmp.compat.CompatBookItem.stack());                                     // 1.33.0: Compatibility Codex
                 for (net.minecraft.world.item.Item ti : com.newuniverse.nusmp.relics.tier.TierItems.all()) output.accept(ti);                  // 1.30.0: catalysts
                 for (var sc : com.newuniverse.nusmp.relics.socket.SocketItems.all()) output.accept(sc.get());                                 // Spirit and Devil Cores                                              // 1.25.0: Dark Rukh Shard
                 for (var egg : com.newuniverse.nusmp.entity.avatar.AvatarEntities.spawnEggs()) output.accept(egg.get());              // 1.22.0

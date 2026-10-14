@@ -2383,5 +2383,13 @@
   "socket.nusmp.cmd.hold_relic": "Hold a relic in the main hand.",
   "socket.nusmp.cmd.unknown": "Unknown Core \"%s\" (spirit:fire, devil:megicula, ...).",
   "socket.nusmp.cmd.list": "%1$s: %2$s of %3$s sockets filled.",
-  "socket.nusmp.cmd.gave": "Gave %1$s to %2$s."
+  "socket.nusmp.cmd.gave": "Gave %1$s to %2$s.",
+  "nusmp.compat.book.given": "You were given the Compatibility Codex.",
+  "nusmp.compat.book.console": "Only a player can be given the Compatibility Codex.",
+  "nusmp.compat.status.header": "Multiverse of Anime: compatibility (read from the mod list now)",
+  "nusmp.compat.status.line": " %s: %s",
+  "nusmp.compat.loaded": "Loaded",
+  "nusmp.compat.absent": "Not installed",
+  "nusmp.compat.pack.on": "Data pack %s: on (Tensura No Index is loaded)",
+  "nusmp.compat.pack.off": "Data pack %s: off (Tensura No Index is not installed)"
 }

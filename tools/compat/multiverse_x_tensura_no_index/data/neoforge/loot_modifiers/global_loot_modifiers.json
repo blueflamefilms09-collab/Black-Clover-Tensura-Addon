@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "entries": [
+    "nusmp_tni_compat:library_chests",
+    "nusmp_tni_compat:tower_stone",
+    "nusmp_tni_compat:boss_extras"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "_about": "Ids this pack is allowed to reference, each checked by hand against the unpacked jar of Tensura No Index 0.71.0 (lang/en_us.json, assets/models and the registration constants of its classes) and against this repo (BossRegistry, NUEntities, data/nusmp/loot_table). Update it only after re-checking.",
+  "tensuranoindex_items": [
+    "phase_dust",
+    "name_slip",
+    "canalis_relic",
+    "relic_philosophers_stone"
+  ],
+  "tensuranoindex_entities": [
+    "coronzon",
+    "fuse_kazakiri",
+    "sasha_kruschev",
+    "auriel",
+    "nokth",
+    "warden_of_the_even",
+    "innocentius"
+  ],
+  "nusmp_entities": [
+    "dante_zogratis",
+    "vanica_zogratis",
+    "zenon_zogratis",
+    "lucius_zogratis",
+    "devil_avatar",
+    "goliath",
+    "charybdis_spawn",
+    "zagred"
+  ],
+  "nusmp_loot_tables": [
+    "chests/library_ruins",
+    "chests/grimoire_tower"
+  ],
+  "tensura_entity_tags": [
+    "no_max_ep_plunder"
+  ]
+}

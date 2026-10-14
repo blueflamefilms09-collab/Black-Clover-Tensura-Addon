@@ -65,6 +65,7 @@ public class NUSMP {
         com.newuniverse.nusmp.relics.tier.TierSystem.registerContent(modEventBus);                                         // 1.30.0: tier component, catalysts (before NUItems.ITEMS.register)
         com.newuniverse.nusmp.relics.socket.SocketItems.init();                                                            // 1.30.0: Spirit and Devil Cores
         com.newuniverse.nusmp.relics.socket.SocketComponents.COMPONENTS.register(modEventBus);
+        modEventBus.addListener(com.newuniverse.nusmp.compat.CompatPacks::onPacks);                       // 1.33.0: the Tensura No Index bridge pack, only when that mod is loaded
         com.newuniverse.nusmp.charter.CharterItems.init();                                                                 // 1.25.0: Charter Grimoires (before NUItems.ITEMS.register)
         modEventBus.addListener(com.newuniverse.nusmp.charter.CharterNet::registerPayloads);
         modEventBus.addListener(com.newuniverse.nusmp.boss.bar.BossBarNet::registerPayloads);
