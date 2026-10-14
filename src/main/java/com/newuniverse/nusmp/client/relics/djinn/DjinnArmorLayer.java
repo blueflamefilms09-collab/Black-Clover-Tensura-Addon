@@ -110,8 +110,10 @@ public class DjinnArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
             halo(pose, buffers, m, d, dark, st, a, light, now, glow);
             backdrop(pose, buffers, m, d, dark, st, a, light, now, glow);
         }
-        // ---- the weapon in hand
-        if (DjinnMeshes.setOf(d, dark) != DjinnLook.BASE) weapon(pose, buffers, p, m, d, dark, st, s, main, light, now, glow);
+        // ---- the weapon in hand (1.34.0: when the real temporary Djinn weapon is in the main hand it is drawn by WeaponRenderer, so the layer's own piece is skipped: no duplicate)
+        boolean realWeapon = p.getMainHandItem().getItem() instanceof com.newuniverse.nusmp.relics.djinn.weapon.DjinnWeaponItem;
+        if (realWeapon) { /* the item in the hand is the Djinn's weapon */ }
+        else if (DjinnMeshes.setOf(d, dark) != DjinnLook.BASE) weapon(pose, buffers, p, m, d, dark, st, s, main, light, now, glow);
         else if (detail && !p.getMainHandItem().isEmpty()) sheath(pose, buffers, p, m, d, s, main, now);
         // ---- the body-art and the aura over the whole model
         float body = Math.max(a, 0f);

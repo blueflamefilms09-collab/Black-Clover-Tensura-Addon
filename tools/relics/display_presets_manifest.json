@@ -1,8 +1,8 @@
 {
   "rule": "tools/relics/display_presets.py",
   "long_blocks": 1.4,
-  "apparent_max_blocks": 1.0,
-  "scale_floor": 0.28,
+  "apparent_max_blocks": 1.5,
+  "scale_floor": 0.2,
   "grip_fraction": 0.25,
   "long_frame_blocks": 1.6,
   "weapons": [
@@ -14,7 +14,7 @@
     {
       "id": "anti_bird_charm",
       "action": "keep",
-      "length_blocks": 0.448
+      "length_blocks": 0.686
     },
     {
       "id": "anti_bird_compass",
@@ -24,50 +24,77 @@
     {
       "id": "astralaria",
       "action": "preset",
-      "length_blocks": 1.529,
-      "first_person_scale": 0.63,
+      "length_blocks": 2.071,
+      "first_person_scale": 0.465,
       "first_person_translation_px": [
         1.13,
-        3.24,
-        0.91
+        2.05,
+        0.54
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.386,
+      "fixed_scale": 0.724
+    },
+    {
+      "id": "astralis_the_eye_of_the_universe",
+      "action": "preset",
+      "length_blocks": 2.635,
+      "first_person_scale": 0.335,
+      "first_person_translation_px": [
+        1.13,
+        2.32,
+        0.83
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.303,
+      "fixed_scale": 0.569
+    },
+    {
+      "id": "axe_of_the_crimson_saint",
+      "action": "preset",
+      "length_blocks": 2.071,
+      "first_person_scale": 0.665,
+      "first_person_translation_px": [
+        1.13,
+        3.23,
+        0.77
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.386,
+      "fixed_scale": 0.724
+    },
+    {
+      "id": "axe_of_the_exile",
+      "action": "preset",
+      "length_blocks": 1.435,
+      "first_person_scale": 0.68,
+      "first_person_translation_px": [
+        1.13,
+        1.96,
+        0.45
       ],
       "tip_out_of_view": false,
       "ground_scale": 0.5,
       "fixed_scale": 1.0
     },
     {
-      "id": "astralis_the_eye_of_the_universe",
-      "action": "preset",
-      "length_blocks": 2.176,
-      "first_person_scale": 0.405,
-      "first_person_translation_px": [
-        1.13,
-        2.48,
-        0.87
-      ],
-      "tip_out_of_view": false,
-      "ground_scale": 0.367,
-      "fixed_scale": 0.689
-    },
-    {
-      "id": "axe_of_the_crimson_saint",
-      "action": "keep",
-      "length_blocks": 1.376
-    },
-    {
-      "id": "axe_of_the_exile",
-      "action": "keep",
-      "length_blocks": 0.906
-    },
-    {
       "id": "bianca",
       "action": "keep",
-      "length_blocks": 1.118
+      "length_blocks": 1.271
     },
     {
       "id": "bloodbound_katana",
-      "action": "keep",
-      "length_blocks": 1.376
+      "action": "preset",
+      "length_blocks": 1.835,
+      "first_person_scale": 0.536,
+      "first_person_translation_px": [
+        1.13,
+        1.91,
+        0.66
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.435,
+      "fixed_scale": 0.817
     },
     {
       "id": "bolt_thrower",
@@ -77,17 +104,17 @@
     {
       "id": "bond_thread",
       "action": "keep",
-      "length_blocks": 0.712
+      "length_blocks": 1.091
     },
     {
       "id": "book_of_mispells",
       "action": "keep",
-      "length_blocks": 0.831
+      "length_blocks": 1.091
     },
     {
       "id": "bottle_blade",
       "action": "keep",
-      "length_blocks": 1.024
+      "length_blocks": 1.318
     },
     {
       "id": "brooch_pin",
@@ -97,55 +124,55 @@
     {
       "id": "buster_sword",
       "action": "preset",
-      "length_blocks": 1.765,
-      "first_person_scale": 0.553,
+      "length_blocks": 3.059,
+      "first_person_scale": 0.319,
       "first_person_translation_px": [
         1.13,
-        3.05,
-        0.58
+        1.4,
+        0.19
       ],
       "tip_out_of_view": false,
-      "ground_scale": 0.453,
-      "fixed_scale": 0.849
+      "ground_scale": 0.261,
+      "fixed_scale": 0.49
     },
     {
       "id": "butcher_cleaver",
       "action": "keep",
-      "length_blocks": 0.751
+      "length_blocks": 1.2
     },
     {
       "id": "caesars_gladius",
       "action": "keep",
-      "length_blocks": 1.024
+      "length_blocks": 1.318
     },
     {
       "id": "catstaff",
       "action": "preset",
-      "length_blocks": 2.0,
-      "first_person_scale": 0.478,
+      "length_blocks": 2.635,
+      "first_person_scale": 0.363,
       "first_person_translation_px": [
         1.13,
-        2.68,
-        0.99
+        2.45,
+        0.91
       ],
       "tip_out_of_view": false,
-      "ground_scale": 0.399,
-      "fixed_scale": 0.749
+      "ground_scale": 0.303,
+      "fixed_scale": 0.569
     },
     {
       "id": "circlet_of_quickened_thought",
       "action": "keep",
-      "length_blocks": 0.475
+      "length_blocks": 0.664
     },
     {
       "id": "club_of_rot",
       "action": "preset",
       "length_blocks": 1.724,
-      "first_person_scale": 0.58,
+      "first_person_scale": 0.59,
       "first_person_translation_px": [
         1.13,
-        2.38,
-        0.7
+        2.43,
+        0.72
       ],
       "tip_out_of_view": false,
       "ground_scale": 0.464,
@@ -154,17 +181,26 @@
     {
       "id": "communication_magic_device",
       "action": "keep",
-      "length_blocks": 0.713
+      "length_blocks": 1.091
     },
     {
       "id": "contingency_plan",
       "action": "keep",
-      "length_blocks": 0.541
+      "length_blocks": 0.647
     },
     {
       "id": "corpse_eater",
-      "action": "keep",
-      "length_blocks": 1.353
+      "action": "preset",
+      "length_blocks": 1.835,
+      "first_person_scale": 0.628,
+      "first_person_translation_px": [
+        1.13,
+        2.6,
+        0.43
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.435,
+      "fixed_scale": 0.817
     },
     {
       "id": "crossbow_of_swift_death",
@@ -179,26 +215,35 @@
     {
       "id": "dagger_of_betrayal",
       "action": "keep",
-      "length_blocks": 0.494
+      "length_blocks": 0.647
     },
     {
       "id": "dead_blade",
       "action": "preset",
-      "length_blocks": 2.176,
-      "first_person_scale": 0.459,
+      "length_blocks": 3.671,
+      "first_person_scale": 0.383,
       "first_person_translation_px": [
         1.13,
-        3.37,
-        0.85
+        3.47,
+        0.71
       ],
       "tip_out_of_view": false,
-      "ground_scale": 0.367,
-      "fixed_scale": 0.689
+      "ground_scale": 0.217,
+      "fixed_scale": 0.408
     },
     {
       "id": "deliverance",
-      "action": "keep",
-      "length_blocks": 1.353
+      "action": "preset",
+      "length_blocks": 1.835,
+      "first_person_scale": 0.543,
+      "first_person_translation_px": [
+        1.13,
+        2.14,
+        0.71
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.435,
+      "fixed_scale": 0.817
     },
     {
       "id": "demon_destroyer_sword",
@@ -241,69 +286,78 @@
     {
       "id": "devil_contract",
       "action": "keep",
-      "length_blocks": 0.764
+      "length_blocks": 1.061
     },
     {
       "id": "disintegration_dagger",
       "action": "keep",
-      "length_blocks": 0.494
+      "length_blocks": 0.647
     },
     {
       "id": "doom_hammer",
       "action": "preset",
-      "length_blocks": 1.546,
-      "first_person_scale": 0.646,
+      "length_blocks": 2.118,
+      "first_person_scale": 0.55,
       "first_person_translation_px": [
         1.13,
-        3.31,
-        1.54
+        2.76,
+        1.28
       ],
       "tip_out_of_view": false,
-      "ground_scale": 0.5,
-      "fixed_scale": 1.0
+      "ground_scale": 0.377,
+      "fixed_scale": 0.708
     },
     {
       "id": "dragon_tooth_blade_red",
-      "action": "keep",
-      "length_blocks": 1.353
+      "action": "preset",
+      "length_blocks": 1.835,
+      "first_person_scale": 0.655,
+      "first_person_translation_px": [
+        1.13,
+        2.89,
+        0.75
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.435,
+      "fixed_scale": 0.817
     },
     {
       "id": "dream_glass",
       "action": "preset",
-      "length_blocks": 1.765,
-      "first_person_scale": 0.566,
+      "length_blocks": 2.965,
+      "first_person_scale": 0.349,
       "first_person_translation_px": [
         1.13,
-        3.0,
-        0.96
+        1.5,
+        0.45
       ],
       "tip_out_of_view": false,
-      "ground_scale": 0.453,
-      "fixed_scale": 0.85
+      "ground_scale": 0.269,
+      "fixed_scale": 0.505
     },
     {
       "id": "druidic_blade",
       "action": "keep",
-      "length_blocks": 1.024
+      "length_blocks": 1.318
     },
     {
       "id": "duality_blade",
       "action": "keep",
-      "length_blocks": 0.918
+      "length_blocks": 1.318
     },
     {
       "id": "elsdocia",
       "action": "preset",
-      "length_blocks": 1.471,
-      "first_person_scale": 0.672,
+      "length_blocks": 3.106,
+      "first_person_scale": 0.318,
       "first_person_translation_px": [
         1.13,
-        2.79,
-        0.98
+        0.87,
+        0.28
       ],
       "tip_out_of_view": false,
-      "ground_scale": 0.5,
-      "fixed_scale": 1.0
+      "ground_scale": 0.257,
+      "fixed_scale": 0.482
     },
     {
       "id": "elsdocia_legacy",
@@ -313,7 +367,7 @@
     {
       "id": "encircled_blade",
       "action": "keep",
-      "length_blocks": 0.918
+      "length_blocks": 1.318
     },
     {
       "id": "eschaton",
@@ -323,26 +377,35 @@
     {
       "id": "flamecutter",
       "action": "preset",
-      "length_blocks": 1.529,
-      "first_person_scale": 0.653,
+      "length_blocks": 1.835,
+      "first_person_scale": 0.559,
       "first_person_translation_px": [
         1.13,
-        3.19,
-        0.95
+        2.55,
+        0.74
       ],
       "tip_out_of_view": false,
-      "ground_scale": 0.5,
-      "fixed_scale": 1.0
+      "ground_scale": 0.435,
+      "fixed_scale": 0.817
     },
     {
       "id": "fortune_die",
       "action": "keep",
-      "length_blocks": 0.785
+      "length_blocks": 1.091
     },
     {
       "id": "frostfang",
-      "action": "keep",
-      "length_blocks": 1.353
+      "action": "preset",
+      "length_blocks": 2.071,
+      "first_person_scale": 0.573,
+      "first_person_translation_px": [
+        1.13,
+        2.6,
+        0.35
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.386,
+      "fixed_scale": 0.724
     },
     {
       "id": "gamblers_grimoire_page",
@@ -357,16 +420,16 @@
     {
       "id": "giant_jawblade",
       "action": "preset",
-      "length_blocks": 2.0,
-      "first_person_scale": 0.462,
+      "length_blocks": 2.965,
+      "first_person_scale": 0.311,
       "first_person_translation_px": [
         1.13,
-        2.35,
-        1.0
+        1.31,
+        0.56
       ],
       "tip_out_of_view": false,
-      "ground_scale": 0.4,
-      "fixed_scale": 0.75
+      "ground_scale": 0.269,
+      "fixed_scale": 0.505
     },
     {
       "id": "glutton_chalice",
@@ -376,7 +439,7 @@
     {
       "id": "grimoire_chain",
       "action": "keep",
-      "length_blocks": 0.749
+      "length_blocks": 1.091
     },
     {
       "id": "hand_of_providence",
@@ -386,45 +449,54 @@
     {
       "id": "heart_of_the_flame",
       "action": "preset",
-      "length_blocks": 1.929,
-      "first_person_scale": 0.493,
+      "length_blocks": 2.965,
+      "first_person_scale": 0.321,
       "first_person_translation_px": [
         1.13,
-        2.45,
-        0.75
+        1.3,
+        0.37
       ],
       "tip_out_of_view": false,
-      "ground_scale": 0.414,
-      "fixed_scale": 0.777
+      "ground_scale": 0.269,
+      "fixed_scale": 0.505
     },
     {
       "id": "humbling_longsword",
-      "action": "keep",
-      "length_blocks": 1.294
+      "action": "preset",
+      "length_blocks": 1.835,
+      "first_person_scale": 0.615,
+      "first_person_translation_px": [
+        1.13,
+        2.45,
+        0.53
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.435,
+      "fixed_scale": 0.817
     },
     {
       "id": "hunger",
       "action": "preset",
-      "length_blocks": 2.047,
-      "first_person_scale": 0.48,
+      "length_blocks": 3.212,
+      "first_person_scale": 0.305,
       "first_person_translation_px": [
         1.13,
-        2.14,
-        0.57
+        1.36,
+        0.35
       ],
       "tip_out_of_view": false,
-      "ground_scale": 0.39,
-      "fixed_scale": 0.732
+      "ground_scale": 0.249,
+      "fixed_scale": 0.467
     },
     {
       "id": "hyperborean_crossbow",
       "action": "keep",
-      "length_blocks": 1.051
+      "length_blocks": 1.271
     },
     {
       "id": "jade_xiphos",
       "action": "keep",
-      "length_blocks": 1.024
+      "length_blocks": 1.318
     },
     {
       "id": "junglethorn_whip",
@@ -448,26 +520,35 @@
     {
       "id": "krakeblade",
       "action": "preset",
-      "length_blocks": 1.882,
-      "first_person_scale": 0.485,
+      "length_blocks": 2.965,
+      "first_person_scale": 0.308,
       "first_person_translation_px": [
         1.13,
-        2.93,
-        0.83
+        1.56,
+        0.4
       ],
       "tip_out_of_view": false,
-      "ground_scale": 0.425,
-      "fixed_scale": 0.796
+      "ground_scale": 0.269,
+      "fixed_scale": 0.505
     },
     {
       "id": "last_word",
       "action": "keep",
-      "length_blocks": 1.039
+      "length_blocks": 1.318
     },
     {
       "id": "leviathan_axe",
-      "action": "keep",
-      "length_blocks": 0.918
+      "action": "preset",
+      "length_blocks": 1.435,
+      "first_person_scale": 0.68,
+      "first_person_translation_px": [
+        1.13,
+        2.56,
+        0.48
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.5,
+      "fixed_scale": 1.0
     },
     {
       "id": "licht_destroyer_sword",
@@ -499,22 +580,31 @@
     },
     {
       "id": "liquid_sword",
-      "action": "keep",
-      "length_blocks": 1.376
+      "action": "preset",
+      "length_blocks": 1.835,
+      "first_person_scale": 0.606,
+      "first_person_translation_px": [
+        1.13,
+        2.4,
+        0.15
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.435,
+      "fixed_scale": 0.817
     },
     {
       "id": "magebane_longsword",
       "action": "preset",
-      "length_blocks": 1.471,
-      "first_person_scale": 0.672,
+      "length_blocks": 1.835,
+      "first_person_scale": 0.539,
       "first_person_translation_px": [
         1.13,
-        3.15,
-        1.11
+        2.3,
+        0.8
       ],
       "tip_out_of_view": false,
-      "ground_scale": 0.5,
-      "fixed_scale": 1.0
+      "ground_scale": 0.435,
+      "fixed_scale": 0.817
     },
     {
       "id": "magebane_shield",
@@ -524,31 +614,40 @@
     {
       "id": "magic_tool_spear",
       "action": "preset",
-      "length_blocks": 2.471,
-      "first_person_scale": 0.385,
+      "length_blocks": 3.671,
+      "first_person_scale": 0.259,
       "first_person_translation_px": [
         1.13,
-        1.76,
-        0.53
+        1.42,
+        0.44
       ],
       "tip_out_of_view": false,
-      "ground_scale": 0.323,
-      "fixed_scale": 0.607
+      "ground_scale": 0.217,
+      "fixed_scale": 0.408
     },
     {
       "id": "magic_tool_sword",
-      "action": "keep",
-      "length_blocks": 1.376
+      "action": "preset",
+      "length_blocks": 1.835,
+      "first_person_scale": 0.516,
+      "first_person_translation_px": [
+        1.13,
+        0.75,
+        0.11
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.435,
+      "fixed_scale": 0.817
     },
     {
       "id": "mana_method_rune_stone",
       "action": "keep",
-      "length_blocks": 0.713
+      "length_blocks": 1.091
     },
     {
       "id": "marids_valor",
       "action": "keep",
-      "length_blocks": 1.279
+      "length_blocks": 1.318
     },
     {
       "id": "miasma_infused_katana",
@@ -558,73 +657,82 @@
     {
       "id": "mountainguards_greataxe",
       "action": "preset",
-      "length_blocks": 2.047,
-      "first_person_scale": 0.488,
+      "length_blocks": 3.176,
+      "first_person_scale": 0.356,
       "first_person_translation_px": [
         1.13,
-        2.77,
-        0.38
+        2.08,
+        0.28
       ],
       "tip_out_of_view": false,
-      "ground_scale": 0.39,
-      "fixed_scale": 0.732
+      "ground_scale": 0.251,
+      "fixed_scale": 0.472
     },
     {
       "id": "needler",
       "action": "keep",
-      "length_blocks": 0.926
+      "length_blocks": 1.271
     },
     {
       "id": "null_blade",
       "action": "preset",
-      "length_blocks": 1.765,
-      "first_person_scale": 0.566,
+      "length_blocks": 2.965,
+      "first_person_scale": 0.348,
       "first_person_translation_px": [
         1.13,
-        3.17,
-        0.93
+        1.6,
+        0.44
       ],
       "tip_out_of_view": false,
-      "ground_scale": 0.453,
-      "fixed_scale": 0.85
+      "ground_scale": 0.269,
+      "fixed_scale": 0.505
     },
     {
       "id": "otherworld_trident",
       "action": "preset",
-      "length_blocks": 2.235,
-      "first_person_scale": 0.447,
+      "length_blocks": 3.671,
+      "first_person_scale": 0.276,
       "first_person_translation_px": [
         1.13,
-        2.9,
-        0.93
+        2.11,
+        0.67
       ],
       "tip_out_of_view": false,
-      "ground_scale": 0.357,
-      "fixed_scale": 0.671
+      "ground_scale": 0.217,
+      "fixed_scale": 0.408
     },
     {
       "id": "palladion",
       "action": "preset",
-      "length_blocks": 1.412,
-      "first_person_scale": 0.68,
+      "length_blocks": 1.835,
+      "first_person_scale": 0.653,
       "first_person_translation_px": [
         1.13,
-        3.03,
-        0.38
+        2.68,
+        0.3
       ],
       "tip_out_of_view": false,
-      "ground_scale": 0.5,
-      "fixed_scale": 1.0
+      "ground_scale": 0.435,
+      "fixed_scale": 0.817
     },
     {
       "id": "permafrost_sabre",
       "action": "keep",
-      "length_blocks": 1.176
+      "length_blocks": 1.318
     },
     {
       "id": "prism_blade",
-      "action": "keep",
-      "length_blocks": 1.294
+      "action": "preset",
+      "length_blocks": 1.835,
+      "first_person_scale": 0.539,
+      "first_person_translation_px": [
+        1.13,
+        2.01,
+        0.7
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.435,
+      "fixed_scale": 0.817
     },
     {
       "id": "quicklings_ivy",
@@ -638,46 +746,64 @@
     },
     {
       "id": "random_axe_of_charity",
-      "action": "keep",
-      "length_blocks": 0.906
+      "action": "preset",
+      "length_blocks": 1.435,
+      "first_person_scale": 0.68,
+      "first_person_translation_px": [
+        1.13,
+        1.57,
+        0.37
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.5,
+      "fixed_scale": 1.0
     },
     {
       "id": "recovery_salve",
       "action": "keep",
-      "length_blocks": 0.785
+      "length_blocks": 1.091
     },
     {
       "id": "returning_hand_axe",
-      "action": "keep",
-      "length_blocks": 0.906
+      "action": "preset",
+      "length_blocks": 1.435,
+      "first_person_scale": 0.68,
+      "first_person_translation_px": [
+        1.13,
+        2.68,
+        0.3
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.5,
+      "fixed_scale": 1.0
     },
     {
       "id": "rimeheart_runeblade",
       "action": "preset",
-      "length_blocks": 1.529,
-      "first_person_scale": 0.653,
+      "length_blocks": 1.941,
+      "first_person_scale": 0.517,
       "first_person_translation_px": [
         1.13,
-        2.75,
-        0.96
+        2.0,
+        0.69
       ],
       "tip_out_of_view": false,
-      "ground_scale": 0.5,
-      "fixed_scale": 1.0
+      "ground_scale": 0.412,
+      "fixed_scale": 0.772
     },
     {
       "id": "rune_splitter",
       "action": "preset",
-      "length_blocks": 1.588,
-      "first_person_scale": 0.629,
+      "length_blocks": 2.071,
+      "first_person_scale": 0.656,
       "first_person_translation_px": [
         1.13,
-        2.58,
-        0.49
+        1.7,
+        0.32
       ],
       "tip_out_of_view": false,
-      "ground_scale": 0.5,
-      "fixed_scale": 1.0
+      "ground_scale": 0.386,
+      "fixed_scale": 0.724
     },
     {
       "id": "severing_greatsword",
@@ -696,54 +822,54 @@
     {
       "id": "shadow_burn",
       "action": "preset",
-      "length_blocks": 1.929,
-      "first_person_scale": 0.502,
+      "length_blocks": 2.965,
+      "first_person_scale": 0.326,
       "first_person_translation_px": [
         1.13,
-        2.51,
-        0.5
+        1.33,
+        0.2
       ],
       "tip_out_of_view": false,
-      "ground_scale": 0.414,
-      "fixed_scale": 0.777
+      "ground_scale": 0.269,
+      "fixed_scale": 0.505
     },
     {
       "id": "shroud_of_margins",
       "action": "keep",
-      "length_blocks": 0.831
+      "length_blocks": 1.091
     },
     {
       "id": "sidras_swearing_sword",
       "action": "keep",
-      "length_blocks": 1.024
+      "length_blocks": 1.318
     },
     {
       "id": "sorrows_edge",
       "action": "preset",
-      "length_blocks": 1.471,
-      "first_person_scale": 0.679,
+      "length_blocks": 2.071,
+      "first_person_scale": 0.582,
       "first_person_translation_px": [
         1.13,
-        2.26,
-        0.77
+        1.67,
+        0.57
       ],
       "tip_out_of_view": false,
-      "ground_scale": 0.5,
-      "fixed_scale": 1.0
+      "ground_scale": 0.386,
+      "fixed_scale": 0.724
     },
     {
       "id": "soul_shatter_blade",
       "action": "preset",
-      "length_blocks": 1.823,
-      "first_person_scale": 0.548,
+      "length_blocks": 2.965,
+      "first_person_scale": 0.405,
       "first_person_translation_px": [
         1.13,
-        2.85,
-        0.27
+        1.78,
+        0.1
       ],
       "tip_out_of_view": false,
-      "ground_scale": 0.438,
-      "fixed_scale": 0.822
+      "ground_scale": 0.269,
+      "fixed_scale": 0.505
     },
     {
       "id": "spell_forged_rapier",
@@ -753,45 +879,45 @@
     {
       "id": "spirit_charm",
       "action": "keep",
-      "length_blocks": 0.785
+      "length_blocks": 1.091
     },
     {
       "id": "spotlight",
       "action": "keep",
-      "length_blocks": 0.941
+      "length_blocks": 1.318
     },
     {
       "id": "staff_of_moonlight",
       "action": "preset",
-      "length_blocks": 2.177,
-      "first_person_scale": 0.459,
+      "length_blocks": 2.635,
+      "first_person_scale": 0.392,
       "first_person_translation_px": [
         1.13,
-        3.15,
-        0.79
+        3.04,
+        0.78
       ],
       "tip_out_of_view": false,
-      "ground_scale": 0.367,
-      "fixed_scale": 0.689
+      "ground_scale": 0.303,
+      "fixed_scale": 0.569
     },
     {
       "id": "stegosaurus_greatsword",
       "action": "preset",
-      "length_blocks": 1.929,
-      "first_person_scale": 0.518,
+      "length_blocks": 2.965,
+      "first_person_scale": 0.361,
       "first_person_translation_px": [
         1.13,
-        2.53,
-        0.7
+        1.47,
+        0.38
       ],
       "tip_out_of_view": false,
-      "ground_scale": 0.414,
-      "fixed_scale": 0.777
+      "ground_scale": 0.269,
+      "fixed_scale": 0.505
     },
     {
       "id": "sword_crystal",
       "action": "keep",
-      "length_blocks": 1.376
+      "length_blocks": 1.318
     },
     {
       "id": "the_dagger_of_many_daggers",
@@ -801,55 +927,82 @@
     {
       "id": "the_dragons_truth",
       "action": "keep",
-      "length_blocks": 0.713
+      "length_blocks": 1.091
     },
     {
       "id": "the_lumberjack",
-      "action": "keep",
-      "length_blocks": 1.376
+      "action": "preset",
+      "length_blocks": 2.071,
+      "first_person_scale": 0.645,
+      "first_person_translation_px": [
+        1.13,
+        2.03,
+        1.46
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.386,
+      "fixed_scale": 0.724
     },
     {
       "id": "the_stabshroom",
       "action": "keep",
-      "length_blocks": 0.435
+      "length_blocks": 0.647
     },
     {
       "id": "thornblight",
-      "action": "keep",
-      "length_blocks": 0.906
-    },
-    {
-      "id": "thundercleave",
       "action": "preset",
-      "length_blocks": 1.882,
-      "first_person_scale": 0.525,
+      "length_blocks": 1.435,
+      "first_person_scale": 0.68,
       "first_person_translation_px": [
         1.13,
-        2.86,
-        1.01
-      ],
-      "tip_out_of_view": false,
-      "ground_scale": 0.425,
-      "fixed_scale": 0.796
-    },
-    {
-      "id": "time_bender_dadao",
-      "action": "preset",
-      "length_blocks": 1.529,
-      "first_person_scale": 0.612,
-      "first_person_translation_px": [
-        1.13,
-        2.96,
-        0.92
+        2.37,
+        0.38
       ],
       "tip_out_of_view": false,
       "ground_scale": 0.5,
       "fixed_scale": 1.0
     },
     {
+      "id": "thundercleave",
+      "action": "preset",
+      "length_blocks": 2.965,
+      "first_person_scale": 0.333,
+      "first_person_translation_px": [
+        1.13,
+        1.5,
+        0.51
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.269,
+      "fixed_scale": 0.505
+    },
+    {
+      "id": "time_bender_dadao",
+      "action": "preset",
+      "length_blocks": 2.4,
+      "first_person_scale": 0.39,
+      "first_person_translation_px": [
+        1.13,
+        1.48,
+        0.42
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.333,
+      "fixed_scale": 0.625
+    },
+    {
       "id": "tripolar_sword",
-      "action": "keep",
-      "length_blocks": 1.353
+      "action": "preset",
+      "length_blocks": 1.835,
+      "first_person_scale": 0.496,
+      "first_person_translation_px": [
+        1.13,
+        1.92,
+        0.62
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.435,
+      "fixed_scale": 0.817
     },
     {
       "id": "twin_hook_swords",
@@ -864,17 +1017,17 @@
     {
       "id": "twin_swords_of_deflection",
       "action": "keep",
-      "length_blocks": 1.176
+      "length_blocks": 1.318
     },
     {
       "id": "twin_swords_of_deflection_left",
       "action": "keep",
-      "length_blocks": 1.176
+      "length_blocks": 1.318
     },
     {
       "id": "unicorn_dagger",
       "action": "keep",
-      "length_blocks": 0.494
+      "length_blocks": 0.647
     },
     {
       "id": "viola_of_moonlit_spirits",
@@ -883,28 +1036,46 @@
     },
     {
       "id": "viper_whip",
-      "action": "keep",
-      "length_blocks": 1.294
+      "action": "preset",
+      "length_blocks": 1.576,
+      "first_person_scale": 0.527,
+      "first_person_translation_px": [
+        1.13,
+        1.25,
+        0.04
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.5,
+      "fixed_scale": 1.0
     },
     {
       "id": "wand_of_bubbles",
       "action": "keep",
-      "length_blocks": 0.612
+      "length_blocks": 1.176
     },
     {
       "id": "warmages_longsword",
-      "action": "keep",
-      "length_blocks": 1.318
+      "action": "preset",
+      "length_blocks": 1.835,
+      "first_person_scale": 0.654,
+      "first_person_translation_px": [
+        1.13,
+        2.36,
+        0.77
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.435,
+      "fixed_scale": 0.817
     },
     {
       "id": "wavebreaker",
       "action": "preset",
       "length_blocks": 1.929,
-      "first_person_scale": 0.518,
+      "first_person_scale": 0.599,
       "first_person_translation_px": [
         1.13,
-        2.61,
-        0.74
+        3.08,
+        0.89
       ],
       "tip_out_of_view": false,
       "ground_scale": 0.414,
@@ -912,51 +1083,60 @@
     },
     {
       "id": "weapon_of_resurgence",
-      "action": "keep",
-      "length_blocks": 1.326
+      "action": "preset",
+      "length_blocks": 1.835,
+      "first_person_scale": 0.539,
+      "first_person_translation_px": [
+        1.13,
+        2.07,
+        0.72
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.435,
+      "fixed_scale": 0.817
     },
     {
       "id": "whirling_blades",
       "action": "keep",
-      "length_blocks": 1.176
+      "length_blocks": 1.318
     },
     {
       "id": "whirling_blades_left",
       "action": "keep",
-      "length_blocks": 1.176
+      "length_blocks": 1.318
     },
     {
       "id": "white_whip_of_welting",
       "action": "preset",
-      "length_blocks": 1.765,
-      "first_person_scale": 0.566,
+      "length_blocks": 2.259,
+      "first_person_scale": 0.455,
       "first_person_translation_px": [
         1.13,
-        1.44,
-        0.41
+        0.74,
+        0.16
       ],
       "tip_out_of_view": false,
-      "ground_scale": 0.453,
-      "fixed_scale": 0.849
+      "ground_scale": 0.354,
+      "fixed_scale": 0.664
     },
     {
       "id": "windcutter",
       "action": "preset",
-      "length_blocks": 1.412,
-      "first_person_scale": 0.674,
+      "length_blocks": 1.835,
+      "first_person_scale": 0.503,
       "first_person_translation_px": [
         1.13,
-        2.97,
-        0.59
+        1.95,
+        0.33
       ],
       "tip_out_of_view": false,
-      "ground_scale": 0.5,
-      "fixed_scale": 1.0
+      "ground_scale": 0.435,
+      "fixed_scale": 0.817
     },
     {
       "id": "written_consent",
       "action": "keep",
-      "length_blocks": 0.785
+      "length_blocks": 1.091
     }
   ]
 }

@@ -9,8 +9,11 @@ import com.newuniverse.nusmp.client.relics.worn.WornCtx;
 import com.newuniverse.nusmp.client.relics.worn.WornRenderer;
 import com.newuniverse.nusmp.client.relics.worn.WornRenderers;
 import com.newuniverse.nusmp.client.relics.worn.lib.ArmorGlow;
+import com.newuniverse.nusmp.client.relics.worn.lib.ArmorItems;
 import com.newuniverse.nusmp.client.relics.worn.lib.WornLibDraw;
 import com.newuniverse.nusmp.client.relics.worn.lib.WornLibrary;
+import com.newuniverse.nusmp.client.relics.worn.lib.WornPlacer;
+import com.newuniverse.nusmp.item.CuriosLink;
 import com.newuniverse.nusmp.relics.Grade;
 import com.newuniverse.nusmp.relics.Look;
 import com.newuniverse.nusmp.relics.RelicDef;
@@ -55,30 +58,45 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
     public void render(PoseStack pose, MultiBufferSource buffers, int light, AbstractClientPlayer p, float limbSwing, float limbSwingAmount,
                        float partial, float age, float netHeadYaw, float headPitch) {
         if (p.isSpectator() || p.isInvisible()) return;
+        ENSEMBLES.clear();
+        ArmorItems.collect(p, ENSEMBLES);                                              // the mod's own armour (the robe sets ...) as 3D pieces: drawn with the relics, never hidden by the relic switches
+        sortEnsembles();
         var worn = Relics.wornList(p);
-        if (worn.isEmpty()) return;
+        if (worn.isEmpty() && ENSEMBLES.isEmpty()) return;
         Minecraft mc = Minecraft.getInstance();
         double distSq = p.distanceToSqr(mc.gameRenderer.getMainCamera().getPosition());
         if (distSq > WornFxPlan.CULL_RANGE * WornFxPlan.CULL_RANGE) return;
         boolean models = RelicFxOptions.models();
+        boolean hideArmour = RelicFxOptions.hideArmourRelics();
+        List<CuriosLink.RenderFlag> flags = null;                                      // the eye icons of the Curios screen, read once per wearer
         VertexConsumer vc = null;
         PlayerModel<AbstractClientPlayer> model = getParentModel();
         List<Relics.Worn> custom = null;                                               // relics with their own worn renderer: drawn after the generic ones
-        ENSEMBLES.clear();
+        int[] plain = new int[RelicSlot.values().length];                              // how many plain-box relics each slot has had so far (their place among slot-mates, after the ones with models)
+        for (Relics.Worn w : worn) {
+            RelicDef d = w.def();
+            if (!d.slot().isHand() && WornRenderers.get(d.id()) == null && (models || d.slot().isArmor()) && WornLibrary.of(d) != null) plain[d.slot().ordinal()]++;
+        }
         for (Relics.Worn w : worn) {
             RelicDef d = w.def();
             RelicSlot slot = d.slot();
+            if (slot.isHand()) continue;
+            if (slot.isCurio()) {
+                if (flags == null) flags = CuriosLink.flags(p);
+                if (!rendered(flags, w.stack())) continue;                              // the wearer switched this Curios slot's visibility off
+            } else if (slot.isArmor() && hideArmour) {
+                continue;                                                               // the client option / key: armour relics have no Curios eye icon
+            }
             if (WornRenderers.get(d.id()) != null) {
                 if (custom == null) custom = new ArrayList<>(2);
                 custom.add(w);
                 continue;
             }
-            if (slot.isHand()) continue;
             if (models || slot.isArmor()) {                                              // a head or boot model stands where the painted armour box was left clear: it is not optional
                 WornLibrary.Ensemble e = WornLibrary.of(d);
                 if (e != null) {
                     int at = ENSEMBLES.size();
-                    while (at > 0 && ENSEMBLES.get(at - 1).tier < e.tier) at--;
+                    while (at > 0 && before(e, ENSEMBLES.get(at - 1))) at--;
                     ENSEMBLES.add(at, e);
                     continue;
                 }
@@ -87,11 +105,12 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
             if (vc == null) vc = buffers.getBuffer(RenderType.entityCutoutNoCull(RelicTextures.WHITE));
             int main = d.paletteMain(), trim = d.paletteTrim(), glow = d.paletteGlow();
             boolean shine = d.grade().atLeast(Grade.GOD);
-            if (slot == RelicSlot.NECK) neck(pose, vc, light, model.body, d.look(), main, trim, glow);
-            else if (slot == RelicSlot.BACK) back(pose, vc, light, model.body, d.look(), main, trim, glow, p.isCrouching());
-            else if (slot == RelicSlot.BELT) belt(pose, vc, light, model.body, main, trim, glow);
-            else if (slot == RelicSlot.HANDS) { hands(pose, vc, light, model.rightArm, true, main, trim, glow); hands(pose, vc, light, model.leftArm, false, main, trim, glow); }
-            else if (slot == RelicSlot.CHARM) charm(pose, vc, light, model.body, main, trim, glow, shine);
+            WornPlacer.Placement pl = WornPlacer.place(slot.name(), plain[slot.ordinal()]++);
+            if (slot == RelicSlot.NECK) neck(pose, vc, light, model.body, d.look(), main, trim, glow, pl);
+            else if (slot == RelicSlot.BACK) back(pose, vc, light, model.body, d.look(), main, trim, glow, p.isCrouching(), pl);
+            else if (slot == RelicSlot.BELT) belt(pose, vc, light, model.body, main, trim, glow, pl);
+            else if (slot == RelicSlot.HANDS) { hands(pose, vc, light, model.rightArm, true, main, trim, glow, pl); hands(pose, vc, light, model.leftArm, false, main, trim, glow, pl); }
+            else if (slot == RelicSlot.CHARM) charm(pose, vc, light, model.body, main, trim, glow, shine, pl);
         }
         if (!ENSEMBLES.isEmpty()) {
             WornLibDraw.draw(ENSEMBLES, pose, buffers, light, model, p.isCrouching(), distSq, age, limbSwingAmount, RelicFxOptions.quality());
@@ -99,13 +118,46 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
         }
         for (Relics.Worn w : worn) {                                                     // the emissive pass of the painted armour boxes
             RelicDef d = w.def();
-            if (d.slot().isArmor() && RelicTextures.hasArmorGlow(d.id()))
+            if (d.slot().isArmor() && !hideArmour && RelicTextures.hasArmorGlow(d.id()))
                 ArmorGlow.draw(pose, buffers, model, d.slot(), RelicTextures.armorGlow(d.id()), 0.75f + 0.25f * (float) Math.sin(age * 0.09f));
         }
         if (custom != null) {
             boolean first = p == mc.player && mc.options.getCameraType().isFirstPerson();
             for (Relics.Worn w : custom) drawCustom(w, pose, buffers, light, model, p, partial, age, netHeadYaw, headPitch, first);
         }
+    }
+
+    /** Best grade first, ties by id, so the order is the same every frame. */
+    private static boolean before(WornLibrary.Ensemble a, WornLibrary.Ensemble b) {
+        return a.tier > b.tier || (a.tier == b.tier && a.id.compareTo(b.id) < 0);
+    }
+
+    /** Insertion sort of the (at most a handful of) ensembles collected so far into {@link #before} order; allocation free. */
+    private static void sortEnsembles() {
+        for (int i = 1; i < ENSEMBLES.size(); i++) {
+            WornLibrary.Ensemble e = ENSEMBLES.get(i);
+            int j = i;
+            while (j > 0 && before(e, ENSEMBLES.get(j - 1))) {
+                ENSEMBLES.set(j, ENSEMBLES.get(j - 1));
+                j--;
+            }
+            ENSEMBLES.set(j, e);
+        }
+    }
+
+    /** Is this Curios stack's slot visible? True when the list has no entry for it (Curios absent or unreadable). */
+    private static boolean rendered(List<CuriosLink.RenderFlag> flags, net.minecraft.world.item.ItemStack stack) {
+        for (CuriosLink.RenderFlag f : flags) if (f.stack() == stack) return f.render();
+        for (CuriosLink.RenderFlag f : flags) if (net.minecraft.world.item.ItemStack.matches(f.stack(), stack)) return f.render();
+        return true;
+    }
+
+    /** The place of a plain-box relic among its slot-mates, applied on top of the body part's pose (model pixels). */
+    private static void place(PoseStack pose, WornPlacer.Placement pl) {
+        if (pl == WornPlacer.Placement.NONE) return;
+        pose.translate(pl.dx() / 16f, pl.dy() / 16f, pl.dz() / 16f);
+        if (pl.rotY() != 0f) pose.mulPose(com.mojang.math.Axis.YP.rotationDegrees(pl.rotY()));
+        pose.scale(pl.scale(), pl.scale(), pl.scale());
     }
 
     /** A relic with its own renderer ({@link WornRenderers}): handed the posed model; a renderer that throws is switched off, and the pose stack is put back. */
@@ -125,9 +177,10 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
     }
 
     // ---------------------------------------------------------------- the worn pieces (model units: 16 to a block, y down, front is -z)
-    private static void neck(PoseStack pose, VertexConsumer vc, int light, ModelPart body, Look look, int main, int trim, int glow) {
+    private static void neck(PoseStack pose, VertexConsumer vc, int light, ModelPart body, Look look, int main, int trim, int glow, WornPlacer.Placement pl) {
         pose.pushPose();
         body.translateAndRotate(pose);
+        place(pose, pl);
         PoseStack.Pose p = pose.last();
         for (int i = 0; i < 4; i++) {                                                  // the chain: two short runs from the collar to the pendant
             float y = -0.2f + i * 0.7f, x = 2.3f - i * 0.5f;
@@ -142,9 +195,10 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
         pose.popPose();
     }
 
-    private static void back(PoseStack pose, VertexConsumer vc, int light, ModelPart body, Look look, int main, int trim, int glow, boolean crouching) {
+    private static void back(PoseStack pose, VertexConsumer vc, int light, ModelPart body, Look look, int main, int trim, int glow, boolean crouching, WornPlacer.Placement pl) {
         pose.pushPose();
         body.translateAndRotate(pose);
+        place(pose, pl);
         PoseStack.Pose p = pose.last();
         boolean cape = look == Look.CAPE, mantle = look == Look.MANTLE;
         float len = cape ? 13f : mantle ? 5f : 18f;                                    // the hem, in pixels down from the shoulders
@@ -163,9 +217,10 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
         pose.popPose();
     }
 
-    private static void belt(PoseStack pose, VertexConsumer vc, int light, ModelPart body, int main, int trim, int glow) {
+    private static void belt(PoseStack pose, VertexConsumer vc, int light, ModelPart body, int main, int trim, int glow, WornPlacer.Placement pl) {
         pose.pushPose();
         body.translateAndRotate(pose);
+        place(pose, pl);
         PoseStack.Pose p = pose.last();
         Boxes.box(p, vc, light, -4.3f, 9.2f, -2.3f, 4.3f, 11.2f, 2.3f, main);
         Boxes.box(p, vc, light, -4.35f, 9.1f, -2.35f, 4.35f, 9.5f, 2.35f, trim);
@@ -175,9 +230,10 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
         pose.popPose();
     }
 
-    private static void hands(PoseStack pose, VertexConsumer vc, int light, ModelPart arm, boolean right, int main, int trim, int glow) {
+    private static void hands(PoseStack pose, VertexConsumer vc, int light, ModelPart arm, boolean right, int main, int trim, int glow, WornPlacer.Placement pl) {
         pose.pushPose();
         arm.translateAndRotate(pose);
+        place(pose, pl);
         PoseStack.Pose p = pose.last();
         float x0 = right ? -3.45f : -1.45f, x1 = right ? 1.45f : 3.45f;
         Boxes.box(p, vc, light, x0, 6.6f, -2.45f, x1, 10.4f, 2.45f, main);             // the gauntlet's cuff
@@ -188,9 +244,10 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
         pose.popPose();
     }
 
-    private static void charm(PoseStack pose, VertexConsumer vc, int light, ModelPart body, int main, int trim, int glow, boolean shine) {
+    private static void charm(PoseStack pose, VertexConsumer vc, int light, ModelPart body, int main, int trim, int glow, boolean shine, WornPlacer.Placement pl) {
         pose.pushPose();
         body.translateAndRotate(pose);
+        place(pose, pl);
         PoseStack.Pose p = pose.last();
         Boxes.box(p, vc, light, 4.0f, 8.8f, -0.4f, 4.4f, 10.6f, 0.4f, trim);            // the cord at the left hip
         Boxes.box(p, vc, light, 4.0f, 10.4f, -1.2f, 4.9f, 12.6f, 1.2f, main);           // the charm itself

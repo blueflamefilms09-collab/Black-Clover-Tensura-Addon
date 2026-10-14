@@ -1,152 +1,170 @@
 {
  "classes": {
   "dagger": {
-   "min": 0.35,
-   "max": 0.55,
+   "min": 0.45,
+   "max": 0.7,
    "head_min": 0.0,
    "grip": 0.2
   },
   "shortsword": {
-   "min": 0.8,
-   "max": 1.0,
-   "head_min": 0.0,
-   "grip": 0.2
-  },
-  "longsword": {
-   "min": 1.1,
+   "min": 1.0,
    "max": 1.3,
    "head_min": 0.0,
    "grip": 0.2
   },
+  "longsword": {
+   "min": 1.4,
+   "max": 1.8,
+   "head_min": 0.0,
+   "grip": 0.2
+  },
   "rapier": {
-   "min": 1.1,
+   "min": 1.0,
    "max": 1.3,
    "head_min": 0.0,
    "grip": 0.2
   },
   "katana": {
-   "min": 1.1,
-   "max": 1.3,
+   "min": 1.4,
+   "max": 1.8,
    "head_min": 0.0,
    "grip": 0.2
   },
   "sabre": {
    "min": 1.0,
-   "max": 1.25,
+   "max": 1.3,
    "head_min": 0.0,
    "grip": 0.2
   },
   "dadao": {
-   "min": 1.2,
-   "max": 1.45,
+   "min": 1.8,
+   "max": 2.4,
    "head_min": 0.0,
    "grip": 0.2
   },
   "greatsword": {
-   "min": 1.5,
-   "max": 1.9,
+   "min": 2.2,
+   "max": 3.0,
    "head_min": 0.0,
    "grip": 0.22
   },
   "handaxe": {
-   "min": 0.7,
-   "max": 0.9,
-   "head_min": 0.3,
+   "min": 1.1,
+   "max": 1.4,
+   "head_min": 0.5,
    "grip": 0.25
   },
   "battleaxe": {
-   "min": 1.1,
-   "max": 1.3,
-   "head_min": 0.45,
+   "min": 1.6,
+   "max": 2.0,
+   "head_min": 0.75,
    "grip": 0.25
   },
   "greataxe": {
-   "min": 1.6,
-   "max": 2.0,
-   "head_min": 0.7,
+   "min": 2.4,
+   "max": 3.0,
+   "head_min": 1.1,
    "grip": 0.28
   },
   "crescent": {
-   "min": 1.2,
-   "max": 1.5,
-   "head_min": 0.5,
+   "min": 1.6,
+   "max": 2.0,
+   "head_min": 0.75,
    "grip": 0.25
   },
   "scythe": {
-   "min": 1.5,
-   "max": 1.9,
-   "head_min": 0.5,
+   "min": 2.0,
+   "max": 2.6,
+   "head_min": 0.6,
    "grip": 0.3
   },
   "cleaver": {
-   "min": 0.55,
-   "max": 0.8,
-   "head_min": 0.25,
+   "min": 0.9,
+   "max": 1.2,
+   "head_min": 0.45,
    "grip": 0.25
   },
   "spear": {
-   "min": 1.8,
-   "max": 2.4,
+   "min": 2.8,
+   "max": 3.6,
    "head_min": 0.0,
    "grip": 0.33
   },
   "glaive": {
-   "min": 1.8,
-   "max": 2.4,
+   "min": 2.8,
+   "max": 3.6,
    "head_min": 0.0,
    "grip": 0.33
   },
   "trident": {
-   "min": 1.8,
-   "max": 2.4,
+   "min": 2.8,
+   "max": 3.6,
    "head_min": 0.0,
    "grip": 0.33
   },
   "staff": {
-   "min": 1.6,
-   "max": 2.0,
+   "min": 2.0,
+   "max": 2.6,
    "head_min": 0.0,
    "grip": 0.4
   },
   "whip": {
-   "min": 1.5,
-   "max": 2.0,
+   "min": 1.6,
+   "max": 2.4,
+   "head_min": 0.0,
+   "grip": 0.15
+  },
+  "coilwhip": {
+   "min": 1.1,
+   "max": 1.7,
    "head_min": 0.0,
    "grip": 0.15
   },
   "crossbow": {
-   "min": 0.7,
-   "max": 0.95,
+   "min": 1.0,
+   "max": 1.2,
+   "head_min": 0.0,
+   "grip": 0.5
+  },
+  "bow": {
+   "min": 1.3,
+   "max": 1.6,
    "head_min": 0.0,
    "grip": 0.5
   },
   "hammer": {
-   "min": 1.1,
-   "max": 1.5,
-   "head_min": 0.4,
+   "min": 1.3,
+   "max": 1.8,
+   "head_min": 0.5,
    "grip": 0.25
   },
+  "greathammer": {
+   "min": 2.2,
+   "max": 2.8,
+   "head_min": 0.9,
+   "grip": 0.28
+  },
   "mace": {
-   "min": 0.8,
-   "max": 1.1,
-   "head_min": 0.0,
+   "min": 1.3,
+   "max": 1.8,
+   "head_min": 0.5,
    "grip": 0.25
   },
   "club": {
-   "min": 0.9,
-   "max": 1.4,
+   "min": 1.3,
+   "max": 1.8,
    "head_min": 0.0,
    "grip": 0.25
   },
   "wand": {
-   "min": 0.35,
-   "max": 0.55,
+   "min": 0.8,
+   "max": 1.2,
    "head_min": 0.0,
    "grip": 0.2
   },
   "shield": {
-   "min": 0.7,
-   "max": 1.1,
+   "min": 0.9,
+   "max": 1.2,
    "head_min": 0.0,
    "grip": 0.5
   },
@@ -156,18 +174,18 @@
    "head_min": 0.0,
    "grip": 0.5
   },
-  "coilwhip": {
-   "min": 0.9,
-   "max": 1.4,
+  "handitem": {
+   "min": 0.5,
+   "max": 0.9,
    "head_min": 0.0,
-   "grip": 0.15
+   "grip": 0.5
   }
  },
- "item_min_extent": 0.4,
+ "item_min_extent": 0.5,
  "weapons": {
-  "amulet_of_the_juggernauts_blindness": "item",
-  "anti_bird_charm": "item",
-  "anti_bird_compass": "item",
+  "amulet_of_the_juggernauts_blindness": "handitem",
+  "anti_bird_charm": "handitem",
+  "anti_bird_compass": "handitem",
   "astralaria": "battleaxe",
   "astralis_the_eye_of_the_universe": "staff",
   "axe_of_the_crimson_saint": "battleaxe",
@@ -175,17 +193,17 @@
   "bianca": "crossbow",
   "bloodbound_katana": "katana",
   "bolt_thrower": "crossbow",
-  "bond_thread": "item",
-  "book_of_mispells": "item",
+  "bond_thread": "handitem",
+  "book_of_mispells": "handitem",
   "bottle_blade": "shortsword",
   "brooch_pin": "dagger",
   "buster_sword": "greatsword",
   "butcher_cleaver": "cleaver",
   "caesars_gladius": "shortsword",
   "catstaff": "staff",
-  "circlet_of_quickened_thought": "item",
+  "circlet_of_quickened_thought": "handitem",
   "club_of_rot": "club",
-  "communication_magic_device": "item",
+  "communication_magic_device": "handitem",
   "contingency_plan": "dagger",
   "corpse_eater": "katana",
   "crossbow_of_swift_death": "crossbow",
@@ -196,9 +214,9 @@
   "demon_destroyer_sword": "greatsword",
   "demon_dweller_sword": "greatsword",
   "demon_slasher_katana": "katana",
-  "devil_bound_sheath": "item",
-  "devil_contract": "item",
-  "devil_contract_book": "item",
+  "devil_bound_sheath": "handitem",
+  "devil_contract": "handitem",
+  "devil_contract_book": "handitem",
   "disintegration_dagger": "dagger",
   "doom_hammer": "hammer",
   "dragon_tooth_blade_red": "katana",
@@ -209,21 +227,21 @@
   "encircled_blade": "shortsword",
   "eschaton": "rapier",
   "flamecutter": "longsword",
-  "fortune_die": "item",
+  "fortune_die": "handitem",
   "frostfang": "battleaxe",
-  "gamblers_grimoire_page": "item",
-  "gauches_hand_mirror": "item",
+  "gamblers_grimoire_page": "handitem",
+  "gauches_hand_mirror": "handitem",
   "giant_jawblade": "greatsword",
-  "glutton_chalice": "item",
-  "grimoire_chain": "item",
-  "hand_of_providence": "item",
+  "glutton_chalice": "handitem",
+  "grimoire_chain": "handitem",
+  "hand_of_providence": "handitem",
   "heart_of_the_flame": "greatsword",
   "humbling_longsword": "longsword",
   "hunger": "greataxe",
   "hyperborean_crossbow": "crossbow",
   "jade_xiphos": "shortsword",
   "junglethorn_whip": "coilwhip",
-  "ki_resonance_lantern": "item",
+  "ki_resonance_lantern": "handitem",
   "krakeblade": "greatsword",
   "last_word": "shortsword",
   "leviathan_axe": "handaxe",
@@ -235,7 +253,7 @@
   "magic_tool_bow": "crossbow",
   "magic_tool_spear": "spear",
   "magic_tool_sword": "longsword",
-  "mana_method_rune_stone": "item",
+  "mana_method_rune_stone": "handitem",
   "marids_valor": "sabre",
   "miasma_infused_katana": "katana",
   "mountainguards_greataxe": "greataxe",
@@ -248,24 +266,24 @@
   "quicklings_ivy": "rapier",
   "rainbow_rapier": "rapier",
   "random_axe_of_charity": "handaxe",
-  "recovery_salve": "item",
+  "recovery_salve": "handitem",
   "returning_hand_axe": "handaxe",
-  "rimeheart_runeblade": "longsword",
+  "rimeheart_runeblade": "greatsword",
   "rune_splitter": "battleaxe",
   "severing_greatsword": "greatsword",
   "shadow_burn": "greatsword",
-  "shroud_of_margins": "item",
+  "shroud_of_margins": "handitem",
   "sidras_swearing_sword": "shortsword",
   "sorrows_edge": "crescent",
   "soul_shatter_blade": "greatsword",
   "spell_forged_rapier": "rapier",
-  "spirit_charm": "item",
+  "spirit_charm": "handitem",
   "spotlight": "shortsword",
   "staff_of_moonlight": "staff",
   "stegosaurus_greatsword": "greatsword",
-  "sword_crystal": "longsword",
+  "sword_crystal": "shortsword",
   "the_dagger_of_many_daggers": "dagger",
-  "the_dragons_truth": "item",
+  "the_dragons_truth": "handitem",
   "the_lumberjack": "battleaxe",
   "the_stabshroom": "dagger",
   "thornblight": "handaxe",
@@ -275,15 +293,16 @@
   "twin_hook_swords": "shortsword",
   "twin_swords_of_deflection": "shortsword",
   "unicorn_dagger": "dagger",
-  "viola_of_moonlit_spirits": "item",
+  "viola_of_moonlit_spirits": "handitem",
   "viper_whip": "coilwhip",
   "wand_of_bubbles": "wand",
   "warmages_longsword": "longsword",
-  "wavebreaker": "greatsword",
+  "wavebreaker": "longsword",
   "weapon_of_resurgence": "longsword",
   "whirling_blades": "sabre",
   "white_whip_of_welting": "whip",
   "windcutter": "longsword",
-  "written_consent": "item"
+  "written_consent": "handitem",
+  "elsdocia_legacy": "greatsword"
  }
 }

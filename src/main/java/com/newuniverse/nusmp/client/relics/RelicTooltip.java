@@ -71,6 +71,42 @@ public final class RelicTooltip {
 
     /** Game bus: puts the component into the tooltip of every relic stack. */
     public static void onGather(RenderTooltipEvent.GatherComponents e) {
+        try {
+            gather(e);
+        } catch (RuntimeException | LinkageError failed) {                                       // never drop the tooltip: the name and the plain grade lines stay
+            if (!warned) {
+                warned = true;
+                com.mojang.logging.LogUtils.getLogger().error("[nusmp] the relic tooltip could not be built; showing the plain lines", failed);
+            }
+            try {
+                ItemStack stack = e.getItemStack();
+                RelicDef def = Relics.defOf(stack);
+                List<Either<FormattedText, TooltipComponent>> els = e.getTooltipElements();
+                els.removeIf(x -> x.right().orElse(null) instanceof Data);
+                if (def != null) for (RelicTooltipLayout.Para p : plain(stack, def)) els.add(Either.left(Component.literal(p.text())));
+            } catch (RuntimeException | LinkageError ignored) {
+                // the vanilla lines are all that is left
+            }
+        }
+    }
+
+    private static boolean warned;
+
+    /** The plain grade and slot lines of a relic stack, whatever state its data is in. */
+    private static List<RelicTooltipLayout.Para> plain(ItemStack stack, RelicDef def) {
+        String stars = "", label = "";
+        try {
+            Grade g = Tiers.effectiveGrade(stack, def);
+            if (g == null) g = def.grade();
+            stars = g.stars();
+            label = g.label();
+        } catch (RuntimeException | LinkageError ignored) {
+            // the grade stays blank
+        }
+        return RelicTooltipFallback.lines(stars, label, def.slot().label(), def.slot().isCurio());
+    }
+
+    private static void gather(RenderTooltipEvent.GatherComponents e) {
         ItemStack stack = e.getItemStack();
         RelicDef def = Relics.defOf(stack);
         if (def == null) return;
@@ -96,15 +132,19 @@ public final class RelicTooltip {
      * the grade's colour fading toward violet (Genesis cycles through the rainbow). The classic look keeps the vanilla tooltip colours.
      */
     public static void onColor(RenderTooltipEvent.Color e) {
-        if (!UiTheme.anime()) return;
-        RelicDef def = Relics.defOf(e.getItemStack());
-        if (def == null) return;
-        Grade eg = Tiers.effectiveGrade(e.getItemStack(), def);
-        int c = 0xFF000000 | (eg == Grade.GENESIS ? rainbow() : eg.rgb());
-        e.setBackgroundStart(0xF2101A30);
-        e.setBackgroundEnd(0xF2070B16);
-        e.setBorderStart(c);
-        e.setBorderEnd(UiMath.mix(c, 0xFF3A2A8A, 0.6f));
+        try {
+            if (!UiTheme.anime()) return;
+            RelicDef def = Relics.defOf(e.getItemStack());
+            if (def == null) return;
+            Grade eg = Tiers.effectiveGrade(e.getItemStack(), def);
+            int c = 0xFF000000 | (eg == Grade.GENESIS ? rainbow() : eg.rgb());
+            e.setBackgroundStart(0xF2101A30);
+            e.setBackgroundEnd(0xF2070B16);
+            e.setBorderStart(c);
+            e.setBorderEnd(UiMath.mix(c, 0xFF3A2A8A, 0.6f));
+        } catch (RuntimeException | LinkageError failed) {
+            // the vanilla colours stay
+        }
     }
 
     /** Game bus: the wheel turns the pages of a paged relic tooltip instead of scrolling the screen underneath. */
@@ -126,9 +166,17 @@ public final class RelicTooltip {
         private Layout layout() {
             if (layout == null) {
                 Font font = Minecraft.getInstance().font;
-                layout = RelicTooltipLayout.layout(content(d, Screen.hasShiftDown()), font::width, d.maxWidth(), d.maxHeight(), LINE, 0.75f);
+                try {
+                    layout = built(font);
+                } catch (RuntimeException | LinkageError failed) {
+                    layout = RelicTooltipLayout.layout(RelicTooltipFallback.lines("", "Relic", "?", false), font::width, d.maxWidth(), d.maxHeight(), LINE, 0.75f);
+                }
             }
             return layout;
+        }
+
+        private Layout built(Font font) {
+            return RelicTooltipLayout.layout(RelicTooltipFallback.safe(() -> content(d, Screen.hasShiftDown()), () -> plain(d.stack(), d.def())), font::width, d.maxWidth(), d.maxHeight(), LINE, 0.75f);
         }
 
         @Override public int getHeight() { return layout().height() + 2; }
@@ -143,21 +191,26 @@ public final class RelicTooltip {
             List<Row> rows = l.pages().get(RelicTooltip.page);
             PoseStack pose = g.pose();
             pose.pushPose();
-            pose.translate(x, y + 1, 0);
-            pose.scale(l.scale(), l.scale(), 1f);
-            int yy = 0;
-            boolean anime = UiTheme.anime();
-            for (Row r : rows) {
-                if (!r.blank()) g.drawString(font, r.text(), r.indent(), yy, color(d.def(), d.stack(), r.tag()), true);
-                yy += LINE;
+            try {
+                pose.translate(x, y + 1, 0);
+                pose.scale(l.scale(), l.scale(), 1f);
+                int yy = 0;
+                boolean anime = UiTheme.anime();
+                for (Row r : rows) {
+                    if (!r.blank()) g.drawString(font, r.text(), r.indent(), yy, color(d.def(), d.stack(), r.tag()), true);
+                    yy += LINE;
+                }
+                if (anime) g.fill(0, LINE - 1, Math.round(l.width() / l.scale()), LINE, UiMath.withAlpha(color(d.def(), d.stack(), GRADE), 0.45f));      // a hairline under the grade row
+                if (l.pageCount() > 1) {
+                    String foot = anime ? UiLang.get(UiLang.NOTICE, UiLang.get("nusmp.ui.relic.pages", RelicTooltip.page + 1, l.pageCount()))
+                            : RelicTooltipLayout.footer(RelicTooltip.page, l.pageCount()) + "  (mouse wheel)";
+                    g.drawString(font, foot, 0, l.pageRows() * LINE, anime ? UiTheme.SAGE_HEAD : 0xFF9A9AA8, true);
+                }
+            } catch (RuntimeException failed) {
+                // a row that cannot be drawn is skipped; the tooltip stays
+            } finally {
+                pose.popPose();
             }
-            if (anime) g.fill(0, LINE - 1, Math.round(l.width() / l.scale()), LINE, UiMath.withAlpha(color(d.def(), d.stack(), GRADE), 0.45f));      // a hairline under the grade row
-            if (l.pageCount() > 1) {
-                String foot = anime ? UiLang.get(UiLang.NOTICE, UiLang.get("nusmp.ui.relic.pages", RelicTooltip.page + 1, l.pageCount()))
-                        : RelicTooltipLayout.footer(RelicTooltip.page, l.pageCount()) + "  (mouse wheel)";
-                g.drawString(font, foot, 0, l.pageRows() * LINE, anime ? UiTheme.SAGE_HEAD : 0xFF9A9AA8, true);
-            }
-            pose.popPose();
         }
     }
 
@@ -209,13 +262,9 @@ public final class RelicTooltip {
             else out.add(new Para("Requires attunement: sneak and hold use for 5 seconds", HINT_ATTUNE));
         }
         String summary = text(def, ".desc", def.desc());
-        if (def.needsAttunement() && !mine) {                                              // a faint tooltip: its power sleeps
-            out.add(new Para("", BODY));
-            if (!summary.isEmpty()) out.add(new Para(summary, DIM));
-            out.add(new Para("Its power sleeps until it is attuned.", DIM));
-            return out;
-        }
+        boolean sleeping = def.needsAttunement() && !mine;                                 // 1.34.0: its power sleeps, but nothing is hidden from the player who holds it
         out.add(new Para("", BODY));
+        if (sleeping) out.add(new Para("Its power sleeps until it is attuned.", DIM));
         if (shift) {
             String full = text(def, ".card", summary);
             if (!full.isEmpty()) out.add(new Para(full, LONG));
@@ -223,8 +272,8 @@ public final class RelicTooltip {
             out.add(new Para(summary, BODY));
         }
         if (g.epBonus() > 0) out.add(new Para("While worn: existence points +" + trim(g.epBonus() * 100) + "%", PASSIVE));
-        acts(def, stack, mc, out);
-        passives(def, out);
+        try { acts(def, stack, mc, out); } catch (RuntimeException | LinkageError failed) { /* the ability lines are left out, the rest stays */ }
+        try { passives(def, out); } catch (RuntimeException | LinkageError failed) { /* the same */ }
         String full = text(def, ".card", "");
         if (!shift && !full.isEmpty() && !full.equals(summary)) {
             out.add(new Para("", BODY));

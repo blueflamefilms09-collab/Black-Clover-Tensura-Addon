@@ -1,204 +1,408 @@
 {
- "_doc": "Per-id size / orientation corrections of the baked weapon meshes; applied by tools/relics/apply_weapon_fixes.py (keys: apparent, extent, scale, grip, flip_x, rotate_z, head, orient_manual, note). A state mesh (needler_pull1 ...) uses its base id's entry.",
+ "_doc": "Per-id size / orientation corrections of the baked weapon meshes; applied by tools/relics/apply_weapon_fixes.py (keys: apparent, flip_y, extent, scale, grip, flip_x, rotate_z, head, orient_manual, note). A state mesh (needler_pull1 ...) uses its base id's entry.",
+ "anti_bird_charm": {
+  "extent": 0.6,
+  "note": "1.34.0: item 0.39 -> 0.60"
+ },
  "astralaria": {
   "flip_x": true,
-  "apparent": 1.3,
+  "apparent": 1.76,
   "head": {
-   "k": 1.39
+   "k": 1.85
   },
-  "note": "auto: head_small,head_toward_player"
+  "note": "1.34.0: battleaxe 1.30 -> 1.76 (range 1.60-2.00); head 0.53 -> x1.85 (min 0.75)"
+ },
+ "astralis_the_eye_of_the_universe": {
+  "apparent": 2.24,
+  "note": "1.34.0: staff 1.85 -> 2.24 (range 2.00-2.60)"
  },
  "axe_of_the_crimson_saint": {
-  "apparent": 1.17,
+  "apparent": 1.76,
   "head": {
-   "k": 1.68
+   "k": 1.94
   },
-  "note": "auto: small,head_small"
+  "note": "1.34.0: battleaxe 1.05 -> 1.76 (range 1.60-2.00); head 0.50 -> x1.94 (min 0.75)"
  },
  "axe_of_the_exile": {
   "flip_x": true,
-  "apparent": 0.77,
+  "apparent": 1.22,
   "head": {
-   "k": 2.12
+   "k": 2.3
   },
-  "note": "auto: small,head_small,head_toward_player"
+  "note": "1.34.0: handaxe 0.62 -> 1.22 (range 1.10-1.40); head 0.31 -> x2.30 (min 0.50)"
+ },
+ "bianca": {
+  "scale": 1.13682,
+  "note": "1.34.0: crossbow 0.95 -> 1.08 (range 1.00-1.20)"
  },
  "bloodbound_katana": {
-  "apparent": 1.17,
-  "note": "auto: small"
+  "apparent": 1.56,
+  "note": "1.34.0: katana 1.05 -> 1.56 (range 1.40-1.80)"
+ },
+ "bond_thread": {
+  "extent": 0.6,
+  "note": "1.34.0: item 0.39 -> 0.60"
+ },
+ "book_of_mispells": {
+  "extent": 0.6,
+  "note": "1.34.0: item 0.46 -> 0.60"
  },
  "bottle_blade": {
-  "apparent": 0.87,
-  "note": "auto: small"
+  "apparent": 1.12,
+  "note": "1.34.0: shortsword 0.62 -> 1.12 (range 1.00-1.30)"
+ },
+ "buster_sword": {
+  "apparent": 2.6,
+  "note": "1.34.0: greatsword 1.50 -> 2.60 (range 2.20-3.00)"
  },
  "butcher_cleaver": {
-  "apparent": 0.638,
+  "apparent": 1.02,
   "head": {
-   "k": 1.84
+   "k": 2.24
   },
-  "note": "auto: small,head_small"
+  "note": "1.34.0: cleaver 0.36 -> 1.02 (range 0.90-1.20); head 0.29 -> x2.24 (min 0.45)"
  },
  "caesars_gladius": {
-  "apparent": 0.87,
-  "note": "auto: small"
+  "apparent": 1.12,
+  "note": "1.34.0: shortsword 0.63 -> 1.12 (range 1.00-1.30)"
+ },
+ "catstaff": {
+  "apparent": 2.24,
+  "note": "1.34.0: staff 1.70 -> 2.24 (range 2.00-2.60)"
+ },
+ "circlet_of_quickened_thought": {
+  "extent": 0.6,
+  "note": "1.34.0: item 0.43 -> 0.60"
+ },
+ "communication_magic_device": {
+  "extent": 0.6,
+  "note": "1.34.0: item 0.39 -> 0.60"
+ },
+ "contingency_plan": {
+  "apparent": 0.55,
+  "note": "1.34.0: dagger 0.46 -> 0.55 (range 0.45-0.70)"
+ },
+ "corpse_eater": {
+  "apparent": 1.56,
+  "note": "1.34.0: katana 1.15 -> 1.56 (range 1.40-1.80)"
+ },
+ "dagger_of_betrayal": {
+  "apparent": 0.55,
+  "note": "1.34.0: dagger 0.42 -> 0.55 (range 0.45-0.70)"
+ },
+ "dead_blade": {
+  "apparent": 3.12,
+  "note": "1.34.0: glaive 1.85 -> 3.12 (range 2.80-3.60)"
+ },
+ "deliverance": {
+  "apparent": 1.56,
+  "note": "1.34.0: longsword 1.15 -> 1.56 (range 1.40-1.80)"
  },
  "devil_contract": {
-  "extent": 0.432,
-  "note": "auto: small"
+  "extent": 0.6,
+  "note": "1.34.0: item 0.33 -> 0.60"
+ },
+ "disintegration_dagger": {
+  "apparent": 0.55,
+  "note": "1.34.0: dagger 0.42 -> 0.55 (range 0.45-0.70)"
  },
  "doom_hammer": {
   "flip_x": true,
-  "note": "auto: head_toward_player"
+  "apparent": 1.8,
+  "note": "1.34.0: hammer 1.31 -> 1.80 (range 1.30-1.80)"
+ },
+ "dragon_tooth_blade_red": {
+  "apparent": 1.56,
+  "note": "1.34.0: katana 1.15 -> 1.56 (range 1.40-1.80)"
+ },
+ "dream_glass": {
+  "apparent": 2.52,
+  "note": "1.34.0: greatsword 1.50 -> 2.52 (range 2.20-3.00)"
  },
  "druidic_blade": {
-  "apparent": 0.87,
-  "note": "auto: small"
+  "apparent": 1.12,
+  "note": "1.34.0: shortsword 0.72 -> 1.12 (range 1.00-1.30)"
+ },
+ "duality_blade": {
+  "apparent": 1.12,
+  "note": "1.34.0: shortsword 0.78 -> 1.12 (range 1.00-1.30)"
+ },
+ "elsdocia": {
+  "apparent": 2.64,
+  "note": "1.34.0: greatsword 1.25 -> 2.64 (range 2.20-3.00)"
+ },
+ "encircled_blade": {
+  "flip_y": true,
+  "apparent": 1.12,
+  "note": "1.34.0: shortsword 0.78 -> 1.12 (range 1.00-1.30)"
+ },
+ "flamecutter": {
+  "flip_y": true,
+  "apparent": 1.56,
+  "note": "1.34.0: longsword 1.30 -> 1.56 (range 1.40-1.80)"
  },
  "fortune_die": {
-  "extent": 0.432,
-  "note": "auto: small"
+  "extent": 0.6,
+  "note": "1.34.0: item 0.33 -> 0.60"
  },
  "frostfang": {
-  "apparent": 1.15,
+  "apparent": 1.76,
   "head": {
-   "k": 1.79
+   "k": 2.04
   },
-  "note": "auto: head_small"
+  "note": "1.34.0: battleaxe 1.15 -> 1.76 (range 1.60-2.00); head 0.50 -> x2.04 (min 0.75)"
+ },
+ "giant_jawblade": {
+  "apparent": 2.52,
+  "note": "1.34.0: greatsword 1.70 -> 2.52 (range 2.20-3.00)"
+ },
+ "grimoire_chain": {
+  "extent": 0.6,
+  "note": "1.34.0: item 0.41 -> 0.60"
  },
  "heart_of_the_flame": {
-  "apparent": 1.64,
-  "note": "auto: small"
+  "apparent": 2.52,
+  "note": "1.34.0: greatsword 1.45 -> 2.52 (range 2.20-3.00)"
+ },
+ "humbling_longsword": {
+  "apparent": 1.56,
+  "note": "1.34.0: longsword 1.10 -> 1.56 (range 1.40-1.80)"
  },
  "hunger": {
   "flip_x": true,
-  "apparent": 1.74,
+  "apparent": 2.73,
   "head": {
-   "k": 1.92
+   "k": 1.93
   },
-  "note": "auto: small,head_small,head_toward_player"
+  "note": "1.34.0: greataxe 1.45 -> 2.73 (range 2.40-3.00); head 0.80 -> x1.93 (min 1.10)"
+ },
+ "hyperborean_crossbow": {
+  "scale": 1.20843,
+  "note": "1.34.0: crossbow 0.89 -> 1.08 (range 1.00-1.20)"
  },
  "jade_xiphos": {
-  "apparent": 0.87,
-  "note": "auto: small"
+  "apparent": 1.12,
+  "note": "1.34.0: shortsword 0.66 -> 1.12 (range 1.00-1.30)"
  },
- "junglethorn_whip": {
-  "apparent": 1.3,
-  "note": "auto: small"
+ "krakeblade": {
+  "apparent": 2.52,
+  "note": "1.34.0: greatsword 1.60 -> 2.52 (range 2.20-3.00)"
+ },
+ "last_word": {
+  "apparent": 1.12,
+  "note": "1.34.0: shortsword 0.88 -> 1.12 (range 1.00-1.30)"
  },
  "leviathan_axe": {
   "flip_x": true,
-  "apparent": 0.78,
+  "apparent": 1.22,
   "head": {
-   "k": 1.84
+   "k": 2.06
   },
-  "note": "auto: head_small,head_toward_player"
+  "note": "1.34.0: handaxe 0.78 -> 1.22 (range 1.10-1.40); head 0.34 -> x2.06 (min 0.50)"
  },
  "liquid_sword": {
-  "apparent": 1.17,
-  "note": "auto: small"
+  "apparent": 1.56,
+  "note": "1.34.0: longsword 1.05 -> 1.56 (range 1.40-1.80)"
+ },
+ "magebane_longsword": {
+  "apparent": 1.56,
+  "note": "1.34.0: longsword 1.25 -> 1.56 (range 1.40-1.80)"
+ },
+ "magic_tool_spear": {
+  "apparent": 3.12,
+  "note": "1.34.0: spear 2.10 -> 3.12 (range 2.80-3.60)"
  },
  "magic_tool_sword": {
-  "apparent": 1.17,
-  "note": "auto: small"
+  "apparent": 1.56,
+  "note": "1.34.0: longsword 1.00 -> 1.56 (range 1.40-1.80)"
+ },
+ "mana_method_rune_stone": {
+  "extent": 0.6,
+  "note": "1.34.0: item 0.39 -> 0.60"
  },
  "marids_valor": {
-  "apparent": 1.087,
-  "note": "auto: small"
+  "scale": 1.17898,
+  "note": "1.34.0: sabre 0.95 -> 1.12 (range 1.00-1.30)"
  },
  "mountainguards_greataxe": {
-  "apparent": 1.74,
+  "apparent": 2.7,
   "head": {
-   "k": 1.17
+   "k": 1.19
   },
-  "note": "auto: small,head_small"
+  "note": "1.34.0: greataxe 1.45 -> 2.70 (range 2.40-3.00); head 1.09 -> x1.19 (min 1.10)"
  },
  "needler": {
-  "apparent": 0.787,
-  "note": "auto: small"
+  "scale": 1.76568,
+  "note": "1.34.0: crossbow 0.61 -> 1.08 (range 1.00-1.20)"
+ },
+ "null_blade": {
+  "apparent": 2.52,
+  "note": "1.34.0: greatsword 1.50 -> 2.52 (range 2.20-3.00)"
+ },
+ "otherworld_trident": {
+  "apparent": 3.12,
+  "note": "1.34.0: trident 1.90 -> 3.12 (range 2.80-3.60)"
+ },
+ "palladion": {
+  "apparent": 1.56,
+  "note": "1.34.0: longsword 1.20 -> 1.56 (range 1.40-1.80)"
+ },
+ "permafrost_sabre": {
+  "apparent": 1.12,
+  "note": "1.34.0: sabre 1.00 -> 1.12 (range 1.00-1.30)"
+ },
+ "prism_blade": {
+  "apparent": 1.56,
+  "note": "1.34.0: longsword 1.10 -> 1.56 (range 1.40-1.80)"
  },
  "random_axe_of_charity": {
   "flip_x": true,
-  "apparent": 0.77,
+  "apparent": 1.22,
   "head": {
-   "k": 2.05,
-   "ky": 1.35
+   "k": 2.86
   },
-  "note": "auto: small,head_small,head_toward_player"
+  "note": "1.34.0: handaxe 0.52 -> 1.22 (range 1.10-1.40); head 0.31 -> x2.86 (min 0.50)"
  },
  "recovery_salve": {
-  "extent": 0.432,
-  "note": "auto: small"
+  "extent": 0.6,
+  "note": "1.34.0: item 0.33 -> 0.60"
  },
  "returning_hand_axe": {
-  "apparent": 0.77,
+  "apparent": 1.22,
   "head": {
-   "k": 1.42
+   "k": 1.52
   },
-  "note": "auto: small,head_small"
+  "note": "1.34.0: handaxe 0.62 -> 1.22 (range 1.10-1.40); head 0.41 -> x1.52 (min 0.50)"
+ },
+ "rimeheart_runeblade": {
+  "apparent": 2.64,
+  "note": "1.34.0: greatsword 2.08 -> 2.64 (range 2.20-3.00)"
  },
  "rune_splitter": {
-  "apparent": 1.35,
+  "apparent": 1.76,
   "head": {
-   "k": 1.89
+   "k": 2.91
   },
-  "note": "auto: head_small"
+  "note": "1.34.0: battleaxe 1.35 -> 1.76 (range 1.60-2.00); head 0.42 -> x2.91 (min 0.75)"
  },
  "shadow_burn": {
-  "apparent": 1.64,
-  "note": "auto: small"
+  "apparent": 2.52,
+  "note": "1.34.0: greatsword 1.40 -> 2.52 (range 2.20-3.00)"
+ },
+ "shroud_of_margins": {
+  "extent": 0.6,
+  "note": "1.34.0: item 0.46 -> 0.60"
  },
  "sidras_swearing_sword": {
-  "apparent": 0.87,
-  "note": "auto: small"
+  "apparent": 1.12,
+  "note": "1.34.0: shortsword 0.70 -> 1.12 (range 1.00-1.30)"
  },
  "sorrows_edge": {
   "flip_x": true,
-  "apparent": 1.25,
+  "apparent": 1.76,
   "head": {
-   "k": 2.9
+   "k": 3.2
   },
-  "note": "auto: head_small,head_toward_player"
+  "note": "1.34.0: crescent 1.25 -> 1.76 (range 1.60-2.00); head 0.38 -> x3.20 (min 0.75)"
+ },
+ "soul_shatter_blade": {
+  "apparent": 2.52,
+  "note": "1.34.0: greatsword 1.55 -> 2.52 (range 2.20-3.00)"
  },
  "spirit_charm": {
-  "extent": 0.432,
-  "note": "auto: small"
+  "extent": 0.6,
+  "note": "1.34.0: item 0.36 -> 0.60"
+ },
+ "spotlight": {
+  "apparent": 1.12,
+  "note": "1.34.0: shortsword 0.80 -> 1.12 (range 1.00-1.30)"
+ },
+ "staff_of_moonlight": {
+  "apparent": 2.24,
+  "note": "1.34.0: staff 1.85 -> 2.24 (range 2.00-2.60)"
  },
  "stegosaurus_greatsword": {
-  "apparent": 1.64,
-  "note": "auto: small"
+  "apparent": 2.52,
+  "note": "1.34.0: greatsword 1.40 -> 2.52 (range 2.20-3.00)"
  },
  "sword_crystal": {
-  "apparent": 1.17,
-  "note": "auto: small"
+  "apparent": 1.12,
+  "note": "1.34.0: shortsword 0.90 -> 1.12 (range 1.00-1.30)"
+ },
+ "the_dragons_truth": {
+  "extent": 0.6,
+  "note": "1.34.0: item 0.39 -> 0.60"
  },
  "the_lumberjack": {
-  "apparent": 1.17,
+  "apparent": 1.76,
   "head": {
-   "k": 1.49
+   "k": 1.74
   },
-  "note": "auto: small,head_small"
+  "note": "1.34.0: battleaxe 1.00 -> 1.76 (range 1.60-2.00); head 0.57 -> x1.74 (min 0.75)"
+ },
+ "the_stabshroom": {
+  "apparent": 0.55,
+  "note": "1.34.0: dagger 0.37 -> 0.55 (range 0.45-0.70)"
  },
  "thornblight": {
-  "apparent": 0.77,
+  "apparent": 1.22,
   "head": {
-   "k": 1.12
+   "k": 1.29
   },
-  "note": "auto: small,head_small"
+  "note": "1.34.0: handaxe 0.58 -> 1.22 (range 1.10-1.40); head 0.47 -> x1.29 (min 0.50)"
+ },
+ "thundercleave": {
+  "apparent": 2.52,
+  "note": "1.34.0: greatsword 1.60 -> 2.52 (range 2.20-3.00)"
+ },
+ "time_bender_dadao": {
+  "apparent": 2.04,
+  "note": "1.34.0: dadao 1.30 -> 2.04 (range 1.80-2.40)"
+ },
+ "tripolar_sword": {
+  "flip_y": true,
+  "apparent": 1.56,
+  "note": "1.34.0: longsword 1.15 -> 1.56 (range 1.40-1.80)"
+ },
+ "twin_swords_of_deflection": {
+  "scale": 1.12001,
+  "note": "1.34.0: shortsword 1.00 -> 1.12 (range 1.00-1.30)"
+ },
+ "unicorn_dagger": {
+  "apparent": 0.55,
+  "note": "1.34.0: dagger 0.42 -> 0.55 (range 0.45-0.70)"
  },
  "viper_whip": {
-  "apparent": 1.1,
-  "note": "a coiled whip: the handle is the length, the coil is held at the end"
+  "apparent": 1.34,
+  "note": "1.34.0: coilwhip 0.62 -> 1.34 (range 1.10-1.70)"
  },
- "wavebreaker": {
-  "apparent": 1.64,
-  "note": "auto: small"
+ "wand_of_bubbles": {
+  "apparent": 1.0,
+  "note": "1.34.0: wand 0.52 -> 1.0 (range 0.8-1.2)"
+ },
+ "warmages_longsword": {
+  "apparent": 1.56,
+  "note": "1.34.0: longsword 1.12 -> 1.56 (range 1.40-1.80)"
+ },
+ "weapon_of_resurgence": {
+  "apparent": 1.56,
+  "note": "1.34.0: longsword 1.13 -> 1.56 (range 1.40-1.80)"
+ },
+ "whirling_blades": {
+  "scale": 1.11999,
+  "note": "1.34.0: sabre 1.00 -> 1.12 (range 1.00-1.30)"
  },
  "white_whip_of_welting": {
-  "apparent": 1.5,
-  "note": "auto: small"
+  "apparent": 1.92,
+  "note": "1.34.0: whip 0.85 -> 1.92 (range 1.60-2.40)"
+ },
+ "windcutter": {
+  "flip_y": true,
+  "apparent": 1.56,
+  "note": "1.34.0: longsword 1.20 -> 1.56 (range 1.40-1.80)"
  },
  "written_consent": {
-  "extent": 0.432,
-  "note": "auto: small"
+  "extent": 0.6,
+  "note": "1.34.0: item 0.33 -> 0.60"
  }
 }

@@ -9,8 +9,12 @@ package com.newuniverse.nusmp.client.relics.item;
 public final class OversizeGuard {
     private OversizeGuard() {}
 
-    /** Longest apparent first-person length (mesh length times display scale) the tool allows; the same number as display_presets.APPARENT_MAX_BLOCKS. */
-    public static final float APPARENT_MAX = 1.0f;
+    /**
+     * Longest apparent first-person length (mesh length times display scale) the tool allows; the same number as display_presets.APPARENT_MAX_BLOCKS.
+     * 1.34.0: raised from 1.0 to 1.5 with the owner's size rule (greatswords of 2.2 to 3 blocks and spears of 2.8 to 3.6 are the point of it); the camera
+     * bounds of the tool (tip in view, every corner in front of the near plane) still decide for the longest ones.
+     */
+    public static final float APPARENT_MAX = 1.5f;
     /** The guard only steps in above this many times {@link #APPARENT_MAX} (a preset's rounding must never trigger it). */
     public static final float TOLERANCE = 1.15f;
     /** The guard never shrinks a weapon below this share. */

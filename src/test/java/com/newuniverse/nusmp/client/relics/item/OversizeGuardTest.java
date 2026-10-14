@@ -10,21 +10,21 @@ class OversizeGuardTest {
     void anOrdinaryWeaponIsNeverTouched() {
         assertEquals(1f, OversizeGuard.factor(1.2f, 0.68f));
         assertEquals(1f, OversizeGuard.factor(1.4f, 0.68f));
-        assertEquals(1f, OversizeGuard.factor(1.69f, 0.68f), "just under the limit: 1.15 blocks apparent");
+        assertEquals(1f, OversizeGuard.factor(2.5f, 0.68f), "just under the limit: 1.7 blocks apparent (1.5 x 1.15)");
     }
 
     @Test
     void aPresetWeaponStaysUnderTheLimit() {
-        // the manifest's rows: length x scale <= 1.0 blocks apparent, below 1.15
-        assertEquals(1f, OversizeGuard.factor(2.47f, 0.385f));
-        assertEquals(1f, OversizeGuard.factor(1.47f, 0.672f));
+        // the manifest's rows: length x scale <= 1.5 blocks apparent, below 1.725
+        assertEquals(1f, OversizeGuard.factor(2.96f, 0.349f));
+        assertEquals(1f, OversizeGuard.factor(2.07f, 0.665f));
     }
 
     @Test
     void aLongWeaponAtTheHandheldScaleIsBroughtToTheLimit() {
-        float f = OversizeGuard.factor(2.47f, 0.68f);                           // 1.68 blocks apparent
+        float f = OversizeGuard.factor(3.67f, 0.68f);                           // 2.5 blocks apparent: a three-block spear at the vanilla scale
         assertTrue(f < 1f);
-        assertEquals(OversizeGuard.APPARENT_MAX * OversizeGuard.TOLERANCE, 2.47f * 0.68f * f, 1e-4);
+        assertEquals(OversizeGuard.APPARENT_MAX * OversizeGuard.TOLERANCE, 3.67f * 0.68f * f, 1e-4);
     }
 
     @Test

@@ -11,6 +11,9 @@ tools/relics/weapon_fixes.json maps an item id (a state mesh uses its base id's 
     "extent"    the same for a held item: the largest dimension of the mesh
     "scale"     a plain multiplier of the place scale (instead of apparent / extent)
     "grip"      share of the length (from the butt) that stays where it is when the weapon grows (default: the class's `grip`)
+    "flip_y"    true (1.34.0): the mesh was built with its HILT at the far (high y) end, so the hand holds the blade (the Windcutter of screenshot 68):
+                a half turn about the x axis through the middle of the length (y -> -y, z -> -z; every x stays, so the edge keeps its side), and the
+                directive `grip 0.12` is written so the runtime normaliser knows the grip is verified
     "flip_x"    true: mirror the mesh across x (edge / head to the other side) relative to what the generator wrote
     "rotate_z"  degrees: turn the mesh about z through (0, middle of its length) (180 = a tip-down mesh tip-up)
     "head"      {"k": 1.5, "ky": .., "kz": .., "cut": <mesh y, default: where the head starts>, "band": 0.06}: the head (everything above `cut`) is
@@ -40,6 +43,8 @@ MESHES = os.path.join(ASSETS, "weapon_meshes")
 FIXES_JSON = os.path.join(HERE, "weapon_fixes.json")
 MARK = "# nusmp_fix "
 DEFAULT_BAND = 0.06
+GRIP_VERIFIED = 0.12                 # the `grip` directive written to a mesh whose hilt end was checked (share of the length from the butt)
+SKIP_PREFIXES = ("djinn_weapon_",)   # 1.34.0: the Djinn temporary weapons belong to another agent / release
 
 
 # ================================================================ tokens <-> quads
@@ -116,6 +121,13 @@ def op_flip_x(quads, px=0.0):
     """Mirrors across the plane x = px (the haft axis): x -> 2 px - x, normals' x negated, quad winding reversed (v0 v3 v2 v1)."""
     for i, t in quads.items():
         quads[i] = _map_vertices(t, lambda p: (2 * px - p[0], p[1], p[2]), lambda n: (-n[0], n[1], n[2]), order=(0, 3, 2, 1))
+
+
+def op_flip_y(quads, pivot_y):
+    """The grip end swap (an involution): a half turn about the x axis through (., pivot_y, 0): y -> 2 pivot_y - y, z -> -z, normals' y and z negated.
+    A proper rotation, so the winding stays and no x changes (the edge keeps its side)."""
+    for i, t in quads.items():
+        quads[i] = _map_vertices(t, lambda p: (p[0], 2 * pivot_y - p[1], -p[2]), lambda n: (n[0], -n[1], -n[2]))
 
 
 def op_rotate_z(quads, deg, pivot_y):
@@ -213,12 +225,19 @@ def undo_marker(lines, quads):
         op_rotate_z(quads, -mk["rotate_z"], mk["rotate_pivot"])
     if mk.get("flip_x"):
         op_flip_x(quads, mk.get("flip_px", 0.0))
+    if mk.get("flip_y"):
+        op_flip_y(quads, mk["flip_y_pivot"])
     lines, quads = _reindex(lines, quads)
     pi, _ = place_of(lines)
     if pi is not None and mk.get("orig_place"):
         lines[pi] = mk["orig_place"]
     if mk.get("orient_manual"):
         lines = [ln for ln in lines if ln.strip() != "orient manual"]
+    if mk.get("grip_line"):
+        if mk.get("grip_prev"):                                  # the generator's own `grip` line was rewritten: put it back
+            lines = [mk["grip_prev"] if ln.strip() == mk["grip_line"] else ln for ln in lines]
+        else:
+            lines = [ln for ln in lines if ln.strip() != mk["grip_line"]]
     lines, quads = parse_lines("\n".join(lines) + "\n")
     return mk, lines, quads
 
@@ -256,6 +275,11 @@ def apply_to_text(text, item_id, fix, data=None, models_dir=None):
     base_text = "\n".join(_reindex(lines, quads)[0])
     if not fix:
         return base_text + "\n", {"changed": base_text + "\n" != text, "before": report["before"], "after": report["before"]}
+    if fix.get("flip_y"):
+        ys = [float(t[2 + k * _stride(t) + 1]) for t in quads.values() for k in range(4)]
+        pivot = (min(ys) + max(ys)) / 2.0
+        op_flip_y(quads, pivot)
+        marker["flip_y"], marker["flip_y_pivot"] = True, pivot
     if fix.get("flip_x"):
         px = round(wo.measure(to_quads(quads), place[3]).axis_x, 3)
         op_flip_x(quads, px)
@@ -301,6 +325,15 @@ def apply_to_text(text, item_id, fix, data=None, models_dir=None):
     if fix.get("orient_manual"):
         lines.insert(pi + 1, "orient manual")
         marker["orient_manual"] = True
+    if fix.get("grip_line") or fix.get("flip_y"):                  # 1.34.0: the mesh states where its grip is (verified): runtime normaliser trusts it
+        gl = "grip %.3f" % float(fix.get("grip_at", GRIP_VERIFIED))
+        prev = next((i for i, ln in enumerate(lines) if ln.split()[:1] == ["grip"]), None)
+        if prev is not None:                                      # a generator that states its own grip (mesh_lib derives it from the part names): replaced, restored on undo
+            marker["grip_prev"] = lines[prev]
+            lines[prev] = gl
+        else:
+            lines.insert(pi + 1, gl)
+        marker["grip_line"] = gl
     lines.append(MARK + json.dumps(marker, separators=(",", ":"), sort_keys=True))
     new = "\n".join(lines) + "\n"
     _l, q2 = parse_lines(new)
@@ -312,6 +345,8 @@ def apply_to_text(text, item_id, fix, data=None, models_dir=None):
 def apply_file(path, item_id=None, fixes=None, data=None, write=True):
     """Applies tools/relics/weapon_fixes.json to one mesh file; used by mesh_lib.Mesh.write_txt after a generator writes the mesh. Returns the report."""
     item_id = item_id or os.path.basename(path)[:-4]
+    if item_id.startswith(SKIP_PREFIXES):
+        return {"changed": False, "reason": "skipped (another agent's mesh)"}
     fixes = fixes if fixes is not None else load_fixes()
     fix = fixes.get(wc.base_id(item_id))
     if fix is None:
@@ -374,12 +409,14 @@ def suggest(data=None, meshes_dir=MESHES):
             continue
         tab = wc.table(data)[r["class"]]
         fix = {}
+        if wo.FLAG_GRIP_FAR_END in r["flags"]:
+            fix["flip_y"] = True
         if wo.FLAG_HEAD_TOWARD_PLAYER in r["flags"]:
             fix["flip_x"] = True
         if wo.FLAG_TIP_DOWN in r["flags"]:
             fix["rotate_z"] = 180
         if "small" in r["status"]:
-            if r["class"] == "item":
+            if wc.is_item_class(r["class"]):
                 fix["extent"] = round(data.get("item_min_extent", wc.ITEM_MIN_EXTENT) * 1.08, 3)
             else:
                 fix["apparent"] = class_target(r["class"], tab)
@@ -402,10 +439,13 @@ def run(apply=False, fixes=None, data=None, meshes_dir=MESHES):
     changed = []
     for path in sorted(glob.glob(os.path.join(meshes_dir, "*.txt"))):
         item_id = os.path.basename(path)[:-4]
+        if item_id.startswith(SKIP_PREFIXES):
+            continue
         fix = fixes.get(wc.base_id(item_id))
         if fix is None:
             continue
-        text = open(path, encoding="utf-8").read()
+        with open(path, encoding="utf-8") as fh:
+            text = fh.read()
         new, rep = apply_to_text(text, item_id, fix, data)
         rows.append((item_id, rep))
         if rep.get("changed"):

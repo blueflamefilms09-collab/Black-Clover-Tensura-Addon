@@ -29,7 +29,7 @@ public final class DjinnItems {
     private static final DeferredItem<Item> DARK_SHARD = NUItems.ITEMS.register("dark_rukh_shard",
             () -> new com.newuniverse.nusmp.relics.djinn.dark.DarkRukhShardItem(new Item.Properties().stacksTo(16).rarity(Rarity.EPIC)));
 
-    public static void init() {}
+    public static void init() { com.newuniverse.nusmp.relics.djinn.weapon.DjinnWeaponItems.init(); }       // the 24 Djinn weapons register in the same item register, before it goes on the bus
 
     public static Item seal(Djinn d) { return SEALS.get(d).get(); }
 

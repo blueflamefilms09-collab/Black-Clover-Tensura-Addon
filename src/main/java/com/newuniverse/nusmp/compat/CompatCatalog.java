@@ -53,6 +53,12 @@ public final class CompatCatalog {
     /** Every entry, in book order. */
     public static List<Entry> entries() { return ENTRIES; }
 
+    /** The entry of a mod id, or null. */
+    public static Entry entry(String modId) {
+        for (Entry e : ENTRIES) if (e.modId().equals(modId)) return e;
+        return null;
+    }
+
     /** The entries of one kind, in book order. */
     public static List<Entry> of(Kind kind) { return ENTRIES.stream().filter(e -> e.kind() == kind).toList(); }
 

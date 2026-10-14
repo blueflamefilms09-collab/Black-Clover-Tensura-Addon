@@ -34,17 +34,27 @@ IMBALANCE_MIN = 0.012                  # blocks: below this a mesh has no side
 CURVE_MIN = 0.05                       # blocks: below this a blade is straight
 POINTED_WIDEST_MAX = 0.72              # a pointed weapon whose widest part (guard / blade) lies above this share of its length is held by the point
 HEAD_HEAVY_MAX = 0.30                  # a head-heavy weapon whose centroid is below this has its head at the butt
+# 1.34.0, the GRIP END: a pointed weapon (a sword, a dagger) whose widest part (the guard / the blade) lies above GRIP_FAR_WIDEST of its length, whose
+# area centroid lies above GRIP_FAR_CENTROID and whose top end is a narrow tip / pommel (below GRIP_FAR_TOP blocks across) is held by its blade: the
+# hilt is at the far end. (Found in the owner's screenshot 68: the Windcutter, built with its point at y = 0.) A mesh can also say so itself with the
+# directive `grip <fraction>` (the share of the length, from the low-y end, where the grip's middle lies): above GRIP_FAR_DIRECTIVE it is reversed.
+GRIP_FAR_WIDEST = 0.60
+GRIP_FAR_CENTROID = 0.54
+GRIP_FAR_TOP = 0.10
+GRIP_FAR_DIRECTIVE = 0.5
 
 FLAG_TIP_DOWN = "tip_down"
 FLAG_HEAD_TOWARD_PLAYER = "head_toward_player"
 FLAG_MIRRORED = "mirrored"                  # informational: a curved blade bends the wrong way for its class (the edge side of a blade cannot be told from geometry alone)
 FLAG_TIP_SUSPECT = "tip_suspect"            # informational: the widest part of a pointed weapon sits near the tip (an ornament, or a blade held by its point)
-ACTIONABLE = (FLAG_TIP_DOWN, FLAG_HEAD_TOWARD_PLAYER)     # the flags a fix / the runtime normaliser acts on
+FLAG_GRIP_FAR_END = "grip_far_end"          # 1.34.0: the hilt is at the far end: the hand would hold the blade (actionable: flip the mesh along its length)
+ACTIONABLE = (FLAG_TIP_DOWN, FLAG_HEAD_TOWARD_PLAYER, FLAG_GRIP_FAR_END)     # the flags a fix / the runtime normaliser acts on
 
 # class traits (class name -> set of traits). `handed`: the edge / head is on one side (must be -x); `pointed`: has a point at the tip end;
 # `head_heavy`: the head is the heavy end; `curve_edge`: tip bends toward the edge (-x); `curve_spine`: tip bends toward the spine (+x)
 TRAITS = {
     "dagger": {"pointed"}, "shortsword": {"pointed"}, "longsword": {"pointed"}, "greatsword": {"pointed"}, "rapier": {"pointed"},
+    "greathammer": {"handed", "head_heavy"}, "bow": set(), "handitem": set(),
     "katana": {"pointed", "curve_edge"}, "sabre": {"pointed", "curve_spine"}, "dadao": {"pointed", "curve_spine"},
     "handaxe": {"handed", "head_heavy"}, "battleaxe": {"handed", "head_heavy"}, "greataxe": {"handed", "head_heavy"}, "crescent": {"handed", "head_heavy"},
     "scythe": {"handed", "head_heavy"}, "cleaver": {"handed"}, "hook": {"handed"},
@@ -74,7 +84,7 @@ def read_mesh_file(path):
                 P = [(float(v[2 + k * 8]), float(v[3 + k * 8]), float(v[4 + k * 8])) for k in range(4)]
                 N = [(float(v[7 + k * 8]), float(v[8 + k * 8]), float(v[9 + k * 8])) for k in range(4)]
                 quads.append((int(v[1]), P, N))
-            elif v[0] in ("orient", "glow"):
+            elif v[0] in ("orient", "glow", "grip"):
                 directives[v[0]] = v[1:]
     return {"place": place, "quads": quads, "directives": directives, "lines": lines}
 
@@ -200,13 +210,28 @@ def measure(quads, scale):
 
 
 # ================================================================ the detector
-def detect(m, cls=None, place_angle=45.0):
-    """Flags of a Measures `m` for a weapon class `cls` (None / unknown: only the class-free checks). Returns a list of FLAG_* strings."""
+def grip_end_flag(m, traits, grip_directive=None):
+    """True when the mesh has its grip at the far (high y) end. `grip_directive` = the mesh's own `grip <fraction>` (None: not given -> geometry)."""
+    if grip_directive is not None:
+        return grip_directive > GRIP_FAR_DIRECTIVE
+    return ("pointed" in traits and m.widest_at > GRIP_FAR_WIDEST and m.centroid > GRIP_FAR_CENTROID and m.top_section < GRIP_FAR_TOP)
+
+
+def grip_at(m, traits, grip_directive=None):
+    """Which end the hand holds: 'low' (the convention) or 'high' (reversed); the same decision as FLAG_GRIP_FAR_END, for reports."""
+    return "high" if grip_end_flag(m, traits, grip_directive) else "low"
+
+
+def detect(m, cls=None, place_angle=45.0, grip_directive=None):
+    """Flags of a Measures `m` for a weapon class `cls` (None / unknown: only the class-free checks). Returns a list of FLAG_* strings.
+    `grip_directive`: the mesh's `grip <fraction>` directive when it has one (see GRIP_FAR_DIRECTIVE)."""
     flags = []
     if m.empty:
         return flags
     traits = TRAITS.get(cls, set()) if cls else set()
-    if cls not in (None, "item", "whip", "coilwhip") and math.sin(math.radians(place_angle)) < -0.1:
+    if grip_end_flag(m, traits, grip_directive):
+        flags.append(FLAG_GRIP_FAR_END)
+    if cls not in (None, "item", "handitem", "whip", "coilwhip") and math.sin(math.radians(place_angle)) < -0.1:
         flags.append(FLAG_TIP_DOWN)                        # the mesh's y axis points down on the sprite: the whole weapon is upside down
     elif "head_heavy" in traits and m.centroid < HEAD_HEAVY_MAX:
         flags.append(FLAG_TIP_DOWN)                        # the weight is at the butt: the head is down
@@ -229,6 +254,15 @@ def mirror_quads(quads):
         P2 = [(-p[0], p[1], p[2]) for p in P]
         N2 = [(-n[0], n[1], n[2]) for n in N]
         out.append((layer, [P2[0], P2[3], P2[2], P2[1]], [N2[0], N2[3], N2[2], N2[1]], ))
+    return out
+
+
+def flip_quads_y(quads, pivot_y):
+    """The grip end swap: a half turn about the x axis through (x, pivot_y, 0): y -> 2 pivot_y - y, z -> -z, the normals' y and z negated. A proper rotation:
+    the winding is kept, and every x stays where it was, so a blade keeps its edge on the same side (and a curve its direction)."""
+    out = []
+    for layer, P, N in quads:
+        out.append((layer, [(p[0], 2 * pivot_y - p[1], -p[2]) for p in P], [(n[0], -n[1], -n[2]) for n in N]))
     return out
 
 

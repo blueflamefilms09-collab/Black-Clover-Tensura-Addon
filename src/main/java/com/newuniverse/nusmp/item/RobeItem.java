@@ -58,8 +58,17 @@ public class RobeItem extends ArmorItem implements GeoItem {
             @Override
             public <T extends LivingEntity> HumanoidModel<?> getGeoArmorRenderer(@Nullable T entity, ItemStack stack,
                     @Nullable EquipmentSlot slot, @Nullable HumanoidModel<T> original) {
+                // 1.34.0: a player wearing the piece gets the 3D worn model of the model library instead (client/relics/worn/lib/ArmorItems); a mob, an armour
+                // stand, or the option relicfx.models = false keeps this older GeckoLib model, so the piece is never invisible
+                if (com.newuniverse.nusmp.client.relics.worn.lib.ArmorItems.replaces(entity, stack, slot))
+                    return com.newuniverse.nusmp.client.relics.worn.lib.ArmorItems.emptyModel();
                 if (renderer == null) renderer = new GeoArmorRenderer<>(new RobeModel());
                 return renderer;
+            }
+
+            /** 1.34.0: as an object (hand, ground, frame) the piece is its 3D worn model, in the inventory its old sprite. */
+            public net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer getGeoItemRenderer() {
+                return com.newuniverse.nusmp.client.relics.worn.lib.ArmorItemRenderer.instance();
             }
         });
     }
@@ -79,6 +88,7 @@ public class RobeItem extends ArmorItem implements GeoItem {
             tip.add(Component.literal("Full set: chest bonus +50%").withStyle(ChatFormatting.GOLD));
             return;
         }
+        tip.add(Component.translatable("tooltip.nusmp.armor.set_pieces", Component.translatable("item.nusmp." + setId)).withStyle(ChatFormatting.DARK_AQUA));
         tip.add(Component.literal("Set bonus (robe worn):").withStyle(ChatFormatting.GOLD));
         int k = NUConfig.GEAR_ELEMENT_BONUS.get();
         switch (kind) {

@@ -31,6 +31,7 @@ public final class DjinnEvents {
         bus.addListener(DjinnSources::onCollapse);
         bus.addListener(DjinnSources::onServerTick);
         bus.addListener(DjinnSources::onContainerOpen);
+        com.newuniverse.nusmp.relics.djinn.weapon.DjinnWeaponEvents.register(bus);                                  // the temporary Djinn weapons: enforcement, guards, the Brand mark
         com.newuniverse.nusmp.relics.djinn.dark.DarkDjinn.register(bus);                  // the Dark Djinn: Holy Water cleanses it, Lucius may drop a shard
     }
 

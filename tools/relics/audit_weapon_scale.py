@@ -30,6 +30,7 @@ ROOT = wc.ROOT
 ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
 MESHES = os.path.join(ASSETS, "weapon_meshes")
 MODELS = os.path.join(ASSETS, "models", "item")
+SKIP_PREFIXES = ("djinn_weapon_",)
 SMALL_TOL = 0.97                     # below this share of the class minimum a weapon is "small"
 RUNTIME_SMALL = 0.60                 # the runtime normaliser's trigger (WeaponClasses.RUNTIME_SMALL)
 
@@ -67,9 +68,13 @@ def audit_one(item_id, data, meshes_dir=MESHES, models_dir=MODELS):
     extent = max(game_len, (max(xs) - min(xs)) * sc, (max(zs) - min(zs)) * sc) * s3
     apparent = game_len * s3
     head = m.max_width * s3
-    flags = wo.detect(m, cls, place[2])
+    gd = mesh["directives"].get("grip")
+    gd = float(gd[0]) if gd else None
+    flags = wo.detect(m, cls, place[2], gd)
+    if item_id.endswith("_left"):                                # the left half of a pair is the right half mirrored: its curve bends the other way on purpose
+        flags = [f for f in flags if f != wo.FLAG_MIRRORED]
     status = []
-    if cls == "item":
+    if wc.is_item_class(cls):
         if extent < data.get("item_min_extent", wc.ITEM_MIN_EXTENT) * SMALL_TOL:
             status.append("small")
     else:
@@ -82,7 +87,8 @@ def audit_one(item_id, data, meshes_dir=MESHES, models_dir=MODELS):
     return {"id": item_id, "class": cls, "s3p": s3, "length": round(game_len, 3), "apparent": round(apparent, 3), "extent": round(extent, 3),
             "head": round(head, 3), "min": tab["min"], "max": tab["max"], "head_min": tab.get("head_min", 0), "centroid": round(m.centroid, 2),
             "imbalance": round(m.imbalance, 3), "curve": round(m.curve, 3), "angle": place[2], "flags": flags, "status": status,
-            "runtime_small": cls != "item" and apparent < tab["min"] * RUNTIME_SMALL}
+            "runtime_small": not wc.is_item_class(cls) and apparent < tab["min"] * RUNTIME_SMALL,
+            "grip_at": wo.grip_at(m, wo.TRAITS.get(cls, set()), gd), "grip_directive": gd, "top_section": round(m.top_section, 3), "widest_at": round(m.widest_at, 2)}
 
 
 def audit_all(data=None, meshes_dir=MESHES, models_dir=MODELS, include_excluded=False):
@@ -90,6 +96,8 @@ def audit_all(data=None, meshes_dir=MESHES, models_dir=MODELS, include_excluded=
     out = []
     for p in sorted(glob.glob(os.path.join(meshes_dir, "*.txt"))):
         i = os.path.basename(p)[:-4]
+        if i.startswith(SKIP_PREFIXES):                          # 1.34.0: the Djinn temporary weapons belong to another agent / release
+            continue
         if not include_excluded and is_excluded(i, data):
             continue
         r = audit_one(i, data, meshes_dir, models_dir)
@@ -112,7 +120,7 @@ def print_table(rows, problems_only=False):
     for r in sorted(rows, key=lambda r: (r["class"], r["id"])):
         if problems_only and not (r["status"] or r["flags"]):
             continue
-        rng = "%.2f-%.2f" % (r["min"], r["max"]) if r["class"] != "item" else "(item)"
+        rng = "%.2f-%.2f" % (r["min"], r["max"])
         print("%-34s %-10s %5.2f %5.2f %5.2f %-11s %5.2f  %-24s %s" % (r["id"], r["class"], r["length"], r["s3p"], r["apparent"], rng, r["head"],
                                                                         ",".join(r["status"]), ",".join(r["flags"])))
 
@@ -128,7 +136,7 @@ def make_sheet(rows, out, data, meshes_dir=None):
                  "centroid %.2f  imbalance %+.3f  curve %+.3f" % (r["centroid"], r["imbalance"], r["curve"]),
                  ("FLAGS: " + ",".join(r["flags"]) if r["flags"] else "") + ("  " + ",".join(r["status"]) if r["status"] else "")]
         frame = (230, 60, 60) if (r["flags"] or "small" in r["status"] or "head_small" in r["status"]) else ((230, 200, 60) if "large" in r["status"] else None)
-        tiles.append(tile(r["id"], mesh, lines, cls_range=(r["min"], r["max"]) if r["class"] != "item" else None, frame=frame, s3p=r["s3p"]))
+        tiles.append(tile(r["id"], mesh, lines, cls_range=(r["min"], r["max"]) if not wc.is_item_class(r["class"]) else None, frame=frame, s3p=r["s3p"]))
     per = 8
     base, ext = os.path.splitext(out)
     outs = []

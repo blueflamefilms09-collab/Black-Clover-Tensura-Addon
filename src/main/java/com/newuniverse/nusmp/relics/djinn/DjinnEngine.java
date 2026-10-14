@@ -318,6 +318,7 @@ public final class DjinnEngine {
                 DjinnMagic.flare(p, d, DjinnFx.particle(d.affinity()));
                 l.playSound(null, p.blockPosition(), SoundEvents.BEACON_POWER_SELECT, SoundSource.PLAYERS, 1.2f, 1.4f);
                 p.displayClientMessage(Component.literal("Djinn Weapon: " + d.displayName() + "'s " + d.affinity().label.toLowerCase() + " is in your blows. " + d.trait().blurb()).withColor(d.color()), true);
+                com.newuniverse.nusmp.relics.djinn.weapon.DjinnWeaponService.apply(p);                                                       // the real temporary weapon (relics.djinn.weapon): the displaced item is kept safe
             }
             case DjinnPhaseRules.FULL -> {
                 s.setPhase(DjinnPhaseRules.FULL);
@@ -325,6 +326,7 @@ public final class DjinnEngine {
                 s.setUsed(0);
                 applyMaso(p, s, d);
                 ensureFlight(p, s);
+                com.newuniverse.nusmp.relics.djinn.weapon.DjinnWeaponService.apply(p);                                                       // the Half Equip's weapon stays: the Full Equip opens its second act
                 DjinnMagic.flare(p, d, DjinnFx.particle(d.affinity()));
                 DjinnFx.ring(l, p.position(), 3.5, d.glow(), 48, 0.2);
                 l.playSound(null, p.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 2.0f, 0.7f);
@@ -357,6 +359,7 @@ public final class DjinnEngine {
             Djinn d = s.active();
             if (d != null && target < from) p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.PLAYERS, 1.0f, 0.8f);
         }
+        if (from > target && target < DjinnPhaseRules.HALF) com.newuniverse.nusmp.relics.djinn.weapon.DjinnWeaponService.release(p);   // below the Half Equip the weapon goes and the displaced item returns
         syncMarkSafe(p, s);
         sync(p, s, r, now, true);
     }
@@ -485,6 +488,7 @@ public final class DjinnEngine {
             s.setSpan(0, 0);
             s.setActiveTicks(0);
         }
+        com.newuniverse.nusmp.relics.djinn.weapon.DjinnWeaponService.release(p);                                                             // death, logout, an admin, a lost Djinn: the weapon goes, the stash returns
         if (r != null) sync(p, s, r, p.level().getGameTime(), true);
     }
 
@@ -685,6 +689,7 @@ public final class DjinnEngine {
         DjinnState s = DjinnState.of(p);
         Djinn d = s.active();
         if (d != null && s.phase() >= DjinnPhaseRules.FULL) applyMaso(p, s, d);
+        com.newuniverse.nusmp.relics.djinn.weapon.DjinnWeaponService.apply(p);                                                               // light or dark: the weapon takes the look of the Djinn now
         if (p.getHealth() > p.getMaxHealth()) p.setHealth(p.getMaxHealth());
         sync(p, s, run(p), p.level().getGameTime(), true);
     }
@@ -725,6 +730,7 @@ public final class DjinnEngine {
     /** Login, respawn: put right whatever the last session left, and tell the client. */
     public static void restore(ServerPlayer p) {
         DjinnState s = DjinnState.of(p);
+        com.newuniverse.nusmp.relics.djinn.weapon.DjinnWeaponService.release(p);                                                             // anything a crash left: a stray weapon, a stash
         if (s.phase() != DjinnPhaseRules.OFF) shutdown(p, EndReason.LOGOUT);
         cleanStale(p, s);
         if (s.owns() || s.lent()) {

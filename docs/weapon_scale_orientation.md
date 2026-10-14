@@ -209,3 +209,117 @@ Nothing here was run in the game. The held-view sheets are a software reproducti
 through the Python cross-check, the unit tests and a pass over all shipped meshes, but `WeaponRenderer` itself (the model json read, the log line, the `orient` directive) was only
 type-checked against stubs. Open points: the crossbows keep their limbs in the sprite plane (limbs up and down in third person; vanilla's crossbow uses its own display rotation); the katana /
 sabre curves are reported only; the first-person look of the enlarged heads should be checked once in game.
+
+---
+
+# 10. 1.34.0: the grip end and the bigger size rule
+
+The owner's two complaints after 1.30.0: (screenshot 68) "some weapons are flipped so the player is holding the blade and not the hilt", and "the weapons are still too small:
+unless the weapon should be small, for example a dagger, make it bigger; a great sword should be massive; Elsdocia must be bigger". Sections 1 to 9 stay as written; where
+they disagree with this section (the class table of section 2, the runtime thresholds of section 7, the first-person cap of section 6) this section wins.
+
+## 10.1 The weapon in screenshot 68 is the Windcutter
+
+A silver blade, a starburst of silver feathers (its winged guard) and a lilac ribbon round the blade: `windcutter`. Its generator (`wave11_ma.py`) measures the card with the
+point at y = 0 ("y runs up from the point here; the pommel is at the top as in the card"), so the mesh had its hilt at the high-y end. The hand anchor is at the low-y end
+(`WeaponRenderer` lays mesh y from the sprite's butt up the diagonal; the hand is at the grip, `GRIP_FRACTION` 0.25 of the length for the first-person guard, the class `grip`
+for growing), so the player held the blade and the pommel pointed away. The 1.30.0 audit only checked the direction of a head or crescent and "tip up", never which end is the grip.
+
+The audit now finds exactly four meshes built point first: **Windcutter, Tripolar Sword, Flamecutter, Encircled Blade** (the other 120 base meshes were looked at in the overview
+sheets as well: every one has its hilt at the butt). `docs/preview/weapon_size_1_34/grip_before_01.png` / `grip_after_01.png` show the four before and after.
+
+## 10.2 The grip-end detector
+
+`weapon_orientation.py` / `WeaponOrientation.java` (same maths, tested to agree): a new actionable flag `grip_far_end`.
+
+1. **Directive first.** A mesh may state where its grip is: `grip <fraction>` (the share of the length, from the low-y end, where the middle of the grip lies). Above 0.5 the mesh is
+   reversed; at or below 0.5 the grip is trusted and the geometry is not consulted.
+2. **Part names.** `mesh_lib.Mesh.write_txt` now writes `# part <name> <first quad line> <count>` comment lines (one per contiguous run of a part's quads) and derives the
+   directive from the part names (`Mesh.grip_fraction`: the quads of parts named pommel / grip / handle / hilt / wrap / haft / butt against the quads of parts named blade / tip /
+   point / head / edge / spike / fuller; undecided when either is missing or both sit at the same height). A regenerated mesh therefore states its own grip. Nothing requires it.
+3. **Geometry fallback** (a pointed class: dagger, shortsword, longsword, greatsword, rapier, katana, sabre, dadao): the widest part (the guard or an ornate guard) above 0.60 of the
+   length **and** the area centroid above 0.54 **and** the top end narrower than 0.10 blocks across (a pommel or a point, not a blunt jaw or a wide blade end). The four reversed
+   meshes satisfy all three; Giant Jawblade (blunt top), Krakeblade, Corpse Eater and every correct sword do not. The rule is deliberately conservative: a plain reversed sword with a
+   small guard is not caught by geometry alone, which is why the directive exists.
+
+`apply_weapon_fixes.py` has a new key `flip_y`: a half turn about the x axis through the middle of the length (`y -> -y`, `z -> -z`, normals' y and z negated, winding kept). No x
+moves, so a blade keeps its edge on the same side and a curve its direction; the model's front and back faces swap, which only matters for a one-sided texture. It is an involution
+(pivot recorded in the `# nusmp_fix` marker, so undo is exact), it is applied first (before `flip_x`, `rotate_z`, `head`, the size), and it writes `grip 0.120` into the mesh (the
+generator's own `grip` line, if it wrote one, is replaced and restored on undo). The four ids carry `flip_y` in `weapon_fixes.json`; their generators have a comment saying so (do not
+flip in both places).
+
+**Runtime** (`WeaponNormaliser`): a mesh with `grip > 0.5`, or (no directive) the geometry rule above, is turned over along its length at load with one log line
+`[nusmp] weapon mesh <id> (<class>) normalised: grip at the far end: turned over along its length`. A mesh with a `grip` line at or below 0.5 is never judged by the geometry.
+`orient manual` still switches the whole net off. The log line, the `grip` directive parse and the new `normalise(..., gripDirective)` overload were type-checked against stubs only.
+
+## 10.3 The new size table (apparent blocks: mesh length x the third-person scale)
+
+| class | length | head min (across) | grip |
+|---|---|---|---|
+| dagger / knife | 0.45 - 0.70 | - | 0.20 |
+| shortsword, rapier, sabre | 1.00 - 1.30 | - | 0.20 |
+| longsword, katana | 1.40 - 1.80 | - | 0.20 |
+| dadao (broad chopping sabre; the Time-Bender's card says greatsword class) | 1.80 - 2.40 | - | 0.20 |
+| greatsword / claymore / zweihander (massive) | 2.20 - 3.00 | - | 0.22 |
+| handaxe (an axe held in one hand), cleaver | 1.10 - 1.40, 0.90 - 1.20 | 0.50, 0.45 | 0.25 |
+| battleaxe, crescent | 1.60 - 2.00 | 0.75 | 0.25 |
+| greataxe | 2.40 - 3.00 | 1.10 | 0.28 |
+| scythe | 2.00 - 2.60 | 0.60 | 0.30 |
+| hammer, mace, club | 1.30 - 1.80 | 0.50, 0.50, - | 0.25 |
+| greathammer (new class) | 2.20 - 2.80 | 0.90 | 0.28 |
+| spear, glaive, halberd, trident | 2.80 - 3.60 | - | 0.33 |
+| staff | 2.00 - 2.60 | - | 0.40 |
+| whip (extended), coilwhip (coiled or short stock) | 1.60 - 2.40, 1.10 - 1.70 | - | 0.15 |
+| crossbow, bow (new class) | 1.00 - 1.20, 1.30 - 1.60 | - | 0.50 |
+| wand | 0.55 - 0.85 | - | 0.20 |
+| shield | 0.90 - 1.20 | - | 0.50 |
+| handitem (new class; the old `item` class stays in the table for old data) | largest dimension 0.50 - 0.90 | - | 0.50 |
+
+The table lives in the same three places as before (`weapon_classes.py`, `weapon_classes.json` + its game copy, the Java fallback in `WeaponClasses.java`; one test checks all three).
+`ITEM_MIN_EXTENT` is 0.50 (was 0.40). `STATE_SUFFIX` now also strips `_left`, so the left half of a pair follows its right half's class and fix.
+
+**Review.** Every id was classified again by its name and card text. Changes: `wavebreaker` longsword (a quick nodachi), `sword_crystal` shortsword ("crystal short sword"),
+`rimeheart_runeblade` greatsword, `doom_hammer` hammer, `sorrows_edge` crescent (1.6 - 2.0, a heavy axe), the 24 held items `handitem`, and the former "excluded" ids (Elsdocia, the three
+pairs) are in the table now (`excluded` is empty): Elsdocia and its legacy mesh greatsword, Twin Hook Swords and the Twin Swords of Deflection shortsword, Whirling Blades sabre.
+
+**Retargeting** (`tools/relics/retarget_weapon_sizes.py`, `--write` rebuilds `weapon_fixes.json`): the mesh as the generator wrote it plus the orientation keys already in the table is
+measured; a weapon below its class minimum (3 % margin) is brought to `min + 0.40 (max - min)` (a boss weapon to 0.50 - 0.55: Elsdocia, the Rimeheart Runeblade, Hunger, ...), scaled about
+the grip; a weapon already in range or above it is untouched (nothing is shrunk: the Severing Greatsword at 3.33 blocks and the Demon-Destroyer at 2.98 stay); a head below its class
+minimum is grown to 1.12 x the minimum by the existing `head` fix; a held item below 0.5 blocks is raised to 0.6 (an `extent` entry). An id with several mesh files (the crossbow draw stages,
+a pair's left half) gets a `scale` entry instead of `apparent`, so every state grows by one factor and the draw stages do not jump in size. 88 ids have an entry (103 mesh files carry a fix, with the
+state meshes and the pair halves). Examples (apparent blocks before the fix -> after): Buster Sword 1.50 -> 2.60, Dream Glass 1.50 -> 2.52, Magic Tool Spear 2.10 -> 3.12, Dead Blade 1.85 -> 3.12,
+Hunger 1.45 -> 2.73 (head 0.80 -> 1.23), Sorrow's Edge 1.25 -> 1.76 (head 0.38 -> 0.83), Staff of Moonlight 1.85 -> 2.24, a long sword 1.05 - 1.20 -> 1.56, a short sword 0.62 - 0.9 -> 1.12,
+daggers 0.37 - 0.42 -> 0.55, the Wand of Bubbles 0.52 -> 0.67, the needler 0.61 -> 1.08.
+
+**Elsdocia** is a greatsword-class crystal blade now: 2.64 blocks apparent (was 1.25; the head, i.e. the guard, is 0.83 across). `elsdocia_rebuild.py` keeps measuring the reference as a 1.25 m
+longsword (every proportion, facet and texel density is the reference's) and places it with `APPARENT_M = 2.64`, the same number as its entry in `weapon_fixes.json`, so
+a rebuild and a fix agree. The three-view check is `docs/preview/weapon_size_1_34/size_after_01.png` (top left).
+
+**The sprite-only bow.** `magic_tool_bow` is a vanilla-model sprite item, not a mesh; its json now carries the vanilla bow display with the third-person scale 1.4 (was 0.9, about 1.4 blocks
+apparent) and the first-person scale 0.95. The Genesis Demon-Slayer (`DemonSlayerRenderer`) was already at 1.615.
+
+## 10.4 Runtime thresholds and first person
+
+* `WeaponClasses.RUNTIME_SMALL` is 0.75 (was 0.60): a mesh below 75 % of its class minimum is scaled up to the minimum about the grip (at most 4 times; an item to `ITEM_MIN_EXTENT`).
+  It still never enlarges a head (the offline `head` fix does that) and never shrinks.
+* **First person.** `display_presets.APPARENT_MAX_BLOCKS` 1.0 -> 1.5 (`OversizeGuard.APPARENT_MAX` likewise; the guard steps in above 1.5 x 1.15). The camera bounds of the tool (every
+  corner of the mesh box in front of the near plane, the tip inside the field of view at a ratio of 1.32) still decide for the longest weapons: greatswords come out at s = 0.31 - 0.40
+  (about 1.0 block apparent, as the view allows), battle axes and heavy blades at 0.47 - 0.67 (1.0 - 1.4 blocks), hand axes at the vanilla 0.68. `SCALE_FLOOR` 0.28 -> 0.20 so the 3.7-block spear and
+  trident (0.26 and 0.28) get their tip into view instead of being listed out of view (none is now). Ground scale floor 0.3 -> 0.2 and item frame floor 0.55 -> 0.35 so a 3-block weapon
+  does not overhang the frame or tower over a dropped item. `python tools/relics/display_presets.py --apply --include-excluded` was run at the end (52 model jsons rewritten, the manifest is
+  `tools/relics/display_presets_manifest.json`).
+
+## 10.5 Tools and tests
+
+* `audit_weapon_scale.py` prints `grip_at` and has `grip_far_end` in the flags; it skips ids starting `djinn_weapon_` (the Djinn temporary weapons are another release's), as do
+  `apply_weapon_fixes.py`, `retarget_weapon_sizes.py` and `display_presets.py` (which has `--include-djinn` to process them).
+* `python tools/relics/test_weapon_scale.py` (35 tests: the new table equals the owner's ranges, nothing below its class minimum, every greatsword at least 2.2, daggers stay small,
+  Elsdocia at least 2.2, every state of one weapon has one scale, every mesh is held by its hilt, the four reversed swords are found in the generators' output, the flip is an involution that keeps
+  every x, the grip line is written and restored), `python tools/relics/test_display_presets.py` (19), and the Java tests `WeaponClassesTest`, `WeaponNormaliserTest`, `WeaponOrientationTest`,
+  `WeaponMeshesTest` (the runtime normaliser has nothing to do on any shipped mesh), `OversizeGuardTest` (all compiled and run with a JUnit console here: 33 tests).
+* Adding a new weapon: build the hilt at low y, give the generator real part names (pommel, grip, guard, blade, tip ...) so `write_txt` states the grip, class it in `weapon_classes.json`, run
+  `retarget_weapon_sizes.py` (dry run first), then `apply_weapon_fixes.py --apply`, `display_presets.py --apply`.
+
+Not verified in game: nothing here was run in Minecraft. The held views are the software reproduction of the vanilla hand chain (section 9); the grip-end flip of the four swords, the
+sizes in the hand and the first-person fit of the longest weapons should be looked at once in game. The z flip of the four swords swaps the two broad faces of the mesh (the texture is painted
+per part, so the difference is small but look at the Windcutter's ribbon and the Flamecutter's wings).

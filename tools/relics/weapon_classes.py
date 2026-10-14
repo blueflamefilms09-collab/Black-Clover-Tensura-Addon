@@ -18,36 +18,41 @@ CLASSES_JSON = os.path.join(HERE, "weapon_classes.json")
 ASSET_JSON = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "weapon_classes.json")
 
 # name: (min, max, head_min, grip)   (head_min 0 = not checked)
+# 1.34.0: the owner's size rule ("unless the weapon should be small, make it bigger; a great sword should be massive"). Apparent blocks.
 CLASSES = {
-    "dagger":     (0.35, 0.55, 0.0, 0.20),
-    "shortsword": (0.80, 1.00, 0.0, 0.20),
-    "longsword":  (1.10, 1.30, 0.0, 0.20),
-    "rapier":     (1.10, 1.30, 0.0, 0.20),
-    "katana":     (1.10, 1.30, 0.0, 0.20),
-    "sabre":      (1.00, 1.25, 0.0, 0.20),
-    "dadao":      (1.20, 1.45, 0.0, 0.20),
-    "greatsword": (1.50, 1.90, 0.0, 0.22),
-    "handaxe":    (0.70, 0.90, 0.30, 0.25),
-    "battleaxe":  (1.10, 1.30, 0.45, 0.25),
-    "greataxe":   (1.60, 2.00, 0.70, 0.28),
-    "crescent":   (1.20, 1.50, 0.50, 0.25),
-    "scythe":     (1.50, 1.90, 0.50, 0.30),
-    "cleaver":    (0.55, 0.80, 0.25, 0.25),
-    "spear":      (1.80, 2.40, 0.0, 0.33),
-    "glaive":     (1.80, 2.40, 0.0, 0.33),
-    "trident":    (1.80, 2.40, 0.0, 0.33),
-    "staff":      (1.60, 2.00, 0.0, 0.40),
-    "whip":       (1.50, 2.00, 0.0, 0.15),
-    "coilwhip":   (0.90, 1.40, 0.0, 0.15),                  # a whip held coiled or with a short stock (the viper whip, the junglethorn vine)
-    "crossbow":   (0.70, 0.95, 0.0, 0.50),
-    "hammer":     (1.10, 1.50, 0.40, 0.25),
-    "mace":       (0.80, 1.10, 0.0, 0.25),
-    "club":       (0.90, 1.40, 0.0, 0.25),
-    "wand":       (0.35, 0.55, 0.0, 0.20),
-    "shield":     (0.70, 1.10, 0.0, 0.50),
-    "item":       (0.0, 9.0, 0.0, 0.50),                  # a held trinket / book / charm: only `ITEM_MIN_EXTENT` applies
+    "dagger":     (0.45, 0.70, 0.0, 0.20),                  # dagger / knife
+    "shortsword": (1.00, 1.30, 0.0, 0.20),
+    "longsword":  (1.40, 1.80, 0.0, 0.20),
+    "rapier":     (1.00, 1.30, 0.0, 0.20),
+    "katana":     (1.40, 1.80, 0.0, 0.20),
+    "sabre":      (1.00, 1.30, 0.0, 0.20),
+    "dadao":      (1.80, 2.40, 0.0, 0.20),                  # a broad chopping sabre: the card of the Time-Bender calls it greatsword class
+    "greatsword": (2.20, 3.00, 0.0, 0.22),                  # claymore / zweihander: massive, the blade as wide as a hand
+    "handaxe":    (1.10, 1.40, 0.50, 0.25),                 # an axe held in one hand: head 0.5 - 0.7
+    "battleaxe":  (1.60, 2.00, 0.75, 0.25),                 # head 0.75 - 1.0
+    "greataxe":   (2.40, 3.00, 1.10, 0.28),                 # head 1.1 - 1.5
+    "crescent":   (1.60, 2.00, 0.75, 0.25),
+    "scythe":     (2.00, 2.60, 0.60, 0.30),
+    "cleaver":    (0.90, 1.20, 0.45, 0.25),
+    "spear":      (2.80, 3.60, 0.0, 0.33),                  # spear / glaive / halberd
+    "glaive":     (2.80, 3.60, 0.0, 0.33),
+    "trident":    (2.80, 3.60, 0.0, 0.33),
+    "staff":      (2.00, 2.60, 0.0, 0.40),
+    "whip":       (1.60, 2.40, 0.0, 0.15),
+    "coilwhip":   (1.10, 1.70, 0.0, 0.15),                  # a whip held coiled or with a short stock (the viper whip, the junglethorn vine)
+    "crossbow":   (1.00, 1.20, 0.0, 0.50),
+    "bow":        (1.30, 1.60, 0.0, 0.50),
+    "hammer":     (1.30, 1.80, 0.50, 0.25),                 # head 0.5 - 0.8
+    "greathammer": (2.20, 2.80, 0.90, 0.28),
+    "mace":       (1.30, 1.80, 0.50, 0.25),
+    "club":       (1.30, 1.80, 0.0, 0.25),
+    "wand":       (0.80, 1.20, 0.0, 0.20),
+    "shield":     (0.90, 1.20, 0.0, 0.50),
+    "item":       (0.0, 9.0, 0.0, 0.50),                    # a held trinket / book / charm: only `ITEM_MIN_EXTENT` applies (kept for old data)
+    "handitem":   (0.50, 0.90, 0.0, 0.50),                  # 1.34.0: the held-item class (lantern, compass, chalice, page, charm): its largest dimension 0.5 - 0.9
 }
-ITEM_MIN_EXTENT = 0.40                                    # blocks: the largest apparent dimension of a held item is never below this
+ITEM_CLASSES = ("item", "handitem")                       # classes measured by their largest dimension, not their length
+ITEM_MIN_EXTENT = 0.50                                    # blocks: the largest apparent dimension of a held item is never below this (1.34.0: was 0.40)
 OVERSIZE_FACTOR = 1.5                                     # only a weapon longer than this times `max` is reported as too big (never auto-shrunk)
 
 # ordered keyword guess for ids the table does not know (the Java fallback WeaponClasses.guess has the same list, in the same order)
@@ -57,10 +62,10 @@ KEYWORDS = [
     ("saber", "sabre"), ("scimitar", "sabre"), ("rapier", "rapier"), ("longsword", "longsword"), ("gladius", "shortsword"),
     ("xiphos", "shortsword"), ("shortsword", "shortsword"), ("dagger", "dagger"), ("knife", "dagger"), ("dirk", "dagger"), ("stiletto", "dagger"),
     ("cleaver", "cleaver"), ("trident", "trident"), ("glaive", "glaive"), ("halberd", "glaive"), ("naginata", "glaive"), ("spear", "spear"),
-    ("lance", "spear"), ("pike", "spear"), ("staff", "staff"), ("wand", "wand"), ("whip", "whip"), ("crossbow", "crossbow"), ("bow", "crossbow"),
-    ("hammer", "hammer"), ("maul", "hammer"), ("mace", "mace"), ("club", "club"), ("shield", "shield"), ("sword", "longsword"), ("blade", "longsword"),
+    ("lance", "spear"), ("pike", "spear"), ("staff", "staff"), ("wand", "wand"), ("whip", "whip"), ("crossbow", "crossbow"), ("longbow", "bow"), ("shortbow", "bow"), ("bow", "crossbow"),
+    ("greathammer", "greathammer"), ("great_hammer", "greathammer"), ("hammer", "hammer"), ("maul", "hammer"), ("mace", "mace"), ("club", "club"), ("shield", "shield"), ("sword", "longsword"), ("blade", "longsword"),
 ]
-STATE_SUFFIX = re.compile(r"(_(pull[123]|charged|spent|genesis|5leaf|liquid|off|blue)|(?<=lantern)_red)$")
+STATE_SUFFIX = re.compile(r"(_(pull[123]|charged|spent|genesis|5leaf|liquid|off|blue|left)|(?<=lantern)_red)$")
 
 
 def base_id(item_id):
@@ -88,6 +93,10 @@ def class_of(item_id, data):
         if i in w:
             return w[i]["class"] if isinstance(w[i], dict) else w[i]
     return guess_class(item_id)
+
+
+def is_item_class(cls):
+    return cls in ITEM_CLASSES
 
 
 def table(data=None):

@@ -98,6 +98,8 @@ public final class GrimoireBakedModel implements BakedModel {
         @Nullable
         @Override
         public BakedModel resolve(BakedModel model, ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int seed) {
+            if (stack.getItem() instanceof com.newuniverse.nusmp.compat.CompatCodexItem)                       // 1.34.0: the Compatibility Codex has a fixed look (compat/CompatCodexLook)
+                return viewFor(com.newuniverse.nusmp.compat.CompatCodexLook.LOOK.key(false));
             return viewFor(GrimoireItem.look(stack).key(false, GrimoireItem.openView(stack)));
         }
     }

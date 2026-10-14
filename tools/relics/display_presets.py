@@ -48,7 +48,7 @@ THE MATHS (every number is a named constant below; the Java guard client/relics/
  with Y_VIEW = 0.92 * tan(35 deg) (the hand is drawn with a fixed 70 degree vertical field of view), X_VIEW = 1.32 (the hand sits at the window's edge:
  x = 0.63 at depth 0.49 is a ratio of 1.30 for the tip of an ordinary sprite sword, so the tip may come no nearer than that), Z_MARGIN = 0.16 (the near
  plane is 0.05). The scale is also capped so that the apparent length s * L <= APPARENT_MAX_BLOCKS, and never goes
- below SCALE_FLOOR (0.28: a weapon that cannot fit even then is listed in the manifest as "tip_out_of_view": true).
+ below SCALE_FLOOR (0.20: a weapon that cannot fit even then is listed in the manifest as "tip_out_of_view": true).
      s_new = clamp(min(s0, bounds, APPARENT_MAX_BLOCKS / L), SCALE_FLOOR, s0)
 
  Left hand. Vanilla mirrors a left-hand transform (y and z rotation and the x translation change sign), so the left entry takes the same scale and
@@ -70,8 +70,8 @@ MANIFEST = os.path.join(HERE, "display_presets_manifest.json")
 
 # ---- named constants (the Java guard in client/relics/item/OversizeGuard repeats the first three)
 LONG_BLOCKS = 1.4                       # a weapon longer than this gets a preset
-APPARENT_MAX_BLOCKS = 1.0               # no weapon is drawn longer than this in first person (s * L)
-SCALE_FLOOR = 0.28                      # never smaller than this
+APPARENT_MAX_BLOCKS = 1.5               # no weapon is drawn longer than this in first person (s * L); 1.34.0: was 1.0 (the bigger-weapons rule; the camera bounds still decide)
+SCALE_FLOOR = 0.20                      # never smaller than this
 GRIP_FRACTION = 0.25                    # the hand holds the weapon this far up from its butt (share of the length)
 HAND = (0.56, -0.52, -0.72)             # vanilla ItemInHandRenderer.applyItemArmTransform, right hand, nothing equipped or swung
 BASE_SCALE = 0.68                       # vanilla item/handheld, first person
@@ -87,7 +87,7 @@ LONG_FRAME_BLOCKS = 1.6                 # 1.29.0: beyond this the ground and ite
 GROUND_BASE, FIXED_BASE = 0.5, 1.0      # the values every generated model json starts with
 GROUND_APPARENT_MAX = 0.8               # a lying weapon is at most this long (ground scale * mesh length)
 FIXED_APPARENT_MAX = 1.5                # a framed weapon (the frame already halves the scale) is at most this long (fixed scale * mesh length)
-GROUND_FLOOR, FIXED_FLOOR = 0.3, 0.55
+GROUND_FLOOR, FIXED_FLOOR = 0.2, 0.35
 MARKER = "nusmp_display_preset"
 FIRST = ("firstperson_righthand", "firstperson_lefthand")
 
@@ -326,13 +326,16 @@ def is_excluded(item_id, excluded):
     return any(item_id == e or item_id.startswith(e + "_") for e in excluded)
 
 
-def run(apply=False, models_dir=MODELS, meshes_dir=MESHES, include_excluded=True):
+SKIP_PREFIXES = ("djinn_weapon_",)       # 1.34.0: the Djinn temporary weapons belong to another release; run with --include-djinn to process them
+
+
+def run(apply=False, models_dir=MODELS, meshes_dir=MESHES, include_excluded=True, include_djinn=False):
     """Process every model json that has a mesh. Returns (manifest_entries, changed_ids). include_excluded=False skips the ids of excluded_ids()."""
     entries, changed = [], []
     excluded = [] if include_excluded else excluded_ids()
     for path in sorted(glob.glob(os.path.join(meshes_dir, "*.txt"))):
         item_id = os.path.basename(path)[:-4]
-        if is_excluded(item_id, excluded):
+        if is_excluded(item_id, excluded) or (not include_djinn and item_id.startswith(SKIP_PREFIXES)):
             continue
         mjson = os.path.join(models_dir, item_id + ".json")
         if not os.path.exists(mjson):
@@ -366,8 +369,9 @@ def main(argv=None):
     ap.add_argument("--apply", action="store_true", help="rewrite the model jsons and the manifest")
     ap.add_argument("--check", action="store_true", help="exit 1 if --apply would change anything")
     ap.add_argument("--include-excluded", action="store_true", help="also process the ids other agents own (Elsdocia, the dual-wield pairs): the lead's final run")
+    ap.add_argument("--include-djinn", action="store_true", help="also process the djinn_weapon_* temporary weapons (skipped by default)")
     args = ap.parse_args(argv)
-    entries, changed = run(apply=args.apply, include_excluded=args.include_excluded)
+    entries, changed = run(apply=args.apply, include_excluded=args.include_excluded, include_djinn=args.include_djinn)
     presets = [e for e in entries if e["action"] == "preset"]
     print("%d meshes with a model json; %d over %.1f blocks; %d to rewrite" % (len(entries), len(presets), LONG_BLOCKS, len(changed)))
     for e in sorted(presets, key=lambda e: -e["length_blocks"]):
@@ -383,6 +387,14 @@ def main(argv=None):
                 old = []
             done = {e["id"] for e in entries}
             entries = sorted(entries + [e for e in old if e["id"] not in done and is_excluded(e["id"], skipped)], key=lambda e: e["id"])
+        if not args.include_djinn:                                       # keep the rows another agent's --include-djinn run wrote
+            try:
+                with open(MANIFEST, encoding="utf-8") as f:
+                    keep = [e for e in json.load(f).get("weapons", []) if e["id"].startswith(SKIP_PREFIXES)]
+            except (OSError, ValueError):
+                keep = []
+            done = {e["id"] for e in entries}
+            entries = sorted(entries + [e for e in keep if e["id"] not in done], key=lambda e: e["id"])
         manifest = {"rule": "tools/relics/display_presets.py", "long_blocks": LONG_BLOCKS, "apparent_max_blocks": APPARENT_MAX_BLOCKS,
                     "scale_floor": SCALE_FLOOR, "grip_fraction": GRIP_FRACTION, "long_frame_blocks": LONG_FRAME_BLOCKS, "weapons": entries}
         with open(MANIFEST, "w", encoding="utf-8", newline="\n") as f:
