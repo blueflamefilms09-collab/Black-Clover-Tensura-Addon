@@ -231,8 +231,9 @@ public final class RelicTooltip {
     /** How the act at this index is used. */
     static String how(RelicDef def, int index) {
         if (def.slot() == RelicSlot.CONSUMABLE) return "Use it";
-        if (def.slot().isHand() && !def.isAdopted() && index == 0) return "Right-click";
-        if (def.slot().isHand() && !def.isAdopted() && index == 1) return "Sneak + right-click";
+        if (def.slot().isHand() && def.isRanged() && index == Math.min(1, def.acts().size() - 1)) return "Sneak + use";      // a drawn weapon: use means draw, so its one click is sneak + use
+        if (def.slot().isHand() && !def.isAdopted() && !def.isRanged() && index == 0) return "Right-click";
+        if (def.slot().isHand() && !def.isAdopted() && !def.isRanged() && index == 1) return "Sneak + right-click";
         if (def.slot().isArmor() || def.slot().isCurio() || def.slot().isHand()) return "Key " + RelicActKeys.USE.getTranslatedKeyMessage().getString();
         return "Use it";
     }

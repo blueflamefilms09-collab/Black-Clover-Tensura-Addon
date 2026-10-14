@@ -22,6 +22,7 @@ ROOT = Path(__file__).resolve().parents[2]
 WAVES = ROOT / "src/main/java/com/newuniverse/nusmp/relics/wave"
 TAGS = ROOT / "src/main/resources/data/curios/tags/item"
 SLOT_TAG = {"NECK": "necklace", "BACK": "back", "BELT": "belt", "HANDS": "hands", "CHARM": "charm"}
+# HEAD, CHEST and FEET are real armour (FEET = boots, 1.25.0), MAIN_HAND and CONSUMABLE are not worn: none of them has a Curios slot, so SLOT_TAG.get() skips them.
 MODID = "nusmp"
 
 DEF = re.compile(r'RelicDef\s*\.\s*of\s*\(\s*([^,]+?)\s*,\s*"(?:[^"\\]|\\.)*"\s*,\s*Grade\s*\.\s*(\w+)\s*,\s*RelicSlot\s*\.\s*(\w+)\s*\)', re.S)

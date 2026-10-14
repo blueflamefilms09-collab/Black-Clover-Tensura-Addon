@@ -4,6 +4,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.logging.LogUtils;
 import com.mojang.math.Axis;
+import com.newuniverse.nusmp.client.relics.item.ItemStateVariants;
+import com.newuniverse.nusmp.client.relics.item.OversizeGuard;
+import com.newuniverse.nusmp.client.relics.item.VariantRules;
 import com.newuniverse.nusmp.item.NUItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -84,7 +87,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
     public static void init(IEventBus modBus) {
         modBus.addListener(WeaponRenderer::registerExtensions);
         modBus.addListener(WeaponRenderer::registerModels);
-        modBus.addListener((ModelEvent.BakingCompleted e) -> MESHES.clear());     // a resource reload re-reads the meshes
+        modBus.addListener((ModelEvent.BakingCompleted e) -> { MESHES.clear(); ItemStateVariants.clearCache(); });     // a resource reload re-reads the meshes
         // 1.15.0: the Magebane Shield is a real shield; this is vanilla's own "blocking" predicate, which swaps in the raised-shield model
         modBus.addListener((FMLClientSetupEvent e) -> e.enqueueWork(() -> ItemProperties.register(NUItems.MAGEBANE_SHIELD.get(),
                 ResourceLocation.withDefaultNamespace("blocking"),
@@ -97,6 +100,14 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             public BlockEntityWithoutLevelRenderer getCustomRenderer() {
                 if (instance == null) instance = new WeaponRenderer();
                 return instance;
+            }
+
+            /** 1.25.0: a loaded relic crossbow is held at the ready like vanilla's (vanilla checks Items.CROSSBOW; this is the hook it leaves for other items). */
+            @Override
+            public net.minecraft.client.model.HumanoidModel.ArmPose getArmPose(net.minecraft.world.entity.LivingEntity holder, net.minecraft.world.InteractionHand hand, ItemStack stack) {
+                if (stack.getItem() instanceof net.minecraft.world.item.CrossbowItem && !holder.swinging && net.minecraft.world.item.CrossbowItem.isCharged(stack))
+                    return net.minecraft.client.model.HumanoidModel.ArmPose.CROSSBOW_HOLD;
+                return null;
             }
         };
         for (Supplier<? extends Item> item : WEAPONS) e.registerItem(ext, item.get());
@@ -112,7 +123,10 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
     public void renderByItem(ItemStack stack, ItemDisplayContext ctx, PoseStack pose, MultiBufferSource buffers, int light, int overlay) {
         Minecraft mc = Minecraft.getInstance();
         String id = BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath();
-        Mesh mesh = ctx == ItemDisplayContext.GUI ? null : mesh(com.newuniverse.nusmp.client.nexus.NavClient.meshId(stack, id, ctx));
+        // 1.25.0: the draw / load stage of a bow or crossbow and the Genesis / five-leaf variants pick the mesh (client/relics/item)
+        ItemStateVariants.Result state = ctx == ItemDisplayContext.GUI ? null
+                : ItemStateVariants.resolve(stack, com.newuniverse.nusmp.client.nexus.NavClient.meshId(stack, id, ctx), ctx, m -> mesh(m) != null);
+        Mesh mesh = state == null ? null : mesh(state.meshId());
         if (mesh == null) {                                                        // the inventory (or a missing mesh): the old icon
             BakedModel icon = com.newuniverse.nusmp.client.nexus.NavClient.resolveIcon(mc.getModelManager().getModel(icon(id)), stack);
             pose.pushPose();
@@ -123,12 +137,21 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         }
         float time = mc.level == null ? 0 : mc.level.getGameTime() + mc.getTimer().getGameTimeDeltaPartialTick(false);
         pose.pushPose();
+        if (ctx.firstPerson()) {                                                   // 1.25.0: an oversized weapon never goes through the camera (tools/relics/display_presets.py is the rule)
+            float k = OversizeGuard.factor(mesh.length, pose.last().pose().getScale(new Vector3f()).x);
+            if (k < 1f) {
+                pose.translate(mesh.gripX, mesh.gripY, 0.5f);
+                pose.scale(k, k, k);
+                pose.translate(-mesh.gripX, -mesh.gripY, -0.5f);
+            }
+        }
         pose.translate(mesh.ox, mesh.oy, 0.5f);
         pose.mulPose(Axis.ZP.rotationDegrees(mesh.angle - 90f));
         pose.scale(mesh.scale, mesh.scale, mesh.scale);
         pose.translate(0f, -mesh.ymin, 0f);
         PoseStack.Pose p = pose.last();
-        emit(p, ItemRenderer.getFoilBufferDirect(buffers, RenderType.entityCutout(mesh.tex), false, stack.hasFoil()), mesh.layers[BODY], 0xFFFFFFFF, light, overlay);
+        emit(p, ItemRenderer.getFoilBufferDirect(buffers, RenderType.entityCutout(mesh.tex), false, stack.hasFoil()), mesh.layers[BODY],
+                state.tint() ? VariantRules.BODY_TINT_5LEAF : 0xFFFFFFFF, light, overlay);
         if (!mesh.layers[VOID].isEmpty()) {
             VertexConsumer vc = buffers.getBuffer(NURenderTypes.demonVoid());
             Matrix4f m = p.pose();
@@ -138,9 +161,14 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             }
         }
         if (mesh.glowTex != null && !mesh.layers[GLOW].isEmpty()) {
-            float k = mesh.glowMin + (mesh.glowMax - mesh.glowMin) * (0.5f + 0.5f * (float) Math.sin(time * mesh.glowSpeed));
-            int r = (int) ((mesh.glowRgb >> 16 & 255) * k), g = (int) ((mesh.glowRgb >> 8 & 255) * k), b = (int) ((mesh.glowRgb & 255) * k);
+            float k = VariantRules.pulse(time, mesh.glowSpeed, mesh.glowMin, mesh.glowMax, state.intensify() ? VariantRules.GENESIS_BOOST : 1f);
+            int rgb = state.tint() ? VariantRules.tintGlow(mesh.glowRgb) : mesh.glowRgb;
+            int r = VariantRules.channel(rgb >> 16 & 255, k), g = VariantRules.channel(rgb >> 8 & 255, k), b = VariantRules.channel(rgb & 255, k);
             emit(p, buffers.getBuffer(RenderType.eyes(mesh.glowTex)), mesh.layers[GLOW], 0xFF000000 | r << 16 | g << 8 | b, 0xF000F0, OverlayTexture.NO_OVERLAY);
+            if (state.intensify()) {                                               // 1.25.0: a Genesis glow adds a translucent emissive pass on top
+                int a = VariantRules.emissiveAlpha(time);
+                emit(p, buffers.getBuffer(RenderType.entityTranslucentEmissive(mesh.glowTex)), mesh.layers[GLOW], a << 24 | (rgb & 0xFFFFFF), 0xF000F0, OverlayTexture.NO_OVERLAY);
+            }
         }
         pose.popPose();
     }
@@ -160,6 +188,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
     /** One weapon's mesh: its placement on the old sprite's diagonal, its glow pulse, and its vertices per layer. */
     static final class Mesh {
         float ox, oy, angle, scale, ymin, glowSpeed, glowMin, glowMax;
+        float ymax = -Float.MAX_VALUE, length, gripX, gripY;                     // 1.25.0: for the oversize guard (client/relics/item/OversizeGuard)
         int glowRgb;
         ResourceLocation tex, glowTex;
         @SuppressWarnings("unchecked")
@@ -174,11 +203,15 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(DemonSlayerRenderer.rl("weapon_meshes/" + id + ".txt"));
             if (res.isPresent()) {
                 mesh = new Mesh();
-                mesh.tex = DemonSlayerRenderer.rl("textures/entity/weapon/" + id + ".png");
+                mesh.tex = skin(id, "");
                 try (BufferedReader in = res.get().openAsReader()) {
                     String line;
                     while ((line = in.readLine()) != null) parse(mesh, id, line.trim().split("\\s+"));
                 }
+                mesh.length = Math.max(0f, (mesh.ymax - mesh.ymin) * mesh.scale);
+                float along = OversizeGuard.GRIP_FRACTION * mesh.length;
+                mesh.gripX = mesh.ox + along * (float) Math.cos(Math.toRadians(mesh.angle));
+                mesh.gripY = mesh.oy + along * (float) Math.sin(Math.toRadians(mesh.angle));
             }
         } catch (Exception ex) {
             LogUtils.getLogger().error("[nusmp] weapon mesh {} failed to load; its icon is used instead", id, ex);
@@ -186,6 +219,20 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         }
         MESHES.put(id, mesh);
         return mesh;
+    }
+
+    /**
+     * The skin of a mesh: its own file when there is one, else the one of the rest mesh (a bow or crossbow state mesh, a Genesis or five-leaf variant
+     * shares the skin and the UV layout of the weapon it belongs to).
+     */
+    private static net.minecraft.resources.ResourceLocation skin(String id, String suffix) {
+        net.minecraft.resources.ResourceLocation own = DemonSlayerRenderer.rl("textures/entity/weapon/" + id + suffix + ".png");
+        String base = id.replaceAll("_(pull[123]|charged|spent|genesis|5leaf)$", "");
+        if (base.equals(id)) return own;
+        try {
+            if (Minecraft.getInstance().getResourceManager().getResource(own).isPresent()) return own;
+        } catch (Exception ignored) { }
+        return DemonSlayerRenderer.rl("textures/entity/weapon/" + base + suffix + ".png");
     }
 
     private static void parse(Mesh mesh, String id, String[] v) {
@@ -202,7 +249,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
                 mesh.glowSpeed = Float.parseFloat(v[2]);
                 mesh.glowMin = Float.parseFloat(v[3]);
                 mesh.glowMax = Float.parseFloat(v[4]);
-                mesh.glowTex = DemonSlayerRenderer.rl("textures/entity/weapon/" + id + "_glow.png");
+                mesh.glowTex = skin(id, "_glow");
             }
             case "q" -> {
                 int layer = Integer.parseInt(v[1]);
@@ -211,6 +258,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
                     int o = 2 + k * 5;
                     mesh.layers[layer].add(new float[]{Float.parseFloat(v[o]), Float.parseFloat(v[o + 1]), Float.parseFloat(v[o + 2]),
                             Float.parseFloat(v[o + 3]), Float.parseFloat(v[o + 4]), nx, ny, nz});
+                    mesh.ymax = Math.max(mesh.ymax, Float.parseFloat(v[o + 1]));
                 }
             }
             case "qn" -> {      // 1.24.0: per-vertex smoothed normals (tools/relics/mesh_lib.py, normals="vertex")
@@ -219,6 +267,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
                     int o = 2 + k * 8;
                     mesh.layers[layer].add(new float[]{Float.parseFloat(v[o]), Float.parseFloat(v[o + 1]), Float.parseFloat(v[o + 2]),
                             Float.parseFloat(v[o + 3]), Float.parseFloat(v[o + 4]), Float.parseFloat(v[o + 5]), Float.parseFloat(v[o + 6]), Float.parseFloat(v[o + 7])});
+                    mesh.ymax = Math.max(mesh.ymax, Float.parseFloat(v[o + 1]));
                 }
             }
             default -> { }

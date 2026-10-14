@@ -91,6 +91,14 @@ public final class RelicEngine {
         bus.addListener(RelicEngine::onServerTick);
         bus.addListener(RelicEngine::onServerStopping);
         bus.addListener(RelicEngine::onChangeTarget);
+        bus.addListener(RelicEngine::onSummonLoad);
+    }
+
+    /** A summon that comes back from disk (a crash, a chunk that held it) is not tracked any more: it goes, so none stays forever. */
+    private static void onSummonLoad(net.neoforged.neoforge.event.entity.EntityJoinLevelEvent e) {
+        if (e.getLevel().isClientSide() || !e.loadedFromDisk()) return;
+        CompoundTag d = e.getEntity().getPersistentData();
+        if (d.hasUUID(Fx.OWNER) && d.contains(Fx.UNTIL)) e.setCanceled(true);
     }
 
     /**
@@ -117,6 +125,7 @@ public final class RelicEngine {
         APPLIED.clear();
         LAST_PACKET.clear();
         RITUAL.clear();
+        RelicSummons.discardAll(e.getServer());
         RelicSummons.clear();
         Relics.clearCaches();
     }
@@ -401,7 +410,7 @@ public final class RelicEngine {
         if (act.cooldownTicks() > 0) {
             long until = UseRules.readyAt(now, act.cooldownTicks());
             setCooldown(p, def, act, until);
-            if (def.acts().size() == 1 && !def.isAdopted() && def.slot().isHand()) p.getCooldowns().addCooldown(stack.getItem(), act.cooldownTicks());
+            if (def.acts().size() == 1 && !def.isAdopted() && !def.isRanged() && def.slot().isHand()) p.getCooldowns().addCooldown(stack.getItem(), act.cooldownTicks());
         }
         p.displayClientMessage(Component.literal(act.displayName()).withStyle(def.grade().colour()), true);
         try {

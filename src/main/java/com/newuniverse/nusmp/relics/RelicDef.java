@@ -28,6 +28,7 @@ public final class RelicDef {
     private int main = 0x8C8C9C, trim = 0xD8C070, glow = 0xFFE9A0;
     private Look look;
     private Supplier<? extends Item> adopted;
+    private RangedKind ranged = RangedKind.NONE;
 
     private RelicDef(String id, String cardName, Grade grade, RelicSlot slot) {
         this.id = id;
@@ -55,6 +56,7 @@ public final class RelicDef {
         d.glow = glow;
         d.look = look;
         d.adopted = adopted;
+        d.ranged = ranged;
         return d;
     }
 
@@ -141,6 +143,18 @@ public final class RelicDef {
 
     public RelicDef look(Look look) { RelicDef d = copy(); d.look = look; return d; }
 
+    /** 1.25.0: what kind of drawn weapon this MAIN_HAND relic is. A BOW or CROSSBOW registers as {@link RelicBowItem} / {@link RelicCrossbowItem}. */
+    public enum RangedKind { NONE, BOW, CROSSBOW }
+
+    /** A bow or crossbow: draws and shoots like the vanilla weapon (its acts go on sneak + use and on the worn-relic key). Needs the MAIN_HAND slot. */
+    public RelicDef ranged(RangedKind kind) { RelicDef d = copy(); d.ranged = kind == null ? RangedKind.NONE : kind; return d; }
+
+    /** Shorthand for {@code ranged(RangedKind.BOW)}: a bow; ship its draw-stage meshes as &lt;id&gt;_pull1 / _pull2 / _pull3 (docs/asset_pipeline.md). */
+    public RelicDef bow() { return ranged(RangedKind.BOW); }
+
+    /** Shorthand for {@code ranged(RangedKind.CROSSBOW)}: a crossbow; ship &lt;id&gt;_pull1..3 (loading) and &lt;id&gt;_charged (loaded). */
+    public RelicDef crossbow() { return ranged(RangedKind.CROSSBOW); }
+
     /** The same def without the vessel flag (the catalog uses it on a def whose grade cannot carry a Djinn). */
     public RelicDef dropVessel() { RelicDef d = copy(); d.vessel = false; return d; }
 
@@ -159,6 +173,8 @@ public final class RelicDef {
     public Supplier<? extends Item> adopted() { return adopted; }
     public boolean isAdopted() { return adopted != null; }
     public boolean hasPalette() { return paletteSet; }
+    public RangedKind rangedKind() { return ranged; }
+    public boolean isRanged() { return ranged != RangedKind.NONE; }
     public int paletteMain() { return main; }
     public int paletteTrim() { return trim; }
     public int paletteGlow() { return glow; }
@@ -190,7 +206,7 @@ public final class RelicDef {
     public int armorDefence() {
         if (defence >= 0) return defence;
         int chest = Math.min(8, 2 + grade.tier());
-        return slot == RelicSlot.HEAD ? Math.max(1, Math.round(chest * 0.4f)) : chest;
+        return slot == RelicSlot.HEAD || slot == RelicSlot.FEET ? Math.max(1, Math.round(chest * 0.4f)) : chest;
     }
 
     public double armorToughness() { return toughness >= 0 ? toughness : Math.max(0.0, (grade.tier() - 2) * 0.75); }

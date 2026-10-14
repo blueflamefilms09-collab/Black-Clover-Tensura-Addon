@@ -84,8 +84,9 @@ public final class DjinnFirstPerson {
         part.translateAndRotate(pose);
         pose.scale(1f / 16f, 1f / 16f, 1f / 16f);
         float glow = 0.9f + 0.1f * Mth.sin((mc.level == null ? 0 : mc.level.getGameTime()) * 0.12f);
-        DjinnDraw.piece(pose, buffers, d, left ? Piece.VAMBRACE_L : Piece.VAMBRACE_R, light, 1f, glow);
-        DjinnDraw.piece(pose, buffers, d, left ? Piece.GAUNTLET_L : Piece.GAUNTLET_R, light, 1f, glow);
+        boolean dark = s.dark();                                  // the Dark Djinn's black and gold arm; the unique look's own pieces; the shared rig as the fallback
+        DjinnDraw.piece(pose, buffers, d, left ? Piece.VAMBRACE_L : Piece.VAMBRACE_R, dark, light, 1f, glow);
+        DjinnDraw.piece(pose, buffers, d, left ? Piece.GAUNTLET_L : Piece.GAUNTLET_R, dark, light, 1f, glow);
         pose.popPose();
         part.xRot = ox;
         part.yRot = oy;

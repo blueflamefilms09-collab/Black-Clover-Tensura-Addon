@@ -6,7 +6,8 @@ package com.newuniverse.nusmp.relics;
  */
 public enum Look {
     SWORD, RAPIER, STAFF, WAND, HAMMER, AXE, BOW, SHIELD, TOME, PLATE, ROBE, LEATHER, COAT, SUIT, CLOAK, CAPE, MANTLE, HOOD, CROWN, CIRCLET, HAT,
-    GLOVES, GAUNTLETS, BELT, AMULET, PENDANT, LOCKET, CHARM, POTION, ORB;
+    GLOVES, GAUNTLETS, BELT, AMULET, PENDANT, LOCKET, CHARM, POTION, ORB,
+    BOOTS, SANDALS, GREAVES;
 
     /** A sensible look for a slot when a def names none. */
     public static Look defaultFor(RelicSlot slot) {
@@ -19,6 +20,7 @@ public enum Look {
             case BELT -> BELT;
             case HANDS -> GAUNTLETS;
             case CHARM -> CHARM;
+            case FEET -> BOOTS;
             default -> POTION;
         };
     }

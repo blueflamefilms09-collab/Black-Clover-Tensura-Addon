@@ -24,6 +24,10 @@
     {
       "id": "nusmp:alchemists_belt",
       "required": false
+    },
+    {
+      "id": "nusmp:artifact_mimic",
+      "required": false
     }
   ]
 }

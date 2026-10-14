@@ -47,13 +47,13 @@
       ],
       "translation": [
         1.13,
-        3.5,
-        1.13
+        2.52,
+        0.86
       ],
       "scale": [
-        0.782,
-        0.782,
-        0.782
+        0.496,
+        0.496,
+        0.496
       ]
     },
     "firstperson_lefthand": {
@@ -64,13 +64,13 @@
       ],
       "translation": [
         1.13,
-        3.5,
-        1.13
+        2.52,
+        0.86
       ],
       "scale": [
-        0.782,
-        0.782,
-        0.782
+        0.496,
+        0.496,
+        0.496
       ]
     },
     "ground": {
@@ -141,5 +141,10 @@
         1
       ]
     }
+  },
+  "nusmp_display_preset": {
+    "length_blocks": 2.0,
+    "scale": 0.496,
+    "rule": "tools/relics/display_presets.py"
   }
 }

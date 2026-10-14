@@ -2,6 +2,8 @@ package com.newuniverse.nusmp.relics.djinn;
 
 import com.newuniverse.nusmp.relics.djinn.DjinnPhaseRules.EndReason;
 import com.newuniverse.nusmp.relics.djinn.DjinnPhaseRules.Verdict;
+import com.newuniverse.nusmp.relics.djinn.dark.DarkDjinn;
+import com.newuniverse.nusmp.relics.djinn.dark.DarkRules;
 import io.github.manasmods.tensura.registry.attribute.TensuraAttributes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
@@ -57,6 +59,8 @@ public final class DjinnEngine {
         long lastKey = -100;
         int lastSig = Integer.MIN_VALUE;
         int pulse;
+        boolean dark;                 // the Extreme Magic charging was begun by a dark Djinn (fixed at the start)
+        double paid;                  // the Magoi share the Extreme Magic charging cost (what a cancelled one gives back)
         boolean rukh;
         long rukhStart;
         Vec3 rukhAt = Vec3.ZERO;
@@ -144,7 +148,8 @@ public final class DjinnEngine {
         if (ph == DjinnPhaseRules.OFF) { sync(p, s, r, now, false); return; }
         int mask = Bonds.mask(p);
         boolean multi = Bonds.multiBond(p);
-        double factor = DjinnPhaseRules.drainFactor(mask, multi, s.assimilation());
+        boolean dark = DarkDjinn.active(s);
+        double factor = DarkRules.upkeep(DjinnPhaseRules.drainFactor(mask, multi, s.assimilation()), dark);
         if (!Magoi.pay(p, DjinnPhaseRules.upkeepFraction(ph) * factor, DjinnPhaseRules.FLOOR)) {
             p.displayClientMessage(Component.literal("The Djinn starves: your Magoi is spent.").withStyle(ChatFormatting.RED), true);
             com.newuniverse.nusmp.mana.ManaLaw.exhaust(p);
@@ -152,7 +157,7 @@ public final class DjinnEngine {
             return;
         }
         float before = s.assimilation();
-        s.setAssimilation(before + DjinnPhaseRules.assimilationPerSecond(ph, lent));
+        s.setAssimilation(before + DarkRules.assimilationRate(DjinnPhaseRules.assimilationPerSecond(ph, lent), dark));
         assimilationNotes(p, s, before, lent);
         if (lent && s.assimilation() >= DjinnPhaseRules.HOUSEHOLD_CAP) {
             p.displayClientMessage(Component.literal("The Djinn's nature has taken half of you: it withdraws.").withStyle(ChatFormatting.DARK_RED), true);
@@ -188,8 +193,10 @@ public final class DjinnEngine {
         syncMark(p, s);
         syncStrain(p, s);
         syncVesselRegen(p, s);
-        String[] skills = DjinnSkills.forPhase(d.affinity(), Math.min(ph, DjinnPhaseRules.FULL)).toArray(new String[0]);
-        if (skills.length > 0) com.newuniverse.nusmp.relics.Fx.lendSkills(p, DjinnSkills.LEASE_TICKS, skills);
+        List<String> skills = new ArrayList<>(DjinnSkills.forPhase(d.affinity(), Math.min(ph, DjinnPhaseRules.FULL)));
+        if (dark) skills.addAll(DarkRules.skills(Math.min(ph, DjinnPhaseRules.FULL)));
+        if (!skills.isEmpty()) com.newuniverse.nusmp.relics.Fx.lendSkills(p, DjinnSkills.LEASE_TICKS, skills.toArray(new String[0]));
+        DarkDjinn.second(p, s, ph);
         sync(p, s, r, now, true);
     }
 
@@ -255,7 +262,8 @@ public final class DjinnEngine {
     static DjinnPhaseRules.Snapshot snapshot(ServerPlayer p, DjinnState s, long now) {
         boolean bound = s.owns(), lent = s.lent();
         boolean vesselOn = bound && !VesselAccess.findBound(p, s.serial()).isEmpty();
-        return new DjinnPhaseRules.Snapshot(s.phase(), bound, lent, vesselOn, s.trust(), s.assimilation(), Magoi.fraction(p), now,
+        int trust = DarkRules.gateTrust(s.trust(), DjinnPhaseRules.EXTREME_TRUST, DarkDjinn.active(s));
+        return new DjinnPhaseRules.Snapshot(s.phase(), bound, lent, vesselOn, trust, s.assimilation(), Magoi.fraction(p), now,
                 s.lockoutUntil(), s.lesserReadyAt(), s.extremeReadyAt(), p.isCreative());
     }
 
@@ -270,7 +278,7 @@ public final class DjinnEngine {
             case COOLDOWN -> target == DjinnPhaseRules.EXTREME ? "The Extreme Magic needs " + secs(s.extremeReadyAt() - now) + " more to gather."
                     : "The Djinn needs " + secs(s.lesserReadyAt() - now) + " more before it answers again.";
             case NEED_TRUST -> "The Djinn does not trust you enough yet: " + s.trust() + " of "
-                    + (target == DjinnPhaseRules.EXTREME ? DjinnPhaseRules.EXTREME_TRUST : DjinnPhaseRules.FULL_TRUST) + ". Use its power in Half Equip to earn it.";
+                    + (target == DjinnPhaseRules.EXTREME ? DarkRules.extremeTrustNeeded(DjinnPhaseRules.EXTREME_TRUST, DarkDjinn.active(s)) : DjinnPhaseRules.FULL_TRUST) + ". Use its power in Half Equip to earn it.";
             case NEED_MAGOI -> "Your Magoi is too low: " + (int) Math.ceil(DjinnPhaseRules.requiredFraction(target) * 100) + "% of the bar is needed.";
             case ASSIMILATED -> s.lent() ? "The Djinn has taken half of you. Rest until it recedes." : "The Djinn has too much of you. Rest until it recedes.";
             case HOUSEHOLD_LIMIT -> "A borrowed Djinn gives you only the Lesser Summon.";
@@ -288,11 +296,12 @@ public final class DjinnEngine {
     private static void enter(ServerPlayer p, DjinnState s, Run r, int target, long now, boolean free) {
         Djinn d = s.active();
         double factor = DjinnPhaseRules.drainFactor(Bonds.mask(p), Bonds.multiBond(p), s.assimilation());
-        double cost = target == DjinnPhaseRules.EXTREME ? DjinnPhaseRules.entryFraction(target) : DjinnPhaseRules.entryFraction(target) * factor;
+        double cost = target == DjinnPhaseRules.EXTREME ? DarkRules.extremePrice(DjinnPhaseRules.entryFraction(target), DarkDjinn.active(s)) : DjinnPhaseRules.entryFraction(target) * factor;
         if (!free && !Magoi.pay(p, cost, DjinnPhaseRules.FLOOR)) {
             p.displayClientMessage(Component.literal("Your Magoi cannot pay for it.").withStyle(ChatFormatting.GRAY), true);
             return;
         }
+        if (target == DjinnPhaseRules.EXTREME) r.paid = free ? 0.0 : cost;
         ServerLevel l = p.serverLevel();
         switch (target) {
             case DjinnPhaseRules.LESSER -> {
@@ -361,7 +370,7 @@ public final class DjinnEngine {
         int used = s.used();
         removeMaso(p);
         revokeFlight(p, s, true);
-        double sev = DjinnPhaseRules.severity(why, used);
+        double sev = DarkRules.backlash(DjinnPhaseRules.severity(why, used), DarkDjinn.active(s), why == EndReason.VOLUNTARY || why == EndReason.TIMEOUT || why == EndReason.DEPLETED);
         int lock = DjinnPhaseRules.lockoutTicks(why, used);
         if (lock > 0) s.setLockoutUntil(Math.max(s.lockoutUntil(), now + lock));
         int delta = DjinnPhaseRules.trustDelta(why, used);
@@ -513,8 +522,9 @@ public final class DjinnEngine {
     }
 
     private static void applyMaso(ServerPlayer p, DjinnState s, Djinn d) {
-        put(p, Attributes.MOVEMENT_SPEED, M_SPEED, DjinnPhaseRules.MASO_SPEED, Operation.ADD_MULTIPLIED_TOTAL);
-        put(p, Attributes.ATTACK_DAMAGE, M_ATTACK, DjinnPhaseRules.MASO_ATTACK, Operation.ADD_VALUE);
+        boolean dark = DarkDjinn.active(s);
+        put(p, Attributes.MOVEMENT_SPEED, M_SPEED, DarkRules.masoSpeed(DjinnPhaseRules.MASO_SPEED, dark), Operation.ADD_MULTIPLIED_TOTAL);
+        put(p, Attributes.ATTACK_DAMAGE, M_ATTACK, DarkRules.masoAttack(DjinnPhaseRules.MASO_ATTACK, dark), Operation.ADD_VALUE);
         put(p, Attributes.ARMOR, M_ARMOR, DjinnPhaseRules.MASO_ARMOR, Operation.ADD_VALUE);
         put(p, Attributes.ARMOR_TOUGHNESS, M_TOUGH, DjinnPhaseRules.MASO_TOUGHNESS, Operation.ADD_VALUE);
         put(p, Attributes.KNOCKBACK_RESISTANCE, M_KB, DjinnPhaseRules.MASO_KNOCKBACK, Operation.ADD_VALUE);
@@ -522,9 +532,9 @@ public final class DjinnEngine {
         put(p, TensuraAttributes.MAX_MAGICULE, M_MAGICULE, DjinnPhaseRules.MASO_EP, Operation.ADD_MULTIPLIED_TOTAL);
         put(p, TensuraAttributes.MAX_AURA, M_AURA, DjinnPhaseRules.MASO_EP, Operation.ADD_MULTIPLIED_TOTAL);
         switch (d.affinity()) {
-            case STRENGTH -> put(p, Attributes.ATTACK_DAMAGE, M_ELEMENT, 3.0, Operation.ADD_VALUE);
-            case LIFE -> put(p, Attributes.MAX_HEALTH, M_ELEMENT, 6.0, Operation.ADD_VALUE);
-            default -> put(p, DjinnFx.boost(d.affinity()), M_ELEMENT, DjinnPhaseRules.MASO_ELEMENT, Operation.ADD_MULTIPLIED_BASE);
+            case STRENGTH -> put(p, Attributes.ATTACK_DAMAGE, M_ELEMENT, DarkRules.masoElementFlat(3.0, DjinnPhaseRules.MASO_ELEMENT, dark), Operation.ADD_VALUE);
+            case LIFE -> put(p, Attributes.MAX_HEALTH, M_ELEMENT, DarkRules.masoElementFlat(6.0, DjinnPhaseRules.MASO_ELEMENT, dark), Operation.ADD_VALUE);
+            default -> put(p, DjinnFx.boost(d.affinity()), M_ELEMENT, DarkRules.masoElement(DjinnPhaseRules.MASO_ELEMENT, dark), Operation.ADD_MULTIPLIED_BASE);
         }
         if (BondRules.regenBlocked(Bonds.mask(p), Bonds.multiBond(p), DjinnPhaseRules.FULL))
             put(p, TensuraAttributes.MAGICULE_REGENERATION_MULTIPLIER, M_REGEN, -1.0, Operation.ADD_MULTIPLIED_TOTAL);
@@ -614,6 +624,7 @@ public final class DjinnEngine {
         r.chargeStart = now;
         r.step = 0;
         r.djinn = d;
+        r.dark = DarkDjinn.active(s);
         r.centre = p.position();
         Vec3 look = p.getLookAngle().multiply(1, 0, 1);
         r.dir = look.lengthSqr() < 1.0E-4 ? new Vec3(0, 0, 1) : look.normalize();
@@ -643,7 +654,7 @@ public final class DjinnEngine {
         if (r.step >= steps) {
             r.charging = false;
             r.hits.clear();
-            s.setAssimilation(s.assimilation() + DjinnPhaseRules.EXTREME_ASSIMILATION);
+            s.setAssimilation(s.assimilation() + DarkRules.assimilationRate(DjinnPhaseRules.EXTREME_ASSIMILATION, r.dark));
             p.displayClientMessage(Component.literal(r.djinn.extreme().name() + "!").withColor(r.djinn.glow()), true);
             sync(p, s, r, now, true);
         }
@@ -657,13 +668,27 @@ public final class DjinnEngine {
         r.hits.clear();
         p.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
         if (refund && !struck) {
-            Magoi.refund(p, DjinnPhaseRules.entryFraction(DjinnPhaseRules.EXTREME));
+            Magoi.refund(p, r.paid);
             s.setExtremeReadyAt(p.level().getGameTime());
             p.displayClientMessage(Component.literal("You let the Extreme Magic go. The Magoi returns.").withStyle(ChatFormatting.GRAY), true);
         }
     }
 
     // ================================================================ sync
+    /** The flags of the sync packet: bit 0 (1) a lent Djinn, bit 1 (2) the Djinn's mark, bit 3 (8) the Djinn is dark. Bit 2 (4) is the client's own. */
+    static int flags(DjinnState s) {
+        return (s.lent() ? 1 : 0) | (s.assimilation() >= DjinnPhaseRules.MARK_AT ? 2 : 0) | (DarkDjinn.active(s) ? DjinnNet.FLAG_DARK : 0);
+    }
+
+    /** For the Dark Djinn: whatever depends on the dark flag is put right (the Maso numbers) and the clients are told. */
+    public static void refresh(ServerPlayer p) {
+        DjinnState s = DjinnState.of(p);
+        Djinn d = s.active();
+        if (d != null && s.phase() >= DjinnPhaseRules.FULL) applyMaso(p, s, d);
+        if (p.getHealth() > p.getMaxHealth()) p.setHealth(p.getMaxHealth());
+        sync(p, s, run(p), p.level().getGameTime(), true);
+    }
+
     static void sync(ServerPlayer p, DjinnState s, Run r, long now, boolean force) {
         Djinn d = s.active();
         int phase = r.charging ? DjinnPhaseRules.EXTREME : s.phase();
@@ -671,7 +696,7 @@ public final class DjinnEngine {
         if (phase == DjinnPhaseRules.EXTREME) left = (int) Math.max(0, DjinnPhaseRules.EXTREME_CHARGE - (now - r.chargeStart));
         else if (phase == DjinnPhaseRules.LESSER) left = (int) Math.max(0, s.end() - now);
         else if (phase == DjinnPhaseRules.FULL) left = Math.max(0, DjinnPhaseRules.FULL_MAX_TICKS - s.used());
-        int flags = (s.lent() ? 1 : 0) | (s.assimilation() >= DjinnPhaseRules.MARK_AT ? 2 : 0);
+        int flags = flags(s);
         DjinnNet.Sync pkt = new DjinnNet.Sync(p.getId(), phase, d == null ? 0 : d.ordinal() + 1, left, Mth.clamp((int) (Magoi.fraction(p) * 100), 0, 100),
                 Mth.clamp((int) (s.assimilation() * 10), 0, 1000), Mth.clamp(s.trust(), 0, 100), (int) Math.max(0, s.lockoutUntil() - now),
                 (int) Math.max(0, s.extremeReadyAt() - now), r.pulse, flags);
@@ -687,11 +712,11 @@ public final class DjinnEngine {
     public static void onStartTracking(net.neoforged.neoforge.event.entity.player.PlayerEvent.StartTracking e) {
         if (!(e.getEntity() instanceof ServerPlayer watcher) || !(e.getTarget() instanceof ServerPlayer target)) return;
         DjinnState s = DjinnState.of(target);
-        if (s.phase() == DjinnPhaseRules.OFF && s.assimilation() < DjinnPhaseRules.MARK_AT) return;
+        if (s.phase() == DjinnPhaseRules.OFF && s.assimilation() < DjinnPhaseRules.MARK_AT && !DarkDjinn.active(s)) return;
         Run r = run(target);
         long now = target.level().getGameTime();
         Djinn d = s.active();
-        int flags = (s.lent() ? 1 : 0) | (s.assimilation() >= DjinnPhaseRules.MARK_AT ? 2 : 0);
+        int flags = flags(s);
         PacketDistributor.sendToPlayer(watcher, new DjinnNet.Sync(target.getId(), r.charging ? 4 : s.phase(), d == null ? 0 : d.ordinal() + 1, 0, 0,
                 Mth.clamp((int) (s.assimilation() * 10), 0, 1000), 0, 0, 0, 0, flags));
     }

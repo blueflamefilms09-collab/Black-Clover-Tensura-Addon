@@ -25,6 +25,10 @@ public final class DjinnItems {
             SEALS.put(d, NUItems.ITEMS.register("djinn_seal_" + d.id(), () -> new DjinnSealItem(d, new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant())));
     }
 
+    /** The Dark Rukh Shard (relics.djinn.dark): black rukh that turns a bound Djinn dark. Registered after the Seals; art by tools/relics/dark_item_icon.py. */
+    private static final DeferredItem<Item> DARK_SHARD = NUItems.ITEMS.register("dark_rukh_shard",
+            () -> new com.newuniverse.nusmp.relics.djinn.dark.DarkRukhShardItem(new Item.Properties().stacksTo(16).rarity(Rarity.EPIC)));
+
     public static void init() {}
 
     public static Item seal(Djinn d) { return SEALS.get(d).get(); }
@@ -35,6 +39,16 @@ public final class DjinnItems {
     public static Djinn djinnOf(ItemStack s) {
         return s != null && !s.isEmpty() && s.getItem() instanceof DjinnSealItem seal ? seal.djinn() : null;
     }
+
+    /** The Dark Rukh Shard item. */
+    public static Item darkShard() { return DARK_SHARD.get(); }
+
+    public static ItemStack darkShardStack() { return new ItemStack(DARK_SHARD.get()); }
+
+    public static boolean isDarkShard(ItemStack s) { return s != null && !s.isEmpty() && s.is(DARK_SHARD.get()); }
+
+    /** The Dark Rukh Shard as a creative-tab entry (the lead adds it next to the Seals). */
+    public static DeferredItem<Item> darkShardEntry() { return DARK_SHARD; }
 
     /** All twelve, in roster order: for the creative tab. */
     public static List<DeferredItem<Item>> allSeals() { return new ArrayList<>(SEALS.values()); }

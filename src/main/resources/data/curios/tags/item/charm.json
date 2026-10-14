@@ -21,6 +21,182 @@
     {
       "id": "nusmp:the_tome_of_wait_thats_illegal",
       "required": false
+    },
+    {
+      "id": "nusmp:alabaster_white_runechalk",
+      "required": false
+    },
+    {
+      "id": "nusmp:bag_of_colding",
+      "required": false
+    },
+    {
+      "id": "nusmp:bag_of_devouring",
+      "required": false
+    },
+    {
+      "id": "nusmp:bag_of_golding",
+      "required": false
+    },
+    {
+      "id": "nusmp:bag_of_holding",
+      "required": false
+    },
+    {
+      "id": "nusmp:bag_of_kittens",
+      "required": false
+    },
+    {
+      "id": "nusmp:bag_of_molding",
+      "required": false
+    },
+    {
+      "id": "nusmp:bag_of_realistic_capacity",
+      "required": false
+    },
+    {
+      "id": "nusmp:bag_of_scolding",
+      "required": false
+    },
+    {
+      "id": "nusmp:bag_of_unfolding",
+      "required": false
+    },
+    {
+      "id": "nusmp:bags_of_transferrence",
+      "required": false
+    },
+    {
+      "id": "nusmp:coin_of_draconic_luck",
+      "required": false
+    },
+    {
+      "id": "nusmp:coin_of_fortune",
+      "required": false
+    },
+    {
+      "id": "nusmp:crystal_dragon",
+      "required": false
+    },
+    {
+      "id": "nusmp:defenders_dial",
+      "required": false
+    },
+    {
+      "id": "nusmp:dragon_satchel",
+      "required": false
+    },
+    {
+      "id": "nusmp:drow_sunscreen",
+      "required": false
+    },
+    {
+      "id": "nusmp:dryads_wedding_band",
+      "required": false
+    },
+    {
+      "id": "nusmp:elephant_of_the_room",
+      "required": false
+    },
+    {
+      "id": "nusmp:fast_travel_beads",
+      "required": false
+    },
+    {
+      "id": "nusmp:fury_of_the_fallen",
+      "required": false
+    },
+    {
+      "id": "nusmp:holy_handgrenade",
+      "required": false
+    },
+    {
+      "id": "nusmp:jar_of_bats",
+      "required": false
+    },
+    {
+      "id": "nusmp:lifes_emergency",
+      "required": false
+    },
+    {
+      "id": "nusmp:madama_cupcake",
+      "required": false
+    },
+    {
+      "id": "nusmp:martels_magical_bag_of_candy",
+      "required": false
+    },
+    {
+      "id": "nusmp:mirror_of_spell_reflection",
+      "required": false
+    },
+    {
+      "id": "nusmp:old_masters_spellbook",
+      "required": false
+    },
+    {
+      "id": "nusmp:paralyzing_perfume",
+      "required": false
+    },
+    {
+      "id": "nusmp:plastic_sheriff_badge",
+      "required": false
+    },
+    {
+      "id": "nusmp:portable_god",
+      "required": false
+    },
+    {
+      "id": "nusmp:satchel_of_unmet_needs",
+      "required": false
+    },
+    {
+      "id": "nusmp:shared_pouches_of_transfer",
+      "required": false
+    },
+    {
+      "id": "nusmp:simple_blue_runechalk",
+      "required": false
+    },
+    {
+      "id": "nusmp:snugglable_doll",
+      "required": false
+    },
+    {
+      "id": "nusmp:spellbook_of_concentration",
+      "required": false
+    },
+    {
+      "id": "nusmp:strange_idol",
+      "required": false
+    },
+    {
+      "id": "nusmp:the_devils_due",
+      "required": false
+    },
+    {
+      "id": "nusmp:the_lovers_divide",
+      "required": false
+    },
+    {
+      "id": "nusmp:the_pocket_campsite",
+      "required": false
+    },
+    {
+      "id": "nusmp:tiny_orbit",
+      "required": false
+    },
+    {
+      "id": "nusmp:urn_of_black_pudding",
+      "required": false
+    },
+    {
+      "id": "nusmp:wallet_of_the_slayer",
+      "required": false
+    },
+    {
+      "id": "nusmp:weaversong",
+      "required": false
     }
   ]
 }

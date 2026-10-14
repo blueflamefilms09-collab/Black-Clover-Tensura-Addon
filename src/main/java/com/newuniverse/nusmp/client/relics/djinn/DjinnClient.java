@@ -44,7 +44,7 @@ public final class DjinnClient {
         NeoForge.EVENT_BUS.addListener(DjinnFirstPerson::onRenderArm);
         NeoForge.EVENT_BUS.addListener(DjinnFirstPerson::onRenderHand);
         NeoForge.EVENT_BUS.addListener(DjinnClient::onTooltip);
-        NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> DjinnClientState.clear());
+        NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> { DjinnClientState.clear(); DjinnAmbient.clear(); });
     }
 
     private static void addLayers(EntityRenderersEvent.AddLayers event) {
@@ -69,17 +69,22 @@ public final class DjinnClient {
     }
 
     /** The assembling and shattering burst: a ring of the Djinn's light round the player (client particles, a few dozen once). */
-    static void burst(int entityId, Djinn d, boolean up) {
+    static void burst(int entityId, Djinn d, boolean up) { burst(entityId, d, up, false); }
+
+    /** The same ring for a Dark Djinn is black rukh: black-violet dust and ink instead of the Djinn's light. */
+    static void burst(int entityId, Djinn d, boolean up, boolean dark) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.level == null) return;
         Entity en = mc.level.getEntity(entityId);
         if (en == null) return;
-        var dust = new net.minecraft.core.particles.DustParticleOptions(new org.joml.Vector3f(((d.glow() >> 16) & 255) / 255f, ((d.glow() >> 8) & 255) / 255f, (d.glow() & 255) / 255f), 1.4f);
+        int rgb = dark ? DjinnLook.darkVignette(d.glow()) : d.glow();
+        var dust = new net.minecraft.core.particles.DustParticleOptions(new org.joml.Vector3f(((rgb >> 16) & 255) / 255f, ((rgb >> 8) & 255) / 255f, (rgb & 255) / 255f), 1.4f);
+        var accent = dark ? ParticleTypes.SQUID_INK : ParticleTypes.END_ROD;
         var rnd = mc.level.getRandom();
         for (int i = 0; i < 36; i++) {
             double a = rnd.nextDouble() * Math.PI * 2, r = up ? 2.2 : 0.4, y = rnd.nextDouble() * en.getBbHeight();
             double vx = Math.cos(a) * (up ? -0.12 : 0.18), vz = Math.sin(a) * (up ? -0.12 : 0.18);
-            mc.level.addParticle(i % 3 == 0 ? ParticleTypes.END_ROD : dust, en.getX() + Math.cos(a) * r, en.getY() + y, en.getZ() + Math.sin(a) * r, vx, 0.02 + rnd.nextDouble() * 0.05, vz);
+            mc.level.addParticle(i % 3 == 0 ? accent : dust, en.getX() + Math.cos(a) * r, en.getY() + y, en.getZ() + Math.sin(a) * r, vx, 0.02 + rnd.nextDouble() * 0.05, vz);
         }
     }
 }

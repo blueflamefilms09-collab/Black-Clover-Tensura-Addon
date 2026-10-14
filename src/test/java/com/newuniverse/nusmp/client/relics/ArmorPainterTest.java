@@ -25,7 +25,7 @@ class ArmorPainterTest {
     @Test
     void everyLookPaintsA64By32ImageOfOpaqueOrClearPixels() {
         for (Look l : Look.values()) {
-            for (RelicSlot s : new RelicSlot[]{RelicSlot.CHEST, RelicSlot.HEAD}) {
+            for (RelicSlot s : new RelicSlot[]{RelicSlot.CHEST, RelicSlot.HEAD, RelicSlot.FEET}) {
                 int[] px = ArmorPainter.paint(l, s, 0x808080, 0xC0A040, 0xFFFFFF, 3);
                 assertEquals(64 * 32, px.length, l + " " + s);
                 for (int p : px) assertTrue((p >>> 24) == 0 || (p >>> 24) == 255, l + " " + s + " has a half-clear pixel");
@@ -58,6 +58,42 @@ class ArmorPainterTest {
             assertEquals(0, opaque(px, 0, 16, 64, 16), l + " leaves the lower half clear");
             assertEquals(0, opaque(px, 32, 0, 32, 16), l + " leaves the right of the head area clear");
         }
+    }
+
+    static int[] feet(Look l) { return ArmorPainter.paint(l, RelicSlot.FEET, 0x6A7A9A, 0xD8B040, 0x80E0FF, 7); }
+
+    @Test
+    void aFootPieceTouchesOnlyTheLegBox() {
+        for (Look l : new Look[]{Look.BOOTS, Look.SANDALS, Look.GREAVES, Look.LEATHER, Look.PLATE, Look.CIRCLET}) {
+            int[] px = feet(l);
+            assertEquals(0, opaque(px, 0, 0, 64, 16), l + " leaves the head area clear");
+            assertEquals(0, opaque(px, 16, 16, 48, 16), l + " leaves the body and arm areas clear");
+            assertTrue(opaque(px, 0, 16, 16, 16) > 20, l + " paints the leg box");
+            assertEquals(0, opaque(px, 4, 16, 4, 4), l + " leaves the top of the leg box (inside the body) clear");
+        }
+    }
+
+    @Test
+    void bootsReachTheGroundAndTheSoleIsPainted() {
+        for (Look l : new Look[]{Look.BOOTS, Look.SANDALS, Look.GREAVES}) {
+            int[] px = feet(l);
+            assertEquals(16, opaque(px, 8, 16, 4, 4), l + " paints the whole sole");
+            for (int x : new int[]{1, 5, 9, 13}) assertEquals(255, alpha(px, x, 31), l + " has a sole edge on every side");
+        }
+    }
+
+    @Test
+    void theThreeFootLooksDifferAndSandalsLeaveTheLegBare() {
+        assertFalse(Arrays.equals(feet(Look.BOOTS), feet(Look.SANDALS)));
+        assertFalse(Arrays.equals(feet(Look.BOOTS), feet(Look.GREAVES)));
+        assertFalse(Arrays.equals(feet(Look.SANDALS), feet(Look.GREAVES)));
+        assertArrayEquals(feet(Look.BOOTS), feet(Look.BOOTS));
+        assertFalse(Arrays.equals(feet(Look.BOOTS), ArmorPainter.paint(Look.BOOTS, RelicSlot.FEET, 0x2A3A4A, 0xD8B040, 0x80E0FF, 7)));
+        int sandals = opaque(feet(Look.SANDALS), 0, 20, 16, 12), boots = opaque(feet(Look.BOOTS), 0, 20, 16, 12), greaves = opaque(feet(Look.GREAVES), 0, 20, 16, 12);
+        assertTrue(sandals < boots && boots < greaves, "sandals " + sandals + " < boots " + boots + " < greaves " + greaves);
+        assertEquals(0, alpha(feet(Look.SANDALS), 5, 22), "the shin above a sandal is bare");
+        assertEquals(0, alpha(feet(Look.BOOTS), 5, 22), "the shin above a boot is bare");
+        assertEquals(255, alpha(feet(Look.GREAVES), 5, 24), "a greave covers the shin");
     }
 
     @Test

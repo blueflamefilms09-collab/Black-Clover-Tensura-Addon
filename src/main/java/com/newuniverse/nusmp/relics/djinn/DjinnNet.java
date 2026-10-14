@@ -17,6 +17,9 @@ public final class DjinnNet {
 
     public static final int ACT_UP = 0, ACT_DOWN = 1, ACT_OFF = 2, ACT_RUKH = 3;
 
+    /** The bits of {@link Sync#flags()}: a lent Djinn, the bearer's mark, the vessel missing (set by the client), and the Dark Djinn (the black rukh). */
+    public static final int FLAG_LENT = 1, FLAG_MARKED = 2, FLAG_VESSEL_MISSING = 4, FLAG_DARK = 8;
+
     /** A key press: 0 = up one phase (or the Extreme Magic from a Full Equip), 1 = down one, 2 = back to none, 3 = draw the Rukh. */
     public record Act(int action) implements CustomPacketPayload {
         public static final Type<Act> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "djinn_act"));
@@ -31,7 +34,8 @@ public final class DjinnNet {
      * What a client needs to draw a player's Djinn. {@code phase} 0-4 (4 while an Extreme Magic charges), {@code djinn} the ordinal + 1 (0 none),
      * {@code left} the ticks left of a timed phase (a Lesser Summon, a Maso, a charge), {@code magoi} 0-100, {@code assim} tenths of a percent,
      * {@code trust} 0-100, {@code lock} ticks of Maso lockout left, {@code cooldown} ticks of Extreme Magic cooldown left, {@code pulse} the
-     * ticks a strike's flash has left, {@code flags}: bit 0 a lent Djinn, bit 1 the bearer wears the Djinn's mark, bit 2 the vessel is missing.
+     * ticks a strike's flash has left, {@code flags}: bit 0 a lent Djinn, bit 1 the bearer wears the Djinn's mark, bit 2 the vessel is missing,
+     * bit 3 (value 8, {@link #FLAG_DARK}) the Djinn is dark: it has drunk the black rukh (relics.djinn.dark), so the equip is drawn black and gold.
      */
     public record Sync(int entity, int phase, int djinn, int left, int magoi, int assim, int trust, int lock, int cooldown, int pulse, int flags)
             implements CustomPacketPayload {

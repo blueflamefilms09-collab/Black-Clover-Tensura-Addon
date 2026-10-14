@@ -56,6 +56,7 @@ public final class RelicCatalog {
         guard("Wave5", () -> Wave5.defs(out));
         guard("Wave6", () -> Wave6.defs(out));
         guard("Wave7", () -> Wave7.defs(out));
+        guard("later waves", () -> WaveRegistry.defs(out));                 // 1.25.0: WaveBoss and Wave8 and up, found by name
         Set<String> taken = new HashSet<>();
         for (DeferredHolder<Item, ? extends Item> h : NUItems.ITEMS.getEntries()) taken.add(h.getId().getPath());
         RelicChecks.Checked c = RelicChecks.check(raw, taken);
@@ -72,8 +73,12 @@ public final class RelicCatalog {
 
     private static Item make(RelicDef d, Holder<ArmorMaterial> material) {
         return switch (d.slot()) {
-            case MAIN_HAND -> new RelicWeaponItem(d);
-            case HEAD, CHEST -> new RelicArmorItem(d, material);
+            case MAIN_HAND -> switch (d.rangedKind()) {                                  // 1.25.0: drawn weapons
+                case BOW -> new RelicBowItem(d);
+                case CROSSBOW -> new RelicCrossbowItem(d);
+                default -> new RelicWeaponItem(d);
+            };
+            case HEAD, CHEST, FEET -> new RelicArmorItem(d, material);
             case CONSUMABLE -> new RelicConsumableItem(d);
             default -> new RelicGearItem(d);
         };
@@ -97,6 +102,7 @@ public final class RelicCatalog {
         guard("Wave5 hooks", Wave5::hooks);
         guard("Wave6 hooks", Wave6::hooks);
         guard("Wave7 hooks", Wave7::hooks);
+        guard("later waves hooks", WaveRegistry::hooks);
     }
 
     public static List<RelicDef> defs() { return defs; }

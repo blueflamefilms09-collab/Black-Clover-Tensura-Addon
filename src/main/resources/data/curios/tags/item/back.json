@@ -39,6 +39,38 @@
     {
       "id": "nusmp:nightstalkers_mantle",
       "required": false
+    },
+    {
+      "id": "nusmp:autumn_cloak",
+      "required": false
+    },
+    {
+      "id": "nusmp:cape_of_bees",
+      "required": false
+    },
+    {
+      "id": "nusmp:cape_of_projection",
+      "required": false
+    },
+    {
+      "id": "nusmp:cloak_of_levitation",
+      "required": false
+    },
+    {
+      "id": "nusmp:cloak_of_the_first_snow",
+      "required": false
+    },
+    {
+      "id": "nusmp:darkened_cloak_of_elvenkind",
+      "required": false
+    },
+    {
+      "id": "nusmp:handy_towel_cape",
+      "required": false
+    },
+    {
+      "id": "nusmp:mantle_of_selflessness",
+      "required": false
     }
   ]
 }

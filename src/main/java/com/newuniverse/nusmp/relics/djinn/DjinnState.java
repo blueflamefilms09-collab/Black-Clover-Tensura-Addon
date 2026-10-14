@@ -25,6 +25,7 @@ public final class DjinnState {
     public UUID serial() { return t.hasUUID("serial") ? t.getUUID("serial") : null; }
 
     public void bind(Djinn d, UUID serial, int trust) {
+        t.remove("dark");                                                   // a new bond starts in its own light
         t.putString("djinn", d.name());
         t.putUUID("serial", serial);
         t.putInt("phase", 0);
@@ -41,6 +42,7 @@ public final class DjinnState {
     public UUID lentFrom() { return t.hasUUID("lentFrom") ? t.getUUID("lentFrom") : null; }
 
     public void lend(UUID owner, Djinn d) {
+        t.remove("dark");                                                   // a household member never gets a dark Djinn
         t.putUUID("lentFrom", owner);
         t.putString("lentDjinn", d.name());
         t.putInt("phase", 0);
@@ -49,7 +51,7 @@ public final class DjinnState {
 
     /** Clears the bond (owner or household): the Djinn, its serial, the phase and what use built up. Clocks stay: a wait is not washed away. */
     public void clearBond() {
-        for (String k : new String[]{"djinn", "serial", "lentFrom", "lentDjinn", "phase", "start", "end", "used", "trust", "assim", "active", "fly"}) t.remove(k);
+        for (String k : new String[]{"djinn", "serial", "lentFrom", "lentDjinn", "phase", "start", "end", "used", "trust", "assim", "active", "fly", "dark"}) t.remove(k);
         DjinnBody.clear(player);
     }
 
@@ -83,11 +85,21 @@ public final class DjinnState {
     // ---------------------------------------------------------------- trust, assimilation
     /** Trust: a persistent Tensura ability-mastery-gain modifier (see {@link DjinnBody}). */
     public int trust() { return DjinnBody.trust(player, t); }
-    public void setTrust(int v) { DjinnBody.setTrust(player, t, v); }
+    public void setTrust(int v) { DjinnBody.setTrust(player, t, com.newuniverse.nusmp.relics.djinn.dark.DarkRules.trustAfter(trust(), v, dark())); }
 
     /** Assimilation: a persistent Tensura ability-learning-gain modifier, with element resistance while it lasts (see {@link DjinnBody}). */
     public float assimilation() { return DjinnBody.assimilation(player, t); }
     public void setAssimilation(float v) { DjinnBody.setAssimilation(player, t, v); }
+
+    // ---------------------------------------------------------------- the dark state
+    /**
+     * True while the owner's Djinn has drunk the black rukh (the Dark Djinn: {@code relics.djinn.dark}). Saved under {@code "dark"}, kept through
+     * death with the rest of the record, removed by {@link #clearBond()} and never set on a household member. Read it through
+     * {@code DarkDjinn.active(state)} when the question is "is the Djinn this player calls dark": that also checks that they own it.
+     */
+    public boolean dark() { return t.getBoolean("dark"); }
+
+    public void setDark(boolean b) { if (b) t.putBoolean("dark", true); else t.remove("dark"); }
 
     // ---------------------------------------------------------------- the clocks
     public long lockoutUntil() { return t.getLong("lock"); }

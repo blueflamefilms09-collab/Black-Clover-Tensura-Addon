@@ -48,7 +48,7 @@ public final class RelicActKeys {
             RelicDef d = w.def();
             int i = 0;
             for (Act a : d.acts()) {
-                if (!(d.slot().isHand() && !d.isAdopted() && i < 2)) out.add(new Entry(d, a));   // a new hand relic's first two acts are the right-click and sneak + right-click (an old item has its own click)
+                if (!(d.slot().isHand() && !d.isAdopted() && !d.isRanged() && i < 2)) out.add(new Entry(d, a));   // a new hand relic's first two acts are the right-click and sneak + right-click (an old item has its own click); a bow or crossbow draws on use, so every one of its acts is on the key as well
                 i++;
             }
         }

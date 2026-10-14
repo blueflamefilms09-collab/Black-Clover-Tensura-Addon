@@ -68,6 +68,34 @@ class RelicDefTest {
     }
 
     @Test
+    void bootsAreArmourWithTheSmallerShareAndTheirOwnLook() {
+        assertTrue(RelicSlot.FEET.isArmor());
+        assertFalse(RelicSlot.FEET.isCurio());
+        assertFalse(RelicSlot.FEET.isHand());
+        assertNull(RelicSlot.FEET.curiosSlot());
+        assertEquals(RelicSlot.FEET, RelicSlot.byName("feet"));
+        assertEquals(RelicSlot.CONSUMABLE.ordinal() + 1, RelicSlot.FEET.ordinal(), "FEET is appended at the end");
+        assertEquals(Look.BOOTS, Look.defaultFor(RelicSlot.FEET));
+        assertEquals(Look.BOOTS, RelicDef.of("b", "B", Grade.RARE, RelicSlot.FEET).look());
+        assertEquals(Look.SANDALS, RelicDef.of("s", "S", Grade.RARE, RelicSlot.FEET).look(Look.SANDALS).look());
+        RelicDef chest = RelicDef.of("c", "C", Grade.LEGEND, RelicSlot.CHEST);
+        RelicDef feet = RelicDef.of("f", "F", Grade.LEGEND, RelicSlot.FEET);
+        assertTrue(feet.armorDefence() >= 1 && feet.armorDefence() < chest.armorDefence());
+        assertEquals(RelicDef.of("h", "H", Grade.LEGEND, RelicSlot.HEAD).armorDefence(), feet.armorDefence());
+        assertEquals(5, feet.armor(5, 1).armorDefence());
+    }
+
+    @Test
+    void theLooksAreOnlyAppended() {
+        Look[] l = Look.values();
+        assertEquals(Look.ORB, l[l.length - 4]);
+        assertEquals(Look.BOOTS, l[l.length - 3]);
+        assertEquals(Look.SANDALS, l[l.length - 2]);
+        assertEquals(Look.GREAVES, l[l.length - 1]);
+        assertEquals(Look.SWORD, l[0]);
+    }
+
+    @Test
     void anIdMustBeSnakeCase() {
         assertThrows(IllegalArgumentException.class, () -> RelicDef.of("Bad Id", "x", Grade.RARE, RelicSlot.NECK));
         assertThrows(IllegalArgumentException.class, () -> RelicDef.of("ok", "x", null, RelicSlot.NECK));

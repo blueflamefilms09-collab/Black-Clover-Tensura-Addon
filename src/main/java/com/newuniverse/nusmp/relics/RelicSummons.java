@@ -45,6 +45,16 @@ final class RelicSummons {
 
     static void clear() { BY_OWNER.clear(); }
 
+    /** The server is stopping: every tracked summon goes now, so none is saved with the world untracked (a saved one would never be swept). */
+    static void discardAll(MinecraftServer server) {
+        for (ArrayDeque<UUID> q : BY_OWNER.values())
+            for (UUID id : q) {
+                Entity e = find(server, id);
+                if (e != null) e.discard();
+            }
+        BY_OWNER.clear();
+    }
+
     private static Entity find(MinecraftServer server, UUID id) {
         for (ServerLevel level : server.getAllLevels()) {
             Entity e = level.getEntity(id);

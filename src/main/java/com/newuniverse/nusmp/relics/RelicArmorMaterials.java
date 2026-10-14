@@ -16,7 +16,7 @@ import java.util.EnumMap;
 import java.util.List;
 
 /**
- * One armour material per HEAD or CHEST relic, in a register of the relics' own (register {@link #MATERIALS} on the mod bus). The layer is named
+ * One armour material per HEAD, CHEST or FEET relic, in a register of the relics' own (register {@link #MATERIALS} on the mod bus). The layer is named
  * {@code nusmp:relic_<id>}: the client paints its texture at run time ({@code client.relics.RelicTextures}) unless a resource pack ships a PNG for it.
  */
 public final class RelicArmorMaterials {
@@ -33,7 +33,7 @@ public final class RelicArmorMaterials {
         String name = name(def.id());
         return MATERIALS.register(name, () -> new ArmorMaterial(
                 Util.make(new EnumMap<>(ArmorItem.Type.class), m -> {
-                    m.put(ArmorItem.Type.BOOTS, 0);
+                    m.put(ArmorItem.Type.BOOTS, d);                           // the def's own share: a boots def already has its smaller default (RelicDef.armorDefence)
                     m.put(ArmorItem.Type.LEGGINGS, 0);
                     m.put(ArmorItem.Type.CHESTPLATE, d);
                     m.put(ArmorItem.Type.HELMET, d);

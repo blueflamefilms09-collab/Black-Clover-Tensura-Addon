@@ -13,13 +13,14 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
+import com.newuniverse.nusmp.relics.djinn.dark.DarkDjinn;
 
 import java.util.UUID;
 
 /**
  * {@code /multiverse djinn ...}. Players: {@code status}, {@code release}, {@code share <player>}, {@code unshare <player>}, {@code accept},
  * {@code leave}. Admins (permission 2): {@code status <player>}, {@code ledger}, {@code grant <player> <djinn> [bind]}, {@code reset <djinn>},
- * {@code phase <0-4>} (the phase for yourself, no price). Attach with {@code DjinnCommand.addTo(root)} on the {@code multiverse} node.
+ * {@code phase <0-4>} (the phase for yourself, no price), {@code dark <on|off> [player]} (the Dark Djinn, no price). Attach with {@code DjinnCommand.addTo(root)} on the {@code multiverse} node.
  */
 public final class DjinnCommand {
     private DjinnCommand() {}
@@ -66,6 +67,11 @@ public final class DjinnCommand {
                             DjinnLedger.get(ctx.getSource().getServer()).reset(d);
                             return ok(ctx, d.displayName() + " sleeps again. Players who held it lose it within four seconds.");
                         })))
+                .then(Commands.literal("dark").requires(DjinnCommand::admin)
+                        .then(Commands.literal("on").executes(ctx -> dark(ctx, ctx.getSource().getPlayerOrException(), true))
+                                .then(Commands.argument("player", EntityArgument.player()).executes(ctx -> dark(ctx, EntityArgument.getPlayer(ctx, "player"), true))))
+                        .then(Commands.literal("off").executes(ctx -> dark(ctx, ctx.getSource().getPlayerOrException(), false))
+                                .then(Commands.argument("player", EntityArgument.player()).executes(ctx -> dark(ctx, EntityArgument.getPlayer(ctx, "player"), false)))))
                 .then(Commands.literal("phase").requires(DjinnCommand::admin).then(Commands.argument("phase", IntegerArgumentType.integer(0, 4)).executes(ctx -> {
                     ServerPlayer p = ctx.getSource().getPlayerOrException();
                     int n = IntegerArgumentType.getInteger(ctx, "phase");
@@ -82,7 +88,7 @@ public final class DjinnCommand {
         if (d == null) return ok(ctx, who + " holds no Djinn. Bonds held: " + Bonds.held(p) + (Bonds.multiBond(p) ? " (the multi-bond relic is worn)" : "") + ".");
         int[] sum = DjinnEngine.summary(p);
         StringBuilder b = new StringBuilder(who).append(s.lent() ? " shares " : " holds ").append(d.fullName()).append(" (").append(d.affinity().label).append(")")
-                .append(" | phase ").append(sum[0]).append(" | trust ").append(sum[1]).append("/100 | assimilation ").append(sum[2] / 10.0).append("%");
+                .append(DarkDjinn.active(s) ? " | DARK (the black rukh)" : "").append(" | phase ").append(sum[0]).append(" | trust ").append(sum[1]).append("/100 | assimilation ").append(sum[2] / 10.0).append("%");
         if (sum[3] > 0) b.append(" | Maso closed for ").append((sum[3] + 19) / 20).append(" s");
         if (sum[4] > 0) b.append(" | Extreme Magic ready in ").append((sum[4] + 19) / 20).append(" s");
         if (!s.lent()) {
@@ -106,6 +112,24 @@ public final class DjinnCommand {
             if (st == DjinnLedger.State.SEALED) b.append(", Seal last at ").append(l.sealPlace(d));
         }
         return ok(ctx, b.toString());
+    }
+
+    // ---------------------------------------------------------------- the Dark Djinn
+    /** Admin: turns a player's own Djinn dark or cleanses it, no price and no shard. A dark Djinn cannot have a household, so that is refused first. */
+    private static int dark(CommandContext<CommandSourceStack> ctx, ServerPlayer p, boolean on) {
+        DjinnState s = DjinnState.of(p);
+        String who = p.getName().getString();
+        if (!s.owns()) return fail(ctx, who + " owns no Djinn (only an owner's Djinn can be dark)." + (s.lent() ? " They share one." : ""));
+        if (on) {
+            if (s.dark()) return fail(ctx, who + "'s Djinn is already dark.");
+            if (!DjinnLedger.get(ctx.getSource().getServer()).household(s.djinn()).isEmpty())
+                return fail(ctx, "A dark Djinn cannot be lent: /multiverse djinn unshare its household members first.");
+            DarkDjinn.darken(p, s);
+            return ok(ctx, who + "'s " + s.djinn().displayName() + " has drunk the black rukh.");
+        }
+        if (!s.dark()) return fail(ctx, who + "'s Djinn is not dark.");
+        DarkDjinn.purify(p, s);
+        return ok(ctx, who + "'s " + s.djinn().displayName() + " is cleansed.");
     }
 
     // ---------------------------------------------------------------- release

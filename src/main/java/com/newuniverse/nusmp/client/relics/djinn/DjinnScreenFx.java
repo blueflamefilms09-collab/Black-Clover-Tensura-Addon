@@ -35,13 +35,16 @@ public final class DjinnScreenFx {
         float now = gt + partial;
         int w = g.guiWidth(), h = g.guiHeight();
         int rgb = d.glow() & 0xFFFFFF;
+        boolean dark = s.dark();                                       // a Dark Djinn: a black-violet vignette and a gold frame (the labels keep the Djinn's colour)
+        int edge = dark ? DjinnLook.darkVignette(d.glow()) : rgb;
         // ---- vignette, fringe, flash
         float base = s.phase() >= 4 ? 0.34f : s.phase() == 3 ? 0.22f : s.phase() == 2 ? 0.10f : 0f;
         float fadeIn = Mth.clamp((now - s.since()) / 10f, 0f, 1f);
         float pulse = s.pulse(gt, partial);
         if (base > 0f) {
             float k = base * fadeIn * (0.85f + 0.15f * Mth.sin(now * (s.phase() >= 4 ? 0.5f : 0.12f)));
-            vignette(g, w, h, rgb, k);
+            vignette(g, w, h, edge, dark ? Math.min(0.5f, k * 1.25f) : k);
+            if (dark) vignette(g, w, h, 0x000000, k * 0.55f);
             if (s.phase() >= 4) {
                 float charge = 1f - Mth.clamp(s.leftNow(gt) / (float) DjinnPhaseRules.EXTREME_CHARGE, 0f, 1f);
                 int off = 2 + (int) (4 * charge * (0.5f + 0.5f * Mth.sin(now * 0.9f)));
@@ -54,12 +57,12 @@ public final class DjinnScreenFx {
         if (!show) return;
         int bw = 118, x = w / 2 - bw / 2, y = h - 66;
         g.fill(x - 3, y - 12, x + bw + 3, y + 21, 0x99080810);
-        g.fill(x - 3, y - 12, x + bw + 3, y - 11, 0xFF000000 | (d.color() & 0xFFFFFF));
+        g.fill(x - 3, y - 12, x + bw + 3, y - 11, 0xFF000000 | (dark ? DjinnLook.GOLD : d.color() & 0xFFFFFF));
         for (int i = 1; i <= 4; i++) {
             int px = x + (i - 1) * 8;
             g.fill(px, y - 9, px + 6, y - 3, i <= s.phase() ? 0xFF000000 | rgb : 0xFF2A2A38);
         }
-        String line = s.phase() > 0 ? PHASE[Math.min(4, s.phase())] + (s.phase() == 1 || s.phase() >= 3 ? "  " + (s.leftNow(gt) + 19) / 20 + "s" : "") : d.displayName();
+        String line = (dark ? "Dark " : "") + (s.phase() > 0 ? PHASE[Math.min(4, s.phase())] + (s.phase() == 1 || s.phase() >= 3 ? "  " + (s.leftNow(gt) + 19) / 20 + "s" : "") : d.displayName());
         g.drawString(mc.font, line, x + 36, y - 10, 0xFF000000 | rgb, true);
         g.fill(x, y, x + bw, y + 5, 0xFF1A1A28);                                              // Magoi: the magicule pool
         g.fill(x, y, x + (int) (bw * s.magoi() / 100f), y + 5, 0xFF000000 | mix(0x3A7BFF, rgb, 0.4f));

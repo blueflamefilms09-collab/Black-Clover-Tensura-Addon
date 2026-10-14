@@ -60,6 +60,22 @@
     {
       "id": "nusmp:voice_of_the_mountain",
       "required": false
+    },
+    {
+      "id": "nusmp:brooch_of_poeur",
+      "required": false
+    },
+    {
+      "id": "nusmp:crest_of_foresight",
+      "required": false
+    },
+    {
+      "id": "nusmp:sigil_of_the_faint_flame",
+      "required": false
+    },
+    {
+      "id": "nusmp:true_heart_clasp",
+      "required": false
     }
   ]
 }

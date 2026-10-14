@@ -16,18 +16,25 @@ import net.minecraft.world.item.component.Unbreakable;
 import net.minecraft.world.level.Level;
 
 /**
- * A HEAD or CHEST relic: real armour (vanilla armour points from the def, never breaks). Right-click puts it on, except that an unattuned one
+ * A HEAD, CHEST or FEET relic: real armour (vanilla armour points from the def, never breaks). Right-click puts it on, except that an unattuned one
  * that needs attunement starts the ritual while you sneak. Its look on the body is painted at run time on the client from the def's palette and look.
  */
 public class RelicArmorItem extends ArmorItem implements RelicBearer {
     private final RelicDef def;
 
     public RelicArmorItem(RelicDef def, Holder<ArmorMaterial> material) {
-        super(material, def.slot() == RelicSlot.HEAD ? ArmorItem.Type.HELMET : ArmorItem.Type.CHESTPLATE,
+        super(material, typeOf(def.slot()),
                 new Item.Properties().stacksTo(1).rarity(RelicItemSupport.rarity(def.grade())).fireResistant()
-                        .durability((def.slot() == RelicSlot.HEAD ? ArmorItem.Type.HELMET : ArmorItem.Type.CHESTPLATE).getDurability(37))
+                        .durability(typeOf(def.slot()).getDurability(37))
                         .component(DataComponents.UNBREAKABLE, new Unbreakable(false)));
         this.def = def;
+    }
+
+    /** The vanilla armour type of an armour slot: HEAD helmet, FEET boots, anything else (CHEST) the chestplate. */
+    static ArmorItem.Type typeOf(RelicSlot slot) {
+        if (slot == RelicSlot.HEAD) return ArmorItem.Type.HELMET;
+        if (slot == RelicSlot.FEET) return ArmorItem.Type.BOOTS;
+        return ArmorItem.Type.CHESTPLATE;
     }
 
     @Override public RelicDef relic() { return def; }

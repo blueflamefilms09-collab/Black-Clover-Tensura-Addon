@@ -1,7 +1,7 @@
 package com.newuniverse.nusmp.relics;
 
 /**
- * Where a relic is carried to work. MAIN_HAND relics work in a hand; HEAD and CHEST are real armour; NECK, BACK, BELT, HANDS and CHARM are
+ * Where a relic is carried to work. MAIN_HAND relics work in a hand; HEAD, CHEST and FEET are real armour (helmet, chestplate, boots); NECK, BACK, BELT, HANDS and CHARM are
  * Curios slots; CONSUMABLE ones are used up. Entries are only appended. (Not the Dungeon's {@code nexus.relic.RelicSlot}.)
  */
 public enum RelicSlot {
@@ -13,7 +13,8 @@ public enum RelicSlot {
     BELT("Belt", "belt"),
     HANDS("Hands", "hands"),
     CHARM("Charm", "charm"),
-    CONSUMABLE("Consumable", null);
+    CONSUMABLE("Consumable", null),
+    FEET("Feet", null);
 
     private final String label, curios;
 
@@ -29,7 +30,8 @@ public enum RelicSlot {
 
     public boolean isCurio() { return curios != null; }
 
-    public boolean isArmor() { return this == HEAD || this == CHEST; }
+    /** Worn as a real armour piece (helmet, chestplate or boots); never a Curios slot. */
+    public boolean isArmor() { return this == HEAD || this == CHEST || this == FEET; }
 
     /** Held in a hand to work (weapons, staffs, shields). */
     public boolean isHand() { return this == MAIN_HAND; }

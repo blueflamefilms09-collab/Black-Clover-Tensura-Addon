@@ -24,6 +24,8 @@ public final class RelicClient {
     private RelicClient() {}
 
     public static void init(IEventBus modBus) {
+        com.newuniverse.nusmp.client.relics.worn.WornRenderers.init();                  // the per-relic worn renderers (the boss relics)
+        com.newuniverse.nusmp.client.relics.item.ItemFxClient.init(modBus);             // relic bow / crossbow item properties, holder tracking, state variants
         modBus.addListener(RelicActKeys::register);
         modBus.addListener(RelicTooltip::factories);
         modBus.addListener(RelicClient::addLayers);
@@ -39,6 +41,7 @@ public final class RelicClient {
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingIn e) -> RelicTextures.registerAll());
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> {
             RelicClientState.clear();
+            com.newuniverse.nusmp.client.relics.worn.WornCues.clear();
             Relics.clearCaches();
         });
     }

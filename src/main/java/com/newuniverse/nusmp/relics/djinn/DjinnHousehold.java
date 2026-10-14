@@ -23,6 +23,10 @@ public final class DjinnHousehold {
         if (server == null) return;
         DjinnState os = DjinnState.of(owner);
         Djinn d = os.djinn();
+        if (com.newuniverse.nusmp.relics.djinn.dark.DarkDjinn.active(os)) {                       // household members never get a dark Djinn
+            owner.sendSystemMessage(Component.literal("A dark Djinn cannot be lent. Cleanse it first: Holy Water on the vessel, sneaking.").withStyle(ChatFormatting.RED));
+            return;
+        }
         DjinnLedger ledger = DjinnLedger.get(server);
         int members = d == null ? 0 : ledger.household(d).size();
         boolean already = d != null && ledger.isMember(d, ally.getUUID());
@@ -61,6 +65,10 @@ public final class DjinnHousehold {
         DjinnLedger ledger = DjinnLedger.get(server);
         Djinn d = DjinnState.of(owner).djinn();
         if (d == null) { ally.sendSystemMessage(Component.literal(owner.getName().getString() + " no longer holds that Djinn.").withStyle(ChatFormatting.GRAY)); return; }
+        if (com.newuniverse.nusmp.relics.djinn.dark.DarkDjinn.active(DjinnState.of(owner))) {
+            ally.sendSystemMessage(Component.literal(owner.getName().getString() + "'s Djinn has since drunk the black rukh and cannot be lent.").withStyle(ChatFormatting.GRAY));
+            return;
+        }
         Verdict v = HouseholdRules.invite(true, false, ledger.household(d).size(), ledger.isMember(d, ally.getUUID()), Bonds.mask(ally), Bonds.multiBond(ally));
         if (v != Verdict.OK) { ally.sendSystemMessage(Component.literal(shareText(v, ally)).withStyle(ChatFormatting.RED)); return; }
         if (!ledger.addMember(d, ally.getUUID())) return;

@@ -4,7 +4,7 @@ import com.newuniverse.nusmp.relics.Look;
 import com.newuniverse.nusmp.relics.RelicSlot;
 
 /**
- * Paints the worn layer of a HEAD or CHEST relic: a 64x32 ARGB image in the layout of vanilla's humanoid armour texture, from the def's palette
+ * Paints the worn layer of a HEAD, CHEST or FEET relic: a 64x32 ARGB image in the layout of vanilla's humanoid armour texture, from the def's palette
  * (main material, trim, glow) and look. Pure arithmetic (no Minecraft types) so the layout is tested; the client turns the pixels into a texture
  * ({@link RelicTextures}). Everything is deterministic from the arguments: the same def paints the same pixels on every machine.
  * <p>
@@ -12,6 +12,11 @@ import com.newuniverse.nusmp.relics.RelicSlot;
  * (16,16): top (20,16), right (16,20), front (20,20), left (28,20), back (32,20), the sides 4 wide and 12 tall, front and back 8 wide; the arm box at (40,16):
  * top (44,16), right (40,20), front (44,20), left (48,20), back (52,20), 4 wide and 12 tall. The left arm mirrors the right one. A pixel with alpha 0 is
  * left out, which is how a circlet leaves the face alone.
+ * <p>
+ * Boots (FEET) are drawn on the leg box at (0,16), the same box the leggings use: top (4,16), bottom (8,16) (4x4 each), right (0,20), front (4,20),
+ * left (8,20), back (12,20) (4 wide, 12 tall). Vanilla draws boots with the outer layer (layer_1), shows both legs, and lets the whole leg box
+ * through, so the painter fills only the lower rows of the four sides plus the sole and leaves the rest clear; the left leg reuses the same UVs.
+ * No leggings texture or geometry is involved: the leg region of layer_1 is free in every head and chest layer.
  */
 public final class ArmorPainter {
     private ArmorPainter() {}
@@ -23,6 +28,7 @@ public final class ArmorPainter {
         Canvas c = new Canvas(seed);
         int m = 0xFF000000 | (main & 0xFFFFFF), t = 0xFF000000 | (trim & 0xFFFFFF), g = 0xFF000000 | (glow & 0xFFFFFF);
         if (slot == RelicSlot.HEAD) head(c, look, m, t, g);
+        else if (slot == RelicSlot.FEET) feet(c, look, m, t, g);
         else body(c, look, m, t, g);
         return c.px;
     }
@@ -244,6 +250,82 @@ public final class ArmorPainter {
         }
         c.rect(44, 16, 4, 4, shade(t, 0.9));
         c.rect(45, 17, 2, 2, shade(g, 0.9));
+    }
+
+    // ================================================================ the feet (FEET)
+    /** The four side faces of the leg box (right, front, left, back), 4 wide and 12 tall, and the sole (bottom face). */
+    private static final int[][] LEG_SIDES = {{0, 20}, {4, 20}, {8, 20}, {12, 20}};
+    private static final int[] SOLE = {8, 16, 4, 4};
+    /** The first row of the leg faces is y = 20; the last (the ground) is y = 31. */
+    private static final int LEG_TOP = 20, LEG_BOTTOM = 31;
+
+    private static void feet(Canvas c, Look look, int m, int t, int g) {
+        switch (look == null ? Look.BOOTS : look) {
+            case SANDALS -> sandals(c, m, t, g);
+            case GREAVES -> greaves(c, m, t, g);
+            case LEATHER, ROBE, COAT, SUIT, CLOAK, CAPE, MANTLE -> boots(c, true, m, t, g);
+            default -> boots(c, false, m, t, g);
+        }
+    }
+
+    /** The sole under every look: dark worn leather with a lighter edge row on the sides. */
+    private static void sole(Canvas c, int base) {
+        c.material(SOLE[0], SOLE[1], SOLE[2], SOLE[3], shade(base, 0.45), 1.0, 0.8, 10);
+        for (int[] s : LEG_SIDES) c.hline(s[0], LEG_BOTTOM, 4, shade(base, 0.42));
+    }
+
+    /** Ankle boots: a turned cuff at the shin, a shaded shaft down to the ground, a toe cap in the trim colour and a stud on the outer side. */
+    private static void boots(Canvas c, boolean soft, int m, int t, int g) {
+        for (int[] s : LEG_SIDES) {
+            c.material(s[0], 25, 4, 7, m, soft ? 1.04 : 1.1, soft ? 0.74 : 0.78, soft ? 20 : 12);
+            c.hline(s[0], 25, 4, t);                                                    // the cuff
+            c.hline(s[0], 26, 4, shade(t, 0.7));
+        }
+        c.hline(4, 29, 4, shade(m, 0.6));                                               // the lacing line on the instep
+        for (int y = 27; y < 31; y += 2) { c.set(5, y, shade(t, 1.2)); c.set(6, y, shade(t, 1.2)); }   // lace crossings
+        c.hline(4, 30, 4, t);                                                           // the toe cap on the front
+        c.set(5, 30, shade(t, 1.2));
+        for (int[] s : LEG_SIDES) if (s[0] != 4) c.hline(s[0], 30, 4, shade(m, 0.6));   // a darker welt round the other three sides
+        c.set(1, 28, g);                                                                // a small stone on the outer side
+        c.set(2, 28, shade(g, 0.7));
+        sole(c, m);
+    }
+
+    /** Sandals: only a sole, an ankle strap and two straps across the instep; the rest of the leg stays bare. */
+    private static void sandals(Canvas c, int m, int t, int g) {
+        for (int[] s : LEG_SIDES) {
+            c.hline(s[0], 28, 4, t);                                                    // the ankle strap, all the way round
+            c.hline(s[0], 29, 4, shade(t, 0.7));
+            c.hline(s[0], LEG_BOTTOM, 4, shade(m, 0.5));                                // the edge of the sole
+        }
+        for (int x : new int[]{1, 2, 9, 10}) c.vline(x, 30, 1, shade(t, 0.8));        // the straps run down the sides to the sole
+        for (int i = 0; i < 4; i++) { c.set(4 + i, 29 + (i % 2), shade(t, 1.0 - 0.1 * i)); }   // the instep straps, criss-cross
+        c.set(5, 30, shade(t, 1.1));
+        c.set(6, 30, shade(t, 0.85));
+        c.rect(5, 27, 2, 1, g);                                                         // the clasp stone on the front of the ankle
+        c.set(1, 28, g);
+        sole(c, m);
+    }
+
+    /** Greaves: a knee guard, a shin plate with a ridge and rivets, an ankle band and a plated toe, from the knee to the ground. */
+    private static void greaves(Canvas c, int m, int t, int g) {
+        for (int[] s : LEG_SIDES) {
+            c.material(s[0], LEG_TOP + 1, 4, 11, m, 1.14, 0.72, 12);
+            c.hline(s[0], LEG_TOP, 4, t);                                               // the knee guard band
+            c.hline(s[0], LEG_TOP + 1, 4, shade(t, 0.7));
+            c.hline(s[0], 28, 4, t);                                                    // the ankle band
+            c.hline(s[0], 29, 4, shade(t, 0.65));
+            c.hline(s[0], 30, 4, shade(m, 0.8));
+        }
+        c.vline(5, 22, 6, shade(m, 1.3));                                               // the ridge down the shin
+        c.vline(6, 22, 6, shade(m, 0.55));
+        c.rect(5, 21, 2, 2, g);                                                         // the gem on the knee
+        for (int[] p : new int[][]{{4, 24}, {7, 24}, {4, 26}, {7, 26}, {1, 25}, {10, 25}}) c.set(p[0], p[1], shade(t, 1.25));   // rivets
+        c.rect(4, 29, 4, 2, shade(t, 0.9));                                              // the sabaton: the plated toe
+        c.hline(4, 29, 4, shade(t, 1.2));
+        c.vline(5, 29, 2, shade(t, 0.6));
+        c.vline(10, 21, 7, shade(m, 0.5));                                               // seam on the inner side
+        sole(c, m);
     }
 
     // ================================================================ the head (HEAD)

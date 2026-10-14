@@ -31,6 +31,7 @@ public final class DjinnEvents {
         bus.addListener(DjinnSources::onCollapse);
         bus.addListener(DjinnSources::onServerTick);
         bus.addListener(DjinnSources::onContainerOpen);
+        com.newuniverse.nusmp.relics.djinn.dark.DarkDjinn.register(bus);                  // the Dark Djinn: Holy Water cleanses it, Lucius may drop a shard
     }
 
     /** The bearer's blows (Half Equip) and the bearer's elemental calm. */
@@ -40,25 +41,16 @@ public final class DjinnEvents {
     }
 
     /**
-     * An owner dies: the Djinn leaves, its Seal falls where they fell (never lost, never burned), the household is called back. A household member
-     * who dies only loses the phase they had out. Runs last, and not at all if another mod cancelled the death.
+     * A player dies: whatever phase they had out ends, but the bond stays. An owner keeps the Djinn (the record is copied on death and the vessel keeps
+     * its binding, so the vessel they drop is still theirs and the Djinn is there again once they hold it), a household member keeps what was lent.
+     * Only {@code /multiverse djinn release}, a deliberate release or an admin ends a bond. Runs last, and not at all if another mod cancelled the death.
      */
     static void onDeath(LivingDeathEvent e) {
         if (!(e.getEntity() instanceof ServerPlayer p)) return;
         DjinnState s = DjinnState.of(p);
-        if (s.owns()) {
-            Djinn d = s.djinn();
-            Vec3 at = p.position().add(0, 0.5, 0);
-            ItemStack seal = DjinnBinding.releaseOwned(p);
-            if (!seal.isEmpty()) {
-                DjinnSources.dropSeal(p.serverLevel(), at, seal);
-                if (p.getServer() != null)
-                    p.getServer().getPlayerList().broadcastSystemMessage(Component.literal(p.getName().getString() + " has fallen, and " + d.fullName()
-                            + " leaves them. Its Seal lies where they died.").withStyle(ChatFormatting.LIGHT_PURPLE), false);
-            }
-        } else if (s.lent() || s.phase() != DjinnPhaseRules.OFF) {
-            DjinnEngine.shutdown(p, DjinnPhaseRules.EndReason.DEATH);
-        }
+        if (s.owns() || s.lent() || s.phase() != DjinnPhaseRules.OFF) DjinnEngine.shutdown(p, DjinnPhaseRules.EndReason.DEATH);
+        if (s.owns())
+            p.displayClientMessage(Component.literal(s.djinn().fullName() + " waits in its vessel. Take the vessel back to call it again.").withStyle(ChatFormatting.LIGHT_PURPLE), false);
     }
 
     static void onLogin(PlayerEvent.PlayerLoggedInEvent e) {

@@ -21,6 +21,38 @@
     {
       "id": "nusmp:thermo_gloves",
       "required": false
+    },
+    {
+      "id": "nusmp:zenon_spatial_ring",
+      "required": false
+    },
+    {
+      "id": "nusmp:bear_bracer",
+      "required": false
+    },
+    {
+      "id": "nusmp:bracelets_of_faithful_friendship",
+      "required": false
+    },
+    {
+      "id": "nusmp:bracer_of_initiative",
+      "required": false
+    },
+    {
+      "id": "nusmp:bracers_of_arcane_blades",
+      "required": false
+    },
+    {
+      "id": "nusmp:bracers_of_manhandling",
+      "required": false
+    },
+    {
+      "id": "nusmp:bracers_of_phasing",
+      "required": false
+    },
+    {
+      "id": "nusmp:phantoms_bracelet",
+      "required": false
     }
   ]
 }

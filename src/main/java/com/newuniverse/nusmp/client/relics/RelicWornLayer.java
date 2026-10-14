@@ -2,11 +2,16 @@ package com.newuniverse.nusmp.client.relics;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.logging.LogUtils;
+import com.newuniverse.nusmp.client.relics.worn.WornCtx;
+import com.newuniverse.nusmp.client.relics.worn.WornRenderer;
+import com.newuniverse.nusmp.client.relics.worn.WornRenderers;
 import com.newuniverse.nusmp.relics.Grade;
 import com.newuniverse.nusmp.relics.Look;
 import com.newuniverse.nusmp.relics.RelicDef;
 import com.newuniverse.nusmp.relics.RelicSlot;
 import com.newuniverse.nusmp.relics.Relics;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -16,6 +21,9 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Draws the relics worn in Curios slots on a player: a pendant and chain at the neck, a cloak or cape on the back, a belt with a buckle, rings on the
@@ -36,9 +44,15 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
         if (worn.isEmpty()) return;
         VertexConsumer vc = null;
         PlayerModel<AbstractClientPlayer> model = getParentModel();
+        List<Relics.Worn> custom = null;                                               // relics with their own worn renderer: drawn after the generic ones
         for (Relics.Worn w : worn) {
             RelicDef d = w.def();
             RelicSlot slot = d.slot();
+            if (WornRenderers.get(d.id()) != null) {
+                if (custom == null) custom = new ArrayList<>(2);
+                custom.add(w);
+                continue;
+            }
             if (!slot.isCurio()) continue;
             if (vc == null) vc = buffers.getBuffer(RenderType.entityCutoutNoCull(RelicTextures.WHITE));
             int main = d.paletteMain(), trim = d.paletteTrim(), glow = d.paletteGlow();
@@ -48,6 +62,27 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
             else if (slot == RelicSlot.BELT) belt(pose, vc, light, model.body, main, trim, glow);
             else if (slot == RelicSlot.HANDS) { hands(pose, vc, light, model.rightArm, true, main, trim, glow); hands(pose, vc, light, model.leftArm, false, main, trim, glow); }
             else if (slot == RelicSlot.CHARM) charm(pose, vc, light, model.body, main, trim, glow, shine);
+        }
+        if (custom != null) {
+            Minecraft mc = Minecraft.getInstance();
+            boolean first = p == mc.player && mc.options.getCameraType().isFirstPerson();
+            for (Relics.Worn w : custom) drawCustom(w, pose, buffers, light, model, p, partial, age, netHeadYaw, headPitch, first);
+        }
+    }
+
+    /** A relic with its own renderer ({@link WornRenderers}): handed the posed model; a renderer that throws is switched off, and the pose stack is put back. */
+    private static void drawCustom(Relics.Worn w, PoseStack pose, MultiBufferSource buffers, int light, PlayerModel<AbstractClientPlayer> model, AbstractClientPlayer p,
+                                   float partial, float age, float netHeadYaw, float headPitch, boolean first) {
+        String id = w.def().id();
+        WornRenderer r = WornRenderers.get(id);
+        if (r == null) return;
+        PoseStack.Pose before = pose.last();
+        try {
+            r.render(new WornCtx(w.stack(), pose, buffers, light, model, p, partial, age, netHeadYaw, headPitch, first));
+        } catch (RuntimeException | LinkageError failed) {
+            for (int i = 0; i < 16 && pose.last() != before; i++) pose.popPose();
+            WornRenderers.register(id, c -> { });                                      // draw nothing for this relic from now on
+            LogUtils.getLogger().error("[nusmp] worn renderer of {} failed and is switched off", id, failed);
         }
     }
 

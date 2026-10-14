@@ -19,6 +19,8 @@ public final class DjinnClientState {
     public record Snap(int phase, int prev, Djinn djinn, long at, long since, int left, int magoi, int assim, int trust, int lock, int cooldown, long pulseAt, int flags) {
         public boolean lent() { return (flags & 1) != 0; }
         public boolean marked() { return (flags & 2) != 0; }
+        /** The Dark Djinn: flag bit 3 (value 8) of the synced state; the equip is drawn black and gold. */
+        public boolean dark() { return (flags & 8) != 0; }
 
         /** Ticks left of the timed phase as of {@code now} (never below 0). */
         public int leftNow(long now) { return Math.max(0, left - (int) (now - at)); }
@@ -44,7 +46,7 @@ public final class DjinnClientState {
         int prev = same ? old.prev() : old == null ? 0 : old.phase();
         long pulseAt = p.pulse() > 0 ? now - (20 - Math.min(20, p.pulse())) : (old != null && now - old.pulseAt() < 20 ? old.pulseAt() : -1);
         BY_ENTITY.put(p.entity(), new Snap(p.phase(), prev, dj, now, since, p.left(), p.magoi(), p.assim(), p.trust(), p.lock(), p.cooldown(), pulseAt, p.flags()));
-        if (!same && dj != null && p.phase() != prev && Math.max(p.phase(), prev) >= 2 && !(p.phase() >= 3 && prev >= 3)) DjinnClient.burst(p.entity(), dj, p.phase() > prev);
+        if (!same && dj != null && p.phase() != prev && Math.max(p.phase(), prev) >= 2 && !(p.phase() >= 3 && prev >= 3)) DjinnClient.burst(p.entity(), dj, p.phase() > prev, (p.flags() & 8) != 0);
     }
 
     /** The player's Djinn state; phase 0 when nothing is known or the last word is stale. */

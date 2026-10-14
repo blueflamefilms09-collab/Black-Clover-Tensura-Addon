@@ -3,6 +3,8 @@ package com.newuniverse.nusmp.relics.djinn;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.book.EnergyBridge;
 import com.newuniverse.nusmp.relics.Fx;
+import com.newuniverse.nusmp.relics.djinn.dark.DarkDjinn;
+import com.newuniverse.nusmp.relics.djinn.dark.DarkRules;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -56,7 +58,8 @@ final class DjinnMagic {
         if (d == null || s.phase() < DjinnPhaseRules.HALF) return;
         Djinn.Trait t = d.trait();
         float amount = e.getAmount();
-        double frac = t.bonusFrac(), cap = t.bonusCap();
+        boolean dark = DarkDjinn.active(s);                                                         // the black rukh: +35% of the rider, its cap x1.5 (6 -> 9)
+        double frac = DarkRules.riderFrac(t.bonusFrac(), dark), cap = DarkRules.riderCap(t.bonusCap(), dark);
         boolean undead = target.getType().is(EntityTypeTags.UNDEAD);
         if (t.special() == Djinn.Special.SMITE && undead) { frac *= 2; cap *= 2; }
         if (t.special() == Djinn.Special.CRUSH) frac *= 1.0 + Math.min(20.0, target.getArmorValue()) / 20.0;
@@ -132,7 +135,7 @@ final class DjinnMagic {
         DjinnState s = DjinnState.of(p);
         Djinn d = s.djinn();
         if (d == null || s.phase() < DjinnPhaseRules.HALF) return;
-        double f = resist(d, e.getSource(), s.phase());
+        double f = DarkRules.calm(resist(d, e.getSource(), s.phase()), DarkDjinn.active(s));      // a dark Djinn's calm is half
         if (f > 0) e.setAmount((float) (e.getAmount() * (1.0 - f)));
     }
 
@@ -237,7 +240,7 @@ final class DjinnMagic {
         if (n >= cap) return false;
         r.hits.put(t.getUUID(), n + 1);
         Djinn.Extreme x = r.djinn.extreme();
-        Fx.damageHeavy(p, t, (float) (x.damage() * scale), DjinnFx.damageType(r.djinn.affinity()));
+        Fx.damageHeavy(p, t, (float) (DarkRules.extremeDamage(x.damage(), r.dark) * scale), DjinnFx.damageType(r.djinn.affinity()));
         if (!x.effectId().isEmpty()) {
             int ticks = x.effectAmp() >= 2 ? BalanceLaw.controlTicks(t, x.effectTicks()) : x.effectTicks();
             DjinnFx.effect(t, x.effectId(), ticks, x.effectAmp());

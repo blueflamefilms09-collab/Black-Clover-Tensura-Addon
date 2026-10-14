@@ -5,6 +5,9 @@ import com.newuniverse.nusmp.NUSMP;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.blackclover.Devil;
 import com.newuniverse.nusmp.blackclover.TimeStop;
+import com.newuniverse.nusmp.boss.LuciusProfile;
+import com.newuniverse.nusmp.boss.LuciusSpellTable;
+import com.newuniverse.nusmp.boss.LuciusSpells;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
 import net.minecraft.ChatFormatting;
@@ -219,6 +222,27 @@ public class LuciusBoss extends ZogratisBoss {
         return form() == FORM_DIVINE ? Math.max(5, Math.min(11, suggested)) : Math.max(7, Math.min(14, suggested));
     }
 
+    // ================================================================ the boss overhaul (boss/LuciusProfile)
+    /** His nullifications as fair cuts of the hit; none in an open window and none against anti-magic (the designed counter). */
+    @Override
+    protected float mitigate(DamageSource source, float amount) {
+        if (LuciusFx.antiMagicHit(source)) return amount;
+        return LuciusProfile.mitigate(this, source, amount);
+    }
+
+    /** Abnormal Condition Nullification: harmful effects do not land, except in an open window. */
+    @Override
+    public boolean canBeAffected(MobEffectInstance effect) {
+        if (LuciusProfile.refuses(this, effect)) return false;
+        return super.canBeAffected(effect);
+    }
+
+    /** Intangibility, Dead End Rainbow and the safe Usurper ride on his blows. */
+    @Override
+    public boolean strike(LivingEntity victim, float base, boolean magic) {
+        return LuciusProfile.strike(this, victim, base, magic, super::strike);
+    }
+
     @Override protected String[] tensuraKeywords() { return new String[]{"soul", "spirit", "holy", "time", "gravity"}; }
     @Override protected int tensuraKitSize() { return 4; }
 
@@ -280,6 +304,7 @@ public class LuciusBoss extends ZogratisBoss {
         reverseStart = 0;
         bodySuppressedUntil = 0;
         juliusBar.removeAllPlayers();                                          // Julius's bar has watchers only while his will is up
+        LuciusProfile.reset(this);
         if (entityData.get(JULIUS) != 0) entityData.set(JULIUS, 0);
         entityData.set(CHARGES, precog.charges());
         entityData.set(FLAGS, 0);
@@ -573,7 +598,7 @@ public class LuciusBoss extends ZogratisBoss {
     @Override
     protected List<Move> moves() {
         List<Move> out = new ArrayList<>();
-        for (LuciusTable.Spec s : LuciusTable.specs()) {
+        for (LuciusTable.Spec s : LuciusSpellTable.allSpecs()) {                            // his table, then Megiddo, Dimension Cutter and True Darkness
             Move.Builder mb = Move.builder(s.id(), s.label()).minPower(s.minPower()).windUp(s.windUpTicks()).cooldown(s.cooldownTicks())
                     .range(s.minRange(), s.maxRange()).weight(s.weight()).mana(s.manaCost()).recovery(s.recovery());
             if (s.ultimate()) mb.ultimate();
@@ -694,7 +719,7 @@ public class LuciusBoss extends ZogratisBoss {
                 TowerSpells.storm(this, t, 6 + PowerCurve.stage(power()));
                 say("Every tower in the kingdom, answer me.");
             };
-            default -> (boss, t) -> { };
+            default -> LuciusSpells.run(this, id);
         };
     }
 
@@ -849,7 +874,7 @@ public class LuciusBoss extends ZogratisBoss {
                 Tells.ring(sl, position(), 6 + (total - left) * 0.2, LuciusFx.GOLD);
                 Tells.gather(sl, position().add(0, 1.5, 0), 1.5, LuciusFx.PALE, 10);
             };
-            default -> null;
+            default -> LuciusSpells.tell(this, id);
         };
     }
 

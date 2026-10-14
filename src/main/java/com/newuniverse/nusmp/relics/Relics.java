@@ -102,7 +102,7 @@ public final class Relics {
 
     private static Map<UUID, Cached> cacheFor(LivingEntity e) { return e.level().isClientSide() ? CLIENT : SERVER; }
 
-    /** Every relic the entity has equipped (a hand for hand relics, the head/chest slot, a Curios slot), working or not. Never null. */
+    /** Every relic the entity has equipped (a hand for hand relics, the head/chest/feet slots, a Curios slot), working or not. Never null. */
     public static List<Worn> wornList(LivingEntity e) { return cached(e, false).worn(); }
 
     /** What works on the entity (cached for {@link #TTL} ticks). Never null. */
@@ -154,7 +154,7 @@ public final class Relics {
             RelicDef d = defOf(s);
             if (d != null && d.slot().isHand()) out.add(new Worn(s, d));
         }
-        for (EquipmentSlot slot : new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST}) {
+        for (EquipmentSlot slot : new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.FEET}) {
             ItemStack s = e.getItemBySlot(slot);
             RelicDef d = defOf(s);
             if (d != null && d.slot().isArmor()) out.add(new Worn(s, d));

@@ -183,6 +183,11 @@ public abstract class ZogratisBoss extends Monster {
     protected double preferredRange(double suggested) { return suggested; }
     /** Last look at incoming damage (after the invulnerability checks); return the amount to apply, 0 or less to ignore the hit. */
     protected float filterDamage(DamageSource source, float amount) { return amount; }
+    /**
+     * A cut of the hit that is NOT applied while the boss is exposed (the framework runs it before {@link PowerCurve#clampDamage}, so the
+     * power lines stay authoritative). Return a positive amount; the default changes nothing.
+     */
+    protected float mitigate(DamageSource source, float amount) { return amount; }
     /** Keywords of the Tensura magic skills it learns (empty = none); see {@link TensuraCaster#learn}. */
     protected String[] tensuraKeywords() { return new String[0]; }
     protected int tensuraKitSize() { return 4; }
@@ -381,6 +386,7 @@ public abstract class ZogratisBoss extends Monster {
     private void refreshBar() {
         bar.setName(Component.literal(barTitle()).withStyle(chatColor()));
         bar.setColor(barColor());
+        com.newuniverse.nusmp.boss.bar.BossBarSync.update(this, bar);     // 1.25.0: the animated boss bar's style (tints, phase, rage) goes to the watchers
     }
 
     @Override
@@ -913,6 +919,7 @@ public abstract class ZogratisBoss extends Monster {
         float a = filterDamage(source, amount);
         if (a <= 0f) return false;
         if (exposed()) a *= EXPOSED_BONUS;
+        else a = mitigate(source, a);
         a = PowerCurve.clampDamage(getHealth(), getMaxHealth(), due, a);
         return a > 0f && super.hurt(source, a);
     }
@@ -946,6 +953,7 @@ public abstract class ZogratisBoss extends Monster {
     public void remove(RemovalReason reason) {
         if (!level().isClientSide) {
             TriadBond.unregister(this);
+            com.newuniverse.nusmp.boss.bar.BossBarSync.remove(bar);          // 1.25.0: tells the watchers to forget the style before they lose the bar
             bar.removeAllPlayers();
             if (reason.shouldDestroy() && level() instanceof ServerLevel sl) {
                 ledger.restoreAll(sl);
