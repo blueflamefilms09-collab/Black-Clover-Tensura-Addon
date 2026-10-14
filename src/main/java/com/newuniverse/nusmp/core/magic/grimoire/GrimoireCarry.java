@@ -15,9 +15,9 @@ public final class GrimoireCarry {
     public record Pose(float right, float up, float forward, float yaw, float pitch, float roll, float scale) {}
 
     /** Dormant: hanging against the right hip / thigh, cover out to the side, slightly tilted, smaller. */
-    public static final Pose HIP = new Pose(0.42f, 0.55f, 0.0f, -90f, 0f, -8f, 0.84f);          // 0.29: 2x bigger, a little further out so it clears the leg
+    public static final Pose HIP = new Pose(0.27f, 0.53f, 0.0f, -90f, 0f, -8f, 0.84f);          // 1.27.0: tucked against the torso (was right 0.42, up 0.55; 0.29 had put it out to clear the leg)
     /** Dormant while sneaking (the hips drop). */
-    public static final Pose HIP_SNEAK = new Pose(0.42f, 0.41f, -0.1f, -90f, 0f, -8f, 0.84f);
+    public static final Pose HIP_SNEAK = new Pose(0.27f, 0.39f, -0.1f, -90f, 0f, -8f, 0.84f);   // 1.27.0: was right 0.42, up 0.41
     /** Summoned: beside the owner's right side, open and tilted steeply so its pages face up at them. */
     // 0.36: floats low beside the owner, lying open at a steep tilt (pages up toward the owner, reclining away), after the
     // owner's floating-grimoire references; 0.29's upright pose in front of the hand was (0.6, 1.12, 0.9, 15, -10, 0)
