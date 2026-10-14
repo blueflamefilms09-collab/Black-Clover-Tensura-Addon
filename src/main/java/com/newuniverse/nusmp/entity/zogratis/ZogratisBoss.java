@@ -392,7 +392,7 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
     }
 
     // ================================================================ the per-second damage budget (1.29.0)
-    @Override public com.newuniverse.nusmp.boss.budget.BossBudget budget() { return dpsBudget; }
+    @Override public com.newuniverse.nusmp.boss.budget.BossBudget dpsBudget() { return dpsBudget; }
 
     /** The power stage 0..4; the Gates (4) are the final stage. */
     @Override public int budgetStage() { return PowerCurve.stage(power()); }

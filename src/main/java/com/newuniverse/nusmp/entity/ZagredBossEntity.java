@@ -155,7 +155,7 @@ public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.b
     // ================================================================ the per-second damage budget (1.29.0)
     private final com.newuniverse.nusmp.boss.budget.BossBudget dpsBudget = new com.newuniverse.nusmp.boss.budget.BossBudget();
 
-    @Override public com.newuniverse.nusmp.boss.budget.BossBudget budget() { return dpsBudget; }
+    @Override public com.newuniverse.nusmp.boss.budget.BossBudget dpsBudget() { return dpsBudget; }
 
     @Override public int budgetStage() { return Math.max(0, phase() - 1); }
 

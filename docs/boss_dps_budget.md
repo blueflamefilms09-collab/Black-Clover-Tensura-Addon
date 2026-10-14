@@ -29,7 +29,7 @@ not fit is cut, and a rise is never touched.
 **`BossBudgetConfig`.** Own spec file so the budget can be tuned or switched off without touching other configs. Reads fall back to the defaults
 before the config is loaded (the same pattern as the Charter config).
 
-**`BudgetedBoss`.** One required method (`budget()`), two optional phase methods. Why an interface: any future boss gets the whole system by
+**`BudgetedBoss`.** One required method (`dpsBudget()`), two optional phase methods. Why an interface: any future boss gets the whole system by
 implementing it and forwarding three hooks; the shared code never needs to know the boss class.
 
 **`BossBudget`.** The Minecraft-facing half, one per entity. `tick` (from `baseTick`) keeps the cap current (max health or phase may change)
