@@ -37,7 +37,31 @@ public final class TensuraScreenTheme {
     private static boolean looked, boundsFailed, warned;
 
     /** Game bus. */
-    public static void init() { NeoForge.EVENT_BUS.addListener(TensuraScreenTheme::onRenderPost); }
+    public static void init() {
+        NeoForge.EVENT_BUS.addListener(TensuraScreenTheme::onRenderPre);
+        NeoForge.EVENT_BUS.addListener(TensuraScreenTheme::onRenderPost);
+    }
+
+    /**
+     * 1.32.0: the magic circle is drawn BEFORE Tensura's screen, so it sits behind the window (it used to be drawn after it and its lines ran across the
+     * skill names and slots). Tensura's own background and panel then cover it; only what lies outside the window shows.
+     */
+    private static void onRenderPre(ScreenEvent.Render.Pre e) {
+        Screen s = e.getScreen();
+        String n = s.getClass().getName();
+        if (!(n.equals(SELECT) || n.equals(MODE) || n.equals(CATEGORIES)) || !UiTheme.anime()) return;
+        try {
+            int[] box = bounds(s.width, s.height);
+            int cx = (box[0] + box[2]) / 2, cy = (box[1] + box[3]) / 2;
+            float radius = Math.max(40f, Math.min(box[2] - box[0], box[3] - box[1]) * 0.62f);
+            MagicCircle.draw(e.getGuiGraphics(), cx, cy, radius, UiTheme.now(), UiTheme.CYAN, 0.12f, MagicCircle.CALM, 1f);
+        } catch (RuntimeException | LinkageError ex) {
+            if (!warned) {
+                warned = true;
+                com.mojang.logging.LogUtils.getLogger().warn("[nusmp] The anime overlay skipped a Tensura screen it could not read", ex);
+            }
+        }
+    }
 
     private static void onRenderPost(ScreenEvent.Render.Post e) {
         Screen s = e.getScreen();
@@ -60,8 +84,6 @@ public final class TensuraScreenTheme {
         int w = s.width, h = s.height;
         int[] box = bounds(w, h);                                  // left, top, right, bottom of Tensura's panel (or a guess), then 1 if it is exact
         int cx = (box[0] + box[2]) / 2, cy = (box[1] + box[3]) / 2;
-        float radius = Math.max(40f, Math.min(box[2] - box[0], box[3] - box[1]) * 0.62f);
-        MagicCircle.draw(g, cx, cy, radius, now, UiTheme.CYAN, 0.12f, MagicCircle.CALM, 1f);
         if (box[4] == 1) {
             UiPanel.brackets(g, box[0] - 3, box[1] - 3, box[2] - box[0] + 6, box[3] - box[1] + 6, 9, UiMath.withAlpha(UiTheme.CYAN, 0.75f));
             UiPanel.sweep(g, box[0], box[1], box[2] - box[0], box[3] - box[1], now, UiTheme.CYAN, 0.7f);

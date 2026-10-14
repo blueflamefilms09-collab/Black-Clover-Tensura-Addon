@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.32.0] — Ability Selection window: the magic circle goes behind it
+
+- The anime overlay on Tensura's Ability Selection window drew its magic circle on top of the window, so its lines ran across the skill names, the slots and the panel. The circle is now drawn before Tensura's screen (behind it); Tensura's panel covers it and only the part outside the window shows. The corner brackets and the Great Sage readout are unchanged. Applies to the ability, mode and category windows.
+- If the corner brackets do not appear, Tensura's panel bounds could not be read; the circle is then centred on the screen. Tell me and I will read the bounds another way.
+
+
 ## [1.31.0] — Hotfix: second first-launch config crash
 
 - **Fixed the same crash as 1.29.0 in the new `nusmp-relicfx-client.toml` (1.30.0).** `relicfx.quality` used `defineInList(List.of(...))`; with no file yet NeoForge checks the missing value (null) against that list, `List.of(..).contains(null)` throws and the whole config load aborts, so other mods crashed reading their unloaded configs (SkyFracture). It is now a string with a validator accepting `low`, `medium` or `high`. Every other config of the mod was checked: none uses a list check any more.
