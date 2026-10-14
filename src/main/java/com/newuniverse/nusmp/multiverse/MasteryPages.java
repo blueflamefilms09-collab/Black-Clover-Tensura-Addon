@@ -137,7 +137,8 @@ public final class MasteryPages {
         if ((told & (1 << m)) != 0) return;
         tag.putInt("GateTold", told | (1 << m));
         inst.markDirty();
-        p.sendSystemMessage(Component.literal("A page stirs (" + page.name() + "), but it will only open for: " + what + ".").withStyle(ChatFormatting.GRAY));
+        // 1.27.0 (discovery): a page that has not opened is not named yet
+        p.sendSystemMessage(Component.literal("A page stirs (" + com.newuniverse.nusmp.core.discovery.DiscoveryRules.QUESTION + "), but it will only open for: " + what + ".").withStyle(ChatFormatting.GRAY));
     }
 
     // ---------------------------------------------------------------- mastery sources besides casting

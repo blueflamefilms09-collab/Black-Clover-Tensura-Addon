@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.book;
 
+import com.newuniverse.nusmp.core.magic.merge.MergeContext;
+import com.newuniverse.nusmp.core.magic.profile.SafeCast;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -55,7 +57,8 @@ public final class SpellRuntime {
     /** Fire a bolt. vel = blocks per tick. homing may be null. */
     public static Bolt bolt(ServerPlayer owner, Vec3 start, Vec3 vel, double radius, int life, boolean pierce,
                             LivingEntity homing, OnHit onHit, OnEnd onEnd) {
-        Bolt b = new Bolt(owner, start, vel, radius, life, pierce, homing, onHit, onEnd);
+        // 1.27.0: a bolt fired inside a merged cast keeps the merge (colours, the second hit effect) when it hits or ends ticks later
+        Bolt b = new Bolt(owner, start, vel, radius, life, pierce, homing, MergeContext.wrap(onHit), MergeContext.wrap(onEnd));
         BOLTS.add(b);
         return b;
     }
@@ -109,11 +112,11 @@ public final class SpellRuntime {
 
     /** Runs step(age) every 'interval' ticks for 'ticks' ticks. */
     public static void zone(ServerLevel level, int ticks, int interval, IntConsumer step) {
-        ZONES.add(new Zone(level, level.getGameTime() + ticks, Math.max(1, interval), step, new long[]{0}));
+        ZONES.add(new Zone(level, level.getGameTime() + ticks, Math.max(1, interval), MergeContext.wrap(step), new long[]{0}));
     }
 
     public static void later(ServerLevel level, int delay, Runnable run) {
-        LATER.add(new Later(level, level.getGameTime() + delay, run));
+        LATER.add(new Later(level, level.getGameTime() + delay, MergeContext.wrap(run)));
     }
 
     /** Places a block in an air/replaceable spot and removes it after 'ticks'. */
@@ -127,7 +130,8 @@ public final class SpellRuntime {
 
     // ---------------------------------------------------------------- tick
     public static void onServerTick(ServerTickEvent.Post event) {
-        for (Bolt b : new ArrayList<>(BOLTS)) if (!b.dead) tickBolt(b);
+        // 1.27.0: one spell's code that throws (a bolt hit, a zone step, a delayed task) is caught and logged once, never crashes the tick
+        for (Bolt b : new ArrayList<>(BOLTS)) if (!b.dead && !SafeCast.tick("spell-bolt", () -> tickBolt(b))) b.dead = true;
         BOLTS.removeIf(b -> b.dead);
 
         List<Zone> zs = new ArrayList<>(ZONES);
@@ -135,14 +139,17 @@ public final class SpellRuntime {
         for (Zone z : zs) {
             long now = z.level().getGameTime();
             if (now > z.until()) continue;
-            if (z.age()[0] % z.interval() == 0) z.step().accept((int) z.age()[0]);
+            if (z.age()[0] % z.interval() == 0) {
+                int age = (int) z.age()[0];
+                if (!SafeCast.tick("spell-zone", () -> z.step().accept(age))) continue;      // a zone whose step threw ends
+            }
             z.age()[0]++;
             ZONES.add(z);
         }
 
         List<Later> due = new ArrayList<>();
         LATER.removeIf(l -> { if (l.level().getGameTime() >= l.at()) { due.add(l); return true; } return false; });
-        due.forEach(l -> l.run().run());
+        due.forEach(l -> SafeCast.tick("spell-later", l.run()));
 
         TEMP.removeIf(t -> {
             if (t.level().getGameTime() < t.until()) return false;

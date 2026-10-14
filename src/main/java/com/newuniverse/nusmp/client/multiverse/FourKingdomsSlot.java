@@ -82,6 +82,11 @@ public final class FourKingdomsSlot {
         int[] r = SLOTS.get(e.getScreen());
         if (!inside(r, e.getMouseX(), e.getMouseY())) return;
         GuiGraphics g = e.getGuiGraphics();
+        if (com.newuniverse.nusmp.client.ui.theme.UiTheme.anime()) {         // 1.27.0: a turning magic circle round the slot
+            float rad = Math.max(r[2], r[3]) * 0.9f;
+            com.newuniverse.nusmp.client.ui.theme.MagicCircle.draw(g, r[0] + r[2] / 2f, r[1] + r[3] / 2f, rad, com.newuniverse.nusmp.client.ui.theme.UiTheme.now(),
+                    com.newuniverse.nusmp.client.ui.theme.UiTheme.GOLD, 0.9f, com.newuniverse.nusmp.client.ui.theme.MagicCircle.STANDARD, 1f);
+        } else
         g.fill(r[0], r[1], r[0] + r[2], r[1] + r[3], 0x30FFFFFF);          // hover highlight
         g.renderTooltip(Minecraft.getInstance().font, Component.literal("Four Kingdoms: every menu is in here"), e.getMouseX(), e.getMouseY());
     }

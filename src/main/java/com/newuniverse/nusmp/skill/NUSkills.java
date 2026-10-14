@@ -185,6 +185,9 @@ public final class NUSkills {
                     () -> com.newuniverse.nusmp.book.WikiBooks.attribute(magic)));
         }
     }
+    /** 1.27.0: the 64 skills that cast the merged magics of a world (core.magic.merge); a merged magic takes one of them when it is created. Not part of BOOKS on purpose. */
+    public static final java.util.List<DeferredHolder<ManasSkill, com.newuniverse.nusmp.core.magic.merge.MergedBook>> MERGED_BOOKS =
+            com.newuniverse.nusmp.core.magic.merge.MergedSkills.registerAll(SKILLS);
     /** Anti-Magic Spirit Lord: awakened by mastering the Anti-Magic grimoire (or /nusmp grimoire awaken_anti). */
     public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.antimagic.AntiMagicLordSkill> ANTI_MAGIC_LORD =
             SKILLS.register("anti_magic_spirit_lord", () -> new com.newuniverse.nusmp.antimagic.AntiMagicLordSkill());

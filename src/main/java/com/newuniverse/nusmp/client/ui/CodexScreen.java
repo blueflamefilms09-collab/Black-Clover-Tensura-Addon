@@ -1,5 +1,12 @@
 package com.newuniverse.nusmp.client.ui;
 
+import com.newuniverse.nusmp.client.ui.theme.CodexSkin;
+import com.newuniverse.nusmp.client.ui.theme.MagicCircle;
+import com.newuniverse.nusmp.client.ui.theme.SageBlock;
+import com.newuniverse.nusmp.client.ui.theme.ThemedButton;
+import com.newuniverse.nusmp.client.ui.theme.UiLang;
+import com.newuniverse.nusmp.client.ui.theme.UiPanel;
+import com.newuniverse.nusmp.client.ui.theme.UiTheme;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -19,6 +26,10 @@ import java.util.List;
  *   <li><b>Keys:</b> Left / Right or A / D turn pages, Up / Down scroll, R changes the pose.</li>
  * </ul>
  * Content is a {@link CodexPage} from {@link CodexPages}, so the book grows by registering pages, not by editing this screen.
+ * <p>
+ * 1.27.0: two looks (config ui.theme). The classic look is the parchment book described above, drawn by the old methods. The anime look
+ * keeps every rectangle and click of it but draws translucent glass pages, a glowing frame, chip tabs, a magic circle turning behind the book
+ * and a Great-Sage analysis line in the footer ({@link CodexSkin}).
  */
 public class CodexScreen extends Screen {
     private static final int FLIP_TICKS = 12;
@@ -33,6 +44,7 @@ public class CodexScreen extends Screen {
     private boolean dragging;
     private long lastNs;
     private int bx, by, bw, bh;                 // the book
+    private final SageBlock sage = new SageBlock();   // the footer's analysis line (anime look)
 
     public CodexScreen(Screen parent) {
         super(Component.literal("Codex"));
@@ -46,14 +58,20 @@ public class CodexScreen extends Screen {
         bx = (width - bw) / 2 - 10;
         by = (height - bh - 20) / 2;
         if (UiPoses.ALL.size() > 0 && time == 0f) UiPoses.roll();
-        addRenderableWidget(net.minecraft.client.gui.components.Button.builder(Component.literal("Grimoire Slot"), b -> com.newuniverse.nusmp.client.grimoire.GrimoireSlotClient.open())
-                .bounds(bx + bw - 94, by + bh + 4, 88, 16).build());
+        addRenderableWidget(new ThemedButton(bx + bw - 94, by + bh + 4, 88, 16, Component.literal("Grimoire Slot"), b -> com.newuniverse.nusmp.client.grimoire.GrimoireSlotClient.open()));
     }
 
     @Override public boolean isPauseScreen() { return false; }
 
     @Override
-    public void renderBackground(GuiGraphics g, int mx, int my, float partial) { renderTransparentBackground(g); }
+    public void renderBackground(GuiGraphics g, int mx, int my, float partial) {
+        if (UiTheme.anime()) {
+            UiPanel.scrim(g, width, height, 1f);
+            MagicCircle.draw(g, bx + bw / 2f, by + bh / 2f, Math.min(width, height) * 0.62f, UiTheme.now(), UiTheme.VIOLET, 0.22f, MagicCircle.CALM, 1f);
+            return;
+        }
+        renderTransparentBackground(g);
+    }
 
     @Override public void onClose() { minecraft.setScreen(parent); }
 
@@ -166,7 +184,9 @@ public class CodexScreen extends Screen {
 
         int x = innerX(), y = innerY(), w = innerW(), h = innerH(), spine = x + w / 2;
         CodexPage cur = pages().get(index);
+        boolean anime = UiTheme.anime();
         if (flipAge < 0f) {
+            if (anime) { CodexSkin.body(g, bx + 6, by + 6, bx + bw - 6, by + bh - 6, spine, by + bh / 2f, (bh - 12) * 0.46f, now, 0f); drawFurniture(g, now); }
             g.enableScissor(x - 4, y, x + w + 4, y + h);                       // long pages are clipped to the paper, never drawn over the frame
             cur.render(ctx, g, x, y, w, h, Math.round(scrollCur), mx, my, now);
             g.disableScissor();
@@ -190,7 +210,17 @@ public class CodexScreen extends Screen {
             g.pose().popPose();
             int sx0 = leafHalf == 0 ? Math.round(spine - (w / 2f) * s) : spine, sx1 = leafHalf == 0 ? spine : Math.round(spine + (w / 2f) * s);
             g.fillGradient(sx0, y - 8, sx1, y + h + 8, UiDraw.withAlpha(0x000000, (int) (70 * (1f - s))), UiDraw.withAlpha(0x000000, (int) (70 * (1f - s))));
+            if (anime) drawFurniture(g, now);
         }
+    }
+
+    /** Anime look: the title line, page number, corner arrows and the Great-Sage analysis line of the current page. */
+    private void drawFurniture(GuiGraphics g, float now) {
+        CodexPage cur = pages().get(index);
+        CodexSkin.furniture(g, font, bx, by, bw, bh, cur.title().toUpperCase(java.util.Locale.ROOT), index, pages().size());
+        int room = Math.max(80, bw - 120);
+        sage.set(font, "", font.plainSubstrByWidth(UiLang.get(UiLang.ANALYSIS_COMPLETE) + " " + UiLang.codexNote(cur.title()), room), "", room, now);
+        sage.draw(g, font, bx + 22, by + bh - 15, now, 1f);
     }
 
     /** One half of a spread (0 left, 1 right), on its own paper, clipped to the half. */
@@ -198,16 +228,21 @@ public class CodexScreen extends Screen {
         int spine = x + w / 2;
         int hx0 = which == 0 ? bx + 6 : spine, hx1 = which == 0 ? spine : bx + bw - 6;
         g.enableScissor(hx0, by + 6, hx1, by + bh - 6);
-        g.fill(hx0, by + 6, hx1, by + bh - 6, UiDraw.PAPER);
         int sh = Math.max(0, Math.min(255, (int) (leaf * 90)));
+        if (UiTheme.anime()) {
+            CodexSkin.body(g, hx0, by + 6, hx1, by + bh - 6, spine, by + bh / 2f, (bh - 12) * 0.46f, now, leaf);
+        } else {
+        g.fill(hx0, by + 6, hx1, by + bh - 6, UiDraw.PAPER);
         g.fillGradient(which == 0 ? hx1 - 18 : hx0, by + 6, which == 0 ? hx1 : hx0 + 18, by + bh - 6,
                 which == 0 ? 0x00000000 : UiDraw.withAlpha(0x000000, 60 + sh / 3), which == 0 ? UiDraw.withAlpha(0x000000, 60 + sh / 3) : 0x00000000);
+        }
         int idx = pages().indexOf(page);
         page.render(ctx, g, x, y, w, h, idx == index ? Math.round(scrollCur) : 0, -1000, -1000, now);
         g.disableScissor();
     }
 
     private void drawBook(GuiGraphics g, int mx, int my) {
+        if (UiTheme.anime()) { CodexSkin.frame(g, bx, by, bw, bh, UiTheme.now()); return; }          // the anime look: the frame only, the pages and the title come later
         g.fill(bx + 3, by + 4, bx + bw + 3, by + bh + 4, 0x66000000);                              // drop shadow
         g.fill(bx, by, bx + bw, by + bh, UiDraw.COVER);
         g.renderOutline(bx, by, bw, bh, UiDraw.COVER_EDGE);
@@ -228,10 +263,16 @@ public class CodexScreen extends Screen {
     private void drawTabs(GuiGraphics g, int mx, int my) {
         int tx = bx + bw;
         int hover = tabAt(mx, my);
+        boolean anime = UiTheme.anime();
         for (int i = 0; i < pages().size(); i++) {
             int ty = by + 14 + i * 26;
             boolean on = i == index;
             int ext = on ? 22 : (i == hover ? 18 : 14);
+            if (anime) {
+                CodexSkin.tab(g, font, tx, ty, ext, on, i == hover, pages().get(i).glyph());
+                if (i == hover) g.renderTooltip(font, Component.literal(pages().get(i).title()), mx, my);
+                continue;
+            }
             g.fill(tx - 2, ty, tx + ext, ty + 24, on ? UiDraw.GOLD : UiDraw.COVER);
             g.renderOutline(tx - 2, ty, ext + 2, 24, UiDraw.COVER_EDGE);
             g.drawCenteredString(font, pages().get(i).glyph(), tx + (ext - 2) / 2 + 1, ty + 8, on ? UiDraw.COVER : UiDraw.GOLD);
@@ -245,6 +286,7 @@ public class CodexScreen extends Screen {
         int total = max + innerH();
         int bar = Math.max(14, h * innerH() / total);
         int pos = (int) ((h - bar) * (scrollCur / max));
+        if (UiTheme.anime()) { CodexSkin.scrollbar(g, x, y, h, pos, bar); return; }
         g.fill(x, y, x + 3, y + h, UiDraw.withAlpha(UiDraw.RULE, 120));
         g.fill(x, y + pos, x + 3, y + pos + bar, UiDraw.GOLD_INK);
     }

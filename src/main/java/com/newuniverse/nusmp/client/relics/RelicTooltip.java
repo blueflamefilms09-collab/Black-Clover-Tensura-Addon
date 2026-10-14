@@ -31,6 +31,9 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
+import com.newuniverse.nusmp.client.ui.theme.UiLang;
+import com.newuniverse.nusmp.client.ui.theme.UiMath;
+import com.newuniverse.nusmp.client.ui.theme.UiTheme;
 import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
 import net.neoforged.neoforge.client.event.RenderTooltipEvent;
 import net.neoforged.neoforge.client.event.ScreenEvent;
@@ -86,6 +89,21 @@ public final class RelicTooltip {
         lastGather = System.nanoTime();
     }
 
+    /**
+     * Game bus (registered by client.ui.theme.UiThemeClient): in the anime look a relic's tooltip is a dark translucent glass with a border in
+     * the grade's colour fading toward violet (Genesis cycles through the rainbow). The classic look keeps the vanilla tooltip colours.
+     */
+    public static void onColor(RenderTooltipEvent.Color e) {
+        if (!UiTheme.anime()) return;
+        RelicDef def = Relics.defOf(e.getItemStack());
+        if (def == null) return;
+        int c = 0xFF000000 | (def.grade() == Grade.GENESIS ? rainbow() : def.grade().rgb());
+        e.setBackgroundStart(0xF2101A30);
+        e.setBackgroundEnd(0xF2070B16);
+        e.setBorderStart(c);
+        e.setBorderEnd(UiMath.mix(c, 0xFF3A2A8A, 0.6f));
+    }
+
     /** Game bus: the wheel turns the pages of a paged relic tooltip instead of scrolling the screen underneath. */
     public static void onScroll(ScreenEvent.MouseScrolled.Pre e) {
         if (pages <= 1 || System.nanoTime() - lastGather > 150_000_000L) return;
@@ -125,13 +143,16 @@ public final class RelicTooltip {
             pose.translate(x, y + 1, 0);
             pose.scale(l.scale(), l.scale(), 1f);
             int yy = 0;
+            boolean anime = UiTheme.anime();
             for (Row r : rows) {
                 if (!r.blank()) g.drawString(font, r.text(), r.indent(), yy, color(d.def(), r.tag()), true);
                 yy += LINE;
             }
+            if (anime) g.fill(0, LINE - 1, Math.round(l.width() / l.scale()), LINE, UiMath.withAlpha(color(d.def(), GRADE), 0.45f));      // a hairline under the grade row
             if (l.pageCount() > 1) {
-                String foot = RelicTooltipLayout.footer(RelicTooltip.page, l.pageCount()) + "  (mouse wheel)";
-                g.drawString(font, foot, 0, l.pageRows() * LINE, 0xFF9A9AA8, true);
+                String foot = anime ? UiLang.get(UiLang.NOTICE, UiLang.get("nusmp.ui.relic.pages", RelicTooltip.page + 1, l.pageCount()))
+                        : RelicTooltipLayout.footer(RelicTooltip.page, l.pageCount()) + "  (mouse wheel)";
+                g.drawString(font, foot, 0, l.pageRows() * LINE, anime ? UiTheme.SAGE_HEAD : 0xFF9A9AA8, true);
             }
             pose.popPose();
         }

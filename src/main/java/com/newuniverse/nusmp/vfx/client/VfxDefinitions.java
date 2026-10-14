@@ -22,6 +22,7 @@ public final class VfxDefinitions implements ResourceManagerReloadListener {
 
     @Override
     public void onResourceManagerReload(ResourceManager manager) {
+        WikiTextures.reload(manager);       // 1.27.0: which wiki_*.png exist (cached; the render path never asks the resource manager)
         DEFS.clear();
         manager.getResource(FILE).ifPresent(res -> {
             try (Reader reader = res.openAsReader()) {

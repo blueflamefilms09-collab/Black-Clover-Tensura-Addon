@@ -1,6 +1,12 @@
 package com.newuniverse.nusmp.client.ui;
 
+import com.newuniverse.nusmp.client.discovery.DiscoveryDraw;
 import com.newuniverse.nusmp.client.multiverse.MultiverseStatusScreen;
+import com.newuniverse.nusmp.client.ui.theme.CodexSkin;
+import com.newuniverse.nusmp.client.ui.theme.UiTheme;
+import com.newuniverse.nusmp.core.discovery.DiscoveryCache;
+import com.newuniverse.nusmp.core.discovery.DiscoveryKeys;
+import com.newuniverse.nusmp.core.discovery.DiscoveryRules;
 import com.newuniverse.nusmp.item.MagicWeaponItem;
 import com.newuniverse.nusmp.item.NUItems;
 import com.newuniverse.nusmp.item.RelicItem;
@@ -43,15 +49,19 @@ public final class CodexPages {
         register(new CatalogPage("Weapons", "W", i -> i instanceof MagicWeaponItem));
         register(new CatalogPage("Relics", "R", i -> i instanceof RelicItem));
         register(new TextPage("Bestiary", "B", List.of(
-                new String[]{"Zagred, the Word-Eater", "A boss of spoken words, barrier layers and a dream dimension. Drops the Heart of Words and one of: Last Word, Shroud of Margins, Circlet of Quickened Thought."},
-                new String[]{"Sylph, the Wind Spirit Lord", "A wind spirit of the gale. Drops the Gale Feather (use: Gale Leap)."})));
+                new String[]{"Zagred, the Word-Eater", "A boss of spoken words, barrier layers and a dream dimension. Drops the Heart of Words and one of: Last Word, Shroud of Margins, Circlet of Quickened Thought.",
+                        "mob:nusmp:zagred|item:nusmp:heart_of_words|item:nusmp:last_word|item:nusmp:shroud_of_margins|item:nusmp:circlet_of_quickened_thought"},
+                new String[]{"Sylph, the Wind Spirit Lord", "A wind spirit of the gale. Drops the Gale Feather (use: Gale Leap).",
+                        "mob:nusmp:wind_spirit_lord|item:nusmp:gale_feather"})));
         register(new TextPage("Spirit Lords", "L", List.of(
-                new String[]{"Salamander", "A winged fire dragon. Flame Breath burns everything in a cone; its master resists fire."},
-                new String[]{"Undine", "A woman of water. Tidal Lance slows foes, and she mends her master when they are hurt."},
-                new String[]{"Sylph", "A green fairy on dragonfly wings. Gale Cut throws foes into the air; her master moves faster and lands softly."},
-                new String[]{"Gnome", "A hunched stone giant. Earth Slam raises stone claws round a foe; his master takes less damage."},
-                new String[]{"One mage each", "As in Black Clover, each elemental Spirit Lord answers to a single mage on the server. At 100 Trust and with a True Name, sneak-use the Spirit Charm to call yours."},
-                new String[]{"Tensura spirits", "Anyone can call a Tensura-style spirit: a small floating orb that follows you. Use the Spirit Charm to pick its element, sneak-use to call it."})));
+                new String[]{"Salamander", "A winged fire dragon. Flame Breath burns everything in a cone; its master resists fire.", "spiritlord:salamander"},
+                new String[]{"Undine", "A woman of water. Tidal Lance slows foes, and she mends her master when they are hurt.", "spiritlord:undine"},
+                new String[]{"Sylph", "A green fairy on dragonfly wings. Gale Cut throws foes into the air; her master moves faster and lands softly.", "spiritlord:sylph"},
+                new String[]{"Gnome", "A hunched stone giant. Earth Slam raises stone claws round a foe; his master takes less damage.", "spiritlord:gnome"},
+                new String[]{"One mage each", "As in Black Clover, each elemental Spirit Lord answers to a single mage on the server. At 100 Trust and with a True Name, sneak-use the Spirit Charm to call yours.",
+                        "spiritlord:salamander|spiritlord:undine|spiritlord:sylph|spiritlord:gnome|item:nusmp:spirit_charm"},
+                new String[]{"Tensura spirits", "Anyone can call a Tensura-style spirit: a small floating orb that follows you. Use the Spirit Charm to pick its element, sneak-use to call it.",
+                        "item:nusmp:spirit_charm"})));
         register(new TextPage("Guide", "?", List.of(
                 new String[]{"Turning pages", "Use the mouse wheel over the book, the arrow keys or A and D, or click a tab. Long pages scroll with the wheel; hold Shift to turn the page instead."},
                 new String[]{"The figure", "Click the figure for a new pose, drag it to turn it."},
@@ -98,24 +108,26 @@ public final class CodexPages {
             int half = w / 2 - 8;
             // left: the figure on a small stage
             int fx = x + half / 2, fy = y + h / 2 + 4, fh = Math.min(h - 40, 170);
-            g.fill(x + 4, y + h - 28, x + half - 4, y + h - 26, UiDraw.withAlpha(UiDraw.RULE, 140));          // the floor line
+            if (UiTheme.anime()) CodexSkin.floorCircle(g, fx, y + h - 27, Math.min(half / 2f - 6, 70f), time);                  // 1.27.0: a summoning circle on the floor
+            else g.fill(x + 4, y + h - 28, x + half - 4, y + h - 26, UiDraw.withAlpha(UiDraw.rule(), 140));          // the floor line
             if (ctx.player() != null) UiDraw.player(g, ctx.player(), fx, fy, fh, ctx.figureYaw);
             ctx.figureX = x; ctx.figureY = y; ctx.figureW = half; ctx.figureH = h;
             String name = ctx.player() == null ? "" : ctx.player().getName().getString();
-            g.drawCenteredString(font, name, fx, y + 2, UiDraw.INK);
-            g.drawCenteredString(font, UiPoses.current().caption(), fx, y + h - 20, UiDraw.INK_DIM);
+            g.drawCenteredString(font, name, fx, y + 2, UiDraw.ink());
+            g.drawCenteredString(font, UiPoses.current().caption(), fx, y + h - 20, UiDraw.inkDim());
             // right: the magic (scrolls)
             int rx = x + w / 2 + 8, rw = w / 2 - 8;
             g.enableScissor(rx - 2, y, rx + rw + 2, y + h);
             int cy = y - scroll;
             cy = UiDraw.header(g, font, "Your magic", rx, cy, rw - 6);
             List<String[]> list = skills(ctx);
-            if (list.isEmpty()) cy = UiDraw.wrapped(g, font, "Nothing from this mod yet. Take a grimoire at a Grimoire Tower to begin.", rx, cy, rw - 8, UiDraw.INK_DIM);
+            if (list.isEmpty()) cy = UiDraw.wrapped(g, font, "Nothing from this mod yet. Take a grimoire at a Grimoire Tower to begin.", rx, cy, rw - 8, UiDraw.inkDim());
             String last = "";
             for (String[] s : list) {
-                if (!s[2].equals(last)) { last = s[2]; cy += 2; g.drawString(font, s[2].toUpperCase(Locale.ROOT), rx, cy, UiDraw.INK_DIM, false); cy += font.lineHeight + 3; }
-                g.fill(rx, cy + 1, rx + 3, cy + 15, UiDraw.ACCENT);
-                g.drawString(font, font.plainSubstrByWidth(s[1], rw - 14), rx + 8, cy + 3, UiDraw.INK, false);
+                if (!s[2].equals(last)) { last = s[2]; cy += 2; g.drawString(font, s[2].toUpperCase(Locale.ROOT), rx, cy, UiDraw.inkDim(), false); cy += font.lineHeight + 3; }
+                if (UiTheme.anime()) CodexSkin.row(g, rx, cy + 1, rw - 8, 15, mx, my, true);                   // 1.27.0: a glass row with a hover highlight
+                else g.fill(rx, cy + 1, rx + 3, cy + 15, UiDraw.ACCENT);
+                g.drawString(font, font.plainSubstrByWidth(s[1], rw - 14), rx + 8, cy + 3, UiDraw.ink(), false);
                 cy += 20;
             }
             g.disableScissor();
@@ -170,7 +182,7 @@ public final class CodexPages {
                 int col = i % 2;
                 int bx = col == 0 ? x : x + w / 2 + 8;
                 int ny = UiDraw.header(g, font, b[0], bx, cy[col], cw - 6);
-                ny = UiDraw.wrapped(g, font, b[1], bx + 2, ny, cw - 10, "warn".equals(b[2]) ? UiDraw.WARN : UiDraw.INK);
+                ny = UiDraw.wrapped(g, font, b[1], bx + 2, ny, cw - 10, "warn".equals(b[2]) ? UiDraw.warn() : UiDraw.ink());
                 cy[col] = ny + 8;
                 i++;
             }
@@ -178,6 +190,12 @@ public final class CodexPages {
     }
 
     // ---------------------------------------------------------------- generic text and item catalogues
+    /**
+     * 1.27.0: an entry is {title, text} or {title, text, keys}; with keys ("a|b|c", discovery keys) it stays "???" until the player has found
+     * any one of them (see core.discovery). Entries with no keys are always shown, as before.
+     */
+    static boolean entryShown(String[] e) { return e.length < 3 || DiscoveryCache.visibleAny(e[2]); }
+
     /** A page of titled paragraphs, laid out in two columns. */
     public static final class TextPage implements CodexPage {
         private final String title, glyph;
@@ -191,7 +209,7 @@ public final class CodexPages {
         @Override
         public int contentHeight(CodexContext ctx, int width) {
             int[] col = new int[2];
-            for (int i = 0; i < entries.size(); i++) col[i % 2] += 18 + UiDraw.wrappedHeight(ctx.font(), entries.get(i)[1], width / 2 - 16) + 10;
+            for (int i = 0; i < entries.size(); i++) col[i % 2] += 18 + UiDraw.wrappedHeight(ctx.font(), bodyOf(entries.get(i)), width / 2 - 16) + 10;
             return Math.max(col[0], col[1]);
         }
 
@@ -201,10 +219,14 @@ public final class CodexPages {
             int[] cy = {y - scroll, y - scroll};
             for (int i = 0; i < entries.size(); i++) {
                 int col = i % 2, bx = col == 0 ? x : x + w / 2 + 8;
-                int ny = UiDraw.header(g, ctx.font(), entries.get(i)[0], bx, cy[col], cw - 6);
-                cy[col] = UiDraw.wrapped(g, ctx.font(), entries.get(i)[1], bx + 2, ny, cw - 10, UiDraw.INK) + 8;
+                boolean shown = entryShown(entries.get(i));
+                int ny = UiDraw.header(g, ctx.font(), shown ? entries.get(i)[0] : DiscoveryRules.QUESTION, bx, cy[col], cw - 6);
+                cy[col] = UiDraw.wrapped(g, ctx.font(), bodyOf(entries.get(i)), bx + 2, ny, cw - 10, shown ? UiDraw.ink() : UiDraw.inkDim()) + 8;
             }
         }
+
+        /** The paragraph of an entry, or the "undiscovered" hint in its place. */
+        private static String bodyOf(String[] e) { return entryShown(e) ? e[1] : DiscoveryDraw.hint(); }
     }
 
     /** Every item of this mod that matches a filter: its icon, its name and the first lines of its tooltip. Grows with the mod. */
@@ -214,7 +236,8 @@ public final class CodexPages {
         private List<Entry> entries;
         private int builtWidth = -1;
 
-        record Entry(ItemStack stack, String name, List<String> lines) {}
+        /** key = the discovery key of the item (null = not tracked, always shown). */
+        record Entry(ItemStack stack, String name, List<String> lines, String key) {}
 
         public CatalogPage(String title, String glyph, Predicate<Item> filter) { this.title = title; this.glyph = glyph; this.filter = filter; }
 
@@ -236,12 +259,16 @@ public final class CodexPages {
                         if (!t.isBlank()) lines.add(t.stripTrailing());
                     }
                 } catch (Throwable ignored) {}
-                entries.add(new Entry(st, st.getHoverName().getString(), lines));
+                entries.add(new Entry(st, st.getHoverName().getString(), lines, DiscoveryKeys.item(item)));
             }
         }
 
+        /** 1.27.0: has the player found this item? (Creative mode and the show-all config always say yes.) An undiscovered entry shows no name, icon or text. */
+        private static boolean shown(Entry e) { return e.key() == null || DiscoveryCache.visible(e.key()); }
+
         private int entryHeight(CodexContext ctx, Entry e, int cw) {
             int hgt = 22;
+            if (!shown(e)) return hgt + UiDraw.wrappedHeight(ctx.font(), DiscoveryDraw.hint(), cw - 8) + 8;
             for (String l : e.lines()) hgt += UiDraw.wrappedHeight(ctx.font(), l.strip(), cw - 8 - (l.startsWith(" ") ? 8 : 0));
             return hgt + 8;
         }
@@ -264,14 +291,20 @@ public final class CodexPages {
                 int col = i % 2, bx = col == 0 ? x : x + w / 2 + 8;
                 Entry e = entries.get(i);
                 int top = cy[col];
-                if (top + entryHeight(ctx, e, cw) > y && top < y + h) {                            // only what is on the page is drawn
+                if (top + entryHeight(ctx, e, cw) > y && top < y + h && !shown(e)) {              // undiscovered: a silhouette and ???, nothing of the item
+                    DiscoveryDraw.icon(g, font, bx, top);
+                    g.drawString(font, DiscoveryRules.QUESTION, bx + 20, top + 4, UiDraw.inkDim(), false);
+                    g.hLine(bx, bx + cw - 6, top + 18, UiDraw.rule());
+                    UiDraw.wrapped(g, font, DiscoveryDraw.hint(), bx + 2, top + 22, cw - 12, UiDraw.inkDim());
+                } else if (top + entryHeight(ctx, e, cw) > y && top < y + h) {                     // only what is on the page is drawn
+                    if (UiTheme.anime()) CodexSkin.row(g, bx - 2, top - 1, 20, 18, mx, my, false);                   // 1.27.0: a glass well behind the icon
                     g.renderItem(e.stack(), bx, top);
-                    g.drawString(font, font.plainSubstrByWidth(e.name(), cw - 26), bx + 20, top + 4, UiDraw.GOLD_INK, false);
-                    g.hLine(bx, bx + cw - 6, top + 18, UiDraw.RULE);
+                    g.drawString(font, font.plainSubstrByWidth(e.name(), cw - 26), bx + 20, top + 4, UiDraw.goldInk(), false);
+                    g.hLine(bx, bx + cw - 6, top + 18, UiDraw.rule());
                     int ly = top + 22;
                     for (String l : e.lines()) {
                         int in = l.startsWith(" ") ? 8 : 0;                    // the tooltip's indented lines stay indented, wrapped under themselves
-                        ly = UiDraw.wrapped(g, font, l.strip(), bx + 2 + in, ly, cw - 12 - in, in > 0 ? UiDraw.INK_DIM : UiDraw.INK);
+                        ly = UiDraw.wrapped(g, font, l.strip(), bx + 2 + in, ly, cw - 12 - in, in > 0 ? UiDraw.inkDim() : UiDraw.ink());
                     }
                 }
                 cy[col] += entryHeight(ctx, e, cw);

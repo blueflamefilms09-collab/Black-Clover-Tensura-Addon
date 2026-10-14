@@ -3,6 +3,9 @@ package com.newuniverse.nusmp.charter;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
+import com.newuniverse.nusmp.core.discovery.DiscoveryKeys;
+import com.newuniverse.nusmp.core.discovery.DiscoveryRules;
+import com.newuniverse.nusmp.core.discovery.DiscoveryTracker;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -43,6 +46,11 @@ public final class CharterCommand {
         ctx.getSource().sendSuccess(() -> Component.literal("Charter Grimoires:").withStyle(ChatFormatting.GOLD), false);
         for (CharterTable.Boss b : CharterTable.all()) {
             DropLedger.Claim c = data.claim(b.id());
+            // 1.27.0 (discovery): a boss the player has not met (no grimoire of it found) stays "???"; operators and the console see all
+            if (!DiscoveryTracker.canSee(ctx.getSource(), DiscoveryKeys.modItem(b.itemId())) && !DiscoveryTracker.canSee(ctx.getSource(), DiscoveryRules.bossKey(b.id()))) {
+                ctx.getSource().sendSuccess(() -> Component.literal(" " + DiscoveryRules.QUESTION), false);
+                continue;
+            }
             ctx.getSource().sendSuccess(() -> Component.literal(" " + b.id() + ": " + (c == null ? "unclaimed" : "claimed by " + c.name() + " on day " + c.day())), false);
         }
         return data.all().size();
