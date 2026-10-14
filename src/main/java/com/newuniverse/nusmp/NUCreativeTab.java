@@ -33,7 +33,9 @@ public final class NUCreativeTab {
                 for (var egg : com.newuniverse.nusmp.relics.order.OrderEntities.spawnEggs()) output.accept(egg.get());
                 output.accept(com.newuniverse.nusmp.relics.order.OrderEntities.NOTICE.get());
                 for (var d : com.newuniverse.nusmp.relics.djinn.Djinn.values()) output.accept(com.newuniverse.nusmp.relics.djinn.DjinnItems.sealStack(d));
-                output.accept(com.newuniverse.nusmp.relics.djinn.DjinnItems.darkShardStack());                                              // 1.25.0: Dark Rukh Shard
+                output.accept(com.newuniverse.nusmp.relics.djinn.DjinnItems.darkShardStack());
+                for (net.minecraft.world.item.Item ti : com.newuniverse.nusmp.relics.tier.TierItems.all()) output.accept(ti);                  // 1.30.0: catalysts
+                for (var sc : com.newuniverse.nusmp.relics.socket.SocketItems.all()) output.accept(sc.get());                                 // Spirit and Devil Cores                                              // 1.25.0: Dark Rukh Shard
                 for (var egg : com.newuniverse.nusmp.entity.avatar.AvatarEntities.spawnEggs()) output.accept(egg.get());              // 1.22.0
                 for (var egg : com.newuniverse.nusmp.entity.zogratis.ZogratisEntities.spawnEggs()) output.accept(egg.get());      // 1.20.0: the Zogratis bosses
                 output.accept(com.newuniverse.nusmp.block.NUBlocks.GRIMOIRE_ALTAR_ITEM.get());

@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.30.0] — Weapon size and orientation, true pairs, worn relic models, tiers, sockets, boss DPS cap, Elsdocia
+
+**State:** written without a compiler; CI is the first compile. Nothing run in game. Design notes (each with a 'Why' per component): `docs/weapon_scale_orientation.md`, `docs/relic_pairs.md`, `docs/relic_visuals.md`, `docs/relic_tiers_and_scaling.md`, `docs/relic_sockets_and_evolution.md`, `docs/boss_dps_budget.md`, `docs/elsdocia_rebuild.md`.
+
+### REPLACEMENT (old kept or reversible)
+- **Weapon orientation and size** (38 weapons): Sorrow's Edge, Astralaria, Axe of the Exile, Leviathan Axe, Random Axe of Charity, Hunger and Doom Hammer faced the wrong way (head toward the wielder) and are mirrored; 14 axe, hammer and cleaver heads are enlarged (hand axes ~0.34 blocks across, battle axes ~0.5); 18 short weapons raised to their class length. Every edit is recorded on the mesh (`# nusmp_fix`) and reversible with `tools/relics/apply_weapon_fixes.py`.
+- **Per-game safety net**: `WeaponRenderer` now normalises each mesh as it loads (turns a tip-down mesh over, mirrors a head that points at the wielder, scales up anything under 60% of its class minimum) and logs one line per correction. Add a weapon and it is right even if the mesh is wrong. `orient manual` opts out.
+- **Twin Hook Swords, Whirling Blades, Twin Swords of Deflection** are true pairs: a right half (the old id) and a `_left` half, each its own 3D blade, obtained together, one pair per world, with an off-hand second blow (60%, PvP-capped). Old worlds get the missing left half once on login. Per-blade damage lowered so a pair lands near the old single item.
+- **Worn relics** get real 3D models (about 85 models, ~65 signature relics such as the Tiny Duck Crown, Circlet of the Phoenix, the dragon circlets, unicorn crowns) with grade effects (rim glow, shimmer, orbiting motes, rune ring, halo, particles) and a quality option `relicfx.quality`. Armour relic art got a wear coat and a glow channel.
+- **Elsdocia** rebuilt from the reference (fractured crystal blade, club inlay, bronze guard) with a pulsing glow, held glitter, and a model json that now actually uses the 3D mesh. The old version is kept as `elsdocia_legacy`.
+- **First-person, ground and item-frame scales** of long weapons re-run.
+- Closed grimoire hip pose (already in 1.27.0) kept.
+
+### NEW
+- **Tier ascension**: relics rise through the seven Tensura grades with a sneak-use catalyst ritual (data component `nusmp:tier`, no new item ids): Devil's Core and Genesis Seed are new catalysts, Tensura ingots are used for the lower tiers. Stats, act power, costs and cooldowns scale with caps; failure never destroys the relic.
+- **Aura scaling**: relic weapon damage grows with the player's max magicules and with awakening (capped lower against bosses, through the existing damage caps).
+- **Sockets**: 15 Cores (`spirit_core_*` for six elements, `devil_core_*` for nine devils) bound by sneak-use give a passive buff and an active ability; socketed relics glow in the element colour with ambient particles; tier LEGEND and above uses the Genesis look. `/multiverse relic socket|unsocket|tier`.
+- **Boss damage-per-second cap** for every mod boss (6% of max health per second by default, `nusmp-boss-budget-server.toml`): damage and direct health changes are truncated, so true damage and `/kill` cannot one-shot a boss.
+
+### Verify in game
+Everything visual (worn models, enlarged heads, mirrored weapons, the Elsdocia mesh, left-hand pair meshes), the pair login grant on an old world, the ritual and socket flows, boss fights with the DPS cap, and the particle budgets.
+
+
 ## [1.29.0] — Hotfix: first launch crash
 
 - **Fixed a crash on the first launch after installing 1.27.0 or 1.28.0.** The new `nusmp-ui-client.toml` declared the menu theme with `defineInList(List.of(...))`; when the file does not exist yet NeoForge checks the missing value (null) against that list, `List.of(..).contains(null)` throws, and the exception aborted the loading of every config. Other mods then crashed reading their own unloaded configs (seen as Tensura No Index `TreeSeal` and `SkyFracture.tick`). The theme is now a plain string with a validator that accepts only `anime` or `classic`. If you hit this crash, update to this build; deleting the `config` folder entries is not needed.

@@ -62,12 +62,16 @@ public class NUSMP {
         modEventBus.addListener(com.newuniverse.nusmp.relics.djinn.DjinnNet::registerPayloads);
         com.newuniverse.nusmp.core.discovery.Discovery.init(modEventBus, modContainer);                                    // 1.27.0: what a player has not found stays hidden
         modEventBus.addListener(com.newuniverse.nusmp.core.magic.merge.MergedSync::register);                              // 1.27.0: merged magics
+        com.newuniverse.nusmp.relics.tier.TierSystem.registerContent(modEventBus);                                         // 1.30.0: tier component, catalysts (before NUItems.ITEMS.register)
+        com.newuniverse.nusmp.relics.socket.SocketItems.init();                                                            // 1.30.0: Spirit and Devil Cores
+        com.newuniverse.nusmp.relics.socket.SocketComponents.COMPONENTS.register(modEventBus);
         com.newuniverse.nusmp.charter.CharterItems.init();                                                                 // 1.25.0: Charter Grimoires (before NUItems.ITEMS.register)
         modEventBus.addListener(com.newuniverse.nusmp.charter.CharterNet::registerPayloads);
         modEventBus.addListener(com.newuniverse.nusmp.boss.bar.BossBarNet::registerPayloads);
         modEventBus.addListener(com.newuniverse.nusmp.relics.wave.WaveBossNet::register);
         modEventBus.addListener(com.newuniverse.nusmp.relics.RelicHolderSync::registerPayload);
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.charter.CharterConfig.SPEC, "nusmp-charter-server.toml");
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.boss.budget.BossBudgetConfig.SPEC, "nusmp-boss-budget-server.toml");      // 1.30.0: boss damage per second cap
         com.newuniverse.nusmp.relics.RelicSystem.registerContent(modEventBus);                                                     // runs RelicCatalog.init: every relic into NUItems.ITEMS
         com.newuniverse.nusmp.dungeon.sentient.SentientItems.init();                                                     // 1.22.0: the twelve synthesis materials
         com.newuniverse.nusmp.dungeon.floor.goliath.GoliathEntities.init();                                                                  // 1.23.0: the floor arenas and their bosses
@@ -119,6 +123,8 @@ public class NUSMP {
             com.newuniverse.nusmp.client.merge.MergedClient.init(modEventBus);
             com.newuniverse.nusmp.client.ui.theme.UiThemeClient.init(modEventBus);                                           // 1.27.0: the anime GUI theme
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.ui.theme.UiThemeOptions.SPEC, "nusmp-ui-client.toml");
+            modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.relics.fx.RelicFxOptions.SPEC, "nusmp-relicfx-client.toml");     // 1.30.0: relic effects quality
+            com.newuniverse.nusmp.client.ElsdociaGlitterClient.init();
             com.newuniverse.nusmp.client.gui.bossbar.ModBossBarOverlay.init();                                                      // 1.25.0: animated boss bar
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.gui.bossbar.BossBarOptions.SPEC, "nusmp-bossbar-client.toml");
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.multiverse.MultiverseClientConfig.SPEC, "nusmp-multiverse-client.toml");
@@ -228,6 +234,10 @@ public class NUSMP {
         com.newuniverse.nusmp.relics.djinn.DjinnEvents.register(NeoForge.EVENT_BUS);
         // 1.25.0: Mod Boss Global Buff Engine, Charter Grimoires + first-kill lock, boss bar sync, holder flags
         com.newuniverse.nusmp.core.magic.merge.MergeEvents.register(NeoForge.EVENT_BUS);                                    // 1.27.0 (also runs the magic audit at start)
+        com.newuniverse.nusmp.relics.tier.TierSystem.registerGame(NeoForge.EVENT_BUS);                                      // 1.30.0
+        com.newuniverse.nusmp.relics.scaling.ScalingSystem.registerGame(NeoForge.EVENT_BUS);
+        com.newuniverse.nusmp.relics.socket.SocketEngine.register(NeoForge.EVENT_BUS);
+        com.newuniverse.nusmp.relics.socket.SocketLoot.register(NeoForge.EVENT_BUS);
         com.newuniverse.nusmp.boss.BossHooks.register();
         com.newuniverse.nusmp.charter.CharterEvents.register(NeoForge.EVENT_BUS);
         com.newuniverse.nusmp.boss.bar.BossBarSync.init();

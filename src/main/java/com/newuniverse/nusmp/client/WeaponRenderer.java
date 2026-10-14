@@ -186,6 +186,8 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
                 emit(p, buffers.getBuffer(RenderType.entityTranslucentEmissive(mesh.glowTex)), mesh.layers[GLOW], a << 24 | (rgb & 0xFFFFFF), 0xF000F0, OverlayTexture.NO_OVERLAY);
             }
         }
+        if (state.socketRgb() != 0 && mesh.glowTex != null && !mesh.layers[GLOW].isEmpty())          // 1.30.0: a bound Spirit or Devil Core colours an emissive pass
+            emit(p, buffers.getBuffer(RenderType.entityTranslucentEmissive(mesh.glowTex)), mesh.layers[GLOW], VariantRules.socketArgb(state.socketRgb(), time), 0xF000F0, OverlayTexture.NO_OVERLAY);
         pose.popPose();
     }
 

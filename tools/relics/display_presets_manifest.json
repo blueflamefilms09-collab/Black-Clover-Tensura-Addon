@@ -33,8 +33,7 @@
       ],
       "tip_out_of_view": false,
       "ground_scale": 0.5,
-      "fixed_scale": 1.0,
-      "rewritten": true
+      "fixed_scale": 1.0
     },
     {
       "id": "astralis_the_eye_of_the_universe",
@@ -261,8 +260,7 @@
       ],
       "tip_out_of_view": false,
       "ground_scale": 0.5,
-      "fixed_scale": 1.0,
-      "rewritten": true
+      "fixed_scale": 1.0
     },
     {
       "id": "dragon_tooth_blade_red",
@@ -304,7 +302,8 @@
         0.98
       ],
       "tip_out_of_view": false,
-      "rewritten": true
+      "ground_scale": 0.5,
+      "fixed_scale": 1.0
     },
     {
       "id": "elsdocia_legacy",
@@ -333,8 +332,7 @@
       ],
       "tip_out_of_view": false,
       "ground_scale": 0.5,
-      "fixed_scale": 1.0,
-      "rewritten": true
+      "fixed_scale": 1.0
     },
     {
       "id": "fortune_die",
@@ -440,8 +438,7 @@
       ],
       "tip_out_of_view": false,
       "ground_scale": 0.5,
-      "fixed_scale": 1.0,
-      "rewritten": true
+      "fixed_scale": 1.0
     },
     {
       "id": "ki_resonance_lantern",
@@ -517,8 +514,7 @@
       ],
       "tip_out_of_view": false,
       "ground_scale": 0.5,
-      "fixed_scale": 1.0,
-      "rewritten": true
+      "fixed_scale": 1.0
     },
     {
       "id": "magebane_shield",
@@ -618,8 +614,7 @@
       ],
       "tip_out_of_view": false,
       "ground_scale": 0.5,
-      "fixed_scale": 1.0,
-      "rewritten": true
+      "fixed_scale": 1.0
     },
     {
       "id": "permafrost_sabre",
@@ -668,8 +663,7 @@
       ],
       "tip_out_of_view": false,
       "ground_scale": 0.5,
-      "fixed_scale": 1.0,
-      "rewritten": true
+      "fixed_scale": 1.0
     },
     {
       "id": "rune_splitter",
@@ -683,8 +677,7 @@
       ],
       "tip_out_of_view": false,
       "ground_scale": 0.5,
-      "fixed_scale": 1.0,
-      "rewritten": true
+      "fixed_scale": 1.0
     },
     {
       "id": "severing_greatsword",
@@ -736,8 +729,7 @@
       ],
       "tip_out_of_view": false,
       "ground_scale": 0.5,
-      "fixed_scale": 1.0,
-      "rewritten": true
+      "fixed_scale": 1.0
     },
     {
       "id": "soul_shatter_blade",
@@ -852,8 +844,7 @@
       ],
       "tip_out_of_view": false,
       "ground_scale": 0.5,
-      "fixed_scale": 1.0,
-      "rewritten": true
+      "fixed_scale": 1.0
     },
     {
       "id": "tripolar_sword",
@@ -960,8 +951,7 @@
       ],
       "tip_out_of_view": false,
       "ground_scale": 0.5,
-      "fixed_scale": 1.0,
-      "rewritten": true
+      "fixed_scale": 1.0
     },
     {
       "id": "written_consent",

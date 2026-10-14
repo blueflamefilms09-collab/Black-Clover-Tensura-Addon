@@ -49,7 +49,9 @@ public final class RelicCommands {
                 .then(Commands.literal("unattune")
                         .executes(ctx -> unattune(ctx.getSource(), ctx.getSource().getPlayerOrException())))
                 .then(Commands.literal("grade")
-                        .executes(ctx -> grade(ctx.getSource(), ctx.getSource().getPlayerOrException()))));
+                        .executes(ctx -> grade(ctx.getSource(), ctx.getSource().getPlayerOrException())))
+                .then(com.newuniverse.nusmp.relics.socket.SocketCommands.node())                  // 1.30.0: socket list|cast|add|remove|core
+                .then(com.newuniverse.nusmp.relics.socket.SocketCommands.unsocketNode()));
     }
 
     /** 1.27.0 (discovery): an operator or the console sees every relic; a player only the ones they have found (see core.discovery). */
