@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.26.0] — Djinn review fixes
+
+- A chained Half Equip hit (Baal) on a player is capped at 6 like a direct hit, also for a Dark Djinn.
+- Trust and assimilation modifiers are re-applied on respawn and login, so a Djinn owner who died keeps them.
+- Docs: a vessel destroyed for good leaves its Djinn bound; the owner frees it with `/multiverse djinn release`. The sheath orientation fix (1.25.0) reverts in `DjinnArmorLayer.sheath()` by scaling `(1/16, 1/16, 1/16)`.
+
 ## [1.25.0] — Boss overhaul, Charter Grimoires, relics part 2, unique and Dark Djinn
 
 **State:** written without a compiler; CI is the first compile. Nothing run in game. Built from the owner's MAS prompt (`neoforge_mas_prompt.md`), the 143 card images of "Relics of the world" parts 2 and 3, the Magi picture references and the owner's fixes list. Design notes: `docs/boss_overhaul.md`, `docs/relics_of_many_worlds_part2.md`.

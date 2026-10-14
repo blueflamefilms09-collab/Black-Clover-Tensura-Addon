@@ -727,7 +727,12 @@ public final class DjinnEngine {
         DjinnState s = DjinnState.of(p);
         if (s.phase() != DjinnPhaseRules.OFF) shutdown(p, EndReason.LOGOUT);
         cleanStale(p, s);
-        if (s.owns() || s.lent()) syncMark(p, s);
+        if (s.owns() || s.lent()) {
+            // the owner keeps the Djinn through death now: write trust and assimilation back onto the new body (the record's copy is the fallback, a no-op if the modifiers survived)
+            if (s.owns()) s.setTrust(s.trust());
+            s.setAssimilation(s.assimilation());
+            syncMark(p, s);
+        }
         syncStrain(p, s);
         syncVesselRegen(p, s);
         RUNS.remove(p.getUUID());

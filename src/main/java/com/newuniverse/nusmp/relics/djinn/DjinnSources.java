@@ -26,7 +26,7 @@ import java.util.List;
  *       Avatar, the Blood-Red Commander) it pays one random Seal of a Djinn nobody holds and no Seal exists for. Heard through the
  *       {@link DungeonCollapseEvent} every one of them posts. The killer receives it (a Seal in an inventory is safe from the collapse).</li>
  *   <li><b>A vault chest</b>, very rarely ({@link HouseholdRules#VAULT_CHANCE}): {@link #vaultSeal}, for the vault / Treasury code to call.</li>
- *   <li><b>Between players</b>: a Seal is an item; it is dropped, traded and, when an owner dies or releases, comes back into the world.</li>
+ *   <li><b>Between players</b>: a Seal is an item; it is dropped, traded and, when an owner releases the Djinn, comes back into the world (an owner's death does not release it).</li>
  *   <li><b>An admin</b>: /multiverse djinn grant.</li>
  *   <li><b>The Dark Rukh Shard</b> (apart from the Seals): the Blood-Red Commander and the Devil Avatar drop one to the killer with a 15% chance on every
  *       kill, Lucius likewise ({@link DarkDjinn#onLuciusDeath}), and a vault chest that holds no Seal has a 2% chance of one.</li>

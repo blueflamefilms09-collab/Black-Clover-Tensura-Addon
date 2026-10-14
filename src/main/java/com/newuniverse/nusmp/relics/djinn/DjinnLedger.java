@@ -152,7 +152,7 @@ public final class DjinnLedger extends SavedData {
         return true;
     }
 
-    /** The owner lets go (command, death): the Djinn becomes a Seal at this place, its household is dismissed. */
+    /** The owner lets go (the release command; a death does not): the Djinn becomes a Seal at this place, its household is dismissed. */
     public void release(Djinn d, String dim, BlockPos at, long now) {
         Entry e = entries.get(d);
         e.state = State.SEALED;

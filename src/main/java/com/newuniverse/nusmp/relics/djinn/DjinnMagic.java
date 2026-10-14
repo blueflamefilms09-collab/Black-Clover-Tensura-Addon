@@ -94,7 +94,7 @@ final class DjinnMagic {
                     if (o != target && dd < best) { best = dd; next = o; }
                 }
                 if (next != null) {
-                    next.hurt(p.damageSources().indirectMagic(p, p), Math.max(1f, bonus));
+                    next.hurt(p.damageSources().indirectMagic(p, p), Math.max(1f, next instanceof Player ? Math.min(bonus, 6f) : bonus));      // the 6-point player cap holds for the chained hit too (a dark rider reaches 9)
                     DjinnFx.line(p.serverLevel(), target.position().add(0, 1, 0), next.position().add(0, 1, 0), ParticleTypes.ELECTRIC_SPARK, 10);
                 }
             }
