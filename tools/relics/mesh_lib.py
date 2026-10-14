@@ -726,6 +726,7 @@ class Mesh:
         self.parts = []
         self.place_cfg = None
         self.glow_cfg = None
+        self.orient_cfg = None                                       # "manual": the mesh's orientation / size is hand-tuned (WeaponRenderer never normalises it)
 
     def add(self, part):
         self.parts.append(part)
@@ -829,9 +830,17 @@ class Mesh:
                 lines.append("qn %d %s" % (layer, " ".join("%.3f %.3f %.3f %.3f %.3f %.4f %.4f %.4f" % (*P[k], *UV[k], *N[k]) for k in range(4))))
             else:
                 lines.append("q %d %s %.3f %.3f %.3f" % (layer, " ".join("%.3f %.3f %.3f %.3f %.3f" % (*P[k], *UV[k]) for k in range(4)), *N[0]))
+        if getattr(self, "orient_cfg", None):                     # 1.29.0: `orient manual` = hand-tuned, the runtime normaliser never touches it
+            lines.insert(2, "orient " + self.orient_cfg)
         os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
         with open(path, "w", newline="\n") as fh:
             fh.write("\n".join(lines) + "\n")
+        if os.path.basename(os.path.dirname(os.path.abspath(path))) == "weapon_meshes":
+            try:                                                     # 1.29.0: tools/relics/weapon_fixes.json (size, head, orientation) is applied to every mesh written here
+                import apply_weapon_fixes
+                apply_weapon_fixes.apply_file(path, os.path.splitext(os.path.basename(path))[0])
+            except ImportError:
+                pass
         return len(quads)
 
 

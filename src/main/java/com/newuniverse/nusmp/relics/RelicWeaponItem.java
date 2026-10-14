@@ -51,9 +51,9 @@ public class RelicWeaponItem extends SwordItem implements RelicBearer {
     /** Stack-borne state (a counter, a charge, a drum) changes the stack every so often: that must not replay the draw animation. */
     @Override public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) { return slotChanged || oldStack.getItem() != newStack.getItem(); }
 
-    @Override public Component getName(ItemStack stack) { return RelicItemSupport.name(super.getName(stack), def); }
+    @Override public Component getName(ItemStack stack) { return RelicItemSupport.name(super.getName(stack), def, stack); }
 
-    @Override public boolean isFoil(ItemStack stack) { return def.grade().atLeast(Grade.LEGEND) || super.isFoil(stack); }
+    @Override public boolean isFoil(ItemStack stack) { return RelicItemSupport.foil(stack, def) || super.isFoil(stack); }
 
     private boolean shield() { return def.look() == Look.SHIELD; }
 

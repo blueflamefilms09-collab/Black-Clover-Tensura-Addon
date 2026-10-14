@@ -9,7 +9,10 @@ plane in first person. This tool
   2. for every weapon longer than LONG_BLOCKS (1.4) rewrites ONLY display.firstperson_righthand / firstperson_lefthand of its model json:
      a reduced scale and a translation that keeps the grip where the grip of an ordinary sword is, so the tip stays in view and in front of the
      camera. thirdperson_* (and every other display entry) are left as they are: the weapon stays massive in third person;
-  3. writes a manifest of what it did (tools/relics/display_presets_manifest.json).
+  3. 1.29.0: for a weapon longer than LONG_FRAME_BLOCKS (1.6) also shrinks the `ground` and `fixed` (item frame) scales so a lying or framed weapon
+     stays about GROUND_APPARENT_MAX / FIXED_APPARENT_MAX blocks long (the inventory shows the old 16 x 16 icon and the head / gui entries are untouched);
+     a weapon under the limit gets the base values back;
+  4. writes a manifest of what it did (tools/relics/display_presets_manifest.json).
 
 It is idempotent: the result depends only on the mesh and on the rotation already in the json (which it never changes), not on the scale or
 translation it wrote last time; running it again changes nothing. A weapon that has shrunk to LONG_BLOCKS or below gets the vanilla handheld
@@ -80,6 +83,11 @@ FOV_HALF_TAN = math.tan(math.radians(35.0))
 VIEW_MARGIN = 0.92
 Y_VIEW = VIEW_MARGIN * FOV_HALF_TAN
 X_VIEW = 1.32                           # |x| <= X_VIEW * depth: an ordinary sprite sword's tip sits at 1.30 (the hand is at the window's edge), so never worse
+LONG_FRAME_BLOCKS = 1.6                 # 1.29.0: beyond this the ground and item-frame views shrink too
+GROUND_BASE, FIXED_BASE = 0.5, 1.0      # the values every generated model json starts with
+GROUND_APPARENT_MAX = 0.8               # a lying weapon is at most this long (ground scale * mesh length)
+FIXED_APPARENT_MAX = 1.5                # a framed weapon (the frame already halves the scale) is at most this long (fixed scale * mesh length)
+GROUND_FLOOR, FIXED_FLOOR = 0.3, 0.55
 MARKER = "nusmp_display_preset"
 FIRST = ("firstperson_righthand", "firstperson_lefthand")
 
@@ -247,6 +255,15 @@ def _rotation_of(display, key):
     return tuple(rot) if rot and len(rot) == 3 else BASE_ROTATION[key]
 
 
+def view_scales(length):
+    """(ground, fixed) scale for a mesh of `length` blocks: the base values up to LONG_FRAME_BLOCKS, then the largest that keeps the apparent length in bounds."""
+    if length <= LONG_FRAME_BLOCKS:
+        return GROUND_BASE, FIXED_BASE
+    g = max(GROUND_FLOOR, min(GROUND_BASE, GROUND_APPARENT_MAX / length))
+    f = max(FIXED_FLOOR, min(FIXED_BASE, FIXED_APPARENT_MAX / length))
+    return math.floor(g * 1000.0) / 1000.0, math.floor(f * 1000.0) / 1000.0
+
+
 def plan_for(item_id, model, mesh):
     """What to do with one model json given its mesh: dict(action, ...) -> the new display entries are in 'first'. action in
     skip_not_3d | skip_manual ("nusmp_display_preset": "manual" in the json) | skip_no_display | keep (short, untouched) | restore (was preset, now short) | preset."""
@@ -264,11 +281,12 @@ def plan_for(item_id, model, mesh):
         if MARKER in model:
             out["action"] = "restore"
             out["first"] = {k: {"rotation": list(_rotation_of(display, k)), "translation": list(BASE_TRANSLATION), "scale": [BASE_SCALE] * 3} for k in FIRST}
+            out["views"] = (GROUND_BASE, FIXED_BASE)
         else:
             out["action"] = "keep"
         return out
     s, t, ok = preset(mesh, rot_r)
-    out.update(action="preset", scale=s, translation=list(t), tip_in_view=ok)
+    out.update(action="preset", scale=s, translation=list(t), tip_in_view=ok, views=view_scales(length))
     out["first"] = {k: {"rotation": list(_rotation_of(display, k)), "translation": list(t), "scale": [s, s, s]} for k in FIRST}
     return out
 
@@ -279,6 +297,15 @@ def apply_plan(model, plan):
     if plan["action"] in ("preset", "restore"):
         for k, v in plan["first"].items():
             new["display"][k] = v
+        g, f = plan.get("views", (GROUND_BASE, FIXED_BASE))
+        for key, sc in (("ground", g), ("fixed", f)):                     # keep the entry's own rotation / translation, only its scale follows the length
+            ent = new["display"].get(key)
+            sc = int(sc) if sc == int(sc) else sc                           # 1 stays 1 (the generated jsons write the base values as integers)
+            same = ent is not None and json.dumps(ent.get("scale")) == json.dumps([sc, sc, sc])
+            if not same and (ent is not None or sc != (GROUND_BASE if key == "ground" else FIXED_BASE)):
+                ent = ent or {"rotation": [0, 0, 0] if key == "ground" else [0, 180, 0], "translation": [0, 2, 0] if key == "ground" else [0, 0, 0]}
+                ent["scale"] = [sc, sc, sc]
+                new["display"][key] = ent
         if plan["action"] == "preset":
             new[MARKER] = {"length_blocks": plan["length"], "scale": plan["scale"], "rule": "tools/relics/display_presets.py"}
         else:
@@ -286,11 +313,27 @@ def apply_plan(model, plan):
     return new
 
 
-def run(apply=False, models_dir=MODELS, meshes_dir=MESHES):
-    """Process every model json that has a mesh. Returns (manifest_entries, changed_ids)."""
+def excluded_ids():
+    """Ids other agents own during a release (tools/relics/weapon_classes.json "excluded"): this tool leaves their model jsons alone unless asked."""
+    try:
+        with open(os.path.join(HERE, "weapon_classes.json"), encoding="utf-8") as f:
+            return sorted(json.load(f).get("excluded", {}))
+    except (OSError, ValueError):
+        return []
+
+
+def is_excluded(item_id, excluded):
+    return any(item_id == e or item_id.startswith(e + "_") for e in excluded)
+
+
+def run(apply=False, models_dir=MODELS, meshes_dir=MESHES, include_excluded=True):
+    """Process every model json that has a mesh. Returns (manifest_entries, changed_ids). include_excluded=False skips the ids of excluded_ids()."""
     entries, changed = [], []
+    excluded = [] if include_excluded else excluded_ids()
     for path in sorted(glob.glob(os.path.join(meshes_dir, "*.txt"))):
         item_id = os.path.basename(path)[:-4]
+        if is_excluded(item_id, excluded):
+            continue
         mjson = os.path.join(models_dir, item_id + ".json")
         if not os.path.exists(mjson):
             continue
@@ -303,7 +346,8 @@ def run(apply=False, models_dir=MODELS, meshes_dir=MESHES):
         plan = plan_for(item_id, model, mesh)
         entry = {"id": item_id, "action": plan["action"], "length_blocks": round(mesh.length, 3)}
         if plan["action"] == "preset":
-            entry.update(first_person_scale=plan["scale"], first_person_translation_px=plan["translation"], tip_out_of_view=not plan["tip_in_view"])
+            entry.update(first_person_scale=plan["scale"], first_person_translation_px=plan["translation"], tip_out_of_view=not plan["tip_in_view"],
+                         ground_scale=plan["views"][0], fixed_scale=plan["views"][1])
         if plan["action"] in ("preset", "restore"):
             new = apply_plan(model, plan)
             text = json.dumps(new, indent=2)
@@ -321,16 +365,26 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--apply", action="store_true", help="rewrite the model jsons and the manifest")
     ap.add_argument("--check", action="store_true", help="exit 1 if --apply would change anything")
+    ap.add_argument("--include-excluded", action="store_true", help="also process the ids other agents own (Elsdocia, the dual-wield pairs): the lead's final run")
     args = ap.parse_args(argv)
-    entries, changed = run(apply=args.apply)
+    entries, changed = run(apply=args.apply, include_excluded=args.include_excluded)
     presets = [e for e in entries if e["action"] == "preset"]
     print("%d meshes with a model json; %d over %.1f blocks; %d to rewrite" % (len(entries), len(presets), LONG_BLOCKS, len(changed)))
     for e in sorted(presets, key=lambda e: -e["length_blocks"]):
         print("  %-36s L=%.2f  s=%.3f  T=%s%s%s" % (e["id"], e["length_blocks"], e["first_person_scale"], e["first_person_translation_px"],
                                                     "  OUT-OF-VIEW" if e["tip_out_of_view"] else "", "  (rewritten)" if e.get("rewritten") else ""))
     if args.apply:
+        if not args.include_excluded:                                    # keep the manifest rows of the ids this run skipped
+            skipped = excluded_ids()
+            try:
+                with open(MANIFEST, encoding="utf-8") as f:
+                    old = json.load(f).get("weapons", [])
+            except (OSError, ValueError):
+                old = []
+            done = {e["id"] for e in entries}
+            entries = sorted(entries + [e for e in old if e["id"] not in done and is_excluded(e["id"], skipped)], key=lambda e: e["id"])
         manifest = {"rule": "tools/relics/display_presets.py", "long_blocks": LONG_BLOCKS, "apparent_max_blocks": APPARENT_MAX_BLOCKS,
-                    "scale_floor": SCALE_FLOOR, "grip_fraction": GRIP_FRACTION, "weapons": entries}
+                    "scale_floor": SCALE_FLOOR, "grip_fraction": GRIP_FRACTION, "long_frame_blocks": LONG_FRAME_BLOCKS, "weapons": entries}
         with open(MANIFEST, "w", encoding="utf-8", newline="\n") as f:
             json.dump(manifest, f, indent=2)
             f.write("\n")

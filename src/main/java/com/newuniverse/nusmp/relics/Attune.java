@@ -33,7 +33,7 @@ public final class Attune {
         for (ItemStack s : RelicEngine.carriedStacks(p)) {
             if (s == except) continue;
             RelicDef d = Relics.defOf(s);
-            if (d != null && d.needsAttunement() && isMine(s, p)) n++;
+            if (d != null && d.needsAttunement() && !d.isPairLeft() && isMine(s, p)) n++;      // 1.29.0: a pair counts once (the left half is attuned with the right)
         }
         return n;
     }
@@ -42,6 +42,7 @@ public final class Attune {
     public static boolean bind(ServerPlayer p, ItemStack stack) {
         if (!AttuneRules.canAttune(carried(p, stack))) return false;
         stack.set(RelicComponents2.ATTUNED.get(), p.getUUID());
+        bindPartner(p, stack, p.getUUID());
         Relics.invalidate(p);
         return true;
     }
@@ -49,6 +50,21 @@ public final class Attune {
     /** Lets go of the relic. */
     public static void release(ServerPlayer p, ItemStack stack) {
         stack.remove(RelicComponents2.ATTUNED.get());
+        bindPartner(p, stack, null);
         Relics.invalidate(p);
+    }
+
+    /** 1.29.0: the other half of a pair the player carries gets the same owner (or lets go with it), so one ritual attunes the pair. */
+    private static void bindPartner(ServerPlayer p, ItemStack stack, UUID owner) {
+        RelicDef d = Relics.defOf(stack);
+        if (d == null || !d.isPairHalf()) return;
+        String other = d.pairPartnerId();
+        for (ItemStack s : RelicEngine.carriedStacks(p)) {
+            if (s == stack || s.isEmpty()) continue;
+            RelicDef sd = Relics.defOf(s);
+            if (sd == null || !sd.id().equals(other)) continue;
+            if (owner == null) s.remove(RelicComponents2.ATTUNED.get());
+            else s.set(RelicComponents2.ATTUNED.get(), owner);
+        }
     }
 }

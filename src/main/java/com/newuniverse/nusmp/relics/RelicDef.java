@@ -29,6 +29,8 @@ public final class RelicDef {
     private Look look;
     private Supplier<? extends Item> adopted;
     private RangedKind ranged = RangedKind.NONE;
+    /** 1.29.0: a PAIR (two hand items that come together). {@code pairLeftName} is set on the right half (the primary def), {@code pairRightId} on the generated left half. */
+    private String pairLeftName, pairRightId;
 
     private RelicDef(String id, String cardName, Grade grade, RelicSlot slot) {
         this.id = id;
@@ -57,6 +59,8 @@ public final class RelicDef {
         d.look = look;
         d.adopted = adopted;
         d.ranged = ranged;
+        d.pairLeftName = pairLeftName;
+        d.pairRightId = pairRightId;
         return d;
     }
 
@@ -157,6 +161,61 @@ public final class RelicDef {
 
     /** The same def without the vessel flag (the catalog uses it on a def whose grade cannot carry a Djinn). */
     public RelicDef dropVessel() { RelicDef d = copy(); d.vessel = false; return d; }
+
+    // ---------------------------------------------------------------- pairs (1.29.0)
+    /** Suffix of the left half's registry id: the right half keeps the card's id (so old worlds load), the left is {@code <id>_left}. */
+    public static final String LEFT_SUFFIX = "_left";
+
+    /**
+     * Declares this MAIN_HAND relic a PAIR: the def itself is the RIGHT half (its id stays the id the card always had), and the catalog adds the
+     * LEFT half as the item {@code <id>_left} named {@code leftCardName}. The left half copies the grade, look, palette, melee numbers, engravings,
+     * passives and acts of the right one (so either half can be the main-hand one), is a separate stack with its own world-unique ledger entry, and
+     * needs the right half's attunement (attuning one half attunes the other). Both halves are obtained together (see docs/relic_pairs.md).
+     */
+    public RelicDef pair(String leftCardName) {
+        if (slot != RelicSlot.MAIN_HAND) throw new IllegalArgumentException("only a MAIN_HAND relic can be a pair: " + id);
+        RelicDef d = copy();
+        d.pairLeftName = leftCardName == null || leftCardName.isBlank() ? cardName + " (Left)" : leftCardName;
+        return d;
+    }
+
+    /** Is this def the right half of a pair (the one that declared {@link #pair})? */
+    public boolean hasPair() { return pairLeftName != null; }
+
+    /** Is this def the generated left half of a pair? */
+    public boolean isPairLeft() { return pairRightId != null; }
+
+    /** True for either half. */
+    public boolean isPairHalf() { return hasPair() || isPairLeft(); }
+
+    /** The id both halves share: the right half's own id. */
+    public String pairBaseId() { return isPairLeft() ? pairRightId : id; }
+
+    /** The id of the other half (left for the right half and the other way round), or null if this is no pair half. */
+    public String pairPartnerId() { return isPairLeft() ? pairRightId : hasPair() ? id + LEFT_SUFFIX : null; }
+
+    /** The left half's def, generated from this (right half) def; null if it is no pair. Its tooltip names the right half it needs. */
+    public RelicDef pairLeft() {
+        if (!hasPair()) return null;
+        RelicDef d = copy();
+        RelicDef left = new RelicDef(id + LEFT_SUFFIX, pairLeftName, grade, slot);
+        left.attune = attune;
+        left.model3d = model3d;
+        left.vessel = false;
+        left.paletteSet = paletteSet;
+        left.desc = desc;
+        left.passives = d.passives;
+        left.acts = d.acts;
+        left.engravings = d.engravings;
+        left.damage = d.damage;
+        left.speed = d.speed;
+        left.main = main;
+        left.trim = trim;
+        left.glow = glow;
+        left.look = look;
+        left.pairRightId = id;
+        return left;
+    }
 
     // ---------------------------------------------------------------- getters
     public String id() { return id; }

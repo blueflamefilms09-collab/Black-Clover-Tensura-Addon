@@ -238,7 +238,7 @@ def _t_sword(sfx):
     return out
 
 
-def build_twin_swords_of_deflection():
+def build_twin_swords_of_deflection_one_mesh():   # the 1.28 two-sword single mesh, kept for reference; the game uses pair_models.py since 1.29.0
     m = ml.Mesh("twin_swords_of_deflection")
     for part in _t_sword("_a"):
         m.add(part.rotated("z", T_SPLAY).translated(-1.0, 0.0, T_GAP_Z / 2))
@@ -264,6 +264,12 @@ def build_twin_swords_of_deflection():
         w.paint_part(atlas, m.part(nm), blade)
     r = w9.ref("p2/Relics of the world part 2/6fde728ebde26f0db7f226ac7424e2f6.jpg", (20, 190, 720, 560), "twin_swords_of_deflection")
     w9.finish("twin_swords_of_deflection", m, atlas, real_m=0.9, glow=("FFFFFF", 0.14, 0.5, 1.0), ref_png=r)
+
+
+def build_twin_swords_of_deflection():
+    """1.29.0: a pair is two items, one mesh each (tools/relics/pair_models.py)."""
+    import pair_models
+    pair_models.build("twin_swords_of_deflection")
 
 
 # ================================================================ Null Blade

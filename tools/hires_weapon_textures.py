@@ -21,7 +21,7 @@ from PIL import Image, ImageFilter
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "..", "src", "main", "resources", "assets", "nusmp", "textures", "entity", "weapon")
 SRC = os.path.join(HERE, "weapon_tex_128")
-SPECIAL = {"elsdocia": 8}          # id -> scale; everything else 4
+SPECIAL = {"elsdocia": 8, "elsdocia_legacy": 8}          # id -> scale; everything else 4
 DEFAULT_SCALE = 4
 
 
@@ -171,7 +171,7 @@ def process(path):
     name = os.path.basename(path)[:-4]
     glow = name.endswith("_glow")
     wid = name[:-5] if glow else name
-    if wid in SPECIAL and wid == "elsdocia":
+    if wid in SPECIAL and wid in ("elsdocia", "elsdocia_legacy"):
         res = build_elsdocia(im, glow)
     else:
         res = upscale(im, DEFAULT_SCALE, seed=(sum(map(ord, wid)) % 50) + 1, grain=not glow)

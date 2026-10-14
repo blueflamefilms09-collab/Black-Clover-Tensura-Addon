@@ -275,7 +275,7 @@ def white_whip_of_welting():
 
 
 # ================================================================ Whirling Blades
-def whirling_blades():
+def whirling_blades_one_mesh():   # the 1.28 two-sword single mesh, kept for reference; the game uses pair_models.py since 1.29.0
     # ---- 1 measure: the card is 736 x 920. The cyan sword runs from its point (95, 495) to the end of its spiked grip (400, 150): 460 px; blade 332 px, grip 133 px
     TOTAL_M = 0.95
     S_TOTAL = 460.0
@@ -335,4 +335,4 @@ def whirling_blades():
 
 
 BUILDERS = {"warmages_longsword": warmages_longsword, "giant_jawblade": giant_jawblade, "the_lumberjack": the_lumberjack,
-            "white_whip_of_welting": white_whip_of_welting, "whirling_blades": whirling_blades}
+            "white_whip_of_welting": white_whip_of_welting, "whirling_blades": lambda: __import__("pair_models").build("whirling_blades")}

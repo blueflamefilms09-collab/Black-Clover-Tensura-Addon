@@ -25,23 +25,61 @@ public final class ArmorPainter {
 
     /** One painted texture: 64 x 32 ARGB pixels, row by row. */
     public static int[] paint(Look look, RelicSlot slot, int main, int trim, int glow, long seed) {
-        Canvas c = new Canvas(seed);
+        return painted(look, slot, main, trim, glow, seed).px;
+    }
+
+    /**
+     * The glow channel of the same texture (64 x 32 ARGB, clear where nothing glows): the pixels the painter drew in the glow colour (gems, engraved runes, lit studs),
+     * drawn by the worn layer a second time at full brightness over the armour (RenderType.eyes), so they shine in the dark.
+     */
+    public static int[] paintGlow(Look look, RelicSlot slot, int main, int trim, int glow, long seed) {
+        Canvas c = painted(look, slot, main, trim, glow, seed);
+        int[] out = new int[W * H];
+        for (int i = 0; i < out.length; i++) if (c.glowMask[i]) out[i] = shade(c.px[i], 1.12);
+        return out;
+    }
+
+    /** A fully clear texture: the armour box of a relic whose 3D model replaces it draws nothing. */
+    public static int[] blank() { return new int[W * H]; }
+
+    private static Canvas painted(Look look, RelicSlot slot, int main, int trim, int glow, long seed) {
+        Canvas c = new Canvas(seed, glow);
         int m = 0xFF000000 | (main & 0xFFFFFF), t = 0xFF000000 | (trim & 0xFFFFFF), g = 0xFF000000 | (glow & 0xFFFFFF);
         if (slot == RelicSlot.HEAD) head(c, look, m, t, g);
         else if (slot == RelicSlot.FEET) feet(c, look, m, t, g);
         else body(c, look, m, t, g);
-        return c.px;
+        finish(c, look, slot, g);
+        return c;
     }
 
     // ================================================================ canvas
     /** The pixels and the few drawing moves the painter needs. */
     static final class Canvas {
         final int[] px = new int[W * H];
+        final boolean[] glowMask = new boolean[W * H];
         final long seed;
+        private final int[] glowRgb = new int[GLOW_SHADES.length];
 
-        Canvas(long seed) { this.seed = seed; }
+        Canvas(long seed) { this(seed, 0xFFFFFF); }
 
-        void set(int x, int y, int argb) { if (x >= 0 && y >= 0 && x < W && y < H) px[y * W + x] = argb; }
+        /** {@code glow} (0xRRGGBB) is the glow colour: every pixel later set to it, or to one of its shades the painters use, is remembered as glowing. */
+        Canvas(long seed, int glow) {
+            this.seed = seed;
+            for (int i = 0; i < GLOW_SHADES.length; i++) glowRgb[i] = shade(0xFF000000 | (glow & 0xFFFFFF), GLOW_SHADES[i]) & 0xFFFFFF;
+        }
+
+        void set(int x, int y, int argb) {
+            if (x < 0 || y < 0 || x >= W || y >= H) return;
+            px[y * W + x] = argb;
+            boolean glows = false;
+            if (argb >>> 24 == 255) for (int rgb : glowRgb) if (rgb == (argb & 0xFFFFFF)) { glows = true; break; }
+            glowMask[y * W + x] = glows;
+        }
+
+        /** Sets a pixel only where something is already painted (decoration never changes what the piece covers). */
+        void setIfOpaque(int x, int y, int argb) { if (get(x, y) >>> 24 == 255) set(x, y, argb); }
+
+        boolean glowAt(int x, int y) { return x >= 0 && y >= 0 && x < W && y < H && glowMask[y * W + x]; }
 
         int get(int x, int y) { return x >= 0 && y >= 0 && x < W && y < H ? px[y * W + x] : 0; }
 
@@ -74,6 +112,50 @@ public final class ArmorPainter {
             h *= 0x5bd1e9955bd1e995L;
             h ^= h >>> 15;
             return ((h & 0xFFFF) / 32767.5) - 1.0;
+        }
+    }
+
+    /** The shades of the glow colour the painters use; pixels of these colours are the glow channel. */
+    private static final double[] GLOW_SHADES = {1.0, 0.9, 0.8, 0.7, 0.6, 0.55, 0.5, 1.3, 1.2, 1.15};
+
+    /**
+     * The last coat, over opaque pixels only (so what a piece covers, and the tests of it, never change): wear (scuffs and glints from the noise, fewer on cloth),
+     * a lit top edge and a dark lower edge where the piece ends, and a few engraved glowing marks along the seams.
+     */
+    private static void finish(Canvas c, Look look, RelicSlot slot, int g) {
+        boolean soft = look == Look.ROBE || look == Look.CLOAK || look == Look.CAPE || look == Look.MANTLE || look == Look.HOOD || look == Look.SANDALS;
+        double dark = soft ? 0.985 : 0.95;
+        int[] before = c.px.clone();
+        for (int y = 0; y < H; y++) {
+            for (int x = 0; x < W; x++) {
+                int p = before[y * W + x];
+                if (p >>> 24 != 255 || c.glowAt(x, y)) continue;
+                boolean above = y > 0 && before[(y - 1) * W + x] >>> 24 == 0, below = y < H - 1 && before[(y + 1) * W + x] >>> 24 == 0;
+                if (above && !soft) { c.set(x, y, shade(p, 1.1)); continue; }
+                if (below && !soft) { c.set(x, y, shade(p, 0.86)); continue; }
+                double n = c.noise(x * 7 + 3, y * 5 + 11);
+                if (n > dark) c.set(x, y, shade(p, 0.8));
+                else if (n < -dark) c.set(x, y, shade(p, 1.16));
+            }
+        }
+        engrave(c, slot, look, g);
+    }
+
+    /** Engraved marks in the glow colour: a runic seam down the breast and spine, rings on the sleeves, a dotted line along a band, a line on the toe. */
+    private static void engrave(Canvas c, RelicSlot slot, Look look, int g) {
+        int dim = shade(g, 0.6), faint = shade(g, 0.5);
+        if (slot == RelicSlot.CHEST) {
+            if (look == Look.CLOAK || look == Look.CAPE || look == Look.MANTLE) return;
+            for (int y = 21; y < 28; y++) if (y % 3 != 0) { c.setIfOpaque(22, y, dim); c.setIfOpaque(25, y, dim); }
+            for (int y = 22; y < 31; y += 2) c.setIfOpaque(35, y, faint);
+            for (int[] a : new int[][]{{44, 20}, {48, 20}, {40, 20}, {52, 20}}) { c.setIfOpaque(a[0] + 1, a[1] + 4, faint); c.setIfOpaque(a[0] + 2, a[1] + 4, faint); }
+        } else if (slot == RelicSlot.HEAD) {
+            for (int x : new int[]{0, 8, 16, 24}) for (int i = 1; i < 8; i += 2) c.setIfOpaque(x + i, 10, faint);
+        } else if (slot == RelicSlot.FEET) {
+            c.setIfOpaque(4, 28, faint);
+            c.setIfOpaque(7, 28, faint);
+            c.setIfOpaque(5, 29, dim);
+            c.setIfOpaque(6, 29, dim);
         }
     }
 

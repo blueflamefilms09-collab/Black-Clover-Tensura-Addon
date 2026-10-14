@@ -21,6 +21,17 @@ public final class RelicTextures {
     /** The white texture the worn models are tinted from. */
     public static final ResourceLocation WHITE = ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "relic_white");
 
+    /** The ids of the armour relics whose glow channel is registered (drawn by the worn layer over the armour). */
+    private static final java.util.Set<String> GLOW = new java.util.HashSet<>();
+
+    /** The glow channel of an armour relic's worn layer (the pixels the painter drew in the glow colour), drawn full bright by {@code ArmorGlow}. */
+    public static ResourceLocation armorGlow(String relicId) {
+        return ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "textures/models/armor/" + RelicArmorMaterials.name(relicId) + "_glow.png");
+    }
+
+    /** Was a glow channel registered for this relic (not when a resource pack supplies the armour texture, nor when a 3D model replaces the armour box)? */
+    public static boolean hasArmorGlow(String relicId) { return GLOW.contains(relicId); }
+
     /** Where vanilla looks for the worn layer of this relic id. */
     public static ResourceLocation armorLayer(String relicId, boolean inner) {
         return ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "textures/models/armor/" + RelicArmorMaterials.name(relicId) + "_layer_" + (inner ? 2 : 1) + ".png");
@@ -34,13 +45,21 @@ public final class RelicTextures {
             NativeImage white = new NativeImage(4, 4, true);
             for (int y = 0; y < 4; y++) for (int x = 0; x < 4; x++) white.setPixelRGBA(x, y, 0xFFFFFFFF);
             tm.register(WHITE, new DynamicTexture(white));
+            com.newuniverse.nusmp.client.relics.worn.lib.WornModels.clear();                   // the catalog decides below which armour boxes a 3D model replaces
+            com.newuniverse.nusmp.client.relics.worn.lib.WornLibrary.clear();
+            GLOW.clear();
             for (RelicDef d : Relics.all()) {
                 if (!d.slot().isArmor() || d.isAdopted()) continue;
                 ResourceLocation outer = armorLayer(d.id(), false);
                 if (mc.getResourceManager().getResource(outer).isPresent()) continue;      // an artist's PNG wins
-                int[] argb = ArmorPainter.paint(d.look(), d.slot(), d.paletteMain(), d.paletteTrim(), d.paletteGlow(), d.id().hashCode());
+                boolean replaced = com.newuniverse.nusmp.client.relics.worn.lib.WornLibrary.hidesArmor(d);   // a 3D head or boot model stands where the painted box would
+                int[] argb = replaced ? ArmorPainter.blank() : ArmorPainter.paint(d.look(), d.slot(), d.paletteMain(), d.paletteTrim(), d.paletteGlow(), d.id().hashCode());
                 tm.register(outer, new DynamicTexture(image(argb)));
                 tm.register(armorLayer(d.id(), true), new DynamicTexture(image(argb)));
+                if (!replaced) {
+                    tm.register(armorGlow(d.id()), new DynamicTexture(image(ArmorPainter.paintGlow(d.look(), d.slot(), d.paletteMain(), d.paletteTrim(), d.paletteGlow(), d.id().hashCode()))));
+                    GLOW.add(d.id());
+                }
             }
         } catch (RuntimeException | LinkageError failed) {
             com.mojang.logging.LogUtils.getLogger().error("[nusmp] relic textures could not be painted", failed);

@@ -170,10 +170,11 @@ public final class Relics {
         int n = worn.size();
         boolean[] needs = new boolean[n], mine = new boolean[n];
         for (int i = 0; i < n; i++) {
-            needs[i] = worn.get(i).def().needsAttunement();
+            needs[i] = worn.get(i).def().needsAttunement() && !worn.get(i).def().isPairLeft();      // 1.29.0: the left half of a pair does not use up a place of its own
             mine[i] = Attune.isMine(worn.get(i).stack(), e);
         }
         boolean[] ok = AttuneRules.working(needs, mine, AttuneRules.CAP);
+        for (int i = 0; i < n; i++) if (worn.get(i).def().isPairLeft()) ok[i] = !worn.get(i).def().needsAttunement() || mine[i];      // it answers to its own attunement (set together with the right half)
         List<Worn> active = new ArrayList<>(n);
         Set<String> flags = new HashSet<>();
         Map<String, Double> resist = new LinkedHashMap<>();
@@ -182,7 +183,7 @@ public final class Relics {
             if (!ok[i]) continue;
             Worn w = worn.get(i);
             active.add(w);
-            ep += w.def().grade().epBonus();
+            ep += com.newuniverse.nusmp.relics.tier.Tiers.effectiveGrade(w.stack(), w.def()).epBonus();      // 1.29.0: the effective (raised) grade
             for (Passive p : w.def().passives()) {
                 if (p.kind() == Passive.Kind.FLAG) flags.add(p.key());
                 else if (p.kind() == Passive.Kind.RESIST) resist.merge(p.key(), p.amount(), Double::sum);

@@ -119,7 +119,7 @@ final class Wave9Events {
         ItemStack s = p.getMainHandItem();
         if (s.isEmpty()) return "";
         RelicDef d = Relics.defOf(s);
-        return d != null && Attune.works(s, d, p) ? d.id() : "";
+        return d != null && Attune.works(s, d, p) ? d.pairBaseId() : "";      // 1.29.0: either half of a pair counts as the pair
     }
 
     static boolean awakened(ItemStack stack) { return Wave9Rules.awakened(Wave9Store.get(stack, "kills")); }
@@ -242,7 +242,7 @@ final class Wave9Events {
     // ================================================================ damage
     static void onIncoming(LivingIncomingDamageEvent e) {
         LivingEntity victim = e.getEntity();
-        if (victim.level().isClientSide() || busy) return;
+        if (victim.level().isClientSide() || busy || com.newuniverse.nusmp.relics.pair.PairHooks.striking()) return;
         DamageSource src = e.getSource();
         long now = victim.level().getGameTime();
         Entity direct = src.getDirectEntity();
@@ -281,8 +281,8 @@ final class Wave9Events {
                 Fx.addEffect(victim, "minecraft:poison", 100, 0);
                 remember(atk, victim);
             }
-            case "twin_swords_of_deflection" -> {                                              // both blades land; a crit on 19-20
-                float amount = e.getAmount() * 1.35f;
+            case "twin_swords_of_deflection" -> {                                              // both blades land (the off-hand blow is the second blade now); a crit on 19-20
+                float amount = e.getAmount();
                 if (Wave9Rules.twinCrit(atk.getRandom().nextDouble())) {
                     amount *= 1.5f;
                     level.sendParticles(ParticleTypes.CRIT, victim.getX(), victim.getY() + 1.0, victim.getZ(), 14, 0.3, 0.4, 0.3, 0.2);

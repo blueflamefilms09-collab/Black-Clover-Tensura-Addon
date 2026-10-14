@@ -18,6 +18,7 @@ public final class ItemFxClient {
         modBus.addListener(RangedItemProperties::register);
         NeoForge.EVENT_BUS.addListener(HolderTracker::onPre);
         NeoForge.EVENT_BUS.addListener(HolderTracker::onPost);
+        SocketFx.init(NeoForge.EVENT_BUS);                                           // 1.29.0: socket particles and tooltip lines
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> {
             HolderFlags.clear();
             HolderTracker.reset();

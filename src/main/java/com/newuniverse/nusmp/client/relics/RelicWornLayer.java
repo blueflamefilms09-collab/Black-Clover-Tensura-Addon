@@ -3,9 +3,14 @@ package com.newuniverse.nusmp.client.relics;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.logging.LogUtils;
+import com.newuniverse.nusmp.client.relics.fx.RelicFxOptions;
+import com.newuniverse.nusmp.client.relics.fx.WornFxPlan;
 import com.newuniverse.nusmp.client.relics.worn.WornCtx;
 import com.newuniverse.nusmp.client.relics.worn.WornRenderer;
 import com.newuniverse.nusmp.client.relics.worn.WornRenderers;
+import com.newuniverse.nusmp.client.relics.worn.lib.ArmorGlow;
+import com.newuniverse.nusmp.client.relics.worn.lib.WornLibDraw;
+import com.newuniverse.nusmp.client.relics.worn.lib.WornLibrary;
 import com.newuniverse.nusmp.relics.Grade;
 import com.newuniverse.nusmp.relics.Look;
 import com.newuniverse.nusmp.relics.RelicDef;
@@ -26,13 +31,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Draws the relics worn in Curios slots on a player: a pendant and chain at the neck, a cloak or cape on the back, a belt with a buckle, rings on the
- * forearms, a charm at the hip. Small boxes tinted from the def's palette (main, trim, glow), built from the player model's own parts so they follow the
- * body; the glow parts are drawn full bright. Reads the player's relics through the 10-tick cache of {@link Relics}, so it costs a few boxes a frame.
- * Without Curios nothing is worn in these slots and nothing is drawn.
+ * Draws the relics a player wears. Three tiers, best first:
+ * <ol>
+ *   <li>A relic with its own renderer ({@link WornRenderers}: the three boss relics) is drawn by it, after everything else.</li>
+ *   <li>A relic the model library knows ({@link WornLibrary}: a signature entry by id, else the models of its slot and look) is drawn as lofted, smooth-shaded, textured
+ *       3D models tinted with its palette, with the effects of its grade ({@link WornLibDraw}: rim glow, shimmer, orbiting motes, rune ring, halo) inside the vertex budget
+ *       of the client option {@code relicfx.quality}. This covers the Curios slots and the head, chest and feet armour relics; the models follow the body parts of
+ *       the player model, so they follow every animation.</li>
+ *   <li>Anything else keeps the old plain boxes (a pendant and chain at the neck, a cloak on the back, a belt, forearm cuffs, a charm at the hip) that the mod had
+ *       before the library, so no relic is ever drawn as nothing.</li>
+ * </ol>
+ * An armour relic that keeps its painted armour box also gets the emissive pass of its glow channel ({@link ArmorGlow}). Wearers beyond 32 blocks are not drawn. Reads
+ * the player's relics through the 10-tick cache of {@link Relics}. Without Curios nothing is worn in the Curios slots and nothing is drawn for them.
  */
 public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
     private static final int FULL = LightTexture.FULL_BRIGHT;
+    /** The relics of the player being drawn that the library knows, best grade first (the render thread draws one player at a time). */
+    private static final List<WornLibrary.Ensemble> ENSEMBLES = new ArrayList<>(12);
 
     public RelicWornLayer(RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> parent) { super(parent); }
 
@@ -42,9 +57,14 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
         if (p.isSpectator() || p.isInvisible()) return;
         var worn = Relics.wornList(p);
         if (worn.isEmpty()) return;
+        Minecraft mc = Minecraft.getInstance();
+        double distSq = p.distanceToSqr(mc.gameRenderer.getMainCamera().getPosition());
+        if (distSq > WornFxPlan.CULL_RANGE * WornFxPlan.CULL_RANGE) return;
+        boolean models = RelicFxOptions.models();
         VertexConsumer vc = null;
         PlayerModel<AbstractClientPlayer> model = getParentModel();
         List<Relics.Worn> custom = null;                                               // relics with their own worn renderer: drawn after the generic ones
+        ENSEMBLES.clear();
         for (Relics.Worn w : worn) {
             RelicDef d = w.def();
             RelicSlot slot = d.slot();
@@ -52,6 +72,16 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
                 if (custom == null) custom = new ArrayList<>(2);
                 custom.add(w);
                 continue;
+            }
+            if (slot.isHand()) continue;
+            if (models || slot.isArmor()) {                                              // a head or boot model stands where the painted armour box was left clear: it is not optional
+                WornLibrary.Ensemble e = WornLibrary.of(d);
+                if (e != null) {
+                    int at = ENSEMBLES.size();
+                    while (at > 0 && ENSEMBLES.get(at - 1).tier < e.tier) at--;
+                    ENSEMBLES.add(at, e);
+                    continue;
+                }
             }
             if (!slot.isCurio()) continue;
             if (vc == null) vc = buffers.getBuffer(RenderType.entityCutoutNoCull(RelicTextures.WHITE));
@@ -63,8 +93,16 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
             else if (slot == RelicSlot.HANDS) { hands(pose, vc, light, model.rightArm, true, main, trim, glow); hands(pose, vc, light, model.leftArm, false, main, trim, glow); }
             else if (slot == RelicSlot.CHARM) charm(pose, vc, light, model.body, main, trim, glow, shine);
         }
+        if (!ENSEMBLES.isEmpty()) {
+            WornLibDraw.draw(ENSEMBLES, pose, buffers, light, model, p.isCrouching(), distSq, age, limbSwingAmount, RelicFxOptions.quality());
+            ENSEMBLES.clear();
+        }
+        for (Relics.Worn w : worn) {                                                     // the emissive pass of the painted armour boxes
+            RelicDef d = w.def();
+            if (d.slot().isArmor() && RelicTextures.hasArmorGlow(d.id()))
+                ArmorGlow.draw(pose, buffers, model, d.slot(), RelicTextures.armorGlow(d.id()), 0.75f + 0.25f * (float) Math.sin(age * 0.09f));
+        }
         if (custom != null) {
-            Minecraft mc = Minecraft.getInstance();
             boolean first = p == mc.player && mc.options.getCameraType().isFirstPerson();
             for (Relics.Worn w : custom) drawCustom(w, pose, buffers, light, model, p, partial, age, netHeadYaw, headPitch, first);
         }

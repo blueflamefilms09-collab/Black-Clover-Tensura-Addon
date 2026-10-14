@@ -145,7 +145,7 @@ public final class Fx {
     private static void hit(ServerPlayer p, LivingEntity t, float amount, String typeId, double playerCap) {
         if (p == null || t == null || t == p || !t.isAlive() || amount <= 0f || t.isAlliedTo(p)) return;
         if (t instanceof Player o && (o.isCreative() || o.isSpectator())) return;
-        float dmg = BalanceLaw.damage(p, t, Math.min(amount, 400f), 0.6);
+        float dmg = BalanceLaw.damage(p, t, Math.min(amount * (float) com.newuniverse.nusmp.relics.tier.ActPower.current(), 400f), 0.6);      // 1.29.0: x the tier's act power inside a relic act (1.0 elsewhere)
         if (t instanceof Player) dmg = (float) Math.min(dmg, t.getMaxHealth() * playerCap);
         t.hurt(source(p, typeId), Math.min(dmg, 400f));
     }

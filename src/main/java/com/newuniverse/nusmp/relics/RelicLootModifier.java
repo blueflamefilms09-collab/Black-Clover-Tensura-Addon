@@ -44,11 +44,11 @@ public final class RelicLootModifier implements IGlobalLootModifier {
     public ObjectArrayList<ItemStack> apply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
         try {
             ResourceLocation table = context.getQueriedLootTableId();
+            if (table != null) com.newuniverse.nusmp.relics.socket.SocketLoot.addToChest(generatedLoot, table.getPath(), context.getRandom());     // 1.29.0: a Spirit or Devil Core, at a low weight
             Tier tier = table == null ? null : tierOf(table.getPath());
             if (tier == null || context.getRandom().nextFloat() >= tier.chance()) return generatedLoot;
             ServerLevel level = context.getLevel();
-            ItemStack relic = RelicLoot.rollUnissued(level, context.getRandom(), tier.min(), tier.max());
-            if (!relic.isEmpty()) generatedLoot.add(relic);
+            generatedLoot.addAll(RelicLoot.rollUnissuedAll(level, context.getRandom(), tier.min(), tier.max()));      // a pair adds both halves
         } catch (RuntimeException | LinkageError ignored) {
             // loot must never fail because of a relic
         }

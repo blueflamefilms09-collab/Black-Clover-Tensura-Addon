@@ -140,7 +140,7 @@ def the_stabshroom():
 
 
 # ================================================================ Twin Hook Swords
-def twin_hook_swords():
+def twin_hook_swords_one_mesh():   # the 1.28 two-sword single mesh, kept for reference; the game uses pair_models.py since 1.29.0
     # ---- 1 measure: the card is 736 x 752; the upper sword runs from its spear point (120, 215) to the end of its hook (600, 215): 480 px
     TOTAL_M = 0.95
     S_TOT = 480.0
@@ -311,5 +311,5 @@ def disintegration_dagger():
     W.finish("disintegration_dagger", m, atlas, TOTAL_M, glow=("FFFFFF", 0.18, 0.5, 1.0), ref=ref)
 
 
-BUILDERS = {"sword_crystal": sword_crystal, "the_stabshroom": the_stabshroom, "twin_hook_swords": twin_hook_swords, "bottle_blade": bottle_blade,
+BUILDERS = {"sword_crystal": sword_crystal, "the_stabshroom": the_stabshroom, "twin_hook_swords": lambda: __import__("pair_models").build("twin_hook_swords"), "bottle_blade": bottle_blade,
             "disintegration_dagger": disintegration_dagger}

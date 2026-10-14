@@ -272,7 +272,7 @@ final class Wave0Util {
     private static boolean busy;
 
     /** True while one of this wave's own extra blows is being dealt (so it does not trigger the hooks again). */
-    static boolean busy() { return busy; }
+    static boolean busy() { return busy || com.newuniverse.nusmp.relics.pair.PairHooks.striking(); }
 
     /** An extra blow on top of a hit: through the core's damage rules, the hurt timer cleared, and no second shove. */
     static void extra(ServerPlayer p, LivingEntity t, float amount, String damageTypeId) {
