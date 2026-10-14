@@ -1,5 +1,8 @@
 package com.newuniverse.nusmp.client;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.logging.LogUtils;
@@ -7,6 +10,9 @@ import com.mojang.math.Axis;
 import com.newuniverse.nusmp.client.relics.item.ItemStateVariants;
 import com.newuniverse.nusmp.client.relics.item.OversizeGuard;
 import com.newuniverse.nusmp.client.relics.item.VariantRules;
+import com.newuniverse.nusmp.client.relics.item.WeaponClasses;
+import com.newuniverse.nusmp.client.relics.item.WeaponNormaliser;
+import com.newuniverse.nusmp.client.relics.item.WeaponOrientation;
 import com.newuniverse.nusmp.item.NUItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -53,7 +59,15 @@ import java.util.function.Supplier;
  *   <li><b>Void:</b> Asta's demon swords show the crimson dimensional void through their notches and broken patches
  *       ({@link NURenderTypes#demonVoid()}).</li>
  * </ul>
- * Preview without the game: python tools/item_preview/preview_weapons.py.
+ * <p>
+ * 1.29.0, size and orientation: every mesh follows one convention (mesh -x is forward, the tip is up-forward; docs/weapon_scale_orientation.md,
+ * {@link WeaponOrientation}). tools/relics/weapon_fixes.json corrects the shipped meshes offline; {@link WeaponNormaliser} is the per-game
+ * safety net: when a mesh loads it is checked against its class ({@link WeaponClasses}, assets/nusmp/weapon_classes.json, else a keyword guess of
+ * the id) and, if it is far too small, tip-down or has its head toward the player, it is scaled up to the class minimum / turned over / mirrored, with
+ * one log line per corrected mesh. A mesh with the directive {@code orient manual} (or a model json with {@code "nusmp_display_preset": "manual"}) is
+ * never touched; {@code orient <rotZ degrees> <flipX 0|1>} applies an explicit turn / mirror at load.
+ * <p>
+ * Preview without the game: python tools/item_preview/preview_weapons.py (sizes and orientation: python tools/relics/audit_weapon_scale.py).
  */
 public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
     /** The weapons and relics drawn this way (each needs a mesh, a skin, and an &lt;id&gt;_icon model). */
@@ -79,6 +93,8 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
 
     private static WeaponRenderer instance;
     private static final Map<String, Mesh> MESHES = new HashMap<>();
+    /** The class table and the id to class map (assets/nusmp/weapon_classes.json), read once per resource reload. */
+    private static WeaponClasses classes;
 
     public WeaponRenderer() {
         super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
@@ -87,7 +103,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
     public static void init(IEventBus modBus) {
         modBus.addListener(WeaponRenderer::registerExtensions);
         modBus.addListener(WeaponRenderer::registerModels);
-        modBus.addListener((ModelEvent.BakingCompleted e) -> { MESHES.clear(); ItemStateVariants.clearCache(); });     // a resource reload re-reads the meshes
+        modBus.addListener((ModelEvent.BakingCompleted e) -> { MESHES.clear(); classes = null; ItemStateVariants.clearCache(); });     // a resource reload re-reads the meshes
         // 1.15.0: the Magebane Shield is a real shield; this is vanilla's own "blocking" predicate, which swaps in the raised-shield model
         modBus.addListener((FMLClientSetupEvent e) -> e.enqueueWork(() -> ItemProperties.register(NUItems.MAGEBANE_SHIELD.get(),
                 ResourceLocation.withDefaultNamespace("blocking"),
@@ -189,6 +205,8 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
     static final class Mesh {
         float ox, oy, angle, scale, ymin, glowSpeed, glowMin, glowMax;
         float ymax = -Float.MAX_VALUE, length, gripX, gripY;                     // 1.25.0: for the oversize guard (client/relics/item/OversizeGuard)
+        boolean manual;                                                          // 1.29.0: `orient manual`: hand-tuned, never normalised
+        float orientRot, orientFlip;                                             // 1.29.0: `orient <rotZ> <flipX>`
         int glowRgb;
         ResourceLocation tex, glowTex;
         @SuppressWarnings("unchecked")
@@ -208,6 +226,10 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
                     String line;
                     while ((line = in.readLine()) != null) parse(mesh, id, line.trim().split("\\s+"));
                 }
+                float[] info = modelInfo(id);                                            // 1.29.0: the third-person display scale and the manual marker of the model json
+                if (info[1] > 0f) mesh.manual = true;
+                applyOrient(mesh);
+                if (!mesh.manual) normalise(id, mesh, info[0]);
                 mesh.length = Math.max(0f, (mesh.ymax - mesh.ymin) * mesh.scale);
                 float along = OversizeGuard.GRIP_FRACTION * mesh.length;
                 mesh.gripX = mesh.ox + along * (float) Math.cos(Math.toRadians(mesh.angle));
@@ -219,6 +241,103 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         }
         MESHES.put(id, mesh);
         return mesh;
+    }
+
+    /** The class table (resource, else the built-in one), read once per reload. */
+    private static WeaponClasses classes() {
+        if (classes != null) return classes;
+        Map<String, WeaponClasses.Cls> table = new HashMap<>();
+        Map<String, String> weapons = new HashMap<>();
+        try {
+            Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(DemonSlayerRenderer.rl("weapon_classes.json"));
+            if (res.isPresent()) {
+                try (BufferedReader in = res.get().openAsReader()) {
+                    JsonObject root = JsonParser.parseReader(in).getAsJsonObject();
+                    if (root.has("classes")) {
+                        for (Map.Entry<String, JsonElement> e : root.getAsJsonObject("classes").entrySet()) {
+                            JsonObject c = e.getValue().getAsJsonObject();
+                            table.put(e.getKey(), new WeaponClasses.Cls(e.getKey(), c.get("min").getAsFloat(), c.get("max").getAsFloat(),
+                                    c.has("head_min") ? c.get("head_min").getAsFloat() : 0f, c.has("grip") ? c.get("grip").getAsFloat() : 0.25f));
+                        }
+                    }
+                    if (root.has("weapons")) {
+                        for (Map.Entry<String, JsonElement> e : root.getAsJsonObject("weapons").entrySet()) weapons.put(e.getKey(), e.getValue().getAsString());
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            LogUtils.getLogger().error("[nusmp] weapon_classes.json failed to load; the built-in class table is used", ex);
+            table.clear();
+            weapons.clear();
+        }
+        classes = new WeaponClasses(table, weapons);
+        return classes;
+    }
+
+    /** {third-person scale (0.85 when the json has none), 1 when the json is marked "nusmp_display_preset": "manual"} of an item's model json (a state mesh reads its base id's). */
+    private static float[] modelInfo(String id) {
+        float s3p = 0.85f;
+        boolean manual = false;
+        for (String cand : new String[]{id, WeaponClasses.baseId(id)}) {
+            try {
+                Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(DemonSlayerRenderer.rl("models/item/" + cand + ".json"));
+                if (res.isEmpty()) continue;
+                try (BufferedReader in = res.get().openAsReader()) {
+                    JsonObject o = JsonParser.parseReader(in).getAsJsonObject();
+                    JsonElement mk = o.get("nusmp_display_preset");
+                    if (mk != null && mk.isJsonPrimitive() && "manual".equals(mk.getAsString())) manual = true;
+                    JsonElement disp = o.get("display");
+                    if (disp != null && disp.isJsonObject()) {
+                        JsonElement t = disp.getAsJsonObject().get("thirdperson_righthand");
+                        if (t != null && t.isJsonObject()) {
+                            JsonElement sc = t.getAsJsonObject().get("scale");
+                            if (sc != null && sc.isJsonArray() && sc.getAsJsonArray().size() > 0) s3p = sc.getAsJsonArray().get(0).getAsFloat();
+                        }
+                    }
+                }
+                break;
+            } catch (Exception ignored) {
+                // an unreadable json: the defaults stand
+            }
+        }
+        return new float[]{s3p, manual ? 1f : 0f};
+    }
+
+    /** The explicit {@code orient <rotZ> <flipX>} directive: mirror across x = 0, then turn about the middle of the mesh's length. */
+    private static void applyOrient(Mesh mesh) {
+        if (mesh.orientFlip == 0f && mesh.orientRot == 0f) return;
+        if (mesh.orientFlip != 0f) for (List<float[]> layer : mesh.layers) WeaponOrientation.mirrorX(layer, 0.0);
+        if (mesh.orientRot != 0f) {
+            float lo = Float.MAX_VALUE, hi = -Float.MAX_VALUE;
+            for (List<float[]> layer : mesh.layers) for (float[] v : layer) { lo = Math.min(lo, v[1]); hi = Math.max(hi, v[1]); }
+            for (List<float[]> layer : mesh.layers) WeaponOrientation.rotateZ(layer, mesh.orientRot, (lo + hi) / 2.0);
+        }
+        mesh.ymax = maxY(mesh);
+    }
+
+    private static float maxY(Mesh mesh) {
+        float hi = -Float.MAX_VALUE;
+        for (List<float[]> layer : mesh.layers) for (float[] v : layer) hi = Math.max(hi, v[1]);
+        return hi;
+    }
+
+    /** 1.29.0: the per-game safety net (client/relics/item/WeaponNormaliser): scale up / turn over / mirror a mesh that breaks its class; one log line per corrected mesh. */
+    private static void normalise(String id, Mesh mesh, float thirdPersonScale) {
+        try {
+            WeaponClasses c = classes();
+            WeaponClasses.Cls cls = c.classOf(id);
+            float[] place = {mesh.ox, mesh.oy, mesh.angle, mesh.scale, mesh.ymin};
+            WeaponNormaliser.Result r = WeaponNormaliser.normalise(mesh.layers, place, cls.name(), cls, thirdPersonScale);
+            if (!r.changed()) return;
+            mesh.ox = place[0];
+            mesh.oy = place[1];
+            mesh.angle = place[2];
+            mesh.scale = place[3];
+            mesh.ymax = maxY(mesh);
+            LogUtils.getLogger().info("[nusmp] weapon mesh {} ({}) normalised: {}", id, cls.name(), r.log());
+        } catch (Exception ex) {
+            LogUtils.getLogger().error("[nusmp] weapon mesh {} could not be normalised; it is drawn as it is", id, ex);
+        }
     }
 
     /**
@@ -243,6 +362,13 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
                 mesh.angle = Float.parseFloat(v[3]);
                 mesh.scale = Float.parseFloat(v[4]);
                 mesh.ymin = Float.parseFloat(v[5]);
+            }
+            case "orient" -> {                                                       // 1.29.0: `orient manual` or `orient <rotZ degrees> <flipX 0|1>`
+                if (v.length > 1 && v[1].equals("manual")) mesh.manual = true;
+                else if (v.length > 2) {
+                    mesh.orientRot = Float.parseFloat(v[1]);
+                    mesh.orientFlip = Float.parseFloat(v[2]);
+                }
             }
             case "glow" -> {
                 mesh.glowRgb = Integer.parseInt(v[1], 16);

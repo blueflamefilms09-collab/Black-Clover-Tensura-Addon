@@ -1,0 +1,536 @@
+{
+ "_doc": "The reviewed class of every weapon / item with a baked mesh (docs/weapon_scale_orientation.md). State meshes (bianca_pull1, needler_charged, marids_valor_liquid ...) use their base id. Edit the class here, then run: python tools/relics/audit_weapon_scale.py --write",
+ "classes": {
+  "dagger": {
+   "min": 0.35,
+   "max": 0.55,
+   "head_min": 0.0,
+   "grip": 0.2
+  },
+  "shortsword": {
+   "min": 0.8,
+   "max": 1.0,
+   "head_min": 0.0,
+   "grip": 0.2
+  },
+  "longsword": {
+   "min": 1.1,
+   "max": 1.3,
+   "head_min": 0.0,
+   "grip": 0.2
+  },
+  "rapier": {
+   "min": 1.1,
+   "max": 1.3,
+   "head_min": 0.0,
+   "grip": 0.2
+  },
+  "katana": {
+   "min": 1.1,
+   "max": 1.3,
+   "head_min": 0.0,
+   "grip": 0.2
+  },
+  "sabre": {
+   "min": 1.0,
+   "max": 1.25,
+   "head_min": 0.0,
+   "grip": 0.2
+  },
+  "dadao": {
+   "min": 1.2,
+   "max": 1.45,
+   "head_min": 0.0,
+   "grip": 0.2
+  },
+  "greatsword": {
+   "min": 1.5,
+   "max": 1.9,
+   "head_min": 0.0,
+   "grip": 0.22
+  },
+  "handaxe": {
+   "min": 0.7,
+   "max": 0.9,
+   "head_min": 0.3,
+   "grip": 0.25
+  },
+  "battleaxe": {
+   "min": 1.1,
+   "max": 1.3,
+   "head_min": 0.45,
+   "grip": 0.25
+  },
+  "greataxe": {
+   "min": 1.6,
+   "max": 2.0,
+   "head_min": 0.7,
+   "grip": 0.28
+  },
+  "crescent": {
+   "min": 1.2,
+   "max": 1.5,
+   "head_min": 0.5,
+   "grip": 0.25
+  },
+  "scythe": {
+   "min": 1.5,
+   "max": 1.9,
+   "head_min": 0.5,
+   "grip": 0.3
+  },
+  "cleaver": {
+   "min": 0.55,
+   "max": 0.8,
+   "head_min": 0.25,
+   "grip": 0.25
+  },
+  "spear": {
+   "min": 1.8,
+   "max": 2.4,
+   "head_min": 0.0,
+   "grip": 0.33
+  },
+  "glaive": {
+   "min": 1.8,
+   "max": 2.4,
+   "head_min": 0.0,
+   "grip": 0.33
+  },
+  "trident": {
+   "min": 1.8,
+   "max": 2.4,
+   "head_min": 0.0,
+   "grip": 0.33
+  },
+  "staff": {
+   "min": 1.6,
+   "max": 2.0,
+   "head_min": 0.0,
+   "grip": 0.4
+  },
+  "whip": {
+   "min": 1.5,
+   "max": 2.0,
+   "head_min": 0.0,
+   "grip": 0.15
+  },
+  "crossbow": {
+   "min": 0.7,
+   "max": 0.95,
+   "head_min": 0.0,
+   "grip": 0.5
+  },
+  "hammer": {
+   "min": 1.1,
+   "max": 1.5,
+   "head_min": 0.4,
+   "grip": 0.25
+  },
+  "mace": {
+   "min": 0.8,
+   "max": 1.1,
+   "head_min": 0.0,
+   "grip": 0.25
+  },
+  "club": {
+   "min": 0.9,
+   "max": 1.4,
+   "head_min": 0.0,
+   "grip": 0.25
+  },
+  "wand": {
+   "min": 0.35,
+   "max": 0.55,
+   "head_min": 0.0,
+   "grip": 0.2
+  },
+  "shield": {
+   "min": 0.7,
+   "max": 1.1,
+   "head_min": 0.0,
+   "grip": 0.5
+  },
+  "item": {
+   "min": 0.0,
+   "max": 9.0,
+   "head_min": 0.0,
+   "grip": 0.5
+  },
+  "coilwhip": {
+   "min": 0.9,
+   "max": 1.4,
+   "head_min": 0.0,
+   "grip": 0.15
+  }
+ },
+ "item_min_extent": 0.4,
+ "excluded": {
+  "elsdocia": "rebuilt by the Elsdocia agent",
+  "twin_hook_swords": "dual-wield pair (pair agent)",
+  "twin_swords_of_deflection": "dual-wield pair (pair agent)",
+  "whirling_blades": "dual-wield pair (pair agent)"
+ },
+ "weapons": {
+  "amulet_of_the_juggernauts_blindness": {
+   "class": "item"
+  },
+  "anti_bird_charm": {
+   "class": "item"
+  },
+  "anti_bird_compass": {
+   "class": "item"
+  },
+  "astralaria": {
+   "class": "battleaxe"
+  },
+  "astralis_the_eye_of_the_universe": {
+   "class": "staff"
+  },
+  "axe_of_the_crimson_saint": {
+   "class": "battleaxe"
+  },
+  "axe_of_the_exile": {
+   "class": "handaxe"
+  },
+  "bianca": {
+   "class": "crossbow"
+  },
+  "bloodbound_katana": {
+   "class": "katana"
+  },
+  "bolt_thrower": {
+   "class": "crossbow"
+  },
+  "bond_thread": {
+   "class": "item"
+  },
+  "book_of_mispells": {
+   "class": "item"
+  },
+  "bottle_blade": {
+   "class": "shortsword"
+  },
+  "brooch_pin": {
+   "class": "dagger"
+  },
+  "buster_sword": {
+   "class": "greatsword"
+  },
+  "butcher_cleaver": {
+   "class": "cleaver"
+  },
+  "caesars_gladius": {
+   "class": "shortsword"
+  },
+  "catstaff": {
+   "class": "staff"
+  },
+  "circlet_of_quickened_thought": {
+   "class": "item"
+  },
+  "club_of_rot": {
+   "class": "club"
+  },
+  "communication_magic_device": {
+   "class": "item"
+  },
+  "contingency_plan": {
+   "class": "dagger"
+  },
+  "corpse_eater": {
+   "class": "katana"
+  },
+  "crossbow_of_swift_death": {
+   "class": "crossbow"
+  },
+  "cyclone_rapier": {
+   "class": "rapier"
+  },
+  "dagger_of_betrayal": {
+   "class": "dagger"
+  },
+  "dead_blade": {
+   "class": "glaive"
+  },
+  "deliverance": {
+   "class": "longsword"
+  },
+  "demon_destroyer_sword": {
+   "class": "greatsword"
+  },
+  "demon_dweller_sword": {
+   "class": "greatsword"
+  },
+  "demon_slasher_katana": {
+   "class": "katana"
+  },
+  "devil_bound_sheath": {
+   "class": "item"
+  },
+  "devil_contract": {
+   "class": "item"
+  },
+  "devil_contract_book": {
+   "class": "item"
+  },
+  "disintegration_dagger": {
+   "class": "dagger"
+  },
+  "doom_hammer": {
+   "class": "hammer"
+  },
+  "dragon_tooth_blade_red": {
+   "class": "katana"
+  },
+  "dream_glass": {
+   "class": "greatsword"
+  },
+  "druidic_blade": {
+   "class": "shortsword"
+  },
+  "duality_blade": {
+   "class": "shortsword"
+  },
+  "elsdocia": {
+   "class": "greatsword"
+  },
+  "encircled_blade": {
+   "class": "shortsword"
+  },
+  "eschaton": {
+   "class": "rapier"
+  },
+  "flamecutter": {
+   "class": "longsword"
+  },
+  "fortune_die": {
+   "class": "item"
+  },
+  "frostfang": {
+   "class": "battleaxe"
+  },
+  "gamblers_grimoire_page": {
+   "class": "item"
+  },
+  "gauches_hand_mirror": {
+   "class": "item"
+  },
+  "giant_jawblade": {
+   "class": "greatsword"
+  },
+  "glutton_chalice": {
+   "class": "item"
+  },
+  "grimoire_chain": {
+   "class": "item"
+  },
+  "hand_of_providence": {
+   "class": "item"
+  },
+  "heart_of_the_flame": {
+   "class": "greatsword"
+  },
+  "humbling_longsword": {
+   "class": "longsword"
+  },
+  "hunger": {
+   "class": "greataxe"
+  },
+  "hyperborean_crossbow": {
+   "class": "crossbow"
+  },
+  "jade_xiphos": {
+   "class": "shortsword"
+  },
+  "junglethorn_whip": {
+   "class": "coilwhip"
+  },
+  "ki_resonance_lantern": {
+   "class": "item"
+  },
+  "krakeblade": {
+   "class": "greatsword"
+  },
+  "last_word": {
+   "class": "shortsword"
+  },
+  "leviathan_axe": {
+   "class": "handaxe"
+  },
+  "licht_destroyer_sword": {
+   "class": "greatsword"
+  },
+  "licht_dweller_sword": {
+   "class": "greatsword"
+  },
+  "liquid_sword": {
+   "class": "longsword"
+  },
+  "magebane_longsword": {
+   "class": "longsword"
+  },
+  "magebane_shield": {
+   "class": "shield"
+  },
+  "magic_tool_bow": {
+   "class": "crossbow"
+  },
+  "magic_tool_spear": {
+   "class": "spear"
+  },
+  "magic_tool_sword": {
+   "class": "longsword"
+  },
+  "mana_method_rune_stone": {
+   "class": "item"
+  },
+  "marids_valor": {
+   "class": "sabre"
+  },
+  "miasma_infused_katana": {
+   "class": "katana"
+  },
+  "mountainguards_greataxe": {
+   "class": "greataxe"
+  },
+  "needler": {
+   "class": "crossbow"
+  },
+  "null_blade": {
+   "class": "greatsword"
+  },
+  "otherworld_trident": {
+   "class": "trident"
+  },
+  "palladion": {
+   "class": "longsword"
+  },
+  "permafrost_sabre": {
+   "class": "sabre"
+  },
+  "prism_blade": {
+   "class": "longsword"
+  },
+  "quicklings_ivy": {
+   "class": "rapier"
+  },
+  "rainbow_rapier": {
+   "class": "rapier"
+  },
+  "random_axe_of_charity": {
+   "class": "handaxe"
+  },
+  "recovery_salve": {
+   "class": "item"
+  },
+  "returning_hand_axe": {
+   "class": "handaxe"
+  },
+  "rimeheart_runeblade": {
+   "class": "longsword"
+  },
+  "rune_splitter": {
+   "class": "battleaxe"
+  },
+  "severing_greatsword": {
+   "class": "greatsword"
+  },
+  "shadow_burn": {
+   "class": "greatsword"
+  },
+  "shroud_of_margins": {
+   "class": "item"
+  },
+  "sidras_swearing_sword": {
+   "class": "shortsword"
+  },
+  "sorrows_edge": {
+   "class": "crescent"
+  },
+  "soul_shatter_blade": {
+   "class": "greatsword"
+  },
+  "spell_forged_rapier": {
+   "class": "rapier"
+  },
+  "spirit_charm": {
+   "class": "item"
+  },
+  "spotlight": {
+   "class": "shortsword"
+  },
+  "staff_of_moonlight": {
+   "class": "staff"
+  },
+  "stegosaurus_greatsword": {
+   "class": "greatsword"
+  },
+  "sword_crystal": {
+   "class": "longsword"
+  },
+  "the_dagger_of_many_daggers": {
+   "class": "dagger"
+  },
+  "the_dragons_truth": {
+   "class": "item"
+  },
+  "the_lumberjack": {
+   "class": "battleaxe"
+  },
+  "the_stabshroom": {
+   "class": "dagger"
+  },
+  "thornblight": {
+   "class": "handaxe"
+  },
+  "thundercleave": {
+   "class": "greatsword"
+  },
+  "time_bender_dadao": {
+   "class": "dadao"
+  },
+  "tripolar_sword": {
+   "class": "longsword"
+  },
+  "twin_hook_swords": {
+   "class": "shortsword"
+  },
+  "twin_swords_of_deflection": {
+   "class": "shortsword"
+  },
+  "unicorn_dagger": {
+   "class": "dagger"
+  },
+  "viola_of_moonlit_spirits": {
+   "class": "item"
+  },
+  "viper_whip": {
+   "class": "coilwhip"
+  },
+  "wand_of_bubbles": {
+   "class": "wand"
+  },
+  "warmages_longsword": {
+   "class": "longsword"
+  },
+  "wavebreaker": {
+   "class": "greatsword"
+  },
+  "weapon_of_resurgence": {
+   "class": "longsword"
+  },
+  "whirling_blades": {
+   "class": "sabre"
+  },
+  "white_whip_of_welting": {
+   "class": "whip"
+  },
+  "windcutter": {
+   "class": "longsword"
+  },
+  "written_consent": {
+   "class": "item"
+  }
+ }
+}

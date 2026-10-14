@@ -196,5 +196,57 @@ class FilesTest(unittest.TestCase):
         self.assertEqual(self.read("long"), before)
 
 
+class ViewScalesTest(unittest.TestCase):
+    """1.29.0: the ground and item-frame views of a long weapon shrink so the lying / framed weapon stays about a block."""
+
+    def test_a_short_weapon_keeps_the_base_views(self):
+        self.assertEqual(dp.view_scales(1.2), (dp.GROUND_BASE, dp.FIXED_BASE))
+        self.assertEqual(dp.view_scales(dp.LONG_FRAME_BLOCKS), (dp.GROUND_BASE, dp.FIXED_BASE))
+
+    def test_a_long_weapon_gets_a_smaller_ground_and_frame_scale(self):
+        g, f = dp.view_scales(2.4)
+        self.assertLess(g, dp.GROUND_BASE)
+        self.assertLess(f, dp.FIXED_BASE)
+        self.assertLessEqual(g * 2.4, dp.GROUND_APPARENT_MAX + 1e-6)
+        self.assertLessEqual(f * 2.4, dp.FIXED_APPARENT_MAX + 1e-6)
+
+    def test_the_views_have_floors(self):
+        self.assertEqual(dp.view_scales(40.0), (dp.GROUND_FLOOR, dp.FIXED_FLOOR))
+
+    def test_the_preset_writes_ground_and_fixed_and_restore_puts_the_base_back(self):
+        d = tempfile.mkdtemp()
+        try:
+            mdir, edir = os.path.join(d, "models"), os.path.join(d, "meshes")
+            os.makedirs(mdir)
+            os.makedirs(edir)
+            m = model()
+            m["display"]["ground"] = {"rotation": [0, 0, 0], "translation": [0, 2, 0], "scale": [0.5] * 3}
+            m["display"]["fixed"] = {"rotation": [0, 180, 0], "translation": [0, 0, 0], "scale": [1] * 3}
+            with open(os.path.join(mdir, "big.json"), "w") as f:
+                json.dump(m, f)
+            sc, ymax = 0.02, 2.4 / 0.02
+            with open(os.path.join(edir, "big.txt"), "w") as f:
+                f.write("place 0.03 0.03 45 %s 0\n" % sc)
+                f.write("q 0 -5 0 -1 0 0 5 0 -1 0 0 5 %s -1 0 0 -5 %s -1 0 0 0 0 1\n" % (ymax, ymax))
+            entries, changed = dp.run(apply=True, models_dir=mdir, meshes_dir=edir)
+            with open(os.path.join(mdir, "big.json")) as f:
+                out = json.load(f)
+            self.assertLess(out["display"]["ground"]["scale"][0], 0.5)
+            self.assertLess(out["display"]["fixed"]["scale"][0], 1.0)
+            self.assertEqual(out["display"]["ground"]["translation"], [0, 2, 0], "only the scale follows the length")
+            self.assertEqual(out["display"]["fixed"]["rotation"], [0, 180, 0])
+            with open(os.path.join(edir, "big.txt"), "w") as f:                         # the weapon shrinks below the limit: base values return
+                f.write("place 0.03 0.03 45 %s 0\n" % sc)
+                f.write("q 0 -5 0 -1 0 0 5 0 -1 0 0 5 %s -1 0 0 -5 %s -1 0 0 0 0 1\n" % (1.0 / sc, 1.0 / sc))
+            dp.run(apply=True, models_dir=mdir, meshes_dir=edir)
+            with open(os.path.join(mdir, "big.json")) as f:
+                back = json.load(f)
+            self.assertEqual(back["display"]["ground"]["scale"], [0.5] * 3)
+            self.assertEqual(back["display"]["fixed"]["scale"], [1.0] * 3)
+            self.assertNotIn(dp.MARKER, back)
+        finally:
+            shutil.rmtree(d)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

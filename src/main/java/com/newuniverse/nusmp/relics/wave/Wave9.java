@@ -105,15 +105,16 @@ public final class Wave9 {
                 .engrave("sturdy", "severance"));
 
         // ---------------------------------------------------------------- Twin Swords of Deflection
-        out.accept(RelicDef.of("twin_swords_of_deflection", "Twin Swords of Deflection", Grade.RARE, RelicSlot.MAIN_HAND)
+        out.accept(RelicDef.of("twin_swords_of_deflection", "Twin Sword of Deflection (Right)", Grade.RARE, RelicSlot.MAIN_HAND)
+                .pair("Twin Sword of Deflection (Left)")
                 .attune().model3d().look(Look.SWORD).palette(0xDCE0EC, 0x6A5CA8, 0xB8A8FF)
-                .desc("A matched pair of hooked blades, drawn as one. Both land with each blow, a tenth of blows are critical, and the wielder is quicker. "
+                .desc("One of a matched pair of hooked blades. With the other in your off hand both land with each blow; a tenth of blows are critical, and the wielder is quicker. "
                         + "Use to parry: missiles turn back on their sender.")
                 .passive(Passive.attr("minecraft:generic.attack_speed", 0.12, AttributeModifier.Operation.ADD_MULTIPLIED_BASE))
                 .passive(Passive.attr("minecraft:generic.movement_speed", 0.05, AttributeModifier.Operation.ADD_MULTIPLIED_BASE))
                 .passive(Passive.flag("w9_twin_swords"))
                 .act(Act.of("deflect", "Deflect", Wave9Acts::deflect).mana(2).cooldown(120))
-                .melee(5.0, 2.0)
+                .melee(4.4, 2.0)
                 .engrave("swift", "magic_weapon", "severance_protection"));
 
         // ---------------------------------------------------------------- Hunger

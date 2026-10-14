@@ -73,7 +73,7 @@ import java.util.UUID;
  * </ol>
  * A purple boss bar shows the phase; the arena's matter is put back when it dies or is removed.
  */
-public class ZagredBossEntity extends Monster {
+public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.boss.budget.BudgetedBoss {
     /** 0.48: what it is doing (synced with ZagredStatePayload for the model's pose and the target reticle). */
     public static final int STATE_IDLE = 0, STATE_STALK = 1, STATE_COMBAT = 2, STATE_CASTING = 3;
     private static final EntityDataAccessor<Integer> PHASE = SynchedEntityData.defineId(ZagredBossEntity.class, EntityDataSerializers.INT);
@@ -151,6 +151,26 @@ public class ZagredBossEntity extends Monster {
 
     /** 1..4 by health. */
     public int phase() { return entityData.get(PHASE); }
+
+    // ================================================================ the per-second damage budget (1.29.0)
+    private final com.newuniverse.nusmp.boss.budget.BossBudget dpsBudget = new com.newuniverse.nusmp.boss.budget.BossBudget();
+
+    @Override public com.newuniverse.nusmp.boss.budget.BossBudget budget() { return dpsBudget; }
+
+    @Override public int budgetStage() { return Math.max(0, phase() - 1); }
+
+    @Override public int budgetFinalStage() { return 3; }
+
+    @Override
+    public void baseTick() {
+        super.baseTick();
+        dpsBudget.tick(this, this);
+    }
+
+    @Override
+    public void setHealth(float health) {
+        super.setHealth(dpsBudget == null ? health : dpsBudget.setHealth(this, health));
+    }
 
     /** Where the arena is (its centre): where it was summoned. */
     public void setArena(BlockPos p) { arena = p.immutable(); }
@@ -673,7 +693,8 @@ public class ZagredBossEntity extends Monster {
     /** Order of operations (docs/zagred_boss_gdd.md 4.1): transitions, rule, nullification, reflex, resistances, adaptation, anchor, barrier, act 4. */
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (level().isClientSide || source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return super.hurt(source, amount);
+        if (level().isClientSide) return super.hurt(source, amount);
+        if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return dpsBudget.hurt(this, source, amount, x -> super.hurt(source, x));
         long t = tickCount;
         if (t < transitionUntil || t < reflexInvulnUntil) return false;
         if (source.getEntity() instanceof ServerPlayer p) fighters.add(p.getUUID());
@@ -731,7 +752,8 @@ public class ZagredBossEntity extends Monster {
         }
         amount = through;
         if (ph == 4 && !antiMagic(source) && t >= exposedUntil) amount *= 0.3f;
-        return super.hurt(source, clampToThreshold(amount));
+        final float finalAmount = clampToThreshold(amount);
+        return dpsBudget.hurt(this, source, finalAmount, x -> super.hurt(source, x));
     }
 
     /** A single burst can't carry him past the next act: it stops just under the threshold. */
@@ -777,7 +799,7 @@ public class ZagredBossEntity extends Monster {
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
-        super.readAdditionalSaveData(tag);
+        dpsBudget.bypass(() -> super.readAdditionalSaveData(tag));         // loading the saved health is not damage
         NbtUtils.readBlockPos(tag, "Arena").ifPresent(p -> arena = p);
         healed = tag.getBoolean("Healed");
         adapted = tag.getString("Adapted");

@@ -25,6 +25,7 @@ public final class RelicClient {
 
     public static void init(IEventBus modBus) {
         com.newuniverse.nusmp.client.relics.worn.WornRenderers.init();                  // the per-relic worn renderers (the boss relics)
+        com.newuniverse.nusmp.client.relics.worn.lib.WornLibClient.init(modBus);         // 1.29.0: the worn model library, its reload hook and the ambient particles
         com.newuniverse.nusmp.client.relics.item.ItemFxClient.init(modBus);             // relic bow / crossbow item properties, holder tracking, state variants
         modBus.addListener(RelicActKeys::register);
         modBus.addListener(RelicTooltip::factories);

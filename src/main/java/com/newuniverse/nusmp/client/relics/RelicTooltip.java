@@ -15,6 +15,8 @@ import com.newuniverse.nusmp.relics.RelicEngine;
 import com.newuniverse.nusmp.relics.RelicSlot;
 import com.newuniverse.nusmp.relics.Relics;
 import com.newuniverse.nusmp.relics.UseRules;
+import com.newuniverse.nusmp.relics.tier.TierRules;
+import com.newuniverse.nusmp.relics.tier.Tiers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -76,7 +78,7 @@ public final class RelicTooltip {
         e.setMaxWidth(maxWidth);
         List<Either<FormattedText, TooltipComponent>> els = e.getTooltipElements();
         if (!els.isEmpty() && !(stack.getItem() instanceof RelicBearer) && els.get(0).left().orElse(null) instanceof Component name) {
-            els.set(0, Either.left(name.copy().withStyle(def.grade().colour())));              // an item the mod already had: its name in the grade's colour
+            els.set(0, Either.left(name.copy().withStyle(Tiers.effectiveGrade(stack, def).colour())));              // an item the mod already had: its name in the grade's colour
         }
         int others = Math.max(0, els.size() - 1);
         int maxHeight = Math.max(60, e.getScreenHeight() - 28 - others * LINE);
@@ -97,7 +99,8 @@ public final class RelicTooltip {
         if (!UiTheme.anime()) return;
         RelicDef def = Relics.defOf(e.getItemStack());
         if (def == null) return;
-        int c = 0xFF000000 | (def.grade() == Grade.GENESIS ? rainbow() : def.grade().rgb());
+        Grade eg = Tiers.effectiveGrade(e.getItemStack(), def);
+        int c = 0xFF000000 | (eg == Grade.GENESIS ? rainbow() : eg.rgb());
         e.setBackgroundStart(0xF2101A30);
         e.setBackgroundEnd(0xF2070B16);
         e.setBorderStart(c);
@@ -145,10 +148,10 @@ public final class RelicTooltip {
             int yy = 0;
             boolean anime = UiTheme.anime();
             for (Row r : rows) {
-                if (!r.blank()) g.drawString(font, r.text(), r.indent(), yy, color(d.def(), r.tag()), true);
+                if (!r.blank()) g.drawString(font, r.text(), r.indent(), yy, color(d.def(), d.stack(), r.tag()), true);
                 yy += LINE;
             }
-            if (anime) g.fill(0, LINE - 1, Math.round(l.width() / l.scale()), LINE, UiMath.withAlpha(color(d.def(), GRADE), 0.45f));      // a hairline under the grade row
+            if (anime) g.fill(0, LINE - 1, Math.round(l.width() / l.scale()), LINE, UiMath.withAlpha(color(d.def(), d.stack(), GRADE), 0.45f));      // a hairline under the grade row
             if (l.pageCount() > 1) {
                 String foot = anime ? UiLang.get(UiLang.NOTICE, UiLang.get("nusmp.ui.relic.pages", RelicTooltip.page + 1, l.pageCount()))
                         : RelicTooltipLayout.footer(RelicTooltip.page, l.pageCount()) + "  (mouse wheel)";
@@ -158,9 +161,10 @@ public final class RelicTooltip {
         }
     }
 
-    private static int color(RelicDef def, int tag) {
+    private static int color(RelicDef def, ItemStack stack, int tag) {
+        Grade g = Tiers.effectiveGrade(stack, def);
         return switch (tag) {
-            case GRADE -> 0xFF000000 | (def.grade() == Grade.GENESIS ? rainbow() : def.grade().rgb());
+            case GRADE -> 0xFF000000 | (g == Grade.GENESIS ? rainbow() : g.rgb());
             case SLOT -> 0xFF8899AA;
             case ATTUNED -> 0xFF55FFFF;
             case HINT_ATTUNE -> 0xFFCC99FF;
@@ -192,9 +196,11 @@ public final class RelicTooltip {
         ItemStack stack = d.stack();
         Minecraft mc = Minecraft.getInstance();
         List<Para> out = new ArrayList<>();
-        Grade g = def.grade();
+        Grade g = Tiers.effectiveGrade(stack, def);                                           // 1.29.0: the effective grade
         out.add(new Para(g.stars() + "  " + g.label() + (def.isVessel() ? "  (can hold a Djinn)" : ""), GRADE));
+        if (g != def.grade()) out.add(new Para(I18n.get("nusmp.tier.tooltip.raised", def.grade().label(), Tiers.steps(stack, def)), PASSIVE));
         out.add(new Para("Slot: " + def.slot().label() + (def.slot().isCurio() ? " (Curios)" : ""), SLOT));
+        if (def.isPairHalf()) out.add(new Para(I18n.get("tooltip.nusmp.relic.pair_needs", I18n.get("item.nusmp." + def.pairPartnerId())), HINT_ATTUNE));      // 1.29.0: "Pair: needs <the other half>"
         boolean mine = mc.player != null && Attune.isMine(stack, mc.player);
         if (def.needsAttunement()) {
             UUID owner = Attune.owner(stack);
@@ -235,9 +241,10 @@ public final class RelicTooltip {
             out.add(new Para("▸ " + a.displayName(), ACT));
             StringBuilder b = new StringBuilder();
             b.append(how(def, i)).append(". ");
-            if (a.manaPercent() > 0) b.append("Mana ").append(a.manaPercent()).append("%. ");
-            if (a.epPercentCost() > 0) b.append("Existence ").append(trim(a.epPercentCost())).append("%. ");
-            if (a.cooldownTicks() > 0) b.append("Cooldown ").append(UseRules.span(a.cooldownTicks())).append(". ");
+            double costF = Tiers.multiplier(stack, def, TierRules.Stat.COST), cdF = Tiers.multiplier(stack, def, TierRules.Stat.COOLDOWN);      // 1.29.0: a raised relic costs less
+            if (a.manaPercent() > 0) b.append("Mana ").append(trim(a.manaPercent() * costF)).append("%. ");
+            if (a.epPercentCost() > 0) b.append("Existence ").append(trim(a.epPercentCost() * costF)).append("%. ");
+            if (a.cooldownTicks() > 0) b.append("Cooldown ").append(UseRules.span((int) Math.round(a.cooldownTicks() * cdF))).append(". ");
             if (a.usesPerDay() > 0) b.append(a.usesPerDay()).append(" a day (").append(Math.min(a.usesPerDay(), RelicEngine.usesLeft(stack, a, now))).append(" left). ");
             if (a.holdTicks() > 0) b.append("Hold ").append(UseRules.span(a.holdTicks())).append(". ");
             if (a.sneakRequired()) b.append("Sneak. ");

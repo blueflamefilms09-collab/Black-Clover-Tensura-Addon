@@ -1,0 +1,24 @@
+package com.newuniverse.nusmp.client.relics.worn.lib;
+
+import com.newuniverse.nusmp.client.relics.fx.RelicFxClient;
+import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
+
+/**
+ * Wires the worn model library into the client: forgets the parsed models and the catalog on every resource reload (so a resource pack can replace them), and
+ * starts the ambient particles. One call from {@code RelicClient.init}.
+ */
+public final class WornLibClient {
+    private WornLibClient() {}
+
+    public static void init(IEventBus modBus) {
+        modBus.addListener((RegisterClientReloadListenersEvent e) ->
+                e.registerReloadListener((ResourceManagerReloadListener) mgr -> {
+                    WornModels.clear();
+                    WornLibrary.clear();
+                    ArmorGlow.clear();
+                }));
+        RelicFxClient.init();
+    }
+}

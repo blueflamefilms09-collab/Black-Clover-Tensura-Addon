@@ -67,6 +67,6 @@ final class Wave12Data {
     /** The id of the relic in the player's main hand, or "". */
     static String heldId(ServerPlayer p) {
         ItemStack s = p.getMainHandItem();
-        return s.isEmpty() ? "" : Relics.of(s).map(RelicDef::id).orElse("");
+        return s.isEmpty() ? "" : Relics.of(s).map(RelicDef::pairBaseId).orElse("");
     }
 }

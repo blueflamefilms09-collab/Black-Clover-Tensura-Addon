@@ -85,7 +85,7 @@ import java.util.UUID;
  * Moves run on the server only. Subclasses override the hooks {@link #onPowerChanged}, {@link #onGatesOpened}, {@link #bossTick},
  * {@link #onFightStart}, {@link #onFightEnd}.
  */
-public abstract class ZogratisBoss extends Monster {
+public abstract class ZogratisBoss extends Monster implements com.newuniverse.nusmp.boss.budget.BudgetedBoss {
     public static final int FORM_BASE = 0, FORM_HYBRID = 1, FORM_DIVINE = 2;
     public static final int STATE_IDLE = 0, STATE_COMBAT = 1, STATE_CASTING = 2, STATE_TRANSFORMING = 3, STATE_RECOVERING = 4, STATE_DEAD = 5;
 
@@ -114,6 +114,8 @@ public abstract class ZogratisBoss extends Monster {
 
     private record BlockEdit(BlockPos pos, BlockState to) {}
 
+    /** 1.29.0 per-second damage budget of this one boss (docs/boss_dps_budget.md); null only while the constructors of Entity run. */
+    private final com.newuniverse.nusmp.boss.budget.BossBudget dpsBudget = new com.newuniverse.nusmp.boss.budget.BossBudget();
     private final ServerBossEvent bar = new ServerBossEvent(Component.empty(), BossEvent.BossBarColor.PURPLE, BossEvent.BossBarOverlay.PROGRESS);
     private final Set<UUID> fighters = new HashSet<>();
     private final BlockLedger ledger = new BlockLedger(this::serverLevel);
@@ -387,6 +389,26 @@ public abstract class ZogratisBoss extends Monster {
         bar.setName(Component.literal(barTitle()).withStyle(chatColor()));
         bar.setColor(barColor());
         com.newuniverse.nusmp.boss.bar.BossBarSync.update(this, bar);     // 1.25.0: the animated boss bar's style (tints, phase, rage) goes to the watchers
+    }
+
+    // ================================================================ the per-second damage budget (1.29.0)
+    @Override public com.newuniverse.nusmp.boss.budget.BossBudget budget() { return dpsBudget; }
+
+    /** The power stage 0..4; the Gates (4) are the final stage. */
+    @Override public int budgetStage() { return PowerCurve.stage(power()); }
+
+    @Override public int budgetFinalStage() { return 4; }
+
+    @Override
+    public void baseTick() {
+        super.baseTick();
+        dpsBudget.tick(this, this);
+    }
+
+    /** Every fall of health (true damage, a mod, the last step of /kill) is cut to the budget; heals and the boss's own restores pass. */
+    @Override
+    public void setHealth(float health) {
+        super.setHealth(dpsBudget == null ? health : dpsBudget.setHealth(this, health));
     }
 
     @Override
@@ -907,7 +929,8 @@ public abstract class ZogratisBoss extends Monster {
     // ================================================================ damage, death, removal
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (level().isClientSide || source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return super.hurt(source, amount);
+        if (level().isClientSide) return super.hurt(source, amount);
+        if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return dpsBudget.hurt(this, source, amount, x -> super.hurt(source, x));   // /kill and the void are capped too
         if (fightEnded || (transformLeft > 0 && level().getGameTime() < transformDeadline)) return false;
         Entity attacker = source.getEntity();
         if (attacker != null && ZogratisEntities.isFamily(attacker)) return false;
@@ -921,7 +944,7 @@ public abstract class ZogratisBoss extends Monster {
         if (exposed()) a *= EXPOSED_BONUS;
         else a = mitigate(source, a);
         a = PowerCurve.clampDamage(getHealth(), getMaxHealth(), due, a);
-        return a > 0f && super.hurt(source, a);
+        return a > 0f && dpsBudget.hurt(this, source, a, x -> super.hurt(source, x));
     }
 
     private void noteFighter(Entity attacker) {
@@ -979,7 +1002,7 @@ public abstract class ZogratisBoss extends Monster {
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
-        super.readAdditionalSaveData(tag);
+        dpsBudget.bypass(() -> super.readAdditionalSaveData(tag));         // loading the saved health is not damage
         int p = tag.contains("ZPower") ? tag.getInt("ZPower") : PowerCurve.OPENING;
         entityData.set(POWER, Math.max(0, Math.min(PowerCurve.FULL, p)));
         entityData.set(FORM, tag.getInt("ZForm"));

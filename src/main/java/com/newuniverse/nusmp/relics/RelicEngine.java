@@ -2,6 +2,9 @@ package com.newuniverse.nusmp.relics;
 
 import com.newuniverse.nusmp.NUConfig;
 import com.newuniverse.nusmp.item.CuriosLink;
+import com.newuniverse.nusmp.relics.tier.ActPower;
+import com.newuniverse.nusmp.relics.tier.TierRules;
+import com.newuniverse.nusmp.relics.tier.Tiers;
 import io.github.manasmods.tensura.storage.TensuraStorages;
 import io.github.manasmods.tensura.util.EnergyHelper;
 import net.minecraft.ChatFormatting;
@@ -404,19 +407,23 @@ public final class RelicEngine {
             tell(p, act.displayName() + ": no uses left today (they return at dawn).", ChatFormatting.GRAY);
             return false;
         }
-        if (!pay(p, act)) return false;
+        if (!pay(p, act, Tiers.multiplier(stack, def, TierRules.Stat.COST))) return false;          // 1.29.0: a raised relic spends less
         if (act.toggles()) flip(p, def, act);
         if (act.usesPerDay() > 0) recordUse(stack, act, now);
         if (act.cooldownTicks() > 0) {
-            long until = UseRules.readyAt(now, act.cooldownTicks());
+            int cd = Math.max(1, (int) Math.round(act.cooldownTicks() * Tiers.multiplier(stack, def, TierRules.Stat.COOLDOWN)));     // 1.29.0: a raised relic recovers sooner
+            long until = UseRules.readyAt(now, cd);
             setCooldown(p, def, act, until);
-            if (def.acts().size() == 1 && !def.isAdopted() && !def.isRanged() && def.slot().isHand()) p.getCooldowns().addCooldown(stack.getItem(), act.cooldownTicks());
+            if (def.acts().size() == 1 && !def.isAdopted() && !def.isRanged() && def.slot().isHand()) p.getCooldowns().addCooldown(stack.getItem(), cd);
         }
         p.displayClientMessage(Component.literal(act.displayName()).withStyle(def.grade().colour()), true);
+        double previousPower = ActPower.begin(Tiers.multiplier(stack, def, TierRules.Stat.ACT_POWER));      // 1.29.0: Fx damage inside this act is scaled by the tier
         try {
             act.body().run(new ActCtx(p, stack, def, sneaking, chargeTicks));
         } catch (RuntimeException | LinkageError failed) {
             org.slf4j.LoggerFactory.getLogger("nusmp").error("[nusmp] relic {} act {} failed", def.id(), act.key(), failed);
+        } finally {
+            ActPower.end(previousPower);
         }
         return true;
     }
@@ -426,13 +433,13 @@ public final class RelicEngine {
      * Costs run on base Tensura only: mana is magicules (then aura for what they cannot cover, like the Kotodama words), existence points are the
      * magicule and aura pools both (never below 10% of either). No pool or meter of the relics' own.
      */
-    private static boolean pay(ServerPlayer p, Act act) {
+    private static boolean pay(ServerPlayer p, Act act, double costFactor) {
         if (p.isCreative() || (act.manaPercent() <= 0 && act.epPercentCost() <= 0)) return true;
         var ex = TensuraStorages.getExistenceFrom(p);
         if (ex == null) return true;                                                    // no Tensura data: nothing to spend
         double maxM = EnergyHelper.getMaxMagicule(p), maxA = EnergyHelper.getMaxAura(p);
         double mag = ex.getMagicule(), aura = ex.getAura();
-        double ep = act.epPercentCost();
+        double ep = act.epPercentCost() * costFactor;
         if (ep > 0) {
             CostMath.Spend m = CostMath.spend(mag, maxM, ep, CostMath.EP_FLOOR);
             CostMath.Spend a = CostMath.spend(aura, maxA, ep, CostMath.EP_FLOOR);
@@ -444,7 +451,7 @@ public final class RelicEngine {
             aura = a.after();
         }
         if (act.manaPercent() > 0) {
-            CostMath.Pooled c = CostMath.spendPooled(mag, aura, maxM * act.manaPercent() / 100.0 * NUConfig.DM_COST_MULT.get());
+            CostMath.Pooled c = CostMath.spendPooled(mag, aura, maxM * act.manaPercent() * costFactor / 100.0 * NUConfig.DM_COST_MULT.get());
             if (!c.ok()) {
                 tell(p, act.displayName() + ": not enough mana.", ChatFormatting.RED);
                 return false;
@@ -483,7 +490,7 @@ public final class RelicEngine {
         return d.getCompound(name);
     }
 
-    private static String key(RelicDef def, Act act) { return def.id() + "/" + act.key(); }
+    private static String key(RelicDef def, Act act) { return def.pairBaseId() + "/" + act.key(); }      // 1.29.0: both halves of a pair share their cooldowns
 
     /** The game time this act is ready again (0 if never used). */
     public static long cooldownReadyAt(Player p, RelicDef def, Act act) {
@@ -494,6 +501,10 @@ public final class RelicEngine {
     private static void setCooldown(ServerPlayer p, RelicDef def, Act act, long readyAt) {
         sub(p, CD, true).putLong(key(def, act), readyAt);
         PacketDistributor.sendToPlayer(p, new RelicCooldownPayload(def.id(), act.key(), readyAt));
+        if (def.isPairHalf()) {                                                       // the HUD of the other half shows the same wait
+            String other = def.pairPartnerId();
+            if (other != null) PacketDistributor.sendToPlayer(p, new RelicCooldownPayload(other, act.key(), readyAt));
+        }
     }
 
     /** Tells the client every cooldown still running (after login or a respawn). */
@@ -507,6 +518,8 @@ public final class RelicEngine {
             int slash = k.indexOf('/');
             if (until <= now || slash <= 0) { done.add(k); continue; }
             PacketDistributor.sendToPlayer(p, new RelicCooldownPayload(k.substring(0, slash), k.substring(slash + 1), until));
+            RelicDef pd = Relics.byId(k.substring(0, slash));
+            if (pd != null && pd.hasPair()) PacketDistributor.sendToPlayer(p, new RelicCooldownPayload(pd.pairPartnerId(), k.substring(slash + 1), until));      // 1.29.0: the left half's HUD
         }
         for (String k : done) cd.remove(k);
     }
@@ -514,7 +527,8 @@ public final class RelicEngine {
     /** Is the toggle ability switched on for this player? */
     public static boolean isOn(Player p, String relicId, String actKey) {
         CompoundTag on = sub(p, ON, false);
-        return on != null && on.getBoolean(relicId + "/" + actKey);
+        RelicDef d = Relics.byId(relicId);
+        return on != null && on.getBoolean((d == null ? relicId : d.pairBaseId()) + "/" + actKey);
     }
 
     private static void flip(ServerPlayer p, RelicDef def, Act act) {

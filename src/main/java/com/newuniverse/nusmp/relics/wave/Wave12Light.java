@@ -2,6 +2,10 @@ package com.newuniverse.nusmp.relics.wave;
 
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
+import com.newuniverse.nusmp.relics.RelicDef;
+import com.newuniverse.nusmp.relics.Relics;
+import com.newuniverse.nusmp.relics.pair.PairHooks;
+import com.newuniverse.nusmp.relics.pair.PairRules;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -101,19 +105,27 @@ final class Wave12Light {
         }
         int hit = 0;
         for (LivingEntity t : Fx.foesAround(p, 3.5)) {
-            Wave0Util.extra(p, t, 6.0f, "minecraft:player_attack");                     // 1d6 + 1d6 (+ the extra 1d6) of piercing, spun
+            Wave0Util.extra(p, t, 6.0f * PairRules.factor(PairHooks.active(p)), "minecraft:player_attack");      // 1d6 + 1d6 (+ the extra 1d6) of piercing, spun; one blade alone spins weaker
             t.knockback(0.4, p.getX() - t.getX(), p.getZ() - t.getZ());
             hit++;
         }
         Wave5Aim.msg(p, hit > 0 ? "Whirling Blades: " + hit + " struck." : "Whirling Blades spin and find no one.", ChatFormatting.AQUA);
     }
 
-    /** Every blow carries one blade's own bite in turn: the cold one slows, the hot one burns. */
+    /**
+     * The main-hand blade's own bite after a blow: the right blade is the hot one (a flame), the left the cold one (a chill). With the pair in hand the
+     * off-hand blade strikes its own blow too ({@link #bladeOffHand}), so a swing carries both, as the card says.
+     */
     static void bladeBlow(ServerPlayer p, LivingEntity t) {
-        CompoundTag d = Wave12Data.player(p);
-        int blow = d.getInt("blow");
-        d.putInt("blow", blow + 1);
-        if (Wave12Rules.coldBlade(blow)) {
+        RelicDef d = Relics.defOf(p.getMainHandItem());
+        bite(p, t, d != null && d.isPairLeft());
+    }
+
+    /** The off-hand blade's blow: its own bite. */
+    static void bladeOffHand(ServerPlayer p, LivingEntity t, RelicDef off) { bite(p, t, off.isPairLeft()); }
+
+    private static void bite(ServerPlayer p, LivingEntity t, boolean cold) {
+        if (cold) {
             Fx.addEffect(t, "minecraft:slowness", 30, 0);
             Fx.addEffect(t, "tensura:frost", 40, 0);
             Wave5Aim.puff(p.serverLevel(), t.position().add(0, t.getBbHeight() * 0.6, 0), ParticleTypes.SNOWFLAKE, 6, 0.3);
@@ -136,7 +148,7 @@ final class Wave12Light {
                 || (t instanceof Mob m && m.getNavigation() instanceof FlyingPathNavigation);
         boolean boss = t.getType().is(net.neoforged.neoforge.common.Tags.EntityTypes.BOSSES);
         boolean prone = Wave12Rules.hookable(t.getBbWidth(), t.getBbHeight(), flies) && Wave12Rules.hookHolds(t.getMaxHealth(), boss);
-        Wave0Util.extra(p, t, prone ? 3.5f : 2.5f, "minecraft:player_attack");        // 1d6 on a hold, 1d4 when it slips
+        Wave0Util.extra(p, t, (prone ? 3.5f : 2.5f) * PairRules.factor(PairHooks.active(p)), "minecraft:player_attack");        // 1d6 on a hold, 1d4 when it slips; one hook alone bites less
         if (!prone) {
             Wave5Aim.msg(p, "The hook slips.", ChatFormatting.GRAY);
             return;
@@ -150,6 +162,11 @@ final class Wave12Light {
         Fx.addEffect(t, "minecraft:weakness", 40, 0);
         Wave5Aim.sound(p.serverLevel(), t.position(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, 0.8f, 1.0f);
         Wave5Aim.msg(p, flies ? "Hooked out of the air." : "Swept off its feet.", ChatFormatting.GREEN);
+    }
+
+    /** The off-hand hook's blow: the foe is caught for a moment. */
+    static void hookOffHand(ServerPlayer p, LivingEntity t, RelicDef off) {
+        Fx.addEffect(t, "minecraft:slowness", 20, 1);
     }
 
     /** Every tick, only while pushed against a wall off the ground: the hooks bite and hold (a slow climb; sneak to hang still). */

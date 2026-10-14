@@ -6,6 +6,10 @@ import com.newuniverse.nusmp.relics.RelicBearer;
 import com.newuniverse.nusmp.relics.RelicDef;
 import com.newuniverse.nusmp.relics.RelicRangedSupport;
 import com.newuniverse.nusmp.relics.Relics;
+import com.newuniverse.nusmp.relics.socket.SocketCatalog;
+import com.newuniverse.nusmp.relics.socket.SocketComponents;
+import com.newuniverse.nusmp.relics.socket.SocketDef;
+import com.newuniverse.nusmp.relics.socket.SocketGrades;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -25,8 +29,10 @@ import java.util.function.Predicate;
  * <ol>
  *   <li><b>stage</b> ({@link RangedStage}): a relic bow or crossbow by its draw and load; the two self-loading crossbows (Bolt Thrower, Crossbow of
  *       Swift Death) are CHARGED when ready and SPENT while their use cooldown runs;</li>
- *   <li><b>variants</b> ({@link VariantRules}): GENESIS (the stack's grade, or the holder's Genesis body flag) and FIVE LEAF (the holder's grimoire, for
- *       Black Clover weapons);</li>
+ *   <li><b>variants</b> ({@link VariantRules}): GENESIS (the stack's effective tier from Legend up, or the holder's Genesis body flag) and FIVE LEAF (the
+ *       holder's grimoire, for Black Clover weapons);</li>
+ *   <li><b>socket</b> (1.29.0, relics/socket): a stack with a bound Spirit or Devil carries its colour in {@link Result#socketRgb}, which the renderer
+ *       draws as an extra emissive pass; the ambient particles are {@link SocketFx}'s (a client tick, not a draw call);</li>
  *   <li><b>mesh</b>: the first of the candidates the mesh set really has; if the variant has no mesh of its own the glow is intensified or tinted.</li>
  * </ol>
  */
@@ -36,10 +42,15 @@ public final class ItemStateVariants {
     /** The persistent-data key of a player whose body is Genesis (server side; mirrored to clients by relics/RelicHolderSync). */
     public static final String GENESIS_KEY = "TensuraGenesisBody";
 
-    /** The answer for one draw. {@code intensify}: pulse harder and add an emissive pass; {@code tint}: violet-black glow. */
-    public record Result(String meshId, boolean intensify, boolean tint) {}
+    /**
+     * The answer for one draw. {@code intensify}: pulse harder and add an emissive pass; {@code tint}: violet-black glow; {@code socketRgb}: the 0xRRGGBB
+     * of the bound socket's element for an extra emissive pass in that colour (0 = no socket).
+     */
+    public record Result(String meshId, boolean intensify, boolean tint, int socketRgb) {
+        public Result(String meshId, boolean intensify, boolean tint) { this(meshId, intensify, tint, 0); }
+    }
 
-    private record Key(String base, int stage, boolean genesis, boolean fiveLeaf) {}
+    private record Key(String base, int stage, boolean genesis, boolean fiveLeaf, int socketRgb) {}
 
     private static final Map<Key, Result> CACHE = new HashMap<>();
 
@@ -51,14 +62,24 @@ public final class ItemStateVariants {
         LivingEntity holder = HolderTracker.holderFor(ctx);
         int stage = stageOf(stack, holder);
         VariantRules.Decision d = decision(stack, holder);
-        Key key = new Key(baseId, stage, d.genesis(), d.fiveLeaf());
+        int socketRgb = socketRgb(stack);
+        Key key = new Key(baseId, stage, d.genesis(), d.fiveLeaf(), socketRgb);
         Result r = CACHE.get(key);
         if (r == null) {
             r = pick(baseId, stage, d, exists);
+            if (socketRgb != 0) r = new Result(r.meshId(), true, r.tint(), socketRgb);     // a socket always gets the stronger glow; the renderer tints the extra pass
             if (CACHE.size() > 512) CACHE.clear();
             CACHE.put(key, r);
         }
         return r;
+    }
+
+    /** The colour of the stack's first bound socket, or 0. Reads the synced component only; no allocation. */
+    static int socketRgb(ItemStack stack) {
+        String id = SocketComponents.firstId(stack);
+        if (id.isEmpty()) return 0;
+        SocketDef d = SocketCatalog.byId(id);
+        return d == null ? 0 : d.rgb() & 0xFFFFFF;                                  // no catalog colour is black, so 0 can mean "no socket"
     }
 
     static Result pick(String baseId, int stage, VariantRules.Decision d, Predicate<String> exists) {
@@ -95,7 +116,8 @@ public final class ItemStateVariants {
     // ---------------------------------------------------------------- the variants
     static VariantRules.Decision decision(ItemStack stack, LivingEntity holder) {
         RelicDef def = Relics.defOf(stack);
-        boolean stackGenesis = def != null && def.grade() == Grade.GENESIS;
+        // 1.29.0: from Legend up (the effective tier: a raised tier counts) a relic wears the "_genesis" mesh if it ships one, else the stronger glow
+        boolean stackGenesis = def != null && (def.grade() == Grade.GENESIS || VariantRules.elaborate(SocketGrades.tier(stack)));
         boolean bc = stack.getItem() instanceof MagicWeaponItem;
         int packed = holder == null ? 0 : HolderFlags.get(holder.getId());
         boolean holderGenesis = HolderFlags.genesis(packed) || (holder != null && genesisBody(holder));

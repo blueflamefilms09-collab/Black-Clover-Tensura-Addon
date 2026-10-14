@@ -110,6 +110,19 @@ public final class RelicCommands {
     private static int give(CommandSourceStack src, ServerPlayer to, String id) {
         RelicDef d = Relics.byId(id);
         if (d == null) return fail(src, "Unknown relic \"" + id + "\".");
+        if (d.isPairHalf()) {                                                               // 1.29.0: a pair is given whole (or the half it lacks)
+            java.util.List<ItemStack> given = com.newuniverse.nusmp.relics.pair.PairGrant.issueMissing(to.serverLevel(), d);
+            if (given.isEmpty())
+                return fail(src, d.cardName() + " already exists in this world as a pair: only one pair may live. (Release it with /multiverse relic order release " + d.pairBaseId() + ".)");
+            StringBuilder names = new StringBuilder();
+            for (ItemStack s : given) {
+                RelicDef gd = Relics.defOf(s);
+                if (names.length() > 0) names.append(" and ");
+                names.append(gd == null ? "a half" : gd.cardName());
+                if (!to.getInventory().add(s)) to.drop(s, false);
+            }
+            return ok(src, "Gave " + names + " to " + to.getName().getString() + ".");
+        }
         ItemStack stack = RelicCatalog.newStack(d);
         if (stack.isEmpty()) return fail(src, d.cardName() + " has no item.");
         if (d.isUnique() && !UniqueLedger.issue(to.serverLevel(), d.id(), stack))

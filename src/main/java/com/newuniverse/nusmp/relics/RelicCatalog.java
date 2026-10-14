@@ -47,7 +47,11 @@ public final class RelicCatalog {
         if (inited) return;
         inited = true;
         List<RelicDef> raw = new ArrayList<>();
-        Consumer<RelicDef> out = raw::add;
+        // 1.29.0: a def that declares a pair (RelicDef.pair) brings its left half along, right after it (see docs/relic_pairs.md)
+        Consumer<RelicDef> out = d -> {
+            raw.add(d);
+            if (d != null && d.hasPair()) raw.add(d.pairLeft());
+        };
         guard("Wave0", () -> Wave0.defs(out));
         guard("Wave1", () -> Wave1.defs(out));
         guard("Wave2", () -> Wave2.defs(out));
@@ -103,6 +107,7 @@ public final class RelicCatalog {
         guard("Wave6 hooks", Wave6::hooks);
         guard("Wave7 hooks", Wave7::hooks);
         guard("later waves hooks", WaveRegistry::hooks);
+        guard("pair hooks", com.newuniverse.nusmp.relics.pair.PairHooks::register);          // 1.29.0: the off-hand strike and the first-login left half
     }
 
     public static List<RelicDef> defs() { return defs; }

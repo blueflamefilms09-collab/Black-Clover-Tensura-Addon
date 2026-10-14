@@ -39,9 +39,9 @@ public class RelicArmorItem extends ArmorItem implements RelicBearer {
 
     @Override public RelicDef relic() { return def; }
 
-    @Override public Component getName(ItemStack stack) { return RelicItemSupport.name(super.getName(stack), def); }
+    @Override public Component getName(ItemStack stack) { return RelicItemSupport.name(super.getName(stack), def, stack); }
 
-    @Override public boolean isFoil(ItemStack stack) { return def.grade().atLeast(Grade.LEGEND) || super.isFoil(stack); }
+    @Override public boolean isFoil(ItemStack stack) { return RelicItemSupport.foil(stack, def) || super.isFoil(stack); }
 
     @Override public UseAnim getUseAnimation(ItemStack stack) { return UseAnim.NONE; }
 

@@ -2042,7 +2042,7 @@ RELICS = [
     ("shroud_of_margins", shroud_of_margins),
     ("circlet_of_quickened_thought", circlet_of_thought),
 ]
-SPECS += [("gauches_hand_mirror", hand_mirror), ("grimoire_chain", grimoire_chain), ("last_word", last_word), ("elsdocia", elsdocia),
+SPECS += [("gauches_hand_mirror", hand_mirror), ("grimoire_chain", grimoire_chain), ("last_word", last_word), ("elsdocia_legacy", elsdocia),     # 1.29.0: the 1.2.0 Elsdocia now writes the *_legacy files; the live one is tools/relics/elsdocia_rebuild.py
           ("magebane_longsword", magebane_longsword), ("prism_blade", prism_blade), ("thundercleave", thundercleave), ("bloodbound_katana", bloodbound_katana),
           ("quicklings_ivy", quicklings_ivy), ("permafrost_sabre", permafrost_sabre), ("cyclone_rapier", cyclone_rapier)]                     # diagonal sprites: placed like the weapons
 
@@ -2484,8 +2484,8 @@ def sprite_box(item_id):
 # 0.52: the katana blades faced the wrong way in hand: their meshes are mirrored across x (edge forward, curve forward)
 FLIP = {"demon_slasher_katana", "miasma_infused_katana"}
 # 0.52: scale about a grip point (fraction along the sprite axis); the trident was too small in hand
-SIZE = {"otherworld_trident": 1.65, "elsdocia": 2.0}         # 1.2.0: Elsdocia is a greatsword the size of the Wizard King's legend
-GRIP = {"otherworld_trident": 0.42, "elsdocia": 0.2}
+SIZE = {"otherworld_trident": 1.65, "elsdocia": 2.0, "elsdocia_legacy": 2.0}         # 1.2.0: Elsdocia is a greatsword the size of the Wizard King's legend
+GRIP = {"otherworld_trident": 0.42, "elsdocia": 0.2, "elsdocia_legacy": 0.2}
 
 
 # the Club of Rot and the Doom Hammer are two-handed: bigger in hand, held where their grips are (fractions along the sprite axis)
@@ -2500,7 +2500,7 @@ REAL = {
     "demon_destroyer_sword": 1.7, "licht_destroyer_sword": 1.7,                                      # the great ones
     "magebane_longsword": 1.25, "rimeheart_runeblade": 1.3, "prism_blade": 1.1, "permafrost_sabre": 1.0,
     "spell_forged_rapier": 1.15, "cyclone_rapier": 1.15,                                             # rapiers
-    "severing_greatsword": 1.8, "thundercleave": 1.6, "elsdocia": 2.3,                              # two-handed greatswords; Elsdocia as in the movie
+    "severing_greatsword": 1.8, "thundercleave": 1.6, "elsdocia": 1.25, "elsdocia_legacy": 2.3,        # two-handed greatswords; Elsdocia 1.29.0: a 1.25 m longsword (legacy mesh kept at 2.3)
     "otherworld_trident": 1.9, "magic_tool_spear": 2.1, "magic_tool_sword": 1.0,
 }
 
@@ -3145,6 +3145,12 @@ def write(item_id, mesh, atlas, extra, fit=False):
                 n += 1
     with open(os.path.join(path, item_id + ".txt"), "w", newline="\n") as f:
         f.write("\n".join(lines) + "\n")
+    try:                                                         # 1.29.0: the size / orientation fixes of tools/relics/weapon_fixes.json
+        sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "relics"))
+        import apply_weapon_fixes
+        apply_weapon_fixes.apply_file(os.path.join(path, item_id + ".txt"), item_id)
+    except ImportError:
+        pass
     tdir = os.path.join(ASSETS, "textures", "entity", "weapon")
     os.makedirs(tdir, exist_ok=True)
     Image.fromarray(np.clip(atlas.img, 0, 255).astype(np.uint8), "RGBA").save(os.path.join(tdir, item_id + ".png"), optimize=True)

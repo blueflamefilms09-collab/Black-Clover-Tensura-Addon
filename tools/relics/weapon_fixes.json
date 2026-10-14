@@ -1,0 +1,204 @@
+{
+ "_doc": "Per-id size / orientation corrections of the baked weapon meshes; applied by tools/relics/apply_weapon_fixes.py (keys: apparent, extent, scale, grip, flip_x, rotate_z, head, orient_manual, note). A state mesh (needler_pull1 ...) uses its base id's entry.",
+ "astralaria": {
+  "flip_x": true,
+  "apparent": 1.3,
+  "head": {
+   "k": 1.39
+  },
+  "note": "auto: head_small,head_toward_player"
+ },
+ "axe_of_the_crimson_saint": {
+  "apparent": 1.17,
+  "head": {
+   "k": 1.68
+  },
+  "note": "auto: small,head_small"
+ },
+ "axe_of_the_exile": {
+  "flip_x": true,
+  "apparent": 0.77,
+  "head": {
+   "k": 2.12
+  },
+  "note": "auto: small,head_small,head_toward_player"
+ },
+ "bloodbound_katana": {
+  "apparent": 1.17,
+  "note": "auto: small"
+ },
+ "bottle_blade": {
+  "apparent": 0.87,
+  "note": "auto: small"
+ },
+ "butcher_cleaver": {
+  "apparent": 0.638,
+  "head": {
+   "k": 1.84
+  },
+  "note": "auto: small,head_small"
+ },
+ "caesars_gladius": {
+  "apparent": 0.87,
+  "note": "auto: small"
+ },
+ "devil_contract": {
+  "extent": 0.432,
+  "note": "auto: small"
+ },
+ "doom_hammer": {
+  "flip_x": true,
+  "note": "auto: head_toward_player"
+ },
+ "druidic_blade": {
+  "apparent": 0.87,
+  "note": "auto: small"
+ },
+ "fortune_die": {
+  "extent": 0.432,
+  "note": "auto: small"
+ },
+ "frostfang": {
+  "apparent": 1.15,
+  "head": {
+   "k": 1.79
+  },
+  "note": "auto: head_small"
+ },
+ "heart_of_the_flame": {
+  "apparent": 1.64,
+  "note": "auto: small"
+ },
+ "hunger": {
+  "flip_x": true,
+  "apparent": 1.74,
+  "head": {
+   "k": 1.92
+  },
+  "note": "auto: small,head_small,head_toward_player"
+ },
+ "jade_xiphos": {
+  "apparent": 0.87,
+  "note": "auto: small"
+ },
+ "junglethorn_whip": {
+  "apparent": 1.3,
+  "note": "auto: small"
+ },
+ "leviathan_axe": {
+  "flip_x": true,
+  "apparent": 0.78,
+  "head": {
+   "k": 1.84
+  },
+  "note": "auto: head_small,head_toward_player"
+ },
+ "liquid_sword": {
+  "apparent": 1.17,
+  "note": "auto: small"
+ },
+ "magic_tool_sword": {
+  "apparent": 1.17,
+  "note": "auto: small"
+ },
+ "marids_valor": {
+  "apparent": 1.087,
+  "note": "auto: small"
+ },
+ "mountainguards_greataxe": {
+  "apparent": 1.74,
+  "head": {
+   "k": 1.17
+  },
+  "note": "auto: small,head_small"
+ },
+ "needler": {
+  "apparent": 0.787,
+  "note": "auto: small"
+ },
+ "random_axe_of_charity": {
+  "flip_x": true,
+  "apparent": 0.77,
+  "head": {
+   "k": 2.05,
+   "ky": 1.35
+  },
+  "note": "auto: small,head_small,head_toward_player"
+ },
+ "recovery_salve": {
+  "extent": 0.432,
+  "note": "auto: small"
+ },
+ "returning_hand_axe": {
+  "apparent": 0.77,
+  "head": {
+   "k": 1.42
+  },
+  "note": "auto: small,head_small"
+ },
+ "rune_splitter": {
+  "apparent": 1.35,
+  "head": {
+   "k": 1.89
+  },
+  "note": "auto: head_small"
+ },
+ "shadow_burn": {
+  "apparent": 1.64,
+  "note": "auto: small"
+ },
+ "sidras_swearing_sword": {
+  "apparent": 0.87,
+  "note": "auto: small"
+ },
+ "sorrows_edge": {
+  "flip_x": true,
+  "apparent": 1.25,
+  "head": {
+   "k": 2.9
+  },
+  "note": "auto: head_small,head_toward_player"
+ },
+ "spirit_charm": {
+  "extent": 0.432,
+  "note": "auto: small"
+ },
+ "stegosaurus_greatsword": {
+  "apparent": 1.64,
+  "note": "auto: small"
+ },
+ "sword_crystal": {
+  "apparent": 1.17,
+  "note": "auto: small"
+ },
+ "the_lumberjack": {
+  "apparent": 1.17,
+  "head": {
+   "k": 1.49
+  },
+  "note": "auto: small,head_small"
+ },
+ "thornblight": {
+  "apparent": 0.77,
+  "head": {
+   "k": 1.12
+  },
+  "note": "auto: small,head_small"
+ },
+ "viper_whip": {
+  "apparent": 1.1,
+  "note": "a coiled whip: the handle is the length, the coil is held at the end"
+ },
+ "wavebreaker": {
+  "apparent": 1.64,
+  "note": "auto: small"
+ },
+ "white_whip_of_welting": {
+  "apparent": 1.5,
+  "note": "auto: small"
+ },
+ "written_consent": {
+  "extent": 0.432,
+  "note": "auto: small"
+ }
+}

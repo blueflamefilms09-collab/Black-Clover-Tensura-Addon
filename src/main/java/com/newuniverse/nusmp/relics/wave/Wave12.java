@@ -43,7 +43,11 @@ public final class Wave12 {
     }
 
     /** Registers the wave's game-bus listeners (called once from the mod constructor, through the catalog). */
-    public static void hooks() { Wave12Hooks.register(); }
+    public static void hooks() {
+        Wave12Hooks.register();
+        com.newuniverse.nusmp.relics.pair.PairEffects.onOffHand(Wave12Light.BLADES, Wave12Light::bladeOffHand);          // 1.29.0: the off-hand blade's own bite
+        com.newuniverse.nusmp.relics.pair.PairEffects.onOffHand(Wave12Light.HOOKS, Wave12Light::hookOffHand);
+    }
 
     // ---------------------------------------------------------------- the weapons
     private static RelicDef jawblade() {
@@ -79,12 +83,13 @@ public final class Wave12 {
     }
 
     private static RelicDef blades() {
-        return RelicDef.of("whirling_blades", "Whirling Blades", Grade.RARE, RelicSlot.MAIN_HAND)
+        return RelicDef.of("whirling_blades", "Whirling Blade (Right)", Grade.RARE, RelicSlot.MAIN_HAND)
+                .pair("Whirling Blade (Left)")
                 .model3d().look(Look.SWORD).palette(0x4A4A52, 0x3FE0D0, 0xFF6A4A)
-                .desc("Two curved swords, one cold and one hot, struck as a pair: every blow carries a chill or a flame in turn. Right-click joins their ends in a spin attack that hits everything around you.")
+                .desc("One of two curved swords that come as a pair, this one hot (its twin is cold): a blow carries a flame, and with the other in your off hand a second blow follows with its chill. Right-click joins their ends in a spin attack that hits everything around you.")
                 .passive(Passive.flag(Wave12Light.BLADES_FLAG))
                 .act(Act.of("spin", "Spin Attack", Wave12Light::spin).cooldown(80))
-                .melee(7.0, 2.0)
+                .melee(5.0, 2.0)
                 .engrave("severance", "swift");
     }
 
@@ -124,12 +129,13 @@ public final class Wave12 {
     }
 
     private static RelicDef hookSwords() {
-        return RelicDef.of("twin_hook_swords", "Twin Hook Swords", Grade.NORMAL, RelicSlot.MAIN_HAND)
+        return RelicDef.of("twin_hook_swords", "Twin Hook Sword (Right)", Grade.NORMAL, RelicSlot.MAIN_HAND)
+                .pair("Twin Hook Sword (Left)")
                 .model3d().look(Look.SWORD).palette(0xB4BCC6, 0x1F6E5E, 0xCFE8E0)
-                .desc("A pair of hook swords. Right-click sweeps the leg of a two-legged or winged foe and drags it off its feet; pushed against a wall, the hooks hold you and let you climb a short way (sneak to hang still).")
+                .desc("One of a pair of hook swords. Right-click sweeps the leg of a two-legged or winged foe and drags it off its feet; with both swords in your hands a second blow follows each strike, and pushed against a wall the hooks hold you and let you climb a short way (sneak to hang still).")
                 .passive(Passive.flag(Wave12Light.HOOKS_FLAG))
                 .act(Act.of("sweep_leg", "Sweep the Leg", Wave12Light::sweepLeg).cooldown(80))
-                .melee(5.0, 2.4)
+                .melee(3.8, 2.4)
                 .engrave("swift", "sturdy");
     }
 

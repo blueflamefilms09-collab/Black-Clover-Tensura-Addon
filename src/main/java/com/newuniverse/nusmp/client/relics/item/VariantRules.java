@@ -87,6 +87,19 @@ public final class VariantRules {
 
     private static int mix(int from, int to) { return Math.round(from + (to - from) * VIOLET_MIX); }
 
+    // ---------------------------------------------------------------- 1.29.0: sockets and tiers
+    /** From this effective tier (Legend) a relic wears the more elaborate look. */
+    public static final int ELABORATE_TIER = 5;
+
+    /** Does a stack of this effective tier (1 Normal to 7 Genesis) get the "_genesis" mesh / stronger glow? */
+    public static boolean elaborate(int tier) { return tier >= ELABORATE_TIER; }
+
+    /** Alpha (0 to 255) of the socket's extra emissive pass: it breathes slower than the Genesis one, between about 70 and 150. */
+    public static int socketAlpha(float time) { return Math.round(110f + 40f * (float) Math.sin(time * 0.13f)); }
+
+    /** The colour of the socket pass as ARGB: the element colour at the breathing alpha. */
+    public static int socketArgb(int rgb, float time) { return socketAlpha(time) << 24 | (rgb & 0xFFFFFF); }
+
     /** Alpha (0 to 255) of the extra additive emissive pass of an intensified glow: it breathes between about 60 and 160. */
     public static int emissiveAlpha(float time) { return Math.round(110f + 50f * (float) Math.sin(time * 0.21f)); }
 

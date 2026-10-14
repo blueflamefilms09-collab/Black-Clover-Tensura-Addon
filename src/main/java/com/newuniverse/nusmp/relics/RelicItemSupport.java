@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.relics;
 
+import com.newuniverse.nusmp.relics.tier.Tiers;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -27,6 +28,12 @@ final class RelicItemSupport {
 
     /** The item's name in the grade's colour. */
     static Component name(Component base, RelicDef def) { return base.copy().withStyle(def.grade().colour()); }
+
+    /** 1.29.0: the name in the colour of the stack's EFFECTIVE grade (a raised relic takes the colour of the grade it was raised to). */
+    static Component name(Component base, RelicDef def, ItemStack stack) { return base.copy().withStyle(Tiers.effectiveGrade(stack, def).colour()); }
+
+    /** 1.29.0: the glint from LEGEND up, by the effective grade. */
+    static boolean foil(ItemStack stack, RelicDef def) { return Tiers.effectiveGrade(stack, def).atLeast(Grade.LEGEND); }
 
     /** While the use button is held on a relic: the attunement clock, or a charge message. Server only. */
     static void onUseTick(Level level, LivingEntity user, ItemStack stack, int remaining, RelicDef def) {

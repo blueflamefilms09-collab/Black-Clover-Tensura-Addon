@@ -40,21 +40,40 @@ public final class RelicLoot {
      * EMPTY if every relic of that range already lives. Consumables are never rolled.
      */
     public static ItemStack rollUnissued(ServerLevel level, RandomSource rng, Grade min, Grade max) {
-        if (level == null || level.getServer() == null) return ItemStack.EMPTY;
+        List<ItemStack> all = rollUnissuedAll(level, rng, min, max);
+        return all.isEmpty() ? ItemStack.EMPTY : all.get(0);
+    }
+
+    /**
+     * The same, as every stack the roll yields: one for a plain relic, BOTH halves for a pair (1.29.0). A pair is rolled only while neither half lives,
+     * and counts as one relic in the weights; the left half is never rolled on its own.
+     */
+    public static List<ItemStack> rollUnissuedAll(ServerLevel level, RandomSource rng, Grade min, Grade max) {
+        List<ItemStack> none = new ArrayList<>();
+        if (level == null || level.getServer() == null) return none;
         Set<String> live = UniqueLedger.liveIds(level.getServer());
         List<RelicDef> pool = new ArrayList<>();
         for (RelicDef d : Relics.all()) {
-            if (!d.isUnique() || live.contains(d.id())) continue;
+            if (!d.isUnique() || live.contains(d.id()) || d.isPairLeft()) continue;
+            if (d.hasPair() && live.contains(d.pairPartnerId())) continue;
             if (d.grade().ordinal() < min.ordinal() || d.grade().ordinal() > max.ordinal()) continue;
             pool.add(d);
         }
         for (int tries = 0; tries < 8 && !pool.isEmpty(); tries++) {
             RelicDef d = pick(pool, rng);
-            ItemStack s = RelicCatalog.newStack(d);
-            if (!s.isEmpty() && UniqueLedger.issue(level, d.id(), s)) return s;
+            if (d.hasPair()) {
+                List<ItemStack> pair = com.newuniverse.nusmp.relics.pair.PairGrant.issueNewPair(level, d);
+                if (!pair.isEmpty()) return pair;
+            } else {
+                ItemStack s = RelicCatalog.newStack(d);
+                if (!s.isEmpty() && UniqueLedger.issue(level, d.id(), s)) {
+                    none.add(s);
+                    return none;
+                }
+            }
             pool.remove(d);                                                            // not available after all: try another
         }
-        return ItemStack.EMPTY;
+        return none;
     }
 
     private static RelicDef pick(List<RelicDef> pool, RandomSource rng) {
@@ -76,12 +95,14 @@ public final class RelicLoot {
         Vec3 at = e.getEntity().position();
         RandomSource rng = level.getRandom();
         ItemStack drop = ItemStack.EMPTY;
+        List<ItemStack> drops = new ArrayList<>();
         if (rng.nextFloat() < CLOAK_CHANCE) {
             RelicDef cloak = Relics.byId(CLOAK_ID);
             ItemStack s = cloak == null ? ItemStack.EMPTY : RelicCatalog.newStack(cloak);
             if (!s.isEmpty() && UniqueLedger.issue(level, CLOAK_ID, s)) drop = s;
         }
-        if (drop.isEmpty() && rng.nextFloat() < MIMIC_CHANCE) drop = rollUnissued(level, rng, Grade.RARE, Grade.LEGEND);
-        if (!drop.isEmpty()) e.getDrops().add(new ItemEntity(level, at.x, at.y + 0.3, at.z, drop));
+        if (!drop.isEmpty()) drops.add(drop);
+        else if (rng.nextFloat() < MIMIC_CHANCE) drops.addAll(rollUnissuedAll(level, rng, Grade.RARE, Grade.LEGEND));      // a pair drops both halves
+        for (ItemStack d : drops) e.getDrops().add(new ItemEntity(level, at.x, at.y + 0.3, at.z, d));
     }
 }

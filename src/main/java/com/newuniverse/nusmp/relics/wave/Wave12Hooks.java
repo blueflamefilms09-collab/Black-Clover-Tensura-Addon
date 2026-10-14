@@ -85,7 +85,7 @@ final class Wave12Hooks {
                     if (RelicFlags.has(atk, Wave12Light.WHIP_FLAG) && Wave12Light.wet(atk)) Wave12Light.humiliate(atk, victim);
                 }
                 case Wave12Light.BLADES -> {
-                    if (RelicFlags.has(atk, Wave12Light.BLADES_FLAG)) Wave12Light.bladeBlow(atk, victim);
+                    if (RelicFlags.has(atk, Wave12Light.BLADES_FLAG)) Wave12Light.bladeBlow(atk, victim);              // the main-hand blade's own bite (the off-hand blow brings the other's)
                 }
                 case Wave12Magic.CRYSTAL -> {
                     if (RelicFlags.has(atk, Wave12Magic.CRYSTAL_FLAG) && Wave12Magic.armActive(atk)) Wave12Magic.crystalAfter(atk, victim);
@@ -118,7 +118,8 @@ final class Wave12Hooks {
         try {
             if (p.onGround()) {
                 Wave12Light.landed(p);
-            } else if (p.horizontalCollision && Wave12Light.HOOKS.equals(Wave12Data.heldId(p)) && RelicFlags.has(p, Wave12Light.HOOKS_FLAG)) {
+            } else if (p.horizontalCollision && Wave12Light.HOOKS.equals(Wave12Data.heldId(p)) && RelicFlags.has(p, Wave12Light.HOOKS_FLAG)
+                    && com.newuniverse.nusmp.relics.pair.PairHooks.active(p)) {                                      // 1.29.0: the hooks hold only with both swords in hand
                 Wave12Light.climb(p);
             }
             if ((p.tickCount + p.getId()) % 20 == 3) slow(p);
