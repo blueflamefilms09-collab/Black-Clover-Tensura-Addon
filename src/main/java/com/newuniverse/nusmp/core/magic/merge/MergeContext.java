@@ -121,6 +121,11 @@ public final class MergeContext {
         return -1;
     }
 
+    /** The wiki layers read WHICH wiki magic it is from the exact palette colour of the payload (WikiMagicLayer.styleForColor): a tinted colour would draw every wiki parent as Air. */
+    private static boolean keepsColor(VfxShape shape) {
+        return shape == VfxShape.WIKI_MAGIC_CAST || shape == VfxShape.WIKI_MAGIC_FIELD || shape == VfxShape.WIKI_MAGIC_BURST;
+    }
+
     private static VfxShape shapeOf(MagicProfile profile, int category) {
         return category == 0 ? profile.castShape() : category == 1 ? profile.fieldShape() : profile.burstShape();
     }
@@ -138,7 +143,7 @@ public final class MergeContext {
             MergedBlend b = s.blend();
             VfxShape shape = payload.shapeType();
             if (shape == VfxShape.MERGED_CAST || shape == VfxShape.MERGED_FIELD || shape == VfxShape.MERGED_BURST || shape == VfxShape.MERGED_AURA) return payload;
-            VfxPayload out = new VfxPayload(payload.shape(), payload.from(), payload.to(), b.tinted(s.parent()), payload.duration(), payload.power(),
+            VfxPayload out = new VfxPayload(payload.shape(), payload.from(), payload.to(), keepsColor(shape) ? payload.color() : b.tinted(s.parent()), payload.duration(), payload.power(),
                     payload.followEntity(), payload.seed());
             int cat = categoryOf(MagicProfiles.of(b.def.parents().get(s.parent())), shape);
             if (cat >= 0) companions(level, s, b, cat, payload);
@@ -160,7 +165,7 @@ public final class MergeContext {
                 if (j == s.parent()) continue;
                 VfxShape sh = shapeOf(MagicProfiles.of(b.def.parents().get(j)), cat);
                 float size = ColorBlend.sizeFor(b.weights[j], n);
-                VfxSpawn.send(level, new VfxPayload(sh.ordinal(), p.from(), p.to(), b.tinted(j), p.duration(), p.power() * size, p.followEntity(),
+                VfxSpawn.send(level, new VfxPayload(sh.ordinal(), p.from(), p.to(), keepsColor(sh) ? b.colors[j] : b.tinted(j), p.duration(), p.power() * size, p.followEntity(),
                         p.seed() ^ (0x9E3779B97F4A7C15L * (j + 1))));
                 sent++;
             }

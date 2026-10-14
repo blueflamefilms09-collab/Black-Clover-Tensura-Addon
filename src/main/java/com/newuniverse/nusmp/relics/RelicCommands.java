@@ -54,7 +54,7 @@ public final class RelicCommands {
 
     /** 1.27.0 (discovery): an operator or the console sees every relic; a player only the ones they have found (see core.discovery). */
     private static boolean seen(CommandSourceStack src, RelicDef d) {
-        return DiscoveryTracker.canSee(src, DiscoveryKeys.item(RelicCatalog.newStack(d)));
+        return src.hasPermission(2) || DiscoveryTracker.canSee(src, DiscoveryKeys.item(RelicCatalog.newStack(d)));
     }
 
     private static CompletableFuture<Suggestions> suggestIds(CommandContext<CommandSourceStack> ctx, SuggestionsBuilder b) {

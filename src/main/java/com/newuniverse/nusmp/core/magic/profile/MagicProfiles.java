@@ -36,7 +36,7 @@ public final class MagicProfiles {
             if (d == null) { d = new EnumMagicProfile(type); DERIVED.put(type.name(), d); }
             return d;
         } catch (Throwable t) {
-            return FALLBACK;
+            return new FallbackMagicProfile(type.name());     // never cached; keeps the constant's own id, so restricted() still answers by name
         }
     }
 

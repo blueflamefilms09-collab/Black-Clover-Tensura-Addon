@@ -128,6 +128,7 @@ public final class MergeAccess {
             if (listed(p, AUTO, def.id()) || listed(p, DENIED, def.id()) || held(p, def).isPresent()) continue;
             if (holdsAllParents(p, def) && grant(p, def)) remember(p, AUTO, def.id());
         }
+        if (MergedRegistry.size() == 0) return;          // nothing published (a load that failed, or no merged magic at all): never take a skill away on that evidence
         for (int slot = 0; slot < MergeLimits.MAX_MERGED && MergedSkills.has(slot); slot++) {
             final int s = slot;
             skills.getSkill(MergedSkills.id(s)).ifPresent(i -> {
