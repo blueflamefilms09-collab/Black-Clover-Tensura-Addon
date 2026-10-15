@@ -3,7 +3,7 @@ manifest) and gen_attributes.py (which writes the files). Keeping the table out 
 manifest can never disagree with the files.
 
 A profile is {parent, range_bonus, two_handed?, attacks?}. `attacks` is written ONLY where we ship our own combo with our own
-animations (assets/nusmp/attack_animations/*); every other profile inherits the combo of the Better Combat parent, so a class
+animations (assets/nusmp/player_animations/*); every other profile inherits the combo of the Better Combat parent, so a class
 without a custom animation keeps the parent's animations. Only parents from Better Combat's built-in set are used.
 """
 

@@ -6,7 +6,7 @@ the mod shipped 12 hand-made files; the other ~100 melee weapons ignored the com
 classes that have a recognisable fighting style (greatsword, katana, rapier, axes, whips, twin blades) ship **their own combos and animations**.
 
 Better Combat stays an optional dependency (`neoforge.mods.toml` lists it `type="optional"`). Without it none of these files is read: data under
-`data/<ns>/weapon_attributes` and `assets/<ns>/attack_animations` is plain resource data that nothing else loads, so nothing changes and nothing can
+`data/<ns>/weapon_attributes` and `assets/<ns>/player_animations` is plain resource data that nothing else loads, so nothing changes and nothing can
 fail. Nothing in this feature is Java, and nothing is registered.
 
 ## How it works
@@ -20,7 +20,7 @@ fail. Nothing in this feature is Java, and nothing is registered.
 2. `tools/bettercombat/profiles.py` holds the per-class numbers (parent, `range_bonus`, `two_handed`, combo) and the hand-written profiles.
 3. `tools/bettercombat/gen_attributes.py` writes `data/nusmp/weapon_attributes/<id>.json` for every manifest weapon. Deterministic, idempotent.
    `--check` exits 1 when a weapon has no file or a file differs; `--list` prints the weapons per class.
-4. `tools/bettercombat/gen_animations.py` writes `assets/nusmp/attack_animations/<name>.json` from small keyframe tables (angles in degrees in the
+4. `tools/bettercombat/gen_animations.py` writes `assets/nusmp/player_animations/<name>.json` from small keyframe tables (angles in degrees in the
    table, radians in the file). `--check` and `--list` as above.
 5. `WeaponAttributesTest` (JUnit, pure, hand-made JSON reader) runs in Gradle: every melee weapon (manifest, class table, relic defs) has a file; every
    file parses, `parent` starts with `bettercombat:`, `range_bonus` is within -1..3, attack numbers are sane; every `nusmp:<x>` animation has its file;
@@ -61,7 +61,7 @@ Weapon file (`data/nusmp/weapon_attributes/<id>.json`):
   Better Combat dual wields two one-handed weapons by itself, the twin pairs only need a combo that looks right in either hand.
 - Extra keys are not used. The existing 12 files keep their `parent` and `range_bonus` exactly (rule: keep the old, add the new).
 
-Animation file (`assets/nusmp/attack_animations/<name>.json`, the Player Animator "emote" JSON that Better Combat 1.21 loads from `attack_animations`):
+Animation file (`assets/nusmp/player_animations/<name>.json`, the Player Animator "emote" JSON that Better Combat 1.21 loads from `player_animations`):
 
 ```json
 { "format_version": "1.0.0", "name": "x", "author": "Multiverse of Anime",

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Why: Better Combat plays a weapon's swing from a Player Animator "emote" JSON found under
-assets/<namespace>/attack_animations/<name>.json. Writing keyframes as raw radians in JSON is unreadable and
+assets/<namespace>/player_animations/<name>.json (1.38.1: the folder is player_animations, the Player Animator registry that Better Combat resolves `animation` ids through; 1.38.0 wrote attack_animations, which nothing loads, so swings had a pose but no animation). Writing keyframes as raw radians in JSON is unreadable and
 easy to get subtly wrong (a tick out of order, a degree typed as a radian), so every animation is a small
 table here: (tick, easing, {part: {axis: value}}), angles in DEGREES, offsets in pixels. The generator converts to the
 file format (radians, degrees=false), checks that ticks ascend and that begin <= end <= stop, and writes one
@@ -22,7 +22,7 @@ most worth checking in game.
 import json, math, os, sys
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "attack_animations")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "player_animations")
 AUTHOR = "Multiverse of Anime"
 PARTS = ("head", "torso", "rightArm", "leftArm", "rightLeg", "leftLeg")
 EASINGS = {"LINEAR", "CONSTANT", "EASEINSINE", "EASEOUTSINE", "EASEINOUTSINE", "EASEINQUAD", "EASEOUTQUAD",
@@ -176,9 +176,20 @@ def build(name):
             if part not in PARTS: raise SystemExit("%s: unknown part %s" % (name, part))
         moves.append(mv)
     if not (0 <= last <= end <= stop): raise SystemExit("%s: need beginTick 0 <= last move %d <= endTick %d <= stopTick %d" % (name, last, end, stop))
-    return {"format_version": "1.0.0", "name": name, "author": AUTHOR,
-            "emote": {"isLoop": False, "returnTick": 0, "beginTick": 0, "endTick": end, "stopTick": stop,
-                      "degrees": False, "moves": moves}}
+    # Better Combat's own files (checked against its repository, assets/bettercombat/player_animations) use ONE part and ONE axis per move
+    # entry, isLoop as the string "false", returnTick 2; the same form is written here so the Player Animator reader sees exactly what it
+    # is known to read.
+    out = []
+    for part in PARTS:
+        for axis in OFFSET_KEYS + ANGLE_KEYS:
+            for tick, easing, parts in frames:
+                if part in parts and axis in parts[part]:
+                    v = float(parts[part][axis])
+                    v = round(math.radians(v), 4) if axis in ANGLE_KEYS else round(v, 4)
+                    out.append({"tick": tick, "easing": easing, "turn": 0, part: {axis: v}})
+    return {"name": name, "author": AUTHOR, "description": name.replace("_", " "),
+            "emote": {"isLoop": "false", "returnTick": 2, "beginTick": 0, "endTick": end, "stopTick": stop,
+                      "degrees": False, "moves": out}}
 
 def render(name): return json.dumps(build(name), indent=2) + "\n"
 

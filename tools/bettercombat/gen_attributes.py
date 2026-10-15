@@ -30,7 +30,7 @@ import profiles as PR  # noqa: E402
 
 ROOT = INV.ROOT
 OUT = os.path.join(ROOT, "src", "main", "resources", "data", "nusmp", "weapon_attributes")
-ANIM_DIR = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "attack_animations")
+ANIM_DIR = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "player_animations")
 
 
 def r2(x):
@@ -83,7 +83,7 @@ def problems_of(weapons):
         for a in doc["attributes"].get("attacks", []):
             name = a["animation"].split(":", 1)[1]
             if not os.path.exists(os.path.join(ANIM_DIR, name + ".json")):
-                out.append("%s: animation %s has no file under assets/nusmp/attack_animations" % (wid, a["animation"]))
+                out.append("%s: animation %s has no file under assets/nusmp/player_animations" % (wid, a["animation"]))
     return out
 
 

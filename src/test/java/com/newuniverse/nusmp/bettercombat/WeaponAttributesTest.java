@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class WeaponAttributesTest {
     private static final Path ROOT = Path.of(".");
     private static final Path ATTRS = ROOT.resolve("src/main/resources/data/nusmp/weapon_attributes");
-    private static final Path ANIMS = ROOT.resolve("src/main/resources/assets/nusmp/attack_animations");
+    private static final Path ANIMS = ROOT.resolve("src/main/resources/assets/nusmp/player_animations");
     private static final Path CLASSES = ROOT.resolve("src/main/resources/assets/nusmp/weapon_classes.json");
     private static final Path MANIFEST = ROOT.resolve("tools/bettercombat/manifest.json");
     private static final Path JAVA = ROOT.resolve("src/main/java");
@@ -133,7 +133,7 @@ class WeaponAttributesTest {
                         dangling.add(f.getFileName() + " -> nusmp:" + m.group(2));
             }
         }
-        assertTrue(dangling.isEmpty(), "animation references without a file under assets/nusmp/attack_animations: " + dangling + " -> run `python tools/bettercombat/gen_animations.py`");
+        assertTrue(dangling.isEmpty(), "animation references without a file under assets/nusmp/player_animations: " + dangling + " -> run `python tools/bettercombat/gen_animations.py`");
     }
 
     // ---------------------------------------------------------------- the animations

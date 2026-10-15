@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.39.0] — Better Combat: the swing animations now load
+
+**State:** nothing run in game; the format was checked against Better Combat's own repository files. See `docs/better_combat.md`.
+
+### FIXED
+- **Weapons showed Better Combat's pose but played no swing animation.** The custom animations of 1.38.0 were written to `assets/nusmp/attack_animations/`, a folder nothing loads; Better Combat resolves every `animation` id through Player Animator's registry, which reads `assets/<namespace>/player_animations/`. They are now generated there (`tools/bettercombat/gen_animations.py`), in the same form Better Combat's own animation files use (one part and one axis per move entry, `isLoop` as the string "false", `returnTick` 2, `description`). The profiles in `data/nusmp/weapon_attributes` are unchanged (every parent and animation id was checked to exist). The old `attack_animations` folder is left in place, unused.
+
 ## [1.38.0] — Better Combat support for every melee weapon, with custom swing animations
 
 **State:** written without a compiler or Better Combat to load it; CI is the first compile. Nothing run in game. See `docs/better_combat.md`.
