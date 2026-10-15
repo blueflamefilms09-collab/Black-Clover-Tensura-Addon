@@ -2,10 +2,10 @@
 
 ## [1.42.0] — Lucius Zogratis, final-arc overhaul
 
-**State:** written without a compiler; CI is the first compile. Nothing run in game. Design and reasons in .
+**State:** written without a compiler; CI is the first compile. Nothing run in game. Design and reasons in `docs/lucius_arc.md`.
 
 ### NEW
-- Three acts (above 65%, 30-65%, below 30%) with the act name on the boss bar; switch  (default on; off = the 1.37.0 Lucius).
+- Three acts (above 65%, 30-65%, below 30%) with the act name on the boss bar; switch `luciusAnimeArc` (default on; off = the 1.37.0 Lucius).
 - Combo chains (Checkmate: gravity pin, spatial blink behind, Chrono Stasis bubble; every harmful step telegraphed 12+ ticks), Soul Touch, the Soul Corruption effect (-10/-20/-30% max health, floor 4 hearts, 60 s), reversible turning of pets and summons for 20 s (max 6).
 - Precognition bypass rules (multiple attackers, rapid hits, anti-magic weapons via tag , two high-tier relics), act 1 levitation and teleport-away, act 2 Time Reversal channel (interruptible; switch ), act 3 clones (3-5) and the chest gem hitbox (crit or anti-magic hit shatters it).
 
