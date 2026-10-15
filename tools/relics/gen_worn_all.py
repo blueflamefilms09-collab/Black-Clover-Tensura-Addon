@@ -19,6 +19,7 @@ import gen_worn_body  # noqa: E402
 import gen_worn_sig  # noqa: E402
 import gen_worn_armor  # noqa: E402
 import gen_worn_armor_relics  # noqa: E402
+import gen_worn_head_r4  # noqa: E402
 import gen_worn_modes  # noqa: E402
 
 MODEL_CAP = 2600                 # vertices of one model (all its passes' base geometry)
@@ -26,7 +27,7 @@ ENSEMBLE_CAP = 2600              # vertices of everything one relic wears
 MODE_CAP = 3600                  # vertices of everything a transformation overlay wears (one mode is on at a time)
 
 BUILDERS = {}
-for mod in (gen_worn_head, gen_worn_back, gen_worn_neck, gen_worn_body, gen_worn_sig, gen_worn_armor, gen_worn_armor_relics, gen_worn_modes):          # later modules replace earlier ones of the same name
+for mod in (gen_worn_head, gen_worn_back, gen_worn_neck, gen_worn_body, gen_worn_sig, gen_worn_armor, gen_worn_armor_relics, gen_worn_head_r4, gen_worn_modes):          # later modules replace earlier ones of the same name
     BUILDERS.update(mod.MODELS)
 
 
@@ -132,6 +133,29 @@ def catalog():
     cat.relic("martels_magical_bag_of_candy", "charm_flask")
     cat.relic("pact_of_the_deck", "charm_orbit")
     cat.relic("holy_chains", "charm_beads")
+    # part 4 (waves 25-30): the head relics' own models (gen_worn_head_r4.py)
+    cat.relic("mask_of_indifference", "mask_indifference")
+    cat.relic("mask_of_difference", "mask_difference")
+    cat.relic("trickster_mask", "trickster_mask")
+    cat.relic("bucket_of_disguise", "bucket_of_disguise")
+    cat.relic("corpse_mask", "corpse_mask")
+    cat.relic("mask_of_the_witchdoctor", "mask_of_the_witchdoctor")
+    cat.relic("helmet_of_headbutting", "helmet_of_headbutting")
+    cat.relic("soul_searchers", "soul_searchers")
+    cat.relic("the_orb_of_ancient_sight", "the_orb_of_ancient_sight")
+    cat.relic("jellyfish_cap", "jellyfish_cap")
+    cat.relic("the_mad_kings_crown", "the_mad_kings_crown")
+    cat.relic("mask_of_the_raven_queens_disciple", "mask_of_the_raven_queens_disciple")
+    cat.relic("lens_of_straight_creepin", "lens_of_straight_creepin")
+    cat.relic("death_knights_helmet", "death_knights_helmet")
+    cat.relic("helm_of_whispers", "helm_of_whispers")
+    cat.relic("mind_stone", "mind_stone")
+    cat.relic("mask_of_mind_melting", "mask_of_mind_melting")
+    cat.relic("frank", "frank")
+    cat.relic("goggles_of_dwarvenkin", "goggles_of_dwarvenkin")
+    cat.relic("eye_of_vecna", "eye_of_vecna")
+    for rid, th in (("helm_of_whispers", "wisp"), ("mind_stone", "leaf"), ("trickster_mask", "wisp"), ("death_knights_helmet", "wisp"), ("the_orb_of_ancient_sight", "star")):
+        cat.theme(rid, th)
     # ---- ambient particle themes where the glow colour alone would pick a poor one
     for rid, th in (("tiny_duck_crown", "star"), ("circlet_of_the_phoenix", "ember"), ("dragon_fire_boots", "ember"), ("cape_of_bees", "bee"),
                     ("cloak_of_the_first_snow", "snow"), ("autumn_cloak", "leaf"), ("darkened_cloak_of_elvenkind", "leaf"), ("nightstalkers_mantle", "wisp"),

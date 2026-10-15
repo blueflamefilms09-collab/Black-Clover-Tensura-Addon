@@ -161,3 +161,31 @@ Not verified in game (no client here): the draw order and winding in the real re
 
 Not verified in game: the placements (the offsets are estimates against the model files), the Curios reflection against the installed Curios version, the key.
 <!-- x1 end -->
+
+## Part 4 head relics (1.41.0)
+Why: `ArmorLooksTest` requires every armour relic (HEAD, CHEST, FEET) to have its own signature worn model, and the twenty head relics of part 4 (waves 25-30) only wore the model of their look. They are now in `tools/relics/gen_worn_head_r4.py` (one `cat.relic(...)` line each under `# part 4` in `gen_worn_all.py`; nothing older was changed). Shapes are read off the card art, the palette is the relic's own, and the glow slot lights only what glows on the card. The preview command is `python3 tools/relics/preview_worn.py <model> --palette main,trim,glow --views front,three,side`.
+
+| Relic | Model | Why it looks like this |
+|---|---|---|
+| Mask of Indifference | `mask_indifference` | the blank grey card mask: coarse flat facets, a sharp nose ridge, slit eyes and a flat mouth slit |
+| Mask of Difference | `mask_difference` | the blue domino mask: swept-up eye corners, cheek filigree swirls (lit), two trailing ribbons that sway |
+| Trickster Mask | `trickster_mask` | the painted skull: red-ringed sockets that glow, black stripes, fangs, jaw plate |
+| Bucket of Disguise | `bucket_of_disguise` | a wooden pail with two dark hoops and two round eye holes, open dark top |
+| Corpse Mask | `corpse_mask` | the cracked grey face with purple swirl horns, spiral cheek marks and long ragged ribbons |
+| Mask of the Witchdoctor | `mask_of_the_witchdoctor` | the tall three-plank totem, green brow gem (lit), bone horns, leaf fans |
+| Helmet of Headbutting | `helmet_of_headbutting` | the riveted iron helm, curled ram horns, bone tusks and a thick white beard |
+| Soul Searchers | `soul_searchers` | round wire sunglasses with stained-glass lenses (lit facets), brow bar, hanging cross |
+| The Orb of Ancient Sight | `the_orb_of_ancient_sight` | the tan skull crown with four points and a floating red eye-orb above it (bobs) |
+| Jellyfish Cap | `jellyfish_cap` | a pearly bell with scalloped rim, lit gem and six swaying oral arms |
+| The Mad King's Crown | `the_mad_kings_crown` | the purple spiked helm-crown, lit rune band, long cheek blades and the red brow diamond (lit) |
+| Mask of the Raven Queen's Disciple | `mask_of_the_raven_queens_disciple` | the dark-blue half mask with brow points, big eye holes, silver beak chin and a purple gem (lit) |
+| Lens of Straight Creepin' | `lens_of_straight_creepin` | the red monocle (lit), ear wire and a swaying bead chain with an engraved cap |
+| Death Knight's Helmet | `death_knights_helmet` | the blue-steel skull helm with curled horns, brow spikes, fangs, cheek blades and a purple gem |
+| Helm of Whispers | `helm_of_whispers` | the rust spiked helm with a long side spike, chin point and a crown of green wisps (lit) |
+| Mind Stone | `mind_stone` | the pale silver Greek helm wreathed in lime leaves, a few drifting above, brow stone (lit) |
+| Mask of Mind Melting | `mask_of_mind_melting` | the squid hood: fin crest, three stacked red eyes (lit), fanged maw, four swaying tentacles |
+| Frank | `frank` | the carved rabbit mask: tall ears (one bent), white-rimmed eyes with a faint glow, muzzle and ruff |
+| Goggles of Dwarvenkin | `goggles_of_dwarvenkin` | copper goggles with two tilted diamond amber lenses (lit), strap, buckle and white fur tufts |
+| Eye of Vecna | `eye_of_vecna` | a brass monocle plate with a bare eyeball, pink iris (lit), a trailing red optic nerve and a ruby brow plate |
+
+Ambient themes (`cat.theme`): helm_of_whispers, trickster_mask and death_knights_helmet wisp, mind_stone leaf, the_orb_of_ancient_sight star. No vanilla particles. Largest ensemble: `helmet_of_headbutting` (about 1900 vertices, under the 2600 cap).

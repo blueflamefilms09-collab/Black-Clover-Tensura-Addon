@@ -99,6 +99,26 @@ relic spellbook_of_concentration charm_tome
 relic martels_magical_bag_of_candy charm_flask
 relic pact_of_the_deck charm_orbit
 relic holy_chains charm_beads
+relic mask_of_indifference mask_indifference
+relic mask_of_difference mask_difference
+relic trickster_mask trickster_mask
+relic bucket_of_disguise bucket_of_disguise
+relic corpse_mask corpse_mask
+relic mask_of_the_witchdoctor mask_of_the_witchdoctor
+relic helmet_of_headbutting helmet_of_headbutting
+relic soul_searchers soul_searchers
+relic the_orb_of_ancient_sight the_orb_of_ancient_sight
+relic jellyfish_cap jellyfish_cap
+relic the_mad_kings_crown the_mad_kings_crown
+relic mask_of_the_raven_queens_disciple mask_of_the_raven_queens_disciple
+relic lens_of_straight_creepin lens_of_straight_creepin
+relic death_knights_helmet death_knights_helmet
+relic helm_of_whispers helm_of_whispers
+relic mind_stone mind_stone
+relic mask_of_mind_melting mask_of_mind_melting
+relic frank frank
+relic goggles_of_dwarvenkin goggles_of_dwarvenkin
+relic eye_of_vecna eye_of_vecna
 relic arcane_conduction_armor chest_conduction coil_arm@rarm coil_arm@larm~
 relic armor_of_plot chest_plot pauldron_plate@rarm pauldron_plate@larm~ deco_halo_back
 relic armor_of_the_defiant_dawn chest_dawn pauldron_rays@rarm pauldron_rays@larm~
@@ -115,6 +135,11 @@ relic zar_sancuis_plate_of_the_red_prophet chest_prophet pauldron_prophet@rarm p
 relic boots_of_the_indomitable boots_war@rleg boots_war@lleg
 relic mudwalkers boots_mud@rleg boots_mud@lleg
 relic waterwalkers boots_water@rleg boots_water@lleg
+fx helm_of_whispers wisp
+fx mind_stone leaf
+fx trickster_mask wisp
+fx death_knights_helmet wisp
+fx the_orb_of_ancient_sight star
 fx tiny_duck_crown star
 fx circlet_of_the_phoenix ember
 fx dragon_fire_boots ember
