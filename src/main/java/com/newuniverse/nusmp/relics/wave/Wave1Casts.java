@@ -6,7 +6,6 @@ import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import io.github.manasmods.tensura.damage.TensuraDamageTypes;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -201,7 +200,7 @@ final class Wave1Casts {
             return false;
         }
         ServerLevel l = p.serverLevel();
-        Wave1Aim.beam(l, p.getEyePosition().add(0, -0.25, 0), t.getBoundingBox().getCenter(), ParticleTypes.END_ROD, 24);
+        Wave1Aim.beam(l, p.getEyePosition().add(0, -0.25, 0), t.getBoundingBox().getCenter(), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 24);
         Fx.damage(p, t, Wave1Aim.radiant(t, 4.0f), LIGHT);
         Fx.addEffect(t, "minecraft:glowing", 120, 0);
         t.getPersistentData().putLong(K_GUIDED, l.getGameTime() + 120);        // the next blow on it lands truer (the "advantage")
@@ -215,7 +214,7 @@ final class Wave1Casts {
         SpellRuntime.zone(l, 60, 10, age -> {
             ServerPlayer owner = l.getServer().getPlayerList().getPlayer(who);
             if (owner == null || !owner.isAlive()) return;
-            Wave1Aim.column(l, at, 6.0, ParticleTypes.END_ROD);
+            Wave1Aim.column(l, at, 6.0, com.newuniverse.nusmp.particle.rukh.RukhParticles.light());
             for (LivingEntity e : Wave1Aim.foesAt(owner, at, 2.5)) {
                 Fx.damage(owner, e, Wave1Aim.radiant(e, 0.85f), LIGHT);
                 Fx.addEffect(e, "minecraft:glowing", 40, 0);
@@ -240,7 +239,7 @@ final class Wave1Casts {
             if (owner == null || !owner.isAlive()) return;
             for (int i = 0; i <= 7; i++) {
                 Vec3 q = a.lerp(b, i / 7.0);
-                for (int h = 0; h < 4; h++) l.sendParticles(ParticleTypes.END_ROD, q.x, q.y + h, q.z, 1, 0.0, 0.1, 0.0, 0.0);
+                for (int h = 0; h < 4; h++) com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, q.x, q.y + h, q.z, 1, 0.0, 0.1, 0.0, 0.0);
             }
             AABB box = new AABB(Math.min(a.x, b.x) - 1.0, centre.y - 1.0, Math.min(a.z, b.z) - 1.0, Math.max(a.x, b.x) + 1.0, centre.y + 4.0, Math.max(a.z, b.z) + 1.0);
             int seen = 0;
@@ -249,7 +248,7 @@ final class Wave1Casts {
                 var owner2 = pr.getOwner();
                 if (owner2 != null && (owner2 == owner || owner2.isAlliedTo(owner))) continue;
                 if (Wave1Aim.distToSegment(a, b, new Vec3(pr.getX(), a.y, pr.getZ())) <= 1.0) {
-                    l.sendParticles(ParticleTypes.FLASH, pr.getX(), pr.getY(), pr.getZ(), 1, 0.0, 0.0, 0.0, 0.0);
+                    com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, pr.getX(), pr.getY(), pr.getZ(), 1, 0.0, 0.0, 0.0, 0.0);
                     pr.discard();
                 }
             }
@@ -268,8 +267,8 @@ final class Wave1Casts {
         ServerLevel l = p.serverLevel();
         Vec3 from = p.getEyePosition().add(0, -0.2, 0);
         Vec3 to = Wave1Aim.point(p, 20.0);
-        Wave1Aim.beam(l, from, to, ParticleTypes.END_ROD, 40);
-        Wave1Aim.beam(l, from, to, ParticleTypes.GLOW, 20);
+        Wave1Aim.beam(l, from, to, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 40);
+        Wave1Aim.beam(l, from, to, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 20);
         for (LivingEntity e : Fx.foesAround(p, 22.0)) {
             if (Wave1Aim.distToSegment(from, to, e.getBoundingBox().getCenter()) > 1.4) continue;
             Fx.damage(p, e, Wave1Aim.radiant(e, 5.5f), LIGHT);
@@ -298,7 +297,7 @@ final class Wave1Casts {
                 }
             }
             if (nearest == null) return;
-            Wave1Aim.beam(l, owner.position().add(0.0, 2.1, 0.0), nearest.getBoundingBox().getCenter(), ParticleTypes.END_ROD, 12);
+            Wave1Aim.beam(l, owner.position().add(0.0, 2.1, 0.0), nearest.getBoundingBox().getCenter(), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 12);
             Fx.damage(owner, nearest, Wave1Aim.radiant(nearest, 0.85f), LIGHT);
         });
         return true;
@@ -319,7 +318,7 @@ final class Wave1Casts {
         }
         for (int i = 0; i < spirits; i++) {
             double ang = Math.PI * 2.0 * i / spirits;
-            l.sendParticles(ParticleTypes.SOUL, p.getX() + Math.cos(ang) * 1.6, p.getY() + 1.0, p.getZ() + Math.sin(ang) * 1.6, 8, 0.15, 0.4, 0.15, 0.02);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, p.getX() + Math.cos(ang) * 1.6, p.getY() + 1.0, p.getZ() + Math.sin(ang) * 1.6, 8, 0.15, 0.4, 0.15, 0.02);
         }
         Fx.ring(l, p.position().add(0.0, 0.2, 0.0), 1.6, 0xFF9FD8FF);
         Fx.say(p, night ? "Three ghosts of the viola's past owners rise to guard you." : "By day only one faint ghost answers the strings.");
@@ -333,7 +332,7 @@ final class Wave1Casts {
             return false;
         }
         ServerLevel l = p.serverLevel();
-        l.sendParticles(ParticleTypes.NOTE, t.getX(), t.getEyeY() + 0.4, t.getZ(), 6, 0.3, 0.2, 0.3, 0.0);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, t.getX(), t.getEyeY() + 0.4, t.getZ(), 6, 0.3, 0.2, 0.3, 0.0);
         Fx.damage(p, t, 4.0f, MAGIC);
         Fx.addEffect(t, "minecraft:slowness", 60, 1);
         Fx.addEffect(t, "minecraft:weakness", 60, 0);
@@ -359,7 +358,7 @@ final class Wave1Casts {
         Fx.addEffect(p, "minecraft:speed", 160, 0);
         Fx.lendSkill(p, SK_WIND_TRANSFORM, 160);                                       // Tensura's wind transform: the body really does become air
         ServerLevel l = p.serverLevel();
-        l.sendParticles(ParticleTypes.CLOUD, p.getX(), p.getY() + 1.0, p.getZ(), 30, 0.4, 0.6, 0.4, 0.02);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 30, 0.4, 0.6, 0.4, 0.02);
         Fx.say(p, "You thin to mist for 8 s: unseen, drifting, and hard to hurt.");
         return true;
     }
@@ -373,8 +372,8 @@ final class Wave1Casts {
         }
         ServerLevel l = p.serverLevel();
         Fx.lendSkills(p, 200, SK_WATER_CURRENT, SK_WATER_MANIP);                       // the whip is Tensura's water control for a moment
-        Wave1Aim.beam(l, p.getEyePosition().add(0, -0.3, 0), t.getBoundingBox().getCenter(), ParticleTypes.SPLASH, 24);
-        Wave1Aim.beam(l, p.getEyePosition().add(0, -0.3, 0), t.getBoundingBox().getCenter(), ParticleTypes.BUBBLE, 12);
+        Wave1Aim.beam(l, p.getEyePosition().add(0, -0.3, 0), t.getBoundingBox().getCenter(), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 24);
+        Wave1Aim.beam(l, p.getEyePosition().add(0, -0.3, 0), t.getBoundingBox().getCenter(), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 12);
         if (t.getBbWidth() > 2.6f || t.getBbHeight() > 3.2f || t.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE) >= 0.8) {
             Fx.say(p, "The whip slips off: too big, or too well planted.");        // the Strength save
             return true;
@@ -399,7 +398,7 @@ final class Wave1Casts {
         boolean wasLiquid = bag.get("state") == 1;
         bag.put("state", wasLiquid ? 0 : 1);
         ServerLevel l = p.serverLevel();
-        l.sendParticles(wasLiquid ? ParticleTypes.SNOWFLAKE : ParticleTypes.SPLASH, p.getX(), p.getY() + 1.2, p.getZ(), 16, 0.4, 0.4, 0.4, 0.02);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.2, p.getZ(), 16, 0.4, 0.4, 0.4, 0.02);
         Fx.say(p, wasLiquid ? "The blade sets solid: cold bites, and you may freeze water." : "The blade runs liquid: reach +2 blocks, and the water answers your hand.");
         Fx.lendSkill(p, wasLiquid ? SK_COLD_RESIST : SK_WATER_BLADE, 400);
         return true;
@@ -445,7 +444,7 @@ final class Wave1Casts {
             Fx.say(p, "There is no still water here to freeze.");
             return false;
         }
-        l.sendParticles(ParticleTypes.SNOWFLAKE, c.getX() + 0.5, c.getY() + 1.0, c.getZ() + 0.5, 24, 1.0, 0.3, 1.0, 0.02);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, c.getX() + 0.5, c.getY() + 1.0, c.getZ() + 0.5, 24, 1.0, 0.3, 1.0, 0.02);
         SpellRuntime.later(l, 1200, () -> {
             for (BlockPos q : frozen) {
                 if (l.isLoaded(q) && l.getBlockState(q).is(Blocks.ICE)) l.setBlock(q, Blocks.WATER.defaultBlockState(), 3);
@@ -473,7 +472,7 @@ final class Wave1Casts {
             if (++n > 6) break;
             if (!cat.isTame()) cat.tame(p);
             cat.heal(4.0f);
-            l.sendParticles(ParticleTypes.HEART, cat.getX(), cat.getY() + 0.7, cat.getZ(), 4, 0.25, 0.2, 0.25, 0.0);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, cat.getX(), cat.getY() + 0.7, cat.getZ(), 4, 0.25, 0.2, 0.25, 0.0);
         }
         if (n == 0) {
             Fx.say(p, "No cat is near enough to hear you.");
@@ -491,7 +490,7 @@ final class Wave1Casts {
         Fx.addEffect(p, "minecraft:night_vision", 1800, 0);
         Fx.lendSkill(p, SK_BEAST, 1800);                                               // the polymorph: Tensura's beast transformation, lent for the 90 s
         p.level().playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.CAT_AMBIENT, SoundSource.PLAYERS, 1.6f, 0.8f);
-        ((ServerLevel) p.level()).sendParticles(ParticleTypes.POOF, p.getX(), p.getY() + 0.8, p.getZ(), 20, 0.4, 0.5, 0.4, 0.04);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(((ServerLevel) p.level()), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 0.8, p.getZ(), 20, 0.4, 0.5, 0.4, 0.04);
         Fx.say(p, "Feline Form for 90 s: quick, springing and sure-eyed. Once a day.");
         return true;
     }
@@ -509,7 +508,7 @@ final class Wave1Casts {
             Vec3 side = new Vec3(-look.z, 0.0, look.x);
             Vec3 q = eye.add(look.scale(dist)).add(side.scale(spread * dist * 0.6));
             float[] c = RAINBOW[i / 6];
-            l.sendParticles(new DustParticleOptions(new Vector3f(c[0], c[1], c[2]), 1.3f), q.x, q.y - 0.2, q.z, 1, 0.05, 0.05, 0.05, 0.0);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, q.x, q.y - 0.2, q.z, 1, 0.05, 0.05, 0.05, 0.0);
         }
         int hit = 0;
         for (LivingEntity e : Fx.foesAround(p, 8.0)) {
@@ -575,7 +574,7 @@ final class Wave1Casts {
     private static boolean touched(ServerLevel l, Vec3 at, ServerPlayer p) {
         for (int i = 0; i < RAINBOW.length; i++) {
             float[] c = RAINBOW[i];
-            l.sendParticles(new DustParticleOptions(new Vector3f(c[0], c[1], c[2]), 1.2f), at.x, at.y, at.z, 3, 0.35, 0.35, 0.35, 0.0);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, at.x, at.y, at.z, 3, 0.35, 0.35, 0.35, 0.0);
         }
         l.playSound(null, at.x, at.y, at.z, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 0.8f, 1.6f);
         return true;
@@ -587,7 +586,7 @@ final class Wave1Casts {
         Fx.lendSkill(p, SK_LIGHT_RESIST, 100);                                         // the stars do not burn their caster
         Fx.aoe(p, 8.0, 6.0f, LIGHT, "minecraft:blindness", 100, 0);
         Fx.ring(l, p.position().add(0.0, 1.0, 0.0), 6.0, 0xFFE9D8FF);
-        l.sendParticles(ParticleTypes.END_ROD, p.getX(), p.getY() + 1.4, p.getZ(), 40, 3.0, 1.2, 3.0, 0.05);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.4, p.getZ(), 40, 3.0, 1.2, 3.0, 0.05);
         Fx.say(p, "A flurry of stars: everything near you is scorched and blinded.");
         return true;
     }
@@ -642,9 +641,9 @@ final class Wave1Casts {
             return false;
         }
         ServerLevel from = p.serverLevel();
-        from.sendParticles(ParticleTypes.REVERSE_PORTAL, p.getX(), p.getY() + 1.0, p.getZ(), 40, 0.4, 0.8, 0.4, 0.1);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(from, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, p.getX(), p.getY() + 1.0, p.getZ(), 40, 0.4, 0.8, 0.4, 0.1);
         p.teleportTo(dest, spot.getX() + 0.5, spot.getY(), spot.getZ() + 0.5, p.getYRot(), p.getXRot());
-        dest.sendParticles(ParticleTypes.REVERSE_PORTAL, p.getX(), p.getY() + 1.0, p.getZ(), 40, 0.4, 0.8, 0.4, 0.1);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(dest, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, p.getX(), p.getY() + 1.0, p.getZ(), 40, 0.4, 0.8, 0.4, 0.1);
         return true;
     }
 
@@ -669,7 +668,7 @@ final class Wave1Casts {
         Vec3 look = p.getLookAngle();
         for (int i = 0; i < 18; i++) {
             Vec3 q = from.add(look.scale(i * 0.35));
-            l.sendParticles(ParticleTypes.BUBBLE_POP, q.x, q.y, q.z, 1, 0.12, 0.12, 0.12, 0.01);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, q.x, q.y, q.z, 1, 0.12, 0.12, 0.12, 0.01);
         }
         l.playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.BUBBLE_COLUMN_UPWARDS_AMBIENT, SoundSource.PLAYERS, 0.8f, 1.5f);
         return true;
@@ -681,7 +680,7 @@ final class Wave1Casts {
         ServerLevel l = p.serverLevel();
         Fx.addEffect(t, "minecraft:water_breathing", 6000, 0);
         t.getPersistentData().putLong(K_AIR, l.getGameTime() + 6000);
-        l.sendParticles(ParticleTypes.BUBBLE_POP, t.getX(), t.getEyeY(), t.getZ(), 20, 0.3, 0.3, 0.3, 0.02);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, t.getX(), t.getEyeY(), t.getZ(), 20, 0.3, 0.3, 0.3, 0.02);
         Fx.say(p, "A bubble of air holds round the head for 5 minutes, or until it takes a hit.");
         return true;
     }
@@ -694,7 +693,7 @@ final class Wave1Casts {
         p.getPersistentData().putLong(K_FLAME, until);
         Fx.lendSkill(p, SK_STRENGTHEN_BODY, 160);                                      // the smite fills the body with a righteous strength
         Fx.ring(l, p.position().add(0.0, 0.3, 0.0), 1.4, 0xFFFFE9A0);
-        l.sendParticles(ParticleTypes.END_ROD, p.getX(), p.getY() + 1.0, p.getZ(), 14, 0.4, 0.7, 0.4, 0.03);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 14, 0.4, 0.7, 0.4, 0.03);
         Fx.say(p, "Divine Smite: your next blow burns with light, and the sacred flame will answer for 8 s (sneak + use).");
         return true;
     }
@@ -711,8 +710,8 @@ final class Wave1Casts {
             return false;
         }
         ServerLevel l = p.serverLevel();
-        l.sendParticles(ParticleTypes.FLAME, t.getX(), t.getY() + 0.2, t.getZ(), 18, 0.25, 0.9, 0.25, 0.03);
-        l.sendParticles(ParticleTypes.END_ROD, t.getX(), t.getY() + 1.0, t.getZ(), 10, 0.25, 0.9, 0.25, 0.03);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, t.getX(), t.getY() + 0.2, t.getZ(), 18, 0.25, 0.9, 0.25, 0.03);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, t.getX(), t.getY() + 1.0, t.getZ(), 10, 0.25, 0.9, 0.25, 0.03);
         Fx.damage(p, t, Wave1Aim.radiant(t, 4.0f), Wave1Aim.undead(t) ? HOLY : LIGHT);   // Tensura's holy damage on the dead
         t.igniteForSeconds(2.0f);
         return true;
@@ -735,7 +734,7 @@ final class Wave1Casts {
         Fx.addEffect(t, "minecraft:regeneration", 160, 0);
         t.heal(2.0f);
         if (t instanceof Mob m) m.setTarget(null);
-        ((ServerLevel) p.level()).sendParticles(ParticleTypes.HEART, t.getX(), t.getEyeY() + 0.3, t.getZ(), 6, 0.3, 0.2, 0.3, 0.0);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(((ServerLevel) p.level()), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, t.getX(), t.getEyeY() + 0.3, t.getZ(), 6, 0.3, 0.2, 0.3, 0.0);
         return reveal(p, 0);
     }
 
@@ -759,7 +758,7 @@ final class Wave1Casts {
         SpellRuntime.later(l, 600, stand::discard);
         Fx.shield(p, 4.0f, 600);
         Fx.lendSkill(p, SK_BODY_ARMOR, 600);                                           // the wardrobe lends a coat of Tensura's body armour for 30 s
-        l.sendParticles(ParticleTypes.POOF, at.x, at.y + 1.0, at.z, 16, 0.3, 0.6, 0.3, 0.02);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, at.x, at.y + 1.0, at.z, 16, 0.3, 0.6, 0.3, 0.02);
         return reveal(p, 1);
     }
 
@@ -771,7 +770,7 @@ final class Wave1Casts {
         }
         ServerLevel l = p.serverLevel();
         if (t.getBbWidth() > 2.6f || t.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE) >= 0.6) {
-            l.sendParticles(ParticleTypes.SMOKE, t.getX(), t.getY() + 1.0, t.getZ(), 8, 0.3, 0.4, 0.3, 0.01);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, t.getX(), t.getY() + 1.0, t.getZ(), 8, 0.3, 0.4, 0.3, 0.01);
             Fx.say(p, "Fold Person: they would not bend.");                     // the Wisdom save
             return true;
         }
@@ -782,7 +781,7 @@ final class Wave1Casts {
             m.setTarget(null);
             m.getNavigation().stop();
         }
-        l.sendParticles(ParticleTypes.CRIT, t.getX(), t.getY() + 1.0, t.getZ(), 10, 0.3, 0.4, 0.3, 0.02);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, t.getX(), t.getY() + 1.0, t.getZ(), 10, 0.3, 0.4, 0.3, 0.02);
         return reveal(p, 2);
     }
 
@@ -804,8 +803,8 @@ final class Wave1Casts {
         SpellRuntime.zone(l, 400, 10, age -> {
             ServerPlayer owner = l.getServer().getPlayerList().getPlayer(who);
             if (owner == null || !owner.isAlive()) return;
-            l.sendParticles(ParticleTypes.ITEM_SLIME, at.x, at.y + 3.0, at.z, 14, 3.0, 0.4, 3.0, 0.0);
-            l.sendParticles(ParticleTypes.SQUID_INK, at.x, at.y + 0.3, at.z, 4, 3.0, 0.1, 3.0, 0.0);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, at.x, at.y + 3.0, at.z, 14, 3.0, 0.4, 3.0, 0.0);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, at.x, at.y + 0.3, at.z, 4, 3.0, 0.1, 3.0, 0.0);
             for (LivingEntity e : Wave1Aim.foesAt(owner, at, 4.0)) Fx.addEffect(e, "minecraft:slowness", 30, 1);
         });
         return reveal(p, 4);
@@ -815,7 +814,7 @@ final class Wave1Casts {
         Vec3 at = Wave1Aim.point(p, 18.0);
         ServerLevel l = p.serverLevel();
         l.playSound(null, at.x, at.y, at.z, SoundEvents.PUFFER_FISH_BLOW_OUT, SoundSource.PLAYERS, 0.7f, 0.6f);
-        l.sendParticles(ParticleTypes.POOF, at.x, at.y + 0.2, at.z, 6, 0.15, 0.1, 0.15, 0.01);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, at.x, at.y + 0.2, at.z, 6, 0.15, 0.1, 0.15, 0.01);
         return reveal(p, 5);
     }
 
@@ -825,8 +824,8 @@ final class Wave1Casts {
         for (MobEffectInstance inst : harmful) p.removeEffect(inst.getEffect());
         p.clearFire();
         ServerLevel l = p.serverLevel();
-        l.sendParticles(ParticleTypes.SPLASH, p.getX(), p.getY() + 1.0, p.getZ(), 30, 0.4, 0.7, 0.4, 0.05);
-        l.sendParticles(ParticleTypes.BUBBLE_POP, p.getX(), p.getY() + 1.0, p.getZ(), 14, 0.4, 0.7, 0.4, 0.02);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 30, 0.4, 0.7, 0.4, 0.05);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 14, 0.4, 0.7, 0.4, 0.02);
         return reveal(p, 6);
     }
 

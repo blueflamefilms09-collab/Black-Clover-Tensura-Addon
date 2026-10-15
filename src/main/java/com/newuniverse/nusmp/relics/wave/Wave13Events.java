@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.relics.Attune;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicDef;
@@ -76,7 +78,7 @@ final class Wave13Events {
                     if (armor != null) {
                         double tough = victim.getAttributeValue(Attributes.ARMOR_TOUGHNESS);
                         e.setAmount((float) Wave13Rules.bypassArmour(e.getAmount(), armor.getValue(), armor.getBaseValue(), tough));
-                        level.sendParticles(ParticleTypes.END_ROD, victim.getX(), victim.getY() + victim.getBbHeight() * 0.6, victim.getZ(), 6, 0.25, 0.4, 0.25, 0.02);
+                        RukhFx.spray(level, RukhFx.Alignment.LIGHT, victim.getX(), victim.getY() + victim.getBbHeight() * 0.6, victim.getZ(), 6, 0.25, 0.4, 0.25, 0.02);
                     }
                 }
                 CompoundTag pd = atk.getPersistentData();
@@ -91,7 +93,7 @@ final class Wave13Events {
                 float add = (float) Wave13Rules.stageDamage(stage);
                 if (Wave13Rules.saintCrit(stage, atk.getRandom().nextDouble())) {
                     add += e.getAmount() * 0.5f;
-                    level.sendParticles(ParticleTypes.CRIT, victim.getX(), victim.getY() + victim.getBbHeight() * 0.6, victim.getZ(), 14, 0.3, 0.4, 0.3, 0.2);
+                    RukhFx.spray(level, RukhFx.Alignment.LIGHT, victim.getX(), victim.getY() + victim.getBbHeight() * 0.6, victim.getZ(), 14, 0.3, 0.4, 0.3, 0.2);
                 }
                 if (add > 0) e.setAmount(e.getAmount() + add);
             }
@@ -130,13 +132,13 @@ final class Wave13Events {
         Vec3 to = atk.getEyePosition().subtract(victim.getEyePosition());
         if (to.lengthSqr() > 1.0e-4 && Wave13Rules.eyeContact(victim.getViewVector(1.0f).dot(to.normalize()))) {
             e.setAmount(e.getAmount() + 4.0f);                                                  // 1d8 necrotic for the one who looks into the eyes
-            level.sendParticles(ParticleTypes.SOUL, victim.getX(), victim.getEyeY(), victim.getZ(), 4, 0.15, 0.1, 0.15, 0.02);
+            RukhFx.spray(level, RukhFx.Alignment.DARK, victim.getX(), victim.getEyeY(), victim.getZ(), 4, 0.15, 0.1, 0.15, 0.02);
         }
         if (Wave13Util.considersAlly(atk, victim)) {                                           // 3d8 against one who trusted you
             float extra = 13.0f;
             if (victim instanceof net.minecraft.world.entity.player.Player) extra = (float) Math.min(extra, victim.getMaxHealth() * 0.3);
             e.setAmount(e.getAmount() + extra);
-            level.sendParticles(ParticleTypes.SCULK_SOUL, victim.getX(), victim.getY() + 1.0, victim.getZ(), 10, 0.3, 0.5, 0.3, 0.03);
+            RukhFx.spray(level, RukhFx.Alignment.DARK, victim.getX(), victim.getY() + 1.0, victim.getZ(), 10, 0.3, 0.5, 0.3, 0.03);
             if (!Wave13Rules.saveHolds(atk.getRandom().nextDouble())) {                        // the Constitution save failed: disadvantage for the next two rolls
                 Fx.addEffect(atk, "minecraft:weakness", 160, 0);
                 Fx.addEffect(atk, "minecraft:mining_fatigue", 160, 0);
@@ -163,14 +165,14 @@ final class Wave13Events {
             int pick = (int) ((now / 20) % 3);
             if (pick == 0) {
                 victim.setRemainingFireTicks(60);
-                level.sendParticles(ParticleTypes.FLAME, victim.getX(), victim.getY() + 1.0, victim.getZ(), 12, 0.3, 0.4, 0.3, 0.03);
+                RukhFx.spray(level, RukhFx.Alignment.LIGHT, victim.getX(), victim.getY() + 1.0, victim.getZ(), 12, 0.3, 0.4, 0.3, 0.03);
             } else if (pick == 1) {
                 Fx.addEffect(victim, "minecraft:slowness", 60, 1);
                 Fx.addEffect(victim, "tensura:frost", 60, 0);
-                level.sendParticles(ParticleTypes.SNOWFLAKE, victim.getX(), victim.getY() + 1.0, victim.getZ(), 14, 0.3, 0.4, 0.3, 0.02);
+                RukhFx.spray(level, RukhFx.Alignment.LIGHT, victim.getX(), victim.getY() + 1.0, victim.getZ(), 14, 0.3, 0.4, 0.3, 0.02);
             } else {
                 Fx.addEffect(victim, "minecraft:weakness", 60, 0);
-                level.sendParticles(ParticleTypes.ELECTRIC_SPARK, victim.getX(), victim.getY() + 1.0, victim.getZ(), 16, 0.3, 0.5, 0.3, 0.3);
+                RukhFx.spray(level, RukhFx.Alignment.LIGHT, victim.getX(), victim.getY() + 1.0, victim.getZ(), 16, 0.3, 0.5, 0.3, 0.3);
             }
             e.setAmount(e.getAmount() + 2.0f);
             Fx.addEffect(victim, "tensura:magic_interference", 80, 0);                          // disadvantage on its saving throws
@@ -220,7 +222,7 @@ final class Wave13Events {
             } finally {
                 busy = false;
             }
-            p.serverLevel().sendParticles(ParticleTypes.ENCHANTED_HIT, t.getX(), t.getY() + 1.0, t.getZ(), 10, 0.3, 0.4, 0.3, 0.2);
+            RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, t.getX(), t.getY() + 1.0, t.getZ(), 10, 0.3, 0.4, 0.3, 0.2);
         }
     }
 
@@ -289,7 +291,7 @@ final class Wave13Events {
         }
         if (held.equals("palladion") && RelicFlags.has(p, "w13_palladion") && p.tickCount % 40 == 3) {   // Extraplanar Sentinel: it glows faintly near them
             if (!Wave13Util.otherworldlyNear(p, 32.0).isEmpty())
-                p.serverLevel().sendParticles(ParticleTypes.END_ROD, p.getX(), p.getY() + 1.2, p.getZ(), 4, 0.4, 0.4, 0.4, 0.01);
+                RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.2, p.getZ(), 4, 0.4, 0.4, 0.4, 0.01);
         }
     }
 

@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
@@ -28,7 +30,7 @@ public class FreyaSkill extends GodSkill {
             t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, 3));
             t.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, ticks, 2));
             if (t instanceof ServerPlayer) t.addEffect(new MobEffectInstance(MobEffects.CONFUSION, ticks, 0));
-            level.sendParticles(ParticleTypes.HEART, t.getX(), t.getY() + t.getBbHeight() + 0.3, t.getZ(), 3, 0.3, 0.2, 0.3, 0.0);
+            RukhFx.spray(level, RukhFx.Alignment.LIGHT, t.getX(), t.getY() + t.getBbHeight() + 0.3, t.getZ(), 3, 0.3, 0.2, 0.3, 0.0);
         }
         level.playSound(null, player.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 2.0F, 1.2F);
         return true;

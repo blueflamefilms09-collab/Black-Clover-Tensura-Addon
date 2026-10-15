@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.NUConfig;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import io.github.manasmods.tensura.ability.skill.Skill;
@@ -49,7 +51,7 @@ public class AirielSkill extends Skill {
             player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, ticks, 0));
             player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, ticks, mastered ? 1 : 0));
             level.playSound(null, player.blockPosition(), SoundEvents.BREEZE_WIND_CHARGE_BURST.value(), SoundSource.PLAYERS, 1.0F, 1.0F);
-            level.sendParticles(ParticleTypes.GUST, player.getX(), player.getY() + 1, player.getZ(), 3, 0.5, 0.5, 0.5, 0.0);
+            RukhFx.spray(level, RukhFx.Alignment.LIGHT, player.getX(), player.getY() + 1, player.getZ(), 3, 0.5, 0.5, 0.5, 0.0);
             instance.setCoolDown(com.newuniverse.nusmp.NUSMP.ticksToSeconds(NUConfig.AIRIEL_COOLDOWN.get()), TEMPEST);
         } else {
             if (!SkillUtil.spendMagicules(player, NUConfig.AIRIEL_MAGICULE_COST.get() / 3)) return;
@@ -59,7 +61,7 @@ public class AirielSkill extends Skill {
             player.hurtMarked = true;
             player.fallDistance = 0;
             level.playSound(null, player.blockPosition(), SoundEvents.BREEZE_JUMP, SoundSource.PLAYERS, 1.0F, 1.2F);
-            level.sendParticles(ParticleTypes.CLOUD, player.getX(), player.getY() + 0.5, player.getZ(), 15, 0.3, 0.2, 0.3, 0.05);
+            RukhFx.spray(level, RukhFx.Alignment.LIGHT, player.getX(), player.getY() + 0.5, player.getZ(), 15, 0.3, 0.2, 0.3, 0.05);
             instance.setCoolDown(com.newuniverse.nusmp.NUSMP.ticksToSeconds(40), DASH);
         }
         SkillUtil.castVfx(player, 0xFF8CFFC2);

@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.core.magic.merge;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.aura.Aura;
 import com.newuniverse.nusmp.aura.PlayerAuras;
 import com.newuniverse.nusmp.blackclover.MagicType;
@@ -198,7 +200,7 @@ public final class MergeContext {
             PlayerAuras.set(player, Aura.MERGED, STANCE_TICKS, def.slot());
             MagicProfile profile = MagicProfiles.of(def.id());
             for (int i = 0; i < b.size(); i++)                       // the merged profile hands out the parents' particles in turn
-                level.sendParticles(profile.particle(), player.getX(), player.getY() + 1.0, player.getZ(), 4, 0.45, 0.6, 0.45, 0.02);
+                RukhFx.spray(level, RukhFx.Alignment.of(profile.particle() == com.newuniverse.nusmp.particle.rukh.RukhParticles.dark()), player.getX(), player.getY() + 1.0, player.getZ(), 4, 0.45, 0.6, 0.45, 0.02);
         } catch (RuntimeException e) {
             SafeCast.fault("merge-stance", e);
         }

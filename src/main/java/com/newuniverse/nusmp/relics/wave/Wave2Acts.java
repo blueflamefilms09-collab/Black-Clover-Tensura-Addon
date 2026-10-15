@@ -8,7 +8,6 @@ import com.newuniverse.nusmp.relics.RelicFlags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -86,7 +85,7 @@ final class Wave2Acts {
         int n = (int) Math.max(2, Math.min(10, d.length() * 1.5));
         for (int i = 1; i <= n; i++) {
             Vec3 at = from.add(d.scale(i / (double) n));
-            lv.sendParticles(what, at.x, at.y, at.z, 1, 0.03, 0.03, 0.03, 0.0);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(lv, com.newuniverse.nusmp.relics.Fx.alignOf(what), at.x, at.y, at.z, 1, 0.03, 0.03, 0.03, 0.0);
         }
     }
 
@@ -94,9 +93,8 @@ final class Wave2Acts {
     static void pocketSand(ActCtx c) {
         ServerPlayer p = c.player();
         ServerLevel lv = p.serverLevel();
-        BlockParticleOption sand = new BlockParticleOption(ParticleTypes.BLOCK, Blocks.SAND.defaultBlockState());
-        Vec3 mouth = p.getEyePosition().add(p.getLookAngle().scale(1.4));
-        lv.sendParticles(sand, mouth.x, mouth.y - 0.2, mouth.z, 36, 0.35, 0.2, 0.35, 0.12);
+                Vec3 mouth = p.getEyePosition().add(p.getLookAngle().scale(1.4));
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(lv, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, mouth.x, mouth.y - 0.2, mouth.z, 36, 0.35, 0.2, 0.35, 0.12);
         sound(p, SoundEvents.SAND_BREAK, 1.0f, 1.3f);
         LivingEntity t = aimed(p, Wave2Rules.SAND_RANGE, Wave2Rules.SAND_COS_HALF, true, x -> !Wave2Rules.eyeless(Wave2Events.entityId(x)));
         if (t == null) {
@@ -107,7 +105,7 @@ final class Wave2Acts {
         Fx.addEffect(t, "minecraft:blindness", ticks, 0);
         Fx.addEffect(t, "tensura:flashed_blindness", ticks, 0);
         Fx.addEffect(t, "minecraft:weakness", ticks, 0);                        // the "disadvantage on attacks"
-        lv.sendParticles(sand, t.getX(), t.getEyeY(), t.getZ(), 20, 0.2, 0.15, 0.2, 0.05);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(lv, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, t.getX(), t.getEyeY(), t.getZ(), 20, 0.2, 0.15, 0.2, 0.05);
         bar(p, "Sand in the eyes!");
     }
 
@@ -227,7 +225,7 @@ final class Wave2Acts {
             return;
         }
         StringBuilder log = new StringBuilder();
-        streak(p.serverLevel(), p.getEyePosition().add(0, -0.2, 0), t.getEyePosition(), ParticleTypes.END_ROD);
+        streak(p.serverLevel(), p.getEyePosition().add(0, -0.2, 0), t.getEyePosition(), com.newuniverse.nusmp.particle.rukh.RukhParticles.light());
         sound(p, SoundEvents.ARROW_SHOOT, 0.6f, 1.8f);
         mask = flip(p, t, mask, 0, null, log, day);
         if (!(t instanceof Player) && p.getRandom().nextInt(20) == 0 && t.isAlive()) {                    // a critical hit: two cards
@@ -251,11 +249,11 @@ final class Wave2Acts {
             case ACE -> {                                                       // vulnerable until the end of the next turn
                 Wave2Events.VULN.put(t.getUUID(), now + 120);
                 Fx.addEffect(t, "tensura:fragility", 120, 0);
-                lv.sendParticles(ParticleTypes.CRIT, t.getX(), t.getY(0.5), t.getZ(), 12, 0.3, 0.4, 0.3, 0.1);
+                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(lv, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, t.getX(), t.getY(0.5), t.getZ(), 12, 0.3, 0.4, 0.3, 0.1);
             }
             case JACK -> {                                                      // spikes at its feet: its movement is halved
                 Fx.addEffect(t, "minecraft:slowness", 60, 2);
-                lv.sendParticles(ParticleTypes.CRIT, t.getX(), t.getY() + 0.1, t.getZ(), 10, 0.3, 0.05, 0.3, 0.05);
+                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(lv, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, t.getX(), t.getY() + 0.1, t.getZ(), 10, 0.3, 0.05, 0.3, 0.05);
             }
             case QUEEN -> {                                                     // draw and throw another card, choosing any damage type
                 if (chain < Wave2Deck.MAX_QUEEN_CHAIN && t.isAlive()) {
@@ -295,7 +293,7 @@ final class Wave2Acts {
                     Fx.damage(p, o, 2.0f, "minecraft:magic");
                     if (++n >= 4) break;
                 }
-                lv.sendParticles(ParticleTypes.END_ROD, t.getX(), t.getY(0.5), t.getZ(), 40, 1.2, 0.8, 1.2, 0.15);
+                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(lv, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, t.getX(), t.getY(0.5), t.getZ(), 40, 1.2, 0.8, 1.2, 0.15);
             }
             case SWAP -> {
                 Vec3 mine = p.position(), theirs = t.position();
@@ -423,7 +421,7 @@ final class Wave2Acts {
         ServerPlayer p = c.player();
         ServerLevel lv = p.serverLevel();
         double r = 5.0;
-        lv.sendParticles(ParticleTypes.SQUID_INK, p.getX(), p.getY(0.5), p.getZ(), 90, r * 0.5, 0.8, r * 0.5, 0.02);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(lv, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, p.getX(), p.getY(0.5), p.getZ(), 90, r * 0.5, 0.8, r * 0.5, 0.02);
         Fx.ring(lv, p.position(), r, 0x15153A);
         sound(p, SoundEvents.SQUID_SQUIRT, 1.2f, 0.7f);
         for (LivingEntity t : Fx.foesAround(p, r)) {
@@ -452,7 +450,7 @@ final class Wave2Acts {
             Fx.damage(p, t, 3.0f, "minecraft:player_attack");                   // bludgeoning
             Fx.addEffect(t, "minecraft:slowness", 100, 0);
             Fx.addEffect(t, "minecraft:weakness", 100, 0);
-            streak(lv, p.position().add(0, 0.9, 0), t.position().add(0, 0.9, 0), ParticleTypes.SQUID_INK);
+            streak(lv, p.position().add(0, 0.9, 0), t.position().add(0, 0.9, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.dark());
         }
         sound(p, SoundEvents.SQUID_HURT, 0.9f, 0.6f);
     }
@@ -478,7 +476,7 @@ final class Wave2Acts {
                 t.hurtMarked = true;
             }
         }
-        streak(p.serverLevel(), p.position().add(0, 0.9, 0), t.position().add(0, 0.9, 0), ParticleTypes.SQUID_INK);
+        streak(p.serverLevel(), p.position().add(0, 0.9, 0), t.position().add(0, 0.9, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.dark());
         sound(p, SoundEvents.SQUID_SQUIRT, 1.0f, 0.5f);
     }
 
@@ -537,7 +535,7 @@ final class Wave2Acts {
             n++;
         }
         Fx.ring(lv, p.position(), r, 0xB05A30);
-        lv.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, p.getX(), p.getY(1.0), p.getZ(), 30, 0.6, 0.8, 0.6, 0.03);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(lv, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, p.getX(), p.getY(1.0), p.getZ(), 30, 0.6, 0.8, 0.6, 0.03);
         sound(p, SoundEvents.RAVAGER_ROAR, 0.8f, 1.2f);
         bar(p, n == 0 ? "The terrible face grins at no one." : n + " cowering.");
     }
@@ -572,7 +570,7 @@ final class Wave2Acts {
         sound(p, SoundEvents.WARDEN_SONIC_BOOM, 0.9f, 1.5f);
         for (int i = 1; i <= 6; i++) {
             Vec3 at = eye.add(look.scale(i * range / 6.0));
-            lv.sendParticles(ParticleTypes.SONIC_BOOM, at.x, at.y, at.z, 1, 0, 0, 0, 0);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(lv, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, at.x, at.y, at.z, 1, 0, 0, 0, 0);
         }
         int hit = 0;
         for (LivingEntity t : Fx.foesAround(p, range)) {
@@ -643,7 +641,7 @@ final class Wave2Acts {
         Fx.addEffect(p, "minecraft:regeneration", 200, 0);
         Wave2Events.clear(p, "tensura:chill");
         p.getFoodData().eat(4, 0.6f);
-        lv.sendParticles(ParticleTypes.CAMPFIRE_COSY_SMOKE, p.getX(), p.getY() + 0.2, p.getZ(), 6, 0.3, 0.1, 0.3, 0.01);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(lv, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, p.getX(), p.getY() + 0.2, p.getZ(), 6, 0.3, 0.1, 0.3, 0.01);
         sound(p, SoundEvents.CAMPFIRE_CRACKLE, 1.0f, 1.0f);
         Fx.say(p, "The cloak wraps you in a warm, quiet camp. You rest, and your spawn point is set here.");
     }

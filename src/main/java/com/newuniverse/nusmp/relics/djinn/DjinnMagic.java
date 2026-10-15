@@ -75,8 +75,8 @@ final class DjinnMagic {
         }
         ServerLevel l = p.serverLevel();
         Vec3 at = target.position().add(0, target.getBbHeight() * 0.6, 0);
-        l.sendParticles(DjinnFx.particle(d.affinity()), at.x, at.y, at.z, 6, 0.25, 0.3, 0.25, 0.05);
-        l.sendParticles(DjinnFx.dust(d.glow(), 1.1f), at.x, at.y, at.z, 4, 0.25, 0.3, 0.25, 0.02);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.djinn.DjinnFx.align(d.affinity()), at.x, at.y, at.z, 6, 0.25, 0.3, 0.25, 0.05);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.align(d.glow()), at.x, at.y, at.z, 4, 0.25, 0.3, 0.25, 0.02);
     }
 
     private static void special(ServerPlayer p, Djinn d, Djinn.Trait t, LivingEntity target, float total, float bonus) {
@@ -95,7 +95,7 @@ final class DjinnMagic {
                 }
                 if (next != null) {
                     next.hurt(p.damageSources().indirectMagic(p, p), Math.max(1f, next instanceof Player ? Math.min(bonus, 6f) : bonus));      // the 6-point player cap holds for the chained hit too (a dark rider reaches 9)
-                    DjinnFx.line(p.serverLevel(), target.position().add(0, 1, 0), next.position().add(0, 1, 0), ParticleTypes.ELECTRIC_SPARK, 10);
+                    DjinnFx.line(p.serverLevel(), target.position().add(0, 1, 0), next.position().add(0, 1, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 10);
                 }
             }
             case MELT -> {
@@ -153,7 +153,7 @@ final class DjinnMagic {
         Vec3 from = p.position().add(0, p.getBbHeight() + 0.5, 0), to = best.position().add(0, best.getBbHeight() * 0.6, 0);
         Fx.damage(p, best, 2.0f, DjinnFx.damageType(d.affinity()));
         DjinnFx.line(p.serverLevel(), from, to, DjinnFx.particle(d.affinity()), 14);
-        p.serverLevel().sendParticles(DjinnFx.dust(d.glow(), 1.2f), to.x, to.y, to.z, 5, 0.2, 0.2, 0.2, 0.02);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(p.serverLevel(), com.newuniverse.nusmp.relics.Fx.align(d.glow()), to.x, to.y, to.z, 5, 0.2, 0.2, 0.2, 0.02);
         sound(p.serverLevel(), best.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, 0.7f, 1.5f);
     }
 
@@ -205,14 +205,14 @@ final class DjinnMagic {
                 for (int arm = 0; arm < 3; arm++)
                     for (int i = 0; i < 8; i++) {
                         double rr = R * (1.0 - i / 9.0), a = age * 0.25 + arm * 2.0944 + i * 0.5;
-                        l.sendParticles(DjinnFx.particle(d.affinity()), c.x + Math.cos(a) * rr, c.y + 0.3 + i * 0.35, c.z + Math.sin(a) * rr, 1, 0, 0, 0, 0);
+                        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.djinn.DjinnFx.align(d.affinity()), c.x + Math.cos(a) * rr, c.y + 0.3 + i * 0.35, c.z + Math.sin(a) * rr, 1, 0, 0, 0, 0);
                     }
             }
             case HEAL_FIELD -> DjinnFx.ring(l, c, R * 0.5, 0xA8FF9A, 24, 0.3);
             default -> { }
         }
-        l.sendParticles(DjinnFx.particle(d.affinity()), p.getX(), p.getY() + 1.0, p.getZ(), 6, 0.4, 0.8, 0.4, 0.03);
-        l.sendParticles(DjinnFx.dust(d.glow(), 1.3f), p.getX(), p.getY() + 2.0, p.getZ(), 4, 0.3, 0.5, 0.3, 0.0);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.djinn.DjinnFx.align(d.affinity()), p.getX(), p.getY() + 1.0, p.getZ(), 6, 0.4, 0.8, 0.4, 0.03);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.align(d.glow()), p.getX(), p.getY() + 2.0, p.getZ(), 4, 0.3, 0.5, 0.3, 0.0);
         if (age % 20 == 0) sound(l, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, 2.2f, 0.6f + (float) prog);
     }
 
@@ -270,9 +270,9 @@ final class DjinnMagic {
             if (hit(p, r, t, 1.0 - 0.4 * Math.min(1.0, dist / R), 1)) push(t, c, shove * (wave ? 1.0 : 1.0 - 0.3 * dist / R), lift);
         }
         for (int k = 1; k <= 3; k++) DjinnFx.ring(l, c, R * k / 3.0, k == 3 ? d.glow() : d.color(), (int) (R * 4 * k / 2.0), 0.25 * k);
-        l.sendParticles(ParticleTypes.FLASH, c.x, c.y + 1, c.z, 1, 0, 0, 0, 0);
-        l.sendParticles(wave ? ParticleTypes.SPLASH : ParticleTypes.EXPLOSION, c.x, c.y + 0.8, c.z, wave ? 80 : 6, R * 0.35, 0.6, R * 0.35, 0.1);
-        l.sendParticles(DjinnFx.particle(d.affinity()), c.x, c.y + 0.8, c.z, 60, R * 0.4, 0.8, R * 0.4, 0.12);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, c.x, c.y + 1, c.z, 1, 0, 0, 0, 0);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, c.x, c.y + 0.8, c.z, wave ? 80 : 6, R * 0.35, 0.6, R * 0.35, 0.1);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.djinn.DjinnFx.align(d.affinity()), c.x, c.y + 0.8, c.z, 60, R * 0.4, 0.8, R * 0.4, 0.12);
         sound(l, p.blockPosition(), SoundEvents.GENERIC_EXPLODE.value(), 3.0f, 0.7f);
     }
 
@@ -280,9 +280,9 @@ final class DjinnMagic {
         ServerLevel l = p.serverLevel();
         Djinn d = r.djinn;
         for (LivingEntity t : DjinnTargets.foesNear(p, at, 3.0)) hit(p, r, t, 0.7, 2);
-        DjinnFx.column(l, at.x, at.y, at.y + 16, at.z, ParticleTypes.ELECTRIC_SPARK, 32);
+        DjinnFx.column(l, at.x, at.y, at.y + 16, at.z, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 32);
         DjinnFx.column(l, at.x, at.y, at.y + 12, at.z, DjinnFx.dust(d.glow(), 1.6f), 24);
-        l.sendParticles(ParticleTypes.FLASH, at.x, at.y + 0.5, at.z, 1, 0, 0, 0, 0);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, at.x, at.y + 0.5, at.z, 1, 0, 0, 0, 0);
         DjinnFx.ring(l, at, 3.0, d.glow(), 24, 0.2);
         sound(l, BlockPos.containing(at), SoundEvents.LIGHTNING_BOLT_IMPACT, 2.0f, 1.0f);
         sound(l, BlockPos.containing(at), SoundEvents.LIGHTNING_BOLT_THUNDER, 2.5f, 1.2f);
@@ -313,10 +313,10 @@ final class DjinnMagic {
         for (int arm = 0; arm < 4; arm++)
             for (int i = 0; i < 14; i++) {
                 double rr = R * (1.0 - i / 15.0), a = arm * Math.PI / 2 + i * 0.55;
-                l.sendParticles(DjinnFx.particle(d.affinity()), c.x + Math.cos(a) * rr, c.y + 0.3 + i * 0.45, c.z + Math.sin(a) * rr, 2, 0.1, 0.1, 0.1, 0.02);
+                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.djinn.DjinnFx.align(d.affinity()), c.x + Math.cos(a) * rr, c.y + 0.3 + i * 0.45, c.z + Math.sin(a) * rr, 2, 0.1, 0.1, 0.1, 0.02);
             }
         DjinnFx.ring(l, c, R, d.glow(), (int) (R * 5), 0.3);
-        l.sendParticles(ParticleTypes.GUST, c.x, c.y + 1, c.z, 2, 1.0, 0.5, 1.0, 0.0);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, c.x, c.y + 1, c.z, 2, 1.0, 0.5, 1.0, 0.0);
         sound(l, p.blockPosition(), SoundEvents.WARDEN_SONIC_BOOM, 2.0f, 0.6f);
     }
 
@@ -334,7 +334,7 @@ final class DjinnMagic {
         DjinnFx.line(l, c.add(0, 1.0, 0), end.add(0, 1.0, 0), DjinnFx.particle(d.affinity()), 40);
         DjinnFx.line(l, c.add(0, 1.0, 0), end.add(0, 1.0, 0), DjinnFx.dust(d.glow(), 2.0f), 40);
         DjinnFx.line(l, c.add(0, 0.3, 0), end.add(0, 0.3, 0), DjinnFx.dust(d.color(), 1.6f), 40);
-        l.sendParticles(ParticleTypes.FLASH, end.x, end.y + 1, end.z, 1, 0, 0, 0, 0);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, end.x, end.y + 1, end.z, 1, 0, 0, 0, 0);
         p.setDeltaMovement(dir.x * 1.4, 0.2, dir.z * 1.4);
         p.hurtMarked = true;
         sound(l, p.blockPosition(), SoundEvents.FIRECHARGE_USE, 2.0f, 0.6f);
@@ -350,17 +350,17 @@ final class DjinnMagic {
         for (ServerPlayer a : DjinnTargets.alliesNear(p, R)) {
             BalanceLaw.heal(a, 6f);
             a.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 1, true, false));
-            l.sendParticles(ParticleTypes.HAPPY_VILLAGER, a.getX(), a.getY() + 1, a.getZ(), 12, 0.4, 0.6, 0.4, 0.05);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, a.getX(), a.getY() + 1, a.getZ(), 12, 0.4, 0.6, 0.4, 0.05);
         }
         for (int k = 1; k <= 3; k++) DjinnFx.ring(l, c, R * k / 3.0, k == 3 ? d.glow() : d.color(), (int) (R * 3 * k), 0.25 * k);
-        l.sendParticles(ParticleTypes.HAPPY_VILLAGER, c.x, c.y + 1, c.z, 90, R * 0.4, 0.9, R * 0.4, 0.05);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, c.x, c.y + 1, c.z, 90, R * 0.4, 0.9, R * 0.4, 0.05);
         sound(l, p.blockPosition(), SoundEvents.TOTEM_USE, 1.6f, 1.2f);
     }
 
     /** A bolt-shaped decoration for the cast's first moment: the caster flares. */
     static void flare(ServerPlayer p, Djinn d, ParticleOptions extra) {
         ServerLevel l = p.serverLevel();
-        l.sendParticles(extra, p.getX(), p.getY() + 1, p.getZ(), 24, 0.5, 0.9, 0.5, 0.05);
-        l.sendParticles(DjinnFx.dust(d.glow(), 1.6f), p.getX(), p.getY() + 1, p.getZ(), 24, 0.5, 0.9, 0.5, 0.0);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.alignOf(extra), p.getX(), p.getY() + 1, p.getZ(), 24, 0.5, 0.9, 0.5, 0.05);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.align(d.glow()), p.getX(), p.getY() + 1, p.getZ(), 24, 0.5, 0.9, 0.5, 0.0);
     }
 }

@@ -1,10 +1,11 @@
 package com.newuniverse.nusmp.relics.wave;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.relics.Fx;
 import io.github.manasmods.tensura.util.EnergyHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -215,8 +216,14 @@ final class Wave14Util {
     }
 
     // ---------------------------------------------------------------- particles and words
-    static DustParticleOptions dust(int rgb, float size) {
-        return new DustParticleOptions(new Vector3f((rgb >> 16 & 255) / 255f, (rgb >> 8 & 255) / 255f, (rgb & 255) / 255f), size);
+    static net.minecraft.core.particles.SimpleParticleType dust(int rgb, float size) {
+        return align(rgb).type();                    // Rukh replaces vanilla dust: the colour only picks the alignment
+    }
+
+    /** Rukh alignment for a legacy dust colour: dark colours (relative luminance below 0.33) become dark Rukh, the rest light. */
+    static com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment align(int rgb) {
+        double lum = (0.2126 * (rgb >> 16 & 255) + 0.7152 * (rgb >> 8 & 255) + 0.0722 * (rgb & 255)) / 255.0;
+        return com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.of(lum < 0.33);
     }
 
     /** A line of particles (at most 48 points) from one point to another. */
@@ -227,7 +234,7 @@ final class Wave14Util {
         int n = (int) Math.max(2, Math.min(48, len * 2.0));
         for (int i = 0; i <= n; i++) {
             Vec3 at = from.add(d.scale(i / (double) n));
-            level.sendParticles(particle, at.x, at.y, at.z, 1, 0.02, 0.02, 0.02, 0.0);
+            RukhFx.spray(level, RukhFx.Alignment.of(particle == com.newuniverse.nusmp.particle.rukh.RukhParticles.dark()), at.x, at.y, at.z, 1, 0.02, 0.02, 0.02, 0.0);
         }
     }
 

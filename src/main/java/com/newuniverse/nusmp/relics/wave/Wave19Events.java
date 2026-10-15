@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -112,7 +114,7 @@ final class Wave19Events {
         int second = p.tickCount / 20;
         ServerLevel sl = p.serverLevel();
         if (p.isInWater() && second % 4 == 0) {
-            sl.sendParticles(ParticleTypes.NOTE, p.getX(), p.getY() + 2.3, p.getZ(), 3, 0.4, 0.2, 0.4, 1.0);
+            RukhFx.spray(sl, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 2.3, p.getZ(), 3, 0.4, 0.2, 0.4, 1.0);
             sl.playSound(null, p.blockPosition(), SoundEvents.NOTE_BLOCK_BANJO.value(), SoundSource.PLAYERS, 0.8f, 0.6f + p.getRandom().nextFloat());
             if (second % 20 == 0) Wave19Util.tell(p, "You can't help singing in the water.", ChatFormatting.DARK_GRAY);
         }
@@ -131,7 +133,7 @@ final class Wave19Events {
             if (cd == null || !cd.contains(Wave19Scrolls.K_FACE_UNTIL)) continue;
             if (cd.copyTag().getLong(Wave19Scrolls.K_FACE_UNTIL) > now) continue;
             inv.setItem(i, ItemStack.EMPTY);
-            p.serverLevel().sendParticles(ParticleTypes.POOF, p.getX(), p.getY() + 1.0, p.getZ(), 12, 0.3, 0.3, 0.3, 0.05);
+            RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 12, 0.3, 0.3, 0.3, 0.05);
             Wave19Util.tell(p, "A facsimile crumbles to dust in your pack.", ChatFormatting.GRAY);
         }
     }

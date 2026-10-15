@@ -1,9 +1,10 @@
 package com.newuniverse.nusmp.relics.wave;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.relics.Fx;
 import io.github.manasmods.tensura.storage.TensuraStorages;
 import io.github.manasmods.tensura.util.EnergyHelper;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -124,8 +125,8 @@ final class Wave16Kit {
     // ---------------------------------------------------------------- particles
     static void puff(ServerLevel l, Vec3 at, int rgb, int count, double spread) {
         if (l == null || at == null) return;
-        DustParticleOptions dust = new DustParticleOptions(new Vector3f((rgb >> 16 & 255) / 255f, (rgb >> 8 & 255) / 255f, (rgb & 255) / 255f), 1.3f);
-        l.sendParticles(dust, at.x, at.y, at.z, Math.min(count, 48), spread, spread, spread, 0.02);
+        double lum = (0.2126 * (rgb >> 16 & 255) + 0.7152 * (rgb >> 8 & 255) + 0.0722 * (rgb & 255)) / 255.0;   // legacy colour -> alignment
+        RukhFx.spray(l, RukhFx.Alignment.of(lum < 0.33), at.x, at.y, at.z, Math.min(count, 48), spread, spread, spread, 0.02);
     }
 
     /** Alive, loaded entities of a list, capped (the targets of an area ability). */

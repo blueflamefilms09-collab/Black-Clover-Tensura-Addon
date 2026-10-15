@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
@@ -30,7 +32,7 @@ public class LokiSkill extends GodSkill {
             if (level.noCollision(player, player.getBoundingBox().move(p.subtract(from)))) { dest = p; break; }
         }
         if (dest == null) { SkillUtil.fail(player, "No room to blink."); return false; }
-        level.sendParticles(ParticleTypes.LARGE_SMOKE, from.x, from.y + 1, from.z, 30, 0.3, 0.6, 0.3, 0.02);
+        RukhFx.spray(level, RukhFx.Alignment.DARK, from.x, from.y + 1, from.z, 30, 0.3, 0.6, 0.3, 0.02);
         player.teleportTo(dest.x, dest.y, dest.z);
         player.fallDistance = 0;
         player.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, mastered ? 200 : 100, 0));

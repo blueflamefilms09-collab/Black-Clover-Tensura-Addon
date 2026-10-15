@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.NUConfig;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import io.github.manasmods.tensura.ability.skill.Skill;
@@ -34,7 +36,7 @@ public class InstantDeathSkill extends Skill {
     private static void strike(ServerPlayer player, LivingEntity t) {
         if (GodTier.fullyAffected(t)) GodTier.kill(player, t);
         else GodTier.percentDamage(player, t, NUConfig.INSTANT_DEATH_BOSS_SHARE.get());
-        player.serverLevel().sendParticles(ParticleTypes.SOUL, t.getX(), t.getY() + 1, t.getZ(), 15, 0.3, 0.5, 0.3, 0.02);
+        RukhFx.spray(player.serverLevel(), RukhFx.Alignment.DARK, t.getX(), t.getY() + 1, t.getZ(), 15, 0.3, 0.5, 0.3, 0.02);
     }
 
     @Override

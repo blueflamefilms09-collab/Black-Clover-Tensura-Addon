@@ -169,7 +169,7 @@ public final class Wave6Events {
         e.setCanceled(true);
         Fx.addEffect(p, Wave6Skills.FX_FATE_CHANGE, 60, 0);
         ServerLevel sl = p.serverLevel();
-        sl.sendParticles(ParticleTypes.CRIT, p.getX(), p.getY() + 1.0, p.getZ(), 12, 0.4, 0.5, 0.4, 0.2);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 12, 0.4, 0.5, 0.4, 0.2);
         Wave6Kit.hint(p, "The blow misses by a hair.");
         return true;
     }
@@ -297,7 +297,7 @@ public final class Wave6Events {
         if (!RelicFlags.has(p, Wave6Tune.F_SLIME) || now >= until) { endSlime(p, true); return; }
         slimeMods(p, true);                                                                       // re-applied after a relog
         Wave6Kit.give(p, "minecraft:jump_boost", 40, 0, true);
-        p.serverLevel().sendParticles(ParticleTypes.ITEM_SLIME, p.getX(), p.getY() + 0.3, p.getZ(), 4, 0.2, 0.1, 0.2, 0.02);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(p.serverLevel(), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 0.3, p.getZ(), 4, 0.2, 0.1, 0.2, 0.02);
     }
 
     /** Ends Slime Form. With {@code checkFit} it waits (up to 25 s) while there is no room to stand up again, so nobody is squeezed into a wall. */
@@ -339,7 +339,7 @@ public final class Wave6Events {
         if (pass % 2 != 0) return;
         Fx.lendSkills(p, 100, Wave6Skills.MAGIC_SENSE, Wave6Skills.ALL_SEEING_EYE);          // "see the unseen": magic sense and the all-seeing eye while the light shines
         ServerLevel sl = p.serverLevel();
-        sl.sendParticles(ParticleTypes.END_ROD, p.getX(), p.getY() + 1.2, p.getZ(), 6, 0.5, 0.6, 0.5, 0.01);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.2, p.getZ(), 6, 0.5, 0.6, 0.5, 0.01);
         int n = 0;
         double r = Wave6Tune.DAWN_REVEAL_RADIUS;
         for (LivingEntity le : sl.getEntitiesOfClass(LivingEntity.class, p.getBoundingBox().inflate(r), x -> x != p && x.isAlive() && x.isInvisible() && !(x instanceof Player pl && pl.isSpectator()))) {

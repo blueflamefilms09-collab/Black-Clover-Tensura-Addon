@@ -1,11 +1,12 @@
 package com.newuniverse.nusmp.client;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment;
+import com.newuniverse.nusmp.client.particle.rukh.RukhClientFx;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -15,7 +16,6 @@ import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RenderHandEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import org.joml.Vector3f;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -155,20 +155,18 @@ public final class SwordDrawClient {
                 for (int k = 0; k < 3; k++) {
                     double ox = (r.nextDouble() - 0.5) * 0.4, oz = (r.nextDouble() - 0.5) * 0.4;
                     if (am) {
-                        boolean red = r.nextBoolean();
-                        p.level().addParticle(new DustParticleOptions(red ? (st == 2 ? new Vector3f(0.45f, 0.12f, 0.75f) : new Vector3f(0.78f, 0.04f, 0.12f)) : new Vector3f(0.04f, 0f, 0.07f), 1.3f),
-                                hx + ox, hy + 0.1, hz + oz, 0, 0.05 + 0.02 * t / 4.0, 0);
+                        RukhClientFx.spray(p.level(), Alignment.DARK, hx + ox, hy + 0.1, hz + oz, 1, 0, 0.05 + 0.02 * t / 4.0, 0, 1.0);
                     } else {
-                        p.level().addParticle(r.nextInt(3) == 0 ? ParticleTypes.ENCHANT : ParticleTypes.END_ROD, hx + ox, hy + 0.1, hz + oz, 0, 0.06, 0);
+                        RukhClientFx.spray(p.level(), Alignment.LIGHT, hx + ox, hy + 0.1, hz + oz, 1, 0, 0.06, 0, 1.0);
                     }
                 }
             }
             if (t == GIVE_TICK) {                                                         // the hilt leaves the pages
                 for (int k = 0; k < 24; k++) {
                     double ang = r.nextDouble() * Math.PI * 2, sp = 0.08 + r.nextDouble() * 0.12;
-                    p.level().addParticle(am ? ParticleTypes.LARGE_SMOKE : ParticleTypes.END_ROD, hx, hy + 0.5, hz, Math.cos(ang) * sp, 0.05 + r.nextDouble() * 0.1, Math.sin(ang) * sp);
+                    RukhClientFx.spray(p.level(), am ? Alignment.DARK : Alignment.LIGHT, hx, hy + 0.5, hz, 1, Math.cos(ang) * sp, 0.05 + r.nextDouble() * 0.1, Math.sin(ang) * sp, 1.0);
                 }
-                if (am) p.level().addParticle(ParticleTypes.EXPLOSION, hx, hy + 0.5, hz, 0, 0, 0);
+                if (am) RukhClientFx.spray(p.level(), Alignment.LIGHT, hx, hy + 0.5, hz, 1, 0, 0, 0, 1.0);
             }
         }
     }

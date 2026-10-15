@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.dungeon.nexus.relic;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment;
+import com.newuniverse.nusmp.client.particle.rukh.RukhClientFx;
 import com.newuniverse.nusmp.dungeon.LivingDungeon;
 import com.newuniverse.nusmp.dungeon.nexus.DungeonCollapseEvent;
 import net.minecraft.ChatFormatting;
@@ -80,7 +82,6 @@ public class ArtifactBlock extends Block {
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         if (state.getValue(TAKEN) || state.getValue(RELIC) == RelicSlot.EMPTY || random.nextInt(3) != 0) return;
-        level.addParticle(ParticleTypes.END_ROD, pos.getX() + 0.3 + random.nextDouble() * 0.4, pos.getY() + 1.0 + random.nextDouble() * 0.4, pos.getZ() + 0.3 + random.nextDouble() * 0.4,
-                0.0, 0.01, 0.0);
+        RukhClientFx.spray(level, Alignment.LIGHT, pos.getX() + 0.3 + random.nextDouble() * 0.4, pos.getY() + 1.0 + random.nextDouble() * 0.4, pos.getZ() + 0.3 + random.nextDouble() * 0.4, 1, 0.0, 0.01, 0.0, 1.0);
     }
 }

@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "safe=false,open=false": {
+      "model": "nusmp:block/pitfall_tile"
+    },
+    "safe=true,open=false": {
+      "model": "nusmp:block/pitfall_tile"
+    },
+    "safe=false,open=true": {
+      "model": "nusmp:block/pitfall_tile_open"
+    },
+    "safe=true,open=true": {
+      "model": "nusmp:block/pitfall_tile_open"
+    }
+  }
+}

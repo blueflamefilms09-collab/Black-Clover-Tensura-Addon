@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicComponents2;
@@ -41,7 +43,7 @@ final class Wave18Acts {
         Fx.addEffect(p, "tensura:magic_aura", Wave18Tune.STUDY_TICKS, 0);
         Fx.addEffect(p, "minecraft:haste", Wave18Tune.STUDY_TICKS, 0);
         Fx.lendSkill(p, "tensura:magic_sense", Wave18Tune.STUDY_TICKS);
-        p.serverLevel().sendParticles(ParticleTypes.ENCHANT, p.getX(), p.getY() + 1.6, p.getZ(), 30, 0.6, 0.4, 0.6, 0.8);
+        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.6, p.getZ(), 30, 0.6, 0.4, 0.6, 0.8);
         Fx.say(p, "You find the shortcut in the old margins: learning and casting come easier for five minutes.");
     }
 
@@ -65,8 +67,8 @@ final class Wave18Acts {
             return;
         }
         Wave18Events.link(p, best, level.getGameTime());
-        level.sendParticles(Wave18Kit.dust(0xE8A23A, 1.3f), best.getX(), best.getY() + best.getBbHeight() * 0.6, best.getZ(), 18, 0.4, 0.4, 0.4, 0.0);
-        level.sendParticles(Wave18Kit.dust(0xE8A23A, 1.3f), p.getX(), p.getY() + 1.0, p.getZ(), 18, 0.4, 0.4, 0.4, 0.0);
+        RukhFx.spray(level, Wave18Kit.align(0xE8A23A), best.getX(), best.getY() + best.getBbHeight() * 0.6, best.getZ(), 18, 0.4, 0.4, 0.4, 0.0);
+        RukhFx.spray(level, Wave18Kit.align(0xE8A23A), p.getX(), p.getY() + 1.0, p.getZ(), 18, 0.4, 0.4, 0.4, 0.0);
         Fx.say(p, "The bangles close: you and " + best.getName().getString() + " share every blow for five minutes.");
         if (best instanceof ServerPlayer o) Fx.say(o, p.getName().getString() + " has joined your hurts to theirs for five minutes.");
     }
@@ -180,7 +182,7 @@ final class Wave18Acts {
         }
         for (int i = 0; i < 24; i++) {
             double a = i * (Math.PI * 2 / 24);
-            level.sendParticles(ParticleTypes.POOF, centre.x + Math.cos(a) * r, centre.y + 0.5, centre.z + Math.sin(a) * r, 1, 0.1, 0.4, 0.1, 0.01);
+            RukhFx.spray(level, RukhFx.Alignment.LIGHT, centre.x + Math.cos(a) * r, centre.y + 0.5, centre.z + Math.sin(a) * r, 1, 0.1, 0.4, 0.1, 0.01);
         }
         long next = now + Wave18Tune.ELEPHANT_PULSE;
         Wave18Events.QUEUE.at(next, () -> elephantPulse(level, pid, centre, r, next, end, false));
@@ -213,7 +215,7 @@ final class Wave18Acts {
         cat.setPersistenceRequired();
         if (!level.addFreshEntity(cat)) return;
         stack.set(RelicComponents2.STATE.get(), n - 1);
-        level.sendParticles(ParticleTypes.HEART, cat.getX(), cat.getY() + 0.5, cat.getZ(), 5, 0.3, 0.3, 0.3, 0.0);
+        RukhFx.spray(level, RukhFx.Alignment.LIGHT, cat.getX(), cat.getY() + 0.5, cat.getZ(), 5, 0.3, 0.3, 0.3, 0.0);
         level.playSound(null, cat.blockPosition(), SoundEvents.CAT_AMBIENT, SoundSource.NEUTRAL, 1.0f, 1.6f);
         Fx.say(p, "You pick a kitten out of the bag (" + (n - 1) + " left inside).");
     }
@@ -237,7 +239,7 @@ final class Wave18Acts {
             Fx.say(p, "No kitten of yours is close enough to pop into the bag.");
             return;
         }
-        level.sendParticles(ParticleTypes.HEART, best.getX(), best.getY() + 0.5, best.getZ(), 5, 0.3, 0.3, 0.3, 0.0);
+        RukhFx.spray(level, RukhFx.Alignment.LIGHT, best.getX(), best.getY() + 0.5, best.getZ(), 5, 0.3, 0.3, 0.3, 0.0);
         best.discard();
         stack.set(RelicComponents2.STATE.get(), n + 1);
         Fx.say(p, "A kitten tumbles into the bag (" + (n + 1) + " inside).");
@@ -276,9 +278,9 @@ final class Wave18Acts {
         }
         for (int i = 0; i < 20; i++) {
             double a = i * (Math.PI * 2 / 20);
-            level.sendParticles(ParticleTypes.HEART, centre.x + Math.cos(a) * r, centre.y + 0.4, centre.z + Math.sin(a) * r, 1, 0.2, 0.3, 0.2, 0.0);
+            RukhFx.spray(level, RukhFx.Alignment.LIGHT, centre.x + Math.cos(a) * r, centre.y + 0.4, centre.z + Math.sin(a) * r, 1, 0.2, 0.3, 0.2, 0.0);
         }
-        level.sendParticles(Wave18Kit.dust(0xE8C48A, 1.2f), centre.x, centre.y + 0.3, centre.z, 24, r * 0.5, 0.2, r * 0.5, 0.0);
+        RukhFx.spray(level, Wave18Kit.align(0xE8C48A), centre.x, centre.y + 0.3, centre.z, 24, r * 0.5, 0.2, r * 0.5, 0.0);
         long next = level.getGameTime() + 20;
         Wave18Events.QUEUE.at(next, () -> floodPulse(level, pid, centre, kittens, pulse + 1, pulses));
     }
@@ -362,10 +364,10 @@ final class Wave18Acts {
                 default -> { }
             }
         }
-        var dust = Wave18Kit.dust(Wave18Pure.powderColour(kind), 1.4f);
+        var dust = Wave18Kit.align(Wave18Pure.powderColour(kind));
         for (int i = 1; i <= 8; i++) {
             double reach = i * Wave18Tune.SATCHEL_RANGE / 8.0, spread = reach * 0.4;
-            level.sendParticles(dust, p.getX() + f.x * reach, p.getEyeY() - 0.3, p.getZ() + f.z * reach, 6, spread, 0.3, spread, 0.0);
+            RukhFx.spray(level, dust, p.getX() + f.x * reach, p.getEyeY() - 0.3, p.getZ() + f.z * reach, 6, spread, 0.3, spread, 0.0);
         }
         level.playSound(null, p.blockPosition(), SoundEvents.DRAGON_FIREBALL_EXPLODE, SoundSource.PLAYERS, 0.5f, 1.6f);
         int after = left - 1;

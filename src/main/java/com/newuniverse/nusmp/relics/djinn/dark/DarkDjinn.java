@@ -12,7 +12,6 @@ import com.newuniverse.nusmp.relics.djinn.DjinnLedger;
 import com.newuniverse.nusmp.relics.djinn.DjinnState;
 import com.newuniverse.nusmp.relics.djinn.VesselAccess;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
@@ -113,11 +112,9 @@ public final class DarkDjinn {
         s.setDark(true);
         DjinnEngine.refresh(p);
         ServerLevel l = p.serverLevel();
-        DustParticleOptions black = new DustParticleOptions(new Vector3f(0.05f, 0.0f, 0.1f), 1.6f);
-        DustParticleOptions gold = new DustParticleOptions(new Vector3f(1.0f, 0.78f, 0.2f), 1.2f);
-        l.sendParticles(black, p.getX(), p.getY() + 1.0, p.getZ(), 40, 0.5, 0.9, 0.5, 0.02);
-        l.sendParticles(gold, p.getX(), p.getY() + 1.0, p.getZ(), 16, 0.5, 0.9, 0.5, 0.02);
-        l.sendParticles(ParticleTypes.SQUID_INK, p.getX(), p.getY() + 1.0, p.getZ(), 24, 0.4, 0.8, 0.4, 0.05);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, p.getX(), p.getY() + 1.0, p.getZ(), 40, 0.5, 0.9, 0.5, 0.02);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 16, 0.5, 0.9, 0.5, 0.02);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, p.getX(), p.getY() + 1.0, p.getZ(), 24, 0.4, 0.8, 0.4, 0.05);
         l.playSound(null, p.blockPosition(), SoundEvents.WARDEN_HEARTBEAT, SoundSource.PLAYERS, 2.0f, 0.5f);
         l.playSound(null, p.blockPosition(), SoundEvents.WARDEN_SONIC_CHARGE, SoundSource.PLAYERS, 1.0f, 0.5f);
     }
@@ -128,7 +125,7 @@ public final class DarkDjinn {
         s.setDark(false);
         DjinnEngine.refresh(p);
         ServerLevel l = p.serverLevel();
-        l.sendParticles(ParticleTypes.END_ROD, p.getX(), p.getY() + 1.0, p.getZ(), 30, 0.5, 0.9, 0.5, 0.05);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 30, 0.5, 0.9, 0.5, 0.05);
         l.playSound(null, p.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.2f, 1.7f);
         l.playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.5f, 1.2f);
     }
@@ -198,7 +195,7 @@ public final class DarkDjinn {
                 Fx.addEffect(m, "tensura:fear", DarkRules.FEAR_TICKS, 0);
             }
         }
-        l.sendParticles(ParticleTypes.SQUID_INK, p.getX(), p.getY() + 1.0, p.getZ(), 3, 0.6, 0.8, 0.6, 0.01);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, p.getX(), p.getY() + 1.0, p.getZ(), 3, 0.6, 0.8, 0.6, 0.01);
     }
 
     // ---------------------------------------------------------------- shards in the pack

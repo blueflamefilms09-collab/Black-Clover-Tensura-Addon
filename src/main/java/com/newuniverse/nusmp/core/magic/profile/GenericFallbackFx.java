@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.core.magic.profile;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.vfx.VfxSpawn;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -22,7 +24,7 @@ public final class GenericFallbackFx {
             int color = profile.color();
             VfxSpawn.send(level, profile.castShape(), eye.add(0, -0.3, 0), at, color, 18, 0.9f);
             VfxSpawn.send(level, profile.burstShape(), at, at.add(0, 1, 0), color, 20, 1.0f);
-            level.sendParticles(profile.particle(), at.x, at.y + 0.4, at.z, 14, 0.4, 0.4, 0.4, 0.02);
+            RukhFx.spray(level, RukhFx.Alignment.of(profile.particle() == com.newuniverse.nusmp.particle.rukh.RukhParticles.dark()), at.x, at.y + 0.4, at.z, 14, 0.4, 0.4, 0.4, 0.02);
         } catch (Throwable ignored) {
             // the fallback must never fault: nothing more to fall back to
         }

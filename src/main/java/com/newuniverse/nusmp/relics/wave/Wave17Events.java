@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.Suggestions;
@@ -144,8 +146,8 @@ public final class Wave17Events {
         if (!Wave17Rules.furyActive(p.getHealth(), p.getMaxHealth())) { if (!LIT.isEmpty()) LIT.remove(p.getUUID()); return; }
         if (!RelicFlags.has(p, F_FURY)) return;
         ServerLevel level = p.serverLevel();
-        level.sendParticles(Wave17Kit.dust(RED, 1.3f), p.getX(), p.getY() + 1.0, p.getZ(), 6, 0.45, 0.7, 0.45, 0.0);
-        level.sendParticles(ParticleTypes.GLOW, p.getX(), p.getY() + 1.0, p.getZ(), 2, 0.4, 0.6, 0.4, 0.0);
+        RukhFx.spray(level, Wave17Kit.align(RED), p.getX(), p.getY() + 1.0, p.getZ(), 6, 0.45, 0.7, 0.45, 0.0);
+        RukhFx.spray(level, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 2, 0.4, 0.6, 0.4, 0.0);
         if (LIT.add(p.getUUID())) Wave17Kit.hint(p, "Fury of the Fallen: you glow red, and every blow you land hits twice as hard.", ChatFormatting.RED);
     }
 

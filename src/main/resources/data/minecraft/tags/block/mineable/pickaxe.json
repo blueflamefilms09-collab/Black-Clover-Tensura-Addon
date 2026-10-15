@@ -6,6 +6,10 @@
     "nusmp:labyrinth_pillar",
     "nusmp:labyrinth_glyph",
     "nusmp:labyrinth_lantern",
-    "nusmp:magicule_vein"
+    "nusmp:magicule_vein",
+    "nusmp:pitfall_tile",
+    "nusmp:snuffer_glyph",
+    "nusmp:sigil_plate",
+    "nusmp:riddle_stone"
   ]
 }

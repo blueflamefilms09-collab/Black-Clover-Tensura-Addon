@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.dungeon.nexus.relic;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment;
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.antimagic.Nullification;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.book.GrimoireBook;
@@ -144,7 +146,7 @@ final class SheathHandler {
                 }
             }
             case CRACKLE -> {
-                p.serverLevel().sendParticles(net.minecraft.core.particles.ParticleTypes.ELECTRIC_SPARK, p.getX(), p.getY() + 1.0, p.getZ(), 10, 0.4, 0.6, 0.4, 0.1);
+                RukhFx.spray(p.serverLevel(), Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 10, 0.4, 0.6, 0.4, 0.1);
                 if (RelicState.due(p.getUUID(), "sheath_crackle", time, 100)) {
                     p.displayClientMessage(Component.literal("The Sheath cracks with magicules! Strike now!").withStyle(ChatFormatting.RED), true);
                 }

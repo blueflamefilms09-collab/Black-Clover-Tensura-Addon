@@ -1,7 +1,6 @@
 package com.newuniverse.nusmp.relics.djinn;
 
 import com.newuniverse.nusmp.relics.djinn.dark.DarkDjinn;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -41,7 +40,7 @@ public final class DjinnWeaponBridge {
 
     public static ParticleOptions particle(Djinn d) { return DjinnFx.particle(d.affinity()); }
 
-    public static DustParticleOptions dust(int rgb, float size) { return DjinnFx.dust(rgb, size); }
+    public static net.minecraft.core.particles.SimpleParticleType dust(int rgb, float size) { return DjinnFx.dust(rgb, size); }
 
     public static void ring(ServerLevel l, Vec3 at, double radius, int rgb, int points, double lift) { DjinnFx.ring(l, at, radius, rgb, points, lift); }
 

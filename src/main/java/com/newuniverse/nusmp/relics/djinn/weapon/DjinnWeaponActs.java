@@ -271,12 +271,12 @@ public final class DjinnWeaponActs {
             double a = -half + (2 * half) * i / (n - 1);
             double[] v = WeaponGeo.turn(c.flat.x, c.flat.z, a);
             double x = c.p.getX() + v[0] * radius, z = c.p.getZ() + v[1] * radius, y = c.p.getY() + 1.0;
-            c.l.sendParticles(o, x, y, z, 1, 0.05, 0.1, 0.05, 0.01);
-            if (i % 2 == 0) c.l.sendParticles(DjinnWeaponBridge.dust(rgb, 1.3f), x, y - 0.3, z, 1, 0.05, 0.05, 0.05, 0.0);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.relics.Fx.alignOf(o), x, y, z, 1, 0.05, 0.1, 0.05, 0.01);
+            if (i % 2 == 0) com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.relics.Fx.align(rgb), x, y - 0.3, z, 1, 0.05, 0.05, 0.05, 0.0);
         }
     }
 
-    private static void flash(Ctx c, Vec3 at) { c.l.sendParticles(ParticleTypes.FLASH, at.x, at.y + 0.5, at.z, 1, 0, 0, 0, 0); }
+    private static void flash(Ctx c, Vec3 at) { com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, at.x, at.y + 0.5, at.z, 1, 0, 0, 0, 0); }
 
     private static void rings(Ctx c, Vec3 at, double r) {
         DjinnWeaponBridge.ring(c.l, at, r, c.color, (int) (r * 6), 0.15);
@@ -306,12 +306,12 @@ public final class DjinnWeaponActs {
             }
             if (next == null) break;
             c.hurt(next, 0.6);
-            DjinnWeaponBridge.line(c.l, at, centre(next), ParticleTypes.ELECTRIC_SPARK, 12);
+            DjinnWeaponBridge.line(c.l, at, centre(next), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 12);
             seen.add(next);
             at = centre(next);
         }
         Vec3 start = c.eye.add(c.look.scale(0.8)).add(0, -0.3, 0);
-        DjinnWeaponBridge.line(c.l, start, end, ParticleTypes.ELECTRIC_SPARK, 40);
+        DjinnWeaponBridge.line(c.l, start, end, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 40);
         DjinnWeaponBridge.line(c.l, start, end, DjinnWeaponBridge.dust(c.glow, 1.5f), 30);
         flash(c, end);
         snd(c, SoundEvents.LIGHTNING_BOLT_IMPACT, 1.0f, 1.6f);
@@ -326,7 +326,7 @@ public final class DjinnWeaponActs {
             DjinnWeaponBridge.effect(t, "minecraft:slowness", 40, 2);
         }
         Vec3 end = start.add(c.flat.scale(8.0));
-        DjinnWeaponBridge.line(c.l, start.add(0, 1, 0), end.add(0, 1, 0), ParticleTypes.ELECTRIC_SPARK, 40);
+        DjinnWeaponBridge.line(c.l, start.add(0, 1, 0), end.add(0, 1, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 40);
         DjinnWeaponBridge.line(c.l, start.add(0, 0.4, 0), end.add(0, 0.4, 0), DjinnWeaponBridge.dust(c.glow, 1.6f), 30);
         flash(c, start);
         snd(c, SoundEvents.LIGHTNING_BOLT_THUNDER, 0.8f, 1.6f);
@@ -339,9 +339,9 @@ public final class DjinnWeaponActs {
             t.setRemainingFireTicks(Math.max(t.getRemainingFireTicks(), 100));
             DjinnWeaponBridge.push(t, c.feet(), 0.5, 0.15);
         }
-        arc(c, 3.0, 60, 24, ParticleTypes.FLAME, c.glow);
-        arc(c, 5.5, 60, 28, ParticleTypes.FLAME, c.color);
-        c.l.sendParticles(ParticleTypes.LAVA, c.p.getX() + c.flat.x * 3, c.p.getY() + 1.2, c.p.getZ() + c.flat.z * 3, 4, 0.6, 0.3, 0.6, 0.0);
+        arc(c, 3.0, 60, 24, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), c.glow);
+        arc(c, 5.5, 60, 28, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), c.color);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, c.p.getX() + c.flat.x * 3, c.p.getY() + 1.2, c.p.getZ() + c.flat.z * 3, 4, 0.6, 0.3, 0.6, 0.0);
         snd(c, SoundEvents.FIRECHARGE_USE, 1.2f, 0.8f);
     }
 
@@ -357,8 +357,8 @@ public final class DjinnWeaponActs {
         Vec3 side = new Vec3(-c.flat.z, 0, c.flat.x);
         for (int i = -3; i <= 3; i++) {
             Vec3 base = c.feet().add(c.flat.scale(3.2)).add(side.scale(i));
-            DjinnWeaponBridge.column(c.l, base.x, base.y, base.y + 2.4, base.z, ParticleTypes.FLAME, 7);
-            c.l.sendParticles(DjinnWeaponBridge.dust(c.glow, 1.4f), base.x, base.y + 1.2, base.z, 2, 0.1, 0.6, 0.1, 0.0);
+            DjinnWeaponBridge.column(c.l, base.x, base.y, base.y + 2.4, base.z, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 7);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.relics.Fx.align(c.glow), base.x, base.y + 1.2, base.z, 2, 0.1, 0.6, 0.1, 0.0);
         }
         snd(c, SoundEvents.BLAZE_SHOOT, 1.2f, 0.7f);
     }
@@ -372,9 +372,9 @@ public final class DjinnWeaponActs {
             DjinnWeaponBridge.effect(t, "minecraft:slowness", 40, 0);
         }
         Vec3 start = c.eye.add(c.look.scale(0.8)).add(0, -0.3, 0), end = c.eye.add(c.look.scale(len));
-        DjinnWeaponBridge.line(c.l, start, end, ParticleTypes.BUBBLE_POP, 40);
+        DjinnWeaponBridge.line(c.l, start, end, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 40);
         DjinnWeaponBridge.line(c.l, start, end, DjinnWeaponBridge.dust(c.glow, 1.5f), 30);
-        c.l.sendParticles(ParticleTypes.SPLASH, end.x, end.y, end.z, 20, 0.5, 0.4, 0.5, 0.1);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, end.x, end.y, end.z, 20, 0.5, 0.4, 0.5, 0.1);
         snd(c, SoundEvents.PLAYER_SPLASH_HIGH_SPEED, 1.0f, 1.2f);
     }
 
@@ -384,9 +384,9 @@ public final class DjinnWeaponActs {
             t.setTicksFrozen(t.getTicksRequiredToFreeze() + 60);
             DjinnWeaponBridge.effect(t, "minecraft:slowness", BalanceLaw.controlTicks(t, 80), 2);
         }
-        arc(c, 3.0, 50, 20, ParticleTypes.SNOWFLAKE, c.glow);
-        arc(c, 6.0, 50, 24, ParticleTypes.SNOWFLAKE, c.color);
-        c.l.sendParticles(ParticleTypes.CLOUD, c.p.getX() + c.flat.x * 3, c.p.getY() + 1.0, c.p.getZ() + c.flat.z * 3, 10, 1.0, 0.4, 1.0, 0.02);
+        arc(c, 3.0, 50, 20, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), c.glow);
+        arc(c, 6.0, 50, 24, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), c.color);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, c.p.getX() + c.flat.x * 3, c.p.getY() + 1.0, c.p.getZ() + c.flat.z * 3, 10, 1.0, 0.4, 1.0, 0.02);
         snd(c, SoundEvents.PLAYER_HURT_FREEZE, 1.2f, 0.8f);
     }
 
@@ -397,8 +397,8 @@ public final class DjinnWeaponActs {
             DjinnWeaponBridge.push(t, c.feet(), 1.0, 0.35);
         }
         rings(c, c.feet(), c.range);
-        c.l.sendParticles(ParticleTypes.GUST, c.p.getX(), c.p.getY() + 1.0, c.p.getZ(), 1, 0.5, 0.2, 0.5, 0.0);
-        c.l.sendParticles(ParticleTypes.CLOUD, c.p.getX(), c.p.getY() + 0.6, c.p.getZ(), 20, c.range * 0.4, 0.3, c.range * 0.4, 0.15);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, c.p.getX(), c.p.getY() + 1.0, c.p.getZ(), 1, 0.5, 0.2, 0.5, 0.0);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, c.p.getX(), c.p.getY() + 0.6, c.p.getZ(), 20, c.range * 0.4, 0.3, c.range * 0.4, 0.15);
         snd(c, SoundEvents.PLAYER_ATTACK_SWEEP, 1.4f, 0.7f);
     }
 
@@ -412,7 +412,7 @@ public final class DjinnWeaponActs {
         c.p.fallDistance = 0;
         Fx.addEffect(c.p, "minecraft:slow_falling", 100, 0);
         rings(c, c.feet(), 3.5);
-        DjinnWeaponBridge.column(c.l, c.p.getX(), c.p.getY(), c.p.getY() + 4, c.p.getZ(), ParticleTypes.CLOUD, 20);
+        DjinnWeaponBridge.column(c.l, c.p.getX(), c.p.getY(), c.p.getY() + 4, c.p.getZ(), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 20);
         snd(c, SoundEvents.PHANTOM_FLAP, 1.0f, 1.2f);
     }
 
@@ -421,14 +421,14 @@ public final class DjinnWeaponActs {
         for (ServerPlayer a : DjinnWeaponBridge.alliesNear(c.p, c.range)) {
             BalanceLaw.heal(a, (float) c.power);
             Fx.addEffect(a, "minecraft:regeneration", 80, 0);
-            c.l.sendParticles(ParticleTypes.HAPPY_VILLAGER, a.getX(), a.getY() + 1, a.getZ(), 10, 0.4, 0.6, 0.4, 0.05);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, a.getX(), a.getY() + 1, a.getZ(), 10, 0.4, 0.6, 0.4, 0.05);
         }
         for (LivingEntity t : around(c, c.range - 2.0)) {
             c.hurt(t, 0.5);
             DjinnWeaponBridge.effect(t, "minecraft:slowness", BalanceLaw.controlTicks(t, 60), 3);
         }
         rings(c, c.feet(), c.range * 0.8);
-        c.l.sendParticles(ParticleTypes.HAPPY_VILLAGER, c.p.getX(), c.p.getY() + 1, c.p.getZ(), 40, c.range * 0.3, 0.8, c.range * 0.3, 0.05);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, c.p.getX(), c.p.getY() + 1, c.p.getZ(), 40, c.range * 0.3, 0.8, c.range * 0.3, 0.05);
         snd(c, SoundEvents.AMETHYST_BLOCK_CHIME, 1.5f, 1.3f);
     }
 
@@ -441,10 +441,10 @@ public final class DjinnWeaponActs {
             DjinnWeaponBridge.effect(t, "minecraft:slowness", BalanceLaw.controlTicks(t, 80), 4);
             DjinnWeaponBridge.effect(t, "minecraft:poison", 100, 0);
             Vec3 m = centre(t);
-            DjinnWeaponBridge.line(c.l, c.eye.add(0, -0.4, 0), m, ParticleTypes.CRIT, 24);
+            DjinnWeaponBridge.line(c.l, c.eye.add(0, -0.4, 0), m, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 24);
             DjinnWeaponBridge.column(c.l, t.getX(), t.getY(), t.getY() + 1.8, t.getZ(), DjinnWeaponBridge.dust(c.glow, 1.4f), 10);
         }
-        arc(c, 4.0, 30, 12, ParticleTypes.HAPPY_VILLAGER, c.color);
+        arc(c, 4.0, 30, 12, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), c.color);
         snd(c, SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, 1.5f, 0.6f);
     }
 
@@ -457,8 +457,8 @@ public final class DjinnWeaponActs {
             DjinnWeaponBridge.push(t, at, 0.6, 0.8);
         }
         for (int k = 1; k <= 3; k++) DjinnWeaponBridge.ring(c.l, at, c.range * k / 3.0, k == 3 ? c.glow : c.color, (int) (c.range * 5 * k / 2.0), 0.15 * k);
-        c.l.sendParticles(ParticleTypes.EXPLOSION, at.x, at.y + 0.6, at.z, 3, c.range * 0.3, 0.2, c.range * 0.3, 0.0);
-        c.l.sendParticles(ParticleTypes.CRIT, at.x, at.y + 0.5, at.z, 24, c.range * 0.4, 0.3, c.range * 0.4, 0.3);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, at.x, at.y + 0.6, at.z, 3, c.range * 0.3, 0.2, c.range * 0.3, 0.0);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, at.x, at.y + 0.5, at.z, 24, c.range * 0.4, 0.3, c.range * 0.4, 0.3);
         snd(c, SoundEvents.IRON_GOLEM_ATTACK, 1.6f, 0.5f);
         snd(c, SoundEvents.ANVIL_LAND, 0.8f, 0.6f);
     }
@@ -472,9 +472,9 @@ public final class DjinnWeaponActs {
             DjinnWeaponBridge.effect(t, "minecraft:weakness", 100, 1);
             Fx.addEffect(t, "tensura:fragility", 160, 0);
             DjinnWeaponBridge.push(t, c.feet(), 0.4, 0.1);
-            c.l.sendParticles(ParticleTypes.CRIT, t.getX(), t.getY() + t.getBbHeight() * 0.6, t.getZ(), 14, 0.3, 0.4, 0.3, 0.3);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, t.getX(), t.getY() + t.getBbHeight() * 0.6, t.getZ(), 14, 0.3, 0.4, 0.3, 0.3);
         }
-        arc(c, 3.5, 40, 14, ParticleTypes.CRIT, c.color);
+        arc(c, 3.5, 40, 14, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), c.color);
         snd(c, SoundEvents.ANVIL_LAND, 1.0f, 1.4f);
     }
 
@@ -485,7 +485,7 @@ public final class DjinnWeaponActs {
             DjinnWeaponBridge.push(t, c.feet(), 1.3, 0.25);
             EnergyBridge.effect(t, "silence", 80, 0);
         }
-        for (int k = 1; k <= 3; k++) arc(c, 2.5 * k, 45, 8 + 4 * k, ParticleTypes.NOTE, k == 3 ? c.glow : c.color);
+        for (int k = 1; k <= 3; k++) arc(c, 2.5 * k, 45, 8 + 4 * k, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), k == 3 ? c.glow : c.color);
         snd(c, SoundEvents.NOTE_BLOCK_BELL.value(), 1.6f, 0.6f);
         snd(c, SoundEvents.WARDEN_SONIC_BOOM, 0.5f, 1.6f);
     }
@@ -497,7 +497,7 @@ public final class DjinnWeaponActs {
             DjinnWeaponBridge.effect(t, "minecraft:slowness", 60, 0);
         }
         rings(c, c.feet(), c.range);
-        c.l.sendParticles(ParticleTypes.NOTE, c.p.getX(), c.p.getY() + 1.5, c.p.getZ(), 16, c.range * 0.3, 0.6, c.range * 0.3, 1.0);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, c.p.getX(), c.p.getY() + 1.5, c.p.getZ(), 16, c.range * 0.3, 0.6, c.range * 0.3, 1.0);
         snd(c, SoundEvents.NOTE_BLOCK_DIDGERIDOO.value(), 1.6f, 0.5f);
     }
 
@@ -511,7 +511,7 @@ public final class DjinnWeaponActs {
             t.setRemainingFireTicks(Math.max(t.getRemainingFireTicks(), 80));
         }
         Vec3 end = start.add(c.flat.scale(c.range));
-        DjinnWeaponBridge.line(c.l, start.add(0, 1, 0), end.add(0, 1, 0), ParticleTypes.FLAME, 40);
+        DjinnWeaponBridge.line(c.l, start.add(0, 1, 0), end.add(0, 1, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 40);
         DjinnWeaponBridge.line(c.l, start.add(0, 0.5, 0), end.add(0, 0.5, 0), DjinnWeaponBridge.dust(c.glow, 1.6f), 30);
         snd(c, SoundEvents.FIRECHARGE_USE, 1.4f, 0.7f);
     }
@@ -552,10 +552,10 @@ public final class DjinnWeaponActs {
             double mult = (i == 0 ? 1.0 : 0.6) * (t.getType().is(EntityTypeTags.UNDEAD) ? 2.0 : 1.0);
             c.hurt(t, mult);
             DjinnWeaponBridge.effect(t, "minecraft:glowing", 60, 0);
-            c.l.sendParticles(ParticleTypes.END_ROD, t.getX(), t.getY() + t.getBbHeight() * 0.6, t.getZ(), 8, 0.2, 0.3, 0.2, 0.05);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, t.getX(), t.getY() + t.getBbHeight() * 0.6, t.getZ(), 8, 0.2, 0.3, 0.2, 0.05);
         }
         Vec3 start = c.eye.add(c.look.scale(0.8)).add(0, -0.3, 0), end = c.eye.add(c.look.scale(len));
-        DjinnWeaponBridge.line(c.l, start, end, ParticleTypes.END_ROD, 40);
+        DjinnWeaponBridge.line(c.l, start, end, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 40);
         DjinnWeaponBridge.line(c.l, start, end, DjinnWeaponBridge.dust(c.glow, 1.4f), 30);
         flash(c, end);
         snd(c, SoundEvents.AMETHYST_BLOCK_RESONATE, 1.4f, 1.8f);
@@ -569,7 +569,7 @@ public final class DjinnWeaponActs {
         for (ServerPlayer a : DjinnWeaponBridge.alliesNear(c.p, c.range)) BalanceLaw.heal(a, (float) (c.power * 0.35));
         flash(c, c.feet());
         rings(c, c.feet(), c.range);
-        c.l.sendParticles(ParticleTypes.END_ROD, c.p.getX(), c.p.getY() + 1.0, c.p.getZ(), 40, c.range * 0.3, 0.8, c.range * 0.3, 0.2);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, c.p.getX(), c.p.getY() + 1.0, c.p.getZ(), 40, c.range * 0.3, 0.8, c.range * 0.3, 0.2);
         snd(c, SoundEvents.BEACON_ACTIVATE, 1.0f, 1.8f);
     }
 
@@ -593,7 +593,7 @@ public final class DjinnWeaponActs {
         for (int i = 0; i < links && cur != null; i++) {
             c.hurt(cur, WeaponGeo.chainFactor(i, 0.85));
             Vec3 m = centre(cur);
-            DjinnWeaponBridge.line(c.l, at, m, ParticleTypes.ELECTRIC_SPARK, 16);
+            DjinnWeaponBridge.line(c.l, at, m, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 16);
             DjinnWeaponBridge.line(c.l, at, m, DjinnWeaponBridge.dust(c.glow, 1.2f), 10);
             seen.add(cur);
             at = m;
@@ -640,10 +640,10 @@ public final class DjinnWeaponActs {
             DjinnWeaponBridge.effect(t, "minecraft:slowness", BalanceLaw.controlTicks(t, 20), 3);
         }
         int glow = st.dark ? 0xB07CFF : 0xD2C2FF;
-        DjinnWeaponBridge.column(l, at.x, at.y, at.y + 14, at.z, ParticleTypes.ELECTRIC_SPARK, 32);
+        DjinnWeaponBridge.column(l, at.x, at.y, at.y + 14, at.z, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 32);
         DjinnWeaponBridge.column(l, at.x, at.y, at.y + 12, at.z, DjinnWeaponBridge.dust(glow, 1.8f), 24);
         DjinnWeaponBridge.ring(l, at, 2.4, glow, 20, 0.2);
-        l.sendParticles(ParticleTypes.FLASH, at.x, at.y + 0.5, at.z, 1, 0, 0, 0, 0);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, at.x, at.y + 0.5, at.z, 1, 0, 0, 0, 0);
         snd(l, at, SoundEvents.LIGHTNING_BOLT_IMPACT, 1.4f, 1.1f);
     }
 
@@ -663,8 +663,8 @@ public final class DjinnWeaponActs {
             for (int i = 0; i <= 6; i++) {
                 double r = 3.0 + i * 1.0, bend = side * Math.sin(i / 6.0 * Math.PI) * 1.2;
                 Vec3 pt = new Vec3(px + v[0] * r + nx * bend, c.p.getY() + 1.0, pz + v[1] * r + nz * bend);
-                if (prev != null) DjinnWeaponBridge.line(c.l, prev, pt, ParticleTypes.CLOUD, 6);
-                c.l.sendParticles(DjinnWeaponBridge.dust(c.glow, 1.4f), pt.x, pt.y, pt.z, 1, 0.05, 0.05, 0.05, 0.0);
+                if (prev != null) DjinnWeaponBridge.line(c.l, prev, pt, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 6);
+                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.relics.Fx.align(c.glow), pt.x, pt.y, pt.z, 1, 0.05, 0.05, 0.05, 0.0);
                 prev = pt;
             }
         }
@@ -683,7 +683,7 @@ public final class DjinnWeaponActs {
             DjinnWeaponBridge.push(t, start, 0.5, 0.2);
         }
         Vec3 end = start.add(c.flat.scale(c.range));
-        DjinnWeaponBridge.line(c.l, start.add(0, 1, 0), end.add(0, 1.4, 0), ParticleTypes.CLOUD, 40);
+        DjinnWeaponBridge.line(c.l, start.add(0, 1, 0), end.add(0, 1.4, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 40);
         DjinnWeaponBridge.line(c.l, start.add(0, 0.6, 0), end.add(0, 1.0, 0), DjinnWeaponBridge.dust(c.glow, 1.5f), 30);
         snd(c, SoundEvents.PHANTOM_FLAP, 1.0f, 1.5f);
     }
@@ -695,11 +695,11 @@ public final class DjinnWeaponActs {
         for (LivingEntity t : in) {
             c.hurt(t, 1.0);
             Fx.addEffect(t, "tensura:fear", BalanceLaw.controlTicks(t, 100), 0);
-            c.l.sendParticles(ParticleTypes.SQUID_INK, t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 6, 0.3, 0.4, 0.3, 0.02);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 6, 0.3, 0.4, 0.3, 0.02);
             reaped++;
         }
         if (reaped > 0) BalanceLaw.heal(c.p, (float) (c.power * 0.25 * Math.min(3, reaped)));
-        arc(c, 3.0, 70, 24, ParticleTypes.SQUID_INK, c.color);
+        arc(c, 3.0, 70, 24, com.newuniverse.nusmp.particle.rukh.RukhParticles.dark(), c.color);
         arc(c, 5.0, 70, 30, DjinnWeaponBridge.particle(c.d), c.glow);
         snd(c, SoundEvents.PLAYER_ATTACK_SWEEP, 1.4f, 0.5f);
         snd(c, SoundEvents.WARDEN_HEARTBEAT, 1.2f, 0.6f);
@@ -719,7 +719,7 @@ public final class DjinnWeaponActs {
         for (int arm = 0; arm < 3; arm++)
             for (int i = 0; i < 8; i++) {
                 double rr = c.range * (1.0 - i / 9.0), a = arm * 2.0944 + i * 0.6;
-                c.l.sendParticles(ParticleTypes.BUBBLE_POP, at.x + Math.cos(a) * rr, at.y + 0.3 + i * 0.12, at.z + Math.sin(a) * rr, 1, 0, 0, 0, 0);
+                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, at.x + Math.cos(a) * rr, at.y + 0.3 + i * 0.12, at.z + Math.sin(a) * rr, 1, 0, 0, 0, 0);
             }
         rings(c, at, c.range);
         snd(c, SoundEvents.PLAYER_SPLASH_HIGH_SPEED, 1.0f, 0.5f);

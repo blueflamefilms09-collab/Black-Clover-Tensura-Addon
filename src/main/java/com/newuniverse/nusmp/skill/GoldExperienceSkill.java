@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import io.github.manasmods.manascore.network.api.util.Changeable;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import io.github.manasmods.tensura.ability.skill.Skill;
@@ -33,7 +35,7 @@ public class GoldExperienceSkill extends Skill {
         boolean mastered = instance.isMastered(player);
         target.heal(mastered ? 16 : 10);
         target.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 160, 1));
-        player.serverLevel().sendParticles(ParticleTypes.HAPPY_VILLAGER, target.getX(), target.getY() + 1, target.getZ(), 30, 0.5, 0.8, 0.5, 0.0);
+        RukhFx.spray(player.serverLevel(), RukhFx.Alignment.LIGHT, target.getX(), target.getY() + 1, target.getZ(), 30, 0.5, 0.8, 0.5, 0.0);
         player.serverLevel().playSound(null, target.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.0F, 1.6F);
         instance.setCoolDown(com.newuniverse.nusmp.NUSMP.ticksToSeconds(DMUtil.cooldown(300)), mode);
         SkillUtil.castVfx(player, 0xFFFFD040);

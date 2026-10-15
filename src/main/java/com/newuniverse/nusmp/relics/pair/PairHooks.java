@@ -91,7 +91,7 @@ public final class PairHooks {
             victim.setDeltaMovement(v);                                                // no second shove
             p.swing(InteractionHand.OFF_HAND, true);
             if (p.level() instanceof ServerLevel l) {
-                l.sendParticles(net.minecraft.core.particles.ParticleTypes.CRIT, victim.getX(), victim.getY() + victim.getBbHeight() * 0.6, victim.getZ(), 5, 0.2, 0.25, 0.2, 0.15);
+                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, victim.getX(), victim.getY() + victim.getBbHeight() * 0.6, victim.getZ(), 5, 0.2, 0.25, 0.2, 0.15);
             }
             PairEffects.OffHandEffect fx = PairEffects.of(off.pairBaseId());
             if (fx != null && victim.isAlive()) fx.strike(p, victim, off);

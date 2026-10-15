@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "nusmp:block/riddle_stone_top",
+    "bottom": "nusmp:block/riddle_stone_top",
+    "side": "nusmp:block/riddle_stone_side"
+  }
+}

@@ -1,9 +1,10 @@
 package com.newuniverse.nusmp.relics.wave;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicFlags;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -190,7 +191,7 @@ final class Wave18Events {
         }
         if (hurt) {
             e.setAmount(e.getAmount() - share);
-            level.sendParticles(Wave18Kit.dust(0xE8A23A, 1.0f), partner.getX(), partner.getY() + partner.getBbHeight() * 0.6, partner.getZ(), 6, 0.3, 0.3, 0.3, 0.0);
+            RukhFx.spray(level, Wave18Kit.align(0xE8A23A), partner.getX(), partner.getY() + partner.getBbHeight() * 0.6, partner.getZ(), 6, 0.3, 0.3, 0.3, 0.0);
         }
     }
 
@@ -232,10 +233,10 @@ final class Wave18Events {
                 m.hurtMarked = true;
                 if (m.getTarget() instanceof Player) m.setTarget(null);
             }
-            DustParticleOptions glow = Wave18Kit.dust(0xF2C14E, 1.0f);
+            RukhFx.Alignment glow = Wave18Kit.align(0xF2C14E);
             for (int i = 0; i < 16; i++) {
                 double a = i * (Math.PI * 2 / 16) + level.getGameTime() * 0.05;
-                level.sendParticles(glow, c.x + Math.cos(a) * r, c.y + 0.3, c.z + Math.sin(a) * r, 1, 0, 0.05, 0, 0);
+                RukhFx.spray(level, glow, c.x + Math.cos(a) * r, c.y + 0.3, c.z + Math.sin(a) * r, 1, 0, 0.05, 0, 0);
             }
         }
     }
@@ -247,8 +248,8 @@ final class Wave18Events {
         double a = p.tickCount * 0.2;
         double x = p.getX() + Math.cos(a) * Wave18Tune.ORBIT_RADIUS, z = p.getZ() + Math.sin(a) * Wave18Tune.ORBIT_RADIUS;
         double y = p.getY() + p.getBbHeight() + 0.2 + Math.sin(a * 0.5) * 0.05;
-        level.sendParticles(Wave18Kit.dust(0xE9E4D4, 1.0f), x, y, z, 1, 0, 0, 0, 0);
-        level.sendParticles(Wave18Kit.dust(0x8E8A82, 1.0f), x + 0.03, y + 0.02, z, 1, 0, 0, 0, 0);
+        RukhFx.spray(level, Wave18Kit.align(0xE9E4D4), x, y, z, 1, 0, 0, 0, 0);
+        RukhFx.spray(level, Wave18Kit.align(0x8E8A82), x + 0.03, y + 0.02, z, 1, 0, 0, 0, 0);
         if ((p.tickCount + p.getId()) % 40 == 8 && level.getMaxLocalRawBrightness(p.blockPosition()) < Wave18Tune.ORBIT_DARK) {
             Wave6Kit.give(p, "minecraft:night_vision", 260, 0, true);                       // the little moon lights the dark
         }

@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import io.github.manasmods.manascore.network.api.util.Changeable;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import io.github.manasmods.tensura.ability.skill.Skill;
@@ -64,7 +66,7 @@ public class DevilsFootprintsSkill extends Skill {
         player.setDeltaMovement(look.x * power, Math.max(0.35, look.y * power), look.z * power);
         player.hurtMarked = true;
         player.fallDistance = 0;
-        level.sendParticles(ParticleTypes.FLAME, player.getX(), player.getY(), player.getZ(), 40, 0.2, 0.1, 0.2, 0.08);
+        RukhFx.spray(level, RukhFx.Alignment.LIGHT, player.getX(), player.getY(), player.getZ(), 40, 0.2, 0.1, 0.2, 0.08);
         level.playSound(null, player.blockPosition(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1.0F, 1.4F);
     }
 
@@ -85,7 +87,7 @@ public class DevilsFootprintsSkill extends Skill {
                 t.igniteForSeconds(5);
             }
         }
-        GodTier.line(level, ParticleTypes.END_ROD, from.add(0, 1, 0), dest.add(0, 1, 0));
+        GodTier.line(level, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), from.add(0, 1, 0), dest.add(0, 1, 0));
         player.teleportTo(dest.x, dest.y, dest.z);
         player.fallDistance = 0;
         level.playSound(null, player.blockPosition(), SoundEvents.FIREWORK_ROCKET_BLAST, SoundSource.PLAYERS, 1.5F, 0.6F);
@@ -102,7 +104,7 @@ public class DevilsFootprintsSkill extends Skill {
             t.igniteForSeconds(6);
             t.knockback(1.5, -look.x, -look.z);
         }
-        level.sendParticles(ParticleTypes.FLAME, eye.x + look.x * 2, eye.y - 0.5, eye.z + look.z * 2, 80, 1.2, 0.4, 1.2, 0.05);
+        RukhFx.spray(level, RukhFx.Alignment.LIGHT, eye.x + look.x * 2, eye.y - 0.5, eye.z + look.z * 2, 80, 1.2, 0.4, 1.2, 0.05);
         level.playSound(null, player.blockPosition(), SoundEvents.BLAZE_SHOOT, SoundSource.PLAYERS, 1.5F, 0.7F);
     }
 

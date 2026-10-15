@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.NUConfig;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import io.github.manasmods.tensura.ability.skill.Skill;
@@ -53,7 +55,7 @@ public class TheAlmightySkill extends Skill {
         double chance = NUConfig.ALMIGHTY_DODGE_CHANCE.get() * (instance.isMastered(owner) ? 1.5 : 1.0);
         if (!rewriting && owner.getRandom().nextDouble() >= chance) return true;
         if (owner.level() instanceof ServerLevel level) {
-            level.sendParticles(ParticleTypes.SMOKE, owner.getX(), owner.getY() + 1, owner.getZ(), 10, 0.3, 0.5, 0.3, 0.01);
+            RukhFx.spray(level, RukhFx.Alignment.DARK, owner.getX(), owner.getY() + 1, owner.getZ(), 10, 0.3, 0.5, 0.3, 0.01);
         }
         return false; // that future never happens
     }

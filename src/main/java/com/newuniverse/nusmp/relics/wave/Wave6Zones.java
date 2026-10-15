@@ -94,7 +94,7 @@ public final class Wave6Zones {
     }
 
     private static void pulse(MinecraftServer s, ServerLevel level, Zone z, Vec3 at) {
-        level.sendParticles(ParticleTypes.LARGE_SMOKE, at.x, at.y + 0.6, at.z, 14, Wave6Tune.CLOUD_RADIUS * 0.4, 0.4, Wave6Tune.CLOUD_RADIUS * 0.4, 0.01);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(level, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, at.x, at.y + 0.6, at.z, 14, Wave6Tune.CLOUD_RADIUS * 0.4, 0.4, Wave6Tune.CLOUD_RADIUS * 0.4, 0.01);
         Fx.ring(level, at.add(0, 0.1, 0), Wave6Tune.CLOUD_RADIUS, CLOUD_COLOUR);
         ServerPlayer owner = s.getPlayerList().getPlayer(z.owner);
         if (owner == null || z.pulses >= Wave6Tune.CLOUD_PULSES) return;

@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import io.github.manasmods.manascore.network.api.util.Changeable;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import net.minecraft.core.particles.ParticleTypes;
@@ -32,7 +34,7 @@ public class HellWalkerSkill extends ToggleAuraSkill {
     @Override
     protected void pulse(ManasSkillInstance instance, ServerPlayer player, boolean mastered) {
         if (player.getHealth() < player.getMaxHealth() * 0.5F) {
-            player.serverLevel().sendParticles(ParticleTypes.SOUL_FIRE_FLAME, player.getX(), player.getY() + 0.2, player.getZ(), 6, 0.3, 0.1, 0.3, 0.01);
+            RukhFx.spray(player.serverLevel(), RukhFx.Alignment.DARK, player.getX(), player.getY() + 0.2, player.getZ(), 6, 0.3, 0.1, 0.3, 0.01);
         }
     }
 

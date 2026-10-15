@@ -103,7 +103,7 @@ final class Wave5Safeguard {
             return;
         }
         ServerLevel l = p.serverLevel();
-        Wave5Aim.puff(l, p.position().add(0, 1.0, 0), ParticleTypes.ENCHANT, 12, 0.7);
+        Wave5Aim.puff(l, p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 12, 0.7);
         Wave5Aim.msg(p, "Meditating... " + (Wave5Pure.MEDITATE_TICKS - elapsed) / 20 + " s", ChatFormatting.LIGHT_PURPLE);
     }
 

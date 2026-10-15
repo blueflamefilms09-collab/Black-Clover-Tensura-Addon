@@ -4,7 +4,6 @@ import com.newuniverse.nusmp.relics.Fx;
 import io.github.manasmods.tensura.util.EnergyHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -206,8 +205,8 @@ final class Wave3Util {
     }
 
     // ---------------------------------------------------------------- particles and words
-    static DustParticleOptions dust(int rgb, float size) {
-        return new DustParticleOptions(new Vector3f((rgb >> 16 & 255) / 255f, (rgb >> 8 & 255) / 255f, (rgb & 255) / 255f), size);
+    static net.minecraft.core.particles.SimpleParticleType dust(int rgb, float size) {
+        return com.newuniverse.nusmp.relics.Fx.dust(rgb, size);
     }
 
     /** A line of particles (at most 48 points) from one point to another. */
@@ -218,7 +217,7 @@ final class Wave3Util {
         int n = (int) Math.max(2, Math.min(48, len * 2.0));
         for (int i = 0; i <= n; i++) {
             Vec3 at = from.add(d.scale(i / (double) n));
-            level.sendParticles(particle, at.x, at.y, at.z, 1, 0.02, 0.02, 0.02, 0.0);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(level, com.newuniverse.nusmp.relics.Fx.alignOf(particle), at.x, at.y, at.z, 1, 0.02, 0.02, 0.02, 0.0);
         }
     }
 

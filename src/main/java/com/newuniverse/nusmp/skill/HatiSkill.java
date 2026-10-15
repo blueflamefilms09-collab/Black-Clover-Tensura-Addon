@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import io.github.manasmods.manascore.network.api.util.Changeable;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import io.github.manasmods.tensura.ability.skill.Skill;
@@ -33,7 +35,7 @@ public class HatiSkill extends Skill {
         amount.set(amount.get() * (mastered ? 0.4F : 0.6F));
         owner.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 200, mastered ? 2 : 1));
         if (owner.level() instanceof ServerLevel level) {
-            level.sendParticles(ParticleTypes.FLAME, owner.getX(), owner.getY() + 1, owner.getZ(), 15, 0.4, 0.6, 0.4, 0.02);
+            RukhFx.spray(level, RukhFx.Alignment.LIGHT, owner.getX(), owner.getY() + 1, owner.getZ(), 15, 0.4, 0.6, 0.4, 0.02);
         }
         if (owner.getRandom().nextInt(4) == 0) instance.addMasteryPoint(owner);
         instance.markDirty();

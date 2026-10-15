@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "active=false": {
+      "model": "nusmp:block/snuffer_glyph"
+    },
+    "active=true": {
+      "model": "nusmp:block/snuffer_glyph"
+    }
+  }
+}

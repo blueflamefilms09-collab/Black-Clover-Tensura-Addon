@@ -57,6 +57,12 @@ SPAWN_GLYPH = "nusmp:spawn_glyph"      # E1
 DOOR = "nusmp:gatekeeper_door"         # E2
 ALTAR = "nusmp:peak_altar"             # E2 (block entity)
 PEDESTAL = "nusmp:relic_pedestal"      # D (block entity)
+PITFALL = "nusmp:pitfall_tile"         # F1 (1.36.0): props safe=true|false, open=false
+SNUFFER = "nusmp:snuffer_glyph"        # F1: floor glyph that snuffs light
+PLATE = "nusmp:sigil_plate"            # F1: props color=0..3, lit=false
+RIDDLE = "nusmp:riddle_stone"          # F1 (block entity, nbt {sequence:[...]})
+LADDER = "minecraft:ladder"
+SPIKE = "minecraft:pointed_dripstone"
 ROCK = ("minecraft:deepslate", "minecraft:deepslate", "minecraft:tuff", "minecraft:cobbled_deepslate", "minecraft:deepslate_bricks")
 
 LOOT_TRIAL = "nusmp:chests/labyrinth_trial"
@@ -176,30 +182,31 @@ def wall_accents(p, n_glyph, n_lantern, y_lo=4, y_hi=None):
         p.shell(x, y, z, GLYPH if i < n_glyph else LANTERN)
 
 
-def doorway(p, side, width=3, height=4, name=SIDE_OUT, target=SIDE_IN, pool=POOL % "side", runes=False, jig=True):
+def doorway(p, side, width=3, height=4, name=SIDE_OUT, target=SIDE_IN, pool=POOL % "side", runes=False, jig=True, y0=1):
     """A `width` x `height` opening in an outer wall at floor level with the jigsaw in its bottom centre cell, facing out.
-    side: 'east' (+x wall), 'west', 'south' (+z), 'north'."""
+    side: 'east' (+x wall), 'west', 'south' (+z), 'north'. `y0` (1.36.0, default 1 = every older piece) is the row of the jigsaw and of the
+    opening's bottom: the pit room's doorway sits at 4 because its floor is sunk three blocks to make room for the pit."""
     sx, sy, sz = p.size
     h = width // 2
     if side in ("east", "west"):
         x = sx - 1 if side == "east" else 0
-        cells = [(x, y, p.cz + d) for d in range(-h, h + 1) for y in range(1, height + 1)]
+        cells = [(x, y, p.cz + d) for d in range(-h, h + 1) for y in range(y0, y0 + height)]
         jx, jz, orient = x, p.cz, side + "_up"
-        floor = [(x, 0, p.cz + d) for d in range(-h, h + 1)]
+        floor = [(x, y0 - 1, p.cz + d) for d in range(-h, h + 1)]
     else:
         z = sz - 1 if side == "south" else 0
-        cells = [(p.cx + d, y, z) for d in range(-h, h + 1) for y in range(1, height + 1)]
+        cells = [(p.cx + d, y, z) for d in range(-h, h + 1) for y in range(y0, y0 + height)]
         jx, jz, orient = p.cx, z, side + "_up"
-        floor = [(p.cx + d, 0, z) for d in range(-h, h + 1)]
+        floor = [(p.cx + d, y0 - 1, z) for d in range(-h, h + 1)]
     for c in cells:
         p.put(*c, AIR)
     if jig:
-        p.feature.discard((jx, 1, jz))
-        p.jigsaw(jx, 1, jz, orient, name, target, pool, AIR, "aligned")
+        p.feature.discard((jx, y0, jz))
+        p.jigsaw(jx, y0, jz, orient, name, target, pool, AIR, "aligned")
     if runes:
         for c in floor:
             p.put(*c, RUNE)
-    return (jx, 1, jz)
+    return (jx, y0, jz)
 
 
 def support(p, x, y1, y2, z):
@@ -751,12 +758,343 @@ def build_example_chapel():
 
 
 # =====================================================================================================================
+# 1.36.0: the D&D trap rooms (docs/labyrinth/f1_traps.md): three side rooms that drain the party's resources
+# =====================================================================================================================
+
+#: Row of the pit room's doorway jigsaw and floor stand: the floor of every older side room is row 0 and its jigsaw row 1; the pit room's
+#: floor is sunk three rows so the pit has somewhere to be, which puts its jigsaw (the same height as the parent's) at row 4.
+ENTRY_Y = {"labyrinth/side/pit_room": 4}
+
+PIT_SIZE = (13, 12, 22)
+PIT_FLOOR_Y = 3                      # the pitfall layer; feet stand at 4
+PIT_FIELD_Z = (6, 15)                # rows of the pit field; rows 4-5 are the landing, 16-20 the treasure alcove
+PIT_FIELD_X = (1, 11)
+PIT_LADDER = (1, 5)                  # (x, z) of the escape ladder, in the west wall of the landing
+
+
+def pit_route(rng, lo_x=1, hi_x=11, z0=6, z1=15):
+    """The safe route over the pit field: a list of (x, z) cells, one wide, 4-connected, from row z0 to row z1. Deterministic for the rng.
+    In every row the route runs sideways and then drops one row; a sideways run continues the direction of the run above (or goes straight
+    down), never back over it, so two rows of the route are never beside each other: the route is a thin snake with pits all around, never
+    a wide band a player could cross by luck."""
+    x = rng.randint(lo_x + 2, hi_x - 2)
+    cells = []
+    direction = 0
+    for z in range(z0, z1 + 1):
+        if direction == 0:
+            want = rng.choice((-1, 1))
+        else:
+            want = direction
+        room = (hi_x - x) if want > 0 else (x - lo_x)
+        if z == z1 or room == 0 or rng.random() < 0.18:
+            run, d = 0, 0                      # straight down (always on the last row: it is just the cell)
+        else:
+            run, d = rng.randint(1, min(4, room)), want
+        for k in range(run + 1):
+            cells.append((x + d * k, z))
+        x += d * run
+        direction = d
+    return cells
+
+
+def build_pit_room():
+    """side/pit_room 13x12x22 (entrance row 4): a corridor, a landing, a pit field and a treasure alcove behind it. The whole floor (row 3) is
+    `nusmp:pitfall_tile`, `safe=true` on the landing, the alcove and ONE fixed one-wide route over the field, `safe=false` everywhere else
+    on it: both look the same. Below the field a dark chamber (rows 1-2) with pointed dripstone on a lattice of its floor, and a ladder
+    in the landing's west wall to climb back out. Sinking the floor three rows is what gives the pit room."""
+    sx, sy, sz = PIT_SIZE
+    p = Piece("labyrinth/side/pit_room", sx, sy, sz)
+    cx = p.cx
+    fy = PIT_FLOOR_Y
+    # shell: a solid block of brick up to the floor row, walls and roof
+    p.box((0, 0, 0), (sx - 1, fy - 1, sz - 1), BRICKS)
+    for y in range(fy, sy - 1):
+        for x in range(sx):
+            p.shell(x, y, 0, BRICKS)
+            p.shell(x, y, sz - 1, BRICKS)
+        for z in range(sz):
+            p.shell(0, y, z, BRICKS)
+            p.shell(sx - 1, y, z, BRICKS)
+    p.box((0, sy - 1, 0), (sx - 1, sy - 1, sz - 1), BRICKS)
+    # the corridor: rows 1-3 are 3 wide, the rest of those rows is wall
+    for z in range(1, 4):
+        for x in range(1, sx - 1):
+            if abs(x - cx) > 1:
+                for y in range(fy, sy - 1):
+                    p.shell(x, y, z, BRICKS)
+    route = set(pit_route(p.rng))
+    x0, x1 = PIT_FIELD_X
+    z0, z1 = PIT_FIELD_Z
+    # the floor row: every cell the player may stand on is a pitfall tile (safe or not)
+    for z in range(1, sz - 1):
+        for x in range(1, sx - 1):
+            if z <= 3 and abs(x - cx) > 1:
+                continue
+            on_field = x0 <= x <= x1 and z0 <= z <= z1
+            safe = (not on_field) or (x, z) in route
+            if (x, z) == PIT_LADDER:
+                continue
+            p.shell(x, fy, z, PITFALL, {"safe": "true" if safe else "false", "open": "false"})
+    # the chamber under the field (rows 1-2), carved out of the brick block, plus the ladder shaft in the landing
+    for z in range(z0, z1 + 1):
+        for x in range(x0, x1 + 1):
+            for y in (1, 2):
+                p.shell(x, y, z, AIR)
+    lx, lz = PIT_LADDER
+    for y in (1, 2):
+        p.shell(lx, y, lz, AIR)
+    for y in (1, 2, 3):
+        p.put(lx, y, lz, LADDER, {"facing": "east", "waterlogged": "false"})
+    # spikes on a lattice (even x, even z) of the chamber floor, never near the foot of the ladder: a lattice leaves whole rows and columns free,
+    # so every free cell stays connected to the ladder (a checkerboard would wall in the cells between its spikes)
+    for z in range(z0, z1 + 1):
+        for x in range(x0, x1 + 1):
+            if x % 2 == 0 and z % 2 == 0 and not (x <= lx + 3 and z <= lz + 3) and p.rng.random() < 0.85:
+                p.put(x, 1, z, SPIKE, {"thickness": "tip", "vertical_direction": "up", "waterlogged": "false"})
+    # the doorway at the sunk row, light in the walls above the floor, the treasure
+    doorway(p, "north", name=SIDE_IN, target=SIDE_OUT, pool=POOL % "caps", y0=ENTRY_Y["labyrinth/side/pit_room"])
+    wall_accents(p, 3, 4, y_lo=5)
+    p.chest(cx, fy + 1, sz - 2, LOOT_TRIAL, "north")
+    return p
+
+
+def build_dark_room():
+    """side/dark_room 15x10x15: a square room with a snuffer glyph in the middle of the floor and no light of its own, and a chest of
+    rations five blocks from the glyph (inside its darkness). The glyph is ringed by a circle of polished blackstone."""
+    s, h = 15, 10
+    p = Piece("labyrinth/side/dark_room", s, h, s)
+    cx, cz = p.cx, p.cz
+    shell_room(p, pilaster_every=4)
+    doorway(p, "north", name=SIDE_IN, target=SIDE_OUT, pool=POOL % "caps")
+    for dx in (-1, 0, 1):
+        for dz in (-1, 0, 1):
+            if (dx, dz) != (0, 0):
+                p.shell(cx + dx, 0, cz + dz, "minecraft:polished_blackstone")
+    p.put(cx, 0, cz, SNUFFER, {"active": "false"})
+    for x, z in ((3, 3), (11, 3), (3, 11), (11, 11)):
+        p.column(x, z, 1, h - 2)
+    p.chest(cx, 1, cz + 5, LOOT_TRIAL, "north")
+    return p
+
+
+def build_puzzle_room():
+    """side/puzzle_room 19x11x20: four sigil plates in a row, a riddle stone beside the entrance, and behind a wall a treasure alcove whose
+    only way in is a `kind=puzzle` Gatekeeper door (2 wide, 3 tall). The alcove holds a trial chest and ONE relic pedestal. The riddle's
+    sequence and the plates' colours are shuffled with the piece's seeded rng, so the room is reproducible."""
+    sx, sy, sz = 19, 11, 20
+    p = Piece("labyrinth/side/puzzle_room", sx, sy, sz)
+    cx = p.cx
+    shell_room(p, pilaster_every=4)
+    doorway(p, "north", name=SIDE_IN, target=SIDE_OUT, pool=POOL % "caps")
+    colours = [0, 1, 2, 3]
+    p.rng.shuffle(colours)
+    for x, c in zip((cx - 3, cx - 1, cx + 1, cx + 3), colours):
+        p.put(x, 1, 6, PLATE, {"color": c, "lit": "false"})
+    seq = [0, 1, 2, 3]
+    p.rng.shuffle(seq)
+    p.be(3, 1, 2, RIDDLE, {"id": RIDDLE, "sequence": nbt.List([nbt.Int(c) for c in seq], tag_type=nbt.TAG_INT)})
+    p.put(3, 2, 2, LANTERN)
+    # the partition and its door
+    door_cells = [(cx - 1, 1, 13, 3), (cx, 1, 13, 3)]
+    gatekeeper_door(p, door_cells, "puzzle")
+    for x in range(1, sx - 1):
+        for y in range(1, sy - 1):
+            if (x, y, 13) not in p.feature:
+                p.shell(x, y, 13, BRICKS)
+    for x in (cx - 2, cx + 1):
+        for y in range(1, 4):
+            p.shell(x, y, 13, PILLAR, {"axis": "y"})
+    for x in (cx - 1, cx):
+        p.shell(x, 4, 13, GOLD)
+    # the alcove behind it
+    p.chest(cx - 3, 1, 17, LOOT_TRIAL, "north")
+    p.be(cx, 1, 17, PEDESTAL, pedestal_nbt())
+    p.put(cx + 3, 3, 17, LANTERN)
+    for x in range(cx - 2, cx + 3):
+        p.shell(x, 0, 15, GOLD if x % 2 == 0 else GLYPH)
+    return p
+
+
+def pit_problems(p):
+    """--check of the pit room (1.36.0): the route over the field exists and is the ONLY way to the treasure, the field is mostly pits,
+    the chamber's free cells all reach the ladder, the ladder reaches the landing."""
+    t = p.t
+    sx, sy, sz = t.size
+    fy = PIT_FLOOR_Y
+    name = t.name
+    probs = []
+    x0, x1 = PIT_FIELD_X
+    z0, z1 = PIT_FIELD_Z
+
+    def tile(x, z):
+        c = t.get(x, fy, z)
+        return c if c is not None and c.block == PITFALL else None
+
+    # 1. a safe path from the doorway to a cell beside the chest, over safe tiles only
+    chest = [pos for pos, c in t.cells.items() if c.block == "minecraft:chest"]
+    if len(chest) != 1:
+        return probs + ["%s: expected exactly one chest" % name]
+    cxx, _, czz = chest[0]
+    start = (p.cx, 1)
+    seen = {start}
+    todo = [start]
+    while todo:
+        x, z = todo.pop()
+        for dx, dz in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            n = (x + dx, z + dz)
+            c = tile(*n)
+            if c is not None and c.props.get("safe") == "true" and n not in seen:
+                seen.add(n)
+                todo.append(n)
+    if (cxx, czz) not in seen:
+        probs.append("%s: no route of safe tiles from the doorway to the chest" % name)
+    # 2. the field is mostly traps and the route is thin
+    field = [(x, z) for x in range(x0, x1 + 1) for z in range(z0, z1 + 1)]
+    unsafe = [c for c in field if tile(*c) is not None and tile(*c).props.get("safe") == "false"]
+    if len(unsafe) < 0.55 * len(field):
+        probs.append("%s: only %d of %d field tiles are pits" % (name, len(unsafe), len(field)))
+    for c in field:
+        if tile(*c) is None:
+            probs.append("%s: field cell %s is not a pitfall tile" % (name, c))
+    # 3. the route is the only crossing: with every pit removed, no other way over (the walls span the field's full width)
+    for z in range(z0, z1 + 1):
+        for x in range(x0, x1 + 1):
+            for xx in (x0 - 1, x1 + 1):
+                c = t.get(xx, fy + 1, z)
+                if c is None or c.block == AIR:
+                    probs.append("%s: the field row %d is open at x=%d: a way round the pits" % (name, z, xx))
+    # 4. below: the chamber is dark, carved, spiked, and its free cells reach the ladder
+    lx, lz = PIT_LADDER
+    free = set()
+    for z in range(z0, z1 + 1):
+        for x in range(x0, x1 + 1):
+            for y in (1, 2):
+                c = t.get(x, y, z)
+                if c is None or c.block not in (AIR, SPIKE):
+                    probs.append("%s: chamber cell (%d,%d,%d) is %s" % (name, x, y, z, c.block if c else None))
+            c = t.get(x, 1, z)
+            if c is not None and c.block == AIR:
+                free.add((x, z))
+    spikes = sum(1 for z in range(z0, z1 + 1) for x in range(x0, x1 + 1) if t.get(x, 1, z) is not None and t.get(x, 1, z).block == SPIKE)
+    if spikes < 10:
+        probs.append("%s: only %d spikes" % (name, spikes))
+    for z in range(z0, z1 + 1):
+        for x in range(x0, x1 + 1):
+            if t.get(x, 1, z) is not None and t.get(x, 1, z).block == SPIKE:
+                below = t.get(x, 0, z)
+                if below is None or below.block == AIR:
+                    probs.append("%s: spike at (%d,%d) has no floor" % (name, x, z))
+    start = (lx, lz + 1)
+    if start not in free:
+        probs.append("%s: the foot of the ladder is not free" % name)
+    else:
+        seen = {start}
+        todo = [start]
+        while todo:
+            x, z = todo.pop()
+            for dx, dz in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                n = (x + dx, z + dz)
+                if n in free and n not in seen:
+                    seen.add(n)
+                    todo.append(n)
+        lost = free - seen
+        if lost:
+            probs.append("%s: %d free chamber cells cannot reach the ladder, e.g. %s" % (name, len(lost), sorted(lost)[0]))
+    for y in (1, 2, 3):
+        c = t.get(lx, y, lz)
+        if c is None or c.block != LADDER or c.props.get("facing") != "east":
+            probs.append("%s: ladder missing at (%d,%d,%d)" % (name, lx, y, lz))
+    wall = t.get(lx - 1, 2, lz)
+    if wall is None or wall.block != BRICKS:
+        probs.append("%s: the ladder has no wall behind it" % name)
+    top = tile(lx + 1, lz)
+    if top is None or top.props.get("safe") != "true":
+        probs.append("%s: the ladder's top must open onto a safe tile" % name)
+    # 5. the sunk floor: nothing but the pitfall layer, the ladder and the airspace above it
+    for z in range(1, sz - 1):
+        for x in range(1, sx - 1):
+            c = t.get(x, fy, z)
+            if c is not None and c.block == BRICKS and not (z <= 3 and abs(x - p.cx) > 1):
+                probs.append("%s: brick at floor row (%d,%d)" % (name, x, z))
+    return probs
+
+
+def puzzle_problems(p):
+    """--check of the puzzle room: four plates of four different colours, one riddle stone whose sequence is valid, the puzzle door is the
+    only way to the alcove (with the door treated as a wall the chest and the pedestal cannot be reached), and with it open they can."""
+    t = p.t
+    name = t.name
+    probs = []
+    plates = [(pos, c) for pos, c in t.cells.items() if c.block == PLATE]
+    if sorted(c.props.get("color") for _, c in plates) != ["0", "1", "2", "3"]:
+        probs.append("%s: the plates must be one of each colour (found %s)" % (name, [c.props.get("color") for _, c in plates]))
+    stones = [(pos, c) for pos, c in t.cells.items() if c.block == RIDDLE]
+    if len(stones) != 1:
+        probs.append("%s: expected one riddle stone" % name)
+    else:
+        seq = [int(v) for v in stones[0][1].nbt["sequence"]]
+        if not (1 <= len(seq) <= 8 and all(0 <= v <= 3 for v in seq)):
+            probs.append("%s: bad riddle sequence %s" % (name, seq))
+    doors = [pos for pos, c in t.cells.items() if c.block == DOOR]
+    if not doors or any(t.get(*pos).props.get("kind") != "puzzle" for pos in doors):
+        probs.append("%s: the doors must all be kind=puzzle" % name)
+    peds = [pos for pos, c in t.cells.items() if c.block == PEDESTAL]
+    if len(peds) != 1:
+        probs.append("%s: exactly one relic pedestal expected, found %d" % (name, len(peds)))
+    sx, sy, sz = t.size
+    passable = (AIR, "minecraft:structure_void", PLATE)
+
+    def solid(x, y, z):
+        if y < 0:
+            return True
+        c = t.get(x, y, z)
+        return not (c is None or c.block in passable)
+
+    entry = [pos for pos, o, d in t.jigsaws() if str(d["name"]) == SIDE_IN][0]
+    seen = _flood(solid, (entry[0], 1, entry[2]), (-1, 0, -1), (sx, sy + 1, sz))
+    for pos, c in t.cells.items():
+        if c.block in ("minecraft:chest", PEDESTAL):
+            beside = any((pos[0] + dx, pos[1] + dy, pos[2] + dz) in seen for dx, dy, dz in ((1, 0, 0), (-1, 0, 0), (0, 0, 1), (0, 0, -1), (0, 1, 0), (0, -1, 0)))
+            if beside:
+                probs.append("%s: the %s at %s is reachable with the puzzle door shut" % (name, c.block, pos))
+    for pos, c in plates + stones:
+        beside = any((pos[0] + dx, pos[1] + dy, pos[2] + dz) in seen for dx, dy, dz in ((1, 0, 0), (-1, 0, 0), (0, 0, 1), (0, 0, -1), (0, 1, 0), (0, -1, 0))) or pos in seen
+        if not beside:
+            probs.append("%s: %s at %s cannot be reached from the entrance" % (name, c.block, pos))
+    return probs
+
+
+def dark_problems(p):
+    """--check of the dark room: one snuffer glyph in the centre column, no light-giving block anywhere, the ration chest inside the glyph's
+    darkness radius (6)."""
+    t = p.t
+    name = t.name
+    probs = []
+    glyphs = [pos for pos, c in t.cells.items() if c.block == SNUFFER]
+    if glyphs != [(p.cx, 0, p.cz)]:
+        probs.append("%s: the snuffer glyph must be the one block at the centre of the floor (found %s)" % (name, glyphs))
+    for pos, c in t.cells.items():
+        if c.block in (LANTERN, GLYPH, SEA, "minecraft:glowstone", "minecraft:shroomlight", "minecraft:torch"):
+            probs.append("%s: a light source (%s) at %s defeats the darkness" % (name, c.block, pos))
+    for pos, c in t.cells.items():
+        if c.block == "minecraft:chest":
+            d = ((pos[0] - p.cx) ** 2 + (pos[1] - 0) ** 2 + (pos[2] - p.cz) ** 2) ** 0.5
+            if d > 6.0:
+                probs.append("%s: the chest at %s is %.1f from the glyph, outside its darkness" % (name, pos, d))
+    return probs
+
+
+TRAP_CHECKS = {"labyrinth/side/pit_room": pit_problems, "labyrinth/side/puzzle_room": puzzle_problems, "labyrinth/side/dark_room": dark_problems}
+
+
+# =====================================================================================================================
 # the set
 # =====================================================================================================================
 
 LEVEL_KINDS = (("hall", 4), ("gallery", 3), ("shrine", 2))
 ASCENT = {"ascent_1": "ascent_2", "ascent_2": "warden", "ascent_3": "ascent_4", "ascent_4": "peak"}
-SIDE_ELEMENTS = [("side/trial_a", 4), ("side/trial_b", 3), ("side/treasury_small", 3), ("side/corridor", 3), ("side/wild_adapter", 2), ("side/balcony", 2)]
+SIDE_ELEMENTS = [("side/trial_a", 4), ("side/trial_b", 3), ("side/treasury_small", 3), ("side/corridor", 3), ("side/wild_adapter", 2), ("side/balcony", 2),
+                 ("side/pit_room", 2), ("side/dark_room", 2), ("side/puzzle_room", 2)]   # 1.36.0, appended: the trap rooms
 
 
 def build_all():
@@ -770,6 +1108,7 @@ def build_all():
                build_corridor("corridor", 13, SIDE_OUT, SIDE_IN, POOL % "side_end"),
                build_corridor("wild_adapter", 9, WILD_OUT, WILD_IN, POOL % "wildcard"),
                build_balcony(),
+               build_pit_room(), build_dark_room(), build_puzzle_room(),
                build_cap(SEALED_ARCH_SIDE, SIDE_IN, SIDE_OUT, "glyph"),
                build_cap("caps/window", SIDE_IN, SIDE_OUT, "window"),
                build_cap("caps/wild_sealed_arch", WILD_IN, WILD_OUT, "amethyst"),
@@ -868,7 +1207,7 @@ def generate():
 
 #: blocks a player walks through: nothing, the structure void, plants, and the Gatekeeper doors (the walk test treats them as OPENED,
 #: because the point is that the stair behind them is climbable once the boss is dead).
-_PASSABLE = (AIR, "minecraft:structure_void", DOOR)
+_PASSABLE = (AIR, "minecraft:structure_void", DOOR, PLATE)
 
 
 def walkable_report(p):
@@ -897,7 +1236,7 @@ def walkable_report(p):
         start = (cx, 5, cz)
     elif name.startswith("labyrinth/side/"):
         entry = [pos for pos, (o, d) in jig.items() if str(d["name"]) == SIDE_IN]
-        start = (entry[0][0], 1, entry[0][2])
+        start = (entry[0][0], ENTRY_Y.get(name, 1), entry[0][2])
     elif name.startswith("labyrinth/caps/"):
         return []
     else:
@@ -938,7 +1277,7 @@ def walkable_report(p):
         if str(d["name"]) in (SIDE_OUT, WILD_OUT) and not near(x, 1, z):
             problems.append("%s: the doorway at (%d,%d,%d) cannot be reached from the stair" % (name, x, y, z))
     for (x, y, z), c in t.cells.items():
-        if c.block in ("minecraft:chest", PEDESTAL, ALTAR) and not near(x, y, z):
+        if c.block in ("minecraft:chest", PEDESTAL, ALTAR, PLATE, RIDDLE) and not near(x, y, z):
             problems.append("%s: %s at (%d,%d,%d) cannot be reached" % (name, c.block, x, y, z))
     return problems
 
@@ -1077,7 +1416,8 @@ def check():
                 is_cap = name.startswith("labyrinth/caps/")
                 if is_cap:  # a plug is one cell deep: its jigsaw is the bottom-centre cell of the plane, facing back toward the room
                     on_wall = (x, y, z) == (1, 0, 0) and (sx, sy, sz) == (3, 4, 1)
-                if (not on_wall or fy != 0 or y != 1) and not is_cap:
+                ey = ENTRY_Y.get(name, 1)          # 1.36.0: the pit room's doorway is sunk (see ENTRY_Y)
+                if (not on_wall or fy != 0 or y != ey) and not is_cap:
                     problems.append("%s: side jigsaw %s at (%d,%d,%d) is not on an outer wall at floor level facing out" % (name, jn, x, y, z))
                 if is_cap and not on_wall:
                     problems.append("%s: cap jigsaw must be the bottom centre of its 3x4x1 plane" % name)
@@ -1090,9 +1430,9 @@ def check():
                 else:  # the doorway must be open: 3 wide x 4 tall of air around the jigsaw
                     px, pz = (0, 1) if fx else (1, 0)
                     for d in (-1, 0, 1):
-                        for yy in range(1, 5):
+                        for yy in range(ey, ey + 4):
                             c = t.get(x + px * d, yy, z + pz * d)
-                            if (d, yy) != (0, 1) and (c is None or c.block != AIR):
+                            if (d, yy) != (0, ey) and (c is None or c.block != AIR):
                                 problems.append("%s: doorway of %s at (%d,%d,%d) is not open" % (name, jn, x + px * d, yy, z + pz * d))
         names = [str(d["name"]) for _, _, d in jigs]
         level_like = name.startswith("labyrinth/ascent_") or name.split("/")[1] in ("warden", "peak", "vault")
@@ -1114,6 +1454,8 @@ def check():
                             if not (c is None or c.block in (AIR, "minecraft:jigsaw")):
                                 problems.append("%s: (%d,%d,%d) must be air for players coming up the stair" % (name, p.cx + dx, yy, p.cz + dz))
         problems += walkable_report(p)
+        if name in TRAP_CHECKS:
+            problems += TRAP_CHECKS[name](p)
         if name == "labyrinth/base":
             c = t.get(p.cx, 4, p.cz)
             if c is None or c.block != TILES:

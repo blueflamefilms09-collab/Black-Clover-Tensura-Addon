@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import io.github.manasmods.tensura.ability.skill.Skill;
 import net.minecraft.core.particles.ParticleTypes;
@@ -29,7 +31,7 @@ public class BookMakerSkill extends Skill {
         target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 120, 5));
         target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 200, mastered ? 2 : 1));
         target.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 200, 2));
-        player.serverLevel().sendParticles(ParticleTypes.CRIT, target.getX(), target.getY() + 1, target.getZ(), 40, 0.4, 0.6, 0.4, 0.2);
+        RukhFx.spray(player.serverLevel(), RukhFx.Alignment.LIGHT, target.getX(), target.getY() + 1, target.getZ(), 40, 0.4, 0.6, 0.4, 0.2);
         player.serverLevel().playSound(null, target.blockPosition(), SoundEvents.ANVIL_PLACE, SoundSource.PLAYERS, 1.0F, 0.6F);
         instance.setCoolDown(com.newuniverse.nusmp.NUSMP.ticksToSeconds(DMUtil.cooldown(80)), mode);
         SkillUtil.castVfx(player, 0xFF8A8A9A);

@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.NUConfig;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import io.github.manasmods.tensura.ability.skill.Skill;
@@ -70,7 +72,7 @@ public class AllFictionSkill extends Skill {
             LivingEntity target = GodTier.lookLiving(player, 24);
             if (target == null) { SkillUtil.fail(player, "No target."); return; }
             if (!SkillUtil.spendMagicules(player, DMUtil.cost(4000))) return;
-            level.sendParticles(ParticleTypes.SQUID_INK, target.getX(), target.getY() + 1, target.getZ(), 60, 0.4, 0.8, 0.4, 0.05);
+            RukhFx.spray(level, RukhFx.Alignment.DARK, target.getX(), target.getY() + 1, target.getZ(), 60, 0.4, 0.8, 0.4, 0.05);
             if (GodTier.fullyAffected(target)) {
                 target.discard(); // erased: no body, no drops
             } else {

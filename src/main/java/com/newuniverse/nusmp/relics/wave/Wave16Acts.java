@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import net.minecraft.core.BlockPos;
@@ -100,7 +102,7 @@ final class Wave16Acts {
         Vec3 at = hit != null ? hit.getLocation().add(0, 0.2, 0) : p.getEyePosition().add(p.getLookAngle().scale(Wave16Tune.GRENADE_THROW));
         Fx.ring(lv, at, Wave16Tune.GRENADE_RADIUS, 0xFFF2B0);
         Fx.burst(lv, at, 0xFFF2B0);
-        lv.sendParticles(ParticleTypes.EXPLOSION_EMITTER, at.x, at.y + 0.5, at.z, 1, 0, 0, 0, 0);
+        RukhFx.spray(lv, RukhFx.Alignment.LIGHT, at.x, at.y + 0.5, at.z, 1, 0, 0, 0, 0);
         String holy = Wave6Kit.damageType(lv, "tensura:holy_damage", "minecraft:magic");
         double r2 = Wave16Tune.GRENADE_RADIUS * Wave16Tune.GRENADE_RADIUS;
         int smitten = 0, healed = 0, seen = 0;
@@ -254,7 +256,7 @@ final class Wave16Acts {
                     if (!(st.getBlock() instanceof CropBlock || st.getBlock() instanceof SaplingBlock || st.getBlock() instanceof StemBlock)) continue;
                     if (!(st.getBlock() instanceof BonemealableBlock b) || !b.isValidBonemealTarget(lv, pos, st)) continue;
                     b.performBonemeal(lv, p.getRandom(), pos, st);
-                    lv.sendParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5, pos.getY() + 0.6, pos.getZ() + 0.5, 4, 0.3, 0.3, 0.3, 0.0);
+                    RukhFx.spray(lv, RukhFx.Alignment.LIGHT, pos.getX() + 0.5, pos.getY() + 0.6, pos.getZ() + 0.5, 4, 0.3, 0.3, 0.3, 0.0);
                     if (++grown >= 12) break outer;
                 }
             }

@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -158,16 +160,16 @@ final class Wave19Field {
                 double r = 1.0 + 3.0 * left;
                 for (int i = 0; i < 20; i++) {
                     double a = i * (Math.PI * 2 / 20);
-                    sl.sendParticles(Wave19Util.dust(0xE04020, 1.3f), q.at().x + Math.cos(a) * r, q.at().y + 0.1, q.at().z + Math.sin(a) * r, 1, 0, 0.02, 0, 0);
+                    RukhFx.spray(sl, Wave19Util.align(0xE04020), q.at().x + Math.cos(a) * r, q.at().y + 0.1, q.at().z + Math.sin(a) * r, 1, 0, 0.02, 0, 0);
                 }
-                sl.sendParticles(ParticleTypes.BUBBLE_POP, q.at().x, q.at().y + 0.4, q.at().z, 6, 0.6, 0.3, 0.6, 0.02);
+                RukhFx.spray(sl, RukhFx.Alignment.LIGHT, q.at().x, q.at().y + 0.4, q.at().z, 6, 0.6, 0.3, 0.6, 0.02);
                 continue;
             }
             it.remove();
             Mob crab = spawnCrab(sl, q.at(), new Alive(q.owner(), now + Wave19Rules.CRAB_TICKS, q.dim()));
             if (crab != null) {
                 sl.playSound(null, crab.blockPosition(), SoundEvents.TURTLE_EGG_CRACK, SoundSource.HOSTILE, 1.6f, 0.5f);
-                sl.sendParticles(ParticleTypes.SPLASH, q.at().x, q.at().y + 0.5, q.at().z, 40, 1.2, 0.5, 1.2, 0.1);
+                RukhFx.spray(sl, RukhFx.Alignment.LIGHT, q.at().x, q.at().y + 0.5, q.at().z, 40, 1.2, 0.5, 1.2, 0.1);
             }
         }
     }
@@ -180,7 +182,7 @@ final class Wave19Field {
             Entity e = sl == null ? null : sl.getEntity(en.getKey());
             if (!(e instanceof Mob m) || !m.isAlive()) { it.remove(); continue; }
             if (now >= en.getValue().until()) {
-                sl.sendParticles(ParticleTypes.CLOUD, m.getX(), m.getY() + 0.8, m.getZ(), 30, 0.8, 0.6, 0.8, 0.05);
+                RukhFx.spray(sl, RukhFx.Alignment.LIGHT, m.getX(), m.getY() + 0.8, m.getZ(), 30, 0.8, 0.6, 0.8, 0.05);
                 m.discard();
                 it.remove();
                 continue;

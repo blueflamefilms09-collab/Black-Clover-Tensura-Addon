@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.wizard;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.NUGameRules;
 import com.newuniverse.nusmp.blackclover.Devil;
 import com.newuniverse.nusmp.blackclover.GrimoireAcceptance;
@@ -166,7 +168,7 @@ public final class WizardSystem {
         }
         book.setDeltaMovement(to.normalize().scale(Math.min(0.32, 0.04 + i * 0.008)));
         book.hurtMarked = true;
-        if (i % 4 == 0) sl.sendParticles(net.minecraft.core.particles.ParticleTypes.ENCHANT, book.getX(), book.getY() + 0.3, book.getZ(), 6, 0.2, 0.2, 0.2, 0.4);
+        if (i % 4 == 0) RukhFx.spray(sl, RukhFx.Alignment.LIGHT, book.getX(), book.getY() + 0.3, book.getZ(), 6, 0.2, 0.2, 0.2, 0.4);
         SpellRuntime.later(sl, 2, () -> step(sl, p, book, arrive, i + 1));
     }
 

@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.Relics;
@@ -121,7 +123,7 @@ final class Wave19Scrolls {
         if (target != scroll && !p.getInventory().add(target)) p.drop(target, false);
         ServerLevel sl = p.serverLevel();
         Fx.burst(sl, p.position(), 0xB48CFF);
-        sl.sendParticles(ParticleTypes.ENCHANT, p.getX(), p.getY() + 1.2, p.getZ(), 40, 0.5, 0.6, 0.5, 0.8);
+        RukhFx.spray(sl, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.2, p.getZ(), 40, 0.5, 0.6, 0.5, 0.8);
         sl.playSound(null, p.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.2f, 1.8f);
         Wave19Util.say(p, "Scroll of Absorption: the spell is drawn into the scroll. Read it to send it back.");
         return true;
@@ -164,7 +166,7 @@ final class Wave19Scrolls {
             if (!(e instanceof Mob m)) continue;
             if (!Wave19Rules.charmTakes(e.getMaxHealth())) { resisted++; continue; }
             Wave19Field.charm(m, p, Wave19Rules.CHARM_TICKS, false);
-            sl.sendParticles(ParticleTypes.HEART, e.getX(), e.getEyeY() + 0.3, e.getZ(), 6, 0.3, 0.3, 0.3, 0.02);
+            RukhFx.spray(sl, RukhFx.Alignment.LIGHT, e.getX(), e.getEyeY() + 0.3, e.getZ(), 6, 0.3, 0.3, 0.3, 0.02);
             charmed++;
             if (e instanceof Villager) villagers++;
         }
@@ -194,8 +196,8 @@ final class Wave19Scrolls {
         EntityHitResult ent = ProjectileUtil.getEntityHitResult(sl, p, eye, stop, new AABB(eye, stop).inflate(1.0), e -> e instanceof LivingEntity l && l != p && l.isAlive() && !l.isSpectator() && e.isPickable());
         if (ent != null) stop = ent.getLocation();
         beam(sl, eye.add(0, -0.3, 0), stop, 0x2E7D32);
-        sl.sendParticles(ParticleTypes.COMPOSTER, stop.x, stop.y, stop.z, 60, 1.6, 1.0, 1.6, 0.2);
-        sl.sendParticles(ParticleTypes.EXPLOSION, stop.x, stop.y, stop.z, 1, 0, 0, 0, 0);
+        RukhFx.spray(sl, RukhFx.Alignment.LIGHT, stop.x, stop.y, stop.z, 60, 1.6, 1.0, 1.6, 0.2);
+        RukhFx.spray(sl, RukhFx.Alignment.LIGHT, stop.x, stop.y, stop.z, 1, 0, 0, 0, 0);
         sl.playSound(null, BlockPos.containing(stop), SoundEvents.GENERIC_EXPLODE.value(), SoundSource.PLAYERS, 0.9f, 1.5f);
         int hit = 0;
         for (LivingEntity t : Wave19Util.foesAt(p, stop, Wave19Rules.FIRBALL_RADIUS)) {
@@ -224,8 +226,8 @@ final class Wave19Scrolls {
         ores.sort(Comparator.comparingDouble(b -> b.distSqr(o)));
         if (ores.size() > Wave19Rules.ROCKS_MAX) ores = new ArrayList<>(ores.subList(0, Wave19Rules.ROCKS_MAX));
         for (BlockPos b : ores) {
-            sl.sendParticles(ParticleTypes.GLOW, b.getX() + 0.5, b.getY() + 0.5, b.getZ() + 0.5, 4, 0.4, 0.4, 0.4, 0.02);
-            sl.sendParticles(ParticleTypes.END_ROD, b.getX() + 0.5, b.getY() + 1.1, b.getZ() + 0.5, 1, 0, 0.1, 0, 0.02);
+            RukhFx.spray(sl, RukhFx.Alignment.LIGHT, b.getX() + 0.5, b.getY() + 0.5, b.getZ() + 0.5, 4, 0.4, 0.4, 0.4, 0.02);
+            RukhFx.spray(sl, RukhFx.Alignment.LIGHT, b.getX() + 0.5, b.getY() + 1.1, b.getZ() + 0.5, 1, 0, 0.1, 0, 0.02);
         }
         sl.playSound(null, o, SoundEvents.STONE_BREAK, SoundSource.PLAYERS, 1.0f, 0.5f);
         Wave19Util.tell(p, "The rocks say: \"" + Wave19Rules.rockQuip(p.getRandom().nextInt(1000)) + "\"", ChatFormatting.GRAY);
@@ -265,7 +267,7 @@ final class Wave19Scrolls {
         ServerPlayer p = c.player();
         Wave19Util.data(p).putLong(Wave19Events.K_MACE, p.level().getGameTime() + Wave19Rules.MACE_TICKS);
         ServerLevel sl = p.serverLevel();
-        sl.sendParticles(ParticleTypes.CRIT, p.getX(), p.getY() + 1.0, p.getZ(), 20, 0.4, 0.4, 0.4, 0.2);
+        RukhFx.spray(sl, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 20, 0.4, 0.4, 0.4, 0.2);
         sl.playSound(null, p.blockPosition(), SoundEvents.ANVIL_USE, SoundSource.PLAYERS, 0.8f, 1.4f);
         Wave19Util.say(p, "Scroll of Mace Hand: your fist swells and hardens into iron. Keep your main hand empty to strike with it.");
     }
@@ -308,7 +310,7 @@ final class Wave19Scrolls {
         });
         if (!p.getInventory().add(copy)) p.drop(copy, false);
         ServerLevel sl = p.serverLevel();
-        sl.sendParticles(ParticleTypes.ENCHANT, p.getX(), p.getY() + 1.3, p.getZ(), 30, 0.4, 0.4, 0.4, 0.6);
+        RukhFx.spray(sl, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.3, p.getZ(), 30, 0.4, 0.4, 0.4, 0.6);
         sl.playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.0f, 1.2f);
         Wave19Util.say(p, "Scroll of Facsimile Copy: a poorer copy (generation " + gen + ") appears; it will crumble in " + (Wave19Rules.facsimileLife(gen) / 1200) + " minutes or so.");
     }
@@ -332,7 +334,7 @@ final class Wave19Scrolls {
         int n = (int) Math.min(48, Math.max(6, len * 2));
         for (int i = 0; i <= n; i++) {
             Vec3 at = from.add(d.scale(i / (double) n));
-            sl.sendParticles(Wave19Util.dust(rgb, 1.0f), at.x, at.y, at.z, 1, 0.03, 0.03, 0.03, 0);
+            RukhFx.spray(sl, Wave19Util.align(rgb), at.x, at.y, at.z, 1, 0.03, 0.03, 0.03, 0);
         }
     }
 }

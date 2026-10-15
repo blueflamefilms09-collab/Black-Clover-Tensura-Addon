@@ -66,7 +66,7 @@ final class Wave5Dragon {
         ServerLevel l = p.serverLevel();
         Fx.burst(l, p.position().add(0, 1.0, 0), SILVER);
         Fx.ring(l, p.position().add(0, 0.2, 0), 3.0, SILVER);
-        Wave5Aim.puff(l, p.position().add(0, 1.0, 0), ParticleTypes.END_ROD, 30, 0.9);
+        Wave5Aim.puff(l, p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 30, 0.9);
         Wave5Aim.sound(l, p.position(), SoundEvents.ENDER_DRAGON_GROWL, 1.0f, 1.3f);
         Wave5Aim.msg(p, "The command word: you are an Adult Silver Dragon. Two minutes. Your hit points are the dragon's now.", ChatFormatting.AQUA);
     }
@@ -91,7 +91,7 @@ final class Wave5Dragon {
         ServerLevel l = p.serverLevel();
         Vec3 from = Wave5Aim.muzzle(p);
         Vec3 look = p.getLookAngle();
-        for (int i = 1; i <= 5; i++) Wave5Aim.puff(l, from.add(look.scale(9.0 * i / 5.0)), ParticleTypes.SNOWFLAKE, 10, 0.25 * i);
+        for (int i = 1; i <= 5; i++) Wave5Aim.puff(l, from.add(look.scale(9.0 * i / 5.0)), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 10, 0.25 * i);
         Wave5Aim.sound(l, from, SoundEvents.ENDER_DRAGON_GROWL, 0.8f, 1.8f);
         List<LivingEntity> hit = Wave5Aim.cone(p, 9.0, 0.7, 8);
         for (LivingEntity e : hit) {
@@ -152,7 +152,7 @@ final class Wave5Dragon {
         if (message != null) {
             ServerLevel l = p.serverLevel();
             Fx.ring(l, p.position().add(0, 0.2, 0), 2.0, SILVER);
-            Wave5Aim.puff(l, p.position().add(0, 1.0, 0), ParticleTypes.END_ROD, 16, 0.7);
+            Wave5Aim.puff(l, p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 16, 0.7);
             Wave5Aim.msg(p, message, ChatFormatting.AQUA);
         }
     }
@@ -183,8 +183,8 @@ final class Wave5Dragon {
         if (p.tickCount % 20 == 0) {
             // the dragon's senses and scales as Tensura skills, merged into the one form for as long as it lasts
             Wave5Skills.lendAll(p, 60, Wave5Skills.PHYSICAL_RESIST, Wave5Skills.DANGER_SENSE, Wave5Skills.MAGIC_SENSE);
-            Wave5Aim.puff(p.serverLevel(), p.position().add(0, 1.2, 0), ParticleTypes.END_ROD, 6, 0.8);
-            Wave5Aim.puff(p.serverLevel(), p.position().add(0, 1.0, 0), ParticleTypes.SNOWFLAKE, 6, 1.0);
+            Wave5Aim.puff(p.serverLevel(), p.position().add(0, 1.2, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 6, 0.8);
+            Wave5Aim.puff(p.serverLevel(), p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 6, 1.0);
         }
     }
 

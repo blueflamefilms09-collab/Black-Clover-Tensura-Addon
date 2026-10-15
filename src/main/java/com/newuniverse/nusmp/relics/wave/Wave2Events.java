@@ -209,7 +209,7 @@ final class Wave2Events {
             if (n++ >= 6) break;
             Fx.damage(p, t, 1.0f, "minecraft:magic");
             Fx.addEffect(t, "tensura:holy_damage", 30, 0);                      // Tensura's own holy burn on top, where it exists
-            lv.sendParticles(ParticleTypes.END_ROD, t.getX(), t.getY(0.6), t.getZ(), 3, 0.2, 0.3, 0.2, 0.01);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(lv, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, t.getX(), t.getY(0.6), t.getZ(), 3, 0.2, 0.3, 0.2, 0.01);
         }
     }
 
@@ -443,18 +443,18 @@ final class Wave2Events {
             if (b[0] > now) {
                 e.setAmount(e.getAmount() + (float) Wave2Rules.smiteBonus(1 + att.getRandom().nextInt(8), evil(victim)));
                 b[0] = 0;
-                lv.sendParticles(ParticleTypes.END_ROD, victim.getX(), victim.getY(0.6), victim.getZ(), 8, 0.25, 0.4, 0.25, 0.04);
+                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(lv, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, victim.getX(), victim.getY(0.6), victim.getZ(), 8, 0.25, 0.4, 0.25, 0.04);
                 if (evil(victim)) Fx.addEffect(victim, "tensura:holy_damage", 40, 0);
             }
             b[1] = now + Wave2Rules.BOOST_TICKS;
-            lv.sendParticles(ParticleTypes.SQUID_INK, att.getX(), att.getY(0.8), att.getZ(), 4, 0.3, 0.4, 0.3, 0.02);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(lv, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, att.getX(), att.getY(0.8), att.getZ(), 4, 0.3, 0.4, 0.3, 0.02);
         } else {
             if (b[1] > now) {
                 e.setAmount(e.getAmount() * (float) Wave2Rules.SPELL_BOOST);
                 b[1] = 0;
             }
             b[0] = now + Wave2Rules.BOOST_TICKS;
-            lv.sendParticles(ParticleTypes.END_ROD, att.getX(), att.getY(0.8), att.getZ(), 4, 0.3, 0.4, 0.3, 0.02);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(lv, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, att.getX(), att.getY(0.8), att.getZ(), 4, 0.3, 0.4, 0.3, 0.02);
         }
     }
 
