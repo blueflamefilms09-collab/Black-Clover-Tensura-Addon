@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.41.0] — Relics of the World, part 4: 124 new relics
+
+**State:** written without a compiler; CI is the first compile. Nothing run in game. Every card's translation is in `docs/relics_of_many_worlds_part4.md`.
+
+### NEW
+- **124 relics in 11 waves** (Wave20 to Wave30), from the 114 part 4 card images plus your Hand and Eye of Vecna and Deck of Many Things; one more image per card read for art, rules and rarity. 46 of them are 3D hand-held weapons (melee, staves and wands, four bows, a crossbow-lute, four shields) with Tensura engravings, size-class meshes and Better Combat profiles; the rest are rings, charms, masks and helms, gloves and gauntlets, collars and medallions, potions and the Deck.
+- **Hand of Vecna and Eye of Vecna** (GOD, bonded pair: they graft and cannot be taken off, `/vecna release <player>` frees them; Eye: truesight, X-ray glow, five spell acts with a 5% "Vecna's Hunger" that never takes control; Hand: strength, cold blows, Touch of Death / Rimed Grasp / Skeleton to Jelly; set bonus when both are worn: poison and disease immunity, regeneration, safe X-ray, a Wish every 30 days).
+- **Deck of Many Things** (GOD): a 22-card shuffled draw, at most 3 draws a game day, every card a bounded effect (no relic or ledger item is taken, nothing kills); the deck crumbles after the 22nd card.
+- **The Infinity Gauntlet and six Infinity Stones**, Paradox, Warren's Key.
+- Duplicates skipped: Quickling's Ivy (already in the mod).
+
+### Also done in this release
+- Weapon classes were added for the new weapons (`tools/relics/weapon_classes.json`), the size/orientation/display-preset tools were run over them, and four orientation false positives (Efreeti's Kusarigama, Rift Breaker, The Reaver, the Librarian's Maul) were reviewed and settled.
+
 ## [1.40.0] — The Relic Forge: upgrade, socket and engrave at a table
 
 **State:** written without a compiler; CI is the first compile. Nothing run in game. See `docs/relic_forge.md`.

@@ -101,6 +101,11 @@
       "profile": "greatsword",
       "source": "item"
     },
+    "demon_shovel": {
+      "class": "club",
+      "profile": "club",
+      "source": "relic"
+    },
     "demon_slasher_katana": {
       "class": "katana",
       "profile": "katana",
@@ -236,9 +241,19 @@
       "profile": "katana",
       "source": "relic"
     },
+    "dragoons_halberd": {
+      "class": "glaive",
+      "profile": "glaive",
+      "source": "relic"
+    },
     "dream_glass": {
       "class": "greatsword",
       "profile": "greatsword",
+      "source": "relic"
+    },
+    "dreamcore_woven_wand": {
+      "class": "wand",
+      "profile": "wand",
       "source": "relic"
     },
     "druidic_blade": {
@@ -249,6 +264,11 @@
     "duality_blade": {
       "class": "shortsword",
       "profile": "shortsword",
+      "source": "relic"
+    },
+    "efreetis_kusarigama": {
+      "class": "scythe",
+      "profile": "scythe",
       "source": "relic"
     },
     "elsdocia": {
@@ -301,6 +321,11 @@
       "profile": "greataxe",
       "source": "relic"
     },
+    "ilmare_gin_the_starlight_silver": {
+      "class": "katana",
+      "profile": "katana",
+      "source": "relic"
+    },
     "jade_xiphos": {
       "class": "shortsword",
       "profile": "shortsword",
@@ -309,6 +334,16 @@
     "junglethorn_whip": {
       "class": "coilwhip",
       "profile": "coilwhip",
+      "source": "relic"
+    },
+    "katana_of_carnage": {
+      "class": "katana",
+      "profile": "katana",
+      "source": "relic"
+    },
+    "katana_of_the_crimson_shogun": {
+      "class": "katana",
+      "profile": "katana",
       "source": "relic"
     },
     "krakeblade": {
@@ -326,6 +361,11 @@
       "profile": "handaxe",
       "source": "relic"
     },
+    "lich_wand": {
+      "class": "wand",
+      "profile": "wand",
+      "source": "relic"
+    },
     "licht_destroyer_sword": {
       "class": "greatsword",
       "profile": "greatsword",
@@ -335,6 +375,11 @@
       "class": "greatsword",
       "profile": "greatsword",
       "source": "item"
+    },
+    "lightworkers_scepter": {
+      "class": "club",
+      "profile": "club",
+      "source": "relic"
     },
     "liquid_sword": {
       "class": "longsword",
@@ -366,6 +411,11 @@
       "profile": "katana",
       "source": "item"
     },
+    "mjolnir": {
+      "class": "hammer",
+      "profile": "hammer",
+      "source": "relic"
+    },
     "mountainguards_greataxe": {
       "class": "greataxe",
       "profile": "greataxe",
@@ -381,15 +431,35 @@
       "profile": "trident",
       "source": "item"
     },
+    "overprotective_halberd": {
+      "class": "glaive",
+      "profile": "glaive",
+      "source": "relic"
+    },
     "palladion": {
       "class": "longsword",
       "profile": "longsword",
       "source": "relic"
     },
+    "paradox": {
+      "class": "staff",
+      "profile": "staff",
+      "source": "table"
+    },
     "permafrost_sabre": {
       "class": "sabre",
       "profile": "sabre",
       "source": "item"
+    },
+    "phoenix_flame": {
+      "class": "glaive",
+      "profile": "glaive",
+      "source": "relic"
+    },
+    "primal_chaos": {
+      "class": "rapier",
+      "profile": "rapier",
+      "source": "relic"
     },
     "prism_blade": {
       "class": "longsword",
@@ -411,9 +481,19 @@
       "profile": "handaxe",
       "source": "relic"
     },
+    "ravens_wing": {
+      "class": "glaive",
+      "profile": "glaive",
+      "source": "relic"
+    },
     "returning_hand_axe": {
       "class": "handaxe",
       "profile": "handaxe",
+      "source": "relic"
+    },
+    "rift_breaker": {
+      "class": "spear",
+      "profile": "spear",
       "source": "relic"
     },
     "rimeheart_runeblade": {
@@ -424,6 +504,21 @@
     "rune_splitter": {
       "class": "battleaxe",
       "profile": "battleaxe",
+      "source": "relic"
+    },
+    "scepter_of_the_double_moon": {
+      "class": "staff",
+      "profile": "staff",
+      "source": "relic"
+    },
+    "scimitar_of_the_seasons": {
+      "class": "sabre",
+      "profile": "sabre",
+      "source": "relic"
+    },
+    "serpant_head_staff": {
+      "class": "staff",
+      "profile": "staff",
       "source": "relic"
     },
     "severing_greatsword": {
@@ -441,6 +536,11 @@
       "profile": "shortsword",
       "source": "relic"
     },
+    "silver_wind_mountain_glaive": {
+      "class": "glaive",
+      "profile": "glaive",
+      "source": "relic"
+    },
     "sorrows_edge": {
       "class": "crescent",
       "profile": "crescent",
@@ -456,12 +556,32 @@
       "profile": "rapier",
       "source": "item"
     },
+    "spider_sword": {
+      "class": "sabre",
+      "profile": "sabre",
+      "source": "relic"
+    },
     "spotlight": {
       "class": "shortsword",
       "profile": "shortsword",
       "source": "relic"
     },
+    "staff_of_blood_magic": {
+      "class": "staff",
+      "profile": "staff",
+      "source": "relic"
+    },
+    "staff_of_ember_visions": {
+      "class": "staff",
+      "profile": "staff",
+      "source": "relic"
+    },
     "staff_of_moonlight": {
+      "class": "staff",
+      "profile": "staff",
+      "source": "relic"
+    },
+    "staff_of_the_apprentice": {
       "class": "staff",
       "profile": "staff",
       "source": "relic"
@@ -471,14 +591,49 @@
       "profile": "greatsword",
       "source": "relic"
     },
+    "stick_of_youth": {
+      "class": "club",
+      "profile": "club",
+      "source": "relic"
+    },
+    "sun_gift": {
+      "class": "glaive",
+      "profile": "glaive",
+      "source": "relic"
+    },
+    "superlunary_staff": {
+      "class": "staff",
+      "profile": "staff",
+      "source": "relic"
+    },
     "sword_crystal": {
       "class": "shortsword",
       "profile": "shortsword",
       "source": "relic"
     },
+    "the_bifrost": {
+      "class": "staff",
+      "profile": "staff",
+      "source": "relic"
+    },
     "the_dagger_of_many_daggers": {
       "class": "dagger",
       "profile": "dagger",
+      "source": "relic"
+    },
+    "the_last_horseman": {
+      "class": "scythe",
+      "profile": "scythe",
+      "source": "relic"
+    },
+    "the_legacy": {
+      "class": "hammer",
+      "profile": "hammer",
+      "source": "relic"
+    },
+    "the_librarians_maul": {
+      "class": "hammer",
+      "profile": "hammer",
       "source": "relic"
     },
     "the_lumberjack": {
@@ -504,6 +659,11 @@
     "time_bender_dadao": {
       "class": "dadao",
       "profile": "dadao",
+      "source": "relic"
+    },
+    "time_hammer": {
+      "class": "hammer",
+      "profile": "hammer",
       "source": "relic"
     },
     "tripolar_sword": {
@@ -536,12 +696,27 @@
       "profile": "dagger",
       "source": "relic"
     },
+    "vanguard_hammer": {
+      "class": "hammer",
+      "profile": "hammer",
+      "source": "relic"
+    },
     "viper_whip": {
       "class": "coilwhip",
       "profile": "coilwhip",
       "source": "relic"
     },
+    "wand_o_wisp": {
+      "class": "wand",
+      "profile": "wand",
+      "source": "relic"
+    },
     "wand_of_bubbles": {
+      "class": "wand",
+      "profile": "wand",
+      "source": "relic"
+    },
+    "wand_of_spider_summoning": {
       "class": "wand",
       "profile": "wand",
       "source": "relic"
@@ -576,13 +751,24 @@
       "profile": "whip",
       "source": "relic"
     },
+    "willbreaker": {
+      "class": "hammer",
+      "profile": "hammer",
+      "source": "relic"
+    },
     "windcutter": {
       "class": "longsword",
       "profile": "longsword",
       "source": "relic"
+    },
+    "windwheel_staff": {
+      "class": "staff",
+      "profile": "staff",
+      "source": "relic"
     }
   },
   "excluded": {
+    "aegis_of_the_abyss": "shield: no swing",
     "amulet_of_the_juggernauts_blindness": "hand item / charm / book / key: not a weapon",
     "anti_bird_charm": "hand item / charm / book / key: not a weapon",
     "anti_bird_compass": "hand item / charm / book / key: not a weapon",
@@ -590,20 +776,24 @@
     "bolt_thrower": "ranged (crossbow): Better Combat only handles melee",
     "bond_thread": "hand item / charm / book / key: not a weapon",
     "book_of_mispells": "hand item / charm / book / key: not a weapon",
+    "celestial_support": "shield: no swing",
     "circlet_of_quickened_thought": "hand item / charm / book / key: not a weapon",
     "communication_magic_device": "hand item / charm / book / key: not a weapon",
     "crossbow_of_swift_death": "ranged (crossbow): Better Combat only handles melee",
     "devil_bound_sheath": "hand item / charm / book / key: not a weapon",
     "devil_contract": "hand item / charm / book / key: not a weapon",
     "devil_contract_book": "hand item / charm / book / key: not a weapon",
+    "divine_mercy": "ranged (bow): Better Combat only handles melee",
     "djinn_weapon_sitri": "ranged (Sitri's bow): Better Combat only handles melee",
     "djinn_weapon_sitri_dark": "ranged (Sitri's bow): Better Combat only handles melee",
+    "embrasure": "ranged (bow): Better Combat only handles melee",
     "fortune_die": "hand item / charm / book / key: not a weapon",
     "gamblers_grimoire_page": "hand item / charm / book / key: not a weapon",
     "gauches_hand_mirror": "hand item / charm / book / key: not a weapon",
     "glutton_chalice": "hand item / charm / book / key: not a weapon",
     "grimoire_chain": "hand item / charm / book / key: not a weapon",
     "hand_of_providence": "hand item / charm / book / key: not a weapon",
+    "heros_shield": "shield: no swing",
     "hyperborean_crossbow": "ranged (crossbow): Better Combat only handles melee",
     "ki_resonance_lantern": "hand item / charm / book / key: not a weapon",
     "magebane_shield": "shield: no swing",
@@ -613,8 +803,12 @@
     "recovery_salve": "hand item / charm / book / key: not a weapon",
     "shroud_of_margins": "hand item / charm / book / key: not a weapon",
     "spirit_charm": "hand item / charm / book / key: not a weapon",
+    "the_dragons_spirit": "ranged (bow): Better Combat only handles melee",
     "the_dragons_truth": "hand item / charm / book / key: not a weapon",
+    "the_reaver": "ranged (bow): Better Combat only handles melee",
+    "thunder_shield": "shield: no swing",
     "viola_of_moonlit_spirits": "hand item / charm / book / key: not a weapon",
+    "warlute": "ranged (crossbow): Better Combat only handles melee",
     "written_consent": "hand item / charm / book / key: not a weapon"
   }
 }

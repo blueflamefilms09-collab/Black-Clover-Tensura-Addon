@@ -30,8 +30,8 @@
       ],
       "translation": [
         1.13,
-        3.2,
-        1.13
+        4.01,
+        -2.63
       ],
       "scale": [
         0.68,
@@ -51,9 +51,9 @@
         0
       ],
       "scale": [
-        0.5,
-        0.5,
-        0.5
+        0.431,
+        0.431,
+        0.431
       ]
     },
     "head": {
@@ -85,9 +85,9 @@
         0
       ],
       "scale": [
-        1,
-        1,
-        1
+        0.808,
+        0.808,
+        0.808
       ]
     },
     "gui": {
@@ -106,6 +106,28 @@
         1,
         1
       ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        0,
+        90,
+        -25
+      ],
+      "translation": [
+        1.13,
+        4.01,
+        -2.63
+      ],
+      "scale": [
+        0.68,
+        0.68,
+        0.68
+      ]
     }
+  },
+  "nusmp_display_preset": {
+    "length_blocks": 1.855,
+    "scale": 0.68,
+    "rule": "tools/relics/display_presets.py"
   }
 }

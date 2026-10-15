@@ -1,0 +1,6 @@
+{
+  "parent": "bettercombat:wand",
+  "attributes": {
+    "range_bonus": 0.0
+  }
+}
