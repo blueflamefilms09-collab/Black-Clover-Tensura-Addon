@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.35.0] — The Labyrinth: Jigsaw dungeon architecture (gate, spire, trials, seals, vault)
+
+**State:** written without a compiler; CI is the first compile. Nothing run in game. Master document `docs/labyrinth.md`; every file's WHY in `docs/labyrinth/*.md`.
+
+### REPLACEMENT (owner's request: the cave dungeon generation is replaced; the old one stays registered, rule 2)
+- **Dungeon generation**: the Living Dungeon's noise caves are no longer where the Maws lead. `labyrinth.engine` (`nusmp-labyrinth-server.toml`, default `labyrinth`) routes Maws and `/multiverse dungeon enter` to the new Labyrinth; `legacy` restores the old dimension. The old dimension, blocks, creatures, ecosystem, floor arenas and Nexus stay registered and loadable.
+- **Relics of Many Worlds are exclusive to the Labyrinth** (`labyrinth.relicsExclusive`, default true): no vanilla chest, no mimic outside a dungeon dimension; vault chests, Relic Pedestals and boss drops only. A build test keeps relics out of every recipe and other loot table.
+
+### NEW
+- **Dimension `nusmp:labyrinth`**: a void sky; **Labyrinth Spires** (structure `nusmp:labyrinth_spire`, set `nusmp:labyrinth_spires`) built by Jigsaw from the chained pools base → ascent 1-4 → Warden hall → Boss Peak → Treasure Vault → crown; side chambers (trials, treasuries, corridors, balconies, a wildcard adapter for other mods' rooms), caps so no path dead-ends.
+- **Dungeon Gate** (structure `nusmp:dungeon_gate`, set `nusmp:dungeon_gates`): a ruined Black Clover arch or a floating Solo-Leveling ring on the Overworld surface (`WORLD_SURFACE_WG` heightmap, `beard_thin`), in vanilla surface biomes and optional `c:` convention biome tags (Biomes O' Plenty, Terralith). Walk into the gate plane to enter; the Exit Gate on the arrival island brings you back; a fall into the void returns you to the island.
+- **Trial chambers**: the Sealed Archway seals every doorway with Magic Barriers when a player enters, spawns the chamber's mobs (data in the template), and lifts the seal when they are dead; abandoned trials reset.
+- **Boss seals**: Gatekeeper Doors (Warden kind: a Shadow Key dropped by the Floor Warden mini-boss; Boss kind: opened when the Peak Altar's floor boss dies). The Peak Altar spawns a boss from its roster (Dante, Vanica, Zenon, the Floor Warden) when the room is entered.
+- **Treasure Vault**: `nusmp:chests/dungeon_relic_vault`, six Relic Pedestals (`nusmp:chests/labyrinth_pedestal`, one relic each, taken by hand), the `nusmp:relic` loot entry type (grade ranges, ledger-safe, pairs give both halves).
+- **Processors**: `nusmp:biome_palette` (masonry adapts to the surrounding biome through the NeoForge data map `nusmp:labyrinth_palette`; inside the Labyrinth it mirrors the Overworld biome above the gate) and `nusmp:magicule_veins` (glowing veins, denser toward the Boss Peak and Vault).
+- Blocks: Labyrinth Bricks/Tiles/Pillar/Glyph/Lantern, Magicule Vein, Labyrinth Gate, Labyrinth Exit Gate, Sealed Archway, Magic Barrier, Ward Rune, Spawn Glyph, Gatekeeper Door, Peak Altar, Relic Pedestal. Items: Shadow Key. Entity: Floor Warden.
+- Commands: `/multiverse labyrinth locate|enter|leave|here|palette`.
+- Tools: `tools/labyrinth/` (NBT writer, template DSL, generators for the gate, the spire and the textures). Opt-in datapacks in `docs/labyrinth/`: `vanilla_dungeons_off` and `labyrinth_wildcard_example`.
+
 ## [1.34.0] — Wands, grips, tooltips, Djinn weapons, armour build, boss effects and second health bar
 
 **State:** written without a compiler; CI is the first compile. Nothing run in game.

@@ -328,7 +328,8 @@ public final class MultiverseCommands {
                 .then(Commands.literal("tower").executes(ctx -> locate(ctx, WorldSites.Kind.TOWER)))
                 .then(Commands.literal("ruins").executes(ctx -> locate(ctx, WorldSites.Kind.RUINS))));
 
-        root.then(com.newuniverse.nusmp.dungeon.DungeonCommand.build());                                   // 1.17.0: the Living Dungeon
+        root.then(com.newuniverse.nusmp.dungeon.DungeonCommand.build());        root.then(com.newuniverse.nusmp.labyrinth.gen.LabyrinthCommand.build());                              // 1.35.0: locate / enter / leave / here / palette
+                                   // 1.17.0: the Living Dungeon
         root.then(Commands.literal("wizard").requires(MultiverseCommands::admin)                              // 1.6.0: the Tower Wizard
                 .then(Commands.literal("summon").then(Commands.argument("player", EntityArgument.player()).executes(ctx -> {
                     ServerPlayer p = EntityArgument.getPlayer(ctx, "player");

@@ -95,6 +95,7 @@ public class NUSMP {
         com.newuniverse.nusmp.dungeon.nexus.zone.GoldenBlocks.init();                                                    // the Golden City's leaves
         com.newuniverse.nusmp.dungeon.nexus.zone.GoldenBlocks.BLOCKS.register(modEventBus);
         com.newuniverse.nusmp.world.NUWorldgen.FEATURES.register(modEventBus);
+        com.newuniverse.nusmp.labyrinth.LabyrinthSystem.init(modEventBus);                                                  // 1.35.0: the Labyrinth (blocks, gate, trials, seals, vault, processors; block items go on NUItems.ITEMS so this runs before its register)
         com.newuniverse.nusmp.item.NUItems.ITEMS.register(modEventBus);
         com.newuniverse.nusmp.item.NUItems.MATERIALS.register(modEventBus);
         com.newuniverse.nusmp.entity.NUEntities.ENTITIES.register(modEventBus);
@@ -123,6 +124,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.multiverse.MultiverseStatusClient.init(modEventBus);
             com.newuniverse.nusmp.client.multiverse.FourKingdomsSlot.init();                                   // 0.46: the slot in Tensura's magic screen
             com.newuniverse.nusmp.client.compat.CompatCodexClient.init(modEventBus);                                           // 1.34.0
+            com.newuniverse.nusmp.client.labyrinth.LabyrinthClient.init(modEventBus);                                        // 1.35.0: Labyrinth renderers, sky
             com.newuniverse.nusmp.client.discovery.DiscoveryClient.init();                                                    // 1.27.0
             com.newuniverse.nusmp.client.merge.MergedClient.init(modEventBus);
             com.newuniverse.nusmp.client.ui.theme.UiThemeClient.init(modEventBus);                                           // 1.27.0: the anime GUI theme
@@ -172,7 +174,8 @@ public class NUSMP {
         }
         modContainer.registerConfig(ModConfig.Type.SERVER, NUConfig.SPEC);
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.multiverse.MultiverseConfig.SPEC, "nusmp-multiverse-server.toml");
-        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.dungeon.DungeonConfig.SPEC, "nusmp-dungeon-server.toml");
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.dungeon.DungeonConfig.SPEC, "nusmp-dungeon-server.toml");        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.LabyrinthConfig.SPEC, "nusmp-labyrinth-server.toml");   // 1.35.0
+
         // Multiverse: /multiverse commands, ceremony, mastery pages, ranks & stars, squads, status sync, world sites
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.MultiverseCommands::register);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.Ceremony::onPlayerTick);

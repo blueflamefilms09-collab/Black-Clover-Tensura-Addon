@@ -43,7 +43,8 @@ public final class NUCreativeTab {
                 for (var egg : com.newuniverse.nusmp.entity.zogratis.ZogratisEntities.spawnEggs()) output.accept(egg.get());      // 1.20.0: the Zogratis bosses
                 output.accept(com.newuniverse.nusmp.block.NUBlocks.GRIMOIRE_ALTAR_ITEM.get());
                 output.accept(com.newuniverse.nusmp.dungeon.DungeonBlocks.DUNGEON_MAW_ITEM.get());           // 1.17.0
-                output.accept(com.newuniverse.nusmp.dungeon.DungeonBlocks.DUNGEON_GATE_ITEM.get());
+                output.accept(com.newuniverse.nusmp.dungeon.DungeonBlocks.DUNGEON_GATE_ITEM.get());                com.newuniverse.nusmp.labyrinth.LabyrinthCreative.addTo(output);                                       // 1.35.0: the Labyrinth's blocks and items
+
                 output.accept(com.newuniverse.nusmp.dungeon.DungeonBlocks.MAW_ROOT_ITEM.get());
                 output.accept(com.newuniverse.nusmp.dungeon.DungeonBlocks.DUNGEON_MYCELIUM_ITEM.get());
                 output.accept(com.newuniverse.nusmp.dungeon.city.CityBlocks.AURELIAN_ALTAR_ITEM.get());          // 1.19.0
