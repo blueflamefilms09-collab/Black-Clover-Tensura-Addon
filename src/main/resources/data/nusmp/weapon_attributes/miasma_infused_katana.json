@@ -1,3 +1,29 @@
 {
-  "parent": "bettercombat:katana"
+  "parent": "bettercombat:katana",
+  "attributes": {
+    "range_bonus": 0.35,
+    "attacks": [
+      {
+        "hitbox": "HORIZONTAL_PLANE",
+        "damage_multiplier": 1.0,
+        "angle": 140,
+        "upswing": 0.4,
+        "animation": "nusmp:katana_draw"
+      },
+      {
+        "hitbox": "VERTICAL_PLANE",
+        "damage_multiplier": 1.0,
+        "angle": 120,
+        "upswing": 0.45,
+        "animation": "nusmp:katana_rise"
+      },
+      {
+        "hitbox": "FORWARD_BOX",
+        "damage_multiplier": 1.15,
+        "angle": 30,
+        "upswing": 0.5,
+        "animation": "nusmp:katana_thrust"
+      }
+    ]
+  }
 }

@@ -1,0 +1,7 @@
+{
+  "parent": "bettercombat:scythe",
+  "attributes": {
+    "range_bonus": 0.75,
+    "two_handed": true
+  }
+}

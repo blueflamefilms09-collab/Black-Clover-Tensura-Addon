@@ -1,0 +1,22 @@
+{
+  "parent": "bettercombat:sword",
+  "attributes": {
+    "range_bonus": 1.5,
+    "attacks": [
+      {
+        "hitbox": "FORWARD_BOX",
+        "damage_multiplier": 1.0,
+        "angle": 20,
+        "upswing": 0.45,
+        "animation": "nusmp:whip_lash"
+      },
+      {
+        "hitbox": "FORWARD_BOX",
+        "damage_multiplier": 1.0,
+        "angle": 20,
+        "upswing": 0.45,
+        "animation": "nusmp:whip_lash"
+      }
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "parent": "bettercombat:dagger",
+  "attributes": {
+    "range_bonus": -0.25,
+    "attacks": [
+      {
+        "hitbox": "FORWARD_BOX",
+        "damage_multiplier": 0.8,
+        "angle": 20,
+        "upswing": 0.3,
+        "animation": "nusmp:rapier_lunge"
+      },
+      {
+        "hitbox": "FORWARD_BOX",
+        "damage_multiplier": 0.8,
+        "angle": 20,
+        "upswing": 0.3,
+        "animation": "nusmp:rapier_lunge"
+      },
+      {
+        "hitbox": "VERTICAL_PLANE",
+        "damage_multiplier": 1.1,
+        "angle": 70,
+        "upswing": 0.35,
+        "animation": "nusmp:katana_rise"
+      }
+    ]
+  }
+}

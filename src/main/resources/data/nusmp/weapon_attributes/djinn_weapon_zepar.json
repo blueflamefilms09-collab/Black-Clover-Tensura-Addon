@@ -1,0 +1,30 @@
+{
+  "parent": "bettercombat:double_axe",
+  "attributes": {
+    "range_bonus": 0.95,
+    "two_handed": true,
+    "attacks": [
+      {
+        "hitbox": "VERTICAL_PLANE",
+        "damage_multiplier": 1.0,
+        "angle": 120,
+        "upswing": 0.55,
+        "animation": "nusmp:axe_chop"
+      },
+      {
+        "hitbox": "HORIZONTAL_PLANE",
+        "damage_multiplier": 1.0,
+        "angle": 150,
+        "upswing": 0.55,
+        "animation": "nusmp:greatsword_sweep"
+      },
+      {
+        "hitbox": "VERTICAL_PLANE",
+        "damage_multiplier": 2.03,
+        "angle": 140,
+        "upswing": 0.7,
+        "animation": "nusmp:greatsword_slam"
+      }
+    ]
+  }
+}

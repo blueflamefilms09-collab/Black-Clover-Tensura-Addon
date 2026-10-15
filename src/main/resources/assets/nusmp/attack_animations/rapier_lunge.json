@@ -1,0 +1,112 @@
+{
+  "format_version": "1.0.0",
+  "name": "rapier_lunge",
+  "author": "Multiverse of Anime",
+  "emote": {
+    "isLoop": false,
+    "returnTick": 0,
+    "beginTick": 0,
+    "endTick": 8,
+    "stopTick": 11,
+    "degrees": false,
+    "moves": [
+      {
+        "tick": 0,
+        "easing": "EASEOUTSINE",
+        "turn": 0,
+        "rightArm": {
+          "pitch": -1.2217,
+          "yaw": 0.0
+        },
+        "leftArm": {
+          "pitch": 0.1745,
+          "roll": -0.2094
+        }
+      },
+      {
+        "tick": 2,
+        "easing": "EASEOUTSINE",
+        "turn": 0,
+        "torso": {
+          "yaw": 0.2443
+        },
+        "rightArm": {
+          "pitch": -0.9076,
+          "yaw": 0.384,
+          "roll": 0.0698
+        },
+        "leftArm": {
+          "pitch": 0.3491,
+          "roll": -0.3491
+        },
+        "rightLeg": {
+          "pitch": 0.1047
+        }
+      },
+      {
+        "tick": 4,
+        "easing": "EASEOUTCUBIC",
+        "turn": 0,
+        "head": {
+          "yaw": 0.1745
+        },
+        "torso": {
+          "pitch": 0.2443,
+          "yaw": -0.2793
+        },
+        "rightArm": {
+          "pitch": -1.6755,
+          "yaw": -0.0349
+        },
+        "leftArm": {
+          "pitch": 0.5934,
+          "roll": -0.5236
+        },
+        "rightLeg": {
+          "pitch": -0.6981
+        },
+        "leftLeg": {
+          "pitch": 0.4538
+        }
+      },
+      {
+        "tick": 6,
+        "easing": "LINEAR",
+        "turn": 0,
+        "torso": {
+          "pitch": 0.2618,
+          "yaw": -0.2967
+        },
+        "rightArm": {
+          "pitch": -1.7104,
+          "yaw": -0.0349
+        },
+        "leftArm": {
+          "pitch": 0.6283,
+          "roll": -0.5585
+        },
+        "rightLeg": {
+          "pitch": -0.733
+        },
+        "leftLeg": {
+          "pitch": 0.4887
+        }
+      },
+      {
+        "tick": 8,
+        "easing": "EASEINOUTSINE",
+        "turn": 0,
+        "torso": {
+          "pitch": 0.0
+        },
+        "rightArm": {
+          "pitch": -1.2217
+        },
+        "leftArm": {
+          "pitch": 0.1745,
+          "roll": -0.2094
+        }
+      }
+    ]
+  }
+}

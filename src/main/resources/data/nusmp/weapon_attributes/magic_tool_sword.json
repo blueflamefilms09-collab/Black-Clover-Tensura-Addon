@@ -1,3 +1,6 @@
 {
-  "parent": "bettercombat:sword"
+  "parent": "bettercombat:sword",
+  "attributes": {
+    "range_bonus": 0.25
+  }
 }

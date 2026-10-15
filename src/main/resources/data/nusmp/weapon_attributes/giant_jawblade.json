@@ -1,0 +1,30 @@
+{
+  "parent": "bettercombat:claymore",
+  "attributes": {
+    "range_bonus": 1.5,
+    "two_handed": true,
+    "attacks": [
+      {
+        "hitbox": "HORIZONTAL_PLANE",
+        "damage_multiplier": 1.0,
+        "angle": 160,
+        "upswing": 0.55,
+        "animation": "nusmp:greatsword_sweep"
+      },
+      {
+        "hitbox": "HORIZONTAL_PLANE",
+        "damage_multiplier": 1.0,
+        "angle": 160,
+        "upswing": 0.55,
+        "animation": "nusmp:greatsword_sweep_back"
+      },
+      {
+        "hitbox": "VERTICAL_PLANE",
+        "damage_multiplier": 1.35,
+        "angle": 140,
+        "upswing": 0.7,
+        "animation": "nusmp:greatsword_slam"
+      }
+    ]
+  }
+}

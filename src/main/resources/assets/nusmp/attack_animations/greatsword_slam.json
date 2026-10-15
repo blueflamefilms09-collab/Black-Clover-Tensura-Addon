@@ -1,0 +1,152 @@
+{
+  "format_version": "1.0.0",
+  "name": "greatsword_slam",
+  "author": "Multiverse of Anime",
+  "emote": {
+    "isLoop": false,
+    "returnTick": 0,
+    "beginTick": 0,
+    "endTick": 16,
+    "stopTick": 20,
+    "degrees": false,
+    "moves": [
+      {
+        "tick": 0,
+        "easing": "EASEOUTSINE",
+        "turn": 0,
+        "torso": {
+          "pitch": 0.0
+        },
+        "rightArm": {
+          "pitch": -0.9599,
+          "yaw": 0.1396
+        },
+        "leftArm": {
+          "pitch": -1.0472,
+          "yaw": -0.1396
+        }
+      },
+      {
+        "tick": 4,
+        "easing": "EASEOUTSINE",
+        "turn": 0,
+        "head": {
+          "pitch": -0.1396
+        },
+        "torso": {
+          "pitch": -0.2094
+        },
+        "rightArm": {
+          "pitch": -2.8798,
+          "yaw": 0.1047,
+          "roll": 0.1047
+        },
+        "leftArm": {
+          "pitch": -2.7925,
+          "yaw": -0.1047,
+          "roll": -0.1047
+        },
+        "rightLeg": {
+          "pitch": 0.1396
+        },
+        "leftLeg": {
+          "pitch": -0.1396
+        }
+      },
+      {
+        "tick": 6,
+        "easing": "LINEAR",
+        "turn": 0,
+        "head": {
+          "pitch": -0.1396
+        },
+        "torso": {
+          "pitch": -0.2618
+        },
+        "rightArm": {
+          "pitch": -3.002,
+          "yaw": 0.1047,
+          "roll": 0.1047
+        },
+        "leftArm": {
+          "pitch": -2.9322,
+          "yaw": -0.1047,
+          "roll": -0.1047
+        },
+        "rightLeg": {
+          "pitch": 0.1396
+        },
+        "leftLeg": {
+          "pitch": -0.1396
+        }
+      },
+      {
+        "tick": 9,
+        "easing": "EASEINQUAD",
+        "turn": 0,
+        "head": {
+          "pitch": 0.2094
+        },
+        "torso": {
+          "pitch": 0.4887
+        },
+        "rightArm": {
+          "pitch": -0.7854,
+          "yaw": 0.0698
+        },
+        "leftArm": {
+          "pitch": -0.8727,
+          "yaw": -0.0698
+        },
+        "rightLeg": {
+          "pitch": -0.384
+        },
+        "leftLeg": {
+          "pitch": 0.2443
+        }
+      },
+      {
+        "tick": 12,
+        "easing": "EASEOUTCUBIC",
+        "turn": 0,
+        "head": {
+          "pitch": 0.2443
+        },
+        "torso": {
+          "pitch": 0.5236
+        },
+        "rightArm": {
+          "pitch": -0.6981,
+          "yaw": 0.0698
+        },
+        "leftArm": {
+          "pitch": -0.7854,
+          "yaw": -0.0698
+        },
+        "rightLeg": {
+          "pitch": -0.4189
+        },
+        "leftLeg": {
+          "pitch": 0.2443
+        }
+      },
+      {
+        "tick": 16,
+        "easing": "EASEINOUTSINE",
+        "turn": 0,
+        "head": {
+          "pitch": 0.0698
+        },
+        "torso": {
+          "pitch": 0.1745
+        },
+        "rightArm": {
+          "pitch": -0.5236
+        },
+        "leftArm": {
+          "pitch": -0.6109
+        }
+      }
+    ]
+  }
+}

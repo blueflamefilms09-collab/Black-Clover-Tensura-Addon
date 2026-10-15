@@ -40,7 +40,7 @@ public final class CompatCatalog {
             new Entry("curios", "Curios API", Kind.OPTIONAL,
                     "Weapons and relics fit its slots (data tags), plus our 2 dungeon_relic slots. Worn weapons give a small passive. Read by reflection."),
             new Entry("bettercombat", "Better Combat", Kind.OPTIONAL,
-                    "12 weapons inherit its attack presets. Data only."),
+                    "Every melee weapon of the mod ships a profile and custom animations. Data only."),
             new Entry("ftbteams", "FTB Teams", Kind.OPTIONAL,
                     "Magic Knight Squads run on its parties. Without it the squad commands do nothing."),
             new Entry("trnightmare", "TR Nightmare", Kind.OPTIONAL,

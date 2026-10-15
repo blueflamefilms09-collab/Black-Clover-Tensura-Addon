@@ -1,0 +1,146 @@
+{
+  "format_version": "1.0.0",
+  "name": "greatsword_sweep",
+  "author": "Multiverse of Anime",
+  "emote": {
+    "isLoop": false,
+    "returnTick": 0,
+    "beginTick": 0,
+    "endTick": 13,
+    "stopTick": 17,
+    "degrees": false,
+    "moves": [
+      {
+        "tick": 0,
+        "easing": "EASEOUTSINE",
+        "turn": 0,
+        "rightArm": {
+          "pitch": -1.0472,
+          "yaw": 0.0
+        },
+        "leftArm": {
+          "pitch": -1.1345,
+          "yaw": 0.0
+        }
+      },
+      {
+        "tick": 4,
+        "easing": "EASEOUTSINE",
+        "turn": 0,
+        "head": {
+          "yaw": 0.384
+        },
+        "torso": {
+          "yaw": -0.733
+        },
+        "rightArm": {
+          "pitch": -1.2566,
+          "yaw": -1.0123,
+          "roll": 0.1396
+        },
+        "leftArm": {
+          "pitch": -1.3614,
+          "yaw": -0.8727
+        },
+        "rightLeg": {
+          "pitch": 0.1745
+        },
+        "leftLeg": {
+          "pitch": -0.1745
+        }
+      },
+      {
+        "tick": 5,
+        "easing": "LINEAR",
+        "turn": 0,
+        "head": {
+          "yaw": 0.384
+        },
+        "torso": {
+          "yaw": -0.7679
+        },
+        "rightArm": {
+          "pitch": -1.2566,
+          "yaw": -1.0472,
+          "roll": 0.1396
+        },
+        "leftArm": {
+          "pitch": -1.3614,
+          "yaw": -0.9076
+        },
+        "rightLeg": {
+          "pitch": 0.1745
+        },
+        "leftLeg": {
+          "pitch": -0.1745
+        }
+      },
+      {
+        "tick": 8,
+        "easing": "EASEINQUAD",
+        "turn": 0,
+        "head": {
+          "yaw": -0.4538
+        },
+        "torso": {
+          "yaw": 0.9076
+        },
+        "rightArm": {
+          "pitch": -1.3963,
+          "yaw": 1.0821
+        },
+        "leftArm": {
+          "pitch": -1.4312,
+          "yaw": 1.2217
+        },
+        "rightLeg": {
+          "pitch": -0.2443
+        },
+        "leftLeg": {
+          "pitch": 0.1745
+        }
+      },
+      {
+        "tick": 10,
+        "easing": "EASEOUTCUBIC",
+        "turn": 0,
+        "head": {
+          "yaw": -0.4887
+        },
+        "torso": {
+          "yaw": 1.0123
+        },
+        "rightArm": {
+          "pitch": -1.3614,
+          "yaw": 1.2217
+        },
+        "leftArm": {
+          "pitch": -1.3963,
+          "yaw": 1.3265
+        },
+        "rightLeg": {
+          "pitch": -0.2443
+        },
+        "leftLeg": {
+          "pitch": 0.1745
+        }
+      },
+      {
+        "tick": 13,
+        "easing": "EASEINOUTSINE",
+        "turn": 0,
+        "torso": {
+          "yaw": 0.2618
+        },
+        "rightArm": {
+          "pitch": -0.6981,
+          "yaw": 0.3491
+        },
+        "leftArm": {
+          "pitch": -0.7854,
+          "yaw": 0.4189
+        }
+      }
+    ]
+  }
+}

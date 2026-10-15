@@ -1,0 +1,128 @@
+{
+  "format_version": "1.0.0",
+  "name": "twin_cross",
+  "author": "Multiverse of Anime",
+  "emote": {
+    "isLoop": false,
+    "returnTick": 0,
+    "beginTick": 0,
+    "endTick": 11,
+    "stopTick": 15,
+    "degrees": false,
+    "moves": [
+      {
+        "tick": 0,
+        "easing": "EASEOUTSINE",
+        "turn": 0,
+        "rightArm": {
+          "pitch": -1.0821,
+          "yaw": -0.1047
+        },
+        "leftArm": {
+          "pitch": -1.0821,
+          "yaw": 0.1047
+        }
+      },
+      {
+        "tick": 3,
+        "easing": "EASEOUTSINE",
+        "turn": 0,
+        "head": {
+          "pitch": -0.0349
+        },
+        "torso": {
+          "pitch": 0.0698
+        },
+        "rightArm": {
+          "pitch": -1.2217,
+          "yaw": -1.0472,
+          "roll": 0.1745
+        },
+        "leftArm": {
+          "pitch": -1.2217,
+          "yaw": 1.0472,
+          "roll": -0.1745
+        },
+        "rightLeg": {
+          "pitch": 0.1396
+        },
+        "leftLeg": {
+          "pitch": -0.1396
+        }
+      },
+      {
+        "tick": 4,
+        "easing": "LINEAR",
+        "turn": 0,
+        "torso": {
+          "pitch": 0.0698
+        },
+        "rightArm": {
+          "pitch": -1.2566,
+          "yaw": -1.0821,
+          "roll": 0.1745
+        },
+        "leftArm": {
+          "pitch": -1.2566,
+          "yaw": 1.0821,
+          "roll": -0.1745
+        }
+      },
+      {
+        "tick": 7,
+        "easing": "EASEINQUAD",
+        "turn": 0,
+        "torso": {
+          "pitch": 0.2094,
+          "yaw": 0.0
+        },
+        "rightArm": {
+          "pitch": -1.4661,
+          "yaw": 0.8378
+        },
+        "leftArm": {
+          "pitch": -1.4661,
+          "yaw": -0.8378
+        },
+        "rightLeg": {
+          "pitch": -0.2793
+        },
+        "leftLeg": {
+          "pitch": 0.2094
+        }
+      },
+      {
+        "tick": 9,
+        "easing": "EASEOUTCUBIC",
+        "turn": 0,
+        "torso": {
+          "pitch": 0.2443
+        },
+        "rightArm": {
+          "pitch": -1.501,
+          "yaw": 1.0123
+        },
+        "leftArm": {
+          "pitch": -1.501,
+          "yaw": -1.0123
+        }
+      },
+      {
+        "tick": 11,
+        "easing": "EASEINOUTSINE",
+        "turn": 0,
+        "torso": {
+          "pitch": 0.0
+        },
+        "rightArm": {
+          "pitch": -0.9599,
+          "yaw": -0.1047
+        },
+        "leftArm": {
+          "pitch": -0.9599,
+          "yaw": 0.1047
+        }
+      }
+    ]
+  }
+}
