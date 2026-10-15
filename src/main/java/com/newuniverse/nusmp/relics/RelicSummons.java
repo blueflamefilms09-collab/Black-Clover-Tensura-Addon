@@ -89,6 +89,7 @@ final class RelicSummons {
     }
 
     private static void drive(Mob m, ServerPlayer owner, List<LivingEntity> foes, long now) {
+        if (m.getPersistentData().contains("nusmp_paladin_turn")) return;      // 1.42.0: Lucius's Soul Touch has turned it for a while: it is not driven for its owner
         try {
             LivingEntity target = m.getTarget();
             if (target == null || !target.isAlive() || target == owner) {

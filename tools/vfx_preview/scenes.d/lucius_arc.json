@@ -1,0 +1,87 @@
+{
+ "_comment": "1.42.0 Lucius's final arc: the chest gem while the core is exposed (LuciusCoreGemLayer).",
+ "lucius_core_gem": {
+  "layer": "LuciusCoreGemLayer",
+  "shape": "LUCIUS_CORE_GEM",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1.4,
+   0
+  ],
+  "power": 0.5,
+  "duration": 160,
+  "color": "FFE8B923",
+  "seed": 4242,
+  "cam": [
+   2.2,
+   1.9,
+   -2.6
+  ],
+  "target": [
+   0,
+   1.4,
+   0
+  ],
+  "ages": [
+   4,
+   20,
+   60,
+   120
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "lucius_core_gem_violet": {
+  "layer": "LuciusCoreGemLayer",
+  "shape": "LUCIUS_CORE_GEM",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1.4,
+   0
+  ],
+  "power": 0.5,
+  "duration": 160,
+  "color": "FF9B5BFF",
+  "seed": 4243,
+  "cam": [
+   2.2,
+   1.9,
+   -2.6
+  ],
+  "target": [
+   0,
+   1.4,
+   0
+  ],
+  "ages": [
+   4,
+   20,
+   60,
+   120
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ }
+}

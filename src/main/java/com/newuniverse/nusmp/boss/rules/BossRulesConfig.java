@@ -12,7 +12,8 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class BossRulesConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue STRIP_REGENERATION, BAN_UNIQUE_ULTIMATE, LUCIUS_COMBO_AI, REFILL_AT_GATES;
+    public static final ModConfigSpec.BooleanValue STRIP_REGENERATION, BAN_UNIQUE_ULTIMATE, LUCIUS_COMBO_AI, REFILL_AT_GATES,
+            LUCIUS_ANIME_ARC, LUCIUS_TIME_REVERSAL;
     public static final ModConfigSpec.ConfigValue<String> FORBIDDEN_WORDS;
 
     static {
@@ -29,6 +30,14 @@ public final class BossRulesConfig {
                 .define("luciusComboAi", true);
         REFILL_AT_GATES = b.comment("The Gates (100% mode) refill a Zogratis boss's health bar once. The one deliberate exception to 'no second wind'; false removes it.")
                 .define("refillAtGates", true);
+        LUCIUS_ANIME_ARC = b.comment("Lucius fights as in the final arc: three acts (levitating Messiah, grounded Soul Corruptor, the clones and the chest gem), spell chains,",
+                        "Soul Touch, a precognition that only simultaneous or very fast strikes, anti-magic or synchronized relics beat. In this mode the Gates do not refill his health bar.",
+                        "false = the old 1.20 to 1.37 Lucius (Julius windows, charges of precognition, the Gates refill) untouched.")
+                .define("luciusAnimeArc", true);
+        LUCIUS_TIME_REVERSAL = b.comment("The owner's second exception to 'no second wind' (like refillAtGates): in act 2, after a burst of damage Lucius channels Time Reversal for 3 seconds",
+                        "and returns to the health he had when the burst began, never above it. Anti-magic, a heavy hit or a lock interrupts it. false = he never rewinds wounds.",
+                        "Needs luciusAnimeArc. BossHealGuard stays the whitelist: the restore runs through BossHealGuard.allow and the budget bypass.")
+                .define("luciusTimeReversal", true);
         b.pop();
         SPEC = b.build();
     }
@@ -44,6 +53,12 @@ public final class BossRulesConfig {
     public static boolean luciusComboAi() { return get(LUCIUS_COMBO_AI); }
 
     public static boolean refillAtGates() { return get(REFILL_AT_GATES); }
+
+    /** The final-arc Lucius (1.42.0): three acts, chains, Soul Touch, the new precognition, clones and the chest gem. */
+    public static boolean luciusAnimeArc() { return get(LUCIUS_ANIME_ARC); }
+
+    /** The owner's exception: Lucius's channelled Time Reversal (act 2) may restore the health a burst took. */
+    public static boolean luciusTimeReversal() { return get(LUCIUS_TIME_REVERSAL); }
 
     /** The switches and words as the pure policy wants them. */
     public static BossSkillPolicy.Settings settings() {

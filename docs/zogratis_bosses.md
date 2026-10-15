@@ -627,3 +627,5 @@ Nothing else in the mod calls into the package. To find every hook, search the s
 - **No Bedrock JSON files** were produced (section 0): there is no `.mcpack` / `.mcaddon` output, by design.
 - **Boss speech, move names and warnings are literals in the code**, so they cannot be translated through lang files.
 - The Time Magic VFX files were not touched (they are the quality standard); Lucius only calls the existing Time shapes.
+- **1.42.0:** with the server switch `luciusAnimeArc` on (the default) Lucius fights as in the final arc: three acts, spell chains, Soul Touch, a new precognition, an active Time Reversal, clones and a chest gem. Section 9 above describes the old fight, which is still what he does with the switch off. See `docs/lucius_arc.md`.
+

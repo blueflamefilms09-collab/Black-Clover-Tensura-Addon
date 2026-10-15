@@ -133,7 +133,7 @@ public final class LuciusProfile {
 
     // ================================================================ nullifications
     /** Is Lucius in a window where he can be hurt in full: exposed after an ultimate, transforming, or Julius's will is up? */
-    public static boolean open(LuciusBoss b) { return b.exposed() || b.transforming() || b.julius(); }
+    public static boolean open(LuciusBoss b) { return b.exposed() || b.transforming() || b.julius() || b.arcOpen(); }
 
     /** The cut applied to a hit (ZogratisBoss.mitigate). Skipped in an open window and for blows of the family. */
     public static float mitigate(LuciusBoss b, DamageSource source, float amount) {

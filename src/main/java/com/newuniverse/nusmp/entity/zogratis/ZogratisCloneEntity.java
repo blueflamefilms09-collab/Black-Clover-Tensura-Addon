@@ -2,6 +2,9 @@ package com.newuniverse.nusmp.entity.zogratis;
 
 import com.newuniverse.nusmp.blackclover.Devil;
 import com.newuniverse.nusmp.blackclover.MagicType;
+import com.newuniverse.nusmp.boss.arc.CloneScheduler;
+import com.newuniverse.nusmp.vfx.VfxShape;
+import com.newuniverse.nusmp.vfx.VfxSpawn;
 import com.newuniverse.nusmp.wizard.BornMagic;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -51,7 +54,16 @@ public class ZogratisCloneEntity extends Monster {
     public static final int FADE_TICKS = 40;
     private static final int TELL_TICKS = 14;
 
+    /** Act 3 (1.42.0): health of a copy of the arc; they are made to fall to a few real blows. */
+    public static final float ARC_HEALTH = 24f;
+    /** Act 3 telegraphs of the three spells, in ticks (all well over the 12 a hurting step needs). */
+    private static final int TELL_TIME = 20, TELL_GRAVITY = 24, TELL_SPATIAL = 18;
+
     private UUID ownerId;
+    // act 3: a copy of the arc has a slot (0..4), casts the spell of its slot when the director says so, and never fades by itself
+    private int arcSlot = -1, arcSpell = -1, arcLeft;
+    private Vec3 arcMark;
+    private LivingEntity arcTarget;
     private int life = 600, power = 20;
     private double damageMult = 0.6;
     private long nextSpell = 60;
@@ -175,6 +187,109 @@ public class ZogratisCloneEntity extends Monster {
         return c;
     }
 
+    /**
+     * 1.42.0: a copy of the final arc. Same look as the real one (it copies his body), a tiny health pool, no loot and no experience, never
+     * heals, never fades by itself (the director removes it when the gem shatters or he falls), and it casts one of Time, Gravity or
+     * Spatial magic when its slot's turn comes ({@link #beginArcCast}). Null if five copies already exist.
+     */
+    public static ZogratisCloneEntity spawnArc(LuciusBoss boss, ServerLevel level, Vec3 at, int slot) {
+        if (boss.clones().size() >= CloneScheduler.MAX_CLONES) return null;
+        ZogratisCloneEntity c = ZogratisEntities.ZOGRATIS_CLONE.get().create(level);
+        if (c == null) return null;
+        c.moveTo(at.x, at.y, at.z, boss.getYRot(), 0);
+        c.copyFrom(boss);
+        c.arcSlot = slot;
+        c.life = 24000;
+        AttributeInstance hp = c.getAttribute(Attributes.MAX_HEALTH);
+        if (hp != null) hp.setBaseValue(ARC_HEALTH);
+        c.setHealth(c.getMaxHealth());
+        level.addFreshEntity(c);
+        ZogratisVfx.divineSigil(level, at, 1.6, 20, FxMath.divine(boss.power()), false);
+        ZogratisVfx.soulVortex(level, at, 1.4, 20, ArcSteps.SOUL);
+        return c;
+    }
+
+    /** The slot of a copy of the arc (0..4), or -1 for a clone of the old moves. */
+    public int arcSlot() { return arcSlot; }
+
+    /** Is it free to start a cast (a copy of the arc that is not in the middle of one)? */
+    boolean arcIdle() { return arcSlot >= 0 && arcLeft <= 0 && isAlive(); }
+
+    /**
+     * Starts the spell of its slot at 'target': the telegraph is shown at once for its whole length (a ring, a line, a sigil), the spell
+     * itself happens when it runs out. Time = a bolt of stasis, Gravity = a crush zone, Spatial = a blink to the target's back and a
+     * marked strike. The damage goes through the owner's strike, so the balance law's per-hit cap and the arc's pressure cap apply.
+     */
+    void beginArcCast(CloneScheduler.Spell spell, LivingEntity target) {
+        if (!(level() instanceof ServerLevel sl) || arcLeft > 0 || target == null || !target.isAlive()) return;
+        arcSpell = spell.ordinal();
+        arcTarget = target;
+        arcMark = ArcSteps.groundUnder(target);
+        switch (spell) {
+            case TIME -> {
+                arcLeft = TELL_TIME;
+                ArcSteps.boltTell(sl, this, target, TELL_TIME);
+            }
+            case GRAVITY -> {
+                arcLeft = TELL_GRAVITY;
+                ArcSteps.zoneTell(sl, arcMark, 6.0, TELL_GRAVITY);
+            }
+            case SPATIAL -> {
+                arcLeft = TELL_SPATIAL;
+                Vec3 d = ArcSteps.behindSpot(this, target);
+                arcMark = d;
+                if (d != null) ArcSteps.blinkTell(sl, d, Vec3.directionFromRotation(0f, target.getYRot()), TELL_SPATIAL);
+            }
+        }
+        entityData.set(CAST, arcLeft);
+        getNavigation().stop();
+        sl.playSound(null, blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.HOSTILE, 0.9f, 1.2f);
+    }
+
+    private void arcAi(ServerLevel sl) {
+        if (arcLeft <= 0) return;
+        arcLeft--;
+        entityData.set(CAST, Math.max(0, arcLeft));
+        getNavigation().stop();
+        if (arcTarget != null && arcTarget.isAlive()) getLookControl().setLookAt(arcTarget, 40f, 40f);
+        if (arcLeft > 0) return;
+        LuciusBoss boss = owner(sl);
+        LivingEntity tg = arcTarget;
+        arcTarget = null;
+        if (boss == null || tg == null || !tg.isAlive() || !ArcSteps.fair(tg)) return;
+        try {
+            arcFire(sl, boss, tg);
+        } catch (RuntimeException e) {
+            com.mojang.logging.LogUtils.getLogger().warn("[nusmp] a Lucius copy's spell failed: {}", e.toString());
+        }
+    }
+
+    private void arcFire(ServerLevel sl, LuciusBoss boss, LivingEntity tg) {
+        swing(net.minecraft.world.InteractionHand.MAIN_HAND);
+        switch (CloneScheduler.Spell.values()[Math.max(0, Math.min(2, arcSpell))]) {
+            case TIME -> ArcSteps.chronoBolt(boss, this, tg);
+            case GRAVITY -> { if (arcMark != null) DanteMoves.gravityField(boss, arcMark, 6.0, 60, 1.1f); }
+            case SPATIAL -> {
+                Vec3 d = arcMark;
+                if (d == null || !sl.noCollision(this, getBoundingBox().move(d.subtract(position())))) return;
+                VfxSpawn.send(sl, VfxShape.SPATIAL_RIFT, position().add(0, 1, 0), position().add(0, 1.5, 0), 0xFF000000 | FxMath.divine(boss.power()), 12, 0.8f);
+                teleportTo(d.x, d.y, d.z);
+                VfxSpawn.send(sl, VfxShape.SPATIAL_RIFT, d.add(0, 1, 0), d.add(0, 1.5, 0), 0xFF000000 | FxMath.divine(boss.power()), 12, 0.8f);
+                ArcSteps.faceTowards(this, tg);
+                final Vec3 at = d;
+                ZogratisVfx.divineSigil(sl, at, 2.6, 16, ArcSteps.SOUL, true);
+                boss.later(16, LuciusFx.safe("clone strike", () -> {
+                    if (!isAlive()) return;
+                    ZogratisVfx.pillar(sl, at, 1.4, 12, FxMath.divine(boss.power()), false);
+                    for (LivingEntity v : boss.foesAround(at, 3.2)) {
+                        double dx = v.getX() - at.x, dz = v.getZ() - at.z;
+                        if (dx * dx + dz * dz <= 2.6 * 2.6 && Math.abs(v.getY() - at.y) <= 3.0) boss.strike(v, ArcSteps.SPATIAL_STRIKE_BASE, true);
+                    }
+                }));
+            }
+        }
+    }
+
     private void copyFrom(LuciusBoss boss) {
         ownerId = boss.getUUID();
         power = boss.power();
@@ -227,6 +342,10 @@ public class ZogratisCloneEntity extends Monster {
                 Tells.column(sl, position(), 3.0, LuciusFx.GOLD);
                 Tells.ring(sl, position(), 1.6, LuciusFx.PALE);
             }
+        }
+        if (arcSlot >= 0) {                                       // 1.42.0: a copy of act 3 casts only when its director says so
+            arcAi(sl);
+            return;
         }
         LivingEntity tg = getTarget();
         if (tg == null || !tg.isAlive()) {
@@ -311,6 +430,7 @@ public class ZogratisCloneEntity extends Monster {
         tag.putInt("Life", life);
         tag.putInt("Power", power);
         tag.putInt("Form", form());
+        tag.putInt("ArcSlot", arcSlot);
     }
 
     @Override
@@ -320,5 +440,6 @@ public class ZogratisCloneEntity extends Monster {
         if (tag.contains("Life")) life = tag.getInt("Life");
         if (tag.contains("Power")) power = tag.getInt("Power");
         entityData.set(FORM, tag.getInt("Form"));
+        arcSlot = tag.contains("ArcSlot") ? tag.getInt("ArcSlot") : -1;
     }
 }

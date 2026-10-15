@@ -138,3 +138,15 @@ the factor shape would touch every Zogratis fight, so it is listed as a decision
 Owner decisions: the Gates refill (above); whether Lucius's four `ultimate` moves (Soul Purge, Sibling Assimilation, Time Stop, Grimoire
 Tower Storm) should be renamed or removed too. They are this mod's own move-framework pacing label, not Tensura Unique/Ultimate skills,
 so they stay.
+
+## 1.42.0: the second exception (Lucius's Time Reversal) and the arc
+
+The owner asked for Lucius to fight like in the final arc (`docs/lucius_arc.md`). One part of it is a deliberate exception to "no second wind",
+like the Gates refill: in act 2, after a burst of damage (18% of his maximum health in 100 ticks) he channels **Time Reversal** for three
+seconds and, if the party does not interrupt it (anti-magic, a heavy blow, a lock), returns to the health he had when the burst began, never
+above it and never above the top of act 2. Why it still fits the rule: it is a scripted restoration, not a regeneration. It runs through
+`BossHealGuard.allow(...)` and the budget's bypass exactly like `PhaseRefill`, so `BossHealGuard` stays the single whitelist; with the new
+switch `luciusTimeReversal` (`BossRulesConfig`, default true) off he never rewinds anything. `luciusAnimeArc` (default true) switches the
+whole final-arc Lucius; with it on, the Gates' 100% refill is **not** used for Lucius (his arc has its own comeback tool and its own end),
+and `refillAtGates` keeps its meaning for every other boss and for Lucius with the arc off.
+

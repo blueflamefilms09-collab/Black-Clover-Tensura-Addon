@@ -243,7 +243,9 @@ public enum VfxShape {
     // 1.35.0 boss VFX (agent b3): Zagred, the Blood-Red Commander and the Juggernaut (ZagredBossLayer / CommanderBossLayer / JuggernautBossLayer)
     ZAGRED_INK_BARS, ZAGRED_GLYPH_RING, ZAGRED_RULE_STONE, ZAGRED_TEXT_CORRUPT, ZAGRED_REWRITE_STRIKE,
     CMD_BANNERS, CMD_CHAINS, CMD_VAULT_LIGHT, CMD_CRIMSON_STRIKE,
-    JUG_ASH_PULSE, JUG_ANTIBODY_RING;
+    JUG_ASH_PULSE, JUG_ANTIBODY_RING,
+    // 1.42.0: Lucius's final arc (LuciusCoreGemLayer)
+    LUCIUS_CORE_GEM;      // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

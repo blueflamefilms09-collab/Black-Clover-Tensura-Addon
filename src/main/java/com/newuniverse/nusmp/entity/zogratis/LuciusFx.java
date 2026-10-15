@@ -102,7 +102,7 @@ final class LuciusFx {
     // ---------------------------------------------------------------- foes
     /** Players in survival and the summons of players: never the animals and villagers standing about, never the Zogratis family. */
     static boolean isFoe(Entity self, Entity e) {
-        if (!(e instanceof LivingEntity le) || e == self || !le.isAlive() || le.isSpectator() || ZogratisEntities.isFamily(e)) return false;
+        if (!(e instanceof LivingEntity le) || e == self || !le.isAlive() || le.isSpectator() || ZogratisEntities.isFamily(e) || PaladinTurns.isTurned(e)) return false;
         if (e instanceof Player p) return !p.isCreative();
         return e instanceof OwnableEntity o && o.getOwnerUUID() != null;
     }

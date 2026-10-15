@@ -9,6 +9,9 @@ import com.newuniverse.nusmp.boss.LuciusNumbers;
 import com.newuniverse.nusmp.boss.LuciusProfile;
 import com.newuniverse.nusmp.boss.LuciusSpellTable;
 import com.newuniverse.nusmp.boss.LuciusSpells;
+import com.newuniverse.nusmp.boss.arc.CoreGemMath;
+import com.newuniverse.nusmp.boss.arc.LuciusArc;
+import com.newuniverse.nusmp.boss.rules.BossRulesConfig;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
 import net.minecraft.ChatFormatting;
@@ -41,6 +44,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.entity.PartEntity;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -71,14 +75,23 @@ import java.util.UUID;
  *   <li><b>Forms</b>: his human body until the Gates of the Tree of Qliphoth open at the last quarter of his health, then the divine
  *       form (three pairs of wings, a halo of gears, the grimoire open before him): all his numbers at their peak.</li>
  * </ul>
+ * <p>
+ * 1.42.0, the final arc (switch {@code luciusAnimeArc}, default on; off = everything above exactly as before): three acts by health
+ * (65% and 30%), spell chains (Checkmate, the Soul Touch), a precognition that only simultaneous or very fast strikes, anti-magic or
+ * synchronized relics beat, an active Time Reversal in act 2, the clones and the chest gem ({@link LuciusCoreGem}) in act 3. All of it
+ * is in {@link LuciusArcDirector}; this class only forwards its hooks to it.
  */
 public class LuciusBoss extends ZogratisBoss {
     private static final EntityDataAccessor<Integer> JULIUS = SynchedEntityData.defineId(LuciusBoss.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> CHARGES = SynchedEntityData.defineId(LuciusBoss.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> FLAGS = SynchedEntityData.defineId(LuciusBoss.class, EntityDataSerializers.INT);
+    /** 1.42.0: the arc's state for the client: the act in the low two bits, then the flags {@link #ARC_GEM} and the rest. */
+    private static final EntityDataAccessor<Integer> ARC = SynchedEntityData.defineId(LuciusBoss.class, EntityDataSerializers.INT);
 
     /** Bits of {@link #flags()}. */
     public static final int FLAG_ACCELERATED = 1, FLAG_STOPPING = 2;
+    /** Bits of {@link #arcFlags()} above the act number (bits 0-1): the gem is out, he channels Time Reversal, he is staggered, he levitates. */
+    public static final int ARC_GEM = 4, ARC_CHANNEL = 8, ARC_STAGGER = 16, ARC_LEVITATE = 32;
 
     private static final float JULIUS_DAMAGE = 1.4f;
     private static final ResourceLocation JULIUS_SLOW = ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "lucius_julius_slow");
@@ -90,6 +103,10 @@ public class LuciusBoss extends ZogratisBoss {
     private final JuliusWill julius = new JuliusWill();
     private final PaladinLedger<UUID> paladins = new PaladinLedger<>();
     private final SoulMath.Budget budget = new SoulMath.Budget();
+    /** 1.42.0: the arc's state machines and glue; used only while {@code luciusAnimeArc} is on. */
+    private final LuciusArcDirector director = new LuciusArcDirector(this);
+    /** 1.42.0: the chest gem, a part of this entity (see {@link LuciusCoreGem}); built here so that its id follows his. */
+    private final LuciusCoreGem gem;
     private final ServerBossEvent juliusBar = new ServerBossEvent(Component.empty(), BossEvent.BossBarColor.WHITE, BossEvent.BossBarOverlay.NOTCHED_10);
 
     // the marks a wind-up locks for its move
@@ -110,6 +127,7 @@ public class LuciusBoss extends ZogratisBoss {
 
     public LuciusBoss(EntityType<LuciusBoss> type, Level level) {
         super(type, level);
+        this.gem = new LuciusCoreGem(this);
     }
 
     public static AttributeSupplier.Builder createAttributes() { return ZogratisBoss.bossAttributes(4800, 22, 0.36, 24, 13); }
@@ -121,7 +139,9 @@ public class LuciusBoss extends ZogratisBoss {
 
     @Override
     public String barTitle() {
-        return julius() ? "Julius Novachrono - the Wizard King's will" : super.barTitle();
+        if (julius()) return "Julius Novachrono - the Wizard King's will";
+        if (arcOn() && director.phase() > LuciusArc.NONE) return bossName() + " - " + LuciusArc.name(director.phase()) + " - " + devil().displayName + " " + power() + "%";
+        return super.barTitle();
     }
 
     @Override
@@ -134,6 +154,7 @@ public class LuciusBoss extends ZogratisBoss {
         b.define(JULIUS, 0);
         b.define(CHARGES, 1);
         b.define(FLAGS, 0);
+        b.define(ARC, 0);
     }
 
     /** Is Julius's will in control (the body stumbles, the bar is his)? Works on the client too. */
@@ -150,6 +171,73 @@ public class LuciusBoss extends ZogratisBoss {
 
     /** How far the divine form hovers above the ground, in blocks (0 in the human form). */
     public float hover() { return form() == FORM_DIVINE ? 0.4f + 0.06f * (float) Math.sin(tickCount * 0.12) : 0f; }
+
+    // ================================================================ 1.42.0: the final arc
+    /** Is the final-arc mode on (the switch {@code luciusAnimeArc})? Server side; the client reads {@link #arcFlags()} instead. */
+    boolean arcOn() { return LuciusArcDirector.on(); }
+
+    LuciusArcDirector director() { return director; }
+
+    /** The act (0 none, 1 to 3) and the flags {@link #ARC_GEM}, {@link #ARC_CHANNEL}, {@link #ARC_STAGGER}, {@link #ARC_LEVITATE}; synced. */
+    public int arcFlags() { return entityData.get(ARC); }
+
+    void setArcFlags(int f) { if (entityData.get(ARC) != f) entityData.set(ARC, f); }
+
+    /** The act of the final arc (0 when the mode is off or the fight has not begun). Works on the client. */
+    public int arcAct() { return arcFlags() & 3; }
+
+    /** Is the chest gem out (the core hit box is live)? Works on the client, so that the crosshair and the server agree. */
+    public boolean gemExposed() { return (arcFlags() & ARC_GEM) != 0; }
+
+    /** Is he channelling Time Reversal right now (the renderer may raise his arms)? */
+    public boolean arcChanneling() { return (arcFlags() & ARC_CHANNEL) != 0; }
+
+    /** Is he open to a full blow in the arc: staggered, channelling Time Reversal, or the gem is out? (Lifts his nullifications, like an ultimate's recovery.) */
+    public boolean arcOpen() { return level() instanceof ServerLevel sl && arcOn() && director.open(sl.getGameTime()); }
+
+    /** Re-sends the main bar's title (the act's name is in it). */
+    void arcRefreshBar() { if (level() instanceof ServerLevel sl) refreshMainBar(sl); }
+
+    // ---------------------------------------------------------------- the core gem as a part of this entity
+    @Override public boolean isMultipartEntity() { return true; }
+
+    @Override public PartEntity<?>[] getParts() { return new PartEntity<?>[]{gem}; }
+
+    /** The part's id follows his (the client builds its own parts and the attack packet names the part by id), the way the dragon's do. */
+    @Override
+    public void setId(int id) {
+        super.setId(id);
+        gem.setId(id + 1);
+    }
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        Vec3 c = director.gemCenter();
+        gem.setPos(c.x, c.y - LuciusCoreGem.SIZE / 2, c.z);                      // on both sides: the crosshair picks on the client
+    }
+
+    /**
+     * A blow on the gem part. Hidden gem: nothing (the pick should not have found it). A critical blow or an anti-magic blow shatters his
+     * resonance ({@link LuciusArcDirector#shatter}); any other blow is an ordinary body hit, which in act 3 is cut to 15%.
+     */
+    boolean hurtGem(DamageSource source, float amount) {
+        if (!(level() instanceof ServerLevel sl) || !arcOn() || !director.gemOut(sl.getGameTime())) return false;
+        Entity attacker = source.getEntity();
+        if (attacker != null && ZogratisEntities.isFamily(attacker)) return false;
+        long now = sl.getGameTime();
+        CoreGemMath.Hit hit = CoreGemMath.classify(true, LuciusArcHooks.antiMagic(source), LuciusArcHooks.crit(source, now));
+        if (attacker instanceof ServerPlayer p) fighters().add(p.getUUID());
+        if (hit == CoreGemMath.Hit.SHATTER) {
+            director.shatter(attacker);
+            return true;
+        }
+        if (attacker instanceof ServerPlayer p && now - p.getPersistentData().getLong("nusmp_lu_gem_note") >= 60) {
+            p.getPersistentData().putLong("nusmp_lu_gem_note", now);
+            p.displayClientMessage(Component.literal("The gem rings but holds: it breaks to a critical blow or to anti-magic.").withStyle(ChatFormatting.GOLD), true);
+        }
+        return hurt(source, amount);
+    }
 
     ChronoRing ring() { return ring; }
     Precognition precog() { return precog; }
@@ -213,16 +301,19 @@ public class LuciusBoss extends ZogratisBoss {
     @Override protected float formScale(int form) { return form == FORM_DIVINE ? 1.2f : form == FORM_BASE ? 1.05f : 1.0f; }
     @Override protected float damageScale() { return 1.25f; }
 
-    /** His plain blow is light (a god does not need his hands); none at all while Julius holds him. */
+    /** His plain blow is light (a god does not need his hands); none at all while Julius holds him, and none in act 1, a chain, a channel or a stagger. */
     @Override
     protected float meleeDamage() {
         if (julius()) return 0f;
+        if (arcOn() && (director.phase() == LuciusArc.MESSIAH || director.blocked(level().getGameTime()))) return 0f;
         return (float) getAttributeValue(Attributes.ATTACK_DAMAGE) * 0.7f * (level().getGameTime() < accelUntil ? ChronoMath.ACCEL_MELEE : 1f);
     }
 
-    /** He keeps his distance: a calm caster at eight to fourteen blocks, closer in the divine form. */
+    /** He keeps his distance: a calm caster at eight to fourteen blocks, closer in the divine form; in the arc, close in act 2 and back among the copies in act 3. */
     @Override
     protected double preferredRange(double suggested) {
+        if (arcOn() && director.phase() == LuciusArc.SOUL_CORRUPTOR) return 4.5;
+        if (arcOn() && director.phase() == LuciusArc.CLONES) return 9.0;
         return form() == FORM_DIVINE ? Math.max(5, Math.min(11, suggested)) : Math.max(7, Math.min(14, suggested));
     }
 
@@ -244,8 +335,20 @@ public class LuciusBoss extends ZogratisBoss {
     /** Intangibility, Dead End Rainbow and the safe Usurper ride on his blows. */
     @Override
     public boolean strike(LivingEntity victim, float base, boolean magic) {
+        if (base <= 0f && arcOn()) return false;                                      // a blow of nothing is no blow (and has no knockback)
         return LuciusProfile.strike(this, victim, base, magic, super::strike);
     }
+
+    /** The arc has its own Time Reversal and its own end; with it on, the Gates do not refill his health bar (decision in docs/lucius_arc.md). */
+    @Override protected boolean refillOnGates() { return !arcOn() && super.refillOnGates(); }
+
+    /** The framework's walking goal stays quiet while he hovers, runs a chain or channels (the director moves him then). */
+    @Override
+    boolean canWalk() { return super.canWalk() && !(arcOn() && director.holdsStill()); }
+
+    /** The creatures he has turned are on his side, and so are the Paladins already (never a target of his own spells). */
+    @Override
+    public boolean isFoe(Entity e) { return !PaladinTurns.isTurned(e) && super.isFoe(e); }
 
     @Override protected String[] tensuraKeywords() { return new String[]{"soul", "spirit", "holy", "time", "gravity"}; }
     @Override protected int tensuraKitSize() { return 4; }
@@ -274,6 +377,12 @@ public class LuciusBoss extends ZogratisBoss {
     @Override
     protected void onFightStart() {
         resetFightState();
+        if (arcOn()) {
+            announce("Precognition: Lucius phases out of every ordinary blow. It fails against two attackers striking together, one attacker striking very fast (4 blows in 1 second), "
+                    + "anti-magic, and a wielder of two synchronized relics (Unique grade or better).");
+            announce("Two souls share this body: at 75%, 55%, 35% and 12% health the will of Julius Novachrono surfaces for 8 seconds. Strike him then.");
+            return;
+        }
         announce("Precognition: Lucius reads the next blow and dodges it, a few times. Strike together (a second attacker is out of sequence), hit him with anti-magic, or wait until his charges are spent.");
         announce("Two souls share this body: at 75%, 55%, 35% and 12% health the will of Julius Novachrono surfaces for 8 seconds. Strike him then.");
     }
@@ -295,6 +404,7 @@ public class LuciusBoss extends ZogratisBoss {
      */
     @Override
     protected int chooseMove(List<Move> bk, MoveScheduler.Situation s, long t) {
+        if (arcOn()) return director.choose(bk, s, level().getGameTime());      // 1.42.0: the arc's chains first, a few light moves of the old table as filler
         if (!com.newuniverse.nusmp.boss.rules.BossRulesConfig.luciusComboAi()) return super.chooseMove(bk, s, t);
         try {
             List<com.newuniverse.nusmp.boss.LuciusCombo.Candidate> pool = new ArrayList<>();
@@ -334,6 +444,7 @@ public class LuciusBoss extends ZogratisBoss {
         reverseStart = 0;
         bodySuppressedUntil = 0;
         juliusBar.removeAllPlayers();                                          // Julius's bar has watchers only while his will is up
+        director.reset();
         LuciusProfile.reset(this);
         if (entityData.get(JULIUS) != 0) entityData.set(JULIUS, 0);
         entityData.set(CHARGES, precog.charges());
@@ -371,6 +482,8 @@ public class LuciusBoss extends ZogratisBoss {
                 Tells.column(sl, position(), 2.0 + 4.0 * transformProgress(), LuciusFx.GOLD);
             }
             if (!fightActive() || !isAlive()) return;
+            if (arcOn()) director.tick(sl, now);
+            else if (arcFlags() != 0 || isNoGravity()) director.reset();            // the switch was turned off in the middle of a fight: everything back to the old way
             precog.tick(now, power());
             if (entityData.get(CHARGES) != precog.charges()) entityData.set(CHARGES, precog.charges());
             if (flagStopping && state() != STATE_CASTING) {                      // the Time Stop wind-up was cancelled (no target left): the sign goes out
@@ -519,12 +632,14 @@ public class LuciusBoss extends ZogratisBoss {
     public void startSeenByPlayer(ServerPlayer p) {
         super.startSeenByPlayer(p);
         if (julius()) juliusBar.addPlayer(p);
+        director.watchedBy(p);
     }
 
     @Override
     public void stopSeenByPlayer(ServerPlayer p) {
         super.stopSeenByPlayer(p);
         juliusBar.removePlayer(p);
+        director.unwatchedBy(p);
     }
 
     // ================================================================ precognition and Julius in the damage path
@@ -539,6 +654,7 @@ public class LuciusBoss extends ZogratisBoss {
                 bodySuppressedUntil = now + 160;
             }
             if (julius.active(now)) return amount * JULIUS_DAMAGE;
+            if (arcOn()) return director.filter(sl, source, amount, now);           // 1.42.0: the new precognition, the channel, the body factor
             if (exposed()) return amount;                                       // an ultimate leaves him open: precognition cannot save him now
             Entity attacker = source.getEntity();
             Precognition.Verdict v = precog.onHit(now, attacker == null ? -1 : attacker.getId(), anti, power());
@@ -1130,6 +1246,7 @@ public class LuciusBoss extends ZogratisBoss {
     public void remove(RemovalReason reason) {
         if (!level().isClientSide) {
             juliusBar.removeAllPlayers();
+            director.close();                                                     // every turned companion is given back whatever the reason, the bar goes
             if (reason.shouldDestroy() && level() instanceof ServerLevel sl) {
                 SoulPaladins.releaseAll(this, sl);
                 for (ZogratisCloneEntity c : clones()) c.fadeAway();
@@ -1159,6 +1276,7 @@ public class LuciusBoss extends ZogratisBoss {
             list.add(t);
         }
         tag.put("LPaladins", list);
+        director.save(tag);
     }
 
     @Override
@@ -1171,6 +1289,7 @@ public class LuciusBoss extends ZogratisBoss {
         budget.restore(tag.getInt("LBudget"));
         fallenClones = Math.max(0, Math.min(6, tag.getInt("LFallen")));
         restorePaladins = tag.getList("LPaladins", Tag.TAG_COMPOUND);
+        director.load(tag);
         ready = false;
     }
 }
