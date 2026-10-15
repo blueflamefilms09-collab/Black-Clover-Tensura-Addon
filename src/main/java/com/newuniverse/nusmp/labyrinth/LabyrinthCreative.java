@@ -24,7 +24,8 @@ public final class LabyrinthCreative {
             "sealed_archway", "magic_barrier", "ward_rune", "spawn_glyph",
             "gatekeeper_door", "peak_altar", "shadow_key", "floor_warden_spawn_egg",
             "relic_pedestal",
-            "pitfall_tile", "snuffer_glyph", "sigil_plate", "riddle_stone");   // 1.36.0 traps and puzzles
+            "pitfall_tile", "snuffer_glyph", "sigil_plate", "riddle_stone",
+            "relic_forge");   // 1.36.0 traps and puzzles
 
     /** Adds every registered Labyrinth item to the tab, in order; unknown ids are skipped. */
     public static void addTo(CreativeModeTab.Output output) {

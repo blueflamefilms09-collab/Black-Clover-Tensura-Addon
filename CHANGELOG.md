@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.40.0] — The Relic Forge: upgrade, socket and engrave at a table
+
+**State:** written without a compiler; CI is the first compile. Nothing run in game. See `docs/relic_forge.md`.
+
+### NEW
+- **Relic Forge** (`nusmp:relic_forge`, craftable): right-click it to open a menu that does what the off-hand sneak flows did, which Better Combat's off-hand handling had made unreachable: **Upgrade** a relic's tier with catalysts, **Socket** a Spirit or Devil Core, **Draw out** a core with the Empty Element Core (Cycle chooses the socket), and an **Engrave** tab that adds a Tensura engraving from an enchanted book to a mod weapon (up to 3 engravings added at the forge, never replacing one). It runs the existing rules (attunement, costs, cooldowns, the roll, a failure never destroys a relic) and edits the one relic stack in place, so the ledger sees the same relic. Items left on the table come back on close. A Rules entry for it appears in the Codex.
+- The sneak-use flows are kept and still work.
+
 ## [1.39.0] — Better Combat: the swing animations now load
 
 **State:** nothing run in game; the format was checked against Better Combat's own repository files. See `docs/better_combat.md`.
