@@ -48,3 +48,15 @@ through the same `rollUnissuedAll` as before, so no relic can exist twice.
 5. `docs/labyrinth/e1_trial.md` — the Sealed Archway.
 6. `docs/labyrinth/e2_seal.md` — doors, key, Warden, altar.
 7. `docs/labyrinth/d_vault.md` — the Vault, pedestals, loot, exclusivity.
+
+## The D&D layer (1.36.0)
+
+The owner's second brief adds the tabletop half. Items 1, 2, 3, 6 and 8 of that brief are the 1.35.0 systems above; these are the new ones.
+
+| Brief item | What exists | Document |
+|---|---|---|
+| 4. D&D traps, resource drains, puzzle doors | Pitfall Tile, Snuffer Glyph, Sigil Plates, Riddle Stone, Gatekeeper kind `puzzle`; three new side rooms in the `labyrinth/side` pool | `docs/labyrinth/f1_traps.md` |
+| 5. Living ecosystem and monster economy; hunger/darkness | `LivingDropsEvent` drops (Magic Stones, monster meat), no vanilla XP; gloom clock and hunger drain | `docs/labyrinth/f2_economy.md` |
+| 7. HP buffers vs lethality | HP buffer (x2.5) and the Vital Strike | `docs/labyrinth/f3_vital.md` |
+
+Why one config file for it: `nusmp-labyrinth-dnd-server.toml` holds every switch so a server can run the anime half (Spire, seals, vault) without the tabletop half, and the other way round. Why bosses are excluded from the buffer and the Vital Strike: they already have the boss DPS cap and their own phase balance; a second multiplier would stack on top of it.

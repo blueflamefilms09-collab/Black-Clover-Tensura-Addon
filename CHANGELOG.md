@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.36.0] — D&D layer of the Labyrinth and the Rukh particles
+
+**State:** written without a compiler; CI is the first compile. Nothing run in game. See `docs/labyrinth.md` (D&D section) and `docs/rukh/r1_core.md`.
+
+### NEW
+- **Traps and puzzles** (Spire side rooms, `docs/labyrinth/f1_traps.md`): the Pitfall Tile (a floor tile that gives way to a spiked, dark cell), the Snuffer Glyph (Darkness, snuffs torches and refuses new lights near it), Sigil Plates + Riddle Stone + a third Gatekeeper door kind `puzzle` (open it by pressing the plates in the order the stone shows). Three new rooms: `side/pit_room`, `side/dark_room`, `side/puzzle_room`.
+- **Monster economy** (`docs/labyrinth/f2_economy.md`): hostile monsters of the Labyrinth drop physical Magic Stones/crystals and monster meat; no vanilla XP orbs.
+- **Dungeon hunger and gloom**: standing in the dark without a light darkens and weakens you; hunger drains 1.5x; low food slows you.
+- **HP buffer and Vital Strike** (`docs/labyrinth/f3_vital.md`): Labyrinth monsters have 2.5x health; a heavy hit (18% of their max health) or four hits with a relic of Rare grade or higher is a Vital Strike that removes at least 35% of their health. Bosses excluded.
+- Config `nusmp-labyrinth-dnd-server.toml` (every switch above).
+- **Dark Rukh and Light Rukh particles** (`nusmp:dark_rukh`, `nusmp:light_rukh`): bird-flock sprites (ink-black flock and glowing cream flock), 15-25 tick life, translucent, budgeted (`RukhFx`, at most 96 per tick per level). The Djinn Equip now gathers Rukh toward you.
+
+### REPLACEMENT
+- **Vanilla particles removed from relics, equipment and active abilities**: all 731 files of the scope in `docs/rukh/scope.txt` (relics, relic waves, Djinn, weapons and items, spells (`MagicType` and the magics), skills, charter grimoires, Nexus relics) now emit Rukh particles only, through `RukhFx`/`RukhClientFx`; large spell bursts are capped (12 per call). A build test fails on any vanilla particle in that scope. Not touched, on purpose: bosses, the dungeon ecosystems and ambience, animals/entities, world blocks, and the Time Magic VFX (`book/TimeBook.java` and its layer).
+- The asset path is `assets/nusmp/...`, not `tensura_black_clover` (the mod id is `nusmp`).
+
 ## [1.35.0] — The Labyrinth: Jigsaw dungeon architecture (gate, spire, trials, seals, vault)
 
 **State:** written without a compiler; CI is the first compile. Nothing run in game. Master document `docs/labyrinth.md`; every file's WHY in `docs/labyrinth/*.md`.

@@ -23,6 +23,10 @@ public final class LabyrinthSystem {
         com.newuniverse.nusmp.labyrinth.seal.SealRegistry.init(modBus);                                    // E2: Gatekeeper doors, Peak Altar, Shadow Key, Floor Warden
         com.newuniverse.nusmp.labyrinth.vault.VaultRegistry.init(modBus);                                  // D: Relic Pedestal and the relic loot entry
         com.newuniverse.nusmp.labyrinth.gen.GenRegistry.init(modBus);                                      // B: processors, palette data map, arrival logic
+        com.newuniverse.nusmp.labyrinth.trap.TrapRegistry.init(modBus);                                    // 1.36.0 F1: pitfall tile, snuffer glyph, sigil plates, riddle stone
+        com.newuniverse.nusmp.labyrinth.trap.TrapRegistry.register(NeoForge.EVENT_BUS);                    // 1.36.0 F1: light-placement guard near a snuffer glyph
+        com.newuniverse.nusmp.labyrinth.dnd.economy.EconomyRegistry.register(NeoForge.EVENT_BUS);          // 1.36.0 F2: stone and meat drops, no vanilla XP, hunger and gloom
+        com.newuniverse.nusmp.labyrinth.dnd.vital.VitalStrike.register(NeoForge.EVENT_BUS);                // 1.36.0 F3: the HP buffer and the Vital Strike
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.labyrinth.gate.LabyrinthEvents::onPlayerTick);   // C: void rescue
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.labyrinth.gate.LabyrinthEvents::onDeath);        // C: a death in the Labyrinth forgets the way back
     }
