@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.dungeon.LivingDungeon;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
@@ -119,7 +121,7 @@ final class Wave15Wear {
         Fx.heal(p, sky ? 12f : 6f);
         Wave15Util.giveQuiet(p, 100, 0, "minecraft:regeneration");
         Wave15Util.remove(p, "minecraft:weakness", "minecraft:mining_fatigue");
-        lv.sendParticles(ParticleTypes.END_ROD, p.getX(), p.getY() + 1.0, p.getZ(), sky ? 24 : 8, 0.6, 0.8, 0.6, 0.02);
+        RukhFx.spray(lv, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), sky ? 24 : 8, 0.6, 0.8, 0.6, 0.02);
         Wave15Util.tell(p, sky ? "The towel and the stars: twice the rest." : "A rest on the towel. (Under an open night sky it would heal twice as much.)", ChatFormatting.GOLD);
     }
 
@@ -129,7 +131,7 @@ final class Wave15Wear {
         p.clearFire();
         p.setTicksFrozen(0);
         Wave15Util.remove(p, "tensura:chill", "tensura:frost");
-        c.player().serverLevel().sendParticles(ParticleTypes.CLOUD, p.getX(), p.getY() + 1.0, p.getZ(), 10, 0.4, 0.6, 0.4, 0.02);
+        RukhFx.spray(c.player().serverLevel(), RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 10, 0.4, 0.6, 0.4, 0.02);
         Wave15Util.tell(p, "Dry. \"42!\"", ChatFormatting.GOLD);
     }
 
@@ -139,7 +141,7 @@ final class Wave15Wear {
         Wave15Util.Aim a = Wave15Util.aim(p, 16.0);
         Vec3 at = a.hit() != null ? a.hit().position().add(0, a.hit().getBbHeight() * 0.6, 0) : a.end();
         Wave15Field.release(p, a.hit(), at);
-        p.serverLevel().sendParticles(Wave15Util.dust(0xF2C230, 1.2f), p.getX(), p.getY() + 1.2, p.getZ(), 24, 0.5, 0.4, 0.5, 0.1);
+        RukhFx.spray(p.serverLevel(), Wave15Util.align(0xF2C230), p.getX(), p.getY() + 1.2, p.getZ(), 24, 0.5, 0.4, 0.5, 0.1);
         Wave15Util.trail(p.serverLevel(), p.getEyePosition().add(0, -0.4, 0), at, Wave15Util.dust(0x1E1C1A, 1.0f));
         Wave15Util.tell(p, "The cape flaps open: bees!", ChatFormatting.YELLOW);
     }
@@ -156,7 +158,7 @@ final class Wave15Wear {
         Wave15Util.giveQuiet(p, Wave15Rules.FLURRY_TICKS, 0, "minecraft:speed");
         for (LivingEntity t : Fx.foesAround(p, 3.5)) Wave15Util.give(t, 60, 0, "tensura:chill", "minecraft:slowness");
         ServerLevel lv = p.serverLevel();
-        lv.sendParticles(ParticleTypes.SNOWFLAKE, p.getX(), p.getY() + 1.0, p.getZ(), 40, 0.7, 0.8, 0.7, 0.05);
+        RukhFx.spray(lv, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 40, 0.7, 0.8, 0.7, 0.05);
         Wave15Util.tell(p, "Gone in a flurry: nothing catches you for a while.", ChatFormatting.AQUA);
     }
 
@@ -172,7 +174,7 @@ final class Wave15Wear {
         CompoundTag d = Wave15Util.data(p);
         d.putLong("evade_until", p.level().getGameTime() + Wave15Rules.BLUR_TICKS);
         d.putString("evade_kind", "blur");
-        p.serverLevel().sendParticles(Wave15Util.dust(0xE08A2A, 1.3f), p.getX(), p.getY() + 1.0, p.getZ(), 40, 0.7, 0.9, 0.7, 0.05);
+        RukhFx.spray(p.serverLevel(), Wave15Util.align(0xE08A2A), p.getX(), p.getY() + 1.0, p.getZ(), 40, 0.7, 0.9, 0.7, 0.05);
         Wave15Util.tell(p, "The leaves swirl round you, blurring you for a minute.", ChatFormatting.GOLD);
     }
 
@@ -181,8 +183,8 @@ final class Wave15Wear {
         CompoundTag d = Wave15Util.peek(p);
         if (d == null || p.level().getGameTime() >= d.getLong("evade_until")) return;
         ServerLevel lv = p.serverLevel();
-        if ("flurry".equals(d.getString("evade_kind"))) lv.sendParticles(ParticleTypes.SNOWFLAKE, p.getX(), p.getY() + 1.0, p.getZ(), 6, 0.5, 0.7, 0.5, 0.03);
-        else lv.sendParticles(Wave15Util.dust(0xC8601E, 1.0f), p.getX(), p.getY() + 1.0, p.getZ(), 5, 0.5, 0.7, 0.5, 0.03);
+        if ("flurry".equals(d.getString("evade_kind"))) RukhFx.spray(lv, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 6, 0.5, 0.7, 0.5, 0.03);
+        else RukhFx.spray(lv, Wave15Util.align(0xC8601E), p.getX(), p.getY() + 1.0, p.getZ(), 5, 0.5, 0.7, 0.5, 0.03);
     }
 
     // ================================================================ Darkened Cloak of Elvenkind
@@ -241,7 +243,7 @@ final class Wave15Wear {
         Wave15Util.data(p).putLong("elven_trace_until", p.level().getGameTime() + 1200);
         for (LivingEntity f : Wave15Util.near(p.serverLevel(), p.position(), 10, e -> Wave15Util.friend(p, e))) Wave15Util.give(f, 1200, 0, "tensura:presence_concealment");
         Wave15Util.giveQuiet(p, 1200, 0, "tensura:presence_concealment");
-        p.serverLevel().sendParticles(ParticleTypes.SMOKE, p.getX(), p.getY() + 0.3, p.getZ(), 20, 0.8, 0.2, 0.8, 0.01);
+        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.DARK, p.getX(), p.getY() + 0.3, p.getZ(), 20, 0.8, 0.2, 0.8, 0.01);
     }
 
     /** Darkness (2 charges): a cloud of dark round you; foes within eight blocks cannot see, you can. */
@@ -252,7 +254,7 @@ final class Wave15Wear {
         for (LivingEntity t : Fx.foesAround(p, 8.0)) Wave15Util.give(t, 120, 0, "minecraft:blindness");
         Wave15Util.giveQuiet(p, 600, 0, "minecraft:night_vision");
         Fx.ring(lv, p.position(), 8.0, 0x20243A);
-        lv.sendParticles(ParticleTypes.LARGE_SMOKE, p.getX(), p.getY() + 1.0, p.getZ(), 40, 3.0, 0.8, 3.0, 0.01);
+        RukhFx.spray(lv, RukhFx.Alignment.DARK, p.getX(), p.getY() + 1.0, p.getZ(), 40, 3.0, 0.8, 3.0, 0.01);
     }
 
     /** Greater Invisibility (3 charges): half a minute unseen; lowering the hood ends it. */
@@ -261,7 +263,7 @@ final class Wave15Wear {
         if (!spendCharges(p, Wave15Rules.INVISIBILITY_COST)) return;
         Wave15Util.data(p).putBoolean("elven_inv", true);
         Wave15Util.giveQuiet(p, 600, 0, "minecraft:invisibility");
-        p.serverLevel().sendParticles(ParticleTypes.SMOKE, p.getX(), p.getY() + 1.0, p.getZ(), 30, 0.4, 0.8, 0.4, 0.02);
+        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.DARK, p.getX(), p.getY() + 1.0, p.getZ(), 30, 0.4, 0.8, 0.4, 0.02);
     }
 
     /** Hood up keeps the Tensura stealth effect on you; the cloak's wearer sneaks better. */
@@ -308,7 +310,7 @@ final class Wave15Wear {
         Wave15Util.give(t, 80, 5, "minecraft:slowness");
         Wave15Util.give(t, 80, 0, "minecraft:weakness");
         Wave15Util.give(t, 40, 0, "minecraft:blindness");
-        p.serverLevel().sendParticles(Wave15Util.dust(0xB02A2A, 1.3f), t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 24, 0.4, 0.5, 0.4, 0.02);
+        RukhFx.spray(p.serverLevel(), Wave15Util.align(0xB02A2A), t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 24, 0.4, 0.5, 0.4, 0.02);
     }
 
     /** Hover: flight while the toggle is on (and the cloak is worn); taken away again when it is not. Creative and spectator players are left alone. */
@@ -354,9 +356,9 @@ final class Wave15Wear {
             m.setTarget(null);
             m.getPersistentData().putUUID("w15_calm_who", p.getUUID());
             m.getPersistentData().putLong("w15_calm_until", until);
-            p.serverLevel().sendParticles(ParticleTypes.HEART, m.getX(), m.getY() + m.getBbHeight() + 0.2, m.getZ(), 2, 0.2, 0.1, 0.2, 0.0);
+            RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, m.getX(), m.getY() + m.getBbHeight() + 0.2, m.getZ(), 2, 0.2, 0.1, 0.2, 0.0);
         }
-        p.serverLevel().sendParticles(ParticleTypes.FLAME, p.getX(), p.getY() + 1.7, p.getZ(), 10, 0.3, 0.2, 0.3, 0.01);
+        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.7, p.getZ(), 10, 0.3, 0.2, 0.3, 0.01);
         Wave15Util.tell(p, n > 0 ? "A smouldering look: " + n + " lose interest." : "A smouldering look... nobody was impressed.", ChatFormatting.GOLD);
     }
 
@@ -383,7 +385,7 @@ final class Wave15Wear {
             if (n >= 12) break;
             if (f instanceof ServerPlayer sp) Fx.heal(sp, amount);
             else f.heal(amount);
-            p.serverLevel().sendParticles(ParticleTypes.HEART, f.getX(), f.getY() + f.getBbHeight() + 0.2, f.getZ(), 3, 0.3, 0.2, 0.3, 0.0);
+            RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, f.getX(), f.getY() + f.getBbHeight() + 0.2, f.getZ(), 3, 0.3, 0.2, 0.3, 0.0);
             n++;
         }
         return n;

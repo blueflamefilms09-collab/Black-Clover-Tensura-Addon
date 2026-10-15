@@ -204,7 +204,7 @@ final class Wave5Hemlock {
         ServerLevel l = p.serverLevel();
         Fx.burst(l, p.position().add(0, 1.0, 0), MASK_COLOUR);
         Fx.ring(l, p.position().add(0, 0.2, 0), 2.5, MASK_COLOUR);
-        Wave5Aim.puff(l, p.position().add(0, 1.0, 0), ParticleTypes.SOUL, 24, 0.6);
+        Wave5Aim.puff(l, p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.dark(), 24, 0.6);
         Wave5Aim.sound(l, p.position(), SoundEvents.TOTEM_USE, 1.0f, 0.6f);
         Wave5Aim.msg(p, "The Reliquary holds your soul in the world: you rise, soul-torn. It will not do this again for a day.", ChatFormatting.DARK_PURPLE);
         return true;

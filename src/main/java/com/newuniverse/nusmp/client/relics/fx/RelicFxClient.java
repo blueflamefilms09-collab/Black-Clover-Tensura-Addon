@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.client.relics.fx;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment;
+import com.newuniverse.nusmp.client.particle.rukh.RukhClientFx;
 import com.newuniverse.nusmp.client.relics.worn.lib.WornLibrary;
 import com.newuniverse.nusmp.relics.RelicDef;
 import com.newuniverse.nusmp.relics.RelicSlot;
@@ -8,7 +10,6 @@ import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
@@ -109,14 +110,14 @@ public final class RelicFxClient {
         double vx = (rnd.nextDouble() - 0.5) * 0.01, vz = (rnd.nextDouble() - 0.5) * 0.01;
         budget++;
         switch (theme) {
-            case EMBER -> level.addParticle(ParticleTypes.FLAME, x, y, z, vx, 0.012, vz);
-            case SNOW -> level.addParticle(ParticleTypes.SNOWFLAKE, x, y, z, vx, -0.004, vz);
-            case SPARK -> level.addParticle(ParticleTypes.ELECTRIC_SPARK, x, y, z, vx * 3, 0.0, vz * 3);
-            case LEAF -> level.addParticle(dust(d.paletteGlow(), d.paletteMain(), 0.8f, rnd), x, y, z, vx, -0.01, vz);
-            case WISP -> level.addParticle(ParticleTypes.SOUL, x, y, z, vx, 0.02, vz);
-            case STAR -> level.addParticle(ParticleTypes.END_ROD, x, y, z, vx, 0.01, vz);
-            case BEE -> level.addParticle(dust(0xF2C230, 0x1E1C1A, 0.6f, rnd), x, y, z, vx * 4, 0.0, vz * 4);
-            case PETAL -> level.addParticle(ParticleTypes.CHERRY_LEAVES, x, y, z, vx, -0.01, vz);
+            case EMBER -> RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, vx, 0.012, vz, 1.0);
+            case SNOW -> RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, vx, -0.004, vz, 1.0);
+            case SPARK -> RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, vx * 3, 0.0, vz * 3, 1.0);
+            case LEAF -> RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, vx, -0.01, vz, 1.0);
+            case WISP -> RukhClientFx.spray(level, Alignment.DARK, x, y, z, 1, vx, 0.02, vz, 1.0);
+            case STAR -> RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, vx, 0.01, vz, 1.0);
+            case BEE -> RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, vx * 4, 0.0, vz * 4, 1.0);
+            case PETAL -> RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, vx, -0.01, vz, 1.0);
             default -> { }
         }
     }
@@ -128,12 +129,8 @@ public final class RelicFxClient {
         double x = p.getX() + Math.cos(a) * r, z = p.getZ() + Math.sin(a) * r;
         budget++;
         double tx = -Math.sin(a) * 0.035, tz = Math.cos(a) * 0.035;
-        if (d.grade().tier() >= 7) level.addParticle(ParticleTypes.END_ROD, x, y, z, tx, 0.0, tz);
-        else level.addParticle(dust(d.paletteGlow(), d.paletteGlow(), 0.7f, level.random), x, y, z, tx, 0.0, tz);
+        if (d.grade().tier() >= 7) RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, tx, 0.0, tz, 1.0);
+        else RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, tx, 0.0, tz, 1.0);
     }
 
-    private static DustParticleOptions dust(int a, int b, float size, RandomSource rnd) {
-        int rgb = rnd.nextBoolean() ? a : b;
-        return new DustParticleOptions(new Vector3f((rgb >> 16 & 255) / 255f, (rgb >> 8 & 255) / 255f, (rgb & 255) / 255f), size);
-    }
 }

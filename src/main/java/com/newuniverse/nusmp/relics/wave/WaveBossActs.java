@@ -57,7 +57,7 @@ final class WaveBossActs {
     private static void wellStep(ServerPlayer p, ServerLevel l, Vec3 c, int age) {
         if (!p.isAlive() || p.isRemoved()) return;
         double r = WaveBossRules.WELL_RADIUS;
-        if (age > 0 && age % 20 == 0) l.sendParticles(ParticleTypes.REVERSE_PORTAL, c.x, c.y + 1.0, c.z, 24, r * 0.4, 0.6, r * 0.4, 0.05);
+        if (age > 0 && age % 20 == 0) com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, c.x, c.y + 1.0, c.z, 24, r * 0.4, 0.6, r * 0.4, 0.05);
         double reach = r + Math.sqrt(p.distanceToSqr(c.x, c.y, c.z));                        // the well stays where it was cast; the caster may walk away
         boolean closing = WaveBossRules.closing(age);
         for (LivingEntity t : Fx.foesAround(p, Math.min(32.0, reach))) {
@@ -173,7 +173,7 @@ final class WaveBossActs {
         }
         long now = l.getGameTime();
         if (age % 10 == 0) {
-            for (double[] g : new double[][]{pair.a(), pair.b()}) l.sendParticles(ParticleTypes.REVERSE_PORTAL, g[0], g[1] + 1.0, g[2], 3, 0.3, 0.6, 0.3, 0.02);
+            for (double[] g : new double[][]{pair.a(), pair.b()}) com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, g[0], g[1] + 1.0, g[2], 3, 0.3, 0.6, 0.3, 0.02);
         }
         for (int side = 0; side < 2; side++) {
             double[] in = side == 0 ? pair.a() : pair.b(), out = side == 0 ? pair.b() : pair.a();
@@ -210,7 +210,7 @@ final class WaveBossActs {
         ServerLevel l = p.serverLevel();
         WaveBossNet.cue(p, WaveBossNet.WHICH_MIMIC, WaveBossNet.KIND_BITE);
         l.playSound(null, p.blockPosition(), SoundEvents.CHEST_OPEN, SoundSource.PLAYERS, 1.0f, 0.6f);
-        l.sendParticles(ParticleTypes.CRIT, p.getX(), p.getY() + 1.0, p.getZ(), 8, 0.5, 0.3, 0.5, 0.05);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 8, 0.5, 0.3, 0.5, 0.05);
         SpellRuntime.later(l, WaveBossRules.BITE_DELAY, safe("mimic bite", () -> snap(p, l)));
     }
 
@@ -238,7 +238,7 @@ final class WaveBossActs {
         Fx.damage(p, target, WaveBossRules.BITE_DAMAGE, "minecraft:player_attack");
         Fx.addEffect(target, "minecraft:slowness", 40, 1);
         Fx.heal(p, 1.0f);                                                                      // it keeps a bite's worth of what it chews
-        l.sendParticles(ParticleTypes.CRIT, target.getX(), target.getY() + target.getBbHeight() * 0.5, target.getZ(), 14, 0.3, 0.3, 0.3, 0.2);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, target.getX(), target.getY() + target.getBbHeight() * 0.5, target.getZ(), 14, 0.3, 0.3, 0.3, 0.2);
     }
 
     /** Hoard: opens the belt's twenty-seven slot pocket (the Mimic yawns while you rummage). */

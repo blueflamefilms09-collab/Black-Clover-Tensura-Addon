@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
@@ -28,7 +30,7 @@ public class HephaestusSkill extends GodSkill {
         }
         if (!repaired) { SkillUtil.fail(player, "Nothing to repair."); return false; }
         ServerLevel level = player.serverLevel();
-        level.sendParticles(ParticleTypes.LAVA, player.getX(), player.getY() + 1, player.getZ(), 15, 0.4, 0.4, 0.4, 0.0);
+        RukhFx.spray(level, RukhFx.Alignment.LIGHT, player.getX(), player.getY() + 1, player.getZ(), 15, 0.4, 0.4, 0.4, 0.0);
         level.playSound(null, player.blockPosition(), SoundEvents.ANVIL_USE, SoundSource.PLAYERS, 1.0F, 1.0F);
         return true;
     }

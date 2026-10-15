@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import io.github.manasmods.manascore.network.api.util.Changeable;
 import io.github.manasmods.manascore.skill.api.EntityEvents;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
@@ -50,7 +52,7 @@ public class VectorManipulationSkill extends ToggleAuraSkill {
         attacker.hurt(owner.damageSources().thorns(owner), amount.get() * share);
         amount.set(amount.get() * (1.0F - share));
         if (owner.level() instanceof ServerLevel level) {
-            level.sendParticles(ParticleTypes.ELECTRIC_SPARK, attacker.getX(), attacker.getY() + 1, attacker.getZ(), 15, 0.3, 0.5, 0.3, 0.1);
+            RukhFx.spray(level, RukhFx.Alignment.LIGHT, attacker.getX(), attacker.getY() + 1, attacker.getZ(), 15, 0.3, 0.5, 0.3, 0.1);
         }
         return true;
     }

@@ -79,7 +79,7 @@ final class Wave3Head {
         int colour = MOTE_COLOURS[Math.floorMod(after.left(), MOTE_COLOURS.length)];
         Vec3 to = a.hit().getBoundingBox().getCenter();
         Wave3Util.trail(sl, p.getEyePosition().add(0, 0.35, 0), to, Wave3Util.dust(colour, 1.1f));
-        sl.sendParticles(Wave3Util.dust(colour, 1.6f), to.x, to.y, to.z, 10, 0.25, 0.25, 0.25, 0.04);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.relics.Fx.align(colour), to.x, to.y, to.z, 10, 0.25, 0.25, 0.25, 0.04);
         Fx.damage(p, a.hit(), Wave3Rules.MOTE_DAMAGE, "minecraft:magic");
         sl.playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.0f, 1.2f + 0.2f * after.left());
         Wave3Util.tell(p, "Magic Missile: " + after.left() + " of " + Wave3Rules.MOTES + " motes left", ChatFormatting.LIGHT_PURPLE);
@@ -95,7 +95,7 @@ final class Wave3Head {
         double y = p.getEyeY() + 0.45;
         for (int i = 0; i < left; i++) {
             double a = now * 0.14 + i * (Math.PI * 2.0 / Wave3Rules.MOTES);
-            sl.sendParticles(Wave3Util.dust(MOTE_COLOURS[i % MOTE_COLOURS.length], 0.9f), p.getX() + Math.cos(a) * 0.6, y + Math.sin(now * 0.09 + i) * 0.06,
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.relics.Fx.align(MOTE_COLOURS[i % MOTE_COLOURS.length]), p.getX() + Math.cos(a) * 0.6, y + Math.sin(now * 0.09 + i) * 0.06,
                     p.getZ() + Math.sin(a) * 0.6, 1, 0, 0, 0, 0);
         }
     }
@@ -107,7 +107,7 @@ final class Wave3Head {
         for (LivingEntity e : Wave3Util.near(sl, p.position(), 6.0, x -> x instanceof Enemy && x instanceof Mob && x.getMaxHealth() < 150f && Wave3Util.target(p, x)
                 && Wave3Util.outranks(p, x)))
             Wave3Util.give(e, 60, 0, "minecraft:slowness");
-        sl.sendParticles(ParticleTypes.FLAME, p.getX(), p.getEyeY() + 0.55, p.getZ(), 3, 0.25, 0.1, 0.25, 0.01);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getEyeY() + 0.55, p.getZ(), 3, 0.25, 0.1, 0.25, 0.01);
     }
 
     /** Is this a spell or effect that would charm, frighten or befuddle its victim? */
@@ -136,11 +136,11 @@ final class Wave3Head {
             if (!foes.isEmpty()) src = foes.get(0);
         }
         Wave3Util.say(p, "Pride's Crown: your will does not bend. Hubris's Fall" + (src == null ? " finds no one to turn on." : " turns it back on " + src.getName().getString() + "."));
-        sl.sendParticles(ParticleTypes.FLAME, p.getX(), p.getEyeY() + 0.5, p.getZ(), 24, 0.4, 0.4, 0.4, 0.05);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getEyeY() + 0.5, p.getZ(), 24, 0.4, 0.4, 0.4, 0.05);
         if (src == null) return;
         int ticks = src.getMaxHealth() >= 150f ? Wave3Rules.FEAR_TICKS / 2 : Wave3Rules.FEAR_TICKS;
         Wave3Util.give(src, ticks, 0, "tensura:fear", "minecraft:weakness");
-        Wave3Util.trail(sl, p.getEyePosition(), src.getBoundingBox().getCenter(), ParticleTypes.FLAME);
+        Wave3Util.trail(sl, p.getEyePosition(), src.getBoundingBox().getCenter(), com.newuniverse.nusmp.particle.rukh.RukhParticles.light());
     }
 
     // ================================================================ Dreamwalker Cowl
@@ -185,7 +185,7 @@ final class Wave3Head {
             Wave3Util.give(e, 160, 0, "tensura:sleep", "minecraft:slowness");
             Wave3Util.give(e, 160, 6, "minecraft:slowness");
             Wave3Util.give(e, 160, 1, "minecraft:weakness");
-            sl.sendParticles(ParticleTypes.NOTE, e.getX(), e.getEyeY() + 0.4, e.getZ(), 3, 0.2, 0.2, 0.2, 0.5);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, e.getX(), e.getEyeY() + 0.4, e.getZ(), 3, 0.2, 0.2, 0.2, 0.5);
         }
         Fx.ring(sl, p.position(), 5.0, 0x8E56C8);
         sl.playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 1.0f, 0.6f);
@@ -207,7 +207,7 @@ final class Wave3Head {
         for (LivingEntity e : mobs) {
             if (n++ >= 12) break;
             Wave3Field.charm((Mob) e, p, 400, true);
-            sl.sendParticles(ParticleTypes.HAPPY_VILLAGER, e.getX(), e.getEyeY(), e.getZ(), 4, 0.3, 0.3, 0.3, 0.02);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, e.getX(), e.getEyeY(), e.getZ(), 4, 0.3, 0.3, 0.3, 0.02);
         }
         for (LivingEntity f : afflicted) {
             for (MobEffectInstance inst : new ArrayList<>(f.getActiveEffects())) if (isMindEffect(inst.getEffect().value())) f.removeEffect(inst.getEffect());
@@ -236,7 +236,7 @@ final class Wave3Head {
             if (e instanceof Mob m && m.getTarget() != null && Wave3Util.friend(p, m.getTarget())) m.setTarget(null);
         }
         Fx.ring(sl, p.position(), 5.0, 0x8E56C8);
-        sl.sendParticles(ParticleTypes.WITCH, p.getX(), p.getY() + 1.0, p.getZ(), 40, 1.2, 0.8, 1.2, 0.05);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, p.getX(), p.getY() + 1.0, p.getZ(), 40, 1.2, 0.8, 1.2, 0.05);
         sl.playSound(null, p.blockPosition(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 1.2f, 0.6f);
     }
 
@@ -248,7 +248,7 @@ final class Wave3Head {
         Wave3Util.give(p, 160, 1, "minecraft:slowness");
         for (MobEffectInstance inst : new ArrayList<>(p.getActiveEffects())) if (isSleepEffect(inst.getEffect().value())) p.removeEffect(inst.getEffect());
         ServerLevel sl = p.serverLevel();
-        sl.sendParticles(ParticleTypes.NOTE, p.getX(), p.getEyeY() + 0.6, p.getZ(), 5, 0.3, 0.2, 0.3, 0.5);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getEyeY() + 0.6, p.getZ(), 5, 0.3, 0.2, 0.3, 0.5);
         Wave3Util.tell(p, "You dream on your feet; the phantoms lose count of your sleepless nights.", ChatFormatting.LIGHT_PURPLE);
     }
 
@@ -310,8 +310,8 @@ final class Wave3Head {
         Wave3Util.give(t, 80, 6, "minecraft:slowness");
         Wave3Util.give(t, 80, 1, "minecraft:weakness");
         Wave3Field.charm((Mob) t, p, 80, true);
-        Wave3Util.trail(sl, p.getEyePosition(), t.getBoundingBox().getCenter(), ParticleTypes.CRIT);
-        sl.sendParticles(ParticleTypes.CRIT, t.getX(), t.getEyeY() + 0.3, t.getZ(), 12, 0.3, 0.3, 0.3, 0.2);
+        Wave3Util.trail(sl, p.getEyePosition(), t.getBoundingBox().getCenter(), com.newuniverse.nusmp.particle.rukh.RukhParticles.light());
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, t.getX(), t.getEyeY() + 0.3, t.getZ(), 12, 0.3, 0.3, 0.3, 0.2);
         sl.playSound(null, p.blockPosition(), SoundEvents.BELL_RESONATE, SoundSource.PLAYERS, 1.0f, 1.3f);
     }
 
@@ -348,7 +348,7 @@ final class Wave3Head {
                 Wave3Field.charm((Mob) e, p, 600, false);
                 Wave3Util.give(e, 100, 0, "minecraft:slowness");
             }
-            sl.sendParticles(ParticleTypes.NOTE, e.getX(), e.getEyeY() + 0.4, e.getZ(), 3, 0.2, 0.2, 0.2, 1.0);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, e.getX(), e.getEyeY() + 0.4, e.getZ(), 3, 0.2, 0.2, 0.2, 1.0);
         }
         sl.playSound(null, p.blockPosition(), SoundEvents.BELL_RESONATE, SoundSource.PLAYERS, 1.2f, 0.9f);
         Fx.ring(sl, p.position(), 3.0, 0xC8D0E0);
@@ -446,7 +446,7 @@ final class Wave3Head {
         Vec3 at = p.position();
         Fx.ring(sl, at, Godking.BURST_RADIUS, MINT);
         Fx.burst(sl, at, MINT);
-        sl.sendParticles(ParticleTypes.END_ROD, at.x, at.y + 1.0, at.z, 60, Godking.BURST_RADIUS * 0.5, 0.8, Godking.BURST_RADIUS * 0.5, 0.15);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, at.x, at.y + 1.0, at.z, 60, Godking.BURST_RADIUS * 0.5, 0.8, Godking.BURST_RADIUS * 0.5, 0.15);
         sl.playSound(null, p.blockPosition(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.PLAYERS, 2.0f, 1.4f);
         for (LivingEntity e : Wave3Util.near(sl, at, Godking.BURST_RADIUS, x -> Wave3Util.target(p, x))) {
             Fx.damageHeavy(p, e, Godking.BURST_OTHERS, "minecraft:magic");
@@ -489,7 +489,7 @@ final class Wave3Head {
         Fx.lendSkills(p, 100, ASCENT_SKILLS);
         Abilities ab = p.getAbilities();
         if (!ab.mayfly && !p.isSpectator()) flightOn(p, d);
-        sl.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, p.getX(), p.getEyeY() + 0.55, p.getZ(), 4, 0.25, 0.1, 0.25, 0.01);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, p.getX(), p.getEyeY() + 0.55, p.getZ(), 4, 0.25, 0.1, 0.25, 0.01);
     }
 
     /** A death or a logout ends the ascension at once, quietly. */

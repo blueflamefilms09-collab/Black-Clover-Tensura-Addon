@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import net.minecraft.core.particles.DustParticleOptions;
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -17,8 +18,14 @@ import java.util.List;
 final class Wave18Kit {
     private Wave18Kit() {}
 
-    static DustParticleOptions dust(int rgb, float size) {
-        return new DustParticleOptions(new Vector3f((rgb >> 16 & 255) / 255f, (rgb >> 8 & 255) / 255f, (rgb & 255) / 255f), size);
+    static net.minecraft.core.particles.SimpleParticleType dust(int rgb, float size) {
+        return align(rgb).type();                    // Rukh replaces vanilla dust: the colour only picks the alignment
+    }
+
+    /** Rukh alignment for a legacy dust colour: dark colours (relative luminance below 0.33) become dark Rukh, the rest light. */
+    static com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment align(int rgb) {
+        double lum = (0.2126 * (rgb >> 16 & 255) + 0.7152 * (rgb >> 8 & 255) + 0.0722 * (rgb & 255)) / 255.0;
+        return com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.of(lum < 0.33);
     }
 
     /** The registry id of an entity type, for messages and checks. */

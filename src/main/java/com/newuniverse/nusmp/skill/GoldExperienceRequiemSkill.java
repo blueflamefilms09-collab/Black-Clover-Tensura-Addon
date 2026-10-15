@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import io.github.manasmods.tensura.ability.skill.Skill;
 import net.minecraft.ChatFormatting;
@@ -53,7 +55,7 @@ public class GoldExperienceRequiemSkill extends Skill {
         attacker.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 100, 3));
         attacker.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 100, 0));
         if (owner.level() instanceof ServerLevel level) {
-            level.sendParticles(ParticleTypes.END_ROD, attacker.getX(), attacker.getY() + 1, attacker.getZ(), 20, 0.4, 0.6, 0.4, 0.05);
+            RukhFx.spray(level, RukhFx.Alignment.LIGHT, attacker.getX(), attacker.getY() + 1, attacker.getZ(), 20, 0.4, 0.6, 0.4, 0.05);
         }
         return false; // the attack returns to zero
     }

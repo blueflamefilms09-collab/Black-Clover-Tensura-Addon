@@ -45,7 +45,7 @@ public final class EnumMagicProfile implements MagicProfile {
 
     @Override public SimpleParticleType particle() {
         SimpleParticleType p = type.rawParticle();
-        return p != null ? p : ParticleTypes.GLOW;
+        return p != null ? p : com.newuniverse.nusmp.particle.rukh.RukhParticles.light();
     }
 
     @Override public Holder<MobEffect> guardEffect() {

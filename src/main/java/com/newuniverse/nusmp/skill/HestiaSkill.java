@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
@@ -26,9 +28,9 @@ public class HestiaSkill extends GodSkill {
             ally.heal(ally.getMaxHealth() * (mastered ? 0.6F : 0.35F));
             ally.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 200, mastered ? 2 : 1));
             ally.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 1200, mastered ? 3 : 1));
-            level.sendParticles(ParticleTypes.HEART, ally.getX(), ally.getY() + 2, ally.getZ(), 5, 0.4, 0.2, 0.4, 0.0);
+            RukhFx.spray(level, RukhFx.Alignment.LIGHT, ally.getX(), ally.getY() + 2, ally.getZ(), 5, 0.4, 0.2, 0.4, 0.0);
         }
-        level.sendParticles(ParticleTypes.CAMPFIRE_COSY_SMOKE, player.getX(), player.getY(), player.getZ(), 20, radius / 3, 0.2, radius / 3, 0.01);
+        RukhFx.spray(level, RukhFx.Alignment.DARK, player.getX(), player.getY(), player.getZ(), 20, radius / 3, 0.2, radius / 3, 0.01);
         level.playSound(null, player.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0F, 1.4F);
         return true;
     }

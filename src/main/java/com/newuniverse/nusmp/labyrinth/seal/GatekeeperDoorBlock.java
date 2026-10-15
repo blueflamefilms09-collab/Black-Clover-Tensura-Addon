@@ -48,7 +48,9 @@ import java.util.List;
 public class GatekeeperDoorBlock extends Block {
     /** Which seal: the Warden's gate before the Boss Peak (a key), or the Vault door (the altar's boss). */
     public enum Kind implements StringRepresentable {
-        WARDEN("warden"), BOSS("boss");
+        WARDEN("warden"), BOSS("boss"),
+        /** 1.36.0 (appended): a puzzle door, opened by the Riddle Stone of its room and blind to the Shadow Key. */
+        PUZZLE("puzzle");
 
         private final String name;
 
@@ -98,6 +100,10 @@ public class GatekeeperDoorBlock extends Block {
         if (!(stack.getItem() instanceof ShadowKeyItem)) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         if (level.isClientSide) return ItemInteractionResult.SUCCESS;
         if (state.getValue(OPEN)) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        if (state.getValue(KIND) == Kind.PUZZLE) {                                         // the Shadow Key does nothing here (1.36.0)
+            puzzleClick(state, level, pos, player);
+            return ItemInteractionResult.CONSUME;
+        }
         if (state.getValue(KIND) != Kind.WARDEN) {
             tell(player, "message.nusmp.gatekeeper.boss_sealed");
             return ItemInteractionResult.CONSUME;
@@ -117,8 +123,26 @@ public class GatekeeperDoorBlock extends Block {
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (state.getValue(OPEN) || player.isShiftKeyDown()) return InteractionResult.PASS;
-        if (!level.isClientSide) tell(player, state.getValue(KIND) == Kind.WARDEN ? "message.nusmp.gatekeeper.warden_sealed" : "message.nusmp.gatekeeper.boss_sealed");
+        if (!level.isClientSide) {
+            if (state.getValue(KIND) == Kind.PUZZLE) puzzleClick(state, level, pos, player);
+            else tell(player, state.getValue(KIND) == Kind.WARDEN ? "message.nusmp.gatekeeper.warden_sealed" : "message.nusmp.gatekeeper.boss_sealed");
+        }
         return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    /**
+     * A click on a puzzle door (1.36.0): it says it answers to the sigils, unless the server switched puzzles off ({@code dnd.puzzles}), in which
+     * case it simply opens, so a server that disabled the puzzle can never lock its treasure away. Returns whether it opened.
+     */
+    private static boolean puzzleClick(BlockState state, Level level, BlockPos pos, Player player) {
+        if (level.isClientSide) return false;
+        if (!com.newuniverse.nusmp.labyrinth.dnd.DndConfig.get(com.newuniverse.nusmp.labyrinth.dnd.DndConfig.PUZZLES)) {
+            boolean opened = openConnected(level, pos) > 0;
+            if (opened) level.playSound(null, pos, SoundEvents.IRON_DOOR_OPEN, SoundSource.BLOCKS, 1.0f, 0.8f);
+            return opened;
+        }
+        tell(player, "message.nusmp.gatekeeper.puzzle_sealed");
+        return false;
     }
 
     private static void tell(Player player, String key) {

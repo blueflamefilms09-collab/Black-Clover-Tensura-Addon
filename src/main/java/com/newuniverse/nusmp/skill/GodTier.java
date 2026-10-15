@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.NUConfig;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.server.level.ServerLevel;
@@ -56,7 +58,7 @@ final class GodTier {
         Vec3 step = to.subtract(from).normalize().scale(0.5);
         Vec3 p = from;
         for (int i = 0; i < from.distanceTo(to) * 2; i++) {
-            level.sendParticles(particle, p.x, p.y, p.z, 1, 0.03, 0.03, 0.03, 0.0);
+            RukhFx.spray(level, RukhFx.Alignment.of(particle == com.newuniverse.nusmp.particle.rukh.RukhParticles.dark()), p.x, p.y, p.z, 1, 0.03, 0.03, 0.03, 0.0);
             p = p.add(step);
         }
     }

@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicEngine;
@@ -51,7 +53,7 @@ final class Wave15Hands {
         ServerPlayer p = c.player();
         Wave15Util.give(p, 160, 1, "minecraft:speed");
         Wave15Util.give(p, 160, 1, "minecraft:haste");
-        p.serverLevel().sendParticles(ParticleTypes.CLOUD, p.getX(), p.getY() + 1.0, p.getZ(), 16, 0.5, 0.7, 0.5, 0.08);
+        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 16, 0.5, 0.7, 0.5, 0.08);
         Wave15Util.tell(p, "Initiative! Your hair streams in a breeze that is only for you.", ChatFormatting.AQUA);
     }
 
@@ -121,7 +123,7 @@ final class Wave15Hands {
         t.hasImpulse = true;
         t.fallDistance = 0f;
         Wave15Field.thrown(p, t);
-        Wave15Util.trail(p.serverLevel(), t.position().add(0, 0.5, 0), t.position().add(0, 0.5, 0).add(v.scale(3)), ParticleTypes.CLOUD);
+        Wave15Util.trail(p.serverLevel(), t.position().add(0, 0.5, 0), t.position().add(0, 0.5, 0).add(v.scale(3)), com.newuniverse.nusmp.particle.rukh.RukhParticles.light());
         Wave15Util.tell(p, "YEET.", ChatFormatting.AQUA);
     }
 
@@ -137,7 +139,7 @@ final class Wave15Hands {
         Vec3 hand = p.getEyePosition().add(look.scale(0.5)).add(0, -0.35, 0);
         var glow = Wave15Util.dust(0x9A7CFF, 1.0f);
         Wave15Util.trail(lv, hand.add(side), a.end(), glow);
-        Wave15Util.trail(lv, hand.subtract(side), a.end(), ParticleTypes.END_ROD);
+        Wave15Util.trail(lv, hand.subtract(side), a.end(), com.newuniverse.nusmp.particle.rukh.RukhParticles.light());
         LivingEntity first = a.hit();
         if (first == null) return;
         LivingEntity second = null;
@@ -165,11 +167,11 @@ final class Wave15Hands {
         float add = 0f;
         if (RelicFlags.has(p, Wave15Rules.F_BEAR) && RelicEngine.isOn(p, Wave15Rules.ID_BEAR, "bear_paw")) {
             add += 3.0f;
-            p.serverLevel().sendParticles(ParticleTypes.SWEEP_ATTACK, victim.getX(), victim.getY() + victim.getBbHeight() * 0.5, victim.getZ(), 1, 0, 0, 0, 0);
+            RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, victim.getX(), victim.getY() + victim.getBbHeight() * 0.5, victim.getZ(), 1, 0, 0, 0, 0);
         }
         if (RelicFlags.has(p, Wave15Rules.F_BLADES) && RelicEngine.isOn(p, Wave15Rules.ID_BLADES, "blade_mode")) {
             add += 3.0f;
-            p.serverLevel().sendParticles(Wave15Util.dust(0x9A7CFF, 1.0f), victim.getX(), victim.getY() + victim.getBbHeight() * 0.5, victim.getZ(), 6, 0.2, 0.3, 0.2, 0.0);
+            RukhFx.spray(p.serverLevel(), Wave15Util.align(0x9A7CFF), victim.getX(), victim.getY() + victim.getBbHeight() * 0.5, victim.getZ(), 6, 0.2, 0.3, 0.2, 0.0);
         }
         if (add > 0f) e.setAmount(e.getAmount() + add);
     }

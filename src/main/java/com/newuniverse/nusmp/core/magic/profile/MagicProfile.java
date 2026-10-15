@@ -54,7 +54,7 @@ public interface MagicProfile {
     default int color() { return 0xFF000000 | com.newuniverse.nusmp.grimoire.BookPalette.glow(MagicKeys.enumKey(id())); }
 
     /** A particle that exists in every game version of the mod's target; the final fallback is GLOW. */
-    default SimpleParticleType particle() { return ParticleTypes.GLOW; }
+    default SimpleParticleType particle() { return com.newuniverse.nusmp.particle.rukh.RukhParticles.light(); }
 
     /** The effect the magic's guard page grants; the final fallback is Resistance. */
     default Holder<MobEffect> guardEffect() { return MobEffects.DAMAGE_RESISTANCE; }

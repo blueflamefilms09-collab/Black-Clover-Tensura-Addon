@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import net.minecraft.core.particles.ParticleOptions;
@@ -67,7 +69,7 @@ final class Wave9Acts {
         int n = (int) Math.min(40, Math.max(2, len / Math.max(0.2, step)));
         for (int i = 0; i <= n; i++) {
             Vec3 at = from.add(d.scale(i / (double) n));
-            l.sendParticles(what, at.x, at.y, at.z, 1, 0.03, 0.03, 0.03, 0.0);
+            RukhFx.spray(l, RukhFx.Alignment.of(what == com.newuniverse.nusmp.particle.rukh.RukhParticles.dark()), at.x, at.y, at.z, 1, 0.03, 0.03, 0.03, 0.0);
         }
     }
 
@@ -94,12 +96,12 @@ final class Wave9Acts {
         Vec3 from = p.getEyePosition().add(0, -0.3, 0);
         LivingEntity t = rayFoe(p, range);
         Vec3 end = t != null ? t.position().add(0, t.getBbHeight() * 0.6, 0) : rayEnd(p, range);
-        trail(l, from, end, ParticleTypes.CRIT, 0.8);
-        trail(l, end.add(0, 0.25, 0), from, ParticleTypes.ENCHANTED_HIT, 1.4);                    // the way back
+        trail(l, from, end, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 0.8);
+        trail(l, end.add(0, 0.25, 0), from, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 1.4);                    // the way back
         l.playSound(null, p.blockPosition(), SoundEvents.TRIDENT_RETURN, SoundSource.PLAYERS, 0.9f, 1.4f);
         if (t == null) return null;
         quiet(() -> Fx.damage(p, t, damage, "minecraft:player_attack"));
-        l.sendParticles(ParticleTypes.SWEEP_ATTACK, t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 1, 0, 0, 0, 0);
+        RukhFx.spray(l, RukhFx.Alignment.LIGHT, t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 1, 0, 0, 0, 0);
         return t;
     }
 
@@ -109,7 +111,7 @@ final class Wave9Acts {
         ServerPlayer p = c.player();
         pd(p).putLong(Wave9Events.K_ARMED, p.level().getGameTime() + Wave9Rules.FROST_ARMED_TICKS);
         Fx.ring(p.serverLevel(), p.position(), 1.6, 0x8FD8FF);
-        p.serverLevel().sendParticles(ParticleTypes.SNOWFLAKE, p.getX(), p.getY() + 1.2, p.getZ(), 16, 0.5, 0.5, 0.5, 0.02);
+        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.2, p.getZ(), 16, 0.5, 0.5, 0.5, 0.02);
         Fx.say(p, "The next bolt will freeze the ground where it lands (30 seconds).");
     }
 
@@ -121,7 +123,7 @@ final class Wave9Acts {
         LivingEntity t = rayFoe(p, 16);
         Vec3 at = t != null ? t.position() : rayEnd(p, 16);
         Fx.ring(l, at, 5.0, 0x3FB950);
-        l.sendParticles(ParticleTypes.HAPPY_VILLAGER, at.x, at.y + 0.3, at.z, 30, 2.4, 0.3, 2.4, 0.02);
+        RukhFx.spray(l, RukhFx.Alignment.LIGHT, at.x, at.y + 0.3, at.z, 30, 2.4, 0.3, 2.4, 0.02);
         l.playSound(null, p.blockPosition(), SoundEvents.GRASS_BREAK, SoundSource.PLAYERS, 1.2f, 0.6f);
         int held = 0;
         for (LivingEntity f : Fx.foesAround(p, 28)) {
@@ -129,7 +131,7 @@ final class Wave9Acts {
             int ticks = Wave9Rules.controlTicks(80, f.getMaxHealth());
             Fx.addEffect(f, "minecraft:slowness", ticks, 6);
             Fx.addEffect(f, "tensura:earth_lock", ticks, 0);
-            l.sendParticles(ParticleTypes.COMPOSTER, f.getX(), f.getY() + 0.2, f.getZ(), 14, 0.4, 0.5, 0.4, 0.02);
+            RukhFx.spray(l, RukhFx.Alignment.LIGHT, f.getX(), f.getY() + 0.2, f.getZ(), 14, 0.4, 0.5, 0.4, 0.02);
             held++;
         }
         if (held == 0) Fx.say(p, "The vines rise, and find nothing to hold.");
@@ -176,8 +178,8 @@ final class Wave9Acts {
         ServerPlayer p = c.player();
         ServerLevel l = p.serverLevel();
         Fx.ring(l, p.position(), 6.0, 0x5B3FD0);
-        l.sendParticles(ParticleTypes.END_ROD, p.getX(), p.getY() + 1.0, p.getZ(), 40, 2.5, 0.8, 2.5, 0.05);
-        l.sendParticles(ParticleTypes.PORTAL, p.getX(), p.getY() + 1.0, p.getZ(), 40, 2.5, 0.8, 2.5, 0.4);
+        RukhFx.spray(l, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 40, 2.5, 0.8, 2.5, 0.05);
+        RukhFx.spray(l, RukhFx.Alignment.DARK, p.getX(), p.getY() + 1.0, p.getZ(), 40, 2.5, 0.8, 2.5, 0.4);
         for (LivingEntity f : Fx.foesAround(p, 6)) {
             quiet(() -> Fx.damage(p, f, 9f, "minecraft:magic"));
             Fx.addEffect(f, "minecraft:glowing", 100, 0);
@@ -214,8 +216,8 @@ final class Wave9Acts {
         d.putString(Wave9Events.K_MARK_DIM, t.level().dimension().location().toString());
         Fx.addEffect(t, "minecraft:poison", 80, 0);
         ServerLevel l = p.serverLevel();
-        trail(l, p.getEyePosition().add(0, -0.4, 0), t.position().add(0, t.getBbHeight() * 0.7, 0), ParticleTypes.HAPPY_VILLAGER, 0.6);
-        l.sendParticles(ParticleTypes.ITEM_SLIME, t.getX(), t.getY() + t.getBbHeight() * 0.7, t.getZ(), 10, 0.2, 0.2, 0.2, 0.05);
+        trail(l, p.getEyePosition().add(0, -0.4, 0), t.position().add(0, t.getBbHeight() * 0.7, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 0.6);
+        RukhFx.spray(l, RukhFx.Alignment.LIGHT, t.getX(), t.getY() + t.getBbHeight() * 0.7, t.getZ(), 10, 0.2, 0.2, 0.2, 0.05);
         Fx.say(p, "Bitten: you will feel which way " + t.getName().getString() + " lies for ten minutes.");
     }
 
@@ -247,8 +249,8 @@ final class Wave9Acts {
         ServerPlayer p = c.player();
         pd(p).putLong(Wave9Events.K_DEFLECT, p.level().getGameTime() + Wave9Rules.DEFLECT_TICKS);
         ServerLevel l = p.serverLevel();
-        l.sendParticles(ParticleTypes.SWEEP_ATTACK, p.getX(), p.getY() + 1.1, p.getZ(), 2, 0.5, 0.2, 0.5, 0.0);
-        l.sendParticles(ParticleTypes.ENCHANTED_HIT, p.getX(), p.getY() + 1.1, p.getZ(), 20, 0.7, 0.5, 0.7, 0.1);
+        RukhFx.spray(l, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.1, p.getZ(), 2, 0.5, 0.2, 0.5, 0.0);
+        RukhFx.spray(l, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.1, p.getZ(), 20, 0.7, 0.5, 0.7, 0.1);
         l.playSound(null, p.blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 1f, 1.5f);
     }
 
@@ -257,7 +259,7 @@ final class Wave9Acts {
     static void devour(ActCtx c) {
         ServerPlayer p = c.player();
         pd(p).putLong(Wave9Events.K_DEVOUR, p.level().getGameTime() + Wave9Rules.DEVOUR_ARMED_TICKS);
-        p.serverLevel().sendParticles(ParticleTypes.DAMAGE_INDICATOR, p.getX(), p.getY() + 1.4, p.getZ(), 6, 0.3, 0.3, 0.3, 0.02);
+        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.DARK, p.getX(), p.getY() + 1.4, p.getZ(), 6, 0.3, 0.3, 0.3, 0.02);
         Fx.say(p, "Hunger opens its mouth. The next hit will be eaten.");
     }
 
@@ -274,6 +276,6 @@ final class Wave9Acts {
         Fx.addEffect(t, "minecraft:slowness", 60, 0);
         ServerLevel l = p.serverLevel();
         Fx.burst(l, t.position(), 0x35E08A);
-        l.sendParticles(ParticleTypes.COMPOSTER, t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 20, 0.3, 0.5, 0.3, 0.02);
+        RukhFx.spray(l, RukhFx.Alignment.LIGHT, t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 20, 0.3, 0.5, 0.3, 0.02);
     }
 }

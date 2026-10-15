@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
@@ -33,7 +35,7 @@ public class UchideNoKozuchiSkill extends ChantedMagicSkill {
         target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, ticks, 1));
         target.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, ticks, 1));
         target.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, ticks, mastered ? 4 : 2));
-        level.sendParticles(ParticleTypes.TOTEM_OF_UNDYING, target.getX(), target.getY() + 1, target.getZ(), 80, 0.5, 1, 0.5, 0.3);
+        RukhFx.spray(level, RukhFx.Alignment.LIGHT, target.getX(), target.getY() + 1, target.getZ(), 80, 0.5, 1, 0.5, 0.3);
         level.playSound(null, target.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 1.0F, 0.8F);
         target.displayClientMessage(Component.literal("LEVEL BOOST! Your power surges.").withStyle(ChatFormatting.GOLD), true);
         return true;

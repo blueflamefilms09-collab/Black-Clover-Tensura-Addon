@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "color=0,lit=false": {
+      "model": "nusmp:block/sigil_plate_0"
+    },
+    "color=0,lit=true": {
+      "model": "nusmp:block/sigil_plate_0_lit"
+    },
+    "color=1,lit=false": {
+      "model": "nusmp:block/sigil_plate_1"
+    },
+    "color=1,lit=true": {
+      "model": "nusmp:block/sigil_plate_1_lit"
+    },
+    "color=2,lit=false": {
+      "model": "nusmp:block/sigil_plate_2"
+    },
+    "color=2,lit=true": {
+      "model": "nusmp:block/sigil_plate_2_lit"
+    },
+    "color=3,lit=false": {
+      "model": "nusmp:block/sigil_plate_3"
+    },
+    "color=3,lit=true": {
+      "model": "nusmp:block/sigil_plate_3_lit"
+    }
+  }
+}

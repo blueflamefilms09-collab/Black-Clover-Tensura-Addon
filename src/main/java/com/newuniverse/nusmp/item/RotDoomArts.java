@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.item;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment;
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.blackclover.TimedModifiers;
 import com.newuniverse.nusmp.book.EnergyBridge;
@@ -10,8 +12,6 @@ import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.BlockParticleOption;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -74,8 +74,6 @@ final class RotDoomArts {
 
     private static final int ROT_GREEN = 0xFF7BD148, OOZE = 0xFFA6E05A, BONE = 0xFFE8E0C0;
     private static final int EMBER = 0xFFFF6A30, DOOM_RED = 0xFFE0381C, DUST = 0xFFB8A890, IRON = 0xFFA0A6B4;
-    private static final DustParticleOptions SPORE = new DustParticleOptions(new Vector3f(0.42f, 0.78f, 0.22f), 1.3f);
-    private static final DustParticleOptions OOZE_DUST = new DustParticleOptions(new Vector3f(0.30f, 0.55f, 0.14f), 1.0f);
 
     static boolean isMine(Kind k) { return k == Kind.CLUB_OF_ROT || k == Kind.DOOM_HAMMER; }
 
@@ -169,7 +167,7 @@ final class RotDoomArts {
         if (n <= 0) return;
         fever(t, n);
         Vec3 mid = t.getBoundingBox().getCenter();
-        sl.sendParticles(SPORE, mid.x, mid.y, mid.z, 3 + n * 2, t.getBbWidth() * 0.4, t.getBbHeight() * 0.35, t.getBbWidth() * 0.4, 0.01);
+        RukhFx.spray(sl, Alignment.DARK, mid.x, mid.y, mid.z, 3 + n * 2, t.getBbWidth() * 0.4, t.getBbHeight() * 0.35, t.getBbWidth() * 0.4, 0.01);
         if (p.isAlive() && !p.isRemoved() && p.level() == t.level()) {
             magic(p, t, 0.3f * n);
             if (n >= 3) {
@@ -186,8 +184,8 @@ final class RotDoomArts {
     /** Spore dust and a dull wet sound on a rotting wound. */
     private static void festerFx(ServerLevel sl, LivingEntity t, int n) {
         Vec3 mid = t.getBoundingBox().getCenter();
-        sl.sendParticles(SPORE, mid.x, mid.y, mid.z, 8 + n * 2, 0.3, 0.4, 0.3, 0.02);
-        sl.sendParticles(OOZE_DUST, mid.x, mid.y - 0.2, mid.z, 6, 0.25, 0.5, 0.25, 0.01);
+        RukhFx.spray(sl, Alignment.DARK, mid.x, mid.y, mid.z, 8 + n * 2, 0.3, 0.4, 0.3, 0.02);
+        RukhFx.spray(sl, Alignment.DARK, mid.x, mid.y - 0.2, mid.z, 6, 0.25, 0.5, 0.25, 0.01);
         sl.playSound(null, t.blockPosition(), SoundEvents.SLIME_SQUISH_SMALL, SoundSource.PLAYERS, 0.8f, 0.55f + 0.05f * n);
     }
 
@@ -217,7 +215,6 @@ final class RotDoomArts {
     /** Plants, crops and leaves under the wave wither: ash and dead-bush crumbs, ring after ring as the wave passes. Particles only; no block changes. */
     private static void witherPlants(ServerLevel sl, Vec3 c, int radius) {
         BlockPos base = BlockPos.containing(c);
-        ParticleOptions dead = new BlockParticleOption(ParticleTypes.BLOCK, Blocks.DEAD_BUSH.defaultBlockState());
         for (int ring = 0; ring <= radius; ring++) {
             final int r = ring;
             SpellRuntime.later(sl, r * 2, () -> {
@@ -230,8 +227,8 @@ final class RotDoomArts {
                             BlockPos pos = base.offset(dx, dy, dz);
                             BlockState s = sl.getBlockState(pos);
                             if (s.getBlock() instanceof BushBlock || s.is(BlockTags.LEAVES)) {
-                                sl.sendParticles(dead, pos.getX() + 0.5, pos.getY() + 0.4, pos.getZ() + 0.5, 6, 0.25, 0.25, 0.25, 0.05);
-                                sl.sendParticles(ParticleTypes.ASH, pos.getX() + 0.5, pos.getY() + 0.6, pos.getZ() + 0.5, 5, 0.3, 0.3, 0.3, 0.02);
+                                RukhFx.spray(sl, Alignment.DARK, pos.getX() + 0.5, pos.getY() + 0.4, pos.getZ() + 0.5, 6, 0.25, 0.25, 0.25, 0.05);
+                                RukhFx.spray(sl, Alignment.DARK, pos.getX() + 0.5, pos.getY() + 0.6, pos.getZ() + 0.5, 5, 0.3, 0.3, 0.3, 0.02);
                                 shown++;
                                 break;
                             }
@@ -256,8 +253,8 @@ final class RotDoomArts {
             for (LivingEntity t : GrimoireBook.around(p, c, 4.5)) {
                 if (rot(p, t, 1, 3) > 0) magic(p, t, 0.8f);
             }
-            sl.sendParticles(SPORE, c.x, c.y + 1.0, c.z, 14, 2.2, 0.8, 2.2, 0.01);
-            sl.sendParticles(ParticleTypes.SPORE_BLOSSOM_AIR, c.x, c.y + 1.4, c.z, 6, 2.4, 0.9, 2.4, 0.0);
+            RukhFx.spray(sl, Alignment.DARK, c.x, c.y + 1.0, c.z, 14, 2.2, 0.8, 2.2, 0.01);
+            RukhFx.spray(sl, Alignment.LIGHT, c.x, c.y + 1.4, c.z, 6, 2.4, 0.9, 2.4, 0.0);
             if (age % 20 == 0) sl.playSound(null, c.x, c.y, c.z, SoundEvents.SLIME_SQUISH_SMALL, SoundSource.PLAYERS, 1.0f, 0.5f);
         });
         return true;
@@ -321,8 +318,8 @@ final class RotDoomArts {
         ServerLevel sl = p.serverLevel();
         if (age % 2 == 0 && airborne[0]) {                                               // an ember trail behind the hammer
             Vec3 at = p.position();
-            sl.sendParticles(ParticleTypes.FLAME, at.x, at.y + 0.2, at.z, 3, 0.2, 0.1, 0.2, 0.01);
-            sl.sendParticles(ParticleTypes.LARGE_SMOKE, at.x, at.y + 0.2, at.z, 2, 0.2, 0.1, 0.2, 0.01);
+            RukhFx.spray(sl, Alignment.LIGHT, at.x, at.y + 0.2, at.z, 3, 0.2, 0.1, 0.2, 0.01);
+            RukhFx.spray(sl, Alignment.DARK, at.x, at.y + 0.2, at.z, 2, 0.2, 0.1, 0.2, 0.01);
         }
         SpellRuntime.later(sl, 1, () -> leapStep(p, age + 1, peak, airborne));
     }
@@ -349,7 +346,7 @@ final class RotDoomArts {
             }
             Vec3 mid = t.getBoundingBox().getCenter();
             VfxSpawn.send(sl, VfxShape.FIRE_BURST, t.position(), t.position(), EMBER, 10, 0.5f);
-            sl.sendParticles(ParticleTypes.CRIT, mid.x, mid.y, mid.z, 14, 0.4, 0.5, 0.4, 0.3);
+            RukhFx.spray(sl, Alignment.LIGHT, mid.x, mid.y, mid.z, 14, 0.4, 0.5, 0.4, 0.3);
         }
         // the shockwave and its ring of cracks
         VfxSpawn.send(sl, VfxShape.IRON_FX3, c, c, EMBER, 30, 1.3f + 0.3f * (scale - 1f));
@@ -363,10 +360,9 @@ final class RotDoomArts {
         }
         BlockState ground = sl.getBlockState(BlockPos.containing(c).below());
         if (!ground.isAir()) {
-            ParticleOptions chips = new BlockParticleOption(ParticleTypes.BLOCK, ground);
-            sl.sendParticles(chips, c.x, c.y + 0.2, c.z, 60, 2.6, 0.2, 2.6, 0.25);
+            RukhFx.spray(sl, Alignment.DARK, c.x, c.y + 0.2, c.z, 60, 2.6, 0.2, 2.6, 0.25);
         }
-        sl.sendParticles(ParticleTypes.EXPLOSION, c.x, c.y + 0.4, c.z, 3, 1.2, 0.1, 1.2, 0.0);
+        RukhFx.spray(sl, Alignment.LIGHT, c.x, c.y + 0.4, c.z, 3, 1.2, 0.1, 1.2, 0.0);
         sl.playSound(null, p.blockPosition(), SoundEvents.MACE_SMASH_GROUND_HEAVY, SoundSource.PLAYERS, 1.8f, 0.7f);
         sl.playSound(null, p.blockPosition(), SoundEvents.ANVIL_LAND, SoundSource.PLAYERS, 1.6f, 0.5f);
         sl.playSound(null, p.blockPosition(), SoundEvents.WARDEN_SONIC_BOOM, SoundSource.PLAYERS, 0.5f, 0.6f);
@@ -393,8 +389,8 @@ final class RotDoomArts {
                 if (t.isAlive()) where[0] = t.position();
                 Vec3 w = where[0];
                 sl.playSound(null, w.x, w.y, w.z, SoundEvents.BELL_BLOCK, SoundSource.PLAYERS, 2.0f, 0.5f);
-                sl.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, w.x, w.y + 0.2, w.z, 14, 0.4, 0.9, 0.4, 0.03);
-                sl.sendParticles(ParticleTypes.LARGE_SMOKE, w.x, w.y + 1.6, w.z, 6, 0.3, 0.2, 0.3, 0.01);
+                RukhFx.spray(sl, Alignment.DARK, w.x, w.y + 0.2, w.z, 14, 0.4, 0.9, 0.4, 0.03);
+                RukhFx.spray(sl, Alignment.DARK, w.x, w.y + 1.6, w.z, 6, 0.3, 0.2, 0.3, 0.01);
                 if (t instanceof ServerPlayer tp)
                     tp.displayClientMessage(Component.literal("Sentenced: " + (4 - toll) + "...").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD), true);
             });
@@ -422,8 +418,8 @@ final class RotDoomArts {
         }
         VfxSpawn.send(sl, VfxShape.CURSE_FX3, c, c, DOOM_RED, 28, 1.4f);
         VfxSpawn.send(sl, VfxShape.DEVIL_CIRCLE, where[0].add(0, 0.05, 0), where[0].add(0, 1, 0), DOOM_RED, 20, 1.6f);
-        sl.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, c.x, c.y, c.z, 30, 0.6, 0.9, 0.6, 0.12);
-        sl.sendParticles(ParticleTypes.EXPLOSION, c.x, c.y, c.z, 2, 0.4, 0.4, 0.4, 0.0);
+        RukhFx.spray(sl, Alignment.DARK, c.x, c.y, c.z, 30, 0.6, 0.9, 0.6, 0.12);
+        RukhFx.spray(sl, Alignment.LIGHT, c.x, c.y, c.z, 2, 0.4, 0.4, 0.4, 0.0);
         sl.playSound(null, c.x, c.y, c.z, SoundEvents.WARDEN_SONIC_BOOM, SoundSource.PLAYERS, 1.6f, 0.55f);
         sl.playSound(null, c.x, c.y, c.z, SoundEvents.BELL_BLOCK, SoundSource.PLAYERS, 2.2f, 0.4f);
         if (p.isAlive()) p.displayClientMessage(Component.literal("The sentence is carried out.").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD), true);
@@ -474,8 +470,8 @@ final class RotDoomArts {
                 CompoundTag d = t.getPersistentData();
                 if (d.getLong(DOOM_AT) > sl.getGameTime() && d.hasUUID(DOOM_BY) && d.getUUID(DOOM_BY).equals(p.getUUID()))
                     d.putFloat(DOOM_BANK, Math.min(12f, d.getFloat(DOOM_BANK) + 2f));  // every blow adds to the sentence
-                sl.sendParticles(ParticleTypes.CRIT, mid.x, mid.y, mid.z, 8 + 2 * n, 0.3, 0.4, 0.3, 0.25);
-                sl.sendParticles(ParticleTypes.FLAME, mid.x, mid.y, mid.z, 4, 0.2, 0.3, 0.2, 0.02);
+                RukhFx.spray(sl, Alignment.LIGHT, mid.x, mid.y, mid.z, 8 + 2 * n, 0.3, 0.4, 0.3, 0.25);
+                RukhFx.spray(sl, Alignment.LIGHT, mid.x, mid.y, mid.z, 4, 0.2, 0.3, 0.2, 0.02);
                 sl.playSound(null, t.blockPosition(), SoundEvents.ANVIL_PLACE, SoundSource.PLAYERS, 0.7f, 0.6f + 0.05f * n);
                 if (crit) VfxSpawn.send(sl, VfxShape.FIRE_BURST, t.position(), t.position(), EMBER, 10, 0.6f);
             }

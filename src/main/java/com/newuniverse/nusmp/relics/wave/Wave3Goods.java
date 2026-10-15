@@ -67,8 +67,8 @@ final class Wave3Goods {
             return;
         }
         ServerLevel sl = p.serverLevel();
-        sl.sendParticles(ParticleTypes.CLOUD, p.getX(), p.getY() + 1.4, p.getZ(), 30, 0.6, 0.6, 0.6, 0.08);
-        sl.sendParticles(ParticleTypes.END_ROD, p.getX(), p.getY() + 1.4, p.getZ(), 20, 0.7, 0.7, 0.7, 0.05);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.4, p.getZ(), 30, 0.6, 0.6, 0.6, 0.08);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.4, p.getZ(), 20, 0.7, 0.7, 0.7, 0.05);
         sl.playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 1.5f, 0.7f);
         switch (sel) {
             case 0 -> power(p);
@@ -101,7 +101,7 @@ final class Wave3Goods {
         for (LivingEntity e : Wave3Util.near(sl, p.position(), 24.0, x -> humanoid(x) && Wave3Util.bends(p, x))) {
             if (n >= 12) break;
             Wave3Field.charm((Mob) e, p, Wave3Rules.WISH_TICKS, false);
-            sl.sendParticles(ParticleTypes.HEART, e.getX(), e.getEyeY() + 0.3, e.getZ(), 6, 0.3, 0.3, 0.3, 0.02);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, e.getX(), e.getEyeY() + 0.3, e.getZ(), 6, 0.3, 0.3, 0.3, 0.02);
             n++;
         }
         Wave3Util.say(p, "Genie Gin: \"Fame it is!\" Villagers hail you as a hero" + (n > 0 ? ", and " + n + " humanoid creature" + (n == 1 ? "" : "s") + " now count you a close friend until you raise a hand against them." : "."));
@@ -145,8 +145,8 @@ final class Wave3Goods {
         flat = flat.normalize();
         Vec3 ground = new Vec3(p.getX() + flat.x * 1.8, p.getY(), p.getZ() + flat.z * 1.8);
         Wave3Field.pour(p, ground);
-        for (int rgb : new int[]{0xE250D8, 0xFF9A2E, 0x2EE8D8, 0x58E848}) sl.sendParticles(Wave3Util.dust(rgb, 1.2f), ground.x, ground.y + 0.2, ground.z, 6, 1.0, 0.1, 1.0, 0.02);
-        sl.sendParticles(ParticleTypes.ELECTRIC_SPARK, ground.x, ground.y + 0.2, ground.z, 12, 1.0, 0.1, 1.0, 0.1);
+        for (int rgb : new int[]{0xE250D8, 0xFF9A2E, 0x2EE8D8, 0x58E848}) com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.relics.Fx.align(rgb), ground.x, ground.y + 0.2, ground.z, 6, 1.0, 0.1, 1.0, 0.02);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(sl, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, ground.x, ground.y + 0.2, ground.z, 12, 1.0, 0.1, 1.0, 0.1);
         sl.playSound(null, p.blockPosition(), SoundEvents.AMETHYST_CLUSTER_BREAK, SoundSource.PLAYERS, 1.0f, 1.6f);
         Wave3Util.tell(p, "Mad Marbles: the marbles spill out. The first to step on them falls, and they go off.", ChatFormatting.LIGHT_PURPLE);
     }

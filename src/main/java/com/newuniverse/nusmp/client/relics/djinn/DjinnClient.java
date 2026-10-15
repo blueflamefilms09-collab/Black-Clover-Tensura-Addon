@@ -6,7 +6,10 @@ import com.newuniverse.nusmp.relics.djinn.Djinn;
 import com.newuniverse.nusmp.relics.djinn.DjinnComponents;
 import com.newuniverse.nusmp.relics.djinn.VesselAccess;
 import net.minecraft.ChatFormatting;
+import com.newuniverse.nusmp.client.particle.rukh.RukhClientFx;
+import com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.resources.PlayerSkin;
@@ -78,14 +81,14 @@ public final class DjinnClient {
         if (mc.level == null) return;
         Entity en = mc.level.getEntity(entityId);
         if (en == null) return;
-        int rgb = dark ? DjinnLook.darkVignette(d.glow()) : d.glow();
-        var dust = new net.minecraft.core.particles.DustParticleOptions(new org.joml.Vector3f(((rgb >> 16) & 255) / 255f, ((rgb >> 8) & 255) / 255f, (rgb & 255) / 255f), 1.4f);
-        var accent = dark ? ParticleTypes.SQUID_INK : ParticleTypes.END_ROD;
+        Alignment al = Alignment.of(dark);
         var rnd = mc.level.getRandom();
-        for (int i = 0; i < 36; i++) {
+        // The Magi Rukh gathering: when the Djinn is put on (up) a flock converges on the player; light for a light Djinn, dark for the dark state.
+        if (up && en instanceof LivingEntity living) RukhClientFx.gather(mc.level, living, al, 12);
+        for (int i = 0; i < 24; i++) {
             double a = rnd.nextDouble() * Math.PI * 2, r = up ? 2.2 : 0.4, y = rnd.nextDouble() * en.getBbHeight();
             double vx = Math.cos(a) * (up ? -0.12 : 0.18), vz = Math.sin(a) * (up ? -0.12 : 0.18);
-            mc.level.addParticle(i % 3 == 0 ? accent : dust, en.getX() + Math.cos(a) * r, en.getY() + y, en.getZ() + Math.sin(a) * r, vx, 0.02 + rnd.nextDouble() * 0.05, vz);
+            RukhClientFx.spray(mc.level, al, en.getX() + Math.cos(a) * r, en.getY() + y, en.getZ() + Math.sin(a) * r, 1, vx, 0.02 + rnd.nextDouble() * 0.05, vz, 1.0);
         }
     }
 }

@@ -88,7 +88,7 @@ final class Wave5Souls {
             st.putInt("freed", mask);
             ServerLevel l = p.serverLevel();
             Fx.burst(l, p.position().add(0, 1.2, 0), 0xB05CFF);
-            Wave5Aim.puff(l, p.position().add(0, 1.2, 0), ParticleTypes.SOUL, 20, 0.6);
+            Wave5Aim.puff(l, p.position().add(0, 1.2, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.dark(), 20, 0.6);
             Wave5Aim.sound(l, p.position(), SoundEvents.ENCHANTMENT_TABLE_USE, 1.0f, 0.5f);
             Fx.addEffect(p, "minecraft:regeneration", 200, 1);
             if (Wave5Pure.allFreed(mask)) {
@@ -236,7 +236,7 @@ final class Wave5Souls {
 
     // ---------------------------------------------------------------- Comos Parolath (Triton: lightning and water)
     private static boolean witchBolt(ServerPlayer p) {
-        return ray(p, 18, 5, "minecraft:lightning_bolt", ParticleTypes.ELECTRIC_SPARK, SoundEvents.LIGHTNING_BOLT_THUNDER, 2.0f, "minecraft:slowness", 40, 0);
+        return ray(p, 18, 5, "minecraft:lightning_bolt", com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), SoundEvents.LIGHTNING_BOLT_THUNDER, 2.0f, "minecraft:slowness", 40, 0);
     }
 
     private static boolean mistyStep(ServerPlayer p) {
@@ -244,7 +244,7 @@ final class Wave5Souls {
         Vec3 from = p.position();
         if (!Fx.teleportLook(p, 10.0)) { Wave5Aim.msg(p, "No safe place to step to.", ChatFormatting.GRAY); return false; }
         Fx.burst(l, from.add(0, 1.0, 0), 0x80C0FF);
-        Wave5Aim.puff(l, from.add(0, 1.0, 0), ParticleTypes.BUBBLE_POP, 20, 0.5);
+        Wave5Aim.puff(l, from.add(0, 1.0, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 20, 0.5);
         Fx.burst(p.serverLevel(), p.position().add(0, 1.0, 0), 0x80C0FF);
         Wave5Skills.lend(p, Wave5Skills.DANGER_SENSE, 200);          // merged with Tensura's Danger Sense: you step to where nothing waits for you
         Wave5Aim.sound(p.serverLevel(), p.position(), SoundEvents.ENDERMAN_TELEPORT, 0.8f, 1.5f);
@@ -255,7 +255,7 @@ final class Wave5Souls {
         List<LivingEntity> line = Wave5Aim.cone(p, 16.0, 0.97, 6);
         if (line.isEmpty()) { none(p); return false; }
         ServerLevel l = p.serverLevel();
-        Wave5Aim.beam(l, Wave5Aim.muzzle(p), line.get(line.size() - 1).getBoundingBox().getCenter(), ParticleTypes.ELECTRIC_SPARK, 28);
+        Wave5Aim.beam(l, Wave5Aim.muzzle(p), line.get(line.size() - 1).getBoundingBox().getCenter(), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 28);
         bolt(l, line.get(0).position());
         for (LivingEntity e : line) {
             Fx.damage(p, e, Wave5Pure.cap(6), "minecraft:lightning_bolt");
@@ -268,7 +268,7 @@ final class Wave5Souls {
     private static boolean healingWord(ServerPlayer p) {
         Fx.heal(p, 6.0f);
         healFriends(p, 6.0f);
-        Wave5Aim.puff(p.serverLevel(), p.position().add(0, 1.4, 0), ParticleTypes.HEART, 6, 0.4);
+        Wave5Aim.puff(p.serverLevel(), p.position().add(0, 1.4, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 6, 0.4);
         Wave5Aim.sound(p.serverLevel(), p.position(), SoundEvents.AMETHYST_BLOCK_CHIME, 1.0f, 1.2f);
         return true;
     }
@@ -283,7 +283,7 @@ final class Wave5Souls {
         }
         if (cured == 0) { Wave5Aim.msg(p, "Nothing ails you that this can mend.", ChatFormatting.GRAY); return false; }
         Wave5Skills.lend(p, Wave5Skills.POISON_RESIST, 1200);        // merged with Tensura's Poison Resistance for a minute: the cure holds
-        Wave5Aim.puff(p.serverLevel(), p.position().add(0, 1.0, 0), ParticleTypes.HAPPY_VILLAGER, 12, 0.5);
+        Wave5Aim.puff(p.serverLevel(), p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 12, 0.5);
         Wave5Aim.sound(p.serverLevel(), p.position(), SoundEvents.ZOMBIE_VILLAGER_CURE, 0.6f, 1.6f);
         return true;
     }
@@ -306,7 +306,7 @@ final class Wave5Souls {
         if (foes.isEmpty()) { none(p); return false; }
         ServerLevel l = p.serverLevel();
         Fx.ring(l, p.position().add(0, 0.3, 0), 5.0, 0x9CC8FF);
-        Wave5Aim.puff(l, p.position().add(0, 1.0, 0), ParticleTypes.ELECTRIC_SPARK, 30, 1.8);
+        Wave5Aim.puff(l, p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 30, 1.8);
         Wave5Aim.sound(l, p.position(), SoundEvents.LIGHTNING_BOLT_THUNDER, 0.5f, 1.8f);
         int n = 0;
         for (LivingEntity e : foes) {
@@ -318,7 +318,7 @@ final class Wave5Souls {
     }
 
     private static boolean shatter(ServerPlayer p) {
-        return blast(p, 14, 3.0, 5, "minecraft:sonic_boom", ParticleTypes.SONIC_BOOM, SoundEvents.GLASS_BREAK, 0xC8E0FF, "minecraft:weakness", 100, 0, 0);
+        return blast(p, 14, 3.0, 5, "minecraft:sonic_boom", com.newuniverse.nusmp.particle.rukh.RukhParticles.dark(), SoundEvents.GLASS_BREAK, 0xC8E0FF, "minecraft:weakness", 100, 0, 0);
     }
 
     private static boolean thunderStep(ServerPlayer p) {
@@ -337,11 +337,11 @@ final class Wave5Souls {
 
     // ---------------------------------------------------------------- Ilia (Yuan-Ti: poison)
     private static boolean raySickness(ServerPlayer p) {
-        return ray(p, 16, 2, "minecraft:magic", ParticleTypes.ITEM_SLIME, SoundEvents.EVOKER_CAST_SPELL, 1.4f, "minecraft:poison", 100, 0);
+        return ray(p, 16, 2, "minecraft:magic", com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), SoundEvents.EVOKER_CAST_SPELL, 1.4f, "minecraft:poison", 100, 0);
     }
 
     private static boolean dragonsBreath(ServerPlayer p) {
-        return cone(p, 6.0, 0.8, 8, 2.5f, "minecraft:magic", ParticleTypes.DRAGON_BREATH, SoundEvents.FIRECHARGE_USE, "minecraft:poison", 80, 0, 0);
+        return cone(p, 6.0, 0.8, 8, 2.5f, "minecraft:magic", com.newuniverse.nusmp.particle.rukh.RukhParticles.dark(), SoundEvents.FIRECHARGE_USE, "minecraft:poison", 80, 0, 0);
     }
 
     private static boolean auraOfVitality(ServerPlayer p) {
@@ -350,21 +350,21 @@ final class Wave5Souls {
         Wave5Skills.lend(p, Wave5Skills.SELF_REGENERATION, 300);     // merged with Tensura's Self Regeneration for the same fifteen seconds (skipped if the skill is not there)
         healFriends(p, 4.0f);
         Fx.ring(p.serverLevel(), p.position().add(0, 0.2, 0), 2.5, 0x6EE07A);
-        Wave5Aim.puff(p.serverLevel(), p.position().add(0, 1.0, 0), ParticleTypes.HAPPY_VILLAGER, 14, 0.6);
+        Wave5Aim.puff(p.serverLevel(), p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 14, 0.6);
         Wave5Aim.sound(p.serverLevel(), p.position(), SoundEvents.ZOMBIE_VILLAGER_CURE, 0.6f, 1.2f);
         return true;
     }
 
     // ---------------------------------------------------------------- Klaroven of the Torch (Elf: necrotic)
     private static boolean inflictWounds(ServerPlayer p) {
-        return ray(p, 4.5, 6, "minecraft:wither", ParticleTypes.SOUL, SoundEvents.EVOKER_CAST_SPELL, 0.6f, null, 0, 0);
+        return ray(p, 4.5, 6, "minecraft:wither", com.newuniverse.nusmp.particle.rukh.RukhParticles.dark(), SoundEvents.EVOKER_CAST_SPELL, 0.6f, null, 0, 0);
     }
 
     private static boolean rayOfEnfeeblement(ServerPlayer p) {
         LivingEntity t = Wave5Aim.pickFoe(p, 16.0);
         if (t == null) { none(p); return false; }
         ServerLevel l = p.serverLevel();
-        Wave5Aim.beam(l, Wave5Aim.muzzle(p), t.getBoundingBox().getCenter(), ParticleTypes.SCULK_SOUL, 20);
+        Wave5Aim.beam(l, Wave5Aim.muzzle(p), t.getBoundingBox().getCenter(), com.newuniverse.nusmp.particle.rukh.RukhParticles.dark(), 20);
         Wave5Aim.sound(l, t.position(), SoundEvents.EVOKER_CAST_SPELL, 0.8f, 0.8f);
         Fx.damage(p, t, Wave5Pure.cap(1), "minecraft:magic");
         Fx.addEffect(t, "minecraft:weakness", 240, 1);
@@ -376,8 +376,8 @@ final class Wave5Souls {
         LivingEntity t = Wave5Aim.pickFoe(p, 4.5);
         if (t == null) { none(p); return false; }
         ServerLevel l = p.serverLevel();
-        Wave5Aim.puff(l, t.getBoundingBox().getCenter(), ParticleTypes.SOUL, 14, 0.4);
-        Wave5Aim.puff(l, p.position().add(0, 1.2, 0), ParticleTypes.HEART, 5, 0.4);
+        Wave5Aim.puff(l, t.getBoundingBox().getCenter(), com.newuniverse.nusmp.particle.rukh.RukhParticles.dark(), 14, 0.4);
+        Wave5Aim.puff(l, p.position().add(0, 1.2, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 5, 0.4);
         Wave5Aim.sound(l, t.position(), SoundEvents.EVOKER_CAST_SPELL, 0.8f, 0.5f);
         Fx.damage(p, t, Wave5Pure.cap(6), "minecraft:wither");
         Fx.heal(p, 6.0f);
@@ -386,7 +386,7 @@ final class Wave5Souls {
 
     // ---------------------------------------------------------------- Mantra Tarlem (Tiefling: fire)
     private static boolean burningHands(ServerPlayer p) {
-        return cone(p, 4.5, 0.6, 6, 4, "minecraft:in_fire", ParticleTypes.FLAME, SoundEvents.FIRECHARGE_USE, null, 0, 0, 4);
+        return cone(p, 4.5, 0.6, 6, 4, "minecraft:in_fire", com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), SoundEvents.FIRECHARGE_USE, null, 0, 0, 4);
     }
 
     private static boolean scorchingRay(ServerPlayer p) {
@@ -395,7 +395,7 @@ final class Wave5Souls {
         ServerLevel l = p.serverLevel();
         for (int i = 0; i < 3; i++) {                              // three bolts, shared out among the foes in view
             LivingEntity t = foes.get(i % foes.size());
-            Wave5Aim.beam(l, Wave5Aim.muzzle(p), t.getBoundingBox().getCenter(), ParticleTypes.FLAME, 16);
+            Wave5Aim.beam(l, Wave5Aim.muzzle(p), t.getBoundingBox().getCenter(), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 16);
             Fx.damage(p, t, Wave5Pure.cap(2), "minecraft:in_fire");
             t.igniteForSeconds(2);
         }
@@ -404,32 +404,32 @@ final class Wave5Souls {
     }
 
     private static boolean fireball(ServerPlayer p) {
-        boolean went = blast(p, 22, 4.0, 6, "minecraft:in_fire", ParticleTypes.FLAME, SoundEvents.GENERIC_EXPLODE.value(), 0xFF8A2A, null, 0, 0, 5);
+        boolean went = blast(p, 22, 4.0, 6, "minecraft:in_fire", com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), SoundEvents.GENERIC_EXPLODE.value(), 0xFF8A2A, null, 0, 0, 5);
         Vec3 at = Wave5Aim.aimPoint(p, 22);
-        p.serverLevel().sendParticles(ParticleTypes.EXPLOSION, at.x, at.y, at.z, 3, 0.8, 0.8, 0.8, 0.0);   // the blast is for show: no block is ever touched
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(p.serverLevel(), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, at.x, at.y, at.z, 3, 0.8, 0.8, 0.8, 0.0);   // the blast is for show: no block is ever touched
         return went;
     }
 
     // ---------------------------------------------------------------- Prammac Caerkul (Dragonborn: acid)
     private static boolean caustic(ServerPlayer p) {
-        return cone(p, 10.0, 0.95, 4, 2, "minecraft:magic", ParticleTypes.ITEM_SLIME, SoundEvents.EVOKER_CAST_SPELL, "minecraft:poison", 60, 0, 0);
+        return cone(p, 10.0, 0.95, 4, 2, "minecraft:magic", com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), SoundEvents.EVOKER_CAST_SPELL, "minecraft:poison", 60, 0, 0);
     }
 
     private static boolean acidArrow(ServerPlayer p) {
-        return ray(p, 20, 2.5f, "minecraft:magic", ParticleTypes.ITEM_SLIME, SoundEvents.FIRECHARGE_USE, 1.8f, "minecraft:poison", 80, 0);
+        return ray(p, 20, 2.5f, "minecraft:magic", com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), SoundEvents.FIRECHARGE_USE, 1.8f, "minecraft:poison", 80, 0);
     }
 
     private static boolean vitriolicSphere(ServerPlayer p) {
-        return blast(p, 20, 3.5, 5, "minecraft:magic", ParticleTypes.ITEM_SLIME, SoundEvents.GLASS_BREAK, 0x9AE04A, "minecraft:weakness", 160, 1, 0);
+        return blast(p, 20, 3.5, 5, "minecraft:magic", com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), SoundEvents.GLASS_BREAK, 0x9AE04A, "minecraft:weakness", 160, 1, 0);
     }
 
     // ---------------------------------------------------------------- Vagan Nightfist (Goliath: cold)
     private static boolean iceKnife(ServerPlayer p) {
-        return ray(p, 18, 4, "minecraft:freeze", ParticleTypes.SNOWFLAKE, SoundEvents.GLASS_BREAK, 1.6f, "minecraft:slowness", 60, 1);
+        return ray(p, 18, 4, "minecraft:freeze", com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), SoundEvents.GLASS_BREAK, 1.6f, "minecraft:slowness", 60, 1);
     }
 
     private static boolean snowballSwarm(ServerPlayer p) {
-        return blast(p, 18, 3.0, 5, "minecraft:freeze", ParticleTypes.SNOWFLAKE, SoundEvents.SNOW_GOLEM_SHOOT, 0xCFEFFF, "minecraft:slowness", 80, 1, 0);
+        return blast(p, 18, 3.0, 5, "minecraft:freeze", com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), SoundEvents.SNOW_GOLEM_SHOOT, 0xCFEFFF, "minecraft:slowness", 80, 1, 0);
     }
 
     /** Thirty seconds in which the wearer's blows carry the cold of the dead: +2 and a slow on every melee hit. */
@@ -437,7 +437,7 @@ final class Wave5Souls {
         long now = p.level().getGameTime();
         Wave5Data.player(p).putLong(SHROUD, now + 600L);
         Fx.ring(p.serverLevel(), p.position().add(0, 0.2, 0), 1.8, 0xCFEFFF);
-        Wave5Aim.puff(p.serverLevel(), p.position().add(0, 1.0, 0), ParticleTypes.SNOWFLAKE, 24, 0.7);
+        Wave5Aim.puff(p.serverLevel(), p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 24, 0.7);
         Wave5Aim.sound(p.serverLevel(), p.position(), SoundEvents.AMETHYST_BLOCK_CHIME, 1.0f, 0.5f);
         return true;
     }
@@ -468,7 +468,7 @@ final class Wave5Souls {
         }
         if (shroud > 0L) {
             if (!worn || now >= shroud) d.putLong(SHROUD, 0L);
-            else Wave5Aim.puff(l, p.position().add(0, 1.0, 0), ParticleTypes.SNOWFLAKE, 8, 0.6);
+            else Wave5Aim.puff(l, p.position().add(0, 1.0, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 8, 0.6);
         }
     }
 

@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.NUConfig;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import io.github.manasmods.tensura.ability.skill.Skill;
@@ -52,8 +54,8 @@ public class FireboltSkill extends Skill {
         Vec3 step = impact.subtract(start).normalize().scale(0.5);
         Vec3 p = start;
         for (int i = 0; i < impact.distanceTo(start) * 2; i++) {
-            level.sendParticles(ParticleTypes.ELECTRIC_SPARK, p.x, p.y, p.z, 2, 0.05, 0.05, 0.05, 0.0);
-            level.sendParticles(ParticleTypes.FLAME, p.x, p.y, p.z, 1, 0.05, 0.05, 0.05, 0.0);
+            RukhFx.spray(level, RukhFx.Alignment.LIGHT, p.x, p.y, p.z, 2, 0.05, 0.05, 0.05, 0.0);
+            RukhFx.spray(level, RukhFx.Alignment.LIGHT, p.x, p.y, p.z, 1, 0.05, 0.05, 0.05, 0.0);
             p = p.add(step);
         }
         level.playSound(null, player.blockPosition(), SoundEvents.LIGHTNING_BOLT_IMPACT, SoundSource.PLAYERS, 0.8F, 1.6F);

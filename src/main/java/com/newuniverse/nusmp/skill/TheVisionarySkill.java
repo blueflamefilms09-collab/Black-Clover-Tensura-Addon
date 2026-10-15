@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import io.github.manasmods.tensura.ability.skill.Skill;
 import net.minecraft.core.particles.ParticleTypes;
@@ -43,7 +45,7 @@ public class TheVisionarySkill extends Skill {
             case METEOR -> {
                 if (!SkillUtil.spendMagicules(player, DMUtil.cost(4000))) return;
                 Vec3 c = DMUtil.lookPoint(player, 64);
-                GodTier.line(level, ParticleTypes.FLAME, c.add(8, 40, 0), c);
+                GodTier.line(level, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), c.add(8, 40, 0), c);
                 level.explode(player, c.x, c.y, c.z, mastered ? 6.0F : 4.0F, true, Level.ExplosionInteraction.NONE);
                 for (LivingEntity t : DMUtil.around(player, c, mastered ? 8 : 6)) {
                     t.hurt(player.damageSources().playerAttack(player), DMUtil.dmg(mastered ? 50 : 35));
@@ -60,7 +62,7 @@ public class TheVisionarySkill extends Skill {
                     t.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 160, 0));
                     t.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 100, 0));
                 }
-                level.sendParticles(ParticleTypes.SQUID_INK, c.x, c.y + 1, c.z, 300, 3, 2, 3, 0.02);
+                RukhFx.spray(level, RukhFx.Alignment.DARK, c.x, c.y + 1, c.z, 300, 3, 2, 3, 0.02);
                 level.playSound(null, player.blockPosition(), SoundEvents.SCULK_SHRIEKER_SHRIEK, SoundSource.PLAYERS, 1.0F, 0.5F);
                 instance.setCoolDown(com.newuniverse.nusmp.NUSMP.ticksToSeconds(DMUtil.cooldown(700)), VOID);
             }
@@ -71,7 +73,7 @@ public class TheVisionarySkill extends Skill {
                 player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, ticks, 2));
                 player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, ticks, 2));
                 player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, ticks, 1));
-                level.sendParticles(ParticleTypes.TOTEM_OF_UNDYING, player.getX(), player.getY() + 1, player.getZ(), 60, 0.5, 1, 0.5, 0.3);
+                RukhFx.spray(level, RukhFx.Alignment.LIGHT, player.getX(), player.getY() + 1, player.getZ(), 60, 0.5, 1, 0.5, 0.3);
                 instance.setCoolDown(com.newuniverse.nusmp.NUSMP.ticksToSeconds(DMUtil.cooldown(3600)), BODY);
             }
         }

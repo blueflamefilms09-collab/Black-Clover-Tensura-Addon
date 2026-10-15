@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.dungeon.LivingDungeon;
 import net.minecraft.ChatFormatting;
@@ -138,8 +140,8 @@ final class Wave15Field {
             s.age++;
             Vec3 c = s.at;
             if (s.age % 3 == 0) {
-                lv.sendParticles(Wave15Util.dust(0xF2C230, 1.0f), c.x, c.y, c.z, 6, 0.6, 0.45, 0.6, 0.02);
-                lv.sendParticles(Wave15Util.dust(0x1E1C1A, 0.9f), c.x, c.y, c.z, 4, 0.6, 0.45, 0.6, 0.02);
+                RukhFx.spray(lv, Wave15Util.align(0xF2C230), c.x, c.y, c.z, 6, 0.6, 0.45, 0.6, 0.02);
+                RukhFx.spray(lv, Wave15Util.align(0x1E1C1A), c.x, c.y, c.z, 4, 0.6, 0.45, 0.6, 0.02);
             }
             if (s.age % Wave15Rules.SWARM_PULSE == 0) pulse(owner, lv, c, s.target);
             if (s.age >= Wave15Rules.SWARM_TICKS) it.remove();
@@ -229,7 +231,7 @@ final class Wave15Field {
                 PHASED.remove(id);
                 continue;
             }
-            if (now % 20 == 0 || now % 20 == 5) p.serverLevel().sendParticles(Wave15Util.dust(0xFFD860, 0.9f), p.getX(), p.getY() + 0.9, p.getZ(), 3, 0.3, 0.5, 0.3, 0.0);
+            if (now % 20 == 0 || now % 20 == 5) RukhFx.spray(p.serverLevel(), Wave15Util.align(0xFFD860), p.getX(), p.getY() + 0.9, p.getZ(), 3, 0.3, 0.5, 0.3, 0.0);
             if (now < ph.until) continue;
             if (p.serverLevel().noCollision(p, p.getBoundingBox())) {
                 endPhase(p, false);
@@ -306,6 +308,6 @@ final class Wave15Field {
 
     /** Snowflake or other flavour particles are sent by the callers; this one is the sparkle of a finished step. */
     static void sparkle(ServerLevel lv, Vec3 at) {
-        lv.sendParticles(ParticleTypes.END_ROD, at.x, at.y + 0.8, at.z, 8, 0.3, 0.4, 0.3, 0.03);
+        RukhFx.spray(lv, RukhFx.Alignment.LIGHT, at.x, at.y + 0.8, at.z, 8, 0.3, 0.4, 0.3, 0.03);
     }
 }

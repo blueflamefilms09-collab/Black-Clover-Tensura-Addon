@@ -501,7 +501,7 @@ public final class Wave7Events {
             quiet(p, "minecraft:night_vision", 260, 0);
             if (second) {
                 Fx.lendSkill(p, Wave7Skills.MAGIC_SENSE, Wave7Skills.LEASE);               // the card's +5 to Insight, Investigation and Perception
-                p.serverLevel().sendParticles(ParticleTypes.ASH, p.getX(), p.getY() + 1.0, p.getZ(), 4, 0.35, 0.6, 0.35, 0.0);
+                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(p.serverLevel(), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, p.getX(), p.getY() + 1.0, p.getZ(), 4, 0.35, 0.6, 0.35, 0.0);
             }
             if (level == 2) {                                                              // the statue: overlooked entirely
                 quiet(p, "minecraft:invisibility", 30, 0);
@@ -534,7 +534,7 @@ public final class Wave7Events {
         ServerLevel l = p.serverLevel();
         double r = Wave7Math.starRadius(l.getDayTime());
         if (second) Fx.ring(l, p.position().add(0, 0.1, 0), r, STAR_COLOR);
-        l.sendParticles(ParticleTypes.END_ROD, p.getX(), p.getY() + 1.2, p.getZ(), 6, r * 0.5, 0.9, r * 0.5, 0.01);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.2, p.getZ(), 6, r * 0.5, 0.9, r * 0.5, 0.01);
         revealHidden(p, r);
     }
 
@@ -598,7 +598,7 @@ public final class Wave7Events {
             double spread = 0.45 + 0.28 * i, lift = 1.0 + 0.2 * i;
             for (int side = -1; side <= 1; side += 2) {
                 Vec3 at = p.position().add(right.scale(side * spread)).add(fwd.scale(-0.4)).add(0, lift, 0);
-                l.sendParticles(ParticleTypes.FLAME, at.x, at.y, at.z, 1, 0.04, 0.04, 0.04, 0.01);
+                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, at.x, at.y, at.z, 1, 0.04, 0.04, 0.04, 0.01);
             }
         }
     }
@@ -667,7 +667,7 @@ public final class Wave7Events {
             try { Fx.damage(p, att, 5f, "minecraft:player_attack"); } finally { busy = false; }
         }
         Fx.addEffect(p, "minecraft:speed", 80, 1);
-        p.serverLevel().sendParticles(ParticleTypes.CRIT, att.getX(), att.getY() + att.getBbHeight() * 0.6, att.getZ(), 10, 0.3, 0.3, 0.3, 0.2);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(p.serverLevel(), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, att.getX(), att.getY() + att.getBbHeight() * 0.6, att.getZ(), 10, 0.3, 0.3, 0.3, 0.2);
         tell(p, "Parried!");
     }
 
@@ -681,7 +681,7 @@ public final class Wave7Events {
             boolean onYou = victim instanceof Mob m && m.getTarget() == a;
             if (Wave7Math.isSneakAttack(cloaked, mob, onYou)) {
                 e.setAmount(e.getAmount() + Wave7Math.sneakBonus(e.getAmount(), rogue(ad)));
-                a.serverLevel().sendParticles(ParticleTypes.CRIT, victim.getX(), victim.getY() + victim.getBbHeight() * 0.6, victim.getZ(), 8, 0.25, 0.25, 0.25, 0.15);
+                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(a.serverLevel(), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, victim.getX(), victim.getY() + victim.getBbHeight() * 0.6, victim.getZ(), 8, 0.25, 0.25, 0.25, 0.15);
             }
             if (cloaked) {                                              // striking breaks Unseen / Fade from View
                 ad.remove(K_GOLD);
@@ -725,7 +725,7 @@ public final class Wave7Events {
             Fx.say(k, "The armour drinks its first soul and wakes.");
         }
         returnEnergy(k, Wave7Math.soulEnergyShare(first));
-        k.serverLevel().sendParticles(ParticleTypes.SOUL, dead.getX(), dead.getY() + dead.getBbHeight() * 0.5, dead.getZ(), 8, 0.3, 0.4, 0.3, 0.05);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(k.serverLevel(), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, dead.getX(), dead.getY() + dead.getBbHeight() * 0.5, dead.getZ(), 8, 0.3, 0.4, 0.3, 0.05);
         Fx.burst(k.serverLevel(), k.position().add(0, 1, 0), SOUL_COLOR);
     }
 

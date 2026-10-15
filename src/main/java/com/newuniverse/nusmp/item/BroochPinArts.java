@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.item;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment;
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.antimagic.Nullification;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.book.GrimoireBook;
@@ -8,7 +10,6 @@ import com.newuniverse.nusmp.item.MagicWeaponItem.Kind;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -53,8 +54,6 @@ public final class BroochPinArts {
     static final float CRIT_RAW = 4.5f;
     static final int DASH = 7, WARD_TICKS = 120;
     private static final String K_UNTIL = "nusmp_ruby_ward_until", K_POOL = "nusmp_ruby_ward_pool";
-    private static final DustParticleOptions RUBY_DUST = new DustParticleOptions(new Vector3f(0.86f, 0.09f, 0.2f), 1.3f);
-    private static final DustParticleOptions RUBY_DUST_L = new DustParticleOptions(new Vector3f(1.0f, 0.45f, 0.5f), 0.9f);
 
     static final WeaponArts.Alt ALT = new WeaponArts.Alt("Ruby Ward",
             "The brooch shatters into a ruby barrier round you. For 6 s it absorbs damage (40% of your health, at least 14); when it breaks or fades, the shards burst out and cut every foe within 4 blocks.", 600);
@@ -88,8 +87,8 @@ public final class BroochPinArts {
         if (behind(p, t) || distracted(p, t)) {                                       // a critical: the pin strikes again, through the armour
             Vec3 mid = t.getBoundingBox().getCenter(), look = p.getViewVector(1f);
             pierce(p, t, CRIT_RAW);
-            sl.sendParticles(ParticleTypes.CRIT, mid.x, mid.y, mid.z, 10, 0.25, 0.3, 0.25, 0.4);
-            sl.sendParticles(RUBY_DUST, mid.x, mid.y, mid.z, 8, 0.25, 0.35, 0.25, 0.02);
+            RukhFx.spray(sl, Alignment.LIGHT, mid.x, mid.y, mid.z, 10, 0.25, 0.3, 0.25, 0.4);
+            RukhFx.spray(sl, Alignment.LIGHT, mid.x, mid.y, mid.z, 8, 0.25, 0.35, 0.25, 0.02);
             VfxSpawn.send(sl, VfxShape.WIND_SLASH, mid.subtract(look.scale(1.1)), mid.add(look.scale(1.1)), RUBY, 8, 0.8f);
             sl.playSound(null, t.blockPosition(), SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.PLAYERS, 1.0f, 1.3f);
         }
@@ -133,7 +132,7 @@ public final class BroochPinArts {
             t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, BalanceLaw.isBoss(t) ? 10 : 40, 1));
             VfxSpawn.send(sl, VfxShape.WIND_SLASH, mid.subtract(dir.scale(1.3)).add(0, 0.2, 0), mid.add(dir.scale(1.3)), RUBY, 8, 1.0f);
             VfxSpawn.send(sl, VfxShape.LIGHT_FLARE, mid, mid, RUBY_L, 8, 0.8f);
-            sl.sendParticles(ParticleTypes.CRIT, mid.x, mid.y, mid.z, first ? 14 : 8, 0.3, 0.4, 0.3, 0.5);
+            RukhFx.spray(sl, Alignment.LIGHT, mid.x, mid.y, mid.z, first ? 14 : 8, 0.3, 0.4, 0.3, 0.5);
             sl.playSound(null, t.blockPosition(), SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.PLAYERS, 1.2f, first ? 1.1f : 1.4f);
             first = false;
         }
@@ -144,7 +143,7 @@ public final class BroochPinArts {
         p.fallDistance = 0;
         p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 50, 1));
         VfxSpawn.send(sl, VfxShape.CORUNDUM_FX3, dest, dest.add(0, 0.6, 0), RUBY, 16, 0.7f);
-        sl.sendParticles(RUBY_DUST, dest.x, dest.y + 1, dest.z, 14, 0.4, 0.5, 0.4, 0.04);
+        RukhFx.spray(sl, Alignment.LIGHT, dest.x, dest.y + 1, dest.z, 14, 0.4, 0.5, 0.4, 0.04);
         sl.playSound(null, from.x, from.y, from.z, SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 1.4f, 1.6f);
         sl.playSound(null, dest.x, dest.y, dest.z, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.2f, 1.7f);
         return true;
@@ -162,7 +161,7 @@ public final class BroochPinArts {
         VfxSpawn.sendFollowing(sl, VfxShape.CORUNDUM_FX2, p, c, RUBY, WARD_TICKS, 2.4f);
         VfxSpawn.send(sl, VfxShape.CORUNDUM_FX3, c, c.add(0, 1, 0), RUBY, 22, 1.1f);
         VfxSpawn.send(sl, VfxShape.LIGHT_FLARE, c.add(0, 1.2, 0), c.add(0, 1.2, 0), RUBY_L, 14, 1.8f);
-        sl.sendParticles(RUBY_DUST, c.x, c.y + 1, c.z, 24, 0.7, 0.8, 0.7, 0.03);
+        RukhFx.spray(sl, Alignment.LIGHT, c.x, c.y + 1, c.z, 24, 0.7, 0.8, 0.7, 0.03);
         sl.playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.PLAYERS, 1.6f, 0.8f);
         sl.playSound(null, p.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.2f, 1.7f);
         SpellRuntime.zone(sl, WARD_TICKS, 4, age -> {                                  // rubies orbiting the wearer while the ward holds
@@ -170,7 +169,7 @@ public final class BroochPinArts {
             double a = age * 0.45;
             for (int k = 0; k < 3; k++) {
                 double aa = a + k * 2.094;
-                sl.sendParticles(RUBY_DUST_L, p.getX() + Math.cos(aa) * 1.15, p.getY() + 0.35 + (age % 24) * 0.06, p.getZ() + Math.sin(aa) * 1.15, 1, 0, 0, 0, 0);
+                RukhFx.spray(sl, Alignment.LIGHT, p.getX() + Math.cos(aa) * 1.15, p.getY() + 0.35 + (age % 24) * 0.06, p.getZ() + Math.sin(aa) * 1.15, 1, 0, 0, 0, 0);
             }
         });
         SpellRuntime.later(sl, WARD_TICKS, () -> {                                      // it fades: the unspent barrier bursts anyway
@@ -195,8 +194,8 @@ public final class BroochPinArts {
         }
         VfxSpawn.send(sl, VfxShape.CORUNDUM_FX3, c, c.add(0, 1, 0), RUBY, 26, broke ? 1.5f : 1.1f);
         VfxSpawn.send(sl, VfxShape.BARRIER_FX3, c.add(0, 1, 0), c.add(0, 1, 0), RUBY_L, 18, 1.2f);
-        sl.sendParticles(RUBY_DUST, c.x, c.y + 1, c.z, 40, 1.2, 0.9, 1.2, 0.06);
-        sl.sendParticles(ParticleTypes.CRIT, c.x, c.y + 1, c.z, 20, 1.2, 0.9, 1.2, 0.5);
+        RukhFx.spray(sl, Alignment.LIGHT, c.x, c.y + 1, c.z, 40, 1.2, 0.9, 1.2, 0.06);
+        RukhFx.spray(sl, Alignment.LIGHT, c.x, c.y + 1, c.z, 20, 1.2, 0.9, 1.2, 0.5);
         sl.playSound(null, p.blockPosition(), SoundEvents.GLASS_BREAK, SoundSource.PLAYERS, 1.8f, 0.7f);
         sl.playSound(null, p.blockPosition(), SoundEvents.AMETHYST_CLUSTER_BREAK, SoundSource.PLAYERS, 1.6f, 1.0f);
     }
@@ -218,7 +217,7 @@ public final class BroochPinArts {
         ServerLevel sl = p.serverLevel();
         Vec3 at = p.position().add(0, 1.1, 0);
         VfxSpawn.send(sl, VfxShape.BARRIER_FX3, at, at.add(p.getViewVector(1f)), RUBY, 10, 0.6f);
-        sl.sendParticles(RUBY_DUST, at.x, at.y, at.z, 6, 0.4, 0.5, 0.4, 0.02);
+        RukhFx.spray(sl, Alignment.LIGHT, at.x, at.y, at.z, 6, 0.4, 0.5, 0.4, 0.02);
         sl.playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.4f, 0.8f + sl.getRandom().nextFloat() * 0.4f);
         if (pool <= 0.01f) {                                                           // the ward is spent: it shatters
             d.putLong(K_UNTIL, 0);

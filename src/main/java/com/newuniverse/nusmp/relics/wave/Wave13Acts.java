@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import net.minecraft.core.component.DataComponents;
@@ -60,7 +62,7 @@ final class Wave13Acts {
         int next = Wave13Rules.nextOffer(cur);
         Wave13Rules.setStage(bag, now, next);
         Fx.say(p, OFFERS[next]);
-        p.serverLevel().sendParticles(ParticleTypes.DAMAGE_INDICATOR, p.getX(), p.getY() + 1.2, p.getZ(), 6, 0.3, 0.3, 0.3, 0.05);
+        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.DARK, p.getX(), p.getY() + 1.2, p.getZ(), 6, 0.3, 0.3, 0.3, 0.05);
     }
 
     static void everything(ActCtx c) {
@@ -248,7 +250,7 @@ final class Wave13Acts {
             Fx.addEffect(t, "tensura:spatial_blockade", hold, 0);
             Fx.addEffect(t, "minecraft:blindness", hold, 0);
         }
-        p.serverLevel().sendParticles(ParticleTypes.PORTAL, t.getX(), t.getY() + 1.0, t.getZ(), 50, 0.4, 0.7, 0.4, 0.5);
+        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.DARK, t.getX(), t.getY() + 1.0, t.getZ(), 50, 0.4, 0.7, 0.4, 0.5);
         Fx.say(p, "The target is flung into another dimension for a round and comes back dazed.");
     }
 

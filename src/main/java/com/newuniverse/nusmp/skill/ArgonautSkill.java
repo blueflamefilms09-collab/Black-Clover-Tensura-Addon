@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.NUConfig;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import io.github.manasmods.tensura.ability.skill.Skill;
@@ -64,7 +66,7 @@ public class ArgonautSkill extends Skill {
 
         ServerLevel level = player.serverLevel();
         level.playSound(null, player.blockPosition(), SoundEvents.BELL_BLOCK, SoundSource.PLAYERS, 1.0F, 0.8F + paid * 0.15F);
-        level.sendParticles(ParticleTypes.END_ROD, player.getX(), player.getY() + 1, player.getZ(), 10 * paid, 0.4, 0.6, 0.4, 0.02);
+        RukhFx.spray(level, RukhFx.Alignment.LIGHT, player.getX(), player.getY() + 1, player.getZ(), 10 * paid, 0.4, 0.6, 0.4, 0.02);
         SkillUtil.actionbar(player, Component.literal("Argonaut charge: " + paid + "/" + maxCharge()).withStyle(ChatFormatting.WHITE));
         return true;
     }
@@ -91,7 +93,7 @@ public class ArgonautSkill extends Skill {
             hits++;
         }
         level.playSound(null, player.blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 1.5F, 0.6F);
-        level.sendParticles(ParticleTypes.SWEEP_ATTACK, eye.x + look.x * 2, eye.y - 0.3, eye.z + look.z * 2, 3 + charge, 1.0, 0.3, 1.0, 0.0);
+        RukhFx.spray(level, RukhFx.Alignment.LIGHT, eye.x + look.x * 2, eye.y - 0.3, eye.z + look.z * 2, 3 + charge, 1.0, 0.3, 1.0, 0.0);
         instance.setCoolDown(com.newuniverse.nusmp.NUSMP.ticksToSeconds(NUConfig.ARGONAUT_COOLDOWN.get()), mode);
         SkillUtil.castVfx(player, 0xFFFFFFFF);
         if (hits > 0) instance.addMasteryPoint(player, charge);

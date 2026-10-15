@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.relics.RelicFlags;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -63,11 +65,11 @@ final class Wave15Events {
         if (flurry && RelicFlags.has(v, Wave15Rules.F_SNOW) && direct instanceof LivingEntity && Wave15Rules.flurryEvades(now, until, d.getLong("evade_last"))) {
             d.putLong("evade_last", now);
             e.setCanceled(true);
-            v.serverLevel().sendParticles(net.minecraft.core.particles.ParticleTypes.SNOWFLAKE, v.getX(), v.getY() + 1.0, v.getZ(), 20, 0.5, 0.6, 0.5, 0.05);
+            RukhFx.spray(v.serverLevel(), RukhFx.Alignment.LIGHT, v.getX(), v.getY() + 1.0, v.getZ(), 20, 0.5, 0.6, 0.5, 0.05);
         } else if (!flurry && RelicFlags.has(v, Wave15Rules.F_AUTUMN) && (direct instanceof LivingEntity || direct instanceof Projectile)
                 && Wave15Rules.blurEvades(now, until, v.getRandom().nextInt(100))) {
             e.setCanceled(true);
-            v.serverLevel().sendParticles(Wave15Util.dust(0xC8601E, 1.1f), v.getX(), v.getY() + 1.0, v.getZ(), 14, 0.5, 0.6, 0.5, 0.03);
+            RukhFx.spray(v.serverLevel(), Wave15Util.align(0xC8601E), v.getX(), v.getY() + 1.0, v.getZ(), 14, 0.5, 0.6, 0.5, 0.03);
         }
     }
 

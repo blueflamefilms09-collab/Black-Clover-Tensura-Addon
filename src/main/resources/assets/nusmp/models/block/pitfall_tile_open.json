@@ -1,0 +1,137 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "nusmp:block/labyrinth_tiles",
+    "tile": "nusmp:block/labyrinth_tiles"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        13,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        2
+      ],
+      "faces": {
+        "north": {
+          "texture": "#tile"
+        },
+        "south": {
+          "texture": "#tile"
+        },
+        "east": {
+          "texture": "#tile"
+        },
+        "west": {
+          "texture": "#tile"
+        },
+        "up": {
+          "texture": "#tile"
+        },
+        "down": {
+          "texture": "#tile"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        13,
+        14
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "north": {
+          "texture": "#tile"
+        },
+        "south": {
+          "texture": "#tile"
+        },
+        "east": {
+          "texture": "#tile"
+        },
+        "west": {
+          "texture": "#tile"
+        },
+        "up": {
+          "texture": "#tile"
+        },
+        "down": {
+          "texture": "#tile"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        13,
+        2
+      ],
+      "to": [
+        2,
+        16,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#tile"
+        },
+        "south": {
+          "texture": "#tile"
+        },
+        "east": {
+          "texture": "#tile"
+        },
+        "west": {
+          "texture": "#tile"
+        },
+        "up": {
+          "texture": "#tile"
+        },
+        "down": {
+          "texture": "#tile"
+        }
+      }
+    },
+    {
+      "from": [
+        14,
+        13,
+        2
+      ],
+      "to": [
+        16,
+        16,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#tile"
+        },
+        "south": {
+          "texture": "#tile"
+        },
+        "east": {
+          "texture": "#tile"
+        },
+        "west": {
+          "texture": "#tile"
+        },
+        "up": {
+          "texture": "#tile"
+        },
+        "down": {
+          "texture": "#tile"
+        }
+      }
+    }
+  ]
+}

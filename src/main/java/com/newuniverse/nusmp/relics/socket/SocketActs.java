@@ -57,40 +57,40 @@ public final class SocketActs {
             case "spirit:fire", "devil:nahamah" -> flame(p, d, amt);
             case "spirit:water" -> {
                 Fx.aoe(p, 6.0, amt, "minecraft:magic", "minecraft:slowness", 80, 1);
-                splash(l, p, ParticleTypes.SPLASH, 40, 3.0);
+                splash(l, p, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 40, 3.0);
             }
             case "spirit:wind" -> {
                 Fx.aoe(p, 3.0, amt, "minecraft:magic", null, 0, 0);
                 Fx.dash(p, 8.0);
                 Fx.addEffect(p, "minecraft:speed", 60, 1);
-                splash(l, p, ParticleTypes.CLOUD, 24, 1.5);
+                splash(l, p, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 24, 1.5);
             }
             case "spirit:earth" -> {
                 Fx.shield(p, 10f, 200);
                 Fx.addEffect(p, "minecraft:resistance", 160, 0);
                 Fx.aoe(p, 4.0, 0f, null, "minecraft:slowness", 60, 1);
-                splash(l, p, ParticleTypes.CRIT, 24, 2.0);
+                splash(l, p, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 24, 2.0);
             }
             case "spirit:light" -> {
                 mend(p, amt, 6.0);
                 for (LivingEntity f : Fx.foesAround(p, 8.0)) Fx.addEffect(f, "minecraft:glowing", 100, 0);
-                splash(l, p, ParticleTypes.END_ROD, 28, 2.0);
+                splash(l, p, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 28, 2.0);
             }
             case "spirit:dark" -> {
                 Fx.addEffect(p, "minecraft:invisibility", 100, 0);
                 Fx.addEffect(p, "minecraft:speed", 100, 0);
                 Fx.aoe(p, 6.0, 0f, null, "minecraft:blindness", 60, 0);
-                splash(l, p, ParticleTypes.LARGE_SMOKE, 30, 2.0);
+                splash(l, p, com.newuniverse.nusmp.particle.rukh.RukhParticles.dark(), 30, 2.0);
             }
             case "devil:liebe" -> {
                 cleanse(p);
                 Fx.shield(p, 8f, 200);
-                splash(l, p, ParticleTypes.END_ROD, 28, 2.0);
+                splash(l, p, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 28, 2.0);
             }
             case "devil:zagred" -> {
                 Fx.aoe(p, 8.0, 0f, null, "minecraft:slowness", 60, 4);
                 Fx.aoe(p, 8.0, 0f, null, "minecraft:weakness", 100, 1);
-                splash(l, p, ParticleTypes.ENCHANT, 40, 3.0);
+                splash(l, p, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 40, 3.0);
             }
             case "devil:megicula" -> curseWarding(p);
             case "devil:lucifero" -> {
@@ -100,17 +100,17 @@ public final class SocketActs {
                     t.push(0.0, -0.6, 0.0);
                     t.hurtMarked = true;
                 }
-                splash(l, p, ParticleTypes.SQUID_INK, 30, 3.0);
+                splash(l, p, com.newuniverse.nusmp.particle.rukh.RukhParticles.dark(), 30, 3.0);
             }
             case "devil:beelzebub" -> {
-                splash(l, p, ParticleTypes.PORTAL, 40, 1.0);
-                if (Fx.teleportLook(p, 14.0)) splash(l, p, ParticleTypes.PORTAL, 40, 1.0);
+                splash(l, p, com.newuniverse.nusmp.particle.rukh.RukhParticles.dark(), 40, 1.0);
+                if (Fx.teleportLook(p, 14.0)) splash(l, p, com.newuniverse.nusmp.particle.rukh.RukhParticles.dark(), 40, 1.0);
             }
             case "devil:astaroth" -> {
                 Fx.addEffect(p, "minecraft:speed", 100, 2);
                 Fx.addEffect(p, "minecraft:haste", 100, 1);
                 Fx.aoe(p, 8.0, 0f, null, "minecraft:slowness", 80, 2);
-                splash(l, p, ParticleTypes.ELECTRIC_SPARK, 30, 3.0);
+                splash(l, p, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 30, 3.0);
             }
             case "devil:lilith" -> {
                 for (LivingEntity t : Fx.foesAround(p, 6.0)) {
@@ -118,7 +118,7 @@ public final class SocketActs {
                     Fx.addEffect(t, "minecraft:slowness", 80, 3);
                     t.setTicksFrozen(t.getTicksRequiredToFreeze() + 40);
                 }
-                splash(l, p, ParticleTypes.SNOWFLAKE, 40, 3.0);
+                splash(l, p, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 40, 3.0);
             }
             case "devil:walgner" -> {
                 float healed = 0f;
@@ -128,7 +128,7 @@ public final class SocketActs {
                     healed += amt * 0.5f;
                 }
                 if (healed > 0f) Fx.heal(p, healed);
-                splash(l, p, ParticleTypes.DAMAGE_INDICATOR, 20, 2.0);
+                splash(l, p, com.newuniverse.nusmp.particle.rukh.RukhParticles.dark(), 20, 2.0);
             }
             default -> { }
         }
@@ -164,10 +164,10 @@ public final class SocketActs {
         if (cone) {
             for (int i = 1; i <= 8; i++) {
                 Vec3 at = eye.add(look.scale(i));
-                l.sendParticles(ParticleTypes.FLAME, at.x, at.y - 0.2, at.z, 4, 0.15 * i, 0.15 * i, 0.15 * i, 0.02);
+                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, at.x, at.y - 0.2, at.z, 4, 0.15 * i, 0.15 * i, 0.15 * i, 0.02);
             }
         } else {
-            splash(l, p, ParticleTypes.FLAME, 48, 3.0);
+            splash(l, p, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 48, 3.0);
         }
     }
 
@@ -191,7 +191,7 @@ public final class SocketActs {
             cleanse(f);
             if (f instanceof ServerPlayer) Fx.shield((ServerPlayer) f, 4f, 160);
         }
-        splash(p.serverLevel(), p, ParticleTypes.SOUL_FIRE_FLAME, 36, 2.5);
+        splash(p.serverLevel(), p, com.newuniverse.nusmp.particle.rukh.RukhParticles.dark(), 36, 2.5);
     }
 
     // ---------------------------------------------------------------- helpers
@@ -215,6 +215,6 @@ public final class SocketActs {
     }
 
     private static void splash(ServerLevel l, ServerPlayer p, ParticleOptions what, int count, double spread) {
-        l.sendParticles(what, p.getX(), p.getY() + 1.0, p.getZ(), count, spread, 0.8, spread, 0.04);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.alignOf(what), p.getX(), p.getY() + 1.0, p.getZ(), count, spread, 0.8, spread, 0.04);
     }
 }

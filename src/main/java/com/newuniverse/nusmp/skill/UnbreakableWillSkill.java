@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import io.github.manasmods.tensura.ability.skill.Skill;
 import net.minecraft.ChatFormatting;
@@ -51,7 +53,7 @@ public class UnbreakableWillSkill extends Skill {
         player.removeAllEffects();
         player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 100, 3));
         player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 200, 1));
-        player.serverLevel().sendParticles(ParticleTypes.TOTEM_OF_UNDYING, player.getX(), player.getY() + 1, player.getZ(), 60, 0.5, 1, 0.5, 0.4);
+        RukhFx.spray(player.serverLevel(), RukhFx.Alignment.LIGHT, player.getX(), player.getY() + 1, player.getZ(), 60, 0.5, 1, 0.5, 0.4);
         player.serverLevel().playSound(null, player.blockPosition(), SoundEvents.TOTEM_USE, SoundSource.PLAYERS, 1.0F, 0.8F);
         player.displayClientMessage(Component.literal("You refuse to fall!").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD), true);
 

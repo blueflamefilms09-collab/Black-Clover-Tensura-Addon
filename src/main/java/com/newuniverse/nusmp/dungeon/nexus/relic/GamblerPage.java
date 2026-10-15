@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.dungeon.nexus.relic;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment;
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.book.GrimoireBook;
 import com.newuniverse.nusmp.book.SpellRuntime;
@@ -193,7 +195,7 @@ final class GamblerPage {
         SpellRuntime.later(level, s.telegraph, () -> {
             if (!here(p, level)) return;
             VfxSpawn.send(level, VfxShape.BONE_FX3, point, point, BONE, 16, 1.2f);
-            level.sendParticles(ParticleTypes.EXPLOSION, point.x, point.y + 0.5, point.z, 3, s.size * 0.3, 0.3, s.size * 0.3, 0.0);
+            RukhFx.spray(level, Alignment.LIGHT, point.x, point.y + 0.5, point.z, 3, s.size * 0.3, 0.3, s.size * 0.3, 0.0);
             level.playSound(null, p.blockPosition(), SoundEvents.GENERIC_EXPLODE.value(), SoundSource.PLAYERS, 1.4f, 0.7f);
             int n = 0;
             for (LivingEntity t : GrimoireBook.around(p, point, s.size)) {
@@ -211,7 +213,7 @@ final class GamblerPage {
             if (!here(p, level)) return;
             VfxSpawn.send(level, VfxShape.LIGHTNING_GOD, point, point, BOLT, 22, (float) s.size);
             level.playSound(null, p.blockPosition(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.PLAYERS, 1.6f, 1.0f);
-            level.sendParticles(ParticleTypes.ELECTRIC_SPARK, point.x, point.y + 1.0, point.z, 30, s.size * 0.4, 1.0, s.size * 0.4, 0.2);
+            RukhFx.spray(level, Alignment.LIGHT, point.x, point.y + 1.0, point.z, 30, s.size * 0.4, 1.0, s.size * 0.4, 0.2);
             int n = 0;
             for (LivingEntity t : GrimoireBook.around(p, point, s.size)) {
                 if (n++ >= HIT_CAP) break;

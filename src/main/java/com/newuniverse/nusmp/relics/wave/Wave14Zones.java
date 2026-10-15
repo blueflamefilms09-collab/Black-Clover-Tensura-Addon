@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.wave.Wave14Rules.Zone;
 import com.newuniverse.nusmp.relics.wave.Wave14Rules.ZoneBook;
@@ -111,12 +113,12 @@ final class Wave14Zones {
     // ---------------------------------------------------------------- mud
     private static void grease(ServerLevel level, Zone z, ServerPlayer owner) {
         Vec3 c = new Vec3(z.x(), z.y(), z.z());
-        level.sendParticles(Wave14Util.dust(0x7A5232, 1.4f), z.x(), z.y() + 0.15, z.z(), 6, z.radius() * 0.5, 0.05, z.radius() * 0.5, 0.0);
+        RukhFx.spray(level, Wave14Util.align(0x7A5232), z.x(), z.y() + 0.15, z.z(), 6, z.radius() * 0.5, 0.05, z.radius() * 0.5, 0.0);
         for (LivingEntity e : Wave14Util.near(level, c, z.radius(), x -> foe(owner, x) && Math.abs(x.getY() - z.y()) < 2.0)) {
             Wave14Util.give(e, 30, 1, "minecraft:slowness");
             if (e.getRandom().nextInt(4) == 0) {                                      // the grease takes the feet from under it
                 Wave14Util.give(e, 20, 4, "minecraft:slowness");
-                level.sendParticles(ParticleTypes.SPLASH, e.getX(), e.getY() + 0.2, e.getZ(), 6, 0.3, 0.1, 0.3, 0.02);
+                RukhFx.spray(level, RukhFx.Alignment.LIGHT, e.getX(), e.getY() + 0.2, e.getZ(), 6, 0.3, 0.1, 0.3, 0.02);
             }
         }
     }
@@ -129,9 +131,9 @@ final class Wave14Zones {
         for (int i = 0; i < 10; i++) {
             double a = i * 0.9 + level.getGameTime() * 0.4, h = i * 0.25;
             double r = 0.4 + i * 0.12;
-            level.sendParticles(Wave14Util.dust(0xC8B27A, 1.3f), m.x() + Math.cos(a) * r, m.y() + h, m.z() + Math.sin(a) * r, 1, 0, 0, 0, 0);
+            RukhFx.spray(level, Wave14Util.align(0xC8B27A), m.x() + Math.cos(a) * r, m.y() + h, m.z() + Math.sin(a) * r, 1, 0, 0, 0, 0);
         }
-        level.sendParticles(ParticleTypes.CLOUD, m.x(), m.y() + 0.3, m.z(), 3, 0.3, 0.2, 0.3, 0.02);
+        RukhFx.spray(level, RukhFx.Alignment.LIGHT, m.x(), m.y() + 0.3, m.z(), 3, 0.3, 0.2, 0.3, 0.02);
         for (LivingEntity e : Wave14Util.near(level, c, m.radius(), x -> foe(owner, x) && Math.abs(x.getY() - m.y()) < 3.0)) {
             if (owner != null) Fx.damage(owner, e, 2.5f, "minecraft:magic");
             Wave14Util.give(e, 30, 0, "minecraft:blindness");
@@ -145,7 +147,7 @@ final class Wave14Zones {
         if (step) {                                                                    // the wall drawn in the air, twice a second
             for (int i = -5; i <= 5; i++) {
                 double ax = z.x() + (-z.hz()) * i, az = z.z() + z.hx() * i;
-                for (int h = 0; h < 3; h++) level.sendParticles(ParticleTypes.CLOUD, ax, z.y() + 0.4 + h, az, 1, 0.05, 0.1, 0.05, 0.0);
+                for (int h = 0; h < 3; h++) RukhFx.spray(level, RukhFx.Alignment.LIGHT, ax, z.y() + 0.4 + h, az, 1, 0.05, 0.1, 0.05, 0.0);
             }
         }
         double r = z.radius() + 3.0;
@@ -153,7 +155,7 @@ final class Wave14Zones {
         for (Projectile pr : level.getEntitiesOfClass(Projectile.class, box)) {
             if (owner != null && pr.getOwner() == owner) continue;                     // the caster's own shots pass
             if (!Wave14Rules.inWall(z, pr.getX(), pr.getY(), pr.getZ())) continue;
-            level.sendParticles(ParticleTypes.POOF, pr.getX(), pr.getY(), pr.getZ(), 4, 0.1, 0.1, 0.1, 0.02);
+            RukhFx.spray(level, RukhFx.Alignment.LIGHT, pr.getX(), pr.getY(), pr.getZ(), 4, 0.1, 0.1, 0.1, 0.02);
             level.playSound(null, pr.blockPosition(), SoundEvents.FIREWORK_ROCKET_BLAST, SoundSource.PLAYERS, 0.5f, 1.4f);
             pr.discard();
         }

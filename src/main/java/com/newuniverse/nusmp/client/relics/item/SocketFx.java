@@ -10,7 +10,8 @@ import com.newuniverse.nusmp.relics.socket.SocketService;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.core.particles.DustParticleOptions;
+import com.newuniverse.nusmp.client.particle.rukh.RukhClientFx;
+import com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -46,7 +47,7 @@ public final class SocketFx {
     private static final double[] SLOT_HEIGHT = {0.95, 0.95, 1.7, 1.1, 0.15};
 
     /** The particles of one socket: the family's own particle (or null) and a coloured dust mote. */
-    private record Look(ParticleOptions base, ParticleOptions dust) {}
+    private record Look(Alignment base, Alignment dust) {}
 
     private static final IdentityHashMap<SocketDef, Look> LOOKS = new IdentityHashMap<>();
 
@@ -58,17 +59,12 @@ public final class SocketFx {
     private static Look look(SocketDef d) {
         Look l = LOOKS.get(d);
         if (l != null) return l;
-        int rgb = d.rgb();
-        DustParticleOptions dust = new DustParticleOptions(new Vector3f((rgb >> 16 & 255) / 255f, (rgb >> 8 & 255) / 255f, (rgb & 255) / 255f), 0.8f);
-        ParticleOptions base = switch (d.fx()) {
-            case EMBER -> ParticleTypes.SMALL_FLAME;
-            case DROPLET -> ParticleTypes.FALLING_WATER;
-            case WISP -> ParticleTypes.CLOUD;
+        Alignment base = switch (d.fx()) {
+            case EMBER, DROPLET, WISP, LIGHT -> Alignment.LIGHT;
             case MOTE -> null;
-            case LIGHT -> ParticleTypes.END_ROD;
-            case SMOKE -> ParticleTypes.SMOKE;
+            case SMOKE -> Alignment.DARK;
         };
-        l = new Look(base, dust);
+        l = new Look(base, d.fx() == SocketFxKind.SMOKE ? Alignment.DARK : Alignment.LIGHT);
         LOOKS.put(d, l);
         return l;
     }
@@ -121,11 +117,11 @@ public final class SocketFx {
             int count = SocketFxRules.perBurst(quality);
             boolean falling = d.fx() == SocketFxKind.DROPLET;
             for (int i = 0; i < count; i++) {
-                level.addParticle(l.base(), x, y, z, (rng.nextDouble() - 0.5) * 0.02, falling ? 0.0 : 0.02 + rng.nextDouble() * 0.02, (rng.nextDouble() - 0.5) * 0.02);
+                RukhClientFx.spray(level, l.base(), x, y, z, 1, (rng.nextDouble() - 0.5) * 0.02, falling ? 0.0 : 0.02 + rng.nextDouble() * 0.02, (rng.nextDouble() - 0.5) * 0.02, 1.0);
                 n++;
             }
         }
-        level.addParticle(l.dust(), x, y, z, 0.0, 0.01, 0.0);
+        RukhClientFx.spray(level, l.dust(), x, y, z, 1, 0.0, 0.01, 0.0, 1.0);
         return n + 1;
     }
 

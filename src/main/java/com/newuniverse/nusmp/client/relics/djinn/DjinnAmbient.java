@@ -1,16 +1,14 @@
 package com.newuniverse.nusmp.client.relics.djinn;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment;
+import com.newuniverse.nusmp.client.particle.rukh.RukhClientFx;
 import com.newuniverse.nusmp.client.relics.djinn.DjinnClientState.Snap;
 import com.newuniverse.nusmp.client.relics.djinn.DjinnLook.Ambient;
 import com.newuniverse.nusmp.client.relics.djinn.DjinnLook.Anchor;
 import com.newuniverse.nusmp.relics.djinn.Djinn;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
-import org.joml.Vector3f;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,12 +43,15 @@ final class DjinnAmbient {
         Ambient a = DjinnLook.ambient(d.ordinal());
         RandomSource rnd = level.getRandom();
         Anchor anchor = DjinnLook.anchorAt(a.anchor(), s.phase());
-        spawn(level, rnd, p, a.main(), DjinnLook.spawnCount(a.mainRate(), share, rnd.nextFloat()), anchor, d.glow());
-        if (a.secondRate() > 0) spawn(level, rnd, p, a.second(), DjinnLook.spawnCount(a.secondRate(), share, rnd.nextFloat()), anchor, d.glow());
-        if (dark) spawn(level, rnd, p, DjinnLook.RUKH_KEY, DjinnLook.spawnCount(DjinnLook.RUKH_RATE, share, rnd.nextFloat()), DjinnLook.anchorAt(Anchor.WINGS, s.phase()), 0x120818);
+        spawn(level, rnd, p, a.main(), DjinnLook.spawnCount(a.mainRate(), share, rnd.nextFloat()), anchor, d.glow(), dark);
+        if (a.secondRate() > 0) spawn(level, rnd, p, a.second(), DjinnLook.spawnCount(a.secondRate(), share, rnd.nextFloat()), anchor, d.glow(), dark);
+        // The Magi Rukh gathering: while the Djinn is worn a flock keeps converging on the player, light for a light Djinn, dark for the dark state.
+        if (level.getGameTime() % 10 == 0) RukhClientFx.gather(level, p, dark ? Alignment.DARK : Alignment.LIGHT, phaseGather(s.phase()));
+        if (dark) spawn(level, rnd, p, DjinnLook.RUKH_KEY, DjinnLook.spawnCount(DjinnLook.RUKH_RATE, share, rnd.nextFloat()), DjinnLook.anchorAt(Anchor.WINGS, s.phase()), 0x120818, true);
     }
 
-    private static void spawn(ClientLevel level, RandomSource rnd, AbstractClientPlayer p, String key, int count, Anchor anchor, int rgb) {
+    private static void spawn(ClientLevel level, RandomSource rnd, AbstractClientPlayer p, String key, int count, Anchor anchor, int rgb, boolean dark) {
+        boolean rukh = key.equals(DjinnLook.RUKH_KEY);
         if (count <= 0) return;
         double yaw = Math.toRadians(p.yBodyRot);
         double fx = -Math.sin(yaw), fz = Math.cos(yaw), lx = Math.cos(yaw), lz = Math.sin(yaw);
@@ -86,39 +87,14 @@ final class DjinnAmbient {
             double vx = (rnd.nextDouble() - 0.5) * 0.03 + ox * 0.03, vz = (rnd.nextDouble() - 0.5) * 0.03 + oz * 0.03;
             double vy = falls ? -0.015 - rnd.nextDouble() * 0.02 : 0.02 + rnd.nextDouble() * 0.05;
             if (key.equals("note")) {                                   // a note's colour is its first velocity component (a hue, 0 to 1)
-                level.addParticle(ParticleTypes.NOTE, x, y, z, rnd.nextInt(24) / 24.0, 0.0, 0.0);
+                RukhClientFx.spray(level, dark ? Alignment.DARK : Alignment.LIGHT, x, y, z, 1, 0.0, 0.02, 0.0, 1.0);
                 continue;
             }
             if (key.equals(DjinnLook.RUKH_KEY)) { vx -= fx * 0.05; vz -= fz * 0.05; }        // the black rukh streams off backwards
-            level.addParticle(particle(key, rgb), x, y, z, vx, vy, vz);
+            RukhClientFx.spray(level, rukh || dark ? Alignment.DARK : Alignment.LIGHT, x, y, z, 1, vx, vy, vz, 1.0);
         }
     }
 
-    /** The particle a key stands for (the keys of the table in {@link DjinnLook}). */
-    static ParticleOptions particle(String key, int rgb) {
-        return switch (key) {
-            case "spark" -> ParticleTypes.ELECTRIC_SPARK;
-            case "ember" -> ParticleTypes.FLAME;
-            case "flame" -> ParticleTypes.SMALL_FLAME;
-            case "smoke" -> ParticleTypes.SMOKE;
-            case "bubble" -> ParticleTypes.BUBBLE_POP;
-            case "drip" -> ParticleTypes.FALLING_WATER;
-            case "wind" -> ParticleTypes.CLOUD;
-            case "feather" -> ParticleTypes.WHITE_ASH;
-            case "petal" -> ParticleTypes.CHERRY_LEAVES;
-            case "spore" -> ParticleTypes.SPORE_BLOSSOM_AIR;
-            case "shard", "crit" -> ParticleTypes.CRIT;
-            case "ash" -> ParticleTypes.ASH;
-            case "enchant" -> ParticleTypes.ENCHANT;
-            case "mote" -> dust(rgb, 1.0f);
-            case "snow" -> ParticleTypes.SNOWFLAKE;
-            case "ink" -> ParticleTypes.SQUID_INK;
-            case "rukh" -> dust(rgb, 1.3f);
-            default -> ParticleTypes.END_ROD;
-        };
-    }
-
-    static DustParticleOptions dust(int rgb, float size) {
-        return new DustParticleOptions(new Vector3f(((rgb >> 16) & 255) / 255f, ((rgb >> 8) & 255) / 255f, (rgb & 255) / 255f), size);
-    }
+    /** How many gathering birds per pulse: a few for the Half Equip, more for the Full Equip. */
+    static int phaseGather(int phase) { return phase >= 3 ? 3 : 2; }
 }

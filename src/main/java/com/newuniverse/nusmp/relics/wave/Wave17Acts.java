@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.dungeon.LivingDungeon;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
@@ -401,8 +403,8 @@ public final class Wave17Acts {
             Wave17Kit.give(target, "tensura:corrosion", 200, 0);
             corrode(target);
         }
-        level.sendParticles(Wave17Kit.dust(ACID, 1.6f), impact.x, impact.y + 0.8, impact.z, 40, 0.5, 0.5, 0.5, 0.05);
-        level.sendParticles(ParticleTypes.SMOKE, impact.x, impact.y + 0.8, impact.z, 16, 0.4, 0.4, 0.4, 0.02);
+        RukhFx.spray(level, Wave17Kit.align(ACID), impact.x, impact.y + 0.8, impact.z, 40, 0.5, 0.5, 0.5, 0.05);
+        RukhFx.spray(level, RukhFx.Alignment.DARK, impact.x, impact.y + 0.8, impact.z, 16, 0.4, 0.4, 0.4, 0.02);
         LivingEntity pudding = null;
         for (String type : new String[]{"tensura:slime", "minecraft:slime"}) {
             pudding = Fx.summon(p, type, Wave17Rules.PUDDING_TICKS);
@@ -512,7 +514,7 @@ public final class Wave17Acts {
         }
         if (devil == null) { say(p, "The coin stays cold: nothing in hell answers here."); return; }
         ServerLevel level = p.serverLevel();
-        level.sendParticles(ParticleTypes.FLAME, devil.getX(), devil.getY() + 1.0, devil.getZ(), 60, 0.6, 0.9, 0.6, 0.08);
+        RukhFx.spray(level, RukhFx.Alignment.LIGHT, devil.getX(), devil.getY() + 1.0, devil.getZ(), 60, 0.6, 0.9, 0.6, 0.08);
         Fx.ring(level, devil.position(), 2.5, HELL);
         Fx.burst(level, devil.position(), HELL);
         spend(c);

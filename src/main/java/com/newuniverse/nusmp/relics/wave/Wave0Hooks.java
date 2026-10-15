@@ -222,7 +222,7 @@ final class Wave0Hooks {
         Wave0Util.extra(p, t, Wave0Util.roll(p, set ? 2 : 1, 6), type);
         if (flag.equals(Wave0.F_SABRE)) Fx.addEffect(t, "tensura:chill", 60, 0);
         Vec3 mid = t.getBoundingBox().getCenter();
-        p.serverLevel().sendParticles(net.minecraft.core.particles.ParticleTypes.SNOWFLAKE, mid.x, mid.y, mid.z, 5, 0.25, 0.3, 0.25, 0.04);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(p.serverLevel(), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, mid.x, mid.y, mid.z, 5, 0.25, 0.3, 0.25, 0.04);
     }
 
     // ---------------------------------------------------------------- Bloodbound Katana: the card's rules on top of the item's own charges

@@ -45,6 +45,33 @@
         "processors": "nusmp:labyrinth_interior",
         "projection": "rigid"
       }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:labyrinth/side/pit_room",
+        "processors": "nusmp:labyrinth_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:labyrinth/side/dark_room",
+        "processors": "nusmp:labyrinth_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:labyrinth/side/puzzle_room",
+        "processors": "nusmp:labyrinth_interior",
+        "projection": "rigid"
+      }
     }
   ]
 }

@@ -1,12 +1,13 @@
 package com.newuniverse.nusmp.client.relics.worn.lib;
 
+import com.newuniverse.nusmp.client.particle.rukh.RukhClientFx;
+import com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment;
 import com.newuniverse.nusmp.client.relics.fx.FxQuality;
 import com.newuniverse.nusmp.client.relics.fx.FxTheme;
 import com.newuniverse.nusmp.client.relics.fx.RelicFxOptions;
 import com.newuniverse.nusmp.client.relics.fx.WornFxPlan;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -53,20 +54,16 @@ public final class ArmorFx {
         double vx = (rnd.nextDouble() - 0.5) * 0.01, vz = (rnd.nextDouble() - 0.5) * 0.01;
         int glow = e.colors[WornMesh.GLOW], main = e.colors[WornMesh.MAIN];
         switch (e.theme) {
-            case EMBER -> level.addParticle(ParticleTypes.FLAME, x, y, z, vx, 0.012, vz);
-            case SNOW -> level.addParticle(ParticleTypes.SNOWFLAKE, x, y, z, vx, -0.004, vz);
-            case SPARK -> level.addParticle(ParticleTypes.ELECTRIC_SPARK, x, y, z, vx * 3, 0.0, vz * 3);
-            case LEAF -> level.addParticle(dust(glow, main, 0.8f, rnd), x, y, z, vx, -0.01, vz);
-            case WISP -> level.addParticle(ParticleTypes.SOUL, x, y, z, vx, 0.02, vz);
-            case STAR -> level.addParticle(ParticleTypes.END_ROD, x, y, z, vx, 0.01, vz);
-            case BEE -> level.addParticle(dust(0xF2C230, 0x1E1C1A, 0.6f, rnd), x, y, z, vx * 4, 0.0, vz * 4);
-            case PETAL -> level.addParticle(ParticleTypes.CHERRY_LEAVES, x, y, z, vx, -0.01, vz);
+            case EMBER -> RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, vx, 0.012, vz, 1.0);
+            case SNOW -> RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, vx, -0.004, vz, 1.0);
+            case SPARK -> RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, vx * 3, 0.0, vz * 3, 1.0);
+            case LEAF -> RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, vx, -0.01, vz, 1.0);
+            case WISP -> RukhClientFx.spray(level, Alignment.DARK, x, y, z, 1, vx, 0.02, vz, 1.0);
+            case STAR -> RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, vx, 0.01, vz, 1.0);
+            case BEE -> RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, vx * 4, 0.0, vz * 4, 1.0);
+            case PETAL -> RukhClientFx.spray(level, Alignment.LIGHT, x, y, z, 1, vx, -0.01, vz, 1.0);
             default -> { }
         }
     }
 
-    private static DustParticleOptions dust(int a, int b, float size, RandomSource rnd) {
-        int rgb = rnd.nextBoolean() ? a : b;
-        return new DustParticleOptions(new Vector3f((rgb >> 16 & 255) / 255f, (rgb >> 8 & 255) / 255f, (rgb & 255) / 255f), size);
-    }
 }

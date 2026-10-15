@@ -6,7 +6,6 @@ import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -227,11 +226,11 @@ public final class Fx {
     public static void ring(ServerLevel l, Vec3 at, double radius, int colorRgb) {
         if (l == null || at == null) return;
         double r = Mth.clamp(radius, 0.5, MAX_RADIUS);
-        DustParticleOptions dust = dust(colorRgb, 1.2f);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment dust = align(colorRgb);
         int n = Mth.clamp((int) (r * 8), 12, 64);
         for (int i = 0; i < n; i++) {
             double a = i * (Math.PI * 2 / n);
-            l.sendParticles(dust, at.x + Math.cos(a) * r, at.y + 0.1, at.z + Math.sin(a) * r, 1, 0, 0.02, 0, 0);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, dust, at.x + Math.cos(a) * r, at.y + 0.1, at.z + Math.sin(a) * r, 1, 0, 0.02, 0, 0);
         }
         VfxSpawn.send(l, VfxShape.MAGIC_CIRCLE, at.add(0, 0.08, 0), at.add(0, 1, 0), 0xFF000000 | (colorRgb & 0xFFFFFF), 24, (float) Math.min(6.0, r * 0.7));
     }
@@ -239,12 +238,24 @@ public final class Fx {
     /** A puff of coloured dust and sparks (0xRRGGBB). */
     public static void burst(ServerLevel l, Vec3 at, int colorRgb) {
         if (l == null || at == null) return;
-        l.sendParticles(dust(colorRgb, 1.5f), at.x, at.y + 0.6, at.z, 32, 0.5, 0.5, 0.5, 0.05);
-        l.sendParticles(ParticleTypes.END_ROD, at.x, at.y + 0.6, at.z, 12, 0.4, 0.4, 0.4, 0.08);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.align(colorRgb), at.x, at.y + 0.6, at.z, 32, 0.5, 0.5, 0.5, 0.05);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, at.x, at.y + 0.6, at.z, 12, 0.4, 0.4, 0.4, 0.08);
     }
 
-    static DustParticleOptions dust(int rgb, float size) {
-        return new DustParticleOptions(new Vector3f((rgb >> 16 & 255) / 255f, (rgb >> 8 & 255) / 255f, (rgb & 255) / 255f), size);
+    /** Dark colours (perceived luminance under 0.35) are Dark Rukh, everything else Light Rukh. */
+    public static com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment align(int rgb) {
+        double lum = ((rgb >> 16 & 255) * 0.2126 + (rgb >> 8 & 255) * 0.7152 + (rgb & 255) * 0.0722) / 255.0;
+        return com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.of(lum < 0.35);
+    }
+
+    /** The Rukh that stands for a coloured dust of the old code (looked up per call, never in a static initialiser). */
+    /** Alignment of a particle option that reached a helper: Dark Rukh stays dark, anything else is Light. */
+    public static com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment alignOf(net.minecraft.core.particles.ParticleOptions o) {
+        return com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.of(o == com.newuniverse.nusmp.particle.rukh.RukhParticles.dark());
+    }
+
+    public static net.minecraft.core.particles.SimpleParticleType dust(int rgb, float size) {
+        return com.newuniverse.nusmp.particle.rukh.RukhParticles.of(align(rgb));
     }
 
     /** A line in chat from the relic (gold). */

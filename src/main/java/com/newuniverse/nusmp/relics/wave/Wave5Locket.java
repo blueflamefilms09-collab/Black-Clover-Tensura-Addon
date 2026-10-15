@@ -51,7 +51,7 @@ final class Wave5Locket {
         Fx.heal(p, p.getMaxHealth() * 0.5f);
         p.getFoodData().eat(8, 0.8f);
         Fx.addEffect(p, "minecraft:regeneration", 400, 1);
-        Wave5Aim.puff(l, p.position().add(0, 1.4, 0), ParticleTypes.HEART, 8, 0.5);
+        Wave5Aim.puff(l, p.position().add(0, 1.4, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 8, 0.5);
         Wave5Aim.sound(l, p.position(), SoundEvents.AMETHYST_BLOCK_CHIME, 1.0f, 1.0f);
         Wave5Aim.msg(p, "An old soldier opens a door to you. You sleep warm, and you will wake here if you fall.", ChatFormatting.LIGHT_PURPLE);
     }

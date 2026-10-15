@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
@@ -29,7 +31,7 @@ public class WynnFimbulvetrSkill extends ChantedMagicSkill {
             t.setTicksFrozen(t.getTicksRequiredToFreeze() + 200);
             t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 140, 4));
         }
-        level.sendParticles(ParticleTypes.SNOWFLAKE, c.x, c.y + 1, c.z, 400, radius / 2, 2, radius / 2, 0.05);
+        RukhFx.spray(level, RukhFx.Alignment.LIGHT, c.x, c.y + 1, c.z, 400, radius / 2, 2, radius / 2, 0.05);
         level.playSound(null, player.blockPosition(), SoundEvents.GLASS_BREAK, SoundSource.PLAYERS, 2.0F, 0.5F);
         return true;
     }

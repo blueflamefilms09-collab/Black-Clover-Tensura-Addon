@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
@@ -23,9 +25,9 @@ public class ReaLaevateinnSkill extends ChantedMagicSkill {
         for (LivingEntity t : DMUtil.around(player, player.position(), radius)) {
             t.hurt(player.damageSources().playerAttack(player), DMUtil.dmg(mastered ? 35 : 24));
             t.igniteForSeconds(8.0F);
-            level.sendParticles(ParticleTypes.FLAME, t.getX(), t.getY(), t.getZ(), 60, 0.3, 3.0, 0.3, 0.02);
+            RukhFx.spray(level, RukhFx.Alignment.LIGHT, t.getX(), t.getY(), t.getZ(), 60, 0.3, 3.0, 0.3, 0.02);
         }
-        level.sendParticles(ParticleTypes.LAVA, player.getX(), player.getY(), player.getZ(), 80, radius / 2, 0.5, radius / 2, 0.0);
+        RukhFx.spray(level, RukhFx.Alignment.LIGHT, player.getX(), player.getY(), player.getZ(), 80, radius / 2, 0.5, radius / 2, 0.0);
         level.playSound(null, player.blockPosition(), SoundEvents.BLAZE_SHOOT, SoundSource.PLAYERS, 2.0F, 0.5F);
         return true;
     }

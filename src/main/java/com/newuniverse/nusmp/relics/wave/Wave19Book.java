@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import net.minecraft.ChatFormatting;
@@ -53,8 +55,8 @@ final class Wave19Book {
         String[] ids = Wave19Rules.page(page);
         int n = Fx.lendSkills(p, ticks, ids);
         ServerLevel sl = p.serverLevel();
-        sl.sendParticles(ParticleTypes.ENCHANT, p.getX(), p.getY() + 1.6, p.getZ(), 40, 0.5, 0.5, 0.5, 0.9);
-        sl.sendParticles(ParticleTypes.END_ROD, p.getX(), p.getY() + 1.6, p.getZ(), 8, 0.4, 0.4, 0.4, 0.03);
+        RukhFx.spray(sl, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.6, p.getZ(), 40, 0.5, 0.5, 0.5, 0.9);
+        RukhFx.spray(sl, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.6, p.getZ(), 8, 0.4, 0.4, 0.4, 0.03);
         sl.playSound(null, p.blockPosition(), SoundEvents.BOOK_PAGE_TURN, SoundSource.PLAYERS, 1.0f, 1.0f);
         if (n == 0) {
             Wave19Util.addMagicules(p, ticks >= Wave19Rules.PREPARE_TICKS ? 0.25 : 0.10);

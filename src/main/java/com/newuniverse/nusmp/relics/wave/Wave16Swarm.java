@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.Relics;
@@ -146,7 +148,7 @@ final class Wave16Swarm {
                 }
                 Fx.damage(owner, target, Wave16Tune.BAT_BITE * alive.size(), "minecraft:mob_attack");
                 Vec3 at = target.position().add(0, target.getBbHeight() * 0.6, 0);
-                lv.sendParticles(ParticleTypes.SMOKE, at.x, at.y, at.z, 10, 0.4, 0.3, 0.4, 0.02);
+                RukhFx.spray(lv, RukhFx.Alignment.DARK, at.x, at.y, at.z, 10, 0.4, 0.3, 0.4, 0.02);
             } else {
                 for (Bat b : alive) if (b.distanceToSqr(owner) > 144) b.teleportTo(owner.getX(), owner.getY() + 1.6, owner.getZ());
             }

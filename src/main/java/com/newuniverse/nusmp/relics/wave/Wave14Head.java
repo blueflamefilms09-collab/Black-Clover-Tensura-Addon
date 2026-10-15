@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Attune;
 import com.newuniverse.nusmp.relics.Fx;
@@ -99,10 +101,10 @@ final class Wave14Head {
                 double spread = i * 0.12;
                 Vec3 at = eye.add(look.scale(i)).add((p.getRandom().nextDouble() - 0.5) * spread * 2, (p.getRandom().nextDouble() - 0.5) * spread * 2,
                         (p.getRandom().nextDouble() - 0.5) * spread * 2);
-                sl.sendParticles(Wave14Util.dust(b.rgb, 1.6f), at.x, at.y, at.z, 1, 0, 0, 0, 0);
+                RukhFx.spray(sl, Wave14Util.align(b.rgb), at.x, at.y, at.z, 1, 0, 0, 0, 0);
             }
             Vec3 at = eye.add(look.scale(i));
-            sl.sendParticles(b == Breath.FIRE ? ParticleTypes.FLAME : b == Breath.COLD ? ParticleTypes.SNOWFLAKE : ParticleTypes.ELECTRIC_SPARK, at.x, at.y, at.z, 2, 0.15 * i * 0.3, 0.15 * i * 0.3, 0.15 * i * 0.3, 0.02);
+            RukhFx.spray(sl, Wave14Util.align(b.rgb), at.x, at.y, at.z, 2, 0.15 * i * 0.3, 0.15 * i * 0.3, 0.15 * i * 0.3, 0.02);
         }
         sl.playSound(null, p.blockPosition(), b == Breath.THUNDER ? SoundEvents.LIGHTNING_BOLT_IMPACT : b == Breath.COLD ? SoundEvents.PLAYER_HURT_FREEZE : SoundEvents.DRAGON_FIREBALL_EXPLODE,
                 SoundSource.PLAYERS, 1.0f, 0.8f);
@@ -170,7 +172,7 @@ final class Wave14Head {
         if (!Wave14Rules.wintersFury(p.getHealth(), p.getMaxHealth())) return 0f;
         float extra = Wave14Rules.furyExtra(1 + p.getRandom().nextInt(8), victim instanceof net.minecraft.world.entity.player.Player);
         Wave14Util.give(victim, 40, 0, "minecraft:slowness");
-        p.serverLevel().sendParticles(ParticleTypes.SNOWFLAKE, victim.getX(), victim.getY() + victim.getBbHeight() * 0.5, victim.getZ(), 8, 0.3, 0.3, 0.3, 0.02);
+        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, victim.getX(), victim.getY() + victim.getBbHeight() * 0.5, victim.getZ(), 8, 0.3, 0.3, 0.3, 0.02);
         return extra;
     }
 
@@ -318,8 +320,8 @@ final class Wave14Head {
         if (t instanceof ServerPlayer tp) Fx.heal(tp, amount);
         else t.heal(amount);
         Wave14Util.remove(t, "minecraft:poison", "minecraft:hunger", "minecraft:nausea", "tensura:infection", "tensura:fatal_poison", "tensura:magicule_poison");
-        p.serverLevel().sendParticles(Wave14Util.dust(0xFF9AD5, 1.4f), t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 18, 0.4, 0.5, 0.4, 0.02);
-        p.serverLevel().sendParticles(ParticleTypes.HEART, t.getX(), t.getY() + t.getBbHeight() + 0.2, t.getZ(), 4, 0.3, 0.2, 0.3, 0.0);
+        RukhFx.spray(p.serverLevel(), Wave14Util.align(0xFF9AD5), t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 18, 0.4, 0.5, 0.4, 0.02);
+        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, t.getX(), t.getY() + t.getBbHeight() + 0.2, t.getZ(), 4, 0.3, 0.2, 0.3, 0.0);
         Wave14Util.say(p, "Healing Touch: " + (t == p ? "you recover " : t.getName().getString() + " recovers ") + amount + " health and is cleansed. " + Wave14Util.pool(d, P_UNI, Wave14Rules.UNICORN_CHARGES, today, () -> 0).have() + " charges left.");
     }
 
@@ -331,7 +333,7 @@ final class Wave14Head {
             Wave14Util.give(e, 200, 0, "minecraft:glowing");
             n++;
         }
-        p.serverLevel().sendParticles(ParticleTypes.END_ROD, p.getX(), p.getY() + 1.0, p.getZ(), 24, 1.5, 0.8, 1.5, 0.05);
+        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 24, 1.5, 0.8, 1.5, 0.05);
         Wave14Util.tell(p, n == 0 ? "You sense no evil near." : "You sense " + n + (n == 1 ? " hostile presence." : " hostile presences."), ChatFormatting.LIGHT_PURPLE);
     }
 
@@ -345,11 +347,11 @@ final class Wave14Head {
             BlockState st = sl.getBlockState(pos);
             if (sl.mayInteract(p, pos) && st.getBlock() instanceof BonemealableBlock bb && bb.isValidBonemealTarget(sl, pos, st)) {
                 if (bb.isBonemealSuccess(sl, sl.random, pos, st)) bb.performBonemeal(sl, sl.random, pos, st);
-                sl.sendParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 10, 0.4, 0.3, 0.4, 0.0);
+                RukhFx.spray(sl, RukhFx.Alignment.LIGHT, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 10, 0.4, 0.3, 0.4, 0.0);
                 return;
             }
         }
-        p.serverLevel().sendParticles(ParticleTypes.HAPPY_VILLAGER, p.getX(), p.getY() + 1.0, p.getZ(), 6, 0.4, 0.4, 0.4, 0.0);
+        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 6, 0.4, 0.4, 0.4, 0.0);
         Wave14Util.tell(p, "Druidcraft: nothing here wants to grow.", ChatFormatting.GRAY);
     }
 
@@ -360,7 +362,7 @@ final class Wave14Head {
         for (LivingEntity e : Wave14Util.friendsAround(p, 8.0)) {
             if (Wave14Util.give(e, 1200, 0, "tensura:presence_concealment", "minecraft:invisibility")) n++;
         }
-        p.serverLevel().sendParticles(ParticleTypes.SMOKE, p.getX(), p.getY() + 0.5, p.getZ(), 20, 0.8, 0.4, 0.8, 0.01);
+        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.DARK, p.getX(), p.getY() + 0.5, p.getZ(), 20, 0.8, 0.4, 0.8, 0.01);
         Wave14Util.tell(p, "Pass without Trace: " + n + (n == 1 ? " walks" : " walk") + " unnoticed for a minute.", ChatFormatting.GRAY);
     }
 
@@ -382,7 +384,7 @@ final class Wave14Head {
         double y = p.getEyeY() + 0.35;
         for (int i = 0; i < 3; i++) {
             double a = p.tickCount * 0.1 + i * 2.09;
-            p.serverLevel().sendParticles(Wave14Util.dust(Wave14Rules.HAIR[h], 0.9f), p.getX() + Math.cos(a) * 0.45, y, p.getZ() + Math.sin(a) * 0.45, 1, 0, 0, 0, 0);
+            RukhFx.spray(p.serverLevel(), Wave14Util.align(Wave14Rules.HAIR[h]), p.getX() + Math.cos(a) * 0.45, y, p.getZ() + Math.sin(a) * 0.45, 1, 0, 0, 0, 0);
         }
     }
 
@@ -410,7 +412,7 @@ final class Wave14Head {
         Vec3 to = a.hit().getBoundingBox().getCenter();
         Wave14Util.trail(sl, p.getEyePosition().add(0, -0.2, 0), to, Wave14Util.dust(0x3A0A1A, 1.5f));
         Wave14Util.trail(sl, p.getEyePosition().add(0, -0.2, 0), to, Wave14Util.dust(0xB0182E, 0.9f));
-        sl.sendParticles(ParticleTypes.SQUID_INK, to.x, to.y, to.z, 12, 0.3, 0.3, 0.3, 0.04);
+        RukhFx.spray(sl, RukhFx.Alignment.DARK, to.x, to.y, to.z, 12, 0.3, 0.3, 0.3, 0.04);
         Fx.damage(p, a.hit(), dmg, "minecraft:wither");
         if (!saved) Wave14Util.give(a.hit(), 40, 0, "minecraft:wither");
         sl.playSound(null, p.blockPosition(), SoundEvents.WITHER_SHOOT, SoundSource.PLAYERS, 0.8f, 1.4f);
@@ -466,7 +468,7 @@ final class Wave14Head {
     /** Feather Fall, as often as you like: twenty seconds of slow falling (and the circlet already takes the sting out of every fall). */
     static void featherFall(ActCtx c) {
         Wave14Util.give(c.player(), 400, 0, "minecraft:slow_falling");
-        c.player().serverLevel().sendParticles(ParticleTypes.FLAME, c.player().getX(), c.player().getY() + 0.2, c.player().getZ(), 8, 0.3, 0.1, 0.3, 0.01);
+        RukhFx.spray(c.player().serverLevel(), RukhFx.Alignment.LIGHT, c.player().getX(), c.player().getY() + 0.2, c.player().getZ(), 8, 0.3, 0.1, 0.3, 0.01);
     }
 
     /**
@@ -493,8 +495,8 @@ final class Wave14Head {
             Fx.damageHeavy(p, f, dmg, "minecraft:in_fire");
             if (!f.fireImmune()) f.setRemainingFireTicks(100);
         }
-        sl.sendParticles(ParticleTypes.FLAME, p.getX(), p.getY() + 1.0, p.getZ(), 80, 1.2, 0.8, 1.2, 0.12);
-        sl.sendParticles(ParticleTypes.LAVA, p.getX(), p.getY() + 1.0, p.getZ(), 20, 1.0, 0.6, 1.0, 0.0);
+        RukhFx.spray(sl, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 80, 1.2, 0.8, 1.2, 0.12);
+        RukhFx.spray(sl, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 20, 1.0, 0.6, 1.0, 0.0);
         sl.playSound(null, p.blockPosition(), SoundEvents.GENERIC_EXPLODE.value(), SoundSource.PLAYERS, 1.0f, 1.2f);
         Fx.ring(sl, p.position(), 3.0, 0xFF7A1C);
         Wave14Util.say(p, "Up in Flames: you erupt in fire and rise again, ashen and weak. The circlet is spent for three days.");
@@ -582,7 +584,7 @@ final class Wave14Head {
         } catch (RuntimeException | LinkageError none) {
             ep = 0.0;
         }
-        p.serverLevel().sendParticles(Wave14Util.dust(0x5CF0A0, 1.3f), t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 20, 0.4, 0.5, 0.4, 0.02);
+        RukhFx.spray(p.serverLevel(), Wave14Util.align(0x5CF0A0), t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 20, 0.4, 0.5, 0.4, 0.02);
         Wave14Util.say(p, "Zone of Truth: " + t.getName().getString() + " has " + Math.round(t.getHealth()) + " of " + Math.round(t.getMaxHealth()) + " health and an existence of "
                 + Math.round(ep) + (t instanceof Mob m && m.getTarget() == p ? ", and it means you harm." : "."));
     }

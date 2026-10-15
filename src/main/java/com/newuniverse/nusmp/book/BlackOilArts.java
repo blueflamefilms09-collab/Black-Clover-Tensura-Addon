@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.book;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.antimagic.Nullification;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.book.ext.AttributeEvents;
@@ -89,8 +91,8 @@ public final class BlackOilArts {
     }
 
     private static void flames(ServerPlayer p, Vec3 c, int n, double spread) {
-        p.serverLevel().sendParticles(ParticleTypes.FLAME, c.x, c.y + 0.5, c.z, n, spread, 0.4, spread, 0.06);
-        p.serverLevel().sendParticles(ParticleTypes.LARGE_SMOKE, c.x, c.y + 0.5, c.z, n / 2, spread, 0.5, spread, 0.04);
+        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, c.x, c.y + 0.5, c.z, n, spread, 0.4, spread, 0.06);
+        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.DARK, c.x, c.y + 0.5, c.z, n / 2, spread, 0.5, spread, 0.04);
     }
 
     // ------------------------------------------------------------------ Sticky Tar: a glob that leaves a trapping pool
@@ -323,7 +325,7 @@ public final class BlackOilArts {
             t.setDeltaMovement(t.getDeltaMovement().add(0, up, 0));
             t.hurtMarked = true;
         }
-        p.serverLevel().sendParticles(ParticleTypes.LARGE_SMOKE, c.x, c.y + 1, c.z, 40, r * 0.2, 1.5, r * 0.2, 0.1);
+        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.DARK, c.x, c.y + 1, c.z, 40, r * 0.2, 1.5, r * 0.2, 0.1);
         // two seconds later the geyser catches
         SpellRuntime.later(p.serverLevel(), 40, () -> {
             if (p.isRemoved()) return;

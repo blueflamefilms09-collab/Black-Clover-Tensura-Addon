@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicDef;
@@ -54,7 +56,7 @@ final class Wave12Light {
             Wave5Aim.msg(p, "The towel cracks on empty air.", ChatFormatting.GRAY);
             return;
         }
-        Wave5Aim.beam(l, Wave5Aim.muzzle(p), t.getBoundingBox().getCenter(), ParticleTypes.CLOUD, 10);
+        Wave5Aim.beam(l, Wave5Aim.muzzle(p), t.getBoundingBox().getCenter(), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 10);
         Wave0Util.extra(p, t, 4.0f, "minecraft:player_attack");                        // 1d6 bludgeoning, wound tight
         if (wet(p)) humiliate(p, t);
     }
@@ -63,7 +65,7 @@ final class Wave12Light {
     static void humiliate(ServerPlayer p, LivingEntity t) {
         Wave0Util.extra(p, t, 2.0f, "minecraft:magic");
         Fx.addEffect(t, "minecraft:weakness", 80, 0);
-        Wave5Aim.puff(p.serverLevel(), t.position().add(0, t.getBbHeight() * 0.8, 0), ParticleTypes.SPLASH, 10, 0.3);
+        Wave5Aim.puff(p.serverLevel(), t.position().add(0, t.getBbHeight() * 0.8, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 10, 0.3);
     }
 
     static void soak(ActCtx c) {
@@ -101,7 +103,7 @@ final class Wave12Light {
         Fx.ring(l, p.position(), 2.2, 0xE8503A);
         for (int i = 0; i < 8; i++) {
             double a = i * Math.PI / 4;
-            l.sendParticles(ParticleTypes.SWEEP_ATTACK, p.getX() + Math.cos(a) * 2.2, p.getY() + 1.0, p.getZ() + Math.sin(a) * 2.2, 1, 0, 0, 0, 0);
+            RukhFx.spray(l, RukhFx.Alignment.LIGHT, p.getX() + Math.cos(a) * 2.2, p.getY() + 1.0, p.getZ() + Math.sin(a) * 2.2, 1, 0, 0, 0, 0);
         }
         int hit = 0;
         for (LivingEntity t : Fx.foesAround(p, 3.5)) {
@@ -128,10 +130,10 @@ final class Wave12Light {
         if (cold) {
             Fx.addEffect(t, "minecraft:slowness", 30, 0);
             Fx.addEffect(t, "tensura:frost", 40, 0);
-            Wave5Aim.puff(p.serverLevel(), t.position().add(0, t.getBbHeight() * 0.6, 0), ParticleTypes.SNOWFLAKE, 6, 0.3);
+            Wave5Aim.puff(p.serverLevel(), t.position().add(0, t.getBbHeight() * 0.6, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 6, 0.3);
         } else {
             t.setRemainingFireTicks(Math.max(t.getRemainingFireTicks(), 40));
-            Wave5Aim.puff(p.serverLevel(), t.position().add(0, t.getBbHeight() * 0.6, 0), ParticleTypes.FLAME, 5, 0.25);
+            Wave5Aim.puff(p.serverLevel(), t.position().add(0, t.getBbHeight() * 0.6, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 5, 0.25);
         }
     }
 

@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicEngine;
@@ -88,17 +90,23 @@ final class Wave10Acts {
         if (len < 0.1) return;
         int n = Mth.clamp((int) (len / Math.max(0.2, step)), 1, 48);
         Vec3 d = to.subtract(from).scale(1.0 / n);
-        var dust = dust(rgb, 1.0f);
-        for (int i = 0; i <= n; i++) l.sendParticles(dust, from.x + d.x * i, from.y + d.y * i, from.z + d.z * i, 1, 0.02, 0.02, 0.02, 0.0);
+        var dust = align(rgb);
+        for (int i = 0; i <= n; i++) RukhFx.spray(l, dust, from.x + d.x * i, from.y + d.y * i, from.z + d.z * i, 1, 0.02, 0.02, 0.02, 0.0);
     }
 
-    static net.minecraft.core.particles.DustParticleOptions dust(int rgb, float size) {
-        return new net.minecraft.core.particles.DustParticleOptions(new org.joml.Vector3f((rgb >> 16 & 255) / 255f, (rgb >> 8 & 255) / 255f, (rgb & 255) / 255f), size);
+    static net.minecraft.core.particles.SimpleParticleType dust(int rgb, float size) {
+        return align(rgb).type();                    // Rukh replaces vanilla dust: the colour only picks the alignment
+    }
+
+    /** Rukh alignment for a legacy dust colour: dark colours (relative luminance below 0.33) become dark Rukh, the rest light. */
+    static com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment align(int rgb) {
+        double lum = (0.2126 * (rgb >> 16 & 255) + 0.7152 * (rgb >> 8 & 255) + 0.0722 * (rgb & 255)) / 255.0;
+        return com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.of(lum < 0.33);
     }
 
     private static void waterBurst(ServerLevel l, Vec3 at) {
-        l.sendParticles(ParticleTypes.SPLASH, at.x, at.y, at.z, 40, 0.5, 0.4, 0.5, 0.2);
-        l.sendParticles(ParticleTypes.BUBBLE_POP, at.x, at.y, at.z, 16, 0.4, 0.4, 0.4, 0.05);
+        RukhFx.spray(l, RukhFx.Alignment.LIGHT, at.x, at.y, at.z, 40, 0.5, 0.4, 0.5, 0.2);
+        RukhFx.spray(l, RukhFx.Alignment.LIGHT, at.x, at.y, at.z, 16, 0.4, 0.4, 0.4, 0.05);
         l.playSound(null, BlockPos.containing(at), SoundEvents.PLAYER_SPLASH, SoundSource.PLAYERS, 0.9f, 1.2f);
     }
 
@@ -134,7 +142,7 @@ final class Wave10Acts {
         giveBuff(t, b);
         ServerLevel l = p.serverLevel();
         Vec3 at = t.position().add(0, t.getBbHeight() * 0.6, 0);
-        l.sendParticles(ParticleTypes.HAPPY_VILLAGER, at.x, at.y, at.z, 10, 0.4, 0.4, 0.4, 0.02);
+        RukhFx.spray(l, RukhFx.Alignment.LIGHT, at.x, at.y, at.z, 10, 0.4, 0.4, 0.4, 0.02);
         Fx.burst(l, at, 0xFFB8F0);
         l.playSound(null, BlockPos.containing(at), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.0f, 1.4f);
         Fx.say(p, (t == p ? "No one in reach: the horn pokes you. " : "You poke " + nameOf(t) + ". ") + "The d8 shows " + roll + ": "
@@ -281,7 +289,7 @@ final class Wave10Acts {
                 struck.add(a.target());
                 if (!(a.target() instanceof Player)) a.target().invulnerableTime = 0;   // each needle is its own hit on a creature
                 Fx.damageHeavy(p, a.target(), Wave10Rules.NEEDLE_DAMAGE, "minecraft:arrow");
-                l.sendParticles(ParticleTypes.CRIT, a.end().x, a.end().y, a.end().z, 4, 0.1, 0.1, 0.1, 0.1);
+                RukhFx.spray(l, RukhFx.Alignment.LIGHT, a.end().x, a.end().y, a.end().z, 4, 0.1, 0.1, 0.1, 0.1);
                 hits++;
             }
         }
@@ -308,7 +316,7 @@ final class Wave10Acts {
         boolean whip = ctx.isOn("command_word");
         ServerLevel l = p.serverLevel();
         l.playSound(null, p.blockPosition(), SoundEvents.SKELETON_AMBIENT, SoundSource.PLAYERS, 1.0f, 0.6f);
-        l.sendParticles(ParticleTypes.POOF, p.getX(), p.getY() + 1.0, p.getZ(), 12, 0.4, 0.4, 0.4, 0.02);
+        RukhFx.spray(l, RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 12, 0.4, 0.4, 0.4, 0.02);
         Fx.say(p, whip ? "\"Clatter!\" The spine falls apart into a whip: it lashes up to five blocks behind you, two foes at a time."
                 : "\"Clatter!\" The vertebrae snap back into a greatsword: it lashes three blocks behind you, one foe at a time.");
     }
@@ -390,7 +398,7 @@ final class Wave10Acts {
         boolean saved = Wave0Util.saves(t, Wave10Rules.FINGER_DC, 0);
         float dmg = Wave10Rules.fingerDamage(t.getMaxHealth(), saved);
         Vec3 at = t.position().add(0, t.getBbHeight() * 0.5, 0);
-        for (int i = 0; i < 12; i++) l.sendParticles(dust(PINK, 1.6f), t.getX(), t.getY() + i * 0.25, t.getZ(), 3, 0.2, 0.05, 0.2, 0.0);
+        for (int i = 0; i < 12; i++) RukhFx.spray(l, align(PINK), t.getX(), t.getY() + i * 0.25, t.getZ(), 3, 0.2, 0.05, 0.2, 0.0);
         Fx.burst(l, at, PINK);
         l.playSound(null, t.blockPosition(), SoundEvents.WITHER_SPAWN, SoundSource.PLAYERS, 0.5f, 1.8f);
         boolean humanoid = Wave10Rules.humanoidPath(pathOf(t));

@@ -202,7 +202,7 @@ public final class Wave1 {
             if (pd.getLong(Wave1Casts.K_GUARD_UNTIL) >= now && pd.getInt(Wave1Casts.K_GUARD_N) > 0) {
                 pd.putInt(Wave1Casts.K_GUARD_N, pd.getInt(Wave1Casts.K_GUARD_N) - 1);
                 e.setCanceled(true);
-                ((ServerLevel) sp.level()).sendParticles(ParticleTypes.SOUL, sp.getX(), sp.getY() + 1.0, sp.getZ(), 10, 0.4, 0.5, 0.4, 0.03);
+                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(((ServerLevel) sp.level()), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, sp.getX(), sp.getY() + 1.0, sp.getZ(), 10, 0.4, 0.5, 0.4, 0.03);
                 if (sp.getRandom().nextInt(5) == 0) frighten(foe);
                 return;
             }
@@ -245,7 +245,7 @@ public final class Wave1 {
                 if (RelicFlags.has(atk, "w1_deliverance") && ad.getLong(Wave1Casts.K_SMITE) >= now) {
                     ad.remove(Wave1Casts.K_SMITE);
                     e.setAmount(e.getAmount() + (Wave1Aim.undead(victim) ? 9.0f : 6.0f));
-                    ((ServerLevel) victim.level()).sendParticles(ParticleTypes.END_ROD, victim.getX(), victim.getY() + 1.0, victim.getZ(), 16, 0.3, 0.6, 0.3, 0.05);
+                    com.newuniverse.nusmp.particle.rukh.RukhFx.spray(((ServerLevel) victim.level()), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, victim.getX(), victim.getY() + 1.0, victim.getZ(), 16, 0.3, 0.6, 0.3, 0.05);
                 }
             }
             default -> { }

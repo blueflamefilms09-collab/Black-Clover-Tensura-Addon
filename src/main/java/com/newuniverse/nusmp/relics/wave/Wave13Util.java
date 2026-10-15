@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicDef;
 import com.newuniverse.nusmp.relics.Relics;
@@ -97,8 +99,8 @@ final class Wave13Util {
             m.getNavigation().stop();
         }
         ServerLevel level = p.serverLevel();
-        level.sendParticles(ParticleTypes.PORTAL, t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 40, 0.4, 0.6, 0.4, 0.4);
-        level.sendParticles(ParticleTypes.END_ROD, t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 12, 0.3, 0.5, 0.3, 0.1);
+        RukhFx.spray(level, RukhFx.Alignment.DARK, t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 40, 0.4, 0.6, 0.4, 0.4);
+        RukhFx.spray(level, RukhFx.Alignment.LIGHT, t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 12, 0.3, 0.5, 0.3, 0.1);
     }
 
     /** A foe that gives up the fight: it loses its target, cowers (Tensura's fear) and is slowed and weakened for a few seconds. Mobs only. */
@@ -109,6 +111,6 @@ final class Wave13Util {
         Fx.addEffect(m, "minecraft:weakness", 100, 0);
         m.setTarget(null);
         m.getNavigation().stop();
-        if (m.level() instanceof ServerLevel level) level.sendParticles(ParticleTypes.SMOKE, m.getX(), m.getY() + m.getBbHeight(), m.getZ(), 8, 0.25, 0.2, 0.25, 0.01);
+        if (m.level() instanceof ServerLevel level) RukhFx.spray(level, RukhFx.Alignment.DARK, m.getX(), m.getY() + m.getBbHeight(), m.getZ(), 8, 0.25, 0.2, 0.25, 0.01);
     }
 }

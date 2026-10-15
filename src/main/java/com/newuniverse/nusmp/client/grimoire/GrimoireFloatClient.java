@@ -17,7 +17,8 @@ import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.core.particles.DustParticleOptions;
+import com.newuniverse.nusmp.client.particle.rukh.RukhClientFx;
+import com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
@@ -526,25 +527,22 @@ public final class GrimoireFloatClient {
         vc.addVertex(last, x, y, z).setColor(c[0], c[1], c[2], a).setUv(u, v).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(last, nx, 0f, nz);
     }
 
-    private static final DustParticleOptions RED_SPARK = new DustParticleOptions(new Vector3f(0.75f, 0.06f, 0.1f), 0.7f);
-    private static final DustParticleOptions EARTH_DUST = new DustParticleOptions(new Vector3f(0.55f, 0.42f, 0.26f), 0.8f);
-
     /** A particle at a point of the page's free edge (model units, transformed to the world). */
     private static void particle(Matrix4f m, Vec3 cam, Style style, float x, float y, float z) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.level == null) return;
         Vector4f v = m.transform(new Vector4f(x, y, z, 1f));
         double wx = cam.x + v.x(), wy = cam.y + v.y(), wz = cam.z + v.z();
-        ParticleOptions type;
+        Alignment type;
         double vy = 0;
         switch (style) {
-            case ANTI -> { type = RNG.nextBoolean() ? ParticleTypes.SMOKE : RED_SPARK; vy = 0.01; }
-            case EMBER -> { type = RNG.nextInt(4) == 0 ? ParticleTypes.FLAME : ParticleTypes.SMALL_FLAME; vy = 0.02; }
-            case DROPLET -> type = RNG.nextInt(3) == 0 ? ParticleTypes.SPLASH : ParticleTypes.FALLING_WATER;
-            case GUST -> { type = ParticleTypes.CLOUD; vy = 0.01; }
-            case DUST -> type = EARTH_DUST;
+            case ANTI -> { type = Alignment.DARK; vy = 0.01; }
+            case EMBER -> { type = Alignment.LIGHT; vy = 0.02; }
+            case DROPLET -> type = Alignment.LIGHT;
+            case GUST -> { type = Alignment.LIGHT; vy = 0.01; }
+            case DUST -> type = Alignment.DARK;                                    // earth dust: the dull flock
             default -> { return; }                                                 // plain parchment: just the rustle
         }
-        mc.level.addParticle(type, wx, wy, wz, (RNG.nextFloat() - 0.5f) * 0.02, vy, (RNG.nextFloat() - 0.5f) * 0.02);
+        RukhClientFx.spray(mc.level, type, wx, wy, wz, 1, (RNG.nextFloat() - 0.5f) * 0.02, vy, (RNG.nextFloat() - 0.5f) * 0.02, 1.0);
     }
 }

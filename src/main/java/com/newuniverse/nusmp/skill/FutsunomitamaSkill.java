@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
@@ -32,7 +34,7 @@ public class FutsunomitamaSkill extends ChantedMagicSkill {
             t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, 6));
             t.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, ticks, 1));
         }
-        level.sendParticles(ParticleTypes.REVERSE_PORTAL, c.x, c.y + 0.5, c.z, 300, radius / 2, 0.3, radius / 2, 0.0);
+        RukhFx.spray(level, RukhFx.Alignment.DARK, c.x, c.y + 0.5, c.z, 300, radius / 2, 0.3, radius / 2, 0.0);
         level.playSound(null, player.blockPosition(), SoundEvents.ANVIL_LAND, SoundSource.PLAYERS, 1.5F, 0.5F);
         return true;
     }

@@ -41,7 +41,7 @@ final class Wave8Acts {
         p.getPersistentData().putLong(K_SPOT, now + 400);
         Fx.addEffect(p, "minecraft:night_vision", 400, 0);
         ServerLevel l = p.serverLevel();
-        for (int i = 0; i < 24; i++) l.sendParticles(ParticleTypes.END_ROD, p.getX(), p.getY() + 0.2 + i * 0.35, p.getZ(), 1, 0.15, 0.0, 0.15, 0.01);
+        for (int i = 0; i < 24; i++) com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 0.2 + i * 0.35, p.getZ(), 1, 0.15, 0.0, 0.15, 0.01);
         l.playSound(null, p.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 0.8f, 1.6f);
         Wave8Util.tell(p, "A beam of light finds you. Your next blow lands true.");
     }
@@ -75,7 +75,7 @@ final class Wave8Acts {
         }
         for (int i = 0; i < 70; i++) {
             double dist = 1.0 + l.random.nextDouble() * 9.0, spread = dist * 0.28;
-            l.sendParticles(ParticleTypes.SNOWFLAKE, eye.x + look.x * dist, eye.y + look.y * dist - 0.2, eye.z + look.z * dist, 1, spread * 0.5, spread * 0.5, spread * 0.5, 0.02);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, eye.x + look.x * dist, eye.y + look.y * dist - 0.2, eye.z + look.z * dist, 1, spread * 0.5, spread * 0.5, spread * 0.5, 0.02);
         }
         l.playSound(null, p.blockPosition(), SoundEvents.PLAYER_HURT_FREEZE, SoundSource.PLAYERS, 1.2f, 0.7f);
     }
@@ -103,7 +103,7 @@ final class Wave8Acts {
         }
         Fx.addEffect(t, "minecraft:wither", 60, 0);
         ServerLevel l = p.serverLevel();
-        l.sendParticles(ParticleTypes.SOUL, t.getX(), t.getY() + 1.0, t.getZ(), 14, 0.3, 0.5, 0.3, 0.04);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, t.getX(), t.getY() + 1.0, t.getZ(), 14, 0.3, 0.5, 0.3, 0.04);
         Wave8Util.tell(p, "Inflict Wounds (" + Wave8Util.chargesLeft(p) + " charges left today)");
     }
 
@@ -150,7 +150,7 @@ final class Wave8Acts {
         } finally {
             acting = false;
         }
-        l.sendParticles(ParticleTypes.EXPLOSION, p.getX(), p.getY() + 0.2, p.getZ(), 3, 1.2, 0.1, 1.2, 0.0);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 0.2, p.getZ(), 3, 1.2, 0.1, 1.2, 0.0);
         Fx.ring(l, p.position(), 4.0, 0xC8CED6);
         l.playSound(null, p.blockPosition(), SoundEvents.GENERIC_EXPLODE.value(), SoundSource.PLAYERS, 0.7f, 1.3f);
     }
@@ -172,7 +172,7 @@ final class Wave8Acts {
             acting = false;
         }
         Vec3 at = eye.add(look.scale(2.2));
-        l.sendParticles(ParticleTypes.SWEEP_ATTACK, at.x, at.y - 0.3, at.z, 2, 0.5, 0.3, 0.5, 0.0);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, at.x, at.y - 0.3, at.z, 2, 0.5, 0.3, 0.5, 0.0);
         l.playSound(null, p.blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 1.0f, 0.8f);
     }
 
@@ -182,7 +182,7 @@ final class Wave8Acts {
         ServerPlayer p = c.player();
         p.getPersistentData().putLong(K_FANG, p.level().getGameTime() + 200);
         ServerLevel l = p.serverLevel();
-        l.sendParticles(ParticleTypes.FLAME, p.getX(), p.getY() + 1.0, p.getZ(), 20, 0.4, 0.5, 0.4, 0.04);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.0, p.getZ(), 20, 0.4, 0.5, 0.4, 0.04);
         l.playSound(null, p.blockPosition(), SoundEvents.BLAZE_SHOOT, SoundSource.PLAYERS, 0.8f, 0.8f);
         Wave8Util.tell(p, "The fang burns: your blows set foes alight for 10 seconds.");
     }
@@ -208,7 +208,7 @@ final class Wave8Acts {
                 continue;
             }
             Wave8Util.paralyse(t, BalanceLaw.controlTicks(t, 100));
-            l.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, t.getX(), t.getEyeY(), t.getZ(), 8, 0.2, 0.2, 0.2, 0.02);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, t.getX(), t.getEyeY(), t.getZ(), 8, 0.2, 0.2, 0.2, 0.02);
             hit++;
         }
         l.playSound(null, p.blockPosition(), SoundEvents.WARDEN_HEARTBEAT, SoundSource.PLAYERS, 1.5f, 0.6f);
@@ -228,7 +228,7 @@ final class Wave8Acts {
         }
         Fx.addEffect(t, "minecraft:wither", 80, 1);
         Fx.heal(p, 3f);
-        p.serverLevel().sendParticles(ParticleTypes.DAMAGE_INDICATOR, t.getX(), t.getY() + 1.0, t.getZ(), 10, 0.3, 0.4, 0.3, 0.1);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(p.serverLevel(), com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, t.getX(), t.getY() + 1.0, t.getZ(), 10, 0.3, 0.4, 0.3, 0.1);
     }
 
     // ================================================================ Random Axe of Charity
@@ -243,7 +243,7 @@ final class Wave8Acts {
         } finally {
             acting = false;
         }
-        trail(p.serverLevel(), p.getEyePosition().add(0, -0.3, 0), t.position().add(0, t.getBbHeight() * 0.5, 0), ParticleTypes.CRIT, 14);
+        trail(p.serverLevel(), p.getEyePosition().add(0, -0.3, 0), t.position().add(0, t.getBbHeight() * 0.5, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 14);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.TRIDENT_THROW.value(), SoundSource.PLAYERS, 0.8f, 1.4f);
     }
 
@@ -258,7 +258,7 @@ final class Wave8Acts {
         if (hit.getType() == HitResult.Type.BLOCK) len = Math.max(1.0, Math.sqrt(hit.getLocation().distanceToSqr(p.getEyePosition())) - 0.3);
         Vec3 to = from.add(dir.scale(len));
         passLine(p, from, to, 10f, true);
-        trail(l, from, to, ParticleTypes.SNOWFLAKE, (int) (len * 2));
+        trail(l, from, to, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), (int) (len * 2));
         CompoundTag pd = p.getPersistentData();
         pd.putLong(K_RET_AT, l.getGameTime() + 14);
         pd.putDouble(K_RET_X, to.x);
@@ -272,7 +272,7 @@ final class Wave8Acts {
         Vec3 from = new Vec3(pd.getDouble(K_RET_X), pd.getDouble(K_RET_Y), pd.getDouble(K_RET_Z));
         Vec3 to = p.getEyePosition().add(0, -0.3, 0);
         passLine(p, from, to, 6f, false);
-        trail(p.serverLevel(), from, to, ParticleTypes.SNOWFLAKE, (int) Math.max(6, from.distanceTo(to) * 2));
+        trail(p.serverLevel(), from, to, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), (int) Math.max(6, from.distanceTo(to) * 2));
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.TRIDENT_RETURN, SoundSource.PLAYERS, 1.0f, 1.2f);
     }
 
@@ -327,7 +327,7 @@ final class Wave8Acts {
         }
         t.setRemainingFireTicks(saved ? 40 : 100);
         if (!saved && BalanceLaw.beginControl(p)) Wave8Util.paralyse(t, BalanceLaw.controlTicks(t, 100));
-        l.sendParticles(ParticleTypes.FLAME, t.getX(), t.getY() + 0.1, t.getZ(), 18, 0.4, 0.05, 0.4, 0.03);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, t.getX(), t.getY() + 0.1, t.getZ(), 18, 0.4, 0.05, 0.4, 0.03);
         Fx.ring(l, t.position(), 1.4, SHADOW);
         Wave8Util.tell(p, saved ? "Burning Hold: it slips half free." : "Burning Hold: pinned in its own shadow.");
     }
@@ -368,7 +368,7 @@ final class Wave8Acts {
         int n = Math.max(2, Math.min(60, steps));
         for (int i = 0; i <= n; i++) {
             double t = i / (double) n;
-            l.sendParticles(type, a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t, a.z + (b.z - a.z) * t, 1, 0.05, 0.05, 0.05, 0.0);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.alignOf(type), a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t, a.z + (b.z - a.z) * t, 1, 0.05, 0.05, 0.05, 0.0);
         }
     }
 }

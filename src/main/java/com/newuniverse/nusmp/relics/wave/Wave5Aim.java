@@ -91,7 +91,7 @@ final class Wave5Aim {
         for (int i = 0; i <= n; i++) {
             double t = i / (double) n;
             Vec3 at = from.add(to.subtract(from).scale(t));
-            l.sendParticles(fx, at.x, at.y, at.z, 1, 0.02, 0.02, 0.02, 0.0);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.alignOf(fx), at.x, at.y, at.z, 1, 0.02, 0.02, 0.02, 0.0);
         }
     }
 
@@ -99,7 +99,7 @@ final class Wave5Aim {
     static Vec3 muzzle(ServerPlayer p) { return p.getEyePosition().add(p.getLookAngle().scale(0.6)).add(0, -0.25, 0); }
 
     static void puff(ServerLevel l, Vec3 at, ParticleOptions fx, int count, double spread) {
-        l.sendParticles(fx, at.x, at.y, at.z, Math.max(1, Math.min(count, 40)), spread, spread, spread, 0.02);
+        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.alignOf(fx), at.x, at.y, at.z, Math.max(1, Math.min(count, 40)), spread, spread, spread, 0.02);
     }
 
     static void sound(ServerLevel l, Vec3 at, SoundEvent s, float volume, float pitch) {

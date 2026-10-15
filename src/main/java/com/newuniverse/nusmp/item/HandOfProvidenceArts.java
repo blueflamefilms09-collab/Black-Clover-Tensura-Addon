@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.item;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment;
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.book.GrimoireBook;
 import com.newuniverse.nusmp.item.MagicWeaponItem.Kind;
@@ -118,14 +120,14 @@ final class HandOfProvidenceArts {
         Vec3 mid = t.getBoundingBox().getCenter();
         if (p.getHealth() < p.getMaxHealth()) {
             p.heal(Mth.clamp(p.getMaxHealth() * 0.02f, 0.5f, 4f) * (evil ? 1.5f : 1f));
-            sl.sendParticles(ParticleTypes.HEART, p.getX(), p.getY() + 1.6, p.getZ(), 1, 0.25, 0.2, 0.25, 0.0);
+            RukhFx.spray(sl, Alignment.LIGHT, p.getX(), p.getY() + 1.6, p.getZ(), 1, 0.25, 0.2, 0.25, 0.0);
         }
         if (!BalanceLaw.isBoss(t)) t.knockback(0.25, p.getX() - t.getX(), p.getZ() - t.getZ());       // a punch
         if (evil) {
             smite(p, t, 2f);
             VfxSpawn.send(sl, VfxShape.LIGHT_FLARE, mid, mid, GOLD, 8, 0.6f);
         }
-        sl.sendParticles(ParticleTypes.ENCHANTED_HIT, mid.x, mid.y, mid.z, 5, 0.25, 0.3, 0.25, 0.3);
+        RukhFx.spray(sl, Alignment.LIGHT, mid.x, mid.y, mid.z, 5, 0.25, 0.3, 0.25, 0.3);
     }
 
     /** Full swing: Radiant Knuckle, a holy blow with a flash of light that mends the wielder a little more. */
@@ -159,8 +161,8 @@ final class HandOfProvidenceArts {
         VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE, at.add(0, 0.12, 0), at.add(0, 1.12, 0), GOLD, 34, 2.4f);
         VfxSpawn.send(sl, VfxShape.LIGHT_FLARE, head, head, HOLY, 20, 2.0f);
         VfxSpawn.send(sl, VfxShape.WATER_RING, at.add(0, 0.1, 0), at.add(0, 1, 0), BLUE, 22, 1.5f);
-        sl.sendParticles(ParticleTypes.END_ROD, chest.x, chest.y, chest.z, 22, 0.4, 0.7, 0.4, 0.06);
-        sl.sendParticles(ParticleTypes.HEART, chest.x, chest.y + 0.4, chest.z, 6, 0.4, 0.5, 0.4, 0.0);
+        RukhFx.spray(sl, Alignment.LIGHT, chest.x, chest.y, chest.z, 22, 0.4, 0.7, 0.4, 0.06);
+        RukhFx.spray(sl, Alignment.LIGHT, chest.x, chest.y + 0.4, chest.z, 6, 0.4, 0.5, 0.4, 0.0);
         sl.playSound(null, who.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.6f, 1.5f);
         sl.playSound(null, who.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.8f, 1.2f);
         sl.playSound(null, who.blockPosition(), SoundEvents.BELL_BLOCK, SoundSource.PLAYERS, 1.2f, 1.4f);
@@ -190,7 +192,7 @@ final class HandOfProvidenceArts {
                 t.addEffect(new MobEffectInstance(MobEffects.GLOWING, 80, 0));
             }
             VfxSpawn.send(sl, VfxShape.LIGHT_FLARE, mid, mid, evil ? HOLY : GOLD, 14, evil ? 1.8f : 1.2f);
-            sl.sendParticles(ParticleTypes.END_ROD, mid.x, mid.y, mid.z, 12, 0.3, 0.4, 0.3, 0.12);
+            RukhFx.spray(sl, Alignment.LIGHT, mid.x, mid.y, mid.z, 12, 0.3, 0.4, 0.3, 0.12);
             struck++;
         }
         VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE, fist, fist.add(look), GOLD, 16, 2.2f);                  // the sigil the fist breaks through
@@ -199,7 +201,7 @@ final class HandOfProvidenceArts {
         VfxSpawn.send(sl, VfxShape.LIGHT_FLARE, end, end, HOLY, 14, 1.6f + Math.min(1.2f, struck * 0.3f));
         for (int k = 1; k <= 6; k++) {
             Vec3 pt = eye.add(look.scale(k));
-            sl.sendParticles(ParticleTypes.END_ROD, pt.x, pt.y - 0.3, pt.z, 3, 0.15, 0.15, 0.15, 0.02);
+            RukhFx.spray(sl, Alignment.LIGHT, pt.x, pt.y - 0.3, pt.z, 3, 0.15, 0.15, 0.15, 0.02);
         }
         sl.playSound(null, p.blockPosition(), SoundEvents.PLAYER_ATTACK_STRONG, SoundSource.PLAYERS, 1.6f, 0.8f);
         sl.playSound(null, p.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.4f, 1.9f);

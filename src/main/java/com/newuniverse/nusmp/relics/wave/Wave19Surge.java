@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.relics.Fx;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -91,14 +93,14 @@ final class Wave19Surge {
             case FLASH -> {
                 Fx.aoe(p, 6.0, 0f, null, "minecraft:blindness", 80, 0);
                 Wave19Util.give(p, "minecraft:blindness", 40, 0);
-                sl.sendParticles(ParticleTypes.FLASH, at.x, at.y + 1.0, at.z, 1, 0, 0, 0, 0);
+                RukhFx.spray(sl, RukhFx.Alignment.LIGHT, at.x, at.y + 1.0, at.z, 1, 0, 0, 0, 0);
             }
             case MANA_SURGE -> Wave19Util.addMagicules(p, 0.20);
             case BLOOM -> {
                 Wave19Util.give(p, "minecraft:regeneration", 200, 1);
                 p.getFoodData().eat(4, 0.4f);
-                sl.sendParticles(ParticleTypes.HAPPY_VILLAGER, at.x, at.y + 1.0, at.z, 40, 1.5, 0.8, 1.5, 0.05);
-                sl.sendParticles(ParticleTypes.CHERRY_LEAVES, at.x, at.y + 2.0, at.z, 30, 1.5, 0.6, 1.5, 0.02);
+                RukhFx.spray(sl, RukhFx.Alignment.LIGHT, at.x, at.y + 1.0, at.z, 40, 1.5, 0.8, 1.5, 0.05);
+                RukhFx.spray(sl, RukhFx.Alignment.LIGHT, at.x, at.y + 2.0, at.z, 30, 1.5, 0.6, 1.5, 0.02);
             }
             case BACKFIRE -> {
                 Wave19Util.give(p, "minecraft:weakness", 120, 0);

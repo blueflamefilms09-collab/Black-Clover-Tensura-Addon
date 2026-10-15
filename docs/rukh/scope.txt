@@ -1,0 +1,27 @@
+# The purge scope: the single source of truth for tools/rukh/purge.py and RukhPurgeScopeTest (docs/rukh/r1_core.md says WHY each line).
+# Paths are globs relative to src/main/java/com/newuniverse/nusmp. `*` stays inside a folder, `**` crosses folders, `[..]` / `[!..]` are classes.
+# A line starting with `!` excludes. A trailing ` @pN` assigns the include to purge slice pN for `purge.py --scope pN`:
+# a file belongs to the slice of the FIRST include line that matches it (so specific lines come before broad ones). The scope test ignores tags.
+# INCLUDED: relics, equipment and active magical abilities.
+relics/wave/Wave9[!0-9]*  @p2
+relics/wave/Wave1[0-9]*   @p2
+relics/**                 @p1
+skill/**                  @p2
+book/**                   @p2
+core/**                   @p2
+wizard/**                 @p2
+charter/**                @p2
+client/relics/**          @p3
+item/**                   @p3
+blackclover/**            @p3
+client/grimoire/**        @p3
+client/SwordDrawClient.java @p3
+dungeon/nexus/relic/**    @p3
+# EXCLUDED. Only an include line puts a file in scope, so these folders are out simply by not being listed; they are written down here
+# (as comments) because the owner reads this file: bosses (entity/zogratis, entity/avatar, boss/**), the legacy and Labyrinth dungeon
+# ecosystems and ambience (dungeon/** except dungeon/nexus/relic, labyrinth/**, client/dungeon/**), animals and other entities (entity/**),
+# world blocks, and vfx/** (the Time Magic layer is the quality standard and must not be touched). docs/rukh/r1_core.md gives the WHY.
+# Active exclusions (carve a hole in an include above):
+!book/TimeBook.java
+!particle/rukh/**
+!client/particle/rukh/**

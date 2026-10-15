@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
@@ -29,7 +31,7 @@ public class ArcsRaySkill extends ChantedMagicSkill {
         Set<LivingEntity> hit = new HashSet<>();
         for (double d = 0; d < start.distanceTo(end); d += 0.5) {
             Vec3 p = start.add(dir.scale(d));
-            level.sendParticles(ParticleTypes.END_ROD, p.x, p.y, p.z, 1, 0.02, 0.02, 0.02, 0.0);
+            RukhFx.spray(level, RukhFx.Alignment.LIGHT, p.x, p.y, p.z, 1, 0.02, 0.02, 0.02, 0.0);
             hit.addAll(DMUtil.around(player, p, 1.2));
         }
         for (LivingEntity t : hit) t.hurt(player.damageSources().playerAttack(player), DMUtil.dmg(mastered ? 22 : 14));

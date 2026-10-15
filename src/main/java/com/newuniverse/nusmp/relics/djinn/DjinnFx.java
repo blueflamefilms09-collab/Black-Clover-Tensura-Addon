@@ -2,7 +2,6 @@ package com.newuniverse.nusmp.relics.djinn;
 
 import io.github.manasmods.tensura.registry.attribute.TensuraAttributes;
 import net.minecraft.core.Holder;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -47,37 +46,33 @@ final class DjinnFx {
         };
     }
 
-    static ParticleOptions particle(Affinity a) {
-        return switch (a) {
-            case HEAT -> ParticleTypes.FLAME;
-            case LIGHTNING -> ParticleTypes.ELECTRIC_SPARK;
-            case WATER -> ParticleTypes.BUBBLE_POP;
-            case WIND -> ParticleTypes.CLOUD;
-            case LIFE -> ParticleTypes.HAPPY_VILLAGER;
-            case STRENGTH -> ParticleTypes.CRIT;
-            case SOUND -> ParticleTypes.NOTE;
-            case LIGHT -> ParticleTypes.END_ROD;
-        };
+    /** Every affinity is a Light Rukh (the djinn are spirits of the elements); the dark djinn colours go through {@link #dust}. */
+    static com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment align(Affinity a) {
+        return com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT;
     }
 
-    static DustParticleOptions dust(int rgb, float size) {
-        return new DustParticleOptions(new Vector3f((rgb >> 16 & 255) / 255f, (rgb >> 8 & 255) / 255f, (rgb & 255) / 255f), size);
+    static ParticleOptions particle(Affinity a) {
+        return com.newuniverse.nusmp.particle.rukh.RukhParticles.of(align(a));
+    }
+
+    static net.minecraft.core.particles.SimpleParticleType dust(int rgb, float size) {
+        return com.newuniverse.nusmp.relics.Fx.dust(rgb, size);
     }
 
     /** A ring of dust lying on the ground: {@code points} particles (clamped to 8..96). */
     static void ring(ServerLevel l, Vec3 at, double radius, int rgb, int points, double lift) {
         int n = Mth.clamp(points, 8, 96);
-        DustParticleOptions d = dust(rgb, 1.3f);
+        net.minecraft.core.particles.ParticleOptions d = dust(rgb, 1.3f);
         for (int i = 0; i < n; i++) {
             double a = i * (Math.PI * 2 / n);
-            l.sendParticles(d, at.x + Math.cos(a) * radius, at.y + lift, at.z + Math.sin(a) * radius, 1, 0, 0.01, 0, 0);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.alignOf(d), at.x + Math.cos(a) * radius, at.y + lift, at.z + Math.sin(a) * radius, 1, 0, 0.01, 0, 0);
         }
     }
 
     /** A vertical column of particles from y0 up to y1: at most 40 of them. */
     static void column(ServerLevel l, double x, double y0, double y1, double z, ParticleOptions o, int count) {
         int n = Mth.clamp(count, 2, 40);
-        for (int i = 0; i < n; i++) l.sendParticles(o, x, y0 + (y1 - y0) * i / (n - 1), z, 1, 0.05, 0, 0.05, 0);
+        for (int i = 0; i < n; i++) com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.alignOf(o), x, y0 + (y1 - y0) * i / (n - 1), z, 1, 0.05, 0, 0.05, 0);
     }
 
     /** A line of particles between two points: at most 40 of them. */
@@ -85,7 +80,7 @@ final class DjinnFx {
         int n = Mth.clamp(count, 2, 40);
         for (int i = 0; i < n; i++) {
             double t = i / (double) (n - 1);
-            l.sendParticles(o, Mth.lerp(t, a.x, b.x), Mth.lerp(t, a.y, b.y), Mth.lerp(t, a.z, b.z), 1, 0, 0, 0, 0);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.alignOf(o), Mth.lerp(t, a.x, b.x), Mth.lerp(t, a.y, b.y), Mth.lerp(t, a.z, b.z), 1, 0, 0, 0, 0);
         }
     }
 

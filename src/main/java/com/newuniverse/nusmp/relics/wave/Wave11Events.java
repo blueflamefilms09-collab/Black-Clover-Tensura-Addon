@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicDef;
 import com.newuniverse.nusmp.relics.RelicFlags;
@@ -61,7 +63,7 @@ public final class Wave11Events {
                 e.setAmount(e.getAmount() * 0.6f);
                 pd.putUUID(Wave11Acts.K_RIPOSTE, foe.getUUID());                 // "advantage on the next attack against the attacker"
                 pd.putLong(Wave11Acts.K_RIPOSTE_UNTIL, now + 100);
-                ((ServerLevel) vp.level()).sendParticles(ParticleTypes.SPLASH, vp.getX(), vp.getY() + 1.0, vp.getZ(), 16, 0.4, 0.5, 0.4, 0.1);
+                RukhFx.spray(((ServerLevel) vp.level()), RukhFx.Alignment.LIGHT, vp.getX(), vp.getY() + 1.0, vp.getZ(), 16, 0.4, 0.5, 0.4, 0.1);
             }
         }
 
@@ -101,7 +103,7 @@ public final class Wave11Events {
             case "sorrows_edge" -> {
                 if (!RelicFlags.has(atk, Wave11.F_SORROW)) return;
                 e.setAmount(e.getAmount() + 2.5f);                                // 1d4 necrotic
-                ((ServerLevel) victim.level()).sendParticles(ParticleTypes.SOUL, victim.getX(), victim.getY() + 1.0, victim.getZ(), 6, 0.3, 0.5, 0.3, 0.02);
+                RukhFx.spray(((ServerLevel) victim.level()), RukhFx.Alignment.DARK, victim.getX(), victim.getY() + 1.0, victim.getZ(), 6, 0.3, 0.5, 0.3, 0.02);
             }
             default -> { }
         }

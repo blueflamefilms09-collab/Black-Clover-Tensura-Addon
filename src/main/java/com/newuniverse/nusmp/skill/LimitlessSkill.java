@@ -1,9 +1,10 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import io.github.manasmods.tensura.ability.skill.Skill;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -57,7 +58,7 @@ public class LimitlessSkill extends Skill {
         if (!infinityOn(instance) || source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return true;
         if (source.getEntity() == null && source.getDirectEntity() == null) return true; // only attacks from something
         if (entity.level() instanceof ServerLevel level) {
-            level.sendParticles(new DustParticleOptions(new Vector3f(0.6F, 0.8F, 1.0F), 1.0F),
+            RukhFx.spray(level, RukhFx.Alignment.LIGHT,
                     entity.getX(), entity.getY() + 1, entity.getZ(), 12, 0.5, 0.7, 0.5, 0.0);
         }
         return false; // the attack never reaches you
@@ -89,7 +90,7 @@ public class LimitlessSkill extends Skill {
                     t.hurtMarked = true;
                     t.hurt(player.damageSources().playerAttack(player), DMUtil.dmg(mastered ? 16 : 10));
                 }
-                level.sendParticles(new DustParticleOptions(new Vector3f(0.1F, 0.3F, 1.0F), 2.0F), c.x, c.y + 1, c.z, 200, 1.5, 1.5, 1.5, 0.0);
+                RukhFx.spray(level, RukhFx.Alignment.LIGHT, c.x, c.y + 1, c.z, 200, 1.5, 1.5, 1.5, 0.0);
                 instance.setCoolDown(com.newuniverse.nusmp.NUSMP.ticksToSeconds(DMUtil.cooldown(200)), BLUE);
             }
             case RED -> {
@@ -100,7 +101,7 @@ public class LimitlessSkill extends Skill {
                     t.hurtMarked = true;
                     t.hurt(player.damageSources().playerAttack(player), DMUtil.dmg(mastered ? 24 : 16));
                 }
-                level.sendParticles(new DustParticleOptions(new Vector3f(1.0F, 0.1F, 0.1F), 2.0F), player.getX(), player.getY() + 1, player.getZ(), 200, 2.5, 1.0, 2.5, 0.0);
+                RukhFx.spray(level, RukhFx.Alignment.DARK, player.getX(), player.getY() + 1, player.getZ(), 200, 2.5, 1.0, 2.5, 0.0);
                 level.playSound(null, player.blockPosition(), SoundEvents.GENERIC_EXPLODE.value(), SoundSource.PLAYERS, 1.0F, 1.4F);
                 instance.setCoolDown(com.newuniverse.nusmp.NUSMP.ticksToSeconds(DMUtil.cooldown(240)), RED);
             }
@@ -111,7 +112,7 @@ public class LimitlessSkill extends Skill {
                 Set<LivingEntity> hit = new HashSet<>();
                 for (double d = 0; d < 64; d += 1.0) {
                     Vec3 p = start.add(dir.scale(d));
-                    level.sendParticles(new DustParticleOptions(new Vector3f(0.6F, 0.1F, 0.9F), 3.0F), p.x, p.y, p.z, 4, 0.6, 0.6, 0.6, 0.0);
+                    RukhFx.spray(level, RukhFx.Alignment.DARK, p.x, p.y, p.z, 4, 0.6, 0.6, 0.6, 0.0);
                     hit.addAll(DMUtil.around(player, p, 2.5));
                 }
                 for (LivingEntity t : hit) {

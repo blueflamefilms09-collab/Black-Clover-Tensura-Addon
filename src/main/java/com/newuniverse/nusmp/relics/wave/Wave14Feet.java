@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+
 import com.newuniverse.nusmp.dungeon.LivingDungeon;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
@@ -132,7 +134,7 @@ final class Wave14Feet {
     /** One of the three heel clicks. */
     static void heelClick(ServerPlayer p) {
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.NOTE_BLOCK_CHIME.value(), SoundSource.PLAYERS, 1.0f, 1.0f + p.getRandom().nextFloat() * 0.4f);
-        p.serverLevel().sendParticles(Wave14Util.dust(0xE0245E, 1.2f), p.getX(), p.getY() + 0.1, p.getZ(), 10, 0.3, 0.05, 0.3, 0.0);
+        RukhFx.spray(p.serverLevel(), Wave14Util.align(0xE0245E), p.getX(), p.getY() + 0.1, p.getZ(), 10, 0.3, 0.05, 0.3, 0.0);
     }
 
     /** The third click: step to place {@code index}. If there is nowhere safe to stand the charge is given back. */
@@ -203,7 +205,7 @@ final class Wave14Feet {
         float dmg = Wave14Rules.fallDamage(e.getDistance());
         e.setDamageMultiplier(0f);
         List<LivingEntity> under = Wave14Util.near(p.serverLevel(), p.position(), 3.0, x -> x != p && Wave14Util.target(p, x));
-        p.serverLevel().sendParticles(Wave14Util.dust(0x8A8E96, 1.5f), p.getX(), p.getY() + 0.1, p.getZ(), 24, 0.8, 0.1, 0.8, 0.02);
+        RukhFx.spray(p.serverLevel(), Wave14Util.align(0x8A8E96), p.getX(), p.getY() + 0.1, p.getZ(), 24, 0.8, 0.1, 0.8, 0.02);
         if (under.isEmpty()) {
             Wave14Util.tell(p, "The boots take the fall: you are unhurt.", ChatFormatting.GRAY);
             return;
@@ -230,7 +232,7 @@ final class Wave14Feet {
             Vec3 at = from.add(dir.scale(1.5 * i));
             Wave14Zones.addZone(p, ZoneKind.GREASE, at, 0, 0, 1.8, Wave14Rules.GREASE_TICKS);
         }
-        p.serverLevel().sendParticles(Wave14Util.dust(0x7A5232, 1.6f), from.x, from.y + 0.2, from.z, 16, 0.5, 0.1, 0.5, 0.02);
+        RukhFx.spray(p.serverLevel(), Wave14Util.align(0x7A5232), from.x, from.y + 0.2, from.z, 16, 0.5, 0.1, 0.5, 0.02);
     }
 
     // ================================================================ Boots of the High Ground
@@ -249,7 +251,7 @@ final class Wave14Feet {
         p.setDeltaMovement(dm.x, 0.55, dm.z);
         p.hurtMarked = true;
         p.fallDistance = 0;
-        p.serverLevel().sendParticles(Wave14Util.dust(0x8A6A44, 1.8f), p.getX(), p.getY() + 0.1, p.getZ(), 30, 0.8, 0.1, 0.8, 0.03);
+        RukhFx.spray(p.serverLevel(), Wave14Util.align(0x8A6A44), p.getX(), p.getY() + 0.1, p.getZ(), 30, 0.8, 0.1, 0.8, 0.03);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.ANVIL_LAND, SoundSource.PLAYERS, 0.7f, 0.6f);
         Wave14Util.say(p, "\"It's over, I have the high ground!\" For one minute your melee blows hit 30% harder and anyone who comes within three blocks is struck. Step down and it ends.");
     }
@@ -274,7 +276,7 @@ final class Wave14Feet {
             f.getPersistentData().putLong(K_HIGH_STRIKE, now);
             Fx.damage(p, f, (float) (p.getAttributeValue(Attributes.ATTACK_DAMAGE) * Wave14Rules.HIGH_REACTION_FACTOR), "minecraft:player_attack");
             p.swing(net.minecraft.world.InteractionHand.MAIN_HAND, true);
-            p.serverLevel().sendParticles(ParticleTypes.SWEEP_ATTACK, f.getX(), f.getY() + f.getBbHeight() * 0.5, f.getZ(), 1, 0, 0, 0, 0);
+            RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, f.getX(), f.getY() + f.getBbHeight() * 0.5, f.getZ(), 1, 0, 0, 0, 0);
             struck++;
         }
     }
@@ -296,7 +298,7 @@ final class Wave14Feet {
     }
 
     private static void breeze(ServerPlayer p, Vec3 at) {
-        p.serverLevel().sendParticles(ParticleTypes.CLOUD, at.x, at.y, at.z, 14, 0.5, 0.3, 0.5, 0.05);
+        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, at.x, at.y, at.z, 14, 0.5, 0.3, 0.5, 0.05);
     }
 
     /** Gust (a cantrip, no charge): a puff of wind in front of you shoves creatures within six blocks back. */
@@ -496,7 +498,7 @@ final class Wave14Feet {
             return;
         }
         if (until - now <= Wave14Rules.FLIGHT_LAST_WARN && (until - now) % 20 < 5) Wave14Util.tell(p, "The jets sputter: " + (until - now) / 20 + " s.", ChatFormatting.GOLD);
-        p.serverLevel().sendParticles(ParticleTypes.FLAME, p.getX(), p.getY() + 0.1, p.getZ(), 4, 0.15, 0.05, 0.15, 0.02);
+        RukhFx.spray(p.serverLevel(), RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 0.1, p.getZ(), 4, 0.15, 0.05, 0.15, 0.02);
     }
 
     /** Called when the player leaves the world or dies: the flight is closed. */
@@ -512,13 +514,13 @@ final class Wave14Feet {
         ServerLevel sl = p.serverLevel();
         Wave14Util.Aim a = Wave14Util.aim(p, Wave14Rules.FIREBALL_RANGE);
         Vec3 at = a.hit() != null ? a.hit().getBoundingBox().getCenter() : a.end();
-        Wave14Util.trail(sl, p.position().add(0, 0.1, 0), at, ParticleTypes.FLAME);
+        Wave14Util.trail(sl, p.position().add(0, 0.1, 0), at, com.newuniverse.nusmp.particle.rukh.RukhParticles.light());
         for (LivingEntity e : Wave14Util.near(sl, at, Wave14Rules.FIREBALL_RADIUS, x -> Wave14Util.target(p, x))) {
             Fx.damage(p, e, Wave14Rules.FIREBALL_DAMAGE, "minecraft:fireball");
             if (!e.fireImmune()) e.setRemainingFireTicks(100);
         }
-        sl.sendParticles(ParticleTypes.EXPLOSION_EMITTER, at.x, at.y, at.z, 1, 0, 0, 0, 0);
-        sl.sendParticles(ParticleTypes.FLAME, at.x, at.y + 0.3, at.z, 50, 1.6, 0.8, 1.6, 0.06);
+        RukhFx.spray(sl, RukhFx.Alignment.LIGHT, at.x, at.y, at.z, 1, 0, 0, 0, 0);
+        RukhFx.spray(sl, RukhFx.Alignment.LIGHT, at.x, at.y + 0.3, at.z, 50, 1.6, 0.8, 1.6, 0.06);
         sl.playSound(null, BlockPos.containing(at), SoundEvents.GENERIC_EXPLODE.value(), SoundSource.PLAYERS, 1.0f, 1.1f);
         if (flying(p) && Wave14Rules.crashes(rng(p))) {
             flightOff(p, d, true);                                                      // the crash hurts (never kills); the long fall after it does not
