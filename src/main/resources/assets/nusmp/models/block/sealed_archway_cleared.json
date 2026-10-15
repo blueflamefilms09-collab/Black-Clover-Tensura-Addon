@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "nusmp:block/sealed_archway_top",
+    "bottom": "nusmp:block/sealed_archway_top",
+    "side": "nusmp:block/sealed_archway_eye_cleared"
+  }
+}

@@ -23,6 +23,8 @@ import java.util.Set;
  * two chests, two Lootr openings or two Mimics can never produce the same one). Two sources use it: the chests of structures
  * ({@link RelicLootModifier}, which runs whenever a loot table under "chests/" is rolled, Lootr's per-player rolls included) and Mimics (any
  * entity whose type path is "mimic", or in the tag nusmp:relic_mimic_types: the Artifacts mod's and the Relics mod's mimics).
+ * 1.35.0: while {@code labyrinth.relicsExclusive} is on, Mimics drop relics only inside the Labyrinth or the legacy Living Dungeon
+ * ({@code labyrinth.vault.RelicExclusivity}); off, the old behaviour above is unchanged.
  */
 public final class RelicLoot {
     private RelicLoot() {}
@@ -51,14 +53,7 @@ public final class RelicLoot {
     public static List<ItemStack> rollUnissuedAll(ServerLevel level, RandomSource rng, Grade min, Grade max) {
         List<ItemStack> none = new ArrayList<>();
         if (level == null || level.getServer() == null) return none;
-        Set<String> live = UniqueLedger.liveIds(level.getServer());
-        List<RelicDef> pool = new ArrayList<>();
-        for (RelicDef d : Relics.all()) {
-            if (!d.isUnique() || live.contains(d.id()) || d.isPairLeft()) continue;
-            if (d.hasPair() && live.contains(d.pairPartnerId())) continue;
-            if (d.grade().ordinal() < min.ordinal() || d.grade().ordinal() > max.ordinal()) continue;
-            pool.add(d);
-        }
+        List<RelicDef> pool = candidates(level, min, max);
         for (int tries = 0; tries < 8 && !pool.isEmpty(); tries++) {
             RelicDef d = pick(pool, rng);
             if (d.hasPair()) {
@@ -74,6 +69,28 @@ public final class RelicLoot {
             pool.remove(d);                                                            // not available after all: try another
         }
         return none;
+    }
+
+    /**
+     * 1.35.0: whether any relic of the range could still be rolled (the dry run of {@link #rollUnissuedAll}, nothing is stamped). The
+     * {@code nusmp:relic} loot entry asks this in {@code expand} so an exhausted range drops out of a pool and a fallback entry can run.
+     */
+    public static boolean anyUnissued(ServerLevel level, Grade min, Grade max) {
+        if (level == null || level.getServer() == null) return false;
+        return !candidates(level, min, max).isEmpty();
+    }
+
+    /** The defs the roll may pick: unique, not alive (neither half of a pair alive), never a left half on its own, within the grades. */
+    private static List<RelicDef> candidates(ServerLevel level, Grade min, Grade max) {
+        Set<String> live = UniqueLedger.liveIds(level.getServer());
+        List<RelicDef> pool = new ArrayList<>();
+        for (RelicDef d : Relics.all()) {
+            if (!d.isUnique() || live.contains(d.id()) || d.isPairLeft()) continue;
+            if (d.hasPair() && live.contains(d.pairPartnerId())) continue;
+            if (d.grade().ordinal() < min.ordinal() || d.grade().ordinal() > max.ordinal()) continue;
+            pool.add(d);
+        }
+        return pool;
     }
 
     private static RelicDef pick(List<RelicDef> pool, RandomSource rng) {
@@ -92,6 +109,7 @@ public final class RelicLoot {
         if (!(e.getEntity().level() instanceof ServerLevel level)) return;
         EntityType<?> type = e.getEntity().getType();
         if (!"mimic".equals(BuiltInRegistries.ENTITY_TYPE.getKey(type).getPath()) && !type.is(MIMIC_TAG)) return;
+        if (!com.newuniverse.nusmp.labyrinth.vault.RelicExclusivity.allowsMobDrop(level)) return;      // 1.35.0: relics only in the dungeons (config relicsExclusive)
         Vec3 at = e.getEntity().position();
         RandomSource rng = level.getRandom();
         ItemStack drop = ItemStack.EMPTY;

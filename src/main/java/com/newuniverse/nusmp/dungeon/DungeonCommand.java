@@ -38,10 +38,13 @@ public final class DungeonCommand {
         LiteralArgumentBuilder<CommandSourceStack> root = Commands.literal("dungeon");
         root.then(Commands.literal("enter").requires(s -> s.hasPermission(2)).executes(ctx -> {
             ServerPlayer p = ctx.getSource().getPlayerOrException();
+            if (com.newuniverse.nusmp.labyrinth.Labyrinth.engineIsLabyrinth())                                      // 1.35.0: the Labyrinth engine takes the command too
+                return com.newuniverse.nusmp.labyrinth.gate.LabyrinthTravel.enterFromMaw(p, p.blockPosition()) ? 1 : fail(ctx.getSource(), "The Labyrinth is not there.");
             return LivingDungeon.enter(p, p.blockPosition()) ? 1 : fail(ctx.getSource(), "The Dungeon is not there.");
         }));
         root.then(Commands.literal("exit").executes(ctx -> {
             ServerPlayer p = ctx.getSource().getPlayerOrException();
+            if (com.newuniverse.nusmp.labyrinth.Labyrinth.in(p)) { com.newuniverse.nusmp.labyrinth.gate.LabyrinthTravel.leave(p); return 1; }   // 1.35.0: out of the Labyrinth too
             if (!LivingDungeon.in(p)) return fail(ctx.getSource(), "You are not in the Dungeon.");
             LivingDungeon.leave(p);
             return 1;

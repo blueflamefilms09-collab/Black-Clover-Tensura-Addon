@@ -18,6 +18,9 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
  * table whose path contains "chests/" and a dungeon-like word (dungeon, vault, stronghold, bastion, ancient_city, trial) is rolled, there is a small
  * chance an unissued relic is added. Because it works on the rolled loot it behaves the same in a plain chest and in Lootr's per-player containers
  * (Lootr rolls the table once per opening player), and the ledger makes sure no two rolls give the same relic.
+ * 1.35.0: with {@code labyrinth.relicsExclusive} on (the default) the modifier first asks {@code labyrinth.vault.RelicExclusivity}: only
+ * {@code nusmp:chests/dungeon_relic_vault} and {@code nusmp:chests/labyrinth_pedestal} pass, so the bonus relic lands in the Labyrinth's vault
+ * only; with it off, the behaviour above is unchanged. (The Socket cores are not relics and are added before the gate as before.)
  */
 public final class RelicLootModifier implements IGlobalLootModifier {
     public static final MapCodec<RelicLootModifier> CODEC = MapCodec.unit(RelicLootModifier::new);
@@ -45,6 +48,7 @@ public final class RelicLootModifier implements IGlobalLootModifier {
         try {
             ResourceLocation table = context.getQueriedLootTableId();
             if (table != null) com.newuniverse.nusmp.relics.socket.SocketLoot.addToChest(generatedLoot, table.getPath(), context.getRandom());     // 1.29.0: a Spirit or Devil Core, at a low weight
+            if (!com.newuniverse.nusmp.labyrinth.vault.RelicExclusivity.allowsChest(table)) return generatedLoot;      // 1.35.0: relics only in the Labyrinth's vault tables (config relicsExclusive)
             Tier tier = table == null ? null : tierOf(table.getPath());
             if (tier == null || context.getRandom().nextFloat() >= tier.chance()) return generatedLoot;
             ServerLevel level = context.getLevel();

@@ -49,7 +49,9 @@ public final class DungeonGuard {
     // ---------------------------------------------------------------- the switch
     /** Is the guard holding this world? Server side only, in the Dungeon only, and only while the config switch is on. */
     public static boolean on(Level level) {
-        return level != null && !level.isClientSide() && LivingDungeon.in(level) && DungeonConfig.get(DungeonConfig.UNBREAKABLE);
+        if (level == null || level.isClientSide()) return false;
+        if (com.newuniverse.nusmp.labyrinth.Labyrinth.in(level)) return com.newuniverse.nusmp.labyrinth.LabyrinthConfig.get(com.newuniverse.nusmp.labyrinth.LabyrinthConfig.UNBREAKABLE);   // 1.35.0: the Labyrinth is held by the same guard (nobody digs round a sealed door)
+        return LivingDungeon.in(level) && DungeonConfig.get(DungeonConfig.UNBREAKABLE);
     }
 
     /**
@@ -57,7 +59,11 @@ public final class DungeonGuard {
      * server still refuses). Used so the crack animation never starts.
      */
     public static boolean predictsClient(Level level) {
-        if (level == null || !level.isClientSide() || !LivingDungeon.in(level)) return false;
+        if (level == null || !level.isClientSide()) return false;
+        if (com.newuniverse.nusmp.labyrinth.Labyrinth.in(level)) {                                                   // 1.35.0: the Labyrinth's own switch
+            try { return com.newuniverse.nusmp.labyrinth.LabyrinthConfig.UNBREAKABLE.get(); } catch (RuntimeException notSynced) { return false; }
+        }
+        if (!LivingDungeon.in(level)) return false;
         try { return DungeonConfig.UNBREAKABLE.get(); } catch (RuntimeException notSynced) { return false; }
     }
 

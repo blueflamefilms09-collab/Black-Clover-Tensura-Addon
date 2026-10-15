@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:group",
+              "children": [
+                { "type": "nusmp:relic", "min_grade": "rare", "max_grade": "unique", "weight": 50 },
+                { "type": "nusmp:relic", "min_grade": "unique", "max_grade": "legend", "weight": 30 },
+                { "type": "nusmp:relic", "min_grade": "legend", "max_grade": "god", "weight": 15 },
+                { "type": "nusmp:relic", "min_grade": "god", "max_grade": "genesis", "weight": 4 }
+              ]
+            },
+            { "type": "minecraft:item", "name": "minecraft:emerald",
+              "functions": [ { "function": "minecraft:set_count", "count": { "type": "minecraft:uniform", "min": 3, "max": 6 } } ] }
+          ]
+        }
+      ]
+    }
+  ]
+}

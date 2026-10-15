@@ -1,0 +1,12 @@
+{
+  "processors": [
+    {
+      "processor_type": "nusmp:magicule_veins",
+      "targets": "nusmp:labyrinth/veinable",
+      "base_chance": 0.01,
+      "peak_chance": 0.12,
+      "rise": 112,
+      "pull": 0.6
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    { "id": "nusmp:labyrinth_glyph", "required": false },
+    "minecraft:amethyst_block"
+  ]
+}

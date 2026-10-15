@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "phase=idle": {
+      "model": "nusmp:block/sealed_archway_idle"
+    },
+    "phase=active": {
+      "model": "nusmp:block/sealed_archway_active"
+    },
+    "phase=cleared": {
+      "model": "nusmp:block/sealed_archway_cleared"
+    }
+  }
+}

@@ -69,7 +69,11 @@ public final class DungeonBlocks {
         @Override
         protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
             if (level.isClientSide || !(entity instanceof ServerPlayer p) || LivingDungeon.justTravelled(p)) return;
-            if (exit) LivingDungeon.leave(p); else LivingDungeon.enter(p, pos);
+            if (com.newuniverse.nusmp.labyrinth.Labyrinth.engineIsLabyrinth()) {                                   // 1.35.0: the Labyrinth engine takes the Maws
+                if (exit) com.newuniverse.nusmp.labyrinth.gate.LabyrinthTravel.leaveAny(p); else com.newuniverse.nusmp.labyrinth.gate.LabyrinthTravel.enterFromMaw(p, pos);
+                return;
+            }
+            if (exit) LivingDungeon.leave(p); else LivingDungeon.enter(p, pos);                                     // legacy: the Living Dungeon caves
         }
     }
 

@@ -1,0 +1,10 @@
+{
+  "processors": [
+    {
+      "processor_type": "nusmp:biome_palette"
+    },
+    {
+      "processor_type": "nusmp:magicule_veins"
+    }
+  ]
+}

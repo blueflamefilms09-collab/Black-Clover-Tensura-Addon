@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "nusmp:labyrinth_bricks",
+    "nusmp:labyrinth_tiles",
+    "nusmp:labyrinth_pillar",
+    "nusmp:labyrinth_glyph",
+    "nusmp:labyrinth_lantern",
+    "nusmp:magicule_vein"
+  ]
+}

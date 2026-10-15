@@ -1,0 +1,6 @@
+{
+  "replace": false,
+  "values": [
+    { "id": "nusmp:labyrinth_pillar", "required": false }
+  ]
+}

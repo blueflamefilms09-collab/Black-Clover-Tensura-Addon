@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    { "id": "nusmp:labyrinth_bricks", "required": false },
+    { "id": "nusmp:labyrinth_tiles", "required": false },
+    "minecraft:deepslate_bricks",
+    "minecraft:deepslate_tiles",
+    "minecraft:polished_deepslate"
+  ]
+}

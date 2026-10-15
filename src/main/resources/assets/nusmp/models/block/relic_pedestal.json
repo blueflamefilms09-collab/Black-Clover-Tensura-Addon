@@ -1,0 +1,44 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "nusmp:block/relic_pedestal",
+    "side": "nusmp:block/relic_pedestal",
+    "top": "nusmp:block/relic_pedestal_top"
+  },
+  "elements": [
+    {
+      "from": [0, 0, 0],
+      "to": [16, 2, 16],
+      "faces": {
+        "north": { "uv": [0, 14, 16, 16], "texture": "#side", "cullface": "north" },
+        "south": { "uv": [0, 14, 16, 16], "texture": "#side", "cullface": "south" },
+        "east":  { "uv": [0, 14, 16, 16], "texture": "#side", "cullface": "east" },
+        "west":  { "uv": [0, 14, 16, 16], "texture": "#side", "cullface": "west" },
+        "up":    { "uv": [0, 0, 16, 16], "texture": "#top" },
+        "down":  { "uv": [0, 0, 16, 16], "texture": "#top", "cullface": "down" }
+      }
+    },
+    {
+      "from": [3, 2, 3],
+      "to": [13, 11, 13],
+      "faces": {
+        "north": { "uv": [3, 5, 13, 14], "texture": "#side" },
+        "south": { "uv": [3, 5, 13, 14], "texture": "#side" },
+        "east":  { "uv": [3, 5, 13, 14], "texture": "#side" },
+        "west":  { "uv": [3, 5, 13, 14], "texture": "#side" }
+      }
+    },
+    {
+      "from": [2, 11, 2],
+      "to": [14, 13, 14],
+      "faces": {
+        "north": { "uv": [2, 3, 14, 5], "texture": "#side" },
+        "south": { "uv": [2, 3, 14, 5], "texture": "#side" },
+        "east":  { "uv": [2, 3, 14, 5], "texture": "#side" },
+        "west":  { "uv": [2, 3, 14, 5], "texture": "#side" },
+        "up":    { "uv": [2, 2, 14, 14], "texture": "#top" },
+        "down":  { "uv": [2, 2, 14, 14], "texture": "#top" }
+      }
+    }
+  ]
+}

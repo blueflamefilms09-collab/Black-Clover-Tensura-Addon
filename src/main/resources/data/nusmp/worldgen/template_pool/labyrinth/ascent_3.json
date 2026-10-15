@@ -1,0 +1,32 @@
+{
+  "fallback": "nusmp:labyrinth/caps",
+  "elements": [
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:labyrinth/ascent_3/hall_3",
+        "processors": "nusmp:labyrinth_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:labyrinth/ascent_3/gallery_3",
+        "processors": "nusmp:labyrinth_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:labyrinth/ascent_3/shrine_3",
+        "processors": "nusmp:labyrinth_interior",
+        "projection": "rigid"
+      }
+    }
+  ]
+}
