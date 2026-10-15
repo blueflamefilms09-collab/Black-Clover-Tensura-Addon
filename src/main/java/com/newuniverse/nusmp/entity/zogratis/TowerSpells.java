@@ -55,7 +55,7 @@ final class TowerSpells {
                     if (book != null) {
                         for (int i = 0; i < book.familyCount(); i++) {
                             BookPage p = book.page(i);
-                            if (p != null && p.costPercent() >= 5) pages.add(new Entry(m, p.name(), p.costPercent()));
+                            if (p != null && p.costPercent() >= 5 && !com.newuniverse.nusmp.boss.rules.BossSkillRules.forbiddenSpellName(p.name())) pages.add(new Entry(m, p.name(), p.costPercent()));
                         }
                     }
                 } catch (Throwable t) {

@@ -73,7 +73,8 @@ public final class LuciusProfile {
         boolean grew = false;
         grew |= modifier(b, LuciusNumbers.ATTR_MAX_MAGICULE, "lucius_max_magicule", LuciusNumbers.MAGICULE_BONUS);
         grew |= modifier(b, LuciusNumbers.ATTR_MAX_AURA, "lucius_max_aura", LuciusNumbers.AURA_BONUS);
-        modifier(b, LuciusNumbers.ATTR_SPIRITUAL_REGEN, "lucius_spiritual_regen", LuciusNumbers.SPIRITUAL_REGEN_BONUS);
+        if (com.newuniverse.nusmp.boss.rules.BossRulesConfig.stripRegeneration()) dropModifier(b, LuciusNumbers.ATTR_SPIRITUAL_REGEN, "lucius_spiritual_regen");   // 1.37.0: no regeneration crutch, spiritual health included
+        else modifier(b, LuciusNumbers.ATTR_SPIRITUAL_REGEN, "lucius_spiritual_regen", LuciusNumbers.SPIRITUAL_REGEN_BONUS);
         dodge(b);
         if (grew) fillPools(b);
         BossSkills.grant(b, LuciusNumbers.SKILL_ABSOLUTE_SEVERANCE);
@@ -100,6 +101,14 @@ public final class LuciusProfile {
         if (cur != null && cur.amount() == amount) return false;
         a.addOrReplacePermanentModifier(new AttributeModifier(mid, amount, AttributeModifier.Operation.ADD_VALUE));
         return true;
+    }
+
+    /** 1.37.0: takes our modifier off an attribute again (a Lucius saved under the old design carries the spiritual-regeneration bonus). */
+    private static void dropModifier(LuciusBoss b, String attributeId, String modifierPath) {
+        Optional<Holder<Attribute>> h = attribute(attributeId);
+        if (h.isEmpty()) return;
+        AttributeInstance a = b.getAttribute(h.get());
+        if (a != null && a.getModifier(id(modifierPath)) != null) a.removeModifier(id(modifierPath));
     }
 
     /** Dodge invulnerability: whatever the base is (the server's config), the total never exceeds {@link LuciusNumbers#DODGE_TOTAL_CAP} ticks. */
@@ -229,6 +238,7 @@ public final class LuciusProfile {
             for (ManasSkillInstance i : new ArrayList<>(skills.getLearnedSkills())) {
                 ResourceLocation rl = i.getSkillId();
                 if (rl == null || !"tensura".equals(rl.getNamespace())) continue;          // only Tensura's own skills are ever mirrored
+                if (com.newuniverse.nusmp.boss.rules.BossSkillRules.forbidden(rl.toString())) continue;    // 1.37.0: never a Unique, an Ultimate or a regeneration skill
                 out.add(new UsurperPolicy.Seen(rl.toString(), kindOf(i.getSkill())));
             }
         } catch (Throwable noSkills) { /* nothing to mirror */ }

@@ -269,7 +269,7 @@ final class LuciusMoves {
         }));
         b.later(PURGE_RADIUS + 2, LuciusFx.safe("soul purge end", () -> {
             float h = SoulMath.purgeHeal(stripped[0], b.getMaxHealth());
-            if (h > 0f) {
+            if (h > 0f && com.newuniverse.nusmp.boss.rules.BossHealGuard.mayHeal(b)) {
                 b.heal(h);
                 b.announce("The purge returns to Lucius: " + Math.round(h) + " health for " + stripped[0] + " devil powers stripped.");
             }

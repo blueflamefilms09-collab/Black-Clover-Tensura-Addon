@@ -138,6 +138,8 @@ public final class BossBuffEngine {
         if (prof == null) return;                                               // not a row of the table: nothing is ever applied
         LivingEntity b = t.entity;
         BossBuffTable.Plan plan = on ? BossBuffTable.plan(t.id, BossBuffConfig.multiplier(), susp, low) : new BossBuffTable.Plan(Map.of(), Set.of());
+        plan = ruled(plan);                                                     // 1.37.0: the boss rules take the regeneration effect and the Unique/Ultimate skills out of the plan
+        com.newuniverse.nusmp.boss.rules.BossSkillRules.sweep(b);               // and off a boss saved under the old design
         BossBuffTable.Applied now0 = read(b, prof);
         for (String id : BossBuffTable.surplus(plan, now0)) effect(id).ifPresent(h -> {
             MobEffectInstance i = b.getEffect(h);
@@ -152,6 +154,20 @@ public final class BossBuffEngine {
         if (!on) for (String s : prof.skills()) if (BossSkills.has(b, s)) BossSkills.forget(b, s);     // the switch is off: the lent theme skills go too (a boss's own list only)
         if (b instanceof LuciusBoss l) LuciusProfile.refresh(l, sl, now);
         if (on && scheduled && !susp && prof.auraRadius() > 0) aura(sl, b, prof);
+    }
+
+    /**
+     * 1.37.0: the plan without what the boss rules forbid (the Instant Regeneration effect, Starved and Mathematician as Unique skills).
+     * The table and its hysteresis stay as they were; the forbidden rows simply never reach the boss, and {@link BossBuffTable#surplus}
+     * removes the ones an older version put there.
+     */
+    static BossBuffTable.Plan ruled(BossBuffTable.Plan plan) {
+        Map<String, Integer> amps = new LinkedHashMap<>();
+        for (Map.Entry<String, Integer> e : plan.amplifiers().entrySet())
+            if (!com.newuniverse.nusmp.boss.rules.BossSkillRules.forbiddenEffect(e.getKey())) amps.put(e.getKey(), e.getValue());
+        Set<String> skills = new LinkedHashSet<>();
+        for (String s : plan.skills()) if (!com.newuniverse.nusmp.boss.rules.BossSkillRules.forbidden(s)) skills.add(s);
+        return new BossBuffTable.Plan(amps, skills);
     }
 
     /** The anti-magic aura: during a fight, players near the boss may have an Ultimate skill jammed for 2 to 3 seconds (a cooldown, never a removal). */

@@ -84,6 +84,8 @@ public class LuciusBoss extends ZogratisBoss {
     private static final ResourceLocation JULIUS_SLOW = ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "lucius_julius_slow");
 
     private final ChronoRing ring = new ChronoRing(ChronoMath.ringCapacity());
+    /** 1.37.0: the combo planner that orders his casts (spatial, offensive, defensive or control, one heavy magic cast). */
+    private final com.newuniverse.nusmp.boss.LuciusCombo combo = new com.newuniverse.nusmp.boss.LuciusCombo(getRandom().nextLong());
     private final Precognition precog = new Precognition();
     private final JuliusWill julius = new JuliusWill();
     private final PaladinLedger<UUID> paladins = new PaladinLedger<>();
@@ -286,7 +288,32 @@ public class LuciusBoss extends ZogratisBoss {
         resetFightState();
     }
 
+    /**
+     * 1.37.0: the combo AI. Of the moves the scheduler allows now (power gate, range, cooldown, mana, ultimate pacing) the planner picks
+     * the one that continues the combo and repeats none of the last three casts; the old weighted draw ({@code super}) answers when the
+     * switch {@code luciusComboAi} is off or the planner has nothing or fails.
+     */
+    @Override
+    protected int chooseMove(List<Move> bk, MoveScheduler.Situation s, long t) {
+        if (!com.newuniverse.nusmp.boss.rules.BossRulesConfig.luciusComboAi()) return super.chooseMove(bk, s, t);
+        try {
+            List<com.newuniverse.nusmp.boss.LuciusCombo.Candidate> pool = new ArrayList<>();
+            for (Move m : bk) if (moveEligible(m, s)) pool.add(new com.newuniverse.nusmp.boss.LuciusCombo.Candidate(m.id(), m.weight()));
+            String id = combo.pick(pool, t).orElse(null);
+            if (id == null) return super.chooseMove(bk, s, t);
+            for (int i = 0; i < bk.size(); i++) {
+                if (!bk.get(i).id().equals(id)) continue;
+                combo.commit(id, t, Math.max(10, (int) Math.round(bk.get(i).cooldownTicks() * tuning().cooldownMultiplier())));
+                return i;
+            }
+        } catch (RuntimeException planner) {
+            LogUtils.getLogger().warn("[nusmp] Lucius's combo planner failed, using the old chooser: {}", planner.toString());
+        }
+        return super.chooseMove(bk, s, t);
+    }
+
     private void resetFightState() {
+        combo.reset();
         ChronoMoves.decelerate(this);
         AttributeInstance sp = getAttribute(Attributes.MOVEMENT_SPEED);
         if (sp != null) sp.removeModifier(JULIUS_SLOW);

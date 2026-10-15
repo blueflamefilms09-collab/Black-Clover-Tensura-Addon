@@ -78,7 +78,9 @@ public final class BossBudget {
      */
     public float setHealth(LivingEntity e, float requested) {
         float current = e.getHealth();
-        if (e.level() == null || e.level().isClientSide || !sized || !active() || bypass > 0) return requested;
+        if (e.level() == null || e.level().isClientSide) return requested;
+        if (bypass == 0 && requested > current && com.newuniverse.nusmp.boss.rules.BossHealGuard.blocks(e)) return current;     // 1.37.0: no second wind in combat; the refill and loads run bypassed and pass
+        if (!sized || !active() || bypass > 0) return requested;
         if (!(requested < current) || requested >= e.getMaxHealth()) return requested;
         float drop = current - requested;
         return BudgetPolicy.settle(current, requested, budget.allow(drop));

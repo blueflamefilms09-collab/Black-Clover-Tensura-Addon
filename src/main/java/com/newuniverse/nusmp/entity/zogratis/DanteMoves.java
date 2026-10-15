@@ -266,7 +266,7 @@ public final class DanteMoves {
 
     /** Body Magic's pulse: restores 'fraction' (at most half) of the boss's max health at once, with the burst of flesh and steam. */
     public static void regenerate(ZogratisBoss boss, float fraction) {
-        if (!boss.isAlive()) return;
+        if (!boss.isAlive() || !com.newuniverse.nusmp.boss.rules.BossHealGuard.mayHeal(boss)) return;       // 1.37.0: no healing pulse in a fight
         float f = Math.max(0f, Math.min(0.5f, fraction));
         boss.setHealth(Math.min(boss.getMaxHealth(), boss.getHealth() + boss.getMaxHealth() * f));
         if (boss.level() instanceof ServerLevel sl) {

@@ -268,7 +268,7 @@ final class ChronoMoves {
         }
         float before = b.getHealth();
         float after = ChronoRing.rewoundHealth(before, s.health(), b.getMaxHealth(), ChronoMath.rewindHealCap(b.power()));
-        if (after > before) b.setHealth(Math.min(b.getMaxHealth(), after));
+        if (after > before && com.newuniverse.nusmp.boss.rules.BossHealGuard.mayHeal(b)) b.setHealth(Math.min(b.getMaxHealth(), after));       // 1.37.0: the rewind returns his place and cleanses, it no longer heals in a fight
         Vec3 to = new Vec3(s.x(), s.y(), s.z());
         Vec3 spot = to.distanceToSqr(b.arenaCenter()) < (double) ZogratisBoss.ARENA_RADIUS * ZogratisBoss.ARENA_RADIUS ? LuciusFx.standable(sl, b, to) : null;
         if (spot != null) {

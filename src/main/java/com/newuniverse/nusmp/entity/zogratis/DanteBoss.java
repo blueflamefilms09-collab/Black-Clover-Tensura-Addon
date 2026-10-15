@@ -178,6 +178,7 @@ public class DanteBoss extends ZogratisBoss {
     }
 
     private void bodyAnswers(ServerLevel sl, DamageSource source, float amount) {
+        if (com.newuniverse.nusmp.boss.rules.BossRulesConfig.stripRegeneration()) return;       // 1.37.0: Body Magic's mortal-wound pulse is a second wind; kept behind stripRegeneration=false
         long now = sl.getGameTime();
         float incoming = exposed() ? amount * ZogratisBoss.EXPOSED_BONUS : amount;
         if (invulnerableTime > 10 && !source.is(DamageTypeTags.BYPASSES_COOLDOWN)) {
