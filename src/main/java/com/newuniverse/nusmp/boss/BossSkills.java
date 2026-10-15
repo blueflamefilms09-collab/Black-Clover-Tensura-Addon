@@ -32,9 +32,10 @@ public final class BossSkills {
         } catch (Throwable noSkills) { return false; }
     }
 
-    /** Teaches a boss a skill; true when it has it afterwards. Does nothing for anything that is not a registry-listed boss. */
+    /** Teaches a boss a skill; true when it has it afterwards. Does nothing for anything that is not a registry-listed boss, and (1.37.0) nothing for a regeneration, Unique or Ultimate skill. */
     public static boolean grant(LivingEntity boss, String skillId) {
         if (!BossEntities.isModBoss(boss)) return false;
+        if (com.newuniverse.nusmp.boss.rules.BossSkillRules.refuses(boss, skillId)) return false;    // 1.37.0: the boss rules, see boss/rules/BossSkillPolicy
         ResourceLocation id = ResourceLocation.tryParse(skillId);
         if (id == null) return false;
         try {

@@ -198,7 +198,7 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
     protected String[] tensuraKeywords() { return new String[0]; }
     protected int tensuraKitSize() { return 4; }
     /** 1.35.0: whether the Gates (the 100% mode) refill the health bar to full. Every Zogratis boss does; override to opt out. */
-    protected boolean refillOnGates() { return true; }
+    protected boolean refillOnGates() { return com.newuniverse.nusmp.boss.rules.BossRulesConfig.refillAtGates(); }
     /** 1.35.0: the id under which the Gates refill is recorded (a subclass with several modes calls {@link #refillForMode} with its own ids). */
     protected String gatesModeId() { return "gates"; }
 
@@ -634,7 +634,7 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
         mana.retune(tuning);
         applyTuning();
         refreshBar();
-        setHealth(getMaxHealth());
+        com.newuniverse.nusmp.boss.rules.BossHealGuard.allow(() -> setHealth(getMaxHealth()));       // 1.37.0: an abandoned fight resets to full; that is not a second wind
         scheduler.reset(tickCount);
         recoveryUntil = 0;
         setState(STATE_IDLE);
@@ -715,9 +715,18 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
         if (bk.isEmpty()) return;
         MoveScheduler.Situation s = situation(target, t);
         updateBand(bk, t);
-        int idx = scheduler.pick(bk, s);
+        int idx = chooseMove(bk, s, t);
         if (idx >= 0) beginCast(sl, idx, bk.get(idx), target, s, t);
     }
+
+    /**
+     * 1.37.0: the index of the move to start, or -1. The default is the scheduler's weighted draw (unchanged); a boss overrides it to plan
+     * its own order (Lucius's combo AI) and falls back to {@code super} whenever its planner has nothing.
+     */
+    protected int chooseMove(List<Move> bk, MoveScheduler.Situation s, long t) { return scheduler.pick(bk, s); }
+
+    /** 1.37.0: would the scheduler allow this move now (power, range, cooldown, mana, ultimate pacing)? For a boss's own planner. */
+    protected final boolean moveEligible(MoveSpec m, MoveScheduler.Situation s) { return scheduler.eligible(m, s); }
 
     /** Where the boss wants to stand: the centre of the ranges of the moves that are ready (up close when none is). */
     private void updateBand(List<Move> bk, long t) {

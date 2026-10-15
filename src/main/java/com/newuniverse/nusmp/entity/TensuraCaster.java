@@ -51,6 +51,7 @@ public final class TensuraCaster {
                     if (!path.contains(k) || path.contains("barrier") || path.contains("summon")) continue;
                     ManasSkill skill = registry.get(id);
                     if (skill == null || !skill.getClass().getName().startsWith(MAGIC_PACKAGE)) continue;
+                    if (com.newuniverse.nusmp.boss.rules.BossSkillRules.refuses(e, skill)) continue;             // 1.37.0: a boss's kit never holds a healing page
                     if (skills.getSkill(id).isEmpty()) skills.learnSkill(skill.createDefaultInstance());
                     out.add(id);
                 }
