@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.42.0] — Lucius Zogratis, final-arc overhaul
+
+**State:** written without a compiler; CI is the first compile. Nothing run in game. Design and reasons in .
+
+### NEW
+- Three acts (above 65%, 30-65%, below 30%) with the act name on the boss bar; switch  (default on; off = the 1.37.0 Lucius).
+- Combo chains (Checkmate: gravity pin, spatial blink behind, Chrono Stasis bubble; every harmful step telegraphed 12+ ticks), Soul Touch, the Soul Corruption effect (-10/-20/-30% max health, floor 4 hearts, 60 s), reversible turning of pets and summons for 20 s (max 6).
+- Precognition bypass rules (multiple attackers, rapid hits, anti-magic weapons via tag , two high-tier relics), act 1 levitation and teleport-away, act 2 Time Reversal channel (interruptible; switch ), act 3 clones (3-5) and the chest gem hitbox (crit or anti-magic hit shatters it).
+
+### REPLACEMENT
+- Old charge-based Precognition is replaced in arc mode (kept when the arc is off). Lucius skips the Gates refill in arc mode; Time Reversal is a second, owner-requested exception to the no-healing boss rule.
+
 ## [1.41.0] — Relics of the World, part 4: 124 new relics
 
 **State:** written without a compiler; CI is the first compile. Nothing run in game. Every card's translation is in `docs/relics_of_many_worlds_part4.md`.

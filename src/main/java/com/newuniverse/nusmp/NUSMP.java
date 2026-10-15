@@ -50,6 +50,8 @@ public class NUSMP {
         com.newuniverse.nusmp.entity.zogratis.ZogratisEntities.ENTITIES.register(modEventBus);
         modEventBus.addListener(com.newuniverse.nusmp.entity.zogratis.ZogratisEntities::attributes);
         com.newuniverse.nusmp.entity.zogratis.ZogratisEffects.EFFECTS.register(modEventBus);
+        com.newuniverse.nusmp.entity.zogratis.LuciusEffects.init();
+        com.newuniverse.nusmp.entity.zogratis.LuciusEffects.EFFECTS.register(modEventBus);
         com.newuniverse.nusmp.entity.zogratis.VanicaCurse.EFFECTS.register(modEventBus);
         com.newuniverse.nusmp.dungeon.nexus.vault.NexusBlocks.init();                                                    // 1.21.0: the Variable Core (vault blocks)
         com.newuniverse.nusmp.dungeon.nexus.vault.NexusBlocks.BLOCKS.register(modEventBus);
@@ -253,6 +255,7 @@ public class NUSMP {
         com.newuniverse.nusmp.relics.socket.SocketLoot.register(NeoForge.EVENT_BUS);
         com.newuniverse.nusmp.boss.BossHooks.register();
         com.newuniverse.nusmp.boss.rules.BossRulesHooks.register();                                        // 1.37.0: bosses never regenerate or use Unique/Ultimate skills
+        com.newuniverse.nusmp.entity.zogratis.LuciusArcHooks.register();                                   // 1.42.0: Lucius final-arc hooks
         com.newuniverse.nusmp.charter.CharterEvents.register(NeoForge.EVENT_BUS);
         com.newuniverse.nusmp.boss.bar.BossBarSync.init();
         com.newuniverse.nusmp.relics.RelicHolderSync.register(NeoForge.EVENT_BUS);
