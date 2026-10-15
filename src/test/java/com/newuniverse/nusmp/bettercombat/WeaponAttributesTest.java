@@ -151,12 +151,20 @@ class WeaponAttributesTest {
                 assertTrue(begin <= end && end <= stop, name + ": need beginTick <= endTick <= stopTick, got " + begin + "," + end + "," + stop);
                 List<?> moves = (List<?>) e.get("moves");
                 assertTrue(moves != null && !moves.isEmpty(), name + ": no moves");
-                double last = -1;
+                // 1.39.0: one part and one axis per move entry (Better Combat's own form), so ticks ascend per (part, axis)
+                Map<String, Double> lastBy = new java.util.HashMap<>();
                 for (Object o : moves) {
-                    double tick = num(obj(o), "tick", name);
-                    assertTrue(tick > last, name + ": ticks must strictly ascend (" + tick + " after " + last + ")");
+                    Map<String, Object> mv = obj(o);
+                    double tick = num(mv, "tick", name);
+                    String part = null, axis = null;
+                    for (Map.Entry<String, Object> en : mv.entrySet()) {
+                        if (en.getValue() instanceof Map) { part = en.getKey(); axis = String.valueOf(obj(en.getValue()).keySet()); }
+                    }
+                    String key = part + "/" + axis;
+                    double last = lastBy.getOrDefault(key, -1.0);
+                    assertTrue(tick > last, name + ": ticks must strictly ascend per part and axis (" + key + ": " + tick + " after " + last + ")");
                     assertTrue(tick <= end, name + ": a move at tick " + tick + " is after endTick " + end);
-                    last = tick;
+                    lastBy.put(key, tick);
                 }
             }
         }
