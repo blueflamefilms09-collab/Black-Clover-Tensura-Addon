@@ -26,7 +26,9 @@ import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -63,6 +65,12 @@ public final class TierRitual {
         return d != null && d.slot() != RelicSlot.CONSUMABLE;
     }
 
+    /** For the Relic Forge's slot rules: is this stack one of the accepted catalyst items (of any tier jump)? */
+    public static boolean acceptsCatalyst(ItemStack s) { return isCatalyst(s); }
+
+    /** For the Relic Forge's slot rules: may this stack go through the ritual (a relic that is not a consumable)? */
+    public static boolean acceptsRelic(ItemStack s) { return ritualRelic(s); }
+
     /** Both sides: cancels the click so the relic's own act does not fire; only the server performs the ritual. */
     static void onUse(PlayerInteractEvent.RightClickItem e) {
         Player p = e.getEntity();
@@ -81,43 +89,84 @@ public final class TierRitual {
 
     /** Runs the ritual once. Returns true if the tier went up. */
     public static boolean attempt(ServerPlayer p, ItemStack relic, ItemStack catalyst) {
+        return run(p, relic, List.of(catalyst)).success();
+    }
+
+    /** Why a ritual ended the way it did (the Relic Forge shows a line per reason; the sneak-use flow only needs the messages). */
+    public enum Reason { SUCCESS, NOT_A_RELIC, COOLDOWN, UNATTUNED, AT_TOP, WRONG_CATALYST, NEED_COUNT, NO_ENERGY, FAILED_KEPT, FAILED_LOST }
+
+    /** The result of one ritual: the reason, whether the tier went up, and the grade ordinal that was aimed for (-1 if none). */
+    public record Result(Reason reason, boolean success, int target) {}
+
+    /**
+     * The Relic Forge's way in (1.41.0): the same ritual, same checks, same cost and roll, but the catalysts come from several menu slots and the answer
+     * is a {@link Result}. {@code relic} is edited in place (the tier is written onto that very stack), the catalyst stacks are shrunk in place.
+     */
+    public static Result attemptFromForge(ServerPlayer p, ItemStack relic, List<ItemStack> catalystSlots) {
+        return run(p, relic, catalystSlots == null ? List.<ItemStack>of() : catalystSlots);
+    }
+
+    /** Ticks left of the player's ritual cooldown (0 when ready); the forge shows it as a refusal before the player clicks. */
+    public static long cooldownLeft(Player p) {
+        CompoundTag r = root(p, false);
+        long until = r == null ? 0L : r.getLong(UNTIL);
+        return Math.max(0L, until - p.level().getGameTime());
+    }
+
+    /**
+     * The one body of the ritual. Several catalyst stacks are allowed: the first accepted catalyst item present among them is the one used, and its
+     * stacks are added together for the count (a single stack, the sneak-use case, behaves exactly as before).
+     */
+    private static Result run(ServerPlayer p, ItemStack relic, List<ItemStack> catalysts) {
         RelicDef def = Relics.defOf(relic);
-        if (def == null) return false;
+        if (def == null) return new Result(Reason.NOT_A_RELIC, false, -1);
         long now = p.level().getGameTime();
         long until = root(p, false) == null ? 0L : root(p, false).getLong(UNTIL);
         if (now < until) {
             say(p, Component.translatable("nusmp.tier.cooldown", (until - now + 19) / 20).withStyle(ChatFormatting.GRAY));
-            return false;
+            return new Result(Reason.COOLDOWN, false, -1);
         }
         if (!Attune.works(relic, def, p)) {
             say(p, Component.translatable("nusmp.tier.unattuned").withStyle(ChatFormatting.LIGHT_PURPLE));
-            return false;
+            return new Result(Reason.UNATTUNED, false, -1);
         }
         Grade eff = Tiers.effectiveGrade(relic, def);
         int target = TierRules.nextTarget(eff.ordinal());
         if (target < 0) {
             say(p, Component.translatable("nusmp.tier.top").withStyle(ChatFormatting.GOLD));
-            return false;
+            return new Result(Reason.AT_TOP, false, -1);
         }
         Grade to = Grade.values()[target];
         Catalyst need = null;
-        String have = idOf(catalyst);
-        for (Catalyst c : TierRules.catalystsTo(target)) if (c.itemId().equals(have)) need = c;
+        List<ItemStack> matched = new ArrayList<>();
+        for (Catalyst c : TierRules.catalystsTo(target)) {
+            for (ItemStack s : catalysts) if (!s.isEmpty() && idOf(s).equals(c.itemId())) matched.add(s);
+            if (!matched.isEmpty()) { need = c; break; }
+        }
         if (need == null) {
             say(p, Component.translatable("nusmp.tier.wrong_catalyst", to.label(), catalystList(target)).withStyle(ChatFormatting.RED));
-            return false;
+            return new Result(Reason.WRONG_CATALYST, false, target);
         }
-        if (!p.isCreative() && catalyst.getCount() < need.count()) {
-            say(p, Component.translatable("nusmp.tier.need_count", need.count(), catalyst.getHoverName()).withStyle(ChatFormatting.RED));
-            return false;
+        int have = 0;
+        for (ItemStack s : matched) have += s.getCount();
+        if (!p.isCreative() && have < need.count()) {
+            say(p, Component.translatable("nusmp.tier.need_count", need.count(), matched.get(0).getHoverName()).withStyle(ChatFormatting.RED));
+            return new Result(Reason.NEED_COUNT, false, target);
         }
         if (!payEnergy(p, TierRules.costPercent(target))) {
             say(p, Component.translatable("nusmp.tier.no_energy", Math.round(TierRules.costPercent(target))).withStyle(ChatFormatting.RED));
-            return false;
+            return new Result(Reason.NO_ENERGY, false, target);
         }
         boolean win = TierRules.succeeds(target, p.getRandom().nextDouble());
         boolean lose = win || TierRules.losesCatalystOnFail(target);
-        if (lose && !p.isCreative()) catalyst.shrink(need.count());
+        if (lose && !p.isCreative()) {
+            int left = need.count();
+            for (ItemStack s : matched) {
+                int take = Math.min(left, s.getCount());
+                s.shrink(take);
+                left -= take;
+            }
+        }
         if (win) {
             Tiers.setTier(relic, target);
             Relics.invalidate(p);
@@ -126,12 +175,12 @@ public final class TierRitual {
             Fx.burst(p.serverLevel(), p.position(), to.rgb());
             setCooldown(p, now + TierRules.SUCCESS_COOLDOWN_TICKS);
             say(p, Component.translatable("nusmp.tier.success", relic.getHoverName(), to.label()).withStyle(to.colour()));
-        } else {
-            p.level().playSound(null, p.blockPosition(), SoundEvents.ANVIL_BREAK, SoundSource.PLAYERS, 0.6f, 0.7f);
-            setCooldown(p, now + TierRules.failCooldownTicks(target));
-            say(p, Component.translatable(lose ? "nusmp.tier.fail_lost" : "nusmp.tier.fail_kept", relic.getHoverName()).withStyle(ChatFormatting.RED));
+            return new Result(Reason.SUCCESS, true, target);
         }
-        return win;
+        p.level().playSound(null, p.blockPosition(), SoundEvents.ANVIL_BREAK, SoundSource.PLAYERS, 0.6f, 0.7f);
+        setCooldown(p, now + TierRules.failCooldownTicks(target));
+        say(p, Component.translatable(lose ? "nusmp.tier.fail_lost" : "nusmp.tier.fail_kept", relic.getHoverName()).withStyle(ChatFormatting.RED));
+        return new Result(lose ? Reason.FAILED_LOST : Reason.FAILED_KEPT, false, target);
     }
 
     /** "2x Low Magisteel Ingot / ..." for the failure message: the registry paths, which are readable enough and need no client lookup. */

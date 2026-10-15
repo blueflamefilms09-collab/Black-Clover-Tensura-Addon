@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "nusmp:block/relic_forge_side",
+    "side": "nusmp:block/relic_forge_side",
+    "plate": "nusmp:block/relic_forge_plate",
+    "top": "nusmp:block/relic_forge_top",
+    "bottom": "nusmp:block/relic_forge_bottom"
+  },
+  "elements": [
+    {
+      "from": [1, 0, 1],
+      "to": [15, 10, 15],
+      "faces": {
+        "down": {"texture": "#bottom", "cullface": "down"},
+        "north": {"texture": "#side"},
+        "south": {"texture": "#side"},
+        "west": {"texture": "#side"},
+        "east": {"texture": "#side"}
+      }
+    },
+    {
+      "from": [0, 10, 0],
+      "to": [16, 14, 16],
+      "faces": {
+        "down": {"texture": "#bottom"},
+        "up": {"texture": "#top"},
+        "north": {"texture": "#plate", "uv": [0, 0, 16, 4]},
+        "south": {"texture": "#plate", "uv": [0, 0, 16, 4]},
+        "west": {"texture": "#plate", "uv": [0, 0, 16, 4]},
+        "east": {"texture": "#plate", "uv": [0, 0, 16, 4]}
+      }
+    }
+  ]
+}

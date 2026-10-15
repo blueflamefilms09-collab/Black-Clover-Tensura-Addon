@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": { "item": "minecraft:gold_ingot" },
+    "D": { "item": "minecraft:diamond" },
+    "O": { "item": "minecraft:obsidian" },
+    "T": { "item": "minecraft:crafting_table" },
+    "I": { "item": "minecraft:iron_ingot" }
+  },
+  "pattern": [
+    "GDG",
+    "OTO",
+    "III"
+  ],
+  "result": { "id": "nusmp:relic_forge", "count": 1 }
+}

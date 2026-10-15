@@ -1,0 +1,6 @@
+{
+  "title": "The Relic Forge",
+  "text": "A table you craft (gold, a diamond, obsidian, a crafting table and iron) that does the sneak-use jobs from a window, for players whose off hand belongs to Better Combat. Put the relic in the first slot. UPGRADE runs the same tier ritual with the catalysts in the two catalyst slots: same attunement, cooldown, magicule and aura price and chance, and a failure never destroys the relic. SOCKET binds the Spirit or Devil Core in the core slot into the first free socket; with an Empty Element Core in the core slot, DRAW OUT takes the Core of the chosen socket back (CYCLE chooses which). The Engrave tab puts a Tensura engraving book onto a mod weapon (at most three engravings added by the table, never replacing one). Everything you leave on the table comes back to you when you close it. The sneak-use ways still work.",
+  "order": 35,
+  "icon": "item:nusmp:relic_forge"
+}

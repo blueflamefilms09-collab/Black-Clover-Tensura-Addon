@@ -115,6 +115,9 @@ public final class SocketEngine {
         e.setCancellationResult(InteractionResult.SUCCESS);
     }
 
+    /** For the Relic Forge: is this the Empty Element Core that draws a bound Core out? (The same test the sneak-use flow makes.) */
+    public static boolean isEmptyElementCore(ItemStack s) { return isEmptyCore(s); }
+
     private static boolean isEmptyCore(ItemStack s) {
         if (s.isEmpty()) return false;
         Item it = emptyCore;
