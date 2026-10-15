@@ -175,6 +175,7 @@ public class NUSMP {
         modContainer.registerConfig(ModConfig.Type.SERVER, NUConfig.SPEC);
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.multiverse.MultiverseConfig.SPEC, "nusmp-multiverse-server.toml");
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.dungeon.DungeonConfig.SPEC, "nusmp-dungeon-server.toml");        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.LabyrinthConfig.SPEC, "nusmp-labyrinth-server.toml");   // 1.35.0
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.dnd.DndConfig.SPEC, "nusmp-labyrinth-dnd-server.toml");   // 1.36.0
 
         // Multiverse: /multiverse commands, ceremony, mastery pages, ranks & stars, squads, status sync, world sites
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.MultiverseCommands::register);
