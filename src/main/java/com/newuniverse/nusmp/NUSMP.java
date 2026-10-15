@@ -178,6 +178,7 @@ public class NUSMP {
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.multiverse.MultiverseConfig.SPEC, "nusmp-multiverse-server.toml");
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.dungeon.DungeonConfig.SPEC, "nusmp-dungeon-server.toml");        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.LabyrinthConfig.SPEC, "nusmp-labyrinth-server.toml");   // 1.35.0
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.dnd.DndConfig.SPEC, "nusmp-labyrinth-dnd-server.toml");   // 1.36.0
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.boss.rules.BossRulesConfig.SPEC, "nusmp-boss-rules-server.toml");   // 1.37.0
 
         // Multiverse: /multiverse commands, ceremony, mastery pages, ranks & stars, squads, status sync, world sites
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.MultiverseCommands::register);
@@ -249,6 +250,7 @@ public class NUSMP {
         com.newuniverse.nusmp.relics.socket.SocketEngine.register(NeoForge.EVENT_BUS);
         com.newuniverse.nusmp.relics.socket.SocketLoot.register(NeoForge.EVENT_BUS);
         com.newuniverse.nusmp.boss.BossHooks.register();
+        com.newuniverse.nusmp.boss.rules.BossRulesHooks.register();                                        // 1.37.0: bosses never regenerate or use Unique/Ultimate skills
         com.newuniverse.nusmp.charter.CharterEvents.register(NeoForge.EVENT_BUS);
         com.newuniverse.nusmp.boss.bar.BossBarSync.init();
         com.newuniverse.nusmp.relics.RelicHolderSync.register(NeoForge.EVENT_BUS);

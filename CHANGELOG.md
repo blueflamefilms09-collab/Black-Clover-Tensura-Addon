@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.37.0] — The Codex stays ours, updates itself and learns your spells; bosses lose regeneration and Unique/Ultimate skills
+
+**State:** written without a compiler; CI is the first compile. Nothing run in game. See `docs/codex.md` and `docs/boss_rules.md`.
+
+### REPLACEMENT
+- **The Great-Sage "Analysis complete" overlay on Tensura's own Skills windows is off** (new client config `ui.tensuraOverlay`, default false; the old code is kept). Analysis text now appears only in the mod's own menus (Codex, Multiverse Status, Four Kingdoms, Questionnaire, Grimoire Slot, Compatibility Codex, the page-unlock toast).
+- **Bosses no longer regenerate and no longer use Unique or Ultimate skills** (`nusmp-boss-rules-server.toml`: `stripRegeneration`, `banUniqueUltimate`, `forbiddenWords`): regeneration/healing skills and effects are refused, removed on join and every 100 ticks, healing in combat is cancelled, and a cancellable skill-event veto stops forbidden skills. The old skill-lending code stays behind the filters. Exception on purpose: the Gates refill of the Zogratis bosses (your earlier request) stays, switch `refillAtGates` (default true).
+- **Lucius's spell chooser** is replaced by a cooldown-managed combo planner (`luciusComboAi`, default true): four casts of distinct roles (spatial, offensive, defensive or control) and one heavy magic cast; no repeats inside cooldowns. The old chooser is the fallback.
+
+### NEW
+- **The Codex builds itself from data**: every folder `assets/<ns>/codex/<section>/` becomes a tab and every JSON in it an entry (title, text, discovery keys, icon, order, remove), other packs can add or override, F3+T reloads; generated tabs for Blocks, Entities, Magic attributes and Effects read the registries each time the book opens; a Rules tab (13 stock rules with live values) and a **Learned Spells tab** (the pages you have opened, grouped by magic, with cost, cooldown and what each does; sealed pages show as ???). The tab column scrolls.
+
 ## [1.36.0] — D&D layer of the Labyrinth and the Rukh particles
 
 **State:** written without a compiler; CI is the first compile. Nothing run in game. See `docs/labyrinth.md` (D&D section) and `docs/rukh/r1_core.md`.

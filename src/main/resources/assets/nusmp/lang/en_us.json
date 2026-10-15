@@ -2555,5 +2555,12 @@
   "message.nusmp.labyrinth_gloom_warning": "The dark presses in. Light a lantern or find a lit room.",
   "message.nusmp.labyrinth_gloom": "The gloom of the Labyrinth saps you. Hold a light.",
   "message.nusmp.labyrinth_hunger": "Your stomach is empty. Eat: the Labyrinth gives no rest.",
-  "message.nusmp.vital_strike": "Vital Strike!"
+  "message.nusmp.vital_strike": "Vital Strike!",
+  "nusmp.codex.section.rules": "Rules",
+  "nusmp.ui.codex.sage.spells": "Learned spells compiled.",
+  "nusmp.ui.codex.sage.blocks": "Block records compiled.",
+  "nusmp.ui.codex.sage.entities": "Entity records compiled.",
+  "nusmp.ui.codex.sage.magic": "Magic attributes compiled.",
+  "nusmp.ui.codex.sage.effects": "Status effects compiled.",
+  "nusmp.ui.codex.sage.rules": "Notice: these rules are in force."
 }
