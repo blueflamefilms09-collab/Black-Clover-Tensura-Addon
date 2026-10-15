@@ -56,6 +56,7 @@ public final class LabyrinthTravel {
             p.sendSystemMessage(Component.literal("The Labyrinth does not answer here.").withStyle(ChatFormatting.GRAY));
             return false;
         }
+        labyrinth.getChunk(pad.getX() >> 4, pad.getZ() >> 4);                  // generate the pad's chunk first, so nobody arrives in an ungenerated void and drops out of the world
         if (!Labyrinth.in(p)) rememberOrigin(p);
         p.getPersistentData().putLong(PAD, pad.asLong());
         stamp(p, labyrinth);
