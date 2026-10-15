@@ -14,6 +14,7 @@ public final class UiThemeOptions {
     public static final ModConfigSpec.BooleanValue MOTION;
     public static final ModConfigSpec.BooleanValue TYPING;
     public static final ModConfigSpec.BooleanValue PAGE_TOAST;
+    public static final ModConfigSpec.BooleanValue TENSURA_OVERLAY;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -26,6 +27,8 @@ public final class UiThemeOptions {
                 .define("typing", true);
         PAGE_TOAST = b.comment("Show the analysis panel with a magic circle when a grimoire page opens through mastery (anime look only).")
                 .define("pageToast", true);
+        TENSURA_OVERLAY = b.comment("Draw the magic circle, cyan brackets and the Great-Sage analysis readout over Tensura's own Skills windows (ability selection, sub-ability mode, categories). Off by default: the analysis look belongs to the mod's own menus (the Codex) only.")
+                .define("tensuraOverlay", false);
         b.pop();
         SPEC = b.build();
     }
@@ -41,6 +44,11 @@ public final class UiThemeOptions {
     public static boolean typing() { return get(TYPING); }
 
     public static boolean pageToast() { return get(PAGE_TOAST); }
+
+    /** Whether the analysis overlay may be drawn over Tensura's own screens. Default false, also when the config is not loaded yet. */
+    public static boolean tensuraOverlay() {
+        try { return TENSURA_OVERLAY.get(); } catch (IllegalStateException notLoaded) { return false; }
+    }
 
     private static boolean get(ModConfigSpec.BooleanValue v) {
         try { return v.get(); } catch (IllegalStateException notLoaded) { return true; }

@@ -1,0 +1,5 @@
+{
+  "title": "The Vital Strike",
+  "text": "In the Labyrinth a heavy blow, or a blow with a strong relic once it is charged, becomes a Vital Strike: it removes at least a third of a monster's maximum health at once, then rests for a few seconds. It raises the damage of one hit; it never sets health to zero, so armour and resistance still count. Bosses are not affected.",
+  "order": 100
+}

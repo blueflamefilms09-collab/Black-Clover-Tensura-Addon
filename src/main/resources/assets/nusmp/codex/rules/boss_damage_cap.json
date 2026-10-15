@@ -1,0 +1,5 @@
+{
+  "title": "Bosses cannot be one-shot",
+  "text": "A boss can lose only a fraction of its maximum health each second (6% by default). Blows, true damage, effects and commands all draw from the same budget, so a huge hit still does its share and the boss dies over seconds, never in one blow.",
+  "order": 40
+}

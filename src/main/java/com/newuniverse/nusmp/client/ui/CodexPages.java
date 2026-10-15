@@ -21,8 +21,15 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 
+import com.newuniverse.nusmp.client.ui.codex.CodexData;
+import com.newuniverse.nusmp.client.ui.codex.CodexSources;
+import com.newuniverse.nusmp.client.ui.codex.EntryListPage;
+import com.newuniverse.nusmp.client.ui.codex.SpellSource;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Locale;
 import java.util.function.Predicate;
 
@@ -38,9 +45,26 @@ public final class CodexPages {
     /** Appends a page (pages only ever go at the end). */
     public static void register(CodexPage page) { PAGES.add(page); }
 
+    /**
+     * The pages in tab order: the registered ones (stock pages first, only ever appended to), then one tab per data section found under
+     * {@code assets/<ns>/codex/<section>/} (1.37.0, see client.ui.codex). A fresh list each call; {@link CodexScreen} takes it once when it opens,
+     * so the tabs stay the same for the screen's whole life even if a resource reload lands meanwhile.
+     */
     public static List<CodexPage> all() {
         if (PAGES.isEmpty()) defaults();
-        return PAGES;
+        List<CodexPage> out = new ArrayList<>(PAGES);
+        for (String section : CodexData.get().sections().keySet()) {
+            String title = CodexSources.sectionTitle(section);
+            out.add(DATA_PAGES.computeIfAbsent(section + "|" + title, k -> new EntryListPage(title, CodexData.glyph(title), 40, () -> CodexSources.section(section))));
+        }
+        return out;
+    }
+
+    private static final Map<String, CodexPage> DATA_PAGES = new HashMap<>();
+
+    /** 1.37.0: the Codex opened: every page that caches is told to forget (registries and the player may have changed). */
+    public static void opened() {
+        for (CodexPage p : all()) p.opened();
     }
 
     private static void defaults() {
@@ -66,6 +90,12 @@ public final class CodexPages {
                 new String[]{"Turning pages", "Use the mouse wheel over the book, the arrow keys or A and D, or click a tab. Long pages scroll with the wheel; hold Shift to turn the page instead."},
                 new String[]{"The figure", "Click the figure for a new pose, drag it to turn it."},
                 new String[]{"Hotkey", "The Codex opens with the Multiverse Status key (Controls, Multiverse Status)."})));
+        // 1.37.0: appended after the stock pages. Built from the registries and the player each time the Codex opens (see client.ui.codex).
+        register(new EntryListPage("Spells", "Sp", 40, SpellSource::blocks));
+        register(new EntryListPage("Blocks", "Bk", 0, CodexSources::blocks));
+        register(new EntryListPage("Entities", "En", 40, CodexSources::entities));
+        register(new EntryListPage("Magic", "Mg", 40, CodexSources::magic));
+        register(new EntryListPage("Effects", "Ef", 0, CodexSources::effects));
     }
 
     // ---------------------------------------------------------------- overview
@@ -89,7 +119,8 @@ public final class CodexPages {
                         ResourceLocation id = i.getSkill().getRegistryName();
                         if (id == null || !"nusmp".equals(id.getNamespace())) continue;
                         String kind = id.getPath().contains("grimoire") ? "Grimoire magic" : "Skill";
-                        out.add(new String[]{id.getPath(), pretty(id.getPath()), kind});
+                        String dk = id.getNamespace() + ".skill." + id.getPath() + ".description";          // 1.37.0: the skill's own one-line description, if it has one
+                        out.add(new String[]{id.getPath(), pretty(id.getPath()), kind, net.minecraft.client.resources.language.I18n.exists(dk) ? net.minecraft.client.resources.language.I18n.get(dk) : ""});
                     }
                 }
             } catch (Throwable ignored) {}
@@ -100,7 +131,11 @@ public final class CodexPages {
         }
 
         @Override
-        public int contentHeight(CodexContext ctx, int width) { return 24 + skills(ctx).size() * 22 + 30; }
+        public int contentHeight(CodexContext ctx, int width) {
+            int h = 24 + 30;
+            for (String[] s : skills(ctx)) h += s.length > 3 && !s[3].isEmpty() ? 33 : 22;                  // 1.37.0: a described skill has a second line
+            return h;
+        }
 
         @Override
         public void render(CodexContext ctx, GuiGraphics g, int x, int y, int w, int h, int scroll, int mx, int my, float time) {
@@ -128,6 +163,10 @@ public final class CodexPages {
                 if (UiTheme.anime()) CodexSkin.row(g, rx, cy + 1, rw - 8, 15, mx, my, true);                   // 1.27.0: a glass row with a hover highlight
                 else g.fill(rx, cy + 1, rx + 3, cy + 15, UiDraw.ACCENT);
                 g.drawString(font, font.plainSubstrByWidth(s[1], rw - 14), rx + 8, cy + 3, UiDraw.ink(), false);
+                if (s.length > 3 && !s[3].isEmpty()) {                                                      // 1.37.0: the second line, one line of the description
+                    g.drawString(font, font.plainSubstrByWidth(s[3], rw - 14), rx + 8, cy + 17, UiDraw.inkDim(), false);
+                    cy += 11;
+                }
                 cy += 20;
             }
             g.disableScissor();

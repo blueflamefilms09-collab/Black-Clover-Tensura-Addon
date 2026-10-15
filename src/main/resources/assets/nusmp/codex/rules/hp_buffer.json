@@ -1,0 +1,5 @@
+{
+  "title": "Labyrinth monsters are sturdier",
+  "text": "Monsters that appear in the Labyrinth carry a health buffer, 2.5 times their normal maximum by default, so that an ordinary hit matters little and a fight lasts. Bosses are excluded: they have their own damage cap.",
+  "order": 110
+}

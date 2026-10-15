@@ -20,6 +20,9 @@ public interface CodexPage {
     /** Draw the spread. (x, y, w, h) is the inner area; scroll is the pixel offset to apply to scrollable content. */
     void render(CodexContext ctx, GuiGraphics g, int x, int y, int w, int h, int scroll, int mouseX, int mouseY, float time);
 
+    /** 1.37.0: the Codex was just opened; a page that caches (registry catalogues, learned spells) forgets what it built. Default: nothing to do. */
+    default void opened() {}
+
     /** A click inside the spread (returns true if it was used). */
     default boolean click(CodexContext ctx, double mouseX, double mouseY, int button, int x, int y, int w, int h) { return false; }
 }

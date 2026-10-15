@@ -35,6 +35,8 @@ public class CodexScreen extends Screen {
     private static final int FLIP_TICKS = 12;
 
     private final Screen parent;
+    private final List<CodexPage> pageList;     // 1.37.0: taken once, so the tabs are stable for the screen's life
+    private int tabFirst;                       // 1.37.0: the first tab shown when there are more tabs than fit on the edge
     private final CodexContext ctx = new CodexContext(this);
     private int index;
     private int prev = -1, dir;                 // the spread being turned away from, and the direction (+1 forward)
@@ -51,6 +53,8 @@ public class CodexScreen extends Screen {
     public CodexScreen(Screen parent) {
         super(Component.literal("Codex"));
         this.parent = parent;
+        CodexPages.opened();
+        this.pageList = CodexPages.all();
     }
 
     @Override
@@ -90,7 +94,7 @@ public class CodexScreen extends Screen {
     private int innerW() { return bw - 40; }
     private int innerH() { return bh - 40; }
 
-    private List<CodexPage> pages() { return CodexPages.all(); }
+    private List<CodexPage> pages() { return pageList; }
 
     private int maxScroll(int page) {
         return Math.max(0, pages().get(page).contentHeight(ctx, innerW()) - innerH());
@@ -106,12 +110,27 @@ public class CodexScreen extends Screen {
         index = target;
         flipAge = 0f;
         scrollCur = scrollTarget = 0f;
+        keepTabVisible();
+    }
+
+    // ---------------------------------------------------------------- 1.37.0: more tabs than fit on the edge scroll
+    private int tabCap() { return Math.max(1, (bh - 18) / 26); }
+
+    private void keepTabVisible() {
+        int cap = tabCap(), n = pages().size();
+        if (index < tabFirst) tabFirst = index;
+        if (index >= tabFirst + cap) tabFirst = index - cap + 1;
+        tabFirst = Mth.clamp(tabFirst, 0, Math.max(0, n - cap));
     }
 
     // ---------------------------------------------------------------- input
     @Override
     public boolean mouseScrolled(double mx, double my, double sx, double sy) {
         if (sy == 0) return super.mouseScrolled(mx, my, sx, sy);
+        if (mx >= bx + bw - 2 && pages().size() > tabCap()) {                    // over the tab edge: the wheel moves the tabs, not the page
+            tabFirst = Mth.clamp(tabFirst + (sy < 0 ? 1 : -1), 0, Math.max(0, pages().size() - tabCap()));
+            return true;
+        }
         int max = maxScroll(index);
         if (max > 0 && !hasShiftDown()) {
             scrollTarget = Mth.clamp(scrollTarget - (float) sy * 22f, 0f, max);
@@ -137,9 +156,9 @@ public class CodexScreen extends Screen {
     }
 
     private int tabAt(double mx, double my) {
-        int tx = bx + bw, n = pages().size();
-        for (int i = 0; i < n; i++) {
-            int ty = by + 14 + i * 26;
+        int tx = bx + bw, n = Math.min(pages().size(), tabFirst + tabCap());
+        for (int i = tabFirst; i < n; i++) {
+            int ty = by + 14 + (i - tabFirst) * 26;
             if (mx >= tx - 2 && mx <= tx + 22 && my >= ty && my <= ty + 24) return i;
         }
         return -1;
@@ -272,8 +291,11 @@ public class CodexScreen extends Screen {
         int tx = bx + bw;
         int hover = tabAt(mx, my);
         boolean anime = UiTheme.anime();
-        for (int i = 0; i < pages().size(); i++) {
-            int ty = by + 14 + i * 26;
+        int shownTo = Math.min(pages().size(), tabFirst + tabCap());
+        if (tabFirst > 0) g.drawCenteredString(font, "^", tx + 8, by + 3, UiDraw.GOLD);                // more tabs above / below: the wheel over the tabs scrolls them
+        if (shownTo < pages().size()) g.drawCenteredString(font, "v", tx + 8, by + 14 + tabCap() * 26, UiDraw.GOLD);
+        for (int i = tabFirst; i < shownTo; i++) {
+            int ty = by + 14 + (i - tabFirst) * 26;
             boolean on = i == index;
             int ext = on ? 22 : (i == hover ? 18 : 14);
             if (anime) {

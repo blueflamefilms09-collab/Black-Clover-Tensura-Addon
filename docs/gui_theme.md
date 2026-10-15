@@ -89,3 +89,11 @@ Terse and analytical, like Tensura's Great Sage / Raphael: a header ("Analysis c
 * The overlay on Tensura's windows reads the panel's rectangle from Tensura's protected statics (`SimpleScreen.guiLeft`...) by reflection; if that fails the brackets are skipped and the readout sits under the screen's centre. It is drawn in `ScreenEvent.Render.Post`, over Tensura's own drawing, so the circle is kept very faint.
 * A page-turn leaf in the anime Codex is translucent over the page under it (the old leaf was opaque paper), so a turning page looks a little denser while it moves.
 * The vanilla font has no italic and few symbols: the Sage lines use plain letters only.
+
+## ui.tensuraOverlay (1.37.0)
+
+`config/nusmp-ui-client.toml`, `[ui] tensuraOverlay = false` (default). Gates `TensuraScreenTheme` (the magic circle, cyan brackets and the Great-Sage readout drawn over Tensura's own Skills windows: `AbilitySelectionScreen`, `SubAbilityModeSelectionScreen`, `AbilityCategoriesScreen`). Read through `UiThemeOptions.tensuraOverlay()`; when the config is not loaded yet it answers false.
+
+Why: the analysis look ("Analysis complete. Notice: choose a category to browse its abilities.") is the mod's own voice and belongs inside the mod's own menus. Drawn over Tensura's window it looked as if Tensura itself showed the popup. The drawing code was not deleted (the project keeps what it has), it only sits behind this switch; set it to `true` to get the old overlay back.
+
+Where analysis-styled text can still appear, all of it on screens the mod owns: the Codex footer line (`CodexScreen`), `MultiverseStatusScreen`, `FourKingdomsScreen`, `QuestionnaireScreen`, `GrimoireSlotScreen`, `CompatCodexScreen`, the in-world page-unlock toast (`PageUnlockOverlay`, a HUD layer, not a screen) and the relic tooltip's "Notice:" page footer (our own item tooltip). The compact "MULTIVERSE" panel and "Four Kingdoms" label the mod injects into other screens (`MultiverseStatusClient`, `FourKingdomsSlot`) draw a button, a circle and short status rows, with no analysis sentence.

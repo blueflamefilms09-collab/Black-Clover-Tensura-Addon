@@ -25,6 +25,11 @@ import java.lang.reflect.Field;
  * </ul>
  * Where Tensura's panel is comes from its protected statics ({@code guiLeft}...), read once by reflection; if that fails the brackets are
  * skipped and the readout sits at the bottom of the screen. Everything is wrapped so that a surprise never breaks a Tensura screen.
+ * <p>
+ * 1.37.0: Why: the Great-Sage analysis look is the mod's own voice and belongs inside the mod's own menus (the Codex); drawn over Tensura's Skills
+ * window it read as if Tensura itself showed our popup. Both handlers are now gated behind the client option {@code ui.tensuraOverlay}
+ * ({@link UiThemeOptions#tensuraOverlay()}, default false). The drawing code is kept as it was (add, never delete): an owner who likes it
+ * can switch it back on.
  */
 public final class TensuraScreenTheme {
     private TensuraScreenTheme() {}
@@ -49,7 +54,7 @@ public final class TensuraScreenTheme {
     private static void onRenderPre(ScreenEvent.Render.Pre e) {
         Screen s = e.getScreen();
         String n = s.getClass().getName();
-        if (!(n.equals(SELECT) || n.equals(MODE) || n.equals(CATEGORIES)) || !UiTheme.anime()) return;
+        if (!(n.equals(SELECT) || n.equals(MODE) || n.equals(CATEGORIES)) || !UiTheme.anime() || !UiThemeOptions.tensuraOverlay()) return;       // 1.37.0: off by default, the analysis look is for our own menus
         try {
             int[] box = bounds(s.width, s.height);
             int cx = (box[0] + box[2]) / 2, cy = (box[1] + box[3]) / 2;
@@ -66,7 +71,7 @@ public final class TensuraScreenTheme {
     private static void onRenderPost(ScreenEvent.Render.Post e) {
         Screen s = e.getScreen();
         String n = s.getClass().getName();
-        if (!(n.equals(SELECT) || n.equals(MODE) || n.equals(CATEGORIES)) || !UiTheme.anime()) return;
+        if (!(n.equals(SELECT) || n.equals(MODE) || n.equals(CATEGORIES)) || !UiTheme.anime() || !UiThemeOptions.tensuraOverlay()) return;       // 1.37.0: off by default, the analysis look is for our own menus
         try {
             draw(e.getGuiGraphics(), s, n);
         } catch (RuntimeException | LinkageError ex) {
