@@ -76,6 +76,7 @@ public final class LivingDungeon {
         placeGate(dungeon, floor);
         p.getPersistentData().putLong(GATE_USED, dungeon.getGameTime() + 80);
         p.teleportTo(dungeon, floor.getX() + 0.5, floor.getY(), floor.getZ() + 0.5, p.getYRot(), 0f);
+        com.newuniverse.nusmp.quests.NusmpEvents.fire(p, "dungeon.entered");
         dungeon.playSound(null, floor, SoundEvents.PORTAL_TRAVEL, SoundSource.PLAYERS, 0.5f, 0.6f);
         p.sendSystemMessage(Component.literal("The roots close behind you. The dark here breathes. A Root Gate glows beside you: it is the way back.").withStyle(ChatFormatting.DARK_GREEN));
         return true;

@@ -177,6 +177,8 @@ public final class ArenaDirector {
             save.bossId(null);
             for (ServerPlayer p : inside(sl)) {
                 p.sendSystemMessage(Component.literal("Lucius Zogratis has fallen. The Final Hour is over, and the Return Sigils have woken.").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
+                com.newuniverse.nusmp.quests.NusmpEvents.fireTeam(p, "arena.victory", "lucius");
+                com.newuniverse.nusmp.quests.QuestHooks.arenaVictory(p);
                 p.sendSystemMessage(Component.literal("[ Return home ]").withStyle(s -> s.withColor(ChatFormatting.AQUA).withBold(true)
                         .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zogratis_arena leave"))));
             }

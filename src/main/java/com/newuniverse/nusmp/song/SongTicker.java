@@ -73,6 +73,7 @@ public final class SongTicker {
             PulseScheduler budget = BUDGETS.computeIfAbsent(p.serverLevel(), k -> new PulseScheduler());
             if (budget.tryTake(now, SongConfig.pulseCap())) {
                 data.putLong(LAST_PULSE, now);
+                com.newuniverse.nusmp.quests.NusmpEvents.fireOnce(p, "song.sung");
                 ManasSkillInstance inst = SongSkill.of(p).orElse(null);
                 if (inst != null && !SongEffects.pulse(p, inst, mode, SongMath.strength(level), false)) spent(p, now);
             }

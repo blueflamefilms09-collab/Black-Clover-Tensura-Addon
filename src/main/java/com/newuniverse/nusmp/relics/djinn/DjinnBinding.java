@@ -68,6 +68,7 @@ public final class DjinnBinding {
         seal.shrink(1);
         VesselAccess.stamp(vessel, d, serial);
         st.bind(d, serial, DjinnPhaseRules.START_TRUST);
+        com.newuniverse.nusmp.quests.NusmpEvents.fire(p, "relic.djinn_bound", d.name().toLowerCase(java.util.Locale.ROOT));
         DjinnEngine.restore(p);
         DjinnMagic.flare(p, d, DjinnFx.particle(d.affinity()));
         DjinnFx.ring(level, p.position(), 4.0, d.glow(), 64, 0.2);

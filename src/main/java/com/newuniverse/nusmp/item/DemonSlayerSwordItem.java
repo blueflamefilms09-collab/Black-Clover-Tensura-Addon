@@ -146,6 +146,7 @@ public class DemonSlayerSwordItem extends MagicWeaponItem {
         float dmg = capped(t, genesis(by, t) * mult);
         if (!t.hurt(severance(by), dmg)) return 0;
         EnergyBridge.spirit(t, dmg * 0.25);
+        if (by instanceof net.minecraft.server.level.ServerPlayer sp) com.newuniverse.nusmp.quests.NusmpEvents.fire(sp, "weapon.genesis");
         return dmg;
     }
 

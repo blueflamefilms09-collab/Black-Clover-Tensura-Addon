@@ -93,6 +93,7 @@ public final class GrimoireSummon {
         if (book.magic == MagicType.KOTODAMA) KotodamaWords.aura(p);                           // 0.47: the corrupted purple-black aura
         if (book.magic == MagicType.DICE || book.magic == MagicType.GAME)
             com.newuniverse.nusmp.anim.CastAnim.play(p, com.newuniverse.nusmp.anim.CastAnim.DICE_FIDDLE);
+        com.newuniverse.nusmp.quests.NusmpEvents.fireOnce(p, "grimoire.opened", book.magic.name().toLowerCase(java.util.Locale.ROOT));
     }
 
     public static void dismiss(ServerPlayer p, boolean effects) {

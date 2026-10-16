@@ -211,6 +211,7 @@ public final class Corpses {
             mark(living, 0);
             CorpseVfx.raise(level, living.position(), Math.max(0.8f, Math.min(2.2f, living.getBbWidth() * 1.4f)), 34);
             level.playSound(null, living.blockPosition(), SoundEvents.SOUL_ESCAPE.value(), SoundSource.PLAYERS, 1.0f, 0.7f);
+            com.newuniverse.nusmp.quests.NusmpEvents.fire(owner, "corpse.raised");
             return living;
         } catch (RuntimeException | LinkageError failed) {
             return null;

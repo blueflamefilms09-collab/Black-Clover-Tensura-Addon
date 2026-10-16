@@ -116,6 +116,7 @@ public final class SpiritBond {
         d.putInt("nusmp_spirit_trust", 30);
         save(p, d);
         p.sendSystemMessage(Component.literal(spirit + " has chosen you. Its nature: " + t.name() + " (" + t.category() + ").").withStyle(ChatFormatting.AQUA));
+        com.newuniverse.nusmp.quests.NusmpEvents.fire(p, "spirit.contract", "spirit");
         p.sendSystemMessage(Component.literal("It warms to: " + String.join(", ", t.likes()).replace('_', ' ')).withStyle(ChatFormatting.GREEN));
         p.sendSystemMessage(Component.literal("It resents: " + String.join(", ", t.dislikes()).replace('_', ' ')).withStyle(ChatFormatting.RED));
     }

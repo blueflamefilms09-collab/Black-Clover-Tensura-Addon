@@ -75,6 +75,7 @@ public final class MergeAccess {
         if (ok) {
             forget(p, DENIED, def.id());
             p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.BOOK_PAGE_TURN, SoundSource.PLAYERS, 1.0f, 0.8f);
+            com.newuniverse.nusmp.quests.NusmpEvents.fire(p, "magic.merged", def.id());
         }
         return ok;
     }

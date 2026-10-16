@@ -53,6 +53,7 @@ public final class SocketService {
                 Relics.invalidate(p);
                 p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 1.2f, core.kind() == SocketKind.DEVIL ? 0.6f : 1.1f);
                 Fx.ring(p.serverLevel(), p.position(), 1.4, core.rgb());
+                com.newuniverse.nusmp.quests.NusmpEvents.fire(p, "relic.socketed", core.key());
                 say(p, ChatFormatting.AQUA, "socket.nusmp.msg.bound", Component.translatable(core.nameKey()), def.cardName(), next.size(), slots);
             }
         }

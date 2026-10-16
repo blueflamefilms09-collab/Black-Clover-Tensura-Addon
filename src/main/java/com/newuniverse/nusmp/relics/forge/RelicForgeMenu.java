@@ -220,6 +220,8 @@ public class RelicForgeMenu extends AbstractContainerMenu {
             case CYCLE -> cycle = ForgeRules.cycleNext(cycle, s.sockets());
             case ENGRAVE -> result = ForgeEngraving.apply(sp, relic, core);
         }
+        if (result.good() && result != Msg.OK && result != Msg.DRAWN_OUT) com.newuniverse.nusmp.quests.NusmpEvents.fire(sp, "relic.forged");
+        if (result == Msg.ENGRAVED) com.newuniverse.nusmp.quests.NusmpEvents.fire(sp, "weapon.engraved");
         table.setChanged();                                                           // the stacks were edited in place: re-read them
         return finish(sp, result);
     }

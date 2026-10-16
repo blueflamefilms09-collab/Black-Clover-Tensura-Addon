@@ -68,6 +68,7 @@ public final class ShadowTravel {
         p.teleportTo(to.x, to.y, to.z);
         p.resetFallDistance();
         level.playSound(null, to.x, to.y, to.z, SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 0.4f, 0.8f);
+        com.newuniverse.nusmp.quests.NusmpEvents.fire(p, "shadow.travel");
         int n = 0;
         for (Player f : followers) {
             Vec3 at = followerSpot(level, dest, n++);

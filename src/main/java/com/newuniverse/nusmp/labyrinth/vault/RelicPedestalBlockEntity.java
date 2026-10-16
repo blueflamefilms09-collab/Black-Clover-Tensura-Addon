@@ -168,6 +168,7 @@ public final class RelicPedestalBlockEntity extends BlockEntity {
         level.playSound(null, worldPosition, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 0.8f, 1.5f);
         level.playSound(null, worldPosition, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.6f, 1.0f);
         player.displayClientMessage(Component.translatable("nusmp.relic_pedestal.taken", name), true);
+        com.newuniverse.nusmp.quests.NusmpEvents.fire(player, "labyrinth.vault_opened");
         return true;
     }
 }

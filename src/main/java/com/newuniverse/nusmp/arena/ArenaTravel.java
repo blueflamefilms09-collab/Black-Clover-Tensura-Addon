@@ -53,6 +53,8 @@ public final class ArenaTravel {
             p.sendSystemMessage(Component.literal(p == user ? "You step into the arena of the Final Hour." : user.getName().getString() + " carried you into the arena of the Final Hour.")
                     .withStyle(ChatFormatting.GOLD));
             ArenaDirector.welcome(server, arena, p);
+            com.newuniverse.nusmp.quests.NusmpEvents.fire(p, "arena.entered");
+            com.newuniverse.nusmp.quests.QuestHooks.arenaEntered(p);
         }
         return true;
     }

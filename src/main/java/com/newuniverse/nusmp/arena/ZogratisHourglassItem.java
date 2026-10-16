@@ -127,6 +127,7 @@ public class ZogratisHourglassItem extends Item {
             user.displayClientMessage(Component.literal(denialText(d.denial())).withStyle(ChatFormatting.GRAY), true);
             return stack;
         }
+        com.newuniverse.nusmp.quests.NusmpEvents.fire(user, "arena.hourglass_used", d.action() == HourglassRules.Action.LEAVE ? "leave" : "enter");
         if (d.action() == HourglassRules.Action.LEAVE) {
             if (ArenaTravel.leave(user)) user.getCooldowns().addCooldown(this, HourglassRules.COOLDOWN_TICKS);
             return stack;

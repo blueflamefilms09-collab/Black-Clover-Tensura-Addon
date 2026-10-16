@@ -254,6 +254,7 @@ final class LuciusGod {
         reflect.clear();
         clearTraps();
         int to = stage.stage();
+        com.newuniverse.nusmp.quests.QuestHooks.bossPhase(b, "lucius", to);
         ZogratisVfx.pillar(sl, b.position(), 5, 60, FxMath.divine(100), false);
         ZogratisVfx.spaceShatter(sl, b.position().add(0, 1, 0), 6.0, FxMath.divine(100));
         ZogratisVfx.halo(sl, b, 1.8, 100, FxMath.divine(100));

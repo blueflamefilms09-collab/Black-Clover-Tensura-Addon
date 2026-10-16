@@ -98,6 +98,7 @@ public final class ButohDance {
         PENDING_CLEAR.remove(p.getUUID());
         PacketDistributor.sendToPlayersTrackingEntityAndSelf(p, new DanceStatePayload(p.getId(), true, seed, now));
         s.activity.touch(now);
+        if (!quiet) com.newuniverse.nusmp.quests.NusmpEvents.fire(p, "butoh.dance");
         if (!quiet) p.displayClientMessage(Component.literal("The dance begins.").withStyle(net.minecraft.ChatFormatting.AQUA), true);
     }
 

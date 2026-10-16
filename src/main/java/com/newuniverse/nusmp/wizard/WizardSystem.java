@@ -141,6 +141,7 @@ public final class WizardSystem {
         GrimoireCover cover = r.kingdom().coverFor(r.leaves());
         Devil devil = cover.isForbidden() ? GrimoireAcceptance.randomDevil(p.getRandom()) : null;
         Heritage.set(p, r.kingdom(), r.blood());
+        com.newuniverse.nusmp.quests.NusmpEvents.fire(p, "wizard.questionnaire");
         ServerLevel sl = p.serverLevel();
         VfxSpawn.sendFollowing(sl, VfxShape.MAGIC_CIRCLE, p, p.position().add(0, 0.08, 0), 0xFFFFD86B, 90, 1.8f);
         say(p, "Yes... I see it. Your grimoire comes.");

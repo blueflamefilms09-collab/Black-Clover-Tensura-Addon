@@ -618,6 +618,7 @@ public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.b
 
     void enterPhase(ServerLevel sl, int ph) {
         entityData.set(PHASE, ph);
+        com.newuniverse.nusmp.quests.QuestHooks.bossPhase(this, "zagred", ph);
         String line = switch (ph) {
             case 2 -> randomLine("Your magic... I have heard it before.", "Did you think that element could surprise me?", "I learn every weakness you reveal.");
             case 3 -> randomLine("Sink beneath the world you know.", "Let the underworld rise around you.", "The ground itself answers my words.");

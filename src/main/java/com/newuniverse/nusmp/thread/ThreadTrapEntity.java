@@ -133,6 +133,7 @@ public class ThreadTrapEntity extends Entity {
         owner.displayClientMessage(Component.literal("A thread trembles: " + foe.getDisplayName().getString() + " at " + (int) foe.getX() + ", " + (int) foe.getY() + ", " + (int) foe.getZ() + ".")
                 .withStyle(ChatFormatting.RED), true);
         owner.playNotifySound(SoundEvents.NOTE_BLOCK_CHIME.value(), SoundSource.PLAYERS, 1.0f, 1.6f);
+        com.newuniverse.nusmp.quests.NusmpEvents.fire(owner, "thread.trap");
         puff(sl, 10);
     }
 

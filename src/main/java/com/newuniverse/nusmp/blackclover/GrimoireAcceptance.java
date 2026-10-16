@@ -173,6 +173,8 @@ public final class GrimoireAcceptance {
 
         player.serverLevel().playSound(null, player.blockPosition(),
                 leaves >= 5 ? SoundEvents.WITHER_SPAWN : SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundSource.PLAYERS, 0.8F, 1.0F);
+        com.newuniverse.nusmp.quests.NusmpEvents.fire(player, "grimoire.received", magic.name().toLowerCase(java.util.Locale.ROOT));
+        com.newuniverse.nusmp.quests.NusmpEvents.fireOnce(player, "grimoire.kingdom", cover.kingdom.name().toLowerCase(java.util.Locale.ROOT));
         Component msg = Component.literal("[Grimoire Tower] ").withStyle(ChatFormatting.GOLD)
                 .append(Component.literal(player.getName().getString() + " received a ").withStyle(ChatFormatting.WHITE))
                 .append(Component.literal(cover.displayName())
