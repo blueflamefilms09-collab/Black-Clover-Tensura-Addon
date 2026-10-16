@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.52.0] — Fix: the Avatar action menu text
+
+### FIXED
+- The menu that opens when you right-click your Avatar listed the name, race, personality and luck twice, and the extra lines ran over the buttons. The duplicated lines are gone, the panel is taller, and the list stops above the buttons.
+
 ## [1.51.0] — The Avatar creation system
 
 **State:** written without a compiler; CI is the first compile. Nothing run in game. Docs: `docs/avatar/av1.md`, `av2.md`, `av3.md`.

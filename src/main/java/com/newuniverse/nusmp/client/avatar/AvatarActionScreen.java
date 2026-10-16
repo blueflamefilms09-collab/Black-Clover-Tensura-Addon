@@ -22,7 +22,7 @@ import java.util.Locale;
  * chosen name; the server checks that the Avatar is yours and near, applies the naming and answers with its own words (shown in the screen).
  */
 public class AvatarActionScreen extends Screen {
-    private static final int W = 230, H = 170;
+    private static final int W = 230, H = 190;
     private final S2C_OpenActionMenuPayload data;
     private boolean naming;
     private EditBox box;
@@ -105,7 +105,14 @@ public class AvatarActionScreen extends Screen {
             g.drawString(font, Component.translatable("nusmp.avatar.action.persona", p == null ? "?" : p.displayName, s == null ? "-" : s.displayName), x + 14, ly, UiTheme.TEXT); ly += 12;
             g.drawString(font, Component.translatable("nusmp.avatar.action.luck", String.format(Locale.ROOT, "%.1f", data.luck())), x + 14, ly, UiTheme.VIOLET); ly += 12;
             g.drawString(font, Component.translatable("nusmp.avatar.action.size", String.format(Locale.ROOT, "%.2f", data.scale())), x + 14, ly, UiTheme.TEXT); ly += 12;
-            for (String line : data.info()) { g.drawString(font, font.plainSubstrByWidth(line, W - 28), x + 14, ly, UiTheme.TEXT_DIM); ly += 11; }
+            // the fixed lines above already show the name, race, personality and luck: only the extra lines are listed, and never past the buttons
+            String nameLine = data.name();
+            for (String line : data.info()) {
+                if (line.startsWith(nameLine) || line.startsWith("Race:") || line.startsWith("Creator luck:")) continue;
+                if (ly > y + H - 56) break;
+                g.drawString(font, font.plainSubstrByWidth(line, W - 28), x + 14, ly, UiTheme.TEXT_DIM);
+                ly += 11;
+            }
         }
         if (!note.getString().isEmpty()) g.drawString(font, note, x + 14, y + H - 42, noteOk ? UiTheme.GREEN : UiTheme.RED);
         super.render(g, mouseX, mouseY, partial);
