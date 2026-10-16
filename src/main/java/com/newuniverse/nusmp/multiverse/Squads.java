@@ -105,6 +105,14 @@ public final class Squads {
 
     public static boolean available() { return Ftb.available(); }
 
+    /**
+     * 1.43.0: the ids of everyone in the player's FTB party team (a Magic Knight squad is a party team), empty without FTB Teams or a
+     * party. Rouge uses it to know whom she guards without caring whether the party was flagged as a squad.
+     */
+    public static Set<UUID> partyMembers(ServerPlayer p) {
+        return Ftb.party(p).map(Ftb::members).orElse(Set.of());
+    }
+
     public static final Component REQUIRES_FTB = Component.literal("Magic Knight Squads are not available on this server (team support is not installed).").withStyle(ChatFormatting.RED);
 
     // ---------------------------------------------------------------- squad records
