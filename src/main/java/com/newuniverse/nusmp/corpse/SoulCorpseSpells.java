@@ -19,20 +19,38 @@ import net.minecraft.sounds.SoundSource;
 public final class SoulCorpseSpells {
     private SoulCorpseSpells() {}
 
-    /** Reanimation: raises the newest of the dead of the last minute. */
+    /**
+     * Reanimation: raises the newest of the dead of the last minute; when there are none, the earth gives up new corpses that fit the place
+     * (1.46.0, config corpse.conjure). Every outcome shows a line on the action bar so the player always sees why something did or did not happen.
+     */
     public static boolean reanimate(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         if (!CorpseConfig.enabled()) { GrimoireBook.fail(p, "Soul Corpse Magic is switched off on this server."); return false; }
-        int made = Corpses.reanimate(p, CorpseConfig.raiseMax());
-        if (made <= 0) { GrimoireBook.fail(p, "No one worth raising has died near you in the last minute."); return false; }
-        b.castCircle(p, 0.8f);
-        p.displayClientMessage(Component.literal(made == 1 ? "A Soul Corpse stands up." : made + " Soul Corpses stand up.").withStyle(ChatFormatting.GRAY), true);
-        return true;
+        Corpses.Result r = Corpses.reanimateOrConjure(p, CorpseConfig.raiseMax(), b.masteryFrac(i));
+        switch (r.outcome()) {
+            case RAISED_DEAD -> {
+                b.castCircle(p, 0.8f);
+                p.displayClientMessage(Component.literal(r.made() == 1 ? "The dead answer: a Soul Corpse stands up." : "The dead answer: " + r.made() + " Soul Corpses stand up.")
+                        .withStyle(ChatFormatting.GRAY), true);
+                return true;
+            }
+            case CONJURED -> {
+                b.castCircle(p, 0.8f);
+                String line = r.made() == 1 ? "The earth gives up a corpse" : "The earth gives up " + r.made() + " corpses";
+                p.displayClientMessage(Component.literal(line + (r.partial() ? " (not enough mana for more)." : ".")).withStyle(ChatFormatting.GRAY), true);
+                return true;
+            }
+            case NO_MANA -> GrimoireBook.fail(p, "Nothing to raise: not enough mana.");
+            case NO_ROOM -> GrimoireBook.fail(p, "Nothing to raise: there is no room for a body to rise here.");
+            case NOTHING -> GrimoireBook.fail(p, "Nothing to raise: no one has died near you in the last minute.");
+            case OFF -> GrimoireBook.fail(p, "Soul Corpse Magic is switched off on this server.");
+        }
+        return false;
     }
 
     /** One of the named puppets: Jimmy, Alfredo or Carl. */
     public static boolean named(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, NamedCorpses kind) {
         if (!CorpseConfig.enabled()) { GrimoireBook.fail(p, "Soul Corpse Magic is switched off on this server."); return false; }
-        if (Corpses.summonNamed(p, kind) == null) { GrimoireBook.fail(p, kind.display + " will not come here."); return false; }
+        if (Corpses.summonNamed(p, kind) == null) { GrimoireBook.fail(p, kind.display + " will not come here: the world refused the body."); return false; }
         b.castCircle(p, 1.0f);
         p.displayClientMessage(Component.literal(kind.display + " answers your call.").withStyle(ChatFormatting.GRAY), true);
         return true;

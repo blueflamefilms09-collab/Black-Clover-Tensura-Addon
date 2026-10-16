@@ -10,8 +10,8 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class ButohConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.DoubleValue DANCE_DRAIN, EVADE_MAX, DANCE_CAST_BONUS;
-    public static final ModConfigSpec.BooleanValue DANCE_SHRINK, DANCE_SIDESTEP;
+    public static final ModConfigSpec.DoubleValue DANCE_DRAIN, EVADE_MAX, DANCE_CAST_BONUS, IDLE_DRAIN_FACTOR, RESTART_SHARE;
+    public static final ModConfigSpec.BooleanValue DANCE_SHRINK, DANCE_SIDESTEP, PASSIVE;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -25,6 +25,12 @@ public final class ButohConfig {
                 .define("danceShrink", true);
         DANCE_SIDESTEP = b.comment("A dodged hit also slips the dancer one step sideways (with a safe-position check). false = the hit is only cancelled.")
                 .define("danceSidestep", true);
+        PASSIVE = b.comment("true (1.46.0) = the dance is a passive: anyone with the Butoh skill dances by themselves and pays the upkeep; the Butoh Dance page only",
+                "switches it between resting and dancing. false = the 1.44.0 behaviour: the page starts and stops the dance.").define("passive", true);
+        IDLE_DRAIN_FACTOR = b.comment("Passive dance: the share of the upkeep paid while standing still (0.5 = half). Moving or fighting pays the full upkeep.")
+                .defineInRange("idleDrainFactor", 0.5, 0.0, 1.0);
+        RESTART_SHARE = b.comment("Passive dance: after it drops for lack of mana it starts again once the magicule is above this share of the maximum (0.15 = 15%).")
+                .defineInRange("restartShare", DancePassive.DEFAULT_RESTART, 0.0, 1.0);
         b.pop();
         SPEC = b.build();
     }
@@ -46,6 +52,12 @@ public final class ButohConfig {
     public static double danceCastBonus() { return get(DANCE_CAST_BONUS, 0.15); }
 
     public static boolean danceShrink() { return get(DANCE_SHRINK, true); }
+
+    public static boolean passive() { return get(PASSIVE, true); }
+
+    public static double idleDrainFactor() { return get(IDLE_DRAIN_FACTOR, 0.5); }
+
+    public static double restartShare() { return get(RESTART_SHARE, DancePassive.DEFAULT_RESTART); }
 
     public static boolean danceSidestep() { return get(DANCE_SIDESTEP, true); }
 }

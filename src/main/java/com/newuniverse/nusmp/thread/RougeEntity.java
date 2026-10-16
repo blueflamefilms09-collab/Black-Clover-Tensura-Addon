@@ -55,6 +55,8 @@ import java.util.UUID;
  */
 public class RougeEntity extends PathfinderMob {
     public static final int SIT = 0, SCURRY = 1, LEAP = 2, TAP = 3, UNRAVEL = 4, REKNIT = 5, HOP = 6;
+    /** 1.46.0: resting on the caster's head (appended last so no number moves). The head-cat layer draws her once settled, see {@link RougePerch}. */
+    public static final int HEAD = 7;
     public static final int TAP_TICKS = 6, REKNIT_TICKS = 12, UNRAVEL_TICKS = 16;
     public static final int RED = 0xFFFF3355;
 
@@ -117,7 +119,12 @@ public class RougeEntity extends PathfinderMob {
     /** Nothing hurts her but /kill and the void. */
     @Override public boolean isInvulnerableTo(DamageSource source) { return !(source.is(DamageTypes.GENERIC_KILL) || source.is(DamageTypes.FELL_OUT_OF_WORLD)); }
     @Override public boolean isPushable() { return false; }
-    @Override public boolean isPickable() { return false; }
+    /**
+     * She is never in the way: arrows and the crosshair pass through her. The one exception is a client whose player holds a name tag, so a
+     * name tag can be used on her (the server never needs this: interaction packets do not ask it).
+     */
+    @Override public boolean isPickable() { return level().isClientSide && RougeRest.namingHand.getAsBoolean(); }
+    @Override public boolean canBeHitByProjectile() { return false; }
     @Override public boolean canBeCollidedWith() { return false; }
     @Override protected void doPush(Entity other) {}
     @Override public void push(double x, double y, double z) {}
@@ -139,8 +146,42 @@ public class RougeEntity extends PathfinderMob {
     @Override
     public void remove(RemovalReason reason) {
         UUID o = ownerId();
+        if (level().isClientSide) RougeRest.clear(o, this);
         if (o != null) RougeManager.forget(o, this);
         super.remove(reason);
+    }
+
+    // ================================================================ the name (1.46.0)
+    /**
+     * A name tag used on her. Only the caster may name her (anyone else's tag is swallowed so it cannot rename her through the vanilla path);
+     * the name is shown above her, and is kept on the caster's thread grimoire so the next cast gives it back. Sneaking with an empty hand opens nothing.
+     */
+    @Override
+    protected net.minecraft.world.InteractionResult mobInteract(net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand) {
+        net.minecraft.world.item.ItemStack stack = player.getItemInHand(hand);
+        if (!stack.is(net.minecraft.world.item.Items.NAME_TAG)) return super.mobInteract(player, hand);
+        net.minecraft.network.chat.Component tagName = stack.get(net.minecraft.core.component.DataComponents.CUSTOM_NAME);
+        String clean = tagName == null ? null : RougePerch.cleanName(tagName.getString());
+        if (clean == null) return net.minecraft.world.InteractionResult.PASS;                    // a blank tag does nothing, as everywhere
+        if (level().isClientSide) return net.minecraft.world.InteractionResult.SUCCESS;
+        if (!(player instanceof ServerPlayer sp) || !sp.getUUID().equals(ownerId())) return net.minecraft.world.InteractionResult.CONSUME;
+        if (!sp.getAbilities().instabuild) stack.shrink(1);
+        rename(sp, clean);
+        return net.minecraft.world.InteractionResult.CONSUME;
+    }
+
+    /** Names her now and remembers the name on the caster's grimoire. */
+    public void rename(ServerPlayer caster, String name) {
+        applyName(name);
+        RougeManager.threadBook(caster).ifPresent(i -> { i.getOrCreateTag().putString(RougePerch.NAME_TAG, name); i.markDirty(); });
+        caster.displayClientMessage(Component.literal("Rouge answers to " + name + " now.").withStyle(net.minecraft.ChatFormatting.RED), true);
+        if (level() instanceof ServerLevel sl) sl.playSound(null, getX(), getY(), getZ(), SoundEvents.CAT_AMBIENT, SoundSource.PLAYERS, 0.6f, 1.9f);
+    }
+
+    /** Sets the shown name without touching the grimoire (used when a recast gives the remembered name back). */
+    public void applyName(String name) {
+        setCustomName(Component.literal(name));
+        setCustomNameVisible(true);
     }
 
     // ================================================================ the owner and the protected set
@@ -179,6 +220,11 @@ public class RougeEntity extends PathfinderMob {
         if (level().isClientSide) {
             stateAge++;
             clientTrail();
+            // the head-cat layer asks RougeRest; she is listed only while settled on the head so the layer and the body never both draw
+            UUID co = ownerId();
+            if (co != null) {
+                if (RougePerch.headCatDrawn(state() == HEAD, stateAge)) RougeRest.put(co, this); else RougeRest.clear(co, this);
+            }
             return;
         }
         stateTicks++;
@@ -189,15 +235,39 @@ public class RougeEntity extends PathfinderMob {
         }
         if (p != null && tickCount - cacheAt >= 40) refreshCaches(p);
         switch (state()) {
-            case REKNIT -> { if (stateTicks >= REKNIT_TICKS) setState(SIT); }
+            case REKNIT -> {
+                if (stateTicks >= REKNIT_TICKS) {
+                    // after a tap she runs back to the caster first; only when she is already close does she settle (no flying across the field)
+                    if (p != null && distanceToSqr(p) > 3.0 * 3.0) setState(SCURRY); else setState(ThreadConfig.rougeOnHead() ? HEAD : SIT);
+                }
+            }
             case TAP -> tickTap();
             case UNRAVEL -> { if (stateTicks >= UNRAVEL_TICKS) discard(); }
             case HOP -> { if (stateTicks >= 4) setState(SCURRY); }
             case LEAP -> { if (onGround() && stateTicks > 3) setState(SCURRY); }
             case SIT -> { if (p != null) glueToShoulder(p); }
+            case HEAD -> { if (p != null) glueToHead(p); }
             default -> { }
         }
-        if (state() != SIT) setNoGravity(false);
+        if (state() != SIT && state() != HEAD) setNoGravity(false);
+    }
+
+    /**
+     * 1.46.0: resting ON the caster's head (the old head cat's place). The entity is held at the top of the head, eased in so the hop up reads as
+     * a hop; the client stops drawing her body after {@link RougePerch#SETTLE_TICKS} and the head-cat layer (same placement, scale and sit pose as
+     * before) takes over, so this entity only supplies position, name plate and interaction there.
+     */
+    private void glueToHead(ServerPlayer p) {
+        setNoGravity(true);
+        Vec3 spot = new Vec3(p.getX(), p.getY() + RougePerch.headY(p.isCrouching()), p.getZ());
+        Vec3 now = position(), next = now.add(spot.subtract(now).scale(stateTicks < RougePerch.SETTLE_TICKS ? 0.4 : 0.9));
+        setPos(next.x, next.y, next.z);
+        setDeltaMovement(Vec3.ZERO);
+        getNavigation().stop();
+        setYRot(p.yBodyRot);
+        yBodyRot = p.yBodyRot;
+        yHeadRot = p.yHeadRot;
+        fallDistance = 0;
     }
 
     /** Sitting on the caster's right shoulder: eased toward the spot so the hop up reads as a hop. */
@@ -302,7 +372,10 @@ public class RougeEntity extends PathfinderMob {
     int stateTicks() { return stateTicks; }
     void markScurry() { if (!busy() && state() != SCURRY && state() != LEAP && state() != HOP) setState(SCURRY); }
     void markLeap() { if (!busy()) setState(LEAP); }
-    void settle() { if (!busy() && state() != SIT) { setState(SIT); } }
+    void settle() {
+        int rest = ThreadConfig.rougeOnHead() ? HEAD : SIT;
+        if (!busy() && state() != rest) setState(rest);
+    }
 
     // ================================================================ goals
     /** Scans every 4 ticks for the protected ally nearest to harm. Moves nothing. */
@@ -401,7 +474,7 @@ public class RougeEntity extends PathfinderMob {
         private int idle;
         FollowCasterGoal(RougeEntity cat) { this.cat = cat; setFlags(EnumSet.of(Flag.MOVE)); }
 
-        @Override public boolean canUse() { return !cat.busy() && cat.state() != SIT && cat.owner() != null; }
+        @Override public boolean canUse() { return !cat.busy() && cat.state() != SIT && cat.state() != HEAD && cat.owner() != null; }
         @Override public boolean canContinueToUse() { return canUse() && cat.endangeredAlly() == null; }
         @Override public void start() { idle = 0; cat.markScurry(); }
         @Override public boolean requiresUpdateEveryTick() { return true; }

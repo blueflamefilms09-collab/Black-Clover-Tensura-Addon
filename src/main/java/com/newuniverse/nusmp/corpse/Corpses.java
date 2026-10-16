@@ -204,6 +204,8 @@ public final class Corpses {
             living.getPersistentData().put(TAG, t);
             living.setCustomName(Component.literal("Soul Corpse of " + f.name()));
             living.setCustomNameVisible(false);
+            // 1.46.0: an owned undead must not burn away in daylight before its own clock ends (a sunlit zombie dies in seconds)
+            living.addEffect(new MobEffectInstance(net.minecraft.world.effect.MobEffects.FIRE_RESISTANCE, life + 40, 0, true, false, false));
             if (!level.addFreshEntity(living)) return null;
             for (UUID old : RAISED.add(owner.getUUID(), living.getUUID(), CorpseConfig.maxActive())) crumbleById(owner.getServer(), old);
             mark(living, 0);
@@ -225,6 +227,121 @@ public final class Corpses {
         return made;
     }
 
+    /** The page that makes Reanimation usable from the first day (it is appended after the generic five, where mastery would keep it sealed for a long time). */
+    static final String STARTER_PAGE = "corpse_reanimate";
+
+    /**
+     * Why: the Soul Corpse pages are appended after the generic five, and a page opens only when mastery reaches its place in the book, so
+     * Reanimation (page 6 of 10) stayed sealed for most players and "Soul Corpse Magic summons nothing". Reanimation is the entry spell of
+     * this magic, so it is opened for every holder of the grimoire; the named puppets and the pact still open by mastery.
+     */
+    static void openStarterPage(ServerPlayer p) {
+        var holder = NUSkills.WIKI_ATTRIBUTE_BOOKS.get(MagicType.SOUL_CORPSE);
+        if (holder == null) return;
+        SkillAPI.getSkillsFrom(p).getSkill(holder.getId()).ifPresent(inst -> {
+            if (!(inst.getSkill() instanceof com.newuniverse.nusmp.book.GrimoireBook book)) return;
+            var pages = book.pages();
+            for (int m = 1; m < pages.size() && m < 31; m++) {
+                if (!STARTER_PAGE.equals(pages.get(m).id())) continue;
+                if (!com.newuniverse.nusmp.book.GrimoireBook.isUnlocked(inst, m)) {
+                    com.newuniverse.nusmp.book.GrimoireBook.unlock(inst, m);
+                    p.displayClientMessage(Component.literal("The grimoire shows you how to call up the dead: Soul Corpse: Reanimation.").withStyle(net.minecraft.ChatFormatting.GRAY), true);
+                }
+                return;
+            }
+        });
+    }
+
+    // ================================================================ conjuring (1.46.0)
+    /** What a conjuring achieved and, when it fell short, why (the page turns this into the action-bar line). */
+    enum Outcome { RAISED_DEAD, CONJURED, NO_MANA, NO_ROOM, NOTHING, OFF }
+
+    record Result(Outcome outcome, int made, boolean partial) {}
+
+    /**
+     * Reanimation: the recently dead first (the 1.44.0 behaviour); only when there are none, and {@code corpse.conjure} is on, new bodies come
+     * out of the ground. Each conjured body is paid for through the mana system before it is made, so a dry caster gets a clear "not enough mana".
+     * 'masteryFraction' sets how many (1 to 3, capped by corpse.raiseMax).
+     */
+    static Result reanimateOrConjure(ServerPlayer caster, int raiseMax, double masteryFraction) {
+        int made = reanimate(caster, raiseMax);
+        if (made > 0) return new Result(Outcome.RAISED_DEAD, made, false);
+        if (!CorpseConfig.conjure()) return new Result(Outcome.NOTHING, 0, false);
+        return conjure(caster, ConjurePool.count(masteryFraction, raiseMax));
+    }
+
+    /** Conjures up to 'n' new Soul Corpses around the caster. */
+    static Result conjure(ServerPlayer caster, int n) {
+        ServerLevel level = caster.serverLevel();
+        ConjurePool.Setting setting = settingAt(caster, level);
+        var pool = ConjurePool.poolWithModded(setting, id -> moddedUndead(id), CorpseConfig.conjureTensura());
+        int made = 0;
+        boolean noMana = false, noRoom = false;
+        for (int k = 0; k < n; k++) {
+            String id = ConjurePool.pick(pool, caster.getRandom().nextDouble());
+            if (id == null) break;
+            Optional<EntityType<?>> type = BuiltInRegistries.ENTITY_TYPE.getOptional(ResourceLocation.parse(id));
+            if (type.isEmpty() || type.get().is(CorpseTags.IMMUNE)) continue;
+            Vec3 spot = findSpot(level, type.get().getDimensions(), caster.position(), 1.8, 4.5, caster.getRandom(), setting == ConjurePool.Setting.WET);
+            if (spot == null) { noRoom = true; continue; }
+            if (!CorpseMana.pay(caster, CorpseConfig.conjureManaPercent())) { noMana = true; break; }
+            String dim = level.dimension().location().toString();
+            CorpseLedger.Fallen f = new CorpseLedger.Fallen(id, type.get().getDescription().getString(), 0, 0, 0, dim, spot.x, spot.y, spot.z, level.getGameTime(), false);
+            LivingEntity body = raise(caster, f);
+            if (body == null) continue;
+            made++;
+            groundBurst(level, spot);
+        }
+        if (made > 0) return new Result(Outcome.CONJURED, made, noMana || made < n);
+        return new Result(noMana ? Outcome.NO_MANA : noRoom ? Outcome.NO_ROOM : Outcome.NOTHING, 0, false);
+    }
+
+    /** Dirt and soul wisps where a body climbs out. */
+    private static void groundBurst(ServerLevel level, Vec3 at) {
+        net.minecraft.core.BlockPos below = net.minecraft.core.BlockPos.containing(at.x, at.y - 0.5, at.z);
+        var state = level.getBlockState(below);
+        if (!state.isAir()) level.sendParticles(new net.minecraft.core.particles.BlockParticleOption(net.minecraft.core.particles.ParticleTypes.BLOCK, state),
+                at.x, at.y + 0.1, at.z, 18, 0.35, 0.1, 0.35, 0.05);
+        level.playSound(null, below, SoundEvents.GRAVEL_BREAK, SoundSource.PLAYERS, 1.0f, 0.6f);
+    }
+
+    private static boolean moddedUndead(String id) {
+        ResourceLocation rl = ResourceLocation.tryParse(id);
+        return rl != null && BuiltInRegistries.ENTITY_TYPE.containsKey(rl);
+    }
+
+    private static ConjurePool.Setting settingAt(ServerPlayer p, ServerLevel level) {
+        net.minecraft.core.BlockPos pos = p.blockPosition();
+        var biome = level.getBiome(pos);
+        boolean cold = biome.value().coldEnoughToSnow(pos);
+        boolean dry = !biome.value().hasPrecipitation() && biome.value().getBaseTemperature() >= 1.5f;
+        boolean wet = p.isInWater() || biome.is(net.minecraft.tags.BiomeTags.IS_OCEAN) && p.isUnderWater();
+        boolean underground = !level.canSeeSky(pos) && pos.getY() < level.getSeaLevel() - 8;
+        return ConjurePool.setting(level.dimension().location().toString(), wet, underground, cold, dry);
+    }
+
+    /**
+     * A place near 'center' where a body of these dimensions fits: no block inside it, solid ground under it (water counts when 'allowLiquid'),
+     * found by trying a few random spots at 'minR' to 'maxR' blocks and a few heights. Null when none fits (a cramped tunnel).
+     */
+    static Vec3 findSpot(ServerLevel level, net.minecraft.world.entity.EntityDimensions dims, Vec3 center, double minR, double maxR,
+                         net.minecraft.util.RandomSource rnd, boolean allowLiquid) {
+        for (int attempt = 0; attempt < 24; attempt++) {
+            double angle = rnd.nextDouble() * Math.PI * 2, r = minR + rnd.nextDouble() * (maxR - minR);
+            double x = center.x + Math.cos(angle) * r, z = center.z + Math.sin(angle) * r;
+            int baseY = (int) Math.floor(center.y);
+            for (int dy = 2; dy >= -3; dy--) {
+                net.minecraft.core.BlockPos feet = net.minecraft.core.BlockPos.containing(x, baseY + dy, z), below = feet.below();
+                boolean ground = level.getBlockState(below).isFaceSturdy(level, below, net.minecraft.core.Direction.UP)
+                        || allowLiquid && !level.getFluidState(below).isEmpty();
+                if (!ground) continue;
+                net.minecraft.world.phys.AABB box = dims.makeBoundingBox(x, feet.getY(), z);
+                if (level.noCollision(box) && (allowLiquid || !level.containsAnyLiquid(box))) return new Vec3(x, feet.getY(), z);
+            }
+        }
+        return null;
+    }
+
     /** True Soul Corpse's second window: re-raises the caster's pets and summons that fell within the pet window. */
     static int reraisePets(ServerPlayer caster) {
         CorpseLedger l = ledger(caster);
@@ -244,9 +361,14 @@ public final class Corpses {
         }
         NamedCorpseEntity n = CorpseEntities.type(kind).create(level);
         if (n == null) return null;
+        // 1.46.0: the old spot (straight ahead at the caster's own height) could be inside a wall or a slope, where the puppet suffocated at once;
+        // look for a free spot with ground under it, nearest in front first, and fall back to the caster's own place
         Vec3 look = owner.getLookAngle();
         double dist = 2.2 + kind.width;
-        n.moveTo(owner.getX() + look.x * dist, owner.getY(), owner.getZ() + look.z * dist, owner.getYRot() + 180f, 0f);
+        Vec3 ahead = new Vec3(owner.getX() + look.x * dist, owner.getY(), owner.getZ() + look.z * dist);
+        Vec3 spot = fits(level, n, ahead) ? ahead : findSpot(level, n.getType().getDimensions(), owner.position(), 1.5 + kind.width, 4.0 + kind.width * 2, owner.getRandom(), false);
+        if (spot == null) spot = owner.position();
+        n.moveTo(spot.x, spot.y, spot.z, owner.getYRot() + 180f, 0f);
         n.setOwner(owner.getUUID());
         CompoundTag t = new CompoundTag();
         t.putUUID("Owner", owner.getUUID());
@@ -262,6 +384,12 @@ public final class Corpses {
         CorpseVfx.raise(level, n.position(), Math.max(1.0f, kind.width * 2.0f), 40);
         level.playSound(null, n.blockPosition(), SoundEvents.SOUL_ESCAPE.value(), SoundSource.PLAYERS, 1.2f, 0.55f);
         return n;
+    }
+
+    private static boolean fits(ServerLevel level, Entity e, Vec3 at) {
+        net.minecraft.core.BlockPos below = net.minecraft.core.BlockPos.containing(at.x, at.y - 0.5, at.z);
+        return level.getBlockState(below).isFaceSturdy(level, below, net.minecraft.core.Direction.UP)
+                && level.noCollision(e.getType().getDimensions().makeBoundingBox(at.x, at.y, at.z));
     }
 
     // ================================================================ the decay mark

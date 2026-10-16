@@ -76,6 +76,19 @@ public final class CastAnimClient {
         s.resumeAt = Float.NaN;
     }
 
+    /**
+     * 1.46.0: whether a one-shot clip (a page's chant or release) is playing on this entity right now. The passive Butoh dance waits for it,
+     * so the cast animation always wins and the dance loop (kept as the clip to return to) comes back afterwards.
+     */
+    public static boolean oneShotActive(int entityId) {
+        State s = STATES.get(entityId);
+        Minecraft mc = Minecraft.getInstance();
+        if (s == null || s.clip == null || !Float.isNaN(s.stopAt) || mc.level == null) return false;
+        Entity e = mc.level.getEntity(entityId);
+        GeoAnim.Clip c = clip(GeoModels.animations(FILE), s.clip);
+        return e != null && c != null && !c.loop && !finished(c, e.tickCount - s.start);
+    }
+
     private static GeoAnim.Clip clip(GeoAnim a, String name) { return a == null || name == null ? null : a.clip(name); }
 
     /** The pose of one clip at an age: [bone 0 body, 1 left arm, 2 right arm, 3 left leg, 4 right leg][x, y, z rotation in radians, position y in pixels]. */
