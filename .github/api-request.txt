@@ -69,3 +69,5 @@
 ^net/minecraft/world/level/block/entity/(BlockEntity|BlockEntityType|BlockEntityTicker|RandomizableContainerBlockEntity|JigsawBlockEntity)$
 ^net/minecraft/world/level/block/state/BlockBehaviour.*$
 ^de/maxhenkel/voicechat/api/.*$
+^net/minecraft/advancements/.*$
+^net/neoforged/neoforge/event/entity/player/AdvancementEvent.*$
