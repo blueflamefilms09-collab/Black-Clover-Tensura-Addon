@@ -1,0 +1,141 @@
+{
+ "paladin_halo": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/paladin_halo.geo.json",
+  "texture": "nusmp:textures/entity/paladin_halo.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   20,
+   40,
+   60
+  ],
+  "tile": [
+   360,
+   300
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 22,
+    "target": [
+     0,
+     0.0,
+     0
+    ],
+    "dist": 2.2
+   },
+   {
+    "name": "top",
+    "yaw": 0,
+    "pitch": 70,
+    "target": [
+     0,
+     0.0,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "paladin_wings_back": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/paladin_wings.geo.json",
+  "texture": "nusmp:textures/entity/paladin_wings.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   20,
+   40,
+   60
+  ],
+  "tile": [
+   420,
+   340
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "from behind",
+    "yaw": 180,
+    "pitch": 4,
+    "target": [
+     0,
+     0.0,
+     0
+    ],
+    "dist": 4.2
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     0.0,
+     0
+    ],
+    "dist": 4.2
+   }
+  ]
+ },
+ "paladin_wings_side": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/paladin_wings.geo.json",
+  "texture": "nusmp:textures/entity/paladin_wings.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   30
+  ],
+  "tile": [
+   360,
+   320
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     0.0,
+     0
+    ],
+    "dist": 4.2
+   },
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     0.0,
+     0
+    ],
+    "dist": 4.2
+   }
+  ]
+ }
+}
