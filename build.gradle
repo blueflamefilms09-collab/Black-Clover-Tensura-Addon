@@ -11,6 +11,11 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 repositories {
     mavenCentral()
     maven {
+        name = "MaxHenkel"
+        url = "https://maven.maxhenkel.de/repository/public"
+        content { includeGroup "de.maxhenkel.voicechat" }
+    }
+    maven {
         name = "CurseMaven"
         url = "https://cursemaven.com"
         content { includeGroup "curse.maven" }
@@ -55,6 +60,8 @@ dependencies {
     implementation "curse.maven:smartbrainlib-661293:7055149"
     // Tensura: Reincarnated (built against 2.0.1.0; runs fine on 2.0.1.3)
     implementation "curse.maven:tensura-reincarnated-643695:8098859"
+    // 1.43.0: Simple Voice Chat API, compile only (Song Magic reads the microphone through it when the mod is installed)
+    compileOnly "de.maxhenkel.voicechat:voicechat-api:2.5.0"
 }
 
 tasks.withType(JavaCompile).configureEach {
