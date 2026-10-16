@@ -29,7 +29,7 @@ public final class ArmorFx {
         int spawned = 0;
         for (int i = 0; i < SLOTS.length && spawned < room; i++) {
             WornLibrary.Ensemble e = ArmorItems.of(p.getItemBySlot(SLOTS[i]), SLOTS[i]);
-            if (e == null || e.theme == FxTheme.NONE) continue;
+            if (e == null || e.pieces.isEmpty() || e.theme == FxTheme.NONE) continue;
             WornFxPlan plan = WornFxPlan.of(e.tier, q, 0.0);
             if (plan.particleEvery() <= 0 || (tick + p.getId() * 7L + i * 5L) % plan.particleEvery() != 0) continue;
             for (int k = 0; k < plan.particlesPerEvent() && spawned < room; k++) {

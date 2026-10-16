@@ -1,7 +1,7 @@
 """Contact sheets of the worn armour models on a Steve-like figure: every robe set as a whole (hood, robe, leggings, boots together) with its palette, the five transformation
 overlays, and the armour relics that got a signature model.
 
-    python3 tools/relics/armor_contact_sheet.py [--out docs/armor_build] [--only sets|modes|relics|curios]
+    python3 tools/relics/armor_contact_sheet.py [--out docs/armor_build] [--only sets|modes|relics|curios|anime]
 
 Uses the software rasteriser of tools/relics/preview_worn.py and the catalog of gen_worn_all.py (run that first). The figure is plain boxes: judge the silhouette, the parts, the
 colours and the glow, not the exact fit against the skin."""
@@ -40,6 +40,25 @@ def sets_sheet():
             pieces += list(items[sid + suffix])
         tiles.append(P.sheet_for(P.parse_pieces(pieces), pals[sid], ["front", "three", "back"], "wide", panel=(250, 400), label=sid))
     return stack(tiles, 2)
+
+
+def anime_pieces(items, sid):
+    """The pieces of the four `anime:` entries of one set (the `none` pieces draw nothing)."""
+    out = []
+    for suffix in ("_hood", "", "_leggings", "_boots"):
+        out += [p for p in items["anime:" + sid + suffix] if p != "none"]
+    return out
+
+
+def anime_sheets():
+    """The 1.48.0 anime cloaks, front / three-quarter / side / back of every set, in three sheets (docs/armor_build/anime_sets_a..c.png)."""
+    cat = A.catalog()
+    items = dict(cat.items)
+    pals = dict(cat.ipal)
+    tiles = []
+    for (sid, *_rest) in AR.ANIME_SETS:
+        tiles.append(P.sheet_for(P.parse_pieces(anime_pieces(items, sid)), pals["anime:" + sid], ["front", "three", "side", "back"], "wide", panel=(240, 400), label=sid))
+    return [stack(tiles[0:4], 1), stack(tiles[4:8], 1), stack(tiles[8:11], 1)]
 
 
 def modes_sheet():
@@ -90,6 +109,11 @@ def main(argv):
     if "--only" in argv:
         only = argv[argv.index("--only") + 1]
     os.makedirs(out, exist_ok=True)
+    if not only or only == "anime":
+        for letter, img in zip("abc", anime_sheets()):
+            path = os.path.join(out, "anime_sets_%s.png" % letter)
+            img.save(path)
+            print("wrote", path)
     for name, fn in (("sets", sets_sheet), ("modes", modes_sheet), ("relics", relics_sheet), ("curios", curios_sheet)):
         if only and only != name:
             continue

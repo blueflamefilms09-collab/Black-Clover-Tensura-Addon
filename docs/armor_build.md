@@ -11,6 +11,8 @@ Owner request (1.34.0): every armour item, old and new, gets the same build as t
 - **Object form**: armour in hand/ground/frame is its 3D model, the inventory keeps the 16x16 sprite (`<id>_icon` model; `builtin/entity` item json).
 - **Engravings**: `ArmorEngravings` (robe sets and the 42 armour relics without engravings), same once-only flag as weapons.
 
+- **Anime look (1.48.0)**: the robe sets are also catalogued as `anime:<id>` (cloak only, `docs/robe_anime.md`); `relicfx.robeAnime` (default true) picks it, false = the lofted garments above.
+
 ## Why
 - **Catalog by item id**: new armour needs one data line, no Java.
 - **Library replaces GeckoLib only for players with the option on**: mobs, armour stands and `relicfx.models=false` keep the old renderer, so nothing is ever invisible (rule 2: old kept).

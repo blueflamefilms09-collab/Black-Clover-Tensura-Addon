@@ -95,7 +95,7 @@ public final class ArmorItemRenderer extends BlockEntityWithoutLevelRenderer {
                 LogUtils.getLogger().error("[nusmp] the 3D model of armour item {} failed; its icon is used", path, ex);
             }
         }
-        if (e == null) {                                                           // the inventory, or no model: the old icon
+        if (e == null || e.pieces.isEmpty()) {                                     // the inventory, no model, or a piece that draws nothing (anime legs and boots): the old icon
             BakedModel icon = mc.getModelManager().getModel(icon(path));
             pose.pushPose();
             pose.translate(0.5f, 0.5f, 0.5f);                                      // render() translates by -0.5 again

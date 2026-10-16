@@ -5,7 +5,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 /**
  * Client options of the worn relic visuals: config/nusmp-relicfx-client.toml. {@code relicfx.quality} (low, medium, high) sets the vertex budget of the worn
  * models and their grade effects and how often the ambient particles spawn ({@link FxQuality}); {@code relicfx.particles} off stops the ambient particles
- * (the models and their glow stay); {@code relicfx.models} off hands every worn relic back to the old plain boxes.
+ * (the models and their glow stay); {@code relicfx.models} off hands every worn relic back to the old plain boxes; {@code relicfx.robeAnime} off wears the robe sets as the older lofted garments instead of the anime cloaks.
  * Registered once from the client section of the mod constructor:
  * {@code modContainer.registerConfig(ModConfig.Type.CLIENT, RelicFxOptions.SPEC, "nusmp-relicfx-client.toml")}.
  */
@@ -15,6 +15,7 @@ public final class RelicFxOptions {
     public static final ModConfigSpec.BooleanValue PARTICLES;
     public static final ModConfigSpec.BooleanValue MODELS;
     public static final ModConfigSpec.BooleanValue HIDE_ARMOUR_RELICS;
+    public static final ModConfigSpec.BooleanValue ROBE_ANIME;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -29,6 +30,9 @@ public final class RelicFxOptions {
         HIDE_ARMOUR_RELICS = b.comment("Hide the worn visuals (3D models, glow, particles) of relics worn as head, chest or feet armour. Curios relics have the eye icon of the Curios screen for this; "
                         + "armour has none, so this is its switch (also the 'Toggle relic visuals' key, unbound by default).")
                 .define("hideArmourRelics", false);
+        ROBE_ANIME = b.comment("Wear the Magic Knight robe sets as in the Black Clover anime: only the squad cloak (with its emblem, clasp and collar) on the chest piece, at most one small head piece, "
+                        + "and nothing on the legs and feet. Off = the older lofted garments (hood, robe, sleeves, hip band, legs, boots).")
+                .define("robeAnime", true);
         b.pop();
         SPEC = b.build();
     }
@@ -42,6 +46,9 @@ public final class RelicFxOptions {
     public static boolean particles() { return get(PARTICLES); }
 
     public static boolean models() { return get(MODELS); }
+
+    /** True when the robe sets are worn as anime cloaks ({@code relicfx.robeAnime}, default on); true when the config is not loaded. */
+    public static boolean robeAnime() { return get(ROBE_ANIME); }
 
     /** True when the worn visuals of armour relics are switched off ({@code relicfx.hideArmourRelics}); false when the config is not loaded. */
     public static boolean hideArmourRelics() {

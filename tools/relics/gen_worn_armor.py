@@ -984,3 +984,333 @@ def catalog_curios(cat):
     for key, slot, pieces, pal, tier in CURIOS:
         cat.item(key, pieces, pal, tier)
         cat.slot_of(key, slot)
+
+
+# ================================================================================================================================================
+# 1.48.0  ANIME CLOAKS: the Magic Knight robe sets as they are worn in the Black Clover anime (docs/robe_anime.md)
+#
+# Why: in the series a Magic Knight wears only the squad cloak over ordinary clothes, so the chest piece draws the cloak alone (shoulder drape, a long back panel with
+# the squad emblem, a clasp, a collar), the helmet piece draws at most one small accessory, and the legs and boots pieces draw nothing. The older lofted garments above
+# stay in this file and in the catalog; the client option relicfx.robeAnime picks which look is worn (catalog keys `anime:<id>` are resolved first when it is on).
+#
+# Frame of the cloak: authored y up, neck line y = 0, back is +z. The player's head box (x +-4, z +-4) sits ABOVE y = 0 and the arms (x +-4..8, z +-2) hang from y = 0, so the
+# shoulder drape rides at y = 1.0 over the arm tops and the cloak falls from the back of the head box.
+# ================================================================================================================================================
+CLOAK_THICK = 0.8                # pixels = 0.05 block: thick enough to read as cloth, thin enough not to z-fight with the body
+_PROFILE_KEYS = [(4.3, 3.0, 1.0), (6.2, 3.2, 1.0), (7.8, 3.4, 0.95), (8.9, 3.6, 0.45), (9.3, 3.8, -2.5), (9.3, 3.95, -6.0), (9.0, 4.2, -9.5), (8.7, 4.4, -12.5), (7.8, 4.7, -18.0), (6.9, 5.0, -23.5)]
+_COLS = 20                       # columns of the drape, from the left front tip round the back to the right front tip
+_PHI_MAX = 2.5                   # radians from the back centre to a front tip: the front stays open
+_PHI_BEND = 1.60                 # beyond this angle the hem is the short front length
+_SPLIT_Y = -6.4                  # the drape above is fixed to the body, below it swings with the stride
+_LOW_COLS = 10                   # columns of the swinging part (whole columns of the same grid, so the seam has no crack)
+
+
+def _catmull(points, per):
+    pts = [np.array(p, float) for p in points]
+    ext = [2 * pts[0] - pts[1]] + pts + [2 * pts[-1] - pts[-2]]
+    out = []
+    for i in range(1, len(ext) - 2):
+        p0, p1, p2, p3 = ext[i - 1], ext[i], ext[i + 1], ext[i + 2]
+        for k in range(per):
+            t = k / per
+            out.append(0.5 * ((2 * p1) + (-p0 + p2) * t + (2 * p0 - 5 * p1 + 4 * p2 - p3) * t * t + (-p0 + 3 * p1 - 3 * p2 + p3) * t ** 3))
+    out.append(pts[-1])
+    return np.array(out)
+
+
+_DENSE = _catmull(_PROFILE_KEYS, 12)             # rows of (radius x, radius z, y), the line the cloak hangs along from the neck down
+
+
+def _dense_at(idx):
+    """The dense profile at a fractional index."""
+    idx = min(max(idx, 0.0), len(_DENSE) - 1.0)
+    i = int(math.floor(idx))
+    f = idx - i
+    if i >= len(_DENSE) - 1:
+        return _DENSE[-1]
+    return _DENSE[i] * (1 - f) + _DENSE[i + 1] * f
+
+
+def _index_of_y(y):
+    """The fractional dense index where the profile reaches height y (the profile only goes down below y = 0.8)."""
+    for i in range(len(_DENSE) - 1):
+        if _DENSE[i + 1][2] <= y < _DENSE[i][2] + 1e-9 and _DENSE[i][2] > _DENSE[i + 1][2]:
+            return i + (_DENSE[i][2] - y) / (_DENSE[i][2] - _DENSE[i + 1][2])
+    return len(_DENSE) - 1.0
+
+
+def _smooth(a, b, x):
+    t = min(1.0, max(0.0, (x - a) / (b - a)))
+    return t * t * (3 - 2 * t)
+
+
+class CloakStyle:
+    """The knobs of one set's cloak (see the table in docs/robe_anime.md)."""
+
+    def __init__(self, back=19.0, front=5.0, hem="smooth", fold=0.55, fold_k=6.9, collar="none", emblem="clover", esize=3.2, ey=-9.6, gem=True, chain=True,
+                 tooth=1.3, flare=0.0):
+        self.back, self.front, self.hem, self.fold, self.fold_k = back, front, hem, fold, fold_k
+        self.collar, self.emblem, self.esize, self.ey, self.gem, self.chain = collar, emblem, esize, ey, gem, chain
+        self.tooth, self.flare = tooth, flare
+
+
+def _phi(k):
+    return -_PHI_MAX + 2 * _PHI_MAX * k / _COLS
+
+
+def _hem_y(st, k):
+    """The height of the hem of column k: long at the back, short at the front, with an optional saw-tooth."""
+    phi = abs(_phi(k))
+    w = max(0.0, 1.0 - (phi / _PHI_BEND) ** 3)
+    y = -(st.front + (st.back - st.front) * w)
+    if st.hem in ("jag", "feather") and w > 0.04:
+        y -= st.tooth * (k % 2) * min(1.0, w * 3.0) * (1.0 if st.hem == "jag" else 0.55)
+    return y
+
+
+def _cloak_pt(st, phi, idx):
+    """A point of the outer face of the cloak at angle phi (0 = back centre) and dense-profile index idx; folds ripple the lower part, never the centre (the emblem)."""
+    rx, rz, y = _dense_at(idx)
+    ramp = _smooth(-4.5, -12.0, y)
+    e = _smooth(0.30, 0.85, abs(phi))
+    d = st.fold * ramp * e * (0.5 + 0.5 * math.sin(st.fold_k * phi)) + st.flare * ramp * 0.6      # folds only bulge outward, so the cloth never sinks into an arm
+    return (float((rx + d) * math.sin(phi)), float(y), float((rz + d) * math.cos(phi)))
+
+
+def _drape(m, st, k0, k1, i_from, hem_fn, nv, slot, tile, group, name, close=False, flags=SHELL):
+    """One sheet of the cloak: columns k0..k1 of the grid, from the profile index i_from (a number or a function of the column) down to the hem of each column."""
+    nu = k1 - k0
+
+    def col(kf):
+        k = int(round(kf))
+        return k
+
+    def fn(u, v):
+        kf = k0 + u * nu
+        k = col(kf)
+        phi = _phi(k)
+        a = i_from(k) if callable(i_from) else i_from
+        b = hem_fn(k)
+        return _cloak_pt(st, phi, a + (b - a) * v)
+
+    p = Part(name)
+    L.sheet(p, fn, nu, nv, CLOAK_THICK, close_edges=close)
+    m.add(p, slot, tile, flags, group=group)
+    return p
+
+
+def _clasp(m, st):
+    """The throat clasp: a beaded chain between the two front tips and a lit stone on a gilt disc."""
+    tl = _cloak_pt(st, _phi(0), 0.0)
+    tr = _cloak_pt(st, _phi(_COLS), 0.0)
+    if st.chain:
+        pts = L.bez3((tr[0], -0.2, tr[2] - 0.3), (tr[0] * 0.5, -1.3, -3.9), (tl[0] * 0.5, -1.3, -3.9), (tl[0], -0.2, tl[2] - 0.3), 6)
+        c = Part("chain")
+        L.beads(c, pts, 0.28, 4, every=2, bead=1.0, thin=0.8)
+        m.add(c, TRIM, "chain", 0)
+    disc = Part("clasp_disc")
+    loft(disc, "-z", (0.0, -1.35, -3.55), [(0.0, 1.0, 1.0), (0.45, 1.0, 1.0)], octagon(1.9, 1.9, 0.5), caps=(False, True))
+    m.add(disc, TRIM, "gilt", SHELL, uv="fit")
+    if st.gem:
+        g = Part("clasp_stone")
+        L.dia(g, (0.0, -1.35, -4.15), 0.5, 0.6, 0.38)
+        m.add(g, GLOW, "gem", EMIT | HOT, uv="fit")
+
+
+def _fur_ring(m, name, y, rx, rz, r, n, bump, tile="fur", slot=TRIM, lift=0.0):
+    """A fluffy ring round the neck: a torus whose radius and thickness alternate round the ring, so it reads as tufted fur without a texture of its own."""
+    rings = []
+    p = Part(name)
+    for i in range(n):
+        th = 2 * math.pi * i / n
+        odd = i % 2
+        R = 1.0 + bump * (1 if odd else -0.6)
+        rr = r * (1.0 + 0.3 * odd)
+        pts = []
+        for kk in range(4):
+            ph = 2 * math.pi * kk / 4
+            u = (1.0 + (rr * math.cos(ph)) / max(rx, 1e-3)) * R
+            x = rx * u * math.cos(th)
+            z = rz * (1.0 + (rr * math.cos(ph)) / max(rz, 1e-3)) * R * math.sin(th)
+            pts.append(p.add_vertex((x, y + rr * math.sin(ph) * 0.9 + lift * odd, z)))
+        rings.append(L.ml.Ring(pts))
+    for i in range(n):
+        j = (i + 1) % n
+        for kk in range(4):
+            l = (kk + 1) % 4
+            p.add_face(rings[i][kk], rings[j][kk], rings[j][l], rings[i][l])
+    p.ensure_outward()
+    m.add(p, slot, tile, SHELL)
+
+
+def _collar(m, st):
+    kind = st.collar
+    if kind == "stand":
+        # a flared stand-up collar behind and beside the head (outside the head box, so it is seen)
+        def fn(u, v):
+            phi = -1.95 + 3.9 * u
+            rx = 4.8 + 0.8 * v ** 1.6
+            rz = 4.4 + 0.8 * v ** 1.6
+            y = -0.6 + 4.6 * v
+            return (rx * math.sin(phi), y, rz * math.cos(phi))
+        p = Part("collar")
+        L.sheet(p, fn, 8, 2, CLOAK_THICK)
+        m.add(p, MAIN, "silk", SHELL)
+        t = Part("collar_trim")
+        L.sheet(t, lambda u, v: ((4.8 + 0.8 + 0.15) * math.sin(-1.95 + 3.9 * u), 4.0 + 0.5 * v, (4.4 + 0.8 + 0.15) * math.cos(-1.95 + 3.9 * u)), 8, 1, CLOAK_THICK)
+        m.add(t, TRIM, "gilt", 0)
+    elif kind == "fur":
+        _fur_ring(m, "fur_collar", 0.9, 4.8, 4.1, 1.15, 16, 0.10, slot=MAIN)
+    elif kind == "mane":
+        _fur_ring(m, "mane_collar", 0.9, 5.2, 4.5, 1.35, 20, 0.20, tile="fur", slot=TRIM, lift=0.6)
+        for k in range(6):
+            a = math.pi * (0.2 + 0.6 * k / 5.0)
+            sp = Part("mane_spike%d" % k)
+            L.cone(sp, (5.4 * math.cos(a + math.pi), 1.2, 4.7 * math.sin(a + math.pi) * -1), (6.6 * math.cos(a + math.pi), 4.2 + (k % 2), 5.9 * math.sin(a + math.pi) * -1), 0.7, 4, mid=0.35, mid_r=0.9)
+            m.add(sp, TRIM, "fur", SHELL)
+    elif kind == "fan":
+        # a peacock fan behind the head: five feathers with a lit eye each
+        for i in range(5):
+            a = math.radians(-48 + 24 * i)
+            base = (4.0 * math.sin(a * 0.55), 0.6, 4.6)
+            tip = (9.5 * math.sin(a), 0.6 + 9.2 * math.cos(a) - 1.1 * abs(a), 5.6)
+            f = Part("feather%d" % i)
+            L.feather(f, base, tip, 2.0, 0.5, 5, 0.0, 0.3)
+            m.add(f, MAIN if i % 2 == 0 else TRIM, "silk", SHELL)
+            eye = Part("eye%d" % i)
+            L.dia(eye, (tip[0] * 0.86 + base[0] * 0.14, tip[1] * 0.86 + base[1] * 0.14, 5.9), 0.55, 0.7, 0.3)
+            m.add(eye, GLOW, "gem", EMIT | HOT, uv="fit")
+
+
+def _anime_cloak(name, st):
+    m = WModel(name, "body")
+    g = m.group("cloak", "swing", (0.0, _SPLIT_Y, 4.0), 16.0, 1.1, 0.0)
+    i_split = _index_of_y(_SPLIT_Y)
+
+    def i_hem(k):
+        return _index_of_y(_hem_y(st, k))
+
+    def up_end(k):
+        return min(i_hem(k), i_split)
+
+    # the fixed drape over the shoulders: the two front edges are trim, the rest is cloth
+    _drape(m, st, 1, _COLS - 1, 0.0, up_end, 5, MAIN, "silk", 0, "drape")
+    _drape(m, st, 0, 1, 0.0, up_end, 5, TRIM, "gilt", 0, "edge_l")
+    _drape(m, st, _COLS - 1, _COLS, 0.0, up_end, 5, TRIM, "gilt", 0, "edge_r")
+    # the swinging long back panel (whole columns of the same grid, only where the hem is below the split)
+    lo = _COLS // 2 - _LOW_COLS // 2
+    hi = lo + _LOW_COLS
+    def low_end(k):
+        return max(i_hem(k), i_split + 0.5)
+    body_end = lambda k: i_split + (low_end(k) - i_split) * 0.88
+    def body_from(k):
+        return i_split
+    def trim_from(k):
+        return body_end(k)
+    _drape(m, st, lo, hi, body_from, body_end, 4, MAIN, "silk", g, "back", close=True)
+    _drape(m, st, lo, hi, trim_from, low_end, 1, TRIM, "gilt", g, "hem", close=True)
+    # the emblem on the back (a relief: plate, inner outline, lit stone), on the swinging part so it moves with the cloth
+    rz = _cloak_pt(st, 0.0, _index_of_y(st.ey))[2]
+    _badge(m, st.emblem, (0.0, st.ey, rz - 0.15), st.esize * 1.3, group=g, outward=1.0)
+    _collar(m, st)
+    _clasp(m, st)
+    return m
+
+
+def _mk_cloak(key, st):
+    def f():
+        return _anime_cloak("anime_cloak_" + key, st)
+    f.__name__ = "anime_cloak_" + key
+    f.__doc__ = "The anime cloak of the %s set: shoulder drape, long swinging back panel with the emblem, clasp and collar; no sleeves, no legs." % key
+    MODELS[f.__name__] = f
+
+
+# ---- the small head pieces (head anchor unless the model says body)
+@model
+def anime_headband():
+    """Asta's headband: a plain cloth band round the brow with two tails that trail behind the runner; the only head piece of the Black Bull set."""
+    m = WModel("anime_headband", "head")
+    b = Part("band")
+    L.band(b, 5.3, 6.9, 4.28, 4.28, 0.3, 20, 0.0, 0.0, 3.2)
+    m.add(b, DARK, "cloth", SHELL)
+    e = Part("band_edge")
+    L.band(e, 6.9, 7.15, 4.3, 4.3, 0.2, 20, 0.0, 0.0, 3.2)
+    m.add(e, TRIM, "cloth", 0)
+    k = Part("knot")
+    L.sph(k, (0.0, 6.1, 4.55), 0.85, 3, 7, squash=0.9)
+    m.add(k, DARK, "cloth", 0)
+    g = m.group("tails", "swing", (0.0, 6.1, 4.6), 26.0, 2.0, 0.0)
+    for sx in (-1, 1):
+        t = Part("tail%d" % sx)
+        L.sheet(t, lambda u, v, sx=sx: (sx * (0.35 + 0.9 * v) + (u - 0.5) * 1.1, 6.0 - v * 6.2, 4.7 + 0.5 * v), 1, 3, 0.35)
+        m.add(t, DARK, "cloth", SHELL, group=g)
+    return m
+
+
+@model
+def anime_hood_down():
+    """A hood laid back on the cloak: a soft bunch of cloth between the shoulder blades with a lighter lining showing at the rim (body anchor; it belongs to the helmet piece)."""
+    m = WModel("anime_hood_down", "body")
+    h = Part("hood")
+    L.sph(h, (0.0, -1.3, 4.35), 3.3, 4, 9, squash=0.72)
+    h.V = [np.array([v[0], v[1], 4.35 + (v[2] - 4.35) * 0.5]) for v in h.V]
+    m.add(h, MAIN, "cloth", SHELL)
+    r = Part("rim")
+    L.torus(r, (0.0, -0.5, 4.95), 2.5, 0.42, n=10, m=4, a_scale=1.0, b_scale=0.55, plane="xy")
+    m.add(r, TRIM, "silk", 0)
+    return m
+
+
+@model
+def anime_horns_devil():
+    """A pair of small swept-back horns on the brow, the only head piece of a devil-bound mage."""
+    m = WModel("anime_horns_devil", "head")
+    for sx in (-1, 1):
+        pts = L.bez3((sx * 2.6, 8.0, -1.2), (sx * 4.6, 10.2, -1.2), (sx * 4.4, 12.0, 0.4), (sx * 2.8, 13.0, 2.4), 6)
+        h = Part("horn%d" % sx)
+        L.horn(h, pts, 0.85, 0.0, 6)
+        m.add(h, TRIM, "horn", SHELL)
+    return m
+
+
+# id, cloak key, CloakStyle, helmet piece, palette (main, trim, glow), tier, theme, canon note
+ANIME_SETS = [
+    ("magic_knight_robe_junior", "junior", CloakStyle(back=15.0, front=4.5, hem="smooth", collar="none", emblem="clover", esize=2.6, ey=-8.6, fold=0.4, chain=False, gem=False),
+     "anime_hood_down", (0x6B5E50, 0xB8B0A0, 0x90B4E0), 2, None),
+    ("magic_knight_robe_senior", "senior", CloakStyle(back=21.0, front=5.0, hem="smooth", collar="stand", emblem="clover", esize=3.3, ey=-10.0),
+     "anime_hood_down", (0xE6E6EA, 0xB42424, 0xFFB0A0), 3, "petal"),
+    ("golden_dawn_mantle", "golden_dawn", CloakStyle(back=21.0, front=5.5, hem="smooth", collar="stand", emblem="sun", esize=3.6, ey=-10.2),
+     None, (0xF2EBD2, 0xD9B44A, 0xFFE890), 4, "star"),
+    ("black_bull_robe", "black_bull", CloakStyle(back=19.5, front=4.5, hem="jag", tooth=1.5, collar="none", emblem="bull", esize=3.7, ey=-10.0, fold=0.7),
+     "anime_headband", (0x1C1C20, 0xE8E4DC, 0xE4B454), 3, "spark"),
+    ("silver_eagle_cloak", "silver_eagle", CloakStyle(back=22.0, front=5.5, hem="smooth", collar="fur", emblem="eagle", esize=3.9, ey=-10.2),
+     None, (0xD5DEE8, 0x6A5FB0, 0xB8E8FF), 4, "star"),
+    ("crimson_lion_mantle", "crimson_lion", CloakStyle(back=20.0, front=5.0, hem="smooth", collar="mane", emblem="lion", esize=3.5, ey=-10.0, fold=0.65),
+     None, (0x9A1E1E, 0xE0A040, 0xFF6A30), 4, "ember"),
+    ("coral_peacock_robe", "coral_peacock", CloakStyle(back=20.0, front=5.0, hem="feather", tooth=1.0, collar="fan", emblem="peacock", esize=3.4, ey=-10.0),
+     None, (0x2FA8A0, 0xE8806C, 0x6CF0E0), 4, "wisp"),
+    ("heart_kingdom_uniform", "heart", CloakStyle(back=17.0, front=5.0, hem="smooth", collar="stand", emblem="heart", esize=3.0, ey=-9.0),
+     "anime_hood_down", (0xE49CB4, 0x54B49C, 0xFFB8D8), 3, "petal"),
+    ("diamond_mage_coat", "diamond", CloakStyle(back=18.0, front=5.0, hem="smooth", collar="stand", emblem="diamond", esize=3.2, ey=-9.4),
+     "anime_hood_down", (0x6C543C, 0xCCB484, 0x9AF0FF), 3, "snow"),
+    ("spade_war_coat", "spade", CloakStyle(back=21.0, front=5.5, hem="jag", tooth=1.0, collar="stand", emblem="spade", esize=3.4, ey=-10.0, fold=0.7),
+     "anime_hood_down", (0x34343A, 0x9C2424, 0xFF5050), 5, "spark"),
+    ("devil_bound_coat", "devil", CloakStyle(back=20.0, front=4.5, hem="jag", tooth=2.0, collar="stand", emblem="devil", esize=3.5, ey=-10.0, fold=0.75),
+     "anime_horns_devil", (0x0C0C0C, 0xCC0C24, 0xFF2038), 6, "ember"),
+]
+for _sid, _key, _st, *_r in ANIME_SETS:
+    _mk_cloak(_key, _st)
+
+NONE_PIECE = "none"              # a catalog piece that draws nothing but still counts as "the library draws this armour piece" (the older renderer is then silenced)
+
+
+def catalog_anime(cat):
+    """`anime:<id>` entries for the four pieces of every robe set: chest = the cloak, helmet = the small accessory (or nothing), legs and boots = nothing."""
+    for (sid, key, st, head, pal, tier, theme) in ANIME_SETS:
+        cat.item("anime:" + sid + "_hood", (head,) if head else (NONE_PIECE,), pal, tier)
+        cat.item("anime:" + sid, ("anime_cloak_" + key,), pal, tier)
+        cat.item("anime:" + sid + "_leggings", (NONE_PIECE,), pal, tier)
+        cat.item("anime:" + sid + "_boots", (NONE_PIECE,), pal, tier)
+        if theme:
+            for suffix in ("_hood", ""):
+                cat.theme("anime:" + sid + suffix, theme)

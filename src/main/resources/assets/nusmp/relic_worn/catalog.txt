@@ -214,6 +214,26 @@ fx devil_bound_coat_hood ember
 fx devil_bound_coat ember
 fx devil_bound_coat_leggings ember
 fx devil_bound_coat_boots ember
+fx anime:magic_knight_robe_senior_hood petal
+fx anime:magic_knight_robe_senior petal
+fx anime:golden_dawn_mantle_hood star
+fx anime:golden_dawn_mantle star
+fx anime:black_bull_robe_hood spark
+fx anime:black_bull_robe spark
+fx anime:silver_eagle_cloak_hood star
+fx anime:silver_eagle_cloak star
+fx anime:crimson_lion_mantle_hood ember
+fx anime:crimson_lion_mantle ember
+fx anime:coral_peacock_robe_hood wisp
+fx anime:coral_peacock_robe wisp
+fx anime:heart_kingdom_uniform_hood petal
+fx anime:heart_kingdom_uniform petal
+fx anime:diamond_mage_coat_hood snow
+fx anime:diamond_mage_coat snow
+fx anime:spade_war_coat_hood spark
+fx anime:spade_war_coat spark
+fx anime:devil_bound_coat_hood ember
+fx anime:devil_bound_coat ember
 fx mode_wind_spirit_dive leaf
 fx mode_fire_spirit_dive ember
 fx mode_demon wisp
@@ -263,6 +283,50 @@ item devil_bound_coat_hood helm_devil
 item devil_bound_coat chest_devil sleeve_plated@rarm sleeve_plated@larm~ emblem_devil
 item devil_bound_coat_leggings hip_plated legs_devil@rleg legs_devil@lleg
 item devil_bound_coat_boots boots_devil@rleg boots_devil@lleg
+item anime:magic_knight_robe_junior_hood anime_hood_down
+item anime:magic_knight_robe_junior anime_cloak_junior
+item anime:magic_knight_robe_junior_leggings none
+item anime:magic_knight_robe_junior_boots none
+item anime:magic_knight_robe_senior_hood anime_hood_down
+item anime:magic_knight_robe_senior anime_cloak_senior
+item anime:magic_knight_robe_senior_leggings none
+item anime:magic_knight_robe_senior_boots none
+item anime:golden_dawn_mantle_hood none
+item anime:golden_dawn_mantle anime_cloak_golden_dawn
+item anime:golden_dawn_mantle_leggings none
+item anime:golden_dawn_mantle_boots none
+item anime:black_bull_robe_hood anime_headband
+item anime:black_bull_robe anime_cloak_black_bull
+item anime:black_bull_robe_leggings none
+item anime:black_bull_robe_boots none
+item anime:silver_eagle_cloak_hood none
+item anime:silver_eagle_cloak anime_cloak_silver_eagle
+item anime:silver_eagle_cloak_leggings none
+item anime:silver_eagle_cloak_boots none
+item anime:crimson_lion_mantle_hood none
+item anime:crimson_lion_mantle anime_cloak_crimson_lion
+item anime:crimson_lion_mantle_leggings none
+item anime:crimson_lion_mantle_boots none
+item anime:coral_peacock_robe_hood none
+item anime:coral_peacock_robe anime_cloak_coral_peacock
+item anime:coral_peacock_robe_leggings none
+item anime:coral_peacock_robe_boots none
+item anime:heart_kingdom_uniform_hood anime_hood_down
+item anime:heart_kingdom_uniform anime_cloak_heart
+item anime:heart_kingdom_uniform_leggings none
+item anime:heart_kingdom_uniform_boots none
+item anime:diamond_mage_coat_hood anime_hood_down
+item anime:diamond_mage_coat anime_cloak_diamond
+item anime:diamond_mage_coat_leggings none
+item anime:diamond_mage_coat_boots none
+item anime:spade_war_coat_hood anime_hood_down
+item anime:spade_war_coat anime_cloak_spade
+item anime:spade_war_coat_leggings none
+item anime:spade_war_coat_boots none
+item anime:devil_bound_coat_hood anime_horns_devil
+item anime:devil_bound_coat anime_cloak_devil
+item anime:devil_bound_coat_leggings none
+item anime:devil_bound_coat_boots none
 item mode_wind_spirit_dive wings_wind crown_starblades
 item mode_fire_spirit_dive wings_dragon flame_hair
 item mode_demon horn_demon wing_demon
@@ -325,6 +389,50 @@ ipal devil_bound_coat_hood 0C0C0C CC0C24 FF2038
 ipal devil_bound_coat 0C0C0C CC0C24 FF2038
 ipal devil_bound_coat_leggings 0C0C0C CC0C24 FF2038
 ipal devil_bound_coat_boots 0C0C0C CC0C24 FF2038
+ipal anime:magic_knight_robe_junior_hood 6B5E50 B8B0A0 90B4E0
+ipal anime:magic_knight_robe_junior 6B5E50 B8B0A0 90B4E0
+ipal anime:magic_knight_robe_junior_leggings 6B5E50 B8B0A0 90B4E0
+ipal anime:magic_knight_robe_junior_boots 6B5E50 B8B0A0 90B4E0
+ipal anime:magic_knight_robe_senior_hood E6E6EA B42424 FFB0A0
+ipal anime:magic_knight_robe_senior E6E6EA B42424 FFB0A0
+ipal anime:magic_knight_robe_senior_leggings E6E6EA B42424 FFB0A0
+ipal anime:magic_knight_robe_senior_boots E6E6EA B42424 FFB0A0
+ipal anime:golden_dawn_mantle_hood F2EBD2 D9B44A FFE890
+ipal anime:golden_dawn_mantle F2EBD2 D9B44A FFE890
+ipal anime:golden_dawn_mantle_leggings F2EBD2 D9B44A FFE890
+ipal anime:golden_dawn_mantle_boots F2EBD2 D9B44A FFE890
+ipal anime:black_bull_robe_hood 1C1C20 E8E4DC E4B454
+ipal anime:black_bull_robe 1C1C20 E8E4DC E4B454
+ipal anime:black_bull_robe_leggings 1C1C20 E8E4DC E4B454
+ipal anime:black_bull_robe_boots 1C1C20 E8E4DC E4B454
+ipal anime:silver_eagle_cloak_hood D5DEE8 6A5FB0 B8E8FF
+ipal anime:silver_eagle_cloak D5DEE8 6A5FB0 B8E8FF
+ipal anime:silver_eagle_cloak_leggings D5DEE8 6A5FB0 B8E8FF
+ipal anime:silver_eagle_cloak_boots D5DEE8 6A5FB0 B8E8FF
+ipal anime:crimson_lion_mantle_hood 9A1E1E E0A040 FF6A30
+ipal anime:crimson_lion_mantle 9A1E1E E0A040 FF6A30
+ipal anime:crimson_lion_mantle_leggings 9A1E1E E0A040 FF6A30
+ipal anime:crimson_lion_mantle_boots 9A1E1E E0A040 FF6A30
+ipal anime:coral_peacock_robe_hood 2FA8A0 E8806C 6CF0E0
+ipal anime:coral_peacock_robe 2FA8A0 E8806C 6CF0E0
+ipal anime:coral_peacock_robe_leggings 2FA8A0 E8806C 6CF0E0
+ipal anime:coral_peacock_robe_boots 2FA8A0 E8806C 6CF0E0
+ipal anime:heart_kingdom_uniform_hood E49CB4 54B49C FFB8D8
+ipal anime:heart_kingdom_uniform E49CB4 54B49C FFB8D8
+ipal anime:heart_kingdom_uniform_leggings E49CB4 54B49C FFB8D8
+ipal anime:heart_kingdom_uniform_boots E49CB4 54B49C FFB8D8
+ipal anime:diamond_mage_coat_hood 6C543C CCB484 9AF0FF
+ipal anime:diamond_mage_coat 6C543C CCB484 9AF0FF
+ipal anime:diamond_mage_coat_leggings 6C543C CCB484 9AF0FF
+ipal anime:diamond_mage_coat_boots 6C543C CCB484 9AF0FF
+ipal anime:spade_war_coat_hood 34343A 9C2424 FF5050
+ipal anime:spade_war_coat 34343A 9C2424 FF5050
+ipal anime:spade_war_coat_leggings 34343A 9C2424 FF5050
+ipal anime:spade_war_coat_boots 34343A 9C2424 FF5050
+ipal anime:devil_bound_coat_hood 0C0C0C CC0C24 FF2038
+ipal anime:devil_bound_coat 0C0C0C CC0C24 FF2038
+ipal anime:devil_bound_coat_leggings 0C0C0C CC0C24 FF2038
+ipal anime:devil_bound_coat_boots 0C0C0C CC0C24 FF2038
 ipal mode_wind_spirit_dive 7FD8B0 F0FFF4 B8FFE0
 ipal mode_fire_spirit_dive 8A2A10 FF9A30 FF5A18
 ipal mode_demon 0C0C10 3A0A12 E02030
@@ -387,6 +495,50 @@ itier devil_bound_coat_hood 6
 itier devil_bound_coat 6
 itier devil_bound_coat_leggings 6
 itier devil_bound_coat_boots 6
+itier anime:magic_knight_robe_junior_hood 2
+itier anime:magic_knight_robe_junior 2
+itier anime:magic_knight_robe_junior_leggings 2
+itier anime:magic_knight_robe_junior_boots 2
+itier anime:magic_knight_robe_senior_hood 3
+itier anime:magic_knight_robe_senior 3
+itier anime:magic_knight_robe_senior_leggings 3
+itier anime:magic_knight_robe_senior_boots 3
+itier anime:golden_dawn_mantle_hood 4
+itier anime:golden_dawn_mantle 4
+itier anime:golden_dawn_mantle_leggings 4
+itier anime:golden_dawn_mantle_boots 4
+itier anime:black_bull_robe_hood 3
+itier anime:black_bull_robe 3
+itier anime:black_bull_robe_leggings 3
+itier anime:black_bull_robe_boots 3
+itier anime:silver_eagle_cloak_hood 4
+itier anime:silver_eagle_cloak 4
+itier anime:silver_eagle_cloak_leggings 4
+itier anime:silver_eagle_cloak_boots 4
+itier anime:crimson_lion_mantle_hood 4
+itier anime:crimson_lion_mantle 4
+itier anime:crimson_lion_mantle_leggings 4
+itier anime:crimson_lion_mantle_boots 4
+itier anime:coral_peacock_robe_hood 4
+itier anime:coral_peacock_robe 4
+itier anime:coral_peacock_robe_leggings 4
+itier anime:coral_peacock_robe_boots 4
+itier anime:heart_kingdom_uniform_hood 3
+itier anime:heart_kingdom_uniform 3
+itier anime:heart_kingdom_uniform_leggings 3
+itier anime:heart_kingdom_uniform_boots 3
+itier anime:diamond_mage_coat_hood 3
+itier anime:diamond_mage_coat 3
+itier anime:diamond_mage_coat_leggings 3
+itier anime:diamond_mage_coat_boots 3
+itier anime:spade_war_coat_hood 5
+itier anime:spade_war_coat 5
+itier anime:spade_war_coat_leggings 5
+itier anime:spade_war_coat_boots 5
+itier anime:devil_bound_coat_hood 6
+itier anime:devil_bound_coat 6
+itier anime:devil_bound_coat_leggings 6
+itier anime:devil_bound_coat_boots 6
 itier mode_wind_spirit_dive 5
 itier mode_fire_spirit_dive 5
 itier mode_demon 6

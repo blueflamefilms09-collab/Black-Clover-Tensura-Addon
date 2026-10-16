@@ -170,6 +170,7 @@ def catalog():
         cat.theme(rid, th)
     gen_worn_armor_relics.catalog_relics(cat)              # the armour relics that only had the model of their look
     gen_worn_armor.catalog_items(cat)                      # the armour items (the robe sets)
+    gen_worn_armor.catalog_anime(cat)                      # 1.48.0: the same robe sets as anime cloaks (`anime:<id>` keys, chosen by relicfx.robeAnime)
     gen_worn_modes.catalog_modes(cat)                      # the transformation overlays
     gen_worn_armor.catalog_curios(cat)                     # Curios-worn items that are not relics
     return cat
@@ -185,7 +186,8 @@ def used_models(cat):
             names.add(p.split("@")[0].rstrip("~"))
     for _r, ps in cat.items:
         for p in ps:
-            names.add(p.split("@")[0].rstrip("~"))
+            if p != gen_worn_armor.NONE_PIECE:                 # `none` draws nothing and has no model file
+                names.add(p.split("@")[0].rstrip("~"))
     return names
 
 
@@ -215,7 +217,7 @@ def main(argv):
             print("relic %s wears %d vertices (cap %d)" % (rid, tot, ENSEMBLE_CAP))
             bad += 1
     for rid, ps in cat.items:
-        tot = sum(verts[p.split("@")[0].rstrip("~")] for p in ps)
+        tot = sum(verts[p.split("@")[0].rstrip("~")] for p in ps if p != gen_worn_armor.NONE_PIECE)
         if tot > (MODE_CAP if rid.startswith("mode_") else ENSEMBLE_CAP):
             print("item %s wears %d vertices (cap %d)" % (rid, tot, ENSEMBLE_CAP))
             bad += 1

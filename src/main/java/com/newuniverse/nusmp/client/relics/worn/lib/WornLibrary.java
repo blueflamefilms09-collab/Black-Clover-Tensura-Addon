@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.client.relics.worn.lib;
 
 import com.newuniverse.nusmp.client.relics.fx.FxTheme;
+import com.newuniverse.nusmp.client.relics.fx.RelicFxOptions;
 import com.newuniverse.nusmp.client.relics.fx.WornFxPlan;
 import com.newuniverse.nusmp.relics.RelicDef;
 import com.newuniverse.nusmp.relics.RelicSlot;
@@ -129,10 +130,13 @@ public final class WornLibrary {
      */
     public static Ensemble ofItem(String path, ArmorLooks.Slot slot) {
         if (path == null || slot == null) return null;
-        String cacheKey = slot.key() + ":" + path;
+        // 1.48.0: with relicfx.robeAnime on, an item that has an `anime:` entry wears that look (cloak only); the older look stays the fallback and the option's off state
+        String key = WornCatalog.animeKey(path);
+        boolean anime = RelicFxOptions.robeAnime() && WornModels.catalog().hasItem(key);
+        String cacheKey = (anime ? "ANIME:" : "") + slot.key() + ":" + path;
         Optional<Ensemble> e = ITEM_CACHE.get(cacheKey);
         if (e == null) {
-            e = Optional.ofNullable(buildKey(path, slot.key(), slot, true));
+            e = Optional.ofNullable(buildKey(anime ? key : path, slot.key(), slot, true));
             ITEM_CACHE.put(cacheKey, e);
         }
         return e.orElse(null);
@@ -180,13 +184,15 @@ public final class WornLibrary {
         if (wanted.isEmpty()) return null;
         if (pal == null) pal = ArmorLooks.palette(key);
         if (tier < 0) tier = 2;
+        boolean nothing = WornCatalog.isNothing(wanted);                                  // an anime robe's legs and boots: the library owns the piece but draws no model
         List<Resolved> out = new ArrayList<>(wanted.size());
         for (WornCatalog.Piece p : wanted) {
+            if (WornCatalog.NONE.equals(p.model())) continue;
             WornMesh m = WornModels.mesh(p.model());
             if (m == null) continue;
             out.add(new Resolved(m, p.anchor() != null ? p.anchor() : m.anchor, p.mirror()));
         }
-        if (out.isEmpty()) return null;
+        if (out.isEmpty() && !nothing) return null;
         FxTheme theme = FxTheme.byName(cat.themeOf(key));
         if (theme == null) theme = FxTheme.fromGlow(pal[2]);
         return new Ensemble(null, key, slotKey, exact, WornPalette.slots(pal[0], pal[1], pal[2]), tier, List.copyOf(out), theme);

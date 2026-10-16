@@ -13,6 +13,7 @@ import java.util.Map;
  * relic tiny_duck_crown crown_duck        a signature relic's own models (they replace the look's)
  * fx tiny_duck_crown ember                the ambient particle theme of a relic
  * item black_bull_robe chest_mantle ...   an ARMOUR ITEM of the mod (by registry path, or a mode_&lt;name&gt;): the models it wears on the player
+ * item anime:black_bull_robe anime_cloak_black_bull   the anime look of the same item (chosen when relicfx.robeAnime is on); the piece {@code none} draws nothing
  * ipal black_bull_robe 242424 E4B454 E4B454   its palette (main, trim, glow as hex); itier black_bull_robe 3  its grade tier 1..7
  * islot glutton_chalice CHARM            a Curios-worn item that is not a relic: the slot it is drawn in (placed and shrunk like a relic of that slot)
  * </pre>
@@ -20,6 +21,14 @@ import java.util.Map;
  * {@code ~} mirrors it left to right (how the left arm gets the right arm's model).
  */
 public final class WornCatalog {
+    /** The registry-path prefix of the anime look of an armour item ({@code anime:black_bull_robe}); the catalog keeps both looks, the option {@code relicfx.robeAnime} picks one. */
+    public static final String ANIME_PREFIX = "anime:";
+    /** A piece that draws nothing but still makes the library "own" that armour piece (so the older renderer is silenced): the legs and boots of an anime robe set. */
+    public static final String NONE = "none";
+
+    /** The catalog key of the anime look of the item with this registry path. */
+    public static String animeKey(String path) { return ANIME_PREFIX + path; }
+
     /** One model on one body part. {@code anchor} is null for the one in the model's file. */
     public record Piece(String model, WornAnchor anchor, boolean mirror) {}
 
@@ -119,6 +128,16 @@ public final class WornCatalog {
 
     /** The Curios slot name ("CHARM" ...) a non-relic worn item is drawn in, or null for an armour item or a mode. */
     public String itemSlot(String key) { return itemSlots.get(key); }
+
+    /** Does the catalog have an {@code item} entry (of either look) under this key? */
+    public boolean hasItem(String key) { return items.containsKey(key); }
+
+    /** Is this list the explicit "draw nothing" entry (only {@link #NONE} pieces)? */
+    public static boolean isNothing(List<Piece> pieces) {
+        if (pieces.isEmpty()) return false;
+        for (Piece p : pieces) if (!NONE.equals(p.model())) return false;
+        return true;
+    }
 
     public int itemCount() { return items.size(); }
 

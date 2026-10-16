@@ -129,6 +129,7 @@ class ArmorLooksTest {
             int total = 0;
             for (int i = 2; i < v.length; i++) {
                 String model = WornCatalog.piece(v[i]).model();
+                if (WornCatalog.NONE.equals(model)) continue;                       // an anime robe's legs and boots draw nothing
                 assertTrue(files.contains(model), line + ": " + model + " has no model file");
                 total += verts.get(model);
             }
@@ -166,6 +167,40 @@ class ArmorLooksTest {
             assertEquals(3, c.itemPieces(id + "_leggings").size(), "a hip piece and two legs");
             assertEquals(2, c.itemPieces(id + "_boots").size(), "two boots");
         }
+    }
+
+    @Test
+    void theAnimeLookCoversEveryPieceOfEveryRobeSet() throws IOException {
+        WornCatalog c = real();
+        Set<String> files = modelNames();
+        for (String id : robeSetIds()) {
+            for (String suffix : new String[]{"_hood", "", "_leggings", "_boots"}) {
+                String key = WornCatalog.animeKey(id + suffix);
+                assertTrue(c.hasItem(key), key + " has an anime entry");
+                assertFalse(c.itemPieces(key).isEmpty(), key);
+                assertNotNull(c.itemPalette(key), key + " has a palette");
+                assertTrue(c.hasItem(id + suffix), "the older look of " + id + suffix + " is kept");
+                for (WornCatalog.Piece p : c.itemPieces(key)) assertTrue(WornCatalog.NONE.equals(p.model()) || files.contains(p.model()), key + " names " + p.model());
+            }
+            WornCatalog.Piece cloak = c.itemPieces(WornCatalog.animeKey(id)).get(0);
+            assertEquals(1, c.itemPieces(WornCatalog.animeKey(id)).size(), "the chest piece is the cloak and nothing else (no sleeves, no hip band)");
+            assertTrue(cloak.model().startsWith("anime_cloak_"), id + " wears an anime cloak");
+            assertTrue(WornCatalog.isNothing(c.itemPieces(WornCatalog.animeKey(id + "_leggings"))), "the player's own legs show");
+            assertTrue(WornCatalog.isNothing(c.itemPieces(WornCatalog.animeKey(id + "_boots"))), "the player's own boots show");
+            assertTrue(c.itemPieces(WornCatalog.animeKey(id + "_hood")).size() == 1, "at most one small head piece");
+        }
+    }
+
+    @Test
+    void theAnimeKeysAndTheNothingPieceAreParsedAsData() {
+        assertEquals("anime:black_bull_robe", WornCatalog.animeKey("black_bull_robe"));
+        WornCatalog c = WornCatalog.parse(List.of("item anime:x_boots none", "item anime:x cloak_a", "item x chest_old"));
+        assertTrue(c.hasItem("anime:x_boots"));
+        assertTrue(WornCatalog.isNothing(c.itemPieces("anime:x_boots")));
+        assertFalse(WornCatalog.isNothing(c.itemPieces("anime:x")));
+        assertFalse(WornCatalog.isNothing(List.of()), "no entry is not the same as an entry that draws nothing");
+        assertFalse(c.hasItem("anime:y"));
+        assertEquals(1, c.itemPieces("x").size(), "the older look is stored apart from the anime one");
     }
 
     /** The ids of the armour relics (HEAD, CHEST, FEET) from the Java sources, with their look (null: the default of the slot). */
