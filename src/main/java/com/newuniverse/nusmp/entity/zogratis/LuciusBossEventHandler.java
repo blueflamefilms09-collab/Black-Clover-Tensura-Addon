@@ -116,7 +116,7 @@ public final class LuciusBossEventHandler {
             DjinnEngine.severed(p, sev);
         }
         timeDecay(b, p, st, now, fair);
-        if (fair && LuciusGodConfig.starvation() && p.tickCount % 10 == 0) {
+        if (fair && LuciusGodConfig.starvation() && p.tickCount % 10 == 0 && !b.god().graceOn(now)) {
             double max = EnergyHelper.getMaxMagicule(p);
             LuciusCapabilities.drainMagicule(p, StarvationMath.perTick(max, LuciusGodConfig.starvationPctPerSec()) * 10.0 / Math.max(1.0, max));
         }
@@ -142,7 +142,8 @@ public final class LuciusBossEventHandler {
     // ================================================================ Time Decay
     private static boolean inAura(LuciusBoss b, Entity who) {
         double r = LuciusGodConfig.auraRadius();
-        return LuciusGodConfig.timeDecay() && b.fightActive() && !b.julius() && who.level() == b.level() && who.distanceToSqr(b) <= r * r;
+        return LuciusGodConfig.timeDecay() && b.fightActive() && !b.julius() && who.level() == b.level() && who.distanceToSqr(b) <= r * r
+                && !b.god().graceOn(who.level().getGameTime());          // 1.46.0: off during a stage change and 10 s after it
     }
 
     private static void timeDecay(LuciusBoss b, ServerPlayer p, PlayerState st, long now, boolean fair) {

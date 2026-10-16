@@ -20,8 +20,8 @@ public final class CounterRules {
     private CounterRules() {}
 
     public static final int HEAVY_COST_PERCENT = 25, SKILL_CHANNEL_TICKS = 30, MIN_HOLD = 10;
-    /** Cooldowns in ticks: the Checkmate counter per target (8 s), the reversal (10 s), the swap (12 s). */
-    public static final int CHECKMATE_COOLDOWN = 160, REVERSAL_COOLDOWN = 200, SWAP_COOLDOWN = 240;
+    /** Cooldowns in ticks: the Checkmate counter per target (14 s, was 8), the reversal (20 s, was 10), the swap (20 s, was 12); also the floors of {@link LuciusBalance}. */
+    public static final int CHECKMATE_COOLDOWN = 280, REVERSAL_COOLDOWN = 400, SWAP_COOLDOWN = 400;
 
     /** Is a held grimoire page a massive channel right now? */
     public static boolean massiveGrimoire(double costPercent, boolean zoneOrSignature, int heldTicks, int castTicks, boolean castable) {
@@ -43,7 +43,7 @@ public final class CounterRules {
     public static boolean reversible(String category) { return "ultimate".equals(category); }
 
     /**
-     * The true damage the reversal mirrors back at the caster: 'pct' percent of the caster's maximum health, never more than 40% of it
+     * The true damage the reversal mirrors back at the caster: 'pct' percent of the caster's maximum health, never more than 25% of it
      * (the single-hit cap of the god tier), 0 for a non-positive percent. The damage the skill would have done is unknowable (the
      * activation is cancelled before it is worked out), so this is a share of the caster's health, honestly named.
      */
@@ -52,7 +52,7 @@ public final class CounterRules {
         return (float) Math.min(casterMax * pct / 100.0, casterMax * TrueDamage.SINGLE_HIT_CAP);
     }
 
-    /** The damage a reflected blow returns to its owner: half of the blow, never more than 40% of the owner's maximum. */
+    /** The damage a reflected blow returns to its owner: half of the blow, never more than 25% of the owner's maximum. */
     public static float swapMirror(float blow, float ownerMax) {
         if (!(blow > 0f) || !(ownerMax > 0f)) return 0f;
         return Math.min(blow * 0.5f, (float) (ownerMax * TrueDamage.SINGLE_HIT_CAP));

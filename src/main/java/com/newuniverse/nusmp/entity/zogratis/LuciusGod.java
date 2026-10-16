@@ -1,8 +1,11 @@
 package com.newuniverse.nusmp.entity.zogratis;
 
 import com.newuniverse.nusmp.boss.arc.LuciusChains;
+import com.newuniverse.nusmp.NUSMP;
+import com.newuniverse.nusmp.boss.god.ArenaScaling;
 import com.newuniverse.nusmp.boss.god.CounterRules;
 import com.newuniverse.nusmp.boss.god.HitGate;
+import com.newuniverse.nusmp.boss.god.LuciusBalance;
 import com.newuniverse.nusmp.boss.god.LuciusGodConfig;
 import com.newuniverse.nusmp.boss.god.LuciusLines;
 import com.newuniverse.nusmp.boss.god.LuciusStage;
@@ -17,6 +20,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetSubtitleTextPacket;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.protocol.game.ClientboundSetTitleTextPacket;
 import net.minecraft.network.protocol.game.ClientboundSetTitlesAnimationPacket;
 import net.minecraft.server.level.ServerLevel;
@@ -26,6 +30,9 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
@@ -72,6 +79,13 @@ final class LuciusGod {
     final ReflectWindow reflect = new ReflectWindow();
     private final CounterRules.Cooldowns<UUID> checkmateCd = new CounterRules.Cooldowns<>(), swapCd = new CounterRules.Cooldowns<>();
     private final CounterRules.Cooldowns<Boolean> reversalCd = new CounterRules.Cooldowns<>();
+    /** 1.46.0: half a second of grace after a true hit, per player. */
+    private final CounterRules.Cooldowns<UUID> graceCd = new CounterRules.Cooldowns<>();
+    private static final ResourceLocation SCALE_ID = ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "arena_scale");
+    /** 1.46.0: the tick the stage-change grace ends (aura, EMP, starvation off until then), and the player count his numbers were scaled for. */
+    private long graceUntil;
+    private boolean scaled, fillOnScale;
+    private int scaledFor = 2;
     private final int[] spoken = new int[LuciusLines.Event.values().length];
     private long seed, lastWindup = -1000, lastClampNote, lastDecayRing = -1000, lastFieldRing = -1000;
 
@@ -94,6 +108,10 @@ final class LuciusGod {
         checkmateCd.clear();
         swapCd.clear();
         reversalCd.clear();
+        graceCd.clear();
+        graceUntil = 0;
+        unscale();
+        fillOnScale = true;                                               // a new fight starts full at its scaled maximum; a reload in the middle of one does not heal him
         java.util.Arrays.fill(spoken, 0);
         seed = 0;
         lastWindup = -1000;
@@ -117,15 +135,54 @@ final class LuciusGod {
             return;
         }
         register();
-        if (LuciusGodConfig.timeDecay() && !b.julius() && now - lastDecayRing >= 50) {
+        if (!scaled) {
+            rescale(fillOnScale);
+            fillOnScale = false;
+        }
+        if (LuciusGodConfig.timeDecay() && !b.julius() && !graceOn(now) && now - lastDecayRing >= 50) {
             lastDecayRing = now;
             ZogratisVfx.divineSigil(sl, ZogratisBoss.ground(sl, b.position()), LuciusGodConfig.auraRadius(), 60, 0xD8A64A, false);
         }
-        if (LuciusGodConfig.starvation() && stage.stage() >= 2 && now - lastFieldRing >= 80) {
+        if (LuciusGodConfig.starvation() && stage.stage() >= 2 && !graceOn(now) && now - lastFieldRing >= 80) {
             lastFieldRing = now;
             ZogratisVfx.divineSigil(sl, ZogratisBoss.ground(sl, b.position()), GodSteps.STARVE_RADIUS, 90, GodSteps.INDIGO, false);
         }
     }
+
+    // ================================================================ 1.46.0: balance (players in the arena, difficulty, grace)
+    /** Is the stage-change grace running (the aura, the EMP and the starvation drain are off)? */
+    boolean graceOn(long now) { return LuciusBalance.inStageGrace(now, graceUntil); }
+
+    /** The survival players inside the arena now (at least one, so the arithmetic never divides by an empty room). */
+    int arenaPlayers() {
+        if (!(b.level() instanceof ServerLevel sl)) return 1;
+        int n = 0;
+        for (ServerPlayer p : sl.players()) if (ArcSteps.fair(p) && inArena(p)) n++;
+        return Math.max(1, n);
+    }
+
+    /**
+     * Scales his maximum health to the players in the arena ({@link ArenaScaling}); read at the start of the fight and of every stage,
+     * not every tick. At the start of the fight ('fill') he is also set to the new maximum, as a scripted heal that the heal guard knows.
+     */
+    void rescale(boolean fill) {
+        AttributeInstance mh = b.getAttribute(Attributes.MAX_HEALTH);
+        if (mh == null) return;
+        int n = arenaPlayers();
+        scaled = true;
+        scaledFor = n;
+        mh.addOrReplacePermanentModifier(new AttributeModifier(SCALE_ID, ArenaScaling.healthModifier(n), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+        if (fill) b.dpsBudget().bypass(() -> BossHealGuard.allow(() -> b.setHealth(b.getMaxHealth())));
+    }
+
+    private void unscale() {
+        scaled = false;
+        AttributeInstance mh = b.getAttribute(Attributes.MAX_HEALTH);
+        if (mh != null) mh.removeModifier(SCALE_ID);
+    }
+
+    /** The factor on every number of his that hurts a player: the difficulty master times the table for the players present. */
+    double damageScale() { return LuciusBalance.damageFactor(LuciusGodConfig.difficulty()) * ArenaScaling.damage(scaledFor); }
 
     boolean inArena(Entity e) {
         if (e.level() != b.level()) return false;
@@ -183,11 +240,14 @@ final class LuciusGod {
         boolean real = source != null && (source.is(DamageTypes.GENERIC_KILL) || source.is(DamageTypes.FELL_OUT_OF_WORLD));
         if (stage.onFatal(real) != LuciusStage.Fall.NEXT_STAGE) return false;
         int from = stage.stage();
+        rescale(false);                                                 // 1.46.0: the next stage's health follows the players who are here now
         // alive again at once: a body at 0 health is taken by the game within a second; the heal is the scripted one, never a regeneration
         b.dpsBudget().bypass(() -> BossHealGuard.allow(() -> b.setHealth(1f)));
         if (!b.refillForMode(LuciusStage.refillMode(from), LuciusGodConfig.stageRefillTicks())) return false;     // spent or busy: no second wind, he dies for real
         stage.advance();
         long now = sl.getGameTime();
+        graceUntil = LuciusBalance.stageGraceUntil(now, LuciusGodConfig.stageRefillTicks());          // 1.46.0: aura, EMP and starvation are off for the change and 10 s after it
+        LuciusCapabilities.clearAll(sl);                                   // 1.46.0: and whatever of his is on the players comes off now
         b.interruptCast();
         b.director().onStageChange(sl, now);
         gate.reset();
@@ -214,7 +274,7 @@ final class LuciusGod {
     boolean reflectBlow(DamageSource src, float raw, long now) {
         if (!LuciusGodConfig.spatialSwap() || !(src.getEntity() instanceof ServerPlayer p) || !reflect.reflecting(p.getUUID(), now)) return false;
         float back = CounterRules.swapMirror(raw, p.getMaxHealth());
-        if (back > 0f) p.hurt(b.damageSources().indirectMagic(b, b), back);
+        if (back > 0f) p.hurt(b.damageSources().indirectMagic(b, b), (float) (back * LuciusBalance.damageFactor(LuciusGodConfig.difficulty())));
         p.displayClientMessage(Component.literal("Spatial Disorientation: your own attack comes back at you.").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD), true);
         if (b.level() instanceof ServerLevel sl) {
             ZogratisVfx.spaceShatter(sl, b.position().add(0, 1, 0), 2.4, GodSteps.ICE);
@@ -256,7 +316,8 @@ final class LuciusGod {
     boolean strike(LivingEntity victim, float base, boolean magic, com.newuniverse.nusmp.boss.LuciusProfile.Strike normal) {
         if (trueApplies(victim, magic)) return landTrue(victim, TrueDamage.tierOfBase(base));
         boolean crit = victim instanceof ServerPlayer sp && TimeStasisTrap.take(sp, b.level().getGameTime());
-        return normal.hit(victim, crit ? base * TrueDamage.CRIT_FACTOR : base, magic);
+        float scaledBase = (float) (base * damageScale());                 // 1.46.0: the difficulty and the players
+        return normal.hit(victim, crit ? scaledBase * TrueDamage.CRIT_FACTOR : scaledBase, magic);
     }
 
     /**
@@ -267,8 +328,9 @@ final class LuciusGod {
     boolean landTrue(LivingEntity victim, TrueDamage.Tier tier) {
         if (victim == null || !victim.isAlive() || ZogratisEntities.isFamily(victim)) return false;
         long now = b.level().getGameTime();
+        if (victim instanceof ServerPlayer gp && !graceCd.use(gp.getUUID(), now, LuciusBalance.HIT_GRACE_TICKS)) return false;     // 1.46.0: half a second of grace after a true hit
         boolean crit = victim instanceof ServerPlayer sp && TimeStasisTrap.take(sp, now);
-        float amount = TrueDamage.amount(tier, victim.getMaxHealth(), LuciusGodConfig.trueDamageScale(), crit);
+        float amount = TrueDamage.amount(tier, victim.getMaxHealth(), LuciusGodConfig.trueDamageScale() * damageScale(), crit);
         if (amount <= 0f) return false;
         boolean ok = victim.hurt(b.damageSources().indirectMagic(b, b), amount);
         if (ok && victim instanceof ServerPlayer sp) {
@@ -294,7 +356,7 @@ final class LuciusGod {
         long now = b.level().getGameTime();
         if (!LuciusGodConfig.checkmateCounter() || !mayAnswer(p, now) || p.distanceToSqr(b) > 48 * 48 || !checkmateCd.ready(p.getUUID(), now)) return false;
         if (!b.director().startGodChain(LuciusChains.CHECKMATE_COUNTER, p, now, true)) return false;
-        checkmateCd.use(p.getUUID(), now, CounterRules.CHECKMATE_COOLDOWN);
+        checkmateCd.use(p.getUUID(), now, LuciusBalance.cooldown("checkmate_counter", CounterRules.CHECKMATE_COOLDOWN, LuciusGodConfig.difficulty()));
         speak(LuciusLines.Event.CHECKMATE_COUNTER);
         p.displayClientMessage(Component.literal("Lucius saw the channel. Move.").withStyle(ChatFormatting.RED, ChatFormatting.BOLD), true);
         return true;
@@ -310,7 +372,7 @@ final class LuciusGod {
         if (!LuciusGodConfig.spatialSwap() || !mayAnswer(p, now) || b.director().chainRunning() || !swapCd.ready(p.getUUID(), now)) return false;
         Vec3 toPlayer = LuciusFx.standable(sl, p, b.position()), toBoss = LuciusFx.standable(sl, b, p.position());
         if (toPlayer == null || toBoss == null) return false;
-        swapCd.use(p.getUUID(), now, CounterRules.SWAP_COOLDOWN);
+        swapCd.use(p.getUUID(), now, LuciusBalance.cooldown("spatial_swap", CounterRules.SWAP_COOLDOWN, LuciusGodConfig.difficulty()));
         Vec3 pa = p.position(), ba = b.position();
         VfxSpawn.send(sl, VfxShape.SPATIAL_RIFT, pa.add(0, 1, 0), pa.add(0, 1.5, 0), 0xFF000000 | GodSteps.ICE, 14, 0.9f);
         VfxSpawn.send(sl, VfxShape.SPATIAL_RIFT, ba.add(0, 1, 0), ba.add(0, 1.5, 0), 0xFF000000 | GodSteps.ICE, 14, 0.9f);
@@ -335,13 +397,13 @@ final class LuciusGod {
         if (!(b.level() instanceof ServerLevel sl)) return false;
         long now = sl.getGameTime();
         if (!LuciusGodConfig.ultimateReversal() || !mayAnswer(p, now) || !reversalCd.ready(Boolean.TRUE, now)) return false;
-        reversalCd.use(Boolean.TRUE, now, CounterRules.REVERSAL_COOLDOWN);
+        reversalCd.use(Boolean.TRUE, now, LuciusBalance.cooldown("ultimate_reversal", CounterRules.REVERSAL_COOLDOWN, LuciusGodConfig.difficulty()));
         Vec3 at = b.position();
         ZogratisVfx.divineSigil(sl, at, 3.4, 12, GodSteps.ICE, false);
         ZogratisVfx.spaceShatter(sl, at.add(0, 1, 0), 3.0, GodSteps.ICE);
         VfxSpawn.send(sl, VfxShape.TIME_REWIND, at.add(0, 0.05, 0), at.add(0, 1, 0), 0, 12, 1.6f);
         LuciusFx.sound(sl, at, SoundEvents.BELL_RESONATE, 2.5f, 1.2f);
-        float dmg = CounterRules.mirrorDamage(p.getMaxHealth(), LuciusGodConfig.mirrorPct());
+        float dmg = CounterRules.mirrorDamage(p.getMaxHealth(), LuciusGodConfig.mirrorPct() * damageScale());
         if (dmg > 0f) p.hurt(b.damageSources().indirectMagic(b, b), dmg);
         String name = skill == null || skill.getSkill() == null ? "skill" : skill.getSkill().getName().getString();
         p.displayClientMessage(Component.literal("Ultimate Skill Reversal: " + name + " is turned back on you.").withStyle(ChatFormatting.RED, ChatFormatting.BOLD), true);

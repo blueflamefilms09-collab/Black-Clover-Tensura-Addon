@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Why: Time Stasis Traps are the answer to dodge spam, and the owner capped them hard: at most {@value #MAX_TRAPS} at once, each alive
- * for 12 seconds, armed only after a visible warning, and a player can be caught by traps only once every 12 seconds. The rules live in
+ * Why: Time Stasis Traps are the answer to dodge spam, and the owner capped them hard: at most {@value #MAX_TRAPS} at once (was six), each alive
+ * for 12 seconds, armed only after a visible warning of {@value #ARM_TICKS} ticks (was 20), and a player can be caught by traps only once every 12 seconds. The rules live in
  * this pure ledger (no Minecraft types, unit tested); the glue draws the rings and freezes whoever the ledger says was caught.
  */
 public final class TrapLedger {
-    public static final int MAX_TRAPS = 6, LIFE_TICKS = 240, ARM_TICKS = 20, PLAYER_COOLDOWN = 240;
+    public static final int MAX_TRAPS = 3, LIFE_TICKS = 240, ARM_TICKS = 24, PLAYER_COOLDOWN = 240;
     public static final double RADIUS = 1.8, HEIGHT = 2.0;
 
     /** One trap. 'armedAt' is when it starts to catch; 'dieAt' when it is gone. */

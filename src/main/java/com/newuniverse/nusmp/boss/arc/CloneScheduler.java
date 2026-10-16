@@ -17,6 +17,9 @@ public final class CloneScheduler {
     public enum Spell { TIME, GRAVITY, SPATIAL }
 
     public static final int MIN_CLONES = 3, MAX_CLONES = 5;
+    /** 1.46.0, the god tier: two copies (three below this share of the stage's health), one more for every player beyond two, five at most; they cast every 12 s (was 8). */
+    public static final int GOD_MIN_CLONES = 2, GOD_MAX_BASE = 3, GOD_CAST_INTERVAL = 240;
+    public static final float GOD_THREE_BELOW = 0.15f;
     /** Ticks between two casts of one clone, and the least gap between two clones starting the same spell. */
     public static final int CAST_INTERVAL = 160, SPELL_GAP = 40, FIRST_CAST_DELAY = 60;
 
@@ -27,6 +30,15 @@ public final class CloneScheduler {
         return Math.max(MIN_CLONES, Math.min(MAX_CLONES, MIN_CLONES + extra));
     }
 
+    /**
+     * 1.46.0: how many copies the god tier shows. {@code stageFraction} is the health left in the current stage (every stage starts full):
+     * 2 copies, 3 under {@link #GOD_THREE_BELOW}; then +1 for every player beyond two, never more than {@link #MAX_CLONES}. NaN counts as full.
+     */
+    public static int cloneCountGod(float stageFraction, int players) {
+        int base = !Float.isNaN(stageFraction) && stageFraction < GOD_THREE_BELOW ? GOD_MAX_BASE : GOD_MIN_CLONES;
+        return Math.max(GOD_MIN_CLONES, Math.min(MAX_CLONES, base + Math.max(0, players - 2)));
+    }
+
     /** The spell a clone in this slot casts: Time, Gravity, Spatial, then round again. */
     public static Spell spellOf(int slot) { return Spell.values()[Math.floorMod(slot, Spell.values().length)]; }
 
@@ -35,6 +47,12 @@ public final class CloneScheduler {
 
     private final List<Long> nextAt = new ArrayList<>();
     private final Map<Spell, Long> lastStart = new HashMap<>();
+    private int interval = CAST_INTERVAL;
+
+    /** Ticks between two casts of one clone (the god tier uses {@link #GOD_CAST_INTERVAL}); a non-positive value is ignored. */
+    public void setInterval(int ticks) { if (ticks > 0) interval = ticks; }
+
+    public int interval() { return interval; }
 
     public int slots() { return nextAt.size(); }
 
@@ -47,7 +65,7 @@ public final class CloneScheduler {
         while (nextAt.size() > n) nextAt.remove(nextAt.size() - 1);
         while (nextAt.size() < n) {
             int slot = nextAt.size();
-            nextAt.add(now + FIRST_CAST_DELAY + (long) slot * (CAST_INTERVAL / Math.max(1, n)));
+            nextAt.add(now + FIRST_CAST_DELAY + (long) slot * (interval / Math.max(1, n)));
         }
     }
 
@@ -75,7 +93,7 @@ public final class CloneScheduler {
                 continue;
             }
             lastStart.put(sp, now);
-            nextAt.set(i, now + CAST_INTERVAL);
+            nextAt.set(i, now + interval);
             return List.of(new Cast(i, sp));
         }
         return List.of();
@@ -92,9 +110,12 @@ public final class CloneScheduler {
         private final Map<Integer, long[]> windows = new HashMap<>();   // victim -> {window start tick, spent as float bits}
 
         /** Returns the part of 'amount' that fits in this victim's second (0 when it is spent). */
-        public float allow(int victim, long now, float amount, float victimMaxHealth) {
+        public float allow(int victim, long now, float amount, float victimMaxHealth) { return allow(victim, now, amount, victimMaxHealth, SHARE_PER_SECOND); }
+
+        /** 1.46.0: like {@link #allow(int, long, float, float)} with the share chosen by the caller (the god tier uses 18%). A share outside 0..1 is made safe. */
+        public float allow(int victim, long now, float amount, float victimMaxHealth, double share) {
             if (!(amount > 0f) || !(victimMaxHealth > 0f)) return 0f;
-            float cap = (float) (victimMaxHealth * SHARE_PER_SECOND);
+            float cap = (float) (victimMaxHealth * Math.max(0.0, Math.min(1.0, Double.isNaN(share) ? SHARE_PER_SECOND : share)));
             long[] w = windows.computeIfAbsent(victim, k -> new long[]{now, Float.floatToIntBits(0f)});
             if (now - w[0] >= WINDOW) {
                 w[0] = now;

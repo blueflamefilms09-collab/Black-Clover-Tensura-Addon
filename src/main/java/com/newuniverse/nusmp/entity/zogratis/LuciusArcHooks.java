@@ -137,7 +137,7 @@ public final class LuciusArcHooks {
             if (d == null) return;
             float amount = e.getAmount();
             if (PaladinTurns.isTurned(attacker)) amount = PaladinTurns.cap(amount, p);
-            float allowed = d.pressure.allow(p.getId(), sl.getGameTime(), amount, p.getMaxHealth());
+            float allowed = d.pressure.allow(p.getId(), sl.getGameTime(), amount, p.getMaxHealth(), com.newuniverse.nusmp.boss.god.LuciusBalance.pressureShare(com.newuniverse.nusmp.boss.god.LuciusGodConfig.godTier()));       // 1.46.0: 18% a second in the god tier, 30% in the 1.42.0 fight
             if (allowed <= 0f) {
                 ownCancel = e;                                                        // 1.45.0: not a dodge of the player's, the dodge counter must not count it
                 e.setCanceled(true);

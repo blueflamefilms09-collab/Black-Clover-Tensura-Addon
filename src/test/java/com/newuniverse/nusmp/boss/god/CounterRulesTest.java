@@ -46,26 +46,26 @@ class CounterRulesTest {
     }
 
     @Test
-    void theMirrorIsAShareOfTheCastersMaximumAndNeverMoreThanFortyPercent() {
+    void theMirrorIsAShareOfTheCastersMaximumAndNeverMoreThanTwentyFivePercent() {
         assertEquals(12f, CounterRules.mirrorDamage(200f, 6.0), 1e-4f);
-        assertEquals(80f, CounterRules.mirrorDamage(200f, 90.0), 1e-3f);
+        assertEquals(50f, CounterRules.mirrorDamage(200f, 90.0), 1e-3f);
         assertEquals(0f, CounterRules.mirrorDamage(200f, 0.0));
         assertEquals(0f, CounterRules.mirrorDamage(0f, 6.0));
     }
 
     @Test
-    void aReflectedBlowReturnsHalfCappedAtFortyPercent() {
+    void aReflectedBlowReturnsHalfCappedAtTwentyFivePercent() {
         assertEquals(50f, CounterRules.swapMirror(100f, 1000f), 1e-4f);
-        assertEquals(40f, CounterRules.swapMirror(10000f, 100f), 1e-4f);
+        assertEquals(25f, CounterRules.swapMirror(10000f, 100f), 1e-4f);
         assertEquals(0f, CounterRules.swapMirror(0f, 100f));
         assertEquals(0f, CounterRules.swapMirror(10f, 0f));
     }
 
     @Test
-    void theCooldownsAreEightTenAndTwelveSeconds() {
-        assertEquals(160, CounterRules.CHECKMATE_COOLDOWN);
-        assertEquals(200, CounterRules.REVERSAL_COOLDOWN);
-        assertEquals(240, CounterRules.SWAP_COOLDOWN);
+    void theCooldownsAreFourteenTwentyAndTwentySeconds() {
+        assertEquals(280, CounterRules.CHECKMATE_COOLDOWN);
+        assertEquals(400, CounterRules.REVERSAL_COOLDOWN);
+        assertEquals(400, CounterRules.SWAP_COOLDOWN);
     }
 
     @Test
