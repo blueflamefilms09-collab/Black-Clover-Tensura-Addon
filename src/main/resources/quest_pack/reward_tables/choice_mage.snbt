@@ -1,0 +1,49 @@
+{
+	id: "174EA3856D0F2FC2"
+	order_index: 7
+	loot_size: 1
+	rewards: [
+		{
+			id: "2B1FE4662F9C51EF"
+			item: {
+				id: "minecraft:lapis_lazuli"
+			}
+			count: 48
+		}
+		{
+			id: "6B6317DFD1198DBE"
+			item: {
+				id: "minecraft:amethyst_shard"
+			}
+			count: 32
+		}
+		{
+			id: "5F2B99EE76A4A52E"
+			item: {
+				id: "minecraft:experience_bottle"
+			}
+			count: 32
+		}
+		{
+			id: "58DA344F4045CAFC"
+			item: {
+				id: "minecraft:echo_shard"
+			}
+			count: 2
+		}
+		{
+			id: "694B05C257284A95"
+			item: {
+				id: "minecraft:glowstone_dust"
+			}
+			count: 32
+		}
+		{
+			id: "44F734AD57DC9A4E"
+			item: {
+				id: "minecraft:ender_eye"
+			}
+			count: 8
+		}
+	]
+}

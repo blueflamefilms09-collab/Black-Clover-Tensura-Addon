@@ -1,0 +1,273 @@
+{
+ "objects": {
+  "base": [
+   "custom_id",
+   "icon",
+   "tags"
+  ],
+  "chapter": [
+   "always_invisible",
+   "autofocus_id",
+   "consume_items",
+   "default_hide_dependency_lines",
+   "default_min_width",
+   "default_quest_shape",
+   "default_quest_size",
+   "default_repeatable_quest",
+   "filename",
+   "hide_quest_details_until_startable",
+   "hide_quest_until_deps_complete",
+   "hide_quest_until_deps_visible",
+   "hide_text_until_complete",
+   "preset",
+   "progression_mode",
+   "require_sequential_tasks"
+  ],
+  "chapter_group": [],
+  "file": [
+   "default_autoclaim_rewards",
+   "default_consume_items",
+   "default_quest_disable_jei",
+   "default_quest_shape",
+   "default_reward_team",
+   "detection_delay",
+   "disable_gui",
+   "drop_book_on_death",
+   "drop_loot_crates",
+   "emergency_items",
+   "emergency_items_cooldown",
+   "fallback_locale",
+   "grid_scale",
+   "hide_excluded_quests",
+   "lock_message",
+   "loot_crate_no_drop",
+   "pause_game",
+   "preset",
+   "presets",
+   "progression_mode",
+   "show_lock_icons",
+   "suppress_all_autoclaiming",
+   "verify_on_load"
+  ],
+  "quest": [
+   "can_repeat",
+   "dep_control_pts",
+   "dependencies",
+   "dependency_requirement",
+   "disable_recipe_mod",
+   "guide_page",
+   "hide",
+   "hide_dependency_lines",
+   "hide_dependent_lines",
+   "hide_details_until_startable",
+   "hide_lock_icon",
+   "hide_text_until_complete",
+   "hide_until_deps_complete",
+   "hide_until_deps_visible",
+   "icon_scale",
+   "ignore_reward_blocking",
+   "invisible",
+   "invisible_until_tasks",
+   "max_completable_dependents",
+   "min_required_dependencies",
+   "min_width",
+   "optional",
+   "preset",
+   "progression_mode",
+   "repeat_cooldown",
+   "require_sequential_tasks",
+   "shape",
+   "size",
+   "x",
+   "y"
+  ],
+  "reward": [
+   "auto",
+   "disable_reward_screen_blur",
+   "exclude_from_claim_all",
+   "ignore_reward_blocking",
+   "team_reward"
+  ],
+  "reward_table": [
+   "empty_weight",
+   "hide_tooltip",
+   "loot_crate",
+   "loot_size",
+   "loot_table_id",
+   "rewards",
+   "use_title"
+  ],
+  "task": [
+   "optional_task"
+  ]
+ },
+ "rewards": {
+  "advancement": [
+   "advancement",
+   "criterion"
+  ],
+  "all_table": [
+   "table_data",
+   "table_id"
+  ],
+  "choice": [
+   "table_data",
+   "table_id"
+  ],
+  "command": [
+   "command",
+   "elevate_perms",
+   "feedback_message",
+   "permission_level",
+   "silent"
+  ],
+  "currency": [
+   "amount"
+  ],
+  "custom": [],
+  "gamestage": [
+   "remove",
+   "stage"
+  ],
+  "item": [
+   "count",
+   "item",
+   "only_one",
+   "random_bonus"
+  ],
+  "loot": [
+   "table_data",
+   "table_id"
+  ],
+  "random": [
+   "table_data",
+   "table_id"
+  ],
+  "toast": [
+   "description"
+  ],
+  "xp": [
+   "xp"
+  ],
+  "xp_levels": [
+   "xp_levels"
+  ]
+ },
+ "source": "FTB Quests 1.21.1/dev (2101.1.x)",
+ "tasks": {
+  "advancement": [
+   "advancement",
+   "criterion"
+  ],
+  "biome": [
+   "biome"
+  ],
+  "checkmark": [],
+  "custom": [],
+  "dimension": [
+   "dimension"
+  ],
+  "fluid": [
+   "amount",
+   "fluid"
+  ],
+  "gamestage": [
+   "stage",
+   "team_stage"
+  ],
+  "interaction": [
+   "interaction_type",
+   "to_interact"
+  ],
+  "item": [
+   "consume_items",
+   "count",
+   "item",
+   "match_components",
+   "only_from_crafting",
+   "task_screen_only"
+  ],
+  "kill": [
+   "custom_name",
+   "entity",
+   "entityTypeTag",
+   "nbt_filter",
+   "value"
+  ],
+  "location": [
+   "dimension",
+   "ignore_dimension",
+   "position",
+   "size"
+  ],
+  "observation": [
+   "observation_type",
+   "observe_type",
+   "timer",
+   "to_observe"
+  ],
+  "stat": [
+   "stat",
+   "value"
+  ],
+  "structure": [
+   "structure"
+  ],
+  "xp": [
+   "points",
+   "value"
+  ]
+ },
+ "types": {
+  "_value_types": {
+   "default_quest_size": [
+    [
+     "contains",
+     "DOUBLE"
+    ]
+   ],
+   "dep_control_pts": [
+    [
+     "contains",
+     "COMPOUND"
+    ]
+   ],
+   "dependencies": [
+    [
+     "list",
+     "STRING"
+    ]
+   ],
+   "emergency_items": [
+    [
+     "list",
+     "COMPOUND"
+    ]
+   ],
+   "hide": [
+    [
+     "contains",
+     "BYTE"
+    ]
+   ],
+   "icon_scale": [
+    [
+     "contains",
+     "DOUBLE"
+    ]
+   ],
+   "rewards": [
+    [
+     "list",
+     "COMPOUND"
+    ]
+   ]
+  },
+  "fluid.fluid": [
+   [
+    "contains",
+    "STRING"
+   ]
+  ]
+ }
+}

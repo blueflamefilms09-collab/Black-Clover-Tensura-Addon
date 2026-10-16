@@ -1,0 +1,115 @@
+{
+  "parent": "nusmp:spells/signature",
+  "display": {
+    "icon": {
+      "id": "minecraft:amethyst_shard"
+    },
+    "title": {
+      "translate": "advancement.nusmp.spells.special.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.spells.special.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_butoh_dance": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "butoh.dance"
+      }
+    },
+    "e_song_sung": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "song.sung"
+      }
+    },
+    "e_corpse_raised": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "corpse.raised"
+      }
+    },
+    "e_paladin_converted": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "paladin.converted"
+      }
+    },
+    "e_rouge_saved": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "rouge.saved"
+      }
+    },
+    "e_thread_trap": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "thread.trap"
+      }
+    },
+    "e_shadow_travel": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "shadow.travel"
+      }
+    },
+    "e_time_stop": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "time.stop"
+      }
+    },
+    "e_unite_mode_canis": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "unite.mode",
+        "arg": "canis"
+      }
+    },
+    "e_unite_mode_equus": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "unite.mode",
+        "arg": "equus"
+      }
+    },
+    "e_unite_mode_felis": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "unite.mode",
+        "arg": "felis"
+      }
+    },
+    "e_unite_mode_gallus": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "unite.mode",
+        "arg": "gallus"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_butoh_dance",
+      "e_song_sung",
+      "e_corpse_raised",
+      "e_paladin_converted",
+      "e_rouge_saved",
+      "e_thread_trap",
+      "e_shadow_travel",
+      "e_time_stop",
+      "e_unite_mode_canis",
+      "e_unite_mode_equus",
+      "e_unite_mode_felis",
+      "e_unite_mode_gallus"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  }
+}

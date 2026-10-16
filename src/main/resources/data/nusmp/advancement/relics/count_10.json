@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:relics/first",
+  "display": {
+    "icon": {
+      "id": "nusmp:bag_of_holding"
+    },
+    "title": {
+      "translate": "advancement.nusmp.relics.count_10.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.relics.count_10.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_relic_obtained_10": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "relic.obtained",
+        "count": 10
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_relic_obtained_10"
+    ]
+  ],
+  "rewards": {
+    "experience": 60
+  }
+}

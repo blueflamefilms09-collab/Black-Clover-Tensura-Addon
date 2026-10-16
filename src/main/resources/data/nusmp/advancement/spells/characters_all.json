@@ -1,0 +1,225 @@
+{
+  "parent": "nusmp:spells/characters",
+  "display": {
+    "icon": {
+      "id": "minecraft:totem_of_undying"
+    },
+    "title": {
+      "translate": "advancement.nusmp.spells.characters_all.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.spells.characters_all.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_page_unlocked_dimension_slash_equinox": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "arg": "dimension_slash_equinox"
+      }
+    },
+    "e_page_unlocked_unite_canis": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "arg": "unite_canis"
+      }
+    },
+    "e_page_unlocked_thunder_fiend": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "arg": "thunder_fiend"
+      }
+    },
+    "e_page_unlocked_curse_workers_neighbor": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "arg": "curse_workers_neighbor"
+      }
+    },
+    "e_page_unlocked_raging_black_bull": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "arg": "raging_black_bull"
+      }
+    },
+    "e_page_unlocked_revelation_of_the_cowardly": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "arg": "revelation_of_the_cowardly"
+      }
+    },
+    "e_page_unlocked_leo_rugiens": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "arg": "leo_rugiens"
+      }
+    },
+    "e_page_unlocked_spirit_of_zephyr": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "arg": "spirit_of_zephyr"
+      }
+    },
+    "e_page_unlocked_yggdrasil": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "arg": "yggdrasil"
+      }
+    },
+    "e_page_unlocked_ripper_cut": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "arg": "ripper_cut"
+      }
+    },
+    "e_page_unlocked_painted_menagerie": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "arg": "painted_menagerie"
+      }
+    },
+    "e_page_unlocked_glamour_world": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "arg": "glamour_world"
+      }
+    },
+    "e_page_unlocked_vortex_shield": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "arg": "vortex_shield"
+      }
+    },
+    "e_page_unlocked_mercury_rain": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "arg": "mercury_rain"
+      }
+    },
+    "e_page_unlocked_branching_array": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "arg": "branching_array"
+      }
+    },
+    "e_page_unlocked_thread_trap": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "arg": "thread_trap"
+      }
+    },
+    "e_page_unlocked_paladin_conversion": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "arg": "paladin_conversion"
+      }
+    },
+    "e_page_unlocked_true_soul_corpse": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "arg": "true_soul_corpse"
+      }
+    },
+    "e_page_unlocked_song_crescendo": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "arg": "song_crescendo"
+      }
+    },
+    "e_page_unlocked_butoh_dance": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "arg": "butoh_dance"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_page_unlocked_dimension_slash_equinox"
+    ],
+    [
+      "e_page_unlocked_unite_canis"
+    ],
+    [
+      "e_page_unlocked_thunder_fiend"
+    ],
+    [
+      "e_page_unlocked_curse_workers_neighbor"
+    ],
+    [
+      "e_page_unlocked_raging_black_bull"
+    ],
+    [
+      "e_page_unlocked_revelation_of_the_cowardly"
+    ],
+    [
+      "e_page_unlocked_leo_rugiens"
+    ],
+    [
+      "e_page_unlocked_spirit_of_zephyr"
+    ],
+    [
+      "e_page_unlocked_yggdrasil"
+    ],
+    [
+      "e_page_unlocked_ripper_cut"
+    ],
+    [
+      "e_page_unlocked_painted_menagerie"
+    ],
+    [
+      "e_page_unlocked_glamour_world"
+    ],
+    [
+      "e_page_unlocked_vortex_shield"
+    ],
+    [
+      "e_page_unlocked_mercury_rain"
+    ],
+    [
+      "e_page_unlocked_branching_array"
+    ],
+    [
+      "e_page_unlocked_thread_trap"
+    ],
+    [
+      "e_page_unlocked_paladin_conversion"
+    ],
+    [
+      "e_page_unlocked_true_soul_corpse"
+    ],
+    [
+      "e_page_unlocked_song_crescendo"
+    ],
+    [
+      "e_page_unlocked_butoh_dance"
+    ]
+  ],
+  "rewards": {
+    "experience": 500
+  }
+}

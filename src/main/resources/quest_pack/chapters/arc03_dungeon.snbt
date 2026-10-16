@@ -1,0 +1,249 @@
+{
+	id: "7E8A44EF0BA51197"
+	group: "0BCF8AD019395CF3"
+	order_index: 8
+	filename: "arc03_dungeon"
+	icon: {
+		id: "nusmp:dungeon_maw"
+	}
+	default_hide_dependency_lines: false
+	quests: [
+		{
+			id: "3A24CC4AAD3E4173"
+			x: 0.0d
+			y: 1.5d
+			shape: "rsquare"
+			size: 1.25d
+			icon: {
+				id: "nusmp:dungeon_maw"
+			}
+			dependencies: ["4C58A15CADBE1399", "379E245E342D9647"]
+			tasks: [
+				{
+					id: "673883189762AC1D"
+					type: "checkmark"
+				}
+			]
+			rewards: [
+				{
+					id: "4E2E322D51A32A68"
+					type: "xp"
+					xp: 25
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "7C8373960FA33049"
+			x: 1.5d
+			y: 1.5d
+			icon: {
+				id: "minecraft:lantern"
+			}
+			dependencies: ["3A24CC4AAD3E4173"]
+			tasks: [
+				{
+					id: "19CF8F3F93CECCEC"
+					type: "advancement"
+					advancement: "nusmp:dungeon/entered"
+					criterion: ""
+				}
+				{
+					id: "60DB6947371D5AE3"
+					type: "advancement"
+					advancement: "nusmp:arcs/dungeon_arc"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "3A6C164DCF2CD82C"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "5AD9284D3093743C"
+			x: 3.0d
+			y: 1.5d
+			icon: {
+				id: "nusmp:dungeon_maw"
+			}
+			dependencies: ["7C8373960FA33049"]
+			tasks: [
+				{
+					id: "485B90E48406436E"
+					type: "advancement"
+					advancement: "nusmp:dungeon/maw"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "23125337B4E2CD98"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "2DF65A31BCCDD68A"
+			x: 4.5d
+			y: 1.5d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "nusmp:dungeon_maw"
+			}
+			dependencies: ["5AD9284D3093743C"]
+			tasks: [
+				{
+					id: "047ED4C830661444"
+					type: "dimension"
+					dimension: "nusmp:living_dungeon"
+				}
+			]
+			rewards: [
+				{
+					id: "2285E20EB54AFDE9"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "7F0CCE06FF6AC10B"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "054034E25FC6DC8F"
+			x: 4.5d
+			y: 3.0d
+			shape: "square"
+			icon: {
+				id: "nusmp:purified_monster_meat"
+			}
+			dependencies: ["2DF65A31BCCDD68A"]
+			optional: true
+			tasks: [
+				{
+					id: "79F3776A3EA652B6"
+					type: "advancement"
+					advancement: "nusmp:dungeon/meat"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "0254FCEAD29CAB69"
+					type: "xp"
+					xp: 15
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "11F6197A86647FF1"
+			x: 6.0d
+			y: 1.5d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:heavy_core"
+			}
+			dependencies: ["2DF65A31BCCDD68A"]
+			tasks: [
+				{
+					id: "7DD811563ECB14B6"
+					type: "advancement"
+					advancement: "nusmp:bosses/goliath"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "042FF7C45A4FA1A2"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "3337A76FE892ACF2"
+					type: "loot"
+					table_id: 4358806230403059797L
+				}
+			]
+		}
+		{
+			id: "3531C3DE8445B1C6"
+			x: 7.5d
+			y: 0.0d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:barrier"
+			}
+			dependencies: ["11F6197A86647FF1"]
+			tasks: [
+				{
+					id: "77E06F0A4CDEE940"
+					type: "advancement"
+					advancement: "nusmp:future/dungeon_arc_vetto"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "4D76AA8F35FC1408"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "3D8DDFB2B03F8BCF"
+					type: "loot"
+					table_id: 4358806230403059797L
+				}
+			]
+		}
+		{
+			id: "7FA822BB8C73ED08"
+			x: 7.5d
+			y: 2.7d
+			shape: "hexagon"
+			size: 1.5d
+			icon: {
+				id: "nusmp:dungeon_maw"
+			}
+			dependencies: ["11F6197A86647FF1"]
+			tasks: [
+				{
+					id: "47D1EFEC6E890ED8"
+					type: "advancement"
+					advancement: "nusmp:dungeon/goliath"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "37DF9B3DA6201210"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "0C79D34EF69DC6AC"
+					type: "choice"
+					table_id: 2338908409416502598L
+				}
+			]
+		}
+	]
+	quest_links: [ ]
+	images: [ ]
+}

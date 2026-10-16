@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:spells/special",
+  "display": {
+    "icon": {
+      "id": "minecraft:clock"
+    },
+    "title": {
+      "translate": "advancement.nusmp.spells.art_time_stop.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.spells.art_time_stop.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_time_stop": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "time.stop"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_time_stop"
+    ]
+  ],
+  "rewards": {
+    "experience": 10
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:relics/forged",
+  "display": {
+    "icon": {
+      "id": "minecraft:amethyst_shard"
+    },
+    "title": {
+      "translate": "advancement.nusmp.relics.socketed.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.relics.socketed.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_relic_socketed": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "relic.socketed"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_relic_socketed"
+    ]
+  ],
+  "rewards": {
+    "experience": 40
+  }
+}

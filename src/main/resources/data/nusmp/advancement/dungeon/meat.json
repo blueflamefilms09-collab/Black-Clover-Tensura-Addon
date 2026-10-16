@@ -1,0 +1,36 @@
+{
+  "parent": "nusmp:dungeon/living_dungeon",
+  "display": {
+    "icon": {
+      "id": "nusmp:purified_monster_meat"
+    },
+    "title": {
+      "translate": "advancement.nusmp.dungeon.meat.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.dungeon.meat.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "consumed": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": "nusmp:purified_monster_meat"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "consumed"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  }
+}

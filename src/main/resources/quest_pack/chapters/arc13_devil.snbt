@@ -1,0 +1,350 @@
+{
+	id: "18C8B71558E9DE92"
+	group: "0BCF8AD019395CF3"
+	order_index: 18
+	filename: "arc13_devil"
+	icon: {
+		id: "nusmp:devil_horn"
+	}
+	default_hide_dependency_lines: false
+	quests: [
+		{
+			id: "5A6CFCE0D9770B2B"
+			x: 0.0d
+			y: 1.5d
+			shape: "rsquare"
+			size: 1.25d
+			icon: {
+				id: "nusmp:devil_horn"
+			}
+			dependencies: ["1BA26443D9623F20", "6B4E1318125129C6"]
+			tasks: [
+				{
+					id: "26C5F92CFE8774B7"
+					type: "checkmark"
+				}
+			]
+			rewards: [
+				{
+					id: "050C501ABE45DB02"
+					type: "xp"
+					xp: 25
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "603A695A183F74E7"
+			x: 1.5d
+			y: 1.5d
+			icon: {
+				id: "nusmp:devil_contract"
+			}
+			dependencies: ["5A6CFCE0D9770B2B"]
+			tasks: [
+				{
+					id: "739CD4127A2959A5"
+					type: "advancement"
+					advancement: "nusmp:spirits/devil_contract"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "278C0FF258027982"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "694C2E9F6DAB28A3"
+			x: 3.0d
+			y: 1.5d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "nusmp:devil_horn"
+			}
+			dependencies: ["603A695A183F74E7"]
+			tasks: [
+				{
+					id: "4E31104F70159122"
+					type: "advancement"
+					advancement: "nusmp:spirits/devil_union"
+					criterion: ""
+				}
+				{
+					id: "005B0794200D5871"
+					type: "advancement"
+					advancement: "nusmp:arcs/devil_arc"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "4B0243A65141E36B"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "1FE009ACFBF05305"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "48BC6A97E8D35F62"
+			x: 4.5d
+			y: 1.5d
+			icon: {
+				id: "nusmp:devils_core"
+			}
+			dependencies: ["694C2E9F6DAB28A3"]
+			tasks: [
+				{
+					id: "4C52583B33C03995"
+					type: "advancement"
+					advancement: "nusmp:spirits/devil_core"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "33ED5A9AB4D9BFBA"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "03CAED70D2019BE8"
+			x: 6.0d
+			y: 0.0d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "nusmp:last_word"
+			}
+			dependencies: ["48BC6A97E8D35F62"]
+			tasks: [
+				{
+					id: "53A1268D5CC4EA7F"
+					type: "advancement"
+					advancement: "nusmp:bosses/zagred"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "10E4944EFB28D20A"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "7122629B52546F08"
+					type: "loot"
+					table_id: 4358806230403059797L
+				}
+			]
+		}
+		{
+			id: "32935D72CC1F96FA"
+			x: 7.5d
+			y: 0.0d
+			icon: {
+				id: "nusmp:last_word"
+			}
+			dependencies: ["03CAED70D2019BE8"]
+			optional: true
+			tasks: [
+				{
+					id: "4408D688790DB859"
+					type: "advancement"
+					advancement: "nusmp:bosses/zagred_phase2"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "5227FB5213239CBF"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "6827079BC0B8F1DF"
+			x: 6.0d
+			y: 3.0d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "nusmp:devil_horn"
+			}
+			dependencies: ["48BC6A97E8D35F62"]
+			tasks: [
+				{
+					id: "18C2E1C2B48C9723"
+					type: "advancement"
+					advancement: "nusmp:bosses/devil_avatar"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "2D5E4767AC97C78D"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "0F4CA65AE09BC7D2"
+					type: "loot"
+					table_id: 4358806230403059797L
+				}
+			]
+		}
+		{
+			id: "279448F089680B0B"
+			x: 7.5d
+			y: 4.5d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:barrier"
+			}
+			dependencies: ["6827079BC0B8F1DF"]
+			tasks: [
+				{
+					id: "01826F1825882AC8"
+					type: "advancement"
+					advancement: "nusmp:future/devil_arc_megicula"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "29A6EFC5E35AA796"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "620F979183411DE2"
+					type: "loot"
+					table_id: 4358806230403059797L
+				}
+			]
+		}
+		{
+			id: "5B8A9A1EFAF712A7"
+			x: 9.0d
+			y: 4.5d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:barrier"
+			}
+			dependencies: ["6827079BC0B8F1DF"]
+			tasks: [
+				{
+					id: "6ACFFC152EC123B5"
+					type: "advancement"
+					advancement: "nusmp:future/devil_arc_lucifero"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "215FAEA2885A1FD2"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "3DA9ACCD7BB09FCC"
+					type: "loot"
+					table_id: 4358806230403059797L
+				}
+			]
+		}
+		{
+			id: "79E0BD592400F38E"
+			x: 10.5d
+			y: 4.5d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:barrier"
+			}
+			dependencies: ["6827079BC0B8F1DF"]
+			tasks: [
+				{
+					id: "71A64B872D54DDAB"
+					type: "advancement"
+					advancement: "nusmp:future/devil_arc_astaroth"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "1B241FAAAABA5411"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "1D8DE72896FCB6DE"
+					type: "loot"
+					table_id: 4358806230403059797L
+				}
+			]
+		}
+		{
+			id: "66D12DC0E20C983B"
+			x: 9.0d
+			y: 1.5d
+			shape: "hexagon"
+			size: 1.5d
+			icon: {
+				id: "nusmp:devil_core_zagred"
+			}
+			dependencies: ["03CAED70D2019BE8", "6827079BC0B8F1DF"]
+			tasks: [
+				{
+					id: "53AD67C030B8BF06"
+					type: "advancement"
+					advancement: "nusmp:bosses/devil_avatar"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "7C0DA2B0D80921F0"
+					type: "xp"
+					xp: 500
+					auto: "enabled"
+				}
+				{
+					id: "4942D288CE831590"
+					type: "loot"
+					table_id: 4728946283094692376L
+				}
+				{
+					id: "72B93B54FB66ED97"
+					type: "choice"
+					table_id: 9171611916907347595L
+				}
+			]
+		}
+	]
+	quest_links: [ ]
+	images: [ ]
+}

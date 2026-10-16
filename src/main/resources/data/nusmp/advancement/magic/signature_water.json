@@ -1,0 +1,99 @@
+{
+  "parent": "nusmp:magic/soul_water",
+  "display": {
+    "icon": {
+      "id": "minecraft:water_bucket"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.signature_water.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.signature_water.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_signature_water": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "water"
+      }
+    },
+    "e_spell_cast_signature_ice": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "ice"
+      }
+    },
+    "e_spell_cast_signature_mercury": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "mercury"
+      }
+    },
+    "e_spell_cast_signature_mist": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "mist"
+      }
+    },
+    "e_spell_cast_signature_gel": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "gel"
+      }
+    },
+    "e_spell_cast_signature_bubble": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "bubble"
+      }
+    },
+    "e_spell_cast_signature_ice_wedge": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "ice_wedge"
+      }
+    },
+    "e_spell_cast_signature_mucus": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "mucus"
+      }
+    },
+    "e_spell_cast_signature_snow": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "snow"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_signature_water",
+      "e_spell_cast_signature_ice",
+      "e_spell_cast_signature_mercury",
+      "e_spell_cast_signature_mist",
+      "e_spell_cast_signature_gel",
+      "e_spell_cast_signature_bubble",
+      "e_spell_cast_signature_ice_wedge",
+      "e_spell_cast_signature_mucus",
+      "e_spell_cast_signature_snow"
+    ]
+  ],
+  "rewards": {
+    "experience": 40
+  }
+}

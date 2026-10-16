@@ -1,0 +1,42 @@
+{
+  "parent": "nusmp:spirits/charm",
+  "display": {
+    "icon": {
+      "id": "nusmp:spirit_core_fire"
+    },
+    "title": {
+      "translate": "advancement.nusmp.spirits.meet_elemental.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.spirits.meet_elemental.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "talked": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "nusmp:elemental_spirit_lord"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "talked"
+    ]
+  ],
+  "rewards": {
+    "experience": 30
+  }
+}

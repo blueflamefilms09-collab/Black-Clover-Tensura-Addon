@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:magic/soul_empty",
+  "display": {
+    "icon": {
+      "id": "minecraft:barrier"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.cast_anti_magic.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.cast_anti_magic.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_anti_magic": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "anti_magic"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_anti_magic"
+    ]
+  ],
+  "rewards": {
+    "experience": 60
+  }
+}

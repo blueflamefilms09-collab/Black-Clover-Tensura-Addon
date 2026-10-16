@@ -1,0 +1,22 @@
+{
+	chapter_groups: [
+		{
+			id: "5D0FDBAA39C60882"
+			icon: {
+				id: "nusmp:grimoire"
+			}
+		}
+		{
+			id: "0BCF8AD019395CF3"
+			icon: {
+				id: "minecraft:white_banner"
+			}
+		}
+		{
+			id: "657C87ED5A27C2D7"
+			icon: {
+				id: "minecraft:wither_skeleton_skull"
+			}
+		}
+	]
+}

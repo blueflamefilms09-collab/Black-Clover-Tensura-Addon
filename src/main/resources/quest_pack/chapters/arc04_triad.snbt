@@ -1,0 +1,236 @@
+{
+	id: "3880ED049F16BF88"
+	group: "0BCF8AD019395CF3"
+	order_index: 9
+	filename: "arc04_triad"
+	icon: {
+		id: "minecraft:nether_star"
+	}
+	default_hide_dependency_lines: false
+	quests: [
+		{
+			id: "62BC305F4B28121F"
+			x: 0.0d
+			y: 1.5d
+			shape: "rsquare"
+			size: 1.25d
+			icon: {
+				id: "minecraft:nether_star"
+			}
+			dependencies: ["3A24CC4AAD3E4173"]
+			tasks: [
+				{
+					id: "64590849F7105690"
+					type: "checkmark"
+				}
+			]
+			rewards: [
+				{
+					id: "13931C34663E76FB"
+					type: "xp"
+					xp: 25
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "5ECC8E85D6715E4C"
+			x: 1.5d
+			y: 1.5d
+			icon: {
+				id: "minecraft:bell"
+			}
+			dependencies: ["62BC305F4B28121F"]
+			tasks: [
+				{
+					id: "405464116373318A"
+					type: "advancement"
+					advancement: "nusmp:spells/signature"
+					criterion: ""
+				}
+				{
+					id: "08031937815330B2"
+					type: "advancement"
+					advancement: "nusmp:arcs/dark_triad"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "28B2E1C1C48C88DB"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "278818B4655A79C6"
+			x: 3.0d
+			y: 1.5d
+			icon: {
+				id: "minecraft:beacon"
+			}
+			dependencies: ["5ECC8E85D6715E4C"]
+			tasks: [
+				{
+					id: "72186EE939C92215"
+					type: "advancement"
+					advancement: "nusmp:spells/signature_10"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "743ED91B325B8974"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "10D761F0E728ED4A"
+			x: 4.5d
+			y: 1.5d
+			icon: {
+				id: "nusmp:bag_of_holding"
+			}
+			dependencies: ["278818B4655A79C6"]
+			tasks: [
+				{
+					id: "69430509A99ED550"
+					type: "advancement"
+					advancement: "nusmp:relics/first"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "0E9AAB3A508C0009"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "20295F93FA69C162"
+			x: 6.0d
+			y: 1.5d
+			icon: {
+				id: "nusmp:ring_of_power"
+			}
+			dependencies: ["10D761F0E728ED4A"]
+			tasks: [
+				{
+					id: "3EB60C7FF01259E8"
+					type: "advancement"
+					advancement: "nusmp:relics/equipped"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "50DCAE62477E4679"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "75D818B73512EBFF"
+			x: 4.5d
+			y: 3.0d
+			shape: "square"
+			icon: {
+				id: "minecraft:white_banner"
+			}
+			dependencies: ["278818B4655A79C6"]
+			optional: true
+			tasks: [
+				{
+					id: "7135C829FD96C4A7"
+					type: "advancement"
+					advancement: "nusmp:squads/created"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "44DAC97B3B219276"
+					type: "xp"
+					xp: 15
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "4DBFFAC5C8A6FA2E"
+			x: 7.5d
+			y: 0.0d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:barrier"
+			}
+			dependencies: ["20295F93FA69C162"]
+			tasks: [
+				{
+					id: "67E397F581298CAF"
+					type: "advancement"
+					advancement: "nusmp:future/dark_triad_boss"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "44596DC01C10B235"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "2D663EB89DF2408C"
+					type: "loot"
+					table_id: 4358806230403059797L
+				}
+			]
+		}
+		{
+			id: "6B668D1768BA4490"
+			x: 7.5d
+			y: 2.7d
+			shape: "hexagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:shield"
+			}
+			dependencies: ["20295F93FA69C162"]
+			tasks: [
+				{
+					id: "7ACF2D964FA23AC1"
+					type: "advancement"
+					advancement: "nusmp:spells/signature_50"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "14A0432CAFA64E7A"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "605FDD2851B2775F"
+					type: "choice"
+					table_id: 5206226156263585362L
+				}
+			]
+		}
+	]
+	quest_links: [ ]
+	images: [ ]
+}

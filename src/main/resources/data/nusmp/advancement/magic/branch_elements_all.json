@@ -1,0 +1,295 @@
+{
+  "parent": "nusmp:magic/branch_elements_signature",
+  "display": {
+    "icon": {
+      "id": "minecraft:blaze_powder"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.branch_elements_all.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.branch_elements_all.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_flame": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "flame"
+      }
+    },
+    "e_spell_cast_explosion": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "explosion"
+      }
+    },
+    "e_spell_cast_magma": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "magma"
+      }
+    },
+    "e_spell_cast_ash": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "ash"
+      }
+    },
+    "e_spell_cast_water": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "water"
+      }
+    },
+    "e_spell_cast_ice": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "ice"
+      }
+    },
+    "e_spell_cast_snow": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "snow"
+      }
+    },
+    "e_spell_cast_mist": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "mist"
+      }
+    },
+    "e_spell_cast_bubble": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "bubble"
+      }
+    },
+    "e_spell_cast_ice_wedge": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "ice_wedge"
+      }
+    },
+    "e_spell_cast_wind": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "wind"
+      }
+    },
+    "e_spell_cast_storm": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "storm"
+      }
+    },
+    "e_spell_cast_air": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "air"
+      }
+    },
+    "e_spell_cast_vortex": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "vortex"
+      }
+    },
+    "e_spell_cast_wing": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "wing"
+      }
+    },
+    "e_spell_cast_sound": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "sound"
+      }
+    },
+    "e_spell_cast_star": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "star"
+      }
+    },
+    "e_spell_cast_earth": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "earth"
+      }
+    },
+    "e_spell_cast_sand": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "sand"
+      }
+    },
+    "e_spell_cast_sandstone": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "sandstone"
+      }
+    },
+    "e_spell_cast_rock": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "rock"
+      }
+    },
+    "e_spell_cast_stone": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "stone"
+      }
+    },
+    "e_spell_cast_mud": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "mud"
+      }
+    },
+    "e_spell_cast_spike": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "spike"
+      }
+    },
+    "e_spell_cast_mercury": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "mercury"
+      }
+    },
+    "e_spell_cast_gel": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "gel"
+      }
+    },
+    "e_spell_cast_mucus": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "mucus"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_flame"
+    ],
+    [
+      "e_spell_cast_explosion"
+    ],
+    [
+      "e_spell_cast_magma"
+    ],
+    [
+      "e_spell_cast_ash"
+    ],
+    [
+      "e_spell_cast_water"
+    ],
+    [
+      "e_spell_cast_ice"
+    ],
+    [
+      "e_spell_cast_snow"
+    ],
+    [
+      "e_spell_cast_mist"
+    ],
+    [
+      "e_spell_cast_bubble"
+    ],
+    [
+      "e_spell_cast_ice_wedge"
+    ],
+    [
+      "e_spell_cast_wind"
+    ],
+    [
+      "e_spell_cast_storm"
+    ],
+    [
+      "e_spell_cast_air"
+    ],
+    [
+      "e_spell_cast_vortex"
+    ],
+    [
+      "e_spell_cast_wing"
+    ],
+    [
+      "e_spell_cast_sound"
+    ],
+    [
+      "e_spell_cast_star"
+    ],
+    [
+      "e_spell_cast_earth"
+    ],
+    [
+      "e_spell_cast_sand"
+    ],
+    [
+      "e_spell_cast_sandstone"
+    ],
+    [
+      "e_spell_cast_rock"
+    ],
+    [
+      "e_spell_cast_stone"
+    ],
+    [
+      "e_spell_cast_mud"
+    ],
+    [
+      "e_spell_cast_spike"
+    ],
+    [
+      "e_spell_cast_mercury"
+    ],
+    [
+      "e_spell_cast_gel"
+    ],
+    [
+      "e_spell_cast_mucus"
+    ]
+  ],
+  "rewards": {
+    "experience": 316
+  }
+}

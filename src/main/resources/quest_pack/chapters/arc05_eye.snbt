@@ -1,0 +1,249 @@
+{
+	id: "1F016D8299311E7A"
+	group: "0BCF8AD019395CF3"
+	order_index: 10
+	filename: "arc05_eye"
+	icon: {
+		id: "nusmp:ring_of_power"
+	}
+	default_hide_dependency_lines: false
+	quests: [
+		{
+			id: "55BFA770A1B1265C"
+			x: 0.0d
+			y: 1.5d
+			shape: "rsquare"
+			size: 1.25d
+			icon: {
+				id: "nusmp:ring_of_power"
+			}
+			dependencies: ["62BC305F4B28121F"]
+			tasks: [
+				{
+					id: "16C88E8AA46FE777"
+					type: "checkmark"
+				}
+			]
+			rewards: [
+				{
+					id: "3EA61D5EF1E43695"
+					type: "xp"
+					xp: 25
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "6A2E4C72DEF47C92"
+			x: 1.5d
+			y: 1.5d
+			icon: {
+				id: "nusmp:bag_of_holding"
+			}
+			dependencies: ["55BFA770A1B1265C"]
+			tasks: [
+				{
+					id: "31B24F0A4C8FDFAD"
+					type: "advancement"
+					advancement: "nusmp:relics/first"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "788BD3A9E91624BB"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "5BF74C5A389D2DC1"
+			x: 3.0d
+			y: 1.5d
+			icon: {
+				id: "nusmp:ring_of_power"
+			}
+			dependencies: ["6A2E4C72DEF47C92"]
+			tasks: [
+				{
+					id: "57CFAE976DDEA056"
+					type: "advancement"
+					advancement: "nusmp:relics/equipped"
+					criterion: ""
+				}
+				{
+					id: "2AFAA1E57561BBF3"
+					type: "advancement"
+					advancement: "nusmp:arcs/eye_midnight"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "6AE147252BE68977"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "670D9A20D2396885"
+			x: 4.5d
+			y: 1.5d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "nusmp:relic_forge"
+			}
+			dependencies: ["5BF74C5A389D2DC1"]
+			tasks: [
+				{
+					id: "14707485DB313CFC"
+					type: "advancement"
+					advancement: "nusmp:relics/forge_block"
+					criterion: ""
+				}
+				{
+					id: "5A508D2855A5CA3F"
+					type: "advancement"
+					advancement: "nusmp:relics/forged"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "307CB2E1F41AD856"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "7EBAD95CAFCFDA3C"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "22421A309DEF6D38"
+			x: 6.0d
+			y: 1.5d
+			icon: {
+				id: "nusmp:ring_of_power"
+			}
+			dependencies: ["670D9A20D2396885"]
+			tasks: [
+				{
+					id: "525B8FD678B48F25"
+					type: "advancement"
+					advancement: "nusmp:relics/grade_rare"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "67BF4DFBCF447084"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "07924558FC4280E7"
+			x: 6.0d
+			y: 3.0d
+			shape: "square"
+			icon: {
+				id: "minecraft:amethyst_shard"
+			}
+			dependencies: ["670D9A20D2396885"]
+			optional: true
+			tasks: [
+				{
+					id: "774D4CAFD351FBDD"
+					type: "advancement"
+					advancement: "nusmp:relics/socketed"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "4BA7B91520E98EAB"
+					type: "xp"
+					xp: 15
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "66DBFBB09073A9BF"
+			x: 7.5d
+			y: 0.0d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:barrier"
+			}
+			dependencies: ["22421A309DEF6D38"]
+			tasks: [
+				{
+					id: "34B95CE3D9B1C5EC"
+					type: "advancement"
+					advancement: "nusmp:future/eye_midnight_boss"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "54F1882D1B0E43FC"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "06ED38DF13FB050A"
+					type: "loot"
+					table_id: 4358806230403059797L
+				}
+			]
+		}
+		{
+			id: "7759C4656DC4E74F"
+			x: 7.5d
+			y: 2.7d
+			shape: "hexagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:nether_star"
+			}
+			dependencies: ["22421A309DEF6D38"]
+			tasks: [
+				{
+					id: "04CE264EB85773C1"
+					type: "advancement"
+					advancement: "nusmp:relics/grade_unique"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "30C3BEE2FBBB945A"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "21B3EFA1F15C406D"
+					type: "choice"
+					table_id: 9171611916907347595L
+				}
+			]
+		}
+	]
+	quest_links: [ ]
+	images: [ ]
+}

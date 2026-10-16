@@ -1,0 +1,36 @@
+{
+  "parent": "nusmp:challenges/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:barrier"
+    },
+    "title": {
+      "translate": "advancement.nusmp.challenges.nullified.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.challenges.nullified.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "afflicted": {
+      "trigger": "minecraft:effects_changed",
+      "conditions": {
+        "effects": {
+          "nusmp:relic_nullified": {}
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "afflicted"
+    ]
+  ],
+  "rewards": {
+    "experience": 40
+  }
+}

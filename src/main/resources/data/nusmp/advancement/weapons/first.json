@@ -1,0 +1,126 @@
+{
+  "parent": "nusmp:root",
+  "display": {
+    "icon": {
+      "id": "nusmp:magic_tool_sword"
+    },
+    "title": {
+      "translate": "advancement.nusmp.weapons.first.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.weapons.first.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "have_magic_tool_sword": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:magic_tool_sword"
+          }
+        ]
+      }
+    },
+    "have_magic_tool_spear": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:magic_tool_spear"
+          }
+        ]
+      }
+    },
+    "have_magic_tool_bow": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:magic_tool_bow"
+          }
+        ]
+      }
+    },
+    "have_demon_slayer_sword": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:demon_slayer_sword"
+          }
+        ]
+      }
+    },
+    "have_demon_slasher_katana": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:demon_slasher_katana"
+          }
+        ]
+      }
+    },
+    "have_elsdocia": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:elsdocia"
+          }
+        ]
+      }
+    },
+    "have_rimeheart_runeblade": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:rimeheart_runeblade"
+          }
+        ]
+      }
+    },
+    "have_otherworld_trident": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:otherworld_trident"
+          }
+        ]
+      }
+    },
+    "have_last_word": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:last_word"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_magic_tool_sword",
+      "have_magic_tool_spear",
+      "have_magic_tool_bow",
+      "have_demon_slayer_sword",
+      "have_demon_slasher_katana",
+      "have_elsdocia",
+      "have_rimeheart_runeblade",
+      "have_otherworld_trident",
+      "have_last_word"
+    ]
+  ],
+  "rewards": {
+    "experience": 15
+  }
+}

@@ -1,0 +1,238 @@
+{
+	id: "2A68FF8B36116056"
+	group: "0BCF8AD019395CF3"
+	order_index: 6
+	filename: "arc01_hage"
+	icon: {
+		id: "nusmp:grimoire"
+	}
+	default_hide_dependency_lines: false
+	quests: [
+		{
+			id: "1ED5D47CE7D47F1F"
+			x: 0.0d
+			y: 1.5d
+			shape: "rsquare"
+			size: 1.25d
+			icon: {
+				id: "nusmp:grimoire"
+			}
+			tasks: [
+				{
+					id: "756856DFD87A9C55"
+					type: "checkmark"
+				}
+			]
+			rewards: [
+				{
+					id: "6AAC4386E716AE53"
+					type: "xp"
+					xp: 25
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "2B1072CA6702E96F"
+			x: 1.5d
+			y: 1.5d
+			icon: {
+				id: "minecraft:book"
+			}
+			dependencies: ["1ED5D47CE7D47F1F"]
+			tasks: [
+				{
+					id: "74E9A3D90E45BB9A"
+					type: "advancement"
+					advancement: "nusmp:start/meet_wizard"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "02F6CD885DA8E0D3"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "6484E94955E79302"
+			x: 3.0d
+			y: 1.5d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "nusmp:grimoire_altar"
+			}
+			dependencies: ["2B1072CA6702E96F"]
+			tasks: [
+				{
+					id: "67551C6689720BD6"
+					type: "advancement"
+					advancement: "nusmp:start/ceremony"
+					criterion: ""
+				}
+				{
+					id: "12F30016C85FF37F"
+					type: "advancement"
+					advancement: "nusmp:arcs/hage_village"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "1FC8BBAE0472E66E"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "5C2D7D7D477AA796"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "6ED19EF9A4775198"
+			x: 4.5d
+			y: 1.5d
+			icon: {
+				id: "minecraft:blaze_powder"
+			}
+			dependencies: ["6484E94955E79302"]
+			tasks: [
+				{
+					id: "68E1662052B88A11"
+					type: "advancement"
+					advancement: "nusmp:start/first_spell"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "275056F1FA2DC3B9"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "5CD263E4872BA9BA"
+			x: 6.0d
+			y: 1.5d
+			icon: {
+				id: "minecraft:experience_bottle"
+			}
+			dependencies: ["6ED19EF9A4775198"]
+			tasks: [
+				{
+					id: "4A6D1DAAFC8CB961"
+					type: "advancement"
+					advancement: "nusmp:start/casts_50"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "6FF9A4368187B867"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "4C6EDE38192EA2BD"
+			x: 3.0d
+			y: 0.0d
+			shape: "square"
+			icon: {
+				id: "minecraft:white_banner"
+			}
+			dependencies: ["6484E94955E79302"]
+			optional: true
+			tasks: [
+				{
+					id: "27528F87A410648B"
+					type: "checkmark"
+				}
+			]
+			rewards: [
+				{
+					id: "74A3E2B7E3C44125"
+					type: "xp"
+					xp: 15
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "3DA83C1F61AA3F80"
+			x: 4.5d
+			y: 3.0d
+			shape: "square"
+			icon: {
+				id: "nusmp:magic_stone"
+			}
+			dependencies: ["6ED19EF9A4775198"]
+			optional: true
+			tasks: [
+				{
+					id: "085528AAAA118FC6"
+					type: "item"
+					item: {
+						id: "nusmp:magic_stone"
+					}
+					count: 16L
+					consume_items: false
+				}
+			]
+			rewards: [
+				{
+					id: "5732C28EF30D2E58"
+					type: "xp"
+					xp: 15
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "65836F3A0D9FEDE2"
+			x: 7.5d
+			y: 1.5d
+			shape: "hexagon"
+			size: 1.5d
+			icon: {
+				id: "nusmp:grimoire"
+			}
+			dependencies: ["5CD263E4872BA9BA"]
+			tasks: [
+				{
+					id: "4C23EF800ECA08F5"
+					type: "advancement"
+					advancement: "nusmp:start/pages_5"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "45E2097CE8ED4161"
+					type: "xp"
+					xp: 100
+					auto: "enabled"
+				}
+				{
+					id: "6B893BA3551A9947"
+					type: "choice"
+					table_id: 1679459504511463362L
+				}
+			]
+		}
+	]
+	quest_links: [ ]
+	images: [ ]
+}

@@ -1,0 +1,38 @@
+{
+  "parent": "nusmp:dungeon/maw",
+  "display": {
+    "icon": {
+      "id": "nusmp:dungeon_maw"
+    },
+    "title": {
+      "translate": "advancement.nusmp.dungeon.maw_item.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.dungeon.maw_item.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "have_dungeon_maw": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:dungeon_maw"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_dungeon_maw"
+    ]
+  ],
+  "rewards": {
+    "experience": 10
+  }
+}

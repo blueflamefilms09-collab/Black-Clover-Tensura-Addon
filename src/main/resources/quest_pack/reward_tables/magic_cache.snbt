@@ -1,0 +1,70 @@
+{
+	id: "29D3CC6B2AA4B0FE"
+	order_index: 1
+	loot_size: 1
+	rewards: [
+		{
+			id: "5DAE23A73DB4DBAC"
+			item: {
+				id: "minecraft:amethyst_shard"
+			}
+			count: 8
+			weight: 20.0d
+		}
+		{
+			id: "7DE184F45C00FDEA"
+			item: {
+				id: "minecraft:lapis_lazuli"
+			}
+			count: 24
+			weight: 20.0d
+		}
+		{
+			id: "6D3F35A08B7D785A"
+			item: {
+				id: "minecraft:glowstone_dust"
+			}
+			count: 16
+			weight: 15.0d
+		}
+		{
+			id: "76D1C63BB97454B3"
+			item: {
+				id: "minecraft:blaze_powder"
+			}
+			count: 8
+			weight: 15.0d
+		}
+		{
+			id: "1226C6DA3725D08D"
+			item: {
+				id: "minecraft:experience_bottle"
+			}
+			count: 12
+			weight: 15.0d
+		}
+		{
+			id: "455A12178F7B5D48"
+			item: {
+				id: "nusmp:magic_stone"
+			}
+			count: 8
+			weight: 12.0d
+		}
+		{
+			id: "6B432A2360868833"
+			item: {
+				id: "minecraft:ender_eye"
+			}
+			count: 2
+			weight: 8.0d
+		}
+		{
+			id: "7F9CED7E4D652D69"
+			item: {
+				id: "minecraft:echo_shard"
+			}
+			weight: 3.0d
+		}
+	]
+}

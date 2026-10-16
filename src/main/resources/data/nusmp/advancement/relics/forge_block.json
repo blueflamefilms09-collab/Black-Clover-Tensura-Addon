@@ -1,0 +1,38 @@
+{
+  "parent": "nusmp:relics/first",
+  "display": {
+    "icon": {
+      "id": "nusmp:relic_forge"
+    },
+    "title": {
+      "translate": "advancement.nusmp.relics.forge_block.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.relics.forge_block.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "have_relic_forge": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:relic_forge"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_relic_forge"
+    ]
+  ],
+  "rewards": {
+    "experience": 15
+  }
+}

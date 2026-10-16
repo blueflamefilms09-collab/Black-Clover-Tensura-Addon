@@ -1,0 +1,93 @@
+{
+  "parent": "nusmp:relics/grade_genesis",
+  "display": {
+    "icon": {
+      "id": "nusmp:the_power_stone"
+    },
+    "title": {
+      "translate": "advancement.nusmp.relics.stone_any.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.relics.stone_any.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "have_the_mind_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:the_mind_stone"
+          }
+        ]
+      }
+    },
+    "have_the_power_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:the_power_stone"
+          }
+        ]
+      }
+    },
+    "have_the_reality_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:the_reality_stone"
+          }
+        ]
+      }
+    },
+    "have_the_soul_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:the_soul_stone"
+          }
+        ]
+      }
+    },
+    "have_the_space_stone_or_the_tesseract": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:the_space_stone_or_the_tesseract"
+          }
+        ]
+      }
+    },
+    "have_the_time_stone_or_the_eye_of_agamotto": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:the_time_stone_or_the_eye_of_agamotto"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_the_mind_stone",
+      "have_the_power_stone",
+      "have_the_reality_stone",
+      "have_the_soul_stone",
+      "have_the_space_stone_or_the_tesseract",
+      "have_the_time_stone_or_the_eye_of_agamotto"
+    ]
+  ],
+  "rewards": {
+    "experience": 200
+  }
+}

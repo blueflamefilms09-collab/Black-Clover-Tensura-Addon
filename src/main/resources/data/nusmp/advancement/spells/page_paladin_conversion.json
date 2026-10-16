@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:spells/characters",
+  "display": {
+    "icon": {
+      "id": "minecraft:writable_book"
+    },
+    "title": {
+      "translate": "advancement.nusmp.spells.page_paladin_conversion.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.spells.page_paladin_conversion.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_page_unlocked_paladin_conversion": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "arg": "paladin_conversion"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_page_unlocked_paladin_conversion"
+    ]
+  ],
+  "rewards": {
+    "experience": 15
+  }
+}

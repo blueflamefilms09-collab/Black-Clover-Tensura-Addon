@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:magic/soul_wind",
+  "display": {
+    "icon": {
+      "id": "minecraft:feather"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.cast_star.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.cast_star.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_star": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "star"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_star"
+    ]
+  ],
+  "rewards": {
+    "experience": 8
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:spells/signature",
+  "display": {
+    "icon": {
+      "id": "minecraft:beacon"
+    },
+    "title": {
+      "translate": "advancement.nusmp.spells.signature_10.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.spells.signature_10.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_signature_10": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "count": 10
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_signature_10"
+    ]
+  ],
+  "rewards": {
+    "experience": 40
+  }
+}

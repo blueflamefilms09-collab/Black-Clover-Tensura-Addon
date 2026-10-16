@@ -1,0 +1,2096 @@
+{
+	id: "5A9C33F38DE7305F"
+	group: "5D0FDBAA39C60882"
+	order_index: 1
+	filename: "magic_mastery"
+	icon: {
+		id: "minecraft:enchanted_book"
+	}
+	default_hide_dependency_lines: false
+	quests: [
+		{
+			id: "51DEC445711B302B"
+			x: 0.0d
+			y: 6.0d
+			shape: "rsquare"
+			size: 1.25d
+			icon: {
+				id: "minecraft:enchanted_book"
+			}
+			tasks: [
+				{
+					id: "4720B09FEF691D65"
+					type: "checkmark"
+				}
+			]
+			rewards: [
+				{
+					id: "21522C68EF511624"
+					type: "xp"
+					xp: 25
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "302B202B2D2B2261"
+			x: 3.0d
+			y: 0.0d
+			icon: {
+				id: "minecraft:blaze_powder"
+			}
+			dependencies: ["51DEC445711B302B"]
+			tasks: [
+				{
+					id: "68435CD5B4706FD1"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_flame"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "4091E622D20E6000"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "14473178693D209E"
+			x: 5.25d
+			y: 0.0d
+			icon: {
+				id: "minecraft:blaze_powder"
+			}
+			dependencies: ["302B202B2D2B2261"]
+			tasks: [
+				{
+					id: "5B20A7466B565944"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_flame"
+					criterion: ""
+				}
+				{
+					id: "5BD53A0B6CD1D67C"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_explosion"
+					criterion: ""
+				}
+				{
+					id: "48DAE00B22CB98DC"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_magma"
+					criterion: ""
+				}
+				{
+					id: "5F627C881CD093F4"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_ash"
+					criterion: ""
+				}
+				{
+					id: "6DB75E9F5C0AD31B"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_water"
+					criterion: ""
+				}
+				{
+					id: "3076B0129EF6BA82"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_ice"
+					criterion: ""
+				}
+				{
+					id: "5081CD8AF16FEDC0"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_snow"
+					criterion: ""
+				}
+				{
+					id: "342C878A7EE3DE7A"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_mist"
+					criterion: ""
+				}
+				{
+					id: "3F99F10FC249919A"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_bubble"
+					criterion: ""
+				}
+				{
+					id: "6F553ABE28AEC9E4"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_ice_wedge"
+					criterion: ""
+				}
+				{
+					id: "7791EC26770ABF3B"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_wind"
+					criterion: ""
+				}
+				{
+					id: "5CEA7DC4DC6FB725"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_storm"
+					criterion: ""
+				}
+				{
+					id: "4A6E3F16E28E7A6B"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_air"
+					criterion: ""
+				}
+				{
+					id: "505A62B8E2DD1522"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_vortex"
+					criterion: ""
+				}
+				{
+					id: "60B66AE0870A1F5C"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_wing"
+					criterion: ""
+				}
+				{
+					id: "369D3F400D2C95A0"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_sound"
+					criterion: ""
+				}
+				{
+					id: "3D1BE65FA8D106D6"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_star"
+					criterion: ""
+				}
+				{
+					id: "6748BCF39EEAED13"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_earth"
+					criterion: ""
+				}
+				{
+					id: "7B027E3D05B23A35"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_sand"
+					criterion: ""
+				}
+				{
+					id: "675DFEC0487CBDDC"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_sandstone"
+					criterion: ""
+				}
+				{
+					id: "0F33167A111BEB9D"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_rock"
+					criterion: ""
+				}
+				{
+					id: "5848C36F346FF1EB"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_stone"
+					criterion: ""
+				}
+				{
+					id: "45D1C86211911FC1"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_mud"
+					criterion: ""
+				}
+				{
+					id: "5EBF541CA7B53EE9"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_spike"
+					criterion: ""
+				}
+				{
+					id: "644D4BB111B4EBA8"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_mercury"
+					criterion: ""
+				}
+				{
+					id: "473442E511103A3B"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_gel"
+					criterion: ""
+				}
+				{
+					id: "4CDFEABDEDAA32E3"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_mucus"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "2F5726C9ACB71F0F"
+					type: "xp"
+					xp: 195
+					auto: "enabled"
+				}
+				{
+					id: "191B3DC442D3EF52"
+					type: "loot"
+					table_id: 3013977336289997054L
+				}
+			]
+		}
+		{
+			id: "0D9FAA44EB97D5AA"
+			x: 7.5d
+			y: 0.0d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "minecraft:blaze_powder"
+			}
+			dependencies: ["14473178693D209E"]
+			tasks: [
+				{
+					id: "6C943BABE014A109"
+					type: "advancement"
+					advancement: "nusmp:magic/branch_elements_signature"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "1A7F8651BC7F1C57"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "1B37B1F028C768AD"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "55236ED9287EFE1E"
+			x: 9.75d
+			y: 0.0d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:blaze_powder"
+			}
+			dependencies: ["0D9FAA44EB97D5AA"]
+			tasks: [
+				{
+					id: "3741E3DA8DA4B141"
+					type: "advancement"
+					advancement: "nusmp:magic/branch_elements_all"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "65EEE3FDB64E61EA"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "51F3E7E85E951FFC"
+					type: "loot"
+					table_id: 1722623282405390358L
+				}
+			]
+		}
+		{
+			id: "2E1252FBC37C5B17"
+			x: 3.0d
+			y: 1.5d
+			icon: {
+				id: "minecraft:glowstone_dust"
+			}
+			dependencies: ["51DEC445711B302B"]
+			tasks: [
+				{
+					id: "3A37AC7B89A3B9D9"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_light"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "58396A14B0CD919E"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "1861704332890F74"
+			x: 5.25d
+			y: 1.5d
+			icon: {
+				id: "minecraft:glowstone_dust"
+			}
+			dependencies: ["2E1252FBC37C5B17"]
+			tasks: [
+				{
+					id: "33ECA8A1C6ED1697"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_light"
+					criterion: ""
+				}
+				{
+					id: "044F625BE2C2771E"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_lightning"
+					criterion: ""
+				}
+				{
+					id: "3348D413A4A02710"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_dark"
+					criterion: ""
+				}
+				{
+					id: "0036AE8098CB1D3E"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_poison"
+					criterion: ""
+				}
+				{
+					id: "3B460396DAFA9BCC"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_smoke"
+					criterion: ""
+				}
+				{
+					id: "11D07857F138117A"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_curse"
+					criterion: ""
+				}
+				{
+					id: "66212C1407EF24FD"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_curse_warding"
+					criterion: ""
+				}
+				{
+					id: "1E7394AF39A6FA19"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_eyeball"
+					criterion: ""
+				}
+				{
+					id: "2CE6F5B6B7E2946B"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_black_oil"
+					criterion: ""
+				}
+				{
+					id: "4DF181918FF71CB4"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_demon_fire"
+					criterion: ""
+				}
+				{
+					id: "6F4980F52335B42B"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_demon_ice"
+					criterion: ""
+				}
+				{
+					id: "08176CC122992590"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_demon_light"
+					criterion: ""
+				}
+				{
+					id: "1A9E50272119A848"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_demon_water"
+					criterion: ""
+				}
+				{
+					id: "6F5B9B1D2B655369"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_demon_beast"
+					criterion: ""
+				}
+				{
+					id: "32205E0F7C876738"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_anti_magic"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "3DBB635EAE1B896E"
+					type: "xp"
+					xp: 135
+					auto: "enabled"
+				}
+				{
+					id: "3A8A1C342BCB8C95"
+					type: "loot"
+					table_id: 3013977336289997054L
+				}
+			]
+		}
+		{
+			id: "5A4EF464A1BA6A60"
+			x: 7.5d
+			y: 1.5d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "minecraft:glowstone_dust"
+			}
+			dependencies: ["1861704332890F74"]
+			tasks: [
+				{
+					id: "31AA6B72EFBDB1AF"
+					type: "advancement"
+					advancement: "nusmp:magic/branch_light_dark_signature"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "1BE45B880C16943B"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "4DAE81521E0045BE"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "16EB9E3B1461127B"
+			x: 9.75d
+			y: 1.5d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:glowstone_dust"
+			}
+			dependencies: ["5A4EF464A1BA6A60"]
+			tasks: [
+				{
+					id: "4CF80CF5A0B1C095"
+					type: "advancement"
+					advancement: "nusmp:magic/branch_light_dark_all"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "45A1130FBD7F1472"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "5435B0F6C4BABD26"
+					type: "loot"
+					table_id: 1722623282405390358L
+				}
+			]
+		}
+		{
+			id: "7061FBDC6B83D7AF"
+			x: 3.0d
+			y: 3.0d
+			icon: {
+				id: "minecraft:bone"
+			}
+			dependencies: ["51DEC445711B302B"]
+			tasks: [
+				{
+					id: "281B5B6344C25B5D"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_reinforcement"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "65296A994599B997"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "5AE5A46F058E1140"
+			x: 5.25d
+			y: 3.0d
+			icon: {
+				id: "minecraft:bone"
+			}
+			dependencies: ["7061FBDC6B83D7AF"]
+			tasks: [
+				{
+					id: "61A4A5D3631019D6"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_reinforcement"
+					criterion: ""
+				}
+				{
+					id: "19CE0ACCF735B937"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_body"
+					criterion: ""
+				}
+				{
+					id: "710DBCFBE40A33F9"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_blood"
+					criterion: ""
+				}
+				{
+					id: "38FA5E656673E5CB"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_bone"
+					criterion: ""
+				}
+				{
+					id: "41195A81CA7D1C98"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_beast"
+					criterion: ""
+				}
+				{
+					id: "78F7805E55CC7BFC"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_scale"
+					criterion: ""
+				}
+				{
+					id: "3DC0BF3EE6D032CD"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_skin"
+					criterion: ""
+				}
+				{
+					id: "646518DC3A52F7DA"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_nail"
+					criterion: ""
+				}
+				{
+					id: "7CF8296930D30C74"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_hair"
+					criterion: ""
+				}
+				{
+					id: "7FD3916AF15B45F4"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_tongue"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "6A6661E666AB11B5"
+					type: "xp"
+					xp: 110
+					auto: "enabled"
+				}
+				{
+					id: "65A2A0E5F57C814B"
+					type: "loot"
+					table_id: 3013977336289997054L
+				}
+			]
+		}
+		{
+			id: "59FAD28D06C4F72E"
+			x: 7.5d
+			y: 3.0d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "minecraft:bone"
+			}
+			dependencies: ["5AE5A46F058E1140"]
+			tasks: [
+				{
+					id: "4055F7E96CEF839F"
+					type: "advancement"
+					advancement: "nusmp:magic/branch_body_signature"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "453D2F853C4CD4A7"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "18D5ADB7C3B5542D"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "2A59C4E1B2B42795"
+			x: 9.75d
+			y: 3.0d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:bone"
+			}
+			dependencies: ["59FAD28D06C4F72E"]
+			tasks: [
+				{
+					id: "2FBFE543C9261E0D"
+					type: "advancement"
+					advancement: "nusmp:magic/branch_body_all"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "11FA34DA7B5FDBB2"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "1A9FD1AE7D6B4648"
+					type: "loot"
+					table_id: 1722623282405390358L
+				}
+			]
+		}
+		{
+			id: "639C3B8BA9C544E8"
+			x: 3.0d
+			y: 4.5d
+			icon: {
+				id: "minecraft:string"
+			}
+			dependencies: ["51DEC445711B302B"]
+			tasks: [
+				{
+					id: "4D7BD22E53B6C584"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_thread"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "7C217A8749EDDC22"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "3C703E17646293E9"
+			x: 5.25d
+			y: 4.5d
+			icon: {
+				id: "minecraft:string"
+			}
+			dependencies: ["639C3B8BA9C544E8"]
+			tasks: [
+				{
+					id: "3E8D3727F6C40922"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_thread"
+					criterion: ""
+				}
+				{
+					id: "476896EA0CFF43C0"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_sealing"
+					criterion: ""
+				}
+				{
+					id: "361404D12089992F"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_chain"
+					criterion: ""
+				}
+				{
+					id: "5C9FFC65B0BAACA2"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_key"
+					criterion: ""
+				}
+				{
+					id: "3F76D3E10ED27D96"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_barrier"
+					criterion: ""
+				}
+				{
+					id: "084F1038625AB912"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_switching"
+					criterion: ""
+				}
+				{
+					id: "78DB70EAEE8D1FA8"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_permeation"
+					criterion: ""
+				}
+				{
+					id: "6A4B2D96418960BB"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_modification"
+					criterion: ""
+				}
+				{
+					id: "205A74064EED74FD"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_recombination"
+					criterion: ""
+				}
+				{
+					id: "06AAC2873D9BB866"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_legion"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "407DDC04A93F3968"
+					type: "xp"
+					xp: 110
+					auto: "enabled"
+				}
+				{
+					id: "3A20EE554D1C51CA"
+					type: "loot"
+					table_id: 3013977336289997054L
+				}
+			]
+		}
+		{
+			id: "18980608663312D1"
+			x: 7.5d
+			y: 4.5d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "minecraft:string"
+			}
+			dependencies: ["3C703E17646293E9"]
+			tasks: [
+				{
+					id: "424711C352F1D404"
+					type: "advancement"
+					advancement: "nusmp:magic/branch_bindings_signature"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "13C1335526C21E8A"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "6535E5A8FC3A39CB"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "0CE258D497B87F0D"
+			x: 9.75d
+			y: 4.5d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:string"
+			}
+			dependencies: ["18980608663312D1"]
+			tasks: [
+				{
+					id: "42A674F3119BB451"
+					type: "advancement"
+					advancement: "nusmp:magic/branch_bindings_all"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "72BF2FF7FA5B4D72"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "6984AC6896EF09EA"
+					type: "loot"
+					table_id: 1722623282405390358L
+				}
+			]
+		}
+		{
+			id: "21F22476C3D935E9"
+			x: 3.0d
+			y: 6.0d
+			icon: {
+				id: "minecraft:clock"
+			}
+			dependencies: ["51DEC445711B302B"]
+			tasks: [
+				{
+					id: "7D4BA1598DB148A2"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_spatial"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "68623DBB25050E16"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "2224424CE16758EC"
+			x: 5.25d
+			y: 6.0d
+			icon: {
+				id: "minecraft:clock"
+			}
+			dependencies: ["21F22476C3D935E9"]
+			tasks: [
+				{
+					id: "6FDF132E7636BA6F"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_spatial"
+					criterion: ""
+				}
+				{
+					id: "63CD1A36728F0A6B"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_time"
+					criterion: ""
+				}
+				{
+					id: "37ACD49DED950CCD"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_gravity"
+					criterion: ""
+				}
+				{
+					id: "6744B245589537FC"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_compass"
+					criterion: ""
+				}
+				{
+					id: "212BFAABE6A8C38D"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_game"
+					criterion: ""
+				}
+				{
+					id: "45FCAF05C3CF5151"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_dice"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "1926A522C5A0CD86"
+					type: "xp"
+					xp: 90
+					auto: "enabled"
+				}
+				{
+					id: "3D9AE9D65FF6A4C7"
+					type: "loot"
+					table_id: 3013977336289997054L
+				}
+			]
+		}
+		{
+			id: "5852988D049E7C01"
+			x: 7.5d
+			y: 6.0d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "minecraft:clock"
+			}
+			dependencies: ["2224424CE16758EC"]
+			tasks: [
+				{
+					id: "6134257441AC09A5"
+					type: "advancement"
+					advancement: "nusmp:magic/branch_space_time_signature"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "0F141097A06D665F"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "5631A3C99A5B4727"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "429ADED22FAC5083"
+			x: 9.75d
+			y: 6.0d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:clock"
+			}
+			dependencies: ["5852988D049E7C01"]
+			tasks: [
+				{
+					id: "2804A647CFC551DB"
+					type: "advancement"
+					advancement: "nusmp:magic/branch_space_time_all"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "6424053B0522B37B"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "769D30CC87BFB1E1"
+					type: "loot"
+					table_id: 1722623282405390358L
+				}
+			]
+		}
+		{
+			id: "25A6E616276BBF0C"
+			x: 3.0d
+			y: 7.5d
+			icon: {
+				id: "minecraft:painting"
+			}
+			dependencies: ["51DEC445711B302B"]
+			tasks: [
+				{
+					id: "6A86F7C7EF1C075B"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_mirror"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "41A4F78485470F13"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "3A0E8E4CB44A3CDE"
+			x: 5.25d
+			y: 7.5d
+			icon: {
+				id: "minecraft:painting"
+			}
+			dependencies: ["25A6E616276BBF0C"]
+			tasks: [
+				{
+					id: "23DD202518878B45"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_mirror"
+					criterion: ""
+				}
+				{
+					id: "4E0E7F76B1115ADA"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_painting"
+					criterion: ""
+				}
+				{
+					id: "2E2B2F60A8927880"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_dream"
+					criterion: ""
+				}
+				{
+					id: "24AEEB146C129D45"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_illusion"
+					criterion: ""
+				}
+				{
+					id: "05D43E7B1BE5C024"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_creation"
+					criterion: ""
+				}
+				{
+					id: "7C313F5DF4BA5B4C"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_copy"
+					criterion: ""
+				}
+				{
+					id: "5FA9EA708F529B1A"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_memory"
+					criterion: ""
+				}
+				{
+					id: "2F2FDB87A9FC816D"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_eye"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "044949A84DCB1BAB"
+					type: "xp"
+					xp: 100
+					auto: "enabled"
+				}
+				{
+					id: "47C5B46FBFE49239"
+					type: "loot"
+					table_id: 3013977336289997054L
+				}
+			]
+		}
+		{
+			id: "302EE84C49634819"
+			x: 7.5d
+			y: 7.5d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "minecraft:painting"
+			}
+			dependencies: ["3A0E8E4CB44A3CDE"]
+			tasks: [
+				{
+					id: "3A233C5346F599A2"
+					type: "advancement"
+					advancement: "nusmp:magic/branch_mind_signature"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "51E3C7E82470B92F"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "0EC36354B6595BE7"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "2030A02020007AD5"
+			x: 9.75d
+			y: 7.5d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:painting"
+			}
+			dependencies: ["302EE84C49634819"]
+			tasks: [
+				{
+					id: "21B6474F60E2E54C"
+					type: "advancement"
+					advancement: "nusmp:magic/branch_mind_all"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "303A19F80574467F"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "0197C60E3D47D432"
+					type: "loot"
+					table_id: 1722623282405390358L
+				}
+			]
+		}
+		{
+			id: "32AA0A22DB66B1CD"
+			x: 3.0d
+			y: 9.0d
+			icon: {
+				id: "minecraft:note_block"
+			}
+			dependencies: ["51DEC445711B302B"]
+			tasks: [
+				{
+					id: "4029A0FFF33717F0"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_song"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "3483DAED6699356F"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "69988337C2074CD0"
+			x: 5.25d
+			y: 9.0d
+			icon: {
+				id: "minecraft:note_block"
+			}
+			dependencies: ["32AA0A22DB66B1CD"]
+			tasks: [
+				{
+					id: "6ECA8785B9B03255"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_song"
+					criterion: ""
+				}
+				{
+					id: "17275BEED6623745"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_butoh"
+					criterion: ""
+				}
+				{
+					id: "1BB6F998FFB36CD0"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_soul"
+					criterion: ""
+				}
+				{
+					id: "2853B8DAAB990E70"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_soul_corpse"
+					criterion: ""
+				}
+				{
+					id: "6A2ABEC3B0779D6E"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_shadow"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "146A8CEB23FA56D4"
+					type: "xp"
+					xp: 85
+					auto: "enabled"
+				}
+				{
+					id: "53FB389B56514182"
+					type: "loot"
+					table_id: 3013977336289997054L
+				}
+			]
+		}
+		{
+			id: "48CCDFFDDDA302F5"
+			x: 7.5d
+			y: 9.0d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "minecraft:note_block"
+			}
+			dependencies: ["69988337C2074CD0"]
+			tasks: [
+				{
+					id: "093E8C0C8F7F2EE8"
+					type: "advancement"
+					advancement: "nusmp:magic/branch_performance_signature"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "3E6C8CB452746EF7"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "0C339CB35A14E56F"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "5C655402665E6DC0"
+			x: 9.75d
+			y: 9.0d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:note_block"
+			}
+			dependencies: ["48CCDFFDDDA302F5"]
+			tasks: [
+				{
+					id: "2F3A08DB17AB4D3C"
+					type: "advancement"
+					advancement: "nusmp:magic/branch_performance_all"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "0C302533F24B631E"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "4CB13EAE29846D9B"
+					type: "loot"
+					table_id: 1722623282405390358L
+				}
+			]
+		}
+		{
+			id: "1A863147C651F461"
+			x: 3.0d
+			y: 10.5d
+			icon: {
+				id: "minecraft:iron_sword"
+			}
+			dependencies: ["51DEC445711B302B"]
+			tasks: [
+				{
+					id: "55AEFD2918096C7A"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_sword"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "4D42897EE71427D9"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "41F29CE05E8C9B59"
+			x: 5.25d
+			y: 10.5d
+			icon: {
+				id: "minecraft:iron_sword"
+			}
+			dependencies: ["1A863147C651F461"]
+			tasks: [
+				{
+					id: "47512EE9C9F3E012"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_sword"
+					criterion: ""
+				}
+				{
+					id: "23774E6F61FAAE95"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_slash"
+					criterion: ""
+				}
+				{
+					id: "7448F376D9F7467B"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_steel"
+					criterion: ""
+				}
+				{
+					id: "55DB3777884DFD66"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_iron"
+					criterion: ""
+				}
+				{
+					id: "551F0193066D2977"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_bronze"
+					criterion: ""
+				}
+				{
+					id: "0F1DF7D6A2372D06"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_copper"
+					criterion: ""
+				}
+				{
+					id: "58B8CEC2D3C407C8"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_corundum"
+					criterion: ""
+				}
+				{
+					id: "5F67553695045B02"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_crystal"
+					criterion: ""
+				}
+				{
+					id: "203F655582139600"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_glass"
+					criterion: ""
+				}
+				{
+					id: "2EC3456DA764246D"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_mineral"
+					criterion: ""
+				}
+				{
+					id: "02E939C64E8D6804"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_shakudo"
+					criterion: ""
+				}
+				{
+					id: "6453FBD6CB466614"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_red_ochre"
+					criterion: ""
+				}
+				{
+					id: "3699F52A9B58F7C7"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_transmutation"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "6093204F65A29632"
+					type: "xp"
+					xp: 125
+					auto: "enabled"
+				}
+				{
+					id: "5315C0332FA9FD0D"
+					type: "loot"
+					table_id: 3013977336289997054L
+				}
+			]
+		}
+		{
+			id: "4AA8E575D6332D15"
+			x: 7.5d
+			y: 10.5d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "minecraft:iron_sword"
+			}
+			dependencies: ["41F29CE05E8C9B59"]
+			tasks: [
+				{
+					id: "671C4CB098EF533A"
+					type: "advancement"
+					advancement: "nusmp:magic/branch_forge_signature"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "529966ED9F3C4181"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "675FE1024470B605"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "4F5152B200169E4F"
+			x: 9.75d
+			y: 10.5d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:iron_sword"
+			}
+			dependencies: ["4AA8E575D6332D15"]
+			tasks: [
+				{
+					id: "0F31723D562AC9FF"
+					type: "advancement"
+					advancement: "nusmp:magic/branch_forge_all"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "1ADA9E61864E266C"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "62A63A3B2A1D92BD"
+					type: "loot"
+					table_id: 1722623282405390358L
+				}
+			]
+		}
+		{
+			id: "2A711AA31EE5370A"
+			x: 3.0d
+			y: 12.0d
+			icon: {
+				id: "minecraft:cherry_sapling"
+			}
+			dependencies: ["51DEC445711B302B"]
+			tasks: [
+				{
+					id: "4B62C37AAA486808"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_plant"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "1E948DC6A276AAD3"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "51F164ADA72E54E2"
+			x: 5.25d
+			y: 12.0d
+			icon: {
+				id: "minecraft:cherry_sapling"
+			}
+			dependencies: ["2A711AA31EE5370A"]
+			tasks: [
+				{
+					id: "77B95CE35DD025EF"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_plant"
+					criterion: ""
+				}
+				{
+					id: "65092611F9FA8F2F"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_cotton"
+					criterion: ""
+				}
+				{
+					id: "72C677093EEB222B"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_world_tree"
+					criterion: ""
+				}
+				{
+					id: "2278F08E98E48FAF"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_kotodama"
+					criterion: ""
+				}
+				{
+					id: "78B111BDF808C3CA"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_briar"
+					criterion: ""
+				}
+				{
+					id: "5B116868A9E84568"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_cherry_blossom"
+					criterion: ""
+				}
+				{
+					id: "584ED484B6FBC861"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_fungus"
+					criterion: ""
+				}
+				{
+					id: "1A10DC0918EBB388"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_food"
+					criterion: ""
+				}
+				{
+					id: "789A1D986BB65C07"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_poison_plant"
+					criterion: ""
+				}
+				{
+					id: "3CD4F3E9C9F948A3"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_tree"
+					criterion: ""
+				}
+				{
+					id: "6337C3B837FC9768"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_vine"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "7E929CD3DDF2E2E3"
+					type: "xp"
+					xp: 115
+					auto: "enabled"
+				}
+				{
+					id: "363DA3452938F3D9"
+					type: "loot"
+					table_id: 3013977336289997054L
+				}
+			]
+		}
+		{
+			id: "46C4D04342AFEC61"
+			x: 7.5d
+			y: 12.0d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "minecraft:cherry_sapling"
+			}
+			dependencies: ["51F164ADA72E54E2"]
+			tasks: [
+				{
+					id: "6D1A2CA4AAEC5D7C"
+					type: "advancement"
+					advancement: "nusmp:magic/branch_nature_signature"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "64DCC36B29354F48"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "3BD43BD55E7FBB9C"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "3DD4CA1F94B311C7"
+			x: 9.75d
+			y: 12.0d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:cherry_sapling"
+			}
+			dependencies: ["46C4D04342AFEC61"]
+			tasks: [
+				{
+					id: "45803FCF69CEB1D1"
+					type: "advancement"
+					advancement: "nusmp:magic/branch_nature_all"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "3E4BD3B75C54C95F"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "409AC824126E5B91"
+					type: "loot"
+					table_id: 1722623282405390358L
+				}
+			]
+		}
+		{
+			id: "0FB6B6D4DEE58C6D"
+			x: 12.75d
+			y: 0.0d
+			icon: {
+				id: "minecraft:enchanted_book"
+			}
+			dependencies: ["51DEC445711B302B"]
+			tasks: [
+				{
+					id: "3582A0B2B4C85348"
+					type: "advancement"
+					advancement: "nusmp:magic/distinct_5"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "5EFC8155CDB0ADAD"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "13475CDD10C066C1"
+			x: 12.75d
+			y: 1.5d
+			icon: {
+				id: "minecraft:enchanted_book"
+			}
+			dependencies: ["0FB6B6D4DEE58C6D"]
+			tasks: [
+				{
+					id: "30D2562F74A18F74"
+					type: "advancement"
+					advancement: "nusmp:magic/distinct_10"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "06627F99E8A3941E"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "35823B376DAEE62F"
+			x: 12.75d
+			y: 3.0d
+			icon: {
+				id: "minecraft:enchanted_book"
+			}
+			dependencies: ["13475CDD10C066C1"]
+			tasks: [
+				{
+					id: "62980FE17A4348AC"
+					type: "advancement"
+					advancement: "nusmp:magic/distinct_25"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "4EDE1F8BBE4F5582"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "2B39EB42B18E50E9"
+			x: 12.75d
+			y: 4.5d
+			icon: {
+				id: "minecraft:enchanted_book"
+			}
+			dependencies: ["35823B376DAEE62F"]
+			tasks: [
+				{
+					id: "01AC98EEC8DA3DFA"
+					type: "advancement"
+					advancement: "nusmp:magic/distinct_50"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "60F46AD0034EB1DE"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "7E3BE6C88073F0B9"
+			x: 15.0d
+			y: 6.0d
+			shape: "hexagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:nether_star"
+			}
+			dependencies: ["2B39EB42B18E50E9", "55236ED9287EFE1E"]
+			tasks: [
+				{
+					id: "191F938B79C61B0E"
+					type: "advancement"
+					advancement: "nusmp:magic/distinct_105"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "019B9EDD148E53F4"
+					type: "xp"
+					xp: 1000
+					auto: "enabled"
+				}
+				{
+					id: "183E509909B3162B"
+					type: "loot"
+					table_id: 4728946283094692376L
+				}
+			]
+		}
+		{
+			id: "02A18319D8526753"
+			x: 0.0d
+			y: 10.5d
+			shape: "square"
+			icon: {
+				id: "minecraft:ender_eye"
+			}
+			dependencies: ["51DEC445711B302B"]
+			optional: true
+			tasks: [
+				{
+					id: "0CA8B1EC66A9B2F4"
+					type: "advancement"
+					advancement: "nusmp:magic/soul_flame"
+					criterion: ""
+				}
+				{
+					id: "7E3EC9C00EE51D56"
+					type: "advancement"
+					advancement: "nusmp:magic/soul_water"
+					criterion: ""
+				}
+				{
+					id: "255CBC6B774DBCF6"
+					type: "advancement"
+					advancement: "nusmp:magic/soul_wind"
+					criterion: ""
+				}
+				{
+					id: "66833933A89A8453"
+					type: "advancement"
+					advancement: "nusmp:magic/soul_earth"
+					criterion: ""
+				}
+				{
+					id: "13B294CABFF6A7EF"
+					type: "advancement"
+					advancement: "nusmp:magic/soul_light"
+					criterion: ""
+				}
+				{
+					id: "2BE66DA7EE6460A1"
+					type: "advancement"
+					advancement: "nusmp:magic/soul_darkness"
+					criterion: ""
+				}
+				{
+					id: "1F05181C0D32116C"
+					type: "advancement"
+					advancement: "nusmp:magic/soul_space"
+					criterion: ""
+				}
+				{
+					id: "594FF8DD157C4CD3"
+					type: "advancement"
+					advancement: "nusmp:magic/soul_time"
+					criterion: ""
+				}
+				{
+					id: "4B97C635BCE18B37"
+					type: "advancement"
+					advancement: "nusmp:magic/soul_battle"
+					criterion: ""
+				}
+				{
+					id: "1138F74018D2D7D3"
+					type: "advancement"
+					advancement: "nusmp:magic/soul_fantasy"
+					criterion: ""
+				}
+				{
+					id: "22E1304A614E87EC"
+					type: "advancement"
+					advancement: "nusmp:magic/soul_empty"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "37575214A1AFF08A"
+					type: "xp"
+					xp: 120
+					auto: "enabled"
+				}
+				{
+					id: "6704BC28ACBCD577"
+					type: "loot"
+					table_id: 3013977336289997054L
+				}
+			]
+		}
+		{
+			id: "1F321E9DCBCF3324"
+			x: 3.0d
+			y: 14.25d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "minecraft:smithing_table"
+			}
+			dependencies: ["51DEC445711B302B"]
+			tasks: [
+				{
+					id: "5A037ADD871C2DFB"
+					type: "advancement"
+					advancement: "nusmp:spells/merged"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "5084B81934BAA58D"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "3E5B105F0B287E03"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "26C65E46E6DB15C3"
+			x: 5.25d
+			y: 14.25d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:smithing_table"
+			}
+			dependencies: ["1F321E9DCBCF3324"]
+			tasks: [
+				{
+					id: "42938952CAF89789"
+					type: "advancement"
+					advancement: "nusmp:spells/merged_5"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "0ABA6FA928EBAAD6"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "01CA318226FE89DA"
+					type: "loot"
+					table_id: 1722623282405390358L
+				}
+			]
+		}
+		{
+			id: "4EE821CE62DFF042"
+			x: 7.5d
+			y: 14.25d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "minecraft:player_head"
+			}
+			dependencies: ["1F321E9DCBCF3324"]
+			tasks: [
+				{
+					id: "2105C9B1EE0C0141"
+					type: "advancement"
+					advancement: "nusmp:spells/characters"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "4EC062C9CF76377A"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "38D62BB725EEC51B"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "393B00DCBF4A3A21"
+			x: 9.75d
+			y: 14.25d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:totem_of_undying"
+			}
+			dependencies: ["4EE821CE62DFF042"]
+			optional: true
+			tasks: [
+				{
+					id: "62DAD63F169B9EC2"
+					type: "advancement"
+					advancement: "nusmp:spells/characters_all"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "29A490EB558A987D"
+					type: "xp"
+					xp: 500
+					auto: "enabled"
+				}
+				{
+					id: "22E7CC31874EA1F3"
+					type: "loot"
+					table_id: 4728946283094692376L
+				}
+			]
+		}
+		{
+			id: "1FEC04F611BA9AD7"
+			x: 3.0d
+			y: 16.5d
+			icon: {
+				id: "minecraft:amethyst_shard"
+			}
+			dependencies: ["51DEC445711B302B"]
+			tasks: [
+				{
+					id: "60153A4F153C9C90"
+					type: "advancement"
+					advancement: "nusmp:spells/special"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "035B05DAD096DD25"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "69F17CE19B67B831"
+			x: 5.25d
+			y: 16.5d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:ender_eye"
+			}
+			dependencies: ["1FEC04F611BA9AD7"]
+			optional: true
+			tasks: [
+				{
+					id: "43EE081C00EEA388"
+					type: "advancement"
+					advancement: "nusmp:spells/unite_all"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "0D2432CE93DEABF3"
+					type: "xp"
+					xp: 200
+					auto: "enabled"
+				}
+				{
+					id: "69FA3A0E8D900DE6"
+					type: "loot"
+					table_id: 1722623282405390358L
+				}
+			]
+		}
+	]
+	quest_links: [ ]
+	images: [ ]
+}

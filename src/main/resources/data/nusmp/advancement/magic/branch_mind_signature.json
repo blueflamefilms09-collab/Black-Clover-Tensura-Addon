@@ -1,0 +1,91 @@
+{
+  "parent": "nusmp:magic/awakening",
+  "display": {
+    "icon": {
+      "id": "minecraft:painting"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.branch_mind_signature.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.branch_mind_signature.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_signature_mirror": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "mirror"
+      }
+    },
+    "e_spell_cast_signature_painting": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "painting"
+      }
+    },
+    "e_spell_cast_signature_dream": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "dream"
+      }
+    },
+    "e_spell_cast_signature_illusion": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "illusion"
+      }
+    },
+    "e_spell_cast_signature_creation": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "creation"
+      }
+    },
+    "e_spell_cast_signature_copy": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "copy"
+      }
+    },
+    "e_spell_cast_signature_memory": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "memory"
+      }
+    },
+    "e_spell_cast_signature_eye": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "eye"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_signature_mirror",
+      "e_spell_cast_signature_painting",
+      "e_spell_cast_signature_dream",
+      "e_spell_cast_signature_illusion",
+      "e_spell_cast_signature_creation",
+      "e_spell_cast_signature_copy",
+      "e_spell_cast_signature_memory",
+      "e_spell_cast_signature_eye"
+    ]
+  ],
+  "rewards": {
+    "experience": 40
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "parent": "nusmp:squads/charter",
+  "display": {
+    "icon": {
+      "id": "nusmp:charter_grimoire_lucius"
+    },
+    "title": {
+      "translate": "advancement.nusmp.squads.charter_all.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.squads.charter_all.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "have_charter_grimoire_dante": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:charter_grimoire_dante"
+          }
+        ]
+      }
+    },
+    "have_charter_grimoire_vanica": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:charter_grimoire_vanica"
+          }
+        ]
+      }
+    },
+    "have_charter_grimoire_zenon": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:charter_grimoire_zenon"
+          }
+        ]
+      }
+    },
+    "have_charter_grimoire_lucius": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:charter_grimoire_lucius"
+          }
+        ]
+      }
+    },
+    "have_charter_grimoire_devil_avatar": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:charter_grimoire_devil_avatar"
+          }
+        ]
+      }
+    },
+    "have_charter_grimoire_goliath": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:charter_grimoire_goliath"
+          }
+        ]
+      }
+    },
+    "have_charter_grimoire_charybdis_spawn": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:charter_grimoire_charybdis_spawn"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_charter_grimoire_dante"
+    ],
+    [
+      "have_charter_grimoire_vanica"
+    ],
+    [
+      "have_charter_grimoire_zenon"
+    ],
+    [
+      "have_charter_grimoire_lucius"
+    ],
+    [
+      "have_charter_grimoire_devil_avatar"
+    ],
+    [
+      "have_charter_grimoire_goliath"
+    ],
+    [
+      "have_charter_grimoire_charybdis_spawn"
+    ]
+  ],
+  "rewards": {
+    "experience": 300
+  }
+}

@@ -1,0 +1,265 @@
+{
+  "parent": "nusmp:magic/signature_earth",
+  "display": {
+    "icon": {
+      "id": "minecraft:oak_sapling"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.master_earth.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.master_earth.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_earth": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "earth"
+      }
+    },
+    "e_spell_cast_plant": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "plant"
+      }
+    },
+    "e_spell_cast_sand": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "sand"
+      }
+    },
+    "e_spell_cast_transmutation": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "transmutation"
+      }
+    },
+    "e_spell_cast_world_tree": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "world_tree"
+      }
+    },
+    "e_spell_cast_briar": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "briar"
+      }
+    },
+    "e_spell_cast_cherry_blossom": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "cherry_blossom"
+      }
+    },
+    "e_spell_cast_fungus": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "fungus"
+      }
+    },
+    "e_spell_cast_crystal": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "crystal"
+      }
+    },
+    "e_spell_cast_corundum": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "corundum"
+      }
+    },
+    "e_spell_cast_bronze": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "bronze"
+      }
+    },
+    "e_spell_cast_copper": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "copper"
+      }
+    },
+    "e_spell_cast_glass": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "glass"
+      }
+    },
+    "e_spell_cast_mineral": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "mineral"
+      }
+    },
+    "e_spell_cast_mud": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "mud"
+      }
+    },
+    "e_spell_cast_poison_plant": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "poison_plant"
+      }
+    },
+    "e_spell_cast_red_ochre": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "red_ochre"
+      }
+    },
+    "e_spell_cast_rock": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "rock"
+      }
+    },
+    "e_spell_cast_sandstone": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "sandstone"
+      }
+    },
+    "e_spell_cast_shakudo": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "shakudo"
+      }
+    },
+    "e_spell_cast_spike": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "spike"
+      }
+    },
+    "e_spell_cast_tree": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "tree"
+      }
+    },
+    "e_spell_cast_stone": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "stone"
+      }
+    },
+    "e_spell_cast_vine": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "vine"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_earth"
+    ],
+    [
+      "e_spell_cast_plant"
+    ],
+    [
+      "e_spell_cast_sand"
+    ],
+    [
+      "e_spell_cast_transmutation"
+    ],
+    [
+      "e_spell_cast_world_tree"
+    ],
+    [
+      "e_spell_cast_briar"
+    ],
+    [
+      "e_spell_cast_cherry_blossom"
+    ],
+    [
+      "e_spell_cast_fungus"
+    ],
+    [
+      "e_spell_cast_crystal"
+    ],
+    [
+      "e_spell_cast_corundum"
+    ],
+    [
+      "e_spell_cast_bronze"
+    ],
+    [
+      "e_spell_cast_copper"
+    ],
+    [
+      "e_spell_cast_glass"
+    ],
+    [
+      "e_spell_cast_mineral"
+    ],
+    [
+      "e_spell_cast_mud"
+    ],
+    [
+      "e_spell_cast_poison_plant"
+    ],
+    [
+      "e_spell_cast_red_ochre"
+    ],
+    [
+      "e_spell_cast_rock"
+    ],
+    [
+      "e_spell_cast_sandstone"
+    ],
+    [
+      "e_spell_cast_shakudo"
+    ],
+    [
+      "e_spell_cast_spike"
+    ],
+    [
+      "e_spell_cast_tree"
+    ],
+    [
+      "e_spell_cast_stone"
+    ],
+    [
+      "e_spell_cast_vine"
+    ]
+  ],
+  "rewards": {
+    "experience": 390
+  }
+}

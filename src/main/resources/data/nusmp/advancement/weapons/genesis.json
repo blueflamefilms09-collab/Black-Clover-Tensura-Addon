@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:weapons/demon_slayer",
+  "display": {
+    "icon": {
+      "id": "nusmp:demon_slayer_sword"
+    },
+    "title": {
+      "translate": "advancement.nusmp.weapons.genesis.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.weapons.genesis.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_weapon_genesis": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "weapon.genesis"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_weapon_genesis"
+    ]
+  ],
+  "rewards": {
+    "experience": 300
+  }
+}

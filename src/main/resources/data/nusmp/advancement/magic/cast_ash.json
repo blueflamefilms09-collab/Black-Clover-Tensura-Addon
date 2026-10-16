@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:magic/soul_flame",
+  "display": {
+    "icon": {
+      "id": "minecraft:blaze_powder"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.cast_ash.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.cast_ash.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_ash": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "ash"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_ash"
+    ]
+  ],
+  "rewards": {
+    "experience": 8
+  }
+}

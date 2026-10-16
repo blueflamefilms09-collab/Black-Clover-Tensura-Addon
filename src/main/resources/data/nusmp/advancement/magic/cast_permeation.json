@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:magic/soul_space",
+  "display": {
+    "icon": {
+      "id": "minecraft:ender_pearl"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.cast_permeation.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.cast_permeation.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_permeation": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "permeation"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_permeation"
+    ]
+  ],
+  "rewards": {
+    "experience": 8
+  }
+}

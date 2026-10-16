@@ -1,0 +1,50 @@
+{
+  "parent": "nusmp:bosses/first",
+  "display": {
+    "icon": {
+      "id": "nusmp:last_word"
+    },
+    "title": {
+      "translate": "advancement.nusmp.bosses.zagred.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.bosses.zagred.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "event": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "boss.defeated",
+        "arg": "zagred"
+      }
+    },
+    "kill": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "nusmp:zagred"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "event",
+      "kill"
+    ]
+  ],
+  "rewards": {
+    "experience": 500
+  }
+}

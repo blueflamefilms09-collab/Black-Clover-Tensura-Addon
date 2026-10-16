@@ -1,0 +1,38 @@
+{
+  "parent": "nusmp:world/arena",
+  "display": {
+    "icon": {
+      "id": "nusmp:zogratis_hourglass"
+    },
+    "title": {
+      "translate": "advancement.nusmp.world.hourglass_item.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.world.hourglass_item.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "have_zogratis_hourglass": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:zogratis_hourglass"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_zogratis_hourglass"
+    ]
+  ],
+  "rewards": {
+    "experience": 30
+  }
+}

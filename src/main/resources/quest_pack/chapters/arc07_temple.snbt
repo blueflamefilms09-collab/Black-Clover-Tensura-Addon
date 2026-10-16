@@ -1,0 +1,224 @@
+{
+	id: "7E302F4D09971162"
+	group: "0BCF8AD019395CF3"
+	order_index: 12
+	filename: "arc07_temple"
+	icon: {
+		id: "minecraft:nautilus_shell"
+	}
+	default_hide_dependency_lines: false
+	quests: [
+		{
+			id: "3D1DCEA3D6FC3FF6"
+			x: 0.0d
+			y: 1.5d
+			shape: "rsquare"
+			size: 1.25d
+			icon: {
+				id: "minecraft:nautilus_shell"
+			}
+			dependencies: ["7C467B7016AD62E5"]
+			tasks: [
+				{
+					id: "6F3D5D30890766D2"
+					type: "checkmark"
+				}
+			]
+			rewards: [
+				{
+					id: "3A5711E2C03E8719"
+					type: "xp"
+					xp: 25
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "509661F9351D0B73"
+			x: 1.5d
+			y: 1.5d
+			icon: {
+				id: "minecraft:water_bucket"
+			}
+			dependencies: ["3D1DCEA3D6FC3FF6"]
+			tasks: [
+				{
+					id: "55AC61BC02174B3A"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_water"
+					criterion: ""
+				}
+				{
+					id: "1750D0CD1692EFAE"
+					type: "advancement"
+					advancement: "nusmp:arcs/underwater_temple"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "0B536885CD8B5D0C"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "42AC0A8441339EE4"
+			x: 3.0d
+			y: 1.5d
+			icon: {
+				id: "minecraft:water_bucket"
+			}
+			dependencies: ["509661F9351D0B73"]
+			tasks: [
+				{
+					id: "09C0F5A2CD34E60A"
+					type: "advancement"
+					advancement: "nusmp:magic/soul_water"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "46E37B3DE2DE43AA"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "2C9816BC1A2D4567"
+			x: 4.5d
+			y: 1.5d
+			shape: "square"
+			icon: {
+				id: "minecraft:powder_snow_bucket"
+			}
+			dependencies: ["42AC0A8441339EE4"]
+			optional: true
+			tasks: [
+				{
+					id: "67793205A7CD40FA"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_ice"
+					criterion: ""
+				}
+				{
+					id: "5F7D1453A5D8F489"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_mist"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "5117931F2A9E51F4"
+					type: "xp"
+					xp: 15
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "4C05E7A159C26483"
+			x: 4.5d
+			y: 3.0d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "minecraft:nautilus_shell"
+			}
+			dependencies: ["42AC0A8441339EE4"]
+			tasks: [
+				{
+					id: "6C59A81B2AD52423"
+					type: "advancement"
+					advancement: "nusmp:bosses/charybdis_spawn"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "4E13F51136DA68DB"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "4C90D29B7A9942DC"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "312B24F1CA507E57"
+			x: 6.0d
+			y: 0.0d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:barrier"
+			}
+			dependencies: ["42AC0A8441339EE4"]
+			tasks: [
+				{
+					id: "69DE40A8EAC0AE53"
+					type: "advancement"
+					advancement: "nusmp:future/underwater_temple_boss"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "6DC4319D6D0F01CF"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "23D141C8B3864D64"
+					type: "loot"
+					table_id: 4358806230403059797L
+				}
+			]
+		}
+		{
+			id: "27C1B4E77E23CFAF"
+			x: 7.5d
+			y: 2.7d
+			shape: "hexagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:conduit"
+			}
+			dependencies: ["4C05E7A159C26483"]
+			tasks: [
+				{
+					id: "0208D008CB2219F4"
+					type: "advancement"
+					advancement: "nusmp:dungeon/charybdis"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "18804657256C77D4"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "00C2B71D0444E6D5"
+					type: "choice"
+					table_id: 9171611916907347595L
+				}
+			]
+		}
+	]
+	quest_links: [ ]
+	images: [ ]
+}

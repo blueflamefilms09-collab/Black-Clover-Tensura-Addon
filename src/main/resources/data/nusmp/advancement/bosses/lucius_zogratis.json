@@ -1,0 +1,50 @@
+{
+  "parent": "nusmp:bosses/first",
+  "display": {
+    "icon": {
+      "id": "nusmp:zogratis_hourglass"
+    },
+    "title": {
+      "translate": "advancement.nusmp.bosses.lucius_zogratis.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.bosses.lucius_zogratis.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "event": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "boss.defeated",
+        "arg": "lucius_zogratis"
+      }
+    },
+    "kill": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "nusmp:lucius_zogratis"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "event",
+      "kill"
+    ]
+  ],
+  "rewards": {
+    "experience": 600
+  }
+}

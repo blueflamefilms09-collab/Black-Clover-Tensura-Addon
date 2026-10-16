@@ -1,0 +1,283 @@
+{
+	id: "70F57D4C5675AD23"
+	group: "0BCF8AD019395CF3"
+	order_index: 15
+	filename: "arc10_heart"
+	icon: {
+		id: "minecraft:red_banner"
+	}
+	default_hide_dependency_lines: false
+	quests: [
+		{
+			id: "4FCBF6C04F8FEE73"
+			x: 0.0d
+			y: 1.5d
+			shape: "rsquare"
+			size: 1.25d
+			icon: {
+				id: "minecraft:red_banner"
+			}
+			dependencies: ["6AE9DB00B892D9EF"]
+			tasks: [
+				{
+					id: "1F5536741148B1DF"
+					type: "checkmark"
+				}
+			]
+			rewards: [
+				{
+					id: "1D1E0CFE6604DBF7"
+					type: "xp"
+					xp: 25
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "3F7E87A20D875A0C"
+			x: 1.5d
+			y: 3.0d
+			shape: "square"
+			icon: {
+				id: "minecraft:red_banner"
+			}
+			dependencies: ["4FCBF6C04F8FEE73"]
+			optional: true
+			tasks: [
+				{
+					id: "62EBA69DE186A3E5"
+					type: "advancement"
+					advancement: "nusmp:world/kingdom_heart"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "5A137CDD1CB42637"
+					type: "xp"
+					xp: 15
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "0FAB31E2CA283C2D"
+			x: 1.5d
+			y: 1.5d
+			icon: {
+				id: "nusmp:spirit_charm"
+			}
+			dependencies: ["4FCBF6C04F8FEE73"]
+			tasks: [
+				{
+					id: "581DFF4C0557AC58"
+					type: "advancement"
+					advancement: "nusmp:spirits/charm"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "7962A6B96565C172"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "51AD1DDE5716D94B"
+			x: 3.0d
+			y: 1.5d
+			icon: {
+				id: "nusmp:spirit_core_fire"
+			}
+			dependencies: ["0FAB31E2CA283C2D"]
+			tasks: [
+				{
+					id: "0A02921FBC3A4388"
+					type: "advancement"
+					advancement: "nusmp:spirits/meet_elemental"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "0349BADCB3874DB2"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "045FE7BC2CC14533"
+			x: 4.5d
+			y: 1.5d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "minecraft:soul_lantern"
+			}
+			dependencies: ["51AD1DDE5716D94B"]
+			tasks: [
+				{
+					id: "45A4E24AF5CA5526"
+					type: "advancement"
+					advancement: "nusmp:spirits/contract"
+					criterion: ""
+				}
+				{
+					id: "306C6E9CFDAE3513"
+					type: "advancement"
+					advancement: "nusmp:arcs/heart_elf"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "46D9B677983F6DC2"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "51031AC61C7EF7BF"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "26BCB82926113C87"
+			x: 6.0d
+			y: 1.5d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "nusmp:spirit_core_earth"
+			}
+			dependencies: ["045FE7BC2CC14533"]
+			tasks: [
+				{
+					id: "0310D0D71FE19B20"
+					type: "advancement"
+					advancement: "nusmp:spirits/cores"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "0E96B86829310800"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "52523BA7ADFAD4FD"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "079140596D06BA15"
+			x: 6.0d
+			y: 3.0d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:feather"
+			}
+			dependencies: ["045FE7BC2CC14533"]
+			optional: true
+			tasks: [
+				{
+					id: "63ADBA0220F995E1"
+					type: "advancement"
+					advancement: "nusmp:bosses/wind_spirit_lord"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "2DA04B013352E1F9"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "701AB8805840034F"
+					type: "loot"
+					table_id: 4358806230403059797L
+				}
+			]
+		}
+		{
+			id: "71FBCFD3843F9EC2"
+			x: 7.5d
+			y: 0.0d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:barrier"
+			}
+			dependencies: ["26BCB82926113C87"]
+			tasks: [
+				{
+					id: "5FC0E32CD10295EE"
+					type: "advancement"
+					advancement: "nusmp:future/heart_elf_boss"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "193B2C6C1C020FB7"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "227A4E4F014AA672"
+					type: "loot"
+					table_id: 4358806230403059797L
+				}
+			]
+		}
+		{
+			id: "6ED5F666577E6219"
+			x: 7.5d
+			y: 2.7d
+			shape: "hexagon"
+			size: 1.5d
+			icon: {
+				id: "nusmp:spirit_lord_skill"
+			}
+			dependencies: ["26BCB82926113C87"]
+			tasks: [
+				{
+					id: "4D56CA1FD3F08A84"
+					type: "advancement"
+					advancement: "nusmp:spirits/lord_skill"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "77E09BED66022F97"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "41800268E1708A78"
+					type: "choice"
+					table_id: 1679459504511463362L
+				}
+			]
+		}
+	]
+	quest_links: [ ]
+	images: [ ]
+}

@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:start/pages_10",
+  "display": {
+    "icon": {
+      "id": "minecraft:nether_star"
+    },
+    "title": {
+      "translate": "advancement.nusmp.start.mastery.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.start.mastery.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_mastery_max": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "mastery.max"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_mastery_max"
+    ]
+  ],
+  "rewards": {
+    "experience": 200
+  }
+}

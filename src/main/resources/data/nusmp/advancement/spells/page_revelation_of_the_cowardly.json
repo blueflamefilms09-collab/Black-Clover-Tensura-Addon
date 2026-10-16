@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:spells/characters",
+  "display": {
+    "icon": {
+      "id": "minecraft:writable_book"
+    },
+    "title": {
+      "translate": "advancement.nusmp.spells.page_revelation_of_the_cowardly.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.spells.page_revelation_of_the_cowardly.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_page_unlocked_revelation_of_the_cowardly": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "arg": "revelation_of_the_cowardly"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_page_unlocked_revelation_of_the_cowardly"
+    ]
+  ],
+  "rewards": {
+    "experience": 15
+  }
+}

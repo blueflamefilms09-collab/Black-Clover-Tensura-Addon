@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:arcs/spade_final",
+  "display": {
+    "icon": {
+      "id": "nusmp:devil_horn"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arcs.devil_arc.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arcs.devil_arc.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_devil_union": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "devil.union"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_devil_union"
+    ]
+  ],
+  "rewards": {
+    "experience": 75
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "parent": "nusmp:challenges/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:clock"
+    },
+    "title": {
+      "translate": "advancement.nusmp.challenges.time_decay.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.challenges.time_decay.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "afflicted": {
+      "trigger": "minecraft:effects_changed",
+      "conditions": {
+        "effects": {
+          "nusmp:time_decay": {}
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "afflicted"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  }
+}

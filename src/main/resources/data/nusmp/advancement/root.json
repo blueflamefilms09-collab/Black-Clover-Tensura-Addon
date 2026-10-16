@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "id": "nusmp:grimoire"
+    },
+    "title": {
+      "translate": "advancement.nusmp.root.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.root.desc"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false,
+    "background": "nusmp:textures/block/grimoire_altar_top.png"
+  },
+  "criteria": {
+    "tick": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "tick"
+    ]
+  ]
+}

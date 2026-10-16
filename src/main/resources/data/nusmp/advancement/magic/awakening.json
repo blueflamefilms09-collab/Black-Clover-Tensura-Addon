@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:root",
+  "display": {
+    "icon": {
+      "id": "nusmp:grimoire"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.awakening.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.awakening.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_3": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "count": 3
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_3"
+    ]
+  ],
+  "rewards": {
+    "experience": 15
+  }
+}

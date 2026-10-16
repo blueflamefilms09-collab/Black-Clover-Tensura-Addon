@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:world/kingdoms",
+  "display": {
+    "icon": {
+      "id": "minecraft:black_banner"
+    },
+    "title": {
+      "translate": "advancement.nusmp.world.kingdom_spade.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.world.kingdom_spade.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_grimoire_kingdom_spade": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "grimoire.kingdom",
+        "arg": "spade"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_grimoire_kingdom_spade"
+    ]
+  ],
+  "rewards": {
+    "experience": 15
+  }
+}

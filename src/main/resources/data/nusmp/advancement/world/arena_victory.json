@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:world/hourglass_used",
+  "display": {
+    "icon": {
+      "id": "minecraft:totem_of_undying"
+    },
+    "title": {
+      "translate": "advancement.nusmp.world.arena_victory.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.world.arena_victory.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arena_victory": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arena.victory"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arena_victory"
+    ]
+  ],
+  "rewards": {
+    "experience": 500
+  }
+}

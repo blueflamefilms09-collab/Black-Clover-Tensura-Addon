@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:relics/grade_rare",
+  "display": {
+    "icon": {
+      "id": "minecraft:nether_star"
+    },
+    "title": {
+      "translate": "advancement.nusmp.relics.grade_unique.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.relics.grade_unique.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_relic_grade_unique": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "relic.grade",
+        "arg": "unique"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_relic_grade_unique"
+    ]
+  ],
+  "rewards": {
+    "experience": 145
+  }
+}

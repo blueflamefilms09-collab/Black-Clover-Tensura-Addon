@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:spells/characters",
+  "display": {
+    "icon": {
+      "id": "minecraft:writable_book"
+    },
+    "title": {
+      "translate": "advancement.nusmp.spells.page_curse_workers_neighbor.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.spells.page_curse_workers_neighbor.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_page_unlocked_curse_workers_neighbor": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "arg": "curse_workers_neighbor"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_page_unlocked_curse_workers_neighbor"
+    ]
+  ],
+  "rewards": {
+    "experience": 15
+  }
+}

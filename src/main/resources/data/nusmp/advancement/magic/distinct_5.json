@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:magic/awakening",
+  "display": {
+    "icon": {
+      "id": "minecraft:enchanted_book"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.distinct_5.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.distinct_5.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_distinct_5": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.distinct",
+        "count": 5
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_distinct_5"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "parent": "nusmp:dungeon/meat",
+  "display": {
+    "icon": {
+      "id": "nusmp:roast_direwolf_haunch"
+    },
+    "title": {
+      "translate": "advancement.nusmp.dungeon.direwolf.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.dungeon.direwolf.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "consumed": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": "nusmp:roast_direwolf_haunch"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "consumed"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  }
+}

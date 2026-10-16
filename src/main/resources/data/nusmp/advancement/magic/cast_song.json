@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:magic/soul_fantasy",
+  "display": {
+    "icon": {
+      "id": "minecraft:enchanted_book"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.cast_song.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.cast_song.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_song": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "song"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_song"
+    ]
+  ],
+  "rewards": {
+    "experience": 8
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "parent": "nusmp:bosses/first",
+  "display": {
+    "icon": {
+      "id": "nusmp:devil_horn"
+    },
+    "title": {
+      "translate": "advancement.nusmp.bosses.devil_avatar.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.bosses.devil_avatar.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "event": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "boss.defeated",
+        "arg": "devil_avatar"
+      }
+    },
+    "kill": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "nusmp:devil_avatar"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "event",
+      "kill"
+    ]
+  ],
+  "rewards": {
+    "experience": 400
+  }
+}

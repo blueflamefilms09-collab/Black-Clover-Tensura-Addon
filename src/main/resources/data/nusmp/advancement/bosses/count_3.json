@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:bosses/first",
+  "display": {
+    "icon": {
+      "id": "minecraft:crossbow"
+    },
+    "title": {
+      "translate": "advancement.nusmp.bosses.count_3.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.bosses.count_3.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_boss_defeated_3": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "boss.defeated",
+        "count": 3
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_boss_defeated_3"
+    ]
+  ],
+  "rewards": {
+    "experience": 60
+  }
+}

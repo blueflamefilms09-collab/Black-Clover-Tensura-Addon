@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:arcs/witches_forest",
+  "display": {
+    "icon": {
+      "id": "minecraft:water_bucket"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arcs.underwater_temple.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arcs.underwater_temple.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_water": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "water"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_water"
+    ]
+  ],
+  "rewards": {
+    "experience": 75
+  }
+}

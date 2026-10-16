@@ -1,0 +1,142 @@
+{
+  "parent": "nusmp:spirits/devil_core",
+  "display": {
+    "icon": {
+      "id": "nusmp:devil_core_beelzebub"
+    },
+    "title": {
+      "translate": "advancement.nusmp.spirits.devil_cores_all.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.spirits.devil_cores_all.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "have_devil_core_zagred": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:devil_core_zagred"
+          }
+        ]
+      }
+    },
+    "have_devil_core_megicula": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:devil_core_megicula"
+          }
+        ]
+      }
+    },
+    "have_devil_core_lucifero": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:devil_core_lucifero"
+          }
+        ]
+      }
+    },
+    "have_devil_core_astaroth": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:devil_core_astaroth"
+          }
+        ]
+      }
+    },
+    "have_devil_core_liebe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:devil_core_liebe"
+          }
+        ]
+      }
+    },
+    "have_devil_core_lilith": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:devil_core_lilith"
+          }
+        ]
+      }
+    },
+    "have_devil_core_nahamah": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:devil_core_nahamah"
+          }
+        ]
+      }
+    },
+    "have_devil_core_walgner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:devil_core_walgner"
+          }
+        ]
+      }
+    },
+    "have_devil_core_beelzebub": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:devil_core_beelzebub"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_devil_core_zagred"
+    ],
+    [
+      "have_devil_core_megicula"
+    ],
+    [
+      "have_devil_core_lucifero"
+    ],
+    [
+      "have_devil_core_astaroth"
+    ],
+    [
+      "have_devil_core_liebe"
+    ],
+    [
+      "have_devil_core_lilith"
+    ],
+    [
+      "have_devil_core_nahamah"
+    ],
+    [
+      "have_devil_core_walgner"
+    ],
+    [
+      "have_devil_core_beelzebub"
+    ]
+  ],
+  "rewards": {
+    "experience": 1000
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "parent": "nusmp:weapons/first",
+  "display": {
+    "icon": {
+      "id": "nusmp:magic_tool_bow"
+    },
+    "title": {
+      "translate": "advancement.nusmp.weapons.mana_tools.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.weapons.mana_tools.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "have_magic_tool_sword": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:magic_tool_sword"
+          }
+        ]
+      }
+    },
+    "have_magic_tool_spear": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:magic_tool_spear"
+          }
+        ]
+      }
+    },
+    "have_magic_tool_bow": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:magic_tool_bow"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_magic_tool_sword"
+    ],
+    [
+      "have_magic_tool_spear"
+    ],
+    [
+      "have_magic_tool_bow"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  }
+}

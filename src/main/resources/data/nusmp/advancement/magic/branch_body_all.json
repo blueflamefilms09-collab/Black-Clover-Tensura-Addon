@@ -1,0 +1,125 @@
+{
+  "parent": "nusmp:magic/branch_body_signature",
+  "display": {
+    "icon": {
+      "id": "minecraft:bone"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.branch_body_all.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.branch_body_all.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_reinforcement": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "reinforcement"
+      }
+    },
+    "e_spell_cast_body": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "body"
+      }
+    },
+    "e_spell_cast_blood": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "blood"
+      }
+    },
+    "e_spell_cast_bone": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "bone"
+      }
+    },
+    "e_spell_cast_beast": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "beast"
+      }
+    },
+    "e_spell_cast_scale": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "scale"
+      }
+    },
+    "e_spell_cast_skin": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "skin"
+      }
+    },
+    "e_spell_cast_nail": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "nail"
+      }
+    },
+    "e_spell_cast_hair": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "hair"
+      }
+    },
+    "e_spell_cast_tongue": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "tongue"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_reinforcement"
+    ],
+    [
+      "e_spell_cast_body"
+    ],
+    [
+      "e_spell_cast_blood"
+    ],
+    [
+      "e_spell_cast_bone"
+    ],
+    [
+      "e_spell_cast_beast"
+    ],
+    [
+      "e_spell_cast_scale"
+    ],
+    [
+      "e_spell_cast_skin"
+    ],
+    [
+      "e_spell_cast_nail"
+    ],
+    [
+      "e_spell_cast_hair"
+    ],
+    [
+      "e_spell_cast_tongue"
+    ]
+  ],
+  "rewards": {
+    "experience": 180
+  }
+}

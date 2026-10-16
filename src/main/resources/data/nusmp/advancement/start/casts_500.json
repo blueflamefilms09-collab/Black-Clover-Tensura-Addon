@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:start/casts_50",
+  "display": {
+    "icon": {
+      "id": "minecraft:nether_star"
+    },
+    "title": {
+      "translate": "advancement.nusmp.start.casts_500.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.start.casts_500.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_500": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "count": 500
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_500"
+    ]
+  ],
+  "rewards": {
+    "experience": 75
+  }
+}

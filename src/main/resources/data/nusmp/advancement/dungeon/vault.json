@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:dungeon/seal",
+  "display": {
+    "icon": {
+      "id": "nusmp:relic_pedestal"
+    },
+    "title": {
+      "translate": "advancement.nusmp.dungeon.vault.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.dungeon.vault.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_labyrinth_vault_opened": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "labyrinth.vault_opened"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_labyrinth_vault_opened"
+    ]
+  ],
+  "rewards": {
+    "experience": 300
+  }
+}

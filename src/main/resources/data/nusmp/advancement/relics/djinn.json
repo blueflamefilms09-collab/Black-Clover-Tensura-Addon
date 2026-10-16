@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:relics/grade_legend",
+  "display": {
+    "icon": {
+      "id": "nusmp:djinn_seal_baal"
+    },
+    "title": {
+      "translate": "advancement.nusmp.relics.djinn.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.relics.djinn.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_relic_djinn_bound": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "relic.djinn_bound"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_relic_djinn_bound"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  }
+}

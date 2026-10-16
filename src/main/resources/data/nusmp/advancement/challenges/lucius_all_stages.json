@@ -1,0 +1,45 @@
+{
+  "parent": "nusmp:challenges/root",
+  "display": {
+    "icon": {
+      "id": "nusmp:zogratis_hourglass"
+    },
+    "title": {
+      "translate": "advancement.nusmp.challenges.lucius_all_stages.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.challenges.lucius_all_stages.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "a0_e_boss_phase_lucius_2": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "boss.phase",
+        "arg": "lucius:2"
+      }
+    },
+    "b1_e_boss_phase_lucius_3": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "boss.phase",
+        "arg": "lucius:3"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "a0_e_boss_phase_lucius_2"
+    ],
+    [
+      "b1_e_boss_phase_lucius_3"
+    ]
+  ],
+  "rewards": {
+    "experience": 400
+  }
+}

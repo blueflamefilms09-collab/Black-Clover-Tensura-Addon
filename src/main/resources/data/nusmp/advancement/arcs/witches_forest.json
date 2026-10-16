@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:arcs/eye_midnight",
+  "display": {
+    "icon": {
+      "id": "minecraft:string"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arcs.witches_forest.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arcs.witches_forest.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_rouge_saved": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "rouge.saved"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_rouge_saved"
+    ]
+  ],
+  "rewards": {
+    "experience": 75
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "parent": "nusmp:spirits/charm",
+  "display": {
+    "icon": {
+      "id": "nusmp:spirit_lord_skill"
+    },
+    "title": {
+      "translate": "advancement.nusmp.spirits.lord_skill.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.spirits.lord_skill.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "have_spirit_lord_skill": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:spirit_lord_skill"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_spirit_lord_skill"
+    ]
+  ],
+  "rewards": {
+    "experience": 60
+  }
+}

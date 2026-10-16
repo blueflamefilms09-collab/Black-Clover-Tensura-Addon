@@ -1,0 +1,50 @@
+{
+  "parent": "nusmp:bosses/first",
+  "display": {
+    "icon": {
+      "id": "minecraft:wither_skeleton_skull"
+    },
+    "title": {
+      "translate": "advancement.nusmp.bosses.grimoire_daemon.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.bosses.grimoire_daemon.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "event": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "boss.defeated",
+        "arg": "grimoire_daemon"
+      }
+    },
+    "kill": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "nusmp:grimoire_daemon"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "event",
+      "kill"
+    ]
+  ],
+  "rewards": {
+    "experience": 80
+  }
+}

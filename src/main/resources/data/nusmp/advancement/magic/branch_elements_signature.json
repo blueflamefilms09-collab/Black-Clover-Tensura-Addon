@@ -1,0 +1,243 @@
+{
+  "parent": "nusmp:magic/awakening",
+  "display": {
+    "icon": {
+      "id": "minecraft:blaze_powder"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.branch_elements_signature.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.branch_elements_signature.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_signature_flame": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "flame"
+      }
+    },
+    "e_spell_cast_signature_explosion": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "explosion"
+      }
+    },
+    "e_spell_cast_signature_magma": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "magma"
+      }
+    },
+    "e_spell_cast_signature_ash": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "ash"
+      }
+    },
+    "e_spell_cast_signature_water": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "water"
+      }
+    },
+    "e_spell_cast_signature_ice": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "ice"
+      }
+    },
+    "e_spell_cast_signature_snow": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "snow"
+      }
+    },
+    "e_spell_cast_signature_mist": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "mist"
+      }
+    },
+    "e_spell_cast_signature_bubble": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "bubble"
+      }
+    },
+    "e_spell_cast_signature_ice_wedge": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "ice_wedge"
+      }
+    },
+    "e_spell_cast_signature_wind": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "wind"
+      }
+    },
+    "e_spell_cast_signature_storm": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "storm"
+      }
+    },
+    "e_spell_cast_signature_air": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "air"
+      }
+    },
+    "e_spell_cast_signature_vortex": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "vortex"
+      }
+    },
+    "e_spell_cast_signature_wing": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "wing"
+      }
+    },
+    "e_spell_cast_signature_sound": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "sound"
+      }
+    },
+    "e_spell_cast_signature_star": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "star"
+      }
+    },
+    "e_spell_cast_signature_earth": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "earth"
+      }
+    },
+    "e_spell_cast_signature_sand": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "sand"
+      }
+    },
+    "e_spell_cast_signature_sandstone": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "sandstone"
+      }
+    },
+    "e_spell_cast_signature_rock": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "rock"
+      }
+    },
+    "e_spell_cast_signature_stone": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "stone"
+      }
+    },
+    "e_spell_cast_signature_mud": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "mud"
+      }
+    },
+    "e_spell_cast_signature_spike": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "spike"
+      }
+    },
+    "e_spell_cast_signature_mercury": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "mercury"
+      }
+    },
+    "e_spell_cast_signature_gel": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "gel"
+      }
+    },
+    "e_spell_cast_signature_mucus": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "mucus"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_signature_flame",
+      "e_spell_cast_signature_explosion",
+      "e_spell_cast_signature_magma",
+      "e_spell_cast_signature_ash",
+      "e_spell_cast_signature_water",
+      "e_spell_cast_signature_ice",
+      "e_spell_cast_signature_snow",
+      "e_spell_cast_signature_mist",
+      "e_spell_cast_signature_bubble",
+      "e_spell_cast_signature_ice_wedge",
+      "e_spell_cast_signature_wind",
+      "e_spell_cast_signature_storm",
+      "e_spell_cast_signature_air",
+      "e_spell_cast_signature_vortex",
+      "e_spell_cast_signature_wing",
+      "e_spell_cast_signature_sound",
+      "e_spell_cast_signature_star",
+      "e_spell_cast_signature_earth",
+      "e_spell_cast_signature_sand",
+      "e_spell_cast_signature_sandstone",
+      "e_spell_cast_signature_rock",
+      "e_spell_cast_signature_stone",
+      "e_spell_cast_signature_mud",
+      "e_spell_cast_signature_spike",
+      "e_spell_cast_signature_mercury",
+      "e_spell_cast_signature_gel",
+      "e_spell_cast_signature_mucus"
+    ]
+  ],
+  "rewards": {
+    "experience": 40
+  }
+}

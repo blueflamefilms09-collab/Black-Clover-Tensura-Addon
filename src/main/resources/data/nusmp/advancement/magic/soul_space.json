@@ -1,0 +1,91 @@
+{
+  "parent": "nusmp:magic/awakening",
+  "display": {
+    "icon": {
+      "id": "minecraft:ender_pearl"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.soul_space.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.soul_space.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_spatial": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "spatial"
+      }
+    },
+    "e_spell_cast_mirror": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "mirror"
+      }
+    },
+    "e_spell_cast_gravity": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "gravity"
+      }
+    },
+    "e_spell_cast_compass": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "compass"
+      }
+    },
+    "e_spell_cast_barrier": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "barrier"
+      }
+    },
+    "e_spell_cast_key": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "key"
+      }
+    },
+    "e_spell_cast_permeation": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "permeation"
+      }
+    },
+    "e_spell_cast_switching": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "switching"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_spatial",
+      "e_spell_cast_mirror",
+      "e_spell_cast_gravity",
+      "e_spell_cast_compass",
+      "e_spell_cast_barrier",
+      "e_spell_cast_key",
+      "e_spell_cast_permeation",
+      "e_spell_cast_switching"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  }
+}

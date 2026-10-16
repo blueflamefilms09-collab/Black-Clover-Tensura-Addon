@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:start/first_spell",
+  "display": {
+    "icon": {
+      "id": "minecraft:experience_bottle"
+    },
+    "title": {
+      "translate": "advancement.nusmp.start.casts_50.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.start.casts_50.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_50": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "count": 50
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_50"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  }
+}

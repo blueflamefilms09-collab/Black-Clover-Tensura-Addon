@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:arcs/spade_raid",
+  "display": {
+    "icon": {
+      "id": "minecraft:red_banner"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arcs.heart_elf.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arcs.heart_elf.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spirit_contract_spirit": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spirit.contract",
+        "arg": "spirit"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spirit_contract_spirit"
+    ]
+  ],
+  "rewards": {
+    "experience": 75
+  }
+}

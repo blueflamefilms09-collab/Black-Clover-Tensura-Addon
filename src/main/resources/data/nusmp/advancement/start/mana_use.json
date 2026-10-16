@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:start/first_spell",
+  "display": {
+    "icon": {
+      "id": "minecraft:lapis_lazuli"
+    },
+    "title": {
+      "translate": "advancement.nusmp.start.mana_use.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.start.mana_use.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_25": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "count": 25
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_25"
+    ]
+  ],
+  "rewards": {
+    "experience": 10
+  }
+}

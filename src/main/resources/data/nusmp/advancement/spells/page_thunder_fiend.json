@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:spells/characters",
+  "display": {
+    "icon": {
+      "id": "minecraft:writable_book"
+    },
+    "title": {
+      "translate": "advancement.nusmp.spells.page_thunder_fiend.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.spells.page_thunder_fiend.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_page_unlocked_thunder_fiend": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "arg": "thunder_fiend"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_page_unlocked_thunder_fiend"
+    ]
+  ],
+  "rewards": {
+    "experience": 15
+  }
+}

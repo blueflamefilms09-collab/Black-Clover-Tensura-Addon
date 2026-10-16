@@ -1,0 +1,77 @@
+{
+  "parent": "nusmp:spirits/meet_elemental",
+  "display": {
+    "icon": {
+      "id": "nusmp:spirit_core_earth"
+    },
+    "title": {
+      "translate": "advancement.nusmp.spirits.cores.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.spirits.cores.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "have_spirit_core_fire": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:spirit_core_fire"
+          }
+        ]
+      }
+    },
+    "have_spirit_core_water": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:spirit_core_water"
+          }
+        ]
+      }
+    },
+    "have_spirit_core_wind": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:spirit_core_wind"
+          }
+        ]
+      }
+    },
+    "have_spirit_core_earth": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:spirit_core_earth"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_spirit_core_fire"
+    ],
+    [
+      "have_spirit_core_water"
+    ],
+    [
+      "have_spirit_core_wind"
+    ],
+    [
+      "have_spirit_core_earth"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  }
+}

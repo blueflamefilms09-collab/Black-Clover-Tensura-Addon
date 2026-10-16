@@ -1,0 +1,36 @@
+{
+  "parent": "nusmp:spirits/devil_contract",
+  "display": {
+    "icon": {
+      "id": "minecraft:totem_of_undying"
+    },
+    "title": {
+      "translate": "advancement.nusmp.spirits.paladin.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.spirits.paladin.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "afflicted": {
+      "trigger": "minecraft:effects_changed",
+      "conditions": {
+        "effects": {
+          "nusmp:paladin": {}
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "afflicted"
+    ]
+  ],
+  "rewards": {
+    "experience": 40
+  }
+}

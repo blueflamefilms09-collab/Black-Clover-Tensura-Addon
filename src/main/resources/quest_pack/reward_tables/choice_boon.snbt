@@ -1,0 +1,42 @@
+{
+	id: "7F481C71F5007E8B"
+	order_index: 6
+	loot_size: 1
+	rewards: [
+		{
+			id: "25321E624A830674"
+			item: {
+				id: "minecraft:diamond"
+			}
+			count: 6
+		}
+		{
+			id: "48E9E989673265DC"
+			item: {
+				id: "minecraft:golden_apple"
+			}
+			count: 8
+		}
+		{
+			id: "095044B6917E8A55"
+			item: {
+				id: "minecraft:experience_bottle"
+			}
+			count: 48
+		}
+		{
+			id: "5CA9EF89825C6758"
+			item: {
+				id: "minecraft:netherite_scrap"
+			}
+			count: 4
+		}
+		{
+			id: "523018B9D6919712"
+			item: {
+				id: "minecraft:ender_pearl"
+			}
+			count: 16
+		}
+	]
+}

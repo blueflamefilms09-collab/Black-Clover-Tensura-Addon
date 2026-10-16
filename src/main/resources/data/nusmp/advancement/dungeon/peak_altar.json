@@ -1,0 +1,38 @@
+{
+  "parent": "nusmp:dungeon/seal",
+  "display": {
+    "icon": {
+      "id": "nusmp:peak_altar"
+    },
+    "title": {
+      "translate": "advancement.nusmp.dungeon.peak_altar.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.dungeon.peak_altar.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "have_peak_altar": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:peak_altar"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_peak_altar"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:spells/characters",
+  "display": {
+    "icon": {
+      "id": "minecraft:writable_book"
+    },
+    "title": {
+      "translate": "advancement.nusmp.spells.page_butoh_dance.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.spells.page_butoh_dance.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_page_unlocked_butoh_dance": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "arg": "butoh_dance"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_page_unlocked_butoh_dance"
+    ]
+  ],
+  "rewards": {
+    "experience": 15
+  }
+}

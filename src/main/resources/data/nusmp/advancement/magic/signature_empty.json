@@ -1,0 +1,43 @@
+{
+  "parent": "nusmp:magic/soul_empty",
+  "display": {
+    "icon": {
+      "id": "minecraft:barrier"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.signature_empty.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.signature_empty.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_signature_anti_magic": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "anti_magic"
+      }
+    },
+    "e_spell_cast_signature_kotodama": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "kotodama"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_signature_anti_magic",
+      "e_spell_cast_signature_kotodama"
+    ]
+  ],
+  "rewards": {
+    "experience": 40
+  }
+}

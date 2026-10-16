@@ -1,0 +1,125 @@
+{
+  "parent": "nusmp:magic/branch_bindings_signature",
+  "display": {
+    "icon": {
+      "id": "minecraft:string"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.branch_bindings_all.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.branch_bindings_all.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_thread": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "thread"
+      }
+    },
+    "e_spell_cast_sealing": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "sealing"
+      }
+    },
+    "e_spell_cast_chain": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "chain"
+      }
+    },
+    "e_spell_cast_key": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "key"
+      }
+    },
+    "e_spell_cast_barrier": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "barrier"
+      }
+    },
+    "e_spell_cast_switching": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "switching"
+      }
+    },
+    "e_spell_cast_permeation": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "permeation"
+      }
+    },
+    "e_spell_cast_modification": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "modification"
+      }
+    },
+    "e_spell_cast_recombination": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "recombination"
+      }
+    },
+    "e_spell_cast_legion": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "legion"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_thread"
+    ],
+    [
+      "e_spell_cast_sealing"
+    ],
+    [
+      "e_spell_cast_chain"
+    ],
+    [
+      "e_spell_cast_key"
+    ],
+    [
+      "e_spell_cast_barrier"
+    ],
+    [
+      "e_spell_cast_switching"
+    ],
+    [
+      "e_spell_cast_permeation"
+    ],
+    [
+      "e_spell_cast_modification"
+    ],
+    [
+      "e_spell_cast_recombination"
+    ],
+    [
+      "e_spell_cast_legion"
+    ]
+  ],
+  "rewards": {
+    "experience": 180
+  }
+}

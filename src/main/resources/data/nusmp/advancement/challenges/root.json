@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:root",
+  "display": {
+    "icon": {
+      "id": "minecraft:netherite_ingot"
+    },
+    "title": {
+      "translate": "advancement.nusmp.challenges.root.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.challenges.root.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_boss_defeated": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "boss.defeated"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_boss_defeated"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  }
+}

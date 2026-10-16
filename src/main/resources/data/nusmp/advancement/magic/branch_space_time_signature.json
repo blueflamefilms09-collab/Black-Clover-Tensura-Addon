@@ -1,0 +1,75 @@
+{
+  "parent": "nusmp:magic/awakening",
+  "display": {
+    "icon": {
+      "id": "minecraft:clock"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.branch_space_time_signature.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.branch_space_time_signature.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_signature_spatial": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "spatial"
+      }
+    },
+    "e_spell_cast_signature_time": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "time"
+      }
+    },
+    "e_spell_cast_signature_gravity": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "gravity"
+      }
+    },
+    "e_spell_cast_signature_compass": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "compass"
+      }
+    },
+    "e_spell_cast_signature_game": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "game"
+      }
+    },
+    "e_spell_cast_signature_dice": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "dice"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_signature_spatial",
+      "e_spell_cast_signature_time",
+      "e_spell_cast_signature_gravity",
+      "e_spell_cast_signature_compass",
+      "e_spell_cast_signature_game",
+      "e_spell_cast_signature_dice"
+    ]
+  ],
+  "rewards": {
+    "experience": 40
+  }
+}

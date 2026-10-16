@@ -1,0 +1,67 @@
+{
+  "parent": "nusmp:magic/awakening",
+  "display": {
+    "icon": {
+      "id": "minecraft:note_block"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.branch_performance_signature.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.branch_performance_signature.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_signature_song": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "song"
+      }
+    },
+    "e_spell_cast_signature_butoh": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "butoh"
+      }
+    },
+    "e_spell_cast_signature_soul": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "soul"
+      }
+    },
+    "e_spell_cast_signature_soul_corpse": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "soul_corpse"
+      }
+    },
+    "e_spell_cast_signature_shadow": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "shadow"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_signature_song",
+      "e_spell_cast_signature_butoh",
+      "e_spell_cast_signature_soul",
+      "e_spell_cast_signature_soul_corpse",
+      "e_spell_cast_signature_shadow"
+    ]
+  ],
+  "rewards": {
+    "experience": 40
+  }
+}

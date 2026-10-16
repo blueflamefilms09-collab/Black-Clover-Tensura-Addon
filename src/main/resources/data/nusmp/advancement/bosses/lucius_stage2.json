@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:bosses/lucius_zogratis",
+  "display": {
+    "icon": {
+      "id": "nusmp:zogratis_hourglass"
+    },
+    "title": {
+      "translate": "advancement.nusmp.bosses.lucius_stage2.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.bosses.lucius_stage2.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_boss_phase_lucius_2": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "boss.phase",
+        "arg": "lucius:2"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_boss_phase_lucius_2"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:magic/awakening",
+  "display": {
+    "icon": {
+      "id": "minecraft:nether_star"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.distinct_105.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.distinct_105.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_distinct_105": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.distinct",
+        "count": 105
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_distinct_105"
+    ]
+  ],
+  "rewards": {
+    "experience": 1000
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "parent": "nusmp:weapons/katana",
+  "display": {
+    "icon": {
+      "id": "nusmp:miasma_infused_katana"
+    },
+    "title": {
+      "translate": "advancement.nusmp.weapons.miasma.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.weapons.miasma.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "have_miasma_infused_katana": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:miasma_infused_katana"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_miasma_infused_katana"
+    ]
+  ],
+  "rewards": {
+    "experience": 30
+  }
+}

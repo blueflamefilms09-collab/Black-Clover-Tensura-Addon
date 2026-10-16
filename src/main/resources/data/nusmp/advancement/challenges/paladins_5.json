@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:challenges/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:totem_of_undying"
+    },
+    "title": {
+      "translate": "advancement.nusmp.challenges.paladins_5.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.challenges.paladins_5.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_paladin_converted_5": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "paladin.converted",
+        "count": 5
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_paladin_converted_5"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  }
+}

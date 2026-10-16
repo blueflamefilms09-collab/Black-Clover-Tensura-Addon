@@ -1,0 +1,163 @@
+{
+  "parent": "nusmp:magic/soul_fantasy",
+  "display": {
+    "icon": {
+      "id": "minecraft:enchanted_book"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.signature_fantasy.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.signature_fantasy.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_signature_creation": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "creation"
+      }
+    },
+    "e_spell_cast_signature_copy": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "copy"
+      }
+    },
+    "e_spell_cast_signature_illusion": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "illusion"
+      }
+    },
+    "e_spell_cast_signature_dream": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "dream"
+      }
+    },
+    "e_spell_cast_signature_thread": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "thread"
+      }
+    },
+    "e_spell_cast_signature_cotton": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "cotton"
+      }
+    },
+    "e_spell_cast_signature_recombination": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "recombination"
+      }
+    },
+    "e_spell_cast_signature_painting": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "painting"
+      }
+    },
+    "e_spell_cast_signature_dice": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "dice"
+      }
+    },
+    "e_spell_cast_signature_game": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "game"
+      }
+    },
+    "e_spell_cast_signature_eye": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "eye"
+      }
+    },
+    "e_spell_cast_signature_butoh": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "butoh"
+      }
+    },
+    "e_spell_cast_signature_food": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "food"
+      }
+    },
+    "e_spell_cast_signature_legion": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "legion"
+      }
+    },
+    "e_spell_cast_signature_memory": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "memory"
+      }
+    },
+    "e_spell_cast_signature_modification": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "modification"
+      }
+    },
+    "e_spell_cast_signature_song": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "song"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_signature_creation",
+      "e_spell_cast_signature_copy",
+      "e_spell_cast_signature_illusion",
+      "e_spell_cast_signature_dream",
+      "e_spell_cast_signature_thread",
+      "e_spell_cast_signature_cotton",
+      "e_spell_cast_signature_recombination",
+      "e_spell_cast_signature_painting",
+      "e_spell_cast_signature_dice",
+      "e_spell_cast_signature_game",
+      "e_spell_cast_signature_eye",
+      "e_spell_cast_signature_butoh",
+      "e_spell_cast_signature_food",
+      "e_spell_cast_signature_legion",
+      "e_spell_cast_signature_memory",
+      "e_spell_cast_signature_modification",
+      "e_spell_cast_signature_song"
+    ]
+  ],
+  "rewards": {
+    "experience": 40
+  }
+}

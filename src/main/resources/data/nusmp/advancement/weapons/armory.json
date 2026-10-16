@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:weapons/elsdocia",
+  "display": {
+    "icon": {
+      "id": "minecraft:netherite_sword"
+    },
+    "title": {
+      "translate": "advancement.nusmp.weapons.armory.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.weapons.armory.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_weapon_engraved_10": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "weapon.engraved",
+        "count": 10
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_weapon_engraved_10"
+    ]
+  ],
+  "rewards": {
+    "experience": 250
+  }
+}

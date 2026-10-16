@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:dungeon/living_dungeon",
+  "display": {
+    "icon": {
+      "id": "minecraft:nautilus_shell"
+    },
+    "title": {
+      "translate": "advancement.nusmp.dungeon.charybdis.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.dungeon.charybdis.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_dungeon_floor_boss_charybdis": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "dungeon.floor_boss",
+        "arg": "charybdis"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_dungeon_floor_boss_charybdis"
+    ]
+  ],
+  "rewards": {
+    "experience": 150
+  }
+}
