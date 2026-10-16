@@ -30,6 +30,8 @@ public final class ZogratisCommand {
     private static <T extends ZogratisBoss> LiteralArgumentBuilder<CommandSourceStack> single(String name, DeferredHolder<EntityType<?>, EntityType<T>> type, String message) {
         return Commands.literal(name).requires(s -> s.hasPermission(2)).executes(ctx -> {
             ServerLevel level = ctx.getSource().getLevel();
+            if ("lucius".equals(name) && com.newuniverse.nusmp.arena.ArenaConfig.arenaOnly() && !com.newuniverse.nusmp.arena.ZogratisArena.in(level))
+                return fail(ctx, "Lucius will only answer in his arena: use the Hourglass of the Final Hour (or /zogratis_arena enter), then /multiverse boss lucius there.");      // 1.46.0
             T boss = ZogratisBoss.spawnAt(level, type.get(), ctx.getSource().getPosition(), 0f);
             if (boss == null) return fail(ctx, name + " could not be summoned here.");
             ctx.getSource().sendSuccess(() -> Component.literal(message), true);

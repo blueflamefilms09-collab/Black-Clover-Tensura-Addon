@@ -3,9 +3,9 @@ package com.newuniverse.nusmp.boss.god;
 /**
  * Why: against players with enormous armour, Existence Points and regeneration, a spell that deals "base damage" is either nothing or a
  * one-shot depending on the build. The owner wants his spells to deal a <i>share of the victim's maximum health</i> as true damage
- * (armour does not matter), growing with how heavy the move is: 3% for a chip, up to 12% for a finisher. This pure class is the table
- * (tier of a move, the percent, the guaranteed-critical factor, the cap of one hit at 40% of a player's maximum so nothing here ever
- * one-shots a full-health player) and the arithmetic; the shared 30%-per-second pressure cap of the final arc still applies on top, where
+ * (armour does not matter), growing with how heavy the move is: 1.5% for a chip, up to 6% for a finisher (1.45.0 had 3% to 12%, halved in 1.46.0 to make the fight fair). This pure class is the table
+ * (tier of a move, the percent, the guaranteed-critical factor, the cap of one hit at 25% of a player's maximum so nothing here ever
+ * one-shots a full-health player) and the arithmetic; the shared pressure cap of the final arc (18% a second in the god tier) still applies on top, where
  * the damage arrives. The same percent, scaled by a factor, is how much of the victim's magicule pool a hit drains (the Tensura "EP"
  * pool that is cheap to reach).
  */
@@ -14,7 +14,7 @@ public final class TrueDamage {
 
     /** The tiers of a move, lightest to heaviest, with the percent of the victim's maximum health each takes. */
     public enum Tier {
-        CHIP(3.0), LIGHT(4.5), MEDIUM(6.5), HEAVY(9.0), FINISHER(12.0);
+        CHIP(1.5), LIGHT(2.25), MEDIUM(3.25), HEAVY(4.5), FINISHER(6.0);
 
         public final double percent;
 
@@ -22,7 +22,7 @@ public final class TrueDamage {
     }
 
     /** One hit never takes more than this share of the victim's maximum health, whatever the tier, the scale and the critical. */
-    public static final double SINGLE_HIT_CAP = 0.40;
+    public static final double SINGLE_HIT_CAP = 0.25;
     /** The factor of a guaranteed critical (the next hit after a Time Stasis Trap). */
     public static final float CRIT_FACTOR = 1.5f;
 

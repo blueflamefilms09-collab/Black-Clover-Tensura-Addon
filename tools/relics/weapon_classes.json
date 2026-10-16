@@ -593,7 +593,8 @@
   "scimitar_of_the_seasons": "sabre",
   "spider_sword": "sabre",
   "stick_of_youth": "club",
-  "warlute": "crossbow"
+  "warlute": "crossbow",
+  "zogratis_hourglass": "handitem"
  },
  "_excluded_was": {
   "elsdocia": "rebuilt by the Elsdocia agent",

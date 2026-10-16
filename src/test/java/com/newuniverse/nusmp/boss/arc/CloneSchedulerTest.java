@@ -115,4 +115,38 @@ class CloneSchedulerTest {
         assertEquals(0f, b.allow(1, 121, -3f, 40f));
         assertEquals(0f, b.allow(1, 121, 3f, 0f));
     }
+
+    @Test
+    void theGodTierShowsTwoToThreeCopiesAndOneMorePerExtraPlayer() {
+        assertEquals(2, CloneScheduler.cloneCountGod(1.0f, 1));
+        assertEquals(2, CloneScheduler.cloneCountGod(0.5f, 2));
+        assertEquals(3, CloneScheduler.cloneCountGod(0.14f, 2));
+        assertEquals(3, CloneScheduler.cloneCountGod(1.0f, 3));
+        assertEquals(4, CloneScheduler.cloneCountGod(1.0f, 4));
+        assertEquals(5, CloneScheduler.cloneCountGod(0.1f, 4));
+        assertEquals(5, CloneScheduler.cloneCountGod(0.0f, 20), "five at the most");
+        assertEquals(2, CloneScheduler.cloneCountGod(Float.NaN, 0));
+    }
+
+    @Test
+    void theGodTierCastsEveryTwelveSeconds() {
+        CloneScheduler s = new CloneScheduler();
+        s.setInterval(CloneScheduler.GOD_CAST_INTERVAL);
+        s.resize(2, 0);
+        boolean[] alive = {true, true};
+        int casts = 0;
+        for (long t = 0; t < 2400; t++) casts += s.tick(t, alive).size();
+        assertTrue(casts <= 2 * (2400 / CloneScheduler.GOD_CAST_INTERVAL) + 2, "slower: " + casts);
+        assertTrue(casts >= 2 * (2400 / CloneScheduler.GOD_CAST_INTERVAL) - 4, "still casting: " + casts);
+        s.setInterval(-5);
+        assertEquals(CloneScheduler.GOD_CAST_INTERVAL, s.interval(), "a bad value is ignored");
+    }
+
+    @Test
+    void aSmallerShareCapsAVictimsSecondLower() {
+        CloneScheduler.PressureBudget b = new CloneScheduler.PressureBudget();
+        assertEquals(7.2f, b.allow(1, 100, 20f, 40f, 0.18), 1e-4f);
+        assertEquals(0f, b.allow(1, 101, 1f, 40f, 0.18), 1e-4f);
+        assertEquals(12f, new CloneScheduler.PressureBudget().allow(1, 100, 20f, 40f, Double.NaN), 1e-4f, "garbage falls back to the classic 30%");
+    }
 }

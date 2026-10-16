@@ -2460,6 +2460,53 @@ SPECS += [("weapon_of_resurgence", weapon_of_resurgence)]
 RELICS += [("magebane_shield", magebane_shield)]                  # upright: placed on its sprite's box like a relic
 
 
+def zogratis_hourglass(m, a):
+    """1.46.0, the Hourglass of the Final Hour: two gold plates joined by four posts, a glass of two stacked bulbs with a golden sand that
+    glows, and a violet gem on the crown. Upright, placed on its icon's box like a relic (tools/gen_zogratis_arena_assets.py makes the icon)."""
+    gold = (214, 164, 48)
+    dark = (96, 64, 22)
+    glass = (170, 204, 236)
+
+    def glass_paint(face, i, j, fw, fh):
+        c = np.array(glass, np.float32) + fz(i * 1.7, j * 1.3, face) * 14
+        if i == 0 or j == 0 or i == fw - 1 or j == fh - 1:
+            c = c * 0.82 + 24
+        return col(c), None
+
+    def sand_paint(face, i, j, fw, fh):
+        c = np.array((238, 194, 82), np.float32) + fz(i * 1.9, j * 1.1, face + 3) * 22
+        if face == 0:
+            c = c + 14
+        return col(c), col((255, 206, 90), 0.85)
+
+    def gem_paint(face, i, j, fw, fh):
+        return col((150, 90, 224)), col((190, 130, 255), 1.0)
+
+    # plates and posts
+    for (y0, y1) in ((-10.0, -8.4), (8.4, 10.0)):
+        box(m, a, -6.5, y0, -6.5, 6.5, y1, 6.5, flat(gold, 12, 2))
+    for sx in (-5.2, 5.2):
+        for sz in (-5.2, 5.2):
+            box(m, a, sx - 0.7, -8.4, sz - 0.7, sx + 0.7, 8.4, sz + 0.7, flat(dark, 10, 5))
+    # the glass: upper bulb narrowing to the neck, lower bulb widening again
+    layers = [(0.7, 0.6, 2.0), (1.6, 2.0, 3.4), (2.5, 3.4, 4.8), (3.3, 4.8, 6.2), (3.9, 6.2, 7.8)]
+    for hw, y0, y1 in layers:
+        box(m, a, -hw, y0, -hw, hw, y1, hw, glass_paint)
+        box(m, a, -hw, -y1, -hw, hw, -y0, hw, glass_paint)
+    box(m, a, -0.7, -0.7, -0.7, 0.7, 0.7, 0.7, glass_paint)
+    # the sand: a thread through the neck, a heap below, a little left above
+    box(m, a, -0.45, -0.6, -0.45, 0.45, 0.6, 0.45, sand_paint)
+    for hw, y0, y1 in ((3.55, -7.5, -6.2), (3.0, -6.2, -4.8), (2.1, -4.8, -3.4), (1.1, -3.4, -2.4), (0.5, -2.4, -1.6)):
+        box(m, a, -hw, y0, -hw, hw, y1, hw, sand_paint)
+    box(m, a, -1.8, 4.8, -1.8, 1.8, 5.8, 1.8, sand_paint)
+    box(m, a, -0.45, 1.6, -0.45, 0.45, 4.8, 0.45, sand_paint)
+    # the crown gem
+    box(m, a, -1.5, 10.0, -1.5, 1.5, 12.0, 1.5, gem_paint)
+    return dict(glow=("FFD35A", 0.1, 0.4, 0.95))
+
+RELICS += [("zogratis_hourglass", zogratis_hourglass)]               # 1.46.0: upright, placed on its icon's box; run tools/gen_zogratis_arena_assets.py first
+
+
 # ================================================================ placement on the old sprite
 def sprite_axis(item_id):
     a = np.asarray(Image.open(os.path.join(ASSETS, "textures", "item", item_id + ".png")).convert("RGBA"))

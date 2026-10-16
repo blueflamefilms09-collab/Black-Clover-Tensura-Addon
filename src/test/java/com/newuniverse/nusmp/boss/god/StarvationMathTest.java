@@ -10,6 +10,7 @@ class StarvationMathTest {
     void onePercentASecondIsAFiftiethOfAPercentAPerTick() {
         assertEquals(0.5, StarvationMath.perTick(1000.0, 1.0), 1e-9);
         assertEquals(10.0, StarvationMath.perTick(1000.0, 1.0) * 20, 1e-9);
+        assertEquals(5.0, StarvationMath.perTick(1000.0, 0.5) * 20, 1e-9, "the 1.46.0 default: half a percent a second");
     }
 
     @Test
@@ -21,13 +22,20 @@ class StarvationMathTest {
     }
 
     @Test
-    void aPulseIsFivePercentOfTheMaximum() {
+    void aPulseIsAPercentOfTheMaximum() {
         assertEquals(50.0, StarvationMath.pulse(1000.0, 5.0), 1e-9);
+        assertEquals(30.0, StarvationMath.pulse(1000.0, 3.0), 1e-9, "the 1.46.0 default pulse");
     }
 
     @Test
     void theDrainLowersThePool() {
         assertEquals(940.0, StarvationMath.apply(1000.0, 1000.0, 60.0), 1e-9);
+    }
+
+    @Test
+    void theFloorKeepsOneStarterPageCastable() {
+        assertTrue(StarvationMath.FLOOR_FRACTION >= 0.08, "a starter page costs 8% of the pool");
+        assertEquals(100.0, StarvationMath.apply(1000.0, 1000.0, 5000.0), 1e-9);
     }
 
     @Test

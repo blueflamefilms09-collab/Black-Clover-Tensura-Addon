@@ -79,4 +79,24 @@ class CoreGemMathTest {
         b.add(-5f);
         assertFalse(b.active());
     }
+
+    @Test
+    void theGodGemWindowIsFiftyPercentLongerAndAnnouncedEarlier() {
+        CoreGemMath.Timing g = CoreGemMath.Timing.GOD, c = CoreGemMath.Timing.CLASSIC;
+        assertEquals(c.openTicks() * 3 / 2, g.openTicks());
+        assertEquals(c.closedFirst(), g.closedFirst(), "the clones still come first");
+        assertEquals(c.cycleTicks() - c.openTicks(), g.cycleTicks() - g.openTicks(), "the closed time is unchanged");
+        assertTrue(g.warnTicks() > c.warnTicks());
+        int open = 0;
+        for (long t = 0; t < g.cycleTicks(); t++) if (g.exposed(t, false)) open++;
+        assertEquals(g.openTicks(), open);
+        assertFalse(g.exposed(119, false));
+        assertTrue(g.exposed(120, false));
+        assertTrue(g.exposed(359, false));
+        assertFalse(g.exposed(360, false));
+        assertEquals(g.warnTicks(), g.opensIn(g.closedFirst() - g.warnTicks()));
+        assertEquals(0, g.opensIn(200));
+        assertTrue(g.exposed(5, true));
+        assertEquals(c.opensIn(100), CoreGemMath.opensIn(100), "the classic timing is the old one");
+    }
 }

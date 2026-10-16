@@ -12,6 +12,8 @@ import com.newuniverse.nusmp.boss.arc.PaladinTurn;
 import com.newuniverse.nusmp.boss.arc.PrecogMath;
 import com.newuniverse.nusmp.boss.arc.TimeReversalMath;
 import com.newuniverse.nusmp.boss.bar.BossBarSync;
+import com.newuniverse.nusmp.boss.god.LuciusBalance;
+import com.newuniverse.nusmp.boss.god.LuciusGodConfig;
 import com.newuniverse.nusmp.boss.god.TrueDamage;
 import com.newuniverse.nusmp.boss.rules.BossHealGuard;
 import com.newuniverse.nusmp.boss.rules.BossRulesConfig;
@@ -114,7 +116,7 @@ final class LuciusArcDirector {
     /** Is the gem out now (server truth)? */
     boolean gemOut(long now) {
         if (arc.phase() != LuciusArc.CLONES || now < gemClosedUntil || actStart < 0 || b.transforming()) return false;
-        return CoreGemMath.exposed(now - actStart, channelsClones());
+        return gemTiming().exposed(now - actStart, channelsClones());
     }
 
     private boolean channelsClones() {
@@ -228,7 +230,7 @@ final class LuciusArcDirector {
     }
 
     private void startChain(LuciusChains.Chain c, LivingEntity target, long now) {
-        if (runner.start(c, now)) chainTarget = target.getUUID();
+        if (runner.start(c, now, chainCooldown(c))) chainTarget = target.getUUID();
     }
 
     /**
@@ -247,7 +249,7 @@ final class LuciusArcDirector {
             if (!preempt) return false;
             b.interruptCast();
         }
-        if (!runner.start(c, now)) return false;
+        if (!runner.start(c, now, chainCooldown(c))) return false;
         chainTarget = target.getUUID();
         mark = dest = retreat = null;
         return true;
@@ -400,9 +402,9 @@ final class LuciusArcDirector {
             case CLONE_WAVE -> spawnClones(sl, t);
             case RETREAT -> ArcSteps.retreatFire(b, retreat);
             case SOUL_RAY -> GodSteps.soulRayFire(b, t);
-            case RELIC_EMP -> GodSteps.empFire(b, sl);
-            case SEVERANCE -> GodSteps.severFire(b, t);
-            case STARVATION_PULSE -> GodSteps.starveFire(b, sl);
+            case RELIC_EMP -> { if (!b.god().graceOn(sl.getGameTime())) GodSteps.empFire(b, sl); }          // 1.46.0: not in the grace of a stage change
+            case SEVERANCE -> { if (!b.god().graceOn(sl.getGameTime())) GodSteps.severFire(b, t); }
+            case STARVATION_PULSE -> { if (!b.god().graceOn(sl.getGameTime())) GodSteps.starveFire(b, sl); }
             case BLOOD_TIDE -> GodSteps.bloodFire(b, t);
             case COUNTER_STRIKE -> GodSteps.counterFire(b, mark, t, runner.chainId() != null && LuciusChains.CHECKMATE_COUNTER.equals(runner.chainId()) ? TrueDamage.Tier.FINISHER : TrueDamage.Tier.HEAVY);
             default -> { }
@@ -606,16 +608,18 @@ final class LuciusArcDirector {
     private void tickGem(ServerLevel sl, long now) {
         boolean out = gemOut(now);
         if (arc.phase() == LuciusArc.CLONES && actStart >= 0 && !out) {
-            int in = CoreGemMath.opensIn(now - actStart);
-            if (in == CoreGemMath.WARN_TICKS && !warned && now >= gemClosedUntil) {
+            CoreGemMath.Timing tm = gemTiming();
+            int in = tm.opensIn(now - actStart);
+            if (in == tm.warnTicks() && !warned && now >= gemClosedUntil) {
                 warned = true;
                 LuciusFx.chime(sl, b.position(), 1.2f);
-                ZogratisVfx.divineSigil(sl, b.position(), 2.2, CoreGemMath.WARN_TICKS, GOLD, true);
+                ZogratisVfx.divineSigil(sl, b.position(), 2.2, tm.warnTicks(), GOLD, true);
             }
-            if (in != CoreGemMath.WARN_TICKS) warned = false;
+            if (in != tm.warnTicks()) warned = false;
         }
         if (out && !gemWasOut) {
-            int ticks = channelsClones() ? 80 : (int) Math.max(20, CoreGemMath.CLOSED_FIRST + CoreGemMath.OPEN_TICKS - ((now - actStart) % CoreGemMath.CYCLE_TICKS));
+            CoreGemMath.Timing tmo = gemTiming();
+            int ticks = channelsClones() ? 80 : (int) Math.max(20, tmo.closedFirst() + tmo.openTicks() - ((now - actStart) % tmo.cycleTicks()));
             VfxSpawn.sendFollowing(sl, VfxShape.LUCIUS_CORE_GEM, b, b.position().add(0, b.getBbHeight() * 0.68, 0), 0xFF000000 | FxMath.divine(b.power()), ticks, 0.5f);
             LuciusFx.sound(sl, b.position(), SoundEvents.BEACON_ACTIVATE, 2f, 1.6f);
             b.announce("The gem on Lucius's chest is open: a critical blow or anti-magic on it shatters his resonance.");
@@ -623,14 +627,28 @@ final class LuciusArcDirector {
         gemWasOut = out;
     }
 
+    /** 1.46.0: the gem window of this fight: the god tier's is 50% longer and announced earlier (the owner's balance pass). */
+    private CoreGemMath.Timing gemTiming() { return b.godOn() ? CoreGemMath.Timing.GOD : CoreGemMath.Timing.CLASSIC; }
+
+    /** 1.46.0: how many copies are wanted: the god tier shows two to three (one more per player beyond two, five at most), the 1.42.0 fight three to five. */
+    private int cloneWant(float healthFraction) {
+        if (b.godOn()) return CloneScheduler.cloneCountGod(healthFraction, b.god().arenaPlayers());
+        return Math.max(CloneScheduler.MIN_CLONES, CloneScheduler.cloneCount(healthFraction));
+    }
+
+    /** 1.46.0: the cooldown a chain gets when it starts: the god tier divides it by the difficulty, above the floors of {@link LuciusBalance}; the 1.42.0 fight keeps the table's number. */
+    private int chainCooldown(LuciusChains.Chain c) {
+        return b.godOn() ? LuciusBalance.cooldown(c.id(), c.cooldown(), LuciusGodConfig.difficulty()) : c.cooldown();
+    }
+
     private boolean needsClones() {
         float f = b.getHealth() / Math.max(1f, b.getMaxHealth());
-        return b.clones().size() < Math.max(CloneScheduler.MIN_CLONES, CloneScheduler.cloneCount(f));
+        return b.clones().size() < cloneWant(f);
     }
 
     private void spawnClones(ServerLevel sl, LivingEntity around) {
         float f = b.getHealth() / Math.max(1f, b.getMaxHealth());
-        int want = Math.max(CloneScheduler.MIN_CLONES, CloneScheduler.cloneCount(f));
+        int want = cloneWant(f);
         List<ZogratisCloneEntity> live = b.clones();
         boolean[] used = new boolean[CloneScheduler.MAX_CLONES];
         for (ZogratisCloneEntity c : live) if (c.arcSlot() >= 0 && c.arcSlot() < used.length) used[c.arcSlot()] = true;
@@ -654,7 +672,8 @@ final class LuciusArcDirector {
 
     private void tickClones(ServerLevel sl, long now, float frac) {
         if (arc.phase() != LuciusArc.CLONES) return;
-        int want = Math.max(CloneScheduler.MIN_CLONES, CloneScheduler.cloneCount(frac));
+        clones.setInterval(b.godOn() ? CloneScheduler.GOD_CAST_INTERVAL : CloneScheduler.CAST_INTERVAL);
+        int want = cloneWant(frac);
         if (clones.slots() != want) clones.resize(want, now);
         if (b.tickCount % 10 != 0 || b.julius()) return;
         List<ZogratisCloneEntity> live = b.clones();

@@ -10,8 +10,8 @@ package com.newuniverse.nusmp.boss.god;
 public final class StarvationMath {
     private StarvationMath() {}
 
-    /** The pool is never drained below this share of its maximum (1%): above the 0.5% black-out line of the mana law. */
-    public static final double FLOOR_FRACTION = 0.01;
+    /** The pool is never drained below this share of its maximum (10%, was 1%): above a starter page's 8% cost, so one basic spell can always be cast, and far above the 0.5% black-out line of the mana law. */
+    public static final double FLOOR_FRACTION = 0.10;
     public static final int TICKS_PER_SECOND = 20;
 
     /** The amount drained each tick for 'pctPerSecond' percent of the maximum per second (0 for a non-positive percent). */

@@ -119,7 +119,7 @@ public final class LuciusChains {
             new Chain(SOUL_RAY_CHAIN, phases(1), 420, 3, List.of(s(Kind.SOUL_RAY, 18, 20, true))),
             // stage 2, Gravity and Blood: the blood tide, the starvation pulse, the severance binding
             new Chain(BLOOD_TIDE_CHAIN, phases(2, 3), 380, 4, List.of(s(Kind.BLOOD_TIDE, 22, 16, true))),
-            new Chain(STARVATION_PULSE_CHAIN, phases(2, 3), 700, 2, List.of(s(Kind.STARVATION_PULSE, 20, 30, false))),
+            new Chain(STARVATION_PULSE_CHAIN, phases(2, 3), 240, 2, List.of(s(Kind.STARVATION_PULSE, 20, 30, false))),
             new Chain(SEVERANCE_CHAIN, phases(2, 3), 800, 2, List.of(s(Kind.SEVERANCE, 28, 20, false))),
             // stage 3, Space: the relic pulse
             new Chain(RELIC_EMP_CHAIN, phases(3), 900, 3, List.of(s(Kind.RELIC_EMP, 24, 20, false))),
@@ -219,11 +219,14 @@ public final class LuciusChains {
         public Map<String, Long> readyAt() { return readyAt; }
 
         /** Starts a chain now. False if one is already running or the chain is not valid. Sets the chain's cooldown. */
-        public boolean start(Chain c, long now) {
+        public boolean start(Chain c, long now) { return start(c, now, c == null ? 0 : c.cooldown()); }
+
+        /** 1.46.0: like {@link #start(Chain, long)} with the cooldown chosen by the caller (the god tier scales it by its difficulty, above the floors). */
+        public boolean start(Chain c, long now, int cooldownTicks) {
             if (active() || !valid(c)) return false;
             chain = c;
             step = 0;
-            readyAt.put(c.id(), now + c.cooldown());
+            readyAt.put(c.id(), now + Math.max(0, cooldownTicks));
             enterTelegraph();
             return true;
         }

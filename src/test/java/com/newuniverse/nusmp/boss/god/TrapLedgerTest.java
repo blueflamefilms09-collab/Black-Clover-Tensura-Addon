@@ -4,27 +4,29 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** Time Stasis Traps: six at most, twelve seconds, armed after a warning, one catch per player per twelve seconds. */
+/** Time Stasis Traps: three at most (was six), twelve seconds, armed after a 24-tick warning, one catch per player per twelve seconds. */
 class TrapLedgerTest {
     @Test
-    void sixAtOnceAndNoSeventh() {
+    void threeAtOnceAndNoFourth() {
         TrapLedger l = new TrapLedger();
-        for (int i = 0; i < 6; i++) assertNotNull(l.lay(i * 10, 0, 0, 0, TrapLedger.LIFE_TICKS));
+        assertEquals(3, TrapLedger.MAX_TRAPS);
+        for (int i = 0; i < 3; i++) assertNotNull(l.lay(i * 10, 0, 0, 0, TrapLedger.LIFE_TICKS));
         assertNull(l.lay(100, 0, 0, 0, TrapLedger.LIFE_TICKS));
-        assertEquals(6, l.liveCount(10));
+        assertEquals(3, l.liveCount(10));
     }
 
     @Test
     void aTrapLivesTwelveSecondsThenMakesRoom() {
         TrapLedger l = new TrapLedger();
-        for (int i = 0; i < 6; i++) l.lay(i * 10, 0, 0, 0, TrapLedger.LIFE_TICKS);
-        assertEquals(6, l.liveCount(239));
+        for (int i = 0; i < 3; i++) l.lay(i * 10, 0, 0, 0, TrapLedger.LIFE_TICKS);
+        assertEquals(3, l.liveCount(239));
         assertEquals(0, l.liveCount(240));
         assertNotNull(l.lay(0, 0, 0, 240, TrapLedger.LIFE_TICKS));
     }
 
     @Test
     void aTrapIsHarmlessUntilItsWarningIsOver() {
+        assertEquals(24, TrapLedger.ARM_TICKS, "the warning is 24 ticks since 1.46.0");
         TrapLedger l = new TrapLedger();
         l.lay(0, 64, 0, 100, TrapLedger.LIFE_TICKS);
         assertNull(l.catchAt("p", 0.5, 64, 0, 100 + TrapLedger.ARM_TICKS - 1));

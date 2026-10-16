@@ -25,6 +25,29 @@ public final class CoreGemMath {
 
     public enum Hit { HIDDEN, NORMAL, SHATTER }
 
+    /**
+     * 1.46.0: the timing of the gem window as data. {@link #CLASSIC} is the 1.42.0 one (8 s open of every 14 s, warning 1 s before);
+     * {@link #GOD} keeps the closed time and the first closed stretch and opens 50% longer (12 s of every 18 s) with a 2 s warning.
+     */
+    public record Timing(int openTicks, int cycleTicks, int closedFirst, int warnTicks) {
+        public static final Timing CLASSIC = new Timing(OPEN_TICKS, CYCLE_TICKS, CLOSED_FIRST, WARN_TICKS);
+        public static final Timing GOD = new Timing(OPEN_TICKS * 3 / 2, CYCLE_TICKS + OPEN_TICKS / 2, CLOSED_FIRST, WARN_TICKS * 2);
+
+        public boolean exposed(long ticksIntoAct, boolean channeling) {
+            if (channeling) return true;
+            if (ticksIntoAct < 0) return false;
+            long m = ticksIntoAct % cycleTicks;
+            return m >= closedFirst && m < closedFirst + openTicks;
+        }
+
+        public int opensIn(long ticksIntoAct) {
+            if (ticksIntoAct < 0) return closedFirst;
+            long m = ticksIntoAct % cycleTicks;
+            if (m >= closedFirst && m < closedFirst + openTicks) return 0;
+            return (int) (m < closedFirst ? closedFirst - m : cycleTicks - m + closedFirst);
+        }
+    }
+
     /** Is the gem out, 'ticksIntoAct' ticks after act 3 began? 'channeling' keeps it out whatever the cycle says. */
     public static boolean exposed(long ticksIntoAct, boolean channeling) {
         if (channeling) return true;

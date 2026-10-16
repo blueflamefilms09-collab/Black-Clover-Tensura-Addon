@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "GNG",
+    "ACA",
+    "DED"
+  ],
+  "key": {
+    "G": { "item": "minecraft:gold_ingot" },
+    "N": { "item": "minecraft:nether_star" },
+    "A": { "item": "minecraft:amethyst_shard" },
+    "C": { "item": "minecraft:clock" },
+    "D": { "item": "minecraft:diamond" },
+    "E": { "item": "minecraft:ender_pearl" }
+  },
+  "result": {
+    "id": "nusmp:zogratis_hourglass",
+    "count": 1
+  }
+}

@@ -4,12 +4,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The percent-of-maximum true damage: tiers, critical, the 40% single-hit cap, and the pool drain. */
+/** The percent-of-maximum true damage: tiers (halved in 1.46.0), critical, the 25% single-hit cap (was 40%), and the pool drain. */
 class TrueDamageTest {
     @Test
-    void tiersGrowFromThreeToTwelvePercent() {
-        assertEquals(3.0, TrueDamage.Tier.CHIP.percent);
-        assertEquals(12.0, TrueDamage.Tier.FINISHER.percent);
+    void tiersGrowFromOneAndAHalfToSixPercent() {
+        assertEquals(1.5, TrueDamage.Tier.CHIP.percent);
+        assertEquals(6.0, TrueDamage.Tier.FINISHER.percent);
         double last = 0;
         for (TrueDamage.Tier t : TrueDamage.Tier.values()) {
             assertTrue(t.percent > last, t.name());
@@ -33,9 +33,9 @@ class TrueDamageTest {
 
     @Test
     void theAmountIsAShareOfTheVictimsMaximumHealth() {
-        assertEquals(6f, TrueDamage.amount(TrueDamage.Tier.CHIP, 200f, 1.0, false), 1e-4f);
-        assertEquals(24f, TrueDamage.amount(TrueDamage.Tier.FINISHER, 200f, 1.0, false), 1e-4f);
-        assertEquals(240f, TrueDamage.amount(TrueDamage.Tier.FINISHER, 2000f, 1.0, false), 1e-3f, "armour and EP do not enter: only the maximum");
+        assertEquals(3f, TrueDamage.amount(TrueDamage.Tier.CHIP, 200f, 1.0, false), 1e-4f);
+        assertEquals(12f, TrueDamage.amount(TrueDamage.Tier.FINISHER, 200f, 1.0, false), 1e-4f);
+        assertEquals(120f, TrueDamage.amount(TrueDamage.Tier.FINISHER, 2000f, 1.0, false), 1e-3f, "armour and EP do not enter: only the maximum");
     }
 
     @Test
@@ -46,11 +46,11 @@ class TrueDamageTest {
     }
 
     @Test
-    void noHitEverTakesMoreThanFortyPercentOfAFullHealthPlayer() {
+    void noHitEverTakesMoreThanTwentyFivePercentOfAFullHealthPlayer() {
         for (TrueDamage.Tier t : TrueDamage.Tier.values())
             for (double scale : new double[]{1.0, 2.0, 10.0, 100.0})
-                assertTrue(TrueDamage.amount(t, 100f, scale, true) <= 40f + 1e-4f, t + " x" + scale);
-        assertEquals(40f, TrueDamage.amount(TrueDamage.Tier.FINISHER, 100f, 100.0, true), 1e-4f);
+                assertTrue(TrueDamage.amount(t, 100f, scale, true) <= 25f + 1e-4f, t + " x" + scale);
+        assertEquals(25f, TrueDamage.amount(TrueDamage.Tier.FINISHER, 100f, 100.0, true), 1e-4f);
     }
 
     @Test
@@ -63,9 +63,9 @@ class TrueDamageTest {
 
     @Test
     void thePoolDrainFollowsThePercentAndTheSameCap() {
-        assertEquals(0.09, TrueDamage.poolFraction(TrueDamage.Tier.HEAVY, 1.0), 1e-9);
-        assertEquals(0.045, TrueDamage.poolFraction(TrueDamage.Tier.HEAVY, 0.5), 1e-9);
-        assertEquals(0.40, TrueDamage.poolFraction(TrueDamage.Tier.FINISHER, 50.0), 1e-9);
+        assertEquals(0.045, TrueDamage.poolFraction(TrueDamage.Tier.HEAVY, 1.0), 1e-9);
+        assertEquals(0.0225, TrueDamage.poolFraction(TrueDamage.Tier.HEAVY, 0.5), 1e-9);
+        assertEquals(0.25, TrueDamage.poolFraction(TrueDamage.Tier.FINISHER, 50.0), 1e-9);
         assertEquals(0.0, TrueDamage.poolFraction(TrueDamage.Tier.HEAVY, 0.0));
         assertEquals(0.0, TrueDamage.poolFraction(null, 1.0));
     }
