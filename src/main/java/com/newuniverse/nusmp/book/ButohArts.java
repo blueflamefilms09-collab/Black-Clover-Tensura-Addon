@@ -159,6 +159,7 @@ final class ButohArts {
         b.vfx(p, VfxShape.BUTOH_FX1, from.add(0, 1, 0), dest.add(0, 1, 0), 14, 1.0f);
         p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 30, 2));
         p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 60, 1));
+        com.newuniverse.nusmp.boss.god.DodgeEvents.record(p);                           // 1.45.0: a dodge, for the god-tier Lucius's Time Stasis Traps
         return true;
     }
 

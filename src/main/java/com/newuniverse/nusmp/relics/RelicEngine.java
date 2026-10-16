@@ -391,6 +391,7 @@ public final class RelicEngine {
      */
     public static boolean activate(ServerPlayer p, ItemStack stack, RelicDef def, Act act, boolean sneaking, int chargeTicks) {
         if (p == null || stack == null || def == null || act == null || !p.isAlive() || p.isSpectator()) return false;
+        if (RelicNullification.isNullified(p)) { tell(p, "Your relics are de-attuned for a moment: they do not answer.", ChatFormatting.GRAY); return false; }     // 1.45.0
         if (!Attune.works(stack, def, p)) { tell(p, def.cardName() + " is not attuned to you.", ChatFormatting.LIGHT_PURPLE); return false; }
         if (act.sneakRequired() && !sneaking) { tell(p, act.displayName() + " needs you to sneak.", ChatFormatting.GRAY); return false; }
         if (act.holdTicks() > 0 && chargeTicks < act.holdTicks()) {

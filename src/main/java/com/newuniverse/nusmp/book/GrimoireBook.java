@@ -233,7 +233,11 @@ public abstract class GrimoireBook extends Skill {
         if (isSummon(mode)) { GrimoireSummon.toggle(p, this); return; }
         if (isStore(mode)) { com.newuniverse.nusmp.anim.WeaponStore.store(p, this, instance); return; }
         if (isDrawWeapon(mode)) { com.newuniverse.nusmp.anim.WeaponStore.draw(p, this, instance); return; }
-        if (isManaZone(mode)) { com.newuniverse.nusmp.mana.ManaLaw.toggleZone(p); return; }
+        if (isManaZone(mode)) {
+            boolean wasOn = com.newuniverse.nusmp.mana.ManaLaw.zoneActive(p);
+            if (com.newuniverse.nusmp.mana.ManaLaw.toggleZone(p) && !wasOn) com.newuniverse.nusmp.entity.zogratis.LuciusCapabilities.onManaZone(p);      // 1.45.0: switching the zone ON is a massive channel to the god-tier Lucius
+            return;
+        }
         if (instant(mode)) {
             if (this instanceof LegionBook && page(mode) != null && page(mode).id().equals(LegionBook.CHESSBOARD_ID))
                 LegionArts.toggleChessboard(p);
@@ -250,6 +254,8 @@ public abstract class GrimoireBook extends Skill {
         instance.markDirty();
         // 1.27.0: one continuous hold circle (start once, grow with the charge, keep-alive) instead of a new circle every 4 ticks; none for a page that cannot be cast
         CastHoldFx.held(instance, p, colorNow(), charge, castTicks(instance, p), castReady(instance, p, mode));
+        if (com.newuniverse.nusmp.entity.zogratis.LuciusCapabilities.fightOn())          // 1.45.0: a heavy page held long enough is a massive channel to the god-tier Lucius
+            com.newuniverse.nusmp.entity.zogratis.LuciusCapabilities.onGrimoireHold(p, page(mode), charge, castTicks(instance, p), castReady(instance, p, mode));
         return true;
     }
 
@@ -263,6 +269,8 @@ public abstract class GrimoireBook extends Skill {
         int windup = instance.isMastered(player) ? 4 : 7;
         // 1.27.0: the hold circle ends (or a tap gets its one release circle) even when an earlier cast is still winding up; none for a page that cannot be cast
         CastHoldFx.released(instance, player, colorNow(), pendingUntil <= now && castReady(instance, player, mode), windup, chargePower);
+        if (com.newuniverse.nusmp.entity.zogratis.LuciusCapabilities.fightOn())          // 1.45.0: releasing a heavy page that was held long enough is a launched devastating attack
+            com.newuniverse.nusmp.entity.zogratis.LuciusCapabilities.onGrimoireRelease(player, page(mode), charge, castTicks(instance, player), castReady(instance, player, mode));
         if (pendingUntil > now) return;
         long castAt = now + windup;
         instance.getOrCreateTag().putLong("PendingCastUntil", castAt);
@@ -563,7 +571,7 @@ public abstract class GrimoireBook extends Skill {
         stamp.putLong("SecondAt", now);
         if (this instanceof LegionBook) LegionArts.updateChessboard(i, p);
         // Spirit Dive upkeep: magicule each second; ends if the Lord contract is lost.
-        if (now < i.getOrCreateTag().getLong("DiveUntil")) {
+        if (now < i.getOrCreateTag().getLong("DiveUntil") && !com.newuniverse.nusmp.relics.Severance.isSevered(p)) {      // 1.45.0: severed, the upkeep waits (nothing is drained, nothing ends)
             if (!spiritGateOpen(p) || !drain(p, EnergyHelper.getMaxMagicule(p) * 0.02)) {
                 i.getOrCreateTag().putLong("DiveUntil", now);
                 if (diveArmor() != null) com.newuniverse.nusmp.blackclover.ModeArmor.stop(p, diveArmor());

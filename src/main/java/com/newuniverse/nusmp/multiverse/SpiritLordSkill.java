@@ -156,6 +156,10 @@ public class SpiritLordSkill extends Skill {
             return;
         }
         if (mode != CALL) return;
+        if (com.newuniverse.nusmp.relics.Severance.isSevered(p)) {                         // 1.45.0: the god-tier Lucius's severance: the spirit does not answer for a few seconds, nothing is lost
+            p.displayClientMessage(Component.literal("Your spirit is severed from you for a moment.").withStyle(ChatFormatting.DARK_PURPLE), true);
+            return;
+        }
         if (!anti(i) && !SpiritBond.incarnate(p)) {
             p.displayClientMessage(Component.literal(type(i) + " has no body yet. Earn its full trust and give it a True Name (Spirit Charm).")
                     .withStyle(ChatFormatting.GRAY), true);
@@ -187,7 +191,7 @@ public class SpiritLordSkill extends Skill {
 
     @Override
     public void onTick(ManasSkillInstance i, LivingEntity e) {
-        if (!(e instanceof ServerPlayer p) || p.tickCount % 20 != 0) return;
+        if (!(e instanceof ServerPlayer p) || p.tickCount % 20 != 0 || com.newuniverse.nusmp.relics.Severance.isSevered(p)) return;
         if (p.level().getGameTime() < i.getOrCreateTag().getLong("CataclysmUntil")) {
             for (LivingEntity t : enemies(p, p.position(), 6)) hit(p, t, 3f);
         }
@@ -196,6 +200,7 @@ public class SpiritLordSkill extends Skill {
     /** Spirit body: physical blows lose 30%, falls do nothing; a living conduit also shrugs off the elements. */
     @Override
     public boolean onTakenDamage(ManasSkillInstance i, LivingEntity owner, DamageSource source, Changeable<Float> amount) {
+        if (com.newuniverse.nusmp.relics.Severance.isSevered(owner)) return true;          // 1.45.0: severed, the spirit body does not shield
         if (source.is(DamageTypeTags.IS_FALL) && MultiverseConfig.get(MultiverseConfig.SPIRIT_FALL_IMMUNE)) { amount.set(0f); return true; }
         if (!AntiMagic.isMagic(source) && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY))
             amount.set(amount.get() * (1f - MultiverseConfig.get(MultiverseConfig.SPIRIT_PHYSICAL_REDUCTION).floatValue()));

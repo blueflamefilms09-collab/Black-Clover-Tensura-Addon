@@ -123,6 +123,7 @@ public final class RougeFateEvents {
         cat.tap(victim);
         if (!deathNet) nudge(victim, from);
         sparkle(victim);
+        if (victim instanceof ServerPlayer saved) com.newuniverse.nusmp.boss.god.DodgeEvents.record(saved);      // 1.45.0: a save is a dodge, for the god-tier Lucius's Time Stasis Traps
         Component line = Component.literal(deathNet ? "Rouge pulls the thread back. That never happened." : "Rouge rewrites fate: the attack misses.").withStyle(ChatFormatting.RED);
         caster.displayClientMessage(line, true);
         if (victim instanceof ServerPlayer vp && vp != caster) vp.displayClientMessage(line, true);

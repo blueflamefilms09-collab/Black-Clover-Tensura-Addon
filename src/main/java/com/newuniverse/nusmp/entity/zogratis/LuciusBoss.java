@@ -11,6 +11,10 @@ import com.newuniverse.nusmp.boss.LuciusSpellTable;
 import com.newuniverse.nusmp.boss.LuciusSpells;
 import com.newuniverse.nusmp.boss.arc.CoreGemMath;
 import com.newuniverse.nusmp.boss.arc.LuciusArc;
+import com.newuniverse.nusmp.boss.god.HitGate;
+import com.newuniverse.nusmp.boss.god.LuciusGodConfig;
+import com.newuniverse.nusmp.boss.god.LuciusLines;
+import com.newuniverse.nusmp.boss.god.LuciusStage;
 import com.newuniverse.nusmp.boss.rules.BossRulesConfig;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
@@ -105,6 +109,8 @@ public class LuciusBoss extends ZogratisBoss {
     private final SoulMath.Budget budget = new SoulMath.Budget();
     /** 1.42.0: the arc's state machines and glue; used only while {@code luciusAnimeArc} is on. */
     private final LuciusArcDirector director = new LuciusArcDirector(this);
+    /** 1.45.0: the god tier (three stages, hit cap, true damage, the answers to what players do); used only while {@code luciusGodTier} is on. */
+    private final LuciusGod god = new LuciusGod(this);
     /** 1.42.0: the chest gem, a part of this entity (see {@link LuciusCoreGem}); built here so that its id follows his. */
     private final LuciusCoreGem gem;
     private final ServerBossEvent juliusBar = new ServerBossEvent(Component.empty(), BossEvent.BossBarColor.WHITE, BossEvent.BossBarOverlay.NOTCHED_10);
@@ -140,7 +146,8 @@ public class LuciusBoss extends ZogratisBoss {
     @Override
     public String barTitle() {
         if (julius()) return "Julius Novachrono - the Wizard King's will";
-        if (arcOn() && director.phase() > LuciusArc.NONE) return bossName() + " - " + LuciusArc.name(director.phase()) + " - " + devil().displayName + " " + power() + "%";
+        if (arcOn() && director.phase() > LuciusArc.NONE)
+            return bossName() + (godStages() ? " - " + LuciusStage.label(god.stageNo()) : "") + " - " + LuciusArc.name(director.phase()) + " - " + devil().displayName + " " + power() + "%";
         return super.barTitle();
     }
 
@@ -177,6 +184,54 @@ public class LuciusBoss extends ZogratisBoss {
     boolean arcOn() { return LuciusArcDirector.on(); }
 
     LuciusArcDirector director() { return director; }
+
+    // ================================================================ 1.45.0: the god tier
+    /** Is the god tier on (the switch {@code luciusGodTier}, which needs {@code luciusAnimeArc})? Server side. */
+    boolean godOn() { return LuciusGod.on(); }
+
+    /** Do the three stages run (the god tier and {@code luciusThreeStages})? */
+    boolean godStages() { return LuciusGodConfig.threeStages(); }
+
+    LuciusGod god() { return god; }
+
+    /** The stage, 1 to 3 (always 1 when the stages are off). */
+    int godStage() { return godStages() ? god.stageNo() : 1; }
+
+    /**
+     * With the stages on, the power curve reads all three stages as one virtual bar (stage 1 the top third), so the percentages, the
+     * Gates and the damage lines run over the whole fight and never restart with a refilled stage; off, it is the one real bar.
+     */
+    @Override
+    protected float powerHealth() {
+        if (!godOn() || !godStages()) return super.powerHealth();
+        return LuciusStage.virtualHealth(god.stageNo(), refilling() ? getMaxHealth() : getHealth(), getMaxHealth());      // while the bar refills the new stage counts as full, or the dip would raise the power early
+    }
+
+    /** The hit cap again, at the very end: nothing that is applied after the damage filter (the exposed bonus) can lift a hit over it. */
+    @Override
+    protected float lastCap(float amount) {
+        return godOn() && LuciusGodConfig.hitCap() ? Math.min(amount, HitGate.cap(getMaxHealth(), LuciusGodConfig.hitCapPct())) : amount;
+    }
+
+    @Override protected float powerMaxHealth() { return godOn() && godStages() ? LuciusStage.virtualMax(getMaxHealth()) : super.powerMaxHealth(); }
+
+    /**
+     * A fatal blow in stage 1 or 2 is not a death: {@link LuciusGod#fall} puts him on his feet and starts the next stage (decided here,
+     * in {@code die}, because that is the one door every fatal hit uses, before the death event, the loot and the bar end). The last
+     * stage, a kill command and the void die for real.
+     */
+    @Override
+    public void die(DamageSource source) {
+        if (!level().isClientSide && godOn() && !dead && god.fall(source)) return;
+        super.die(source);
+    }
+
+    /** A health of zero that never went through {@code die} (a mod calling {@code setHealth(0)}) is the same fatal blow. */
+    @Override
+    public void baseTick() {
+        if (!level().isClientSide && godOn() && !dead && fightActive() && getHealth() <= 0f && !isRemoved()) god.fall(null);
+        super.baseTick();
+    }
 
     /** The act (0 none, 1 to 3) and the flags {@link #ARC_GEM}, {@link #ARC_CHANNEL}, {@link #ARC_STAGGER}, {@link #ARC_LEVITATE}; synced. */
     public int arcFlags() { return entityData.get(ARC); }
@@ -336,6 +391,7 @@ public class LuciusBoss extends ZogratisBoss {
     @Override
     public boolean strike(LivingEntity victim, float base, boolean magic) {
         if (base <= 0f && arcOn()) return false;                                      // a blow of nothing is no blow (and has no knockback)
+        if (godOn()) return LuciusProfile.strike(this, victim, base, magic, (v, bs, m) -> god.strike(v, bs, m, super::strike));      // 1.45.0: a share of the victim's maximum health
         return LuciusProfile.strike(this, victim, base, magic, super::strike);
     }
 
@@ -354,7 +410,11 @@ public class LuciusBoss extends ZogratisBoss {
     @Override protected int tensuraKitSize() { return 4; }
 
     // ================================================================ lines
-    @Override protected String openingLine() { return "Another pack of ants climbing towards heaven. Very well. I will show you how far away it is."; }
+    @Override
+    protected String openingLine() {
+        if (godOn() && LuciusGodConfig.voiceLines()) return god.line(LuciusLines.Event.FIGHT_START);
+        return "Another pack of ants climbing towards heaven. Very well. I will show you how far away it is.";
+    }
 
     @Override
     protected String powerLine(int old, int now) {
@@ -365,7 +425,11 @@ public class LuciusBoss extends ZogratisBoss {
     }
 
     @Override protected String gatesLine() { return "The Gates of the Tree of Qliphoth open. Behold the soul that wears many faces: a god, awake."; }
-    @Override protected String deathLine() { return "So... this is how the story ends. Julius... did you win after all?"; }
+    @Override
+    protected String deathLine() {
+        if (godOn() && LuciusGodConfig.voiceLines()) return god.line(LuciusLines.Event.DEFEAT);
+        return "So... this is how the story ends. Julius... did you win after all?";
+    }
 
     private static final String[] JULIUS_LINES = {
             "Lucius... enough. I can hold him only for a moment. Please, strike now!",
@@ -393,6 +457,7 @@ public class LuciusBoss extends ZogratisBoss {
             SoulPaladins.releaseAll(this, sl);
             for (ZogratisCloneEntity c : clones()) c.fadeAway();
             releaseHeld(sl);
+            god.close();                                                          // 1.45.0: the sabotage effects come off the players, the traps go
         }
         resetFightState();
     }
@@ -445,6 +510,7 @@ public class LuciusBoss extends ZogratisBoss {
         bodySuppressedUntil = 0;
         juliusBar.removeAllPlayers();                                          // Julius's bar has watchers only while his will is up
         director.reset();
+        god.reset();
         LuciusProfile.reset(this);
         if (entityData.get(JULIUS) != 0) entityData.set(JULIUS, 0);
         entityData.set(CHARGES, precog.charges());
@@ -484,6 +550,8 @@ public class LuciusBoss extends ZogratisBoss {
             if (!fightActive() || !isAlive()) return;
             if (arcOn()) director.tick(sl, now);
             else if (arcFlags() != 0 || isNoGravity()) director.reset();            // the switch was turned off in the middle of a fight: everything back to the old way
+            if (godOn()) god.tick(sl, now);
+            else god.unregister();
             precog.tick(now, power());
             if (entityData.get(CHARGES) != precog.charges()) entityData.set(CHARGES, precog.charges());
             if (flagStopping && state() != STATE_CASTING) {                      // the Time Stop wind-up was cancelled (no target left): the sign goes out
@@ -552,7 +620,7 @@ public class LuciusBoss extends ZogratisBoss {
 
     // ================================================================ Julius
     private void updateJulius(ServerLevel sl, long now) {
-        JuliusWill.Event ev = julius.update(getHealth() / getMaxHealth(), now, fightActive() && isAlive() && !transforming());
+        JuliusWill.Event ev = julius.update(powerHealth() / powerMaxHealth(), now, fightActive() && isAlive() && !transforming());      // 1.45.0: with the stages on, the four windows are spread over the whole fight (75% in stage 1, 55% and 35% in stage 2, 12% in stage 3)
         if (ev == JuliusWill.Event.SURFACE) surface(sl, now);
         else if (ev == JuliusWill.Event.END) conceal(sl);
         if (!julius.active(now)) return;
@@ -645,6 +713,20 @@ public class LuciusBoss extends ZogratisBoss {
     // ================================================================ precognition and Julius in the damage path
     @Override
     protected float filterDamage(DamageSource source, float amount) {
+        if (!godOn() || !(level() instanceof ServerLevel sl)) return filterBody(source, amount, amount);
+        long now = sl.getGameTime();
+        if (god.reflectBlow(source, amount, now)) return 0f;                       // 1.45.0: the blow of a swapped player is absorbed, half of it goes back
+        boolean cap = LuciusGodConfig.hitCap();
+        double pct = LuciusGodConfig.hitCapPct();
+        HitGate.Result gated = cap ? HitGate.clamp(amount, getMaxHealth(), pct) : new HitGate.Result(amount, false);
+        float out = filterBody(source, gated.amount(), amount);                    // the first clamp is at the very start; the heavy-blow test still reads the raw amount
+        if (cap && out > 0f) out = Math.min(out, HitGate.cap(getMaxHealth(), pct));        // and the multipliers (Julius's window, the channel) can not lift it again
+        if (gated.clamped() && out > 0f) god.reactToClamp(source.getEntity(), sl, now);
+        return out;
+    }
+
+    /** The 1.42.0 damage filter. 'raw' is the blow before the god tier's hit cap (the Time Reversal channel breaks on a heavy blow whatever the cap leaves of it). */
+    private float filterBody(DamageSource source, float amount, float raw) {
         if (!(level() instanceof ServerLevel sl)) return amount;
         try {
             long now = sl.getGameTime();
@@ -654,7 +736,7 @@ public class LuciusBoss extends ZogratisBoss {
                 bodySuppressedUntil = now + 160;
             }
             if (julius.active(now)) return amount * JULIUS_DAMAGE;
-            if (arcOn()) return director.filter(sl, source, amount, now);           // 1.42.0: the new precognition, the channel, the body factor
+            if (arcOn()) return director.filter(sl, source, amount, now, raw);      // 1.42.0: the new precognition, the channel, the body factor
             if (exposed()) return amount;                                       // an ultimate leaves him open: precognition cannot save him now
             Entity attacker = source.getEntity();
             Precognition.Verdict v = precog.onHit(now, attacker == null ? -1 : attacker.getId(), anti, power());
@@ -1247,6 +1329,8 @@ public class LuciusBoss extends ZogratisBoss {
         if (!level().isClientSide) {
             juliusBar.removeAllPlayers();
             director.close();                                                     // every turned companion is given back whatever the reason, the bar goes
+            god.unregister();
+            if (reason.shouldDestroy()) god.close();
             if (reason.shouldDestroy() && level() instanceof ServerLevel sl) {
                 SoulPaladins.releaseAll(this, sl);
                 for (ZogratisCloneEntity c : clones()) c.fadeAway();
@@ -1277,6 +1361,7 @@ public class LuciusBoss extends ZogratisBoss {
         }
         tag.put("LPaladins", list);
         director.save(tag);
+        god.save(tag);
     }
 
     @Override
@@ -1290,6 +1375,7 @@ public class LuciusBoss extends ZogratisBoss {
         fallenClones = Math.max(0, Math.min(6, tag.getInt("LFallen")));
         restorePaladins = tag.getList("LPaladins", Tag.TAG_COMPOUND);
         director.load(tag);
+        god.load(tag);
         ready = false;
     }
 }

@@ -95,6 +95,12 @@ public final class LuciusArcHooks {
         p.getPersistentData().putLong(SWING_T, p.level().getGameTime());
     }
 
+    /** 1.45.0: the event this class cancelled itself (the pressure cap), so that {@link LuciusBossEventHandler} does not read it as a dodge. */
+    static volatile LivingIncomingDamageEvent ownCancel;
+
+    /** 1.45.0: is this attacker Lucius, one of his clones or a creature he turned (while the final arc is on)? */
+    static boolean luciusSide(ServerLevel sl, Entity attacker) { return attacker != null && directorOf(sl, attacker) != null; }
+
     /** The director whose pressure budget covers a blow by this attacker (Lucius, one of his clones, a creature he turned), or null. */
     private static LuciusArcDirector directorOf(ServerLevel sl, Entity attacker) {
         LuciusBoss boss = null;
@@ -132,7 +138,10 @@ public final class LuciusArcHooks {
             float amount = e.getAmount();
             if (PaladinTurns.isTurned(attacker)) amount = PaladinTurns.cap(amount, p);
             float allowed = d.pressure.allow(p.getId(), sl.getGameTime(), amount, p.getMaxHealth());
-            if (allowed <= 0f) e.setCanceled(true);
+            if (allowed <= 0f) {
+                ownCancel = e;                                                        // 1.45.0: not a dodge of the player's, the dodge counter must not count it
+                e.setCanceled(true);
+            }
             else if (allowed < e.getAmount()) e.setAmount(allowed);
         }
     }

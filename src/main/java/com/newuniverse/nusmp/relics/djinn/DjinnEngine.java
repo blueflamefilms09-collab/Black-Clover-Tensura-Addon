@@ -62,6 +62,7 @@ public final class DjinnEngine {
         boolean dark;                 // the Extreme Magic charging was begun by a dark Djinn (fixed at the start)
         double paid;                  // the Magoi share the Extreme Magic charging cost (what a cancelled one gives back)
         boolean rukh;
+        long severedAt = -1;          // 1.45.0: the tick the god-tier Lucius severed this bearer, or -1
         long rukhStart;
         Vec3 rukhAt = Vec3.ZERO;
     }
@@ -87,6 +88,7 @@ public final class DjinnEngine {
         if (!(e.getEntity() instanceof ServerPlayer p)) return;
         int t = p.tickCount;
         if ((t & 3) != 0) return;
+        if (com.newuniverse.nusmp.relics.Severance.isSevered(p)) return;               // 1.45.0: severed by the god-tier Lucius: no upkeep, no skills lent, no sync; see severed(p, on)
         DjinnState s = DjinnState.of(p);
         Run r = RUNS.get(p.getUUID());
         boolean charging = r != null && r.charging, drawing = r != null && r.rukh;
@@ -210,11 +212,52 @@ public final class DjinnEngine {
             p.sendSystemMessage(Component.literal("Assimilation: a quarter. The borrowed Djinn leaves its mark on you.").withStyle(ChatFormatting.YELLOW));
     }
 
+    // ================================================================ 1.45.0: severance
+    /**
+     * The god-tier Lucius's Spirit/Djinn Severance begins ({@code on}) or ends for this bearer. Nothing is destroyed: on the start a running
+     * Rukh or Extreme Magic charge is let go (the Magoi is refunded), the Maso's attribute boosts and its flight are taken off while the
+     * phase and the bond stay as they are, and the tick above does nothing; on the end the boosts and flight are put back, a Lesser Summon's
+     * clock is moved on by the time lost, and the client is told. Called by the Lucius capabilities once per change; idempotent.
+     */
+    public static void severed(ServerPlayer p, boolean on) {
+        DjinnState s = DjinnState.of(p);
+        Run r = run(p);
+        long now = p.level().getGameTime();
+        if (on) {
+            if (r.severedAt >= 0) return;
+            r.severedAt = now;
+            if (r.charging) cancelCharge(p, s, r, true);
+            if (r.rukh) endRukh(p, r, "The Rukh slips away: you are severed.");
+            if (s.phase() >= DjinnPhaseRules.FULL) {
+                removeMaso(p);
+                if (s.flightGranted()) revokeFlight(p, s, false);
+            }
+            removeMark(p);
+            return;
+        }
+        if (r.severedAt < 0) return;
+        long lost = Math.max(0, now - r.severedAt);
+        r.severedAt = -1;
+        Djinn d = s.active();
+        if (d != null && s.phase() >= DjinnPhaseRules.FULL) {
+            applyMaso(p, s, d);
+            ensureFlight(p, s);
+        }
+        if (d != null && s.phase() == DjinnPhaseRules.LESSER && s.end() > 0) s.setSpan(s.start(), s.end() + lost);
+        if (s.owns() || s.lent()) syncMark(p, s);
+        r.lastSig = Integer.MIN_VALUE;
+        sync(p, s, r, now, true);
+    }
+
     // ================================================================ keys
     /** A key press from the client. */
     public static void onKey(ServerPlayer p, int action) {
         if (action < DjinnNet.ACT_UP || action > DjinnNet.ACT_RUKH) return;                          // never trust the client: only the four known keys
         if (!p.isAlive() || p.isSpectator()) return;
+        if (com.newuniverse.nusmp.relics.Severance.isSevered(p)) {                      // 1.45.0
+            p.displayClientMessage(Component.literal("Your Djinn is severed from you for a moment.").withStyle(ChatFormatting.DARK_PURPLE), true);
+            return;
+        }
         Run r = run(p);
         long now = p.level().getGameTime();
         if (now - r.lastKey < DjinnPhaseRules.KEY_SPACING) return;

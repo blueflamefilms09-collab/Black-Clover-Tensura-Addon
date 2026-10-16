@@ -41,7 +41,20 @@ public final class LuciusChains {
         /** Phase 3: the clones (re)appear. */
         CLONE_WAVE,
         /** A teleport away from whoever came too close. */
-        RETREAT
+        RETREAT,
+        // ---- 1.45.0, the god tier (appended; the name is what is saved)
+        /** Stage 1: the Soul Touch from range, a soul lance at the target (Soul Corruption level one, a share of the touch's damage). */
+        SOUL_RAY,
+        /** A spatial pulse that de-attunes every relic of whoever stands in it for a few seconds. */
+        RELIC_EMP,
+        /** A binding on one player that severs their Djinn and spirits for a few seconds. */
+        SEVERANCE,
+        /** A pulse from the starvation field that drains a share of the magicule of everyone in range. */
+        STARVATION_PULSE,
+        /** Stage 2: Vanica's blood tide, as a chain step. */
+        BLOOD_TIDE,
+        /** A step beside the target and an unblockable physical strike (the Checkmate counter and the answer to a clamped hit). */
+        COUNTER_STRIKE
     }
 
     /**
@@ -73,6 +86,10 @@ public final class LuciusChains {
     public static final String CHECKMATE = "checkmate", CHECKMATE_SOUL = "checkmate_soul", SOUL_TOUCH_FOLLOWUP = "soul_touch_followup",
             STASIS_VOLLEY = "stasis_volley", TOWER_SPAM = "tower_spam", RETREAT = "retreat", CRUSH_PRESSURE = "crush_pressure",
             CRUSH_BLINK_TOUCH = "crush_blink_touch", CLONE_WAVE = "clone_wave";
+    /** 1.45.0, the god tier's chains. */
+    public static final String SOUL_RAY_CHAIN = "soul_ray", STASIS_SNARE = "stasis_snare", BLOOD_TIDE_CHAIN = "blood_tide_pressure",
+            STARVATION_PULSE_CHAIN = "starvation_pulse", RELIC_EMP_CHAIN = "relic_emp", SEVERANCE_CHAIN = "severance_bind",
+            CHECKMATE_COUNTER = "checkmate_counter", HIT_COUNTER = "hit_counter";
 
     private static final List<Chain> ALL = List.of(
             // Checkmate: gravity pins you, space opens behind you, time closes round you
@@ -96,7 +113,25 @@ public final class LuciusChains {
             new Chain(CRUSH_BLINK_TOUCH, phases(2), 420, 5, List.of(
                     s(Kind.CRUSH_ZONE, 24, 6, true), s(Kind.SPATIAL_BLINK, 12, 4, false), s(Kind.SOUL_TOUCH, 14, 10, true))),
             // act 3: the clones appear (the clones cast on their own after that)
-            new Chain(CLONE_WAVE, phases(3), 400, 3, List.of(s(Kind.CLONE_WAVE, 30, 20, false))));
+            new Chain(CLONE_WAVE, phases(3), 400, 3, List.of(s(Kind.CLONE_WAVE, 30, 20, false))),
+            // ---- 1.45.0, the god tier (never drawn when it is off). Stage 1, Time and Soul: a stasis snare and a soul lance from range.
+            new Chain(STASIS_SNARE, phases(1), 360, 3, List.of(s(Kind.CHRONO_STASIS, 16, 24, false))),
+            new Chain(SOUL_RAY_CHAIN, phases(1), 420, 3, List.of(s(Kind.SOUL_RAY, 18, 20, true))),
+            // stage 2, Gravity and Blood: the blood tide, the starvation pulse, the severance binding
+            new Chain(BLOOD_TIDE_CHAIN, phases(2, 3), 380, 4, List.of(s(Kind.BLOOD_TIDE, 22, 16, true))),
+            new Chain(STARVATION_PULSE_CHAIN, phases(2, 3), 700, 2, List.of(s(Kind.STARVATION_PULSE, 20, 30, false))),
+            new Chain(SEVERANCE_CHAIN, phases(2, 3), 800, 2, List.of(s(Kind.SEVERANCE, 28, 20, false))),
+            // stage 3, Space: the relic pulse
+            new Chain(RELIC_EMP_CHAIN, phases(3), 900, 3, List.of(s(Kind.RELIC_EMP, 24, 20, false))),
+            // answers (weight 0: started by the glue, never drawn): the Checkmate counter and the reply to a clamped hit
+            new Chain(CHECKMATE_COUNTER, phases(1, 2, 3), 160, 0, List.of(s(Kind.SPATIAL_BLINK, 12, 2, false), s(Kind.COUNTER_STRIKE, 14, 10, true))),
+            new Chain(HIT_COUNTER, phases(1, 2, 3), 0, 0, List.of(s(Kind.COUNTER_STRIKE, 14, 10, true))));
+
+    /** The chains that exist only in the god tier: {@link #pick} leaves them out unless it is told the god tier is on. */
+    private static final java.util.Set<String> GOD_ONLY = java.util.Set.of(STASIS_SNARE, SOUL_RAY_CHAIN, BLOOD_TIDE_CHAIN, STARVATION_PULSE_CHAIN,
+            SEVERANCE_CHAIN, RELIC_EMP_CHAIN, CHECKMATE_COUNTER, HIT_COUNTER);
+
+    public static boolean godOnly(String id) { return GOD_ONLY.contains(id); }
 
     public static List<Chain> all() { return ALL; }
 
@@ -121,11 +156,16 @@ public final class LuciusChains {
      * (the "caught in close quarters" rule). The retreat (weight 0) is never drawn here.
      */
     public static Optional<Chain> pick(int phase, long now, Map<String, Long> readyAt, Random rng, double targetDistance) {
+        return pick(phase, now, readyAt, rng, targetDistance, false);
+    }
+
+    /** Like {@link #pick(int, long, Map, Random, double)}; with 'god' the god-tier chains (1.45.0) are drawn too, without it they never are. */
+    public static Optional<Chain> pick(int phase, long now, Map<String, Long> readyAt, Random rng, double targetDistance, boolean god) {
         List<Chain> pool = new ArrayList<>();
         List<Integer> weights = new ArrayList<>();
         int total = 0;
         for (Chain c : ALL) {
-            if (!c.usable(phase) || c.weight() <= 0 || readyAt.getOrDefault(c.id(), 0L) > now) continue;
+            if (!c.usable(phase) || c.weight() <= 0 || readyAt.getOrDefault(c.id(), 0L) > now || (!god && GOD_ONLY.contains(c.id()))) continue;
             int w = c.weight();
             boolean touch = c.steps().stream().anyMatch(st -> st.kind() == Kind.SOUL_TOUCH);
             if (touch && targetDistance <= 8.0) w *= 3;

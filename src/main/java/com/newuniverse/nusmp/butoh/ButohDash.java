@@ -43,6 +43,7 @@ public final class ButohDash {
         p.teleportTo(dest.x, dest.y, dest.z);
         p.fallDistance = 0;
         p.getPersistentData().putLong(K_UNTIL, p.level().getGameTime() + DeflectMath.WINDOW_TICKS);
+        com.newuniverse.nusmp.boss.god.DodgeEvents.record(p);                           // 1.45.0: a dodge, for the god-tier Lucius's Time Stasis Traps
         return true;
     }
 

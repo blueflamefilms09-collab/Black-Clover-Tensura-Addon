@@ -9,6 +9,11 @@ The whole rework sits behind one switch, `luciusAnimeArc` (server config `nusmp-
 the boss is exactly the 1.20 to 1.37 Lucius of `docs/zogratis_bosses.md` section 9 (his old precognition charges, the Gates refill,
 every move of the table). Nothing of the old code was deleted.
 
+> **1.45.0**: the god tier (three stages with health resets, a hard hit cap, percent-of-max-health true damage, Time Decay, the relic pulse,
+> severance, starvation, anti-flight, the answers to massive channels and Ultimates, Time Stasis Traps) is built on top of this document and
+> switched by `luciusGodTier`; with it off the fight is exactly what is described below. See `docs/lucius_god.md`. Where this document says the
+> acts follow 65% and 30% health, with the god tier on they follow the stage instead.
+
 ## New or replacement (rule 5)
 
 | Part | New or replacement | What happens to the old |

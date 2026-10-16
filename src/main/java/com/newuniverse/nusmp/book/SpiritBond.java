@@ -151,7 +151,7 @@ public final class SpiritBond {
     }
 
     /** Can the spirit be called? (bonded spirits below 10 Trust refuse) */
-    public static boolean willAnswer(Player p) { return !bonded(p) || trust(p) >= 10; }
+    public static boolean willAnswer(Player p) { return !com.newuniverse.nusmp.relics.Severance.isSevered(p) && (!bonded(p) || trust(p) >= 10); }   // 1.45.0: severed = does not answer, nothing is lost
 
     // ---------------------------------------------------------------- Over-Pull strain
     /** A heavy spirit use (Spirit Dive / Spirit Channeling). Returns false if the spirit has dissolved. */

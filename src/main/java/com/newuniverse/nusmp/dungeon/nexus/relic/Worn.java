@@ -30,6 +30,7 @@ public final class Worn {
 
     /** The same; {@code fresh} ignores the kept answer. */
     public static int mask(Player p, boolean fresh) {
+        if (com.newuniverse.nusmp.relics.RelicNullification.isNullified(p)) return 0;      // 1.45.0: the god-tier Lucius's pulse silences the slots for a while; nothing is unequipped
         long now = p.level().getGameTime();
         long[] kept = CACHE.get(p.getUUID());
         if (!fresh && kept != null && now >= kept[0] && now - kept[0] < TTL) return (int) kept[1];
@@ -46,6 +47,7 @@ public final class Worn {
 
     /** The worn, attuned stack of this relic (the real one in the slot, so it can be changed), or EMPTY. Not kept. */
     public static ItemStack stack(Player p, Relic r) {
+        if (com.newuniverse.nusmp.relics.RelicNullification.isNullified(p)) return ItemStack.EMPTY;
         for (Place place : places(p)) {
             if (Relic.of(place.stack) == r && Attunement.isAttuned(place.stack, p)) return place.stack;
         }

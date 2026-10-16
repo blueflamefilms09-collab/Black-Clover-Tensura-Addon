@@ -236,6 +236,7 @@ public final class ButohDance {
             p.teleportTo(dest.x, dest.y, dest.z);
             p.fallDistance = 0;
         }
+        com.newuniverse.nusmp.boss.god.DodgeEvents.record(p);                           // 1.45.0: a dodge, for the god-tier Lucius's Time Stasis Traps
     }
 
     /** The horizontal direction at right angles to the blow (from the attacker if there is one, otherwise to the way the dancer faces). */

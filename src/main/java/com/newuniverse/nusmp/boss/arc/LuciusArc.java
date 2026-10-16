@@ -60,6 +60,23 @@ public final class LuciusArc {
         return NONE;
     }
 
+    /**
+     * 1.45.0, stage-driven mode (the god tier): the act is the stage the fight is in (1 to 3), not a line on the health bar, because each
+     * stage starts again from a full health bar. Moves straight to that act, in either direction, and returns the act if it was entered
+     * for the first time by this call, {@link #NONE} otherwise (the same once-only announcement rule as {@link #update}). The threshold
+     * mode above is untouched and still used when the god tier is off.
+     */
+    public int enterStage(int stage) {
+        int next = Math.max(MESSIAH, Math.min(CLONES, stage));
+        if (next == phase) return NONE;
+        phase = next;
+        if (!entered(next)) {
+            entered |= 1 << next;
+            return next;
+        }
+        return NONE;
+    }
+
     /** A fresh fight. */
     public void reset() {
         phase = NONE;

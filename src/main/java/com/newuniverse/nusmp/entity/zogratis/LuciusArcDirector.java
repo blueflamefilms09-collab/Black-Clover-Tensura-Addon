@@ -12,6 +12,7 @@ import com.newuniverse.nusmp.boss.arc.PaladinTurn;
 import com.newuniverse.nusmp.boss.arc.PrecogMath;
 import com.newuniverse.nusmp.boss.arc.TimeReversalMath;
 import com.newuniverse.nusmp.boss.bar.BossBarSync;
+import com.newuniverse.nusmp.boss.god.TrueDamage;
 import com.newuniverse.nusmp.boss.rules.BossHealGuard;
 import com.newuniverse.nusmp.boss.rules.BossRulesConfig;
 import com.newuniverse.nusmp.relics.Grade;
@@ -130,7 +131,7 @@ final class LuciusArcDirector {
     // ================================================================ the tick
     void tick(ServerLevel sl, long now) {
         float hp = b.getHealth(), max = b.getMaxHealth();
-        int entered = arc.update(max > 0 ? hp / max : 1f);
+        int entered = b.godOn() && b.godStages() ? arc.enterStage(b.godStage()) : arc.update(max > 0 ? hp / max : 1f);      // 1.45.0: with the stages on, the act is the stage
         if (entered != LuciusArc.NONE) onPhase(sl, now, entered);
         window.record(now, hp);
         if (b.julius()) {
@@ -204,7 +205,7 @@ final class LuciusArcDirector {
         }
         Map<String, Long> ready = new java.util.HashMap<>(runner.readyAt());
         ready.put(LuciusChains.CLONE_WAVE, Long.MAX_VALUE);                      // the clone wave is started by need above, never by the draw
-        Optional<LuciusChains.Chain> pick = LuciusChains.pick(ph, now, ready, rng, dist);
+        Optional<LuciusChains.Chain> pick = LuciusChains.pick(ph, now, ready, rng, dist, b.godOn());
         if (pick.isPresent()) {
             startChain(pick.get(), target, now);
             return -1;
@@ -228,6 +229,56 @@ final class LuciusArcDirector {
 
     private void startChain(LuciusChains.Chain c, LivingEntity target, long now) {
         if (runner.start(c, now)) chainTarget = target.getUUID();
+    }
+
+    /**
+     * 1.45.0: starts one of the god tier's answer chains (the Checkmate counter, the reply to a clamped hit) on 'target'. With 'preempt'
+     * a running chain or a move being wound up is dropped for it (the AI interrupt); never over a Time Reversal channel, a stagger, a
+     * transformation, Julius's window or a stage change. False if it could not start.
+     */
+    boolean startGodChain(String id, LivingEntity target, long now, boolean preempt) {
+        LuciusChains.Chain c = LuciusChains.byId(id);
+        if (c == null || target == null || !target.isAlive() || channel.channeling() || staggered(now) || b.transforming() || b.julius() || b.refilling()) return false;
+        if (runner.active()) {
+            if (!preempt) return false;
+            runner.abort();
+        }
+        if (b.state() == ZogratisBoss.STATE_CASTING) {
+            if (!preempt) return false;
+            b.interruptCast();
+        }
+        if (!runner.start(c, now)) return false;
+        chainTarget = target.getUUID();
+        mark = dest = retreat = null;
+        return true;
+    }
+
+    /**
+     * 1.45.0: a stage ended and the next begins: everything that belonged to the old stage is dropped (the running chain, the rewind
+     * channel and its window, the unpaid shatter damage, the stagger, the gem's clock, the copies, the precognition history, the
+     * cooldowns of the chains) so the new stage starts clean; the new act is announced by the next tick through {@code enterStage}.
+     */
+    void onStageChange(ServerLevel sl, long now) {
+        runner.abort();
+        runner.readyAt().clear();
+        if (channel.channeling()) hideChannelBar();
+        channel.reset();
+        window.clear();
+        burn.clear();
+        precog.reset();
+        pressure.clear();
+        staggerUntil = 0;
+        gemClosedUntil = 0;
+        burnUntil = 0;
+        warned = false;
+        gemWasOut = false;
+        cloneAt = now + 40;
+        actStart = -1;
+        clones.clear();
+        for (ZogratisCloneEntity c : b.clones()) c.fadeAway();
+        releaseAllTurns(sl);
+        mark = dest = retreat = null;
+        tower = null;
     }
 
     private LivingEntity chainTarget(ServerLevel sl) {
@@ -297,12 +348,38 @@ final class LuciusArcDirector {
                 ZogratisVfx.divineSigil(sl, b.position(), 5.0, tel + 2, FxMath.divine(b.power()), true);
                 ZogratisVfx.soulVortex(sl, b.position(), 3.0, tel + 2, ArcSteps.SOUL);
                 b.announce("Lucius casts Unlimited Cloning: his chest gem is open while he does.");
+                if (b.godOn()) b.god().windup();
             }
             case RETREAT -> {
                 List<LivingEntity> near = b.foes(8.0);
                 Vec3 from = !near.isEmpty() ? near.get(0).position() : t != null ? t.position() : b.position();
                 retreat = ArcSteps.retreatSpot(b, from);
                 ArcSteps.retreatTell(b, sl, tel);
+            }
+            // ---- 1.45.0, the god tier's steps (GodSteps)
+            case SOUL_RAY -> {
+                GodSteps.soulRayTell(b, sl, t, tel);
+                b.quip("Come. Let me hold what you are.");
+            }
+            case RELIC_EMP -> {
+                GodSteps.empTell(b, sl, tel);
+                b.god().windup();
+            }
+            case SEVERANCE -> {
+                GodSteps.severTell(b, sl, t, tel);
+                b.god().windup();
+            }
+            case STARVATION_PULSE -> {
+                GodSteps.starveTell(b, sl, tel);
+                b.god().windup();
+            }
+            case BLOOD_TIDE -> {
+                GodSteps.bloodTell(b, sl, t, tel);
+                b.quip("Vanica's blood, my hands.");
+            }
+            case COUNTER_STRIKE -> {
+                mark = ArcSteps.groundUnder(t);
+                GodSteps.counterTell(b, sl, mark, t, tel);
             }
             default -> { }
         }
@@ -311,7 +388,10 @@ final class LuciusArcDirector {
     private void fire(ServerLevel sl, LuciusChains.Kind kind, int step, LivingEntity t) {
         switch (kind) {
             case GRAVITY_PIN -> { if (mark != null) ArcSteps.pinFire(b, sl, mark); }
-            case SPATIAL_BLINK -> ArcSteps.blinkFire(b, dest, t);
+            case SPATIAL_BLINK -> {
+                ArcSteps.blinkFire(b, dest, t);
+                if (LuciusChains.CHECKMATE_COUNTER.equals(runner.chainId()) && t instanceof ServerPlayer p) LuciusCapabilities.interruptCast(p, 40);      // 1.45.0: he is behind them, the channel breaks
+            }
             case CHRONO_STASIS -> ArcSteps.bubble(b, b, t);
             case SOUL_TOUCH -> { if (mark != null) ArcSteps.touchFire(b, turns, mark, t); }
             case CHRONO_BOLT -> ArcSteps.chronoBolt(b, b, t);
@@ -319,6 +399,12 @@ final class LuciusArcDirector {
             case CRUSH_ZONE -> { if (mark != null) ArcSteps.zoneFire(b, mark); }
             case CLONE_WAVE -> spawnClones(sl, t);
             case RETREAT -> ArcSteps.retreatFire(b, retreat);
+            case SOUL_RAY -> GodSteps.soulRayFire(b, t);
+            case RELIC_EMP -> GodSteps.empFire(b, sl);
+            case SEVERANCE -> GodSteps.severFire(b, t);
+            case STARVATION_PULSE -> GodSteps.starveFire(b, sl);
+            case BLOOD_TIDE -> GodSteps.bloodFire(b, t);
+            case COUNTER_STRIKE -> GodSteps.counterFire(b, mark, t, runner.chainId() != null && LuciusChains.CHECKMATE_COUNTER.equals(runner.chainId()) ? TrueDamage.Tier.FINISHER : TrueDamage.Tier.HEAVY);
             default -> { }
         }
     }
@@ -343,7 +429,7 @@ final class LuciusArcDirector {
      * then the Time Reversal channel (it can be broken by this very blow; while it runs he takes 25% more), then precognition (a blow is
      * phased out unless it is one of the four answers), then the body factor of act 3. Returns the amount to apply, 0 for a phased blow.
      */
-    float filter(ServerLevel sl, DamageSource source, float amount, long now) {
+    float filter(ServerLevel sl, DamageSource source, float amount, long now, float raw) {
         Entity attacker = source.getEntity();
         boolean anti = LuciusArcHooks.antiMagic(source);
         Player player = attacker instanceof Player p ? p : null;
@@ -352,7 +438,7 @@ final class LuciusArcDirector {
         if (channel.channeling()) {
             boolean relicHeavy = player != null && worn(player, Grade.LEGEND) > 0;
             if (anti) breakChannel(sl, now, TimeReversalMath.Interrupt.ANTI_MAGIC);
-            else if (TimeReversalMath.heavy(amount, b.getMaxHealth(), relicHeavy)) breakChannel(sl, now, TimeReversalMath.Interrupt.HEAVY_HIT);
+            else if (TimeReversalMath.heavy(raw, b.getMaxHealth(), relicHeavy)) breakChannel(sl, now, TimeReversalMath.Interrupt.HEAVY_HIT);      // 'raw' is the blow before the god tier's hit cap
             out = amount * TimeReversalMath.DAMAGE_PERCENT / 100f;
         }
         boolean active = !channel.channeling() && !staggered(now) && !gemOut(now) && !b.transforming() && !b.exposed();
@@ -369,8 +455,11 @@ final class LuciusArcDirector {
             case RAPID -> note(now, "Too fast to read: the blow lands.");
             default -> { }
         }
-        return out * CoreGemMath.bodyFactor(arc.phase());
+        return out * (b.godOn() && arc.phase() == LuciusArc.CLONES ? GOD_BODY_FACTOR : CoreGemMath.bodyFactor(arc.phase()));
     }
+
+    /** 1.45.0: in the god tier the last stage starts from a full bar, so the body takes half of a blow, not 15% (the hit cap and the gem still rule). */
+    static final float GOD_BODY_FACTOR = 0.5f;
 
     private void note(long now, String text) {
         if (now - lastNote < 60) return;
@@ -461,7 +550,7 @@ final class LuciusArcDirector {
     private void completeChannel(ServerLevel sl, long now) {
         hideChannelBar();
         float hp = b.getHealth(), max = b.getMaxHealth();
-        float ceiling = LuciusArc.P2_BELOW * max - 1f;
+        float ceiling = b.godOn() && b.godStages() ? max : LuciusArc.P2_BELOW * max - 1f;      // a stage starts from a full bar: the rewind may go back as far as the burst began
         float to = TimeReversalMath.restoreTarget(channel.startHealth(), hp, max, ceiling);
         if (to > hp) BossHealGuard.allow(() -> b.dpsBudget().bypass(() -> b.setHealth(to)));   // the owner's exception; PhaseRefill does the same
         Vec3 at = b.position();
@@ -498,10 +587,10 @@ final class LuciusArcDirector {
         if (now > burnUntil) { burn.clear(); return; }
         if (b.transforming()) return;                                                  // the Gates' cutscene shield holds against this too
         float hp = b.getHealth(), max = b.getMaxHealth();
-        int due = PowerCurve.next(hp / max, b.power());
+        int due = PowerCurve.next(b.powerHealth() / b.powerMaxHealth(), b.power());
         if (due >= PowerCurve.FULL && b.power() < PowerCurve.FULL) return;          // the Gates are about to open: nothing may skip them
         float want = Math.min(burn.want(), hp - 1f);
-        want = PowerCurve.clampDamage(hp, max, due, want);
+        want = PowerCurve.clampDamage(b.powerHealth(), b.powerMaxHealth(), due, want);
         if (want <= 0f) { if (hp <= 1f) burn.clear(); return; }
         b.setHealth(hp - want);                                                      // ZogratisBoss.setHealth: cut to the per-second budget
         burn.paid(hp - b.getHealth());
@@ -613,6 +702,7 @@ final class LuciusArcDirector {
         b.announce("THE CORE GEM SHATTERS" + (by instanceof Player p ? " (" + p.getName().getString() + ")" : "") + ": " + gone
                 + " clones are gone, Lucius takes massive true damage and is staggered for 10 seconds.");
         LuciusFx.bar(sl, b.position(), 64, Component.literal("RESONANCE SHATTERED - strike him now!").withStyle(ChatFormatting.RED, ChatFormatting.BOLD));
+        if (b.godOn()) b.god().gemShattered();
     }
 
     // ================================================================ hover and aura

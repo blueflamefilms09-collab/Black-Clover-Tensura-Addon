@@ -142,10 +142,13 @@ final class ArcSteps {
      * while Julius holds the body. Returns the ticks held, or 0. The grace after it (nobody can be stopped again for six seconds) is the
      * existing {@link ChronoMoves#release}.
      */
-    static int hold(LuciusBoss owner, LivingEntity caster, LivingEntity foe, int base) {
+    static int hold(LuciusBoss owner, LivingEntity caster, LivingEntity foe, int base) { return hold(owner, caster, foe, base, true); }
+
+    /** The same, with the line of sight optional (1.45.0: a Time Stasis Trap on the ground holds whoever steps in it, whether or not he can see them). */
+    static int hold(LuciusBoss owner, LivingEntity caster, LivingEntity foe, int base, boolean needSight) {
         if (!(foe.level() instanceof ServerLevel sl) || owner.juliusActive() || !fair(foe)) return 0;
         if (foe instanceof Player p && LuciusFx.antiMagicHeld(p)) return 0;
-        if (TimeStop.isImmune(foe) || TimeStop.isFrozen(foe) || !caster.hasLineOfSight(foe)) return 0;
+        if (TimeStop.isImmune(foe) || TimeStop.isFrozen(foe) || (needSight && !caster.hasLineOfSight(foe))) return 0;
         int t = Math.min(ChronoMath.HARD_STOP_CAP, BalanceLaw.controlTicks(foe, base));
         TimeStop.freeze(foe, t);
         owner.noteHeld(foe);

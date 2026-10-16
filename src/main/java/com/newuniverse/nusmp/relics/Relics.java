@@ -105,11 +105,11 @@ public final class Relics {
     /** Every relic the entity has equipped (a hand for hand relics, the head/chest/feet slots, a Curios slot), working or not. Never null. */
     public static List<Worn> wornList(LivingEntity e) { return cached(e, false).worn(); }
 
-    /** What works on the entity (cached for {@link #TTL} ticks). Never null. */
-    public static Loadout loadout(LivingEntity e) { return cached(e, false).loadout(); }
+    /** What works on the entity (cached for {@link #TTL} ticks). Never null. 1.45.0: nothing works while the entity is relic-nullified ({@link RelicNullification}). */
+    public static Loadout loadout(LivingEntity e) { return RelicNullification.isNullified(e) ? Loadout.EMPTY : cached(e, false).loadout(); }
 
     /** The same, ignoring the cache. */
-    public static Loadout loadoutFresh(LivingEntity e) { return cached(e, true).loadout(); }
+    public static Loadout loadoutFresh(LivingEntity e) { return RelicNullification.isNullified(e) ? Loadout.EMPTY : cached(e, true).loadout(); }
 
     /** The equipped relic stacks (the contract's list): held, armour, Curios; attuned or not. */
     public static List<ItemStack> equipped(LivingEntity e) {

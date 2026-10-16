@@ -102,6 +102,7 @@ public class SpiritLordEntity extends TamableAnimal implements GeoEntity {
     @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
+        if (com.newuniverse.nusmp.relics.Severance.isSevered(getOwner())) { setTarget(null); return; }     // 1.45.0: severed from its mage, it stands idle until the binding ends
         LivingEntity t = getTarget();
         if (--castCooldown > 0 || t == null || !t.isAlive() || distanceToSqr(t) > 16 * 16 || !hasLineOfSight(t)) return;
         castCooldown = 60;

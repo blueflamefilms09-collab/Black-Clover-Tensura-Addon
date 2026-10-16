@@ -199,6 +199,17 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
     protected int tensuraKitSize() { return 4; }
     /** 1.35.0: whether the Gates (the 100% mode) refill the health bar to full. Every Zogratis boss does; override to opt out. */
     protected boolean refillOnGates() { return com.newuniverse.nusmp.boss.rules.BossRulesConfig.refillAtGates(); }
+    /**
+     * 1.45.0: the health the power curve reads, and the size of the bar it reads it on. For every boss this is the one health bar; the god-tier
+     * Lucius lays his three stages end to end on a virtual bar so the curve (and the Gates) run over the whole fight, not over each stage.
+     */
+    protected float powerHealth() { return getHealth(); }
+    protected float powerMaxHealth() { return getMaxHealth(); }
+    /** 1.45.0: the last word on one hit's size before the damage budget (the exposed bonus is applied after the filter, so a cap set there can be lifted again). Default: no change. */
+    protected float lastCap(float amount) { return amount; }
+    /** 1.45.0: drops the move being wound up (for a stage change or an answer that preempts it). */
+    protected void interruptCast() { cancelCast(); }
+
     /** 1.35.0: the id under which the Gates refill is recorded (a subclass with several modes calls {@link #refillForMode} with its own ids). */
     protected String gatesModeId() { return "gates"; }
 
@@ -519,7 +530,7 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
         tickRefill(sl);
         float frac = getHealth() / getMaxHealth();
         bar.setProgress(Math.max(0f, Math.min(1f, frac)));
-        int np = PowerCurve.next(frac, power());
+        int np = PowerCurve.next(powerHealth() / powerMaxHealth(), power());
         while (np > power() && transformLeft <= 0) raisePower(sl, Math.min(np, PowerCurve.stepUp(power())), null);   // one step at a time, each announced
         if (t % 20 == 0) upkeep(sl, t);
         if (transformLeft > 0) {
@@ -1006,14 +1017,15 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
         if (attacker != null && ZogratisEntities.isFamily(attacker)) return false;
         // the power the health already asks for: a second hit in the tick of a crossing is bounded by the line after it, and a boss
         // that has crossed the last line is shielded until this tick's AI step opens the Gates (nothing can finish it in between)
-        int due = PowerCurve.next(getHealth() / getMaxHealth(), power());
+        int due = PowerCurve.next(powerHealth() / powerMaxHealth(), power());
         if (due >= PowerCurve.FULL && power() < PowerCurve.FULL) return false;
         noteFighter(attacker);
         float a = filterDamage(source, amount);
         if (a <= 0f) return false;
         if (exposed()) a *= EXPOSED_BONUS;
         else a = mitigate(source, a);
-        a = PowerCurve.clampDamage(getHealth(), getMaxHealth(), due, a);
+        a = PowerCurve.clampDamage(powerHealth(), powerMaxHealth(), due, a);
+        a = lastCap(a);
         return a > 0f && dpsBudget.hurt(this, source, a, x -> super.hurt(source, x));
     }
 
