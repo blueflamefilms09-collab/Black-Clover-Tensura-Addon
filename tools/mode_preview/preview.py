@@ -33,7 +33,8 @@ def build():
         for d, _, fs in os.walk(base):
             files += [os.path.join(d, f) for f in fs if f.endswith(".java")]
     vstub = os.path.join(ROOT, "tools", "vfx_preview", "stubs", "net", "minecraft")
-    files += [os.path.join(vstub, "util", "Mth.java"), os.path.join(vstub, "resources", "ResourceLocation.java")]
+    files += [os.path.join(vstub, "util", "Mth.java"), os.path.join(vstub, "resources", "ResourceLocation.java"),
+              os.path.join(vstub, "world", "phys", "Vec3.java")]
     files.append(os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "client", "mode", "ModeArmorLayer.java"))
     files.append(os.path.join(HERE, "Preview.java"))
     subprocess.run(["javac", "-nowarn", "-cp", JOML, "-d", cls] + files, check=True)
@@ -125,12 +126,113 @@ def render(quads, eye, target):
     return img
 
 
+# ------------------------------------------------------------------------------------------------ the Devil Unite modes (1.43.0)
+# Their overlays are GeoLite models (assets/nusmp/geo/devils, see tools/gen_devil_assets.py) attached to the player's bones, drawn by
+# client/shadow/DevilOverlay.java. The Java preview above can not load GeoLite (it needs the game's resource manager), so this reads the same
+# .geo.json files and textures, ports GeoDraw's bone and cube maths (vanilla layer space, y down) and rasterises them in the player's rest pose
+# next to the same figure. The animation clips are not played (rest pose); the pieces are authored in the standing pose, so rest is the pose
+# every bone has when the player stands still.
+DEVIL_PARTS = {
+    "DEVIL_EQUUS": ["equus_head", "equus_body", "equus_arm_r", "equus_arm_l", "equus_leg_r", "equus_leg_l"],
+    "DEVIL_CANIS": ["canis_head", "canis_body", "canis_arm_r", "canis_arm_l"],
+    "DEVIL_FELIS": ["felis_head", "felis_body", "felis_arm_r", "felis_arm_l", "felis_leg_r", "felis_leg_l"],
+    "DEVIL_GALLUS": ["gallus_head", "gallus_body", "gallus_arm_r", "gallus_arm_l"],
+}
+
+
+def _rot(rx, ry, rz):
+    """GeoDraw.rotate: Quaternionf.rotationZYX(-rz, ry, -rx) as a matrix (degrees in, vanilla y-down space)."""
+    a, b, c = math.radians(-rz), math.radians(ry), math.radians(-rx)
+    Rz = np.array([[math.cos(a), -math.sin(a), 0], [math.sin(a), math.cos(a), 0], [0, 0, 1]])
+    Ry = np.array([[math.cos(b), 0, math.sin(b)], [0, 1, 0], [-math.sin(b), 0, math.cos(b)]])
+    Rx = np.array([[1, 0, 0], [0, math.cos(c), -math.sin(c)], [0, math.sin(c), math.cos(c)]])
+    m = np.eye(4)
+    m[:3, :3] = Rz @ Ry @ Rx
+    return m
+
+
+def _tr(x, y, z):
+    m = np.eye(4)
+    m[:3, 3] = (x, y, z)
+    return m
+
+
+def geo_quads(model_id, space="player"):
+    """The quads of one devil model in the preview's world (the same frame the Java layer's quads are in)."""
+    geo = json.load(open(os.path.join(TEX, "geo", "devils", model_id + ".geo.json")))["minecraft:geometry"][0]
+    tw, th = geo["description"]["texture_width"], geo["description"]["texture_height"]
+    bones = {b["name"]: b for b in geo["bones"]}
+    kids = {}
+    roots = []
+    for b in geo["bones"]:
+        par = b.get("parent")
+        (kids.setdefault(par, []) if par in bones and par != b["name"] else roots).append(b)
+    out = []
+    root = _tr(0, 24, 0) if space == "player" else np.diag([1, -1, -1, 1.0])
+    texes = {"cutout": "textures/entity/devils/%s.png" % model_id, "eyes": "textures/entity/devils/%s_glow.png" % model_id}
+
+    def world(p):                                                    # vanilla layer space (px, y down) -> the preview's world (blocks)
+        if space == "player":
+            return np.array([p[0] / 16, 1.501 - p[1] / 16, -p[2] / 16])
+        return np.array([p[0] / 16, p[1] / 16, p[2] / 16])
+
+    def uvs(c):
+        u, v = c["uv"]
+        w, h, d = c["size"]
+        r = {"W": (u, v + d, u + d, v + d + h), "N": (u + d, v + d, u + d + w, v + d + h), "E": (u + d + w, v + d, u + 2 * d + w, v + d + h),
+             "S": (u + 2 * d + w, v + d, u + 2 * d + 2 * w, v + d + h), "T": (u + d, v, u + d + w, v + d), "B": (u + d + w, v + d, u + d + 2 * w, v)}
+        return r
+
+    def draw(b, parent, M):
+        x = b["pivot"][0] - (parent["pivot"][0] if parent else 0)
+        y = -b["pivot"][1] + (parent["pivot"][1] if parent else 0)
+        z = b["pivot"][2] - (parent["pivot"][2] if parent else 0)
+        rx, ry, rz = b.get("rotation", (0, 0, 0))
+        Mb = M @ _tr(x, y, z) @ _rot(rx, ry, rz)
+        for c in b["cubes"]:
+            Mc = Mb
+            if c.get("rotation") and any(c["rotation"]):
+                cx, cy, cz = c["pivot"][0] - b["pivot"][0], -c["pivot"][1] + b["pivot"][1], c["pivot"][2] - b["pivot"][2]
+                Mc = Mb @ _tr(cx, cy, cz) @ _rot(*c["rotation"]) @ _tr(-cx, -cy, -cz)
+            g = c.get("inflate", 0.0)
+            ox, oy, oz = c["origin"]
+            sx, sy, sz = c["size"]
+            mn = (ox - b["pivot"][0] - g, -(oy + sy) + b["pivot"][1] - g, oz - b["pivot"][2] - g)
+            mx = (ox - b["pivot"][0] + sx + g, -oy + b["pivot"][1] + g, oz - b["pivot"][2] + sz + g)
+            V = [Mc @ np.array([mx[0] if i & 1 else mn[0], mx[1] if i & 2 else mn[1], mx[2] if i & 4 else mn[2], 1.0]) for i in range(8)]
+            R = uvs(c)
+            for key, idx in (("W", (0, 4, 6, 2)), ("N", (1, 0, 2, 3)), ("E", (5, 1, 3, 7)), ("S", (4, 5, 7, 6)), ("T", (5, 4, 0, 1)), ("B", (3, 2, 6, 7))):
+                u1, v1, u2, v2 = R[key]
+                u1, u2, v1, v2 = u1 / tw, u2 / tw, v1 / th, v2 / th
+                t = ((u2, v1), (u1, v1), (u1, v2), (u2, v2))
+                verts = [list(world(V[i][:3] if True else V[i])) + list(t[k]) for k, i in enumerate(idx)]
+                for kind in ("cutout", "eyes"):
+                    out.append({"t": texes[kind], "k": kind, "a": 255, "v": verts})
+        for ch in kids.get(b["name"], []):
+            draw(ch, b, Mb)
+
+    for r in roots:
+        draw(r, None, root)
+    return out
+
+
+def devil_modes():
+    out = {}
+    for mode, parts in DEVIL_PARTS.items():
+        q = []
+        for p in parts:
+            q += geo_quads("devil_" + p)
+        out[mode] = q
+    return out
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     cls = build()
     out = os.path.join(OUT, "modes.json")
     subprocess.run(["java", "-cp", cls + os.pathsep + JOML, "Preview", out, sys.argv[1] if len(sys.argv) > 1 else "40"], check=True)
     modes = json.load(open(out))
+    modes.update(devil_modes())
     views = [("front", np.array([-1.6, 1.9, 3.4]), np.array([0, 1.15, 0])), ("back", np.array([1.8, 2.1, -3.3]), np.array([0, 1.2, 0])),
              ("right side", np.array([-3.8, 1.6, 0.2]), np.array([0, 1.1, 0.2]))]
     sheet = Image.new("RGB", (W * len(modes), (H + 16) * len(views)), (20, 20, 24))

@@ -51,5 +51,6 @@ final class PropRegistry {
         MercuryProps.init();
         SandProps.init();
         RecombinationProps.init();
+        com.newuniverse.nusmp.shadow.ShadowPackProps.init();
     }
 }
