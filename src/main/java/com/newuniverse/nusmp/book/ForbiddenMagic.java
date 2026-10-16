@@ -130,6 +130,7 @@ public final class ForbiddenMagic {
         GrimoireBook.unlock(fb, 1);
         SkillAPI.getSkillsFrom(p).learnSkill(fb, Component.literal("Forbidden pages bleed into your grimoire.").withStyle(ChatFormatting.DARK_RED));
         subtitle(p, Component.literal(p.getName().getString() + " has bound " + devil.displayName + ", " + devil.title + "."));
+        com.newuniverse.nusmp.quests.NusmpEvents.fire(p, "spirit.contract", "devil");
         return true;
     }
 

@@ -59,6 +59,7 @@ public final class DungeonMaw {
         if (a[0] >= threshold && now - s.lastMaw >= cooldown && p.level() instanceof ServerLevel sl && open(sl, p.blockPosition())) {
             a[0] = threshold * 0.25;
             s.lastMaw = now;
+            com.newuniverse.nusmp.quests.NusmpEvents.fire(p, "dungeon.maw");
         }
     }
 

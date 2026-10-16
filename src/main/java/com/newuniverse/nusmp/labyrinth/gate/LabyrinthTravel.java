@@ -61,6 +61,7 @@ public final class LabyrinthTravel {
         p.getPersistentData().putLong(PAD, pad.asLong());
         stamp(p, labyrinth);
         p.teleportTo(labyrinth, pad.getX() + 0.5, pad.getY(), pad.getZ() + 0.5, p.getYRot(), 0f);
+        com.newuniverse.nusmp.quests.NusmpEvents.fire(p, "labyrinth.entered");
         labyrinth.playSound(null, pad, SoundEvents.PORTAL_TRAVEL, SoundSource.PLAYERS, 0.5f, 0.6f);
         p.sendSystemMessage(Component.literal("The gate closes behind you. Above the sea of clouds the Spire waits; the golden gate beside you is the way back.").withStyle(ChatFormatting.DARK_PURPLE));
         return true;

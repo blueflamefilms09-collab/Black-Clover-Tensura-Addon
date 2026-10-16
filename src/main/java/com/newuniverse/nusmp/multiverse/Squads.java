@@ -242,6 +242,8 @@ public final class Squads {
         d.setDirty();
         p.getServer().getPlayerList().broadcastSystemMessage(Component.literal("A new Magic Knight squad is founded: " + name + ", Captain " + p.getName().getString() + ".")
                 .withStyle(ChatFormatting.GOLD), false);
+        com.newuniverse.nusmp.quests.NusmpEvents.fire(p, "squad.created");
+        com.newuniverse.nusmp.quests.NusmpEvents.fire(p, "squad.captain", "founder");
         MultiverseSync.markDirty(p);
     }
 
@@ -270,6 +272,7 @@ public final class Squads {
         Optional<Membership> m = membership(p);
         if (m.isEmpty() || !p.getUUID().equals(Ftb.owner(m.get().team))) { fail(p, "Only the captain can hand over the squad."); return; }
         Ftb.run(p, "ftbteams party transfer_ownership " + target.getGameProfile().getName());
+        if (target.getUUID().equals(Ftb.owner(m.get().team))) com.newuniverse.nusmp.quests.NusmpEvents.fire(target, "squad.captain", "handover");
     }
 
     public static void setVice(ServerPlayer p, ServerPlayer target) {
@@ -281,6 +284,7 @@ public final class Squads {
         m.get().squad.vice = target.getUUID();
         Data.get(p.getServer()).setDirty();
         target.sendSystemMessage(Component.literal("You are now Vice-Captain of " + m.get().squad.name + ".").withStyle(ChatFormatting.GOLD));
+        com.newuniverse.nusmp.quests.NusmpEvents.fire(target, "squad.vice");
         MultiverseSync.markDirty(target);
     }
 
@@ -335,6 +339,7 @@ public final class Squads {
         }
         if (p.getUUID().equals(Ftb.owner(m.get().team))) return;
         int need = KnightRank.parseStep(MultiverseConfig.get(MultiverseConfig.SQUAD_MIN_RANK_JOIN));
+        com.newuniverse.nusmp.quests.NusmpEvents.fireOnce(p, "squad.joined");
         Collection<UUID> members = Ftb.members(m.get().team);
         if (MultiverseProfile.step(p) < need || members.size() > MultiverseConfig.get(MultiverseConfig.SQUAD_MAX_SIZE)) {
             fail(p, "You do not meet " + m.get().squad.name + "'s Magic Knight requirements (rank or squad size). You leave the squad.");

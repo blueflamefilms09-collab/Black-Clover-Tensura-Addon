@@ -111,6 +111,7 @@ public class GatekeeperDoorBlock extends Block {
         if (!player.isCreative()) stack.shrink(1);                                        // one key per run; creative keeps testing freely
         int opened = openConnected(level, pos);
         level.playSound(null, pos, SoundEvents.IRON_DOOR_OPEN, SoundSource.BLOCKS, 1.0f, 0.6f);
+        if (opened > 0 && player instanceof net.minecraft.server.level.ServerPlayer sp) com.newuniverse.nusmp.quests.NusmpEvents.fire(sp, "labyrinth.seal_opened", "warden");
         if (level instanceof ServerLevel sl) {
             sl.sendParticles(ParticleTypes.WITCH, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 24, 0.6, 0.9, 0.6, 0.02);
             sl.sendParticles(ParticleTypes.END_ROD, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 12, 0.5, 0.8, 0.5, 0.03);

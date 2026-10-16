@@ -104,6 +104,7 @@ public final class MasteryPages {
     public static int tryUnlock(ServerPlayer p, ManasSkillInstance inst, GrimoireBook book) {
         int n = book.familyCount(), unlocked = 0;
         for (int m = 0; m < n; m++) if (GrimoireBook.isUnlocked(inst, m)) unlocked++;
+        if (book.masteryFrac(inst) >= 1.0) com.newuniverse.nusmp.quests.NusmpEvents.fireOnce(p, "mastery.max", GrimoirePages.magicOf(inst).name().toLowerCase(java.util.Locale.ROOT));
         if (unlocked >= slots(p, inst, book)) return -1;
         double mastery = book.masteryFrac(inst);
         for (int m = 1; m < n; m++) {
@@ -120,6 +121,7 @@ public final class MasteryPages {
                 continue;
             }
             GrimoireBook.unlock(inst, m);
+            com.newuniverse.nusmp.quests.NusmpEvents.fire(p, "page.unlocked", page.id());
             p.sendSystemMessage(Component.literal("Your mastery opens a new page: ").withStyle(ChatFormatting.GOLD)
                     .append(Component.literal(page.name()).withStyle(ChatFormatting.AQUA, ChatFormatting.BOLD)));
             p.sendSystemMessage(Component.translatable("nusmp.page." + book.getRegistryName().getPath() + "." + page.id()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));

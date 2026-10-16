@@ -169,6 +169,7 @@ public final class TierRitual {
         }
         if (win) {
             Tiers.setTier(relic, target);
+            com.newuniverse.nusmp.quests.QuestHooks.relicTier(p, to);
             Relics.invalidate(p);
             p.level().playSound(null, p.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.2f, 1.4f);
             Fx.ring(p.serverLevel(), p.position(), 1.8, to.rgb());

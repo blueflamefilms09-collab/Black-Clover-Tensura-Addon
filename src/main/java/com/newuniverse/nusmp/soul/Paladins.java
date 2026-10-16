@@ -170,6 +170,7 @@ public final class Paladins {
         PaladinGoals.install(m);
         PaladinNet.announce(m);
         owner.displayClientMessage(Component.literal(m.getDisplayName().getString() + " is purified and follows you.").withStyle(ChatFormatting.GOLD), true);
+        com.newuniverse.nusmp.quests.NusmpEvents.fire(owner, "paladin.converted");
         return true;
     }
 

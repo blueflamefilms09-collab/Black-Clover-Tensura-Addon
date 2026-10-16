@@ -43,6 +43,7 @@ public final class Attune {
         if (!AttuneRules.canAttune(carried(p, stack))) return false;
         stack.set(RelicComponents2.ATTUNED.get(), p.getUUID());
         bindPartner(p, stack, p.getUUID());
+        com.newuniverse.nusmp.quests.QuestHooks.relicEquipped(p, stack);
         Relics.invalidate(p);
         return true;
     }

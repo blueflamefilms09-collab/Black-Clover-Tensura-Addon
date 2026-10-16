@@ -203,6 +203,7 @@ public final class Ceremony {
         VfxSpawn.send(p.serverLevel(), VfxShape.MAGIC_CIRCLE_EXPLOSION, p.position().add(0, 1, 0), p.position().add(0, 2, 0), 0xFFFFD86B, 30, 1.0f);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.BOOK_PAGE_TURN, SoundSource.PLAYERS, 1.2f, 0.7f);
         p.sendSystemMessage(Component.literal("A grimoire drifts down from the shelves of " + where + " and chooses you.").withStyle(ChatFormatting.GOLD));
+        com.newuniverse.nusmp.quests.NusmpEvents.fire(p, "ceremony.completed");
     }
 
     /**

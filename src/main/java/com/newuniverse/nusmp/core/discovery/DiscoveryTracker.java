@@ -91,6 +91,7 @@ public final class DiscoveryTracker {
     public static boolean discover(ServerPlayer p, String key) {
         if (key == null || !data(p).add(key)) return false;
         PENDING.computeIfAbsent(p.getUUID(), k -> new ArrayList<>()).add(key);
+        com.newuniverse.nusmp.quests.QuestHooks.onDiscovered(p, key);
         return true;
     }
 

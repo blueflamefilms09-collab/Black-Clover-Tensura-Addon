@@ -58,6 +58,7 @@ public final class UniteState {
         save(p, UniteSlot.start(kind, now, ticks));
         p.getPersistentData().putBoolean(OLD, fromOldPage);
         applyStats(p, kind);
+        com.newuniverse.nusmp.quests.NusmpEvents.fire(p, "unite.mode", kind.name().toLowerCase(java.util.Locale.ROOT));
         if (ShadowConfig.overlays()) ModeArmor.start(p, ModeArmor.Mode.valueOf(kind.overlay), ticks);
     }
 

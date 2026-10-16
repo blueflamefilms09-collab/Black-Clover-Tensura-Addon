@@ -331,6 +331,7 @@ public abstract class GrimoireBook extends Skill {
             instance.setCoolDown(com.newuniverse.nusmp.NUSMP.ticksToSeconds(ticks), mode);
         }
         addMasteryPoint(instance, player);
+        com.newuniverse.nusmp.quests.QuestHooks.onCast(player, String.valueOf(castMagic), p.id(), p.costPercent());
         instance.getOrCreateTag().putInt("LastMode", mode);
         com.newuniverse.nusmp.item.MagicGear.onCast(player);
         com.newuniverse.nusmp.relics.wave.Wave6Events.onSpellCast(player);
@@ -544,6 +545,7 @@ public abstract class GrimoireBook extends Skill {
         if (p.hasEffect(com.newuniverse.nusmp.entity.zogratis.ZogratisEffects.PURIFIED)) { fail(p, "Lucius's Soul Purge has stripped your devil's power for now."); return false; }   // 1.20.0
         startDevilState(p, 160);
         p.getPersistentData().putString("nusmp_devil_src", "union");
+        com.newuniverse.nusmp.quests.NusmpEvents.fire(p, "devil.union");
         p.getServer().getPlayerList().broadcastSystemMessage(Component.literal(p.getName().getString() + " has entered Devil Union.")
                 .withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD), false);
         VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.DEVIL_CIRCLE, p, p.position().add(0, 1, 0), 0xFFB01010, 40, 2.0F);
