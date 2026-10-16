@@ -1,0 +1,121 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "minecraft:ender_dragon",
+      "required": false
+    },
+    {
+      "id": "minecraft:wither",
+      "required": false
+    },
+    {
+      "id": "minecraft:warden",
+      "required": false
+    },
+    {
+      "id": "minecraft:creeper",
+      "required": false
+    },
+    {
+      "id": "minecraft:ghast",
+      "required": false
+    },
+    {
+      "id": "minecraft:villager",
+      "required": false
+    },
+    {
+      "id": "minecraft:wandering_trader",
+      "required": false
+    },
+    {
+      "id": "minecraft:iron_golem",
+      "required": false
+    },
+    {
+      "id": "minecraft:snow_golem",
+      "required": false
+    },
+    {
+      "id": "minecraft:armor_stand",
+      "required": false
+    },
+    {
+      "id": "minecraft:allay",
+      "required": false
+    },
+    {
+      "id": "minecraft:evoker_fangs",
+      "required": false
+    },
+    {
+      "id": "minecraft:illusioner",
+      "required": false
+    },
+    {
+      "id": "minecraft:shulker",
+      "required": false
+    },
+    {
+      "id": "minecraft:giant",
+      "required": false
+    },
+    {
+      "id": "minecraft:slime",
+      "required": false
+    },
+    {
+      "id": "minecraft:magma_cube",
+      "required": false
+    },
+    {
+      "id": "nusmp:corpse_jimmy",
+      "required": false
+    },
+    {
+      "id": "nusmp:corpse_alfredo",
+      "required": false
+    },
+    {
+      "id": "nusmp:corpse_carl",
+      "required": false
+    },
+    {
+      "id": "nusmp:tower_wizard",
+      "required": false
+    },
+    {
+      "id": "nusmp:grimoire_daemon",
+      "required": false
+    },
+    {
+      "id": "nusmp:spirit_lord",
+      "required": false
+    },
+    {
+      "id": "nusmp:mirror_double",
+      "required": false
+    },
+    {
+      "id": "nusmp:painted_construct",
+      "required": false
+    },
+    {
+      "id": "nusmp:zogratis_clone",
+      "required": false
+    },
+    {
+      "id": "nusmp:dark_disciple",
+      "required": false
+    },
+    {
+      "id": "nusmp:blood_beast",
+      "required": false
+    },
+    {
+      "id": "nusmp:floor_warden",
+      "required": false
+    }
+  ]
+}
