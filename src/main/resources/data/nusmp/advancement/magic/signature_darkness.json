@@ -1,0 +1,139 @@
+{
+  "parent": "nusmp:magic/soul_darkness",
+  "display": {
+    "icon": {
+      "id": "minecraft:ink_sac"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.signature_darkness.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.signature_darkness.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_signature_dark": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "dark"
+      }
+    },
+    "e_spell_cast_signature_shadow": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "shadow"
+      }
+    },
+    "e_spell_cast_signature_poison": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "poison"
+      }
+    },
+    "e_spell_cast_signature_demon_beast": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "demon_beast"
+      }
+    },
+    "e_spell_cast_signature_eyeball": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "eyeball"
+      }
+    },
+    "e_spell_cast_signature_curse": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "curse"
+      }
+    },
+    "e_spell_cast_signature_demon_fire": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "demon_fire"
+      }
+    },
+    "e_spell_cast_signature_demon_ice": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "demon_ice"
+      }
+    },
+    "e_spell_cast_signature_demon_light": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "demon_light"
+      }
+    },
+    "e_spell_cast_signature_demon_water": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "demon_water"
+      }
+    },
+    "e_spell_cast_signature_black_oil": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "black_oil"
+      }
+    },
+    "e_spell_cast_signature_smoke": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "smoke"
+      }
+    },
+    "e_spell_cast_signature_soul_corpse": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "soul_corpse"
+      }
+    },
+    "e_spell_cast_signature_soul": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "soul"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_signature_dark",
+      "e_spell_cast_signature_shadow",
+      "e_spell_cast_signature_poison",
+      "e_spell_cast_signature_demon_beast",
+      "e_spell_cast_signature_eyeball",
+      "e_spell_cast_signature_curse",
+      "e_spell_cast_signature_demon_fire",
+      "e_spell_cast_signature_demon_ice",
+      "e_spell_cast_signature_demon_light",
+      "e_spell_cast_signature_demon_water",
+      "e_spell_cast_signature_black_oil",
+      "e_spell_cast_signature_smoke",
+      "e_spell_cast_signature_soul_corpse",
+      "e_spell_cast_signature_soul"
+    ]
+  ],
+  "rewards": {
+    "experience": 40
+  }
+}

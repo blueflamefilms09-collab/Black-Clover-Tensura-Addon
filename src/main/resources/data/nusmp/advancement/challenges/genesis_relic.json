@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:challenges/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:nether_star"
+    },
+    "title": {
+      "translate": "advancement.nusmp.challenges.genesis_relic.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.challenges.genesis_relic.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_relic_grade_genesis": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "relic.grade",
+        "arg": "genesis"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_relic_grade_genesis"
+    ]
+  ],
+  "rewards": {
+    "experience": 500
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:spells/characters",
+  "display": {
+    "icon": {
+      "id": "minecraft:writable_book"
+    },
+    "title": {
+      "translate": "advancement.nusmp.spells.page_unite_canis.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.spells.page_unite_canis.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_page_unlocked_unite_canis": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "arg": "unite_canis"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_page_unlocked_unite_canis"
+    ]
+  ],
+  "rewards": {
+    "experience": 15
+  }
+}

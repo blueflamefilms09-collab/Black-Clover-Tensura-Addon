@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:magic/soul_time",
+  "display": {
+    "icon": {
+      "id": "minecraft:clock"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.cast_sealing.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.cast_sealing.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_sealing": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "sealing"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_sealing"
+    ]
+  ],
+  "rewards": {
+    "experience": 8
+  }
+}

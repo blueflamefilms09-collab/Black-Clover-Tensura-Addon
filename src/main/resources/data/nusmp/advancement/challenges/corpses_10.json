@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:challenges/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:wither_skeleton_skull"
+    },
+    "title": {
+      "translate": "advancement.nusmp.challenges.corpses_10.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.challenges.corpses_10.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_corpse_raised_10": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "corpse.raised",
+        "count": 10
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_corpse_raised_10"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  }
+}

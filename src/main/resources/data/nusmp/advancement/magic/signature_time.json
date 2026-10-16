@@ -1,0 +1,51 @@
+{
+  "parent": "nusmp:magic/soul_time",
+  "display": {
+    "icon": {
+      "id": "minecraft:clock"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.signature_time.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.signature_time.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_signature_time": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "time"
+      }
+    },
+    "e_spell_cast_signature_sealing": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "sealing"
+      }
+    },
+    "e_spell_cast_signature_curse_warding": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "curse_warding"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_signature_time",
+      "e_spell_cast_signature_sealing",
+      "e_spell_cast_signature_curse_warding"
+    ]
+  ],
+  "rewards": {
+    "experience": 40
+  }
+}

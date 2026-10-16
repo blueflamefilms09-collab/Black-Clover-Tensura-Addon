@@ -1,0 +1,105 @@
+{
+  "parent": "nusmp:magic/branch_mind_signature",
+  "display": {
+    "icon": {
+      "id": "minecraft:painting"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.branch_mind_all.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.branch_mind_all.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_mirror": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "mirror"
+      }
+    },
+    "e_spell_cast_painting": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "painting"
+      }
+    },
+    "e_spell_cast_dream": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "dream"
+      }
+    },
+    "e_spell_cast_illusion": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "illusion"
+      }
+    },
+    "e_spell_cast_creation": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "creation"
+      }
+    },
+    "e_spell_cast_copy": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "copy"
+      }
+    },
+    "e_spell_cast_memory": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "memory"
+      }
+    },
+    "e_spell_cast_eye": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "eye"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_mirror"
+    ],
+    [
+      "e_spell_cast_painting"
+    ],
+    [
+      "e_spell_cast_dream"
+    ],
+    [
+      "e_spell_cast_illusion"
+    ],
+    [
+      "e_spell_cast_creation"
+    ],
+    [
+      "e_spell_cast_copy"
+    ],
+    [
+      "e_spell_cast_memory"
+    ],
+    [
+      "e_spell_cast_eye"
+    ]
+  ],
+  "rewards": {
+    "experience": 164
+  }
+}

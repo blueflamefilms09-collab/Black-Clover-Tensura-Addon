@@ -1,0 +1,47 @@
+{
+	id: "48403B1AF8703652"
+	order_index: 8
+	loot_size: 1
+	rewards: [
+		{
+			id: "15A9A0A7DCCF1049"
+			item: {
+				id: "minecraft:diamond"
+			}
+			count: 8
+		}
+		{
+			id: "7845F430581BF0CE"
+			item: {
+				id: "minecraft:netherite_scrap"
+			}
+			count: 4
+		}
+		{
+			id: "4BC1A4AFCE25B305"
+			item: {
+				id: "minecraft:golden_apple"
+			}
+			count: 6
+		}
+		{
+			id: "1807D55FFBB052CB"
+			item: {
+				id: "minecraft:shield"
+			}
+		}
+		{
+			id: "77B3E655368B00C7"
+			item: {
+				id: "minecraft:totem_of_undying"
+			}
+		}
+		{
+			id: "4DE449E06B73435D"
+			item: {
+				id: "minecraft:iron_ingot"
+			}
+			count: 32
+		}
+	]
+}

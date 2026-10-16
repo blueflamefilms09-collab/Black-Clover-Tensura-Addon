@@ -1,0 +1,45 @@
+{
+  "parent": "nusmp:dungeon/goliath",
+  "display": {
+    "icon": {
+      "id": "minecraft:beacon"
+    },
+    "title": {
+      "translate": "advancement.nusmp.dungeon.both_floors.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.dungeon.both_floors.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "a0_e_dungeon_floor_boss_goliath": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "dungeon.floor_boss",
+        "arg": "goliath"
+      }
+    },
+    "b1_e_dungeon_floor_boss_charybdis": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "dungeon.floor_boss",
+        "arg": "charybdis"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "a0_e_dungeon_floor_boss_goliath"
+    ],
+    [
+      "b1_e_dungeon_floor_boss_charybdis"
+    ]
+  ],
+  "rewards": {
+    "experience": 300
+  }
+}

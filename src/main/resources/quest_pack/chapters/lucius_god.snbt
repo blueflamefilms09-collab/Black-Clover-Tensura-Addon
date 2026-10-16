@@ -1,0 +1,543 @@
+{
+	id: "0096A69B89242719"
+	group: "657C87ED5A27C2D7"
+	order_index: 20
+	filename: "lucius_god"
+	icon: {
+		id: "nusmp:zogratis_hourglass"
+	}
+	default_hide_dependency_lines: false
+	quests: [
+		{
+			id: "56A8F22FA16AB384"
+			x: 0.0d
+			y: 3.0d
+			shape: "rsquare"
+			size: 1.25d
+			icon: {
+				id: "nusmp:zogratis_hourglass"
+			}
+			tasks: [
+				{
+					id: "0756BDEF5E8C664C"
+					type: "checkmark"
+				}
+			]
+			rewards: [
+				{
+					id: "228C2FA7420C38B3"
+					type: "xp"
+					xp: 25
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "63E175378A296ED8"
+			x: 1.5d
+			y: 3.0d
+			icon: {
+				id: "nusmp:zogratis_hourglass"
+			}
+			dependencies: ["56A8F22FA16AB384"]
+			tasks: [
+				{
+					id: "7E16B2491EB25C0D"
+					type: "advancement"
+					advancement: "nusmp:world/hourglass_item"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "5285E16F0DC66021"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "2E57E1A61C416D61"
+			x: 1.5d
+			y: 5.25d
+			shape: "square"
+			icon: {
+				id: "nusmp:arena_return_sigil"
+			}
+			dependencies: ["56A8F22FA16AB384"]
+			optional: true
+			tasks: [
+				{
+					id: "1D60CDD1695C53F2"
+					type: "advancement"
+					advancement: "nusmp:world/sigil"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "124CF8E1A5E29FDD"
+					type: "xp"
+					xp: 15
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "34C9D509F7D83B02"
+			x: 3.0d
+			y: 3.0d
+			icon: {
+				id: "nusmp:zogratis_hourglass"
+			}
+			dependencies: ["63E175378A296ED8"]
+			tasks: [
+				{
+					id: "6059FF0E36DFC128"
+					type: "advancement"
+					advancement: "nusmp:world/hourglass_used"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "3E716038A4D58285"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "60B9E3B01920EB72"
+			x: 4.5d
+			y: 3.0d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "nusmp:arena_return_sigil"
+			}
+			dependencies: ["34C9D509F7D83B02"]
+			tasks: [
+				{
+					id: "47F2A3B8117FCB8B"
+					type: "advancement"
+					advancement: "nusmp:world/arena"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "64B3DE2A43E1DB38"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "045A168D86EC24EC"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "4D1ED86E6B289D41"
+			x: 4.5d
+			y: 5.25d
+			shape: "square"
+			icon: {
+				id: "nusmp:arena_return_sigil"
+			}
+			dependencies: ["34C9D509F7D83B02"]
+			optional: true
+			tasks: [
+				{
+					id: "00630DC6F5D5820B"
+					type: "dimension"
+					dimension: "nusmp:zogratis_arena"
+				}
+			]
+			rewards: [
+				{
+					id: "0F517D7D0D5E22E2"
+					type: "xp"
+					xp: 15
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "42A5961EB0302E49"
+			x: 6.0d
+			y: 1.5d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "nusmp:zogratis_hourglass"
+			}
+			dependencies: ["60B9E3B01920EB72"]
+			tasks: [
+				{
+					id: "68C4700B53A68927"
+					type: "advancement"
+					advancement: "nusmp:bosses/lucius_stage2"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "54B5F900E1CBD1EF"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "619B25D5C6ADAB08"
+					type: "loot"
+					table_id: 4358806230403059797L
+				}
+			]
+		}
+		{
+			id: "6140DF5E887349DB"
+			x: 8.25d
+			y: 1.5d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "nusmp:zogratis_hourglass"
+			}
+			dependencies: ["42A5961EB0302E49"]
+			tasks: [
+				{
+					id: "39CFA975252672D9"
+					type: "advancement"
+					advancement: "nusmp:bosses/lucius_stage3"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "4E4A9304BA80CD31"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "00F5CD8EA9D3FC2E"
+					type: "loot"
+					table_id: 4358806230403059797L
+				}
+			]
+		}
+		{
+			id: "6C2581DA4A1AD3C7"
+			x: 10.5d
+			y: 1.5d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "nusmp:zogratis_hourglass"
+			}
+			dependencies: ["6140DF5E887349DB"]
+			tasks: [
+				{
+					id: "489895E340C6D330"
+					type: "advancement"
+					advancement: "nusmp:challenges/lucius_all_stages"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "1127A2C6030EFD44"
+					type: "xp"
+					xp: 400
+					auto: "enabled"
+				}
+				{
+					id: "506710EEE2D49132"
+					type: "loot"
+					table_id: 4728946283094692376L
+				}
+			]
+		}
+		{
+			id: "7CFAD86DDEF5497B"
+			x: 6.0d
+			y: 4.5d
+			shape: "square"
+			icon: {
+				id: "minecraft:clock"
+			}
+			dependencies: ["60B9E3B01920EB72"]
+			optional: true
+			tasks: [
+				{
+					id: "2937F94BBF7C7F27"
+					type: "advancement"
+					advancement: "nusmp:challenges/time_decay"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "5CA2CBC0C99EAD65"
+					type: "xp"
+					xp: 15
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "6C3AD3ADBBDD3B37"
+			x: 8.25d
+			y: 4.5d
+			shape: "square"
+			icon: {
+				id: "minecraft:iron_sword"
+			}
+			dependencies: ["7CFAD86DDEF5497B"]
+			optional: true
+			tasks: [
+				{
+					id: "3DF780714D86FF23"
+					type: "advancement"
+					advancement: "nusmp:challenges/severed"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "3F4B922AAD4FCF53"
+					type: "xp"
+					xp: 15
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "6CBBFDF3BB5C7E5A"
+			x: 10.5d
+			y: 4.5d
+			shape: "square"
+			icon: {
+				id: "minecraft:barrier"
+			}
+			dependencies: ["6C3AD3ADBBDD3B37"]
+			optional: true
+			tasks: [
+				{
+					id: "17851F79C99D143E"
+					type: "advancement"
+					advancement: "nusmp:challenges/nullified"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "6F55897A5D3E2A2A"
+					type: "xp"
+					xp: 15
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "1F921EB3DE0F6525"
+			x: 12.75d
+			y: 3.0d
+			shape: "hexagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:totem_of_undying"
+			}
+			dependencies: ["6C2581DA4A1AD3C7"]
+			tasks: [
+				{
+					id: "43023CD73FC7AC84"
+					type: "advancement"
+					advancement: "nusmp:world/arena_victory"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "28EDF618ACB87462"
+					type: "xp"
+					xp: 500
+					auto: "enabled"
+				}
+				{
+					id: "04A94B5B33870CBF"
+					type: "loot"
+					table_id: 4728946283094692376L
+				}
+				{
+					id: "3BC1848EC0CF0BD5"
+					type: "choice"
+					table_id: 5206226156263585362L
+				}
+			]
+		}
+		{
+			id: "7999E3F291A4D5AD"
+			x: 12.75d
+			y: 0.0d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "nusmp:zogratis_hourglass"
+			}
+			dependencies: ["6C2581DA4A1AD3C7"]
+			tasks: [
+				{
+					id: "3961BA4AE0E53719"
+					type: "advancement"
+					advancement: "nusmp:bosses/lucius_zogratis"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "4156D0BA2D02CE62"
+					type: "xp"
+					xp: 600
+					auto: "enabled"
+				}
+				{
+					id: "64B1CA6F136AAD08"
+					type: "loot"
+					table_id: 4728946283094692376L
+				}
+			]
+		}
+		{
+			id: "18D4D1E3B139CE92"
+			x: 15.0d
+			y: 3.0d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:iron_sword"
+			}
+			dependencies: ["1F921EB3DE0F6525"]
+			optional: true
+			tasks: [
+				{
+					id: "60716FB14561CCAC"
+					type: "advancement"
+					advancement: "nusmp:challenges/norelic"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "70550D91EAACA1AE"
+					type: "xp"
+					xp: 1500
+					auto: "enabled"
+				}
+				{
+					id: "121DBC0C2FA2C084"
+					type: "loot"
+					table_id: 4728946283094692376L
+				}
+				{
+					id: "48905E7727FACB5C"
+					type: "item"
+					item: {
+						id: "minecraft:nether_star"
+					}
+					count: 2
+					team_reward: true
+				}
+			]
+		}
+		{
+			id: "1013AE6238D8BB84"
+			x: 15.0d
+			y: 5.25d
+			shape: "square"
+			icon: {
+				id: "minecraft:shield"
+			}
+			dependencies: ["1F921EB3DE0F6525"]
+			optional: true
+			tasks: [
+				{
+					id: "373B1FA5A5A57419"
+					type: "checkmark"
+				}
+			]
+			rewards: [
+				{
+					id: "654A518E65A5F0F0"
+					type: "xp"
+					xp: 15
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "17B921B99B191EE1"
+			x: 15.0d
+			y: 0.75d
+			shape: "square"
+			icon: {
+				id: "minecraft:netherite_sword"
+			}
+			dependencies: ["42A5961EB0302E49"]
+			optional: true
+			tasks: [
+				{
+					id: "15A8A4F5ACE76964"
+					type: "checkmark"
+				}
+			]
+			rewards: [
+				{
+					id: "3AE7C77A87A0D9A3"
+					type: "xp"
+					xp: 15
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "0FE663F520D5E6A9"
+			x: 17.25d
+			y: 3.0d
+			shape: "hexagon"
+			size: 1.5d
+			icon: {
+				id: "nusmp:zogratis_hourglass"
+			}
+			dependencies: ["1F921EB3DE0F6525"]
+			tasks: [
+				{
+					id: "45193693CE98A1C3"
+					type: "advancement"
+					advancement: "nusmp:bosses/lucius_zogratis"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "4CB10D95BC7AF772"
+					type: "xp"
+					xp: 1000
+					auto: "enabled"
+				}
+				{
+					id: "49F21EB4E56FB78B"
+					type: "loot"
+					table_id: 4728946283094692376L
+				}
+			]
+		}
+	]
+	quest_links: [ ]
+	images: [ ]
+}

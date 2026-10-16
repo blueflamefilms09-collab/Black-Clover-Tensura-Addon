@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:spells/special",
+  "display": {
+    "icon": {
+      "id": "minecraft:string"
+    },
+    "title": {
+      "translate": "advancement.nusmp.spells.art_unite_felis.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.spells.art_unite_felis.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_unite_mode_felis": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "unite.mode",
+        "arg": "felis"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_unite_mode_felis"
+    ]
+  ],
+  "rewards": {
+    "experience": 10
+  }
+}

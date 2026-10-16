@@ -1,0 +1,51 @@
+{
+  "parent": "nusmp:magic/soul_light",
+  "display": {
+    "icon": {
+      "id": "minecraft:glowstone_dust"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.signature_light.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.signature_light.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_signature_light": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "light"
+      }
+    },
+    "e_spell_cast_signature_lightning": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "lightning"
+      }
+    },
+    "e_spell_cast_signature_sword": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "sword"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_signature_light",
+      "e_spell_cast_signature_lightning",
+      "e_spell_cast_signature_sword"
+    ]
+  ],
+  "rewards": {
+    "experience": 40
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:arcs/royal_knights",
+  "display": {
+    "icon": {
+      "id": "minecraft:black_banner"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arcs.spade_raid.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arcs.spade_raid.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_boss_defeated": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "boss.defeated"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_boss_defeated"
+    ]
+  ],
+  "rewards": {
+    "experience": 75
+  }
+}

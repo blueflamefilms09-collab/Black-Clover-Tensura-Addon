@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:spirits/charm",
+  "display": {
+    "icon": {
+      "id": "minecraft:soul_lantern"
+    },
+    "title": {
+      "translate": "advancement.nusmp.spirits.contract.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.spirits.contract.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spirit_contract_spirit": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spirit.contract",
+        "arg": "spirit"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spirit_contract_spirit"
+    ]
+  ],
+  "rewards": {
+    "experience": 80
+  }
+}

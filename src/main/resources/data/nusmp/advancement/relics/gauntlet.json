@@ -1,0 +1,38 @@
+{
+  "parent": "nusmp:relics/stone_any",
+  "display": {
+    "icon": {
+      "id": "nusmp:the_infinity_gauntlet"
+    },
+    "title": {
+      "translate": "advancement.nusmp.relics.gauntlet.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.relics.gauntlet.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "have_the_infinity_gauntlet": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:the_infinity_gauntlet"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_the_infinity_gauntlet"
+    ]
+  ],
+  "rewards": {
+    "experience": 300
+  }
+}

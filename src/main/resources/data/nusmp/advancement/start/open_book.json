@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:start/first_grimoire",
+  "display": {
+    "icon": {
+      "id": "nusmp:grimoire_summons"
+    },
+    "title": {
+      "translate": "advancement.nusmp.start.open_book.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.start.open_book.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_grimoire_opened": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "grimoire.opened"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_grimoire_opened"
+    ]
+  ],
+  "rewards": {
+    "experience": 5
+  }
+}

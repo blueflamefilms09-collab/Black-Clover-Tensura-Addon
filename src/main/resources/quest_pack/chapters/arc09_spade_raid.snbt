@@ -1,0 +1,250 @@
+{
+	id: "5BB55F345355969A"
+	group: "0BCF8AD019395CF3"
+	order_index: 14
+	filename: "arc09_spade_raid"
+	icon: {
+		id: "minecraft:black_banner"
+	}
+	default_hide_dependency_lines: false
+	quests: [
+		{
+			id: "6AE9DB00B892D9EF"
+			x: 0.0d
+			y: 1.5d
+			shape: "rsquare"
+			size: 1.25d
+			icon: {
+				id: "minecraft:black_banner"
+			}
+			dependencies: ["519D28E29EE8273D"]
+			tasks: [
+				{
+					id: "23641E4EE2548350"
+					type: "checkmark"
+				}
+			]
+			rewards: [
+				{
+					id: "37D9FF84F196D0E6"
+					type: "xp"
+					xp: 25
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "16547121D8B77F3A"
+			x: 1.5d
+			y: 1.5d
+			icon: {
+				id: "nusmp:charter_grimoire_dante"
+			}
+			dependencies: ["6AE9DB00B892D9EF"]
+			tasks: [
+				{
+					id: "7556114A69C4F175"
+					type: "advancement"
+					advancement: "nusmp:squads/charter"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "527039C7DA07303E"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "5892D072964202A8"
+			x: 1.5d
+			y: 3.0d
+			shape: "square"
+			icon: {
+				id: "minecraft:black_banner"
+			}
+			dependencies: ["6AE9DB00B892D9EF"]
+			optional: true
+			tasks: [
+				{
+					id: "1498FB4EB389DF35"
+					type: "advancement"
+					advancement: "nusmp:world/kingdom_spade"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "19CCEAFB37F5011E"
+					type: "xp"
+					xp: 15
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "3274C29004F53291"
+			x: 3.0d
+			y: 1.5d
+			icon: {
+				id: "minecraft:iron_sword"
+			}
+			dependencies: ["16547121D8B77F3A"]
+			tasks: [
+				{
+					id: "4D5D59FE01A25E6B"
+					type: "advancement"
+					advancement: "nusmp:bosses/first"
+					criterion: ""
+				}
+				{
+					id: "532B5C9CED55B80A"
+					type: "advancement"
+					advancement: "nusmp:arcs/spade_raid"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "49ED78E36EFD3988"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "3E9465637CC9F145"
+			x: 4.5d
+			y: 0.0d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "nusmp:dante_gravity_crown"
+			}
+			dependencies: ["3274C29004F53291"]
+			tasks: [
+				{
+					id: "5FF0897F29E3085E"
+					type: "advancement"
+					advancement: "nusmp:bosses/dante_zogratis"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "4AA3C1F1D3629CFD"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "1F1B05E33CE52140"
+					type: "loot"
+					table_id: 4358806230403059797L
+				}
+			]
+		}
+		{
+			id: "3BDEAFB942E8AD2D"
+			x: 4.5d
+			y: 1.5d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:ender_eye"
+			}
+			dependencies: ["3274C29004F53291"]
+			tasks: [
+				{
+					id: "4553C7335ED410F7"
+					type: "advancement"
+					advancement: "nusmp:bosses/vanica_zogratis"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "38110BC735F34A77"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "7D08696B3CC69312"
+					type: "loot"
+					table_id: 4358806230403059797L
+				}
+			]
+		}
+		{
+			id: "3F7553B6A7856875"
+			x: 4.5d
+			y: 3.0d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "nusmp:zenon_spatial_ring"
+			}
+			dependencies: ["3274C29004F53291"]
+			tasks: [
+				{
+					id: "12558ABCB5F32088"
+					type: "advancement"
+					advancement: "nusmp:bosses/zenon_zogratis"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "4C6EC2A516B1850C"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "273492A83165B805"
+					type: "loot"
+					table_id: 4358806230403059797L
+				}
+			]
+		}
+		{
+			id: "63E4656EBDF885BE"
+			x: 7.5d
+			y: 1.5d
+			shape: "hexagon"
+			size: 1.5d
+			icon: {
+				id: "nusmp:charter_grimoire_zenon"
+			}
+			dependencies: ["3E9465637CC9F145", "3BDEAFB942E8AD2D", "3F7553B6A7856875"]
+			tasks: [
+				{
+					id: "02A8BB9045CD2BDA"
+					type: "advancement"
+					advancement: "nusmp:bosses/triad"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "11232170413A634A"
+					type: "xp"
+					xp: 400
+					auto: "enabled"
+				}
+				{
+					id: "12C3B492C5285BA8"
+					type: "loot"
+					table_id: 4728946283094692376L
+				}
+			]
+		}
+	]
+	quest_links: [ ]
+	images: [ ]
+}

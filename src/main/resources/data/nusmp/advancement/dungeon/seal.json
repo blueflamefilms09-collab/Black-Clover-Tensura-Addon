@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:dungeon/shadow_key",
+  "display": {
+    "icon": {
+      "id": "minecraft:tripwire_hook"
+    },
+    "title": {
+      "translate": "advancement.nusmp.dungeon.seal.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.dungeon.seal.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_labyrinth_seal_opened": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "labyrinth.seal_opened"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_labyrinth_seal_opened"
+    ]
+  ],
+  "rewards": {
+    "experience": 80
+  }
+}

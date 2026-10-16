@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:magic/soul_water",
+  "display": {
+    "icon": {
+      "id": "minecraft:water_bucket"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.cast_mercury.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.cast_mercury.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_mercury": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "mercury"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_mercury"
+    ]
+  ],
+  "rewards": {
+    "experience": 8
+  }
+}

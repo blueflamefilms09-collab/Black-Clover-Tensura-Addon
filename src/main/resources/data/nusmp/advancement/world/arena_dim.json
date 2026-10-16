@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:world/arena",
+  "display": {
+    "icon": {
+      "id": "nusmp:arena_return_sigil"
+    },
+    "title": {
+      "translate": "advancement.nusmp.world.arena_dim.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.world.arena_dim.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "entered": {
+      "trigger": "minecraft:changed_dimension",
+      "conditions": {
+        "to": "nusmp:zogratis_arena"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "entered"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  }
+}

@@ -1,0 +1,472 @@
+{
+	id: "079EBE56AF761B62"
+	group: "657C87ED5A27C2D7"
+	order_index: 21
+	filename: "hard_mode"
+	icon: {
+		id: "minecraft:netherite_ingot"
+	}
+	default_hide_dependency_lines: false
+	quests: [
+		{
+			id: "7399E9D16526E75A"
+			x: 0.0d
+			y: 3.0d
+			shape: "rsquare"
+			size: 1.25d
+			icon: {
+				id: "minecraft:netherite_ingot"
+			}
+			tasks: [
+				{
+					id: "34CB6E0D8F18D771"
+					type: "checkmark"
+				}
+			]
+			rewards: [
+				{
+					id: "014C76B0B90F33BF"
+					type: "xp"
+					xp: 25
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "7CC3F55686AE9937"
+			x: 1.5d
+			y: 1.5d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "minecraft:enchanted_golden_apple"
+			}
+			dependencies: ["7399E9D16526E75A"]
+			optional: true
+			tasks: [
+				{
+					id: "7F8042B146ED4DE5"
+					type: "advancement"
+					advancement: "nusmp:challenges/ten_pages_boss"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "09A0D6780289E2D5"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "23A4825149254207"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "254F09629102C02C"
+			x: 3.0d
+			y: 0.0d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "minecraft:totem_of_undying"
+			}
+			dependencies: ["7399E9D16526E75A"]
+			optional: true
+			tasks: [
+				{
+					id: "25E4461625689D54"
+					type: "advancement"
+					advancement: "nusmp:challenges/paladins_5"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "1FE84F23C1A97084"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "100C2FDCD15F5832"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "5D57C2EFB5EF1EB0"
+			x: 3.0d
+			y: 1.5d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "minecraft:wither_skeleton_skull"
+			}
+			dependencies: ["7399E9D16526E75A"]
+			optional: true
+			tasks: [
+				{
+					id: "1A7EE4DAAF825405"
+					type: "advancement"
+					advancement: "nusmp:challenges/corpses_10"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "5B611D71112B98DE"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "4D415B87B8CBD05E"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "4A23532E6C4AAC3C"
+			x: 3.0d
+			y: 3.0d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:nether_star"
+			}
+			dependencies: ["7CC3F55686AE9937"]
+			optional: true
+			tasks: [
+				{
+					id: "666D4FD6FE02FC14"
+					type: "advancement"
+					advancement: "nusmp:challenges/genesis_relic"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "4D3B38C5E5E167F3"
+					type: "xp"
+					xp: 500
+					auto: "enabled"
+				}
+				{
+					id: "64091F3F02C19D73"
+					type: "loot"
+					table_id: 4728946283094692376L
+				}
+			]
+		}
+		{
+			id: "1B69552CBBEB9513"
+			x: 3.0d
+			y: 4.5d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:nether_star"
+			}
+			dependencies: ["7399E9D16526E75A"]
+			optional: true
+			tasks: [
+				{
+					id: "2208BDB9DDDEBFE0"
+					type: "advancement"
+					advancement: "nusmp:challenges/all_magic"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "05891D925B9E12AA"
+					type: "xp"
+					xp: 1000
+					auto: "enabled"
+				}
+				{
+					id: "12552F1A00C09E69"
+					type: "loot"
+					table_id: 4728946283094692376L
+				}
+			]
+		}
+		{
+			id: "52B39607661D111F"
+			x: 4.5d
+			y: 0.0d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "nusmp:djinn_seal_paimon"
+			}
+			dependencies: ["254F09629102C02C"]
+			optional: true
+			tasks: [
+				{
+					id: "51EBEEA608FBC3FA"
+					type: "advancement"
+					advancement: "nusmp:relics/djinn_seals"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "657E9A883C61308A"
+					type: "xp"
+					xp: 400
+					auto: "enabled"
+				}
+				{
+					id: "6D3DE714CBBE1A88"
+					type: "loot"
+					table_id: 4728946283094692376L
+				}
+			]
+		}
+		{
+			id: "5B66BC36B528DAA1"
+			x: 4.5d
+			y: 1.5d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "nusmp:hand_of_vecna"
+			}
+			dependencies: ["5D57C2EFB5EF1EB0"]
+			optional: true
+			tasks: [
+				{
+					id: "576F1B58B9AEFCF3"
+					type: "advancement"
+					advancement: "nusmp:relics/vecna"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "4246BD208233644E"
+					type: "xp"
+					xp: 300
+					auto: "enabled"
+				}
+				{
+					id: "201A5EDD642A3783"
+					type: "loot"
+					table_id: 4728946283094692376L
+				}
+			]
+		}
+		{
+			id: "0BA0D88E8B51B8DF"
+			x: 4.5d
+			y: 3.0d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "nusmp:the_infinity_gauntlet"
+			}
+			dependencies: ["4A23532E6C4AAC3C"]
+			optional: true
+			tasks: [
+				{
+					id: "4E86347B3C252075"
+					type: "advancement"
+					advancement: "nusmp:relics/stones_all"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "1FB9CBB5D6992EFF"
+					type: "xp"
+					xp: 2000
+					auto: "enabled"
+				}
+				{
+					id: "7965BB34B37C37C8"
+					type: "loot"
+					table_id: 4728946283094692376L
+				}
+			]
+		}
+		{
+			id: "10344E83C0F3359B"
+			x: 4.5d
+			y: 4.5d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "nusmp:devil_core_beelzebub"
+			}
+			dependencies: ["1B69552CBBEB9513"]
+			optional: true
+			tasks: [
+				{
+					id: "54634F84296359E3"
+					type: "advancement"
+					advancement: "nusmp:spirits/devil_cores_all"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "24065EFCF02E68B1"
+					type: "xp"
+					xp: 1000
+					auto: "enabled"
+				}
+				{
+					id: "10F1B22B27640CCB"
+					type: "loot"
+					table_id: 4728946283094692376L
+				}
+			]
+		}
+		{
+			id: "63E0F32943DEEBD1"
+			x: 6.0d
+			y: 1.5d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "nusmp:charter_grimoire_lucius"
+			}
+			dependencies: ["52B39607661D111F", "5B66BC36B528DAA1"]
+			dependency_requirement: "one_completed"
+			optional: true
+			tasks: [
+				{
+					id: "25AC815D430224BE"
+					type: "advancement"
+					advancement: "nusmp:squads/charter_all"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "782698A067A3A431"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "6510C6560CB56BC6"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "21A600B00FC29140"
+			x: 6.0d
+			y: 4.5d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "minecraft:ender_eye"
+			}
+			dependencies: ["10344E83C0F3359B"]
+			optional: true
+			tasks: [
+				{
+					id: "4DA3E515D3D3D4F9"
+					type: "advancement"
+					advancement: "nusmp:spells/unite_all"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "14C4FBABE50CBB9C"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "7154AAEE27C9BF49"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "4A87694C3AB4456D"
+			x: 7.5d
+			y: 3.0d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:totem_of_undying"
+			}
+			dependencies: ["0BA0D88E8B51B8DF", "10344E83C0F3359B"]
+			dependency_requirement: "one_completed"
+			optional: true
+			tasks: [
+				{
+					id: "70878FDCF565212E"
+					type: "advancement"
+					advancement: "nusmp:spells/characters_all"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "743902C28EBA3516"
+					type: "xp"
+					xp: 500
+					auto: "enabled"
+				}
+				{
+					id: "4B3DCD8E38BF85CD"
+					type: "loot"
+					table_id: 4728946283094692376L
+				}
+			]
+		}
+		{
+			id: "6CFD6CDA7A1E9D75"
+			x: 10.5d
+			y: 3.0d
+			shape: "hexagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:nether_star"
+			}
+			dependencies: ["4A87694C3AB4456D", "63E0F32943DEEBD1", "21A600B00FC29140"]
+			optional: true
+			tasks: [
+				{
+					id: "3E9381141D45CFFF"
+					type: "checkmark"
+				}
+			]
+			rewards: [
+				{
+					id: "43B1C4F6BC1CB029"
+					type: "xp"
+					xp: 5000
+					auto: "enabled"
+				}
+				{
+					id: "0A0395EE5A35CA0C"
+					type: "loot"
+					table_id: 4728946283094692376L
+				}
+				{
+					id: "0343CF42C627B6E6"
+					type: "loot"
+					table_id: 4728946283094692376L
+				}
+			]
+		}
+	]
+	quest_links: [ ]
+	images: [ ]
+}

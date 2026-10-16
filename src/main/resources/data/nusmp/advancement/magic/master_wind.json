@@ -1,0 +1,95 @@
+{
+  "parent": "nusmp:magic/signature_wind",
+  "display": {
+    "icon": {
+      "id": "minecraft:feather"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.master_wind.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.master_wind.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_wind": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "wind"
+      }
+    },
+    "e_spell_cast_star": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "star"
+      }
+    },
+    "e_spell_cast_storm": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "storm"
+      }
+    },
+    "e_spell_cast_air": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "air"
+      }
+    },
+    "e_spell_cast_sound": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "sound"
+      }
+    },
+    "e_spell_cast_vortex": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "vortex"
+      }
+    },
+    "e_spell_cast_wing": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "wing"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_wind"
+    ],
+    [
+      "e_spell_cast_star"
+    ],
+    [
+      "e_spell_cast_storm"
+    ],
+    [
+      "e_spell_cast_air"
+    ],
+    [
+      "e_spell_cast_sound"
+    ],
+    [
+      "e_spell_cast_vortex"
+    ],
+    [
+      "e_spell_cast_wing"
+    ]
+  ],
+  "rewards": {
+    "experience": 220
+  }
+}

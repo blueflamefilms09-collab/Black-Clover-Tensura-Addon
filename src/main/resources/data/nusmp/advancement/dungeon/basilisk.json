@@ -1,0 +1,36 @@
+{
+  "parent": "nusmp:dungeon/meat",
+  "display": {
+    "icon": {
+      "id": "nusmp:roast_basilisk_fillet"
+    },
+    "title": {
+      "translate": "advancement.nusmp.dungeon.basilisk.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.dungeon.basilisk.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "consumed": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": "nusmp:roast_basilisk_fillet"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "consumed"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  }
+}

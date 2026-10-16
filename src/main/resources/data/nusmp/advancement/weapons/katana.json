@@ -1,0 +1,38 @@
+{
+  "parent": "nusmp:weapons/first",
+  "display": {
+    "icon": {
+      "id": "nusmp:demon_slasher_katana"
+    },
+    "title": {
+      "translate": "advancement.nusmp.weapons.katana.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.weapons.katana.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "have_demon_slasher_katana": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:demon_slasher_katana"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_demon_slasher_katana"
+    ]
+  ],
+  "rewards": {
+    "experience": 30
+  }
+}

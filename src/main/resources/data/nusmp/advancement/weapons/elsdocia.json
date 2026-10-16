@@ -1,0 +1,38 @@
+{
+  "parent": "nusmp:weapons/first",
+  "display": {
+    "icon": {
+      "id": "nusmp:elsdocia"
+    },
+    "title": {
+      "translate": "advancement.nusmp.weapons.elsdocia.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.weapons.elsdocia.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "have_elsdocia": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:elsdocia"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_elsdocia"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  }
+}

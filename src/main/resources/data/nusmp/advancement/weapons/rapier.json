@@ -1,0 +1,38 @@
+{
+  "parent": "nusmp:weapons/first",
+  "display": {
+    "icon": {
+      "id": "nusmp:spell_forged_rapier"
+    },
+    "title": {
+      "translate": "advancement.nusmp.weapons.rapier.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.weapons.rapier.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "have_spell_forged_rapier": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:spell_forged_rapier"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_spell_forged_rapier"
+    ]
+  ],
+  "rewards": {
+    "experience": 30
+  }
+}

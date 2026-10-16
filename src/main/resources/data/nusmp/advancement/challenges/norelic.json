@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:challenges/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:iron_sword"
+    },
+    "title": {
+      "translate": "advancement.nusmp.challenges.norelic.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.challenges.norelic.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arena_victory_norelic": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arena.victory",
+        "arg": "norelic"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arena_victory_norelic"
+    ]
+  ],
+  "rewards": {
+    "experience": 1500
+  }
+}

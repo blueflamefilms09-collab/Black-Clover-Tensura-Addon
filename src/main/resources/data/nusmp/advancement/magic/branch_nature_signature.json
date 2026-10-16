@@ -1,0 +1,115 @@
+{
+  "parent": "nusmp:magic/awakening",
+  "display": {
+    "icon": {
+      "id": "minecraft:cherry_sapling"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.branch_nature_signature.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.branch_nature_signature.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_signature_plant": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "plant"
+      }
+    },
+    "e_spell_cast_signature_cotton": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "cotton"
+      }
+    },
+    "e_spell_cast_signature_world_tree": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "world_tree"
+      }
+    },
+    "e_spell_cast_signature_kotodama": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "kotodama"
+      }
+    },
+    "e_spell_cast_signature_briar": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "briar"
+      }
+    },
+    "e_spell_cast_signature_cherry_blossom": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "cherry_blossom"
+      }
+    },
+    "e_spell_cast_signature_fungus": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "fungus"
+      }
+    },
+    "e_spell_cast_signature_food": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "food"
+      }
+    },
+    "e_spell_cast_signature_poison_plant": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "poison_plant"
+      }
+    },
+    "e_spell_cast_signature_tree": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "tree"
+      }
+    },
+    "e_spell_cast_signature_vine": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "vine"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_signature_plant",
+      "e_spell_cast_signature_cotton",
+      "e_spell_cast_signature_world_tree",
+      "e_spell_cast_signature_kotodama",
+      "e_spell_cast_signature_briar",
+      "e_spell_cast_signature_cherry_blossom",
+      "e_spell_cast_signature_fungus",
+      "e_spell_cast_signature_food",
+      "e_spell_cast_signature_poison_plant",
+      "e_spell_cast_signature_tree",
+      "e_spell_cast_signature_vine"
+    ]
+  ],
+  "rewards": {
+    "experience": 40
+  }
+}

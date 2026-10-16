@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:magic/soul_fantasy",
+  "display": {
+    "icon": {
+      "id": "minecraft:enchanted_book"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.cast_thread.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.cast_thread.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_thread": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "thread"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_thread"
+    ]
+  ],
+  "rewards": {
+    "experience": 8
+  }
+}

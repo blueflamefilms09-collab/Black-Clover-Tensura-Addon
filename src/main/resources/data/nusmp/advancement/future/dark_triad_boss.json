@@ -1,0 +1,31 @@
+{
+  "parent": "nusmp:arcs/dark_triad",
+  "display": {
+    "icon": {
+      "id": "minecraft:barrier"
+    },
+    "title": {
+      "translate": "advancement.nusmp.future.dark_triad_boss.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.future.dark_triad_boss.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "impossible": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "impossible"
+    ]
+  ],
+  "rewards": {
+    "experience": 150
+  }
+}

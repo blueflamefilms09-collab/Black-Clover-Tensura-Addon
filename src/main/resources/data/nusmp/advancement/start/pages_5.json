@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:start/first_page",
+  "display": {
+    "icon": {
+      "id": "minecraft:written_book"
+    },
+    "title": {
+      "translate": "advancement.nusmp.start.pages_5.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.start.pages_5.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_page_unlocked_5": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "count": 5
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_page_unlocked_5"
+    ]
+  ],
+  "rewards": {
+    "experience": 25
+  }
+}

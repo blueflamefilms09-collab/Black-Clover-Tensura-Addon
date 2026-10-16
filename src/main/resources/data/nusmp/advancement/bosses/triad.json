@@ -1,0 +1,100 @@
+{
+  "parent": "nusmp:bosses/dante_zogratis",
+  "display": {
+    "icon": {
+      "id": "nusmp:charter_grimoire_dante"
+    },
+    "title": {
+      "translate": "advancement.nusmp.bosses.triad.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.bosses.triad.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "a0_event": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "boss.defeated",
+        "arg": "dante_zogratis"
+      }
+    },
+    "a1_kill": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "nusmp:dante_zogratis"
+            }
+          }
+        ]
+      }
+    },
+    "b2_event": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "boss.defeated",
+        "arg": "vanica_zogratis"
+      }
+    },
+    "b3_kill": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "nusmp:vanica_zogratis"
+            }
+          }
+        ]
+      }
+    },
+    "c4_event": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "boss.defeated",
+        "arg": "zenon_zogratis"
+      }
+    },
+    "c5_kill": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "nusmp:zenon_zogratis"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "a0_event",
+      "a1_kill"
+    ],
+    [
+      "b2_event",
+      "b3_kill"
+    ],
+    [
+      "c4_event",
+      "c5_kill"
+    ]
+  ],
+  "rewards": {
+    "experience": 400
+  }
+}

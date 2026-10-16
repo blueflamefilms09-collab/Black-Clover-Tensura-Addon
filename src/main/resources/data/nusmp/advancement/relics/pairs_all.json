@@ -1,0 +1,103 @@
+{
+  "parent": "nusmp:relics/pair",
+  "display": {
+    "icon": {
+      "id": "nusmp:whirling_blades"
+    },
+    "title": {
+      "translate": "advancement.nusmp.relics.pairs_all.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.relics.pairs_all.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "have_twin_hook_swords": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:twin_hook_swords"
+          }
+        ]
+      }
+    },
+    "have_twin_hook_swords_left": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:twin_hook_swords_left"
+          }
+        ]
+      }
+    },
+    "have_whirling_blades": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:whirling_blades"
+          }
+        ]
+      }
+    },
+    "have_whirling_blades_left": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:whirling_blades_left"
+          }
+        ]
+      }
+    },
+    "have_twin_swords_of_deflection": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:twin_swords_of_deflection"
+          }
+        ]
+      }
+    },
+    "have_twin_swords_of_deflection_left": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:twin_swords_of_deflection_left"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_twin_hook_swords"
+    ],
+    [
+      "have_twin_hook_swords_left"
+    ],
+    [
+      "have_whirling_blades"
+    ],
+    [
+      "have_whirling_blades_left"
+    ],
+    [
+      "have_twin_swords_of_deflection"
+    ],
+    [
+      "have_twin_swords_of_deflection_left"
+    ]
+  ],
+  "rewards": {
+    "experience": 200
+  }
+}

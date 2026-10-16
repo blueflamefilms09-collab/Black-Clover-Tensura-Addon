@@ -1,0 +1,139 @@
+{
+  "parent": "nusmp:magic/soul_battle",
+  "display": {
+    "icon": {
+      "id": "minecraft:iron_sword"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.signature_battle.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.signature_battle.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_signature_reinforcement": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "reinforcement"
+      }
+    },
+    "e_spell_cast_signature_beast": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "beast"
+      }
+    },
+    "e_spell_cast_signature_bone": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "bone"
+      }
+    },
+    "e_spell_cast_signature_blood": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "blood"
+      }
+    },
+    "e_spell_cast_signature_steel": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "steel"
+      }
+    },
+    "e_spell_cast_signature_slash": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "slash"
+      }
+    },
+    "e_spell_cast_signature_body": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "body"
+      }
+    },
+    "e_spell_cast_signature_chain": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "chain"
+      }
+    },
+    "e_spell_cast_signature_iron": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "iron"
+      }
+    },
+    "e_spell_cast_signature_hair": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "hair"
+      }
+    },
+    "e_spell_cast_signature_nail": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "nail"
+      }
+    },
+    "e_spell_cast_signature_scale": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "scale"
+      }
+    },
+    "e_spell_cast_signature_skin": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "skin"
+      }
+    },
+    "e_spell_cast_signature_tongue": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "tongue"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_signature_reinforcement",
+      "e_spell_cast_signature_beast",
+      "e_spell_cast_signature_bone",
+      "e_spell_cast_signature_blood",
+      "e_spell_cast_signature_steel",
+      "e_spell_cast_signature_slash",
+      "e_spell_cast_signature_body",
+      "e_spell_cast_signature_chain",
+      "e_spell_cast_signature_iron",
+      "e_spell_cast_signature_hair",
+      "e_spell_cast_signature_nail",
+      "e_spell_cast_signature_scale",
+      "e_spell_cast_signature_skin",
+      "e_spell_cast_signature_tongue"
+    ]
+  ],
+  "rewards": {
+    "experience": 40
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "parent": "nusmp:magic/awakening",
+  "display": {
+    "icon": {
+      "id": "minecraft:string"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.branch_bindings_signature.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.branch_bindings_signature.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_signature_thread": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "thread"
+      }
+    },
+    "e_spell_cast_signature_sealing": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "sealing"
+      }
+    },
+    "e_spell_cast_signature_chain": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "chain"
+      }
+    },
+    "e_spell_cast_signature_key": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "key"
+      }
+    },
+    "e_spell_cast_signature_barrier": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "barrier"
+      }
+    },
+    "e_spell_cast_signature_switching": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "switching"
+      }
+    },
+    "e_spell_cast_signature_permeation": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "permeation"
+      }
+    },
+    "e_spell_cast_signature_modification": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "modification"
+      }
+    },
+    "e_spell_cast_signature_recombination": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "recombination"
+      }
+    },
+    "e_spell_cast_signature_legion": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "legion"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_signature_thread",
+      "e_spell_cast_signature_sealing",
+      "e_spell_cast_signature_chain",
+      "e_spell_cast_signature_key",
+      "e_spell_cast_signature_barrier",
+      "e_spell_cast_signature_switching",
+      "e_spell_cast_signature_permeation",
+      "e_spell_cast_signature_modification",
+      "e_spell_cast_signature_recombination",
+      "e_spell_cast_signature_legion"
+    ]
+  ],
+  "rewards": {
+    "experience": 40
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:spells/special",
+  "display": {
+    "icon": {
+      "id": "minecraft:note_block"
+    },
+    "title": {
+      "translate": "advancement.nusmp.spells.art_butoh.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.spells.art_butoh.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_butoh_dance": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "butoh.dance"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_butoh_dance"
+    ]
+  ],
+  "rewards": {
+    "experience": 10
+  }
+}

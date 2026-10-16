@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:relics/grade_god",
+  "display": {
+    "icon": {
+      "id": "minecraft:nether_star"
+    },
+    "title": {
+      "translate": "advancement.nusmp.relics.grade_genesis.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.relics.grade_genesis.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_relic_grade_genesis": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "relic.grade",
+        "arg": "genesis"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_relic_grade_genesis"
+    ]
+  ],
+  "rewards": {
+    "experience": 550
+  }
+}

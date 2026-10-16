@@ -1,0 +1,181 @@
+{
+  "parent": "nusmp:relics/djinn",
+  "display": {
+    "icon": {
+      "id": "nusmp:djinn_seal_paimon"
+    },
+    "title": {
+      "translate": "advancement.nusmp.relics.djinn_seals.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.relics.djinn_seals.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "have_djinn_seal_amon": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:djinn_seal_amon"
+          }
+        ]
+      }
+    },
+    "have_djinn_seal_baal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:djinn_seal_baal"
+          }
+        ]
+      }
+    },
+    "have_djinn_seal_bifron": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:djinn_seal_bifron"
+          }
+        ]
+      }
+    },
+    "have_djinn_seal_focalor": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:djinn_seal_focalor"
+          }
+        ]
+      }
+    },
+    "have_djinn_seal_furfur": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:djinn_seal_furfur"
+          }
+        ]
+      }
+    },
+    "have_djinn_seal_marchosias": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:djinn_seal_marchosias"
+          }
+        ]
+      }
+    },
+    "have_djinn_seal_paimon": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:djinn_seal_paimon"
+          }
+        ]
+      }
+    },
+    "have_djinn_seal_sitri": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:djinn_seal_sitri"
+          }
+        ]
+      }
+    },
+    "have_djinn_seal_vassago": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:djinn_seal_vassago"
+          }
+        ]
+      }
+    },
+    "have_djinn_seal_vinea": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:djinn_seal_vinea"
+          }
+        ]
+      }
+    },
+    "have_djinn_seal_zagan": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:djinn_seal_zagan"
+          }
+        ]
+      }
+    },
+    "have_djinn_seal_zepar": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:djinn_seal_zepar"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_djinn_seal_amon"
+    ],
+    [
+      "have_djinn_seal_baal"
+    ],
+    [
+      "have_djinn_seal_bifron"
+    ],
+    [
+      "have_djinn_seal_focalor"
+    ],
+    [
+      "have_djinn_seal_furfur"
+    ],
+    [
+      "have_djinn_seal_marchosias"
+    ],
+    [
+      "have_djinn_seal_paimon"
+    ],
+    [
+      "have_djinn_seal_sitri"
+    ],
+    [
+      "have_djinn_seal_vassago"
+    ],
+    [
+      "have_djinn_seal_vinea"
+    ],
+    [
+      "have_djinn_seal_zagan"
+    ],
+    [
+      "have_djinn_seal_zepar"
+    ]
+  ],
+  "rewards": {
+    "experience": 400
+  }
+}

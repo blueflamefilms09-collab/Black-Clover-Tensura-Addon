@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:bosses/zagred",
+  "display": {
+    "icon": {
+      "id": "nusmp:last_word"
+    },
+    "title": {
+      "translate": "advancement.nusmp.bosses.zagred_phase2.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.bosses.zagred_phase2.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_boss_phase_zagred_2": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "boss.phase",
+        "arg": "zagred:2"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_boss_phase_zagred_2"
+    ]
+  ],
+  "rewards": {
+    "experience": 80
+  }
+}

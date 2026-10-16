@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:magic/soul_darkness",
+  "display": {
+    "icon": {
+      "id": "minecraft:ink_sac"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.cast_curse.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.cast_curse.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_curse": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "curse"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_curse"
+    ]
+  ],
+  "rewards": {
+    "experience": 8
+  }
+}

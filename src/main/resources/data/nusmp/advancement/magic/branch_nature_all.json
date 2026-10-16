@@ -1,0 +1,135 @@
+{
+  "parent": "nusmp:magic/branch_nature_signature",
+  "display": {
+    "icon": {
+      "id": "minecraft:cherry_sapling"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.branch_nature_all.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.branch_nature_all.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_plant": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "plant"
+      }
+    },
+    "e_spell_cast_cotton": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "cotton"
+      }
+    },
+    "e_spell_cast_world_tree": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "world_tree"
+      }
+    },
+    "e_spell_cast_kotodama": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "kotodama"
+      }
+    },
+    "e_spell_cast_briar": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "briar"
+      }
+    },
+    "e_spell_cast_cherry_blossom": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "cherry_blossom"
+      }
+    },
+    "e_spell_cast_fungus": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "fungus"
+      }
+    },
+    "e_spell_cast_food": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "food"
+      }
+    },
+    "e_spell_cast_poison_plant": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "poison_plant"
+      }
+    },
+    "e_spell_cast_tree": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "tree"
+      }
+    },
+    "e_spell_cast_vine": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "vine"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_plant"
+    ],
+    [
+      "e_spell_cast_cotton"
+    ],
+    [
+      "e_spell_cast_world_tree"
+    ],
+    [
+      "e_spell_cast_kotodama"
+    ],
+    [
+      "e_spell_cast_briar"
+    ],
+    [
+      "e_spell_cast_cherry_blossom"
+    ],
+    [
+      "e_spell_cast_fungus"
+    ],
+    [
+      "e_spell_cast_food"
+    ],
+    [
+      "e_spell_cast_poison_plant"
+    ],
+    [
+      "e_spell_cast_tree"
+    ],
+    [
+      "e_spell_cast_vine"
+    ]
+  ],
+  "rewards": {
+    "experience": 188
+  }
+}

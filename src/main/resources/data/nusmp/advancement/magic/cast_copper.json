@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:magic/soul_earth",
+  "display": {
+    "icon": {
+      "id": "minecraft:oak_sapling"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.cast_copper.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.cast_copper.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_copper": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "copper"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_copper"
+    ]
+  ],
+  "rewards": {
+    "experience": 8
+  }
+}

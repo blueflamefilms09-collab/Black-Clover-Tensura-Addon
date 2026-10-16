@@ -1,0 +1,55 @@
+{
+  "parent": "nusmp:magic/signature_light",
+  "display": {
+    "icon": {
+      "id": "minecraft:glowstone_dust"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.master_light.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.master_light.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_light": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "light"
+      }
+    },
+    "e_spell_cast_lightning": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "lightning"
+      }
+    },
+    "e_spell_cast_sword": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "sword"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_light"
+    ],
+    [
+      "e_spell_cast_lightning"
+    ],
+    [
+      "e_spell_cast_sword"
+    ]
+  ],
+  "rewards": {
+    "experience": 180
+  }
+}

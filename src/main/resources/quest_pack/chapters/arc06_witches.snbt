@@ -1,0 +1,269 @@
+{
+	id: "7C7E4B9532FBD407"
+	group: "0BCF8AD019395CF3"
+	order_index: 11
+	filename: "arc06_witches"
+	icon: {
+		id: "minecraft:string"
+	}
+	default_hide_dependency_lines: false
+	quests: [
+		{
+			id: "7C467B7016AD62E5"
+			x: 0.0d
+			y: 1.5d
+			shape: "rsquare"
+			size: 1.25d
+			icon: {
+				id: "minecraft:string"
+			}
+			dependencies: ["55BFA770A1B1265C"]
+			tasks: [
+				{
+					id: "3DBD234AC99ADA13"
+					type: "checkmark"
+				}
+			]
+			rewards: [
+				{
+					id: "2F71AAFD3C596DC8"
+					type: "xp"
+					xp: 25
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "3BAD16A73BAC8402"
+			x: 1.5d
+			y: 1.5d
+			icon: {
+				id: "minecraft:string"
+			}
+			dependencies: ["7C467B7016AD62E5"]
+			tasks: [
+				{
+					id: "5816058DDE4BA897"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_thread"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "0ED71BA00E07BAF8"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "0FAF75478A576986"
+			x: 3.0d
+			y: 1.5d
+			icon: {
+				id: "minecraft:string"
+			}
+			dependencies: ["3BAD16A73BAC8402"]
+			tasks: [
+				{
+					id: "6E7316EECEF9E9A9"
+					type: "advancement"
+					advancement: "nusmp:spells/art_thread_trap"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "644A9FBD023F4B67"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "425EC01E784FCDD0"
+			x: 4.5d
+			y: 1.5d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "minecraft:string"
+			}
+			dependencies: ["0FAF75478A576986"]
+			tasks: [
+				{
+					id: "3C790518ACCDF0AF"
+					type: "advancement"
+					advancement: "nusmp:spells/art_rouge"
+					criterion: ""
+				}
+				{
+					id: "58ABBC3EC8C75193"
+					type: "advancement"
+					advancement: "nusmp:arcs/witches_forest"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "13AA26C28D673CD5"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "0E116896F5C32B10"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "253F7F65BBBF1618"
+			x: 4.5d
+			y: 3.0d
+			shape: "square"
+			icon: {
+				id: "minecraft:oak_sapling"
+			}
+			dependencies: ["0FAF75478A576986"]
+			optional: true
+			tasks: [
+				{
+					id: "0AA19D0AFE002435"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_plant"
+					criterion: ""
+				}
+				{
+					id: "68BEF43AA6BCF3C4"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_tree"
+					criterion: ""
+				}
+				{
+					id: "4FBC5D558DAB7BE8"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_vine"
+					criterion: ""
+				}
+				{
+					id: "3D49170C170358F7"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_briar"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "1FF6352EE0FBAC9F"
+					type: "xp"
+					xp: 15
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "4D01EBD66DEFD72E"
+			x: 6.0d
+			y: 1.5d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "minecraft:writable_book"
+			}
+			dependencies: ["425EC01E784FCDD0"]
+			optional: true
+			tasks: [
+				{
+					id: "34ED4B67B08C7291"
+					type: "advancement"
+					advancement: "nusmp:spells/page_thread_trap"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "56EB81C5E7C27750"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "41448F2301A4A394"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "4BA060942E63EFA3"
+			x: 7.5d
+			y: 0.0d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:barrier"
+			}
+			dependencies: ["425EC01E784FCDD0"]
+			tasks: [
+				{
+					id: "26E83A896B2901FC"
+					type: "advancement"
+					advancement: "nusmp:future/witches_forest_boss"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "7BE7B15AE4A7E52D"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "20A09D99739EF894"
+					type: "loot"
+					table_id: 4358806230403059797L
+				}
+			]
+		}
+		{
+			id: "7AF25C11F5E8A189"
+			x: 7.5d
+			y: 2.7d
+			shape: "hexagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:string"
+			}
+			dependencies: ["425EC01E784FCDD0"]
+			tasks: [
+				{
+					id: "568E8B191074CDA5"
+					type: "advancement"
+					advancement: "nusmp:spells/special"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "1C002E5BE4D5D824"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "6BD6544F00F4552C"
+					type: "choice"
+					table_id: 1679459504511463362L
+				}
+			]
+		}
+	]
+	quest_links: [ ]
+	images: [ ]
+}

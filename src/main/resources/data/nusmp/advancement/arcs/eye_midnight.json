@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:arcs/dark_triad",
+  "display": {
+    "icon": {
+      "id": "nusmp:ring_of_power"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arcs.eye_midnight.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arcs.eye_midnight.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_relic_equipped": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "relic.equipped"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_relic_equipped"
+    ]
+  ],
+  "rewards": {
+    "experience": 75
+  }
+}

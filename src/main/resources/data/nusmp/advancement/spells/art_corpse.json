@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:spells/special",
+  "display": {
+    "icon": {
+      "id": "minecraft:wither_skeleton_skull"
+    },
+    "title": {
+      "translate": "advancement.nusmp.spells.art_corpse.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.spells.art_corpse.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_corpse_raised": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "corpse.raised"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_corpse_raised"
+    ]
+  ],
+  "rewards": {
+    "experience": 10
+  }
+}

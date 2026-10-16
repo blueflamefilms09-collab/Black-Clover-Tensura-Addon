@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:relics/grade_unique",
+  "display": {
+    "icon": {
+      "id": "minecraft:nether_star"
+    },
+    "title": {
+      "translate": "advancement.nusmp.relics.grade_legend.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.relics.grade_legend.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_relic_grade_legend": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "relic.grade",
+        "arg": "legend"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_relic_grade_legend"
+    ]
+  ],
+  "rewards": {
+    "experience": 250
+  }
+}

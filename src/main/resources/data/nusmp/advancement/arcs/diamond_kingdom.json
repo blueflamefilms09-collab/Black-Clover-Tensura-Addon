@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:arcs/heart_elf",
+  "display": {
+    "icon": {
+      "id": "minecraft:diamond"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arcs.diamond_kingdom.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arcs.diamond_kingdom.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_magic_merged": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "magic.merged"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_magic_merged"
+    ]
+  ],
+  "rewards": {
+    "experience": 75
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "parent": "nusmp:relics/equipped",
+  "display": {
+    "icon": {
+      "id": "nusmp:hand_of_vecna"
+    },
+    "title": {
+      "translate": "advancement.nusmp.relics.vecna.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.relics.vecna.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "have_hand_of_vecna": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:hand_of_vecna"
+          }
+        ]
+      }
+    },
+    "have_eye_of_vecna": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:eye_of_vecna"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_hand_of_vecna"
+    ],
+    [
+      "have_eye_of_vecna"
+    ]
+  ],
+  "rewards": {
+    "experience": 300
+  }
+}

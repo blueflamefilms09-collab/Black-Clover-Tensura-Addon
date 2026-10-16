@@ -1,0 +1,264 @@
+{
+	id: "3886C692FF81F0F5"
+	group: "0BCF8AD019395CF3"
+	order_index: 16
+	filename: "arc11_diamond"
+	icon: {
+		id: "minecraft:diamond"
+	}
+	default_hide_dependency_lines: false
+	quests: [
+		{
+			id: "1182F3DAF2C9379E"
+			x: 0.0d
+			y: 1.5d
+			shape: "rsquare"
+			size: 1.25d
+			icon: {
+				id: "minecraft:diamond"
+			}
+			dependencies: ["4FCBF6C04F8FEE73"]
+			tasks: [
+				{
+					id: "007F950480BA1FE8"
+					type: "checkmark"
+				}
+			]
+			rewards: [
+				{
+					id: "0FCA4876B79154DD"
+					type: "xp"
+					xp: 25
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "5835165BDE8B2F7E"
+			x: 1.5d
+			y: 3.0d
+			shape: "square"
+			icon: {
+				id: "minecraft:diamond"
+			}
+			dependencies: ["1182F3DAF2C9379E"]
+			optional: true
+			tasks: [
+				{
+					id: "7A9B02BD16320774"
+					type: "advancement"
+					advancement: "nusmp:world/kingdom_diamond"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "79FF453D5D0BB048"
+					type: "xp"
+					xp: 15
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "2EBEA08212893E57"
+			x: 1.5d
+			y: 1.5d
+			icon: {
+				id: "minecraft:amethyst_shard"
+			}
+			dependencies: ["1182F3DAF2C9379E"]
+			tasks: [
+				{
+					id: "6C89E538FC72AFD3"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_crystal"
+					criterion: ""
+				}
+				{
+					id: "5FA3C1238F02E552"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_corundum"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "7E09377A0A9FEE79"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "613F9A5B5445A93C"
+			x: 3.0d
+			y: 1.5d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "minecraft:smithing_table"
+			}
+			dependencies: ["2EBEA08212893E57"]
+			tasks: [
+				{
+					id: "0F64CE29EB36715F"
+					type: "advancement"
+					advancement: "nusmp:spells/merged"
+					criterion: ""
+				}
+				{
+					id: "1E30293E21EC44E8"
+					type: "advancement"
+					advancement: "nusmp:arcs/diamond_kingdom"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "40448AE49AEC6C9F"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "1BF91A7597299035"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "2F7EC4D8F0CB699B"
+			x: 4.5d
+			y: 1.5d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "minecraft:smithing_table"
+			}
+			dependencies: ["613F9A5B5445A93C"]
+			tasks: [
+				{
+					id: "4262C14EB8FE93A1"
+					type: "advancement"
+					advancement: "nusmp:spells/merged_5"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "2A17F6CE839BA586"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "18BC1A40D84132C5"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "401842F084CDE519"
+			x: 4.5d
+			y: 3.0d
+			shape: "square"
+			icon: {
+				id: "minecraft:glass_bottle"
+			}
+			dependencies: ["613F9A5B5445A93C"]
+			optional: true
+			tasks: [
+				{
+					id: "64C250C96C039D5D"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_mirror"
+					criterion: ""
+				}
+				{
+					id: "776373E28FB0A999"
+					type: "advancement"
+					advancement: "nusmp:magic/cast_glass"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "7B76DE81A60130AA"
+					type: "xp"
+					xp: 15
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "417E9427AE6E811F"
+			x: 6.0d
+			y: 0.0d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:barrier"
+			}
+			dependencies: ["2F7EC4D8F0CB699B"]
+			tasks: [
+				{
+					id: "55A4B88B9BEE2C1A"
+					type: "advancement"
+					advancement: "nusmp:future/diamond_kingdom_boss"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "728A28D56CFA8006"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "2FAE68BBA2E48D7D"
+					type: "loot"
+					table_id: 4358806230403059797L
+				}
+			]
+		}
+		{
+			id: "06B0381C9A11ABD7"
+			x: 7.5d
+			y: 2.7d
+			shape: "hexagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:smithing_table"
+			}
+			dependencies: ["2F7EC4D8F0CB699B"]
+			tasks: [
+				{
+					id: "580A2B7647883077"
+					type: "advancement"
+					advancement: "nusmp:start/pages_10"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "714BD5C30B6EAD93"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "05F12D7E39C62C86"
+					type: "choice"
+					table_id: 1679459504511463362L
+				}
+			]
+		}
+	]
+	quest_links: [ ]
+	images: [ ]
+}

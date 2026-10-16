@@ -1,0 +1,59 @@
+{
+  "parent": "nusmp:magic/soul_flame",
+  "display": {
+    "icon": {
+      "id": "minecraft:blaze_powder"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.signature_flame.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.signature_flame.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_signature_flame": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "flame"
+      }
+    },
+    "e_spell_cast_signature_explosion": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "explosion"
+      }
+    },
+    "e_spell_cast_signature_magma": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "magma"
+      }
+    },
+    "e_spell_cast_signature_ash": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast.signature",
+        "arg": "ash"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_signature_flame",
+      "e_spell_cast_signature_explosion",
+      "e_spell_cast_signature_magma",
+      "e_spell_cast_signature_ash"
+    ]
+  ],
+  "rewards": {
+    "experience": 40
+  }
+}

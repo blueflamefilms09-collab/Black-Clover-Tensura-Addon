@@ -1,0 +1,59 @@
+{
+	id: "3C7D972C2FEF1055"
+	order_index: 4
+	loot_size: 1
+	rewards: [
+		{
+			id: "2F3EBC0A858BBCBA"
+			item: {
+				id: "minecraft:diamond"
+			}
+			count: 4
+			weight: 20.0d
+		}
+		{
+			id: "5E74A5133A2C1446"
+			item: {
+				id: "minecraft:netherite_scrap"
+			}
+			count: 2
+			weight: 12.0d
+		}
+		{
+			id: "1175089D82CFE4BB"
+			item: {
+				id: "minecraft:experience_bottle"
+			}
+			count: 32
+			weight: 20.0d
+		}
+		{
+			id: "4B5F8BD43934E40B"
+			item: {
+				id: "minecraft:enchanted_golden_apple"
+			}
+			weight: 6.0d
+		}
+		{
+			id: "3FB5E3D99DEBB9D5"
+			item: {
+				id: "minecraft:totem_of_undying"
+			}
+			weight: 4.0d
+		}
+		{
+			id: "2B7C2F6EFCB1FD19"
+			item: {
+				id: "minecraft:nether_star"
+			}
+		}
+		{
+			id: "5566FAB205EDF092"
+			item: {
+				id: "nusmp:magic_stone"
+			}
+			count: 24
+			weight: 15.0d
+		}
+	]
+}

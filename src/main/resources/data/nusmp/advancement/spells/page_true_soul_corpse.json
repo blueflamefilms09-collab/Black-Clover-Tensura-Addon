@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:spells/characters",
+  "display": {
+    "icon": {
+      "id": "minecraft:writable_book"
+    },
+    "title": {
+      "translate": "advancement.nusmp.spells.page_true_soul_corpse.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.spells.page_true_soul_corpse.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_page_unlocked_true_soul_corpse": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "arg": "true_soul_corpse"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_page_unlocked_true_soul_corpse"
+    ]
+  ],
+  "rewards": {
+    "experience": 15
+  }
+}

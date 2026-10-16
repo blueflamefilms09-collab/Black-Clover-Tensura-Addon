@@ -1,0 +1,55 @@
+{
+  "parent": "nusmp:arcs/entrance_exam",
+  "display": {
+    "icon": {
+      "id": "nusmp:dungeon_maw"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arcs.dungeon_arc.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arcs.dungeon_arc.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "a0_e_dungeon_entered": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "dungeon.entered"
+      }
+    },
+    "b1_e_labyrinth_entered": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "labyrinth.entered"
+      }
+    },
+    "c2_entered": {
+      "trigger": "minecraft:changed_dimension",
+      "conditions": {
+        "to": "nusmp:living_dungeon"
+      }
+    },
+    "d3_entered": {
+      "trigger": "minecraft:changed_dimension",
+      "conditions": {
+        "to": "nusmp:labyrinth"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "a0_e_dungeon_entered",
+      "b1_e_labyrinth_entered",
+      "c2_entered",
+      "d3_entered"
+    ]
+  ],
+  "rewards": {
+    "experience": 75
+  }
+}

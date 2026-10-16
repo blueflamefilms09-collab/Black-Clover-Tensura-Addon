@@ -1,0 +1,38 @@
+{
+  "parent": "nusmp:weapons/first",
+  "display": {
+    "icon": {
+      "id": "nusmp:severing_greatsword"
+    },
+    "title": {
+      "translate": "advancement.nusmp.weapons.greatsword.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.weapons.greatsword.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "have_severing_greatsword": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:severing_greatsword"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_severing_greatsword"
+    ]
+  ],
+  "rewards": {
+    "experience": 30
+  }
+}

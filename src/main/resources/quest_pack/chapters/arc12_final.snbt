@@ -1,0 +1,279 @@
+{
+	id: "2D775188DDC92130"
+	group: "0BCF8AD019395CF3"
+	order_index: 17
+	filename: "arc12_final"
+	icon: {
+		id: "nusmp:zogratis_hourglass"
+	}
+	default_hide_dependency_lines: false
+	quests: [
+		{
+			id: "1BA26443D9623F20"
+			x: 0.0d
+			y: 1.5d
+			shape: "rsquare"
+			size: 1.25d
+			icon: {
+				id: "nusmp:zogratis_hourglass"
+			}
+			dependencies: ["1182F3DAF2C9379E"]
+			tasks: [
+				{
+					id: "07C4014E847DA8F0"
+					type: "checkmark"
+				}
+			]
+			rewards: [
+				{
+					id: "67CD9134B980A160"
+					type: "xp"
+					xp: 25
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "2D2D4C15EFA618C7"
+			x: 1.5d
+			y: 1.5d
+			icon: {
+				id: "nusmp:zogratis_hourglass"
+			}
+			dependencies: ["1BA26443D9623F20"]
+			tasks: [
+				{
+					id: "37AD0FC3AB90C742"
+					type: "advancement"
+					advancement: "nusmp:world/hourglass_item"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "63F1A679CEC03EA1"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "3EB36DB82FDE7632"
+			x: 3.0d
+			y: 1.5d
+			icon: {
+				id: "nusmp:zogratis_hourglass"
+			}
+			dependencies: ["2D2D4C15EFA618C7"]
+			tasks: [
+				{
+					id: "34F82504B37E76CE"
+					type: "advancement"
+					advancement: "nusmp:world/hourglass_used"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "03737C658728C5DD"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "0A4F7ED7E63011E9"
+			x: 4.5d
+			y: 1.5d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "nusmp:arena_return_sigil"
+			}
+			dependencies: ["3EB36DB82FDE7632"]
+			tasks: [
+				{
+					id: "1C4649837EDB0DB8"
+					type: "dimension"
+					dimension: "nusmp:zogratis_arena"
+				}
+				{
+					id: "39F24F7F216DDDDB"
+					type: "advancement"
+					advancement: "nusmp:arcs/spade_final"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "789244B25A7EA823"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "0015529C568C6B49"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "21AC0FEDC21F502C"
+			x: 4.5d
+			y: 3.0d
+			shape: "square"
+			icon: {
+				id: "nusmp:arena_return_sigil"
+			}
+			dependencies: ["3EB36DB82FDE7632"]
+			optional: true
+			tasks: [
+				{
+					id: "37A1C2009775DEA9"
+					type: "advancement"
+					advancement: "nusmp:world/sigil"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "04106C77105611A1"
+					type: "xp"
+					xp: 15
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "6E6503855FC03E30"
+			x: 6.0d
+			y: 0.0d
+			icon: {
+				id: "nusmp:zogratis_hourglass"
+			}
+			dependencies: ["0A4F7ED7E63011E9"]
+			tasks: [
+				{
+					id: "70CB3A410F96D1C5"
+					type: "advancement"
+					advancement: "nusmp:bosses/lucius_stage2"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "2F3C5ED7FA3AA7FB"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "51A85AE2CA5B2BDC"
+			x: 7.5d
+			y: 0.0d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "nusmp:zogratis_hourglass"
+			}
+			dependencies: ["6E6503855FC03E30"]
+			tasks: [
+				{
+					id: "3B96B77A3F486E66"
+					type: "advancement"
+					advancement: "nusmp:bosses/lucius_stage3"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "7651F815B2479070"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "1417608A84A5EC71"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "23251F7E938F0612"
+			x: 7.5d
+			y: 1.5d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "nusmp:zogratis_hourglass"
+			}
+			dependencies: ["0A4F7ED7E63011E9"]
+			tasks: [
+				{
+					id: "025E842467F33B2B"
+					type: "advancement"
+					advancement: "nusmp:bosses/lucius_zogratis"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "5AF51E29D2B4D9AE"
+					type: "xp"
+					xp: 600
+					auto: "enabled"
+				}
+				{
+					id: "058015CED34A9189"
+					type: "loot"
+					table_id: 4728946283094692376L
+				}
+			]
+		}
+		{
+			id: "6B4E1318125129C6"
+			x: 9.0d
+			y: 1.5d
+			shape: "hexagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:totem_of_undying"
+			}
+			dependencies: ["23251F7E938F0612"]
+			tasks: [
+				{
+					id: "18815813A7E23C9B"
+					type: "advancement"
+					advancement: "nusmp:world/arena_victory"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "3DE09E13CF680399"
+					type: "xp"
+					xp: 500
+					auto: "enabled"
+				}
+				{
+					id: "46E9AA83FC5A6107"
+					type: "loot"
+					table_id: 4728946283094692376L
+				}
+				{
+					id: "134434694449852E"
+					type: "choice"
+					table_id: 5206226156263585362L
+				}
+			]
+		}
+	]
+	quest_links: [ ]
+	images: [ ]
+}

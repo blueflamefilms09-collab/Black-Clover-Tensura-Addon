@@ -1,0 +1,1242 @@
+{
+	id: "259D79A3D94D62A8"
+	group: "5D0FDBAA39C60882"
+	order_index: 2
+	filename: "weapons_relics"
+	icon: {
+		id: "nusmp:ring_of_power"
+	}
+	default_hide_dependency_lines: false
+	quests: [
+		{
+			id: "5A318125F3C5B252"
+			x: 0.0d
+			y: 3.0d
+			shape: "rsquare"
+			size: 1.25d
+			icon: {
+				id: "nusmp:bag_of_holding"
+			}
+			tasks: [
+				{
+					id: "3391CA25D3C71AD3"
+					type: "checkmark"
+				}
+			]
+			rewards: [
+				{
+					id: "14EDADF007A4305D"
+					type: "xp"
+					xp: 25
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "433AF7DE8FA1BF2F"
+			x: 1.5d
+			y: 3.0d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "nusmp:bag_of_holding"
+			}
+			dependencies: ["5A318125F3C5B252"]
+			tasks: [
+				{
+					id: "7C5FA91BB265D637"
+					type: "advancement"
+					advancement: "nusmp:relics/first"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "4A1206BB3CD51FED"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "7432DC3D6E05BE98"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "492B64FA1A4300C4"
+			x: 3.0d
+			y: 3.0d
+			icon: {
+				id: "nusmp:ring_of_power"
+			}
+			dependencies: ["433AF7DE8FA1BF2F"]
+			tasks: [
+				{
+					id: "306553C67907A27C"
+					type: "advancement"
+					advancement: "nusmp:relics/equipped"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "14A9ACE09AB131F7"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "20487F7B1236A431"
+			x: 4.5d
+			y: 3.0d
+			icon: {
+				id: "nusmp:ring_of_power"
+			}
+			dependencies: ["492B64FA1A4300C4"]
+			tasks: [
+				{
+					id: "7A25B0D49A1F0E60"
+					type: "advancement"
+					advancement: "nusmp:relics/grade_normal"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "4DD8AC66FB804ABA"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "020B70DE7A998001"
+			x: 6.0d
+			y: 3.0d
+			icon: {
+				id: "nusmp:ring_of_power"
+			}
+			dependencies: ["20487F7B1236A431"]
+			tasks: [
+				{
+					id: "49B73E323A49FA3C"
+					type: "advancement"
+					advancement: "nusmp:relics/grade_special"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "52F475164C8A4B1E"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "35F0F867ECB1D70D"
+			x: 7.5d
+			y: 3.0d
+			icon: {
+				id: "nusmp:ring_of_power"
+			}
+			dependencies: ["020B70DE7A998001"]
+			tasks: [
+				{
+					id: "6AA6579CC37E5A23"
+					type: "advancement"
+					advancement: "nusmp:relics/grade_rare"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "3146D6BD258A9C86"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "58A90EBAA105FDC0"
+			x: 9.0d
+			y: 3.0d
+			icon: {
+				id: "nusmp:ring_of_power"
+			}
+			dependencies: ["35F0F867ECB1D70D"]
+			tasks: [
+				{
+					id: "1C485ECC24F83975"
+					type: "advancement"
+					advancement: "nusmp:relics/grade_unique"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "69D271A0EC4C41B9"
+					type: "xp"
+					xp: 155
+					auto: "enabled"
+				}
+				{
+					id: "2D74CC73283025F7"
+					type: "loot"
+					table_id: 1722623282405390358L
+				}
+			]
+		}
+		{
+			id: "3EA763BF4510BA79"
+			x: 10.5d
+			y: 3.0d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "minecraft:nether_star"
+			}
+			dependencies: ["58A90EBAA105FDC0"]
+			tasks: [
+				{
+					id: "07007C976E139CAB"
+					type: "advancement"
+					advancement: "nusmp:relics/grade_legend"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "53A185E783471A80"
+					type: "xp"
+					xp: 260
+					auto: "enabled"
+				}
+				{
+					id: "3F4C360B45DE6E86"
+					type: "loot"
+					table_id: 1722623282405390358L
+				}
+			]
+		}
+		{
+			id: "04C309EB03AEC576"
+			x: 12.0d
+			y: 3.0d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "minecraft:nether_star"
+			}
+			dependencies: ["3EA763BF4510BA79"]
+			tasks: [
+				{
+					id: "5766E4D7F0AAC3AE"
+					type: "advancement"
+					advancement: "nusmp:relics/grade_god"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "0082D19241E9BB07"
+					type: "xp"
+					xp: 395
+					auto: "enabled"
+				}
+				{
+					id: "48C5F8C25C4EE8D0"
+					type: "loot"
+					table_id: 4728946283094692376L
+				}
+			]
+		}
+		{
+			id: "04B8C43886493317"
+			x: 13.5d
+			y: 3.0d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:nether_star"
+			}
+			dependencies: ["04C309EB03AEC576"]
+			tasks: [
+				{
+					id: "75B425964289B44E"
+					type: "advancement"
+					advancement: "nusmp:relics/grade_genesis"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "229B38E9BB29675E"
+					type: "xp"
+					xp: 560
+					auto: "enabled"
+				}
+				{
+					id: "127AE716D9618A1F"
+					type: "loot"
+					table_id: 4728946283094692376L
+				}
+			]
+		}
+		{
+			id: "1C4F8762F1DD088A"
+			x: 1.5d
+			y: 0.0d
+			shape: "square"
+			icon: {
+				id: "nusmp:bag_of_holding"
+			}
+			dependencies: ["433AF7DE8FA1BF2F"]
+			optional: true
+			tasks: [
+				{
+					id: "6AF0BA5FD77AEE5D"
+					type: "advancement"
+					advancement: "nusmp:relics/count_10"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "79AF4C2520612CC5"
+					type: "xp"
+					xp: 15
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "14F0EBB5E2299886"
+			x: 3.0d
+			y: 0.0d
+			shape: "square"
+			icon: {
+				id: "nusmp:bag_of_holding"
+			}
+			dependencies: ["1C4F8762F1DD088A"]
+			optional: true
+			tasks: [
+				{
+					id: "5BB72289D4CB38D0"
+					type: "advancement"
+					advancement: "nusmp:relics/count_30"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "77C3CAE41A650028"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "066D9E402FCCE75B"
+					type: "loot"
+					table_id: 1722623282405390358L
+				}
+			]
+		}
+		{
+			id: "28CA0B9D2757581B"
+			x: 1.5d
+			y: 5.25d
+			shape: "square"
+			icon: {
+				id: "nusmp:relic_pedestal"
+			}
+			dependencies: ["433AF7DE8FA1BF2F"]
+			optional: true
+			tasks: [
+				{
+					id: "4B46160382A56010"
+					type: "advancement"
+					advancement: "nusmp:relics/pedestal"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "0A9A58CFA1C039D7"
+					type: "xp"
+					xp: 15
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "71A889358E42AD6B"
+			x: 3.0d
+			y: 5.25d
+			icon: {
+				id: "nusmp:relic_forge"
+			}
+			dependencies: ["433AF7DE8FA1BF2F"]
+			tasks: [
+				{
+					id: "02A9A7DC0A4DE66E"
+					type: "advancement"
+					advancement: "nusmp:relics/forge_block"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "4807E34D1B1BA167"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "18DAC405F31E1AA7"
+			x: 4.5d
+			y: 5.25d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "minecraft:anvil"
+			}
+			dependencies: ["71A889358E42AD6B"]
+			tasks: [
+				{
+					id: "3D4F56FD8A9FE187"
+					type: "advancement"
+					advancement: "nusmp:relics/forged"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "2F74B18F4038C2F1"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "7B18FD0B762F2112"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "46F580890F43FE63"
+			x: 6.0d
+			y: 5.25d
+			icon: {
+				id: "minecraft:amethyst_shard"
+			}
+			dependencies: ["18DAC405F31E1AA7"]
+			tasks: [
+				{
+					id: "7F074DB4112EC076"
+					type: "advancement"
+					advancement: "nusmp:relics/socketed"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "4C1E0048964D38CC"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "6A269B9D525F9275"
+			x: 7.5d
+			y: 5.25d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "minecraft:beacon"
+			}
+			dependencies: ["46F580890F43FE63"]
+			tasks: [
+				{
+					id: "198A9D3434E113D8"
+					type: "advancement"
+					advancement: "nusmp:relics/tier"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "0EE0975BF99AE5EA"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "40B9F85EF096ED83"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "13FB61EE3E8371CC"
+			x: 4.5d
+			y: 7.5d
+			icon: {
+				id: "nusmp:notice_of_order"
+			}
+			dependencies: ["433AF7DE8FA1BF2F"]
+			tasks: [
+				{
+					id: "300D30708A4AEC90"
+					type: "advancement"
+					advancement: "nusmp:relics/ledger"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "6F852D20EE4523B3"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "3A62F4EC50811836"
+			x: 6.0d
+			y: 7.5d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "nusmp:djinn_seal_baal"
+			}
+			dependencies: ["3EA763BF4510BA79"]
+			tasks: [
+				{
+					id: "7F50358BCC7FE60C"
+					type: "advancement"
+					advancement: "nusmp:relics/djinn"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "43AE0126885597A0"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "706813D0916B1D86"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "0214DA5A23791502"
+			x: 7.5d
+			y: 7.5d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "nusmp:djinn_seal_paimon"
+			}
+			dependencies: ["3A62F4EC50811836"]
+			optional: true
+			tasks: [
+				{
+					id: "45567A7B37B99A26"
+					type: "advancement"
+					advancement: "nusmp:relics/djinn_seals"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "46F8B3211B187076"
+					type: "xp"
+					xp: 400
+					auto: "enabled"
+				}
+				{
+					id: "0A6966D687D8632C"
+					type: "loot"
+					table_id: 4728946283094692376L
+				}
+			]
+		}
+		{
+			id: "6801A5BA3BC1D657"
+			x: 4.5d
+			y: 9.75d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "nusmp:twin_hook_swords"
+			}
+			dependencies: ["492B64FA1A4300C4"]
+			tasks: [
+				{
+					id: "30D4B4C79818E6D6"
+					type: "advancement"
+					advancement: "nusmp:relics/pair"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "01E665D53ADECCB3"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "55031806BD584D56"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "205E786854A6C9B8"
+			x: 6.0d
+			y: 9.75d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "nusmp:whirling_blades"
+			}
+			dependencies: ["6801A5BA3BC1D657"]
+			optional: true
+			tasks: [
+				{
+					id: "295AB5A37353D3C9"
+					type: "advancement"
+					advancement: "nusmp:relics/pairs_all"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "2F6DFF3E2A7DB5BA"
+					type: "xp"
+					xp: 200
+					auto: "enabled"
+				}
+				{
+					id: "5F3989F0D01CA57E"
+					type: "loot"
+					table_id: 4728946283094692376L
+				}
+			]
+		}
+		{
+			id: "7B9382B61AC440DA"
+			x: 7.5d
+			y: 9.75d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "nusmp:hand_of_vecna"
+			}
+			dependencies: ["492B64FA1A4300C4"]
+			tasks: [
+				{
+					id: "6B4B7EDE2FF4752A"
+					type: "advancement"
+					advancement: "nusmp:relics/vecna"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "4E6685063B883580"
+					type: "xp"
+					xp: 300
+					auto: "enabled"
+				}
+				{
+					id: "3155CB85F6FF81D6"
+					type: "loot"
+					table_id: 4728946283094692376L
+				}
+			]
+		}
+		{
+			id: "09992E2D579AE0D1"
+			x: 13.5d
+			y: 5.25d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "nusmp:the_power_stone"
+			}
+			dependencies: ["04B8C43886493317"]
+			tasks: [
+				{
+					id: "6008549F2C2BAD06"
+					type: "advancement"
+					advancement: "nusmp:relics/stone_any"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "782621531AC49211"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "359238966FDB5F25"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "71E252E88C82E596"
+			x: 15.0d
+			y: 5.25d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "nusmp:the_infinity_gauntlet"
+			}
+			dependencies: ["09992E2D579AE0D1"]
+			tasks: [
+				{
+					id: "750AA9AEBE565F22"
+					type: "advancement"
+					advancement: "nusmp:relics/gauntlet"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "4881D0A690BDC431"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "0E1657693483F2F7"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "1F16959786941523"
+			x: 16.5d
+			y: 5.25d
+			shape: "hexagon"
+			size: 1.5d
+			icon: {
+				id: "nusmp:the_infinity_gauntlet"
+			}
+			dependencies: ["71E252E88C82E596"]
+			tasks: [
+				{
+					id: "5402BAC32E08111F"
+					type: "advancement"
+					advancement: "nusmp:relics/stones_all"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "193396961123E29D"
+					type: "xp"
+					xp: 2000
+					auto: "enabled"
+				}
+				{
+					id: "44E834539FD90F23"
+					type: "loot"
+					table_id: 4728946283094692376L
+				}
+			]
+		}
+		{
+			id: "7017E2B5B5F5F327"
+			x: 0.0d
+			y: 12.0d
+			shape: "rsquare"
+			size: 1.25d
+			icon: {
+				id: "nusmp:magic_tool_sword"
+			}
+			tasks: [
+				{
+					id: "6CC512F8BB0382CE"
+					type: "advancement"
+					advancement: "nusmp:weapons/first"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "23D04169EB95637D"
+					type: "xp"
+					xp: 25
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "56FC524EBCF5D391"
+			x: 1.5d
+			y: 12.0d
+			icon: {
+				id: "nusmp:magic_tool_bow"
+			}
+			dependencies: ["7017E2B5B5F5F327"]
+			tasks: [
+				{
+					id: "33C7EA73379B44F2"
+					type: "advancement"
+					advancement: "nusmp:weapons/mana_tools"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "5A5849C305DA1B12"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "3468E48F797AB1A9"
+			x: 3.0d
+			y: 12.0d
+			icon: {
+				id: "minecraft:grindstone"
+			}
+			dependencies: ["7017E2B5B5F5F327"]
+			tasks: [
+				{
+					id: "7CF8641C5FEEEDC9"
+					type: "advancement"
+					advancement: "nusmp:spells/engraved"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "388C28399B0563DF"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "233CBCC48387685C"
+			x: 1.5d
+			y: 14.25d
+			icon: {
+				id: "nusmp:demon_slasher_katana"
+			}
+			dependencies: ["7017E2B5B5F5F327"]
+			tasks: [
+				{
+					id: "793CD56DF152312D"
+					type: "advancement"
+					advancement: "nusmp:weapons/katana"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "7FB362505258D901"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "48980B2BF6DE3AA5"
+			x: 3.0d
+			y: 14.25d
+			icon: {
+				id: "nusmp:miasma_infused_katana"
+			}
+			dependencies: ["233CBCC48387685C"]
+			tasks: [
+				{
+					id: "196475E428B0C5B4"
+					type: "advancement"
+					advancement: "nusmp:weapons/miasma"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "74A3BC876A218359"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "46FA0A9E53413E6C"
+			x: 1.5d
+			y: 16.5d
+			icon: {
+				id: "nusmp:spell_forged_rapier"
+			}
+			dependencies: ["7017E2B5B5F5F327"]
+			tasks: [
+				{
+					id: "20DD19CD941DF2C3"
+					type: "advancement"
+					advancement: "nusmp:weapons/rapier"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "5649B0F0227294ED"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "20D535E4DFE7D67E"
+			x: 3.0d
+			y: 16.5d
+			icon: {
+				id: "nusmp:severing_greatsword"
+			}
+			dependencies: ["46FA0A9E53413E6C"]
+			tasks: [
+				{
+					id: "7BEC2EF9857E2970"
+					type: "advancement"
+					advancement: "nusmp:weapons/greatsword"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "79FABFE5B7BFA649"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "4EBCB9931DEB3EBF"
+			x: 4.5d
+			y: 12.0d
+			icon: {
+				id: "nusmp:rimeheart_runeblade"
+			}
+			dependencies: ["7017E2B5B5F5F327"]
+			tasks: [
+				{
+					id: "3A37BF0669E6D8B9"
+					type: "advancement"
+					advancement: "nusmp:weapons/runeblade"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "3EDFEAFC6C0272B2"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "302F7ED8F14DC8E8"
+			x: 6.0d
+			y: 12.0d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "nusmp:demon_slayer_sword"
+			}
+			dependencies: ["4EBCB9931DEB3EBF"]
+			tasks: [
+				{
+					id: "62712C2380228225"
+					type: "advancement"
+					advancement: "nusmp:weapons/demon_slayer"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "1CEEEA07ED7F7E3F"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "04640AB9CC2DBEDB"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "56DE10B04B023FDB"
+			x: 7.5d
+			y: 12.0d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "nusmp:demon_slayer_sword"
+			}
+			dependencies: ["302F7ED8F14DC8E8"]
+			tasks: [
+				{
+					id: "039E31D3EF56A5F0"
+					type: "advancement"
+					advancement: "nusmp:weapons/genesis"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "7889C167BF660962"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "4A95035A071A5047"
+					type: "loot"
+					table_id: 4358806230403059797L
+				}
+			]
+		}
+		{
+			id: "50584710DEEB6530"
+			x: 6.0d
+			y: 14.25d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "nusmp:demon_dweller_sword"
+			}
+			dependencies: ["302F7ED8F14DC8E8"]
+			tasks: [
+				{
+					id: "395BB53D80A337DB"
+					type: "advancement"
+					advancement: "nusmp:weapons/anti_magic_trio"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "514B94B947D148B4"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "0516413056BD7AB2"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "0A63E1FF3E8D53A9"
+			x: 7.5d
+			y: 14.25d
+			icon: {
+				id: "nusmp:licht_dweller_sword"
+			}
+			dependencies: ["50584710DEEB6530"]
+			tasks: [
+				{
+					id: "322FCEC3054AD03F"
+					type: "advancement"
+					advancement: "nusmp:weapons/licht"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "18CD7FC7FE693B94"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "7D915910DD81C24C"
+			x: 6.0d
+			y: 16.5d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "nusmp:elsdocia"
+			}
+			dependencies: ["7017E2B5B5F5F327"]
+			tasks: [
+				{
+					id: "29CA3FAE7060C084"
+					type: "advancement"
+					advancement: "nusmp:weapons/elsdocia"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "19FBDCFDB5030676"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "7059F8B95A39FD4B"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "1D32A8FFE0642A87"
+			x: 7.5d
+			y: 16.5d
+			icon: {
+				id: "nusmp:otherworld_trident"
+			}
+			dependencies: ["7D915910DD81C24C"]
+			tasks: [
+				{
+					id: "6826A0A1B9BAD184"
+					type: "advancement"
+					advancement: "nusmp:weapons/trident"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "40946AA81DBD4306"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "3F0A9B8575D46564"
+			x: 9.0d
+			y: 16.5d
+			icon: {
+				id: "nusmp:last_word"
+			}
+			dependencies: ["1D32A8FFE0642A87"]
+			tasks: [
+				{
+					id: "108650B2D3F5E902"
+					type: "advancement"
+					advancement: "nusmp:weapons/last_word"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "5538B3024E7B3B82"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "45B3F17FEFF53B18"
+			x: 9.0d
+			y: 14.25d
+			shape: "square"
+			icon: {
+				id: "nusmp:null_blade"
+			}
+			dependencies: ["50584710DEEB6530"]
+			optional: true
+			tasks: [
+				{
+					id: "1404A705B7C0CB69"
+					type: "advancement"
+					advancement: "nusmp:weapons/null_blade"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "1CEFFFFE2F734DDA"
+					type: "xp"
+					xp: 15
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "314CA0DC36E8747F"
+			x: 4.5d
+			y: 18.75d
+			shape: "hexagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:netherite_sword"
+			}
+			dependencies: ["3468E48F797AB1A9", "7D915910DD81C24C"]
+			tasks: [
+				{
+					id: "26B237C4F2DD0F08"
+					type: "advancement"
+					advancement: "nusmp:weapons/armory"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "2358F53725DFD743"
+					type: "xp"
+					xp: 250
+					auto: "enabled"
+				}
+				{
+					id: "71C112E86B1479BE"
+					type: "choice"
+					table_id: 5206226156263585362L
+				}
+			]
+		}
+	]
+	quest_links: [ ]
+	images: [ ]
+}

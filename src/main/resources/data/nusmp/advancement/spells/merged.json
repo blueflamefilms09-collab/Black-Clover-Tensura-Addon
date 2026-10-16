@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:spells/signature",
+  "display": {
+    "icon": {
+      "id": "minecraft:smithing_table"
+    },
+    "title": {
+      "translate": "advancement.nusmp.spells.merged.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.spells.merged.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_magic_merged": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "magic.merged"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_magic_merged"
+    ]
+  ],
+  "rewards": {
+    "experience": 60
+  }
+}

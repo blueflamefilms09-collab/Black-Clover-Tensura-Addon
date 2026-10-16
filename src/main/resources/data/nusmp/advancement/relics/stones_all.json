@@ -1,0 +1,116 @@
+{
+  "parent": "nusmp:relics/gauntlet",
+  "display": {
+    "icon": {
+      "id": "nusmp:the_infinity_gauntlet"
+    },
+    "title": {
+      "translate": "advancement.nusmp.relics.stones_all.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.relics.stones_all.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "have_the_mind_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:the_mind_stone"
+          }
+        ]
+      }
+    },
+    "have_the_power_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:the_power_stone"
+          }
+        ]
+      }
+    },
+    "have_the_reality_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:the_reality_stone"
+          }
+        ]
+      }
+    },
+    "have_the_soul_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:the_soul_stone"
+          }
+        ]
+      }
+    },
+    "have_the_space_stone_or_the_tesseract": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:the_space_stone_or_the_tesseract"
+          }
+        ]
+      }
+    },
+    "have_the_time_stone_or_the_eye_of_agamotto": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:the_time_stone_or_the_eye_of_agamotto"
+          }
+        ]
+      }
+    },
+    "have_the_infinity_gauntlet": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:the_infinity_gauntlet"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_the_mind_stone"
+    ],
+    [
+      "have_the_power_stone"
+    ],
+    [
+      "have_the_reality_stone"
+    ],
+    [
+      "have_the_soul_stone"
+    ],
+    [
+      "have_the_space_stone_or_the_tesseract"
+    ],
+    [
+      "have_the_time_stone_or_the_eye_of_agamotto"
+    ],
+    [
+      "have_the_infinity_gauntlet"
+    ]
+  ],
+  "rewards": {
+    "experience": 2000
+  }
+}

@@ -1,0 +1,237 @@
+{
+	id: "73DD909089723DA3"
+	group: "0BCF8AD019395CF3"
+	order_index: 7
+	filename: "arc02_exam"
+	icon: {
+		id: "minecraft:enchanted_book"
+	}
+	default_hide_dependency_lines: false
+	quests: [
+		{
+			id: "4C58A15CADBE1399"
+			x: 0.0d
+			y: 1.5d
+			shape: "rsquare"
+			size: 1.25d
+			icon: {
+				id: "minecraft:enchanted_book"
+			}
+			dependencies: ["1ED5D47CE7D47F1F", "65836F3A0D9FEDE2"]
+			tasks: [
+				{
+					id: "087DEDB1C8986085"
+					type: "checkmark"
+				}
+			]
+			rewards: [
+				{
+					id: "163E546B0D93314C"
+					type: "xp"
+					xp: 25
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "40FEEE418E713BE1"
+			x: 1.5d
+			y: 1.5d
+			icon: {
+				id: "minecraft:enchanted_book"
+			}
+			dependencies: ["4C58A15CADBE1399"]
+			tasks: [
+				{
+					id: "708A4DE5B3D2EA27"
+					type: "advancement"
+					advancement: "nusmp:start/questionnaire"
+					criterion: ""
+				}
+				{
+					id: "2F954193ECE0375A"
+					type: "advancement"
+					advancement: "nusmp:arcs/entrance_exam"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "6F2FDC704A2DD8DB"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "03736C8E2E0232A3"
+			x: 3.0d
+			y: 1.5d
+			icon: {
+				id: "minecraft:lectern"
+			}
+			dependencies: ["40FEEE418E713BE1"]
+			tasks: [
+				{
+					id: "28DCB13BDEE30DF0"
+					type: "dimension"
+					dimension: "nusmp:grimoire_library"
+				}
+			]
+			rewards: [
+				{
+					id: "707970AEC96A5528"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "00684DF180DA7D43"
+			x: 4.5d
+			y: 1.5d
+			icon: {
+				id: "minecraft:experience_bottle"
+			}
+			dependencies: ["03736C8E2E0232A3"]
+			tasks: [
+				{
+					id: "732895BB6A396A37"
+					type: "advancement"
+					advancement: "nusmp:start/casts_50"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "770FC5CA92B26362"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "378513C9D380D828"
+			x: 6.0d
+			y: 1.5d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "minecraft:written_book"
+			}
+			dependencies: ["00684DF180DA7D43"]
+			tasks: [
+				{
+					id: "2473A916462C1CAB"
+					type: "advancement"
+					advancement: "nusmp:start/pages_10"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "066CFDB8E2877456"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "02E889023055B87F"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "173E07CD4962BD52"
+			x: 6.0d
+			y: 0.0d
+			shape: "square"
+			icon: {
+				id: "minecraft:nether_star"
+			}
+			dependencies: ["00684DF180DA7D43"]
+			optional: true
+			tasks: [
+				{
+					id: "57A18B3FE6D33094"
+					type: "advancement"
+					advancement: "nusmp:spells/signature"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "5055499A06995F3B"
+					type: "xp"
+					xp: 15
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "31F9943B93C6F80C"
+			x: 3.0d
+			y: 3.0d
+			shape: "square"
+			icon: {
+				id: "minecraft:white_banner"
+			}
+			dependencies: ["40FEEE418E713BE1"]
+			optional: true
+			tasks: [
+				{
+					id: "252B5CA884700D84"
+					type: "advancement"
+					advancement: "nusmp:squads/created"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "47E818969A470064"
+					type: "xp"
+					xp: 15
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "379E245E342D9647"
+			x: 7.5d
+			y: 1.5d
+			shape: "hexagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:shield"
+			}
+			dependencies: ["378513C9D380D828"]
+			tasks: [
+				{
+					id: "2B3E4C30BDC4E780"
+					type: "advancement"
+					advancement: "nusmp:start/mastery"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "2A464B60E9327BE8"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "49F1A707F7E64F4E"
+					type: "choice"
+					table_id: 5206226156263585362L
+				}
+			]
+		}
+	]
+	quest_links: [ ]
+	images: [ ]
+}

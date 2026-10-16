@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:bosses/count_10",
+  "display": {
+    "icon": {
+      "id": "minecraft:wither_skeleton_skull"
+    },
+    "title": {
+      "translate": "advancement.nusmp.bosses.count_25.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.bosses.count_25.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_boss_defeated_25": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "boss.defeated",
+        "count": 25
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_boss_defeated_25"
+    ]
+  ],
+  "rewards": {
+    "experience": 400
+  }
+}

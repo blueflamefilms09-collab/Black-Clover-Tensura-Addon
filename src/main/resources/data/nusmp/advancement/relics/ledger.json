@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:relics/first",
+  "display": {
+    "icon": {
+      "id": "nusmp:notice_of_order"
+    },
+    "title": {
+      "translate": "advancement.nusmp.relics.ledger.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.relics.ledger.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_relic_unique_ledger": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "relic.unique_ledger"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_relic_unique_ledger"
+    ]
+  ],
+  "rewards": {
+    "experience": 40
+  }
+}

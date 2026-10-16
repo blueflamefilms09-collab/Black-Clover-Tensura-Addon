@@ -1,0 +1,155 @@
+{
+  "parent": "nusmp:magic/branch_forge_signature",
+  "display": {
+    "icon": {
+      "id": "minecraft:iron_sword"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.branch_forge_all.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.branch_forge_all.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_sword": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "sword"
+      }
+    },
+    "e_spell_cast_slash": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "slash"
+      }
+    },
+    "e_spell_cast_steel": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "steel"
+      }
+    },
+    "e_spell_cast_iron": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "iron"
+      }
+    },
+    "e_spell_cast_bronze": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "bronze"
+      }
+    },
+    "e_spell_cast_copper": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "copper"
+      }
+    },
+    "e_spell_cast_corundum": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "corundum"
+      }
+    },
+    "e_spell_cast_crystal": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "crystal"
+      }
+    },
+    "e_spell_cast_glass": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "glass"
+      }
+    },
+    "e_spell_cast_mineral": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "mineral"
+      }
+    },
+    "e_spell_cast_shakudo": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "shakudo"
+      }
+    },
+    "e_spell_cast_red_ochre": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "red_ochre"
+      }
+    },
+    "e_spell_cast_transmutation": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "transmutation"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_sword"
+    ],
+    [
+      "e_spell_cast_slash"
+    ],
+    [
+      "e_spell_cast_steel"
+    ],
+    [
+      "e_spell_cast_iron"
+    ],
+    [
+      "e_spell_cast_bronze"
+    ],
+    [
+      "e_spell_cast_copper"
+    ],
+    [
+      "e_spell_cast_corundum"
+    ],
+    [
+      "e_spell_cast_crystal"
+    ],
+    [
+      "e_spell_cast_glass"
+    ],
+    [
+      "e_spell_cast_mineral"
+    ],
+    [
+      "e_spell_cast_shakudo"
+    ],
+    [
+      "e_spell_cast_red_ochre"
+    ],
+    [
+      "e_spell_cast_transmutation"
+    ]
+  ],
+  "rewards": {
+    "experience": 204
+  }
+}

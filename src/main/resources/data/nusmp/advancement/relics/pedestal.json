@@ -1,0 +1,38 @@
+{
+  "parent": "nusmp:relics/first",
+  "display": {
+    "icon": {
+      "id": "nusmp:relic_pedestal"
+    },
+    "title": {
+      "translate": "advancement.nusmp.relics.pedestal.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.relics.pedestal.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "have_relic_pedestal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:relic_pedestal"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_relic_pedestal"
+    ]
+  ],
+  "rewards": {
+    "experience": 15
+  }
+}

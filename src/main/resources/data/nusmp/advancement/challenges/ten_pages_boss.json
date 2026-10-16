@@ -1,0 +1,45 @@
+{
+  "parent": "nusmp:challenges/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:enchanted_golden_apple"
+    },
+    "title": {
+      "translate": "advancement.nusmp.challenges.ten_pages_boss.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.challenges.ten_pages_boss.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "a0_e_page_unlocked_10": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "count": 10
+      }
+    },
+    "b1_e_boss_defeated_3": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "boss.defeated",
+        "count": 3
+      }
+    }
+  },
+  "requirements": [
+    [
+      "a0_e_page_unlocked_10"
+    ],
+    [
+      "b1_e_boss_defeated_3"
+    ]
+  ],
+  "rewards": {
+    "experience": 150
+  }
+}

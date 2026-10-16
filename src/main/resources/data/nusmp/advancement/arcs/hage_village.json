@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:root",
+  "display": {
+    "icon": {
+      "id": "nusmp:grimoire"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arcs.hage_village.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arcs.hage_village.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_ceremony_completed": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "ceremony.completed"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_ceremony_completed"
+    ]
+  ],
+  "rewards": {
+    "experience": 75
+  }
+}

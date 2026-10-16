@@ -1,0 +1,38 @@
+{
+  "parent": "nusmp:weapons/first",
+  "display": {
+    "icon": {
+      "id": "nusmp:null_blade"
+    },
+    "title": {
+      "translate": "advancement.nusmp.weapons.null_blade.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.weapons.null_blade.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "have_null_blade": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:null_blade"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_null_blade"
+    ]
+  ],
+  "rewards": {
+    "experience": 30
+  }
+}

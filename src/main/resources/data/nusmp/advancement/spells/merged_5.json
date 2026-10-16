@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:spells/merged",
+  "display": {
+    "icon": {
+      "id": "minecraft:smithing_table"
+    },
+    "title": {
+      "translate": "advancement.nusmp.spells.merged_5.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.spells.merged_5.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_magic_merged_5": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "magic.merged",
+        "count": 5
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_magic_merged_5"
+    ]
+  ],
+  "rewards": {
+    "experience": 150
+  }
+}

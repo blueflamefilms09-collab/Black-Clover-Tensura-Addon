@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:challenges/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:nether_star"
+    },
+    "title": {
+      "translate": "advancement.nusmp.challenges.all_magic.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.challenges.all_magic.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_distinct_105": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.distinct",
+        "count": 105
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_distinct_105"
+    ]
+  ],
+  "rewards": {
+    "experience": 1000
+  }
+}

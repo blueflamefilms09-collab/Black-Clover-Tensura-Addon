@@ -1,0 +1,42 @@
+{
+  "parent": "nusmp:start/first_grimoire",
+  "display": {
+    "icon": {
+      "id": "minecraft:book"
+    },
+    "title": {
+      "translate": "advancement.nusmp.start.meet_wizard.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.start.meet_wizard.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "talked": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "nusmp:tower_wizard"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "talked"
+    ]
+  ],
+  "rewards": {
+    "experience": 5
+  }
+}

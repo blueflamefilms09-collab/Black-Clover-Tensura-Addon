@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:arcs/diamond_kingdom",
+  "display": {
+    "icon": {
+      "id": "nusmp:zogratis_hourglass"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arcs.spade_final.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arcs.spade_final.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arena_entered": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arena.entered"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arena_entered"
+    ]
+  ],
+  "rewards": {
+    "experience": 75
+  }
+}

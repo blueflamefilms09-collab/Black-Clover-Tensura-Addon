@@ -1,0 +1,163 @@
+{
+  "parent": "nusmp:magic/awakening",
+  "display": {
+    "icon": {
+      "id": "minecraft:enchanted_book"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.soul_fantasy.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.soul_fantasy.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_creation": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "creation"
+      }
+    },
+    "e_spell_cast_copy": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "copy"
+      }
+    },
+    "e_spell_cast_illusion": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "illusion"
+      }
+    },
+    "e_spell_cast_dream": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "dream"
+      }
+    },
+    "e_spell_cast_thread": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "thread"
+      }
+    },
+    "e_spell_cast_cotton": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "cotton"
+      }
+    },
+    "e_spell_cast_recombination": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "recombination"
+      }
+    },
+    "e_spell_cast_painting": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "painting"
+      }
+    },
+    "e_spell_cast_dice": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "dice"
+      }
+    },
+    "e_spell_cast_game": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "game"
+      }
+    },
+    "e_spell_cast_eye": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "eye"
+      }
+    },
+    "e_spell_cast_butoh": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "butoh"
+      }
+    },
+    "e_spell_cast_food": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "food"
+      }
+    },
+    "e_spell_cast_legion": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "legion"
+      }
+    },
+    "e_spell_cast_memory": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "memory"
+      }
+    },
+    "e_spell_cast_modification": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "modification"
+      }
+    },
+    "e_spell_cast_song": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "song"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_creation",
+      "e_spell_cast_copy",
+      "e_spell_cast_illusion",
+      "e_spell_cast_dream",
+      "e_spell_cast_thread",
+      "e_spell_cast_cotton",
+      "e_spell_cast_recombination",
+      "e_spell_cast_painting",
+      "e_spell_cast_dice",
+      "e_spell_cast_game",
+      "e_spell_cast_eye",
+      "e_spell_cast_butoh",
+      "e_spell_cast_food",
+      "e_spell_cast_legion",
+      "e_spell_cast_memory",
+      "e_spell_cast_modification",
+      "e_spell_cast_song"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  }
+}

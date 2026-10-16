@@ -1,0 +1,31 @@
+{
+  "parent": "nusmp:arcs/devil_arc",
+  "display": {
+    "icon": {
+      "id": "minecraft:barrier"
+    },
+    "title": {
+      "translate": "advancement.nusmp.future.devil_arc_astaroth.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.future.devil_arc_astaroth.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "impossible": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "impossible"
+    ]
+  ],
+  "rewards": {
+    "experience": 150
+  }
+}

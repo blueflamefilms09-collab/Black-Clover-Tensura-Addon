@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:start/first_grimoire",
+  "display": {
+    "icon": {
+      "id": "minecraft:lectern"
+    },
+    "title": {
+      "translate": "advancement.nusmp.start.five_grimoires.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.start.five_grimoires.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_grimoire_received_5": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "grimoire.received",
+        "count": 5
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_grimoire_received_5"
+    ]
+  ],
+  "rewards": {
+    "experience": 40
+  }
+}

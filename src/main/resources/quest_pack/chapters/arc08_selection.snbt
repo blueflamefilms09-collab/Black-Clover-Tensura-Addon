@@ -1,0 +1,281 @@
+{
+	id: "47F49E148FC2484D"
+	group: "0BCF8AD019395CF3"
+	order_index: 13
+	filename: "arc08_selection"
+	icon: {
+		id: "nusmp:labyrinth_gate"
+	}
+	default_hide_dependency_lines: false
+	quests: [
+		{
+			id: "519D28E29EE8273D"
+			x: 0.0d
+			y: 1.5d
+			shape: "rsquare"
+			size: 1.25d
+			icon: {
+				id: "nusmp:labyrinth_gate"
+			}
+			dependencies: ["3D1DCEA3D6FC3FF6"]
+			tasks: [
+				{
+					id: "5ACFF5C4564DF253"
+					type: "checkmark"
+				}
+			]
+			rewards: [
+				{
+					id: "4AF00DEA1E10CF30"
+					type: "xp"
+					xp: 25
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "69ADB434A73CF246"
+			x: 1.5d
+			y: 1.5d
+			icon: {
+				id: "minecraft:white_banner"
+			}
+			dependencies: ["519D28E29EE8273D"]
+			tasks: [
+				{
+					id: "08FC049F3661E45F"
+					type: "advancement"
+					advancement: "nusmp:squads/created"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "7CC7A599C13EE4CD"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "5EB7B5098840B9AD"
+			x: 3.0d
+			y: 1.5d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "nusmp:labyrinth_gate"
+			}
+			dependencies: ["69ADB434A73CF246"]
+			tasks: [
+				{
+					id: "21FBDEB4D8CDFBE4"
+					type: "dimension"
+					dimension: "nusmp:labyrinth"
+				}
+				{
+					id: "27FEF375BF8ABF51"
+					type: "advancement"
+					advancement: "nusmp:arcs/royal_knights"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "5DBBAE939B9BB45B"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "47EF8878A1374E3D"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "2E39D8D18F85BD9A"
+			x: 4.5d
+			y: 3.0d
+			shape: "square"
+			icon: {
+				id: "nusmp:pitfall_tile"
+			}
+			dependencies: ["5EB7B5098840B9AD"]
+			optional: true
+			tasks: [
+				{
+					id: "2540769AE9E95827"
+					type: "advancement"
+					advancement: "nusmp:dungeon/traps"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "595DC8E18523F46E"
+					type: "xp"
+					xp: 15
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "49B9408B7AF4D633"
+			x: 4.5d
+			y: 1.5d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:iron_bars"
+			}
+			dependencies: ["5EB7B5098840B9AD"]
+			tasks: [
+				{
+					id: "6887EC7AAA97A283"
+					type: "advancement"
+					advancement: "nusmp:bosses/floor_warden"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "45CDB7C033FD6870"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "76B4B672686FE29B"
+					type: "loot"
+					table_id: 4358806230403059797L
+				}
+			]
+		}
+		{
+			id: "042C15F19B71CECB"
+			x: 6.0d
+			y: 1.5d
+			icon: {
+				id: "nusmp:shadow_key"
+			}
+			dependencies: ["49B9408B7AF4D633"]
+			tasks: [
+				{
+					id: "5E2054EDC801162F"
+					type: "advancement"
+					advancement: "nusmp:dungeon/shadow_key"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "07B96C69F5282E6D"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "4C76D219FAA5C75C"
+			x: 7.5d
+			y: 1.5d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "minecraft:tripwire_hook"
+			}
+			dependencies: ["042C15F19B71CECB"]
+			tasks: [
+				{
+					id: "2A15998F3A0681DD"
+					type: "advancement"
+					advancement: "nusmp:dungeon/seal"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "578330CDB2985AC8"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "3E51402A69FE4695"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "646FF060A989B7AA"
+			x: 9.0d
+			y: 0.0d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:barrier"
+			}
+			dependencies: ["4C76D219FAA5C75C"]
+			tasks: [
+				{
+					id: "28C52DE1659819C2"
+					type: "advancement"
+					advancement: "nusmp:future/royal_knights_boss"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "3831CF5F468AA2D7"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "5D1EC2CF7D37C03A"
+					type: "loot"
+					table_id: 4358806230403059797L
+				}
+			]
+		}
+		{
+			id: "072803DDD6E83007"
+			x: 9.0d
+			y: 2.7d
+			shape: "hexagon"
+			size: 1.5d
+			icon: {
+				id: "nusmp:relic_pedestal"
+			}
+			dependencies: ["4C76D219FAA5C75C"]
+			tasks: [
+				{
+					id: "1294D53C7F6116BF"
+					type: "advancement"
+					advancement: "nusmp:dungeon/vault"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "17F3BB17B25764F8"
+					type: "xp"
+					xp: 300
+					auto: "enabled"
+				}
+				{
+					id: "65FD4E91D2223169"
+					type: "choice"
+					table_id: 2338908409416502598L
+				}
+			]
+		}
+	]
+	quest_links: [ ]
+	images: [ ]
+}

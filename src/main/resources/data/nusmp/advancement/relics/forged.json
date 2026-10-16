@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:relics/forge_block",
+  "display": {
+    "icon": {
+      "id": "minecraft:anvil"
+    },
+    "title": {
+      "translate": "advancement.nusmp.relics.forged.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.relics.forged.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_relic_forged": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "relic.forged"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_relic_forged"
+    ]
+  ],
+  "rewards": {
+    "experience": 40
+  }
+}

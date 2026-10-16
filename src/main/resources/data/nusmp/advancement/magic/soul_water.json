@@ -1,0 +1,99 @@
+{
+  "parent": "nusmp:magic/awakening",
+  "display": {
+    "icon": {
+      "id": "minecraft:water_bucket"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.soul_water.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.soul_water.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_water": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "water"
+      }
+    },
+    "e_spell_cast_ice": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "ice"
+      }
+    },
+    "e_spell_cast_mercury": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "mercury"
+      }
+    },
+    "e_spell_cast_mist": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "mist"
+      }
+    },
+    "e_spell_cast_gel": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "gel"
+      }
+    },
+    "e_spell_cast_bubble": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "bubble"
+      }
+    },
+    "e_spell_cast_ice_wedge": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "ice_wedge"
+      }
+    },
+    "e_spell_cast_mucus": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "mucus"
+      }
+    },
+    "e_spell_cast_snow": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "snow"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_water",
+      "e_spell_cast_ice",
+      "e_spell_cast_mercury",
+      "e_spell_cast_mist",
+      "e_spell_cast_gel",
+      "e_spell_cast_bubble",
+      "e_spell_cast_ice_wedge",
+      "e_spell_cast_mucus",
+      "e_spell_cast_snow"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  }
+}

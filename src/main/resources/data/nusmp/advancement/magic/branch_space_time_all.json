@@ -1,0 +1,85 @@
+{
+  "parent": "nusmp:magic/branch_space_time_signature",
+  "display": {
+    "icon": {
+      "id": "minecraft:clock"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.branch_space_time_all.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.branch_space_time_all.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_spatial": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "spatial"
+      }
+    },
+    "e_spell_cast_time": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "time"
+      }
+    },
+    "e_spell_cast_gravity": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "gravity"
+      }
+    },
+    "e_spell_cast_compass": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "compass"
+      }
+    },
+    "e_spell_cast_game": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "game"
+      }
+    },
+    "e_spell_cast_dice": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "dice"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_spatial"
+    ],
+    [
+      "e_spell_cast_time"
+    ],
+    [
+      "e_spell_cast_gravity"
+    ],
+    [
+      "e_spell_cast_compass"
+    ],
+    [
+      "e_spell_cast_game"
+    ],
+    [
+      "e_spell_cast_dice"
+    ]
+  ],
+  "rewards": {
+    "experience": 148
+  }
+}

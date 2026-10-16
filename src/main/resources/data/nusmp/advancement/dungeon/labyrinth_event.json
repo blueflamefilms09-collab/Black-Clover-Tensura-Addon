@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:dungeon/labyrinth",
+  "display": {
+    "icon": {
+      "id": "nusmp:labyrinth_gate"
+    },
+    "title": {
+      "translate": "advancement.nusmp.dungeon.labyrinth_event.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.dungeon.labyrinth_event.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_labyrinth_entered": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "labyrinth.entered"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_labyrinth_entered"
+    ]
+  ],
+  "rewards": {
+    "experience": 10
+  }
+}

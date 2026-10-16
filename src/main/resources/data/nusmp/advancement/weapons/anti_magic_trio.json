@@ -1,0 +1,64 @@
+{
+  "parent": "nusmp:weapons/demon_slayer",
+  "display": {
+    "icon": {
+      "id": "nusmp:demon_dweller_sword"
+    },
+    "title": {
+      "translate": "advancement.nusmp.weapons.anti_magic_trio.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.weapons.anti_magic_trio.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "have_demon_slayer_sword": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:demon_slayer_sword"
+          }
+        ]
+      }
+    },
+    "have_demon_dweller_sword": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:demon_dweller_sword"
+          }
+        ]
+      }
+    },
+    "have_demon_destroyer_sword": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:demon_destroyer_sword"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_demon_slayer_sword"
+    ],
+    [
+      "have_demon_dweller_sword"
+    ],
+    [
+      "have_demon_destroyer_sword"
+    ]
+  ],
+  "rewards": {
+    "experience": 120
+  }
+}

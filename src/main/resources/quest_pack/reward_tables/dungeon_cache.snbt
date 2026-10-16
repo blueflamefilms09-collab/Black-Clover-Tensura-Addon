@@ -1,0 +1,70 @@
+{
+	id: "4B0BBF4340480D49"
+	order_index: 2
+	loot_size: 1
+	rewards: [
+		{
+			id: "63DF6B3106DD9AA2"
+			item: {
+				id: "nusmp:magic_stone"
+			}
+			count: 12
+			weight: 25.0d
+		}
+		{
+			id: "63FCC7C3D62EC8AC"
+			item: {
+				id: "minecraft:iron_ingot"
+			}
+			count: 8
+			weight: 15.0d
+		}
+		{
+			id: "6FC23819696AB4C7"
+			item: {
+				id: "minecraft:gold_ingot"
+			}
+			count: 6
+			weight: 15.0d
+		}
+		{
+			id: "23A61C580BAE6F1C"
+			item: {
+				id: "minecraft:diamond"
+			}
+			count: 2
+			weight: 8.0d
+		}
+		{
+			id: "0B978504469FC93A"
+			item: {
+				id: "minecraft:golden_apple"
+			}
+			count: 2
+			weight: 8.0d
+		}
+		{
+			id: "506DA2CB4FA42566"
+			item: {
+				id: "minecraft:honey_bottle"
+			}
+			count: 4
+			weight: 12.0d
+		}
+		{
+			id: "4CF7D052A6353754"
+			item: {
+				id: "minecraft:experience_bottle"
+			}
+			count: 10
+			weight: 12.0d
+		}
+		{
+			id: "7F826FE8BF0976CD"
+			item: {
+				id: "minecraft:ominous_trial_key"
+			}
+			weight: 2.0d
+		}
+	]
+}

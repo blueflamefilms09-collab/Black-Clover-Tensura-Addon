@@ -1,0 +1,48 @@
+{
+	id: "207578CE6971CD46"
+	order_index: 9
+	loot_size: 1
+	rewards: [
+		{
+			id: "3FC38EF2FC98F295"
+			item: {
+				id: "nusmp:magic_stone"
+			}
+			count: 48
+		}
+		{
+			id: "52284425E1EFACBC"
+			item: {
+				id: "minecraft:ender_pearl"
+			}
+			count: 16
+		}
+		{
+			id: "03FB8CC6E8D2957F"
+			item: {
+				id: "minecraft:honey_bottle"
+			}
+			count: 8
+		}
+		{
+			id: "6DE2BF0847668917"
+			item: {
+				id: "minecraft:recovery_compass"
+			}
+		}
+		{
+			id: "5D7D26BB976A5849"
+			item: {
+				id: "minecraft:ominous_trial_key"
+			}
+			count: 2
+		}
+		{
+			id: "16AA1E138C1AE888"
+			item: {
+				id: "minecraft:golden_apple"
+			}
+			count: 4
+		}
+	]
+}

@@ -1,0 +1,60 @@
+{
+  "parent": "nusmp:dungeon/labyrinth",
+  "display": {
+    "icon": {
+      "id": "nusmp:pitfall_tile"
+    },
+    "title": {
+      "translate": "advancement.nusmp.dungeon.traps.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.dungeon.traps.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "have_pitfall_tile": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:pitfall_tile"
+          }
+        ]
+      }
+    },
+    "have_snuffer_glyph": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:snuffer_glyph"
+          }
+        ]
+      }
+    },
+    "have_riddle_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "nusmp:riddle_stone"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_pitfall_tile",
+      "have_snuffer_glyph",
+      "have_riddle_stone"
+    ]
+  ],
+  "rewards": {
+    "experience": 15
+  }
+}

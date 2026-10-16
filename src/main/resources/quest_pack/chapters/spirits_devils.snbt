@@ -1,0 +1,391 @@
+{
+	id: "523F27D303C24410"
+	group: "5D0FDBAA39C60882"
+	order_index: 4
+	filename: "spirits_devils"
+	icon: {
+		id: "nusmp:spirit_charm"
+	}
+	default_hide_dependency_lines: false
+	quests: [
+		{
+			id: "6859D66D7BFAE575"
+			x: 0.0d
+			y: 3.0d
+			shape: "rsquare"
+			size: 1.25d
+			icon: {
+				id: "nusmp:spirit_charm"
+			}
+			tasks: [
+				{
+					id: "09C3E66A24DA13DF"
+					type: "checkmark"
+				}
+			]
+			rewards: [
+				{
+					id: "1A4605116F8D4D09"
+					type: "xp"
+					xp: 25
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "45967F026D55797C"
+			x: 1.5d
+			y: 1.5d
+			icon: {
+				id: "nusmp:spirit_charm"
+			}
+			dependencies: ["6859D66D7BFAE575"]
+			tasks: [
+				{
+					id: "0F43E49A2E27413E"
+					type: "advancement"
+					advancement: "nusmp:spirits/charm"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "1BF5DA87474DF26A"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "525C1D214745A32C"
+			x: 3.0d
+			y: 1.5d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "nusmp:spirit_lord_skill"
+			}
+			dependencies: ["45967F026D55797C"]
+			tasks: [
+				{
+					id: "6C0ADDE4A1D31087"
+					type: "advancement"
+					advancement: "nusmp:spirits/lord_skill"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "58F7FED4C6043BD1"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "7A40E40FC33DEEE6"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "40696B24201ED87C"
+			x: 3.0d
+			y: 0.0d
+			icon: {
+				id: "nusmp:spirit_core_fire"
+			}
+			dependencies: ["45967F026D55797C"]
+			tasks: [
+				{
+					id: "6E15A157250AB0FF"
+					type: "advancement"
+					advancement: "nusmp:spirits/meet_elemental"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "29E9DC69AF218286"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "77CB18B021E27F38"
+			x: 4.5d
+			y: 0.0d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "nusmp:spirit_core_earth"
+			}
+			dependencies: ["40696B24201ED87C"]
+			tasks: [
+				{
+					id: "78350E1ADEE9E3AE"
+					type: "advancement"
+					advancement: "nusmp:spirits/cores"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "43DEF59DE2976867"
+					type: "xp"
+					xp: 100
+					auto: "enabled"
+				}
+				{
+					id: "367FAFE2AE33E808"
+					type: "loot"
+					table_id: 1722623282405390358L
+				}
+			]
+		}
+		{
+			id: "551D10238EAD3753"
+			x: 4.5d
+			y: 1.5d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "minecraft:soul_lantern"
+			}
+			dependencies: ["525C1D214745A32C"]
+			tasks: [
+				{
+					id: "5A5CE54CC18283D3"
+					type: "advancement"
+					advancement: "nusmp:spirits/contract"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "5DB0A8CC4D036C97"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "7A90B914B864FB3D"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "058E3D5BD1B4797F"
+			x: 6.0d
+			y: 1.5d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "minecraft:feather"
+			}
+			dependencies: ["551D10238EAD3753"]
+			tasks: [
+				{
+					id: "13BDDAA80EDDEE6E"
+					type: "advancement"
+					advancement: "nusmp:bosses/wind_spirit_lord"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "3DF71E6F9E3FE45D"
+					type: "xp"
+					xp: 150
+					auto: "enabled"
+				}
+				{
+					id: "1454F43F672E9001"
+					type: "loot"
+					table_id: 4358806230403059797L
+				}
+			]
+		}
+		{
+			id: "02B8976CEF3700F2"
+			x: 1.5d
+			y: 4.5d
+			icon: {
+				id: "nusmp:devil_contract"
+			}
+			dependencies: ["6859D66D7BFAE575"]
+			tasks: [
+				{
+					id: "499C92EEDFEC3EE8"
+					type: "advancement"
+					advancement: "nusmp:spirits/devil_contract"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "356772A06DDE02F5"
+					type: "xp"
+					xp: 20
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "0EF2B1BB1C86CFCB"
+			x: 3.0d
+			y: 4.5d
+			shape: "diamond"
+			size: 1.25d
+			icon: {
+				id: "nusmp:devils_core"
+			}
+			dependencies: ["02B8976CEF3700F2"]
+			tasks: [
+				{
+					id: "08B8FD30DEFD42EB"
+					type: "advancement"
+					advancement: "nusmp:spirits/devil_core"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "7F32DE7EE88D2314"
+					type: "xp"
+					xp: 50
+					auto: "enabled"
+				}
+				{
+					id: "05B143FD89DEEC2E"
+					type: "loot"
+					table_id: 7255529209430744368L
+				}
+			]
+		}
+		{
+			id: "45D41C2EF163B286"
+			x: 4.5d
+			y: 4.5d
+			shape: "octagon"
+			size: 1.5d
+			icon: {
+				id: "nusmp:devil_horn"
+			}
+			dependencies: ["02B8976CEF3700F2"]
+			tasks: [
+				{
+					id: "65B7168969338B37"
+					type: "advancement"
+					advancement: "nusmp:spirits/devil_union"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "5619736BB5E1582F"
+					type: "xp"
+					xp: 300
+					auto: "enabled"
+				}
+				{
+					id: "51467F9E2F527CBE"
+					type: "loot"
+					table_id: 4728946283094692376L
+				}
+			]
+		}
+		{
+			id: "5465D14C08E96C1C"
+			x: 6.0d
+			y: 4.5d
+			shape: "square"
+			icon: {
+				id: "minecraft:wither_skeleton_skull"
+			}
+			dependencies: ["45D41C2EF163B286"]
+			optional: true
+			tasks: [
+				{
+					id: "2197CE37E1B7B1CA"
+					type: "advancement"
+					advancement: "nusmp:spirits/soul_corruption"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "27A453E86B5A9A90"
+					type: "xp"
+					xp: 15
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "46A8AD51FDFB0705"
+			x: 6.0d
+			y: 6.0d
+			shape: "square"
+			icon: {
+				id: "minecraft:totem_of_undying"
+			}
+			dependencies: ["02B8976CEF3700F2"]
+			optional: true
+			tasks: [
+				{
+					id: "37A83BAE7B87589D"
+					type: "advancement"
+					advancement: "nusmp:spirits/paladin"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "129BD312834B7DE7"
+					type: "xp"
+					xp: 15
+					auto: "enabled"
+				}
+			]
+		}
+		{
+			id: "01B51312B0858292"
+			x: 7.5d
+			y: 4.5d
+			shape: "hexagon"
+			size: 1.5d
+			icon: {
+				id: "nusmp:devil_core_beelzebub"
+			}
+			dependencies: ["0EF2B1BB1C86CFCB"]
+			tasks: [
+				{
+					id: "7BEBD4A238E640C9"
+					type: "advancement"
+					advancement: "nusmp:spirits/devil_cores_all"
+					criterion: ""
+				}
+			]
+			rewards: [
+				{
+					id: "24D18805E7E94D36"
+					type: "xp"
+					xp: 1000
+					auto: "enabled"
+				}
+				{
+					id: "374E7914369E0583"
+					type: "loot"
+					table_id: 4728946283094692376L
+				}
+			]
+		}
+	]
+	quest_links: [ ]
+	images: [ ]
+}

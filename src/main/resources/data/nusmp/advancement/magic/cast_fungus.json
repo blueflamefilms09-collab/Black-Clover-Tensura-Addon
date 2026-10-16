@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:magic/soul_earth",
+  "display": {
+    "icon": {
+      "id": "minecraft:oak_sapling"
+    },
+    "title": {
+      "translate": "advancement.nusmp.magic.cast_fungus.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.magic.cast_fungus.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_fungus": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "fungus"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_fungus"
+    ]
+  ],
+  "rewards": {
+    "experience": 8
+  }
+}
