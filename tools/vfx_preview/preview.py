@@ -35,6 +35,9 @@ JOML = os.path.join(HERE, "lib", "joml-1.10.5.jar")
 JOML_URL = "https://repo.maven.apache.org/maven2/org/joml/joml/1.10.5/joml-1.10.5.jar"
 
 W, H, FOV = 480, 360, 70.0
+# the portal classes that need no GL / world types (the game-side PortalClient, PortalGl ... are left out)
+PORTAL_PREVIEW_FILES = {"PortalSettings.java", "PortalMath.java", "PortalSpec.java", "PortalPass.java", "PortalSink.java", "PortalFrame.java",
+                        "PortalMesh.java", "PortalComposer.java", "PortalBufferSink.java"}
 
 
 # ------------------------------------------------------------------------------------------------ build
@@ -56,7 +59,9 @@ def patched_vertex_buffer(src):
     }
 
 '''
-    return src[:a] + drain + src[b:]
+    src = src[:a] + drain + src[b:]
+    # 1.43.0: a scene may ask for a bigger budget than the shared 400 (the 3D portal's top tier is drawn by its own GL path in the game)
+    return src.replace("Math.min(limit, MAX_VERTICES_PER_ACTIVATION)", "limit")
 
 
 def patched_blend(src):
@@ -104,6 +109,13 @@ def build(layers):
     for layer in layers:                                                       # 1.35.0: the Zogratis layers share ZogratisFx (a helper, not a layer)
         if layer.split(".")[-1].startswith("Zogratis") or layer.split(".")[-1] == "LuciusCoreGemLayer":      # 1.42.0: the chest gem layer uses the same helper
             shutil.copy(os.path.join(layer_dir, "ZogratisFx.java"), os.path.join(pkg, "client", "layer"))
+    portal_src = os.path.join(VFX, "client", "portal")                       # 1.43.0: the 3D portal (pure classes + the buffer sink + its layer helper)
+    portal_dst = os.path.join(pkg, "client", "portal")
+    os.makedirs(portal_dst, exist_ok=True)
+    for fn in os.listdir(portal_src):
+        if fn.endswith(".java") and fn in PORTAL_PREVIEW_FILES:
+            shutil.copy(os.path.join(portal_src, fn), portal_dst)
+    shutil.copy(os.path.join(layer_dir, "SpatialPortalLayer.java"), os.path.join(pkg, "client", "layer"))
     shutil.copy(os.path.join(HERE, "Preview.java"), gen)
     classes = os.path.join(BUILD, "classes")
     shutil.rmtree(classes, ignore_errors=True)
@@ -246,6 +258,8 @@ def run_scene(name, scene, classes):
             "--seed", str(scene.get("seed", 12345)), "--cam", ",".join(map(str, scene["cam"])),
             "--target", ",".join(map(str, scene["target"])), "--ages", ",".join(map(str, scene["ages"])),
             "--detail", str(scene.get("detail", 1)), "--out", out_json]
+    if "budget" in scene:
+        args += ["--budget", str(scene["budget"])]
     subprocess.run(args, check=True)
     with open(out_json) as f:
         data = json.load(f)
@@ -263,8 +277,9 @@ def run_scene(name, scene, classes):
     path = os.path.join(BUILD, name + ".png")
     sheet.save(path)
     worst = max(fr["vertices"] for fr in data["frames"])
-    print(f"{name:24s} max {worst:3d}/400 vertices -> {path}")
-    return worst
+    budget = scene.get("budget", 400)
+    print(f"{name:24s} max {worst:3d}/{budget} vertices -> {path}")
+    return worst - (budget - 400)
 
 
 def main():

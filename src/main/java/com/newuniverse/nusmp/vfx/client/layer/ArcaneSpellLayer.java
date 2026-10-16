@@ -75,6 +75,12 @@ public class ArcaneSpellLayer extends AbstractVfxLayer {
     public void onSpawn(VfxInstance inst) {
         if (inst.shape == VfxShape.LIGHTNING_GOD) VfxShake.add(inst.payload.from(), 1.3f, 14);
         else if (inst.shape == VfxShape.SEAL_TRINITY) VfxShake.add(inst.payload.from(), 0.5f, 8);
+        else if (inst.shape == VfxShape.SPACE_PORTAL && SpatialPortalLayer.active()) SpatialPortalLayer.onSpawn(inst);      // 1.43.0: the 3D gate
+    }
+
+    @Override
+    public void onTick(VfxInstance inst) {
+        if (inst.shape == VfxShape.SPACE_PORTAL && SpatialPortalLayer.active()) SpatialPortalLayer.onTick(inst);
     }
 
     @Override
@@ -402,6 +408,8 @@ public class ArcaneSpellLayer extends AbstractVfxLayer {
 
     // ------------------------------------------------------------------ Fallen Angel Gate
     private void portal(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {
+        // 1.43.0: spatial.portal3d (default on) draws the 3D animated gate; off keeps the flat portal below exactly as it was
+        if (SpatialPortalLayer.active()) { SpatialPortalLayer.render(inst, ctx, buf); return; }
         float age = inst.ageTicks(ctx.partialTick), r = inst.power;
         float open = VfxAnim.easeOutBack(Mth.clamp(age / 10f, 0, 1));
         float fade = life(inst, age, 0, 12);
