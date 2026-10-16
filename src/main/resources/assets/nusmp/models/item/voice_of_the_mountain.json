@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "minecraft:builtin/entity",
+  "gui_light": "front",
   "textures": {
-    "layer0": "nusmp:item/voice_of_the_mountain"
+    "particle": "nusmp:item/voice_of_the_mountain"
   }
 }

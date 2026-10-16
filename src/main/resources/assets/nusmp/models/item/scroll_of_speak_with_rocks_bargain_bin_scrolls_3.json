@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "minecraft:builtin/entity",
+  "gui_light": "front",
   "textures": {
-    "layer0": "nusmp:item/scroll_of_speak_with_rocks_bargain_bin_scrolls_3"
+    "particle": "nusmp:item/scroll_of_speak_with_rocks_bargain_bin_scrolls_3"
   }
 }

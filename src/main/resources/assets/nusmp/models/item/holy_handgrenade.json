@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "minecraft:builtin/entity",
+  "gui_light": "front",
   "textures": {
-    "layer0": "nusmp:item/holy_handgrenade"
+    "particle": "nusmp:item/holy_handgrenade"
   }
 }

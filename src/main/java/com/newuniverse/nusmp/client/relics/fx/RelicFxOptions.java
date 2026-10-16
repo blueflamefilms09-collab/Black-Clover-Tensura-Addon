@@ -15,6 +15,7 @@ public final class RelicFxOptions {
     public static final ModConfigSpec.BooleanValue PARTICLES;
     public static final ModConfigSpec.BooleanValue MODELS;
     public static final ModConfigSpec.BooleanValue HIDE_ARMOUR_RELICS;
+    public static final ModConfigSpec.BooleanValue HAND_MODELS;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -29,6 +30,9 @@ public final class RelicFxOptions {
         HIDE_ARMOUR_RELICS = b.comment("Hide the worn visuals (3D models, glow, particles) of relics worn as head, chest or feet armour. Curios relics have the eye icon of the Curios screen for this; "
                         + "armour has none, so this is its switch (also the 'Toggle relic visuals' key, unbound by default).")
                 .define("hideArmourRelics", false);
+        HAND_MODELS = b.comment("Show relics that are not weapons (rings, necklaces, hoods, boots, flasks, scrolls ...) as 3D objects in the hand, on the ground and in item frames. Off = the flat sprite, as before. "
+                        + "The inventory always shows the sprite.")
+                .define("handModels", true);
         b.pop();
         SPEC = b.build();
     }
@@ -42,6 +46,9 @@ public final class RelicFxOptions {
     public static boolean particles() { return get(PARTICLES); }
 
     public static boolean models() { return get(MODELS); }
+
+    /** Relics that are not weapons as 3D objects in hand, on the ground and in frames ({@code relicfx.handModels}). */
+    public static boolean handModels() { return get(HAND_MODELS); }
 
     /** True when the worn visuals of armour relics are switched off ({@code relicfx.hideArmourRelics}); false when the config is not loaded. */
     public static boolean hideArmourRelics() {

@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "minecraft:builtin/entity",
+  "gui_light": "front",
   "textures": {
-    "layer0": "nusmp:item/fury_of_the_fallen"
+    "particle": "nusmp:item/fury_of_the_fallen"
   }
 }

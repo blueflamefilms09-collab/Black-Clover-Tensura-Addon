@@ -85,6 +85,25 @@ public final class ArmorItemRenderer extends BlockEntityWithoutLevelRenderer {
 
     @Override
     public void renderByItem(ItemStack stack, ItemDisplayContext ctx, PoseStack pose, MultiBufferSource buffers, int light, int overlay) {
+        if (stack.getItem() instanceof RelicBearer) {                              // 1.48.0: a relic armour item is held as the hand library says (hold styles, hand models)
+            if (RelicFxOptions.handModels()) {
+                com.newuniverse.nusmp.client.relics.hand.HandItemRenderer.instance().renderByItem(stack, ctx, pose, buffers, light, overlay);
+                return;
+            }
+            pose.pushPose();                                                       // option off: the 1.34.0 object form below, with the display block that its item json no longer carries
+            try {
+                com.newuniverse.nusmp.client.relics.hand.HandItemRenderer.applySpritePreset(pose, ctx);
+                renderOlder(stack, ctx, pose, buffers, light, overlay);
+            } finally {
+                pose.popPose();
+            }
+            return;
+        }
+        renderOlder(stack, ctx, pose, buffers, light, overlay);
+    }
+
+    /** The armour item as an object, as 1.34.0 made it (every armour item that is not a relic, and a relic when relicfx.handModels is off). */
+    private void renderOlder(ItemStack stack, ItemDisplayContext ctx, PoseStack pose, MultiBufferSource buffers, int light, int overlay) {
         Minecraft mc = Minecraft.getInstance();
         String path = BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath();
         WornLibrary.Ensemble e = null;

@@ -1,0 +1,104 @@
+# How a relic that is not a weapon is held, dropped and framed: the hold styles of client/relics/hand/HandTransforms.
+#
+#   style <name> [size=] [hold=hx,hy,hz] [pre=rx,ry,rz] [sway=deg] [only=n] [from=<style>]
+#   xf <style> <ctx> rx ry rz tx ty tz scale     ctx = ground fixed tp_right tp_left fp_right fp_left head
+#   use <key[,key...]> <style> [size=..] [hold=..] [pre=..] [sway=..] [only=..]     key = id:<relic> | look:<SLOT>:<LOOK> | slot:<SLOT>
+#
+# The numbers of xf are those of a model json display block (degrees, sixteenths of a block, scale); the left hand is written out in full (the game does not
+# mirror a builtin/entity model for us). The object is first made upright (its front to +z, the way a sprite faces), then placed:
+#   size  the longest side of the object in blocks            hold  the point of the object that sits in the hand (fractions of its half size, y up, z to the viewer)
+#   pre   a turn of the object about the hold point            sway  degrees it swings about the hold point (a dangling thing)     only  draw the first n pieces
+# hold and sway work in a hand only; size and pre work everywhere. The lookup order is id:, then look:, then slot:, then the style "default".
+# In the third person hand the item's +y points forward and its +z points up, so [90 180 0] stands an object upright with its front to the onlooker. In the first person view
+# the item sits 0.56 right, 0.52 down and 0.72 ahead of the camera, so [-20 -38 0] turns the front of an object towards the eye (a flat sprite is turned [0 -90 25] instead).
+# Edit, then look at the result with:  python3 tools/relics/hand_preview.py <relic id>   (docs/relic_hand_models.md)
+
+# ---------------------------------------------------------------- the flat sprite (what a vanilla generated item does): the fallback when a relic has no model
+style sprite
+xf sprite ground 0 0 0 0 2 0 0.5
+xf sprite fixed 0 180 0 0 0 0 1
+xf sprite tp_right 0 0 0 0 3 1 0.55
+xf sprite tp_left 0 0 0 0 3 1 0.55
+xf sprite fp_right 0 -90 25 1.13 3.2 1.13 0.68
+xf sprite fp_left 0 90 -25 -1.13 3.2 1.13 0.68
+xf sprite head 0 180 0 0 13 7 1
+
+# ---------------------------------------------------------------- the generic upright object
+style default size=0.9
+xf default ground 0 0 0 0 2 0 0.55
+xf default fixed 0 180 0 0 0 0 0.9
+xf default tp_right 90 180 0 0 0 0 0.6
+xf default tp_left 90 180 0 0 0 0 0.6
+xf default fp_right -20 -38 0 1 2 0 0.55
+xf default fp_left -20 38 0 -1 2 0 0.55
+xf default head 0 180 0 0 13 7 1
+
+# anything held by its top, so it hangs below the hand: in the first person view it is lifted so that it is not all below the screen
+style dangle from=default
+xf dangle fp_right -20 -38 0 1 7 0 0.55
+xf dangle fp_left -20 38 0 -1 7 0 0.55
+# a thing that dangles from the fingers: necklaces, pendants, anything on a chain or cord
+style hang from=dangle size=0.8 hold=0,0.9,0 sway=7
+# an ornament or a small thing lying loose in the palm: orbs, charms, bags, books, figurines
+style palm from=default size=0.65 hold=0,0,0
+# a very small thing (a ring, a coin, a badge): smaller in the hand, larger in a frame
+style small from=palm size=0.5
+xf small ground 0 0 0 0 2 0 0.8
+xf small fixed 0 180 0 0 0 0 1.4
+# an object gripped by its handle or neck, held low: lanterns, spoons, lyres, horns, mirrors, keys, chalk
+style tool from=default size=0.9 hold=0,-0.4,0
+# a bottle, vial, jar, mug or scroll gripped round the body
+style flask from=default size=0.62 hold=0,-0.3,0
+# a hood, hat, crown or circlet held by its brim, a mask by its edge
+style brim from=default size=0.8 hold=0.85,-0.6,0 pre=0,0,-10
+# a glove or gauntlet held by the cuff (one of the pair)
+style cuff from=dangle size=0.8 hold=0,0.9,0 only=1 sway=4
+# a cloak or cape draped from the hand
+style cloak from=dangle size=0.9 hold=0,0.95,0 sway=3
+# a chest piece held up by its collar
+style garment from=dangle size=0.8 hold=0,0.95,0 sway=2
+# a belt or a collar held by its buckle or clasp so it hangs as a loop
+style coil from=dangle size=0.7 hold=0,0,1 pre=-90,0,0 sway=0
+# a pair of boots held by the straps
+style boots from=dangle size=0.8 hold=0,0.8,0 sway=4
+
+# ---------------------------------------------------------------- the mapping by slot (every relic that is not named below)
+use slot:NECK hang
+use slot:CHARM palm
+use slot:CONSUMABLE flask
+use slot:HEAD brim
+use slot:HANDS cuff
+use slot:BACK cloak
+use slot:CHEST garment
+use slot:BELT coil
+use slot:FEET boots
+
+# ---------------------------------------------------------------- by look, where a look of a slot is a different kind of thing
+use look:HANDS:CHARM palm only=0
+use look:CHARM:AMULET hang
+use look:CHARM:POTION flask
+use look:CHARM:TOME palm
+
+# ---------------------------------------------------------------- by relic (the signature objects)
+# small things: rings, coins, badges, brooches
+use id:ring_of_endless_rage,id:ring_of_memories,id:ring_of_power,id:ring_of_regeneration,id:ring_of_rock_eating,id:ring_of_the_game,id:ring_of_the_mimic,id:the_forgotten_ring,id:witchs_ring,id:dryads_wedding_band small
+use id:coin_of_draconic_luck,id:coin_of_fortune,id:the_devils_due,id:fury_of_the_fallen,id:official_looking_badge,id:plastic_sheriff_badge,id:brooch_of_poeur,id:sigil_of_the_faint_flame small
+use id:true_heart_clasp,id:the_lovers_divide,id:tiny_orbit,id:defenders_dial,id:eye_of_the_deep_one small
+# things on a chain or a cord
+use id:sunheart_medallion,id:witchers_medallion,id:eye_of_the_aboleth,id:pocket_time,id:lucky_egg,id:the_time_stone_or_the_eye_of_agamotto hang size=0.7
+use id:executioners_bane hang size=0.75
+use id:spirit_lantern hang size=0.85
+# long things gripped low
+use id:soup_spoon_of_improbability,id:warrens_key,id:mirror_of_spell_reflection,id:horn_of_leroy tool
+use id:bewitching_lyre,id:silver_tongued_lyre tool size=0.85
+use id:simple_blue_runechalk,id:alabaster_white_runechalk,id:weaversong tool size=0.8
+use id:hand_of_vecna,id:the_infinity_gauntlet tool size=0.85 hold=0,-0.7,0
+# the stones, orbs and other round things
+use id:the_space_stone_or_the_tesseract,id:the_mind_stone,id:the_power_stone,id:the_reality_stone,id:the_soul_stone palm size=0.6
+use id:orb_of_plagues,id:orb_of_the_dryad,id:holy_handgrenade,id:eye_of_vecna,id:pocket_portal palm size=0.6
+# bags, books, figurines
+use id:instant_cooking_pot,id:deck_of_many_things,id:crystal_dragon,id:the_pocket_campsite,id:elephant_of_the_room palm size=0.7
+# a bottle held as a bottle
+use id:paralyzing_perfume,id:drow_sunscreen,id:jar_of_bats flask
+# collars hang as a loop from their clasp
+use id:chromatic_collar,id:collar_of_the_penitent_dragon,id:fenrirs_collar coil size=0.65

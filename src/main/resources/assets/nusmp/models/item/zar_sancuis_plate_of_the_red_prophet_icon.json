@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "nusmp:item/zar_sancuis_plate_of_the_red_prophet"
+  }
+}

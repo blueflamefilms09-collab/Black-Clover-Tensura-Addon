@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "minecraft:builtin/entity",
+  "gui_light": "front",
   "textures": {
-    "layer0": "nusmp:item/bracelets_of_faithful_friendship"
+    "particle": "nusmp:item/bracelets_of_faithful_friendship"
   }
 }

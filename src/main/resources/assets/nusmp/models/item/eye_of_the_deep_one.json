@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "minecraft:builtin/entity",
+  "gui_light": "front",
   "textures": {
-    "layer0": "nusmp:item/eye_of_the_deep_one"
+    "particle": "nusmp:item/eye_of_the_deep_one"
   }
 }

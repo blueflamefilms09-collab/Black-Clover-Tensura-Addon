@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "minecraft:builtin/entity",
+  "gui_light": "front",
   "textures": {
-    "layer0": "nusmp:item/dragons_fire_gauntlet"
+    "particle": "nusmp:item/dragons_fire_gauntlet"
   }
 }
