@@ -15,11 +15,8 @@ public final class RelicFxOptions {
     public static final ModConfigSpec.BooleanValue PARTICLES;
     public static final ModConfigSpec.BooleanValue MODELS;
     public static final ModConfigSpec.BooleanValue HIDE_ARMOUR_RELICS;
-<<<<<<< HEAD
     public static final ModConfigSpec.BooleanValue ROBE_ANIME;
-=======
     public static final ModConfigSpec.BooleanValue HAND_MODELS;
->>>>>>> claude/hand-wip
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -34,15 +31,12 @@ public final class RelicFxOptions {
         HIDE_ARMOUR_RELICS = b.comment("Hide the worn visuals (3D models, glow, particles) of relics worn as head, chest or feet armour. Curios relics have the eye icon of the Curios screen for this; "
                         + "armour has none, so this is its switch (also the 'Toggle relic visuals' key, unbound by default).")
                 .define("hideArmourRelics", false);
-<<<<<<< HEAD
         ROBE_ANIME = b.comment("Wear the Magic Knight robe sets as in the Black Clover anime: only the squad cloak (with its emblem, clasp and collar) on the chest piece, at most one small head piece, "
                         + "and nothing on the legs and feet. Off = the older lofted garments (hood, robe, sleeves, hip band, legs, boots).")
                 .define("robeAnime", true);
-=======
         HAND_MODELS = b.comment("Show relics that are not weapons (rings, necklaces, hoods, boots, flasks, scrolls ...) as 3D objects in the hand, on the ground and in item frames. Off = the flat sprite, as before. "
                         + "The inventory always shows the sprite.")
                 .define("handModels", true);
->>>>>>> claude/hand-wip
         b.pop();
         SPEC = b.build();
     }
@@ -57,13 +51,10 @@ public final class RelicFxOptions {
 
     public static boolean models() { return get(MODELS); }
 
-<<<<<<< HEAD
     /** True when the robe sets are worn as anime cloaks ({@code relicfx.robeAnime}, default on); true when the config is not loaded. */
     public static boolean robeAnime() { return get(ROBE_ANIME); }
-=======
     /** Relics that are not weapons as 3D objects in hand, on the ground and in frames ({@code relicfx.handModels}). */
     public static boolean handModels() { return get(HAND_MODELS); }
->>>>>>> claude/hand-wip
 
     /** True when the worn visuals of armour relics are switched off ({@code relicfx.hideArmourRelics}); false when the config is not loaded. */
     public static boolean hideArmourRelics() {
