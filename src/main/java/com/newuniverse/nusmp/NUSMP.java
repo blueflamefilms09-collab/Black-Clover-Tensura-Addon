@@ -71,7 +71,10 @@ public class NUSMP {
         com.newuniverse.nusmp.relics.socket.SocketComponents.COMPONENTS.register(modEventBus);
         modEventBus.addListener(com.newuniverse.nusmp.compat.CompatPacks::onPacks);                       // 1.33.0: the Tensura No Index bridge pack, only when that mod is loaded
         com.newuniverse.nusmp.quests.QuestsSetup.init(modEventBus, modContainer);                                       // 1.49.0: advancements trigger, quest pack installer
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.avatar.AvatarAiConfig.SPEC, "nusmp-avatar-ai-server.toml");
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.avatar.net.AvatarNetConfig.SPEC, "nusmp-avatar-net-server.toml");
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.relics.MobRelicsConfig.SPEC, "nusmp-mobrelics-server.toml");   // 1.50.0: named mobs carry relics
+        com.newuniverse.nusmp.avatar.AvatarSystem.init(modEventBus, modContainer);                                       // 1.51.0: Avatar creation system, Genesis Core (before NUItems.ITEMS.register; registers its own config)
         com.newuniverse.nusmp.arena.ArenaSystem.init(modEventBus);                                                         // 1.46.0: Lucius's arena, the Hourglass (before NUItems.ITEMS.register)
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.arena.ArenaConfig.SPEC, "nusmp-lucius-arena-server.toml");
         com.newuniverse.nusmp.compat.CompatItems.init();                                                                   // 1.34.0: the Compatibility Codex item (before NUItems.ITEMS.register)
@@ -174,6 +177,7 @@ public class NUSMP {
             modEventBus.addListener(com.newuniverse.nusmp.client.floor.goliath.GoliathClient::register);                            // 1.23.0
             modEventBus.addListener(com.newuniverse.nusmp.client.floor.charybdis.CharybdisClient::register);
             modEventBus.addListener(com.newuniverse.nusmp.client.avatar.AvatarClient::register);                                    // 1.22.0: the Devil Avatar
+            com.newuniverse.nusmp.client.avatar.PlayerAvatarClient.register(modEventBus);                                           // 1.51.0: the player-made Avatars
             modEventBus.addListener(com.newuniverse.nusmp.client.nexus.RelicKeys::register);                                         // 1.22.0: Use Relic (R)
             NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.client.nexus.RelicKeys::onClientTick);
             modEventBus.addListener(com.newuniverse.nusmp.client.nexus.NavClient::registerProperties);                              // 1.21.0: lantern flame, compass needle

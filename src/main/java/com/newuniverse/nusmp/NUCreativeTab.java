@@ -76,6 +76,7 @@ public final class NUCreativeTab {
                     if (m == MagicType.ANTI_MAGIC || m == MagicType.KOTODAMA) continue;   // Kotodama: only Zagred's five-leaf below
                     output.accept(GrimoireItem.createUnbound(GrimoireCover.THREE_LEAF, m, null));
                 }
+                output.accept(com.newuniverse.nusmp.avatar.item.AvatarItems.coreStack());                                        // 1.51.0: Genesis Core
                 // the named canon grimoires (Fuegoleon, Yuno, Asta, Noelle, ...)
                 for (var b : com.newuniverse.nusmp.grimoire.CanonBook.values()) output.accept(GrimoireItem.createCanon(b));
             })
