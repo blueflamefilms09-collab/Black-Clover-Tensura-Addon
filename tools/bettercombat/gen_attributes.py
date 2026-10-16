@@ -13,7 +13,10 @@ Schema subset written (from memory of Better Combat 2.x; the mod could not be lo
 No `pose`, `off_hand_pose`, `swing_sound` or `category` keys are written: their value spaces (animation / sound ids) are not certain offline, and
 Better Combat falls back to the parent's for anything we do not set.
 
-Usage:  python tools/bettercombat/gen_attributes.py [--check] [--list]
+1.46.0: the default output uses ONLY Better Combat's own presets and animations (no `attacks`, no `nusmp:` animation): the file is a `parent`
+plus `range_bonus` / `two_handed`. `--custom` writes the 1.39.0 files with our own animations instead (kept, not used; see docs/better_combat.md).
+
+Usage:  python tools/bettercombat/gen_attributes.py [--check] [--list] [--custom]
   --check  write nothing; exit 1 when a weapon has no file or a file differs from its profile
   --list   print the weapons per class
 Run  python tools/bettercombat/inventory.py  first when a weapon was added (it refreshes manifest.json; --check does it in memory).
@@ -31,6 +34,9 @@ import profiles as PR  # noqa: E402
 ROOT = INV.ROOT
 OUT = os.path.join(ROOT, "src", "main", "resources", "data", "nusmp", "weapon_attributes")
 ANIM_DIR = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "player_animations")
+BUILTIN = json.load(open(os.path.join(HERE, "builtin_animations.json"), encoding="utf-8"))
+PRESETS = BUILTIN["presets"]
+CUSTOM = False        # set by --custom: the 1.39.0 profiles with our own animations
 
 
 def r2(x):
@@ -40,7 +46,8 @@ def r2(x):
 def profile_for(wid, w):
     """The effective profile of one weapon: {parent, range_bonus, two_handed, attacks} (None = not written)."""
     cls, prof = w["class"], w["profile"]
-    base = PR.SPECIAL_PROFILES.get(prof) or PR.CLASS_PROFILES[cls]
+    specials, classes = (PR.CUSTOM_SPECIAL_PROFILES, PR.CUSTOM_CLASS_PROFILES) if CUSTOM else (PR.SPECIAL_PROFILES, PR.CLASS_PROFILES)
+    base = specials.get(prof) or classes[cls]
     p = copy.deepcopy(base)
     if wid in PR.SIZE_RANGE and prof == cls:
         p["range_bonus"] = PR.SIZE_RANGE[wid]
@@ -49,7 +56,7 @@ def profile_for(wid, w):
         # range_bonus on top of the player's interaction range, so only the part of the class size the modifier does not cover is added.
         reach = float(w["source"].rsplit("reach", 1)[1])
         p["range_bonus"] = max(0.0, r2(p["range_bonus"] - reach))
-        if p["attacks"]:
+        if CUSTOM and p["attacks"]:
             p["attacks"][-1]["damage_multiplier"] = r2(p["attacks"][-1]["damage_multiplier"] * 1.5)   # the finisher of a Djinn weapon lands harder
     legacy = PR.LEGACY.get(wid)
     if legacy:
@@ -61,8 +68,16 @@ def profile_for(wid, w):
     return p
 
 
+def effective_range(p):
+    """Better Combat treats range_bonus 0 as "unset" and keeps the parent's, so a wanted 0 on a parent whose own value is not 0
+    (axe -0.25, wand -0.5, claw -0.5, spear 1 ...) is written as NEARLY_ZERO, which is 0 for every practical purpose."""
+    if CUSTOM or p["range_bonus"] != 0:
+        return p["range_bonus"]
+    return PR.NEARLY_ZERO if PRESETS[p["parent"]]["range_bonus"] != 0 else 0.0
+
+
 def document(p):
-    attrs = {"range_bonus": p["range_bonus"]}
+    attrs = {"range_bonus": effective_range(p)}
     if p["two_handed"]:
         attrs["two_handed"] = True
     if p["attacks"]:
@@ -78,16 +93,21 @@ def problems_of(weapons):
     out = []
     for wid, w in weapons.items():
         doc = document(profile_for(wid, w))
-        if doc["parent"].split(":", 1)[1] not in PR.BUILTIN_PARENTS:
-            out.append("%s: parent %s is not a Better Combat built-in" % (wid, doc["parent"]))
+        if doc["parent"].split(":", 1)[1] not in PRESETS:
+            out.append("%s: parent %s is not a Better Combat built-in preset (builtin_animations.json)" % (wid, doc["parent"]))
         for a in doc["attributes"].get("attacks", []):
-            name = a["animation"].split(":", 1)[1]
-            if not os.path.exists(os.path.join(ANIM_DIR, name + ".json")):
-                out.append("%s: animation %s has no file under assets/nusmp/player_animations" % (wid, a["animation"]))
+            if CUSTOM:
+                name = a["animation"].split(":", 1)[1]
+                if not os.path.exists(os.path.join(ANIM_DIR, name + ".json")):
+                    out.append("%s: animation %s has no file under assets/nusmp/player_animations" % (wid, a["animation"]))
+            elif a["animation"] not in BUILTIN["animations"]:
+                out.append("%s: animation %s is not one Better Combat ships" % (wid, a["animation"]))
     return out
 
 
 def main(argv):
+    global CUSTOM
+    CUSTOM = "--custom" in argv
     weapons, _excluded, probs = INV.build()
     probs = probs + problems_of(weapons)
     for p in probs:

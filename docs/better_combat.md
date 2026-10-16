@@ -198,3 +198,96 @@ presets" to "Every melee weapon of the mod ships a profile and custom animations
 - The Genesis and Elsdocia numbers are a first pass; the Djinn range subtraction assumes `range_bonus` adds to the interaction range.
 - `elsdocia_legacy` is only a model id (no registered item), kept as an alias so a stack carrying the id still works.
 - Better Combat also draws the weapon trail and plays swing sounds from `swing_sound`; none is set, so those are the parent's defaults or silent.
+
+## 1.46.0: Better Combat's own animations only
+
+Owner request: "fix the weapon animations for better combat, don't add custom ones". Since 1.39.0 the attacks pointed at our own `nusmp:*`
+animations; the owner still saw wrong animations. This release removes every reference to them.
+
+### Why the animations were wrong (root causes, checked against the Better Combat 2.4.0 source)
+
+1. **Our own animation files were the problem, not the plumbing.** Better Combat plays whatever `attacks[].animation` names. 1.39.0 named 10 hand-keyed
+   animations (`nusmp:greatsword_sweep`, ...) whose bone angles and signs were never seen in game (the docs said so: "the most likely thing to need a flip").
+   The built-in animations are authored and tuned together with the built-in presets' `upswing` and `angle`.
+2. **Our `attacks` lists replaced the parent's combo.** In `WeaponAttributesHelper.override`, a child `attacks` list is merged index by index with the
+   parent's and its length wins, so a 3-attack greatsword combo laid our `angle`/`upswing`/`damage_multiplier` over the claymore's, and swapped the
+   animation for ours. Everything that did not set `swing_sound` kept the parent's sound, so the sound no longer matched the motion.
+3. **A wanted `range_bonus` of 0 was silently ignored.** `override` treats 0 as "unset" and keeps the parent's value. `handaxe`, `wand`, `fist` and the
+   Djinn lance/trident/club weapons asked for 0 and got the parent's (axe -0.25, wand -0.5, fist -0.75; the Djinn lance got the spear's +1 on top of the
+   +1 reach modifier it already carries). Fixed by writing 0.01 where the parent's own value is not 0.
+4. **The docs claimed one-handed spears / katanas that were never written.** No `two_handed` was written for them, so they inherited `true` from the
+   preset. (Unchanged in behaviour; the table below now says what really happens.)
+5. **`pike` was in our parent list and does not exist** in Better Combat. No file used it, but the list now comes from the source
+   (`builtin_animations.json`), not from memory.
+
+Not causes: namespaces (`bettercombat:<preset>` parents and `bettercombat:<animation>` ids are right), file location (`data/nusmp/weapon_attributes/<id>.json`
+is what Better Combat scans), and the item classes (see "Java" below).
+
+### What changed (REPLACEMENT)
+
+- Every `data/nusmp/weapon_attributes/*.json` (153 files; 83 changed) is now `{ "parent": "bettercombat:<preset>", "attributes": { "range_bonus": r, "two_handed"?: true } }`.
+  **No `attacks`**, so combo, animations, hitboxes, sounds and poses are exactly the preset's. No `nusmp:` id appears anywhere.
+- `tools/bettercombat/profiles.py`: new `CLASS_PROFILES` / `SPECIAL_PROFILES` (built-in presets only). The 1.39.0 tables are kept as
+  `CUSTOM_CLASS_PROFILES` / `CUSTOM_SPECIAL_PROFILES`, and `python tools/bettercombat/gen_attributes.py --custom` still writes the 1.39.0 files
+  (kept per the never-delete rule; not the default, not used by the game).
+- `tools/bettercombat/gen_attributes.py`: default mode as above, writes the 0.01 workaround, validates parents and animation ids against the source list.
+- `WeaponAttributesTest`: parents must be built-in presets, `animation` ids must be built-in, no file may contain `nusmp:`, the built-in list is sanity-checked;
+  the "every weapon has a file", manifest and animation-file tests are kept.
+
+### NEW
+
+- `tools/bettercombat/extract_builtin.py` and `tools/bettercombat/builtin_animations.json`: the 31 animation ids Better Combat ships
+  (`assets/bettercombat/player_animations`) and its 33 presets with their inheritance resolved (range, hands, pose, category, animations).
+  Source: `/home/user/zsoltmolnarrr/bettercombat` (Better Combat 2.4.0, MC 1.21.1). All ids and presets used below were read from that tree.
+
+### KEPT, unreferenced
+
+`src/main/resources/assets/nusmp/player_animations/*.json` and `tools/bettercombat/gen_animations.py` stay in the repo (nobody deleted them), but no
+weapon_attributes file points at them, so Better Combat never plays them. No new custom animation was added.
+
+### Class -> built-in preset (1.46.0)
+
+`range_bonus` is the weapon's in-hand size from the 1.30-1.34 size classes (unchanged numbers); `two` is the `two_handed` written. Hands/animations are the preset's.
+
+| class | parent preset | range_bonus | two | animations played (from the preset) |
+|---|---|---|---|---|
+| dagger | dagger | -0.25 | inherited (no) | slash right, slash left, dual stab |
+| shortsword, longsword | sword | 0 / +0.25 | no | slash right, slash left, stab |
+| sabre | cutlass (sword) | +0.1 | no | slash right, slash left |
+| rapier | rapier | +0.25 | no | slash left, stab |
+| katana | katana | +0.35 | inherited (yes) | two-handed horizontal/vertical slashes |
+| dadao | katana | +0.6 | inherited (yes) | as katana |
+| greatsword | claymore | +1.0 (+1.25 / +1.5 for the named big ones) | yes | two-handed slash, stab, slam |
+| handaxe, cleaver | axe | 0.01 / -0.1 | no | slash right, slash left |
+| battleaxe | heavy_axe (double_axe) | +0.75 | yes | two-handed slash, spin |
+| greataxe | double_axe | +1.25 | yes | two-handed slash, spin |
+| crescent, scythe | scythe | +0.75 / +1.0 | yes | two-handed slashes |
+| hammer | hammer | +0.5 | yes | two-handed slam |
+| club | mace | +0.25 | no | slash, slash, slam |
+| spear | spear | +1.0 | inherited (yes) | two-handed stab |
+| trident | trident (spear) | +1.0 | preset: no | one-handed stab |
+| glaive | glaive | +1.25 | yes | vertical, vertical, horizontal slash |
+| staff | staff | +0.75 | yes | two slashes and a slam |
+| wand | wand | 0.01 | no | one-handed stab |
+| whip, coilwhip | sword | +1.5 / +1.25 | no | sword combo (no whip preset exists) |
+| fist (Marchosias claws) | claw | 0.01 | no | punch, swipe |
+| Genesis Demon-Slayer | sword | +0.75 | no | sword combo (was a custom 3-sweep combo) |
+| Elsdocia (+ legacy alias) | claymore | +1.5 | yes | claymore combo |
+| twin pairs (Whirling Blades, Twin Hook Swords, Twin Swords of Deflection) | sword | +0.1 / 0 | no | sword combo; Better Combat dual wields the halves |
+| Djinn weapons | by kind (spear, claymore, trident, glaive, staff, double_axe, mace, claw, scythe) | class size minus the weapon's own reach modifier (0 written as 0.01) | by class | the preset's |
+
+The 12 pre-1.38.0 files keep their parent and range as before (rule 2). Consequences of the replacement worth knowing: the Genesis, Elsdocia, rapiers,
+katanas, daggers, axes, hammers, whips and twin pairs lose their custom combos and the 1.5x Djinn finisher multiplier (damage multipliers are not
+Better Combat data we should author; the preset's own are used).
+
+### Java side (nothing changed, findings)
+
+`grep` shows no Java touches Better Combat except `CompatCatalog` (optional dependency entry). Checked and fine: every melee item extends `SwordItem`
+(`MagicWeaponItem`, `RelicWeaponItem`, Djinn) with `ATTACK_SPEED` and `ATTACK_DAMAGE` modifiers in the main hand, which Better Combat needs to size
+its combo timing; none override the swing, and `use()` is only a right-click ability, `getUseAnimation` is `NONE`/`BLOCK` only for shields, so
+Better Combat's left-click swing is never intercepted. `DemonSlayerSwordItem` and the Djinn weapons raise `ENTITY_INTERACTION_RANGE`, and Better Combat's
+`range_bonus` is added on top of it: handled in the generator (Djinn range is reduced by their own reach).
+**Unverified risk, not changed:** `relics/pair/PairHooks.onDamagePost` strikes an extra off-hand blow after every `PLAYER_ATTACK` hit while a pair is held.
+With Better Combat's dual wielding the off-hand swing is itself a real attack, so a pair can land both Better Combat's off-hand hit and the mod's
+extra blow (a rate limit, `PairRules.ready`, caps it). It does not stop animations; fixing it needs Better Combat's API (not on the class path), so it is
+reported for the lead to decide. Nothing could be run in game.

@@ -24,6 +24,9 @@ import static org.junit.jupiter.api.Assertions.*;
  * is the compile step for the data, so adding a melee weapon without giving it a file fails the build instead of shipping a weapon that ignores
  * the combat mod. It is pure: java.nio and a tiny JSON reader (no JSON library is on the test class path), CWD = repo root.
  *
+ * <p>1.46.0: weapons use ONLY Better Combat's own presets and animations (the custom nusmp: animation files stay in the repo, unreferenced), and
+ * this test enforces it: every {@code parent} is a built-in preset, every {@code animation} is a built-in id, nothing says {@code nusmp:}.
+ *
  * <p>Fix for a new weapon: run {@code python tools/bettercombat/gen_attributes.py} (it refreshes the inventory and writes the file), then commit it.
  */
 class WeaponAttributesTest {
@@ -32,6 +35,8 @@ class WeaponAttributesTest {
     private static final Path ANIMS = ROOT.resolve("src/main/resources/assets/nusmp/player_animations");
     private static final Path CLASSES = ROOT.resolve("src/main/resources/assets/nusmp/weapon_classes.json");
     private static final Path MANIFEST = ROOT.resolve("tools/bettercombat/manifest.json");
+    /** Better Combat's own animation ids and weapon presets, extracted from its source by tools/bettercombat/extract_builtin.py (1.46.0). */
+    private static final Path BUILTIN = ROOT.resolve("tools/bettercombat/builtin_animations.json");
     private static final Path JAVA = ROOT.resolve("src/main/java");
     private static final Set<String> NON_MELEE = Set.of("handitem", "crossbow", "bow", "shield", "item");
     private static final Set<String> HITBOXES = Set.of("HORIZONTAL_PLANE", "VERTICAL_PLANE", "FORWARD_BOX");
@@ -94,6 +99,7 @@ class WeaponAttributesTest {
                 Map<String, Object> doc = parse(read(f));
                 Object parent = doc.get("parent");
                 assertTrue(parent instanceof String && ((String) parent).startsWith("bettercombat:"), name + ": parent must start with bettercombat:");
+                assertTrue(builtinPresets().contains(((String) parent).substring("bettercombat:".length())), name + ": parent " + parent + " is not a Better Combat built-in preset");
                 Object attrs = doc.get("attributes");
                 if (attrs == null) continue;
                 Map<String, Object> a = obj(attrs);
@@ -122,18 +128,50 @@ class WeaponAttributesTest {
     }
 
     @Test
-    void everyAnimationReferenceResolves() throws IOException {
-        Pattern ref = Pattern.compile("\"animation\"\\s*:\\s*\"([a-z0-9_]+):([a-z0-9_/]+)\"");
-        List<String> dangling = new ArrayList<>();
+    void everyAnimationReferenceIsABuiltInOne() throws IOException {
+        Pattern ref = Pattern.compile("\"animation\"\\s*:\\s*\"([^\"]*)\"");
+        Set<String> builtin = builtinAnimations();
+        List<String> bad = new ArrayList<>();
         try (Stream<Path> files = Files.list(ATTRS)) {
             for (Path f : (Iterable<Path>) files.filter(p -> p.toString().endsWith(".json"))::iterator) {
                 Matcher m = ref.matcher(read(f));
                 while (m.find())
-                    if (m.group(1).equals("nusmp") && !Files.exists(ANIMS.resolve(m.group(2) + ".json")))
-                        dangling.add(f.getFileName() + " -> nusmp:" + m.group(2));
+                    if (!builtin.contains(m.group(1)) || m.group(1).startsWith("bettercombat:pose_")) bad.add(f.getFileName() + " -> " + m.group(1));
             }
         }
-        assertTrue(dangling.isEmpty(), "animation references without a file under assets/nusmp/player_animations: " + dangling + " -> run `python tools/bettercombat/gen_animations.py`");
+        assertTrue(bad.isEmpty(), "animation ids that Better Combat does not ship (only its own are allowed since 1.46.0): " + bad);
+    }
+
+    @Test
+    void noFileUsesTheNusmpAnimationNamespace() throws IOException {
+        List<String> bad = new ArrayList<>();
+        try (Stream<Path> files = Files.list(ATTRS)) {
+            for (Path f : (Iterable<Path>) files.filter(p -> p.toString().endsWith(".json"))::iterator)
+                if (read(f).contains("nusmp:")) bad.add(f.getFileName().toString());
+        }
+        assertTrue(bad.isEmpty(), "weapon_attributes files that reference nusmp: (custom animations are not used since 1.46.0): " + bad);
+    }
+
+    @Test
+    void builtInListMatchesWhatBetterCombatShips() throws IOException {
+        Set<String> anims = builtinAnimations();
+        assertTrue(anims.size() >= 25, "builtin_animations.json lists only " + anims.size() + " animations");
+        assertTrue(anims.contains("bettercombat:one_handed_slash_horizontal_right") && anims.contains("bettercombat:two_handed_slam"), "core animations missing");
+        for (String p : new String[]{"sword", "claymore", "katana", "dagger", "spear", "staff", "axe", "mace", "hammer", "scythe", "glaive", "trident", "wand", "fist", "rapier"})
+            assertTrue(builtinPresets().contains(p), "preset " + p + " missing from builtin_animations.json");
+        // every preset's animations are themselves in the animation list
+        for (Map.Entry<String, Object> e : obj(parse(read(BUILTIN)).get("presets")).entrySet())
+            for (Object a : (List<?>) obj(e.getValue()).get("animations")) assertTrue(anims.contains(a), "preset " + e.getKey() + " uses unlisted animation " + a);
+    }
+
+    private static Set<String> builtinAnimations() throws IOException {
+        Set<String> out = new TreeSet<>();
+        for (Object o : (List<?>) parse(read(BUILTIN)).get("animations")) out.add((String) o);
+        return out;
+    }
+
+    private static Set<String> builtinPresets() throws IOException {
+        return new TreeSet<>(obj(parse(read(BUILTIN)).get("presets")).keySet());
     }
 
     // ---------------------------------------------------------------- the animations

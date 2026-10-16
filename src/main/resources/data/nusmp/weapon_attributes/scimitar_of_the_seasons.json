@@ -1,5 +1,5 @@
 {
-  "parent": "bettercombat:sword",
+  "parent": "bettercombat:cutlass",
   "attributes": {
     "range_bonus": 0.1
   }

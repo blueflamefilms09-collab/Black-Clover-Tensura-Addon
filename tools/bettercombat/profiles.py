@@ -2,13 +2,16 @@
 manifest) and gen_attributes.py (which writes the files). Keeping the table out of both scripts means a balance tweak is one edit and the
 manifest can never disagree with the files.
 
-A profile is {parent, range_bonus, two_handed?, attacks?}. `attacks` is written ONLY where we ship our own combo with our own
-animations (assets/nusmp/player_animations/*); every other profile inherits the combo of the Better Combat parent, so a class
-without a custom animation keeps the parent's animations. Only parents from Better Combat's built-in set are used.
+A profile is {parent, range_bonus, two_handed?, attacks?}. Since 1.46.0 CLASS_PROFILES / SPECIAL_PROFILES (bottom of the file) never set
+`attacks`, so every animation is the parent preset's own. The 1.39.0 tables with our custom animations are kept as CUSTOM_CLASS_PROFILES /
+CUSTOM_SPECIAL_PROFILES (gen_attributes.py --custom) and are not used by default.
 """
 
-BUILTIN_PARENTS = ("sword", "claymore", "dagger", "rapier", "katana", "axe", "double_axe", "mace", "hammer", "scythe",
-                   "spear", "pike", "halberd", "glaive", "staff", "trident", "fist", "wand")
+# Melee presets that exist in Better Combat 2.4.0 (data/bettercombat/weapon_attributes). 1.38.0 listed "pike", which does not exist; the
+# authoritative list is builtin_animations.json (extract_builtin.py), this tuple is a convenience copy for the old custom tables.
+BUILTIN_PARENTS = ("sword", "cutlass", "claymore", "dagger", "rapier", "katana", "axe", "heavy_axe", "double_axe", "mace", "hammer", "scythe",
+                   "spear", "halberd", "glaive", "staff", "battlestaff", "trident", "fist", "claw", "wand", "pickaxe", "sickle", "lance",
+                   "twin_blade", "coral_blade", "soul_knife")
 
 HORIZ, VERT, FWD = "HORIZONTAL_PLANE", "VERTICAL_PLANE", "FORWARD_BOX"
 
@@ -41,8 +44,9 @@ def P(parent, rng, two=None, attacks=None):
     return {"parent": parent, "range_bonus": rng, "two_handed": two, "attacks": attacks}
 
 
+# 1.39.0 profiles with OUR animations (nusmp:*). Kept, unused by default (gen_attributes.py --custom writes them); see docs/better_combat.md 1.46.0.
 # class -> profile. range_bonus follows the in-hand size of the 1.30-1.34 weapon-size classes (tools/relics/weapon_classes.json).
-CLASS_PROFILES = {
+CUSTOM_CLASS_PROFILES = {
     "dagger": P("dagger", -0.25, None, DAGGER_COMBO),
     "shortsword": P("sword", 0.0),
     "longsword": P("sword", 0.25),
@@ -69,8 +73,8 @@ CLASS_PROFILES = {
     "fist": P("fist", 0.0),
 }
 
-# Named weapons with a hand-written profile (bigger range, a distinct combo).
-SPECIAL_PROFILES = {
+# 1.39.0 named profiles with custom combos (kept, see CUSTOM_CLASS_PROFILES).
+CUSTOM_SPECIAL_PROFILES = {
     "genesis": P("sword", 0.75, None, GENESIS_COMBO),          # the Genesis Demon-Slayer: one-handed like the Black Clover original, huge sweeps
     "elsdocia": P("claymore", 1.5, True, ELSDOCIA_COMBO),
     "twin_sabre": P("sword", 0.1, None, TWIN_COMBO),
@@ -104,3 +108,44 @@ DJINN_KIND_CLASS = {"lance": "spear", "greatsword": "greatsword", "trident": "tr
                     "axe": "greataxe", "horn": "club", "claws": "fist", "scythe": "scythe"}
 # Classes that are not melee at all: no profile.
 NON_MELEE_CLASSES = ("handitem", "crossbow", "bow", "shield", "item")
+
+# ======================================================================= 1.46.0: Better Combat's own presets only
+# A profile here never has `attacks`: the combo (and so every animation id) is the parent preset's, which Better Combat itself ships.
+# Only `range_bonus` (the weapon's real in-hand size) and `two_handed` are set. Parents are all in builtin_animations.json "presets".
+# range_bonus note: Better Combat treats 0 as "not set" and keeps the parent's value, so a wanted 0 on a parent that is not 0 is written as
+# NEARLY_ZERO (see gen_attributes.effective_range).
+NEARLY_ZERO = 0.01
+
+CLASS_PROFILES = {
+    "dagger": P("dagger", -0.25),
+    "shortsword": P("sword", 0.0),
+    "longsword": P("sword", 0.25),
+    "sabre": P("cutlass", 0.1),
+    "rapier": P("rapier", 0.25),
+    "katana": P("katana", 0.35),
+    "dadao": P("katana", 0.6),
+    "greatsword": P("claymore", 1.0, True),
+    "handaxe": P("axe", 0.0),
+    "cleaver": P("axe", -0.1),
+    "battleaxe": P("heavy_axe", 0.75, True),
+    "greataxe": P("double_axe", 1.25, True),
+    "crescent": P("scythe", 0.75, True),
+    "scythe": P("scythe", 1.0, True),
+    "hammer": P("hammer", 0.5, True),
+    "club": P("mace", 0.25),
+    "spear": P("spear", 1.0),
+    "trident": P("trident", 1.0),
+    "glaive": P("glaive", 1.25, True),
+    "staff": P("staff", 0.75, True),
+    "wand": P("wand", 0.0),
+    "whip": P("sword", 1.5),
+    "coilwhip": P("sword", 1.25),
+    "fist": P("claw", 0.0),
+}
+
+SPECIAL_PROFILES = {
+    "genesis": P("sword", 0.75),                 # the Genesis Demon-Slayer: one-handed like the Black Clover original
+    "elsdocia": P("claymore", 1.5, True),
+    "twin_sabre": P("sword", 0.1),               # a pair: Better Combat dual wields two one-handed swords by itself
+    "twin_shortsword": P("sword", 0.0),
+}
