@@ -310,4 +310,18 @@ final class ButohArts {
         }
         return true;
     }
+
+    // ------------------------------------------------------------------ Butoh Dance (1.43.0, Kiato)
+    /** The dance state: cast to begin, cast again to stop. Upkeep, evasion and the shrinking hitbox are in butoh.ButohDance. */
+    static boolean dance(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
+        boolean wasDancing = com.newuniverse.nusmp.butoh.ButohDance.dancing(p);
+        b.castCircle(p, wasDancing ? 0.6f : 1.1f);
+        return com.newuniverse.nusmp.butoh.ButohDance.toggle(p);
+    }
+
+    // ------------------------------------------------------------------ Deflect Dash (1.43.0, Kiato)
+    /** A dash that turns missiles back on their shooter for 12 ticks (stronger while dancing). Ebb Step is untouched. */
+    static boolean dashDeflect(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
+        return com.newuniverse.nusmp.butoh.ButohDash.cast(b, i, p, mode);
+    }
 }
