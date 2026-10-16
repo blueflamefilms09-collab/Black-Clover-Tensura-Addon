@@ -45,7 +45,7 @@ public final class WikiBooks {
                         ElementBook.nova(16, 7, true, VfxShape.WIKI_MAGIC_BURST, rider)).withCooldown(900),
                 mid("attribute_guard", name + " Guard",
                         ElementBook.empower(180, 4, true, VfxShape.WIKI_MAGIC_FIELD,
-                                () -> new MobEffectInstance(magic.guardEffect(), 180, 0)))));
+                                () -> new MobEffectInstance(magic.guardEffect(), 180, 0))))).plus(com.newuniverse.nusmp.book.ext.ExclusiveExt.pages(magic));
     }
 
     public static int color(MagicType magic) {
