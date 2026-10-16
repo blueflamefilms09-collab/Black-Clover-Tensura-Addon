@@ -1,0 +1,166 @@
+{
+ "_comment": "Soul Corpse preview scenes (CorpseLayer): CORPSE_RAISE (a body rising), CORPSE_PACT (the pact sigil), CORPSE_PACT flash form (seed bit 0, the pact paying out).",
+ "corpse_raise": {
+  "layer": "CorpseLayer",
+  "shape": "CORPSE_RAISE",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   2,
+   0
+  ],
+  "power": 1.0,
+  "duration": 36,
+  "color": "FF6C7899",
+  "cam": [
+   4.5,
+   2.2,
+   4.5
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   3,
+   8,
+   14,
+   20,
+   28,
+   33
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "corpse_raise_big": {
+  "layer": "CorpseLayer",
+  "shape": "CORPSE_RAISE",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   2,
+   0
+  ],
+  "power": 2.0,
+  "duration": 40,
+  "color": "FF6C7899",
+  "cam": [
+   7,
+   3,
+   7
+  ],
+  "target": [
+   0,
+   1.8,
+   0
+  ],
+  "ages": [
+   4,
+   10,
+   18,
+   26,
+   34
+  ],
+  "figures": []
+ },
+ "corpse_pact": {
+  "layer": "CorpseLayer",
+  "shape": "CORPSE_PACT",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.6,
+  "duration": 100,
+  "color": "FF6C7899",
+  "cam": [
+   4.5,
+   2.2,
+   4.5
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   4,
+   14,
+   30,
+   60,
+   90
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "corpse_pact_flash": {
+  "layer": "CorpseLayer",
+  "shape": "CORPSE_PACT",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.2,
+  "duration": 40,
+  "seed": 1,
+  "color": "FF6C7899",
+  "cam": [
+   4.5,
+   2.2,
+   4.5
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   1,
+   4,
+   9,
+   16,
+   28
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ }
+}

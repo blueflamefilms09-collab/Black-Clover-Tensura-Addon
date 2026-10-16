@@ -102,7 +102,7 @@ def build(layers):
         if layer.split(".")[-1] in ("DevilBossLayer", "StoneBossLayer", "TideBossLayer", "OrderBossLayer"):
             shutil.copy(os.path.join(layer_dir, "BossFx.java"), os.path.join(pkg, "client", "layer"))
     for layer in layers:                                                       # 1.35.0: the Zogratis layers share ZogratisFx (a helper, not a layer)
-        if layer.split(".")[-1].startswith("Zogratis") or layer.split(".")[-1] == "LuciusCoreGemLayer":      # 1.42.0: the chest gem layer uses the same helper
+        if layer.split(".")[-1].startswith("Zogratis") or layer.split(".")[-1] in ("LuciusCoreGemLayer", "CorpseLayer"):      # 1.42.0: the chest gem layer uses the same helper
             shutil.copy(os.path.join(layer_dir, "ZogratisFx.java"), os.path.join(pkg, "client", "layer"))
     shutil.copy(os.path.join(HERE, "Preview.java"), gen)
     classes = os.path.join(BUILD, "classes")
