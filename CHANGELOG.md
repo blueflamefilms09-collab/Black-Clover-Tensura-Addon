@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.49.0] — Advancements and the FTB Quests questline
+
+**State:** written without a compiler; CI is the first compile. Nothing run in game, and FTB Quests has never loaded the pack (written to its source format and checked with a validator). Docs: `docs/quests.md`, `docs/advancements.md`, `docs/quests_java.md`.
+
+### NEW
+- **369 advancements** in a "Multiverse of Anime" tab (start, 105 magic families, spells, bosses, relics, weapons, dungeon and Labyrinth, spirits, squads, world, challenges, 13 arcs). The 25 hidden Convergence ones are untouched. Custom trigger `nusmp:event` with about 55 hooks into the game (spell casts, relics, forge, sockets, Djinn, squads, bosses, arena, and more).
+- **FTB Quests questline:** 22 chapters, 339 quests in three groups: The Journey, The Anime Arcs (13 main arcs in order) and Bosses and Challenges. Squads chapter on FTB Teams; boss kills credit the killer's whole team. Arcs whose bosses are not made yet are complete chapters with locked "coming soon" boss quests waiting on hidden `nusmp:future/*` advancements; a new boss unlocks its quest with `NusmpEvents.futureBoss(player, arc, boss)`.
+- **Installer** `/nusmp quests status|install [force]|update|uninstall` (op): copies the bundled pack into `config/ftbquests/quests`, refuses to overwrite a foreign quest book unless forced (then backs it up), never touches other chapters on update. Config `nusmp-quests-server.toml`.
+
 ## [1.48.0] — Every relic in hand as a 3D model, and the Clover robes in the anime style
 
 **State:** written without a compiler; CI is the first compile. Nothing run in game. Details: `docs/relic_hand_models.md`, `docs/robe_anime.md`.
