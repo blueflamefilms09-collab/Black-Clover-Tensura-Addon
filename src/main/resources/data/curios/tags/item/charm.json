@@ -225,6 +225,130 @@
     {
       "id": "nusmp:charter_grimoire_charybdis_spawn",
       "required": false
+    },
+    {
+      "id": "nusmp:bewitching_lyre",
+      "required": false
+    },
+    {
+      "id": "nusmp:deck_of_many_things",
+      "required": false
+    },
+    {
+      "id": "nusmp:eye_of_the_deep_one",
+      "required": false
+    },
+    {
+      "id": "nusmp:horn_of_leroy",
+      "required": false
+    },
+    {
+      "id": "nusmp:instant_cooking_pot",
+      "required": false
+    },
+    {
+      "id": "nusmp:lucky_egg",
+      "required": false
+    },
+    {
+      "id": "nusmp:lumpy",
+      "required": false
+    },
+    {
+      "id": "nusmp:monster_compass",
+      "required": false
+    },
+    {
+      "id": "nusmp:official_looking_badge",
+      "required": false
+    },
+    {
+      "id": "nusmp:orb_of_plagues",
+      "required": false
+    },
+    {
+      "id": "nusmp:orb_of_the_dryad",
+      "required": false
+    },
+    {
+      "id": "nusmp:pocket_time",
+      "required": false
+    },
+    {
+      "id": "nusmp:ring_of_endless_rage",
+      "required": false
+    },
+    {
+      "id": "nusmp:ring_of_memories",
+      "required": false
+    },
+    {
+      "id": "nusmp:ring_of_power",
+      "required": false
+    },
+    {
+      "id": "nusmp:ring_of_regeneration",
+      "required": false
+    },
+    {
+      "id": "nusmp:ring_of_rock_eating",
+      "required": false
+    },
+    {
+      "id": "nusmp:ring_of_the_game",
+      "required": false
+    },
+    {
+      "id": "nusmp:rose_petal",
+      "required": false
+    },
+    {
+      "id": "nusmp:silver_tongued_lyre",
+      "required": false
+    },
+    {
+      "id": "nusmp:soup_spoon_of_improbability",
+      "required": false
+    },
+    {
+      "id": "nusmp:spirit_lantern",
+      "required": false
+    },
+    {
+      "id": "nusmp:the_forgotten_ring",
+      "required": false
+    },
+    {
+      "id": "nusmp:the_mind_stone",
+      "required": false
+    },
+    {
+      "id": "nusmp:the_power_stone",
+      "required": false
+    },
+    {
+      "id": "nusmp:the_reality_stone",
+      "required": false
+    },
+    {
+      "id": "nusmp:the_soul_stone",
+      "required": false
+    },
+    {
+      "id": "nusmp:the_space_stone_or_the_tesseract",
+      "required": false
+    },
+    {
+      "id": "nusmp:the_time_stone_or_the_eye_of_agamotto",
+      "required": false
+    },
+    {
+      "id": "nusmp:warrens_key",
+      "required": false
+    },
+    {
+      "id": "nusmp:witchs_ring",
+      "required": false
     }
   ]
 }

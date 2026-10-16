@@ -53,6 +53,58 @@
     {
       "id": "nusmp:phantoms_bracelet",
       "required": false
+    },
+    {
+      "id": "nusmp:arcane_tricksters_glove",
+      "required": false
+    },
+    {
+      "id": "nusmp:bears_grip",
+      "required": false
+    },
+    {
+      "id": "nusmp:dragons_fire_gauntlet",
+      "required": false
+    },
+    {
+      "id": "nusmp:gauntlet_mimic",
+      "required": false
+    },
+    {
+      "id": "nusmp:gauntlet_of_the_stormcaller",
+      "required": false
+    },
+    {
+      "id": "nusmp:glove_of_appreciation",
+      "required": false
+    },
+    {
+      "id": "nusmp:gloves_of_opportunity",
+      "required": false
+    },
+    {
+      "id": "nusmp:goristro_charger",
+      "required": false
+    },
+    {
+      "id": "nusmp:hand_of_vecna",
+      "required": false
+    },
+    {
+      "id": "nusmp:hellfire_gauntlet",
+      "required": false
+    },
+    {
+      "id": "nusmp:proficiency_gloves",
+      "required": false
+    },
+    {
+      "id": "nusmp:the_gauntlet_of_gamelon",
+      "required": false
+    },
+    {
+      "id": "nusmp:the_infinity_gauntlet",
+      "required": false
     }
   ]
 }

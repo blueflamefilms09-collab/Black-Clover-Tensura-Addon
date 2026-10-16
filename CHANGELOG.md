@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.43.0] — Fix: part 4 relics could not be put into Curios slots
+
+**State:** data fix, CI is the first load. Nothing run in game.
+
+### FIXED
+- 52 worn relics from the 1.41.0 batch (neck 6, hands 13, belt 2, charm 31) were missing from the Curios item tags (`data/curios/tags/item/{necklace,hands,belt,charm}.json`), so Curios refused them in every slot. The tags were last regenerated for 1.25.0; `tools/relics/gen_curios_tags.py` was not rerun after waves 20 to 30. It has now been, and **it must be rerun after every relic wave** (`python3 tools/relics/gen_curios_tags.py --check`). Entries are `required: false`, nothing existing was removed.
+
 ## [1.42.0] — Lucius Zogratis, final-arc overhaul
 
 **State:** written without a compiler; CI is the first compile. Nothing run in game. Design and reasons in `docs/lucius_arc.md`.

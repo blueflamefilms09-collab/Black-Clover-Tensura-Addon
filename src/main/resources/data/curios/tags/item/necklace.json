@@ -76,6 +76,30 @@
     {
       "id": "nusmp:true_heart_clasp",
       "required": false
+    },
+    {
+      "id": "nusmp:chromatic_collar",
+      "required": false
+    },
+    {
+      "id": "nusmp:collar_of_the_penitent_dragon",
+      "required": false
+    },
+    {
+      "id": "nusmp:eye_of_the_aboleth",
+      "required": false
+    },
+    {
+      "id": "nusmp:fenrirs_collar",
+      "required": false
+    },
+    {
+      "id": "nusmp:sunheart_medallion",
+      "required": false
+    },
+    {
+      "id": "nusmp:witchers_medallion",
+      "required": false
     }
   ]
 }

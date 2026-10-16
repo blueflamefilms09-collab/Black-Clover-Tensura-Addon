@@ -28,6 +28,14 @@
     {
       "id": "nusmp:artifact_mimic",
       "required": false
+    },
+    {
+      "id": "nusmp:buffoons_pantaloons",
+      "required": false
+    },
+    {
+      "id": "nusmp:ring_of_the_mimic",
+      "required": false
     }
   ]
 }
