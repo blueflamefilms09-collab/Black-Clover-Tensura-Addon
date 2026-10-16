@@ -1,6 +1,6 @@
 {
-  "parent": "bettercombat:fist",
+  "parent": "bettercombat:claw",
   "attributes": {
-    "range_bonus": 0.0
+    "range_bonus": 0.01
   }
 }
