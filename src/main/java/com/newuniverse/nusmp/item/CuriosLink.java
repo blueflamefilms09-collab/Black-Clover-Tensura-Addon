@@ -43,7 +43,7 @@ public final class CuriosLink {
 
     private static final org.slf4j.Logger LOG = LogUtils.getLogger();
     private static Boolean loaded;
-    private static boolean broken;
+    private static volatile long brokenUntil;               // 1.46.0: a failure pauses Curios reads for 10 s instead of switching them off for the whole session
     private static Method getInventory, getEquipped;
 
     private static boolean loaded() {
@@ -56,12 +56,14 @@ public final class CuriosLink {
     }
 
     /** Is Curios installed and its inventory readable? (The Nexus relics fall back to the off-hand when it is not.) */
-    public static boolean available() { return loaded() && !broken; }
+    public static boolean available() { return loaded() && !isBroken(); }
+
+    private static boolean isBroken() { return System.currentTimeMillis() < brokenUntil; }
 
     // ---------------------------------------------------------------- reading the Curios inventory
     /** Every stack worn in a Curios slot of this entity (empty without Curios, or if its API is not what was expected). */
     public static List<ItemStack> equipped(LivingEntity e) {
-        if (broken || !loaded()) return List.of();
+        if (isBroken() || !loaded()) return List.of();
         try {
             // each method is looked up on its own: flags() fills getInventory first, and a shared "if getInventory == null" left getEquipped null (1.46.0 fix)
             Method inv = getInventory, eq = getEquipped;
@@ -77,7 +79,8 @@ public final class CuriosLink {
             }
             return out;
         } catch (Throwable t) {
-            broken = true;
+            brokenUntil = System.currentTimeMillis() + 10_000L;
+            getInventory = null; getEquipped = null;
             LOG.warn("[nusmp] Curios is present but its inventory could not be read ({}); weapons worn in Curios slots give no passive", t.toString());
             return List.of();
         }
@@ -88,14 +91,14 @@ public final class CuriosLink {
     public record RenderFlag(ItemStack stack, boolean render) {}
 
     private static Method getCurios, getStacks, getRenders;
-    private static boolean flagsBroken;
+    private static volatile long flagsBrokenUntil;
 
     /**
      * The worn stacks of this entity with the render flag of the slot each sits in (the eye icon of the Curios screen: ICurioStacksHandler#getRenders, one boolean per
      * slot index). Empty without Curios or on any failure; an index the list does not cover renders (true).
      */
     public static List<RenderFlag> flags(LivingEntity e) {
-        if (e == null || flagsBroken || !loaded()) return List.of();
+        if (e == null || System.currentTimeMillis() < flagsBrokenUntil || !loaded()) return List.of();
         try {
             if (getInventory == null) {
                 getInventory = Class.forName("top.theillusivec4.curios.api.CuriosApi").getMethod("getCuriosInventory", LivingEntity.class);
@@ -123,7 +126,8 @@ public final class CuriosLink {
             }
             return out;
         } catch (Throwable t) {
-            flagsBroken = true;
+            flagsBrokenUntil = System.currentTimeMillis() + 10_000L;
+            getInventory = null; getCurios = null;
             LOG.warn("[nusmp] the Curios render toggles could not be read ({}); every worn relic is drawn", t.toString());
             return List.of();
         }
