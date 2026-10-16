@@ -2,16 +2,17 @@
 
 ## [1.45.0] — Lucius Zogratis, god-tier counter-mechanics
 
-**State:** written without a compiler; CI is the first compile. Nothing run in game. Full design in .
+**State:** written without a compiler; CI is the first compile. Nothing run in game. Full design in `docs/lucius_god.md`.
 
-### NEW (all behind , default on; off = the 1.42.0 fight)
+### NEW (all behind `luciusGodTier`, default on; off = the 1.42.0 fight)
 - Three stages, each a full health bar: the fatal blow is intercepted, health refilled (a third owner exception to the no-healing rule, next to Time Reversal and the Gates refill), the stage advances with theatrical voice lines to everyone in the arena. Stage 1 Time and Soul, stage 2 Gravity and Blood, stage 3 Spatial, clone swarm and the chest gem.
 - Hit cap of 2% of his max health per blow (evasive teleport or counter when it triggers); his spells hit for a percent of the target's max health as true damage (never more than 40% in one blow, still under the 30%/s pressure cap), and drain the same percent of the target's magicule.
 - Time Decay aura (20 blocks): no passive regeneration for players and pets; Relic Nullification EMP (10 s, nothing is unequipped); Spirit and Djinn Severance (12 s, reversible); Magicule Starvation field (never touches health); Anti-Flight gravity in the arena (creative off by default); Spatial swap when you launch a devastating attack; Ultimate Skill Reversal (cancels the activation, mirrors 6% of your max health); Checkmate Counter against channelled spells; Time Stasis Traps for players who spam dodges.
-- Effects , , ; config  with a switch per mechanic.
+- Effects `nusmp:relic_nullified`, `nusmp:severed`, `nusmp:time_decay`; config `nusmp-lucius-god-server.toml` with a switch per mechanic.
 
 ### Kept
 - Every 1.42.0 chain and the old Swap Strike; the Gates refill stays off for Lucius (the stage change is the only refill).
+
 ## [1.44.0] — The exclusive casters: Vanessa, Spatial, Lucius, Rades, Kahono, Kiato, Nacht
 
 **State:** written without a compiler; CI is the first compile. Nothing run in game. Per-caster details, WHY and unverified points: `docs/exclusive/{vn,sp,lz,rs,kh,kt,nf}.md`.
