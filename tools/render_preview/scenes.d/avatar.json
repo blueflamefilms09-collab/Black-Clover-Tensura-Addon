@@ -1,0 +1,1686 @@
+{
+ "avatar_hair_0": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_hair_0.geo.json",
+  "texture": "nusmp:textures/entity/avatar_hair_0.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   30
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "avatar_hair_1": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_hair_1.geo.json",
+  "texture": "nusmp:textures/entity/avatar_hair_1.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   30
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "avatar_hair_2": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_hair_2.geo.json",
+  "texture": "nusmp:textures/entity/avatar_hair_2.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   30
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "avatar_hair_3": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_hair_3.geo.json",
+  "texture": "nusmp:textures/entity/avatar_hair_3.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   30
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "avatar_hair_4": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_hair_4.geo.json",
+  "texture": "nusmp:textures/entity/avatar_hair_4.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   30
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "avatar_hair_5": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_hair_5.geo.json",
+  "texture": "nusmp:textures/entity/avatar_hair_5.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   30
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "avatar_hair_6": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_hair_6.geo.json",
+  "texture": "nusmp:textures/entity/avatar_hair_6.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   30
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "avatar_hair_7": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_hair_7.geo.json",
+  "texture": "nusmp:textures/entity/avatar_hair_7.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   30
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "avatar_hair_8": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_hair_8.geo.json",
+  "texture": "nusmp:textures/entity/avatar_hair_8.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   30
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "avatar_hair_9": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_hair_9.geo.json",
+  "texture": "nusmp:textures/entity/avatar_hair_9.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   30
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "avatar_hair_10": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_hair_10.geo.json",
+  "texture": "nusmp:textures/entity/avatar_hair_10.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   30
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "avatar_hair_11": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_hair_11.geo.json",
+  "texture": "nusmp:textures/entity/avatar_hair_11.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   30
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "avatar_hair_12": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_hair_12.geo.json",
+  "texture": "nusmp:textures/entity/avatar_hair_12.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   30
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "avatar_hair_13": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_hair_13.geo.json",
+  "texture": "nusmp:textures/entity/avatar_hair_13.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   30
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "avatar_hair_14": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_hair_14.geo.json",
+  "texture": "nusmp:textures/entity/avatar_hair_14.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   30
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "avatar_hair_15": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_hair_15.geo.json",
+  "texture": "nusmp:textures/entity/avatar_hair_15.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   30
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "avatar_horn_0": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_horn_0.geo.json",
+  "texture": "nusmp:textures/entity/avatar_horn_0.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": null,
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "avatar_horn_1": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_horn_1.geo.json",
+  "texture": "nusmp:textures/entity/avatar_horn_1.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": null,
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "avatar_horn_2": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_horn_2.geo.json",
+  "texture": "nusmp:textures/entity/avatar_horn_2.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": null,
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "avatar_horn_3": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_horn_3.geo.json",
+  "texture": "nusmp:textures/entity/avatar_horn_3.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": null,
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "avatar_horn_4": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_horn_4.geo.json",
+  "texture": "nusmp:textures/entity/avatar_horn_4.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": null,
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "avatar_horn_5": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_horn_5.geo.json",
+  "texture": "nusmp:textures/entity/avatar_horn_5.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": null,
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "avatar_horn_6": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_horn_6.geo.json",
+  "texture": "nusmp:textures/entity/avatar_horn_6.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": null,
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "avatar_horn_7": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_horn_7.geo.json",
+  "texture": "nusmp:textures/entity/avatar_horn_7.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   260,
+   260
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": null,
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 8,
+    "target": [
+     0,
+     1.9,
+     0
+    ],
+    "dist": 1.9
+   }
+  ]
+ },
+ "avatar_wing_0": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_wing_0.geo.json",
+  "texture": "nusmp:textures/entity/avatar_wing_0.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   40
+  ],
+  "tile": [
+   320,
+   300
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "from behind",
+    "yaw": 180,
+    "pitch": 4,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 4.0
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 4.0
+   }
+  ]
+ },
+ "avatar_wing_1": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_wing_1.geo.json",
+  "texture": "nusmp:textures/entity/avatar_wing_1.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   40
+  ],
+  "tile": [
+   320,
+   300
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "from behind",
+    "yaw": 180,
+    "pitch": 4,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 4.0
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 4.0
+   }
+  ]
+ },
+ "avatar_wing_2": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_wing_2.geo.json",
+  "texture": "nusmp:textures/entity/avatar_wing_2.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   40
+  ],
+  "tile": [
+   320,
+   300
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "from behind",
+    "yaw": 180,
+    "pitch": 4,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 4.0
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 4.0
+   }
+  ]
+ },
+ "avatar_wing_3": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_wing_3.geo.json",
+  "texture": "nusmp:textures/entity/avatar_wing_3.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   40
+  ],
+  "tile": [
+   320,
+   300
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "from behind",
+    "yaw": 180,
+    "pitch": 4,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 4.0
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 4.0
+   }
+  ]
+ },
+ "avatar_wing_4": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_wing_4.geo.json",
+  "texture": "nusmp:textures/entity/avatar_wing_4.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   40
+  ],
+  "tile": [
+   320,
+   300
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "from behind",
+    "yaw": 180,
+    "pitch": 4,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 4.0
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 4.0
+   }
+  ]
+ },
+ "avatar_wing_5": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_wing_5.geo.json",
+  "texture": "nusmp:textures/entity/avatar_wing_5.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   40
+  ],
+  "tile": [
+   320,
+   300
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "from behind",
+    "yaw": 180,
+    "pitch": 4,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 4.0
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 4.0
+   }
+  ]
+ },
+ "avatar_extra_1": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_extra_1.geo.json",
+  "texture": "nusmp:textures/entity/avatar_extra_1.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 3.4
+   }
+  ]
+ },
+ "avatar_extra_2": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_extra_2.geo.json",
+  "texture": "nusmp:textures/entity/avatar_extra_2.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 3.4
+   }
+  ]
+ },
+ "avatar_extra_3": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_extra_3.geo.json",
+  "texture": "nusmp:textures/entity/avatar_extra_3.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 3.4
+   }
+  ]
+ },
+ "avatar_extra_5": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_extra_5.geo.json",
+  "texture": "nusmp:textures/entity/avatar_extra_5.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 3.4
+   }
+  ]
+ },
+ "avatar_extra_8": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_extra_8.geo.json",
+  "texture": "nusmp:textures/entity/avatar_extra_8.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 3.4
+   }
+  ]
+ },
+ "avatar_extra_10": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_extra_10.geo.json",
+  "texture": "nusmp:textures/entity/avatar_extra_10.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 3.4
+   }
+  ]
+ },
+ "avatar_extra_11": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_extra_11.geo.json",
+  "texture": "nusmp:textures/entity/avatar_extra_11.png",
+  "space": "PLAYER",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   300,
+   300
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 8,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 3.4
+   },
+   {
+    "name": "3/4 back",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.2,
+     0
+    ],
+    "dist": 3.4
+   }
+  ]
+ },
+ "avatar_aura_ring": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/avatar_aura_ring.geo.json",
+  "texture": "nusmp:textures/entity/avatar_aura_ring.png",
+  "space": "PROP",
+  "layer": "ADDITIVE",
+  "argb": "CC66CCFF",
+  "glow": "00000000",
+  "ages": [
+   0,
+   80
+  ],
+  "tile": [
+   320,
+   260
+  ],
+  "floor": false,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 28,
+    "target": [
+     0,
+     0.2,
+     0
+    ],
+    "dist": 2.6
+   }
+  ]
+ }
+}
