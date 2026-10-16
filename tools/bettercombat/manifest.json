@@ -809,6 +809,7 @@
     "thunder_shield": "shield: no swing",
     "viola_of_moonlit_spirits": "hand item / charm / book / key: not a weapon",
     "warlute": "ranged (crossbow): Better Combat only handles melee",
-    "written_consent": "hand item / charm / book / key: not a weapon"
+    "written_consent": "hand item / charm / book / key: not a weapon",
+    "zogratis_hourglass": "hand item / charm / book / key: not a weapon"
   }
 }
