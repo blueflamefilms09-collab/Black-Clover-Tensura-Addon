@@ -50,6 +50,8 @@ public class NUSMP {
         com.newuniverse.nusmp.entity.zogratis.ZogratisEntities.ENTITIES.register(modEventBus);
         modEventBus.addListener(com.newuniverse.nusmp.entity.zogratis.ZogratisEntities::attributes);
         com.newuniverse.nusmp.entity.zogratis.ZogratisEffects.EFFECTS.register(modEventBus);
+        com.newuniverse.nusmp.entity.zogratis.LuciusGodEffects.init();
+        com.newuniverse.nusmp.entity.zogratis.LuciusGodEffects.EFFECTS.register(modEventBus);
         com.newuniverse.nusmp.entity.zogratis.LuciusEffects.init();
         com.newuniverse.nusmp.entity.zogratis.LuciusEffects.EFFECTS.register(modEventBus);
         com.newuniverse.nusmp.entity.zogratis.VanicaCurse.EFFECTS.register(modEventBus);
@@ -264,6 +266,8 @@ public class NUSMP {
         com.newuniverse.nusmp.boss.BossHooks.register();
         com.newuniverse.nusmp.boss.rules.BossRulesHooks.register();                                        // 1.37.0: bosses never regenerate or use Unique/Ultimate skills
         com.newuniverse.nusmp.entity.zogratis.LuciusArcHooks.register();                                   // 1.42.0: Lucius final-arc hooks
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.boss.god.LuciusGodConfig.SPEC, "nusmp-lucius-god-server.toml");
+        com.newuniverse.nusmp.entity.zogratis.LuciusBossEventHandler.register();                           // 1.45.0: Lucius god tier
         // 1.44.0: the exclusive casters
         com.newuniverse.nusmp.thread.ThreadEntities.init();
         com.newuniverse.nusmp.thread.ThreadEntities.ENTITIES.register(modEventBus);
