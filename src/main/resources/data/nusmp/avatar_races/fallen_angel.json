@@ -1,0 +1,41 @@
+{
+  "display_name": "Fallen Angel",
+  "description": "A being of light that lost its sky: proud, bright and bitter.",
+  "default_scale": 1.1,
+  "base_attributes": {
+    "minecraft:generic.max_health": 4.0,
+    "minecraft:generic.armor_toughness": 1.0
+  },
+  "stat_multipliers": {
+    "str": 1.05,
+    "dex": 1.15,
+    "con": 1.0,
+    "int": 1.15,
+    "wis": 1.2,
+    "cha": 1.3
+  },
+  "base_magicule_cost": 900,
+  "base_ep": 1800,
+  "evolves_to_race_id": "",
+  "requires_dnd_roll": true,
+  "selectable": true,
+  "connection_conditions": [
+    "min_ep:500"
+  ],
+  "allowed_personalities": [
+    "INDEPENDENT",
+    "TSUNDERE",
+    "STOIC",
+    "HEROIC",
+    "LOYAL",
+    "AGGRESSIVE",
+    "SADISTIC",
+    "CHUNIBYO"
+  ],
+  "appearance": {
+    "skin_tone": "#EEE8F0",
+    "wing_id": 2,
+    "aura_rgb": "#FFFFFF",
+    "eye_rgb": "#FFD866"
+  }
+}

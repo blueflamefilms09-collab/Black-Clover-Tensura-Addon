@@ -1,0 +1,122 @@
+#!/usr/bin/env python3
+"""Why: the Avatar system's Genesis Core needs a 16x16 inventory icon, a 3D held model (owner rule 7: every item is a real 3D model in hand and keeps
+its sprite as the inventory icon) and the Naming Sleep effect icon. Everything is generated so it can be tuned and rerun (idempotent, writes the same bytes).
+
+Writes (under src/main/resources/assets/nusmp):
+  textures/item/genesis_core.png            16x16 inventory icon (a glowing core in a ring)
+  textures/item/genesis_core_model.png      16x16 texture atlas of the 3D model (halo, shell, inner core, studs)
+  models/item/genesis_core.json             neoforge:separate_transforms: icon in the gui, the 3D model everywhere else
+  models/item/genesis_core_icon.json        the flat sprite model
+  models/item/genesis_core_3d.json          the elements model: translucent shell, bright inner core, four orbit studs, a flat halo ring
+  textures/mob_effect/naming_sleep.png      18x18 icon of the Naming Sleep exhaustion effect
+Run: python tools/gen_avatar_assets.py
+"""
+import json, math, os
+from PIL import Image
+
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp")
+
+
+def p(*a):
+    return os.path.join(ROOT, *a)
+
+
+def lerp(a, b, t):
+    return tuple(int(a[i] + (b[i] - a[i]) * t) for i in range(len(a)))
+
+
+def icon():
+    im = Image.new("RGBA", (16, 16), (0, 0, 0, 0))
+    cx = cy = 7.5
+    for y in range(16):
+        for x in range(16):
+            d = math.hypot(x - cx, y - cy)
+            if d <= 3.0:                                   # the bright core
+                im.putpixel((x, y), lerp((255, 255, 255, 255), (150, 120, 255, 255), d / 3.0))
+            elif d <= 5.4:                                 # the violet shell
+                t = (d - 3.0) / 2.4
+                im.putpixel((x, y), lerp((120, 80, 230, 255), (50, 20, 120, 255), t))
+            elif 6.2 <= d <= 7.4 and (x + y) % 2 == 0:     # a broken halo
+                im.putpixel((x, y), (200, 170, 255, 230))
+    im.putpixel((3, 3), (255, 255, 255, 255)); im.putpixel((12, 11), (255, 255, 255, 255)); im.putpixel((11, 3), (230, 210, 255, 255))
+    im.save(p("textures", "item", "genesis_core.png"))
+
+
+def model_texture():
+    # 16x16: rows 0-7 inner core (white to violet), 8-11 shell (translucent violet), 12-13 stud (gold), 14-15 halo (pale)
+    im = Image.new("RGBA", (16, 16), (0, 0, 0, 0))
+    for y in range(16):
+        for x in range(16):
+            if y < 8:
+                im.putpixel((x, y), lerp((255, 255, 255, 255), (170, 140, 255, 255), ((x + y) % 8) / 8.0))
+            elif y < 12:
+                im.putpixel((x, y), (90 + (x * 7) % 40, 50, 200 - (y - 8) * 10, 150))
+            elif y < 14:
+                im.putpixel((x, y), (255, 215 - (x % 4) * 12, 90, 255))
+            else:
+                im.putpixel((x, y), (215, 195, 255, 235))
+    im.save(p("textures", "item", "genesis_core_model.png"))
+
+
+def box(frm, to, uv_row, glow=15):
+    """A cube with all six faces mapped to a 4-pixel-tall band of the model texture."""
+    v0, v1 = uv_row
+    face = {"uv": [0, v0, 16, v1], "texture": "#t"}
+    el = {"from": frm, "to": to, "faces": {k: dict(face) for k in ("north", "east", "south", "west", "up", "down")}}
+    if glow:
+        el["neoforge_data"] = {"block_light": glow, "sky_light": glow}
+    return el
+
+
+def models():
+    elements = [
+        box([5, 5, 5], [11, 11, 11], (0, 8), 15),           # the bright inner core
+        box([3.5, 3.5, 3.5], [12.5, 12.5, 12.5], (8, 12), 8),   # the translucent shell
+        box([7.25, 12.5, 7.25], [8.75, 14.0, 8.75], (12, 14), 15),   # orbit studs: up, down, two sides
+        box([7.25, 2.0, 7.25], [8.75, 3.5, 8.75], (12, 14), 15),
+        box([12.5, 7.25, 7.25], [14.0, 8.75, 8.75], (12, 14), 15),
+        box([2.0, 7.25, 7.25], [3.5, 8.75, 8.75], (12, 14), 15),
+        box([1.5, 7.6, 1.5], [14.5, 8.4, 14.5], (14, 16), 12),   # the flat halo ring (a thin plate around the middle)
+    ]
+    display = {
+        "gui": {"rotation": [25, 35, 0], "translation": [0, 0, 0], "scale": [1.1, 1.1, 1.1]},
+        "ground": {"rotation": [0, 0, 0], "translation": [0, 3, 0], "scale": [0.6, 0.6, 0.6]},
+        "fixed": {"rotation": [0, 0, 0], "translation": [0, 0, 0], "scale": [0.95, 0.95, 0.95]},
+        "head": {"rotation": [0, 0, 0], "translation": [0, 12, 0], "scale": [0.8, 0.8, 0.8]},
+        "thirdperson_righthand": {"rotation": [0, 0, 0], "translation": [0, 3, 2], "scale": [0.55, 0.55, 0.55]},
+        "thirdperson_lefthand": {"rotation": [0, 0, 0], "translation": [0, 3, 2], "scale": [0.55, 0.55, 0.55]},
+        "firstperson_righthand": {"rotation": [10, -25, 0], "translation": [1.5, 3.5, -2.5], "scale": [0.7, 0.7, 0.7]},
+        "firstperson_lefthand": {"rotation": [10, 25, 0], "translation": [-1.5, 3.5, -2.5], "scale": [0.7, 0.7, 0.7]},
+    }
+    three_d = {"_comment": "Genesis Core held model, generated by tools/gen_avatar_assets.py (rule 7: real 3D in hand, sprite as the inventory icon).",
+               "textures": {"t": "nusmp:item/genesis_core_model", "particle": "nusmp:item/genesis_core"}, "elements": elements, "display": display}
+    json.dump(three_d, open(p("models", "item", "genesis_core_3d.json"), "w"), indent=2)
+    json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/genesis_core"}}, open(p("models", "item", "genesis_core_icon.json"), "w"), indent=2)
+    root = {"loader": "neoforge:separate_transforms",
+            "base": {"parent": "nusmp:item/genesis_core_3d"},
+            "perspectives": {"gui": {"parent": "nusmp:item/genesis_core_icon"}}}
+    json.dump(root, open(p("models", "item", "genesis_core.json"), "w"), indent=2)
+
+
+def effect_icon():
+    im = Image.new("RGBA", (18, 18), (0, 0, 0, 0))
+    for y in range(18):
+        for x in range(18):
+            d = math.hypot(x - 8.5, y - 8.5)
+            if d <= 7.5:
+                im.putpixel((x, y), lerp((40, 30, 90, 255), (90, 70, 170, 255), d / 7.5))
+    # a crescent moon and a "z"
+    for y in range(18):
+        for x in range(18):
+            if math.hypot(x - 8.5, y - 8.5) <= 4.6 and math.hypot(x - 10.5, y - 7.5) > 4.2:
+                im.putpixel((x, y), (235, 225, 255, 255))
+    for x in range(11, 15): im.putpixel((x, 4), (255, 255, 255, 255)); im.putpixel((x, 7), (255, 255, 255, 255))
+    for i, (x, y) in enumerate([(14, 5), (13, 6)]): im.putpixel((x, y), (255, 255, 255, 255))
+    im.save(p("textures", "mob_effect", "naming_sleep.png"))
+
+
+if __name__ == "__main__":
+    for d in (("textures", "item"), ("models", "item"), ("textures", "mob_effect")):
+        os.makedirs(p(*d), exist_ok=True)
+    icon(); model_texture(); models(); effect_icon()
+    print("wrote the Genesis Core assets")

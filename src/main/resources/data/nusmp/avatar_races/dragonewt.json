@@ -1,0 +1,30 @@
+{
+  "display_name": "Dragonewt",
+  "description": "A named Lizardman: scales hardened to dragon-hide.",
+  "default_scale": 1.25,
+  "base_attributes": {
+    "minecraft:generic.armor": 4.0,
+    "minecraft:generic.max_health": 8.0,
+    "minecraft:generic.attack_damage": 2.0
+  },
+  "stat_multipliers": {
+    "str": 1.35,
+    "dex": 1.15,
+    "con": 1.35,
+    "int": 1.15,
+    "wis": 1.1,
+    "cha": 1.0
+  },
+  "base_magicule_cost": 1200,
+  "base_ep": 5000,
+  "evolves_to_race_id": "",
+  "requires_dnd_roll": true,
+  "selectable": false,
+  "connection_conditions": [],
+  "appearance": {
+    "skin_tone": "#3A6A8A",
+    "wing_id": 1,
+    "aura_rgb": "#55CCFF",
+    "eye_rgb": "#FFAA00"
+  }
+}

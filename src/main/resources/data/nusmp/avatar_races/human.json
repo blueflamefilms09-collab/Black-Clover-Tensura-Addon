@@ -1,0 +1,27 @@
+{
+  "display_name": "Human",
+  "description": "Plain and adaptable: no gifts, no weaknesses, and the most surprises.",
+  "default_scale": 1.0,
+  "base_attributes": {
+    "minecraft:generic.luck": 1.0
+  },
+  "stat_multipliers": {
+    "str": 1.0,
+    "dex": 1.0,
+    "con": 1.0,
+    "int": 1.0,
+    "wis": 1.0,
+    "cha": 1.1
+  },
+  "base_magicule_cost": 300,
+  "base_ep": 600,
+  "evolves_to_race_id": "",
+  "requires_dnd_roll": true,
+  "selectable": true,
+  "connection_conditions": [],
+  "appearance": {
+    "skin_tone": "#E8C8A8",
+    "aura_rgb": "#66CCFF",
+    "eye_rgb": "#3366FF"
+  }
+}

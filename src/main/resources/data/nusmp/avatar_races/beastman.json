@@ -1,0 +1,28 @@
+{
+  "display_name": "Beastman",
+  "description": "Keen senses and quick feet; the wild is closer to them than to anyone.",
+  "default_scale": 1.0,
+  "base_attributes": {
+    "minecraft:generic.movement_speed": 0.02
+  },
+  "stat_multipliers": {
+    "str": 1.1,
+    "dex": 1.2,
+    "con": 1.1,
+    "int": 0.9,
+    "wis": 1.15,
+    "cha": 0.95
+  },
+  "base_magicule_cost": 350,
+  "base_ep": 800,
+  "evolves_to_race_id": "",
+  "requires_dnd_roll": true,
+  "selectable": true,
+  "connection_conditions": [],
+  "appearance": {
+    "skin_tone": "#C09060",
+    "hair_id": 5,
+    "aura_rgb": "#FFCC66",
+    "eye_rgb": "#FFAA00"
+  }
+}

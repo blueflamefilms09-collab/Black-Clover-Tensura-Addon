@@ -1,0 +1,35 @@
+{
+  "display_name": "Demon Host",
+  "description": "A body made to carry a devil: strong, proud, and bound to a contract.",
+  "default_scale": 1.25,
+  "base_attributes": {
+    "minecraft:generic.max_health": 6.0,
+    "minecraft:generic.attack_damage": 1.5,
+    "minecraft:generic.armor_toughness": 1.0
+  },
+  "stat_multipliers": {
+    "str": 1.15,
+    "dex": 1.0,
+    "con": 1.1,
+    "int": 1.2,
+    "wis": 1.0,
+    "cha": 1.1
+  },
+  "base_magicule_cost": 1500,
+  "base_ep": 2500,
+  "evolves_to_race_id": "devil_vessel",
+  "requires_dnd_roll": true,
+  "selectable": true,
+  "connection_conditions": [
+    "black_clover:devil_contract",
+    "min_ep:1000",
+    "has_item:nusmp:genesis_core"
+  ],
+  "appearance": {
+    "skin_tone": "#B04A4A",
+    "horn_id": 2,
+    "wing_id": 0,
+    "aura_rgb": "#C01030",
+    "eye_rgb": "#FF2020"
+  }
+}

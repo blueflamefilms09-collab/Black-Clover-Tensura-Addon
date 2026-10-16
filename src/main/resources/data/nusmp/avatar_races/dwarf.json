@@ -1,0 +1,29 @@
+{
+  "display_name": "Dwarf",
+  "description": "Short, broad and stubborn; hammers and runes come easily.",
+  "default_scale": 0.85,
+  "base_attributes": {
+    "minecraft:generic.armor": 1.0,
+    "minecraft:generic.max_health": 2.0
+  },
+  "stat_multipliers": {
+    "str": 1.15,
+    "dex": 0.9,
+    "con": 1.25,
+    "int": 1.05,
+    "wis": 1.0,
+    "cha": 0.85
+  },
+  "base_magicule_cost": 400,
+  "base_ep": 800,
+  "evolves_to_race_id": "",
+  "requires_dnd_roll": true,
+  "selectable": true,
+  "connection_conditions": [],
+  "appearance": {
+    "skin_tone": "#D8B090",
+    "hair_id": 4,
+    "aura_rgb": "#FFAA33",
+    "eye_rgb": "#AA6622"
+  }
+}

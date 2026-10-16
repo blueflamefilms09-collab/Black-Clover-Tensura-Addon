@@ -1,0 +1,29 @@
+{
+  "display_name": "Ogre",
+  "description": "Big, loud and tough; weak at magic until a name changes it.",
+  "default_scale": 1.4,
+  "base_attributes": {
+    "minecraft:generic.max_health": 8.0,
+    "minecraft:generic.attack_damage": 2.0
+  },
+  "stat_multipliers": {
+    "str": 1.35,
+    "dex": 0.85,
+    "con": 1.3,
+    "int": 0.8,
+    "wis": 0.85,
+    "cha": 0.9
+  },
+  "base_magicule_cost": 600,
+  "base_ep": 1100,
+  "evolves_to_race_id": "kijin",
+  "requires_dnd_roll": true,
+  "selectable": true,
+  "connection_conditions": [],
+  "appearance": {
+    "skin_tone": "#7FA060",
+    "horn_id": 1,
+    "aura_rgb": "#FF6644",
+    "eye_rgb": "#FFCC00"
+  }
+}

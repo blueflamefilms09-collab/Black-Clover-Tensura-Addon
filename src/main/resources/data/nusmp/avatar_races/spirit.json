@@ -1,0 +1,29 @@
+{
+  "display_name": "Spirit",
+  "description": "A bound spirit in a borrowed shape: frail in body, vast in mana.",
+  "default_scale": 0.9,
+  "base_attributes": {
+    "minecraft:generic.max_health": -4.0
+  },
+  "stat_multipliers": {
+    "str": 0.8,
+    "dex": 1.1,
+    "con": 0.8,
+    "int": 1.3,
+    "wis": 1.3,
+    "cha": 1.05
+  },
+  "base_magicule_cost": 700,
+  "base_ep": 1500,
+  "evolves_to_race_id": "",
+  "requires_dnd_roll": true,
+  "selectable": true,
+  "connection_conditions": [
+    "has_grimoire"
+  ],
+  "appearance": {
+    "skin_tone": "#BFD8FF",
+    "aura_rgb": "#99DDFF",
+    "eye_rgb": "#FFFFFF"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "display_name": "Elf",
+  "description": "Slight and long-lived, a natural at magic and a poor bruiser.",
+  "default_scale": 0.95,
+  "base_attributes": {
+    "minecraft:generic.movement_speed": 0.01
+  },
+  "stat_multipliers": {
+    "str": 0.9,
+    "dex": 1.15,
+    "con": 0.9,
+    "int": 1.2,
+    "wis": 1.15,
+    "cha": 1.1
+  },
+  "base_magicule_cost": 500,
+  "base_ep": 900,
+  "evolves_to_race_id": "high_elf",
+  "requires_dnd_roll": true,
+  "selectable": true,
+  "connection_conditions": [],
+  "appearance": {
+    "skin_tone": "#F0DCC0",
+    "hair_id": 2,
+    "aura_rgb": "#88FFAA",
+    "eye_rgb": "#33CC66"
+  }
+}

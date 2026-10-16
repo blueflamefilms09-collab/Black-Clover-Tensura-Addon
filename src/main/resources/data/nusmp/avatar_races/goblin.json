@@ -1,0 +1,27 @@
+{
+  "display_name": "Goblin",
+  "description": "Small, quick and numerous; a name makes a Hobgoblin.",
+  "default_scale": 0.8,
+  "base_attributes": {
+    "minecraft:generic.movement_speed": 0.02
+  },
+  "stat_multipliers": {
+    "str": 0.85,
+    "dex": 1.25,
+    "con": 0.9,
+    "int": 0.9,
+    "wis": 0.9,
+    "cha": 0.8
+  },
+  "base_magicule_cost": 150,
+  "base_ep": 300,
+  "evolves_to_race_id": "hobgoblin",
+  "requires_dnd_roll": true,
+  "selectable": true,
+  "connection_conditions": [],
+  "appearance": {
+    "skin_tone": "#6E9A4A",
+    "aura_rgb": "#99DD44",
+    "eye_rgb": "#FFDD00"
+  }
+}
