@@ -163,6 +163,10 @@ public final class Relics {
             RelicDef d = defOf(s);
             if (d != null && d.slot().isCurio()) out.add(new Worn(s, d));
         }
+        for (ItemStack s : MobRelics.pack(e)) {                                  // 1.50.0: the pack of a named mob (empty for players)
+            RelicDef d = defOf(s);
+            if (d != null) out.add(new Worn(s, d));
+        }
         return out;
     }
 

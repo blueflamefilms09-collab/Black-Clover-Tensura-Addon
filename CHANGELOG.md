@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.50.0] — Named mobs can carry and attune to relics
+
+**State:** written without a compiler; CI is the first compile. Nothing run in game. Details: `docs/mob_relics.md`.
+
+### NEW
+- Sneak + use a relic on a named or owned mob (a goblin you named, a tamed monster): it takes the relic (weapons in hand, armour on its slots, the rest in a small pack), a relic that needs attunement attunes to the mob (3 at most), and the mob wears the relic's attribute passives, effects and resistances. Sneak + empty hand takes it back. The pack drops on death. Config `nusmp-mobrelics-server.toml` (`enabled`, `namedOnly`, `maxCarried`).
+- Not for mobs: relic acts, grade existence bonus and skill leases (they are written for players).
+
 ## [1.49.0] — Advancements and the FTB Quests questline
 
 **State:** written without a compiler; CI is the first compile. Nothing run in game, and FTB Quests has never loaded the pack (written to its source format and checked with a validator). Docs: `docs/quests.md`, `docs/advancements.md`, `docs/quests_java.md`.

@@ -95,6 +95,7 @@ public final class RelicEngine {
         bus.addListener(RelicEngine::onServerStopping);
         bus.addListener(RelicEngine::onChangeTarget);
         bus.addListener(RelicEngine::onSummonLoad);
+        MobRelics.register(bus);                                                       // 1.50.0: named mobs carry and attune relics
     }
 
     /** A summon that comes back from disk (a crash, a chunk that held it) is not tracked any more: it goes, so none stays forever. */
@@ -235,8 +236,9 @@ public final class RelicEngine {
 
     // ---------------------------------------------------------------- resistances
     private static void onIncomingDamage(LivingIncomingDamageEvent e) {
-        if (!(e.getEntity() instanceof ServerPlayer p)) return;
-        Relics.Loadout lo = Relics.loadout(p);
+        LivingEntity victim = e.getEntity();
+        if (!(victim instanceof ServerPlayer) && !MobRelics.carries(victim)) return;                // 1.50.0: a mob that was given relics resists too
+        Relics.Loadout lo = Relics.loadout(victim);
         if (lo.resists().isEmpty()) return;
         DamageSource src = e.getSource();
         double keep = 1.0;
