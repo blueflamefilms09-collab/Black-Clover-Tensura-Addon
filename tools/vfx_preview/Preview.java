@@ -19,7 +19,7 @@ import java.util.Map;
  * with texture, blend and vertex colours) as JSON for preview.py to rasterise.
  *
  * args: --layer CLASS --shape NAME --from x,y,z --to x,y,z --power P --duration D --color AARRGGBB|0 --seed N
- *       --cam x,y,z --target x,y,z --ages a,b,c --detail 1 --out FILE
+ *       --cam x,y,z --target x,y,z --ages a,b,c --detail 1 [--budget N] --out FILE
  */
 public final class Preview {
     public static void main(String[] a) throws Exception {
@@ -48,7 +48,7 @@ public final class Preview {
             inst.setAge((int) Math.floor(age));
             float partial = age - (float) Math.floor(age);
             VfxRenderContext ctx = new VfxRenderContext(cam, target, partial, detail);
-            buf.beginActivation(layer.vertexBudget(shape));
+            buf.beginActivation(o.containsKey("--budget") ? Integer.parseInt(o.get("--budget")) : layer.vertexBudget(shape));
             layer.render(inst, ctx, buf);
             List<Object[]> quads = buf.drain();
             if (!firstFrame) sb.append(',');

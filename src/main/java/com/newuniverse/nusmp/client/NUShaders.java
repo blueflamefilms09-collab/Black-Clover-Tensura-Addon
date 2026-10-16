@@ -18,21 +18,26 @@ import java.util.function.Consumer;
  *   <li>{@code rendertype_zagred_aura}: Zagred's pulsing fresnel rim (purple to crimson), format NEW_ENTITY, additive.</li>
  *   <li>{@code rendertype_dimension_slash}: Yami's Dimension Slash fracture (black core, jagged violet aura, stars), format POSITION_TEX_COLOR,
  *       drawn by {@link NURenderTypes#drawDimensionSlash} for the Dark Slash VFX layer.</li>
+ *   <li>{@code spatial_portal} (1.43.0): the 3D portal's refracting event horizon and the faint full-screen warp pulse, format POSITION_TEX_COLOR.</li>
  * </ul>
  */
 public final class NUShaders {
     private NUShaders() {}
 
-    private static ShaderInstance demonVoid, zagredAura, dimensionSlash;
+    private static ShaderInstance demonVoid, zagredAura, dimensionSlash, spatialPortal;
 
     public static ShaderInstance demonVoid() { return demonVoid; }
     public static ShaderInstance zagredAura() { return zagredAura; }
     public static ShaderInstance dimensionSlash() { return dimensionSlash; }
+    /** 1.43.0: the spatial portal's event horizon / warp pulse (null when it could not be built: the plain translucent gate is used). */
+    public static ShaderInstance spatialPortal() { return spatialPortal; }
 
     public static void register(RegisterShadersEvent e) {
         load(e, "rendertype_demon_void", DefaultVertexFormat.POSITION, s -> demonVoid = s);
         load(e, "rendertype_zagred_aura", DefaultVertexFormat.NEW_ENTITY, s -> zagredAura = s);
         load(e, "rendertype_dimension_slash", DefaultVertexFormat.POSITION_TEX_COLOR, s -> dimensionSlash = s);
+        load(e, "spatial_portal", DefaultVertexFormat.POSITION_TEX_COLOR, s -> spatialPortal = s);
+        com.newuniverse.nusmp.vfx.client.portal.PortalClient.install();                                  // 1.43.0: sounds, Rukh and the shader draw for the 3D gate
         com.newuniverse.nusmp.vfx.client.layer.DarkSlashShaderPass.drawer = NURenderTypes::drawDimensionSlash;      // the Dark Slash layer draws its tear through it
     }
 

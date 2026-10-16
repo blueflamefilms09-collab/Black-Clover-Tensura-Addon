@@ -1,0 +1,11 @@
+{
+ "_comment": "1.43.0 the 3D spatial portal (SPACE_PORTAL via ArcaneSpellLayer when spatial.portal3d is on). Shader refraction cannot run here: this is the plain translucent path at the top tier (budget raised for the preview only).",
+ "portal_open": {"layer": "ArcaneSpellLayer", "shape": "SPACE_PORTAL", "from": [0, 0, 0], "to": [0, 0, 6], "power": 1, "duration": 100, "color": "FFB088FF", "seed": 424242, "budget": 1500,
+  "cam": [0, 1.7, 6.5], "target": [0, 1.3, 0], "ages": [1, 4, 8, 12, 50], "figures": [[2.2, 0, 3, 1.8]]},
+ "portal_close": {"layer": "ArcaneSpellLayer", "shape": "SPACE_PORTAL", "from": [0, 0, 0], "to": [0, 0, 6], "power": 1, "duration": 100, "color": "FFB088FF", "seed": 424242, "budget": 1500,
+  "cam": [0, 1.7, 6.5], "target": [0, 1.3, 0], "ages": [90, 94, 96, 98, 99.5]},
+ "portal_oblique": {"layer": "ArcaneSpellLayer", "shape": "SPACE_PORTAL", "from": [0, 0, 0], "to": [0, 0, 6], "power": 1.4, "duration": 100, "color": "FFB088FF", "seed": 7, "budget": 1500,
+  "cam": [6, 1.8, 4.5], "target": [0, 1.5, 0], "ages": [30, 55], "figures": [[-2.5, 0, 3, 1.8]]},
+ "portal_tiers": {"layer": "ArcaneSpellLayer", "shape": "SPACE_PORTAL", "from": [0, 0, 0], "to": [0, 0, 6], "power": 1, "duration": 100, "color": "FFB088FF", "seed": 424242, "detail": 0.5,
+  "cam": [0, 1.7, 8], "target": [0, 1.3, 0], "ages": [40, 60]}
+}
