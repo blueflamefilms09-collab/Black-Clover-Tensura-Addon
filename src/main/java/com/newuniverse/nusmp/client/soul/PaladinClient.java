@@ -16,7 +16,7 @@ public final class PaladinClient {
     private PaladinClient() {}
 
     public static void register(IEventBus modBus) {
-        modBus.addListener(PaladinLayer::addLayers);
+        modBus.addListener((net.neoforged.neoforge.client.event.EntityRenderersEvent.AddLayers e) -> PaladinLayer.addLayers(e));
         NeoForge.EVENT_BUS.addListener((RenderLevelStageEvent e) -> PaladinOverlay.onRender(e));
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> { PaladinNet.clear(); PaladinLayer.DRAWN.clear(); });
     }
