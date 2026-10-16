@@ -70,6 +70,8 @@ public class NUSMP {
         com.newuniverse.nusmp.relics.socket.SocketItems.init();                                                            // 1.30.0: Spirit and Devil Cores
         com.newuniverse.nusmp.relics.socket.SocketComponents.COMPONENTS.register(modEventBus);
         modEventBus.addListener(com.newuniverse.nusmp.compat.CompatPacks::onPacks);                       // 1.33.0: the Tensura No Index bridge pack, only when that mod is loaded
+        com.newuniverse.nusmp.arena.ArenaSystem.init(modEventBus);                                                         // 1.46.0: Lucius's arena, the Hourglass (before NUItems.ITEMS.register)
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.arena.ArenaConfig.SPEC, "nusmp-lucius-arena-server.toml");
         com.newuniverse.nusmp.compat.CompatItems.init();                                                                   // 1.34.0: the Compatibility Codex item (before NUItems.ITEMS.register)
         net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.item.ArmorEngravings::onPlayerTick);   // 1.34.0: armour engravings
         com.newuniverse.nusmp.charter.CharterItems.init();                                                                 // 1.25.0: Charter Grimoires (before NUItems.ITEMS.register)

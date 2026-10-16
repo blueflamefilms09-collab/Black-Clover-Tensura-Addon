@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.46.0] — Fixes: crashes, Curios relics, Better Combat, Butoh, Rouge, Soul Corpse, and Lucius's arena
+
+**State:** written without a compiler; CI is the first compile. Nothing run in game. Details: `docs/better_combat.md` (1.46.0), `docs/relic_fix_1_46.md`, `docs/exclusive/fx3.md`, `docs/lucius_arena.md`.
+
+### FIXED
+- **Crash "Not building!" in the player aura layer** (two crash reports): a painter held two vertex buffers and the second ended the first. All aura painting now goes through `LazyBuffers`, which re-acquires its builder at every vertex.
+- **Relics did nothing in Curios slots:** `CuriosLink` shared one initialisation between two lookups, left one null, and then marked Curios broken for the whole session. Fixed, and a failure now only pauses Curios reads for 10 s. Also: Ring of the Mimic was missing from the charm slot tag, and 14 charms had no worn model (they are drawn now).
+- **30 magics had no rune texture** (Soul, Soul Corpse, Song and 27 more attributes): generated.
+- **Better Combat:** every weapon now uses only Better Combat's own presets and animations (no custom animations referenced; the old files stay on disk unreferenced). Root causes in `docs/better_combat.md`.
+- **Soul Corpse spawned nothing:** the reanimation page was sealed behind mastery (now opened for every holder), an empty ledger did nothing (new bodies are conjured), puppets could spawn inside blocks and undead burned in daylight.
+
+### REPLACEMENT (old behind a switch)
+- Butoh dance is a passive for anyone with the magic, with a mana upkeep (`butoh.passive`); the page now toggles it off and on.
+- Rouge rests on your head again (`thread.rougeOnHead`) and can be named with a name tag (or by using one while looking up).
+- Lucius god-tier balance: true-damage tiers halved, caps and cooldowns eased, fewer clones, new `luciusDifficulty` (default 0.8) and scaling by player count.
+- The Named corpse pages (Jimmy, Alfredo, Carl) are no longer locked to Rades.
+
+### NEW
+- **Lucius's arena** (`nusmp:zogratis_arena`) and the **Hourglass of the Final Hour**: hold right click 3 s to be carried there with allies within 8 blocks, and again to go home. Lucius can only exist in the arena (`luciusArenaOnly`, default on); the spawn egg, summon command and portals are refused elsewhere. Return Sigil block, `/zogratis_arena`.
+
 ## [1.45.0] — Lucius Zogratis, god-tier counter-mechanics
 
 **State:** written without a compiler; CI is the first compile. Nothing run in game. Full design in `docs/lucius_god.md`.

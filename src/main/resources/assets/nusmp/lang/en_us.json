@@ -3016,5 +3016,12 @@
   "effect.nusmp.severed.description": "Your Djinn and your Black Clover spirits are cut off from you. Nothing is lost: they answer again when this ends.",
   "effect.nusmp.time_decay": "Time Decay",
   "effect.nusmp.time_decay.description": "Lucius's aura stops all passive healing here: natural regeneration, the Regeneration effect and regeneration skills. Healing potions and food still work.",
-  "nusmp.page.book_soul_corpse.corpse_reanimate": "Raises the dead of the last minute near you as Soul Corpses (up to 2). When no one has died near you, the earth gives up new corpses of its own: undead that fit the place (husks in the desert, strays in the snow, drowned in the water, skeletons in the dark and the Nether), one to three by your mastery, each for a little mana. They fight for you, bleed away, and last about a minute. This page is open from the start."
+  "nusmp.page.book_soul_corpse.corpse_reanimate": "Raises the dead of the last minute near you as Soul Corpses (up to 2). When no one has died near you, the earth gives up new corpses of its own: undead that fit the place (husks in the desert, strays in the snow, drowned in the water, skeletons in the dark and the Nether), one to three by your mastery, each for a little mana. They fight for you, bleed away, and last about a minute. This page is open from the start.",
+  "item.nusmp.zogratis_hourglass": "Hourglass of the Final Hour",
+  "item.nusmp.zogratis_hourglass.tip.kind": "Relic of the Zogratis arena",
+  "item.nusmp.zogratis_hourglass.tip.lore": "The sand falls upward for those who are ready to meet him.",
+  "item.nusmp.zogratis_hourglass.tip.use": "Hold right click for 3 seconds: you and every player within 8 blocks (party first) are carried to Lucius's arena. Hold again inside to go home.",
+  "item.nusmp.zogratis_hourglass.tip.rules": "Not in the Labyrinth or the dungeons. Not while hurt, nor while Lucius fights (leaving mid-fight takes 10 seconds). 60 second cooldown after coming home.",
+  "block.nusmp.arena_return_sigil": "Return Sigil",
+  "dimension.nusmp.zogratis_arena": "The Final Hour"
 }
