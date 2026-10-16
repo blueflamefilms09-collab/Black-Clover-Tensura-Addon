@@ -349,6 +349,10 @@
     {
       "id": "nusmp:witchs_ring",
       "required": false
+    },
+    {
+      "id": "nusmp:ring_of_the_mimic",
+      "required": false
     }
   ]
 }

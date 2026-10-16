@@ -32,6 +32,10 @@ look CHEST ROBE sleeves_flared@rarm sleeves_flared@larm~
 look FEET BOOTS boots_cuffed@rleg boots_cuffed@lleg
 look FEET GREAVES greaves_plated@rleg greaves_plated@lleg
 look FEET SANDALS sandals_winged@rleg sandals_winged@lleg
+look CHARM ORB charm_orbit
+look CHARM PENDANT brooch_badge
+look CHARM CIRCLET charm_orbit
+look CHARM BELT charm_pouch
 relic godking_crown crown_godking
 relic greaves_of_the_wind_walker greaves_windwalker@rleg greaves_windwalker@lleg
 relic gold_circlet circlet_dragon

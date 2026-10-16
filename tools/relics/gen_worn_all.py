@@ -61,6 +61,11 @@ def catalog():
     cat.look("FEET", "BOOTS", "boots_cuffed@rleg", "boots_cuffed@lleg")
     cat.look("FEET", "GREAVES", "greaves_plated@rleg", "greaves_plated@lleg")
     cat.look("FEET", "SANDALS", "sandals_winged@rleg", "sandals_winged@lleg")
+    # 1.46.0: charm looks the part 4 waves use that had no entry (they fell back to plain boxes); also three older charms with the same gap
+    cat.look("CHARM", "ORB", "charm_orbit")
+    cat.look("CHARM", "PENDANT", "brooch_badge")
+    cat.look("CHARM", "CIRCLET", "charm_orbit")
+    cat.look("CHARM", "BELT", "charm_pouch")
 
     # ---- signature relics, best grade first
     # GOD
