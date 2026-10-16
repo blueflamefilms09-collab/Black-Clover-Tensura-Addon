@@ -63,13 +63,13 @@ public final class CuriosLink {
     public static List<ItemStack> equipped(LivingEntity e) {
         if (broken || !loaded()) return List.of();
         try {
-            if (getInventory == null) {
-                getInventory = Class.forName("top.theillusivec4.curios.api.CuriosApi").getMethod("getCuriosInventory", LivingEntity.class);
-                getEquipped = Class.forName("top.theillusivec4.curios.api.type.capability.ICuriosItemHandler").getMethod("getEquippedCurios");
-            }
-            Object opt = getInventory.invoke(null, e);
+            // each method is looked up on its own: flags() fills getInventory first, and a shared "if getInventory == null" left getEquipped null (1.46.0 fix)
+            Method inv = getInventory, eq = getEquipped;
+            if (inv == null) inv = getInventory = Class.forName("top.theillusivec4.curios.api.CuriosApi").getMethod("getCuriosInventory", LivingEntity.class);
+            if (eq == null) eq = getEquipped = Class.forName("top.theillusivec4.curios.api.type.capability.ICuriosItemHandler").getMethod("getEquippedCurios");
+            Object opt = inv.invoke(null, e);
             if (!(opt instanceof Optional<?> o) || o.isEmpty()) return List.of();
-            if (!(getEquipped.invoke(o.get()) instanceof IItemHandler h)) return List.of();
+            if (!(eq.invoke(o.get()) instanceof IItemHandler h)) return List.of();
             List<ItemStack> out = new ArrayList<>();
             for (int i = 0; i < h.getSlots(); i++) {
                 ItemStack s = h.getStackInSlot(i);

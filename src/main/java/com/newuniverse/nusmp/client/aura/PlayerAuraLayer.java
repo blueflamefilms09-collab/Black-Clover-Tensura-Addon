@@ -29,7 +29,7 @@ public class PlayerAuraLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
             float fade = Mth.clamp(Math.min(t / 8f, left / 8f), 0f, 1f);
             pose.pushPose();
             try {
-                painter.paint(new AuraContext(p, getParentModel(), pose, buffers, light, partial, age, t, left, total, (int) w[2], limbSwing, limbSwingAmount, netHeadYaw, headPitch, fade));
+                painter.paint(new AuraContext(p, getParentModel(), pose, new LazyBuffers(buffers), light, partial, age, t, left, total, (int) w[2], limbSwing, limbSwingAmount, netHeadYaw, headPitch, fade));
             } finally {
                 pose.popPose();
             }
