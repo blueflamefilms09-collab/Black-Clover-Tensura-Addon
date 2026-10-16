@@ -2,14 +2,14 @@
 
 ## [1.51.0] — The Avatar creation system
 
-**State:** written without a compiler; CI is the first compile. Nothing run in game. Docs: , , .
+**State:** written without a compiler; CI is the first compile. Nothing run in game. Docs: `docs/avatar/av1.md`, `av2.md`, `av3.md`.
 
 ### NEW (nothing replaced; the Devil Avatar boss is untouched)
-- **Genesis Core** item (drops only from DanMachi dungeon boss rooms: first kill guaranteed, then a chance) opens the **creation GUI**: roll D&D stats on the server (4d6 drop lowest, or 5d6 drop two lowest when your total luck is above 10), pick a race from  (15 shipped, connection conditions checked on the server), one or two of 14 personalities, design the look (hair, horns, wings, outfit, skin, aura, eyes), name optional.
-- **The Avatar** (): follows and defends the creator. After 3 in-game days an unnamed Avatar without a unique skill rolls its outcome: Betrayal (30% minus luck), Soul Awakening (25% plus luck), Ordinary Existence. Naming it (Tensura-style: magicule exhaustion tax, permanent tax, +50 to +200% EP surge, evolution, Soul-Bond Lock) cancels betrayal. Betrayed Avatars hunt the creator across dimensions (hits capped, grace after each teleport).
+- **Genesis Core** item (drops only from DanMachi dungeon boss rooms: first kill guaranteed, then a chance) opens the **creation GUI**: roll D&D stats on the server (4d6 drop lowest, or 5d6 drop two lowest when your total luck is above 10), pick a race from `data/nusmp/avatar_races/*.json` (15 shipped, connection conditions checked on the server), one or two of 14 personalities, design the look (hair, horns, wings, outfit, skin, aura, eyes), name optional.
+- **The Avatar** (`nusmp:player_avatar`): follows and defends the creator. After 3 in-game days an unnamed Avatar without a unique skill rolls its outcome: Betrayal (30% minus luck), Soul Awakening (25% plus luck), Ordinary Existence. Naming it (Tensura-style: magicule exhaustion tax, permanent tax, +50 to +200% EP surge, evolution, Soul-Bond Lock) cancels betrayal. Betrayed Avatars hunt the creator across dimensions (hits capped, grace after each teleport).
 - **Personalities and chatter:** 1386 hand-written lines, hybrid mixing, Yandere frenzy (burns its own health, cooldown x0.1, no magicule cost, jealousy and intercept goals, FTB squadmates exempt), and a fake-player caster so grimoire and Tensura magic can be cast by the Avatar.
 - **Look:** layered renderer with 16 hairs, 8 horns, 6 wings, 12 outfits, tinted skin, aura ring, glowing eyes (red in a frenzy).
-- Config: , , . Command . Quest keys , , , .
+- Config: `nusmp-avatar-server.toml`, `nusmp-avatar-ai-server.toml`, `nusmp-avatar-net-server.toml`. Command `/nusmp avatar ...`. Quest keys `avatar.created`, `avatar.named`, `avatar.betrayed`, `avatar.awakened`.
 
 ## [1.50.0] — Named mobs can carry and attune to relics
 
