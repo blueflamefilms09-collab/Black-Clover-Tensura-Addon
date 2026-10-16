@@ -57,7 +57,7 @@ def parse_defs(sources):
             if arg.startswith('"') and arg.endswith('"'):
                 rid = arg[1:-1]
             else:
-                rid = consts.get(arg) or consts.get(arg.split(".")[-1])
+                rid = (consts.get(f"{cls}.{arg}") if "." not in arg else None) or consts.get(arg) or consts.get(arg.split(".")[-1])      # 1.46.0: a bare name is the one of THIS class first (two waves both have an ID_MIMIC)
             if rid is None:
                 unresolved.append(f"{cls}: {arg}")
                 continue
