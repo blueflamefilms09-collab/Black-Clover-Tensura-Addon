@@ -290,6 +290,7 @@ public class NUSMP {
         com.newuniverse.nusmp.corpse.CorpseEntities.ENTITIES.register(modEventBus);
         modEventBus.addListener(com.newuniverse.nusmp.corpse.CorpseEntities::attributes);
         com.newuniverse.nusmp.corpse.CorpseHooks.register();
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.thread.RougeNameEvents::onUseNameTag);
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.corpse.CorpseConfig.SPEC, "nusmp-corpse-server.toml");
         modEventBus.addListener(com.newuniverse.nusmp.song.SongNet::registerPayloads);
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.song.SongConfig.SPEC, "nusmp-song-server.toml");

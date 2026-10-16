@@ -62,9 +62,6 @@ public final class CharacterSpells {
         lock("book_thread", "reinforcement", CanonBook.VANESSA);
         lock("book_soul", "paladin_conversion", CanonBook.LUCIUS);
         lock("book_soul", "paladin_recall", CanonBook.LUCIUS);
-        lock("book_soul_corpse", "corpse_jimmy", CanonBook.RADES);
-        lock("book_soul_corpse", "corpse_alfredo", CanonBook.RADES);
-        lock("book_soul_corpse", "corpse_carl", CanonBook.RADES);
         lock("book_soul_corpse", "true_soul_corpse", CanonBook.RADES);
         lock("book_song", "song_crescendo", CanonBook.KAHONO);
         lock("book_butoh", "butoh_dance", CanonBook.KIATO);
