@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.48.0] — Every relic in hand as a 3D model, and the Clover robes in the anime style
+
+**State:** written without a compiler; CI is the first compile. Nothing run in game. Details: `docs/relic_hand_models.md`, `docs/robe_anime.md`.
+
+### NEW
+- **3D relics in hand, on the ground and in item frames** for every relic that is not a weapon (240 relics): 83 signature models (the Infinity Stones and Gauntlet, Hand and Eye of Vecna, the Deck, Warren's Key, the Soup Spoon, the Cooking Pot, the lantern, both lyres, Horn of Leroy, collars, medallions, orbs, ten rings, bags, coins and more), 21 consumable models (jars, vials, flasks, a genie bottle, scrolls), garment bodies under the ornaments of chest relics, and data-driven hold styles (`assets/nusmp/relic_hand/transforms.txt`). The inventory keeps the 16x16 sprite. The 14 weapons you listed as flat already had meshes (they are older items kept as relics).
+- **The Magic Knight robes look like the anime:** the chest piece is only the cloak (shoulder drape, long swaying back panel, squad emblem, clasp, collar); the helmet piece is a single accessory (Asta's headband for Black Bull, horns for the devil coat, a hood laid back for some, nothing for others); legs and boots draw nothing so your own legs show. 11 sets. Designs are from memory of the series; `docs/robe_anime.md` says which parts are canon and which invented.
+
+### REPLACEMENT (old behind a switch)
+- Client options `relicfx.handModels` (default on; off = the old flat form) and `relicfx.robeAnime` (default on; off = the 1.34.0 lofted robes). Old models and catalog lines are kept.
+- The 1.34.0 object form of relic armour is now drawn by the new hand renderer.
+
 ## [1.47.0] — docs: the relic format
 
 ### NEW

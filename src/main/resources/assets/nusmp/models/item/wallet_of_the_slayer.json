@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "minecraft:builtin/entity",
+  "gui_light": "front",
   "textures": {
-    "layer0": "nusmp:item/wallet_of_the_slayer"
+    "particle": "nusmp:item/wallet_of_the_slayer"
   }
 }

@@ -22,6 +22,7 @@ public final class WornLibClient {
                 }));
         modBus.addListener(ArmorItemRenderer::registerExtensions);
         modBus.addListener(ArmorItemRenderer::registerModels);
+        com.newuniverse.nusmp.client.relics.hand.HandClient.init(modBus);                  // 1.48.0: relics as held objects
         RelicFxClient.init();
     }
 }

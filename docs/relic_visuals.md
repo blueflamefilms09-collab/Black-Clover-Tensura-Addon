@@ -189,3 +189,7 @@ Why: `ArmorLooksTest` requires every armour relic (HEAD, CHEST, FEET) to have it
 | Eye of Vecna | `eye_of_vecna` | a brass monocle plate with a bare eyeball, pink iris (lit), a trailing red optic nerve and a ruby brow plate |
 
 Ambient themes (`cat.theme`): helm_of_whispers, trickster_mask and death_knights_helmet wisp, mind_stone leaf, the_orb_of_ancient_sight star. No vanilla particles. Largest ensemble: `helmet_of_headbutting` (about 1900 vertices, under the 2600 cap).
+
+## Held forms (1.48.0)
+
+The worn library also draws every relic that is not a weapon as an object in the hand, on the ground and in an item frame (hold styles, hand models, garment bodies for chest relics): see `docs/relic_hand_models.md`.

@@ -198,6 +198,14 @@ public final class WornLibrary {
         return new Ensemble(null, key, slotKey, exact, WornPalette.slots(pal[0], pal[1], pal[2]), tier, List.copyOf(out), theme);
     }
 
+    /**
+     * An ensemble of the given pieces coloured and graded like this relic, built fresh and not cached: the hand library ({@code client.relics.hand}) uses it for the models a
+     * relic is held as (a signature hand model, or one glove of the worn pair) so they draw through the same code as the worn ones.
+     */
+    public static Ensemble ofPieces(RelicDef def, List<Resolved> pieces) {
+        return new Ensemble(def, List.copyOf(pieces), FxTheme.fromGlow(def.paletteGlow()));
+    }
+
     /** Does this relic have worn models? */
     public static boolean hasModel(RelicDef def) { return of(def) != null; }
 

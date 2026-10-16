@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "nusmp:item/the_time_stone_or_the_eye_of_agamotto"
+  }
+}

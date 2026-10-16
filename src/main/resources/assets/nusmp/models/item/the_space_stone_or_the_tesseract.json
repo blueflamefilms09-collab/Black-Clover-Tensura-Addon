@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "minecraft:builtin/entity",
+  "gui_light": "front",
   "textures": {
-    "layer0": "nusmp:item/the_space_stone_or_the_tesseract"
+    "particle": "nusmp:item/the_space_stone_or_the_tesseract"
   }
 }

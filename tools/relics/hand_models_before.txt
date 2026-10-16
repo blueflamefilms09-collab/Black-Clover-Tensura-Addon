@@ -1,0 +1,26 @@
+# the relics that already had the 1.34.0 3D object form (head and feet armour) before the hand library of 1.48.0; every other non-weapon relic was a flat sprite in the hand.
+# read by tools/relics/hand_report.py (the list cannot be recomputed from the files once gen_hand_item_models.py has run).
+boots_of_burglery
+boots_of_the_high_ground
+boots_of_the_indomitable
+dragon_fire_boots
+greaves_of_the_wind_walker
+mudwalkers
+ruby_boots_of_planestriding
+sandals_of_sneaking
+waterwalkers
+arcanists_circlet
+captains_tricorn
+circlet_of_the_phoenix
+crown_of_the_conjurer
+dante_gravity_crown
+dark_unicorn_crown
+diadem_of_fabulous_truthiness
+dreamwalker_cowl
+godking_crown
+gold_circlet
+prides_crown
+silver_circlet
+steel_circlet
+tiny_duck_crown
+unicorn_crown

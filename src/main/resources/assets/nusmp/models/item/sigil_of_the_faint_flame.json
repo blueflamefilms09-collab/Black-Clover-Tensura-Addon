@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "minecraft:builtin/entity",
+  "gui_light": "front",
   "textures": {
-    "layer0": "nusmp:item/sigil_of_the_faint_flame"
+    "particle": "nusmp:item/sigil_of_the_faint_flame"
   }
 }

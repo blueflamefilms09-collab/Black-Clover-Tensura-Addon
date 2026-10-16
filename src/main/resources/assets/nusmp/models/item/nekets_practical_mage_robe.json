@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "minecraft:builtin/entity",
+  "gui_light": "front",
   "textures": {
-    "layer0": "nusmp:item/nekets_practical_mage_robe"
+    "particle": "nusmp:item/nekets_practical_mage_robe"
   }
 }
