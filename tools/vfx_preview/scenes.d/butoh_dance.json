@@ -1,0 +1,27 @@
+{
+ "_comment": "Butoh dance preview scenes (ButohLayer, 1.43.0): the ripples under the dancer's feet and the ink-wash after-image.",
+ "butoh_dance_ripple": {
+  "layer": "ButohLayer", "shape": "BUTOH_DANCE_RIPPLE",
+  "from": [0, 0, 0], "to": [0, 0, 0], "power": 1.4, "duration": 24, "color": "FFB8E6FF",
+  "cam": [3.2, 1.8, -3.6], "target": [0, 0.5, 0], "ages": [2, 9, 16, 22],
+  "figures": [[0, 0, 0, 1.8]]
+ },
+ "butoh_dance_ripple_wide": {
+  "layer": "ButohLayer", "shape": "BUTOH_DANCE_RIPPLE",
+  "from": [0, 0, 0], "to": [0, 0, 0], "power": 1.84, "duration": 36, "color": "FFB8E6FF", "seed": 777,
+  "cam": [3.2, 1.8, -3.6], "target": [0, 0.5, 0], "ages": [3, 12, 24, 32],
+  "figures": [[0, 0, 0, 1.8]]
+ },
+ "butoh_afterimage": {
+  "layer": "ButohLayer", "shape": "BUTOH_AFTERIMAGE",
+  "from": [0, 0, 0], "to": [1.0, 0, 0.2], "power": 1.0, "duration": 16, "color": "FFB8E6FF",
+  "cam": [0.5, 1.5, -4.2], "target": [0.4, 1.0, 0], "ages": [1, 4, 8, 13],
+  "figures": [[1.0, 0, 0.2, 1.8]]
+ },
+ "butoh_afterimage_dash": {
+  "layer": "ButohLayer", "shape": "BUTOH_AFTERIMAGE",
+  "from": [0, 0, 0], "to": [-5, 0, 0], "power": 1.0, "duration": 16, "color": "FFFF5A8A", "seed": 99,
+  "cam": [-2.5, 1.6, -6], "target": [-2.5, 1.0, 0], "ages": [1, 5, 9, 14],
+  "figures": [[-5, 0, 0, 1.8]]
+ }
+}

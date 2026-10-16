@@ -14,6 +14,7 @@ Loops (chant, mana zone) close: the last key equals the first.
 """
 import json
 import os
+import sys
 
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "animations", "player", "cast.animation.json")
 
@@ -160,7 +161,120 @@ CLIPS = {
 }
 
 
+# ----------------------------------------------------------------------------------------------------------------------------------
+# 1.43.0 (Kiato, Butoh dance): eight looping dance moves for butoh.DanceChoreographer. Why separate: they are loops that blend into each
+# other, so every one closes (the last key equals the first) and is eased by baking smoothstep sub-keys, because the client samples
+# keyframes linearly. The client turns the arms and legs; body and head are written too so the clip is a complete pose for a later renderer
+# (and for Blockbench), the way the older clips are. Names are "dance_<move>", the same strings as butoh.DanceMove.
+# ----------------------------------------------------------------------------------------------------------------------------------
+DANCE_BONES = ("head", "body", "left_arm", "right_arm", "left_leg", "right_leg")
+DANCE_STEPS = 4          # smoothstep sub-keys between two story poses
+
+
+def _v(x):
+    return list(x)
+
+
+def _lerp3(a, b, k):
+    return [a[i] + (b[i] - a[i]) * k for i in range(3)]
+
+
+def _norm(p):
+    """{bone: rot3} or {bone: (rot3, pos3)} -> {bone: (rot3, pos3)} with every bone present (rest where the key leaves it out)."""
+    out = {}
+    for bone in DANCE_BONES:
+        v = p.get(bone, (0, 0, 0))
+        rot, pos = (v if isinstance(v[0], (tuple, list)) else (v, (0, 0, 0)))
+        out[bone] = (_v(rot), _v(pos))
+    return out
+
+
+def dance(length, story):
+    """story: [(time, pose)] of the main poses, first at 0. The loop is closed (a key at `length` equal to the first), and each span is
+    eased with smoothstep sub-keys so the move starts and ends softly and flows into the next clip."""
+    poses = [(t, _norm(p)) for t, p in story]
+    poses.append((length, poses[0][1]))
+    keys = []
+    for (t0, p0), (t1, p1) in zip(poses, poses[1:]):
+        for s in range(DANCE_STEPS):
+            k = s / DANCE_STEPS
+            e = k * k * (3 - 2 * k)
+            keys.append((t0 + (t1 - t0) * k, {b: (_lerp3(p0[b][0], p1[b][0], e), _lerp3(p0[b][1], p1[b][1], e)) for b in DANCE_BONES}))
+    keys.append((length, poses[-1][1]))
+    return clip(length, True, keys)
+
+
+DANCE_CLIPS = {
+    # SWAY: the weight rolls from one hip to the other, the arms drift like weed in a current
+    "dance_sway": dance(1.6, [
+        (0.0, dict(head=(0, 6, 3), body=((2, 12, 4), (0.6, 0, 0)), left_arm=(-35, 0, -40), right_arm=(-20, 0, 65), left_leg=(-6, 0, 4), right_leg=(5, 0, 6))),
+        (0.8, dict(head=(0, -6, -3), body=((2, -12, -4), (-0.6, 0, 0)), left_arm=(-20, 0, -65), right_arm=(-35, 0, 40), left_leg=(5, 0, -6), right_leg=(-6, 0, -4))),
+    ]),
+    # SPIN: arms thrown wide and pulled in on the turn, the feet crossing under the body
+    "dance_spin": dance(1.0, [
+        (0.0, dict(head=(0, 0, 0), body=((3, 0, 0), (0, 0, 0)), left_arm=(-15, 0, -88), right_arm=(-15, 0, 88), left_leg=(-14, 0, 6), right_leg=(10, 0, -6))),
+        (0.25, dict(head=(0, 10, 0), body=((4, 70, 0), (0, 0.6, 0)), left_arm=(-60, 0, -35), right_arm=(-60, 0, 35), left_leg=(8, 0, -4), right_leg=(-12, 0, 4))),
+        (0.5, dict(head=(0, 0, 0), body=((3, 140, 0), (0, 0, 0)), left_arm=(-15, 0, -88), right_arm=(-15, 0, 88), left_leg=(-14, 0, 6), right_leg=(10, 0, -6))),
+        (0.75, dict(head=(0, -10, 0), body=((4, 210, 0), (0, 0.6, 0)), left_arm=(-60, 0, -35), right_arm=(-60, 0, 35), left_leg=(8, 0, -4), right_leg=(-12, 0, 4))),
+    ]),
+    # RIPPLE: a wave travels through the arms, one rising as the other falls, then back
+    "dance_ripple": dance(1.4, [
+        (0.0, dict(head=(-4, 0, 0), body=((0, 8, 0), (0, 0, 0)), left_arm=(-150, 0, -22), right_arm=(-30, 0, 16), left_leg=(-5, 0, 0), right_leg=(4, 0, 0))),
+        (0.35, dict(head=(0, 0, 4), body=((3, 0, 0), (0, -0.4, 0)), left_arm=(-95, 0, -40), right_arm=(-95, 0, 40), left_leg=(0, 0, 0), right_leg=(0, 0, 0))),
+        (0.7, dict(head=(-4, 0, 0), body=((0, -8, 0), (0, 0, 0)), left_arm=(-30, 0, -16), right_arm=(-150, 0, 22), left_leg=(4, 0, 0), right_leg=(-5, 0, 0))),
+        (1.05, dict(head=(0, 0, -4), body=((3, 0, 0), (0, -0.4, 0)), left_arm=(-95, 0, -40), right_arm=(-95, 0, 40), left_leg=(0, 0, 0), right_leg=(0, 0, 0))),
+    ]),
+    # CROUCH WAVE: sunk low with the legs apart, one arm sweeping over the other like a swell
+    "dance_crouch_wave": dance(1.2, [
+        (0.0, dict(head=(8, 0, 0), body=((18, 0, 0), (0, -5, 0)), left_arm=(-60, 20, -30), right_arm=(-20, 0, 50), left_leg=(-34, 0, -14), right_leg=(-30, 0, 14))),
+        (0.4, dict(head=(8, 0, 0), body=((22, 8, 0), (0, -6, 0)), left_arm=(-100, -30, -12), right_arm=(-55, -20, 28), left_leg=(-36, 0, -16), right_leg=(-32, 0, 16))),
+        (0.8, dict(head=(8, 0, 0), body=((18, -8, 0), (0, -5, 0)), left_arm=(-20, 0, -50), right_arm=(-60, -20, 30), left_leg=(-30, 0, -14), right_leg=(-34, 0, 14))),
+    ]),
+    # LUNGE FEINT: a long step in, the strike arm shown, and snatched back before it lands
+    "dance_lunge_feint": dance(1.1, [
+        (0.0, dict(head=(0, 0, 0), body=((4, 0, 0), (0, 0, 0)), left_arm=(10, 0, -30), right_arm=(-30, 0, 18), left_leg=(8, 0, -3), right_leg=(-6, 0, 3))),
+        (0.3, dict(head=(-4, 0, 0), body=((12, -15, 0), (0, -2, 0)), left_arm=(25, 0, -35), right_arm=(-85, 0, 8), left_leg=(-36, 0, -4), right_leg=(26, 0, 4))),
+        (0.5, dict(head=(-4, 0, 0), body=((14, -18, 0), (0, -2.5, 0)), left_arm=(28, 0, -38), right_arm=(-90, 0, 6), left_leg=(-38, 0, -4), right_leg=(28, 0, 4))),
+        (0.8, dict(head=(2, 0, 0), body=((-4, 6, 0), (0, 0, 0)), left_arm=(-20, 0, -55), right_arm=(-40, 0, 40), left_leg=(6, 0, -3), right_leg=(-5, 0, 3))),
+    ]),
+    # FOLD: the arms close across the chest like a shutting fan, the body gathers in, then opens out
+    "dance_fold": dance(1.5, [
+        (0.0, dict(head=(10, 0, 0), body=((14, 0, 0), (0, -2, 0)), left_arm=(-72, 42, -8), right_arm=(-72, -42, 8), left_leg=(-14, 0, 6), right_leg=(-14, 0, -6))),
+        (0.6, dict(head=(-6, 0, 0), body=((-8, 0, 0), (0, 1, 0)), left_arm=(-30, 0, -72), right_arm=(-30, 0, 72), left_leg=(4, 0, -4), right_leg=(4, 0, 4))),
+        (1.05, dict(head=(4, 0, 0), body=((6, 0, 0), (0, -1, 0)), left_arm=(-55, 25, -20), right_arm=(-55, -25, 20), left_leg=(-8, 0, 3), right_leg=(-8, 0, -3))),
+    ]),
+    # DRIFT: slow and loose, the arms trailing low and wide as if carried by the tide, a small step either way
+    "dance_drift": dance(1.8, [
+        (0.0, dict(head=(2, 8, 0), body=((3, 10, 2), (0.3, 0, 0)), left_arm=(-12, 10, -34), right_arm=(-26, -10, 48), left_leg=(10, 0, -2), right_leg=(-12, 0, 2))),
+        (0.9, dict(head=(2, -8, 0), body=((3, -10, -2), (-0.3, 0, 0)), left_arm=(-26, 10, -48), right_arm=(-12, -10, 34), left_leg=(-12, 0, -2), right_leg=(10, 0, 2))),
+    ]),
+    # RISE: up on the toes, the arms lifting overhead like smoke, then sinking back to the sides
+    "dance_rise": dance(1.3, [
+        (0.0, dict(head=(-4, 0, 0), body=((0, 0, 0), (0, 0, 0)), left_arm=(-30, 0, -20), right_arm=(-30, 0, 20), left_leg=(2, 0, 0), right_leg=(2, 0, 0))),
+        (0.5, dict(head=(-14, 0, 0), body=((-10, 0, 0), (0, 1.5, 0)), left_arm=(-172, 0, -12), right_arm=(-168, 0, 12), left_leg=(6, 0, 0), right_leg=(6, 0, 0))),
+        (0.85, dict(head=(-8, 0, 0), body=((-4, 0, 0), (0, 0.8, 0)), left_arm=(-110, 0, -30), right_arm=(-105, 0, 30), left_leg=(4, 0, 0), right_leg=(4, 0, 0))),
+    ]),
+}
+
+CLIPS.update(DANCE_CLIPS)
+
+
+def append_dance():
+    """Adds (or refreshes) only the dance_* clips in the existing file and leaves every other clip exactly as it is on disk."""
+    path = os.path.normpath(OUT)
+    with open(path) as f:
+        data = json.load(f)
+    data["animations"].update(DANCE_CLIPS)
+    with open(path, "w", newline="\n") as f:
+        json.dump(data, f, indent=1)
+        f.write("\n")
+    print("appended", len(DANCE_CLIPS), "dance clips to", path)
+
+
 def main():
+    if "--append-dance" in sys.argv:
+        append_dance()
+        return
     data = {"format_version": "1.8.0", "animations": CLIPS}
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w", newline="\n") as f:

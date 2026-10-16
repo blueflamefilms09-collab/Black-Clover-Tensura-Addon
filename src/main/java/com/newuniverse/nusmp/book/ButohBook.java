@@ -28,7 +28,12 @@ public class ButohBook extends GrimoireBook {
             BookPage.zone("butoh_undertow", "Undertow", ButohArts::undertow).withAnim("slam"),
             BookPage.zone("butoh_metronome_field", "Metronome Field", ButohArts::metronomeField).withAnim("up"),
             BookPage.signature("butoh_sea_god_descent", "Sea God's Descent", ButohArts::seaGodDescent).withAnim("signature"),
-            BookPage.daily("butoh_seabed_hymn", "Seabed Hymn", ButohArts::seabedHymn).withCooldown(12000).withAnim("up"));
+            BookPage.daily("butoh_seabed_hymn", "Seabed Hymn", ButohArts::seabedHymn).withCooldown(12000).withAnim("up"),
+            // 1.43.0 (Kiato): the dance state and the deflect dash, appended last so no page moves. The dance page toggles (cast again to stop);
+            // its release clip is the plain side pose, the looping dance clips come from butoh.DanceChoreographer / client.butoh.DanceClient.
+            new BookPage("butoh_dance", "Butoh Dance", "Butoh Dance", 4, 100, 40, ButohArts::dance, "side"),
+            BookPage.mid("butoh_dash_deflect", "Deflect Dash", ButohArts::dashDeflect).withAnim("side")
+                    .withCooldown(com.newuniverse.nusmp.butoh.DeflectMath.COOLDOWN_TICKS));
 
     public ButohBook() { super(MagicType.BUTOH, COLOR); }
     @Override protected List<BookPage> familyPages() { return pages; }
@@ -40,6 +45,14 @@ public class ButohBook extends GrimoireBook {
         var tag = i.getOrCreateTag();
         if (source.getDirectEntity() == owner && owner.level().getGameTime() < tag.getLong("EmpowerUntil")) {
             amount.set(amount.get() + com.newuniverse.nusmp.balance.BalanceLaw.damage(target, tag.getFloat("EmpowerBonus"), masteryFrac(i)));
+        }
+        // 1.43.0: Butoh pages cast while the dance is on hit harder (+15%, config butoh.danceCastBonus), never past the PvP per-hit cap
+        float bonus = com.newuniverse.nusmp.butoh.ButohDance.castBonus(owner);
+        if (bonus > 1f && (source.is(TensuraDamageTypes.WATER_ELEMENTAL) || source.is(damageType()))) {
+            float boosted = amount.get() * bonus;
+            if (target instanceof net.minecraft.world.entity.player.Player)
+                boosted = Math.min(boosted, (float) (target.getMaxHealth() * com.newuniverse.nusmp.NUGameRules.pvpHitCap(target.level())));
+            amount.set(Math.max(amount.get(), boosted));
         }
         return true;
     }

@@ -40,15 +40,20 @@ public class ButohLayer extends AbstractVfxLayer {
     private static final ResourceLocation SLASH = VfxTextures.byName("butoh_slash");
     private static final ResourceLocation FLASH = VfxTextures.byName("butoh_flash");
 
+    /** The dance's own palette: ghostly white-blue water light and the deep blue-black of ink wash (1.43.0). */
+    private static final int GHOST = 0xFFB8E6FF, INK = 0xFF16233A;
     private static final int TEAL = 0xFF48D8C8, JADE = 0xFF8CF0C8, PALE = 0xFFE6F8F4, VIOLET = 0xFFB088F4, WHITE = 0xFFFFFFFF;
 
-    @Override public Set<VfxShape> shapes() { return EnumSet.of(VfxShape.BUTOH_FX1, VfxShape.BUTOH_FX2, VfxShape.BUTOH_FX3); }
+    @Override public Set<VfxShape> shapes() { return EnumSet.of(VfxShape.BUTOH_FX1, VfxShape.BUTOH_FX2, VfxShape.BUTOH_FX3,
+            VfxShape.BUTOH_DANCE_RIPPLE, VfxShape.BUTOH_AFTERIMAGE); }
 
     @Override
     public int defaultDuration(VfxShape s) {
         return switch (s) {
             case BUTOH_FX1 -> 16;
             case BUTOH_FX2 -> 80;
+            case BUTOH_DANCE_RIPPLE -> 24;
+            case BUTOH_AFTERIMAGE -> 16;
             default -> 28;
         };
     }
@@ -61,6 +66,8 @@ public class ButohLayer extends AbstractVfxLayer {
             case BUTOH_FX1 -> cast(inst, ctx, buf);
             case BUTOH_FX2 -> zone(inst, ctx, buf);
             case BUTOH_FX3 -> impact(inst, ctx, buf);
+            case BUTOH_DANCE_RIPPLE -> danceRipple(inst, ctx, buf);
+            case BUTOH_AFTERIMAGE -> afterimage(inst, ctx, buf);
             default -> { }
         }
     }
@@ -323,6 +330,106 @@ public class ButohLayer extends AbstractVfxLayer {
             Vector3f end = new Vector3f(out).mul(p * (0.8f + 2.2f * eSlow)).add(c);
             end.y += 0.5f * t * p;
             buf.beam(ctx, SHEEN, VfxBlend.ALPHA, c, end, 0.8f * p, 0.3f * p, 3, age * 0.05f + i, a(WHITE, 0.85f * (1f - t) * saturate(t * 6f + 0.3f)), a(WHITE, 0f));
+        }
+    }
+
+    // ------------------------------------------------------------------ BUTOH_DANCE_RIPPLE: the dancer's ripples (1.43.0)
+    /**
+     * from = the dancer's feet (follows them), power = size (1 to 1.9, bigger for the wider moves), duration = the length of the move plus a
+     * little. Three ghostly white-blue wave discs spread out over the ground one after the other, a thin ring on the water line, a low glow and
+     * a few ink flecks lifting off. One of these starts at every move, so the water under the dancer is always moving with the dance.
+     */
+    private void danceRipple(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {
+        float age = inst.ageTicks(ctx.partialTick), dur = Math.max(1f, inst.duration);
+        float fade = Math.min(saturate(age / 3f), saturate((dur - age) / 8f));
+        if (fade <= 0.01f) return;
+        float R = 0.9f + 0.5f * Math.max(0.5f, inst.power);
+        Vector3f c = ctx.rel(inst.from(ctx));
+        VfxPose ground = VfxPose.ground(c);
+        RandomSource r = inst.random();
+        int ghost = VfxVertexBuffer.lerpColor(GHOST, PALE, 0.35f);
+
+        // three discs, each born a few ticks after the one before and spreading out as it fades
+        for (int i = 0; i < 3; i++) {
+            float k = saturate((age - i * 4f) / (dur - 6f));
+            if (k <= 0f || k >= 1f) continue;
+            float e = VfxAnim.easeOutCubic(k), al = (1f - k) * (1f - k);
+            buf.plane(RIPPLE, VfxBlend.ADD, ground.lift(0.03f + 0.01f * i).spin(i * 2.1f + age * 0.02f), R * (0.25f + 0.95f * e), a(ghost, 0.6f * al * fade));
+        }
+        // the ring on the water line: a thin chain-link band that breathes with the move
+        float rr = R * (0.55f + 0.08f * VfxAnim.pulse(age, 1.2f));
+        buf.ring(LINKS, VfxBlend.ADD, ground.lift(0.05f).spin(-age * 0.03f), rr - 0.07f * R, rr, ctx.seg(14, 8), 5, age * 0.01f, a(GHOST, 0.5f * fade));
+        VfxBloom.glow(ctx, buf, new Vector3f(c).add(0, 0.12f, 0), R * 0.9f, GHOST, 0.22f * fade);
+
+        // ink flecks lifting off the water
+        int n = ctx.seg(5, 3);
+        for (int i = 0; i < n; i++) {
+            float ang = r.nextFloat() * Mth.TWO_PI, rad = (0.2f + 0.7f * r.nextFloat()) * R, ph = r.nextFloat();
+            float k = (ph + age * 0.03f) % 1f;
+            Vector3f pos = new Vector3f(c).add(Mth.cos(ang) * rad, 0.1f + k * 1.1f, Mth.sin(ang) * rad);
+            buf.billboard(ctx, FLECK, VfxBlend.ALPHA, pos, 0.16f + 0.1f * r.nextFloat(), ang, a(i % 2 == 0 ? GHOST : INK, fade * Mth.sin(k * Mth.PI) * 0.8f));
+        }
+    }
+
+    // ------------------------------------------------------------------ BUTOH_AFTERIMAGE: the ink-wash after-image (1.43.0)
+    /**
+     * from = where the dancer was (where the blow would have landed), to = where they are now (it leans and drifts that way), power = size,
+     * duration = life (16). A soft pale-blue standing figure (head, torso, two legs) fades out while an ink-wash smear stretches along the
+     * line to the new place, with two trailing sleeves of iridescent water and a few ink flecks. It is a client-only picture: no entity.
+     */
+    private void afterimage(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {
+        float age = inst.ageTicks(ctx.partialTick), dur = Math.max(1f, inst.duration);
+        float t = saturate(age / dur), p = Math.max(0.4f, inst.power);
+        float life = (1f - t) * (1f - t);
+        if (life <= 0.01f) return;
+        Vector3f a0 = ctx.rel(inst.from(ctx)), a1 = ctx.rel(inst.to(ctx));
+        Vector3f move = new Vector3f(a1).sub(a0);
+        move.y = 0f;
+        float dist = move.length();
+        Vector3f dir = dist < 1e-3f ? new Vector3f(ctx.camRight) : new Vector3f(move).div(dist);
+        RandomSource r = inst.random();
+        // the figure drifts a third of the way toward the new place while it fades
+        Vector3f base = new Vector3f(a0).add(new Vector3f(dir).mul(Math.min(dist, 1.6f) * 0.35f * VfxAnim.easeOutCubic(t)));
+        Vector3f up = new Vector3f(0, 1, 0), tcam = toCam(new Vector3f(base).add(0, 1, 0));
+        int ghost = VfxVertexBuffer.lerpColor(GHOST, PALE, 0.4f);
+
+        // ink-wash smear along the move (dark, behind) and its pale glow copy
+        if (dist > 0.2f) {
+            Vector3f mid = new Vector3f(a0).add(new Vector3f(move).mul(0.5f)).add(0, 1.0f, 0);
+            float len = Math.max(0.8f, dist * (0.8f + 0.5f * t));
+            butohOriented(buf, SLASH, VfxBlend.ALPHA, mid, move, tcam, len, 0.34f * p, a(INK, 0.6f * life));
+            butohOriented(buf, SLASH, VfxBlend.ADD, mid.add(0, 0.12f * p, 0), move, tcam, len * 0.9f, 0.16f * p, a(ghost, 0.5f * life));
+        }
+        // the figure: legs, torso, head, each a soft pale blade-shaped glow standing up
+        float sway = 0.04f * Mth.sin(age * 0.5f);
+        Vector3f side = new Vector3f(up).cross(tcam).normalize();
+        for (int s = -1; s <= 1; s += 2) {
+            Vector3f leg = new Vector3f(base).add(new Vector3f(side).mul(0.11f * s * p)).add(0, 0.45f * p, 0);
+            butohOriented(buf, FLECK, VfxBlend.ALPHA, leg.add(new Vector3f(side).mul(0.04f * s * p)), up, tcam, 0.92f * p, 0.13f * p, a(INK, 0.5f * life));
+            butohOriented(buf, FLECK, VfxBlend.ADD, leg, up, tcam, 0.9f * p, 0.1f * p, a(ghost, 0.85f * life));
+        }
+        Vector3f torso = new Vector3f(base).add(sway, 1.12f * p, 0);
+        butohOriented(buf, FLECK, VfxBlend.ALPHA, new Vector3f(torso).add(new Vector3f(side).mul(0.05f * p)), up, tcam, 0.9f * p, 0.3f * p, a(INK, 0.55f * life));
+        butohOriented(buf, FLECK, VfxBlend.ADD, torso, up, tcam, 0.86f * p, 0.24f * p, a(ghost, 0.95f * life));
+        butohOriented(buf, VfxTextures.GLOW, VfxBlend.ADD, torso, up, tcam, 1.0f * p, 0.5f * p, a(ghost, 0.35f * life));
+        Vector3f head = new Vector3f(base).add(sway, 1.7f * p, 0);
+        buf.billboard(ctx, VfxTextures.GLOW, VfxBlend.ALPHA, head, 0.4f * p, 0f, a(INK, 0.5f * life));
+        buf.billboard(ctx, VfxTextures.GLOW, VfxBlend.ADD, head, 0.36f * p, 0f, a(PALE, 0.9f * life));
+        VfxBloom.glow(ctx, buf, torso, 0.9f * p, GHOST, 0.3f * life);
+
+        // two sleeves of iridescent water trailing toward where the dancer went
+        Vector3f lean = new Vector3f(dir).mul(-0.9f * p * (0.4f + 0.6f * t));
+        for (int s = -1; s <= 1; s += 2) {
+            Vector3f sh = new Vector3f(torso).add(new Vector3f(side).mul(0.3f * s * p)).add(0, 0.25f * p, 0);
+            Vector3f tip = new Vector3f(sh).add(lean).add(new Vector3f(side).mul(0.2f * s * p)).add(0, -0.55f * p, 0);
+            buf.beam(ctx, SHEEN, VfxBlend.ALPHA, sh, tip, 0.34f * p, 0.06f * p, 2, age * 0.05f * s, a(WHITE, 0.7f * life), a(WHITE, 0f));
+        }
+        // ink flecks falling off the figure
+        int n = ctx.seg(4, 2);
+        for (int i = 0; i < n; i++) {
+            float k = saturate(t * 1.3f - 0.1f * i);
+            Vector3f pos = new Vector3f(torso).add((r.nextFloat() - 0.5f) * 0.7f * p, (r.nextFloat() - 0.2f) * 0.8f * p - 0.7f * k * k, (r.nextFloat() - 0.5f) * 0.5f * p);
+            buf.billboard(ctx, FLECK, VfxBlend.ALPHA, pos, 0.14f * p, r.nextFloat() * 6f, a(i % 2 == 0 ? INK : GHOST, (1f - k) * 0.8f));
         }
     }
 }
