@@ -2,6 +2,7 @@ package com.newuniverse.nusmp.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.newuniverse.nusmp.book.RougeCat;
+import com.newuniverse.nusmp.thread.RougeRest;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -36,7 +37,8 @@ public class RougeCatLayer extends RenderLayer<AbstractClientPlayer, PlayerModel
     @Override
     public void render(PoseStack pose, MultiBufferSource buffers, int light, AbstractClientPlayer p, float limbSwing, float limbSwingAmount,
                        float partial, float age, float netHeadYaw, float headPitch) {
-        if (!RougeCat.onHead(p.getId(), p.level().getGameTime())) return;
+        // the old head cat (RougeCat payload, used when thread.rougeEntity is off) or, from 1.46.0, the Rouge entity resting on this player's head
+        if (!RougeCat.onHead(p.getId(), p.level().getGameTime()) && RougeRest.on(p.getUUID()) == null) return;
         pose.pushPose();
         getParentModel().head.translateAndRotate(pose);
         pose.translate(0, -0.5f + Mth.sin(age * 0.1f) * 0.01f, 0);           // the top of the head (y points down here)

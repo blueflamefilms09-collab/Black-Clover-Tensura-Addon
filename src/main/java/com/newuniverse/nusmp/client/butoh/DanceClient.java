@@ -5,6 +5,7 @@ import com.newuniverse.nusmp.butoh.DanceStatePayload;
 import com.newuniverse.nusmp.client.CastAnimClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
@@ -28,6 +29,7 @@ public final class DanceClient {
         final long startTick;
         int lastIndex = -1;
         int age;
+        boolean playing;                // 1.46.0: the dance clip is the one on the body (false while an item is in use)
 
         Dancer(long seed, long startTick) {
             this.cursor = new DanceChoreographer.Cursor(seed);
@@ -68,9 +70,17 @@ public final class DanceClient {
             Dancer d = en.getValue();
             DanceChoreographer.Step step = d.cursor.at((int) Math.max(0, now - d.startTick));
             d.age++;
+            // 1.46.0: eating, drawing a bow, blocking: the arms belong to the item, so the dance clip is taken off until it is put down
+            if (ent instanceof LivingEntity le && le.isUsingItem()) {
+                if (d.playing) { CastAnimClient.receive(en.getKey(), ""); d.playing = false; }
+                continue;
+            }
+            // a page's own cast animation wins; the move change is not sent, so it is picked up the tick the cast clip is over
+            if (CastAnimClient.oneShotActive(en.getKey())) continue;
             // a new move, or a few ticks after the start (the page's own release clip may have just taken the arms): play the move's clip
-            if (step.index() != d.lastIndex || d.age == 4) {
+            if (!d.playing || step.index() != d.lastIndex || d.age == 4) {
                 d.lastIndex = step.index();
+                d.playing = true;
                 CastAnimClient.receive(en.getKey(), step.move().clip);
             }
         }

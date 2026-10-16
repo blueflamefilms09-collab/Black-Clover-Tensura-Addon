@@ -39,6 +39,14 @@ public class ButohBook extends GrimoireBook {
     @Override protected List<BookPage> familyPages() { return pages; }
     @Override public ResourceKey<DamageType> damageType() { return TensuraDamageTypes.MAGIC_GENERIC; }
 
+    /** 1.46.0: with the dance as a passive, the Butoh Dance page only flips resting / dancing, so it costs nothing (the upkeep is the cost). */
+    @Override
+    public double getMagiculeCost(LivingEntity entity, ManasSkillInstance instance, int mode) {
+        BookPage pg = page(mode);
+        if (pg != null && pg.id().equals("butoh_dance") && com.newuniverse.nusmp.butoh.ButohConfig.passive()) return 0;
+        return super.getMagiculeCost(entity, instance, mode);
+    }
+
     /** Trance Dance: melee hits deal a bonus while it lasts. */
     @Override
     public boolean onDamageEntity(ManasSkillInstance i, LivingEntity owner, LivingEntity target, DamageSource source, Changeable<Float> amount) {

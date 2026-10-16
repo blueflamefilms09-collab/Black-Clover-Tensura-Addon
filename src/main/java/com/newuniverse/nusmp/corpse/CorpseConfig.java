@@ -14,7 +14,8 @@ public final class CorpseConfig {
     public static final ModConfigSpec.IntValue LEDGER_MAX, RAISE_MAX, MAX_ACTIVE, LIFE_SECONDS, NAMED_LIFE_SECONDS, TRUE_COOLDOWN_SECONDS,
             PACT_MINUTES, REVIVE_DECAY_SECONDS, PET_WINDOW_SECONDS, PACT_RANGE, LEDGER_RADIUS, REVIVE_MANA_PERCENT;
     public static final ModConfigSpec.DoubleValue DAMAGE_MULT, REVIVE_HEALTH, REVIVE_MAX_HEALTH_CUT;
-    public static final ModConfigSpec.BooleanValue ENABLED, REVIVE_PLAYERS;
+    public static final ModConfigSpec.BooleanValue ENABLED, REVIVE_PLAYERS, CONJURE, CONJURE_TENSURA;
+    public static final ModConfigSpec.DoubleValue CONJURE_MANA_PERCENT;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -53,6 +54,12 @@ public final class CorpseConfig {
                 .defineInRange("pactRange", 96, 8, 1024);
         PET_WINDOW_SECONDS = b.comment("Seconds either side of the cast within which a fallen pet or summon of the caster is re-raised by True Soul Corpse Magic.")
                 .defineInRange("petWindow", 15, 1, 120);
+        CONJURE = b.comment("true (1.46.0): when no one has died near you in the last minute, Reanimation conjures new Soul Corpses out of the ground (undead that fit the",
+                "biome or dimension; 1 to 3 by mastery). false = Reanimation only raises the recently dead, as in 1.44.0.").define("conjure", true);
+        CONJURE_TENSURA = b.comment("Also let the ground give up the weak Tensura undead (Ghoul, Wight) when those entity types exist. Vanilla undead are always used.")
+                .define("conjureTensura", true);
+        CONJURE_MANA_PERCENT = b.comment("Mana a conjured corpse costs, percent of your maximum magicule per body, on top of the page's own cost. 0 = free.")
+                .defineInRange("conjureManaPercent", 3.0, 0.0, 100.0);
         b.pop();
         SPEC = b.build();
     }
@@ -71,6 +78,9 @@ public final class CorpseConfig {
         try { return v.get(); } catch (IllegalStateException unloaded) { return fallback; }
     }
 
+    public static boolean conjure() { return getb(CONJURE, true); }
+    public static boolean conjureTensura() { return getb(CONJURE_TENSURA, true); }
+    public static double conjureManaPercent() { return getd(CONJURE_MANA_PERCENT, 3.0); }
     public static boolean enabled() { return getb(ENABLED, true); }
     public static int ledgerMax() { return geti(LEDGER_MAX, 24); }
     public static int ledgerRadius() { return geti(LEDGER_RADIUS, 32); }

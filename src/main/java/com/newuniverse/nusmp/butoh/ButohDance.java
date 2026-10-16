@@ -6,6 +6,9 @@ import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
 import io.github.manasmods.tensura.storage.TensuraStorages;
 import io.github.manasmods.tensura.util.EnergyHelper;
+import com.newuniverse.nusmp.skill.NUSkills;
+import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
+import io.github.manasmods.manascore.skill.api.SkillAPI;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -48,6 +51,8 @@ public final class ButohDance {
         DanceMove applied;          // the move the hitbox currently matches
         DanceMove last;             // the move the ripples were last drawn for
         int side = 1;               // which side the next sidestep slips to (flips each time)
+        final DancePassive.Activity activity = new DancePassive.Activity();   // 1.46.0: moving / fighting or idle, for the cheaper idle upkeep
+        double lastX = Double.NaN, lastZ = Double.NaN;
 
         Session(long seed, long startTick, ResourceKey<Level> dimension) {
             this.cursor = new DanceChoreographer.Cursor(seed);
@@ -83,14 +88,17 @@ public final class ButohDance {
         return true;
     }
 
-    private static void start(ServerPlayer p) {
+    private static void start(ServerPlayer p) { start(p, false); }
+
+    private static void start(ServerPlayer p, boolean quiet) {
         long now = p.level().getGameTime();
         long seed = DanceChoreographer.seedFor(p.getUUID().getMostSignificantBits(), p.getUUID().getLeastSignificantBits(), now);
         Session s = new Session(seed, now, p.level().dimension());
         SESSIONS.put(p.getUUID(), s);
         PENDING_CLEAR.remove(p.getUUID());
         PacketDistributor.sendToPlayersTrackingEntityAndSelf(p, new DanceStatePayload(p.getId(), true, seed, now));
-        p.displayClientMessage(Component.literal("The dance begins.").withStyle(net.minecraft.ChatFormatting.AQUA), true);
+        s.activity.touch(now);
+        if (!quiet) p.displayClientMessage(Component.literal("The dance begins.").withStyle(net.minecraft.ChatFormatting.AQUA), true);
     }
 
     /** Ends the dance on every path (with a short reason for the player, or null for a quiet end). Safe to call when not dancing. */
@@ -118,13 +126,23 @@ public final class ButohDance {
     public static void tick(ServerPlayer p) {
         UUID id = p.getUUID();
         if (!PENDING_CLEAR.isEmpty() && PENDING_CLEAR.containsKey(id)) growBack(p);
+        if (ButohConfig.passive()) passiveTick(p);
         Session s = SESSIONS.get(id);
         if (s == null) return;
         long now = p.level().getGameTime();
         if (!p.isAlive()) { forget(p); return; }
-        if (p.level().dimension() != s.dimension) { stop(p, "The dance is lost between worlds."); return; }
+        boolean passive = ButohConfig.passive();
+        // in passive mode the dance re-arms by itself after these, so they end it quietly instead of with a message each time
+        if (p.level().dimension() != s.dimension) { stop(p, passive ? null : "The dance is lost between worlds."); return; }
         String block = interrupted(p);
-        if (block != null) { stop(p, block); return; }
+        if (block != null) { stop(p, passive ? null : block); return; }
+        if (passive) {
+            boolean fighting = p.swinging || p.hurtTime > 0 || (p.tickCount - p.getLastHurtMobTimestamp()) < 40;
+            double dx = Double.isNaN(s.lastX) ? 0 : p.getX() - s.lastX, dz = Double.isNaN(s.lastZ) ? 0 : p.getZ() - s.lastZ;
+            s.activity.observe(now, dx * dx + dz * dz, fighting);
+            s.lastX = p.getX();
+            s.lastZ = p.getZ();
+        }
 
         long elapsed = now - s.startTick;
         DanceChoreographer.Step step = s.cursor.at((int) elapsed);
@@ -135,7 +153,7 @@ public final class ButohDance {
         }
         if (move != s.applied) applyScale(p, s, move);
 
-        if (elapsed > 0 && elapsed % 20 == 0 && !upkeep(p)) stop(p, "Your mana runs dry; the dance falters.");
+        if (elapsed > 0 && elapsed % 20 == 0 && !upkeep(p, s)) stop(p, "Your mana runs dry; the dance falters.");
     }
 
     /** Stun, sleep, time stop, spectating: anything that takes the body out of the dancer's hands ends the dance. */
@@ -152,13 +170,77 @@ public final class ButohDance {
     }
 
     /** One second of upkeep: a fraction of the maximum magicule (config butoh.danceDrain). False when there is not enough. */
-    private static boolean upkeep(ServerPlayer p) {
-        double want = EnergyHelper.getMaxMagicule(p) * ButohConfig.danceDrain() * ManaLaw.costMult(p);
+    private static boolean upkeep(ServerPlayer p, Session s) {
+        double factor = ButohConfig.passive() ? DancePassive.drainFactor(s.activity.idle(p.level().getGameTime()), ButohConfig.idleDrainFactor()) : 1.0;
+        double want = EnergyHelper.getMaxMagicule(p) * ButohConfig.danceDrain() * ManaLaw.costMult(p) * factor;
         if (want <= 0) return true;
         var ex = TensuraStorages.getExistenceFrom(p);
         if (ex == null || ex.getMagicule() < want) return false;
         ex.setMagicule(ex.getMagicule() - want);
         ex.markDirty();
+        return true;
+    }
+
+    // ------------------------------------------------------------------ the passive (1.46.0)
+    /** The skill-tag flag the Butoh Dance page flips: true = the dancer chose to rest, so the passive stays off. */
+    public static final String REST_TAG = "DanceRest";
+
+    private static ManasSkillInstance butohSkill(ServerPlayer p) {
+        return SkillAPI.getSkillsFrom(p).getSkill(NUSkills.BOOK_BUTOH.getId()).orElse(null);
+    }
+
+    /**
+     * Starts and stops the dance for anyone who has the Butoh skill. Nothing is stored except the resting flag on the skill, so a login, a
+     * respawn or a dimension change simply re-arms it at the next check. Players who are not dancing are looked at every fifth tick only.
+     */
+    private static void passiveTick(ServerPlayer p) {
+        boolean dancing = SESSIONS.containsKey(p.getUUID());
+        long now = p.level().getGameTime();
+        if (!dancing && now % 5 != 0) return;
+        ManasSkillInstance inst = butohSkill(p);
+        boolean wanted = inst != null && !inst.getOrCreateTag().getBoolean(REST_TAG);
+        if (!wanted && !dancing) return;
+        boolean blocked = wanted && p.isAlive() && (interruptedNow(p) || passiveBlocked(p));
+        if (!p.isAlive()) blocked = true;
+        double share = 0;
+        if (wanted && !dancing && !blocked) share = manaShare(p);
+        switch (DancePassive.decide(dancing, wanted, blocked, share, ButohConfig.restartShare())) {
+            case START -> start(p, true);
+            case STOP -> stop(p, null);
+            default -> { }
+        }
+    }
+
+    /** The checks of {@link #interrupted} done in full regardless of the tick (the start check runs on a fifth tick anyway). */
+    private static boolean interruptedNow(ServerPlayer p) {
+        if (p.isSpectator() || p.isSleeping() || TimeStop.isFrozen(p)) return true;
+        for (String id : new String[] {"paralysis", "sleep", "petrification"}) {
+            Holder<MobEffect> h = BuiltInRegistries.MOB_EFFECT.getHolder(ResourceLocation.fromNamespaceAndPath("tensura", id)).map(x -> (Holder<MobEffect>) x).orElse(null);
+            if (h != null && p.hasEffect(h)) return true;
+        }
+        return false;
+    }
+
+    /** States where a dance makes no sense: on a mount or vehicle, swimming, gliding, flying, on a ladder. */
+    private static boolean passiveBlocked(ServerPlayer p) {
+        return p.isPassenger() || p.isSwimming() || p.isFallFlying() || p.getAbilities().flying || p.onClimbable() || p.isVisuallyCrawling();
+    }
+
+    private static double manaShare(ServerPlayer p) {
+        double max = EnergyHelper.getMaxMagicule(p);
+        var ex = TensuraStorages.getExistenceFrom(p);
+        return ex == null || max <= 0 ? 0 : Math.min(1.0, ex.getMagicule() / max);
+    }
+
+    /** The Butoh Dance page in passive mode: flips resting / dancing. Returns true (the cast always counts). */
+    public static boolean toggleRest(ServerPlayer p, ManasSkillInstance inst) {
+        var tag = inst.getOrCreateTag();
+        boolean rest = !tag.getBoolean(REST_TAG);
+        tag.putBoolean(REST_TAG, rest);
+        inst.markDirty();
+        if (rest) stop(p, null);
+        p.displayClientMessage(Component.literal(rest ? "Butoh dance: resting" : "Butoh dance: dancing")
+                .withStyle(rest ? net.minecraft.ChatFormatting.GRAY : net.minecraft.ChatFormatting.AQUA), true);
         return true;
     }
 

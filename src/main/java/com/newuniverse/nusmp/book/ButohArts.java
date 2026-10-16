@@ -317,6 +317,8 @@ final class ButohArts {
     static boolean dance(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
         boolean wasDancing = com.newuniverse.nusmp.butoh.ButohDance.dancing(p);
         b.castCircle(p, wasDancing ? 0.6f : 1.1f);
+        // 1.46.0: the dance is a passive now; the page only switches it between resting and dancing (butoh.passive=false keeps the toggle)
+        if (com.newuniverse.nusmp.butoh.ButohConfig.passive()) return com.newuniverse.nusmp.butoh.ButohDance.toggleRest(p, i);
         return com.newuniverse.nusmp.butoh.ButohDance.toggle(p);
     }
 

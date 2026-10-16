@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.newuniverse.nusmp.client.RougeCatModel;
 import com.newuniverse.nusmp.thread.RougeEntity;
+import com.newuniverse.nusmp.thread.RougePerch;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -34,6 +35,8 @@ public class RougeRenderer extends EntityRenderer<RougeEntity> {
     @Override
     public void render(RougeEntity e, float yaw, float partial, PoseStack pose, MultiBufferSource buffers, int light) {
         int state = e.state();
+        // 1.46.0: settled on the head, the head-cat layer draws her; the entity only supplies the name plate (no second model)
+        if (!RougePerch.bodyDrawn(state == RougeEntity.HEAD, e.stateAge())) { super.render(e, yaw, partial, pose, buffers, light); return; }
         float t = e.stateAge() + partial, age = e.tickCount + partial;
         float body = Mth.rotLerp(partial, e.yBodyRotO, e.yBodyRot);
         float headYaw = Mth.rotLerp(partial, e.yHeadRotO, e.yHeadRot) - body;
@@ -60,5 +63,6 @@ public class RougeRenderer extends EntityRenderer<RougeEntity> {
         model.render(pose, buffers.getBuffer(RenderType.entityTranslucent(TEX)), light, OverlayTexture.NO_OVERLAY, (a << 24) | 0xFFFFFF);
         model.render(pose, buffers.getBuffer(RenderType.eyes(TEX)), 0xF000F0, OverlayTexture.NO_OVERLAY, ((int) (a * 0.3f) << 24) | 0xFF8090);
         pose.popPose();
+        super.render(e, yaw, partial, pose, buffers, light);                    // the name plate of a named Rouge
     }
 }

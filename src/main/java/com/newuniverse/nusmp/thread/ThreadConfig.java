@@ -11,7 +11,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class ThreadConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue ROUGE_ENTITY;
+    public static final ModConfigSpec.BooleanValue ROUGE_ENTITY, ROUGE_ON_HEAD;
     public static final ModConfigSpec.IntValue ROUGE_MINUTES, ROUGE_MAX_ALLIES, ROUGE_BOSS_COOLDOWN_SECONDS, TRAP_MAX, TRAP_SECONDS, ARREST_SECONDS;
     public static final ModConfigSpec.DoubleValue ROUGE_BIG_HIT_FRACTION, ROUGE_MANA_FLAT, ROUGE_MANA_PERCENT, REINFORCE_DRAIN;
 
@@ -21,6 +21,8 @@ public final class ThreadConfig {
         ROUGE_ENTITY = b.comment("true: the Rouge page calls a real red thread cat that watches your allies and rewrites deadly blows (costs a lot of mana each time).",
                         "false: the 1.34 to 0.49 Rouge untouched (a cat on your head, a 12% dodge, one death undo a day).")
                 .define("rougeEntity", true);
+        ROUGE_ON_HEAD = b.comment("true (1.46.0): Rouge rests ON THE CASTER'S HEAD when she has nothing to do, drawn as the old head cat.",
+                        "false: the 1.44.0 shoulder perch.").define("rougeOnHead", true);
         ROUGE_MINUTES = b.comment("Minutes Rouge stays after the page is cast.").defineInRange("rougeMinutes", 10, 1, 120);
         ROUGE_MAX_ALLIES = b.comment("How many hand-picked allies one caster can name (Sneak + cast on a player or pet). Party members and pets are watched on top of this.")
                 .defineInRange("rougeMaxAllies", 6, 0, 32);
@@ -44,6 +46,7 @@ public final class ThreadConfig {
     private ThreadConfig() {}
 
     public static boolean rougeEntity() { return get(ROUGE_ENTITY); }
+    public static boolean rougeOnHead() { return get(ROUGE_ON_HEAD); }
     public static int rougeTicks() { return get(ROUGE_MINUTES) * 1200; }
     public static int rougeMaxAllies() { return get(ROUGE_MAX_ALLIES); }
     public static int trapMax() { return get(TRAP_MAX); }

@@ -73,6 +73,10 @@ public final class RougeManager {
         cat.setOwner(p);
         cat.setLifetime(sl.getGameTime() + ThreadConfig.rougeTicks());
         cat.refreshCaches(p);
+        threadBook(p).ifPresent(i -> {                                   // 1.46.0: a recast keeps the name the caster gave her
+            String name = RougePerch.cleanName(i.getOrCreateTag().getString(RougePerch.NAME_TAG));
+            if (name != null) cat.applyName(name);
+        });
         sl.addFreshEntity(cat);
         ACTIVE.put(p.getUUID(), cat);
         return cat;

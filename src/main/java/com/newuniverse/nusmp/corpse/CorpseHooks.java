@@ -44,6 +44,7 @@ public final class CorpseHooks {
         done = true;
         var bus = NeoForge.EVENT_BUS;
         bus.addListener(CorpseHooks::onTick);
+        bus.addListener(CorpseHooks::onPlayerTick);
         bus.addListener(EventPriority.HIGH, CorpseHooks::onDeathPact);
         bus.addListener(CorpseHooks::onDeath);
         bus.addListener(CorpseHooks::onChangeTarget);
@@ -62,6 +63,11 @@ public final class CorpseHooks {
     static void onTick(ServerTickEvent.Post e) {
         Corpses.tick(e.getServer());
         Pacts.tick(e.getServer());
+    }
+
+    /** 1.46.0: opens the Reanimation page for anyone who holds the Soul Corpse grimoire (see {@link Corpses#openStarterPage}). */
+    static void onPlayerTick(net.neoforged.neoforge.event.tick.PlayerTickEvent.Post e) {
+        if (e.getEntity() instanceof ServerPlayer p && p.tickCount % 40 == 13) Corpses.openStarterPage(p);
     }
 
     static void onDeathPact(LivingDeathEvent e) { Pacts.onDeath(e); }
