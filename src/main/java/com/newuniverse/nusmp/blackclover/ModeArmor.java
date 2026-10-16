@@ -19,11 +19,14 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
  *
  * <p>Triggers: Spirit Dive on the Wind book or Spirit of Zephyr ({@link Mode#WIND_SPIRIT_DIVE}), Spirit Dive on the Fire book
  * ({@link Mode#FIRE_SPIRIT_DIVE}), Black Asta or the Anti-Magic Spirit Lord's Black Form ({@link Mode#DEMON}), Thunder Fiend
- * and Black Lightning Battle Fiend ({@link Mode#LIGHTNING_GOD}), Valkyrie Dress ({@link Mode#VALKYRIE}).
+ * and Black Lightning Battle Fiend ({@link Mode#LIGHTNING_GOD}), Valkyrie Dress ({@link Mode#VALKYRIE}), and (1.43.0) the four Devil Unite modes
+ * of the Shadow book ({@link Mode#DEVIL_EQUUS}, {@link Mode#DEVIL_CANIS}, {@link Mode#DEVIL_FELIS}, {@link Mode#DEVIL_GALLUS}).
  */
 public final class ModeArmor {
     /** Append only: the ordinal goes over the network. */
-    public enum Mode { NONE, WIND_SPIRIT_DIVE, FIRE_SPIRIT_DIVE, DEMON, LIGHTNING_GOD, VALKYRIE }
+    public enum Mode { NONE, WIND_SPIRIT_DIVE, FIRE_SPIRIT_DIVE, DEMON, LIGHTNING_GOD, VALKYRIE,
+        /** 1.43.0: Nacht Faust's Devil Unite modes (shadow.UniteState): Slotos, Gimodelo, Plumede, Walgner. */
+        DEVIL_EQUUS, DEVIL_CANIS, DEVIL_FELIS, DEVIL_GALLUS }
 
     private static final String KEY = "nusmp_mode_armor", UNTIL = "nusmp_mode_armor_until";
 

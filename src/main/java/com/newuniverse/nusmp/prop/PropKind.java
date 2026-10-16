@@ -95,5 +95,7 @@ public enum PropKind {
     SAND_1,
     SAND_2,
     RECOMBINATION_1,
-    RECOMBINATION_2
+    RECOMBINATION_2,
+    /** 1.43.0: Unite Canis's shadow wolves (server: shadow.ShadowPackProps, painter: client.shadow.ShadowPackPainter). */
+    SHADOW_PACK_1
 }

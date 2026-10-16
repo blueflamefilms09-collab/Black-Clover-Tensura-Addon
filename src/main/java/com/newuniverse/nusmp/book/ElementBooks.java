@@ -97,7 +97,12 @@ public final class ElementBooks {
                 mid("heavens_shadow_second_sight", "Heaven's Shadow Second Sight", WikiSpells::secondSight),
                 mid("unite_canis", "Unite Mode: Canis", WikiSpells::uniteCanis).withCooldown(900),
                 mid("unite_gallus", "Unite Mode: Gallus", WikiSpells::uniteGallus).withCooldown(900),
-                signature("unite_canis_felis", "Unite Mode: Canis x Felis", WikiSpells::uniteCanisFelis).withCooldown(1200)));
+                signature("unite_canis_felis", "Unite Mode: Canis x Felis", WikiSpells::uniteCanisFelis).withCooldown(1200),
+                // 1.43.0 (appended): Nacht Faust's Shadow Travel and the new Devil Unite modes
+                mid("shadow_travel", "Shadow Travel", com.newuniverse.nusmp.shadow.ShadowTravel::cast).withCooldown(120),
+                new BookPage("unite_equus", "Unite Mode: Equus", "Unite Mode: Equus", 45, 1800, 1200, com.newuniverse.nusmp.shadow.UnitePages::equus),
+                mid("unite_felis", "Unite Mode: Felis", com.newuniverse.nusmp.shadow.UnitePages::felis).withCooldown(900),
+                mid("unite_gallus_call", "Gallus: Walgner's Call", com.newuniverse.nusmp.shadow.UnitePages::gallusCall).withCooldown(100)));
     }
 
     /** Poison Magic (Gordon Agrippa), rebuilt after the wiki in 0.34: page ids kept, Curse-Worker's Neighbor appended (Gordon only). */

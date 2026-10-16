@@ -42,6 +42,8 @@ import java.util.Locale;
  *       bolts that re-strikes every two ticks.</li>
  *   <li>Valkyrie Dress (Noelle): crystalline water plating (chest, skirt plates, gauntlets, greaves), helmet wings, avian
  *       water wings and the spinning drill lance in the right hand.</li>
+ *   <li>1.43.0, the Devil Unite modes of Nacht Faust (Equus, Canis, Felis, Gallus): drawn by {@code client.shadow.DevilOverlay} from
+ *       .geo.json models attached to the same bones.</li>
  * </ul>
  * The overlay grows in over 6 ticks when the mode starts and fades over the last 10.
  */
@@ -87,6 +89,9 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
             case DEMON -> demon(c, m);
             case LIGHTNING_GOD -> lightning(c, m);
             case VALKYRIE -> valkyrie(c, m);
+            // 1.43.0: Nacht Faust's Devil Unite armours are GeoLite models attached to the same bones (client.shadow.DevilOverlay)
+            case DEVIL_EQUUS, DEVIL_CANIS, DEVIL_FELIS, DEVIL_GALLUS ->
+                    com.newuniverse.nusmp.client.shadow.DevilOverlay.draw(mode, pose, buffers, light, m, now, k, limbSwingAmount);
             default -> { }
         }
         if (lib != null && k > 0.35f) {                                                  // the library's 3D pieces of the mode (wings, crowns, horns, skirt), after the plates
