@@ -1,0 +1,107 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.avatar_extra_11",
+    "texture_width": 64,
+    "texture_height": 32,
+    "visible_bounds_width": 4,
+    "visible_bounds_height": 4,
+    "visible_bounds_offset": [
+     0,
+     1,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "body",
+     "pivot": [
+      0,
+      24,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -5,
+        22,
+        -3
+       ],
+       "size": [
+        10,
+        2,
+        6
+       ],
+       "uv": [
+        20,
+        0
+       ],
+       "inflate": 0.2
+      },
+      {
+       "origin": [
+        -5,
+        25,
+        2.5
+       ],
+       "size": [
+        10,
+        3,
+        2
+       ],
+       "uv": [
+        0,
+        22
+       ]
+      },
+      {
+       "origin": [
+        -4,
+        23.4,
+        -3.5
+       ],
+       "size": [
+        8,
+        1,
+        1
+       ],
+       "uv": [
+        24,
+        22
+       ]
+      }
+     ]
+    },
+    {
+     "name": "cape",
+     "pivot": [
+      0,
+      23,
+      2.2
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -4.5,
+        2,
+        2.2
+       ],
+       "size": [
+        9,
+        21,
+        1
+       ],
+       "uv": [
+        0,
+        0
+       ]
+      }
+     ],
+     "parent": "body"
+    }
+   ]
+  }
+ ]
+}
