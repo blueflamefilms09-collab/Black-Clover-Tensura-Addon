@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.47.0] — docs: the relic format
+
+### NEW
+- `docs/relic_format.md`: the card template and the definition format every relic is built from. No code changed.
+
 ## [1.46.0] — Fixes: crashes, Curios relics, Better Combat, Butoh, Rouge, Soul Corpse, and Lucius's arena
 
 **State:** written without a compiler; CI is the first compile. Nothing run in game. Details: `docs/better_combat.md` (1.46.0), `docs/relic_fix_1_46.md`, `docs/exclusive/fx3.md`, `docs/lucius_arena.md`.
