@@ -56,7 +56,7 @@ public enum CanonBook {
     LETOILE("Letoile Becquerel", "THREE_LEAF", "COMPASS", 0x3A6A4A, 0xD8B860, 0, null),       // Golden Dawn; Compass Magic
     // 0.47: appended. Zagred's corrupted five-leaf grimoire: indigo cover, black clover, Word Soul
     ZAGRED("Zagred", "FIVE_LEAF", "KOTODAMA", 0x1E1640, 0x6A5AB0, 0x0A0610, null),              // the five-leaf art design, black clover
-    SECRE("Secre Swallowtail", "THREE_LEAF", "SEALING", 0x1E4E7A, 0x8AE8FF, 0, null),;           // 0.56: the swallowtail grimoire of Seal Magic, cyan neon
+    SECRE("Secre Swallowtail", "THREE_LEAF", "SEALING", 0x1E4E7A, 0x8AE8FF, 0, null),           // 0.56: the swallowtail grimoire of Seal Magic, cyan neon
     // 1.43.0: appended. The three exclusive casters whose magic had no grimoire of its own
     RADES("Rades Spirito", "THREE_LEAF", "SOUL_CORPSE", 0x2A2E3A, 0x9AA6C8, 0, null),          // Clover Kingdom / Soul Corpse Magic
     KAHONO("Kahono", "THREE_LEAF", "SONG", 0xE8D8F0, 0xC890D8, 0, null),                       // Song Magic
