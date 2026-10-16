@@ -56,6 +56,22 @@ public final class CharacterSpells {
         lock("book_sealing", "eternal_prison", CanonBook.SECRE);
         lock("book_sealing", "wound_sealing", CanonBook.SECRE);
         lock("book_sealing", "orbital_bind", CanonBook.SECRE);
+        // 1.44.0: the exclusive casters
+        lock("book_thread", "arresting_dark_weave", CanonBook.VANESSA);
+        lock("book_thread", "thread_trap", CanonBook.VANESSA);
+        lock("book_thread", "reinforcement", CanonBook.VANESSA);
+        lock("book_soul", "paladin_conversion", CanonBook.LUCIUS);
+        lock("book_soul", "paladin_recall", CanonBook.LUCIUS);
+        lock("book_soul_corpse", "corpse_jimmy", CanonBook.RADES);
+        lock("book_soul_corpse", "corpse_alfredo", CanonBook.RADES);
+        lock("book_soul_corpse", "corpse_carl", CanonBook.RADES);
+        lock("book_soul_corpse", "true_soul_corpse", CanonBook.RADES);
+        lock("book_song", "song_crescendo", CanonBook.KAHONO);
+        lock("book_butoh", "butoh_dance", CanonBook.KIATO);
+        lock("book_butoh", "butoh_dash_deflect", CanonBook.KIATO);
+        lock("book_shadow", "unite_equus", CanonBook.NACHT);
+        lock("book_shadow", "unite_felis", CanonBook.NACHT);
+        lock("book_shadow", "unite_gallus_call", CanonBook.NACHT);
     }
 
     /** Who may open this page, or null if anyone may. */

@@ -130,6 +130,14 @@ public class NUSMP {
             com.newuniverse.nusmp.client.compat.CompatCodexClient.init(modEventBus);                                           // 1.34.0
             com.newuniverse.nusmp.client.particle.rukh.RukhClient.init(modEventBus);                                          // 1.36.0
             com.newuniverse.nusmp.client.relics.forge.ForgeClient.init(modEventBus);                                         // 1.40.0
+            modEventBus.addListener(com.newuniverse.nusmp.client.thread.ThreadClient::register);                          // 1.44.0: Rouge, thread traps
+            com.newuniverse.nusmp.client.soul.PaladinClient.register(modEventBus);
+            modEventBus.addListener(com.newuniverse.nusmp.client.corpse.CorpseClient::register);
+            modEventBus.addListener(com.newuniverse.nusmp.client.corpse.CorpseClient::addLayers);
+            com.newuniverse.nusmp.client.song.SongClient.init(modEventBus);
+            modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.song.SongClientConfig.SPEC, "nusmp-song-client.toml");
+            com.newuniverse.nusmp.client.butoh.DanceClient.register(NeoForge.EVENT_BUS);
+            modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.vfx.client.portal.SpatialPortalConfig.SPEC, "nusmp-spatial-portal.toml");
             com.newuniverse.nusmp.client.labyrinth.LabyrinthClient.init(modEventBus);                                        // 1.35.0: Labyrinth renderers, sky
             com.newuniverse.nusmp.client.discovery.DiscoveryClient.init();                                                    // 1.27.0
             com.newuniverse.nusmp.client.merge.MergedClient.init(modEventBus);
@@ -256,6 +264,40 @@ public class NUSMP {
         com.newuniverse.nusmp.boss.BossHooks.register();
         com.newuniverse.nusmp.boss.rules.BossRulesHooks.register();                                        // 1.37.0: bosses never regenerate or use Unique/Ultimate skills
         com.newuniverse.nusmp.entity.zogratis.LuciusArcHooks.register();                                   // 1.42.0: Lucius final-arc hooks
+        // 1.44.0: the exclusive casters
+        com.newuniverse.nusmp.thread.ThreadEntities.init();
+        com.newuniverse.nusmp.thread.ThreadEntities.ENTITIES.register(modEventBus);
+        modEventBus.addListener(com.newuniverse.nusmp.thread.ThreadEntities::attributes);
+        com.newuniverse.nusmp.thread.ThreadEffects.init();
+        com.newuniverse.nusmp.thread.ThreadEffects.EFFECTS.register(modEventBus);
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.thread.ThreadConfig.SPEC, "nusmp-thread-server.toml");
+        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGH, com.newuniverse.nusmp.thread.RougeFateEvents::onIncoming);
+        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGH, com.newuniverse.nusmp.thread.RougeFateEvents::onProjectile);
+        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGH, com.newuniverse.nusmp.thread.RougeFateEvents::onDeath);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.thread.ThreadSpells::onIncomingDamage);
+        com.newuniverse.nusmp.soul.PaladinEffects.init();
+        com.newuniverse.nusmp.soul.PaladinEffects.EFFECTS.register(modEventBus);
+        modEventBus.addListener(com.newuniverse.nusmp.soul.PaladinNet::register);
+        com.newuniverse.nusmp.soul.PaladinEvents.register(NeoForge.EVENT_BUS);
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.soul.SoulConfig.SPEC, "nusmp-soul-server.toml");
+        com.newuniverse.nusmp.corpse.CorpseEffects.init();
+        com.newuniverse.nusmp.corpse.CorpseEffects.EFFECTS.register(modEventBus);
+        com.newuniverse.nusmp.corpse.CorpseEntities.init();
+        com.newuniverse.nusmp.corpse.CorpseEntities.ENTITIES.register(modEventBus);
+        modEventBus.addListener(com.newuniverse.nusmp.corpse.CorpseEntities::attributes);
+        com.newuniverse.nusmp.corpse.CorpseHooks.register();
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.corpse.CorpseConfig.SPEC, "nusmp-corpse-server.toml");
+        modEventBus.addListener(com.newuniverse.nusmp.song.SongNet::registerPayloads);
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.song.SongConfig.SPEC, "nusmp-song-server.toml");
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.song.SongTicker::onPlayerTick);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.song.SongTicker::onLogout);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.song.SongTicker::onChangeTarget);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.song.SongTicker::onDamaged);
+        com.newuniverse.nusmp.butoh.ButohEvents.register(NeoForge.EVENT_BUS);
+        modEventBus.addListener(com.newuniverse.nusmp.butoh.DanceStatePayload::register);
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.butoh.ButohConfig.SPEC, "nusmp-butoh-server.toml");
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.shadow.ShadowConfig.SPEC, "nusmp-shadow-server.toml");
+        com.newuniverse.nusmp.shadow.UniteEvents.register(NeoForge.EVENT_BUS);
         com.newuniverse.nusmp.charter.CharterEvents.register(NeoForge.EVENT_BUS);
         com.newuniverse.nusmp.boss.bar.BossBarSync.init();
         com.newuniverse.nusmp.relics.RelicHolderSync.register(NeoForge.EVENT_BUS);

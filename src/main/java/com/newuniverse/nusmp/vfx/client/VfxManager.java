@@ -190,6 +190,10 @@ public final class VfxManager {
         register(new com.newuniverse.nusmp.vfx.client.layer.CommanderBossLayer());
         register(new com.newuniverse.nusmp.vfx.client.layer.JuggernautBossLayer());
         register(new com.newuniverse.nusmp.vfx.client.layer.LuciusCoreGemLayer());      // 1.42.0: the chest gem of Lucius's final arc
+        register(new com.newuniverse.nusmp.vfx.client.layer.ThreadFateLayer());          // 1.44.0
+        register(new com.newuniverse.nusmp.vfx.client.layer.SongNotesLayer());
+        register(new com.newuniverse.nusmp.vfx.client.layer.SongRingLayer());
+        register(new com.newuniverse.nusmp.vfx.client.layer.CorpseLayer());
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }

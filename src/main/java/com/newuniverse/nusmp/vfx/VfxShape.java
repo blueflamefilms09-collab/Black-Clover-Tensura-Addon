@@ -245,7 +245,18 @@ public enum VfxShape {
     CMD_BANNERS, CMD_CHAINS, CMD_VAULT_LIGHT, CMD_CRIMSON_STRIKE,
     JUG_ASH_PULSE, JUG_ANTIBODY_RING,
     // 1.42.0: Lucius's final arc (LuciusCoreGemLayer)
-    LUCIUS_CORE_GEM;      // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
+    LUCIUS_CORE_GEM,
+    // 1.44.0: the exclusive casters (Vanessa, Kahono, Rades, Kiato)
+    ROUGE_FATE_TAP,       // Rouge's tap: red thread burst round the saved ally
+    THREAD_COCOON,        // Arresting Dark Weave: a thread cocoon round the bound target
+    THREAD_TRAP_LINE,     // a faint tripwire thread between trap nodes
+    THREAD_SKIN,          // Mana Skin: a thread skin on the caster
+    SONG_NOTES,           // Kahono: notes rising from the followed singer; power = size
+    SONG_RING,            // Kahono: a sound ring on the ground running out to radius = power
+    CORPSE_RAISE,         // a soul ripped up out of the ground at 'from' (a body rising); power = size
+    CORPSE_PACT,          // the pact sigil round the followed caster (seed bit 0 = the short flash form); power = size
+    BUTOH_DANCE_RIPPLE,   // Kiato: ripples under the dancer's feet
+    BUTOH_AFTERIMAGE;     // Kiato: an ink after-image of the dancer      // the gem on the chest of the followed body while the core is exposed: a pulsing diamond, a halo and rising motes; power = size
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

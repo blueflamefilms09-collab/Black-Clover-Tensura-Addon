@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.44.0] — The exclusive casters: Vanessa, Spatial, Lucius, Rades, Kahono, Kiato, Nacht
+
+**State:** written without a compiler; CI is the first compile. Nothing run in game. Per-caster details, WHY and unverified points: `docs/exclusive/{vn,sp,lz,rs,kh,kt,nf}.md`.
+
+### NEW
+- **Vanessa (Thread):** Rouge as a real unkillable thread-cat entity that runs to endangered allies and taps them; a fatal or 35%+ hit on the caster, pets, squad or chosen allies is cancelled and the target nudged aside, at a massive mana cost (Rouge unravels if it cannot be paid). New pages: Arresting Dark Weave, Dancing Doll recall, Thread Trap, Reinforcement / Mana Skin (toggle).
+- **Lucius (Soul):** Paladin Conversion (3 s purification channel, buffed, loyal, halo and wings) and Paladin Recall.
+- **Rades (Soul Corpse):** Reanimate, the named corpses Jimmy, Alfredo and Carl (roles invented), decaying stitched overlay, True Soul Corpse pact (cancels a death inside a window; a player already on the respawn screen cannot be revived in Minecraft).
+- **Kahono (Song):** four song modes plus Crescendo, driven by Simple Voice Chat microphone loudness (optional dependency; hold V as a fallback without it).
+- **Kiato (Butoh):** Dance state with unpredictable looping moves, evasion, shrunken hitbox, and the deflect dash.
+- **Nacht (Shadow):** Shadow Travel (light below 4), Unite Equus and Felis, a Gallus call, armour overlays and `.geo.json` models for all four Devil modes.
+
+### REPLACEMENT (the old is kept behind a switch)
+- Rouge: the head-cat with a 12% dodge and a one-time death undo is replaced by the entity when `thread.rougeEntity` is on (default). Off restores the old behaviour.
+- Spatial portal: the flat portal is replaced by a 3D animated one with a refracting shader, momentum through gates, and projectiles and items passing, when `spatial.portal3d` is on (default). Off restores the flat portal.
+
+### Notes
+- Magic merge generator (blend VFX, layers and models of parent magics) already exists since 1.27.0; not rebuilt.
+- Butoh pages added at the end of its page list shift the universal pages after them by two mode numbers; ids are unchanged.
+
 ## [1.43.0] — Fix: part 4 relics could not be put into Curios slots
 
 **State:** data fix, CI is the first load. Nothing run in game.
