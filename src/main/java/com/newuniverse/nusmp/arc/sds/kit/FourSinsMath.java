@@ -44,6 +44,22 @@ public final class FourSinsMath {
         return Math.hypot(px - (ax + dx * t), pz - (az + dz * t));
     }
 
+    /** Distance from the point P to the segment A-B in three dimensions (a spear thrown downwards from the air is a lane in 3D, not on the ground plane). */
+    public static double distToSegment3(double px, double py, double pz, double ax, double ay, double az, double bx, double by, double bz) {
+        double t = along3(px, py, pz, ax, ay, az, bx, by, bz);
+        return Math.sqrt(sq(px - (ax + (bx - ax) * t)) + sq(py - (ay + (by - ay) * t)) + sq(pz - (az + (bz - az) * t)));
+    }
+
+    /** How far along the segment A to B (0 at A, 1 at B, clamped) the foot of the perpendicular from P falls, in three dimensions. */
+    public static double along3(double px, double py, double pz, double ax, double ay, double az, double bx, double by, double bz) {
+        double dx = bx - ax, dy = by - ay, dz = bz - az;
+        double len2 = dx * dx + dy * dy + dz * dz;
+        if (len2 < 1e-9) return 0;
+        return Math.max(0, Math.min(1, ((px - ax) * dx + (py - ay) * dy + (pz - az) * dz) / len2));
+    }
+
+    private static double sq(double v) { return v * v; }
+
     /** How far along the segment A to B (0 at A, 1 at B, clamped) the foot of the perpendicular from P falls. */
     public static double along(double px, double pz, double ax, double az, double bx, double bz) {
         double dx = bx - ax, dz = bz - az;

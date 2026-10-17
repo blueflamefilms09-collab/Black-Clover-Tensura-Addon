@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.arc.sds;
 
 import com.newuniverse.nusmp.arc.ArcCharacter;
+import com.newuniverse.nusmp.arc.ArcLook;
 import com.newuniverse.nusmp.arc.ArcSaga;
 import com.newuniverse.nusmp.arc.sds.kit.FourSinsStory;
 
@@ -20,7 +21,10 @@ public final class MerlinSheet {
     /** Violet of her spells and the gold of Aldan, 0xRRGGBB. */
     public static final int RGB = 0x7A5CFF, ACCENT = 0xFFD86B;
     public static final double HEALTH = 2500, ATTACK = 16, SPEED = 0.33, ARMOR = 9, TOUGHNESS = 6;
-    public static final float WIDTH = 0.62f, HEIGHT = 1.85f;
+    /** The hitbox the art kit recommends for the model (tools/arc/manifest.json: recommended_hitbox_blocks), so the model is drawn at its own size. */
+    public static final float WIDTH = 0.55f, HEIGHT = 1.91f;
+    /** The numbers of tools/arc/manifest.json (arc_look); the bigger of the two forms for the culling box and the shadow (the gear halo of the second form). */
+    public static final ArcLook LOOK = new ArcLook("merlin", 1.91f, 1.16f, 2.06f, 0.43f, 1.11f, 1.26f, true);
 
     public static final ArcCharacter CHARACTER = ArcCharacter.boss("merlin", "Merlin")
             .title("the Boar's Sin of Gluttony")

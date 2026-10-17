@@ -12,20 +12,26 @@ import java.util.List;
  * makes leaving it the first answer and breaking it the second.
  */
 public final class InfinityFields {
-    /** One field on the ground: its id (for the glue's zone to check it still stands), centre and radius. */
-    public record Field(int id, double x, double z, double radius, long born) {
+    /** How far above or below the floor of a field a foe may be and still stand in it. */
+    public static final double REACH_Y = 5;
+
+    /** One field on the ground: its id (for the glue's zone to check it still stands), centre ({@code y} is the floor it lies on) and radius. */
+    public record Field(int id, double x, double y, double z, double radius, long born) {
         public boolean contains(double px, double pz) { return Math.hypot(px - x, pz - z) <= radius; }
+
+        /** The point is inside the field's disc and within {@link InfinityFields#REACH_Y} blocks of its floor. */
+        public boolean contains(double px, double py, double pz) { return contains(px, pz) && Math.abs(py - y) <= REACH_Y; }
     }
 
     private final List<Field> fields = new ArrayList<>();
     private int nextId = 1;
 
     /** Lays a field. If {@code cap} fields already stand the oldest is pushed out and returned (null when nothing was). */
-    public Field add(double x, double z, double radius, long now, int cap) {
+    public Field add(double x, double y, double z, double radius, long now, int cap) {
         Field pushed = null;
         int keep = Math.max(1, cap) - 1;
         while (fields.size() > keep) pushed = fields.remove(0);
-        fields.add(new Field(nextId++, x, z, radius, now));
+        fields.add(new Field(nextId++, x, y, z, radius, now));
         return pushed;
     }
 

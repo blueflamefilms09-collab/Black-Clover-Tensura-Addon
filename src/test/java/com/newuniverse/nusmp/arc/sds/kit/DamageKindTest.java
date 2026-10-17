@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The one answer to "what kind of blow was that?": elements win over how it travelled, spells over plain hits, and ids from other mods are sorted by their words. */
+/** Why: three of the Sins answer a blow by what it is, so the one sorting of damage into kinds is tested, including the traps in the words of ids ("icicle" is ice, "slice" is not). */
 class DamageKindTest {
     private static DamageKind kind(boolean freezing, boolean fire, boolean explosion, boolean lightning, boolean projectile, boolean spell, boolean melee, String path) {
         return DamageKind.of(new DamageKind.Facts(freezing, fire, explosion, lightning, projectile, spell, melee, path));

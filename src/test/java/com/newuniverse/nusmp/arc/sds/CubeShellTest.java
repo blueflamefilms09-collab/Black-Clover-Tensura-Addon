@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** Perfect Cube: what it reflects, what crosses it, how many times it holds, and what breaks it. */
+/** Why: Perfect Cube reflects what is thrown at it, so how many times, for what, and what breaks it are pinned: it can never become a wall that reflects for ever. */
 class CubeShellTest {
     private static CubeShell open(int charges) {
         CubeShell c = new CubeShell();

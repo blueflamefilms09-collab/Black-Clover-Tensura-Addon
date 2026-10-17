@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The ground-plane geometry the four Sins share: arcs that wrap, fans, segments, cones, rings and spread marks. */
+/** Why: the arcs, fans, segments, cones, rings and spread marks of four bosses are easy to get subtly wrong (wrap-around, a segment shorter than a block), so the shared ground-plane geometry is tested. */
 class FourSinsMathTest {
     @Test
     void anglesWrapTheShortWay() {
@@ -79,5 +79,17 @@ class FourSinsMathTest {
         assertEquals(2.0f, FourSinsMath.clamp(2.0f, 0f, 3f), 1e-6f);
         assertEquals(5.0, FourSinsMath.lerp(0, 10, 0.5), 1e-9);
         assertEquals(10.0, FourSinsMath.lerp(0, 10, 7), 1e-9);
+    }
+
+    @Test
+    void aLaneInThreeDimensionsIsMeasuredInThree() {
+        // a spear from (0, 6, 0) down to (10, 1, 0): a point on the ground under the middle is far from it, a point on the line is on it
+        assertEquals(0.0, FourSinsMath.distToSegment3(5, 3.5, 0, 0, 6, 0, 10, 1, 0), 1e-9);
+        assertTrue(FourSinsMath.distToSegment3(5, 0, 0, 0, 6, 0, 10, 1, 0) > 2.0, "the floor under the flight is not on the lane");
+        assertEquals(5.0, FourSinsMath.distToSegment3(-3, 6, 4, 0, 6, 0, 10, 6, 0), 1e-9, "before the start: the distance to the start");
+        assertEquals(0.5, FourSinsMath.along3(5, 3.5, 0, 0, 6, 0, 10, 1, 0), 1e-9);
+        assertEquals(0.0, FourSinsMath.along3(-9, 0, 0, 0, 6, 0, 10, 1, 0), 1e-9);
+        assertEquals(1.0, FourSinsMath.along3(99, 0, 0, 0, 6, 0, 10, 1, 0), 1e-9);
+        assertEquals(0.0, FourSinsMath.along3(1, 1, 1, 2, 2, 2, 2, 2, 2), 1e-9, "a segment of no length");
     }
 }

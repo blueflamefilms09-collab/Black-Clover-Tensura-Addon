@@ -19,7 +19,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The record of Merlin: tier, stats band, floors, themes, prerequisites, and a Charter Grimoire of real Tensura skills only. */
+/** Why: a typo in a Charter skill id, a floor or a prerequisite would silently break the character, so her record is checked without loading an entity class. */
 class MerlinSheetTest {
     static Set<String> tensuraSkills() throws IOException {
         Set<String> out = new HashSet<>();

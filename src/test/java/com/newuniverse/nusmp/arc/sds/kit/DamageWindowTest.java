@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The sliding window of damage and the burst gauge built on it. */
+/** Why: several of the Sins' rules ask how much damage came in the last few seconds, so the sliding window they share is tested. */
 class DamageWindowTest {
     @Test
     void theWindowHoldsOnlyTheLastSpanTicks() {

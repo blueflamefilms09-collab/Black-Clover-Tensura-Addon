@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.book.SpellRuntime;
 import com.newuniverse.nusmp.entity.zogratis.DanteMoves;
+import com.newuniverse.nusmp.mana.ManaLaw;
 import com.newuniverse.nusmp.entity.zogratis.SpellSeal;
 import com.newuniverse.nusmp.entity.zogratis.Tells;
 import com.newuniverse.nusmp.entity.zogratis.ZogratisBoss;
@@ -183,6 +184,19 @@ public final class FourSinsKit {
         int t = BalanceLaw.controlTicks(victim, baseTicks);
         long until = victim.level().getGameTime() + t;
         if (p.getPersistentData().getLong(SpellSeal.SEALED_FLAG) < until) p.getPersistentData().putLong(SpellSeal.SEALED_FLAG, until);
+        return t;
+    }
+
+    /**
+     * Rewrites what a player was doing: {@link #silence} (the grimoire shut for a moment, under the balance law), a Mana Zone switched off, a held item let go.
+     * Nothing is spent or taken. The CALLER pays the shared control cool-down with {@code BalanceLaw.beginControl(boss)}. Returns the ticks applied, 0 if none.
+     */
+    public static int forget(LivingEntity victim, int baseTicks) {
+        int t = silence(victim, baseTicks);
+        if (t > 0 && victim instanceof ServerPlayer p) {
+            if (ManaLaw.zoneActive(p)) ManaLaw.toggleZone(p);
+            p.stopUsingItem();
+        }
         return t;
     }
 

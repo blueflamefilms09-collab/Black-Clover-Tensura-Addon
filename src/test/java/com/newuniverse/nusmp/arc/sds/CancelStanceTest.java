@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** Absolute Cancel as a stance: what it erases, what crosses it, how it closes, what she devours and sends back. */
+/** Why: Absolute Cancel is the rule a player's best spell meets, so every limit it has (what it erases, from where, how often, what ends it, what comes back) is pinned to the tick instead of being found by a party. */
 class CancelStanceTest {
     private static CancelStance open(int charges) {
         CancelStance s = new CancelStance();

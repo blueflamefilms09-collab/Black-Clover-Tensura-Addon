@@ -13,7 +13,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** Merlin's move table, and a played-out fight through the framework's scheduler: what she does at each power and distance. */
+/** Why: Merlin's moves must read in time and never repeat, so the table is played out through the framework's scheduler at every power: what she does at each distance and when the Coffin may come. */
 class MerlinTableTest {
     static final List<MoveRow> ROWS = MerlinTable.rows();
 
