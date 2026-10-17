@@ -18,6 +18,11 @@ class BowRulesTest {
     }
 
     @Test
+    void theDefaultLagAllowanceIsTheDocumentedFourTicks() {
+        assertEquals(4, BowRules.DEFAULT_GRACE, "the config default and the documentation say four ticks (a fifth of a second)");
+    }
+
+    @Test
     void theBestExcuseWins() {
         assertEquals(BowRules.Verdict.UNBOWED, BowRules.verdict(true, true, true));
         assertEquals(BowRules.Verdict.UNBOWED, BowRules.verdict(true, false, false));

@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.arc.spade;
 
 import com.mojang.logging.LogUtils;
+import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.entity.zogratis.DevilStyle;
 import com.newuniverse.nusmp.entity.zogratis.DanteMoves;
 import com.newuniverse.nusmp.entity.zogratis.ZogratisBoss;
@@ -10,6 +11,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -109,6 +111,36 @@ final class SpadeFx {
         }
     }
 
+    // ---------------------------------------------------------------- the Balance Law
+    /**
+     * One ask of the Balance Law's shared twelve-second lock for a whole order (a Bow, a fan of tendrils, the sky falling), made only when somebody is
+     * really going to be held: a Bow that everyone obeyed, or tendrils that found nobody, must not use up the boss's next twelve seconds of hard control.
+     */
+    static final class Control {
+        private final ZogratisBoss boss;
+        private boolean asked, granted;
+
+        Control(ZogratisBoss boss) { this.boss = boss; }
+
+        /** Asks on the first call, then answers the same for the rest of the order. */
+        boolean granted() {
+            if (!asked) {
+                asked = true;
+                granted = BalanceLaw.beginControl(boss);
+            }
+            return granted;
+        }
+    }
+
+    // ---------------------------------------------------------------- the hits
+    /** What kind of hit a damage source is (see {@link DamageKind}): the three facts the pure classifier needs, read off the source. */
+    static DamageKind kindOf(DamageSource source) {
+        boolean anti = DanteMoves.antiMagicHit(source);
+        boolean projectile = source.is(DamageTypeTags.IS_PROJECTILE);
+        String path = source.typeHolder().unwrapKey().map(k -> k.location().getPath()).orElse("");
+        return DamageKind.classify(source.getEntity() != null, projectile, path, anti);
+    }
+
     // ---------------------------------------------------------------- the foes
     /** A demon sword in hand, or the Anti-Magic Lord, or the Anti-Magic grimoire out: gravity and modification find nothing to grip. */
     static boolean antiMagic(LivingEntity e) {
@@ -127,6 +159,9 @@ final class SpadeFx {
         if (antiMagic(e)) f = Math.min(f, 0.40);
         return f;
     }
+
+    /** The factor on a MAGIC blow (a spell does not care for a raised shield): anti-magic cuts it to 40%, nothing else does. */
+    static double magicGuard(LivingEntity e) { return antiMagic(e) ? 0.40 : 1.0; }
 
     /** Gravity wins over wings: a foe gliding on an elytra is brought out of the glide before any forced push. */
     static void grounded(LivingEntity e) {

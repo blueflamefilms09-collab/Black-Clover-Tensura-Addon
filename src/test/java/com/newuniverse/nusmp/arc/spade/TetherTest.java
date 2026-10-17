@@ -34,6 +34,15 @@ class TetherTest {
     }
 
     @Test
+    void theTimingsAreTheOnesTheDocumentationPromises() {
+        assertEquals(6, Tether.CUT_TICKS, "a third of a second standing on the thread");
+        assertEquals(30, Tether.SIGHT_TICKS, "a second and a half without a line of sight");
+        assertEquals(28.0, Tether.MAX_DISTANCE, 1e-9);
+        assertEquals(2.4, Tether.REACH, 1e-9);
+        assertEquals(1.15, TetherMath.THREAD_HALF_WIDTH, 1e-9);
+    }
+
+    @Test
     void aWallBetweenThemLosesItAfterThirtyTicks() {
         Tether t = new Tether(160);
         run(t, Tether.SIGHT_TICKS - 1, false, true, false, false, 12);

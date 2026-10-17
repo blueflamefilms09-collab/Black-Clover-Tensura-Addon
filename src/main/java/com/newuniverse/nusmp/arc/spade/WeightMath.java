@@ -99,7 +99,7 @@ public final class WeightMath {
         return dx * dx + dz * dz <= POCKET_RADIUS * POCKET_RADIUS;
     }
 
-    // ---------------------------------------------------------------- the six arms
+    // ---------------------------------------------------------------- the six limbs
     /** The angles (radians) of {@code count} strikes spread evenly round the circle, starting at {@code phase}. */
     public static double[] armAngles(int count, double phase) {
         int n = Math.max(1, count);

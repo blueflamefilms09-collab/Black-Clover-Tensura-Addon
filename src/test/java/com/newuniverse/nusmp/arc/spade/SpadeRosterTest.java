@@ -85,6 +85,11 @@ class SpadeRosterTest {
         assertEquals(DevilStyle.accent(Devil.LUCIFERO), LUCIFERO.accent());
         assertEquals(0xFF9B58, MORRIS.color(), "Modification Magic's orange from the mod's own books");
         assertNotEquals(MORRIS.color(), LUCIFERO.color());
+        // the records spell their colours as literals (the grimoire art tool reads them from the source); the moves use the constants: they must agree
+        assertEquals(SpadeRoster.MORRIS_COLOR, MORRIS.color());
+        assertEquals(SpadeRoster.MORRIS_ACCENT, MORRIS.accent());
+        assertEquals(SpadeRoster.LUCIFERO_COLOR, LUCIFERO.color());
+        assertEquals(SpadeRoster.LUCIFERO_ACCENT, LUCIFERO.accent());
     }
 
     @Test

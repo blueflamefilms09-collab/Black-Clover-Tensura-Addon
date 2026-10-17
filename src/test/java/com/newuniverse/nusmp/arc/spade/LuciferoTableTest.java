@@ -40,9 +40,9 @@ class LuciferoTableTest {
         String[] order = {LuciferoTable.CRUSHING_PALM, LuciferoTable.FALLING_HEAVENS, LuciferoTable.DISTORTION_STEP, LuciferoTable.THE_BOW,
                 LuciferoTable.GRAVITY_SHROUD, LuciferoTable.LESSER_DEVILS, LuciferoTable.GRAVITY_COMB, LuciferoTable.GRAVITY_GRASP,
                 LuciferoTable.WANDERING_WEIGHT, LuciferoTable.FLATTEN_AIR, LuciferoTable.KNEEL_BEFORE_THE_KING, LuciferoTable.EVENT_HORIZON,
-                LuciferoTable.SIX_ARMS};
+                LuciferoTable.SIX_LIMBS};
         for (int i = 0; i < order.length; i++) assertEquals(order[i], SPECS.get(i).id(), "move " + i);
-        assertSame(LuciferoTable.byId(LuciferoTable.SIX_ARMS), SPECS.get(12));
+        assertSame(LuciferoTable.byId(LuciferoTable.SIX_LIMBS), SPECS.get(12));
         assertNull(LuciferoTable.byId("nope"));
     }
 
@@ -106,7 +106,7 @@ class LuciferoTableTest {
         assertTrue(LuciferoTable.KNEEL > LuciferoTable.PALM && LuciferoTable.HORIZON > LuciferoTable.PALM, "the ultimates hit hardest");
         assertTrue(LuciferoTable.PALM > LuciferoTable.GRASP * 0.5 && LuciferoTable.GRASP >= LuciferoTable.PALM, "the grasp is the single-target tank buster");
         assertTrue(LuciferoTable.HEAVEN * 12 < LuciferoTable.KNEEL * 6, "a full rain of debris is no ultimate");
-        assertTrue(LuciferoTable.ARM * 6 < LuciferoTable.KNEEL * 1.6, "six arms all landing stay under an ultimate and a half");
+        assertTrue(LuciferoTable.ARM * 6 < LuciferoTable.KNEEL * 1.6, "six limbs all landing stay under an ultimate and a half");
     }
 
     /** Plays a fight: a decision every 5 ticks, the target wandering between 2 and 36 blocks. Returns how often each move was used. */
@@ -154,7 +154,7 @@ class LuciferoTableTest {
             assertNotNull(play(seed, 60, 30000).get(LuciferoTable.KNEEL_BEFORE_THE_KING), "the kneel from 60% (seed " + seed + ")");
             assertNull(play(seed, 79, 30000).get(LuciferoTable.EVENT_HORIZON));
             assertNotNull(play(seed, 80, 30000).get(LuciferoTable.EVENT_HORIZON), "the horizon from 80% (seed " + seed + ")");
-            assertNull(play(seed, 99, 30000).get(LuciferoTable.SIX_ARMS), "the arms wait for the Gates");
+            assertNull(play(seed, 99, 30000).get(LuciferoTable.SIX_LIMBS), "the limbs wait for the Gates");
         }
         MoveScheduler sch = new MoveScheduler(3);
         sch.reset(0);

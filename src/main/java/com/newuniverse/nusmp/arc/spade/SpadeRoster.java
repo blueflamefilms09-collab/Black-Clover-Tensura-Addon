@@ -29,7 +29,7 @@ public final class SpadeRoster {
      */
     public static final ArcCharacter MORRIS = ArcCharacter.boss("morris_libardirt", "Morris Libardirt")
             .title("the Magic Scholar").source("Black Clover").saga(ArcSaga.SPADE_RAID).tier(4)
-            .colors(MORRIS_COLOR, MORRIS_ACCENT)
+            .colors(0xFF9B58, 0xFFD9B0)                                  // literals on purpose: tools/gen_arc_grimoire_assets.py reads them from the source; SpadeRosterTest pins them to the constants
             .devil(Devil.LUCIFERO).magic("modification")
             .stats(3000, 14, 0.30, 14)
             .floors(null, 70, 90)
@@ -43,13 +43,13 @@ public final class SpadeRoster {
             .build();
 
     /**
-     * Lucifero, the King of Devils: Gravity Magic, the devil of the Dark Triad's eldest, the one the Magic Knight captains could not stand up against.
-     * The Charter Grimoire lends the gravity set of a king (domination, field, flight, the nullification of gravity), the presence that bows a room,
-     * and the cutting of spells.
+     * Lucifero, the King of Devils: Gravity Magic, the devil whose power Dante Zogratis carried, the one the Magic Knight captains could not stand up
+     * against. The Charter Grimoire lends the gravity set of a king (domination, field, flight, the nullification of gravity), the presence that bows a
+     * room, and the cutting of spells.
      */
     public static final ArcCharacter LUCIFERO = ArcCharacter.boss("lucifero", "Lucifero")
             .title("King of Devils").source("Black Clover").saga(ArcSaga.SPADE_RAID).tier(4)
-            .colors(LUCIFERO_COLOR, LUCIFERO_ACCENT)
+            .colors(0x5B2A8C, 0xB58CFF)
             .devil(Devil.LUCIFERO).magic("gravity")
             .stats(3500, 20, 0.34, 20)
             .floors(null, 90, 100)

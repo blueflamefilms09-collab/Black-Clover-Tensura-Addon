@@ -28,6 +28,17 @@ class CageMathTest {
     }
 
     @Test
+    void theNumbersAreTheOnesTheDocumentationPromises() {
+        assertEquals(16.0, CageMath.START, 1e-9);
+        assertEquals(5.0, CageMath.END, 1e-9);
+        assertEquals(1.25, CageMath.WALL, 1e-9);
+        assertEquals(3, CageMath.DOORS, "three doors");
+        assertEquals(40.0, Math.toDegrees(CageMath.DOOR_HALF) * 2, 1e-9, "each door is forty degrees wide");
+        assertEquals(10.94, CageMath.doorWidth(CageMath.START), 0.01, "about eleven blocks at the start");
+        assertEquals(3.42, CageMath.doorWidth(CageMath.END), 0.01, "about three and a half at the end");
+    }
+
+    @Test
     void theRingClosesSlowerThanAPlayerWalks() {
         double perTick = (CageMath.START - CageMath.END) / 120.0;
         assertTrue(perTick < 0.216 / 2, "the wall moves at " + perTick + " blocks a tick: nobody is run down");

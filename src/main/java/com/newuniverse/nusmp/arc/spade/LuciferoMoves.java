@@ -140,13 +140,13 @@ final class LuciferoMoves {
     // ================================================================ The Bow
     /**
      * The weight falls on everyone who did not bow. {@code crouched} maps a foe to the last tick it was seen crouching during the wind-up. One ask of the
-     * Balance Law covers the whole order (the shared 12 second lock); without it the crushed are slowed hard for a moment but not held. Returns how many
-     * were crushed.
+     * Balance Law covers the whole order (the shared 12 second lock), made only if somebody is crushed; without it the crushed are slowed hard for a
+     * moment but not held. Returns how many were crushed.
      */
     static int bow(ZogratisBoss b, Map<UUID, Long> crouched, float base) {
         if (!(b.level() instanceof ServerLevel sl)) return 0;
         long now = sl.getGameTime();
-        boolean control = BalanceLaw.beginControl(b);
+        SpadeFx.Control law = new SpadeFx.Control(b);
         int grace = SpadeConfig.bowGrace(), crushed = 0;
         sl.playSound(null, b.blockPosition(), SoundEvents.WITHER_SPAWN, SoundSource.HOSTILE, 2.5f, 0.5f);
         for (LivingEntity e : b.foes(56)) {
@@ -162,8 +162,9 @@ final class LuciferoMoves {
             crushed++;
             ZogratisVfx.gravityImpact(sl, e.position(), 2.8, VIOLET_RGB);
             SpadeFx.crush(b, e, (float) (base * BowRules.bowFactor(v) * SpadeFx.guard01(e)), TensuraDamageTypes.GRAVITY_PRESS);
-            int ticks = control ? WeightMath.kneelTicks(SpadeConfig.kneelSeconds(), BalanceLaw.controlTicks(e, WeightMath.LAW_CAP)) : 12;
-            if (control) SpadeFx.kneel(b, e, ticks);
+            boolean held = law.granted();
+            int ticks = held ? WeightMath.kneelTicks(SpadeConfig.kneelSeconds(), BalanceLaw.controlTicks(e, WeightMath.LAW_CAP)) : 12;
+            if (held) SpadeFx.kneel(b, e, ticks);
             else {
                 SpadeFx.slam(e, 1.0);
                 e.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, 4));
@@ -327,7 +328,10 @@ final class LuciferoMoves {
     }
 
     // ================================================================ Kneel Before the King
-    /** The pockets of still air, laid for the foes: planned by {@link PocketMath}, snapped to standing floor, at most {@code count} of them. */
+    /**
+     * The pockets of still air, laid for the foes: planned by {@link PocketMath}, snapped to standing floor, at most {@code count} of them. If a cramped room
+     * leaves fewer than two with floor under them, the foes are sheltered where they stand, so the ultimate always has its counter.
+     */
     static List<Vec3> pockets(ZogratisBoss b, int count) {
         List<LivingEntity> foes = b.foes(48);
         if (foes.isEmpty()) return List.of();
@@ -340,6 +344,14 @@ final class LuciferoMoves {
             Vec3 g = ZogratisBoss.groundOrNull(b.level(), new Vec3(p[0], b.getY(), p[1]));
             if (g != null && g.distanceTo(b.arenaCenter()) < ZogratisBoss.ARENA_RADIUS - 4) out.add(g);
         }
+        // a cramped room can leave no candidate with floor under it, and the ultimate must always have its counter: shelter the foes where they stand then
+        if (out.size() < Math.min(2, count)) {
+            for (LivingEntity e : foes) {
+                if (out.size() >= count) break;
+                Vec3 g = ZogratisBoss.groundOrNull(b.level(), e.position());
+                if (g != null && out.stream().noneMatch(p -> p.distanceTo(g) < WeightMath.POCKET_RADIUS * 2)) out.add(g);
+            }
+        }
         return out;
     }
 
@@ -350,11 +362,12 @@ final class LuciferoMoves {
 
     /**
      * The sky falls. Whoever stands in a pocket of still air takes a quarter of it and is not forced down, whoever holds anti-magic takes 40% and is not
-     * forced down, everyone else is crushed and made to kneel (one ask of the Balance Law for the whole room). Returns how many were crushed.
+     * forced down, everyone else is crushed and made to kneel (one ask of the Balance Law for the whole room, made only if somebody is crushed).
+     * Returns how many were crushed.
      */
     static int kneelBeforeTheKing(ZogratisBoss b, List<Vec3> pockets, float base) {
         if (!(b.level() instanceof ServerLevel sl)) return 0;
-        boolean control = BalanceLaw.beginControl(b);
+        SpadeFx.Control law = new SpadeFx.Control(b);
         int crushed = 0;
         sl.playSound(null, b.blockPosition(), SoundEvents.WITHER_SPAWN, SoundSource.HOSTILE, 3f, 0.4f);
         ZogratisVfx.gravityImpact(sl, b.position(), 26, VIOLET_RGB);
@@ -371,7 +384,7 @@ final class LuciferoMoves {
             if (!BowRules.pinnedByKneel(v)) continue;
             crushed++;
             ZogratisVfx.gravityImpact(sl, e.position(), 2.8, VIOLET_RGB);
-            if (control) SpadeFx.kneel(b, e, WeightMath.kneelTicks(SpadeConfig.kneelSeconds(), BalanceLaw.controlTicks(e, WeightMath.LAW_CAP)));
+            if (law.granted()) SpadeFx.kneel(b, e, WeightMath.kneelTicks(SpadeConfig.kneelSeconds(), BalanceLaw.controlTicks(e, WeightMath.LAW_CAP)));
             else {
                 SpadeFx.slam(e, 1.2);
                 e.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 4));
@@ -418,8 +431,8 @@ final class LuciferoMoves {
         return caught;
     }
 
-    // ================================================================ Six Arms
-    /** One arm's strike: a wedge of 24 degrees and 5.8 blocks; a foe is struck at most three times by the six arms together. */
+    // ================================================================ Six Limbs
+    /** One limb's strike (a wing turned into an arm, or a hand): a wedge of 24 degrees and 5.8 blocks; a foe is struck at most three times by the six limbs together. */
     static void arm(ZogratisBoss b, double angle, float base, Map<Integer, Integer> hits) {
         if (!(b.level() instanceof ServerLevel sl)) return;
         Vec3 from = b.position(), dir = new Vec3(Math.cos(angle), 0, Math.sin(angle));
@@ -437,6 +450,6 @@ final class LuciferoMoves {
         }
     }
 
-    /** A fresh hit counter for one Six Arms. */
+    /** A fresh hit counter for one Six Limbs. */
     static Map<Integer, Integer> newHits() { return new HashMap<>(); }
 }

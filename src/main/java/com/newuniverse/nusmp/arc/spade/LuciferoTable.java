@@ -14,7 +14,7 @@ import java.util.List;
  * at range, the Distortion Step is how he leaves a foe that clings; The Bow, the Gravity Comb, the Gravity Grasp and the Wandering Weight are the rules
  * of the room (kneel, lanes, a hand, a well that follows you); the Gravity Shroud is his defence against what flies; Flatten the Air takes jumping and
  * gliding away for a while; the Lesser Devils are the followers he calls and swallows. Kneel Before the King (60%) and the Event Horizon (80%) are the
- * two ultimates, and once the Gates are open the wings become arms: Six Arms.
+ * two ultimates, and once the Gates are open the four wings become arms beside his two hands: Six Limbs.
  */
 public final class LuciferoTable {
     private LuciferoTable() {}
@@ -22,7 +22,7 @@ public final class LuciferoTable {
     public static final String CRUSHING_PALM = "crushing_palm", FALLING_HEAVENS = "falling_heavens", DISTORTION_STEP = "distortion_step",
             THE_BOW = "the_bow", GRAVITY_SHROUD = "gravity_shroud", LESSER_DEVILS = "lesser_devils", GRAVITY_COMB = "gravity_comb",
             GRAVITY_GRASP = "gravity_grasp", WANDERING_WEIGHT = "wandering_weight", FLATTEN_AIR = "flatten_air",
-            KNEEL_BEFORE_THE_KING = "kneel_before_the_king", EVENT_HORIZON = "event_horizon", SIX_ARMS = "six_arms";
+            KNEEL_BEFORE_THE_KING = "kneel_before_the_king", EVENT_HORIZON = "event_horizon", SIX_LIMBS = "six_limbs";
 
     /** Base damage of the moves (before the boss's damage law: power tuning, victim EP, the balance law's caps). */
     public static final float PALM = 22f, HEAVEN = 11f, LENS = 7f, BOW = 20f, COMB = 17f, COMB_PULSE = 8f, GRASP = 26f, WANDER = 3.2f, ARM = 8f,
@@ -48,7 +48,7 @@ public final class LuciferoTable {
             new Spec(FLATTEN_AIR, "Flatten the Air", 40, 24, 420, 0, 48, 2, false, false, 8),
             new Spec(KNEEL_BEFORE_THE_KING, "Kneel Before the King", 60, 70, 1500, 0, 56, 5, true, false, 60),
             new Spec(EVENT_HORIZON, "Event Horizon", 80, 72, 1500, 0, 56, 5, true, false, 60),
-            new Spec(SIX_ARMS, "Six Arms", 100, 34, 260, 0, 9, 5, false, false, 12));
+            new Spec(SIX_LIMBS, "Six Limbs", 100, 34, 260, 0, 9, 5, false, false, 12));
 
     /** The table, in the order of the boss's move list (the client reads move names by index). */
     public static List<Spec> specs() { return SPECS; }

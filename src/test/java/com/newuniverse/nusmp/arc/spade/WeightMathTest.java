@@ -125,7 +125,7 @@ class WeightMathTest {
             double ang = Math.toRadians(deg);
             for (double arm : a) if (WeightMath.inArm(ang, arm, 3)) { struck++; break; }
         }
-        assertTrue(struck < 360 && struck > 200, "six arms cover most but not all of the circle: " + struck);
+        assertTrue(struck < 360 && struck > 200, "six limbs cover most but not all of the circle: " + struck);
     }
 
     @Test

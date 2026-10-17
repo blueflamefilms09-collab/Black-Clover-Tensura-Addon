@@ -246,6 +246,492 @@
    ],
    "problems": []
   },
+  "lucifero": {
+   "model": "arc_lucifero",
+   "spec": "GeoSpec.of(\"arc\", \"lucifero\")",
+   "form": 1,
+   "role": "boss",
+   "name": "Lucifero",
+   "build": "lanky",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_lucifero.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_lucifero.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_lucifero.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_lucifero_glow.png"
+   ],
+   "texture": [
+    512,
+    192
+   ],
+   "cubes": 71,
+   "faces_per_pass": 371,
+   "height_blocks": 2.69,
+   "height_with_hair_and_horns_blocks": 3.6,
+   "bounds_blocks": {
+    "min": [
+     -1.63,
+     0.0,
+     -0.25
+    ],
+    "max": [
+     1.63,
+     3.6,
+     0.34
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.55,
+    "height": 2.69
+   },
+   "arc_look": {
+    "height": 2.69,
+    "walkCycle": 1.73,
+    "runCycle": 3.1,
+    "shadow": 1.14,
+    "growXz": 2.13,
+    "growUp": 1.31,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 1.75,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    },
+    "spawn": {
+     "length": 2.0,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "hair_back",
+    "horns",
+    "wing_l",
+    "wing_tip_l",
+    "wing_r",
+    "wing_tip_r",
+    "prop_r",
+    "wing2_l",
+    "wing2_r"
+   ],
+   "glow_bones": [
+    "head",
+    "arm_l",
+    "arm_r",
+    "prop_r"
+   ],
+   "problems": []
+  },
+  "lucifero_form2": {
+   "model": "arc_lucifero_form2",
+   "spec": "GeoSpec.of(\"arc\", \"lucifero_form2\")",
+   "form": 2,
+   "role": "boss",
+   "name": "Lucifero, King of Devils (full power)",
+   "build": "lanky",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_lucifero_form2.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_lucifero_form2.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_lucifero_form2.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_lucifero_form2_glow.png"
+   ],
+   "texture": [
+    512,
+    256
+   ],
+   "cubes": 79,
+   "faces_per_pass": 419,
+   "height_blocks": 2.69,
+   "height_with_hair_and_horns_blocks": 4.01,
+   "bounds_blocks": {
+    "min": [
+     -2.0,
+     0.0,
+     -0.25
+    ],
+    "max": [
+     2.0,
+     4.01,
+     0.34
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.55,
+    "height": 2.69
+   },
+   "arc_look": {
+    "height": 2.69,
+    "walkCycle": 1.73,
+    "runCycle": 3.1,
+    "shadow": 1.4,
+    "growXz": 2.5,
+    "growUp": 1.72,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 1.25,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    },
+    "spawn": {
+     "length": 2.0,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "hair_back",
+    "horns",
+    "wing_l",
+    "wing_tip_l",
+    "wing_r",
+    "wing_tip_r",
+    "prop_r",
+    "wing2_l",
+    "wing2_r"
+   ],
+   "glow_bones": [
+    "head",
+    "arm_l",
+    "arm_r",
+    "prop_r"
+   ],
+   "problems": []
+  },
+  "morris_libardirt": {
+   "model": "arc_morris_libardirt",
+   "spec": "GeoSpec.of(\"arc\", \"morris_libardirt\")",
+   "form": 1,
+   "role": "boss",
+   "name": "Morris Libardirt",
+   "build": "slim",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_morris_libardirt.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_morris_libardirt.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_morris_libardirt.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_morris_libardirt_glow.png"
+   ],
+   "texture": [
+    512,
+    64
+   ],
+   "cubes": 101,
+   "faces_per_pass": 544,
+   "height_blocks": 2.0,
+   "height_with_hair_and_horns_blocks": 2.31,
+   "bounds_blocks": {
+    "min": [
+     -0.54,
+     0.0,
+     -0.42
+    ],
+    "max": [
+     0.55,
+     2.31,
+     0.58
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.55,
+    "height": 2.0
+   },
+   "arc_look": {
+    "height": 2.0,
+    "walkCycle": 0.88,
+    "runCycle": 1.63,
+    "shadow": 0.39,
+    "growXz": 1.08,
+    "growUp": 0.71,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 1.75,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    },
+    "spawn": {
+     "length": 2.0,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "prop_r"
+   ],
+   "glow_bones": [
+    "body",
+    "prop_r"
+   ],
+   "problems": []
+  },
+  "morris_libardirt_form2": {
+   "model": "arc_morris_libardirt_form2",
+   "spec": "GeoSpec.of(\"arc\", \"morris_libardirt_form2\")",
+   "form": 2,
+   "role": "boss",
+   "name": "Morris Libardirt, Lucifero's Host",
+   "build": "slim",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_morris_libardirt_form2.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_morris_libardirt_form2.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_morris_libardirt_form2.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_morris_libardirt_form2_glow.png"
+   ],
+   "texture": [
+    512,
+    128
+   ],
+   "cubes": 110,
+   "faces_per_pass": 602,
+   "height_blocks": 2.0,
+   "height_with_hair_and_horns_blocks": 2.57,
+   "bounds_blocks": {
+    "min": [
+     -0.97,
+     0.0,
+     -0.42
+    ],
+    "max": [
+     0.97,
+     2.57,
+     0.58
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.55,
+    "height": 2.0
+   },
+   "arc_look": {
+    "height": 2.0,
+    "walkCycle": 0.88,
+    "runCycle": 1.63,
+    "shadow": 0.68,
+    "growXz": 1.47,
+    "growUp": 0.97,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 1.25,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    },
+    "spawn": {
+     "length": 2.0,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "horns",
+    "wing_l",
+    "wing_tip_l",
+    "wing_r",
+    "wing_tip_r",
+    "prop_r"
+   ],
+   "glow_bones": [
+    "body",
+    "head",
+    "prop_r"
+   ],
+   "problems": []
+  },
   "npc_default": {
    "model": "arc_npc_default",
    "spec": "GeoSpec.of(\"arc\", \"npc_default\")",
