@@ -18,6 +18,8 @@ public final class Room {
     public final BoundingBox box;
     /** The native faction (an id of {@code data/nusmp/mega/factions}); null until the ecology assigned one. Mutable on purpose: the eco builder sets it after generation. */
     public String faction;
+    /** 1.55.0: the signed floor of this room ({@link FloorMap}); 0 until the floor assigner banded the sector (a 1.54.0 save stays 0, which {@code MegaDungeon.floorAt} reads as the sector's first floor). Mutable on purpose: the floors builder sets it after generation. */
+    public int floor;
 
     public Room(int id, String template, RoomKind kind, BoundingBox box) {
         this.id = id;
@@ -43,6 +45,7 @@ public final class Room {
         t.putString("tpl", template);
         t.putIntArray("box", new int[] {box.minX(), box.minY(), box.minZ(), box.maxX(), box.maxY(), box.maxZ()});
         if (faction != null) t.putString("fac", faction);
+        if (floor != 0) t.putInt("fl", floor);
         return t;
     }
 
@@ -51,6 +54,7 @@ public final class Room {
         if (b.length != 6) b = new int[] {0, 0, 0, 0, 0, 0};
         Room r = new Room(t.getInt("id"), t.getString("tpl"), RoomKind.of(t.getString("tpl")), new BoundingBox(b[0], b[1], b[2], b[3], b[4], b[5]));
         if (t.contains("fac")) r.faction = t.getString("fac");
+        if (t.contains("fl")) r.floor = t.getInt("fl");
         return r;
     }
 }
