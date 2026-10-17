@@ -1,0 +1,9 @@
+{
+  "id": "tensura:great_sage",
+  "kind": "unique",
+  "name": "Great Sage",
+  "ep_tax": 8,
+  "min_ep": 1500,
+  "tint": "#5CD8FF",
+  "description": "A mind that answers before the question ends."
+}

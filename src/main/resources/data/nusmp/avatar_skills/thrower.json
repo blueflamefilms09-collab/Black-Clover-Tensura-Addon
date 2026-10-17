@@ -1,0 +1,9 @@
+{
+  "id": "tensura:thrower",
+  "kind": "unique",
+  "name": "Thrower",
+  "ep_tax": 3,
+  "min_ep": 400,
+  "tint": "#FFB04A",
+  "description": "Anything becomes a weapon."
+}

@@ -35,6 +35,12 @@ public final class NamingMath {
     /** The creator's permanent magicule tax as a fraction of their maximum: the config percent, never the whole pool. */
     public static double taxFraction(double percent) { return clamp(percent / 100.0, 0.0, 0.9); }
 
+    /**
+     * The tax after naming: the naming tax is added to the tax the Avatar already carries (the Soul Forge's price for its aptitudes and chosen skills), never
+     * above the same 0.9 ceiling, so naming cannot wipe out what the forge charged.
+     */
+    public static double taxAfterNaming(double existing, double namingTax) { return clamp(Math.max(0.0, existing) + Math.max(0.0, namingTax), 0.0, 0.9); }
+
     /** Seconds of Naming Sleep the creator suffers: the config value, doubled for an evolution (a bigger rebirth costs more). */
     public static int sleepTicks(int configSeconds, boolean evolves) { return Math.max(0, configSeconds) * 20 * (evolves ? 2 : 1); }
 

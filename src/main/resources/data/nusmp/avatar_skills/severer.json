@@ -1,0 +1,9 @@
+{
+  "id": "tensura:severer",
+  "kind": "unique",
+  "name": "Severer",
+  "ep_tax": 7,
+  "min_ep": 1200,
+  "tint": "#DDEEFF",
+  "description": "Cuts what should not be cut."
+}

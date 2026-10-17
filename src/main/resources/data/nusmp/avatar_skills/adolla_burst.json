@@ -1,0 +1,9 @@
+{
+  "id": "nusmp:adolla_burst",
+  "kind": "ultimate",
+  "name": "Adolla Burst",
+  "ep_tax": 16,
+  "min_ep": 4000,
+  "tint": "#FF8A4A",
+  "description": "The flame of the other world."
+}
