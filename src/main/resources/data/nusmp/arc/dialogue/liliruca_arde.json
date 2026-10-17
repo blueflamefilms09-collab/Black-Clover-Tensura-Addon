@@ -1,0 +1,155 @@
+{
+  "character": "liliruca_arde",
+  "voice": "#B4683C",
+  "lines": {
+    "greeting": [
+      {
+        "text": "Oh! A new customer! ...I mean, a new friend. I am {npc}, but everyone says Lili. I carry things. A lot of things. Do you need something carried?",
+        "key": "arc.dialogue.liliruca_arde.1",
+        "first": true
+      },
+      {
+        "text": "Hello! Lili, supporter, at your service. Cheap, quick and nearly always honest. Who are you, {player}?",
+        "key": "arc.dialogue.liliruca_arde.2",
+        "first": true
+      },
+      {
+        "text": "{player}! You look like someone who has loot to carry.",
+        "key": "arc.dialogue.liliruca_arde.3",
+        "first": false
+      },
+      {
+        "text": "Good to see you. Your pouch is heavier than last time. Mine is lighter. Funny, is it not?",
+        "key": "arc.dialogue.liliruca_arde.4",
+        "first": false
+      },
+      {
+        "text": "Do not tell Bell I said this, but I am happy you are here.",
+        "key": "arc.dialogue.liliruca_arde.5",
+        "first": false
+      }
+    ],
+    "hint": [
+      {
+        "text": "A supporter's rule: always carry more than you need, and never be the one to touch the trap.",
+        "key": "arc.dialogue.liliruca_arde.6",
+        "priority": 0,
+        "weight": 1
+      },
+      {
+        "text": "Potions, rope, a lantern. Nobody remembers the lantern until it is dark.",
+        "key": "arc.dialogue.liliruca_arde.7",
+        "priority": 0,
+        "weight": 1
+      },
+      {
+        "text": "A good fight is mostly preparation. A good escape is all preparation.",
+        "key": "arc.dialogue.liliruca_arde.8",
+        "priority": 0,
+        "weight": 1
+      },
+      {
+        "text": "Monsters call monsters. If you hear a roar, count the exits first.",
+        "key": "arc.dialogue.liliruca_arde.9",
+        "priority": 0,
+        "weight": 1
+      },
+      {
+        "text": "The upper floors have a Minotaur, which is rude, because I work those floors. Bring it down and the prices go back to normal.",
+        "key": "arc.dialogue.liliruca_arde.10",
+        "priority": 0,
+        "weight": 3,
+        "notDefeated": [
+          "minotaur"
+        ]
+      },
+      {
+        "text": "A black Goliath? Welf is already drawing plans for what to do with its hide. Do not ask me what black hide costs.",
+        "key": "arc.dialogue.liliruca_arde.11",
+        "priority": 0,
+        "weight": 3,
+        "defeated": [
+          "minotaur"
+        ],
+        "notDefeated": [
+          "black_goliath"
+        ]
+      },
+      {
+        "text": "The Water City has a two-headed thing. Its scales are worth more than I will say out loud. The red head eats magic, so do not stand in its mist and cast.",
+        "key": "arc.dialogue.liliruca_arde.12",
+        "priority": 0,
+        "weight": 3,
+        "defeated": [
+          "black_goliath"
+        ],
+        "notDefeated": [
+          "amphisbaena"
+        ]
+      },
+      {
+        "text": "The White Palace is bone all the way down. I am not carrying any of it. Ask Ais.",
+        "key": "arc.dialogue.liliruca_arde.13",
+        "priority": 0,
+        "weight": 3,
+        "defeated": [
+          "amphisbaena"
+        ],
+        "notDefeated": [
+          "udaeus"
+        ]
+      },
+      {
+        "text": "Everything is down? Then I will have to find new work. I am joking. I am joking! There is always work.",
+        "key": "arc.dialogue.liliruca_arde.14",
+        "priority": 0,
+        "weight": 3,
+        "defeated": [
+          "udaeus"
+        ]
+      }
+    ],
+    "shop": [
+      {
+        "text": "Potions, rope, a lantern, whatever the supporter can carry! Which, as you can see, is a lot.",
+        "key": "arc.dialogue.liliruca_arde.15"
+      },
+      {
+        "text": "Everything has a fair price. Fair to me, mostly.",
+        "key": "arc.dialogue.liliruca_arde.16"
+      }
+    ],
+    "quest_offer": [
+      {
+        "text": "Do you want a job? The two-headed dragon in the Water City. Bring it down and I will tell everyone who helped. The scales alone... never mind. Interested?",
+        "key": "arc.dialogue.liliruca_arde.17",
+        "notDefeated": [
+          "amphisbaena"
+        ]
+      }
+    ],
+    "quest_done": [
+      {
+        "text": "You beat it! The Amphisbaena! Oh, the scales... I mean, the whole city thanks you. I mean I do. Thank you, {player}.",
+        "key": "arc.dialogue.liliruca_arde.18",
+        "defeated": [
+          "amphisbaena"
+        ]
+      }
+    ],
+    "farewell": [
+      {
+        "text": "Come again!",
+        "key": "arc.dialogue.liliruca_arde.19"
+      },
+      {
+        "text": "Mind the traps!",
+        "key": "arc.dialogue.liliruca_arde.20"
+      },
+      {
+        "text": "Pay your debts and do not fall behind.",
+        "key": "arc.dialogue.liliruca_arde.21"
+      }
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:arc/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:book"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arc.met_solid_silva.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arc.met_solid_silva.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_met_solid_silva": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arc.met",
+        "arg": "solid_silva"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_met_solid_silva"
+    ]
+  ],
+  "rewards": {
+    "experience": 10
+  }
+}

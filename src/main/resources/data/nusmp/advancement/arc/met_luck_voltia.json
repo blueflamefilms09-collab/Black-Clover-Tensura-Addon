@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:arc/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:book"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arc.met_luck_voltia.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arc.met_luck_voltia.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_met_luck_voltia": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arc.met",
+        "arg": "luck_voltia"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_met_luck_voltia"
+    ]
+  ],
+  "rewards": {
+    "experience": 10
+  }
+}

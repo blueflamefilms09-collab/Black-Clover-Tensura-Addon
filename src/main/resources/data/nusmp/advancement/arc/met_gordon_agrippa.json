@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:arc/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:book"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arc.met_gordon_agrippa.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arc.met_gordon_agrippa.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_met_gordon_agrippa": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arc.met",
+        "arg": "gordon_agrippa"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_met_gordon_agrippa"
+    ]
+  ],
+  "rewards": {
+    "experience": 10
+  }
+}

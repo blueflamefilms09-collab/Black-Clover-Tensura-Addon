@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:arc/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:iron_sword"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arc.saga_seven_deadly_sins.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arc.saga_seven_deadly_sins.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_saga_clear_seven_deadly_sins": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arc.saga_clear",
+        "arg": "seven_deadly_sins"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_saga_clear_seven_deadly_sins"
+    ]
+  ],
+  "rewards": {
+    "experience": 300
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:arc/saga_elf_reincarnation",
+  "display": {
+    "icon": {
+      "id": "minecraft:iron_sword"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arc.defeated_mars.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arc.defeated_mars.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_defeated_mars": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arc.defeated",
+        "arg": "mars"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_defeated_mars"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  }
+}

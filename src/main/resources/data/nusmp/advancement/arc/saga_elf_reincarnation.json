@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:arc/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:written_book"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arc.saga_elf_reincarnation.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arc.saga_elf_reincarnation.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_saga_clear_elf_reincarnation": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arc.saga_clear",
+        "arg": "elf_reincarnation"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_saga_clear_elf_reincarnation"
+    ]
+  ],
+  "rewards": {
+    "experience": 300
+  }
+}

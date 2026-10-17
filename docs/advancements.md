@@ -10,7 +10,7 @@ Nothing was run in Minecraft. See "Unverified in the game".
 - The lang fragment must be merged into `assets/nusmp/lang/en_us.json` (`python tools/quests/merge_lang.py`, idempotent). `AdvancementDataTest` fails while a key is missing.
 - `src/test/java/com/newuniverse/nusmp/quests/AdvancementDataTest.java` checks every file: parses, parent exists, one root, no cycle, translations exist, triggers are known, event keys are in the contract, mod items / entities / effects / dimensions exist, every criterion is used by a requirement.
 
-## The tree (391 advancements)
+## The tree (452 advancements)
 
 | Branch (folder) | Advancements | What is in it |
 | --- | --- | --- |
@@ -28,9 +28,9 @@ Nothing was run in Minecraft. See "Unverified in the game".
 | `challenges` | 11 | long deeds: no-relic arena win, necromancer, every magic, Genesis in hand |
 | `arcs` | 13 | one milestone per anime arc (13), chained in story order |
 | `future` | 11 | hidden placeholders for the bosses that are not made yet (granted by their death once they exist) |
-| `arc` | 12 | the characters of the arcs, one advancement per character of tools/quests/arc_roster.txt (defeated a boss, met a friend), one per saga cleared, and one for the arenas (spec_arc.py, refreshed by tools/quests/gen_arc_adv.py) |
+| `arc` | 73 | the characters of the arcs, one advancement per character of tools/quests/arc_roster.txt (defeated a boss, met a friend), one per saga cleared, and one for the arenas (spec_arc.py, refreshed by tools/quests/gen_arc_adv.py) |
 
-Frames: 212 task, 121 goal, 58 challenge. Goals and challenges announce in chat, tasks do not. Every advancement grants experience (5 to 2000 points, more for challenges).
+Frames: 248 task, 144 goal, 60 challenge. Goals and challenges announce in chat, tasks do not. Every advancement grants experience (5 to 2000 points, more for challenges).
 
 The tab background is `textures/block/grimoire_altar_top.png` (an existing 16x16 texture of the mod; the advancement screen tiles it).
 
@@ -49,9 +49,9 @@ Everything else is the mod's own trigger `nusmp:event` (implemented in `quests/N
 | Key | Argument | Used by (advancements) | Counts used | Hook point suggested to the Java side |
 | --- | --- | --- | --- | --- |
 | `arc.arena` | boss id lower case | 1 | 1 | a player is carried into a story arena by the Chronicle Sigil: arc/arena/ArcArenaTravel.enter |
-| `arc.defeated` | character id lower case (dante, lucius, goliath ...) | 8 | 1 | a boss of the arcs falls: arc/story/ArcStory.defeated (the arcs' own bosses), arc/world/ArcWorldCredit (the seven older ones); credits the fighters and, with arc.shareStoryCredit, their nearby FTB teammates |
-| `arc.met` | character id lower case | 1 | 1 | first conversation with a friendly character of the arcs (arc/story/ArcStory.met) |
-| `arc.saga_clear` | saga id lower case (elf_reincarnation, spade_raid, wizard_king, seven_deadly_sins, danmachi) | 3 | 1 | a player's story closes a saga (every boss of it defeated), once per saga: arc/world/ArcWorldCredit.settle |
+| `arc.defeated` | character id lower case (dante, lucius, goliath ...) | 31 | 1 | a boss of the arcs falls: arc/story/ArcStory.defeated (the arcs' own bosses), arc/world/ArcWorldCredit (the seven older ones); credits the fighters and, with arc.shareStoryCredit, their nearby FTB teammates |
+| `arc.met` | character id lower case | 37 | 1 | first conversation with a friendly character of the arcs (arc/story/ArcStory.met) |
+| `arc.saga_clear` | saga id lower case (elf_reincarnation, spade_raid, wizard_king, seven_deadly_sins, danmachi) | 5 | 1 | a player's story closes a saga (every boss of it defeated), once per saga: arc/world/ArcWorldCredit.settle |
 | `arena.entered` | - | 2 | 1 | arena travel |
 | `arena.hourglass_used` | - | 1 | 1 | Hourglass of the Final Hour used |
 | `arena.victory` | lucius (what the Java side sends); norelic is an extra arg requested by the data side (also fired when the winner carried no relic) | 2 | 1 | arena won |

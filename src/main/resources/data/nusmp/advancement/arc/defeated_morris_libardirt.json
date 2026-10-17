@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:arc/saga_spade_raid",
+  "display": {
+    "icon": {
+      "id": "minecraft:iron_sword"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arc.defeated_morris_libardirt.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arc.defeated_morris_libardirt.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_defeated_morris_libardirt": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arc.defeated",
+        "arg": "morris_libardirt"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_defeated_morris_libardirt"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  }
+}

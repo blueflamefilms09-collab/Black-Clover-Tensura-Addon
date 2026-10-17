@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:arc/saga_elf_reincarnation",
+  "display": {
+    "icon": {
+      "id": "minecraft:iron_sword"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arc.defeated_revchi_salik.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arc.defeated_revchi_salik.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_defeated_revchi_salik": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arc.defeated",
+        "arg": "revchi_salik"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_defeated_revchi_salik"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  }
+}

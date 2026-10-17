@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:arc/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:book"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arc.met_yami_sukehiro.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arc.met_yami_sukehiro.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_met_yami_sukehiro": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arc.met",
+        "arg": "yami_sukehiro"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_met_yami_sukehiro"
+    ]
+  ],
+  "rewards": {
+    "experience": 10
+  }
+}

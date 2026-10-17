@@ -1,0 +1,157 @@
+{
+  "character": "ais_wallenstein",
+  "voice": "#E0B040",
+  "lines": {
+    "greeting": [
+      {
+        "text": "...I am {npc}.",
+        "key": "arc.dialogue.ais_wallenstein.1",
+        "first": true
+      },
+      {
+        "text": "You are not from here, {player}. ...I am {npc}. Be careful.",
+        "key": "arc.dialogue.ais_wallenstein.2",
+        "first": true
+      },
+      {
+        "text": "...Hello.",
+        "key": "arc.dialogue.ais_wallenstein.3",
+        "first": false
+      },
+      {
+        "text": "You are still alive. That is good.",
+        "key": "arc.dialogue.ais_wallenstein.4",
+        "first": false
+      },
+      {
+        "text": "I was thinking.",
+        "key": "arc.dialogue.ais_wallenstein.5",
+        "first": false
+      },
+      {
+        "text": "Your stance has changed. It is better.",
+        "key": "arc.dialogue.ais_wallenstein.6",
+        "first": false
+      }
+    ],
+    "hint": [
+      {
+        "text": "A sword has an edge. A swordsman has habits. Break the habit, keep the edge.",
+        "key": "arc.dialogue.ais_wallenstein.7",
+        "priority": 0,
+        "weight": 1
+      },
+      {
+        "text": "I cannot tell you everything. I can tell you to keep moving.",
+        "key": "arc.dialogue.ais_wallenstein.8",
+        "priority": 0,
+        "weight": 1
+      },
+      {
+        "text": "The wind is steady. Be the same.",
+        "key": "arc.dialogue.ais_wallenstein.9",
+        "priority": 0,
+        "weight": 1
+      },
+      {
+        "text": "Eat. You fight badly when you are hungry.",
+        "key": "arc.dialogue.ais_wallenstein.10",
+        "priority": 0,
+        "weight": 1
+      },
+      {
+        "text": "The upper floors have a Minotaur that should not be there. ...It hunts the weakest. Do not be the weakest. Or stand near a wall.",
+        "key": "arc.dialogue.ais_wallenstein.11",
+        "priority": 0,
+        "weight": 3,
+        "notDefeated": [
+          "minotaur"
+        ]
+      },
+      {
+        "text": "...The black Goliath. Plain blades do little to it. I have seen the hide break only under repeated heavy blows.",
+        "key": "arc.dialogue.ais_wallenstein.12",
+        "priority": 0,
+        "weight": 3,
+        "defeated": [
+          "minotaur"
+        ],
+        "notDefeated": [
+          "black_goliath"
+        ]
+      },
+      {
+        "text": "Water City. Two heads. The red one is the one to remove.",
+        "key": "arc.dialogue.ais_wallenstein.13",
+        "priority": 0,
+        "weight": 3,
+        "defeated": [
+          "black_goliath"
+        ],
+        "notDefeated": [
+          "amphisbaena"
+        ]
+      },
+      {
+        "text": "Udaeus. Its ribs follow the last blow. Do not strike from one side. Move around it.",
+        "key": "arc.dialogue.ais_wallenstein.14",
+        "priority": 0,
+        "weight": 3,
+        "defeated": [
+          "amphisbaena"
+        ],
+        "notDefeated": [
+          "udaeus"
+        ]
+      },
+      {
+        "text": "...You beat Udaeus. I did not think I would hear that so soon.",
+        "key": "arc.dialogue.ais_wallenstein.15",
+        "priority": 0,
+        "weight": 3,
+        "defeated": [
+          "udaeus"
+        ]
+      }
+    ],
+    "quest_offer": [
+      {
+        "text": "...Udaeus, on the thirty-seventh floor. I want to know how strong you are. Defeat it, and come back to tell me.",
+        "key": "arc.dialogue.ais_wallenstein.16",
+        "notDefeated": [
+          "udaeus"
+        ]
+      }
+    ],
+    "quest_done": [
+      {
+        "text": "You beat Udaeus. ...Thank you. I will remember it.",
+        "key": "arc.dialogue.ais_wallenstein.17",
+        "defeated": [
+          "udaeus"
+        ]
+      },
+      {
+        "text": "So it can be done by someone other than me. ...Good.",
+        "key": "arc.dialogue.ais_wallenstein.18",
+        "defeated": [
+          "udaeus"
+        ]
+      }
+    ],
+    "farewell": [
+      {
+        "text": "...Goodbye.",
+        "key": "arc.dialogue.ais_wallenstein.19"
+      },
+      {
+        "text": "...Be careful.",
+        "key": "arc.dialogue.ais_wallenstein.20"
+      },
+      {
+        "text": "Come back.",
+        "key": "arc.dialogue.ais_wallenstein.21"
+      }
+    ]
+  }
+}

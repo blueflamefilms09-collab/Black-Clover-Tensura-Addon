@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:arc/saga_elf_reincarnation",
+  "display": {
+    "icon": {
+      "id": "minecraft:iron_sword"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arc.defeated_vetto.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arc.defeated_vetto.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_defeated_vetto": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arc.defeated",
+        "arg": "vetto"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_defeated_vetto"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  }
+}

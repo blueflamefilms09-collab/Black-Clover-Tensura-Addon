@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:arc/saga_danmachi",
+  "display": {
+    "icon": {
+      "id": "minecraft:book"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arc.met_hestia.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arc.met_hestia.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_met_hestia": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arc.met",
+        "arg": "hestia"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_met_hestia"
+    ]
+  ],
+  "rewards": {
+    "experience": 10
+  }
+}

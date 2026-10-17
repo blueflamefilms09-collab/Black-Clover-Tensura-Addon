@@ -6,3 +6,62 @@ dante|Dante Zogratis|spade_raid|boss
 vanica|Vanica Zogratis|spade_raid|boss
 zenon|Zenon Zogratis|spade_raid|boss
 lucius|Lucius Zogratis|wizard_king|boss
+morris_libardirt|Morris Libardirt|spade_raid|boss
+lucifero|Lucifero|spade_raid|boss
+revchi_salik|Revchi Salik|elf_reincarnation|boss
+heath_grice|Heath Grice|elf_reincarnation|boss
+lotus_whomalt|Lotus Whomalt|elf_reincarnation|boss
+mars|Mars|elf_reincarnation|boss
+vetto|Vetto|elf_reincarnation|boss
+diane|Diane|seven_deadly_sins|boss
+gowther|Gowther|seven_deadly_sins|boss
+king|King|seven_deadly_sins|boss
+merlin|Merlin|seven_deadly_sins|boss
+meliodas|Meliodas|seven_deadly_sins|boss
+escanor|Escanor|seven_deadly_sins|boss
+ban|Ban|seven_deadly_sins|boss
+fana|Fana|elf_reincarnation|boss
+patolli|Patolli|elf_reincarnation|boss
+rades_spirito|Rades Spirito|elf_reincarnation|boss
+rhya|Rhya|elf_reincarnation|boss
+zagred|Zagred|elf_reincarnation|boss
+charlotte_roselei|Charlotte Roselei|allies|npc
+jack_the_ripper|Jack the Ripper|allies|npc
+dorothy_unsworth|Dorothy Unsworth|allies|npc
+julius_novachrono|Julius Novachrono|allies|npc
+marx_francois|Marx Francois|allies|npc
+fuegoleon_vermillion|Fuegoleon Vermillion|allies|npc
+mereoleona_vermillion|Mereoleona Vermillion|allies|npc
+leopold_vermillion|Leopold Vermillion|allies|npc
+yuno|Yuno|allies|npc
+william_vangeance|William Vangeance|allies|npc
+mimosa_vermillion|Mimosa Vermillion|allies|npc
+klaus_lunettes|Klaus Lunettes|allies|npc
+kahono|Kahono|allies|npc
+kiato|Kiato|allies|npc
+nozel_silva|Nozel Silva|allies|npc
+solid_silva|Solid Silva|allies|npc
+eina_tulle|Eina Tulle|danmachi|npc
+bell_cranel|Bell Cranel|danmachi|npc
+hestia|Hestia|danmachi|npc
+welf_crozzo|Welf Crozzo|danmachi|npc
+liliruca_arde|Liliruca Arde|danmachi|npc
+ais_wallenstein|Ais Wallenstein|danmachi|npc
+minotaur|Minotaur|danmachi|boss
+black_goliath|Black Goliath|danmachi|boss
+amphisbaena|Amphisbaena|danmachi|boss
+udaeus|Udaeus|danmachi|boss
+yami_sukehiro|Yami Sukehiro|allies|npc
+asta|Asta|allies|npc
+noelle_silva|Noelle Silva|allies|npc
+finral_roulacase|Finral Roulacase|allies|npc
+magna_swing|Magna Swing|allies|npc
+luck_voltia|Luck Voltia|allies|npc
+charmy_pappitson|Charmy Pappitson|allies|npc
+vanessa_enoteca|Vanessa Enoteca|allies|npc
+gordon_agrippa|Gordon Agrippa|allies|npc
+zora_ideale|Zora Ideale|allies|npc
+gauche_adlai|Gauche Adlai|allies|npc
+grey|Grey|allies|npc
+secre_swallowtail|Secre Swallowtail|allies|npc
+nacht_faust|Nacht Faust|allies|npc

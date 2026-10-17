@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:arc/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:book"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arc.met_kahono.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arc.met_kahono.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_met_kahono": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arc.met",
+        "arg": "kahono"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_met_kahono"
+    ]
+  ],
+  "rewards": {
+    "experience": 10
+  }
+}

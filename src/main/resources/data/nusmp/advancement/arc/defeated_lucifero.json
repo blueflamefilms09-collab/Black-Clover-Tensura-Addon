@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:arc/saga_spade_raid",
+  "display": {
+    "icon": {
+      "id": "minecraft:iron_sword"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arc.defeated_lucifero.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arc.defeated_lucifero.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_defeated_lucifero": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arc.defeated",
+        "arg": "lucifero"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_defeated_lucifero"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  }
+}

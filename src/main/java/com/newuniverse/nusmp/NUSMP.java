@@ -78,6 +78,7 @@ public class NUSMP {
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.arc.spade.SpadeConfig.SPEC, "nusmp-spade-server.toml");
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.arc.midnight.MidnightConfig.SPEC, "nusmp-midnight-server.toml");   // 1.61.0: the Eye of the Midnight Sun bosses
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.arc.sds.SdsaConfig.SPEC, "nusmp-arc-sdsa-server.toml");   // 1.61.0: the Seven Deadly Sins, part 1 (Meliodas, Escanor, Ban)
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.arc.danmachi.DanMachiConfig.SPEC, "nusmp-danmachi-server.toml");   // 1.61.0: DanMachi: the Dungeon Level of the monsters
         com.newuniverse.nusmp.arc.world.ArcWorldSystem.init(modEventBus, modContainer);                                    // 1.61.0: where the characters appear: floor bosses, story arenas, the Hub (registers its own config nusmp-arc-world-server.toml; before NUItems.ITEMS.register)
         modEventBus.addListener(com.newuniverse.nusmp.charter.CharterNet::registerPayloads);
         modEventBus.addListener(com.newuniverse.nusmp.boss.bar.BossBarNet::registerPayloads);

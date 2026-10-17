@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:arc/saga_elf_reincarnation",
+  "display": {
+    "icon": {
+      "id": "minecraft:iron_sword"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arc.defeated_lotus_whomalt.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arc.defeated_lotus_whomalt.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_defeated_lotus_whomalt": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arc.defeated",
+        "arg": "lotus_whomalt"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_defeated_lotus_whomalt"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  }
+}

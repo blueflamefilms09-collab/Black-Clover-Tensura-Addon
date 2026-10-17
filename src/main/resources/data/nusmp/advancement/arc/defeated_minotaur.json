@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:arc/saga_danmachi",
+  "display": {
+    "icon": {
+      "id": "minecraft:iron_sword"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arc.defeated_minotaur.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arc.defeated_minotaur.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_defeated_minotaur": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arc.defeated",
+        "arg": "minotaur"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_defeated_minotaur"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  }
+}

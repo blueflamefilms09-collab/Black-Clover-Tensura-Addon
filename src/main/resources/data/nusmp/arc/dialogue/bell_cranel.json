@@ -1,0 +1,127 @@
+{
+  "character": "bell_cranel",
+  "voice": "#E8E8F4",
+  "lines": {
+    "greeting": [
+      {
+        "text": "Oh! H-hello. I am {npc}. Sorry, I am not very good at meeting people. Are you an adventurer too, {player}?",
+        "key": "arc.dialogue.bell_cranel.1",
+        "first": true
+      },
+      {
+        "text": "Hi, I am {npc}! I only started a little while ago, so I do not know much, but I know where the stairs are.",
+        "key": "arc.dialogue.bell_cranel.2",
+        "first": true
+      },
+      {
+        "text": "{player}! You are alive. Good. I mean, of course you are, you are strong. I mean... hello.",
+        "key": "arc.dialogue.bell_cranel.3",
+        "first": false
+      },
+      {
+        "text": "I was just about to go down. Do you want to come with me? Everything is better with two.",
+        "key": "arc.dialogue.bell_cranel.4",
+        "first": false
+      },
+      {
+        "text": "My goddess says I should rest between floors. I get restless, though.",
+        "key": "arc.dialogue.bell_cranel.5",
+        "first": false
+      }
+    ],
+    "hint": [
+      {
+        "text": "Eina says every monster has a Level, and so do we. When I beat something above mine I can feel it, like I took a step I did not know was there.",
+        "key": "arc.dialogue.bell_cranel.6",
+        "priority": 0,
+        "weight": 1
+      },
+      {
+        "text": "Fear is the worst monster. If I stop running, I can think. Then I can fight.",
+        "key": "arc.dialogue.bell_cranel.7",
+        "priority": 0,
+        "weight": 1
+      },
+      {
+        "text": "A knife is not much, but a knife you trust is enough.",
+        "key": "arc.dialogue.bell_cranel.8",
+        "priority": 0,
+        "weight": 1
+      },
+      {
+        "text": "If a monster roars and your legs stop working, it is not shameful. It means the roar is stronger than you, for now. Get stronger, or get a wall.",
+        "key": "arc.dialogue.bell_cranel.9",
+        "priority": 0,
+        "weight": 1
+      },
+      {
+        "text": "There is a Minotaur on the upper floors. I met one once. It chose me out of everyone. All I learned is this: stand with a wall behind you and let it hit the wall.",
+        "key": "arc.dialogue.bell_cranel.10",
+        "priority": 0,
+        "weight": 3,
+        "notDefeated": [
+          "minotaur"
+        ]
+      },
+      {
+        "text": "You beat the Minotaur? That is... I mean, I am glad. Welf says that past the stone Goliath there is a black one that his hammer could not scratch. He wants to see how it breaks.",
+        "key": "arc.dialogue.bell_cranel.11",
+        "priority": 0,
+        "weight": 3,
+        "defeated": [
+          "minotaur"
+        ],
+        "notDefeated": [
+          "black_goliath"
+        ]
+      },
+      {
+        "text": "Lili says there is something with two heads in the Water City. She says it like it is a bargain. I trust her about everything except prices.",
+        "key": "arc.dialogue.bell_cranel.12",
+        "priority": 0,
+        "weight": 3,
+        "defeated": [
+          "black_goliath"
+        ],
+        "notDefeated": [
+          "amphisbaena"
+        ]
+      },
+      {
+        "text": "Ais is waiting for someone to try Udaeus. She does not say so, but she is. I would like to be the one, one day.",
+        "key": "arc.dialogue.bell_cranel.13",
+        "priority": 0,
+        "weight": 3,
+        "defeated": [
+          "amphisbaena"
+        ],
+        "notDefeated": [
+          "udaeus"
+        ]
+      },
+      {
+        "text": "You beat all of them! I am going to go and train now, I think. A lot.",
+        "key": "arc.dialogue.bell_cranel.14",
+        "priority": 0,
+        "weight": 3,
+        "defeated": [
+          "udaeus"
+        ]
+      }
+    ],
+    "farewell": [
+      {
+        "text": "See you down there, {player}!",
+        "key": "arc.dialogue.bell_cranel.15"
+      },
+      {
+        "text": "Be careful. Please.",
+        "key": "arc.dialogue.bell_cranel.16"
+      },
+      {
+        "text": "Thank you for talking to me. I mean it.",
+        "key": "arc.dialogue.bell_cranel.17"
+      }
+    ]
+  }
+}

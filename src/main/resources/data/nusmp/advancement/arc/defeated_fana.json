@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:arc/saga_elf_reincarnation",
+  "display": {
+    "icon": {
+      "id": "minecraft:iron_sword"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arc.defeated_fana.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arc.defeated_fana.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_defeated_fana": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arc.defeated",
+        "arg": "fana"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_defeated_fana"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  }
+}

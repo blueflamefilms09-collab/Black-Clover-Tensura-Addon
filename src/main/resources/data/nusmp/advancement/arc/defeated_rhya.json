@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:arc/saga_elf_reincarnation",
+  "display": {
+    "icon": {
+      "id": "minecraft:iron_sword"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arc.defeated_rhya.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arc.defeated_rhya.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_defeated_rhya": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arc.defeated",
+        "arg": "rhya"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_defeated_rhya"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  }
+}

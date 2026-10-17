@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:arc/saga_seven_deadly_sins",
+  "display": {
+    "icon": {
+      "id": "minecraft:iron_sword"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arc.defeated_gowther.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arc.defeated_gowther.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_defeated_gowther": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arc.defeated",
+        "arg": "gowther"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_defeated_gowther"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  }
+}
