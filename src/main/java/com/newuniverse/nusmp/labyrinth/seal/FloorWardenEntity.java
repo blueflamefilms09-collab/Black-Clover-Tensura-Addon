@@ -154,19 +154,30 @@ public class FloorWardenEntity extends LivingArmorEntity {
         }
     }
 
+    /** 1.54.0: the Ground Slam's damage as an overridable value (the Labyrinth Guardian scales it with its sector's threat); the Warden's stays 8. */
+    protected float slamDamage() { return SLAM_DAMAGE; }
+
+    /** 1.54.0: the Ground Slam's radius as an overridable value (the Guardian's gravity trait widens it); the Warden's stays 4. */
+    protected double slamRadius() { return SLAM_RADIUS; }
+
+    /** 1.54.0: called once after every Ground Slam (the Guardian's storm trait hangs its chain lightning here); nothing happens for the Warden. */
+    protected void onGroundSlam(ServerLevel sl) {}
+
     /** Ground Slam: 8 damage and a shove to everything but armour within 4 blocks, with the anvil's crash. */
     private void groundSlam(ServerLevel sl) {
-        AABB ring = getBoundingBox().inflate(SLAM_RADIUS);
+        double radius = slamRadius();
+        AABB ring = getBoundingBox().inflate(radius);
         for (LivingEntity e : sl.getEntitiesOfClass(LivingEntity.class, ring, e -> e != this && e.isAlive() && !(e instanceof LivingArmorEntity)
                 && !(e instanceof Player p && (p.isCreative() || p.isSpectator())))) {
-            if (e.hurt(damageSources().mobAttack(this), SLAM_DAMAGE)) e.knockback(1.4, getX() - e.getX(), getZ() - e.getZ());
+            if (e.hurt(damageSources().mobAttack(this), slamDamage())) e.knockback(1.4, getX() - e.getX(), getZ() - e.getZ());
         }
         sl.playSound(null, blockPosition(), SoundEvents.ANVIL_LAND, SoundSource.HOSTILE, 1.4f, 0.55f);
         sl.sendParticles(ParticleTypes.EXPLOSION, getX(), getY() + 0.1, getZ(), 1, 0, 0, 0, 0);
         for (int i = 0; i < 24; i++) {
             double a = i * Math.PI / 12.0;
-            sl.sendParticles(ParticleTypes.LARGE_SMOKE, getX() + Math.cos(a) * SLAM_RADIUS, getY() + 0.2, getZ() + Math.sin(a) * SLAM_RADIUS, 1, 0, 0, 0, 0.02);
+            sl.sendParticles(ParticleTypes.LARGE_SMOKE, getX() + Math.cos(a) * radius, getY() + 0.2, getZ() + Math.sin(a) * radius, 1, 0, 0, 0, 0.02);
         }
+        onGroundSlam(sl);
     }
 
     /** Shadow Step: it is suddenly beside a target that kept its distance (behind it when that spot is free), in a burst of smoke. */
@@ -203,6 +214,7 @@ public class FloorWardenEntity extends LivingArmorEntity {
             guard.moveTo(getX() + side, getY(), getZ() - side * 0.5, getYRot(), 0f);
             guard.finalizeSpawn(sl, sl.getCurrentDifficultyAt(guard.blockPosition()), MobSpawnType.MOB_SUMMONED, null);
             guard.setPersistenceRequired();
+            guard.addTag("nusmp_servant");                                                 // 1.54.0: a boss's minion is no faction's fighter (the Mega-Dungeon's turf wars leave it alone)
             guard.setTarget(getTarget());
             sl.addFreshEntity(guard);
             sl.sendParticles(ParticleTypes.WITCH, guard.getX(), guard.getY() + 1.0, guard.getZ(), 20, 0.4, 0.8, 0.4, 0.02);
