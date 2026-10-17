@@ -96,10 +96,15 @@ class AdvancementDataTest {
     private static Set<String> modEntities() throws IOException {
         Set<String> out = new HashSet<>();
         Pattern pat = Pattern.compile("\\.build\\(\"([a-z0-9_]+)\"\\)");
+        // 1.61.0: the bosses of the arcs are registered by ArcEntities.boss("id", ...), which builds the type with the id it is given
+        Pattern arc = Pattern.compile("ArcEntities\\.boss\\(\\s*\"([a-z0-9_]+)\"");
         try (Stream<Path> s = Files.walk(JAVA)) {
             for (Path p : s.filter(f -> f.toString().endsWith(".java")).toList()) {
-                Matcher m = pat.matcher(Files.readString(p));
+                String text = Files.readString(p);
+                Matcher m = pat.matcher(text);
                 while (m.find()) out.add(m.group(1));
+                Matcher a = arc.matcher(text);
+                while (a.find()) out.add(a.group(1));
             }
         }
         return out;

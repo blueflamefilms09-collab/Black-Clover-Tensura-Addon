@@ -566,6 +566,236 @@
    ],
    "problems": []
   },
+  "diane": {
+   "model": "arc_diane",
+   "spec": "GeoSpec.of(\"arc\", \"diane\")",
+   "form": 1,
+   "role": "boss",
+   "name": "Diane",
+   "build": "average",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_diane.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_diane.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_diane.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_diane_glow.png"
+   ],
+   "texture": [
+    512,
+    128
+   ],
+   "cubes": 38,
+   "faces_per_pass": 214,
+   "height_blocks": 2.0,
+   "height_with_hair_and_horns_blocks": 2.52,
+   "bounds_blocks": {
+    "min": [
+     -0.72,
+     0.0,
+     -0.25
+    ],
+    "max": [
+     0.53,
+     2.52,
+     0.28
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.7,
+    "height": 2.0
+   },
+   "arc_look": {
+    "height": 2.0,
+    "walkCycle": 1.21,
+    "runCycle": 2.15,
+    "shadow": 0.5,
+    "growXz": 1.22,
+    "growUp": 0.92,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 1.75,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "hair_tail_l",
+    "hair_tail_r",
+    "prop_r"
+   ],
+   "glow_bones": [
+    "prop_r"
+   ],
+   "problems": []
+  },
+  "diane_form2": {
+   "model": "arc_diane_form2",
+   "spec": "GeoSpec.of(\"arc\", \"diane_form2\")",
+   "form": 2,
+   "role": "boss",
+   "name": "Diane, in Drole's Dance",
+   "build": "average",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_diane_form2.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_diane_form2.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_diane_form2.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_diane_form2_glow.png"
+   ],
+   "texture": [
+    512,
+    128
+   ],
+   "cubes": 46,
+   "faces_per_pass": 260,
+   "height_blocks": 2.0,
+   "height_with_hair_and_horns_blocks": 2.52,
+   "bounds_blocks": {
+    "min": [
+     -0.72,
+     0.0,
+     -0.25
+    ],
+    "max": [
+     0.62,
+     2.52,
+     0.28
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.7,
+    "height": 2.0
+   },
+   "arc_look": {
+    "height": 2.0,
+    "walkCycle": 1.21,
+    "runCycle": 2.15,
+    "shadow": 0.5,
+    "growXz": 1.22,
+    "growUp": 0.92,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 1.25,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "hair_tail_l",
+    "hair_tail_r",
+    "prop_r"
+   ],
+   "glow_bones": [
+    "body",
+    "head",
+    "arm_l",
+    "leg_l",
+    "arm_r",
+    "leg_r",
+    "prop_r"
+   ],
+   "problems": []
+  },
   "dorothy_unsworth": {
    "model": "arc_dorothy_unsworth",
    "spec": "GeoSpec.of(\"arc\", \"dorothy_unsworth\")",
@@ -1593,6 +1823,242 @@
    ],
    "problems": []
   },
+  "gowther": {
+   "model": "arc_gowther",
+   "spec": "GeoSpec.of(\"arc\", \"gowther\")",
+   "form": 1,
+   "role": "boss",
+   "name": "Gowther",
+   "build": "slim",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_gowther.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_gowther.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_gowther.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_gowther_glow.png"
+   ],
+   "texture": [
+    512,
+    128
+   ],
+   "cubes": 61,
+   "faces_per_pass": 329,
+   "height_blocks": 1.84,
+   "height_with_hair_and_horns_blocks": 1.94,
+   "bounds_blocks": {
+    "min": [
+     -0.41,
+     -0.22,
+     -0.25
+    ],
+    "max": [
+     0.65,
+     1.94,
+     0.34
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.55,
+    "height": 1.84
+   },
+   "arc_look": {
+    "height": 1.84,
+    "walkCycle": 1.11,
+    "runCycle": 1.97,
+    "shadow": 0.46,
+    "growXz": 1.15,
+    "growUp": 0.5,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 1.75,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "hair_back",
+    "prop_l",
+    "prop_back"
+   ],
+   "glow_bones": [
+    "body",
+    "head"
+   ],
+   "problems": []
+  },
+  "gowther_form2": {
+   "model": "arc_gowther_form2",
+   "spec": "GeoSpec.of(\"arc\", \"gowther_form2\")",
+   "form": 2,
+   "role": "boss",
+   "name": "Gowther, the Doll Unbound",
+   "build": "slim",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_gowther_form2.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_gowther_form2.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_gowther_form2.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_gowther_form2_glow.png"
+   ],
+   "texture": [
+    512,
+    128
+   ],
+   "cubes": 78,
+   "faces_per_pass": 409,
+   "height_blocks": 1.84,
+   "height_with_hair_and_horns_blocks": 2.64,
+   "bounds_blocks": {
+    "min": [
+     -0.99,
+     -0.22,
+     -0.25
+    ],
+    "max": [
+     0.99,
+     2.64,
+     0.47
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.55,
+    "height": 1.84
+   },
+   "arc_look": {
+    "height": 1.84,
+    "walkCycle": 1.11,
+    "runCycle": 1.97,
+    "shadow": 0.69,
+    "growXz": 1.49,
+    "growUp": 1.2,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 1.25,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "hair_back",
+    "wing_l",
+    "wing_tip_l",
+    "wing_r",
+    "wing_tip_r",
+    "halo",
+    "prop_l",
+    "prop_back"
+   ],
+   "glow_bones": [
+    "body",
+    "head",
+    "wing_l",
+    "wing_tip_l",
+    "wing_r",
+    "wing_tip_r",
+    "halo"
+   ],
+   "problems": []
+  },
   "grey": {
    "model": "arc_grey",
    "spec": "GeoSpec.of(\"arc\", \"grey\")",
@@ -2397,6 +2863,258 @@
    ],
    "glow_bones": [
     "prop_hip_l"
+   ],
+   "problems": []
+  },
+  "king": {
+   "model": "arc_king",
+   "spec": "GeoSpec.of(\"arc\", \"king\")",
+   "form": 1,
+   "role": "boss",
+   "name": "King",
+   "build": "small",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_king.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_king.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_king.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_king_glow.png"
+   ],
+   "texture": [
+    512,
+    128
+   ],
+   "cubes": 113,
+   "faces_per_pass": 591,
+   "height_blocks": 1.59,
+   "height_with_hair_and_horns_blocks": 2.7,
+   "bounds_blocks": {
+    "min": [
+     -0.82,
+     -0.43,
+     -0.5
+    ],
+    "max": [
+     0.82,
+     2.7,
+     0.51
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.5,
+    "height": 1.59
+   },
+   "arc_look": {
+    "height": 1.59,
+    "walkCycle": 0.99,
+    "runCycle": 1.73,
+    "shadow": 0.57,
+    "growXz": 1.32,
+    "growUp": 1.51,
+    "glow": true
+   },
+   "grip": "two-handed",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 1.75,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "sash",
+    "cape",
+    "cape_low",
+    "wing_l",
+    "wing_tip_l",
+    "wing_r",
+    "wing_tip_r",
+    "prop_r"
+   ],
+   "glow_bones": [
+    "body",
+    "head",
+    "cape",
+    "cape_low",
+    "wing_l",
+    "wing_tip_l",
+    "wing_r",
+    "wing_tip_r",
+    "prop_r"
+   ],
+   "problems": []
+  },
+  "king_form2": {
+   "model": "arc_king_form2",
+   "spec": "GeoSpec.of(\"arc\", \"king_form2\")",
+   "form": 2,
+   "role": "boss",
+   "name": "King, the Fairy King Harlequin",
+   "build": "small",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_king_form2.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_king_form2.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_king_form2.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_king_form2_glow.png"
+   ],
+   "texture": [
+    512,
+    128
+   ],
+   "cubes": 114,
+   "faces_per_pass": 593,
+   "height_blocks": 1.59,
+   "height_with_hair_and_horns_blocks": 2.7,
+   "bounds_blocks": {
+    "min": [
+     -0.95,
+     -0.43,
+     -0.5
+    ],
+    "max": [
+     0.95,
+     2.7,
+     0.51
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.5,
+    "height": 1.59
+   },
+   "arc_look": {
+    "height": 1.59,
+    "walkCycle": 0.99,
+    "runCycle": 1.73,
+    "shadow": 0.67,
+    "growXz": 1.45,
+    "growUp": 1.51,
+    "glow": true
+   },
+   "grip": "two-handed",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 1.25,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "sash",
+    "cape",
+    "cape_low",
+    "wing_l",
+    "wing_tip_l",
+    "wing_r",
+    "wing_tip_r",
+    "halo",
+    "prop_r"
+   ],
+   "glow_bones": [
+    "body",
+    "head",
+    "cape",
+    "cape_low",
+    "wing_l",
+    "wing_tip_l",
+    "wing_r",
+    "wing_tip_r",
+    "halo",
+    "prop_r"
    ],
    "problems": []
   },
@@ -3910,6 +4628,244 @@
    ],
    "glow_bones": [
     "prop_float"
+   ],
+   "problems": []
+  },
+  "merlin": {
+   "model": "arc_merlin",
+   "spec": "GeoSpec.of(\"arc\", \"merlin\")",
+   "form": 1,
+   "role": "boss",
+   "name": "Merlin",
+   "build": "slim",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_merlin.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_merlin.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_merlin.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_merlin_glow.png"
+   ],
+   "texture": [
+    512,
+    64
+   ],
+   "cubes": 44,
+   "faces_per_pass": 230,
+   "height_blocks": 1.91,
+   "height_with_hair_and_horns_blocks": 2.0,
+   "bounds_blocks": {
+    "min": [
+     -0.61,
+     0.0,
+     -0.25
+    ],
+    "max": [
+     0.61,
+     2.0,
+     0.34
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.55,
+    "height": 1.91
+   },
+   "arc_look": {
+    "height": 1.91,
+    "walkCycle": 1.16,
+    "runCycle": 2.06,
+    "shadow": 0.43,
+    "growXz": 1.11,
+    "growUp": 0.49,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 1.75,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "hair_back",
+    "sash",
+    "cape",
+    "cape_low",
+    "prop_r"
+   ],
+   "glow_bones": [
+    "body",
+    "head",
+    "cape",
+    "cape_low",
+    "prop_r"
+   ],
+   "problems": []
+  },
+  "merlin_form2": {
+   "model": "arc_merlin_form2",
+   "spec": "GeoSpec.of(\"arc\", \"merlin_form2\")",
+   "form": 2,
+   "role": "boss",
+   "name": "Merlin, Infinity Unbound",
+   "build": "slim",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_merlin_form2.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_merlin_form2.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_merlin_form2.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_merlin_form2_glow.png"
+   ],
+   "texture": [
+    512,
+    128
+   ],
+   "cubes": 45,
+   "faces_per_pass": 232,
+   "height_blocks": 1.91,
+   "height_with_hair_and_horns_blocks": 2.77,
+   "bounds_blocks": {
+    "min": [
+     -0.61,
+     0.0,
+     -0.25
+    ],
+    "max": [
+     0.61,
+     2.77,
+     0.34
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.55,
+    "height": 1.91
+   },
+   "arc_look": {
+    "height": 1.91,
+    "walkCycle": 1.16,
+    "runCycle": 2.06,
+    "shadow": 0.43,
+    "growXz": 1.11,
+    "growUp": 1.26,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 1.25,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "hair_back",
+    "sash",
+    "cape",
+    "cape_low",
+    "halo",
+    "prop_r"
+   ],
+   "glow_bones": [
+    "body",
+    "head",
+    "cape",
+    "cape_low",
+    "halo",
+    "prop_r"
    ],
    "problems": []
   },

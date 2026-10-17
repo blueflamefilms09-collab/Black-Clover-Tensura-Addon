@@ -38,6 +38,11 @@ public abstract class ArcBoss extends ZogratisBoss {
 
     @Override public int styleAccent() { return character().accent(); }
 
+    /** The bar reads the character's name and strength; the framework's version also names a devil, which means nothing for a Magic Knight or a monster of the Dungeon. */
+    @Override public String barTitle() {
+        return bossName() + " - " + power() + "%" + (gatesOpen() ? " - Gates open" : "");
+    }
+
     @Override protected String openingLine() {
         String line = character().opening();
         return line.isEmpty() ? character().fullName() + " stands before you." : line;

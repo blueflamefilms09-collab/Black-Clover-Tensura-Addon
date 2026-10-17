@@ -36,6 +36,11 @@ public final class ArcCharacters {
         ArcRoster.register(com.newuniverse.nusmp.arc.sds.MeliodasBoss.CHARACTER);
         ArcRoster.register(com.newuniverse.nusmp.arc.sds.EscanorBoss.CHARACTER);
         ArcRoster.register(com.newuniverse.nusmp.arc.sds.BanBoss.CHARACTER);
+        // The Seven Deadly Sins, part 2 (SDS-B): Merlin, Gowther, King and Diane
+        ArcRoster.register(com.newuniverse.nusmp.arc.sds.MerlinBoss.CHARACTER);
+        ArcRoster.register(com.newuniverse.nusmp.arc.sds.GowtherBoss.CHARACTER);
+        ArcRoster.register(com.newuniverse.nusmp.arc.sds.KingBoss.CHARACTER);
+        ArcRoster.register(com.newuniverse.nusmp.arc.sds.DianeBoss.CHARACTER);
         com.newuniverse.nusmp.arc.npc.BlackBullsNpcs.registerAll();   // 1.61.0: fourteen Black Bulls and friends of the saga Allies (NPC-A); the NPC lines stay together because the roster order decides the Hub posts
         com.newuniverse.nusmp.arc.knights.KnightsCast.registerAll();   // 1.61.0: sixteen friendly Magic Knights, captains and court members of the Hub (NPC-B)
     }

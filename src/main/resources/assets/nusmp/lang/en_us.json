@@ -5562,5 +5562,9 @@
   "arc.dialogue.zora_ideale.32": "Hah. Come back and tell me what you stepped on.",
   "entity.nusmp.meliodas": "Meliodas",
   "entity.nusmp.escanor": "Escanor",
-  "entity.nusmp.ban": "Ban"
+  "entity.nusmp.ban": "Ban",
+  "entity.nusmp.merlin": "Merlin",
+  "entity.nusmp.gowther": "Gowther",
+  "entity.nusmp.king": "King",
+  "entity.nusmp.diane": "Diane"
 }
