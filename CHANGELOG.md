@@ -1,5 +1,30 @@
 # Changelog
 
+## [1.60.0] — Parties: the Mega-Dungeon is instanced per FTB team (or per player)
+
+The owner asked for the new dungeon to be "multiplayer friendly (should also work with FTB Teams)". Until now every player shared one chain of floors per road, so the first player to clear a floor changed it for everyone and a group could not keep its own progress. Doc: `docs/labyrinth/mega_v2_party.md` (the lane table, the FTB Teams notes, the decisions and the honest list of what is unverified).
+
+**State:** written without a whole-project compiler; the pure parts (party keys, the party book, lanes, policy, the console lines) are covered by JUnit tests, the smoke test grows a second party from the console and checks the lanes. Nothing has been run in a game client, FTB Teams was never installed where this was written (its API is called by reflection and was checked against its source only).
+
+### NEW
+- **A party is the FTB team of a player, or the player alone** (the personal team FTB gives everyone counts as no team). Each party gets an index from a saved book (`data/nusmp_mega_parties.dat`), and the index is a **lane**: party 0 keeps the old lanes (Holy at z = 0, Abyssal at z = 300 000), so an existing world is unchanged; party k gets Holy at z = -k x 4096 and Abyssal at z = 300 000 + k x 4096. Every sector stores its party; generation, expansion, stairs, the Avatars' delving, the themes and the Crucible all follow the sector's party, with the seed mixed per party.
+- The party is decided when a player enters through the gate (`PartyService.enter`); the Hub stays one shared Sanctuary. A guard sends a player off the floors of a party they do not belong to (operators bypass). The party name and head count are told in chat on arrival. A new FTB team inherits the lane of the member who played alone (the owner first); forming a team later is how friends end up in one dungeon.
+- **The System for a party:** kills are credited to the killer and the members of their FTB team who are on the floor (`SystemParty.setProvider`, the seam of 1.58.0).
+- Admin commands `/multiverse mega party list | of <player> | tp <player> | set <player> <n>` (`set <player> 0` merges a player into the old chain) and an optional `party <n>` on `mega status` and `mega expand`. Quest hook `mega.party` (the number of the party).
+- Config `nusmp-labyrinth-mega-party-server.toml`, section `[party]`: `mode` ("party", or "shared" for the old shared dungeon), `maxParties` (64, up to 256), `useFtbTeams` (true), `guard` (true), `opsBypass` (true), `teamInheritsLane` (true). Self-tests `party.lanes`, `party.book`, `party.resolve`, `party.guard`, `party.chains`.
+
+### CHANGED
+- The System's default kill-credit group (everyone standing in the same sector) is replaced by the party provider; with no FTB Teams every player is a party of one, so the credit goes to the killer alone. `mega.maxSectors` now counts per party, the Dungeon Master's party-size grouping never joins two parties, and a Hub-to-dungeon entry decides the party.
+
+### KEPT
+- Every old signature and saved format (a sector without a party reads as party 0), the whole floor model, the stairs, the themes, the Crucible, the Guardian, the Hub and the Directional Lock. `party.mode = "shared"` (or the old ten-floor model, `floors.perSector` above 1) gives the 1.59.0 behaviour exactly, and switching back deletes nothing.
+
+### Notes for the owner
+- After the update the **first party that enters adopts the old chain** (party 0). If you would rather have one dungeon for everybody, set `mode = "shared"`; to merge a player into the old chain use `/multiverse mega party set <player> 0`.
+- Friends who want one dungeon must be in one FTB party team before they enter (the personal team does not count). Without FTB Teams installed, or with `useFtbTeams = false`, everyone is alone in their own dungeon; use `mode = "shared"` on such a server.
+- Far lanes (up to z = -258 048 and 558 048 with 64 parties) rely on chunk loading and the world border behaving; the server logs a warning at start if the border would cut a lane.
+- The gate prompt in the Hub was not changed (the party is told after arrival instead).
+
 ## [1.59.0] — Sixteen new themes for the two roads: the Cursed Archive, the Holy Church and fourteen more
 
 The owner asked for more themes for the dungeon, among them "a massive book archive called the Cursed Archive (evil route) and a Holy Church (good route)", and "many others" researched from D&D, fantasy and horror. Four builders each made four themes; this release carries all sixteen. Docs: `docs/labyrinth/mega_v2_tha.md`, `mega_v2_thb.md`, `mega_v2_thc.md`, `mega_v2_thd.md` (sources with URLs, every room and why, the palette, the numbers and the honest list of what is unverified).

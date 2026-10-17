@@ -4598,5 +4598,8 @@
   "message.nusmp.mega.enc.spider_warrens.sw_silk_sentries": "The silk is humming.",
   "message.nusmp.mega.enc.spider_warrens.sw_wasp_nest": "The hum has changed.",
   "message.nusmp.mega.enc.spider_warrens.sw_weaver_pack": "Eight legs on stone, many times over.",
-  "message.nusmp.mega.enc.spider_warrens.sw_web_trap": "The threads are all pulled at once."
+  "message.nusmp.mega.enc.spider_warrens.sw_web_trap": "The threads are all pulled at once.",
+  "message.nusmp.mega.party.entry.solo": "You walk the floors of your own: a party of one. Join an FTB team to share them with friends.",
+  "message.nusmp.mega.party.entry.team": "Your party %s has floors of its own. %s of you are in the dungeon now.",
+  "message.nusmp.mega.party.evicted": "These floors belong to another party. The dungeon sends you back to the Hub; go in again by your own gate."
 }
