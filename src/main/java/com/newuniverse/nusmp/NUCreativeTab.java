@@ -29,6 +29,7 @@ public final class NUCreativeTab {
                 for (var egg : com.newuniverse.nusmp.dungeon.floor.goliath.GoliathEntities.spawnEggs()) output.accept(egg.get());                                 // 1.23.0
                 for (var egg : com.newuniverse.nusmp.dungeon.floor.charybdis.CharybdisEntities.spawnEggs()) output.accept(egg.get());
                 for (net.minecraft.world.item.Item ci : com.newuniverse.nusmp.charter.CharterItems.all()) output.accept(ci);                   // 1.25.0: Charter Grimoires
+                for (net.minecraft.world.item.ItemStack egg : com.newuniverse.nusmp.arc.ArcItems.creativeEggs()) output.accept(egg);          // 1.58.0: spawn eggs of the arc characters
                 for (var it : com.newuniverse.nusmp.relics.RelicCatalog.creativeItems()) output.accept(it.get());                                  // 1.24.0: Relics of Many Worlds
                 for (var egg : com.newuniverse.nusmp.relics.order.OrderEntities.spawnEggs()) output.accept(egg.get());
                 output.accept(com.newuniverse.nusmp.relics.order.OrderEntities.NOTICE.get());

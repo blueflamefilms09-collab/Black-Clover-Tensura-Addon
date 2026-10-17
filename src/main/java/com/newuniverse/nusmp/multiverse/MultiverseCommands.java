@@ -211,6 +211,7 @@ public final class MultiverseCommands {
         root.then(com.newuniverse.nusmp.compat.CompatCommand.node());                                    // 1.33.0: compat book|status
         root.then(com.newuniverse.nusmp.core.magic.merge.MergeCommand.node());                                          // 1.27.0: magic merge|list|info|remove|grant|revoke|audit
         com.newuniverse.nusmp.charter.CharterCommand.addTo(root);                                              // 1.25.0: charter status|give|reset
+        root.then(com.newuniverse.nusmp.arc.ArcCommand.node());                                                // 1.58.0: arc list|info|summon|spawn_npc|story
         root.then(bossNode);
         root.then(com.newuniverse.nusmp.labyrinth.mega.MegaCommands.node());                                           // 1.54.0: mega status|sector|tp|expand|regen|audit|plan|unseal|rooms|pools + dm|faction|rest|core|floors|system|flow|gear|selftest
 

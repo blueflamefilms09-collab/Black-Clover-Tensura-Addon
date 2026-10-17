@@ -71,6 +71,7 @@ public class NUSMP {
         com.newuniverse.nusmp.compat.CompatItems.init();                                                                   // 1.34.0: the Compatibility Codex item (before NUItems.ITEMS.register)
         net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.item.ArmorEngravings::onPlayerTick);   // 1.34.0: armour engravings
         com.newuniverse.nusmp.charter.CharterItems.init();                                                                 // 1.25.0: Charter Grimoires (before NUItems.ITEMS.register)
+        com.newuniverse.nusmp.arc.ArcSystem.init(modEventBus, modContainer);                                              // 1.58.0: the characters of the arcs: roster, NPC entity, story, arc Charter Grimoires, spawn egg (before NUItems.ITEMS.register; registers its own config)
         modEventBus.addListener(com.newuniverse.nusmp.charter.CharterNet::registerPayloads);
         modEventBus.addListener(com.newuniverse.nusmp.boss.bar.BossBarNet::registerPayloads);
         modEventBus.addListener(com.newuniverse.nusmp.relics.wave.WaveBossNet::register);
@@ -112,6 +113,7 @@ public class NUSMP {
         modEventBus.addListener(com.newuniverse.nusmp.anim.CastAnimPayload::register);                      // 0.54: casting body animations                      // 0.52: the grimoire sword draw
         modEventBus.addListener(com.newuniverse.nusmp.entity.ZagredStatePayload::register);                 // 0.48: Zagred's state, word and reticle
         if (FMLEnvironment.dist == Dist.CLIENT) {
+            com.newuniverse.nusmp.client.arc.ArcClient.init(modEventBus);                                                   // 1.58.0: renderers of the arc characters, spawn egg colours
             com.newuniverse.nusmp.vfx.client.VfxClientEvents.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireClient.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireShelfClient.init(modEventBus);
