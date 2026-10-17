@@ -1,0 +1,12 @@
+{
+  "name": "Creation",
+  "rarity": "EPIC",
+  "tax_percent": 14,
+  "magic": "creation",
+  "skills": [
+    "tensura:molecular_manipulation",
+    "tensura:magic_wall"
+  ],
+  "tint": "#FFD0F0",
+  "description": "Make what you need out of what is there."
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Earth",
+  "rarity": "COMMON",
+  "tax_percent": 0,
+  "magic": "earth",
+  "skills": [
+    "tensura:earth_manipulation",
+    "tensura:earth_wall",
+    "tensura:stone_shot"
+  ],
+  "tint": "#B08850",
+  "description": "Stone and soil: patient, heavy, hard to move."
+}

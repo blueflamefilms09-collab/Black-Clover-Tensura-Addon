@@ -1,0 +1,9 @@
+{
+  "id": "tensura:predator",
+  "kind": "unique",
+  "name": "Predator",
+  "ep_tax": 8,
+  "min_ep": 1500,
+  "tint": "#8A3CFF",
+  "description": "Devour, learn, keep."
+}
