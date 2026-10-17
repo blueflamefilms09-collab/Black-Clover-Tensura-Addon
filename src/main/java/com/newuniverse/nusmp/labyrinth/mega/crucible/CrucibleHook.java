@@ -36,15 +36,17 @@ import java.util.Set;
  * Why: this is the line the whole Crucible stands on: "taking ONE relic forfeits the rest, and the maximum output is exactly one relic per region".
  * It is installed in front of {@code RelicPedestalBlockEntity.take} as a hook (additive, so a Spire pedestal and one an admin placed work exactly as
  * before: the hook answers null for any pedestal that is not in a sector's saved pedestal list). For a Crucible pedestal it judges the click with
- * {@link CrucibleRules#take} and, on a legal pick, does FIVE things in this order, and the order is the guarantee: (1) it writes Phase CHOSEN, the
+ * {@link CrucibleRules#take} and, on a legal pick, does SIX things in this order, and the order is the guarantee: (1) it writes Phase CHOSEN, the
  * chooser, the chosen id and the drawn catastrophe into the sector FIRST, so whatever fails afterwards, and whoever clicks next (a second player in
  * the same tick, a double click), finds the vault already taken and gets "too late": the rule is enforced by data and ordering, not by trust;
  * (2) it issues ONLY the chosen relic through the God of Order's ledger ({@code UniqueLedger.issue}); if the ledger refuses because the relic went
  * live meanwhile (another vault, an admin) it rolls ONE replacement and retries once, else tells the player and ends the vault; (3) it gives the
  * stack (inventory, else the floor); (4) in a {@code finally}, so even an exception cannot leave a relic on a pedestal, it empties EVERY pedestal of
  * the vault in the same call (the others crumble to dust, the offered relics stay unissued and so stay in the world's pool); (5) it fires the quest
- * hook and starts the catastrophe. A failure inside the hook is logged and answered with "nothing given": it never falls through to the old pick,
- * which would hand a preview (a relic that was never issued) to the player.
+ * hook and starts the catastrophe, which then runs on its own clock; (6) it marks the vault RESOLVED and tells {@code MegaDungeon.crucibleResolved}, which
+ * releases the next sector (its theme is the road of the relic just taken): the catastrophe is an aftermath, not part of the choice. A failure inside the
+ * hook is logged and answered with "nothing given": it never falls through to the old pick, which would hand a preview (a relic that was never issued) to
+ * the player.
  * <p>
  * The {@link #mayDrop drop guard} is the same rule for the other door: a Crucible pedestal that is removed must NOT drop the relic it shows, because
  * what it shows is a preview; the old drop-on-removal exists to save ISSUED relics.
@@ -141,7 +143,7 @@ public final class CrucibleHook {
                 if (!player.getInventory().add(stack) && !stack.isEmpty()) Block.popResource(level, player.blockPosition(), stack);
                 delivered = true;
                 try {
-                    announce(level, center, player, name, swapped);
+                    announce(level, center, player, name, swapped, chosen.id());
                 } catch (RuntimeException chatFailed) {
                     LOG.warn("[nusmp] mega crucible: could not announce the pick in sector {}: {}", s.id, chatFailed.toString());
                 }
@@ -164,16 +166,20 @@ public final class CrucibleHook {
             }
         }
         if (refused) {
+            c.chosen = "";                                                          // nobody got a relic: the vault ends like an empty one, and the next theme does not follow a relic nobody holds
+            data.setDirty();
             tellChat(player, "refused");
             end(level, s);
             return Boolean.FALSE;
         }
-        // ---- 5. the catastrophe (the quest event fired above)
-        if (!CatastropheRunner.start(level, s, c.catastrophe, player, center, true)) end(level, s);
+        // ---- 5. the catastrophe starts (the quest event fired above); from here it runs on its own clock
+        CatastropheRunner.start(level, s, c.catastrophe, player, center, true);
+        // ---- 6. the vault is done the moment the relic is in hand: RESOLVED and MegaDungeon.crucibleResolved release the next sector, whose theme is the relic's road
+        end(level, s);
         return Boolean.TRUE;
     }
 
-    /** CHOSEN becomes RESOLVED (the ledger refused, or the catastrophe could not start) and the listeners hear it. */
+    /** CHOSEN becomes RESOLVED (the pick is made, or the ledger refused) and the listeners hear it: the next sector may be built. */
     private static void end(ServerLevel level, Sector s) {
         Sector.Crucible c = s.crucible;
         c.phase = Sector.Crucible.Phase.valueOf(CrucibleRules.afterCatastrophe(Phase.of(c.phase.name())).name());
@@ -181,11 +187,14 @@ public final class CrucibleHook {
         MegaDungeon.crucibleResolved(level, s.id);
     }
 
-    private static void announce(ServerLevel level, BlockPos center, ServerPlayer chooser, Component relic, boolean swapped) {
+    private static void announce(ServerLevel level, BlockPos center, ServerPlayer chooser, Component relic, boolean swapped, String relicId) {
         Component line = Component.translatable("message.nusmp.mega.crucible.chosen", chooser.getDisplayName(), relic).withStyle(ChatFormatting.GOLD);
+        Component road = ThemeConfig.get(ThemeConfig.SHOW_ROADS)
+                ? Component.translatable("message.nusmp.mega.crucible.road", NextTheme.describe(NextTheme.roadOfRelic(relicId))).withStyle(ChatFormatting.AQUA) : null;
         for (ServerPlayer p : CruciblePedestals.playersInBox(level, center)) {
             p.displayClientMessage(line, false);
             p.displayClientMessage(Component.translatable("message.nusmp.mega.crucible.crumble").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC), false);
+            if (road != null) p.displayClientMessage(road, false);
         }
         if (swapped) chooser.displayClientMessage(Component.translatable("message.nusmp.mega.crucible.swapped").withStyle(ChatFormatting.GRAY), true);
     }

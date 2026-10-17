@@ -23,7 +23,8 @@ import java.util.Set;
  * survival players in the Mega-Dungeon; the first one found inside a vault box whose Crucible is UNOPENED rolls the offer ({@link CrucibleOffer#roll}),
  * and while a vault is ROLLED it keeps its pedestals showing the saved offer (a regenerated sector, an admin's {@code /data}), which is the "re-entry
  * re-reads the saved ids to repair a pedestal" rule. It also holds the two housekeeping jobs that keep the saved data honest: a vault found CHOSEN with
- * no catastrophe running (the server restarted in the middle of one) is RESOLVED, so nobody is trapped by a countdown that no longer exists, and a vault
+ * no catastrophe running (a pick that was cut short: the hook marks the vault RESOLVED as soon as it is done, so CHOSEN only outlives a failure in the middle of
+ * a pick) is RESOLVED and the next sector released, so the dungeon is never held back by a vault that stopped half way, and a vault
  * that is CHOSEN or RESOLVED is checked once per server session for a stale preview on a pedestal and emptied. The same tick drives the running
  * catastrophes ({@link CatastropheRunner#tick}); with nothing running and nobody in the dungeon the whole handler is two comparisons. Creative players do not
  * wake the Crucible (an operator can look at a vault without spending it; {@code /multiverse mega crucible roll} is the admin's way).
@@ -58,6 +59,7 @@ public final class CrucibleVault {
      * One player standing at {@code pos}: when that is inside a sector's vault box (and the player is neither a spectator nor in creative mode) the vault
      * reacts to its phase: an UNOPENED one rolls its offer, a ROLLED one re-shows it every two seconds, a finished one is tidied once per session. The ticker
      * calls this with each player's block position; a self-test calls it with a fake player, which no level lists and whose own position is not a real one.
+     * A player in a ROLLED vault also reads, on the action bar, the relic they are looking at and where it leads ({@link CrucibleOffer#inspect}).
      * Returns the sector whose vault the player is in, or null.
      */
     static Sector visit(ServerLevel level, MegaData data, ServerPlayer p, BlockPos pos, int tick) {
@@ -66,13 +68,16 @@ public final class CrucibleVault {
         if (s == null || !CruciblePedestals.inBox(s, pos)) return null;
         switch (Phase.of(s.crucible.phase.name())) {
             case UNOPENED -> CrucibleOffer.roll(level, s);
-            case ROLLED -> { if (tick % 40 == 0) CrucibleOffer.show(level, s); }
+            case ROLLED -> {
+                if (tick % 40 == 0) CrucibleOffer.show(level, s);
+                CrucibleOffer.inspect(s, p);
+            }
             case CHOSEN, RESOLVED -> { if (TIDIED.add(s.id)) CrucibleOffer.clearAll(level, s, true); }
         }
         return s;
     }
 
-    /** A vault that is CHOSEN while no catastrophe runs for it (a restart ended it) is RESOLVED and the listeners hear it. */
+    /** A vault that is CHOSEN while no catastrophe runs for it (a pick cut short by a failure) is RESOLVED and the listeners hear it. */
     static void sweepChosen(ServerLevel level, MegaData data) {
         for (Sector s : List.copyOf(data.sectors())) {
             if (Phase.of(s.crucible.phase.name()) != Phase.CHOSEN || CatastropheRunner.active(s.id)) continue;

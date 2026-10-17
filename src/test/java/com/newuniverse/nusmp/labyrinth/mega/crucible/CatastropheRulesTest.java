@@ -42,6 +42,49 @@ class CatastropheRulesTest {
     }
 
     @Test
+    void aStoneIsMarkedLongEnoughToStepAsideAndLandsInsideTheCollapse() {
+        assertTrue(CatastropheRules.DEBRIS_TELEGRAPH_TICKS >= 10, "at least half a second to see it and move");
+        assertTrue(CatastropheRules.DEBRIS_TELEGRAPH_TICKS <= 20, "but a scare, not a pause");
+        assertEquals(54, CatastropheRules.debrisLandsAt(40));
+        // a walking person (4.3 blocks a second) covers more than the stone's radius while it is marked: the aimed spot is escapable
+        double walked = 4.3 * CatastropheRules.DEBRIS_TELEGRAPH_TICKS / 20.0;
+        assertTrue(walked > CatastropheRules.DEBRIS_RADIUS + 1.0, "walked " + walked + " blocks, the stone's radius is " + CatastropheRules.DEBRIS_RADIUS);
+        // the pulses are spaced by more than the time a stone takes, so two aimed stones never fall on the same person at once
+        assertTrue(CatastropheRules.COLLAPSE_PULSE_EVERY > CatastropheRules.DEBRIS_TELEGRAPH_TICKS);
+    }
+
+    @Test
+    void aStoneHurtsOnlyWhoStaysWithinItsRadius() {
+        assertTrue(CatastropheRules.debrisHits(0, 0, 0));
+        assertTrue(CatastropheRules.debrisHits(1.7, 0, 0));
+        assertTrue(CatastropheRules.debrisHits(1.2, 2.9, 1.2));
+        assertFalse(CatastropheRules.debrisHits(1.9, 0, 0), "two steps away is out of it");
+        assertFalse(CatastropheRules.debrisHits(1.3, 0, 1.3), "the radius is round: the corner of a square is out");
+        assertFalse(CatastropheRules.debrisHits(0, 3.1, 0), "a person on a gallery above or a floor below is not under it");
+        assertFalse(CatastropheRules.debrisHits(0, -3.1, 0));
+    }
+
+    @Test
+    void theCollapseNeverTakesMoreThanItsBudgetWhateverLandsOnAPerson() {
+        float max = 20f, taken = 0f;
+        int stones = 0;
+        while (true) {
+            float allowance = CatastropheRules.collapseAllowance(max, taken);
+            assertTrue(allowance >= 0f, "never negative");
+            if (allowance <= 0f) break;
+            taken += Math.min(allowance, 7f);                                       // a heavy stone each time
+            stones++;
+            assertTrue(stones < 20, "the budget runs out");
+        }
+        assertEquals(12f, taken, 0.001f, "60 % of 20 hearts-halves: 12 health");
+        assertTrue(taken < max, "a person who stood in every stone is still alive");
+        assertEquals(0f, CatastropheRules.collapseAllowance(20f, 99f), "an over-spent budget gives nothing");
+        assertEquals(CatastropheRules.collapseAllowance(20f, 0f), CatastropheRules.collapseAllowance(20f, -5f), 0.001f, "damage taken is never negative: a negative figure counts as none");
+        assertTrue(CatastropheRules.collapseAllowance(0f, 0f) > 0f, "a nonsense health value still gives a small, positive allowance");
+        for (float hp = 1f; hp <= 2000f; hp *= 1.7f) assertTrue(CatastropheRules.collapseAllowance(hp, 0f) < hp, "at " + hp + " maximum health the budget is below it");
+    }
+
+    @Test
     void noPulseAfterTheEnd() {
         assertFalse(CatastropheRules.collapsePulseAt(160, 160));
         assertFalse(CatastropheRules.collapsePulseAt(190, 160));

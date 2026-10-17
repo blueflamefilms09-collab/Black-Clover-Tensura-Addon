@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.labyrinth.mega.theme;
 
 import com.newuniverse.nusmp.labyrinth.mega.MegaData;
+import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
 import com.newuniverse.nusmp.labyrinth.mega.RegionContext;
 import com.newuniverse.nusmp.labyrinth.mega.RegionTheme;
 import com.newuniverse.nusmp.labyrinth.mega.SelfTests;
@@ -18,6 +19,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LightBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.Half;
@@ -107,6 +109,12 @@ public final class ThemeSelfTests {
                 StructureTemplate.StructureBlockInfo out = RegionContext.call(sector, Map.of(), () -> RegionThemeProcessor.INSTANCE.processBlock(reader, BlockPos.ZERO, BlockPos.ZERO, in, in, settings));
                 if (out == null) return SelfTests.Result.fail(t.id() + ": the processor returned null for " + id(st.getBlock()));
                 if (!out.pos().equals(in.pos()) || out.nbt() != in.nbt()) return SelfTests.Result.fail(t.id() + ": the processor moved or re-tagged " + id(st.getBlock()));
+                if (st.is(Blocks.LIGHT)) {                                          // the theme's light: the invisible light block is moved by the theme's shift (never under 6)
+                    int wantLevel = ThemeSwap.shiftLight(st.getValue(LightBlock.LEVEL), def.lightShift());
+                    if (out.state().getBlock() != Blocks.LIGHT || out.state().getValue(LightBlock.LEVEL) != wantLevel)
+                        return SelfTests.Result.fail(t.id() + ": a light block of level " + st.getValue(LightBlock.LEVEL) + " came out as " + out.state() + ", level " + wantLevel + " was expected (shift " + def.lightShift() + ")");
+                    continue;
+                }
                 ThemeSwap.Resolved r = table.get(id(st.getBlock()));
                 boolean expectSwap = t != RegionTheme.GRAVITY && r != null && r.swaps();
                 if (!expectSwap) {
@@ -154,6 +162,7 @@ public final class ThemeSelfTests {
                 Blocks.CHAIN.defaultBlockState().setValue(BlockStateProperties.AXIS, Direction.Axis.X),
                 Blocks.RED_CARPET.defaultBlockState(),
                 Blocks.LANTERN.defaultBlockState().setValue(BlockStateProperties.HANGING, true),
+                Blocks.LIGHT.defaultBlockState().setValue(LightBlock.LEVEL, 12),
                 Blocks.WALL_TORCH.defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST),
         };
     }
@@ -226,26 +235,48 @@ public final class ThemeSelfTests {
         if (total < 3) return SelfTests.Result.fail("only " + total + " relics of " + ThemeConfig.minGrade() + " or above exist: a vault could never offer three");
         for (RegionTheme t : RegionTheme.values()) if (!perTheme.containsKey(t)) return SelfTests.Result.fail("no relic of " + ThemeConfig.minGrade() + " or above leads to the " + t.id() + " theme");
 
-        // the planner's question, asked of made-up sectors: nothing until the Crucible is decided, then a theme that never changes
+        // the planner's question, asked of made-up sectors: nothing until the Crucible is decided, then a theme that never changes; asked through the
+        // Mega-Dungeon's own hook (MegaDungeon.themeOverride), which is the door the generator uses, so a registration that was forgotten shows here
         Sector probe = new Sector(-7);
         probe.seed = 0x5DEECE66DL;
         probe.crucible.phase = Sector.Crucible.Phase.UNOPENED;
         if (NextTheme.nextThemeFor(probe) != null) return SelfTests.Result.fail("an UNOPENED Crucible already names the next theme");
+        if (MegaDungeon.themeOverride(probe) != null) return SelfTests.Result.fail("MegaDungeon.themeOverride names a theme for an UNOPENED Crucible (or is registered wrongly)");
         probe.crucible.phase = Sector.Crucible.Phase.ROLLED;
         if (NextTheme.nextThemeFor(probe) != null) return SelfTests.Result.fail("a ROLLED Crucible already names the next theme");
+        if (MegaDungeon.themeOverride(probe) != null) return SelfTests.Result.fail("MegaDungeon.themeOverride names a theme for a ROLLED Crucible");
         String sample = explicit.keySet().iterator().next();
         probe.crucible.phase = Sector.Crucible.Phase.CHOSEN;
         probe.crucible.chosen = sample;
         RelicDef def = Relics.byId(sample);
-        RegionTheme want = RelicThemes.themeOf(sample, def == null ? "" : def.cardName(), explicit, keywords);
+        RelicThemes.Road wantRoad = RelicThemes.roadOf(sample, def == null ? "" : def.cardName(), explicit, RelicThemeMap.rulesets(), keywords);
+        RegionTheme want = wantRoad.theme();
         if (NextTheme.nextThemeFor(probe) != want) return SelfTests.Result.fail("nextThemeFor gives " + NextTheme.nextThemeFor(probe) + " for " + sample + ", RelicThemes gives " + want);
+        if (MegaDungeon.themeOverride(probe) != want) return SelfTests.Result.fail("MegaDungeon.themeOverride gives " + MegaDungeon.themeOverride(probe) + " for " + sample + ", RelicThemes gives " + want
+                + ": ThemeRegistry.init did not register NextTheme.HOOK");
+        if (!wantRoad.ruleset().equals(NextTheme.nextRulesetFor(probe))) return SelfTests.Result.fail("nextRulesetFor gives " + NextTheme.nextRulesetFor(probe) + " for " + sample + ", RelicThemes gives " + wantRoad.ruleset());
         probe.crucible.phase = Sector.Crucible.Phase.RESOLVED;
         if (NextTheme.nextThemeFor(probe) != want) return SelfTests.Result.fail("a RESOLVED Crucible names another theme than when it was CHOSEN");
         probe.crucible.chosen = "";
         RegionTheme empty = NextTheme.nextThemeFor(probe);
         if (empty == null || empty == RegionTheme.GRAVITY) return SelfTests.Result.fail("a Crucible resolved empty names " + empty + " instead of a theme other than the baseline");
         if (empty != NextTheme.nextThemeFor(probe)) return SelfTests.Result.fail("a Crucible resolved empty does not always name the same theme");
+        for (RegionTheme t : RegionTheme.values()) {
+            String name = RelicThemeMap.rulesetName(t.id());
+            if (name == null || name.isEmpty()) return SelfTests.Result.fail("the ruleset '" + t.id() + "' (the default of the " + t.id() + " theme) has no name in relic_themes.json");
+        }
+
+        // a region's ruleset is read back from the saved Crucible of the region before it, and only when the region really wears the theme that relic chose
+        MegaData data = MegaData.get(server);
+        Sector tail = data.chainTail(com.newuniverse.nusmp.labyrinth.mega.Polarity.HOLY);
+        if (tail != null && tail.chainIndex > 0) {
+            Sector before = data.chainSector(tail.polarity, tail.chainIndex - 1);
+            String got = NextTheme.rulesetOf(data, tail);
+            RelicThemes.Road road = NextTheme.roadAfter(before);
+            String expect = road != null && road.theme() == tail.theme ? road.ruleset() : "";
+            if (!got.equals(expect)) return SelfTests.Result.fail("rulesetOf(sector " + tail.id + ") gives '" + got + "', the saved Crucible of sector " + (before == null ? "?" : before.id) + " says '" + expect + "'");
+        }
         return SelfTests.Result.ok(total + " relics of " + ThemeConfig.minGrade() + " or above lead to " + perTheme.size() + " themes " + perTheme + " (" + byTable + " by the table, " + byWords + " by keywords, " + byHash
-                + " by hash); every table entry is a real relic; the next theme is unknown until the Crucible is decided");
+                + " by hash); every table entry is a real relic; the next theme (and its ruleset) is unknown until the Crucible is decided, and MegaDungeon.themeOverride answers like NextTheme");
     }
 }

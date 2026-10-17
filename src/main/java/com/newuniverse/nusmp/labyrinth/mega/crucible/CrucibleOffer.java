@@ -34,7 +34,9 @@ import java.util.Set;
  * see it, the world's unissued relics change over days, and a roll made long before the party arrives would offer relics somebody else has since
  * found). It is always three DISTINCT relics (the {@code offerCount} config, at most the vault's pedestals) of the grades from {@code minGrade}
  * (Unique) up to Genesis, drawn weighted by each grade's loot weight so Genesis stays very rare, whatever the sector's depth or theme: the Crucible is
- * the only place a relic of those grades can be found in the Mega-Dungeon, so a vault is never a lesser prize than the one before it. It goes through
+ * the only place a relic of those grades can be found in the Mega-Dungeon, so a vault is never a lesser prize than the one before it. The relic taken decides
+ * the road of the next ten floors, so the three are also chosen to lead to three DIFFERENT roads when the world's unissued relics allow it (a dozen are drawn
+ * by weight and {@link CrucibleRules#distinctRoads} keeps the first three with different themes): a choice between three relics of one road is not a choice. It goes through
  * {@code RelicLoot.peekUnissued}, which never touches the God of Order's ledger: the unchosen relics must stay unissued, or taking one would burn the
  * others for ever. Fewer than three unissued relics of those grades left: the vault offers what exists; none: it is resolved empty with a message. The saved offer
  * ({@code Sector.Crucible.offered}, ids in slot order) is the truth and the pedestals only SHOW it, which is why {@link #show} can repair a
@@ -65,7 +67,13 @@ final class CrucibleOffer {
      * pair is two items, and a pick is exactly one relic) and never one in {@code excluded}; nothing is issued. Fewer come back when fewer qualify.
      */
     static List<RelicDef> pick(ServerLevel level, int count, Set<String> excluded) {
-        return RelicLoot.peekUnissued(level, level.getRandom(), ThemeConfig.minGrade(), Grade.GENESIS, count, d -> !d.hasPair() && !excluded.contains(d.id()));
+        List<RelicDef> drawn = RelicLoot.peekUnissued(level, level.getRandom(), ThemeConfig.minGrade(), Grade.GENESIS, Math.max(count, CrucibleRules.DRAW_POOL),
+                d -> !d.hasPair() && !excluded.contains(d.id()));
+        List<String> roads = new java.util.ArrayList<>();
+        for (RelicDef d : drawn) roads.add(NextTheme.roadOfRelic(d.id()).theme().id());
+        List<RelicDef> out = new java.util.ArrayList<>();
+        for (int i : CrucibleRules.distinctRoads(roads, count)) out.add(drawn.get(i));                  // three relics that lead to three different roads, where the world has them
+        return out;
     }
 
     /** One replacement relic for a pick whose relic went live meanwhile: the same grades, never the lost one or one in {@code excluded}; null when none is left. */
@@ -106,8 +114,16 @@ final class CrucibleOffer {
             return true;
         }
         show(level, s);
-        for (ServerPlayer p : CruciblePedestals.playersInBox(level, center))
+        List<ServerPlayer> inside = CruciblePedestals.playersInBox(level, center);
+        for (ServerPlayer p : inside)
             p.displayClientMessage(Component.translatable("message.nusmp.mega.crucible.offered", defs.size()).withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC), false);
+        if (ThemeConfig.get(ThemeConfig.SHOW_ROADS)) {                               // a choice is only a choice when the party knows what each relic leads to
+            for (RelicDef d : defs) {
+                Component line = Component.translatable("message.nusmp.mega.crucible.offer_line", Component.literal(d.cardName()).withStyle(d.grade().colour()), d.grade().shortName(),
+                        NextTheme.describe(NextTheme.roadOfRelic(d.id()))).withStyle(ChatFormatting.GRAY);
+                for (ServerPlayer p : inside) p.displayClientMessage(line, false);
+            }
+        }
         if (center != null) {
             level.playSound(null, center, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 1.0f, 0.6f);
             level.sendParticles(ParticleTypes.END_ROD, center.getX() + 0.5, center.getY() + 1.0, center.getZ() + 0.5, 40, 3.0, 1.5, 3.0, 0.02);
@@ -171,6 +187,55 @@ final class CrucibleOffer {
             if (be.isTaken() != taken) be.setTaken(taken);
         }
         return cleared;
+    }
+
+    /** How closely a player has to look at a relic to read its name: the cosine of about 15 degrees. */
+    static final double INSPECT_COS = 0.965;
+    /** How far away (blocks) a relic can be read. */
+    static final double INSPECT_RANGE = 7.0;
+
+    /**
+     * The slot of the relic a player is looking at (within {@link #INSPECT_COS} of the line to it and {@link #INSPECT_RANGE} blocks), or -1: a choice is only a
+     * choice when each relic can be read before it is taken, and a right-click on a pedestal IS the pick, so the name has to come from looking. Pure geometry.
+     * @param eye the player's eyes, {@code look} the unit look vector, {@code relics} the centre of each floating relic (null entries: nothing there)
+     */
+    static int lookedAt(Vec3 eye, Vec3 look, List<Vec3> relics) {
+        int best = -1;
+        double bestDot = INSPECT_COS;
+        for (int i = 0; i < relics.size(); i++) {
+            Vec3 at = relics.get(i);
+            if (at == null) continue;
+            Vec3 to = at.subtract(eye);
+            double d = to.length();
+            if (d < 0.5 || d > INSPECT_RANGE) continue;
+            double dot = to.scale(1.0 / d).dot(look);
+            if (dot > bestDot) {
+                bestDot = dot;
+                best = i;
+            }
+        }
+        return best;
+    }
+
+    /**
+     * Shows, on the action bar, the name, the grade and the road of the offered relic the player is looking at ({@code showRoads}). Called by the vault ticker
+     * every half second for a player in a ROLLED vault; does nothing for anything else.
+     */
+    static void inspect(Sector s, ServerPlayer p) {
+        if (!ThemeConfig.get(ThemeConfig.SHOW_ROADS)) return;
+        List<BlockPos> slots = CruciblePedestals.ordered(s);
+        List<String> offered = s.crucible.offered;
+        List<Vec3> at = new java.util.ArrayList<>();
+        for (int i = 0; i < slots.size(); i++) {
+            boolean there = i < offered.size() && offered.get(i) != null && !offered.get(i).isEmpty();
+            at.add(there ? Vec3.atCenterOf(slots.get(i)).add(0, 0.8, 0) : null);                // the floating relic hangs about 1.3 blocks above its block (the centre is half a block up)
+        }
+        int slot = lookedAt(p.getEyePosition(), p.getLookAngle(), at);
+        if (slot < 0) return;
+        RelicDef d = Relics.byId(offered.get(slot));
+        if (d == null) return;
+        p.displayClientMessage(Component.translatable("message.nusmp.mega.crucible.inspect", Component.literal(d.cardName()).withStyle(d.grade().colour()), d.grade().shortName(),
+                NextTheme.describe(NextTheme.roadOfRelic(d.id()))), true);
     }
 
     /** The puff of dust where a relic crumbled (or was taken): a pedestal's floating relic hangs about 1.3 blocks above its block. */

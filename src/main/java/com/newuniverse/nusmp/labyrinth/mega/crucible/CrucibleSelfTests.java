@@ -55,8 +55,8 @@ import java.util.UUID;
  * minute spirit is walked in milliseconds). A fake player is listed by no level and its own position is not real, so the position is handed in and
  * the players the catastrophes would hurt are stood in for by a pig. {@code theme.crucible_flow}: roll, three distinct relics of Unique or above on the
  * pedestals and none of them issued, one pick through the pedestal, exactly one relic issued and given, the other pedestals empty and sealed, exactly one
- * catastrophe started, a second pick refused at every pedestal, the catastrophe walked to its end, the vault RESOLVED and the listeners told once, the next
- * region's theme known. {@code theme.single_relic}: in the Mega-Dungeon nothing but a Crucible hands out a relic (the relic roll, a Mimic and the vault loot
+ * catastrophe started, the vault RESOLVED and the listeners told once at the moment of the pick (that releases the next sector), a second pick refused at
+ * every pedestal, the catastrophe walked to its end (resolving nothing a second time), the next region's theme known. {@code theme.single_relic}: in the Mega-Dungeon nothing but a Crucible hands out a relic (the relic roll, a Mimic and the vault loot
  * tables give none), two regions of the same theme never offer the same relic, and each pick adds exactly one relic to the world. {@code
  * theme.catastrophe_undo}: each catastrophe ends by itself, changes no block and no saved state, leaves no spirit behind, resolves nothing when it is only
  * a test, can be stopped half way, and a vault left CHOSEN by a restart is resolved. Everything a test changes is put back (the vault is reset, the
@@ -277,7 +277,8 @@ public final class CrucibleSelfTests {
         long t0 = r.level.getGameTime();
         check(pedestal(r, r.slots.get(k)).take(r.fake), "take() refused a legal pick at slot " + k);
         check(CatastropheRunner.started() == started0 + 1, "the pick started " + (CatastropheRunner.started() - started0) + " catastrophes, not exactly one");
-        check(Phase.of(c.phase.name()) == Phase.CHOSEN, "the vault is " + c.phase + " right after the pick, not CHOSEN");
+        check(Phase.of(c.phase.name()) == Phase.RESOLVED, "the vault is " + c.phase + " right after the pick, not RESOLVED (the pick releases the next sector)");
+        check(r.probe.resolved.equals(List.of(s.id)), "the pick told the listeners of resolutions " + r.probe.resolved + ", exactly one for sector " + s.id + " was expected right away");
         String chosen = c.chosen;
         check(chosen.equals(offered.get(k)), "the chosen relic is " + chosen + ", not the one on pedestal " + k + " (" + offered.get(k) + "): it went live meanwhile and was swapped");
         check(r.fake.getUUID().equals(c.chooser), "the chooser was not saved");
@@ -307,7 +308,7 @@ public final class CrucibleSelfTests {
         check(CatastropheRunner.started() == started0 + 1, "a refused pick started another catastrophe");
         check(UniqueLedger.liveIds(r.server).equals(live1), "a refused pick changed the ledger");
         check(relicsIn(r.fake).equals(held), "a refused pick gave something");
-        check(Phase.of(c.phase.name()) == Phase.CHOSEN, "a refused pick moved the vault to " + c.phase);
+        check(Phase.of(c.phase.name()) == Phase.RESOLVED, "a refused pick moved the vault to " + c.phase);
 
         // ---- the catastrophe runs out by itself, on a made-up clock
         UUID spirit = CatastropheRunner.spiritOf(s.id);
@@ -315,7 +316,7 @@ public final class CrucibleSelfTests {
         int used = drive(r, t0, 0, capTicks(kind));
         check(!CatastropheRunner.active(s.id), "the " + kind + " was still running after " + used + " ticks");
         check(Phase.of(c.phase.name()) == Phase.RESOLVED, "the vault is " + c.phase + " after the " + kind + " ended, not RESOLVED");
-        check(r.probe.resolved.equals(List.of(s.id)), "the listeners were told of resolutions " + r.probe.resolved + ", exactly one for sector " + s.id + " was expected");
+        check(r.probe.resolved.equals(List.of(s.id)), "the listeners were told of resolutions " + r.probe.resolved + " by the end of the " + kind + ", exactly one for sector " + s.id + " was expected (the catastrophe resolves nothing)");
         if (spirit != null) check(r.level.getEntity(spirit) == null, "the Cursed Spirit is still in the world after the catastrophe ended");
         check(spiritsIn(r.level) == 0, "a Cursed Spirit is left in the Mega-Dungeon");
         check(CatastropheRunner.started() == started0 + 1, "more than one catastrophe ran");

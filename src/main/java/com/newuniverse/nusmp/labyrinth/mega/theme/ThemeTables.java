@@ -50,6 +50,9 @@ final class ThemeTables {
         return t.swap().get(from);
     }
 
+    /** The shift of the invisible light blocks in a sector of this theme (see {@code ThemeDef.lightShift}); 0 for the baseline and for a theme without a file. */
+    static int lightShiftOf(RegionTheme theme) { return ThemeDefs.get(theme).lightShift(); }
+
     /** How many blocks the theme swaps (for the status command); builds the table when needed. */
     static int size(RegionTheme theme) {
         ThemeDef def = ThemeDefs.get(theme);

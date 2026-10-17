@@ -26,9 +26,9 @@ public final class CrucibleRules {
         UNOPENED,
         /** The offer is drawn and shown on the pedestals; one may be taken. */
         ROLLED,
-        /** One was taken: the others are gone, the catastrophe runs. */
+        /** One was taken: the lock written FIRST by the pick, so nobody can take a second; it lasts only while the pick runs (RESOLVED follows in the same call). */
         CHOSEN,
-        /** The vault is done (the catastrophe ended, the vault was empty, or a restart ended it). */
+        /** The vault is done: the relic is in hand (the catastrophe runs on beside it), the vault was empty, or a pick that was cut short was swept up. */
         RESOLVED;
 
         /** The phase with this name, UNOPENED for anything unknown (an old save must still load). */
@@ -57,6 +57,31 @@ public final class CrucibleRules {
     /** Is the offset from the vault centre inside the vault box? */
     public static boolean inVaultBox(int dx, int dy, int dz) {
         return Math.abs(dx) <= BOX_HORIZONTAL && Math.abs(dz) <= BOX_HORIZONTAL && Math.abs(dy) <= BOX_VERTICAL;
+    }
+
+    /**
+     * How many relics are drawn before three are kept: the vault asks the relic roll for this many (weighted by grade, in the order they were drawn) and
+     * {@link #distinctRoads} keeps the first three that lead to different roads.
+     */
+    public static final int DRAW_POOL = 12;
+
+    /**
+     * Which of the drawn relics to put on the pedestals: the first {@code count} (by position, the order they were drawn in) whose roads are all different;
+     * when the draw holds fewer than {@code count} different roads, the earliest of the rest fill the remaining pedestals. A choice between three relics that
+     * lead to the same road is no choice at all, because the relic taken decides the look and rules of the next ten floors. Returns indices into
+     * {@code roads} in ascending order; a null or empty road counts as one road of its own per entry (an unknown relic never blocks another).
+     */
+    public static List<Integer> distinctRoads(List<String> roads, int count) {
+        List<Integer> out = new ArrayList<>();
+        if (roads == null || count <= 0) return out;
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        for (int i = 0; i < roads.size() && out.size() < count; i++) {
+            String r = roads.get(i);
+            if (r == null || r.isEmpty() || seen.add(r)) out.add(i);
+        }
+        for (int i = 0; i < roads.size() && out.size() < count; i++) if (!out.contains(i)) out.add(i);
+        Collections.sort(out);
+        return out;
     }
 
     // ---------------------------------------------------------------- the grades
@@ -125,13 +150,13 @@ public final class CrucibleRules {
     /** After the offer was drawn: ROLLED, or RESOLVED when no relic could be offered (the world has none left of that depth). */
     public static Phase afterRoll(int offeredCount) { return offeredCount > 0 ? Phase.ROLLED : Phase.RESOLVED; }
 
-    /** After a legal pick. */
+    /** After a legal pick: the lock. */
     public static Phase afterPick() { return Phase.CHOSEN; }
 
-    /** After the catastrophe ended (or was cut short): only CHOSEN becomes RESOLVED. */
+    /** After the pick is done (the relic given, the pedestals emptied, the catastrophe started) or was cut short: only CHOSEN becomes RESOLVED. */
     public static Phase afterCatastrophe(Phase phase) { return phase == Phase.CHOSEN ? Phase.RESOLVED : phase; }
 
-    /** A server restart in the middle of a catastrophe simply ends it, so nobody is trapped by a countdown that no longer runs. */
+    /** A vault found CHOSEN with no pick running (a failure in the middle of one) is swept up so the dungeon is not held back by it. */
     public static Phase afterRestart(Phase phase) { return afterCatastrophe(phase); }
 
     // ---------------------------------------------------------------- the catastrophe
@@ -176,6 +201,17 @@ public final class CrucibleRules {
     }
 
     // ---------------------------------------------------------------- how hard
+    /**
+     * The threat the catastrophes of a vault count: the sector's threat, with everything above the first level (the part that grows as the dungeon deepens)
+     * scaled by the theme's danger, so the same pick is crueller in an Abyss sector (danger above 1) and kinder in a Radiant one (below 1) without any
+     * catastrophe being rewritten; threat 1 is never changed, and the result is never below 1.
+     */
+    public static int dangerThreat(int threat, double danger) {
+        if (threat <= 1) return 1;
+        double d = Double.isNaN(danger) ? 1.0 : Math.max(0.5, Math.min(2.0, danger));
+        return (int) Math.max(1, Math.round(1.0 + (threat - 1) * d));
+    }
+
     /** The toxic flood's effect level at this threat: {@code round((threat - 1) * perThreat)}, 0 to 4. */
     public static int floodAmplifier(int threat, double perThreat) {
         return (int) Math.max(0, Math.min(4, Math.round(Math.max(0, threat - 1) * perThreat)));

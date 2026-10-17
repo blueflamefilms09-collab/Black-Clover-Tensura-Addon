@@ -1,5 +1,18 @@
 {
-  "_why": "The Crucible's relic decides where the dungeon goes next: the relic a party takes in a vault gives the theme of the NEXT region. This table places the relics that exist by their lore (Frostfang on the Frost road, the Bloodbound Katana on the Blood road, the Space Stone on the Spatial road ...); a relic that is not listed here is placed by the keywords of the theme files (relics.keywords) and, failing those, by a stable hash of its id, so a relic added later still leads somewhere. Keys are relic ids (the registry path, no namespace), values are theme ids. Gravity, the baseline of the first region, can only be reached from this table: weights, anchors, hammers and shields. A relic listed twice keeps its last entry; an unknown theme is ignored with a warning.",
+  "_why": "The Crucible's relic decides where the dungeon goes next: the relic a party takes in a vault gives the theme (and the ruleset) of the NEXT region, its next ten floors. This table places the relics that exist by their lore (Frostfang on the Frost road, the Bloodbound Katana on the Blood road, the Space Stone on the Spatial road ...); a relic that is not listed here is placed by the keywords of the theme files (relics.keywords) and, failing those, by a stable hash of its id, so a relic added later still leads somewhere. Keys are relic ids (the registry path, no namespace), values are theme ids. Gravity, the baseline of the first region, can only be reached from this table: weights, anchors, hammers and shields. A relic listed twice keeps its last entry; an unknown theme is ignored with a warning. The ruleset of a road is the id of the theme unless the optional object 'rulesets' (relic id to ruleset id, lower case letters, digits and underscores) names a variant for one relic; 'ruleset_names' gives the name a player reads for a ruleset id (the id of a theme when it has no variant), and a ruleset without a name is shown under the name of its theme. No relic names a variant yet: systems that want a relic's own rules (an encounter table, a faction mix) can start by adding one here.",
+  "ruleset_names": {
+    "gravity": "Heavy Halls",
+    "blood": "The Blood Tithe",
+    "spatial": "Folded Rooms",
+    "flame": "The Forge Heat",
+    "frost": "The Long Winter",
+    "verdant": "The Overgrowth",
+    "storm": "Static Air",
+    "shadow": "Lightless Halls",
+    "astral": "The Starlit Way",
+    "radiant": "Hallowed Ground",
+    "abyss": "The Deep Rot"
+  },
   "explicit": {
     "dante_gravity_crown": "gravity",
     "delphynes_cursed_armor": "gravity",

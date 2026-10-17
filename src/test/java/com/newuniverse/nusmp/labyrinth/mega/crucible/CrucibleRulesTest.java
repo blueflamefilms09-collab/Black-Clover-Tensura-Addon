@@ -37,6 +37,41 @@ class CrucibleRulesTest {
     }
 
     @Test
+    void theThreeRelicsLeadToThreeRoadsWhenTheDrawHasThem() {
+        assertEquals(List.of(0, 1, 2), CrucibleRules.distinctRoads(List.of("frost", "blood", "storm", "frost"), 3), "already different: the first three");
+        assertEquals(List.of(0, 2, 3), CrucibleRules.distinctRoads(List.of("frost", "frost", "blood", "storm", "blood"), 3), "the second frost is skipped for the next road");
+        assertEquals(List.of(0, 1, 3), CrucibleRules.distinctRoads(List.of("a", "b", "a", "c", "d", "e"), 3), "the third distinct road is c, at index 3");
+        assertEquals(List.of(0, 1, 2), CrucibleRules.distinctRoads(List.of("frost", "frost", "frost", "frost"), 3), "one road only: the earliest fill the pedestals");
+        assertEquals(List.of(0, 1, 2), CrucibleRules.distinctRoads(List.of("frost", "frost", "blood"), 3), "two roads for three pedestals: the second frost fills the gap, in drawing order");
+        assertEquals(List.of(0, 2), CrucibleRules.distinctRoads(List.of("frost", "frost", "blood"), 2), "two pedestals take the two roads");
+        assertEquals(List.of(0, 1), CrucibleRules.distinctRoads(List.of("frost", "blood"), 3), "fewer relics than pedestals: all of them");
+        assertEquals(List.of(), CrucibleRules.distinctRoads(List.of(), 3));
+        assertEquals(List.of(), CrucibleRules.distinctRoads(null, 3));
+        assertEquals(List.of(), CrucibleRules.distinctRoads(List.of("frost"), 0));
+        java.util.List<String> withNulls = new java.util.ArrayList<>();
+        withNulls.add(null);
+        withNulls.add("");
+        withNulls.add("frost");
+        assertEquals(List.of(0, 1, 2), CrucibleRules.distinctRoads(withNulls, 3), "a relic with no known road never blocks another");
+        assertEquals(12, CrucibleRules.DRAW_POOL);
+    }
+
+    @Test
+    void theKeptRelicsAreAlwaysAscendingAndWithoutRepeats() {
+        java.util.Random rnd = new java.util.Random(7);
+        for (int round = 0; round < 500; round++) {
+            List<String> roads = new ArrayList<>();
+            int n = rnd.nextInt(13);
+            for (int i = 0; i < n; i++) roads.add("road" + rnd.nextInt(5));
+            List<Integer> kept = CrucibleRules.distinctRoads(roads, 3);
+            assertEquals(Math.min(3, n), kept.size(), "as many as can be had, at most three: " + roads);
+            for (int i = 1; i < kept.size(); i++) assertTrue(kept.get(i) > kept.get(i - 1), "ascending and without repeats: " + kept);
+            long distinctWanted = Math.min(3, roads.stream().distinct().count());
+            assertEquals(distinctWanted, kept.stream().map(roads::get).distinct().count(), "as many different roads as the draw allows: " + roads + " -> " + kept);
+        }
+    }
+
+    @Test
     void onlyAnUnopenedVaultRolls() {
         assertTrue(CrucibleRules.shouldRoll(Phase.UNOPENED));
         assertFalse(CrucibleRules.shouldRoll(Phase.ROLLED));
@@ -283,5 +318,22 @@ class CrucibleRulesTest {
         assertEquals(1.0, CrucibleRules.spiritDamageMultiplier(1, 0.08), 0.0001);
         assertEquals(1.8, CrucibleRules.spiritDamageMultiplier(11, 0.08), 0.0001);
         assertEquals(20.0, CrucibleRules.spiritDamageMultiplier(1000, 0.5), 0.0001);
+    }
+
+    @Test
+    void aThemesDangerScalesTheThreatTheCatastrophesCount() {
+        assertEquals(1, CrucibleRules.dangerThreat(1, 2.0), "the first level is never scaled");
+        assertEquals(1, CrucibleRules.dangerThreat(0, 1.0));
+        assertEquals(1, CrucibleRules.dangerThreat(-4, 1.0));
+        assertEquals(11, CrucibleRules.dangerThreat(11, 1.0), "danger 1 changes nothing");
+        assertEquals(14, CrucibleRules.dangerThreat(11, 1.3), "1 + 10 * 1.3");
+        assertEquals(9, CrucibleRules.dangerThreat(11, 0.8), "1 + 10 * 0.8");
+        assertEquals(21, CrucibleRules.dangerThreat(11, 99.0), "the danger is held to 0.5 .. 2");
+        assertEquals(6, CrucibleRules.dangerThreat(11, 0.0));
+        assertEquals(11, CrucibleRules.dangerThreat(11, Double.NaN));
+        for (int threat = 1; threat <= 60; threat++) {
+            assertTrue(CrucibleRules.dangerThreat(threat, 0.8) <= CrucibleRules.dangerThreat(threat, 1.0), "a kinder theme is never harsher at " + threat);
+            assertTrue(CrucibleRules.dangerThreat(threat, 1.0) <= CrucibleRules.dangerThreat(threat, 1.3), "a crueller theme is never kinder at " + threat);
+        }
     }
 }

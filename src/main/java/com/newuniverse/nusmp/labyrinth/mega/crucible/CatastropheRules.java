@@ -29,6 +29,37 @@ public final class CatastropheRules {
         return elapsed >= warn && elapsed < totalTicks && (elapsed - warn) % COLLAPSE_PULSE_EVERY == 0;
     }
 
+    /**
+     * A pulse is a fall of masonry, not an instant blow: at the pulse a ring of dust and a column of falling dust mark where a stone will land on each
+     * person, and this many ticks later it lands. Seven tenths of a second is long enough to step aside (a walking person covers three blocks in it) and short
+     * enough to be a scare, so the collapse is a test of nerve that is won by moving, and a person who keeps moving takes almost nothing.
+     */
+    public static final int DEBRIS_TELEGRAPH_TICKS = 14;
+    /** How far from the point where it lands a stone still hurts (blocks, horizontally): two steps away is out of it. */
+    public static final double DEBRIS_RADIUS = 1.8;
+    /** How far above or below the landing point a person may stand and still be hit (blocks). */
+    public static final double DEBRIS_REACH_Y = 3.0;
+    /** Harmless stones that fall round the aimed ones at every pulse, for the look of a ceiling coming down. */
+    public static final int DEBRIS_DECOR_PER_PULSE = 3;
+    /**
+     * The largest share of a person's maximum health the whole collapse may take, however many stones land on them: the collapse is a trial of nerve and
+     * never an execution, which is the promise "every catastrophe is survivable by running out of the vault" in one number.
+     */
+    public static final float COLLAPSE_BUDGET = 0.60f;
+
+    /** Does a stone that landed at the origin hurt somebody standing at this offset (dx, dz horizontally, dy up)? */
+    public static boolean debrisHits(double dx, double dy, double dz) {
+        return dx * dx + dz * dz <= DEBRIS_RADIUS * DEBRIS_RADIUS && Math.abs(dy) <= DEBRIS_REACH_Y;
+    }
+
+    /** How much more damage the collapse may do to a person who has already taken {@code taken} of it: the budget of their maximum health, never below zero. */
+    public static float collapseAllowance(float maxHealth, float taken) {
+        return Math.max(0f, COLLAPSE_BUDGET * Math.max(1f, maxHealth) - Math.max(0f, taken));
+    }
+
+    /** The tick a stone aimed at a pulse of {@code elapsed} lands on. */
+    public static int debrisLandsAt(int elapsed) { return elapsed + DEBRIS_TELEGRAPH_TICKS; }
+
     /** How many pulses the whole collapse holds. */
     public static int collapsePulseCount(int totalTicks) {
         int n = 0;

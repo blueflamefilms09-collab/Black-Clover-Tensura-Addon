@@ -36,6 +36,11 @@ class ThemeDataTest {
             "minecraft:flame", "minecraft:small_flame", "minecraft:snowflake", "minecraft:spore_blossom_air", "minecraft:electric_spark", "minecraft:sculk_soul", "minecraft:soul",
             "minecraft:end_rod", "minecraft:glow", "minecraft:enchant", "minecraft:white_ash", "minecraft:witch", "minecraft:cloud", "minecraft:smoke", "minecraft:soul_fire_flame",
             "nusmp:light_rukh");
+    /** Sound events of 1.21.1 that a theme may play as its mood (each one checked against the game's {@code SoundEvents} in the API dump). */
+    private static final Set<String> MOOD_SOUNDS = Set.of("minecraft:ambient.cave", "minecraft:ambient.crimson_forest.mood", "minecraft:ambient.warped_forest.mood",
+            "minecraft:ambient.soul_sand_valley.mood", "minecraft:ambient.basalt_deltas.mood", "minecraft:block.portal.ambient", "minecraft:block.lava.ambient",
+            "minecraft:block.amethyst_block.chime", "minecraft:block.amethyst_block.resonate", "minecraft:block.bell.resonate", "minecraft:block.beacon.ambient",
+            "minecraft:entity.lightning_bolt.thunder", "minecraft:entity.warden.heartbeat");
     /** The themes the mod ships, in the order of the {@code RegionTheme} enum (append a new one here AND in the enum; a file nobody lists is a stray). */
     private static final List<String> SHIPPED = List.of("gravity", "blood", "spatial", "flame", "frost", "verdant", "storm", "shadow", "astral", "radiant", "abyss");
     /** The one mod particle a theme may name: a SimpleParticleType registered by {@code particle/rukh/RukhParticles}. */
@@ -183,6 +188,34 @@ class ThemeDataTest {
             assertTrue(SIMPLE_PARTICLES.contains(d.ambient()), d.id() + ": ambient '" + d.ambient() + "' is not a simple particle");
             assertTrue(d.name().length() > 2 && d.color() != 0);
         }
+    }
+
+    @Test
+    void everyThemeHasItsOwnLightMoodAndDanger() throws IOException {
+        Map<String, ThemeDef> t = themes();
+        Set<String> sounds = new TreeSet<>();
+        for (ThemeDef d : t.values()) {
+            assertTrue(d.lightShift() >= -ThemeDef.MAX_LIGHT_SHIFT && d.lightShift() <= ThemeDef.MAX_LIGHT_SHIFT, d.id() + " light");
+            assertTrue(d.danger() >= ThemeDef.MIN_DANGER && d.danger() <= ThemeDef.MAX_DANGER, d.id() + " danger");
+            assertTrue(d.mood().any(), d.id() + " has no mood sound: a sector must sound different too");
+            assertTrue(MOOD_SOUNDS.contains(d.mood().sound()), d.id() + ": '" + d.mood().sound() + "' is not a checked vanilla sound event");
+            assertTrue(d.mood().volume() <= 0.7f, d.id() + " is too loud for an ambience: " + d.mood().volume());
+            assertTrue(d.mood().every() >= 3, d.id() + " plays its mood more than every six seconds on average: " + d.mood().every());
+            sounds.add(d.mood().sound());
+        }
+        assertTrue(sounds.size() >= 9, "the themes should not all sound alike: " + sounds);
+        assertEquals(0, t.get("gravity").lightShift(), "the baseline keeps the templates' own light");
+        assertEquals(1.0, t.get("gravity").danger(), 1e-9);
+        // the two roads: the Holy road is the bright, kind one and the Abyssal road the dark, cruel one (the brief's own picture of them)
+        assertTrue(t.get("radiant").lightShift() >= 2 && t.get("abyss").lightShift() <= -2, "radiant is brighter and abyss darker than the baseline");
+        for (ThemeDef d : t.values()) {
+            assertTrue(t.get("radiant").lightShift() >= d.lightShift(), "no theme is brighter than radiant (" + d.id() + ")");
+            assertTrue(t.get("abyss").lightShift() <= d.lightShift(), "no theme is darker than abyss (" + d.id() + ")");
+            assertTrue(t.get("radiant").danger() <= d.danger(), "no theme is kinder than radiant (" + d.id() + ")");
+            assertTrue(t.get("abyss").danger() >= d.danger(), "no theme is crueller than abyss (" + d.id() + ")");
+        }
+        assertEquals("minecraft:lantern", t.get("radiant").explicit().get("minecraft:soul_lantern"), "radiant has no cold light");
+        assertEquals("minecraft:soul_lantern", t.get("abyss").explicit().get("minecraft:lantern"), "abyss has no warm light");
     }
 
     @Test

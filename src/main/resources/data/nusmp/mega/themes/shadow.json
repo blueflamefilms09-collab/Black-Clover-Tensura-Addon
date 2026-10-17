@@ -1,5 +1,5 @@
 {
-  "_why": "Polished blackstone bricks over deepslate tiles with dark oak: the same dark floors with black walls, which is why the explicit map turns every warm light into a soul light: the blue glow is what makes a Shadow sector feel different from the baseline at a glance. Spirits favour it.",
+  "_why": "Polished blackstone bricks over deepslate tiles with dark oak: the same dark floors with black walls, which is why the explicit map turns every warm light into a soul light: the blue glow is what makes a Shadow sector feel different from the baseline at a glance. Spirits favour it. Its windows and growths are dimmer (light -2), its mood the soul sand valley's moan, and its danger 1.15.",
   "id": "shadow",
   "name": "Shadow",
   "color": "#3B3558",
@@ -28,5 +28,8 @@
     "flood": 2,
     "spirit": 4
   },
-  "ambient": "minecraft:sculk_soul"
+  "ambient": "minecraft:sculk_soul",
+  "light": -2,
+  "sound": {"id": "minecraft:ambient.soul_sand_valley.mood", "volume": 0.55, "pitch": 1, "every": 5},
+  "danger": 1.15
 }

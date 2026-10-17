@@ -15,7 +15,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class ThemeConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue CRUCIBLE_ENABLED, AMBIENT_ENABLED;
+    public static final ModConfigSpec.BooleanValue CRUCIBLE_ENABLED, AMBIENT_ENABLED, SHOW_ROADS;
     public static final ModConfigSpec.IntValue OFFER_COUNT, FLOOD_SECONDS, SPIRIT_MINUTES, COLLAPSE_SECONDS;
     public static final ModConfigSpec.ConfigValue<String> MIN_GRADE;
     public static final ModConfigSpec.DoubleValue FLOOD_AMPLIFIER_PER_THREAT, COLLAPSE_DAMAGE, COLLAPSE_DAMAGE_PER_THREAT, SPIRIT_HEALTH_PER_THREAT, SPIRIT_DAMAGE_PER_THREAT;
@@ -31,13 +31,16 @@ public final class ThemeConfig {
         MIN_GRADE = b.comment("The lowest relic grade a Crucible offers: Normal, Special, Rare, Unique, Legend, God (also written Mythical) or Genesis. Every vault draws from this grade up to Genesis, weighted by the grade's loot weight, so Genesis stays very rare.",
                         "A value that is not a grade is read as Unique.")
                 .define("minGrade", "UNIQUE", o -> o instanceof String s && CrucibleRules.gradeOrdinal(s) >= 0);   // not defineInList(List.of(..)): a list-validated value throws while the file does not exist yet
+        SHOW_ROADS = b.comment("When a vault's relics appear, tell the people inside which road each one leads to (the theme of the next ten floors), and tell them again when one is taken.",
+                        "false = they choose blind and only learn the road from what the next region looks like.")
+                .define("showRoads", true);
         FLOOD_SECONDS = b.comment("How long the toxic magicule flood lasts (it ends sooner when nobody is left in the vault).")
                 .defineInRange("floodSeconds", 30, 5, 300);
         FLOOD_AMPLIFIER_PER_THREAT = b.comment("Magicule sickness level of the flood = round((threat - 1) * this), at most 4. 0 = always level 0 (the flood only slows).")
                 .defineInRange("floodAmplifierPerThreat", 0.34, 0.0, 2.0);
-        COLLAPSE_SECONDS = b.comment("How long the falling-dust collapse lasts: a two second warning, then a damage pulse every 1.5 seconds.")
+        COLLAPSE_SECONDS = b.comment("How long the collapse lasts: a two second warning, then every 1.5 seconds a stone is aimed at each person in the vault; it is marked on the floor for 0.7 seconds before it lands.")
                 .defineInRange("collapseSeconds", 8, 3, 60);
-        COLLAPSE_DAMAGE = b.comment("Damage of the first collapse pulse (a pulse never takes more than 35% of the victim's maximum health).")
+        COLLAPSE_DAMAGE = b.comment("Damage of the first collapse stone that lands on a person (a stone never takes more than 35% of their maximum health, and the whole collapse never more than 60%).")
                 .defineInRange("collapseDamage", 2.0, 0.0, 50.0);
         COLLAPSE_DAMAGE_PER_THREAT = b.comment("Extra collapse pulse damage per threat level above 1.")
                 .defineInRange("collapseDamagePerThreat", 0.6, 0.0, 10.0);

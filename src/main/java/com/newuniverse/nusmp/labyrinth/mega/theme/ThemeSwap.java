@@ -221,6 +221,20 @@ public final class ThemeSwap {
         return out;
     }
 
+    /** A theme's light shift never takes a light block below this level (or below its own level when it was lower): the templates were lit to stay clear of the dungeon's gloom limit. */
+    public static final int LIGHT_FLOOR = 6;
+
+    /**
+     * The level an invisible {@code minecraft:light} block takes in a sector whose theme shifts the light by {@code shift} (the window glow and the glowing growths
+     * of the templates): moved by the shift, never above 15 and never below {@link #LIGHT_FLOOR} (a block that was already lower keeps its own level as the floor,
+     * and a block of level 0, which gives no light, stays 0).
+     */
+    public static int shiftLight(int level, int shift) {
+        if (level <= 0) return level;
+        int floor = Math.min(level, LIGHT_FLOOR);
+        return Math.max(floor, Math.min(15, level + shift));
+    }
+
     /** True when the id is one of the 31 palette blocks. */
     public static boolean isPalette(String id) {
         for (Entry e : PALETTE) if (e.id().equals(id)) return true;

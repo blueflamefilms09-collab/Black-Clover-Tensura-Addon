@@ -7,6 +7,8 @@ import com.newuniverse.nusmp.labyrinth.mega.Sector;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LightBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
@@ -23,7 +25,9 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
  * GRAVITY means "return the block untouched", which is exactly what keeps it harmless everywhere else. The swap itself is a lookup in
  * {@link ThemeTables}. The new state carries the SAME properties ({@code Block.withPropertiesOf}: facing, half, shape, axis, waterlogged, the
  * connection sides of walls and fences) so a rotated stair or an upside-down slab keeps its orientation in the new material, and the block entity
- * data of the template block travels unchanged. It never throws: one exception here would abort the whole piece.
+ * data of the template block travels unchanged. The theme's light is applied here too: an invisible {@code minecraft:light} block (the window glow and the
+ * glowing growths of the templates) is brightened or dimmed by the theme's {@code light} shift ({@link ThemeSwap#shiftLight}, never under level 6), which is
+ * what makes a Radiant sector bright and an Abyss one dim without a single template being redrawn. It never throws: one exception here would abort the whole piece.
  * <p>
  * Registered as {@code nusmp:region_theme} by {@link ThemeRegistry}; the processor list {@code nusmp:mega_interior} runs it BEFORE
  * {@code nusmp:mod_compat} (the theme changes the wood, the compat swap then replaces furniture on top of the new wood). It has no parameters.
@@ -49,9 +53,18 @@ public final class RegionThemeProcessor extends StructureProcessor {
             if (sector == null || sector.theme == null || sector.theme == RegionTheme.GRAVITY) return current;
             BlockState state = current.state();
             if (state == null) return current;
-            Block target = ThemeTables.targetOf(sector.theme, state.getBlock());
-            if (target == null || target == state.getBlock()) return current;           // not a swapped block (most blocks: glass, lanterns, markers ...)
-            return new StructureTemplate.StructureBlockInfo(current.pos(), target.withPropertiesOf(state), current.nbt());
+            Block block = state.getBlock();
+            Block target = ThemeTables.targetOf(sector.theme, block);
+            if (target != null && target != block) return new StructureTemplate.StructureBlockInfo(current.pos(), target.withPropertiesOf(state), current.nbt());
+            if (block == Blocks.LIGHT) {                                                // the theme's light: window glow and glowing growths are brighter or dimmer
+                int shift = ThemeTables.lightShiftOf(sector.theme);
+                if (shift != 0 && state.hasProperty(LightBlock.LEVEL)) {
+                    int was = state.getValue(LightBlock.LEVEL);
+                    int now = ThemeSwap.shiftLight(was, shift);
+                    if (now != was) return new StructureTemplate.StructureBlockInfo(current.pos(), state.setValue(LightBlock.LEVEL, now), current.nbt());
+                }
+            }
+            return current;                                                             // not a swapped block (most blocks: glass, lanterns, markers ...)
         } catch (RuntimeException e) {
             return current;
         }

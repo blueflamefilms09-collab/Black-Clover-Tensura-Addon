@@ -1,5 +1,5 @@
 {
-  "_why": "Tuff bricks, oxidised cut copper floors and polished tuff trim with spruce: a lightning observatory. The copper is waxed so it never ages in game, the chiselled lintels are oxidised chiselled copper, and weathered and exposed copper stand in for the wear (an inlaid look, like a trial chamber). Copper has no wall, so walls come from the tuff bricks.",
+  "_why": "Tuff bricks, oxidised cut copper floors and polished tuff trim with spruce: a lightning observatory. The copper is waxed so it never ages in game, the chiselled lintels are oxidised chiselled copper, and weathered and exposed copper stand in for the wear (an inlaid look, like a trial chamber). Copper has no wall, so walls come from the tuff bricks. Its mood is thunder far away (a quarter volume, so nobody mistakes it for a strike next to them), and its danger 1.1.",
   "id": "storm",
   "name": "Storm",
   "color": "#2FB5A8",
@@ -23,5 +23,8 @@
     "flood": 1,
     "spirit": 2
   },
-  "ambient": "minecraft:electric_spark"
+  "ambient": "minecraft:electric_spark",
+  "light": 0,
+  "sound": {"id": "minecraft:entity.lightning_bolt.thunder", "volume": 0.25, "pitch": 0.9, "every": 9},
+  "danger": 1.1
 }

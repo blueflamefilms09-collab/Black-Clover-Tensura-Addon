@@ -1,5 +1,5 @@
 {
-  "_why": "End stone bricks, purpur and amethyst trim with warped wood: folded space. Pale yellow walls, magenta floors and violet crystal frames around every doorway read as 'not quite here'; obsidian flecks stand in for worn purpur because crying obsidian would light the floor and take the dungeon's darkness away. Purpur has no wall and amethyst has no shapes, so those shapes come from the end stone bricks (see the fallback rule).",
+  "_why": "End stone bricks, purpur and amethyst trim with warped wood: folded space. Pale yellow walls, magenta floors and violet crystal frames around every doorway read as 'not quite here'; obsidian flecks stand in for worn purpur because crying obsidian would light the floor and take the dungeon's darkness away. Purpur has no wall and amethyst has no shapes, so those shapes come from the end stone bricks (see the fallback rule). Its mood is the hum of a portal somewhere behind the wall; light and danger are the baseline's.",
   "id": "spatial",
   "name": "Spatial",
   "color": "#B070E0",
@@ -23,5 +23,8 @@
     "flood": 2,
     "spirit": 2
   },
-  "ambient": "minecraft:portal"
+  "ambient": "minecraft:portal",
+  "light": 0,
+  "sound": {"id": "minecraft:block.portal.ambient", "volume": 0.35, "pitch": 0.9, "every": 7},
+  "danger": 1
 }

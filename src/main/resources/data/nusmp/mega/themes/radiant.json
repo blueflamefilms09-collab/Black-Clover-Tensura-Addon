@@ -1,5 +1,5 @@
 {
-  "_why": "The Holy road: seamless smooth quartz walls, quartz trim, light smooth stone floors and a calcite shell, with gold blocks where the deepslate templates have chiselled capitals, so a gold accent crowns every pillar and medallion. It must not be mistaken for Astral (quartz bricks, polished diorite, prismarine, a dark night-sky floor): Radiant is the one bright, warm, clean theme, so the soul lights of the templates become ordinary warm ones and the Light Rukh drift in the air. Vanilla gives smooth quartz and quartz blocks no wall, so the explicit map hands them diorite walls; smooth stone has no stairs or walls and falls back to the quartz shapes.",
+  "_why": "The Holy road: seamless smooth quartz walls, quartz trim, light smooth stone floors and a calcite shell, with gold blocks where the deepslate templates have chiselled capitals, so a gold accent crowns every pillar and medallion. It must not be mistaken for Astral (quartz bricks, polished diorite, prismarine, a dark night-sky floor): Radiant is the one bright, warm, clean theme, so the soul lights of the templates become ordinary warm ones and the Light Rukh drift in the air. Vanilla gives smooth quartz and quartz blocks no wall, so the explicit map hands them diorite walls; smooth stone has no stairs or walls and falls back to the quartz shapes. It is the brightest theme (light +3, and every soul light of the templates is a warm one), its mood a far bell humming in a cathedral, and its danger 0.8: the Holy road is the kinder road, as the brief intends.",
   "id": "radiant",
   "name": "Radiant",
   "color": "#FFD95A",
@@ -31,5 +31,8 @@
     "flood": 2,
     "spirit": 1
   },
-  "ambient": "nusmp:light_rukh"
+  "ambient": "nusmp:light_rukh",
+  "light": 3,
+  "sound": {"id": "minecraft:block.bell.resonate", "volume": 0.3, "pitch": 0.7, "every": 8},
+  "danger": 0.8
 }

@@ -17,7 +17,9 @@ Two layouts, each for one, two and three relics (the number in the name is the n
     chancel at the far end where the relics stand in a row before a gold-trimmed screen, cages and chandeliers hanging from the vault, shrines in the side
     walls.
 Both are drawn in the shared palette (the deepslate and dark oak families) plus neutral accents (gold blocks, red carpet, soul lanterns, candles, iron bars,
-chains, skulls, lightning rods, banners), so the Region Theme restyles the architecture and leaves the accents alone. The only custom block is the Relic
+chains, skulls, cobwebs, bone blocks, lightning rods, banners), so the Region Theme restyles the architecture and leaves the accents alone. Both carry the
+marks of the trial: wall skulls over the torches and in the niches, cobwebs under the vault, the remains of earlier parties against the walls, cracked blocks,
+rubble and stalactites; none of it is ever on the carpeted route. The only custom block is the Relic
 Pedestal, placed WITHOUT block-entity data: the Crucible fills it when the first person comes in. Every template has ONE socket, the door on the south face
 at offset 13 (`nusmp:mega_vault`, an open hole: the vault is attached TO the antechamber), one `vault_center` marker, one `pedestal;slot=i` marker in the air
 cell directly above each pedestal, no spawn marker and no other door: the way out is the way in.
@@ -77,9 +79,10 @@ def carpet(mt, x1, z1, x2, z2, y=GROUND, color="red"):
 
 
 def stalactite(mt, x, z, length):
-    """A pointed-dripstone stalactite hanging from the first solid cell above the room at (x, z)."""
-    ceil = K.ceiling_at(mt, x, z, GROUND + 8)
-    if ceil is None:
+    """A pointed-dripstone stalactite hanging from the first solid cube above the room at (x, z); nothing is placed when anything (a lantern, a chain) already
+    hangs in that column, so the dripstone never grows from a lantern or leaves a gap in a chain."""
+    ceil = K.solid_ceiling_at(mt, x, z, GROUND + 8)
+    if ceil is None or any(mt.get(x, ceil - 1 - k, z) is not None for k in range(length)):
         return
     for k in range(length):
         y = ceil - 1 - k
@@ -255,6 +258,14 @@ def shrine(mt, ang):
     if ceil is not None:
         mt.try_set(cell_x, ceil - 1, cell_z, L.CHAIN_BLOCK, {"axis": "y"})
         mt.try_set(cell_x, ceil - 2, cell_z, L.SOUL_LANTERN, {"hanging": "true"})
+    placed = 0                                                    # two skulls on the alcove wall behind the statue, and a cobweb in the vault of the alcove
+    for ox, oz in ((-2, 0), (2, 0), (0, -2), (0, 2), (-2, -1), (2, 1), (-1, -2), (1, 2)):
+        if placed < 2 and K.wall_item(mt, cell_x + ox, GROUND + 2, cell_z + oz, "skull", skull="wither_skeleton" if placed else "skeleton"):
+            placed += 1
+    for ox, oz in ((-1, 0), (1, 0), (0, 1), (0, -1), (-1, -1), (1, 1), (-1, 1), (1, -1)):
+        top = K.solid_ceiling_at(mt, cell_x + ox, cell_z + oz, GROUND + 3)
+        if top is not None and K.cobweb(mt, cell_x + ox, top - 1, cell_z + oz):
+            break
 
 
 def rotunda_lights(mt):
@@ -274,6 +285,7 @@ def rotunda_lights(mt):
             continue
         if a % 30 == 0:
             K.wall_item(mt, x, GROUND + 3, z, "soul_torch")
+            K.wall_item(mt, x, GROUND + 4, z, "skull", skull="wither_skeleton" if (a // 30) % 3 == 0 else "skeleton")
         else:
             K.wall_item(mt, x, GROUND + 7, z, "banner", color="red")
     colors = ("white", "white", "red", "white", "gray")
@@ -324,6 +336,8 @@ def rotunda_dressing(mt):
     for ang, rho, ln in ((20, 6.5, 3), (110, 8.0, 2), (200, 7.0, 3), (290, 5.0, 2), (330, 8.5, 2), (160, 8.0, 2)):
         x, z = K.rpolar(CX, CZ, ang, rho)
         stalactite(mt, x, z, ln)
+    for i, (x, z) in enumerate(((5, 13), (21, 13), (8, 21), (18, 21), (13, 3))):       # the dead of earlier parties, against the wall and out of the way
+        K.remains(mt, x, z, skull_rot=i * 5)
 
 
 vault("one_a", 1)(lambda name: rotunda(name, 1))
@@ -442,6 +456,10 @@ def chancel(mt, n):
         mt.set(px, CHANCEL_TOP + 4, 3, L.CHAIN_BLOCK, {"axis": "y"})
         mt.set(px, CHANCEL_TOP + 3, 3, L.SOUL_LANTERN, {"hanging": "true"})
         K.wall_item(mt, px, CHANCEL_TOP + 2, 2, "banner", color="red")
+        K.wall_item(mt, px - 1, CHANCEL_TOP + 2, 3, "skull", skull="skeleton")                   # the niche's two side walls each carry a skull, looking at the relic
+        K.wall_item(mt, px + 1, CHANCEL_TOP + 2, 3, "skull", skull="wither_skeleton")
+        K.cobweb(mt, px - 1, CHANCEL_TOP + 3, 2)
+        K.cobweb(mt, px + 1, CHANCEL_TOP + 3, 2)
     for x in range(2, 25):
         mt.force(x, CHANCEL_TOP + 5, 3, GOLD if x % 2 == 0 else L.CHISELED)         # the gold course over the niches
         mt.force(x, SPRING + 1, 3, GOLD if x % 2 == 0 else L.CHISELED)              # and the frieze under the emblem
@@ -518,6 +536,13 @@ def nave_dressing(mt, d, rows):
     for x, z, ln in ((10, 17, 3), (16, 20, 2), (11, 24, 2), (15, 21, 3)):
         if z < d - 4:
             stalactite(mt, x, z, ln)
+    for i, (x, z) in enumerate(((3, 15), (23, 17), (4, d - 12), (22, d - 10), (3, d - 20))):  # the dead of earlier parties, in the aisles and out of the way
+        K.remains(mt, x, z, skull_rot=3 + i * 4)
+    for z in rows[1:-1]:                                                                         # cobwebs where the transverse arches meet the side walls
+        for x in (3, 23):
+            ceil = K.solid_ceiling_at(mt, x, z + 1, GROUND + 10)
+            if ceil is not None:
+                K.cobweb(mt, x, ceil - 1, z + 1)
 
 
 vault("one_b", 1)(lambda name: nave(name, 1, 3))

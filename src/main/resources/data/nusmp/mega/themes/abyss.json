@@ -1,5 +1,5 @@
 {
-  "_why": "The Abyssal road: dark ORGANIC rock. The walls stay a dark, smooth deepslate, but the stone itself is being eaten: sculk grows through the cracked wall bricks, moss through the cracked floors, netherrack heaps where the rubble is, and the wood is mangrove, the colour of a bog. It must not be mistaken for Shadow (black blackstone walls, nothing growing) or Blood (red nether bricks): nothing here is brick-red or jet black, and the growths are what the eye finds first. The warm lights become soul lights, the soul fire of the abyss. Spirits and the toxic flood favour it; the deep keeps what it takes.",
+  "_why": "The Abyssal road: dark ORGANIC rock. The walls stay a dark, smooth deepslate, but the stone itself is being eaten: sculk grows through the cracked wall bricks, moss through the cracked floors, netherrack heaps where the rubble is, and the wood is mangrove, the colour of a bog. It must not be mistaken for Shadow (black blackstone walls, nothing growing) or Blood (red nether bricks): nothing here is brick-red or jet black, and the growths are what the eye finds first. The warm lights become soul lights, the soul fire of the abyss. Spirits and the toxic flood favour it; the deep keeps what it takes. It is the darkest theme (light -4 on the window glow and the growths, never under level 6, and every warm light of the templates is a soul light), its mood a slow heartbeat under the stone, and its danger 1.3: the Abyssal road is the crueller road.",
   "id": "abyss",
   "name": "Abyss",
   "color": "#1F4F57",
@@ -28,5 +28,8 @@
     "flood": 3,
     "spirit": 3
   },
-  "ambient": "minecraft:soul_fire_flame"
+  "ambient": "minecraft:soul_fire_flame",
+  "light": -4,
+  "sound": {"id": "minecraft:entity.warden.heartbeat", "volume": 0.5, "pitch": 0.8, "every": 4},
+  "danger": 1.3
 }

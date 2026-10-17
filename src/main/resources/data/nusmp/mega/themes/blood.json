@@ -1,5 +1,5 @@
 {
-  "_why": "Nether bricks and crimson wood: the Crimson Reliquary. Red nether bricks for the floors and polished blackstone bricks for the trim keep three clearly different reds and blacks on screen, and the crimson spores that drift over the player say 'blood' before any block is read. Spirits favour it: the dead of a reliquary do not stay quiet.",
+  "_why": "Nether bricks and crimson wood: the Crimson Reliquary. Red nether bricks for the floors and polished blackstone bricks for the trim keep three clearly different reds and blacks on screen, and the crimson spores that drift over the player say 'blood' before any block is read. Spirits favour it: the dead of a reliquary do not stay quiet. Its light is a little dimmer than the baseline, its mood the crimson forest's wet murmur, and its danger 1.15: a reliquary bites harder.",
   "id": "blood",
   "name": "Blood",
   "color": "#9A1B1B",
@@ -23,5 +23,8 @@
     "flood": 2,
     "spirit": 3
   },
-  "ambient": "minecraft:crimson_spore"
+  "ambient": "minecraft:crimson_spore",
+  "light": -1,
+  "sound": {"id": "minecraft:ambient.crimson_forest.mood", "volume": 0.5, "pitch": 1, "every": 6},
+  "danger": 1.15
 }

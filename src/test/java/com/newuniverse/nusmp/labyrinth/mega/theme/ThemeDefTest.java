@@ -94,6 +94,58 @@ class ThemeDefTest {
     }
 
     @Test
+    void theLightTheSoundAndTheDangerAreRead() {
+        ThemeDef.Parsed p = parse("radiant", "{\"catastrophes\": {\"flood\": 1}, \"light\": 3, \"danger\": 0.8, \"sound\": {\"id\": \"Block.Bell.Resonate\", \"volume\": 0.3, \"pitch\": 0.7, \"every\": 8}}");
+        assertEquals(List.of(), p.warnings());
+        ThemeDef d = p.def();
+        assertEquals(3, d.lightShift());
+        assertEquals(0.8, d.danger(), 1e-9);
+        assertEquals("minecraft:block.bell.resonate", d.mood().sound(), "case folded, namespace made explicit");
+        assertEquals(0.3f, d.mood().volume(), 1e-6f);
+        assertEquals(0.7f, d.mood().pitch(), 1e-6f);
+        assertEquals(8, d.mood().every());
+        assertTrue(d.mood().any());
+    }
+
+    @Test
+    void aFileWithoutThemIsTheBaselinesLightSilenceAndDanger() {
+        ThemeDef d = parse("x", "{\"catastrophes\": {\"flood\": 1}}").def();
+        assertEquals(0, d.lightShift());
+        assertEquals(1.0, d.danger(), 1e-9);
+        assertFalse(d.mood().any());
+        assertEquals(ThemeDef.Mood.NONE, d.mood());
+        ThemeDef g = ThemeDef.gravity();
+        assertEquals(0, g.lightShift());
+        assertEquals(1.0, g.danger(), 1e-9);
+        assertFalse(g.mood().any());
+        assertEquals(0, ThemeDef.plain("blood").lightShift());
+        assertEquals(1.0, ThemeDef.plain("blood").danger(), 1e-9);
+    }
+
+    @Test
+    void theLightTheSoundAndTheDangerAreClampedWithAWarningAndNeverThrow() {
+        ThemeDef.Parsed p = parse("x", "{\"catastrophes\": {\"flood\": 1}, \"light\": 99, \"danger\": 17, \"sound\": {\"id\": \"minecraft:ambient.cave\", \"volume\": 9, \"pitch\": 0.01, \"every\": 0}}");
+        assertEquals(5, p.warnings().size(), p.warnings().toString());
+        assertEquals(ThemeDef.MAX_LIGHT_SHIFT, p.def().lightShift());
+        assertEquals(ThemeDef.MAX_DANGER, p.def().danger(), 1e-9);
+        assertEquals(1.0f, p.def().mood().volume(), 1e-6f);
+        assertEquals(0.5f, p.def().mood().pitch(), 1e-6f);
+        assertEquals(1, p.def().mood().every());
+        ThemeDef.Parsed low = parse("x", "{\"catastrophes\": {\"flood\": 1}, \"light\": -99, \"danger\": 0}");
+        assertEquals(-ThemeDef.MAX_LIGHT_SHIFT, low.def().lightShift());
+        assertEquals(ThemeDef.MIN_DANGER, low.def().danger(), 1e-9);
+        ThemeDef.Parsed wrong = parse("x", "{\"catastrophes\": {\"flood\": 1}, \"light\": \"bright\", \"danger\": \"high\", \"sound\": \"cave\"}");
+        assertEquals(3, wrong.warnings().size(), wrong.warnings().toString());
+        assertEquals(0, wrong.def().lightShift());
+        assertEquals(1.0, wrong.def().danger(), 1e-9);
+        assertFalse(wrong.def().mood().any());
+        ThemeDef.Parsed badSound = parse("x", "{\"catastrophes\": {\"flood\": 1}, \"sound\": {\"id\": \"not a sound\", \"volume\": \"loud\"}, \"light\": 2}");
+        assertFalse(badSound.def().mood().any(), "a sound without a usable id is silence");
+        assertEquals(2, badSound.def().lightShift(), "and costs nothing else");
+        assertEquals(1, badSound.warnings().size(), badSound.warnings().toString());
+    }
+
+    @Test
     void theRecordIsImmutable() {
         ThemeDef g = ThemeDef.gravity();
         boolean threw = false;

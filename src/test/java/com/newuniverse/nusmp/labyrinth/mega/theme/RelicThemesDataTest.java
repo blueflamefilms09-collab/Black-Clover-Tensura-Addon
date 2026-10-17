@@ -47,7 +47,10 @@ class RelicThemesDataTest {
     @Test
     void everyKeyIsNormalisedAndListedOnce() throws IOException {
         String raw = raw();
-        Matcher m = Pattern.compile("^\\s{4}\"([^\"]+)\"\\s*:\\s*\"[^\"]+\"\\s*,?\\s*$", Pattern.MULTILINE).matcher(raw);
+        int from = raw.indexOf("\"explicit\": {");
+        assertTrue(from > 0, "the table has an explicit object");
+        String block = raw.substring(from, raw.indexOf("\n  }", from));                  // only the explicit block: the ruleset names above it are indented the same way
+        Matcher m = Pattern.compile("^\\s{4}\"([^\"]+)\"\\s*:\\s*\"[^\"]+\"\\s*,?\\s*$", Pattern.MULTILINE).matcher(block);
         Set<String> seen = new HashSet<>();
         int entries = 0;
         while (m.find()) {
@@ -58,6 +61,21 @@ class RelicThemesDataTest {
             assertTrue(seen.add(key), "relic '" + key + "' is listed twice");
         }
         assertEquals(RelicThemes.parse(MiniJson.parse(raw), SHIPPED).explicit().size(), entries, "every line of the table is one entry");
+    }
+
+    @Test
+    void everyShippedThemeHasARulesetNameAndEveryVariantIsAValidId() throws IOException {
+        RelicThemes.Parsed p = RelicThemes.parse(MiniJson.parse(raw()), SHIPPED);
+        for (String theme : SHIPPED) {
+            String name = p.names().get(theme);
+            assertNotNull(name, "the ruleset of the theme '" + theme + "' (its own id) has no name in ruleset_names");
+            assertTrue(name.length() >= 4 && name.length() <= 40, theme + ": '" + name + "'");
+        }
+        assertEquals(new TreeSet<>(SHIPPED), new TreeSet<>(p.names().keySet()), "a name for a ruleset nobody plays would never be read");
+        for (Map.Entry<String, String> v : p.rulesets().entrySet()) {
+            assertTrue(RelicThemes.validRuleset(v.getValue()), v.getKey() + ": '" + v.getValue() + "' is not a ruleset id");
+            assertTrue(p.explicit().containsKey(v.getKey()), v.getKey() + " names a ruleset variant but is not placed in 'explicit' (a variant belongs to a hand-placed relic)");
+        }
     }
 
     @Test

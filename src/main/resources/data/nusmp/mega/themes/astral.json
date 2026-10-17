@@ -1,5 +1,5 @@
 {
-  "_why": "Quartz bricks, polished diorite floors and prismarine brick trim with birch: a cold observatory of stars. Vanilla gives quartz bricks, polished diorite, prismarine bricks and calcite no wall (and quartz bricks no stairs or slabs either), so the explicit map hands them quartz stairs, quartz slabs, diorite walls and prismarine walls for the trim; dark prismarine stands in for the floor wear like a night sky showing through.",
+  "_why": "Quartz bricks, polished diorite floors and prismarine brick trim with birch: a cold observatory of stars. Vanilla gives quartz bricks, polished diorite, prismarine bricks and calcite no wall (and quartz bricks no stairs or slabs either), so the explicit map hands them quartz stairs, quartz slabs, diorite walls and prismarine walls for the trim; dark prismarine stands in for the floor wear like a night sky showing through. Its light is brighter (+2), its mood a crystal resonating, and its danger 0.95: the stars watch more than they strike.",
   "id": "astral",
   "name": "Astral",
   "color": "#F0E6B8",
@@ -30,5 +30,8 @@
     "flood": 3,
     "spirit": 2
   },
-  "ambient": "minecraft:end_rod"
+  "ambient": "minecraft:end_rod",
+  "light": 2,
+  "sound": {"id": "minecraft:block.amethyst_block.resonate", "volume": 0.4, "pitch": 1, "every": 6},
+  "danger": 0.95
 }

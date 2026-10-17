@@ -231,4 +231,25 @@ class ThemeSwapTest {
         assertEquals(python, java, "ThemeSwap.PALETTE and mega_lib.PALETTE must list the same 31 blocks");
         assertEquals(31, java.size());
     }
+
+    @Test
+    void aThemesLightShiftMovesTheLightBlocksButNeverUnderTheFloor() {
+        assertEquals(15, ThemeSwap.shiftLight(12, 3), "brighter, to the top");
+        assertEquals(15, ThemeSwap.shiftLight(15, 3), "never above 15");
+        assertEquals(8, ThemeSwap.shiftLight(12, -4), "dimmer");
+        assertEquals(ThemeSwap.LIGHT_FLOOR, ThemeSwap.shiftLight(12, -8), "never under the floor of 6");
+        assertEquals(ThemeSwap.LIGHT_FLOOR, ThemeSwap.shiftLight(10, -8));
+        assertEquals(5, ThemeSwap.shiftLight(5, -3), "a block that was already under the floor keeps its own level as the floor");
+        assertEquals(5, ThemeSwap.shiftLight(3, 2), "and a shift upwards still works");
+        assertEquals(12, ThemeSwap.shiftLight(12, 0), "no shift, no change");
+        assertEquals(0, ThemeSwap.shiftLight(0, 3), "a level-0 block gives no light and stays that way");
+        for (int level = 1; level <= 15; level++) {
+            for (int shift = -8; shift <= 8; shift++) {
+                int r = ThemeSwap.shiftLight(level, shift);
+                assertTrue(r >= Math.min(level, ThemeSwap.LIGHT_FLOOR) && r <= 15, level + " shifted by " + shift + " gave " + r);
+                if (shift >= 0) assertTrue(r >= level, "a brighter theme never dims a light block: " + level + " + " + shift + " = " + r);
+                else assertTrue(r <= level, "a dimmer theme never brightens one: " + level + " " + shift + " = " + r);
+            }
+        }
+    }
 }

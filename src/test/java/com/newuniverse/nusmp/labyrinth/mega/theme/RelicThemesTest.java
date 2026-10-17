@@ -172,7 +172,77 @@ class RelicThemesTest {
         assertEquals(0, RelicThemes.hits(List.of("a"), null));
     }
 
+    // ---------------------------------------------------------------- the road: a theme and a ruleset
+    @Test
+    void theRulesetIsTheThemeUnlessTheRelicNamesAVariant() {
+        Map<RegionTheme, List<String>> frost = kw(RegionTheme.FROST, List.of("frost"));
+        RelicThemes.Road plain = RelicThemes.roadOf("frostfang", "Frostfang", Map.of(), Map.of(), frost);
+        assertEquals(RegionTheme.FROST, plain.theme());
+        assertEquals("frost", plain.ruleset(), "no variant: the ruleset is the theme's own id");
+        RelicThemes.Road variant = RelicThemes.roadOf("frostfang", "Frostfang", Map.of(), table("frostfang", "the_long_winter"), frost);
+        assertEquals(RegionTheme.FROST, variant.theme(), "a variant never changes the theme");
+        assertEquals("the_long_winter", variant.ruleset());
+        assertEquals(new RelicThemes.Road(RegionTheme.BLOOD, "blood"), RelicThemes.roadOf("x", "", table("x", "blood"), null, Map.of()), "no ruleset table at all is fine");
+    }
+
+    @Test
+    void aRulesetVariantIsReadLikeAThemeEntryAndBadOnesAreIgnored() {
+        Map<RegionTheme, List<String>> frost = kw(RegionTheme.FROST, List.of("frost"));
+        assertEquals("hunt_2", RelicThemes.roadOf("NUSMP:FrostFang", "Frostfang", Map.of(), table("frostfang", " Hunt_2 "), frost).ruleset(), "key and id are normalised");
+        assertEquals("hunt_2", RelicThemes.roadOf("frostfang", "Frostfang", Map.of(), table("Nusmp:FrostFang", "hunt_2"), frost).ruleset(), "so is a namespaced key in the table");
+        for (String bad : new String[] {"", "  ", "has space", "Bad-Dash", "x".repeat(41), "with:colon", "ünï"}) {
+            assertEquals("frost", RelicThemes.roadOf("frostfang", "Frostfang", Map.of(), table("frostfang", bad), frost).ruleset(), "'" + bad + "' is not a ruleset id");
+        }
+        Map<String, String> nulls = new HashMap<>();
+        nulls.put("frostfang", null);
+        nulls.put(null, "x");
+        assertEquals("frost", RelicThemes.roadOf("frostfang", "Frostfang", Map.of(), nulls, frost).ruleset());
+        assertTrue(RelicThemes.validRuleset("a_1"));
+        assertFalse(RelicThemes.validRuleset(null));
+        assertFalse(RelicThemes.validRuleset(""));
+    }
+
+    @Test
+    void theRoadNeverThrowsOrReturnsNull() {
+        assertNotNull(RelicThemes.roadOf(null, null, null, null, null));
+        assertEquals(RelicThemes.themeOf(null, null, null, null), RelicThemes.roadOf(null, null, null, null, null).theme());
+        assertEquals(RelicThemes.roadOf(null, null, null, null, null).theme().id(), RelicThemes.roadOf(null, null, null, null, null).ruleset());
+        assertNotNull(RelicThemes.roadOf("x".repeat(50000), "y", Map.of(), Map.of("x", "z"), Map.of()));
+    }
+
     // ---------------------------------------------------------------- the file
+    @Test
+    void parseReadsTheRulesetVariantsAndTheirNames() {
+        RelicThemes.Parsed p = RelicThemes.parse(MiniJson.parse("{\"explicit\": {\"frostfang\": \"frost\"}, \"rulesets\": {\"Nusmp:Frostfang\": \"The_Hunt\"}, "
+                + "\"ruleset_names\": {\"the_hunt\": \"The Frozen Hunt\", \"frost\": \"The Long Winter\"}}"));
+        assertEquals(List.of(), p.warnings());
+        assertEquals(Map.of("frostfang", "the_hunt"), p.rulesets());
+        assertEquals("The Frozen Hunt", p.names().get("the_hunt"));
+        assertEquals("The Long Winter", p.names().get("frost"));
+    }
+
+    @Test
+    void parseWarnsAboutBadRulesetEntriesAndKeepsTheGoodOnes() {
+        RelicThemes.Parsed p = RelicThemes.parse(MiniJson.parse("{\"explicit\": {\"a\": \"frost\"}, \"rulesets\": {\"good\": \"fine_id\", \"bad\": \"Not An Id\", \"\": \"x\", \"num\": 7}, "
+                + "\"ruleset_names\": {\"fine_id\": \"Fine\", \"Bad Id\": \"x\", \"empty\": \"  \", \"long\": \"" + "n".repeat(61) + "\"}}"));
+        assertEquals(Map.of("good", "fine_id"), p.rulesets());
+        assertEquals(Map.of("fine_id", "Fine"), p.names());
+        assertEquals(6, p.warnings().size(), p.warnings().toString());
+        RelicThemes.Parsed shapes = RelicThemes.parse(MiniJson.parse("{\"explicit\": {}, \"rulesets\": [1], \"ruleset_names\": \"x\"}"));
+        assertEquals(2, shapes.warnings().size(), shapes.warnings().toString());
+        assertTrue(shapes.rulesets().isEmpty() && shapes.names().isEmpty());
+    }
+
+    @Test
+    void aFileFromBeforeRulesetsStillReads() {
+        RelicThemes.Parsed p = RelicThemes.parse(MiniJson.parse("{\"explicit\": {\"a\": \"frost\"}}"));
+        assertEquals(List.of(), p.warnings());
+        assertTrue(p.rulesets().isEmpty() && p.names().isEmpty());
+        RelicThemes.Parsed legacy = new RelicThemes.Parsed(Map.of("a", "frost"), List.of("w"));
+        assertTrue(legacy.rulesets().isEmpty() && legacy.names().isEmpty());
+        assertEquals(List.of("w"), legacy.warnings());
+    }
+
     @Test
     void parseReadsTheTableAndNormalisesIt() {
         RelicThemes.Parsed p = RelicThemes.parse(MiniJson.parse("{\"_why\": \"x\", \"explicit\": {\"Frostfang\": \"FROST\", \"nusmp:the_reaver\": \"blood\", \"dante_gravity_crown\": \"gravity\"}}"));

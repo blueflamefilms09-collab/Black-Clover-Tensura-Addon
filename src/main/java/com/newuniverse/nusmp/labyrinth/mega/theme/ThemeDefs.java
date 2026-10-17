@@ -30,12 +30,15 @@ public final class ThemeDefs implements ResourceManagerReloadListener {
     private static final Logger LOG = LogUtils.getLogger();
     static final String DIR = "mega/themes";
     private static volatile Map<String, ThemeDef> DEFS = Map.of("gravity", ThemeDef.gravity());
+    /** The baseline-looking definitions handed out for themes without a file: ONE instance per theme, because the block tables are cached by identity of the definition. */
+    private static final Map<String, ThemeDef> PLAIN = new java.util.concurrent.ConcurrentHashMap<>();
+    private static final ThemeDef BASELINE = ThemeDef.gravity();
 
-    /** The definition of a theme: its file, or a plain baseline-looking one when it has none. Never null. */
+    /** The definition of a theme: its file, or a plain baseline-looking one when it has none. Never null, and the same object every time for the same loaded set. */
     public static ThemeDef get(RegionTheme theme) {
-        if (theme == null) return ThemeDef.gravity();
+        if (theme == null) return BASELINE;
         ThemeDef d = DEFS.get(theme.id());
-        return d != null ? d : ThemeDef.plain(theme.id());
+        return d != null ? d : PLAIN.computeIfAbsent(theme.id(), ThemeDef::plain);
     }
 
     /** The definition with this id (any case), or null. */
@@ -49,6 +52,7 @@ public final class ThemeDefs implements ResourceManagerReloadListener {
         Map<String, ThemeDef> m = new LinkedHashMap<>(defs);
         m.putIfAbsent("gravity", ThemeDef.gravity());
         DEFS = Collections.unmodifiableMap(m);
+        PLAIN.clear();
         ThemeTables.clear();
     }
 

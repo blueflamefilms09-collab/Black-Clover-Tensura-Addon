@@ -26,6 +26,7 @@ from collections import deque
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import mega_lib as L  # noqa: E402
+import mega_arch_check as A  # noqa: E402  (the game's survival rules: what a chain or a lantern may hang from)
 
 GROUND = L.FLOOR_ROW + 1        # the first interior row: the cell a person stands in
 FLOOR = L.FLOOR_ROW
@@ -187,19 +188,17 @@ def wall_item(mt, x, y, z, kind, **kw):
 # furniture of the vault
 # ===================================================================================================================
 def column(mt, cx, cz, y0=GROUND, y1=GROUND + 12, spire=3, collar=True, lanterns=True):
-    """A pillar on a 3x3 footprint: a plinth, a plus-shaped shaft (a polished block ringed by polished walls), a gold collar, an inverted-stair capital and a
-    spire of lightning rods on top. `y0` is the first row of the plinth, `y1` the last of the capital; the spire stands above it. Two soul lanterns hang
+    """A pillar on a 3x3 footprint: a plinth with a lit candle cluster on each corner, a plus-shaped shaft (a polished block ringed by polished walls), a gold collar,
+    an inverted-stair capital with bottom-slab corners and a spire of lightning rods on top. `y0` is the first row of the plinth, `y1` the last of the capital; the spire stands above it. Two soul lanterns hang
     from the capital. Symmetrical by construction, so a mirrored pair is an exact mirror."""
     arms = (("north", 0, -1), ("south", 0, 1), ("east", 1, 0), ("west", -1, 0))
     for dx in (-1, 0, 1):
         for dz in (-1, 0, 1):
             mt.set(cx + dx, y0, cz + dz, L.POLISHED)
-    for dx, dz in ((-1, -1), (-1, 1), (1, -1), (1, 1)):
-        slab(mt, cx + dx, y0 + 1, cz + dz, "bottom")
     mt.set(cx, y0 + 1, cz, L.POLISHED)
     if lanterns:
-        for dx, dz in ((-1, -1), (-1, 1), (1, -1), (1, 1)):                  # a lit candle cluster on each corner of the plinth
-            candle_cluster(mt, cx + dx, y0 + 2, cz + dz, 3 + ((cx + cz + dx) & 1), "white")
+        for dx, dz in ((-1, -1), (-1, 1), (1, -1), (1, 1)):                  # a lit candle cluster on each corner of the plinth, standing on a full block (the game pops a candle off a slab)
+            candle_cluster(mt, cx + dx, y0 + 1, cz + dz, 3 + ((cx + cz + dx) & 1), "white")
     for d, dx, dz in arms:
         mt.set(cx + dx, y0 + 1, cz + dz, L.POLISHED_STAIRS, {"facing": L.OPPOSITE[d], "half": "bottom"})
     top = y1 - 1
@@ -218,7 +217,7 @@ def column(mt, cx, cz, y0=GROUND, y1=GROUND + 12, spire=3, collar=True, lanterns
                 d = {(0, -1): "north", (0, 1): "south", (1, 0): "east", (-1, 0): "west"}[(dx, dz)]
                 mt.set(cx + dx, y1, cz + dz, L.POLISHED_STAIRS, {"facing": L.OPPOSITE[d], "half": "top"})
             else:
-                mt.set(cx + dx, y1, cz + dz, L.POLISHED_SLAB, {"type": "top"})
+                mt.set(cx + dx, y1, cz + dz, L.POLISHED_SLAB, {"type": "bottom"})      # a bottom slab: its underside is a full face, so a lantern may hang from it
     stop = ceiling_at(mt, cx, cz, y1 + 1)                      # the spire ends under the vault, never inside it
     for k in range(spire):
         if stop is not None and y1 + 1 + k >= stop:
@@ -263,10 +262,14 @@ def dais(mt, cx, cz, front, pedestal=True, w=5, base=L.POLISHED, trim=GOLD, slot
 def cage_on_chains(mt, x, z, y_bottom, w=3, d=3, h=4, skull_inside=True):
     """A bar cage hung from the ceiling above it by four chains: (x, z) is its middle, `y_bottom` the lowest bar row. The chains run up to the first solid
     cell above; the cage is the shared kit's bars with a skull on a block of the floor of the cage."""
-    ceil = ceiling_at(mt, x, z, y_bottom + h)
-    if ceil is None:
-        return False
     x0, z0 = x - w // 2, z - d // 2
+    corners = ((x0, z0), (x0 + w - 1, z0), (x0, z0 + d - 1), (x0 + w - 1, z0 + d - 1))
+    tops = []
+    for cx, cz in corners:                                         # the vault curves, so every corner has its own ceiling
+        top = ceiling_at(mt, cx, cz, y_bottom + h)
+        if top is None or not A.touches_bottom(mt.get(cx, top, cz)):
+            return False                                           # a chain that would end in the air or under a top slab: no cage here
+        tops.append(top)
     for dx in range(w):
         for dz in range(d):
             for dy in range(h):
@@ -275,8 +278,8 @@ def cage_on_chains(mt, x, z, y_bottom, w=3, d=3, h=4, skull_inside=True):
                     mt.try_set(x0 + dx, y_bottom + dy, z0 + dz, L.IRON_BARS)
     if skull_inside:
         mt.try_set(x, y_bottom + 1, z, "minecraft:skeleton_skull", {"rotation": str((x * 3 + z) % 16)})
-    for cx, cz in ((x0, z0), (x0 + w - 1, z0), (x0, z0 + d - 1), (x0 + w - 1, z0 + d - 1)):
-        for y in range(y_bottom + h, ceil):
+    for (cx, cz), top in zip(corners, tops):
+        for y in range(y_bottom + h, top):
             mt.try_set(cx, y, cz, L.CHAIN_BLOCK, {"axis": "y"})
     return True
 
@@ -290,11 +293,21 @@ def ceiling_at(mt, x, z, y_from):
     return None
 
 
+def solid_ceiling_at(mt, x, z, y_from):
+    """The first FULL, solid cube above y_from at (x, z) (a lantern, a chain, a rod or a slab is not one), or None: what a stalactite may grow from."""
+    for y in range(y_from, L.HEIGHT):
+        c = mt.get(x, y, z)
+        if c is not None and A.is_solid_cube(c):
+            return y
+    return None
+
+
 def chandelier_wheel(mt, cx, cz, y, r=3, hub_top=None):
-    """A spoked wheel of chains at row `y` hung on a central chain, with a soul lantern under each of eight points of the rim and one under the hub. The rim
-    is a ring of horizontal chains, the spokes run along both axes."""
+    """A wheel of chains hung on a central chain at row `y`: four spokes of horizontal chains end in a polished post each, and a soul lantern hangs under every
+    post and under the hub. (A lantern needs a full face above it, so it cannot hang from a horizontal chain: only the posts and the hub carry one.) The cross is
+    one connected piece: the hub chain touches the first spoke block of every arm and the last one touches the post."""
     top = hub_top if hub_top is not None else ceiling_at(mt, cx, cz, y + 1)
-    if top is None:
+    if top is None or not A.touches_bottom(mt.get(cx, top, cz)):
         return False
     for yy in range(y + 1, top):
         mt.try_set(cx, yy, cz, L.CHAIN_BLOCK, {"axis": "y"})
@@ -302,13 +315,9 @@ def chandelier_wheel(mt, cx, cz, y, r=3, hub_top=None):
     for k in range(1, r):
         for sx, sz, ax in ((k, 0, "x"), (-k, 0, "x"), (0, k, "z"), (0, -k, "z")):
             mt.try_set(cx + sx, y, cz + sz, L.CHAIN_BLOCK, {"axis": ax})
-    rim = []
-    for a in range(0, 360, 45):
-        px, pz = rpolar(cx, cz, a, r)
-        rim.append((px, pz))
-    for i, (px, pz) in enumerate(rim):
-        mt.try_set(px, y, pz, L.POLISHED_WALL if i % 2 == 0 else L.CHAIN_BLOCK, None if i % 2 == 0 else {"axis": "x" if (px - cx) else "z"})
-        mt.try_set(px, y - 1, pz, L.SOUL_LANTERN, {"hanging": "true"})
+    for sx, sz in ((r, 0), (-r, 0), (0, r), (0, -r)):
+        mt.try_set(cx + sx, y, cz + sz, L.POLISHED_WALL)
+        mt.try_set(cx + sx, y - 1, cz + sz, L.SOUL_LANTERN, {"hanging": "true"})
     mt.try_set(cx, y - 1, cz, L.SOUL_LANTERN, {"hanging": "true"})
     return True
 
@@ -345,6 +354,29 @@ def crack(mt, x, y, z, block=None):
         mt.force(x, y, z, L.CRACKED_BRICK)
     elif c.block == L.TILE:
         mt.force(x, y, z, L.CRACKED_TILE)
+
+
+def remains(mt, x, z, skull_rot=0):
+    """What is left of a party that took the wrong relic: a bone block with a skull on it and, half the time, a second bone block lying beside it. Placed
+    only on free floor (the cell is empty and a block is under it); returns whether the heap stands."""
+    if mt.get(x, GROUND, z) is not None or mt.get(x, FLOOR, z) is None or (x, GROUND, z) in mt.clear:
+        return False
+    mt.set(x, GROUND, z, "minecraft:bone_block", {"axis": "y"})
+    mt.try_set(x, GROUND + 1, z, "minecraft:skeleton_skull", {"rotation": str(skull_rot % 16)})
+    if mt.rng.random() < 0.5:
+        for dx, dz, ax in ((1, 0, "x"), (-1, 0, "x"), (0, 1, "z"), (0, -1, "z")):
+            if (x + dx, GROUND, z + dz) not in mt.clear and mt.get(x + dx, FLOOR, z + dz) is not None and mt.try_set(x + dx, GROUND, z + dz, "minecraft:bone_block", {"axis": ax}):
+                break
+    return True
+
+
+def cobweb(mt, x, y, z):
+    """A cobweb in a free air cell that touches a block on at least one face (a web hangs in a corner, not in mid-air); never on the clear route."""
+    if (x, y, z) in mt.clear:
+        return False
+    if all(mt.get(x + dx, y + dy, z + dz) is None for dx, dy, dz in ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1))):
+        return False
+    return mt.try_set(x, y, z, "minecraft:cobweb")
 
 
 def rubble_pile(mt, x, z, spread=1):

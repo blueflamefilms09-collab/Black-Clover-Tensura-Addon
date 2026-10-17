@@ -6,9 +6,9 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.newuniverse.nusmp.labyrinth.mega.MegaData;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
-import com.newuniverse.nusmp.labyrinth.mega.RegionTheme;
 import com.newuniverse.nusmp.labyrinth.mega.Sector;
 import com.newuniverse.nusmp.labyrinth.mega.crucible.CrucibleRules.Phase;
+import com.newuniverse.nusmp.labyrinth.mega.theme.RelicThemes;
 import com.newuniverse.nusmp.labyrinth.mega.theme.ThemeConfig;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -70,7 +70,7 @@ public final class CrucibleCommand {
         Sector s = sectorOf(src, id);
         if (s == null) return fail(src, id == null ? "You are not inside a sector of the Mega-Dungeon: give a sector number." : "There is no sector " + id + ".");
         Sector.Crucible c = s.crucible;
-        RegionTheme next = NextTheme.nextThemeFor(s);
+        RelicThemes.Road next = NextTheme.roadAfter(s);
         StringBuilder offered = new StringBuilder();
         for (String o : c.offered) offered.append(offered.length() == 0 ? "" : ", ").append(o == null || o.isEmpty() ? "-" : o);
         String running = CatastropheRunner.active(s.id) ? CatastropheRunner.kindOf(s.id) : "none";
@@ -79,7 +79,8 @@ public final class CrucibleCommand {
                 + "\n  offered [" + offered + "], chosen " + (c.chosen == null || c.chosen.isEmpty() ? "-" : c.chosen) + ", chooser " + (c.chooser == null ? "-" : c.chooser)
                 + ", catastrophe " + (c.catastrophe == null || c.catastrophe.isEmpty() ? "-" : c.catastrophe) + " (running: " + running + ")"
                 + "\n  offers up to " + CrucibleRules.offerCount(ThemeConfig.get(ThemeConfig.OFFER_COUNT), CruciblePedestals.ordered(s).size()) + " relics of " + ThemeConfig.minGrade().shortName()
-                + " and above; the next region's theme: " + (next == null ? "not decided yet" : next.id()) + "; roster " + CursedSpirits.roster().size() + " spirits");
+                + " and above; the next region's road: " + (next == null ? "not decided yet" : next.theme().id() + ", ruleset " + next.ruleset() + " (" + NextTheme.describe(next) + ")")
+                + "; roster " + CursedSpirits.roster().size() + " spirits");
     }
 
     private static int roll(CommandSourceStack src, Integer id) {

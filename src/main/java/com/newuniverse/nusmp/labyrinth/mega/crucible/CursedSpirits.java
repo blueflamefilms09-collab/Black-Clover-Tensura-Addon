@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.labyrinth.mega.Sector;
 import com.newuniverse.nusmp.labyrinth.mega.theme.JsonTrees;
 import com.newuniverse.nusmp.labyrinth.mega.theme.ThemeConfig;
+import com.newuniverse.nusmp.labyrinth.mega.theme.ThemeDefs;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -94,7 +95,7 @@ public final class CursedSpirits implements ResourceManagerReloadListener {
     static Mob spawn(ServerLevel level, Sector s, BlockPos at, ServerPlayer chooser) {
         long seed = CrucibleRules.drawSeed(s.seed ^ 0x2545F4914F6CDD1DL, chooser == null ? null : chooser.getUUID());
         SpiritRoster.Entry entry = SpiritRoster.pick(ROSTER, seed, CursedSpirits::exists);
-        return entry == null ? null : spawnEntry(level, s.threat, entry, at);
+        return entry == null ? null : spawnEntry(level, CrucibleRules.dangerThreat(s.threat, ThemeDefs.get(s.theme).danger()), entry, at);
     }
 
     /** The spirit of one roster entry (the draw is {@link #spawn}'s business; the self-test builds every entry in turn to find one that cannot be made). */

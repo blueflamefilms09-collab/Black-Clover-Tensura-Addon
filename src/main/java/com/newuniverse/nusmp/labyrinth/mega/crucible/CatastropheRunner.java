@@ -5,8 +5,8 @@ import com.newuniverse.nusmp.dungeon.DungeonEffects;
 import com.newuniverse.nusmp.labyrinth.mega.MegaData;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
 import com.newuniverse.nusmp.labyrinth.mega.Sector;
-import com.newuniverse.nusmp.labyrinth.mega.crucible.CrucibleRules.Phase;
 import com.newuniverse.nusmp.labyrinth.mega.theme.ThemeConfig;
+import com.newuniverse.nusmp.labyrinth.mega.theme.ThemeDefs;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -28,6 +28,8 @@ import net.minecraft.world.level.block.Blocks;
 import org.joml.Vector3f;
 import org.slf4j.Logger;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -36,15 +38,17 @@ import java.util.UUID;
 
 /**
  * Why: the three catastrophes of the Crucible (a collapse of falling dust, a toxic magicule flood, a Cursed Spirit) are one small tick-driven state
- * machine, because each is "something that happens in the vault for a while and then ends", and the ending is what matters: the Crucible is RESOLVED
- * (and {@code MegaDungeon.crucibleResolved} told) when the catastrophe ends, however it ends. The saved state is only the {@code catastrophe} string
- * of the sector's crucible; the running state (start tick, the spirit's id, the clocks) is kept in memory and is NOT saved on purpose: a server restart
- * in the middle of a catastrophe simply ends it ({@code CrucibleVault} resolves every CHOSEN vault that has no running catastrophe), so nobody is
- * ever trapped by a countdown that no longer exists.
+ * machine, because each is "something that happens in the vault for a while and then ends". The Crucible itself is RESOLVED at the pick (the hook tells
+ * {@code MegaDungeon.crucibleResolved} then, which releases the next sector), so a catastrophe is an aftermath that runs beside the dungeon growing, and
+ * the ending is what matters: however it ends, nobody is left in it. The saved state is only the {@code catastrophe} string of the sector's crucible; the
+ * running state (start tick, the spirit's id, the clocks) is kept in memory and is NOT saved on purpose: a server restart in the middle of a catastrophe
+ * simply ends it, so nobody is ever trapped by a countdown that no longer exists.
  * <p>
  * Every one is survivable by running out of the vault, and none of them changes a single block (so nothing needs the Dungeon Guard's permission and
- * nothing has to be restored): the COLLAPSE warns for two seconds with rumbling and a rain of dust, then pulses small damage every 1.5 seconds to the
- * players inside the vault box (never more than 35 % of their health per pulse); the FLOOD renews magicule sickness (level from the sector's threat) and
+ * nothing has to be restored): the COLLAPSE warns for two seconds with rumbling and a rain of dust, then every 1.5 seconds drops a stone on each person in
+ * the vault box: a ring of dust and a falling column mark the spot for seven tenths of a second, then it lands and hurts whoever is still within two
+ * blocks (never more than 35 % of their health per stone and never more than 60 % of it in all), while harmless stones crash down all round for the look
+ * of a ceiling coming apart; the FLOOD renews magicule sickness (level from the sector's threat) and
  * slowness II once a second on the players inside the box, counts down on the action bar and ends early when nobody is inside any more; the SPIRIT
  * appears at the vault centre inside a three second summoning circle, then hunts, and ends when it dies, when it is gone from loaded ground, or
  * ten minutes after the last player left its sector. The clocks are the pure {@link CatastropheRules}; this class only applies them. The new crowd
@@ -62,12 +66,15 @@ public final class CatastropheRunner {
         final String kind;
         final long start;
         final BlockPos center;
-        /** True for a real pick (the Crucible is resolved at the end); false for an admin's test run. */
+        /** True for a real pick (the end is announced); false for an admin's test run. */
         final boolean resolves;
         UUID spirit;
         BlockPos spiritPos;
         long lastPlayerTick;
         boolean awake;
+        /** The stones of a collapse that are still falling (aimed and harmless ones), and what each person has taken so far (their collapse budget). */
+        final List<Debris> falling = new ArrayList<>();
+        final Map<UUID, Float> taken = new HashMap<>();
         /** Consecutive ticks the spirit's ground was loaded and the spirit was not found (a chunk's entities load a moment after the chunk). */
         int missingTicks;
 
@@ -81,6 +88,9 @@ public final class CatastropheRunner {
             this.lastPlayerTick = start;
         }
     }
+
+    /** One falling stone: where it lands, the tick (of the collapse) it lands on, and whether it hurts (an aimed stone) or only looks the part. */
+    private record Debris(double x, double y, double z, int lands, boolean harmful) {}
 
     private static final Map<Integer, Active> ACTIVE = new LinkedHashMap<>();
     /** How many catastrophes were started since the server came up (the self-test reads it: one pick must start exactly one). */
@@ -116,8 +126,8 @@ public final class CatastropheRunner {
 
     // ---------------------------------------------------------------- start / stop
     /**
-     * Starts a catastrophe of {@code kind} centred on {@code center} (the vault centre for a real pick). {@code resolves} is true for a pick (the Crucible
-     * is resolved when it ends). A SPIRIT that cannot be summoned (no roster entity exists) becomes a COLLAPSE and the sector's saved catastrophe is
+     * Starts a catastrophe of {@code kind} centred on {@code center} (the vault centre for a real pick). {@code resolves} is true for a real pick (the people
+     * in the vault are told when it is over) and false for an admin's test run, which says nothing. A SPIRIT that cannot be summoned (no roster entity exists) becomes a COLLAPSE and the sector's saved catastrophe is
      * corrected. Returns false when it could not start at all (no centre).
      */
     public static boolean start(ServerLevel level, Sector s, String kind, ServerPlayer chooser, BlockPos center, boolean resolves) {
@@ -141,7 +151,7 @@ public final class CatastropheRunner {
             s.crucible.catastrophe = k;
             MegaData.get(level.getServer()).setDirty();
         }
-        Active a = new Active(s.id, s.threat, k, level.getGameTime(), at.immutable(), resolves);
+        Active a = new Active(s.id, CrucibleRules.dangerThreat(s.threat, ThemeDefs.get(s.theme).danger()), k, level.getGameTime(), at.immutable(), resolves);
         if (spirit != null) {
             a.spirit = spirit.getUUID();
             a.spiritPos = spirit.blockPosition();
@@ -228,17 +238,14 @@ public final class CatastropheRunner {
         }
     }
 
-    /** The end of a catastrophe: a real one resolves the Crucible (only if it is still CHOSEN: a reset in between wins). */
+    /**
+     * The end of a catastrophe: a real one tells the people still in the vault that it is over. The Crucible itself was resolved at the pick (the next sector is
+     * being built by now), so nothing is resolved here: the catastrophe is an aftermath of the choice and ends on its own clock.
+     */
     private static void finish(ServerLevel level, Sector s, Active a) {
         if (!a.resolves) return;
-        Sector.Crucible c = s.crucible;
-        Phase now = Phase.of(c.phase.name());
-        if (now != Phase.CHOSEN) return;
-        c.phase = Sector.Crucible.Phase.valueOf(CrucibleRules.afterCatastrophe(now).name());
-        MegaData.get(level.getServer()).setDirty();
         for (ServerPlayer p : CruciblePedestals.playersInBox(level, a.center))
             p.displayClientMessage(Component.translatable("message.nusmp.mega.crucible.resolved").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC), true);
-        MegaDungeon.crucibleResolved(level, s.id);
     }
 
     // ---------------------------------------------------------------- collapse
@@ -251,16 +258,82 @@ public final class CatastropheRunner {
         if (elapsed % 3 == 0) dust(level, a, elapsed >= warn ? 3 : 1);
         if (elapsed % 12 == 0)
             level.playSound(null, c, elapsed < warn ? SoundEvents.GRAVEL_FALL : SoundEvents.DEEPSLATE_BRICKS_BREAK, SoundSource.BLOCKS, 1.0f, 0.5f + rng.nextFloat() * 0.3f);
-        if (CatastropheRules.collapsePulseAt(elapsed, total)) for (ServerPlayer p : CruciblePedestals.victimsInBox(level, c)) pulse(level, a.threat, p);
+        if (elapsed == warn / 2) level.playSound(null, c, SoundEvents.GENERIC_EXPLODE.value(), SoundSource.BLOCKS, 0.5f, 0.5f);       // a hollow boom from somewhere above
+        if (CatastropheRules.collapsePulseAt(elapsed, total)) aim(level, a, elapsed, rng);
+        land(level, a, elapsed);
         return false;
     }
 
-    /** One collapse pulse on one victim: a blow of the configured size (never more than 35 % of its maximum health), a puff of smoke and a dull crash. */
-    static void pulse(ServerLevel level, int threat, LivingEntity victim) {
-        float dmg = CrucibleRules.collapsePulseDamage(threat, ThemeConfig.get(ThemeConfig.COLLAPSE_DAMAGE), ThemeConfig.get(ThemeConfig.COLLAPSE_DAMAGE_PER_THREAT), victim.getMaxHealth());
+    /**
+     * One pulse: a stone is aimed at each person in the vault box (at where they stand, a step to either side so a still target is hit and a moving one is not)
+     * and a few harmless ones are dropped at random places of the hall; each is marked on the floor until it lands {@link CatastropheRules#DEBRIS_TELEGRAPH_TICKS}
+     * later.
+     */
+    private static void aim(ServerLevel level, Active a, int elapsed, RandomSource rng) {
+        int lands = CatastropheRules.debrisLandsAt(elapsed);
+        for (ServerPlayer p : CruciblePedestals.victimsInBox(level, a.center))
+            a.falling.add(new Debris(p.getX() + (rng.nextDouble() - 0.5) * 1.2, p.getY(), p.getZ() + (rng.nextDouble() - 0.5) * 1.2, lands, true));
+        for (int i = 0; i < CatastropheRules.DEBRIS_DECOR_PER_PULSE; i++)
+            a.falling.add(new Debris(a.center.getX() + 0.5 + (rng.nextDouble() - 0.5) * 18.0, a.center.getY(), a.center.getZ() + 0.5 + (rng.nextDouble() - 0.5) * 18.0, lands - rng.nextInt(4), false));
+    }
+
+    /** Marks every stone that is still falling and lets the ones whose time has come land. */
+    private static void land(ServerLevel level, Active a, int elapsed) {
+        if (a.falling.isEmpty()) return;
+        for (Iterator<Debris> it = a.falling.iterator(); it.hasNext(); ) {
+            Debris d = it.next();
+            if (elapsed < d.lands()) {
+                if (elapsed % 2 == 0) mark(level, d, d.lands() - elapsed);
+                continue;
+            }
+            it.remove();
+            impact(level, a, d);
+        }
+    }
+
+    /** The warning of a falling stone: a ring of orange dust on the floor that tightens as the stone comes, and dust streaming down a column above it. */
+    private static void mark(ServerLevel level, Debris d, int left) {
+        double r = CatastropheRules.DEBRIS_RADIUS * (0.35 + 0.65 * Math.min(1.0, left / (double) CatastropheRules.DEBRIS_TELEGRAPH_TICKS));
+        DustParticleOptions ring = new DustParticleOptions(new Vector3f(0.95f, 0.5f, 0.2f), 1.1f);
+        for (int i = 0; i < 8; i++) {
+            double ang = Math.PI * 2.0 * i / 8.0 + left * 0.3;
+            level.sendParticles(ring, d.x() + Math.cos(ang) * r, d.y() + 0.12, d.z() + Math.sin(ang) * r, 1, 0.0, 0.0, 0.0, 0.0);
+        }
+        BlockParticleOption rock = new BlockParticleOption(ParticleTypes.FALLING_DUST, Blocks.DEEPSLATE_TILES.defaultBlockState());
+        level.sendParticles(rock, d.x(), d.y() + 3.5 + left * 0.35, d.z(), 5, 0.35, 0.5, 0.35, 0.0);
+    }
+
+    /** A stone lands: a burst of broken masonry, dust and smoke and a crash; an aimed one also hurts everybody within its radius, up to each person's budget. */
+    private static void impact(ServerLevel level, Active a, Debris d) {
+        BlockPos at = BlockPos.containing(d.x(), d.y(), d.z());
+        level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.DEEPSLATE_BRICKS.defaultBlockState()), d.x(), d.y() + 0.2, d.z(), 36, 0.45, 0.2, 0.45, 0.14);
+        level.sendParticles(ParticleTypes.POOF, d.x(), d.y() + 0.3, d.z(), 8, 0.45, 0.2, 0.45, 0.05);
+        level.sendParticles(ParticleTypes.LARGE_SMOKE, d.x(), d.y() + 0.4, d.z(), 4, 0.35, 0.2, 0.35, 0.02);
+        level.playSound(null, at, SoundEvents.DEEPSLATE_BRICKS_BREAK, SoundSource.BLOCKS, 1.0f, 0.55f);
+        level.playSound(null, at, d.harmful() ? SoundEvents.ANVIL_LAND : SoundEvents.GRAVEL_BREAK, SoundSource.BLOCKS, d.harmful() ? 0.5f : 0.8f, 0.5f);
+        if (!d.harmful()) return;
+        for (ServerPlayer p : CruciblePedestals.victimsInBox(level, a.center)) {
+            if (!CatastropheRules.debrisHits(p.getX() - d.x(), p.getY() - d.y(), p.getZ() - d.z())) continue;
+            float allowance = CatastropheRules.collapseAllowance(p.getMaxHealth(), a.taken.getOrDefault(p.getUUID(), 0f));
+            if (allowance <= 0f) continue;                                         // this person has had all the collapse may give
+            float dealt = hit(level, a.threat, p, allowance);
+            a.taken.merge(p.getUUID(), dealt, Float::sum);
+        }
+    }
+
+    /** One collapse pulse on one victim with no budget: a blow of the configured size (never more than 35 % of its maximum health), a puff of smoke and a dull crash. */
+    static void pulse(ServerLevel level, int threat, LivingEntity victim) { hit(level, threat, victim, Float.MAX_VALUE); }
+
+    /**
+     * One stone's blow on one victim: the configured damage (see {@link CrucibleRules#collapsePulseDamage}, never more than 35 % of the victim's maximum health),
+     * cut down to {@code allowance} (what is left of the victim's collapse budget). Returns the damage it asked the game for.
+     */
+    static float hit(ServerLevel level, int threat, LivingEntity victim, float allowance) {
+        float dmg = Math.min(allowance, CrucibleRules.collapsePulseDamage(threat, ThemeConfig.get(ThemeConfig.COLLAPSE_DAMAGE), ThemeConfig.get(ThemeConfig.COLLAPSE_DAMAGE_PER_THREAT), victim.getMaxHealth()));
         if (dmg > 0f) victim.hurt(level.damageSources().generic(), dmg);
         level.sendParticles(ParticleTypes.LARGE_SMOKE, victim.getX(), victim.getY() + 0.3, victim.getZ(), 12, 0.5, 0.2, 0.5, 0.04);
         level.playSound(null, victim.blockPosition(), SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 0.7f, 0.4f);
+        return Math.max(0f, dmg);
     }
 
     /** A rain of deepslate dust from the ceiling: over every player in the box and at a few random places of the hall. */
