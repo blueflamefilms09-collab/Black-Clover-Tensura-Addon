@@ -18,7 +18,9 @@ import java.util.SplittableRandom;
  * only when a domain changes. The solver is deterministic for a given (tileset, problem, seed): the random source is a {@link SplittableRandom},
  * logarithms use {@link StrictMath}, and nothing depends on hash order, so a world regenerated on another machine gets the identical interior.
  * The x axis may WRAP (the Hub's landmarks are rings of angular sectors). A face whose neighbour is outside the grid or EXCLUDED is checked against
- * the problem's per-direction "edge" socket masks instead of a neighbour (the caller decides there which sockets are acceptable).
+ * the problem's per-direction "edge" socket masks instead of a neighbour (the caller decides there which sockets are acceptable). A FREE cell may also be
+ * restricted to a subset of the tiles ({@link Problem#allowOnly}, {@link Problem#forbid}): that is how a doorway tile is kept off every cell the caller did not
+ * pre-collapse on purpose.
  * Pure: no Minecraft import.
  */
 public final class Wfc3D {
@@ -95,6 +97,8 @@ public final class Wfc3D {
         public final boolean wrapX;
         private final byte[] state;
         private final int[] fixedTile;
+        /** Per cell, the bit mask of the tiles the cell may take (a FREE cell only). Default: every tile. */
+        private final long[] allowed;
         /** Per direction, the bit mask of socket ids acceptable on a face whose neighbour is outside the grid or EXCLUDED. Default: all. */
         public final int[] edgeMask = new int[] {-1, -1, -1, -1, -1, -1};
 
@@ -106,6 +110,8 @@ public final class Wfc3D {
             this.wrapX = wrapX;
             this.state = new byte[sx * sy * sz];
             this.fixedTile = new int[sx * sy * sz];
+            this.allowed = new long[sx * sy * sz];
+            java.util.Arrays.fill(this.allowed, -1L);
         }
 
         public int index(int x, int y, int z) { return (z * sy + y) * sx + x; }
@@ -121,6 +127,18 @@ public final class Wfc3D {
         public void setFixed(int x, int y, int z, int tile) { int i = index(x, y, z); state[i] = FIXED; fixedTile[i] = tile; }
 
         public int fixedTileAt(int x, int y, int z) { return fixedTile[index(x, y, z)]; }
+
+        /**
+         * Restricts a FREE cell to the tiles in {@code tileMask} (bit i = tile i). Why: some tiles must exist only where the caller pre-collapsed a
+         * cell (a doorway onto a staircase landing, the way in from outside): letting the solver choose them anywhere else would open doors onto a drop.
+         */
+        public void allowOnly(int x, int y, int z, long tileMask) { allowed[index(x, y, z)] = tileMask; }
+
+        /** Removes one tile from the choices of a cell. */
+        public void forbid(int x, int y, int z, int tile) { allowed[index(x, y, z)] &= ~(1L << tile); }
+
+        /** The tiles a cell may take (all bits set when unrestricted). */
+        public long allowedAt(int x, int y, int z) { return allowed[index(x, y, z)]; }
 
         /** Restrict the sockets acceptable on faces that touch nothing in direction {@code dir} to the given ids. */
         public void restrictEdge(int dir, int... socketIds) {
@@ -268,7 +286,7 @@ public final class Wfc3D {
             for (int i = 0; i < n; i++) {
                 jitter[i] = rng.nextDouble() * 1e-6;
                 byte st = p.state[i];
-                dom[i] = st == EXCLUDED ? 0L : (st == FIXED ? 1L << p.fixedTile[i] : all);
+                dom[i] = st == EXCLUDED ? 0L : (st == FIXED ? 1L << p.fixedTile[i] : all & p.allowed[i]);
             }
             for (int i = 0; i < n; i++) {
                 if (p.state[i] == EXCLUDED) continue;

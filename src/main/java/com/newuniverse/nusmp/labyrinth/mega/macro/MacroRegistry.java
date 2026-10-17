@@ -1,17 +1,37 @@
 package com.newuniverse.nusmp.labyrinth.mega.macro;
 
+import com.mojang.serialization.MapCodec;
+import com.newuniverse.nusmp.NUSMP;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.event.server.ServerStoppedEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
- * Why: the registration entry point of one builder of the bidirectional Mega-Dungeon (1.55.0): the 3D-noise and Wave Function Collapse chunk generator of the Sanctuary Hub. CONTRACT STUB: the builder who owns this
- * package REPLACES the empty bodies below with its DeferredRegisters and listeners; {@code MegaSystem} already calls both methods, so
- * nothing else changes when the bodies are filled. {@code init} runs before {@code NUItems.ITEMS.register}, so a block item may be put on
- * {@code NUItems.ITEMS} here; {@code register} receives the game bus.
+ * Why: the registration entry point of the Hub's terrain generator (the MACRO module of the bidirectional Mega-Dungeon, 1.55.0), the one class
+ * {@code MegaSystem} calls. It registers exactly one thing in the game's registries: the CODEC of {@link SanctuaryGenerator} in the chunk-generator registry, under
+ * the id {@code nusmp:sanctuary}, because the Hub's dimension JSON ({@code "generator": {"type": "nusmp:sanctuary", "biome_source": ...}}) names it and the
+ * dimension registry is read from the datapack when the server starts, which is after every mod-bus registration has run (that is why this is on the MOD bus
+ * in {@code init}, called from {@code MegaSystem.init}, and not a game-bus handler). It also adds the in-game self-tests and drops the cached per-seed models
+ * when the server stops, so a long-running client that opens world after world does not keep them.
  */
 public final class MacroRegistry {
     private MacroRegistry() {}
 
-    public static void init(IEventBus modBus) {}
+    /** The chunk generator codecs of this mod. */
+    public static final DeferredRegister<MapCodec<? extends ChunkGenerator>> GENERATORS = DeferredRegister.create(Registries.CHUNK_GENERATOR, NUSMP.MODID);
 
-    public static void register(IEventBus gameBus) {}
+    /** {@code nusmp:sanctuary}: the Hub's generator. */
+    public static final DeferredHolder<MapCodec<? extends ChunkGenerator>, MapCodec<SanctuaryGenerator>> SANCTUARY = GENERATORS.register("sanctuary", () -> SanctuaryGenerator.CODEC);
+
+    public static void init(IEventBus modBus) {
+        GENERATORS.register(modBus);
+        MacroSelfTests.register();
+    }
+
+    public static void register(IEventBus gameBus) {
+        gameBus.addListener((ServerStoppedEvent e) -> HubModel.clearCache());
+    }
 }

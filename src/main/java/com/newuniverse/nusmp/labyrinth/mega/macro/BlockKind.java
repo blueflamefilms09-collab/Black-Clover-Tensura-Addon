@@ -39,8 +39,12 @@ public enum BlockKind {
     SCULK(true, false, false), MOSS(true, false, false), MOSS_CARPET(false, false, true), GLOW_LICHEN(false, false, true),
     POINTED_DRIPSTONE_UP(false, false, false), POINTED_DRIPSTONE_DOWN(false, false, false), WATER(false, false, false),
 
-    // the two polarity gates: the plane of the existing Labyrinth Gate block and its gold frame
+    // the two polarity gates: the plane of the existing Labyrinth Gate block and its frames (gold for the Holy gate, crying obsidian for the Abyssal one)
     GATE_FRAME(true, false, false), GATE(false, false, true),
+
+    // added while building the landmarks: hanging chandeliers, the dark paving of the Chasm's floor, the Abyssal gate's frame
+    LANTERN_HANGING(false, false, false), CHAIN_Y(false, false, false), ABYSS_FRAME(true, false, false),
+    PLATFORM_DARK(true, false, false), PLATFORM_DARK_TRIM(true, false, false), DEEPSLATE_TILES(true, false, false), POLISHED_DEEPSLATE(true, false, false),
 
     /** Pseudo kind used inside tile patterns only: "the rock of the surrounding stratum". Never returned by {@link HubModel#kindAt}. */
     NATIVE(true, false, false);

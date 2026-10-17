@@ -42,6 +42,17 @@ public final class HelixPath {
      * @param stops landings, ascending by {@code q}; a stop at {@code qEnd} is the final platform
      */
     public HelixPath(int dir, double startAngle, int qEnd, IntToDoubleFunction radiusAt, List<Stop> stops) {
+        this(dir, startAngle, qEnd, radiusAt, stops, 0.0);
+    }
+
+    /**
+     * Like the constructor above, but one row of the table spans one block of arc at the radius {@code arcInset} blocks INSIDE the walkway's centre (the row's
+     * angular width is {@code 1 / (radius - arcInset)}). Why: a row is a wedge, and the wedge boundary is where the surface steps by half a block. At the centre radius
+     * the columns on the inner side of the walkway are closer together than a block of arc, so a lattice neighbour there can lie two wedges away (a full block
+     * step in a stair meant to be climbed in half blocks). With the arc measured at the inner edge no two lattice neighbours of the walkway are more than one
+     * wedge apart, so every column of the walkway can be walked without a jump.
+     */
+    public HelixPath(int dir, double startAngle, int qEnd, IntToDoubleFunction radiusAt, List<Stop> stops, double arcInset) {
         this.dir = dir >= 0 ? 1 : -1;
         this.startAngle = startAngle;
         this.qEnd = qEnd;
@@ -55,7 +66,7 @@ public final class HelixPath {
             do {
                 double r = radiusAt.applyAsDouble(q);
                 rows.add(new double[] {t, q, r, stop != null && stop.open() ? 1 : 0, stop != null ? 1 : 0});
-                double dt = 1.0 / r;
+                double dt = 1.0 / Math.max(1.0, r - arcInset);
                 t += dt;
                 acc += dt;
             } while (acc < hold);
