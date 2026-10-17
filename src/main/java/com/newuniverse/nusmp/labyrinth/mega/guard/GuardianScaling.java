@@ -105,6 +105,10 @@ public final class GuardianScaling {
             case "dwarven_forgehold": return Trait.FLAME;
             case "crystal_geode": return Trait.ASTRAL;
             case "sunken_temple": return Trait.FROST;
+            case "holy_church": return Trait.ASTRAL;
+            case "celestial_court": return Trait.ASTRAL;
+            case "sky_citadel": return Trait.STORM;
+            case "mountain_monastery": return Trait.FROST;
             default: break;
         }
         try { return Trait.valueOf(theme.name()); } catch (IllegalArgumentException unmapped) { return Trait.GRAVITY; }
@@ -190,6 +194,10 @@ public final class GuardianScaling {
             case "dwarven_forgehold" -> 0xC98A3C;
             case "crystal_geode" -> 0xC9A0FF;
             case "sunken_temple" -> 0x3FB8B0;
+            case "holy_church" -> 0xE3D3A8;
+            case "celestial_court" -> 0x7FE0E6;
+            case "sky_citadel" -> 0xBFD8F2;
+            case "mountain_monastery" -> 0xB8844C;
             default -> 0x9AA0B4;
         };
     }

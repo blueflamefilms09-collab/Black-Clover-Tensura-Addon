@@ -7,9 +7,9 @@
     "nusmp:mega/treasure/feywild_grove_"
   ],
   "relative": {
-    "mega/hall/feywild_grove_": 60,
-    "mega/set/feywild_grove_": 12,
-    "mega/puzzle/feywild_grove_": 16,
-    "mega/treasure/feywild_grove_": 16
+    "mega/hall/feywild_grove_": 20,
+    "mega/set/feywild_grove_": 20,
+    "mega/puzzle/feywild_grove_": 20,
+    "mega/treasure/feywild_grove_": 20
   }
 }

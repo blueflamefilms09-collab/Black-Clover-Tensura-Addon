@@ -44,8 +44,9 @@ class EncounterDataTest {
     private static final Path KNOWN = Path.of("src/test/resources/mega/enc/known_ids.txt");
     private static final Path LANG = Path.of("src/main/resources/assets/nusmp/lang/en_us.json");
     private static final Path SOURCE = Path.of("src/main/java");
-    private static final List<String> THEMES = List.of("gravity", "blood", "spatial", "flame", "frost", "verdant", "storm", "shadow", "astral", "radiant", "abyss",
-            "feywild_grove", "dwarven_forgehold", "crystal_geode", "sunken_temple");
+    private static final List<String> THEMES = List.of("gravity", "blood", "spatial", "flame", "frost", "verdant", "storm", "shadow", "astral",
+            "radiant", "abyss", "feywild_grove", "dwarven_forgehold", "crystal_geode", "sunken_temple", "holy_church", "celestial_court",
+            "sky_citadel", "mountain_monastery");
     private static final Set<String> NAMESPACES = Set.of("minecraft", "tensura", "nusmp");
     private static final String MESSAGE_PREFIX = "message.nusmp.mega.enc.";
 

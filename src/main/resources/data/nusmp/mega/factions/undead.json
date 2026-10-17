@@ -29,7 +29,11 @@
     "feywild_grove": 0,
     "dwarven_forgehold": 1,
     "crystal_geode": 0,
-    "sunken_temple": 2
+    "sunken_temple": 2,
+    "holy_church": 3,
+    "celestial_court": 1,
+    "sky_citadel": 0,
+    "mountain_monastery": 0
   },
   "drops": {
     "meat": "raw_monster_meat",

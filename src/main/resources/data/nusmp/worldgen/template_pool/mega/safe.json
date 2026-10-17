@@ -2,6 +2,15 @@
   "fallback": "nusmp:mega/cap",
   "elements": [
     {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/safe/celestial_court_fountain_court",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
       "weight": 3,
       "element": {
         "element_type": "minecraft:single_pool_element",
@@ -24,6 +33,24 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/safe/hearth_hall_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/safe/holy_church_baptistery",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/safe/mountain_monastery_hot_springs",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }

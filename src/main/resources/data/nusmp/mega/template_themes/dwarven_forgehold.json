@@ -7,9 +7,9 @@
     "nusmp:mega/treasure/dwarven_forgehold_"
   ],
   "relative": {
-    "mega/hall/dwarven_forgehold_": 60,
-    "mega/set/dwarven_forgehold_": 12,
-    "mega/trial/dwarven_forgehold_": 16,
-    "mega/treasure/dwarven_forgehold_": 16
+    "mega/hall/dwarven_forgehold_": 20,
+    "mega/set/dwarven_forgehold_": 20,
+    "mega/trial/dwarven_forgehold_": 20,
+    "mega/treasure/dwarven_forgehold_": 20
   }
 }

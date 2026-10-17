@@ -7,9 +7,9 @@
     "nusmp:mega/treasure/sunken_temple_"
   ],
   "relative": {
-    "mega/hall/sunken_temple_": 60,
-    "mega/set/sunken_temple_": 12,
-    "mega/puzzle/sunken_temple_": 16,
-    "mega/treasure/sunken_temple_": 16
+    "mega/hall/sunken_temple_": 20,
+    "mega/set/sunken_temple_": 20,
+    "mega/puzzle/sunken_temple_": 20,
+    "mega/treasure/sunken_temple_": 20
   }
 }

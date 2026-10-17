@@ -42,7 +42,15 @@ public enum RegionTheme {
     /** 1.59.0, the Holy road (THEME-B): a giant amethyst geode, calcite and basalt shells, budding crystals, crystal bridges, a resonance puzzle. */
     CRYSTAL_GEODE(3, 3, Route.HOLY),
     /** 1.59.0, the Holy road (THEME-B): the temple of a forgotten good god, flooded to the knees: prismarine, sea lanterns, drowned shrines, tidal gates. */
-    SUNKEN_TEMPLE(3, 3, Route.HOLY);
+    SUNKEN_TEMPLE(3, 3, Route.HOLY),
+    /** 1.59.0, the Holy road: a great cathedral, nave and pews, stained glass, a bell tower, a crypt and a reliquary (good route only). */
+    HOLY_CHURCH(3, 3, Route.HOLY),
+    /** 1.59.0, the Holy road: the marble terraces, golden gates and colonnades of a heavenly court (good route only). */
+    CELESTIAL_COURT(3, 3, Route.HOLY),
+    /** 1.59.0, the Holy road: a cloud giant's castle in the sky, white stone, wind and long drops (good route only). */
+    SKY_CITADEL(3, 3, Route.HOLY),
+    /** 1.59.0, the Holy road: a monks' retreat of timber and paper, a dojo, a bell and a prayer wheel hall (good route only). */
+    MOUNTAIN_MONASTERY(3, 3, Route.HOLY);
 
     /**
      * The owner's newest brief fixes the Crucible at EXACTLY three distinct Unique-or-higher relics (one pick per region, so one high-tier relic per ten
