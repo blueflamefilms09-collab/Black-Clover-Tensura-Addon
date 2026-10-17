@@ -1,10 +1,11 @@
 # Mega-Dungeon: standard Normal / Special / Rare equipment, dropped without limit (`mega.gear`, 1.55.0, builder GEAR)
 
 Package `com.newuniverse.nusmp.labyrinth.mega.gear`, data `data/nusmp/mega/gear/tables.json`. **Nothing here was run in game.** The pure classes are
-unit tested (JUnit, 62 tests, mutation checked), the game classes were type-checked against the project's API stubs (rebuilt from the API dump, so they
-know the 1.21 data-component classes), the shipped table is read and checked by `GearDataTest`, and four IN-GAME self-tests (`gear.*`, section 10) are
+unit tested (JUnit, 86 tests, mutation checked), the game classes were type-checked against the project's API stubs (rebuilt from the API dump, so they
+know the 1.21 data-component classes), the shipped table is read and checked by `GearDataTest`, and five IN-GAME self-tests (`gear.*`, section 10) are
 registered with the shared `SelfTests` registry so the CI server smoke test exercises the real thing. CI is the first real compile. Three pictures of the
-grades, the chances and example tooltips are drawn by `tools/labyrinth/mega_gear_preview.py` (section 13).
+grades, the chances (kills AND chests) and example tooltips are drawn by `tools/labyrinth/mega_gear_preview.py` (section 13). The chest side (the owner's
+fourth brief: "from mobs AND standard chests", "Global Loot Modifier JSONs") is section 14.
 
 The brief (system 5, "Abyssal Descents"): *"Standard Loot (Normal, Special, Rare): the `LivingDropsEvent` logic where monsters drop physical Magic
 Stones and Monster Meat, alongside lower-tier equipment. Based on the Tensura grading scale, 'Normal' (standard everyday items without magic), 'Special'
@@ -26,7 +27,10 @@ restricted"* (to the Crucible, another builder).
 | The 236 low-grade relics, the Order's ledger (`UniqueLedger`), the Crucible's Unique-and-above relics | KEPT | Unchanged and **not used**: a test (`GearIsNotARelicTest`) fails the build if the gear package starts importing them. |
 | The relic `Grade` enum (names, colours, labels) | KEPT, REUSED | `GearLook` reads colour and label from it so the three tiers look exactly like the relic tiers. |
 | `item/WeaponEngravings`, `item/ArmorEngravings` | KEPT, unedited | They engrave `nusmp:` items only (their first lines return for any other namespace), so they cannot list a vanilla base. The engravings of the standard gear are listed in `tables.json` (owner rule 6, see section 6.3). |
-| Nothing was replaced and nothing was removed. | | |
+| 1.55.0, fourth brief: `ChestLootModifier`, a NeoForge global loot modifier `nusmp:gear_chests` with its JSON and the classes `ChestRules`, `ChestGear`, `ChestSelfTests` (section 14) | NEW | Gear also drops from standard chests of the Mega-Dungeon. |
+| `data/neoforge/loot_modifiers/global_loot_modifiers.json` (the list of global loot modifiers, which already named `nusmp:relic_chests`) | KEPT, one entry ADDED | The relic modifier stays listed; `nusmp:gear_chests` is appended. |
+| `caps` of `tables.json` (0.30 / 0.20 / 0.15 / 0.50 became 0.40 / 0.30 / 0.25 / 0.60) | CHANGED by me, my own file | Safety ceilings only; raised because the chest odds reached the old ones (section 14.5). No kill rate changes. |
+| Nothing else was replaced and nothing was removed. | | |
 
 ## 2. The central decision: ordinary items, not relics
 
@@ -148,7 +152,11 @@ off. The relic `Grade` colours and names are reused only for the look.
 | `GearDrops` | | The `LivingDropsEvent` listener and the decision `process(event, dice)`. |
 | `GearEvents` | | The resistance on `LivingIncomingDamageEvent` and the quest hook on pickup. |
 | `GearCommand` | | `gear give / roll / status`. |
-| `GearSelfTests` | | The four in-game self-tests. |
+| `GearSelfTests` | | Four of the in-game self-tests (`gear.tables`, `gear.roll`, `gear.drop`, `gear.resist`) and the shared `carriesRelicMark`. |
+| `ChestRules` | pure | Which loot tables are chests that may hold a piece, which are treasure chests, which are never touched (the two relic tables, fixed in code). |
+| `ChestGear` | pure | The chest decision: the chest base chances through the kill roller's own curves and caps, the treasure factor, Luck; at most one piece. |
+| `ChestLootModifier` | | The NeoForge global loot modifier `nusmp:gear_chests` (a `LootModifier`): codec, registry entry, and the live decision that adds the stack. |
+| `ChestSelfTests` | | The in-game self-test `gear.chest`. |
 | `GearRegistry` | | `init` (the component, the self-tests) and `register` (the listeners); `command()`. |
 
 ## 6. The data file `data/nusmp/mega/gear/tables.json`
@@ -159,7 +167,7 @@ reversed ranges are reported in the log at reload (`[nusmp] Gear tables file ...
 
 ```json
 { "curve":  { "normal": [[0.0, 1.0], [0.5, 0.64], [1.0, 0.40]], "special": [...], "rare": [...] },
-  "caps":   { "normal": 0.30, "special": 0.20, "rare": 0.15, "total": 0.50 },
+  "caps":   { "normal": 0.40, "special": 0.30, "rare": 0.25, "total": 0.60 },
   "slotWeights": { "sword": 18, "axe": 8, "bow": 8, "crossbow": 5, "shield": 9, "helmet": 13, "chestplate": 13, "leggings": 13, "boots": 13 },
   "grades": { "rare": { "items": { "sword": ["minecraft:iron_sword", "minecraft:diamond_sword"], ... },
                         "power": [20, 35], "durability": [25, 50],
@@ -170,7 +178,7 @@ reversed ranges are reported in the log at reload (`[nusmp] Gear tables file ...
 
 * `curve.<grade>`: points `[x, multiplier]`, `x` in 0..1 (sorted for you), piecewise linear, flat before the first and after the last. The grade's chance at a
   floor is `base * curve(x)` with `x = floorShift * (threat - 1)` clamped to 0..1.
-* `caps.<grade>`: the most one grade's chance per kill can be; `caps.total`: the most the three together can be after the shift and Looting (the three are scaled down together).
+* `caps.<grade>`: the most one grade's chance per kill or chest can be; `caps.total`: the most the three together can be after the shift and Looting (the three are scaled down together).
 * `slotWeights`: relative weight of each slot (they add up to 100 so each reads as a percent). A slot a grade has no base item for is never rolled for it.
 * `grades.<grade>.items.<slot>`: the base item ids, uniform (an id listed twice is twice as likely); vanilla ids only, resolved when a piece is made, an absent one makes no drop.
 * `power`: the percentage bonus to attack damage (sword, axe) or armour (the four armour pieces); `durability`: the bonus to the maximum durability.
@@ -236,8 +244,9 @@ engraves `nusmp:` items), so this table is where owner rule 6 is met for the van
 
 **Why these numbers.** The bases 0.05 / 0.015 / 0.004, the shift 0.02 and the Looting 0.01 are the brief's. The curve endpoints are mine, chosen so the total
 stays within 6 % of the floor-1 total (a test enforces 10 %), Normal ends at 40 %, Special peaks near x = 0.5 and Rare reaches six times its base: at the
-bottom of the dungeon a third of the drops are Rare, which is the point of going there. The caps (0.30 / 0.20 / 0.15 and 0.50 in all) are far above anything the
-defaults produce; they exist so that a mistyped config cannot turn every kill into a shower of gear. The slot weights are 13 per armour piece (so armour is half
+bottom of the dungeon a third of the drops are Rare, which is the point of going there. The caps (0.40 / 0.30 / 0.25 and 0.60 in all) are above anything the
+defaults produce, chests included (a test, `noCeilingBitesUnderTheShippedDefaults`, pins that); they exist so that a mistyped config cannot turn every kill or chest into a
+shower of gear. (They were 0.30 / 0.20 / 0.15 / 0.50 until the chest odds were drawn: a deep treasure chest hit the old Special and Rare ceilings and the curve went flat.) The slot weights are 13 per armour piece (so armour is half
 of the drops, the thing a player needs four of), 18 sword, 8 axe, 8 bow, 5 crossbow, 9 shield.
 
 **Magic resistance.** Armour 5 to 12 % per piece (average 8.5), weapon and shield 4 to 6 % (average 5). The pieces worn and held are summed and held to
@@ -255,7 +264,7 @@ ceiling of 40 is reached by a full average set and not exceeded by anyone: a hun
 
 | Key | Default | Range | Meaning |
 |---|---|---|---|
-| `enabled` | true | | The gear drops (and the quest hook). The resistance of gear already held is switched off with `maxResist = 0`. |
+| `enabled` | true | | The gear drops from monsters AND chests (and the quest hook). The resistance of gear already held is switched off with `maxResist = 0`. |
 | `normalChance` | 0.05 | 0..1 | Chance per kill of a Normal piece at floor 1, before Looting. |
 | `specialChance` | 0.015 | 0..1 | The same for Special. |
 | `rareChance` | 0.004 | 0..1 | The same for Rare. |
@@ -265,6 +274,10 @@ ceiling of 40 is reached by a full average set and not exceeded by anyone: a hun
 | `maxResist` | 40 | 0..90 | Ceiling of the summed magic resistance, in percent. 0 = no resistance. |
 | `engravings` | true | | Special and Rare weapons and shields carry Tensura engravings. |
 | `extraMagicTypes` | "" | | Extra damage types that count as magic: ids or `namespace:*`, separated by commas. |
+| `chestNormal` | 0.22 | 0..1 | Chance that a standard chest of the Mega-Dungeon holds ONE Normal piece at floor 1. |
+| `chestSpecial` | 0.06 | 0..1 | The same for Special. |
+| `chestRare` | 0.02 | 0..1 | The same for Rare. 0 for all three = no gear in chests. |
+| `chestTreasureFactor` | 2.0 | 1..10 | A treasure chest multiplies its Special and Rare chances by this (Normal unchanged). |
 
 `extraMagicTypes` is an addition to the brief's list (so is the explanation that `enabled` and `maxResist` are the two separate off switches): the rule for
 "magic" is a guess at Tensura's ids that nobody can check without the game, and this is the owner's escape hatch. All values are plain `define` /
@@ -275,14 +288,18 @@ ceiling of 40 is reached by a full average set and not exceeded by anyone: a hun
 * `gear give <player> <normal|special|rare> [slot]`: makes a piece with the real factory (a random slot unless one is given) and gives it; the quest key fires.
 * `gear roll [count]`: runs the real roller `count` times (default 1000, at most 200000) at YOUR floor with the config's rates and prints the pieces, the
   histogram by grade and by slot and the average resistance. This is how the table is tuned. The floor is 1 for the console or outside a sector.
-* `gear status`: the switches, the depth progress at your floor, and for each grade its configured base, its chance here, its chance with Looting III and its cap.
+* `gear roll chest [count]` and `gear roll treasure [count]` (1.55.0): the same histogram for `count` standard or treasure chests at YOUR floor, with the chest
+  chances of the config, through the modifier's own decision (`ChestGear.decide`), no Luck.
+* `gear status`: the switches, the depth progress at your floor, and for each grade its configured base, its chance here, its chance with Looting III and its cap;
+  and (1.55.0) a line with the standard and the treasure chest chances here.
 
 Text goes through `message.nusmp.mega.mgr.cmd.*` with English fallbacks in the code (the fragment `mgr.lang.json` carries the same texts).
 
 ## 10. Tests
 
 ### 10.1 JUnit (`src/test/java/com/newuniverse/nusmp/labyrinth/mega/gear`)
-`GearRollerTest` (20), `GearTablesParserTest` (13), `GearDataTest` (10), `ResistMathTest` (4), `MagicDamageTest` (5), `GearInfoTest` (6),
+`GearRollerTest` (20), `GearTablesParserTest` (15), `GearDataTest` (10), `ResistMathTest` (4), `MagicDamageTest` (5), `GearInfoTest` (6),
+`ChestRulesTest` (6), `ChestGearTest` (12), `GearChestDataTest` (4, the shipped JSON files against the Java sources),
 `GearIsNotARelicTest` (4), with helpers `GearFx` and `MiniJson` (a copy of the faction tests' tiny reader: no JSON library is on the test class path) and
 resources `mega/gear/vanilla_items.txt` (the 1333 constants of the API dump's `Items` class), `vanilla_enchantments.txt` (the 42 enchantments of the 1.21.1
 data pack; **from memory, the dump has no enchantment class**; the in-game `gear.tables` proves them), `tensura_enchantments.txt` (the owner's 34) and
@@ -306,6 +323,16 @@ lost, the slot pick always the last, the resistance clamp of `GearInfo` lost, th
 clamp in `draw` (a pool entry whose own minimum is above the cap) and the armour rule when a pack lists an armour engraving pool (the shipped file has none). Two
 tests were added for them (`anEntryWhoseMinimumIsAboveTheCapIsStillHeldToTheCap`, `armourNeverCarriesEngravingsEvenIfAPackListsAPool`) and both mutants now die.
 
+The chest classes (section 14) are pinned the same way: `ChestRulesTest` (a table with a `chests/` segment is a chest, a treasure word makes it treasure, the two relic tables are never touched even
+with an empty data file or in another case, mobs', blocks' and unknown tables are nothing, the data file's additions are normalised), `ChestGearTest` (the floor-1 chances are the config, treasure
+multiplies only Special and Rare, the depth shift, Luck adds to the total and keeps the mix, the ceilings hold under an absurd config and do NOT bite under the defaults, a chest is more generous than a
+kill, one decision and one piece, a hundred thousand seeded chests per kind and floor within five standard deviations, a seed replays) and `GearChestDataTest` (the shipped list file keeps
+`nusmp:relic_chests` and names `nusmp:gear_chests` once with `replace` false; the modifier JSON's type equals the id the Java registers and its condition names the dimension that
+`Labyrinth.MEGA_DIMENSION` is built from, not the Sanctuary; every chest table of this mod is classified on purpose). Ten mutants of the chest code (treasure multiplying Normal too,
+`decide` and `chances` ignoring a non-chest table, the Luck ceiling and the Luck clamp lost, the relic tables not fixed in code, the `chests/` rule loosened to `chest`, the path's case
+mattering, the treasure test running before the exclusion, any string accepted as an excluded id) were applied: every one failed at least one test. The ceilings test was mutated by putting
+the old ceilings back: it fails at the deep treasure chest, as intended.
+
 ### 10.2 In-game self-tests (`GearSelfTests`, run by `/multiverse mega selftest`)
 
 | Key | What it drives and asserts |
@@ -313,6 +340,7 @@ tests were added for them (`anEntryWhoseMinimumIsAboveTheCapIsStillHeldToTheCap`
 | `gear.tables` | The tables in force were read by a data reload (not the jar fallback: this catches an unregistered listener), parse with no complaint, every base item and every vanilla enchantment resolves in this game, and at least some Tensura engravings exist (the detail lists the absent ones). |
 | `gear.roll` | 300 pieces of all three grades through the real factory. Each has the component with the right grade, a name in the colour of the relic grade, a lore line `Standard Gear`, NO relic component (`relic_serial`, `relic_attuned`, `relic_uses`, `relic_state`) and no relic definition; Rare armour 5 to 12 % with its resistance line, only Rare resists; a durability bonus raises the maximum; the sword, axe or armour keeps its OWN attack damage or armour next to the new bonus, with exactly one modifier of the slot's fixed id; every enchantment and every existing engraving is on the stack. Then 30000 rolls at floor 40 must produce every grade. |
 | `gear.drop` | 8000 zombie kills by a fake player in sector 0 (or anywhere in the Mega level, counted as floor 1, when no sector has been generated yet: the test needs none) posted to `GearDrops.process` as real `LivingDropsEvent`s: never more than one piece per kill, always a graded stack, the count and each grade within six standard deviations of the table; 300 deaths with no player drop nothing; a zombie tagged as a boss, a wanderer or a servant drops nothing; tagged `nusmp_sector_guardian` it drops exactly one Rare piece every time; then 6000 kills of a cow (no `Enemy`) tagged `nusmp_dm` pay at the table's rate and 400 of the untagged cow pay nothing. |
+| `gear.chest` | See section 14.6: made-up chest tables rolled through the whole loot pipeline in the Mega-Dungeon (count and grades within six standard deviations, one piece at most, the table's own bread kept, never a relic), nothing in the Overworld or the Hub, and the modifier called alone for the code's own gate. |
 | `gear.resist` | A fake player wears and holds Rare pieces: the sum is armour worn plus weapon and shield held (a chestplate carried in the hand and boots worn on the head do not count), held to the ceiling; magic and indirect magic are cut by exactly the share, fall and generic damage are not; four Tensura spells (fire elemental, light elemental, holy, magic generic) are cut and four other Tensura types (bullet, suffocate, magicule poison, severer blade) are not, by their real registry keys. The equipment is restored. |
 
 ## 11. Hooks for the lead
@@ -320,7 +348,9 @@ tests were added for them (`anEntryWhoseMinimumIsAboveTheCapIsStillHeldToTheCap`
 * **Nothing to register** for the component, the listeners, the reload listener and the self-tests: `MegaSystem` already calls `GearRegistry.init` and `register`.
 * **Config**: `modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.gear.GearConfig.SPEC, "nusmp-labyrinth-mega-gear-server.toml");`
 * **Command**: attach `com.newuniverse.nusmp.labyrinth.mega.gear.GearRegistry.command()` under `/multiverse mega`.
-* **Lang**: merge `mgr.lang.json` (25 keys, `message.nusmp.mega.mgr.*`) into `en_us.json`.
+* **Lang**: merge `mgr.lang.json` (28 keys, `message.nusmp.mega.mgr.*`) into `en_us.json`; the three keys added for the chest output are `cmd.roll.chest.head`, `cmd.roll.chest.grade`, `cmd.status.chest`.
+* **Loot modifier list (1.55.0, chests)**: `data/neoforge/loot_modifiers/global_loot_modifiers.json` already existed (entry `nusmp:relic_chests`); this module appends `nusmp:gear_chests` to
+  its `entries` (the exact diff is in section 14.4). The type is registered by `GearRegistry.init`, nothing else to wire.
 * **GUARD**: the Labyrinth Guardian must carry the scoreboard tag `nusmp_sector_guardian` (`entity.addTag(...)`); the flow module reads the same tag for the Metal Vessel.
 * **No creative-tab entry**: there is no new item. `gear give` is the way to get a piece.
 
@@ -367,6 +397,18 @@ tests were added for them (`anEntryWhoseMinimumIsAboveTheCapIsStillHeldToTheCap`
     that drain. It is consistent ("magic resistance") but it softens the punishment the owner asked for; if the drain must stay absolute, FLOW should hurt with a
     damage type outside the rule (`generic`, or `thorns`, which `MagicDamage` deliberately does not count), or `gear.maxResist` can be lowered. Nothing in this module
     needs to change.
+16. **The chest side never ran in game** (section 14): the codec, the registry entry, the JSON condition, the list entry and the loot-table wiring are checked by pure tests
+    against the Java sources, by the type check, and by NeoForge's own source and docs read online, but only `gear.chest` in a booted game proves the chain.
+17. **The `location_check` condition's JSON shape** (`{"condition": "minecraft:location_check", "predicate": {"dimension": "nusmp:mega_dungeon"}}`) is the vanilla
+    condition as the NeoForge 1.21.1 loot-condition docs show it (found through a web search; the docs host itself could not be fetched here) and the vanilla
+    `predicate.location.dimension` key is confirmed in the 1.21.1 data pack (`github.com/misode/mcmeta` `1.21.1-data`, an advancement). A wrong condition would make the whole modifier fail to
+    load (a logged error), which `gear.chest` reports as "nothing at all".
+18. **Lootr and other containers** are expected to work (they roll the table through `LootTable`, which is where NeoForge applies the global modifiers) but were not tried.
+19. **No treasure table exists in the Mega-Dungeon yet.** Every chest its templates place uses `nusmp:chests/labyrinth_trial` (a standard chest); the two relic tables are excluded; the
+    treasure class is for tables a later builder or another mod adds (a boss room, a vault that is not a relic vault).
+20. **The owner's fourth brief calls the standard items "Farmable Standard Relics"** ("Relics of Many Worlds", "not bound by world limits"). This module keeps them ordinary vanilla items
+    with a grade (they were never under a limit), which meets "drop infinitely". If the owner means that the mod's own 236 low-grade RELICS (Normal, Special and Rare, under the Order's
+    ledger) should also lose their one-per-world limit, that is a separate change in the relic system and is not made here.
 
 ## 13. Pictures and the preview tool
 
@@ -380,3 +422,92 @@ Java roller (chances at eleven floors and 162 seeded pieces, one per grade, slot
 comment holds the three commands) and fails on any difference. It was run: 11 chance rows and
 162 pieces, 0 differences, which is a second check that the chances in section 7 and the pieces the roller makes are what the code says. Vanilla numbers in the
 script (attack damage, durability) are from `github.com/misode/mcmeta` `1.21.1-summary/item_components`.
+
+## 14. Chests: the global loot modifier `nusmp:gear_chests` (1.55.0, owner's fourth brief)
+
+The fourth brief says the standard Normal, Special and Rare items "can drop infinitely from mobs and standard chests" and asks for "the `LivingDropsEvent` and Global Loot Modifier JSONs for
+the dungeon". Mobs are `GearDrops` (section 3). This is the chest side, everything NEW; nothing of the kill side was changed except that the safety ceilings of `tables.json` were raised (14.5).
+
+### 14.1 Why a global loot modifier
+A NeoForge global loot modifier works on loot that has ALREADY been rolled, whoever rolled it: a plain chest, a Lootr container (one roll per opening player), a chest minecart, a mod's
+container, a table another builder or a pack adds later. No template, no chest block and no loot-table JSON is edited, and nothing the table rolled is replaced: the modifier ADDS one stack beside it
+(add the new, keep the old). The alternative, adding a pool to every chest table, would have to touch each table and miss every table that does not exist yet. NeoForge applies the modifiers in
+`LootTable.getRandomItems(LootContext)` after the table's own pools, once per top-level roll (a table pulled in by another table goes through the raw method and is not modified twice), and records
+the id of the table being rolled in the context (`getQueriedLootTableId`; `neoforge:unknown_loot_table` when it does not know), which is how the modifier knows what a chest is.
+
+### 14.2 Which tables (`ChestRules`, pure, tested)
+* A table counts only if its path has a `chests/` segment (vanilla's and this mod's convention): a mob's, a block's, a fishing or an archaeology table never does; the unknown id never does.
+* **TREASURE**: a chest table whose path holds one of `treasureWords` (shipped: treasure, vault, boss, guardian, crucible, antechamber, reward). It rolls the better grades more often (14.3).
+* **Never touched**: `nusmp:chests/dungeon_relic_vault` and `nusmp:chests/labyrinth_pedestal`, the two tables the relic system and the Crucible's offer are built on. They are fixed IN THE CODE
+  (`ChestRules.ALWAYS_EXCLUDED`): a data pack can add exclusions through the `chests` section of `tables.json` but can never remove these two. WHY: the pedestal holds exactly the relic it was
+  made for (a second stack in a one-item pedestal would break it), and the owner's rule is that the Crucible is the only source of the Unique-and-higher relics. The modifier never adds a relic
+  of any kind: the stack carries only `nusmp:gear_grade` and `gear.chest` asserts it.
+* Only inside the Mega-Dungeon dimension (`MegaDungeon.in`): the Overworld, the Spire and the Sanctuary Hub (a separate dimension, deliberately not a Labyrinth) get nothing. TWO gates: the JSON's
+  `location_check` condition on the dimension id, and the same check in the code, so a data pack that edits the conditions still cannot make gear appear elsewhere.
+
+### 14.3 The numbers (first-pass: nobody has played them)
+One roll per chest over the three chances laid end to end, so AT MOST ONE piece per chest, through the SAME roller as the kills (`GearRoller.roll`), so the depth curves, the slot weights, the items,
+the enchantments, the engravings and the resistance are the kills' and nothing is duplicated.
+
+| | Normal | Special | Rare | Total (floor 1) | One piece per |
+|---|---|---|---|---|---|
+| a kill (reference) | 5 % | 1.5 % | 0.4 % | 6.9 % | 14.5 kills |
+| a standard chest, floor 1 | 22 % | 6 % | 2 % | 30 % | 3.3 chests |
+| a treasure chest, floor 1 | 22 % | 12 % | 4 % | 38 % | 2.6 chests |
+| a standard chest, floor 51 and deeper | 8.8 % | 8.4 % | 12 % | 29.2 % | 3.4 chests |
+| a treasure chest, floor 51 and deeper | 8.8 % | 16.8 % | 24 % | 49.6 % | 2.0 chests |
+
+(The picture `gear_drop_chances.png` has every floor.) WHY these numbers:
+* **22 / 6 / 2, about four to five times a kill.** A chest is a deliberate reward found a handful of times a floor, a kill is one of a hundred; three pieces in ten chests make the chests the
+  dependable source of survival gear (a Rare one in fifty chests at floor 1, rising to one in eight at depth) while the kills stay the volume. The three are in the SAME proportion as the kills'
+  (73 / 20 / 7 percent of the pieces), because the depth curves of `tables.json` were shaped for that mix: with it the chance of a piece stays within 3 % of 30 % at every depth, so going
+  deeper changes WHAT a chest holds and not how often. The first try, 20 / 8 / 2, drifted by 11 % mid-way (a test caught it).
+* **Treasure multiplies Special and Rare only (default 2).** A treasure chest should hold something BETTER, not simply more of everything; Normal stays 22 %. At depth it reaches one piece in two
+  chests, a quarter of them Rare: generous on purpose, it is the reward for the rooms that name a vault or a boss. `chestTreasureFactor` 1 turns the difference off.
+* **The floor shift and the Looting bonus are the kills' keys** (`floorShift`, `lootingBonus`): one knob each, so a server that flattens the depth curve does it for both. The bonus counts per
+  point of the opener's LUCK (the chest's `getLuck()`, from the Luck attribute and the potion, rounded, at most 10): a lucky player finds more pieces in the same mix, as Looting does for a kill.
+* **The floor is the chest's own** (`ORIGIN` of the loot context, `MegaDungeon.floorAt`); 0 (a gap between sectors, no origin) counts as floor 1.
+* **Quest.** When the opener is a player the key `mega.gear` fires for the grade (first time per grade only; fake players are ignored by the quest code), so a piece received from a chest counts
+  even though taking it from a container fires no pickup event.
+
+### 14.4 The data files and the diff
+* `data/nusmp/loot_modifiers/gear_chests.json`, WHY each line: `type` is the id `ChestLootModifier` registers (a test holds the two together); `conditions` is required by NeoForge's codec (an empty
+  list would be legal) and carries one vanilla `minecraft:location_check` whose predicate names the dimension `nusmp:mega_dungeon` (a test reads `Labyrinth.MEGA_DIMENSION` and compares); no
+  `neoforge:conditions` because nothing here depends on another mod.
+* `data/nusmp/mega/gear/tables.json`, new section `chests` (`excluded`, `treasureWords`, each documented by a `why`), parsed by `GearTablesParser`; a file without it gets the defaults, so an old data
+  pack behaves the same.
+* `data/neoforge/loot_modifiers/global_loot_modifiers.json` ALREADY EXISTED (the relic modifier's entry), so it was merged into, not replaced:
+
+```diff
+ {
+   "replace": false,
+   "entries": [
+-    "nusmp:relic_chests"
++    "nusmp:relic_chests",
++    "nusmp:gear_chests"
+   ]
+ }
+```
+
+### 14.5 The ceilings were raised
+`caps` of `tables.json` (the most a grade, and all three together, can turn up in one kill or chest) were 0.30 / 0.20 / 0.15 / 0.50 and are now 0.40 / 0.30 / 0.25 / 0.60. They are a safety net for a
+mistyped config and no kill rate ever came near them, but the deepest treasure chest (Special 0.234, Rare 0.24) hit the old ones and the picture showed a flat-topped curve. A test,
+`noCeilingBitesUnderTheShippedDefaults`, now pins that under the shipped numbers (kills and chests, standard and treasure, floors 1 to 80) no ceiling changes any chance. Nothing a player could
+have noticed changes: every kill chance is the same.
+
+### 14.6 The self-test `gear.chest`
+It builds a MADE-UP chest table (one bread per roll, an id of its own: `nusmp:chests/gear_selftest`, and `..._treasure`) and rolls it through the game's WHOLE loot pipeline, so the type is found by
+its JSON, the list entry and the dimension condition are evaluated for real. In the Mega-Dungeon the number of pieces and of each grade must match the chest chances within six standard deviations,
+never more than one per chest, the bread is never replaced, never a relic; the treasure table must match the treasure chances; the same rolls in the Overworld and (where it exists) the Hub must give
+nothing. Then the modifier is called ALONE with no JSON conditions: nothing in the Overworld, nothing for the two relic tables, a mob's table, a block's table, a non-chest table or the unknown id in the
+Mega-Dungeon, and with Luck 5 the Luck chances. Last, a chest opened by a fake player must not fail. A real vault table is deliberately never rolled through the whole pipeline: other loot modifiers
+act on it and may touch the Order's ledger, and a self-test must not burn relics. A failure with "nothing at all" names the likely causes: the type is not registered, the entry is not in the list file,
+or the condition is not met.
+
+### 14.7 Verified online (read-only, nothing from the downloads is run)
+* NeoForge `1.21.1` sources on `raw.githubusercontent.com/neoforged/NeoForge`: `LootModifier` (the codec's required `conditions` field through `codecStart`, `apply` final with `doApply`),
+  `CommonHooks.modifyLoot` (it calls every modifier and first records the queried table id), the patches to `LootContext` (`getQueriedLootTableId`, `Builder.withQueriedLootTableId`) and `LootTable`
+  (`setLootTableId`, the modifiers applied in the private `getRandomItems(LootContext)` after the raw roll). The rebuilt API stubs of the type check carry the same methods.
+* The vanilla `location.dimension` key and the `location_check` shape: see honest-list item 17.
+* The repo's own precedent: the compat resource pack's `neoforge:add_table` modifiers use the same `conditions` array, and `relics/RelicLootModifier` is the other global modifier of the mod
+  (a different base, `IGlobalLootModifier`, because it has no conditions).

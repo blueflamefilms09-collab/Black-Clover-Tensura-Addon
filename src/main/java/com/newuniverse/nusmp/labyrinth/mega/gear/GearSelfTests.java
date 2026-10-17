@@ -65,7 +65,8 @@ import java.util.TreeSet;
  * sector 0, or anywhere in the Mega level at floor 1 when no sector exists yet, go through {@link GearDrops#process} as real {@code LivingDropsEvent}s: never more than one piece per kill, always a graded stack, the count
  * and the grade mix within six standard deviations of the table; a death no player caused, a boss, a servant drop nothing; a tagged sector Guardian drops
  * exactly one Rare piece) and {@code gear.resist} (a fake player wears and holds Rare pieces: the resistance is the sum of the right pieces, held to the
- * ceiling; spells of vanilla and of Tensura, by their REAL registry keys, are cut and a fall, a blade and a poison are not). Each test skips with an OK line
+ * ceiling; spells of vanilla and of Tensura, by their REAL registry keys, are cut and a fall, a blade and a poison are not); the fifth, {@code gear.chest},
+ * is {@link ChestSelfTests}. Each test skips with an OK line
  * when its precondition is a configuration choice and FAILS when the world is wrong (no Mega dimension). Everything a test touches (the fake
  * player's equipment, the tags put on the zombie) is restored in a {@code finally}.
  */
@@ -80,6 +81,16 @@ public final class GearSelfTests {
         SelfTests.register("gear.roll", GearSelfTests::roll);
         SelfTests.register("gear.drop", GearSelfTests::drop);
         SelfTests.register("gear.resist", GearSelfTests::resist);
+        ChestSelfTests.register();                    // 1.55.0 (chests): gear.chest
+    }
+
+    /**
+     * Does the stack carry any mark of the relic system: one of the four relic components, or a relic definition? Standard gear must carry none, whoever made it
+     * (the drops, the chests, the command). Lives here because this is the one class of the package allowed to import the relic classes (a unit test guards that).
+     */
+    static boolean carriesRelicMark(ItemStack stack) {
+        return stack.has(RelicComponents2.SERIAL.get()) || stack.has(RelicComponents2.ATTUNED.get()) || stack.has(RelicComponents2.USES.get())
+                || stack.has(RelicComponents2.STATE.get()) || Relics.defOf(stack) != null;
     }
 
     private static SelfTests.Result ok(String detail) { return SelfTests.Result.ok(detail); }

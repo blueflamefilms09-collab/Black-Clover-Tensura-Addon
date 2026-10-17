@@ -34,6 +34,8 @@ POWER_SLOTS = ["sword", "axe"] + ARMOUR
 ENGRAVE_SLOTS = ["sword", "axe", "bow", "crossbow", "shield"]
 DEFAULTS = {"normal": 0.05, "special": 0.015, "rare": 0.004, "floorShift": 0.02, "lootingBonus": 0.01}   # GearRates.DEFAULT
 MAX_RESIST = 40                                                                                            # GearConfig default
+CHEST_DEFAULTS = {"normal": 0.22, "special": 0.06, "rare": 0.02, "floorShift": 0.02, "lootingBonus": 0.01}   # GearRates.CHEST_DEFAULT
+TREASURE_FACTOR = 2.0                                                                                      # GearRates.DEFAULT_TREASURE_FACTOR
 
 # ------------------------------------------------------------------------------------------------------------------ vanilla facts
 # item -> [attack damage modifier, attack speed modifier, max durability]   (1.21.1 item_components)
@@ -157,6 +159,18 @@ def chances(t, floor, looting=0, rates=DEFAULTS):
     boosted = min(total + max(0, looting) * max(0.0, rates["lootingBonus"]), t.total_cap)
     scale = boosted / total
     return {g: min(w[g] * scale, t.max_chance[g]) for g in GRADES}
+
+
+def chest_chances(t, floor, kind="standard", luck=0, rates=CHEST_DEFAULTS, factor=TREASURE_FACTOR):
+    """ChestGear.chances: the chest bases (a treasure chest multiplies only Special and Rare by the factor, never below 1) through the same curves and caps."""
+    if kind not in ("standard", "treasure"):
+        return {g: 0.0 for g in GRADES}
+    r = dict(rates)
+    if kind == "treasure":
+        f = max(1.0, factor)
+        r["special"] *= f
+        r["rare"] *= f
+    return chances(t, floor, max(0, min(10, luck)), r)
 
 
 def _pick_range(d, rng):
@@ -541,59 +555,77 @@ def picture_tables(t, out):
 
 
 # ------------------------------------------------------------------------------------------------------------------ picture 2: the drop chances
+def stacked_panel(img, d, ox, top, pw, ph, caption, per_floor, labels, ymax, share, fonts):
+    """One stacked-bar panel: a bar per floor, Normal at the bottom, 2 px surface gaps, stripes for Special and dots for Rare, the value on a small plate."""
+    f_h, f_s, f_b = fonts
+    d.text((ox, top - 52), caption, font=f_h, fill=INK)
+    left, right, bottom = ox + 70, ox + pw, top + ph
+    for k in range(5):                                       # recessive grid
+        v = ymax * k / 4.0
+        yy = bottom - int(ph * k / 4.0)
+        d.line([(left, yy), (right, yy)], fill=GRID, width=1)
+        d.text((left - 12, yy - 11), ("%g" % round(v, 1)), font=f_s, fill=MUTED, anchor="ra")
+    slot_w = (right - left) / len(per_floor)
+    for i, c in enumerate(per_floor):
+        tot = sum(c.values())
+        vals = {g: (c[g] / tot * 100.0 if share else c[g] * 100.0) for g in GRADES}
+        bx0 = int(left + slot_w * i + slot_w * 0.22)
+        bx1 = int(left + slot_w * (i + 1) - slot_w * 0.22)
+        ytop = bottom
+        for g in GRADES:
+            seg = int(ph * vals[g] / ymax)
+            y1, y0 = ytop - 2, ytop - seg                      # a 2 px surface gap between the segments
+            if g == "normal":
+                y1 = ytop
+            if y1 - y0 >= 1:
+                rounded_top_bar(d, bx0, y0, bx1, y1, GRADE_RGB[g], 4 if g == "rare" else 0)
+                hatch(img, (bx0, y0, bx1, y1), g, shade(GRADE_RGB[g], 0.55))
+                if seg >= 26:                                   # the value on a small dark plate, so the stripes never touch the digits
+                    txt = "%.1f" % vals[g] if share else "%.2f" % vals[g]
+                    cx, cy = (bx0 + bx1) // 2, (y0 + y1) // 2
+                    tw = d.textlength(txt, font=f_s)
+                    d.rounded_rectangle([cx - tw / 2 - 6, cy - 12, cx + tw / 2 + 6, cy + 12], radius=5, fill=(20, 20, 19))
+                    d.text((cx, cy), txt, font=f_s, fill=INK, anchor="mm")
+            ytop -= seg
+        d.text(((bx0 + bx1) // 2, bottom + 14), labels[i], font=f_b, fill=INK2, anchor="ma")
+    d.text(((left + right) // 2, bottom + 52), "floor (distance from the Hub, Holy and Abyssal alike)", font=f_s, fill=MUTED, anchor="ma")
+
+
 def picture_chances(t, out):
     floors = [1, 5, 10, 20, 26, 30, 40, 51]
     labels = ["1", "5", "10", "20", "26", "30", "40", "51+"]
-    data = [chances(t, f) for f in floors]
-    data3 = [chances(t, f, 3) for f in floors]
-    W, H = 2200, 1660
+    kills = [chances(t, f) for f in floors]
+    kills3 = [chances(t, f, 3) for f in floors]
+    std = [chest_chances(t, f, "standard") for f in floors]
+    trs = [chest_chances(t, f, "treasure") for f in floors]
+    std3 = [chest_chances(t, f, "standard", 3) for f in floors]
+    trs3 = [chest_chances(t, f, "treasure", 3) for f in floors]
+    W, H = 2200, 3000
     img = Image.new("RGB", (W, H), BG)
     d = ImageDraw.Draw(img)
     f_t, f_h, f_b, f_s, fb = sans(40, True), sans(26, True), sans(22), sans(19), sans(22, True)
     x0 = 60
-    d.text((x0, 40), "How often a kill drops standard gear, by floor", font=f_t, fill=INK)
-    d.text((x0, 94), "The roller's own numbers with the default config (normal 5 %, special 1.5 %, rare 0.4 % at floor 1; floorShift 0.02) and the shipped curves. "
-           "Floors count as distance from the Hub: -10 is as deep as +10.", font=f_b, fill=INK2)
-    d.text((x0, 128), "Going deeper MOVES weight from Normal to Special and Rare; the total stays near 7 % (one piece in about 14 kills).", font=f_b, fill=INK2)
-
-    surface = BG
-    panels = [("Chance per kill (percent)", False, 0, 8.0), ("Share of the pieces that drop (percent)", True, 0, 100.0)]
+    d.text((x0, 40), "How often a kill or a chest drops standard gear, by floor", font=f_t, fill=INK)
+    intro = ["The roller's own numbers with the default config and the shipped curves. Kills: normal 5 %, special 1.5 %, rare 0.4 % at floor 1. Chests (the loot modifier nusmp:gear_chests): "
+             "22 %, 6 %, 2 %; a treasure chest multiplies special and rare by 2.",
+             "Floors count as distance from the Hub: -10 is as deep as +10. Going deeper MOVES weight from Normal to Special and Rare; the chance of a piece stays about the same "
+             "(one in 14 kills, three in ten chests). At most one piece per kill or chest."]
+    yy = 94
+    for para in intro:
+        for ln in text_wrap(d, para, f_b, W - 2 * x0):
+            d.text((x0, yy), ln, font=f_b, fill=INK2)
+            yy += 30
+    pw, ph = 980, 440
     px = [x0, 1130]
-    pw, ph, top = 980, 560, 250
-    for (title_s, share, lo, hi), ox in zip(panels, px):
-        d.text((ox, top - 52), title_s, font=f_h, fill=INK)
-        left, right, bottom = ox + 70, ox + pw, top + ph
-        for k in range(5):                                   # recessive grid
-            v = lo + (hi - lo) * k / 4.0
-            yy = bottom - int(ph * k / 4.0)
-            d.line([(left, yy), (right, yy)], fill=GRID, width=1)
-            d.text((left - 12, yy - 11), ("%g" % round(v, 1)), font=f_s, fill=MUTED, anchor="ra")
-        slot_w = (right - left) / len(floors)
-        for i, c in enumerate(data):
-            tot = sum(c.values())
-            vals = {g: (c[g] / tot * 100.0 if share else c[g] * 100.0) for g in GRADES}
-            bx0 = int(left + slot_w * i + slot_w * 0.22)
-            bx1 = int(left + slot_w * (i + 1) - slot_w * 0.22)
-            ytop = bottom
-            for g in GRADES:
-                seg = int(ph * vals[g] / (hi - lo))
-                y1, y0 = ytop - 2, ytop - seg                  # a 2 px surface gap between the segments
-                if g == "normal":
-                    y1 = ytop
-                if y1 - y0 >= 1:
-                    rounded_top_bar(d, bx0, y0, bx1, y1, GRADE_RGB[g], 4 if g == "rare" else 0)
-                    hatch(img, (bx0, y0, bx1, y1), g, shade(GRADE_RGB[g], 0.55))
-                    if seg >= 26:                                   # the value on a small dark plate, so the stripes never touch the digits
-                        txt = "%.1f" % vals[g] if share else "%.2f" % vals[g]
-                        cx, cy = (bx0 + bx1) // 2, (y0 + y1) // 2
-                        tw = d.textlength(txt, font=f_s)
-                        d.rounded_rectangle([cx - tw / 2 - 6, cy - 12, cx + tw / 2 + 6, cy + 12], radius=5, fill=(20, 20, 19))
-                        d.text((cx, cy), txt, font=f_s, fill=INK, anchor="mm")
-                ytop -= seg
-            d.text(((bx0 + bx1) // 2, bottom + 14), labels[i], font=f_b, fill=INK2, anchor="ma")
-        d.text(((left + right) // 2, bottom + 52), "floor (distance from the Hub, Holy and Abyssal alike)", font=f_s, fill=MUTED, anchor="ma")
-    # legend, with the secondary encodings
-    lx, ly = x0 + 70, top + ph + 100
+    top1 = 280
+    fonts = (f_h, f_s, f_b)
+    stacked_panel(img, d, px[0], top1, pw, ph, "Chance per kill (percent)", kills, labels, 8.0, False, fonts)
+    stacked_panel(img, d, px[1], top1, pw, ph, "Share of the pieces that drop from kills (percent)", kills, labels, 100.0, True, fonts)
+    top2 = top1 + ph + 190
+    stacked_panel(img, d, px[0], top2, pw, ph, "Chance per standard chest (percent)", std, labels, 50.0, False, fonts)
+    stacked_panel(img, d, px[1], top2, pw, ph, "Chance per treasure chest (percent), Special and Rare x2", trs, labels, 50.0, False, fonts)
+    surface = BG
+    lx, ly = x0 + 70, top2 + ph + 100
     for g in GRADES:
         d.rectangle([lx, ly, lx + 34, ly + 22], fill=GRADE_RGB[g])
         hatch(img, (lx, ly, lx + 34, ly + 22), g, shade(GRADE_RGB[g], 0.55))
@@ -601,24 +633,30 @@ def picture_chances(t, out):
         lx += 280
     d.text((lx + 40, ly - 1), "Segment labels in the bars are percent; the table below has every number.", font=f_s, fill=MUTED)
 
-    y = top + ph + 160
+    y = top2 + ph + 160
     d.text((x0, y), "Every number", font=f_h, fill=INK)
     y += 42
     rows = []
     for g in GRADES:
-        rows.append([[(g.title(), GRADE_RGB[g])]] + ["%.2f %%" % (c[g] * 100) for c in data])
-    rows.append(["Total per kill"] + ["%.2f %%" % (sum(c.values()) * 100) for c in data])
-    rows.append(["One piece per (kills)"] + ["%.1f" % (1 / sum(c.values())) for c in data])
+        rows.append([[(g.title() + " (kill)", GRADE_RGB[g])]] + ["%.2f %%" % (c[g] * 100) for c in kills])
+    rows.append(["Kill: total per kill"] + ["%.2f %%" % (sum(c.values()) * 100) for c in kills])
+    rows.append(["Kill: one piece per (kills)"] + ["%.1f" % (1 / sum(c.values())) for c in kills])
     for g in GRADES:
-        rows.append([[(g.title() + " share", GRADE_RGB[g])]] + ["%.0f %%" % (c[g] / sum(c.values()) * 100) for c in data])
-    rows.append(["Total with Looting III"] + ["%.2f %%" % (sum(c.values()) * 100) for c in data3])
-    widths = [330] + [200] * len(floors)
+        rows.append([[(g.title() + " share of kill drops", GRADE_RGB[g])]] + ["%.0f %%" % (c[g] / sum(c.values()) * 100) for c in kills])
+    rows.append(["Kill: total with Looting III"] + ["%.2f %%" % (sum(c.values()) * 100) for c in kills3])
+    for name, data, data3 in (("standard chest", std, std3), ("treasure chest", trs, trs3)):
+        for g in GRADES:
+            rows.append([[(g.title() + " (" + name + ")", GRADE_RGB[g])]] + ["%.2f %%" % (c[g] * 100) for c in data])
+        rows.append([name.title() + ": total per chest"] + ["%.2f %%" % (sum(c.values()) * 100) for c in data])
+        rows.append([name.title() + ": one piece per (chests)"] + ["%.1f" % (1 / sum(c.values())) for c in data])
+        rows.append([name.title() + ": total with Luck III"] + ["%.2f %%" % (sum(c.values()) * 100) for c in data3])
+    widths = [420] + [200] * len(floors)
     y = table(d, x0, y, widths, ["Floor (+- the same)"] + labels, rows, f_b, fb, pad=9) + 24
-    d.text((x0, y), "Looting adds 1 % to the TOTAL per level and shares it in proportion: more pieces, same mix. Caps: 30 % normal, 20 % special, 15 % rare, 50 % in all (they only matter for a mistyped config).",
-           font=f_s, fill=MUTED)
+    d.text((x0, y), "Looting (kills) and Luck (chests) add 1 % to the TOTAL per level and share it in proportion: more pieces, same mix. Caps (a safety net for a mistyped config): 40 % normal, 30 % special, "
+           "25 % rare, 60 % in all; no cap bites under the defaults.", font=f_s, fill=MUTED)
     y += 40
-    d.text((x0, y), "First-pass estimates: nobody has played them. Tune with  /multiverse mega gear status  and  gear roll 100000.  The colours are the game's grade colours; the stripes and dots are the second encoding.",
-           font=f_s, fill=MUTED)
+    d.text((x0, y), "First-pass estimates: nobody has played them. Tune with  /multiverse mega gear status,  gear roll 100000  and  gear roll chest 100000.  The colours are the game's grade colours; "
+           "the stripes and dots are the second encoding.", font=f_s, fill=MUTED)
     img = img.crop((0, 0, W, y + 50))
     img.save(os.path.join(out, "gear_drop_chances.png"))
     return img.size
@@ -687,6 +725,14 @@ def verify(t, path):
                 bad.append("floor %d %s with Looting III: java %.6f python %.6f" % (c["floor"], g, c[k + "3"], mine3[g]))
         if abs(progress(c["floor"]) - c["x"]) > 1e-4:
             bad.append("floor %d progress: java %.4f python %.4f" % (c["floor"], c["x"], progress(c["floor"])))
+    for c in dump.get("chests", []):
+        for kind in ("standard", "treasure"):
+            for luck, suffix in ((0, ""), (3, "3")):
+                mine = chest_chances(t, c["floor"], kind, luck)
+                for k, g in (("n", "normal"), ("s", "special"), ("r", "rare")):
+                    theirs = c[kind][k + suffix]
+                    if abs(mine[g] - theirs) > 1e-6:
+                        bad.append("floor %d %s chest %s luck %d: java %.6f python %.6f" % (c["floor"], kind, g, luck, theirs, mine[g]))
     for e in dump["examples"]:
         gi, si = GRADES.index(e["grade"]), SLOTS.index(e["slot"])
         spec = make(t, Dice(JavaRandom(1000 * gi + 37 * e["seed"] + si)), e["grade"], e["slot"])
@@ -695,7 +741,7 @@ def verify(t, path):
         theirs = {k: e[k] for k in mine}
         if mine != theirs:
             bad.append("%s %s seed %d: java %s python %s" % (e["grade"], e["slot"], e["seed"], theirs, mine))
-    return bad, len(dump["chances"]), len(dump["examples"])
+    return bad, len(dump["chances"]) + 4 * len(dump.get("chests", [])), len(dump["examples"])
 
 
 def main():

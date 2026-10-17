@@ -1,6 +1,7 @@
 {
   "replace": false,
   "entries": [
-    "nusmp:relic_chests"
+    "nusmp:relic_chests",
+    "nusmp:gear_chests"
   ]
 }
