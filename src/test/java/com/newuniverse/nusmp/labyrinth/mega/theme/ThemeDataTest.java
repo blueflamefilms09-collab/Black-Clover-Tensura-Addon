@@ -44,11 +44,13 @@ class ThemeDataTest {
             "minecraft:block.amethyst_block.chime", "minecraft:block.amethyst_block.resonate", "minecraft:block.bell.resonate", "minecraft:block.beacon.ambient",
             "minecraft:entity.lightning_bolt.thunder", "minecraft:entity.warden.heartbeat",
             // 1.59.0 (THEME-B), each one a constant of SoundEvents in the API dump: an allay's hum, a blast furnace, a struck amethyst cluster, a conduit
-            "minecraft:entity.allay.ambient_without_item", "minecraft:block.blastfurnace.fire_crackle", "minecraft:block.amethyst_cluster.hit", "minecraft:block.conduit.ambient");
+            "minecraft:entity.allay.ambient_without_item", "minecraft:block.blastfurnace.fire_crackle", "minecraft:block.amethyst_cluster.hit", "minecraft:block.conduit.ambient",
+            // 1.59.0 (THEME-C): a turned page, a bat, a creaking door
+            "minecraft:item.book.page_turn", "minecraft:entity.bat.ambient", "minecraft:block.wooden_door.open");
     /** The themes the mod ships, in the order of the {@code RegionTheme} enum (append a new one here AND in the enum; a file nobody lists is a stray). */
     private static final List<String> SHIPPED = List.of("gravity", "blood", "spatial", "flame", "frost", "verdant", "storm", "shadow", "astral",
             "radiant", "abyss", "feywild_grove", "dwarven_forgehold", "crystal_geode", "sunken_temple", "holy_church", "celestial_court",
-            "sky_citadel", "mountain_monastery");
+            "sky_citadel", "mountain_monastery", "cursed_archive", "necropolis", "vampire_castle", "haunted_manor");
     /** The one mod particle a theme may name: a SimpleParticleType registered by {@code particle/rukh/RukhParticles}. */
     private static final Path RUKH = Path.of("src/main/java/com/newuniverse/nusmp/particle/rukh/RukhParticles.java");
 

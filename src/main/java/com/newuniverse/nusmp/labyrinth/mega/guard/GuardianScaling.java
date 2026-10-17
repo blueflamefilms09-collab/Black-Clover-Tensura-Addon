@@ -109,6 +109,10 @@ public final class GuardianScaling {
             case "celestial_court": return Trait.ASTRAL;
             case "sky_citadel": return Trait.STORM;
             case "mountain_monastery": return Trait.FROST;
+            case "cursed_archive": return Trait.VERDANT;
+            case "necropolis": return Trait.FROST;
+            case "vampire_castle": return Trait.BLOOD;
+            case "haunted_manor": return Trait.SHADOW;
             default: break;
         }
         try { return Trait.valueOf(theme.name()); } catch (IllegalArgumentException unmapped) { return Trait.GRAVITY; }
@@ -198,6 +202,10 @@ public final class GuardianScaling {
             case "celestial_court" -> 0x7FE0E6;
             case "sky_citadel" -> 0xBFD8F2;
             case "mountain_monastery" -> 0xB8844C;
+            case "cursed_archive" -> 0x5B3A7A;
+            case "necropolis" -> 0xC9B27A;
+            case "vampire_castle" -> 0x7A1230;
+            case "haunted_manor" -> 0x6E8A82;
             default -> 0x9AA0B4;
         };
     }

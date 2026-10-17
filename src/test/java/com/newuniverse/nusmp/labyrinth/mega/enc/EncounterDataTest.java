@@ -46,7 +46,7 @@ class EncounterDataTest {
     private static final Path SOURCE = Path.of("src/main/java");
     private static final List<String> THEMES = List.of("gravity", "blood", "spatial", "flame", "frost", "verdant", "storm", "shadow", "astral",
             "radiant", "abyss", "feywild_grove", "dwarven_forgehold", "crystal_geode", "sunken_temple", "holy_church", "celestial_court",
-            "sky_citadel", "mountain_monastery");
+            "sky_citadel", "mountain_monastery", "cursed_archive", "necropolis", "vampire_castle", "haunted_manor");
     private static final Set<String> NAMESPACES = Set.of("minecraft", "tensura", "nusmp");
     private static final String MESSAGE_PREFIX = "message.nusmp.mega.enc.";
 

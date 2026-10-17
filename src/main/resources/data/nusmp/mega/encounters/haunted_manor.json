@@ -1,0 +1,302 @@
+{
+  "comment": "Why: a haunted house is small rooms and sudden fright, not a hunt, so the table is lighter than the other evil roads (a budget of nine tenths, no roll bonus) and made of the things a house does: a cold spot, a rattling in the walls, armour that stands in the hall, doors that slam, a hag in the kitchen. The ghosts are vexes, which is the vanilla body that flies through walls; the noise gate is the slamming door, and the ambushes are the house waking all at once.",
+  "description": "Pale plaster, dark tiles, spruce and moonlit glass: a haunted house with a grand stair, a nursery, a ballroom and an attic. Ghosts, possessed armour and a hag; small rooms, sudden fright.",
+  "rollBonus": 0,
+  "budgetScale": 0.9,
+  "defaultFaction": "undead",
+  "entries": [
+    {
+      "id": "hm_cold_spot",
+      "comment": "A cold spot: one or two ghosts that drift through the wall, look, and decide whether to stay.",
+      "band": "minor",
+      "weight": 14,
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "minecraft:vex",
+          "count": "1-2"
+        }
+      ],
+      "cue": {
+        "sound": "minecraft:entity.vex.ambient",
+        "volume": 0.6,
+        "pitch": 0.7,
+        "particle": "minecraft:soul",
+        "count": 6
+      },
+      "message": "message.nusmp.mega.enc.haunted_manor.hm_cold_spot"
+    },
+    {
+      "id": "hm_rattling_walls",
+      "comment": "Something in the walls: two or three skeletons from the old servants' passage, who come out when the party is in the middle of the room.",
+      "band": "minor",
+      "weight": 12,
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "minecraft:skeleton",
+          "count": "2-3"
+        }
+      ],
+      "cells": 3,
+      "cue": {
+        "sound": "minecraft:entity.skeleton.ambient",
+        "volume": 0.6,
+        "pitch": 0.8,
+        "particle": "minecraft:ash",
+        "count": 6
+      }
+    },
+    {
+      "id": "hm_music_box",
+      "comment": "A music box that nobody wound: two ghosts that follow the tune, and only for a party that is quiet.",
+      "band": "minor",
+      "weight": 9,
+      "maxThreat": 8,
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "minecraft:vex",
+          "count": "2"
+        }
+      ],
+      "needs": {
+        "noisy": false
+      },
+      "cue": {
+        "sound": "minecraft:block.amethyst_block.chime",
+        "volume": 0.7,
+        "pitch": 0.9,
+        "particle": "minecraft:note",
+        "count": 8
+      },
+      "message": "message.nusmp.mega.enc.haunted_manor.hm_music_box"
+    },
+    {
+      "id": "hm_servants_hall",
+      "comment": "The servants who never left: three or four of the room's own, in the hall and on the stair.",
+      "band": "standard",
+      "weight": 11,
+      "faction": "undead",
+      "mobs": [
+        {
+          "type": "faction",
+          "count": "3-4"
+        }
+      ],
+      "cue": {
+        "sound": "minecraft:entity.zombie.ambient",
+        "volume": 0.7,
+        "pitch": 0.7,
+        "particle": "minecraft:soul",
+        "count": 6
+      }
+    },
+    {
+      "id": "hm_possessed_armour",
+      "comment": "The armour in the hall: one or two suits that turn their heads when the party passes and then stand down from the wall.",
+      "band": "standard",
+      "weight": 10,
+      "minThreat": 2,
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "nusmp:living_armor",
+          "count": "1-2"
+        }
+      ],
+      "cue": {
+        "sound": "minecraft:item.armor.equip_iron",
+        "volume": 0.8,
+        "pitch": 0.6,
+        "particle": "minecraft:soul",
+        "count": 8
+      },
+      "message": "message.nusmp.mega.enc.haunted_manor.hm_possessed_armour"
+    },
+    {
+      "id": "hm_poltergeist",
+      "comment": "The poltergeist: three or four ghosts at once that throw what they can lift, for a party that has slammed one door too many.",
+      "band": "standard",
+      "weight": 9,
+      "minThreat": 2,
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "minecraft:vex",
+          "count": "3-4"
+        }
+      ],
+      "needs": {
+        "noisy": true
+      },
+      "cue": {
+        "sound": "minecraft:entity.zombie.break_wooden_door",
+        "volume": 0.9,
+        "pitch": 0.7,
+        "particle": "minecraft:poof",
+        "count": 8
+      },
+      "message": "message.nusmp.mega.enc.haunted_manor.hm_poltergeist"
+    },
+    {
+      "id": "hm_attic_spiders",
+      "comment": "The things in the attic: cave spiders in the beams over a party that has come up in the dark.",
+      "band": "standard",
+      "weight": 8,
+      "minThreat": 2,
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "minecraft:cave_spider",
+          "count": "3-5"
+        }
+      ],
+      "needs": {
+        "dark": true
+      },
+      "cue": {
+        "sound": "minecraft:entity.spider.ambient",
+        "volume": 0.7,
+        "pitch": 0.8,
+        "particle": "minecraft:item_cobweb",
+        "count": 8
+      }
+    },
+    {
+      "id": "hm_the_hag",
+      "comment": "The hag of the kitchen: a witch and the dead she keeps for company, coming through the larder door.",
+      "band": "hard",
+      "weight": 8,
+      "minThreat": 3,
+      "faction": "undead",
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "minecraft:witch",
+          "count": "1"
+        },
+        {
+          "type": "faction",
+          "count": "2-3"
+        }
+      ],
+      "cue": {
+        "sound": "minecraft:entity.witch.ambient",
+        "volume": 0.9,
+        "pitch": 0.7,
+        "particle": "minecraft:witch",
+        "count": 10
+      },
+      "message": "message.nusmp.mega.enc.haunted_manor.hm_the_hag"
+    },
+    {
+      "id": "hm_waltz_of_bones",
+      "comment": "The last waltz: skeletons and zombies in two and threes, who go on dancing and come for whoever is out of step.",
+      "band": "hard",
+      "weight": 7,
+      "minThreat": 4,
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "minecraft:skeleton",
+          "count": "4"
+        },
+        {
+          "type": "entity",
+          "id": "minecraft:zombie",
+          "count": "2-3"
+        }
+      ],
+      "cue": {
+        "sound": "minecraft:block.bone_block.break",
+        "volume": 0.9,
+        "pitch": 0.7,
+        "particle": "minecraft:note",
+        "count": 10
+      },
+      "message": "message.nusmp.mega.enc.haunted_manor.hm_waltz_of_bones"
+    },
+    {
+      "id": "hm_mistress",
+      "comment": "The lady of the house: an evoker in a gown with two ghosts at her skirts. Rare, and it knows where the party sleeps.",
+      "band": "hard",
+      "weight": 5,
+      "minThreat": 5,
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "minecraft:evoker",
+          "count": "1"
+        },
+        {
+          "type": "entity",
+          "id": "minecraft:vex",
+          "count": "2"
+        }
+      ],
+      "scaleWithParty": false,
+      "cue": {
+        "sound": "minecraft:entity.evoker.prepare_summon",
+        "volume": 1.0,
+        "pitch": 0.6,
+        "particle": "minecraft:soul",
+        "count": 10
+      },
+      "message": "message.nusmp.mega.enc.haunted_manor.hm_mistress"
+    },
+    {
+      "id": "hm_house_wakes",
+      "comment": "The house wakes at once: five to seven of the room's own from every door of it, on a party that has not been quiet.",
+      "band": "ambush",
+      "weight": 5,
+      "minThreat": 3,
+      "faction": "undead",
+      "mobs": [
+        {
+          "type": "faction",
+          "count": "5-7"
+        }
+      ],
+      "range": [
+        8,
+        22
+      ],
+      "cells": 3,
+      "cue": {
+        "sound": "minecraft:entity.zombie.break_wooden_door",
+        "volume": 1.0,
+        "pitch": 0.6,
+        "particle": "minecraft:soul",
+        "count": 12
+      },
+      "message": "message.nusmp.mega.enc.haunted_manor.hm_house_wakes"
+    },
+    {
+      "id": "hm_slamming_doors",
+      "comment": "Every door in the house slams, and ghosts come in through every wall: four to six, on a loud party in the dark.",
+      "band": "ambush",
+      "weight": 4,
+      "minThreat": 4,
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "minecraft:vex",
+          "count": "4-6"
+        }
+      ],
+      "needs": {
+        "dark": true,
+        "noisy": true
+      },
+      "cue": {
+        "sound": "minecraft:entity.zombie.break_wooden_door",
+        "volume": 1.0,
+        "pitch": 0.5,
+        "particle": "minecraft:soul",
+        "count": 14
+      },
+      "message": "message.nusmp.mega.enc.haunted_manor.hm_slamming_doors"
+    }
+  ]
+}

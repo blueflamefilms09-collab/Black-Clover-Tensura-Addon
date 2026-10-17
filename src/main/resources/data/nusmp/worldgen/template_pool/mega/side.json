@@ -401,6 +401,33 @@
       "weight": 20,
       "element": {
         "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/cursed_archive_reading_hall",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/cursed_archive_scriptorium",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/cursed_archive_stacks",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/dwarven_forgehold_chasm_forge",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
@@ -456,6 +483,24 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/great_hall",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/haunted_manor_grand_stair",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/haunted_manor_kitchen",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }
@@ -578,6 +623,24 @@
       }
     },
     {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/necropolis_catacombs",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/necropolis_mausoleum_street",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
       "weight": 3,
       "element": {
         "element_type": "minecraft:single_pool_element",
@@ -686,6 +749,24 @@
       }
     },
     {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/vampire_castle_coffin_crypt",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/vampire_castle_great_hall",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
       "weight": 7,
       "element": {
         "element_type": "minecraft:single_pool_element",
@@ -761,6 +842,15 @@
       "weight": 20,
       "element": {
         "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/puzzle/cursed_archive_card_catalogue",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/puzzle/feywild_grove_fairy_ring",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
@@ -816,6 +906,24 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/safe/chapel",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/safe/cursed_archive_librarians_study",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/safe/haunted_manor_master_bedroom",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }
@@ -914,6 +1022,15 @@
       "weight": 20,
       "element": {
         "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/set/cursed_archive_rotunda",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/set/dwarven_forgehold_vault_of_kings",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
@@ -924,6 +1041,15 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/set/feywild_grove_court_of_seasons",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/set/haunted_manor_nursery",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }
@@ -950,6 +1076,15 @@
       "weight": 20,
       "element": {
         "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/set/necropolis_bone_bridges",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/set/sky_citadel_storm_spire",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
@@ -965,10 +1100,55 @@
       }
     },
     {
+      "weight": 10,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/set/vampire_castle_chapel",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 10,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/set/vampire_castle_clock_tower",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/trap/cursed_archive_burning_stacks",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
       "weight": 7,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/trap/dark_room",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/trap/haunted_manor_attic",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/trap/necropolis_grave_pits",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }
@@ -1040,6 +1220,15 @@
       "weight": 20,
       "element": {
         "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/treasure/cursed_archive_restricted_section",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/treasure/dwarven_forgehold_hoard_nook",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
@@ -1067,6 +1256,15 @@
       "weight": 20,
       "element": {
         "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/treasure/necropolis_burial_vault",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/treasure/sky_citadel_pantry",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
@@ -1077,6 +1275,15 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/treasure/sunken_temple_offering_nook",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/treasure/vampire_castle_mirror_gallery",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }
@@ -1104,6 +1311,15 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/trial/dwarven_forgehold_anvil_trial",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/trial/haunted_manor_ballroom",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }
@@ -1140,6 +1356,15 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/trial/trial_hall_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/trial/vampire_castle_blood_court",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }
