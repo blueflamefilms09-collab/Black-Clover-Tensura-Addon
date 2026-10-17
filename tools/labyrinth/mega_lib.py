@@ -780,14 +780,14 @@ def chair(mt, x, y, z, facing="south", wood=PLANKS_STAIRS):
 
 
 def chandelier(mt, x, y_ceiling, z, drop=4, radius=1, lantern=LANTERN):
-    """A chandelier hung from the ceiling cell `y_ceiling`: a chain of `drop` blocks and a ring of lanterns round its foot."""
-    for k in range(1, drop + 1):
-        mt.set(x, y_ceiling - k, z, CHAIN_BLOCK, {"axis": "y"})
+    """A chandelier hung from the ceiling cell `y_ceiling`: a chain of `drop` blocks and a ring of lanterns round its foot.
+    Every one of the five chains runs all the way up to the ceiling (the four side lanterns used to hang from a one-block chain stub that ended in the
+    air next to the centre chain: it looked fine in a flat preview and floated in the game, which tools/labyrinth/mega_arch_check.py reports)."""
     y = y_ceiling - drop - 1
-    mt.set(x, y, z, lantern, {"hanging": "true"})
-    for dx, dz in ((radius, 0), (-radius, 0), (0, radius), (0, -radius)):
-        mt.set(x + dx, y + 1, z + dz, CHAIN_BLOCK, {"axis": "y"})
-        mt.set(x + dx, y, z + dz, lantern, {"hanging": "true"})
+    for cx, cz in ((x, z), (x + radius, z), (x - radius, z), (x, z + radius), (x, z - radius)):
+        for k in range(1, drop + 1):
+            mt.set(cx, y_ceiling - k, cz, CHAIN_BLOCK, {"axis": "y"})
+        mt.set(cx, y, cz, lantern, {"hanging": "true"})
     return mt
 
 
