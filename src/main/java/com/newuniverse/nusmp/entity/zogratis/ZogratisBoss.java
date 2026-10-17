@@ -285,7 +285,7 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
         if (!(level() instanceof ServerLevel sl) || isDeadOrDying() || fightEnded) return false;
         if (!refill.begin(modeId, getHealth(), getMaxHealth(), ticks)) return false;
         refillDeadline = sl.getGameTime() + Math.max(1, ticks) + 40;      // the shield can never outlast this, whatever happens to the AI tick
-        com.newuniverse.nusmp.boss.refill.RefillFx.start(sl, position(), getBbHeight(), DevilStyle.color(devil()), DevilStyle.accent(devil()), ticks);
+        com.newuniverse.nusmp.boss.refill.RefillFx.start(sl, position(), getBbHeight(), styleColor(), styleAccent(), ticks);
         broadcast(Component.translatable("nusmp.boss.refill.second_bar", bossName()).withStyle(chatColor(), ChatFormatting.BOLD));
         refreshBar();
         return true;
@@ -301,7 +301,7 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
             dpsBudget.bypass(() -> setHealth(to));                     // a refill is the boss's own heal, never damage, never counted against the budget
             bar.setProgress(Math.max(0f, Math.min(1f, getHealth() / getMaxHealth())));
         }
-        int rgb = DevilStyle.color(devil()), accent = DevilStyle.accent(devil());
+        int rgb = styleColor(), accent = styleAccent();
         if (refill.active()) {
             com.newuniverse.nusmp.boss.refill.RefillFx.fill(sl, position(), getBbHeight(), getBbWidth(), rgb, accent, refill.progress(), tickCount);
         } else {
@@ -428,6 +428,15 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
         bar.removePlayer(p);
     }
 
+    /**
+     * 1.57.0: the main colour (0xRRGGBB) of this boss's glow, telegraph dust, refill shield and rifts. Default: its devil's colour (so the Zogratis family
+     * is unchanged); an arc character (<code>arc/ArcBoss</code>) answers with its own palette, because most of them are not devil-bound.
+     */
+    public int styleColor() { return DevilStyle.color(devil()); }
+
+    /** 1.57.0: the lighter accent colour (rims, sparks). Default: its devil's accent. */
+    public int styleAccent() { return DevilStyle.accent(devil()); }
+
     protected BossEvent.BossBarColor barColor() {
         Devil d = devil();
         if (d == Devil.LUCIFERO) return BossEvent.BossBarColor.PURPLE;
@@ -483,7 +492,7 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
         super.aiStep();
         if (!level().isClientSide || tickCount % 3 != 0 || power() < 40) return;
         var r = getRandom();
-        int rgb = DevilStyle.color(devil());
+        int rgb = styleColor();
         var dust = new DustParticleOptions(new Vector3f(DevilStyle.red(rgb), DevilStyle.green(rgb), DevilStyle.blue(rgb)), 1.2f);
         int n = state() == STATE_TRANSFORMING ? 6 : state() == STATE_CASTING ? 3 : 1;
         for (int i = 0; i < n; i++)
@@ -611,7 +620,7 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
         }
         if (distanceToSqr(c) > (double) ARENA_RADIUS * ARENA_RADIUS) {
             Vec3 home = ground(sl, c);
-            VfxSpawn.send(sl, VfxShape.SPATIAL_RIFT, position().add(0, 1, 0), position().add(0, 2, 0), 0xFF000000 | DevilStyle.color(devil()), 14, 0.8f);
+            VfxSpawn.send(sl, VfxShape.SPATIAL_RIFT, position().add(0, 1, 0), position().add(0, 2, 0), 0xFF000000 | styleColor(), 14, 0.8f);
             teleportTo(home.x, home.y, home.z);
             getNavigation().stop();
         }
@@ -665,7 +674,7 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
         applyTuning();
         refreshBar();
         if (rageOf != null) announce(rageOf + " has fallen. " + bossName() + " rages: " + old + "% -> " + to + "% of " + devil().displayName + "'s power.");
-        VfxSpawn.send(sl, VfxShape.DEVIL_CIRCLE, position(), position().add(0, 1, 0), 0xFF000000 | DevilStyle.color(devil()), 50, 2.2f);
+        VfxSpawn.send(sl, VfxShape.DEVIL_CIRCLE, position(), position().add(0, 1, 0), 0xFF000000 | styleColor(), 50, 2.2f);
         sl.playSound(null, blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.HOSTILE, 2f, 0.5f);
         if (to >= PowerCurve.FULL) beginGates(sl);
         else if (rageOf == null) say(powerLine(old, to));
@@ -690,7 +699,7 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
         getNavigation().stop();
         announce("The Gates of the Tree of Qliphoth open!");
         say(gatesLine());
-        VfxSpawn.send(sl, VfxShape.DEVIL_CIRCLE, position(), position().add(0, 1, 0), 0xFF000000 | DevilStyle.color(devil()), PowerCurve.TRANSFORM_TICKS, 4f);
+        VfxSpawn.send(sl, VfxShape.DEVIL_CIRCLE, position(), position().add(0, 1, 0), 0xFF000000 | styleColor(), PowerCurve.TRANSFORM_TICKS, 4f);
         sl.playSound(null, blockPosition(), SoundEvents.WITHER_SPAWN, SoundSource.HOSTILE, 3f, 0.6f);
         onGatesOpened();
         if (refillOnGates()) refillForMode(gatesModeId());          // 1.35.0: the 100% mode comes with a full health bar
@@ -700,12 +709,12 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
         transformLeft--;
         entityData.set(PHASE_LEFT, Math.max(0, transformLeft));
         getNavigation().stop();
-        int rgb = DevilStyle.color(devil());
+        int rgb = styleColor();
         if (transformLeft % 6 == 0) Tells.ring(sl, position(), 2.5 + (PowerCurve.TRANSFORM_TICKS - transformLeft) * 0.08, rgb);
-        if (transformLeft % 4 == 0) Tells.gather(sl, position().add(0, getBbHeight() / 2, 0), 1.2, DevilStyle.accent(devil()), 8);
+        if (transformLeft % 4 == 0) Tells.gather(sl, position().add(0, getBbHeight() / 2, 0), 1.2, styleAccent(), 8);
         if (transformLeft == PowerCurve.TRANSFORM_TICKS / 2) {
             setForm(gatesForm());
-            Tells.burst(sl, position().add(0, getBbHeight() / 2, 0), DevilStyle.accent(devil()), 60);
+            Tells.burst(sl, position().add(0, getBbHeight() / 2, 0), styleAccent(), 60);
             sl.playSound(null, blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.HOSTILE, 3f, 0.4f);
         }
         if (transformLeft <= 0) {
@@ -795,8 +804,8 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
 
     /** The default tell: dust gathering at the boss, and a ring at the target's feet (round the boss for an ultimate). */
     protected void defaultTell(ServerLevel sl, Move m, LivingEntity target, int ticksLeft) {
-        int rgb = DevilStyle.color(devil());
-        Tells.gather(sl, position().add(0, getBbHeight() * 0.6, 0), 0.9, DevilStyle.accent(devil()), 4);
+        int rgb = styleColor();
+        Tells.gather(sl, position().add(0, getBbHeight() * 0.6, 0), 0.9, styleAccent(), 4);
         if (m.ultimate()) Tells.ring(sl, position(), Math.min(14, 4 + (entityData.get(PHASE_TOTAL) - ticksLeft) * 0.2), rgb);
         else if (m.maxRange() > 8) Tells.ring(sl, target.position(), 1.5 + ticksLeft * 0.08, rgb);
         else Tells.ring(sl, position(), 2.2, rgb);
@@ -898,10 +907,10 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
     /** A safe blink: moves the boss to 'to' if its body fits there. */
     public boolean blinkTo(Vec3 to) {
         if (!(level() instanceof ServerLevel sl) || !sl.noCollision(this, getBoundingBox().move(to.subtract(position())))) return false;
-        VfxSpawn.send(sl, VfxShape.SPATIAL_RIFT, position().add(0, 1, 0), position().add(0, 1.5, 0), 0xFF000000 | DevilStyle.color(devil()), 12, 0.8f);
+        VfxSpawn.send(sl, VfxShape.SPATIAL_RIFT, position().add(0, 1, 0), position().add(0, 1.5, 0), 0xFF000000 | styleColor(), 12, 0.8f);
         teleportTo(to.x, to.y, to.z);
         getNavigation().stop();
-        VfxSpawn.send(sl, VfxShape.SPATIAL_RIFT, to.add(0, 1, 0), to.add(0, 1.5, 0), 0xFF000000 | DevilStyle.color(devil()), 12, 0.8f);
+        VfxSpawn.send(sl, VfxShape.SPATIAL_RIFT, to.add(0, 1, 0), to.add(0, 1.5, 0), 0xFF000000 | styleColor(), 12, 0.8f);
         sl.playSound(null, blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.HOSTILE, 1.5f, 0.6f);
         return true;
     }
@@ -1001,7 +1010,7 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
 
     private void removeDisciples(ServerLevel sl) {
         for (DarkDiscipleEntity d : disciples()) {
-            Tells.burst(sl, d.position().add(0, 1, 0), DevilStyle.color(devil()), 12);
+            Tells.burst(sl, d.position().add(0, 1, 0), styleColor(), 12);
             d.discard();
         }
     }

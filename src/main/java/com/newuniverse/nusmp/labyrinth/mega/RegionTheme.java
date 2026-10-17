@@ -14,38 +14,57 @@ import java.util.Locale;
  */
 public enum RegionTheme {
     /** The baseline: the deepslate palette every template is drawn in, so this theme swaps nothing. Weights, falling stone, lightning rods. */
-    GRAVITY(3, 3),
+    GRAVITY(3, 3, Route.ANY),
     /** Nether bricks and crimson wood: blood, bone, torture, the Crimson Reliquary. */
-    BLOOD(3, 3),
+    BLOOD(3, 3, Route.ABYSSAL),
     /** End stone, purpur, amethyst, crying obsidian: folded space, mirrors, doors that lead nowhere. */
-    SPATIAL(3, 3),
+    SPATIAL(3, 3, Route.HOLY),
     /** Blackstone, gilded blackstone, magma, lava forges. */
-    FLAME(3, 3),
+    FLAME(3, 3, Route.ABYSSAL),
     /** Packed ice, snow, spruce and calcite. */
-    FROST(3, 3),
+    FROST(3, 3, Route.HOLY),
     /** Mossy stone, moss, azalea, cherry and vines: an overgrown ruin. */
-    VERDANT(3, 3),
+    VERDANT(3, 3, Route.ABYSSAL),
     /** Oxidised copper, tuff, lightning rods. */
-    STORM(3, 3),
+    STORM(3, 3, Route.HOLY),
     /** Polished blackstone, sculk, soul lanterns. */
-    SHADOW(3, 3),
+    SHADOW(3, 3, Route.ABYSSAL),
     /** Quartz, calcite, prismarine and gold: a cold observatory of stars. */
-    ASTRAL(3, 3),
+    ASTRAL(3, 3, Route.HOLY),
     /** 1.55.0, the Holy road: white quartz, smooth stone, gold and calcite, light everywhere, the air thick with Light Rukh. The Holy chain draws it most often. */
-    RADIANT(3, 3),
+    RADIANT(3, 3, Route.HOLY),
     /** 1.55.0, the Abyssal road: dark organic rock, deepslate with sculk, moss and netherrack growing through it, soul fire. The Abyssal chain draws it most often. */
-    ABYSS(3, 3);
+    ABYSS(3, 3, Route.ABYSSAL);
 
     /**
      * The owner's newest brief fixes the Crucible at EXACTLY three distinct Unique-or-higher relics (one pick per region, so one high-tier relic per ten
      * floors), so every theme's range is 3..3. The range fields stay (the pure draw below still honours them) so a different count is a one-line edit.
      */
     private final int minRelics, maxRelics;
+    private final Route route;
 
-    RegionTheme(int minRelics, int maxRelics) {
+    RegionTheme(int minRelics, int maxRelics, Route route) {
         this.minRelics = minRelics;
         this.maxRelics = maxRelics;
+        this.route = route;
     }
+
+    /**
+     * 1.58.0: which road a theme belongs to. {@code HOLY} and {@code ABYSSAL} themes are FAVOURED on their road (drawn three to one over the rest, as
+     * the 1.55.0 rule had it for the original eleven); {@code ANY} is drawn evenly on both. A theme that is {@link #exclusive()} (every theme added in
+     * 1.58.0: the Holy Church is a good-route place, the Cursed Archive an evil-route one) is NEVER drawn on the other road. Why an enum field and
+     * not two switch lists: a new theme is one appended line, and nobody has to edit two methods (and collide with the other builders doing the same).
+     */
+    public enum Route { HOLY, ABYSSAL, ANY }
+
+    /** The road this theme belongs to ({@link Route#ANY} for the baseline). */
+    public Route route() { return route; }
+
+    /** True for a theme that is only ever drawn on its own road (the 1.58.0 themes); the original eleven are favoured on their road but may appear on the other. */
+    public boolean exclusive() { return ordinal() >= FIRST_EXCLUSIVE; }
+
+    /** The ordinal of the first theme added in 1.58.0 (ABYSS is the last of the original eleven). Kept as a constant so an appended entry needs no other edit. */
+    private static final int FIRST_EXCLUSIVE = 11;
 
     /** Fewest relics the Crucible of a sector of this theme offers (1..3). */
     public int minRelics() { return minRelics; }
@@ -89,7 +108,9 @@ public enum RegionTheme {
         List<RegionTheme> pool = new ArrayList<>();
         for (RegionTheme t : values()) {
             if (t == previous) continue;
-            int w = polarity == Polarity.HOLY ? (t.favoursHoly() ? 3 : 1) : (t.favoursAbyss() ? 3 : 1);
+            boolean mine = polarity == Polarity.HOLY ? t.favoursHoly() : t.favoursAbyss();
+            if (t.exclusive() && !mine) continue;                          // a good-route theme never shows up on the Abyssal road, and the other way round
+            int w = mine ? 3 : 1;
             for (int i = 0; i < w; i++) pool.add(t);
         }
         if (pool.isEmpty()) return GRAVITY;
@@ -101,10 +122,10 @@ public enum RegionTheme {
     }
 
     /** Does this theme suit the Holy road (bright, cold, clean)? */
-    public boolean favoursHoly() { return this == RADIANT || this == ASTRAL || this == FROST || this == SPATIAL || this == STORM; }
+    public boolean favoursHoly() { return route == Route.HOLY; }
 
     /** Does this theme suit the Abyssal road (dark, organic, hot)? */
-    public boolean favoursAbyss() { return this == ABYSS || this == SHADOW || this == BLOOD || this == FLAME || this == VERDANT; }
+    public boolean favoursAbyss() { return route == Route.ABYSSAL; }
 
     /**
      * Deterministic theme of a sector: sector 0 is always {@link #GRAVITY} (the baseline look is the one the player meets first), later ones

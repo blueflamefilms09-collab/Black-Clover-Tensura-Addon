@@ -72,9 +72,31 @@ def element_json(tid, weight, processors):
     return {"weight": weight, "element": {"element_type": "minecraft:single_pool_element", "location": "nusmp:" + tid, "processors": processors, "projection": "rigid"}}
 
 
+THEME_DIR = os.path.join(L.RES, "data", "nusmp", "mega", "template_themes")
+
+
+def theme_weights():
+    """1.58.0: {template id prefix: relative weight} gathered from every data/nusmp/mega/template_themes/*.json (the `relative` map of each theme file, same
+    style of key as mega_pools.json: 'mega/hall/holy_church_'). A theme's builder tunes how often its own rooms are drawn in its own file instead of editing
+    the shared mega_pools.json; the rooms are only ever drawn in sectors of that theme (the `templates` prefixes of the same file, read by the game)."""
+    out = {}
+    for path in sorted(glob.glob(os.path.join(THEME_DIR, "*.json"))):
+        try:
+            doc = json.load(open(path))
+        except ValueError:
+            continue
+        for prefix, w in (doc.get("relative") or {}).items():
+            out[prefix] = int(w)
+    return out
+
+
 def build():
     """{pool name: json text} for every pool of the config."""
     cfg = json.load(open(CONFIG))
+    extra = theme_weights()
+    if extra:
+        for pool in cfg["pools"].values():
+            pool["relative"] = dict(pool.get("relative", {}), **extra)
     out = {}
     report = []
     for name, pool in sorted(cfg["pools"].items()):
