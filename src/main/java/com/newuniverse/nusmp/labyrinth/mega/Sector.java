@@ -29,6 +29,15 @@ public final class Sector {
     public enum State { GENERATING, ACTIVE, GUARDIAN_DEAD, UNSEALED, COMPLETE, FAILED }
 
     public final int id;
+    /**
+     * 1.55.0: which road of the bidirectional dungeon this sector belongs to. Sectors saved by 1.54.0 have no road and read as HOLY (their one chain is the
+     * Holy one, so nothing changes for an old world). Set by the generator at creation.
+     */
+    public Polarity polarity = Polarity.HOLY;
+    /** 1.55.0: the 0-based index of this sector within its polarity's chain; for a 1.54.0 save (one chain) it equals {@link #id}. Set by the generator at creation. */
+    public int chainIndex;
+    /** 1.55.0: how many floors this sector spans ({@link FloorMap#DEFAULT_PER_REGION}); saved so a config change never renumbers a sector that already exists. */
+    public int perRegion = FloorMap.DEFAULT_PER_REGION;
     /** Set by the generator at creation. */
     public RegionTheme theme = RegionTheme.GRAVITY;
     /** 1 for sector 0, then 1 + id; the encounter director, factions and the guardian scale with it. */
@@ -57,16 +66,30 @@ public final class Sector {
     public BlockPos expansionPos;
     public Direction expansionFacing;
     public int sealW = 3, sealH = 4, sealD = 2;
-    /** How many relics the Crucible offers (1..3), decided by the planner from the theme (generator). */
+    /** How many relics the Crucible offers (1..3; always 3 since the owner fixed it at three), decided by the planner from the theme (generator). */
     public int relicCount = 1;
     /** The pedestal blocks (generator, from PEDESTAL markers: marker.below()). */
     public final List<BlockPos> pedestals = new ArrayList<>();
     /** The id of the sector that was generated off this one's Way Onward, or -1. */
     public int nextId = -1;
+    /**
+     * 1.55.0: the Gatekeeper was opened but the next sector has not been requested yet. It waits until the Crucible is resolved or a player reaches the Way Onward
+     * ({@code mega.expandAfterVault}), so that the relic taken can decide the next theme. Saved, so a restart keeps waiting.
+     */
+    public boolean expansionPending;
 
     public final Crucible crucible = new Crucible();
 
-    public Sector(int id) { this.id = id; }
+    public Sector(int id) {
+        this.id = id;
+        this.chainIndex = id;
+    }
+
+    /** The signed number of this sector's first floor (the Landing's floor). */
+    public int firstFloor() { return FloorMap.firstFloor(polarity, chainIndex, perRegion); }
+
+    /** The signed number of this sector's last floor (the Guardian's arena, the decennial floor). */
+    public int lastFloor() { return FloorMap.lastFloor(polarity, chainIndex, perRegion); }
 
     /** The Crucible of Choice's saved state (the crucible builder owns the meaning; the data lives here so there is one saved file). */
     public static final class Crucible {
@@ -150,6 +173,9 @@ public final class Sector {
         t.putInt("id", id);
         t.putString("theme", theme.id());
         t.putInt("threat", threat);
+        t.putString("pol", polarity.id());
+        t.putInt("chain", chainIndex);
+        t.putInt("fpr", perRegion);
         t.putString("state", state.name());
         t.putLong("seed", seed);
         t.putIntArray("region", box(region));
@@ -177,6 +203,7 @@ public final class Sector {
         for (int i = 0; i < pl.length; i++) pl[i] = pedestals.get(i).asLong();
         t.putLongArray("peds", pl);
         t.putInt("next", nextId);
+        if (expansionPending) t.putBoolean("xpend", true);
         t.put("crucible", crucible.save());
         return t;
     }
@@ -185,6 +212,10 @@ public final class Sector {
         Sector s = new Sector(t.getInt("id"));
         s.theme = RegionTheme.fromId(t.getString("theme"));
         s.threat = Math.max(1, t.getInt("threat"));
+        Polarity pol = Polarity.fromId(t.getString("pol"));
+        s.polarity = pol == null ? Polarity.HOLY : pol;
+        s.chainIndex = t.contains("chain") ? Math.max(0, t.getInt("chain")) : s.id;
+        s.perRegion = t.contains("fpr") ? Math.max(1, t.getInt("fpr")) : FloorMap.DEFAULT_PER_REGION;
         try { s.state = State.valueOf(t.getString("state")); } catch (IllegalArgumentException ex) { s.state = State.ACTIVE; }
         s.seed = t.getLong("seed");
         s.region = box(t.getIntArray("region"));
@@ -215,6 +246,7 @@ public final class Sector {
         s.relicCount = Math.max(1, Math.min(3, t.getInt("relics")));
         for (long p : t.getLongArray("peds")) s.pedestals.add(BlockPos.of(p));
         s.nextId = t.contains("next") ? t.getInt("next") : -1;
+        s.expansionPending = t.getBoolean("xpend");
         if (t.contains("crucible")) s.crucible.load(t.getCompound("crucible"));
         return s;
     }

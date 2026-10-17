@@ -1,0 +1,73 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "minecraft:spider",
+      "required": false
+    },
+    {
+      "id": "minecraft:cave_spider",
+      "required": false
+    },
+    {
+      "id": "minecraft:silverfish",
+      "required": false
+    },
+    {
+      "id": "minecraft:endermite",
+      "required": false
+    },
+    {
+      "id": "tensura:black_spider",
+      "required": false
+    },
+    {
+      "id": "tensura:knight_spider",
+      "required": false
+    },
+    {
+      "id": "tensura:giant_ant",
+      "required": false
+    },
+    {
+      "id": "tensura:army_wasp",
+      "required": false
+    },
+    {
+      "id": "tensura:hell_moth",
+      "required": false
+    },
+    {
+      "id": "tensura:hell_caterpillar",
+      "required": false
+    },
+    {
+      "id": "tensura:evil_centipede",
+      "required": false
+    },
+    {
+      "id": "iceandfire:myrmex_worker",
+      "required": false
+    },
+    {
+      "id": "iceandfire:myrmex_soldier",
+      "required": false
+    },
+    {
+      "id": "iceandfire:myrmex_sentinel",
+      "required": false
+    },
+    {
+      "id": "iceandfire:myrmex_royal",
+      "required": false
+    },
+    {
+      "id": "iceandfire:myrmex_queen",
+      "required": false
+    },
+    {
+      "id": "iceandfire:death_worm",
+      "required": false
+    }
+  ]
+}

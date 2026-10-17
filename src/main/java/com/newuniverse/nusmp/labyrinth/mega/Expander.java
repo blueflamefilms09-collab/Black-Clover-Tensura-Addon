@@ -13,6 +13,12 @@ public interface Expander {
     /** Queues sector 0 if it does not exist yet. False when it exists already or a job is running. */
     boolean requestFirst(MinecraftServer server);
 
+    /**
+     * 1.55.0: queues the FIRST sector of a polarity's chain (the Holy chain starts at the 1.54.0 origin, the Abyssal chain at {@link MegaGrid#LANE_Z}). The
+     * default keeps a single-chain generator working: HOLY is the old sector 0 and ABYSSAL is refused until the generator overrides this.
+     */
+    default boolean requestFirst(MinecraftServer server, Polarity polarity) { return polarity == Polarity.HOLY && requestFirst(server); }
+
     /** Queues the sector that attaches to {@code from}'s Way Onward. False when refused (already generated, queued, expansion off, limit reached). */
     boolean requestNext(ServerLevel level, Sector from);
 

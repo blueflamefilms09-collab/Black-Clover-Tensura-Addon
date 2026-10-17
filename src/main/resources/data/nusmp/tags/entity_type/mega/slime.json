@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "minecraft:slime",
+      "required": false
+    },
+    {
+      "id": "minecraft:magma_cube",
+      "required": false
+    },
+    {
+      "id": "tensura:slime",
+      "required": false
+    },
+    {
+      "id": "tensura:metal_slime",
+      "required": false
+    },
+    {
+      "id": "tensura:supermassive_slime",
+      "required": false
+    },
+    {
+      "id": "nusmp:dungeon_slime",
+      "required": false
+    }
+  ]
+}

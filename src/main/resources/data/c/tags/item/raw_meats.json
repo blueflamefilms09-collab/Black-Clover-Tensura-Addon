@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "nusmp:raw_slime_jelly",
+    "nusmp:raw_armor_flank",
+    "nusmp:raw_basilisk_fillet",
+    "nusmp:raw_direwolf_haunch",
+    "nusmp:raw_monster_meat"
+  ]
+}
