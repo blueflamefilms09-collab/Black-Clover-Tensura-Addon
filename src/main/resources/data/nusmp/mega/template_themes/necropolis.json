@@ -1,0 +1,9 @@
+{ "theme": "necropolis",
+  "templates": ["nusmp:mega/hall/necropolis_", "nusmp:mega/set/necropolis_", "nusmp:mega/trap/necropolis_", "nusmp:mega/treasure/necropolis_"],
+  "relative": {
+    "mega/hall/necropolis_catacombs": 160,
+    "mega/hall/necropolis_mausoleum_street": 150,
+    "mega/set/necropolis_bone_bridges": 12,
+    "mega/trap/necropolis_grave_pits": 8,
+    "mega/treasure/necropolis_burial_vault": 10
+  } }

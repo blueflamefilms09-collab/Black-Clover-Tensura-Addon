@@ -1,0 +1,12 @@
+{ "theme": "cursed_archive",
+  "templates": ["nusmp:mega/hall/cursed_archive_", "nusmp:mega/set/cursed_archive_", "nusmp:mega/safe/cursed_archive_", "nusmp:mega/trap/cursed_archive_", "nusmp:mega/puzzle/cursed_archive_", "nusmp:mega/treasure/cursed_archive_"],
+  "relative": {
+    "mega/hall/cursed_archive_stacks": 110,
+    "mega/hall/cursed_archive_reading_hall": 100,
+    "mega/hall/cursed_archive_scriptorium": 100,
+    "mega/set/cursed_archive_rotunda": 12,
+    "mega/safe/cursed_archive_librarians_study": 10,
+    "mega/trap/cursed_archive_burning_stacks": 8,
+    "mega/puzzle/cursed_archive_card_catalogue": 6,
+    "mega/treasure/cursed_archive_restricted_section": 10
+  } }

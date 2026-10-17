@@ -1,0 +1,10 @@
+{ "theme": "vampire_castle",
+  "templates": ["nusmp:mega/hall/vampire_castle_", "nusmp:mega/set/vampire_castle_", "nusmp:mega/trial/vampire_castle_", "nusmp:mega/treasure/vampire_castle_"],
+  "relative": {
+    "mega/hall/vampire_castle_great_hall": 160,
+    "mega/hall/vampire_castle_coffin_crypt": 150,
+    "mega/set/vampire_castle_chapel": 12,
+    "mega/set/vampire_castle_clock_tower": 12,
+    "mega/trial/vampire_castle_blood_court": 10,
+    "mega/treasure/vampire_castle_mirror_gallery": 10
+  } }

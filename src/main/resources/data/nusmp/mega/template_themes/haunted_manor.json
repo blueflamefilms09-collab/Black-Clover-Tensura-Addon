@@ -1,0 +1,10 @@
+{ "theme": "haunted_manor",
+  "templates": ["nusmp:mega/hall/haunted_manor_", "nusmp:mega/set/haunted_manor_", "nusmp:mega/trial/haunted_manor_", "nusmp:mega/safe/haunted_manor_", "nusmp:mega/trap/haunted_manor_"],
+  "relative": {
+    "mega/hall/haunted_manor_grand_stair": 160,
+    "mega/hall/haunted_manor_kitchen": 150,
+    "mega/set/haunted_manor_nursery": 12,
+    "mega/trial/haunted_manor_ballroom": 10,
+    "mega/safe/haunted_manor_master_bedroom": 10,
+    "mega/trap/haunted_manor_attic": 8
+  } }

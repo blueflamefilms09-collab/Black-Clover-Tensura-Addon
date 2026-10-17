@@ -1,0 +1,303 @@
+{
+  "comment": "Why: a city of the dead is a place where nothing has ever left. The table is the dead, in the order a visitor meets them: the shamblers at the threshold, the ghouls in the loculi, the rattle of a procession, a death knight in the mausoleum, the ossuary that stands up when the party is loud. The dark is their friend (several entries need it), the abyssal bonus makes the whole road hunt a little, and the first sector gets only the quiet end of it.",
+  "description": "Sandstone, bone block and ghost-green light: catacombs, mausoleums and bone bridges over an abyss. The dead are patient, they are many, and they walk in order.",
+  "rollBonus": 1,
+  "budgetScale": 1.1,
+  "defaultFaction": "undead",
+  "entries": [
+    {
+      "id": "nc_grave_shamblers",
+      "comment": "The breather: one or two of the room's own dead at the threshold, who have not noticed they were buried.",
+      "band": "minor",
+      "weight": 14,
+      "mobs": [
+        {
+          "type": "faction",
+          "count": "1-2"
+        }
+      ],
+      "cue": {
+        "sound": "minecraft:entity.zombie.ambient",
+        "volume": 0.6,
+        "pitch": 0.6,
+        "particle": "minecraft:soul",
+        "count": 6
+      }
+    },
+    {
+      "id": "nc_bone_rattle",
+      "comment": "Skeletons in a niche that rattle when something living walks the nave: two or three, loose and not hurried.",
+      "band": "minor",
+      "weight": 12,
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "minecraft:skeleton",
+          "count": "2-3"
+        }
+      ],
+      "cells": 3,
+      "cue": {
+        "sound": "minecraft:entity.skeleton.ambient",
+        "volume": 0.7,
+        "pitch": 0.7,
+        "particle": "minecraft:soul",
+        "count": 6
+      }
+    },
+    {
+      "id": "nc_grave_chill",
+      "comment": "A cold that is not the cave's: two strays from the frozen end of the catacombs, for a party that has let its torch go out.",
+      "band": "minor",
+      "weight": 9,
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "minecraft:stray",
+          "count": "2"
+        }
+      ],
+      "needs": {
+        "dark": true
+      },
+      "cue": {
+        "sound": "minecraft:entity.stray.ambient",
+        "volume": 0.7,
+        "pitch": 0.7,
+        "particle": "minecraft:snowflake",
+        "count": 8
+      }
+    },
+    {
+      "id": "nc_gnawing_ghouls",
+      "comment": "The ghouls of the loculi: husks that crawl out of the wall niches in a group of three or four, hungry for what is warm.",
+      "band": "standard",
+      "weight": 12,
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "minecraft:husk",
+          "count": "3-4"
+        }
+      ],
+      "cue": {
+        "sound": "minecraft:entity.zombie.ambient",
+        "volume": 0.8,
+        "pitch": 0.5,
+        "particle": "minecraft:soul",
+        "count": 8
+      },
+      "message": "message.nusmp.mega.enc.necropolis.nc_gnawing_ghouls"
+    },
+    {
+      "id": "nc_procession",
+      "comment": "The funeral procession: a faction column of the dead that walks the nave in step. It never turns round and it never stops.",
+      "band": "standard",
+      "weight": 11,
+      "minThreat": 2,
+      "faction": "undead",
+      "mobs": [
+        {
+          "type": "faction",
+          "count": "4-6"
+        }
+      ],
+      "cue": {
+        "sound": "minecraft:block.bell.use",
+        "volume": 0.8,
+        "pitch": 0.5,
+        "particle": "minecraft:soul",
+        "count": 10
+      },
+      "message": "message.nusmp.mega.enc.necropolis.nc_procession"
+    },
+    {
+      "id": "nc_wight",
+      "comment": "The lone hunter of the dark: a wither skeleton or two that wait for the lights to go and then come down the corridor together.",
+      "band": "standard",
+      "weight": 9,
+      "minThreat": 2,
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "minecraft:wither_skeleton",
+          "count": "1-2"
+        }
+      ],
+      "needs": {
+        "dark": true
+      },
+      "scaleWithParty": false,
+      "cue": {
+        "sound": "minecraft:entity.wither_skeleton.ambient",
+        "volume": 0.8,
+        "pitch": 0.5,
+        "particle": "minecraft:soul",
+        "count": 8
+      }
+    },
+    {
+      "id": "nc_soul_lights",
+      "comment": "The wisps over the graves: vexes the colour of the lamps, who follow a party that is carrying fire.",
+      "band": "standard",
+      "weight": 8,
+      "minThreat": 2,
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "minecraft:vex",
+          "count": "2-3"
+        }
+      ],
+      "cue": {
+        "sound": "minecraft:entity.vex.ambient",
+        "volume": 0.7,
+        "pitch": 0.9,
+        "particle": "minecraft:soul_fire_flame",
+        "count": 8
+      }
+    },
+    {
+      "id": "nc_death_knight",
+      "comment": "The death knight: armour that was a lord's and kept his oath, with two of his wither guards, coming up out of the mausoleum.",
+      "band": "hard",
+      "weight": 8,
+      "minThreat": 3,
+      "faction": "undead",
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "nusmp:living_armor",
+          "count": "1"
+        },
+        {
+          "type": "entity",
+          "id": "minecraft:wither_skeleton",
+          "count": "2"
+        }
+      ],
+      "cue": {
+        "sound": "minecraft:entity.iron_golem.step",
+        "volume": 0.9,
+        "pitch": 0.5,
+        "particle": "minecraft:soul",
+        "count": 10
+      },
+      "message": "message.nusmp.mega.enc.necropolis.nc_death_knight"
+    },
+    {
+      "id": "nc_bone_golem",
+      "comment": "A bone golem that the ossuary assembled from its own stock when the party was loud, with the dead that come after it.",
+      "band": "hard",
+      "weight": 6,
+      "minThreat": 4,
+      "faction": "undead",
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "tensura:bone_golem",
+          "count": "1"
+        },
+        {
+          "type": "faction",
+          "count": "2-3"
+        }
+      ],
+      "needs": {
+        "noisy": true
+      },
+      "cue": {
+        "sound": "minecraft:block.bone_block.break",
+        "volume": 1.0,
+        "pitch": 0.5,
+        "particle": "minecraft:poof",
+        "count": 12
+      },
+      "message": "message.nusmp.mega.enc.necropolis.nc_bone_golem"
+    },
+    {
+      "id": "nc_hungry_dead",
+      "comment": "A crowd: zombies and husks in a mass of six to nine, the sort of thing a city of the dead has in the thousands.",
+      "band": "hard",
+      "weight": 6,
+      "minThreat": 5,
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "minecraft:zombie",
+          "count": "4-6"
+        },
+        {
+          "type": "entity",
+          "id": "minecraft:husk",
+          "count": "2-3"
+        }
+      ],
+      "cue": {
+        "sound": "minecraft:entity.zombie.break_wooden_door",
+        "volume": 1.0,
+        "pitch": 0.5,
+        "particle": "minecraft:soul",
+        "count": 14
+      }
+    },
+    {
+      "id": "nc_ossuary_wakes",
+      "comment": "The ossuary stands up: the dead from the cells nearest the party, five to eight of them, out of the walls.",
+      "band": "ambush",
+      "weight": 5,
+      "minThreat": 3,
+      "faction": "undead",
+      "mobs": [
+        {
+          "type": "faction",
+          "count": "5-8"
+        }
+      ],
+      "range": [
+        8,
+        20
+      ],
+      "cells": 4,
+      "cue": {
+        "sound": "minecraft:block.bone_block.break",
+        "volume": 1.0,
+        "pitch": 0.5,
+        "particle": "minecraft:soul",
+        "count": 14
+      },
+      "message": "message.nusmp.mega.enc.necropolis.nc_ossuary_wakes"
+    },
+    {
+      "id": "nc_buried_alive",
+      "comment": "The floor gives: strays and wither skeletons from the pit of an old grave, on a party that is loud and has no light.",
+      "band": "ambush",
+      "weight": 4,
+      "minThreat": 5,
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "minecraft:stray",
+          "count": "3-4"
+        },
+        {
+          "type": "entity",
+          "id": "minecraft:wither_skeleton",
+          "count": "2"
+        }
+      ],
+      "needs": {
+        "dark": true,
+        "noisy": true
+      },
+      "cue": {
+        "sound": "minecraft:block.gravel.break",
+        "volume": 0.9,
+        "pitch": 0.6,
+        "particle": "minecraft:ash",
+        "count": 12
+      },
+      "message": "message.nusmp.mega.enc.necropolis.nc_buried_alive"
+    }
+  ]
+}

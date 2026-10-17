@@ -24,6 +24,10 @@
     "verdant": 0,
     "storm": 1,
     "shadow": 4,
+    "cursed_archive": 2,
+    "necropolis": 2,
+    "vampire_castle": 3,
+    "haunted_manor": 1,
     "astral": 1,
     "radiant": 0,
     "abyss": 5

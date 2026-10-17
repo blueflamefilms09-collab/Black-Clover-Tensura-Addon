@@ -218,7 +218,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/alchemy_lab_a",
@@ -227,7 +227,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/alchemy_lab_b",
@@ -236,7 +236,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/armory_forge_a",
@@ -245,7 +245,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/armory_forge_b",
@@ -254,7 +254,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/barracks_a",
@@ -263,7 +263,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/barracks_b",
@@ -272,7 +272,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/cell_block_a",
@@ -281,7 +281,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/cell_block_b",
@@ -308,7 +308,7 @@
       }
     },
     {
-      "weight": 2,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/colonnade_hall_a",
@@ -326,7 +326,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/crypt_a",
@@ -335,10 +335,37 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/crypt_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/cursed_archive_reading_hall",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/cursed_archive_scriptorium",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/cursed_archive_stacks",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }
@@ -353,7 +380,25 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/haunted_manor_grand_stair",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/haunted_manor_kitchen",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/kitchen_larder",
@@ -380,7 +425,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/library_a",
@@ -389,7 +434,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/library_b",
@@ -407,7 +452,25 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/necropolis_catacombs",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/necropolis_mausoleum_street",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/ossuary",
@@ -416,7 +479,7 @@
       }
     },
     {
-      "weight": 2,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/round_hall_a",
@@ -425,7 +488,7 @@
       }
     },
     {
-      "weight": 2,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/round_hall_b",
@@ -434,7 +497,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/shrine_a",
@@ -465,6 +528,24 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/torture_chamber_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/vampire_castle_coffin_crypt",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/vampire_castle_great_hall",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }
@@ -536,115 +617,7 @@
       "weight": 10,
       "element": {
         "element_type": "minecraft:single_pool_element",
-        "location": "nusmp:mega/puzzle/sigil_hall_a",
-        "processors": "nusmp:mega_interior",
-        "projection": "rigid"
-      }
-    },
-    {
-      "weight": 10,
-      "element": {
-        "element_type": "minecraft:single_pool_element",
-        "location": "nusmp:mega/puzzle/sigil_hall_b",
-        "processors": "nusmp:mega_interior",
-        "projection": "rigid"
-      }
-    },
-    {
-      "weight": 3,
-      "element": {
-        "element_type": "minecraft:single_pool_element",
-        "location": "nusmp:mega/safe/chapel",
-        "processors": "nusmp:mega_interior",
-        "projection": "rigid"
-      }
-    },
-    {
-      "weight": 3,
-      "element": {
-        "element_type": "minecraft:single_pool_element",
-        "location": "nusmp:mega/safe/hearth_hall_a",
-        "processors": "nusmp:mega_interior",
-        "projection": "rigid"
-      }
-    },
-    {
-      "weight": 3,
-      "element": {
-        "element_type": "minecraft:single_pool_element",
-        "location": "nusmp:mega/safe/hearth_hall_b",
-        "processors": "nusmp:mega_interior",
-        "projection": "rigid"
-      }
-    },
-    {
-      "weight": 3,
-      "element": {
-        "element_type": "minecraft:single_pool_element",
-        "location": "nusmp:mega/safe/refectory",
-        "processors": "nusmp:mega_interior",
-        "projection": "rigid"
-      }
-    },
-    {
-      "weight": 3,
-      "element": {
-        "element_type": "minecraft:single_pool_element",
-        "location": "nusmp:mega/safe/workshop_a",
-        "processors": "nusmp:mega_interior",
-        "projection": "rigid"
-      }
-    },
-    {
-      "weight": 3,
-      "element": {
-        "element_type": "minecraft:single_pool_element",
-        "location": "nusmp:mega/safe/workshop_b",
-        "processors": "nusmp:mega_interior",
-        "projection": "rigid"
-      }
-    },
-    {
-      "weight": 20,
-      "element": {
-        "element_type": "minecraft:single_pool_element",
-        "location": "nusmp:mega/set/cathedral_rotunda",
-        "processors": "nusmp:mega_interior",
-        "projection": "rigid"
-      }
-    },
-    {
-      "weight": 7,
-      "element": {
-        "element_type": "minecraft:single_pool_element",
-        "location": "nusmp:mega/trap/dark_room",
-        "processors": "nusmp:mega_interior",
-        "projection": "rigid"
-      }
-    },
-    {
-      "weight": 7,
-      "element": {
-        "element_type": "minecraft:single_pool_element",
-        "location": "nusmp:mega/trap/pit_hall_a",
-        "processors": "nusmp:mega_interior",
-        "projection": "rigid"
-      }
-    },
-    {
-      "weight": 7,
-      "element": {
-        "element_type": "minecraft:single_pool_element",
-        "location": "nusmp:mega/trap/pit_hall_b",
-        "processors": "nusmp:mega_interior",
-        "projection": "rigid"
-      }
-    },
-    {
-      "weight": 8,
-      "element": {
-        "element_type": "minecraft:single_pool_element",
-        "location": "nusmp:mega/treasure/closet_a",
+        "location": "nusmp:mega/puzzle/cursed_archive_card_catalogue",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }
@@ -653,7 +626,25 @@
       "weight": 5,
       "element": {
         "element_type": "minecraft:single_pool_element",
-        "location": "nusmp:mega/treasure/closet_b",
+        "location": "nusmp:mega/puzzle/sigil_hall_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/puzzle/sigil_hall_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/safe/chapel",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }
@@ -662,13 +653,238 @@
       "weight": 8,
       "element": {
         "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/safe/cursed_archive_librarians_study",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 8,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/safe/haunted_manor_master_bedroom",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/safe/hearth_hall_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/safe/hearth_hall_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/safe/refectory",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/safe/workshop_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/safe/workshop_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/set/cathedral_rotunda",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/set/cursed_archive_rotunda",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/set/haunted_manor_nursery",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/set/necropolis_bone_bridges",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/set/vampire_castle_chapel",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/set/vampire_castle_clock_tower",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/trap/cursed_archive_burning_stacks",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/trap/dark_room",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/trap/haunted_manor_attic",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/trap/necropolis_grave_pits",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/trap/pit_hall_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/trap/pit_hall_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/treasure/closet_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/treasure/closet_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/treasure/closet_c",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }
     },
     {
-      "weight": 10,
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/treasure/cursed_archive_restricted_section",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/treasure/necropolis_burial_vault",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/treasure/vampire_castle_mirror_gallery",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 8,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/trial/haunted_manor_ballroom",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/trial/trial_hall_a",
@@ -677,10 +893,19 @@
       }
     },
     {
-      "weight": 10,
+      "weight": 2,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/trial/trial_hall_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 8,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/trial/vampire_castle_blood_court",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }

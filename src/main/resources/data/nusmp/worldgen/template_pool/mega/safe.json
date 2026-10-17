@@ -2,7 +2,7 @@
   "fallback": "nusmp:mega/cap",
   "elements": [
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/safe/chapel",
@@ -11,7 +11,25 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 8,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/safe/cursed_archive_librarians_study",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 8,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/safe/haunted_manor_master_bedroom",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/safe/hearth_hall_a",
@@ -20,7 +38,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/safe/hearth_hall_b",
@@ -29,7 +47,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/safe/refectory",
@@ -38,7 +56,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/safe/workshop_a",
@@ -47,7 +65,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/safe/workshop_b",
