@@ -108,7 +108,16 @@
    "fallback": "minecraft:empty"
   },
   "nusmp:mega/landing": {
-   "elements": [],
+   "elements": [
+    {
+     "template": "nusmp:mega/landing/landing_a",
+     "weight": 10
+    },
+    {
+     "template": "nusmp:mega/landing/landing_b",
+     "weight": 10
+    }
+   ],
    "emptyWeight": 0,
    "fallback": "nusmp:mega/cap"
   },
@@ -151,7 +160,32 @@
    "fallback": "nusmp:mega/cap"
   },
   "nusmp:mega/safe": {
-   "elements": [],
+   "elements": [
+    {
+     "template": "nusmp:mega/safe/chapel",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/safe/hearth_hall_a",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/safe/hearth_hall_b",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/safe/refectory",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/safe/workshop_a",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/safe/workshop_b",
+     "weight": 3
+    }
+   ],
    "emptyWeight": 0,
    "fallback": "nusmp:mega/cap"
   },
@@ -264,6 +298,30 @@
     {
      "template": "nusmp:mega/junction/plaza_3x3_c",
      "weight": 7
+    },
+    {
+     "template": "nusmp:mega/safe/chapel",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/safe/hearth_hall_a",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/safe/hearth_hall_b",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/safe/refectory",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/safe/workshop_a",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/safe/workshop_b",
+     "weight": 3
     }
    ],
    "emptyWeight": 2,
@@ -3686,6 +3744,729 @@
     }
    ]
   },
+  "nusmp:mega/landing/landing_a": {
+   "kind": "LANDING",
+   "markers": [
+    {
+     "args": {},
+     "kind": "arrival",
+     "x": 6,
+     "y": 9,
+     "z": 5
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 7
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 19
+    },
+    {
+     "args": {
+      "as": "storage"
+     },
+     "kind": "furniture",
+     "x": 23,
+     "y": 10,
+     "z": 2
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 18,
+     "y": 10,
+     "z": 5
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 20,
+     "y": 10,
+     "z": 5
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 22,
+     "y": 10,
+     "z": 5
+    },
+    {
+     "args": {
+      "as": "table"
+     },
+     "kind": "furniture",
+     "x": 20,
+     "y": 10,
+     "z": 6
+    },
+    {
+     "args": {
+      "as": "storage"
+     },
+     "kind": "furniture",
+     "x": 2,
+     "y": 10,
+     "z": 8
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 18,
+     "y": 10,
+     "z": 8
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 20,
+     "y": 10,
+     "z": 8
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 22,
+     "y": 10,
+     "z": 8
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 19,
+     "y": 10,
+     "z": 16
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 20,
+     "y": 10,
+     "z": 16
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 21,
+     "y": 10,
+     "z": 16
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 2,
+     "y": 10,
+     "z": 17
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 2,
+     "y": 10,
+     "z": 18
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 17,
+     "y": 10,
+     "z": 18
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 23,
+     "y": 10,
+     "z": 18
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 17,
+     "y": 10,
+     "z": 19
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 23,
+     "y": 10,
+     "z": 19
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 2,
+     "y": 10,
+     "z": 20
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 17,
+     "y": 10,
+     "z": 20
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 23,
+     "y": 10,
+     "z": 20
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 2,
+     "y": 10,
+     "z": 21
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 19,
+     "y": 10,
+     "z": 22
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 20,
+     "y": 10,
+     "z": 22
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 21,
+     "y": 10,
+     "z": 22
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 5,
+     "y": 10,
+     "z": 23
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 8,
+     "y": 10,
+     "z": 23
+    },
+    {
+     "args": {
+      "as": "storage"
+     },
+     "kind": "furniture",
+     "x": 6,
+     "y": 10,
+     "z": 24
+    },
+    {
+     "args": {
+      "as": "storage"
+     },
+     "kind": "furniture",
+     "x": 15,
+     "y": 10,
+     "z": 24
+    },
+    {
+     "args": {
+      "as": "stove"
+     },
+     "kind": "hearth",
+     "x": 16,
+     "y": 10,
+     "z": 24
+    },
+    {
+     "args": {
+      "as": "stove"
+     },
+     "kind": "hearth",
+     "x": 17,
+     "y": 10,
+     "z": 24
+    },
+    {
+     "args": {
+      "as": "stove"
+     },
+     "kind": "hearth",
+     "x": 20,
+     "y": 11,
+     "z": 19
+    },
+    {
+     "args": {
+      "as": "cooking_pot"
+     },
+     "kind": "furniture",
+     "x": 21,
+     "y": 11,
+     "z": 19
+    },
+    {
+     "args": {
+      "as": "cutting_board"
+     },
+     "kind": "furniture",
+     "x": 18,
+     "y": 11,
+     "z": 24
+    },
+    {
+     "args": {
+      "as": "skillet"
+     },
+     "kind": "furniture",
+     "x": 19,
+     "y": 11,
+     "z": 24
+    },
+    {
+     "args": {
+      "as": "cutting_board"
+     },
+     "kind": "furniture",
+     "x": 21,
+     "y": 11,
+     "z": 24
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 26,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 26
+    }
+   ]
+  },
+  "nusmp:mega/landing/landing_b": {
+   "kind": "LANDING",
+   "markers": [
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 9
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 20
+    },
+    {
+     "args": {},
+     "kind": "arrival",
+     "x": 20,
+     "y": 9,
+     "z": 21
+    },
+    {
+     "args": {
+      "as": "stove"
+     },
+     "kind": "hearth",
+     "x": 22,
+     "y": 10,
+     "z": 2
+    },
+    {
+     "args": {
+      "as": "storage"
+     },
+     "kind": "furniture",
+     "x": 23,
+     "y": 10,
+     "z": 2
+    },
+    {
+     "args": {
+      "as": "storage"
+     },
+     "kind": "furniture",
+     "x": 10,
+     "y": 10,
+     "z": 3
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 15,
+     "y": 10,
+     "z": 16
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 18,
+     "y": 10,
+     "z": 16
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 15,
+     "y": 10,
+     "z": 18
+    },
+    {
+     "args": {
+      "as": "table"
+     },
+     "kind": "furniture",
+     "x": 17,
+     "y": 10,
+     "z": 18
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 18,
+     "y": 10,
+     "z": 18
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 15,
+     "y": 10,
+     "z": 20
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 18,
+     "y": 10,
+     "z": 20
+    },
+    {
+     "args": {
+      "as": "cooking_pot"
+     },
+     "kind": "furniture",
+     "x": 5,
+     "y": 11,
+     "z": 2
+    },
+    {
+     "args": {
+      "as": "stove"
+     },
+     "kind": "hearth",
+     "x": 16,
+     "y": 11,
+     "z": 22
+    },
+    {
+     "args": {
+      "as": "storage"
+     },
+     "kind": "furniture",
+     "x": 4,
+     "y": 16,
+     "z": 2
+    },
+    {
+     "args": {
+      "as": "stove"
+     },
+     "kind": "hearth",
+     "x": 16,
+     "y": 16,
+     "z": 2
+    },
+    {
+     "args": {
+      "as": "stove"
+     },
+     "kind": "hearth",
+     "x": 17,
+     "y": 16,
+     "z": 2
+    },
+    {
+     "args": {
+      "as": "storage"
+     },
+     "kind": "furniture",
+     "x": 21,
+     "y": 16,
+     "z": 2
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 3,
+     "y": 16,
+     "z": 3
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 6,
+     "y": 16,
+     "z": 3
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 13,
+     "y": 16,
+     "z": 3
+    },
+    {
+     "args": {
+      "as": "table"
+     },
+     "kind": "furniture",
+     "x": 13,
+     "y": 16,
+     "z": 4
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 14,
+     "y": 16,
+     "z": 5
+    },
+    {
+     "args": {
+      "as": "cutting_board"
+     },
+     "kind": "furniture",
+     "x": 18,
+     "y": 17,
+     "z": 2
+    },
+    {
+     "args": {
+      "as": "cutting_board"
+     },
+     "kind": "furniture",
+     "x": 20,
+     "y": 17,
+     "z": 2
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 26,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 26
+    }
+   ]
+  },
   "nusmp:mega/link/straight_a": {
    "kind": "LINK",
    "markers": [
@@ -3812,6 +4593,2756 @@
      "x": 4,
      "y": 9,
      "z": 8
+    }
+   ]
+  },
+  "nusmp:mega/safe/chapel": {
+   "kind": "SAFE",
+   "markers": [
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 8,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 1,
+     "y": 10,
+     "z": 4
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 13,
+     "y": 10,
+     "z": 4
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 4,
+     "y": 10,
+     "z": 7
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 5,
+     "y": 10,
+     "z": 7
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 6,
+     "y": 10,
+     "z": 7
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 11,
+     "y": 10,
+     "z": 7
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 12,
+     "y": 10,
+     "z": 7
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 13,
+     "y": 10,
+     "z": 7
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 1,
+     "y": 10,
+     "z": 8
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 16,
+     "y": 10,
+     "z": 8
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 4,
+     "y": 10,
+     "z": 9
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 5,
+     "y": 10,
+     "z": 9
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 6,
+     "y": 10,
+     "z": 9
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 11,
+     "y": 10,
+     "z": 9
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 12,
+     "y": 10,
+     "z": 9
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 13,
+     "y": 10,
+     "z": 9
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 4,
+     "y": 10,
+     "z": 11
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 5,
+     "y": 10,
+     "z": 11
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 6,
+     "y": 10,
+     "z": 11
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 11,
+     "y": 10,
+     "z": 11
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 12,
+     "y": 10,
+     "z": 11
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 13,
+     "y": 10,
+     "z": 11
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 4,
+     "y": 10,
+     "z": 15
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 5,
+     "y": 10,
+     "z": 15
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 6,
+     "y": 10,
+     "z": 15
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 7,
+     "y": 10,
+     "z": 15
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 8,
+     "y": 10,
+     "z": 15
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 5,
+     "y": 11,
+     "z": 2
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 12,
+     "y": 11,
+     "z": 2
+    },
+    {
+     "args": {
+      "as": "brazier"
+     },
+     "kind": "hearth",
+     "x": 6,
+     "y": 12,
+     "z": 3
+    },
+    {
+     "args": {
+      "as": "brazier"
+     },
+     "kind": "hearth",
+     "x": 11,
+     "y": 12,
+     "z": 3
+    }
+   ],
+   "size": [
+    18,
+    48,
+    18
+   ],
+   "sockets": [
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 17,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 17
+    }
+   ]
+  },
+  "nusmp:mega/safe/hearth_hall_a": {
+   "kind": "SAFE",
+   "markers": [
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 8
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 20
+    },
+    {
+     "args": {
+      "as": "storage"
+     },
+     "kind": "furniture",
+     "x": 23,
+     "y": 10,
+     "z": 3
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 5,
+     "y": 10,
+     "z": 4
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 7,
+     "y": 10,
+     "z": 5
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 7,
+     "y": 10,
+     "z": 6
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 7,
+     "y": 10,
+     "z": 7
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 17,
+     "y": 10,
+     "z": 8
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 5,
+     "y": 10,
+     "z": 9
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 16,
+     "y": 10,
+     "z": 10
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 19,
+     "y": 10,
+     "z": 10
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 16,
+     "y": 10,
+     "z": 12
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 19,
+     "y": 10,
+     "z": 12
+    },
+    {
+     "args": {
+      "as": "table"
+     },
+     "kind": "furniture",
+     "x": 18,
+     "y": 10,
+     "z": 13
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 16,
+     "y": 10,
+     "z": 14
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 19,
+     "y": 10,
+     "z": 14
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 16,
+     "y": 10,
+     "z": 16
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 19,
+     "y": 10,
+     "z": 16
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 18,
+     "y": 10,
+     "z": 18
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 5,
+     "y": 10,
+     "z": 19
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 9,
+     "y": 10,
+     "z": 19
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 5,
+     "y": 10,
+     "z": 20
+    },
+    {
+     "args": {
+      "as": "table"
+     },
+     "kind": "furniture",
+     "x": 7,
+     "y": 10,
+     "z": 20
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 9,
+     "y": 10,
+     "z": 20
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 5,
+     "y": 10,
+     "z": 21
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 9,
+     "y": 10,
+     "z": 21
+    },
+    {
+     "args": {
+      "as": "storage"
+     },
+     "kind": "furniture",
+     "x": 9,
+     "y": 10,
+     "z": 24
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 17,
+     "y": 10,
+     "z": 24
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 18,
+     "y": 10,
+     "z": 24
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 19,
+     "y": 10,
+     "z": 24
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 20,
+     "y": 10,
+     "z": 24
+    },
+    {
+     "args": {
+      "as": "stove"
+     },
+     "kind": "hearth",
+     "x": 2,
+     "y": 11,
+     "z": 6
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 23,
+     "y": 11,
+     "z": 8
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 23,
+     "y": 11,
+     "z": 14
+    },
+    {
+     "args": {
+      "as": "cooking_pot"
+     },
+     "kind": "furniture",
+     "x": 2,
+     "y": 11,
+     "z": 18
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 23,
+     "y": 11,
+     "z": 20
+    },
+    {
+     "args": {
+      "as": "stove"
+     },
+     "kind": "hearth",
+     "x": 10,
+     "y": 11,
+     "z": 21
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 22,
+     "y": 16,
+     "z": 6
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 22,
+     "y": 16,
+     "z": 8
+    },
+    {
+     "args": {
+      "as": "stove"
+     },
+     "kind": "hearth",
+     "x": 24,
+     "y": 16,
+     "z": 11
+    },
+    {
+     "args": {
+      "as": "stove"
+     },
+     "kind": "hearth",
+     "x": 24,
+     "y": 16,
+     "z": 12
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 22,
+     "y": 16,
+     "z": 13
+    },
+    {
+     "args": {
+      "as": "table"
+     },
+     "kind": "furniture",
+     "x": 23,
+     "y": 16,
+     "z": 13
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 22,
+     "y": 16,
+     "z": 14
+    },
+    {
+     "args": {
+      "as": "storage"
+     },
+     "kind": "furniture",
+     "x": 24,
+     "y": 16,
+     "z": 16
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 24,
+     "y": 16,
+     "z": 19
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 24,
+     "y": 16,
+     "z": 20
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 24,
+     "y": 16,
+     "z": 21
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 24,
+     "y": 16,
+     "z": 22
+    },
+    {
+     "args": {
+      "as": "cutting_board"
+     },
+     "kind": "furniture",
+     "x": 24,
+     "y": 17,
+     "z": 13
+    },
+    {
+     "args": {
+      "as": "skillet"
+     },
+     "kind": "furniture",
+     "x": 24,
+     "y": 17,
+     "z": 15
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 26
+    }
+   ]
+  },
+  "nusmp:mega/safe/hearth_hall_b": {
+   "kind": "SAFE",
+   "markers": [
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 7
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 19
+    },
+    {
+     "args": {
+      "as": "storage"
+     },
+     "kind": "furniture",
+     "x": 23,
+     "y": 10,
+     "z": 2
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 2,
+     "y": 10,
+     "z": 3
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 5,
+     "y": 10,
+     "z": 3
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 20,
+     "y": 10,
+     "z": 3
+    },
+    {
+     "args": {
+      "as": "storage"
+     },
+     "kind": "furniture",
+     "x": 24,
+     "y": 10,
+     "z": 3
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 2,
+     "y": 10,
+     "z": 4
+    },
+    {
+     "args": {
+      "as": "table"
+     },
+     "kind": "furniture",
+     "x": 4,
+     "y": 10,
+     "z": 4
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 5,
+     "y": 10,
+     "z": 4
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 20,
+     "y": 10,
+     "z": 4
+    },
+    {
+     "args": {
+      "as": "stove"
+     },
+     "kind": "hearth",
+     "x": 24,
+     "y": 10,
+     "z": 4
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 2,
+     "y": 10,
+     "z": 5
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 5,
+     "y": 10,
+     "z": 5
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 20,
+     "y": 10,
+     "z": 5
+    },
+    {
+     "args": {
+      "as": "stove"
+     },
+     "kind": "hearth",
+     "x": 24,
+     "y": 10,
+     "z": 5
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 20,
+     "y": 10,
+     "z": 6
+    },
+    {
+     "args": {
+      "as": "counter"
+     },
+     "kind": "furniture",
+     "x": 21,
+     "y": 10,
+     "z": 6
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 2,
+     "y": 10,
+     "z": 7
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 5,
+     "y": 10,
+     "z": 7
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 20,
+     "y": 10,
+     "z": 7
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 2,
+     "y": 10,
+     "z": 8
+    },
+    {
+     "args": {
+      "as": "table"
+     },
+     "kind": "furniture",
+     "x": 4,
+     "y": 10,
+     "z": 8
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 5,
+     "y": 10,
+     "z": 8
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 20,
+     "y": 10,
+     "z": 8
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 2,
+     "y": 10,
+     "z": 9
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 5,
+     "y": 10,
+     "z": 9
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 10,
+     "y": 10,
+     "z": 10
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 11,
+     "y": 10,
+     "z": 10
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 15,
+     "y": 10,
+     "z": 10
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 16,
+     "y": 10,
+     "z": 10
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 10,
+     "y": 10,
+     "z": 11
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 16,
+     "y": 10,
+     "z": 11
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 10,
+     "y": 10,
+     "z": 15
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 16,
+     "y": 10,
+     "z": 15
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 10,
+     "y": 10,
+     "z": 16
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 11,
+     "y": 10,
+     "z": 16
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 15,
+     "y": 10,
+     "z": 16
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 16,
+     "y": 10,
+     "z": 16
+    },
+    {
+     "args": {
+      "as": "storage"
+     },
+     "kind": "furniture",
+     "x": 24,
+     "y": 10,
+     "z": 21
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 6,
+     "y": 10,
+     "z": 22
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 7,
+     "y": 10,
+     "z": 22
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 8,
+     "y": 10,
+     "z": 22
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 9,
+     "y": 10,
+     "z": 22
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 17,
+     "y": 10,
+     "z": 22
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 18,
+     "y": 10,
+     "z": 22
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 19,
+     "y": 10,
+     "z": 22
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 20,
+     "y": 10,
+     "z": 22
+    },
+    {
+     "args": {
+      "as": "table"
+     },
+     "kind": "furniture",
+     "x": 8,
+     "y": 10,
+     "z": 23
+    },
+    {
+     "args": {
+      "as": "table"
+     },
+     "kind": "furniture",
+     "x": 19,
+     "y": 10,
+     "z": 23
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 6,
+     "y": 10,
+     "z": 24
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 9,
+     "y": 10,
+     "z": 24
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 17,
+     "y": 10,
+     "z": 24
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 20,
+     "y": 10,
+     "z": 24
+    },
+    {
+     "args": {
+      "as": "stove"
+     },
+     "kind": "hearth",
+     "x": 9,
+     "y": 11,
+     "z": 4
+    },
+    {
+     "args": {
+      "as": "cutting_board"
+     },
+     "kind": "furniture",
+     "x": 24,
+     "y": 11,
+     "z": 6
+    },
+    {
+     "args": {
+      "as": "skillet"
+     },
+     "kind": "furniture",
+     "x": 24,
+     "y": 11,
+     "z": 8
+    },
+    {
+     "args": {
+      "as": "stove"
+     },
+     "kind": "hearth",
+     "x": 13,
+     "y": 11,
+     "z": 13
+    },
+    {
+     "args": {
+      "as": "cooking_pot"
+     },
+     "kind": "furniture",
+     "x": 12,
+     "y": 11,
+     "z": 14
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 8,
+     "y": 16,
+     "z": 23
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 14,
+     "y": 16,
+     "z": 23
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 20,
+     "y": 16,
+     "z": 23
+    },
+    {
+     "args": {
+      "as": "storage"
+     },
+     "kind": "furniture",
+     "x": 24,
+     "y": 16,
+     "z": 23
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 3,
+     "y": 16,
+     "z": 24
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 26,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 26
+    }
+   ]
+  },
+  "nusmp:mega/safe/refectory": {
+   "kind": "SAFE",
+   "markers": [
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 12,
+     "y": 9,
+     "z": 8
+    },
+    {
+     "args": {
+      "as": "storage"
+     },
+     "kind": "furniture",
+     "x": 2,
+     "y": 10,
+     "z": 4
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 7,
+     "y": 10,
+     "z": 5
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 8,
+     "y": 10,
+     "z": 5
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 9,
+     "y": 10,
+     "z": 5
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 10,
+     "y": 10,
+     "z": 5
+    },
+    {
+     "args": {
+      "as": "storage"
+     },
+     "kind": "furniture",
+     "x": 2,
+     "y": 10,
+     "z": 7
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 7,
+     "y": 10,
+     "z": 7
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 10,
+     "y": 10,
+     "z": 7
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 14,
+     "y": 10,
+     "z": 7
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 7,
+     "y": 10,
+     "z": 9
+    },
+    {
+     "args": {
+      "as": "table"
+     },
+     "kind": "furniture",
+     "x": 9,
+     "y": 10,
+     "z": 9
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 10,
+     "y": 10,
+     "z": 9
+    },
+    {
+     "args": {
+      "as": "storage"
+     },
+     "kind": "furniture",
+     "x": 2,
+     "y": 10,
+     "z": 10
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 14,
+     "y": 10,
+     "z": 10
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 7,
+     "y": 10,
+     "z": 11
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 10,
+     "y": 10,
+     "z": 11
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 9,
+     "y": 10,
+     "z": 13
+    },
+    {
+     "args": {
+      "as": "storage"
+     },
+     "kind": "furniture",
+     "x": 8,
+     "y": 10,
+     "z": 15
+    },
+    {
+     "args": {
+      "as": "cutting_board"
+     },
+     "kind": "furniture",
+     "x": 4,
+     "y": 11,
+     "z": 2
+    },
+    {
+     "args": {
+      "as": "skillet"
+     },
+     "kind": "furniture",
+     "x": 5,
+     "y": 11,
+     "z": 2
+    },
+    {
+     "args": {
+      "as": "stove"
+     },
+     "kind": "hearth",
+     "x": 7,
+     "y": 11,
+     "z": 2
+    },
+    {
+     "args": {
+      "as": "stove"
+     },
+     "kind": "hearth",
+     "x": 8,
+     "y": 11,
+     "z": 2
+    },
+    {
+     "args": {
+      "as": "cooking_pot"
+     },
+     "kind": "furniture",
+     "x": 9,
+     "y": 11,
+     "z": 2
+    },
+    {
+     "args": {
+      "as": "stove"
+     },
+     "kind": "hearth",
+     "x": 10,
+     "y": 11,
+     "z": 2
+    },
+    {
+     "args": {
+      "as": "cutting_board"
+     },
+     "kind": "furniture",
+     "x": 12,
+     "y": 11,
+     "z": 2
+    },
+    {
+     "args": {
+      "as": "skillet"
+     },
+     "kind": "furniture",
+     "x": 13,
+     "y": 11,
+     "z": 2
+    }
+   ],
+   "size": [
+    18,
+    48,
+    18
+   ],
+   "sockets": [
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 17,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 4,
+     "y": 9,
+     "z": 17
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 17
+    }
+   ]
+  },
+  "nusmp:mega/safe/workshop_a": {
+   "kind": "SAFE",
+   "markers": [
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 8,
+     "y": 9,
+     "z": 12
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 9,
+     "y": 9,
+     "z": 19
+    },
+    {
+     "args": {
+      "as": "storage"
+     },
+     "kind": "furniture",
+     "x": 2,
+     "y": 10,
+     "z": 2
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 3,
+     "y": 10,
+     "z": 7
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 4,
+     "y": 10,
+     "z": 7
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 5,
+     "y": 10,
+     "z": 7
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 6,
+     "y": 10,
+     "z": 7
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 11,
+     "y": 10,
+     "z": 7
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 12,
+     "y": 10,
+     "z": 7
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 13,
+     "y": 10,
+     "z": 7
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 14,
+     "y": 10,
+     "z": 7
+    },
+    {
+     "args": {
+      "as": "storage"
+     },
+     "kind": "furniture",
+     "x": 15,
+     "y": 10,
+     "z": 7
+    },
+    {
+     "args": {
+      "as": "table"
+     },
+     "kind": "furniture",
+     "x": 5,
+     "y": 10,
+     "z": 8
+    },
+    {
+     "args": {
+      "as": "table"
+     },
+     "kind": "furniture",
+     "x": 13,
+     "y": 10,
+     "z": 8
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 3,
+     "y": 10,
+     "z": 10
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 4,
+     "y": 10,
+     "z": 10
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 5,
+     "y": 10,
+     "z": 10
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 6,
+     "y": 10,
+     "z": 10
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 11,
+     "y": 10,
+     "z": 10
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 12,
+     "y": 10,
+     "z": 10
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 13,
+     "y": 10,
+     "z": 10
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 14,
+     "y": 10,
+     "z": 10
+    },
+    {
+     "args": {
+      "as": "storage"
+     },
+     "kind": "furniture",
+     "x": 15,
+     "y": 10,
+     "z": 10
+    },
+    {
+     "args": {
+      "as": "storage"
+     },
+     "kind": "furniture",
+     "x": 15,
+     "y": 10,
+     "z": 16
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 3,
+     "y": 10,
+     "z": 17
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 6,
+     "y": 10,
+     "z": 17
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 15,
+     "y": 10,
+     "z": 17
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 3,
+     "y": 10,
+     "z": 18
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 15,
+     "y": 10,
+     "z": 18
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 3,
+     "y": 10,
+     "z": 19
+    },
+    {
+     "args": {
+      "as": "table"
+     },
+     "kind": "furniture",
+     "x": 5,
+     "y": 10,
+     "z": 19
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 15,
+     "y": 10,
+     "z": 19
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 3,
+     "y": 10,
+     "z": 20
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 6,
+     "y": 10,
+     "z": 20
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 15,
+     "y": 10,
+     "z": 20
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 3,
+     "y": 10,
+     "z": 23
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 6,
+     "y": 10,
+     "z": 23
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 9,
+     "y": 10,
+     "z": 23
+    },
+    {
+     "args": {
+      "as": "storage"
+     },
+     "kind": "furniture",
+     "x": 7,
+     "y": 10,
+     "z": 24
+    },
+    {
+     "args": {
+      "as": "stove"
+     },
+     "kind": "hearth",
+     "x": 6,
+     "y": 11,
+     "z": 2
+    },
+    {
+     "args": {
+      "as": "stove"
+     },
+     "kind": "hearth",
+     "x": 8,
+     "y": 11,
+     "z": 2
+    },
+    {
+     "args": {
+      "as": "stove"
+     },
+     "kind": "hearth",
+     "x": 11,
+     "y": 11,
+     "z": 2
+    }
+   ],
+   "size": [
+    18,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 17,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 26
+    }
+   ]
+  },
+  "nusmp:mega/safe/workshop_b": {
+   "kind": "SAFE",
+   "markers": [
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 11,
+     "y": 9,
+     "z": 8
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 6,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {
+      "as": "storage"
+     },
+     "kind": "furniture",
+     "x": 3,
+     "y": 10,
+     "z": 2
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 4,
+     "y": 10,
+     "z": 3
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 8,
+     "y": 10,
+     "z": 3
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 7,
+     "y": 10,
+     "z": 5
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 10,
+     "y": 10,
+     "z": 5
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 13,
+     "y": 10,
+     "z": 6
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 7,
+     "y": 10,
+     "z": 7
+    },
+    {
+     "args": {
+      "as": "table"
+     },
+     "kind": "furniture",
+     "x": 9,
+     "y": 10,
+     "z": 7
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 10,
+     "y": 10,
+     "z": 7
+    },
+    {
+     "args": {
+      "as": "stove"
+     },
+     "kind": "hearth",
+     "x": 2,
+     "y": 10,
+     "z": 8
+    },
+    {
+     "args": {
+      "as": "stove"
+     },
+     "kind": "hearth",
+     "x": 2,
+     "y": 10,
+     "z": 9
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 4,
+     "y": 10,
+     "z": 9
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 7,
+     "y": 10,
+     "z": 9
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 10,
+     "y": 10,
+     "z": 9
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 9,
+     "y": 10,
+     "z": 11
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 7,
+     "y": 10,
+     "z": 15
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 8,
+     "y": 10,
+     "z": 15
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 9,
+     "y": 10,
+     "z": 15
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 6,
+     "y": 10,
+     "z": 16
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 10,
+     "y": 10,
+     "z": 16
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 4,
+     "y": 10,
+     "z": 17
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 6,
+     "y": 10,
+     "z": 17
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 10,
+     "y": 10,
+     "z": 17
+    },
+    {
+     "args": {
+      "as": "stove"
+     },
+     "kind": "hearth",
+     "x": 15,
+     "y": 10,
+     "z": 17
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 6,
+     "y": 10,
+     "z": 18
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 10,
+     "y": 10,
+     "z": 18
+    },
+    {
+     "args": {
+      "as": "storage"
+     },
+     "kind": "furniture",
+     "x": 15,
+     "y": 10,
+     "z": 18
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 7,
+     "y": 10,
+     "z": 19
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 8,
+     "y": 10,
+     "z": 19
+    },
+    {
+     "args": {
+      "as": "sofa",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 9,
+     "y": 10,
+     "z": 19
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 9,
+     "y": 10,
+     "z": 23
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 12,
+     "y": 10,
+     "z": 23
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 15,
+     "y": 10,
+     "z": 23
+    },
+    {
+     "args": {
+      "as": "storage"
+     },
+     "kind": "furniture",
+     "x": 11,
+     "y": 10,
+     "z": 24
+    },
+    {
+     "args": {
+      "as": "cooking_pot"
+     },
+     "kind": "furniture",
+     "x": 9,
+     "y": 11,
+     "z": 16
+    },
+    {
+     "args": {
+      "as": "stove"
+     },
+     "kind": "hearth",
+     "x": 8,
+     "y": 11,
+     "z": 17
+    },
+    {
+     "args": {
+      "as": "cooking_pot"
+     },
+     "kind": "furniture",
+     "x": 2,
+     "y": 11,
+     "z": 21
+    }
+   ],
+   "size": [
+    18,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 17,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 4,
+     "y": 9,
+     "z": 26
     }
    ]
   }
