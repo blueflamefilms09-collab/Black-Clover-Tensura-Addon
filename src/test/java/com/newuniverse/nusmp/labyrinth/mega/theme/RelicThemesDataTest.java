@@ -34,7 +34,8 @@ class RelicThemesDataTest {
     /** The themes the mod ships (the same list as {@code ThemeDataTest}): the file is checked against these, whatever the enum on the class path holds. */
     private static final List<String> SHIPPED = List.of("gravity", "blood", "spatial", "flame", "frost", "verdant", "storm", "shadow", "astral",
             "radiant", "abyss", "feywild_grove", "dwarven_forgehold", "crystal_geode", "sunken_temple", "holy_church", "celestial_court",
-            "sky_citadel", "mountain_monastery", "cursed_archive", "necropolis", "vampire_castle", "haunted_manor");
+            "sky_citadel", "mountain_monastery", "cursed_archive", "necropolis", "vampire_castle", "haunted_manor", "fungal_underdark",
+            "infernal_foundry", "drowned_crypt", "spider_warrens");
 
     private static String raw() throws IOException { return Files.readString(FILE, StandardCharsets.UTF_8); }
 

@@ -1,0 +1,51 @@
+{
+  "_why": "A sunken crypt: a burial vault the sea took back. The walls are dark prismarine (the colour of stone with barnacles and brine on it), the floors mossy stone brick, the pillars deepslate brick, the keystones prismarine brick, the rubble cobbled deepslate, the cracked wall cracked stone brick, and where the floor is worn it is flecked with dead tube coral (a barnacle crust, no living reef), the rough fill dripstone (a vault that has dripped for a thousand years), the wood spruce, the darkest timber of a wrecked ship. It must not be mistaken for Astral (bright quartz and light prismarine) or for the Holy road's Sunken Temple (a bright place of glass and clean prismarine): everything here is dark, wet and green-grey, and the lights turn cold (soul lanterns, soul torches) so that the only warm thing in a flooded nave is a party's own torch. Dark prismarine has stairs and slabs but no wall, so the explicit map hands its walls the plain prismarine wall. Flood and spirit favour it: the toxic flood is the tide coming in, the spirit a drowned priest. The mood is the low hum of a conduit under water, the ambient a drip from the vault roof. Darker than most (light -2), danger 1.15: the drowned dead are slow, and the air is the real enemy.",
+  "id": "drowned_crypt",
+  "name": "Drowned Crypt",
+  "color": "#2E6F80",
+  "families": {
+    "brick": "minecraft:dark_prismarine",
+    "tile": "minecraft:mossy_stone_bricks",
+    "polished": "minecraft:deepslate_bricks",
+    "chiseled": "minecraft:prismarine_bricks",
+    "cobbled": "minecraft:cobbled_deepslate",
+    "cracked_brick": "minecraft:cracked_stone_bricks",
+    "cracked_tile": "minecraft:dead_tube_coral_block",
+    "rock": "minecraft:dripstone_block",
+    "wood": "minecraft:spruce_planks"
+  },
+  "explicit": {
+    "minecraft:deepslate_brick_wall": "minecraft:prismarine_wall",
+    "minecraft:lantern": "minecraft:soul_lantern",
+    "minecraft:wall_torch": "minecraft:soul_wall_torch",
+    "minecraft:torch": "minecraft:soul_torch",
+    "minecraft:campfire": "minecraft:soul_campfire"
+  },
+  "relics": {
+    "keywords": [
+      "drown",
+      "barnacle",
+      "krake",
+      "jellyfish",
+      "leviathan",
+      "kelp",
+      "undertow",
+      "wreck",
+      "wavebreak"
+    ]
+  },
+  "catastrophes": {
+    "collapse": 1,
+    "flood": 4,
+    "spirit": 3
+  },
+  "ambient": "minecraft:dripping_water",
+  "light": -2,
+  "sound": {
+    "id": "minecraft:block.conduit.ambient",
+    "volume": 0.4,
+    "pitch": 0.6,
+    "every": 5
+  },
+  "danger": 1.15
+}

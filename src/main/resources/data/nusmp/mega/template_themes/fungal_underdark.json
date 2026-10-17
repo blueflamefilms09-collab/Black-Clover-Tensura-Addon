@@ -1,0 +1,17 @@
+{
+  "theme": "fungal_underdark",
+  "templates": [
+    "nusmp:mega/hall/fungal_underdark_",
+    "nusmp:mega/cavern/fungal_underdark_",
+    "nusmp:mega/set/fungal_underdark_",
+    "nusmp:mega/trap/fungal_underdark_",
+    "nusmp:mega/safe/fungal_underdark_"
+  ],
+  "relative": {
+    "mega/hall/fungal_underdark_": 30,
+    "mega/cavern/fungal_underdark_": 10,
+    "mega/set/fungal_underdark_": 20,
+    "mega/trap/fungal_underdark_": 20,
+    "mega/safe/fungal_underdark_": 20
+  }
+}

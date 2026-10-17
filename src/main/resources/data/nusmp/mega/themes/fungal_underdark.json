@@ -1,0 +1,59 @@
+{
+  "_why": "The Underdark, the evil road's mushroom world: a drow house carved into a fungus cavern. The walls are packed mud (damp, brown, earthy: the cave's own rough masonry) with patches of old mud brick showing through where the wear is, and every stair, slab and wall post of the walls is mud brick, the floors polished blackstone speckled with mycelium where the wear is, the pillars and trim obsidian with crying obsidian keystones (the black-and-purple of a drow house, whose tears also give the keystones a faint purple glow), the rough fill blackstone over smooth basalt, and the wood is warped planks, the colour of fungus stems. It must not be mistaken for Shadow (polished blackstone BRICK walls, deepslate floors, nothing growing) or Flame (raw blackstone, magma): here the walls are brown packed mud and the floor wear is living mycelium. It must not be mistaken for the Feywild Grove either (mud brick walls too, but over mossy stone floors with pale polished diorite and green light): this one is brown mud over black floors with obsidian and violet glow, and the Grove's walls are the brick, not the packed mud. Obsidian and packed mud have no stairs, slabs or walls, so the explicit map gives the pillar shapes polished blackstone ones and the wall shapes mud brick ones. Lights turn cold (soul lanterns, soul torches): the Underdark's faerie fire is blue and violet, and the warm glow in these rooms is shroomlight and nothing else, so the mushrooms are the brightest thing a party sees. Spores and spirits favour it (the toxic flood is a spore cloud, the spirit a myconid ghost); mood is the whispering additions of a warped forest, ambient the warped spores. A little dimmer than the baseline (light -2, never under level 6), danger 1.2: the deep is crueller than the surface but kinder than the Abyss itself.",
+  "id": "fungal_underdark",
+  "name": "Fungal Underdark",
+  "color": "#6A4C93",
+  "families": {
+    "brick": "minecraft:packed_mud",
+    "tile": "minecraft:polished_blackstone",
+    "polished": "minecraft:obsidian",
+    "chiseled": "minecraft:crying_obsidian",
+    "cobbled": "minecraft:blackstone",
+    "cracked_brick": "minecraft:mud_bricks",
+    "cracked_tile": "minecraft:mycelium",
+    "rock": "minecraft:smooth_basalt",
+    "wood": "minecraft:warped_planks"
+  },
+  "explicit": {
+    "minecraft:deepslate_brick_stairs": "minecraft:mud_brick_stairs",
+    "minecraft:deepslate_brick_slab": "minecraft:mud_brick_slab",
+    "minecraft:deepslate_brick_wall": "minecraft:mud_brick_wall",
+    "minecraft:polished_deepslate_stairs": "minecraft:polished_blackstone_stairs",
+    "minecraft:polished_deepslate_slab": "minecraft:polished_blackstone_slab",
+    "minecraft:polished_deepslate_wall": "minecraft:polished_blackstone_wall",
+    "minecraft:lantern": "minecraft:soul_lantern",
+    "minecraft:wall_torch": "minecraft:soul_wall_torch",
+    "minecraft:torch": "minecraft:soul_torch",
+    "minecraft:campfire": "minecraft:soul_campfire"
+  },
+  "relics": {
+    "keywords": [
+      "spore",
+      "fungal",
+      "fungus",
+      "myconid",
+      "fungi",
+      "underdark",
+      "pudding",
+      "elvenkind",
+      "toadstool",
+      "mycel",
+      "truffle",
+      "shroom"
+    ]
+  },
+  "catastrophes": {
+    "collapse": 1,
+    "flood": 2,
+    "spirit": 3
+  },
+  "ambient": "minecraft:warped_spore",
+  "light": -2,
+  "sound": {
+    "id": "minecraft:ambient.warped_forest.additions",
+    "volume": 0.5,
+    "pitch": 0.7,
+    "every": 5
+  },
+  "danger": 1.2
+}

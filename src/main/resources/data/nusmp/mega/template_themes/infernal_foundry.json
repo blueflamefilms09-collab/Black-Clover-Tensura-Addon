@@ -1,0 +1,19 @@
+{
+  "theme": "infernal_foundry",
+  "templates": [
+    "nusmp:mega/hall/infernal_foundry_",
+    "nusmp:mega/trial/infernal_foundry_",
+    "nusmp:mega/puzzle/infernal_foundry_",
+    "nusmp:mega/set/infernal_foundry_",
+    "nusmp:mega/safe/infernal_foundry_",
+    "nusmp:mega/treasure/infernal_foundry_"
+  ],
+  "relative": {
+    "mega/hall/infernal_foundry_": 30,
+    "mega/trial/infernal_foundry_": 20,
+    "mega/puzzle/infernal_foundry_": 20,
+    "mega/set/infernal_foundry_": 20,
+    "mega/safe/infernal_foundry_": 20,
+    "mega/treasure/infernal_foundry_": 20
+  }
+}

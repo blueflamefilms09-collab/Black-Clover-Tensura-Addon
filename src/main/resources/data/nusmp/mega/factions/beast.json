@@ -38,7 +38,11 @@
     "holy_church": 1,
     "celestial_court": 1,
     "sky_citadel": 3,
-    "mountain_monastery": 4
+    "mountain_monastery": 4,
+    "fungal_underdark": 2,
+    "infernal_foundry": 1,
+    "drowned_crypt": 1,
+    "spider_warrens": 2
   },
   "drops": {
     "meat": "raw_direwolf_haunch",

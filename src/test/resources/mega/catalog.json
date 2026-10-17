@@ -268,6 +268,14 @@
      "weight": 20
     },
     {
+     "template": "nusmp:mega/safe/drowned_crypt_air_bell",
+     "weight": 20
+    },
+    {
+     "template": "nusmp:mega/safe/fungal_underdark_myconid_garden",
+     "weight": 20
+    },
+    {
      "template": "nusmp:mega/safe/haunted_manor_master_bedroom",
      "weight": 20
     },
@@ -284,12 +292,20 @@
      "weight": 20
     },
     {
+     "template": "nusmp:mega/safe/infernal_foundry_smelters_rest",
+     "weight": 20
+    },
+    {
      "template": "nusmp:mega/safe/mountain_monastery_hot_springs",
      "weight": 20
     },
     {
      "template": "nusmp:mega/safe/refectory",
      "weight": 3
+    },
+    {
+     "template": "nusmp:mega/safe/spider_warrens_silk_nook",
+     "weight": 20
     },
     {
      "template": "nusmp:mega/safe/workshop_a",
@@ -316,6 +332,14 @@
     {
      "template": "nusmp:mega/cavern/fungal_grotto_b",
      "weight": 6
+    },
+    {
+     "template": "nusmp:mega/cavern/fungal_underdark_darklake",
+     "weight": 10
+    },
+    {
+     "template": "nusmp:mega/cavern/fungal_underdark_spore_forest",
+     "weight": 10
     },
     {
      "template": "nusmp:mega/cavern/overgrown_cavern",
@@ -494,6 +518,14 @@
      "weight": 20
     },
     {
+     "template": "nusmp:mega/hall/drowned_crypt_flooded_nave",
+     "weight": 30
+    },
+    {
+     "template": "nusmp:mega/hall/drowned_crypt_sarcophagus_vault",
+     "weight": 30
+    },
+    {
      "template": "nusmp:mega/hall/dwarven_forgehold_chasm_forge",
      "weight": 20
     },
@@ -518,6 +550,14 @@
      "weight": 20
     },
     {
+     "template": "nusmp:mega/hall/fungal_underdark_drow_enclave",
+     "weight": 30
+    },
+    {
+     "template": "nusmp:mega/hall/fungal_underdark_fungus_farm",
+     "weight": 30
+    },
+    {
      "template": "nusmp:mega/hall/great_hall",
      "weight": 1
     },
@@ -540,6 +580,14 @@
     {
      "template": "nusmp:mega/hall/holy_church_nave",
      "weight": 20
+    },
+    {
+     "template": "nusmp:mega/hall/infernal_foundry_grand_furnace",
+     "weight": 30
+    },
+    {
+     "template": "nusmp:mega/hall/infernal_foundry_penal_forge",
+     "weight": 30
     },
     {
      "template": "nusmp:mega/hall/kitchen_larder",
@@ -618,6 +666,14 @@
      "weight": 30
     },
     {
+     "template": "nusmp:mega/hall/spider_warrens_cocoon_larder",
+     "weight": 30
+    },
+    {
+     "template": "nusmp:mega/hall/spider_warrens_web_great_hall",
+     "weight": 30
+    },
+    {
      "template": "nusmp:mega/hall/sunken_temple_coral_atrium",
      "weight": 20
     },
@@ -682,11 +738,19 @@
      "weight": 20
     },
     {
+     "template": "nusmp:mega/puzzle/drowned_crypt_tide_gate",
+     "weight": 20
+    },
+    {
      "template": "nusmp:mega/puzzle/feywild_grove_fairy_ring",
      "weight": 20
     },
     {
      "template": "nusmp:mega/puzzle/holy_church_confessional",
+     "weight": 20
+    },
+    {
+     "template": "nusmp:mega/puzzle/infernal_foundry_contract_hall",
      "weight": 20
     },
     {
@@ -714,6 +778,14 @@
      "weight": 20
     },
     {
+     "template": "nusmp:mega/safe/drowned_crypt_air_bell",
+     "weight": 20
+    },
+    {
+     "template": "nusmp:mega/safe/fungal_underdark_myconid_garden",
+     "weight": 20
+    },
+    {
      "template": "nusmp:mega/safe/haunted_manor_master_bedroom",
      "weight": 20
     },
@@ -730,12 +802,20 @@
      "weight": 20
     },
     {
+     "template": "nusmp:mega/safe/infernal_foundry_smelters_rest",
+     "weight": 20
+    },
+    {
      "template": "nusmp:mega/safe/mountain_monastery_hot_springs",
      "weight": 20
     },
     {
      "template": "nusmp:mega/safe/refectory",
      "weight": 3
+    },
+    {
+     "template": "nusmp:mega/safe/spider_warrens_silk_nook",
+     "weight": 20
     },
     {
      "template": "nusmp:mega/safe/workshop_a",
@@ -762,6 +842,10 @@
      "weight": 20
     },
     {
+     "template": "nusmp:mega/set/drowned_crypt_drowned_chapel",
+     "weight": 20
+    },
+    {
      "template": "nusmp:mega/set/dwarven_forgehold_vault_of_kings",
      "weight": 20
     },
@@ -770,11 +854,19 @@
      "weight": 20
     },
     {
+     "template": "nusmp:mega/set/fungal_underdark_myconid_circle",
+     "weight": 20
+    },
+    {
      "template": "nusmp:mega/set/haunted_manor_nursery",
      "weight": 20
     },
     {
      "template": "nusmp:mega/set/holy_church_bell_tower",
+     "weight": 20
+    },
+    {
+     "template": "nusmp:mega/set/infernal_foundry_soul_wheel",
      "weight": 20
     },
     {
@@ -787,6 +879,10 @@
     },
     {
      "template": "nusmp:mega/set/sky_citadel_storm_spire",
+     "weight": 20
+    },
+    {
+     "template": "nusmp:mega/set/spider_warrens_queens_lair",
      "weight": 20
     },
     {
@@ -808,6 +904,10 @@
     {
      "template": "nusmp:mega/trap/dark_room",
      "weight": 7
+    },
+    {
+     "template": "nusmp:mega/trap/fungal_underdark_chasm_ledges",
+     "weight": 20
     },
     {
      "template": "nusmp:mega/trap/haunted_manor_attic",
@@ -850,6 +950,10 @@
      "weight": 20
     },
     {
+     "template": "nusmp:mega/treasure/drowned_crypt_pearl_reliquary",
+     "weight": 20
+    },
+    {
      "template": "nusmp:mega/treasure/dwarven_forgehold_hoard_nook",
      "weight": 20
     },
@@ -862,11 +966,19 @@
      "weight": 20
     },
     {
+     "template": "nusmp:mega/treasure/infernal_foundry_counting_house",
+     "weight": 20
+    },
+    {
      "template": "nusmp:mega/treasure/necropolis_burial_vault",
      "weight": 20
     },
     {
      "template": "nusmp:mega/treasure/sky_citadel_pantry",
+     "weight": 20
+    },
+    {
+     "template": "nusmp:mega/treasure/spider_warrens_egg_cache",
      "weight": 20
     },
     {
@@ -886,6 +998,10 @@
      "weight": 20
     },
     {
+     "template": "nusmp:mega/trial/drowned_crypt_drowned_font",
+     "weight": 20
+    },
+    {
      "template": "nusmp:mega/trial/dwarven_forgehold_anvil_trial",
      "weight": 20
     },
@@ -894,11 +1010,19 @@
      "weight": 20
     },
     {
+     "template": "nusmp:mega/trial/infernal_foundry_cage_arena",
+     "weight": 20
+    },
+    {
      "template": "nusmp:mega/trial/mountain_monastery_duel_ring",
      "weight": 20
     },
     {
      "template": "nusmp:mega/trial/sky_citadel_thunder_court",
+     "weight": 20
+    },
+    {
+     "template": "nusmp:mega/trial/spider_warrens_brood_hatch",
      "weight": 20
     },
     {
@@ -1092,6 +1216,14 @@
      "weight": 20
     },
     {
+     "template": "nusmp:mega/hall/drowned_crypt_flooded_nave",
+     "weight": 30
+    },
+    {
+     "template": "nusmp:mega/hall/drowned_crypt_sarcophagus_vault",
+     "weight": 30
+    },
+    {
      "template": "nusmp:mega/hall/dwarven_forgehold_chasm_forge",
      "weight": 20
     },
@@ -1116,6 +1248,14 @@
      "weight": 20
     },
     {
+     "template": "nusmp:mega/hall/fungal_underdark_drow_enclave",
+     "weight": 30
+    },
+    {
+     "template": "nusmp:mega/hall/fungal_underdark_fungus_farm",
+     "weight": 30
+    },
+    {
      "template": "nusmp:mega/hall/great_hall",
      "weight": 1
     },
@@ -1138,6 +1278,14 @@
     {
      "template": "nusmp:mega/hall/holy_church_nave",
      "weight": 20
+    },
+    {
+     "template": "nusmp:mega/hall/infernal_foundry_grand_furnace",
+     "weight": 30
+    },
+    {
+     "template": "nusmp:mega/hall/infernal_foundry_penal_forge",
+     "weight": 30
     },
     {
      "template": "nusmp:mega/hall/kitchen_larder",
@@ -1213,6 +1361,14 @@
     },
     {
      "template": "nusmp:mega/hall/sky_citadel_wind_gallery",
+     "weight": 30
+    },
+    {
+     "template": "nusmp:mega/hall/spider_warrens_cocoon_larder",
+     "weight": 30
+    },
+    {
+     "template": "nusmp:mega/hall/spider_warrens_web_great_hall",
      "weight": 30
     },
     {
@@ -2576,6 +2732,293 @@
     }
    ],
    "themes": []
+  },
+  "nusmp:mega/cavern/fungal_underdark_darklake": {
+   "kind": "CAVERN",
+   "markers": [
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 28,
+     "y": 9,
+     "z": 8
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 15,
+     "y": 9,
+     "z": 10
+    },
+    {
+     "args": {
+      "faction": "aquatic"
+     },
+     "kind": "faction",
+     "x": 24,
+     "y": 9,
+     "z": 10
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 8,
+     "y": 9,
+     "z": 15
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 28,
+     "y": 9,
+     "z": 16
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 9,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 29,
+     "y": 9,
+     "z": 24
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 6,
+     "y": 9,
+     "z": 25
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 20,
+     "y": 9,
+     "z": 26
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 15,
+     "y": 9,
+     "z": 27
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 25,
+     "y": 9,
+     "z": 27
+    }
+   ],
+   "size": [
+    36,
+    48,
+    36
+   ],
+   "sockets": [
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 35,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 35
+    }
+   ],
+   "themes": [
+    "fungal_underdark"
+   ]
+  },
+  "nusmp:mega/cavern/fungal_underdark_spore_forest": {
+   "kind": "CAVERN",
+   "markers": [
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 37,
+     "y": 9,
+     "z": 7
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 24,
+     "y": 9,
+     "z": 9
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 12,
+     "y": 9,
+     "z": 12
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 28,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 22,
+     "y": 9,
+     "z": 14
+    },
+    {
+     "args": {
+      "faction": "insect"
+     },
+     "kind": "faction",
+     "x": 32,
+     "y": 9,
+     "z": 16
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 19,
+     "y": 9,
+     "z": 17
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 23,
+     "y": 9,
+     "z": 21
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 12,
+     "y": 9,
+     "z": 25
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 30,
+     "y": 9,
+     "z": 27
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 14,
+     "y": 9,
+     "z": 29
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 9,
+     "y": 10,
+     "z": 28
+    }
+   ],
+   "size": [
+    45,
+    48,
+    36
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 31,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 22,
+     "y": 9,
+     "z": 35
+    }
+   ],
+   "themes": [
+    "fungal_underdark"
+   ]
   },
   "nusmp:mega/cavern/overgrown_cavern": {
    "kind": "CAVERN",
@@ -7940,6 +8383,300 @@
     "cursed_archive"
    ]
   },
+  "nusmp:mega/hall/drowned_crypt_flooded_nave": {
+   "kind": "HALL",
+   "markers": [
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 12,
+     "y": 9,
+     "z": 11
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 14,
+     "y": 9,
+     "z": 15
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 11,
+     "y": 9,
+     "z": 17
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 6,
+     "y": 9,
+     "z": 20
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 15,
+     "y": 9,
+     "z": 20
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 20,
+     "y": 9,
+     "z": 20
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 23
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 21,
+     "y": 9,
+     "z": 23
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 9,
+     "y": 9,
+     "z": 24
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 18,
+     "y": 9,
+     "z": 24
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 14,
+     "y": 9,
+     "z": 27
+    },
+    {
+     "args": {
+      "faction": "aquatic"
+     },
+     "kind": "faction",
+     "x": 11,
+     "y": 9,
+     "z": 29
+    }
+   ],
+   "size": [
+    27,
+    48,
+    36
+   ],
+   "sockets": [
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 26,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 35
+    }
+   ],
+   "themes": [
+    "drowned_crypt"
+   ]
+  },
+  "nusmp:mega/hall/drowned_crypt_sarcophagus_vault": {
+   "kind": "HALL",
+   "markers": [
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 10,
+     "y": 9,
+     "z": 7
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 16,
+     "y": 9,
+     "z": 8
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 13,
+     "y": 9,
+     "z": 10
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 7,
+     "y": 9,
+     "z": 11
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 19,
+     "y": 9,
+     "z": 11
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 17,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 11,
+     "y": 9,
+     "z": 14
+    },
+    {
+     "args": {
+      "faction": "undead"
+     },
+     "kind": "faction",
+     "x": 7,
+     "y": 9,
+     "z": 15
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 12,
+     "y": 9,
+     "z": 17
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 16,
+     "y": 9,
+     "z": 18
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 10,
+     "y": 9,
+     "z": 19
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 14,
+     "y": 9,
+     "z": 20
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 26,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 26
+    }
+   ],
+   "themes": [
+    "drowned_crypt"
+   ]
+  },
   "nusmp:mega/hall/dwarven_forgehold_chasm_forge": {
    "kind": "HALL",
    "markers": [
@@ -8898,6 +9635,289 @@
     "feywild_grove"
    ]
   },
+  "nusmp:mega/hall/fungal_underdark_drow_enclave": {
+   "kind": "HALL",
+   "markers": [
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 7,
+     "y": 9,
+     "z": 7
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 14,
+     "y": 9,
+     "z": 10
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 7,
+     "y": 9,
+     "z": 16
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 19,
+     "y": 9,
+     "z": 16
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 18
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 9,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 17,
+     "y": 9,
+     "z": 24
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 12,
+     "y": 9,
+     "z": 26
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 21,
+     "y": 18,
+     "z": 9
+    },
+    {
+     "args": {
+      "faction": "cultist"
+     },
+     "kind": "faction",
+     "x": 5,
+     "y": 18,
+     "z": 20
+    }
+   ],
+   "size": [
+    27,
+    48,
+    36
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 4,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 22,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 26,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 35
+    }
+   ],
+   "themes": [
+    "fungal_underdark"
+   ]
+  },
+  "nusmp:mega/hall/fungal_underdark_fungus_farm": {
+   "kind": "HALL",
+   "markers": [
+    {
+     "args": {
+      "faction": "goblin"
+     },
+     "kind": "faction",
+     "x": 16,
+     "y": 9,
+     "z": 5
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 10,
+     "y": 9,
+     "z": 6
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 14,
+     "y": 9,
+     "z": 12
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 12,
+     "y": 9,
+     "z": 19
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 19,
+     "y": 10,
+     "z": 8
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 7,
+     "y": 10,
+     "z": 9
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 17,
+     "y": 10,
+     "z": 16
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 8,
+     "y": 10,
+     "z": 17
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 20,
+     "y": 11,
+     "z": 20
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 26,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 26
+    }
+   ],
+   "themes": [
+    "fungal_underdark"
+   ]
+  },
   "nusmp:mega/hall/great_hall": {
    "kind": "HALL",
    "markers": [
@@ -9818,6 +10838,291 @@
    ],
    "themes": [
     "holy_church"
+   ]
+  },
+  "nusmp:mega/hall/infernal_foundry_grand_furnace": {
+   "kind": "HALL",
+   "markers": [
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 21,
+     "y": 9,
+     "z": 5
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 7,
+     "y": 9,
+     "z": 7
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 16,
+     "y": 9,
+     "z": 10
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 10,
+     "y": 9,
+     "z": 12
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 6,
+     "y": 9,
+     "z": 16
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 19,
+     "y": 9,
+     "z": 17
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 7,
+     "y": 9,
+     "z": 23
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 12,
+     "y": 9,
+     "z": 24
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 19,
+     "y": 9,
+     "z": 25
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 10,
+     "y": 9,
+     "z": 28
+    },
+    {
+     "args": {
+      "faction": "demon"
+     },
+     "kind": "faction",
+     "x": 17,
+     "y": 9,
+     "z": 30
+    }
+   ],
+   "size": [
+    27,
+    48,
+    36
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 26,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 35
+    }
+   ],
+   "themes": [
+    "infernal_foundry"
+   ]
+  },
+  "nusmp:mega/hall/infernal_foundry_penal_forge": {
+   "kind": "HALL",
+   "markers": [
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 19,
+     "y": 9,
+     "z": 5
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 7,
+     "y": 9,
+     "z": 7
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 21,
+     "y": 9,
+     "z": 9
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 16,
+     "y": 9,
+     "z": 10
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 9,
+     "y": 9,
+     "z": 11
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 20,
+     "y": 9,
+     "z": 15
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 15,
+     "y": 9,
+     "z": 16
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 9,
+     "y": 9,
+     "z": 17
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 19,
+     "y": 9,
+     "z": 20
+    },
+    {
+     "args": {
+      "faction": "demon"
+     },
+     "kind": "faction",
+     "x": 7,
+     "y": 9,
+     "z": 21
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 26,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 26
+    }
+   ],
+   "themes": [
+    "infernal_foundry"
    ]
   },
   "nusmp:mega/hall/kitchen_larder": {
@@ -12476,6 +13781,319 @@
    ],
    "themes": [
     "sky_citadel"
+   ]
+  },
+  "nusmp:mega/hall/spider_warrens_cocoon_larder": {
+   "kind": "HALL",
+   "markers": [
+    {
+     "args": {
+      "faction": "insect"
+     },
+     "kind": "faction",
+     "x": 13,
+     "y": 9,
+     "z": 6
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 11,
+     "y": 9,
+     "z": 8
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 15,
+     "y": 9,
+     "z": 10
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 8,
+     "y": 9,
+     "z": 11
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 18,
+     "y": 9,
+     "z": 11
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 6,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 20,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 9,
+     "y": 9,
+     "z": 14
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 18,
+     "y": 9,
+     "z": 15
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 11,
+     "y": 9,
+     "z": 16
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 15,
+     "y": 9,
+     "z": 18
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 20
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 26,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 26
+    }
+   ],
+   "themes": [
+    "spider_warrens"
+   ]
+  },
+  "nusmp:mega/hall/spider_warrens_web_great_hall": {
+   "kind": "HALL",
+   "markers": [
+    {
+     "args": {
+      "faction": "insect"
+     },
+     "kind": "faction",
+     "x": 10,
+     "y": 9,
+     "z": 8
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 15,
+     "y": 9,
+     "z": 10
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 6,
+     "y": 9,
+     "z": 12
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 20,
+     "y": 9,
+     "z": 14
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 11,
+     "y": 9,
+     "z": 15
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 16,
+     "y": 9,
+     "z": 17
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 9,
+     "y": 9,
+     "z": 21
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 15,
+     "y": 9,
+     "z": 24
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 11,
+     "y": 9,
+     "z": 27
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 7,
+     "y": 9,
+     "z": 30
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 19,
+     "y": 9,
+     "z": 30
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 5,
+     "y": 18,
+     "z": 6
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 21,
+     "y": 18,
+     "z": 6
+    }
+   ],
+   "size": [
+    27,
+    48,
+    36
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 26,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 35
+    }
+   ],
+   "themes": [
+    "spider_warrens"
    ]
   },
   "nusmp:mega/hall/sunken_temple_coral_atrium": {
@@ -16251,6 +17869,68 @@
     "cursed_archive"
    ]
   },
+  "nusmp:mega/puzzle/drowned_crypt_tide_gate": {
+   "kind": "PUZZLE",
+   "markers": [
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 7,
+     "y": 9,
+     "z": 8
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 15,
+     "y": 9,
+     "z": 12
+    },
+    {
+     "args": {
+      "faction": "aquatic"
+     },
+     "kind": "faction",
+     "x": 4,
+     "y": 9,
+     "z": 14
+    }
+   ],
+   "size": [
+    27,
+    48,
+    18
+   ],
+   "sockets": [
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 17
+    }
+   ],
+   "themes": [
+    "drowned_crypt"
+   ]
+  },
   "nusmp:mega/puzzle/feywild_grove_fairy_ring": {
    "kind": "PUZZLE",
    "markers": [
@@ -16408,6 +18088,68 @@
    ],
    "themes": [
     "holy_church"
+   ]
+  },
+  "nusmp:mega/puzzle/infernal_foundry_contract_hall": {
+   "kind": "PUZZLE",
+   "markers": [
+    {
+     "args": {
+      "faction": "cultist"
+     },
+     "kind": "faction",
+     "x": 4,
+     "y": 9,
+     "z": 5
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 7,
+     "y": 9,
+     "z": 9
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 15,
+     "y": 9,
+     "z": 13
+    }
+   ],
+   "size": [
+    27,
+    48,
+    18
+   ],
+   "sockets": [
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 17
+    }
+   ],
+   "themes": [
+    "infernal_foundry"
    ]
   },
   "nusmp:mega/puzzle/sigil_hall_a": {
@@ -17233,6 +18975,288 @@
    ],
    "themes": [
     "cursed_archive"
+   ]
+  },
+  "nusmp:mega/safe/drowned_crypt_air_bell": {
+   "kind": "SAFE",
+   "markers": [
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 12,
+     "y": 9,
+     "z": 11
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 5,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 3,
+     "y": 10,
+     "z": 7
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 8,
+     "y": 10,
+     "z": 7
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 3,
+     "y": 10,
+     "z": 9
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 5,
+     "y": 10,
+     "z": 9
+    },
+    {
+     "args": {
+      "as": "brazier"
+     },
+     "kind": "hearth",
+     "x": 8,
+     "y": 10,
+     "z": 9
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 11,
+     "y": 10,
+     "z": 9
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 3,
+     "y": 10,
+     "z": 11
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 8,
+     "y": 10,
+     "z": 11
+    }
+   ],
+   "size": [
+    18,
+    48,
+    18
+   ],
+   "sockets": [
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 17,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 17
+    }
+   ],
+   "themes": [
+    "drowned_crypt"
+   ]
+  },
+  "nusmp:mega/safe/fungal_underdark_myconid_garden": {
+   "kind": "SAFE",
+   "markers": [
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 12,
+     "y": 9,
+     "z": 6
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 5,
+     "y": 9,
+     "z": 11
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 3,
+     "y": 10,
+     "z": 3
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 8,
+     "y": 10,
+     "z": 3
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 13,
+     "y": 10,
+     "z": 3
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 8,
+     "y": 10,
+     "z": 5
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 5,
+     "y": 10,
+     "z": 8
+    },
+    {
+     "args": {
+      "as": "brazier"
+     },
+     "kind": "hearth",
+     "x": 8,
+     "y": 10,
+     "z": 8
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 11,
+     "y": 10,
+     "z": 8
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 8,
+     "y": 10,
+     "z": 12
+    }
+   ],
+   "size": [
+    18,
+    48,
+    18
+   ],
+   "sockets": [
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 17,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 17
+    }
+   ],
+   "themes": [
+    "fungal_underdark"
    ]
   },
   "nusmp:mega/safe/haunted_manor_master_bedroom": {
@@ -18721,6 +20745,147 @@
     "holy_church"
    ]
   },
+  "nusmp:mega/safe/infernal_foundry_smelters_rest": {
+   "kind": "SAFE",
+   "markers": [
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 12,
+     "y": 9,
+     "z": 6
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 5,
+     "y": 9,
+     "z": 12
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 3,
+     "y": 10,
+     "z": 3
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 8,
+     "y": 10,
+     "z": 5
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 3,
+     "y": 10,
+     "z": 6
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 5,
+     "y": 10,
+     "z": 8
+    },
+    {
+     "args": {
+      "as": "brazier"
+     },
+     "kind": "hearth",
+     "x": 8,
+     "y": 10,
+     "z": 8
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 11,
+     "y": 10,
+     "z": 8
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 3,
+     "y": 10,
+     "z": 9
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 8,
+     "y": 10,
+     "z": 11
+    }
+   ],
+   "size": [
+    18,
+    48,
+    18
+   ],
+   "sockets": [
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 17,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 17
+    }
+   ],
+   "themes": [
+    "infernal_foundry"
+   ]
+  },
   "nusmp:mega/safe/mountain_monastery_hot_springs": {
    "kind": "SAFE",
    "markers": [
@@ -19180,6 +21345,147 @@
     }
    ],
    "themes": []
+  },
+  "nusmp:mega/safe/spider_warrens_silk_nook": {
+   "kind": "SAFE",
+   "markers": [
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 12,
+     "y": 9,
+     "z": 7
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 4,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 3,
+     "y": 10,
+     "z": 3
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 6,
+     "y": 10,
+     "z": 3
+    },
+    {
+     "args": {
+      "as": "bed"
+     },
+     "kind": "bed",
+     "x": 9,
+     "y": 10,
+     "z": 3
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "south"
+     },
+     "kind": "seat",
+     "x": 8,
+     "y": 10,
+     "z": 6
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 5,
+     "y": 10,
+     "z": 9
+    },
+    {
+     "args": {
+      "as": "brazier"
+     },
+     "kind": "hearth",
+     "x": 8,
+     "y": 10,
+     "z": 9
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "west"
+     },
+     "kind": "seat",
+     "x": 11,
+     "y": 10,
+     "z": 9
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 8,
+     "y": 10,
+     "z": 12
+    }
+   ],
+   "size": [
+    18,
+    48,
+    18
+   ],
+   "sockets": [
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 17,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 17
+    }
+   ],
+   "themes": [
+    "spider_warrens"
+   ]
   },
   "nusmp:mega/safe/workshop_a": {
    "kind": "SAFE",
@@ -20676,6 +22982,154 @@
     "cursed_archive"
    ]
   },
+  "nusmp:mega/set/drowned_crypt_drowned_chapel": {
+   "kind": "SET_PIECE",
+   "markers": [
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 22,
+     "y": 9,
+     "z": 16
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 19,
+     "y": 9,
+     "z": 19
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 15,
+     "y": 9,
+     "z": 21
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 28,
+     "y": 9,
+     "z": 21
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 9,
+     "y": 9,
+     "z": 23
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 33,
+     "y": 9,
+     "z": 23
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 25,
+     "y": 9,
+     "z": 25
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 19,
+     "y": 9,
+     "z": 26
+    },
+    {
+     "args": {},
+     "kind": "room_center",
+     "x": 22,
+     "y": 9,
+     "z": 27
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 23,
+     "y": 9,
+     "z": 33
+    },
+    {
+     "args": {
+      "faction": "aquatic"
+     },
+     "kind": "faction",
+     "x": 19,
+     "y": 11,
+     "z": 10
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 25,
+     "y": 11,
+     "z": 10
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 22,
+     "y": 13,
+     "z": 5
+    }
+   ],
+   "size": [
+    45,
+    48,
+    45
+   ],
+   "sockets": [
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 44,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 22,
+     "y": 9,
+     "z": 44
+    }
+   ],
+   "themes": [
+    "drowned_crypt"
+   ]
+  },
   "nusmp:mega/set/dwarven_forgehold_vault_of_kings": {
    "kind": "SET_PIECE",
    "markers": [
@@ -20984,6 +23438,166 @@
     "feywild_grove"
    ]
   },
+  "nusmp:mega/set/fungal_underdark_myconid_circle": {
+   "kind": "SET_PIECE",
+   "markers": [
+    {
+     "args": {},
+     "kind": "room_center",
+     "x": 22,
+     "y": 8,
+     "z": 22
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 17,
+     "y": 8,
+     "z": 27
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 29,
+     "y": 9,
+     "z": 5
+    },
+    {
+     "args": {
+      "faction": "slime"
+     },
+     "kind": "faction",
+     "x": 12,
+     "y": 9,
+     "z": 6
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 35,
+     "y": 9,
+     "z": 9
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 6,
+     "y": 9,
+     "z": 12
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 15,
+     "y": 9,
+     "z": 15
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 28,
+     "y": 9,
+     "z": 16
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 29,
+     "y": 9,
+     "z": 29
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 39,
+     "y": 9,
+     "z": 30
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 21,
+     "y": 9,
+     "z": 33
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 9,
+     "y": 9,
+     "z": 35
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 34,
+     "y": 9,
+     "z": 36
+    }
+   ],
+   "size": [
+    45,
+    48,
+    45
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 22,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 44,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 22,
+     "y": 9,
+     "z": 44
+    }
+   ],
+   "themes": [
+    "fungal_underdark"
+   ]
+  },
   "nusmp:mega/set/haunted_manor_nursery": {
    "kind": "SET_PIECE",
    "markers": [
@@ -21200,6 +23814,189 @@
    ],
    "themes": [
     "holy_church"
+   ]
+  },
+  "nusmp:mega/set/infernal_foundry_soul_wheel": {
+   "kind": "SET_PIECE",
+   "markers": [
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 12,
+     "y": 9,
+     "z": 8
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 23,
+     "y": 9,
+     "z": 8
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 17,
+     "y": 9,
+     "z": 9
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 17,
+     "y": 9,
+     "z": 14
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 16,
+     "y": 9,
+     "z": 17
+    },
+    {
+     "args": {
+      "faction": "demon"
+     },
+     "kind": "faction",
+     "x": 7,
+     "y": 9,
+     "z": 20
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 21,
+     "y": 9,
+     "z": 20
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 28,
+     "y": 9,
+     "z": 20
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 17,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 12,
+     "y": 9,
+     "z": 23
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 25,
+     "y": 9,
+     "z": 23
+    },
+    {
+     "args": {},
+     "kind": "room_center",
+     "x": 17,
+     "y": 9,
+     "z": 26
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 22,
+     "y": 9,
+     "z": 26
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 18,
+     "y": 9,
+     "z": 28
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 28,
+     "y": 9,
+     "z": 28
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 7,
+     "y": 9,
+     "z": 29
+    }
+   ],
+   "size": [
+    36,
+    48,
+    36
+   ],
+   "sockets": [
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 35,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 35
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 22,
+     "y": 9,
+     "z": 35
+    }
+   ],
+   "themes": [
+    "infernal_foundry"
    ]
   },
   "nusmp:mega/set/mountain_monastery_cliff_stairs": {
@@ -21624,6 +24421,180 @@
    ],
    "themes": [
     "sky_citadel"
+   ]
+  },
+  "nusmp:mega/set/spider_warrens_queens_lair": {
+   "kind": "SET_PIECE",
+   "markers": [
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 33,
+     "y": 9,
+     "z": 7
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 17,
+     "y": 9,
+     "z": 8
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 23,
+     "y": 9,
+     "z": 11
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 12,
+     "y": 9,
+     "z": 12
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 28,
+     "y": 9,
+     "z": 16
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 8,
+     "y": 9,
+     "z": 18
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 16,
+     "y": 9,
+     "z": 28
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 32,
+     "y": 9,
+     "z": 32
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 7,
+     "y": 9,
+     "z": 33
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 20,
+     "y": 9,
+     "z": 34
+    },
+    {
+     "args": {
+      "faction": "insect"
+     },
+     "kind": "faction",
+     "x": 12,
+     "y": 9,
+     "z": 38
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 18,
+     "y": 10,
+     "z": 17
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 36,
+     "y": 10,
+     "z": 18
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 26,
+     "y": 10,
+     "z": 27
+    },
+    {
+     "args": {},
+     "kind": "room_center",
+     "x": 22,
+     "y": 12,
+     "z": 24
+    }
+   ],
+   "size": [
+    45,
+    48,
+    45
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 22,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 44,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 22,
+     "y": 9,
+     "z": 44
+    }
+   ],
+   "themes": [
+    "spider_warrens"
    ]
   },
   "nusmp:mega/set/sunken_temple_heart_of_tides": {
@@ -22708,6 +25679,174 @@
    ],
    "themes": []
   },
+  "nusmp:mega/trap/fungal_underdark_chasm_ledges": {
+   "kind": "TRAP",
+   "markers": [
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 13,
+     "y": 8,
+     "z": 18
+    },
+    {
+     "args": {
+      "faction": "insect"
+     },
+     "kind": "faction",
+     "x": 9,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 21,
+     "y": 9,
+     "z": 5
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 6,
+     "y": 9,
+     "z": 6
+    },
+    {
+     "args": {
+      "type": "pit"
+     },
+     "kind": "trap",
+     "x": 13,
+     "y": 9,
+     "z": 6
+    },
+    {
+     "args": {
+      "type": "pit"
+     },
+     "kind": "trap",
+     "x": 11,
+     "y": 9,
+     "z": 8
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 4,
+     "y": 9,
+     "z": 9
+    },
+    {
+     "args": {
+      "type": "pit"
+     },
+     "kind": "trap",
+     "x": 11,
+     "y": 9,
+     "z": 10
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 13,
+     "y": 9,
+     "z": 12
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 14,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 7,
+     "y": 9,
+     "z": 19
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 20,
+     "y": 9,
+     "z": 20
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 11,
+     "y": 9,
+     "z": 21
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 26,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 26
+    }
+   ],
+   "themes": [
+    "fungal_underdark"
+   ]
+  },
   "nusmp:mega/trap/haunted_manor_attic": {
    "kind": "TRAP",
    "markers": [
@@ -23766,6 +26905,74 @@
     "cursed_archive"
    ]
   },
+  "nusmp:mega/treasure/drowned_crypt_pearl_reliquary": {
+   "kind": "TREASURE",
+   "markers": [
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 13,
+     "y": 9,
+     "z": 9
+    },
+    {
+     "args": {
+      "faction": "aquatic"
+     },
+     "kind": "faction",
+     "x": 13,
+     "y": 9,
+     "z": 12
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 9,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 7,
+     "y": 10,
+     "z": 9
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 9,
+     "y": 10,
+     "z": 9
+    }
+   ],
+   "size": [
+    18,
+    48,
+    18
+   ],
+   "sockets": [
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 17
+    }
+   ],
+   "themes": [
+    "drowned_crypt"
+   ]
+  },
   "nusmp:mega/treasure/dwarven_forgehold_hoard_nook": {
    "kind": "TREASURE",
    "markers": [
@@ -23978,6 +27185,81 @@
     "holy_church"
    ]
   },
+  "nusmp:mega/treasure/infernal_foundry_counting_house": {
+   "kind": "TREASURE",
+   "markers": [
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 10,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 4,
+     "y": 9,
+     "z": 5
+    },
+    {
+     "args": {
+      "faction": "demon"
+     },
+     "kind": "faction",
+     "x": 8,
+     "y": 9,
+     "z": 6
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 12,
+     "y": 9,
+     "z": 7
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 10,
+     "y": 9,
+     "z": 10
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 8,
+     "y": 9,
+     "z": 12
+    }
+   ],
+   "size": [
+    18,
+    48,
+    18
+   ],
+   "sockets": [
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 17
+    }
+   ],
+   "themes": [
+    "infernal_foundry"
+   ]
+  },
   "nusmp:mega/treasure/necropolis_burial_vault": {
    "kind": "TREASURE",
    "markers": [
@@ -24124,6 +27406,74 @@
    ],
    "themes": [
     "sky_citadel"
+   ]
+  },
+  "nusmp:mega/treasure/spider_warrens_egg_cache": {
+   "kind": "TREASURE",
+   "markers": [
+    {
+     "args": {
+      "faction": "insect"
+     },
+     "kind": "faction",
+     "x": 8,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 13,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 5,
+     "y": 9,
+     "z": 5
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 10,
+     "y": 9,
+     "z": 6
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 12,
+     "y": 9,
+     "z": 10
+    }
+   ],
+   "size": [
+    18,
+    48,
+    18
+   ],
+   "sockets": [
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 17
+    }
+   ],
+   "themes": [
+    "spider_warrens"
    ]
   },
   "nusmp:mega/treasure/sunken_temple_offering_nook": {
@@ -24382,6 +27732,75 @@
     "crystal_geode"
    ]
   },
+  "nusmp:mega/trial/drowned_crypt_drowned_font": {
+   "kind": "TRIAL",
+   "markers": [
+    {
+     "args": {
+      "faction": "aquatic"
+     },
+     "kind": "faction",
+     "x": 4,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 6
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 6,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 20
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 26
+    }
+   ],
+   "themes": [
+    "drowned_crypt"
+   ]
+  },
   "nusmp:mega/trial/dwarven_forgehold_anvil_trial": {
    "kind": "TRIAL",
    "markers": [
@@ -24520,6 +27939,75 @@
     "haunted_manor"
    ]
   },
+  "nusmp:mega/trial/infernal_foundry_cage_arena": {
+   "kind": "TRIAL",
+   "markers": [
+    {
+     "args": {
+      "faction": "demon"
+     },
+     "kind": "faction",
+     "x": 4,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 6
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 6,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 20
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 26
+    }
+   ],
+   "themes": [
+    "infernal_foundry"
+   ]
+  },
   "nusmp:mega/trial/mountain_monastery_duel_ring": {
    "kind": "TRIAL",
    "markers": [
@@ -24642,6 +28130,75 @@
    ],
    "themes": [
     "sky_citadel"
+   ]
+  },
+  "nusmp:mega/trial/spider_warrens_brood_hatch": {
+   "kind": "TRIAL",
+   "markers": [
+    {
+     "args": {
+      "faction": "insect"
+     },
+     "kind": "faction",
+     "x": 4,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 6
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 6,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 20
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 26
+    }
+   ],
+   "themes": [
+    "spider_warrens"
    ]
   },
   "nusmp:mega/trial/trial_hall_a": {

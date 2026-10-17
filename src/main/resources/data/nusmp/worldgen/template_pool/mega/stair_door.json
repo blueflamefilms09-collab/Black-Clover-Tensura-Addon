@@ -389,6 +389,24 @@
       }
     },
     {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/drowned_crypt_flooded_nave",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/drowned_crypt_sarcophagus_vault",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
       "weight": 20,
       "element": {
         "element_type": "minecraft:single_pool_element",
@@ -443,6 +461,24 @@
       }
     },
     {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/fungal_underdark_drow_enclave",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/fungal_underdark_fungus_farm",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
       "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
@@ -492,6 +528,24 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/holy_church_nave",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/infernal_foundry_grand_furnace",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/infernal_foundry_penal_forge",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }
@@ -663,6 +717,24 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/sky_citadel_wind_gallery",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/spider_warrens_cocoon_larder",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/spider_warrens_web_great_hall",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }

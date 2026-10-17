@@ -1,0 +1,17 @@
+{
+  "theme": "spider_warrens",
+  "templates": [
+    "nusmp:mega/hall/spider_warrens_",
+    "nusmp:mega/set/spider_warrens_",
+    "nusmp:mega/trial/spider_warrens_",
+    "nusmp:mega/safe/spider_warrens_",
+    "nusmp:mega/treasure/spider_warrens_"
+  ],
+  "relative": {
+    "mega/hall/spider_warrens_": 30,
+    "mega/set/spider_warrens_": 20,
+    "mega/trial/spider_warrens_": 20,
+    "mega/safe/spider_warrens_": 20,
+    "mega/treasure/spider_warrens_": 20
+  }
+}

@@ -113,6 +113,10 @@ public final class GuardianScaling {
             case "necropolis": return Trait.FROST;
             case "vampire_castle": return Trait.BLOOD;
             case "haunted_manor": return Trait.SHADOW;
+            case "fungal_underdark": return Trait.SHADOW;
+            case "infernal_foundry": return Trait.FLAME;
+            case "drowned_crypt": return Trait.GRAVITY;
+            case "spider_warrens": return Trait.VERDANT;
             default: break;
         }
         try { return Trait.valueOf(theme.name()); } catch (IllegalArgumentException unmapped) { return Trait.GRAVITY; }
@@ -206,6 +210,10 @@ public final class GuardianScaling {
             case "necropolis" -> 0xC9B27A;
             case "vampire_castle" -> 0x7A1230;
             case "haunted_manor" -> 0x6E8A82;
+            case "fungal_underdark" -> 0x6A4C93;
+            case "infernal_foundry" -> 0xC2452D;
+            case "drowned_crypt" -> 0x2E6F80;
+            case "spider_warrens" -> 0x9FA3B8;
             default -> 0x9AA0B4;
         };
     }

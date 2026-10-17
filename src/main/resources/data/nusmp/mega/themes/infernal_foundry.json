@@ -1,0 +1,47 @@
+{
+  "_why": "The Nine Hells as a factory: Dis, the iron city whose streets glow the dull red of hot iron. The walls are red nether brick (the red of metal that has not cooled), the floors deepslate tile (the dark iron plates of a casting floor), the trim polished blackstone brick, the keystones and medallions gilded blackstone (hell is paid for in gold), the rubble nether brick, the cracks cracked nether brick and cracked deepslate tile, the rough fill blackstone, the wood dark oak (scaffolding, beams and doors in a smithy). It must not be mistaken for Blood (a reliquary of plain nether bricks with crimson wood and netherrack) or Flame (raw blackstone and basalt): here the red wall sits on a grey iron floor, and gold marks every keystone, which no other theme has. Both kinds of light stay as the templates have them (warm lanterns and soul lanterns together): a foundry is lit by the fire it works with and by the soul fire it burns for fuel. The shapes all exist (red nether brick has stairs, slabs and walls; gilded blackstone is a plain keystone). It is a little brighter than the baseline (light +1, the glow of lava through grates), its mood the crackle of a blast furnace and its ambient the smoke that drifts off the crucibles; danger 1.25, because every hall is a workplace of something that hurts people for a living.",
+  "id": "infernal_foundry",
+  "name": "Infernal Foundry",
+  "color": "#C2452D",
+  "families": {
+    "brick": "minecraft:red_nether_bricks",
+    "tile": "minecraft:deepslate_tiles",
+    "polished": "minecraft:polished_blackstone_bricks",
+    "chiseled": "minecraft:gilded_blackstone",
+    "cobbled": "minecraft:nether_bricks",
+    "cracked_brick": "minecraft:cracked_nether_bricks",
+    "cracked_tile": "minecraft:cracked_deepslate_tiles",
+    "rock": "minecraft:blackstone",
+    "wood": "minecraft:dark_oak_planks"
+  },
+  "explicit": {},
+  "relics": {
+    "keywords": [
+      "devil",
+      "contract",
+      "pact",
+      "foundry",
+      "brimstone",
+      "baator",
+      "damn",
+      "furnace",
+      "chain",
+      "shackle",
+      "hellish"
+    ]
+  },
+  "catastrophes": {
+    "collapse": 2,
+    "flood": 1,
+    "spirit": 3
+  },
+  "ambient": "minecraft:smoke",
+  "light": 1,
+  "sound": {
+    "id": "minecraft:block.blastfurnace.fire_crackle",
+    "volume": 0.45,
+    "pitch": 0.7,
+    "every": 3
+  },
+  "danger": 1.25
+}

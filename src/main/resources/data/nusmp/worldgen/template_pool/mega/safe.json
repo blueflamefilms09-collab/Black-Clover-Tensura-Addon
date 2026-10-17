@@ -32,6 +32,24 @@
       "weight": 20,
       "element": {
         "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/safe/drowned_crypt_air_bell",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/safe/fungal_underdark_myconid_garden",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/safe/haunted_manor_master_bedroom",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
@@ -68,6 +86,15 @@
       "weight": 20,
       "element": {
         "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/safe/infernal_foundry_smelters_rest",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/safe/mountain_monastery_hot_springs",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
@@ -78,6 +105,15 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/safe/refectory",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/safe/spider_warrens_silk_nook",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }

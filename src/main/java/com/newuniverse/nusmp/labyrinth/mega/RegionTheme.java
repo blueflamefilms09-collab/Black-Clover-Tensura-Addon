@@ -58,7 +58,15 @@ public enum RegionTheme {
     /** 1.59.0, the evil road: Ravenloft, a grey gothic keep with crimson trim: a dining hall, a desecrated chapel, coffin crypts, a clock tower, mirrors that show nothing. */
     VAMPIRE_CASTLE(3, 3, Route.ABYSSAL),
     /** 1.59.0, the evil road: a haunted house: plaster walls, dark floors, a nursery with a rocking horse, a ballroom of dancing ghosts, long corridors and sudden big rooms. */
-    HAUNTED_MANOR(3, 3, Route.ABYSSAL);
+    HAUNTED_MANOR(3, 3, Route.ABYSSAL),
+    /** 1.59.0, the Abyssal road only: the Underdark. Forests of huge mushrooms, glowing spores, obsidian and crying obsidian of a drow house, packed-mud tunnels, a dark lake. */
+    FUNGAL_UNDERDARK(3, 3, Route.ABYSSAL),
+    /** 1.59.0, the Abyssal road only: the Nine Hells as a factory. Red nether bricks and iron-dark floors, chains, cages, lava crucibles, anvils, a contract hall. */
+    INFERNAL_FOUNDRY(3, 3, Route.ABYSSAL),
+    /** 1.59.0, the Abyssal road only: a sunken crypt. Dark prismarine and mossy stone with barnacles, kelp-grown sarcophagi, tide gates, air pockets, a drowned chapel. */
+    DROWNED_CRYPT(3, 3, Route.ABYSSAL),
+    /** 1.59.0, the Abyssal road only: a spider queen's warren. Black polished stone and tuff veiled in cobweb, silk pillars, egg sacs, cocoons, silk bridges, the queen's lair. */
+    SPIDER_WARRENS(3, 3, Route.ABYSSAL);
 
     /**
      * The owner's newest brief fixes the Crucible at EXACTLY three distinct Unique-or-higher relics (one pick per region, so one high-tier relic per ten

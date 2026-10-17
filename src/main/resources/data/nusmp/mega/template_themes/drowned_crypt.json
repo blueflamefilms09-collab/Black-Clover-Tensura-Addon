@@ -1,0 +1,19 @@
+{
+  "theme": "drowned_crypt",
+  "templates": [
+    "nusmp:mega/hall/drowned_crypt_",
+    "nusmp:mega/puzzle/drowned_crypt_",
+    "nusmp:mega/trial/drowned_crypt_",
+    "nusmp:mega/set/drowned_crypt_",
+    "nusmp:mega/safe/drowned_crypt_",
+    "nusmp:mega/treasure/drowned_crypt_"
+  ],
+  "relative": {
+    "mega/hall/drowned_crypt_": 30,
+    "mega/puzzle/drowned_crypt_": 20,
+    "mega/trial/drowned_crypt_": 20,
+    "mega/set/drowned_crypt_": 20,
+    "mega/safe/drowned_crypt_": 20,
+    "mega/treasure/drowned_crypt_": 20
+  }
+}

@@ -38,7 +38,11 @@
     "holy_church": 1,
     "celestial_court": 0,
     "sky_citadel": 0,
-    "mountain_monastery": 0
+    "mountain_monastery": 0,
+    "fungal_underdark": 1,
+    "infernal_foundry": 5,
+    "drowned_crypt": 0,
+    "spider_warrens": 1
   },
   "drops": {
     "meat": "raw_monster_meat",

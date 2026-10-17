@@ -37,7 +37,9 @@ class ThemeDataTest {
             "minecraft:end_rod", "minecraft:glow", "minecraft:enchant", "minecraft:white_ash", "minecraft:witch", "minecraft:cloud", "minecraft:smoke", "minecraft:soul_fire_flame",
             "nusmp:light_rukh",
             // 1.59.0 (THEME-B): the petals of the Feywild and the drops of the Sunken Temple (both SimpleParticleType in ParticleTypes)
-            "minecraft:cherry_leaves", "minecraft:falling_water");
+            "minecraft:cherry_leaves", "minecraft:falling_water",
+            // 1.59.0 (THEME-D): the drip of a crypt vault and the falling bits of a spider's web
+            "minecraft:dripping_water", "minecraft:item_cobweb");
     /** Sound events of 1.21.1 that a theme may play as its mood (each one checked against the game's {@code SoundEvents} in the API dump). */
     private static final Set<String> MOOD_SOUNDS = Set.of("minecraft:ambient.cave", "minecraft:ambient.crimson_forest.mood", "minecraft:ambient.warped_forest.mood",
             "minecraft:ambient.soul_sand_valley.mood", "minecraft:ambient.basalt_deltas.mood", "minecraft:block.portal.ambient", "minecraft:block.lava.ambient",
@@ -46,11 +48,14 @@ class ThemeDataTest {
             // 1.59.0 (THEME-B), each one a constant of SoundEvents in the API dump: an allay's hum, a blast furnace, a struck amethyst cluster, a conduit
             "minecraft:entity.allay.ambient_without_item", "minecraft:block.blastfurnace.fire_crackle", "minecraft:block.amethyst_cluster.hit", "minecraft:block.conduit.ambient",
             // 1.59.0 (THEME-C): a turned page, a bat, a creaking door
-            "minecraft:item.book.page_turn", "minecraft:entity.bat.ambient", "minecraft:block.wooden_door.open");
+            "minecraft:item.book.page_turn", "minecraft:entity.bat.ambient", "minecraft:block.wooden_door.open",
+            // 1.59.0 (THEME-D): the warped forest's whispers and a spider
+            "minecraft:ambient.warped_forest.additions", "minecraft:entity.spider.ambient");
     /** The themes the mod ships, in the order of the {@code RegionTheme} enum (append a new one here AND in the enum; a file nobody lists is a stray). */
     private static final List<String> SHIPPED = List.of("gravity", "blood", "spatial", "flame", "frost", "verdant", "storm", "shadow", "astral",
             "radiant", "abyss", "feywild_grove", "dwarven_forgehold", "crystal_geode", "sunken_temple", "holy_church", "celestial_court",
-            "sky_citadel", "mountain_monastery", "cursed_archive", "necropolis", "vampire_castle", "haunted_manor");
+            "sky_citadel", "mountain_monastery", "cursed_archive", "necropolis", "vampire_castle", "haunted_manor", "fungal_underdark",
+            "infernal_foundry", "drowned_crypt", "spider_warrens");
     /** The one mod particle a theme may name: a SimpleParticleType registered by {@code particle/rukh/RukhParticles}. */
     private static final Path RUKH = Path.of("src/main/java/com/newuniverse/nusmp/particle/rukh/RukhParticles.java");
 

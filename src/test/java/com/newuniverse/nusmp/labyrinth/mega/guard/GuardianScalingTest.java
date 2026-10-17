@@ -109,7 +109,9 @@ class GuardianScalingTest {
             java.util.Map.entry("holy_church", Trait.ASTRAL), java.util.Map.entry("celestial_court", Trait.ASTRAL),
             java.util.Map.entry("sky_citadel", Trait.STORM), java.util.Map.entry("mountain_monastery", Trait.FROST),
             java.util.Map.entry("cursed_archive", Trait.VERDANT), java.util.Map.entry("necropolis", Trait.FROST),
-            java.util.Map.entry("vampire_castle", Trait.BLOOD), java.util.Map.entry("haunted_manor", Trait.SHADOW));
+            java.util.Map.entry("vampire_castle", Trait.BLOOD), java.util.Map.entry("haunted_manor", Trait.SHADOW),
+            java.util.Map.entry("fungal_underdark", Trait.SHADOW), java.util.Map.entry("infernal_foundry", Trait.FLAME),
+            java.util.Map.entry("drowned_crypt", Trait.GRAVITY), java.util.Map.entry("spider_warrens", Trait.VERDANT));
 
     @Test
     void everyThemeHasItsOwnTrait() {
