@@ -49,6 +49,14 @@ class NamingTest {
     }
 
     @Test
+    void namingAddsToTheTaxTheForgeAlreadyCharged() {
+        assertEquals(0.25, NamingMath.taxAfterNaming(0.15, 0.10), EPS);
+        assertEquals(0.10, NamingMath.taxAfterNaming(0.0, 0.10), EPS);
+        assertEquals(0.9, NamingMath.taxAfterNaming(0.85, 0.10), EPS);
+        assertEquals(0.10, NamingMath.taxAfterNaming(-1.0, 0.10), EPS);
+    }
+
+    @Test
     void anEvolutionDoublesTheSleep() {
         assertEquals(3600, NamingMath.sleepTicks(180, false));
         assertEquals(7200, NamingMath.sleepTicks(180, true));

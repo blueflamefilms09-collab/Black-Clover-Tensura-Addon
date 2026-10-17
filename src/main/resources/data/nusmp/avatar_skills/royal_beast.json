@@ -1,0 +1,9 @@
+{
+  "id": "tensura:royal_beast",
+  "kind": "unique",
+  "name": "Royal Beast",
+  "ep_tax": 8,
+  "min_ep": 1500,
+  "tint": "#C98A4A",
+  "description": "The beast in you wears a crown."
+}

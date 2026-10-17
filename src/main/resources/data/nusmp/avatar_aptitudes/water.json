@@ -1,0 +1,13 @@
+{
+  "name": "Water",
+  "rarity": "COMMON",
+  "tax_percent": 0,
+  "magic": "water",
+  "skills": [
+    "tensura:water_manipulation",
+    "tensura:water_blade",
+    "tensura:water_cutter"
+  ],
+  "tint": "#4FA8FF",
+  "description": "Tide and rain. Calm until it is not."
+}

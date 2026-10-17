@@ -1,0 +1,9 @@
+{
+  "id": "tensura:lust",
+  "kind": "ultimate",
+  "name": "Lust",
+  "ep_tax": 12,
+  "min_ep": 3000,
+  "tint": "#FF8AD8",
+  "description": "Desire as a weapon."
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Dark",
+  "rarity": "UNCOMMON",
+  "tax_percent": 4,
+  "magic": "dark",
+  "skills": [
+    "tensura:darkness",
+    "tensura:darkness_cannon",
+    "tensura:dark_cube"
+  ],
+  "tint": "#8E62D0",
+  "description": "Shadow that keeps its own counsel."
+}

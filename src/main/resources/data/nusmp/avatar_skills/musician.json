@@ -1,0 +1,9 @@
+{
+  "id": "tensura:musician",
+  "kind": "unique",
+  "name": "Musician",
+  "ep_tax": 3,
+  "min_ep": 400,
+  "tint": "#FFD0F0",
+  "description": "A tune that steadies friends."
+}

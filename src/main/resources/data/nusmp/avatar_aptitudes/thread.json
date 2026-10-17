@@ -1,0 +1,13 @@
+{
+  "name": "Thread",
+  "rarity": "RARE",
+  "tax_percent": 8,
+  "magic": "thread",
+  "skills": [
+    "tensura:sticky_steel_thread",
+    "tensura:shadow_bind",
+    "tensura:curse_bind"
+  ],
+  "tint": "#FF3355",
+  "description": "Red lines of fate pulled tight."
+}

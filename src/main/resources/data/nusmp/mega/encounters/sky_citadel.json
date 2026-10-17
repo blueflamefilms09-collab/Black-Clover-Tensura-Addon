@@ -1,0 +1,182 @@
+{
+  "comment": "Why: the Sky Citadel is a cloud giant's castle, open to the weather on its galleries and bright by day, so the party is nearly always lit and the dice would meet it often; the roll bonus of minus one takes back some of that, and the budget is a tenth larger because everything here was built for something bigger than the party. The monsters are what lives in a castle in the clouds: harpies and flocks on the wing (phantoms and owls), the storm itself (breezes, vexes and the elemental tag), the giants' own kin (the ogre tag, with the castle's armour for company) and the beasts of the aeries (the beast tag). A fall is the real danger of this place, so none of the encounters is a trap by itself; they are what is waiting on the next gallery.",
+  "description": "The Holy road's cloud giant castle: wind galleries and long drops. Harpy flocks, storm spirits, breezes, a giant's kin and the beasts of the aeries.",
+  "rollBonus": -1,
+  "budgetScale": 1.1,
+  "defaultFaction": "ogre",
+  "entries": [
+    {
+      "id": "sky_harpy_scouts",
+      "comment": "The breather of the castle: one or two harpies on the wing (phantoms), who circle a gallery before they dive. Explicit ids and no upper threat, so the minor band never runs dry on a floor where the ogre tag is too heavy for the first floors.",
+      "band": "minor",
+      "weight": 14,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:phantom", "count": "1-2"}
+      ],
+      "cue": {"sound": "minecraft:entity.phantom.ambient", "volume": 0.6, "pitch": 1.3, "particle": "minecraft:cloud", "count": 6}
+    },
+    {
+      "id": "sky_storm_wisps",
+      "comment": "The small lightning of the castle: a couple of vexes drawn to a bright party on a gallery, the common nuisance of a place that is bright by day and by night.",
+      "band": "minor",
+      "weight": 10,
+      "maxThreat": 8,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:vex", "count": "2-3"}
+      ],
+      "needs": {"lit": true},
+      "cells": 2,
+      "cue": {"sound": "minecraft:entity.vex.ambient", "volume": 0.6, "pitch": 1.5, "particle": "minecraft:electric_spark", "count": 8}
+    },
+    {
+      "id": "sky_eyrie_chicks",
+      "comment": "Owls from the eyrie, drawn to a bright party: two or three, cheap and fast, from the upper galleries.",
+      "band": "minor",
+      "weight": 8,
+      "maxThreat": 7,
+      "mobs": [
+        {"type": "entity", "id": "tensura:one_eyed_owl", "count": "2-3"}
+      ],
+      "needs": {"lit": true},
+      "cells": 2,
+      "cue": {"sound": "minecraft:entity.bat.takeoff", "volume": 0.5, "pitch": 1.2, "particle": "minecraft:cloud", "count": 6}
+    },
+    {
+      "id": "sky_castle_armour",
+      "comment": "The evergreen standard encounter: the castle's suits of armour, left standing when the giants stopped caring. The id is explicit so the first floors, where the ogre tag is too heavy, still have a reliable fight.",
+      "band": "standard",
+      "weight": 12,
+      "mobs": [
+        {"type": "entity", "id": "nusmp:living_armor", "count": "2-3"}
+      ],
+      "cue": {"sound": "minecraft:item.armor.equip_iron", "volume": 0.7, "pitch": 0.8, "particle": "minecraft:poof", "count": 6}
+    },
+    {
+      "id": "sky_harpy_flock",
+      "comment": "The flock: phantoms arriving together from the open side of a gallery, with a vex or two among them as the storm's own. No needs, so the sky is never empty.",
+      "band": "standard",
+      "weight": 12,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:phantom", "count": "3-4"},
+        {"type": "entity", "id": "minecraft:vex", "count": "1-2"}
+      ],
+      "cue": {"sound": "minecraft:entity.phantom.swoop", "volume": 0.7, "pitch": 1.0, "particle": "minecraft:cloud", "count": 10}
+    },
+    {
+      "id": "sky_aerie_hunters",
+      "comment": "The beasts of the aeries (the beast tag, the griffon-like hunters of the brief) with an owl or two on the wing ahead of them. The beasts are the entry; the owls are trimmed first when the budget is short.",
+      "band": "standard",
+      "weight": 9,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "faction", "count": "2-3", "faction": "beast"},
+        {"type": "entity", "id": "tensura:one_eyed_owl", "count": "1-2"}
+      ],
+      "range": [12, 26],
+      "cells": 2,
+      "cue": {"sound": "minecraft:entity.wolf.howl", "volume": 0.7, "pitch": 1.4, "particle": "minecraft:cloud", "count": 8}
+    },
+    {
+      "id": "sky_storm_choir",
+      "comment": "Spirits and winds of the elemental tag, drawn to a lit party: the storm that lives in the castle. The tag decides who comes within the toughness window.",
+      "band": "standard",
+      "weight": 8,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "faction", "count": "2-3", "faction": "elemental"}
+      ],
+      "needs": {"lit": true},
+      "cue": {"sound": "minecraft:block.amethyst_block.resonate", "volume": 0.8, "pitch": 1.2, "particle": "minecraft:electric_spark", "count": 8}
+    },
+    {
+      "id": "sky_wall_of_wind",
+      "comment": "The walls are alive: breezes in the arched windows of a gallery with a few vexes in their gusts, placed close (range 10-22) over three places with a short hunt, so the party meets the wind by walking into the open side.",
+      "band": "standard",
+      "weight": 8,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:breeze", "count": "1-2"},
+        {"type": "entity", "id": "minecraft:vex", "count": "2-3"}
+      ],
+      "range": [10, 22],
+      "cells": 3,
+      "hunt": 300,
+      "cue": {"sound": "minecraft:entity.breeze.idle_ground", "volume": 0.9, "pitch": 0.8, "particle": "minecraft:gust", "count": 10},
+      "message": "message.nusmp.mega.enc.sky_citadel.sky_wall_of_wind"
+    },
+    {
+      "id": "sky_giants_kin",
+      "comment": "A giant's kin wakes to a noisy party: the ogre tag (a big body the toughness window lets in from threat 3) with the castle's armour at its side. If the tag has nobody for the floor the armour alone answers, so the entry never fails.",
+      "band": "hard",
+      "weight": 10,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "faction", "count": "1-2", "faction": "ogre"},
+        {"type": "entity", "id": "nusmp:living_armor", "count": "1-2"}
+      ],
+      "needs": {"noisy": true},
+      "cue": {"sound": "minecraft:entity.ravager.roar", "volume": 1.0, "pitch": 0.6, "particle": "minecraft:cloud", "count": 12},
+      "message": "message.nusmp.mega.enc.sky_citadel.sky_giants_kin"
+    },
+    {
+      "id": "sky_thunderhead",
+      "comment": "A storm priest and the weather it brought: an evoker with two breezes and a few vexes, hard band from threat 4. The breezes are cheap in health and dear in nuisance, which is the point of weather.",
+      "band": "hard",
+      "weight": 10,
+      "minThreat": 4,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:evoker", "count": "1"},
+        {"type": "entity", "id": "minecraft:breeze", "count": "2"},
+        {"type": "entity", "id": "minecraft:vex", "count": "2-3"}
+      ],
+      "scaleWithParty": false,
+      "cue": {"sound": "minecraft:entity.lightning_bolt.thunder", "volume": 0.8, "pitch": 1.2, "particle": "minecraft:electric_spark", "count": 14},
+      "message": "message.nusmp.mega.enc.sky_citadel.sky_thunderhead"
+    },
+    {
+      "id": "sky_wing_knights",
+      "comment": "The mimic-style surprise of a castle in the clouds: armour that rides the wind, living armour with a swarm of harpies over it. Placed at a distance (range 12-24) because the point is that they came from the open side.",
+      "band": "hard",
+      "weight": 8,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "nusmp:living_armor", "count": "1-2"},
+        {"type": "entity", "id": "minecraft:phantom", "count": "3-4"}
+      ],
+      "range": [12, 24],
+      "cells": 2,
+      "hunt": 600,
+      "cue": {"sound": "minecraft:entity.phantom.swoop", "volume": 0.9, "pitch": 0.8, "particle": "minecraft:cloud", "count": 12}
+    },
+    {
+      "id": "sky_storm_front",
+      "comment": "The wave of the castle: a front moves through the galleries and the storm's own come at once, many vexes in three places with breezes behind them.",
+      "band": "ambush",
+      "weight": 10,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:vex", "count": "6-9"},
+        {"type": "entity", "id": "minecraft:breeze", "count": "2"}
+      ],
+      "cells": 3,
+      "cue": {"sound": "minecraft:entity.lightning_bolt.thunder", "volume": 1.0, "pitch": 0.8, "particle": "minecraft:electric_spark", "count": 20},
+      "message": "message.nusmp.mega.enc.sky_citadel.sky_storm_front"
+    },
+    {
+      "id": "sky_giants_feast_call",
+      "comment": "The late ambush: the giants' own come to the table with a flight of harpies over them, from two sides. Only for parties of two or more.",
+      "band": "ambush",
+      "weight": 8,
+      "minThreat": 5,
+      "mobs": [
+        {"type": "faction", "count": "2-3", "faction": "ogre"},
+        {"type": "entity", "id": "minecraft:phantom", "count": "4-6"}
+      ],
+      "minParty": 2,
+      "cells": 2,
+      "cue": {"sound": "minecraft:entity.ravager.roar", "volume": 1.0, "pitch": 0.5, "particle": "minecraft:cloud", "count": 20},
+      "message": "message.nusmp.mega.enc.sky_citadel.sky_giants_feast_call"
+    }
+  ]
+}

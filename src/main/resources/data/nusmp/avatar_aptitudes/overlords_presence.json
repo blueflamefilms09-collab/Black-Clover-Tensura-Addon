@@ -1,0 +1,13 @@
+{
+  "name": "Overlord's Presence",
+  "rarity": "EPIC",
+  "tax_percent": 13,
+  "magic": "",
+  "skills": [
+    "tensura:demon_lord_haki",
+    "tensura:majesty",
+    "tensura:coercion"
+  ],
+  "tint": "#D84AFF",
+  "description": "Weak wills bow before you speak."
+}

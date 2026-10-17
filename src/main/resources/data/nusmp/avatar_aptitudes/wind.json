@@ -1,0 +1,13 @@
+{
+  "name": "Wind",
+  "rarity": "COMMON",
+  "tax_percent": 0,
+  "magic": "wind",
+  "skills": [
+    "tensura:wind_manipulation",
+    "tensura:wind_blade",
+    "tensura:wind_cutter"
+  ],
+  "tint": "#8CFFC2",
+  "description": "A quick, clean current that carries steel and spells alike."
+}

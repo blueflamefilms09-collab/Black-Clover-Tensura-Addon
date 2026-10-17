@@ -1,0 +1,13 @@
+{
+  "name": "Dragon Blood",
+  "rarity": "EPIC",
+  "tax_percent": 14,
+  "magic": "",
+  "skills": [
+    "tensura:dragon_skin",
+    "tensura:dragon_eye",
+    "tensura:dragon_mode"
+  ],
+  "tint": "#FF7A3C",
+  "description": "Old fire in young veins."
+}

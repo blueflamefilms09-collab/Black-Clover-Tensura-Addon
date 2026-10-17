@@ -1,0 +1,12 @@
+{
+  "name": "Plant",
+  "rarity": "COMMON",
+  "tax_percent": 0,
+  "magic": "plant",
+  "skills": [
+    "tensura:self_regeneration",
+    "tensura:poison"
+  ],
+  "tint": "#6CFF7A",
+  "description": "Roots and thorns that mend friends and snare foes."
+}
