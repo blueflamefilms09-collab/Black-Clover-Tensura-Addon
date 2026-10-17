@@ -82,9 +82,14 @@ public class AvatarActionScreen extends Screen {
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
+    /**
+     * Why: Screen.render already calls renderBackground once before the widgets, and since 1.21 that call blurs everything drawn so far. The panel is
+     * therefore drawn HERE, right after the background, never in render(): drawing it in render() and calling renderBackground by hand made the
+     * background run twice, the second time over the finished panel (the blurry menu of the 1.51.0 screenshot). ScreenBlurGuardTest keeps it that way.
+     */
     @Override
-    public void render(GuiGraphics g, int mouseX, int mouseY, float partial) {
-        renderBackground(g, mouseX, mouseY, partial);
+    public void renderBackground(GuiGraphics g, int mouseX, int mouseY, float partial) {
+        super.renderBackground(g, mouseX, mouseY, partial);
         float now = UiTheme.now();
         int x = (width - W) / 2, y = (height - H) / 2;
         UiPanel.panelScan(g, x, y, W, H, UiTheme.CYAN, 0.8f, 1f, now);
@@ -115,7 +120,6 @@ public class AvatarActionScreen extends Screen {
             }
         }
         if (!note.getString().isEmpty()) g.drawString(font, note, x + 14, y + H - 42, noteOk ? UiTheme.GREEN : UiTheme.RED);
-        super.render(g, mouseX, mouseY, partial);
     }
 
     @Override

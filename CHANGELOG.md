@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.53.0] — Fix: the blurry Avatar menu, and a guard so no screen can do it again
+
+### FIXED
+- The Avatar action menu was blurry because it called `renderBackground` by hand and then `Screen.render` called it again over the finished panel (since 1.21 that call blurs everything drawn before it). The panel is now drawn inside a `renderBackground` override, after the background. Same bug class as the questionnaire in 1.15.0.
+
+### NEW (guard)
+- `ScreenBlurGuardTest`: the build fails if any screen under `client/` calls `renderBackground` or `renderBlurredBackground` inside its own `render(...)`.
+
 ## [1.52.0] — Fix: the Avatar action menu text
 
 ### FIXED
