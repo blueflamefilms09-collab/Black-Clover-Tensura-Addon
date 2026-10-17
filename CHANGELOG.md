@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.57.0] — Fix: the Mega-Dungeon is now really the default dungeon
+
+In 1.55.0 and 1.56.0 the config default of `mega.layout` was still `"spire"` (a leftover from the build-up): the Gates, Maws and `/multiverse labyrinth` led to the old Spire, and the new dungeon was reachable only with the `/multiverse mega ...` commands or after setting `layout = "mega"`. The default is now `"mega"`: the Overworld Gateway leads to Floor 0 (the Sanctuary Hub) and its gates to the Holy and Abyssal roads (`hub.enabled`). The Spire is kept: set `mega.layout = "spire"` to route back to it.
+
+**If you already ran 1.55.0 or 1.56.0** the config file `serverconfig/nusmp-labyrinth-mega-server.toml` of your world was written with `layout = "spire"` and keeps it: change it to `layout = "mega"` (and restart or `/reload` is not enough for server configs: restart the world), or delete the file so it is rewritten with the new default.
+
 ## [1.56.0] — Lucius: the chest gem reveal clip and a clean stage change
 
 The owner sent the Lucius Zogratis god-tier brief again. Compared with the mod (rule 5), nearly all of it already exists since 1.45.0 and is kept as it is (`docs/lucius_god.md`, which maps every item): the three stages with a full health reset and the invulnerable change, the theatrical lines, the hit cap, percent true damage, the anti-regeneration aura, the relic EMP, Djinn severance, magicule starvation, anti-flight gravity, spatial disorientation, ultimate reversal, the Checkmate counter and the Time Stasis Traps. Two things of the brief were missing and are new.

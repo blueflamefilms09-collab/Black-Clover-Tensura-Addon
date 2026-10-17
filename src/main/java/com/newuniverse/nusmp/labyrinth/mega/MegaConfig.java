@@ -20,8 +20,8 @@ public final class MegaConfig {
     public static final ModConfigSpec.IntValue PIECES_PER_TICK, MAX_PIECES, MAX_SECTORS, ASSEMBLE_TRIES, MAX_LINK_MODULES, GEN_BUDGET_MS;
 
     public static final String LAYOUT_MEGA = "mega", LAYOUT_SPIRE = "spire";
-    /** The default layout. Kept at "spire" while the Mega-Dungeon is being built (so a build of a half-finished tree behaves exactly like 1.53.0); the integration commit flips it to "mega". */
-    public static final String DEFAULT_LAYOUT = LAYOUT_SPIRE;
+    /** The default layout: the Mega-Dungeon replaces the Spire as the default dungeon (the owner's decision). It was left at "spire" by mistake in 1.55.0 and 1.56.0; flipped in 1.57.0. A server config that already says "spire" keeps it. */
+    public static final String DEFAULT_LAYOUT = LAYOUT_MEGA;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
