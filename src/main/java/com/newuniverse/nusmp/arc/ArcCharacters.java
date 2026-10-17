@@ -22,6 +22,9 @@ public final class ArcCharacters {
         ArcRoster.register(com.newuniverse.nusmp.arc.early.LotusWhomaltBoss.CHARACTER);
         ArcRoster.register(com.newuniverse.nusmp.arc.early.MarsBoss.CHARACTER);
         ArcRoster.register(com.newuniverse.nusmp.arc.early.VettoBoss.CHARACTER);
+        // Saga 2, the Spade Kingdom Raid: Morris first, Lucifero names him as a prerequisite (S2)
+        ArcRoster.register(com.newuniverse.nusmp.arc.spade.MorrisBoss.CHARACTER);
+        ArcRoster.register(com.newuniverse.nusmp.arc.spade.LuciferoBoss.CHARACTER);
         com.newuniverse.nusmp.arc.knights.KnightsCast.registerAll();   // 1.61.0: sixteen friendly Magic Knights, captains and court members of the Hub (NPC-B)
     }
 }
