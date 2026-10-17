@@ -4228,5 +4228,8 @@
   "message.nusmp.mega.mgd.theme.shadow": "Shadow",
   "message.nusmp.mega.mgd.theme.spatial": "Folded Space",
   "message.nusmp.mega.mgd.theme.storm": "Storm",
-  "message.nusmp.mega.mgd.theme.verdant": "Overgrowth"
+  "message.nusmp.mega.mgd.theme.verdant": "Overgrowth",
+  "message.nusmp.mega.mgr.cmd.roll.chest.head": "%s %s chests at floor %s (threat %s, no Luck): %s pieces (%s of chests).",
+  "message.nusmp.mega.mgr.cmd.roll.chest.grade": "%s: %s (%s of chests)",
+  "message.nusmp.mega.mgr.cmd.status.chest": "Chests (the loot modifier nusmp:gear_chests, one piece at most): standard %s normal / %s special / %s rare = %s; treasure (x%s on special and rare) %s / %s / %s = %s."
 }
