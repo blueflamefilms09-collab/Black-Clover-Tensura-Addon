@@ -57,7 +57,7 @@ public final class Sector {
     public BlockPos expansionPos;
     public Direction expansionFacing;
     public int sealW = 3, sealH = 4, sealD = 2;
-    /** How many relics the Crucible offers (1..3), decided by the planner from the theme (generator). */
+    /** How many relics the Crucible offers (1..3; always 3 since the owner fixed it at three), decided by the planner from the theme (generator). */
     public int relicCount = 1;
     /** The pedestal blocks (generator, from PEDESTAL markers: marker.below()). */
     public final List<BlockPos> pedestals = new ArrayList<>();

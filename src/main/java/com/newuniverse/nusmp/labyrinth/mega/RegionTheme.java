@@ -14,24 +14,28 @@ import java.util.Locale;
  */
 public enum RegionTheme {
     /** The baseline: the deepslate palette every template is drawn in, so this theme swaps nothing. Weights, falling stone, lightning rods. */
-    GRAVITY(1, 2),
+    GRAVITY(3, 3),
     /** Nether bricks and crimson wood: blood, bone, torture, the Crimson Reliquary. */
-    BLOOD(2, 3),
+    BLOOD(3, 3),
     /** End stone, purpur, amethyst, crying obsidian: folded space, mirrors, doors that lead nowhere. */
-    SPATIAL(1, 3),
+    SPATIAL(3, 3),
     /** Blackstone, gilded blackstone, magma, lava forges. */
-    FLAME(2, 3),
+    FLAME(3, 3),
     /** Packed ice, snow, spruce and calcite. */
-    FROST(1, 2),
+    FROST(3, 3),
     /** Mossy stone, moss, azalea, cherry and vines: an overgrown ruin. */
-    VERDANT(1, 3),
+    VERDANT(3, 3),
     /** Oxidised copper, tuff, lightning rods. */
-    STORM(2, 3),
+    STORM(3, 3),
     /** Polished blackstone, sculk, soul lanterns. */
-    SHADOW(1, 3),
+    SHADOW(3, 3),
     /** Quartz, calcite, prismarine and gold: a cold observatory of stars. */
-    ASTRAL(1, 3);
+    ASTRAL(3, 3);
 
+    /**
+     * The owner's newest brief fixes the Crucible at EXACTLY three distinct Unique-or-higher relics (one pick per region, so one high-tier relic per ten
+     * floors), so every theme's range is 3..3. The range fields stay (the pure draw below still honours them) so a different count is a one-line edit.
+     */
     private final int minRelics, maxRelics;
 
     RegionTheme(int minRelics, int maxRelics) {

@@ -120,6 +120,16 @@ public class MegaContractTest {
         assertEquals(RegionTheme.values().length, seen.size(), "every theme turns up in 400 sectors");
     }
 
+    /** The owner's newest brief: a Crucible shows exactly three relics, so one pick per region is one high-tier relic per ten floors. */
+    @Test
+    public void everyThemeOffersExactlyThreeRelics() {
+        for (RegionTheme t : RegionTheme.values()) {
+            assertEquals(3, t.minRelics(), t + " minimum");
+            assertEquals(3, t.maxRelics(), t + " maximum");
+            assertEquals(3, t.relicCount(11L, 5), t + " draw");
+        }
+    }
+
     @Test
     public void relicCountStaysInTheThemeRange() {
         for (RegionTheme t : RegionTheme.values()) {
