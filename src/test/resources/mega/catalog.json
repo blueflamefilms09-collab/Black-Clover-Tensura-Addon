@@ -197,15 +197,15 @@
     },
     {
      "template": "nusmp:mega/cavern/fungal_grotto_a",
-     "weight": 5
+     "weight": 6
     },
     {
      "template": "nusmp:mega/cavern/fungal_grotto_b",
-     "weight": 5
+     "weight": 6
     },
     {
      "template": "nusmp:mega/cavern/overgrown_cavern",
-     "weight": 5
+     "weight": 4
     },
     {
      "template": "nusmp:mega/corridor/bend_1x1_a",
@@ -288,40 +288,116 @@
      "weight": 5
     },
     {
+     "template": "nusmp:mega/hall/alchemy_lab_a",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/hall/alchemy_lab_b",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/hall/armory_forge_a",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/hall/armory_forge_b",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/hall/barracks_a",
+     "weight": 4
+    },
+    {
+     "template": "nusmp:mega/hall/barracks_b",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/hall/cell_block_a",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/hall/cell_block_b",
+     "weight": 3
+    },
+    {
      "template": "nusmp:mega/hall/cistern_a",
-     "weight": 7
+     "weight": 1
     },
     {
      "template": "nusmp:mega/hall/cistern_b",
-     "weight": 7
+     "weight": 1
     },
     {
      "template": "nusmp:mega/hall/colonnade_hall_a",
-     "weight": 7
+     "weight": 2
     },
     {
      "template": "nusmp:mega/hall/colonnade_hall_b",
-     "weight": 7
+     "weight": 1
+    },
+    {
+     "template": "nusmp:mega/hall/crypt_a",
+     "weight": 4
+    },
+    {
+     "template": "nusmp:mega/hall/crypt_b",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/hall/great_hall",
+     "weight": 1
+    },
+    {
+     "template": "nusmp:mega/hall/kitchen_larder",
+     "weight": 3
     },
     {
      "template": "nusmp:mega/hall/lava_hall_a",
-     "weight": 7
+     "weight": 1
     },
     {
      "template": "nusmp:mega/hall/lava_hall_b",
-     "weight": 7
+     "weight": 1
+    },
+    {
+     "template": "nusmp:mega/hall/library_a",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/hall/library_b",
+     "weight": 3
     },
     {
      "template": "nusmp:mega/hall/mirror_hall",
-     "weight": 7
+     "weight": 1
+    },
+    {
+     "template": "nusmp:mega/hall/ossuary",
+     "weight": 3
     },
     {
      "template": "nusmp:mega/hall/round_hall_a",
-     "weight": 7
+     "weight": 2
     },
     {
      "template": "nusmp:mega/hall/round_hall_b",
-     "weight": 7
+     "weight": 2
+    },
+    {
+     "template": "nusmp:mega/hall/shrine_a",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/hall/shrine_b",
+     "weight": 1
+    },
+    {
+     "template": "nusmp:mega/hall/torture_chamber_a",
+     "weight": 1
+    },
+    {
+     "template": "nusmp:mega/hall/torture_chamber_b",
+     "weight": 1
     },
     {
      "template": "nusmp:mega/junction/crossroads_hall_3x3",
@@ -398,6 +474,18 @@
     {
      "template": "nusmp:mega/trap/pit_hall_b",
      "weight": 7
+    },
+    {
+     "template": "nusmp:mega/treasure/closet_a",
+     "weight": 8
+    },
+    {
+     "template": "nusmp:mega/treasure/closet_b",
+     "weight": 5
+    },
+    {
+     "template": "nusmp:mega/treasure/closet_c",
+     "weight": 8
     },
     {
      "template": "nusmp:mega/trial/trial_hall_a",

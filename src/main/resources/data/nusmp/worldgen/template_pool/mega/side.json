@@ -11,7 +11,7 @@
       }
     },
     {
-      "weight": 5,
+      "weight": 6,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/cavern/fungal_grotto_a",
@@ -20,7 +20,7 @@
       }
     },
     {
-      "weight": 5,
+      "weight": 6,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/cavern/fungal_grotto_b",
@@ -29,7 +29,7 @@
       }
     },
     {
-      "weight": 5,
+      "weight": 4,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/cavern/overgrown_cavern",
@@ -218,7 +218,79 @@
       }
     },
     {
-      "weight": 7,
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/alchemy_lab_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/alchemy_lab_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/armory_forge_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/armory_forge_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/barracks_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/barracks_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/cell_block_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/cell_block_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/cistern_a",
@@ -227,7 +299,7 @@
       }
     },
     {
-      "weight": 7,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/cistern_b",
@@ -236,7 +308,7 @@
       }
     },
     {
-      "weight": 7,
+      "weight": 2,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/colonnade_hall_a",
@@ -245,7 +317,7 @@
       }
     },
     {
-      "weight": 7,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/colonnade_hall_b",
@@ -254,7 +326,43 @@
       }
     },
     {
-      "weight": 7,
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/crypt_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/crypt_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/great_hall",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/kitchen_larder",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/lava_hall_a",
@@ -263,7 +371,7 @@
       }
     },
     {
-      "weight": 7,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/lava_hall_b",
@@ -272,7 +380,25 @@
       }
     },
     {
-      "weight": 7,
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/library_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/library_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/mirror_hall",
@@ -281,7 +407,16 @@
       }
     },
     {
-      "weight": 7,
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/ossuary",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/round_hall_a",
@@ -290,10 +425,46 @@
       }
     },
     {
-      "weight": 7,
+      "weight": 2,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/round_hall_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/shrine_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/shrine_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/torture_chamber_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/torture_chamber_b",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }
@@ -465,6 +636,33 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/trap/pit_hall_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 8,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/treasure/closet_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/treasure/closet_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 8,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/treasure/closet_c",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }

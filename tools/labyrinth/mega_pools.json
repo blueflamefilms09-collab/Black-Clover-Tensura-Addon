@@ -12,48 +12,184 @@
   "scale": 20,
   "processors": "nusmp:mega_interior",
   "pools": {
-    "landing": {"folders": {"landing": 1}, "fallback": "nusmp:mega/cap"},
+    "landing": {
+      "folders": {
+        "landing": 1
+      },
+      "fallback": "nusmp:mega/cap"
+    },
     "side": {
-      "folders": {"corridor": 5, "junction": 3, "hall": 3, "trap": 1, "puzzle": 1, "trial": 1, "treasure": 1, "cavern": 1, "set": 1, "safe": 1},
+      "folders": {
+        "corridor": 5,
+        "junction": 3,
+        "hall": 3,
+        "trap": 1,
+        "puzzle": 1,
+        "trial": 1,
+        "treasure": 1,
+        "cavern": 1,
+        "set": 1,
+        "safe": 1
+      },
       "relative": {
-        "mega/corridor/straight_1x2": 3, "mega/corridor/straight_1x3": 3, "mega/corridor/straight_1x4": 2,
-        "mega/corridor/bend": 2, "mega/corridor/tee": 2, "mega/corridor/cross": 1, "mega/corridor/gallery": 1,
-        "mega/junction/plaza_2x2": 3, "mega/junction/plaza_3x3": 2, "mega/junction/crossroads_hall": 2
+        "mega/corridor/straight_1x2": 3,
+        "mega/corridor/straight_1x3": 3,
+        "mega/corridor/straight_1x4": 2,
+        "mega/corridor/bend": 2,
+        "mega/corridor/tee": 2,
+        "mega/corridor/cross": 1,
+        "mega/corridor/gallery": 1,
+        "mega/junction/plaza_2x2": 3,
+        "mega/junction/plaza_3x3": 2,
+        "mega/junction/crossroads_hall": 2,
+        "mega/hall/cell_block": 10,
+        "mega/hall/torture_chamber": 4,
+        "mega/hall/crypt_a": 14,
+        "mega/hall/crypt_b": 10,
+        "mega/hall/ossuary": 10,
+        "mega/hall/library": 10,
+        "mega/hall/alchemy_lab": 10,
+        "mega/hall/armory_forge": 10,
+        "mega/hall/kitchen_larder": 10,
+        "mega/hall/barracks_a": 14,
+        "mega/hall/barracks_b": 10,
+        "mega/hall/shrine_a": 10,
+        "mega/hall/shrine_b": 5,
+        "mega/hall/great_hall": 5,
+        "mega/hall/round_hall": 6,
+        "mega/hall/colonnade_hall_a": 6,
+        "mega/hall/colonnade_hall_b": 5,
+        "mega/hall/cistern": 4,
+        "mega/hall/lava_hall": 4,
+        "mega/hall/mirror_hall": 4,
+        "mega/cavern/fungal_grotto": 5,
+        "mega/cavern/overgrown_cavern": 3,
+        "mega/cavern/crystal_cavern": 4,
+        "mega/trap/pit_hall": 3,
+        "mega/trap/dark_room": 3,
+        "mega/puzzle/sigil_hall": 3,
+        "mega/trial/trial_hall": 3,
+        "mega/set/cathedral_rotunda": 1,
+        "mega/treasure/closet_a": 3,
+        "mega/treasure/closet_b": 2,
+        "mega/treasure/closet_c": 3
       },
       "empty": 2,
       "fallback": "nusmp:mega/cap"
     },
     "cap": {
       "absolute": true,
-      "folders": {"cap": 1},
+      "folders": {
+        "cap": 1
+      },
       "relative": {
-        "mega/cap/plain_wall_a": 6, "mega/cap/plain_wall_b": 4,
-        "mega/cap/alcove_lantern_a": 4, "mega/cap/alcove_lantern_b": 3,
-        "mega/cap/alcove_candles_a": 3, "mega/cap/alcove_candles_b": 2,
-        "mega/cap/alcove_banner_a": 3, "mega/cap/alcove_banner_b": 3,
-        "mega/cap/alcove_statue_a": 2, "mega/cap/alcove_statue_b": 1,
-        "mega/cap/alcove_bookcase": 2, "mega/cap/alcove_skulls": 2, "mega/cap/alcove_brazier": 2,
-        "mega/cap/alcove_window_a": 2, "mega/cap/alcove_window_b": 2, "mega/cap/alcove_snake": 1,
-        "mega/cap/alcove_cell": 1, "mega/cap/alcove_chest": 1, "mega/cap/alcove_barrels": 2,
-        "mega/cap/alcove_bones": 2, "mega/cap/alcove_cobweb": 2, "mega/cap/alcove_rack": 2
+        "mega/cap/plain_wall_a": 6,
+        "mega/cap/plain_wall_b": 4,
+        "mega/cap/alcove_lantern_a": 4,
+        "mega/cap/alcove_lantern_b": 3,
+        "mega/cap/alcove_candles_a": 3,
+        "mega/cap/alcove_candles_b": 2,
+        "mega/cap/alcove_banner_a": 3,
+        "mega/cap/alcove_banner_b": 3,
+        "mega/cap/alcove_statue_a": 2,
+        "mega/cap/alcove_statue_b": 1,
+        "mega/cap/alcove_bookcase": 2,
+        "mega/cap/alcove_skulls": 2,
+        "mega/cap/alcove_brazier": 2,
+        "mega/cap/alcove_window_a": 2,
+        "mega/cap/alcove_window_b": 2,
+        "mega/cap/alcove_snake": 1,
+        "mega/cap/alcove_cell": 1,
+        "mega/cap/alcove_chest": 1,
+        "mega/cap/alcove_barrels": 2,
+        "mega/cap/alcove_bones": 2,
+        "mega/cap/alcove_cobweb": 2,
+        "mega/cap/alcove_rack": 2
       },
       "fallback": "minecraft:empty"
     },
-    "safe": {"folders": {"safe": 1}, "fallback": "nusmp:mega/cap"},
-    "arena": {"folders": {"arena": 1}, "fallback": "nusmp:mega/cap"},
-    "antechamber": {"folders": {"antechamber": 1}, "fallback": "nusmp:mega/cap"},
-    "vault": {"folders": {"vault": 1}, "fallback": "nusmp:mega/cap"},
-    "vault_1": {"folders": {"vault": 1}, "filter": "one_", "fallback": "nusmp:mega/cap"},
-    "vault_2": {"folders": {"vault": 1}, "filter": "two_", "fallback": "nusmp:mega/cap"},
-    "vault_3": {"folders": {"vault": 1}, "filter": "three_", "fallback": "nusmp:mega/cap"},
-    "onward": {"folders": {"onward": 1}, "fallback": "nusmp:mega/cap"},
-    "onward_straight": {"folders": {"onward": 1}, "filter": "straight_", "fallback": "nusmp:mega/cap"},
-    "onward_left": {"folders": {"onward": 1}, "filter": "left_", "fallback": "nusmp:mega/cap"},
-    "onward_right": {"folders": {"onward": 1}, "filter": "right_", "fallback": "nusmp:mega/cap"},
+    "safe": {
+      "folders": {
+        "safe": 1
+      },
+      "fallback": "nusmp:mega/cap"
+    },
+    "arena": {
+      "folders": {
+        "arena": 1
+      },
+      "fallback": "nusmp:mega/cap"
+    },
+    "antechamber": {
+      "folders": {
+        "antechamber": 1
+      },
+      "fallback": "nusmp:mega/cap"
+    },
+    "vault": {
+      "folders": {
+        "vault": 1
+      },
+      "fallback": "nusmp:mega/cap"
+    },
+    "vault_1": {
+      "folders": {
+        "vault": 1
+      },
+      "filter": "one_",
+      "fallback": "nusmp:mega/cap"
+    },
+    "vault_2": {
+      "folders": {
+        "vault": 1
+      },
+      "filter": "two_",
+      "fallback": "nusmp:mega/cap"
+    },
+    "vault_3": {
+      "folders": {
+        "vault": 1
+      },
+      "filter": "three_",
+      "fallback": "nusmp:mega/cap"
+    },
+    "onward": {
+      "folders": {
+        "onward": 1
+      },
+      "fallback": "nusmp:mega/cap"
+    },
+    "onward_straight": {
+      "folders": {
+        "onward": 1
+      },
+      "filter": "straight_",
+      "fallback": "nusmp:mega/cap"
+    },
+    "onward_left": {
+      "folders": {
+        "onward": 1
+      },
+      "filter": "left_",
+      "fallback": "nusmp:mega/cap"
+    },
+    "onward_right": {
+      "folders": {
+        "onward": 1
+      },
+      "filter": "right_",
+      "fallback": "nusmp:mega/cap"
+    },
     "link": {
       "absolute": true,
-      "folders": {"link": 1},
-      "relative": {"mega/link/straight_a": 4, "mega/link/straight_b": 4, "mega/link/waystation": 1},
+      "folders": {
+        "link": 1
+      },
+      "relative": {
+        "mega/link/straight_a": 4,
+        "mega/link/straight_b": 4,
+        "mega/link/waystation": 1
+      },
       "fallback": "nusmp:mega/cap"
     }
   }
