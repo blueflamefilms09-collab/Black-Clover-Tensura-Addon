@@ -5,13 +5,22 @@ Twenty-two Jigsaw templates of the Mega-Dungeon (`docs/labyrinth/mega.md`, the c
 table of its own (the closets roll the existing `nusmp:chests/labyrinth_trial`).
 
 ```
-python3 tools/labyrinth/gen_mega_rooms1.py                  # (re)writes the 22 templates, prints one status line each (ok / FAIL + the problems)
+python3 tools/labyrinth/gen_mega_rooms1.py                  # (re)writes the 22 templates, prints one status line each (ok / FAIL + the problems);
+                                                            # a template with a defect is NOT written (--force writes it anyway, to look at it)
 python3 tools/labyrinth/gen_mega_rooms1.py crypt_a library_b  # only these
-python3 tools/labyrinth/gen_mega_rooms1.py --check          # regenerate in memory, compare with the files on disk, run every check
+python3 tools/labyrinth/gen_mega_rooms1.py --check          # regenerate in memory, compare with the files on disk, run every check (CI-style: exit 1 on any)
 python3 tools/labyrinth/gen_mega_rooms1.py --list
-python3 tools/labyrinth/mega_check.py                       # shared checker: only "pool nusmp:mega/side does not exist" is expected here
+python3 tools/labyrinth/mega_check.py                       # shared checker: 0 errors for these templates (the ten "pool ... has no elements" errors belong to the
+                                                            # arena / antechamber / vault / onward pools of builders that have not merged yet)
+python3 tools/labyrinth/mega_arch_check.py hall/cell_block hall/torture hall/crypt hall/ossuary hall/library hall/alchemy hall/armory hall/kitchen \
+    hall/barracks hall/shrine hall/great treasure/      # the game's survival rules: 0 problems
+python3 tools/labyrinth/mega_shape_preview.py mega/hall/crypt_a --lightreport     # block light on the walking route
 python3 tools/labyrinth/mega_catalog.py                     # regenerates src/test/resources/mega/catalog.json (after the merge: run it again)
 ```
+
+Every status line of the generator already includes the shared tools: `mega_arch_check.problems`, `mega_decor_r2.attachment_problem`, a pairing check of beds,
+doors and double chests, and the light report of `mega_shape_preview` (minimum 5 on the walking route) are part of `Hall.check()` (section 4), so a template that
+fails any of them is not written.
 
 The output is byte-for-byte deterministic (every template draws from its own name-seeded random; the same script gives the same bytes under any
 `PYTHONHASHSEED`; checked by writing the folder three times and comparing SHA-256).
@@ -37,32 +46,35 @@ Nothing existing was replaced: no template of this name existed.
 Sizes are in modules (9 blocks) `mx x mz`; every piece is 48 high with the floor row at 8 (world floor y = 64). Doors are `side@offset`: for `n`/`s`
 the offset is the x of the doorway centre, for `e`/`w` its z (the module centres 4, 13, 22, 31, 40). Every door is a `MT.socket` (3 wide, 4 tall hole through
 both wall layers, polished frame, chiselled keystone, jigsaw `nusmp:mega_door`, pool `nusmp:mega/side`). "Light" is the block light at eye level over
-the whole reachable floor (minimum / median); the Gloom clock of 1.36.0 treats 4 or less as dark, so the minimum has to be 5.
+the whole reachable floor, minimum of the kit's own model / minimum of the lead's `mega_shape_preview --lightreport` (the two models agree on every template; the
+second also lets a player stand on a table or on a ring of open trapdoors and counts a lit furnace as a light, the kit's does not) and the median of the kit's;
+the Gloom clock of 1.36.0 treats 4 or less as dark, so the minimum has to be 5. "Spawn 5 (2 x2)" is five spawn markers, two of them `;weight=2`. "Cells" are the
+non-air blocks of the file. The table is printed from the files by `gen_mega_rooms1.py --table`, so it cannot drift from them.
 
-| Template | Modules | Blocks x z | Doors | Spawn | Patrol | Other markers | Stands | Light | Recommended weight |
-|---|---|---|---|---|---|---|---|---|---|
-| `hall/cell_block_a` | 3x3 | 27x27 | n@13 s@13 e@13 w@13 | 5 | 2 | faction cultist, furniture, seat | 2 | 6 / 11 | 2 |
-| `hall/cell_block_b` | 3x3 | 27x27 | n@13 s@13 e@13 w@13 | 5 | 2 | faction cultist, furniture, seat, bed | 2 | 5 / 11 | 2 |
-| `hall/torture_chamber_a` | 2x3 | 18x27 | n@13 s@4 e@13 | 5 | 2 | faction demon, furniture, seat, room_center | 0 | 5 / 9 | 1 (rare) |
-| `hall/torture_chamber_b` | 2x3 | 18x27 | n@4 s@13 w@13 | 5 | 2 | faction demon, furniture, room_center | 0 | 5 / 10 | 1 (rare) |
-| `hall/crypt_a` | 3x3 | 27x27 | n@13 s@13 e@13 w@13 | 5 | 2 | faction undead | 0 | 5 / 7 | 3 (common) |
-| `hall/crypt_b` | 3x3 | 27x27 | n@13 s@13 e@13 w@13 | 5 | 2 | faction undead, room_center | 6 | 5 / 7 | 2 |
-| `hall/ossuary` | 2x2 | 18x18 | n@4 s@13 e@13 | 5 | 2 | faction undead, furniture x2, seat | 0 | 5 / 7 | 2 |
-| `hall/library_a` | 3x2 | 27x18 | n@13 s@13 | 5 | 2 | faction cultist, furniture x2, seat x2 | 0 | 7 / 11 | 2 |
-| `hall/library_b` | 3x2 | 27x18 | n@13 s@13 | 5 | 2 | faction cultist, furniture x2, seat x2 | 0 | 6 / 11 | 2 |
-| `hall/alchemy_lab_a` | 2x3 | 18x27 | n@13 s@4 e@13 | 5 | 2 | faction slime, furniture x2, seat, bed | 0 | 6 / 9 | 2 |
-| `hall/alchemy_lab_b` | 2x3 | 18x27 | n@4 s@13 w@13 | 5 | 2 | faction cultist, furniture x2, seat, room_center | 0 | 6 / 9 | 2 |
-| `hall/armory_forge_a` | 3x2 | 27x18 | s@4 s@22 e@13 | 5 | 2 | faction construct, hearth, room_center | 5 | 5 / 11 | 2 |
-| `hall/armory_forge_b` | 3x2 | 27x18 | n@22 s@4 w@13 | 5 | 2 | faction construct, furniture x3 | 11 | 7 / 11 | 2 |
-| `hall/kitchen_larder` | 2x2 | 18x18 | n@13 s@4 w@13 | 5 | 2 | faction goblin, hearth, furniture x3 (table, counter, storage, cutting board), seat | 0 | 6 / 10 | 2 |
-| `hall/barracks_a` | 3x2 | 27x18 | n@22 s@4 e@13 | 5 | 2 | faction goblin, bed x7, hearth, furniture x2, seat | 2 | 5 / 10 | 3 (common) |
-| `hall/barracks_b` | 3x2 | 27x18 | s@13 w@13 e@13 | 5 | 2 | faction ogre, bed x4, hearth, furniture x2, seat, room_center | 2 | 8 / 11 | 2 |
-| `hall/shrine_a` | 2x3 | 18x27 | s@4 s@13 e@13 w@13 | 5 | 2 | faction cultist, seat | 2 | 5 / 9 | 2 |
-| `hall/shrine_b` | 2x3 | 18x27 | n@4 s@13 e@13 w@13 | 5 | 2 | faction cultist | 0 | 6 / 9 | 1 (rare) |
-| `hall/great_hall` | 3x5 | 27x45 | s@13 w@22 e@22 w@40 | 6 | 3 | faction ogre, hearth x2, furniture x6, seat | 6 | 5 / 10 | 1 (rare, one per sector at most) |
-| `treasure/closet_a` | 1x2 | 9x18 | n@4 | 1 | 0 | room_center | 2 | 8 / 11 | 3 |
-| `treasure/closet_b` | 1x2 | 9x18 | n@4 w@13 | 1 | 0 | - | 2 | 7 / 10 | 2 (two doors: it can chain) |
-| `treasure/closet_c` | 1x2 | 9x18 | n@4 | 1 | 0 | room_center | 1 | 6 / 10 | 3 |
+| Template | Modules | Blocks x z | Doors | Spawn | Patrol | Other markers | Stands | Light kit / shared (min) | Cells | Weight (see 7) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| `hall/cell_block_a` | 3x3 | 27x27 | n@13 w@13 e@13 s@13 | 5 (2 x2) | 2 | faction cultist, furniture, seat | 2 | 6 / 6 (median 11) | 5404 | 10 |
+| `hall/cell_block_b` | 3x3 | 27x27 | n@13 w@13 e@13 s@13 | 5 (2 x2) | 2 | faction cultist, furniture, seat, bed | 2 | 5 / 5 (median 11) | 5284 | 10 |
+| `hall/torture_chamber_a` | 2x3 | 18x27 | n@13 e@13 s@4 | 5 (2 x2) | 2 | faction demon, furniture, seat, room_center | 0 | 5 / 5 (median 9) | 3305 | 4 (rare) |
+| `hall/torture_chamber_b` | 2x3 | 18x27 | n@4 w@13 s@13 | 5 (2 x2) | 2 | faction demon, furniture, room_center | 0 | 5 / 5 (median 10) | 3458 | 4 (rare) |
+| `hall/crypt_a` | 3x3 | 27x27 | n@13 w@13 e@13 s@13 | 5 (2 x2) | 2 | faction undead | 0 | 5 / 5 (median 7) | 5193 | 14 (common) |
+| `hall/crypt_b` | 3x3 | 27x27 | n@13 w@13 e@13 s@13 | 5 (2 x2) | 2 | faction undead, room_center | 6 | 5 / 5 (median 7) | 5405 | 10 |
+| `hall/ossuary` | 2x2 | 18x18 | n@4 e@13 s@13 | 5 (2 x2) | 2 | faction undead, furniture x2, seat | 0 | 5 / 5 (median 7) | 2292 | 10 |
+| `hall/library_a` | 3x2 | 27x18 | n@13 s@13 | 5 (2 x2) | 2 | faction cultist, furniture x2, seat x2 | 0 | 7 / 7 (median 11) | 5579 | 10 |
+| `hall/library_b` | 3x2 | 27x18 | n@13 s@13 | 5 (2 x2) | 2 | faction cultist, furniture x2, seat x2 | 0 | 6 / 6 (median 11) | 5383 | 10 |
+| `hall/alchemy_lab_a` | 2x3 | 18x27 | n@13 e@13 s@4 | 5 (2 x2) | 2 | faction slime, furniture x2, seat, bed | 0 | 6 / 6 (median 9) | 3346 | 10 |
+| `hall/alchemy_lab_b` | 2x3 | 18x27 | n@4 w@13 s@13 | 5 (2 x2) | 2 | faction cultist, furniture x2, seat, room_center | 0 | 6 / 6 (median 10) | 3662 | 10 |
+| `hall/armory_forge_a` | 3x2 | 27x18 | e@13 s@4 s@22 | 5 (2 x2) | 2 | faction construct, hearth, room_center | 5 | 5 / 5 (median 11) | 3475 | 10 |
+| `hall/armory_forge_b` | 3x2 | 27x18 | n@22 w@13 s@4 | 5 (2 x2) | 2 | faction construct, furniture x3 | 11 | 7 / 7 (median 11) | 3136 | 10 |
+| `hall/kitchen_larder` | 2x2 | 18x18 | n@13 w@13 s@4 | 5 (2 x2) | 2 | faction goblin, furniture x5, seat, hearth | 0 | 6 / 6 (median 10) | 2241 | 10 |
+| `hall/barracks_a` | 3x2 | 27x18 | n@22 e@13 s@4 | 5 (2 x2) | 2 | faction goblin, furniture x2, seat, hearth, bed x7 | 2 | 5 / 5 (median 10) | 3299 | 14 (common) |
+| `hall/barracks_b` | 3x2 | 27x18 | w@13 e@13 s@13 | 5 (2 x2) | 2 | faction ogre, furniture x2, seat, hearth, bed x4, room_center | 2 | 8 / 8 (median 11) | 3542 | 10 |
+| `hall/shrine_a` | 2x3 | 18x27 | w@13 e@13 s@4 s@13 | 5 (2 x2) | 2 | faction cultist, seat | 2 | 5 / 5 (median 9) | 3917 | 10 |
+| `hall/shrine_b` | 2x3 | 18x27 | n@4 w@13 e@13 s@13 | 5 (2 x2) | 2 | faction cultist | 0 | 6 / 6 (median 9) | 3687 | 5 (rare) |
+| `hall/great_hall` | 3x5 | 27x45 | w@22 e@22 w@40 s@13 | 6 (2 x2) | 2 | faction ogre, furniture x6, seat, hearth x2 | 6 | 5 / 5 (median 10) | 9731 | 5 (rare, one per sector at most) |
+| `treasure/closet_a` | 1x2 | 9x18 | n@4 | 1 (1 x2) | 0 | room_center | 2 | 8 / 5 (median 11) | 1248 | 3 |
+| `treasure/closet_b` | 1x2 | 9x18 | n@4 w@13 | 1 (1 x2) | 0 | - | 2 | 7 / 7 (median 10) | 1204 | 2 (two doors: it can chain) |
+| `treasure/closet_c` | 1x2 | 9x18 | n@4 | 1 (1 x2) | 0 | room_center | 1 | 6 / 6 (median 10) | 1226 | 3 |
 
 The best two spawn cells of every hall carry `;weight=2`. `faction` ids are the brief's (cell blocks cultist, torture chambers demon, crypts and the
 ossuary undead, libraries cultist, alchemy a slime / b cultist, armouries construct, kitchen goblin, barracks a goblin / b ogre, shrines cultist, great
@@ -74,12 +86,13 @@ ossuary with its bone-block walls (84 %).
 
 ### Weights: why
 
-The sector builder draws halls from one weighted pool, so the weights are about how often a party should meet the room, not about size.
-* Crypts and barracks are the dungeon's bread and butter (3): a crypt is the easiest room to fill with the undead, a barracks gives the best fight
-  with goblins and ogres and the best place for a short rest. Their `_b` variants are a notch rarer (2) because they are the grander versions.
-* Cell blocks, libraries, alchemy labs, armouries, the kitchen, the ossuary and the chapel (2) are the staple furnished rooms.
-* The torture chambers, the sanctum (`shrine_b`) and the great hall are set pieces (1): the torture chambers are the grimmest rooms, the sanctum is the
-  cult's heart, the great hall is 27 x 45 and eats five modules of a sector.
+The sector builder draws halls from one weighted pool, so the weights are about how often a party should meet the room, not about size. The column is on ROOMS-2's scale (a plain furnished
+hall is 10; section 7 has the exact `relative` entries for `mega_pools.json`).
+* Crypt a and barracks a are the dungeon's bread and butter (14): a crypt is the easiest room to fill with the undead, a barracks gives the best fight with goblins and ogres and the best place
+  for a short rest. Their `_b` variants are the grander versions (10).
+* Cell blocks, libraries, alchemy labs, armouries, the kitchen, the ossuary and the chapel (10) are the staple furnished rooms.
+* The torture chambers (4), the sanctum `shrine_b` (5) and the great hall (5) are set pieces: the torture chambers are the grimmest rooms, the sanctum is the cult's heart, the great hall is
+  27 x 45 and eats five modules of a sector.
 * Closets: the one-door pockets a and c (3), the two-door b (2) because its second socket needs a cap or a neighbour.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -100,7 +113,8 @@ ledger, a lantern, a key board of tripwire hooks, a spear rack and two guard arm
 running to the drain, a tool bench (anvil, grindstone, quench cauldron), crates.
 *Plays:* the four-way crossing under a wheel chandelier is the choke point; broken cells are where the Director hides ambushes; the guard post is where the
 party finds the first loot-like detail; the locked cells stay locked (iron doors cannot be opened by hand), which is part of the story. Hacks: `cell_row`,
-`drain`, `hanging_cage`, `torture_chair`, `spear_rack`, `brazier`, `chandelier_wheel`.
+`drain`, `hanging_cage`, `torture_chair`, `spear_rack`, `brazier`, `chandelier_wheel`. The upper third of the walls carries barred slits, tall black banners and
+lantern brackets (`upper_dress`).
 
 ### 3.2 `cell_block_b`: the Menagerie (3x3, four doors)
 The see-through prison: two clusters (north-west, south-east) of four 3 x 3 barred cages each, iron bars on every face and as a roof, posts with a chiselled
@@ -109,11 +123,11 @@ along the aisle with a lantern, candles and a skull, two chairs behind it, the l
 brazier, a banner). South-west: the torture corner (two torture chairs against the west wall facing a brazier, stocks, a cage hung over the tool bench, a
 gutter across the floor to the drain). The aisle lamps hang from fence arms on the cage posts.
 *Plays:* you can see everything in the cages (and be seen); the guards' room is a kill zone with a bunk to rest in; the cages' open gates hide the spawn
-cells. Hacks: `cage_cluster`, `guard_room_b`, `torture_corner_b`, `stocks`, `bunk`.
+cells. Hacks: `cage_cluster`, `guard_room_b`, `torture_corner_b`, `stocks`, `bunk`. High on the walls: black and red banners, barred slits, lantern brackets.
 
 ### 3.3 `torture_chamber_a`: the Question Room (2x3, doors n@13 s@4 e@13)
-The west wall is a row of machines: an iron maiden (iron bars and lightning-rod spikes) and three torture chairs (open iron trapdoor backrests with rod spikes,
-bar restraints, a skull on the headrest, a dripstone point in front). In the middle a stretching rack (beam frame, barrel rollers with crank handles, chain
+The west wall is a row of machines: an iron maiden (iron bars and lightning-rod spikes) and three torture chairs (an open iron trapdoor backrest and a bar post
+that carries the skull, rod spikes, bar restraints on chains, a dripstone point in front). In the middle a stretching rack (beam frame, barrel rollers with crank handles, chain
 ropes), a gutter running past it to a drain. Under the north wall the inquisitors' table, a lectern, a soul lantern and two chairs. South-east: two chain beds
 (beds hung from the ceiling on four chains over bar frames), three hanging cages (two with a skull), the brazier with its tongs (an anvil, a grindstone, a
 quench cauldron). Blood, bones, rubble, skull sconces, wall vines.
@@ -123,20 +137,24 @@ quench cauldron). Blood, bones, rubble, skull sconces, wall vines.
 The dissection table in the middle (two wide, chains, skulls, red carpet, a lamp over it) with two torture chairs turned towards it so the sitters watch;
 an iron maiden on the north wall; a branding cauldron (lava) with irons and a cage hung over it; a breaking wheel (a ring of open trapdoors, a barrel hub,
 chain spokes) and stocks on the east wall; a brazier with an anvil and a second cage in the middle; two chain beds and a tool bench with blast furnaces in the
-south. *Plays:* the table is the centre of the room, the chairs and the cages are cover; the west door opens just south of the chairs.
+south. Tall black and red banners and flaming skulls high on the walls, a torch over the wheel. *Plays:* the table is the centre of the room, the chairs and the cages
+are cover; the west door opens just south of the chairs.
 
 ### 3.5 `crypt_a`: the Catacomb Hall (3x3, four doors)
 A polished processional cross in the floor with a chiselled medallion where the ways meet, a colonnade of eight columns (ring of stairs at the foot and under
 the capital) round the nave, sarcophagi in both aisles (polished base, slab lid between a raised head and foot stone with skull and candles; some opened, a
 skeleton in them), a columbarium of skull niches in the west and east walls, a priest's lectern between two candelabras at the north door, a sunken ossuary
-pit in the north-east (a bone-block ramp down, skulls, a soul lantern, a fence round the rim), soul-lantern wheel chandeliers, purple banners, moss and
-cobwebs. *Plays:* the undead hall: many columns to fight round, the pit as the one place the party can fall into (one block onto bones), the nave as the line.
+pit in the north-east (a bone-block ramp down, skulls, a soul lantern at its foot and two more set into the lining beside the ramp so the steps are lit, a fence
+round the rim), soul-lantern wheel chandeliers, purple banners, moss and cobwebs; a candle burns in every opened coffin; tall purple and black banners, soul-lantern
+brackets and candle niches with a skull high on the walls. *Plays:* the undead hall: many columns to fight round, the pit as the one place the party can fall into (one block onto bones), the nave as the line.
 
 ### 3.6 `crypt_b`: the Lord's Tomb (3x3, four doors)
 A square dais in the middle (a stepped edge, a chequer of tiles) under a baldachin of four posts joined by beams, a great sarcophagus on it flanked by a
 netherite and a gold statue (armour stands), candelabras and a priest's lectern at its head. Round the dais a polished ring road; the four doors reach it by
 straight arms. Four corner chapels each with a sarcophagus (two open), skull and iron statues, loculi in every wall, a sunken ossuary pit in the east wing,
-moss, vines. *Plays:* the ring road is the loop for patrols; the lord's tomb is the room's one big prop; chapels are the ambush pockets.
+moss, vines, a soul torch beside every doorway and a candelabra in each corner pocket (so no cell on the route is at or under the gloom limit), the same high
+banners, brackets and niches as the other crypt. *Plays:* the ring road is the loop for patrols; the lord's tomb is the room's one big prop; chapels are the
+ambush pockets.
 
 ### 3.7 `ossuary` (2x2, doors n@4 s@13 e@13)
 The inner wall layer is bone blocks up to the sixth row; a stepped heap of bone blocks (crowned by a wither skull) in the north-east, two bone pillars, a
@@ -146,7 +164,7 @@ lantern canopy lights it evenly (median light 7).
 
 ### 3.8 `library_a`: the Long Library (3x2, doors n@13 s@13)
 Two storeys: gallery decks over both long sides (dark-oak planks on a polished colonnade and a log architrave), a stair flight at each end with a fence rail,
-bookshelves in both storeys with ladders, pilasters between the bays, amber windows (stained glass lit by shroomlight in the outer wall layer), reading tables
+bookshelves in both storeys (about one in eight a chiselled bookshelf holding real books, which a player can take) with ladders, pilasters between the bays, amber windows (stained glass lit by shroomlight in the outer wall layer), reading tables
 with chairs and candles, four study lecterns, two wheel chandeliers and three lantern globes (a 3x3x3 rounded shell of stained glass with a lantern hung in
 it), a chequered floor, two toppled shelves (a webbed gap in the shelving, the fallen bookshelves heaped in front). *Plays:* the hall is open between the
 galleries, so sight lines are long; the galleries are the high ground; ladders are the shortcuts.
@@ -154,25 +172,28 @@ galleries, so sight lines are long; the galleries are the high ground; ladders a
 ### 3.9 `library_b`: the Scriptorium (3x2, doors n@13 s@13)
 A mezzanine over the north half carried by a colonnade, a spiral tower of bookshelves in the east (a 3x3 shelf core with a spiral stair round it up to a landing
 on the mezzanine), a double-height south wall of shelving with ladders, scriptorium desks on the mezzanine, reading tables, three lectern stations, a wheel
-chandelier and two yellow lantern globes, a floor border and a diamond medallion. *Plays:* the spiral is the way up (one at a time), so the mezzanine is a
+chandelier and two yellow lantern globes, a floor border and a diamond medallion; the scribes' chairs on the mezzanine face their desks, and the shelves are
+chiselled bookshelves with books now and then, as in the Long Library. *Plays:* the spiral is the way up (one at a time), so the mezzanine is a
 defensible spot to hold; the west windows give the room its amber light.
 
 ### 3.10 `alchemy_lab_a`: the Brewer's Workshop (2x3, doors n@13 s@4 e@13)
-Three long benches under the west wall with brewing stands, potions (flower pots, mushrooms), candles and skull jars, a chair at each; an island of three
+Three long benches under the west wall with brewing stands, potions (flower pots, mushrooms), candles and skull jars, a stool at the end of each; an island of three
 cauldrons (water, lava, powder snow) inside a chalk circle of carpets; a glass-pane cage with a caged slime and a mob head, a still (furnace, cauldron, copper
 head, glass tube), storage barrels, two cots with herbs drying from the beams behind them (a dried-herb block with roots hanging from it, on a chain), shelves of potions along
-the walls. *Plays:* the slime faction's lab; the chalk circle is the centre; the cage is the room's one thing to look at.
+the walls, lime windows lit by verdant froglights high in the walls. *Plays:* the slime faction's lab; the chalk circle is the centre; the cage is the room's one
+thing to look at.
 
 ### 3.11 `alchemy_lab_b`: the Distillery (2x3, doors n@4 s@13 w@13)
 A chequered floor, three glowing reactor tanks along the east wall (glass shells, a column of stained glass over a froglight or sea lantern, a copper lid), a
 copper main (oxidised copper blocks) from the tanks across the ceiling to a still in the middle and along the north wall, smaller stills, a cauldron row under
 the north wall, a sample bench with stools, a specimen bench with skull jars, a second glass cage (a cyan one with a zombie head). *Plays:* the cult's
-workshop; the tanks light the east half in green, cyan and purple, the west half is the fighting floor.
+workshop; the tanks light the east half in green, cyan and purple (cyan windows lit by sea lanterns high in the walls), the west half is the fighting floor.
 
 ### 3.12 `armory_forge_a`: the Great Forge (3x2, doors s@4 s@22 e@13)
 A raised hearth under a stepped brick chimney breast (a back row of lit blast furnaces and lava cauldrons), a scorched floor in front, three anvils each with
 a bench (grindstone, candles, lantern), two smithing tables, a row of quench cauldrons, three chain hoists (shackles from the beams), spear racks and two armour
-stands on the west wall, three armoured statues on the east wall, coal and crates. *Plays:* the construct faction's forge; the hearth is the room's light and
+stands on the west wall, three armoured statues on the east wall, coal and crates; tall orange and black banners, barred slits and lantern brackets high up.
+*Plays:* the construct faction's forge; the hearth is the room's light and
 its hazard (lava cauldrons, lit furnaces); the benches are cover.
 
 ### 3.13 `armory_forge_b`: the Armoury (3x2, doors n@22 s@4 w@13)
@@ -182,39 +203,41 @@ in the west (two blast furnaces, two lava cauldrons, anvil, grindstone, smithing
 east wall, barrels and chests. *Plays:* a museum guarded by constructs; the stands are decoration only (no gear can be taken from them: all slots are locked).
 
 ### 3.14 `kitchen_larder` (2x2, doors n@13 s@4 w@13)
-A hearth against the north wall (campfire under a hanging cauldron between fences and bars, smokers and furnaces either side, a brick hood), a cutting table and a
-prep bench with a wash basin, larder barrels in the east, crates and a pair of chests in the south, hay, smoked meat hung from the beams (bone blocks on chains),
-herbs, wall shelves. Markers: hearth (stove), furniture as table / counter / cutting_board / storage so a kitchen mod can furnish it. *Plays:* goblin territory;
-the hearth is a rest spot; the larder is cover.
+A hearth against the north wall (a campfire in the middle, a stew pot (cauldron) on each side of it, smokers and furnaces beyond, a grease filter of iron bars in
+the mouth of the brick hood), a cutting table (a wooden pressure plate on the counter is the board) and a prep bench with a wash basin, larder barrels in the east,
+crates and a double chest in the south, hay, smoked meat hung from the beams (bone blocks on chains), herbs, wall shelves. Markers follow the SAFE builder's
+vocabulary so a kitchen mod can furnish it: `hearth;as=stove` on the campfire, `furniture;as=cooking_pot` on the two pots, `furniture;as=cutting_board` on the plate,
+`furniture;as=counter`, `furniture;as=storage`, `seat;as=chair`. *Plays:* goblin territory; the hearth is a rest spot; the larder is cover.
 
 ### 3.15 `barracks_a`: the Soldiers' Quarters (3x2, doors n@22 s@4 e@13)
-Seven bunk beds (two beds on log posts with trapdoor rails, a `bed` marker each) in two rows along the long walls, a long table with a bench each side and a
-map table (cartography table), a fireplace (campfire, smoker, cauldron under a brick breast) in the west with a `hearth` and a `seat`, lockers of barrels, two
+Seven bunk beds (two beds on log posts with trapdoor rails, the posts going on as chains to the ceiling, a `bed` marker each) in two rows along the long walls, a long table with a bench each side and a
+map table (cartography table, an officer's chair in front of it), a fireplace (campfire, smoker, cauldron under a brick breast) in the west with a `hearth` and a `seat`, lockers of barrels, two
 guard armours, polearms standing in recesses (the weapon racks), banners, ceiling beams. *Plays:* the long table between the bunk rows is the lane; goblins
 spawn from the bunk gaps; the fireplace is the party's rest spot.
 
 ### 3.16 `barracks_b`: the Officers' Cabins (3x2, doors w@13 e@13 s@13)
 Four timber cabins built into the north end (plank partitions, a wooden door, a plank roof, a bed, a chest, a desk with a candle and a chair, a lantern; one
 locked), a common room in front of them with a long table and benches, a cartography (map) table, a fireplace in the south wall, lockers, two statues, polearm
-recesses, a chequered common-room floor. *Plays:* ogre officers' quarters: the cabins are private pockets (loot-free by design), the common room is the arena.
+recesses, a chequered common-room floor, red and blue banners and lantern brackets high up. *Plays:* ogre officers' quarters: the cabins are private pockets (loot-free by design), the common room is the arena.
 
 ### 3.17 `shrine_a`: the Chapel (2x3, doors s@4 s@13 e@13 w@13)
 A stage at the north end (two tiers of steps, an altar of chiselled blocks with a purple cloth and candles, two gold statues, four candelabras), pews either side of
 a nave with a prayer carpet runner (white borders, purple field, a red kneeling cushion at its foot), holy-water fonts (cauldrons) at the entrance, tall stained-glass
-slits (cyan, magenta, orange, lime glass in front of froglights and a sea lantern) in the apse and side walls, candle wheel chandeliers. *Plays:* the nave is a long
+slits (cyan, magenta, orange, lime glass in front of froglights and a sea lantern) in the apse and side walls, candle wheel chandeliers (a ring of iron bars carrying
+the candles, hung on chains), tall white and purple banners high up. *Plays:* the nave is a long
 open line between pews (cover); the stage is the high spot; white banners and pale glass make it the calmest of the cult's rooms.
 
 ### 3.18 `shrine_b`: the Sanctum (2x3, doors n@4 s@13 e@13 w@13)
 A looming idol against the north wall (stepped plinth, polished body, a chiselled head with two shroomlight eyes, lightning-rod horns, stair arms, skulls at its
 feet), two soul braziers, a ritual circle of red and black carpets with a sacrificial slab (chains, bars, candles at the four corners) and a candelabra at each quarter,
-offering bowls, red stained glass with a glow behind it, a red candle chandelier, a chequer floor at the idol end. *Plays:* the cult's heart: the circle is where the
+offering bowls, red stained glass with a glow behind it, a red candle chandelier, a chequer floor at the idol end, black and red banners and flaming skulls high up. *Plays:* the cult's heart: the circle is where the
 party should not step; the idol's eyes are the light.
 
 ### 3.19 `great_hall` (3x5, doors s@13 w@22 e@22 w@40)
 The dais at the north end (two tiers, a throne with a tall back, crown and skull, two braziers, two gold statues, a fireplace each side), a colonnade of eight columns
 down the side aisles, four long tables with benches (cake, candles, lanterns, pots) either side of a red runner, three wheel chandeliers, armoured statues and
-banners between the columns, tall amber windows, and in the south a minstrels' gallery (a deck on four posts and an architrave, a fence rail, a stair flight up along the
-east wall, a table, chairs, lecterns, two lantern globes) over a buttery of barrels and hanging meat. *Plays:* the biggest room; four ways in (two in the west wall, one in the east wall, one in the south wall); the gallery
+banners between the columns (and long red and black ones high up), tall amber windows, and in the south a minstrels' gallery (a deck on four posts and an architrave, a fence rail, a stair flight up along the
+east wall, a table, chairs, lecterns, two lantern globes) over a buttery of barrels and hanging meat. *Plays:* the biggest room; two patrol nodes on the red runner; four ways in (two in the west wall, one in the east wall, one in the south wall); the gallery
 is a spawn position for archers and the hall's high ground; the dais at the far end is the lookout over the whole hall.
 
 ### 3.20 `closet_a`: the spiked cache (1x2, door n@4)
@@ -238,66 +261,131 @@ Why a kit and not raw `MT.set`: a hall is 20 to 60 thousand cells of which a few
 orientation-aware (`Fr`: a frame with right / up / forward; `Wall`: a wall with lateral / row / depth), refuses mistakes while building (decor never overwrites the shell or
 other decor, never blocks a declared route or a doorway apron) and checks the finished template.
 
-* Furniture and set pieces: `table` (top slabs, stair end boards), `chair`, `bench`, `lectern`, `bed`, `bunk` (beds on log posts with trapdoor rails), `spear_rack`,
+* Furniture and set pieces: `table` (top slabs, stair end boards), `chair`, `bench`, `lectern`, `bed`, `bunk` (beds on log posts with trapdoor rails; `chains=True` carries the posts on
+  as chains to the ceiling), `spear_rack`,
   `weapon_niche` (polearms standing in a recess: a rack that fits where the aisles leave no depth), `sarcophagus`, `candelabra`, `loculi`, `statue`, `dais`,
   `apse` (in the generator), `stretching_rack`, `torture_chair`, `iron_maiden`, `breaking_wheel`, `stocks`, `branding_cauldron`, `hanging_cage`, `hanging_bed`, `shackles`,
   `chain_hoist`, `drain`, `herb_bundle`, `glass_case`, `pane_cage`, `alembic`, `chalk_circle`, `glow_tank`, `armor_alcove`, `fireplace`, `idol`, `sacrificial_slab`,
-  `bone_wall`, `bone_pyramid`, `bone_stack`, `lantern_canopy`, `lantern_globe`, `toppled_shelf`, `shelf_wall`, `ladder_run`, `deck`, `stair_flight`, `spiral_stairs`, `fence_run`.
+  `bone_wall`, `bone_pyramid`, `bone_stack`, `lantern_canopy`, `lantern_globe`, `toppled_shelf`, `shelf_wall` (with `chiseled_shelf`: a chiselled bookshelf whose block entity holds
+  the books its `slot_N_occupied` states show), `ladder_run`, `deck`, `stair_flight`, `spiral_stairs`, `fence_run`.
 * Architecture (palette blocks only): `column`, `pilaster`, `cornice`, `plinth`, `door_trim`, `niche`, `window_slit` (barred, or stained glass lit from the outer layer),
   `beams`, `wall_band` (a string course at door-head height), `floor_chequer`, `floor_border`, `floor_medallion`.
-* Light (all real sources): `hang_lantern`, `chandelier_wheel` (four chains, a ring of horizontal chains, lanterns or candles), `bracket_lantern`, `sconce`, `wall_torch`,
+* Light (all real sources): `hang_lantern`, `chandelier_wheel` (a square ring hung from the ceiling by a vertical chain at each corner, at the middle of each side and in the centre; a
+  lantern under every chain, or a ring of iron bars with lit candles standing on it: the game holds a hanging lantern from the underside of the block above it and a lying chain has
+  none, so every lantern hangs from a standing chain), `bracket_lantern`, `sconce`, `wall_torch`,
   `brazier` (a post, a campfire, four open iron trapdoors flaring round it), `skull_sconce`, `candles_at`, `lantern_globe`.
 * Dressers (they fill only the free cells, so they cannot undo a design): `dress_wall` with items `it_sconce`, `it_wall_torch`, `it_banner`, `it_skull_sconce`, `it_shackles`,
-  `it_candle_niche`, `it_shelf`, `it_hooks`, `it_lantern_bracket`, `it_slit`; `clutter` with `cl_barrels`, `cl_bones`, `cl_rubble`, `cl_candles`; `auto_light` (hangs lanterns over the
+  `it_candle_niche` (needs a solid sill under the recess), `it_shelf`, `it_hooks`, `it_lantern_bracket`, `it_slit`; `upper_dress` (a second pass over the upper third of the walls with its own
+  random stream, so it never shifts the dice of the lower passes) with `it_tall_banner`, `it_high_bracket`, `it_high_slit` (barred, or stained glass lit from behind),
+  `it_high_niche`, `it_high_skull`; `clutter` with `cl_barrels`, `cl_bones`, `cl_rubble`, `cl_candles`; `auto_light` (hangs lanterns over the
   darkest reachable cells until the whole floor has block light 5 at eye level), `auto_markers` (spawn cells by farthest-point sampling over wide, reachable, flat floor;
   patrol cells nearest the middle of the door paths; `room_center` when the middle is blocked).
 
 ### What the generator checks on every template (the substitute for the game)
-1. Block states: every property name and value against a vanilla 1.21.1 table written for this kit (the shared `check_state` lets any property through on a block it does not list).
+1. Block states: every property name and value against the game's own table (`mega_lib.check_state`, now read from the vanilla 1.21.1 data) and, as a second opinion, a table written for this kit.
 2. The walk graph (half-block accurate: step up one block with a jump, two cells of head room): every door reaches every other door on foot, and by a route at least 3 wide.
 3. Spawn and patrol markers are reachable; spawn markers have a flat 3 x 3 around them and are at least 2 cells from a wall.
-4. Block light (the game's propagation rule, 15 minus one per cell): at least 96 % of the reachable floor has eye-level light 5 or more (all rooms reach 100 %); furnaces are not counted as light.
-5. No void visible: a flood fill through every non-opaque cell from the room never reaches the template's boundary except through the doorway holes.
+4. Block light (the game's propagation rule, 15 minus one per cell): at least 96 % of the reachable floor has eye-level light 5 or more (all rooms reach 100 %); furnaces are not counted as light; a
+   data marker (a structure block) is air, it is never placed.
+5. No void visible: a flood fill through every non-opaque cell from the room never reaches the template's boundary except through the doorway holes (this found the soul lanterns set into the lining of the crypt pit,
+   which had opened the pit to the void under the floor: they are backed by stone now).
 6. Nothing hangs in the air: chains and lanterns need a block above, wall torches, banners and ladders need a full block behind, and a connectivity test (flood fill through
    every solid cell from the floor, walls and ceiling) must reach every block.
 7. Nothing the game would drop on its first neighbour update: candles, torches and standing lanterns only on a surface that is sturdy at its centre (a full block, a top slab, an
-   upside-down stair, a fence or wall post), hanging lanterns only under one, roots only under a full block, dripstone on a base, vines and tripwire hooks on a full block, doors
-   on a full block, falling blocks (anvils) with a block under them; skulls, pots and cauldrons never on a bottom slab (they would float half a block above it).
+   upside-down stair, a fence or wall post, a STANDING chain: a lying chain has no top face), hanging lanterns only under one (or under a standing chain), roots only under a full block, dripstone on a base, vines and tripwire
+   hooks on a full block, doors on a full block, falling blocks (anvils) with a block under them; skulls, pots and cauldrons never on a bottom slab (they would float half a block above it).
 8. At most 12 armour stands per room.
 9. Doorway holes are empty (the library's `MT.set` refuses a block in a hole and `validate()` checks them again before a file is written).
+10. **The lead's gates, run from `Hall.check()` (`shared_problems`)**: `mega_arch_check.problems` (the survival rules of the game: standing lantern or candle on a full top face, hanging lantern under a block or a
+    standing chain, wall torch and banner on a solid back, no chain that ends in the air, sealed water, armour stands standing on something), `mega_decor_r2.attachment_problem` (a second audit of the same kind, errors
+    only), `multiblock_problems` (every bed has its head and foot, every door both halves with the same facing, hinge and state, every double chest its partner: with `facing` north the RIGHT half is the WEST
+    one), and the minimum block light 5 of `mega_shape_preview.light_report`. A template with any problem is not written (`--force` writes it to look at it).
+11. `explicit_defaults` writes the default `type` of a slab, the `half` of a stair and of a trapdoor into every cell that lacks them (the game reads a missing property as its default, a reader of the file does not).
+
+The checks of the other builders were also run over these templates from outside, to see that independent models agree (they are not part of this generator): ROOMS-2's `check_room` (doors reachable from door 0, 3-wide
+routes between all doors, markers reachable, light at or under the gloom limit 0 % in every room, no leak, no water or lava problem) finds nothing but its own fire rule, which counts a LAVA CAULDRON as lava and so
+objects to the wood near the forge and the branding cauldron: a lava cauldron does not ignite anything in vanilla (only flowing lava, fire and lightning do), so those stand as designed; and, for the closets,
+its "one faction marker" rule for halls, which the brief does not ask of a closet.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
 ## 5. Looked at
 
-Every template was rendered from two opposite corners (cutaway, ceiling off, with real shapes for stairs, slabs, trapdoors, fences, bars, chains and lanterns), the rooms with levels, pits or patterned floors also in plan, and the weak spots fixed: a wall torch hanging in a niche, chains hung from nothing, decor blocking an apron, markers on carpets, a stage that was never built, beams written with an
-axis on a block that has none, a beam floating over air (closet_c), candles on bottom slabs (sarcophagi, sacrificial slab), roots under chains (herbs), bookshelf ladders
-over a gap. Close-ups were rendered of the cages, chairs, sarcophagi, the ossuary pit, the gallery of the great hall and the
-guards' room. The official `mega_preview.py` was run on all 22 (isometric cutaway and top-down) without errors; its flat colours confirm shape and sockets only.
+Every template was rendered from two opposite corners (cutaway, roof off, with real shapes for stairs, slabs, trapdoors, fences, bars, chains and lanterns), in plan, as four wall
+elevations (what stands in front of each wall, to see where a wall is bare) and in first person from a doorway, by the lead's `mega_shape_preview.py` and `mega_walk_preview.py`
+(flat colours on a quarter-block grid: shape, light and clutter can be judged, textures cannot). The weak spots found and fixed over both passes: a wall torch hanging in a niche, chains hung from
+nothing, decor blocking an apron, markers on carpets, a stage that was never built, beams written with an axis on a block that has none, a beam floating over air (closet_c), candles on bottom
+slabs (sarcophagi, sacrificial slab), roots under chains (herbs), bookshelf ladders over a gap, and in the second pass (section 8) lanterns hung under lying chains (every wheel chandelier), a skull on
+an open trapdoor (the torture chairs), a double chest written the wrong way round (kitchen), three dark spots on the walking route (the crypt pit's ramp, a corner pocket, the top of the breaking wheel),
+chairs that did not face their table (library_b's mezzanine, the map table, the alchemy stools) and plain upper walls in every tall room.
+
+The final pictures are in `scratchpad/previews/mr1/` (the lead copies them where the owner reads them): per room `<room>_cutaway_SE.png`, `<room>_cutaway_NW.png`, `<room>_plan.png`, `<room>_walls.png`,
+a first-person view from the first doorway `<room>_view_door_*.png`, and `_ALL_ROOMS_contact_sheet.png` (the 22 SE cutaways on one sheet).
 
 ## 6. Unverified (nothing was run in game)
 
-* No template was placed in a world: block states, support rules and walk-graph rules are the generator's own tables, written from knowledge of vanilla 1.21.1, not from the game.
-* Light is a simplification (no sky light, glass and stained glass treated as clear, furnaces and soul fire as written in `emission`). The Gloom clock reads the real values.
+* No template was placed in a world: block states are checked against the game's own table (`mega_lib.real_states`, from the public mcmeta data of 1.21.1), the support, survival and walking rules are models.
+  The arch check, the attachment audit and the kit's own rules were written from knowledge of the vanilla `canSurvive` code; a block that survives in the model might still pop in the game.
+* Light is a simplification (no sky light, glass and stained glass treated as clear, furnaces and soul fire as written in `emission`). The Gloom clock reads the real values. Two different models
+  (the kit's and the lead's) agree on every template: minimum 5, none at or under 4.
 * The walk graph is conservative but approximate: stairs, slabs and trapdoors follow a simple step rule; a mob with a wide body may still stick on a prop that the graph accepts.
-* Armour stands: poses are the default; the statue offset (`dy` 0.5 on a slab) and the yaw of stands in alcoves were calculated, not seen.
-* Furnaces, blast furnaces and smokers are written lit with 32767 ticks of burn time (about 27 minutes of loaded time) so the forge glows when first seen; after that they are cold.
-* Lecterns carry `has_book=true` with an empty block entity (the book is drawn; the screen is empty).
-* Lit campfires and lava cauldrons are real hazards (a campfire burns whoever stands in it; a lava cauldron burns whoever falls in). They stand against walls behind fences, bars or benches.
+* Armour stands: poses are the default; the statue offset (`dy` 0.5 on a slab) and the yaw of stands in alcoves were calculated, not seen. The item ids of every stand and of the books were checked against the
+  vanilla 1.21.1 item registry (misode/mcmeta, branch 1.21.1-registries, `item/data.min.json`): all exist.
+* Furnaces, blast furnaces and smokers are written lit with 32767 ticks of burn time (about 27 minutes of loaded time) so the forge glows when first seen; after that they are cold. The tag name `BurnTime` is
+  the 1.21.1 one (it was renamed in 1.21.2).
+* Lecterns carry `has_book=true` with an empty block entity (the book is drawn; the screen is empty). Chiselled bookshelves are different: their block entity holds the books the states show (`Items` with
+  `Slot`, `id`, `count`, and `last_interacted_slot`), written from the 1.21.1 format as remembered; if the game rejected the tag the shelf would simply load empty with books drawn.
+* Lit campfires and lava cauldrons are real hazards (a campfire burns whoever stands in it; a lava cauldron burns whoever falls in). They stand against walls behind fences, bars or benches. Lava cauldrons are
+  not lava: they ignite nothing around them in vanilla, so the wood and wool near the forge, the branding cauldron and the alchemy island is as designed (ROOMS-2's analysis counts them as lava and says otherwise).
 * The "locked" cell doors are iron doors without a way to open them by hand; closet_b's real chest is behind two bookshelves (breakable by hand); closet_a's cobweb curtain needs a sword or shears.
-* `chiseled_bookshelf` is a real vanilla block with `facing` and six `slot_N_occupied` states, but `mega_lib._SCHEMA` (pattern `chiseled_.*`) knows only an `axis` for it and the shared checker
-  reports every one as an error, so the libraries use plain bookshelves (`CHISELED_SHELVES = False` in the kit brings them back; the kit writes and validates them itself). To fix the
-  shared table add one entry before the `chiseled_.*` rule: `chiseled_bookshelf`: `facing` (north, south, east, west) and `slot_0_occupied` ... `slot_5_occupied` (true, false).
+* The compat hints follow the SAFE builder's vocabulary (a pressure plate for `cutting_board`, a cauldron beside the fire for `cooking_pot`, the campfire for `stove`); whether a kitchen mod's blocks look right
+  where they replace one block of a multi-block prop (a table end, a plate) was not seen.
 * Pointed dripstone is written with the thickness the game would work out for the shape; the game recomputes it on a neighbour update.
 * Wall windows with a glow block (shroomlight, froglights, sea lantern) put the glow block in the outer wall layer, so the room's outer face shows a lit strip: harmless inside the
   dungeon, a lit window on an exterior wall.
+* The upper-wall banners, brackets and slits (`upper_dress`) were judged from the elevations and cutaways; how a banner's cloth hangs in front of a chiselled string course was not seen.
 
 ## 7. For the pool builder and the lead
 
 * Templates: `nusmp:mega/hall/<name>` for the 19 halls (RoomKind HALL), `nusmp:mega/treasure/closet_{a,b,c}` (TREASURE). Every door's jigsaw is name `nusmp:mega_door`,
   pool `nusmp:mega/side`, joint aligned, final state air (written by `MT.socket`; do not change them by hand: re-run the generator).
 * No Java, config, registration, quest key, lang entry or `build.gradle` change is needed for this builder. There are no config keys.
-* `catalog.json` is generated: after merging all builders run `python3 tools/labyrinth/mega_catalog.py`.
-* The markers use only kinds of `MarkerKind`: `spawn` (some `;weight=2`), `patrol`, `room_center`, `faction;faction=<id>`, `furniture;as=table|counter|storage|cutting_board`,
+* `catalog.json` is generated: after merging all builders run `python3 tools/labyrinth/mega_catalog.py` (done in this worktree; it differs only in these templates' markers).
+* The pools in the tree were generated before these templates existed: run `python3 tools/labyrinth/gen_mega_pools.py` after the merge (`mega_check` lists the 22 as orphans until then). Checked in a scratch
+  copy: the generator accepts them (28 halls and 3 closets in `side`).
+* **Weights.** With no `relative` entry every hall weighs the same (2 of 356 in `side`). To make crypts and barracks common and the set pieces rare, add to the `side` pool's `relative` map of
+  `tools/labyrinth/mega_pools.json` (the numbers are on ROOMS-2's scale, where a plain furnished hall is 10; add ROOMS-2's own entries from their doc next to these, or their halls drop to weight 1):
+  `"mega/hall/cell_block": 10, "mega/hall/torture_chamber": 4, "mega/hall/crypt_a": 14, "mega/hall/crypt_b": 10, "mega/hall/ossuary": 10, "mega/hall/library": 10, "mega/hall/alchemy_lab": 10,
+  "mega/hall/armory_forge": 10, "mega/hall/kitchen_larder": 10, "mega/hall/barracks_a": 14, "mega/hall/barracks_b": 10, "mega/hall/shrine_a": 10, "mega/hall/shrine_b": 5, "mega/hall/great_hall": 5,
+  "mega/treasure/closet_a": 3, "mega/treasure/closet_b": 2, "mega/treasure/closet_c": 3`. The weights come out as small integers (3 or 4 of 356 for a common hall, 1 for a set piece), so `scale` in that file
+  is the knob if finer steps are wanted. The great hall should also be limited to one per sector by the recipe (it is 3 x 5 modules).
+* The markers use only kinds of `MarkerKind`: `spawn` (some `;weight=2`), `patrol`, `room_center`, `faction;faction=<id>`, `furniture;as=table|counter|storage|cutting_board|cooking_pot`,
   `seat;as=chair;facing=<dir>`, `hearth;as=stove`, `bed;as=bed`. No `arrival`, `expansion_socket`, `pedestal`, `guardian_spawn`, `gatekeeper` or `trap` markers.
 * Great hall: four doors, two in the west wall (z 22 and 40), one in the east wall (z 22), one in the south wall (x 13); it needs a sector with room for 3 x 5 modules.
+* Vanilla Block Primacy: no `nusmp:` block appears in any of these templates (checked by `mega_check`); everything is vanilla. The closets roll the existing `nusmp:chests/labyrinth_trial`.
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+## 8. The relaunch audit (the second agent's pass over the first agent's work)
+
+The first agent was stopped with all 22 templates, the generator, the kit and this document written. The second agent audited every template against the brief and the stricter shared tools and
+changed the following. Nothing was deleted or renamed; the old rooms stay, with their defects mended.
+
+* **Found by `mega_arch_check` (54 problems in 12 templates), fixed:** the wheel chandeliers hung their side lanterns under lying chain links (a lantern is held by the underside of the block above it and a lying chain has
+  none), now every lantern hangs from a standing chain up to the ceiling and a candle wheel is a ring of iron bars; skulls on the headrest of the torture chairs rested on an open trapdoor, now on a bar post;
+  barracks_b's lantern chains ended under a slab written without its `type` (the checker read a missing property as none; `explicit_defaults` now writes slab `type`, stair and trapdoor `half`).
+* **Found by the new pairing check, fixed:** the kitchen's double chest was written with its halves the wrong way round (a half chest until the first update).
+* **Found by the lead's light report (the first agent's own model said 5 everywhere), fixed:** the ramp of the crypt pit (bone blocks stop light) had block light 3, an open coffin, a corner pocket of crypt_b and the
+  top of the breaking wheel in torture_chamber_b had 4. Soul lanterns now sit in the pit's lining (backed by stone, found by the leak check), a candle burns in an opened coffin, crypt_b has a soul torch at each doorway and a
+  candelabra in each corner, the wheel has a torch.
+* **Wrong compat markers, fixed:** the kitchen's `hearth` marker stood over the cauldron, not the fire; it now follows the SAFE builder's vocabulary (stove on the campfire, cooking pots beside it, a pressure plate as cutting board).
+* **Furniture that did not work, fixed:** library_b's mezzanine chairs faced away from their desks, barracks_a's map-table chair faced an empty cell, the alchemy stools were a cell away from the benches; a candle niche
+  needs a solid sill (a candle on a skull is what the high niches first produced).
+* **Added to the brief's list:** chiselled bookshelves with real books in both libraries (the first agent had to leave them out because the shared state table was wrong; it is the game's own table now), bunk posts that
+  go on as chains to the ceiling in barracks_a ("beds + trapdoors + chains"), the upper third of the walls of every tall room (tall banners, lantern brackets, barred or lit slits, candle niches, flaming skulls: `upper_dress`),
+  spilled potions on the alchemy floors, more cobwebs (the corner column is searched for a free cell), the great hall at two patrol nodes (the brief says 1 to 2).
+* **Gates built into the generator:** the lead's arch check, the attachment audit, the multi-block pairing check and the shared light minimum run in `Hall.check()`; a failing template is not written; `--table` prints
+  the table of section 2 from the files; `--force` writes a failing template to look at it.
+* **Checked and found fine:** sizes and door counts and placements against the brief; marker counts (4 to 8 spawns, 1 to 2 patrols, one faction marker per hall, the `seat` over stairs, `bed` over bed feet); the loot
+  table of the closets; every item id in the armour stands and books against the vanilla registry; palette share of the shell (87 % for the ossuary with its bone walls, 95 % or more elsewhere); determinism
+  (three runs under different `PYTHONHASHSEED` give identical bytes); ROOMS-2's independent analysis (doors, 3-wide routes, markers, light, leaks, fluids) over all 22.

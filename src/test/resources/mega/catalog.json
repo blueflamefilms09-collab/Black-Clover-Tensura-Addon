@@ -3204,16 +3204,9 @@
     {
      "args": {},
      "kind": "spawn",
-     "x": 11,
-     "y": 9,
-     "z": 4
-    },
-    {
-     "args": {},
-     "kind": "spawn",
      "x": 5,
      "y": 9,
-     "z": 8
+     "z": 4
     },
     {
      "args": {},
@@ -3237,6 +3230,13 @@
      "x": 11,
      "y": 9,
      "z": 13
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 5,
+     "y": 9,
+     "z": 14
     },
     {
      "args": {
@@ -3278,7 +3278,7 @@
       "facing": "west"
      },
      "kind": "seat",
-     "x": 5,
+     "x": 4,
      "y": 10,
      "z": 9
     },
@@ -3764,11 +3764,9 @@
      "z": 5
     },
     {
-     "args": {
-      "weight": "2"
-     },
+     "args": {},
      "kind": "spawn",
-     "x": 4,
+     "x": 5,
      "y": 9,
      "z": 7
     },
@@ -3784,7 +3782,7 @@
     {
      "args": {},
      "kind": "spawn",
-     "x": 7,
+     "x": 8,
      "y": 9,
      "z": 9
     },
@@ -3805,18 +3803,20 @@
      "z": 10
     },
     {
-     "args": {},
-     "kind": "patrol",
-     "x": 22,
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 4,
      "y": 9,
      "z": 11
     },
     {
      "args": {},
-     "kind": "spawn",
-     "x": 5,
+     "kind": "patrol",
+     "x": 22,
      "y": 9,
-     "z": 12
+     "z": 11
     },
     {
      "args": {
@@ -5400,13 +5400,6 @@
     },
     {
      "args": {},
-     "kind": "patrol",
-     "x": 6,
-     "y": 9,
-     "z": 28
-    },
-    {
-     "args": {},
      "kind": "spawn",
      "x": 20,
      "y": 9,
@@ -5632,12 +5625,30 @@
     },
     {
      "args": {
-      "as": "cutting_board"
+      "as": "cooking_pot"
      },
      "kind": "furniture",
      "x": 5,
      "y": 10,
-     "z": 6
+     "z": 2
+    },
+    {
+     "args": {
+      "as": "stove"
+     },
+     "kind": "hearth",
+     "x": 6,
+     "y": 10,
+     "z": 2
+    },
+    {
+     "args": {
+      "as": "cooking_pot"
+     },
+     "kind": "furniture",
+     "x": 7,
+     "y": 10,
+     "z": 2
     },
     {
      "args": {
@@ -5660,21 +5671,21 @@
     },
     {
      "args": {
-      "as": "stove"
-     },
-     "kind": "hearth",
-     "x": 6,
-     "y": 11,
-     "z": 2
-    },
-    {
-     "args": {
       "as": "storage"
      },
      "kind": "furniture",
      "x": 15,
      "y": 11,
      "z": 4
+    },
+    {
+     "args": {
+      "as": "cutting_board"
+     },
+     "kind": "furniture",
+     "x": 5,
+     "y": 11,
+     "z": 6
     }
    ],
    "size": [

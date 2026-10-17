@@ -237,6 +237,8 @@ def cell_block_a():
     runner(h, 12, 2, 14, 24, "z", skip=[(12, 12, 14, 14)])
     runner(h, 2, 12, 24, 14, "x", skip=[(12, 12, 14, 14)])
     D.beams(h, "x", [6, 20])
+    # the upper third of the walls: dark barred slits, tall black banners, a lantern bracket now and then
+    D.upper_dress(h, [D.it_high_slit(None, rows=2, drop=2), D.it_tall_banner("black", hang=2), D.it_high_bracket(drop=2)], sides="nsew", step=(4, 6))
     h.faction("cultist", 11, 15)
     D.auto_light(h)
     D.auto_markers(h)
@@ -365,6 +367,31 @@ def ossuary_pit(h, x1, z1, x2, z2, floor_row=3, ramp_from="s"):
                 h.try_set(x, top_row + 1, z, "minecraft:skeleton_skull", {"rotation": str(h.rng.randrange(16))})
     far = {"s": ((x1 + x2) // 2, z1), "n": ((x1 + x2) // 2, z2), "e": (x1, (z1 + z2) // 2), "w": (x2, (z1 + z2) // 2)}[ramp_from]
     h.set(far[0], floor_row + 1, far[1], L.SOUL_LANTERN, {"hanging": False}, over=True)
+    # soul lanterns set into the pit's side walls beside the ramp (the lantern stands in the lining, its light falls on the steps): the ramp is made of bone blocks,
+    # which stop light, so the one lantern at the foot of the pit left the middle of the ramp in the dark (the shared light check found block light 3 there)
+    for k in (1, 3):
+        if k >= length:
+            continue
+        top_row = FLOOR - 1 - min(k, depth - 1)
+        for edge in (min(lats) - 1, max(lats) + 1):
+            if ramp_from == "s":
+                x, z = edge, z2 - k
+            elif ramp_from == "n":
+                x, z = edge, z1 + k
+            elif ramp_from == "e":
+                x, z = x2 - k, edge
+            else:
+                x, z = x1 + k, edge
+            if top_row + 1 < FLOOR:
+                h.set(x, top_row + 1, z, L.SOUL_LANTERN, {"hanging": False}, over=True)
+                # the lantern is see-through: whatever lies behind it must be stone (the lining may be the only skin between the pit and the void under the floor)
+                ox, oz = (0, 0)
+                if ramp_from in ("s", "n"):
+                    ox = -1 if edge == min(lats) - 1 else 1
+                else:
+                    oz = -1 if edge == min(lats) - 1 else 1
+                if h.free(x + ox, top_row + 1, z + oz):
+                    h.set(x + ox, top_row + 1, z + oz, L.COBBLED)
     for (x, z) in ring:
         gap = (ramp_from == "s" and z == z2 + 1 and x1 <= x <= x2) or (ramp_from == "n" and z == z1 - 1 and x1 <= x <= x2) or \
               (ramp_from == "e" and x == x2 + 1 and z1 <= z <= z2) or (ramp_from == "w" and x == x1 - 1 and z1 <= z <= z2)
@@ -438,6 +465,8 @@ def crypt_a():
     D.clutter(h, [D.cl_bones, D.cl_rubble, D.cl_candles], 10)
     D.wall_vines(h, "s", range(3, 12), p=0.35)
     D.beams(h, "x", [5, 9, 17, 21], block=L.POLISHED, corbel=L.POLISHED_STAIRS)
+    D.upper_dress(h, [D.it_tall_banner("purple", hang=3), D.it_high_bracket(soul=True, drop=3), D.it_high_niche("white", drop=3), D.it_tall_banner("black", hang=3)],
+                  sides="nsew", step=(4, 6))
     finish_common(h)
     h.faction("undead", 11, 13)
     D.auto_light(h, soul=True)
@@ -592,6 +621,8 @@ def cell_block_b():
     D.cobwebs(h, 0.8)
     D.beams(h, "x", [6, 20], y=h.top)
     D.beams(h, "z", [6, 20], y=h.top)
+    D.upper_dress(h, [D.it_tall_banner("black", hang=3), D.it_high_slit(None, rows=3, drop=2), D.it_high_bracket(drop=3), D.it_tall_banner("red", hang=3)], sides="nsew",
+                  step=(4, 6))
     finish_common(h, plinth=False, webs=False)
     h.faction("cultist", 13, 13)
     D.auto_light(h)
@@ -631,6 +662,7 @@ def torture_chamber_b():
     D.hanging_cage(h, 12, 3, GROUND + 2)
     # wheel and stocks on the east wall
     D.breaking_wheel(we, 7, GROUND + 3)
+    D.wall_torch(we, 7, GROUND + 7)               # a torch over the wheel: its ring of open trapdoors is a ladder to the shared light check, and the wheel should be lit anyway
     D.stocks(h.frame(14, GROUND, 11, "south"), 4)
     # the brazier with its tongs (an anvil) and a second cage over the crossing east of the west door
     D.brazier(h, 12, 14)
@@ -658,6 +690,7 @@ def torture_chamber_b():
     D.clutter(h, [D.cl_bones, D.cl_barrels, D.cl_rubble, D.cl_candles], 9)
     D.wall_vines(h, "s", range(3, 11), p=0.4)
     D.beams(h, "x", [4, 10, 16, 22])
+    D.upper_dress(h, [D.it_tall_banner("black", hang=2), D.it_high_skull(soul=False, drop=3), D.it_tall_banner("red", hang=2)], sides="nsew", step=(4, 6))
     finish_common(h)
     h.faction("demon", 11, 16)
     D.auto_light(h)
@@ -871,7 +904,7 @@ def library_b():
     # mezzanine desks
     for x0 in (3, 12, 21):
         D.table(h.frame(x0, DECK + 1, 3, "east"), 3)
-        D.chair(h.frame(x0 + 1, DECK + 1, 4, "south"))
+        D.chair(h.frame(x0 + 1, DECK + 1, 4, "north"))               # the scribe sits at the desk, facing it
     finish_common(h, plinth=False, webs=False)
     h.faction("cultist", 13, 10)
     D.auto_light(h)
@@ -934,13 +967,17 @@ def crypt_b():
     D.chandelier_wheel(h, 13, 13, r=2, drop=5, soul=True)
     for (x, z, f) in ((10, 3, "south"), (16, 3, "south"), (10, 23, "north"), (16, 23, "north")):
         D.statue(h, x, z, f, kit="skull" if (x + z) % 2 else "iron")
-    for (x, z) in ((3, 8), (3, 18), (23, 8), (23, 18), (8, 3), (18, 3), (8, 23), (18, 23)):
+    for (x, z) in ((3, 8), (3, 18), (23, 8), (23, 18), (8, 3), (18, 3), (8, 23), (18, 23), (2, 2), (24, 2), (2, 24), (24, 24)):
         if h.can_set(x, GROUND, z) and h.can_set(x, GROUND + 1, z):
             D.candelabra(h, x, z, soul=True)
     for (wl, lo, hi) in ((wn, 3, 23), (ws, 3, 23), (ww, 3, 23), (we, 3, 23)):
         D.loculi(h, wl.side, [lt for lt in range(lo, hi + 1, 2) if not (10 <= lt <= 16)], (GROUND + 4, GROUND + 6))
         D.dress_wall(h, wl.side, [D.it_banner("purple", y=GROUND + 3, hang=1), D.it_skull_sconce(), D.it_candle_niche("white", y=GROUND + 8), D.it_wall_torch(soul=True)],
                      lo=3, hi=23, step=(3, 5))
+    # a soul torch on each side of every doorway, a little way from the jamb: the dim nave still keeps the cells beside the doors above the gloom limit
+    for wl in (wn, ws, ww, we):
+        for lat in (10, 16):
+            D.it_wall_torch(soul=True)(wl, lat)
     # the sunken ossuary pit in the east wing, a ramp of bone blocks down from the ring road side
     ossuary_pit(h, 22, 7, 23, 10, floor_row=4, ramp_from="w")
     D.moss_patch(h, 3, 12, 2, 0.5)
@@ -949,6 +986,8 @@ def crypt_b():
     D.wall_vines(h, "n", range(3, 12), p=0.3)
     D.beams(h, "x", [7, 19], block=L.POLISHED, corbel=L.POLISHED_STAIRS)
     D.beams(h, "z", [7, 19], block=L.POLISHED, corbel=L.POLISHED_STAIRS)
+    D.upper_dress(h, [D.it_tall_banner("purple", hang=3), D.it_high_bracket(soul=True, drop=3), D.it_high_niche("white", drop=3), D.it_tall_banner("black", hang=3)],
+                  sides="nsew", step=(4, 6))
     finish_common(h)
     h.faction("undead", 13, 20)
     D.auto_light(h, soul=True)
@@ -1003,7 +1042,7 @@ def alchemy_lab_a():
     for z0 in (3, 8, 13):
         D.table(h.frame(3, GROUND, z0, "south"), 4, width=2)
         bench_items(h, [(x, z) for z in range(z0, z0 + 4) for x in (2, 3)], GROUND + 1)
-        D.chair(h.frame(5, GROUND, z0 + 1, "west"), seat_marker=(z0 == 8))
+        D.chair(h.frame(4, GROUND, z0 + 1, "west"), seat_marker=(z0 == 8))      # a stool right at the bench
     # the vats on the island and the chalk circle round them
     h.set(7, GROUND, 10, "minecraft:water_cauldron", {"level": 3})
     h.set(8, GROUND, 10, "minecraft:lava_cauldron")
@@ -1033,7 +1072,13 @@ def alchemy_lab_a():
     D.dress_wall(h, "e", [D.it_shelf(("pot", "brew", "candle")), D.it_banner("lime"), D.it_wall_torch(), D.it_shelf(("skull", "pot"))], lo=3, hi=24)
     D.dress_wall(h, "w", [D.it_wall_torch(), D.it_banner("lime"), D.it_shelf()], lo=17, hi=24)
     D.clutter(h, [D.cl_barrels, D.cl_candles], 6)
+    # spilt brews on the floor south of the island: carpets in the colours of the potions (walkable, so the routes stay clear)
+    for (x, z, col) in ((9, 15, "lime"), (10, 15, "lime"), (10, 16, "lime"), (9, 16, "green"), (5, 18, "purple"), (6, 18, "purple"), (6, 19, "magenta"),
+                        (11, 19, "cyan"), (12, 19, "cyan"), (12, 18, "light_blue")):
+        h.try_set(x, GROUND, z, "minecraft:%s_carpet" % col)
     D.beams(h, "x", [5, 11, 17, 23])
+    D.upper_dress(h, [D.it_high_slit("minecraft:verdant_froglight", "minecraft:lime_stained_glass", rows=2, drop=2), D.it_tall_banner("lime", hang=2),
+                      D.it_high_bracket(drop=2)], sides="nsew", step=(4, 6))
     finish_common(h)
     h.faction("slime", 8, 15)
     D.auto_light(h)
@@ -1107,7 +1152,12 @@ def alchemy_lab_b():
     D.dress_wall(h, "s", [D.it_shelf(("pot", "brew")), D.it_banner("cyan"), D.it_wall_torch()], lo=3, hi=11)
     D.dress_wall(h, "e", [D.it_wall_torch(), D.it_banner("purple")], lo=15, hi=24)
     D.clutter(h, [D.cl_barrels, D.cl_candles], 6)
+    # a spilt sample on the floor of the fighting half
+    for (x, z, col) in ((9, 17, "cyan"), (10, 17, "cyan"), (10, 18, "light_blue"), (11, 18, "lime"), (9, 19, "purple"), (10, 19, "purple")):
+        h.try_set(x, GROUND, z, "minecraft:%s_carpet" % col)
     D.beams(h, "x", [5, 16, 21])
+    D.upper_dress(h, [D.it_high_slit("minecraft:sea_lantern", "minecraft:cyan_stained_glass", rows=3, drop=2), D.it_tall_banner("cyan", hang=2),
+                      D.it_high_bracket(drop=3)], sides="nsew", step=(4, 6))
     finish_common(h)
     h.faction("cultist", 9, 15)
     D.auto_light(h)
@@ -1204,6 +1254,8 @@ def armory_forge_a():
     D.dress_wall(h, "w", [D.it_wall_torch(), D.it_banner("black")], lo=12, hi=15, step=(3, 4))
     D.clutter(h, [D.cl_barrels, D.cl_candles], 5)
     D.beams(h, "z", [6, 13, 20])
+    D.upper_dress(h, [D.it_tall_banner("orange", hang=3), D.it_high_slit(None, rows=3, drop=2), D.it_high_bracket(drop=3), D.it_tall_banner("black", hang=3)],
+                  sides="nsew", step=(4, 6))
     finish_common(h)
     h.faction("construct", 9, 11)
     D.auto_light(h)
@@ -1270,6 +1322,8 @@ def armory_forge_b():
     D.dress_wall(h, "e", [D.it_wall_torch(), D.it_banner("black"), D.it_shelf(("skull", "candle", "pot"))], lo=10, hi=15, step=(2, 3))
     D.clutter(h, [D.cl_barrels, D.cl_candles], 4)
     D.beams(h, "z", [6, 13, 20])
+    D.upper_dress(h, [D.it_tall_banner("red", hang=2), D.it_high_slit(None, rows=2, drop=2), D.it_tall_banner("black", hang=2), D.it_high_bracket(drop=2)],
+                  sides="nsew", step=(4, 6))
     finish_common(h)
     h.faction("construct", 13, 8)
     D.auto_light(h)
@@ -1296,15 +1350,19 @@ def kitchen_larder():
     for x in range(3, 10):
         for z in (2, 3):
             h.floor_set(x, z, L.COBBLED)
+    # the fire in the middle (the `hearth;as=stove` marker stands on it: a kitchen mod swaps the campfire for its stove and the party rests there), a stew pot on
+    # each side of it on the hearthstone (`furniture;as=cooking_pot`: the SAFE builder's convention, "a cauldron next to a fire"), smokers and furnaces beyond
     h.set(6, GROUND, 2, "minecraft:campfire", {"facing": "south", "lit": True, "signal_fire": False})
-    h.set(6, GROUND + 1, 2, "minecraft:cauldron")
-    h.marker(6, GROUND + 2, 2, "hearth", **{"as": "stove"})
+    h.marker(6, GROUND + 1, 2, "hearth", **{"as": "stove"})
+    h.set(5, GROUND, 2, "minecraft:water_cauldron", {"level": 3})
+    h.set(7, GROUND, 2, "minecraft:cauldron")
+    h.marker(5, GROUND + 1, 2, "furniture", **{"as": "cooking_pot"})
+    h.marker(7, GROUND + 1, 2, "furniture", **{"as": "cooking_pot"})
     for x, kind in ((4, "smoker"), (8, "smoker"), (3, "furnace"), (9, "furnace")):
         h.furnace(x, GROUND, 2, kind, "south")
-    h.set(5, GROUND, 2, L.FENCE)
-    h.set(7, GROUND, 2, L.FENCE)
-    h.set(5, GROUND + 1, 2, "minecraft:iron_bars")
-    h.set(7, GROUND + 1, 2, "minecraft:iron_bars")
+    # a grease filter of iron bars in the mouth of the hood, above the fire and the two pots
+    for x in (5, 6, 7):
+        h.set(x, GROUND + 2, 2, "minecraft:iron_bars")
     for k, y in enumerate(range(GROUND + 3, top + 1)):
         a, b = 3 + k, 9 - k
         if a > b:
@@ -1314,7 +1372,8 @@ def kitchen_larder():
                 h.try_set(x, y, z, D.brick_mix(h, 0.12, 0.08))
     # the cutting table and a second bench, with the goods on them
     D.table(h.frame(4, GROUND, 6, "east"), 5)
-    h.marker(5, GROUND + 1, 6, "furniture", **{"as": "cutting_board"})
+    h.set(5, GROUND + 1, 6, L.PLATE)                 # the cutting board: a wooden pressure plate on the counter (the SAFE builder's convention for `cutting_board`)
+    h.marker(5, GROUND + 2, 6, "furniture", **{"as": "cutting_board"})
     D.candles_at(h, 6, GROUND + 1, 6, 2, "orange")
     h.set(7, GROUND + 1, 6, "minecraft:flower_pot")
     h.set(8, GROUND + 1, 6, L.LANTERN, {"hanging": False})
@@ -1334,8 +1393,9 @@ def kitchen_larder():
         h.set(x, GROUND, 15, "minecraft:barrel", {"facing": "up", "open": False})
     for x in (9, 10):
         h.set(x, GROUND + 1, 15, "minecraft:barrel", {"facing": "up", "open": False})
-    h.set(12, GROUND, 15, "minecraft:chest", {"facing": "north", "type": "left"})
-    h.set(13, GROUND, 15, "minecraft:chest", {"facing": "north", "type": "right"})
+    # a double chest facing north: the RIGHT half is the west one (it joins eastward), the LEFT half the east one (a viewer in front, looking south, has east on the left)
+    h.set(12, GROUND, 15, "minecraft:chest", {"facing": "north", "type": "right"})
+    h.set(13, GROUND, 15, "minecraft:chest", {"facing": "north", "type": "left"})
     h.set(15, GROUND, 14, "minecraft:hay_block", {"axis": "x"})
     h.set(15, GROUND, 13, "minecraft:hay_block", {"axis": "x"})
     h.set(15, GROUND + 1, 14, "minecraft:hay_block", {"axis": "x"})
@@ -1379,9 +1439,9 @@ def barracks_a():
     top = h.top
     # bunk beds along both long walls
     for i, x in enumerate((4, 8, 12, 16)):
-        D.bunk(h.frame(x, GROUND, 4, "north"), color="red" if i % 2 == 0 else "blue")
+        D.bunk(h.frame(x, GROUND, 4, "north"), color="red" if i % 2 == 0 else "blue", chains=True)
     for i, x in enumerate((8, 12, 16)):
-        D.bunk(h.frame(x, GROUND, 13, "south"), color="blue" if i % 2 == 0 else "red")
+        D.bunk(h.frame(x, GROUND, 13, "south"), color="blue" if i % 2 == 0 else "red", chains=True)
     # the long table between the bunks, a bench on each side, the map table
     D.table(h.frame(7, GROUND, 7, "east"), 11)
     h.marker(8, GROUND + 1, 7, "furniture", **{"as": "table"})
@@ -1394,7 +1454,7 @@ def barracks_a():
     D.chair(h.frame(6, GROUND, 7, "east"), seat_marker=True)
     D.chair(h.frame(18, GROUND, 7, "west"))
     h.set(20, GROUND, 7, "minecraft:cartography_table")
-    D.chair(h.frame(19, GROUND, 8, "east"))
+    D.chair(h.frame(20, GROUND, 8, "north"))                        # the officer at the map table sits in front of it, facing it
     # the hearth in the west, lockers of barrels in the north-east and south-east, two guard armours
     D.fireplace(ww, 6, 3)
     h.marker(2, GROUND + 1, 7, "hearth", **{"as": "stove"})
@@ -1505,6 +1565,7 @@ def barracks_b():
     D.dress_wall(h, "w", [D.it_wall_torch(), D.it_banner("blue")], lo=7, hi=11, step=(3, 4))
     D.clutter(h, [D.cl_barrels, D.cl_candles], 4)
     D.beams(h, "z", [7, 12, 17, 22])
+    D.upper_dress(h, [D.it_tall_banner("red", hang=2), D.it_high_bracket(drop=2), D.it_tall_banner("blue", hang=2)], sides="nsew", step=(4, 6))
     finish_common(h)
     h.faction("ogre", 13, 8)
     D.auto_light(h)
@@ -1606,6 +1667,7 @@ def shrine_a():
     D.dress_wall(h, "w", [D.it_banner("white", y=GROUND + 6, hang=2), D.it_wall_torch()], lo=22, hi=24, step=(2, 3))
     D.dress_wall(h, "e", [D.it_banner("white", y=GROUND + 6, hang=2), D.it_wall_torch()], lo=22, hi=24, step=(2, 3))
     D.beams(h, "x", [6, 12, 18, 24], block=L.POLISHED, corbel=L.POLISHED_STAIRS)
+    D.upper_dress(h, [D.it_tall_banner("white", hang=3), D.it_high_bracket(drop=3), D.it_tall_banner("purple", hang=3)], sides="nsew", step=(4, 6))
     finish_common(h)
     h.faction("cultist", 9, 12)
     D.auto_light(h)
@@ -1658,6 +1720,7 @@ def shrine_b():
     D.clutter(h, [D.cl_candles, lambda hh, x, z: D.cl_candles(hh, x, z, "red"), D.cl_bones], 26, region=(6, 6, 15, 11))
     D.clutter(h, [D.cl_candles, lambda hh, x, z: D.cl_candles(hh, x, z, "red")], 10, region=(2, 15, 11, 24))
     D.beams(h, "x", [6, 12, 18, 24], block=L.POLISHED, corbel=L.POLISHED_STAIRS)
+    D.upper_dress(h, [D.it_tall_banner("black", hang=3), D.it_high_skull(soul=False, drop=3), D.it_tall_banner("red", hang=3)], sides="nsew", step=(4, 6))
     finish_common(h)
     h.faction("cultist", 8, 10)
     D.auto_light(h, soul=True)
@@ -1783,10 +1846,11 @@ def great_hall():
     runner(h, 12, 8, 14, 42, "z", colors=("red", "red", "red"))
     D.clutter(h, [D.cl_barrels, D.cl_candles, D.cl_rubble], 8, region=(2, 36, 24, 42))
     D.beams(h, "x", [9, 17, 25, 33, 41], block=L.POLISHED, corbel=L.POLISHED_STAIRS)
+    D.upper_dress(h, [D.it_tall_banner("black", hang=4, drop=2), D.it_high_bracket(drop=3), D.it_tall_banner("red", hang=4, drop=2)], sides="nsew", step=(5, 7))
     finish_common(h)
     h.faction("ogre", 13, 20)
     D.auto_light(h)
-    D.auto_markers(h, spawns=6, patrols=3)
+    D.auto_markers(h, spawns=6, patrols=2)
     return h
 
 
@@ -1947,16 +2011,64 @@ def sha(path):
         return hashlib.sha256(f.read()).hexdigest()[:12]
 
 
+def print_table():
+    """The template table of docs/labyrinth/mega_rooms1.md (section 2), printed from the files on disk so the doc cannot drift from them: size, doors, markers,
+    armour stands, the minimum block light of the kit's model and of the lead's `mega_shape_preview` light report, the number of non-air cells."""
+    import collections
+    from template import load
+    import mega_shape_preview as SP
+    print("| Template | Modules | Blocks x z | Doors | Spawn | Patrol | Other markers | Stands | Light kit / shared (min) | Cells |")
+    print("|---|---|---|---|---|---|---|---|---|---|")
+    brief_order = ["cell_block", "torture_chamber", "crypt", "ossuary", "library", "alchemy_lab", "armory_forge", "kitchen_larder", "barracks", "shrine", "great_hall",
+                   "closet"]
+    for name in sorted(ROOMS, key=lambda n: (brief_order.index(n.rsplit("_", 1)[0] if n[-2:] in ("_a", "_b", "_c") else n), n)):
+        t = load(os.path.join(L.RES, "data", "nusmp", "structure", "mega", name_path(name) + ".nbt"), "mega/" + name_path(name))
+        sx, sy, sz = t.size
+        doors = []
+        for (x, y, z), o, _d in t.jigsaws():
+            side = o.split("_")[0][0]
+            doors.append("%s@%d" % (side, x if side in "ns" else z))
+        marks = D.markers_of(t)
+        count = collections.Counter(k for k, *_ in marks)
+        heavy = sum(1 for k, _x, _y, _z, a in marks if k == "spawn" and a.get("weight"))
+        other = []
+        for k in ("faction", "furniture", "seat", "hearth", "bed", "room_center"):
+            if count.get(k):
+                if k == "faction":
+                    other.append("faction " + [a.get("faction") for kk, _x, _y, _z, a in marks if kk == "faction"][0])
+                else:
+                    other.append(k if count[k] == 1 else "%s x%d" % (k, count[k]))
+        stands = sum(1 for e in t.entities if str(e["nbt"].get("id", "")) == "minecraft:armor_stand")
+        lv = D.light_levels(t)
+        nodes = D.walk_nodes(t)
+        holes = D.door_holes(t)
+        vals = sorted(lv.get((x, int(s_ / 2.0 + 1.62), z), 0) for (x, z, s_) in D.reach(t, nodes) if (x, s_ // 2, z) not in holes)
+        rep = SP.light_report(t, name)
+        print("| `%s` | %dx%d | %dx%d | %s | %d (%d x2) | %d | %s | %d | %d / %d (median %d) | %d |" % (
+            name_path(name), sx // 9, sz // 9, sx, sz, " ".join(doors), count["spawn"], heavy, count["patrol"], ", ".join(other) or "-", stands, vals[0], rep["min"],
+            vals[len(vals) // 2], len(t.cells)))
+
+
+def name_path(name):
+    """The template path ('hall/crypt_a', 'treasure/closet_a') of a room name of this file."""
+    return ("treasure/" if name.startswith("closet_") else "hall/") + name
+
+
 def main(argv):
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("names", nargs="*", help="templates to build (default: all)")
     ap.add_argument("--check", action="store_true", help="do not write; compare with the files on disk and run the template checks")
     ap.add_argument("--list", action="store_true")
+    ap.add_argument("--table", action="store_true", help="print the markdown table of section 2 of the doc from the files on disk")
     ap.add_argument("--quiet", action="store_true")
+    ap.add_argument("--force", action="store_true", help="write a template even when a check fails (to look at it); the exit status stays 1")
     a = ap.parse_args(argv)
     if a.list:
         for n in ROOMS:
             print(n)
+        return 0
+    if a.table:
+        print_table()
         return 0
     names = a.names or list(ROOMS)
     bad = 0
@@ -1977,8 +2089,10 @@ def main(argv):
             if not data_equal:
                 print("STALE %s (the file on disk differs from the generator)" % n)
                 bad += 1
-        else:
+        elif not problems or a.force:
             h.save()
+        else:
+            print("NOT WRITTEN %s: a template with a defect never reaches the data folder (--force writes it anyway)" % n)
         if not a.quiet or problems:
             print("%s %-28s %5d blocks %2d doors %2d stands  light min %s median %s dark %s%%  markers %s" % (
                 status, n, stats.get("blocks", 0), len(h.doors), stats.get("armor_stands", 0), stats.get("eye_light_min"), stats.get("eye_light_median"),

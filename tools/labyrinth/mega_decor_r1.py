@@ -96,7 +96,7 @@ _OPAQUE_EXTRA = re.compile(r".*_froglight|shroomlight|sea_lantern|glowstone|reds
 def opaque(block):
     """True for a block that stops light and sight: a full cube other than glass and ice (mega_lib's table of full cubes lacks the froglights)."""
     p = path_of(block)
-    if _OPAQUE_NOT.fullmatch(p):
+    if _OPAQUE_NOT.fullmatch(p) or p in ("structure_block", "jigsaw"):         # a data marker is never placed in the world: it is air
         return False
     return L.is_full(block) or bool(_OPAQUE_EXTRA.fullmatch(p) and not re.fullmatch(r".*(stairs|slab|wall|bars|chain|rod|grate|bulb|door|trapdoor).*", p))
 
@@ -446,8 +446,10 @@ def center_support(block, props, face):
     if p.endswith("_stairs"):
         half = props.get("half", "bottom")
         return (half == "top" and face == "up") or (half == "bottom" and face == "down")
-    if p.endswith("_fence") or p.endswith("_wall") or p in ("iron_bars", "chain"):
+    if p.endswith("_fence") or p.endswith("_wall") or p == "iron_bars":
         return True
+    if p == "chain":
+        return props.get("axis", "y") == "y"      # a lying chain has nothing at its top or bottom face (its cross-section floats in the middle of the cell)
     return False
 
 
@@ -687,6 +689,83 @@ def check_hall(t, quiet=False, min_eye_light=5, light_floor_pct=0.04):
 
 
 # ===================================================================================================================
+# the lead's gates: the checks every template of the Mega-Dungeon has to pass, run here before a file is written
+# ===================================================================================================================
+_CW = {"north": "east", "east": "south", "south": "west", "west": "north"}
+_CCW = {v: k for k, v in _CW.items()}
+
+
+def multiblock_problems(t):
+    """Things that are several blocks in the game and must agree with each other: a bed (a foot and a head one step apart along its facing, one colour), a door (a
+    lower and an upper half with the same facing, hinge and state) and a double chest (a left and a right half that point at each other; with `facing` north the
+    RIGHT half is the west one, because the half a viewer in front, looking south, sees on his right is the west). Why: the game fixes a lone half on the first
+    neighbour update, but until then the template shows a half a bed, half a chest or a door with no top; the kitchen's chests were once written the wrong way round
+    and no other check noticed."""
+    cells = t.cells
+    out = []
+    for (x, y, z), c in sorted(cells.items()):
+        n = path_of(c.block)
+        p = c.props
+        if n.endswith("_bed"):
+            dx, dz = DV[p["facing"]]
+            if p["part"] == "foot":
+                o = cells.get((x + dx, y, z + dz))
+                if not (o and o.block == c.block and o.props.get("part") == "head" and o.props.get("facing") == p["facing"]):
+                    out.append("bed foot at %s has no head" % ((x, y, z),))
+            else:
+                o = cells.get((x - dx, y, z - dz))
+                if not (o and o.block == c.block and o.props.get("part") == "foot" and o.props.get("facing") == p["facing"]):
+                    out.append("bed head at %s has no foot" % ((x, y, z),))
+        elif n.endswith("_door") and not c.block.startswith("nusmp:"):
+            if p.get("half") == "lower":
+                o = cells.get((x, y + 1, z))
+                if not (o and o.block == c.block and o.props.get("half") == "upper" and all(o.props.get(k) == p.get(k) for k in ("facing", "hinge", "open"))):
+                    out.append("door at %s has no matching upper half" % ((x, y, z),))
+            else:
+                o = cells.get((x, y - 1, z))
+                if not (o and o.block == c.block and o.props.get("half") == "lower"):
+                    out.append("door top at %s has no lower half" % ((x, y, z),))
+        elif n in ("chest", "trapped_chest") and p.get("type", "single") != "single":
+            d = _CW[p["facing"]] if p["type"] == "right" else _CCW[p["facing"]]
+            dx, dz = DV[d]
+            o = cells.get((x + dx, y, z + dz))
+            want = "left" if p["type"] == "right" else "right"
+            if not (o and o.block == c.block and o.props.get("type") == want and o.props.get("facing") == p["facing"]):
+                out.append("double chest half (%s, facing %s) at %s has no partner at %s" % (p["type"], p["facing"], (x, y, z), (x + dx, y, z + dz)))
+    return out
+
+
+def shared_problems(t, name, min_light=5):
+    """The lead's own tools over a finished template, as problem strings: `mega_arch_check.problems` (the survival rules of the game: standing lanterns and
+    candles need a full top face, hanging lanterns need a block or a vertical chain above, wall torches and banners a solid back, no floating chain, water sealed),
+    `mega_decor_r2.attachment_problem` (a second audit of the same kind), the pairing of beds, doors and double chests, and the walking-route light of
+    `mega_shape_preview.light_report` (it counts every cell a player could stand in, also the top of a wheel of trapdoors, and calls a lit furnace a light, so it
+    is a different model from `check_hall`'s; both have to pass). Why: a template that passes only its own builder's checks has passed the checks its builder
+    wrote for it; these three are the ones the owner's lead runs on every template of the dungeon."""
+    out = []
+    import mega_arch_check as AC
+    for line in AC.problems(t, name):
+        out.append("arch check: " + line)
+    try:
+        import mega_decor_r2 as R2
+    except ImportError:             # the other builder's module is not there: the arch check above is the main audit
+        R2 = None
+    if R2 is not None:
+        for pos, c in sorted(t.cells.items()):
+            r = R2.attachment_problem(t.cells, pos, c)
+            if r is not None and r[0] == "error":
+                out.append("attachment check: %s at %s: %s" % (c.block, pos, r[1]))
+    for line in multiblock_problems(t):
+        out.append("multi-block check: " + line)
+    import mega_shape_preview as SP
+    r = SP.light_report(t, name)
+    if r["cells"] and r["min"] < min_light:
+        out.append("shared light check: the walking route has block light %d at its darkest (%.1f%% at or under 4); the minimum has to be %d" % (
+            r["min"], 100.0 * r["dark4"], min_light))
+    return out
+
+
+# ===================================================================================================================
 # the builder: a hall under construction, with the safety rails
 # ===================================================================================================================
 _B2 = ("true", "false")
@@ -884,12 +963,36 @@ class Hall:
         raise ValueError("%s: no free cell for the faction marker" % self.name)
 
     # ---- output
+    def explicit_defaults(self):
+        """Writes the default value of the properties that decide what a block covers (a slab's `type`, a stair's and a trapdoor's `half`) into every cell that
+        lacks them. Why: the game reads a missing property as its default (a slab without `type` is a bottom slab), but a template reader that does not know that
+        sees a slab that carries nothing, so the file says what it means."""
+        cells = self.mt.t.cells
+        for pos, c in list(cells.items()):
+            p = path_of(c.block)
+            add = {}
+            if p.endswith("_slab") and "type" not in c.props:
+                add["type"] = "bottom"
+            elif p.endswith("_stairs") and "half" not in c.props:
+                add["half"] = "bottom"
+            elif p.endswith("_trapdoor"):
+                if "half" not in c.props:
+                    add["half"] = "bottom"
+                if "open" not in c.props:
+                    add["open"] = "false"
+            if add:
+                cells[pos] = type(c)(c.block, dict(c.props, **add), c.nbt)
+        return self
+
     def finish(self):
+        self.explicit_defaults()
         self.mt.finish()
         return self
 
     def check(self, **kw):
-        return check_hall(self.mt.t, **kw)
+        problems, stats = check_hall(self.mt.t, **kw)
+        problems = problems + shared_problems(self.mt.t, self.name)
+        return problems, stats
 
     def save(self):
         return self.mt.save()
@@ -1244,26 +1347,34 @@ def hang_lantern(h, x, z, drop, y_top=None, soul=False):
 
 
 def chandelier_wheel(h, x, z, r=2, drop=3, y_top=None, soul=False, candles=False):
-    """A wheel chandelier: four chains down from the ceiling to a square ring of horizontal chains, a lantern hung under every corner and under the
-    middle of every side (or, with candles=True, lit candles standing on the ring). Why: vanilla chains lie on any axis, so a ring needs no custom block."""
+    """A wheel chandelier: a square ring `drop` rows under the ceiling hung from the ceiling by a vertical chain at each corner and at the middle of each side
+    (and one in the centre), a lantern hung under every one of those chains. With candles=True the ring is iron bars and lit candles stand on it instead of the
+    lanterns. Why: in the game a hanging lantern is held by the underside of the block above it, and a HORIZONTAL chain has nothing at its underside (its
+    cross-section is a thin bar in the middle of the cell), so a lantern under a ring link drops as an item at the first block update; every lantern here hangs
+    from a vertical chain that runs up to the ceiling. The same goes for candles: the top of a horizontal chain cannot carry one, the top of an iron bar can."""
     y_top = h.top if y_top is None else y_top
     yb = y_top - drop
     lant = L.SOUL_LANTERN if soul else L.LANTERN
-    for sx in (-1, 1):
-        for sz in (-1, 1):
-            for yy in range(yb, y_top + 1):
-                h.set(x + sx * r, yy, z + sz * r, L.CHAIN_BLOCK, {"axis": "y"})
-    for k in range(-r + 1, r):
-        h.set(x + k, yb, z - r, L.CHAIN_BLOCK, {"axis": "x"})
-        h.set(x + k, yb, z + r, L.CHAIN_BLOCK, {"axis": "x"})
-        h.set(x - r, yb, z + k, L.CHAIN_BLOCK, {"axis": "z"})
-        h.set(x + r, yb, z + k, L.CHAIN_BLOCK, {"axis": "z"})
+    stems = [(x + sx * r, z + sz * r) for sx in (-1, 1) for sz in (-1, 1)] + [(x, z - r), (x, z + r), (x - r, z), (x + r, z)]
+    stem_set = set(stems)
+    ring = [(x + k, z - r, "x") for k in range(-r, r + 1)] + [(x + k, z + r, "x") for k in range(-r, r + 1)] + \
+           [(x - r, z + k, "z") for k in range(-r + 1, r)] + [(x + r, z + k, "z") for k in range(-r + 1, r)]
+    for (px, pz) in stems:
+        for yy in range(yb + (1 if candles else 0), y_top + 1):
+            h.set(px, yy, pz, L.CHAIN_BLOCK, {"axis": "y"})
+    for (px, pz, ax) in ring:
+        if (px, pz) in stem_set:
+            continue
+        if candles:
+            h.set(px, yb, pz, L.IRON_BARS)
+            h.set(px, yb + 1, pz, "minecraft:candle", {"candles": "2", "lit": "true"})
+        else:
+            h.set(px, yb, pz, L.CHAIN_BLOCK, {"axis": ax})
     if candles:
-        for k in range(-r + 1, r):
-            for (px, pz) in ((x + k, z - r), (x + k, z + r), (x - r, z + k), (x + r, z + k)):
-                h.set(px, yb + 1, pz, "minecraft:candle", {"candles": "2", "lit": "true"})
+        for (px, pz) in stems:
+            h.set(px, yb, pz, L.IRON_BARS)
     else:
-        for (px, pz) in ((x - r, z - r), (x + r, z - r), (x - r, z + r), (x + r, z + r), (x, z - r), (x, z + r), (x - r, z), (x + r, z)):
+        for (px, pz) in stems:
             h.set(px, yb - 1, pz, lant, {"hanging": "true"})
     # the middle chain carries one more lantern so the wheel is not hollow
     for yy in range(yb, y_top + 1):
@@ -1394,6 +1505,13 @@ def bunk(f, color="red", wood_post=L.LOG, chains=False, marker=True):
         f.set(r, 2, 1, L.TRAPDOOR, {"facing": "@right" if r > 0 else "@left", "half": "bottom", "open": True})
     if marker:
         f.marker(0, 3, 0, "bed", **{"as": "bed"})
+    if chains:
+        # the four posts go on as chains up to the ceiling: a hung four-poster bunk (the brief's "beds + trapdoors + chains")
+        top = f.hall.top
+        for r in (-1, 1):
+            for ff in (-1, 2):
+                for u in range(4, top - f.y + 1):
+                    f.try_set(r, u, ff, L.CHAIN_BLOCK, {"axis": "y"})
 
 
 def spear_rack(w, lat, width=3):
@@ -1500,8 +1618,11 @@ def torture_chair(f, spikes=True):
     f.set(0, 0, 0, L.PLANKS_STAIRS, {"facing": "@back", "half": "bottom"})
     f.set(-1, 0, 0, L.IRON_BARS)
     f.set(1, 0, 0, L.IRON_BARS)
+    # the backrest: an open iron trapdoor plate, then a bar post that carries the skull (a skull needs a top face under it; the top of an open trapdoor is
+    # only a thin plate on one side of the cell, which the structural check rightly calls a floating skull)
+    f.set(0, 1, -1, "minecraft:iron_trapdoor", {"facing": "@forward", "half": "bottom", "open": True})
+    f.set(0, 2, -1, L.IRON_BARS)
     for u in (1, 2):
-        f.set(0, u, -1, "minecraft:iron_trapdoor", {"facing": "@forward", "half": "bottom", "open": True})
         f.set(0, u, 0, "minecraft:lightning_rod", {"facing": "@forward"})
     rot = {"south": 0, "west": 4, "north": 8, "east": 12}[f.facing]
     f.set(0, 3, -1, "minecraft:skeleton_skull", {"rotation": str(rot)})
@@ -1548,9 +1669,12 @@ def cobwebs(h, p=1.0):
     t = h.top
     for (x, z) in ((h.x0, h.z0), (h.x1, h.z0), (h.x0, h.z1), (h.x1, h.z1)):
         if h.rng.random() < p:
-            h.try_set(x, t, z, "minecraft:cobweb")
-            if h.rng.random() < 0.5:
-                h.try_set(x, t - 1, z, "minecraft:cobweb")
+            # the highest free cell of the corner column (the cornice may hold the top one): a web hangs in the angle and, now and then, a second one under it
+            for dy in range(0, 4):
+                if h.try_set(x, t - dy, z, "minecraft:cobweb"):
+                    if h.rng.random() < 0.5:
+                        h.try_set(x, t - dy - 1, z, "minecraft:cobweb")
+                    break
 
 
 def rubble(h, x, z, rows=2):
@@ -1632,29 +1756,112 @@ def shackles(h, x, z, y_top=None, drop=3):
 # ===================================================================================================================
 # dressers: wall rhythm and floor clutter placed along whatever is still free (deterministic, never blocks a route)
 # ===================================================================================================================
-def dress_wall(h, side, items, lo=None, hi=None, step=(3, 5), start=None):
+def dress_wall(h, side, items, lo=None, hi=None, step=(3, 5), start=None, rng=None, door_gap=0):
     """Walks along a wall and offers each position to the next item in `items` (callables `fn(w, lat) -> bool`, True when it placed something). An item
     checks that its cells are free, so the dresser fills only the gaps the furniture left. Why: hand-placing every banner and sconce of 22 rooms makes
-    the walls uniform or leaves them bare; a rhythm of varied small items along the free stretches gives every wall the layered look of the references."""
+    the walls uniform or leaves them bare; a rhythm of varied small items along the free stretches gives every wall the layered look of the references.
+    `rng` is another random stream than the hall's (so a second pass over the upper wall does not shift the dice of the passes written before it) and
+    `door_gap` keeps that many cells clear on each side of every doorway of this wall."""
     w = h.wall(side)
+    rng = rng or h.rng
     lo = (h.x0 if side in ("n", "s") else h.z0) + 1 if lo is None else lo
     hi = (h.x1 if side in ("n", "s") else h.z1) - 1 if hi is None else hi
-    lat = lo + (h.rng.randint(0, 2) if start is None else start)
-    i = h.rng.randrange(len(items))
+    doors = [off for (sd, off) in h.doors if sd == side]
+    lat = lo + (rng.randint(0, 2) if start is None else start)
+    i = rng.randrange(len(items))
     placed = 0
     tries = 0
     while lat <= hi and tries < 400:
         tries += 1
+        if door_gap and any(abs(lat - off) <= 1 + door_gap for off in doors):
+            lat += 1
+            continue
         fn = items[i % len(items)]
         if fn(w, lat):
             placed += 1
             i += 1
-            lat += h.rng.randint(*step)
+            lat += rng.randint(*step)
         else:
             i += 1
             if i % len(items) == 0:
                 lat += 1
     return placed
+
+
+def upper_dress(h, items, sides="nsew", step=(4, 6), door_gap=1, tag="upper", lo=None, hi=None):
+    """The second pass over the walls: everything above the string course (row 14 and up), written with its own random stream (`tag`) so it never shifts the dice of
+    the lower passes. `items` are the same callables as for `dress_wall` and take their rows from `h.top`. Why: the first version dressed the walls to door height and
+    left the upper third of every tall room a plain brick face; a tall banner, a lantern bracket, a barred slit or a candle niche every five cells breaks it up."""
+    import random
+    n = 0
+    for side in sides:
+        rng = random.Random("nusmp:mega:%s:%s:%s" % (h.name, tag, side))
+        n += dress_wall(h, side, items, lo=lo, hi=hi, step=step, rng=rng, door_gap=door_gap)
+    return n
+
+
+def it_tall_banner(color="black", hang=3, drop=1):
+    """A wall banner hung high: its top row is `drop` below the ceiling and up to `hang` free cells are kept under it (the cloth of a banner is nearly two blocks
+    long, so at least one must be free; it takes the longest run the wall leaves, down to that one)."""
+    def fn(w, lat):
+        h = w.hall
+        y = h.top - drop
+        for run in range(hang, 0, -1):
+            if y - run >= GROUND + 4 and w.all_free([(lat, y - k, 0) for k in range(run + 1)]):
+                w.set(lat, y, 0, "minecraft:%s_wall_banner" % color, {"facing": w.into})
+                return True
+        return False
+    return fn
+
+
+def it_high_bracket(soul=False, drop=3):
+    """A lantern on a fence bracket high on the wall, `drop` rows under the ceiling."""
+    def fn(w, lat):
+        h = w.hall
+        y = h.top - drop
+        if y < GROUND + 5 or not w.all_free([(lat, y, 0), (lat, y - 1, 0)]) or not w.backed(lat, y, 0):
+            return False
+        bracket_lantern(w, lat, y, arm=1, soul=soul)
+        return True
+    return fn
+
+
+def it_high_slit(glow=None, glass="minecraft:light_blue_stained_glass", rows=3, drop=2):
+    """A tall narrow window high in the wall: bars (dark) or, with `glow`, stained glass lit from behind by a glow block in the outer wall layer."""
+    def fn(w, lat):
+        h = w.hall
+        y1 = h.top - drop
+        y0 = y1 - rows + 1
+        if y0 < GROUND + 5:
+            return False
+        for y in range(y0, y1 + 1):
+            for dl in (-1, 0, 1):
+                c = h.get(*w.cell(lat + dl, y, -1))
+                if c is None or c.block not in WALL_BLOCKS or w.cell(lat + dl, y, -1) in h.mt.reserved:
+                    return False
+            if glow is not None:
+                o = h.get(*w.cell(lat, y, -2))
+                if o is None or o.block not in WALL_BLOCKS:
+                    return False
+            if not w.free(lat, y, 0):
+                return False
+        window_slit(w, lat, y0, y1, glow=glow, glass=glass)
+        return True
+    return fn
+
+
+def it_high_niche(color="red", drop=3, skull=True):
+    """A one-wide recess high in the wall with a candle cluster on its sill and a skull over it (the `it_candle_niche` at the height of the upper course)."""
+    def fn(w, lat):
+        return it_candle_niche(color, y=w.hall.top - drop, skull=skull)(w, lat)
+    return fn
+
+
+def it_high_skull(soul=True, drop=3):
+    """A flaming-skull sconce high on the wall."""
+    def fn(w, lat):
+        return it_skull_sconce(soul=soul, y=w.hall.top - drop)(w, lat)
+    return fn
 
 
 def it_sconce(soul=False):
@@ -1718,6 +1925,9 @@ def it_candle_niche(color="red", y=GROUND + 3, skull=True, wall_blocks=WALL_BLOC
             if (x, yy, z) not in h.shell or (x, yy, z) in h.mt.reserved:
                 return False
         if not w.all_free([(lat, y, 0), (lat, y + 1, 0)]):
+            return False
+        sill = h.get(*w.cell(lat, y - 1, -1))              # the candle stands on the wall block under the recess: a skull or a carved niche below would not hold it
+        if sill is None or not L.is_full(sill.block):
             return False
         # keep clear of doorway frames (they are polished jambs inside the wall layers)
         for dl in (-1, 0, 1):
@@ -1885,6 +2095,8 @@ def sarcophagus(f, length=4, width=2, open_lid=False, banner=None):
         f.set(width - 1, 1, length - 1, "minecraft:bone_block", {"axis": "z" if f.facing in ("north", "south") else "x"})
         if f.free(width - 1, 2, length - 1):
             f.set(width - 1, 2, length - 1, "minecraft:skeleton_skull", {"rotation": str(rot)})
+        if width >= 2 and f.free(0, 1, length - 1):
+            candles_at(h, *f.at(0, 1, length - 1), 3, "white")        # a candle in the open coffin: the bones under the shoved lid must not sit in the dark
 
 
 def candelabra(h, x, z, y=GROUND, n=3, color="white", post=L.POLISHED_WALL, soul=False):
@@ -2212,10 +2424,30 @@ def fence_run(h, x1, z1, x2, z2, y, block=L.FENCE, skip=()):
                 h.try_set(x, y, z, block)
 
 
-#: Chiselled bookshelves are real vanilla blocks with a `facing` and six `slot_N_occupied` states, but the shared checker (`mega_lib.check_state`, pattern `chiseled_.*`)
-#: only knows an `axis` for them and reports every one as an error. Until that table is fixed (one entry, see docs/labyrinth/mega_rooms1.md) the libraries use plain
-#: bookshelves; flip this to bring the chiselled ones back (the kit writes and validates them itself).
-CHISELED_SHELVES = False
+#: Chiselled bookshelves are real vanilla blocks with a `facing` and six `slot_N_occupied` states. The first version of this kit left them out because the shared
+#: block-state table of that day knew only an `axis` for them; the table now comes from the game's own data (mega_lib.real_states), so they are back.
+CHISELED_SHELVES = True
+
+
+def chiseled_shelf(h, facing, p_book=0.7):
+    """(props, block entity) of a chiselled bookshelf facing `facing`: each of its six slots holds a book with probability `p_book`, and the state says so
+    (`slot_N_occupied`) AND the block entity holds the same books, so the shelf shows its books and gives them to whoever takes them. Why both: a shelf whose state
+    says full and whose block entity is empty draws books nobody can take, and the game never corrects it (removing an empty slot does not update the state)."""
+    props = {"facing": facing}
+    items = []
+    for i in range(6):
+        occupied = h.rng.random() < p_book
+        props["slot_%d_occupied" % i] = occupied
+        if occupied:
+            items.append(_nbt_mod().Compound({"Slot": _nbt_mod().Byte(i), "id": "minecraft:book", "count": _nbt_mod().Int(1)}))
+    data = _nbt_mod().Compound({"id": "minecraft:chiseled_bookshelf", "Items": _nbt_mod().List(items, tag_type=_nbt_mod().TAG_COMPOUND),
+                                "last_interacted_slot": _nbt_mod().Int(-1)})
+    return props, data
+
+
+def _nbt_mod():
+    import nbt as _n
+    return _n
 
 
 def shelf_wall(w, lat1, lat2, y1, y2, chiseled=0.12, d=0):
@@ -2225,11 +2457,16 @@ def shelf_wall(w, lat1, lat2, y1, y2, chiseled=0.12, d=0):
     n = 0
     for lat in range(lat1, lat2 + 1):
         for y in range(y1, y2 + 1):
-            blk = "minecraft:chiseled_bookshelf" if (CHISELED_SHELVES and h.rng.random() < chiseled) else "minecraft:bookshelf"
-            props = {"facing": w.into} if blk.endswith("chiseled_bookshelf") else None
-            if w.can(lat, y, d, blk, props):
-                w.set(lat, y, d, blk, props)
-                n += 1
+            fancy = CHISELED_SHELVES and h.rng.random() < chiseled
+            blk = "minecraft:chiseled_bookshelf" if fancy else "minecraft:bookshelf"
+            if not w.can(lat, y, d, blk):
+                continue
+            if fancy:
+                props, data = chiseled_shelf(h, w.into)
+                w.set(lat, y, d, blk, props, nbt=data)
+            else:
+                w.set(lat, y, d, blk)
+            n += 1
     return n
 
 
