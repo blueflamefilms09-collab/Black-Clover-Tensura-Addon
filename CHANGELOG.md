@@ -1,5 +1,51 @@
 # Changelog
 
+## [1.55.0] — Floor 0 and the two roads: the Sanctuary Hub, Holy and Abyssal floors, the System, the Rukh flow, standard gear
+
+Ships together with 1.54.0 below (the Mega-Dungeon itself); 1.54.0 was never released on its own. **State:** written without a whole-project compiler; CI is the first real compile. Pure logic is covered by JUnit tests that ran locally in a small shim, the whole tree was type-checked against API stubs, and a CI smoke test boots a headless server with `[smoke] [strict]`. Nothing has been run in the game. Docs: `docs/labyrinth/mega_floors.md` (the brief against what existed, decisions and their WHY) and one `docs/labyrinth/mega_<part>.md` per part.
+
+### NEW
+- **Floor 0, the Sanctuary Hub** (dimension `nusmp:sanctuary`, biome `nusmp:sanctuary_plains`): a safe, buildable plains world. Only passive animals spawn, no structure of any other mod generates, a protected plaza (arrival point, notice pavilion, fountain, the Gate of Return home) and two polarity gates. Built by its own `ChunkGenerator` (`nusmp:sanctuary`): 3D simplex noise for the plains, the **Holy Spire** (a tiered tower, trial chambers by a 3D Wave Function Collapse around a guaranteed spiral stair) and the **Abyssal Chasm** (a pit with caverns by a polar 3D WFC around a guaranteed ramp); both roads are proven walkable by a search in the tests.
+- **Two roads** from one dungeon dimension: Holy floors +1, +2 ... and Abyssal floors -1, -2 ... (two chains of sectors 300 000 blocks apart). A sector is ten floors; the Landing is its first floor and the Guardian's hall the last (every tenth floor is a boss floor). Floors are numbered by an even split of rooms by distance (`floors.banding = "even"`; `"arena"` is the brief's literal doorway-depth rule, which left about 3.6 of 10 floors empty in measurement).
+- **Directional Lock** (`PlayerDungeonAlignment`, a data attachment): clearing floor +1 or -1 locks the player to that road; the other road's stairs, gates and chain travel refuse them, and a hard guard casts out a player who gets across anyway. Operators bypass it. Config `nusmp-labyrinth-mega-floors-server.toml`.
+- **The System** (Solo Leveling): a holographic client overlay (`nusmp:system_overlay`, key Y), per-floor quests, permanent stat rewards or a **Shadow Core** item that extracts the shadow of a defeated Holy enemy as a minion (new item `nusmp:shadow_core`).
+- **The Rukh flow** (Magi): on Holy floors a Light cast does x2.5 damage for 1.5 s, a Dark cast is rejected (8% of max health, never lethal); the 105 magic families are classified in a data file (3 Light, 16 Dark, 86 neutral). The Abyssal road has no flow by default.
+- **Standard gear**: Normal, Special and Rare pieces (ordinary vanilla items stamped with `nusmp:gear_grade`, Tensura engravings on Special and Rare weapons, magic resistance on Rare) drop without limit from the dungeon's monsters and appear in its chests (global loot modifier `nusmp:gear_chests`). They are not relics and not in the Order's ledger.
+- **Gateway ruin guard**: survival and adventure players cannot mine or blow up the Overworld Gateway (a creative operator can; switch `labyrinth.gatewayUnbreakable`).
+- Ten new advancements (Floor 0, the two roads, ten floors, the System, Arise, standard gear); event keys `mega.hub`, `mega.aligned`, `mega.floor`, `mega.gear`, `mega.system_quest`, `mega.shadow`, `mega.vessel`.
+- Shared template tools: block states are checked against the game's own table (`tools/labyrinth/vanilla_block_states_1_21_1.json`), a static survival check (`mega_arch_check.py`), cutaway and first-person previews (`mega_shape_preview.py`, `mega_walk_preview.py`), a sector composer.
+
+### REPLACED
+- The destination of the Overworld Gateway: it now leads to Floor 0 first (`hub.enabled = false` restores the 1.54.0 way straight into sector 0). Leaving a road of the Mega-Dungeon returns to Floor 0.
+- The Crucible of Choice offers **exactly three distinct Unique-or-better relics** (Unique, Legend, Mythical, Genesis) instead of 1 to 3 of mixed grades (`theme.offerCount` can restore the old shape); the relic taken decides the look and ruleset of the next ten floors.
+- Threat follows the floor (monsters, loot, rest ambushes; the sector Guardian takes the threat of its last floor) instead of one number per sector.
+- Next sectors wait for the Crucible (`mega.expandAfterVault`, default on): the pick releases them.
+
+### KEPT (nothing removed)
+- The 1.54.0 Mega-Dungeon, the Spire and the Living Dungeon (`mega.layout`, `labyrinth.engine`), the old Dungeon Gates and Maws, the vanilla-particle purge and `nusmp:light_rukh` (1.36.0), the Magic Stone and meat economy and the Vital Strike (1.36.0), all relics and the Order's ledger (the mod's existing low-grade named relics are still one-per-world).
+- The guaranteed decennial **Metal Vessel** is built but OFF by default (`flow.vesselEnabled = false`): the newest brief says one top-tier relic per ten floors (the Crucible's).
+- Normal gear carries no engraving ("Normal is plain"); making it light is a data-only change in `data/nusmp/mega/gear/tables.json`.
+
+### Config and commands
+- New server config files: `nusmp-labyrinth-mega-{floors,hub,macro,system,flow,gear}-server.toml` (plus `nusmp-labyrinth-mega-system-client.toml`); `labyrinth.gatewayUnbreakable`. Commands under `/multiverse mega`: `floors`, `hub`, `macro`, `system`, `flow`, `gear`, `crucible`, `expand [holy|abyssal]`.
+
+## [1.54.0] — The singular, expanding Mega-Dungeon
+
+**State:** as 1.55.0 (never released on its own). Docs: `docs/labyrinth/mega.md` and `mega_core.md`, `mega_arch.md`, `mega_rooms1.md`, `mega_rooms2.md`, `mega_safe.md`, `mega_enc.md`, `mega_eco.md`, `mega_guard.md`, `mega_theme.md`, `mega_ci.md`.
+
+### REPLACED
+- **The default dungeon.** Dungeon Gates and Maws now lead into ONE persistent dimension, `nusmp:mega_dungeon`, built from vanilla blocks as a tightly packed tabletop-style layout of sectors (122 room templates on a 9-block grid, corridors, junctions, halls, caverns, safe zones, trap/puzzle/trial rooms, a boss chain and a vault per sector). The Spire (1.35.0) stays registered and is reachable with `mega.layout = "spire"`.
+
+### NEW
+- **Live expansion:** the generator assembles a sector from the template pools (deterministic, audited, saved, placed over several ticks) and grows the next one off the previous sector's dead end when its **Labyrinth Guardian** is cleared and the sector's Gatekeeper door (`kind=sector`) is opened with the Guardian's **Mana Core**; `/multiverse mega expand|status|regen|audit|plan|unseal`.
+- **Dungeon Master:** D&D encounter tables rolled by threat, party size, noise and light, wandering bosses (`mega.enc`); **factions** and turf wars, faction drops (`mega.eco`).
+- **Safe zones and rests:** Landings and safe rooms with seats, hearths and beds; short and long rests only there, no easy passive regeneration; a data-driven mod-compat processor swaps in Farmer's Delight and MrCrayfish furniture when installed (`mega.safe`).
+- **Region themes:** the `nusmp:region_theme` processor restyles every room by swapping vanilla block families (11 themes) and the **Crucible of Choice** vault with its catastrophe (`mega.theme`).
+- The Overworld **Gateway** structure (`nusmp:mega_gateway`) and an in-game self-test system read by a CI smoke test that boots a headless server (`tools/ci/server_smoke.py`, `.github/workflows/smoke.yml`).
+
+### KEPT
+- The Spire, the Living Dungeon, the old gates, the Sealed Archway trials, trap blocks, puzzle doors, relic pedestals and exit gates (reused as rooms), the Magic Stone and meat economy, the Vital Strike, and every relic rule.
+
 ## [1.53.0] — Fix: the blurry Avatar menu, and a guard so no screen can do it again
 
 ### FIXED
