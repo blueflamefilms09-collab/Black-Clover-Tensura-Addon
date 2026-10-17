@@ -3,6 +3,7 @@ package com.newuniverse.nusmp.avatar.goal;
 import com.newuniverse.nusmp.avatar.AvatarConfig;
 import com.newuniverse.nusmp.avatar.AvatarEntity;
 import com.newuniverse.nusmp.avatar.betrayal.BetrayalDimensionHandler;
+import com.newuniverse.nusmp.avatar.delve.AvatarDelve;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.goal.Goal;
 
@@ -27,9 +28,12 @@ public class AvatarFollowCreatorGoal extends Goal {
         setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
     }
 
+    /** An Avatar told to stay, or out on a trip into the dungeon, follows nobody (a Delve Avatar between trips follows like any other). */
+    private boolean idle() { return avatar.staying() || AvatarDelve.onTrip(avatar); }
+
     @Override
     public boolean canUse() {
-        if (!avatar.isLoyal() || avatar.isPassenger()) return false;
+        if (!avatar.isLoyal() || avatar.isPassenger() || idle()) return false;
         ServerPlayer p = avatar.creatorPlayer();
         if (p == null || p.isSpectator()) return false;
         boolean sameLevel = p.level() == avatar.level();
@@ -41,7 +45,7 @@ public class AvatarFollowCreatorGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        if (creator == null || !creator.isAlive() || !avatar.isLoyal()) return false;
+        if (creator == null || !creator.isAlive() || !avatar.isLoyal() || idle()) return false;
         if (creator.level() != avatar.level()) return !limited;
         return avatar.distanceToSqr(creator) > STOP * STOP && !(limited && avatar.distanceToSqr(creator) > ORDINARY_RANGE * ORDINARY_RANGE);
     }

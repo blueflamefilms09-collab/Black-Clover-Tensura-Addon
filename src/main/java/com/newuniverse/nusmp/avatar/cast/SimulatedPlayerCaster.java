@@ -5,14 +5,19 @@ import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.avatar.AvatarAiConfig;
 import com.newuniverse.nusmp.avatar.AvatarEntity;
 import com.newuniverse.nusmp.avatar.AvatarPersonalityTraits;
+import com.newuniverse.nusmp.avatar.TensuraBridge;
 import com.newuniverse.nusmp.avatar.ai.HasDndStats;
+import com.newuniverse.nusmp.avatar.aptitude.Aptitude;
+import com.newuniverse.nusmp.avatar.aptitude.AptitudeCatalog;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.blackclover.GrimoirePages;
+import com.newuniverse.nusmp.blackclover.MagicType;
 import com.newuniverse.nusmp.book.BookPage;
 import com.newuniverse.nusmp.book.GrimoireBook;
 import com.newuniverse.nusmp.core.magic.profile.SafeCast;
 import com.newuniverse.nusmp.entity.TensuraCaster;
 import com.newuniverse.nusmp.entity.zogratis.SpellSeal;
+import com.newuniverse.nusmp.skill.NUSkills;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import io.github.manasmods.tensura.util.EnergyHelper;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
@@ -49,6 +54,11 @@ import java.util.UUID;
  * Yandere skips the cost. Cooldowns are kept in the avatar's persistent data, scaled by INT/WIS, personality and frenzy
  * ({@link AvatarCastMath}). Only pages {@link AvatarSkillList} allows are ever cast.
  *
+ * <p>Several books (the Avatar rebuild): an Avatar casts from a list of grimoire sources, not only the creator's: first one book per Magic Aptitude it was born
+ * with (the book of the aptitude's magic family, a fresh instance whose open pages follow the Avatar's EP and INT, see {@link PageTier}), then the creator's copy
+ * as before. {@link #pageEntries} turns the castable pages of all of them into loadout entries; {@link #castPage(AvatarEntity, int, int, LivingEntity)} casts one.
+ * The old single-book methods ({@code candidates}, {@code castPage(avatar, mode, target)}, {@code pageName}) still mean "the creator's book".
+ *
  * <p>Damage: the spells hurt with the double as the attacker. {@code AvatarCasterEvents} turns that into the AVATAR being the attacker
  * (the double's UUID is the avatar's, so even a projectile that forgets its cached owner resolves to the avatar) and drops hits on the creator,
  * the creator's team, pets, villagers and other Avatars, because area pages hit "everyone but the caster".
@@ -57,11 +67,20 @@ public final class SimulatedPlayerCaster extends FakePlayer {
     private static final Logger LOG = LogUtils.getLogger();
     private static final Map<UUID, SimulatedPlayerCaster> CACHE = new HashMap<>();
     private static final Map<UUID, GrimoireCopy> BOOKS = new HashMap<>();
+    /** The aptitude books of each Avatar, rebuilt every {@link #BOOK_REFRESH_TICKS} (a copy of the creator's book lives in {@link #BOOKS}). */
+    private static final Map<UUID, AptitudeBooks> APTITUDE_BOOKS = new HashMap<>();
 
     static final String TAG_COOLDOWNS = "nusmp_av_cd", TAG_MANA = "nusmp_av_mana", TAG_MANA_AT = "nusmp_av_mana_at", TAG_GAP = "nusmp_av_cast_gap";
     private static final int BOOK_REFRESH_TICKS = 600;
 
     private record GrimoireCopy(GrimoireBook book, ManasSkillInstance instance, long at) {}
+
+    /** One book an Avatar casts from. {@code aptitude} is the index of the Magic Aptitude it belongs to, or -1 for the creator's book. */
+    public record Source(String key, int aptitude, GrimoireBook book, ManasSkillInstance instance) {
+        public boolean fromCreator() { return aptitude < 0; }
+    }
+
+    private record AptitudeBooks(List<Source> list, long at, String signature) {}
 
     /** Why a cast did or did not happen (for the goal's decision and the tests of the glue). */
     public enum Result { OK, DISABLED, NO_GRIMOIRE, NOT_ALLOWED, SEALED, COOLDOWN, NO_MANA, FAILED }
@@ -95,12 +114,14 @@ public final class SimulatedPlayerCaster extends FakePlayer {
     public static void forget(UUID avatarId) {
         CACHE.remove(avatarId);
         BOOKS.remove(avatarId);
+        APTITUDE_BOOKS.remove(avatarId);
         KITS.remove(avatarId);
     }
 
     public static void forgetAll() {
         CACHE.clear();
         BOOKS.clear();
+        APTITUDE_BOOKS.clear();
         KITS.clear();
     }
 
@@ -134,9 +155,51 @@ public final class SimulatedPlayerCaster extends FakePlayer {
         return fresh;
     }
 
-    public boolean hasGrimoire(AvatarEntity avatar) { return grimoire(avatar) != null; }
+    /**
+     * The books of the Magic Aptitudes the Avatar was born with, in the order they were chosen: for each aptitude whose {@code magic} names a magic family with a
+     * book, a fresh instance of that book whose open pages follow the Avatar's EP and INT. Rebuilt every 30 s (so the pages open as it grows) and when the list of
+     * aptitudes changes.
+     */
+    private List<Source> aptitudeSources(AvatarEntity avatar) {
+        long now = avatar.level().getGameTime();
+        String sig = String.join(",", avatar.magicAptitudes()) + "|" + (long) TensuraBridge.maxEp(avatar) / 100;
+        AptitudeBooks have = APTITUDE_BOOKS.get(avatarId);
+        if (have != null && now - have.at < BOOK_REFRESH_TICKS && have.signature.equals(sig)) return have.list;
+        List<Source> out = new ArrayList<>();
+        List<String> ids = avatar.magicAptitudes();
+        for (int i = 0; i < ids.size(); i++) {
+            try {
+                Aptitude a = AptitudeCatalog.byId(ids.get(i));
+                MagicType magic = a == null || a.magic().isEmpty() ? null : MagicType.lookup(a.magic());
+                GrimoireBook book = magic == null ? null : NUSkills.bookFor(magic);
+                if (book == null) continue;
+                boolean dup = false;
+                for (Source s : out) if (s.book == book) { dup = true; break; }
+                if (dup) continue;
+                ManasSkillInstance inst = book.createDefaultInstance();
+                int open = PageTier.unlockedPages(book.familyCount(), TensuraBridge.maxEp(avatar), intelligence(avatar));
+                inst.getOrCreateTag().putInt("Unlocked", PageTier.mask(open));
+                out.add(new Source("apt:" + ids.get(i), i, book, inst));
+            } catch (RuntimeException | LinkageError soft) {
+                LOG.debug("[nusmp] Avatar aptitude book failed for {}", ids.get(i), soft);
+            }
+        }
+        List<Source> list = List.copyOf(out);
+        APTITUDE_BOOKS.put(avatarId, new AptitudeBooks(list, now, sig));
+        return list;
+    }
 
-    /** The castable attack pages right now (allowed, unlocked by the creator, off cooldown, affordable) for the planner. */
+    /** Every book the Avatar casts from, best first: its aptitude books, then the creator's copy. */
+    public List<Source> sources(AvatarEntity avatar) {
+        List<Source> out = new ArrayList<>(aptitudeSources(avatar));
+        GrimoireCopy c = grimoire(avatar);
+        if (c != null) out.add(new Source("creator", -1, c.book, c.instance));
+        return out;
+    }
+
+    public boolean hasGrimoire(AvatarEntity avatar) { return grimoire(avatar) != null || !aptitudeSources(avatar).isEmpty(); }
+
+    /** The castable attack pages of the creator's book right now (allowed, unlocked by the creator, off cooldown, affordable) for the planner. */
     public List<AvatarCastPlanner.Candidate> candidates(AvatarEntity avatar) {
         List<AvatarCastPlanner.Candidate> out = new ArrayList<>();
         GrimoireCopy g = grimoire(avatar);
@@ -156,8 +219,37 @@ public final class SimulatedPlayerCaster extends FakePlayer {
         return out;
     }
 
+    /**
+     * The castable attack pages of ALL the Avatar's books as loadout entries (the aptitude books ranked above the creator's), each ready to be cast: allowed by the
+     * whitelist, open, off cooldown and affordable (a frenzied Avatar pays nothing). A page id that two books share (Mana Strike is in every grimoire) appears once.
+     * {@code source} of an entry is the index into {@link #sources}.
+     */
+    public List<LoadoutPlanner.Entry> pageEntries(AvatarEntity avatar) {
+        List<LoadoutPlanner.Entry> out = new ArrayList<>();
+        if (!AvatarAiConfig.castEnabled() || SpellSeal.sealed(avatar)) return out;
+        List<Source> sources = sources(avatar);
+        if (sources.isEmpty()) return out;
+        long now = avatar.level().getGameTime();
+        double pool = poolNow(avatar);
+        sync(avatar, null);
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        for (int si = 0; si < sources.size(); si++) {
+            Source src = sources.get(si);
+            List<BookPage> pages = src.book.pages();
+            for (int mode = 0; mode < pages.size(); mode++) {
+                BookPage p = pages.get(mode);
+                if (AvatarSkillList.kind(p.id(), p.costPercent()) != AvatarSkillList.Kind.ATTACK || p.weaponTag() != null || !seen.add(p.id())) continue;
+                if (!src.book.usable(src.instance, avatar, mode) || cooldownLeft(avatar, p.id(), now) > 0) continue;
+                if (!avatar.frenzied() && !AvatarManaPool.canPay(pool, estimateCost(avatar, src.book, src.instance, mode))) continue;
+                LoadoutPlanner.Kind kind = src.fromCreator() ? LoadoutPlanner.Kind.CREATOR_PAGE : LoadoutPlanner.Kind.APTITUDE_PAGE;
+                out.add(new LoadoutPlanner.Entry(kind, p.id(), p.name(), si, mode, SkillRoles.Role.ATTACK, p.costPercent(), p.cooldown(), AvatarCastPlanner.looksMelee(p.id()),
+                        LoadoutPlanner.rankOf(kind, Math.max(0, src.aptitude))));
+            }
+        }
+        return out;
+    }
 
-    /** The display name of a page (for the shout). Null when the mode does not exist. */
+    /** The display name of a page of the creator's book (for the shout). Null when the mode does not exist. */
     public String pageName(AvatarEntity avatar, int mode) {
         GrimoireCopy g = grimoire(avatar);
         BookPage p = g == null ? null : g.book.page(mode);
@@ -188,26 +280,38 @@ public final class SimulatedPlayerCaster extends FakePlayer {
     }
 
     /**
-     * Casts the page {@code mode} of the Avatar's grimoire at {@code target}. All checks, the cost, the cooldown and the frenzy burn happen here.
-     * Safe: an exception inside a spell is swallowed by {@link SafeCast} (the book is put on its recovery cooldown like for a player).
+     * Casts the page {@code mode} of the CREATOR's book at {@code target} (the 1.51.0 door; the loadout uses the source overload below). All checks, the cost, the
+     * cooldown and the frenzy burn happen here. Safe: an exception inside a spell is swallowed by {@link SafeCast} (the book is put on its recovery cooldown like for
+     * a player).
      */
     public Result castPage(AvatarEntity avatar, int mode, LivingEntity target) {
-        if (!AvatarAiConfig.castEnabled()) return Result.DISABLED;
         GrimoireCopy g = grimoire(avatar);
-        if (g == null) return Result.NO_GRIMOIRE;
-        BookPage p = g.book.page(mode);
-        if (p == null || p.weaponTag() != null || !AvatarSkillList.allowedPage(p.id(), p.costPercent()) || !g.book.usable(g.instance, avatar, mode)) return Result.NOT_ALLOWED;
+        return g == null ? Result.NO_GRIMOIRE : castFrom(avatar, g.book, g.instance, mode, target);
+    }
+
+    /** Casts the page {@code mode} of source number {@code source} (an index into {@link #sources}) at {@code target}. */
+    public Result castPage(AvatarEntity avatar, int source, int mode, LivingEntity target) {
+        List<Source> sources = sources(avatar);
+        if (source < 0 || source >= sources.size()) return Result.NO_GRIMOIRE;
+        Source src = sources.get(source);
+        return castFrom(avatar, src.book, src.instance, mode, target);
+    }
+
+    private Result castFrom(AvatarEntity avatar, GrimoireBook book, ManasSkillInstance instance, int mode, LivingEntity target) {
+        if (!AvatarAiConfig.castEnabled()) return Result.DISABLED;
+        BookPage p = book.page(mode);
+        if (p == null || p.weaponTag() != null || !AvatarSkillList.allowedPage(p.id(), p.costPercent()) || !book.usable(instance, avatar, mode)) return Result.NOT_ALLOWED;
         if (SpellSeal.sealed(avatar)) return Result.SEALED;
         long now = avatar.level().getGameTime();
         if (cooldownLeft(avatar, p.id(), now) > 0) return Result.COOLDOWN;
-        if (SafeCast.blocked(g.book.magicId(), now)) return Result.FAILED;
+        if (SafeCast.blocked(book.magicId(), now)) return Result.FAILED;
         sync(avatar, target == null ? null : target.getBoundingBox().getCenter());
         boolean free = avatar.frenzied();
-        double cost = free ? 0 : estimateCost(avatar, g, mode);
+        double cost = free ? 0 : estimateCost(avatar, book, instance, mode);
         double pool = poolNow(avatar);
         if (!free && !AvatarManaPool.canPay(pool, cost)) return Result.NO_MANA;
         final int m = mode;
-        boolean ok = SafeCast.run(g.book.magicId(), now, this, () -> p.cast().cast(g.book, g.instance, this, m));
+        boolean ok = SafeCast.run(book.magicId(), now, this, () -> p.cast().cast(book, instance, this, m));
         syncBack(avatar);
         if (!ok) return Result.FAILED;
         if (!free) setPool(avatar, AvatarManaPool.pay(pool, cost));
@@ -260,11 +364,13 @@ public final class SimulatedPlayerCaster extends FakePlayer {
     }
 
     // ---------------------------------------------------------------- cost and pool
-    private double estimateCost(AvatarEntity avatar, GrimoireCopy g, int mode) {
-        BookPage p = g.book.page(mode);
+    private double estimateCost(AvatarEntity avatar, GrimoireCopy g, int mode) { return estimateCost(avatar, g.book, g.instance, mode); }
+
+    private double estimateCost(AvatarEntity avatar, GrimoireBook book, ManasSkillInstance instance, int mode) {
+        BookPage p = book.page(mode);
         if (p == null) return Double.MAX_VALUE;
         try {
-            return Math.max(0, g.book.getMagiculeCost(this, g.instance, mode));
+            return Math.max(0, book.getMagiculeCost(this, instance, mode));
         } catch (RuntimeException soft) {
             return BalanceLaw.cost(this, p.costPercent(), p.costFloor());
         }
@@ -294,6 +400,15 @@ public final class SimulatedPlayerCaster extends FakePlayer {
         return cur;
     }
 
+    /** Spends from the Avatar's own spell pool (the one its spells and its namings share); false, and nothing spent, when it holds less. A cost of zero or less is free. */
+    public static boolean spendPool(AvatarEntity avatar, double cost) {
+        if (cost <= 0) return true;
+        double pool = poolNow(avatar);
+        if (!AvatarManaPool.canPay(pool, cost)) return false;
+        setPool(avatar, AvatarManaPool.pay(pool, cost));
+        return true;
+    }
+
     static void setPool(AvatarEntity avatar, double value) {
         avatar.getPersistentData().putDouble(TAG_MANA, value);
         avatar.getPersistentData().putLong(TAG_MANA_AT, avatar.level().getGameTime());
@@ -305,7 +420,8 @@ public final class SimulatedPlayerCaster extends FakePlayer {
         return (int) Math.max(0, cds.getLong(id) - now);
     }
 
-    private static void startCooldown(AvatarEntity avatar, String id, int pageTicks, long now) {
+    /** Starts the cooldown of {@code id} (a page id, or a key such as {@code sk:tensura:berserk}) with the INT / WIS / personality / frenzy scaling, and the global gap. */
+    static void startCooldown(AvatarEntity avatar, String id, int pageTicks, long now) {
         var traits = AvatarPersonalityTraits.combine(avatar.primary(), avatar.secondary());
         int ticks = AvatarCastMath.pageCooldownTicks(pageTicks, AvatarPersonalityTraits.mentalCooldownMult(intelligence(avatar), wisdom(avatar)),
                 traits.cooldownMult(), avatar.cooldownMultiplier(), avatar.frenzied());
@@ -316,7 +432,16 @@ public final class SimulatedPlayerCaster extends FakePlayer {
         root.put(TAG_COOLDOWNS, cds);
         int gap = AvatarCastMath.gapTicks(AvatarAiConfig.castGapTicks(),
                 AvatarPersonalityTraits.mentalCooldownMult(intelligence(avatar), wisdom(avatar)), traits.cooldownMult(), avatar.cooldownMultiplier(), avatar.frenzied());
+        if (avatar.combatStyle() == com.newuniverse.nusmp.avatar.ai.CombatStyle.MAGE) gap = Math.max(8, (int) Math.round(gap * 0.6));       // a mage in its stance casts faster
         root.putLong(TAG_GAP, now + gap);
+    }
+
+    /** Puts one key on a short cooldown without touching the global gap: a press that failed must not be tried again at once, and must not stop the others. */
+    static void blockFor(AvatarEntity avatar, String id, int ticks, long now) {
+        CompoundTag root = avatar.getPersistentData();
+        CompoundTag cds = root.getCompound(TAG_COOLDOWNS);
+        cds.putLong(id, now + Math.max(1, ticks));
+        root.put(TAG_COOLDOWNS, cds);
     }
 
     /** Is the Avatar past its global gap between two casts? */

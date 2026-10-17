@@ -8,9 +8,9 @@ import com.newuniverse.nusmp.avatar.AvatarManager;
 import com.newuniverse.nusmp.avatar.AvatarSystem;
 import com.newuniverse.nusmp.avatar.ChatEvent;
 import com.newuniverse.nusmp.avatar.AvatarChatterEngine;
+import com.newuniverse.nusmp.avatar.TensuraBond;
 import com.newuniverse.nusmp.avatar.TensuraBridge;
-import com.newuniverse.nusmp.avatar.appearance.AppearanceData;
-import com.newuniverse.nusmp.avatar.appearance.DynamicAppearanceEngine;
+import com.newuniverse.nusmp.avatar.evolution.AvatarEvolution;
 import com.newuniverse.nusmp.avatar.dnd.Stat;
 import com.newuniverse.nusmp.avatar.outcome.Outcome;
 import com.newuniverse.nusmp.avatar.race.AvatarRace;
@@ -58,9 +58,18 @@ public final class TensuraNamingEngine {
 
     /**
      * Applies the consequences of a valid name. {@code ourSurge} is false when the name was given through Tensura's own naming (it already applies its own
-     * EP gain, so only the bond, the evolution, the tax and the sleep are added here).
+     * EP gain, so only the bond, the evolution, the tax and the sleep are added here, and the D&D surge is applied as a floor: see {@link #apply(ServerPlayer,
+     * AvatarEntity, String, boolean, double)}).
      */
-    public static void apply(ServerPlayer creator, AvatarEntity a, String name, boolean ourSurge) {
+    public static void apply(ServerPlayer creator, AvatarEntity a, String name, boolean ourSurge) { apply(creator, a, name, ourSurge, -1.0); }
+
+    /**
+     * The full form. {@code epBeforeNaming} is the Avatar's base EP before Tensura's own naming gained anything (the interceptor captures it when the naming event
+     * fires), or a negative number when unknown. Tensura's own naming adds its gain to the Avatar's EP; the owner's rule is that a named Avatar also gets the D&D
+     * surge of +50% to +200% by luck and INT, so on that path the Avatar ends with the LARGER of the two (the surge on the EP it had before naming, or what Tensura
+     * gave), never the sum of both, and an evolution never sets it back below what Tensura just gave.
+     */
+    public static void apply(ServerPlayer creator, AvatarEntity a, String name, boolean ourSurge, double epBeforeNaming) {
         a.setNamed(true);
         a.setAvatarName(name);
         TensuraBridge.setNaming(a, name, creator.getUUID(), false);
@@ -72,26 +81,26 @@ public final class TensuraNamingEngine {
             a.setOutcomeTimer(-1);
             a.setTarget(null);
             a.rebuildGoals();
+            TensuraBond.sync(a);
             if (before == Outcome.BETRAYAL) creator.sendSystemMessage(Component.literal(name + "'s grudge dissolves: the name binds the soul.").withStyle(ChatFormatting.AQUA));
         }
 
         // EP surge (and evolution)
         int intScore = a.stats().length >= 6 ? a.stats()[Stat.INT.ordinal()] : 10;
         double boost = NamingMath.epBoost(a.storedLuck(), intScore, a.getRandom().nextDouble(), AvatarConfig.namingMinEpBoost(), AvatarConfig.namingMaxEpBoost());
-        double mult = ourSurge ? NamingMath.epMultiplier(boost) : 1.0;
+        double mult = NamingMath.epMultiplier(boost);
+        double epNow = TensuraBridge.baseMaxEp(a);
         AvatarRace now = AvatarRaces.get(a.raceId());
         AvatarRace next = now != null && now.evolves() ? AvatarRaces.get(now.evolvesTo()) : null;
         boolean evolved = false;
         if (next != null) {
-            AppearanceData look = a.appearance();
-            float scale = now.defaultScale() > 0 ? look.scale() * next.defaultScale() / now.defaultScale() : next.defaultScale();
-            AppearanceData grown = new AppearanceData(look.skinTone(), look.hairId(), look.outfitId(), look.hornId(), look.wingId(), scale, look.auraRgb(), look.eyeRgb());
-            a.getEntityData().set(AvatarEntity.RACE, next.id());
-            a.setAppearance(DynamicAppearanceEngine.sanitize(grown, next));
-            a.applyRace(next, mult);
+            AvatarEvolution.evolve(a, now, next, mult);                  // never ends below the EP the Avatar had (Tensura's gain included)
             evolved = true;
         } else if (ourSurge) {
             TensuraBridge.scaleEnergy(a, mult);
+        } else {
+            double top = NamingMath.nativeTopUp(epBeforeNaming, epNow, mult);          // Tensura's own gain smaller than the D&D surge: the Avatar gets the surge
+            if (top > 1.0) TensuraBridge.scaleEnergy(a, top);
         }
 
         // the creator pays

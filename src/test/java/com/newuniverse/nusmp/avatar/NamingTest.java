@@ -86,4 +86,17 @@ class NamingTest {
         assertFalse(NameRules.message(NameRules.Verdict.DUPLICATE).isEmpty());
         assertEquals("", NameRules.message(NameRules.Verdict.OK));
     }
+
+    @Test
+    void aNativeNamingEndsWithTheLargerOfTensurasGainAndTheSurge() {
+        assertEquals(2.0, NamingMath.nativeTopUp(100, 150, 3.0), 1e-9, "100 x 3 = 300 beats Tensura's 150: scale 150 up to 300");
+        assertEquals(1.0, NamingMath.nativeTopUp(100, 400, 3.0), 1e-9, "Tensura gave more than the surge");
+        assertEquals(1.0, NamingMath.nativeTopUp(100, 300, 3.0), 1e-9, "equal: nothing to add");
+        assertEquals(1.0, NamingMath.nativeTopUp(-1, 150, 3.0), 1e-9, "an unknown starting EP changes nothing");
+        assertEquals(1.0, NamingMath.nativeTopUp(100, 0, 3.0), 1e-9);
+        assertEquals(1.0, NamingMath.nativeTopUp(100, 150, 1.0), 1e-9, "no surge, no top-up");
+        assertEquals(1.0, NamingMath.nativeTopUp(Double.NaN, 150, 3.0), 1e-9);
+        double ends = 150 * NamingMath.nativeTopUp(100, 150, 3.0);
+        assertTrue(ends >= 150 && ends >= 100 * 3.0 - 1e-9);
+    }
 }

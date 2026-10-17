@@ -53,6 +53,20 @@ class YandereTest {
     }
 
     @Test
+    void frenzyDrainsTheMaximumButNeverBelowOne() {
+        assertEquals(2.0, YandereMath.drainStep(20.0, 0.0, 2.0), 1e-9);
+        assertEquals(2.0, YandereMath.drainStep(20.0, 10.0, 2.0), 1e-9);
+        assertEquals(1.0, YandereMath.drainStep(20.0, 18.0, 2.0), 1e-9, "only what leaves a maximum of one");
+        assertEquals(0.0, YandereMath.drainStep(20.0, 19.0, 2.0), 1e-9);
+        assertEquals(0.0, YandereMath.drainStep(20.0, 25.0, 2.0), 1e-9);
+        assertEquals(0.0, YandereMath.drainStep(20.0, 0.0, 0.0), 1e-9);
+        assertEquals(0.0, YandereMath.drainStep(20.0, 0.0, -3.0), 1e-9);
+        double drained = 0.0, max = 40.0;
+        for (int i = 0; i < 1000; i++) drained += YandereMath.drainStep(max, drained, 3.0);
+        assertEquals(max - 1.0, drained, 1e-9, "a thousand casts leave the maximum at one, never zero");
+    }
+
+    @Test
     void nonLethalNeverTakesAPlayerBelowOneHealth() {
         assertEquals(5f, YandereMath.nonLethal(5f, 20f, 0f), 1e-5f);
         assertEquals(19f, YandereMath.nonLethal(100f, 20f, 0f), 1e-5f);

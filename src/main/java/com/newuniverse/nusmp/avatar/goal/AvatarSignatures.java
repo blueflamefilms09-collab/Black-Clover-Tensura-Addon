@@ -5,15 +5,16 @@ import com.newuniverse.nusmp.avatar.AvatarEntity;
 import com.newuniverse.nusmp.avatar.ChatEvent;
 import com.newuniverse.nusmp.avatar.outcome.AvatarUniqueSkill;
 import com.newuniverse.nusmp.balance.BalanceLaw;
-import net.minecraft.core.particles.ParticleTypes;
+import com.newuniverse.nusmp.vfx.VfxShape;
+import com.newuniverse.nusmp.vfx.VfxSpawn;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 
 /**
  * Why: the three signature moves a generated Unique Skill can carry ({@link AvatarUniqueSkill.Signature}). Each hurts through {@link BalanceLaw#damage}
- * (EP scaling, the player hit cap, the mob multiplier) and only touches what {@link AvatarTargeting#canHarm} allows; the visuals are vanilla particles,
- * so no new effect shape has to be registered.
+ * (EP scaling, the player hit cap, the mob multiplier) and only touches what {@link AvatarTargeting#canHarm} allows; the visuals are the mod's own effect shapes
+ * ({@link VfxSpawn}), not vanilla particles.
  */
 public final class AvatarSignatures {
     private AvatarSignatures() {}
@@ -23,7 +24,7 @@ public final class AvatarSignatures {
         AvatarChatterEngine.say(a, ChatEvent.SKILL_CAST, perk.name());
         switch (perk.signature()) {
             case SHOCKWAVE -> {
-                sl.sendParticles(ParticleTypes.EXPLOSION, a.getX(), a.getY() + 0.3, a.getZ(), 6, 1.5, 0.1, 1.5, 0.0);
+                VfxSpawn.send(sl, VfxShape.WIND_RING, a.position().add(0, 0.2, 0), a.position().add(0, 1.2, 0), 0xFFE8E0C8, 16, 1.6f);
                 for (LivingEntity e : sl.getEntitiesOfClass(LivingEntity.class, a.getBoundingBox().inflate(4.0), e -> AvatarTargeting.canHarm(a, e))) {
                     hit(a, e, perk.signaturePower());
                     Vec3 push = e.position().subtract(a.position()).multiply(1, 0, 1).normalize().scale(0.9);
@@ -35,12 +36,12 @@ public final class AvatarSignatures {
                 Vec3 dir = target.position().subtract(a.position()).normalize();
                 a.setDeltaMovement(dir.x * 1.4, 0.25, dir.z * 1.4);
                 a.hurtMarked = true;
-                sl.sendParticles(ParticleTypes.SWEEP_ATTACK, target.getX(), target.getY(0.5), target.getZ(), 1, 0, 0, 0, 0);
+                VfxSpawn.send(sl, VfxShape.WIND_SLASH, a.position().add(0, 1.0, 0), target.position().add(0, target.getBbHeight() * 0.5, 0), 0xFFFFFFFF, 10, 1.0f);
                 if (AvatarTargeting.canHarm(a, target)) hit(a, target, perk.signaturePower() * 1.2);
             }
             case SOUL_FLAME -> {
                 if (!AvatarTargeting.canHarm(a, target)) return;
-                sl.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, target.getX(), target.getY(0.5), target.getZ(), 24, 0.4, 0.6, 0.4, 0.02);
+                VfxSpawn.send(sl, VfxShape.FIRE_BURST, target.position().add(0, 0.2, 0), target.position().add(0, 1.2, 0), 0xFF4FD8FF, 18, 1.0f);
                 target.igniteForSeconds(4.0f);
                 hit(a, target, perk.signaturePower());
             }

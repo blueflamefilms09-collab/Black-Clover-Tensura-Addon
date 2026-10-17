@@ -7,7 +7,8 @@ import com.newuniverse.nusmp.avatar.AvatarPersonality;
 import com.newuniverse.nusmp.avatar.ChatEvent;
 import com.newuniverse.nusmp.avatar.FtbTeamHelper;
 import com.newuniverse.nusmp.avatar.ai.AvatarGates;
-import net.minecraft.core.particles.ParticleTypes;
+import com.newuniverse.nusmp.vfx.VfxShape;
+import com.newuniverse.nusmp.vfx.VfxSpawn;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -23,7 +24,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 /**
  * Why: the Yandere frenzy. When the creator is hurt, a Yandere Avatar within 48 blocks goes berserk for a short while: red eyes (the synced
  * IS_FRENZIED flag the renderer reads), +30% speed, skill cooldowns x0.1 and magicule costs waived (both read by the cast code), at the price of
- * burning ITS OWN health per cast (never below 1). It refreshes while the creator keeps being hurt and always ends in a short Slowness
+ * draining ITS OWN maximum health per cast (never below 1, given back when the frenzy ends). It refreshes while the creator keeps being hurt and always ends in a short Slowness
  * exhaustion, so it is never permanent. The state lives in two ints in the Avatar's persistent data (see {@link YandereFrenzyState}) so a reload
  * cannot leave the flag stuck. Works only for Avatars with YANDERE as primary or secondary personality. Server side only.
  */
@@ -32,6 +33,8 @@ public final class YandereFrenzyHandler {
 
     private static final String T_FRENZY = "nusmp_av_frenzy", T_EXHAUST = "nusmp_av_exhaust";
     private static final ResourceLocation SPEED_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "avatar_frenzy_speed");
+    /** The temporary drain on the Avatar's maximum health that its frenzy casts cause (one transient modifier, replaced on every cast, removed when the frenzy ends). */
+    private static final ResourceLocation DRAIN_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "avatar_frenzy_drain");
 
     /** The creator was damaged: start or refresh this Avatar's frenzy, and let it go for the attacker. Never throws on a client. */
     public static void onCreatorHurt(AvatarEntity avatar, DamageSource source, float amount) {
@@ -58,20 +61,36 @@ public final class YandereFrenzyHandler {
         save(avatar, st);
         if (st.phase() == YandereFrenzyState.Phase.FRENZY) {
             if (!avatar.frenzied()) begin(avatar);
-            if (avatar.tickCount % 6 == 0 && avatar.level() instanceof ServerLevel sl) {
-                sl.sendParticles(ParticleTypes.CRIMSON_SPORE, avatar.getX(), avatar.getY(0.6), avatar.getZ(), 3, 0.35, 0.5, 0.35, 0.01);
-                sl.sendParticles(ParticleTypes.SMOKE, avatar.getX(), avatar.getY(0.9), avatar.getZ(), 2, 0.3, 0.4, 0.3, 0.01);
+            if (avatar.tickCount % 20 == 0 && avatar.level() instanceof ServerLevel sl) {                // the mod's own aura effect, renewed every second (it runs 26 ticks)
+                VfxSpawn.sendFollowing(sl, VfxShape.SPIRIT_AURA, avatar, avatar.position(), 0xFFB0102A, 26, 1.0f);
             }
         }
         if (c == YandereFrenzyState.Change.ENTERED_EXHAUSTION) end(avatar, true);
         else if (c == YandereFrenzyState.Change.ENDED) end(avatar, false);
     }
 
-    /** One frenzy cast has happened: the Avatar burns its own health, never below 1. */
+    /**
+     * One frenzy cast has happened. The brief's price is the Avatar's own MAXIMUM health: the maximum drops by {@code frenzyHealthBurnPerCast} for as long as the frenzy
+     * lasts (a transient modifier, so a reload or the end of the frenzy gives it back; the health it lost stays lost until it heals), and never so far that the maximum
+     * falls below 1 ({@link YandereMath#drainStep}). Before the rebuild it burned the current health instead; that is kept as the fallback when the Avatar has no
+     * maximum-health attribute to drain.
+     */
     public static void burnForCast(AvatarEntity avatar) {
         if (avatar == null || avatar.level().isClientSide || !avatar.frenzied()) return;
-        float b = YandereMath.burn(avatar.getHealth(), AvatarAiConfig.frenzyBurn());
-        if (b > 0f) avatar.setHealth(avatar.getHealth() - b);
+        AttributeInstance max = avatar.getAttribute(Attributes.MAX_HEALTH);
+        if (max == null) {
+            float b = YandereMath.burn(avatar.getHealth(), AvatarAiConfig.frenzyBurn());
+            if (b > 0f) avatar.setHealth(avatar.getHealth() - b);
+            return;
+        }
+        AttributeModifier old = max.getModifier(DRAIN_ID);
+        double drained = old == null ? 0.0 : -old.amount();
+        double withoutDrain = max.getValue() + drained;
+        double step = YandereMath.drainStep(withoutDrain, drained, AvatarAiConfig.frenzyBurn());
+        if (step <= 0.0) return;
+        max.removeModifier(DRAIN_ID);
+        max.addTransientModifier(new AttributeModifier(DRAIN_ID, -(drained + step), AttributeModifier.Operation.ADD_VALUE));
+        if (avatar.getHealth() > avatar.getMaxHealth()) avatar.setHealth(avatar.getMaxHealth());
     }
 
     private static void begin(AvatarEntity avatar) {
@@ -85,6 +104,8 @@ public final class YandereFrenzyHandler {
         avatar.setFrenzied(false);
         AttributeInstance speed = avatar.getAttribute(Attributes.MOVEMENT_SPEED);
         if (speed != null) speed.removeModifier(SPEED_ID);
+        AttributeInstance max = avatar.getAttribute(Attributes.MAX_HEALTH);
+        if (max != null) max.removeModifier(DRAIN_ID);                                       // the maximum comes back
         if (exhausted && AvatarAiConfig.exhaustionTicks() > 0)
             avatar.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, AvatarAiConfig.exhaustionTicks(), 1, false, true));
     }

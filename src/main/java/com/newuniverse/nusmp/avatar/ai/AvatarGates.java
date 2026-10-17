@@ -19,6 +19,9 @@ public final class AvatarGates {
         try { return AvatarEntity.class.getMethod("isLoyal"); } catch (ReflectiveOperationException | RuntimeException e) { return null; }
     }
 
+    /** Is this tick the Avatar's turn in a rhythm of {@code period} ticks? See {@link TickSlot} for why a plain modulus is wrong for a goal's start check. */
+    public static boolean slot(int tickCount, int period) { return TickSlot.on(tickCount, period); }
+
     /** True while the Avatar still serves its creator. */
     public static boolean loyal(AvatarEntity avatar) {
         if (LOYAL == null) return true;

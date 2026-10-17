@@ -7,6 +7,8 @@ import com.newuniverse.nusmp.avatar.AvatarPersonality;
 import com.newuniverse.nusmp.avatar.ChatEvent;
 import com.newuniverse.nusmp.avatar.FtbTeamHelper;
 import com.newuniverse.nusmp.avatar.cast.SimulatedPlayerCaster;
+import com.newuniverse.nusmp.avatar.goal.AvatarTargeting;
+import com.newuniverse.nusmp.avatar.party.AvatarPartyManager;
 import com.newuniverse.nusmp.avatar.yandere.YandereFrenzyHandler;
 import com.newuniverse.nusmp.avatar.yandere.YandereMath;
 import net.minecraft.server.level.ServerLevel;
@@ -15,6 +17,7 @@ import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
@@ -64,6 +67,10 @@ public final class AvatarAiEvents {
             LivingEntity victim = e.getEntity();
             if (victim.level().isClientSide) return;
             if (src.getEntity() instanceof SimulatedPlayerCaster sc) { redirect(e, sc); return; }
+            if (src.getEntity() instanceof Mob member && AvatarPartyManager.isMember(member)) {                    // a party member never hurts what its Avatar may not
+                AvatarEntity owner = AvatarPartyManager.avatarOf(member);
+                if (owner != null && (!AvatarTargeting.canHarm(owner, victim) || AvatarPartyManager.isMember(victim))) { e.setCanceled(true); return; }
+            }
             if (src.getEntity() instanceof AvatarEntity av && victim instanceof Player p && av.has(AvatarPersonality.YANDERE) && !AvatarAiConfig.yandereLethal())
                 e.setAmount(YandereMath.nonLethal(e.getAmount(), p.getHealth(), p.getAbsorptionAmount()));
             if (victim instanceof ServerPlayer creator) intercept(e, creator);
@@ -116,7 +123,8 @@ public final class AvatarAiEvents {
 
     // ---------------------------------------------------------------- targets
     public static void onChangeTarget(LivingChangeTargetEvent e) {
-        if (!(e.getEntity() instanceof AvatarEntity avatar) || avatar.level().isClientSide) return;
+        if (!(e.getEntity() instanceof AvatarEntity avatar)) { guardMember(e); return; }
+        if (avatar.level().isClientSide) return;
         try {
             LivingEntity next = e.getNewAboutToBeSetTarget();
             if (next == null) return;
@@ -127,6 +135,16 @@ public final class AvatarAiEvents {
                 return;
             }
             if (avatar.getTarget() == null) AvatarChatterEngine.say(avatar, ChatEvent.COMBAT_START, next.getDisplayName().getString());
+        } catch (RuntimeException soft) { /* never break targeting */ }
+    }
+
+    /** A named monster of an Avatar's party never picks a target its Avatar may not attack (the creator, the creator's friends and pets, the party itself). */
+    private static void guardMember(LivingChangeTargetEvent e) {
+        try {
+            LivingEntity mob = e.getEntity(), next = e.getNewAboutToBeSetTarget();
+            if (next == null || mob.level().isClientSide || !AvatarPartyManager.isMember(mob)) return;
+            AvatarEntity owner = AvatarPartyManager.avatarOf(mob);
+            if (owner != null && (!AvatarTargeting.canHarm(owner, next) || AvatarPartyManager.isMember(next))) e.setCanceled(true);
         } catch (RuntimeException soft) { /* never break targeting */ }
     }
 

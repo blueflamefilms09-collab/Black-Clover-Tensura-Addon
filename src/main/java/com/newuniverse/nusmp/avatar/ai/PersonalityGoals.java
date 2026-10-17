@@ -46,7 +46,7 @@ public final class PersonalityGoals {
 
         @Override
         public boolean canUse() {
-            if (avatar.level().isClientSide || avatar.frenzied() || avatar.tickCount % 4 != 0) return false;
+            if (avatar.level().isClientSide || avatar.frenzied() || !AvatarGates.slot(avatar.tickCount, 4)) return false;
             var t = traits(avatar);
             LivingEntity threat = null;
             if (t.fleesBosses() && mind.fear != null && mind.fear.isAlive() && avatar.distanceToSqr(mind.fear) < 20 * 20) threat = mind.fear;
@@ -108,7 +108,7 @@ public final class PersonalityGoals {
 
         @Override
         public boolean canUse() {
-            if (avatar.level().isClientSide || avatar.frenzied() || avatar.getTarget() != null || avatar.tickCount % 20 != 0 || !traits(avatar).eatsFood()) return false;
+            if (avatar.level().isClientSide || avatar.frenzied() || avatar.getTarget() != null || !AvatarGates.slot(avatar.tickCount, 20) || !traits(avatar).eatsFood()) return false;
             List<ItemEntity> l = avatar.level().getEntitiesOfClass(ItemEntity.class, avatar.getBoundingBox().inflate(8), i -> i.isAlive() && i.getItem().has(DataComponents.FOOD));
             food = l.isEmpty() ? null : l.stream().min((a, b) -> Double.compare(a.distanceToSqr(avatar), b.distanceToSqr(avatar))).get();
             return food != null;
@@ -146,7 +146,7 @@ public final class PersonalityGoals {
 
         @Override
         public boolean canUse() {
-            if (avatar.level().isClientSide || avatar.getTarget() != null || avatar.tickCount % 20 != 0 || !traits(avatar).defendsVillagers()) return false;
+            if (avatar.level().isClientSide || avatar.getTarget() != null || !AvatarGates.slot(avatar.tickCount, 20) || !traits(avatar).defendsVillagers()) return false;
             Mob attacker = null;
             double best = Double.MAX_VALUE;
             for (Mob m : avatar.level().getEntitiesOfClass(Mob.class, avatar.getBoundingBox().inflate(20), x -> x instanceof Enemy && x.isAlive() && x.getTarget() instanceof AbstractVillager)) {
