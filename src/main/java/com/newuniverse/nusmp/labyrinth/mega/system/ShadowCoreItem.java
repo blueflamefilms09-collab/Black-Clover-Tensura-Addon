@@ -33,7 +33,7 @@ public class ShadowCoreItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
         tip.add(SystemMsg.text(SystemText.TIP_CHARGES, charges(stack), CoreCharges.MAX).withStyle(ChatFormatting.LIGHT_PURPLE));
-        tip.add(SystemMsg.text(SystemText.TIP_USE, SystemConfig.get(SystemConfig.EXTRACT_WINDOW_TICKS) / 20).withStyle(ChatFormatting.GRAY));
+        tip.add(SystemMsg.text(SystemText.TIP_USE_ANY, SystemConfig.get(SystemConfig.EXTRACT_WINDOW_TICKS) / 20).withStyle(ChatFormatting.GRAY));
         tip.add(SystemMsg.text(SystemText.TIP_LIMIT, SystemConfig.get(SystemConfig.MAX_MINIONS)).withStyle(ChatFormatting.GRAY));
         tip.add(SystemMsg.text(SystemText.TIP_LORE).withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
     }

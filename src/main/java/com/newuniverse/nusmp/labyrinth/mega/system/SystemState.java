@@ -22,9 +22,17 @@ public final class SystemState {
     private int done;
     private int failed;
     private QuestProgress quest;
+    private boolean hintShown;
 
-    /** The saved form: plain values only. */
-    public record Data(List<Integer> points, int cores, int maxFloor, String lastKind, int done, int failed, QuestProgress.Data quest) {}
+    /**
+     * The saved form: plain values only. {@code hint} (1.58.0) says the player has been told once how to move the window; the seven-argument constructor is the
+     * form before it existed, so every older caller and every older save reads as "not told yet".
+     */
+    public record Data(List<Integer> points, int cores, int maxFloor, String lastKind, int done, int failed, QuestProgress.Data quest, boolean hint) {
+        public Data(List<Integer> points, int cores, int maxFloor, String lastKind, int done, int failed, QuestProgress.Data quest) {
+            this(points, cores, maxFloor, lastKind, done, failed, quest, false);
+        }
+    }
 
     // ---------------------------------------------------------------- stats
     public int points(Stat s) { return points[s.ordinal()]; }
@@ -85,16 +93,22 @@ public final class SystemState {
 
     public void setQuest(QuestProgress q) { quest = q; }
 
+    // ---------------------------------------------------------------- the one-time window hint
+    /** Has the player been told how to move the System window ({@code system.hudHintOnEntry})? */
+    public boolean hintShown() { return hintShown; }
+
+    public void setHintShown(boolean shown) { hintShown = shown; }
+
     // ---------------------------------------------------------------- saving
     /** Does this state hold anything worth saving? (An empty one is not written, so players who never entered the Mega-Dungeon add nothing to their file.) */
     public boolean hasContent() {
-        return totalPoints() > 0 || cores > 0 || maxFloor > 0 || done > 0 || failed > 0 || quest != null;
+        return totalPoints() > 0 || cores > 0 || maxFloor > 0 || done > 0 || failed > 0 || quest != null || hintShown;
     }
 
     public Data toData() {
         List<Integer> list = new ArrayList<>(Stat.COUNT);
         for (int p : points) list.add(p);
-        return new Data(list, cores, maxFloor, lastKind, done, failed, quest == null ? null : quest.toData());
+        return new Data(list, cores, maxFloor, lastKind, done, failed, quest == null ? null : quest.toData(), hintShown);
     }
 
     /** Restores from the saved form; a null, short, long or damaged record gives a valid state. */
@@ -113,6 +127,7 @@ public final class SystemState {
         s.done = Math.max(0, d.done());
         s.failed = Math.max(0, d.failed());
         s.quest = QuestProgress.of(d.quest());
+        s.hintShown = d.hint();
         return s;
     }
 }

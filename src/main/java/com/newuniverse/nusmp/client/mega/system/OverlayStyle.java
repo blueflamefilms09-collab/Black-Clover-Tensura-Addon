@@ -36,6 +36,9 @@ public final class OverlayStyle {
     /** Scanlines: one every this many pixels; the sweep band is this tall and takes this many ticks to cross the panel. */
     public static final int SCAN_SPACING = 5, SWEEP_H = 12, SWEEP_TICKS = 170;
 
+    /** Edit mode (1.58.0): the room round the hint box's text, the side of the square handles on the frame's corners, and the width the toasts' column is assumed to take. */
+    public static final int EDIT_PAD = 4, EDIT_HANDLE = 3, TOAST_COLUMN_W = 220;
+
     /** Toasts: height of one, space between two, the most shown at once, and the room its text keeps on each side. */
     public static final int TOAST_H = 15, TOAST_GAP = 3, TOAST_MAX = 3, TOAST_PAD = 8, TOAST_MIN_W = 96;
 

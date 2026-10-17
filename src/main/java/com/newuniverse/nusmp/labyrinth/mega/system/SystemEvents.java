@@ -25,12 +25,12 @@ import java.util.UUID;
 /**
  * Why: every reaction of the System to the game is a listener on the game bus, and keeping them in one class that only DELEGATES (to {@link SystemQuests},
  * {@link ShadowExtraction}, {@link ShadowMinions}, {@link SystemSync}) means each rule has one home and this file is the table of contents of what the
- * System listens to: the server tick (the sync, the shadows' sweep, the extraction window), the player tick (the clock and the room), a death (kill quests,
+ * System listens to: the server tick (the sync, the shadows' sweep, the extraction window), the player tick (the clock and the room, and every two seconds the safety net that keeps the stat bonus on exactly while the player is in a dungeon dimension), a death (kill quests,
  * ambush quests, the extraction memory, a shadow falling), damage (twice: a guard that stops a shadow and its owner from hurting each other, early, on the
  * incoming blow; and the quest notice for the player on {@code LivingDamageEvent.Post}, which reports the health the player REALLY lost after armour, absorption
  * and shield, so a blow another mod cancelled, a shield turned aside or an absorption heart swallowed never spoils an "unscathed" quest), a target change (a shadow must
  * never pick its owner), loot and experience (a shadow gives none), a creature joining (a saved shadow comes back), a creature changing dimension (a shadow
- * never leaves the Mega-Dungeon alone), and the player's comings and goings (login, respawn, dimension change, logout) and the server stopping. Registered with
+ * never leaves the Mega-Dungeon alone), and the player's comings and goings (login, respawn, dimension change: the stat bonus goes on or off with the dimension; logout) and the server stopping. Registered with
  * {@code addListener} like the rest of the mod. Every handler is wrapped so an exception here can never break the game's own event, and the cheap checks
  * come first.
  */
@@ -68,9 +68,15 @@ public final class SystemEvents {
         }
     }
 
+    /** How often (ticks) the safety net looks at each player's stat bonus: every two seconds, offset so it does not share a tick with the quest work. */
+    static final int RECONCILE_EVERY = 40;
+
     static void onPlayerTick(PlayerTickEvent.Post e) {
         try {
-            if (e.getEntity() instanceof ServerPlayer p) SystemQuests.tickPlayer(p);
+            if (e.getEntity() instanceof ServerPlayer p) {
+                if (p.tickCount % RECONCILE_EVERY == 11) SystemStats.reconcile(p);
+                SystemQuests.tickPlayer(p);
+            }
         } catch (RuntimeException ex) {
             // a quest must never break the player's tick
         }
@@ -163,7 +169,7 @@ public final class SystemEvents {
     // ================================================================ players
     static void onLogin(PlayerEvent.PlayerLoggedInEvent e) {
         try {
-            if (e.getEntity() instanceof ServerPlayer p) SystemQuests.refresh(p);
+            if (e.getEntity() instanceof ServerPlayer p) SystemQuests.refreshFresh(p, true);
         } catch (RuntimeException ex) {
             // never break a login
         }
@@ -171,7 +177,7 @@ public final class SystemEvents {
 
     static void onRespawn(PlayerEvent.PlayerRespawnEvent e) {
         try {
-            if (e.getEntity() instanceof ServerPlayer p) SystemQuests.refresh(p);
+            if (e.getEntity() instanceof ServerPlayer p) SystemQuests.refreshFresh(p, false);
         } catch (RuntimeException ex) {
             // never break a respawn
         }
@@ -188,6 +194,7 @@ public final class SystemEvents {
     static void onLogout(PlayerEvent.PlayerLoggedOutEvent e) {
         try {
             if (!(e.getEntity() instanceof ServerPlayer p) || p.getServer() == null) return;
+            SystemStats.stashHealth(p);                         // the event fires before the player is saved
             ShadowMinions.ownerLeft(p.getServer(), p.getUUID());
             SystemQuests.forget(p.getUUID());
         } catch (RuntimeException ex) {

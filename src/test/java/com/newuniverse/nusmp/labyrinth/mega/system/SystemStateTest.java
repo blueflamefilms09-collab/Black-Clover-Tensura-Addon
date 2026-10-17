@@ -97,11 +97,40 @@ class SystemStateTest {
         assertTrue(SystemText.all().size() >= 40, "found " + SystemText.all().size());
         for (var e : SystemText.all().entrySet()) {
             assertFalse(e.getValue().isBlank(), e.getKey());
-            assertTrue(e.getKey().startsWith("message.nusmp.mega.system.") || e.getKey().equals(SystemText.KEY_TOGGLE) || e.getKey().equals(SystemText.ITEM_NAME), e.getKey());
+            assertTrue(e.getKey().startsWith("message.nusmp.mega.system.") || e.getKey().startsWith("key.nusmp.system_") || e.getKey().equals(SystemText.KEY_CATEGORY)
+                    || e.getKey().equals(SystemText.ITEM_NAME), e.getKey());
             assertEquals(e.getValue(), SystemText.english(e.getKey()));
         }
         assertEquals("not.a.key", SystemText.english("not.a.key"), "an unknown key shows as itself, never null");
         assertEquals("null", SystemText.english(null));
+    }
+
+    @Test void everyKeyOfTheControlsScreenHasItsNameAndTheCategoryIsTheOwnersWord() {
+        for (String k : new String[]{SystemText.KEY_TOGGLE, SystemText.KEY_EDIT, SystemText.KEY_LEFT, SystemText.KEY_RIGHT, SystemText.KEY_UP, SystemText.KEY_DOWN, SystemText.KEY_RESET, SystemText.KEY_CORNER}) {
+            assertTrue(SystemText.all().containsKey(k), k);
+            assertFalse(SystemText.english(k).isBlank(), k);
+        }
+        assertEquals("Multiverse: System", SystemText.english(SystemText.KEY_CATEGORY));
+    }
+
+    @Test void theWindowHintAndTheEditHintTakeTheirKeyNames() {
+        assertTrue(SystemText.english(SystemText.MSG_WINDOW_HINT).contains("%1$s") && SystemText.english(SystemText.MSG_WINDOW_HINT).contains("%3$s"));
+        for (String a : new String[]{"%1$s", "%2$s", "%3$s", "%4$s"}) assertTrue(SystemText.english(SystemText.EDIT_KEYS).contains(a), a);
+        assertTrue(SystemText.english(SystemText.EDIT_HEAD).contains("%3$s"));
+        assertTrue(SystemText.english(SystemText.EDIT_SAMPLE_QUEST).contains("%1$s"));
+        assertFalse(SystemText.english(SystemText.TIP_USE_ANY).contains("Holy"), "the System is for every road now");
+        assertFalse(SystemText.english(SystemText.MSG_NOTHING_TO_EXTRACT_ANY).contains("Holy"));
+    }
+
+    @Test void aSaveWithoutTheHintFlagStillLoadsAndTheFlagRoundTrips() {
+        SystemState fresh = SystemState.of(new SystemState.Data(List.of(1, 2, 3, 4, 5), 0, 0, "", 0, 0, null));
+        assertFalse(fresh.hintShown(), "a save from before 1.58.0 has not been told yet");
+        SystemState told = new SystemState();
+        assertFalse(told.hasContent(), "an untouched state is not written");
+        told.setHintShown(true);
+        assertTrue(told.hasContent(), "the flag alone must be saved, or the player is told again on every login");
+        assertTrue(SystemState.of(told.toData()).hintShown());
+        assertFalse(SystemState.of(new SystemState().toData()).hintShown());
     }
 
     @Test void theFormatsTakeTheArgumentsTheCodeGivesThem() {

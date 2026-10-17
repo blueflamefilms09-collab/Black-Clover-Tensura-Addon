@@ -2,7 +2,7 @@ package com.newuniverse.nusmp.labyrinth.mega.system;
 
 /**
  * Why: "which dead creature may become a shadow" is a list of exclusions the owner stated in the brief (bosses, summons of other owners, named and persistent
- * mobs are never extractable) plus the sense ones (it must be hostile, able to fight, and have been slain by a player on the Holy road). Deciding that from
+ * mobs are never extractable) plus the sense ones (it must be hostile, able to fight, and have been slain by a player on a floor of the dungeon, on either road since 1.58.0). Deciding that from
  * plain facts, in one pure function that answers WHY NOT in a word, keeps the rule testable case by case, lets the command and the chat line say what is wrong
  * with a target, and keeps the game side down to reading each fact off the entity once. The first reason that applies wins, in the order of the list below.
  */
@@ -13,7 +13,7 @@ public final class ExtractRules {
      * The facts about a slain creature.
      *
      * @param killedByPlayer a player (not a minion, not the environment) struck the last blow
-     * @param holyRoad       it died inside a sector of the road the System covers (Holy; Abyssal too when the config says so)
+     * @param holyRoad       it died inside a sector of a road the System covers (every road since 1.58.0; the name is the 1.55.0 one, kept so callers compile)
      * @param enemy          it is a hostile monster (a vanilla {@code Enemy}, or a monster of the Dungeon Master, whose Tensura creatures are not {@code Enemy})
      * @param mob            it is a {@code Mob} that can carry AI
      * @param armed          it can fight (has an attack damage attribute or a ranged attack)
@@ -29,7 +29,7 @@ public final class ExtractRules {
     /** Null when the creature may be extracted, else one word naming the first rule it breaks. */
     public static String refusal(Facts f) {
         if (!f.killedByPlayer()) return "not slain by a player";
-        if (!f.holyRoad()) return "not on the Holy floors";
+        if (!f.holyRoad()) return "not on a floor of the dungeon";
         if (!f.mob()) return "not a creature that can follow";
         if (!f.enemy()) return "not hostile";
         if (f.boss()) return "a boss";

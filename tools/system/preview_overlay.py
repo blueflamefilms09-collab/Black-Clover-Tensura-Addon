@@ -8,7 +8,10 @@ fetched once from a public mirror of the vanilla assets into build/system_previe
     python tools/system/preview_overlay.py [--out DIR] [--work DIR] [--font ascii.png] [--gui-scale 3]
 
 Writes into DIR (default build/system_preview): system_overlay.png (a full mock screenshot: panel, quest, stats, three toasts), system_scenes.png (the panel in every
-state: counting, typing, many, speed, urgent, unharmed, done, failed, other floor, boss, no quest, Abyssal, bare) and system_anchors.png (the four corners).
+state: counting, typing, many, speed, urgent, unharmed, done, failed, other floor, boss, no quest, Abyssal, bare, and since 1.58.0 the Hub's status window) and
+system_anchors.png (the four corners). 1.58.0 adds system_edit.png (edit mode: the amber frame and the hint box round a window that was moved from its corner),
+system_edit_corners.png (edit mode in each of the four corners, as the corner key cycles them) and system_moved.png (the same window, moved, on a small screen and on a
+large one).
 Needs: Python 3 with Pillow and numpy, a JDK (javac, java).
 """
 import argparse
@@ -62,12 +65,14 @@ def find_font(arg, workdir):
 
 
 # ---------------------------------------------------------------- the layout, run for real
-def run_scene(workdir, glyphs, scene, gui_w, gui_h, scale, anchor, alpha, t):
-    out = subprocess.run(["java", "-cp", os.path.join(workdir, "classes"), "OverlayDump", glyphs, scene, str(gui_w), str(gui_h), str(scale), str(anchor), str(alpha), str(t)],
-                         capture_output=True, text=True, env=dict(os.environ, JAVA_TOOL_OPTIONS=""))
+def run_scene(workdir, glyphs, scene, gui_w, gui_h, scale, anchor, alpha, t, off=(0, 0), edit=False):
+    cmd = ["java", "-cp", os.path.join(workdir, "classes"), "OverlayDump", glyphs, scene, str(gui_w), str(gui_h), str(scale), str(anchor), str(alpha), str(t), str(off[0]), str(off[1])]
+    if edit:
+        cmd.append("edit")
+    out = subprocess.run(cmd, capture_output=True, text=True, env=dict(os.environ, JAVA_TOOL_OPTIONS=""))
     if out.returncode != 0:
         sys.exit("OverlayDump failed:\n" + out.stderr)
-    frame, panel, toasts, cur = None, [], [], None
+    frame, panel, toasts, marks, cur = None, [], [], [], None
     cur = panel
     for line in out.stdout.splitlines():
         if line.startswith("Picked up"):
@@ -76,9 +81,11 @@ def run_scene(workdir, glyphs, scene, gui_w, gui_h, scale, anchor, alpha, t):
             frame = tuple(int(x) for x in line.split()[1:])
         elif line == "toasts":
             cur = toasts
+        elif line == "edit":
+            cur = marks
         elif line:
             cur.append(line)
-    return frame, panel, toasts
+    return frame, panel, toasts, marks
 
 
 def compile_dump(workdir):
@@ -200,16 +207,17 @@ def hud(canvas, gui_w, gui_h, k):
     canvas.rect(cx, cy - 5, cx + 1, cy + 6, 0xCCFFFFFF, k)
 
 
-def screenshot(workdir, glyphs, font, scene, gui_w, gui_h, gui_scale, scale, anchor, alpha, t, toast_scene=None, background=None):
-    frame, panel, toasts = run_scene(workdir, glyphs, scene, gui_w, gui_h, scale, anchor, alpha, t)
+def screenshot(workdir, glyphs, font, scene, gui_w, gui_h, gui_scale, scale, anchor, alpha, t, toast_scene=None, background=None, off=(0, 0), edit=False):
+    frame, panel, toasts, marks = run_scene(workdir, glyphs, scene, gui_w, gui_h, scale, anchor, alpha, t, off, edit)
     if toast_scene and toast_scene != scene:
-        _, _, toasts = run_scene(workdir, glyphs, toast_scene, gui_w, gui_h, scale, anchor, alpha, t)
+        _, _, toasts, _ = run_scene(workdir, glyphs, toast_scene, gui_w, gui_h, scale, anchor, alpha, t, off, edit)
     bg = background or mock_dungeon(gui_w * gui_scale, gui_h * gui_scale)
     cv = Canvas(bg)
     hud(cv, gui_w, gui_h, gui_scale)
     k = gui_scale * scale
     paint(cv, panel, k, font)
     paint(cv, toasts, k, font)
+    paint(cv, marks, k, font)
     return cv.image(), frame
 
 
@@ -246,7 +254,8 @@ def main():
     scenes = [("count", 5.0, "counting"), ("typing", 5.0, "a new quest, typing"), ("many", 5.0, "a long title, a long bar"), ("speed", 5.0, "a timed quest"),
               ("urgent", 40.0, "a timed quest, nearly out of time"), ("unharmed", 5.0, "reach the next floor unharmed"), ("done", 5.0, "complete"),
               ("failed", 5.0, "failed"), ("foreign", 5.0, "back on an earlier floor"), ("boss", 5.0, "a boss floor"), ("noquest", 5.0, "no quest"),
-              ("abyssal", 5.0, "Abyssal road, deep"), ("bare", 5.0, "no stats row"), ("count", 0.2, "header glitch frame")]
+              ("abyssal", 5.0, "Abyssal road, deep"), ("bare", 5.0, "no stats row"), ("count", 0.2, "header glitch frame"), ("hub", 5.0, "the Hub: status only"),
+              ("sample", 5.0, "edit mode sample (no dungeon)")]
     tiles = []
     for name, t, label in scenes:
         shot, fr = screenshot(work, glyphs, font, name, gw, gh, S, 1.0, 0, 0.67, t)
@@ -270,7 +279,26 @@ def main():
         shot, _ = screenshot(work, glyphs, font, "count", 640, 360, 1, 1.0, i, 0.67, 5.0, toast_scene="done", background=mock_dungeon(640, 360))
         quad.paste(shot, (4 + (i % 2) * 644, 4 + (i // 2) * 364))
     quad.save(os.path.join(out, "system_anchors.png"))
-    print("wrote", [f for f in ("system_overlay.png", "system_scenes.png", "system_anchors.png")], "into", out)
+
+    # 4. edit mode: the window moved off its corner, with the amber frame and the hint box (the toasts stay where they are)
+    shot, _ = screenshot(work, glyphs, font, "count", gw, gh, S, 1.0, 0, 0.67, 20.0, toast_scene="done", off=(48, 30), edit=True)
+    shot.save(os.path.join(out, "system_edit.png"))
+
+    # 5. edit mode in each corner, as the corner key walks them (clockwise from the top-left), a small screen so the box placement shows
+    quad = Image.new("RGB", (2 * 640 + 12, 2 * 360 + 12), (16, 18, 24))
+    for i, corner in enumerate((0, 1, 2, 3)):
+        shot, _ = screenshot(work, glyphs, font, "count", 640, 360, 1, 1.0, corner, 0.67, 20.0, background=mock_dungeon(640, 360), edit=True)
+        quad.paste(shot, (4 + (i % 2) * 644, 4 + (i // 2) * 364))
+    quad.save(os.path.join(out, "system_edit_corners.png"))
+
+    # 6. a moved window on a small and on a large screen (the same saved place, clamped to what fits), and one pushed far past the edge
+    pair = Image.new("RGB", (640 + 960 + 12, 540 + 8), (16, 18, 24))
+    small, _ = screenshot(work, glyphs, font, "count", 640, 360, 1, 1.0, 3, 0.67, 5.0, background=mock_dungeon(640, 360), off=(300, 200))
+    large, _ = screenshot(work, glyphs, font, "count", 960, 540, 1, 1.0, 3, 0.67, 5.0, background=mock_dungeon(960, 540), off=(300, 200))
+    pair.paste(small, (4, 4))
+    pair.paste(large, (648, 4))
+    pair.save(os.path.join(out, "system_moved.png"))
+    print("wrote", [f for f in ("system_overlay.png", "system_scenes.png", "system_anchors.png", "system_edit.png", "system_edit_corners.png", "system_moved.png")], "into", out)
 
 
 if __name__ == "__main__":

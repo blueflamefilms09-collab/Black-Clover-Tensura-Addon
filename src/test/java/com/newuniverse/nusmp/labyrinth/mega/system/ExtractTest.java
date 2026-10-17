@@ -28,7 +28,7 @@ class ExtractTest {
 
     @Test void eachExclusionOfTheBriefIsRefused() {
         assertEquals("not slain by a player", ExtractRules.refusal(new ExtractRules.Facts(false, true, true, true, true, false, false, false, false, false)));
-        assertEquals("not on the Holy floors", ExtractRules.refusal(new ExtractRules.Facts(true, false, true, true, true, false, false, false, false, false)));
+        assertEquals("not on a floor of the dungeon", ExtractRules.refusal(new ExtractRules.Facts(true, false, true, true, true, false, false, false, false, false)));
         assertEquals("not a creature that can follow", ExtractRules.refusal(new ExtractRules.Facts(true, true, true, false, true, false, false, false, false, false)));
         assertEquals("not hostile", ExtractRules.refusal(new ExtractRules.Facts(true, true, false, true, true, false, false, false, false, false)));
         assertEquals("a boss", ExtractRules.refusal(new ExtractRules.Facts(true, true, true, true, true, true, false, false, false, false)));
