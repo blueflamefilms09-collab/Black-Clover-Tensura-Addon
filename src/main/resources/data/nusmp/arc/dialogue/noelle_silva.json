@@ -1,0 +1,211 @@
+{
+  "character": "noelle_silva",
+  "lines": {
+    "greeting": [
+      {
+        "text": "O-oh. A stranger. I am Noelle Silva, of House Silva. Don't just stand there staring, {player}. Say something!",
+        "key": "arc.dialogue.noelle_silva.1",
+        "first": true
+      },
+      {
+        "text": "Hmph. I suppose you want to know who I am. Noelle Silva. Black Bulls. And yes, I really am from that Silva family, so don't gawk.",
+        "key": "arc.dialogue.noelle_silva.2",
+        "first": true
+      },
+      {
+        "text": "You can stop being so stiff, {player}. I'm not going to bite. ...Usually. I'm Noelle.",
+        "key": "arc.dialogue.noelle_silva.3",
+        "first": true
+      },
+      {
+        "text": "You've been fighting a lot already, I can tell. Good. A Silva respects someone who doesn't run. I'm Noelle.",
+        "key": "arc.dialogue.noelle_silva.4",
+        "first": true,
+        "minStage": 3,
+        "priority": 2
+      },
+      {
+        "text": "You beat Vetto?! Hmph. I'll have you know I tore his arm off first. ...That doesn't make you any less impressive. I'm Noelle Silva.",
+        "key": "arc.dialogue.noelle_silva.5",
+        "first": true,
+        "defeated": [
+          "vetto"
+        ],
+        "priority": 2
+      }
+    ],
+    "hint": [
+      {
+        "text": "The labyrinth is dangerous, but it teaches better than my family ever did. Stay calm, control your mana, and don't panic, {player}. I learned that the hard way.",
+        "key": "arc.dialogue.noelle_silva.6",
+        "maxStage": 2,
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Water goes where you tell it to. Remember that, whatever you wield. Panic floods everything, and I do not need another flood in the plaza.",
+        "key": "arc.dialogue.noelle_silva.7",
+        "maxStage": 2,
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Men like Heath Grice, Revchi Salik and the Diamond Kingdom mages are not a matter of pride, they're a matter of survival. Don't underestimate anyone just because they stand on an early floor.",
+        "key": "arc.dialogue.noelle_silva.8",
+        "maxStage": 5,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Vetto grew his arm back right in front of me. If you face him, don't stop after the first hit. And past the thirtieth floor, the Eye's elite have a third eye. That isn't a metaphor.",
+        "key": "arc.dialogue.noelle_silva.9",
+        "minStage": 4,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "The Dark Triad are what happens when talent and cruelty share a house. Dante, Vanica, Zenon. Don't face them alone, and don't face them proud.",
+        "key": "arc.dialogue.noelle_silva.10",
+        "saga": [
+          "spade_raid"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Lucius Zogratis wore the Wizard King's face. Whatever he says, whatever he shows you, remember who you are. I'll... keep that in mind as well.",
+        "key": "arc.dialogue.noelle_silva.11",
+        "saga": [
+          "wizard_king"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Those Sins have strange manners and stranger strength. No titles, no houses, only power. I find it... refreshing. Don't tell my brother.",
+        "key": "arc.dialogue.noelle_silva.12",
+        "saga": [
+          "seven_deadly_sins"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "The monsters of that other dungeon are crude, but crude is not the same as weak. The bull-headed one especially. Keep your head.",
+        "key": "arc.dialogue.noelle_silva.13",
+        "saga": [
+          "danmachi"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Twenty already? Hmph. That is... acceptable. For a commoner. I mean it as a compliment. Probably.",
+        "key": "arc.dialogue.noelle_silva.14",
+        "minStage": 20,
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Sea Dragon's Roar is a homing dragon of water that hits like a landslide. The trick isn't throwing it harder. It's throwing it at the right thing.",
+        "key": "arc.dialogue.noelle_silva.15",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "The Valkyrie Dress wraps you in water armor for thirty seconds: faster, stronger, harder to hurt, light on your feet. It needs a full minute to recover, so choose the moment carefully.",
+        "key": "arc.dialogue.noelle_silva.16",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Sea Dragon's Nest is a dome of water. Enemy spells inside it are swallowed, foes slow down, and my side gets patched up. I cast it when things look bad. Then they look less bad.",
+        "key": "arc.dialogue.noelle_silva.17",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Vetto is gone? Good. I blew his arm off with one spell and he simply grew it back. I found that rude.",
+        "key": "arc.dialogue.noelle_silva.18",
+        "defeated": [
+          "vetto"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Vanica's down? Good. Hers was the cruelest curse I have ever seen. You have my respect.",
+        "key": "arc.dialogue.noelle_silva.19",
+        "defeated": [
+          "vanica"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Lucius is finished? ...Good. Then I may finally stop pretending that I'm not afraid of him.",
+        "key": "arc.dialogue.noelle_silva.20",
+        "defeated": [
+          "lucius"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "My brother Nozel never says anything kind. He never says anything cruel, either. I can't decide which is worse.",
+        "key": "arc.dialogue.noelle_silva.21",
+        "priority": 1
+      },
+      {
+        "text": "I used to think my mana was a curse. Now it's just... difficult. Like a very large cat.",
+        "key": "arc.dialogue.noelle_silva.22",
+        "priority": 1
+      },
+      {
+        "text": "Asta is an idiot. A loud, sweaty, wonderful idiot. Don't tell him I said wonderful.",
+        "key": "arc.dialogue.noelle_silva.23",
+        "priority": 1
+      },
+      {
+        "text": "Eat something, {player}. Charmy's cooking is surprisingly good. Surprisingly. I'm not being nice.",
+        "key": "arc.dialogue.noelle_silva.24",
+        "priority": 1
+      },
+      {
+        "text": "A Silva does not hesitate. Unfortunately, I am a Silva who hesitates. Often.",
+        "key": "arc.dialogue.noelle_silva.25",
+        "priority": 1
+      },
+      {
+        "text": "Raw monster meat makes you sick. I can't believe I have to say that out loud. Cook it first.",
+        "key": "arc.dialogue.noelle_silva.26",
+        "priority": 1
+      },
+      {
+        "text": "Don't let your torch go out. I was in the dark too long once and it left me weak. Not that I was afraid. I was... conserving energy.",
+        "key": "arc.dialogue.noelle_silva.27",
+        "priority": 1
+      }
+    ],
+    "farewell": [
+      {
+        "text": "Hmph. Try not to get yourself killed. I... would find it inconvenient.",
+        "key": "arc.dialogue.noelle_silva.28"
+      },
+      {
+        "text": "G-good luck, {player}. That's all. Don't make it weird.",
+        "key": "arc.dialogue.noelle_silva.29"
+      },
+      {
+        "text": "Go on. And stand up straight. A Silva notices.",
+        "key": "arc.dialogue.noelle_silva.30"
+      }
+    ]
+  }
+}

@@ -1,0 +1,212 @@
+{
+  "character": "nacht_faust",
+  "lines": {
+    "greeting": [
+      {
+        "text": "...Another one. I'm Nacht Faust. I don't waste time on people who lose, so don't lose.",
+        "key": "arc.dialogue.nacht_faust.1",
+        "first": true
+      },
+      {
+        "text": "You'll be asking about devils sooner or later. Everyone does. Nacht Faust. Ask quickly.",
+        "key": "arc.dialogue.nacht_faust.2",
+        "first": true
+      },
+      {
+        "text": "So you're the new one. Hm. You look tougher than you sound. Name's Nacht.",
+        "key": "arc.dialogue.nacht_faust.3",
+        "first": true
+      },
+      {
+        "text": "You put Vetto down. Good. I don't like noise from beasts. Nacht Faust. Sit, if you want. I won't.",
+        "key": "arc.dialogue.nacht_faust.4",
+        "first": true,
+        "defeated": [
+          "vetto"
+        ],
+        "priority": 2
+      },
+      {
+        "text": "Plenty of fights behind you, and you're still standing. Not an idiot, then. Nacht Faust.",
+        "key": "arc.dialogue.nacht_faust.5",
+        "first": true,
+        "minStage": 6,
+        "priority": 2
+      }
+    ],
+    "hint": [
+      {
+        "text": "First rule: losing is your own fault. Second rule: so is dying. Third rule: don't make me repeat the first two.",
+        "key": "arc.dialogue.nacht_faust.6",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Noise and light. Everything down there counts them. A torch draws attention, and noise draws more. If you can't fight it, don't let it see you.",
+        "key": "arc.dialogue.nacht_faust.7",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "The Eye of the Midnight Sun has a devil at its root. Zagred, its secret founder. You'll meet his people first. Don't underestimate them just because they're human.",
+        "key": "arc.dialogue.nacht_faust.8",
+        "maxStage": 5,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Zagred is down the Chasm, somewhere below the fortieth floor. A devil of words: say it and it becomes true. You can't win by listening. Plug your ears, if you have to.",
+        "key": "arc.dialogue.nacht_faust.9",
+        "minStage": 4,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Three brothers, three devils: Lucifero, Megicula, Beelzebub. Gravity, curses, space. Devils lend power and take payment. The Zogratis paid with everything they had.",
+        "key": "arc.dialogue.nacht_faust.10",
+        "saga": [
+          "spade_raid"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Astaroth, the devil of time, was bound to Lucius. A devil that can fold hours. Whatever you plan, he's already thought of it. So plan twice.",
+        "key": "arc.dialogue.nacht_faust.11",
+        "saga": [
+          "wizard_king"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Seven people from another world, each carrying a sin. Nothing to do with devils. Nothing to do with me. That's what makes it interesting.",
+        "key": "arc.dialogue.nacht_faust.12",
+        "saga": [
+          "seven_deadly_sins"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "That other dungeon breeds monsters the way mine breeds regrets. Efficiently. Don't go in unprepared.",
+        "key": "arc.dialogue.nacht_faust.13",
+        "saga": [
+          "danmachi"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Twenty or more victories. Fine. I'll admit it: you're not an idiot.",
+        "key": "arc.dialogue.nacht_faust.14",
+        "minStage": 20,
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Liebe is anti-magic. Zagred is words. Megicula curses. Lucifero crushes with gravity. Beelzebub tears space. Astaroth bends time. Know the name, know the trick.",
+        "key": "arc.dialogue.nacht_faust.15",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Mine are different: Slotos the horse, Gimodelo the dog, Plumede the cat, Walgner the rooster. In Unite Mode each lends me its body for thirty seconds: a fortress, a pack, a stalker, a stunning call. Those pages open only in my own grimoire.",
+        "key": "arc.dialogue.nacht_faust.16",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Shadow Travel works if you stand in shadow and there is a shadow to land in. The labyrinth is generous with both.",
+        "key": "arc.dialogue.nacht_faust.17",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "A five-leaf grimoire may carry a devil. Devil Union is what it grants. Don't envy anyone who has one. The devil always collects.",
+        "key": "arc.dialogue.nacht_faust.18",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Zagred is down? Good. Devils lie. He lied loudest.",
+        "key": "arc.dialogue.nacht_faust.19",
+        "defeated": [
+          "zagred"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "The whole Dark Triad is down. Three contracts broken at once. I almost feel sorry for their devils. Almost.",
+        "key": "arc.dialogue.nacht_faust.20",
+        "defeated": [
+          "dante",
+          "vanica",
+          "zenon"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Lucius, finished. A man who chose a devil of time and still ran out of it. Poetic.",
+        "key": "arc.dialogue.nacht_faust.21",
+        "defeated": [
+          "lucius"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "My brother Morgen died stopping a ritual that tried to bind a devil. I haven't forgotten the lesson. Devils are not tools.",
+        "key": "arc.dialogue.nacht_faust.22",
+        "priority": 1
+      },
+      {
+        "text": "Asta talks too much. Noelle sulks too much. Everyone eats too much. It's an exhausting squad. ...I'd die for them.",
+        "key": "arc.dialogue.nacht_faust.23",
+        "priority": 1
+      },
+      {
+        "text": "I wear four relics on a string around my neck. They're not jewelry. Don't touch them.",
+        "key": "arc.dialogue.nacht_faust.24",
+        "priority": 1
+      },
+      {
+        "text": "The captain doesn't care about rank. I do. Rank is how you tell who has to pay.",
+        "key": "arc.dialogue.nacht_faust.25",
+        "priority": 1
+      },
+      {
+        "text": "If you want to talk about feelings, find Vanessa. She's drunk. It will be a good conversation.",
+        "key": "arc.dialogue.nacht_faust.26",
+        "priority": 1
+      },
+      {
+        "text": "Shadow is my road, but darkness will weaken you if you stay in it. Carry a lantern anyway.",
+        "key": "arc.dialogue.nacht_faust.27",
+        "priority": 1
+      }
+    ],
+    "farewell": [
+      {
+        "text": "Hm. Don't lose.",
+        "key": "arc.dialogue.nacht_faust.28"
+      },
+      {
+        "text": "Go. Come back with something worth saying.",
+        "key": "arc.dialogue.nacht_faust.29"
+      },
+      {
+        "text": "If you see a devil, don't trust its smile.",
+        "key": "arc.dialogue.nacht_faust.30"
+      }
+    ]
+  }
+}

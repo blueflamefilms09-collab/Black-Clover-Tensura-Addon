@@ -1,0 +1,224 @@
+{
+  "character": "grey",
+  "lines": {
+    "greeting": [
+      {
+        "text": "U-um... h-hello. I'm... G-Grey. Sorry. Sorry! I didn't mean to stand so close. We're not even touching. Sorry anyway.",
+        "key": "arc.dialogue.grey.1",
+        "first": true
+      },
+      {
+        "text": "A-ah! Someone's talking to me! I'm Grey. Of the Black Bulls. I... I turn into things. It helps me talk.",
+        "key": "arc.dialogue.grey.2",
+        "first": true
+      },
+      {
+        "text": "Hello! (deepens voice) I mean, hah! Hello! I am the great Grey! ...Sorry. I'm just Grey. Nice to meet you.",
+        "key": "arc.dialogue.grey.3",
+        "first": true
+      },
+      {
+        "text": "Y-you beat Lotus Whomalt? That's amazing! I'm Grey. I was too scared to come out until you did. Sorry.",
+        "key": "arc.dialogue.grey.4",
+        "first": true,
+        "defeated": [
+          "lotus_whomalt"
+        ],
+        "priority": 2
+      },
+      {
+        "text": "You look tired. I c-could turn into a pillow! ...I'm joking. S-sorry. I'm Grey.",
+        "key": "arc.dialogue.grey.5",
+        "first": true,
+        "minStage": 3,
+        "priority": 2
+      }
+    ],
+    "hint": [
+      {
+        "text": "Not every chest is a chest. Some have teeth. If it's sitting alone in a corner, be careful. ...Don't ask how I know.",
+        "key": "arc.dialogue.grey.6",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "If something looks too friendly, it might be a monster. Or me. ...It's usually a monster.",
+        "key": "arc.dialogue.grey.7",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "The Eye of the Midnight Sun is scary. They don't scare me as much as my family did. ...That's not comforting, is it? Sorry.",
+        "key": "arc.dialogue.grey.8",
+        "maxStage": 5,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "People with a third eye don't blink the same. I noticed that. ...I notice things when I'm hiding.",
+        "key": "arc.dialogue.grey.9",
+        "minStage": 4,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "The three brothers... one is gravity, one is curses, one is space. I could turn into a rock, but a rock gets crushed too. Sorry.",
+        "key": "arc.dialogue.grey.10",
+        "saga": [
+          "spade_raid"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Lucius... is the one at the end. I'll hide behind someone bigger. ...I'll be someone bigger. Then I'll hide.",
+        "key": "arc.dialogue.grey.11",
+        "saga": [
+          "wizard_king"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Seven strong strangers... Merlin is scary. Diane is huge. I could turn into a giant, but she'd just step on me. ...Sorry for thinking about it.",
+        "key": "arc.dialogue.grey.12",
+        "saga": [
+          "seven_deadly_sins"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Another dungeon... with a hearth. A family. I wish I had a family like that. ...Oh! I do. The Black Bulls. Sorry, I forgot.",
+        "key": "arc.dialogue.grey.13",
+        "saga": [
+          "danmachi"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Twenty fights?! I... I think I'm proud of you. Is that allowed? Sorry.",
+        "key": "arc.dialogue.grey.14",
+        "minStage": 20,
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Magic Convert draws a circle in front of you for two seconds. Any enemy spell that touches it turns into your mana. I'm... very proud of that one. ...Sorry for being proud.",
+        "key": "arc.dialogue.grey.15",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Transmutation: Iron Spikes turns the ground ahead into iron and thrusts it up in a line. Quagmire turns the ground into sand for five seconds, and everything sinks.",
+        "key": "arc.dialogue.grey.16",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Grand Transmutation turns every blessing on the enemies around you into a curse, and you take the blessings. It's a bit mean. ...Sorry.",
+        "key": "arc.dialogue.grey.17",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "I can change what I look like, and sometimes what other things are. The first time, I turned into a very large man by accident. ...He was loud.",
+        "key": "arc.dialogue.grey.18",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Mars... crystals. I turned a rock into a crystal once, but it was a bad crystal. Sorry.",
+        "key": "arc.dialogue.grey.19",
+        "defeated": [
+          "mars"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "You beat Vetto? He grew his arm back, right? I'd have run. I'm glad you didn't.",
+        "key": "arc.dialogue.grey.20",
+        "defeated": [
+          "vetto"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Zagred makes words true... I can change what things are, too. But I have to touch them. He doesn't. That's... unfair.",
+        "key": "arc.dialogue.grey.21",
+        "defeated": [
+          "zagred"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Lucius is finished? I can stop pretending to be a rock now? Oh! Sorry. That was private.",
+        "key": "arc.dialogue.grey.22",
+        "defeated": [
+          "lucius"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "When I'm shy, I turn into someone braver. When I'm someone braver, I turn into someone shy. It doesn't make sense, I know.",
+        "key": "arc.dialogue.grey.23",
+        "priority": 1
+      },
+      {
+        "text": "Asta never laughs at me. He just shouts good job at everything. I... like it.",
+        "key": "arc.dialogue.grey.24",
+        "priority": 1
+      },
+      {
+        "text": "Noelle is so brave. I wish I could be brave like that. ...Oh, she gets embarrassed when I say that. Sorry.",
+        "key": "arc.dialogue.grey.25",
+        "priority": 1
+      },
+      {
+        "text": "Zora pranked me once. I turned into a statue so he couldn't find me. It worked for three days.",
+        "key": "arc.dialogue.grey.26",
+        "priority": 1
+      },
+      {
+        "text": "I like it here. Nobody asks me to be someone else. ...Which is funny, because that's my magic.",
+        "key": "arc.dialogue.grey.27",
+        "priority": 1
+      },
+      {
+        "text": "There's no easy healing down there, so rest in safe rooms and Landings. I hide in them. Sometimes for hours.",
+        "key": "arc.dialogue.grey.28",
+        "priority": 1
+      },
+      {
+        "text": "Relics come from vaults, pedestals and bosses, as far as I know. If someone offers you one for free... it's probably a me. Sorry!",
+        "key": "arc.dialogue.grey.29",
+        "priority": 1
+      }
+    ],
+    "farewell": [
+      {
+        "text": "B-bye! Sorry! ...I mean, goodbye!",
+        "key": "arc.dialogue.grey.30"
+      },
+      {
+        "text": "Take care! (deep voice) And don't dawdle!",
+        "key": "arc.dialogue.grey.31"
+      },
+      {
+        "text": "Thank you for talking to me. I... don't do that often.",
+        "key": "arc.dialogue.grey.32"
+      }
+    ]
+  }
+}

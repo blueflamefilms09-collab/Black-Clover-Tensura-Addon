@@ -1,0 +1,224 @@
+{
+  "character": "gordon_agrippa",
+  "lines": {
+    "greeting": [
+      {
+        "text": "...Oh. Hello. I... I'm Gordon. Gordon Agrippa. I'm sorry... for existing. Please don't leave.",
+        "key": "arc.dialogue.gordon_agrippa.1",
+        "first": true
+      },
+      {
+        "text": "Heh... you can see me. Most people don't. I'm Gordon. Poison magic. Don't worry, I only curse people I don't like.",
+        "key": "arc.dialogue.gordon_agrippa.2",
+        "first": true
+      },
+      {
+        "text": "I... mumble. Sorry. It's a habit. I'm Gordon, of the Black Bulls. ...I think you seem nice.",
+        "key": "arc.dialogue.gordon_agrippa.3",
+        "first": true
+      },
+      {
+        "text": "You... took down Heath Grice. Good. I'm glad. I was hiding in the dark and thinking someone should. Gordon.",
+        "key": "arc.dialogue.gordon_agrippa.4",
+        "first": true,
+        "defeated": [
+          "heath_grice"
+        ],
+        "priority": 2
+      },
+      {
+        "text": "You look... tired. Tired is good. Tired means you did something. I'm Gordon...",
+        "key": "arc.dialogue.gordon_agrippa.5",
+        "first": true,
+        "minStage": 3,
+        "priority": 2
+      }
+    ],
+    "hint": [
+      {
+        "text": "The dark... isn't so bad. But stay in it too long and the dungeon makes you weak. Carry a light. I'd carry one too, but I like the dark. ...Heh. Carry a light.",
+        "key": "arc.dialogue.gordon_agrippa.6",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Raw monster meat is poison. Real poison, not the good kind. Cook it or purify it. I know ten ways to ruin it. And one way to fix it.",
+        "key": "arc.dialogue.gordon_agrippa.7",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "The Eye of the Midnight Sun... they're hurt people who hurt people. Heath Grice, Vetto... I understand them. ...I'm still going to curse them. A little.",
+        "key": "arc.dialogue.gordon_agrippa.8",
+        "maxStage": 5,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "The ones with the third eye... they don't think they're villains. That's the worst kind. Be careful past the thirtieth floor.",
+        "key": "arc.dialogue.gordon_agrippa.9",
+        "minStage": 4,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Vanica's curse... it's a very good curse. Terrible, but good. I could study it for years. ...Please don't tell the captain I said that.",
+        "key": "arc.dialogue.gordon_agrippa.10",
+        "saga": [
+          "spade_raid"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Lucius... took people's souls and called it mercy. I don't think I like him. ...I don't like many people. But him less.",
+        "key": "arc.dialogue.gordon_agrippa.11",
+        "saga": [
+          "wizard_king"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Seven sins... I think I have at least five. ...Shame is one of them. Is shame a sin? ...Hm.",
+        "key": "arc.dialogue.gordon_agrippa.12",
+        "saga": [
+          "seven_deadly_sins"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "That other dungeon has a hearth where the weak can sit. I like that. ...I'd sit by it, if I was allowed.",
+        "key": "arc.dialogue.gordon_agrippa.13",
+        "saga": [
+          "danmachi"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Twenty... fights? You're braver than me. ...That's not hard, but still.",
+        "key": "arc.dialogue.gordon_agrippa.14",
+        "minStage": 20,
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Aufwachen Dachs sends a badger of poison. Violett Schirm hangs a curtain of poison for eight seconds: spells that cross it melt, foes that touch it sicken. Basilisk's Breath... is not for the squeamish.",
+        "key": "arc.dialogue.gordon_agrippa.15",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "My own page is Curse-Worker's Neighbor. It cleans your side of every curse and pours them on the other side. It only opens in my grimoire. ...Sorry. It's a bit selfish.",
+        "key": "arc.dialogue.gordon_agrippa.16",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Curses aren't evil. They're debts. If you pay them, they go away. If you don't, they grow.",
+        "key": "arc.dialogue.gordon_agrippa.17",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Poison, in the right dose, is medicine. I research that. With my father. We... talk now. Sometimes.",
+        "key": "arc.dialogue.gordon_agrippa.18",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "You beat Vanica? ...Her curse was the most beautiful horror I've ever seen. I'm glad you survived it.",
+        "key": "arc.dialogue.gordon_agrippa.19",
+        "defeated": [
+          "vanica"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "A devil of words... and you stopped him. I have so many questions. Don't answer them. I like not knowing.",
+        "key": "arc.dialogue.gordon_agrippa.20",
+        "defeated": [
+          "zagred"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Lucius is gone... the world feels lighter. ...Or I'm just hungry. Both.",
+        "key": "arc.dialogue.gordon_agrippa.21",
+        "defeated": [
+          "lucius"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Mars... crystals are nice. ...Sorry. I'm talking about the enemy again.",
+        "key": "arc.dialogue.gordon_agrippa.22",
+        "defeated": [
+          "mars"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "People think I'm creepy. I think it's the eyebrows. ...I don't have eyebrows.",
+        "key": "arc.dialogue.gordon_agrippa.23",
+        "priority": 1
+      },
+      {
+        "text": "Gauche asked me for advice once. I was so surprised I forgot how to speak. ...More than usual.",
+        "key": "arc.dialogue.gordon_agrippa.24",
+        "priority": 1
+      },
+      {
+        "text": "The Black Bulls are... nice. They don't ask me to speak louder.",
+        "key": "arc.dialogue.gordon_agrippa.25",
+        "priority": 1
+      },
+      {
+        "text": "I never used to have friends. ...Now I have too many. It's lovely.",
+        "key": "arc.dialogue.gordon_agrippa.26",
+        "priority": 1
+      },
+      {
+        "text": "Sunlight is overrated. Under a ceiling, a man can think.",
+        "key": "arc.dialogue.gordon_agrippa.27",
+        "priority": 1
+      },
+      {
+        "text": "At the end of every ten floors there's a vault with relics. When you take one, the dungeon answers: a collapsing ceiling, a magicule flood, a cursed spirit. ...Stay calm. Walk to the exit.",
+        "key": "arc.dialogue.gordon_agrippa.28",
+        "priority": 1
+      },
+      {
+        "text": "If you're poisoned, a bucket of milk clears everything. I don't know why. Cows are magic. ...Don't tell my father I said that.",
+        "key": "arc.dialogue.gordon_agrippa.29",
+        "priority": 1
+      }
+    ],
+    "farewell": [
+      {
+        "text": "...Goodbye. Please be careful. I'll be here, in the dark.",
+        "key": "arc.dialogue.gordon_agrippa.30"
+      },
+      {
+        "text": "Thank you for talking to me. ...Really.",
+        "key": "arc.dialogue.gordon_agrippa.31"
+      },
+      {
+        "text": "...Take care. Heh. I mean it.",
+        "key": "arc.dialogue.gordon_agrippa.32"
+      }
+    ]
+  }
+}

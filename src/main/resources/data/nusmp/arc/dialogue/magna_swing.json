@@ -1,0 +1,213 @@
+{
+  "character": "magna_swing",
+  "lines": {
+    "greeting": [
+      {
+        "text": "Oi, who're you? Name's Magna Swing! Black Bulls! Don't let the jacket fool you, I'm tougher than I look. Actually I look pretty tough.",
+        "key": "arc.dialogue.magna_swing.1",
+        "first": true
+      },
+      {
+        "text": "Hah! Another fresh face! I'm Magna. Fire's my game. Sit down before you fall over.",
+        "key": "arc.dialogue.magna_swing.2",
+        "first": true
+      },
+      {
+        "text": "Don't stare at the mohawk. Everybody does. Magna Swing. Remember it, 'cause I'm gonna be famous.",
+        "key": "arc.dialogue.magna_swing.3",
+        "first": true
+      },
+      {
+        "text": "You took down Revchi Salik? Heh. Not bad! Not bad at all! Magna Swing! Wanna see my broom?",
+        "key": "arc.dialogue.magna_swing.4",
+        "first": true,
+        "defeated": [
+          "revchi_salik"
+        ],
+        "priority": 2
+      },
+      {
+        "text": "You look like you've been through it. Good. Real fighters have a look. Magna Swing, Black Bull. Pleased to meet ya.",
+        "key": "arc.dialogue.magna_swing.5",
+        "first": true,
+        "minStage": 3,
+        "priority": 2
+      }
+    ],
+    "hint": [
+      {
+        "text": "Fire's simple. Hit hard, hit first, don't stop. That's the whole spell book. Okay, there's more. But that's the important part.",
+        "key": "arc.dialogue.magna_swing.6",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Keep a flame going down there. Stay in the dark long enough and the dungeon makes you weak. A fire mage with no fire is a sad sight.",
+        "key": "arc.dialogue.magna_swing.7",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Eye of the Midnight Sun, huh? Heath Grice, Vetto, the whole gang. I'd go after them myself, but the captain says I'd burn the dungeon down. He's right. I don't like it.",
+        "key": "arc.dialogue.magna_swing.8",
+        "maxStage": 5,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Deeper down, the Eye sends the third-eye freaks. Big, ugly, hard to kill. Hit them harder. Then hit them again. That's the whole plan. Don't improve it.",
+        "key": "arc.dialogue.magna_swing.9",
+        "minStage": 4,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Dante Zogratis, the big gravity brute. I've met that name before and I'd like another go. Take him head on, just don't stand where the ground's heavy.",
+        "key": "arc.dialogue.magna_swing.10",
+        "saga": [
+          "spade_raid"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Lucius. The one at the top, wearing the Wizard King's face. Heh. I'd burn that face off, but I hear he's not the burning kind.",
+        "key": "arc.dialogue.magna_swing.11",
+        "saga": [
+          "wizard_king"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "New guys on the floors, and they're strong. Luck-level strong. I'm gonna have to watch Luck so he doesn't run off and challenge all of 'em.",
+        "key": "arc.dialogue.magna_swing.12",
+        "saga": [
+          "seven_deadly_sins"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "A bull-headed monster in that other dungeon? And I'm a Black Bull? Hey, we should settle who the better bull is.",
+        "key": "arc.dialogue.magna_swing.13",
+        "saga": [
+          "danmachi"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Twenty fights! Not bad, not bad! Don't let it go to your head, or I'll set your hair on fire. Friendly like.",
+        "key": "arc.dialogue.magna_swing.14",
+        "minStage": 20,
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "My go-to is the Exploding Fireball, the first page of the Fire book. It hits harder than it looks. A fire mage who can't throw one is just a cook.",
+        "key": "arc.dialogue.magna_swing.15",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Leo Rugiens and Calidos Brachium only open for the grimoires of the Vermillions. Don't ask me for 'em. The Crimson Lions keep the fancy stuff to themselves.",
+        "key": "arc.dialogue.magna_swing.16",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "My broom's called Crazy Cyclone. It flies, it's fast, it's mine. Touch it and I'll set your boots on fire.",
+        "key": "arc.dialogue.magna_swing.17",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Dante's down? Heh! Told you he could be beaten. Nice work, {player}.",
+        "key": "arc.dialogue.magna_swing.18",
+        "defeated": [
+          "dante"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Vetto, the big beast? I'd love to have seen his face when you finished him. Nice!",
+        "key": "arc.dialogue.magna_swing.19",
+        "defeated": [
+          "vetto"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Mars, huh. Crystals. I bet he sparkled on the way down.",
+        "key": "arc.dialogue.magna_swing.20",
+        "defeated": [
+          "mars"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Lucius is done! Time for a feast! Hey Charmy, we're celebrating!",
+        "key": "arc.dialogue.magna_swing.21",
+        "defeated": [
+          "lucius"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Luck and I fight over everything. Food, seats, who's stronger. We're best friends. Don't tell him.",
+        "key": "arc.dialogue.magna_swing.22",
+        "priority": 1
+      },
+      {
+        "text": "I was a delinquent in Rayaka. Now I'm a Magic Knight. Life's funny.",
+        "key": "arc.dialogue.magna_swing.23",
+        "priority": 1
+      },
+      {
+        "text": "The captain's a legend, but don't tell him. His head's big enough already.",
+        "key": "arc.dialogue.magna_swing.24",
+        "priority": 1
+      },
+      {
+        "text": "Fireballs are about attitude. More attitude, more boom.",
+        "key": "arc.dialogue.magna_swing.25",
+        "priority": 1
+      },
+      {
+        "text": "Anyone messes with the squad, they mess with me. That includes Gauche. Okay, not Gauche.",
+        "key": "arc.dialogue.magna_swing.26",
+        "priority": 1
+      },
+      {
+        "text": "Bring a friend into the dungeon. Two fighters beat one, simple math. The floors are split per team, so nobody steals your kills.",
+        "key": "arc.dialogue.magna_swing.27",
+        "priority": 1
+      }
+    ],
+    "farewell": [
+      {
+        "text": "Later! Don't die, or I'll be mad!",
+        "key": "arc.dialogue.magna_swing.28"
+      },
+      {
+        "text": "Hah! Go get 'em!",
+        "key": "arc.dialogue.magna_swing.29"
+      },
+      {
+        "text": "Come back and tell me who you set on fire.",
+        "key": "arc.dialogue.magna_swing.30"
+      }
+    ]
+  }
+}

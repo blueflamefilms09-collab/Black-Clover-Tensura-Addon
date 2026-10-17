@@ -1,0 +1,249 @@
+{
+  "character": "asta",
+  "lines": {
+    "greeting": [
+      {
+        "text": "Oh! A new face! I'm Asta! I'm going to be the Wizard King, {player}, and I train every single day to get there!",
+        "key": "arc.dialogue.asta.1",
+        "first": true
+      },
+      {
+        "text": "Hey, {player}! You look strong! Do you train? Please say you train. I'm Asta, by the way!",
+        "key": "arc.dialogue.asta.2",
+        "first": true
+      },
+      {
+        "text": "Nice to meet you! I'm Asta, a Black Bull! I don't have any magic, but that's okay, because I have guts and a really big sword!",
+        "key": "arc.dialogue.asta.3",
+        "first": true
+      },
+      {
+        "text": "You've been fighting down there, haven't you? I can tell! Your hands look like mine after training. I'm Asta!",
+        "key": "arc.dialogue.asta.4",
+        "first": true,
+        "minStage": 3,
+        "priority": 2
+      },
+      {
+        "text": "You beat Vetto?! For real?! Then we have to train together! I'm Asta!",
+        "key": "arc.dialogue.asta.5",
+        "first": true,
+        "defeated": [
+          "vetto"
+        ],
+        "priority": 2
+      }
+    ],
+    "hint": [
+      {
+        "text": "First rule of the labyrinth: don't stand still. Second rule: if you can't dodge it, hit it harder. That's all I know. I'm still learning the rest.",
+        "key": "arc.dialogue.asta.6",
+        "maxStage": 2,
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "The Spire goes up and the Chasm goes down, and once you clear the first floor of one, the other one locks! I can't even try both. So unfair!",
+        "key": "arc.dialogue.asta.7",
+        "maxStage": 2,
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "The Eye of the Midnight Sun are no joke! Heath Grice, Vetto, and the rest. I fought one of them in a temple at the bottom of the sea. With Noelle and the captain. Mostly I got hit.",
+        "key": "arc.dialogue.asta.8",
+        "maxStage": 5,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Vetto is huge, he heals, and he's super mean! My sword drains magic, but you still have to survive his fists. Don't just swing. Dodge first!",
+        "key": "arc.dialogue.asta.9",
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "notDefeated": [
+          "vetto"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Past the thirtieth floor the strongest of the Eye wait with a third eye! And way down in the Chasm there's Zagred, a devil who makes words come true. Say no really loudly. I'd try that!",
+        "key": "arc.dialogue.asta.10",
+        "minStage": 4,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Spade Kingdom stuff is the worst! Devils, a giant ritual, brothers who look at you like you're a snack. Dante, Vanica and Zenon are on the floors now. Be ready!",
+        "key": "arc.dialogue.asta.11",
+        "saga": [
+          "spade_raid"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "The last one's Lucius. He and the Wizard King shared one body. I still don't get it, but I know he has to be stopped. Right here, right now!",
+        "key": "arc.dialogue.asta.12",
+        "saga": [
+          "wizard_king"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "There are seven weirdos on the floors now! The Seven Deadly Sins! Wrath, Pride, Greed, Gluttony, Lust, Sloth, Envy... I only know about being stubborn. Is stubborn a sin?",
+        "key": "arc.dialogue.asta.13",
+        "saga": [
+          "seven_deadly_sins"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Did you know there's a whole other dungeon in here? With a bull-headed monster? I'm a Black Bull, he's a bull... we should have a talk!",
+        "key": "arc.dialogue.asta.14",
+        "saga": [
+          "danmachi"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Past twenty fights?! Wow! Come on, spar with me! Please!",
+        "key": "arc.dialogue.asta.15",
+        "minStage": 20,
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "My grimoire has a sword in it! When the book opens, the sword falls right into your hand. I know it sounds weird. Anti-magic doesn't care how big a spell is, it just cuts it.",
+        "key": "arc.dialogue.asta.16",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Anti-magic stores up! Every time magic hits you, it charges your Anti-Magic Power. So don't be scared of spells. Be scared of fists. Fists are still fists!",
+        "key": "arc.dialogue.asta.17",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "If you master the book, something wakes up in it. More swords answer: Demon-Dweller, Demon-Destroyer, Demon-Slasher. And Black Asta stops being a quick trick and becomes a form you hold as long as you can stand it.",
+        "key": "arc.dialogue.asta.18",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "When you beat somebody big, their grimoire might drop, and you can borrow their moves for a while by holding it! I can't, I have no mana. So I'll cheer as loudly as I can instead!",
+        "key": "arc.dialogue.asta.19",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "You took down Vetto?! Noelle's Sea Dragon's Roar took his arm off, my sword drained his magic, and the captain finished him... and you did it yourself?! Amazing!",
+        "key": "arc.dialogue.asta.20",
+        "defeated": [
+          "vetto"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Heath Grice is down? He scared me! He was all calm about being scary, which is the worst kind!",
+        "key": "arc.dialogue.asta.21",
+        "defeated": [
+          "heath_grice"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "A devil who makes words come true, and you beat him? How?! Did you shout louder than he did?!",
+        "key": "arc.dialogue.asta.22",
+        "defeated": [
+          "zagred"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "The whole Dark Triad?! Okay, now I'm jealous. Teach me everything!",
+        "key": "arc.dialogue.asta.23",
+        "defeated": [
+          "dante",
+          "vanica",
+          "zenon"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Lucius is gone? For real? Then the Wizard King is safe, and I can keep saying I'll be the next one. Thanks, {player}!",
+        "key": "arc.dialogue.asta.24",
+        "defeated": [
+          "lucius"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "I do a thousand swings every morning. The captain said that's pointless, then made me do two thousand.",
+        "key": "arc.dialogue.asta.25",
+        "priority": 1
+      },
+      {
+        "text": "Noelle says I'm an idiot. She says it a lot. I think it's how she says she likes me?",
+        "key": "arc.dialogue.asta.26",
+        "priority": 1
+      },
+      {
+        "text": "Never giving up is my magic! It doesn't glow or anything, but it works!",
+        "key": "arc.dialogue.asta.27",
+        "priority": 1
+      },
+      {
+        "text": "Yuno and I made a promise: whoever gets there first becomes Wizard King. I'm not letting him win!",
+        "key": "arc.dialogue.asta.28",
+        "priority": 1
+      },
+      {
+        "text": "People keep telling me anti-magic is a curse. I think it's the best thing that ever happened to me!",
+        "key": "arc.dialogue.asta.29",
+        "priority": 1
+      },
+      {
+        "text": "If you get hungry, ask Charmy which monster meat is safe. Raw meat makes you sick! Cook it first!",
+        "key": "arc.dialogue.asta.30",
+        "priority": 1
+      },
+      {
+        "text": "Keep a torch! If you stay in the dark too long, you get weak. I tried it. I felt weak. Then I did push-ups, which made it worse.",
+        "key": "arc.dialogue.asta.31",
+        "priority": 1
+      }
+    ],
+    "farewell": [
+      {
+        "text": "Keep training, {player}! See you next time!",
+        "key": "arc.dialogue.asta.32"
+      },
+      {
+        "text": "Don't give up, okay? Not ever!",
+        "key": "arc.dialogue.asta.33"
+      },
+      {
+        "text": "Time for my swings! Come back soon!",
+        "key": "arc.dialogue.asta.34"
+      }
+    ]
+  }
+}
