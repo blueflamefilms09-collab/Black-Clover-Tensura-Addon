@@ -1,0 +1,33 @@
+{
+  "_why": "A temple of a forgotten good god, gone under the water: prismarine bricks for the walls, dark prismarine floors, rough prismarine for pillars and frames, sea lanterns for the keystones and column caps (the god's light still burns), mossy cobblestone for the rough fill and acacia for the timber that did not rot. It must not be mistaken for Astral (quartz, diorite, birch; prismarine only as trim): here prismarine is the wall itself, the floors are dark and the capitals GLOW. Prismarine bricks and dark prismarine have no walls of their own, so the explicit map hands them the prismarine wall; every other shape is derived. The place is wet and echoing (a conduit's hum for the mood, drops falling for the ambient) and kind: danger 0.9, its trouble is the tide (flood has the highest catastrophe weight, collapse the lowest). Light is the baseline's because the sea lanterns already carry the room.",
+  "id": "sunken_temple",
+  "name": "Sunken Temple",
+  "color": "#3FB8B0",
+  "families": {
+    "brick": "minecraft:prismarine_bricks",
+    "tile": "minecraft:dark_prismarine",
+    "polished": "minecraft:prismarine",
+    "chiseled": "minecraft:sea_lantern",
+    "cobbled": "minecraft:mossy_cobblestone",
+    "cracked_brick": "minecraft:mossy_stone_bricks",
+    "cracked_tile": "minecraft:dead_tube_coral_block",
+    "rock": "minecraft:dark_prismarine",
+    "wood": "minecraft:acacia_planks"
+  },
+  "explicit": {
+    "minecraft:deepslate_brick_wall": "minecraft:prismarine_wall",
+    "minecraft:deepslate_tile_wall": "minecraft:prismarine_wall"
+  },
+  "relics": {
+    "keywords": ["tide", "tidal", "coral", "trident", "brine", "ocean", "marine", "pearl", "nautilus", "siren", "reef", "lagoon", "current", "sluice"]
+  },
+  "catastrophes": {
+    "collapse": 1,
+    "flood": 4,
+    "spirit": 2
+  },
+  "ambient": "minecraft:falling_water",
+  "light": 0,
+  "sound": {"id": "minecraft:block.conduit.ambient", "volume": 0.35, "pitch": 0.8, "every": 6},
+  "danger": 0.9
+}

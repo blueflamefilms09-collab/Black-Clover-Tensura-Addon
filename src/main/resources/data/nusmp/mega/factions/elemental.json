@@ -21,9 +21,21 @@
     "verdant": 1,
     "storm": 5,
     "shadow": 0,
+    "cursed_archive": 1,
+    "necropolis": 0,
+    "vampire_castle": 1,
+    "haunted_manor": 0,
     "astral": 3,
     "radiant": 4,
-    "abyss": 1
+    "abyss": 1,
+    "feywild_grove": 3,
+    "dwarven_forgehold": 4,
+    "crystal_geode": 4,
+    "sunken_temple": 3,
+    "holy_church": 2,
+    "celestial_court": 4,
+    "sky_citadel": 5,
+    "mountain_monastery": 1
   },
   "drops": {
     "meat": "raw_monster_meat",

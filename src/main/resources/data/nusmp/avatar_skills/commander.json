@@ -1,0 +1,9 @@
+{
+  "id": "tensura:commander",
+  "kind": "unique",
+  "name": "Commander",
+  "ep_tax": 6,
+  "min_ep": 1000,
+  "tint": "#FFD060",
+  "description": "Allies fight as one."
+}

@@ -1,0 +1,9 @@
+{
+  "id": "tensura:envy",
+  "kind": "ultimate",
+  "name": "Envy",
+  "ep_tax": 12,
+  "min_ep": 3000,
+  "tint": "#3CE08A",
+  "description": "Wants what others have, and takes the shape of it."
+}

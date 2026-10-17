@@ -1,0 +1,40 @@
+{
+  "_why": "A giant amethyst geode, built the way the game builds one: a white calcite shell, dark basalt floors and purple amethyst trim, with tuff for the rough rock between. Walls are calcite and floors smooth basalt (the geode's outer layers), pillars and frames are amethyst blocks (the inner layer), keystones purpur pillar, the deep rock tuff, and the timber pale bamboo so the few wooden parts do not fight the stone. It must not be mistaken for Astral (quartz bricks, prismarine, birch, a dark night-sky floor): the geode is the one purple and basalt-black theme, and its floors are DARK while the walls are white. Calcite, smooth basalt, amethyst and purpur have no stairs, slabs or walls of their own in the way ThemeSwap derives them, so the explicit map names every shape: quartz stairs and slabs for the calcite walls, polished blackstone shapes for the basalt floors, purpur shapes for the amethyst trim. The brightest of the wild themes (light +2): crystals give light and the place glitters; its mood is a crystal humming (a struck amethyst cluster, low), its ambient a purple sparkle, its danger 0.95. Its catastrophe is mostly the collapse of shards. Its colour is a pale lavender, not the saturated violet of Spatial, so the two names are not mistaken for each other.",
+  "id": "crystal_geode",
+  "name": "Crystal Geode",
+  "color": "#C9A0FF",
+  "families": {
+    "brick": "minecraft:calcite",
+    "tile": "minecraft:smooth_basalt",
+    "polished": "minecraft:amethyst_block",
+    "chiseled": "minecraft:purpur_pillar",
+    "cobbled": "minecraft:tuff",
+    "cracked_brick": "minecraft:dripstone_block",
+    "cracked_tile": "minecraft:tuff",
+    "rock": "minecraft:tuff",
+    "wood": "minecraft:bamboo_planks"
+  },
+  "explicit": {
+    "minecraft:deepslate_brick_stairs": "minecraft:quartz_stairs",
+    "minecraft:deepslate_brick_slab": "minecraft:quartz_slab",
+    "minecraft:deepslate_brick_wall": "minecraft:diorite_wall",
+    "minecraft:deepslate_tile_stairs": "minecraft:polished_blackstone_stairs",
+    "minecraft:deepslate_tile_slab": "minecraft:polished_blackstone_slab",
+    "minecraft:deepslate_tile_wall": "minecraft:polished_blackstone_wall",
+    "minecraft:polished_deepslate_stairs": "minecraft:purpur_stairs",
+    "minecraft:polished_deepslate_slab": "minecraft:purpur_slab",
+    "minecraft:polished_deepslate_wall": "minecraft:polished_blackstone_wall"
+  },
+  "relics": {
+    "keywords": ["geode", "gem", "amethyst", "jewel", "shard", "facet", "opal", "sapphire", "diamond", "emerald", "resonan", "chime", "echo", "glitter"]
+  },
+  "catastrophes": {
+    "collapse": 4,
+    "flood": 1,
+    "spirit": 2
+  },
+  "ambient": "minecraft:witch",
+  "light": 2,
+  "sound": {"id": "minecraft:block.amethyst_cluster.hit", "volume": 0.4, "pitch": 0.5, "every": 6},
+  "danger": 0.95
+}

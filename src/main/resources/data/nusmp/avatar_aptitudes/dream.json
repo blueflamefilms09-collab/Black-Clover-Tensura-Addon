@@ -1,0 +1,13 @@
+{
+  "name": "Dream",
+  "rarity": "EPIC",
+  "tax_percent": 14,
+  "magic": "dream",
+  "skills": [
+    "tensura:sleep_mist",
+    "tensura:hypnos",
+    "tensura:mirage"
+  ],
+  "tint": "#C8A8FF",
+  "description": "A world inside a world, and you hold the door."
+}

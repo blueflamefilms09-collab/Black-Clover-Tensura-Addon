@@ -1,0 +1,12 @@
+{
+  "name": "Soul",
+  "rarity": "EPIC",
+  "tax_percent": 15,
+  "magic": "soul",
+  "skills": [
+    "tensura:possession",
+    "tensura:spiritual_attack_resistance"
+  ],
+  "tint": "#8FFFE0",
+  "description": "Hands that reach past the body."
+}

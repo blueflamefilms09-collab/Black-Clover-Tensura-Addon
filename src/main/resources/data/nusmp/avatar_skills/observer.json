@@ -1,0 +1,9 @@
+{
+  "id": "tensura:observer",
+  "kind": "unique",
+  "name": "Observer",
+  "ep_tax": 4,
+  "min_ep": 600,
+  "tint": "#7CF0B0",
+  "description": "Sees what others walk past."
+}

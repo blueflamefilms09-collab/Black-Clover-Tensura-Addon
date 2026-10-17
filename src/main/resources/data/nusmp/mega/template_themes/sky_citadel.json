@@ -1,0 +1,3 @@
+{ "theme": "sky_citadel",
+  "templates": ["nusmp:mega/hall/sky_citadel_", "nusmp:mega/set/sky_citadel_", "nusmp:mega/trap/sky_citadel_", "nusmp:mega/treasure/sky_citadel_", "nusmp:mega/trial/sky_citadel_"],
+  "relative": { "mega/hall/sky_citadel_": 30, "mega/set/sky_citadel_": 20, "mega/trap/sky_citadel_": 20, "mega/treasure/sky_citadel_": 20, "mega/trial/sky_citadel_": 20 } }

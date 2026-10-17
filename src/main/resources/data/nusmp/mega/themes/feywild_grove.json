@@ -1,0 +1,32 @@
+{
+  "_why": "The Feywild: pastel and alive, nothing like the cold grey halls of the other roads. Pinkish mud bricks for the walls with mossy stone floors, pale polished diorite trim and amethyst keystones (the fey's own magic shows in every lintel), rooted earth for the deep rock and cherry wood for the timber, so a room reads as a grove somebody built out of a forest and the forest took back. It must not be mistaken for Verdant (grey mossy stone bricks, jungle wood, nothing pink): Feywild is the one theme with pink wood, clay-coloured walls and purple accents. Its mood is a small chime on the wind (an allay's hum), cherry petals drift through the air, and its light is a little brighter than the baseline (+1) because wisps and glowing flowers light the place. Its danger is 1.05: whimsical but dangerous, the fey play tricks. Its catastrophe weights favour the spirit (a trickster, never a plain rockfall). Polished diorite has no wall, so the explicit map hands the polished wall to the diorite wall; every other shape is derived.",
+  "id": "feywild_grove",
+  "name": "Feywild Grove",
+  "color": "#D98BE8",
+  "families": {
+    "brick": "minecraft:mud_bricks",
+    "tile": "minecraft:mossy_stone_bricks",
+    "polished": "minecraft:polished_diorite",
+    "chiseled": "minecraft:amethyst_block",
+    "cobbled": "minecraft:mossy_cobblestone",
+    "cracked_brick": "minecraft:packed_mud",
+    "cracked_tile": "minecraft:moss_block",
+    "rock": "minecraft:rooted_dirt",
+    "wood": "minecraft:cherry_planks"
+  },
+  "explicit": {
+    "minecraft:polished_deepslate_wall": "minecraft:diorite_wall"
+  },
+  "relics": {
+    "keywords": ["fairy", "faerie", "pixie", "wisp", "trickster", "quickling", "glimmer", "twilight", "petal", "blossom", "satyr", "revel"]
+  },
+  "catastrophes": {
+    "collapse": 1,
+    "flood": 2,
+    "spirit": 4
+  },
+  "ambient": "minecraft:cherry_leaves",
+  "light": 1,
+  "sound": {"id": "minecraft:entity.allay.ambient_without_item", "volume": 0.4, "pitch": 0.8, "every": 7},
+  "danger": 1.05
+}
