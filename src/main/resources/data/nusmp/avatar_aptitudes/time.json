@@ -1,0 +1,12 @@
+{
+  "name": "Time",
+  "rarity": "LEGENDARY",
+  "tax_percent": 20,
+  "magic": "time",
+  "skills": [
+    "tensura:thought_acceleration",
+    "tensura:ultra_instinct"
+  ],
+  "tint": "#F5D76E",
+  "description": "The one thing nobody gets back, held in your hand."
+}

@@ -64,6 +64,7 @@ public class NUSMP {
         com.newuniverse.nusmp.quests.QuestsSetup.init(modEventBus, modContainer);                                       // 1.49.0: advancements trigger, quest pack installer
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.avatar.AvatarAiConfig.SPEC, "nusmp-avatar-ai-server.toml");
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.avatar.net.AvatarNetConfig.SPEC, "nusmp-avatar-net-server.toml");
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.avatar.AvatarSoulForgeConfig.SPEC, "nusmp-avatar-soulforge-server.toml");   // 1.58.0: the Soul Forge ritual, aptitudes, chosen skills
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.relics.MobRelicsConfig.SPEC, "nusmp-mobrelics-server.toml");   // 1.50.0: named mobs carry relics
         com.newuniverse.nusmp.avatar.AvatarSystem.init(modEventBus, modContainer);                                       // 1.51.0: Avatar creation system, Genesis Core (before NUItems.ITEMS.register; registers its own config)
         com.newuniverse.nusmp.arena.ArenaSystem.init(modEventBus);                                                         // 1.46.0: Lucius's arena, the Hourglass (before NUItems.ITEMS.register)

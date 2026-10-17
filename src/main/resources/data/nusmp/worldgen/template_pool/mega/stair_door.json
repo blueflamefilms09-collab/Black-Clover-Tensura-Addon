@@ -236,6 +236,42 @@
       }
     },
     {
+      "weight": 15,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/celestial_court_banquet",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 15,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/celestial_court_colonnade",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 15,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/celestial_court_sundial",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 15,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/celestial_court_terrace",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
       "weight": 3,
       "element": {
         "element_type": "minecraft:single_pool_element",
@@ -308,10 +344,154 @@
       }
     },
     {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/crystal_geode_echo_gallery",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/crystal_geode_prism_atrium",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/cursed_archive_reading_hall",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/cursed_archive_scriptorium",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/cursed_archive_stacks",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/dwarven_forgehold_chasm_forge",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/dwarven_forgehold_hall_of_pillars",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/dwarven_forgehold_mine_works",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/feywild_grove_feast_hall",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/feywild_grove_hollow_tree",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/feywild_grove_moonlit_glade",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
       "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/great_hall",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/haunted_manor_grand_stair",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/haunted_manor_kitchen",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/holy_church_cloister",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/holy_church_crypt",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/holy_church_nave",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }
@@ -371,6 +551,60 @@
       }
     },
     {
+      "weight": 15,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/mountain_monastery_dojo",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 15,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/mountain_monastery_prayer_wheel_hall",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 15,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/mountain_monastery_scroll_library",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 15,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/mountain_monastery_zen_garden",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/necropolis_catacombs",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/necropolis_mausoleum_street",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
       "weight": 3,
       "element": {
         "element_type": "minecraft:single_pool_element",
@@ -416,6 +650,51 @@
       }
     },
     {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/sky_citadel_great_hall",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/sky_citadel_wind_gallery",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/sunken_temple_coral_atrium",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/sunken_temple_coral_nave",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/sunken_temple_drowned_shrines",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
       "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
@@ -429,6 +708,24 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/torture_chamber_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/vampire_castle_coffin_crypt",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/vampire_castle_great_hall",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }

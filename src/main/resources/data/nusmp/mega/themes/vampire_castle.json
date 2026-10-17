@@ -1,0 +1,35 @@
+{
+  "_why": "The Vampire Castle, the evil road's Ravenloft: a grey gothic keep. The walls are plain grey andesite (the castle's cold curtain stone, found in no other theme), the floors polished andesite, the pillars and trim polished blackstone, and every keystone and capital red nether bricks: a thin crimson line at every arch, the blood in the mortar. The worn walls are cracked stone bricks, the worn floors darker blackstone bricks, the rubble cobbled deepslate, the rock deepslate, and the wood dark oak (the doors, pews, tables and coffins). Unlike the other dark themes the lights stay WARM: the soul lights of the templates become ordinary lanterns and torches, because a vampire's court is lit by hundreds of candles, a dining hall of gold light on grey stone is the gothic picture, and the cold of this place is the stone and not the flame. Vanilla gives andesite stairs, slabs and walls and polished andesite stairs and slabs (no wall), so one shape falls back to the wall. It must not be mistaken for Frost (white stone bricks), Storm (grey-green tuff and copper) or Shadow (black walls): this is a mid grey with red and black. Its mood is a bat somewhere in the dark, smoke drifts like fog, and its danger 1.25: the court is old and it is hungry.",
+  "id": "vampire_castle",
+  "name": "Vampire Castle",
+  "color": "#7A1230",
+  "families": {
+    "brick": "minecraft:andesite",
+    "tile": "minecraft:polished_andesite",
+    "polished": "minecraft:polished_blackstone",
+    "chiseled": "minecraft:red_nether_bricks",
+    "cobbled": "minecraft:cobbled_deepslate",
+    "cracked_brick": "minecraft:cracked_stone_bricks",
+    "cracked_tile": "minecraft:polished_blackstone_bricks",
+    "rock": "minecraft:deepslate",
+    "wood": "minecraft:dark_oak_planks"
+  },
+  "explicit": {
+    "minecraft:soul_lantern": "minecraft:lantern",
+    "minecraft:soul_wall_torch": "minecraft:wall_torch",
+    "minecraft:soul_torch": "minecraft:torch",
+    "minecraft:soul_campfire": "minecraft:campfire"
+  },
+  "relics": {
+    "keywords": ["bats", "fang", "baron", "castle", "coffin", "gothic", "dracul", "thrall", "lord", "noble", "nosferatu"]
+  },
+  "catastrophes": {
+    "collapse": 1,
+    "flood": 2,
+    "spirit": 4
+  },
+  "ambient": "minecraft:smoke",
+  "light": -1,
+  "sound": {"id": "minecraft:entity.bat.ambient", "volume": 0.3, "pitch": 0.6, "every": 7},
+  "danger": 1.25
+}

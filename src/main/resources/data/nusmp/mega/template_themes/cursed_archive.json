@@ -1,0 +1,19 @@
+{
+  "theme": "cursed_archive",
+  "templates": [
+    "nusmp:mega/hall/cursed_archive_",
+    "nusmp:mega/set/cursed_archive_",
+    "nusmp:mega/safe/cursed_archive_",
+    "nusmp:mega/trap/cursed_archive_",
+    "nusmp:mega/puzzle/cursed_archive_",
+    "nusmp:mega/treasure/cursed_archive_"
+  ],
+  "relative": {
+    "mega/hall/cursed_archive_": 20,
+    "mega/set/cursed_archive_": 20,
+    "mega/safe/cursed_archive_": 20,
+    "mega/trap/cursed_archive_": 20,
+    "mega/puzzle/cursed_archive_": 20,
+    "mega/treasure/cursed_archive_": 20
+  }
+}

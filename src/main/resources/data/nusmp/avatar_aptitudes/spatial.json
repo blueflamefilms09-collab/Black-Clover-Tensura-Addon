@@ -1,0 +1,13 @@
+{
+  "name": "Spatial",
+  "rarity": "RARE",
+  "tax_percent": 10,
+  "magic": "spatial",
+  "skills": [
+    "tensura:spatial_manipulation",
+    "tensura:spatial_motion",
+    "tensura:spatial_storage"
+  ],
+  "tint": "#B088FF",
+  "description": "Doors where there are no doors."
+}

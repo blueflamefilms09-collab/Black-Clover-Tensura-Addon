@@ -1,0 +1,9 @@
+{
+  "id": "tensura:shadow_striker",
+  "kind": "unique",
+  "name": "Shadow Striker",
+  "ep_tax": 6,
+  "min_ep": 1000,
+  "tint": "#8E62D0",
+  "description": "Strikes from where you were not looking."
+}

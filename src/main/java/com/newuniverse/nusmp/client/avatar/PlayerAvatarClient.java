@@ -19,8 +19,8 @@ import org.joml.Vector3f;
 
 /**
  * Why: the one client entry point of the Avatar creation system (the Devil Avatar boss keeps its own {@code AvatarClient}; a second {@code register}
- * overload there would make its existing method reference ambiguous). Registers the renderer for the player-made Avatar, the creation screen, drops
- * cached textures on a resource reload and on logout, and runs the small client tick that spawns the frenzy's dark particles and the aura's motes.
+ * overload there would make its existing method reference ambiguous). Registers the renderer for the player-made Avatar, the creation screens (the
+ * classic one and the Soul Forge's), drops cached textures on a resource reload and on logout, and runs the small client tick that spawns the frenzy's dark particles and the aura's motes.
  * Call {@code PlayerAvatarClient.register(modEventBus)} from the client block of NUSMP.
  */
 public final class PlayerAvatarClient {
@@ -28,9 +28,12 @@ public final class PlayerAvatarClient {
 
     public static void register(IEventBus modBus) {
         modBus.addListener((EntityRenderersEvent.RegisterRenderers e) -> e.registerEntityRenderer(AvatarEntities.AVATAR.get(), PlayerAvatarRenderer::new));
-        modBus.addListener((RegisterMenuScreensEvent e) -> e.register(AvatarMenus.BUILDER.get(), AvatarBuilderScreen::new));
-        modBus.addListener((ModelEvent.BakingCompleted e) -> { AvatarSkinCache.clear(); AvatarLooks.clear(); });
-        NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> { AvatarSkinCache.clear(); AvatarLooks.clear(); AvatarClientData.clear(); });
+        modBus.addListener((RegisterMenuScreensEvent e) -> {
+            e.register(AvatarMenus.BUILDER.get(), AvatarBuilderScreen::new);
+            e.register(AvatarMenus.SOUL_FORGE.get(), SoulForgeScreen::new);
+        });
+        modBus.addListener((ModelEvent.BakingCompleted e) -> { AvatarSkinCache.clear(); AvatarLooks.clear(); ForgeIcons.clear(); });
+        NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> { AvatarSkinCache.clear(); AvatarLooks.clear(); AvatarClientData.clear(); SoulForgeClientData.clear(); ForgeIcons.clear(); });
         NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post e) -> tick());
     }
 
