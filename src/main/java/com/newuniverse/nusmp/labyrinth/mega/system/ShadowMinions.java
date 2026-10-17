@@ -6,6 +6,8 @@ import com.newuniverse.nusmp.boss.rules.BossIdentity;
 import com.newuniverse.nusmp.corpse.Corpses;
 import com.newuniverse.nusmp.dungeon.nexus.zone.MonarchBoss;
 import com.newuniverse.nusmp.labyrinth.Labyrinth;
+import com.newuniverse.nusmp.labyrinth.dnd.vital.HpBuffer;
+import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
 import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.soul.Paladins;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -26,6 +28,7 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.decoration.ArmorStand;
@@ -102,6 +105,13 @@ public final class ShadowMinions {
         }
     }
 
+    /**
+     * Is this a hostile creature of the dungeon? A vanilla {@link Enemy}, or one of the Dungeon Master's monsters: Tensura's monsters are tamable animals and not
+     * {@code Enemy}, so the economy, the health buffer and the faction drops ask {@link MegaDungeon#isDungeonMonster} as well, and so does the System (a kill quest, a
+     * cleared room and an extraction must count the Director's direwolves and goblins like zombies).
+     */
+    public static boolean isHostile(Entity e) { return e instanceof Enemy || MegaDungeon.isDungeonMonster(e); }
+
     /** Is this a boss by any of the mod's definitions (or a wandering boss of the dungeon)? */
     public static boolean isBoss(LivingEntity e) {
         try {
@@ -143,6 +153,7 @@ public final class ShadowMinions {
             mob.getPersistentData().put(DATA, t);
             mob.finalizeSpawn(level, level.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.MOB_SUMMONED, null);
             scale(mob, f);
+            keepBufferOff(mob);
             mob.setPersistenceRequired();
             mob.setCanPickUpLoot(false);
             mob.setTarget(null);
@@ -183,6 +194,21 @@ public final class ShadowMinions {
         if (atk != null && f.attack() > 0) {
             atk.removeModifiers();
             atk.setBaseValue(Math.max(0.5, f.attack() * k));
+        }
+    }
+
+    /**
+     * The Labyrinth's health buffer multiplies the health of EVERY hostile creature that joins a Labyrinth dimension, and a shadow is hostile by type. Its health is
+     * already a share of the fallen creature's (which carried the buffer), so it must not be buffered again. The buffer skips a creature that already has its
+     * modifier, so the modifier goes on first with an amount of 0, which changes nothing. Saved with the creature, so a shadow that comes back from disk stays out
+     * of it too.
+     */
+    private static void keepBufferOff(Mob m) {
+        try {
+            AttributeInstance hp = m.getAttribute(Attributes.MAX_HEALTH);
+            if (hp != null) hp.addOrReplacePermanentModifier(new AttributeModifier(HpBuffer.MODIFIER_ID, 0.0, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+        } catch (RuntimeException | LinkageError buffer) {
+            // the buffer class is part of this mod; if it cannot be read there is nothing to keep off
         }
     }
 
@@ -328,7 +354,7 @@ public final class ShadowMinions {
         if (t == owner || t == shadow || !t.isAlive() || t.isSpectator() || t instanceof ArmorStand || t instanceof Player || t instanceof Npc) return false;
         if (t.level() != owner.level() || t.distanceToSqr(owner) > 40.0 * 40.0) return false;
         if (t.isAlliedTo(owner) || t.isAlliedTo(shadow) || isServant(t)) return false;
-        if (t instanceof Enemy || t.getType().getCategory() == MobCategory.MONSTER) return true;
+        if (isHostile(t) || t.getType().getCategory() == MobCategory.MONSTER) return true;
         return fighting(owner, t);
     }
 

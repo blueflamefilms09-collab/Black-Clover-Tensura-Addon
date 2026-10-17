@@ -33,6 +33,7 @@ public final class SystemNet {
      * @param threat        the floor's difficulty number
      * @param boss          the floor is a boss floor (no quest there)
      * @param questState    {@link #Q_NONE} .. {@link #Q_FAILED}
+     * @param questFloor    the signed floor the quest belongs to (0 = no quest); differs from {@code floor} while the player is back on an earlier floor, and the window says so
      * @param kind          the quest's kind id ({@code kill_n} ...) or ""
      * @param titleKey      lang key of the quest title (its format takes the target as %1$s)
      * @param titleFallback the English title, the target already put in
@@ -42,7 +43,7 @@ public final class SystemNet {
      * @param clockRunning  the clock is running now (the player is on the quest's floor)
      * @param stats         the points of STR AGI VIT INT SENSE
      */
-    public record Sync(boolean active, int floor, String polarity, int threat, boolean boss, int questState, String kind, String titleKey,
+    public record Sync(boolean active, int floor, String polarity, int threat, boolean boss, int questState, int questFloor, String kind, String titleKey,
                        String titleFallback, int progress, int target, int timeLeft, boolean clockRunning, List<Integer> stats) implements CustomPacketPayload {
         public static final Type<Sync> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "system_sync"));
         public static final StreamCodec<FriendlyByteBuf, Sync> CODEC = StreamCodec.of(Sync::write, Sync::read);
@@ -51,7 +52,7 @@ public final class SystemNet {
         public static Sync hidden() {
             List<Integer> zero = new ArrayList<>();
             for (int i = 0; i < Stat.COUNT; i++) zero.add(0);
-            return new Sync(false, 0, "", 0, false, Q_NONE, "", "", "", 0, 0, -1, false, zero);
+            return new Sync(false, 0, "", 0, false, Q_NONE, 0, "", "", "", 0, 0, -1, false, zero);
         }
 
         @Override
@@ -60,13 +61,14 @@ public final class SystemNet {
         static void write(FriendlyByteBuf b, Sync p) {
             b.writeBoolean(p.active());
             b.writeInt(p.floor());
-            b.writeUtf(p.polarity(), 16);
+            b.writeUtf(clip(p.polarity(), 16), 16);
             b.writeVarInt(p.threat());
             b.writeBoolean(p.boss());
             b.writeByte(p.questState());
-            b.writeUtf(p.kind(), 32);
-            b.writeUtf(p.titleKey(), 160);
-            b.writeUtf(p.titleFallback(), 256);
+            b.writeInt(p.questFloor());
+            b.writeUtf(clip(p.kind(), 32), 32);
+            b.writeUtf(clip(p.titleKey(), 160), 160);
+            b.writeUtf(clip(p.titleFallback(), 256), 256);
             b.writeVarInt(p.progress());
             b.writeVarInt(p.target());
             b.writeInt(p.timeLeft());
@@ -83,6 +85,7 @@ public final class SystemNet {
             int threat = b.readVarInt();
             boolean boss = b.readBoolean();
             int state = b.readByte();
+            int questFloor = b.readInt();
             String kind = b.readUtf(32);
             String key = b.readUtf(160);
             String fallback = b.readUtf(256);
@@ -94,9 +97,15 @@ public final class SystemNet {
             List<Integer> stats = new ArrayList<>(Stat.COUNT);
             for (int i = 0; i < n; i++) stats.add(b.readVarInt());
             while (stats.size() < Stat.COUNT) stats.add(0);
-            return new Sync(active, floor, polarity, threat, boss, state, kind, key, fallback, progress, target, timeLeft, clock, stats);
+            return new Sync(active, floor, polarity, threat, boss, state, questFloor, kind, key, fallback, progress, target, timeLeft, clock, stats);
         }
     }
+
+    /**
+     * A string cut to the length the wire format allows. Why: {@code writeUtf} THROWS on a string over its limit, and a packet is encoded later on the network
+     * thread, where an exception disconnects the player. Every text that can come from a datapack (a quest title) must therefore be cut before it is written.
+     */
+    static String clip(String s, int max) { return s == null ? "" : s.length() <= max ? s : s.substring(0, max); }
 
     /**
      * One pop-up line.
@@ -122,10 +131,10 @@ public final class SystemNet {
 
         static void write(FriendlyByteBuf b, Toast p) {
             b.writeByte(p.kind());
-            b.writeUtf(p.key(), 160);
+            b.writeUtf(clip(p.key(), 160), 160);
             int n = Math.min(p.args().size(), MAX_ARGS);
             b.writeByte(n);
-            for (int i = 0; i < n; i++) b.writeUtf(p.args().get(i), 96);
+            for (int i = 0; i < n; i++) b.writeUtf(clip(p.args().get(i), 96), 96);
         }
 
         static Toast read(FriendlyByteBuf b) {

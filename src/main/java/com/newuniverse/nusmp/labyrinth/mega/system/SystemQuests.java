@@ -18,7 +18,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.phys.AABB;
 import org.slf4j.Logger;
 
@@ -69,6 +68,22 @@ public final class SystemQuests implements FloorListener {
     }
 
     public static boolean covers(int floor) { return covers(Polarity.ofFloor(floor)); }
+
+    /**
+     * The floor the player counts as standing on: the floor of the room they are in; in a doorway cap or the air beside the rooms (no room at all) the last
+     * floor they entered, so a step through a cap never reads as "back on the first floor of the sector" (the floor tracker keeps the last floor in a gap in the
+     * same way). A room that was never banded (a 1.54.0 save) answers with the first floor of its sector, as {@link MegaDungeon#floorAt} does.
+     */
+    public static int currentFloor(ServerLevel level, ServerPlayer p) {
+        BlockPos pos = p.blockPosition();
+        Room r = MegaDungeon.roomAt(level, pos);
+        if (r != null && r.floor != 0) return r.floor;
+        if (r == null) {
+            int last = lastFloor(p);
+            if (last != 0) return last;
+        }
+        return MegaDungeon.floorAt(level, pos);
+    }
 
     /** Is this damage magic: the datapack tag, or a damage type id the pure {@link MagicDamage} calls magic? */
     public static boolean isMagicDamage(DamageSource s) {
@@ -194,7 +209,7 @@ public final class SystemQuests implements FloorListener {
             return;
         }
         BlockPos pos = p.blockPosition();
-        if (MegaDungeon.floorAt(level, pos) != q.floor()) {
+        if (currentFloor(level, p) != q.floor()) {
             DWELL.remove(p.getUUID());
             return;
         }
@@ -220,13 +235,13 @@ public final class SystemQuests implements FloorListener {
 
     /** Is no hostile creature (other than a shadow) alive inside the room? One bounded entity query, made only when the player has stood in the room long enough. */
     static boolean roomIsClear(ServerLevel level, Room room) {
-        return level.getEntitiesOfClass(Mob.class, AABB.of(room.box), m -> m instanceof Enemy && m.isAlive() && !ShadowMinions.isMinion(m)).isEmpty();
+        return level.getEntitiesOfClass(Mob.class, AABB.of(room.box), m -> ShadowMinions.isHostile(m) && m.isAlive() && !ShadowMinions.isMinion(m)).isEmpty();
     }
 
     // ================================================================ feeding: kills and damage
     /** A hostile creature fell to this player (or their shadow): counts for a kill quest on its floor. */
     public static void killed(ServerPlayer p, LivingEntity dead) {
-        if (!SystemConfig.enabled() || !(dead instanceof Enemy) || ShadowMinions.isMinion(dead) || !p.hasData(SystemAttachments.STATE)) return;
+        if (!SystemConfig.enabled() || !ShadowMinions.isHostile(dead) || ShadowMinions.isMinion(dead) || !p.hasData(SystemAttachments.STATE)) return;
         SystemState s = state(p);
         QuestProgress q = s.quest();
         if (q == null || !q.isActive() || q.kind() != QuestKind.KILL_N) return;
@@ -253,7 +268,7 @@ public final class SystemQuests implements FloorListener {
         SystemState s = state(p);
         QuestProgress q = s.quest();
         if (q == null || !q.isActive()) return;
-        if (MegaDungeon.floorAt(p.serverLevel(), p.blockPosition()) != q.floor()) return;
+        if (currentFloor(p.serverLevel(), p) != q.floor()) return;
         QuestProgress.Change c = q.onDamage();
         if (c == QuestProgress.Change.NONE && isMagicDamage(source)) c = q.onMagicDamage();
         apply(p, s, q, c);

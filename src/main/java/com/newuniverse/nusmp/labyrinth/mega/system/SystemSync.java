@@ -99,7 +99,7 @@ public final class SystemSync {
     public static SystemNet.Sync build(ServerPlayer p) {
         ServerLevel level = p.serverLevel();
         boolean inMega = MegaDungeon.in(level);
-        int floor = inMega ? MegaDungeon.floorAt(level, p.blockPosition()) : 0;
+        int floor = inMega ? SystemQuests.currentFloor(level, p) : 0;
         if (inMega && floor == 0) floor = SystemQuests.lastFloor(p);
         Polarity polarity = Polarity.ofFloor(floor);
         boolean active = SystemConfig.enabled() && inMega && floor != 0 && SystemQuests.covers(floor);
@@ -108,7 +108,7 @@ public final class SystemSync {
         int perRegion = sector == null ? FloorMap.DEFAULT_PER_REGION : sector.perRegion;
         SystemState st = SystemQuests.state(p);
         QuestProgress q = st.quest();
-        int questState = SystemNet.Q_NONE, progress = 0, target = 0, timeLeft = -1;
+        int questState = SystemNet.Q_NONE, questFloor = 0, progress = 0, target = 0, timeLeft = -1;
         String kind = "", key = "", fallback = "";
         boolean clock = false;
         if (q != null) {
@@ -118,6 +118,7 @@ public final class SystemSync {
                 case FAILED -> SystemNet.Q_FAILED;
             };
             QuestTemplate t = SystemData.quests().get(q.id());
+            questFloor = q.floor();
             kind = q.kind().id();
             key = t != null ? t.langKey() : SystemText.PREFIX + "quest." + q.id();
             fallback = t != null ? t.englishTitle(q.target()) : q.kind().defaultTitle(q.target());
@@ -129,6 +130,6 @@ public final class SystemSync {
         List<Integer> stats = new ArrayList<>(Stat.COUNT);
         for (Stat s : Stat.values()) stats.add(st.points(s));
         return new SystemNet.Sync(true, floor, polarity == null ? "" : polarity.id(), FloorMap.threat(floor), FloorMap.isDecennial(floor, perRegion),
-                questState, kind, key, fallback, progress, target, timeLeft, clock, stats);
+                questState, questFloor, kind, key, fallback, progress, target, timeLeft, clock, stats);
     }
 }

@@ -104,10 +104,13 @@ public final class SystemSelfTests {
 
     // ------------------------------------------------------------------------------------------------ sync
     private static SelfTests.Result sync(MinecraftServer server) {
-        SystemNet.Sync a = new SystemNet.Sync(true, -17, "abyssal", 17, false, SystemNet.Q_ACTIVE, "speed", "message.nusmp.mega.system.quest.swift_ascent",
+        SystemNet.Sync a = new SystemNet.Sync(true, -17, "abyssal", 17, false, SystemNet.Q_ACTIVE, -16, "speed", "message.nusmp.mega.system.quest.swift_ascent",
                 "Reach the next floor within 266 seconds", 3, 266, 4210, true, List.of(1, 2, 3, 4, 5));
         SystemNet.Sync back = roundTrip(a);
         if (!a.equals(back)) return fail("the sync payload changed in a round trip: " + a + " became " + back);
+        String longTitle = "x".repeat(400);
+        SystemNet.Sync wordy = new SystemNet.Sync(true, 3, "holy", 3, false, SystemNet.Q_ACTIVE, 3, "kill_n", "message.nusmp.mega.system.quest.long", longTitle, 0, 5, -1, false, List.of(0, 0, 0, 0, 0));
+        if (roundTrip(wordy).titleFallback().length() != 256) return fail("a quest title over the wire limit was not cut to 256 characters (it would kick the player)");
         SystemNet.Sync hidden = roundTrip(SystemNet.Sync.hidden());
         if (hidden.active() || hidden.stats().size() != Stat.COUNT) return fail("the hidden payload is not hidden or has " + hidden.stats().size() + " stats");
         SystemNet.Toast t = SystemNet.Toast.of(ToastKind.REWARD, SystemText.TOAST_REWARD_STAT, "2", "STR");

@@ -10,6 +10,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
 import net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 import net.neoforged.neoforge.event.entity.living.LivingExperienceDropEvent;
@@ -25,8 +26,9 @@ import java.util.UUID;
  * Why: every reaction of the System to the game is a listener on the game bus, and keeping them in one class that only DELEGATES (to {@link SystemQuests},
  * {@link ShadowExtraction}, {@link ShadowMinions}, {@link SystemSync}) means each rule has one home and this file is the table of contents of what the
  * System listens to: the server tick (the sync, the shadows' sweep, the extraction window), the player tick (the clock and the room), a death (kill quests,
- * ambush quests, the extraction memory, a shadow falling), damage (twice: a guard that stops a shadow and its owner from hurting each other, early; and the
- * quest notice for the player, last, after every other mod has had its say, so a blow another mod cancelled is not counted), a target change (a shadow must
+ * ambush quests, the extraction memory, a shadow falling), damage (twice: a guard that stops a shadow and its owner from hurting each other, early, on the
+ * incoming blow; and the quest notice for the player on {@code LivingDamageEvent.Post}, which reports the health the player REALLY lost after armour, absorption
+ * and shield, so a blow another mod cancelled, a shield turned aside or an absorption heart swallowed never spoils an "unscathed" quest), a target change (a shadow must
  * never pick its owner), loot and experience (a shadow gives none), a creature joining (a saved shadow comes back), a creature changing dimension (a shadow
  * never leaves the Mega-Dungeon alone), and the player's comings and goings (login, respawn, dimension change, logout) and the server stopping. Registered with
  * {@code addListener} like the rest of the mod. Every handler is wrapped so an exception here can never break the game's own event, and the cheap checks
@@ -40,7 +42,7 @@ public final class SystemEvents {
         bus.addListener(SystemEvents::onPlayerTick);
         bus.addListener(SystemEvents::onDeath);
         bus.addListener(EventPriority.HIGH, SystemEvents::onFriendlyFire);
-        bus.addListener(EventPriority.LOWEST, SystemEvents::onPlayerHurt);
+        bus.addListener(SystemEvents::onPlayerHurt);
         bus.addListener(EventPriority.LOW, SystemEvents::onChangeTarget);
         bus.addListener(SystemEvents::onDrops);
         bus.addListener(SystemEvents::onExperience);
@@ -108,10 +110,10 @@ public final class SystemEvents {
         }
     }
 
-    /** The player took damage (after every other handler): the quest notice. */
-    static void onPlayerHurt(LivingIncomingDamageEvent e) {
+    /** The player really lost health (after armour, absorption and shield: the number is what the health bar went down by): the quest notice. */
+    static void onPlayerHurt(LivingDamageEvent.Post e) {
         try {
-            if (e.getEntity() instanceof ServerPlayer p) SystemQuests.damaged(p, e.getSource(), e.getAmount());
+            if (e.getEntity() instanceof ServerPlayer p) SystemQuests.damaged(p, e.getSource(), e.getNewDamage());
         } catch (RuntimeException ex) {
             // never break a hit
         }

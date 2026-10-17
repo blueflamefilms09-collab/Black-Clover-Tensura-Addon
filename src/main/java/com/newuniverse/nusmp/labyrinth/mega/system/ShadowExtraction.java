@@ -16,7 +16,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.item.ItemStack;
 
@@ -66,7 +65,7 @@ public final class ShadowExtraction {
         boolean mob = dead instanceof Mob;
         boolean armed = dead instanceof Mob m && (m.getAttribute(Attributes.ATTACK_DAMAGE) != null || m instanceof RangedAttackMob);
         boolean persistent = dead instanceof Mob m && m.isPersistenceRequired();
-        return new ExtractRules.Facts(byPlayer, road, dead instanceof Enemy, mob, armed, ShadowMinions.isBoss(dead), ShadowMinions.isServant(dead),
+        return new ExtractRules.Facts(byPlayer, road, ShadowMinions.isHostile(dead), mob, armed, ShadowMinions.isBoss(dead), ShadowMinions.isServant(dead),
                 dead.hasCustomName(), persistent, dead.getType().is(IMMUNE));
     }
 

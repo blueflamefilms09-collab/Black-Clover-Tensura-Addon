@@ -43,6 +43,10 @@ public final class SystemText {
     public static final String STAT_VIT = put("ui.stat.vit", "VIT");
     public static final String STAT_INT = put("ui.stat.int", "INT");
     public static final String STAT_SENSE = put("ui.stat.sense", "SENSE");
+    public static final String QUEST_FLOOR = put("ui.quest_floor", "QUEST OF FLOOR %1$s");
+    public static final String TAG = put("ui.tag", "[SYSTEM]");
+    public static final String WINDOW_SHOWN = put("ui.window_shown", "System window: shown");
+    public static final String WINDOW_HIDDEN = put("ui.window_hidden", "System window: hidden");
 
     // ---- pop-up lines (the "[SYSTEM]" header is drawn by the overlay)
     public static final String TOAST_QUEST_ARRIVED = put("toast.quest_arrived", "QUEST ARRIVED");

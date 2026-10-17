@@ -1,0 +1,11 @@
+{
+  "loader": "neoforge:separate_transforms",
+  "base": {
+    "parent": "nusmp:item/shadow_core_3d"
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "nusmp:item/shadow_core_icon"
+    }
+  }
+}

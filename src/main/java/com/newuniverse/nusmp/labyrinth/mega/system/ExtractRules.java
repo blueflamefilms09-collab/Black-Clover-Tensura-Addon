@@ -14,7 +14,7 @@ public final class ExtractRules {
      *
      * @param killedByPlayer a player (not a minion, not the environment) struck the last blow
      * @param holyRoad       it died inside a sector of the road the System covers (Holy; Abyssal too when the config says so)
-     * @param enemy          it is a hostile monster ({@code Enemy})
+     * @param enemy          it is a hostile monster (a vanilla {@code Enemy}, or a monster of the Dungeon Master, whose Tensura creatures are not {@code Enemy})
      * @param mob            it is a {@code Mob} that can carry AI
      * @param armed          it can fight (has an attack damage attribute or a ranged attack)
      * @param boss           a boss by any of the mod's definitions

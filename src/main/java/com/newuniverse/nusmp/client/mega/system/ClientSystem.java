@@ -11,9 +11,10 @@ import java.util.List;
  * Why: the overlay is drawn many times a second but the server speaks only when something changes, so the client keeps the last picture it was given in one
  * place: plain static fields, written by the payload handlers on the client thread (they enqueue onto the main thread) and read by the overlay on the same
  * thread, so there is no locking and no copying. It holds the window's facts (floor, road, threat, the quest and its count, the clock, the stat points), the
- * queue of pop-up lines waiting to be shown, and two switches: {@link #broken} (a draw failed once: the window stays hidden until the server sends news, so a
- * bug in the drawing can never spam the log or crash a frame) and {@link #version} (bumped on every sync, so the overlay rebuilds its cached strings only
- * when something changed). It has no Minecraft import on purpose, so it is safe to load anywhere and testable.
+ * queue of pop-up lines waiting to be shown, and three switches: {@link #broken} (a draw failed once: the window stays hidden until the server sends news, so a
+ * bug in the drawing can never spam the log or crash a frame), {@link #hidden} (the player pressed the toggle key) and {@link #version} (bumped on every sync, so
+ * the overlay rebuilds its cached strings only when something changed). It also remembers WHEN the current quest first appeared on screen, so the overlay can
+ * type its title out once. It imports no Minecraft class of its own (only the payload records), so it loads anywhere.
  */
 public final class ClientSystem {
     private ClientSystem() {}
@@ -28,6 +29,7 @@ public final class ClientSystem {
     static int threat;
     static boolean boss;
     static int questState;
+    static int questFloor;
     static String kind = "";
     static String titleKey = "";
     static String titleFallback = "";
@@ -40,8 +42,16 @@ public final class ClientSystem {
     // ---- switches
     /** A draw failed: hide the window until the server sends news. */
     static boolean broken;
+    /** The player switched the window off with the toggle key (not saved: the configuration's {@code enabled} is the lasting switch). */
+    static boolean hidden;
     /** Bumped on every sync (the overlay's cached text is rebuilt when it changes). */
     static int version;
+
+    // ---- the quest on screen
+    /** What identifies the quest on screen (kind, title key, target, floor); a change means a NEW quest, whose title is typed out. */
+    private static String questSignature = "";
+    /** Client game time (plus partial tick) at which the current quest was first drawn; NaN until then. */
+    static float questSince = Float.NaN;
 
     // ---- the pop-up lines
     /** One pop-up line waiting or showing: when it started (game time plus partial tick; NaN until first drawn), what it says (key and arguments) and what kind it is. */
@@ -50,8 +60,8 @@ public final class ClientSystem {
         final String key;
         final List<String> args;
         float start = Float.NaN;
-        String text;
-        List<String> lines;
+        /** The message in the player's language, resolved the first time the toast is drawn. */
+        String message;
 
         Toast(ToastKind kind, String key, List<String> args) {
             this.kind = kind;
@@ -71,6 +81,7 @@ public final class ClientSystem {
         threat = p.threat();
         boss = p.boss();
         questState = p.questState();
+        questFloor = p.questFloor();
         kind = p.kind();
         titleKey = p.titleKey();
         titleFallback = p.titleFallback();
@@ -80,6 +91,11 @@ public final class ClientSystem {
         clockRunning = p.clockRunning();
         timeStamp = gameTime;
         for (int i = 0; i < Stat.COUNT; i++) STATS[i] = i < p.stats().size() ? p.stats().get(i) : 0;
+        String sig = questState == SystemNet.Q_NONE ? "" : kind + "|" + titleKey + "|" + target + "|" + questFloor;
+        if (!sig.equals(questSignature)) {
+            questSignature = sig;
+            questSince = Float.NaN;
+        }
         broken = false;
         version++;
     }
@@ -105,6 +121,7 @@ public final class ClientSystem {
         threat = 0;
         boss = false;
         questState = 0;
+        questFloor = 0;
         kind = "";
         titleKey = "";
         titleFallback = "";
@@ -114,6 +131,8 @@ public final class ClientSystem {
         clockRunning = false;
         for (int i = 0; i < STATS.length; i++) STATS[i] = 0;
         TOASTS.clear();
+        questSignature = "";
+        questSince = Float.NaN;
         broken = false;
         version++;
     }
@@ -124,4 +143,10 @@ public final class ClientSystem {
     public static int floor() { return floor; }
 
     public static int stat(Stat s) { return STATS[s.ordinal()]; }
+
+    /** Flips the player's own switch and returns whether the window is now shown. */
+    public static boolean toggle() {
+        hidden = !hidden;
+        return !hidden;
+    }
 }
