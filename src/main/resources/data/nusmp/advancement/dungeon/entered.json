@@ -39,6 +39,18 @@
       "conditions": {
         "to": "nusmp:labyrinth"
       }
+    },
+    "e4_e_mega_entered": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "mega.entered"
+      }
+    },
+    "f5_entered": {
+      "trigger": "minecraft:changed_dimension",
+      "conditions": {
+        "to": "nusmp:mega_dungeon"
+      }
     }
   },
   "requirements": [
@@ -46,7 +58,9 @@
       "a0_e_dungeon_entered",
       "b1_e_labyrinth_entered",
       "c2_entered",
-      "d3_entered"
+      "d3_entered",
+      "e4_e_mega_entered",
+      "f5_entered"
     ]
   ],
   "rewards": {

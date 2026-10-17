@@ -16,7 +16,7 @@ public final class MegaConfig {
     public static final ModConfigSpec SPEC;
     /** "mega" (the singular expanding Mega-Dungeon, default) or "spire" (the 1.35.0 floating Spire of the Labyrinth). */
     public static final ModConfigSpec.ConfigValue<String> LAYOUT;
-    public static final ModConfigSpec.BooleanValue EXPANSION, LEGACY_GATES, LAST_LANDING;
+    public static final ModConfigSpec.BooleanValue EXPANSION, LEGACY_GATES, LAST_LANDING, EXPAND_AFTER_VAULT;
     public static final ModConfigSpec.IntValue PIECES_PER_TICK, MAX_PIECES, MAX_SECTORS, ASSEMBLE_TRIES, MAX_LINK_MODULES, GEN_BUDGET_MS;
 
     public static final String LAYOUT_MEGA = "mega", LAYOUT_SPIRE = "spire";
@@ -34,6 +34,8 @@ public final class MegaConfig {
                 .define("legacyGates", true);
         LAST_LANDING = b.comment("Entering takes you to the deepest Landing you ever reached (sneak while entering = sector 0). false = always sector 0.")
                 .define("lastLanding", true);
+        EXPAND_AFTER_VAULT = b.comment("1.55.0: the next sector is generated when the Crucible of the unsealed sector is resolved (or a player reaches the Way Onward), not the moment the Gatekeeper opens, so the relic taken can decide the next sector's theme. false = the 1.54.0 behaviour.")
+                .define("expandAfterVault", true);
         PIECES_PER_TICK = b.comment("Jigsaw pieces placed per server tick while a sector is being generated (higher = faster, laggier).")
                 .defineInRange("piecesPerTick", 3, 1, 16);
         MAX_PIECES = b.comment("Upper bound on the pieces of one sector (rooms, corridors and door caps together).")

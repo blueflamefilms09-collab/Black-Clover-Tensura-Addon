@@ -36,6 +36,15 @@ public final class MegaGrid {
     public static final int CAP_MARGIN = 8;
     /** Minimum clear distance between the regions of two sectors, so no cap of one can touch a piece of another. */
     public static final int REGION_GAP = 12;
+    /**
+     * 1.55.0: the Abyssal chain's first sector is built this far from the Holy chain's (along z), so the two roads of the bidirectional dungeon never meet. A chain is
+     * at most {@code maxSectors} regions of about 183 blocks each (under 100 000 blocks in any direction), so 300 000 is three times that, and still far inside the
+     * world border and the range where rendering is exact.
+     */
+    public static final int LANE_Z = 300_000;
+
+    /** The z offset of the first sector of a chain: 0 for the Holy chain (where 1.54.0 put sector 0), {@link #LANE_Z} for the Abyssal chain. */
+    public static int laneZ(Polarity p) { return p == Polarity.ABYSSAL ? LANE_Z : 0; }
 
     /** Jigsaw names and pools every builder must use (the connector contract of docs/labyrinth/mega.md). */
     public static final String DOOR = "nusmp:mega_door";

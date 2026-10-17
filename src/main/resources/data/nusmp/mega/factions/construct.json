@@ -1,0 +1,33 @@
+{
+  "why": "Guardians of a place, not hunters: a construct ignores everyone except an intruder standing inside the room it was made for (territorial), and then it defends with a long reach. Its only open feud is with the elemental forces that unmake it. Most constructs have no flesh; the armoured ones leave a flank.",
+  "id": "construct",
+  "name": "Animate Constructs",
+  "color": "#8892A0",
+  "tag": "nusmp:mega/construct",
+  "rivals": [
+    "elemental"
+  ],
+  "allies": [],
+  "aggro": {
+    "range": 8,
+    "nativeBonus": 12
+  },
+  "themeWeights": {
+    "gravity": 4,
+    "blood": 0,
+    "spatial": 3,
+    "flame": 3,
+    "frost": 1,
+    "verdant": 0,
+    "storm": 5,
+    "shadow": 1,
+    "astral": 5,
+    "radiant": 4,
+    "abyss": 1
+  },
+  "drops": {
+    "meat": "raw_armor_flank",
+    "meatChance": 0.25
+  },
+  "territorial": true
+}

@@ -1,5 +1,5 @@
-# 1.21.0 check: Tensura items for the Ki-Resonance Lantern fuel (magic stones, slime gel) and avian mobs
-files:^assets/tensura/models/item/[a-z_0-9]*(magic|stone|ore|gel|slime|crystal|core|shard|spar|feather|wing|egg|compass|lantern|bird|owl|peacock)[a-z_0-9]*\.json$
-files:^data/tensura/tags/item/
-files:^data/tensura/recipe/[a-z_0-9/]*(gel|slime|magic_stone)[a-z_0-9]*\.json$
-cat:^data/tensura/loot_table/entities/(one_eyed_owl|dragon_peacock|giant_bat|slime)\.json$
+# 1.55.0: which jar holds a half-renamed MinecraftServer? (list the jars, then print the class header from every jar that has it)
+list:^net/minecraft/server/MinecraftServer\.class$
+list:^net/minecraft/world/level/Level\.class$
+net/minecraft/server/MinecraftServer\.class$
+net/minecraft/server/level/ServerLevel\.class$

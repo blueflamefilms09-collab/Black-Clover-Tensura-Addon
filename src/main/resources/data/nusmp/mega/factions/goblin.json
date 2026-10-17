@@ -1,0 +1,34 @@
+{
+  "why": "Small, many and quarrelsome: goblins and the raiders that run with them fight everything bigger or hungrier than themselves, the ogres that bully them, the beasts that hunt them and the dead that rise under their feet. They favour the plain stone and the overgrown regions.",
+  "id": "goblin",
+  "name": "Goblin Warrens",
+  "color": "#5C8A3A",
+  "tag": "nusmp:mega/goblin",
+  "rivals": [
+    "undead",
+    "ogre",
+    "beast"
+  ],
+  "allies": [],
+  "aggro": {
+    "range": 14,
+    "nativeBonus": 8
+  },
+  "themeWeights": {
+    "gravity": 5,
+    "blood": 1,
+    "spatial": 0,
+    "flame": 2,
+    "frost": 2,
+    "verdant": 4,
+    "storm": 3,
+    "shadow": 1,
+    "astral": 0,
+    "radiant": 1,
+    "abyss": 3
+  },
+  "drops": {
+    "meat": "raw_monster_meat",
+    "meatChance": 0.5
+  }
+}

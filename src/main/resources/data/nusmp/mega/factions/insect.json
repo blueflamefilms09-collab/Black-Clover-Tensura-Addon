@@ -1,0 +1,32 @@
+{
+  "why": "Swarms and spinners: they fight the beasts that hunt in their nests. They favour the overgrown and shadow regions (sculk and moss). Their cut is the fillet.",
+  "id": "insect",
+  "name": "Hive Swarms",
+  "color": "#B0B22C",
+  "tag": "nusmp:mega/insect",
+  "rivals": [
+    "beast"
+  ],
+  "allies": [],
+  "aggro": {
+    "range": 14,
+    "nativeBonus": 8
+  },
+  "themeWeights": {
+    "gravity": 2,
+    "blood": 1,
+    "spatial": 0,
+    "flame": 1,
+    "frost": 0,
+    "verdant": 5,
+    "storm": 2,
+    "shadow": 3,
+    "astral": 0,
+    "radiant": 1,
+    "abyss": 4
+  },
+  "drops": {
+    "meat": "raw_basilisk_fillet",
+    "meatChance": 0.45
+  }
+}

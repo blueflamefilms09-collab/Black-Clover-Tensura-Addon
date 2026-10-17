@@ -1,0 +1,14 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega_gateway/gateway",
+        "processors": "nusmp:gate_weathering",
+        "projection": "rigid"
+      }
+    }
+  ]
+}

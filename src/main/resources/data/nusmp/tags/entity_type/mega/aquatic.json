@@ -1,0 +1,57 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "minecraft:guardian",
+      "required": false
+    },
+    {
+      "id": "minecraft:elder_guardian",
+      "required": false
+    },
+    {
+      "id": "tensura:lizardman",
+      "required": false
+    },
+    {
+      "id": "tensura:aqua_frog",
+      "required": false
+    },
+    {
+      "id": "tensura:landfish",
+      "required": false
+    },
+    {
+      "id": "tensura:giant_cod",
+      "required": false
+    },
+    {
+      "id": "tensura:giant_salmon",
+      "required": false
+    },
+    {
+      "id": "tensura:megalodon",
+      "required": false
+    },
+    {
+      "id": "tensura:sissie",
+      "required": false
+    },
+    {
+      "id": "tensura:spear_toro",
+      "required": false
+    },
+    {
+      "id": "iceandfire:hippocampus",
+      "required": false
+    },
+    {
+      "id": "iceandfire:sea_serpent",
+      "required": false
+    },
+    {
+      "id": "iceandfire:siren",
+      "required": false
+    }
+  ]
+}

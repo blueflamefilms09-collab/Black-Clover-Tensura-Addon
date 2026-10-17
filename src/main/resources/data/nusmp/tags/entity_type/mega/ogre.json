@@ -1,0 +1,33 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "tensura:orc",
+      "required": false
+    },
+    {
+      "id": "tensura:war_gnome",
+      "required": false
+    },
+    {
+      "id": "tensura:beast_gnome",
+      "required": false
+    },
+    {
+      "id": "iceandfire:troll",
+      "required": false
+    },
+    {
+      "id": "iceandfire:cyclops",
+      "required": false
+    },
+    {
+      "id": "minecraft:ravager",
+      "required": false
+    },
+    {
+      "id": "minecraft:piglin_brute",
+      "required": false
+    }
+  ]
+}

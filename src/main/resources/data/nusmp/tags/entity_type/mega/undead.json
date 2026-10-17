@@ -1,0 +1,81 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "minecraft:zombie",
+      "required": false
+    },
+    {
+      "id": "minecraft:zombie_villager",
+      "required": false
+    },
+    {
+      "id": "minecraft:husk",
+      "required": false
+    },
+    {
+      "id": "minecraft:drowned",
+      "required": false
+    },
+    {
+      "id": "minecraft:skeleton",
+      "required": false
+    },
+    {
+      "id": "minecraft:stray",
+      "required": false
+    },
+    {
+      "id": "minecraft:bogged",
+      "required": false
+    },
+    {
+      "id": "minecraft:wither_skeleton",
+      "required": false
+    },
+    {
+      "id": "minecraft:phantom",
+      "required": false
+    },
+    {
+      "id": "minecraft:zombified_piglin",
+      "required": false
+    },
+    {
+      "id": "tensura:zombie",
+      "required": false
+    },
+    {
+      "id": "tensura:skeleton",
+      "required": false
+    },
+    {
+      "id": "iceandfire:ghost",
+      "required": false
+    },
+    {
+      "id": "iceandfire:dread_thrall",
+      "required": false
+    },
+    {
+      "id": "iceandfire:dread_ghoul",
+      "required": false
+    },
+    {
+      "id": "iceandfire:dread_beast",
+      "required": false
+    },
+    {
+      "id": "iceandfire:dread_scuttler",
+      "required": false
+    },
+    {
+      "id": "iceandfire:dread_knight",
+      "required": false
+    },
+    {
+      "id": "iceandfire:dread_lich",
+      "required": false
+    }
+  ]
+}

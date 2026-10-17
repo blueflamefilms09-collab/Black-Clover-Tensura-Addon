@@ -45,7 +45,7 @@ public final class QuestWorldEvents {
                 default -> null;
             };
             if (floor != null) NusmpEvents.fireAll(who, "dungeon.floor_boss", floor);
-            if (path.equals("floor_warden")) NusmpEvents.fireAll(who, "labyrinth.warden_defeated", null);
+            if (path.equals("floor_warden") && !dead.getTags().contains("nusmp_wanderer")) NusmpEvents.fireAll(who, "labyrinth.warden_defeated", null);   // a wandering Warden is not the floor's Warden
             if (peak) NusmpEvents.fireAll(who, "labyrinth.seal_opened", "boss");
         } catch (Throwable t) {
             // a quest hook must never disturb a boss death
