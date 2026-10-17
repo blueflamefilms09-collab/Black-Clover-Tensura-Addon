@@ -1,0 +1,179 @@
+{
+  "comment": "Why: the Mountain Monastery is lit by paper lanterns and windows of paper, softer than a tower of light but never dark, so most parties carry light and the dice would find them a little more often; the table keeps the plain bonus of zero because the rooms are quieter than a tower and a quiet place should not be made busier by a modifier. The monsters are what a retreat keeps once its discipline has gone wrong: rogue monks (vindicators and the casters who taught them), iron guardians of the temple (living armour and the iron golem), the beasts of the mountain (the beast tag), the swifts of the eaves (bats), and the spirits of the chimes (vexes). Duels are the heart of it: hard entries arrive close, in a ring, with a short hunt, because a challenge is called, not chased.",
+  "description": "The Holy road's mountain retreat: dojo, library and garden. Rogue monks, iron guardians, mountain beasts and the spirits of the wind chimes.",
+  "rollBonus": 0,
+  "budgetScale": 1.0,
+  "defaultFaction": "construct",
+  "entries": [
+    {
+      "id": "monastery_novices",
+      "comment": "The breather of the retreat: one or two of the room's own people (the construct tag unless the room has a native faction), novices who took the wrong teacher and are not sure they want a fight. No upper threat, so the minor band never runs dry.",
+      "band": "minor",
+      "weight": 14,
+      "mobs": [
+        {"type": "faction", "count": "1-2"}
+      ],
+      "cue": {"sound": "minecraft:entity.vindicator.ambient", "volume": 0.6, "pitch": 1.2, "particle": "minecraft:white_smoke", "count": 6}
+    },
+    {
+      "id": "monastery_chime_spirits",
+      "comment": "The spirits of the wind chimes: a couple of vexes that come to a noisy party the way a chime comes to a breath of wind. Cheap, and gone when the noise is.",
+      "band": "minor",
+      "weight": 10,
+      "maxThreat": 8,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:vex", "count": "2-3"}
+      ],
+      "needs": {"noisy": true},
+      "cells": 2,
+      "cue": {"sound": "minecraft:block.amethyst_block.chime", "volume": 0.7, "pitch": 1.5, "particle": "minecraft:cherry_leaves", "count": 8}
+    },
+    {
+      "id": "monastery_eave_swifts",
+      "comment": "The swifts of the eaves and the bats of the rafters, woken by a party that carries no light into a hall of paper and timber: three or four, cheap, from the ceiling.",
+      "band": "minor",
+      "weight": 8,
+      "maxThreat": 6,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:bat", "count": "3-5"}
+      ],
+      "needs": {"dark": true},
+      "cells": 2,
+      "cue": {"sound": "minecraft:entity.bat.takeoff", "volume": 0.6, "pitch": 1.0, "particle": "minecraft:white_smoke", "count": 6}
+    },
+    {
+      "id": "monastery_iron_disciples",
+      "comment": "The evergreen standard encounter: the temple's iron guardians on their rounds, the mod's living armour. The id is explicit so the first floors, where the construct tag is thin, still have a reliable fight.",
+      "band": "standard",
+      "weight": 14,
+      "mobs": [
+        {"type": "entity", "id": "nusmp:living_armor", "count": "2-3"}
+      ],
+      "cue": {"sound": "minecraft:item.armor.equip_iron", "volume": 0.7, "pitch": 1.0, "particle": "minecraft:glow", "count": 6}
+    },
+    {
+      "id": "monastery_rogue_brothers",
+      "comment": "Rogue monks in company: fighters first (vindicators), a caster who taught them at the back. The caster is trimmed first when the budget is short.",
+      "band": "standard",
+      "weight": 11,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:vindicator", "count": "2-3"},
+        {"type": "entity", "id": "minecraft:evoker", "count": "1"}
+      ],
+      "cue": {"sound": "minecraft:entity.vindicator.ambient", "volume": 0.8, "pitch": 0.9, "particle": "minecraft:white_smoke", "count": 10}
+    },
+    {
+      "id": "monastery_mountain_pack",
+      "comment": "The beasts of the mountain (the beast tag): a pack that came down for the warmth of the halls, arriving together from the cliff side.",
+      "band": "standard",
+      "weight": 9,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "faction", "count": "3-4", "faction": "beast"}
+      ],
+      "range": [12, 28],
+      "cells": 2,
+      "cue": {"sound": "minecraft:entity.wolf.growl", "volume": 0.8, "pitch": 0.8, "particle": "minecraft:cloud", "count": 8}
+    },
+    {
+      "id": "monastery_paper_wall_gnawers",
+      "comment": "The walls are alive: silverfish in the paper screens and the bamboo, placed close (range 10-22) over three places with a short hunt, so the party meets them by walking into a wall.",
+      "band": "standard",
+      "weight": 8,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:silverfish", "count": "4-6"}
+      ],
+      "range": [10, 22],
+      "cells": 3,
+      "hunt": 300,
+      "cue": {"sound": "minecraft:block.bone_block.break", "volume": 0.8, "pitch": 1.2, "particle": "minecraft:white_smoke", "count": 8},
+      "message": "message.nusmp.mega.enc.mountain_monastery.monastery_paper_wall_gnawers"
+    },
+    {
+      "id": "monastery_the_silent_master",
+      "comment": "The lone hunter: a master who fights by ear. A party that walks without light in a hall of paper and timber is a party that cannot see him, and he is one body, a vindicator, never scaled by the party.",
+      "band": "standard",
+      "weight": 6,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:vindicator", "count": "1"}
+      ],
+      "needs": {"dark": true},
+      "scaleWithParty": false,
+      "cue": {"sound": "minecraft:entity.vindicator.ambient", "volume": 0.5, "pitch": 0.5, "particle": "minecraft:white_smoke", "count": 6},
+      "message": "message.nusmp.mega.enc.mountain_monastery.monastery_the_silent_master"
+    },
+    {
+      "id": "monastery_gate_guardian",
+      "comment": "The loud brute: the temple's gate guardian (an iron golem, a hundred health, five points of budget) wakes to a noisy party. One body, a lot of health; hard band only and from threat 3, where a hard budget can pay for it.",
+      "band": "hard",
+      "weight": 10,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:iron_golem", "count": "1"}
+      ],
+      "needs": {"noisy": true},
+      "cue": {"sound": "minecraft:block.bell.use", "volume": 1.0, "pitch": 0.5, "particle": "minecraft:white_smoke", "count": 12},
+      "message": "message.nusmp.mega.enc.mountain_monastery.monastery_gate_guardian"
+    },
+    {
+      "id": "monastery_the_duel",
+      "comment": "A challenge is called: rogue monks step into a ring round the party, fighters with a caster to keep the count. Close range (10-18) and a short hunt, because a duel is fought where it is called.",
+      "band": "hard",
+      "weight": 10,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:vindicator", "count": "2-3"},
+        {"type": "entity", "id": "minecraft:evoker", "count": "1"}
+      ],
+      "range": [10, 18],
+      "cells": 2,
+      "hunt": 300,
+      "cue": {"sound": "minecraft:block.bell.use", "volume": 0.9, "pitch": 0.9, "particle": "minecraft:cherry_leaves", "count": 12},
+      "message": "message.nusmp.mega.enc.mountain_monastery.monastery_the_duel"
+    },
+    {
+      "id": "monastery_temple_warband",
+      "comment": "The temple's iron guardians and the mountain beasts that follow them: living armour first, the beast tag behind. Hard band from threat 4.",
+      "band": "hard",
+      "weight": 8,
+      "minThreat": 4,
+      "mobs": [
+        {"type": "entity", "id": "nusmp:living_armor", "count": "2-3"},
+        {"type": "faction", "count": "1-2", "faction": "beast"}
+      ],
+      "cue": {"sound": "minecraft:item.armor.equip_iron", "volume": 0.9, "pitch": 0.8, "particle": "minecraft:cloud", "count": 12}
+    },
+    {
+      "id": "monastery_gong_of_the_mountain",
+      "comment": "The wave of the retreat: the great gong sounds and every rogue in the mountain comes, many in three places with a caster behind them.",
+      "band": "ambush",
+      "weight": 10,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:vindicator", "count": "3-4"},
+        {"type": "entity", "id": "minecraft:evoker", "count": "1"}
+      ],
+      "cells": 3,
+      "cue": {"sound": "minecraft:block.bell.use", "volume": 1.0, "pitch": 0.5, "particle": "minecraft:cherry_leaves", "count": 20},
+      "message": "message.nusmp.mega.enc.mountain_monastery.monastery_gong_of_the_mountain"
+    },
+    {
+      "id": "monastery_the_mountain_itself",
+      "comment": "The late ambush: the temple's golems and the beasts of the mountain together, from two sides. Only for parties of two or more.",
+      "band": "ambush",
+      "weight": 8,
+      "minThreat": 5,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:iron_golem", "count": "1-2"},
+        {"type": "faction", "count": "3-4", "faction": "beast"}
+      ],
+      "minParty": 2,
+      "cells": 2,
+      "cue": {"sound": "minecraft:entity.iron_golem.step", "volume": 1.0, "pitch": 0.5, "particle": "minecraft:cloud", "count": 20},
+      "message": "message.nusmp.mega.enc.mountain_monastery.monastery_the_mountain_itself"
+    }
+  ]
+}

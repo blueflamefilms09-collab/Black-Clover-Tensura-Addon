@@ -44,7 +44,7 @@ class EncounterDataTest {
     private static final Path KNOWN = Path.of("src/test/resources/mega/enc/known_ids.txt");
     private static final Path LANG = Path.of("src/main/resources/assets/nusmp/lang/en_us.json");
     private static final Path SOURCE = Path.of("src/main/java");
-    private static final List<String> THEMES = List.of("gravity", "blood", "spatial", "flame", "frost", "verdant", "storm", "shadow", "astral", "radiant", "abyss");
+    private static final List<String> THEMES = List.of("gravity", "blood", "spatial", "flame", "frost", "verdant", "storm", "shadow", "astral", "radiant", "abyss", "holy_church", "celestial_court", "sky_citadel", "mountain_monastery");
     private static final Set<String> NAMESPACES = Set.of("minecraft", "tensura", "nusmp");
     private static final String MESSAGE_PREFIX = "message.nusmp.mega.enc.";
 
@@ -133,7 +133,7 @@ class EncounterDataTest {
     // ---------------------------------------------------------------- the tables
     @Test
     void allTwelveTablesAreShippedAndParseWithoutProblems() {
-        assertEquals(12, tableNames().size());
+        assertEquals(1 + THEMES.size(), tableNames().size());
         for (String n : tableNames()) {
             assertTrue(Files.exists(ENC.resolve(n + ".json")), "missing encounters/" + n + ".json");
             EncounterTableParser.Parsed p = parse(n);

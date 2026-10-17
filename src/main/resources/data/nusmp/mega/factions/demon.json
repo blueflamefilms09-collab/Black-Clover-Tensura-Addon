@@ -26,7 +26,11 @@
     "shadow": 4,
     "astral": 1,
     "radiant": 0,
-    "abyss": 5
+    "abyss": 5,
+    "holy_church": 1,
+    "celestial_court": 0,
+    "sky_citadel": 0,
+    "mountain_monastery": 0
   },
   "drops": {
     "meat": "raw_monster_meat",

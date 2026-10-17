@@ -21,7 +21,11 @@
     "shadow": 2,
     "astral": 1,
     "radiant": 2,
-    "abyss": 3
+    "abyss": 3,
+    "holy_church": 0,
+    "celestial_court": 0,
+    "sky_citadel": 0,
+    "mountain_monastery": 1
   },
   "drops": {
     "meat": "raw_slime_jelly",

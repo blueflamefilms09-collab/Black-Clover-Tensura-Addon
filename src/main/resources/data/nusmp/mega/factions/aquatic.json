@@ -23,7 +23,11 @@
     "shadow": 1,
     "astral": 3,
     "radiant": 1,
-    "abyss": 3
+    "abyss": 3,
+    "holy_church": 1,
+    "celestial_court": 1,
+    "sky_citadel": 0,
+    "mountain_monastery": 1
   },
   "drops": {
     "meat": "raw_basilisk_fillet",

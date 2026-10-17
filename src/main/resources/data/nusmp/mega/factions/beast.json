@@ -26,7 +26,11 @@
     "shadow": 1,
     "astral": 0,
     "radiant": 2,
-    "abyss": 4
+    "abyss": 4,
+    "holy_church": 1,
+    "celestial_court": 1,
+    "sky_citadel": 3,
+    "mountain_monastery": 4
   },
   "drops": {
     "meat": "raw_direwolf_haunch",

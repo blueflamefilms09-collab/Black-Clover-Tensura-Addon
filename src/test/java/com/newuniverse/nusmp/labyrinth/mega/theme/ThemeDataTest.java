@@ -42,7 +42,7 @@ class ThemeDataTest {
             "minecraft:block.amethyst_block.chime", "minecraft:block.amethyst_block.resonate", "minecraft:block.bell.resonate", "minecraft:block.beacon.ambient",
             "minecraft:entity.lightning_bolt.thunder", "minecraft:entity.warden.heartbeat");
     /** The themes the mod ships, in the order of the {@code RegionTheme} enum (append a new one here AND in the enum; a file nobody lists is a stray). */
-    private static final List<String> SHIPPED = List.of("gravity", "blood", "spatial", "flame", "frost", "verdant", "storm", "shadow", "astral", "radiant", "abyss");
+    private static final List<String> SHIPPED = List.of("gravity", "blood", "spatial", "flame", "frost", "verdant", "storm", "shadow", "astral", "radiant", "abyss", "holy_church", "celestial_court", "sky_citadel", "mountain_monastery");
     /** The one mod particle a theme may name: a SimpleParticleType registered by {@code particle/rukh/RukhParticles}. */
     private static final Path RUKH = Path.of("src/main/java/com/newuniverse/nusmp/particle/rukh/RukhParticles.java");
 
@@ -77,7 +77,7 @@ class ThemeDataTest {
         for (RegionTheme t : RegionTheme.values()) assertTrue(files.contains(t.id()), "RegionTheme " + t + " has no data/nusmp/mega/themes/" + t.id() + ".json");
         for (String f : files) assertTrue(SHIPPED.contains(f), "themes/" + f + ".json is not a shipped theme: add it to RegionTheme (appended last) and to SHIPPED here");
         assertEquals(new TreeSet<>(SHIPPED), new TreeSet<>(files), "one file per shipped theme");
-        assertEquals(11, files.size());
+        assertEquals(SHIPPED.size(), files.size());
     }
 
     @Test
