@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** Lotus's discs of smoke. */
+/** Why: the smoke dose reads one question of the cloud list (how thick is it here?), so a disc's shape, its end, the cap and the no-stacking rule are proven once. */
 class CloudFieldTest {
     @Test
     void aDiscIsFlatAndRound() {

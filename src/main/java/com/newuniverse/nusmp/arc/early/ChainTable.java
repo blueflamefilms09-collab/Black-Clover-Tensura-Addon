@@ -30,7 +30,7 @@ public final class ChainTable {
 
     /** Reach of the lashes and of the whirl, the cage's radius, the lines' half widths, and the farthest a chain flies. */
     public static final double LASH_REACH = 7.5, LASH_HALF_ANGLE = 0.96, WHIRL_RADIUS = 5.6, CAGE_RADIUS = 6.2, HEAVY_RADIUS = 3.2, PILLAR_RADIUS = 2.1,
-            LINE_HALF = 1.0, RUSH_HALF = 1.4, CHAIN_RANGE = 22;
+            LINE_HALF = 1.0, RUSH_HALF = 1.4, RUSH_LENGTH = 16, CHAIN_RANGE = 22;
     /** The Gates make the cage and the lockdown this much bigger. */
     public static final double GATES_REACH = 1.25;
 

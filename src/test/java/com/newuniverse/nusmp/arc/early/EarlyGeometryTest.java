@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The shapes the early bosses aim at the floor: corridors, cones, fans, polygons, ring waves, falloff. */
+/** Why: every telegraph is a shape on the floor and the damage must land exactly where it was drawn, so the corridor, cone, fan, polygon, ring wave and falloff are proven in plain maths. */
 class EarlyGeometryTest {
     @Test
     void aCorridorEndsWhereItsSegmentEnds() {

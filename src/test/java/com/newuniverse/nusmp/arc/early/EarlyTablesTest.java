@@ -10,7 +10,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The five move tables: the house rules, then fights played out through the framework's own scheduler. */
+/** Why: a table that breaks the house rules makes a boss unreadable or idle, so every table is held to them and then played out through the framework's own scheduler. */
 class EarlyTablesTest {
     private static final Map<String, List<MoveRow>> TABLES = Map.of(
             "revchi", ChainTable.rows(), "heath", HeathTable.rows(), "lotus", LotusTable.rows(), "mars", MarsTable.rows(), "vetto", VettoTable.rows());

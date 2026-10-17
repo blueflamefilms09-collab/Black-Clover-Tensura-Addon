@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** Heath's appointment book. */
+/** Why: Heath's cage must come on a rhythm a party can learn, so the first appointment, the gap and its floor are fixed here. */
 class TimetableTest {
     @Test
     void theFirstAppointmentIsOpenAndTheNextOneIsSet() {

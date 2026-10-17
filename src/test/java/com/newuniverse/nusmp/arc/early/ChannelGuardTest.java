@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The break counter of a long cast: armed, fed, says once that it broke. */
+/** Why: four ultimates share one lesson (break the cast by damage), so the counter must break exactly once, never before it is armed and never after it is put away. */
 class ChannelGuardTest {
     @Test
     void itBreaksExactlyOnceWhenTheThresholdIsCrossed() {

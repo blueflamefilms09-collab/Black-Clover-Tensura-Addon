@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** Mars's Nemean Armor: a front, and nothing behind. */
+/** Why: the armour only teaches "walk round him" if it has a front and nothing behind, and if anti-magic cuts straight through. */
 class FrontGuardTest {
     @Test
     void theFrontIsCutAndTheRestIsNot() {

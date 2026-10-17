@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** Revchi's Magic Binding: who is bound, how long, and how a foe tears the chain. */
+/** Why: Revchi's Magic Binding must be escapable (links torn by the bound foe's blows, one blow of anti-magic) and never chain-lockable, which only a test can promise. */
 class BindLedgerTest {
     private final UUID a = new UUID(0, 1), b = new UUID(0, 2);
 

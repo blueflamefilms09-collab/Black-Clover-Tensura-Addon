@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** Heath's Crystal Ice Shield: a wall against range, not against a blade. */
+/** Why: the shield must never make the fight longer for a fighter who closes in nor useless for a caster, so what passes, what cracks and what shatters is fixed here. */
 class FrostShieldTest {
     @Test
     void rangeIsSwallowedUntilThePoolIsGone() {

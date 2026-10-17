@@ -6,7 +6,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** Heath's cage: always the same for a seed, always with a way through. */
+/** Why: the Endless Ice Cage is a lesson only if there is always a corridor no icicle touches, so the pattern is checked over hundreds of seeds. */
 class HailPatternTest {
     private static final double R = HeathTable.CAGE_RADIUS, IMPACT = HeathTable.CAGE_IMPACT, HALF = HeathTable.CAGE_CORRIDOR;
 

@@ -9,7 +9,7 @@ import java.util.UUID;
 /**
  * Why: Lotus Whomalt does not fight, he waits. In the anime he had been running a weakening spell on Luck since the moment Luck arrived; it works slowly,
  * and once enough smoke has been breathed the target loses their balance and falls. A fight cannot be "wait and see", but it can be that slow-burn made
- * visible and made learnable: every foe carries a dose of smoke from 0 to {@value #MAX}, it climbs while they stand in his clouds or in his sight and falls
+ * visible and made learnable: every foe carries a dose of smoke from 0 to {@value #MAX}, it climbs while they stand in his clouds (and, slowly and only to {@value #SIGHT_CAP}, in his sight) and falls
  * when they keep clear, and what it does to them is a fixed ladder (weakness from 3, slowness from 6, a stumble at {@value #MAX}). The party can always read
  * the number (the action bar shows it), always lower it (leave the cloud, break his line of sight, close in and finish him), and a party that ignores it is
  * weakened without ever being hit. This pure class is the ledger and the ladder; the game glue ({@code LotusWhomaltBoss}) feeds it positions and applies
@@ -54,9 +54,22 @@ public final class DoseLedger {
     /** The damage of the Bloom that spends the doses: {@code perPoint} for each point of dose, none for a dose under 3. */
     public static float bloom(int dose, float perPoint) { return dose < 3 ? 0f : dose * perPoint; }
 
-    /** The dose a foe gains in a second: the strongest of what they stand in, the aura's trickle only counts when nothing else does. */
-    public static int gain(int cloudGain, boolean inSight, boolean auraTick) {
-        if (cloudGain > 0) return cloudGain;
-        return inSight && auraTick ? 1 : 0;
+    /** The highest dose his gaze alone can give: a foe he can only see is weakened, never slowed, and the cloud does the rest. */
+    public static final int SIGHT_CAP = 5;
+
+    /**
+     * The dose one second later. In a cloud it climbs by the cloud's gain. In his sight, with nothing round them, it climbs by one on every beat of his aura but
+     * never above {@value #SIGHT_CAP} (and sinks back to it on the decay beat if it was higher: a foe who has stepped out of the smoke but not out of his eye
+     * is not freed at once). Out of his sight and out of the smoke it falls by one on every decay beat. Always between 0 and {@value #MAX}.
+     */
+    public static int step(int dose, int cloudGain, boolean inSight, boolean auraBeat, boolean decayBeat) {
+        int d = Math.max(0, Math.min(MAX, dose));
+        if (cloudGain > 0) return Math.min(MAX, d + cloudGain);
+        if (inSight) {
+            if (auraBeat && d < SIGHT_CAP) return d + 1;
+            if (decayBeat && d > SIGHT_CAP) return d - 1;
+            return d;
+        }
+        return decayBeat ? Math.max(0, d - 1) : d;
     }
 }

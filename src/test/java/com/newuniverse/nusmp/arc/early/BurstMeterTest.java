@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The sliding window of recent damage. */
+/** Why: Vetto's aura tears when a burst lands inside three seconds, so the sliding window of recent damage has to forget exactly on time. */
 class BurstMeterTest {
     @Test
     void onlyTheWindowCounts() {

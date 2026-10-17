@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The timed flag: open, extend, never cut short, close. */
+/** Why: staggers, wounds and the armour are all one timed flag, so opening, extending (never cutting short) and closing it are proven once. */
 class WindowTest {
     @Test
     void aWindowIsOpenUntilItsEnd() {

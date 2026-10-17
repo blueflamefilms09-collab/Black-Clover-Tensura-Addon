@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** Mars's mage stones. */
+/** Why: Mars's long fight is cracking his stones in time, so the count, the window, the double count of anti-magic and the save/restore are proven. */
 class StoneLedgerTest {
     @Test
     void threeStonesAreSetAndEachAddsATenth() {

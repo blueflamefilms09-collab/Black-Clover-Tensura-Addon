@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** Vetto's auras: what they give, and how they come off. */
+/** Why: Vetto's whole fight is his auras, so what each one gives and how a blow or a burst tears it off is pinned down before anything is drawn. */
 class BeastAurasTest {
     private static final double MAX = 2000;
 
