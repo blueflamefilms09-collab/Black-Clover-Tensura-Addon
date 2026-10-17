@@ -1,0 +1,32 @@
+{
+  "fallback": "nusmp:mega/cap",
+  "elements": [
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/link/straight_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/link/straight_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/link/waystation",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    }
+  ]
+}

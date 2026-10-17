@@ -1,0 +1,190 @@
+{
+  "comment": "Why: the shadow sectors are where hiding is the whole game, so the table is a hunting ground (roll bonus one) with more entries that need the dark than any other: the lurking wither skeleton, the grave knight. A lit party attracts the night flyers, a noisy one wakes the sculk, and the mimic is an armour that is not empty.",
+  "description": "Polished blackstone, sculk and soul lanterns: the dead, the cults and the spiders of the dark. A hunting ground: the dark itself is the weapon, and a party without light is found more often.",
+  "rollBonus": 1,
+  "budgetScale": 1.0,
+  "defaultFaction": "undead",
+  "entries": [
+    {
+      "id": "shade_scouts",
+      "comment": "The breather: one or two of the room's own people, with the sculk stirring.",
+      "band": "minor",
+      "weight": 14,
+      "mobs": [
+        {"type": "faction", "count": "1-2"}
+      ],
+      "cue": {"sound": "minecraft:block.sculk_catalyst.bloom", "volume": 0.5, "pitch": 0.8, "particle": "minecraft:sculk_soul", "count": 6}
+    },
+    {
+      "id": "gloom_bats",
+      "comment": "Bats roosting in the dark: they come out when something walks below.",
+      "band": "minor",
+      "weight": 10,
+      "maxThreat": 8,
+      "mobs": [
+        {"type": "entity", "id": "tensura:giant_bat", "count": "2-4"}
+      ],
+      "cells": 3,
+      "cue": {"sound": "minecraft:entity.bat.ambient", "volume": 0.8, "pitch": 0.7}
+    },
+    {
+      "id": "hollow_patrol",
+      "comment": "The evergreen standard encounter: a group of the dead, fixed to the undead.",
+      "band": "standard",
+      "weight": 12,
+      "faction": "undead",
+      "mobs": [
+        {"type": "faction", "count": "3-5"}
+      ],
+      "cue": {"sound": "minecraft:entity.zombie.ambient", "volume": 0.7, "pitch": 0.5, "particle": "minecraft:sculk_soul", "count": 8}
+    },
+    {
+      "id": "lurking_wither",
+      "comment": "The lone hunter: a wither skeleton or two, only for a party in the dark.",
+      "band": "standard",
+      "weight": 10,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:wither_skeleton", "count": "1-2"}
+      ],
+      "needs": {"dark": true},
+      "scaleWithParty": false,
+      "cue": {"sound": "minecraft:entity.wither_skeleton.ambient", "volume": 0.8, "pitch": 0.5, "particle": "minecraft:soul", "count": 8},
+      "message": "message.nusmp.mega.enc.shadow.lurking_wither"
+    },
+    {
+      "id": "web_of_shadows",
+      "comment": "A black spider with cave spiders for its web: the big one first, the small ones trimmed first when the budget is short.",
+      "band": "standard",
+      "weight": 10,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "entity", "id": "tensura:black_spider", "count": "1"},
+        {"type": "entity", "id": "minecraft:cave_spider", "count": "3-5"}
+      ],
+      "cells": 2,
+      "cue": {"sound": "minecraft:entity.spider.ambient", "volume": 0.8, "pitch": 0.5, "particle": "minecraft:sculk_soul", "count": 8}
+    },
+    {
+      "id": "soul_thieves",
+      "comment": "Vexes out of the wall, close: they pass through stone and are on the party before it can choose a door.",
+      "band": "standard",
+      "weight": 8,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:vex", "count": "2-4"}
+      ],
+      "range": [10, 22],
+      "cue": {"sound": "minecraft:entity.vex.ambient", "volume": 0.8, "pitch": 0.7, "particle": "minecraft:soul", "count": 8}
+    },
+    {
+      "id": "candle_snuffers",
+      "comment": "Night flyers drawn to a lit party: the price of a torch in the shadow sectors.",
+      "band": "standard",
+      "weight": 8,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:phantom", "count": "2-3"}
+      ],
+      "needs": {"lit": true},
+      "cue": {"sound": "minecraft:entity.phantom.ambient", "volume": 0.8, "pitch": 0.8, "particle": "minecraft:soul_fire_flame", "count": 8}
+    },
+    {
+      "id": "dusk_cabal",
+      "comment": "The caster pair of the dark: cultists with the dead as bodyguards.",
+      "band": "standard",
+      "weight": 8,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "faction", "count": "1-2", "faction": "cultist"},
+        {"type": "faction", "count": "2-3", "faction": "undead"}
+      ],
+      "cue": {"sound": "minecraft:entity.witch.ambient", "volume": 0.8, "pitch": 0.6, "particle": "minecraft:witch", "count": 8}
+    },
+    {
+      "id": "grave_knight",
+      "comment": "The hard lone hunter: a wither skeleton in the lead and the dead behind it, only for a party in the dark.",
+      "band": "hard",
+      "weight": 10,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:wither_skeleton", "count": "1"},
+        {"type": "faction", "count": "2-3", "faction": "undead"}
+      ],
+      "needs": {"dark": true},
+      "scaleWithParty": false,
+      "cue": {"sound": "minecraft:entity.wither_skeleton.ambient", "volume": 0.9, "pitch": 0.5, "particle": "minecraft:soul", "count": 12},
+      "message": "message.nusmp.mega.enc.shadow.grave_knight"
+    },
+    {
+      "id": "sculk_brute",
+      "comment": "Noise wakes the sculk, and the thing under it: one brute of the ogre tag for a party that is too loud.",
+      "band": "hard",
+      "weight": 10,
+      "minThreat": 3,
+      "faction": "ogre",
+      "mobs": [
+        {"type": "faction", "count": "1"}
+      ],
+      "needs": {"noisy": true},
+      "cue": {"sound": "minecraft:block.sculk_shrieker.shriek", "volume": 0.8, "pitch": 0.9, "particle": "minecraft:sculk_soul", "count": 12},
+      "message": "message.nusmp.mega.enc.shadow.sculk_brute"
+    },
+    {
+      "id": "hollow_suit",
+      "comment": "The mimic-style surprise: the empty armour in the alcove is not empty. A cultist is the one who filled it.",
+      "band": "hard",
+      "weight": 6,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "entity", "id": "nusmp:living_armor", "count": "1-2"},
+        {"type": "faction", "count": "1", "faction": "cultist"}
+      ],
+      "range": [10, 18],
+      "cells": 2,
+      "hunt": 300,
+      "cue": {"sound": "minecraft:item.armor.equip_iron", "volume": 0.8, "pitch": 0.5, "particle": "minecraft:sculk_soul", "count": 10},
+      "message": "message.nusmp.mega.enc.shadow.hollow_suit"
+    },
+    {
+      "id": "night_horde",
+      "comment": "The wave of the dark: the dead in three places at once.",
+      "band": "ambush",
+      "weight": 10,
+      "minThreat": 3,
+      "faction": "undead",
+      "mobs": [
+        {"type": "faction", "count": "6-9"}
+      ],
+      "cells": 3,
+      "cue": {"sound": "minecraft:entity.zombie.break_wooden_door", "volume": 1.0, "pitch": 0.5, "particle": "minecraft:sculk_soul", "count": 16},
+      "message": "message.nusmp.mega.enc.shadow.night_horde"
+    },
+    {
+      "id": "black_pack",
+      "comment": "A nest wakes: black spiders and their small poisonous kin, in three places.",
+      "band": "ambush",
+      "weight": 8,
+      "minThreat": 4,
+      "mobs": [
+        {"type": "entity", "id": "tensura:black_spider", "count": "2-3"},
+        {"type": "entity", "id": "minecraft:cave_spider", "count": "4-6"}
+      ],
+      "cells": 3,
+      "cue": {"sound": "minecraft:entity.spider.ambient", "volume": 1.0, "pitch": 0.5, "particle": "minecraft:sculk_soul", "count": 16}
+    },
+    {
+      "id": "hollow_court",
+      "comment": "The late ambush: a court of casters, bones and vexes from two sides. Only for parties of two or more.",
+      "band": "ambush",
+      "weight": 6,
+      "minThreat": 6,
+      "mobs": [
+        {"type": "faction", "count": "3-4", "faction": "cultist"},
+        {"type": "entity", "id": "minecraft:wither_skeleton", "count": "2-3"},
+        {"type": "entity", "id": "minecraft:vex", "count": "2-3"}
+      ],
+      "minParty": 2,
+      "cells": 2,
+      "cue": {"sound": "minecraft:entity.evoker.prepare_summon", "volume": 1.0, "pitch": 0.5, "particle": "minecraft:soul", "count": 20}
+    }
+  ]
+}

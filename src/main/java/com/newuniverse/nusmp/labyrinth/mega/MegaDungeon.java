@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public final class MegaDungeon {
     private static volatile Expander expander;
     private static volatile ChainTravel chainTravel;
     private static volatile AlignmentPolicy alignmentPolicy;
+    private static volatile ThemeOverride themeOverride;
 
     // ---------------------------------------------------------------- wiring
     /** Registers a listener (once, from a registry's init; never removed). */
@@ -44,6 +46,16 @@ public final class MegaDungeon {
 
     /** 1.55.0: the alignment module registers the Directional Lock here; every door asks {@link #mayEnter}. */
     public static void setAlignmentPolicy(AlignmentPolicy a) { alignmentPolicy = a; }
+
+    /** 1.55.0: the theme module registers how a taken relic decides the next sector's theme. */
+    public static void setThemeOverride(ThemeOverride t) { themeOverride = t; }
+
+    /** 1.55.0: the theme the sector after {@code previous} must wear because of the relic taken in {@code previous}, or null (no opinion, or no override registered). */
+    public static RegionTheme themeOverride(Sector previous) {
+        ThemeOverride t = themeOverride;
+        if (t == null || previous == null) return null;
+        try { return t.themeAfter(previous); } catch (RuntimeException e) { LOG.warn("theme override failed: {}", e.toString()); return null; }
+    }
 
     /** 1.55.0: registers a floor listener (once, from a registry's init; never removed). */
     public static void addFloorListener(FloorListener l) { if (l != null && !FLOOR_LISTENERS.contains(l)) FLOOR_LISTENERS.add(l); }
@@ -75,6 +87,16 @@ public final class MegaDungeon {
             try { l.onFloorCleared(p, floor); } catch (RuntimeException e) { LOG.warn("floor listener failed on clear: {}", e.toString()); }
         }
     }
+
+    // ---------------------------------------------------------------- what lives here
+    /** The entity tag the Dungeon Master puts on every monster it spawns (a plain scoreboard tag, so it survives a reload with the mob). */
+    public static final String DM_TAG = "nusmp_dm";
+
+    /**
+     * Is this one of the Dungeon Master's monsters? Tensura's monsters are tamable animals, not the vanilla {@code Enemy} interface the 1.36.0 economy and HP buffer
+     * key on, so those two (and the faction drops) ask this as well: a direwolf the Director sent must drop stones and carry the buffer like a zombie does.
+     */
+    public static boolean isDungeonMonster(Entity e) { return e != null && e.getTags().contains(DM_TAG); }
 
     // ---------------------------------------------------------------- where
     /** Is this the Mega-Dungeon dimension? Null-safe, both sides. */
@@ -158,7 +180,15 @@ public final class MegaDungeon {
         d.setDirty();
         for (SectorListener l : LISTENERS) l.onSectorUnsealed(level, s);
         Expander e = expander;
-        if (e != null && com.newuniverse.nusmp.labyrinth.mega.MegaConfig.get(MegaConfig.EXPANSION)) e.requestNext(level, s);
+        if (e != null && com.newuniverse.nusmp.labyrinth.mega.MegaConfig.get(MegaConfig.EXPANSION)) {
+            boolean wait = MegaConfig.get(MegaConfig.EXPAND_AFTER_VAULT) && s.vaultCenter != null && s.crucible.phase != Sector.Crucible.Phase.RESOLVED;
+            if (wait) {
+                s.expansionPending = true;      // the vault comes first: crucibleResolved() or a player at the Way Onward ({@link #requestPending}) starts the next sector
+                d.setDirty();
+            } else {
+                e.requestNext(level, s);
+            }
+        }
         return true;
     }
 
@@ -170,6 +200,20 @@ public final class MegaDungeon {
         if (s.state == Sector.State.UNSEALED) s.state = Sector.State.COMPLETE;
         d.setDirty();
         for (SectorListener l : LISTENERS) l.onCrucibleResolved(level, s);
+        requestPending(level, s);
+    }
+
+    /**
+     * 1.55.0: starts the next sector of a sector whose Gatekeeper is open and whose expansion was held back (see {@link #unseal}). Called when its Crucible is
+     * resolved and by the Way Onward trigger when a player reaches the seal. A no-op when nothing is pending, so every caller may call it freely.
+     */
+    public static boolean requestPending(ServerLevel level, Sector s) {
+        if (s == null || !s.expansionPending) return false;
+        Expander e = expander;
+        if (e == null || !MegaConfig.get(MegaConfig.EXPANSION)) return false;
+        s.expansionPending = false;
+        MegaData.get(level.getServer()).setDirty();
+        return e.requestNext(level, s);
     }
 
     /** Called by the generator when a sector's pieces are placed and its data saved (it sets ACTIVE itself first). */

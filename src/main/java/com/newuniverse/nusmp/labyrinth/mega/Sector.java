@@ -72,6 +72,11 @@ public final class Sector {
     public final List<BlockPos> pedestals = new ArrayList<>();
     /** The id of the sector that was generated off this one's Way Onward, or -1. */
     public int nextId = -1;
+    /**
+     * 1.55.0: the Gatekeeper was opened but the next sector has not been requested yet. It waits until the Crucible is resolved or a player reaches the Way Onward
+     * ({@code mega.expandAfterVault}), so that the relic taken can decide the next theme. Saved, so a restart keeps waiting.
+     */
+    public boolean expansionPending;
 
     public final Crucible crucible = new Crucible();
 
@@ -198,6 +203,7 @@ public final class Sector {
         for (int i = 0; i < pl.length; i++) pl[i] = pedestals.get(i).asLong();
         t.putLongArray("peds", pl);
         t.putInt("next", nextId);
+        if (expansionPending) t.putBoolean("xpend", true);
         t.put("crucible", crucible.save());
         return t;
     }
@@ -240,6 +246,7 @@ public final class Sector {
         s.relicCount = Math.max(1, Math.min(3, t.getInt("relics")));
         for (long p : t.getLongArray("peds")) s.pedestals.add(BlockPos.of(p));
         s.nextId = t.contains("next") ? t.getInt("next") : -1;
+        s.expansionPending = t.getBoolean("xpend");
         if (t.contains("crucible")) s.crucible.load(t.getCompound("crucible"));
         return s;
     }

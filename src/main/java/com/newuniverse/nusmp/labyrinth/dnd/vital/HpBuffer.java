@@ -54,7 +54,7 @@ public final class HpBuffer {
 
     /** Buffer {@code mob} if it qualifies and has none yet. Returns true when it was buffered now. */
     public static boolean apply(Mob mob, double scale, boolean loadedFromDisk) {
-        if (!(mob instanceof Enemy) || isBoss(mob) || isBuffered(mob)) return false;
+        if (!(mob instanceof Enemy || com.newuniverse.nusmp.labyrinth.mega.MegaDungeon.isDungeonMonster(mob)) || isBoss(mob) || isBuffered(mob)) return false;
         AttributeInstance hp = mob.getAttribute(Attributes.MAX_HEALTH);
         if (hp == null) return false;
         mob.addTag(TAG);
