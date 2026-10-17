@@ -3,6 +3,7 @@ package com.newuniverse.nusmp.labyrinth.mega.enc;
 import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.labyrinth.dnd.economy.LightItems;
+import com.newuniverse.nusmp.labyrinth.mega.FloorMap;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
 import com.newuniverse.nusmp.labyrinth.mega.Room;
 import com.newuniverse.nusmp.labyrinth.mega.Sector;
@@ -180,7 +181,7 @@ public final class EncounterDirector {
         if (sector == null) return Outcome.of(Kind.OUTSIDE, "the party stands between two sectors");
         if (exposed.isEmpty()) return Outcome.of(Kind.SAFE_ZONE, "the party is in a safe zone or a boss room: the Dungeon Master does not roll");
         if (sector.state == Sector.State.GENERATING || sector.state == Sector.State.FAILED || sector.rooms.isEmpty()) return Outcome.of(Kind.NOT_READY, "sector " + sector.id + " is not ready");
-        EncounterTable table = EncData.table(sector.theme);
+        EncounterTable table = EncData.table(sector.theme, sector.polarity);
         if (table.entries().isEmpty()) return Outcome.of(Kind.NO_ENTRY, "the encounter table of " + sector.theme.id() + " is empty");
         if (level.getDifficulty() == Difficulty.PEACEFUL && !(force != null && force.allowPeaceful())) return Outcome.of(Kind.PEACEFUL, "the world is Peaceful: the monsters would vanish at once");
         double[] centre = centre(exposed);
@@ -193,8 +194,8 @@ public final class EncounterDirector {
         }
 
         // the dice
-        int threat = sector.threat;
         View v = view(level, sector, exposed, table, now);
+        int threat = v.threat();
         Random rnd = new Random(level.getRandom().nextLong());
         EncounterRoll.Result res;
         if (force != null && force.band() != null) res = new EncounterRoll.Result(0, v.mods(), 0, v.dc(), 0, force.band(), false, false);
@@ -236,7 +237,7 @@ public final class EncounterDirector {
 
     private static Outcome spawnEntry(ServerLevel level, Sector sector, EncounterTable table, List<ServerPlayer> exposed, EncounterTable.Entry entry, Band band,
                                       View v, Random rnd, long now, EncounterRoll.Result res) {
-        int threat = sector.threat;
+        int threat = v.threat();
         double budget = EncounterRoll.budget(EncConfig.get(EncConfig.BASE_BUDGET), band, threat, v.factor(), table.budgetScale());
         double min = entry.minRange() > 0.0 ? entry.minRange() : EncConfig.get(EncConfig.SPAWN_MIN);
         double max = entry.maxRange() > 0.0 ? entry.maxRange() : Math.max(min + 8.0, EncConfig.get(EncConfig.SPAWN_MAX));
@@ -339,7 +340,7 @@ public final class EncounterDirector {
 
     // ---------------------------------------------------------------- the reading of a party
     /** Everything the dice are made of, for the roll and for the status command. */
-    record View(int size, double factor, double noise, LightRules.Light light, boolean noisy, EncounterRoll.Mods mods, int dc) {}
+    record View(int size, int threat, int floor, double factor, double noise, LightRules.Light light, boolean noisy, EncounterRoll.Mods mods, int dc) {}
 
     static View view(ServerLevel level, Sector sector, List<ServerPlayer> exposed, EncounterTable table, long now) {
         int n = exposed.size();
@@ -355,8 +356,11 @@ public final class EncounterDirector {
         LightRules.Light light = LightRules.evaluate(block, held);
         double[] factors = PartyMath.parseFactors(EncConfig.get(EncConfig.PARTY_FACTORS));
         double factor = PartyMath.factor(n, factors, EncConfig.get(EncConfig.PARTY_EXTRA));
-        EncounterRoll.Mods mods = EncounterRoll.mods(sector.threat, noise, light.mod(), n, table.rollBonus(), EncounterRoll.Caps.DEFAULT);
-        return new View(n, factor, noise, light, noise >= EncConfig.get(EncConfig.NOISY_AT), mods, EncConfig.get(EncConfig.DC));
+        boolean byFloor = EncConfig.get(EncConfig.FLOOR_THREAT);
+        int floor = byFloor ? FloorThreat.floorOf(level, exposed) : 0;
+        int threat = ThreatInput.of(sector.threat, floor, byFloor);
+        EncounterRoll.Mods mods = EncounterRoll.mods(threat, noise, light.mod(), n, table.rollBonus(), EncounterRoll.Caps.DEFAULT);
+        return new View(n, threat, floor, factor, noise, light, noise >= EncConfig.get(EncConfig.NOISY_AT), mods, EncConfig.get(EncConfig.DC));
     }
 
     /** A light in either hand: a block item whose block emits light, or an item the id test knows (the idea of the gloom clock). */
@@ -537,7 +541,7 @@ public final class EncounterDirector {
             return out;
         }
         Room room = sector.roomAt(player.blockPosition());
-        EncounterTable table = EncData.table(sector.theme);
+        EncounterTable table = EncData.table(sector.theme, sector.polarity);
         List<ServerPlayer> ps = new ArrayList<>();
         StringBuilder names = new StringBuilder();
         for (ServerPlayer p : party) {
@@ -548,7 +552,9 @@ public final class EncounterDirector {
         View v = view(level, sector, ps, table, now);
         long cool = 0L;
         for (ServerPlayer p : ps) cool = Math.max(cool, state(p.getUUID()).cooldownUntil);
-        out.add("Party of " + ps.size() + ": " + names + ". Sector " + sector.id + " (" + sector.theme.id() + ", threat " + sector.threat + "), room " + (room == null ? "-" : room.kind.name().toLowerCase(java.util.Locale.ROOT)) + ".");
+        out.add("Party of " + ps.size() + ": " + names + ". Sector " + sector.id + " (" + sector.theme.id() + ", " + sector.polarity.id() + " road, sector threat " + sector.threat + "), room "
+                + (room == null ? "-" : room.kind.name().toLowerCase(java.util.Locale.ROOT)) + ".");
+        out.add("Floor " + (v.floor() == 0 ? "unknown" : FloorMap.label(v.floor())) + ", the dice read threat " + v.threat() + (v.floor() != 0 ? " (from the floor)" : " (from the sector)") + ".");
         out.add("Noise " + String.format(java.util.Locale.ROOT, "%.2f", v.noise()) + (v.noisy() ? " (noisy)" : "") + ", light " + v.light().brightness() + (v.light().dark() ? " (dark)" : v.light().lit() ? " (lit)" : "")
                 + ", party factor " + String.format(java.util.Locale.ROOT, "%.2f", v.factor()) + ".");
         EncounterRoll.Mods m = v.mods();
