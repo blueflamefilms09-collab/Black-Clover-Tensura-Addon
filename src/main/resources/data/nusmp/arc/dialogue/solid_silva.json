@@ -1,0 +1,134 @@
+{
+  "character": "solid_silva",
+  "voice": "#6AA0E0",
+  "lines": {
+    "greeting": [
+      {
+        "text": "Solid Silva, Silver Eagle. Yes, those Silvas. Try not to look too impressed.",
+        "key": "arc.dialogue.solid_silva.1",
+        "first": true
+      },
+      {
+        "text": "Another delver? How tedious. ...Well, at least you are not shouting.",
+        "key": "arc.dialogue.solid_silva.2",
+        "first": true
+      },
+      {
+        "text": "You look like you need advice. Lucky for you I give it free. Do not expect it to be nice.",
+        "key": "arc.dialogue.solid_silva.3",
+        "first": true
+      },
+      {
+        "text": "So you are the delver who keeps turning up in the reports. I suppose I should say well done. ...There. I said it.",
+        "key": "arc.dialogue.solid_silva.4",
+        "first": true,
+        "minStage": 4
+      },
+      {
+        "text": "Oh. You again.",
+        "key": "arc.dialogue.solid_silva.5",
+        "first": false
+      },
+      {
+        "text": "Still here? Fine.",
+        "key": "arc.dialogue.solid_silva.6",
+        "first": false
+      }
+    ],
+    "hint": [
+      {
+        "text": "Water takes the shape of whatever holds it. A mage who cannot adapt is just a puddle with pride.",
+        "key": "arc.dialogue.solid_silva.7",
+        "priority": 1
+      },
+      {
+        "text": "My family has a talent for looking down on people. I am working on it. Slowly.",
+        "key": "arc.dialogue.solid_silva.8",
+        "priority": 1
+      },
+      {
+        "text": "Do not waste mana on showy spells. Anyone can make a big splash. The trick is being the one still standing afterwards.",
+        "key": "arc.dialogue.solid_silva.9",
+        "priority": 1
+      },
+      {
+        "text": "My little sister turned out to be stronger than the rest of us. I will not say that out loud again.",
+        "key": "arc.dialogue.solid_silva.10",
+        "priority": 1
+      },
+      {
+        "text": "The tide goes out, the tide comes in. If you are losing a fight, remember the tide: pull back, then return stronger.",
+        "key": "arc.dialogue.solid_silva.11",
+        "priority": 1
+      },
+      {
+        "text": "No champions beaten? Fine. We all start somewhere. Some of us started with servants. Never mind.",
+        "key": "arc.dialogue.solid_silva.12",
+        "priority": 1,
+        "weight": 4,
+        "maxStage": 0
+      },
+      {
+        "text": "The Eye of the Midnight Sun are fanatics. Fanatics make mistakes when you wreck their plans. So wreck them.",
+        "key": "arc.dialogue.solid_silva.13",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "minStage": 1
+      },
+      {
+        "text": "You beat Vetto? ...Tch. Fine. Good work. Do not make me say it twice.",
+        "key": "arc.dialogue.solid_silva.14",
+        "priority": 1,
+        "weight": 4,
+        "defeated": [
+          "vetto"
+        ]
+      },
+      {
+        "text": "Spade Kingdom. Dark nonsense. Wash off the curses after every fight there.",
+        "key": "arc.dialogue.solid_silva.15",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "spade_raid"
+        ]
+      },
+      {
+        "text": "Lucius? Let somebody else go first. ...I am joking. Mostly.",
+        "key": "arc.dialogue.solid_silva.16",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "wizard_king"
+        ]
+      },
+      {
+        "text": "People from beyond our world in the Chronicle? Splendid. More people to out-perform.",
+        "key": "arc.dialogue.solid_silva.17",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "seven_deadly_sins",
+          "danmachi"
+        ]
+      }
+    ],
+    "farewell": [
+      {
+        "text": "Do not die. It would be embarrassing for the Sanctuary.",
+        "key": "arc.dialogue.solid_silva.18"
+      },
+      {
+        "text": "Go on. I have things to look down on.",
+        "key": "arc.dialogue.solid_silva.19"
+      },
+      {
+        "text": "Hmph. Good luck.",
+        "key": "arc.dialogue.solid_silva.20"
+      }
+    ]
+  }
+}

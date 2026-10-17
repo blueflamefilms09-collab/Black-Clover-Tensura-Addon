@@ -1,0 +1,209 @@
+{
+  "character": "julius_novachrono",
+  "voice": "#E8DCC0",
+  "lines": {
+    "greeting": [
+      {
+        "text": "Ahaha! A new visitor to the Sanctuary! I am Julius Novachrono. Do not stand on ceremony. I certainly do not.",
+        "key": "arc.dialogue.julius_novachrono.1",
+        "first": true
+      },
+      {
+        "text": "Welcome, {player}! You have the look of someone who has opened a great many doors and wants to open more. Excellent!",
+        "key": "arc.dialogue.julius_novachrono.2",
+        "first": true
+      },
+      {
+        "text": "Ah, so you are the one the dungeon has been whispering about! Come, ask me anything. Time is the one thing I always seem to find.",
+        "key": "arc.dialogue.julius_novachrono.3",
+        "first": true
+      },
+      {
+        "text": "The records say your story stands at '{saga}', and I am only now learning your name! Forgive a Wizard King his manners.",
+        "key": "arc.dialogue.julius_novachrono.4",
+        "first": true,
+        "minStage": 5
+      },
+      {
+        "text": "Ah, {player}! Always a pleasure.",
+        "key": "arc.dialogue.julius_novachrono.5",
+        "first": false
+      },
+      {
+        "text": "Back so soon? Or did I wander off in the middle of the hour again? Hee hee.",
+        "key": "arc.dialogue.julius_novachrono.6",
+        "first": false
+      }
+    ],
+    "hint": [
+      {
+        "text": "Every grimoire is a small door. I have spent my life opening them. Never stop reading.",
+        "key": "arc.dialogue.julius_novachrono.7",
+        "priority": 1
+      },
+      {
+        "text": "I never judged anyone by rank or by blood. The dungeon does not either: it only asks what you can do.",
+        "key": "arc.dialogue.julius_novachrono.8",
+        "priority": 1
+      },
+      {
+        "text": "The Chronicle in the plaza keeps the list of every story told here, and the dungeon plays them back as challengers. Read it before each descent.",
+        "key": "arc.dialogue.julius_novachrono.9",
+        "priority": 1
+      },
+      {
+        "text": "Time Magic is mostly patience. Even so, there are moments when patience runs out and only the next breath is left.",
+        "key": "arc.dialogue.julius_novachrono.10",
+        "priority": 1
+      },
+      {
+        "text": "Chrono Stasis is the page every Time mage learns to trust. It holds a thing for a few seconds at most. Spend them on a friend's safety, not on greed.",
+        "key": "arc.dialogue.julius_novachrono.11",
+        "priority": 1
+      },
+      {
+        "text": "If you find the hours are not enough, I can spare one or two. Not many. Ahaha!",
+        "key": "arc.dialogue.julius_novachrono.12",
+        "priority": 1
+      },
+      {
+        "text": "If a stranger in the plaza gives you good advice, be polite and say thank you. You never know who is wearing a disguise.",
+        "key": "arc.dialogue.julius_novachrono.13",
+        "priority": 1
+      },
+      {
+        "text": "Magic is not a ranking. It is a conversation. Listen to your grimoire, and it will tell you what it wants to become.",
+        "key": "arc.dialogue.julius_novachrono.14",
+        "priority": 1
+      },
+      {
+        "text": "A champion that falls does not vanish. It joins the Chronicle. That is how we remember them.",
+        "key": "arc.dialogue.julius_novachrono.15",
+        "priority": 1
+      },
+      {
+        "text": "Let me tell you how it goes. First the Eye of the Midnight Sun, then the Spade Kingdom, then a name I would rather not say aloud. The Chronicle opens each in its turn.",
+        "key": "arc.dialogue.julius_novachrono.16",
+        "priority": 1,
+        "weight": 4,
+        "maxStage": 0
+      },
+      {
+        "text": "The Eye of the Midnight Sun is older than the kingdom's quarrels. Their members hold the first guardian floors. Beat them in the order the Chronicle gives.",
+        "key": "arc.dialogue.julius_novachrono.17",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "minStage": 1
+      },
+      {
+        "text": "The devil of the word souls is silenced. One more thread of that old story is cut. Ahaha, I do love a tidy ending!",
+        "key": "arc.dialogue.julius_novachrono.18",
+        "priority": 1,
+        "weight": 4,
+        "defeated": [
+          "zagred"
+        ]
+      },
+      {
+        "text": "The Spade Kingdom now. The Zogratis siblings fight with gravity, blood and bone, and behind them stands a devil whose weight no one bears alone. Bring friends.",
+        "key": "arc.dialogue.julius_novachrono.19",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "spade_raid"
+        ]
+      },
+      {
+        "text": "The last of them is Lucius Zogratis. He can only be called to his own arena, with the Hourglass of the Final Hour.",
+        "key": "arc.dialogue.julius_novachrono.20",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "wizard_king"
+        ]
+      },
+      {
+        "text": "Craft the hourglass from gold, a nether star, amethyst, a clock, diamonds and an ender pearl. An odd recipe, but time is odd.",
+        "key": "arc.dialogue.julius_novachrono.21",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "wizard_king"
+        ]
+      },
+      {
+        "text": "Hold the hourglass, and those within eight paces of you come with you. Choose them well, and do not step in alone.",
+        "key": "arc.dialogue.julius_novachrono.22",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "wizard_king"
+        ]
+      },
+      {
+        "text": "In that fight a part of me is bound to him. At four moments my will rises, and for a few breaths he is not himself. Strike then, all of you, with everything you have.",
+        "key": "arc.dialogue.julius_novachrono.23",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "wizard_king"
+        ]
+      },
+      {
+        "text": "He reads the next blow before it falls, unless two of you strike together, or one of you strikes very quickly, or you carry anti-magic. Remember that.",
+        "key": "arc.dialogue.julius_novachrono.24",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "wizard_king"
+        ]
+      },
+      {
+        "text": "The Chronicle has begun to open pages from other worlds. Seven knights who carry sins, a labyrinth beneath a city called Orario... Stranger and stranger. I am delighted.",
+        "key": "arc.dialogue.julius_novachrono.25",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "seven_deadly_sins",
+          "danmachi"
+        ]
+      },
+      {
+        "text": "If you meet someone from another world, treat them as you would a Magic Knight from another kingdom. Curiosity first. Swords second.",
+        "key": "arc.dialogue.julius_novachrono.26",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "seven_deadly_sins",
+          "danmachi"
+        ]
+      },
+      {
+        "text": "You stood before Lucius and walked away. I... thank you. More than I can say in a single hour.",
+        "key": "arc.dialogue.julius_novachrono.27",
+        "priority": 1,
+        "weight": 4,
+        "defeated": [
+          "lucius"
+        ]
+      }
+    ],
+    "farewell": [
+      {
+        "text": "Go well, {player}. And come back with stories!",
+        "key": "arc.dialogue.julius_novachrono.28"
+      },
+      {
+        "text": "May your hours be long and your grimoire heavy.",
+        "key": "arc.dialogue.julius_novachrono.29"
+      },
+      {
+        "text": "Until the next page.",
+        "key": "arc.dialogue.julius_novachrono.30"
+      }
+    ]
+  }
+}

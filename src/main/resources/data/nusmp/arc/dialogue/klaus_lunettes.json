@@ -1,0 +1,139 @@
+{
+  "character": "klaus_lunettes",
+  "voice": "#9AB0C0",
+  "lines": {
+    "greeting": [
+      {
+        "text": "Klaus Lunettes, Golden Dawn. I assume you know what that means. If you do not, you will learn.",
+        "key": "arc.dialogue.klaus_lunettes.1",
+        "first": true
+      },
+      {
+        "text": "State your purpose in the Sanctuary. ...The dungeon, of course. Then listen carefully, because I will say this only once.",
+        "key": "arc.dialogue.klaus_lunettes.2",
+        "first": true
+      },
+      {
+        "text": "A new delver. Tell me, {player}: do you have a plan, or only courage? Courage is not a plan.",
+        "key": "arc.dialogue.klaus_lunettes.3",
+        "first": true
+      },
+      {
+        "text": "Hm. A delver of record already. Then I will skip the lecture. Mostly.",
+        "key": "arc.dialogue.klaus_lunettes.4",
+        "first": true,
+        "minStage": 4
+      },
+      {
+        "text": "{player}. What have you learned since last time?",
+        "key": "arc.dialogue.klaus_lunettes.5",
+        "first": false
+      },
+      {
+        "text": "Still alive? Good. Dead delvers make poor strategists.",
+        "key": "arc.dialogue.klaus_lunettes.6",
+        "first": false
+      }
+    ],
+    "hint": [
+      {
+        "text": "Every dangerous attack shows its warning first: a mark on the floor, a glow, a held breath. Learn the warnings and half the fight is won.",
+        "key": "arc.dialogue.klaus_lunettes.7",
+        "priority": 1
+      },
+      {
+        "text": "Steel is patient. A wall, a lance, an ally standing behind both. Build a position before you advance.",
+        "key": "arc.dialogue.klaus_lunettes.8",
+        "priority": 1
+      },
+      {
+        "text": "Do not fight in the open when a corridor will do. Narrow ground favours the prepared.",
+        "key": "arc.dialogue.klaus_lunettes.9",
+        "priority": 1
+      },
+      {
+        "text": "I was raised to believe nobility is a privilege. I have since learned it is a debt. I intend to repay mine.",
+        "key": "arc.dialogue.klaus_lunettes.10",
+        "priority": 1
+      },
+      {
+        "text": "Noble or commoner, I judge a mage by how long they stay on their feet. The dungeon keeps the same ledger.",
+        "key": "arc.dialogue.klaus_lunettes.11",
+        "priority": 1
+      },
+      {
+        "text": "Noise and light draw attention in the dark. Move quietly through halls you have not cleared, and scout before you commit.",
+        "key": "arc.dialogue.klaus_lunettes.12",
+        "priority": 1
+      },
+      {
+        "text": "No champion defeated, yet you are asking for advice. That alone puts you ahead of most. Study the first guardian's pattern before you commit.",
+        "key": "arc.dialogue.klaus_lunettes.13",
+        "priority": 1,
+        "weight": 4,
+        "maxStage": 0
+      },
+      {
+        "text": "The Eye of the Midnight Sun fights as a unit. When you meet one of them, assume a second plan is hidden behind the first.",
+        "key": "arc.dialogue.klaus_lunettes.14",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "minStage": 1
+      },
+      {
+        "text": "You defeated Vetto. A beast with no obvious weakness. I would like your notes, if you kept any.",
+        "key": "arc.dialogue.klaus_lunettes.15",
+        "priority": 1,
+        "weight": 4,
+        "defeated": [
+          "vetto"
+        ]
+      },
+      {
+        "text": "Gravity, blood, bone. Three siblings, three problems. Solve them one at a time, in the order the Chronicle gives.",
+        "key": "arc.dialogue.klaus_lunettes.16",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "spade_raid"
+        ]
+      },
+      {
+        "text": "Lucius reads a single attacker's rhythm. So break your rhythm, or strike in pairs, or strike so fast he has no time to read.",
+        "key": "arc.dialogue.klaus_lunettes.17",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "wizard_king"
+        ]
+      },
+      {
+        "text": "I cannot evaluate enemies from worlds I have never studied. I will study them anyway. A strategist is paid to be uncomfortable.",
+        "key": "arc.dialogue.klaus_lunettes.18",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "seven_deadly_sins",
+          "danmachi"
+        ]
+      }
+    ],
+    "farewell": [
+      {
+        "text": "Return with a report.",
+        "key": "arc.dialogue.klaus_lunettes.19"
+      },
+      {
+        "text": "Do nothing unwise. Or, at the least, document it.",
+        "key": "arc.dialogue.klaus_lunettes.20"
+      },
+      {
+        "text": "Proceed.",
+        "key": "arc.dialogue.klaus_lunettes.21"
+      }
+    ]
+  }
+}

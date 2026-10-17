@@ -1,0 +1,139 @@
+{
+  "character": "nozel_silva",
+  "voice": "#C8CCD8",
+  "lines": {
+    "greeting": [
+      {
+        "text": "Nozel Silva, captain of the Silver Eagle. State your business, or do not. I have little interest either way.",
+        "key": "arc.dialogue.nozel_silva.1",
+        "first": true
+      },
+      {
+        "text": "A new delver. Do not expect special treatment because you stand on royal ground. Do expect honesty.",
+        "key": "arc.dialogue.nozel_silva.2",
+        "first": true
+      },
+      {
+        "text": "Hmph. At least you do not shout. That puts you ahead of most.",
+        "key": "arc.dialogue.nozel_silva.3",
+        "first": true
+      },
+      {
+        "text": "I have heard of you, {player}. Do not let it go to your head.",
+        "key": "arc.dialogue.nozel_silva.4",
+        "first": true,
+        "minStage": 4
+      },
+      {
+        "text": "You again.",
+        "key": "arc.dialogue.nozel_silva.5",
+        "first": false
+      },
+      {
+        "text": "Still alive. Acceptable.",
+        "key": "arc.dialogue.nozel_silva.6",
+        "first": false
+      }
+    ],
+    "hint": [
+      {
+        "text": "Mercury flows into every gap. A defence with no gap is worth more than ten attacks. Remember that.",
+        "key": "arc.dialogue.nozel_silva.7",
+        "priority": 1
+      },
+      {
+        "text": "Do not mistake courage for competence. The dungeon punishes the first and rewards the second.",
+        "key": "arc.dialogue.nozel_silva.8",
+        "priority": 1
+      },
+      {
+        "text": "Pride is not strength. But strength that does not know its worth is wasted. I speak from experience.",
+        "key": "arc.dialogue.nozel_silva.9",
+        "priority": 1
+      },
+      {
+        "text": "Family is a matter of effort, not blood. ...Forget that I said that.",
+        "key": "arc.dialogue.nozel_silva.10",
+        "priority": 1
+      },
+      {
+        "text": "A telegraphed blow is a gift. Anyone who dies to one has only himself to blame.",
+        "key": "arc.dialogue.nozel_silva.11",
+        "priority": 1
+      },
+      {
+        "text": "Armour, barrier, mercury: choose what suits you, then trust it. Doubt kills faster than any blade.",
+        "key": "arc.dialogue.nozel_silva.12",
+        "priority": 1
+      },
+      {
+        "text": "No champions defeated. Then you have much to prove. Begin by surviving the first one.",
+        "key": "arc.dialogue.nozel_silva.13",
+        "priority": 1,
+        "weight": 4,
+        "maxStage": 0
+      },
+      {
+        "text": "The Eye of the Midnight Sun means to rewrite this kingdom. I do not intend to let them. Neither should you.",
+        "key": "arc.dialogue.nozel_silva.14",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "minStage": 1
+      },
+      {
+        "text": "The Eye has lost another piece. Continue.",
+        "key": "arc.dialogue.nozel_silva.15",
+        "priority": 1,
+        "weight": 4,
+        "defeated": [
+          "heath_grice"
+        ]
+      },
+      {
+        "text": "Spade Kingdom gravity can pin even armour. Do not lean on silver or steel to bear a weight meant for resolve.",
+        "key": "arc.dialogue.nozel_silva.16",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "spade_raid"
+        ]
+      },
+      {
+        "text": "If you intend to face Lucius, do it as a unit. A single blade will not matter.",
+        "key": "arc.dialogue.nozel_silva.17",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "wizard_king"
+        ]
+      },
+      {
+        "text": "The Chronicle holds strangers now. Fine. I will judge them as I judge everyone: by what they do under pressure.",
+        "key": "arc.dialogue.nozel_silva.18",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "seven_deadly_sins",
+          "danmachi"
+        ]
+      }
+    ],
+    "farewell": [
+      {
+        "text": "Go.",
+        "key": "arc.dialogue.nozel_silva.19"
+      },
+      {
+        "text": "Do not disgrace the Sanctuary.",
+        "key": "arc.dialogue.nozel_silva.20"
+      },
+      {
+        "text": "...Be careful.",
+        "key": "arc.dialogue.nozel_silva.21"
+      }
+    ]
+  }
+}

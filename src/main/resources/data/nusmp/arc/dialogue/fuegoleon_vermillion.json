@@ -1,0 +1,139 @@
+{
+  "character": "fuegoleon_vermillion",
+  "voice": "#E0502C",
+  "lines": {
+    "greeting": [
+      {
+        "text": "I am Fuegoleon Vermillion, captain of the Crimson Lion. Be welcome in the Sanctuary, {player}.",
+        "key": "arc.dialogue.fuegoleon_vermillion.1",
+        "first": true
+      },
+      {
+        "text": "A delver, then. The dungeon has need of those who keep their heads. Do you?",
+        "key": "arc.dialogue.fuegoleon_vermillion.2",
+        "first": true
+      },
+      {
+        "text": "Fire is a good servant and a terrible master. I would be glad to see you learn the difference.",
+        "key": "arc.dialogue.fuegoleon_vermillion.3",
+        "first": true
+      },
+      {
+        "text": "Your deeds reached the Sanctuary before you did, {player}. It is an honour to meet you.",
+        "key": "arc.dialogue.fuegoleon_vermillion.4",
+        "first": true,
+        "minStage": 4
+      },
+      {
+        "text": "Welcome back, {player}.",
+        "key": "arc.dialogue.fuegoleon_vermillion.5",
+        "first": false
+      },
+      {
+        "text": "Good to see you on your feet.",
+        "key": "arc.dialogue.fuegoleon_vermillion.6",
+        "first": false
+      }
+    ],
+    "hint": [
+      {
+        "text": "A flame with no purpose is only a fire. Decide what you protect, and let the heat follow.",
+        "key": "arc.dialogue.fuegoleon_vermillion.7",
+        "priority": 1
+      },
+      {
+        "text": "I was struck down once, badly. It taught me what the people behind me are worth. Fight with them, not around them.",
+        "key": "arc.dialogue.fuegoleon_vermillion.8",
+        "priority": 1
+      },
+      {
+        "text": "The spirit of fire does not lend its power to the careless. Earn it, and take care of it.",
+        "key": "arc.dialogue.fuegoleon_vermillion.9",
+        "priority": 1
+      },
+      {
+        "text": "My sister Mereoleona has more strength than patience, and my brother Leopold more heart than caution. Between them they keep me humble.",
+        "key": "arc.dialogue.fuegoleon_vermillion.10",
+        "priority": 1
+      },
+      {
+        "text": "Every boss shows its blow before it lands. A calm eye sees the warning; a hot head sees only the target.",
+        "key": "arc.dialogue.fuegoleon_vermillion.11",
+        "priority": 1
+      },
+      {
+        "text": "Hold the line together. A party that retreats together can always return.",
+        "key": "arc.dialogue.fuegoleon_vermillion.12",
+        "priority": 1
+      },
+      {
+        "text": "Start small, {player}. A guardian on the early floors is still a guardian. There is no shame in bringing company.",
+        "key": "arc.dialogue.fuegoleon_vermillion.13",
+        "priority": 1,
+        "weight": 4,
+        "maxStage": 0
+      },
+      {
+        "text": "The Eye of the Midnight Sun is patient and cruel. Do not let them choose the ground you fight on.",
+        "key": "arc.dialogue.fuegoleon_vermillion.14",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "minStage": 1
+      },
+      {
+        "text": "One of the Eye's blades is broken. It is a start, not the end of it.",
+        "key": "arc.dialogue.fuegoleon_vermillion.15",
+        "priority": 1,
+        "weight": 4,
+        "defeated": [
+          "heath_grice"
+        ]
+      },
+      {
+        "text": "The Spade Kingdom fights in a way we do not. Do not meet gravity with stubbornness; go around it.",
+        "key": "arc.dialogue.fuegoleon_vermillion.16",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "spade_raid"
+        ]
+      },
+      {
+        "text": "To face Lucius is to face a man who has already thought of your next move. Show him one he has not.",
+        "key": "arc.dialogue.fuegoleon_vermillion.17",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "wizard_king"
+        ]
+      },
+      {
+        "text": "I am told there are warriors in the Chronicle who answer to no kingdom at all. I would be glad to learn from them, and to stand beside them.",
+        "key": "arc.dialogue.fuegoleon_vermillion.18",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "seven_deadly_sins",
+          "danmachi"
+        ]
+      }
+    ],
+    "farewell": [
+      {
+        "text": "Go with fire in your heart and a cool head.",
+        "key": "arc.dialogue.fuegoleon_vermillion.19"
+      },
+      {
+        "text": "Return to us, {player}.",
+        "key": "arc.dialogue.fuegoleon_vermillion.20"
+      },
+      {
+        "text": "The Crimson Lion stands behind you.",
+        "key": "arc.dialogue.fuegoleon_vermillion.21"
+      }
+    ]
+  }
+}

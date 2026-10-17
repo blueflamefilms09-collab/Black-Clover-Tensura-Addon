@@ -1,0 +1,155 @@
+{
+  "character": "yuno",
+  "voice": "#7FD6A0",
+  "lines": {
+    "greeting": [
+      {
+        "text": "{player}. I have not seen you here before. I am Yuno, of the Golden Dawn.",
+        "key": "arc.dialogue.yuno.1",
+        "first": true
+      },
+      {
+        "text": "A new delver. If you are going into the dungeon, go in with a plan. Ask me what you want to know.",
+        "key": "arc.dialogue.yuno.2",
+        "first": true
+      },
+      {
+        "text": "Hm. You look like you have not decided whether to be brave or careful. Be both.",
+        "key": "arc.dialogue.yuno.3",
+        "first": true
+      },
+      {
+        "text": "So you are the one the guardians keep losing to. I wanted to meet you, {player}.",
+        "key": "arc.dialogue.yuno.4",
+        "first": true,
+        "minStage": 3
+      },
+      {
+        "text": "Back again, {player}.",
+        "key": "arc.dialogue.yuno.5",
+        "first": false
+      },
+      {
+        "text": "Still in one piece. That is a good start.",
+        "key": "arc.dialogue.yuno.6",
+        "first": false
+      }
+    ],
+    "hint": [
+      {
+        "text": "My rival would charge in first and think afterwards. I prefer the other order. Both work, if you survive.",
+        "key": "arc.dialogue.yuno.7",
+        "priority": 1
+      },
+      {
+        "text": "Wind never pushes for the sake of pushing. It goes where the resistance is least. Fight the same way.",
+        "key": "arc.dialogue.yuno.8",
+        "priority": 1
+      },
+      {
+        "text": "A spirit lends its strength only to someone it trusts. Treat the one that chose you as a partner, not a tool.",
+        "key": "arc.dialogue.yuno.9",
+        "priority": 1
+      },
+      {
+        "text": "Spirit Dive asks a great deal of you both. Do not stay in it longer than the strain allows.",
+        "key": "arc.dialogue.yuno.10",
+        "priority": 1
+      },
+      {
+        "text": "Mana runs lower down there than it feels. If your magic starts to stutter, step back and breathe before you cast again.",
+        "key": "arc.dialogue.yuno.11",
+        "priority": 1
+      },
+      {
+        "text": "I mean to become Wizard King. So does Asta. Neither of us can afford to lose to anything in this dungeon.",
+        "key": "arc.dialogue.yuno.12",
+        "priority": 1
+      },
+      {
+        "text": "You have not beaten a single champion yet. Start with the Eye of the Midnight Sun on the early floors. They are strong, but they are the first step, not the last.",
+        "key": "arc.dialogue.yuno.13",
+        "priority": 1,
+        "weight": 4,
+        "maxStage": 0
+      },
+      {
+        "text": "Read the Chronicle in the plaza before you go down. It shows which fights are open to you and which are not.",
+        "key": "arc.dialogue.yuno.14",
+        "priority": 1,
+        "weight": 4,
+        "maxStage": 0
+      },
+      {
+        "text": "You are making progress against the Eye of the Midnight Sun. Do not grow comfortable: the ones who lead them are far beyond the first.",
+        "key": "arc.dialogue.yuno.15",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "minStage": 1
+      },
+      {
+        "text": "Heath Grice is down? Then you know the Eye's soldiers can be beaten. Remember how you did it.",
+        "key": "arc.dialogue.yuno.16",
+        "priority": 1,
+        "weight": 4,
+        "defeated": [
+          "heath_grice"
+        ]
+      },
+      {
+        "text": "You brought Vetto down: all brawn and no mercy, and you still found a way. I am impressed.",
+        "key": "arc.dialogue.yuno.17",
+        "priority": 1,
+        "weight": 4,
+        "defeated": [
+          "vetto"
+        ]
+      },
+      {
+        "text": "The Spade Kingdom. The Zogratis name carries a weight the Eye never had: gravity, blood and bone. Prepare for each of them separately.",
+        "key": "arc.dialogue.yuno.18",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "spade_raid"
+        ]
+      },
+      {
+        "text": "Lucius Zogratis. Even the Wizard King could not end him alone. Do not enter his arena unless you can fight as a team.",
+        "key": "arc.dialogue.yuno.19",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "wizard_king"
+        ]
+      },
+      {
+        "text": "There are fighters in the Chronicle I have never heard of, from worlds I have never seen. I intend to measure myself against every one.",
+        "key": "arc.dialogue.yuno.20",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "seven_deadly_sins",
+          "danmachi"
+        ]
+      }
+    ],
+    "farewell": [
+      {
+        "text": "Go carefully, {player}.",
+        "key": "arc.dialogue.yuno.21"
+      },
+      {
+        "text": "May the wind be at your back.",
+        "key": "arc.dialogue.yuno.22"
+      },
+      {
+        "text": "I will be here when you return. Try to make that certain.",
+        "key": "arc.dialogue.yuno.23"
+      }
+    ]
+  }
+}

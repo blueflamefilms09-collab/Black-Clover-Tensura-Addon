@@ -1,0 +1,139 @@
+{
+  "character": "charlotte_roselei",
+  "voice": "#4A90C8",
+  "lines": {
+    "greeting": [
+      {
+        "text": "Charlotte Roselei, Blue Rose. Do not stare. State your business or leave.",
+        "key": "arc.dialogue.charlotte_roselei.1",
+        "first": true
+      },
+      {
+        "text": "Hmph. Another delver. Keep your distance and your hands to yourself, and we will get along.",
+        "key": "arc.dialogue.charlotte_roselei.2",
+        "first": true
+      },
+      {
+        "text": "You are not unbearable. That is rare. Go on, speak.",
+        "key": "arc.dialogue.charlotte_roselei.3",
+        "first": true
+      },
+      {
+        "text": "You are the one clearing the guardian floors? ...Fine. I suppose that earns you a place within arm's reach.",
+        "key": "arc.dialogue.charlotte_roselei.4",
+        "first": true,
+        "minStage": 4
+      },
+      {
+        "text": "Oh. You.",
+        "key": "arc.dialogue.charlotte_roselei.5",
+        "first": false
+      },
+      {
+        "text": "Back again? Do not make a habit of it. ...Do.",
+        "key": "arc.dialogue.charlotte_roselei.6",
+        "first": false
+      }
+    ],
+    "hint": [
+      {
+        "text": "Thorns exist so that nobody has to apologise for what they protect. Remember that when you build a defence.",
+        "key": "arc.dialogue.charlotte_roselei.7",
+        "priority": 1
+      },
+      {
+        "text": "A trap you have seen is half-defused. The dungeon is full of them. Look at the floor before you step on it.",
+        "key": "arc.dialogue.charlotte_roselei.8",
+        "priority": 1
+      },
+      {
+        "text": "Briars bind what they touch. Fire frees you, so does a sharp blade, so does patience. Panic is the only thing that does not.",
+        "key": "arc.dialogue.charlotte_roselei.9",
+        "priority": 1
+      },
+      {
+        "text": "If you happen to meet the Black Bulls' captain, you did not hear my name from me.",
+        "key": "arc.dialogue.charlotte_roselei.10",
+        "priority": 1
+      },
+      {
+        "text": "Take your party's weakest member seriously. A chain breaks at its smallest link, and a squad at its most careless knight.",
+        "key": "arc.dialogue.charlotte_roselei.11",
+        "priority": 1
+      },
+      {
+        "text": "Noise and light draw things in the dark. Walk softly through halls you have not cleared.",
+        "key": "arc.dialogue.charlotte_roselei.12",
+        "priority": 1
+      },
+      {
+        "text": "No champions beaten. Listen: start with the lesser ones, watch their habits, then strike. That is what a Blue Rose does.",
+        "key": "arc.dialogue.charlotte_roselei.13",
+        "priority": 1,
+        "weight": 4,
+        "maxStage": 0
+      },
+      {
+        "text": "The Eye of the Midnight Sun hide behind pretty speeches. Cut through them.",
+        "key": "arc.dialogue.charlotte_roselei.14",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "minStage": 1
+      },
+      {
+        "text": "One of the Eye's thorns is pulled. Do not celebrate; there are more.",
+        "key": "arc.dialogue.charlotte_roselei.15",
+        "priority": 1,
+        "weight": 4,
+        "defeated": [
+          "heath_grice"
+        ]
+      },
+      {
+        "text": "Spade Kingdom blood magic is petty and cruel. Keep your guard up and your party close.",
+        "key": "arc.dialogue.charlotte_roselei.16",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "spade_raid"
+        ]
+      },
+      {
+        "text": "Lucius turns people into props on his stage. I would very much like to prune him.",
+        "key": "arc.dialogue.charlotte_roselei.17",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "wizard_king"
+        ]
+      },
+      {
+        "text": "More challengers from other worlds. Good. I have been told I am unsociable; this is my chance to be rude to strangers.",
+        "key": "arc.dialogue.charlotte_roselei.18",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "seven_deadly_sins",
+          "danmachi"
+        ]
+      }
+    ],
+    "farewell": [
+      {
+        "text": "Mind my roses on your way out.",
+        "key": "arc.dialogue.charlotte_roselei.19"
+      },
+      {
+        "text": "Go. ...Take care.",
+        "key": "arc.dialogue.charlotte_roselei.20"
+      },
+      {
+        "text": "Do not die.",
+        "key": "arc.dialogue.charlotte_roselei.21"
+      }
+    ]
+  }
+}
