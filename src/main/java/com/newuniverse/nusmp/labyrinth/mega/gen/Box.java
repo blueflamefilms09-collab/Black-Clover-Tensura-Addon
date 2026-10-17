@@ -47,6 +47,16 @@ public record Box(int minX, int minY, int minZ, int maxX, int maxY, int maxZ) {
         return new Box(Math.min(minX, o.minX), Math.min(minY, o.minY), Math.min(minZ, o.minZ), Math.max(maxX, o.maxX), Math.max(maxY, o.maxY), Math.max(maxZ, o.maxZ));
     }
 
+    /**
+     * The clear distance to another box in the horizontal plane: the larger of the empty gaps along x and z, in cells (0 when the boxes touch or overlap). It is the number
+     * the rule "two regions are never closer than the gap" is stated in.
+     */
+    public long gapXZ(Box o) {
+        long dx = Math.max(0, Math.max(minX - o.maxX, o.minX - maxX) - 1);
+        long dz = Math.max(0, Math.max(minZ - o.maxZ, o.minZ - maxZ) - 1);
+        return Math.max(dx, dz);
+    }
+
     /** The horizontal centre as doubles (x then z), for distances measured in modules. */
     public double centerX() { return (minX + maxX) / 2.0; }
 

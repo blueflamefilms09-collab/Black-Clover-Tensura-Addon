@@ -197,6 +197,42 @@ final class SyntheticCatalog implements PoolSource {
         return c;
     }
 
+    // ---------------------------------------------------------------- the stand-in with the REAL boss chain
+
+    /**
+     * {@link #standard()} with the boss chain drawn to the size and handedness of the templates that ship (the Guardian's hall five modules across with only its
+     * entry and its chain door, ONE antechamber whose Way Onward is always on the left of the walk and whose vault is on the right, Ways Onward of three
+     * modules or one by four, vaults of three modules). Why a second stand-in: the first one was drawn before any real template existed, with small chain pieces and
+     * extra doors, and the assembler passed on it while it could not build a single sector from the real templates (the distance rule measured the door the
+     * Guardian's hall hangs from, which at the edge of the band kept free for the chain is always too close to the Landing; the real hall is five modules across).
+     * Tests on this catalog keep that from coming back without needing the real templates in the repository.
+     */
+    static SyntheticCatalog realSized() {
+        SyntheticCatalog c = standard();
+        final String M = "nusmp:mega/";
+        c.put(c.shape(M + "arena/pit_5x5", RoomKind.ARENA, 5, 5).door('s', 22)
+                .door('n', 22, MegaGrid.CHAIN, MegaGrid.CHAIN, MegaGrid.P_ANTECHAMBER, "minecraft:air")
+                .marker(MarkerKind.GUARDIAN_SPAWN, 22, 9, 22).marker(MarkerKind.GATEKEEPER, 22, 10, 2));
+        c.pool(MegaGrid.P_ARENA, 0, MegaGrid.P_CAP, M + "arena/pit_5x5", 1);
+        c.put(c.shape(M + "antechamber/vestibule_3x3", RoomKind.ANTECHAMBER, 3, 3)
+                .door('s', 13, MegaGrid.CHAIN, MegaGrid.CHAIN, MegaGrid.P_EMPTY, "minecraft:air")
+                .door('e', 13, MegaGrid.VAULT, MegaGrid.VAULT, MegaGrid.P_VAULT, "minecraft:air")
+                .door('w', 13, MegaGrid.ONWARD, MegaGrid.ONWARD, MegaGrid.P_ONWARD, "minecraft:air"));
+        c.pool(MegaGrid.P_ANTECHAMBER, 0, MegaGrid.P_CAP, M + "antechamber/vestibule_3x3", 1);
+        final String seal = "minecraft:cobbled_deepslate";
+        c.put(c.shape(M + "onward/straight_a", RoomKind.ONWARD, 1, 4).door('s', 4, MegaGrid.ONWARD, MegaGrid.ONWARD, MegaGrid.P_EMPTY, "minecraft:air")
+                .door('n', 4, MegaGrid.DOOR, MegaGrid.DOOR, MegaGrid.P_EMPTY, seal).marker(MarkerKind.EXPANSION_SOCKET, 4, 10, 0, "facing", "north"));
+        c.put(c.shape(M + "onward/left_a", RoomKind.ONWARD, 3, 3).door('s', 22, MegaGrid.ONWARD, MegaGrid.ONWARD, MegaGrid.P_EMPTY, "minecraft:air")
+                .door('w', 4, MegaGrid.DOOR, MegaGrid.DOOR, MegaGrid.P_EMPTY, seal).marker(MarkerKind.EXPANSION_SOCKET, 0, 10, 4, "facing", "west"));
+        c.put(c.shape(M + "onward/right_a", RoomKind.ONWARD, 3, 3).door('s', 4, MegaGrid.ONWARD, MegaGrid.ONWARD, MegaGrid.P_EMPTY, "minecraft:air")
+                .door('e', 4, MegaGrid.DOOR, MegaGrid.DOOR, MegaGrid.P_EMPTY, seal).marker(MarkerKind.EXPANSION_SOCKET, 26, 10, 4, "facing", "east"));
+        c.pool(SectorPlanner.POOL_STRAIGHT, 0, MegaGrid.P_CAP, M + "onward/straight_a", 1);
+        c.pool(SectorPlanner.POOL_LEFT, 0, MegaGrid.P_CAP, M + "onward/left_a", 1);
+        c.pool(SectorPlanner.POOL_RIGHT, 0, MegaGrid.P_CAP, M + "onward/right_a", 1);
+        c.pool(MegaGrid.P_ONWARD, 0, MegaGrid.P_CAP, M + "onward/straight_a", 1, M + "onward/left_a", 1, M + "onward/right_a", 1);
+        return c;
+    }
+
     // ---------------------------------------------------------------- the catalog.json format
 
     /** This catalog in the format of {@code tools/labyrinth/mega_catalog.py}, so {@link CatalogSource} and the simulator read it like the real one. */

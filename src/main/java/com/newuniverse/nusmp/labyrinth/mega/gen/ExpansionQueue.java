@@ -2,10 +2,11 @@ package com.newuniverse.nusmp.labyrinth.mega.gen;
 
 import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.labyrinth.mega.Expander;
+import com.newuniverse.nusmp.labyrinth.mega.FloorMap;
 import com.newuniverse.nusmp.labyrinth.mega.MegaConfig;
 import com.newuniverse.nusmp.labyrinth.mega.MegaData;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
-import com.newuniverse.nusmp.labyrinth.mega.RegionTheme;
+import com.newuniverse.nusmp.labyrinth.mega.Polarity;
 import com.newuniverse.nusmp.labyrinth.mega.RoomKind;
 import com.newuniverse.nusmp.labyrinth.mega.Sector;
 import net.minecraft.core.BlockPos;
@@ -32,6 +33,14 @@ import java.util.Locale;
  * GENERATING when the server stopped is simply planned and placed again from its saved seed (the plan is a function of saved data, so it is the same sector;
  * decorative entities of the unfinished run are cleared first). A sector that cannot be built is marked FAILED with the reasons in the log and can be retried
  * with {@code /multiverse mega regen}. Nothing here ever throws out of the tick.
+ *
+ * <p>Two roads (1.55.0): the dungeon is two chains of sectors in the one dimension, the Holy road (floors +1, +2 ...) whose first sector stands at the origin and the
+ * Abyssal road (floors -1, -2 ...) whose first sector stands {@code MegaGrid.LANE_Z} blocks away, and either can be opened first. So {@code requestFirst} with a polarity
+ * creates the first sector of the named road and {@link #requestNext} always continues the road of the sector it is given. Sector ids stay global (the newest + 1, the one
+ * number every other module keys its data by), so the road and the place in it (polarity and chain index) are what say where a sector belongs; those two, the number of
+ * floors, the threat, the theme, the relic count and the seed are decided by {@link SectorDraft} when the sector is created. The next sector may be requested at any time
+ * after the Guardian is dead (the rule is {@link ExpandRule#refusalForNext}): the facade holds the request back until the Crucible is resolved (so the relic taken can pick
+ * the next theme, which {@code MegaDungeon.themeOverride} answers here), and the admin command asks at once.
  */
 public final class ExpansionQueue implements Expander {
     private static final Logger LOG = LogUtils.getLogger();
@@ -76,7 +85,14 @@ public final class ExpansionQueue implements Expander {
     // ================================================================================================================ Expander
 
     @Override
-    public boolean requestFirst(MinecraftServer server) { return tryFirst(server) == null; }
+    public boolean requestFirst(MinecraftServer server) { return requestFirst(server, Polarity.HOLY); }
+
+    @Override
+    public boolean requestFirst(MinecraftServer server, Polarity polarity) {
+        String why = tryFirst(server, polarity);
+        if (why != null) LOG.info("[nusmp] Mega first sector of the {} road refused: {}", polarity == null ? "?" : polarity.id(), why);
+        return why == null;
+    }
 
     @Override
     public boolean requestNext(ServerLevel level, Sector from) {
@@ -91,30 +107,40 @@ public final class ExpansionQueue implements Expander {
         return queue.isEmpty() ? -1f : 0f;
     }
 
-    /** Queues sector 0. Returns null on success, else the reason it was refused. */
-    public String tryFirst(MinecraftServer server) {
+    /** Queues the first sector of the Holy road (1.54.0's sector 0). Returns null on success, else the reason it was refused. */
+    public String tryFirst(MinecraftServer server) { return tryFirst(server, Polarity.HOLY); }
+
+    /**
+     * Queues the FIRST sector of a road: its Landing's door is the fixed cell of the road's lane ({@code (0, 64, MegaGrid.laneZ(road))}) and the sector grows east. The
+     * sector gets the next global id, whichever road was opened first. Returns null on success, else the reason it was refused (the road already has a sector, even a
+     * failed one: retry that one with {@code regen}).
+     */
+    public String tryFirst(MinecraftServer server, Polarity road) {
+        if (road == null) return "no road named";
         ServerLevel level = MegaDungeon.level(server);
         if (level == null) return "the Mega-Dungeon dimension is not loaded";
         MegaData data = MegaData.get(server);
-        if (!data.sectors().isEmpty()) return "sector 0 already exists";
+        Sector tail = data.chainTail(road);
+        if (tail != null) return "the " + road.id() + " road already has sector " + tail.id + " (" + tail.state.name() + ")";
+        if (data.sectors().size() >= MegaConfig.get(MegaConfig.MAX_SECTORS)) return "the dungeon reached maxSectors (" + MegaConfig.get(MegaConfig.MAX_SECTORS) + ")";
         if (data.seed == 0L) {
             long seed = Rng.mix(server.overworld().getSeed(), 0x4D454741L);
             data.seed = seed == 0L ? 1L : seed;
             data.setDirty();
         }
-        SectorPlanner.Plan plan = SectorPlanner.first(data.seed);
-        Sector s = new Sector(0);
-        s.theme = RegionTheme.GRAVITY;
-        s.threat = 1;
-        s.state = Sector.State.GENERATING;
+        Sector latest = data.latest();
+        int id = latest == null ? 0 : latest.id + 1;
+        SectorDraft draft = SectorDraft.first(data.seed, id, road);
+        SectorPlanner.Plan plan = SectorPlanner.first(data.seed, id, road);
+        Sector s = create(draft);
         s.seed = plan.seed();
         s.region = SectorGenerator.bb(plan.region());
         s.entry = SectorGenerator.pos(plan.entryFloor());
         s.forward = SectorGenerator.dir(plan.forward());
-        s.relicCount = s.theme.relicCount(data.seed, 0);
         data.add(s);
-        queue.add(new Job(0, false, null));
-        LOG.info("[nusmp] Mega sector 0 queued (seed {}).", s.seed);
+        queue.add(new Job(id, false, null));
+        LOG.info("[nusmp] Mega sector {} queued: the first of the {} road (floors {}..{}, theme {}, seed {}).", id, road.id(), FloorMap.label(s.firstFloor()), FloorMap.label(s.lastFloor()),
+                s.theme.id(), s.seed);
         return null;
     }
 
@@ -123,11 +149,9 @@ public final class ExpansionQueue implements Expander {
         if (level == null || from == null) return "no sector";
         MinecraftServer server = level.getServer();
         MegaData data = MegaData.get(server);
-        if (from.nextId != -1) return "sector " + from.id + " already leads to sector " + from.nextId;
-        if (from.state == Sector.State.GENERATING) return "sector " + from.id + " is still generating";
-        if (from.state == Sector.State.FAILED) return "sector " + from.id + " failed to generate (retry it with /multiverse mega regen " + from.id + ")";
-        if (from.expansionPos == null || from.expansionFacing == null) return "sector " + from.id + " has no Way Onward";
-        if (data.sectors().size() >= MegaConfig.get(MegaConfig.MAX_SECTORS)) return "the dungeon reached maxSectors (" + MegaConfig.get(MegaConfig.MAX_SECTORS) + ")";
+        boolean slotTaken = data.chainSector(from.polarity, from.chainIndex + 1) != null;
+        String why = ExpandRule.refusalForNext(rowOf(from), data.sectors().size(), MegaConfig.get(MegaConfig.MAX_SECTORS), slotTaken);
+        if (why != null) return why;
         SectorPlanner.Next n = planBehind(data, from);
         if (n == null) return "no room behind the seal of sector " + from.id + " (older sectors are in the way)";
         Sector s = draft(data, from, n);
@@ -135,29 +159,49 @@ public final class ExpansionQueue implements Expander {
         from.nextId = id;
         data.add(s);
         queue.add(new Job(id, false, null));
-        LOG.info("[nusmp] Mega sector {} queued behind sector {} (theme {}, {} tunnel segments, seed {}).", id, from.id, s.theme.id(), n.linkModules(), s.seed);
+        LOG.info("[nusmp] Mega sector {} queued behind sector {} on the {} road (floors {}..{}, theme {}, {} tunnel segments, seed {}).", id, from.id, s.polarity.id(),
+                FloorMap.label(s.firstFloor()), FloorMap.label(s.lastFloor()), s.theme.id(), n.linkModules(), s.seed);
         return null;
+    }
+
+    /** What {@link ExpandRule} needs to know about a sector. */
+    static ExpandRule.Row rowOf(Sector s) {
+        return new ExpandRule.Row(s.id, s.expansionPos != null && s.expansionFacing != null, s.nextId, s.state == Sector.State.GENERATING, s.state == Sector.State.FAILED);
     }
 
     /** Where the sector behind {@code from}'s Way Onward would go (region, entry door, tunnel length), or null when older sectors leave no room. Changes nothing. */
     static SectorPlanner.Next planBehind(MegaData data, Sector from) {
         return SectorPlanner.planNext(SectorGenerator.vec(from.expansionPos), SectorGenerator.facing(from.expansionFacing), SectorGenerator.box(from.region),
-                SectorGenerator.obstacles(data, Integer.MAX_VALUE, from.id), MegaConfig.get(MegaConfig.MAX_LINK_MODULES));
+                SectorGenerator.obstacles(data, Integer.MAX_VALUE, from.id, from.polarity), MegaConfig.get(MegaConfig.MAX_LINK_MODULES));
     }
 
-    /** The sector that is created for the plan {@code n} behind {@code from}: next id, theme by the dungeon seed, threat, the seed of its plan. Not added to the data. */
+    /**
+     * The sector that is created for the plan {@code n} behind {@code from}: the next global id, the same road, the next place in it, the same number of floors,
+     * the threat of its floors, the seed of its place, and the theme the Crucible's chosen relic forces ({@code MegaDungeon.themeOverride}), else the seeded draw of
+     * the road. Not added to the data.
+     */
     static Sector draft(MegaData data, Sector from, SectorPlanner.Next n) {
         Sector latest = data.latest();
         int id = latest == null ? 0 : latest.id + 1;
-        Sector s = new Sector(id);
-        s.theme = RegionTheme.pick(data.seed, id, from.theme);
-        s.threat = 1 + id;
-        s.state = Sector.State.GENERATING;
-        s.seed = SectorPlanner.sectorSeed(data.seed, id);
+        SectorDraft d = SectorDraft.of(data.seed, id, from.polarity, from.chainIndex + 1, from.perRegion, from.theme, MegaDungeon.themeOverride(from));
+        Sector s = create(d);
+        s.seed = d.seed();
         s.region = SectorGenerator.bb(n.region());
         s.entry = SectorGenerator.pos(n.entry().add(0, -1, 0));
         s.forward = SectorGenerator.dir(n.forward());
-        s.relicCount = s.theme.relicCount(data.seed, id);
+        return s;
+    }
+
+    /** A new sector with everything {@link SectorDraft} decides (the geometry is the caller's): GENERATING, its road, place, floors, threat, theme and relic count. */
+    private static Sector create(SectorDraft d) {
+        Sector s = new Sector(d.id());
+        s.polarity = d.road();
+        s.chainIndex = d.chainIndex();
+        s.perRegion = d.perRegion();
+        s.theme = d.theme();
+        s.threat = d.threat();
+        s.state = Sector.State.GENERATING;
+        s.relicCount = d.relicCount();
         return s;
     }
 
@@ -290,7 +334,8 @@ public final class ExpansionQueue implements Expander {
         GenData.Stat st = SectorGenerator.stat(j.planned, ms);
         GenData.get(server).put(s.id, st);
         data.setDirty();
-        LOG.info("MEGA sector {} {} rooms={} edges={} pieces={} loops={} tries={} ms={}", s.id, s.state.name(), s.rooms.size(), s.edges.size(), st.pieces, st.loops, st.tries, ms);
+        LOG.info("MEGA sector {} {} rooms={} edges={} pieces={} loops={} tries={} ms={} road={} chain={}", s.id, s.state.name(), s.rooms.size(), s.edges.size(), st.pieces, st.loops, st.tries, ms,
+                s.polarity.id(), s.chainIndex);
         if (st.fallback) LOG.warn("MEGA sector {} used the FALLBACK layout (only the Landing and the boss chain) after {} assemble tries: {}", s.id, st.tries - 1, SectorSolver.summary(j.planned.solved().failures(), 3));
         else if (st.tries > 1) LOG.warn("MEGA sector {} needed {} assemble tries: {}", s.id, st.tries, SectorSolver.summary(j.planned.solved().failures(), 3));
         if (st.deadEnd) LOG.warn("MEGA sector {} is a DEAD END: its Way Onward faces older sectors, so no sector can follow it.", s.id);
@@ -301,6 +346,7 @@ public final class ExpansionQueue implements Expander {
         } catch (Throwable t) {
             LOG.error("[nusmp] A listener failed while sector {} was announced as generated: {}", s.id, t.toString(), t);
         }
+        data.setDirty();                                       // the listeners band the floors and assign the factions into the saved sector: make sure what they wrote is saved
         if (prev != null) tellWayOpen(level, prev, opened);
     }
 

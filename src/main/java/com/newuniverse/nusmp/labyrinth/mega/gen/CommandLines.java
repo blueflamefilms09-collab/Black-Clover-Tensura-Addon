@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.labyrinth.mega.gen;
 
+import com.newuniverse.nusmp.labyrinth.mega.FloorMap;
+import com.newuniverse.nusmp.labyrinth.mega.Polarity;
 import com.newuniverse.nusmp.labyrinth.mega.RoomKind;
 
 import java.util.List;
@@ -23,6 +25,31 @@ public final class CommandLines {
     public static String sector(int id, String state, String theme, int threat, int rooms, int edges, int pieces, int relics, int x1, int z1, int x2, int z2) {
         return "sector " + id + " " + state + " theme=" + theme + " threat=" + threat + " rooms=" + rooms + " edges=" + edges + " pieces=" + pieces + " relics=" + relics
                 + " region=" + x1 + "," + z1 + "," + x2 + "," + z2;
+    }
+
+    /**
+     * The sector line followed by the road it belongs to (1.55.0): {@code <sector line> road=<holy|abyssal> chain=<k> floors=<first>..<last>}, the floors signed
+     * ({@code +1..+10}, {@code -11..-20}). The words before {@code road=} are exactly {@link #sector}'s, so a script that parses the 1.54.0 line still does.
+     */
+    public static String sectorOnRoad(String sectorLine, Polarity road, int chainIndex, int firstFloor, int lastFloor) {
+        return sectorLine + " road=" + road.id() + " chain=" + chainIndex + " floors=" + FloorMap.label(firstFloor) + ".." + FloorMap.label(lastFloor);
+    }
+
+    /**
+     * The header of one road in {@code status}: {@code road <holy|abyssal>: sectors=<n> ids=<id,id> floors=<first>..<last> state=<STATE of its newest sector>}, or
+     * {@code road <id>: not opened} when the road has no sector yet. {@code ids} are the global sector ids in chain order; the floors run from the first floor of the
+     * road's first sector to the last floor of its newest one.
+     */
+    public static String road(Polarity road, List<Integer> ids, int firstFloor, int lastFloor, String newestState) {
+        if (ids.isEmpty()) return "road " + road.id() + ": not opened";
+        StringBuilder b = new StringBuilder("road ").append(road.id()).append(": sectors=").append(ids.size()).append(" ids=");
+        for (int i = 0; i < ids.size(); i++) b.append(i == 0 ? "" : ",").append(ids.get(i));
+        return b.append(" floors=").append(FloorMap.label(firstFloor)).append("..").append(FloorMap.label(lastFloor)).append(" state=").append(newestState).toString();
+    }
+
+    /** {@code <verb>: queued sector <id> on the <holy|abyssal> road (floors <first>..<last>)}: {@link #queued}'s words first, then where the sector goes. */
+    public static String queuedOn(String verb, int id, Polarity road, int firstFloor, int lastFloor) {
+        return queued(verb, id) + " on the " + road.id() + " road (floors " + FloorMap.label(firstFloor) + ".." + FloorMap.label(lastFloor) + ")";
     }
 
     /** {@code audit <id> OK} or {@code audit <id> FAIL: <failure>; <failure>}. */

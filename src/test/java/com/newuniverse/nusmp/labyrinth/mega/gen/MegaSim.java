@@ -1,6 +1,6 @@
 package com.newuniverse.nusmp.labyrinth.mega.gen;
 
-import com.newuniverse.nusmp.labyrinth.mega.RegionTheme;
+import com.newuniverse.nusmp.labyrinth.mega.Polarity;
 import com.newuniverse.nusmp.labyrinth.mega.RoomKind;
 
 import java.nio.file.Files;
@@ -15,10 +15,12 @@ import java.util.Locale;
  * fill, deepest door, how many tries and whether the fallback layout was needed) and, at the end, the failure rate and the minimum, average and maximum of each
  * number, plus the reasons tries failed for, most frequent first. The plan files of the first five seeds are written for
  * {@code python3 tools/labyrinth/mega_preview.py --plan plan.json map.png}. With {@code --chain N} it also grows N sectors per seed through the real planner and
- * tunnel builder and reports the closest two regions ever came and whether the dungeon could keep growing.
+ * tunnel builder and reports the closest two regions ever came and whether the dungeon could keep growing. Since 1.55.0 {@code --road abyssal} puts the first sector
+ * on the Abyssal lane (300 000 blocks from the Holy one) and {@code --roads} grows BOTH roads side by side in each simulated world, so the chain run also reports the
+ * closest two regions of one road and the distance between the roads. {@code --real} uses the stand-in with the boss chain drawn to the real sizes.
  *
  * <pre>
- *   java -cp OUT com.newuniverse.nusmp.labyrinth.mega.gen.MegaSim &lt;catalog.json | --synthetic&gt; &lt;seeds&gt; [planOutDir] [--chain N]
+ *   java -cp OUT com.newuniverse.nusmp.labyrinth.mega.gen.MegaSim &lt;catalog.json | --synthetic | --real&gt; &lt;seeds&gt; [planOutDir] [--chain N] [--road holy|abyssal] [--roads]
  * </pre>
  */
 public final class MegaSim {
@@ -26,15 +28,21 @@ public final class MegaSim {
 
     public static void main(String[] args) throws Exception {
         if (args.length < 2) {
-            System.out.println("usage: MegaSim <catalog.json | --synthetic> <seeds> [planOutDir] [--chain N]");
+            System.out.println("usage: MegaSim <catalog.json | --synthetic | --real> <seeds> [planOutDir] [--chain N] [--road holy|abyssal] [--roads]");
             return;
         }
         PoolSource src;
         if (args[0].equals("--synthetic")) src = SyntheticCatalog.standard();
+        else if (args[0].equals("--real")) src = SyntheticCatalog.realSized();
         else {
             CatalogSource c = CatalogSource.load(Path.of(args[0]));
             if (c.isEmpty()) {
                 System.out.println("The catalog " + args[0] + " has no templates yet: nothing to simulate.");
+                return;
+            }
+            java.util.List<String> missing = c.missingForSectors(SectorDraft.first(0, 0, Polarity.HOLY).relicCount());
+            if (!missing.isEmpty()) {
+                System.out.println("The catalog " + args[0] + " (" + c.shapeCount() + " templates) cannot make whole sectors yet, these pools hold no template: " + missing + ". Nothing to simulate.");
                 return;
             }
             src = c;
@@ -42,8 +50,12 @@ public final class MegaSim {
         int seeds = Integer.parseInt(args[1]);
         Path planDir = null;
         int chain = 0;
+        Polarity road = Polarity.HOLY;
+        boolean both = false;
         for (int i = 2; i < args.length; i++) {
             if (args[i].equals("--chain") && i + 1 < args.length) chain = Integer.parseInt(args[++i]);
+            else if (args[i].equals("--road") && i + 1 < args.length) road = Polarity.fromId(args[++i]) == null ? Polarity.HOLY : Polarity.fromId(args[i]);
+            else if (args[i].equals("--roads")) both = true;
             else planDir = Path.of(args[i]);
         }
         if (planDir != null) Files.createDirectories(planDir);
@@ -55,11 +67,12 @@ public final class MegaSim {
         double fillSum = 0, fillMin = Double.MAX_VALUE, fillMax = 0;
         long tTries = 0, nanos = 0;
         java.util.Map<String, Integer> reasons = new java.util.LinkedHashMap<>();
+        System.out.println("the first sector stands on the " + road.id() + " lane (z " + com.newuniverse.nusmp.labyrinth.mega.MegaGrid.laneZ(road) + ")");
         System.out.println("seed  tries fb  pieces rooms caps link loops safe depth  fill%   ms  note");
         for (int s = 0; s < seeds; s++) {
             long dungeonSeed = Rng.mix(s, 1234567L);
-            SectorPlanner.Plan plan = SectorPlanner.first(dungeonSeed);
-            int relics = RegionTheme.GRAVITY.relicCount(dungeonSeed, 0);
+            SectorPlanner.Plan plan = SectorPlanner.first(dungeonSeed, 0, road);
+            int relics = SectorDraft.first(dungeonSeed, 0, road).relicCount();
             SectorRequests.Inputs in = new SectorRequests.Inputs(src, recipe, 450, 40, plan.seed(), plan.entry(), plan.forward(), plan.region(), null, null, null, List.of(), relics);
             SectorRequests.Prepared prep = SectorRequests.prepare(in);
             long t0 = System.nanoTime();
@@ -121,23 +134,36 @@ public final class MegaSim {
         if (!reasons.isEmpty()) System.out.println("failed tries by reason: " + SectorSolver.summary(reasons, 8));
         if (chain > 1) {
             int grown = 0, stuck = 0;
-            long minGap = Long.MAX_VALUE;
+            long minGap = Long.MAX_VALUE, minRoadGap = Long.MAX_VALUE;
             java.util.Map<String, Integer> why = new java.util.LinkedHashMap<>();
             for (int s = 0; s < seeds; s++) {
                 SimWorld w = new SimWorld(src, Rng.mix(s, 1234567L), recipe, 450, 40, 24);
-                boolean done = w.grow(chain);
+                boolean done = both ? w.growRoads(chain) : growOne(w, road, chain);
                 if (done) grown++;
                 else {
                     stuck++;
                     why.merge(SectorSolver.stripNumbers(w.stopped == null ? "?" : w.stopped), 1, Integer::sum);
                 }
                 for (int i = 0; i < w.sectors.size(); i++) {
-                    for (int j = i + 1; j < w.sectors.size(); j++) minGap = Math.min(minGap, gap(w.sectors.get(i).plan().region(), w.sectors.get(j).plan().region()));
+                    for (int j = i + 1; j < w.sectors.size(); j++) {
+                        long g = gap(w.sectors.get(i).plan().region(), w.sectors.get(j).plan().region());
+                        if (w.sectors.get(i).road() == w.sectors.get(j).road()) minGap = Math.min(minGap, g);
+                        else minRoadGap = Math.min(minRoadGap, g);
+                    }
                 }
             }
-            System.out.println("chain of " + chain + " sectors: " + grown + " of " + seeds + " worlds grew fully, " + stuck + " stopped early; closest two regions: " + (minGap == Long.MAX_VALUE ? "n/a" : minGap + " blocks"));
+            System.out.println("chain of " + chain + " sectors" + (both ? " on each road" : " on the " + road.id() + " road") + ": " + grown + " of " + seeds + " worlds grew fully, " + stuck
+                    + " stopped early; closest two regions of one road: " + (minGap == Long.MAX_VALUE ? "n/a" : minGap + " blocks")
+                    + (both ? "; closest regions of the two roads: " + (minRoadGap == Long.MAX_VALUE ? "n/a" : minRoadGap + " blocks") : ""));
             if (!why.isEmpty()) System.out.println("stopped because: " + SectorSolver.summary(why, 5));
         }
+    }
+
+    /** Grows one road of a world to {@code count} sectors (the first sector on its lane, then the sectors behind each Way Onward). */
+    private static boolean growOne(SimWorld w, Polarity road, int count) {
+        if (!w.first(road)) return false;
+        for (int i = 1; i < count; i++) if (!w.next(road)) return false;
+        return true;
     }
 
     /** The clear distance between two boxes in the horizontal plane (0 when they touch or overlap). */

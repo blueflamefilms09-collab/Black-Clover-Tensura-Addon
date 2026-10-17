@@ -5,6 +5,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.newuniverse.nusmp.labyrinth.mega.MegaConfig;
 import com.newuniverse.nusmp.labyrinth.mega.MegaData;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
+import com.newuniverse.nusmp.labyrinth.mega.Polarity;
 import com.newuniverse.nusmp.labyrinth.mega.Room;
 import com.newuniverse.nusmp.labyrinth.mega.RoomKind;
 import com.newuniverse.nusmp.labyrinth.mega.Sector;
@@ -36,7 +37,9 @@ import java.util.Set;
  * {@code audit <id>} checks the saved data against the promises the other systems rely on, {@code verify [id]} asks the game itself whether the plan's
  * rotation maths and placement agree with vanilla, {@code plan <id>} writes the sector's plan as a JSON file for the map preview, {@code rooms [id]} counts the
  * rooms by kind, {@code unseal <id>} is the admin's Gatekeeper key, {@code tp <id>} goes to a Landing, and {@code pools} lists the template pools the data pack
- * provides and how many of their templates cannot be read. Permission 2 on the whole tree, messages as literals (the pattern of {@code LabyrinthCommand}).
+ * provides and how many of their templates cannot be read. Since 1.55.0 the dungeon is two roads: {@code expand [holy|abyssal]} makes the named road grow (the Holy
+ * road when none is named), {@code status} lists both roads (their sector ids, the floors they span and the state of their newest sector) and every sector line says
+ * which road and floors it belongs to. Permission 2 on the whole tree, messages as literals (the pattern of {@code LabyrinthCommand}).
  * The lead attaches it under {@code /multiverse} with {@code root.then(MegaCommand.build())}; the other builders' sub-commands are attached under {@code mega} by
  * the lead too.
  */
@@ -59,7 +62,9 @@ public final class MegaCommand {
         root.then(Commands.literal("sector").executes(ctx -> sector(ctx.getSource(), -1))
                 .then(Commands.argument("id", IntegerArgumentType.integer(0)).executes(ctx -> sector(ctx.getSource(), IntegerArgumentType.getInteger(ctx, "id")))));
         root.then(Commands.literal("tp").then(Commands.argument("id", IntegerArgumentType.integer(0)).executes(ctx -> tp(ctx.getSource(), IntegerArgumentType.getInteger(ctx, "id")))));
-        root.then(Commands.literal("expand").executes(ctx -> expand(ctx.getSource())));
+        root.then(Commands.literal("expand").executes(ctx -> expand(ctx.getSource(), Polarity.HOLY))
+                .then(Commands.literal("holy").executes(ctx -> expand(ctx.getSource(), Polarity.HOLY)))
+                .then(Commands.literal("abyssal").executes(ctx -> expand(ctx.getSource(), Polarity.ABYSSAL))));
         root.then(Commands.literal("regen").then(Commands.argument("id", IntegerArgumentType.integer(0)).executes(ctx -> regen(ctx.getSource(), IntegerArgumentType.getInteger(ctx, "id")))));
         root.then(Commands.literal("audit").then(Commands.argument("id", IntegerArgumentType.integer(0)).executes(ctx -> audit(ctx.getSource(), IntegerArgumentType.getInteger(ctx, "id")))));
         root.then(Commands.literal("verify").executes(ctx -> verify(ctx.getSource(), -1))
@@ -88,8 +93,8 @@ public final class MegaCommand {
     private static String sectorLine(MinecraftServer server, Sector s) {
         GenData.Stat st = GenData.get(server).get(s.id);
         BoundingBox r = s.region;
-        return CommandLines.sector(s.id, s.state.name(), s.theme.id(), s.threat, s.rooms.size(), s.edges.size(), st == null ? 0 : st.pieces, s.relicCount,
-                r.minX(), r.minZ(), r.maxX(), r.maxZ());
+        return CommandLines.sectorOnRoad(CommandLines.sector(s.id, s.state.name(), s.theme.id(), s.threat, s.rooms.size(), s.edges.size(), st == null ? 0 : st.pieces, s.relicCount,
+                r.minX(), r.minZ(), r.maxX(), r.maxZ()), s.polarity, s.chainIndex, s.firstFloor(), s.lastFloor());
     }
 
     private static String xyz(BlockPos p) { return p == null ? "none" : p.getX() + "," + p.getY() + "," + p.getZ(); }
@@ -100,7 +105,14 @@ public final class MegaCommand {
         MinecraftServer server = src.getServer();
         MegaData data = MegaData.get(server);
         say(src, CommandLines.status(data.expansionLevel, data.sectors().size(), ExpansionQueue.get().progress()));
-        for (Sector s : data.sectors()) say(src, sectorLine(server, s));
+        for (Polarity road : Polarity.values()) {
+            List<Sector> chain = data.chain(road);
+            List<Integer> ids = new ArrayList<>();
+            for (Sector s : chain) ids.add(s.id);
+            Sector newest = chain.isEmpty() ? null : chain.get(chain.size() - 1);
+            say(src, CommandLines.road(road, ids, chain.isEmpty() ? 0 : chain.get(0).firstFloor(), newest == null ? 0 : newest.lastFloor(), newest == null ? "" : newest.state.name()));
+            for (Sector s : chain) say(src, sectorLine(server, s));
+        }
         return 1;
     }
 
@@ -125,24 +137,30 @@ public final class MegaCommand {
 
     // ================================================================================================================ growing
 
-    private static int expand(CommandSourceStack src) {
+    /**
+     * Makes one road grow: its first sector when the road has none, else the next sector off the road's newest sector that has a free Way Onward. The refusal says which
+     * road and why. Works at any time after the road's sector is built, whatever state its Guardian, Gatekeeper and Crucible are in (an admin's push).
+     */
+    private static int expand(CommandSourceStack src, Polarity road) {
         MinecraftServer server = src.getServer();
         MegaData data = MegaData.get(server);
         List<ExpandRule.Row> rows = new ArrayList<>();
-        for (Sector s : data.sectors()) {
-            rows.add(new ExpandRule.Row(s.id, s.expansionPos != null && s.expansionFacing != null, s.nextId, s.state == Sector.State.GENERATING, s.state == Sector.State.FAILED));
-        }
+        for (Sector s : data.chain(road)) rows.add(ExpansionQueue.rowOf(s));
         ExpandRule.Decision d = ExpandRule.decide(rows);
-        if (d.refusal() != null) return no(src, CommandLines.refused("expand", d.refusal()));
+        if (d.refusal() != null) return no(src, CommandLines.refused("expand", "the " + road.id() + " road: " + d.refusal()));
         if (d.first()) {
-            String why = ExpansionQueue.get().tryFirst(server);
-            return why == null ? say(src, CommandLines.queued("expand", 0)) : no(src, CommandLines.refused("expand", why));
+            String why = ExpansionQueue.get().tryFirst(server, road);
+            if (why != null) return no(src, CommandLines.refused("expand", why));
+            Sector made = data.chainTail(road);
+            return say(src, CommandLines.queuedOn("expand", made.id, road, made.firstFloor(), made.lastFloor()));
         }
         ServerLevel level = MegaDungeon.level(server);
         Sector from = data.sector(d.from());
         if (level == null) return no(src, CommandLines.refused("expand", "the Mega-Dungeon dimension is not loaded"));
         String why = ExpansionQueue.get().tryNext(level, from);
-        return why == null ? say(src, CommandLines.queued("expand", from.nextId)) : no(src, CommandLines.refused("expand", why));
+        if (why != null) return no(src, CommandLines.refused("expand", why));
+        Sector made = data.sector(from.nextId);
+        return say(src, CommandLines.queuedOn("expand", made.id, road, made.firstFloor(), made.lastFloor()));
     }
 
     private static int regen(CommandSourceStack src, int id) {
@@ -158,7 +176,11 @@ public final class MegaCommand {
         if (level == null) return no(src, CommandLines.refused("unseal", "the Mega-Dungeon dimension is not loaded"));
         Sector.State before = s.state;
         if (!MegaDungeon.unseal(level, id)) return no(src, CommandLines.refused("unseal", "sector " + id + " is " + before.name() + " and cannot be unsealed"));
-        return say(src, "unseal: sector " + id + " unsealed" + (MegaConfig.get(MegaConfig.EXPANSION) ? ", the next sector was requested" : ", expansion is off so nothing was requested"));
+        if (!MegaConfig.get(MegaConfig.EXPANSION)) return say(src, "unseal: sector " + id + " unsealed, expansion is off so nothing was requested");
+        // with mega.expandAfterVault the facade held the next sector back until the Crucible is resolved; the admin's key does not wait for the vault
+        boolean skippedVault = s.expansionPending && MegaDungeon.requestPending(level, s);
+        if (s.nextId < 0) return say(src, "unseal: sector " + id + " unsealed, but no next sector was queued (see the server log" + (s.expansionPending ? "; it still waits for the vault" : "") + ")");
+        return say(src, "unseal: sector " + id + " unsealed, the next sector was requested (sector " + s.nextId + (skippedVault ? ", the vault was skipped" : "") + ")");
     }
 
     private static int tp(CommandSourceStack src, int id) throws com.mojang.brigadier.exceptions.CommandSyntaxException {

@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.labyrinth.mega.gen;
 
 import com.newuniverse.nusmp.labyrinth.mega.MegaGrid;
+import com.newuniverse.nusmp.labyrinth.mega.Polarity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,10 +85,18 @@ public final class SectorPlanner {
         };
     }
 
-    /** The plan of sector 0: its Landing's entry door is the fixed cell (0, door row, 0) and the sector grows east. */
-    public static Plan first(long dungeonSeed) {
-        Vec entry = new Vec(0, DOOR_Y, 0);
-        return new Plan(0, sectorSeed(dungeonSeed, 0), entry, Facing.EAST, regionFor(entry, Facing.EAST), 0);
+    /** The plan of the first sector of the Holy road (1.54.0's sector 0): its Landing's entry door is the fixed cell (0, door row, 0) and the sector grows east. */
+    public static Plan first(long dungeonSeed) { return first(dungeonSeed, 0, Polarity.HOLY); }
+
+    /**
+     * The plan of the first sector of a road (1.55.0): the Landing's entry door is the fixed cell {@code (0, door row, laneZ)} of the road's lane
+     * ({@link MegaGrid#laneZ}: z 0 for the Holy road, {@link MegaGrid#LANE_Z} for the Abyssal road) and the sector grows east, so the two roads start side by
+     * side at x 0 and never come near each other. {@code id} is the sector's global id (it only labels the plan); the seed belongs to the place in the road
+     * ({@link SectorDraft#seedKey}), not to the id.
+     */
+    public static Plan first(long dungeonSeed, int id, Polarity road) {
+        Vec entry = new Vec(0, DOOR_Y, MegaGrid.laneZ(road));
+        return new Plan(id, sectorSeed(dungeonSeed, SectorDraft.seedKey(road, 0)), entry, Facing.EAST, regionFor(entry, Facing.EAST), 0);
     }
 
     /** The tunnel (as a keep-clear box) of {@code modules} 9-block segments that starts in front of the seal and runs towards {@code facing}. */

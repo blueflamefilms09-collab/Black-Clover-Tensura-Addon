@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.labyrinth.mega.Marker;
 import com.newuniverse.nusmp.labyrinth.mega.MegaConfig;
 import com.newuniverse.nusmp.labyrinth.mega.MegaData;
+import com.newuniverse.nusmp.labyrinth.mega.Polarity;
 import com.newuniverse.nusmp.labyrinth.mega.Room;
 import com.newuniverse.nusmp.labyrinth.mega.RoomKind;
 import com.newuniverse.nusmp.labyrinth.mega.Sector;
@@ -91,9 +92,16 @@ public final class SectorGenerator {
      * ones that existed when it was first planned (so a regeneration sees what the original saw, see {@link WorldObstacles}). {@code skipRegion} leaves one
      * region out: the planner of the next sector adds the region of the sector it hangs from itself. Pass {@code Integer.MAX_VALUE} to see every sector.
      */
-    public static List<SectorPlanner.Obstacle> obstacles(MegaData d, int before, int skipRegion) {
+    public static List<SectorPlanner.Obstacle> obstacles(MegaData d, int before, int skipRegion) { return obstacles(d, before, skipRegion, null); }
+
+    /**
+     * {@link #obstacles(MegaData, int, int)} for the sectors of one road only (null: every road). A sector keeps out of the sectors of ITS OWN road: the two roads
+     * start {@code MegaGrid.LANE_Z} blocks apart and cannot meet, and a plan that looked at the other road too would depend on how far that road had grown.
+     */
+    public static List<SectorPlanner.Obstacle> obstacles(MegaData d, int before, int skipRegion, Polarity road) {
         List<WorldObstacles.Known> known = new ArrayList<>();
         for (Sector o : d.sectors()) {
+            if (road != null && o.polarity != road) continue;
             Sector prev = prevOf(d, o);
             Vec seal = null;
             Facing seals = null;
@@ -101,9 +109,9 @@ public final class SectorGenerator {
                 seal = vec(prev.expansionPos);
                 seals = facing(prev.expansionFacing);
             }
-            known.add(new WorldObstacles.Known(o.id, box(o.region), seal, seals, vec(o.entry.above())));
+            known.add(new WorldObstacles.Known(o.id, box(o.region), seal, seals, vec(o.entry.above()), o.polarity));
         }
-        return WorldObstacles.of(known, before, skipRegion);
+        return WorldObstacles.of(known, before, skipRegion, road);
     }
 
     // ---------------------------------------------------------------- planning
@@ -136,12 +144,13 @@ public final class SectorGenerator {
             prevSeal = vec(prev.expansionPos);
             prevFacing = facing(prev.expansionFacing);
             prevRegion = box(prev.region);
-        } else if (s.id != 0) {
-            LOG.warn("[nusmp] Mega sector {} has no predecessor that points at it; it is planned as a free-standing sector.", s.id);
+        } else if (s.chainIndex != 0) {
+            LOG.warn("[nusmp] Mega sector {} ({} road, chain index {}) has no predecessor that points at it; it is planned as a free-standing sector.", s.id, s.polarity.id(), s.chainIndex);
         }
         SectorRequests.Inputs in = new SectorRequests.Inputs(pools, recipe, MegaConfig.get(MegaConfig.MAX_PIECES), MegaConfig.get(MegaConfig.MAX_LINK_MODULES), s.seed,
-                entryJigsaw, forward, region, prevSeal, prevFacing, prevRegion, obstacles(data, s.id, -1), s.relicCount);
+                entryJigsaw, forward, region, prevSeal, prevFacing, prevRegion, obstacles(data, s.id, -1, s.polarity), s.relicCount);
         SectorRequests.Prepared prep = SectorRequests.prepare(in);
+        for (String n : prep.notes()) LOG.warn("[nusmp] Mega sector {} plan: {}", s.id, n);
         if (!prep.ok()) return new Planned(prep, null, System.nanoTime() - t0, prep.failure());
         SectorSolver.Solved solved = SectorSolver.solve(prep.request(), MegaConfig.get(MegaConfig.ASSEMBLE_TRIES));
         long dt = System.nanoTime() - t0;
@@ -152,15 +161,19 @@ public final class SectorGenerator {
 
     /**
      * Plans a free-standing "probe" sector at the position of sector 0 with no neighbours, for the self-tests and the simulator-in-game: it exercises the real
-     * pools and the real templates through the real request and solver, and places nothing and saves nothing. The relic count is 1.
+     * pools and the real templates through the real request and solver, and places nothing and saves nothing. The relic count is the one the road's first sector
+     * would have (three since 1.55.0), so the vault pool a real sector draws from is the one the probe exercises.
      */
-    public static Planned probe(ServerLevel level, long dungeonSeed) {
+    public static Planned probe(ServerLevel level, long dungeonSeed) { return probe(level, dungeonSeed, Polarity.HOLY); }
+
+    /** {@link #probe(ServerLevel, long)} at the lane origin of a road: the Abyssal probe stands {@code MegaGrid.LANE_Z} blocks from the Holy one, exactly where that road's first sector would. */
+    public static Planned probe(ServerLevel level, long dungeonSeed, Polarity road) {
         long t0 = System.nanoTime();
         VanillaPools pools = VanillaPools.get();
         pools.bind(level.getStructureManager());
-        SectorPlanner.Plan plan = SectorPlanner.first(dungeonSeed);
+        SectorPlanner.Plan plan = SectorPlanner.first(dungeonSeed, 0, road);
         SectorRequests.Inputs in = new SectorRequests.Inputs(pools, pools.recipe(), MegaConfig.get(MegaConfig.MAX_PIECES), MegaConfig.get(MegaConfig.MAX_LINK_MODULES), plan.seed(),
-                plan.entry(), plan.forward(), plan.region(), null, null, null, List.of(), 1);
+                plan.entry(), plan.forward(), plan.region(), null, null, null, List.of(), SectorDraft.first(dungeonSeed, 0, road).relicCount());
         SectorRequests.Prepared prep = SectorRequests.prepare(in);
         if (!prep.ok()) return new Planned(prep, null, System.nanoTime() - t0, prep.failure());
         SectorSolver.Solved solved = SectorSolver.solve(prep.request(), MegaConfig.get(MegaConfig.ASSEMBLE_TRIES));

@@ -20,13 +20,13 @@ class RegenReplayTest {
 
     private static List<WorldObstacles.Known> known(SimWorld w) {
         List<WorldObstacles.Known> out = new ArrayList<>();
-        for (SimWorld.Entry e : w.sectors) out.add(new WorldObstacles.Known(e.id(), e.plan().region(), e.prevSeal(), e.prevFacing(), e.plan().entry()));
+        for (SimWorld.Entry e : w.sectors) out.add(new WorldObstacles.Known(e.id(), e.plan().region(), e.prevSeal(), e.prevFacing(), e.plan().entry(), e.road()));
         return out;
     }
 
     private static SectorSolver.Solved replay(SimWorld w, int j, List<SectorPlanner.Obstacle> others) {
         SimWorld.Entry e = w.sectors.get(j);
-        Box prevRegion = j == 0 ? null : w.sectors.get(j - 1).plan().region();
+        Box prevRegion = e.prevId() < 0 ? null : w.sectors.get(e.prevId()).plan().region();
         SectorRequests.Prepared p = SectorRequests.prepare(new SectorRequests.Inputs(CAT, w.recipe, w.maxPieces, w.maxLinkModules, e.plan().seed(), e.plan().entry(),
                 e.plan().forward(), e.plan().region(), e.prevSeal(), e.prevFacing(), prevRegion, others, e.relics()));
         assertTrue(p.ok(), "sector " + j + ": " + p.failure());

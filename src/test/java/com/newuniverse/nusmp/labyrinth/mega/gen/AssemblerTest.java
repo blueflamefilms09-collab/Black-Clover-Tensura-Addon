@@ -111,10 +111,32 @@ class AssemblerTest {
             }
             assertTrue(safe >= rc.extraSafe, "an extra safe room 5..12 modules from the Landing");
             Placed arena = r.pieces.stream().filter(p -> p.shape.kind == RoomKind.ARENA).findFirst().orElseThrow();
-            Vec front = r.pieces.get(arena.parent).socketFront(arena.parentSocket);
-            assertTrue(Math.hypot(front.x() - land.box.centerX(), front.z() - land.box.centerZ()) / 9.0 >= rc.arenaMinDistance, "the arena is far from the Landing");
+            assertTrue(Math.hypot(arena.box.centerX() - land.box.centerX(), arena.box.centerZ() - land.box.centerZ()) / 9.0 >= rc.arenaMinDistance,
+                    "the Guardian's hall itself (its centre) is far from the Landing's centre");
             assertTrue(arena.depth >= rc.arenaMinDepth, "and deep in the tree: " + arena.depth);
         }
+    }
+
+    /**
+     * The regression test of a bug found on the real templates: the distance rule used to be measured at the DOOR the Guardian's hall hangs from, and the hall is five
+     * modules across, so at the edge of the band kept free for the boss chain every door in the middle of the region was "too close" and only the doors at the far
+     * corners could host the hall, where the chain's two wings (about 90 blocks across) do not fit. Every sector of the real catalog fell back to the 7-piece layout. With
+     * the rule measured at the hall's own centre the central doors count and the chain is found at the first or second try. The numbers are those of the stand-in with the
+     * real boss-chain sizes: 1.1 tries on average with the centre rule, 2.5 with the door rule (checked by putting the old rule back).
+     */
+    @Test
+    void theBossChainOfTheRealSizesIsFoundWithoutManyRetries() {
+        SyntheticCatalog real = SyntheticCatalog.realSized();
+        int tries = 0, seeds = 40;
+        for (long s = 0; s < seeds; s++) {
+            Request q = TestPlans.first(real, s);
+            SectorSolver.Solved sv = SectorSolver.solve(q, 24);
+            assertTrue(sv.ok(), "seed " + s + ": " + SectorSolver.summary(sv.failures(), 3));
+            assertFalse(sv.fallback(), "seed " + s + " must not need the fallback layout");
+            assertEquals(List.of(), TestPlans.brute(sv.result(), q.withSeed(sv.result().seed, false)), "seed " + s);
+            tries += sv.tries();
+        }
+        assertTrue(tries / (double) seeds < 1.8, "the chain should usually be found at the first try: " + tries / (double) seeds + " tries on average");
     }
 
     @Test

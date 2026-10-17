@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.labyrinth.mega.gen;
 
 import com.newuniverse.nusmp.labyrinth.mega.MegaGrid;
+import com.newuniverse.nusmp.labyrinth.mega.RoomKind;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +25,54 @@ public final class SectorRequests {
     public record Inputs(PoolSource source, Recipe recipe, int maxPieces, int maxLinkModules, long seed, Vec entryJigsaw, Facing forward, Box region,
                          Vec prevSeal, Facing prevFacing, Box prevRegion, List<SectorPlanner.Obstacle> others, int relicCount) {}
 
-    /** The request, the tunnel pieces it starts with and, when something does not line up, why the request could not be built. */
-    public record Prepared(Request request, LinkBuilder.Tunnel tunnel, SectorPlanner.Obstacle tunnelObstacle, String failure) {
+    /**
+     * The request, the tunnel pieces it starts with and, when something does not line up, why the request could not be built. {@code notes} are the things the
+     * generator decided on its own that the owner should hear about (a promise of the recipe that the template pools cannot keep, see {@link #effective}).
+     */
+    public record Prepared(Request request, LinkBuilder.Tunnel tunnel, SectorPlanner.Obstacle tunnelObstacle, String failure, List<String> notes) {
+        public Prepared { notes = List.copyOf(notes); }
+
+        public Prepared(Request request, LinkBuilder.Tunnel tunnel, SectorPlanner.Obstacle tunnelObstacle, String failure) { this(request, tunnel, tunnelObstacle, failure, List.of()); }
+
         public boolean ok() { return failure == null; }
+    }
+
+    /**
+     * The recipe this sector can really keep. A promise that needs a kind of room no template of the pools offers (the recipe wants two treasure closets, but nobody
+     * has drawn one yet; a data pack that dropped the safe rooms) cannot be kept by any seed, and failing every try of every sector for it would leave the dungeon
+     * with nothing but the 7-piece fallback layout, which is a far worse sector than one that lacks a closet. So such a promise is waived for this plan and said so in
+     * {@code notes}; the pool commands and the log tell the owner which folder is empty. A promise whose kind IS offered is untouched, and the audit holds the plan
+     * to the effective recipe, so what is waived here is not demanded there.
+     */
+    static Recipe effective(PoolSource source, Recipe recipe, List<String> notes) {
+        Recipe r = recipe == null ? new Recipe() : recipe;
+        PoolDef side = source.pool(MegaGrid.P_SIDE);
+        if (side != null) {
+            for (RoomKind k : RoomKind.values()) {
+                if (k == RoomKind.CAP || r.min(k) <= 0 || offers(source, side, k)) continue;
+                notes.add("no template of kind " + k.folder() + " is in the pool " + MegaGrid.P_SIDE + ", so the recipe's minimum of " + r.min(k) + " is waived for this sector");
+                r = r == recipe ? recipe.copy() : r;
+                r.setMin(k, 0);
+            }
+        }
+        if (r.extraSafe > 0) {
+            PoolDef safe = source.pool(MegaGrid.P_SAFE);
+            if (safe != null && !offers(source, safe, RoomKind.SAFE)) {
+                notes.add("the pool " + MegaGrid.P_SAFE + " has no template, so the recipe's extra safe room is waived for this sector");
+                r = r == recipe ? recipe.copy() : r;
+                r.extraSafe = 0;
+            }
+        }
+        return r;
+    }
+
+    /** Does the pool hold at least one template that can be read and is of this kind? */
+    private static boolean offers(PoolSource source, PoolDef pool, RoomKind kind) {
+        for (PoolEntry e : pool.entries()) {
+            Shape sh = source.shape(e.shape());
+            if (sh != null && sh.kind == kind) return true;
+        }
+        return false;
     }
 
     public static Prepared prepare(Inputs in) {
@@ -48,10 +94,11 @@ public final class SectorRequests {
             tunnelObstacle = SectorPlanner.Obstacle.tunnel(SectorPlanner.tunnelBox(in.prevSeal(), in.prevFacing(), modules));
             beyond.add(tunnelObstacle);
         }
+        List<String> notes = new ArrayList<>();
         Request q = new Request();
         q.source = in.source();
         q.seed = in.seed();
-        q.recipe = in.recipe();
+        q.recipe = effective(in.source(), in.recipe(), notes);
         q.maxPieces = in.maxPieces();
         q.region = in.region();
         q.relicCount = in.relicCount();
@@ -61,6 +108,6 @@ public final class SectorRequests {
         q.pre = tunnel.pieces();
         int parent = tunnel.pieces().isEmpty() ? -1 : tunnel.pieces().size() - 1;
         q.start = new Request.Start(in.entryJigsaw(), in.forward(), MegaGrid.P_LANDING, MegaGrid.DOOR, parent, tunnel.lastOutSocket());
-        return new Prepared(q, tunnel, tunnelObstacle, null);
+        return new Prepared(q, tunnel, tunnelObstacle, null, notes);
     }
 }

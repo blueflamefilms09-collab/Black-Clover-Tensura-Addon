@@ -301,11 +301,13 @@ public final class MegaAssembler {
         }
         List<DoorStart> starts = arenaStarts();
         bump("chain.doors", starts.size());
+        // the distance rule is about the Guardian's hall, not about the door it hangs from: a real hall is five modules across, so its middle lies two and a half modules beyond the door
+        final Predicate<Box> farEnough = req.fallback ? null : box -> moduleDistance(box.centerX(), box.centerZ()) >= rc.arenaMinDistance;
         int tried = 0;
         for (DoorStart s : starts) {
             if (tried++ >= rc.chainSockets || overBudget || stopChain) break;
             bump("chain.doorsTried", 1);
-            attachEach(s.piece(), s.socket(), arenaPool, req.maxPieces, null, this::completeChain, () -> stopChain || overBudget);
+            attachEach(s.piece(), s.socket(), arenaPool, req.maxPieces, farEnough, this::completeChain, () -> stopChain || overBudget);
         }
         if (bestChain == null) return false;
         if (bestChain.pieces().get(0).index != placed.size()) throw new IllegalStateException("the chain search did not take its placements back");
@@ -322,7 +324,11 @@ public final class MegaAssembler {
         return true;
     }
 
-    /** The doors the arena may hang from: unused ordinary doors far enough from the Landing and deep enough in the tree; those facing the reserved band first, each group shuffled. */
+    /**
+     * The doors the arena may hang from: unused ordinary doors deep enough in the tree; those facing the reserved band first, each group shuffled. How far from the
+     * Landing the Guardian's hall must stand is NOT decided here (by the door) but when the hall is placed (by its own centre, see {@link #ensureChain}): the hall is
+     * five modules across, so the door at the edge of the band is two and a half modules nearer the Landing than the hall is.
+     */
     private List<DoorStart> arenaStarts() {
         List<DoorStart> out = new ArrayList<>();
         for (Placed p : placed) {
@@ -332,7 +338,6 @@ public final class MegaAssembler {
                 Socket s = p.shape.sockets.get(si);
                 if (p.isUsed(si) || s.sealed() || !s.isDoor()) continue;
                 Vec f = p.socketFront(si);
-                if (!req.fallback && moduleDistance(f.x(), f.z()) < rc.arenaMinDistance) continue;
                 out.add(new DoorStart(p, si, zone != null && zone.contains(f), rng.nextInt(1 << 20)));
             }
         }

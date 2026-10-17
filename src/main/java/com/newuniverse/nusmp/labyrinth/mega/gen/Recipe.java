@@ -50,11 +50,21 @@ public final class Recipe {
     private final Map<String, Integer> shapeMax = new LinkedHashMap<>();
     private final List<String> unknown = new ArrayList<>();
 
-    /** The recipe of the design document: at least one trial, two treasure closets, at most one set piece. */
+    /**
+     * The recipe of the design document: at least one trial, two treasure closets, at most one set piece. Since 1.55.0 it also carries the notes of the room builders:
+     * the trap, puzzle and trial rooms (the dark room is a trap) are meant to be about one per sector, so at most two of each kind and the dark room once; the great hall
+     * (3 x 5 modules) and the cathedral rotunda (5 x 5) are landmarks that must not repeat inside one sector.
+     */
     public Recipe() {
         min.put(RoomKind.TRIAL, 1);
         min.put(RoomKind.TREASURE, 2);
         max.put(RoomKind.SET_PIECE, 1);
+        max.put(RoomKind.TRIAL, 2);
+        max.put(RoomKind.TRAP, 2);
+        max.put(RoomKind.PUZZLE, 2);
+        shapeMax.put("nusmp:mega/hall/great_hall", 1);
+        shapeMax.put("nusmp:mega/set/cathedral_rotunda", 1);
+        shapeMax.put("nusmp:mega/trap/dark_room", 1);
     }
 
     /** The least number of rooms of this kind a plan must hold (0 when the recipe asks for none). */

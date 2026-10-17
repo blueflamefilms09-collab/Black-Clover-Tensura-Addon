@@ -2,6 +2,7 @@ package com.newuniverse.nusmp.labyrinth.mega.gen;
 
 import com.newuniverse.nusmp.labyrinth.mega.MegaGrid;
 import com.newuniverse.nusmp.labyrinth.mega.RegionTheme;
+import com.newuniverse.nusmp.labyrinth.mega.RoomKind;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -91,5 +92,66 @@ class SectorRequestsTest {
         assertFalse(p.ok());
         assertTrue(p.failure().startsWith("tunnel:"), p.failure());
         assertEquals(RegionTheme.GRAVITY, RegionTheme.pick(1, 0, null));
+    }
+
+    // ---------------------------------------------------------------- the recipe a sector can really keep
+
+    private static SectorRequests.Prepared prepareOn(PoolSource src, Recipe recipe) {
+        SectorPlanner.Plan p = SectorPlanner.first(5);
+        return SectorRequests.prepare(new SectorRequests.Inputs(src, recipe, 450, 40, p.seed(), p.entry(), p.forward(), p.region(), null, null, null, List.of(), 3));
+    }
+
+    /** The standard stand-in with the ordinary door pool rebuilt without the shapes of one kind. */
+    private static SyntheticCatalog without(RoomKind kind) {
+        SyntheticCatalog c = SyntheticCatalog.standard();
+        PoolDef side = c.pool(MegaGrid.P_SIDE);
+        List<Object> keep = new java.util.ArrayList<>();
+        for (PoolEntry e : side.entries()) {
+            if (c.shape(e.shape()).kind == kind) continue;
+            keep.add(e.shape());
+            keep.add(e.weight());
+        }
+        c.pool(MegaGrid.P_SIDE, side.emptyWeight(), side.fallback(), keep.toArray());
+        return c;
+    }
+
+    @Test
+    void aPromiseTheDoorPoolCannotKeepIsWaivedAndSaidSoInsteadOfFailingEverySeed() {
+        SectorRequests.Prepared prep = prepareOn(without(RoomKind.TREASURE), new Recipe());
+        assertTrue(prep.ok(), prep.failure());
+        assertEquals(0, prep.request().recipe.min(RoomKind.TREASURE), "no treasure closet exists, so none is demanded");
+        assertEquals(1, prep.request().recipe.min(RoomKind.TRIAL), "the promises the pool CAN keep stay");
+        assertEquals(1, prep.notes().size());
+        assertTrue(prep.notes().get(0).contains("treasure"), prep.notes().get(0));
+        SectorSolver.Solved sv = SectorSolver.solve(prep.request(), 24);
+        assertTrue(sv.ok() && !sv.fallback(), "the sector is built whole, not as the 7-piece fallback: " + SectorSolver.summary(sv.failures(), 3));
+        assertEquals(0, sv.result().count(RoomKind.TREASURE));
+    }
+
+    @Test
+    void aSectorWhoseRecipeCanBeKeptIsLeftAlone() {
+        Recipe given = new Recipe();
+        SectorRequests.Prepared prep = prepareOn(CAT, given);
+        assertTrue(prep.ok());
+        assertSame(given, prep.request().recipe, "nothing was waived, so the very same recipe is used");
+        assertTrue(prep.notes().isEmpty());
+    }
+
+    @Test
+    void theCallersRecipeIsNeverChangedByAWaiver() {
+        Recipe given = new Recipe();
+        prepareOn(without(RoomKind.TRIAL), given);
+        assertEquals(1, given.min(RoomKind.TRIAL), "the waiver works on a copy");
+        assertEquals(2, given.min(RoomKind.TREASURE));
+    }
+
+    @Test
+    void anEmptySafePoolWaivesTheExtraSafeRoom() {
+        SyntheticCatalog c = SyntheticCatalog.standard();
+        c.pool(MegaGrid.P_SAFE, 0, MegaGrid.P_CAP);
+        SectorRequests.Prepared prep = prepareOn(c, new Recipe());
+        assertTrue(prep.ok());
+        assertEquals(0, prep.request().recipe.extraSafe);
+        assertTrue(prep.notes().get(0).contains("safe"), prep.notes().get(0));
     }
 }

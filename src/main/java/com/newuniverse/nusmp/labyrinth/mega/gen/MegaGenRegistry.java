@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 /**
  * Why: the registration entry point of the generator (1.54.0), so {@code MegaSystem} wires the whole Mega-Dungeon core with the two calls it already makes.
  * {@code init} runs while the mod is being constructed: it only registers things that need no server (the {@link ExpansionQueue} as the one
- * {@code Expander} the facade talks to, and the self-tests); all real state is created lazily on the first server. {@code register} receives the game bus
+ * {@code Expander} the facade talks to, the {@code ChainTravel} the Hub's gates call, and the self-tests); all real state is created lazily on the first server. {@code register} receives the game bus
  * and hooks the five moments the core cares about: every server tick (the expansion job places a few pieces within its time budget, and the players waiting
  * for sector 0 are released), the server start (sectors that were being generated when the server stopped are generated again from their saved seed), the
  * server stop (the queue, the waiting list and the template caches are dropped, so nothing outlives a server), a data pack reload (the pools and the Sector
@@ -31,6 +31,7 @@ public final class MegaGenRegistry {
 
     public static void init(IEventBus modBus) {
         MegaDungeon.setExpander(ExpansionQueue.get());
+        MegaDungeon.setChainTravel(MegaTravel::enterChain);          // 1.55.0: the Hub's gates take a player up or down a road through the facade
         CoreSelfTests.register();
     }
 

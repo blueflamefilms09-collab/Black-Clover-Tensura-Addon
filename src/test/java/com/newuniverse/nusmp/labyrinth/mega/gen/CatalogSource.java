@@ -2,6 +2,7 @@ package com.newuniverse.nusmp.labyrinth.mega.gen;
 
 import com.newuniverse.nusmp.labyrinth.mega.MarkerKind;
 import com.newuniverse.nusmp.labyrinth.mega.MarkerSpec;
+import com.newuniverse.nusmp.labyrinth.mega.MegaGrid;
 import com.newuniverse.nusmp.labyrinth.mega.RoomKind;
 
 import java.io.IOException;
@@ -81,6 +82,25 @@ final class CatalogSource implements PoolSource {
     private static int i(Object o) { return ((Number) o).intValue(); }
 
     boolean isEmpty() { return shapes.isEmpty(); }
+
+    /**
+     * The pools a sector cannot be built without that hold no readable template yet: the Landings, the ordinary door pool and the door caps, the Guardian's hall, the
+     * antechamber, the vault for {@code relicCount} relics and the three Way Onward variants. Empty when the catalog is complete. The boss chain is drawn by other builders than the
+     * rooms, so the real catalog is incomplete for a while after the rooms arrive; a test that needs whole sectors uses this to say "not yet" instead of failing a build for
+     * content that has not been merged.
+     */
+    List<String> missingForSectors(int relicCount) {
+        String[] needed = {MegaGrid.P_LANDING, MegaGrid.P_SIDE, MegaGrid.P_CAP, MegaGrid.P_ARENA, MegaGrid.P_ANTECHAMBER, MegaGrid.P_VAULT + "_" + relicCount, SectorPlanner.POOL_STRAIGHT,
+                SectorPlanner.POOL_LEFT, SectorPlanner.POOL_RIGHT};
+        List<String> missing = new ArrayList<>();
+        for (String id : needed) {
+            PoolDef p = pools.get(id);
+            boolean stocked = false;
+            if (p != null) for (PoolEntry e : p.entries()) if (shapes.containsKey(e.shape())) stocked = true;
+            if (!stocked) missing.add(id);
+        }
+        return missing;
+    }
 
     int shapeCount() { return shapes.size(); }
 

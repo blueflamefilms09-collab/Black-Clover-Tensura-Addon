@@ -40,6 +40,19 @@ class RecipeTest {
     }
 
     @Test
+    void theRoomBuildersNotesAreInTheDefaults() {
+        Recipe r = new Recipe();
+        for (RoomKind k : new RoomKind[] {RoomKind.TRIAL, RoomKind.TRAP, RoomKind.PUZZLE}) assertEquals(2, r.max(k), "about one per sector, never more than two: " + k);
+        assertEquals(1, r.shapeMax("nusmp:mega/hall/great_hall"));
+        assertEquals(1, r.shapeMax("nusmp:mega/set/cathedral_rotunda"));
+        assertEquals(1, r.shapeMax("nusmp:mega/trap/dark_room"));
+        assertEquals(0, r.shapeMax("nusmp:mega/hall/crypt_a"), "an ordinary hall may repeat");
+        Recipe own = Recipe.fromMap(Map.of("shapeMax", Map.of("nusmp:mega/hall/great_hall", 0L)));
+        assertEquals(0, own.shapeMax("nusmp:mega/hall/great_hall"), "a data pack can lift a default limit with 0");
+        assertEquals(1, own.shapeMax("nusmp:mega/set/cathedral_rotunda"), "and only that one");
+    }
+
+    @Test
     void fromMapOverridesAndReportsWhatItDoesNotKnow() {
         Map<String, Object> m = new LinkedHashMap<>();
         m.put("minRooms", 60L);
@@ -118,6 +131,9 @@ class RecipeTest {
         for (RoomKind k : RoomKind.values()) {
             assertEquals(code.min(k), file.min(k), "min " + k);
             assertEquals(code.max(k), file.max(k), "max " + k);
+        }
+        for (String id : new String[] {"nusmp:mega/hall/great_hall", "nusmp:mega/set/cathedral_rotunda", "nusmp:mega/trap/dark_room", "nusmp:mega/hall/crypt_a"}) {
+            assertEquals(code.shapeMax(id), file.shapeMax(id), "shapeMax " + id);
         }
     }
 }
