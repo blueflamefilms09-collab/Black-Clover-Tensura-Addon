@@ -245,6 +245,9 @@ final class LuciusGod {
         b.dpsBudget().bypass(() -> BossHealGuard.allow(() -> b.setHealth(1f)));
         if (!b.refillForMode(LuciusStage.refillMode(from), LuciusGodConfig.stageRefillTicks())) return false;     // spent or busy: no second wind, he dies for real
         stage.advance();
+        for (net.minecraft.world.effect.MobEffectInstance debuff : new java.util.ArrayList<>(b.getActiveEffects())) {          // 1.56.0: a new stage starts clean: every harmful effect on him ends
+            if (debuff.getEffect().value().getCategory() == net.minecraft.world.effect.MobEffectCategory.HARMFUL) b.removeEffect(debuff.getEffect());
+        }
         long now = sl.getGameTime();
         graceUntil = LuciusBalance.stageGraceUntil(now, LuciusGodConfig.stageRefillTicks());          // 1.46.0: aura, EMP and starvation are off for the change and 10 s after it
         LuciusCapabilities.clearAll(sl);                                   // 1.46.0: and whatever of his is on the players comes off now

@@ -244,3 +244,7 @@ Worth watching first:
 7. The grimoire hooks: `castReady` is evaluated a second time per held tick while a fight is on; the swap at release.
 8. Balance: 2%, the tiers, 6%, the starvation numbers, 80 ticks of invulnerable stage change, the body factor, are a first pass.
 9. The three effect icons (`tools/gen_lucius_god_icons.py`) and the lang entries (`frag/lu2.lang.json`).
+
+## 1.56.0: the brief arrived a second time
+
+The same brief (three stages, the 2.5% cap, the 30-block aura, the EMP, the severance, starvation, the gravity domain, the swap, the reversal, traps, the Checkmate) was sent again. Every item is the 1.45.0 work above. What was added: the **`chest_gem_reveal`** clip (both models, played by `ZogratisPose` on the rising edge of the gem flag, in `tools/gen_zogratis_lucius.py`) and the **debuff cleanse** of the boss at a stage change (`LuciusGod.fall`). The numbers differ from the brief on purpose: `luciusHitCapPct` stays 2.0 and `luciusAuraRadius` 14 (eased in 1.46.0); set 2.5 and 30 in the config for the brief's values. Not verified in the game.

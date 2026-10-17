@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.56.0] — Lucius: the chest gem reveal clip and a clean stage change
+
+The owner sent the Lucius Zogratis god-tier brief again. Compared with the mod (rule 5), nearly all of it already exists since 1.45.0 and is kept as it is (`docs/lucius_god.md`, which maps every item): the three stages with a full health reset and the invulnerable change, the theatrical lines, the hit cap, percent true damage, the anti-regeneration aura, the relic EMP, Djinn severance, magicule starvation, anti-flight gravity, spatial disorientation, ultimate reversal, the Checkmate counter and the Time Stasis Traps. Two things of the brief were missing and are new.
+
+### NEW
+- **`chest_gem_reveal`**, a one-shot Lucius animation (1.8 s) on both bodies, the human and the divine form: a crouch, then the chest thrown out and the arms spread wide while the glow swells (the divine form opens its wings too). It plays once, when the chest gem opens in the last stage (the rising edge of the synced gem flag), and settles back to the idle pose. A model without the clip simply skips it. Built in `tools/gen_zogratis_lucius.py` (previews: `lucius_base_chest_gem_reveal`, `lucius_divine_chest_gem_reveal`), played by `ZogratisPose` (new `Frame.gemOut`, tested).
+- **A stage change cleanses Lucius**: every harmful effect on him ends when the next stage begins (the brief's "clear debuffs"). Before, only the players were cleansed.
+
+### KEPT (every number the brief names stays a config value the owner already tuned)
+- The hit cap is `luciusHitCapPct` (2.0 here; the brief says 2.5) and the aura radius `luciusAuraRadius` (14 here, eased in 1.46.0; the brief says 30). Both are in `nusmp-lucius-god-server.toml`; they were not changed because the owner eased them on purpose in 1.46.0.
+- The Java 17 / mixin wording of the brief does not apply: the mod runs on Java 21 and every mechanic is an event hook or a gated call in the existing classes.
+- The brief file ends in the middle of its section 5 ("The Checkmate ..."): the Checkmate counter exists since 1.45.0; if more was meant after that, it did not arrive.
+
+State: the animation was checked in the headless render preview only; nothing was run in the game.
+
 ## [1.55.0] — Floor 0 and the two roads: the Sanctuary Hub, Holy and Abyssal floors, the System, the Rukh flow, standard gear
 
 Ships together with 1.54.0 below (the Mega-Dungeon itself); 1.54.0 was never released on its own. **State:** written without a whole-project compiler; CI is the first real compile. Pure logic is covered by JUnit tests that ran locally in a small shim, the whole tree was type-checked against API stubs, and a CI smoke test boots a headless server with `[smoke] [strict]`. Nothing has been run in the game. Docs: `docs/labyrinth/mega_floors.md` (the brief against what existed, decisions and their WHY) and one `docs/labyrinth/mega_<part>.md` per part.

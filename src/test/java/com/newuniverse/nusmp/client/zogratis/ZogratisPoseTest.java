@@ -369,4 +369,39 @@ class ZogratisPoseTest {
         assertEquals(-180f, ZogratisPose.wrapDegrees(180f), 1e-4);
         assertEquals(10f, ZogratisPose.wrapDegrees(370f), 1e-4);
     }
+
+    @Test
+    void theChestGemRevealPlaysOnceWhenTheGemOpensAndOnlyOnAModelThatHasIt() {
+        ZogratisPose.Clips withReveal = clips(Map.of("idle", 4f, "walk", 1.1f, "run", 0.62f, "attack", 0.9f, "cast", 1.2f, "cast_big", 2.0f, "hurt", 0.45f,
+                "transform", 3.2f, "death", 2.8f, "chest_gem_reveal", 1.8f), true);
+        ZogratisPose p = new ZogratisPose();
+        ZogratisPose.Frame f = frame(100);
+        p.update(f, withReveal);
+        assertEquals("idle", p.clip, "the gem is shut: nothing special");
+        f = frame(110);
+        f.gemOut = true;
+        p.update(f, withReveal);
+        assertEquals("chest_gem_reveal", p.clip, "the rising edge of the gem starts the clip");
+        assertEquals(0f, p.seconds, 1e-4);
+        f = frame(128);
+        f.gemOut = true;
+        p.update(f, withReveal);
+        assertEquals("chest_gem_reveal", p.clip);
+        assertEquals(0.9f, p.seconds, 1e-4, "it runs on the age clock");
+        f = frame(150);
+        f.gemOut = true;
+        p.update(f, withReveal);
+        assertEquals("idle", p.clip, "the clip is a one-shot: after its length the gem staying out does not replay it");
+        f = frame(160);
+        p.update(f, withReveal);
+        f = frame(170);
+        f.gemOut = true;
+        p.update(f, withReveal);
+        assertEquals("chest_gem_reveal", p.clip, "a gem that closes and opens again is a new reveal");
+        ZogratisPose bare = new ZogratisPose();
+        f = frame(10);
+        f.gemOut = true;
+        bare.update(f, LOOPING);
+        assertEquals("idle", bare.clip, "a model without the clip never plays it");
+    }
 }

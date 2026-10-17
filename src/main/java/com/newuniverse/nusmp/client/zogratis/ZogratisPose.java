@@ -8,7 +8,9 @@ package com.newuniverse.nusmp.client.zogratis;
  */
 public final class ZogratisPose {
     public static final String IDLE = "idle", WALK = "walk", RUN = "run", ATTACK = "attack", CAST = "cast", CAST_BIG = "cast_big",
-            HURT = "hurt", TRANSFORM = "transform", DEATH = "death", SPAWN = "spawn";
+            HURT = "hurt", TRANSFORM = "transform", DEATH = "death", SPAWN = "spawn",
+            /** Lucius only: played once when the chest gem opens (a one-shot clip; a model without it simply skips it). */
+            REVEAL = "chest_gem_reveal";
 
     /** The slam of a one-shot cast_big clip lies at this fraction of its length: the wind-up ends there, the rest is the settling. */
     public static final float CAST_BIG_RELEASE = 0.8f;
@@ -47,6 +49,8 @@ public final class ZogratisPose {
         /** 0..1 of the wind-up. */
         public float castProgress;
         public boolean swinging;
+        /** True while the chest gem is out (Lucius): its rising edge starts the {@link #REVEAL} clip. */
+        public boolean gemOut;
         /** Ticks since the last hit landed, negative when there is none lately. */
         public float hurtTicks = -1f;
         /** Horizontal blocks the entity moved in its current tick (the clock adds them up into the ground covered). */
@@ -63,8 +67,8 @@ public final class ZogratisPose {
     private float lastAge = Float.NaN;
     private int lastTick = Integer.MIN_VALUE;
     private float speed, prevRaw, travelBase, travel;
-    private boolean running, wasSwinging;
-    private float attackStart = -1e9f, castStart = -1e9f, releaseAge = -1e9f, lastCastProgress;
+    private boolean running, wasSwinging, wasGemOut;
+    private float attackStart = -1e9f, castStart = -1e9f, releaseAge = -1e9f, revealStart = -1e9f, lastCastProgress;
     private int lastCast;
     private float scale = Float.NaN, lastScaleAge, yaw = Float.NaN, lastYawAge;
 
@@ -83,6 +87,8 @@ public final class ZogratisPose {
         travel = travelBase + raw * clamp01(f.age - f.tick);
         if (f.swinging && !wasSwinging) attackStart = f.age;
         wasSwinging = f.swinging;
+        if (f.gemOut && !wasGemOut) revealStart = f.age;
+        wasGemOut = f.gemOut;
         if (f.cast > 0) {
             if (lastCast == 0) castStart = f.age;
             lastCastProgress = f.castProgress;
@@ -106,6 +112,8 @@ public final class ZogratisPose {
         travel = 0f;
         running = false;
         wasSwinging = false;
+        wasGemOut = false;
+        revealStart = -1e9f;
         attackStart = -1e9f;
         castStart = -1e9f;
         releaseAge = -1e9f;
@@ -122,6 +130,8 @@ public final class ZogratisPose {
             set(DEATH, clamp01(f.deathTicks / Math.max(1f, f.deathSpan)) * len(c, DEATH));
         } else if (f.transforming) {
             set(TRANSFORM, clamp01(f.transformProgress) * len(c, TRANSFORM));
+        } else if (revealing(f.age, c)) {
+            set(REVEAL, (f.age - revealStart) / 20f);
         } else if (f.cast == 2 && c.length(CAST_BIG) > 0f) {
             float l = len(c, CAST_BIG);
             set(CAST_BIG, c.loops(CAST_BIG) ? (f.age - castStart) / 20f : clamp01(f.castProgress) * CAST_BIG_RELEASE * l);
@@ -142,6 +152,11 @@ public final class ZogratisPose {
         } else {
             set(IDLE, f.age / 20f);
         }
+    }
+
+    private boolean revealing(float age, Clips c) {
+        float l = len(c, REVEAL);
+        return l > 0f && age >= revealStart && (age - revealStart) / 20f < l;
     }
 
     private boolean attacking(float age, Clips c) {

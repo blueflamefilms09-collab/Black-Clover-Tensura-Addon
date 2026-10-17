@@ -99,6 +99,7 @@ public class ZogratisBossRenderer<T extends ZogratisBoss> extends ZogratisRender
 
         float target = look.scale * (look.followsHitbox ? e.getBbHeight() / e.getType().getHeight() : 1f);
         f.transforming = transforming;
+        f.gemOut = e instanceof LuciusBoss gem && gem.gemExposed();
         f.transformProgress = !look.splitTransform ? phase : second ? (phase - 0.5f) * 2f : phase * 2f;
         f.cast = casting ? (ultimate ? 2 : 1) : 0;
         f.castProgress = phase;

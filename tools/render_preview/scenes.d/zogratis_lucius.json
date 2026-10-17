@@ -353,6 +353,53 @@
    }
   ]
  },
+ "lucius_base_chest_gem_reveal": {
+  "kind": "geo",
+  "model": "zogratis_lucius_base",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   7.2,
+   14.4,
+   21.6,
+   28.8
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "chest_gem_reveal",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 5.805
+   },
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     1.3,
+     0
+    ],
+    "dist": 5.805
+   }
+  ]
+ },
  "lucius_divine_front": {
   "kind": "geo",
   "model": "zogratis_lucius_divine",
@@ -725,6 +772,55 @@
    }
   ]
  },
+ "lucius_divine_chest_gem_reveal": {
+  "kind": "geo",
+  "model": "zogratis_lucius_divine",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   7.2,
+   14.4,
+   21.6,
+   28.8
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [
+   "BUDGET"
+  ],
+  "anim": "chest_gem_reveal",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.95,
+     0
+    ],
+    "dist": 10.26
+   },
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     1.95,
+     0
+    ],
+    "dist": 10.26
+   }
+  ]
+ },
  "soul_paladin_front": {
   "kind": "geo",
   "model": "zogratis_soul_paladin",
@@ -1022,6 +1118,42 @@
      0
     ],
     "dist": 4.83
+   }
+  ]
+ },
+ "soul_paladin_chest_gem_reveal": {
+  "kind": "geo",
+  "model": "zogratis_soul_paladin",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   7.2,
+   14.4,
+   21.6,
+   28.8
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "chest_gem_reveal",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.35,
+     0
+    ],
+    "dist": 6.21
    }
   ]
  },
@@ -1324,6 +1456,42 @@
      0
     ],
     "dist": 2.94
+   }
+  ]
+ },
+ "grimoire_prop_chest_gem_reveal": {
+  "kind": "geo",
+  "model": "zogratis_grimoire_prop",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   7.2,
+   14.4,
+   21.6,
+   28.8
+  ],
+  "tile": [
+   340,
+   340
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "chest_gem_reveal",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     0.9,
+     0
+    ],
+    "dist": 3.78
    }
   ]
  }

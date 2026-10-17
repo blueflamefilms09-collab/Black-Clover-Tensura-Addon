@@ -1529,6 +1529,26 @@ def base_clips(a):
         root=[(0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (-3, 1, 0), (-3, 3, 0)])
     seq(a, "death", "scale", T, spark=[(0.62,) * 3, (0.3,) * 3, (TINY,) * 3, (TINY,) * 3, (TINY,) * 3, (TINY,) * 3])
 
+    # ------------------------------------------------------------------------------------------------------- chest_gem_reveal (one-shot 1.8 s): a crouch, then the chest thrown out and the arms wide while the spark swells; settles back to idle
+    L = 1.8
+    a.clip("chest_gem_reveal", L, False)
+    T = (0.0, 0.35, 0.9, 1.4, 1.8)
+    seq(a, "chest_gem_reveal", "rot", T,
+        arm_l=[(20, 0, 9), (-6, 0, 26), (4, 0, 64), (4, 0, 60), (20, 0, 9)],
+        arm_r=[(8, 0, -9), (-6, 0, -26), (4, 0, -64), (4, 0, -60), (8, 0, -9)],
+        forearm_l=[(134, 0, 0), (60, 0, 0), (14, 0, 0), (14, 0, 0), (134, 0, 0)],
+        forearm_r=[(30, 0, 0), (50, 0, 0), (14, 0, 0), (14, 0, 0), (30, 0, 0)],
+        body=[(0, 0, 0), (-6, 0, 0), (9, 0, 0), (9, 0, 0), (0, 0, 0)],
+        head=[(1.5, 0, 0), (8, 0, 0), (-14, 0, 0), (-14, 0, 0), (-2, 0, 0)],
+        hair=[(0, 0, 0), (8, 0, 0), (-18, 0, 3), (-18, 0, -3), (0, 0, 0)],
+        fur=[(0, 0, 0), (4, 0, 0), (-8, 0, 0), (-8, 0, 0), (0, 0, 0)],
+        cloak_top=[(-2, 0, 0), (6, 0, 0), (-18, 0, 3), (-18, 0, -3), (-4, 0, 0)],
+        cloak_bottom=[(-2, 0, 0), (8, 0, 0), (-26, 0, -4), (-26, 0, 4), (-6, 0, 0)],
+        cloak_l=[(0, 0, 2), (0, 0, 4), (-14, 0, 16), (-14, 0, 14), (0, 0, 6)],
+        cloak_r=[(0, 0, -2), (0, 0, -4), (-14, 0, -16), (-14, 0, -14), (0, 0, -6)])
+    seq(a, "chest_gem_reveal", "pos", T, body=[(0, 0, 0), (0, -1.6, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)])
+    seq(a, "chest_gem_reveal", "scale", T, spark=[(0.62,) * 3, (0.9,) * 3, (2.2,) * 3, (2.2,) * 3, (0.62,) * 3])
+
 
 # ------------------------------------------------------------------------------------------------------------------ animation of the divine form
 WING_REST = {1: (0.0, 0.0), 2: (0.0, 0.0), 3: (0.0, 0.0)}            # the model is built with the wings fully spread; clips fold them (negative z folds the left wing)
@@ -1777,6 +1797,25 @@ def divine_clips(a):
     a.rot("death", "halo", {0.0: (0, 0, 0), L: (0, 0, 30)})
     a.rot("death", "halo_in", {0.0: (0, 0, 0), L: (0, 0, -30)})
 
+    # ------------------------------------------------------------------------------------------------------- chest_gem_reveal (one-shot 1.8 s): the wings open, the arms go wide and the chest is thrown out; settles back to idle
+    L = 1.8
+    a.clip("chest_gem_reveal", L, False)
+    T = (0.0, 0.4, 0.9, 1.4, 1.8)
+    seq(a, "chest_gem_reveal", "rot", T,
+        arm_l=[(38, 0, 14), (10, 0, 30), (-10, 0, 76), (-10, 0, 72), (38, 0, 14)],
+        arm_r=[(58, -14, -28), (10, 0, -30), (-10, 0, -76), (-10, 0, -72), (58, -14, -28)],
+        forearm_l=[(88, 0, 0), (40, 0, 0), (14, 0, 0), (14, 0, 0), (88, 0, 0)],
+        forearm_r=[(22, 0, 0), (30, 0, 0), (14, 0, 0), (14, 0, 0), (22, 0, 0)],
+        body=[(-1, 0, 0), (-6, 0, 0), (8, 0, 0), (8, 0, 0), (-1, 0, 0)],
+        head=[(2, 0, 0), (8, 0, 0), (-16, 0, 0), (-16, 0, 0), (2, 0, 0)],
+        cloak_top=[(-9, 0, 0), (0, 0, 0), (-24, 0, 0), (-24, 0, 0), (-9, 0, 0)],
+        cloak_bottom=[(-14, 0, 0), (-4, 0, 0), (-34, 0, 0), (-34, 0, 0), (-14, 0, 0)])
+    seq(a, "chest_gem_reveal", "pos", T, root=[(0, 0, 0), (0, 1.0, 0), (0, 4.0, 0), (0, 4.0, 0), (0, 0, 0)])
+    seq(a, "chest_gem_reveal", "scale", T, spark=[(0.5,) * 3, (0.8,) * 3, (3.0,) * 3, (3.0,) * 3, (0.5,) * 3])
+    wings_keys(a, "chest_gem_reveal", T, [WING_IDLE, WING_CAST, WING_BIG, WING_BIG, WING_IDLE])
+    halo_spin(a, "chest_gem_reveal")
+
+
 
 def run_build(b, tex_h=None):
     img, glow = b.finish()
@@ -1828,12 +1867,12 @@ def scenes_for(models=MODELS):
         if m in ("lucius_base", "lucius_divine"):
             fy = {"lucius_base": 1.75, "lucius_divine": 2.1}[m]
             sc[m + "_face"] = scene(full, "idle", [0], [view("face", 0, 2, (0, fy, 0), 2.1), view("face 3/4", 32, 6, (0, fy, 0), 2.1)], (420, 420))
-        for clip, secs, n in (("cast", 1.2, 4), ("cast_big", 2.0, 4), ("attack", 0.9, 5), ("transform", 3.2 if m != "lucius_divine" else 3.6, 6), ("death", 2.8, 5), ("walk", 1.1, 4)):
+        for clip, secs, n in (("cast", 1.2, 4), ("cast_big", 2.0, 4), ("attack", 0.9, 5), ("transform", 3.2 if m != "lucius_divine" else 3.6, 6), ("death", 2.8, 5), ("walk", 1.1, 4), ("chest_gem_reveal", 1.8, 5)):
             ages = [tick(secs * k / n) for k in range(n)]
-            wide = 1.35 if clip in ("cast_big", "transform") else 1.05
+            wide = 1.35 if clip in ("cast_big", "transform", "chest_gem_reveal") else 1.05
             exp = ("ZERO_AREA",) if (m, clip) == ("grimoire_prop", "transform") else ()               # its first frame is the book at a hundredth of its size
             vs = [view("3/4", 30, 6, (0, ty + (0.25 if wide > 1.2 else 0.0), 0), d * wide)]
-            if clip == "cast_big" and m in ("lucius_base", "lucius_divine"):
+            if clip in ("cast_big", "chest_gem_reveal") and m in ("lucius_base", "lucius_divine"):
                 vs.append(view("front", 0, 4, (0, ty + 0.25, 0), d * wide))
             sc["%s_%s" % (m, clip)] = scene(full, clip, ages, vs, (340, 480) if m != "grimoire_prop" else (340, 340), expect=exp)
     return sc
