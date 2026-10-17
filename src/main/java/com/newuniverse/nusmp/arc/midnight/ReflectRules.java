@@ -7,8 +7,8 @@ package com.newuniverse.nusmp.arc.midnight;
  * (it is given facts about the foe, never the foe itself) so the beam, the fireball and the tests agree. The mod's own answers are used: a Full Reflection
  * mirror, a live mirror array, and the anti-magic of a demon sword or the Anti-Magic Lord.
  * <p>
- * A beam is instant, so a sword swing cannot meet it (an anti-magic holder merely cuts it); a fireball flies for a moment, so a swing can meet it, which
- * is exactly how the story showed it.
+ * A beam is instant, so a sword swing cannot meet it (an anti-magic holder merely has it cut by the guard rule, {@code MidnightMath.guardFactor}); a fireball
+ * flies for a moment, so a swing can meet it, which is exactly how the story showed it.
  */
 public final class ReflectRules {
     private ReflectRules() {}
@@ -37,9 +37,6 @@ public final class ReflectRules {
         if (projectile && antiMagicHeld && swinging) return Kind.ANTI_MAGIC_SWING;
         return Kind.NONE;
     }
-
-    /** The share of an instant attack that gets through to a foe who holds anti-magic but cannot turn it back: it is cut to 40%. */
-    public static double antiMagicCut(boolean antiMagicHeld) { return antiMagicHeld ? 0.4 : 1.0; }
 
     /** The damage (before the budget) an attack turned back deals to the boss that threw it, as a share of the boss's maximum health. */
     public static float backfireShare(Kind kind) {

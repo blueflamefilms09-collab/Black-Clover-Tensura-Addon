@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The shared geometry of the Midnight Sun strikes: the telegraph and the hit test must agree at every edge. */
+/** Why: the telegraph and the hit test of every Midnight Sun strike call the same geometry, and the one thing a boss must never do is hit where nothing was shown, so every edge (lane ends, ring rim, cone corner, the spot behind a body) is pinned here. */
 class MidnightMathTest {
 
     @Test

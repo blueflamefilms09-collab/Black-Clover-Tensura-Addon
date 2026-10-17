@@ -10,7 +10,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** Rades's table, his army and ward, the Soul Abductor's memory and the retreat rule. */
+/** Why: Rades's fight is a question of choosing targets, which only works if the ward of the dead is capped, anti-magic really cuts it, the Soul Abductor remembers only what it should and the retreat fires only when pressed; those rules and his table are held here. */
 class RadesTest {
     static final List<MidnightSpec> SPECS = RadesTable.specs();
 

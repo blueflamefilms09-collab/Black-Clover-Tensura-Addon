@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The small state machines shared by the four bosses: stagger with a lockout, the break watch, the sliding damage window, the reflect rules and the trio bond. */
+/** Why: the four bosses share a handful of small state machines (the open window with its lockout, the break watch, the sliding damage window, the reflect rules and the trio bond) and a mistake in one would show up in all four fights, so they are tested once here. */
 class StateClocksTest {
 
     @Test
@@ -109,8 +109,6 @@ class StateClocksTest {
         assertTrue(ReflectRules.backfireShare(ReflectRules.Kind.FULL_REFLECTION) <= 0.1f, "never more than a tenth of the bar from one reflect");
         assertEquals(0, ReflectRules.openTicks(ReflectRules.Kind.NONE));
         assertTrue(ReflectRules.openTicks(ReflectRules.Kind.FULL_REFLECTION) > ReflectRules.openTicks(ReflectRules.Kind.ANTI_MAGIC_SWING));
-        assertEquals(0.4, ReflectRules.antiMagicCut(true), 1e-12);
-        assertEquals(1.0, ReflectRules.antiMagicCut(false), 1e-12);
     }
 
     @Test

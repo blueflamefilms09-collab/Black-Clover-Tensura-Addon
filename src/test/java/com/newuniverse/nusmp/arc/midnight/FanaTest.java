@@ -10,7 +10,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** Fana's table, the robe's weakness, the Evil Heart countdown and the fairness of her marks. */
+/** Why: Fana's fight rests on numbers nobody has played yet, so the laws it must obey (a readable telegraph, marks that can be left, a robe with a real weakness, an Evil Heart that can be broken) are held here as tests instead of being found by a player. */
 class FanaTest {
     static final List<MidnightSpec> SPECS = FanaTable.specs();
 

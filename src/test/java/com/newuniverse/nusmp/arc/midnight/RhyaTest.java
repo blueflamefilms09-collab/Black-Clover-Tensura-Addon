@@ -13,7 +13,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** Rhya's table, his memory of what he copied and the fairness of his marks. */
+/** Why: Rhya's whole fight is the memory of what he copied (the newest wins, a repeat refreshes, time forgets, what he knows hurts him less), and it is easy to get subtly wrong, so the memory, his table and the fairness of his marks are tested. */
 class RhyaTest {
     static final List<MidnightSpec> SPECS = RhyaTable.specs();
 
@@ -52,7 +52,10 @@ class RhyaTest {
             assertTrue(RhyaMath.boltCount(powers[i]) >= RhyaMath.boltCount(powers[i - 1]));
             assertTrue(RhyaMath.lightCopyBlades(powers[i]) >= RhyaMath.lightCopyBlades(powers[i - 1]));
             assertTrue(RhyaMath.novaCount(powers[i]) >= RhyaMath.novaCount(powers[i - 1]));
+            assertTrue(RhyaMath.sealCount(powers[i]) >= RhyaMath.sealCount(powers[i - 1]));
         }
+        assertEquals(1, RhyaMath.sealCount(20));
+        assertEquals(2, RhyaMath.sealCount(100), "two rings of chains at the end");
         assertEquals(3, RhyaMath.boltCount(20));
         assertEquals(6, RhyaMath.boltCount(100));
         assertEquals(1, RhyaMath.memoryCapacity(false));
@@ -82,6 +85,9 @@ class RhyaTest {
         MidnightSpec lance = RhyaTable.byId(RhyaTable.LANCE);
         assertTrue(lance.windUpTicks() - RhyaMath.LANCE_LOCK >= 12);
         assertTrue(MidnightMath.escapeReach(RhyaMath.LANCE_LOCK) >= RhyaMath.LANCE_HALF_WIDTH + 0.3 + 0.5);
+        MidnightSpec bolts = RhyaTable.byId(RhyaTable.BOLTS);
+        assertTrue(bolts.windUpTicks() > RhyaMath.BOLT_LOCK, "the volley locks before it leaves");
+        assertTrue(MidnightMath.escapeReach(RhyaMath.BOLT_LOCK) >= RhyaMath.BOLT_RADIUS + 0.3 + 0.5, "a frozen line of copied bolts can be stepped out of");
         MidnightSpec light = RhyaTable.byId(RhyaTable.LIGHT_COPY);
         assertTrue(light.windUpTicks() - RhyaMath.LIGHT_COPY_LOCK >= 12);
         assertTrue(RhyaMath.BOOK_GAP * RhyaMath.BOOK_SALVOS < 120, "the Stolen Spellbook is over in six seconds");

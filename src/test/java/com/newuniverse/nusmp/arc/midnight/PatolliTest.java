@@ -10,7 +10,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** Patolli's table, his numbers and the overreach rule: the fairness laws of a light-speed fight. */
+/** Why: Patolli is fast by design, so his fight is only fair if every strike is drawn long enough to read and the Overreach counter works as written; the table, his counts and that rule are held here. */
 class PatolliTest {
     static final List<MidnightSpec> SPECS = PatolliTable.specs();
 

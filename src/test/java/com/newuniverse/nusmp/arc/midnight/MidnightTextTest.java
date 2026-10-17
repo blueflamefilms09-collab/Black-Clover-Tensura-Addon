@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The rewriting of the framework's devil-voiced lines, the bar title and the gauge. */
+/** Why: the four bosses speak in their own voice instead of the framework's devil voice, and a wrong rewrite would put the wrong name or a stray sentence on every party's screen, so the text helpers are tested. */
 class MidnightTextTest {
 
     @Test
