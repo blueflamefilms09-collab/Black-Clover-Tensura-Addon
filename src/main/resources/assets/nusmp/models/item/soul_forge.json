@@ -1,0 +1,11 @@
+{
+  "loader": "neoforge:separate_transforms",
+  "base": {
+    "parent": "nusmp:block/soul_forge"
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "nusmp:item/soul_forge_icon"
+    }
+  }
+}

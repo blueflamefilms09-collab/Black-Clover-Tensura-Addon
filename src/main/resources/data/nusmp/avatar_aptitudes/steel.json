@@ -1,0 +1,13 @@
+{
+  "name": "Steel",
+  "rarity": "UNCOMMON",
+  "tax_percent": 3,
+  "magic": "steel",
+  "skills": [
+    "tensura:steel_strength",
+    "tensura:body_armor",
+    "tensura:strengthen_body"
+  ],
+  "tint": "#B8C2CC",
+  "description": "A body forged to take the blow."
+}

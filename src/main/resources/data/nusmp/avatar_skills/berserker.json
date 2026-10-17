@@ -1,0 +1,9 @@
+{
+  "id": "tensura:berserker",
+  "kind": "unique",
+  "name": "Berserker",
+  "ep_tax": 6,
+  "min_ep": 1000,
+  "tint": "#FF3355",
+  "description": "Rage with a purpose."
+}

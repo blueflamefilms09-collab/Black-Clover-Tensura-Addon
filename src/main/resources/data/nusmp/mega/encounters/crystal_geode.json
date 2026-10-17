@@ -1,0 +1,175 @@
+{
+  "comment": "Why: a giant geode is quiet and bright and everything in it is made of the same stone as the walls, so the table is constructs, slimes and elementals (the golems, the cubes and the sparks), shulker turrets in the facets, bats that hunt by echo and silverfish that eat the crystal. Noise draws the bats and the one brute (an umber-hulk-like ravager), light draws the sprites. The budget is a tenth larger than the baseline because the fights are rarer and heavier, in the way of the astral sectors.",
+  "description": "A giant amethyst geode: calcite and basalt shells, budding crystals, echoing galleries. Crystal golems, gelatinous cubes, sparks, shulker turrets in the facets, bats and an umber-hulk-like brute that tunnels at the noise.",
+  "rollBonus": 0,
+  "budgetScale": 1.1,
+  "defaultFaction": "construct",
+  "entries": [
+    {
+      "id": "glint_bats",
+      "comment": "Bats that nest among the crystals and are startled by the light on the facets: a few quick bodies from the roof. Capped at threat 8 so the minor band does not stay a joke when the party is deep.",
+      "band": "minor",
+      "weight": 14,
+      "maxThreat": 8,
+      "mobs": [
+        {"type": "entity", "id": "tensura:giant_bat", "count": "2-3"}
+      ],
+      "cue": {"sound": "minecraft:entity.bat.ambient", "volume": 0.7, "pitch": 1.2, "particle": "minecraft:witch", "count": 6}
+    },
+    {
+      "id": "shard_crawlers",
+      "comment": "Things that eat the crystal and the stone under it: a few silverfish out of the nearest wall. The evergreen breather of the geode, with no upper threat so the minor band never runs dry.",
+      "band": "minor",
+      "weight": 14,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:silverfish", "count": "2-4"}
+      ],
+      "cue": {"sound": "minecraft:block.glass.break", "volume": 0.5, "pitch": 1.4, "particle": "minecraft:witch", "count": 4}
+    },
+    {
+      "id": "crystal_golems",
+      "comment": "The geode's golems, cut from the same stone as the walls and standing in alcoves until someone walks past: the construct tag decides who comes. The evergreen standard fight of the geode.",
+      "band": "standard",
+      "weight": 12,
+      "mobs": [
+        {"type": "faction", "count": "2-3", "faction": "construct"}
+      ],
+      "cue": {"sound": "minecraft:block.amethyst_block.resonate", "volume": 0.8, "pitch": 0.8, "particle": "minecraft:witch", "count": 8}
+    },
+    {
+      "id": "gelatinous_cubes",
+      "comment": "Slimes that grew in the damp between the shells, big and slow and quivering with light: the slime tag, three to five of them, the closest the geode has to a gelatinous cube.",
+      "band": "standard",
+      "weight": 10,
+      "mobs": [
+        {"type": "faction", "count": "3-5", "faction": "slime"}
+      ],
+      "cue": {"sound": "minecraft:entity.slime.squish", "volume": 0.8, "pitch": 0.7, "particle": "minecraft:witch", "count": 8}
+    },
+    {
+      "id": "spark_elementals",
+      "comment": "Crystal sparks given a body by the resonance: the elemental tag decides who comes (breezes, Tensura's spirits and the rest within the toughness window).",
+      "band": "standard",
+      "weight": 10,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "faction", "count": "2-3", "faction": "elemental"}
+      ],
+      "cue": {"sound": "minecraft:block.amethyst_block.chime", "volume": 0.8, "pitch": 1.2, "particle": "minecraft:enchant", "count": 8}
+    },
+    {
+      "id": "crystal_turrets",
+      "comment": "Turrets in the wall: shulkers do not move, so they are placed close and never sent hunting (hunt 0); the party meets them by walking into their range. In a geode they are the crystals that open and watch.",
+      "band": "standard",
+      "weight": 8,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:shulker", "count": "2-3"}
+      ],
+      "range": [10, 22],
+      "cells": 3,
+      "hunt": 0,
+      "cue": {"sound": "minecraft:entity.shulker.open", "volume": 0.8, "pitch": 1.0, "particle": "minecraft:witch", "count": 8},
+      "message": "message.nusmp.mega.enc.crystal_geode.crystal_turrets"
+    },
+    {
+      "id": "echo_wings",
+      "comment": "Sound carries in a geode and bats hunt by it: for a loud party, big bats and a cloud of small ones come down the galleries. The small bats are trimmed first.",
+      "band": "standard",
+      "weight": 8,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "entity", "id": "tensura:giant_bat", "count": "3-4"},
+        {"type": "entity", "id": "minecraft:bat", "count": "3-4"}
+      ],
+      "needs": {"noisy": true},
+      "cue": {"sound": "minecraft:entity.bat.takeoff", "volume": 0.8, "pitch": 1.0, "particle": "minecraft:witch", "count": 8},
+      "message": "message.nusmp.mega.enc.crystal_geode.echo_wings"
+    },
+    {
+      "id": "prism_sprites",
+      "comment": "Light given a shape: vexes drawn to a bright party, which the facets make brighter still. They split the party's attention across three angles.",
+      "band": "standard",
+      "weight": 8,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:vex", "count": "3-4"}
+      ],
+      "needs": {"lit": true},
+      "cells": 2,
+      "cue": {"sound": "minecraft:entity.vex.charge", "volume": 0.7, "pitch": 1.4, "particle": "minecraft:glow", "count": 8}
+    },
+    {
+      "id": "umber_brute",
+      "comment": "Something tunnels toward the noise: one heavy, horned body that breaks out of the nearest wall, the geode's answer to an umber hulk. Only for a party that fights and sprints.",
+      "band": "hard",
+      "weight": 10,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:ravager", "count": "1"}
+      ],
+      "needs": {"noisy": true},
+      "cue": {"sound": "minecraft:entity.ravager.roar", "volume": 0.9, "pitch": 0.8, "particle": "minecraft:witch", "count": 10},
+      "message": "message.nusmp.mega.enc.crystal_geode.umber_brute"
+    },
+    {
+      "id": "living_statues",
+      "comment": "Two of the crystal statues were never statues: a golem and living armour a few steps behind a corner that get up when the party passes. The armour is trimmed first.",
+      "band": "hard",
+      "weight": 8,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:iron_golem", "count": "1"},
+        {"type": "entity", "id": "nusmp:living_armor", "count": "1-2"}
+      ],
+      "range": [10, 18],
+      "cells": 2,
+      "hunt": 300,
+      "cue": {"sound": "minecraft:block.deepslate.break", "volume": 0.9, "pitch": 0.7, "particle": "minecraft:witch", "count": 10},
+      "message": "message.nusmp.mega.enc.crystal_geode.living_statues"
+    },
+    {
+      "id": "cube_flood",
+      "comment": "The floor ripples and a flood of slimes comes up between the shells with a couple of sparks riding them: the heaviest crowd of the standard fights.",
+      "band": "hard",
+      "weight": 8,
+      "minThreat": 4,
+      "mobs": [
+        {"type": "faction", "count": "5-7", "faction": "slime"},
+        {"type": "faction", "count": "2", "faction": "elemental"}
+      ],
+      "cells": 2,
+      "cue": {"sound": "minecraft:entity.slime.squish", "volume": 1.0, "pitch": 0.5, "particle": "minecraft:witch", "count": 12},
+      "message": "message.nusmp.mega.enc.crystal_geode.cube_flood"
+    },
+    {
+      "id": "shard_storm",
+      "comment": "The walls shed splinters, and splinters have teeth: a swarm of vexes and silverfish out of the facets on three sides, with the message as the only warning.",
+      "band": "ambush",
+      "weight": 10,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:vex", "count": "5-7"},
+        {"type": "entity", "id": "minecraft:silverfish", "count": "5-8"}
+      ],
+      "cells": 3,
+      "cue": {"sound": "minecraft:block.glass.break", "volume": 1.0, "pitch": 0.8, "particle": "minecraft:witch", "count": 16},
+      "message": "message.nusmp.mega.enc.crystal_geode.shard_storm"
+    },
+    {
+      "id": "geode_collapse",
+      "comment": "The late ambush of the geode: a ravager breaks a wall, the golems step out and the slimes pour in behind, from two sides, for a party that is two or more. The ravager is the anchor; the slimes are trimmed first.",
+      "band": "ambush",
+      "weight": 8,
+      "minThreat": 5,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:ravager", "count": "1"},
+        {"type": "faction", "count": "2-3", "faction": "construct"},
+        {"type": "faction", "count": "3-4", "faction": "slime"}
+      ],
+      "minParty": 2,
+      "cells": 2,
+      "cue": {"sound": "minecraft:block.amethyst_block.resonate", "volume": 1.0, "pitch": 0.5, "particle": "minecraft:witch", "count": 16},
+      "message": "message.nusmp.mega.enc.crystal_geode.geode_collapse"
+    }
+  ]
+}

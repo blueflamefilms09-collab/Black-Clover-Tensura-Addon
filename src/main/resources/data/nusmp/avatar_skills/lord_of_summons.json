@@ -1,0 +1,9 @@
+{
+  "id": "nusmp:lord_of_summons",
+  "kind": "ultimate",
+  "name": "Lord of Summons",
+  "ep_tax": 16,
+  "min_ep": 4000,
+  "tint": "#9A7CFF",
+  "description": "Every summon obeys, every gate opens."
+}

@@ -1,0 +1,12 @@
+{
+  "name": "Mercury",
+  "rarity": "RARE",
+  "tax_percent": 7,
+  "magic": "mercury",
+  "skills": [
+    "tensura:liquidize",
+    "tensura:molecular_manipulation"
+  ],
+  "tint": "#C9D1DB",
+  "description": "Liquid silver that is a shield one moment and a spear the next."
+}

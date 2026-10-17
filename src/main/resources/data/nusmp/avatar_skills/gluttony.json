@@ -1,0 +1,9 @@
+{
+  "id": "tensura:gluttony",
+  "kind": "ultimate",
+  "name": "Gluttony",
+  "ep_tax": 14,
+  "min_ep": 3500,
+  "tint": "#8A3CFF",
+  "description": "Hunger that never fills, strength that never ends."
+}

@@ -1,0 +1,3 @@
+{ "theme": "mountain_monastery",
+  "templates": ["nusmp:mega/hall/mountain_monastery_", "nusmp:mega/set/mountain_monastery_", "nusmp:mega/safe/mountain_monastery_", "nusmp:mega/trial/mountain_monastery_"],
+  "relative": { "mega/hall/mountain_monastery_": 15, "mega/set/mountain_monastery_": 20, "mega/safe/mountain_monastery_": 20, "mega/trial/mountain_monastery_": 20 } }

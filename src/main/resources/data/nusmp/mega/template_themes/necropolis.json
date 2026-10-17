@@ -1,0 +1,15 @@
+{
+  "theme": "necropolis",
+  "templates": [
+    "nusmp:mega/hall/necropolis_",
+    "nusmp:mega/set/necropolis_",
+    "nusmp:mega/trap/necropolis_",
+    "nusmp:mega/treasure/necropolis_"
+  ],
+  "relative": {
+    "mega/hall/necropolis_": 30,
+    "mega/set/necropolis_": 20,
+    "mega/trap/necropolis_": 20,
+    "mega/treasure/necropolis_": 20
+  }
+}

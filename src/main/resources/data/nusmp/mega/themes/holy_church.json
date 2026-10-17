@@ -1,0 +1,37 @@
+{
+  "_why": "The Holy road's cathedral. The brief: it must NOT read as Radiant's quartz sameness, so the church is built the way a warm limestone cathedral is: pale cream ashlar walls (smooth sandstone, with chiselled sandstone for capitals and keystones), a floor and vault of grey stone bricks, white-grey pillars (polished diorite), dark oak for pews, beams and the choir stalls, and the colour comes from what the rooms add in places no theme touches: red carpet, gold, candles and stained glass. Vanilla gives smooth sandstone and polished diorite no walls, so the explicit map hands them sandstone and diorite walls; the soul lights of the templates become ordinary warm ones (a church is lit by candle and lantern, never by cold fire). Light +1 (candlelit, never as bright as Radiant), a far bell for the mood and danger 0.9: the Holy road is the kinder road, a church the kindest place on it.",
+  "id": "holy_church",
+  "name": "Holy Church",
+  "color": "#E3D3A8",
+  "families": {
+    "brick": "minecraft:smooth_sandstone",
+    "tile": "minecraft:stone_bricks",
+    "polished": "minecraft:polished_diorite",
+    "chiseled": "minecraft:chiseled_sandstone",
+    "cobbled": "minecraft:sandstone",
+    "cracked_brick": "minecraft:cut_sandstone",
+    "cracked_tile": "minecraft:cracked_stone_bricks",
+    "rock": "minecraft:stone",
+    "wood": "minecraft:dark_oak_planks"
+  },
+  "explicit": {
+    "minecraft:deepslate_brick_wall": "minecraft:sandstone_wall",
+    "minecraft:polished_deepslate_wall": "minecraft:diorite_wall",
+    "minecraft:soul_lantern": "minecraft:lantern",
+    "minecraft:soul_wall_torch": "minecraft:wall_torch",
+    "minecraft:soul_torch": "minecraft:torch",
+    "minecraft:soul_campfire": "minecraft:campfire"
+  },
+  "relics": {
+    "keywords": ["church", "cathedral", "chapel", "choir", "altar", "prayer", "priest", "cleric", "rosary", "hymn", "chalice", "reliquary", "sanctuary", "vestment", "crozier"]
+  },
+  "catastrophes": {
+    "collapse": 2,
+    "flood": 1,
+    "spirit": 4
+  },
+  "ambient": "minecraft:white_ash",
+  "light": 1,
+  "sound": {"id": "minecraft:block.bell.resonate", "volume": 0.3, "pitch": 0.5, "every": 10},
+  "danger": 0.9
+}

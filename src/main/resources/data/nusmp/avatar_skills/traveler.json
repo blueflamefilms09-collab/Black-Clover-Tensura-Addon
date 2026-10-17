@@ -1,0 +1,9 @@
+{
+  "id": "tensura:traveler",
+  "kind": "unique",
+  "name": "Traveler",
+  "ep_tax": 5,
+  "min_ep": 800,
+  "tint": "#8CFFC2",
+  "description": "No road is too long."
+}

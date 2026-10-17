@@ -1,0 +1,9 @@
+{
+  "id": "tensura:reaper",
+  "kind": "unique",
+  "name": "Reaper",
+  "ep_tax": 7,
+  "min_ep": 1200,
+  "tint": "#6E5AA8",
+  "description": "Takes what is already lost."
+}

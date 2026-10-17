@@ -1,0 +1,9 @@
+{
+  "id": "nusmp:gold_experience_requiem",
+  "kind": "ultimate",
+  "name": "Gold Experience Requiem",
+  "ep_tax": 18,
+  "min_ep": 5000,
+  "tint": "#FFD060",
+  "description": "Life, and the return to zero."
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Lightning",
+  "rarity": "UNCOMMON",
+  "tax_percent": 3,
+  "magic": "lightning",
+  "skills": [
+    "tensura:lightning_manipulation",
+    "tensura:thunder_lance",
+    "tensura:thunder_orb"
+  ],
+  "tint": "#FFE14A",
+  "description": "Speed you can see for one instant."
+}

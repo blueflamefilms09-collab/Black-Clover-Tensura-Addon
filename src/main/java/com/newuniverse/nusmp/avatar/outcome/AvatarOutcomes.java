@@ -88,7 +88,7 @@ public final class AvatarOutcomes {
                 a.setPerk(AvatarUniqueSkill.generate(a.seeded()));
                 a.setHasUniqueOrUltimate(true);
                 a.setOutcomeState(Outcome.SOUL_AWAKENING);
-                a.setPermanentTax(0.0);
+                if (a.magicAptitudes().isEmpty() && a.chosenUnique().isEmpty() && a.chosenUltimate().isEmpty()) a.setPermanentTax(0.0);   // the Soul Forge's tax is the price of its aptitudes and skills, which the Avatar keeps
                 a.setFrenzied(false);
                 a.setTarget(null);
                 a.setStance(Stance.FOLLOW);

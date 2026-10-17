@@ -34,7 +34,31 @@ public enum RegionTheme {
     /** 1.55.0, the Holy road: white quartz, smooth stone, gold and calcite, light everywhere, the air thick with Light Rukh. The Holy chain draws it most often. */
     RADIANT(3, 3, Route.HOLY),
     /** 1.55.0, the Abyssal road: dark organic rock, deepslate with sculk, moss and netherrack growing through it, soul fire. The Abyssal chain draws it most often. */
-    ABYSS(3, 3, Route.ABYSSAL);
+    ABYSS(3, 3, Route.ABYSSAL),
+    /** 1.59.0, the Holy road (THEME-B): the Feywild, giant glowing flowers and mushrooms, cherry and azalea, will-o'-wisps, tricks and illusions. */
+    FEYWILD_GROVE(3, 3, Route.HOLY),
+    /** 1.59.0, the Holy road (THEME-B): a dwarven hold, dressed stone, copper and iron, anvils, lava channels behind glass, mine carts, a vault of kings. */
+    DWARVEN_FORGEHOLD(3, 3, Route.HOLY),
+    /** 1.59.0, the Holy road (THEME-B): a giant amethyst geode, calcite and basalt shells, budding crystals, crystal bridges, a resonance puzzle. */
+    CRYSTAL_GEODE(3, 3, Route.HOLY),
+    /** 1.59.0, the Holy road (THEME-B): the temple of a forgotten good god, flooded to the knees: prismarine, sea lanterns, drowned shrines, tidal gates. */
+    SUNKEN_TEMPLE(3, 3, Route.HOLY),
+    /** 1.59.0, the Holy road: a great cathedral, nave and pews, stained glass, a bell tower, a crypt and a reliquary (good route only). */
+    HOLY_CHURCH(3, 3, Route.HOLY),
+    /** 1.59.0, the Holy road: the marble terraces, golden gates and colonnades of a heavenly court (good route only). */
+    CELESTIAL_COURT(3, 3, Route.HOLY),
+    /** 1.59.0, the Holy road: a cloud giant's castle in the sky, white stone, wind and long drops (good route only). */
+    SKY_CITADEL(3, 3, Route.HOLY),
+    /** 1.59.0, the Holy road: a monks' retreat of timber and paper, a dojo, a bell and a prayer wheel hall (good route only). */
+    MOUNTAIN_MONASTERY(3, 3, Route.HOLY),
+    /** 1.59.0, the evil road: a massive library of forbidden knowledge: endless shelves, reading halls, chained tomes, a scriptorium. Red-brown bricks, black stone, crying obsidian, soul lights. */
+    CURSED_ARCHIVE(3, 3, Route.ABYSSAL),
+    /** 1.59.0, the evil road: a city of the dead: sandstone catacombs, bone pillars, mausoleums, ossuaries, bone bridges over an abyss. */
+    NECROPOLIS(3, 3, Route.ABYSSAL),
+    /** 1.59.0, the evil road: Ravenloft, a grey gothic keep with crimson trim: a dining hall, a desecrated chapel, coffin crypts, a clock tower, mirrors that show nothing. */
+    VAMPIRE_CASTLE(3, 3, Route.ABYSSAL),
+    /** 1.59.0, the evil road: a haunted house: plaster walls, dark floors, a nursery with a rocking horse, a ballroom of dancing ghosts, long corridors and sudden big rooms. */
+    HAUNTED_MANOR(3, 3, Route.ABYSSAL);
 
     /**
      * The owner's newest brief fixes the Crucible at EXACTLY three distinct Unique-or-higher relics (one pick per region, so one high-tier relic per ten

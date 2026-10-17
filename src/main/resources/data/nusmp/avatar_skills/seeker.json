@@ -1,0 +1,9 @@
+{
+  "id": "tensura:seeker",
+  "kind": "unique",
+  "name": "Seeker",
+  "ep_tax": 4,
+  "min_ep": 600,
+  "tint": "#FFE14A",
+  "description": "Finds the thing that does not want to be found."
+}
