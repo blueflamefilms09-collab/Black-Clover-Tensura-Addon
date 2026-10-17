@@ -21,6 +21,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -47,7 +48,8 @@ import java.util.UUID;
  *       25% less. When it falls his outermost barrier layer breaks.</li>
  *   <li><b>Rule stone</b>: one of the five glyph slabs of "Overwrite". Destroying three cuts the sentence.</li>
  * </ul>
- * They belong to one boss (BossId), never fight it or each other, and vanish when it does.
+ * They belong to one boss (BossId), never fight it or each other, and vanish when it does. 1.60.0: the boss may be the legacy Zagred or the remade one
+ * (any {@link DaemonMaster}); the daemons only ever ask the interface.
  */
 public class GrimoireDaemonEntity extends Monster {
     public static final int LESSER = 0, GREATER = 1, ARCH = 2, STONE = 3;
@@ -109,7 +111,8 @@ public class GrimoireDaemonEntity extends Monster {
         return super.getDefaultDimensions(pose).scale(s);
     }
 
-    public static GrimoireDaemonEntity spawn(ServerLevel sl, ZagredBossEntity boss, int tier, Vec3 at) {
+    /** Calls a daemon of {@code tier} for {@code boss} (the legacy Zagred or the remade one: any {@link DaemonMaster}) at {@code at}. */
+    public static GrimoireDaemonEntity spawn(ServerLevel sl, Mob boss, int tier, Vec3 at) {
         GrimoireDaemonEntity d = NUEntities.GRIMOIRE_DAEMON.get().create(sl);
         if (d == null) return null;
         d.moveTo(at.x, at.y, at.z, boss.getRandom().nextFloat() * 360f, 0);
@@ -119,12 +122,13 @@ public class GrimoireDaemonEntity extends Monster {
         return d;
     }
 
-    ZagredBossEntity boss(ServerLevel sl) {
-        return bossId != null && sl.getEntity(bossId) instanceof ZagredBossEntity z && z.isAlive() ? z : null;
+    /** The boss this daemon serves, or null when it is gone or dead (the daemon then vanishes). */
+    DaemonMaster master(ServerLevel sl) {
+        return bossId != null && sl.getEntity(bossId) instanceof DaemonMaster m && m.daemonMaster().isAlive() ? m : null;
     }
 
     @Override
-    public boolean isAlliedTo(Entity other) { return other instanceof ZagredBossEntity || other instanceof GrimoireDaemonEntity || super.isAlliedTo(other); }
+    public boolean isAlliedTo(Entity other) { return other instanceof DaemonMaster || other instanceof GrimoireDaemonEntity || super.isAlliedTo(other); }
 
     @Override public boolean isPushable() { return tier() != STONE && tier() != GREATER; }
     @Override public boolean fireImmune() { return true; }
@@ -135,8 +139,9 @@ public class GrimoireDaemonEntity extends Monster {
     protected void customServerAiStep() {
         super.customServerAiStep();
         if (!(level() instanceof ServerLevel sl)) return;
-        ZagredBossEntity boss = boss(sl);
-        if (boss == null) { discard(); return; }
+        DaemonMaster master = master(sl);
+        if (master == null) { discard(); return; }
+        Mob boss = master.daemonMaster();
         long t = tickCount;
         int tier = tier();
         LivingEntity tg = boss.getTarget();
@@ -146,9 +151,9 @@ public class GrimoireDaemonEntity extends Monster {
         if (cast > 0) entityData.set(CAST, cast - 1);
         if (tier == STONE || tg == null) { bob(boss.position().y + 1.2); return; }
         switch (tier) {
-            case LESSER -> lesser(sl, boss, tg, t, cast);
-            case GREATER -> greater(sl, boss, tg, t, cast);
-            case ARCH -> arch(sl, boss, tg, t, cast);
+            case LESSER -> lesser(sl, master, tg, t, cast);
+            case GREATER -> greater(sl, master, tg, t, cast);
+            case ARCH -> arch(sl, master, tg, t, cast);
             default -> { }
         }
     }
@@ -168,11 +173,11 @@ public class GrimoireDaemonEntity extends Monster {
     }
 
     // ---- lesser: orbit, telegraph, ash bolt
-    private void lesser(ServerLevel sl, ZagredBossEntity boss, LivingEntity tg, long t, int cast) {
+    private void lesser(ServerLevel sl, DaemonMaster master, LivingEntity tg, long t, int cast) {
         double ang = (getId() * 2.4) + t * 0.012;
         Vec3 want = tg.position().add(Math.cos(ang) * 7, 2.5, Math.sin(ang) * 7);
         drift(want, 0.14);
-        if (cast == 1) bolt(sl, boss, tg);
+        if (cast == 1) bolt(sl, master, tg);
         else if (cast == 0 && t >= nextAct) {
             aim = tg.getEyePosition();
             entityData.set(CAST, 10);
@@ -182,25 +187,25 @@ public class GrimoireDaemonEntity extends Monster {
         if (cast > 0) line(sl, getEyePosition(), aim, variant == 0 ? new Vector3f(0.45f, 0.45f, 0.47f) : new Vector3f(0.45f, 0.3f, 0.18f));
     }
 
-    private void bolt(ServerLevel sl, ZagredBossEntity boss, LivingEntity tg) {
+    private void bolt(ServerLevel sl, DaemonMaster master, LivingEntity tg) {
         VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, getEyePosition(), aim, variant == 0 ? 0xFF8A8A92 : 0xFF8A6A3A, 8, 0.4f);
         ZagredFx.strike(sl, getEyePosition(), aim, variant == 0 ? 0xFFB0B0BA : 0xFFC89A5A, 0.6f, 10);                  // 1.35.0: the ash bolt is a short sentence
-        for (LivingEntity t : KotodamaWords.foes(boss, aim, 1.5)) {
-            t.hurt(damageSources().indirectMagic(this, boss), 4f);
+        for (LivingEntity t : master.daemonFoes(aim, 1.5)) {
+            t.hurt(damageSources().indirectMagic(this, master.daemonMaster()), 4f);
             t.addEffect(new MobEffectInstance(variant == 0 ? MobEffects.BLINDNESS : MobEffects.MOVEMENT_SLOWDOWN, 40, 0));
         }
     }
 
     // ---- greater: a marked circle, then fire
-    private void greater(ServerLevel sl, ZagredBossEntity boss, LivingEntity tg, long t, int cast) {
-        bob(boss.position().y + 0.8 + (getId() % 3) * 0.2);
+    private void greater(ServerLevel sl, DaemonMaster master, LivingEntity tg, long t, int cast) {
+        bob(master.daemonMaster().position().y + 0.8 + (getId() % 3) * 0.2);
         if (cast > 0) ring(sl, aim, 3.0, cast);
         if (cast == 1) {
             VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, aim.add(0, 0.5, 0), aim, variant == 0 ? 0xFF3A1E5A : 0xFFFF6A20, 14, 2f);
             ZagredFx.strike(sl, aim.add(0, 7, 0), aim, variant == 0 ? 0xFF8A4CFF : 0xFFFF6A20, 2.4f, 14);
             sl.playSound(null, bp(aim), SoundEvents.FIRECHARGE_USE, SoundSource.HOSTILE, 1f, 0.8f);
-            for (LivingEntity v : KotodamaWords.foes(boss, aim, 3.0)) {
-                KotodamaWords.hurt(boss, v, 12f);
+            for (LivingEntity v : master.daemonFoes(aim, 3.0)) {
+                master.daemonBlast(v, 12f);
                 v.igniteForSeconds(4);
             }
         } else if (cast == 0 && t >= nextAct) {
@@ -214,7 +219,8 @@ public class GrimoireDaemonEntity extends Monster {
     private static net.minecraft.core.BlockPos bp(Vec3 v) { return net.minecraft.core.BlockPos.containing(v); }
 
     // ---- arch: teleport, gravity wells, Tensura spatial spells
-    private void arch(ServerLevel sl, ZagredBossEntity boss, LivingEntity tg, long t, int cast) {
+    private void arch(ServerLevel sl, DaemonMaster master, LivingEntity tg, long t, int cast) {
+        Mob boss = master.daemonMaster();
         bob(boss.position().y + 2.2);
         if (t % 100 == 40) {                                              // shuffles to a new spot near Zagred
             double a = random.nextDouble() * Math.PI * 2, r = 6 + random.nextDouble() * 4;
@@ -226,14 +232,14 @@ public class GrimoireDaemonEntity extends Monster {
             }
         }
         if (cast > 0) ring(sl, aim, 6.0, cast);
-        if (cast == 1) well(sl, boss);
+        if (cast == 1) well(sl, master);
         else if (cast == 0 && t >= nextAct) {
             aim = tg.position();
             entityData.set(CAST, 40);
             ZagredFx.ring(sl, aim, 6f, 40, KotodamaWords.VIOLET);
             nextAct = t + 160 + random.nextInt(40);
         }
-        if (t >= nextTensura && distanceToSqr(tg) < 30 * 30 && boss.phase() >= 3) {
+        if (t >= nextTensura && distanceToSqr(tg) < 30 * 30 && master.daemonAct() >= 3) {
             if (kit == null) {
                 kit = TensuraCaster.learn(this, 3, "gravity", "dimension", "spatial", "space", "void");
                 TensuraCaster.ensureMana(this, 1_000_000);
@@ -244,13 +250,14 @@ public class GrimoireDaemonEntity extends Monster {
     }
 
     /** A gravity well: for 3 s everything near the centre is dragged into it and bruised. */
-    private void well(ServerLevel sl, ZagredBossEntity boss) {
+    private void well(ServerLevel sl, DaemonMaster master) {
+        Mob boss = master.daemonMaster();
         Vec3 c = aim;
         VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, c.add(0, 0.5, 0), c, 0xFF7A5AD0, 20, 2.6f);
         ZagredFx.corrupt(sl, c, 6f, 60, 0xFF7A5AD0);                                                               // 1.35.0: the well reads as corrupted text
         sl.playSound(null, bp(c), SoundEvents.ENDERMAN_TELEPORT, SoundSource.HOSTILE, 1.5f, 0.4f);
         SpellRuntime.zone(sl, 60, 2, age -> {
-            for (LivingEntity v : KotodamaWords.foes(boss, c, 6)) {
+            for (LivingEntity v : master.daemonFoes(c, 6)) {
                 Vec3 pull = c.subtract(v.position());
                 if (pull.lengthSqr() < 0.25) continue;
                 v.setDeltaMovement(v.getDeltaMovement().add(pull.normalize().scale(0.09)));
@@ -284,7 +291,7 @@ public class GrimoireDaemonEntity extends Monster {
     // ---------------------------------------------------------------- damage
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (source.getEntity() instanceof ZagredBossEntity || source.getEntity() instanceof GrimoireDaemonEntity) return false;
+        if (source.getEntity() instanceof DaemonMaster || source.getEntity() instanceof GrimoireDaemonEntity) return false;
         if (tier() == GREATER && source.getEntity() instanceof LivingEntity a && !level().isClientSide) {
             Vec3 toAttacker = a.position().subtract(position()).multiply(1, 0, 1);
             Vec3 look = getViewVector(1f).multiply(1, 0, 1);
@@ -301,10 +308,10 @@ public class GrimoireDaemonEntity extends Monster {
         super.die(source);
         if (!(level() instanceof ServerLevel sl)) return;
         VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, position().add(0, 1, 0), position(), KotodamaWords.ABYSS, 20, tier() == ARCH ? 3f : 1.2f);
-        ZagredBossEntity boss = boss(sl);
-        if (boss == null) return;
-        if (tier() == ARCH) boss.archFell();
-        else if (tier() == STONE) boss.stoneBroken();
+        DaemonMaster master = master(sl);
+        if (master == null) return;
+        if (tier() == ARCH) master.archFell();
+        else if (tier() == STONE) master.stoneBroken();
     }
 
     // ---------------------------------------------------------------- client flavour

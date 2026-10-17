@@ -382,6 +382,7 @@ public class MagicWeaponItem extends SwordItem {
             p.getPersistentData().putLong("nusmp_redact_cd", now + 400);
             stripOne(target);
             if (target instanceof com.newuniverse.nusmp.entity.ZagredBossEntity z) z.breakBarrierLayer();
+            else if (target instanceof com.newuniverse.nusmp.arc.zagred.ZagredBoss zb) zb.breakWardLayer();      // 1.60.0: the remade Zagred
             VfxSpawn.send(p.serverLevel(), VfxShape.KOTO_SHATTER, target.getBoundingBox().getCenter(), target.position(), 0xFFFFFFFF, 20, 1.6f);
             p.displayClientMessage(Component.literal("Struck out!").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD), true);
             n = 0;

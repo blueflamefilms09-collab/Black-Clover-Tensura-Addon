@@ -34,6 +34,7 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -72,8 +73,12 @@ import java.util.UUID;
  *       once, and hurls its otherworldly trident.</li>
  * </ol>
  * A purple boss bar shows the phase; the arena's matter is put back when it dies or is removed.
+ *
+ * <p>1.60.0: THIS IS THE LEGACY BOSS. Zagred was remade as {@code arc/zagred/ZagredBoss} (a boss of the arcs, with a Word-and-answer fight and a devil
+ * form), which took over the entity id {@code nusmp:zagred}; this class stays in the tree (the owner's rule: add the new, keep the old), registered as
+ * {@code nusmp:zagred_legacy} so an old world's Zagred still loads, and it still serves the Grimoire Daemons as their {@link DaemonMaster}.
  */
-public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.boss.budget.BudgetedBoss {
+public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.boss.budget.BudgetedBoss, DaemonMaster {
     /** 0.48: what it is doing (synced with ZagredStatePayload for the model's pose and the target reticle). */
     public static final int STATE_IDLE = 0, STATE_STALK = 1, STATE_COMBAT = 2, STATE_CASTING = 3;
     private static final EntityDataAccessor<Integer> PHASE = SynchedEntityData.defineId(ZagredBossEntity.class, EntityDataSerializers.INT);
@@ -306,6 +311,15 @@ public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.b
 
     BlockPos arenaPos() { return arena; }
 
+    // ---- 1.60.0: what the Grimoire Daemons ask of their master (the same calls they made before the remade Zagred shared them)
+    @Override public Mob daemonMaster() { return this; }
+
+    @Override public int daemonAct() { return phase(); }
+
+    @Override public List<LivingEntity> daemonFoes(Vec3 at, double radius) { return KotodamaWords.foes(this, at, radius); }
+
+    @Override public void daemonBlast(LivingEntity victim, float raw) { KotodamaWords.hurt(this, victim, raw); }
+
     /** The boss bar's name: phase, barrier layers, reflex tokens, the rule in force. */
     Component barName(int ph, long t) {
         StringBuilder s = new StringBuilder("Zagred  \u00b7  Phase ").append(ph).append("  \u00b7  Barrier ");
@@ -496,7 +510,8 @@ public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.b
     }
 
     /** An Arch Daemon fell: its anchor is gone and his outermost barrier layer breaks. */
-    void archFell() {
+    @Override
+    public void archFell() {
         archCount = Math.max(0, archCount - 1);
         if (barrier.breakOne(tickCount) && level() instanceof ServerLevel sl) {
             say(sl, "An Arch Daemon is struck down: a layer of Zagred's barrier breaks.");
@@ -505,7 +520,8 @@ public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.b
     }
 
     /** A rule stone fell; the third one cuts the sentence short and staggers him for 2 s. */
-    void stoneBroken() {
+    @Override
+    public void stoneBroken() {
         if (++stoneKills < 3 || !(level() instanceof ServerLevel sl)) return;
         if (pending == Word.OVERWRITE) { pending = null; castAt = 0; }
         if (ruleKind != null) ZagredAttacks.endRule(this, sl);
@@ -895,8 +911,16 @@ public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.b
         if (hasCustomName()) bar.setName(getDisplayName());
     }
 
-    /** Summons the boss at 'at' with its arena there (the command). */
-    public static ZagredBossEntity summon(ServerLevel sl, Vec3 at) {
+    /**
+     * 1.60.0: summons Zagred at 'at' with his arena there (the command {@code /multiverse boss zagred}). Zagred is the REMADE boss now
+     * ({@code arc/zagred/ZagredBoss}, the entity id {@code nusmp:zagred}); this entry point is kept so the command works whatever the call site says.
+     */
+    public static Mob summon(ServerLevel sl, Vec3 at) {
+        return com.newuniverse.nusmp.arc.zagred.ZagredBoss.summon(sl, at);
+    }
+
+    /** The legacy boss, summoned the way the command did it before the remake (its type is {@code nusmp:zagred_legacy}; kept for tools and old saves). */
+    public static ZagredBossEntity summonLegacy(ServerLevel sl, Vec3 at) {
         ZagredBossEntity z = NUEntities.ZAGRED.get().create(sl);
         if (z == null) return null;
         z.moveTo(at.x, at.y, at.z, 0, 0);
