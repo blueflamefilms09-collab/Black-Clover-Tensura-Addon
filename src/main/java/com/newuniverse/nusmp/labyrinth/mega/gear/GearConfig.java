@@ -9,13 +9,16 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  * the magic resistance); the SHAPES (curves, caps, items, enchantments) are data in {@code data/nusmp/mega/gear/tables.json}. The defaults are read from
  * {@link GearRates#DEFAULT}, the one place the numbers live, so the config and the unit tests cannot drift apart. Every value is a plain
  * {@code define} / {@code defineInRange} (never {@code defineInList}: a list-validated value throws while the server is still loading) and every reader
- * goes through {@link #get}, which answers the default while the spec is not loaded yet. {@code enabled} switches the DROPS (and the quest hook);
+ * goes through {@link #get}, which answers the default while the spec is not loaded yet. Since 1.55.0 the chest side has four keys of its own ({@code chestNormal},
+ * {@code chestSpecial}, {@code chestRare}, {@code chestTreasureFactor}) and shares the shift and the Looting bonus with the kills. {@code enabled} switches the DROPS from monsters
+ * and chests (and the quest hook);
  * {@code maxResist = 0} switches the magic resistance off, so each half has its own off switch.
  */
 public final class GearConfig {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue ENABLED, BOSS_GUARANTEED, ENGRAVINGS;
     public static final ModConfigSpec.DoubleValue NORMAL_CHANCE, SPECIAL_CHANCE, RARE_CHANCE, FLOOR_SHIFT, LOOTING_BONUS;
+    public static final ModConfigSpec.DoubleValue CHEST_NORMAL, CHEST_SPECIAL, CHEST_RARE, CHEST_TREASURE_FACTOR;
     public static final ModConfigSpec.IntValue MAX_RESIST;
     public static final ModConfigSpec.ConfigValue<String> EXTRA_MAGIC_TYPES;
 
@@ -23,7 +26,7 @@ public final class GearConfig {
         GearRates d = GearRates.DEFAULT;
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
         b.push("gear");
-        ENABLED = b.comment("Monsters of the Mega-Dungeon drop standard Normal / Special / Rare equipment (ordinary vanilla items with a grade; never relics, so there is no world limit). false = no gear drops. The magic resistance of gear you already hold is switched off with maxResist = 0, not with this.")
+        ENABLED = b.comment("Monsters and chests of the Mega-Dungeon drop standard Normal / Special / Rare equipment (ordinary vanilla items with a grade; never relics, so there is no world limit). false = no gear drops from either. The magic resistance of gear you already hold is switched off with maxResist = 0, not with this.")
                 .define("enabled", true);
         NORMAL_CHANCE = b.comment("Chance per kill that a Normal-grade piece drops at floor 1, before Looting. Hostile non-boss monsters killed by a player only; at most one piece per kill in all.")
                 .defineInRange("normalChance", d.normal(), 0.0, 1.0);
@@ -35,6 +38,15 @@ public final class GearConfig {
                 .defineInRange("floorShift", d.floorShift(), 0.0, 0.2);
         LOOTING_BONUS = b.comment("Chance added to the TOTAL chance of a drop per level of Looting on the killer's main-hand weapon, shared out between the grades in proportion to their own chances (Looting makes drops more frequent, it does not change their grade).")
                 .defineInRange("lootingBonus", d.lootingBonus(), 0.0, 0.25);
+        GearRates c = GearRates.CHEST_DEFAULT;
+        CHEST_NORMAL = b.comment("CHESTS: chance that a chest rolled in the Mega-Dungeon holds ONE Normal-grade piece at floor 1 (the global loot modifier nusmp:gear_chests; any loot table with a chests/ segment, except the two relic tables). At most one piece per chest in all. 0 for all three chest chances = no gear in chests.")
+                .defineInRange("chestNormal", c.normal(), 0.0, 1.0);
+        CHEST_SPECIAL = b.comment("CHESTS: the same for a Special-grade piece.")
+                .defineInRange("chestSpecial", c.special(), 0.0, 1.0);
+        CHEST_RARE = b.comment("CHESTS: the same for a Rare-grade piece.")
+                .defineInRange("chestRare", c.rare(), 0.0, 1.0);
+        CHEST_TREASURE_FACTOR = b.comment("CHESTS: a treasure chest (a table whose path names a vault, treasure, boss, guardian, crucible, antechamber or reward) multiplies its Special and Rare chances by this (Normal stays as it is: a treasure chest holds better things, not more of them). 1 = treasure chests are like any other. The depth shift (floorShift) and the per-level bonus (lootingBonus, counted per point of Luck of the player who opens the chest) are shared with the kills.")
+                .defineInRange("chestTreasureFactor", GearRates.DEFAULT_TREASURE_FACTOR, 1.0, 10.0);
         BOSS_GUARANTEED = b.comment("The Labyrinth Guardian of a sector (the entity with the tag nusmp_sector_guardian) drops one guaranteed Rare piece when a player kills it. Other bosses never drop standard gear.")
                 .define("bossGuaranteed", true);
         MAX_RESIST = b.comment("The most magic resistance, in percent, that all the gear a creature wears and holds can give together (armour worn, weapon and shield held). 0 = standard gear gives no resistance at all. Capped at 90 whatever is written here.")
@@ -57,5 +69,10 @@ public final class GearConfig {
     /** The five rate numbers as one record, read from the config at the moment of a roll. */
     public static GearRates rates() {
         return new GearRates(get(NORMAL_CHANCE), get(SPECIAL_CHANCE), get(RARE_CHANCE), get(FLOOR_SHIFT), get(LOOTING_BONUS));
+    }
+
+    /** The same record for a CHEST roll: the three chest chances with the shift and the per-level bonus the kills use. */
+    public static GearRates chestRates() {
+        return new GearRates(get(CHEST_NORMAL), get(CHEST_SPECIAL), get(CHEST_RARE), get(FLOOR_SHIFT), get(LOOTING_BONUS));
     }
 }

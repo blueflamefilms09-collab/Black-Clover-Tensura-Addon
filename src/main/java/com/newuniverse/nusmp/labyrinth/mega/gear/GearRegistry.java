@@ -13,14 +13,16 @@ import net.neoforged.neoforge.event.AddReloadListenerEvent;
  * {@code nusmp:gear_grade} and the in-game self-tests ({@link GearSelfTests}, keys {@code gear.*}); {@code register} (game bus, {@code addListener}
  * with no annotation scanning, like the rest of the mod) adds the data reload of the drop tables, the drop listener at LOW priority so it runs after the
  * 1.36.0 economy's and the faction layer's listeners (it only ADDS an item and never touches what they decided), the magic resistance at LOW priority so
- * it cuts the final amount after other systems have multiplied it, and the quest hook on pickup. It registers no items and no blocks (standard gear is
- * ordinary vanilla items), so it has no ordering constraint against {@code NUItems}.
+ * it cuts the final amount after other systems have multiplied it, and the quest hook on pickup. The chest side (owner's fourth brief) is one more registry
+ * entry on the mod bus: the global-loot-modifier type {@code nusmp:gear_chests} ({@link ChestLootModifier}), switched on by the JSON list of loot modifiers, not by
+ * code. It registers no items and no blocks (standard gear is ordinary vanilla items), so it has no ordering constraint against {@code NUItems}.
  */
 public final class GearRegistry {
     private GearRegistry() {}
 
     public static void init(IEventBus modBus) {
         GearComponents.COMPONENTS.register(modBus);
+        ChestLootModifier.register(modBus);        // 1.55.0 (chests): the global loot modifier type nusmp:gear_chests
         GearSelfTests.register();
     }
 

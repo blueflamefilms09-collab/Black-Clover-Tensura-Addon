@@ -1,0 +1,9 @@
+{
+  "type": "nusmp:gear_chests",
+  "conditions": [
+    {
+      "condition": "minecraft:location_check",
+      "predicate": { "dimension": "nusmp:mega_dungeon" }
+    }
+  ]
+}

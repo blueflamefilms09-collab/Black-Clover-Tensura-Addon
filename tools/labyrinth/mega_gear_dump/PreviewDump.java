@@ -7,7 +7,8 @@ import java.util.List;
 /**
  * Why: {@code tools/labyrinth/mega_gear_preview.py} is a second, independent implementation of the gear roller, and an independent implementation is only worth
  * something if it is compared with the real one. This is the real one's side of that comparison: it prints, as JSON, the chances the Java {@link GearRoller}
- * gives at eleven floors (with and without Looting III) and 162 pieces made with fixed seeds (every grade, every slot, six seeds), so
+ * gives at eleven floors (with and without Looting III), the chances {@link ChestGear} gives for standard and treasure chests at the same floors (with and
+ * without Luck III), and 162 pieces made with fixed seeds (every grade, every slot, six seeds), so
  * {@code mega_gear_preview.py --verify dump.json} can replay the same seeds and report any difference. It is a developer tool, not part of the mod: it lives
  * outside {@code src}, uses the pure classes of the gear package and the test helpers {@code GearFx} / {@code MiniJson} (so it reads the shipped
  * {@code tables.json}), and needs no game.
@@ -31,6 +32,17 @@ public final class PreviewDump {
             sb.append(i == 0 ? "\n" : ",\n").append(String.format(java.util.Locale.ROOT,
                     "{\"floor\":%d,\"x\":%.4f,\"n\":%.6f,\"s\":%.6f,\"r\":%.6f,\"n3\":%.6f,\"s3\":%.6f,\"r3\":%.6f}",
                     floors[i], GearRoller.progress(r, floors[i]), c0[0], c0[1], c0[2], c3[0], c3[1], c3[2]));
+        }
+        sb.append("\n],\n\"chests\": [");
+        for (int i = 0; i < floors.length; i++) {
+            sb.append(i == 0 ? "\n" : ",\n").append("{\"floor\":").append(floors[i]);
+            for (ChestRules.Kind k : new ChestRules.Kind[] {ChestRules.Kind.STANDARD, ChestRules.Kind.TREASURE}) {
+                double[] c0 = ChestGear.chances(k, GearRates.CHEST_DEFAULT, GearRates.DEFAULT_TREASURE_FACTOR, t, floors[i], 0);
+                double[] c3 = ChestGear.chances(k, GearRates.CHEST_DEFAULT, GearRates.DEFAULT_TREASURE_FACTOR, t, floors[i], 3);
+                sb.append(String.format(java.util.Locale.ROOT, ",\"%s\":{\"n\":%.6f,\"s\":%.6f,\"r\":%.6f,\"n3\":%.6f,\"s3\":%.6f,\"r3\":%.6f}",
+                        k.name().toLowerCase(java.util.Locale.ROOT), c0[0], c0[1], c0[2], c3[0], c3[1], c3[2]));
+            }
+            sb.append("}");
         }
         sb.append("\n],\n\"examples\": [");
         boolean first = true;

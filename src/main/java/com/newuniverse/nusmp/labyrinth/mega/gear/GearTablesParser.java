@@ -33,7 +33,8 @@ public final class GearTablesParser {
 
     /** The shape of a resource location: lower-case namespace, a colon, a lower-case path (the same alphabet the game accepts). */
     static final Pattern ID = Pattern.compile("[a-z0-9_.-]+:[a-z0-9_./-]+");
-    private static final Set<String> TOP = Set.of("why", "curve", "caps", "slotWeights", "grades");
+    private static final Set<String> TOP = Set.of("why", "curve", "caps", "slotWeights", "grades", "chests");
+    private static final Set<String> CHESTS = Set.of("why", "excluded", "treasureWords");
     private static final Set<String> GRADE = Set.of("why", "items", "power", "durability", "enchants", "engravings", "resist");
 
     @SuppressWarnings("unchecked")
@@ -108,9 +109,39 @@ public final class GearTablesParser {
                 for (GearSlot s : GearSlot.values()) if (!t.offers(s)) problems.add("grade " + g.id() + " has no base item for " + s.id() + ": that slot is never rolled for it");
             }
         }
-        GearTables tables = new GearTables(grades, curves, caps, total, weights);
+        GearTables tables = new GearTables(grades, curves, caps, total, weights, chests(m.get("chests"), problems));
         if (!tables.isUsable()) problems.add("no grade offers any item: nothing will drop");
         return new Result(tables, problems);
+    }
+
+    // ---------------------------------------------------------------- the chest rules
+    /**
+     * The {@code chests} section: extra table ids that never get gear and the treasure words. A missing section gives {@link ChestRules#DEFAULT} (so an old
+     * data pack still protects the vault tables and still knows its treasure words); a section that lists words REPLACES the default words, one that lists none
+     * keeps them. An id that is not {@code namespace:path} is reported and dropped. The two relic tables stay excluded whatever is written here
+     * ({@link ChestRules#ALWAYS_EXCLUDED}).
+     */
+    private static ChestRules chests(Object o, List<String> problems) {
+        if (o == null) return ChestRules.DEFAULT;
+        if (!(o instanceof Map<?, ?> cm)) { problems.add("chests is not an object"); return ChestRules.DEFAULT; }
+        for (Object k : cm.keySet()) if (!CHESTS.contains(String.valueOf(k))) problems.add("chests: unknown key '" + k + "'");
+        List<String> excluded = new ArrayList<>();
+        Object ex = cm.get("excluded");
+        if (ex instanceof List<?> l) {
+            for (Object x : l) {
+                if (x instanceof String id && ID.matcher(id).matches()) excluded.add(id);
+                else problems.add("chests.excluded: '" + x + "' is not an id (namespace:path)");
+            }
+        } else if (ex != null) problems.add("chests.excluded is not a list");
+        List<String> words = new ArrayList<>();
+        Object tw = cm.get("treasureWords");
+        if (tw instanceof List<?> l) {
+            for (Object x : l) {
+                if (x instanceof String w && !w.isBlank()) words.add(w);
+                else problems.add("chests.treasureWords: '" + x + "' is not a word");
+            }
+        } else if (tw != null) problems.add("chests.treasureWords is not a list");
+        return new ChestRules(Set.copyOf(excluded), words.isEmpty() ? ChestRules.DEFAULT_TREASURE_WORDS : words);
     }
 
     // ---------------------------------------------------------------- one grade

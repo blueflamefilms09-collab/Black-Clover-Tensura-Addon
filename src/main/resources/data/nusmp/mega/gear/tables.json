@@ -9,17 +9,23 @@
   },
 
   "caps": {
-    "why": "Ceilings that hold whatever the config asks for: no grade drops on more than the stated share of kills, and the three together never pass total. They keep a mistyped config (normalChance 5) from turning every kill into a shower of gear.",
-    "normal": 0.30,
-    "special": 0.20,
-    "rare": 0.15,
-    "total": 0.50
+    "why": "Ceilings that hold whatever the config asks for: no grade turns up in more than the stated share of kills or chests, and the three together never pass total. They keep a mistyped config (normalChance 5) from turning every kill into a shower of gear. They sit above what the DEFAULTS reach, chests included (the deepest treasure chest: special 0.234, rare 0.24, all three 0.50), so under the shipped numbers no ceiling bites and the depth curves stay smooth; 1.55.0 raised them from 0.30 / 0.20 / 0.15 / 0.50 when the chest odds showed a flat-topped curve.",
+    "normal": 0.40,
+    "special": 0.30,
+    "rare": 0.25,
+    "total": 0.60
   },
 
   "slotWeights": {
     "why": "How likely each kind of piece is when a drop is decided. They add up to 100 so each reads as a percent: half the drops are armour (four pieces of 13), about four in ten are weapons, one in eleven a shield. A slot a grade has no base item for is simply never rolled for that grade.",
     "sword": 18, "axe": 8, "bow": 8, "crossbow": 5, "shield": 9,
     "helmet": 13, "chestplate": 13, "leggings": 13, "boots": 13
+  },
+
+  "chests": {
+    "why": "Which loot tables are chests that may hold ONE piece of standard gear (the global loot modifier nusmp:gear_chests rolls it, only inside the Mega-Dungeon). A table counts when its path has a chests/ segment. 'treasureWords': a table whose path holds one of these words is a TREASURE chest, whose Special and Rare chances are multiplied by the config key chestTreasureFactor (a treasure chest should hold something better, not just more). 'excluded': extra full ids that never get gear. The two relic tables, nusmp:chests/dungeon_relic_vault and nusmp:chests/labyrinth_pedestal, are excluded in the code whatever this file says: the pedestal holds exactly the relic it was made for, and the Crucible is the only source of the high relics.",
+    "excluded": [],
+    "treasureWords": ["treasure", "vault", "boss", "guardian", "crucible", "antechamber", "reward"]
   },
 
   "grades": {

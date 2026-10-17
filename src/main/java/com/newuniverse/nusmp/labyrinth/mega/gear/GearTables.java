@@ -13,7 +13,8 @@ import java.util.Map;
  * drops tunable without a mod update, so the numbers are data and a datapack may replace the file; the roller reads only this class, never a file or a
  * Minecraft type, so the whole drop logic runs in the unit tests with the real shipped file. Everything here is immutable once built by
  * {@link GearTablesParser}; a lookup of something absent answers with a harmless default (an empty list, a flat curve, a zero weight) instead of null,
- * so a half-valid datapack degrades to "fewer drops" and never to an exception in a death event.
+ * so a half-valid datapack degrades to "fewer drops" and never to an exception in a death event. Since 1.55.0 the same file also says which loot tables are chests that
+ * may hold a piece ({@link ChestRules}, the {@code chests} section), because the chest side reads the same curves, caps and items.
  */
 public final class GearTables {
     /** Nothing offered: no grade can drop. What the game uses when the file is missing or unusable (it logs why once). */
@@ -131,9 +132,17 @@ public final class GearTables {
     private final Map<GearGrade, Double> maxChance;
     private final double totalCap;
     private final Map<GearSlot, Double> slotWeights;
+    private final ChestRules chests;
 
     public GearTables(Map<GearGrade, GradeTable> grades, Map<GearGrade, Curve> curves, Map<GearGrade, Double> maxChance, double totalCap,
                       Map<GearSlot, Double> slotWeights) {
+        this(grades, curves, maxChance, totalCap, slotWeights, ChestRules.DEFAULT);
+    }
+
+    /** 1.55.0 (chests): the same tables plus the rules that say which loot tables are chests worth a piece (the {@code chests} section of the file). */
+    public GearTables(Map<GearGrade, GradeTable> grades, Map<GearGrade, Curve> curves, Map<GearGrade, Double> maxChance, double totalCap,
+                      Map<GearSlot, Double> slotWeights, ChestRules chests) {
+        this.chests = chests == null ? ChestRules.DEFAULT : chests;
         this.grades = new EnumMap<>(GearGrade.class);
         this.grades.putAll(grades);
         this.curves = new EnumMap<>(GearGrade.class);
@@ -173,6 +182,9 @@ public final class GearTables {
 
     /** The most the three chances together can ever be, after the depth shift and Looting. */
     public double totalCap() { return totalCap; }
+
+    /** Which loot tables are chests that may hold a piece, which are treasure chests, which are never touched (never null; the defaults when the file says nothing). */
+    public ChestRules chests() { return chests; }
 
     /** The relative weight of a slot (0 when the file lists none). */
     public double slotWeight(GearSlot s) {
