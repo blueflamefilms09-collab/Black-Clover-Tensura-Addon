@@ -1,0 +1,34 @@
+{
+  "why": "Big and slow to start a fight but ferocious when it comes to them: a short reach, a long defending bonus inside their own hold. They crush goblins, resent robed cultists and have no love for the demons that cults feed. They favour the forge regions and the stone halls.",
+  "id": "ogre",
+  "name": "Ogre Holds",
+  "color": "#9C6B3F",
+  "tag": "nusmp:mega/ogre",
+  "rivals": [
+    "goblin",
+    "demon",
+    "cultist"
+  ],
+  "allies": [],
+  "aggro": {
+    "range": 12,
+    "nativeBonus": 10
+  },
+  "themeWeights": {
+    "gravity": 4,
+    "blood": 3,
+    "spatial": 0,
+    "flame": 4,
+    "frost": 3,
+    "verdant": 2,
+    "storm": 2,
+    "shadow": 1,
+    "astral": 0,
+    "radiant": 2,
+    "abyss": 3
+  },
+  "drops": {
+    "meat": "raw_monster_meat",
+    "meatChance": 0.55
+  }
+}

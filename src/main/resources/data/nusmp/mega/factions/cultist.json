@@ -1,0 +1,34 @@
+{
+  "why": "Robed casters who call down what they worship: the demons they summon are their allies, so a cult and a hell court never fight each other. Brutes that smash their shrines are their enemies. They favour the folded-space, shadow and star regions.",
+  "id": "cultist",
+  "name": "Cult Conclaves",
+  "color": "#7A4FA3",
+  "tag": "nusmp:mega/cultist",
+  "rivals": [
+    "ogre"
+  ],
+  "allies": [
+    "demon"
+  ],
+  "aggro": {
+    "range": 14,
+    "nativeBonus": 8
+  },
+  "themeWeights": {
+    "gravity": 1,
+    "blood": 4,
+    "spatial": 5,
+    "flame": 1,
+    "frost": 1,
+    "verdant": 1,
+    "storm": 1,
+    "shadow": 4,
+    "astral": 4,
+    "radiant": 3,
+    "abyss": 3
+  },
+  "drops": {
+    "meat": "raw_monster_meat",
+    "meatChance": 0.4
+  }
+}

@@ -14,24 +14,32 @@ import java.util.Locale;
  */
 public enum RegionTheme {
     /** The baseline: the deepslate palette every template is drawn in, so this theme swaps nothing. Weights, falling stone, lightning rods. */
-    GRAVITY(1, 2),
+    GRAVITY(3, 3),
     /** Nether bricks and crimson wood: blood, bone, torture, the Crimson Reliquary. */
-    BLOOD(2, 3),
+    BLOOD(3, 3),
     /** End stone, purpur, amethyst, crying obsidian: folded space, mirrors, doors that lead nowhere. */
-    SPATIAL(1, 3),
+    SPATIAL(3, 3),
     /** Blackstone, gilded blackstone, magma, lava forges. */
-    FLAME(2, 3),
+    FLAME(3, 3),
     /** Packed ice, snow, spruce and calcite. */
-    FROST(1, 2),
+    FROST(3, 3),
     /** Mossy stone, moss, azalea, cherry and vines: an overgrown ruin. */
-    VERDANT(1, 3),
+    VERDANT(3, 3),
     /** Oxidised copper, tuff, lightning rods. */
-    STORM(2, 3),
+    STORM(3, 3),
     /** Polished blackstone, sculk, soul lanterns. */
-    SHADOW(1, 3),
+    SHADOW(3, 3),
     /** Quartz, calcite, prismarine and gold: a cold observatory of stars. */
-    ASTRAL(1, 3);
+    ASTRAL(3, 3),
+    /** 1.55.0, the Holy road: white quartz, smooth stone, gold and calcite, light everywhere, the air thick with Light Rukh. The Holy chain draws it most often. */
+    RADIANT(3, 3),
+    /** 1.55.0, the Abyssal road: dark organic rock, deepslate with sculk, moss and netherrack growing through it, soul fire. The Abyssal chain draws it most often. */
+    ABYSS(3, 3);
 
+    /**
+     * The owner's newest brief fixes the Crucible at EXACTLY three distinct Unique-or-higher relics (one pick per region, so one high-tier relic per ten
+     * floors), so every theme's range is 3..3. The range fields stay (the pure draw below still honours them) so a different count is a one-line edit.
+     */
     private final int minRelics, maxRelics;
 
     RegionTheme(int minRelics, int maxRelics) {
@@ -68,6 +76,35 @@ public enum RegionTheme {
         for (RegionTheme t : values()) if (t.id().equalsIgnoreCase(id)) return t;
         return GRAVITY;
     }
+
+    /**
+     * 1.55.0: the polarity-aware draw. The first sector of a road wears the road's own signature ({@link #RADIANT} for Holy, {@link #ABYSS} for Abyssal), so the
+     * two roads look different from the first step; later sectors are drawn with weights that favour the themes that fit the road (Holy: radiant, astral,
+     * frost, spatial, storm; Abyssal: abyss, shadow, blood, flame, verdant) three to one over the rest, never equal to the previous sector's theme. Deterministic
+     * (splitmix64 of the dungeon seed, the chain index and the polarity). The older three-argument {@link #pick} is kept for single-chain worlds.
+     */
+    public static RegionTheme pick(long dungeonSeed, int chainIndex, RegionTheme previous, Polarity polarity) {
+        if (polarity == null) return pick(dungeonSeed, chainIndex, previous);
+        if (chainIndex <= 0) return polarity == Polarity.HOLY ? RADIANT : ABYSS;
+        List<RegionTheme> pool = new ArrayList<>();
+        for (RegionTheme t : values()) {
+            if (t == previous) continue;
+            int w = polarity == Polarity.HOLY ? (t.favoursHoly() ? 3 : 1) : (t.favoursAbyss() ? 3 : 1);
+            for (int i = 0; i < w; i++) pool.add(t);
+        }
+        if (pool.isEmpty()) return GRAVITY;
+        long z = dungeonSeed * 0x9E3779B97F4A7C15L + (chainIndex * 2L + polarity.ordinal()) * 0xBF58476D1CE4E5B9L;
+        z = (z ^ (z >>> 30)) * 0xBF58476D1CE4E5B9L;
+        z = (z ^ (z >>> 27)) * 0x94D049BB133111EBL;
+        z ^= z >>> 31;
+        return pool.get((int) Math.floorMod(z, (long) pool.size()));
+    }
+
+    /** Does this theme suit the Holy road (bright, cold, clean)? */
+    public boolean favoursHoly() { return this == RADIANT || this == ASTRAL || this == FROST || this == SPATIAL || this == STORM; }
+
+    /** Does this theme suit the Abyssal road (dark, organic, hot)? */
+    public boolean favoursAbyss() { return this == ABYSS || this == SHADOW || this == BLOOD || this == FLAME || this == VERDANT; }
 
     /**
      * Deterministic theme of a sector: sector 0 is always {@link #GRAVITY} (the baseline look is the one the player meets first), later ones

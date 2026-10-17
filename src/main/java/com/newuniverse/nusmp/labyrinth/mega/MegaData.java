@@ -43,6 +43,27 @@ public final class MegaData extends SavedData {
         return null;
     }
 
+    /** 1.55.0: the sectors of one polarity's chain in chain order (a 1.54.0 save has only the Holy chain). */
+    public List<Sector> chain(Polarity p) {
+        List<Sector> out = new ArrayList<>();
+        for (Sector s : sectors) if (s.polarity == p) out.add(s);
+        out.sort((a, b) -> Integer.compare(a.chainIndex, b.chainIndex));
+        return out;
+    }
+
+    /** 1.55.0: the sector of a polarity with this chain index, or null. */
+    public Sector chainSector(Polarity p, int chainIndex) {
+        for (Sector s : sectors) if (s.polarity == p && s.chainIndex == chainIndex) return s;
+        return null;
+    }
+
+    /** 1.55.0: the newest sector of a polarity's chain (highest chain index), or null when that road has not been opened. */
+    public Sector chainTail(Polarity p) {
+        Sector best = null;
+        for (Sector s : sectors) if (s.polarity == p && (best == null || s.chainIndex > best.chainIndex)) best = s;
+        return best;
+    }
+
     /** The newest sector, or null when none exists yet. */
     public Sector latest() { return sectors.isEmpty() ? null : sectors.get(sectors.size() - 1); }
 

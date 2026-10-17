@@ -28,6 +28,8 @@ public final class Labyrinth {
     public static final ResourceKey<Level> DIMENSION = ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "labyrinth"));
     /** 1.54.0: the singular, expanding Mega-Dungeon (data/nusmp/dimension/mega_dungeon.json). A NEW dimension, for the same reason the Labyrinth was one: a world keeps the dimension generators written into its level.dat. */
     public static final ResourceKey<Level> MEGA_DIMENSION = ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "mega_dungeon"));
+    /** 1.55.0: Floor 0, the Sanctuary Hub (data/nusmp/dimension/sanctuary.json): a safe, buildable plains world with two landmarks, the Holy Spire and the Abyssal Chasm. Deliberately NOT a Labyrinth dimension ({@link #in} is false there), so the Dungeon Guard does not hold it and players can build. */
+    public static final ResourceKey<Level> SANCTUARY_DIMENSION = ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "sanctuary"));
     /** The one biome of that dimension: no spawners, no features, so only the Jigsaw pieces and what the Sealed Archways call stand there. */
     public static final ResourceKey<Biome> BIOME = ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "labyrinth_sky"));
     /** Structure tag holding the Spire: what {@code ServerLevel.findNearestMapStructure} is asked for from inside the dimension. */
@@ -49,6 +51,9 @@ public final class Labyrinth {
 
     /** Is this world the Mega-Dungeon dimension (1.54.0)? */
     public static boolean inMega(Level level) { return level != null && level.dimension() == MEGA_DIMENSION; }
+
+    /** Is this world Floor 0, the Sanctuary Hub (1.55.0)? Not a Labyrinth dimension: {@link #in} stays false there. */
+    public static boolean inSanctuary(Level level) { return level != null && level.dimension() == SANCTUARY_DIMENSION; }
 
     /** Does the {@code mega.layout} switch send Gates, Maws and the enter command into the Mega-Dungeon (default) rather than the 1.35.0 Spire? Safe before the config is loaded. */
     public static boolean layoutIsMega() {

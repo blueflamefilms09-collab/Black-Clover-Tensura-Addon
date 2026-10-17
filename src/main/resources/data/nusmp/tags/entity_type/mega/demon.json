@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "tensura:lesser_daemon",
+      "required": false
+    },
+    {
+      "id": "minecraft:ghast",
+      "required": false
+    },
+    {
+      "id": "minecraft:vex",
+      "required": false
+    }
+  ]
+}

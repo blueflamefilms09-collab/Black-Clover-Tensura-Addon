@@ -1,0 +1,32 @@
+{
+  "why": "Things that live in the cisterns and flooded halls: they fight the land beasts that come to drink. They need water, so they belong to rooms with water in them. Their cut is the fillet.",
+  "id": "aquatic",
+  "name": "Drowned Depths",
+  "color": "#3A8FC9",
+  "tag": "nusmp:mega/aquatic",
+  "rivals": [
+    "beast"
+  ],
+  "allies": [],
+  "aggro": {
+    "range": 12,
+    "nativeBonus": 6
+  },
+  "themeWeights": {
+    "gravity": 1,
+    "blood": 0,
+    "spatial": 1,
+    "flame": 0,
+    "frost": 2,
+    "verdant": 3,
+    "storm": 2,
+    "shadow": 1,
+    "astral": 3,
+    "radiant": 1,
+    "abyss": 3
+  },
+  "drops": {
+    "meat": "raw_basilisk_fillet",
+    "meatChance": 0.55
+  }
+}
