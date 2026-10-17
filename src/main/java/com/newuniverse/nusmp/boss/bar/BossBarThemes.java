@@ -3,7 +3,8 @@ package com.newuniverse.nusmp.boss.bar;
 /**
  * The colour pair of each mod boss's animated bar and how it moves with the phase (pure; the server fills the sync with it).
  * Lucius is gold and turns deep purple as the Gates of the Tree of Qliphoth open; the floor bosses have their own palettes; every
- * other boss falls back to its devil's colours. Phase is {@code PowerCurve.stage(power)}: 0 at 20%, 1 at 40, 2 at 60, 3 at 80, 4 once the Gates are open.
+ * other boss falls back to the palette it is given (its devil's colours for the Zogratis family; from 1.60.0 the boss's own {@code styleColor()} and
+ * {@code styleAccent()}, which is how the characters of the arcs get a bar in their own colours). Phase is {@code PowerCurve.stage(power)}: 0 at 20%, 1 at 40, 2 at 60, 3 at 80, 4 once the Gates are open.
  */
 public final class BossBarThemes {
     private BossBarThemes() {}

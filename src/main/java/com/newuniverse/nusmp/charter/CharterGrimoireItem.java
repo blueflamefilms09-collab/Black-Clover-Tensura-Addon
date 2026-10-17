@@ -35,7 +35,10 @@ public class CharterGrimoireItem extends Item {
     }
 
     @Override
-    public Component getName(ItemStack stack) { return super.getName(stack).copy().withStyle(grade().colour()); }
+    public Component getName(ItemStack stack) {
+        // the language entry when there is one (the seven bosses), otherwise a name made from the boss (the arc bosses: no hand-written entry per character)
+        return Component.translatableWithFallback(getDescriptionId(stack), "Charter Grimoire of " + boss.name()).withStyle(grade().colour());
+    }
 
     @Override
     public boolean isFoil(ItemStack stack) { return true; }

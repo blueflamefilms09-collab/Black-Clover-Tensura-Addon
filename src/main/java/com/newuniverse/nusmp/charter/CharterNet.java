@@ -20,6 +20,9 @@ import java.util.Map;
 public final class CharterNet {
     private CharterNet() {}
 
+    /** More than the seven bosses and the thirty-odd arc bosses can ever claim (the reader stops here, so the cap must never be below the writer's count). */
+    private static final int MAX_ENTRIES = 256;
+
     /** One claimed grimoire: the boss id, the first recipient's name and the day. */
     public record Entry(String boss, String name, long day) {}
 
@@ -35,7 +38,7 @@ public final class CharterNet {
                     }
                 },
                 buf -> {
-                    int n = Math.min(buf.readVarInt(), 64);
+                    int n = Math.min(buf.readVarInt(), MAX_ENTRIES);
                     List<Entry> list = new ArrayList<>(n);
                     for (int i = 0; i < n; i++) list.add(new Entry(buf.readUtf(64), buf.readUtf(64), buf.readVarLong()));
                     return new Sync(list);
@@ -56,7 +59,7 @@ public final class CharterNet {
 
     private static Sync snapshot(ModWorldDropData data) {
         List<Entry> list = new ArrayList<>();
-        for (Map.Entry<String, DropLedger.Claim> e : data.all().entrySet()) list.add(new Entry(e.getKey(), e.getValue().name(), e.getValue().day()));
+        for (Map.Entry<String, DropLedger.Claim> e : data.all().entrySet()) if (list.size() < MAX_ENTRIES) list.add(new Entry(e.getKey(), e.getValue().name(), e.getValue().day()));
         return new Sync(list);
     }
 
