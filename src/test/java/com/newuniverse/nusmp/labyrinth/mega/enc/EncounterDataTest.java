@@ -44,7 +44,7 @@ class EncounterDataTest {
     private static final Path KNOWN = Path.of("src/test/resources/mega/enc/known_ids.txt");
     private static final Path LANG = Path.of("src/main/resources/assets/nusmp/lang/en_us.json");
     private static final Path SOURCE = Path.of("src/main/java");
-    private static final List<String> THEMES = List.of("gravity", "blood", "spatial", "flame", "frost", "verdant", "storm", "shadow", "astral");
+    private static final List<String> THEMES = List.of("gravity", "blood", "spatial", "flame", "frost", "verdant", "storm", "shadow", "astral", "radiant", "abyss");
     private static final Set<String> NAMESPACES = Set.of("minecraft", "tensura", "nusmp");
     private static final String MESSAGE_PREFIX = "message.nusmp.mega.enc.";
 
@@ -55,7 +55,7 @@ class EncounterDataTest {
         String[][] h = {{"zombie", "20"}, {"husk", "20"}, {"skeleton", "20"}, {"stray", "20"}, {"wither_skeleton", "20"}, {"spider", "16"}, {"cave_spider", "12"},
                 {"silverfish", "8"}, {"endermite", "8"}, {"creeper", "20"}, {"blaze", "20"}, {"breeze", "30"}, {"witch", "26"}, {"evoker", "24"}, {"vindicator", "24"},
                 {"illusioner", "32"}, {"piglin_brute", "50"}, {"hoglin", "40"}, {"zoglin", "40"}, {"ravager", "100"}, {"magma_cube", "20"}, {"phantom", "20"},
-                {"enderman", "40"}, {"vex", "14"}, {"shulker", "30"}, {"iron_golem", "100"}, {"polar_bear", "30"}, {"bat", "6"}};
+                {"enderman", "40"}, {"vex", "14"}, {"shulker", "30"}, {"iron_golem", "100"}, {"polar_bear", "30"}, {"bat", "6"}, {"drowned", "20"}};
         for (String[] e : h) HEALTH.put("minecraft:" + e[0], Double.parseDouble(e[1]));
         HEALTH.put("nusmp:living_armor", 22.0);
         HEALTH.put("nusmp:floor_warden", 200.0);
@@ -132,8 +132,8 @@ class EncounterDataTest {
 
     // ---------------------------------------------------------------- the tables
     @Test
-    void allTenTablesAreShippedAndParseWithoutProblems() {
-        assertEquals(10, tableNames().size());
+    void allTwelveTablesAreShippedAndParseWithoutProblems() {
+        assertEquals(12, tableNames().size());
         for (String n : tableNames()) {
             assertTrue(Files.exists(ENC.resolve(n + ".json")), "missing encounters/" + n + ".json");
             EncounterTableParser.Parsed p = parse(n);
@@ -146,7 +146,7 @@ class EncounterDataTest {
             files.forEach(f -> found.add(f.getFileName().toString()));
             Set<String> want = new TreeSet<>();
             for (String n : tableNames()) want.add(n + ".json");
-            assertEquals(want, found, "the folder holds exactly the ten tables");
+            assertEquals(want, found, "the folder holds exactly the twelve tables");
         } catch (IOException e) {
             throw new IllegalStateException(e.getMessage());
         }
@@ -253,23 +253,32 @@ class EncounterDataTest {
     }
 
     /**
-     * The message keys are translated in the language file once the lead merges the fragment of this builder into it. Before that merge there is no key of the
-     * namespace in the file at all and the test says so and passes; after it, a missing key (or a half-merged fragment) fails the build.
+     * The message keys are translated in the language file once the lead merges the fragment of this builder into it. The check works one table at a time: a
+     * table none of whose keys is in the file has simply not been merged yet (the test says so and passes), but a table that is merged only in part, or any
+     * merged key without {@code wanderer_spawn}, fails the build, because a half-merged fragment shows raw keys to players.
      */
     @Test
     void messagesAreTranslatedOnceTheFragmentIsMerged() {
         if (!Files.exists(LANG)) return;
         JsonObject lang = JsonParser.parseString(read(LANG)).getAsJsonObject();
-        boolean merged = false;
-        for (String k : lang.keySet()) if (k.startsWith(MESSAGE_PREFIX)) merged = true;
-        if (!merged) {
-            System.out.println("note: the Dungeon Master's language fragment is not merged into en_us.json yet, translation check skipped");
-            return;
+        List<String> missing = new ArrayList<>(), unmerged = new ArrayList<>();
+        boolean anyMerged = false;
+        for (Map.Entry<String, EncounterTable> t : tables().entrySet()) {
+            List<String> keys = new ArrayList<>();
+            for (EncounterTable.Entry e : t.getValue().entries()) if (!e.message().isEmpty()) keys.add(e.message());
+            boolean some = false;
+            for (String k : keys) if (lang.has(k)) some = true;
+            if (some) anyMerged = true;
+            if (!some) {
+                if (!keys.isEmpty()) unmerged.add(t.getKey());
+                continue;
+            }
+            for (String k : keys) if (!lang.has(k)) missing.add(k);
         }
-        List<String> missing = new ArrayList<>();
-        if (!lang.has(MESSAGE_PREFIX + "wanderer_spawn")) missing.add(MESSAGE_PREFIX + "wanderer_spawn");
-        for (EncounterTable t : tables().values()) for (EncounterTable.Entry e : t.entries()) if (!e.message().isEmpty() && !lang.has(e.message())) missing.add(e.message());
+        for (String k : lang.keySet()) if (k.startsWith(MESSAGE_PREFIX)) anyMerged = true;
+        if (anyMerged && !lang.has(MESSAGE_PREFIX + "wanderer_spawn")) missing.add(MESSAGE_PREFIX + "wanderer_spawn");
         assertTrue(missing.isEmpty(), "untranslated: " + missing);
+        if (!unmerged.isEmpty()) System.out.println("note: the language fragment of the tables " + unmerged + " is not merged into en_us.json yet, translation check skipped for them");
     }
 
     @Test
@@ -318,8 +327,76 @@ class EncounterDataTest {
     }
 
     @Test
+    void theHolyRoadIsMadeForLightAndTheAbyssalRoadForTheDark() {
+        EncounterTable radiant = parse("radiant").table(), abyss = parse("abyss").table();
+        int radiantLit = 0, radiantDark = 0, abyssLit = 0, abyssDark = 0;
+        for (EncounterTable.Entry e : radiant.entries()) {
+            if (Boolean.TRUE.equals(e.needs().lit())) radiantLit++;
+            if (Boolean.TRUE.equals(e.needs().dark())) radiantDark++;
+        }
+        for (EncounterTable.Entry e : abyss.entries()) {
+            if (Boolean.TRUE.equals(e.needs().lit())) abyssLit++;
+            if (Boolean.TRUE.equals(e.needs().dark())) abyssDark++;
+        }
+        assertTrue(radiantLit >= 4, "the Rukh-bright road has only " + radiantLit + " entries that need light");
+        assertTrue(radiantDark >= 1 && radiantDark <= 1, "the dark entries of the Holy road are rare: " + radiantDark);
+        assertTrue(abyssDark >= 4, "the dark road has only " + abyssDark + " entries that need the dark");
+        assertTrue(abyssLit == 0, "nothing of the Abyssal road needs a lit party: " + abyssLit);
+        // the roll bonus cancels what the light modifier would add (a bright road) or take away (a dark one)
+        assertTrue(radiant.rollBonus() <= -1, "a road of light needs a negative roll bonus: " + radiant.rollBonus());
+        assertTrue(abyss.rollBonus() >= 1, "a road of darkness needs a positive roll bonus: " + abyss.rollBonus());
+        assertTrue(abyss.budgetScale() >= 1.0, "the ecosystems of the descent are not smaller than the baseline");
+        assertEquals("construct", radiant.defaultFaction());
+        assertEquals("beast", abyss.defaultFaction());
+    }
+
+    @Test
+    void theHolyRoadLeansOnConstructsElementalsAndCultists() {
+        Set<String> factions = new TreeSet<>();
+        for (EncounterTable.Entry e : parse("radiant").table().entries()) {
+            if (!e.faction().isEmpty()) factions.add(e.faction());
+            for (EncounterTable.MobSpec m : e.mobs()) if (m.kind() == EncounterTable.Kind.FACTION && !m.faction().isEmpty()) factions.add(m.faction());
+        }
+        assertTrue(factions.containsAll(Set.of("construct", "elemental", "cultist")), "the factions of the Holy road: " + factions);
+    }
+
+    @Test
+    void theAbyssalRoadHasItsEcosystemsItsWallAmbushItsCisternsAndItsGrowingPacks() {
+        EncounterTable abyss = parse("abyss").table();
+        Set<String> factions = new TreeSet<>();
+        boolean wallAmbush = false, cistern = false, brute = false, clash = false;
+        int biggestBeastPack = 0, firstPackAt = Integer.MAX_VALUE, bigPackAt = Integer.MAX_VALUE;
+        for (EncounterTable.Entry e : abyss.entries()) {
+            if (!e.faction().isEmpty()) factions.add(e.faction());
+            Set<String> inEntry = new TreeSet<>();
+            for (EncounterTable.MobSpec m : e.mobs()) {
+                String f = m.kind() == EncounterTable.Kind.FACTION ? (!m.faction().isEmpty() ? m.faction() : e.faction()) : "";
+                if (!f.isEmpty()) {
+                    factions.add(f);
+                    inEntry.add(f);
+                }
+                if (m.kind() == EncounterTable.Kind.FACTION && "beast".equals(f)) {
+                    biggestBeastPack = Math.max(biggestBeastPack, m.count().max());
+                    if (m.count().max() <= 5) firstPackAt = Math.min(firstPackAt, e.minThreat());
+                    if (m.count().max() >= 8) bigPackAt = Math.min(bigPackAt, e.minThreat());
+                }
+            }
+            if (e.maxRange() > 0.0 && e.maxRange() <= 24.0 && e.band() == Band.STANDARD && e.cells() >= 3) wallAmbush = true;
+            if ("aquatic".equals(e.faction())) cistern = true;
+            if (e.needs().noisy() != null && e.needs().noisy() && e.band() == Band.HARD) brute = true;
+            if (inEntry.size() >= 2 && e.band() == Band.HARD) clash = true;
+        }
+        assertTrue(factions.containsAll(Set.of("beast", "insect", "undead", "demon", "slime", "aquatic")), "the ecosystems of the descent: " + factions);
+        assertTrue(wallAmbush, "an ambush from the walls");
+        assertTrue(cistern, "a cistern entry");
+        assertTrue(brute, "a loud brute");
+        assertTrue(clash, "an entry that sets two ecosystems on the party at once");
+        assertTrue(biggestBeastPack >= 8 && bigPackAt > firstPackAt, "the beast packs grow with the floor: a first pack from threat " + firstPackAt + ", a big one (up to " + biggestBeastPack + ") from threat " + bigPackAt);
+    }
+
+    @Test
     void theTablesShareTheCountsTheyPromise() {
-        // the summary the report quotes: entries per band over all ten files, the number of needs-gated entries, and how many name a message
+        // the summary the report quotes: entries per band over all twelve files, the number of needs-gated entries, and how many name a message
         Map<Band, Integer> perBand = new TreeMap<>();
         int total = 0, gated = 0, messages = 0, factionOnly = 0;
         for (EncounterTable t : tables().values()) {

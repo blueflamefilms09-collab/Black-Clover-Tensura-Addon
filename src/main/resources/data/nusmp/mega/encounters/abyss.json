@@ -1,0 +1,203 @@
+{
+  "comment": "Why: the Abyssal road is the dark one, and its parties are in the dark most of the time, so the light modifier of the dice would make encounters rarer here than on any other road; the roll bonus of plus two cancels it, and a party that carries a torch pays for it twice, because the road is hungry and a lamp is a signal. The monsters are the ecosystems of the descent: beasts, hives, the restless dead, demons, slimes and what climbs out of the cisterns. They come from the room's own faction first, so the factions that the ecology put in each region show, and two entries put two factions on top of the party at once, which is the owner's 'ecosystems that fight over territory' made visible at the party's feet. Entries that need the dark are common here, and the big packs grow with the floor.",
+  "description": "The Abyssal road: dark organic rock, deepslate with sculk, moss and netherrack growing through it, soul fire. Sprawling monster ecosystems fight over every tunnel, and the party is the meat they meet in between.",
+  "rollBonus": 2,
+  "budgetScale": 1.2,
+  "defaultFaction": "beast",
+  "entries": [
+    {
+      "id": "mire_scouts",
+      "comment": "The breather of the descent: one or two of the room's own people (the beast tag unless the room has a native faction). No upper threat, so the minor band never runs dry.",
+      "band": "minor",
+      "weight": 14,
+      "mobs": [
+        {"type": "faction", "count": "1-2"}
+      ],
+      "cue": {"sound": "minecraft:block.netherrack.break", "volume": 0.6, "pitch": 0.5, "particle": "minecraft:ash", "count": 6}
+    },
+    {
+      "id": "ooze_trickle",
+      "comment": "Slimes seeping through the organic rock: slow, many, and they fill a tunnel. Only up to threat 8, after which they are food for the real ecosystems.",
+      "band": "minor",
+      "weight": 10,
+      "maxThreat": 8,
+      "faction": "slime",
+      "mobs": [
+        {"type": "faction", "count": "2-4"}
+      ],
+      "cells": 2,
+      "cue": {"sound": "minecraft:entity.slime.squish", "volume": 0.8, "pitch": 0.6, "particle": "minecraft:item_slime", "count": 8}
+    },
+    {
+      "id": "wall_burst",
+      "comment": "Ambush from the walls: the rock is alive here, and a crawling swarm breaks out of it right next to the party, out of sight behind the wall but close. The silverfish come first and the poisonous small spiders are the escort.",
+      "band": "standard",
+      "weight": 10,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:silverfish", "count": "4-7"},
+        {"type": "entity", "id": "minecraft:cave_spider", "count": "2-4"}
+      ],
+      "range": [10, 22],
+      "cells": 3,
+      "hunt": 500,
+      "cue": {"sound": "minecraft:block.sculk_catalyst.bloom", "volume": 0.9, "pitch": 0.6, "particle": "minecraft:infested", "count": 14},
+      "message": "message.nusmp.mega.enc.abyss.wall_burst"
+    },
+    {
+      "id": "hive_swarm",
+      "comment": "The evergreen standard encounter of the descent: a hive spills into the tunnel, a swarm of the insect tag in three places.",
+      "band": "standard",
+      "weight": 12,
+      "faction": "insect",
+      "mobs": [
+        {"type": "faction", "count": "4-7"}
+      ],
+      "cells": 3,
+      "cue": {"sound": "minecraft:entity.spider.ambient", "volume": 0.8, "pitch": 0.5, "particle": "minecraft:warped_spore", "count": 12}
+    },
+    {
+      "id": "maw_pack",
+      "comment": "The pack that grows: three to five beasts of the beast tag arriving together from one side. From threat 8 the great hunt takes its place, bigger and from three sides.",
+      "band": "standard",
+      "weight": 12,
+      "minThreat": 2,
+      "maxThreat": 7,
+      "faction": "beast",
+      "mobs": [
+        {"type": "faction", "count": "3-5"}
+      ],
+      "cells": 1,
+      "cue": {"sound": "minecraft:entity.wolf.howl", "volume": 0.9, "pitch": 0.6, "particle": "minecraft:sculk_soul", "count": 8}
+    },
+    {
+      "id": "cistern_dead",
+      "comment": "What climbs out of the cisterns: drowned and lizardmen, the amphibious part of the aquatic tag (the water-bound members cannot stand on a floor, so they are not drawn). The entry carries the aquatic faction so the turf wars know who they are.",
+      "band": "standard",
+      "weight": 8,
+      "minThreat": 2,
+      "faction": "aquatic",
+      "mobs": [
+        {"type": "entity", "id": "minecraft:drowned", "count": "2-4"},
+        {"type": "entity", "id": "tensura:lizardman", "count": "1-2"}
+      ],
+      "range": [12, 28],
+      "cue": {"sound": "minecraft:entity.drowned.ambient", "volume": 0.9, "pitch": 0.6, "particle": "minecraft:bubble", "count": 14},
+      "message": "message.nusmp.mega.enc.abyss.cistern_dead"
+    },
+    {
+      "id": "lurker_below",
+      "comment": "The dark stalker: one tough beast of the beast tag, only for a party that walks without light. It follows the party at the edge of its sight and strikes when the party stops.",
+      "band": "standard",
+      "weight": 10,
+      "minThreat": 2,
+      "faction": "beast",
+      "mobs": [
+        {"type": "faction", "count": "1"}
+      ],
+      "needs": {"dark": true},
+      "scaleWithParty": false,
+      "cue": {"sound": "minecraft:entity.warden.heartbeat", "volume": 0.5, "pitch": 1.0, "particle": "minecraft:sculk_soul", "count": 6},
+      "message": "message.nusmp.mega.enc.abyss.lurker_below"
+    },
+    {
+      "id": "shade_hounds",
+      "comment": "Tensura's barghests in a small pack, for a party in the dark: black hounds that find what carries no light.",
+      "band": "standard",
+      "weight": 10,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "tensura:barghest", "count": "2-3"}
+      ],
+      "needs": {"dark": true},
+      "cue": {"sound": "minecraft:entity.wolf.growl", "volume": 0.9, "pitch": 0.5, "particle": "minecraft:soul", "count": 10}
+    },
+    {
+      "id": "deep_brute",
+      "comment": "The loud brute: noise carries far in a tunnel, and one heavy body of the ogre tag comes up with a couple of beasts at its heels. The beasts are trimmed first when the budget is short; a bigger party meets more than one brute.",
+      "band": "hard",
+      "weight": 10,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "faction", "count": "1", "faction": "ogre"},
+        {"type": "faction", "count": "0-2", "faction": "beast"}
+      ],
+      "needs": {"noisy": true},
+      "cue": {"sound": "minecraft:entity.ravager.roar", "volume": 0.9, "pitch": 0.5, "particle": "minecraft:large_smoke", "count": 12},
+      "message": "message.nusmp.mega.enc.abyss.deep_brute"
+    },
+    {
+      "id": "turf_clash",
+      "comment": "Two ecosystems at once: beasts and a hive arrive from two sides and find the party between them. The ecology's turf wars do the rest, so the party is fighting a battle that was going on without it.",
+      "band": "hard",
+      "weight": 8,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "faction", "count": "3-4", "faction": "beast"},
+        {"type": "faction", "count": "3-4", "faction": "insect"}
+      ],
+      "cells": 2,
+      "cue": {"sound": "minecraft:block.sculk.spread", "volume": 1.0, "pitch": 0.6, "particle": "minecraft:crimson_spore", "count": 16},
+      "message": "message.nusmp.mega.enc.abyss.turf_clash"
+    },
+    {
+      "id": "pit_demon",
+      "comment": "The hard lone hunter: a demon of the demon tag with the dead in its train, only for a party in the dark. One demon, never scaled by the party.",
+      "band": "hard",
+      "weight": 8,
+      "minThreat": 4,
+      "mobs": [
+        {"type": "faction", "count": "1", "faction": "demon"},
+        {"type": "faction", "count": "2-3", "faction": "undead"}
+      ],
+      "needs": {"dark": true},
+      "scaleWithParty": false,
+      "cue": {"sound": "minecraft:entity.ghast.ambient", "volume": 0.8, "pitch": 0.5, "particle": "minecraft:soul_fire_flame", "count": 12},
+      "message": "message.nusmp.mega.enc.abyss.pit_demon"
+    },
+    {
+      "id": "rotted_armour",
+      "comment": "The mimic-style surprise: the suit in the alcove is full of the descent's growth and it breathes. Close range, a short hunt, the dead behind it.",
+      "band": "hard",
+      "weight": 6,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "entity", "id": "nusmp:living_armor", "count": "1-2"},
+        {"type": "faction", "count": "1-2", "faction": "undead"}
+      ],
+      "range": [10, 18],
+      "cells": 2,
+      "hunt": 300,
+      "cue": {"sound": "minecraft:item.armor.equip_iron", "volume": 0.8, "pitch": 0.5, "particle": "minecraft:sculk_soul", "count": 10},
+      "message": "message.nusmp.mega.enc.abyss.rotted_armour"
+    },
+    {
+      "id": "great_hunt",
+      "comment": "The big pack: six to ten beasts of the beast tag in three places, so there is no wall to put a back against. It replaces the smaller pack as the floors go down.",
+      "band": "ambush",
+      "weight": 10,
+      "minThreat": 4,
+      "faction": "beast",
+      "mobs": [
+        {"type": "faction", "count": "6-10"}
+      ],
+      "cells": 3,
+      "cue": {"sound": "minecraft:entity.wolf.howl", "volume": 1.0, "pitch": 0.5, "particle": "minecraft:large_smoke", "count": 16},
+      "message": "message.nusmp.mega.enc.abyss.great_hunt"
+    },
+    {
+      "id": "black_hunt",
+      "comment": "The hunt in the dark: when the lights are out the pack closes in from three sides with the dead behind it. Only for a party without light, from threat 5.",
+      "band": "ambush",
+      "weight": 8,
+      "minThreat": 5,
+      "mobs": [
+        {"type": "faction", "count": "5-8", "faction": "beast"},
+        {"type": "faction", "count": "2-3", "faction": "undead"}
+      ],
+      "needs": {"dark": true},
+      "cells": 3,
+      "cue": {"sound": "minecraft:entity.warden.heartbeat", "volume": 1.0, "pitch": 0.8, "particle": "minecraft:sculk_soul", "count": 20},
+      "message": "message.nusmp.mega.enc.abyss.black_hunt"
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.labyrinth.mega.enc;
 
 import com.mojang.logging.LogUtils;
+import com.newuniverse.nusmp.labyrinth.mega.Polarity;
 import com.newuniverse.nusmp.labyrinth.mega.RegionTheme;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
@@ -24,7 +25,8 @@ import java.util.TreeSet;
  * so the game must read them again whenever data reloads and must never crash on a bad file. This class owns the two immutable snapshots the
  * rest of the package reads ({@link #table} for a theme, {@link #roster}) and the reload listener that replaces them. The files are
  * {@code data/nusmp/mega/encounters/<name>.json} (one per theme plus {@code default}; a theme file REPLACES the default for sectors of that
- * theme, and the default answers for a theme without a file) and {@code data/nusmp/mega/wanderers.json}. Only the {@code nusmp} namespace is
+ * theme, a theme without a file borrows the table of its road, {@code radiant} or {@code abyss}, and only then the default answers) and
+ * {@code data/nusmp/mega/wanderers.json}. Only the {@code nusmp} namespace is
  * read, so a datapack overrides a file by shipping the same path. When several packs ship a file the highest-priority one wins, as for any data
  * file. Every problem the pure parsers report is written to the log with the file's name; a file that is not JSON at all is skipped, and the
  * snapshot keeps working with what is left. Snapshots are swapped as a whole (volatile fields), so the server thread never sees a half-read table.
@@ -39,13 +41,18 @@ public final class EncData {
     private static volatile WandererRoster roster = WandererRoster.EMPTY;
     private static volatile int version;
 
-    /** The table for sectors of this theme: its own file, else the default, else an empty table (no encounters). */
-    public static EncounterTable table(RegionTheme theme) {
+    /** The table for sectors of this theme on no particular road: its own file, else the default, else an empty table (no encounters). */
+    public static EncounterTable table(RegionTheme theme) { return table(theme, null); }
+
+    /**
+     * The table for a sector of this theme on this road: its own file; else the road's table ({@code radiant} for the Holy road, {@code abyss} for the Abyssal
+     * one); else the default; else an empty table (no encounters). The order is the pure rule {@link TableChoice#pick}.
+     */
+    public static EncounterTable table(RegionTheme theme, Polarity polarity) {
         Map<String, EncounterTable> t = tables;
-        EncounterTable own = theme == null ? null : t.get(theme.id());
-        if (own != null) return own;
-        EncounterTable def = t.get("default");
-        return def != null ? def : EncounterTable.EMPTY;
+        String name = TableChoice.pick(t.keySet(), theme == null ? null : theme.id(), polarity);
+        EncounterTable chosen = name == null ? null : t.get(name);
+        return chosen != null ? chosen : EncounterTable.EMPTY;
     }
 
     /** A table by file name (for the admin command), or null. */

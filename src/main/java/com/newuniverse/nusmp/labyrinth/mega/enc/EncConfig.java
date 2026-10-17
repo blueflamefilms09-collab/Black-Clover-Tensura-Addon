@@ -13,7 +13,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 public final class EncConfig {
     public static final ModConfigSpec SPEC;
     // the Dungeon Master (random encounters)
-    public static final ModConfigSpec.BooleanValue ENABLED, CUES;
+    public static final ModConfigSpec.BooleanValue ENABLED, CUES, FLOOR_THREAT;
     public static final ModConfigSpec.IntValue ROLL_EVERY, BASE_COOLDOWN, MIN_COOLDOWN, MAX_LIVE, MAX_PER_ENCOUNTER, DC, MAX_AGE, SPAWN_ATTEMPTS;
     public static final ModConfigSpec.DoubleValue PARTY_RADIUS, PARTY_EXTRA, BASE_BUDGET, NOISE_DECAY, NOISE_SCALE, NOISY_AT, HEALTH_PER_LEVEL, DAMAGE_PER_LEVEL,
             DESPAWN_DISTANCE, SPAWN_MIN, SPAWN_MAX;
@@ -70,6 +70,8 @@ public final class EncConfig {
                 .defineInRange("maxAgeTicks", 12000, 1200, 240000);
         CUES = b.comment("The Dungeon Master tells the party that something is coming with a distant sound and a little dust (an entry can have its own cue). false = no warning at all.")
                 .define("cues", true);
+        FLOOR_THREAT = b.comment("A sector is ten floors. true = the dice, the budget, the toughness window and the monsters' health follow the FLOOR the party stands on (its distance from the Hub, 1 to 10 in the first sector of a road; the deepest member of the party decides). false = the older rule: the threat of the sector, the same in every room of it.")
+                .define("floorThreat", true);
 
         WANDERERS = b.comment("Wandering bosses: a big monster that walks the rooms of a sector and hunts by sight and sound. false = none appear.")
                 .define("wanderers", true);

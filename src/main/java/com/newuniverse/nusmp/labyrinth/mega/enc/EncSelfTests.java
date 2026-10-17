@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.labyrinth.mega.enc;
 
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
+import com.newuniverse.nusmp.labyrinth.mega.Polarity;
 import com.newuniverse.nusmp.labyrinth.mega.RegionTheme;
 import com.newuniverse.nusmp.labyrinth.mega.Room;
 import com.newuniverse.nusmp.labyrinth.mega.RoomKind;
@@ -32,10 +33,10 @@ import java.util.TreeSet;
  * REAL generated sector 0, with a stand-in player: the tables and the roster resolve to live entity types (the part no unit test can check,
  * because it needs the registries of every installed mod), a forced roll puts monsters where the rules say (inside the sector, 24 to 48 blocks
  * from the party, out of its sight, never in a safe room, tagged, within the budget), a party in a safe room is not rolled for, noise raises a
- * player's meter and fades, and a wandering boss walks the room graph without ever standing in a safe room. Each test calls the same methods the
- * event handlers and the admin command call, feeds time by hand (the monsters are not ticked, so a walk is simulated by stepping the boss to the
- * goal it was sent to), keeps to about a second or two, and removes everything it made. They are registered with {@link SelfTests} and run by
- * {@code /multiverse mega selftest}.
+ * player's meter and fades, a wandering boss walks the room graph without ever standing in a safe room, and the threat the dice read follows the floor
+ * of the room the party stands in. Each test calls the same methods the event handlers and the admin command call, feeds time by hand (the monsters
+ * are not ticked, so a walk is simulated by stepping the boss to the goal it was sent to), keeps to about a second or two, and removes everything it
+ * made. They are registered with {@link SelfTests} and run by {@code /multiverse mega selftest}.
  */
 final class EncSelfTests {
     private EncSelfTests() {}
@@ -46,6 +47,7 @@ final class EncSelfTests {
         SelfTests.register("enc.safe_zone", EncSelfTests::safeZone);
         SelfTests.register("enc.noise", EncSelfTests::noise);
         SelfTests.register("enc.wanderer", EncSelfTests::wanderer);
+        SelfTests.register("enc.floor_threat", EncSelfTests::floorThreat);
     }
 
     // ---------------------------------------------------------------- helpers
@@ -93,6 +95,12 @@ final class EncSelfTests {
         List<String> missing = new ArrayList<>(), broken = new ArrayList<>();
         for (RegionTheme t : RegionTheme.values()) if (!names.contains(t.id())) missing.add(t.id());
         if (!missing.isEmpty()) return fail("no encounter table for the themes " + missing);
+        for (RegionTheme t : RegionTheme.values()) {
+            for (Polarity pol : Polarity.values()) {
+                String got = EncData.table(t, pol).id();
+                if (!got.equals(t.id())) return fail("a " + t.id() + " sector on the " + pol.id() + " road reads the table '" + got + "' instead of its own");
+            }
+        }
         int entries = 0, dormantExtras = 0;
         Set<String> types = new TreeSet<>();
         Set<String> bands = new TreeSet<>();
@@ -308,6 +316,52 @@ final class EncSelfTests {
         } finally {
             NoiseEvents.forget(p.getUUID());
             NoiseEvents.BURSTS.clear();
+        }
+    }
+
+    // ---------------------------------------------------------------- enc.floor_threat
+    private static SelfTests.Result floorThreat(MinecraftServer server) {
+        ServerLevel mega = SelfTests.mega(server);
+        if (mega == null) return fail("no mega dimension");
+        Sector s = MegaDungeon.data(server).sector(0);
+        if (s == null || s.state == Sector.State.GENERATING || s.state == Sector.State.FAILED || s.rooms.isEmpty()) return fail("sector 0 is not ready (run /multiverse mega expand first)");
+        int first = s.firstFloor(), last = s.lastFloor();
+        int lo = Math.min(Math.abs(first), Math.abs(last)), hi = Math.max(Math.abs(first), Math.abs(last));
+        Set<Integer> floors = new TreeSet<>();
+        Room landing = null, deepest = null;
+        int deepestFloor = 0;
+        for (Room r : s.rooms) {
+            int floor = MegaDungeon.floorAt(mega, r.center());
+            String who = "room " + r.id + " (" + r.kind.name().toLowerCase(Locale.ROOT) + ")";
+            if (floor == 0) return fail(who + " answers floor 0 inside its own sector");
+            if (Polarity.ofFloor(floor) != s.polarity) return fail(who + " is floor " + floor + ", which is not on the " + s.polarity.id() + " road of its sector");
+            if (Math.abs(floor) < lo || Math.abs(floor) > hi) return fail(who + " is floor " + floor + ", outside the sector's floors " + first + " to " + last);
+            if (ThreatInput.of(s.threat, floor, true) != Math.abs(floor)) return fail(who + ": the threat of floor " + floor + " is " + ThreatInput.of(s.threat, floor, true));
+            floors.add(floor);
+            if (r.kind == RoomKind.LANDING) landing = r;
+            if (deepest == null || Math.abs(floor) > Math.abs(deepestFloor)) {
+                deepest = r;
+                deepestFloor = floor;
+            }
+        }
+        if (landing == null) return fail("sector 0 has no Landing");
+        int landingFloor = MegaDungeon.floorAt(mega, landing.center());
+        if (landingFloor != first) return fail("the Landing is floor " + landingFloor + " but the sector begins at floor " + first);
+        boolean byFloor = EncConfig.get(EncConfig.FLOOR_THREAT);
+        FakePlayer near = stand(mega, "enc_floor_a", landing.center());
+        FakePlayer far = stand(mega, "enc_floor_b", deepest.center());
+        try {
+            int alone = FloorThreat.of(mega, s, List.of(near)), pair = FloorThreat.of(mega, s, List.of(near, far));
+            int wantAlone = byFloor ? Math.abs(first) : s.threat, wantPair = byFloor ? Math.abs(deepestFloor) : s.threat;
+            if (alone != wantAlone) return fail("a player in the Landing reads threat " + alone + ", expected " + wantAlone);
+            if (pair != wantPair) return fail("a party with a member on floor " + deepestFloor + " reads threat " + pair + ", expected " + wantPair);
+            EncounterTable table = EncData.table(s.theme, s.polarity);
+            if (!table.id().equals(s.theme.id())) return fail("the " + s.theme.id() + " sector reads the table '" + table.id() + "'");
+            return SelfTests.Result.ok("sector 0 (" + s.polarity.id() + ", " + s.theme.id() + ", sector threat " + s.threat + ") has " + floors.size() + " different floors between " + first + " and " + last
+                    + "; the Landing reads threat " + alone + ", a party reaching floor " + deepestFloor + " reads " + pair + (byFloor ? " (from the floor)" : " (the floor rule is off)"));
+        } finally {
+            cleanup(mega, near);
+            cleanup(mega, far);
         }
     }
 

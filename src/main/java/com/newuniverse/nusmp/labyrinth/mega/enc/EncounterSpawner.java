@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.labyrinth.mega.enc;
 
 import com.mojang.logging.LogUtils;
+import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -36,8 +37,8 @@ final class EncounterSpawner {
     private EncounterSpawner() {}
 
     private static final org.slf4j.Logger LOG = LogUtils.getLogger();
-    /** The entity tag of every monster the Dungeon Master made. */
-    static final String TAG = "nusmp_dm";
+    /** The entity tag of every monster the Dungeon Master made: the contract's own constant, which the economy, the health buffer and the faction drops ask for. */
+    static final String TAG = MegaDungeon.DM_TAG;
     /** Persistent data: the id of the table entry that made it, and the game time it was made. */
     static final String ENTRY = "nusmp_dm_entry", BORN = "nusmp_dm_born";
     static final ResourceLocation HEALTH_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "mega_dm_health"), DAMAGE_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "mega_dm_damage");
