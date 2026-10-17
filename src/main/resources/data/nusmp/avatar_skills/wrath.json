@@ -1,0 +1,9 @@
+{
+  "id": "tensura:wrath",
+  "kind": "ultimate",
+  "name": "Wrath",
+  "ep_tax": 14,
+  "min_ep": 3500,
+  "tint": "#FF3355",
+  "description": "Anger given a shape and a target."
+}

@@ -1,0 +1,9 @@
+{
+  "id": "tensura:sniper",
+  "kind": "unique",
+  "name": "Sniper",
+  "ep_tax": 4,
+  "min_ep": 600,
+  "tint": "#FFB04A",
+  "description": "One shot, one place."
+}

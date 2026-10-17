@@ -1,0 +1,9 @@
+{
+  "id": "nusmp:goddess_of_faith",
+  "kind": "ultimate",
+  "name": "Goddess of Faith",
+  "ep_tax": 16,
+  "min_ep": 4000,
+  "tint": "#FFF2A8",
+  "description": "Belief made into strength."
+}

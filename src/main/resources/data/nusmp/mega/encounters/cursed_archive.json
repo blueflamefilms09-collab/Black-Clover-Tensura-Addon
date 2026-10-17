@@ -1,0 +1,346 @@
+{
+  "comment": "Why: the Archive is a library, so the table is a library's own population: bookworms in the shelving, scholars of the cult at their desks, ink that gets up off the page, books that were bound in bone, and a censor who wants silence. Most of it is cultists (the table's own faction) and constructs; the noise gate is the place where a library bites, because shouting in the stacks is the one thing the librarians never forgave. Nothing here needs a lit party, and the ink only moves when the torch is down.",
+  "description": "Red-brown brick, black stone, crying obsidian and soul light: the forbidden library, where the scholars never left and the books are not shut. Quiet people and quieter books; the noise is what draws them.",
+  "rollBonus": 0,
+  "budgetScale": 1.0,
+  "defaultFaction": "cultist",
+  "entries": [
+    {
+      "id": "ca_bookworm_drift",
+      "comment": "The breather of the stacks: silverfish that have eaten a wall of paper and now want the next one.",
+      "band": "minor",
+      "weight": 14,
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "minecraft:silverfish",
+          "count": "3-5"
+        }
+      ],
+      "cells": 3,
+      "cue": {
+        "sound": "minecraft:block.moss.break",
+        "volume": 0.6,
+        "pitch": 0.9,
+        "particle": "minecraft:poof",
+        "count": 6
+      }
+    },
+    {
+      "id": "ca_ink_wisps",
+      "comment": "Ink that has come up off a page: two or three vexes with nothing to say, and only on the dark side of the lamp.",
+      "band": "minor",
+      "weight": 12,
+      "maxThreat": 10,
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "minecraft:vex",
+          "count": "2-3"
+        }
+      ],
+      "needs": {
+        "dark": true
+      },
+      "cue": {
+        "sound": "minecraft:entity.vex.ambient",
+        "volume": 0.7,
+        "pitch": 0.8,
+        "particle": "minecraft:squid_ink",
+        "count": 8
+      },
+      "message": "message.nusmp.mega.enc.cursed_archive.ca_ink_wisps"
+    },
+    {
+      "id": "ca_reading_cell",
+      "comment": "A few of the room's own people at their desks, who look up when the door opens.",
+      "band": "minor",
+      "weight": 11,
+      "mobs": [
+        {
+          "type": "faction",
+          "count": "1-2"
+        }
+      ],
+      "cue": {
+        "sound": "minecraft:block.enchantment_table.use",
+        "volume": 0.6,
+        "pitch": 0.9,
+        "particle": "minecraft:enchant",
+        "count": 8
+      }
+    },
+    {
+      "id": "ca_scholar_cell",
+      "comment": "The evergreen standard fight: a cell of the cult's scholars, fixed to the cultists, who carry the library's keys.",
+      "band": "standard",
+      "weight": 12,
+      "faction": "cultist",
+      "mobs": [
+        {
+          "type": "faction",
+          "count": "3-5"
+        }
+      ],
+      "cue": {
+        "sound": "minecraft:entity.evoker.prepare_summon",
+        "volume": 0.7,
+        "pitch": 0.8,
+        "particle": "minecraft:enchant",
+        "count": 10
+      }
+    },
+    {
+      "id": "ca_hush",
+      "comment": "The librarian's rule: a noisy party is a visitor who has not read the sign, and the room sends an evoker and a few of its readers to explain it.",
+      "band": "standard",
+      "weight": 10,
+      "minThreat": 2,
+      "faction": "cultist",
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "minecraft:evoker",
+          "count": "1"
+        },
+        {
+          "type": "faction",
+          "count": "2-3"
+        }
+      ],
+      "needs": {
+        "noisy": true
+      },
+      "scaleWithParty": false,
+      "cue": {
+        "sound": "minecraft:entity.evoker.cast_spell",
+        "volume": 0.8,
+        "pitch": 0.7,
+        "particle": "minecraft:enchant",
+        "count": 10
+      },
+      "message": "message.nusmp.mega.enc.cursed_archive.ca_hush"
+    },
+    {
+      "id": "ca_bone_bound",
+      "comment": "Books bound in bone: constructs of the room, two or three, that stand up off the shelf and block the aisle.",
+      "band": "standard",
+      "weight": 9,
+      "minThreat": 2,
+      "mobs": [
+        {
+          "type": "faction",
+          "count": "2-3",
+          "faction": "construct"
+        }
+      ],
+      "cue": {
+        "sound": "minecraft:block.bone_block.break",
+        "volume": 0.8,
+        "pitch": 0.7,
+        "particle": "minecraft:poof",
+        "count": 8
+      }
+    },
+    {
+      "id": "ca_dark_reader",
+      "comment": "A lone witch among the shelves who reads by the light of the party's torch and does not like it going out.",
+      "band": "standard",
+      "weight": 8,
+      "minThreat": 2,
+      "faction": "cultist",
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "minecraft:witch",
+          "count": "1"
+        },
+        {
+          "type": "faction",
+          "count": "1-2"
+        }
+      ],
+      "needs": {
+        "dark": true
+      },
+      "cue": {
+        "sound": "minecraft:entity.witch.ambient",
+        "volume": 0.8,
+        "pitch": 0.7,
+        "particle": "minecraft:witch",
+        "count": 8
+      }
+    },
+    {
+      "id": "ca_censors",
+      "comment": "The censors: an evoker with a cell of cultists behind it, come to take away the party's books and, if need be, the party.",
+      "band": "hard",
+      "weight": 8,
+      "minThreat": 3,
+      "faction": "cultist",
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "minecraft:evoker",
+          "count": "1"
+        },
+        {
+          "type": "faction",
+          "count": "3-4"
+        }
+      ],
+      "cue": {
+        "sound": "minecraft:entity.evoker.prepare_summon",
+        "volume": 0.9,
+        "pitch": 0.6,
+        "particle": "minecraft:enchant",
+        "count": 12
+      },
+      "message": "message.nusmp.mega.enc.cursed_archive.ca_censors"
+    },
+    {
+      "id": "ca_overdue",
+      "comment": "An overdue return: suits of living armour that were the library's guards, with ink wisps over them.",
+      "band": "hard",
+      "weight": 6,
+      "minThreat": 4,
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "nusmp:living_armor",
+          "count": "2"
+        },
+        {
+          "type": "entity",
+          "id": "minecraft:vex",
+          "count": "2"
+        }
+      ],
+      "cue": {
+        "sound": "minecraft:entity.iron_golem.step",
+        "volume": 0.9,
+        "pitch": 0.6,
+        "particle": "minecraft:squid_ink",
+        "count": 10
+      },
+      "message": "message.nusmp.mega.enc.cursed_archive.ca_overdue"
+    },
+    {
+      "id": "ca_illusionist_reads",
+      "comment": "The one reader who learned the wrong book: an illusioner and its copies, in a room where every shelf has a second row.",
+      "band": "hard",
+      "weight": 6,
+      "minThreat": 5,
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "minecraft:illusioner",
+          "count": "1"
+        },
+        {
+          "type": "entity",
+          "id": "minecraft:vex",
+          "count": "2"
+        }
+      ],
+      "needs": {
+        "dark": true
+      },
+      "scaleWithParty": false,
+      "cue": {
+        "sound": "minecraft:entity.illusioner.prepare_blindness",
+        "volume": 0.8,
+        "pitch": 0.7,
+        "particle": "minecraft:witch",
+        "count": 10
+      }
+    },
+    {
+      "id": "ca_shelf_fall",
+      "comment": "The ambush from the walls: a bay of shelving tips and the constructs behind it step out, three to five of them from the cells nearest the party.",
+      "band": "ambush",
+      "weight": 5,
+      "minThreat": 3,
+      "mobs": [
+        {
+          "type": "faction",
+          "count": "3-5",
+          "faction": "construct"
+        }
+      ],
+      "range": [
+        8,
+        24
+      ],
+      "cells": 3,
+      "cue": {
+        "sound": "minecraft:block.deepslate.break",
+        "volume": 1.0,
+        "pitch": 0.6,
+        "particle": "minecraft:poof",
+        "count": 12
+      },
+      "message": "message.nusmp.mega.enc.cursed_archive.ca_shelf_fall"
+    },
+    {
+      "id": "ca_torn_page",
+      "comment": "A page turns by itself, and then all of them do: a swarm of ink wisps loosed on a party that has been loud in the dark.",
+      "band": "ambush",
+      "weight": 5,
+      "minThreat": 4,
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "minecraft:vex",
+          "count": "4-6"
+        },
+        {
+          "type": "entity",
+          "id": "minecraft:silverfish",
+          "count": "3-4"
+        }
+      ],
+      "needs": {
+        "dark": true,
+        "noisy": true
+      },
+      "cue": {
+        "sound": "minecraft:entity.vex.charge",
+        "volume": 0.9,
+        "pitch": 0.6,
+        "particle": "minecraft:squid_ink",
+        "count": 14
+      },
+      "message": "message.nusmp.mega.enc.cursed_archive.ca_torn_page"
+    },
+    {
+      "id": "ca_book_wyrm",
+      "comment": "The thing that has been eating the stacks since the library was founded: a long cave spider swarm under a brute of a construct. Rare, and loud to meet.",
+      "band": "hard",
+      "weight": 5,
+      "minThreat": 6,
+      "mobs": [
+        {
+          "type": "faction",
+          "count": "1-2",
+          "faction": "construct"
+        },
+        {
+          "type": "entity",
+          "id": "minecraft:cave_spider",
+          "count": "4-6"
+        }
+      ],
+      "needs": {
+        "noisy": true
+      },
+      "cue": {
+        "sound": "minecraft:entity.spider.ambient",
+        "volume": 0.9,
+        "pitch": 0.6,
+        "particle": "minecraft:item_cobweb",
+        "count": 10
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "theme": "dwarven_forgehold",
+  "templates": [
+    "nusmp:mega/hall/dwarven_forgehold_",
+    "nusmp:mega/set/dwarven_forgehold_",
+    "nusmp:mega/trial/dwarven_forgehold_",
+    "nusmp:mega/treasure/dwarven_forgehold_"
+  ],
+  "relative": {
+    "mega/hall/dwarven_forgehold_": 20,
+    "mega/set/dwarven_forgehold_": 20,
+    "mega/trial/dwarven_forgehold_": 20,
+    "mega/treasure/dwarven_forgehold_": 20
+  }
+}

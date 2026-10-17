@@ -1,0 +1,9 @@
+{
+  "id": "tensura:researcher",
+  "kind": "unique",
+  "name": "Researcher",
+  "ep_tax": 4,
+  "min_ep": 600,
+  "tint": "#9FE6FF",
+  "description": "Learns faster than the lesson is taught."
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": { "item": "minecraft:crying_obsidian" },
+    "N": { "item": "minecraft:nether_star" },
+    "I": { "item": "minecraft:netherite_ingot" },
+    "G": { "item": "nusmp:genesis_core" },
+    "A": { "item": "minecraft:enchanted_golden_apple" }
+  },
+  "pattern": [
+    "CNC",
+    "IGI",
+    "CAC"
+  ],
+  "result": { "id": "nusmp:soul_forge", "count": 1 }
+}

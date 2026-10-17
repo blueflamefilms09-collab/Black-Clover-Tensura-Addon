@@ -1,0 +1,13 @@
+{
+  "name": "Sealing",
+  "rarity": "RARE",
+  "tax_percent": 8,
+  "magic": "sealing",
+  "skills": [
+    "tensura:magic_barrier",
+    "tensura:ranged_barrier",
+    "tensura:chant_annulment"
+  ],
+  "tint": "#E8C26A",
+  "description": "Circles that close, hold and silence."
+}

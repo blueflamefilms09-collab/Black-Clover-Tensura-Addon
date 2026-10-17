@@ -1,0 +1,9 @@
+{
+  "id": "tensura:guardian",
+  "kind": "unique",
+  "name": "Guardian",
+  "ep_tax": 5,
+  "min_ep": 800,
+  "tint": "#E8C26A",
+  "description": "Stands where the blow would land."
+}

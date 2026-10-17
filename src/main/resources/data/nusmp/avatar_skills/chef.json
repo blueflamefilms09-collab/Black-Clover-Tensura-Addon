@@ -1,0 +1,9 @@
+{
+  "id": "tensura:chef",
+  "kind": "unique",
+  "name": "Chef",
+  "ep_tax": 2,
+  "min_ep": 200,
+  "tint": "#FFB04A",
+  "description": "A good meal is a good spell."
+}

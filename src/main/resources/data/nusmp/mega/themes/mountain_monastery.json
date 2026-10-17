@@ -1,0 +1,42 @@
+{
+  "_why": "The Holy road's monks' retreat, built the way a mountain monastery is: a stone footing (cobblestone) under walls of woven bamboo (bamboo mosaic: the paper-and-screen look of the brief), dark-oak boards for the floor and the coffered ceiling, spruce for beams, doors and furniture, red-lacquer terracotta where the keystones of the other themes are (every doorway gets a torii-red lintel), light bamboo pillars. Bamboo mosaic, bamboo blocks and the plank families have no stone shapes, so the explicit map names every stair, slab and wall that the palette needs (cobblestone walls for all, the bamboo and plank stairs for the rest). The soul lights become warm ones (paper lanterns are never cold). Light +1, a wind chime (a high amethyst chime) for the mood and danger 0.95.",
+  "id": "mountain_monastery",
+  "name": "Mountain Monastery",
+  "color": "#B8844C",
+  "families": {
+    "brick": "minecraft:bamboo_mosaic",
+    "tile": "minecraft:dark_oak_planks",
+    "polished": "minecraft:stripped_bamboo_block",
+    "chiseled": "minecraft:red_terracotta",
+    "cobbled": "minecraft:cobblestone",
+    "cracked_brick": "minecraft:bamboo_planks",
+    "cracked_tile": "minecraft:spruce_planks",
+    "rock": "minecraft:stone",
+    "wood": "minecraft:spruce_planks"
+  },
+  "explicit": {
+    "minecraft:deepslate_brick_wall": "minecraft:cobblestone_wall",
+    "minecraft:deepslate_tile_stairs": "minecraft:dark_oak_stairs",
+    "minecraft:deepslate_tile_slab": "minecraft:dark_oak_slab",
+    "minecraft:deepslate_tile_wall": "minecraft:cobblestone_wall",
+    "minecraft:polished_deepslate_stairs": "minecraft:bamboo_stairs",
+    "minecraft:polished_deepslate_slab": "minecraft:bamboo_slab",
+    "minecraft:polished_deepslate_wall": "minecraft:cobblestone_wall",
+    "minecraft:soul_lantern": "minecraft:lantern",
+    "minecraft:soul_wall_torch": "minecraft:wall_torch",
+    "minecraft:soul_torch": "minecraft:torch",
+    "minecraft:soul_campfire": "minecraft:campfire"
+  },
+  "relics": {
+    "keywords": ["monk", "monastery", "temple", "shrine", "zen", "ascetic", "disciple", "sutra", "lotus", "bamboo", "dojo", "karma", "dharma", "mantra", "sensei", "pagoda"]
+  },
+  "catastrophes": {
+    "collapse": 3,
+    "flood": 1,
+    "spirit": 3
+  },
+  "ambient": "minecraft:smoke",
+  "light": 1,
+  "sound": {"id": "minecraft:block.amethyst_block.chime", "volume": 0.3, "pitch": 1.4, "every": 9},
+  "danger": 0.95
+}

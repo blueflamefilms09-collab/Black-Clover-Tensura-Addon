@@ -1,0 +1,38 @@
+{
+  "_why": "The Holy road's heavenly court (Mount Celestia): law and light in polished white and grey stone with gold. Walls are polished diorite (white with a grey grain), floors polished andesite (a darker slate, so the white terraces stand out from what you walk on), pillars quartz, capitals and medallions solid gold. It must not be mistaken for Radiant (smooth quartz, smooth stone, no grey at all) or Astral (a dark prismarine floor): a Court is white over grey with gold, and the cyan of its glass roofs, fountains and banners comes from what the rooms add. Vanilla gives polished diorite and polished andesite no walls, so the explicit map hands them diorite and andesite walls; the soul lights become warm ones. Light +2 (open, glass-roofed), a beacon's hum for the mood and danger 0.9: judges and archons guard the way, they do not ambush it.",
+  "id": "celestial_court",
+  "name": "Celestial Court",
+  "color": "#7FE0E6",
+  "families": {
+    "brick": "minecraft:polished_diorite",
+    "tile": "minecraft:polished_andesite",
+    "polished": "minecraft:quartz_block",
+    "chiseled": "minecraft:gold_block",
+    "cobbled": "minecraft:andesite",
+    "cracked_brick": "minecraft:diorite",
+    "cracked_tile": "minecraft:andesite",
+    "rock": "minecraft:stone",
+    "wood": "minecraft:birch_planks"
+  },
+  "explicit": {
+    "minecraft:deepslate_brick_wall": "minecraft:diorite_wall",
+    "minecraft:deepslate_tile_wall": "minecraft:andesite_wall",
+    "minecraft:polished_deepslate_wall": "minecraft:diorite_wall",
+    "minecraft:soul_lantern": "minecraft:lantern",
+    "minecraft:soul_wall_torch": "minecraft:wall_torch",
+    "minecraft:soul_torch": "minecraft:torch",
+    "minecraft:soul_campfire": "minecraft:campfire"
+  },
+  "relics": {
+    "keywords": ["court", "throne", "regal", "royal", "majesty", "herald", "archon", "empyrean", "heaven", "ascend", "tribunal", "verdict", "judge", "sovereign", "edict", "decree"]
+  },
+  "catastrophes": {
+    "collapse": 3,
+    "flood": 1,
+    "spirit": 2
+  },
+  "ambient": "minecraft:enchant",
+  "light": 2,
+  "sound": {"id": "minecraft:block.beacon.ambient", "volume": 0.3, "pitch": 1.0, "every": 9},
+  "danger": 0.9
+}

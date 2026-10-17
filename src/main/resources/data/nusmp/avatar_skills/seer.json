@@ -1,0 +1,9 @@
+{
+  "id": "tensura:seer",
+  "kind": "unique",
+  "name": "Seer",
+  "ep_tax": 5,
+  "min_ep": 800,
+  "tint": "#C8A8FF",
+  "description": "A glimpse of the next heartbeat."
+}

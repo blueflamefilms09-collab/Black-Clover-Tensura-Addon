@@ -1,0 +1,13 @@
+{
+  "name": "Sage's Mind",
+  "rarity": "RARE",
+  "tax_percent": 7,
+  "magic": "",
+  "skills": [
+    "tensura:analytical_appraisal",
+    "tensura:thought_acceleration",
+    "tensura:search_enemy"
+  ],
+  "tint": "#5CD8FF",
+  "description": "A mind that reads the fight before it starts."
+}

@@ -1,0 +1,15 @@
+{
+  "theme": "feywild_grove",
+  "templates": [
+    "nusmp:mega/hall/feywild_grove_",
+    "nusmp:mega/set/feywild_grove_",
+    "nusmp:mega/puzzle/feywild_grove_",
+    "nusmp:mega/treasure/feywild_grove_"
+  ],
+  "relative": {
+    "mega/hall/feywild_grove_": 20,
+    "mega/set/feywild_grove_": 20,
+    "mega/puzzle/feywild_grove_": 20,
+    "mega/treasure/feywild_grove_": 20
+  }
+}
