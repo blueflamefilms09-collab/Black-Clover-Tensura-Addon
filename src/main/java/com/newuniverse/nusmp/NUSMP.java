@@ -205,6 +205,7 @@ public class NUSMP {
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.enc.EncConfig.SPEC, "nusmp-labyrinth-mega-enc-server.toml");   // 1.54.0: the Dungeon Master's encounters
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.safe.SafeConfig.SPEC, "nusmp-labyrinth-mega-safe-server.toml");   // 1.54.0: rests and safe zones
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.gear.GearConfig.SPEC, "nusmp-labyrinth-mega-gear-server.toml");   // 1.55.0: standard Normal / Special / Rare gear
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.flow.FlowConfig.SPEC, "nusmp-labyrinth-mega-flow-server.toml");   // 1.55.0: the Rukh flow of the Holy floors
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.boss.rules.BossRulesConfig.SPEC, "nusmp-boss-rules-server.toml");   // 1.37.0
 
         // Multiverse: /multiverse commands, ceremony, mastery pages, ranks & stars, squads, status sync, world sites

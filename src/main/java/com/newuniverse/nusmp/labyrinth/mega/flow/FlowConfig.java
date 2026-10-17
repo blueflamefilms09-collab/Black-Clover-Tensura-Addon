@@ -49,8 +49,8 @@ public final class FlowConfig {
                 .defineInRange("ambientCount", 3, 0, 12);
         SKILL_HOOK = b.comment("Also read Tensura skills and other ManasCore skills (not grimoires) as casts, by their skill id, when the player activates them. Grimoire casts are always read.")
                 .define("skillHook", true);
-        VESSEL_ENABLED = b.comment("The Guardian of every Holy sector (the tenth-floor boss) drops one Metal Vessel, once per sector, from the relics that can hold a Djinn and that nobody owns yet. false = it drops nothing.")
-                .define("vesselEnabled", true);
+        VESSEL_ENABLED = b.comment("The Guardian of every Holy sector (the tenth-floor boss) drops one Metal Vessel, once per sector, from the relics that can hold a Djinn and that nobody owns yet. OFF by default since the owner's fourth brief says the end-game output is exactly ONE Unique+ relic per ten floors (the Crucible's); the older brief's guaranteed Metal Vessel would be a second one. true = the 1.55.0 first-brief behaviour.")
+                .define("vesselEnabled", false);
         b.pop();
         SPEC = b.build();
     }

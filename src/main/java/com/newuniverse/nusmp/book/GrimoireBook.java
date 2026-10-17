@@ -319,6 +319,7 @@ public abstract class GrimoireBook extends Skill {
         }
         instance.getOrCreateTag().putBoolean("ManaZone", false);
         if (EnergyHelper.isOutOfEnergy(player, instance, mode)) return;
+        com.newuniverse.nusmp.labyrinth.mega.flow.FlowCasts.beforeCast(player, magicId(), p.id());      // 1.55.0: the Rukh flow: this tick's damage comes from this page
         if (!com.newuniverse.nusmp.core.magic.profile.SafeCast.run(magicId(), gameTime, player, () -> p.cast().cast(this, instance, player, mode))) { com.newuniverse.nusmp.anim.CastAnim.play(player, com.newuniverse.nusmp.anim.CastAnim.FAIL); return; }
         MagicType castMagic = magicNow();
         String clip = castMagic == MagicType.KEY ? com.newuniverse.nusmp.anim.CastAnim.KEY_TURN
@@ -332,6 +333,7 @@ public abstract class GrimoireBook extends Skill {
         }
         addMasteryPoint(instance, player);
         com.newuniverse.nusmp.quests.QuestHooks.onCast(player, String.valueOf(castMagic), p.id(), p.costPercent());
+        com.newuniverse.nusmp.labyrinth.mega.flow.FlowCasts.onCast(player, magicId(), p.id(), p.costPercent());      // 1.55.0: the Rukh flow: a finished cast is Light, Dark or neutral; an opposing one is rejected in a Holy place
         instance.getOrCreateTag().putInt("LastMode", mode);
         com.newuniverse.nusmp.item.MagicGear.onCast(player);
         com.newuniverse.nusmp.relics.wave.Wave6Events.onSpellCast(player);
