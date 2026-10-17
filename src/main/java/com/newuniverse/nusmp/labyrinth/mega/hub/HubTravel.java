@@ -68,14 +68,33 @@ public final class HubTravel {
         return true;
     }
 
-    /** Takes the player to the plaza's arrival cell (the Mega-Dungeon calls this when somebody leaves it for Floor 0). The way back to the Overworld is not touched. */
+    /**
+     * Takes the player to the plaza's arrival cell (the Mega-Dungeon calls this when somebody leaves it for Floor 0). The way back to the Overworld is kept,
+     * or, for a player who entered the Mega-Dungeon before Floor 0 existed, taken over from the Labyrinth's own record (see {@link #adoptLabyrinthOrigin}),
+     * so the caller must call this BEFORE it forgets the Labyrinth's origin.
+     */
     public static void returnToPlaza(ServerPlayer p) {
         ServerLevel hub = level(p.getServer());
         if (hub == null) {
             tell(p, "travel.no_level", "The Sanctuary does not answer: its dimension is not loaded.", ChatFormatting.GRAY);
             return;
         }
+        adoptLabyrinthOrigin(p);
         arrive(p, hub, "travel.plaza", "You are back on the Sanctuary's square.");
+    }
+
+    /**
+     * A player who walked into the Mega-Dungeon straight from the Overworld (1.54.0, or {@code hub.enabled = false} at the time) has only the Labyrinth's
+     * record of where they came from. Once they stand on the plaza that record is what the home gate should honour, so it is copied to the Hub's own key,
+     * unless the player already has a Hub origin (it wins) or the record points into a Labyrinth or Sanctuary dimension (that is not a way home).
+     */
+    static void adoptLabyrinthOrigin(ServerPlayer p) {
+        CompoundTag data = p.getPersistentData();
+        if (data.contains(HubKeys.ORIGIN) || !data.contains(HubKeys.LABYRINTH_ORIGIN)) return;
+        CompoundTag o = data.getCompound(HubKeys.LABYRINTH_ORIGIN);
+        ServerLevel at = levelOf(p.getServer(), o.getString(HubKeys.DIM));
+        if (at == null || Labyrinth.in(at) || Labyrinth.inSanctuary(at)) return;
+        data.put(HubKeys.ORIGIN, o.copy());
     }
 
     private static void arrive(ServerPlayer p, ServerLevel hub, String key, String english) {

@@ -7,6 +7,7 @@ generated from this script so the numbers cannot drift from the Java that places
     python3 tools/labyrinth/gen_mega_hub.py --check         # rebuild in memory, verify the file on disk and every rule below
     python3 tools/labyrinth/gen_mega_hub.py --ascii         # the layers as text
     python3 tools/labyrinth/gen_mega_hub.py --preview out   # out_top.png (plan) and out_iso0..3.png (3D views from the four sides)
+    python3 tools/labyrinth/gen_mega_hub.py --map out.png   # the plan and the section of the whole Hub (plaza, Spire, Chasm, gates, protected volumes)
 
 Why a template and not blocks written by the chunk generator: the plaza is AUTHORED (a fountain, stalls, signposts, an arch round the way home).
 A noise field cannot draw those, a template can, and a template is stamped once, by `HubPlaza`, when the first player arrives, so the terrain
@@ -38,7 +39,7 @@ from template import Template, load  # noqa: E402
 ROOT = L.ROOT
 RES = L.RES
 JAVA_MEGA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "labyrinth", "mega")
-JAVA_FILES = (os.path.join(JAVA_MEGA, "HubLayout.java"), os.path.join(JAVA_MEGA, "hub", "HubPlazaLayout.java"))
+JAVA_FILES = (os.path.join(JAVA_MEGA, "HubLayout.java"), os.path.join(JAVA_MEGA, "hub", "HubPlazaLayout.java"), os.path.join(JAVA_MEGA, "hub", "HubProtect.java"))
 TEMPLATE_NAME = "hub/plaza"
 GATE = "nusmp:labyrinth_gate"
 SEED = "nusmp:hub:plaza"
@@ -94,6 +95,9 @@ SPAWN = (K["SPAWN_X"] - K["PLAZA_X"], K["SPAWN_Z"] - K["PLAZA_Z"])              
 GATE_W, GATE_BELOW, GATE_ABOVE = K["GATE_HALF_WIDTH"], K["GATE_BELOW"], K["GATE_ABOVE"]
 RADIUS = 16.45                                   # the paved disc
 CLEAR_RADIUS = 16.95                             # the disc that is cleared of everything above the paving (trees, grass tufts)
+#: The Gate of Return is wider than the paved disc is at the north edge, so its footprint (plaza coordinates, inclusive: px1, px2, pz1, pz2) is
+#: paved and cleared as well; `in_gate_box` is the one test every part uses (the hedge leaves it free, the lamp posts keep out, the checks allow it).
+GATE_BOX = (HOME[0] - 8, HOME[0] + 8, HOME[2] - 2, HOME[2] + 3)
 
 HAZARDS = re.compile(r"(lava|fire|magma|cactus|campfire|sweet_berry|wither_rose|powder_snow|cobweb|pointed_dripstone|tnt|_bed|nether_portal|"
                      r"end_portal|trial_spawner|spawner|command_block|barrier|bedrock|structure_block|jigsaw)")
@@ -215,6 +219,11 @@ class Plaza:
         return self
 
 
+def in_gate_box(px, pz):
+    """Is the plaza cell inside the Gate of Return's footprint?"""
+    return GATE_BOX[0] <= px <= GATE_BOX[1] and GATE_BOX[2] <= pz <= GATE_BOX[3]
+
+
 def facing_towards(px, pz, tx, tz):
     """The compass direction a stair at (px, pz) must face so that its high side points at (tx, tz) (dominant axis)."""
     dx, dz = tx - px, tz - pz
@@ -263,11 +272,12 @@ def build_ground(p):
     for pz in range(-17, 18):
         for px in range(-17, 18):
             r = math.hypot(px, pz)
-            if r <= RADIUS:
+            gate = in_gate_box(px, pz)
+            if r <= RADIUS or gate:
                 p.put(px, 0, pz, "dirt")
                 p.put(px, 1, pz, "dirt")
-                p.put(px, FLOOR, pz, paving(p, px, pz))
-            if r <= CLEAR_RADIUS:
+                p.put(px, FLOOR, pz, paving(p, px, pz) or "stone_bricks")        # beyond the disc only the gatehouse's own footprint is paved
+            if r <= CLEAR_RADIUS or gate:
                 for row in range(STAND, SY):
                     p.put(px, row, pz, "air")
 
@@ -296,44 +306,97 @@ def build_fountain(p):
 
 
 def build_gatehouse(p):
-    """The way home on the north edge: two pillars, a lintel with a stepped crown, a back wall, a banner on each pillar, a sign, the gate plane."""
+    """The Gate of Return, the way home on the north edge: a crenellated wall with a pointed arch, two towers with hipped roofs and lightning rods, the gate
+    plane recessed in the arch with a dark backing and a frame of chiselled bricks and sea lanterns, two banners, a hanging lantern and the sign "Overworld".
+
+    Layers from the north: the REAR layer (pz = gz - 2, the last row of the template) is a plain brick face so that nobody walking round the gatehouse sees
+    the dark backing, the BACK layer (pz = gz - 1) is that dark backing of the plane, the PLANE layer (pz = gz) holds the gate block and its frame, the
+    TUNNEL layer (pz = gz + 1) is the open arch the player walks into, and the towers reach one block further south. The profile of the arch is a pointed one
+    built from upside-down stairs: five wide at the foot, three wide a row higher, one wide at the apex, closed by a keystone.
+    """
     p.feature = "gatehouse"
     gx, gz = HOME[0], HOME[2]                       # centre of the plane (px, pz)
-    top_open = STAND + GATE_BELOW + GATE_ABOVE      # last row of the plane
-    for dz in (-1, 0, 1):
-        for side in (-1, 1):
-            for off in (2, 3):
-                px = gx + side * off
-                p.put(px, STAND, gz + dz, "polished_andesite")
-                for row in range(STAND + 1, top_open + 2):
-                    p.put(px, row, gz + dz, "stone_bricks")
-                p.put(px, top_open + 2, gz + dz, "chiseled_stone_bricks" if off == 2 else "polished_andesite")
-    lint = top_open + 1
-    for dz in (-1, 0, 1):
-        for px in range(gx - 1, gx + 2):
-            p.put(px, lint, gz + dz, "stone_bricks")
-    p.put(gx, lint, gz + 1, "chiseled_stone_bricks")
-    crown = top_open + 2
-    for dz in (-1, 0, 1):
-        for px in range(gx - 1, gx + 2):
-            p.put(px, crown, gz + dz, "stone_bricks")
-        for px in range(gx - 1, gx + 2):
-            p.put(px, crown + 1, gz + dz, "stone_bricks")
-        p.put(gx - 1, crown + 2, gz + dz, "stone_brick_stairs", {"facing": "east", "half": "bottom"})
-        p.put(gx + 1, crown + 2, gz + dz, "stone_brick_stairs", {"facing": "west", "half": "bottom"})
-        p.put(gx, crown + 2, gz + dz, "stone_brick_slab", {"type": "bottom"})
+    s = STAND
+    plane_top = s + GATE_BELOW + GATE_ABOVE         # last row of the plane (the plane is s .. s + 3)
+    rear, back, front = gz - 2, gz - 1, gz + 1
+    wall_top = s + 7
+    brick = "stone_bricks"
+
+    def stair(px, row, pz, facing, half="bottom"):
+        p.put(px, row, pz, "stone_brick_stairs", {"facing": facing, "half": half})
+
+    # the wall between the towers: solid first, carved after (a feature may overwrite its own cells)
+    for pz in (rear, back, gz, front):
+        for px in range(gx - 4, gx + 5):
+            p.put(px, s, pz, "polished_andesite")
+            for row in range(s + 1, wall_top + 1):
+                p.put(px, row, pz, brick)
+    for px in range(gx - 4, gx + 5):                # the rear face carries the same chiselled bands as the towers
+        p.put(px, s + 4, rear, "chiseled_stone_bricks")
+        p.put(px, wall_top, rear, "chiseled_stone_bricks")
+    # the tunnel: five wide for four rows, then the pointed head
+    for row in range(s, s + 4):
+        for px in range(gx - 2, gx + 3):
+            p.put(px, row, front, "air")
+    for px in range(gx - 1, gx + 2):
+        p.put(px, s + 4, front, "air")
+    p.put(gx, s + 5, front, "air")
     for side in (-1, 1):
-        for dz in (-1, 1):
-            p.put(gx + side * 3, crown + 1, gz + dz, "lantern", {"hanging": False})
-    for row in range(STAND, top_open + 1):          # back wall: the gate is a recessed doorway, entered from the south
-        for px in range(gx - GATE_W, gx + GATE_W + 1):
-            p.put(px, row, gz - 1, "stone_bricks")
-    p.put(gx - 2, STAND + 2, gz + 2, "white_wall_banner", {"facing": "south"})
-    p.put(gx + 2, STAND + 2, gz + 2, "black_wall_banner", {"facing": "south"})
-    p.sign(gx, lint, gz + 2, "south", ["", "Overworld", "(home)", ""])
-    for row in range(STAND, top_open + 1):          # the gate plane: 3 wide, 4 high, from the standing level up
+        outward = "east" if side > 0 else "west"
+        stair(gx + 2 * side, s + 4, front, outward, "top")      # upside-down: the lower inner corner is cut away, so the opening narrows in steps
+        stair(gx + side, s + 5, front, outward, "top")
+    p.put(gx, s + 6, front, "chiseled_stone_bricks")           # the keystone
+    # the plane, its dark backing and the frame beside it
+    for row in range(s, plane_top + 1):
         for px in range(gx - GATE_W, gx + GATE_W + 1):
             p.put(px, row, gz, GATE)
+            p.put(px, row, back, "cracked_deepslate_tiles" if (row + px) % 3 == 0 else "deepslate_tiles")
+    for side in (-1, 1):
+        x = gx + 2 * side
+        p.put(x, s, gz, "polished_andesite")
+        p.put(x, s + 1, gz, "chiseled_stone_bricks")
+        p.put(x, s + 2, gz, "sea_lantern")
+        p.put(x, s + 3, gz, "chiseled_stone_bricks")
+    # a lantern on a chain from the keystone, hanging in front of the top of the plane
+    p.put(gx, s + 5, front, "chain", {"axis": "y"})
+    p.put(gx, s + 4, front, "lantern", {"hanging": True})
+    # the cornice (a course of upside-down stairs, tucked in at the foot) and the crenellated parapet
+    for px in range(gx - 4, gx + 5):
+        stair(px, wall_top, front, "north", "top")
+    for px in range(gx - 4, gx + 5, 2):
+        for pz in (rear, front):
+            p.put(px, wall_top + 1, pz, "stone_brick_wall")
+    for px in range(gx - 4, gx + 5):
+        for pz in (back, gz):
+            p.put(px, wall_top + 1, pz, "stone_brick_slab", {"type": "bottom"})
+    for side in (-1, 1):
+        p.put(gx + 4 * side, wall_top + 2, front, "lantern", {"hanging": False})
+    # the towers: a plinth, a chiselled band, an arrow slit with a dark backing, a hipped roof with a lightning rod
+    for side in (-1, 1):
+        xs = range(gx + 5, gx + 8) if side > 0 else range(gx - 7, gx - 4)
+        zs = list(range(rear, front + 2))
+        cx = gx + 6 * side
+        for px in xs:
+            for pz in zs:
+                p.put(px, s, pz, "polished_andesite")
+                for row in range(s + 1, wall_top + 2):
+                    p.put(px, row, pz, "chiseled_stone_bricks" if row == s + 4 else brick)
+        for row in (s + 5, s + 6):
+            p.put(cx, row, front + 1, "iron_bars")
+            p.put(cx, row, front, "deepslate_tiles")
+        mid = (zs[0] + zs[-1]) / 2.0
+        for px in xs:
+            for pz in zs:
+                if px in (xs[0], xs[-1]) or pz in (zs[0], zs[-1]):
+                    stair(px, wall_top + 2, pz, facing_towards(px, pz, cx, mid))
+                else:
+                    p.put(px, wall_top + 2, pz, brick)
+        p.put(cx, wall_top + 3, zs[len(zs) // 2], "lightning_rod", {"facing": "up"})
+        p.put(cx, wall_top + 4, zs[len(zs) // 2], "lightning_rod", {"facing": "up"})
+    # banners on the piers, the sign on the keystone
+    p.put(gx - 3, s + 3, front + 1, "white_wall_banner", {"facing": "south"})
+    p.put(gx + 3, s + 3, front + 1, "black_wall_banner", {"facing": "south"})
+    p.sign(gx, s + 6, front + 1, "south", ["", "Overworld", "(home)", ""])
     for px in range(gx - 2, gx + 3):                # a dais of polished andesite in front of it
         for dz in (1, 2):
             p.put(px, FLOOR, gz + dz, "polished_andesite")
@@ -358,17 +421,29 @@ def build_exits(p):
 
 
 def build_noticeboard(p):
-    """South of the arrival cell, so a newcomer (who spawns facing south) reads it at once."""
+    """The Notice Pavilion, south of the arrival cell (a newcomer spawns facing south and reads it at once): a dark-oak board wall in a log frame under a
+    two-sided spruce roof, four signs on it and two lanterns hanging from the beam. The roof is two rows of stairs that meet in a ridge (a gable two
+    blocks deep), so the pavilion needs nothing of the circle that is not paved there."""
     p.feature = "noticeboard"
-    pz = 14
-    for px in range(-4, 5):
-        for row in (STAND, STAND + 1, STAND + 2):
-            p.put(px, row, pz, "spruce_planks")
-    for px in (-5, 5):
-        for row in range(STAND, STAND + 4):
-            p.put(px, row, pz, "spruce_log", {"axis": "y"})
-    for px in range(-5, 6):
-        p.put(px, STAND + 3, pz, "spruce_slab", {"type": "bottom"})
+    s = STAND
+    wall_z, front_z = 15, 14
+    for px in range(-4, 5):                          # the board wall, four rows high
+        for row in range(s, s + 4):
+            p.put(px, row, wall_z, "dark_oak_planks")
+    for px in range(-4, 5):                          # its frame: a sill and a head of horizontal logs
+        p.put(px, s, wall_z, "stripped_spruce_log", {"axis": "x"})
+        p.put(px, s + 3, wall_z, "stripped_spruce_log", {"axis": "x"})
+    for px in (-5, 5):                               # the corner posts, front and back
+        for row in range(s, s + 3):
+            p.put(px, row, front_z, "stripped_spruce_log", {"axis": "y"})
+        for row in range(s, s + 4):
+            p.put(px, row, wall_z, "stripped_spruce_log", {"axis": "y"})
+    for px in range(-5, 6):                          # the beam over the front, and the two roof slopes meeting in a ridge
+        p.put(px, s + 3, front_z, "stripped_spruce_log", {"axis": "x"})
+        p.put(px, s + 4, front_z, "spruce_stairs", {"facing": "south", "half": "bottom"})
+        p.put(px, s + 4, wall_z, "spruce_stairs", {"facing": "north", "half": "bottom"})
+    for px in (-2, 2):                               # lanterns hang from the beam, between the signs
+        p.put(px, s + 2, front_z, "lantern", {"hanging": True})
     texts = [
         ["Floor 0", "THE SANCTUARY", "", "Safe ground"],
         ["Only gentle", "creatures roam", "here. Nothing", "hostile lives."],
@@ -376,7 +451,7 @@ def build_noticeboard(p):
         ["East: climb", "the Holy Spire", "West: descend", "the Chasm"],
     ]
     for px, lines in zip((-3, -1, 1, 3), texts):
-        p.sign(px, STAND + 1, pz - 1, "north", lines)
+        p.sign(px, s + 1, front_z, "north", lines)
 
 
 def build_dais(p):
@@ -424,7 +499,7 @@ def build_beds(p):
 
 
 def build_benches(p):
-    """Eight benches: two beside each arm of the avenues. A bench is three stairs; the sitter looks across the avenue, so the stair backs turn away."""
+    """Six benches: two beside each of the east and west avenues and two flanking the avenue to the gate. A bench is three stairs; the sitter looks across the avenue, so the stair backs turn away."""
     p.feature = "benches"
     for cx, cz, back in ((9, -2, "north"), (9, 2, "south"), (-9, -2, "north"), (-9, 2, "south")):
         for dx in (-1, 0, 1):
@@ -467,7 +542,9 @@ def build_lamps(p):
     p.feature = "lamps"
     for k in range(8):
         a = math.radians(22.5 + 45 * k)
-        p.lamp_post(int(round(14.2 * math.cos(a))), int(round(14.2 * math.sin(a))))
+        px, pz = int(round(14.2 * math.cos(a))), int(round(14.2 * math.sin(a)))
+        if not in_gate_box(px, pz):                 # the two northern posts would stand inside the gatehouse's towers
+            p.lamp_post(px, pz)
     for side in (-3, 3):
         p.lamp_post(SPAWN[0] + side, SPAWN[1] + 2)
 
@@ -481,7 +558,7 @@ def build_hedge(p):
             r = math.hypot(px, pz)
             if not (15.45 < r <= RADIUS):
                 continue
-            if (abs(px) <= 6 and pz < 0) or (abs(px) <= 7 and pz > 0) or (abs(pz) <= 3):
+            if in_gate_box(px, pz) or (abs(px) <= 9 and pz < 0) or (abs(px) <= 7 and pz > 0) or (abs(pz) <= 3):
                 continue
             if any(p.owner.get((px + CX, row, pz + CZ)) not in (None, "ground") for row in range(FLOOR, FLOOR + 3)):
                 continue
@@ -516,8 +593,8 @@ def finish(p):
 # ------------------------------------------------------------------ the checks (the substitute for "stamp it in the game and look")
 #: blocks a wall sign, a banner or a standing lantern may rest on (a full-enough block: the game's `canSurvive` asks for a solid face)
 SUPPORTS = re.compile(r"(stone_bricks|cracked_stone_bricks|mossy_stone_bricks|chiseled_stone_bricks|polished_andesite|andesite|smooth_stone|"
-                      r"spruce_planks|spruce_log|stripped_spruce_log|.*_wool|barrel|stone_brick_wall|spruce_fence|sea_lantern|stone_brick_slab|"
-                      r"stone_brick_stairs|spruce_slab|spruce_stairs|dirt|grass_block)")
+                      r"spruce_planks|dark_oak_planks|spruce_log|stripped_spruce_log|.*_wool|barrel|stone_brick_wall|spruce_fence|sea_lantern|stone_brick_slab|"
+                      r"stone_brick_stairs|spruce_slab|spruce_stairs|dirt|grass_block|deepslate_tiles|cracked_deepslate_tiles)")
 #: what water may touch on its four sides: only full blocks (a slab or a stair would be waterlogged, and the water would creep on)
 WATER_WALLS = re.compile(r"(stone_bricks|chiseled_stone_bricks|polished_andesite|andesite|smooth_stone|sea_lantern|water)")
 PLANTS_ON = re.compile(r"(grass_block|dirt)")
@@ -581,7 +658,7 @@ def check_template(t):
                     errors.append("no foundation under plaza (%d,%d)" % (px, pz))
     # everything above the paving stays inside the cleared disc, so the template never leaves a half tree behind
     for (x, y, z), c in t.cells.items():
-        if y >= STAND and c.block != "minecraft:air" and math.hypot(x - CX, z - CZ) > CLEAR_RADIUS:
+        if y >= STAND and c.block != "minecraft:air" and math.hypot(x - CX, z - CZ) > CLEAR_RADIUS and not in_gate_box(x - CX, z - CZ):
             errors.append("%s at plaza (%d,%d,%d) lies outside the cleared disc" % (c.block, x - CX, y, z - CZ))
     # support rules
     for (x, y, z), c in t.cells.items():
@@ -597,6 +674,23 @@ def check_template(t):
             b = t.cells.get((x, y - 1, z))
             if b is None or _path(b) not in ("stone_brick_wall", "spruce_fence", "stone_bricks", "polished_andesite", "chiseled_stone_bricks", "stripped_spruce_log", "spruce_log"):
                 errors.append("a standing lantern at plaza (%d,%d,%d) rests on %s" % (px, y, pz, None if b is None else b.block))
+        elif path == "lantern":
+            b = t.cells.get((x, y + 1, z))
+            if b is None or _path(b) not in ("chain", "stone_bricks", "stone_brick_wall", "spruce_planks", "stripped_spruce_log"):
+                errors.append("a hanging lantern at plaza (%d,%d,%d) hangs from %s" % (px, y, pz, None if b is None else b.block))
+        elif path == "chain":
+            yy = y
+            while t.cells.get((x, yy + 1, z)) is not None and _path(t.cells[(x, yy + 1, z)]) == "chain":
+                yy += 1
+            top = t.cells.get((x, yy + 1, z))
+            if top is None or _path(top) in ("air",):
+                errors.append("a chain at plaza (%d,%d,%d) ends in the air" % (px, y, pz))
+        elif path == "lightning_rod":
+            below = t.cells.get((x, y - 1, z))
+            if below is None or _path(below) not in ("stone_bricks", "lightning_rod"):
+                errors.append("a lightning rod at plaza (%d,%d,%d) does not stand on stone (%s)" % (px, y, pz, None if below is None else below.block))
+            if any(c2 is not None and c2.block not in ("minecraft:air", "minecraft:lightning_rod") for c2 in (t.cells.get((x, yy, z)) for yy in range(y + 1, SY))):
+                errors.append("a lightning rod at plaza (%d,%d,%d) is not the highest block of its column, so lightning would not be drawn to it" % (px, y, pz))
         elif path.endswith("_carpet"):
             b = t.cells.get((x, y - 1, z))
             if b is None or _path(b) == "air":
@@ -693,7 +787,13 @@ def main(argv=None):
     ap.add_argument("--check", action="store_true")
     ap.add_argument("--ascii", action="store_true")
     ap.add_argument("--preview", metavar="PREFIX")
+    ap.add_argument("--map", metavar="OUT.png", help="the plan and section of the whole Hub, drawn from the Java constants")
     a = ap.parse_args(argv)
+    if a.map:
+        import gen_mega_hub_preview as V
+        V.layout_map(K, a.map)
+        print("wrote", a.map)
+        return 0
     if a.check:
         return 0 if check() else 1
     t = finish(build())

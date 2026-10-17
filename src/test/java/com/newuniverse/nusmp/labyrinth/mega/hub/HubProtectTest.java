@@ -83,6 +83,52 @@ class HubProtectTest {
     }
 
     @Test
+    void aBucketOrAFlameIsRefusedWithinItsMarginOfAProtectedVolumeAndNotBeyond() {
+        int y = HubLayout.SURFACE_Y, z = HubPlazaLayout.originZ() + 10;
+        int east = HubPlazaLayout.maxX();
+        assertTrue(HubProtect.near(east, y, z, 0) && !HubProtect.near(east + 1, y, z, 0), "margin 0 is the box itself");
+        assertTrue(HubProtect.near(east + HubProtect.BUCKET_MARGIN, y, z, HubProtect.BUCKET_MARGIN), "eight blocks east of the box is within a bucket's margin");
+        assertFalse(HubProtect.near(east + HubProtect.BUCKET_MARGIN + 1, y, z, HubProtect.BUCKET_MARGIN), "nine blocks is not");
+        assertTrue(HubProtect.near(east + HubProtect.FIRE_MARGIN, y, z, HubProtect.FIRE_MARGIN) && !HubProtect.near(east + HubProtect.FIRE_MARGIN + 1, y, z, HubProtect.FIRE_MARGIN), "the flame's margin");
+        assertTrue(HubProtect.near(HubPlazaLayout.originX() - HubProtect.BUCKET_MARGIN, y, z, HubProtect.BUCKET_MARGIN), "west side");
+        assertTrue(HubProtect.near(HubLayout.PLAZA_X, HubPlazaLayout.maxY() + HubProtect.BUCKET_MARGIN, HubLayout.PLAZA_Z, HubProtect.BUCKET_MARGIN), "above the box");
+        assertFalse(HubProtect.near(HubLayout.PLAZA_X, HubPlazaLayout.maxY() + HubProtect.BUCKET_MARGIN + 1, HubLayout.PLAZA_Z, HubProtect.BUCKET_MARGIN), "higher than that is out");
+        int[][] gates = {{HubLayout.HOLY_GATE_X, HubLayout.HOLY_GATE_Y, HubLayout.HOLY_GATE_Z}, {HubLayout.ABYSS_GATE_X, HubLayout.ABYSS_GATE_Y, HubLayout.ABYSS_GATE_Z}};
+        for (int[] g : gates) {
+            int reach = HubProtect.GATE_SPHERE_RADIUS + HubProtect.BUCKET_MARGIN;
+            assertTrue(HubProtect.near(g[0] + reach, g[1], g[2], HubProtect.BUCKET_MARGIN), "a bucket's reach round a polarity gate");
+            assertFalse(HubProtect.near(g[0] + reach + 1, g[1], g[2], HubProtect.BUCKET_MARGIN), "one more block is out");
+        }
+    }
+
+    @Test
+    void nearWithNoMarginIsExactlyIsProtectedOverAWholeSampleOfTheHub() {
+        int[][] centres = {{HubLayout.PLAZA_X, HubLayout.SURFACE_Y, HubLayout.PLAZA_Z}, {HubLayout.HOLY_GATE_X, HubLayout.HOLY_GATE_Y, HubLayout.HOLY_GATE_Z},
+                {HubLayout.ABYSS_GATE_X, HubLayout.ABYSS_GATE_Y, HubLayout.ABYSS_GATE_Z}, {HubLayout.SPIRE_X, HubLayout.SURFACE_Y, HubLayout.SPIRE_Z}};
+        int checked = 0;
+        for (int[] c : centres) {
+            for (int dx = -24; dx <= 24; dx += 3) {
+                for (int dy = -12; dy <= 12; dy += 3) {
+                    for (int dz = -24; dz <= 24; dz += 3) {
+                        assertEquals(HubProtect.isProtected(c[0] + dx, c[1] + dy, c[2] + dz), HubProtect.near(c[0] + dx, c[1] + dy, c[2] + dz, 0), "margin 0 at " + dx + "," + dy + "," + dz);
+                        checked++;
+                    }
+                }
+            }
+        }
+        assertTrue(checked > 3000);
+    }
+
+    @Test
+    void theSwitchesAlsoDecideTheMarginQuestion() {
+        int x = HubPlazaLayout.maxX() + HubProtect.BUCKET_MARGIN, y = HubLayout.SURFACE_Y, z = HubPlazaLayout.originZ() + 10;
+        assertTrue(HubProtect.refusesNear(true, true, x, y, z, HubProtect.BUCKET_MARGIN), "build on, protect on: a bucket this close is refused");
+        assertFalse(HubProtect.refusesNear(true, false, x, y, z, HubProtect.BUCKET_MARGIN), "protect off: it is not");
+        assertFalse(HubProtect.refusesNear(true, true, x + 1, y, z, HubProtect.BUCKET_MARGIN), "one block further out: it is not");
+        assertTrue(HubProtect.refusesNear(false, false, x + 100, y, z, HubProtect.BUCKET_MARGIN), "build off: everything is refused");
+    }
+
+    @Test
     void aRefusalIsToldAtMostOnceAWhileAndATimeThatWentBackCountsAsDue() {
         assertFalse(HubProtect.messageDue(100, 100), "the same tick");
         assertFalse(HubProtect.messageDue(100 + HubProtect.MESSAGE_INTERVAL - 1, 100), "just before the interval");

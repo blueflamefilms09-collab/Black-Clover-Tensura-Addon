@@ -27,6 +27,7 @@ import net.minecraft.world.item.FlintAndSteelItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.phys.AABB;
@@ -51,7 +52,8 @@ import java.util.List;
  * reaches the world another way (a mod's own spawner, a summon, a block that releases a mob) is only stopped by looking at the MOB, so a cancelled
  * {@code FinalizeSpawnEvent} stops the spawns that fire it and a sparse sweep removes what slipped in without one. (2) Players can build: nothing is done
  * (the Dungeon Guard does not hold this dimension) except to refuse changes inside the protected volumes of {@link HubProtect}, for players who are not in
- * creative mode, on every path a change takes: breaking, placing (single and multi-block), explosions, and the buckets and fire a player carries.
+ * creative mode, on every path a change takes: breaking, placing (single and multi-block), explosions, the buckets and fire a player carries (with a margin: they
+ * do their damage a few blocks from the click), the tools that reshape a block in place (axe, shovel, hoe) and the flower pots.
  * (3) No foreign structures: the real guarantee is the generator, which places none; this class is the alarm, a one-time warning when a chunk of the
  * Sanctuary loads with a structure start in it. Everything is a no-op outside the Sanctuary and on the client, never throws out of an event, and holds
  * no state beyond one warning flag cleared when the server stops.
@@ -76,6 +78,7 @@ public final class HubRules {
         gameBus.addListener(HubRules::onExplosion);
         gameBus.addListener(HubRules::onLeftClick);
         gameBus.addListener(HubRules::onRightClick);
+        gameBus.addListener(HubRules::onToolModify);
         gameBus.addListener(HubRules::onChunkLoad);
         gameBus.addListener(HubRules::onServerTick);
         gameBus.addListener(HubRules::onServerStopped);
@@ -220,21 +223,49 @@ public final class HubRules {
         }
     }
 
-    /** A bucket, a flint and steel or a fire charge used on or against a protected block: water and lava would flow over the paving, fire would spread. */
+    /**
+     * Must a change that reaches {@code margin} blocks round a click at this cell be refused to a non-creative player, under the current config? A bucket
+     * and a flame do their damage after the click, a few blocks away, so they are asked with a margin. Public for the self-test.
+     */
+    public static boolean refusesNear(BlockPos pos, int margin) {
+        return HubProtect.refusesNear(HubConfig.get(HubConfig.BUILD_ENABLED), HubConfig.get(HubConfig.PROTECT_PLAZA), pos.getX(), pos.getY(), pos.getZ(), margin);
+    }
+
+    /**
+     * What a right click can do to a protected volume without breaking or placing a block: a bucket (water and lava flow over the paving), a flint and steel
+     * or a fire charge (fire spreads through the awnings and the hedge), and an empty hand on a flower pot (it lifts the flower out). Buckets and flames are
+     * asked with a margin ({@link HubProtect#BUCKET_MARGIN}, {@link HubProtect#FIRE_MARGIN}) round the clicked block and the block in front of it.
+     */
     private static void onRightClick(PlayerInteractEvent.RightClickBlock e) {
         try {
             Level level = e.getLevel();
             if (!serverSanctuary(level) || e.getEntity().isCreative()) return;
             Item item = e.getItemStack().getItem();
-            if (!(item instanceof BucketItem || item instanceof FlintAndSteelItem || item instanceof FireChargeItem)) return;
             BlockPos hit = e.getPos();
             BlockPos beside = e.getFace() == null ? hit : hit.relative(e.getFace());
-            if (!refuses(hit) && !refuses(beside)) return;
+            boolean refused;
+            if (item instanceof BucketItem) refused = refusesNear(hit, HubProtect.BUCKET_MARGIN) || refusesNear(beside, HubProtect.BUCKET_MARGIN);
+            else if (item instanceof FlintAndSteelItem || item instanceof FireChargeItem) refused = refusesNear(hit, HubProtect.FIRE_MARGIN) || refusesNear(beside, HubProtect.FIRE_MARGIN);
+            else refused = level.getBlockState(hit).getBlock() instanceof FlowerPotBlock && refuses(hit);
+            if (!refused) return;
             e.setCanceled(true);
             e.setCancellationResult(InteractionResult.FAIL);
             tell(e.getEntity(), hit);
         } catch (RuntimeException ex) {
             failed("right-click guard", ex);
+        }
+    }
+
+    /** An axe (stripping a log), a shovel (flattening grass to a path) or a hoe (tilling the beds) used on a protected block changes it without a break or place event. */
+    private static void onToolModify(BlockEvent.BlockToolModificationEvent e) {
+        try {
+            if (!(e.getLevel() instanceof Level level) || !serverSanctuary(level)) return;
+            Player p = e.getPlayer();
+            if ((p != null && p.isCreative()) || !refuses(e.getPos())) return;
+            e.setCanceled(true);
+            if (!e.isSimulated()) tell(p, e.getPos());
+        } catch (RuntimeException ex) {
+            failed("tool guard", ex);
         }
     }
 

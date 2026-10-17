@@ -27,14 +27,15 @@ import java.util.List;
 /**
  * Why: nothing in this package can be played by its author, so each rule of Floor 0 has a SELF-TEST that the CI server smoke test runs in the real game
  * ({@code /multiverse mega selftest}), and each fails loudly with the reason. {@code hub.dimension}: the Sanctuary level exists, the chunk at the arrival
- * cell generates, the block under the arrival cell is solid and the three cells above it are free. {@code hub.plaza}: {@code ensurePlaza} leaves the home
- * gate plane in place and the arrival column clear. {@code hub.no_hostile}: the spawn filter cancels a zombie's natural spawn and lets a cow, a
- * command-spawned zombie and an owned zombie through, and the sweep removes a stray zombie but not a named one or one an admin asked for.
- * {@code hub.no_structures}: a 5 x 5 chunk square round the plaza has no structure start (the third layer of "no foreign structures"). {@code hub.gates}: the
- * three gate centres classify as themselves, a position near no gate classifies as none and {@code useGate} on it leaves the player where they are, and the
- * protected volumes answer as configured. {@code hub.biome}: the live biome (after every mod's biome modifiers ran) lists no monster, only creatures that
- * are not monsters, and only vanilla features. They drive the same public entry points the event handlers use. No test teleports anybody (a fake player
- * has no connection and cannot change dimension); every entity a test creates is discarded whatever happens.
+ * cell generates, the raw terrain under the arrival cell is solid, and once the plaza is stamped (the terrain may have grown a tree on the spot) the
+ * three cells above it are free. {@code hub.plaza}: {@code ensurePlaza} leaves the home gate plane in place and the arrival column clear.
+ * {@code hub.no_hostile}: the spawn filter cancels a zombie's natural spawn and lets a cow, a command-spawned zombie and an owned zombie through, and the
+ * sweep removes a stray zombie but not a named one or one an admin asked for. {@code hub.no_structures}: a 5 x 5 chunk square round the plaza has no
+ * structure start (the third layer of "no foreign structures"). {@code hub.gates}: the three gate centres classify as themselves, a position near no gate
+ * classifies as none and {@code useGate} on it leaves the player where they are, and the protected volumes answer as configured. {@code hub.biome}: the
+ * live biome (after every mod's biome modifiers ran) lists no monster, only creatures that are not monsters, and only vanilla features. They drive the
+ * same public entry points the event handlers use. No test teleports anybody (a fake player has no connection and cannot change dimension); every entity
+ * a test creates is discarded whatever happens.
  */
 public final class HubSelfTests {
     private HubSelfTests() {}
@@ -70,13 +71,15 @@ public final class HubSelfTests {
         BlockPos spawn = HubTravel.arrivalPos();
         hub.getChunk(spawn.getX() >> 4, spawn.getZ() >> 4);
         BlockPos ground = new BlockPos(spawn.getX(), HubLayout.SURFACE_Y - 1, spawn.getZ());
-        BlockState g = hub.getBlockState(ground);
+        BlockState g = hub.getBlockState(ground);                 // the raw terrain first: this is the generator's promise (a flattened disc at SURFACE_Y)
         if (g.getCollisionShape(hub, ground).isEmpty()) return fail("the block under the arrival cell " + at(ground) + " is not solid: " + g.getBlock().getDescriptionId());
+        // the terrain may have grown a tree on the spot before the plaza exists, and the plaza clears its disc: the free cells are asked of the stamped plaza
+        if (!HubTravel.ensurePlaza(hub)) return fail("ensurePlaza could not guarantee the home gate (see the log)");
         for (int k = 0; k < 3; k++) {
             BlockPos cell = new BlockPos(spawn.getX(), HubLayout.SURFACE_Y + k, spawn.getZ());
             if (!free(hub, cell)) return fail("the arrival column is blocked at " + at(cell) + " by " + hub.getBlockState(cell).getBlock().getDescriptionId());
         }
-        return ok("arrival cell " + at(spawn) + ": ground " + g.getBlock().getDescriptionId() + ", three free cells above, chunk generated");
+        return ok("arrival cell " + at(spawn) + ": terrain " + g.getBlock().getDescriptionId() + " under it, three free cells above once the plaza stands, chunk generated");
     }
 
     // ------------------------------------------------------------------------------------------------ the plaza

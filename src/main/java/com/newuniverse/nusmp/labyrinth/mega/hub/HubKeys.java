@@ -20,6 +20,13 @@ public final class HubKeys {
     /** Persistent data of a player: the same stamp for the legacy Dungeon Maw and Root Gate ({@code LabyrinthTravel.LEGACY_GATE_USED}). */
     public static final String LEGACY_GATE_USED = "nusmp_dungeon_gate";
 
+    /**
+     * Persistent data of a player: the Labyrinth's own way back ({@code LabyrinthTravel.ORIGIN}, package-private there). The Hub never writes it; it only READS
+     * it once, when a player who entered the Mega-Dungeon before Floor 0 existed is brought to the plaza ({@link HubTravel#returnToPlaza}), so the home gate
+     * still leads to where they came from.
+     */
+    public static final String LABYRINTH_ORIGIN = "nusmp_labyrinth_origin";
+
     /** Persistent data of a mob: set when an admin spawned a hostile mob in the Sanctuary, so the sweep leaves it alone. */
     public static final String ALLOWED = "nusmp_hub_allowed";
 

@@ -26,6 +26,8 @@ EXACT = {
     "azure_bluet": (232, 232, 238), "oxeye_daisy": (240, 240, 235), "allium": (176, 100, 204), "red_tulip": (210, 50, 40), "pink_tulip": (240, 150, 190),
     "white_tulip": (238, 238, 240), "orange_tulip": (238, 140, 40), "lily_of_the_valley": (240, 245, 240), "rose_bush": (190, 40, 50),
     "peony": (236, 160, 200), "lilac": (190, 150, 220), "fern": (70, 130, 50), "tall_grass": (80, 150, 50), "large_fern": (70, 130, 50),
+    "dark_oak_planks": (66, 43, 20), "deepslate_tiles": (54, 54, 58), "cracked_deepslate_tiles": (50, 50, 54), "lightning_rod": (196, 122, 76),
+    "iron_bars": (150, 150, 156), "chain": (60, 66, 78),
 }
 SUFFIX = [
     (r".*_wool|.*_carpet|.*_wall_banner|.*_banner", None),
@@ -133,4 +135,104 @@ def elevation(t, out, x1, x2, z1, z2, scale=28, from_south=True, y1=0):
                     py = (sy - 1 - y) * scale
                     d.rectangle([px, py, px + scale - 1, py + scale - 1], fill=col, outline=(0, 0, 0, 60))
                     break
+    img.save(out)
+
+
+# ------------------------------------------------------------------ the map of the whole Hub
+def _font(size, bold=False):
+    from PIL import ImageFont
+    for name in (("DejaVuSans-Bold.ttf" if bold else "DejaVuSans.ttf"), "LiberationSans-Regular.ttf"):
+        try:
+            return ImageFont.truetype(name, size)
+        except OSError:
+            continue
+    return ImageFont.load_default()
+
+
+def layout_map(k, out):
+    """A plan and a side section of the whole Hub drawn from the integer constants of HubLayout / HubPlazaLayout / HubProtect (`k`, a dict): where the
+    plaza, the Holy Spire, the Abyssal Chasm and the three gates stand, what is protected, how high and how deep the landmarks go. The point is to see at a
+    glance that the numbers the three builders share make one coherent place (nothing overlaps, every gate is inside its landmark, the dimension fits)."""
+    sx = 3                                                     # pixels per block, horizontally
+    x_min, x_max = k["CHASM_X"] - k["CHASM_RIM_RADIUS"] - 30, k["SPIRE_X"] + k["SPIRE_BASE_RADIUS"] + 30
+    z_half = max(k["CHASM_RIM_RADIUS"], k["SPIRE_BASE_RADIUS"], k["PLAZA_RADIUS"]) + 16
+    w = (x_max - x_min) * sx
+    plan_h = 2 * z_half * sx
+    y_lo, y_hi = -64, 319                                      # the dimension type: min_y -64, height 384
+    sy = 1.0                                                   # pixels per block, vertically
+    sec_h = int((y_hi - y_lo) * sy)
+    head, gap = 70, 56
+    img = Image.new("RGB", (w + 40, head + plan_h + gap + sec_h + 70), (24, 26, 32))
+    d = ImageDraw.Draw(img, "RGBA")
+    f_small, f_mid, f_big = _font(13), _font(16), _font(22, True)
+    ox, oy = 20, head
+    d.text((20, 14), "Floor 0, the Sanctuary Hub (nusmp:sanctuary): plan and section along z = 0", font=f_big, fill=(235, 235, 240))
+    d.text((20, 44), "every number is read from HubLayout.java / HubPlazaLayout.java / HubProtect.java", font=f_small, fill=(150, 154, 166))
+
+    def X(x):
+        return ox + (x - x_min) * sx
+
+    def Z(z):
+        return oy + (z + z_half) * sx
+
+    def circle(cx, cz, r, **kw):
+        d.ellipse([X(cx - r), Z(cz - r), X(cx + r), Z(cz + r)], **kw)
+
+    d.rectangle([ox, oy, ox + w, oy + plan_h], fill=(70, 128, 62))                           # the plains
+    circle(k["PLAZA_X"], k["PLAZA_Z"], k["PLAZA_RADIUS"] + 24, fill=(82, 140, 70))              # the blend
+    circle(k["PLAZA_X"], k["PLAZA_Z"], k["PLAZA_RADIUS"], fill=(98, 152, 82))                   # the flattened disc
+    d.line([X(k["CHASM_DOOR_X"]), Z(0), X(k["SPIRE_DOOR_X"]), Z(0)], fill=(168, 168, 164), width=int(3 * sx))      # the road along z = 0
+    circle(k["SPIRE_X"], k["SPIRE_Z"], k["SPIRE_BASE_RADIUS"], fill=(236, 236, 240), outline=(200, 170, 70), width=2)
+    circle(k["SPIRE_X"], k["SPIRE_Z"], k["SPIRE_TOP_RADIUS"], outline=(120, 120, 130), width=1)
+    circle(k["CHASM_X"], k["CHASM_Z"], k["CHASM_RIM_RADIUS"], fill=(22, 18, 30), outline=(150, 110, 200), width=2)
+    circle(k["CHASM_X"], k["CHASM_Z"], k["CHASM_FLOOR_RADIUS"], outline=(110, 90, 150), width=1)
+    ph = k["SIZE_X"] // 2
+    d.rectangle([X(k["PLAZA_X"] - ph), Z(k["PLAZA_Z"] - ph), X(k["PLAZA_X"] + ph + 1), Z(k["PLAZA_Z"] + ph + 1)], fill=(150, 150, 150), outline=(220, 70, 70), width=2)
+    r = k["GATE_SPHERE_RADIUS"]
+    for gx, gz, col in ((k["HOLY_GATE_X"], k["HOLY_GATE_Z"], (240, 200, 60)), (k["ABYSS_GATE_X"], k["ABYSS_GATE_Z"], (170, 110, 240))):
+        circle(gx, gz, r, outline=(220, 70, 70), width=2)
+        d.rectangle([X(gx - 1), Z(gz - 1), X(gx + 2), Z(gz + 2)], fill=col)
+    d.rectangle([X(k["HOME_GATE_X"] - 1), Z(k["HOME_GATE_Z"]), X(k["HOME_GATE_X"] + 2), Z(k["HOME_GATE_Z"] + 1)], fill=(120, 90, 235))
+    d.ellipse([X(k["SPAWN_X"]) - 4, Z(k["SPAWN_Z"]) - 4, X(k["SPAWN_X"]) + 4, Z(k["SPAWN_Z"]) + 4], fill=(70, 220, 230))
+    for x, z, lines in (
+            (k["SPIRE_X"], k["SPIRE_Z"] + k["SPIRE_BASE_RADIUS"] + 6, ("Holy Spire (Ascension)", "doorway on the plaza side,", "stairs up to the Holy gate")),
+            (k["CHASM_X"], k["CHASM_Z"] + k["CHASM_RIM_RADIUS"] + 6, ("Abyssal Chasm (Descent)", "rim path, ramp down to the Abyssal gate")),
+            (k["PLAZA_X"], k["PLAZA_Z"] + ph + 6, ("plaza (33 x 33 template)", "arrival cell, notice pavilion, fountain,", "Gate of Return in the north"))):
+        for i, line in enumerate(lines):
+            d.text((X(x), Z(z) + 17 * i), line, font=f_small, fill=(235, 235, 240), anchor="ma")
+    d.text((X(k["HOME_GATE_X"]) + 12, Z(k["HOME_GATE_Z"]) - 8), "home gate", font=f_small, fill=(205, 190, 255))
+    d.text((X(k["SPAWN_X"]) + 8, Z(k["SPAWN_Z"]) - 8), "arrival", font=f_small, fill=(120, 235, 240))
+    d.text((X(k["HOLY_GATE_X"]), Z(k["HOLY_GATE_Z"]) - 30), "Holy gate (y %d)" % k["HOLY_GATE_Y"], font=f_small, fill=(120, 80, 0), anchor="ma")
+    d.text((X(k["ABYSS_GATE_X"]), Z(k["ABYSS_GATE_Z"]) - 30), "Abyssal gate (y %d)" % k["ABYSS_GATE_Y"], font=f_small, fill=(200, 160, 250), anchor="ma")
+    d.text((ox + 8, oy + 8), "red outlines = protected volumes (the plaza box, a sphere of %d blocks round each polarity gate)" % r, font=f_small, fill=(255, 190, 190))
+
+    # the side section: x to the right, y up
+    sy0 = head + plan_h + gap
+    d.text((20, sy0 - 30), "section along z = 0 (height: min_y %d .. highest block %d)" % (y_lo, y_hi), font=f_mid, fill=(235, 235, 240))
+
+    def Y(y):
+        return sy0 + (y_hi - y) * sy
+
+    d.rectangle([ox, sy0, ox + w, sy0 + sec_h], fill=(120, 170, 235))                          # the sky
+    surf = k["SURFACE_Y"]
+    d.rectangle([ox, Y(surf - 1), ox + w, sy0 + sec_h], fill=(104, 86, 66))                      # the ground (stone, deepslate below)
+    d.rectangle([ox, Y(surf - 1), ox + w, Y(surf - 1) + 2], fill=(92, 160, 58))
+    d.rectangle([ox, Y(0), ox + w, sy0 + sec_h], fill=(86, 86, 92))
+    d.rectangle([ox, Y(-64 + 1), ox + w, sy0 + sec_h], fill=(30, 30, 34))
+    top = surf + k["SPIRE_HEIGHT"]
+    d.polygon([(X(k["SPIRE_X"] - k["SPIRE_BASE_RADIUS"]), Y(surf)), (X(k["SPIRE_X"] - k["SPIRE_TOP_RADIUS"]), Y(top)),
+               (X(k["SPIRE_X"] + k["SPIRE_TOP_RADIUS"]), Y(top)), (X(k["SPIRE_X"] + k["SPIRE_BASE_RADIUS"]), Y(surf))], fill=(236, 236, 240), outline=(200, 170, 70))
+    d.polygon([(X(k["SPIRE_X"] - k["SPIRE_BASE_RADIUS"] + 3), Y(surf)), (X(k["SPIRE_X"] - k["SPIRE_TOP_RADIUS"] + 3), Y(top)),
+               (X(k["SPIRE_X"] + k["SPIRE_TOP_RADIUS"] - 3), Y(top)), (X(k["SPIRE_X"] + k["SPIRE_BASE_RADIUS"] - 3), Y(surf))], fill=(190, 205, 235))     # hollow
+    bottom = surf - k["CHASM_DEPTH"]
+    d.polygon([(X(k["CHASM_X"] - k["CHASM_RIM_RADIUS"]), Y(surf - 1)), (X(k["CHASM_X"] - k["CHASM_FLOOR_RADIUS"]), Y(bottom)),
+               (X(k["CHASM_X"] + k["CHASM_FLOOR_RADIUS"]), Y(bottom)), (X(k["CHASM_X"] + k["CHASM_RIM_RADIUS"]), Y(surf - 1))], fill=(22, 18, 30))
+    d.rectangle([X(k["PLAZA_X"] - ph), Y(surf + 8), X(k["PLAZA_X"] + ph + 1), Y(surf - 3)], fill=(150, 150, 150), outline=(220, 70, 70))
+    for gx, gy, col in ((k["HOLY_GATE_X"], k["HOLY_GATE_Y"], (240, 200, 60)), (k["ABYSS_GATE_X"], k["ABYSS_GATE_Y"], (170, 110, 240)), (k["HOME_GATE_X"], k["HOME_GATE_Y"], (120, 90, 235))):
+        d.rectangle([X(gx - 1), Y(gy + 2), X(gx + 2), Y(gy - 2)], fill=col)
+    for y, label in ((surf, "SURFACE_Y %d" % surf), (y_hi, "build limit %d" % y_hi), (y_lo, "bottom %d" % y_lo), (top, "Spire crown %d" % top), (bottom, "Chasm floor %d" % bottom)):
+        d.line([ox, Y(y), ox + w, Y(y)], fill=(255, 255, 255, 70), width=1)
+        d.text((ox + 6, Y(y) - 15), label, font=f_small, fill=(255, 255, 255))
+    d.text((X(k["SPIRE_X"]) - 40, Y(top) - 20), "Holy Spire", font=f_small, fill=(40, 40, 50))
+    d.text((X(k["CHASM_X"]) - 40, Y(surf) + 6), "Abyssal Chasm", font=f_small, fill=(230, 230, 240))
     img.save(out)

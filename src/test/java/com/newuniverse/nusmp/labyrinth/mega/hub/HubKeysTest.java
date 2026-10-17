@@ -35,7 +35,9 @@ class HubKeysTest {
         String src = HubTestIo.read(Path.of("src/main/java/com/newuniverse/nusmp/labyrinth/gate/LabyrinthTravel.java"));
         assertTrue(src.contains("GATE_USED = \"" + HubKeys.GATE_USED + "\""), "LabyrinthTravel.GATE_USED is no longer " + HubKeys.GATE_USED);
         assertTrue(src.contains("LEGACY_GATE_USED = \"" + HubKeys.LEGACY_GATE_USED + "\""), "LabyrinthTravel.LEGACY_GATE_USED is no longer " + HubKeys.LEGACY_GATE_USED);
-        assertTrue(src.contains("ORIGIN = \"nusmp_labyrinth_origin\""), "the Labyrinth's own origin key is the one the Hub's differs from");
+        assertTrue(src.contains("ORIGIN = \"" + HubKeys.LABYRINTH_ORIGIN + "\""), "the Labyrinth's own origin key is the one the Hub reads once and never writes");
+        assertEquals("nusmp_labyrinth_origin", HubKeys.LABYRINTH_ORIGIN);
+        assertTrue(!HubKeys.LABYRINTH_ORIGIN.equals(HubKeys.ORIGIN), "the Hub's way home and the Labyrinth's are two different records");
     }
 
     @Test
