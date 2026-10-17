@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:dungeon/mega_system",
+  "display": {
+    "icon": {
+      "id": "minecraft:wither_skeleton_skull"
+    },
+    "title": {
+      "translate": "advancement.nusmp.dungeon.mega_shadow.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.dungeon.mega_shadow.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_mega_shadow": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "mega.shadow"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_mega_shadow"
+    ]
+  ],
+  "rewards": {
+    "experience": 80
+  }
+}

@@ -48,7 +48,8 @@ class AdvancementDataTest {
             "spirit.contract", "devil.union", "squad.created", "squad.joined", "squad.captain", "squad.vice", "convergence.stage",
             "convergence.anomaly", "magic.merged", "weapon.engraved", "weapon.genesis", "butoh.dance", "song.sung", "corpse.raised",
             "paladin.converted", "rouge.saved", "thread.trap", "shadow.travel", "unite.mode", "time.stop",
-            "mega.entered", "mega.sector_cleared", "mega.rested", "mega.crucible_choice", "mega.wanderer_survived");
+            "mega.entered", "mega.sector_cleared", "mega.rested", "mega.crucible_choice", "mega.wanderer_survived",
+            "mega.hub", "mega.aligned", "mega.floor", "mega.gear", "mega.system_quest", "mega.shadow", "mega.vessel");
 
     private static final Set<String> DIMENSIONS = Set.of("nusmp:labyrinth", "nusmp:living_dungeon", "nusmp:zogratis_arena", "nusmp:dream",
             "nusmp:grimoire_library", "nusmp:mega_dungeon", "minecraft:overworld", "minecraft:the_nether", "minecraft:the_end");

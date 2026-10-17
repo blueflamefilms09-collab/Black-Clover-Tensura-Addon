@@ -97,6 +97,13 @@ The advancement trigger `nusmp:event` takes `key`, optional `count` (>= 1, compa
 | `mega.rested` | short or long | a rest completes at a seat, hearth or bed of a safe zone |
 | `mega.crucible_choice` | - | a relic is taken from a Crucible of Choice |
 | `mega.wanderer_survived` | - | a player escapes a wandering boss that was chasing them |
+| `mega.hub` | - | a player arrives on Floor 0, the Sanctuary Hub (labyrinth/mega/hub) |
+| `mega.aligned` | holy or abyssal | the Directional Lock closes: the player cleared the first floor of a road (labyrinth/mega/floors) |
+| `mega.floor` | floor label such as +4 or -10 | a depth is reached on a road for the first time |
+| `mega.gear` | normal, special or rare | a graded piece of standard gear is picked up, once per grade per player (labyrinth/mega/gear; also from chests) |
+| `mega.system_quest` | quest id | a quest of the Solo Leveling System is completed (labyrinth/mega/system) |
+| `mega.shadow` | entity type id | a shadow is extracted with a Shadow Core |
+| `mega.vessel` | relic id | the decennial Metal Vessel is handed out (the drop is off by default, config vesselEnabled) |
 | `dungeon.entered` | - | enter the living dungeon or the labyrinth by any door |
 | `dungeon.maw` | - | step through a Dungeon Maw |
 | `dungeon.floor_boss` | goliath or charybdis | floor boss dies |

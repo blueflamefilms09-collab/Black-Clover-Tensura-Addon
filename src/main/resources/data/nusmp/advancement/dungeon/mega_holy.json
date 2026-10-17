@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:dungeon/mega_hub",
+  "display": {
+    "icon": {
+      "id": "minecraft:bell"
+    },
+    "title": {
+      "translate": "advancement.nusmp.dungeon.mega_holy.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.dungeon.mega_holy.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_mega_aligned_holy": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "mega.aligned",
+        "arg": "holy"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_mega_aligned_holy"
+    ]
+  ],
+  "rewards": {
+    "experience": 40
+  }
+}

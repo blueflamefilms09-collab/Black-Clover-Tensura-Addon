@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:dungeon/mega",
+  "display": {
+    "icon": {
+      "id": "minecraft:iron_sword"
+    },
+    "title": {
+      "translate": "advancement.nusmp.dungeon.mega_gear.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.dungeon.mega_gear.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_mega_gear": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "mega.gear"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_mega_gear"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  }
+}

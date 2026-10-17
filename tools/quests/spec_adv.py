@@ -5,6 +5,7 @@ hand written JSON; the quest pack (spec_quests*.py) points its advancement tasks
 
 Branches (folders): start, magic, spells, arcs, bosses, relics, weapons, dungeon, spirits, squads, world, challenges, future.
 """
+from spec_lib import _crit
 from spec_lib import (Spec, ev, ev_any, ev_all, tick, impossible, have, killed, boss_kill, dimension, talk, effect, consume, slug,
                       _crit)
 from spec_magic import MAGICS, RESTRICTED, BRANCHES
@@ -379,6 +380,23 @@ add(du + "mega_sector_3", du + "mega_sector", "Three Sectors Deep", "Clear three
     ev("mega.sector_cleared", 3), frame="challenge", xp=300)
 add(du + "mega_crucible", du + "mega_sector", "The Crucible of Choice", "Take a relic from a Crucible. Only one can be taken, and the dungeon answers.",
     "nusmp:relic_pedestal", ev("mega.crucible_choice"), frame="challenge", xp=300)
+# 1.55.0: the bidirectional Mega-Dungeon (Floor 0, the two roads, the System, standard gear); appended after the older ones so nothing existing changes
+add(du + "mega_hub", du + "mega", "Floor 0", "Arrive in the Sanctuary Hub: a safe place to build, and the start of both roads.",
+    "minecraft:grass_block", ev("mega.hub"), xp=15)
+add(du + "mega_holy", du + "mega_hub", "The Holy Road", "Clear the first floor of the Holy road. From now on the Abyssal road is closed to you.",
+    "minecraft:bell", ev("mega.aligned", arg="holy"), xp=40)
+add(du + "mega_abyssal", du + "mega_hub", "The Abyssal Road", "Clear the first floor of the Abyssal road. From now on the Holy road is closed to you.",
+    "minecraft:echo_shard", ev("mega.aligned", arg="abyssal"), xp=40)
+add(du + "mega_decennial", du + "mega_hub", "Ten Floors", "Reach floor +10 or floor -10 of the Mega-Dungeon.",
+    "minecraft:nether_star", _crit("any", ev("mega.floor", 1, "+10", name="floor_up_10")["list"] + ev("mega.floor", 1, "-10", name="floor_down_10")["list"]), frame="goal", xp=100)
+add(du + "mega_system", du + "mega_holy", "The System", "Finish a quest that the System gives you on a Holy floor.",
+    "minecraft:written_book", ev("mega.system_quest"), xp=40)
+add(du + "mega_shadow", du + "mega_system", "Arise", "Extract the shadow of a defeated Holy enemy with a Shadow Core.",
+    "minecraft:wither_skeleton_skull", ev("mega.shadow"), frame="goal", xp=80)
+add(du + "mega_gear", du + "mega", "Standard Issue", "Find a graded piece of standard gear in the Mega-Dungeon.",
+    "minecraft:iron_sword", ev("mega.gear"), xp=20)
+add(du + "mega_gear_rare", du + "mega_gear", "Rare Grade", "Find a Rare-grade piece of standard gear, made to turn magic aside.",
+    "minecraft:diamond_sword", ev("mega.gear", arg="rare"), frame="goal", xp=60)
 
 # ============================================================================================================== spirits
 spi = "spirits/"

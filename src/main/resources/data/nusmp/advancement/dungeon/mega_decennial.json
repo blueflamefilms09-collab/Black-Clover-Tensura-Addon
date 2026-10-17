@@ -1,0 +1,43 @@
+{
+  "parent": "nusmp:dungeon/mega_hub",
+  "display": {
+    "icon": {
+      "id": "minecraft:nether_star"
+    },
+    "title": {
+      "translate": "advancement.nusmp.dungeon.mega_decennial.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.dungeon.mega_decennial.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "floor_up_10": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "mega.floor",
+        "arg": "+10"
+      }
+    },
+    "floor_down_10": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "mega.floor",
+        "arg": "-10"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "floor_up_10",
+      "floor_down_10"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  }
+}
