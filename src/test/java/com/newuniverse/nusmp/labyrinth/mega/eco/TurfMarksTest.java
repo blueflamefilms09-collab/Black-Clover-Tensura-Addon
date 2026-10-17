@@ -14,9 +14,9 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class TurfMarksTest {
     @Test void bossMarkersAreTheOnesTheModSets() {
-        for (String t : new String[] {"nusmp_peak_boss", "nusmp_wanderer", "nusmp_floor_boss", "nusmp_juggernaut", "nusmp_charybdis"})
+        for (String t : new String[] {"nusmp_peak_boss", "nusmp_wanderer", "nusmp_floor_boss", "nusmp_juggernaut", "nusmp_charybdis", "nusmp_cursed_spirit"})
             assertTrue(TurfMarks.BOSS_TAGS.contains(t), t);
-        assertEquals(5, TurfMarks.BOSS_TAGS.size());
+        assertEquals(6, TurfMarks.BOSS_TAGS.size());
         assertEquals("nusmp:floor_warden", TurfMarks.WARDEN_ID);
     }
 
