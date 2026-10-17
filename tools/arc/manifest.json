@@ -4385,6 +4385,260 @@
     "prop_float"
    ],
    "problems": []
+  },
+  "zagred": {
+   "model": "arc_zagred",
+   "spec": "GeoSpec.of(\"arc\", \"zagred\")",
+   "form": 1,
+   "role": "boss",
+   "name": "Zagred",
+   "build": "lanky",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_zagred.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_zagred.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_zagred.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_zagred_glow.png"
+   ],
+   "texture": [
+    512,
+    64
+   ],
+   "cubes": 93,
+   "faces_per_pass": 512,
+   "height_blocks": 2.31,
+   "height_with_hair_and_horns_blocks": 2.62,
+   "bounds_blocks": {
+    "min": [
+     -0.88,
+     0.0,
+     -0.42
+    ],
+    "max": [
+     0.55,
+     2.62,
+     0.58
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.55,
+    "height": 2.31
+   },
+   "arc_look": {
+    "height": 2.31,
+    "walkCycle": 1.05,
+    "runCycle": 1.95,
+    "shadow": 0.61,
+    "growXz": 1.38,
+    "growUp": 0.71,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 1.75,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    },
+    "spawn": {
+     "length": 2.0,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "prop_float"
+   ],
+   "glow_bones": [
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "arm_r",
+    "forearm_r",
+    "prop_float"
+   ],
+   "problems": []
+  },
+  "zagred_form2": {
+   "model": "arc_zagred_form2",
+   "spec": "GeoSpec.of(\"arc\", \"zagred_form2\")",
+   "form": 2,
+   "role": "boss",
+   "name": "Zagred, the Word Soul Devil",
+   "build": "lanky",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_zagred_form2.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_zagred_form2.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_zagred_form2.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_zagred_form2_glow.png"
+   ],
+   "texture": [
+    512,
+    192
+   ],
+   "cubes": 129,
+   "faces_per_pass": 704,
+   "height_blocks": 2.31,
+   "height_with_hair_and_horns_blocks": 4.18,
+   "bounds_blocks": {
+    "min": [
+     -1.53,
+     0.0,
+     -0.42
+    ],
+    "max": [
+     1.53,
+     4.18,
+     1.55
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.55,
+    "height": 2.31
+   },
+   "arc_look": {
+    "height": 2.31,
+    "walkCycle": 1.05,
+    "runCycle": 1.95,
+    "shadow": 1.07,
+    "growXz": 2.05,
+    "growUp": 2.27,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 1.25,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    },
+    "spawn": {
+     "length": 2.0,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "horns",
+    "wing_l",
+    "wing_tip_l",
+    "wing_r",
+    "wing_tip_r",
+    "tail1",
+    "tail2",
+    "tail3",
+    "tail4",
+    "tail5",
+    "prop_float",
+    "prop_back"
+   ],
+   "glow_bones": [
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "arm_r",
+    "forearm_r",
+    "horns",
+    "tail5",
+    "prop_float",
+    "prop_back"
+   ],
+   "problems": []
   }
  }
 }

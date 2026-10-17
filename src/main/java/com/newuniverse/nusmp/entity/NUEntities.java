@@ -27,9 +27,13 @@ public final class NUEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<PaintedConstructEntity>> PAINTED_CONSTRUCT = ENTITIES.register("painted_construct",
             () -> EntityType.Builder.of(PaintedConstructEntity::new, MobCategory.MISC).sized(0.6f, 1.95f).clientTrackingRange(10).build("painted_construct"));
 
-    /** 0.47: Zagred, the Kotodama devil, as a 4-phase boss (off by default; /multiverse boss zagred). */
-    public static final DeferredHolder<EntityType<?>, EntityType<ZagredBossEntity>> ZAGRED = ENTITIES.register("zagred",
-            () -> EntityType.Builder.of(ZagredBossEntity::new, MobCategory.MONSTER).sized(0.6f, 1.95f).fireImmune().clientTrackingRange(16).build("zagred"));
+    /**
+     * 0.47: Zagred, the Kotodama devil, as a 4-phase boss. 1.60.0: this is the LEGACY Zagred. The id {@code nusmp:zagred} now belongs to the remade boss
+     * ({@code arc/zagred/ZagredBoss}, registered through {@code ArcEntities}); the old class stays (no egg, no command, no floor) under {@code nusmp:zagred_legacy}.
+     * The Java name {@code ZAGRED} is kept because the legacy renderer and the legacy summon still use it.
+     */
+    public static final DeferredHolder<EntityType<?>, EntityType<ZagredBossEntity>> ZAGRED = ENTITIES.register("zagred_legacy",
+            () -> EntityType.Builder.of(ZagredBossEntity::new, MobCategory.MONSTER).sized(0.6f, 1.95f).fireImmune().clientTrackingRange(16).build("zagred_legacy"));
 
     /** 0.52: Zagred's Grimoire Daemons (lesser, greater, arch, and the Overwrite rule stones). */
     public static final DeferredHolder<EntityType<?>, EntityType<GrimoireDaemonEntity>> GRIMOIRE_DAEMON = ENTITIES.register("grimoire_daemon",

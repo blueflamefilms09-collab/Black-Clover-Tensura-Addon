@@ -27,6 +27,8 @@ public final class ArcCharacters {
         ArcRoster.register(com.newuniverse.nusmp.arc.midnight.FanaBoss.CHARACTER);
         ArcRoster.register(com.newuniverse.nusmp.arc.midnight.RhyaBoss.CHARACTER);
         ArcRoster.register(com.newuniverse.nusmp.arc.midnight.PatolliBoss.CHARACTER);
+        // Zagred, remade (ZAG): the same entity id as before, after Patolli and Rades Spirito whom the story names as his prerequisites
+        ArcRoster.register(com.newuniverse.nusmp.arc.zagred.ZagredBoss.CHARACTER);
         // Saga 2, the Spade Kingdom Raid: Morris first, Lucifero names him as a prerequisite (S2)
         ArcRoster.register(com.newuniverse.nusmp.arc.spade.MorrisBoss.CHARACTER);
         ArcRoster.register(com.newuniverse.nusmp.arc.spade.LuciferoBoss.CHARACTER);

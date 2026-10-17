@@ -9,6 +9,7 @@
     { "id": "nusmp:goliath", "required": false },
     { "id": "nusmp:charybdis_spawn", "required": false },
     { "id": "nusmp:zagred", "required": false },
+    { "id": "nusmp:zagred_legacy", "required": false },
     { "id": "nusmp:floor_warden", "required": false }
   ]
 }
