@@ -1,0 +1,187 @@
+{
+  "comment": "Why: the Dungeon Master needs a table for every sector, and a theme file is optional (a datapack may remove or replace one), so this one is the safety net and the reference for how an entry is written. It is deliberately generic: most entries name no faction on the monster, so the room's native faction (written by the ecology after generation) decides who turns up, and the table's defaultFaction (undead) only fills the gaps. Every band has an entry with no upper threat, so a deep sector never runs out of encounters.",
+  "description": "Fallback for any sector whose theme has no table of its own: the classic dungeon crowd of the restless dead, goblins, beasts, spiders and the odd empty suit of armour.",
+  "rollBonus": 0,
+  "budgetScale": 1.0,
+  "defaultFaction": "undead",
+  "entries": [
+    {
+      "id": "bone_scouts",
+      "comment": "The breather: one or two of the room's own people, with no faction fixed, so a goblin warren sends goblins and a crypt sends the dead. No upper threat, so the minor band is never empty in a deep sector, where the toughness window raises the quality of the draw instead.",
+      "band": "minor",
+      "weight": 16,
+      "mobs": [
+        {"type": "faction", "count": "1-2"}
+      ],
+      "cue": {"sound": "minecraft:entity.skeleton.ambient", "volume": 0.6, "pitch": 0.7, "particle": "minecraft:smoke", "count": 4}
+    },
+    {
+      "id": "cave_crawlers",
+      "comment": "Weak things out of the cracks: cheap, quick and many, poisonous at the higher difficulties. A nuisance that teaches a party to keep its back to a wall. They stop mattering at threat 8 and drop out of the table.",
+      "band": "minor",
+      "weight": 10,
+      "maxThreat": 8,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:cave_spider", "count": "3-5"}
+      ],
+      "range": [10, 24],
+      "cells": 3,
+      "hunt": 400,
+      "cue": {"sound": "minecraft:entity.spider.ambient", "volume": 0.5, "pitch": 0.8}
+    },
+    {
+      "id": "goblin_patrol",
+      "comment": "The classic patrol of the goblin kind (Tensura goblins and the raiders and piglins of the goblin tag). The faction is fixed on the entry so that even a room of another ecology can be raided by them. It retires at threat 9 in favour of the warband.",
+      "band": "standard",
+      "weight": 14,
+      "maxThreat": 9,
+      "faction": "goblin",
+      "mobs": [
+        {"type": "faction", "count": "2-4"}
+      ],
+      "cue": {"sound": "minecraft:entity.pillager.ambient", "volume": 0.7, "pitch": 0.8, "particle": "minecraft:smoke", "count": 6}
+    },
+    {
+      "id": "crypt_walkers",
+      "comment": "The evergreen standard encounter: a group from the room's native faction (the dead when the room has none). No upper threat, so the standard band always has an answer; at depth the toughness floor drops the weakest of the faction and keeps the strongest.",
+      "band": "standard",
+      "weight": 12,
+      "mobs": [
+        {"type": "faction", "count": "3-5"}
+      ],
+      "cue": {"sound": "minecraft:entity.zombie.ambient", "volume": 0.7, "pitch": 0.7, "particle": "minecraft:smoke", "count": 6}
+    },
+    {
+      "id": "walls_alive",
+      "comment": "'The walls are alive': a handful of silverfish bursting from the stone right next to the party, out of sight behind the wall but close. It is the cheapest way to make a corridor frightening, because nothing is ever certain to be solid.",
+      "band": "standard",
+      "weight": 8,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:silverfish", "count": "4-7"}
+      ],
+      "range": [10, 22],
+      "cells": 3,
+      "hunt": 500,
+      "cue": {"sound": "minecraft:block.stone.break", "volume": 0.8, "pitch": 0.5, "particle": "minecraft:infested", "count": 12},
+      "message": "message.nusmp.mega.enc.default.walls_alive"
+    },
+    {
+      "id": "dark_stalker",
+      "comment": "The lone hunter, only for a party that walks in the dark (no light carried, low block light): one tough beast of the beast tag. A predator stalks what cannot see it coming; a party with light is hunted by the pack instead.",
+      "band": "standard",
+      "weight": 8,
+      "minThreat": 2,
+      "faction": "beast",
+      "mobs": [
+        {"type": "faction", "count": "1"}
+      ],
+      "needs": {"dark": true},
+      "scaleWithParty": false,
+      "cue": {"sound": "minecraft:entity.wolf.growl", "volume": 0.8, "pitch": 0.6},
+      "message": "message.nusmp.mega.enc.default.dark_stalker"
+    },
+    {
+      "id": "beast_pack",
+      "comment": "A pack: three to five beasts of one kind arriving together from one side, the wolves of the tabletop. One place only, so they hit as a group.",
+      "band": "standard",
+      "weight": 10,
+      "minThreat": 2,
+      "faction": "beast",
+      "mobs": [
+        {"type": "faction", "count": "3-5"}
+      ],
+      "cells": 1,
+      "cue": {"sound": "minecraft:entity.wolf.howl", "volume": 0.9, "pitch": 0.8}
+    },
+    {
+      "id": "necromancer_and_thralls",
+      "comment": "The caster pair: the casters come first, because the entry is about them, and the dead who guard them are trimmed first when the budget is short.",
+      "band": "standard",
+      "weight": 8,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "faction", "count": "1-2", "faction": "cultist"},
+        {"type": "faction", "count": "2-4", "faction": "undead"}
+      ],
+      "cue": {"sound": "minecraft:entity.witch.ambient", "volume": 0.8, "pitch": 0.7, "particle": "minecraft:witch", "count": 8}
+    },
+    {
+      "id": "light_moths",
+      "comment": "Light-hunters: only when the party is bright (torches, lanterns, a lit hand) the insect tag comes to the light like moths to a flame. The counterpart of the dark stalker: carrying light is safe from beasts and costly against bugs.",
+      "band": "standard",
+      "weight": 8,
+      "faction": "insect",
+      "mobs": [
+        {"type": "faction", "count": "3-5"}
+      ],
+      "needs": {"lit": true},
+      "cue": {"sound": "minecraft:entity.bee.loop_aggressive", "volume": 0.4, "pitch": 1.2, "particle": "minecraft:end_rod", "count": 6}
+    },
+    {
+      "id": "ogre_brute",
+      "comment": "The loud brute: only when the party is noisy (fighting, sprinting, breaking blocks) one big thing of the ogre tag follows the noise, with up to two goblins who tag along. The punishment for a brawl.",
+      "band": "hard",
+      "weight": 10,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "faction", "count": "1", "faction": "ogre"},
+        {"type": "faction", "count": "0-2", "faction": "goblin"}
+      ],
+      "needs": {"noisy": true},
+      "cue": {"sound": "minecraft:entity.ravager.roar", "volume": 0.7, "pitch": 0.7, "particle": "minecraft:large_smoke", "count": 10}
+    },
+    {
+      "id": "empty_armour",
+      "comment": "The mimic-style surprise: a Living Armor (our own mollusk colony in a discarded suit) that shows up close, a few steps behind a corner, and gets up when the party passes. Hard for its cost because the party does not expect an ordinary mob to be an ambusher.",
+      "band": "hard",
+      "weight": 6,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "entity", "id": "nusmp:living_armor", "count": "1-3"}
+      ],
+      "range": [10, 18],
+      "cells": 2,
+      "hunt": 300,
+      "cue": {"sound": "minecraft:item.armor.equip_iron", "volume": 0.9, "pitch": 0.6},
+      "message": "message.nusmp.mega.enc.default.empty_armour"
+    },
+    {
+      "id": "warband",
+      "comment": "A goblin warband with an ogre at its head: the grown-up form of the patrol, which it replaces in the draw from threat 4, when a patrol is no longer a challenge.",
+      "band": "hard",
+      "weight": 10,
+      "minThreat": 4,
+      "mobs": [
+        {"type": "faction", "count": "4-6", "faction": "goblin"},
+        {"type": "faction", "count": "1", "faction": "ogre"}
+      ],
+      "cue": {"sound": "minecraft:entity.pillager.ambient", "volume": 1.0, "pitch": 0.6, "particle": "minecraft:large_smoke", "count": 10}
+    },
+    {
+      "id": "the_horde",
+      "comment": "The classic wave: more bodies than any smaller band allows, in three places at once, so there is no single door to hold. The room's native faction first.",
+      "band": "ambush",
+      "weight": 10,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "faction", "count": "6-10"}
+      ],
+      "cells": 3,
+      "cue": {"sound": "minecraft:entity.zombie.break_wooden_door", "volume": 0.9, "pitch": 0.6, "particle": "minecraft:poof", "count": 16},
+      "message": "message.nusmp.mega.enc.default.the_horde"
+    },
+    {
+      "id": "pincer",
+      "comment": "Two kinds at once, split over two places: the goblins drive the party into the beasts. A tabletop ambush that punishes holding a corridor with an open back.",
+      "band": "ambush",
+      "weight": 8,
+      "minThreat": 4,
+      "mobs": [
+        {"type": "faction", "count": "3-5", "faction": "goblin"},
+        {"type": "faction", "count": "3-4", "faction": "beast"}
+      ],
+      "cells": 2,
+      "cue": {"sound": "minecraft:entity.wolf.howl", "volume": 1.0, "pitch": 0.6, "particle": "minecraft:poof", "count": 12}
+    }
+  ]
+}
