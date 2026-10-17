@@ -1,0 +1,3 @@
+{ "theme": "holy_church",
+  "templates": ["nusmp:mega/hall/holy_church_", "nusmp:mega/set/holy_church_", "nusmp:mega/puzzle/holy_church_", "nusmp:mega/treasure/holy_church_", "nusmp:mega/safe/holy_church_"],
+  "relative": { "mega/hall/holy_church_": 20, "mega/set/holy_church_": 20, "mega/puzzle/holy_church_": 20, "mega/treasure/holy_church_": 20, "mega/safe/holy_church_": 20 } }

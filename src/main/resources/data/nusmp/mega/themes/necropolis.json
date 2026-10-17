@@ -1,0 +1,41 @@
+{
+  "_why": "The Necropolis, the evil road's city of the dead. A necropolis is a valley of tombs, so the walls are sandstone (pale, dry, dusty, found in no other theme), the floors smooth sandstone, every pillar, lintel and door frame is a block of BONE, the capitals are chiselled sandstone, the rubble is dripstone, and the worn walls are terracotta while the worn floors are coarse dirt: grave soil showing through the paving, which is what a city that is slowly being taken back by its own cemetery looks like. The wood is acacia, the red-brown of coffin planks. Every warm light of the templates becomes a soul light, so the yellow stone is washed in cold teal, and no candle is warm enough to comfort. Vanilla gives bone blocks and dripstone no stairs, slabs or walls, so those six shapes are written out in the explicit map (they take the sandstone shapes on purpose, not by the fallback). It must not be mistaken for Verdant (green), Flame (black) or Radiant (white quartz): nothing here is shiny, green or black, it is the colour of old bone. Its mood is a dry rumble far off, white ash drifts in the air, and its danger 1.2: the dead are patient, and there are many of them.",
+  "id": "necropolis",
+  "name": "Necropolis",
+  "color": "#C9B27A",
+  "families": {
+    "brick": "minecraft:sandstone",
+    "tile": "minecraft:smooth_sandstone",
+    "polished": "minecraft:bone_block",
+    "chiseled": "minecraft:chiseled_sandstone",
+    "cobbled": "minecraft:dripstone_block",
+    "cracked_brick": "minecraft:terracotta",
+    "cracked_tile": "minecraft:coarse_dirt",
+    "rock": "minecraft:sandstone",
+    "wood": "minecraft:acacia_planks"
+  },
+  "explicit": {
+    "minecraft:polished_deepslate_stairs": "minecraft:sandstone_stairs",
+    "minecraft:polished_deepslate_slab": "minecraft:sandstone_slab",
+    "minecraft:polished_deepslate_wall": "minecraft:sandstone_wall",
+    "minecraft:cobbled_deepslate_stairs": "minecraft:sandstone_stairs",
+    "minecraft:cobbled_deepslate_slab": "minecraft:sandstone_slab",
+    "minecraft:cobbled_deepslate_wall": "minecraft:sandstone_wall",
+    "minecraft:lantern": "minecraft:soul_lantern",
+    "minecraft:wall_torch": "minecraft:soul_wall_torch",
+    "minecraft:torch": "minecraft:soul_torch",
+    "minecraft:campfire": "minecraft:soul_campfire"
+  },
+  "relics": {
+    "keywords": ["bone", "skelet", "crypt", "mummy", "lich", "wight", "undead", "ossuar", "dead", "death", "necro", "ghoul", "fallen", "horseman"]
+  },
+  "catastrophes": {
+    "collapse": 2,
+    "flood": 1,
+    "spirit": 4
+  },
+  "ambient": "minecraft:white_ash",
+  "light": -2,
+  "sound": {"id": "minecraft:ambient.basalt_deltas.mood", "volume": 0.45, "pitch": 0.7, "every": 6},
+  "danger": 1.2
+}

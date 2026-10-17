@@ -1,0 +1,42 @@
+{
+  "_why": "The Holy road's cloud giant castle. Everything is built to read as cloud and weather: white concrete walls (smooth, bright, almost no grain: the one theme without stone texture), light-grey concrete floors, quartz pillars, sky-blue concrete capitals, andesite rubble and a snow-block mass below. Concrete has no stairs, slabs or walls, so the explicit map gives every concrete family the shapes of its nearest vanilla colour (smooth quartz for white, stone for light grey, andesite walls), which is also why this theme names so many explicit swaps: a bad fallback here would turn a white wall into a deepslate stair. The soul lights become warm ones (a castle of giants burns torches the size of trees). Light +2 (open to the sky), far thunder for the mood and danger 1.0: a fall is a real danger here, a cloud giant's home is not made for small folk.",
+  "id": "sky_citadel",
+  "name": "Sky Citadel",
+  "color": "#BFD8F2",
+  "families": {
+    "brick": "minecraft:white_concrete",
+    "tile": "minecraft:light_gray_concrete",
+    "polished": "minecraft:smooth_quartz",
+    "chiseled": "minecraft:light_blue_concrete",
+    "cobbled": "minecraft:andesite",
+    "cracked_brick": "minecraft:calcite",
+    "cracked_tile": "minecraft:stone",
+    "rock": "minecraft:snow_block",
+    "wood": "minecraft:oak_planks"
+  },
+  "explicit": {
+    "minecraft:deepslate_brick_stairs": "minecraft:smooth_quartz_stairs",
+    "minecraft:deepslate_brick_slab": "minecraft:smooth_quartz_slab",
+    "minecraft:deepslate_brick_wall": "minecraft:diorite_wall",
+    "minecraft:deepslate_tile_stairs": "minecraft:stone_stairs",
+    "minecraft:deepslate_tile_slab": "minecraft:stone_slab",
+    "minecraft:deepslate_tile_wall": "minecraft:andesite_wall",
+    "minecraft:polished_deepslate_wall": "minecraft:diorite_wall",
+    "minecraft:soul_lantern": "minecraft:lantern",
+    "minecraft:soul_wall_torch": "minecraft:wall_torch",
+    "minecraft:soul_torch": "minecraft:torch",
+    "minecraft:soul_campfire": "minecraft:campfire"
+  },
+  "relics": {
+    "keywords": ["cloud", "sky", "giant", "zephyr", "griffon", "griffin", "harpy", "eagle", "roc", "feather", "cirrus", "nimbus", "gust", "levit", "soar", "wing"]
+  },
+  "catastrophes": {
+    "collapse": 4,
+    "flood": 1,
+    "spirit": 2
+  },
+  "ambient": "minecraft:cloud",
+  "light": 2,
+  "sound": {"id": "minecraft:entity.lightning_bolt.thunder", "volume": 0.2, "pitch": 1.3, "every": 14},
+  "danger": 1.0
+}

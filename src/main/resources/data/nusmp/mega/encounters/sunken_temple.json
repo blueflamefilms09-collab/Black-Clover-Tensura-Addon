@@ -1,0 +1,181 @@
+{
+  "comment": "Why: a temple of a forgotten good god, flooded to the knees, is kept by what the water left: the drowned faithful, the god's prismarine sentinels, the creatures of the pools and the spirits of the tide. The table is the aquatic and construct tags with the drowned as the evergreen body, and every creature in it fights on land (the amphibious part of the aquatic tag, drowned, lizardmen), because a fish cannot stand on a floor. Light draws the tide spirits, the dark draws the cistern creatures and noise wakes the colossus. The roll bonus is zero and the budget the baseline's: the temple is kind, and the water does the rest.",
+  "description": "A flooded temple of a forgotten good god: prismarine, sea lanterns, drowned shrines. The drowned faithful, prismarine sentinels, lizardmen, tide spirits and the lost choir; the flood is its ambush.",
+  "rollBonus": 0,
+  "budgetScale": 1.0,
+  "defaultFaction": "aquatic",
+  "entries": [
+    {
+      "id": "drowned_acolytes",
+      "comment": "The faithful who stayed when the water came: one or two drowned walking the nave. The evergreen breather of the temple, with no upper threat so the minor band never runs dry.",
+      "band": "minor",
+      "weight": 14,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:drowned", "count": "1-2"}
+      ],
+      "cue": {"sound": "minecraft:entity.drowned.ambient", "volume": 0.7, "pitch": 0.9, "particle": "minecraft:falling_water", "count": 6}
+    },
+    {
+      "id": "pool_crawlers",
+      "comment": "Whatever lives in the shallow pools and has a mind to come out of them: the aquatic tag, two or three of the amphibious part. Capped at threat 8 so the minor band does not stay a joke when the party is deep.",
+      "band": "minor",
+      "weight": 12,
+      "maxThreat": 8,
+      "mobs": [
+        {"type": "faction", "count": "2-3", "faction": "aquatic"}
+      ],
+      "cue": {"sound": "minecraft:block.moss.break", "volume": 0.6, "pitch": 0.9, "particle": "minecraft:falling_water", "count": 6}
+    },
+    {
+      "id": "temple_drowned",
+      "comment": "A congregation of drowned, rising from the pools in a body: the standard fight of the temple, with no upper threat so the band never runs dry.",
+      "band": "standard",
+      "weight": 14,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:drowned", "count": "3-5"}
+      ],
+      "cue": {"sound": "minecraft:entity.drowned.ambient", "volume": 0.8, "pitch": 0.7, "particle": "minecraft:falling_water", "count": 8}
+    },
+    {
+      "id": "prismarine_sentinels",
+      "comment": "The god's sentinels: armour of prismarine and old gold that kept its post when the temple sank. The id is explicit so the first floors, where the construct tag is thin, still have a reliable fight.",
+      "band": "standard",
+      "weight": 12,
+      "mobs": [
+        {"type": "entity", "id": "nusmp:living_armor", "count": "2-3"}
+      ],
+      "cue": {"sound": "minecraft:item.armor.equip_iron", "volume": 0.6, "pitch": 0.7, "particle": "minecraft:falling_water", "count": 6}
+    },
+    {
+      "id": "reef_lizardmen",
+      "comment": "Lizardmen who nest in the temple's air pockets and fight on land as well as in the water: a patrol in the corridors, in a body.",
+      "band": "standard",
+      "weight": 10,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "entity", "id": "tensura:lizardman", "count": "2-3"}
+      ],
+      "cue": {"sound": "minecraft:entity.zombie.ambient", "volume": 0.6, "pitch": 1.2, "particle": "minecraft:falling_water", "count": 6}
+    },
+    {
+      "id": "tide_spirits",
+      "comment": "Spirits of the tide that the god once kept: the elemental tag decides who comes (Tensura's water spirits, breezes and the rest within the toughness window), drawn to a lit party.",
+      "band": "standard",
+      "weight": 8,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "faction", "count": "2-3", "faction": "elemental"}
+      ],
+      "needs": {"lit": true},
+      "cue": {"sound": "minecraft:block.beacon.ambient", "volume": 0.8, "pitch": 1.2, "particle": "minecraft:glow", "count": 8}
+    },
+    {
+      "id": "lost_choir",
+      "comment": "The temple's dead singers, still at their hymn: the undead tag, two or three, who come when a party is quiet enough to hear it. They arrive in a body from the nave.",
+      "band": "standard",
+      "weight": 8,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "faction", "count": "2-3", "faction": "undead"}
+      ],
+      "cue": {"sound": "minecraft:block.bell.use", "volume": 0.7, "pitch": 0.6, "particle": "minecraft:soul", "count": 8},
+      "message": "message.nusmp.mega.enc.sunken_temple.lost_choir"
+    },
+    {
+      "id": "sunken_priests",
+      "comment": "A priest of the forgotten god who has not noticed the god is gone: an evoker with a few spirits of the hymn. Casters first, the spirits trimmed first when the budget is short.",
+      "band": "standard",
+      "weight": 8,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:evoker", "count": "1"},
+        {"type": "entity", "id": "minecraft:vex", "count": "2-3"}
+      ],
+      "scaleWithParty": false,
+      "cue": {"sound": "minecraft:entity.evoker.cast_spell", "volume": 0.8, "pitch": 0.9, "particle": "minecraft:enchant", "count": 12}
+    },
+    {
+      "id": "brine_slimes",
+      "comment": "Slimes grown fat on the water seeping through the old stone, on two sides at once: the slime tag, three to five of them.",
+      "band": "standard",
+      "weight": 8,
+      "mobs": [
+        {"type": "faction", "count": "3-5", "faction": "slime"}
+      ],
+      "cells": 2,
+      "cue": {"sound": "minecraft:entity.slime.squish", "volume": 0.8, "pitch": 0.8, "particle": "minecraft:falling_water", "count": 8}
+    },
+    {
+      "id": "colossus_awakes",
+      "comment": "The statue of the god turns its head: one heavy body of prismarine and iron, woken by the din, for a party that fights and sprints.",
+      "band": "hard",
+      "weight": 10,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:iron_golem", "count": "1"}
+      ],
+      "needs": {"noisy": true},
+      "cue": {"sound": "minecraft:entity.iron_golem.step", "volume": 0.9, "pitch": 0.6, "particle": "minecraft:falling_water", "count": 8},
+      "message": "message.nusmp.mega.enc.sunken_temple.colossus_awakes"
+    },
+    {
+      "id": "guarded_shrine",
+      "comment": "The shrine keeps its own: sentinels and the creatures of its pool, a few steps behind a corner, getting up when the party takes what is on the altar. The pool creatures are trimmed first.",
+      "band": "hard",
+      "weight": 8,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "nusmp:living_armor", "count": "1-2"},
+        {"type": "faction", "count": "2-3", "faction": "aquatic"}
+      ],
+      "range": [10, 18],
+      "cells": 2,
+      "hunt": 300,
+      "cue": {"sound": "minecraft:block.beacon.ambient", "volume": 0.9, "pitch": 0.7, "particle": "minecraft:falling_water", "count": 10}
+    },
+    {
+      "id": "deep_hunt",
+      "comment": "For a party that walks without a light: what lives in the cisterns comes up the stairs to the dark. A party in the dark in the temple is the exception, and this is what finds it.",
+      "band": "hard",
+      "weight": 6,
+      "minThreat": 4,
+      "mobs": [
+        {"type": "faction", "count": "3-4", "faction": "aquatic"},
+        {"type": "entity", "id": "minecraft:drowned", "count": "2"}
+      ],
+      "needs": {"dark": true},
+      "cue": {"sound": "minecraft:entity.drowned.ambient", "volume": 0.9, "pitch": 0.5, "particle": "minecraft:falling_water", "count": 10},
+      "message": "message.nusmp.mega.enc.sunken_temple.deep_hunt"
+    },
+    {
+      "id": "flood_tide",
+      "comment": "The water in the pools is rising, and it isn't water: a wave of the temple's creatures on three sides at once, with the message as the only warning.",
+      "band": "ambush",
+      "weight": 10,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "faction", "count": "5-8", "faction": "aquatic"},
+        {"type": "entity", "id": "minecraft:drowned", "count": "3-5"}
+      ],
+      "cells": 3,
+      "cue": {"sound": "minecraft:entity.drowned.ambient", "volume": 1.0, "pitch": 0.6, "particle": "minecraft:falling_water", "count": 16},
+      "message": "message.nusmp.mega.enc.sunken_temple.flood_tide"
+    },
+    {
+      "id": "drowned_choir",
+      "comment": "The late ambush of the temple: the whole hymn at once, a priest, its spirits and the drowned faithful, from two sides, for a party that is two or more. The priest is the anchor; the spirits are trimmed first.",
+      "band": "ambush",
+      "weight": 8,
+      "minThreat": 5,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:evoker", "count": "1"},
+        {"type": "entity", "id": "minecraft:vex", "count": "3-5"},
+        {"type": "entity", "id": "minecraft:drowned", "count": "4-6"}
+      ],
+      "minParty": 2,
+      "cells": 2,
+      "cue": {"sound": "minecraft:block.bell.use", "volume": 1.0, "pitch": 0.5, "particle": "minecraft:falling_water", "count": 16},
+      "message": "message.nusmp.mega.enc.sunken_temple.drowned_choir"
+    }
+  ]
+}

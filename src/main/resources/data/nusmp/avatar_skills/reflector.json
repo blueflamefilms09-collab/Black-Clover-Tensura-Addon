@@ -1,0 +1,9 @@
+{
+  "id": "tensura:reflector",
+  "kind": "unique",
+  "name": "Reflector",
+  "ep_tax": 6,
+  "min_ep": 1000,
+  "tint": "#DDEEFF",
+  "description": "What is thrown at you returns."
+}

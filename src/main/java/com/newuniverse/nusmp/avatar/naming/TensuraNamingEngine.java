@@ -70,6 +70,7 @@ public final class TensuraNamingEngine {
      * gave), never the sum of both, and an evolution never sets it back below what Tensura just gave.
      */
     public static void apply(ServerPlayer creator, AvatarEntity a, String name, boolean ourSurge, double epBeforeNaming) {
+        boolean firstNaming = !a.isNamed();
         a.setNamed(true);
         a.setAvatarName(name);
         TensuraBridge.setNaming(a, name, creator.getUUID(), false);
@@ -104,7 +105,8 @@ public final class TensuraNamingEngine {
         }
 
         // the creator pays
-        a.setPermanentTax(NamingMath.taxFraction(AvatarConfig.permanentTaxPercent()));
+        // naming adds its tax to the one the Soul Forge already put on the Avatar (its aptitudes and chosen skills), and only the first naming charges it
+        if (firstNaming) a.setPermanentTax(NamingMath.taxAfterNaming(a.permanentTax(), NamingMath.taxFraction(AvatarConfig.permanentTaxPercent())));
         AvatarManager.get(creator.getServer()).update(a);
         refreshTax(creator);
         int sleep = NamingMath.sleepTicks(AvatarConfig.namingSleepSeconds(), evolved);

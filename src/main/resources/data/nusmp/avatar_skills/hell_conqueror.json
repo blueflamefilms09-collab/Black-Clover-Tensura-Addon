@@ -1,0 +1,9 @@
+{
+  "id": "nusmp:hell_conqueror",
+  "kind": "ultimate",
+  "name": "Hell Conqueror",
+  "ep_tax": 15,
+  "min_ep": 3500,
+  "tint": "#FF6A1E",
+  "description": "Walks through fire and keeps the flame."
+}

@@ -1,0 +1,9 @@
+{
+  "id": "tensura:sloth",
+  "kind": "ultimate",
+  "name": "Sloth",
+  "ep_tax": 12,
+  "min_ep": 3000,
+  "tint": "#9CC0A0",
+  "description": "Rest so deep the world waits for you."
+}

@@ -1,0 +1,35 @@
+{
+  "_why": "The Cursed Archive, the evil road's library of forbidden knowledge. It must read as a place of ink and leather, so the walls are red-brown clay bricks (the warm colour of old bindings and of a scholars' hall, the wall of no other theme), the floors black polished blackstone bricks, the pillars and trim polished blackstone, and every keystone, capital and lintel is crying obsidian: a purple glow that weeps in the dark, the cursed ink of the place, which is what the eye finds first in a corridor. The worn walls are mud bricks (the older, browner masonry that shows where the clay has gone), the worn floors cracked blackstone, the rock is the deepslate of the cellars under the stacks and the wood stays dark oak, the shelves and desks of a library. Every warm light of the templates becomes a soul light, because candles are the only warm thing left here and the signature rooms add their own. Vanilla gives bricks (as brick_stairs, brick_slab and brick_wall: the swap rule takes the singular), polished blackstone bricks and polished blackstone all of stairs, slabs and walls, so no shape falls back. It must not be mistaken for Shadow (black blackstone walls on deepslate tiles, no brown, no purple), Blood (the dark purple-red of nether bricks) or the Infernal Foundry (red nether bricks): here the walls are the orange-brown of baked clay and the black and the purple are only trim. Its mood is a page turning in an empty room, its air full of enchanting glyphs, and its danger 1.1: knowledge bites, but it does not hunt like the deep.",
+  "id": "cursed_archive",
+  "name": "Cursed Archive",
+  "color": "#5B3A7A",
+  "families": {
+    "brick": "minecraft:bricks",
+    "tile": "minecraft:polished_blackstone_bricks",
+    "polished": "minecraft:polished_blackstone",
+    "chiseled": "minecraft:crying_obsidian",
+    "cobbled": "minecraft:cobbled_deepslate",
+    "cracked_brick": "minecraft:mud_bricks",
+    "cracked_tile": "minecraft:cracked_polished_blackstone_bricks",
+    "rock": "minecraft:deepslate",
+    "wood": "minecraft:dark_oak_planks"
+  },
+  "explicit": {
+    "minecraft:lantern": "minecraft:soul_lantern",
+    "minecraft:wall_torch": "minecraft:soul_wall_torch",
+    "minecraft:torch": "minecraft:soul_torch",
+    "minecraft:campfire": "minecraft:soul_campfire"
+  },
+  "relics": {
+    "keywords": ["tome", "book", "scroll", "librar", "archiv", "notebook", "spellbook", "grimoire", "scribe", "codex", "lectern", "quill", "arcan"]
+  },
+  "catastrophes": {
+    "collapse": 2,
+    "flood": 2,
+    "spirit": 4
+  },
+  "ambient": "minecraft:enchant",
+  "light": -1,
+  "sound": {"id": "minecraft:item.book.page_turn", "volume": 0.4, "pitch": 0.6, "every": 5},
+  "danger": 1.1
+}
