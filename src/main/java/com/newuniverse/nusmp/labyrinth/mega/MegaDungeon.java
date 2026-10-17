@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
@@ -86,6 +87,16 @@ public final class MegaDungeon {
             try { l.onFloorCleared(p, floor); } catch (RuntimeException e) { LOG.warn("floor listener failed on clear: {}", e.toString()); }
         }
     }
+
+    // ---------------------------------------------------------------- what lives here
+    /** The entity tag the Dungeon Master puts on every monster it spawns (a plain scoreboard tag, so it survives a reload with the mob). */
+    public static final String DM_TAG = "nusmp_dm";
+
+    /**
+     * Is this one of the Dungeon Master's monsters? Tensura's monsters are tamable animals, not the vanilla {@code Enemy} interface the 1.36.0 economy and HP buffer
+     * key on, so those two (and the faction drops) ask this as well: a direwolf the Director sent must drop stones and carry the buffer like a zombie does.
+     */
+    public static boolean isDungeonMonster(Entity e) { return e != null && e.getTags().contains(DM_TAG); }
 
     // ---------------------------------------------------------------- where
     /** Is this the Mega-Dungeon dimension? Null-safe, both sides. */
