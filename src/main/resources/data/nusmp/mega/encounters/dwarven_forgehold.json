@@ -1,0 +1,182 @@
+{
+  "comment": "Why: a dwarven hold is a place of craftsmen, so its trouble is what a hold has always had: constructs that keep working after their masters left, the fire that was never put out, raiders from the deeps, a rebel faction and the stone itself. The table leans on the construct, elemental and goblin tags, with iron golems and living armour for the big fights and bats for the roof. Noise draws the golem and the dark draws the bats. The roll bonus is zero and the budget the baseline's: the hold is orderly, and what finds the party is on its rounds.",
+  "description": "A dwarven hold: dressed stone, copper and iron, anvils, lava channels behind glass, mine carts. Constructs on their rounds, fire elementals, bats, goblin raiders from the lower deeps and a rebel faction of grey dwarves.",
+  "rollBonus": 0,
+  "budgetScale": 1.0,
+  "defaultFaction": "construct",
+  "entries": [
+    {
+      "id": "cave_bats",
+      "comment": "Bats that roost in the roof of the great halls and come down when the lanterns swing. Cheap and fast, they are the hold's nuisance. Capped at threat 8 so the minor band does not stay a joke when the party is deep.",
+      "band": "minor",
+      "weight": 14,
+      "maxThreat": 8,
+      "mobs": [
+        {"type": "entity", "id": "tensura:giant_bat", "count": "2-3"}
+      ],
+      "cue": {"sound": "minecraft:entity.bat.takeoff", "volume": 0.7, "pitch": 0.9, "particle": "minecraft:smoke", "count": 6}
+    },
+    {
+      "id": "hold_sentries",
+      "comment": "The evergreen breather of the hold: one or two of the room's own creatures (the construct tag unless the room has a native faction), walking their rounds. No upper threat, so the minor band never runs dry.",
+      "band": "minor",
+      "weight": 14,
+      "mobs": [
+        {"type": "faction", "count": "1-2"}
+      ],
+      "cue": {"sound": "minecraft:block.anvil.land", "volume": 0.5, "pitch": 1.2, "particle": "minecraft:small_flame", "count": 4}
+    },
+    {
+      "id": "goblin_raiders",
+      "comment": "Raiders from the lower deeps who got in through the mines and are looting the storerooms: a loud pack of the goblin tag. A dwarven hold has always had them as neighbours, and they always come in a crowd.",
+      "band": "standard",
+      "weight": 12,
+      "mobs": [
+        {"type": "faction", "count": "3-5", "faction": "goblin"}
+      ],
+      "cue": {"sound": "minecraft:entity.zombie.ambient", "volume": 0.6, "pitch": 1.4, "particle": "minecraft:smoke", "count": 6}
+    },
+    {
+      "id": "forge_armour",
+      "comment": "The evergreen standard fight of the hold: armour from the smithy that was never collected and got up on its own. The id is explicit so the first floors, where the construct tag is thin, still have a reliable fight.",
+      "band": "standard",
+      "weight": 12,
+      "mobs": [
+        {"type": "entity", "id": "nusmp:living_armor", "count": "2-3"}
+      ],
+      "cue": {"sound": "minecraft:item.armor.equip_iron", "volume": 0.7, "pitch": 0.9, "particle": "minecraft:small_flame", "count": 6}
+    },
+    {
+      "id": "ember_spirits",
+      "comment": "The hold's fire elementals, born of the forges that were never put out. The elemental tag decides who comes (blazes, Tensura's fire spirits and the rest within the toughness window).",
+      "band": "standard",
+      "weight": 10,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "faction", "count": "2-3", "faction": "elemental"}
+      ],
+      "cue": {"sound": "minecraft:entity.blaze.ambient", "volume": 0.7, "pitch": 1.0, "particle": "minecraft:small_flame", "count": 8}
+    },
+    {
+      "id": "forge_salamanders",
+      "comment": "Salamanders that crawled up out of the lava channels, with the molten slag they shed: a fire fight with a core of one or two heavy bodies. The slag is trimmed first when the budget is short.",
+      "band": "standard",
+      "weight": 8,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "entity", "id": "tensura:salamander", "count": "1-2"},
+        {"type": "entity", "id": "minecraft:magma_cube", "count": "2-3"}
+      ],
+      "cue": {"sound": "minecraft:block.lava.pop", "volume": 0.8, "pitch": 0.8, "particle": "minecraft:small_flame", "count": 8}
+    },
+    {
+      "id": "rebel_duergar",
+      "comment": "Grey dwarves who broke with the hold and took the lower galleries: axe-wielders with a crossbowman at the back, coming down the long hall. Axes first, the crossbow is trimmed first when the budget is short.",
+      "band": "standard",
+      "weight": 10,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:vindicator", "count": "2-3"},
+        {"type": "entity", "id": "minecraft:pillager", "count": "1"}
+      ],
+      "cue": {"sound": "minecraft:entity.vindicator.ambient", "volume": 0.7, "pitch": 0.8, "particle": "minecraft:smoke", "count": 8},
+      "message": "message.nusmp.mega.enc.dwarven_forgehold.rebel_duergar"
+    },
+    {
+      "id": "war_gnome_band",
+      "comment": "War gnomes, small and heavy and well armed: the mining clans' own soldiers, who do not recognise the party as guests. They arrive in a body and hold the corridor.",
+      "band": "standard",
+      "weight": 8,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "tensura:war_gnome", "count": "2-3"}
+      ],
+      "cue": {"sound": "minecraft:block.stone.break", "volume": 0.7, "pitch": 0.8, "particle": "minecraft:smoke", "count": 8}
+    },
+    {
+      "id": "infested_ore",
+      "comment": "The ore is alive: silverfish burst out of the veins close by on three sides, with spiders from the shafts. Close range makes it an ambush, not a chase.",
+      "band": "standard",
+      "weight": 8,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:silverfish", "count": "4-6"},
+        {"type": "entity", "id": "minecraft:cave_spider", "count": "2-3"}
+      ],
+      "range": [10, 22],
+      "cells": 3,
+      "hunt": 500,
+      "cue": {"sound": "minecraft:block.deepslate.break", "volume": 0.8, "pitch": 1.0, "particle": "minecraft:smoke", "count": 8},
+      "message": "message.nusmp.mega.enc.dwarven_forgehold.infested_ore"
+    },
+    {
+      "id": "stone_giant",
+      "comment": "A hammer-golem of the hold, woken by the din: one heavy body for a party that fights and sprints, from the nearest dark gallery.",
+      "band": "hard",
+      "weight": 10,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:iron_golem", "count": "1"}
+      ],
+      "needs": {"noisy": true},
+      "cue": {"sound": "minecraft:entity.iron_golem.step", "volume": 0.9, "pitch": 0.7, "particle": "minecraft:smoke", "count": 8}
+    },
+    {
+      "id": "smithy_awakens",
+      "comment": "The great forge answers: armour that was hung to cool and blazes that were never banked, a few steps behind a corner. The armour stands up when the party passes.",
+      "band": "hard",
+      "weight": 8,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "nusmp:living_armor", "count": "1-2"},
+        {"type": "entity", "id": "minecraft:blaze", "count": "2-3"}
+      ],
+      "range": [10, 18],
+      "cells": 2,
+      "hunt": 300,
+      "cue": {"sound": "minecraft:block.anvil.land", "volume": 0.9, "pitch": 0.6, "particle": "minecraft:small_flame", "count": 12},
+      "message": "message.nusmp.mega.enc.dwarven_forgehold.smithy_awakens"
+    },
+    {
+      "id": "dark_wings",
+      "comment": "For a party that walks without a light: bats the size of a man from the roof and slag from the channels, in a gallery where the lanterns have gone out. A party in the dark in the hold is the exception.",
+      "band": "hard",
+      "weight": 6,
+      "minThreat": 4,
+      "mobs": [
+        {"type": "entity", "id": "tensura:giant_bat", "count": "4-5"},
+        {"type": "entity", "id": "minecraft:magma_cube", "count": "2"}
+      ],
+      "needs": {"dark": true},
+      "cue": {"sound": "minecraft:entity.bat.ambient", "volume": 0.8, "pitch": 0.6, "particle": "minecraft:smoke", "count": 10}
+    },
+    {
+      "id": "deeps_horde",
+      "comment": "Drums from below: the goblins of the lower deeps in force, on three sides, with the message as the only warning. The goblin tag decides the bodies so the horde grows with the floor.",
+      "band": "ambush",
+      "weight": 10,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "faction", "count": "6-10", "faction": "goblin"}
+      ],
+      "cells": 3,
+      "cue": {"sound": "minecraft:entity.zombie.break_wooden_door", "volume": 0.9, "pitch": 0.8, "particle": "minecraft:smoke", "count": 14},
+      "message": "message.nusmp.mega.enc.dwarven_forgehold.deeps_horde"
+    },
+    {
+      "id": "hold_in_arms",
+      "comment": "The late ambush of the hold: its whole guard turned out, a golem, the armour and the fire spirits, from two sides, for a party that is two or more. The golem is the anchor; the spirits are trimmed first.",
+      "band": "ambush",
+      "weight": 8,
+      "minThreat": 5,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:iron_golem", "count": "1"},
+        {"type": "entity", "id": "nusmp:living_armor", "count": "2-3"},
+        {"type": "faction", "count": "2", "faction": "elemental"}
+      ],
+      "minParty": 2,
+      "cells": 2,
+      "cue": {"sound": "minecraft:block.anvil.land", "volume": 1.0, "pitch": 0.5, "particle": "minecraft:small_flame", "count": 16},
+      "message": "message.nusmp.mega.enc.dwarven_forgehold.hold_in_arms"
+    }
+  ]
+}

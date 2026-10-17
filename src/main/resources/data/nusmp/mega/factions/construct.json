@@ -23,7 +23,11 @@
     "shadow": 1,
     "astral": 5,
     "radiant": 4,
-    "abyss": 1
+    "abyss": 1,
+    "feywild_grove": 2,
+    "dwarven_forgehold": 5,
+    "crystal_geode": 4,
+    "sunken_temple": 3
   },
   "drops": {
     "meat": "raw_armor_flank",

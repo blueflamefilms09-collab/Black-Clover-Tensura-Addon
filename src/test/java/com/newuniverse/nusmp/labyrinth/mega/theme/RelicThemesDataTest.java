@@ -32,7 +32,8 @@ class RelicThemesDataTest {
     private static final Path THEMES = Path.of("src/main/resources/data/nusmp/mega/themes");
     private static final Path RELICS = Path.of("src/main/java/com/newuniverse/nusmp/relics");
     /** The themes the mod ships (the same list as {@code ThemeDataTest}): the file is checked against these, whatever the enum on the class path holds. */
-    private static final List<String> SHIPPED = List.of("gravity", "blood", "spatial", "flame", "frost", "verdant", "storm", "shadow", "astral", "radiant", "abyss");
+    private static final List<String> SHIPPED = List.of("gravity", "blood", "spatial", "flame", "frost", "verdant", "storm", "shadow", "astral", "radiant", "abyss",
+            "feywild_grove", "dwarven_forgehold", "crystal_geode", "sunken_temple");
 
     private static String raw() throws IOException { return Files.readString(FILE, StandardCharsets.UTF_8); }
 
