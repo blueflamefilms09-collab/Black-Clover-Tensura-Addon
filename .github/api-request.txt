@@ -73,6 +73,7 @@
 ^net/neoforged/neoforge/event/entity/player/AdvancementEvent.*$
 # ---- 1.55.0: the WHOLE Minecraft and NeoForge API plus the libraries the mod compiles against, so tools/typecheck can type-check any new code offline
 # (the earlier list covered what the code used at the time; every builder of the Mega-Dungeon met a "stub gap" because of the rest)
+# (re-run marker 4: the fully mapped neoforge-21 jar is now read first)
 ^net/minecraft/.*$
 ^net/neoforged/.*$
 ^cpw/mods/modlauncher/api/.*$

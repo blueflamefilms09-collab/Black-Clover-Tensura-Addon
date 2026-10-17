@@ -28,7 +28,18 @@ for root in roots:
         for fn in fns:
             if fn.endswith(".jar") and not fn.endswith("-sources.jar") and not fn.endswith("-javadoc.jar"):
                 jars.append(os.path.join(dp, fn))
-jars.sort()
+# 1.55.0: a class found in several jars is taken from the FIRST, and some intermediate Minecraft jars of the Gradle cache hold half-renamed copies
+# (MinecraftServer extends an obfuscated name there). The fully mapped Minecraft + NeoForge classes live in neoforge-21*.jar, so those go first.
+def _rank(path):
+    base = os.path.basename(path)
+    if re.match(r"neoforge-21[^/]*\.jar$", base):
+        return 0
+    if "client-extra" in base:
+        return 1
+    return 2
+
+
+jars.sort(key=lambda p: (_rank(p), p))
 print("jars:", len(jars))
 
 seen = set()
