@@ -44,8 +44,13 @@ public final class LabyrinthTravel {
      * old road into the Living Dungeon. False if there is nowhere to go (the message says why).
      */
     public static boolean enter(ServerPlayer p, BlockPos from) {
+        if (Labyrinth.inSanctuary(p.level())) return com.newuniverse.nusmp.labyrinth.mega.hub.HubTravel.useGate(p, from);      // 1.55.0: a gate of Floor 0 (the Sanctuary Hub) leads onto its road, whatever the switches below say
         if (!Labyrinth.engineIsLabyrinth()) return LivingDungeon.enter(p, from);
-        if (Labyrinth.layoutIsMega()) return com.newuniverse.nusmp.labyrinth.mega.travel.MegaTravel.enter(p, from);      // 1.54.0: the singular Mega-Dungeon is the default layout; the Spire below stays behind mega.layout = "spire"
+        if (Labyrinth.layoutIsMega()) {
+            if (com.newuniverse.nusmp.labyrinth.mega.hub.HubTravel.enabled() && com.newuniverse.nusmp.labyrinth.mega.hub.HubTravel.available(p.getServer()))
+                return com.newuniverse.nusmp.labyrinth.mega.hub.HubTravel.enterFromOverworld(p, from);                               // 1.55.0: the Gateway leads to Floor 0 first (hub.enabled=false restores the 1.54.0 road straight into sector 0)
+            return com.newuniverse.nusmp.labyrinth.mega.travel.MegaTravel.enter(p, from);      // 1.54.0: the singular Mega-Dungeon is the default layout; the Spire below stays behind mega.layout = "spire"
+        }
         return enterSpire(p, from);
     }
 
@@ -98,6 +103,11 @@ public final class LabyrinthTravel {
         if (!Labyrinth.in(p)) return;
         MinecraftServer server = p.getServer();
         if (server == null) return;
+        if (Labyrinth.inMega(p.level()) && com.newuniverse.nusmp.labyrinth.mega.hub.HubTravel.enabled() && com.newuniverse.nusmp.labyrinth.mega.hub.HubTravel.available(server)) {
+            com.newuniverse.nusmp.labyrinth.mega.hub.HubTravel.returnToPlaza(p);       // 1.55.0: leaving a road of the Mega-Dungeon brings the player back to Floor 0 (it reads the stored origin, so it runs BEFORE forget)
+            forget(p);
+            return;
+        }
         CompoundTag data = p.getPersistentData();
         CompoundTag o = data.getCompound(ORIGIN);
         ServerLevel to = o.isEmpty() ? null : server.getLevel(ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse(o.getString("Dim"))));

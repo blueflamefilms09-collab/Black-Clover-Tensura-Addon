@@ -24,6 +24,7 @@ public final class MegaCommands {
         mega.then(com.newuniverse.nusmp.labyrinth.mega.system.SystemRegistry.command());     // system: the Solo Leveling System
         mega.then(com.newuniverse.nusmp.labyrinth.mega.flow.FlowRegistry.command());         // flow: the Rukh flow
         mega.then(com.newuniverse.nusmp.labyrinth.mega.gear.GearRegistry.command());         // gear: standard Normal / Special / Rare gear
+        mega.then(com.newuniverse.nusmp.labyrinth.mega.hub.HubRegistry.command());           // hub: Floor 0, the Sanctuary Hub (status, tp, plaza, gates)
         mega.then(SelfTestCommand.command());                                               // selftest: the in-game self-tests the CI smoke test reads
         return mega;
     }
