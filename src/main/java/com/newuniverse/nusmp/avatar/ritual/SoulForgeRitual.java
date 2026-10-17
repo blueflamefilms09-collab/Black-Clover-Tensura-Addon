@@ -115,7 +115,6 @@ public final class SoulForgeRitual {
         if (!AvatarConfig.enabled()) { p.displayClientMessage(note("message.nusmp.avatar.disabled", "Avatars are disabled on this server.", ChatFormatting.RED), true); return; }
         if (!AvatarSoulForgeConfig.soulForgeUi()) { AvatarBuilderMenu.open(p); return; }
         if (ACTIVE.containsKey(p.getUUID()) || !p.isAlive() || p.isSpectator() || p.isPassenger() || p.isSleeping()) return;
-        if (!START_LIMIT.allow(p.getUUID(), System.currentTimeMillis(), AvatarSoulForgeConfig.startGapMillis())) return;
         int have = AvatarManager.get(p.getServer()).count(p.getUUID());
         if (have >= AvatarConfig.maxAvatarsPerPlayer()) {
             p.displayClientMessage(Component.translatableWithFallback("message.nusmp.avatar.forge.limit", "You already have %s Avatar(s): the Soul Forge has nothing more for you.", have)
@@ -126,6 +125,8 @@ public final class SoulForgeRitual {
             p.displayClientMessage(note("message.nusmp.avatar.forge.hungry", "The Soul Forge hungers for a Genesis Core.", ChatFormatting.LIGHT_PURPLE), true);
             return;
         }
+        // only a real start uses up the gap: a refusal above must not make the next try, a moment after the core arrives, fail without a word
+        if (!START_LIMIT.allow(p.getUUID(), System.currentTimeMillis(), AvatarSoulForgeConfig.startGapMillis())) return;
         start(p, forge);
     }
 
