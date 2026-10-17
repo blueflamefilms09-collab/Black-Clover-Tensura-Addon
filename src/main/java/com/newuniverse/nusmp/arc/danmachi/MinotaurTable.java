@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * Why: the Minotaur's moves are numbers first (when it may use a move, how long the telegraph lasts, how big the shape is, how hard it hits), and the whole
- * table must be checkable without a game: that every move has a telegraph of at least a second at the Gates, that there is always an attack to throw at any
+ * table must be checkable without a game: that every move has a telegraph that is still 12 ticks (an ultimate 42) at the Gates, that there is always an attack to throw at any
  * distance, that the ultimate is rare and leaves it exposed. This pure table is that; {@code MinotaurBoss} turns each row into a framework {@code Move}.
  *
  * <p>The shape of the fight (the Level 2 monster that hunts Bell on the 5th floor of the anime, see {@code docs/arc/minotaur.md}): a bull that wants to be

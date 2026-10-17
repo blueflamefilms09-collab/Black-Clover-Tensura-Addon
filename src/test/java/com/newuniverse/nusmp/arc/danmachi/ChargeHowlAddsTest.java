@@ -4,7 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The numbers behind the charges (Minotaur, Goliath), the Howl and the monsters a roar calls. */
+/**
+ * Why: the charges, the Howl and the called monsters are numbers a player learns from (how long a bull is stunned by a wall, how far a Howl reaches, how many
+ * monsters a roar may bring), and they must stay what the docs say as the power tuning is retuned later.
+ */
 class ChargeHowlAddsTest {
     // ------------------------------------------------------------------ charge
     @Test

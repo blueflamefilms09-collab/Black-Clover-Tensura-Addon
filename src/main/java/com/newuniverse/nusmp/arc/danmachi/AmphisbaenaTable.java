@@ -4,8 +4,8 @@ import java.util.List;
 
 /**
  * Why: the Amphisbaena's moves are numbers first (range windows, telegraphs, shapes, damage) and the table must be checkable without a game: every move has a
- * telegraph of at least a second at the Gates, an attack exists at every distance, the ultimate is rare and leaves it exposed. This pure table is that;
- * {@code AmphisbaenaBoss} turns each row into a framework {@code Move}.
+ * telegraph that is still 12 ticks (an ultimate 42) at the Gates, an attack exists at every distance, the ultimate is rare and leaves it exposed. This pure table
+ * is that; {@code AmphisbaenaBoss} turns each row into a framework {@code Move}.
  *
  * <p>The shape of the fight (the two-headed water dragon of the 27th floor, see {@code docs/arc/amphisbaena.md}): the blue head breathes flame that burns
  * through steel (the Blue Flame Breath, the Scorch Field), the red head breathes a mist that dissipates magic (the Red Mist Breath), the body bites, lashes
@@ -19,8 +19,11 @@ public final class AmphisbaenaTable {
             TIDAL_SURGE = "tidal_surge", WATERSPOUTS = "waterspouts", HEADS_LASH = "heads_lash", WATER_CITY_CALL = "water_city_call", DIVE_STRIKE = "dive_strike",
             SCORCH_FIELD = "scorch_field", TWIN_CALAMITY = "twin_calamity", BLUE_FLAME_CYCLONE = "blue_flame_cyclone";
 
-    /** The moves that need the red head: gone once it is cut. */
-    public static boolean needsRedHead(String id) { return RED_MIST_BREATH.equals(id) || TWIN_CALAMITY.equals(id); }
+    /**
+     * The moves that need the red head: gone once it is cut. The Twin Calamity stays (it is the ultimate and must always exist): without the red head it is the
+     * blue flame alone, which the boss class decides when it runs it.
+     */
+    public static boolean needsRedHead(String id) { return RED_MIST_BREATH.equals(id); }
 
     private static final List<DmSpec> SPECS = List.of(
             DmSpec.move(TWIN_BITE, "Twin Bite").power(20).wind(18).cd(90).range(0, 7).weight(6).recovery(10).custom(6.5, 12),

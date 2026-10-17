@@ -1,0 +1,160 @@
+{
+  "character": "welf_crozzo",
+  "voice": "#C8782A",
+  "lines": {
+    "greeting": [
+      {
+        "text": "Hey. I am {npc}. Smith, mostly. I fight when a sword I made needs testing. What do you need, {player}?",
+        "key": "arc.dialogue.welf_crozzo.1",
+        "first": true
+      },
+      {
+        "text": "A new face. Good, mine is getting stale. {npc}, blacksmith. Do not touch the blade on the left, it bites.",
+        "key": "arc.dialogue.welf_crozzo.2",
+        "first": true
+      },
+      {
+        "text": "Back for a look at the forge, {player}?",
+        "key": "arc.dialogue.welf_crozzo.3",
+        "first": false
+      },
+      {
+        "text": "Hm. Your weapon needs love. I can see it from here.",
+        "key": "arc.dialogue.welf_crozzo.4",
+        "first": false
+      },
+      {
+        "text": "I swear this hammer is smaller than yesterday.",
+        "key": "arc.dialogue.welf_crozzo.5",
+        "first": false
+      },
+      {
+        "text": "Do not stand near the quench barrel. It has opinions.",
+        "key": "arc.dialogue.welf_crozzo.6",
+        "first": false
+      }
+    ],
+    "hint": [
+      {
+        "text": "Steel is honest. It tells you what is wrong in the first hit: it rings, or it does not.",
+        "key": "arc.dialogue.welf_crozzo.7",
+        "priority": 0,
+        "weight": 1
+      },
+      {
+        "text": "A good weapon is half the fight. The other half is what you do with it.",
+        "key": "arc.dialogue.welf_crozzo.8",
+        "priority": 0,
+        "weight": 1
+      },
+      {
+        "text": "Magic swords break. That is the price. Do not swing one at something you cannot afford to lose to.",
+        "key": "arc.dialogue.welf_crozzo.9",
+        "priority": 0,
+        "weight": 1
+      },
+      {
+        "text": "A heavy blow is just a light blow that decided to commit.",
+        "key": "arc.dialogue.welf_crozzo.10",
+        "priority": 0,
+        "weight": 1
+      },
+      {
+        "text": "A Minotaur on the upper floors? Hm. A horn takes a good edge, if you can get one. Do not go at it with a dull blade.",
+        "key": "arc.dialogue.welf_crozzo.11",
+        "priority": 0,
+        "weight": 3,
+        "notDefeated": [
+          "minotaur"
+        ]
+      },
+      {
+        "text": "Have you seen the black giant? Plain steel glances off it. The hide only breaks if you hit hard, several times in a row. Magic goes straight through, they say.",
+        "key": "arc.dialogue.welf_crozzo.12",
+        "priority": 0,
+        "weight": 3,
+        "defeated": [
+          "minotaur"
+        ],
+        "notDefeated": [
+          "black_goliath"
+        ]
+      },
+      {
+        "text": "The Water City's two-headed lizard burns through metal with its blue flame. Bring a spare weapon. The red head eats magic; I would keep the spells for the other one.",
+        "key": "arc.dialogue.welf_crozzo.13",
+        "priority": 0,
+        "weight": 3,
+        "defeated": [
+          "black_goliath"
+        ],
+        "notDefeated": [
+          "amphisbaena"
+        ]
+      },
+      {
+        "text": "Udaeus's ribs shift to meet your blow. A smith's trick works on it: a shield moves with the blow, but a second blow from the other side finds it open.",
+        "key": "arc.dialogue.welf_crozzo.14",
+        "priority": 0,
+        "weight": 3,
+        "defeated": [
+          "amphisbaena"
+        ],
+        "notDefeated": [
+          "udaeus"
+        ]
+      },
+      {
+        "text": "You have done all of it. I will have to find harder steel.",
+        "key": "arc.dialogue.welf_crozzo.15",
+        "priority": 0,
+        "weight": 3,
+        "defeated": [
+          "udaeus"
+        ]
+      }
+    ],
+    "shop": [
+      {
+        "text": "Look at anything on the table. I made every piece, so I can tell you what is wrong with it.",
+        "key": "arc.dialogue.welf_crozzo.16"
+      },
+      {
+        "text": "I can sharpen a blade, mend a strap, fit a hilt. Bring it when you have the time.",
+        "key": "arc.dialogue.welf_crozzo.17"
+      }
+    ],
+    "quest_offer": [
+      {
+        "text": "Listen, {player}: I want to know what that black hide is made of. If you bring the giant down I will learn it from what you tell me. You will need to hit hard. Interested?",
+        "key": "arc.dialogue.welf_crozzo.18",
+        "notDefeated": [
+          "black_goliath"
+        ]
+      }
+    ],
+    "quest_done": [
+      {
+        "text": "The Black Goliath is down. ...And its hide breaks under three heavy blows in a row. That is information I can use. Thanks, {player}.",
+        "key": "arc.dialogue.welf_crozzo.19",
+        "defeated": [
+          "black_goliath"
+        ]
+      }
+    ],
+    "farewell": [
+      {
+        "text": "Do not break it.",
+        "key": "arc.dialogue.welf_crozzo.20"
+      },
+      {
+        "text": "Come back and tell me how it held.",
+        "key": "arc.dialogue.welf_crozzo.21"
+      },
+      {
+        "text": "Bring ore next time.",
+        "key": "arc.dialogue.welf_crozzo.22"
+      }
+    ]
+  }
+}

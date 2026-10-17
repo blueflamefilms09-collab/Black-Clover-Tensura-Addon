@@ -1,0 +1,127 @@
+{
+  "character": "hestia",
+  "voice": "#3A78D8",
+  "lines": {
+    "greeting": [
+      {
+        "text": "Hello, hello! I am {npc}, goddess of the hearth and head of the whole Hestia Familia, which at the moment is me, one stubborn boy and a great deal of enthusiasm. Who are you, {player}?",
+        "key": "arc.dialogue.hestia.1",
+        "first": true
+      },
+      {
+        "text": "A visitor! Do sit... well, there is only one chair, and it is mine. I am {npc}. What can a goddess do for you?",
+        "key": "arc.dialogue.hestia.2",
+        "first": true
+      },
+      {
+        "text": "Back again, {player}! Have you been feeding yourself properly? Nobody ever does.",
+        "key": "arc.dialogue.hestia.3",
+        "first": false
+      },
+      {
+        "text": "Oh, it is you. I was telling Bell about you. Nothing bad, I promise. Mostly.",
+        "key": "arc.dialogue.hestia.4",
+        "first": false
+      },
+      {
+        "text": "Careful in the Dungeon, {player}. I cannot bless everyone, but I can worry about everyone.",
+        "key": "arc.dialogue.hestia.5",
+        "first": false
+      }
+    ],
+    "hint": [
+      {
+        "text": "A god may not use power in the lower world. We can advise, scold and bake. I do two of those well.",
+        "key": "arc.dialogue.hestia.6",
+        "priority": 0,
+        "weight": 1
+      },
+      {
+        "text": "Strength grows faster against something just above you than against something far below. It also kills you faster, so choose with care.",
+        "key": "arc.dialogue.hestia.7",
+        "priority": 0,
+        "weight": 1
+      },
+      {
+        "text": "The Dungeon is alive in its way, and it learns. When you grow, it grows. Do not let that make you proud; let it make you curious.",
+        "key": "arc.dialogue.hestia.8",
+        "priority": 0,
+        "weight": 1
+      },
+      {
+        "text": "Bell collects trouble the way other people collect coins. Tell him to rest, please. He never listens to me.",
+        "key": "arc.dialogue.hestia.9",
+        "priority": 0,
+        "weight": 1
+      },
+      {
+        "text": "If anything with horns turns up on the upper floors, you have my permission to run. Goddesses are allowed to say such things.",
+        "key": "arc.dialogue.hestia.10",
+        "priority": 0,
+        "weight": 3,
+        "notDefeated": [
+          "minotaur"
+        ]
+      },
+      {
+        "text": "Welf has been muttering about a black giant. When a smith mutters, a hammer is never far behind.",
+        "key": "arc.dialogue.hestia.11",
+        "priority": 0,
+        "weight": 3,
+        "defeated": [
+          "minotaur"
+        ],
+        "notDefeated": [
+          "black_goliath"
+        ]
+      },
+      {
+        "text": "The Water City, two heads. I do not like it. Two heads means two opinions, and both of them are wrong.",
+        "key": "arc.dialogue.hestia.12",
+        "priority": 0,
+        "weight": 3,
+        "defeated": [
+          "black_goliath"
+        ],
+        "notDefeated": [
+          "amphisbaena"
+        ]
+      },
+      {
+        "text": "Udaeus. Bones. I really dislike bones. Please do not bring any home.",
+        "key": "arc.dialogue.hestia.13",
+        "priority": 0,
+        "weight": 3,
+        "defeated": [
+          "amphisbaena"
+        ],
+        "notDefeated": [
+          "udaeus"
+        ]
+      },
+      {
+        "text": "That is the lot, then. I am very proud. Insufferably so. Come and be insufferable with me.",
+        "key": "arc.dialogue.hestia.14",
+        "priority": 0,
+        "weight": 3,
+        "defeated": [
+          "udaeus"
+        ]
+      }
+    ],
+    "farewell": [
+      {
+        "text": "Come back soon, {player}, and bring snacks.",
+        "key": "arc.dialogue.hestia.15"
+      },
+      {
+        "text": "Do not do anything I would not do. Or anything I would, really.",
+        "key": "arc.dialogue.hestia.16"
+      },
+      {
+        "text": "Goodbye! Wave at the Dungeon for me.",
+        "key": "arc.dialogue.hestia.17"
+      }
+    ]
+  }
+}

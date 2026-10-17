@@ -86,6 +86,18 @@ public final class DmGeometry {
     /** Ticks a ring wave needs to cross {@code reach} blocks (and a little past it). */
     public static int waveTicks(double reach, double start, double speed, double thick) { return (int) Math.ceil((reach + thick - start) / speed) + 1; }
 
+    /** The ticks a leap of {@code distance} blocks stays in the air: the move's own time, or longer when the distance would need more than 3 blocks a tick. */
+    public static int leapTicks(double distance, int baseTicks) {
+        return Math.max(Math.max(1, baseTicks), (int) Math.ceil(Math.max(0.0, distance) / 3.0));
+    }
+
+    /** The height above the line between take-off and landing after {@code k} of {@code n} ticks of a leap that peaks at {@code peak} blocks (a parabola: 0 at both ends). */
+    public static double arcHeight(int k, int n, double peak) {
+        if (n <= 0) return 0;
+        double t = Math.max(0.0, Math.min(1.0, k / (double) n));
+        return 4.0 * Math.max(0.0, peak) * t * (1.0 - t);
+    }
+
     /** Yaw offsets in radians of {@code count} projectiles fanned over {@code spreadDeg} degrees, centred on the aim (one projectile flies straight). */
     public static double[] fan(int count, double spreadDeg) {
         int n = Math.max(1, count);

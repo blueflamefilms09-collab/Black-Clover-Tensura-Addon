@@ -13,7 +13,10 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The four move tables: well formed, a real mix of moves, an attack at every distance, and a played-out fight through the scheduler. */
+/**
+ * Why: a boss whose table has no attack at some distance stands still, and one whose ultimate comes too soon or without a warning is unfair, so the four tables are
+ * checked as data (well formed, a real mix, an attack at every distance, a telegraph of 16 ticks at the opening and still 12 at the Gates, 56 and 42 for an ultimate) and played out through the real scheduler.
+ */
 class DmTablesTest {
     private static Map<String, List<DmSpec>> tables() {
         Map<String, List<DmSpec>> m = new LinkedHashMap<>();
@@ -270,7 +273,7 @@ class DmTablesTest {
     @Test
     void theRedHeadMovesAreTheOnesThatNeedTheRedHead() {
         assertTrue(AmphisbaenaTable.needsRedHead(AmphisbaenaTable.RED_MIST_BREATH));
-        assertTrue(AmphisbaenaTable.needsRedHead(AmphisbaenaTable.TWIN_CALAMITY));
+        assertFalse(AmphisbaenaTable.needsRedHead(AmphisbaenaTable.TWIN_CALAMITY), "the ultimate always exists: without the red head it is the flame alone");
         assertFalse(AmphisbaenaTable.needsRedHead(AmphisbaenaTable.BLUE_FLAME_BREATH));
         assertFalse(AmphisbaenaTable.needsRedHead(null));
         for (DmSpec s : AmphisbaenaTable.specs()) if (AmphisbaenaTable.needsRedHead(s.id())) assertNotNull(AmphisbaenaTable.byId(s.id()));

@@ -6,7 +6,7 @@ package com.newuniverse.nusmp.arc.danmachi;
  * other head fell. The game cannot aim at a head, so the rule is built from what the players CAN do: when the red head rears up to breathe (the wind-up of
  * the Red Mist Breath, plus a little after), the blows that land on the boss wear the head down, and enough of them cut it off. Physical blows count in
  * full, anti-magic blows count double (they unravel the mist), and spells count for nothing (the mist eats them). A head that is not cut when the window
- * closes forgets the wear. A boss that reaches 60% power loses the head anyway ({@link #forceCut}): the fight must never depend on a mechanic being found.
+ * closes forgets the wear. A boss that reaches {@value #FORCE_CUT_POWER}% power loses the head anyway ({@link #forceCut}): the fight must never depend on a mechanic being found.
  * Pure, so every rule is tested; the boss class feeds it the blows.
  */
 public final class HeadCut {
@@ -17,6 +17,11 @@ public final class HeadCut {
     public static final double CUT_FRACTION = 0.07;
     /** Ticks the head stays reared after the wind-up of the mist ends. */
     public static final int LINGER_TICKS = 40;
+    /** The power (percent) at which the fight tears the head off by itself: the Twin Calamity (60) still breathes the mist once, the Gates never do. */
+    public static final int FORCE_CUT_POWER = 80;
+
+    /** Does the fight itself take the head at this power? */
+    public static boolean mustCut(int power) { return power >= FORCE_CUT_POWER; }
 
     private boolean cut;
     private long windowUntil;
@@ -55,7 +60,7 @@ public final class HeadCut {
         return true;
     }
 
-    /** The head is torn off by the fight itself (the boss's power rose to 60%). Returns true if it was still on. */
+    /** The head is torn off by the fight itself (the boss's power rose to {@link #FORCE_CUT_POWER}). Returns true if it was still on. */
     public boolean forceCut() {
         if (cut) return false;
         cut = true;

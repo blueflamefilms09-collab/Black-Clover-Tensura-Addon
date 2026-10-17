@@ -4,7 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** Udaeus's rib guard: blocked from one side for ever, cracked by flanks, broken by a few cracks. */
+/**
+ * Why: Udaeus's ribs are the one mechanic of its fight and the players learn it by circling, so the block, the turn, the flank, the cracks, the break and the cry are
+ * tested as a state machine (one side is blocked for ever, a flank cracks a rib, enough cracks break the cage).
+ */
 class RibGuardTest {
     @Test
     void theFirstBlowLandsInFullAndTheRibsTurnToIt() {

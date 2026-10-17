@@ -6,7 +6,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The shapes on the floor: cones, lanes, ring waves, fans, spokes and the plan of marks. */
+/**
+ * Why: the telegraph and the strike of every move ask the same geometry whether a foe is inside the shape, so the cone, the lane, the ring wave, the fan, the spokes
+ * and the plan of marks are tested on the floor (a foe at the edge, behind, beside), the one place where a wrong sign would make a fight feel unfair.
+ */
 class DmGeometryTest {
     private static final double[] SOUTH = {0, 1}, EAST = {1, 0};
 
@@ -162,5 +165,26 @@ class DmGeometryTest {
         assertEquals(0, DmGeometry.markPlan(0, 0, 0, null, 2.3, 0).size());
         assertEquals(1, DmGeometry.markPlan(1, 5, 5, null, 2.3, 0).size());
         assertEquals(4, DmGeometry.markPlan(4, 5, 5, new double[][]{null, {1}}, 2.3, 0).size(), "bad foe entries are skipped");
+    }
+
+    @Test
+    void aLeapArcStartsAndEndsOnTheGroundAndPeaksInTheMiddle() {
+        assertEquals(0.0, DmGeometry.arcHeight(0, 10, 4.0), 1e-9);
+        assertEquals(0.0, DmGeometry.arcHeight(10, 10, 4.0), 1e-9);
+        assertEquals(4.0, DmGeometry.arcHeight(5, 10, 4.0), 1e-9);
+        assertEquals(DmGeometry.arcHeight(3, 10, 4.0), DmGeometry.arcHeight(7, 10, 4.0), 1e-9, "symmetric");
+        assertTrue(DmGeometry.arcHeight(3, 10, 4.0) < DmGeometry.arcHeight(5, 10, 4.0));
+        assertEquals(0.0, DmGeometry.arcHeight(4, 0, 4.0), 1e-9, "no air time, no arc");
+        assertEquals(0.0, DmGeometry.arcHeight(14, 10, 4.0), 1e-9, "past the end it stays on the ground");
+        assertEquals(0.0, DmGeometry.arcHeight(5, 10, -3.0), 1e-9, "a negative peak is no arc");
+    }
+
+    @Test
+    void aLongLeapTakesLongerSoTheBodyNeverMovesMoreThanThreeBlocksATick() {
+        assertEquals(8, DmGeometry.leapTicks(10.0, 8), "a short leap keeps the move's own time");
+        assertEquals(11, DmGeometry.leapTicks(32.0, 8), "32 blocks need 11 ticks at 3 a tick");
+        assertEquals(12, DmGeometry.leapTicks(36.0, 9));
+        assertEquals(1, DmGeometry.leapTicks(0.0, 0), "never zero ticks");
+        for (double d = 0; d <= 60; d += 1.7) assertTrue(d / DmGeometry.leapTicks(d, 8) <= 3.0 + 1e-9, "distance " + d);
     }
 }

@@ -6,7 +6,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The Minotaur's Hunt: who is the prey, when the mark moves, and how another fighter steals it. */
+/**
+ * Why: the Hunt is a curse on the weakest fighter unless the others can steal the mark, so who is chosen, when the mark moves and how three quick hits or one big blow
+ * take it are tested as a small state machine.
+ */
 class PreyBookTest {
     private static PreyBook.Candidate c(int id, int level, double dist) { return new PreyBook.Candidate(id, level, dist); }
 

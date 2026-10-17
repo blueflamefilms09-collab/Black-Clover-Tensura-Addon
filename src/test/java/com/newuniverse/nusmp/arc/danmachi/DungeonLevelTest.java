@@ -4,7 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The Dungeon Level rules: the Level of a fighter from their EP, the Level of a party, and when and how far a boss levels up. */
+/**
+ * Why: the Dungeon Level decides whether a boss changes at the Gates, so the Level of a fighter from their EP, the Level of a party and the steps a boss takes are
+ * tested at their edges (the exact EP of a new Level, an empty party, a bad config value).
+ */
 class DungeonLevelTest {
     @Test
     void theDefaultScaleIsOneLevelPerHalfDecadeOfEp() {

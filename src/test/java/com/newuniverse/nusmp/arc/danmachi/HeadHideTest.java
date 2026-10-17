@@ -4,7 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The Amphisbaena's red head and the Black Goliath's hide. */
+/**
+ * Why: the red head and the black hide are counters the player has to find, so every threshold of them (what counts, the window, the plates, the time the hide stays
+ * broken, the reset for a new fight) is pinned here.
+ */
 class HeadHideTest {
     // ------------------------------------------------------------------ the red head
     @Test
@@ -58,6 +61,13 @@ class HeadHideTest {
         h.open(200, 50);
         assertEquals(0.0, h.worn(), 1e-12, "the wear of the first window is forgotten");
         assertFalse(h.onHit(210, HeadCut.Kind.PHYSICAL, 10f, max));
+    }
+
+    @Test
+    void theFightTakesTheHeadAtTheEighthPercentStepAndNotBefore() {
+        for (int power : new int[]{0, 20, 40, 60, 79}) assertFalse(HeadCut.mustCut(power), "power " + power);
+        for (int power : new int[]{80, 100}) assertTrue(HeadCut.mustCut(power), "power " + power);
+        assertTrue(HeadCut.FORCE_CUT_POWER > 60, "the Twin Calamity (60) still has the red head the first time it is thrown");
     }
 
     @Test

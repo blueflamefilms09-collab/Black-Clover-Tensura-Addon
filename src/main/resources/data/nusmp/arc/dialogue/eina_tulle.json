@@ -1,0 +1,168 @@
+{
+  "character": "eina_tulle",
+  "voice": "#D0B060",
+  "lines": {
+    "greeting": [
+      {
+        "text": "Welcome to the Guild, {player}. I am {npc}, one of the advisers. Everything you do below goes into a record, and I would like yours to be a long one.",
+        "key": "arc.dialogue.eina_tulle.1",
+        "first": true
+      },
+      {
+        "text": "New face, new page. I am {npc}. Tell me your name and what you can do, {player}, and I will tell you which floors are sensible.",
+        "key": "arc.dialogue.eina_tulle.2",
+        "first": true
+      },
+      {
+        "text": "Back safely, {player}. Good. That is the only result the Guild truly cares about.",
+        "key": "arc.dialogue.eina_tulle.3",
+        "first": false
+      },
+      {
+        "text": "Sit down for a moment, {player}. Your record will not write itself.",
+        "key": "arc.dialogue.eina_tulle.4",
+        "first": false
+      },
+      {
+        "text": "The board is quiet today. In my experience that means somebody is about to do something foolish. Not you, I hope.",
+        "key": "arc.dialogue.eina_tulle.5",
+        "first": false
+      },
+      {
+        "text": "Rested, supplied, rope, light? Then go. And come back.",
+        "key": "arc.dialogue.eina_tulle.6",
+        "first": false
+      }
+    ],
+    "hint": [
+      {
+        "text": "Every adventurer and every monster has a Level in the Guild's books. A Level is a measure of how much a body has been through, and the Dungeon seems to notice it.",
+        "key": "arc.dialogue.eina_tulle.7",
+        "priority": 0,
+        "weight": 1
+      },
+      {
+        "text": "When a monster is nearly beaten, the Dungeon looks at the party. A party that is strong enough meets a monster that is stronger than it was a moment ago. That is not unfair, it is the Dungeon.",
+        "key": "arc.dialogue.eina_tulle.8",
+        "priority": 0,
+        "weight": 1
+      },
+      {
+        "text": "Do not fight a monster above your Level with a party below it. Fear is not a figure of speech down there: some of them can make you slow, and weak. Anti-magic does not care about that kind of noise.",
+        "key": "arc.dialogue.eina_tulle.9",
+        "priority": 0,
+        "weight": 1
+      },
+      {
+        "text": "The Guild pays for stones and for information. A fight you can describe to me is worth more than a fight you only survived.",
+        "key": "arc.dialogue.eina_tulle.10",
+        "priority": 0,
+        "weight": 1
+      },
+      {
+        "text": "A Minotaur has been seen on the upper floors, where nothing of its kind should be. The Guild rates it Level 2. It picks the weakest of a party and does not let go; put a wall at your back and let it run into it.",
+        "key": "arc.dialogue.eina_tulle.11",
+        "priority": 0,
+        "weight": 3,
+        "notDefeated": [
+          "minotaur"
+        ]
+      },
+      {
+        "text": "The Minotaur is down, and the Guild has put it in your record. Now the reports from the lower floors: the stone Goliath of the pit first, and behind it a Goliath that is the wrong colour. Black as slate, and plain swords glance off it. Bring something heavy, or a spell.",
+        "key": "arc.dialogue.eina_tulle.12",
+        "priority": 0,
+        "weight": 3,
+        "defeated": [
+          "minotaur"
+        ],
+        "notDefeated": [
+          "black_goliath"
+        ]
+      },
+      {
+        "text": "Beyond the giant's floor there is a city half under water, and something with two heads lives in it. One head breathes a flame that eats steel, the other a mist that eats magic. Take the red one first.",
+        "key": "arc.dialogue.eina_tulle.13",
+        "priority": 0,
+        "weight": 3,
+        "defeated": [
+          "black_goliath"
+        ],
+        "notDefeated": [
+          "amphisbaena"
+        ]
+      },
+      {
+        "text": "The White Palace is the last page the Guild has for now: a skeleton as tall as a house, with a black sword and ribs that turn to meet every blow. Do not strike it from one side only.",
+        "key": "arc.dialogue.eina_tulle.14",
+        "priority": 0,
+        "weight": 3,
+        "defeated": [
+          "amphisbaena"
+        ],
+        "notDefeated": [
+          "udaeus"
+        ]
+      },
+      {
+        "text": "That is every great monster the Guild has a page for. I will have to write new pages. The Dungeon never runs out of material; do not let that make you careless.",
+        "key": "arc.dialogue.eina_tulle.15",
+        "priority": 0,
+        "weight": 3,
+        "defeated": [
+          "udaeus"
+        ]
+      }
+    ],
+    "quest_offer": [
+      {
+        "text": "There is an open request at the counter, {player}: the Minotaur on the upper floors, a Level 2 where there should be none. Bring it down and I will mark the request done. Take friends; it prefers the weakest of them.",
+        "key": "arc.dialogue.eina_tulle.16",
+        "notDefeated": [
+          "minotaur"
+        ]
+      },
+      {
+        "text": "The Guild would like the Minotaur off the upper floors before it kills somebody's first expedition. Will you take the request, {player}? Bring it down and tell me how it went.",
+        "key": "arc.dialogue.eina_tulle.17",
+        "notDefeated": [
+          "minotaur"
+        ]
+      }
+    ],
+    "quest_done": [
+      {
+        "text": "You brought the Minotaur down. I have written it in your record, with today's date and a very long underline. Thank you, {player}.",
+        "key": "arc.dialogue.eina_tulle.18",
+        "defeated": [
+          "minotaur"
+        ]
+      },
+      {
+        "text": "The Minotaur is finished, and nobody had to carry anybody home. That is the best report I have had all month, {player}.",
+        "key": "arc.dialogue.eina_tulle.19",
+        "defeated": [
+          "minotaur"
+        ]
+      }
+    ],
+    "farewell": [
+      {
+        "text": "Mind the rules, {player}.",
+        "key": "arc.dialogue.eina_tulle.20"
+      },
+      {
+        "text": "Come back with all your fingers.",
+        "key": "arc.dialogue.eina_tulle.21"
+      },
+      {
+        "text": "Go on. And write down what you see.",
+        "key": "arc.dialogue.eina_tulle.22"
+      },
+      {
+        "text": "The Guild thanks you for your custom.",
+        "key": "arc.dialogue.eina_tulle.23"
+      }
+    ]
+  }
+}

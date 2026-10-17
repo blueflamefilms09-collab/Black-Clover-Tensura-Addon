@@ -3,8 +3,8 @@ package com.newuniverse.nusmp.arc.danmachi;
 import java.util.List;
 
 /**
- * Why: Udaeus's moves are numbers first (range windows, telegraphs, shapes, damage) and the table must be checkable without a game: every move has a
- * telegraph of at least a second at the Gates, an attack exists at every distance, the ultimate is rare and leaves it exposed. This pure table is that;
+ * Why: Udaeus's moves are numbers first (range windows, telegraphs, shapes, damage) and the table must be checkable without a game: every move has a telegraph
+ * that is still 12 ticks (an ultimate 42) at the Gates, an attack exists at every distance, the ultimate is rare and leaves it exposed. This pure table is that;
  * {@code UdaeusBoss} turns each row into a framework {@code Move}.
  *
  * <p>The shape of the fight (the skeletal giant of the 37th floor's White Palace, see {@code docs/arc/udaeus.md}): a great black sword up close (the slash,

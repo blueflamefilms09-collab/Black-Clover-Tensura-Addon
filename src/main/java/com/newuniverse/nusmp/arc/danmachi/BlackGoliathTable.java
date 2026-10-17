@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * Why: the Black Goliath's moves are numbers first (range windows, telegraphs, shapes, damage) and the table must be checkable without a game: every move
- * has a telegraph of at least a second at the Gates, an attack exists at every distance, the ultimate is rare and leaves it exposed. This pure table is that;
+ * has a telegraph that is still 12 ticks (an ultimate 42) at the Gates, an attack exists at every distance, the ultimate is rare and leaves it exposed. This pure table is that;
  * {@code BlackGoliathBoss} turns each row into a framework {@code Move}.
  *
  * <p>The shape of the fight (the Dungeon's own answer to a god's power, the irregular Goliath of the 18th floor, see {@code docs/arc/black_goliath.md}): a
