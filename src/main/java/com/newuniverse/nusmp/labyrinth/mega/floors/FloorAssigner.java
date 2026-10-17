@@ -22,7 +22,8 @@ import java.util.Map;
  * tick and {@code MegaDungeon.floorAt} just reads it. It is idempotent: a second run over the same sector writes the same numbers. The number of floors per
  * sector ({@link Sector#perRegion}) is decided once, the first time the sector is numbered, and stored in the sector, so changing the config later never
  * renumbers a sector that exists; and a sector of a road that already has numbered sectors takes THEIR length, because floors are counted as
- * {@code chainIndex * perRegion + band} and two lengths in one chain would overlap (a 5-floor sector after a 10-floor one would reuse floors +6..+10).
+ * {@code chainIndex * perRegion + band} and two lengths in one chain would overlap (a 5-floor sector after a 10-floor one would reuse floors +6..+10); a
+ * regenerated sector has new, unnumbered rooms but keeps the length it was given (see {@link FloorBands#lengthFor}).
  * {@link #ensureBanded} is the safety net used when a player is found in a sector whose rooms were never numbered: a world saved by 1.54.0 has none, and a
  * generator that forgot to announce a sector would leave none; the sector is numbered on first contact instead of being read as one endless first floor.
  * How the graph is cut into floors is {@link FloorBands.Strategy} (config {@code floors.banding}). Nothing here may break generation, so every failure is
@@ -59,16 +60,12 @@ public final class FloorAssigner implements SectorListener {
         Room landing = landingOf(s);
         Room arena = arenaOf(s);
         List<FloorBands.Node> nodes = new ArrayList<>(s.rooms.size());
-        int lowest = Integer.MAX_VALUE;
-        for (Room r : s.rooms) {
-            nodes.add(new FloorBands.Node(r.id, r.kind));
-            lowest = Math.min(lowest, r.id);
-        }
-        int root = landing != null ? landing.id : lowest;                                // a sector without a Landing is walked from its first room
-        Map<Integer, Integer> bands = FloorBands.bands(nodes, root, arena == null ? FloorBands.NONE : arena.id, s.edges, per, strategy());
+        for (Room r : s.rooms) nodes.add(new FloorBands.Node(r.id, r.kind));
+        // a sector without a Landing is walked from its lowest room id (the pure rule decides), one without an arena has the deepest room play it
+        Map<Integer, Integer> floors = FloorBands.floors(nodes, landing == null ? FloorBands.NONE : landing.id, arena == null ? FloorBands.NONE : arena.id, s.edges, s.polarity, s.chainIndex, per, strategy());
         int changed = 0;
         for (Room r : s.rooms) {
-            int floor = FloorMap.floorOf(s.polarity, s.chainIndex, bands.getOrDefault(r.id, per), per);
+            int floor = floors.getOrDefault(r.id, FloorMap.floorOf(s.polarity, s.chainIndex, per, per));
             if (r.floor != floor) {
                 r.floor = floor;
                 changed++;
@@ -101,6 +98,18 @@ public final class FloorAssigner implements SectorListener {
         }
     }
 
+    /**
+     * Numbers every finished sector whose rooms carry no floors yet: the sectors of a world saved by 1.54.0, or of a generator that never announced one.
+     * Called once when the server has started, so {@code MegaDungeon.floorAt} is right for old worlds from the first tick instead of from the first player
+     * who happens to stand in the sector. Returns how many sectors were numbered.
+     */
+    public static int numberOldSectors(MinecraftServer server) {
+        if (server == null) return 0;
+        int n = 0;
+        for (Sector s : new ArrayList<>(MegaData.get(server).sectors())) if (ensureBanded(server, s)) n++;
+        return n;
+    }
+
     /** Has any room of the sector been given a floor? (A numbered room is never floor 0: floors are signed and never 0.) */
     public static boolean isBanded(Sector s) {
         for (Room r : s.rooms) if (r.floor != 0) return true;
@@ -108,16 +117,21 @@ public final class FloorAssigner implements SectorListener {
     }
 
     /**
-     * The length to give a sector that was never numbered: the length of any other numbered sector of the same road (so the chain's floors never overlap or
-     * leave a gap), else the config's {@code perRegion}.
+     * The length to give a sector whose rooms carry no numbers: the length of any other numbered sector of the same road (so the chain's floors never overlap
+     * or leave a gap), else the length the sector already carries when a numbering decided it before (a regenerated sector has new, unnumbered rooms but keeps
+     * its length), else the config's {@code perRegion}. The rule itself is the pure {@link FloorBands#lengthFor}.
      */
     static int firstPerRegion(Sector s, MegaData data) {
+        int other = 0;
         if (data != null) {
-            for (Sector other : data.sectors()) {
-                if (other != s && other.polarity == s.polarity && isBanded(other)) return Math.max(1, other.perRegion);
+            for (Sector o : data.sectors()) {
+                if (o != s && o.polarity == s.polarity && isBanded(o)) {
+                    other = Math.max(1, o.perRegion);
+                    break;
+                }
             }
         }
-        return Math.max(1, FloorsConfig.get(FloorsConfig.PER_REGION));
+        return FloorBands.lengthFor(s.perRegion, other, FloorsConfig.get(FloorsConfig.PER_REGION));
     }
 
     /** The Landing: the room that holds the arrival marker, else the first room of kind LANDING, else null. */

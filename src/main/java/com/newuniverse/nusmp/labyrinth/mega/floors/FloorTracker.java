@@ -16,6 +16,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import org.slf4j.Logger;
@@ -38,8 +39,10 @@ import java.util.UUID;
  * <p>The floor is read from the room under the player's feet and NOT from {@code MegaDungeon.floorAt}: that method answers the sector's first floor for a
  * position that is in no room (a door cap alcove, the air above the rooms, a gap between sectors), which would make a player walking through a cap flip down
  * to floor +1 and back and fire two false floor changes. A position in no room keeps the floor the player was on. Going back to Floor 0 is leaving the
- * dimension: it forgets the floor and fires nothing, so a retreat never changes the lock. {@link #check} does one player, which is what the tick calls and
- * what the self-tests call directly (a stand-in player is not in the level's player list).
+ * dimension: it forgets the floor and fires nothing, so a retreat never changes the lock. A locked player who stands on the OTHER road and is about to be sent
+ * out by the hard guard ({@link HardLock#shouldCastOut}) is not tracked at all, so a teleport that the lock will undo within a second cannot earn floor events or
+ * quest credit on a road that is closed to them. {@link #check} does one player, which is what the tick calls and what the self-tests call directly (a
+ * stand-in player is not in the level's player list).
  */
 public final class FloorTracker {
     private FloorTracker() {}
@@ -56,6 +59,7 @@ public final class FloorTracker {
         bus.addListener(FloorTracker::onLogout);
         bus.addListener(FloorTracker::onRespawn);
         bus.addListener(FloorTracker::onChangedDimension);
+        bus.addListener(FloorTracker::onServerStarted);
         bus.addListener(FloorTracker::onServerStopped);
     }
 
@@ -84,6 +88,7 @@ public final class FloorTracker {
         if (p == null || p.isSpectator() || !p.isAlive()) return;
         ServerLevel level = p.serverLevel();
         if (!MegaDungeon.in(level)) return;
+        if (HardLock.shouldCastOut(p)) return;                                    // locked to the other road and about to be sent out: they are not really on this one, so no floor event and no quest credit
         int floor = floorAt(level, p.blockPosition());
         if (floor == 0) return;                                                   // in no room: keep the floor they were on
         int previous = CURRENT.getOrDefault(p.getUUID(), 0);
@@ -190,6 +195,16 @@ public final class FloorTracker {
         if (!(e.getEntity() instanceof ServerPlayer p)) return;
         CURRENT.remove(p.getUUID());                                              // leaving the dungeon (for Floor 0 or anywhere) forgets the floor and fires nothing
         AlignmentNet.send(p);
+    }
+
+    /** Numbers the sectors of an old world (saved before floors existed) once, so the first player to arrive reads real floors. Never throws. */
+    private static void onServerStarted(ServerStartedEvent e) {
+        try {
+            int n = FloorAssigner.numberOldSectors(e.getServer());
+            if (n > 0) LOG.info("[nusmp] Numbered the floors of {} sector(s) that were saved before floors existed.", n);
+        } catch (RuntimeException ex) {
+            LOG.warn("[nusmp] The sectors saved before floors existed could not be numbered: {}", ex.toString());
+        }
     }
 
     private static void onServerStopped(ServerStoppedEvent e) {

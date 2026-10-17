@@ -35,7 +35,7 @@ public final class AlignmentAttachments {
 
     /** {@code nusmp:dungeon_alignment}: saved with the player (unless it is still the default), copied on death and on the End return. */
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<PlayerDungeonAlignment>> ALIGNMENT = ATTACHMENTS.register("dungeon_alignment",
-            () -> AttachmentType.builder(PlayerDungeonAlignment::new).serialize(CODEC, a -> !a.isDefault()).copyOnDeath().build());
+            () -> AttachmentType.builder(() -> new PlayerDungeonAlignment()).serialize(CODEC, a -> !a.isDefault()).copyOnDeath().build());
 
     /** The player's alignment (created empty on first use). The returned object is live: changing it through {@link AlignmentRules} changes the player's save. */
     public static PlayerDungeonAlignment get(Player player) { return player.getData(ALIGNMENT); }

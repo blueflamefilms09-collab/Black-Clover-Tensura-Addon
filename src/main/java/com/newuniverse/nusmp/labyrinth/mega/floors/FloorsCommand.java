@@ -154,8 +154,12 @@ public final class FloorsCommand {
         if (s.rooms.isEmpty()) return fail(src, text("bands.empty", "Sector %s has no rooms.", id));
         Room landing = FloorAssigner.landingOf(s), arena = FloorAssigner.arenaOf(s);
         List<FloorBands.Node> nodes = new ArrayList<>();
-        for (Room r : s.rooms) nodes.add(new FloorBands.Node(r.id, r.kind));
-        int root = landing != null ? landing.id : s.rooms.get(0).id;
+        int lowest = Integer.MAX_VALUE;
+        for (Room r : s.rooms) {
+            nodes.add(new FloorBands.Node(r.id, r.kind));
+            lowest = Math.min(lowest, r.id);
+        }
+        int root = landing != null ? landing.id : lowest;                              // the same root the numbering uses
         Map<Integer, Integer> depth = FloorBands.depths(nodes, root, s.edges);
         ok(src, text("bands.head", "Sector %s (%s, chain index %s, state %s): %s rooms, %s floors per sector, floors %s to %s. Landing #%s, arena %s.",
                 s.id, s.polarity.id(), s.chainIndex, s.state.name(), s.rooms.size(), s.perRegion, FloorsText.floor(s.firstFloor()), FloorsText.floor(s.lastFloor()),

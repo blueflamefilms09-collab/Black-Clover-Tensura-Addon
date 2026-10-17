@@ -136,6 +136,11 @@ class AlignmentRulesTest {
         assertFalse(AlignmentRules.clearsPrevious(s, 2, 3), "+2 and +3 were never reached after that: below the deepest, so no event");
         assertFalse(AlignmentRules.clearsPrevious(s, 1, -1), "from one road to the other is no clear");
         assertFalse(AlignmentRules.clearsPrevious(s, -1, 1));
+        PlayerDungeonAlignment t = new PlayerDungeonAlignment();
+        AlignmentRules.onFloorEntered(t, 1);
+        assertFalse(AlignmentRules.clearsPrevious(t, 1, -3), "a jump to a deeper floor of the OTHER road does not clear the floor they left");
+        AlignmentRules.onFloorEntered(t, -2);
+        assertFalse(AlignmentRules.clearsPrevious(t, -2, 5), "nor does a jump the other way");
     }
 
     @Test void theSectorBoundaryIsJustAnotherStep() {
@@ -249,6 +254,20 @@ class AlignmentRulesTest {
         assertTrue(AlignmentRules.mayEnter(s.chosen(), s.locked(), A, true));
         assertTrue(AlignmentRules.choose(s, null), "forgetting the road is allowed");
         assertNull(s.chosen());
+        assertTrue(AlignmentRules.choose(s, A));
+        assertTrue(AlignmentRules.lock(s, 9));
+        assertTrue(AlignmentRules.choose(s, null), "forgetting the road of a locked player");
+        assertFalse(s.locked(), "a lock without a road cannot exist, so forgetting the road opens it");
+        assertEquals(0L, s.lockedAt());
+        assertTrue(s.isDefault(), "nothing is left of the state");
+    }
+
+    @Test void aLockTimeIsNeverNegative() {
+        PlayerDungeonAlignment s = new PlayerDungeonAlignment();
+        AlignmentRules.choose(s, H);
+        assertTrue(AlignmentRules.lock(s, -50));
+        assertEquals(0L, s.lockedAt(), "a game time below zero is stored as zero");
+        assertTrue(s.locked());
     }
 
     // ------------------------------------------------------------------------------------------------ the save
@@ -300,6 +319,17 @@ class AlignmentRulesTest {
         assertNotEquals(base, PlayerDungeonAlignment.of("holy", true, 3, 3, 99));                          // the Abyssal record
         assertNotEquals(base, PlayerDungeonAlignment.of("holy", true, 3, 2, 100));                         // the time of the lock
         assertNotEquals(base, null);
+        // a lock that closed at game time 0 differs from no lock only by the flag
+        assertNotEquals(PlayerDungeonAlignment.of("holy", true, 3, 2, 0), PlayerDungeonAlignment.of("holy", false, 3, 2, 0));
+    }
+
+    @Test void onlyAStateThatNeverTouchedTheDungeonIsTheDefaultAndNotSaved() {
+        assertTrue(new PlayerDungeonAlignment().isDefault());
+        assertTrue(PlayerDungeonAlignment.of("", false, 0, 0, 0).isDefault());
+        assertFalse(PlayerDungeonAlignment.of("holy", false, 0, 0, 0).isDefault(), "a road alone is a record");
+        assertFalse(PlayerDungeonAlignment.of("", false, 4, 0, 0).isDefault(), "a Holy record alone");
+        assertFalse(PlayerDungeonAlignment.of("", false, 0, 4, 0).isDefault(), "an Abyssal record alone");
+        assertFalse(PlayerDungeonAlignment.of("abyssal", true, 0, 0, 0).isDefault(), "a lock at game time 0");
     }
 
     @Test void deepestIsReadPerRoadAndNullHasNone() {

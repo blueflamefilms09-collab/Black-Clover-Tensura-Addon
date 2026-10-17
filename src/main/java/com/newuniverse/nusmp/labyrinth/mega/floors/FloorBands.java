@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.labyrinth.mega.floors;
 
 import com.newuniverse.nusmp.labyrinth.mega.FloorMap;
+import com.newuniverse.nusmp.labyrinth.mega.Polarity;
 import com.newuniverse.nusmp.labyrinth.mega.RoomKind;
 
 import java.util.ArrayDeque;
@@ -36,16 +37,18 @@ import java.util.Map;
  * Landing to the arena are spread over bands 1..perRegion-1 and everything as deep as the arena is the last band. With no usable arena (none exists, it
  * cannot be reached, or it stands in the Landing's own cell) the deepest reachable room plays the arena, so a failed or odd sector still gets a sensible
  * spread and never an exception. It is exact when the arena is at least perRegion-1 doorways from the Landing and few rooms are deeper than the arena.
- * The assembler does not promise that: it fills a region with about a hundred rooms and many loops (rooms that merely touch share a doorway), so on its
- * real output the arena is only 3 to 7 doorways away, three or four of the nine early floors have no room at all, and about half of the rooms (all the
- * ones as deep as the arena) pile up on the last floor.
+ * The assembler does not promise that: it fills a region with about a hundred rooms and many loops (rooms that merely touch share a doorway), so on the
+ * simulator's output (200 sectors of the assembler over its stand-in catalog, measured for this class: 123 rooms, the arena 5.4 doorways from the Landing on
+ * average, the deepest room 10.4) three or four of the nine early floors have no room at all and more than half of the rooms (all the ones as deep as the
+ * arena) pile up on the last floor.
  *
  * <p>{@link Strategy#EVEN} keeps the same invariants but spreads the plain rooms by RANK instead of by raw depth: they are sorted by (depth, room id) and
  * cut into perRegion-1 runs of (nearly) equal size, so every one of the floors 1..perRegion-1 holds about the same number of rooms (the "about ten rooms
  * per floor" the design counts on), the last floor is the boss chain alone, and a deeper room never has a lower band (the sort puts every shallower room
  * first), so bands still never fall along a shortest path. The price is that two rooms at the SAME depth may land on neighbouring floors (the cut can
  * fall inside a depth level); the order inside a level is the room id, which is placement order and so keeps siblings together. The result depends only on
- * the graph (depths and ids), never on the order the rooms or edges are listed in.
+ * the graph (depths and ids), never on the order the rooms or edges are listed in. On the same 200 simulated sectors it puts 13 rooms on each of the nine
+ * early floors and 4 on the last (the arena, the antechamber, the vault and the Way Onward) and leaves no floor empty.
  */
 public final class FloorBands {
     private FloorBands() {}
@@ -87,6 +90,20 @@ public final class FloorBands {
     /** Kinds that stand at or behind the Guardian's arena: they are always the last band. */
     public static boolean isBeyondArena(RoomKind kind) {
         return kind == RoomKind.ARENA || kind == RoomKind.ANTECHAMBER || kind == RoomKind.VAULT || kind == RoomKind.ONWARD;
+    }
+
+    /**
+     * Why: floors are counted {@code chainIndex * perRegion + band}, so every sector of one road must be the same length or two sectors would claim the same
+     * floor numbers (a 5-floor sector after a 10-floor one would reuse +6..+10, and the lock, the quests and the boss rule all assume one floor means one
+     * place). This is the one rule that decides the length of a sector that is about to be numbered, kept pure so it can be pinned. In order: the length of
+     * another numbered sector of the same road wins ({@code otherNumbered}, 0 when there is none: the chain stays consistent); else the length the sector
+     * already carries wins when it is not the constructor's default ({@code stored}: a sector that was numbered before and then regenerated keeps its length
+     * even though its rooms are new and unnumbered, so a config change never renumbers it); else the config's value ({@code configured}). Never below 1.
+     */
+    public static int lengthFor(int stored, int otherNumbered, int configured) {
+        if (otherNumbered > 0) return otherNumbered;
+        if (stored > 0 && stored != FloorMap.DEFAULT_PER_REGION) return stored;
+        return Math.max(1, configured);
     }
 
     /**
@@ -143,6 +160,26 @@ public final class FloorBands {
         Map<Integer, Integer> out = new LinkedHashMap<>();
         if (rooms == null) return out;
         for (Node n : rooms) out.put(n.id(), band.get(n.id()));                       // in the order the caller listed the rooms
+        return out;
+    }
+
+    /**
+     * Why: the assigner's last step (a band becomes a SIGNED floor of a chain: the road's sign, the sector's place in the chain) is arithmetic that decides
+     * whether the Abyssal road counts downwards and whether the second sector of a chain starts at +11, so it lives here, pure and tested, and the assigner only
+     * copies the answer into the rooms. {@code landingId} may be {@link #NONE} (a sector whose Landing cannot be found is walked from its lowest room id, so a
+     * damaged sector still gets floors); a null polarity reads as HOLY. The result is {@code FloorMap.floorOf(polarity, chainIndex, band, perRegion)} for every
+     * room, keyed by room id in the order of {@code rooms}.
+     */
+    public static Map<Integer, Integer> floors(List<Node> rooms, int landingId, int arenaId, List<int[]> edges, Polarity polarity, int chainIndex, int perRegion, Strategy strategy) {
+        int per = Math.max(1, perRegion);
+        Polarity road = polarity == null ? Polarity.HOLY : polarity;
+        int root = landingId;
+        if (root == NONE && rooms != null && !rooms.isEmpty()) {
+            root = rooms.get(0).id();
+            for (Node n : rooms) root = Math.min(root, n.id());
+        }
+        Map<Integer, Integer> out = new LinkedHashMap<>();
+        for (Map.Entry<Integer, Integer> e : bands(rooms, root, arenaId, edges, per, strategy).entrySet()) out.put(e.getKey(), FloorMap.floorOf(road, chainIndex, e.getValue(), per));
         return out;
     }
 
