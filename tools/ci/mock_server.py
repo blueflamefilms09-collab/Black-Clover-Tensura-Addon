@@ -96,6 +96,10 @@ def handle(cmd):
                 polls[s["id"]] = 0
         save()
         return "regen: queued"
+    if c == "reload":
+        return "Reloaded!"
+    if c == "multiverse mega selftest":
+        return "selftest safe.rest OK healed 12.0 -> 20.0\nselftest guard.chain OK sector 0 unsealed\nselftest summary ok=2 fail=0"
     if c.startswith("save-all"):
         return "Saved the game"
     if c.startswith("multiverse"):

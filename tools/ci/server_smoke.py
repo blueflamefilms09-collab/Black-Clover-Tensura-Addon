@@ -210,7 +210,14 @@ class Smoke:
 
     @staticmethod
     def unknown_command(text):
-        return "Unknown or incomplete command" in text or "Unknown command" in text
+        return "Unknown or incomplete command" in text or "Unknown command" in text or "Incorrect argument for command" in text
+
+    @staticmethod
+    def missing(text):
+        """The answer of the game when the thing asked about does not exist in this build (a pool, a structure, a command)."""
+        t = text.lower()
+        return ("unknown" in t or "there is no template pool" in t or "there is no structure" in t or "does not exist" in t or "no such" in t
+                or "incorrect argument for command" in t)
 
     # ---- preparation
     def prepare(self):
@@ -310,6 +317,26 @@ class Smoke:
         else:
             self.ok("log-" + label, "no mod-related ERROR or exception in the server log")
 
+    def phase_reload(self):
+        """/reload runs every datapack reload listener of the mod (themes, factions, compat tables, recipes) against the real registries."""
+        r = self.run("reload")
+        time.sleep(4)
+        (self.ok if "reload" in r.lower() else self.fail)("reload", r.strip()[:160])
+
+    SELFTEST_RE = re.compile(r"^selftest (\S+) (OK|FAIL)[: ]\s*(.*)$", re.M)
+
+    def phase_selftests(self):
+        text = self.run("multiverse mega selftest")
+        found = 0
+        for m in self.SELFTEST_RE.finditer(text):
+            key, level, detail = m.groups()
+            if key == "summary":
+                continue
+            found += 1
+            (self.ok if level == "OK" else self.fail)("selftest-" + key, detail.strip()[:240])
+        if found == 0:
+            (self.fail if self.args.strict else self.skip)("selftests", "no self-test reported: " + text.strip()[:160])
+
     def phase_dimension(self):
         r = self.run("execute in nusmp:mega_dungeon run forceload add 0 0")
         if re.search(r"[Mm]arked", r):
@@ -329,8 +356,8 @@ class Smoke:
         r = self.run("locate structure nusmp:mega_gateway")
         if "nearest" in r.lower():
             self.ok("locate-gateway", r.strip()[:200])
-        elif "Unknown" in r or "not a valid" in r.lower() or "Invalid" in r:
-            self.skip("locate-gateway", "the structure does not exist in this build")
+        elif self.missing(r) or "not a valid" in r.lower() or "Invalid" in r:
+            (self.fail if self.args.strict else self.skip)("locate-gateway", "the structure does not exist in this build: " + r.strip()[:120])
         else:
             self.fail("locate-gateway", r.strip()[:200])
 
@@ -341,8 +368,8 @@ class Smoke:
             x += 300
             if "Generated jigsaw" in r or "generated jigsaw" in r.lower():
                 self.ok("jigsaw-" + pool, "vanilla Jigsaw placed our pool with its processors")
-            elif "Unknown" in r or "does not exist" in r or "no such" in r.lower() or "Invalid" in r:
-                self.skip("jigsaw-" + pool, r.strip()[:120])
+            elif self.missing(r) or "Invalid" in r:
+                (self.fail if self.args.strict else self.skip)("jigsaw-" + pool, r.strip()[:120])
             else:
                 self.fail("jigsaw-" + pool, r.strip()[:200])
 
@@ -380,7 +407,7 @@ class Smoke:
     def phase_mega(self):
         text, _ = self.status()
         if self.unknown_command(text):
-            self.skip("mega", "the /multiverse mega command is not in this build")
+            (self.fail if self.args.strict else self.skip)("mega", "the /multiverse mega command is not in this build")
             return False
         r = self.run("multiverse mega expand")
         if "queued" not in r.lower():
@@ -475,7 +502,10 @@ class Smoke:
             self.phase_dimension()
             self.phase_locate()
             self.phase_jigsaw()
+            self.phase_reload()
             ran = self.phase_mega()
+            if ran:
+                self.phase_selftests()
             self.scan_log("run")
             if self.args.restart and ran:
                 self.phase_restart()
@@ -521,6 +551,7 @@ def main(argv):
     ap.add_argument("--gen-timeout", type=int, default=600)
     ap.add_argument("--sectors", type=int, default=3)
     ap.add_argument("--restart", action="store_true")
+    ap.add_argument("--strict", action="store_true", help="a missing pool, structure or command is a FAILURE (the integrated build must have them all)")
     ap.add_argument("--no-deps", action="store_true", help="do not download TerraBlender (self-test with a stand-in server)")
     ap.add_argument("--quiet", action="store_true")
     args = ap.parse_args(argv)
