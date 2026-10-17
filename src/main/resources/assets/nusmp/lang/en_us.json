@@ -5559,5 +5559,8 @@
   "arc.dialogue.zora_ideale.29": "Wandering bosses walk the rooms like landlords. If you hear heavy footsteps, check your exits before you check your hair.",
   "arc.dialogue.zora_ideale.30": "Tch. Don't die stupidly. Die for something good, if you have to.",
   "arc.dialogue.zora_ideale.31": "Go on, get lost. Watch the floor.",
-  "arc.dialogue.zora_ideale.32": "Hah. Come back and tell me what you stepped on."
+  "arc.dialogue.zora_ideale.32": "Hah. Come back and tell me what you stepped on.",
+  "entity.nusmp.meliodas": "Meliodas",
+  "entity.nusmp.escanor": "Escanor",
+  "entity.nusmp.ban": "Ban"
 }
