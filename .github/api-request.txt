@@ -71,3 +71,15 @@
 ^de/maxhenkel/voicechat/api/.*$
 ^net/minecraft/advancements/.*$
 ^net/neoforged/neoforge/event/entity/player/AdvancementEvent.*$
+# ---- 1.55.0: the WHOLE Minecraft and NeoForge API plus the libraries the mod compiles against, so tools/typecheck can type-check any new code offline
+# (the earlier list covered what the code used at the time; every builder of the Mega-Dungeon met a "stub gap" because of the rest)
+^net/minecraft/.*$
+^net/neoforged/.*$
+^cpw/mods/modlauncher/api/.*$
+^com/electronwill/nightconfig/.*$
+^software/bernie/geckolib/.*$
+^net/tslat/smartbrainlib/.*$
+^dev/architectury/.*$
+^top/theillusivec4/curios/.*$
+^dev/ftb/.*$
+^net/bettercombat/.*$
