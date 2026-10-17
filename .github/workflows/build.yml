@@ -12,6 +12,8 @@ permissions:
 
 jobs:
   build:
+    # a commit message with [smoke-only] asks for the server smoke test (smoke.yml) INSTEAD of a build and a release
+    if: ${{ !contains(github.event.head_commit.message, '[smoke-only]') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
