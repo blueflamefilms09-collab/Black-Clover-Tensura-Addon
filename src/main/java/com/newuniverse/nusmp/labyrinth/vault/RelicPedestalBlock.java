@@ -39,6 +39,24 @@ public final class RelicPedestalBlock extends BaseEntityBlock {
     /** The model's three parts: a 16x2 base, a 10-wide column to y 11, a 12-wide top plate to y 13. */
     private static final VoxelShape SHAPE = Shapes.or(Block.box(0, 0, 0, 16, 2, 16), Block.box(3, 2, 3, 13, 11, 13), Block.box(2, 11, 2, 14, 13, 14));
 
+    /**
+     * 1.54.0: asked before a held relic is dropped because the block was removed. {@code true} (no guard installed: the old behaviour) drops it;
+     * {@code false} keeps it from dropping. The Crucible of Choice answers false for a pedestal that shows a PREVIEW, a relic that was never issued:
+     * dropping that copy would hand out a relic outside the ledger and outside the one-relic-per-region rule.
+     */
+    @FunctionalInterface
+    public interface DropGuard extends java.util.function.BiPredicate<Level, BlockPos> {}
+
+    private static volatile DropGuard dropGuard;
+
+    /** Installs (or, with null, removes) the drop guard; called once at start-up by the Mega-Dungeon's theme builder. */
+    public static void setDropGuard(DropGuard guard) { dropGuard = guard; }
+
+    private static boolean mayDrop(Level level, BlockPos pos) {
+        DropGuard guard = dropGuard;
+        return guard == null || guard.test(level, pos);
+    }
+
     public RelicPedestalBlock(BlockBehaviour.Properties props) { super(props); }
 
     @Override
@@ -69,7 +87,7 @@ public final class RelicPedestalBlock extends BaseEntityBlock {
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof RelicPedestalBlockEntity be) {
             ItemStack held = be.getHeld();
-            if (!held.isEmpty()) Block.popResource(level, pos, held.copy());                    // never lose an issued relic with the block
+            if (!held.isEmpty() && mayDrop(level, pos)) Block.popResource(level, pos, held.copy());      // never lose an issued relic with the block (1.54.0: but never drop a Crucible preview)
         }
         super.onRemove(state, level, pos, newState, movedByPiston);
     }

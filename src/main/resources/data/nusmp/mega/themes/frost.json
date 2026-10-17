@@ -1,0 +1,29 @@
+{
+  "_why": "Stone bricks, polished diorite floors and snow-block trim with spruce: a cold monastery. Packed ice is deliberately NOT used (it is slippery, and a dungeon fight on a random patch of ice is a hazard nobody asked for); calcite stands in for the floor wear, and every warm lantern is turned into a soul lantern so the light is cold too (the explicit map).",
+  "id": "frost",
+  "name": "Frost",
+  "color": "#8FD3F4",
+  "families": {
+    "brick": "minecraft:stone_bricks",
+    "tile": "minecraft:polished_diorite",
+    "polished": "minecraft:snow_block",
+    "chiseled": "minecraft:chiseled_stone_bricks",
+    "cobbled": "minecraft:cobblestone",
+    "cracked_brick": "minecraft:cracked_stone_bricks",
+    "cracked_tile": "minecraft:calcite",
+    "rock": "minecraft:stone",
+    "wood": "minecraft:spruce_planks"
+  },
+  "explicit": {
+    "minecraft:lantern": "minecraft:soul_lantern"
+  },
+  "relics": {
+    "keywords": ["frost", "snow", "ice", "winter", "cold", "permafrost", "hyperborean", "glacier", "freez", "season", "blizzard", "white"]
+  },
+  "catastrophes": {
+    "collapse": 3,
+    "flood": 2,
+    "spirit": 1
+  },
+  "ambient": "minecraft:snowflake"
+}

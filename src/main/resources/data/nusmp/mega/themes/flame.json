@@ -1,0 +1,32 @@
+{
+  "_why": "Blackstone and gilded blackstone with dark oak: a forge-temple. Rough blackstone walls on polished blackstone brick floors with gold flecks in the wall wear look like a bastion that was lived in; every soul light is turned back into a warm one so no cold blue shows in a Flame sector (the explicit map). Collapse is its favourite catastrophe: heat cracks stone.",
+  "id": "flame",
+  "name": "Flame",
+  "color": "#E8741E",
+  "families": {
+    "brick": "minecraft:blackstone",
+    "tile": "minecraft:polished_blackstone_bricks",
+    "polished": "minecraft:polished_blackstone",
+    "chiseled": "minecraft:chiseled_polished_blackstone",
+    "cobbled": "minecraft:basalt",
+    "cracked_brick": "minecraft:gilded_blackstone",
+    "cracked_tile": "minecraft:cracked_polished_blackstone_bricks",
+    "rock": "minecraft:basalt",
+    "wood": "minecraft:dark_oak_planks"
+  },
+  "explicit": {
+    "minecraft:soul_lantern": "minecraft:lantern",
+    "minecraft:soul_wall_torch": "minecraft:wall_torch",
+    "minecraft:soul_torch": "minecraft:torch",
+    "minecraft:soul_campfire": "minecraft:campfire"
+  },
+  "relics": {
+    "keywords": ["flame", "fire", "ember", "phoenix", "hellfire", "infernal", "dragon", "sun", "burn", "efreeti", "heat", "thermo", "cinder", "forge"]
+  },
+  "catastrophes": {
+    "collapse": 3,
+    "flood": 1,
+    "spirit": 2
+  },
+  "ambient": "minecraft:flame"
+}

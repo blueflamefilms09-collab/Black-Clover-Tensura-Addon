@@ -1,0 +1,27 @@
+{
+  "_why": "Tuff bricks, oxidised cut copper floors and polished tuff trim with spruce: a lightning observatory. The copper is waxed so it never ages in game, the chiselled lintels are oxidised chiselled copper, and weathered and exposed copper stand in for the wear (an inlaid look, like a trial chamber). Copper has no wall, so walls come from the tuff bricks.",
+  "id": "storm",
+  "name": "Storm",
+  "color": "#2FB5A8",
+  "families": {
+    "brick": "minecraft:tuff_bricks",
+    "tile": "minecraft:waxed_oxidized_cut_copper",
+    "polished": "minecraft:polished_tuff",
+    "chiseled": "minecraft:waxed_oxidized_chiseled_copper",
+    "cobbled": "minecraft:tuff",
+    "cracked_brick": "minecraft:waxed_weathered_cut_copper",
+    "cracked_tile": "minecraft:waxed_exposed_cut_copper",
+    "rock": "minecraft:tuff",
+    "wood": "minecraft:spruce_planks"
+  },
+  "explicit": {},
+  "relics": {
+    "keywords": ["storm", "thunder", "lightning", "wind", "cyclone", "tempest", "bolt", "gale", "mjolnir", "static", "volt"]
+  },
+  "catastrophes": {
+    "collapse": 3,
+    "flood": 1,
+    "spirit": 2
+  },
+  "ambient": "minecraft:electric_spark"
+}

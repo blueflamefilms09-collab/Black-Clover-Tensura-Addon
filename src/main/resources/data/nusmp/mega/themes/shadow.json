@@ -1,0 +1,32 @@
+{
+  "_why": "Polished blackstone bricks over deepslate tiles with dark oak: the same dark floors with black walls, which is why the explicit map turns every warm light into a soul light: the blue glow is what makes a Shadow sector feel different from the baseline at a glance. Spirits favour it.",
+  "id": "shadow",
+  "name": "Shadow",
+  "color": "#3B3558",
+  "families": {
+    "brick": "minecraft:polished_blackstone_bricks",
+    "tile": "minecraft:deepslate_tiles",
+    "polished": "minecraft:polished_deepslate",
+    "chiseled": "minecraft:chiseled_polished_blackstone",
+    "cobbled": "minecraft:blackstone",
+    "cracked_brick": "minecraft:cracked_polished_blackstone_bricks",
+    "cracked_tile": "minecraft:cracked_deepslate_tiles",
+    "rock": "minecraft:deepslate",
+    "wood": "minecraft:dark_oak_planks"
+  },
+  "explicit": {
+    "minecraft:lantern": "minecraft:soul_lantern",
+    "minecraft:wall_torch": "minecraft:soul_wall_torch",
+    "minecraft:torch": "minecraft:soul_torch",
+    "minecraft:campfire": "minecraft:soul_campfire"
+  },
+  "relics": {
+    "keywords": ["shadow", "night", "dark", "shade", "phantom", "whisper", "raven", "sneak", "stalker", "soul", "mask", "veil", "burglery", "dagger", "assassin", "mimic", "cowl", "eclipse"]
+  },
+  "catastrophes": {
+    "collapse": 1,
+    "flood": 2,
+    "spirit": 4
+  },
+  "ambient": "minecraft:sculk_soul"
+}

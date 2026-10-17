@@ -1,0 +1,14 @@
+{
+  "_why": "The creatures the Crucible's SPIRIT catastrophe can summon, as data so the owner can retune them without a mod update: a spirit is the vault's curse made flesh, so the roster is the dungeon's own apparitions (Tensura's daemons, hounds, moths, weavers and the phantaspore wraith), each renamed and glowing when it appears. 'weight' is the share of the draw; 'healthScale' multiplies the creature's maximum health before the threat scaling, so a weak body (a lesser daemon) is made sturdier and a strong one (an arch daemon) is held back; an id that no loaded mod registers is skipped, and with nothing left the catastrophe becomes a collapse. The numbers are first guesses: the base health of these bodies could not be read without the game.",
+  "entries": [
+    {"entity": "tensura:lesser_daemon", "weight": 3, "name": "Wailing Daemon", "healthScale": 1.5},
+    {"entity": "tensura:greater_daemon", "weight": 2, "name": "Cursed Spirit", "healthScale": 1.0},
+    {"entity": "tensura:arch_daemon", "weight": 1, "name": "Archfiend Wraith", "healthScale": 0.6},
+    {"entity": "tensura:phantaspore", "weight": 3, "name": "Cursed Spore-Wraith", "healthScale": 1.5},
+    {"entity": "tensura:barghest", "weight": 3, "name": "Grave Hound", "healthScale": 1.3},
+    {"entity": "tensura:blade_tiger", "weight": 2, "name": "Cursed Blade Wraith", "healthScale": 1.0},
+    {"entity": "tensura:hell_moth", "weight": 2, "name": "Ashen Moth Spirit", "healthScale": 1.5},
+    {"entity": "tensura:black_spider", "weight": 2, "name": "Pale Weaver", "healthScale": 1.2},
+    {"entity": "tensura:knight_spider", "weight": 1, "name": "Weaver Knight", "healthScale": 0.9}
+  ]
+}

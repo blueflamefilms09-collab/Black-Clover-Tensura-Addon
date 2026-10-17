@@ -1,0 +1,32 @@
+{
+  "_why": "The Abyssal road: dark ORGANIC rock. The walls stay a dark, smooth deepslate, but the stone itself is being eaten: sculk grows through the cracked wall bricks, moss through the cracked floors, netherrack heaps where the rubble is, and the wood is mangrove, the colour of a bog. It must not be mistaken for Shadow (black blackstone walls, nothing growing) or Blood (red nether bricks): nothing here is brick-red or jet black, and the growths are what the eye finds first. The warm lights become soul lights, the soul fire of the abyss. Spirits and the toxic flood favour it; the deep keeps what it takes.",
+  "id": "abyss",
+  "name": "Abyss",
+  "color": "#1F4F57",
+  "families": {
+    "brick": "minecraft:polished_deepslate",
+    "tile": "minecraft:cobbled_deepslate",
+    "polished": "minecraft:deepslate_bricks",
+    "chiseled": "minecraft:chiseled_deepslate",
+    "cobbled": "minecraft:netherrack",
+    "cracked_brick": "minecraft:sculk",
+    "cracked_tile": "minecraft:moss_block",
+    "rock": "minecraft:deepslate",
+    "wood": "minecraft:mangrove_planks"
+  },
+  "explicit": {
+    "minecraft:lantern": "minecraft:soul_lantern",
+    "minecraft:wall_torch": "minecraft:soul_wall_torch",
+    "minecraft:torch": "minecraft:soul_torch",
+    "minecraft:campfire": "minecraft:soul_campfire"
+  },
+  "relics": {
+    "keywords": ["abyss", "void", "sculk", "deep", "warden", "hollow", "grave", "tomb", "rot", "decay", "plague", "ooze", "mire", "devour", "kraken", "curse", "forgotten", "slime"]
+  },
+  "catastrophes": {
+    "collapse": 1,
+    "flood": 3,
+    "spirit": 3
+  },
+  "ambient": "minecraft:soul_fire_flame"
+}

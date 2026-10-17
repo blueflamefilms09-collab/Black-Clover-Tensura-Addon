@@ -53,6 +53,7 @@ public final class RelicLoot {
     public static List<ItemStack> rollUnissuedAll(ServerLevel level, RandomSource rng, Grade min, Grade max) {
         List<ItemStack> none = new ArrayList<>();
         if (level == null || level.getServer() == null) return none;
+        if (!com.newuniverse.nusmp.labyrinth.vault.RelicExclusivity.allowsWildRoll(level)) return none;      // 1.54.0: in the Mega-Dungeon a Crucible is the only source of relics
         List<RelicDef> pool = candidates(level, min, max);
         for (int tries = 0; tries < 8 && !pool.isEmpty(); tries++) {
             RelicDef d = pick(pool, rng);
@@ -77,7 +78,28 @@ public final class RelicLoot {
      */
     public static boolean anyUnissued(ServerLevel level, Grade min, Grade max) {
         if (level == null || level.getServer() == null) return false;
+        if (!com.newuniverse.nusmp.labyrinth.vault.RelicExclusivity.allowsWildRoll(level)) return false;      // 1.54.0: see rollUnissuedAll
         return !candidates(level, min, max).isEmpty();
+    }
+
+    /**
+     * 1.54.0: up to {@code count} DISTINCT relics of the range that nobody has yet, picked by the grades' loot weights, WITHOUT issuing any of them (the
+     * ledger is not touched). The Crucible of Choice shows several relics on pedestals and only the one that is taken may be issued: rolling the offer with
+     * {@link #rollUnissuedAll} would stamp every offered relic as alive and burn the ones the player did not take. The candidate rules are the same as the
+     * roll's (unique, not alive, never the left half of a pair, within the grades); {@code filter} narrows them further (the Crucible drops pairs, which
+     * have two halves, and relics already on offer in another vault). Fewer than {@code count} come back when fewer qualify.
+     */
+    public static List<RelicDef> peekUnissued(ServerLevel level, RandomSource rng, Grade min, Grade max, int count, java.util.function.Predicate<RelicDef> filter) {
+        List<RelicDef> out = new ArrayList<>();
+        if (level == null || level.getServer() == null || rng == null || min == null || max == null || count <= 0) return out;
+        List<RelicDef> pool = candidates(level, min, max);
+        if (filter != null) pool.removeIf(d -> !filter.test(d));
+        while (out.size() < count && !pool.isEmpty()) {
+            RelicDef d = pick(pool, rng);
+            out.add(d);
+            pool.remove(d);
+        }
+        return out;
     }
 
     /** The defs the roll may pick: unique, not alive (neither half of a pair alive), never a left half on its own, within the grades. */
