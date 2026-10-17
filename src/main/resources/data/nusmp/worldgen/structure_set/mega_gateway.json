@@ -1,0 +1,16 @@
+{
+  "structures": [
+    {
+      "structure": "nusmp:mega_gateway",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:concentric_rings",
+    "distance": 5,
+    "spread": 1,
+    "count": 1,
+    "preferred_biomes": "#nusmp:has_structure/mega_gateway_preferred",
+    "salt": 1540154
+  }
+}
