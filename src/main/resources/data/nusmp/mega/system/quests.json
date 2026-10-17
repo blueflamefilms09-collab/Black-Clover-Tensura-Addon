@@ -1,0 +1,63 @@
+{
+  "why": "The floor quests of the System, as data. Why data: the owner's brief gives ONE example quest ('Clear 5 rooms without taking magic damage') and asks for 'objectives per floor'; the objectives, their sizes and what they pay are balance numbers that will be tuned many times after the first play, so a datapack can change a row, add one or switch one off (weight 0) without a mod update. Each row is one quest template. kind is one of CLEAR_ROOMS, KILL_N, NO_DAMAGE_STRETCH, SPEED, SURVIVE_AMBUSH. The target of a quest on a floor of threat T is clamp(round(base + perFloor * T), min, max): rooms to clear, monsters to defeat, ambushers to defeat, or (for SPEED) seconds allowed on the floor. title is the English text, {n} and {t} stand for the target; the lang key message.nusmp.mega.system.quest.<id> takes over where a translation exists. noMagic fails the quest at the first magic damage the player takes. rewards.stats are the stats a success may pay (the roll picks one), rewards.points how many points, rewards.shadowCore whether a Shadow Core may be paid instead of a point.",
+  "quests": [
+    {
+      "id": "clear_rooms_no_magic",
+      "kind": "CLEAR_ROOMS",
+      "title": "Clear {n} rooms without taking magic damage",
+      "base": 3, "perFloor": 0.25, "min": 2, "max": 8, "weight": 10,
+      "noMagic": true,
+      "rewards": { "stats": ["INT"], "points": 1, "shadowCore": true },
+      "why": "The brief's own example. It pays INT because clearing a room carefully under magical threat is the mind's work. A room counts after 40 ticks inside with no hostile alive in it."
+    },
+    {
+      "id": "clear_rooms",
+      "kind": "CLEAR_ROOMS",
+      "title": "Clear {n} rooms of every hostile creature",
+      "base": 3, "perFloor": 0.2, "min": 2, "max": 8, "weight": 8,
+      "rewards": { "stats": ["INT", "STR"], "points": 1, "shadowCore": true },
+      "why": "The plain clearing quest, a little easier than the no-magic one (no condition to break), so a party that fights with spells can still earn the clearing reward."
+    },
+    {
+      "id": "slay_hostiles",
+      "kind": "KILL_N",
+      "title": "Defeat {n} monsters on this floor",
+      "base": 6, "perFloor": 0.5, "min": 4, "max": 20, "weight": 10,
+      "rewards": { "stats": ["STR", "AGI"], "points": 1, "shadowCore": true },
+      "why": "The combat quest: strength or agility is what a fighter earns. The count grows half a monster per floor so a deep floor asks for a real fight."
+    },
+    {
+      "id": "slay_no_magic",
+      "kind": "KILL_N",
+      "title": "Defeat {n} monsters without taking magic damage",
+      "base": 5, "perFloor": 0.4, "min": 3, "max": 16, "weight": 6,
+      "noMagic": true,
+      "rewards": { "stats": ["STR", "AGI"], "points": 1, "shadowCore": true },
+      "why": "The combat quest with the brief's magic condition: a little fewer monsters, in exchange for staying out of the spellcasters' reach."
+    },
+    {
+      "id": "unscathed",
+      "kind": "NO_DAMAGE_STRETCH",
+      "title": "Reach the next floor without taking any damage",
+      "base": 1, "perFloor": 0, "min": 1, "max": 1, "weight": 5,
+      "rewards": { "stats": ["VIT"], "points": 2, "shadowCore": true },
+      "why": "Endurance by avoidance: any damage at all fails it, and it is judged when the staircase is taken. It is the hardest quest, so it pays two points of VIT."
+    },
+    {
+      "id": "swift_ascent",
+      "kind": "SPEED",
+      "title": "Reach the next floor within {t} seconds",
+      "base": 300, "perFloor": -2, "min": 150, "max": 300, "weight": 7,
+      "rewards": { "stats": ["AGI"], "points": 1, "shadowCore": true },
+      "why": "The race: seconds spent ON the quest's floor, shortening by two seconds per floor of depth down to two and a half minutes. It starts generous because nobody has played it yet."
+    },
+    {
+      "id": "survive_ambush",
+      "kind": "SURVIVE_AMBUSH",
+      "title": "Survive the ambush: defeat {n} of the creatures that hunt you",
+      "base": 3, "perFloor": 0.3, "min": 3, "max": 10, "weight": 8,
+      "rewards": { "stats": ["SENSE"], "points": 1, "shadowCore": true },
+      "why": "The Dungeon Master's ambush groups carry the entity tag nusmp_dm; defeating them is how a player proves their senses. Counts for every player of the party near the kill."
+    }
+  ]
+}
