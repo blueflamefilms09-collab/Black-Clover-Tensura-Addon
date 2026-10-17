@@ -1,0 +1,37 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "minecraft:blaze",
+      "required": false
+    },
+    {
+      "id": "minecraft:breeze",
+      "required": false
+    },
+    {
+      "id": "minecraft:creeper",
+      "required": false
+    },
+    {
+      "id": "tensura:salamander",
+      "required": false
+    },
+    {
+      "id": "tensura:undine",
+      "required": false
+    },
+    {
+      "id": "tensura:sylphide",
+      "required": false
+    },
+    {
+      "id": "tensura:akash",
+      "required": false
+    },
+    {
+      "id": "iceandfire:pixie",
+      "required": false
+    }
+  ]
+}

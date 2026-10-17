@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "nusmp:living_armor",
+      "required": false
+    },
+    {
+      "id": "tensura:armorsaurus",
+      "required": false
+    },
+    {
+      "id": "minecraft:shulker",
+      "required": false
+    },
+    {
+      "id": "minecraft:iron_golem",
+      "required": false
+    }
+  ]
+}

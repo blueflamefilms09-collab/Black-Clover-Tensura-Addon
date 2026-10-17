@@ -1,0 +1,32 @@
+{
+  "why": "The dead hate the living things that still breathe in their halls: they hunt goblins and beasts on sight and fight the demons that call the grave theirs. They are at home in the blood and shadow regions and in the cold of the frost regions. Skeletons leave no meat (the economy skips fleshless creatures), a zombie leaves a little.",
+  "id": "undead",
+  "name": "The Restless Dead",
+  "color": "#8FA08C",
+  "tag": "nusmp:mega/undead",
+  "rivals": [
+    "goblin",
+    "beast",
+    "demon"
+  ],
+  "allies": [],
+  "aggro": {
+    "range": 16,
+    "nativeBonus": 8
+  },
+  "themeWeights": {
+    "gravity": 3,
+    "blood": 5,
+    "spatial": 1,
+    "flame": 1,
+    "frost": 3,
+    "verdant": 1,
+    "storm": 1,
+    "shadow": 5,
+    "astral": 0
+  },
+  "drops": {
+    "meat": "raw_monster_meat",
+    "meatChance": 0.3
+  }
+}

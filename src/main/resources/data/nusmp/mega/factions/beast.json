@@ -1,0 +1,33 @@
+{
+  "why": "Hunters with a long nose: the widest reach of any faction and the smallest defending bonus, because a den is only where a beast sleeps. Everything that hunts or swarms in the dungeon is prey or rival to them. Their cut is the haunch, the best meat in the dungeon. They favour the frost and verdant regions.",
+  "id": "beast",
+  "name": "Beast Dens",
+  "color": "#B8863B",
+  "tag": "nusmp:mega/beast",
+  "rivals": [
+    "undead",
+    "goblin",
+    "aquatic",
+    "insect"
+  ],
+  "allies": [],
+  "aggro": {
+    "range": 18,
+    "nativeBonus": 6
+  },
+  "themeWeights": {
+    "gravity": 2,
+    "blood": 1,
+    "spatial": 0,
+    "flame": 1,
+    "frost": 5,
+    "verdant": 5,
+    "storm": 2,
+    "shadow": 1,
+    "astral": 0
+  },
+  "drops": {
+    "meat": "raw_direwolf_haunch",
+    "meatChance": 0.55
+  }
+}

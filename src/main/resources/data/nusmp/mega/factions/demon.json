@@ -1,0 +1,33 @@
+{
+  "why": "What the cultists summon: allied to the cults, at war with the dead and the ogres. They favour the blood, flame and shadow regions.",
+  "id": "demon",
+  "name": "Infernal Court",
+  "color": "#B3262E",
+  "tag": "nusmp:mega/demon",
+  "rivals": [
+    "undead",
+    "ogre"
+  ],
+  "allies": [
+    "cultist"
+  ],
+  "aggro": {
+    "range": 16,
+    "nativeBonus": 8
+  },
+  "themeWeights": {
+    "gravity": 1,
+    "blood": 5,
+    "spatial": 3,
+    "flame": 5,
+    "frost": 0,
+    "verdant": 0,
+    "storm": 1,
+    "shadow": 4,
+    "astral": 1
+  },
+  "drops": {
+    "meat": "raw_monster_meat",
+    "meatChance": 0.35
+  }
+}
