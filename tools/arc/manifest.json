@@ -229,6 +229,242 @@
    ],
    "problems": []
   },
+  "fana": {
+   "model": "arc_fana",
+   "spec": "GeoSpec.of(\"arc\", \"fana\")",
+   "form": 1,
+   "role": "boss",
+   "name": "Fana",
+   "build": "slim",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_fana.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_fana.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_fana.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_fana_glow.png"
+   ],
+   "texture": [
+    512,
+    64
+   ],
+   "cubes": 51,
+   "faces_per_pass": 269,
+   "height_blocks": 1.75,
+   "height_with_hair_and_horns_blocks": 1.84,
+   "bounds_blocks": {
+    "min": [
+     -0.72,
+     0.0,
+     -0.25
+    ],
+    "max": [
+     0.62,
+     1.84,
+     0.34
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.55,
+    "height": 1.75
+   },
+   "arc_look": {
+    "height": 1.75,
+    "walkCycle": 1.01,
+    "runCycle": 1.79,
+    "shadow": 0.5,
+    "growXz": 1.22,
+    "growUp": 0.49,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 1.75,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "hair_back",
+    "cape",
+    "cape_low",
+    "prop_l",
+    "prop_float"
+   ],
+   "glow_bones": [
+    "body",
+    "head",
+    "prop_l",
+    "prop_float"
+   ],
+   "problems": []
+  },
+  "fana_form2": {
+   "model": "arc_fana_form2",
+   "spec": "GeoSpec.of(\"arc\", \"fana_form2\")",
+   "form": 2,
+   "role": "boss",
+   "name": "Fana, the Evil Heart",
+   "build": "slim",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_fana_form2.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_fana_form2.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_fana_form2.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_fana_form2_glow.png"
+   ],
+   "texture": [
+    512,
+    128
+   ],
+   "cubes": 94,
+   "faces_per_pass": 486,
+   "height_blocks": 1.75,
+   "height_with_hair_and_horns_blocks": 2.62,
+   "bounds_blocks": {
+    "min": [
+     -0.72,
+     0.0,
+     -0.63
+    ],
+    "max": [
+     0.64,
+     2.62,
+     0.69
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.55,
+    "height": 1.75
+   },
+   "arc_look": {
+    "height": 1.75,
+    "walkCycle": 1.01,
+    "runCycle": 1.79,
+    "shadow": 0.5,
+    "growXz": 1.22,
+    "growUp": 1.27,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 1.25,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "hair_back",
+    "cape",
+    "cape_low",
+    "halo",
+    "prop_l",
+    "prop_float"
+   ],
+   "glow_bones": [
+    "body",
+    "head",
+    "halo",
+    "prop_l",
+    "prop_float"
+   ],
+   "problems": []
+  },
   "fuegoleon_vermillion": {
    "model": "arc_fuegoleon_vermillion",
    "spec": "GeoSpec.of(\"arc\", \"fuegoleon_vermillion\")",
@@ -2668,6 +2904,464 @@
    "glow_bones": [],
    "problems": []
   },
+  "patolli": {
+   "model": "arc_patolli",
+   "spec": "GeoSpec.of(\"arc\", \"patolli\")",
+   "form": 1,
+   "role": "boss",
+   "name": "Patolli",
+   "build": "slim",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_patolli.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_patolli.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_patolli.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_patolli_glow.png"
+   ],
+   "texture": [
+    512,
+    64
+   ],
+   "cubes": 49,
+   "faces_per_pass": 258,
+   "height_blocks": 2.03,
+   "height_with_hair_and_horns_blocks": 2.12,
+   "bounds_blocks": {
+    "min": [
+     -0.5,
+     0.0,
+     -0.29
+    ],
+    "max": [
+     0.62,
+     2.12,
+     0.47
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.55,
+    "height": 2.03
+   },
+   "arc_look": {
+    "height": 2.03,
+    "walkCycle": 0.92,
+    "runCycle": 1.7,
+    "shadow": 0.44,
+    "growXz": 1.12,
+    "growUp": 0.5,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 1.75,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "hair_back",
+    "cape",
+    "cape_low",
+    "prop_l"
+   ],
+   "glow_bones": [
+    "head",
+    "prop_l"
+   ],
+   "problems": []
+  },
+  "patolli_form2": {
+   "model": "arc_patolli_form2",
+   "spec": "GeoSpec.of(\"arc\", \"patolli_form2\")",
+   "form": 2,
+   "role": "boss",
+   "name": "Patolli, the Dark Elf",
+   "build": "slim",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_patolli_form2.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_patolli_form2.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_patolli_form2.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_patolli_form2_glow.png"
+   ],
+   "texture": [
+    512,
+    128
+   ],
+   "cubes": 56,
+   "faces_per_pass": 296,
+   "height_blocks": 2.03,
+   "height_with_hair_and_horns_blocks": 2.83,
+   "bounds_blocks": {
+    "min": [
+     -0.54,
+     0.0,
+     -0.29
+    ],
+    "max": [
+     0.62,
+     2.83,
+     0.47
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.55,
+    "height": 2.03
+   },
+   "arc_look": {
+    "height": 2.03,
+    "walkCycle": 0.92,
+    "runCycle": 1.7,
+    "shadow": 0.44,
+    "growXz": 1.12,
+    "growUp": 1.2,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 1.25,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "hair_back",
+    "cape",
+    "cape_low",
+    "halo",
+    "prop_l"
+   ],
+   "glow_bones": [
+    "head",
+    "halo",
+    "prop_l"
+   ],
+   "problems": []
+  },
+  "rades_spirito": {
+   "model": "arc_rades_spirito",
+   "spec": "GeoSpec.of(\"arc\", \"rades_spirito\")",
+   "form": 1,
+   "role": "boss",
+   "name": "Rades Spirito",
+   "build": "average",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_rades_spirito.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_rades_spirito.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_rades_spirito.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_rades_spirito_glow.png"
+   ],
+   "texture": [
+    512,
+    128
+   ],
+   "cubes": 84,
+   "faces_per_pass": 463,
+   "height_blocks": 1.91,
+   "height_with_hair_and_horns_blocks": 2.29,
+   "bounds_blocks": {
+    "min": [
+     -0.48,
+     0.0,
+     -0.5
+    ],
+    "max": [
+     0.67,
+     2.29,
+     0.51
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.62,
+    "height": 1.91
+   },
+   "arc_look": {
+    "height": 1.91,
+    "walkCycle": 1.11,
+    "runCycle": 1.97,
+    "shadow": 0.47,
+    "growXz": 1.17,
+    "growUp": 0.78,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 1.75,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "cape",
+    "cape_low",
+    "prop_l"
+   ],
+   "glow_bones": [
+    "prop_l"
+   ],
+   "problems": []
+  },
+  "rades_spirito_form2": {
+   "model": "arc_rades_spirito_form2",
+   "spec": "GeoSpec.of(\"arc\", \"rades_spirito_form2\")",
+   "form": 2,
+   "role": "boss",
+   "name": "Rades Spirito, the Betrayed",
+   "build": "average",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_rades_spirito_form2.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_rades_spirito_form2.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_rades_spirito_form2.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_rades_spirito_form2_glow.png"
+   ],
+   "texture": [
+    512,
+    128
+   ],
+   "cubes": 80,
+   "faces_per_pass": 410,
+   "height_blocks": 1.91,
+   "height_with_hair_and_horns_blocks": 2.71,
+   "bounds_blocks": {
+    "min": [
+     -0.58,
+     0.0,
+     -0.63
+    ],
+    "max": [
+     0.67,
+     2.71,
+     0.69
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.62,
+    "height": 1.91
+   },
+   "arc_look": {
+    "height": 1.91,
+    "walkCycle": 1.11,
+    "runCycle": 1.97,
+    "shadow": 0.47,
+    "growXz": 1.19,
+    "growUp": 1.2,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 1.25,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "hair_back",
+    "cape",
+    "cape_low",
+    "halo",
+    "prop_l"
+   ],
+   "glow_bones": [
+    "head",
+    "halo",
+    "prop_l"
+   ],
+   "problems": []
+  },
   "revchi_salik": {
    "model": "arc_revchi_salik",
    "spec": "GeoSpec.of(\"arc\", \"revchi_salik\")",
@@ -2782,6 +3476,231 @@
     "forearm_r",
     "prop_r",
     "chain_tail"
+   ],
+   "problems": []
+  },
+  "rhya": {
+   "model": "arc_rhya",
+   "spec": "GeoSpec.of(\"arc\", \"rhya\")",
+   "form": 1,
+   "role": "boss",
+   "name": "Rhya",
+   "build": "slim",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_rhya.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_rhya.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_rhya.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_rhya_glow.png"
+   ],
+   "texture": [
+    512,
+    128
+   ],
+   "cubes": 104,
+   "faces_per_pass": 566,
+   "height_blocks": 2.0,
+   "height_with_hair_and_horns_blocks": 2.39,
+   "bounds_blocks": {
+    "min": [
+     -0.55,
+     0.0,
+     -0.5
+    ],
+    "max": [
+     0.62,
+     2.39,
+     0.51
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.55,
+    "height": 2.0
+   },
+   "arc_look": {
+    "height": 2.0,
+    "walkCycle": 1.21,
+    "runCycle": 2.15,
+    "shadow": 0.44,
+    "growXz": 1.12,
+    "growUp": 0.79,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 1.75,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "cape",
+    "cape_low",
+    "prop_l"
+   ],
+   "glow_bones": [
+    "prop_l"
+   ],
+   "problems": []
+  },
+  "rhya_form2": {
+   "model": "arc_rhya_form2",
+   "spec": "GeoSpec.of(\"arc\", \"rhya_form2\")",
+   "form": 2,
+   "role": "boss",
+   "name": "Rhya, the Open Eye",
+   "build": "slim",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_rhya_form2.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_rhya_form2.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_rhya_form2.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_rhya_form2_glow.png"
+   ],
+   "texture": [
+    512,
+    64
+   ],
+   "cubes": 100,
+   "faces_per_pass": 558,
+   "height_blocks": 2.0,
+   "height_with_hair_and_horns_blocks": 2.31,
+   "bounds_blocks": {
+    "min": [
+     -0.55,
+     0.0,
+     -0.42
+    ],
+    "max": [
+     0.62,
+     2.31,
+     0.58
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.55,
+    "height": 2.0
+   },
+   "arc_look": {
+    "height": 2.0,
+    "walkCycle": 1.21,
+    "runCycle": 2.15,
+    "shadow": 0.44,
+    "growXz": 1.12,
+    "growUp": 0.71,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 1.25,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "cape",
+    "cape_low",
+    "prop_l"
+   ],
+   "glow_bones": [
+    "head",
+    "prop_l"
    ],
    "problems": []
   },

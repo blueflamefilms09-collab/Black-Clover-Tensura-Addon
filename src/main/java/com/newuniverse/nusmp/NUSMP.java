@@ -76,6 +76,7 @@ public class NUSMP {
         com.newuniverse.nusmp.arc.spade.SpadeEffects.init();                                                              // 1.61.0: the three effects of the Spade Kingdom Raid bosses (Flattened Air, Kneeling, Specimen)
         com.newuniverse.nusmp.arc.spade.SpadeEffects.EFFECTS.register(modEventBus);
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.arc.spade.SpadeConfig.SPEC, "nusmp-spade-server.toml");
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.arc.midnight.MidnightConfig.SPEC, "nusmp-midnight-server.toml");   // 1.61.0: the Eye of the Midnight Sun bosses
         com.newuniverse.nusmp.arc.world.ArcWorldSystem.init(modEventBus, modContainer);                                    // 1.61.0: where the characters appear: floor bosses, story arenas, the Hub (registers its own config nusmp-arc-world-server.toml; before NUItems.ITEMS.register)
         modEventBus.addListener(com.newuniverse.nusmp.charter.CharterNet::registerPayloads);
         modEventBus.addListener(com.newuniverse.nusmp.boss.bar.BossBarNet::registerPayloads);

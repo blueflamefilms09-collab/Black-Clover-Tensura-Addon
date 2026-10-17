@@ -22,6 +22,11 @@ public final class ArcCharacters {
         ArcRoster.register(com.newuniverse.nusmp.arc.early.LotusWhomaltBoss.CHARACTER);
         ArcRoster.register(com.newuniverse.nusmp.arc.early.MarsBoss.CHARACTER);
         ArcRoster.register(com.newuniverse.nusmp.arc.early.VettoBoss.CHARACTER);
+        // Saga 1, the Eye of the Midnight Sun (S1B): Rades first, then Fana, Rhya (the Third Eye trio with Vetto) and Patolli
+        ArcRoster.register(com.newuniverse.nusmp.arc.midnight.RadesBoss.CHARACTER);
+        ArcRoster.register(com.newuniverse.nusmp.arc.midnight.FanaBoss.CHARACTER);
+        ArcRoster.register(com.newuniverse.nusmp.arc.midnight.RhyaBoss.CHARACTER);
+        ArcRoster.register(com.newuniverse.nusmp.arc.midnight.PatolliBoss.CHARACTER);
         // Saga 2, the Spade Kingdom Raid: Morris first, Lucifero names him as a prerequisite (S2)
         ArcRoster.register(com.newuniverse.nusmp.arc.spade.MorrisBoss.CHARACTER);
         ArcRoster.register(com.newuniverse.nusmp.arc.spade.LuciferoBoss.CHARACTER);

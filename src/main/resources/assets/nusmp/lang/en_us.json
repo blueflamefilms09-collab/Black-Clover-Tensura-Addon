@@ -5045,5 +5045,9 @@
   "message.nusmp.spade.pocket": "The still air shelters you.",
   "message.nusmp.spade.specimen": "You are the specimen: the thread drags and drains you. Have an ally stand on it, break line of sight, or hold anti-magic.",
   "message.nusmp.spade.tendril_cut": "Your anti-magic cuts the tendril.",
-  "message.nusmp.spade.unbowed": "Your anti-magic holds the weight off you."
+  "message.nusmp.spade.unbowed": "Your anti-magic holds the weight off you.",
+  "entity.nusmp.fana": "Fana",
+  "entity.nusmp.patolli": "Patolli",
+  "entity.nusmp.rades_spirito": "Rades Spirito",
+  "entity.nusmp.rhya": "Rhya"
 }
