@@ -15,7 +15,7 @@ public final class LabyrinthConfig {
     public static final ModConfigSpec SPEC;
     /** "labyrinth" (the Spire, default) or "legacy" (the Living Dungeon caves of 1.17-1.34): where Maws, Gates and the enter command lead. */
     public static final ModConfigSpec.ConfigValue<String> ENGINE;
-    public static final ModConfigSpec.BooleanValue UNBREAKABLE, RELICS_EXCLUSIVE, VOID_RESCUE, BOSS_ROSTER_ENABLED;
+    public static final ModConfigSpec.BooleanValue UNBREAKABLE, RELICS_EXCLUSIVE, VOID_RESCUE, BOSS_ROSTER_ENABLED, GATEWAY_UNBREAKABLE;
     public static final ModConfigSpec.IntValue TRIAL_RESET_SECONDS;
     public static final ModConfigSpec.DoubleValue WARDEN_HEALTH;
 
@@ -36,6 +36,8 @@ public final class LabyrinthConfig {
                 .defineInRange("wardenHealth", 200.0, 20.0, 2000.0);
         BOSS_ROSTER_ENABLED = b.comment("The Peak Altar rolls its floor boss from the roster written into the structure (the Zogratis siblings, a Floor Warden). false = the altar always calls a Floor Warden.")
                 .define("bossRosterEnabled", true);
+        GATEWAY_UNBREAKABLE = b.comment("1.55.0: the Mega-Dungeon's Gateway ruin in the Overworld cannot be mined (survival or adventure) or blown up; a creative-mode operator can still edit it. false = the ruin is an ordinary structure.")
+                .define("gatewayUnbreakable", true);
         b.pop();
         SPEC = b.build();
     }

@@ -37,6 +37,8 @@ public final class MegaSystem {
         com.newuniverse.nusmp.labyrinth.mega.eco.EcoRegistry.register(bus);
         com.newuniverse.nusmp.labyrinth.mega.guard.GuardRegistry.register(bus);
         bus.addListener(ExpansionTrigger::onServerTick);            // 1.55.0: starts a held-back expansion when a player reaches the Way Onward
+        bus.addListener(GatewayGuard::onBreak);                     // 1.55.0: the Overworld Gateway ruin cannot be mined ...
+        bus.addListener(GatewayGuard::onExplosion);                 // ... or blown up (a creative operator can still edit it)
         com.newuniverse.nusmp.labyrinth.mega.floors.FloorsRegistry.register(bus);
         com.newuniverse.nusmp.labyrinth.mega.macro.MacroRegistry.register(bus);
         com.newuniverse.nusmp.labyrinth.mega.hub.HubRegistry.register(bus);
