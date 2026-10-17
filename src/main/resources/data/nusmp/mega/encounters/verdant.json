@@ -1,0 +1,175 @@
+{
+  "comment": "Why: the verdant sectors are a ruin the garden has reclaimed, so the table is a swarm table: a budget scale of 1.2 buys more bodies, most of them cheap, and the insect and slime tags carry the weight. Light draws moths, noise draws a bear, and the mimic is a statue under ivy.",
+  "description": "Moss, vines, azalea and cherry: an overgrown ruin where bugs, beasts and slimes have taken the halls back. Many small things; the swarm theme.",
+  "rollBonus": 0,
+  "budgetScale": 1.2,
+  "defaultFaction": "insect",
+  "entries": [
+    {
+      "id": "bramble_crawlers",
+      "comment": "The breather: two or three crawlers of the room's own kind (the insect tag by default).",
+      "band": "minor",
+      "weight": 14,
+      "mobs": [
+        {"type": "faction", "count": "2-3"}
+      ],
+      "cue": {"sound": "minecraft:entity.spider.ambient", "volume": 0.5, "pitch": 0.9, "particle": "minecraft:spore_blossom_air", "count": 8}
+    },
+    {
+      "id": "slime_ooze",
+      "comment": "Slimes oozing out of the moss: slow, harmless-looking and sticky; they split and fill a corridor.",
+      "band": "minor",
+      "weight": 12,
+      "maxThreat": 8,
+      "faction": "slime",
+      "mobs": [
+        {"type": "faction", "count": "2-3"}
+      ],
+      "cue": {"sound": "minecraft:entity.slime.squish", "volume": 0.8, "pitch": 0.7, "particle": "minecraft:item_slime", "count": 6}
+    },
+    {
+      "id": "web_drop",
+      "comment": "Spiders dropping from the vines overhead, close and out of sight: the big ones first, the small poisonous ones as the escort.",
+      "band": "standard",
+      "weight": 10,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:spider", "count": "2-3"},
+        {"type": "entity", "id": "minecraft:cave_spider", "count": "2-4"}
+      ],
+      "range": [10, 22],
+      "cells": 3,
+      "hunt": 500,
+      "cue": {"sound": "minecraft:entity.spider.ambient", "volume": 0.8, "pitch": 0.6, "particle": "minecraft:falling_spore_blossom", "count": 10},
+      "message": "message.nusmp.mega.enc.verdant.web_drop"
+    },
+    {
+      "id": "spore_swarm",
+      "comment": "The evergreen standard encounter of the theme: a swarm of the insect tag in three places.",
+      "band": "standard",
+      "weight": 10,
+      "faction": "insect",
+      "mobs": [
+        {"type": "faction", "count": "4-7"}
+      ],
+      "cells": 3,
+      "cue": {"sound": "minecraft:block.moss.break", "volume": 0.8, "pitch": 0.7, "particle": "minecraft:spore_blossom_air", "count": 14}
+    },
+    {
+      "id": "wasp_nest",
+      "comment": "Army wasps from a nest in the wall: fast flyers in a group, two directions.",
+      "band": "standard",
+      "weight": 8,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "entity", "id": "tensura:army_wasp", "count": "3-5"}
+      ],
+      "cells": 2,
+      "cue": {"sound": "minecraft:entity.bee.loop_aggressive", "volume": 0.9, "pitch": 0.8, "particle": "minecraft:spore_blossom_air", "count": 10}
+    },
+    {
+      "id": "vine_stalker",
+      "comment": "The lone hunter: a black spider, only for a party in the dark, spinning behind it.",
+      "band": "standard",
+      "weight": 8,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "entity", "id": "tensura:black_spider", "count": "1"}
+      ],
+      "needs": {"dark": true},
+      "scaleWithParty": false,
+      "cue": {"sound": "minecraft:entity.spider.ambient", "volume": 0.8, "pitch": 0.5, "particle": "minecraft:falling_spore_blossom", "count": 8},
+      "message": "message.nusmp.mega.enc.verdant.vine_stalker"
+    },
+    {
+      "id": "beast_run",
+      "comment": "A run of beasts through the undergrowth: the beast tag as a pack, arriving together.",
+      "band": "standard",
+      "weight": 10,
+      "minThreat": 2,
+      "faction": "beast",
+      "mobs": [
+        {"type": "faction", "count": "3-5"}
+      ],
+      "cells": 1,
+      "cue": {"sound": "minecraft:block.grass.break", "volume": 0.8, "pitch": 0.6, "particle": "minecraft:spore_blossom_air", "count": 8}
+    },
+    {
+      "id": "moth_cloud",
+      "comment": "A cloud of moths for a bright party: light is food to them.",
+      "band": "standard",
+      "weight": 8,
+      "mobs": [
+        {"type": "entity", "id": "tensura:hell_moth", "count": "3-5"}
+      ],
+      "needs": {"lit": true},
+      "cue": {"sound": "minecraft:entity.phantom.swoop", "volume": 0.5, "pitch": 1.4, "particle": "minecraft:glow", "count": 8}
+    },
+    {
+      "id": "moss_bear",
+      "comment": "The loud brute: a giant bear, drawn by breaking branches and shouting. One body, a lot of health.",
+      "band": "hard",
+      "weight": 10,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "tensura:giant_bear", "count": "1"}
+      ],
+      "needs": {"noisy": true},
+      "cue": {"sound": "minecraft:entity.polar_bear.warning", "volume": 1.0, "pitch": 0.6, "particle": "minecraft:spore_blossom_air", "count": 10},
+      "message": "message.nusmp.mega.enc.verdant.moss_bear"
+    },
+    {
+      "id": "overgrown_armour",
+      "comment": "The mimic-style surprise: the statue under the ivy that was never a statue, with slimes in its gaps.",
+      "band": "hard",
+      "weight": 6,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "entity", "id": "nusmp:living_armor", "count": "1-2"},
+        {"type": "faction", "count": "2-3", "faction": "slime"}
+      ],
+      "range": [10, 18],
+      "cells": 2,
+      "hunt": 300,
+      "cue": {"sound": "minecraft:block.moss.break", "volume": 0.8, "pitch": 0.5, "particle": "minecraft:spore_blossom_air", "count": 10},
+      "message": "message.nusmp.mega.enc.verdant.overgrown_armour"
+    },
+    {
+      "id": "hive_guard",
+      "comment": "The guards of a hive: knight spiders with a swarm at their heels (the swarm is trimmed first when the budget is short).",
+      "band": "hard",
+      "weight": 10,
+      "minThreat": 4,
+      "mobs": [
+        {"type": "entity", "id": "tensura:knight_spider", "count": "1-2"},
+        {"type": "faction", "count": "3-5", "faction": "insect"}
+      ],
+      "cue": {"sound": "minecraft:entity.spider.ambient", "volume": 1.0, "pitch": 0.5, "particle": "minecraft:spore_blossom_air", "count": 14}
+    },
+    {
+      "id": "brood_flood",
+      "comment": "The ambush of the theme: a flood of insects in three places, more bodies than any other band makes.",
+      "band": "ambush",
+      "weight": 10,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "faction", "count": "7-11", "faction": "insect"}
+      ],
+      "cells": 3,
+      "cue": {"sound": "minecraft:entity.spider.ambient", "volume": 1.0, "pitch": 0.5, "particle": "minecraft:falling_spore_blossom", "count": 20},
+      "message": "message.nusmp.mega.enc.verdant.brood_flood"
+    },
+    {
+      "id": "green_tide",
+      "comment": "The garden turns on the party: slimes and beasts together, in three places.",
+      "band": "ambush",
+      "weight": 8,
+      "minThreat": 4,
+      "mobs": [
+        {"type": "faction", "count": "4-6", "faction": "slime"},
+        {"type": "faction", "count": "3-5", "faction": "beast"}
+      ],
+      "cells": 3,
+      "cue": {"sound": "minecraft:block.moss.break", "volume": 1.0, "pitch": 0.5, "particle": "minecraft:item_slime", "count": 16}
+    }
+  ]
+}

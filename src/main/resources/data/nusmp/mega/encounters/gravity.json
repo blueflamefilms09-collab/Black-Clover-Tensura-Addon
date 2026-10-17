@@ -1,0 +1,179 @@
+{
+  "comment": "Why: the baseline theme is the one every new player meets first (sector 0 is always gravity), so its table has to be survivable at threat 1 and still scale. Its flavour is weight: armour that was left standing, bats that let go of the ceiling, ogres whose footsteps are the warning, and one big Ravager for a party that is too loud. The construct faction is thin at threat 1, so the entries of the early bands name the Living Armor directly.",
+  "description": "Deepslate halls under a heavy ceiling: constructs, brutes and what falls from above. The baseline theme and the first sector a player ever sees, so it is gentle at threat 1 and very heavy by threat 8.",
+  "rollBonus": 0,
+  "budgetScale": 1.0,
+  "defaultFaction": "construct",
+  "entries": [
+    {
+      "id": "sentry_armour",
+      "comment": "A sentry or two of the construct tag (our Living Armors first): armour that was left standing. The faction is fixed to constructs because gravity halls are the home of weight and metal.",
+      "band": "minor",
+      "weight": 14,
+      "faction": "construct",
+      "mobs": [
+        {"type": "faction", "count": "1-2"}
+      ],
+      "cue": {"sound": "minecraft:item.armor.equip_iron", "volume": 0.6, "pitch": 0.7}
+    },
+    {
+      "id": "pebble_slimes",
+      "comment": "Slimes that slid in from the cracks: weight-bags that teach the party to look down. Only up to threat 6, after which they are not worth a roll.",
+      "band": "minor",
+      "weight": 10,
+      "maxThreat": 6,
+      "faction": "slime",
+      "mobs": [
+        {"type": "faction", "count": "2-4"}
+      ],
+      "cells": 2,
+      "cue": {"sound": "minecraft:entity.slime.squish", "volume": 0.8, "pitch": 0.6, "particle": "minecraft:item_slime", "count": 6}
+    },
+    {
+      "id": "armour_patrol",
+      "comment": "The signature standard encounter of the baseline theme: a march of Living Armors. The id is explicit (not the faction) so that the first sector, whose construct window is thin, still has a reliable fight.",
+      "band": "standard",
+      "weight": 14,
+      "mobs": [
+        {"type": "entity", "id": "nusmp:living_armor", "count": "2-4"}
+      ],
+      "cue": {"sound": "minecraft:block.chain.fall", "volume": 0.8, "pitch": 0.6, "particle": "minecraft:smoke", "count": 6}
+    },
+    {
+      "id": "roost_drop",
+      "comment": "Falling stone turned into creatures: bats that roost in the vaults let go of the dark when the party passes under them. Spread over three places, short hunt.",
+      "band": "standard",
+      "weight": 8,
+      "maxThreat": 10,
+      "mobs": [
+        {"type": "entity", "id": "tensura:giant_bat", "count": "3-5"}
+      ],
+      "range": [10, 24],
+      "cells": 3,
+      "hunt": 600,
+      "cue": {"sound": "minecraft:entity.bat.takeoff", "volume": 0.9, "pitch": 0.6, "particle": "minecraft:dust_plume", "count": 10},
+      "message": "message.nusmp.mega.enc.gravity.roost_drop"
+    },
+    {
+      "id": "crushing_steps",
+      "comment": "Heavy walkers of the ogre tag arriving as one group with a slow, audible approach (the cue is their footsteps). A gravity hall is where the big, slow things live.",
+      "band": "standard",
+      "weight": 10,
+      "minThreat": 2,
+      "faction": "ogre",
+      "mobs": [
+        {"type": "faction", "count": "2-3"}
+      ],
+      "cells": 1,
+      "cue": {"sound": "minecraft:entity.iron_golem.step", "volume": 1.0, "pitch": 0.5, "particle": "minecraft:large_smoke", "count": 8}
+    },
+    {
+      "id": "weight_in_the_dark",
+      "comment": "The lone hunter of this theme: one brute of the ogre tag, only for a party in the dark. Heavy things stalk by feel, not by sight.",
+      "band": "standard",
+      "weight": 8,
+      "minThreat": 3,
+      "faction": "ogre",
+      "mobs": [
+        {"type": "faction", "count": "1"}
+      ],
+      "needs": {"dark": true},
+      "scaleWithParty": false,
+      "cue": {"sound": "minecraft:block.deepslate.break", "volume": 0.9, "pitch": 0.5},
+      "message": "message.nusmp.mega.enc.gravity.weight_in_the_dark"
+    },
+    {
+      "id": "glare_wardens",
+      "comment": "Constructs that wake only in light: their visors catch a torch. Carrying light in a gravity hall is a trade, not a gift.",
+      "band": "standard",
+      "weight": 8,
+      "faction": "construct",
+      "mobs": [
+        {"type": "faction", "count": "2-3"}
+      ],
+      "needs": {"lit": true},
+      "cue": {"sound": "minecraft:item.armor.equip_iron", "volume": 0.7, "pitch": 0.9, "particle": "minecraft:end_rod", "count": 6}
+    },
+    {
+      "id": "gnome_brigade",
+      "comment": "Tensura's war gnomes in a squad. The id is explicit because the ogre tag mixes them with weaker things and the brigade is meant to be a recognisable fight. It ends at threat 12, where the ogre tag draws something tougher than a gnome.",
+      "band": "standard",
+      "weight": 10,
+      "minThreat": 3,
+      "maxThreat": 12,
+      "mobs": [
+        {"type": "entity", "id": "tensura:war_gnome", "count": "2-4"}
+      ],
+      "cue": {"sound": "minecraft:entity.vindicator.ambient", "volume": 0.8, "pitch": 0.6, "particle": "minecraft:smoke", "count": 6}
+    },
+    {
+      "id": "pit_brute",
+      "comment": "The loud brute: a Ravager (100 health, five points of budget on its own) comes to a noisy party. It is the most expensive single thing in the table, so it is hard band only and from threat 3, where a hard budget (19 and more) can pay for it.",
+      "band": "hard",
+      "weight": 10,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:ravager", "count": "1"}
+      ],
+      "needs": {"noisy": true},
+      "cue": {"sound": "minecraft:entity.ravager.roar", "volume": 1.0, "pitch": 0.6, "particle": "minecraft:large_smoke", "count": 10},
+      "message": "message.nusmp.mega.enc.gravity.pit_brute"
+    },
+    {
+      "id": "walking_statue",
+      "comment": "The mimic-style surprise of the baseline theme: the statue on its plinth steps down, an iron golem (100 health) with a Living Armor or two at its heels. Close range and a short hunt, because the point is that it was there all along.",
+      "band": "hard",
+      "weight": 6,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:iron_golem", "count": "1"},
+        {"type": "entity", "id": "nusmp:living_armor", "count": "1-2"}
+      ],
+      "range": [10, 18],
+      "cells": 2,
+      "hunt": 300,
+      "cue": {"sound": "minecraft:block.deepslate_bricks.break", "volume": 0.9, "pitch": 0.5, "particle": "minecraft:dust_plume", "count": 12},
+      "message": "message.nusmp.mega.enc.gravity.walking_statue"
+    },
+    {
+      "id": "war_bear",
+      "comment": "A giant bear: the heavy beast of the table. Hard because it is one big body rather than a crowd; a larger party meets more than one.",
+      "band": "hard",
+      "weight": 8,
+      "minThreat": 4,
+      "mobs": [
+        {"type": "entity", "id": "tensura:giant_bear", "count": "1"}
+      ],
+      "cue": {"sound": "minecraft:entity.polar_bear.warning", "volume": 1.0, "pitch": 0.5}
+    },
+    {
+      "id": "rockfall",
+      "comment": "The ambush of the baseline theme: an armour column and one brute, arriving in three places while a cloud of dust marks where something fell. The message is the only warning.",
+      "band": "ambush",
+      "weight": 10,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "nusmp:living_armor", "count": "4-6"},
+        {"type": "faction", "count": "1", "faction": "ogre"}
+      ],
+      "range": [12, 26],
+      "cells": 3,
+      "cue": {"sound": "minecraft:block.deepslate_bricks.break", "volume": 1.0, "pitch": 0.5, "particle": "minecraft:dust_plume", "count": 20},
+      "message": "message.nusmp.mega.enc.gravity.rockfall"
+    },
+    {
+      "id": "colossus_march",
+      "comment": "The late ambush: a march of ogres and constructs. Only for parties of two or more, because a solo player meeting it is not a fight but a funeral.",
+      "band": "ambush",
+      "weight": 6,
+      "minThreat": 6,
+      "mobs": [
+        {"type": "faction", "count": "2-4", "faction": "ogre"},
+        {"type": "faction", "count": "2-3", "faction": "construct"}
+      ],
+      "minParty": 2,
+      "cells": 2,
+      "cue": {"sound": "minecraft:entity.ravager.roar", "volume": 1.0, "pitch": 0.5, "particle": "minecraft:large_smoke", "count": 16}
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+# Boots the mod in a real headless dedicated server and drives it through RCON (tools/ci/server_smoke.py): datapack registries decode, the dimensions load,
+# structures place, the Mega-Dungeon generator builds, audits, expands and saves sectors. This is the only place the game itself runs.
+#
+# It only runs for a push whose commit message contains  [smoke]  (in addition to the normal build) or  [smoke-only]  (INSTEAD of the normal build:
+# build.yml skips itself for that token, so no release is published for a commit that only wants the smoke test), or when started by hand.
+# Why a token and not every push: a server boot needs the whole NeoForge dev setup (several minutes) and most pushes are not about world generation.
+name: Server smoke test
+
+on:
+  push:
+    branches: [ "claude/**" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    if: ${{ github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[smoke]') || contains(github.event.head_commit.message, '[smoke-only]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Boot the server and run the smoke checks
+        env:
+          # through the environment, never pasted into the script text: a commit message is free text
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+          # the systems of this build that must each have registered self-tests (edit this list when a system is added)
+          SMOKE_EXPECT: "core,safe,enc,eco,guard,theme"
+        run: |
+          chmod +x gradlew
+          # [strict] in the commit message: a missing pool, structure or command is a failure (use it on the integrated build)
+          STRICT=""
+          if [[ "$COMMIT_MESSAGE" == *"[strict]"* ]]; then STRICT="--strict"; fi
+          python3 tools/ci/server_smoke.py --sectors 3 --restart --quiet $STRICT 2>&1 | tee smoke.log
+
+      - name: Mod-related lines of the server log
+        if: always()
+        run: |
+          mkdir -p run/smoke
+          grep -hE "nusmp|Mega|MEGA|multiverse" run/smoke/server_*.log 2>/dev/null | grep -E "ERROR|WARN|Exception|MEGA" | head -80 || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: server-smoke
+          path: |
+            smoke.log
+            run/smoke/
+            run/server/logs/
+            run/server/crash-reports/
+            run/server/mega_plan_*.json
+          if-no-files-found: ignore

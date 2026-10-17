@@ -1,0 +1,172 @@
+{
+  "comment": "Why: the storm sectors are a machine for lightning, so the table is made of the things that conduct: armour, constructs, breezes, vexes and creepers. A lit party is a lightning rod (it draws St. Elmo's fire), a noisy one wakes the iron golem, and a silent one in the dark is stalked by a creeper's hiss.",
+  "description": "Oxidised copper, tuff and lightning rods: elementals and machines that crackle. Fast, loud, and fond of the noise a party makes.",
+  "rollBonus": 0,
+  "budgetScale": 1.0,
+  "defaultFaction": "elemental",
+  "entries": [
+    {
+      "id": "rusting_sentry",
+      "comment": "A Living Armor or two, green with verdigris: sentries left standing in the wet.",
+      "band": "minor",
+      "weight": 14,
+      "mobs": [
+        {"type": "entity", "id": "nusmp:living_armor", "count": "1-2"}
+      ],
+      "cue": {"sound": "minecraft:block.copper.break", "volume": 0.8, "pitch": 0.7, "particle": "minecraft:electric_spark", "count": 8}
+    },
+    {
+      "id": "charged_bats",
+      "comment": "Bats shaken out of the rafters by the storm: fast, erratic and many.",
+      "band": "minor",
+      "weight": 10,
+      "maxThreat": 7,
+      "mobs": [
+        {"type": "entity", "id": "tensura:giant_bat", "count": "2-4"}
+      ],
+      "range": [10, 24],
+      "cells": 3,
+      "cue": {"sound": "minecraft:entity.bat.takeoff", "volume": 0.8, "pitch": 0.9, "particle": "minecraft:electric_spark", "count": 10}
+    },
+    {
+      "id": "spark_skirmishers",
+      "comment": "The evergreen standard encounter: a few of the elemental tag, fixed to elementals whatever the room's native faction.",
+      "band": "standard",
+      "weight": 12,
+      "faction": "elemental",
+      "mobs": [
+        {"type": "faction", "count": "2-3"}
+      ],
+      "cue": {"sound": "minecraft:entity.lightning_bolt.thunder", "volume": 0.35, "pitch": 1.2, "particle": "minecraft:electric_spark", "count": 12}
+    },
+    {
+      "id": "rod_guard",
+      "comment": "Constructs of the lightning rods: slow, armoured and aligned with the rods, the weight of the theme.",
+      "band": "standard",
+      "weight": 10,
+      "faction": "construct",
+      "mobs": [
+        {"type": "faction", "count": "2-3"}
+      ],
+      "cue": {"sound": "minecraft:block.copper.break", "volume": 0.9, "pitch": 0.6, "particle": "minecraft:electric_spark", "count": 8}
+    },
+    {
+      "id": "gust_pair",
+      "comment": "One or two breezes: they jump and knock a party about in the narrow halls, and their charges push it where the rest of the encounter wants it.",
+      "band": "standard",
+      "weight": 10,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:breeze", "count": "1-2"}
+      ],
+      "cue": {"sound": "minecraft:entity.breeze.idle_ground", "volume": 0.9, "pitch": 0.8, "particle": "minecraft:cloud", "count": 10}
+    },
+    {
+      "id": "silent_fuse",
+      "comment": "The lone hunter: a creeper or two, only for a party in the dark, because a creeper is the one hunter that wants to be near. The cue has no sound on purpose.",
+      "band": "standard",
+      "weight": 8,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:creeper", "count": "1-2"}
+      ],
+      "needs": {"dark": true},
+      "scaleWithParty": false,
+      "cue": {"volume": 0.0, "pitch": 1.0, "particle": "minecraft:electric_spark", "count": 8},
+      "message": "message.nusmp.mega.enc.storm.silent_fuse"
+    },
+    {
+      "id": "st_elmos_fire",
+      "comment": "A lit party is a lightning rod: vexes come out of the walls to the light.",
+      "band": "standard",
+      "weight": 8,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:vex", "count": "3-4"}
+      ],
+      "needs": {"lit": true},
+      "cue": {"sound": "minecraft:entity.vex.charge", "volume": 0.8, "pitch": 1.1, "particle": "minecraft:electric_spark", "count": 14}
+    },
+    {
+      "id": "stormcallers",
+      "comment": "The caster pair of the storm: cultists with constructs for bodyguards; the constructs are trimmed first when the budget is short.",
+      "band": "standard",
+      "weight": 8,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "faction", "count": "1-2", "faction": "cultist"},
+        {"type": "faction", "count": "2-3", "faction": "construct"}
+      ],
+      "cue": {"sound": "minecraft:entity.evoker.prepare_summon", "volume": 0.9, "pitch": 0.8, "particle": "minecraft:electric_spark", "count": 12}
+    },
+    {
+      "id": "thunder_brute",
+      "comment": "The loud brute: an iron golem (100 health, five points of budget) woken by noise. It is a machine, so it does not tire and does not stop.",
+      "band": "hard",
+      "weight": 10,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:iron_golem", "count": "1"}
+      ],
+      "needs": {"noisy": true},
+      "cue": {"sound": "minecraft:entity.lightning_bolt.thunder", "volume": 0.5, "pitch": 0.8, "particle": "minecraft:electric_spark", "count": 16},
+      "message": "message.nusmp.mega.enc.storm.thunder_brute"
+    },
+    {
+      "id": "galvanised_armour",
+      "comment": "The mimic-style surprise: armour that crackles with charge, vexes riding its current. Close range, short hunt.",
+      "band": "hard",
+      "weight": 6,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "entity", "id": "nusmp:living_armor", "count": "1-3"},
+        {"type": "entity", "id": "minecraft:vex", "count": "1-2"}
+      ],
+      "range": [10, 18],
+      "cells": 2,
+      "hunt": 300,
+      "cue": {"sound": "minecraft:block.copper.break", "volume": 0.8, "pitch": 0.5, "particle": "minecraft:electric_spark", "count": 14},
+      "message": "message.nusmp.mega.enc.storm.galvanised_armour"
+    },
+    {
+      "id": "tempest_wing",
+      "comment": "Breezes and vexes together: everything that flies, in one wing.",
+      "band": "hard",
+      "weight": 10,
+      "minThreat": 4,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:breeze", "count": "2-3"},
+        {"type": "entity", "id": "minecraft:vex", "count": "2-3"}
+      ],
+      "cue": {"sound": "minecraft:entity.breeze.idle_ground", "volume": 1.0, "pitch": 0.6, "particle": "minecraft:cloud", "count": 16}
+    },
+    {
+      "id": "squall_line",
+      "comment": "A line of squalls: a crowd of the elemental tag in three places.",
+      "band": "ambush",
+      "weight": 10,
+      "minThreat": 3,
+      "faction": "elemental",
+      "mobs": [
+        {"type": "faction", "count": "5-8"}
+      ],
+      "cells": 3,
+      "cue": {"sound": "minecraft:entity.lightning_bolt.thunder", "volume": 0.6, "pitch": 0.9, "particle": "minecraft:electric_spark", "count": 24},
+      "message": "message.nusmp.mega.enc.storm.squall_line"
+    },
+    {
+      "id": "thunderhead",
+      "comment": "The late ambush: a golem, breezes and constructs from two sides. Only for parties of two or more.",
+      "band": "ambush",
+      "weight": 8,
+      "minThreat": 5,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:iron_golem", "count": "1"},
+        {"type": "entity", "id": "minecraft:breeze", "count": "2-3"},
+        {"type": "faction", "count": "2-3", "faction": "construct"}
+      ],
+      "minParty": 2,
+      "cells": 2,
+      "cue": {"sound": "minecraft:entity.lightning_bolt.thunder", "volume": 0.8, "pitch": 0.7, "particle": "minecraft:electric_spark", "count": 24}
+    }
+  ]
+}

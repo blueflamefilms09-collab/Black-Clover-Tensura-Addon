@@ -1,0 +1,101 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "tensura:direwolf",
+      "required": false
+    },
+    {
+      "id": "tensura:barghest",
+      "required": false
+    },
+    {
+      "id": "tensura:hound_dog",
+      "required": false
+    },
+    {
+      "id": "tensura:blade_tiger",
+      "required": false
+    },
+    {
+      "id": "tensura:giant_bear",
+      "required": false
+    },
+    {
+      "id": "tensura:horned_bear",
+      "required": false
+    },
+    {
+      "id": "tensura:horned_rabbit",
+      "required": false
+    },
+    {
+      "id": "tensura:winged_cat",
+      "required": false
+    },
+    {
+      "id": "tensura:giant_bat",
+      "required": false
+    },
+    {
+      "id": "tensura:one_eyed_owl",
+      "required": false
+    },
+    {
+      "id": "tensura:hover_lizard",
+      "required": false
+    },
+    {
+      "id": "tensura:leech_lizard",
+      "required": false
+    },
+    {
+      "id": "tensura:dragon_peacock",
+      "required": false
+    },
+    {
+      "id": "tensura:feathered_serpent",
+      "required": false
+    },
+    {
+      "id": "tensura:basilisk",
+      "required": false
+    },
+    {
+      "id": "minecraft:hoglin",
+      "required": false
+    },
+    {
+      "id": "minecraft:zoglin",
+      "required": false
+    },
+    {
+      "id": "nusmp:dungeon_direwolf",
+      "required": false
+    },
+    {
+      "id": "nusmp:basilisk",
+      "required": false
+    },
+    {
+      "id": "iceandfire:stymphalian_bird",
+      "required": false
+    },
+    {
+      "id": "iceandfire:amphithere",
+      "required": false
+    },
+    {
+      "id": "iceandfire:cockatrice",
+      "required": false
+    },
+    {
+      "id": "iceandfire:hydra",
+      "required": false
+    },
+    {
+      "id": "iceandfire:gorgon",
+      "required": false
+    }
+  ]
+}

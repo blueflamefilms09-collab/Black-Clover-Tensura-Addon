@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:dungeon/mega_sector",
+  "display": {
+    "icon": {
+      "id": "minecraft:beacon"
+    },
+    "title": {
+      "translate": "advancement.nusmp.dungeon.mega_sector_3.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.dungeon.mega_sector_3.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_mega_sector_cleared_3": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "mega.sector_cleared",
+        "count": 3
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_mega_sector_cleared_3"
+    ]
+  ],
+  "rewards": {
+    "experience": 300
+  }
+}

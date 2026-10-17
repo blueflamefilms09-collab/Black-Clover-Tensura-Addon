@@ -128,7 +128,11 @@ _H4 = ("north", "south", "east", "west")
 _H6 = _H4 + ("up", "down")
 _SIDE3 = ("none", "low", "tall")
 _SCHEMA = [  # (regex of the block path, {property: allowed values or None for any})
-    (r".*_stairs", {"facing": _H4, "half": ("top", "bottom"), "shape": ("straight", "inner_left", "inner_right", "outer_left", "outer_right"), "waterlogged": _B}),
+    # first on purpose: a mod block (the Gatekeeper door ends in "_door", the pressure plates in "_plate") is never judged by a vanilla rule
+    (r"nusmp:.*", None),
+    (r"chiseled_bookshelf", {"facing": _H4, "slot_0_occupied": _B, "slot_1_occupied": _B, "slot_2_occupied": _B, "slot_3_occupied": _B,
+                              "slot_4_occupied": _B, "slot_5_occupied": _B}),
+    (r".*_stairs",{"facing": _H4, "half": ("top", "bottom"), "shape": ("straight", "inner_left", "inner_right", "outer_left", "outer_right"), "waterlogged": _B}),
     (r".*_slab", {"type": ("top", "bottom", "double"), "waterlogged": _B}),
     (r".*_wall", {"up": _B, "north": _SIDE3, "east": _SIDE3, "south": _SIDE3, "west": _SIDE3, "waterlogged": _B}),
     (r".*_fence", {"north": _B, "east": _B, "south": _B, "west": _B, "waterlogged": _B}),
@@ -201,10 +205,35 @@ def check_state(block, props):
     return _check_cached(block, tuple(sorted((props or {}).items())))
 
 
+_REAL_STATES = None
+
+
+def real_states():
+    """{block path: {property: [allowed values]}} of EVERY vanilla 1.21.1 block, read from vanilla_block_states_1_21_1.json (empty if the file is missing).
+    Source: the "summary" data of the public mcmeta repository (github.com/misode/mcmeta, branch 1.21.1-summary, blocks/data.min.json), which is generated
+    from the game's own data generators, so it is the game's truth, not a hand-written table (the hand-written _SCHEMA below stays as the fallback and
+    for the blocks of other mods)."""
+    global _REAL_STATES
+    if _REAL_STATES is None:
+        import json
+        p = os.path.join(HERE, "vanilla_block_states_1_21_1.json")
+        _REAL_STATES = json.load(open(p, encoding="utf-8")) if os.path.exists(p) else {}
+    return _REAL_STATES
+
+
 @functools.lru_cache(maxsize=65536)
 def _check_cached(block, items):
     props = dict(items)
     path = block.split(":", 1)[1] if ":" in block else block
+    if block.startswith("minecraft:"):
+        real = real_states().get(path)
+        if real is not None:
+            for k, v in props.items():
+                if k not in real:
+                    return "%s has no property %r (it has %s)" % (block, k, ", ".join(sorted(real)) or "none")
+                if str(v) not in real[k]:
+                    return "%s property %s=%r is not one of %s" % (block, k, v, ", ".join(real[k]))
+            return None
     for pat, allowed in _SCHEMA:
         if re.fullmatch(pat, path) or re.fullmatch(pat, block):
             if allowed is None:
@@ -780,14 +809,14 @@ def chair(mt, x, y, z, facing="south", wood=PLANKS_STAIRS):
 
 
 def chandelier(mt, x, y_ceiling, z, drop=4, radius=1, lantern=LANTERN):
-    """A chandelier hung from the ceiling cell `y_ceiling`: a chain of `drop` blocks and a ring of lanterns round its foot."""
-    for k in range(1, drop + 1):
-        mt.set(x, y_ceiling - k, z, CHAIN_BLOCK, {"axis": "y"})
+    """A chandelier hung from the ceiling cell `y_ceiling`: a chain of `drop` blocks and a ring of lanterns round its foot.
+    Every one of the five chains runs all the way up to the ceiling (the four side lanterns used to hang from a one-block chain stub that ended in the
+    air next to the centre chain: it looked fine in a flat preview and floated in the game, which tools/labyrinth/mega_arch_check.py reports)."""
     y = y_ceiling - drop - 1
-    mt.set(x, y, z, lantern, {"hanging": "true"})
-    for dx, dz in ((radius, 0), (-radius, 0), (0, radius), (0, -radius)):
-        mt.set(x + dx, y + 1, z + dz, CHAIN_BLOCK, {"axis": "y"})
-        mt.set(x + dx, y, z + dz, lantern, {"hanging": "true"})
+    for cx, cz in ((x, z), (x + radius, z), (x - radius, z), (x, z + radius), (x, z - radius)):
+        for k in range(1, drop + 1):
+            mt.set(cx, y_ceiling - k, cz, CHAIN_BLOCK, {"axis": "y"})
+        mt.set(cx, y, cz, lantern, {"hanging": "true"})
     return mt
 
 

@@ -40,7 +40,11 @@ public enum RoomKind {
 
     public boolean isSafe() { return this == LANDING || this == SAFE; }
 
-    /** Corridors and links: rooms that only carry traffic (no spawn, no patrol node of their own). */
+    /**
+     * Corridors, junctions, links and onward pieces: rooms whose job is to carry traffic. They are not "dead" for the monsters: the corridor and
+     * junction templates do carry a few {@code spawn} and {@code patrol} markers, so the Dungeon Master can meet a party between two halls; what they
+     * never hold is loot, a boss, a seat or a gate.
+     */
     public boolean isCirculation() { return this == CORRIDOR || this == JUNCTION || this == LINK || this == ONWARD; }
 
     /**

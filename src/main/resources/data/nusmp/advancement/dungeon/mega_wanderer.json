@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:dungeon/mega",
+  "display": {
+    "icon": {
+      "id": "minecraft:sculk_shrieker"
+    },
+    "title": {
+      "translate": "advancement.nusmp.dungeon.mega_wanderer.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.dungeon.mega_wanderer.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_mega_wanderer_survived": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "mega.wanderer_survived"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_mega_wanderer_survived"
+    ]
+  ],
+  "rewards": {
+    "experience": 80
+  }
+}

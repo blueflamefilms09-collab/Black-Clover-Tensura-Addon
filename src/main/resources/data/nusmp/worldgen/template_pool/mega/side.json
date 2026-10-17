@@ -1,0 +1,497 @@
+{
+  "fallback": "nusmp:mega/cap",
+  "elements": [
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/cavern/crystal_cavern",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/cavern/fungal_grotto_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/cavern/fungal_grotto_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/cavern/overgrown_cavern",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/corridor/bend_1x1_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/corridor/bend_1x1_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/corridor/bend_1x1_c",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/corridor/cross_1x1_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/corridor/cross_1x1_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/corridor/cross_1x1_c",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/corridor/gallery_2x4_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/corridor/gallery_2x4_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/corridor/straight_1x2_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/corridor/straight_1x2_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/corridor/straight_1x2_c",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/corridor/straight_1x3_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/corridor/straight_1x3_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/corridor/straight_1x3_c",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/corridor/straight_1x4_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/corridor/straight_1x4_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/corridor/straight_1x4_c",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/corridor/tee_1x1_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/corridor/tee_1x1_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/corridor/tee_1x1_c",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/cistern_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/cistern_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/colonnade_hall_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/colonnade_hall_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/lava_hall_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/lava_hall_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/mirror_hall",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/round_hall_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/round_hall_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/junction/crossroads_hall_3x3",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 11,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/junction/plaza_2x2_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 11,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/junction/plaza_2x2_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 11,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/junction/plaza_2x2_c",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/junction/plaza_3x3_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/junction/plaza_3x3_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/junction/plaza_3x3_c",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 10,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/puzzle/sigil_hall_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 10,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/puzzle/sigil_hall_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/safe/chapel",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/safe/hearth_hall_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/safe/hearth_hall_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/safe/refectory",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/safe/workshop_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/safe/workshop_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/set/cathedral_rotunda",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/trap/dark_room",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/trap/pit_hall_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/trap/pit_hall_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 10,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/trial/trial_hall_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 10,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/trial/trial_hall_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:empty_pool_element"
+      }
+    }
+  ]
+}
