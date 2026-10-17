@@ -1,0 +1,139 @@
+{
+  "character": "mimosa_vermillion",
+  "voice": "#E0D468",
+  "lines": {
+    "greeting": [
+      {
+        "text": "Oh! Hello, I'm Mimosa Vermillion. Please don't be nervous, I'm only a Golden Dawn knight. ...Only.",
+        "key": "arc.dialogue.mimosa_vermillion.1",
+        "first": true
+      },
+      {
+        "text": "Welcome to the Sanctuary, {player}! I hope you're not hurt. Healing is the one thing I'm good at, so please take care of yourself.",
+        "key": "arc.dialogue.mimosa_vermillion.2",
+        "first": true
+      },
+      {
+        "text": "Hello! Please take care of yourself down there. I'll worry otherwise.",
+        "key": "arc.dialogue.mimosa_vermillion.3",
+        "first": true
+      },
+      {
+        "text": "You've already beaten champions... you must be so tired. Please, rest and take care of yourself.",
+        "key": "arc.dialogue.mimosa_vermillion.4",
+        "first": true,
+        "minStage": 3
+      },
+      {
+        "text": "{player}! You came back safe. I'm so glad.",
+        "key": "arc.dialogue.mimosa_vermillion.5",
+        "first": false
+      },
+      {
+        "text": "Oh, hello again! You look tired. Please rest first.",
+        "key": "arc.dialogue.mimosa_vermillion.6",
+        "first": false
+      }
+    ],
+    "hint": [
+      {
+        "text": "Rest in a Safe Zone or at a Landing whenever you can. Your body won't mend by itself down there, however brave you feel.",
+        "key": "arc.dialogue.mimosa_vermillion.7",
+        "priority": 1
+      },
+      {
+        "text": "Plants remember where the light was. If a room feels wrong, look at what grows in it.",
+        "key": "arc.dialogue.mimosa_vermillion.8",
+        "priority": 1
+      },
+      {
+        "text": "Flowers can't fight, but they can hold a wall. I think healing and protecting are the same thing.",
+        "key": "arc.dialogue.mimosa_vermillion.9",
+        "priority": 1
+      },
+      {
+        "text": "Eat before you go, and bring something for your friends. Nobody fights well on an empty stomach.",
+        "key": "arc.dialogue.mimosa_vermillion.10",
+        "priority": 1
+      },
+      {
+        "text": "Fuegoleon and Mereoleona are my brother and sister. I joined the Golden Dawn on my own, so nobody could say it was because of my name.",
+        "key": "arc.dialogue.mimosa_vermillion.11",
+        "priority": 1
+      },
+      {
+        "text": "I used to think only people with strong magic mattered. I was wrong, and it took my friends to show me.",
+        "key": "arc.dialogue.mimosa_vermillion.12",
+        "priority": 1
+      },
+      {
+        "text": "You haven't fought a champion yet, have you? Please take a friend with you for the first one.",
+        "key": "arc.dialogue.mimosa_vermillion.13",
+        "priority": 1,
+        "weight": 4,
+        "maxStage": 0
+      },
+      {
+        "text": "The Eye of the Midnight Sun frightens me. But I saw my friends stand up to them, and I want to stand up too.",
+        "key": "arc.dialogue.mimosa_vermillion.14",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "minStage": 1
+      },
+      {
+        "text": "I heard Heath Grice is gone. I'm glad it's over, but I wish nobody had to be hurt like that.",
+        "key": "arc.dialogue.mimosa_vermillion.15",
+        "priority": 1,
+        "weight": 4,
+        "defeated": [
+          "heath_grice"
+        ]
+      },
+      {
+        "text": "The Zogratis curses don't fade on their own. If you're marked, please don't hide it from your party. Tell them.",
+        "key": "arc.dialogue.mimosa_vermillion.16",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "spade_raid"
+        ]
+      },
+      {
+        "text": "Lucius... please, whoever you go with, hold each other's hands before you start. Even if it sounds silly.",
+        "key": "arc.dialogue.mimosa_vermillion.17",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "wizard_king"
+        ]
+      },
+      {
+        "text": "There are so many people from other worlds fighting down there. I hope they'll let us help them someday.",
+        "key": "arc.dialogue.mimosa_vermillion.18",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "seven_deadly_sins",
+          "danmachi"
+        ]
+      }
+    ],
+    "farewell": [
+      {
+        "text": "Please come back safe, {player}!",
+        "key": "arc.dialogue.mimosa_vermillion.19"
+      },
+      {
+        "text": "I'll leave a flower here for you. Bring it back with a story!",
+        "key": "arc.dialogue.mimosa_vermillion.20"
+      },
+      {
+        "text": "Take care!",
+        "key": "arc.dialogue.mimosa_vermillion.21"
+      }
+    ]
+  }
+}

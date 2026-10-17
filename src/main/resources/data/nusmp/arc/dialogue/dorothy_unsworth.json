@@ -1,0 +1,135 @@
+{
+  "character": "dorothy_unsworth",
+  "voice": "#E88AA0",
+  "lines": {
+    "greeting": [
+      {
+        "text": "Hi hi hi! I'm Dorothy, Coral Peacock! ...Zzz. Sorry. Mid-hello. It happens.",
+        "key": "arc.dialogue.dorothy_unsworth.1",
+        "first": true
+      },
+      {
+        "text": "Welcome to the Sanctuary, {player}. Have you ever had a dream that felt more real than waking? ...Me neither. Just asking.",
+        "key": "arc.dialogue.dorothy_unsworth.2",
+        "first": true
+      },
+      {
+        "text": "Oh, a new face. You look like someone who would share a macaron. ...Yes? Yes.",
+        "key": "arc.dialogue.dorothy_unsworth.3",
+        "first": true
+      },
+      {
+        "text": "You're the one in all the dreams lately. Fighting big things. Nice, nice.",
+        "key": "arc.dialogue.dorothy_unsworth.4",
+        "first": true,
+        "minStage": 3
+      },
+      {
+        "text": "Oh. {player}. Hello. ...Zzz. Sorry.",
+        "key": "arc.dialogue.dorothy_unsworth.5",
+        "first": false
+      },
+      {
+        "text": "You again! Hee hee. I dreamed about you.",
+        "key": "arc.dialogue.dorothy_unsworth.6",
+        "first": false
+      }
+    ],
+    "hint": [
+      {
+        "text": "In a dream, anything is possible, but it only works if the dreamer is awake enough to hold it. Think about that.",
+        "key": "arc.dialogue.dorothy_unsworth.7",
+        "priority": 1
+      },
+      {
+        "text": "Macarons keep morale up. Strawberry ones especially. This is a fact.",
+        "key": "arc.dialogue.dorothy_unsworth.8",
+        "priority": 1
+      },
+      {
+        "text": "Rest is a weapon, {player}. If you do not rest properly, you fight worse. I rest properly. All the time.",
+        "key": "arc.dialogue.dorothy_unsworth.9",
+        "priority": 1
+      },
+      {
+        "text": "Cute things are underrated in battle. They make people underestimate you. ...Yawn.",
+        "key": "arc.dialogue.dorothy_unsworth.10",
+        "priority": 1
+      },
+      {
+        "text": "My vice-captain does the paperwork. I do the sleeping. We are very efficient.",
+        "key": "arc.dialogue.dorothy_unsworth.11",
+        "priority": 1
+      },
+      {
+        "text": "I look after my squad, you know. Even when I am asleep. Especially when I am asleep.",
+        "key": "arc.dialogue.dorothy_unsworth.12",
+        "priority": 1
+      },
+      {
+        "text": "Do not worry too much. Worry is just a dream you have with your eyes open.",
+        "key": "arc.dialogue.dorothy_unsworth.13",
+        "priority": 1
+      },
+      {
+        "text": "No champions yet? Mmm. Start with an easy one. Or nap first. Napping first is allowed.",
+        "key": "arc.dialogue.dorothy_unsworth.14",
+        "priority": 1,
+        "weight": 4,
+        "maxStage": 0
+      },
+      {
+        "text": "The Eye of the Midnight Sun are so serious. Serious people have terrible dreams. I have seen.",
+        "key": "arc.dialogue.dorothy_unsworth.15",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "minStage": 1
+      },
+      {
+        "text": "Spade Kingdom dreams are heavy. Like being pushed into a bed that is also a cliff.",
+        "key": "arc.dialogue.dorothy_unsworth.16",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "spade_raid"
+        ]
+      },
+      {
+        "text": "Lucius is in a lot of dreams lately. He does not say anything. He just waits. Do not dream about him.",
+        "key": "arc.dialogue.dorothy_unsworth.17",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "wizard_king"
+        ]
+      },
+      {
+        "text": "So many worlds in the Chronicle. I dream about them sometimes. Everyone is a little sad and a little hungry. Bring snacks.",
+        "key": "arc.dialogue.dorothy_unsworth.18",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "seven_deadly_sins",
+          "danmachi"
+        ]
+      }
+    ],
+    "farewell": [
+      {
+        "text": "Mm. See you. Or I will dream you.",
+        "key": "arc.dialogue.dorothy_unsworth.19"
+      },
+      {
+        "text": "Bye bye... zzz...",
+        "key": "arc.dialogue.dorothy_unsworth.20"
+      },
+      {
+        "text": "Take a nap first. Then go.",
+        "key": "arc.dialogue.dorothy_unsworth.21"
+      }
+    ]
+  }
+}

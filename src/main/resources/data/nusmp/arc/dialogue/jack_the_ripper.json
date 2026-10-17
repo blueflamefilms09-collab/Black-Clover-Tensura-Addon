@@ -1,0 +1,139 @@
+{
+  "character": "jack_the_ripper",
+  "voice": "#3CB074",
+  "lines": {
+    "greeting": [
+      {
+        "text": "Hahaha! Look at that, a fresh face! Jack the Ripper, Green Mantis. Don't worry, I only cut things that cut back.",
+        "key": "arc.dialogue.jack_the_ripper.1",
+        "first": true
+      },
+      {
+        "text": "A delver! Good. Delvers always have something worth cutting.",
+        "key": "arc.dialogue.jack_the_ripper.2",
+        "first": true
+      },
+      {
+        "text": "Commoner? Noble? Doesn't matter. Can you swing something sharp? That's all I want to know.",
+        "key": "arc.dialogue.jack_the_ripper.3",
+        "first": true
+      },
+      {
+        "text": "So YOU'RE the one filling the guardians' graves! Come here, let me shake your hand. Carefully.",
+        "key": "arc.dialogue.jack_the_ripper.4",
+        "first": true,
+        "minStage": 4
+      },
+      {
+        "text": "Hey, it's you! Got anything for me to cut?",
+        "key": "arc.dialogue.jack_the_ripper.5",
+        "first": false
+      },
+      {
+        "text": "Still alive? Hahaha! I like that.",
+        "key": "arc.dialogue.jack_the_ripper.6",
+        "first": false
+      }
+    ],
+    "hint": [
+      {
+        "text": "Everything has a seam. Armour, magic, even the dark between two rooms. Find it and I'll teach you the cut.",
+        "key": "arc.dialogue.jack_the_ripper.7",
+        "priority": 1
+      },
+      {
+        "text": "Barrier in your way? Cut it. Door in your way? Cut it. Rule in your way... I'll cut that too, if nobody's looking.",
+        "key": "arc.dialogue.jack_the_ripper.8",
+        "priority": 1
+      },
+      {
+        "text": "Safe Zones are for resting, and resting is for people with somewhere to be. I'm going to sharpen.",
+        "key": "arc.dialogue.jack_the_ripper.9",
+        "priority": 1
+      },
+      {
+        "text": "Don't mind me licking the blade. It helps me think. It also tastes of victory. Hahaha!",
+        "key": "arc.dialogue.jack_the_ripper.10",
+        "priority": 1
+      },
+      {
+        "text": "That lazy Black Bull captain keeps calling me a madman. Pot, kettle! Hahaha!",
+        "key": "arc.dialogue.jack_the_ripper.11",
+        "priority": 1
+      },
+      {
+        "text": "I was born a commoner and I cut just fine. Blood doesn't matter; the edge does. Remember that.",
+        "key": "arc.dialogue.jack_the_ripper.12",
+        "priority": 1
+      },
+      {
+        "text": "No guardians dead yet? Then you're missing the best part. Go! Hear them crack!",
+        "key": "arc.dialogue.jack_the_ripper.13",
+        "priority": 1,
+        "weight": 4,
+        "maxStage": 0
+      },
+      {
+        "text": "The Eye of the Midnight Sun are lovely targets. Lots of tricks, lots of seams. Tell me how it goes!",
+        "key": "arc.dialogue.jack_the_ripper.14",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "minStage": 1
+      },
+      {
+        "text": "Heath Grice? He never liked being cut. Don't blame him. Hahaha!",
+        "key": "arc.dialogue.jack_the_ripper.15",
+        "priority": 1,
+        "weight": 4,
+        "defeated": [
+          "heath_grice"
+        ]
+      },
+      {
+        "text": "Gravity, huh? Cut the field itself if you've got the reach. Otherwise... run! Hahaha!",
+        "key": "arc.dialogue.jack_the_ripper.16",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "spade_raid"
+        ]
+      },
+      {
+        "text": "Lucius reads attacks before they land? Then cut fast. Four cuts inside a second, and see how he reads that!",
+        "key": "arc.dialogue.jack_the_ripper.17",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "wizard_king"
+        ]
+      },
+      {
+        "text": "Other worlds, other swords! I hope somebody out there cuts better than I do. Then I can stop being bored.",
+        "key": "arc.dialogue.jack_the_ripper.18",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "seven_deadly_sins",
+          "danmachi"
+        ]
+      }
+    ],
+    "farewell": [
+      {
+        "text": "Hahaha! Go bring me stories with blood in them!",
+        "key": "arc.dialogue.jack_the_ripper.19"
+      },
+      {
+        "text": "Don't get cut! ...Unless it makes a good story.",
+        "key": "arc.dialogue.jack_the_ripper.20"
+      },
+      {
+        "text": "See you, delver!",
+        "key": "arc.dialogue.jack_the_ripper.21"
+      }
+    ]
+  }
+}

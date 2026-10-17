@@ -1,0 +1,144 @@
+{
+  "character": "kahono",
+  "voice": "#C890D8",
+  "lines": {
+    "greeting": [
+      {
+        "text": "Oh! Hello! I'm Kahono, from the Seabed Temple! Well, I used to be. Now I'm from... the sky? The sky is so big!",
+        "key": "arc.dialogue.kahono.1",
+        "first": true
+      },
+      {
+        "text": "Welcome, {player}! Songs can close wounds, you know. Mine do. Mostly. I'll sing for you sometime!",
+        "key": "arc.dialogue.kahono.2",
+        "first": true
+      },
+      {
+        "text": "My brother says I talk too much. Do you think that's true? Don't answer that!",
+        "key": "arc.dialogue.kahono.3",
+        "first": true
+      },
+      {
+        "text": "You're the one bringing down the champions! Everyone's talking about you! I'm going to write a song about it!",
+        "key": "arc.dialogue.kahono.4",
+        "first": true,
+        "minStage": 3
+      },
+      {
+        "text": "{player}! You came back! I wrote a new verse!",
+        "key": "arc.dialogue.kahono.5",
+        "first": false
+      },
+      {
+        "text": "Ah, hello again!",
+        "key": "arc.dialogue.kahono.6",
+        "first": false
+      }
+    ],
+    "hint": [
+      {
+        "text": "If you ever learn Song magic, you can sing it with your own voice! Speak into your microphone, or hold the Sing key if you don't have one.",
+        "key": "arc.dialogue.kahono.7",
+        "priority": 1
+      },
+      {
+        "text": "Healing Hymn is for friends, Lullaby for anyone who needs to stop, Barrier Chorus to push foes away, and Requiem for when there is no other way.",
+        "key": "arc.dialogue.kahono.8",
+        "priority": 1
+      },
+      {
+        "text": "My Crescendo answers only to my own grimoire. But every other song is yours to learn!",
+        "key": "arc.dialogue.kahono.9",
+        "priority": 1
+      },
+      {
+        "text": "I want to be an idol, you know. The first idol of the surface! I think I'd be good at it.",
+        "key": "arc.dialogue.kahono.10",
+        "priority": 1
+      },
+      {
+        "text": "My brother Kiato is serious about everything. I'm serious about only a few things. Mostly singing.",
+        "key": "arc.dialogue.kahono.11",
+        "priority": 1
+      },
+      {
+        "text": "I've never seen so many stars! Do you have this many where you come from?",
+        "key": "arc.dialogue.kahono.12",
+        "priority": 1
+      },
+      {
+        "text": "A song in your head helps in a fight. Hum something! Anything!",
+        "key": "arc.dialogue.kahono.13",
+        "priority": 1
+      },
+      {
+        "text": "No champions yet? Then everything is still ahead of you! That's the best kind of song.",
+        "key": "arc.dialogue.kahono.14",
+        "priority": 1,
+        "weight": 4,
+        "maxStage": 0
+      },
+      {
+        "text": "The Eye of the Midnight Sun frightens me. But we'll face things like that together, right?",
+        "key": "arc.dialogue.kahono.15",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "minStage": 1
+      },
+      {
+        "text": "Vetto is gone? Then Kiato and I can finally breathe. Thank you, thank you!",
+        "key": "arc.dialogue.kahono.16",
+        "priority": 1,
+        "weight": 4,
+        "defeated": [
+          "vetto"
+        ]
+      },
+      {
+        "text": "Everyone in the Spade Kingdom looks so sad in the stories. I hope songs can reach them too.",
+        "key": "arc.dialogue.kahono.17",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "spade_raid"
+        ]
+      },
+      {
+        "text": "Lucius frightens even the captains. So I'll sing the loudest for whoever goes to face him!",
+        "key": "arc.dialogue.kahono.18",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "wizard_king"
+        ]
+      },
+      {
+        "text": "So many strangers from other worlds in the Chronicle! Imagine the songs they must know!",
+        "key": "arc.dialogue.kahono.19",
+        "priority": 1,
+        "weight": 4,
+        "saga": [
+          "seven_deadly_sins",
+          "danmachi"
+        ]
+      }
+    ],
+    "farewell": [
+      {
+        "text": "Come back and tell me everything! I'll sing about it!",
+        "key": "arc.dialogue.kahono.20"
+      },
+      {
+        "text": "Be safe! La la la!",
+        "key": "arc.dialogue.kahono.21"
+      },
+      {
+        "text": "Bye bye, {player}!",
+        "key": "arc.dialogue.kahono.22"
+      }
+    ]
+  }
+}

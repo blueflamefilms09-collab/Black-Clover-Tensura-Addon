@@ -1,0 +1,484 @@
+{
+ "arc_fuegoleon_vermillion_front": {
+  "kind": "geo",
+  "model": "arc_fuegoleon_vermillion",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     1.147,
+     0
+    ],
+    "dist": 4.704
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 8,
+    "target": [
+     0,
+     1.147,
+     0
+    ],
+    "dist": 4.704
+   }
+  ]
+ },
+ "arc_fuegoleon_vermillion_back": {
+  "kind": "geo",
+  "model": "arc_fuegoleon_vermillion",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 5,
+    "target": [
+     0,
+     1.147,
+     0
+    ],
+    "dist": 4.704
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.147,
+     0
+    ],
+    "dist": 4.704
+   }
+  ]
+ },
+ "arc_fuegoleon_vermillion_face": {
+  "kind": "geo",
+  "model": "arc_fuegoleon_vermillion",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     1.844,
+     0
+    ],
+    "dist": 2.1
+   },
+   {
+    "name": "face 3/4",
+    "yaw": 32,
+    "pitch": 6,
+    "target": [
+     0,
+     1.844,
+     0
+    ],
+    "dist": 2.1
+   }
+  ]
+ },
+ "arc_fuegoleon_vermillion_idle": {
+  "kind": "geo",
+  "model": "arc_fuegoleon_vermillion",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   16.0,
+   32.0,
+   48.0
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.147,
+     0
+    ],
+    "dist": 4.939
+   }
+  ]
+ },
+ "arc_fuegoleon_vermillion_walk": {
+  "kind": "geo",
+  "model": "arc_fuegoleon_vermillion",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   5.5,
+   11.0,
+   16.5
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "walk",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.147,
+     0
+    ],
+    "dist": 4.939
+   }
+  ]
+ },
+ "arc_fuegoleon_vermillion_run": {
+  "kind": "geo",
+  "model": "arc_fuegoleon_vermillion",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   3.1,
+   6.2,
+   9.3
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "run",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.147,
+     0
+    ],
+    "dist": 4.939
+   }
+  ]
+ },
+ "arc_fuegoleon_vermillion_attack": {
+  "kind": "geo",
+  "model": "arc_fuegoleon_vermillion",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   3.6,
+   7.2,
+   10.8,
+   14.4
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "attack",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.247,
+     0
+    ],
+    "dist": 6.115
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.147,
+     0
+    ],
+    "dist": 6.115
+   }
+  ]
+ },
+ "arc_fuegoleon_vermillion_cast": {
+  "kind": "geo",
+  "model": "arc_fuegoleon_vermillion",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   6.0,
+   12.0,
+   18.0
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "cast",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.147,
+     0
+    ],
+    "dist": 4.939
+   }
+  ]
+ },
+ "arc_fuegoleon_vermillion_cast_big": {
+  "kind": "geo",
+  "model": "arc_fuegoleon_vermillion",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   9.6,
+   19.2,
+   28.8,
+   38.4
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "cast_big",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.247,
+     0
+    ],
+    "dist": 6.115
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.147,
+     0
+    ],
+    "dist": 6.115
+   }
+  ]
+ },
+ "arc_fuegoleon_vermillion_hurt": {
+  "kind": "geo",
+  "model": "arc_fuegoleon_vermillion",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   1.8,
+   3.6,
+   5.4,
+   7.2
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "hurt",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.147,
+     0
+    ],
+    "dist": 4.939
+   }
+  ]
+ },
+ "arc_fuegoleon_vermillion_transform": {
+  "kind": "geo",
+  "model": "arc_fuegoleon_vermillion",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   12.0,
+   24.0,
+   36.0,
+   48.0
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "transform",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.247,
+     0
+    ],
+    "dist": 6.115
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.147,
+     0
+    ],
+    "dist": 6.115
+   }
+  ]
+ },
+ "arc_fuegoleon_vermillion_death": {
+  "kind": "geo",
+  "model": "arc_fuegoleon_vermillion",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   11.2,
+   22.4,
+   33.6,
+   44.8
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "death",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.147,
+     0
+    ],
+    "dist": 4.939
+   }
+  ]
+ }
+}
