@@ -15,6 +15,12 @@ public final class ArcCharacters {
         if (done) return;
         done = true;
         // Saga 1 ... (lines are appended here as the builders are merged, e.g. ArcRoster.register(HeathGriceBoss.CHARACTER);)
+        // Saga 1, the five openers in the order of the anime (S1A); each CHARACTER constant loads its boss class, which registers its entity type
+        ArcRoster.register(com.newuniverse.nusmp.arc.early.RevchiSalikBoss.CHARACTER);
+        ArcRoster.register(com.newuniverse.nusmp.arc.early.HeathGriceBoss.CHARACTER);
+        ArcRoster.register(com.newuniverse.nusmp.arc.early.LotusWhomaltBoss.CHARACTER);
+        ArcRoster.register(com.newuniverse.nusmp.arc.early.MarsBoss.CHARACTER);
+        ArcRoster.register(com.newuniverse.nusmp.arc.early.VettoBoss.CHARACTER);
         com.newuniverse.nusmp.arc.knights.KnightsCast.registerAll();   // 1.61.0: sixteen friendly Magic Knights, captains and court members of the Hub (NPC-B)
     }
 }

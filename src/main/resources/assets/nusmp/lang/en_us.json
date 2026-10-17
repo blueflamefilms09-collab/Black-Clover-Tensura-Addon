@@ -4955,5 +4955,20 @@
   "arc.dialogue.yuno.20": "There are fighters in the Chronicle I have never heard of, from worlds I have never seen. I intend to measure myself against every one.",
   "arc.dialogue.yuno.21": "Go carefully, %1$s.",
   "arc.dialogue.yuno.22": "May the wind be at your back.",
-  "arc.dialogue.yuno.23": "I will be here when you return. Try to make that certain."
+  "arc.dialogue.yuno.23": "I will be here when you return. Try to make that certain.",
+  "entity.nusmp.revchi_salik": "Revchi Salik",
+  "entity.nusmp.heath_grice": "Heath Grice",
+  "entity.nusmp.lotus_whomalt": "Lotus Whomalt",
+  "entity.nusmp.mars": "Mars",
+  "entity.nusmp.vetto": "Vetto",
+  "message.nusmp.arc.early.revchi.bound": "Chained for %s s: strike him to tear the links, or use anti-magic.",
+  "message.nusmp.arc.early.revchi.link": "A link tears! %s left.",
+  "message.nusmp.arc.early.revchi.free": "The chain breaks: you are free.",
+  "message.nusmp.arc.early.revchi.cut": "Anti-magic cuts the chain.",
+  "message.nusmp.arc.early.heath.shielded": "The ice shield swallows it: close in, or use anti-magic.",
+  "message.nusmp.arc.early.lotus.dose": "Smoke dose %1$s of %2$s",
+  "message.nusmp.arc.early.lotus.fall": "The smoke has you: you stumble.",
+  "message.nusmp.arc.early.lotus.cut": "Anti-magic cuts the smoke prison.",
+  "message.nusmp.arc.early.mars.guarded": "The crystal turns the blow: strike from the side, or use anti-magic.",
+  "message.nusmp.arc.early.vetto.shielded": "A wall stands between you and the Mana Release."
 }
