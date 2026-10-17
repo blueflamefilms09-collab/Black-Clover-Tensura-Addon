@@ -594,7 +594,8 @@
   "spider_sword": "sabre",
   "stick_of_youth": "club",
   "warlute": "crossbow",
-  "zogratis_hourglass": "handitem"
+  "zogratis_hourglass": "handitem",
+  "mana_core": "handitem"
  },
  "_excluded_was": {
   "elsdocia": "rebuilt by the Elsdocia agent",

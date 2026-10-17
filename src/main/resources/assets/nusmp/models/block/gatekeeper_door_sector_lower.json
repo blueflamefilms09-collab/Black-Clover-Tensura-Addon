@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "nusmp:block/gatekeeper_door_sector_bottom",
+    "down": "nusmp:block/gatekeeper_door_end",
+    "up": "nusmp:block/gatekeeper_door_end",
+    "north": "nusmp:block/gatekeeper_door_sector_bottom",
+    "south": "nusmp:block/gatekeeper_door_sector_bottom",
+    "east": "nusmp:block/gatekeeper_door_sector_bottom",
+    "west": "nusmp:block/gatekeeper_door_sector_bottom"
+  }
+}

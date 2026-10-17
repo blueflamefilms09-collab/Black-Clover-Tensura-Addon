@@ -50,7 +50,9 @@ public class GatekeeperDoorBlock extends Block {
     public enum Kind implements StringRepresentable {
         WARDEN("warden"), BOSS("boss"),
         /** 1.36.0 (appended): a puzzle door, opened by the Riddle Stone of its room and blind to the Shadow Key. */
-        PUZZLE("puzzle");
+        PUZZLE("puzzle"),
+        /** 1.54.0 (appended): the sector door of the Mega-Dungeon, opened only by the Mana Core of the sector that holds it and blind to the Shadow Key (mega.guard.SectorDoor). */
+        SECTOR("sector");
 
         private final String name;
 
@@ -97,6 +99,7 @@ public class GatekeeperDoorBlock extends Block {
     // ---------------------------------------------------------------- the key
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (state.getValue(KIND) == Kind.SECTOR) return com.newuniverse.nusmp.labyrinth.mega.guard.SectorDoor.useItem(stack, state, level, pos, player);   // 1.54.0: a Mana Core, nothing else
         if (!(stack.getItem() instanceof ShadowKeyItem)) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         if (level.isClientSide) return ItemInteractionResult.SUCCESS;
         if (state.getValue(OPEN)) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
@@ -126,6 +129,7 @@ public class GatekeeperDoorBlock extends Block {
         if (state.getValue(OPEN) || player.isShiftKeyDown()) return InteractionResult.PASS;
         if (!level.isClientSide) {
             if (state.getValue(KIND) == Kind.PUZZLE) puzzleClick(state, level, pos, player);
+            else if (state.getValue(KIND) == Kind.SECTOR) tell(player, "message.nusmp.gatekeeper.sector_sealed");
             else tell(player, state.getValue(KIND) == Kind.WARDEN ? "message.nusmp.gatekeeper.warden_sealed" : "message.nusmp.gatekeeper.boss_sealed");
         }
         return InteractionResult.sidedSuccess(level.isClientSide);

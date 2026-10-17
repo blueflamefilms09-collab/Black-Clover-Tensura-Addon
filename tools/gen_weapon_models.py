@@ -2507,6 +2507,62 @@ def zogratis_hourglass(m, a):
 RELICS += [("zogratis_hourglass", zogratis_hourglass)]               # 1.46.0: upright, placed on its icon's box; run tools/gen_zogratis_arena_assets.py first
 
 
+def mana_core(m, a):
+    """1.54.0, the Mana Core of a sector's Labyrinth Guardian (docs/labyrinth/mega_guard.md): a faceted teal-violet crystal (a hexagonal
+    bipyramid with a belt) with a bright heart, floating inside two thin rings of runes (a horizontal one round its belt and a vertical
+    one standing across it, like an armillary sphere) and four glowing motes. Upright, placed on its icon's box like a relic; the icon is
+    made by tools/labyrinth/gen_mega_items.py, so run that first."""
+    teal, mana = (62, 226, 200), (146, 94, 236)
+
+    def crystal_paint(k, s, y, th):
+        t = (y + 11.0) / 22.0
+        pal = np.array(teal if k % 2 == 0 else mana, np.float32)
+        shade = 0.74 + 0.34 * math.cos(th - 2.3)                         # lit from the upper left
+        mid = 1.0 - min(1.0, abs(y) / 9.0)                              # brightest round the belt: the heart shines through
+        c = pal * shade * (0.72 + 0.5 * mid) + np.array((210, 255, 255), np.float32) * 0.3 * mid ** 3
+        c = c + fz(k * 7 + s * 5, y * 1.3, 91) * 10
+        if s < 0.14 or s > 0.86:
+            c = c * 1.22 + 8                                             # the bevel between two facets catches the light
+        if t > 0.82:
+            c = c + np.array((40, 50, 50), np.float32) * (t - 0.82) * 4  # the tips are paler
+        return col(np.clip(c, 0, 255)), col((170, 255, 240) if k % 2 == 0 else (200, 160, 255), 0.45 + 0.5 * mid)
+
+    # the crystal: stations (y, radius), six sides
+    lathe(m, a, [(-11.0, 0.0), (-8.2, 3.1), (-4.0, 5.3), (0.0, 5.9), (4.0, 5.3), (8.2, 3.1), (11.0, 0.0)], 6, crystal_paint, sw=4)
+
+    def ring_painter(n, r_in, r_out, runes, salt):
+        c = n / 2.0
+
+        def p(i, j, front):
+            dx, dy = i + 0.5 - c, j + 0.5 - c
+            r = math.hypot(dx, dy)
+            t = (r - r_in) / max(0.1, r_out - r_in)                     # 0 on the inner edge, 1 on the outer
+            q = (math.atan2(dy, dx) + math.pi) / (2 * math.pi) * runes
+            fr = q - math.floor(q)
+            idx = int(math.floor(q))
+            base = np.array((64, 48, 112), np.float32) + fz(i * 1.7, j * 1.3, salt) * 16
+            if t < 0.22 or t > 0.78:
+                base = base * 1.25                                      # the polished rims
+            dash = 0.22 < fr < (0.5 if idx % 3 == 2 else 0.72) and 0.2 < t < 0.8
+            if dash:
+                return col((120, 255, 232)), col((150, 255, 236), 0.95)
+            if idx % 3 == 0 and 0.22 < fr < 0.34 and 0.3 < t < 0.7:     # a dot between some of the dashes
+                return col((214, 176, 255)), col((214, 176, 255), 0.8)
+            return col(np.clip(base, 0, 255)), None
+        return p
+
+    n1 = int(math.ceil(2 * 10.5))
+    plate(m, a, disc_mask(10.5, inner=8.1), -n1 / 2.0, -n1 / 2.0, 0.7, ring_painter(n1, 8.1, 10.5, 14, 92), "xz", 0.0)
+    n2 = int(math.ceil(2 * 7.6))
+    plate(m, a, disc_mask(7.6, inner=5.8), -n2 / 2.0, -n2 / 2.0, 0.6, ring_painter(n2, 5.8, 7.6, 11, 93), "xy", 0.0)
+    for (x, y, z) in ((6.9, 4.6, 0.0), (-6.9, -4.6, 0.0), (0.0, 3.6, 6.9), (0.0, -3.6, -6.9)):                  # the motes
+        box(m, a, x - 0.9, y - 0.9, z - 0.9, x + 0.9, y + 0.9, z + 0.9, lambda face, i, j, fw, fh: (col((222, 190, 255)), col((222, 190, 255), 1.0)))
+    return dict(glow=("EAF8FF", 0.1, 0.5, 1.0))
+
+
+RELICS += [("mana_core", mana_core)]                                   # 1.54.0: upright, placed on its icon's box; run tools/labyrinth/gen_mega_items.py first
+
+
 # ================================================================ placement on the old sprite
 def sprite_axis(item_id):
     a = np.asarray(Image.open(os.path.join(ASSETS, "textures", "item", item_id + ".png")).convert("RGBA"))

@@ -35,6 +35,18 @@
     },
     "kind=puzzle,open=true,half=upper": {
       "model": "nusmp:block/gatekeeper_door_open"
+    },
+    "kind=sector,open=false,half=lower": {
+      "model": "nusmp:block/gatekeeper_door_sector_lower"
+    },
+    "kind=sector,open=true,half=lower": {
+      "model": "nusmp:block/gatekeeper_door_open"
+    },
+    "kind=sector,open=false,half=upper": {
+      "model": "nusmp:block/gatekeeper_door_sector_upper"
+    },
+    "kind=sector,open=true,half=upper": {
+      "model": "nusmp:block/gatekeeper_door_open"
     }
   }
 }
