@@ -5,10 +5,12 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.newuniverse.nusmp.labyrinth.mega.MegaConfig;
 import com.newuniverse.nusmp.labyrinth.mega.MegaData;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
+import com.newuniverse.nusmp.labyrinth.mega.MegaGrid;
 import com.newuniverse.nusmp.labyrinth.mega.Polarity;
 import com.newuniverse.nusmp.labyrinth.mega.Room;
 import com.newuniverse.nusmp.labyrinth.mega.RoomKind;
 import com.newuniverse.nusmp.labyrinth.mega.Sector;
+import com.newuniverse.nusmp.labyrinth.mega.party.PartyService;
 import com.newuniverse.nusmp.labyrinth.mega.travel.MegaTravel;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -42,6 +44,11 @@ import java.util.Set;
  * which road and floors it belongs to. Permission 2 on the whole tree, messages as literals (the pattern of {@code LabyrinthCommand}).
  * The lead attaches it under {@code /multiverse} with {@code root.then(MegaCommand.build())}; the other builders' sub-commands are attached under {@code mega} by
  * the lead too.
+ *
+ * <p>Parties (1.58.0): the dungeon is instanced, so {@code status} and {@code expand} work on ONE party's chains. They take an optional trailing {@code party <index>}; without
+ * it the console means party 0 (the shared chain, so the smoke test and every older habit read exactly what they always read), and a player means their own party (the floors
+ * they stand on, else the party their gate would take them to). Every command that names a sector by its id ({@code sector}, {@code regen}, {@code audit}, {@code tp} ...)
+ * needs no party: ids are global. A sector of any party but 0 says {@code party=<n>} at the end of its line; party 0 lines are unchanged.
  */
 public final class MegaCommand {
     private MegaCommand() {}
@@ -58,13 +65,15 @@ public final class MegaCommand {
 
     public static LiteralArgumentBuilder<CommandSourceStack> build() {
         LiteralArgumentBuilder<CommandSourceStack> root = Commands.literal("mega").requires(s -> s.hasPermission(2));
-        root.then(Commands.literal("status").executes(ctx -> status(ctx.getSource())));
+        root.then(Commands.literal("status").executes(ctx -> status(ctx.getSource(), -1))
+                .then(Commands.literal("party").then(Commands.argument("index", IntegerArgumentType.integer(0, MegaGrid.MAX_PARTIES - 1)).executes(ctx -> status(ctx.getSource(), IntegerArgumentType.getInteger(ctx, "index"))))));
         root.then(Commands.literal("sector").executes(ctx -> sector(ctx.getSource(), -1))
                 .then(Commands.argument("id", IntegerArgumentType.integer(0)).executes(ctx -> sector(ctx.getSource(), IntegerArgumentType.getInteger(ctx, "id")))));
         root.then(Commands.literal("tp").then(Commands.argument("id", IntegerArgumentType.integer(0)).executes(ctx -> tp(ctx.getSource(), IntegerArgumentType.getInteger(ctx, "id")))));
-        root.then(Commands.literal("expand").executes(ctx -> expand(ctx.getSource(), Polarity.HOLY))
-                .then(Commands.literal("holy").executes(ctx -> expand(ctx.getSource(), Polarity.HOLY)))
-                .then(Commands.literal("abyssal").executes(ctx -> expand(ctx.getSource(), Polarity.ABYSSAL))));
+        root.then(Commands.literal("expand").executes(ctx -> expand(ctx.getSource(), Polarity.HOLY, -1))
+                .then(partyNode(Polarity.HOLY))
+                .then(Commands.literal("holy").executes(ctx -> expand(ctx.getSource(), Polarity.HOLY, -1)).then(partyNode(Polarity.HOLY)))
+                .then(Commands.literal("abyssal").executes(ctx -> expand(ctx.getSource(), Polarity.ABYSSAL, -1)).then(partyNode(Polarity.ABYSSAL))));
         root.then(Commands.literal("regen").then(Commands.argument("id", IntegerArgumentType.integer(0)).executes(ctx -> regen(ctx.getSource(), IntegerArgumentType.getInteger(ctx, "id")))));
         root.then(Commands.literal("audit").then(Commands.argument("id", IntegerArgumentType.integer(0)).executes(ctx -> audit(ctx.getSource(), IntegerArgumentType.getInteger(ctx, "id")))));
         root.then(Commands.literal("verify").executes(ctx -> verify(ctx.getSource(), -1))
@@ -77,7 +86,33 @@ public final class MegaCommand {
         return root;
     }
 
+    /** {@code party <index>}: the optional tail of {@code expand}, naming the party whose road grows. */
+    private static LiteralArgumentBuilder<CommandSourceStack> partyNode(Polarity road) {
+        return Commands.literal("party").then(Commands.argument("index", IntegerArgumentType.integer(0, MegaGrid.MAX_PARTIES - 1))
+                .executes(ctx -> expand(ctx.getSource(), road, IntegerArgumentType.getInteger(ctx, "index"))));
+    }
+
     // ================================================================================================================ lookups
+
+    /**
+     * The party a read-only command shows when none is named: 0 for the console, the party of the floors a player stands on or of their record for a player, 0 for a
+     * player whose party has no floors yet (the shared chain, which is what every command showed before parties).
+     */
+    private static int viewParty(CommandSourceStack src) {
+        ServerPlayer p = src.getPlayer();
+        return p == null ? 0 : Math.max(0, PartyService.knownParty(p));
+    }
+
+    /**
+     * The party a command that BUILDS grows when none is named: 0 for the console; for a player the floors they stand on, else the party their gate would take them to (handed
+     * out now if they have none: they are growing their own chain). -1 when a player's party cannot be placed.
+     */
+    private static int growParty(CommandSourceStack src) {
+        ServerPlayer p = src.getPlayer();
+        if (p == null) return 0;
+        int known = PartyService.knownParty(p);
+        return known >= 0 ? known : PartyService.enter(p);
+    }
 
     private static Sector sectorOrNewest(CommandSourceStack src, int id) {
         MegaData data = MegaData.get(src.getServer());
@@ -93,20 +128,23 @@ public final class MegaCommand {
     private static String sectorLine(MinecraftServer server, Sector s) {
         GenData.Stat st = GenData.get(server).get(s.id);
         BoundingBox r = s.region;
-        return CommandLines.sectorOnRoad(CommandLines.sector(s.id, s.state.name(), s.theme.id(), s.threat, s.rooms.size(), s.edges.size(), st == null ? 0 : st.pieces, s.relicCount,
-                r.minX(), r.minZ(), r.maxX(), r.maxZ()), s.polarity, s.chainIndex, s.firstFloor(), s.lastFloor());
+        return CommandLines.withParty(CommandLines.sectorOnRoad(CommandLines.sector(s.id, s.state.name(), s.theme.id(), s.threat, s.rooms.size(), s.edges.size(), st == null ? 0 : st.pieces, s.relicCount,
+                r.minX(), r.minZ(), r.maxX(), r.maxZ()), s.polarity, s.chainIndex, s.firstFloor(), s.lastFloor()), s.party);
     }
 
     private static String xyz(BlockPos p) { return p == null ? "none" : p.getX() + "," + p.getY() + "," + p.getZ(); }
 
     // ================================================================================================================ status and sector
 
-    private static int status(CommandSourceStack src) {
+    private static int status(CommandSourceStack src, int explicitParty) {
         MinecraftServer server = src.getServer();
         MegaData data = MegaData.get(server);
+        int party = explicitParty >= 0 ? explicitParty : viewParty(src);
         say(src, CommandLines.status(data.expansionLevel, data.sectors().size(), ExpansionQueue.get().progress()));
+        List<Integer> known = data.parties();
+        if (party != 0 || known.size() > 1) say(src, CommandLines.partyView(party, known));
         for (Polarity road : Polarity.values()) {
-            List<Sector> chain = data.chain(road);
+            List<Sector> chain = data.chain(party, road);
             List<Integer> ids = new ArrayList<>();
             for (Sector s : chain) ids.add(s.id);
             Sector newest = chain.isEmpty() ? null : chain.get(chain.size() - 1);
@@ -129,8 +167,8 @@ public final class MegaCommand {
                 + " next=" + (s.nextId < 0 ? "none" : Integer.toString(s.nextId)) + " prev=" + (prev == null ? "none" : Integer.toString(prev.id)));
         if (s.isFloor()) say(src, CommandLines.stairs(s.stairBack == null ? null : xyz(s.stairBack), s.stairForward == null ? null : xyz(s.stairForward),
                 s.stairForwardPad == null ? null : xyz(s.stairForwardPad), StairLinks.back(s.chainIndex), StairLinks.forward(s.chainIndex), s.polarity, s.isBossFloor(),
-                data.chainSector(s.polarity, s.chainIndex + 1) == null ? -1 : data.chainSector(s.polarity, s.chainIndex + 1).id,
-                s.chainIndex == 0 ? -1 : data.chainSector(s.polarity, s.chainIndex - 1) == null ? -1 : data.chainSector(s.polarity, s.chainIndex - 1).id));
+                data.chainSector(s.party, s.polarity, s.chainIndex + 1) == null ? -1 : data.chainSector(s.party, s.polarity, s.chainIndex + 1).id,
+                s.chainIndex == 0 ? -1 : data.chainSector(s.party, s.polarity, s.chainIndex - 1) == null ? -1 : data.chainSector(s.party, s.polarity, s.chainIndex - 1).id));
         GenData.Stat st = GenData.get(server).get(s.id);
         if (st != null) {
             say(src, "  generated: tries=" + st.tries + " fallback=" + st.fallback + " deadEnd=" + st.deadEnd + " loops=" + st.loops + " caps=" + st.caps + " link=" + st.link
@@ -145,18 +183,21 @@ public final class MegaCommand {
      * Makes one road grow: its first sector when the road has none, else the next sector off the road's newest sector that has a free Way Onward. The refusal says which
      * road and why. Works at any time after the road's sector is built, whatever state its Guardian, Gatekeeper and Crucible are in (an admin's push).
      */
-    private static int expand(CommandSourceStack src, Polarity road) {
+    private static int expand(CommandSourceStack src, Polarity road, int explicitParty) {
         MinecraftServer server = src.getServer();
         MegaData data = MegaData.get(server);
+        int party = explicitParty >= 0 ? explicitParty : growParty(src);
+        if (party < 0) return no(src, CommandLines.refused("expand", "your party has no free lane (party.maxParties)"));
+        if (party > 0 && !PartyService.instanced()) return no(src, CommandLines.refused("expand", "the dungeon is not instanced (party.mode is shared, or floors.perSector is above 1): only party 0 can grow"));
         List<ExpandRule.Row> rows = new ArrayList<>();
-        for (Sector s : data.chain(road)) rows.add(ExpansionQueue.rowOf(s));
+        for (Sector s : data.chain(party, road)) rows.add(ExpansionQueue.rowOf(s));
         ExpandRule.Decision d = ExpandRule.decide(rows);
-        if (d.refusal() != null) return no(src, CommandLines.refused("expand", "the " + road.id() + " road: " + d.refusal()));
+        if (d.refusal() != null) return no(src, CommandLines.refused("expand", "the " + road.id() + " road" + (party == 0 ? "" : " of party " + party) + ": " + d.refusal()));
         if (d.first()) {
-            String why = ExpansionQueue.get().tryFirst(server, road);
+            String why = ExpansionQueue.get().tryFirst(server, road, party);
             if (why != null) return no(src, CommandLines.refused("expand", why));
-            Sector made = data.chainTail(road);
-            return say(src, CommandLines.queuedOn("expand", made.id, road, made.firstFloor(), made.lastFloor()));
+            Sector made = data.chainTail(party, road);
+            return say(src, CommandLines.withParty(CommandLines.queuedOn("expand", made.id, road, made.firstFloor(), made.lastFloor()), party));
         }
         ServerLevel level = MegaDungeon.level(server);
         Sector from = data.sector(d.from());
@@ -164,7 +205,7 @@ public final class MegaCommand {
         String why = ExpansionQueue.get().tryNext(level, from);
         if (why != null) return no(src, CommandLines.refused("expand", why));
         Sector made = data.sector(from.nextId);
-        return say(src, CommandLines.queuedOn("expand", made.id, road, made.firstFloor(), made.lastFloor()));
+        return say(src, CommandLines.withParty(CommandLines.queuedOn("expand", made.id, road, made.firstFloor(), made.lastFloor()), party));
     }
 
     private static int regen(CommandSourceStack src, int id) {

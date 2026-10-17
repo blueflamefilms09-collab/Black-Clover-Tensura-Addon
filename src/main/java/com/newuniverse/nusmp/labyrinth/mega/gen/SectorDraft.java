@@ -23,6 +23,10 @@ import com.newuniverse.nusmp.labyrinth.mega.RegionTheme;
  *     1.58.0, the floor model: a theme belongs to a DECADE of floors, so only the first floor of each decade (floor 1, 11, 21 ...) draws one (the draw is made for the decade
  *     index) or takes the Crucible's choice; the other nine floors keep the theme of the floor before.</li>
  * <li><b>Threat counts floors.</b> It is {@link SectorThreat#of}: the distance from Floor 0 of the sector's first floor, not {@code 1 + id}.</li>
+ * <li><b>A party has seeds of its own</b> (1.58.0). Every party walks its own chain of floors, and two parties that walked the very same floors would make the
+ *     dungeon feel like one room copied for each of them, so the party is mixed into the dungeon seed ({@link #partySeed}) before the theme, the relic count and the
+ *     sector seed are drawn. Party 0, the shared lane, uses the dungeon seed as it is, so a world saved before parties and a server in {@code shared} mode plan exactly
+ *     what they always planned.</li>
  * </ul>
  *
  * @param id         the global sector id
@@ -33,8 +37,20 @@ import com.newuniverse.nusmp.labyrinth.mega.RegionTheme;
  * @param seed       the sector's own seed ({@code SectorPlanner.sectorSeed(dungeonSeed, seedKey(road, chainIndex))})
  * @param theme      the sector's theme
  * @param relicCount how many relics its Crucible offers
+ * @param party      1.58.0: the party whose chain the sector belongs to (0 = the shared lane)
  */
-public record SectorDraft(int id, Polarity road, int chainIndex, int perRegion, int threat, long seed, RegionTheme theme, int relicCount) {
+public record SectorDraft(int id, Polarity road, int chainIndex, int perRegion, int threat, long seed, RegionTheme theme, int relicCount, int party) {
+
+    /** The draft of a sector of the shared lane (party 0): what every caller before 1.58.0 constructed. */
+    public SectorDraft(int id, Polarity road, int chainIndex, int perRegion, int threat, long seed, RegionTheme theme, int relicCount) {
+        this(id, road, chainIndex, perRegion, threat, seed, theme, relicCount, 0);
+    }
+
+    /**
+     * The seed a party's sectors derive from: the dungeon seed itself for party 0 (the shared lane, so nothing planned before parties changes), and a mix of the dungeon
+     * seed and the party index for every other party.
+     */
+    public static long partySeed(long dungeonSeed, int party) { return party <= 0 ? dungeonSeed : Rng.mix(dungeonSeed, 0x50415254_0000L + party); }
 
     /** The number of a PLACE in the dungeon: two per chain index, the Holy road even and the Abyssal road odd. */
     public static int seedKey(Polarity road, int chainIndex) { return Math.max(0, chainIndex) * 2 + (road == Polarity.ABYSSAL ? 1 : 0); }
@@ -49,11 +65,22 @@ public record SectorDraft(int id, Polarity road, int chainIndex, int perRegion, 
         return of(dungeonSeed, id, road, 0, perRegion, null, null);
     }
 
+    /** 1.58.0 (party): the first sector of a road on the lane of party {@code party}. */
+    public static SectorDraft first(long dungeonSeed, int id, Polarity road, int perRegion, int party) {
+        return of(dungeonSeed, id, road, 0, perRegion, null, null, party);
+    }
+
     /**
      * The sector at {@code chainIndex} of a road. {@code previous} is the theme of the sector before it (null for the first) and {@code override} the theme the
      * Crucible's chosen relic forces (null for no opinion).
      */
     public static SectorDraft of(long dungeonSeed, int id, Polarity road, int chainIndex, int perRegion, RegionTheme previous, RegionTheme override) {
+        return of(dungeonSeed, id, road, chainIndex, perRegion, previous, override, 0);
+    }
+
+    /** 1.58.0 (party): {@link #of(long, int, Polarity, int, int, RegionTheme, RegionTheme)} for a sector of party {@code party}'s chain (see the class comment on its seeds). */
+    public static SectorDraft of(long dungeonSeed, int id, Polarity road, int chainIndex, int perRegion, RegionTheme previous, RegionTheme override, int party) {
+        long partySeed = partySeed(dungeonSeed, party);
         int idx = Math.max(0, chainIndex);
         int per = Math.max(1, perRegion);
         RegionTheme theme;
@@ -62,11 +89,11 @@ public record SectorDraft(int id, Polarity road, int chainIndex, int perRegion, 
             // chose, which is why the override is ignored on every other floor); the rest of the decade wears the theme of the floor before.
             boolean starts = FloorMap.startsDecade(idx, per);
             if (!starts && previous != null) theme = previous;
-            else theme = override != null && starts ? override : RegionTheme.pick(dungeonSeed, FloorMap.decadeOf(idx, per), previous, road);
+            else theme = override != null && starts ? override : RegionTheme.pick(partySeed, FloorMap.decadeOf(idx, per), previous, road);
         } else {
-            theme = override != null ? override : RegionTheme.pick(dungeonSeed, idx, previous, road);
+            theme = override != null ? override : RegionTheme.pick(partySeed, idx, previous, road);
         }
         int key = seedKey(road, idx);
-        return new SectorDraft(id, road, idx, per, SectorThreat.of(road, idx, per), SectorPlanner.sectorSeed(dungeonSeed, key), theme, theme.relicCount(dungeonSeed, key));
+        return new SectorDraft(id, road, idx, per, SectorThreat.of(road, idx, per), SectorPlanner.sectorSeed(partySeed, key), theme, theme.relicCount(partySeed, key), Math.max(0, party));
     }
 }

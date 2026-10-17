@@ -11,6 +11,8 @@ import com.newuniverse.nusmp.labyrinth.mega.Room;
 import com.newuniverse.nusmp.labyrinth.mega.SelfTests;
 import com.newuniverse.nusmp.labyrinth.mega.Sector;
 import com.newuniverse.nusmp.labyrinth.mega.floors.FloorsConfig;
+import com.newuniverse.nusmp.labyrinth.mega.party.PartyKey;
+import com.newuniverse.nusmp.labyrinth.mega.party.PartyService;
 import com.newuniverse.nusmp.labyrinth.mega.travel.MegaTravel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -251,6 +253,7 @@ final class CoreSelfTests {
         CompoundTag mem = p.getPersistentData();
         clearMemory(mem);
         MegaTravel.forget(p.getUUID());
+        PartyKey pinned = PartyService.pin(server, p, 0);                      // 1.58.0: a stand-in is a party of its own; this test is about the shared chain (party 0), so it joins it
         try {
             Sector a = MegaTravel.choose(data, p, false);
             if (a == null || a.id != first.id) return fail("a newcomer should be offered sector " + first.id + " but got " + (a == null ? "nothing" : Integer.toString(a.id)));
@@ -298,6 +301,8 @@ final class CoreSelfTests {
             }
             return ok("newcomer to sector " + first.id + ", deep memory to sector " + want + ", the 1.54.0 key honoured, sneaking to sector " + first.id + ", entered onto the pad" + remembered);
         } finally {
+            PartyService.unpin(server, pinned);
+            p.getPersistentData().remove(PartyService.KEY);
             clearMemory(mem);
             MegaTravel.forget(p.getUUID());
         }
@@ -374,7 +379,8 @@ final class CoreSelfTests {
         if (d.perRegion != from.perRegion) return "it has " + d.perRegion + " floors per sector but its road has " + from.perRegion;
         if (d.firstFloor() != from.lastFloor() + from.polarity.sign()) return "its first floor " + FloorMap.label(d.firstFloor()) + " does not follow floor " + FloorMap.label(from.lastFloor());
         if (d.threat != SectorThreat.of(d.polarity, d.chainIndex, d.perRegion)) return "its threat is " + d.threat + " but its floors say " + SectorThreat.of(d.polarity, d.chainIndex, d.perRegion);
-        if (d.seed != SectorPlanner.sectorSeed(dungeonSeed, SectorDraft.seedKey(d.polarity, d.chainIndex))) return "its seed is not the seed of its place";
+        if (d.party != from.party) return "it is in party " + d.party + " but sector " + from.id + " is in party " + from.party;
+        if (d.seed != SectorPlanner.sectorSeed(SectorDraft.partySeed(dungeonSeed, d.party), SectorDraft.seedKey(d.polarity, d.chainIndex))) return "its seed is not the seed of its place";
         return null;
     }
 
@@ -389,13 +395,13 @@ final class CoreSelfTests {
         String bad = checkDraft(draft, from, data.seed);
         if (bad != null) return who + " would be wrong: " + bad;
         if (!draft.isFloor()) return who + " would not be a floor of the floor model (floors per sector " + draft.perRegion + ")";
-        Vec slot = FloorPlan.entry(draft.polarity, draft.chainIndex);
+        Vec slot = FloorPlan.entry(draft.polarity, draft.chainIndex, draft.party);
         if (draft.entry.getX() != slot.x() || draft.entry.getZ() != slot.z()) return who + " would stand at " + draft.entry.toShortString() + " but its slot is x " + slot.x() + ", z " + slot.z();
         if (!FloorMap.startsDecade(draft.chainIndex, draft.perRegion) && draft.theme != from.theme) {
             return who + " is not the first floor of a decade, so it keeps theme " + from.theme.id() + ", but it has " + draft.theme.id();
         }
         Box region = SectorGenerator.box(draft.region);
-        for (Sector o : data.chain(from.polarity)) {
+        for (Sector o : data.chain(from.party, from.polarity)) {
             if (region.inflateXZ(SectorPlanner.GAP - 1).overlaps(SectorGenerator.box(o.region))) return who + " would be closer than " + SectorPlanner.GAP + " blocks to sector " + o.id;
         }
         SectorGenerator.Planned p = SectorGenerator.plan(level, data, draft, from);
@@ -509,6 +515,7 @@ final class CoreSelfTests {
             clearMemory(mem);
             MegaTravel.forget(p.getUUID());
             LabyrinthTravel.forget(p);
+            PartyKey pinned = PartyService.pin(server, p, 0);                  // 1.58.0: the stand-in joins the shared chain (party 0), which is what this test reads
             try {
                 Sector chosen = MegaTravel.choose(data, p, road, false);
                 if (chosen == null || chosen.id != first.id) return fail("a newcomer should be offered the first sector of the " + road.id() + " road (sector " + first.id + ") but got " + (chosen == null ? "nothing" : Integer.toString(chosen.id)));
@@ -538,6 +545,8 @@ final class CoreSelfTests {
                 detail.append("the ").append(road.id()).append(" road: entered onto the pad of sector ").append(first.id).append(", deep memory offers sector ").append(want).append(", the other road is not affected; ");
                 tested++;
             } finally {
+                PartyService.unpin(server, pinned);
+                p.getPersistentData().remove(PartyService.KEY);
                 clearMemory(mem);
                 MegaTravel.forget(p.getUUID());
             }

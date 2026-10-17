@@ -100,10 +100,17 @@ public final class SectorGenerator {
      * {@link #obstacles(MegaData, int, int)} for the sectors of one road only (null: every road). A sector keeps out of the sectors of ITS OWN road: the two roads
      * start {@code MegaGrid.LANE_Z} blocks apart and cannot meet, and a plan that looked at the other road too would depend on how far that road had grown.
      */
-    public static List<SectorPlanner.Obstacle> obstacles(MegaData d, int before, int skipRegion, Polarity road) {
+    public static List<SectorPlanner.Obstacle> obstacles(MegaData d, int before, int skipRegion, Polarity road) { return obstacles(d, before, skipRegion, road, -1); }
+
+    /**
+     * {@link #obstacles(MegaData, int, int, Polarity)} for the sectors of one party's chain only (1.58.0; negative = every party). The lanes of two parties are
+     * {@code MegaGrid.PARTY_STEP} blocks apart and cannot meet, and a plan that looked at another party's floors would depend on how far that party had got.
+     */
+    public static List<SectorPlanner.Obstacle> obstacles(MegaData d, int before, int skipRegion, Polarity road, int party) {
         List<WorldObstacles.Known> known = new ArrayList<>();
         for (Sector o : d.sectors()) {
             if (road != null && o.polarity != road) continue;
+            if (party >= 0 && o.party != party) continue;
             Sector prev = prevOf(d, o);
             Vec seal = null;
             Facing seals = null;
@@ -111,9 +118,9 @@ public final class SectorGenerator {
                 seal = vec(prev.expansionPos);
                 seals = facing(prev.expansionFacing);
             }
-            known.add(new WorldObstacles.Known(o.id, box(o.region), seal, seals, vec(o.entry.above()), o.polarity));
+            known.add(new WorldObstacles.Known(o.id, box(o.region), seal, seals, vec(o.entry.above()), o.polarity, o.party));
         }
-        return WorldObstacles.of(known, before, skipRegion, road);
+        return WorldObstacles.of(known, before, skipRegion, road, party);
     }
 
     // ---------------------------------------------------------------- planning
@@ -151,7 +158,7 @@ public final class SectorGenerator {
             LOG.warn("[nusmp] Mega sector {} ({} road, chain index {}) has no predecessor that points at it; it is planned as a free-standing sector.", s.id, s.polarity.id(), s.chainIndex);
         }
         SectorRequests.Inputs in = new SectorRequests.Inputs(pools, recipe, MegaConfig.get(MegaConfig.MAX_PIECES), MegaConfig.get(MegaConfig.MAX_LINK_MODULES), s.seed,
-                entryJigsaw, forward, region, prevSeal, prevFacing, prevRegion, obstacles(data, s.id, -1, s.polarity), s.relicCount, s.theme.id(), pools.themes(), null);
+                entryJigsaw, forward, region, prevSeal, prevFacing, prevRegion, obstacles(data, s.id, -1, s.polarity, s.party), s.relicCount, s.theme.id(), pools.themes(), null);
         SectorRequests.Prepared prep = SectorRequests.prepare(in);
         for (String n : prep.notes()) LOG.warn("[nusmp] Mega sector {} plan: {}", s.id, n);
         if (!prep.ok()) return new Planned(prep, null, System.nanoTime() - t0, prep.failure());
@@ -191,15 +198,18 @@ public final class SectorGenerator {
     public static Planned probe(ServerLevel level, long dungeonSeed) { return probe(level, dungeonSeed, Polarity.HOLY); }
 
     /** {@link #probe(ServerLevel, long)} at the lane origin of a road: the Abyssal probe stands {@code MegaGrid.LANE_Z} blocks from the Holy one, exactly where that road's first sector would. */
-    public static Planned probe(ServerLevel level, long dungeonSeed, Polarity road) {
+    public static Planned probe(ServerLevel level, long dungeonSeed, Polarity road) { return probe(level, dungeonSeed, road, 0); }
+
+    /** 1.58.0 (party): {@link #probe(ServerLevel, long, Polarity)} on the lane of party {@code party}, exactly where that party's first sector would stand. */
+    public static Planned probe(ServerLevel level, long dungeonSeed, Polarity road, int party) {
         long t0 = System.nanoTime();
         VanillaPools pools = VanillaPools.get();
         pools.bind(level.getStructureManager());
         if (FloorMap.isFloorModel(FloorMap.floorsPerSector(FloorsConfig.get(FloorsConfig.PER_SECTOR)))) {
-            return probeFloor(pools, dungeonSeed, road, 0, t0);
+            return probeFloor(pools, dungeonSeed, road, 0, t0, party);
         }
-        SectorPlanner.Plan plan = SectorPlanner.first(dungeonSeed, 0, road);
-        SectorDraft first = SectorDraft.first(dungeonSeed, 0, road);
+        SectorPlanner.Plan plan = SectorPlanner.first(dungeonSeed, 0, road, party);
+        SectorDraft first = SectorDraft.first(dungeonSeed, 0, road, FloorMap.DEFAULT_PER_REGION, party);
         SectorRequests.Inputs in = new SectorRequests.Inputs(pools, pools.recipe(), MegaConfig.get(MegaConfig.MAX_PIECES), MegaConfig.get(MegaConfig.MAX_LINK_MODULES), plan.seed(),
                 plan.entry(), plan.forward(), plan.region(), null, null, null, List.of(), first.relicCount(), first.theme().id(), pools.themes(), null);
         SectorRequests.Prepared prep = SectorRequests.prepare(in);
@@ -214,10 +224,13 @@ public final class SectorGenerator {
      * 1.58.0: the probe of the floor model: floor {@code chainIndex} of a road planned with the real pools, templates, floor recipe and theme rules, nothing placed and
      * nothing saved. The self-tests probe floor 1 (an ordinary floor) and floor 10 (a boss floor) of each road.
      */
-    public static Planned probeFloor(VanillaPools pools, long dungeonSeed, Polarity road, int chainIndex, long t0) {
+    public static Planned probeFloor(VanillaPools pools, long dungeonSeed, Polarity road, int chainIndex, long t0) { return probeFloor(pools, dungeonSeed, road, chainIndex, t0, 0); }
+
+    /** 1.58.0 (party): {@link #probeFloor(VanillaPools, long, Polarity, int, long)} on the lane of party {@code party}. */
+    public static Planned probeFloor(VanillaPools pools, long dungeonSeed, Polarity road, int chainIndex, long t0, int party) {
         Request.Floor spec = FloorPlan.spec(road, chainIndex, MegaConfig.get(MegaConfig.FLOOR_ROOMS));
-        SectorDraft draft = SectorDraft.of(dungeonSeed, 0, road, chainIndex, 1, null, null);
-        SectorPlanner.Plan plan = SectorPlanner.floor(dungeonSeed, 0, road, chainIndex, spec.rooms(), spec.boss());
+        SectorDraft draft = SectorDraft.of(dungeonSeed, 0, road, chainIndex, 1, null, null, party);
+        SectorPlanner.Plan plan = SectorPlanner.floor(dungeonSeed, 0, road, chainIndex, spec.rooms(), spec.boss(), party);
         SectorRequests.Inputs in = new SectorRequests.Inputs(pools, pools.floorRecipe(), MegaConfig.get(MegaConfig.MAX_PIECES), MegaConfig.get(MegaConfig.MAX_LINK_MODULES), plan.seed(),
                 plan.entry(), plan.forward(), plan.region(), null, null, null, List.of(), draft.relicCount(), draft.theme().id(), pools.themes(), spec);
         SectorRequests.Prepared prep = SectorRequests.prepare(in);

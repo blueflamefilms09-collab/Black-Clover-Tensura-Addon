@@ -28,6 +28,9 @@ public final class MegaData extends SavedData {
     /** Number of sectors that were unsealed (each unsealing generated the next sector). */
     public int expansionLevel;
     private final List<Sector> sectors = new ArrayList<>();
+    /** The sectors looked at last by {@link #sectorAt}: the same few players ask the same few sectors every tick, so the answer is almost always one of these. Never saved. */
+    private final Sector[] recent = new Sector[4];
+    private int recentNext;
 
     public MegaData() {}
 
@@ -43,33 +46,70 @@ public final class MegaData extends SavedData {
         return null;
     }
 
-    /** 1.55.0: the sectors of one polarity's chain in chain order (a 1.54.0 save has only the Holy chain). */
-    public List<Sector> chain(Polarity p) {
+    /**
+     * 1.58.0 (party): the sectors of one party's chain on one road, in chain order. Every party has chains of its own ({@link Sector#party}); party 0 is the shared /
+     * legacy chain, where every sector saved by 1.54.0 to 1.57.0 lives.
+     */
+    public List<Sector> chain(int party, Polarity p) {
         List<Sector> out = new ArrayList<>();
-        for (Sector s : sectors) if (s.polarity == p) out.add(s);
+        for (Sector s : sectors) if (s.party == party && s.polarity == p) out.add(s);
         out.sort((a, b) -> Integer.compare(a.chainIndex, b.chainIndex));
         return out;
     }
 
-    /** 1.55.0: the sector of a polarity with this chain index, or null. */
-    public Sector chainSector(Polarity p, int chainIndex) {
-        for (Sector s : sectors) if (s.polarity == p && s.chainIndex == chainIndex) return s;
+    /** 1.55.0: the sectors of one polarity's chain in chain order (a 1.54.0 save has only the Holy chain). The chain of party 0, the shared one; {@link #chain(int, Polarity)} names the party. */
+    public List<Sector> chain(Polarity p) { return chain(0, p); }
+
+    /** 1.58.0 (party): the sector of a party's chain on a road with this chain index, or null. */
+    public Sector chainSector(int party, Polarity p, int chainIndex) {
+        for (Sector s : sectors) if (s.party == party && s.polarity == p && s.chainIndex == chainIndex) return s;
         return null;
     }
 
-    /** 1.55.0: the newest sector of a polarity's chain (highest chain index), or null when that road has not been opened. */
-    public Sector chainTail(Polarity p) {
+    /** 1.55.0: the sector of a polarity with this chain index, or null. The chain of party 0; {@link #chainSector(int, Polarity, int)} names the party. */
+    public Sector chainSector(Polarity p, int chainIndex) { return chainSector(0, p, chainIndex); }
+
+    /** 1.58.0 (party): the newest sector (highest chain index) of a party's chain on a road, or null when that party has not opened the road. */
+    public Sector chainTail(int party, Polarity p) {
         Sector best = null;
-        for (Sector s : sectors) if (s.polarity == p && (best == null || s.chainIndex > best.chainIndex)) best = s;
+        for (Sector s : sectors) if (s.party == party && s.polarity == p && (best == null || s.chainIndex > best.chainIndex)) best = s;
         return best;
+    }
+
+    /** 1.55.0: the newest sector of a polarity's chain (highest chain index), or null when that road has not been opened. The chain of party 0; {@link #chainTail(int, Polarity)} names the party. */
+    public Sector chainTail(Polarity p) { return chainTail(0, p); }
+
+    /** 1.58.0 (party): how many sectors (floors, of both roads) a party has; the limit {@code mega.maxSectors} is counted per party. */
+    public int sectorCount(int party) {
+        int n = 0;
+        for (Sector s : sectors) if (s.party == party) n++;
+        return n;
+    }
+
+    /** 1.58.0 (party): the indices of the parties that own at least one sector, ascending (a world that never had parties answers just {@code [0]} once it has a sector). */
+    public List<Integer> parties() {
+        java.util.TreeSet<Integer> out = new java.util.TreeSet<>();
+        for (Sector s : sectors) out.add(s.party);
+        return new ArrayList<>(out);
     }
 
     /** The newest sector, or null when none exists yet. */
     public Sector latest() { return sectors.isEmpty() ? null : sectors.get(sectors.size() - 1); }
 
-    /** The sector whose region holds the position, or null. */
+    /**
+     * The sector whose region holds the position, or null. Called by most systems for every player every tick, and since 1.58.0 the dungeon holds the floors of every
+     * party (hundreds of sectors on a busy server), so the sectors that answered last are tried first: regions never overlap, so a sector that still holds the position
+     * IS the answer, and checking it costs six comparisons (its state and region are read afresh every time, so nothing can go stale).
+     */
     public Sector sectorAt(BlockPos p) {
-        for (Sector s : sectors) if (s.state != Sector.State.FAILED && s.containsRegion(p)) return s;
+        for (Sector r : recent) if (r != null && r.state != Sector.State.FAILED && r.containsRegion(p)) return r;
+        for (Sector s : sectors) {
+            if (s.state != Sector.State.FAILED && s.containsRegion(p)) {
+                recent[recentNext] = s;
+                recentNext = (recentNext + 1) & 3;
+                return s;
+            }
+        }
         return null;
     }
 

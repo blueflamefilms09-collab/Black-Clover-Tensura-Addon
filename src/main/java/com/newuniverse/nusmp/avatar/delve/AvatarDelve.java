@@ -16,6 +16,7 @@ import com.newuniverse.nusmp.labyrinth.mega.Polarity;
 import com.newuniverse.nusmp.labyrinth.mega.Room;
 import com.newuniverse.nusmp.labyrinth.mega.RoomKind;
 import com.newuniverse.nusmp.labyrinth.mega.Sector;
+import com.newuniverse.nusmp.labyrinth.mega.party.PartyService;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -79,17 +80,20 @@ public final class AvatarDelve {
     }
 
     /**
-     * The sector to arrive at: the floor the creator last reached on the configured road, but not beyond the newest finished one and not beyond the configured cap.
-     * Null when the dungeon does not exist or the road has no finished sector. The Avatar never wakes the dungeon itself.
+     * The sector to arrive at: the floor the creator last reached on the configured road, but not beyond the newest finished one and not beyond the configured cap, in the
+     * chain of the creator's party (the dungeon is instanced since 1.58.0). Null when the dungeon does not exist, the creator's party has no floors or the road has no
+     * finished sector. The Avatar never wakes the dungeon itself.
      */
     public static Sector target(MinecraftServer server, ServerPlayer creator) {
         if (server == null || creator == null || dungeon(server) == null) return null;
         MegaData data = MegaData.get(server);
+        int party = PartyService.knownParty(creator);                  // 1.58.0: the dungeon is instanced; the Avatar delves in the floors of its creator's party and nobody else's
+        if (party < 0) return null;
         Polarity road = road();
         int count = 0;
-        for (Sector s = data.chainSector(road, 0); s != null && playable(s); s = data.chainSector(road, count)) count++;
+        for (Sector s = data.chainSector(party, road, 0); s != null && playable(s); s = data.chainSector(party, road, count)) count++;
         int idx = DelveRules.landingIndex(creatorDeepest(creator, road), count, AvatarAiConfig.delveMaxChain());
-        return idx < 0 ? null : data.chainSector(road, idx);
+        return idx < 0 ? null : data.chainSector(party, road, idx);
     }
 
     /** Where to stand on arrival: the sector's arrival cell, else the middle of its first landing or safe room; null when it has none. */

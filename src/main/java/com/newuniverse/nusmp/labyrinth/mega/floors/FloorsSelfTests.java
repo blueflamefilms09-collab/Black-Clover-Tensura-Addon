@@ -390,7 +390,7 @@ public final class FloorsSelfTests {
         if (s.isFloor()) {
             // the floor model: floors are joined by stairs, so the walk is from the arrival stairwell to the arrival stairwell of the NEXT floor when it exists (that is
             // the change of floor a party really makes), else to the forward stairwell of the same floor (no change of floor, so no event)
-            Sector next = data.chainSector(s.polarity, s.chainIndex + 1);
+            Sector next = data.chainSector(s.party, s.polarity, s.chainIndex + 1);
             Room nextLanding = null;
             if (next != null && next.state != Sector.State.GENERATING && next.state != Sector.State.FAILED && !next.rooms.isEmpty()) {
                 if (!FloorAssigner.isBanded(next)) {

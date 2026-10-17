@@ -21,6 +21,8 @@ public final class QuestTeams {
 
     private static Boolean ok;
     private static Method api, getManager, isManagerLoaded, getTeamForPlayer, teamId, teamName, teamMembers;
+    /** Looked up apart from the rest (1.58.0, for the dungeon parties): an FTB Teams that lacks one of them still serves everything above. */
+    private static Method getTeamForPlayerId, teamOwner;
 
     private static boolean available() {
         if (ok != null) return ok;
@@ -39,6 +41,8 @@ public final class QuestTeams {
             teamName = team.getMethod("getShortName");
             teamMembers = team.getMethod("getMembers");
             ok = true;
+            try { getTeamForPlayerId = mgr.getMethod("getTeamForPlayerID", UUID.class); } catch (ReflectiveOperationException absent) { getTeamForPlayerId = null; }
+            try { teamOwner = team.getMethod("getOwner"); } catch (ReflectiveOperationException absent) { teamOwner = null; }
         } catch (ReflectiveOperationException | LinkageError e) {
             com.mojang.logging.LogUtils.getLogger().warn("[nusmp] FTB Teams found but its API could not be reached; squad credit sharing disabled", e);
         }
@@ -57,6 +61,29 @@ public final class QuestTeams {
         } catch (ReflectiveOperationException | RuntimeException e) {
             return Optional.empty();
         }
+    }
+
+    /**
+     * 1.58.0: the FTB team of a player given only their id, so an OFFLINE player can be placed too (the dungeon's admin commands ask about players who are not on). Empty
+     * without FTB Teams, with an FTB Teams that has no such lookup, or for a player it does not know.
+     */
+    public static Optional<Object> teamOfId(UUID playerId) {
+        if (playerId == null || !available() || getTeamForPlayerId == null) return Optional.empty();
+        try {
+            Object a = api.invoke(null);
+            if (a == null || !(boolean) isManagerLoaded.invoke(a)) return Optional.empty();
+            Object manager = getManager.invoke(a);
+            Optional<?> t = (Optional<?>) getTeamForPlayerId.invoke(manager, playerId);
+            return t.map(o -> (Object) o);
+        } catch (ReflectiveOperationException | RuntimeException e) {
+            return Optional.empty();
+        }
+    }
+
+    /** 1.58.0: the id of the team's owner (the player who founded it), or null when FTB Teams cannot say. */
+    public static UUID ownerOf(Object team) {
+        if (team == null || teamOwner == null) return null;
+        try { return (UUID) teamOwner.invoke(team); } catch (ReflectiveOperationException | RuntimeException e) { return null; }
     }
 
     /** The team's id, or null. */

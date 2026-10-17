@@ -43,8 +43,32 @@ public final class MegaGrid {
      */
     public static final int LANE_Z = 300_000;
 
-    /** The z offset of the first sector of a chain: 0 for the Holy chain (where 1.54.0 put sector 0), {@link #LANE_Z} for the Abyssal chain. */
-    public static int laneZ(Polarity p) { return p == Polarity.ABYSSAL ? LANE_Z : 0; }
+    /**
+     * 1.58.0 (party): the dungeon is instanced per party, and every party gets a lane of its own on each road, this many blocks (along z) from the lane of the party
+     * before it. A floor of the floor model is at most 171 blocks wide plus the reach of a door cap (about 190 in all) and floors run along x, so 4096 leaves more than
+     * twenty times the room a floor needs and eight times the furthest a player can see (32 chunks = 512 blocks): nothing of one party's lane is ever loaded, lit or
+     * ticked because of a player in another. Fixed for ever: a lane that moved would strand the floors already built on it.
+     */
+    public static final int PARTY_STEP = 4096;
+
+    /** The most parties the lane maths knows (the top of the config {@code party.maxParties}); party indices are {@code 0 .. MAX_PARTIES - 1}. */
+    public static final int MAX_PARTIES = 256;
+
+    /** The z offset of the first sector of a chain: 0 for the Holy chain (where 1.54.0 put sector 0), {@link #LANE_Z} for the Abyssal chain. This is the lane of party 0. */
+    public static int laneZ(Polarity p) { return laneZ(p, 0); }
+
+    /**
+     * 1.58.0 (party): the z of the lane of road {@code p} for party {@code party}. Party 0 is the shared / legacy lane and stands exactly where it always stood (Holy z 0,
+     * Abyssal {@link #LANE_Z}), so a world saved before parties existed, and a server that runs {@code party.mode = shared}, are untouched. Party {@code k > 0} has its
+     * Holy lane at {@code -k * PARTY_STEP} (the negative side, which nothing else uses) and its Abyssal lane at {@code LANE_Z + k * PARTY_STEP}, so the two groups of
+     * lanes can never meet: the Holy lanes fill {@code [-(MAX_PARTIES - 1) * PARTY_STEP, 0]} and the Abyssal lanes {@code [LANE_Z, LANE_Z + (MAX_PARTIES - 1) * PARTY_STEP]},
+     * about 1.04 million blocks each way in the worst case (256 parties) and 558 048 for the default 64, far inside the vanilla world border of 29 999 984. A negative
+     * index is read as 0.
+     */
+    public static int laneZ(Polarity p, int party) {
+        int k = Math.max(0, party);
+        return p == Polarity.ABYSSAL ? LANE_Z + k * PARTY_STEP : -k * PARTY_STEP;
+    }
 
     /** Jigsaw names and pools every builder must use (the connector contract of docs/labyrinth/mega.md). */
     public static final String DOOR = "nusmp:mega_door";

@@ -54,14 +54,13 @@ public final class StairSelfTests {
         if (level == null) return fail("no mega dimension");
         MegaData data = MegaData.get(server);
         int floors = 0, bosses = 0;
-        for (Polarity road : Polarity.values()) {
-            for (Sector s : data.chain(road)) {
-                if (!s.isFloor() || !SectorGenerator.playable(s)) continue;
-                String bad = checkFloor(level, s);
-                if (bad != null) return fail("sector " + s.id + " (floor " + FloorMap.label(s.firstFloor()) + ", " + road.id() + " road): " + bad);
-                floors++;
-                if (s.isBossFloor()) bosses++;
-            }
+        for (Sector s : new ArrayList<>(data.sectors())) {                      // the floors of every party (1.58.0), not only the shared chain
+            Polarity road = s.polarity;
+            if (!s.isFloor() || !SectorGenerator.playable(s)) continue;
+            String bad = checkFloor(level, s);
+            if (bad != null) return fail("sector " + s.id + " (floor " + FloorMap.label(s.firstFloor()) + ", " + road.id() + " road" + (s.party == 0 ? "" : ", party " + s.party) + "): " + bad);
+            floors++;
+            if (s.isBossFloor()) bosses++;
         }
         if (floors == 0) return ok("no finished floor of the floor model yet (run /multiverse mega expand and wait for it)");
         return ok(floors + " finished floor(s) (" + bosses + " boss): each has its two exits, a floor under both 3 x 3 pads, standing room over their middles, a landing on the forward stairs and an arrival that is on no pad");
@@ -123,9 +122,14 @@ public final class StairSelfTests {
         MegaData data = MegaData.get(server);
         StringBuilder detail = new StringBuilder();
         int tested = 0;
-        for (Polarity road : Polarity.values()) {
+        List<int[]> chains = new ArrayList<>();                                 // 1.58.0: every party has chains of its own; the stairs of each are walked ({party, road})
+        for (int party : data.parties()) for (Polarity r : Polarity.values()) chains.add(new int[] {party, r.ordinal()});
+        for (int[] pr : chains) {
+            int party = pr[0];
+            Polarity road = Polarity.values()[pr[1]];
+            String ofParty = party == 0 ? "" : " of party " + party;
             Sector low = null, high = null;
-            for (Sector s : data.chain(road)) {
+            for (Sector s : data.chain(party, road)) {
                 if (!s.isFloor() || !SectorGenerator.playable(s) || s.stairForward == null || s.stairBack == null) {
                     low = null;
                     continue;
@@ -137,7 +141,7 @@ public final class StairSelfTests {
                 low = s;
             }
             if (low == null || high == null) {
-                detail.append("the ").append(road.id()).append(" road has no two finished floors in a row; ");
+                detail.append("the ").append(road.id()).append(" road").append(ofParty).append(" has no two finished floors in a row; ");
                 continue;
             }
             FakePlayer p = SelfTests.player(level, "mega_stair_test_" + road.id(), low.stairForward.getX() + 0.5, low.stairForward.getY(), low.stairForward.getZ() + 0.5);
@@ -145,7 +149,7 @@ public final class StairSelfTests {
             reset(p);
             try {
                 if (!MegaDungeon.mayEnter(p, road)) {
-                    detail.append("the Directional Lock refuses the stand-in on the ").append(road.id()).append(" road, so its stairs were not walked; ");
+                    detail.append("the Directional Lock refuses the stand-in on the ").append(road.id()).append(" road").append(ofParty).append(", so its stairs were not walked; ");
                     continue;
                 }
                 // on: the forward pad of the lower floor leads to the arrival of the upper one
@@ -178,7 +182,7 @@ public final class StairSelfTests {
                 p.setPos(high.arrival.getX() + 0.5, high.arrival.getY(), high.arrival.getZ() + 0.5);
                 StairTravel.look(level, data, p);
                 if (LabyrinthTravel.arrivalPad(p) != null) return fail("standing on the arrival platform of sector " + high.id + " moved the stand-in: the arrival is on a pad");
-                detail.append("the ").append(road.id()).append(" road: floor ").append(FloorMap.label(low.firstFloor())).append(" to ").append(FloorMap.label(high.firstFloor()))
+                detail.append("the ").append(road.id()).append(" road").append(ofParty).append(": floor ").append(FloorMap.label(low.firstFloor())).append(" to ").append(FloorMap.label(high.firstFloor()))
                         .append(" and back by the pads, the arrival platform is no pad; ");
                 tested++;
             } finally {

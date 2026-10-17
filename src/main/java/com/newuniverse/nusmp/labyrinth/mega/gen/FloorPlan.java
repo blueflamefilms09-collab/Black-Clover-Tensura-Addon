@@ -59,8 +59,14 @@ public final class FloorPlan {
      * The region anchor of floor {@code chainIndex} of a road: the jigsaw cell (door row) at the middle of the near edge of the floor's slot, the fixed cell the
      * region is built around ({@code Sector.entry} saves the floor cell below it). Floor 0 of the Holy road stands at x 0, z 0 where 1.54.0 put its sector 0.
      */
-    public static Vec entry(Polarity road, int chainIndex) {
-        return new Vec(Math.max(0, chainIndex) * PITCH, SectorPlanner.DOOR_Y, MegaGrid.laneZ(road));
+    public static Vec entry(Polarity road, int chainIndex) { return entry(road, chainIndex, 0); }
+
+    /**
+     * 1.58.0 (party): the same anchor on the lane of party {@code party} ({@link MegaGrid#laneZ(Polarity, int)}). Only z differs between parties, so a floor's slot along x
+     * is the same for everybody and a party's floors keep their pitch; party 0 is the shared lane where 1.54.0 put its sector 0.
+     */
+    public static Vec entry(Polarity road, int chainIndex, int party) {
+        return new Vec(Math.max(0, chainIndex) * PITCH, SectorPlanner.DOOR_Y, MegaGrid.laneZ(road, party));
     }
 
     /** The region of a floor that aims at {@code rooms}, anchored at {@code entry} and growing east (the lane runs along x). */

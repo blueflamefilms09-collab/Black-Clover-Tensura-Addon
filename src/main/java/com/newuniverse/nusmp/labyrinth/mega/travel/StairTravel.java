@@ -36,6 +36,8 @@ import java.util.ArrayList;
  * so a party that has just arrived is never standing on a pad (they are a staircase away from it); and every use, accepted or refused, starts a short cooldown so a refusal
  * is spoken once every few seconds, not every look, and a player is never bounced. The deepest floor reached is remembered the way the Landings were ({@code MegaTravel.remember}), so the Hub's gate takes
  * a returning player to where they left off. The feedback is a short title with its fade ("Floor +4", "You climb the stairs"), chat is kept for refusals. Server thread only.
+ * The dungeon is instanced per party (1.58.0): the floor a stair leads to is the next floor of the SAME party's chain ({@code Sector.party} of the floor the player stands on),
+ * so a player can only ever climb into floors of their own party, whoever else is in the dungeon.
  */
 public final class StairTravel {
     private static final Logger LOG = LogUtils.getLogger();
@@ -104,7 +106,7 @@ public final class StairTravel {
 
     private static void goOn(ServerLevel level, MegaData data, ServerPlayer p, Sector s) {
         StairLinks.Dest d = StairLinks.forward(s.chainIndex);
-        Sector t = data.chainSector(s.polarity, d.chainIndex());
+        Sector t = data.chainSector(s.party, s.polarity, d.chainIndex());
         if (t == null) {                                                      // not built yet: say so, and make it so
             String why = ExpansionQueue.get().tryNext(level, s);
             if (why != null) LOG.info("[nusmp] The stairs of sector {} lead nowhere yet and the next floor was not queued: {}", s.id, why);
@@ -130,7 +132,7 @@ public final class StairTravel {
             LabyrinthTravel.leaveAny(p);
             return;
         }
-        Sector t = data.chainSector(s.polarity, d.chainIndex());
+        Sector t = data.chainSector(s.party, s.polarity, d.chainIndex());
         if (t == null || !SectorGenerator.playable(t)) {
             say(p, "stairs.lost", "The stairs back are gone. Ask an admin to look at /multiverse mega status.", ChatFormatting.RED);
             cool(level, p, REFUSED_COOLDOWN);

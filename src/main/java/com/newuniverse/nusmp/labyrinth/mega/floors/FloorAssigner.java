@@ -125,7 +125,7 @@ public final class FloorAssigner implements SectorListener {
         int other = 0;
         if (data != null) {
             for (Sector o : data.sectors()) {
-                if (o != s && o.polarity == s.polarity && isBanded(o)) {
+                if (o != s && o.polarity == s.polarity && o.party == s.party && isBanded(o)) {
                     other = Math.max(1, o.perRegion);
                     break;
                 }

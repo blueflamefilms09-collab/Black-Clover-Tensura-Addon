@@ -7,6 +7,7 @@ import com.newuniverse.nusmp.labyrinth.mega.FloorMap;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
 import com.newuniverse.nusmp.labyrinth.mega.Room;
 import com.newuniverse.nusmp.labyrinth.mega.Sector;
+import com.newuniverse.nusmp.labyrinth.mega.party.PartyService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -139,7 +140,7 @@ public final class EncounterDirector {
 
     private static void fill(List<ServerPlayer> players) {
         List<PartyMath.Member> members = new ArrayList<>();
-        for (ServerPlayer p : players) if (p.isAlive() && !p.isCreative() && !p.isSpectator()) members.add(new PartyMath.Member(p.getUUID(), p.getX(), p.getY(), p.getZ()));
+        for (ServerPlayer p : players) if (p.isAlive() && !p.isCreative() && !p.isSpectator()) members.add(new PartyMath.Member(p.getUUID(), p.getX(), p.getY(), p.getZ(), PartyService.partyOf(p)));
         if (!members.isEmpty()) QUEUE.addAll(PartyMath.group(members, EncConfig.get(EncConfig.PARTY_RADIUS)));
     }
 

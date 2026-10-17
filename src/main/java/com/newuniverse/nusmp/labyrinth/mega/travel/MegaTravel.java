@@ -13,6 +13,7 @@ import com.newuniverse.nusmp.labyrinth.mega.Sector;
 import com.newuniverse.nusmp.labyrinth.mega.gen.ExpansionQueue;
 import com.newuniverse.nusmp.labyrinth.mega.gen.LandingRule;
 import com.newuniverse.nusmp.labyrinth.mega.gen.SectorGenerator;
+import com.newuniverse.nusmp.labyrinth.mega.party.PartyService;
 import com.newuniverse.nusmp.quests.NusmpEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -52,6 +53,12 @@ import java.util.UUID;
  * ROAD, or the road's first one. The memory is per road: a persistent int {@code nusmp_mega_landing_holy} / {@code nusmp_mega_landing_abyssal} holding the deepest CHAIN
  * INDEX reached (sector ids are global and interleave the two roads, so an id says nothing about depth; the chain index does). The 1.54.0 key
  * {@code nusmp_mega_landing} (a sector id; the rest anchors write it too) is still written and still read, as a hint for the road its sector belongs to. The Gates ({@link #enter}) lead to the first road, the Holy one, and obey the lock like every other door.
+ *
+ * <p>Parties (1.58.0): the dungeon is instanced, so a player goes into THEIR party's chain of the road, not the road's one chain. The party is decided here, at the gate,
+ * after the lock has agreed ({@link PartyService#enter}: their team's lane, handed out the first time), and everything below it is asked of that party's chain: the Landing to
+ * offer (the deepest the player reached, never deeper than the party's newest finished floor, so a teammate who comes later joins the chain that exists), the first floor of a
+ * road the party has not opened yet (queued on the party's own lane), and the wait for it. With one shared party (parties switched off) it is the same code on party 0, which
+ * is the chain it always was. A party that cannot be placed (the book of lanes is full) is not let in: there is no other place to put it but among strangers.
  */
 public final class MegaTravel {
     private static final Logger LOG = LogUtils.getLogger();
@@ -67,8 +74,8 @@ public final class MegaTravel {
     private static final double WANDER = 64.0;
     private static final long MESSAGE_GAP = 60L;
 
-    /** A player waiting for the first sector of a road to be built: who, in which dimension and where they stood when they came to the Gate, since when (server tick) and for which road. */
-    private record Waiting(UUID id, ResourceKey<Level> dimension, BlockPos from, long since, Polarity road) {}
+    /** A player waiting for the first sector of a road to be built: who, in which dimension and where they stood when they came to the Gate, since when (server tick), for which road and for which party's chain. */
+    private record Waiting(UUID id, ResourceKey<Level> dimension, BlockPos from, long since, Polarity road, int party) {}
 
     private static final Map<UUID, Waiting> WAITING = new LinkedHashMap<>();
     private static final Map<UUID, Long> LAST_TOLD = new HashMap<>();
@@ -113,42 +120,51 @@ public final class MegaTravel {
         Waiting waiting = WAITING.get(p.getUUID());
         if (waiting != null && waiting.road() == road) return true;                          // a Gate calls this every tick the player stands in it
         if (!MegaDungeon.mayEnter(p, road)) return false;                                    // the Directional Lock says why
+        int party = PartyService.enter(p);                                                   // the party is decided at the gate: the lane of their team (or of the player alone)
+        if (party < 0) {
+            tell(p, "The Labyrinth has no free lane for your party. An admin can raise party.maxParties.");
+            return false;
+        }
         MegaData data = MegaData.get(server);
-        Sector target = choose(data, p, road, p.isShiftKeyDown());
+        Sector target = choose(data, party, p, road, p.isShiftKeyDown());
         if (target != null) return go(p, mega, target, true);
 
-        Sector first = data.chainSector(road, 0);
+        Sector first = data.chainSector(party, road, 0);
         if (first != null && first.state == Sector.State.FAILED) {
             tell(p, "The " + road.id() + " road failed to wake. An admin can try again with /multiverse mega regen " + first.id + ".");
             return false;
         }
-        if (data.chain(road).isEmpty()) {
-            String why = ExpansionQueue.get().tryFirst(server, road);
+        if (data.chain(party, road).isEmpty()) {
+            String why = ExpansionQueue.get().tryFirst(server, road, party);
             if (why != null) {
                 tell(p, "The Labyrinth cannot wake: " + why + ".");
                 return false;
             }
         }
-        WAITING.put(p.getUUID(), new Waiting(p.getUUID(), p.level().dimension(), p.blockPosition(), server.getTickCount(), road));
+        WAITING.put(p.getUUID(), new Waiting(p.getUUID(), p.level().dimension(), p.blockPosition(), server.getTickCount(), road, party));
         p.displayClientMessage(Component.translatable("message.nusmp.mega.core.waking", percent()), true);
         p.sendSystemMessage(Component.literal("The Labyrinth stirs. Stay by the gate: it will take you in when it is ready.").withStyle(ChatFormatting.DARK_PURPLE));
         return true;
     }
 
-    /** The sector of the Holy road whose Landing this player should arrive at, or null when none is finished yet (the 1.54.0 question, for the one road it had). */
+    /** The sector of the Holy road whose Landing this player should arrive at, or null when none is finished yet (the 1.54.0 question, for the one road it had). The shared chain (party 0). */
     public static Sector choose(MegaData data, ServerPlayer p, boolean sneaking) { return choose(data, p, Polarity.HOLY, sneaking); }
 
+    /** {@link #choose(MegaData, int, ServerPlayer, Polarity, boolean)} on the shared chain (party 0), the way it was asked before parties. */
+    public static Sector choose(MegaData data, ServerPlayer p, Polarity road, boolean sneaking) { return choose(data, 0, p, road, sneaking); }
+
     /**
-     * The sector of {@code road} whose Landing this player should arrive at, or null when none is finished yet: the deepest Landing the player reached on that road
-     * (clamped down to the newest finished one), the road's first when they sneak or {@code lastLanding} is off ({@link LandingRule}, applied to chain indices).
+     * The sector of {@code road} in the chain of {@code party} whose Landing this player should arrive at, or null when none is finished yet: the deepest Landing the player
+     * reached on that road (clamped down to the newest finished one OF THE PARTY'S CHAIN, so a player who comes to a party's chain late joins what it has built), the
+     * chain's first when they sneak or {@code lastLanding} is off ({@link LandingRule}, applied to chain indices).
      */
-    public static Sector choose(MegaData data, ServerPlayer p, Polarity road, boolean sneaking) {
-        List<Sector> chain = data.chain(road);
+    public static Sector choose(MegaData data, int party, ServerPlayer p, Polarity road, boolean sneaking) {
+        List<Sector> chain = data.chain(party, road);
         int[] playable = new int[chain.size()];
         int n = 0;
         for (Sector s : chain) if (SectorGenerator.playable(s)) playable[n++] = s.chainIndex;
         int idx = LandingRule.choose(MegaConfig.get(MegaConfig.LAST_LANDING), sneaking, deepest(data, p, road), Arrays.copyOf(playable, n));
-        return idx < 0 ? null : data.chainSector(road, idx);
+        return idx < 0 ? null : data.chainSector(party, road, idx);
     }
 
     /** The persistent key of the per-road memory. */
@@ -197,8 +213,26 @@ public final class MegaTravel {
         if (fromGate) {
             NusmpEvents.fire(p, "labyrinth.entered");
             NusmpEvents.fire(p, "mega.entered", Integer.toString(target.id));
+            announceParty(p, target);
         }
         return true;
+    }
+
+    /**
+     * The gate's word about the party, after the arrival: which party the player walks with and how many of it are inside already (nothing when the dungeon is shared), and the
+     * quest hook {@code mega.party} (argument: how many of the party are inside now, the player included) when there is somebody to delve with.
+     */
+    private static void announceParty(ServerPlayer p, Sector target) {
+        try {
+            Component note = PartyService.entryNote(p, target.party);
+            if (note != null && p.connection != null) p.sendSystemMessage(note.copy().withStyle(ChatFormatting.GRAY));
+            if (PartyService.instanced() && p.getServer() != null) {
+                int inside = PartyService.onlineIn(p.getServer(), target.party).size();
+                if (inside >= 2) NusmpEvents.fire(p, "mega.party", Integer.toString(inside));
+            }
+        } catch (RuntimeException e) {
+            LOG.debug("[nusmp] The party line of the gate failed: {}", e.toString());
+        }
     }
 
     // ================================================================================================================ waiting for sector 0
@@ -223,13 +257,13 @@ public final class MegaTravel {
                     p.sendSystemMessage(Component.literal("You step away from the gate. The Labyrinth will be ready when you come back.").withStyle(ChatFormatting.GRAY));
                     continue;
                 }
-                Sector target = choose(data, p, w.road(), false);
+                Sector target = choose(data, w.party(), p, w.road(), false);
                 if (target != null) {
                     it.remove();
                     if (MegaDungeon.mayEnter(p, w.road())) go(p, mega, target, true);          // the lock may have closed this road while the player waited
                     continue;
                 }
-                Sector first = data.chainSector(w.road(), 0);
+                Sector first = data.chainSector(w.party(), w.road(), 0);
                 if (first != null && first.state == Sector.State.FAILED) {
                     it.remove();
                     p.sendSystemMessage(Component.literal("The " + w.road().id() + " road failed to wake. An admin can try again with /multiverse mega regen " + first.id + ".").withStyle(ChatFormatting.RED));

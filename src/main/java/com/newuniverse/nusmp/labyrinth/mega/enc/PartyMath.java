@@ -15,6 +15,10 @@ import java.util.UUID;
  * a handful of players, not hundreds. The party size also drives the encounter budget (a pair is not simply twice a soloist: the factor table
  * grows more slowly than the head count, the way a tabletop group's strength does, and the table is config-driven so a server can tune it).
  * Pure (no Minecraft types) so the grouping and the factors are tested without a server.
+ *
+ * <p>1.58.0, the dungeon is instanced per party: a player now carries the number of the party whose floors they stand on, and two players of different parties are never one table,
+ * however close they are (the lanes keep parties thousands of blocks apart anyway; this makes the rule independent of the geometry, and is what lets a shared dungeon and an
+ * instanced one use the same grouping). With one party, which is how the dungeon worked before, every player has party 0 and the grouping is what it always was.
  */
 public final class PartyMath {
     private PartyMath() {}
@@ -24,8 +28,11 @@ public final class PartyMath {
     public static final double DEFAULT_EXTRA = 0.3;
     private static final double[] FALLBACK = {1.0, 1.6, 2.1, 2.5};
 
-    /** One player as the grouping sees it: an id and a position. */
-    public record Member(UUID id, double x, double y, double z) {}
+    /** One player as the grouping sees it: an id, a position and the party whose floors they stand on (0 = the shared chain). */
+    public record Member(UUID id, double x, double y, double z, int party) {
+        /** A player of the shared chain (party 0): the way a member was made before parties. */
+        public Member(UUID id, double x, double y, double z) { this(id, x, y, z, 0); }
+    }
 
     /** A group of players that stand near each other. The leader is the member with the lowest UUID, so it is stable while the group keeps its members. */
     public record Party(UUID leader, List<Member> members, double cx, double cy, double cz) {
@@ -50,6 +57,7 @@ public final class PartyMath {
             Member a = players.get(i);
             for (int j = i + 1; j < n; j++) {
                 Member b = players.get(j);
+                if (a.party() != b.party()) continue;                          // another party's floors are another table, however close the numbers say they are
                 double dx = a.x() - b.x(), dy = a.y() - b.y(), dz = a.z() - b.z();
                 if (dx * dx + dy * dy + dz * dz <= r2) union(root, i, j);
             }
