@@ -218,7 +218,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/alchemy_lab_a",
@@ -227,7 +227,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/alchemy_lab_b",
@@ -236,7 +236,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/armory_forge_a",
@@ -245,7 +245,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/armory_forge_b",
@@ -254,7 +254,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/barracks_a",
@@ -263,7 +263,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/barracks_b",
@@ -272,7 +272,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/cell_block_a",
@@ -281,7 +281,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/cell_block_b",
@@ -308,7 +308,7 @@
       }
     },
     {
-      "weight": 2,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/colonnade_hall_a",
@@ -326,7 +326,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/crypt_a",
@@ -335,10 +335,82 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/crypt_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/crystal_geode_echo_gallery",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/crystal_geode_prism_atrium",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/dwarven_forgehold_chasm_forge",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/dwarven_forgehold_hall_of_pillars",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/dwarven_forgehold_mine_works",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/feywild_grove_feast_hall",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/feywild_grove_hollow_tree",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/feywild_grove_moonlit_glade",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }
@@ -353,7 +425,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/kitchen_larder",
@@ -380,7 +452,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/library_a",
@@ -389,7 +461,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/library_b",
@@ -407,7 +479,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/ossuary",
@@ -416,7 +488,7 @@
       }
     },
     {
-      "weight": 2,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/round_hall_a",
@@ -425,7 +497,7 @@
       }
     },
     {
-      "weight": 2,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/round_hall_b",
@@ -434,7 +506,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/shrine_a",
@@ -447,6 +519,33 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/shrine_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/sunken_temple_coral_atrium",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/sunken_temple_coral_nave",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/sunken_temple_drowned_shrines",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }
@@ -533,7 +632,25 @@
       }
     },
     {
-      "weight": 10,
+      "weight": 6,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/puzzle/crystal_geode_resonance_hall",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/puzzle/feywild_grove_fairy_ring",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/puzzle/sigil_hall_a",
@@ -542,10 +659,19 @@
       }
     },
     {
-      "weight": 10,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/puzzle/sigil_hall_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/puzzle/sunken_temple_tidal_gate",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }
@@ -605,10 +731,46 @@
       }
     },
     {
-      "weight": 20,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/set/cathedral_rotunda",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/set/crystal_geode_great_geode",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/set/dwarven_forgehold_vault_of_kings",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/set/feywild_grove_court_of_seasons",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/set/sunken_temple_heart_of_tides",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }
@@ -641,7 +803,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/treasure/closet_a",
@@ -650,7 +812,7 @@
       }
     },
     {
-      "weight": 5,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/treasure/closet_b",
@@ -659,7 +821,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/treasure/closet_c",
@@ -668,7 +830,61 @@
       }
     },
     {
-      "weight": 10,
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/treasure/crystal_geode_gem_vault",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/treasure/dwarven_forgehold_hoard_nook",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/treasure/feywild_grove_pixie_nook",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/treasure/sunken_temple_offering_nook",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 8,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/trial/crystal_geode_shatter_trial",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 8,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/trial/dwarven_forgehold_anvil_trial",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/trial/trial_hall_a",
@@ -677,7 +893,7 @@
       }
     },
     {
-      "weight": 10,
+      "weight": 2,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/trial/trial_hall_b",

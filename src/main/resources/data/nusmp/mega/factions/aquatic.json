@@ -23,7 +23,11 @@
     "shadow": 1,
     "astral": 3,
     "radiant": 1,
-    "abyss": 3
+    "abyss": 3,
+    "feywild_grove": 2,
+    "dwarven_forgehold": 0,
+    "crystal_geode": 0,
+    "sunken_temple": 5
   },
   "drops": {
     "meat": "raw_basilisk_fillet",

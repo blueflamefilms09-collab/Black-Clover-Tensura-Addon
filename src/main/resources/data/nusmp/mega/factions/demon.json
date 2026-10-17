@@ -26,7 +26,11 @@
     "shadow": 4,
     "astral": 1,
     "radiant": 0,
-    "abyss": 5
+    "abyss": 5,
+    "feywild_grove": 0,
+    "dwarven_forgehold": 1,
+    "crystal_geode": 0,
+    "sunken_temple": 0
   },
   "drops": {
     "meat": "raw_monster_meat",

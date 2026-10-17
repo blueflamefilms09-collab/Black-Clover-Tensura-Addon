@@ -383,35 +383,35 @@
     },
     {
      "template": "nusmp:mega/hall/alchemy_lab_a",
-     "weight": 3
+     "weight": 1
     },
     {
      "template": "nusmp:mega/hall/alchemy_lab_b",
-     "weight": 3
+     "weight": 1
     },
     {
      "template": "nusmp:mega/hall/armory_forge_a",
-     "weight": 3
+     "weight": 1
     },
     {
      "template": "nusmp:mega/hall/armory_forge_b",
-     "weight": 3
+     "weight": 1
     },
     {
      "template": "nusmp:mega/hall/barracks_a",
-     "weight": 4
+     "weight": 1
     },
     {
      "template": "nusmp:mega/hall/barracks_b",
-     "weight": 3
+     "weight": 1
     },
     {
      "template": "nusmp:mega/hall/cell_block_a",
-     "weight": 3
+     "weight": 1
     },
     {
      "template": "nusmp:mega/hall/cell_block_b",
-     "weight": 3
+     "weight": 1
     },
     {
      "template": "nusmp:mega/hall/cistern_a",
@@ -423,7 +423,7 @@
     },
     {
      "template": "nusmp:mega/hall/colonnade_hall_a",
-     "weight": 2
+     "weight": 1
     },
     {
      "template": "nusmp:mega/hall/colonnade_hall_b",
@@ -431,11 +431,43 @@
     },
     {
      "template": "nusmp:mega/hall/crypt_a",
-     "weight": 4
+     "weight": 1
     },
     {
      "template": "nusmp:mega/hall/crypt_b",
-     "weight": 3
+     "weight": 1
+    },
+    {
+     "template": "nusmp:mega/hall/crystal_geode_echo_gallery",
+     "weight": 4
+    },
+    {
+     "template": "nusmp:mega/hall/crystal_geode_prism_atrium",
+     "weight": 4
+    },
+    {
+     "template": "nusmp:mega/hall/dwarven_forgehold_chasm_forge",
+     "weight": 4
+    },
+    {
+     "template": "nusmp:mega/hall/dwarven_forgehold_hall_of_pillars",
+     "weight": 4
+    },
+    {
+     "template": "nusmp:mega/hall/dwarven_forgehold_mine_works",
+     "weight": 4
+    },
+    {
+     "template": "nusmp:mega/hall/feywild_grove_feast_hall",
+     "weight": 4
+    },
+    {
+     "template": "nusmp:mega/hall/feywild_grove_hollow_tree",
+     "weight": 4
+    },
+    {
+     "template": "nusmp:mega/hall/feywild_grove_moonlit_glade",
+     "weight": 4
     },
     {
      "template": "nusmp:mega/hall/great_hall",
@@ -443,7 +475,7 @@
     },
     {
      "template": "nusmp:mega/hall/kitchen_larder",
-     "weight": 3
+     "weight": 1
     },
     {
      "template": "nusmp:mega/hall/lava_hall_a",
@@ -455,11 +487,11 @@
     },
     {
      "template": "nusmp:mega/hall/library_a",
-     "weight": 3
+     "weight": 1
     },
     {
      "template": "nusmp:mega/hall/library_b",
-     "weight": 3
+     "weight": 1
     },
     {
      "template": "nusmp:mega/hall/mirror_hall",
@@ -467,23 +499,35 @@
     },
     {
      "template": "nusmp:mega/hall/ossuary",
-     "weight": 3
+     "weight": 1
     },
     {
      "template": "nusmp:mega/hall/round_hall_a",
-     "weight": 2
+     "weight": 1
     },
     {
      "template": "nusmp:mega/hall/round_hall_b",
-     "weight": 2
+     "weight": 1
     },
     {
      "template": "nusmp:mega/hall/shrine_a",
-     "weight": 3
+     "weight": 1
     },
     {
      "template": "nusmp:mega/hall/shrine_b",
      "weight": 1
+    },
+    {
+     "template": "nusmp:mega/hall/sunken_temple_coral_atrium",
+     "weight": 4
+    },
+    {
+     "template": "nusmp:mega/hall/sunken_temple_coral_nave",
+     "weight": 4
+    },
+    {
+     "template": "nusmp:mega/hall/sunken_temple_drowned_shrines",
+     "weight": 4
     },
     {
      "template": "nusmp:mega/hall/torture_chamber_a",
@@ -522,12 +566,24 @@
      "weight": 7
     },
     {
+     "template": "nusmp:mega/puzzle/crystal_geode_resonance_hall",
+     "weight": 6
+    },
+    {
+     "template": "nusmp:mega/puzzle/feywild_grove_fairy_ring",
+     "weight": 6
+    },
+    {
      "template": "nusmp:mega/puzzle/sigil_hall_a",
-     "weight": 10
+     "weight": 1
     },
     {
      "template": "nusmp:mega/puzzle/sigil_hall_b",
-     "weight": 10
+     "weight": 1
+    },
+    {
+     "template": "nusmp:mega/puzzle/sunken_temple_tidal_gate",
+     "weight": 6
     },
     {
      "template": "nusmp:mega/safe/chapel",
@@ -555,7 +611,23 @@
     },
     {
      "template": "nusmp:mega/set/cathedral_rotunda",
-     "weight": 20
+     "weight": 1
+    },
+    {
+     "template": "nusmp:mega/set/crystal_geode_great_geode",
+     "weight": 5
+    },
+    {
+     "template": "nusmp:mega/set/dwarven_forgehold_vault_of_kings",
+     "weight": 5
+    },
+    {
+     "template": "nusmp:mega/set/feywild_grove_court_of_seasons",
+     "weight": 5
+    },
+    {
+     "template": "nusmp:mega/set/sunken_temple_heart_of_tides",
+     "weight": 5
     },
     {
      "template": "nusmp:mega/trap/dark_room",
@@ -571,23 +643,47 @@
     },
     {
      "template": "nusmp:mega/treasure/closet_a",
-     "weight": 8
+     "weight": 1
     },
     {
      "template": "nusmp:mega/treasure/closet_b",
-     "weight": 5
+     "weight": 1
     },
     {
      "template": "nusmp:mega/treasure/closet_c",
+     "weight": 1
+    },
+    {
+     "template": "nusmp:mega/treasure/crystal_geode_gem_vault",
+     "weight": 4
+    },
+    {
+     "template": "nusmp:mega/treasure/dwarven_forgehold_hoard_nook",
+     "weight": 4
+    },
+    {
+     "template": "nusmp:mega/treasure/feywild_grove_pixie_nook",
+     "weight": 4
+    },
+    {
+     "template": "nusmp:mega/treasure/sunken_temple_offering_nook",
+     "weight": 4
+    },
+    {
+     "template": "nusmp:mega/trial/crystal_geode_shatter_trial",
+     "weight": 8
+    },
+    {
+     "template": "nusmp:mega/trial/dwarven_forgehold_anvil_trial",
      "weight": 8
     },
     {
      "template": "nusmp:mega/trial/trial_hall_a",
-     "weight": 10
+     "weight": 2
     },
     {
      "template": "nusmp:mega/trial/trial_hall_b",
-     "weight": 10
+     "weight": 2
     }
    ],
    "emptyWeight": 2,
@@ -6133,6 +6229,1239 @@
    ],
    "themes": []
   },
+  "nusmp:mega/hall/crystal_geode_echo_gallery": {
+   "kind": "HALL",
+   "markers": [
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 4,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 13,
+     "y": 9,
+     "z": 8
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 4,
+     "y": 9,
+     "z": 14
+    },
+    {
+     "args": {
+      "faction": "slime"
+     },
+     "kind": "faction",
+     "x": 8,
+     "y": 9,
+     "z": 17
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 11,
+     "y": 9,
+     "z": 21
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 6,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 9,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 9,
+     "y": 9,
+     "z": 25
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 11,
+     "y": 9,
+     "z": 32
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 4,
+     "y": 9,
+     "z": 35
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 13,
+     "y": 9,
+     "z": 40
+    }
+   ],
+   "size": [
+    18,
+    48,
+    45
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 17,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 4,
+     "y": 9,
+     "z": 44
+    }
+   ]
+  },
+  "nusmp:mega/hall/crystal_geode_prism_atrium": {
+   "kind": "HALL",
+   "markers": [
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 17,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {
+      "faction": "elemental"
+     },
+     "kind": "faction",
+     "x": 8,
+     "y": 9,
+     "z": 8
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 4,
+     "y": 9,
+     "z": 9
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 10,
+     "y": 9,
+     "z": 10
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 22,
+     "y": 9,
+     "z": 10
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 7,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 12,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 19,
+     "y": 9,
+     "z": 15
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 4,
+     "y": 9,
+     "z": 17
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 9,
+     "y": 9,
+     "z": 20
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 17,
+     "y": 9,
+     "z": 22
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 26,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 26
+    }
+   ]
+  },
+  "nusmp:mega/hall/dwarven_forgehold_chasm_forge": {
+   "kind": "HALL",
+   "markers": [
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 18,
+     "y": 3,
+     "z": 22
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 4,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 24,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 12,
+     "y": 9,
+     "z": 6
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 28,
+     "y": 9,
+     "z": 11
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 17,
+     "y": 9,
+     "z": 12
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 6,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {
+      "faction": "elemental"
+     },
+     "kind": "faction",
+     "x": 5,
+     "y": 9,
+     "z": 17
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 31,
+     "y": 9,
+     "z": 19
+    },
+    {
+     "args": {},
+     "kind": "room_center",
+     "x": 18,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 28,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 13,
+     "y": 9,
+     "z": 28
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 23,
+     "y": 9,
+     "z": 29
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 5,
+     "y": 9,
+     "z": 31
+    }
+   ],
+   "size": [
+    36,
+    48,
+    36
+   ],
+   "sockets": [
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 35,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 35,
+     "y": 9,
+     "z": 22
+    }
+   ]
+  },
+  "nusmp:mega/hall/dwarven_forgehold_hall_of_pillars": {
+   "kind": "HALL",
+   "markers": [
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 4,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 22,
+     "y": 9,
+     "z": 6
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 10,
+     "y": 9,
+     "z": 10
+    },
+    {
+     "args": {
+      "faction": "construct"
+     },
+     "kind": "faction",
+     "x": 16,
+     "y": 9,
+     "z": 15
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 9,
+     "y": 9,
+     "z": 21
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 17,
+     "y": 9,
+     "z": 21
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 9,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "args": {},
+     "kind": "room_center",
+     "x": 17,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 10,
+     "y": 9,
+     "z": 27
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 16,
+     "y": 9,
+     "z": 33
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 4,
+     "y": 9,
+     "z": 39
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 22,
+     "y": 9,
+     "z": 40
+    },
+    {
+     "args": {
+      "as": "table"
+     },
+     "kind": "furniture",
+     "x": 13,
+     "y": 10,
+     "z": 12
+    },
+    {
+     "args": {
+      "as": "table"
+     },
+     "kind": "furniture",
+     "x": 13,
+     "y": 10,
+     "z": 31
+    }
+   ],
+   "size": [
+    27,
+    48,
+    45
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 26,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 44
+    }
+   ]
+  },
+  "nusmp:mega/hall/dwarven_forgehold_mine_works": {
+   "kind": "HALL",
+   "markers": [
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 19,
+     "y": 9,
+     "z": 5
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 12,
+     "y": 9,
+     "z": 6
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 14,
+     "y": 9,
+     "z": 8
+    },
+    {
+     "args": {
+      "faction": "goblin"
+     },
+     "kind": "faction",
+     "x": 18,
+     "y": 9,
+     "z": 9
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 10,
+     "y": 9,
+     "z": 10
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 16,
+     "y": 9,
+     "z": 10
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 10,
+     "y": 9,
+     "z": 11
+    },
+    {
+     "args": {},
+     "kind": "room_center",
+     "x": 10,
+     "y": 9,
+     "z": 15
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 10,
+     "y": 9,
+     "z": 16
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 15,
+     "y": 9,
+     "z": 16
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 12,
+     "y": 9,
+     "z": 19
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 8,
+     "y": 9,
+     "z": 20
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 17,
+     "y": 9,
+     "z": 20
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 26,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 26
+    }
+   ]
+  },
+  "nusmp:mega/hall/feywild_grove_feast_hall": {
+   "kind": "HALL",
+   "markers": [
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 4,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 13,
+     "y": 9,
+     "z": 7
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 4,
+     "y": 9,
+     "z": 10
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 12,
+     "y": 9,
+     "z": 15
+    },
+    {
+     "args": {},
+     "kind": "room_center",
+     "x": 12,
+     "y": 9,
+     "z": 17
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 5,
+     "y": 9,
+     "z": 18
+    },
+    {
+     "args": {
+      "faction": "cultist"
+     },
+     "kind": "faction",
+     "x": 4,
+     "y": 9,
+     "z": 20
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 12,
+     "y": 9,
+     "z": 23
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 5,
+     "y": 9,
+     "z": 28
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 13,
+     "y": 9,
+     "z": 30
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "east"
+     },
+     "kind": "seat",
+     "x": 7,
+     "y": 10,
+     "z": 14
+    },
+    {
+     "args": {
+      "as": "table"
+     },
+     "kind": "furniture",
+     "x": 9,
+     "y": 10,
+     "z": 17
+    },
+    {
+     "args": {
+      "as": "chair",
+      "facing": "north"
+     },
+     "kind": "seat",
+     "x": 9,
+     "y": 12,
+     "z": 31
+    }
+   ],
+   "size": [
+    18,
+    48,
+    36
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 17,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 31
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 4,
+     "y": 9,
+     "z": 35
+    }
+   ]
+  },
+  "nusmp:mega/hall/feywild_grove_hollow_tree": {
+   "kind": "HALL",
+   "markers": [
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 13,
+     "y": 9,
+     "z": 6
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 9,
+     "y": 9,
+     "z": 10
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 14,
+     "y": 9,
+     "z": 10
+    },
+    {
+     "args": {
+      "faction": "beast"
+     },
+     "kind": "faction",
+     "x": 4,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 6,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 10,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 20,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 8,
+     "y": 9,
+     "z": 15
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 17,
+     "y": 9,
+     "z": 15
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 16
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 13,
+     "y": 23,
+     "z": 13
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 26,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 26
+    }
+   ]
+  },
+  "nusmp:mega/hall/feywild_grove_moonlit_glade": {
+   "kind": "HALL",
+   "markers": [
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 8,
+     "y": 9,
+     "z": 5
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 6
+    },
+    {
+     "args": {
+      "faction": "beast"
+     },
+     "kind": "faction",
+     "x": 9,
+     "y": 9,
+     "z": 8
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 5,
+     "y": 9,
+     "z": 9
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 21,
+     "y": 9,
+     "z": 9
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 18,
+     "y": 9,
+     "z": 15
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 5,
+     "y": 9,
+     "z": 16
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 9,
+     "y": 9,
+     "z": 19
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 20,
+     "y": 9,
+     "z": 21
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 13,
+     "y": 10,
+     "z": 13
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 10,
+     "z": 17
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 26,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 26
+    }
+   ]
+  },
   "nusmp:mega/hall/great_hall": {
    "kind": "HALL",
    "markers": [
@@ -7920,6 +9249,463 @@
     }
    ],
    "themes": []
+  },
+  "nusmp:mega/hall/sunken_temple_coral_atrium": {
+   "kind": "HALL",
+   "markers": [
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 10,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 16,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 4,
+     "y": 9,
+     "z": 6
+    },
+    {
+     "args": {
+      "faction": "aquatic"
+     },
+     "kind": "faction",
+     "x": 8,
+     "y": 9,
+     "z": 8
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 18,
+     "y": 9,
+     "z": 8
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 6,
+     "y": 9,
+     "z": 12
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 21,
+     "y": 9,
+     "z": 14
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 7,
+     "y": 9,
+     "z": 18
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 14,
+     "y": 9,
+     "z": 21
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 9,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 22,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 13,
+     "y": 17,
+     "z": 7
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 13,
+     "y": 17,
+     "z": 13
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 26,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 26
+    }
+   ]
+  },
+  "nusmp:mega/hall/sunken_temple_coral_nave": {
+   "kind": "HALL",
+   "markers": [
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 4,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 13,
+     "y": 9,
+     "z": 6
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 7,
+     "y": 9,
+     "z": 11
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 10,
+     "y": 9,
+     "z": 19
+    },
+    {
+     "args": {},
+     "kind": "room_center",
+     "x": 8,
+     "y": 9,
+     "z": 21
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 7,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 8,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "args": {
+      "faction": "aquatic"
+     },
+     "kind": "faction",
+     "x": 8,
+     "y": 9,
+     "z": 24
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 10,
+     "y": 9,
+     "z": 25
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 8,
+     "y": 9,
+     "z": 33
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 4,
+     "y": 9,
+     "z": 38
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 13,
+     "y": 9,
+     "z": 40
+    }
+   ],
+   "size": [
+    18,
+    48,
+    45
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 17,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 4,
+     "y": 9,
+     "z": 44
+    }
+   ]
+  },
+  "nusmp:mega/hall/sunken_temple_drowned_shrines": {
+   "kind": "HALL",
+   "markers": [
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 4,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 22,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 7,
+     "y": 9,
+     "z": 8
+    },
+    {
+     "args": {
+      "faction": "aquatic"
+     },
+     "kind": "faction",
+     "x": 8,
+     "y": 9,
+     "z": 8
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 10
+    },
+    {
+     "args": {},
+     "kind": "room_center",
+     "x": 9,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 10,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 16,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 16
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 7,
+     "y": 9,
+     "z": 17
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 4,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 22,
+     "y": 9,
+     "z": 22
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 26,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 26
+    }
+   ]
   },
   "nusmp:mega/hall/torture_chamber_a": {
    "kind": "HALL",
@@ -10780,6 +12566,124 @@
    ],
    "themes": []
   },
+  "nusmp:mega/puzzle/crystal_geode_resonance_hall": {
+   "kind": "PUZZLE",
+   "markers": [
+    {
+     "args": {
+      "faction": "elemental"
+     },
+     "kind": "faction",
+     "x": 5,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 7,
+     "y": 9,
+     "z": 8
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 8
+    }
+   ],
+   "size": [
+    27,
+    48,
+    18
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    }
+   ]
+  },
+  "nusmp:mega/puzzle/feywild_grove_fairy_ring": {
+   "kind": "PUZZLE",
+   "markers": [
+    {
+     "args": {
+      "faction": "beast"
+     },
+     "kind": "faction",
+     "x": 5,
+     "y": 9,
+     "z": 6
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 7,
+     "y": 9,
+     "z": 8
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 15,
+     "y": 9,
+     "z": 8
+    }
+   ],
+   "size": [
+    27,
+    48,
+    18
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    }
+   ]
+  },
   "nusmp:mega/puzzle/sigil_hall_a": {
    "kind": "PUZZLE",
    "markers": [
@@ -10899,6 +12803,65 @@
     }
    ],
    "themes": []
+  },
+  "nusmp:mega/puzzle/sunken_temple_tidal_gate": {
+   "kind": "PUZZLE",
+   "markers": [
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 9
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 8,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {
+      "faction": "aquatic"
+     },
+     "kind": "faction",
+     "x": 5,
+     "y": 9,
+     "z": 14
+    }
+   ],
+   "size": [
+    27,
+    48,
+    18
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    }
+   ]
   },
   "nusmp:mega/safe/chapel": {
    "kind": "SAFE",
@@ -14240,6 +16203,636 @@
    ],
    "themes": []
   },
+  "nusmp:mega/set/crystal_geode_great_geode": {
+   "kind": "SET_PIECE",
+   "markers": [
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 17,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 7,
+     "y": 9,
+     "z": 10
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 22,
+     "y": 9,
+     "z": 14
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 4,
+     "y": 9,
+     "z": 16
+    },
+    {
+     "args": {
+      "faction": "construct"
+     },
+     "kind": "faction",
+     "x": 8,
+     "y": 9,
+     "z": 16
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 19
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 16,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 31,
+     "y": 9,
+     "z": 23
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 24,
+     "y": 9,
+     "z": 31
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 29,
+     "y": 17,
+     "z": 11
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 6,
+     "y": 17,
+     "z": 24
+    },
+    {
+     "args": {},
+     "kind": "room_center",
+     "x": 20,
+     "y": 22,
+     "z": 18
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 18,
+     "y": 22,
+     "z": 20
+    }
+   ],
+   "size": [
+    36,
+    48,
+    36
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 35,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 22,
+     "y": 9,
+     "z": 35
+    }
+   ]
+  },
+  "nusmp:mega/set/dwarven_forgehold_vault_of_kings": {
+   "kind": "SET_PIECE",
+   "markers": [
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 4,
+     "y": 9,
+     "z": 6
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 22,
+     "y": 9,
+     "z": 6
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 13,
+     "y": 9,
+     "z": 7
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 12,
+     "y": 9,
+     "z": 17
+    },
+    {
+     "args": {
+      "faction": "construct"
+     },
+     "kind": "faction",
+     "x": 6,
+     "y": 9,
+     "z": 20
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 7,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 12,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 20,
+     "y": 9,
+     "z": 26
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 15,
+     "y": 9,
+     "z": 32
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 4,
+     "y": 9,
+     "z": 34
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 20,
+     "y": 9,
+     "z": 40
+    }
+   ],
+   "size": [
+    27,
+    48,
+    45
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 26,
+     "y": 9,
+     "z": 22
+    }
+   ]
+  },
+  "nusmp:mega/set/feywild_grove_court_of_seasons": {
+   "kind": "SET_PIECE",
+   "markers": [
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 4,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 31,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {
+      "faction": "cultist"
+     },
+     "kind": "faction",
+     "x": 10,
+     "y": 9,
+     "z": 5
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 17,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {},
+     "kind": "room_center",
+     "x": 18,
+     "y": 9,
+     "z": 15
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 16
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 29,
+     "y": 9,
+     "z": 17
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 15,
+     "y": 9,
+     "z": 18
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 4,
+     "y": 9,
+     "z": 19
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 23,
+     "y": 9,
+     "z": 24
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 4,
+     "y": 9,
+     "z": 31
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 17,
+     "y": 9,
+     "z": 31
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 31,
+     "y": 9,
+     "z": 31
+    }
+   ],
+   "size": [
+    36,
+    48,
+    36
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 35,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 22,
+     "y": 9,
+     "z": 35
+    }
+   ]
+  },
+  "nusmp:mega/set/sunken_temple_heart_of_tides": {
+   "kind": "SET_PIECE",
+   "markers": [
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 11,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 26,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 5,
+     "y": 9,
+     "z": 8
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 17,
+     "y": 9,
+     "z": 12
+    },
+    {
+     "args": {
+      "faction": "aquatic"
+     },
+     "kind": "faction",
+     "x": 8,
+     "y": 9,
+     "z": 14
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 4,
+     "y": 9,
+     "z": 16
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 12,
+     "y": 9,
+     "z": 17
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 31,
+     "y": 9,
+     "z": 17
+    },
+    {
+     "args": {},
+     "kind": "room_center",
+     "x": 23,
+     "y": 9,
+     "z": 18
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 17,
+     "y": 9,
+     "z": 23
+    },
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 18,
+     "y": 9,
+     "z": 23
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 4,
+     "y": 9,
+     "z": 27
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 12,
+     "y": 9,
+     "z": 31
+    },
+    {
+     "args": {},
+     "kind": "spawn",
+     "x": 27,
+     "y": 9,
+     "z": 31
+    }
+   ],
+   "size": [
+    36,
+    48,
+    36
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 35,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 22
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 22,
+     "y": 9,
+     "z": 35
+    }
+   ]
+  },
   "nusmp:mega/trap/dark_room": {
    "kind": "TRAP",
    "markers": [
@@ -14814,6 +17407,334 @@
     }
    ],
    "themes": []
+  },
+  "nusmp:mega/treasure/crystal_geode_gem_vault": {
+   "kind": "TREASURE",
+   "markers": [
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 4,
+     "y": 9,
+     "z": 7
+    },
+    {
+     "args": {},
+     "kind": "room_center",
+     "x": 4,
+     "y": 9,
+     "z": 9
+    },
+    {
+     "args": {
+      "faction": "slime"
+     },
+     "kind": "faction",
+     "x": 5,
+     "y": 9,
+     "z": 12
+    }
+   ],
+   "size": [
+    9,
+    48,
+    18
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 4,
+     "y": 9,
+     "z": 0
+    }
+   ]
+  },
+  "nusmp:mega/treasure/dwarven_forgehold_hoard_nook": {
+   "kind": "TREASURE",
+   "markers": [
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 4,
+     "y": 9,
+     "z": 7
+    },
+    {
+     "args": {},
+     "kind": "room_center",
+     "x": 5,
+     "y": 9,
+     "z": 9
+    },
+    {
+     "args": {
+      "faction": "construct"
+     },
+     "kind": "faction",
+     "x": 5,
+     "y": 9,
+     "z": 11
+    }
+   ],
+   "size": [
+    9,
+    48,
+    18
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 4,
+     "y": 9,
+     "z": 0
+    }
+   ]
+  },
+  "nusmp:mega/treasure/feywild_grove_pixie_nook": {
+   "kind": "TREASURE",
+   "markers": [
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 4,
+     "y": 9,
+     "z": 6
+    },
+    {
+     "args": {},
+     "kind": "room_center",
+     "x": 4,
+     "y": 9,
+     "z": 8
+    },
+    {
+     "args": {
+      "faction": "beast"
+     },
+     "kind": "faction",
+     "x": 5,
+     "y": 9,
+     "z": 14
+    }
+   ],
+   "size": [
+    9,
+    48,
+    18
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 4,
+     "y": 9,
+     "z": 0
+    }
+   ]
+  },
+  "nusmp:mega/treasure/sunken_temple_offering_nook": {
+   "kind": "TREASURE",
+   "markers": [
+    {
+     "args": {
+      "weight": "2"
+     },
+     "kind": "spawn",
+     "x": 4,
+     "y": 9,
+     "z": 7
+    },
+    {
+     "args": {},
+     "kind": "room_center",
+     "x": 4,
+     "y": 9,
+     "z": 9
+    },
+    {
+     "args": {
+      "faction": "aquatic"
+     },
+     "kind": "faction",
+     "x": 6,
+     "y": 9,
+     "z": 14
+    }
+   ],
+   "size": [
+    9,
+    48,
+    18
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 4,
+     "y": 9,
+     "z": 0
+    }
+   ]
+  },
+  "nusmp:mega/trial/crystal_geode_shatter_trial": {
+   "kind": "TRIAL",
+   "markers": [
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 6
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 6,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {
+      "faction": "elemental"
+     },
+     "kind": "faction",
+     "x": 20,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 20
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 26,
+     "y": 9,
+     "z": 13
+    }
+   ]
+  },
+  "nusmp:mega/trial/dwarven_forgehold_anvil_trial": {
+   "kind": "TRIAL",
+   "markers": [
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 6
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 6,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {
+      "faction": "construct"
+     },
+     "kind": "faction",
+     "x": 20,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 20
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/side",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 13,
+     "y": 9,
+     "z": 26
+    }
+   ]
   },
   "nusmp:mega/trial/trial_hall_a": {
    "kind": "TRIAL",

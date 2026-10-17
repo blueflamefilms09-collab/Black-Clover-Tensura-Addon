@@ -1,0 +1,17 @@
+{
+  "theme": "crystal_geode",
+  "templates": [
+    "nusmp:mega/hall/crystal_geode_",
+    "nusmp:mega/set/crystal_geode_",
+    "nusmp:mega/puzzle/crystal_geode_",
+    "nusmp:mega/trial/crystal_geode_",
+    "nusmp:mega/treasure/crystal_geode_"
+  ],
+  "relative": {
+    "mega/hall/crystal_geode_": 60,
+    "mega/set/crystal_geode_": 12,
+    "mega/puzzle/crystal_geode_": 16,
+    "mega/trial/crystal_geode_": 16,
+    "mega/treasure/crystal_geode_": 16
+  }
+}

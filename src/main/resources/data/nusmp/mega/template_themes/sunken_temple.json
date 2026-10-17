@@ -1,0 +1,15 @@
+{
+  "theme": "sunken_temple",
+  "templates": [
+    "nusmp:mega/hall/sunken_temple_",
+    "nusmp:mega/set/sunken_temple_",
+    "nusmp:mega/puzzle/sunken_temple_",
+    "nusmp:mega/treasure/sunken_temple_"
+  ],
+  "relative": {
+    "mega/hall/sunken_temple_": 60,
+    "mega/set/sunken_temple_": 12,
+    "mega/puzzle/sunken_temple_": 16,
+    "mega/treasure/sunken_temple_": 16
+  }
+}

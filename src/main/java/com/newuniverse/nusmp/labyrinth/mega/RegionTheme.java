@@ -34,7 +34,15 @@ public enum RegionTheme {
     /** 1.55.0, the Holy road: white quartz, smooth stone, gold and calcite, light everywhere, the air thick with Light Rukh. The Holy chain draws it most often. */
     RADIANT(3, 3, Route.HOLY),
     /** 1.55.0, the Abyssal road: dark organic rock, deepslate with sculk, moss and netherrack growing through it, soul fire. The Abyssal chain draws it most often. */
-    ABYSS(3, 3, Route.ABYSSAL);
+    ABYSS(3, 3, Route.ABYSSAL),
+    /** 1.59.0, the Holy road (THEME-B): the Feywild, giant glowing flowers and mushrooms, cherry and azalea, will-o'-wisps, tricks and illusions. */
+    FEYWILD_GROVE(3, 3, Route.HOLY),
+    /** 1.59.0, the Holy road (THEME-B): a dwarven hold, dressed stone, copper and iron, anvils, lava channels behind glass, mine carts, a vault of kings. */
+    DWARVEN_FORGEHOLD(3, 3, Route.HOLY),
+    /** 1.59.0, the Holy road (THEME-B): a giant amethyst geode, calcite and basalt shells, budding crystals, crystal bridges, a resonance puzzle. */
+    CRYSTAL_GEODE(3, 3, Route.HOLY),
+    /** 1.59.0, the Holy road (THEME-B): the temple of a forgotten good god, flooded to the knees: prismarine, sea lanterns, drowned shrines, tidal gates. */
+    SUNKEN_TEMPLE(3, 3, Route.HOLY);
 
     /**
      * The owner's newest brief fixes the Crucible at EXACTLY three distinct Unique-or-higher relics (one pick per region, so one high-tier relic per ten
