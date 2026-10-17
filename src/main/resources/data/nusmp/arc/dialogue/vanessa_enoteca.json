@@ -1,0 +1,226 @@
+{
+  "character": "vanessa_enoteca",
+  "lines": {
+    "greeting": [
+      {
+        "text": "Mmm... a new face. Come closer, sweetie, I don't bite. I'm Vanessa. Don't mind the bottle, it's medicinal.",
+        "key": "arc.dialogue.vanessa_enoteca.1",
+        "first": true
+      },
+      {
+        "text": "Well, well. Fresh blood for the labyrinth. Vanessa Enoteca, at your service, {player}. Buy a girl a drink sometime.",
+        "key": "arc.dialogue.vanessa_enoteca.2",
+        "first": true
+      },
+      {
+        "text": "Oh, you've got a thread on you. A bright one, too. Interesting. Name's Vanessa, cutie.",
+        "key": "arc.dialogue.vanessa_enoteca.3",
+        "first": true
+      },
+      {
+        "text": "You've been out there a while, haven't you? There's blood in your threads. Sit, drink some water. I'm Vanessa.",
+        "key": "arc.dialogue.vanessa_enoteca.4",
+        "first": true,
+        "minStage": 3,
+        "priority": 2
+      },
+      {
+        "text": "Mm, you dealt with Heath Grice. That's why I woke up. I'm Vanessa. Pour yourself something and tell me about it.",
+        "key": "arc.dialogue.vanessa_enoteca.5",
+        "first": true,
+        "defeated": [
+          "heath_grice"
+        ],
+        "priority": 2
+      }
+    ],
+    "hint": [
+      {
+        "text": "A little advice from a lazy woman: don't rush. The labyrinth isn't going anywhere. Rest in a Landing, drink some water, and live to see the second floor.",
+        "key": "arc.dialogue.vanessa_enoteca.6",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Don't go alone, sweetie. Every thread needs another end. The dungeon keeps one set of floors per party, so the people you bring are the only ones you'll see down there.",
+        "key": "arc.dialogue.vanessa_enoteca.7",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "The Eye of the Midnight Sun is a knot of old grudges. Heath Grice, Vetto and the rest sit at the tangles. Pull at the right one and the whole thing loosens.",
+        "key": "arc.dialogue.vanessa_enoteca.8",
+        "maxStage": 5,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Further down there's a devil who talks things into being. Zagred. I can't read his thread; words don't have one. Keep your own tied tight when you go in.",
+        "key": "arc.dialogue.vanessa_enoteca.9",
+        "minStage": 4,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Three brothers, three devils: gravity, curses, space. I'd stay far away from the one with the curses. A curse is just a thread someone tied around you without asking.",
+        "key": "arc.dialogue.vanessa_enoteca.10",
+        "saga": [
+          "spade_raid"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "I'm told Lucius has two souls on one thread. Rude. I'd need a very strong drink to read that one.",
+        "key": "arc.dialogue.vanessa_enoteca.11",
+        "saga": [
+          "wizard_king"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Seven strangers named for sins. Even the thread around them hums. It's a different weave from ours, as if it came off another loom.",
+        "key": "arc.dialogue.vanessa_enoteca.12",
+        "saga": [
+          "seven_deadly_sins"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "In that other dungeon the threads all run one way: down. Be careful what you follow, sweetie.",
+        "key": "arc.dialogue.vanessa_enoteca.13",
+        "saga": [
+          "danmachi"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Twenty fights and you're still smiling? Lovely. Come sit, I'll buy the first round. Er. You'll buy it, I'll drink it.",
+        "key": "arc.dialogue.vanessa_enoteca.14",
+        "minStage": 20,
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Red Thread holds an ordinary enemy for about three seconds from sixteen blocks away, and a boss for one. Bind the same target again within half a minute and it holds half as long. Plan around that, sweetie.",
+        "key": "arc.dialogue.vanessa_enoteca.15",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Rouge watches over you for a day. If a blow would kill you, she ties your thread back to where you stood a few seconds ago, at half health. Once a day. Don't waste her.",
+        "key": "arc.dialogue.vanessa_enoteca.16",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Arresting Dark Weave, Thread Trap and the Reinforcement that turns mana into a second skin only open in my own grimoire. A borrowed book won't oblige. Threads are picky.",
+        "key": "arc.dialogue.vanessa_enoteca.17",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Curses are threads someone tied around you. Don't yank on them. Find the knot, ask nicely, and if the knot says no... then pull.",
+        "key": "arc.dialogue.vanessa_enoteca.18",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Heath Grice. Poor man; he tied himself in his own knot. You cut it clean, sweetie. I'm impressed.",
+        "key": "arc.dialogue.vanessa_enoteca.19",
+        "defeated": [
+          "heath_grice"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "You beat Zagred? A devil that speaks reality? Come here, I want to look at your thread. ...Still there. Good. You're a lucky one.",
+        "key": "arc.dialogue.vanessa_enoteca.20",
+        "defeated": [
+          "zagred"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "The whole Dark Triad? Ooh, that calls for a night of drinking. Sit.",
+        "key": "arc.dialogue.vanessa_enoteca.21",
+        "defeated": [
+          "dante",
+          "vanica",
+          "zenon"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Two souls, one body, and you cut the knot. Take your time, sweetie. You've earned a nap.",
+        "key": "arc.dialogue.vanessa_enoteca.22",
+        "defeated": [
+          "lucius"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "I'm not lazy. I'm conserving energy for important things, like sleeping, and flirting with the captain.",
+        "key": "arc.dialogue.vanessa_enoteca.23",
+        "priority": 1
+      },
+      {
+        "text": "The captain never notices. Or maybe he does and he's too embarrassed to say. Either way, it's adorable.",
+        "key": "arc.dialogue.vanessa_enoteca.24",
+        "priority": 1
+      },
+      {
+        "text": "Noelle's a sweet girl, but she needs to relax. Asta needs to relax even more. Honestly, everyone needs a drink.",
+        "key": "arc.dialogue.vanessa_enoteca.25",
+        "priority": 1
+      },
+      {
+        "text": "Fate isn't a straight line, {player}. It's a tangle. You can pull it, cut it, braid it... just don't tie it to yourself.",
+        "key": "arc.dialogue.vanessa_enoteca.26",
+        "priority": 1
+      },
+      {
+        "text": "Mmm. Do you smell that? Charmy's cooking. Follow your nose. That's an order. From a drunk witch.",
+        "key": "arc.dialogue.vanessa_enoteca.27",
+        "priority": 1
+      },
+      {
+        "text": "The beds in the corridors are for show, honey. Real rest is in a Landing or a safe room. I checked every single one.",
+        "key": "arc.dialogue.vanessa_enoteca.28",
+        "priority": 1
+      },
+      {
+        "text": "There's no easy healing down there. The dungeon doesn't let you just regenerate. So bring potions, or bring me. I accept payment in alcohol.",
+        "key": "arc.dialogue.vanessa_enoteca.29",
+        "priority": 1
+      }
+    ],
+    "farewell": [
+      {
+        "text": "Go on, sweetie. Come back and tell me everything.",
+        "key": "arc.dialogue.vanessa_enoteca.30"
+      },
+      {
+        "text": "Mmm... leaving so soon? Fine. I'll drink to your safe return.",
+        "key": "arc.dialogue.vanessa_enoteca.31"
+      },
+      {
+        "text": "Fate willing, we'll meet again. And if not... I'll have a drink in your name.",
+        "key": "arc.dialogue.vanessa_enoteca.32"
+      }
+    ]
+  }
+}

@@ -1,0 +1,218 @@
+{
+  "character": "luck_voltia",
+  "lines": {
+    "greeting": [
+      {
+        "text": "Hey hey! You look strong! Are you strong? I'm Luck! Luck Voltia! Wanna fight? Later! Maybe now!",
+        "key": "arc.dialogue.luck_voltia.1",
+        "first": true
+      },
+      {
+        "text": "Ooh, a new face! New faces are fun, they haven't seen my tricks yet. I'm Luck, a Black Bull. Hi!",
+        "key": "arc.dialogue.luck_voltia.2",
+        "first": true
+      },
+      {
+        "text": "Hi hi hi! I love fighting, I love lightning, and I love being fast. I'm Luck. What about you?",
+        "key": "arc.dialogue.luck_voltia.3",
+        "first": true
+      },
+      {
+        "text": "I heard you beat Revchi Salik! Was it fun? Tell me everything! I'm Luck!",
+        "key": "arc.dialogue.luck_voltia.4",
+        "first": true,
+        "defeated": [
+          "revchi_salik"
+        ],
+        "priority": 2
+      },
+      {
+        "text": "You've been fighting a lot, haven't you? I can tell, you've got that look. Luck Voltia! Let's compare scars!",
+        "key": "arc.dialogue.luck_voltia.5",
+        "first": true,
+        "minStage": 3,
+        "priority": 2
+      }
+    ],
+    "hint": [
+      {
+        "text": "Fast beats strong, strong beats slow, and fast AND strong beats everything. I'm trying to be both. Try it!",
+        "key": "arc.dialogue.luck_voltia.6",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "The dungeon has wandering bosses! They walk the rooms like they own the place. Find one and say hi for me. Then run.",
+        "key": "arc.dialogue.luck_voltia.7",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Ooh, the Eye of the Midnight Sun! Strong people with strange reasons. Heath Grice, Vetto... Vetto grows his arm back! That's so cool! I'd hit him twice just to watch.",
+        "key": "arc.dialogue.luck_voltia.8",
+        "maxStage": 5,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "The Eye's elite have a third eye and a terrible attitude. Those are the fun ones! Find them past the thirtieth floor. Don't fight them tired!",
+        "key": "arc.dialogue.luck_voltia.9",
+        "minStage": 4,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "The Dark Triad! Gravity, curses, space! I've always wanted to be hit by gravity. Not like I'd enjoy it. I'd... enjoy it a bit.",
+        "key": "arc.dialogue.luck_voltia.10",
+        "saga": [
+          "spade_raid"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Lucius is the last big one! The Wizard King's face and a really bad attitude. Fun and scary. Mostly scary. Bring snacks.",
+        "key": "arc.dialogue.luck_voltia.11",
+        "saga": [
+          "wizard_king"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "The Seven Deadly Sins are on the floors, and I really want to fight Wrath! And Pride! The one who's strongest at noon! I'll fight at noon, in the dungeon, if I have to!",
+        "key": "arc.dialogue.luck_voltia.12",
+        "saga": [
+          "seven_deadly_sins"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Another dungeon with another city's monsters! New enemies, new tricks! The bull-headed one is supposed to be really strong. I'd love to race it.",
+        "key": "arc.dialogue.luck_voltia.13",
+        "saga": [
+          "danmachi"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Twenty fights! You're fun! Let's fight each other! Please? I'll go easy. A little.",
+        "key": "arc.dialogue.luck_voltia.14",
+        "minStage": 20,
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Thunder Fiend wraps lightning around you for thirty seconds. You get fast, and your hits jump to a second enemy. I don't have a favorite page. Okay, it's Thunder Fiend.",
+        "key": "arc.dialogue.luck_voltia.15",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Black Lightning Battle Fiend is the big one: faster, stronger, and every blow arcs to two more enemies. It only opens for my own grimoire, so no, you can't borrow mine.",
+        "key": "arc.dialogue.luck_voltia.16",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Chain Lightning jumps from enemy to enemy within five blocks, three targets in a row. Great against crowds. Terrible when you're the crowd.",
+        "key": "arc.dialogue.luck_voltia.17",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Vetto! You beat Vetto?! I wanted to fight Vetto! Fine, fine, I'll fight you instead. Good job, though!",
+        "key": "arc.dialogue.luck_voltia.18",
+        "defeated": [
+          "vetto"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Dante's down? Was the gravity fun?",
+        "key": "arc.dialogue.luck_voltia.19",
+        "defeated": [
+          "dante"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Zagred's down! The word devil! Did he say die? Did it work? Obviously it didn't, you're here!",
+        "key": "arc.dialogue.luck_voltia.20",
+        "defeated": [
+          "zagred"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Lucius is down?! Then who's left? Wait, there's always someone. Good!",
+        "key": "arc.dialogue.luck_voltia.21",
+        "defeated": [
+          "lucius"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Magna's my best friend. Don't tell him. He'd get a big head. It's already big.",
+        "key": "arc.dialogue.luck_voltia.22",
+        "priority": 1
+      },
+      {
+        "text": "Pranks are the best training. Dodging pranks makes you fast. I'm basically a teacher.",
+        "key": "arc.dialogue.luck_voltia.23",
+        "priority": 1
+      },
+      {
+        "text": "Charmy says I'm scary when I smile. I say I'm just happy! Why is that scary?",
+        "key": "arc.dialogue.luck_voltia.24",
+        "priority": 1
+      },
+      {
+        "text": "When I get excited, my smile gets wider. Gordon says it's unsettling. Gordon says everything is unsettling.",
+        "key": "arc.dialogue.luck_voltia.25",
+        "priority": 1
+      },
+      {
+        "text": "Sometimes I think lightning is the only thing faster than my mouth.",
+        "key": "arc.dialogue.luck_voltia.26",
+        "priority": 1
+      },
+      {
+        "text": "Noise brings monsters! Light brings monsters! Being too much fun brings monsters! ...Okay, mostly noise and light.",
+        "key": "arc.dialogue.luck_voltia.27",
+        "priority": 1
+      },
+      {
+        "text": "Don't run ahead of your team! I do it all the time, but you shouldn't. The floors are split per team, so if you get hurt, nobody from another team is going to come save you.",
+        "key": "arc.dialogue.luck_voltia.28",
+        "priority": 1
+      }
+    ],
+    "farewell": [
+      {
+        "text": "Bye bye! Win something for me!",
+        "key": "arc.dialogue.luck_voltia.29"
+      },
+      {
+        "text": "See you! Next time we fight, okay?",
+        "key": "arc.dialogue.luck_voltia.30"
+      },
+      {
+        "text": "Zoom! That's me leaving! Bye!",
+        "key": "arc.dialogue.luck_voltia.31"
+      }
+    ]
+  }
+}

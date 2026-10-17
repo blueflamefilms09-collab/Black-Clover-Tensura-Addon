@@ -1,0 +1,215 @@
+{
+  "character": "finral_roulacase",
+  "lines": {
+    "greeting": [
+      {
+        "text": "Oh! A new customer! I mean, a new friend. Finral Roulacase, Black Bulls, transport and general errands. Hello, {player}!",
+        "key": "arc.dialogue.finral_roulacase.1",
+        "first": true
+      },
+      {
+        "text": "Welcome, welcome! Don't be afraid, I'm the friendly one. Well, the cowardly one. But friendly! Finral!",
+        "key": "arc.dialogue.finral_roulacase.2",
+        "first": true
+      },
+      {
+        "text": "Ah, are you lost? Don't worry, I can take you anywhere. Almost anywhere. Finral Roulacase, at your service!",
+        "key": "arc.dialogue.finral_roulacase.3",
+        "first": true
+      },
+      {
+        "text": "Wow, you're already past a few floors? That's more than I managed on my first day. Finral! Tell me if you need a lift.",
+        "key": "arc.dialogue.finral_roulacase.4",
+        "first": true,
+        "minStage": 3,
+        "priority": 2
+      },
+      {
+        "text": "You beat Revchi Salik?! Oh, you're strong! I mean, I'm glad you're on our side. Finral, at your service!",
+        "key": "arc.dialogue.finral_roulacase.5",
+        "first": true,
+        "defeated": [
+          "revchi_salik"
+        ],
+        "priority": 2
+      }
+    ],
+    "hint": [
+      {
+        "text": "Okay, the basics: the Spire climbs, the Chasm drops, and the gate behind you goes home. Even after the other road locks, you can always come back to the plaza. I checked. Twice. For safety!",
+        "key": "arc.dialogue.finral_roulacase.6",
+        "maxStage": 2,
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Every floor is a level of its own. You arrive at the foot of the stairs, you find the far end, and the next floor builds while you walk. If the stairs say they're still forming, give them a moment. Don't poke them.",
+        "key": "arc.dialogue.finral_roulacase.7",
+        "maxStage": 2,
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "The early floors are crawling with leftovers from all the old trouble. Heath Grice, Vetto, those Diamond Kingdom mages. If you get cornered, remember: running away is a perfectly valid tactic! I'm an expert!",
+        "key": "arc.dialogue.finral_roulacase.8",
+        "maxStage": 5,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Deeper down, the Eye sends the really scary ones, with a third eye. If you meet one, open a Fallen Angel Gate and use it. Running through a door you made yourself counts as tactics.",
+        "key": "arc.dialogue.finral_roulacase.9",
+        "minStage": 4,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "The Spade Kingdom's brothers are three kinds of awful. Dante crushes, Vanica curses, Zenon folds space. When Zenon folds space I'm offended on behalf of my magic. He's doing it wrong.",
+        "key": "arc.dialogue.finral_roulacase.10",
+        "saga": [
+          "spade_raid"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Lucius Zogratis is the last one, I think. I try not to think about him. I think about Finesse, and soup. Mostly Finesse.",
+        "key": "arc.dialogue.finral_roulacase.11",
+        "saga": [
+          "wizard_king"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "There are strangers on the floors who are very, very strong, and some of them are very, very beautiful. I'm not saying I'll introduce myself. I'm saying I want to survive long enough to try.",
+        "key": "arc.dialogue.finral_roulacase.12",
+        "saga": [
+          "seven_deadly_sins"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Another dungeon! With a goddess and a hearth and a family-run feeling. I like it already. Still, be careful: monsters aren't polite just because the city is.",
+        "key": "arc.dialogue.finral_roulacase.13",
+        "saga": [
+          "danmachi"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Twenty already?! You're making me look bad! Which isn't hard, but still!",
+        "key": "arc.dialogue.finral_roulacase.14",
+        "minStage": 20,
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Fallen Angel Gate opens two doors that lead to each other. Cast it once, aim, and cast it again. Both stay open for twenty seconds, and then it needs forty-five seconds to rest. Perfect for running. I love running.",
+        "key": "arc.dialogue.finral_roulacase.15",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Sacred Mana Domination wipes out the nearest enemy projectile within eight blocks. If there isn't one, it drags your target four blocks closer. One or the other, never both. I tried both once. It was awkward.",
+        "key": "arc.dialogue.finral_roulacase.16",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "The dungeon sorts its floors by team. Your friends share your floors, and other teams get their own copies. Like a private labyrinth, but with company! Nobody steals your corridor.",
+        "key": "arc.dialogue.finral_roulacase.17",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Lotus Whomalt is down? The smoke and poison gas fellow? I'd have fainted. Respect!",
+        "key": "arc.dialogue.finral_roulacase.18",
+        "defeated": [
+          "lotus_whomalt"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "You beat Mars, the crystal fellow? Crystal magic is gorgeous, but not when it's coming at your face!",
+        "key": "arc.dialogue.finral_roulacase.19",
+        "defeated": [
+          "mars"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Zenon's down? He did space magic wrong and I'm not even mad. Okay, I'm a little mad. But thank you!",
+        "key": "arc.dialogue.finral_roulacase.20",
+        "defeated": [
+          "zenon"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Lucius, finished. I'm so relieved I could cry. I'm going to cry a little. Don't look!",
+        "key": "arc.dialogue.finral_roulacase.21",
+        "defeated": [
+          "lucius"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Everyone calls me a taxi. I'm a fully qualified Magic Knight who happens to be very good at driving.",
+        "key": "arc.dialogue.finral_roulacase.22",
+        "priority": 1
+      },
+      {
+        "text": "My brother Langris is in the Golden Dawn. Perfect hair, perfect magic, perfect attitude. I'm better at jokes.",
+        "key": "arc.dialogue.finral_roulacase.23",
+        "priority": 1
+      },
+      {
+        "text": "I'm going to become the head of House Vaude and marry Finesse. I'll be brave soon. Very soon.",
+        "key": "arc.dialogue.finral_roulacase.24",
+        "priority": 1
+      },
+      {
+        "text": "Gordon is creepy. Magna is loud. Luck is terrifying. Everyone here is wonderful, honest!",
+        "key": "arc.dialogue.finral_roulacase.25",
+        "priority": 1
+      },
+      {
+        "text": "I keep telling Asta that fear is just caution wearing a funny hat.",
+        "key": "arc.dialogue.finral_roulacase.26",
+        "priority": 1
+      },
+      {
+        "text": "A little advice: bring a light and keep it burning. Stay in the dark too long and you go weak, and I can't drive weak people. Ooh, that came out wrong.",
+        "key": "arc.dialogue.finral_roulacase.27",
+        "priority": 1
+      }
+    ],
+    "farewell": [
+      {
+        "text": "Safe travels! Don't forget to come back! I'll keep the gate warm.",
+        "key": "arc.dialogue.finral_roulacase.28"
+      },
+      {
+        "text": "Okay, bye! Be brave! One of us has to be.",
+        "key": "arc.dialogue.finral_roulacase.29"
+      },
+      {
+        "text": "Careful out there. If you see a lady in distress, tell her I said hi.",
+        "key": "arc.dialogue.finral_roulacase.30"
+      }
+    ]
+  }
+}

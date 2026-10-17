@@ -1,0 +1,224 @@
+{
+  "character": "secre_swallowtail",
+  "lines": {
+    "greeting": [
+      {
+        "text": "...Hello. I am Secre Swallowtail. I seal things, and I open them again. You may call me Secre.",
+        "key": "arc.dialogue.secre_swallowtail.1",
+        "first": true
+      },
+      {
+        "text": "I see. A new person. I will remember your face, {player}. I remember faces, locks and debts.",
+        "key": "arc.dialogue.secre_swallowtail.2",
+        "first": true
+      },
+      {
+        "text": "Do not stand so close. I am not angry. This is my normal face.",
+        "key": "arc.dialogue.secre_swallowtail.3",
+        "first": true
+      },
+      {
+        "text": "You are the one who put Vetto down. Then it is time for me to be here. I am Secre.",
+        "key": "arc.dialogue.secre_swallowtail.4",
+        "first": true,
+        "defeated": [
+          "vetto"
+        ],
+        "priority": 2
+      },
+      {
+        "text": "You have the look of someone who has opened many doors. I am Secre. I prefer locks.",
+        "key": "arc.dialogue.secre_swallowtail.5",
+        "first": true,
+        "minStage": 3,
+        "priority": 2
+      }
+    ],
+    "hint": [
+      {
+        "text": "Gatekeeper doors answer to Mana Cores, not to hope. Beat the guardian, take the core, open the door. Hope is optional.",
+        "key": "arc.dialogue.secre_swallowtail.6",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Locked chests exist. Branching Array opens them if you look at one from eight blocks or closer. A grimoire is faster than a key. If it is mine.",
+        "key": "arc.dialogue.secre_swallowtail.7",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "The Eye of the Midnight Sun seals people inside rituals. I know how that works. The seal is rarely the problem. The one who holds the key is.",
+        "key": "arc.dialogue.secre_swallowtail.8",
+        "maxStage": 5,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "A seal is a promise that something stays shut. Zagred keeps promises only when they please him. Do not trust a lock in front of him.",
+        "key": "arc.dialogue.secre_swallowtail.9",
+        "minStage": 4,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Someone opened a gate to a lower place in the Spade Kingdom, and devils walked through. The Dark Triad stand on your floors because of that. I would rather not discuss it.",
+        "key": "arc.dialogue.secre_swallowtail.10",
+        "saga": [
+          "spade_raid"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Lucius Zogratis hid inside the Wizard King for years. A lock nobody knew was locked. Prince Lemiel would have been furious.",
+        "key": "arc.dialogue.secre_swallowtail.11",
+        "saga": [
+          "wizard_king"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "The Seven Deadly Sins are people from elsewhere. I have no seal for them. I would like that on record.",
+        "key": "arc.dialogue.secre_swallowtail.12",
+        "saga": [
+          "seven_deadly_sins"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Another dungeon. More monsters behind more doors. I do not care, as long as they stay behind their doors.",
+        "key": "arc.dialogue.secre_swallowtail.13",
+        "saga": [
+          "danmachi"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Twenty fights. Hm. You are... acceptable. This is a compliment.",
+        "key": "arc.dialogue.secre_swallowtail.14",
+        "minStage": 20,
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "My four seals open only in my own grimoire: Branching Array, Eternal Prison, Wound Sealing, Orbital Bind. A borrowed book will refuse them. That is not rude. That is a lock.",
+        "key": "arc.dialogue.secre_swallowtail.15",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Eternal Prison encases a target in a cube for six seconds. Nothing goes in, nothing comes out. A boss slips free in a second and a half. Plan for that.",
+        "key": "arc.dialogue.secre_swallowtail.16",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Wound Sealing closes a third of an ally's wounds and clears what ails them. Orbital Bind makes an ally harder to hit with magic for half a minute, and it pairs well with an anti-magic sword. Ask Asta. Both seals are quiet. I like quiet.",
+        "key": "arc.dialogue.secre_swallowtail.17",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "The ordinary Seal page silences a mage's grimoire for five seconds. A boss's for one. Do not cast it in a panic. Time it.",
+        "key": "arc.dialogue.secre_swallowtail.18",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Vetto is gone? Good. A thing that heals that fast should have been sealed, not fought.",
+        "key": "arc.dialogue.secre_swallowtail.19",
+        "defeated": [
+          "vetto"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Heath Grice used a relic to close his own story. A poor seal. It did not hold.",
+        "key": "arc.dialogue.secre_swallowtail.20",
+        "defeated": [
+          "heath_grice"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "You broke Zagred's hold on the Eye. Hm. It did not hold either.",
+        "key": "arc.dialogue.secre_swallowtail.21",
+        "defeated": [
+          "zagred"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Lucius is sealed away for good. I would like to believe that. Prince Lemiel would have liked it, too.",
+        "key": "arc.dialogue.secre_swallowtail.22",
+        "defeated": [
+          "lucius"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "I once sealed my lord inside a statue. It was necessary. I do not enjoy explaining it.",
+        "key": "arc.dialogue.secre_swallowtail.23",
+        "priority": 1
+      },
+      {
+        "text": "I used to be a bird. Black, small, loud. I preferred it, though the food was worse.",
+        "key": "arc.dialogue.secre_swallowtail.24",
+        "priority": 1
+      },
+      {
+        "text": "Asta is noisy. His grimoire is quiet. I like his grimoire.",
+        "key": "arc.dialogue.secre_swallowtail.25",
+        "priority": 1
+      },
+      {
+        "text": "I peck him when he is annoying. He deserves it. That is all I will say.",
+        "key": "arc.dialogue.secre_swallowtail.26",
+        "priority": 1
+      },
+      {
+        "text": "The Black Bulls are loud, dirty and unreliable. I have never been so content.",
+        "key": "arc.dialogue.secre_swallowtail.27",
+        "priority": 1
+      },
+      {
+        "text": "A door that does not open has a rule. Find the rule, and the door opens. Find the key, and the door opens faster.",
+        "key": "arc.dialogue.secre_swallowtail.28",
+        "priority": 1
+      },
+      {
+        "text": "The Crucible shows three relics and asks you to choose one. The rest turn to dust. I would choose quickly, and leave quickly.",
+        "key": "arc.dialogue.secre_swallowtail.29",
+        "priority": 1
+      }
+    ],
+    "farewell": [
+      {
+        "text": "Goodbye. Do not be loud on the way out.",
+        "key": "arc.dialogue.secre_swallowtail.30"
+      },
+      {
+        "text": "Return safely. I dislike changing locks.",
+        "key": "arc.dialogue.secre_swallowtail.31"
+      },
+      {
+        "text": "I will be here. I am always here. It is a good place to be quiet.",
+        "key": "arc.dialogue.secre_swallowtail.32"
+      }
+    ]
+  }
+}

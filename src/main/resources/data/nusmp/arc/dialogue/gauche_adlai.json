@@ -1,0 +1,224 @@
+{
+  "character": "gauche_adlai",
+  "lines": {
+    "greeting": [
+      {
+        "text": "...What do you want? I don't talk to strangers. Gauche Adlai. That's all you get.",
+        "key": "arc.dialogue.gauche_adlai.1",
+        "first": true
+      },
+      {
+        "text": "You're staring. Stop it. If you must know, I'm Gauche. Mirror Magic. Don't bother me unless it's important.",
+        "key": "arc.dialogue.gauche_adlai.2",
+        "first": true
+      },
+      {
+        "text": "Hmph. Another person who thinks the Black Bulls are a joke. I'm Gauche Adlai. Prove me wrong.",
+        "key": "arc.dialogue.gauche_adlai.3",
+        "first": true
+      },
+      {
+        "text": "So you're the one who cleaned out the Diamond mages. ...Fine. Gauche Adlai. Don't think this makes us friends.",
+        "key": "arc.dialogue.gauche_adlai.4",
+        "first": true,
+        "defeated": [
+          "lotus_whomalt"
+        ],
+        "priority": 2
+      },
+      {
+        "text": "You look like you've done something useful for once. Gauche. Save your breath.",
+        "key": "arc.dialogue.gauche_adlai.5",
+        "first": true,
+        "minStage": 3,
+        "priority": 2
+      }
+    ],
+    "hint": [
+      {
+        "text": "Listen once, because I won't repeat it. Don't fight in the open when a corridor will do. Don't fight when you're hurt. Don't fight when you don't have to.",
+        "key": "arc.dialogue.gauche_adlai.6",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "The System window follows you around down there, and it can be moved. It has its own keybinds. Look for them before you complain about it covering your view.",
+        "key": "arc.dialogue.gauche_adlai.7",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "The Eye of the Midnight Sun fights as one organism. Kill the loud ones first and the quiet ones come apart. Their leader wears a borrowed face and fights with light.",
+        "key": "arc.dialogue.gauche_adlai.8",
+        "maxStage": 5,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Light against a mirror is a bad bet. A mirror turns light back. If the leader of the Eye comes at you with it, you'll know where to stand.",
+        "key": "arc.dialogue.gauche_adlai.9",
+        "minStage": 4,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "The Zogratis brothers: gravity, curses, space. Three kinds of pressure. A mirror won't help against gravity. Don't bother.",
+        "key": "arc.dialogue.gauche_adlai.10",
+        "saga": [
+          "spade_raid"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Lucius Zogratis. Time, souls, and a bad temper. I suggest you don't make him angry, but you'll do it anyway.",
+        "key": "arc.dialogue.gauche_adlai.11",
+        "saga": [
+          "wizard_king"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Those Sins. Lust and Envy are the irritating ones: a man who toys with minds and a giant who envies everyone. I don't like fighting people who toy with minds.",
+        "key": "arc.dialogue.gauche_adlai.12",
+        "saga": [
+          "seven_deadly_sins"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "That other dungeon's monsters are simple. Good. Simple things die easily. I like them.",
+        "key": "arc.dialogue.gauche_adlai.13",
+        "saga": [
+          "danmachi"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Twenty. Hmph. That's the lowest number a competent person would be proud of.",
+        "key": "arc.dialogue.gauche_adlai.14",
+        "minStage": 20,
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Reflect Refrain hangs a mirror before you for four seconds. It catches two to four shots, sends them back and silences whoever fired. Time it. Don't flail.",
+        "key": "arc.dialogue.gauche_adlai.15",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Real Double steps a copy of you out of a mirror. Each double costs a tenth of your magicules, takes extra damage, and adds a fifth to your own blows, up to three. Don't be sentimental about them. They aren't you.",
+        "key": "arc.dialogue.gauche_adlai.16",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Full Reflection turns every shot back for eight seconds and returns most of every blow. Mirror Array keeps a ring of mirrors around you, and one shatters in place of a killing blow. Use both. Stop dying.",
+        "key": "arc.dialogue.gauche_adlai.17",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Mirrors are weak to gel and to dark. A slime ruins a mirror's day. Keep that in mind, if you have a brain.",
+        "key": "arc.dialogue.gauche_adlai.18",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Mars? Crystal brain. Fine. You beat him. Don't expect applause.",
+        "key": "arc.dialogue.gauche_adlai.19",
+        "defeated": [
+          "mars"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Vetto. A big beast who never stops. Hmph. I'd have been faster. But fine, you got him.",
+        "key": "arc.dialogue.gauche_adlai.20",
+        "defeated": [
+          "vetto"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Zenon Zogratis. Space and bone. A smart one. You're better than you look, which wasn't hard.",
+        "key": "arc.dialogue.gauche_adlai.21",
+        "defeated": [
+          "zenon"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Lucius is dead? Hm. I wanted to see it. ...Marie would have wanted to see it, too.",
+        "key": "arc.dialogue.gauche_adlai.22",
+        "defeated": [
+          "lucius"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Marie is the cutest thing in this kingdom. Say otherwise and I will end you. ...What? It's a fact.",
+        "key": "arc.dialogue.gauche_adlai.23",
+        "priority": 1
+      },
+      {
+        "text": "Marie hits harder than any bull. It's character building.",
+        "key": "arc.dialogue.gauche_adlai.24",
+        "priority": 1
+      },
+      {
+        "text": "I'm the smartest one in the squad. Not because the rest are dumb, though they are, but because I actually read things.",
+        "key": "arc.dialogue.gauche_adlai.25",
+        "priority": 1
+      },
+      {
+        "text": "My left eye is a mirror. It sees more than the other one. Don't ask.",
+        "key": "arc.dialogue.gauche_adlai.26",
+        "priority": 1
+      },
+      {
+        "text": "Stop looking at me like that. I'm not blushing. It's just hot.",
+        "key": "arc.dialogue.gauche_adlai.27",
+        "priority": 1
+      },
+      {
+        "text": "If the room is a trap, leave. If the trap is a room, leave faster.",
+        "key": "arc.dialogue.gauche_adlai.28",
+        "priority": 1
+      },
+      {
+        "text": "Floors lie. A pitfall tile looks exactly like the one beside it. Mirrors don't lie. Check the corners.",
+        "key": "arc.dialogue.gauche_adlai.29",
+        "priority": 1
+      }
+    ],
+    "farewell": [
+      {
+        "text": "Hmph. Get out of my sight. ...Be careful.",
+        "key": "arc.dialogue.gauche_adlai.30"
+      },
+      {
+        "text": "Don't die. It would be a waste of my advice.",
+        "key": "arc.dialogue.gauche_adlai.31"
+      },
+      {
+        "text": "Marie is waiting. Leave.",
+        "key": "arc.dialogue.gauche_adlai.32"
+      }
+    ]
+  }
+}

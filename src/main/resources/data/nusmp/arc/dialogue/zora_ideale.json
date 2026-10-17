@@ -1,0 +1,224 @@
+{
+  "character": "zora_ideale",
+  "lines": {
+    "greeting": [
+      {
+        "text": "Tch. Another one. Zora Ideale. Don't expect a handshake. I might leave a trap in it.",
+        "key": "arc.dialogue.zora_ideale.1",
+        "first": true
+      },
+      {
+        "text": "You staring at the straps? Yeah, they're real. So's my temper. Zora Ideale, Black Bulls. What do you want?",
+        "key": "arc.dialogue.zora_ideale.2",
+        "first": true
+      },
+      {
+        "text": "Hah! You don't look like a noble. That's a good start. I'm Zora.",
+        "key": "arc.dialogue.zora_ideale.3",
+        "first": true
+      },
+      {
+        "text": "You took out Heath Grice? Not bad. Don't get a big head. Zora Ideale. Come to see what a real trap looks like?",
+        "key": "arc.dialogue.zora_ideale.4",
+        "first": true,
+        "defeated": [
+          "heath_grice"
+        ],
+        "priority": 2
+      },
+      {
+        "text": "You've been in the dungeon long enough to learn how things bite. Good. Zora. Don't step on anything shiny.",
+        "key": "arc.dialogue.zora_ideale.5",
+        "first": true,
+        "minStage": 3,
+        "priority": 2
+      }
+    ],
+    "hint": [
+      {
+        "text": "Rule one of the dungeon: the floor lies to you. A pitfall tile looks exactly like the tiles around it, and if the floor is suspiciously clean, somebody wanted you to walk on it.",
+        "key": "arc.dialogue.zora_ideale.6",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Some rooms have a glyph that eats your light. Torches die, lanterns die, and you can't place new ones nearby. Don't plant a torch near one. Carry your light out the other side.",
+        "key": "arc.dialogue.zora_ideale.7",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "The Eye of the Midnight Sun, hah. Terrorists with relics and rituals who think nobody's watching. Heath Grice even died to hide the plan. Who does that?",
+        "key": "arc.dialogue.zora_ideale.8",
+        "maxStage": 5,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Past the thirtieth floor, the Eye's elite wait with their third eyes open. Fun to avoid, anyway. Learn their patterns, then set a trap.",
+        "key": "arc.dialogue.zora_ideale.9",
+        "minStage": 4,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Royal siblings who made deals with devils and took a kingdom. Sounds like nobles. Dante, Vanica, Zenon. I'd love to rig a surprise for each.",
+        "key": "arc.dialogue.zora_ideale.10",
+        "saga": [
+          "spade_raid"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Lucius. A Wizard King who turned out to be a Zogratis. Of course. Every time you trust somebody with a title...",
+        "key": "arc.dialogue.zora_ideale.11",
+        "saga": [
+          "wizard_king"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Seven sinners from nowhere. No titles, no nobles, no paperwork. I might actually like them. Don't tell them.",
+        "key": "arc.dialogue.zora_ideale.12",
+        "saga": [
+          "seven_deadly_sins"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "A whole city of adventurers working for gods. No kings. Hah. I'd retire there.",
+        "key": "arc.dialogue.zora_ideale.13",
+        "saga": [
+          "danmachi"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Twenty fights. Not bad for someone who isn't a noble. Don't tell me your last name.",
+        "key": "arc.dialogue.zora_ideale.14",
+        "minStage": 20,
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Ash Bullets blind what they hit, and Ash Cloud hides you and blinds everything near. Ash is coward's magic, which is why it works.",
+        "key": "arc.dialogue.zora_ideale.15",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Revelation of the Cowardly: for thirty seconds, the next three jerks who hit you set off an ash trap. It only opens for my grimoire. Hah. Pay for your own tricks.",
+        "key": "arc.dialogue.zora_ideale.16",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Ash Absorbing Formation is a ring of ash that drinks the mana of every enemy inside for eight seconds and pours it into you. Use it on a boss mid-cast. He'll hate it.",
+        "key": "arc.dialogue.zora_ideale.17",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Puzzle rooms: four sigils, four colors, and a stone that states the riddle. Press them in order. Press them in the wrong order and it locks you out for a while. Don't guess.",
+        "key": "arc.dialogue.zora_ideale.18",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Mars is down? Crystal brain. Fine. He thought he was pretty. Hah.",
+        "key": "arc.dialogue.zora_ideale.19",
+        "defeated": [
+          "mars"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Zenon, space and bone. Cute. You beat him, so I guess you're allowed to be proud.",
+        "key": "arc.dialogue.zora_ideale.20",
+        "defeated": [
+          "zenon"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Lucius is gone. Good. A king who isn't a king is the worst kind.",
+        "key": "arc.dialogue.zora_ideale.21",
+        "defeated": [
+          "lucius"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Vetto's down? Shame. I'd planned a trap for him. A big one. The kind with a lid.",
+        "key": "arc.dialogue.zora_ideale.22",
+        "defeated": [
+          "vetto"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "I hate nobles. Not all of them. Just most of them. Okay, nearly all of them. Noelle's all right.",
+        "key": "arc.dialogue.zora_ideale.23",
+        "priority": 1
+      },
+      {
+        "text": "Traps are honest. Nobody expects a trap to be nice. That's more than I can say for kings.",
+        "key": "arc.dialogue.zora_ideale.24",
+        "priority": 1
+      },
+      {
+        "text": "I pranked Luck once. He liked it. Now he does it back. This is why I can't have nice things.",
+        "key": "arc.dialogue.zora_ideale.25",
+        "priority": 1
+      },
+      {
+        "text": "The straps? Don't ask. It's an old story, and it has a bad ending. For somebody else.",
+        "key": "arc.dialogue.zora_ideale.26",
+        "priority": 1
+      },
+      {
+        "text": "I'm here for justice, kid. And pranks. Mostly pranks.",
+        "key": "arc.dialogue.zora_ideale.27",
+        "priority": 1
+      },
+      {
+        "text": "If a room feels empty and quiet, don't relax. That's usually the trap. Or the boss. Or both.",
+        "key": "arc.dialogue.zora_ideale.28",
+        "priority": 1
+      },
+      {
+        "text": "Wandering bosses walk the rooms like landlords. If you hear heavy footsteps, check your exits before you check your hair.",
+        "key": "arc.dialogue.zora_ideale.29",
+        "priority": 1
+      }
+    ],
+    "farewell": [
+      {
+        "text": "Tch. Don't die stupidly. Die for something good, if you have to.",
+        "key": "arc.dialogue.zora_ideale.30"
+      },
+      {
+        "text": "Go on, get lost. Watch the floor.",
+        "key": "arc.dialogue.zora_ideale.31"
+      },
+      {
+        "text": "Hah. Come back and tell me what you stepped on.",
+        "key": "arc.dialogue.zora_ideale.32"
+      }
+    ]
+  }
+}

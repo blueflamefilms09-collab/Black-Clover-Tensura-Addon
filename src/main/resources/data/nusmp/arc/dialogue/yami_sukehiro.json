@@ -1,0 +1,228 @@
+{
+  "character": "yami_sukehiro",
+  "lines": {
+    "greeting": [
+      {
+        "text": "Hm? New face. Yami Sukehiro, captain of the Black Bulls. Don't expect a speech, {player}.",
+        "key": "arc.dialogue.yami_sukehiro.1",
+        "first": true
+      },
+      {
+        "text": "You can stand upright and hold a weapon. That's more than half my squad managed when they showed up. Name's Yami.",
+        "key": "arc.dialogue.yami_sukehiro.2",
+        "first": true
+      },
+      {
+        "text": "So you're the one everybody's whispering about. I'm Yami. Black Bulls. Worst squad in the kingdom, and proud of it.",
+        "key": "arc.dialogue.yami_sukehiro.3",
+        "first": true
+      },
+      {
+        "text": "Hah. You've been down there and back already, haven't you? You smell like the dungeon. Good. I like people who come back. Yami.",
+        "key": "arc.dialogue.yami_sukehiro.4",
+        "first": true,
+        "minStage": 3,
+        "priority": 2
+      }
+    ],
+    "hint": [
+      {
+        "text": "The Spire climbs and the Chasm drops. Pick a road and mean it, {player}. Clear the first floor of one and the other shuts behind you. Think it over. I never do.",
+        "key": "arc.dialogue.yami_sukehiro.5",
+        "maxStage": 2,
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Every tenth floor has a guardian sitting on the stairs. Don't take one alone unless you're an idiot, or me.",
+        "key": "arc.dialogue.yami_sukehiro.6",
+        "maxStage": 2,
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "The Eye of the Midnight Sun and its friends left their mess on the early floors. Revchi Salik, Heath Grice, a beast called Vetto, a pair of Diamond Kingdom mages. From the tenth floor on, you'll trip over one of them.",
+        "key": "arc.dialogue.yami_sukehiro.7",
+        "maxStage": 5,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Past the thirtieth floor the Eye sends its elite, the ones with the third eye. And down the Chasm, below the fortieth, sits the devil behind all of them. Zagred. Take friends.",
+        "key": "arc.dialogue.yami_sukehiro.8",
+        "minStage": 4,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Spade Kingdom. Three brothers made deals with devils and wore the power like armor: Dante, Vanica, Zenon. Don't fight them like it's a normal fight. It isn't.",
+        "key": "arc.dialogue.yami_sukehiro.9",
+        "saga": [
+          "spade_raid"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "One left at the top of the pile. Lucius Zogratis, eldest of those three. He wore the Wizard King's face for years and nobody noticed. Bring everything you've learned.",
+        "key": "arc.dialogue.yami_sukehiro.10",
+        "saga": [
+          "wizard_king"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Strangers have turned up on the floors. Seven of them, named after sins, from some other world. I don't know why they're here and I don't care. Rank means nothing to them. Respect them or run.",
+        "key": "arc.dialogue.yami_sukehiro.11",
+        "saga": [
+          "seven_deadly_sins"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Out past the edges there's a pit that belongs to another city's dungeon. Orario. A bull-headed brute, a giant, a two-headed horror. Not our usual trouble, but trouble is trouble.",
+        "key": "arc.dialogue.yami_sukehiro.12",
+        "saga": [
+          "danmachi"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Twenty down already? Not bad, {player}. If you were in my squad, I'd make you do the paperwork.",
+        "key": "arc.dialogue.yami_sukehiro.13",
+        "minStage": 20,
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "A boss's grimoire drops the first time it dies, once per world. Hold it or wear it and you borrow its owner's tricks for a while. Don't get attached. It's a loan.",
+        "key": "arc.dialogue.yami_sukehiro.14",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "There's a slash in the Dark book called Equinox. It opens only for my own grimoire. No, you can't borrow mine.",
+        "key": "arc.dialogue.yami_sukehiro.15",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "At the end of every ten floors there's a vault with three relics and a bad attitude. Take one. The rest turn to dust, and then the ceiling gets ideas. Grab and run.",
+        "key": "arc.dialogue.yami_sukehiro.16",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "There's a monument on the plaza with a lectern on it. It lists the big names: who's beaten, who's waiting. Read it before you pick a fight.",
+        "key": "arc.dialogue.yami_sukehiro.17",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Heath Grice stays down for you? He'd rather die than answer questions, that one. Typical.",
+        "key": "arc.dialogue.yami_sukehiro.18",
+        "defeated": [
+          "heath_grice"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Vetto's down for you, too? Last time it took three of us. I made the last cut, obviously. The brat will tell you he did.",
+        "key": "arc.dialogue.yami_sukehiro.19",
+        "defeated": [
+          "vetto"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "You beat Zagred. A devil whose words turn into facts, and you came back with your head on. Tch. Drinks are on you.",
+        "key": "arc.dialogue.yami_sukehiro.20",
+        "defeated": [
+          "zagred"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "All three Zogratis. You're either very good or very lucky, and I don't believe in luck.",
+        "key": "arc.dialogue.yami_sukehiro.21",
+        "defeated": [
+          "dante",
+          "vanica",
+          "zenon"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Lucius, finished. Then that's the lot. Take the rest of the day off. Take a week. I won't tell anyone.",
+        "key": "arc.dialogue.yami_sukehiro.22",
+        "defeated": [
+          "lucius"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "A captain's job is to stand in front. The rest is paperwork, and I don't do paperwork.",
+        "key": "arc.dialogue.yami_sukehiro.23",
+        "priority": 1
+      },
+      {
+        "text": "Black Bulls don't get medals. We get the jobs nobody else wants. Suits me.",
+        "key": "arc.dialogue.yami_sukehiro.24",
+        "priority": 1
+      },
+      {
+        "text": "Magic isn't everything. Guts count. Ask the brat. More guts than anyone I've met, and zero mana.",
+        "key": "arc.dialogue.yami_sukehiro.25",
+        "priority": 1
+      },
+      {
+        "text": "If you see Charmy near food, hide it. If you see Vanessa near drinks, hide those. If you see Magna and Luck together, hide yourself.",
+        "key": "arc.dialogue.yami_sukehiro.26",
+        "priority": 1
+      },
+      {
+        "text": "Every captain who threw out a misfit got a worse squad. I picked them all up. Funny thing is, they're the ones who stayed.",
+        "key": "arc.dialogue.yami_sukehiro.27",
+        "priority": 1
+      },
+      {
+        "text": "Keep a light burning. Stay in the dark long enough and the dungeon makes you weak, and weak people don't come back.",
+        "key": "arc.dialogue.yami_sukehiro.28",
+        "priority": 1
+      },
+      {
+        "text": "Raw monster meat will make you sick. Cook it, or find a way to purify it. Don't ask me how. I eat what Charmy gives me.",
+        "key": "arc.dialogue.yami_sukehiro.29",
+        "priority": 1
+      }
+    ],
+    "farewell": [
+      {
+        "text": "Don't go dying out there. It's a lot of paperwork.",
+        "key": "arc.dialogue.yami_sukehiro.30"
+      },
+      {
+        "text": "Tch. Come back in one piece, {player}.",
+        "key": "arc.dialogue.yami_sukehiro.31"
+      },
+      {
+        "text": "Go on. I've got a cigarette to finish.",
+        "key": "arc.dialogue.yami_sukehiro.32"
+      }
+    ]
+  }
+}

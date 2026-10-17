@@ -1,0 +1,232 @@
+{
+  "character": "charmy_pappitson",
+  "lines": {
+    "greeting": [
+      {
+        "text": "Hello! I'm Charmy! Do you have food? No? That's okay, Charmy has food. Do you want some? ...Charmy is not sure Charmy wants to share.",
+        "key": "arc.dialogue.charmy_pappitson.1",
+        "first": true
+      },
+      {
+        "text": "Mmm! New person! You smell like adventure! And maybe a little like biscuits? Charmy is Charmy Pappitson!",
+        "key": "arc.dialogue.charmy_pappitson.2",
+        "first": true
+      },
+      {
+        "text": "Charmy is hungry. Charmy is always hungry. What's your name? Do you like sheep?",
+        "key": "arc.dialogue.charmy_pappitson.3",
+        "first": true
+      },
+      {
+        "text": "You beat a big one! You must be hungry! Charmy will share! A little! Charmy Pappitson!",
+        "key": "arc.dialogue.charmy_pappitson.4",
+        "first": true,
+        "defeated": [
+          "revchi_salik"
+        ],
+        "priority": 2
+      },
+      {
+        "text": "You've been fighting! Fighting makes you hungry! Charmy knows because Charmy fights! Charmy Pappitson!",
+        "key": "arc.dialogue.charmy_pappitson.5",
+        "first": true,
+        "minStage": 3,
+        "priority": 2
+      }
+    ],
+    "hint": [
+      {
+        "text": "Raw monster meat makes you sick. Charmy knows. Charmy tried it. Cook it first, or purify it. Cooked meat is yummy meat!",
+        "key": "arc.dialogue.charmy_pappitson.6",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Monsters drop magic stones and meat! Stones are money! Meat is food! That's a good deal! Charmy wants the meat!",
+        "key": "arc.dialogue.charmy_pappitson.7",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "The Eye of the Midnight Sun are scary, but they don't share. Charmy doesn't like people who don't share. Charmy doesn't like Heath Grice.",
+        "key": "arc.dialogue.charmy_pappitson.8",
+        "maxStage": 5,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "The Eye's elite are down deep, past the thirtieth floor! Bring snacks. A lot of snacks. Charmy always brings snacks.",
+        "key": "arc.dialogue.charmy_pappitson.9",
+        "minStage": 4,
+        "saga": [
+          "elf_reincarnation"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Spade Kingdom monsters are huge. Dante is huge. If Dante was a pie, he'd feed everyone for a week. Charmy should not be saying that.",
+        "key": "arc.dialogue.charmy_pappitson.10",
+        "saga": [
+          "spade_raid"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Lucius is the last one. After that, Charmy wants a feast. A big one. For everyone!",
+        "key": "arc.dialogue.charmy_pappitson.11",
+        "saga": [
+          "wizard_king"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "One of the Seven Deadly Sins is Gluttony. Charmy wants to meet her. Charmy will challenge her to an eating contest!",
+        "key": "arc.dialogue.charmy_pappitson.12",
+        "saga": [
+          "seven_deadly_sins"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Another dungeon! New monsters! New meat! Charmy is very excited!",
+        "key": "arc.dialogue.charmy_pappitson.13",
+        "saga": [
+          "danmachi"
+        ],
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Twenty fights! Charmy is proud! Charmy will cook a feast! ...after Charmy eats something. Right now.",
+        "key": "arc.dialogue.charmy_pappitson.14",
+        "minStage": 20,
+        "priority": 1,
+        "weight": 3
+      },
+      {
+        "text": "Sheep Cook! Three chef sheep cook for everyone nearby. It heals, it fills your belly, and the regeneration lasts a long time. Charmy's best page!",
+        "key": "arc.dialogue.charmy_pappitson.15",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Sleeping Sheep Strike makes a real sheep jump out of a cloud and put an enemy to sleep. Sheep Bondage hugs them in a cocoon of cotton. Sheep are the best!",
+        "key": "arc.dialogue.charmy_pappitson.16",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Cotton Cloud carries you and up to four friends where you walk, then puts you down softly. Charmy rides it to lunch.",
+        "key": "arc.dialogue.charmy_pappitson.17",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Glutton's Banquet is a giant mouth. It eats every spell in front of it and bites the enemies, then turns it all into mana. It's also a very good name.",
+        "key": "arc.dialogue.charmy_pappitson.18",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Charmy's grimoire has Cotton AND Food magic. A new grimoire picks one side when it's first bound, but Charmy's gets both. Charmy is special!",
+        "key": "arc.dialogue.charmy_pappitson.19",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "You beat the monster Vetto! Did it drop anything good? Charmy asks for a friend. The friend is Charmy.",
+        "key": "arc.dialogue.charmy_pappitson.20",
+        "defeated": [
+          "vetto"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Charmy doesn't like devils who talk. Charmy likes devils who eat. Good job on Zagred!",
+        "key": "arc.dialogue.charmy_pappitson.21",
+        "defeated": [
+          "zagred"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "All three brothers! Charmy would give you the biggest piece of cake!",
+        "key": "arc.dialogue.charmy_pappitson.22",
+        "defeated": [
+          "dante",
+          "vanica",
+          "zenon"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Lucius is gone! Party! Charmy brings the cake! Charmy eats the cake! You can have the crumbs!",
+        "key": "arc.dialogue.charmy_pappitson.23",
+        "defeated": [
+          "lucius"
+        ],
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Charmy's rule: never touch Charmy's food. Charmy is nice, but not about food.",
+        "key": "arc.dialogue.charmy_pappitson.24",
+        "priority": 1
+      },
+      {
+        "text": "Asta ate Charmy's leftovers once. Charmy forgave him. Eventually.",
+        "key": "arc.dialogue.charmy_pappitson.25",
+        "priority": 1
+      },
+      {
+        "text": "Charmy is small, but when Charmy eats, Charmy gets big! That's food magic!",
+        "key": "arc.dialogue.charmy_pappitson.26",
+        "priority": 1
+      },
+      {
+        "text": "What's your favorite food? Charmy's is all of them.",
+        "key": "arc.dialogue.charmy_pappitson.27",
+        "priority": 1
+      },
+      {
+        "text": "Charmy's sheep are very polite. They say baa and nothing else.",
+        "key": "arc.dialogue.charmy_pappitson.28",
+        "priority": 1
+      },
+      {
+        "text": "Hunger makes you slow down in the dungeon! Eat before you're hungry. Charmy never has this problem.",
+        "key": "arc.dialogue.charmy_pappitson.29",
+        "priority": 1
+      },
+      {
+        "text": "Don't let the lights go out! No light, no food, no fun!",
+        "key": "arc.dialogue.charmy_pappitson.30",
+        "priority": 1
+      }
+    ],
+    "farewell": [
+      {
+        "text": "Bye! Charmy is going to eat now!",
+        "key": "arc.dialogue.charmy_pappitson.31"
+      },
+      {
+        "text": "Come back with snacks!",
+        "key": "arc.dialogue.charmy_pappitson.32"
+      },
+      {
+        "text": "Goodbye! Don't forget to eat!",
+        "key": "arc.dialogue.charmy_pappitson.33"
+      }
+    ]
+  }
+}
