@@ -69,6 +69,7 @@ public final class AvatarSystem {
         modEventBus.addListener(AvatarNet::register);
         modEventBus.addListener((FMLCommonSetupEvent e) -> e.enqueueWork(AvatarNamingHook::register));
         AvatarMenus.init(modEventBus);
+        com.newuniverse.nusmp.avatar.ritual.SoulForgeSystem.init(modEventBus);                      // 1.58.0: the Soul Forge altar, its ritual and the creator screen (before NUItems.ITEMS.register)
         if (container != null) container.registerConfig(ModConfig.Type.SERVER, AvatarConfig.SPEC, "nusmp-avatar-server.toml");
 
         IEventBus game = NeoForge.EVENT_BUS;

@@ -60,6 +60,7 @@ public final class NUCreativeTab {
                     output.accept(GrimoireItem.createUnbound(GrimoireCover.THREE_LEAF, m, null));
                 }
                 output.accept(com.newuniverse.nusmp.avatar.item.AvatarItems.coreStack());                                        // 1.51.0: Genesis Core
+                output.accept(com.newuniverse.nusmp.avatar.item.SoulForgeBlocks.SOUL_FORGE_ITEM.get());                         // 1.58.0: the Soul Forge altar
                 // the named canon grimoires (Fuegoleon, Yuno, Asta, Noelle, ...)
                 for (var b : com.newuniverse.nusmp.grimoire.CanonBook.values()) output.accept(GrimoireItem.createCanon(b));
             })

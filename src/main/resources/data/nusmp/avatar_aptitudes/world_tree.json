@@ -1,0 +1,13 @@
+{
+  "name": "World Tree",
+  "rarity": "EPIC",
+  "tax_percent": 15,
+  "magic": "world_tree",
+  "skills": [
+    "tensura:healing_rain",
+    "tensura:self_regeneration",
+    "tensura:healthcare"
+  ],
+  "tint": "#3CE08A",
+  "description": "Roots to the bottom of the world, a crown above the clouds."
+}

@@ -1,0 +1,15 @@
+{
+  "theme": "vampire_castle",
+  "templates": [
+    "nusmp:mega/hall/vampire_castle_",
+    "nusmp:mega/set/vampire_castle_",
+    "nusmp:mega/trial/vampire_castle_",
+    "nusmp:mega/treasure/vampire_castle_"
+  ],
+  "relative": {
+    "mega/hall/vampire_castle_": 30,
+    "mega/set/vampire_castle_": 10,
+    "mega/trial/vampire_castle_": 20,
+    "mega/treasure/vampire_castle_": 20
+  }
+}

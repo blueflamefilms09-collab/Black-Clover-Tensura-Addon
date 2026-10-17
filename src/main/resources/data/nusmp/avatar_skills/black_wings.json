@@ -1,0 +1,9 @@
+{
+  "id": "nusmp:black_wings",
+  "kind": "ultimate",
+  "name": "Black Wings",
+  "ep_tax": 14,
+  "min_ep": 3000,
+  "tint": "#4A3A6A",
+  "description": "Direction, bent to your will."
+}

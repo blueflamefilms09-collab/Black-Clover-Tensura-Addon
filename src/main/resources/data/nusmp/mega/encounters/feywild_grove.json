@@ -1,0 +1,188 @@
+{
+  "comment": "Why: the Feywild is whimsical and dangerous, so the table is full of small, quick, bright things (pixies, wisps, bees) that are a nuisance alone and a danger in a crowd, with beasts and satyrs for the real fights and a hag, an illusionist and a Wild Hunt for the tricks. Light draws the illusionist and the dark draws the wisps, so a party can steer what finds it; noise draws the one brute. The budget is the baseline's and the roll bonus is zero: the grove is lively, not hostile.",
+  "description": "The Feywild: a glowing grove of giant flowers and mushrooms, cherry and azalea, will-o'-wisps. Pixies, satyrs, wardens grown through with roots, bees, wolves and an illusionist; it plays tricks.",
+  "rollBonus": 0,
+  "budgetScale": 1.0,
+  "defaultFaction": "beast",
+  "entries": [
+    {
+      "id": "pixie_swarm",
+      "comment": "The pixies of the grove: a few vexes that come out of the flowers to see who walked in. They are small, quick and cheap, and they stop being funny at the second hit. Capped at threat 8 so the minor band does not stay a joke when the party is deep.",
+      "band": "minor",
+      "weight": 14,
+      "maxThreat": 8,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:vex", "count": "2-3"}
+      ],
+      "cells": 2,
+      "cue": {"sound": "minecraft:entity.vex.ambient", "volume": 0.6, "pitch": 1.5, "particle": "minecraft:glow", "count": 8}
+    },
+    {
+      "id": "thicket_kin",
+      "comment": "The evergreen breather of the grove: one or two of the room's own creatures (the beast tag unless the room has a native faction), looking up from what they were doing. No upper threat, so the minor band never runs dry.",
+      "band": "minor",
+      "weight": 14,
+      "mobs": [
+        {"type": "faction", "count": "1-2"}
+      ],
+      "cue": {"sound": "minecraft:block.grass.break", "volume": 0.6, "pitch": 0.8, "particle": "minecraft:cherry_leaves", "count": 6}
+    },
+    {
+      "id": "briar_wolves",
+      "comment": "Wolves that came out of the fey woods on the scent of a stranger. A pack arrives together from one side and circles; the Feywild's beasts are the ones that look like pets until they are not.",
+      "band": "standard",
+      "weight": 12,
+      "mobs": [
+        {"type": "entity", "id": "tensura:direwolf", "count": "2-4"}
+      ],
+      "cells": 1,
+      "cue": {"sound": "minecraft:entity.wolf.growl", "volume": 0.7, "pitch": 1.0, "particle": "minecraft:cherry_leaves", "count": 6}
+    },
+    {
+      "id": "giant_bees",
+      "comment": "The bees of the grove, grown to the size of a dog on pollen that glows. They come in a loose cloud from two sides; stinging insects are the Feywild's idea of a hedge.",
+      "band": "standard",
+      "weight": 10,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "entity", "id": "tensura:army_wasp", "count": "3-5"}
+      ],
+      "cells": 2,
+      "cue": {"sound": "minecraft:entity.bee.loop_aggressive", "volume": 0.7, "pitch": 0.9, "particle": "minecraft:glow", "count": 8}
+    },
+    {
+      "id": "satyr_revel",
+      "comment": "Satyrs on their way to a feast and in no mood to share: axe-wielding brutes with a pair of pixies for company. Brutes first, the pixies are trimmed first when the budget is short.",
+      "band": "standard",
+      "weight": 10,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:vindicator", "count": "2-3"},
+        {"type": "entity", "id": "minecraft:vex", "count": "1-2"}
+      ],
+      "cue": {"sound": "minecraft:entity.vindicator.ambient", "volume": 0.7, "pitch": 1.1, "particle": "minecraft:cherry_leaves", "count": 8},
+      "message": "message.nusmp.mega.enc.feywild_grove.satyr_revel"
+    },
+    {
+      "id": "dryad_wardens",
+      "comment": "The evergreen standard fight of the grove: the dryads' wardens, living armour grown through with roots. The id is explicit so the first floors, where the construct tag is thin, still have a reliable fight.",
+      "band": "standard",
+      "weight": 14,
+      "mobs": [
+        {"type": "entity", "id": "nusmp:living_armor", "count": "2-3"}
+      ],
+      "cue": {"sound": "minecraft:item.armor.equip_iron", "volume": 0.6, "pitch": 0.8, "particle": "minecraft:glow", "count": 6}
+    },
+    {
+      "id": "will_o_wisps",
+      "comment": "Lights that lead a party astray: a few vexes that only come to a party with no light of its own, because a wisp wants the dark to be a lamp in. They appear on two sides so the party cannot tell which light is the real way.",
+      "band": "standard",
+      "weight": 8,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:vex", "count": "3-4"}
+      ],
+      "needs": {"dark": true},
+      "cells": 2,
+      "cue": {"sound": "minecraft:entity.vex.charge", "volume": 0.7, "pitch": 1.4, "particle": "minecraft:glow", "count": 10},
+      "message": "message.nusmp.mega.enc.feywild_grove.will_o_wisps"
+    },
+    {
+      "id": "briar_snare",
+      "comment": "The hedge is alive: briar spiders drop out of the thorn ceiling close by, on three sides, and hunt only for a short while. Close range makes it an ambush rather than a chase.",
+      "band": "standard",
+      "weight": 8,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:cave_spider", "count": "3-5"},
+        {"type": "entity", "id": "minecraft:spider", "count": "1-2"}
+      ],
+      "range": [10, 22],
+      "cells": 3,
+      "hunt": 500,
+      "cue": {"sound": "minecraft:entity.spider.ambient", "volume": 0.8, "pitch": 1.0, "particle": "minecraft:cherry_leaves", "count": 8},
+      "message": "message.nusmp.mega.enc.feywild_grove.briar_snare"
+    },
+    {
+      "id": "mirror_court",
+      "comment": "Tricks are the Feywild's favourite weapon: an illusioner with a few pixies for company, drawn to a bright party that is easy to dazzle. A lone caster, so the entry never scales with the party.",
+      "band": "standard",
+      "weight": 8,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:illusioner", "count": "1"},
+        {"type": "entity", "id": "minecraft:vex", "count": "2-3"}
+      ],
+      "needs": {"lit": true},
+      "scaleWithParty": false,
+      "cue": {"sound": "minecraft:entity.illusioner.prepare_blindness", "volume": 0.8, "pitch": 1.2, "particle": "minecraft:glow", "count": 12}
+    },
+    {
+      "id": "thorn_ogre",
+      "comment": "A horned thing that grew up in the briars and is angry at noise: one heavy body for a party that fights and sprints. It comes from the nearest dark corner, straight at the loudest player.",
+      "band": "hard",
+      "weight": 10,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "tensura:horned_bear", "count": "1"}
+      ],
+      "needs": {"noisy": true},
+      "cue": {"sound": "minecraft:entity.polar_bear.warning", "volume": 0.8, "pitch": 0.8, "particle": "minecraft:cherry_leaves", "count": 8}
+    },
+    {
+      "id": "hag_bargain",
+      "comment": "A hag who has come to offer a bargain and brought her thralls to see that it is accepted: witches first, the beasts of the grove at her heels are trimmed first when the budget is short.",
+      "band": "hard",
+      "weight": 8,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:witch", "count": "1-2"},
+        {"type": "faction", "count": "2-3", "faction": "beast"}
+      ],
+      "cue": {"sound": "minecraft:entity.witch.ambient", "volume": 0.8, "pitch": 0.9, "particle": "minecraft:enchant", "count": 12},
+      "message": "message.nusmp.mega.enc.feywild_grove.hag_bargain"
+    },
+    {
+      "id": "wild_hunt",
+      "comment": "The Wild Hunt rides through the grove: a great cat and the hounds of the fey, from two sides, with a horn first. The hardest fight of the band and the one the party hears coming.",
+      "band": "hard",
+      "weight": 10,
+      "minThreat": 4,
+      "mobs": [
+        {"type": "entity", "id": "tensura:blade_tiger", "count": "1"},
+        {"type": "entity", "id": "tensura:direwolf", "count": "2-3"}
+      ],
+      "cells": 2,
+      "cue": {"sound": "minecraft:entity.wolf.howl", "volume": 0.8, "pitch": 0.7, "particle": "minecraft:cherry_leaves", "count": 10},
+      "message": "message.nusmp.mega.enc.feywild_grove.wild_hunt"
+    },
+    {
+      "id": "bramble_tide",
+      "comment": "The grove closes: a wave of the grove's creatures on three sides at once, with the message as the only warning. The beast tag decides the bodies so the wave grows with the floor.",
+      "band": "ambush",
+      "weight": 10,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "faction", "count": "5-8", "faction": "beast"}
+      ],
+      "cells": 3,
+      "cue": {"sound": "minecraft:block.grass.break", "volume": 0.9, "pitch": 0.6, "particle": "minecraft:cherry_leaves", "count": 14},
+      "message": "message.nusmp.mega.enc.feywild_grove.bramble_tide"
+    },
+    {
+      "id": "midsummer_revel",
+      "comment": "The late ambush of the grove: a whole revel of satyrs, pixies and an illusioner, from two sides, for a party that is two or more. The pixies are numerous and cheap; the illusioner is last to be trimmed because it is what makes the fight a trick.",
+      "band": "ambush",
+      "weight": 8,
+      "minThreat": 5,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:vindicator", "count": "2-3"},
+        {"type": "entity", "id": "minecraft:vex", "count": "4-6"},
+        {"type": "entity", "id": "minecraft:illusioner", "count": "1"}
+      ],
+      "minParty": 2,
+      "cells": 2,
+      "cue": {"sound": "minecraft:entity.evoker.prepare_summon", "volume": 0.9, "pitch": 1.2, "particle": "minecraft:glow", "count": 16},
+      "message": "message.nusmp.mega.enc.feywild_grove.midsummer_revel"
+    }
+  ]
+}

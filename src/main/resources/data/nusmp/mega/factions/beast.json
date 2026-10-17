@@ -24,9 +24,21 @@
     "verdant": 5,
     "storm": 2,
     "shadow": 1,
+    "cursed_archive": 0,
+    "necropolis": 1,
+    "vampire_castle": 4,
+    "haunted_manor": 1,
     "astral": 0,
     "radiant": 2,
-    "abyss": 4
+    "abyss": 4,
+    "feywild_grove": 5,
+    "dwarven_forgehold": 1,
+    "crystal_geode": 2,
+    "sunken_temple": 1,
+    "holy_church": 1,
+    "celestial_court": 1,
+    "sky_citadel": 3,
+    "mountain_monastery": 4
   },
   "drops": {
     "meat": "raw_direwolf_haunch",

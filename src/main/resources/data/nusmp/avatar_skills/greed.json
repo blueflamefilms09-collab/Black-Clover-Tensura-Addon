@@ -1,0 +1,9 @@
+{
+  "id": "tensura:greed",
+  "kind": "ultimate",
+  "name": "Greed",
+  "ep_tax": 12,
+  "min_ep": 3000,
+  "tint": "#E8C468",
+  "description": "Everything within reach is already yours."
+}

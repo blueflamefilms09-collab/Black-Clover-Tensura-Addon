@@ -1,0 +1,13 @@
+{
+  "name": "Poison",
+  "rarity": "UNCOMMON",
+  "tax_percent": 3,
+  "magic": "poison",
+  "skills": [
+    "tensura:poison",
+    "tensura:paralysis",
+    "tensura:poisonous_breath"
+  ],
+  "tint": "#8AD04A",
+  "description": "Slow, certain and unfair."
+}

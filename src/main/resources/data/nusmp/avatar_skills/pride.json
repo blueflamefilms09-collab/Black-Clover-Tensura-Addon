@@ -1,0 +1,9 @@
+{
+  "id": "tensura:pride",
+  "kind": "ultimate",
+  "name": "Pride",
+  "ep_tax": 14,
+  "min_ep": 3500,
+  "tint": "#FFD060",
+  "description": "Will that refuses to kneel."
+}

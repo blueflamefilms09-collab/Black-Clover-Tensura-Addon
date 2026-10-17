@@ -1,0 +1,13 @@
+{
+  "name": "Fire",
+  "rarity": "COMMON",
+  "tax_percent": 0,
+  "magic": "flame",
+  "skills": [
+    "tensura:flame_manipulation",
+    "tensura:fire_ball",
+    "tensura:fire_lance"
+  ],
+  "tint": "#FF6A1E",
+  "description": "Flame that answers the first call. Cheap, honest and always welcome."
+}

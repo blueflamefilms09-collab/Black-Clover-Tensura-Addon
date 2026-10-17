@@ -9,6 +9,7 @@ import com.newuniverse.nusmp.avatar.appearance.DynamicAppearanceEngine;
 import com.newuniverse.nusmp.avatar.menu.AvatarBuilderMenu;
 import com.newuniverse.nusmp.avatar.race.AvatarRace;
 import com.newuniverse.nusmp.avatar.race.AvatarRaces;
+import com.newuniverse.nusmp.avatar.ritual.SoulForgeRitual;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -24,7 +25,11 @@ public final class AvatarNetServer {
 
     static final RollLimiter ROLL_LIMIT = new RollLimiter(), NAME_LIMIT = new RollLimiter();
 
-    private static boolean hasBuilderOpen(ServerPlayer p) { return p.containerMenu instanceof AvatarBuilderMenu; }
+    /** The classic screen is open. */
+    private static boolean hasClassicOpen(ServerPlayer p) { return p.containerMenu instanceof AvatarBuilderMenu; }
+
+    /** Either creation screen is open: the classic one, or the Soul Forge's inside a running ritual (the stat roll of page 1 serves both). */
+    private static boolean hasBuilderOpen(ServerPlayer p) { return hasClassicOpen(p) || SoulForgeRitual.withScreenOpen(p) != null; }
 
     private static void reply(ServerPlayer p, boolean ok, String kind, String msg) {
         PacketDistributor.sendToPlayer(p, new S2C_CreationResultPayload(ok, kind, NetText.clean(msg, 240)));
@@ -39,7 +44,7 @@ public final class AvatarNetServer {
     }
 
     public static void onFinalize(ServerPlayer p, C2S_FinalizeAvatarPayload m) {
-        if (!AvatarConfig.enabled() || !hasBuilderOpen(p)) return;
+        if (!AvatarConfig.enabled() || !hasClassicOpen(p)) return;          // the Soul Forge has its own Finalize packet (SoulForgeNetServer)
         String raceId = NetText.clean(m.raceId(), NetText.ID_MAX);
         AvatarRace race = AvatarRaces.get(raceId);
         AvatarPersonality primary = AvatarPersonality.byName(NetText.clean(m.primary(), NetText.ID_MAX));
