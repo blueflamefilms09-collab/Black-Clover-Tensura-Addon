@@ -60,3 +60,24 @@ The owner's second brief adds the tabletop half. Items 1, 2, 3, 6 and 8 of that 
 | 7. HP buffers vs lethality | HP buffer (x2.5) and the Vital Strike | `docs/labyrinth/f3_vital.md` |
 
 Why one config file for it: `nusmp-labyrinth-dnd-server.toml` holds every switch so a server can run the anime half (Spire, seals, vault) without the tabletop half, and the other way round. Why bosses are excluded from the buffer and the Vital Strike: they already have the boss DPS cap and their own phase balance; a second multiplier would stack on top of it.
+
+## The Mega-Dungeon (1.54.0) and its two roads (1.55.0)
+
+The Spire above stays registered, but the default dungeon is now ONE persistent dimension, `nusmp:mega_dungeon`, built from vanilla blocks as a tightly packed tabletop-style layout of sectors that grows when a sector's Labyrinth Guardian is cleared. 1.55.0 puts Floor 0 (a safe, buildable Sanctuary Hub, its own dimension `nusmp:sanctuary`) in front of it and splits the growth into two roads: Holy floors +1, +2 ... and Abyssal floors -1, -2 ..., with a Directional Lock once a road is chosen. Where to read:
+
+| What | Document |
+|---|---|
+| The master design, the connector contract, every decision and its WHY | `docs/labyrinth/mega.md` |
+| The bidirectional layer: floors, Hub, lock, System, Rukh flow, standard gear (brief against what existed) | `docs/labyrinth/mega_floors.md` |
+| Generator, travel, command | `mega_core.md` |
+| Circulation pieces and the Gateway | `mega_arch.md` |
+| Furnished halls and treasure closets / grand halls, caverns, trap, puzzle and trial rooms | `mega_rooms1.md` / `mega_rooms2.md` |
+| Safe zones, rests, mod compat | `mega_safe.md` |
+| Dungeon Master encounters / factions and economy | `mega_enc.md` / `mega_eco.md` |
+| Guardian, Mana Core, sector door | `mega_guard.md` |
+| Region themes and the Crucible of Choice | `mega_theme.md` |
+| Floors and the Directional Lock / Floor 0 / the Hub terrain | `mega_floors_lock.md` / `mega_hub.md` / `mega_macro.md` |
+| The System overlay / the Rukh flow / standard gear | `mega_system.md` / `mega_flow.md` / `mega_gear.md` |
+| CI smoke test and in-game self-tests | `mega_ci.md` |
+
+Config: one file per part, `nusmp-labyrinth-mega-<part>-server.toml`. Commands: `/multiverse mega ...` (permission 2). Nothing here has run in the game; the CI smoke test (headless server) is the only place it boots.

@@ -443,6 +443,19 @@ class Smoke:
             (self.ok if sk["state"] == "ACTIVE" else self.fail)("mega-sector-%d" % nxt, "%s rooms=%d pieces=%d theme=%s relics=%d" % (sk["state"], sk["rooms"], sk["pieces"], sk["theme"], sk["relics"]))
             a = self.run("multiverse mega audit %d" % nxt)
             (self.ok if ("audit %d OK" % nxt) in a else self.fail)("mega-audit-%d" % nxt, a.strip()[:300])
+        # 1.55.0: the Abyssal road has its own first sector, on its own lane 300000 blocks away; the id is the next global one, read from the reply
+        r = self.run("multiverse mega expand abyssal")
+        m = re.search(r"queued sector (\d+) on the abyssal road", r)
+        if not m:
+            (self.fail if self.args.strict else self.skip)("mega-abyssal-expand", r.strip()[:200])
+        else:
+            aid = int(m.group(1))
+            self.ok("mega-abyssal-expand", r.strip()[:120])
+            sa = self.wait_active(aid, "mega-abyssal-sector")
+            if sa:
+                (self.ok if sa["state"] == "ACTIVE" else self.fail)("mega-abyssal-sector", "%s id=%d rooms=%d pieces=%d theme=%s" % (sa["state"], aid, sa["rooms"], sa["pieces"], sa["theme"]))
+                a2 = self.run("multiverse mega audit %d" % aid)
+                (self.ok if ("audit %d OK" % aid) in a2 else self.fail)("mega-abyssal-audit", a2.strip()[:300])
         _, sectors = self.status()
         ids = sorted(sectors)
         worst = 10 ** 9
