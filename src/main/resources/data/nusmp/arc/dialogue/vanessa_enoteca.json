@@ -36,7 +36,7 @@
     ],
     "hint": [
       {
-        "text": "A little advice from a lazy woman: don't rush. The labyrinth isn't going anywhere. Rest in a Landing, drink some water, and live to see the second floor.",
+        "text": "A little advice from a lazy woman: don't rush. The labyrinth isn't going anywhere. Rest in a Landing, drink some water, and live to see tomorrow.",
         "key": "arc.dialogue.vanessa_enoteca.6",
         "priority": 1,
         "weight": 2
@@ -117,26 +117,32 @@
         "weight": 2
       },
       {
-        "text": "Rouge watches over you for a day. If a blow would kill you, she ties your thread back to where you stood a few seconds ago, at half health. Once a day. Don't waste her.",
+        "text": "Rouge is a cat of red thread. Cast her page and she sits on your head for ten minutes, watching you, your party, your pets and up to six friends you name by sneaking and casting at them.",
         "key": "arc.dialogue.vanessa_enoteca.16",
         "priority": 1,
         "weight": 2
       },
       {
-        "text": "Arresting Dark Weave, Thread Trap and the Reinforcement that turns mana into a second skin only open in my own grimoire. A borrowed book won't oblige. Threads are picky.",
+        "text": "While Rouge watches, a blow that would kill, or take over a third of someone's health, never lands. Every save costs your mana, double against a boss, and a boss gets no second save on the same person for eight seconds.",
         "key": "arc.dialogue.vanessa_enoteca.17",
         "priority": 1,
         "weight": 2
       },
       {
-        "text": "Curses are threads someone tied around you. Don't yank on them. Find the knot, ask nicely, and if the knot says no... then pull.",
+        "text": "Arresting Dark Weave, Thread Trap and the Reinforcement that turns mana into a second skin only open in my own grimoire. A borrowed book won't oblige. Threads are picky.",
         "key": "arc.dialogue.vanessa_enoteca.18",
         "priority": 1,
         "weight": 2
       },
       {
-        "text": "Heath Grice. Poor man; he tied himself in his own knot. You cut it clean, sweetie. I'm impressed.",
+        "text": "Curses are threads someone tied around you. Don't yank on them. Find the knot, ask nicely, and if the knot says no... then pull.",
         "key": "arc.dialogue.vanessa_enoteca.19",
+        "priority": 1,
+        "weight": 2
+      },
+      {
+        "text": "Heath Grice. Poor man; he tied himself in his own knot. You cut it clean, sweetie. I'm impressed.",
+        "key": "arc.dialogue.vanessa_enoteca.20",
         "defeated": [
           "heath_grice"
         ],
@@ -145,7 +151,7 @@
       },
       {
         "text": "You beat Zagred? A devil that speaks reality? Come here, I want to look at your thread. ...Still there. Good. You're a lucky one.",
-        "key": "arc.dialogue.vanessa_enoteca.20",
+        "key": "arc.dialogue.vanessa_enoteca.21",
         "defeated": [
           "zagred"
         ],
@@ -154,7 +160,7 @@
       },
       {
         "text": "The whole Dark Triad? Ooh, that calls for a night of drinking. Sit.",
-        "key": "arc.dialogue.vanessa_enoteca.21",
+        "key": "arc.dialogue.vanessa_enoteca.22",
         "defeated": [
           "dante",
           "vanica",
@@ -165,7 +171,7 @@
       },
       {
         "text": "Two souls, one body, and you cut the knot. Take your time, sweetie. You've earned a nap.",
-        "key": "arc.dialogue.vanessa_enoteca.22",
+        "key": "arc.dialogue.vanessa_enoteca.23",
         "defeated": [
           "lucius"
         ],
@@ -174,52 +180,52 @@
       },
       {
         "text": "I'm not lazy. I'm conserving energy for important things, like sleeping, and flirting with the captain.",
-        "key": "arc.dialogue.vanessa_enoteca.23",
-        "priority": 1
-      },
-      {
-        "text": "The captain never notices. Or maybe he does and he's too embarrassed to say. Either way, it's adorable.",
         "key": "arc.dialogue.vanessa_enoteca.24",
         "priority": 1
       },
       {
-        "text": "Noelle's a sweet girl, but she needs to relax. Asta needs to relax even more. Honestly, everyone needs a drink.",
+        "text": "The captain never notices. Or maybe he does and he's too embarrassed to say. Either way, it's adorable.",
         "key": "arc.dialogue.vanessa_enoteca.25",
         "priority": 1
       },
       {
-        "text": "Fate isn't a straight line, {player}. It's a tangle. You can pull it, cut it, braid it... just don't tie it to yourself.",
+        "text": "Noelle's a sweet girl, but she needs to relax. Asta needs to relax even more. Honestly, everyone needs a drink.",
         "key": "arc.dialogue.vanessa_enoteca.26",
         "priority": 1
       },
       {
-        "text": "Mmm. Do you smell that? Charmy's cooking. Follow your nose. That's an order. From a drunk witch.",
+        "text": "Fate isn't a straight line, {player}. It's a tangle. You can pull it, cut it, braid it... just don't tie it to yourself.",
         "key": "arc.dialogue.vanessa_enoteca.27",
         "priority": 1
       },
       {
-        "text": "The beds in the corridors are for show, honey. Real rest is in a Landing or a safe room. I checked every single one.",
+        "text": "Mmm. Do you smell that? Charmy's cooking. Follow your nose. That's an order. From a drunk witch.",
         "key": "arc.dialogue.vanessa_enoteca.28",
         "priority": 1
       },
       {
-        "text": "There's no easy healing down there. The dungeon doesn't let you just regenerate. So bring potions, or bring me. I accept payment in alcohol.",
+        "text": "The beds in the corridors are for show, honey. Real rest is in a Landing or a safe room. I checked every single one.",
         "key": "arc.dialogue.vanessa_enoteca.29",
+        "priority": 1
+      },
+      {
+        "text": "There's no easy healing down there. The dungeon doesn't let you just regenerate. So bring potions, or bring me. I accept payment in alcohol.",
+        "key": "arc.dialogue.vanessa_enoteca.30",
         "priority": 1
       }
     ],
     "farewell": [
       {
         "text": "Go on, sweetie. Come back and tell me everything.",
-        "key": "arc.dialogue.vanessa_enoteca.30"
-      },
-      {
-        "text": "Mmm... leaving so soon? Fine. I'll drink to your safe return.",
         "key": "arc.dialogue.vanessa_enoteca.31"
       },
       {
-        "text": "Fate willing, we'll meet again. And if not... I'll have a drink in your name.",
+        "text": "Mmm... leaving so soon? Fine. I'll drink to your safe return.",
         "key": "arc.dialogue.vanessa_enoteca.32"
+      },
+      {
+        "text": "Fate willing, we'll meet again. And if not... I'll have a drink in your name.",
+        "key": "arc.dialogue.vanessa_enoteca.33"
       }
     ]
   }

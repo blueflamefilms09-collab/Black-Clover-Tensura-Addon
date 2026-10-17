@@ -123,7 +123,7 @@
         "weight": 2
       },
       {
-        "text": "Wound Sealing closes a third of an ally's wounds and clears what ails them. Orbital Bind makes an ally harder to hit with magic for half a minute, and it pairs well with an anti-magic sword. Ask Asta. Both seals are quiet. I like quiet.",
+        "text": "Wound Sealing mends thirty percent of an ally's health and clears what ails them. Orbital Bind makes an ally harder to hit with magic for half a minute, and it pairs well with an anti-magic sword. Ask Asta. Both seals are quiet. I like quiet.",
         "key": "arc.dialogue.secre_swallowtail.17",
         "priority": 1,
         "weight": 2
@@ -144,7 +144,7 @@
         "weight": 2
       },
       {
-        "text": "Heath Grice used a relic to close his own story. A poor seal. It did not hold.",
+        "text": "Heath Grice closed his own story before anyone could question him. A poor seal. It did not hold.",
         "key": "arc.dialogue.secre_swallowtail.20",
         "defeated": [
           "heath_grice"
@@ -201,7 +201,7 @@
         "priority": 1
       },
       {
-        "text": "The Crucible shows three relics and asks you to choose one. The rest turn to dust. I would choose quickly, and leave quickly.",
+        "text": "The Crucible shows three relics and asks you to choose one. Whichever you take, the vault answers with a catastrophe. I would choose quickly, and leave quickly.",
         "key": "arc.dialogue.secre_swallowtail.29",
         "priority": 1
       }

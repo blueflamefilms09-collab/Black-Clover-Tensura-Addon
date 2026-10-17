@@ -111,13 +111,13 @@
         "weight": 3
       },
       {
-        "text": "Thunder Fiend wraps lightning around you for thirty seconds. You get fast, and your hits jump to a second enemy. I don't have a favorite page. Okay, it's Thunder Fiend.",
+        "text": "Thunder Fiend wraps lightning around you for thirty seconds. You get fast, and your hits jump to a second enemy. It only opens for my own grimoire, so no borrowing. I don't have a favorite page. Okay, it's this one.",
         "key": "arc.dialogue.luck_voltia.15",
         "priority": 1,
         "weight": 2
       },
       {
-        "text": "Black Lightning Battle Fiend is the big one: faster, stronger, and every blow arcs to two more enemies. It only opens for my own grimoire, so no, you can't borrow mine.",
+        "text": "Black Lightning Battle Fiend is the big one: faster, stronger, and every blow arcs to two more enemies. Mine again. You can't borrow that one either.",
         "key": "arc.dialogue.luck_voltia.16",
         "priority": 1,
         "weight": 2

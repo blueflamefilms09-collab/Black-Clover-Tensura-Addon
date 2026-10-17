@@ -104,7 +104,7 @@
         "weight": 3
       },
       {
-        "text": "A boss's grimoire drops the first time it dies, once per world. Hold it or wear it and you borrow its owner's tricks for a while. Don't get attached. It's a loan.",
+        "text": "A boss can drop its own grimoire, once per world. An unlucky kill only means the next kill rolls again. Hold it or wear it and you borrow its owner's tricks for a while. Don't get attached. It's a loan.",
         "key": "arc.dialogue.yami_sukehiro.14",
         "priority": 1,
         "weight": 2
@@ -116,13 +116,13 @@
         "weight": 2
       },
       {
-        "text": "At the end of every ten floors there's a vault with three relics and a bad attitude. Take one. The rest turn to dust, and then the ceiling gets ideas. Grab and run.",
+        "text": "At the end of every ten floors there's a vault with three relics and a bad attitude. Take one, and the vault bites back: the ceiling falls, the room floods with bad magicules, or a cursed spirit wakes. Grab and run.",
         "key": "arc.dialogue.yami_sukehiro.16",
         "priority": 1,
         "weight": 2
       },
       {
-        "text": "There's a monument on the plaza with a lectern on it. It lists the big names: who's beaten, who's waiting. Read it before you pick a fight.",
+        "text": "There's a rotunda on the Promenade, the paved ring round the plaza, with a lectern in it. It lists your story: who's beaten, who's open, who's still locked. Read it before you pick a fight.",
         "key": "arc.dialogue.yami_sukehiro.17",
         "priority": 1,
         "weight": 2
@@ -137,7 +137,7 @@
         "weight": 2
       },
       {
-        "text": "Vetto's down for you, too? Last time it took three of us. I made the last cut, obviously. The brat will tell you he did.",
+        "text": "Vetto's down for you, too? Last time it took half the squad. I made the last cut, obviously. The brat will tell you he did.",
         "key": "arc.dialogue.yami_sukehiro.19",
         "defeated": [
           "vetto"
