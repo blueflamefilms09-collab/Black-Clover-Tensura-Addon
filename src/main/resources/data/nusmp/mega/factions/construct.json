@@ -21,7 +21,9 @@
     "verdant": 0,
     "storm": 5,
     "shadow": 1,
-    "astral": 5
+    "astral": 5,
+    "radiant": 4,
+    "abyss": 1
   },
   "drops": {
     "meat": "raw_armor_flank",

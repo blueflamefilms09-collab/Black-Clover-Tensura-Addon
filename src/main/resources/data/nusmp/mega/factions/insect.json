@@ -21,7 +21,9 @@
     "verdant": 5,
     "storm": 2,
     "shadow": 3,
-    "astral": 0
+    "astral": 0,
+    "radiant": 1,
+    "abyss": 4
   },
   "drops": {
     "meat": "raw_basilisk_fillet",
