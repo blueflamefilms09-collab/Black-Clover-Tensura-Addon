@@ -362,8 +362,8 @@ def workshop_b():
         sr.set_(x, st, 24, "minecraft:chest", facing="north", type="single", waterlogged="false")
         sr.set_(x + 1, st, 24, "minecraft:barrel", facing="up", open="false")
     sr.hint(11, st, 24, "storage")
-    lamp_on(sr, 10, st + 1, 24)
-    lamp_on(sr, 13, st + 1, 24)
+    wall_lamp(sr, "s", 10, st + 2)                                    # on brackets over the chests: a chest top is 14/16 high and cannot hold a lantern up
+    wall_lamp(sr, "s", 13, st + 2)
     candles(sr, 14, st + 1, 24, 2, "orange")
 
     # ---- the walls between: the north wall display and the south wall by the door
@@ -622,16 +622,13 @@ def chapel():
         for z in range(2, 6):
             sr.set_(x, st, z, POLISHED)
         sr.set_(x, st, 6, POLISHED_STAIRS, facing="north", half="bottom")
-    for x in (8, 9):
+    for x in (8, 9):                                                  # the altar: two deep and one high in quartz, candles on the back row, a cloth on the front, a chiselled frontal
         for z in (2, 3):
             sr.set_(x, st + 1, z, "minecraft:quartz_block")
-        sr.set_(x, st + 2, 2, "minecraft:smooth_quartz_slab", type="bottom")
-    sr.set_(8, st + 2, 3, "minecraft:quartz_stairs", facing="south", half="bottom")
-    sr.set_(9, st + 2, 3, "minecraft:quartz_stairs", facing="south", half="bottom")
-    candles(sr, 8, st + 3, 2, 3, "white")
-    candles(sr, 9, st + 3, 2, 2, "white")
-    sr.set_(8, st + 1, 4, "minecraft:chiseled_quartz_block")
-    sr.set_(9, st + 1, 4, "minecraft:chiseled_quartz_block")
+        sr.set_(x, st + 1, 4, "minecraft:chiseled_quartz_block")
+        sr.set_(x, st + 2, 3, "minecraft:white_carpet")
+    candles(sr, 8, st + 2, 2, 3, "white")                            # on the full top of a quartz block: a candle on a bottom slab would float half a block above it
+    candles(sr, 9, st + 2, 2, 2, "white")
     soul_brazier(sr, 6, st + 1, 3)
     soul_brazier(sr, 11, st + 1, 3)
     sr.set_(12, st + 1, 4, "minecraft:lectern", facing="west", has_book="true", powered="false")

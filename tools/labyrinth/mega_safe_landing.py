@@ -179,9 +179,9 @@ def landing_a():
     sr.set(6, st, 24, "minecraft:barrel", {"facing": "up", "open": "false"})
     sr.hint(6, st, 24, "storage")
     sr.set(7, st, 24, "minecraft:chest", {"facing": "north", "type": "single", "waterlogged": "false"})
-    lamp_on(sr, 7, st + 1, 24)
     rug(sr, 4, 19, 9, 21, ["brown", "orange"])
     hay_pile(sr, [(10, st, 24), (10, st + 1, 24), (9, st, 24), (10, st, 23)])
+    lamp_on(sr, 9, st + 1, 24)                                      # on the hay block beside the second bed: a chest top is 14/16 high and cannot hold a lantern up
     sr.set(4, st, 24, "minecraft:barrel", {"facing": "north", "open": "false"})
     sr.set(3, st, 24, "minecraft:barrel", {"facing": "up", "open": "false"})
     banner(sr, "s", 4, 14, "orange")
@@ -325,8 +325,8 @@ def landing_b():
     sr.set_(4, BS, 2, "minecraft:barrel", facing="up", open="false")
     sr.hint(4, BS, 2, "storage")
     sr.set_(5, BS, 2, "minecraft:chest", facing="south", type="single", waterlogged="false")
-    lamp_on(sr, 5, BS + 1, 2)
     sr.set_(7, BS, 2, "minecraft:barrel", facing="up", open="false")
+    lamp_on(sr, 7, BS + 1, 2)                                         # on the barrel, not on the chest beside it (a chest top is 14/16 high and cannot hold a lantern up)
     for x in (9, 10, 11):
         for y in (BS, BS + 1, BS + 2):
             sr.set_(x, y, 2, "minecraft:bookshelf")

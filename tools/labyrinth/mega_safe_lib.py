@@ -27,6 +27,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
+import mega_arch_check as CK  # noqa: E402
 import mega_lib as L  # noqa: E402
 import mega_safe_verify as V  # noqa: E402
 import nbt  # noqa: E402
@@ -168,11 +169,15 @@ class SR(MT):
     # ---- finishing
     def finish_and_check(self, portcullis=True, **kw):
         """Puts a raised portcullis over every doorway (`portcullis()`), carves the doorways, verifies, and returns the report (the caller decides
-        whether to save)."""
+        whether to save). The report also carries, as errors, every defect `mega_arch_check.problems` finds: that module applies the rules the game's own
+        `canSurvive` methods apply (a standing lantern or candle needs a top face under it that covers the middle of the cell, a chain must end against a
+        block, an armour stand must stand on something ...), which a walk-through model does not know, so a template that fails them is never written."""
         if portcullis and not self.finished:
             raise_portcullis(self)
         self.finish()
         self.report = V.verify(self, expect=self.expect, **kw)
+        for line in CK.problems(self.t, self.name):
+            self.report.err("game rule: " + line)
         return self.report
 
 
