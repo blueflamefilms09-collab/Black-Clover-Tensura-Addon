@@ -51,8 +51,8 @@ public final class SunClock {
             return switch (this) {
                 case WORLD -> wrap(worldDayTime);
                 case DAWN -> 0;
-                case NOON -> NOON;
-                case MIDNIGHT -> MIDNIGHT;
+                case NOON -> SunClock.NOON;
+                case MIDNIGHT -> SunClock.MIDNIGHT;
             };
         }
     }

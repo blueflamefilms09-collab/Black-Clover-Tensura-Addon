@@ -17,7 +17,7 @@ public final class SdsCharacters {
     private SdsCharacters() {}
 
     /** The Eye of the Midnight Sun bosses of Saga 1 that open the Seven Deadly Sins (ids as the Eye's builder is expected to name them). */
-    static final String[] EYE_OF_THE_MIDNIGHT_SUN = {"fana", "patolli", "rades_spirito", "third_eye"};
+    static final String[] EYE_OF_THE_MIDNIGHT_SUN = {"fana", "patolli", "rades_spirito", "rhya"};
 
     /**
      * Meliodas, the Dragon's Sin of Wrath: Demon King scaling. The skills: Reflector is the Full Counter, Wrath is the rage that grows, Black Flame and

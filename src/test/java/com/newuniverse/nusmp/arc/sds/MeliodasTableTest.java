@@ -87,7 +87,7 @@ class MeliodasTableTest {
     @Test
     void atTheOpeningHeUsesOnlyTheOpeningMovesAndNeverAnUltimate() {
         for (long seed = 1; seed <= 5; seed++) {
-            Map<String, Integer> used = SdsaFightSim.play(SPECS, seed, 20, 20, 20000);
+            Map<String, Integer> used = SdsaFightSim.play(SPECS, seed, 20, 20000);
             for (String id : used.keySet()) assertTrue(MeliodasTable.byId(id).minPower() <= 20, id + " is not an opening move");
             assertNull(used.get(MeliodasTable.PURGATORY));
             assertNull(used.get(MeliodasTable.HELLBLAZE), "Hellblaze waits for the Demon Mark");
@@ -98,17 +98,17 @@ class MeliodasTableTest {
     @Test
     void thePurgatoryNeedsSixtyPercentAndTheWrathNeedsTheGates() {
         for (long seed = 1; seed <= 5; seed++) {
-            assertNull(SdsaFightSim.play(SPECS, seed, 59, 59, 20000).get(MeliodasTable.PURGATORY));
-            assertNotNull(SdsaFightSim.play(SPECS, seed, 60, 60, 20000).get(MeliodasTable.PURGATORY), "he uses it at 60%");
-            assertNull(SdsaFightSim.play(SPECS, seed, 80, 80, 40000).get(MeliodasTable.WRATH), "not in Assault Mode");
-            assertNotNull(SdsaFightSim.play(SPECS, seed, 100, 100, 40000).get(MeliodasTable.WRATH), "the Demon King uses it");
+            assertNull(SdsaFightSim.play(SPECS, seed, 59, 20000).get(MeliodasTable.PURGATORY));
+            assertNotNull(SdsaFightSim.play(SPECS, seed, 60, 20000).get(MeliodasTable.PURGATORY), "he uses it at 60%");
+            assertNull(SdsaFightSim.play(SPECS, seed, 80, 40000).get(MeliodasTable.WRATH), "not in Assault Mode");
+            assertNotNull(SdsaFightSim.play(SPECS, seed, 100, 40000).get(MeliodasTable.WRATH), "the Demon King uses it");
         }
     }
 
     @Test
     void atTheGatesEveryMoveGetsUsedAndUltimatesAreSpaced() {
         for (long seed = 1; seed <= 3; seed++) {
-            Map<String, Integer> used = SdsaFightSim.play(SPECS, seed, 100, 100, 60000);
+            Map<String, Integer> used = SdsaFightSim.play(SPECS, seed, 100, 60000);
             for (MeliodasTable.Spec s : SPECS) assertNotNull(used.get(s.id()), s.id() + " is used at the Gates (seed " + seed + ")");
             int ults = used.get(MeliodasTable.PURGATORY) + used.get(MeliodasTable.WRATH);
             assertTrue(ults >= 3, "several ultimates in a long fight");
@@ -118,7 +118,7 @@ class MeliodasTableTest {
 
     @Test
     void closeInHeFightsWithTheSwordNotTheFlame() {
-        Map<String, Integer> used = SdsaFightSim.play(SPECS, 11, 20, 20, 4000);
+        Map<String, Integer> used = SdsaFightSim.play(SPECS, 11, 20, 4000);
         int slash = used.getOrDefault(MeliodasTable.SLASH, 0), wave = used.getOrDefault(MeliodasTable.WAVE, 0);
         assertTrue(slash + wave > 0);
         MeliodasTable.Spec s = MeliodasTable.byId(MeliodasTable.SLASH);

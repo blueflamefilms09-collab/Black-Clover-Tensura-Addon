@@ -42,6 +42,11 @@ class SnatchLedgerTest {
         assertEquals(0.15, l.steal(A, 10, 0.15), 1e-9);
         assertEquals(0.30, l.taken(A, 10), 1e-9);
         assertEquals(0.0, l.steal(A, 20, 0.15), 0.0, "a third one fizzles");
+        SnatchLedger small = new SnatchLedger(0.60);
+        assertEquals(0.10, small.steal(A, 0, 0.10), 1e-9);
+        assertEquals(0.10, small.steal(A, 1, 0.10), 1e-9);
+        assertEquals(0.0, small.steal(A, 2, 0.10), 0.0, "two Snatches is the most, even when the ceiling still has room for a third");
+        assertEquals(0.20, small.taken(A, 3), 1e-9);
         SnatchLedger tight = new SnatchLedger();
         assertEquals(0.24, tight.steal(A, 0, 0.24), 1e-9);
         assertEquals(0.06, tight.steal(A, 5, 0.24), 1e-9, "the ceiling of 0.30 cuts the second");
