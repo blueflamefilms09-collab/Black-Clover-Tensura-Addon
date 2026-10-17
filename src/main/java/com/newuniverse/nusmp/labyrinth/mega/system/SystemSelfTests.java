@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.labyrinth.mega.system;
 
+import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.labyrinth.mega.MegaData;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
 import com.newuniverse.nusmp.labyrinth.mega.Polarity;
@@ -13,6 +14,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -39,7 +41,10 @@ import java.util.List;
  * charge was spent and that a fourth shadow releases the first. {@code system.sync} round-trips both payloads through the real stream codecs and builds the
  * window's state for a player in and out of the dungeon (a fake player has no connection, so the packet is tested, not the send). {@code system.data} checks
  * that the shipped quest and stat files loaded through the real reload, every kind and stat is there, the item, the attachment and the magic-damage rule
- * exist. Each test cleans up (shadows discarded, the fake player's state reset) whatever happens.
+ * exist. 1.58.0 adds {@code system.cover} (both roads are covered: a quest on floor -1, a new one on -2, none on the boss floor -10, the party seam) and
+ * {@code system.buff} (the stat bonus is on in the Mega-Dungeon and the Hub, off in the Overworld, a transient modifier that is not in the saved attribute, off after
+ * leaving and on after entering, the safety net, the Hub's status window; a fake player cannot change dimension, so one is created in each level). Each test cleans up
+ * (shadows discarded, the fake player's state reset) whatever happens.
  */
 public final class SystemSelfTests {
     private SystemSelfTests() {}
@@ -55,6 +60,8 @@ public final class SystemSelfTests {
         SelfTests.register("system.quest", SystemSelfTests::quest);
         SelfTests.register("system.stats", SystemSelfTests::stats);
         SelfTests.register("system.extract", SystemSelfTests::extract);
+        SelfTests.register("system.cover", SystemSelfTests::cover);
+        SelfTests.register("system.buff", SystemSelfTests::buff);
     }
 
     private static void reset(FakePlayer p) {
@@ -62,6 +69,8 @@ public final class SystemSelfTests {
         p.setData(SystemAttachments.STATE, new SystemState());
         p.getInventory().clearContent();
         SystemQuests.forget(p.getUUID());
+        SystemStats.forget(p.getUUID());
+        SystemStats.dropHealth(p);
     }
 
     // ------------------------------------------------------------------------------------------------ data
@@ -247,6 +256,149 @@ public final class SystemSelfTests {
             return ok("3 STR -> modifier " + m.amount() + " with id " + SystemStats.modifierId(Stat.STR) + ", idempotent over " + before + " modifiers, cap " + cap + " holds, remove and re-apply work");
         } finally {
             reset(p);
+        }
+    }
+
+    // ------------------------------------------------------------------------------------------------ every road (1.58.0)
+    private static SelfTests.Result cover(MinecraftServer server) {
+        List<String> bad = new ArrayList<>();
+        for (Polarity pol : Polarity.values()) if (!SystemQuests.covers(pol)) bad.add("the System does not cover the " + pol + " road");
+        for (int floor : new int[] {1, 7, 25, -1, -7, -25}) if (!SystemQuests.covers(floor)) bad.add("the System does not cover floor " + floor);
+        if (SystemQuests.covers((Polarity) null) || SystemQuests.covers(0)) bad.add("Floor 0 / no road is reported as a road");
+        for (int floor : new int[] {10, -10, 20, -30}) if (!QuestFloors.isBossFloor(floor)) bad.add("floor " + floor + " is not a boss floor");
+        for (int floor : new int[] {0, 1, -1, 9, -9, 11, -19}) if (QuestFloors.isBossFloor(floor)) bad.add("floor " + floor + " is a boss floor");
+        if (!bad.isEmpty()) return fail(String.join(" | ", bad.subList(0, Math.min(5, bad.size()))));
+        ServerLevel level = SelfTests.mega(server);
+        if (level == null) return fail("no mega dimension");
+        if (!SystemConfig.enabled()) return ok("every road is covered (pure); the quest walk was skipped: system.enabled is false in the config");
+        FakePlayer p = SelfTests.player(level, "system_tester_cover", 0.5, 70, 0.5);
+        reset(p);
+        try {
+            SystemState s = SystemQuests.state(p);
+            MegaDungeon.fireFloorEntered(p, -1, 0);
+            QuestProgress q1 = s.quest();
+            if (q1 == null || !q1.isActive() || q1.floor() != -1) return fail("floor -1 (the Abyssal road) did not start an ACTIVE quest on floor -1: " + describe(q1));
+            if (!SystemQuests.complete(p) || q1.state() != QuestProgress.State.DONE) return fail("the Abyssal quest could not be completed: " + describe(q1));
+            if (s.totalPoints() <= 0 && s.cores() <= 0) return fail("a completed Abyssal quest paid nothing");
+            MegaDungeon.fireFloorEntered(p, -2, -1);
+            QuestProgress q2 = s.quest();
+            if (q2 == null || q2 == q1 || !q2.isActive() || q2.floor() != -2) return fail("floor -2 did not start a new ACTIVE quest: " + describe(q2));
+            MegaDungeon.fireFloorEntered(p, -10, -2);
+            if (s.quest() != null) return fail("the Abyssal boss floor -10 has a quest: " + describe(s.quest()));
+            List<ServerPlayer> party = SystemParty.members(p);
+            if (party.isEmpty() || party.get(0) != p) return fail("SystemParty.members does not start with the player itself: " + party.size() + " member(s)");
+            return ok("both roads are covered; floor -1 ACTIVE, completed and paid, floor -2 a new " + q2.kind() + ", the boss floor -10 has no quest; the party of a lone player is the player");
+        } finally {
+            reset(p);
+        }
+    }
+
+    // ------------------------------------------------------------------------------------------------ the buff only in the dungeon (1.58.0)
+    private static SelfTests.Result buff(MinecraftServer server) {
+        if (!BuffGate.MEGA.equals(Labyrinth.MEGA_DIMENSION.location().toString())) return fail("BuffGate.MEGA " + BuffGate.MEGA + " is not the Mega-Dungeon's dimension id " + Labyrinth.MEGA_DIMENSION.location());
+        if (!BuffGate.HUB.equals(Labyrinth.SANCTUARY_DIMENSION.location().toString())) return fail("BuffGate.HUB " + BuffGate.HUB + " is not the Hub's dimension id " + Labyrinth.SANCTUARY_DIMENSION.location());
+        ServerLevel mega = SelfTests.mega(server);
+        if (mega == null) return fail("no mega dimension");
+        ServerLevel elsewhere = server.overworld();
+        StatTable.Def str = SystemData.stats().def(Stat.STR);
+        if (str == null || str.effects().isEmpty()) return fail("the stat table has no STR row");
+        StatTable.Effect eff = str.effects().get(0);
+        boolean onlyInDungeon = SystemConfig.buffOnlyInDungeon();
+        FakePlayer inside = SelfTests.player(mega, "system_tester_buff_in", 0.5, 70, 0.5);
+        FakePlayer outside = SelfTests.player(elsewhere, "system_tester_buff_out", 0.5, 70, 0.5);
+        reset(inside);
+        reset(outside);
+        try {
+            SystemState sIn = SystemQuests.state(inside), sOut = SystemQuests.state(outside);
+            sIn.setPoints(Stat.STR, 4);
+            sOut.setPoints(Stat.STR, 4);
+            AttributeInstance atkIn = inside.getAttribute(Attributes.ATTACK_DAMAGE), atkOut = outside.getAttribute(Attributes.ATTACK_DAMAGE);
+            if (atkIn == null || atkOut == null) return fail("a fake player has no attack damage attribute");
+            ResourceLocation id = SystemStats.modifierId(Stat.STR);
+
+            SystemStats.apply(inside, sIn);
+            SystemStats.apply(outside, sOut);
+            AttributeModifier mIn = atkIn.getModifier(id);
+            if (mIn == null || Math.abs(mIn.amount() - eff.amount(4)) > 1e-9) return fail("inside the Mega-Dungeon the bonus is not on (4 STR should be " + eff.amount(4) + "): " + mIn);
+            boolean outsideOn = atkOut.getModifier(id) != null;
+            if (outsideOn == onlyInDungeon) return fail("in the Overworld the bonus is " + (outsideOn ? "ON" : "OFF") + " but buffOnlyInDungeon is " + onlyInDungeon);
+            if (atkIn.save().toString().contains(id.toString()))
+                return fail("the bonus is saved with the player (it must be a transient modifier, or a crash could leave it behind): " + atkIn.save());
+            if (sOut.points(Stat.STR) != 4 || sIn.points(Stat.STR) != 4) return fail("the stat points changed while the bonus was switched");
+
+            // leaving the dungeon: the bonus goes, the points stay, entering brings it back
+            SystemStats.remove(inside);
+            if (atkIn.getModifier(id) != null) return fail("remove() (leaving the dungeon) left the bonus on");
+            if (sIn.points(Stat.STR) != 4) return fail("leaving the dungeon lost stat points");
+            SystemStats.apply(inside, sIn);
+            if (atkIn.getModifier(id) == null) return fail("entering the dungeon did not bring the bonus back");
+
+            // a relog costs no hearts: the transient bonus is not saved, so the health above the plain maximum is carried by the logout note
+            String hp = "";
+            StatTable.Def vit = SystemData.stats().def(Stat.VIT);
+            if (vit != null && !vit.effects().isEmpty() && "minecraft:generic.max_health".equals(vit.effects().get(0).attribute())) {
+                sIn.setPoints(Stat.VIT, 5);
+                SystemStats.apply(inside, sIn);
+                float full = inside.getMaxHealth();
+                inside.setHealth(full);
+                SystemStats.stashHealth(inside);
+                SystemStats.remove(inside);                                          // what loading does to a bonus that was not saved: the health is cut to the plain maximum
+                float plain = inside.getMaxHealth();
+                if (!(full > plain)) return fail("5 VIT did not raise the maximum health (" + plain + " -> " + full + "), so the relog test cannot run");
+                SystemStats.apply(inside, sIn);
+                if (inside.getHealth() >= full) return fail("test set-up: the health was not cut when the bonus went");
+                SystemStats.restoreHealth(inside);
+                if (inside.getHealth() < full - 0.01f) return fail("a relog lost hearts: " + inside.getHealth() + " of " + full + " after restoreHealth");
+                inside.setHealth(full - 3f);
+                SystemStats.restoreHealth(inside);
+                if (inside.getHealth() > full - 3f + 0.01f) return fail("the logout note was used twice");
+                sIn.setPoints(Stat.VIT, 0);
+                SystemStats.apply(inside, sIn);
+                hp = "; a relog keeps the " + (full - plain) + " bonus hearts (logout note, used once)";
+            }
+
+            // the safety net puts a missed change right (only when the System is on: a switched-off System takes the bonus away)
+            String net = "";
+            if (SystemConfig.enabled()) {
+                SystemStats.remove(inside);
+                SystemStats.forget(inside.getUUID());
+                SystemStats.reconcile(inside);
+                if (atkIn.getModifier(id) == null) return fail("the safety net did not restore the bonus of a player in the dungeon");
+                if (onlyInDungeon) {
+                    SystemStats.applyActive(outside, sOut);
+                    SystemStats.apply(outside, sOut);
+                    if (atkOut.getModifier(id) != null) return fail("apply() did not take a stray bonus off a player outside the dungeon");
+                }
+                net = "; the safety net restores a missed change";
+            }
+
+            // the Hub counts as the dungeon
+            String hub = "";
+            ServerLevel hubLevel = server.getLevel(Labyrinth.SANCTUARY_DIMENSION);
+            if (hubLevel != null) {
+                FakePlayer inHub = SelfTests.player(hubLevel, "system_tester_buff_hub", 0.5, 70, 0.5);
+                reset(inHub);
+                try {
+                    SystemState sHub = SystemQuests.state(inHub);
+                    sHub.setPoints(Stat.STR, 2);
+                    AttributeInstance atkHub = inHub.getAttribute(Attributes.ATTACK_DAMAGE);
+                    SystemStats.apply(inHub, sHub);
+                    if (atkHub == null || atkHub.getModifier(id) == null) return fail("the bonus is not on in the Hub (Sanctuary)");
+                    if (SystemConfig.enabled()) {
+                        SystemNet.Sync w = SystemSync.build(inHub);
+                        if (!w.active() || w.floor() != 0 || w.questState() != SystemNet.Q_NONE || w.stats().get(Stat.STR.ordinal()) != 2)
+                            return fail("the Hub's status window is wrong: " + w);
+                    }
+                    hub = "; the Hub has the bonus and a status window (floor 0, no quest)";
+                } finally {
+                    reset(inHub);
+                }
+            }
+            return ok("4 STR: bonus " + mIn.amount() + " on inside the Mega-Dungeon (transient: not in the saved attribute), " + (outsideOn ? "on" : "off") + " in the Overworld (buffOnlyInDungeon "
+                    + onlyInDungeon + "), off after leaving and on after entering, points never lost" + hp + net + hub);
+        } finally {
+            reset(inside);
+            reset(outside);
         }
     }
 

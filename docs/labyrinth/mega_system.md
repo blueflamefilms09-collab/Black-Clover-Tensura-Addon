@@ -9,6 +9,10 @@ slain Holy enemies as minions. This builder owns packages `labyrinth/mega/system
 The look of the window was rendered by running the REAL layout class through `tools/system/preview_overlay.py` (section 8): nobody has seen it in the game, and section 11
 lists exactly what is unverified. Every class, data file and strategy below says WHY.
 
+**1.58.0 update.** Several statements below are replaced by `docs/labyrinth/mega_v2_sys2.md`: the System now covers every player in the dungeon on both roads (`abyssalToo` is ignored),
+the Hub has a status window, the stat bonus is a transient modifier that works only inside the dungeon dimensions (it was permanent), the window can be moved with keys (client config `anchor`,
+`offsetX`, `offsetY`; category "Multiverse: System"), and a kill is credited to the party. Read that document first where the two disagree.
+
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
 ## 1. New, replacement, kept (rule 5)

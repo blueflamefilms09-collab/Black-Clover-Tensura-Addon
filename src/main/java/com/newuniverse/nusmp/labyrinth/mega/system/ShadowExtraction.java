@@ -106,7 +106,7 @@ public final class ShadowExtraction {
         }
         ExtractLedger.Fallen f = nearest(p);
         if (f == null) {
-            p.displayClientMessage(SystemMsg.text(SystemText.MSG_NOTHING_TO_EXTRACT, SystemConfig.get(SystemConfig.EXTRACT_WINDOW_TICKS) / 20).withStyle(ChatFormatting.GRAY), true);
+            p.displayClientMessage(SystemMsg.text(SystemText.MSG_NOTHING_TO_EXTRACT_ANY, SystemConfig.get(SystemConfig.EXTRACT_WINDOW_TICKS) / 20).withStyle(ChatFormatting.GRAY), true);
             return Result.NOTHING;
         }
         Mob shadow = ShadowMinions.raise(p, f);

@@ -10,6 +10,7 @@ import com.newuniverse.nusmp.labyrinth.mega.Sector;
 import com.newuniverse.nusmp.quests.NusmpEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -22,6 +23,7 @@ import net.minecraft.world.phys.AABB;
 import org.slf4j.Logger;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -62,9 +64,13 @@ public final class SystemQuests implements FloorListener {
     /** The last floor the floor tracker (or a sync) saw this player on; 0 when none. */
     public static int lastFloor(ServerPlayer p) { return LAST_FLOOR.getOrDefault(p.getUUID(), 0); }
 
-    /** Does the System cover this road? Holy always; Abyssal only when the config says so. */
+    /**
+     * Does the System cover this road? Since 1.58.0 every road of the dungeon: the owner's rule is that the System is for every player in the dungeon, so the Holy
+     * and the Abyssal road alike (the config key {@code abyssalToo} stays in the file for old configs but no longer matters). Only "no road at all" (a position
+     * in no sector, Floor 0) is not a road.
+     */
     public static boolean covers(Polarity pol) {
-        return pol == Polarity.HOLY || (pol == Polarity.ABYSSAL && SystemConfig.get(SystemConfig.ABYSSAL_TOO));
+        return pol != null;
     }
 
     public static boolean covers(int floor) { return covers(Polarity.ofFloor(floor)); }
@@ -129,8 +135,7 @@ public final class SystemQuests implements FloorListener {
     private static void startFor(ServerPlayer p, SystemState s, int floor, int depth) {
         ServerLevel level = p.serverLevel();
         Sector sector = MegaDungeon.sectorAt(level, p.blockPosition());
-        int per = sector == null ? FloorMap.DEFAULT_PER_REGION : sector.perRegion;
-        if (FloorMap.isDecennial(floor, per)) {
+        if (QuestFloors.isBossFloor(floor)) {
             s.setQuest(null);
             return;
         }
@@ -239,9 +244,24 @@ public final class SystemQuests implements FloorListener {
     }
 
     // ================================================================ feeding: kills and damage
-    /** A hostile creature fell to this player (or their shadow): counts for a kill quest on its floor. */
+    /**
+     * A hostile creature fell to this player (or their shadow): counts for a kill quest on its floor, for the killer and, when {@code system.shareProgress} is on,
+     * for every party member who is on that floor, alive and within {@code system.shareRadius} blocks ({@link SystemParty}, {@link PartyRules}). Only the kill
+     * quests share: "no damage", "speed" and "rooms" judge a player's own conduct, so they stay personal.
+     */
     public static void killed(ServerPlayer p, LivingEntity dead) {
-        if (!SystemConfig.enabled() || !ShadowMinions.isHostile(dead) || ShadowMinions.isMinion(dead) || !p.hasData(SystemAttachments.STATE)) return;
+        if (!SystemConfig.enabled() || !ShadowMinions.isHostile(dead) || ShadowMinions.isMinion(dead)) return;
+        for (ServerPlayer who : creditTargets(p, dead)) creditKill(who, dead);
+    }
+
+    /** The players a kill of {@code dead} by {@code p} is credited to: {@code p} alone, or the party members within the share radius of the fallen creature when sharing is on. Never empty, {@code p} first. */
+    static List<ServerPlayer> creditTargets(ServerPlayer p, LivingEntity dead) {
+        if (!SystemConfig.get(SystemConfig.SHARE_PROGRESS)) return List.of(p);
+        return PartyRules.credit(p, SystemParty.members(p), m -> m.isAlive() && m.level() == p.level(), m -> m.distanceToSqr(dead), SystemConfig.get(SystemConfig.SHARE_RADIUS));
+    }
+
+    private static void creditKill(ServerPlayer p, LivingEntity dead) {
+        if (!p.hasData(SystemAttachments.STATE)) return;
         SystemState s = state(p);
         QuestProgress q = s.quest();
         if (q == null || !q.isActive() || q.kind() != QuestKind.KILL_N) return;
@@ -317,10 +337,39 @@ public final class SystemQuests implements FloorListener {
     }
 
     // ================================================================ lifecycle of the per-player scratch state
-    /** A player came back (login, respawn, a new dimension): their stat modifiers are re-applied and the window is rebuilt. */
+    /**
+     * A player came back (login, respawn, a new dimension): the stat bonus is put on or taken off by the dimension they are in ({@link SystemStats#sync}), the
+     * window is rebuilt, and a player in the dungeon who has never been told is told once how to move the window.
+     */
     public static void refresh(ServerPlayer p) {
-        if (SystemConfig.enabled()) SystemStats.apply(p);
+        SystemStats.sync(p);
         SystemSync.requestNow(p);
+        hintOnEntry(p);
+    }
+
+    /**
+     * Login ({@code login} true) and respawn: as {@link #refresh}, after clearing every stat modifier first (a world saved by 1.55.0 to 1.57.0 holds them as
+     * permanent ones). A login also gives back the health the player logged out with (the transient bonus is not saved), a respawn throws that note away.
+     */
+    public static void refreshFresh(ServerPlayer p, boolean login) {
+        SystemStats.remove(p);
+        refresh(p);
+        if (login) SystemStats.restoreHealth(p);
+        else SystemStats.dropHealth(p);
+    }
+
+    /**
+     * Tells a real player once (config {@code system.hudHintOnEntry}) how to move the System window, in the first moment they are in a dungeon dimension. The keys
+     * are {@code Component.keybind} components, which every client resolves to ITS binding, so the line is right even for a player who rebound them. The flag is
+     * saved in the player's {@link SystemState}.
+     */
+    static void hintOnEntry(ServerPlayer p) {
+        if (!SystemConfig.enabled() || !SystemConfig.get(SystemConfig.HUD_HINT_ON_ENTRY) || !SystemSync.hasConnection(p)) return;
+        if (!BuffGate.isDungeonDimension(SystemStats.dimensionId(p))) return;
+        SystemState s = state(p);
+        if (s.hintShown()) return;
+        s.setHintShown(true);
+        p.sendSystemMessage(SystemMsg.text(SystemText.MSG_WINDOW_HINT, Component.keybind(SystemText.KEY_EDIT), Component.keybind(SystemText.KEY_CORNER), Component.keybind(SystemText.KEY_RESET)));
     }
 
     /** A player left: their scratch state goes. */
@@ -328,6 +377,7 @@ public final class SystemQuests implements FloorListener {
         DWELL.remove(player);
         LAST_FLOOR.remove(player);
         SystemSync.forget(player);
+        SystemStats.forget(player);
     }
 
     /** Server stop. */
@@ -335,5 +385,6 @@ public final class SystemQuests implements FloorListener {
         DWELL.clear();
         LAST_FLOOR.clear();
         SystemSync.clear();
+        SystemStats.clear();
     }
 }

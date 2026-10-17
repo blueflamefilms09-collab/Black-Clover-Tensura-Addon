@@ -27,7 +27,8 @@ import java.util.Locale;
  * hand (the only way to test a reward without clearing five rooms; {@code quest start <id>} starts one named template), {@code stat give <player> <stat> <n>}
  * adds or takes points (and re-applies the attribute modifiers at once), {@code core give [player]} hands over a Shadow Core, and {@code minions clear
  * [player]} releases every shadow. Every reply is a translatable component with an English fallback from {@link SystemText}, so it reads fine before the lang
- * fragment is merged. No command changes anything outside the System's own data and the target player's inventory.
+ * fragment is merged. {@code status} also says whether the stat bonus is active where the player stands (1.58.0: only in the dungeon dimensions) and how many
+ * players share their quest credit. No command changes anything outside the System's own data and the target player's inventory.
  */
 public final class SystemCommand {
     private SystemCommand() {}
@@ -104,6 +105,10 @@ public final class SystemCommand {
         else ok(src, SystemMsg.text(SystemText.CMD_STATUS_QUEST, q.id(), q.kind().id(), q.state().name().toLowerCase(Locale.ROOT), q.progress(), q.target(), FloorMap.label(q.floor())));
         ok(src, SystemMsg.text(SystemText.CMD_STATUS_STATS, st.points(Stat.STR), st.points(Stat.AGI), st.points(Stat.VIT), st.points(Stat.INT), st.points(Stat.SENSE),
                 SystemConfig.get(SystemConfig.MAX_STAT_POINTS)));
+        ok(src, SystemMsg.text(SystemText.CMD_STATUS_BUFF, SystemMsg.text(SystemStats.wanted(p) ? SystemText.CMD_ON : SystemText.CMD_DORMANT), SystemStats.dimensionId(p),
+                SystemMsg.text(SystemConfig.buffOnlyInDungeon() ? SystemText.CMD_ON : SystemText.CMD_OFF)));
+        ok(src, SystemMsg.text(SystemText.CMD_STATUS_PARTY, SystemParty.members(p).size(), SystemMsg.text(SystemConfig.get(SystemConfig.SHARE_PROGRESS) ? SystemText.CMD_ON : SystemText.CMD_OFF),
+                SystemConfig.get(SystemConfig.SHARE_RADIUS)));
         ok(src, SystemMsg.text(SystemText.CMD_STATUS_COUNTERS, st.done(), st.failed(), st.cores(), ShadowMinions.countOf(p.getUUID()), SystemConfig.get(SystemConfig.MAX_MINIONS),
                 ShadowExtraction.pending(p) == null ? 0 : 1));
         return 1;

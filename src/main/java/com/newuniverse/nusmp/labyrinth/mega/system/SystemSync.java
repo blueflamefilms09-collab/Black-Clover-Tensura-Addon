@@ -1,10 +1,10 @@
 package com.newuniverse.nusmp.labyrinth.mega.system;
 
 import com.mojang.logging.LogUtils;
+import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.labyrinth.mega.FloorMap;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
 import com.newuniverse.nusmp.labyrinth.mega.Polarity;
-import com.newuniverse.nusmp.labyrinth.mega.Sector;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -95,17 +95,20 @@ public final class SystemSync {
     }
 
     // ---------------------------------------------------------------- building
-    /** The window's state for this player right now. Pure reading: sends nothing. */
+    /**
+     * The window's state for this player right now. Pure reading: sends nothing. In the Mega-Dungeon it is the floor, the road and the quest; in the Hub
+     * (Floor 0, the Sanctuary) it is the status window only, floor 0 with no road, no threat and no quest, so the stat points can be read there (floor quests
+     * are for the floors); everywhere else the window is hidden. The wire format is unchanged: the Hub is "floor 0, quest none".
+     */
     public static SystemNet.Sync build(ServerPlayer p) {
         ServerLevel level = p.serverLevel();
+        if (SystemConfig.enabled() && Labyrinth.inSanctuary(level)) return hub(p);
         boolean inMega = MegaDungeon.in(level);
         int floor = inMega ? SystemQuests.currentFloor(level, p) : 0;
         if (inMega && floor == 0) floor = SystemQuests.lastFloor(p);
         Polarity polarity = Polarity.ofFloor(floor);
         boolean active = SystemConfig.enabled() && inMega && floor != 0 && SystemQuests.covers(floor);
         if (!active) return SystemNet.Sync.hidden();
-        Sector sector = MegaDungeon.sectorAt(level, p.blockPosition());
-        int perRegion = sector == null ? FloorMap.DEFAULT_PER_REGION : sector.perRegion;
         SystemState st = SystemQuests.state(p);
         QuestProgress q = st.quest();
         int questState = SystemNet.Q_NONE, questFloor = 0, progress = 0, target = 0, timeLeft = -1;
@@ -129,7 +132,15 @@ public final class SystemSync {
         }
         List<Integer> stats = new ArrayList<>(Stat.COUNT);
         for (Stat s : Stat.values()) stats.add(st.points(s));
-        return new SystemNet.Sync(true, floor, polarity == null ? "" : polarity.id(), FloorMap.threat(floor), FloorMap.isDecennial(floor, perRegion),
+        return new SystemNet.Sync(true, floor, polarity == null ? "" : polarity.id(), FloorMap.threat(floor), QuestFloors.isBossFloor(floor),
                 questState, questFloor, kind, key, fallback, progress, target, timeLeft, clock, stats);
+    }
+
+    /** The Hub's picture: the status window with the player's stat points and nothing of a floor (floor 0, no road, threat 0, no quest, no clock). */
+    private static SystemNet.Sync hub(ServerPlayer p) {
+        SystemState st = SystemQuests.state(p);
+        List<Integer> stats = new ArrayList<>(Stat.COUNT);
+        for (Stat s : Stat.values()) stats.add(st.points(s));
+        return new SystemNet.Sync(true, 0, "", 0, false, SystemNet.Q_NONE, 0, "", "", "", 0, 0, -1, false, stats);
     }
 }

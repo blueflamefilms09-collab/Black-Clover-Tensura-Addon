@@ -35,13 +35,18 @@ public final class OverlayLayout {
      * @param anchor 0 top-left, 1 top-right, 2 bottom-left, 3 bottom-right
      * @param alpha  the opacity setting (0.1 to 1)
      * @param time   the game time in ticks plus the partial tick (drives every animation)
+     * @param offX   1.58.0: how far the player moved the window from its corner, in the window's own pixels, inwards (see {@link OverlayMath#placeX})
+     * @param offY   the same, vertically
      */
-    public record View(int guiW, int guiH, float scale, int anchor, float alpha, float time) {
+    public record View(int guiW, int guiH, float scale, int anchor, float alpha, float time, int offX, int offY) {
+        /** A view with the window in its corner (no offset): the form before the window could be moved, kept so older callers and tests compile. */
+        public View(int guiW, int guiH, float scale, int anchor, float alpha, float time) { this(guiW, guiH, scale, anchor, alpha, time, 0, 0); }
+
         /** The screen width in the window's own (scaled) pixels. */
-        public int w() { return Math.max(1, Math.round(guiW / Math.max(0.1f, scale))); }
+        public int w() { return OverlayMath.windowSize(guiW, scale); }
 
         /** The screen height in the window's own (scaled) pixels. */
-        public int h() { return Math.max(1, Math.round(guiH / Math.max(0.1f, scale))); }
+        public int h() { return OverlayMath.windowSize(guiH, scale); }
     }
 
     /** What the quest block says. {@code state} is one of {@code Q_*}, {@code mode} one of {@code MODE_*}. A null quest means "no quest". */
@@ -70,14 +75,18 @@ public final class OverlayLayout {
     /** The marks of the panel and the rectangle it takes (screen pixels of the window's own space). */
     public record Frame(List<Op> ops, int x, int y, int w, int h) {}
 
+    /** The marks of edit mode and the rectangle of its hint box (all zero when there are no hint lines), so the pop-ups can keep clear of it. */
+    public record EditMarks(List<Op> ops, int x, int y, int w, int h) {}
+
     // ================================================================ the panel
     public Frame panel(Panel p, View v) {
         float crisp = crisp(v.alpha());
         String floorText = label(p.floor());
         int wFloor = width.applyAsInt(p.floorWord() + " " + floorText);
         int wRoad = p.road() == 0 ? 0 : width.applyAsInt(p.roadWord());
-        int wThreat = width.applyAsInt(p.threatWord() + " " + p.threat());
-        int items = p.road() == 0 ? 2 : 3;
+        boolean showThreat = p.threat() > 0;                                           // the Hub (floor 0) has no threat number
+        int wThreat = showThreat ? width.applyAsInt(p.threatWord() + " " + p.threat()) : 0;
+        int items = 1 + (p.road() == 0 ? 0 : 1) + (showThreat ? 1 : 0);
         int w = Math.max(PANEL_MIN_W, wFloor + wRoad + wThreat + (items - 1) * 6 + 2 * PAD_X);
         int cell = statCell(p.stats());
         if (p.stats() != null) w = Math.max(w, Math.min(STAT_CELLS, p.stats().labels().length) * cell + 2 * PAD_X);
@@ -98,7 +107,7 @@ public final class OverlayLayout {
         y += TEXT_H + GAP;
 
         // the floor, the road, the threat
-        int gap = Math.max(6, Math.min(14, (inner - wFloor - wRoad - wThreat) / (items - 1)));
+        int gap = items > 1 ? Math.max(6, Math.min(14, (inner - wFloor - wRoad - wThreat) / (items - 1))) : 0;
         int x = PAD_X;
         text(fg, x, y, p.floorWord(), CYAN_DIM, crisp, true);
         text(fg, x + width.applyAsInt(p.floorWord() + " "), y, floorText, TEXT, crisp, true);
@@ -107,8 +116,10 @@ public final class OverlayLayout {
             text(fg, x, y, p.roadWord(), roadColour(p.road()), crisp, true);
             x += wRoad + gap;
         }
-        text(fg, x, y, p.threatWord(), CYAN_DIM, crisp, true);
-        text(fg, x + width.applyAsInt(p.threatWord() + " "), y, Integer.toString(p.threat()), threatColour(p.threat()), crisp, true);
+        if (showThreat) {
+            text(fg, x, y, p.threatWord(), CYAN_DIM, crisp, true);
+            text(fg, x + width.applyAsInt(p.threatWord() + " "), y, Integer.toString(p.threat()), threatColour(p.threat()), crisp, true);
+        }
         y += TEXT_H + GAP;
         divider(fg, y, w, crisp);
         y += 1 + GAP;
@@ -140,8 +151,8 @@ public final class OverlayLayout {
         all.addAll(fg);
         border(all, w, h, crisp);
 
-        int x0 = OverlayMath.originX(v.anchor(), v.w(), w, MARGIN);
-        int y0 = OverlayMath.originY(v.anchor(), v.h(), h, MARGIN);
+        int x0 = OverlayMath.placeX(v.anchor(), v.w(), w, MARGIN, v.offX());
+        int y0 = OverlayMath.placeY(v.anchor(), v.h(), h, MARGIN, v.offY());
         return new Frame(shift(all, x0, y0), x0, y0, w, h);
     }
 
@@ -310,6 +321,57 @@ public final class OverlayLayout {
         out.add(new Op.Fill(-1, h - len, t - 1, h + 1, b));
         out.add(new Op.Fill(w - len, h - t + 1, w + 1, h + 1, b));
         out.add(new Op.Fill(w - t + 1, h - len, w + 1, h + 1, b));
+    }
+
+    // ================================================================ edit mode (1.58.0)
+    /**
+     * The marks of edit mode, drawn over a panel that was just laid out: a pulsing amber frame two pixels outside the panel with a handle at each corner, and a box
+     * of hint lines (the first line in amber, the rest plain), each wrapped to the screen. The box sits under the frame, above it when there is no room below, and
+     * over the bottom of the screen when the panel is too tall for either; it never leaves the screen. The lines come in already translated, so this stays pure. The
+     * result carries the marks and the box's rectangle (see {@link OverlayMath#toastClear}).
+     */
+    public EditMarks edit(Frame f, View v, List<String> lines) {
+        List<Op> out = new ArrayList<>(24);
+        float pulse = 0.7f + 0.3f * (float) Math.sin(v.time() * 0.3f);
+        int x1 = f.x() - 2, y1 = f.y() - 2, x2 = f.x() + f.w() + 2, y2 = f.y() + f.h() + 2;
+        fill(out, x1, y1, x2, y1 + 1, AMBER, pulse);
+        fill(out, x1, y2 - 1, x2, y2, AMBER, pulse);
+        fill(out, x1, y1 + 1, x1 + 1, y2 - 1, AMBER, pulse);
+        fill(out, x2 - 1, y1 + 1, x2, y2 - 1, AMBER, pulse);
+        int hd = EDIT_HANDLE;
+        fill(out, x1 - 1, y1 - 1, x1 - 1 + hd, y1 - 1 + hd, AMBER, 1f);
+        fill(out, x2 + 1 - hd, y1 - 1, x2 + 1, y1 - 1 + hd, AMBER, 1f);
+        fill(out, x1 - 1, y2 + 1 - hd, x1 - 1 + hd, y2 + 1, AMBER, 1f);
+        fill(out, x2 + 1 - hd, y2 + 1 - hd, x2 + 1, y2 + 1, AMBER, 1f);
+
+        int room = Math.max(40, v.w() - 2 * MARGIN - 2 * EDIT_PAD);
+        List<String> wrapped = new ArrayList<>();
+        List<Boolean> head = new ArrayList<>();
+        for (int i = 0; i < lines.size(); i++) {
+            for (String piece : TextWrap.wrap(lines.get(i), room, width, 2)) {
+                wrapped.add(piece);
+                head.add(i == 0);
+            }
+        }
+        if (wrapped.isEmpty()) return new EditMarks(out, 0, 0, 0, 0);
+        int textW = 0;
+        for (String line : wrapped) textW = Math.max(textW, width.applyAsInt(line));
+        int boxW = textW + 2 * EDIT_PAD, boxH = wrapped.size() * LINE + 2 * EDIT_PAD - 2;
+        int by = y2 + 4;
+        if (by + boxH > v.h() - MARGIN / 2) by = y1 - 4 - boxH;
+        if (by < MARGIN / 2) by = OverlayMath.clamp(v.h() - boxH - MARGIN, 0, v.h() - boxH);
+        int bx = OverlayMath.clamp(f.x(), 0, v.w() - boxW);
+        fill(out, bx, by, bx + boxW, by + boxH, TOAST_BG, 0.88f);
+        fill(out, bx, by, bx + boxW, by + 1, AMBER, 0.6f);
+        fill(out, bx, by + boxH - 1, bx + boxW, by + boxH, AMBER, 0.6f);
+        fill(out, bx, by + 1, bx + 1, by + boxH - 1, AMBER, 0.6f);
+        fill(out, bx + boxW - 1, by + 1, bx + boxW, by + boxH - 1, AMBER, 0.6f);
+        int ty = by + EDIT_PAD;
+        for (int i = 0; i < wrapped.size(); i++) {
+            text(out, bx + EDIT_PAD, ty, wrapped.get(i), head.get(i) ? AMBER : i == wrapped.size() - 1 ? CYAN_DIM : TEXT, 1f, true);
+            ty += LINE;
+        }
+        return new EditMarks(out, bx, by, boxW, boxH);
     }
 
     // ================================================================ the toasts

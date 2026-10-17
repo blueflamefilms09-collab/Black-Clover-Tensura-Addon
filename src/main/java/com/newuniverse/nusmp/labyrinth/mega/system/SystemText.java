@@ -63,6 +63,7 @@ public final class SystemText {
     public static final String TOAST_MINION_RELEASED = put("toast.minion_released", "THE OLDEST SHADOW IS RELEASED: %1$s");
 
     // ---- chat and action-bar lines
+    /** Superseded by {@link #MSG_NOTHING_TO_EXTRACT_ANY} in 1.58.0 (the System is not only for the Holy road any more); kept so the old lang key still has a text. */
     public static final String MSG_NOTHING_TO_EXTRACT = put("msg.nothing_to_extract",
             "Nothing to extract here. Slay a hostile creature on the Holy floors, then use the core within %1$s seconds, close to where it fell.");
     public static final String MSG_CHARGES_LEFT = put("msg.charges_left", "Shadow Core: %1$s charge(s) left.");
@@ -72,6 +73,7 @@ public final class SystemText {
 
     // ---- the item
     public static final String TIP_CHARGES = put("tip.charges", "Charges: %1$s / %2$s");
+    /** Superseded by {@link #TIP_USE_ANY} in 1.58.0; kept for the same reason. */
     public static final String TIP_USE = put("tip.use", "Use it within %1$s seconds of slaying a hostile creature on the Holy floors, close to where it fell, to raise it as your shadow.");
     public static final String TIP_LIMIT = put("tip.limit", "At most %1$s shadows follow you; raising another releases the oldest.");
     public static final String TIP_LORE = put("tip.lore", "The System keeps what it is owed.");
@@ -98,13 +100,55 @@ public final class SystemText {
     public static final String CMD_CORE_GIVEN = put("cmd.core.given", "Gave a Shadow Core to %1$s.");
     public static final String CMD_MINIONS_CLEARED = put("cmd.minions.cleared", "Released %1$s shadow(s) of %2$s.");
 
-    // ---- the key binding and the item name (the lang fragment carries them too)
+    // ---- 1.58.0: the System for every road, the Hub window and the extraction texts that no longer say "Holy" (new keys: the old ones stay in the lang file, unused)
+    public static final String HUB = put("ui.hub", "SANCTUARY: NO QUESTS HERE");
+    public static final String MSG_NOTHING_TO_EXTRACT_ANY = put("msg.nothing_to_extract_any",
+            "Nothing to extract here. Slay a hostile creature in the dungeon, then use the core within %1$s seconds, close to where it fell.");
+    public static final String TIP_USE_ANY = put("tip.use_any",
+            "Use it within %1$s seconds of slaying a hostile creature in the dungeon, close to where it fell, to raise it as your shadow.");
+    public static final String CMD_STATUS_BUFF = put("cmd.status.buff", "Stat bonus: %1$s (in %2$s; works only in the dungeon: %3$s)");
+    public static final String CMD_DORMANT = put("cmd.dormant", "dormant");
+    public static final String CMD_STATUS_PARTY = put("cmd.status.party", "Party for quest credit: %1$s player(s) (sharing %2$s, radius %3$s blocks)");
+
+    // ---- 1.58.0: the movable window (edit mode)
+    public static final String EDIT_HEAD = put("edit.head", "EDIT MODE - %1$s - X %2$s, Y %3$s");
+    public static final String EDIT_KEYS = put("edit.keys", "%1$s: move 1 px (Shift: 10) | %2$s: corner | %3$s: reset | %4$s: done");
+    public static final String EDIT_MOUSE = put("edit.mouse", "Open the chat or the inventory to drag the window with the mouse.");
+    public static final String EDIT_ARROWS = put("edit.arrows", "Arrow keys");
+    public static final String EDIT_ON = put("edit.on", "System window: edit mode on");
+    public static final String EDIT_OFF = put("edit.off", "System window: position saved");
+    public static final String EDIT_CORNER_TL = put("edit.corner.0", "TOP LEFT");
+    public static final String EDIT_CORNER_TR = put("edit.corner.1", "TOP RIGHT");
+    public static final String EDIT_CORNER_BL = put("edit.corner.2", "BOTTOM LEFT");
+    public static final String EDIT_CORNER_BR = put("edit.corner.3", "BOTTOM RIGHT");
+    public static final String EDIT_SAMPLE_QUEST = put("edit.sample_quest", "Sample: defeat %1$s monsters on this floor");
+    public static final String MSG_WINDOW_HINT = put("msg.window_hint",
+            "The System window can be moved. Press %1$s to enter edit mode: the arrow keys move it (Shift: 10 pixels), %2$s changes its corner, %3$s resets it.");
+
+    // ---- the key bindings and the item name (the lang fragment carries them too)
     public static final String KEY_TOGGLE = "key.nusmp.system_toggle";
     public static final String ITEM_NAME = "item.nusmp.shadow_core";
+    /** The Controls category of every key of the System (1.58.0): "Multiverse: System". */
+    public static final String KEY_CATEGORY = "key.categories.nusmp.system";
+    public static final String KEY_EDIT = "key.nusmp.system_edit";
+    public static final String KEY_LEFT = "key.nusmp.system_left";
+    public static final String KEY_RIGHT = "key.nusmp.system_right";
+    public static final String KEY_UP = "key.nusmp.system_up";
+    public static final String KEY_DOWN = "key.nusmp.system_down";
+    public static final String KEY_RESET = "key.nusmp.system_reset";
+    public static final String KEY_CORNER = "key.nusmp.system_corner";
 
     static {
         EN.put(KEY_TOGGLE, "Toggle the System window");
         EN.put(ITEM_NAME, "Shadow Core");
+        EN.put(KEY_CATEGORY, "Multiverse: System");
+        EN.put(KEY_EDIT, "Toggle edit mode (move the window)");
+        EN.put(KEY_LEFT, "Edit mode: nudge left");
+        EN.put(KEY_RIGHT, "Edit mode: nudge right");
+        EN.put(KEY_UP, "Edit mode: nudge up");
+        EN.put(KEY_DOWN, "Edit mode: nudge down");
+        EN.put(KEY_RESET, "Edit mode: reset position");
+        EN.put(KEY_CORNER, "Edit mode: cycle the corner");
     }
 
     /** The English text of a key, or the key itself when it is not one of ours (never null, so a missing entry shows as the key, not as a crash). */

@@ -5,6 +5,9 @@ import com.newuniverse.nusmp.client.mega.system.OverlayLayout.Quest;
 import com.newuniverse.nusmp.client.mega.system.OverlayLayout.Stats;
 import com.newuniverse.nusmp.client.mega.system.OverlayLayout.ToastView;
 import com.newuniverse.nusmp.client.mega.system.OverlayLayout.View;
+import com.newuniverse.nusmp.client.mega.system.OverlayMath;
+import com.newuniverse.nusmp.client.mega.system.OverlayStyle;
+import com.newuniverse.nusmp.labyrinth.mega.system.SystemText;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -18,8 +21,9 @@ import java.util.Locale;
  * for tools/system/preview_overlay.py to paint. The text width comes from a table of the default font's glyph advances (written by the script from the game's
  * own font atlas), so wrapping and spacing match the game. Nothing here is part of the mod.
  *
- * Usage: java OverlayDump &lt;glyph table&gt; &lt;scene&gt; &lt;guiW&gt; &lt;guiH&gt; &lt;scale&gt; &lt;anchor&gt; &lt;alpha&gt; &lt;time&gt;
- * Output: "frame x y w h", then "F x1 y1 x2 y2 argb", "G x1 y1 x2 y2 top bottom", "T x y argb shadow text" (panel), then the same after "toasts".
+ * Usage: java OverlayDump &lt;glyph table&gt; &lt;scene&gt; &lt;guiW&gt; &lt;guiH&gt; &lt;scale&gt; &lt;anchor&gt; &lt;alpha&gt; &lt;time&gt; [&lt;offsetX&gt; &lt;offsetY&gt; [edit]]
+ * Output: "frame x y w h", then "F x1 y1 x2 y2 argb", "G x1 y1 x2 y2 top bottom", "T x y argb shadow text" (panel), then the same after "toasts", and (1.58.0) after "edit"
+ * the marks of edit mode (the frame and the hint box; empty unless the last argument is "edit"). The offsets are the player's move of the window from its corner.
  */
 public final class OverlayDump {
     private static final int[] ADVANCE = new int[128];
@@ -34,13 +38,29 @@ public final class OverlayDump {
         float scale = Float.parseFloat(a[4]), alpha = Float.parseFloat(a[6]), time = Float.parseFloat(a[7]);
         int anchor = Integer.parseInt(a[5]);
         OverlayLayout layout = new OverlayLayout(OverlayDump::width);
-        View view = new View(guiW, guiH, scale, anchor, alpha, time);
+        int offX = a.length > 9 ? Integer.parseInt(a[8]) : 0, offY = a.length > 9 ? Integer.parseInt(a[9]) : 0;
+        boolean edit = a.length > 10 && "edit".equals(a[10]);
+        View view = new View(guiW, guiH, scale, anchor, alpha, time, offX, offY);
         OverlayLayout.Frame f = layout.panel(panel(scene), view);
         System.out.println("frame " + f.x() + " " + f.y() + " " + f.w() + " " + f.h());
         dump(f.ops());
         System.out.println("toasts");
-        int tx = 6, ty = anchor == 0 ? f.y() + f.h() + 8 : 8;
+        int tx = OverlayStyle.MARGIN, ty = OverlayMath.toastTop(f.x(), f.y(), f.w(), f.h(), view.h(), OverlayStyle.TOAST_COLUMN_W, OverlayStyle.MARGIN, 8);
+        OverlayLayout.EditMarks marks = edit ? layout.edit(f, view, editLines(anchor, f)) : null;
+        if (marks != null) ty = OverlayMath.toastClear(ty, marks.x(), marks.y(), marks.w(), marks.h(), OverlayStyle.TOAST_COLUMN_W, OverlayStyle.TOAST_MAX * (OverlayStyle.TOAST_H + OverlayStyle.TOAST_GAP), OverlayStyle.MARGIN, 4);
         dump(layout.toasts(toasts(scene), tx, ty));
+        System.out.println("edit");
+        if (marks != null) dump(marks.ops());
+    }
+
+    /** The three hint lines of edit mode, from the same English texts the game falls back on, with the default key names. */
+    static List<String> editLines(int anchor, OverlayLayout.Frame f) {
+        String[] corners = {SystemText.EDIT_CORNER_TL, SystemText.EDIT_CORNER_TR, SystemText.EDIT_CORNER_BL, SystemText.EDIT_CORNER_BR};
+        List<String> l = new ArrayList<>();
+        l.add(String.format(Locale.ROOT, SystemText.english(SystemText.EDIT_HEAD), SystemText.english(corners[anchor]), f.x(), f.y()));
+        l.add(String.format(Locale.ROOT, SystemText.english(SystemText.EDIT_KEYS), SystemText.english(SystemText.EDIT_ARROWS), "End", "Home", "U"));
+        l.add(SystemText.english(SystemText.EDIT_MOUSE));
+        return l;
     }
 
     static int width(String s) {
@@ -82,6 +102,8 @@ public final class OverlayDump {
             case "noquest" -> new Panel("[ SYSTEM ]", "FLOOR", 8, 1, "HOLY", "THREAT", 8, false, "BOSS FLOOR: NO QUEST", "NO QUEST ON THIS FLOOR", null, st);
             case "abyssal" -> new Panel("[ SYSTEM ]", "FLOOR", -120, 2, "ABYSSAL", "THREAT", 120, false, "BOSS FLOOR: NO QUEST", "NO QUEST ON THIS FLOOR",
                     new Quest(OverlayLayout.Q_ACTIVE, OverlayLayout.MODE_COUNT, "Defeat 20 monsters on this floor", -1, false, "", "COMPLETE", "FAILED", "", 11, 20, "TIME", -1, 0, false), stats(30, 30, 30, 30, 30));
+            case "hub" -> new Panel("[ SYSTEM ]", "FLOOR", 0, 0, "HOLY", "THREAT", 0, false, "BOSS FLOOR: NO QUEST", SystemText.english(SystemText.HUB), null, stats(4, 1, 2, 0, 3));
+            case "sample" -> holy(3, 3, new Quest(OverlayLayout.Q_ACTIVE, OverlayLayout.MODE_COUNT, "Sample: defeat 5 monsters on this floor", -1, false, "", "COMPLETE", "FAILED", "", 2, 5, "TIME", -1, 0, false), stats(0, 0, 0, 0, 0));
             case "bare" -> new Panel("[ SYSTEM ]", "FLOOR", 1, 1, "HOLY", "THREAT", 1, false, "BOSS FLOOR: NO QUEST", "NO QUEST ON THIS FLOOR", null, null);
             default -> throw new IllegalArgumentException("unknown scene " + scene);
         };
