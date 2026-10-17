@@ -345,6 +345,7 @@ public final class RestEvents {
     static boolean isHostile(Mob m, Player p) {
         if (!m.isAlive() || m.isNoAi() || m.isAlliedTo(p)) return false;
         if (m instanceof OwnableEntity pet && pet.getOwnerUUID() != null) return false;
+        if (m.getTags().contains("nusmp_servant")) return false;        // 1.55.0: a resting player's own Shadow minion (an Enemy by type) must not block the rest
         return m instanceof Enemy || m.getType().getCategory() == MobCategory.MONSTER || m.getTarget() instanceof Player;
     }
 

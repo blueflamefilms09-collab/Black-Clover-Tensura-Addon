@@ -148,6 +148,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.butoh.DanceClient.register(NeoForge.EVENT_BUS);
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.vfx.client.portal.SpatialPortalConfig.SPEC, "nusmp-spatial-portal.toml");
             com.newuniverse.nusmp.client.labyrinth.LabyrinthClient.init(modEventBus);                                        // 1.35.0: Labyrinth renderers, sky
+            com.newuniverse.nusmp.client.mega.system.SystemClient.init(modEventBus, modContainer);                           // 1.55.0: the System overlay layer, its key and client config
             com.newuniverse.nusmp.client.discovery.DiscoveryClient.init();                                                    // 1.27.0
             com.newuniverse.nusmp.client.merge.MergedClient.init(modEventBus);
             com.newuniverse.nusmp.client.ui.theme.UiThemeClient.init(modEventBus);                                           // 1.27.0: the anime GUI theme
@@ -206,6 +207,7 @@ public class NUSMP {
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.safe.SafeConfig.SPEC, "nusmp-labyrinth-mega-safe-server.toml");   // 1.54.0: rests and safe zones
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.gear.GearConfig.SPEC, "nusmp-labyrinth-mega-gear-server.toml");   // 1.55.0: standard Normal / Special / Rare gear
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.flow.FlowConfig.SPEC, "nusmp-labyrinth-mega-flow-server.toml");   // 1.55.0: the Rukh flow of the Holy floors
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.system.SystemConfig.SPEC, "nusmp-labyrinth-mega-system-server.toml");   // 1.55.0: the System overlay, floor quests, the Shadow Core
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.boss.rules.BossRulesConfig.SPEC, "nusmp-boss-rules-server.toml");   // 1.37.0
 
         // Multiverse: /multiverse commands, ceremony, mastery pages, ranks & stars, squads, status sync, world sites
