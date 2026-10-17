@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:arc/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:black_banner"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arc.saga_spade_raid.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arc.saga_spade_raid.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_saga_clear_spade_raid": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arc.saga_clear",
+        "arg": "spade_raid"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_saga_clear_spade_raid"
+    ]
+  ],
+  "rewards": {
+    "experience": 300
+  }
+}

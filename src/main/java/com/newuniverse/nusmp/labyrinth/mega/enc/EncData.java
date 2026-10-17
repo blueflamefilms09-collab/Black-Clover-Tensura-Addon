@@ -35,7 +35,8 @@ public final class EncData {
     private EncData() {}
 
     private static final Logger LOG = LogUtils.getLogger();
-    private static final String ENCOUNTERS = "mega/encounters/", WANDERERS = "mega/wanderers.json";
+    /** {@code WANDERERS_ARC} (1.61.0) is an ADDITIVE file: the characters of the arcs that may walk the halls, merged after the main one by {@link WandererRoster#merge}. */
+    private static final String ENCOUNTERS = "mega/encounters/", WANDERERS = "mega/wanderers.json", WANDERERS_ARC = "mega/wanderers_arc.json";
 
     private static volatile Map<String, EncounterTable> tables = Map.of();
     private static volatile WandererRoster roster = WandererRoster.EMPTY;
@@ -78,10 +79,10 @@ public final class EncData {
         @Override
         public void onResourceManagerReload(ResourceManager manager) {
             Map<String, EncounterTable> found = new LinkedHashMap<>();
-            WandererRoster wanderers = WandererRoster.EMPTY;
+            WandererRoster wanderers = WandererRoster.EMPTY, extra = WandererRoster.EMPTY;
             try {
                 Map<ResourceLocation, List<Resource>> files = manager.listResourceStacks("mega", rl -> rl.getNamespace().equals("nusmp")
-                        && (rl.getPath().equals(WANDERERS) || (rl.getPath().startsWith(ENCOUNTERS) && rl.getPath().endsWith(".json") && rl.getPath().indexOf('/', ENCOUNTERS.length()) < 0)));
+                        && (rl.getPath().equals(WANDERERS) || rl.getPath().equals(WANDERERS_ARC) || (rl.getPath().startsWith(ENCOUNTERS) && rl.getPath().endsWith(".json") && rl.getPath().indexOf('/', ENCOUNTERS.length()) < 0)));
                 List<ResourceLocation> keys = new ArrayList<>(files.keySet());
                 keys.sort(Comparator.comparing(ResourceLocation::toString));
                 for (ResourceLocation key : keys) {
@@ -89,10 +90,13 @@ public final class EncData {
                     if (stack == null || stack.isEmpty()) continue;
                     String text = read(stack.get(stack.size() - 1), key);                       // the highest-priority pack wins
                     if (text == null) continue;
-                    if (key.getPath().equals(WANDERERS)) {
+                    if (key.getPath().equals(WANDERERS) || key.getPath().equals(WANDERERS_ARC)) {
                         WandererRoster.Parsed p = WandererRoster.parse(text);
-                        for (String problem : p.problems()) LOG.warn("[nusmp] {}", problem);
-                        if (p.roster() != null) wanderers = p.roster();
+                        for (String problem : p.problems()) LOG.warn("[nusmp] {} ({})", problem, key.getPath());
+                        if (p.roster() != null) {
+                            if (key.getPath().equals(WANDERERS)) wanderers = p.roster();
+                            else extra = p.roster();
+                        }
                     } else {
                         String name = key.getPath().substring(ENCOUNTERS.length(), key.getPath().length() - 5);
                         EncounterTableParser.Parsed p = EncounterTableParser.parse(name, text);
@@ -103,8 +107,8 @@ public final class EncData {
             } catch (RuntimeException e) {
                 LOG.warn("[nusmp] The Dungeon Master's data could not be listed: {}", e.toString());
             }
-            install(found, wanderers);
-            LOG.info("[nusmp] Dungeon Master: {} encounter tables ({}), {} wandering boss kinds", found.size(), String.join(", ", new TreeSet<>(found.keySet())), wanderers.entries().size());
+            install(found, WandererRoster.merge(wanderers, extra));
+            LOG.info("[nusmp] Dungeon Master: {} encounter tables ({}), {} wandering boss kinds", found.size(), String.join(", ", new TreeSet<>(found.keySet())), roster.entries().size());
         }
 
         private static String read(Resource res, ResourceLocation key) {

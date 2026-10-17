@@ -66,6 +66,7 @@ public final class ArcStory {
 
     /** The per-boss rows: buff profile, boss registry entry, Charter Grimoire (table row and item). A clash with an older boss is logged and skipped. */
     private static void wireBoss(ArcCharacter c) {
+        if (com.newuniverse.nusmp.arc.world.ExistingBosses.owns(c.id())) return;                // 1.61.0: the seven older bosses already have their registry, buff and Charter rows (arc/world/ExistingBosses)
         if (!BossRegistry.addArc(c.id(), c.id())) LOG.warn("[nusmp] arc boss {} is not added to the boss registry (the id or entity path is taken)", c.id());
         if (!BossBuffTable.addArc(ArcBossProfile.profileFor(c))) LOG.warn("[nusmp] arc boss {} has no global buff row (the id is taken)", c.id());
         if (c.hasCharter()) {

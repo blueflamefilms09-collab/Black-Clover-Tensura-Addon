@@ -1,0 +1,41 @@
+{
+  "parent": "nusmp:root",
+  "display": {
+    "icon": {
+      "id": "minecraft:written_book"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arc.root.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arc.root.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_met": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arc.met"
+      }
+    },
+    "e_arc_defeated": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arc.defeated"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_met",
+      "e_arc_defeated"
+    ]
+  ],
+  "rewards": {
+    "experience": 10
+  }
+}

@@ -21,7 +21,7 @@ import spec_adv  # noqa: E402
 OUT = os.path.join(L.RES, "data", "nusmp", "advancement")
 LANG_OUT = os.path.join(L.HERE, "lang", "qst.lang.json")
 OWNED_DIRS = {"start", "magic", "spells", "arcs", "bosses", "relics", "weapons", "dungeon", "spirits", "squads", "world", "challenges",
-              "future"}
+              "future", "arc"}
 FRAMES = {"task", "goal", "challenge"}
 
 

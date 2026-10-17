@@ -117,6 +117,10 @@ The advancement trigger `nusmp:event` takes `key`, optional `count` (>= 1, compa
 | `shadow.travel` | - | shadow/ShadowTravel |
 | `unite.mode` | canis, equus, felis or gallus | shadow/UniteWatcher |
 | `time.stop` | - | blackclover/TimeStop |
+| `arc.defeated` | character id lower case (dante, lucius, goliath ...) | a boss of the arcs falls: arc/story/ArcStory.defeated (the arcs' own bosses), arc/world/ArcWorldCredit (the seven older ones); credits the fighters and, with arc.shareStoryCredit, their nearby FTB teammates |
+| `arc.met` | character id lower case | first conversation with a friendly character of the arcs (arc/story/ArcStory.met) |
+| `arc.saga_clear` | saga id lower case (elf_reincarnation, spade_raid, wizard_king, seven_deadly_sins, danmachi) | a player's story closes a saga (every boss of it defeated), once per saga: arc/world/ArcWorldCredit.settle |
+| `arc.arena` | boss id lower case | a player is carried into a story arena by the Chronicle Sigil: arc/arena/ArcArenaTravel.enter |
 
 Keys marked *extra* are not in the original list: `spell.distinct` (counter of distinct magics cast), `grimoire.kingdom`, `arena.victory` with arg `norelic`, and the `boss.phase` argument form `<boss>:<stage>`. Until the Java side fires them the advancements that need them (the `magic/distinct_*` ladder and `challenges/all_magic`, the four kingdom advancements, `challenges/norelic`) cannot be earned; every other advancement and quest works without them.
 

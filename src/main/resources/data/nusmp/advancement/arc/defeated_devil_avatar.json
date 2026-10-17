@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:arc/saga_spade_raid",
+  "display": {
+    "icon": {
+      "id": "minecraft:iron_sword"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arc.defeated_devil_avatar.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arc.defeated_devil_avatar.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_defeated_devil_avatar": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arc.defeated",
+        "arg": "devil_avatar"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_defeated_devil_avatar"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  }
+}

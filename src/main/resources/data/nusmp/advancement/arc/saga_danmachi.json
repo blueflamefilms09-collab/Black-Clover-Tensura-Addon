@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:arc/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:lantern"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arc.saga_danmachi.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arc.saga_danmachi.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_saga_clear_danmachi": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arc.saga_clear",
+        "arg": "danmachi"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_saga_clear_danmachi"
+    ]
+  ],
+  "rewards": {
+    "experience": 300
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:arc/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:lectern"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arc.arena.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arc.arena.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_arena": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arc.arena"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_arena"
+    ]
+  ],
+  "rewards": {
+    "experience": 40
+  }
+}

@@ -91,7 +91,11 @@ public class GuardianAltarBlockEntity extends BlockEntity {
                 lastBossPos != null && sl.isLoaded(lastBossPos), now, since, idleSince, AltarRules.abandonTicks(GuardConfig.get(GuardConfig.ABANDON_SECONDS)));
         Act act = AltarRules.decide(look);
         switch (act) {
-            case SUMMON -> summon(sl, sector, now);
+            case SUMMON -> {
+                Entity hosted = com.newuniverse.nusmp.arc.world.ArcFloorBosses.host(sl, sector, worldPosition);   // arc.floorBosses: a boss of the arcs may stand here instead (null = the plain Guardian)
+                if (hosted != null) adopt(sl, hosted, now);
+                else summon(sl, sector, now);
+            }
             case FINISH -> finish(sl, sector, now);
             case RESET -> reset(sl, e, now);
             default -> { }
@@ -133,6 +137,21 @@ public class GuardianAltarBlockEntity extends BlockEntity {
         idleSince = now;
         setChanged();
         return g;
+    }
+
+    /**
+     * IDLE -> ACTIVE with a boss of the arcs in the Guardian's place ({@code ArcFloorBosses} made it, gave it the Guardian's contract tags and put it in the
+     * level): the same state machine follows its death, so the Mana Core is forged and {@code guardianDefeated} runs exactly as for the Guardian.
+     */
+    private void adopt(ServerLevel sl, Entity foreign, long now) {
+        broadcast(sl, 48, Component.translatable("message.nusmp.mega.mgd.altar.answers").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
+        boss = foreign.getUUID();
+        lastBossPos = worldPosition.above();
+        bossDied = false;
+        state = State.ACTIVE;
+        since = now;
+        idleSince = now;
+        setChanged();
     }
 
     // ---------------------------------------------------------------- ACTIVE -> DONE

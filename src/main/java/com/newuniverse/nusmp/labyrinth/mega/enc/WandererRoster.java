@@ -43,6 +43,18 @@ public record WandererRoster(List<Entry> entries) {
         entries = entries == null ? List.of() : List.copyOf(entries);
     }
 
+    /**
+     * 1.61.0 (the characters of the arcs): the main roster followed by the entries of an ADDITIVE file ({@code wanderers_arc.json}). An entity the main
+     * file already lists keeps the main file's entry, so an extra file can add kinds but never change what the owner tuned; a null side counts as empty.
+     */
+    public static WandererRoster merge(WandererRoster base, WandererRoster extra) {
+        List<Entry> out = new ArrayList<>();
+        Set<String> seen = new HashSet<>();
+        if (base != null) for (Entry e : base.entries()) if (seen.add(e.entity())) out.add(e);
+        if (extra != null) for (Entry e : extra.entries()) if (seen.add(e.entity())) out.add(e);
+        return new WandererRoster(out);
+    }
+
     /** One entry by weight among those whose threat window holds {@code threat} and which the game can spawn; null when there is none. */
     public Entry pick(int threat, Predicate<Entry> usable, Random r) {
         List<Entry> pool = new ArrayList<>();

@@ -172,6 +172,7 @@ class ArenaShapesTest {
             for (int[] g : s.sigils()) {
                 List<ArenaCell> cells = s.column(g[0], g[1]);
                 ArenaCell top = cells.get(cells.size() - 1);
+                if (top.part() == ArenaPart.CEILING) top = cells.get(cells.size() - 2);                      // a cavern's roof is above the answering block
                 assertEquals(ArenaPart.SIGIL, top.part(), s.id() + ": the answering block of a way home");
                 assertEquals(1, top.dy(), s.id());
                 for (int ox = -1; ox <= 1; ox++) for (int oz = -1; oz <= 1; oz++) {

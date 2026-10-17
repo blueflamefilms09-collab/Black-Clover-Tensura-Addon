@@ -1,0 +1,21 @@
+{
+  "comment": "Why: the first characters of the arcs (tier 1 and 2) are strong enough to be the elite of the halls between the decennial bosses, so the Dungeon Master may send them walking. This file is ADDITIVE: it is read after wanderers.json and merged by WandererRoster.merge, an entity that wanderers.json already lists keeps its main entry, and an id that is not installed (a character another builder has not merged yet) is simply never drawn. The threat number is the floor's distance from the Hub, so the windows below follow the floors each character was designed for (tier 1 on floors 10 to 50, the Eye of the Midnight Sun deeper). The bodies are boss-framework bodies that already fight with moves and a power curve, so their health is cut a little (they walk into a fight rather than being waited for) and their stride is a touch slower than their own (a head start is worth something); the dungeon's own threat scaling is added on top of both. Their fight arena follows them while they wander (ArcFloorBosses), because the framework otherwise pulls a boss back to the spot it was made at.",
+  "entries": [
+    {"entity": "nusmp:revchi_salik", "weight": 2, "minThreat": 10, "maxThreat": 50, "name": "Revchi Salik", "healthScale": 0.8, "speed": 0.9,
+     "comment": "Tier 1, the first of the Midnight Sun's scouts: floors 10 to 50."},
+    {"entity": "nusmp:heath_grice", "weight": 2, "minThreat": 10, "maxThreat": 50, "name": "Heath Grice", "healthScale": 0.8, "speed": 0.9,
+     "comment": "Tier 1, a fire-handed duelist: floors 10 to 50."},
+    {"entity": "nusmp:lotus_whomalt", "weight": 2, "minThreat": 10, "maxThreat": 60, "name": "Lotus Whomalt", "healthScale": 0.8, "speed": 0.9,
+     "comment": "Tier 1: floors 10 to 60."},
+    {"entity": "nusmp:mars", "weight": 2, "minThreat": 15, "maxThreat": 60, "name": "Mars", "healthScale": 0.8, "speed": 0.9,
+     "comment": "Tier 1 to 2: floors 15 to 60."},
+    {"entity": "nusmp:vetto", "weight": 1, "minThreat": 25, "maxThreat": 80, "name": "Vetto", "healthScale": 0.8, "speed": 0.9,
+     "comment": "A beast of a boss, rarer than the others: floors 25 to 80."},
+    {"entity": "nusmp:fana", "weight": 1, "minThreat": 30, "maxThreat": 90, "name": "Fana", "healthScale": 0.8, "speed": 0.9,
+     "comment": "Tier 2, of the Eye of the Midnight Sun: floors 30 to 90."},
+    {"entity": "nusmp:patolli", "weight": 1, "minThreat": 30, "maxThreat": 90, "name": "Patolli", "healthScale": 0.8, "speed": 0.9,
+     "comment": "Tier 2, of the Eye of the Midnight Sun: floors 30 to 90."},
+    {"entity": "nusmp:rades_spirito", "weight": 1, "minThreat": 30, "maxThreat": 90, "name": "Rades Spirito", "healthScale": 0.8, "speed": 0.9,
+     "comment": "Tier 2, of the Eye of the Midnight Sun: floors 30 to 90."}
+  ]
+}

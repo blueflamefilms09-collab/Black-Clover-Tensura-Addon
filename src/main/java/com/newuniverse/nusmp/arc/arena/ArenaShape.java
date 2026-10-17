@@ -43,18 +43,17 @@ public interface ArenaShape {
     int[][] sigils();
 
     // ---------------------------------------------------------------- what every shape shares
-    /** The {@code dy} of the highest solid cell of the column, or {@link Integer#MIN_VALUE} when it has none. */
+    /** The {@code dy} of the highest solid cell of the column that is not the roof, or {@link Integer#MIN_VALUE} when it has none: the level a walker stands on. */
     default int surface(int dx, int dz) {
         int best = Integer.MIN_VALUE;
-        for (ArenaCell c : column(dx, dz)) if (c.part().solid() && c.dy() > best) best = c.dy();
+        for (ArenaCell c : column(dx, dz)) if (c.part().solid() && c.part() != ArenaPart.CEILING && c.dy() > best) best = c.dy();
         return best;
     }
 
-    /** Can a player stand on this column: solid ground with no cell in the three rows above it? */
+    /** Can a player stand on this column: solid ground with no cell in the three rows above it (the roof of a cavern is far above and does not count)? */
     default boolean standable(int dx, int dz) {
         List<ArenaCell> cells = column(dx, dz);
-        int top = Integer.MIN_VALUE;
-        for (ArenaCell c : cells) if (c.part().solid() && c.dy() > top) top = c.dy();
+        int top = surface(dx, dz);
         if (top == Integer.MIN_VALUE) return false;
         for (ArenaCell c : cells) if (c.dy() > top && c.dy() <= top + 3 && c.part().solid()) return false;
         for (ArenaCell c : cells) if (c.dy() > top && c.dy() <= top + 3 && c.part() != ArenaPart.CARPET && c.part() != ArenaPart.FLOWER_A

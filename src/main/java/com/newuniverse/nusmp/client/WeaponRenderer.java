@@ -87,7 +87,8 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.GLUTTON_CHALICE, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.DEVIL_BOUND_SHEATH, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.GAMBLERS_GRIMOIRE_PAGE,
             com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.AMULET_OF_THE_JUGGERNAUTS_BLINDNESS,      // 1.22.0
             com.newuniverse.nusmp.arena.ArenaSystem.HOURGLASS,      // 1.46.0: the Hourglass of the Final Hour
-            com.newuniverse.nusmp.labyrinth.mega.guard.GuardRegistry.MANA_CORE);      // 1.54.0: the Mana Core of a Mega-Dungeon sector's Guardian
+            com.newuniverse.nusmp.labyrinth.mega.guard.GuardRegistry.MANA_CORE,      // 1.54.0: the Mana Core of a Mega-Dungeon sector's Guardian
+            com.newuniverse.nusmp.arc.world.ArcWorldItems.CHRONICLE_SIGIL);      // 1.61.0: the Chronicle Sigil
 
     /** 1.24.0: the old list plus every 3D relic of Relics of Many Worlds. */
     static final List<Supplier<? extends Item>> WEAPONS = java.util.stream.Stream.concat(BASE_WEAPONS.stream(), com.newuniverse.nusmp.relics.RelicCatalog.model3dItems().stream()).toList();

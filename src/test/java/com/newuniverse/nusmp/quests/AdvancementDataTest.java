@@ -31,7 +31,7 @@ class AdvancementDataTest {
 
     /** The folders the generator owns; convergence/ holds the older hidden advancements and is only checked for parsing. */
     private static final Set<String> OWNED = Set.of("start", "magic", "spells", "arcs", "bosses", "relics", "weapons", "dungeon",
-            "spirits", "squads", "world", "challenges", "future");
+            "spirits", "squads", "world", "challenges", "future", "arc");
 
     private static final Set<String> VANILLA_TRIGGERS = Set.of("minecraft:tick", "minecraft:impossible", "minecraft:inventory_changed",
             "minecraft:player_killed_entity", "minecraft:changed_dimension", "minecraft:location", "minecraft:consume_item",
@@ -49,7 +49,8 @@ class AdvancementDataTest {
             "convergence.anomaly", "magic.merged", "weapon.engraved", "weapon.genesis", "butoh.dance", "song.sung", "corpse.raised",
             "paladin.converted", "rouge.saved", "thread.trap", "shadow.travel", "unite.mode", "time.stop",
             "mega.entered", "mega.sector_cleared", "mega.rested", "mega.crucible_choice", "mega.wanderer_survived",
-            "mega.hub", "mega.aligned", "mega.floor", "mega.gear", "mega.system_quest", "mega.shadow", "mega.vessel");
+            "mega.hub", "mega.aligned", "mega.floor", "mega.gear", "mega.system_quest", "mega.shadow", "mega.vessel",
+            "arc.defeated", "arc.met", "arc.saga_clear", "arc.arena");
 
     private static final Set<String> DIMENSIONS = Set.of("nusmp:labyrinth", "nusmp:living_dungeon", "nusmp:zogratis_arena", "nusmp:dream",
             "nusmp:grimoire_library", "nusmp:mega_dungeon", "minecraft:overworld", "minecraft:the_nether", "minecraft:the_end");

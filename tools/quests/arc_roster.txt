@@ -1,0 +1,8 @@
+# id|name|saga|role : written by /multiverse arc dump, read by tools/quests/spec_arc.py
+goliath|Goliath|danmachi|boss
+charybdis_spawn|Spawn of Charybdis|danmachi|boss
+devil_avatar|Devil Avatar|spade_raid|boss
+dante|Dante Zogratis|spade_raid|boss
+vanica|Vanica Zogratis|spade_raid|boss
+zenon|Zenon Zogratis|spade_raid|boss
+lucius|Lucius Zogratis|wizard_king|boss
