@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.59.0] — New themes for the two roads: the Cursed Archive, the Holy Church and ten more
+
+The owner asked for more themes for the dungeon, among them "a massive book archive called the Cursed Archive (evil route) and a Holy Church (good route)", and "many others" researched from D&D, fantasy and horror. Four builders each made four themes; this release carries the first twelve. Docs: `docs/labyrinth/mega_v2_tha.md`, `mega_v2_thb.md`, `mega_v2_thc.md` (sources with URLs, every room and why, the palette, the numbers and the honest list of what is unverified).
+
+**State:** written without a whole-project compiler; every room was built by a Python generator, passed the template checks (`mega_check.py`, `mega_arch_check.py`, the safe-zone check) and was rendered and looked at; CI compiles and tests it and a headless server smoke test places pieces of the changed pools with the real Jigsaw. Nothing has been run in a game client.
+
+### NEW
+- **The good road (Holy)** gets eight themes. **Holy Church**: a cathedral with a three-storey nave and organ loft, a cloister, a crypt, a bell tower, a confessional puzzle, a reliquary and a baptistery that is a real Safe Zone. **Celestial Court**: marble terraces, a colonnade, a sundial hall, a banquet hall, a throne room, a tribunal trial and a fountain court Safe Zone. **Sky Citadel**: a cloud giant's castle with giant furniture, a wind gallery, a cloud chasm trap, a storm spire, a pantry and a thunder court. **Mountain Monastery**: a dojo, a prayer-wheel hall, a scroll library, a zen garden, cliff stairs, hot springs (a Safe Zone) and a duel ring. **Feywild Grove**: a feast hall, a hollow tree, a moonlit glade, a court of the seasons, a fairy-ring puzzle. **Dwarven Forgehold**: a hall of pillars, a chasm forge, mine works with carts, a vault of kings, an anvil trial. **Crystal Geode**: an echo gallery, a prism atrium, a three-level great geode, a resonance puzzle, a shatter trial, a gem vault. **Sunken Temple**: a coral nave, drowned shrines, a heart of the tides, a tidal-gate puzzle, an offering nook.
+- **The evil road (Abyssal)** gets four themes. **Cursed Archive**: endless stacks, a reading hall, a scriptorium, a rotunda, burning stacks (a trap), a card-catalogue puzzle, a restricted section and the librarian's study (a Safe Zone). **Necropolis**: catacombs, a mausoleum street, bone bridges, grave pits and a burial vault. **Vampire Castle**: a great hall, a coffin crypt, a chapel, a clock tower, a blood court trial and a mirror gallery. **Haunted Manor**: a grand stair, a kitchen, a nursery, a ballroom trial, an attic trap and the master bedroom (a Safe Zone).
+- Each theme is a palette (the dungeon restyles every ordinary room into it), 5 to 8 signature rooms that **only its own sectors draw**, an encounter table (12 to 13 entries), faction weights in all eleven factions, an ambient particle and mood sound, a Guardian trait and a Mana Core colour, and a ruleset name. 76 new room templates in all.
+- **Road-bound themes**: a theme belongs to one road (`RegionTheme.Route`) and is never drawn on the other. Every theme is also reachable by relic: a relic taken from a vault can lead to the theme it fits (over sixty relic entries were re-homed or added, so each theme is the road of at least five relics).
+- New tools: `tools/labyrinth/mega_theme_kit.py`, `mega_tha_kit.py`, `mega_thc_kit.py` (shared building kits), one generator per theme, and new data tests (`TemplateThemesDataTest`, `TemplateThemesFilesTest`, `GoodRoadThemesDataTest`).
+
+### CHANGED
+- **How rooms are weighted**: a theme's own rooms now carry an absolute weight (a themed hall folder totals 60, the other kinds 20), so they take nothing from the old rooms in other sectors (`gen_mega_pools.py`, the `claimed` rule). Without this the new rooms would have starved the old ones everywhere.
+- The Guardian's trait table and the Mana Core colour table know the new themes, and the shared theme tests list them.
+
+### KEPT
+- The eleven themes of 1.54.0 and 1.55.0, all their rooms, tables and pools; the old pool weights are unchanged in every old sector.
+
+### Notes for the owner
+- Four more themes (from the fourth builder: an Underdark, a foundry, a crypt and a spider lair) are still being built and will follow.
+- Lava, water and the many props (copper bulbs, minecarts, sea pickles, budding amethyst) are held in place by the room models only; if one behaves badly in play, tell me which room.
+
 ## [1.58.0] — The Mega-Dungeon as floors with stairs, the old dungeon removed, the System for everyone, the Soul Forge
 
 The owner asked for a stack of changes at once: remove the old dungeon "completely, but keep the blocks the new one uses"; make every floor its own level that you leave by a stair, as in D&D; make the System work for every player in the dungeon with a window you can move; and rebuild the Avatar from the brief that was sent. This release is the first part. The party layer (FTB Teams), the new themes and the characters of the arcs follow in 1.59.0 and 1.60.0. Every number, file and decision is explained in `docs/labyrinth/mega_v2.md` (the contract) and one doc per part.
