@@ -1,0 +1,11 @@
+{
+  "name": "Dice",
+  "rarity": "EPIC",
+  "tax_percent": 12,
+  "magic": "dice",
+  "skills": [
+    "tensura:unpredictability"
+  ],
+  "tint": "#4AE8B0",
+  "description": "Luck is a currency, and you are rich."
+}

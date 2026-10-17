@@ -1,0 +1,17 @@
+{
+  "theme": "haunted_manor",
+  "templates": [
+    "nusmp:mega/hall/haunted_manor_",
+    "nusmp:mega/set/haunted_manor_",
+    "nusmp:mega/trial/haunted_manor_",
+    "nusmp:mega/safe/haunted_manor_",
+    "nusmp:mega/trap/haunted_manor_"
+  ],
+  "relative": {
+    "mega/hall/haunted_manor_": 30,
+    "mega/set/haunted_manor_": 20,
+    "mega/trial/haunted_manor_": 20,
+    "mega/safe/haunted_manor_": 20,
+    "mega/trap/haunted_manor_": 20
+  }
+}

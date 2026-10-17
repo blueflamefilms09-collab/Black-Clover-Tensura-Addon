@@ -1,0 +1,13 @@
+{
+  "name": "Ice",
+  "rarity": "UNCOMMON",
+  "tax_percent": 3,
+  "magic": "ice",
+  "skills": [
+    "tensura:icicle_lance",
+    "tensura:ice_wall",
+    "tensura:freeze"
+  ],
+  "tint": "#9FE6FF",
+  "description": "Frost that slows the world to a walk."
+}

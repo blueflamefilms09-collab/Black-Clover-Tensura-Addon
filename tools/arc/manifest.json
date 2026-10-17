@@ -1,0 +1,470 @@
+{
+ "generator": "python3 -B tools/gen_arc_characters.py",
+ "frame": "pixels (1/16 block), y up, the model's front on -z, +x the model's left, origin at the feet; GeoDraw.Space.PROP",
+ "models": {
+  "heath_grice": {
+   "model": "arc_heath_grice",
+   "spec": "GeoSpec.of(\"arc\", \"heath_grice\")",
+   "form": 1,
+   "role": "boss",
+   "name": "Heath Grice",
+   "build": "slim",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_heath_grice.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_heath_grice.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_heath_grice.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_heath_grice_glow.png"
+   ],
+   "texture": [
+    512,
+    64
+   ],
+   "cubes": 78,
+   "faces_per_pass": 446,
+   "height_blocks": 2.09,
+   "height_with_hair_and_horns_blocks": 2.29,
+   "bounds_blocks": {
+    "min": [
+     -0.72,
+     0.0,
+     -0.25
+    ],
+    "max": [
+     0.53,
+     2.29,
+     0.38
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.55,
+    "height": 2.09
+   },
+   "arc_look": {
+    "height": 2.09,
+    "walkCycle": 1.31,
+    "runCycle": 2.33,
+    "shadow": 0.5,
+    "growXz": 1.22,
+    "growUp": 0.6,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 1.75,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "watch",
+    "prop_float"
+   ],
+   "glow_bones": [
+    "head",
+    "arm_l",
+    "forearm_l",
+    "arm_r",
+    "forearm_r",
+    "watch",
+    "prop_float"
+   ],
+   "problems": []
+  },
+  "heath_grice_form2": {
+   "model": "arc_heath_grice_form2",
+   "spec": "GeoSpec.of(\"arc\", \"heath_grice_form2\")",
+   "form": 2,
+   "role": "boss",
+   "name": "Heath Grice, Purified",
+   "build": "slim",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_heath_grice_form2.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_heath_grice_form2.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_heath_grice_form2.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_heath_grice_form2_glow.png"
+   ],
+   "texture": [
+    512,
+    192
+   ],
+   "cubes": 109,
+   "faces_per_pass": 508,
+   "height_blocks": 2.09,
+   "height_with_hair_and_horns_blocks": 2.89,
+   "bounds_blocks": {
+    "min": [
+     -1.27,
+     0.0,
+     -0.25
+    ],
+    "max": [
+     1.27,
+     2.89,
+     0.38
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.55,
+    "height": 2.09
+   },
+   "arc_look": {
+    "height": 2.09,
+    "walkCycle": 1.31,
+    "runCycle": 2.33,
+    "shadow": 0.89,
+    "growXz": 1.77,
+    "growUp": 1.2,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 1.25,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "watch",
+    "wing_l",
+    "wing_tip_l",
+    "wing_r",
+    "wing_tip_r",
+    "halo",
+    "prop_float"
+   ],
+   "glow_bones": [
+    "head",
+    "arm_l",
+    "forearm_l",
+    "arm_r",
+    "forearm_r",
+    "watch",
+    "wing_l",
+    "wing_tip_l",
+    "wing_r",
+    "wing_tip_r",
+    "halo",
+    "prop_float"
+   ],
+   "problems": []
+  },
+  "npc_default": {
+   "model": "arc_npc_default",
+   "spec": "GeoSpec.of(\"arc\", \"npc_default\")",
+   "form": 1,
+   "role": "npc",
+   "name": "Villager",
+   "build": "average",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_npc_default.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_npc_default.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_npc_default.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_npc_default_glow.png"
+   ],
+   "texture": [
+    512,
+    64
+   ],
+   "cubes": 56,
+   "faces_per_pass": 314,
+   "height_blocks": 1.91,
+   "height_with_hair_and_horns_blocks": 2.1,
+   "bounds_blocks": {
+    "min": [
+     -0.47,
+     0.0,
+     -0.34
+    ],
+    "max": [
+     0.47,
+     2.1,
+     0.34
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.62,
+    "height": 1.91
+   },
+   "arc_look": {
+    "height": 1.91,
+    "walkCycle": 1.11,
+    "runCycle": 1.97,
+    "shadow": 0.35,
+    "growXz": 0.97,
+    "growUp": 0.59,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 3.0,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair"
+   ],
+   "glow_bones": [],
+   "problems": []
+  },
+  "yami_sukehiro": {
+   "model": "arc_yami_sukehiro",
+   "spec": "GeoSpec.of(\"arc\", \"yami_sukehiro\")",
+   "form": 1,
+   "role": "npc",
+   "name": "Yami Sukehiro",
+   "build": "broad",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_yami_sukehiro.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_yami_sukehiro.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_yami_sukehiro.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_yami_sukehiro_glow.png"
+   ],
+   "texture": [
+    512,
+    128
+   ],
+   "cubes": 84,
+   "faces_per_pass": 475,
+   "height_blocks": 2.06,
+   "height_with_hair_and_horns_blocks": 2.57,
+   "bounds_blocks": {
+    "min": [
+     -0.76,
+     0.0,
+     -0.54
+    ],
+    "max": [
+     0.74,
+     2.57,
+     0.55
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.78,
+    "height": 2.06
+   },
+   "arc_look": {
+    "height": 2.06,
+    "walkCycle": 1.21,
+    "runCycle": 2.15,
+    "shadow": 0.53,
+    "growXz": 1.26,
+    "growUp": 0.91,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 3.0,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "cape",
+    "cape_low",
+    "cigarette",
+    "prop_r"
+   ],
+   "glow_bones": [
+    "cigarette"
+   ],
+   "problems": []
+  }
+ }
+}

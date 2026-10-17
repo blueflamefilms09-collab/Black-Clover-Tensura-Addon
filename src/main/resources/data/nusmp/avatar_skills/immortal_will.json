@@ -1,0 +1,9 @@
+{
+  "id": "nusmp:immortal_will",
+  "kind": "ultimate",
+  "name": "Immortal Will",
+  "ep_tax": 15,
+  "min_ep": 3500,
+  "tint": "#B8C2CC",
+  "description": "Refuses the end."
+}

@@ -1,0 +1,9 @@
+{
+  "id": "tensura:mathematician",
+  "kind": "unique",
+  "name": "Mathematician",
+  "ep_tax": 4,
+  "min_ep": 600,
+  "tint": "#FFFFFF",
+  "description": "The world is a sum, and you do the sum first."
+}

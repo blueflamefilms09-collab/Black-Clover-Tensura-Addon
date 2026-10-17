@@ -1,0 +1,13 @@
+{
+  "name": "Blood",
+  "rarity": "RARE",
+  "tax_percent": 8,
+  "magic": "blood",
+  "skills": [
+    "tensura:blood_mist",
+    "tensura:drain",
+    "tensura:self_regeneration"
+  ],
+  "tint": "#C0102A",
+  "description": "What is spilled is spent; what is drained is kept."
+}

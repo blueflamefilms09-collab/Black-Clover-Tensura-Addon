@@ -1,0 +1,13 @@
+{
+  "name": "Spirit Whisperer",
+  "rarity": "RARE",
+  "tax_percent": 7,
+  "magic": "",
+  "skills": [
+    "tensura:summon_medium_elemental",
+    "tensura:summon_greater_elemental",
+    "tensura:spiritual_attack_resistance"
+  ],
+  "tint": "#7CF0D0",
+  "description": "The spirits of the air and flame answer when you call."
+}
