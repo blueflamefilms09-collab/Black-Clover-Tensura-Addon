@@ -30,10 +30,17 @@ public final class LuckMath {
         return Math.max(MIN, Math.min(MAX, t));
     }
 
-    /** True when the id of a registered skill looks like a luck / probability skill (used to find Tensura's without hard-coding an id that may change). */
+    /**
+     * True when the id of a registered skill looks like a luck / probability skill (used to find Tensura's without hard-coding an id that may change).
+     * Avatar rebuild: Tensura keeps its probability manipulation inside the Unique skill {@code tensura:tuner} ("change your fate ... manipulate probability", see the
+     * 2.0.1.3 id list), whose id carries none of the three words, so the Tuner is matched by name; before this fix the Tensura source of the Total Luck was
+     * always zero.
+     */
     public static boolean looksLikeLuckSkill(String path) {
         if (path == null) return false;
-        String p = path.toLowerCase();
-        return p.contains("probability") || p.contains("luck") || p.contains("fortune");
+        String p = path.toLowerCase(java.util.Locale.ROOT);
+        int colon = p.indexOf(':');
+        if (colon >= 0) p = p.substring(colon + 1);
+        return p.contains("probability") || p.contains("luck") || p.contains("fortune") || p.equals("tuner") || p.contains("fate_change");
     }
 }

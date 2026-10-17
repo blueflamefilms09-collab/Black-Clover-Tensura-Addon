@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.avatar.goal;
 
 import com.newuniverse.nusmp.avatar.AvatarEntity;
+import com.newuniverse.nusmp.avatar.ai.AvatarCombat;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -38,14 +39,14 @@ public class AvatarDefendSelfOrCreatorGoal extends Goal {
     }
 
     private LivingEntity recent(LivingEntity e, int stamp, int now) {
-        if (e == null || now - stamp > MEMORY || !AvatarTargeting.canHarm(avatar, e)) return null;
+        if (e == null || now - stamp > MEMORY || !AvatarTargeting.canHarm(avatar, e) || !AvatarCombat.mayEngage(avatar, e)) return null;
         return e;
     }
 
     @Override
     public boolean canContinueToUse() {
         LivingEntity t = avatar.getTarget();
-        return avatar.isLoyal() && t != null && t.isAlive() && AvatarTargeting.canHarm(avatar, t) && avatar.distanceToSqr(t) < 40.0 * 40.0;
+        return avatar.isLoyal() && t != null && t.isAlive() && AvatarTargeting.canHarm(avatar, t) && avatar.distanceToSqr(t) < 40.0 * 40.0 && AvatarCombat.mayEngage(avatar, t);
     }
 
     @Override

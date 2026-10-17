@@ -1,9 +1,11 @@
 package com.newuniverse.nusmp.avatar.ai;
 
+import com.newuniverse.nusmp.avatar.AvatarAiConfig;
 import com.newuniverse.nusmp.avatar.AvatarChatterEngine;
 import com.newuniverse.nusmp.avatar.AvatarEntity;
 import com.newuniverse.nusmp.avatar.AvatarPersonalityTraits;
 import com.newuniverse.nusmp.avatar.ChatEvent;
+import com.newuniverse.nusmp.avatar.delve.AvatarDelve;
 import com.newuniverse.nusmp.boss.rules.BossIdentity;
 import com.newuniverse.nusmp.relics.RelicBearer;
 import com.newuniverse.nusmp.mana.MagicStoneItem;
@@ -24,8 +26,9 @@ import java.util.EnumSet;
 /**
  * Why: a few things must be sampled every tick or every half second for the whole life of the Avatar and belong to no single behaviour: counting
  * down the Yandere frenzy, noticing that the creator is badly hurt (the CREATOR_LOW_HP line, once per drop), idle remarks, a Cowardly Avatar spotting a
- * boss, a Lazy Avatar noticing its creator standing still, a Merchant nudging dropped relics toward the creator, the Tsundere protective bonus, and
- * the numeric personality modifiers (attack speed). It never moves the Avatar itself. Personality is read every time (never cached at install),
+ * boss, a Lazy Avatar noticing its creator standing still, a Merchant nudging dropped relics toward the creator (only while the looting goal is switched
+ * off: with it on the Merchant fetches them itself), the Tsundere protective bonus, the numeric personality modifiers (attack speed), and the weapon AI's look at
+ * what the Avatar holds. It never moves the Avatar itself. Personality is read every time (never cached at install),
  * because {@code registerGoals} runs before the Avatar's synced personality is set.
  */
 public final class AvatarWatcherGoal extends Goal {
@@ -50,13 +53,19 @@ public final class AvatarWatcherGoal extends Goal {
     @Override
     public void tick() {
         int t = avatar.tickCount;
+        // the weapon AI looks again at what the Avatar holds as soon as a hand changed, and every two seconds (the arrows may have run out)
+        if (avatar.consumeStyleStale() || t % 40 == 7) AvatarCombat.refresh(avatar);
         if (t % 10 != 0) return;
         AvatarPersonalityTraits.Traits traits = AvatarPersonalityTraits.combine(avatar.primary(), avatar.secondary());
         ServerPlayer creator = avatar.creatorPlayer();
         numericModifiers(traits);
+        if (t % 20 == 0 && AvatarDelve.onTrip(avatar)) {                          // the limits of a trip into the dungeon hold in the middle of a fight too
+            AvatarDelve.watch(avatar);
+            return;                                                                  // the Avatar may be a new instance now
+        }
         if (creator != null && creator.level() == avatar.level() && AvatarGates.loyal(avatar)) {
             creatorWatch(creator, traits);
-            if (traits.pullsLoot()) pullLoot(creator);
+            if (traits.pullsLoot() && !AvatarAiConfig.lootEnabled()) pullLoot(creator);        // with the looting goal on, the Merchant fetches the drops itself and hands them over
         }
         if (t % 20 == 0) bossWatch(traits, creator);
         if (t % 200 == 0 && avatar.getTarget() == null && avatar.getRandom().nextInt(3) == 0) AvatarChatterEngine.say(avatar, ChatEvent.IDLE);

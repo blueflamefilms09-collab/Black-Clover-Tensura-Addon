@@ -3,7 +3,11 @@ package com.newuniverse.nusmp.avatar;
 import com.mojang.logging.LogUtils;
 import io.github.manasmods.tensura.storage.TensuraStorages;
 import io.github.manasmods.tensura.util.EnergyHelper;
+import io.github.manasmods.tensura.util.SubordinateHelper;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import org.slf4j.Logger;
 
 import java.util.UUID;
@@ -110,6 +114,76 @@ public final class TensuraBridge {
             var ex = TensuraStorages.getExistenceFrom(e);
             return ex != null && ex.getName() != null && !ex.getName().isEmpty();
         } catch (Throwable t) { return false; }
+    }
+
+    // ---------------------------------------------------------------- the subordinate bond (Avatar rebuild)
+    /** The owner Tensura has recorded for this entity (its permanent owner), or null. */
+    public static UUID permanentOwner(LivingEntity e) {
+        try {
+            var ex = TensuraStorages.getExistenceFrom(e);
+            return ex == null ? null : ex.getPermanentOwner();
+        } catch (Throwable t) { return null; }
+    }
+
+    /** Sets (or, with null, clears) Tensura's permanent owner of the entity; nothing is written when it already is that value. */
+    public static void setPermanentOwner(LivingEntity e, UUID owner) {
+        try {
+            var ex = TensuraStorages.getExistenceFrom(e);
+            if (ex == null) return;
+            UUID now = ex.getPermanentOwner();
+            if (owner == null ? now == null : owner.equals(now)) return;
+            ex.setPermanentOwner(owner);
+            ex.markDirty();
+        } catch (Throwable t) { warn("permanent owner", t); }
+    }
+
+    /** True when Tensura's own Stay command is active on this mob (false on any failure). */
+    public static boolean orderedToStay(LivingEntity e) {
+        try { return SubordinateHelper.isOrderedToStay(e); } catch (Throwable t) { return false; }
+    }
+
+    /** Tells Tensura the mob is now ordered to stay (true) or to follow (false), the same call its own command makes. */
+    public static void orderStay(Mob m, boolean stay) {
+        try {
+            if (stay) SubordinateHelper.setStay(m); else SubordinateHelper.setFollow(m);
+        } catch (Throwable t) { warn("stay / follow order", t); }
+    }
+
+    /** Is this one of Tensura's own entity types (its registry namespace is {@code tensura})? */
+    public static boolean isTensuraMob(Entity e) {
+        try { return e != null && "tensura".equals(BuiltInRegistries.ENTITY_TYPE.getKey(e.getType()).getNamespace()); } catch (Throwable t) { return false; }
+    }
+
+    /** True when Tensura lets this entity be named: it has a storage that says so and no name yet. */
+    public static boolean nameable(LivingEntity e) {
+        try {
+            var ex = TensuraStorages.getExistenceFrom(e);
+            return ex != null && ex.isNameable() && (ex.getName() == null || ex.getName().isEmpty());
+        } catch (Throwable t) { return false; }
+    }
+
+    /** Adds to the base maximum EP (and the current EP with it); the gain is added, never replaces. */
+    public static void addBaseEp(LivingEntity e, double amount) {
+        if (amount <= 0.0) return;
+        try {
+            double before = EnergyHelper.getBaseMaxEP(e);
+            EnergyHelper.setBaseMaxEP(e, before + amount);
+            var ex = TensuraStorages.getExistenceFrom(e);
+            if (ex != null) { ex.setEP(Math.max(ex.getEP(), 0.0) + amount); ex.markDirty(); }
+        } catch (Throwable t) { warn("EP gain", t); }
+    }
+
+    /** The entity's current EP (its Tensura existence value), or 0. */
+    public static double ep(LivingEntity e) {
+        try {
+            var ex = TensuraStorages.getExistenceFrom(e);
+            return ex == null ? 0.0 : ex.getEP();
+        } catch (Throwable t) { return 0.0; }
+    }
+
+    /** The entity's maximum magicule, or 0 when Tensura does not know it. */
+    public static double maxMagicule(LivingEntity e) {
+        try { return EnergyHelper.getMaxMagicule(e); } catch (Throwable t) { return 0.0; }
     }
 
     private static void warn(String what, Throwable t) {

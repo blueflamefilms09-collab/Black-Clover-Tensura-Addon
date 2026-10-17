@@ -21,6 +21,17 @@ public final class NamingMath {
     /** The multiplier on the Avatar's EP: 1 + boost. */
     public static double epMultiplier(double boost) { return 1.0 + Math.max(0.0, boost); }
 
+    /**
+     * The native-naming floor. Tensura's own naming has already raised the Avatar's EP from {@code epBefore} to {@code epNow}; the owner's rule is that a named Avatar
+     * also gets the surge ({@code multiplier} on the EP it had before). The Avatar ends with the LARGER of the two, never the sum: the factor to scale the EP by now,
+     * 1.0 when Tensura's gain already beats the surge or when a number is unknown (not above zero).
+     */
+    public static double nativeTopUp(double epBefore, double epNow, double multiplier) {
+        if (!(epBefore > 0.0) || !(epNow > 0.0) || !(multiplier > 1.0)) return 1.0;
+        double wanted = epBefore * multiplier;
+        return wanted > epNow ? wanted / epNow : 1.0;
+    }
+
     /** The creator's permanent magicule tax as a fraction of their maximum: the config percent, never the whole pool. */
     public static double taxFraction(double percent) { return clamp(percent / 100.0, 0.0, 0.9); }
 

@@ -45,4 +45,14 @@ class LuckMathTest {
         assertFalse(LuckMath.looksLikeLuckSkill("sage"));
         assertFalse(LuckMath.looksLikeLuckSkill(null));
     }
+
+    @Test
+    void tensurasProbabilityLivesInTheTunerSkill() {
+        // the 2.0.1.3 id list has no skill with "probability" in its id: the Unique skill Tuner is the one that "manipulates probability"
+        assertTrue(LuckMath.looksLikeLuckSkill("tuner"));
+        assertTrue(LuckMath.looksLikeLuckSkill("tensura:tuner"));
+        assertTrue(LuckMath.looksLikeLuckSkill("TENSURA:TUNER"));
+        assertFalse(LuckMath.looksLikeLuckSkill("tensura:tunerx_not_a_skill"), "only the exact path counts");
+        assertFalse(LuckMath.looksLikeLuckSkill("tensura:commander"));
+    }
 }

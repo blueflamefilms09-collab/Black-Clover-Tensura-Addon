@@ -5,6 +5,9 @@ import com.newuniverse.nusmp.avatar.AvatarConfig;
 import com.newuniverse.nusmp.avatar.AvatarEntity;
 import com.newuniverse.nusmp.avatar.AvatarManager;
 import com.newuniverse.nusmp.avatar.ChatEvent;
+import com.newuniverse.nusmp.avatar.Stance;
+import com.newuniverse.nusmp.avatar.TensuraBond;
+import com.newuniverse.nusmp.avatar.cast.VirtualSkillLoadout;
 import com.newuniverse.nusmp.avatar.naming.TensuraNamingEngine;
 import com.newuniverse.nusmp.quests.NusmpEvents;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
@@ -73,6 +76,7 @@ public final class AvatarOutcomes {
                 a.setOutcomeState(Outcome.BETRAYAL);
                 a.setFrenzied(false);
                 a.setTarget(null);
+                a.setStance(Stance.FOLLOW);                                       // a betrayer is not sitting where its creator left it
                 a.rebuildGoals();
                 AvatarChatterEngine.say(a, ChatEvent.BETRAYAL);
                 if (owner != null) {
@@ -87,6 +91,7 @@ public final class AvatarOutcomes {
                 a.setPermanentTax(0.0);
                 a.setFrenzied(false);
                 a.setTarget(null);
+                a.setStance(Stance.FOLLOW);
                 a.rebuildGoals();
                 if (owner != null) {
                     owner.sendSystemMessage(Component.literal(a.avatarName() + "'s soul has awakened: " + a.perk().describe() + ". It walks its own road now, and will never raise a hand against you.").withStyle(ChatFormatting.LIGHT_PURPLE));
@@ -112,19 +117,22 @@ public final class AvatarOutcomes {
                 a.rebuildGoals();
             }
         }
+        TensuraBond.sync(a);                                                      // betrayal and awakening sever Tensura's owner record; the rest keep (or restore) it
         if (a.level() instanceof ServerLevel sl) AvatarManager.get(sl.getServer()).update(a);
     }
 
     /**
      * Once in a while: does the Avatar hold a Unique or Ultimate Tensura skill (granted by some other system)? Then the roll is skipped, as the owner wants.
-     * The mod's own grimoire books are Unique-type skills but are not what the rule means, so only skills in Tensura's own namespace count.
+     * The mod's own grimoire books are Unique-type skills but are not what the rule means, so only skills in Tensura's own namespace count. The skills the creator
+     * picked in the Soul Forge (and those of the Avatar's aptitudes) are taught to the Avatar by its skill loadout when it first uses them, and that must not count: the
+     * three-day risk is bypassed only by the Instant Skill Awakening, a naming or a skill some other system gave.
      */
     static void pollUniqueSkill(AvatarEntity a) {
         if (a.hasUniqueOrUltimate()) return;
         try {
             for (ManasSkillInstance i : SkillAPI.getSkillsFrom(a).getLearnedSkills()) {
                 var id = i.getSkill().getRegistryName();
-                if (id == null || !id.getNamespace().equals("tensura")) continue;
+                if (id == null || !id.getNamespace().equals("tensura") || VirtualSkillLoadout.isLoadoutSkill(a, id)) continue;      // the creator's own Soul Forge picks are not a skill "granted by some other system"
                 if (i.getSkill() instanceof Skill s && (s.getType() == Skill.SkillType.UNIQUE || s.getType() == Skill.SkillType.ULTIMATE)) {
                     a.setHasUniqueOrUltimate(true);
                     if (a.outcomeState() == Outcome.PENDING) { a.setOutcomeState(Outcome.SKIPPED_UNIQUE); a.setOutcomeTimer(-1); }

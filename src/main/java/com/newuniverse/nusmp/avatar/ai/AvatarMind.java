@@ -4,9 +4,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * Why: the personality goals of one Avatar share a few facts that no single goal owns (what it is afraid of, how long its creator has stood still,
- * whether the low-health line already fired). One small mutable holder per Avatar, created by {@code AvatarAi.install}, keeps them without touching
- * the entity class. Server side only.
+ * Why: the goals of one Avatar share a few facts that no single goal owns (what it is afraid of, how long its creator has stood still, whether the
+ * low-health line already fired, when it last pressed a skill, the drop it is walking to). One small mutable holder per Avatar, created by
+ * {@code AvatarAi.install}, keeps them without touching the entity class. Server side only.
  */
 public final class AvatarMind {
     /** The boss a Cowardly Avatar is currently afraid of (within 24 blocks), or null. */
@@ -16,4 +16,6 @@ public final class AvatarMind {
     public int creatorStillTicks;
     /** The low-health bark fires once per drop, until the creator has recovered. */
     public boolean lowHpLatched;
+    /** The game time of the last skill press attempt: a long silence before it means a new fight has begun (a buff goes first). */
+    public long lastEngagedAt = -10_000;
 }

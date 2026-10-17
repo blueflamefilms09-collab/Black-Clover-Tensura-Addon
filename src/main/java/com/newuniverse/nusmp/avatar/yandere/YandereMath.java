@@ -39,6 +39,17 @@ public final class YandereMath {
         return Math.max(0f, Math.min(burn, health - 1f));
     }
 
+    /**
+     * The brief's frenzy cost is the Avatar's own MAXIMUM health ("drains the Avatar's own Max Health to machine-gun skills"): each frenzy cast takes {@code perCast}
+     * off the maximum, as a temporary modifier that the end of the frenzy removes. Returns how much more to take: the configured amount, but never so much that the
+     * effective maximum falls below 1 (so the Avatar can never kill itself with its own spells). {@code maxWithoutDrain} is the maximum health without the drain,
+     * {@code alreadyDrained} what the modifier holds now.
+     */
+    public static double drainStep(double maxWithoutDrain, double alreadyDrained, double perCast) {
+        if (perCast <= 0.0) return 0.0;
+        return Math.max(0.0, Math.min(perCast, maxWithoutDrain - Math.max(0.0, alreadyDrained) - 1.0));
+    }
+
     /** Raw damage allowed on a player when lethal Yandere hits are off: never more than leaves them at 1 health (counting absorption). */
     public static float nonLethal(float amount, float playerHealth, float absorption) {
         return Math.max(0f, Math.min(amount, playerHealth + absorption - 1f));
