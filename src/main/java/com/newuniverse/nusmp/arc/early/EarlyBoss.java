@@ -107,7 +107,7 @@ public abstract class EarlyBoss extends ArcBoss {
 
     @Override
     protected int chooseMove(List<Move> bk, MoveScheduler.Situation s, long t) {
-        if (stagger.active(t)) return -1;
+        if (staggered()) return -1;                                                  // ({@code t} is the framework's own clock, the boss's age; the stagger is kept in game time)
         return super.chooseMove(bk, s, t);
     }
 

@@ -137,13 +137,13 @@ public class HeathGriceBoss extends EarlyBoss {
     }
 
     // ================================================================ the appointment book
-    /** The cage is not drawn at random: when the watch strikes and the cage may be cast, it is the next move. */
+    /** The cage is not drawn at random: when the watch strikes and the cage may be cast, it is the next move. ({@code t} is the framework's own clock, the boss's age; the timetable is kept in game time.) */
     @Override
     protected int chooseMove(List<Move> bk, MoveScheduler.Situation s, long t) {
         if (staggered()) return -1;
         try {
             int cage = moveIndex(HeathTable.CAGE);
-            if (cage >= 0 && cage < bk.size() && table.due(t) && moveEligible(bk.get(cage), s)) return cage;
+            if (cage >= 0 && cage < bk.size() && table.due(level().getGameTime()) && moveEligible(bk.get(cage), s)) return cage;
         } catch (RuntimeException e) {
             LogUtils.getLogger().warn("[nusmp] Heath's timetable failed: {}", e.toString());
         }

@@ -327,8 +327,9 @@ public class ZagredBoss extends ArcBoss implements DaemonMaster {
     @Override
     protected int chooseMove(List<Move> bk, MoveScheduler.Situation s, long t) {
         if (!(level() instanceof ServerLevel sl)) return super.chooseMove(bk, s, t);
-        if (helpless(t)) return -1;
-        ZagredAi.Read read = situationRead(sl, s, t);
+        long gt = sl.getGameTime();                                                  // ({@code t} is the framework's own clock, the boss's age; his stagger, ward and watch are kept in game time)
+        if (helpless(gt)) return -1;
+        ZagredAi.Read read = situationRead(sl, s, gt);
         double[] w = new double[bk.size()];
         for (int i = 0; i < w.length; i++) {
             Move m = bk.get(i);
