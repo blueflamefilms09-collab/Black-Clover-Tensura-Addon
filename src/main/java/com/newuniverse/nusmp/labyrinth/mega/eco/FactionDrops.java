@@ -51,7 +51,7 @@ public final class FactionDrops {
 
     public static void onDrops(LivingDropsEvent e) {
         try {
-            if (!(e.getEntity() instanceof Mob mob) || !(mob.level() instanceof ServerLevel level) || !Labyrinth.inMega(level) || !(mob instanceof Enemy)) return;
+            if (!(e.getEntity() instanceof Mob mob) || !(mob.level() instanceof ServerLevel level) || !Labyrinth.inMega(level) || !(mob instanceof Enemy || MegaDungeon.isDungeonMonster(mob))) return;
             if (!DndConfig.get(DndConfig.DROPS) || !EcoConfig.get(EcoConfig.FACTION_DROPS) || !TurfEligibility.wild(mob)) return;
             String faction = FactionRegistry.factionOf(mob.getType());
             FactionDef def = faction == null ? null : FactionRegistry.graph().def(faction);

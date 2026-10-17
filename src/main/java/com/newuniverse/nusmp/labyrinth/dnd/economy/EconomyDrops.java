@@ -57,7 +57,7 @@ public final class EconomyDrops {
 
     /** Does this death belong to the economy: a hostile non-boss Mob in the Labyrinth. */
     static boolean applies(LivingEntity v) {
-        return v instanceof Mob m && v.level() instanceof ServerLevel sl && Labyrinth.in(sl) && v instanceof Enemy && !isBoss(m);
+        return v instanceof Mob m && v.level() instanceof ServerLevel sl && Labyrinth.in(sl) && (v instanceof Enemy || com.newuniverse.nusmp.labyrinth.mega.MegaDungeon.isDungeonMonster(v)) && !isBoss(m);
     }
 
     /** Bosses: the DPS-budget interface, the peak tag, the Floor Warden id and the shared boss entity tag. */
