@@ -1,0 +1,173 @@
+{
+  "comment": "Why: the astral sectors are an observatory, so their encounters are rare (roll bonus minus one) and sharp (budget scale 1.2): few bodies, each with a trick. The cultists are the astronomers, the vexes their conjured lights, the shulkers watch from the walls, the orrery guards itself, and the mimic is a case whose armour left its display.",
+  "description": "Quartz, calcite, prismarine and gold: a cold observatory of stars. Few, strange and precise: astronomers and their conjured guards, the night flyers and turrets in the wall.",
+  "rollBonus": -1,
+  "budgetScale": 1.2,
+  "defaultFaction": "cultist",
+  "entries": [
+    {
+      "id": "stargazers",
+      "comment": "The breather: one or two astronomers of the cultist tag, or the room's own people.",
+      "band": "minor",
+      "weight": 14,
+      "mobs": [
+        {"type": "faction", "count": "1-2"}
+      ],
+      "cue": {"sound": "minecraft:block.amethyst_block.chime", "volume": 0.6, "pitch": 0.8, "particle": "minecraft:end_rod", "count": 6}
+    },
+    {
+      "id": "owl_watch",
+      "comment": "One-eyed owls, the observatory's watchers: they find the party and keep it in sight for whoever comes next.",
+      "band": "minor",
+      "weight": 10,
+      "maxThreat": 8,
+      "mobs": [
+        {"type": "entity", "id": "tensura:one_eyed_owl", "count": "1-2"}
+      ],
+      "cue": {"sound": "minecraft:entity.phantom.ambient", "volume": 0.5, "pitch": 1.2, "particle": "minecraft:end_rod", "count": 4}
+    },
+    {
+      "id": "constellation_guard",
+      "comment": "The evergreen standard encounter: the observatory's armoured guards and a conjured light or two over them.",
+      "band": "standard",
+      "weight": 12,
+      "mobs": [
+        {"type": "entity", "id": "nusmp:living_armor", "count": "2-3"},
+        {"type": "entity", "id": "minecraft:vex", "count": "1-2"}
+      ],
+      "cue": {"sound": "minecraft:item.armor.equip_iron", "volume": 0.7, "pitch": 1.0, "particle": "minecraft:end_rod", "count": 8}
+    },
+    {
+      "id": "comet_vexes",
+      "comment": "Vexes like falling stars: fast, bright and quick to be gone, in a group of three or four.",
+      "band": "standard",
+      "weight": 10,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:vex", "count": "3-4"}
+      ],
+      "cue": {"sound": "minecraft:entity.vex.charge", "volume": 0.8, "pitch": 1.0, "particle": "minecraft:end_rod", "count": 10}
+    },
+    {
+      "id": "observers",
+      "comment": "Turrets in the wall: shulkers do not move, so they are placed close and never sent hunting (hunt 0); the party meets them by walking into their range.",
+      "band": "standard",
+      "weight": 10,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:shulker", "count": "2-3"}
+      ],
+      "range": [10, 22],
+      "cells": 3,
+      "hunt": 0,
+      "cue": {"sound": "minecraft:entity.shulker.open", "volume": 0.8, "pitch": 0.9, "particle": "minecraft:end_rod", "count": 8},
+      "message": "message.nusmp.mega.enc.astral.observers"
+    },
+    {
+      "id": "void_whisper",
+      "comment": "The lone hunter: an enderman, only for a party in the dark, noticed from very far away.",
+      "band": "standard",
+      "weight": 8,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:enderman", "count": "1"}
+      ],
+      "needs": {"dark": true},
+      "scaleWithParty": false,
+      "cue": {"sound": "minecraft:entity.enderman.stare", "volume": 0.9, "pitch": 0.6, "particle": "minecraft:portal", "count": 12},
+      "message": "message.nusmp.mega.enc.astral.void_whisper"
+    },
+    {
+      "id": "astrologers",
+      "comment": "The caster pair: an evoker and the vexes it calls, the vexes trimmed first when the budget is short.",
+      "band": "standard",
+      "weight": 8,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:evoker", "count": "1"},
+        {"type": "entity", "id": "minecraft:vex", "count": "2-3"}
+      ],
+      "cue": {"sound": "minecraft:entity.evoker.prepare_summon", "volume": 0.8, "pitch": 0.9, "particle": "minecraft:end_rod", "count": 10}
+    },
+    {
+      "id": "star_moths",
+      "comment": "Night flyers drawn to a lit party: the lights of the observatory are for them.",
+      "band": "standard",
+      "weight": 8,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:phantom", "count": "2-3"}
+      ],
+      "needs": {"lit": true},
+      "cue": {"sound": "minecraft:entity.phantom.swoop", "volume": 0.7, "pitch": 1.3, "particle": "minecraft:end_rod", "count": 8}
+    },
+    {
+      "id": "orrery_guardian",
+      "comment": "The loud brute: the orrery's iron golem turns toward noise. One body, a lot of health.",
+      "band": "hard",
+      "weight": 10,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:iron_golem", "count": "1"}
+      ],
+      "needs": {"noisy": true},
+      "cue": {"sound": "minecraft:block.beacon.ambient", "volume": 0.8, "pitch": 0.5, "particle": "minecraft:end_rod", "count": 14},
+      "message": "message.nusmp.mega.enc.astral.orrery_guardian"
+    },
+    {
+      "id": "broken_orrery",
+      "comment": "The mimic-style surprise: the armour in the case left its display, and an illusioner is the one who moved it.",
+      "band": "hard",
+      "weight": 6,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "entity", "id": "nusmp:living_armor", "count": "1-2"},
+        {"type": "entity", "id": "minecraft:illusioner", "count": "1"}
+      ],
+      "range": [10, 18],
+      "cells": 2,
+      "hunt": 300,
+      "cue": {"sound": "minecraft:item.armor.equip_iron", "volume": 0.8, "pitch": 0.9, "particle": "minecraft:end_rod", "count": 10},
+      "message": "message.nusmp.mega.enc.astral.broken_orrery"
+    },
+    {
+      "id": "shooting_stars",
+      "comment": "Breezes and vexes: everything that flies and does not care for walls.",
+      "band": "hard",
+      "weight": 10,
+      "minThreat": 4,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:breeze", "count": "2-3"},
+        {"type": "entity", "id": "minecraft:vex", "count": "2-3"}
+      ],
+      "cue": {"sound": "minecraft:entity.breeze.idle_ground", "volume": 1.0, "pitch": 0.8, "particle": "minecraft:end_rod", "count": 16}
+    },
+    {
+      "id": "eclipse",
+      "comment": "An eclipse: a crowd of night flyers and conjured lights in three places.",
+      "band": "ambush",
+      "weight": 10,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:phantom", "count": "4-6"},
+        {"type": "entity", "id": "minecraft:vex", "count": "3-5"}
+      ],
+      "cells": 3,
+      "cue": {"sound": "minecraft:entity.phantom.ambient", "volume": 1.0, "pitch": 0.5, "particle": "minecraft:end_rod", "count": 20},
+      "message": "message.nusmp.mega.enc.astral.eclipse"
+    },
+    {
+      "id": "conjunction",
+      "comment": "The late ambush: casters, turrets and a teleporter. Only for parties of two or more.",
+      "band": "ambush",
+      "weight": 8,
+      "minThreat": 5,
+      "mobs": [
+        {"type": "faction", "count": "3-4", "faction": "cultist"},
+        {"type": "entity", "id": "minecraft:shulker", "count": "2-3"},
+        {"type": "entity", "id": "minecraft:enderman", "count": "1-2"}
+      ],
+      "minParty": 2,
+      "cells": 2,
+      "cue": {"sound": "minecraft:entity.enderman.scream", "volume": 1.0, "pitch": 0.6, "particle": "minecraft:end_rod", "count": 24}
+    }
+  ]
+}
