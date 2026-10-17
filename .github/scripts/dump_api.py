@@ -28,18 +28,36 @@ for root in roots:
         for fn in fns:
             if fn.endswith(".jar") and not fn.endswith("-sources.jar") and not fn.endswith("-javadoc.jar"):
                 jars.append(os.path.join(dp, fn))
-# 1.55.0: a class found in several jars is taken from the FIRST, and some intermediate Minecraft jars of the Gradle cache hold half-renamed copies
-# (MinecraftServer extends an obfuscated name there). The fully mapped Minecraft + NeoForge classes live in neoforge-21*.jar, so those go first.
+# 1.55.0: a class found in several jars is taken from the FIRST, and the Gradle cache holds several Minecraft jars (NeoGradle keeps the outputs of its
+# intermediate steps), some with half-renamed copies of a few classes (MinecraftServer extends an obfuscated name there). The right one is the jar that
+# holds BOTH Minecraft's MinecraftServer and NeoForge's own NeoForge class (the fully mapped, patched game), so that jar goes first, then any jar that
+# only holds MinecraftServer, then the rest. The job log lists the candidates so a wrong pick is visible.
+def _has(path, entry):
+    try:
+        with zipfile.ZipFile(path) as z:
+            z.getinfo(entry)
+            return True
+    except Exception:
+        return False
+
+
 def _rank(path):
-    base = os.path.basename(path)
-    if re.match(r"neoforge-21[^/]*\.jar$", base):
+    mc = _has(path, "net/minecraft/server/MinecraftServer.class")
+    nf = _has(path, "net/neoforged/neoforge/common/NeoForge.class")
+    if mc and nf:
         return 0
-    if "client-extra" in base:
+    if mc:
         return 1
-    return 2
+    if re.match(r"neoforge-21[^/]*\.jar$", os.path.basename(path)):
+        return 2
+    return 3
 
 
-jars.sort(key=lambda p: (_rank(p), p))
+ranks = {p: _rank(p) for p in jars}
+jars.sort(key=lambda p: (ranks[p], p))
+for p in jars:
+    if ranks[p] <= 1:
+        print("minecraft jar candidate (rank %d): %s" % (ranks[p], p))
 print("jars:", len(jars))
 
 seen = set()
