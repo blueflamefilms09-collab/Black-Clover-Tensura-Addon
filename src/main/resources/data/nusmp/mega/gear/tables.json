@@ -1,0 +1,132 @@
+{
+  "why": "The drop tables of the standard Normal / Special / Rare equipment that monsters of the Mega-Dungeon drop without limit (1.55.0, builder GEAR). They are data so the owner or a pack can retune the drops without a mod update (a data pack file of the same path replaces this one; /reload applies it). The three base chances, the shift per floor and the Looting bonus are NOT here: they are server config keys (nusmp-labyrinth-mega-gear-server.toml) because they are the knobs of one server, while this file holds the SHAPES: how the grade mix moves with depth, what each grade is made of, which slots are likely. Every item id is a vanilla item on purpose: standard gear is ordinary items stamped with the nusmp:gear_grade component, never relics, so no relic ledger or world limit ever applies to it (docs/labyrinth/mega_gear.md).",
+
+  "curve": {
+    "why": "Multiplier of each grade's base chance along the depth progress x = floorShift * (threat - 1), clamped to 0..1 (x = 1 at floor 51 with the default shift). With the default bases 0.05 / 0.015 / 0.004 the three multiplied chances add up to about 0.069 at every depth (within 6 percent), so going deeper MOVES weight from Normal to Special and Rare instead of adding drops: Normal falls to 0.40, Special peaks at x = 0.5 (about floor 26) and eases back to 1.40, Rare keeps rising to 6.",
+    "normal":  [[0.0, 1.0], [0.5, 0.64], [1.0, 0.40]],
+    "special": [[0.0, 1.0], [0.5, 1.95], [1.0, 1.40]],
+    "rare":    [[0.0, 1.0], [0.5, 2.40], [1.0, 6.00]]
+  },
+
+  "caps": {
+    "why": "Ceilings that hold whatever the config asks for: no grade drops on more than the stated share of kills, and the three together never pass total. They keep a mistyped config (normalChance 5) from turning every kill into a shower of gear.",
+    "normal": 0.30,
+    "special": 0.20,
+    "rare": 0.15,
+    "total": 0.50
+  },
+
+  "slotWeights": {
+    "why": "How likely each kind of piece is when a drop is decided. They add up to 100 so each reads as a percent: half the drops are armour (four pieces of 13), about four in ten are weapons, one in eleven a shield. A slot a grade has no base item for is simply never rolled for that grade.",
+    "sword": 18, "axe": 8, "bow": 8, "crossbow": 5, "shield": 9,
+    "helmet": 13, "chestplate": 13, "leggings": 13, "boots": 13
+  },
+
+  "grades": {
+    "normal": {
+      "why": "Everyday items without magic (Tensura: mass-produced from standard metals): wood, stone and leather, the plain bow, crossbow and shield. No bonus, no enchantment, no engraving, no resistance: the item is exactly what the vanilla item is, with a grade on it.",
+      "items": {
+        "sword": ["minecraft:wooden_sword", "minecraft:stone_sword"],
+        "axe": ["minecraft:wooden_axe", "minecraft:stone_axe"],
+        "bow": ["minecraft:bow"],
+        "crossbow": ["minecraft:crossbow"],
+        "shield": ["minecraft:shield"],
+        "helmet": ["minecraft:leather_helmet"],
+        "chestplate": ["minecraft:leather_chestplate"],
+        "leggings": ["minecraft:leather_leggings"],
+        "boots": ["minecraft:leather_boots"]
+      },
+      "power": [0, 0],
+      "durability": [0, 0],
+      "enchants": { "count": [0, 0], "levelCap": 1, "pool": {} },
+      "engravings": { "count": [0, 0], "pool": {} },
+      "resist": { "armour": [0, 0], "hand": [0, 0] }
+    },
+
+    "special": {
+      "why": "Refined craftsmanship (Tensura: superior quality, occasionally a minor magical effect): iron and chainmail instead of wood, stone and leather, 10 to 20 percent more attack damage or armour, 10 to 25 percent more durability, at most one minor enchantment (level 1) and, on a weapon or shield, at most one light Tensura engraving. No magic resistance: that is what Rare adds.",
+      "items": {
+        "sword": ["minecraft:iron_sword"],
+        "axe": ["minecraft:iron_axe"],
+        "bow": ["minecraft:bow"],
+        "crossbow": ["minecraft:crossbow"],
+        "shield": ["minecraft:shield"],
+        "helmet": ["minecraft:chainmail_helmet", "minecraft:iron_helmet"],
+        "chestplate": ["minecraft:chainmail_chestplate", "minecraft:iron_chestplate"],
+        "leggings": ["minecraft:chainmail_leggings", "minecraft:iron_leggings"],
+        "boots": ["minecraft:chainmail_boots", "minecraft:iron_boots"]
+      },
+      "power": [10, 20],
+      "durability": [10, 25],
+      "enchants": {
+        "count": [0, 1],
+        "levelCap": 1,
+        "pool": {
+          "sword": [ {"id": "minecraft:sharpness", "min": 1, "max": 2}, {"id": "minecraft:unbreaking", "min": 1, "max": 3}, {"id": "minecraft:knockback", "min": 1, "max": 2}, {"id": "minecraft:sweeping_edge", "min": 1, "max": 3} ],
+          "axe": [ {"id": "minecraft:sharpness", "min": 1, "max": 2}, {"id": "minecraft:efficiency", "min": 1, "max": 3}, {"id": "minecraft:unbreaking", "min": 1, "max": 3} ],
+          "bow": [ {"id": "minecraft:power", "min": 1, "max": 2}, {"id": "minecraft:punch", "min": 1, "max": 2}, {"id": "minecraft:unbreaking", "min": 1, "max": 3} ],
+          "crossbow": [ {"id": "minecraft:quick_charge", "min": 1, "max": 2}, {"id": "minecraft:piercing", "min": 1, "max": 2}, {"id": "minecraft:unbreaking", "min": 1, "max": 3} ],
+          "shield": [ {"id": "minecraft:unbreaking", "min": 1, "max": 3} ],
+          "helmet": [ {"id": "minecraft:protection", "min": 1, "max": 2}, {"id": "minecraft:respiration", "min": 1, "max": 2}, {"id": "minecraft:aqua_affinity", "min": 1, "max": 1}, {"id": "minecraft:unbreaking", "min": 1, "max": 3} ],
+          "chestplate": [ {"id": "minecraft:protection", "min": 1, "max": 2}, {"id": "minecraft:thorns", "min": 1, "max": 2}, {"id": "minecraft:unbreaking", "min": 1, "max": 3} ],
+          "leggings": [ {"id": "minecraft:protection", "min": 1, "max": 2}, {"id": "minecraft:swift_sneak", "min": 1, "max": 2}, {"id": "minecraft:unbreaking", "min": 1, "max": 3} ],
+          "boots": [ {"id": "minecraft:protection", "min": 1, "max": 2}, {"id": "minecraft:feather_falling", "min": 1, "max": 2}, {"id": "minecraft:unbreaking", "min": 1, "max": 3} ]
+        }
+      },
+      "engravings": {
+        "count": [0, 1],
+        "pool": {
+          "sword": [ {"id": "tensura:sturdy", "min": 1, "max": 1}, {"id": "tensura:swift", "min": 1, "max": 1} ],
+          "axe": [ {"id": "tensura:sturdy", "min": 1, "max": 1}, {"id": "tensura:crushing", "min": 1, "max": 1} ],
+          "bow": [ {"id": "tensura:sturdy", "min": 1, "max": 1} ],
+          "crossbow": [ {"id": "tensura:sturdy", "min": 1, "max": 1} ],
+          "shield": [ {"id": "tensura:sturdy", "min": 1, "max": 1} ]
+        }
+      },
+      "resist": { "armour": [0, 0], "hand": [0, 0] }
+    },
+
+    "rare": {
+      "why": "High-grade make (Tensura: premium alloys, natural magic resistance): iron or diamond, 20 to 35 percent more attack damage or armour, 25 to 50 percent more durability, one or two enchantments (level up to 2), one or two Tensura engravings on a weapon or shield chosen for fighting magic, and a magic resistance of 5 to 12 percent on each armour piece and 4 to 6 percent on a weapon or shield (summed over everything worn and held and held to the config ceiling maxResist).",
+      "items": {
+        "sword": ["minecraft:iron_sword", "minecraft:diamond_sword"],
+        "axe": ["minecraft:iron_axe", "minecraft:diamond_axe"],
+        "bow": ["minecraft:bow"],
+        "crossbow": ["minecraft:crossbow"],
+        "shield": ["minecraft:shield"],
+        "helmet": ["minecraft:iron_helmet", "minecraft:diamond_helmet"],
+        "chestplate": ["minecraft:iron_chestplate", "minecraft:diamond_chestplate"],
+        "leggings": ["minecraft:iron_leggings", "minecraft:diamond_leggings"],
+        "boots": ["minecraft:iron_boots", "minecraft:diamond_boots"]
+      },
+      "power": [20, 35],
+      "durability": [25, 50],
+      "enchants": {
+        "count": [1, 2],
+        "levelCap": 2,
+        "pool": {
+          "sword": [ {"id": "minecraft:sharpness", "min": 1, "max": 2}, {"id": "minecraft:unbreaking", "min": 1, "max": 3}, {"id": "minecraft:knockback", "min": 1, "max": 2}, {"id": "minecraft:sweeping_edge", "min": 1, "max": 3} ],
+          "axe": [ {"id": "minecraft:sharpness", "min": 1, "max": 2}, {"id": "minecraft:efficiency", "min": 1, "max": 3}, {"id": "minecraft:unbreaking", "min": 1, "max": 3} ],
+          "bow": [ {"id": "minecraft:power", "min": 1, "max": 2}, {"id": "minecraft:punch", "min": 1, "max": 2}, {"id": "minecraft:unbreaking", "min": 1, "max": 3} ],
+          "crossbow": [ {"id": "minecraft:quick_charge", "min": 1, "max": 2}, {"id": "minecraft:piercing", "min": 1, "max": 2}, {"id": "minecraft:unbreaking", "min": 1, "max": 3} ],
+          "shield": [ {"id": "minecraft:unbreaking", "min": 1, "max": 3} ],
+          "helmet": [ {"id": "minecraft:protection", "min": 1, "max": 2}, {"id": "minecraft:respiration", "min": 1, "max": 2}, {"id": "minecraft:aqua_affinity", "min": 1, "max": 1}, {"id": "minecraft:unbreaking", "min": 1, "max": 3} ],
+          "chestplate": [ {"id": "minecraft:protection", "min": 1, "max": 2}, {"id": "minecraft:thorns", "min": 1, "max": 2}, {"id": "minecraft:unbreaking", "min": 1, "max": 3} ],
+          "leggings": [ {"id": "minecraft:protection", "min": 1, "max": 2}, {"id": "minecraft:swift_sneak", "min": 1, "max": 2}, {"id": "minecraft:unbreaking", "min": 1, "max": 3} ],
+          "boots": [ {"id": "minecraft:protection", "min": 1, "max": 2}, {"id": "minecraft:feather_falling", "min": 1, "max": 2}, {"id": "minecraft:unbreaking", "min": 1, "max": 3} ]
+        }
+      },
+      "engravings": {
+        "count": [1, 2],
+        "pool": {
+          "sword": [ {"id": "tensura:magic_interference", "min": 1, "max": 1}, {"id": "tensura:magicule_absorption", "min": 1, "max": 1}, {"id": "tensura:sturdy", "min": 1, "max": 2}, {"id": "tensura:barrier_piercing", "min": 1, "max": 1} ],
+          "axe": [ {"id": "tensura:magic_interference", "min": 1, "max": 1}, {"id": "tensura:sturdy", "min": 1, "max": 2}, {"id": "tensura:crushing", "min": 1, "max": 1}, {"id": "tensura:barrier_piercing", "min": 1, "max": 1} ],
+          "bow": [ {"id": "tensura:magic_interference", "min": 1, "max": 1}, {"id": "tensura:magicule_absorption", "min": 1, "max": 1}, {"id": "tensura:sturdy", "min": 1, "max": 1} ],
+          "crossbow": [ {"id": "tensura:magic_interference", "min": 1, "max": 1}, {"id": "tensura:barrier_piercing", "min": 1, "max": 1}, {"id": "tensura:sturdy", "min": 1, "max": 1} ],
+          "shield": [ {"id": "tensura:magic_interference", "min": 1, "max": 1}, {"id": "tensura:magicule_absorption", "min": 1, "max": 2}, {"id": "tensura:magic_protection", "min": 1, "max": 1}, {"id": "tensura:sturdy", "min": 1, "max": 2} ]
+        }
+      },
+      "resist": { "armour": [5, 12], "hand": [4, 6] }
+    }
+  }
+}
