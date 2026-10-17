@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:arc/saga_danmachi",
+  "display": {
+    "icon": {
+      "id": "minecraft:iron_sword"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arc.defeated_charybdis_spawn.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arc.defeated_charybdis_spawn.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_defeated_charybdis_spawn": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arc.defeated",
+        "arg": "charybdis_spawn"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_defeated_charybdis_spawn"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  }
+}

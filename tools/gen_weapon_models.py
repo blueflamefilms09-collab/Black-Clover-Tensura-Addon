@@ -2507,6 +2507,54 @@ def zogratis_hourglass(m, a):
 RELICS += [("zogratis_hourglass", zogratis_hourglass)]               # 1.46.0: upright, placed on its icon's box; run tools/gen_zogratis_arena_assets.py first
 
 
+def chronicle_sigil(m, a):
+    """1.61.0, the Chronicle Sigil (nusmp:chronicle_sigil, docs/arc/world.md): a round seal of lapis in a heavy gold rim, an open book raised on each face with a
+    spark above it, four gold studs round the rim and a bail with a ring above, all with a soft gold glow. Upright, placed on its icon's box like a relic
+    (tools/gen_chronicle_assets.py makes the icon, so run that first)."""
+    gold, gold_hi, gold_lo = (222, 170, 52), (255, 226, 130), (120, 78, 22)
+    lapis, page, ink, spine = (34, 54, 138), (238, 228, 198), (118, 96, 60), (92, 62, 26)
+    disc = disc_mask(7.0)
+    rim = disc_mask(7.0, inner=5.5)
+    book = ascii_mask([".####.####.", "#####.#####", "#####.#####", "#####.#####", "#####.#####", ".####.####.", "..###.###.."])
+    spark = ascii_mask([".#.", "###", ".#."])
+
+    def lapis_paint(i, j, front):
+        c = np.array(lapis, np.float32) + fz(i * 1.9, j * 1.5, 31) * 26 + (14 if (i * 7 + j * 13) % 5 == 0 else 0)
+        return col(np.clip(c, 0, 255)), col((120, 150, 255), 0.18)
+
+    def rim_paint(i, j, front):
+        c = np.array(gold, np.float32) * (1.12 if (i + j) % 3 == 0 else 1.0) + fz(i * 2.1, j * 1.7, 5) * 16
+        return col(np.clip(c, 0, 255)), col((255, 226, 130), 0.2)
+
+    def book_paint(i, j, front):
+        ii = i if front else 10 - i                                      # the back face is mirrored: read the book the same way from both sides
+        if ii == 5:
+            return col(spine), None
+        if j in (2, 4) and ii % 2 == 0:
+            return col(ink), None
+        c = np.array(page, np.float32) * (1.0 if ii < 5 else 0.9) + fz(i * 1.4, j * 1.9, 9) * 8
+        return col(np.clip(c, 0, 255)), col((255, 240, 190), 0.3)
+
+    def spark_paint(i, j, front):
+        return col(gold_hi), col((255, 236, 160), 1.0)
+
+    plate(m, a, disc, -7.0, -7.0, 1.2, lapis_paint, "xy", 0.0)                      # the seal
+    plate(m, a, rim, -7.0, -7.0, 1.7, rim_paint, "xy", 0.0)                         # its rim stands proud of both faces
+    plate(m, a, book, -5.5, -4.5, 0.45, book_paint, "xy", 1.35)                     # the book on the front face ...
+    plate(m, a, book, -5.5, -4.5, 0.45, book_paint, "xy", -1.35)                    # ... and on the back
+    plate(m, a, spark, -1.5, 3.4, 0.45, spark_paint, "xy", 1.35)
+    plate(m, a, spark, -1.5, 3.4, 0.45, spark_paint, "xy", -1.35)
+    for k in range(4):                                                              # four studs round the rim
+        ang = k * math.pi / 2 + math.pi / 4
+        sx, sy = math.cos(ang) * 6.3, math.sin(ang) * 6.3
+        box(m, a, sx - 0.8, sy - 0.8, -2.2, sx + 0.8, sy + 0.8, 2.2, flat(gold_hi, 10, 7))
+    box(m, a, -1.3, 7.0, -1.0, 1.3, 9.0, 1.0, flat(gold_lo, 10, 3))                 # the bail ...
+    plate(m, a, disc_mask(1.9, inner=0.9), -1.9, 8.6, 0.8, rim_paint, "xy", 0.0)       # ... and its ring
+    return dict(glow=("FFE9A8", 0.12, 0.35, 0.9))
+
+RELICS += [("chronicle_sigil", chronicle_sigil)]                                    # 1.61.0: upright, placed on its icon's box; run tools/gen_chronicle_assets.py first
+
+
 def mana_core(m, a):
     """1.54.0, the Mana Core of a sector's Labyrinth Guardian (docs/labyrinth/mega_guard.md): a faceted teal-violet crystal (a hexagonal
     bipyramid with a belt) with a bright heart, floating inside two thin rings of runes (a horizontal one round its belt and a vertical

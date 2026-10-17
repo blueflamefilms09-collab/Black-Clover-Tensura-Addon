@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:arc/saga_spade_raid",
+  "display": {
+    "icon": {
+      "id": "minecraft:iron_sword"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arc.defeated_dante.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arc.defeated_dante.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_defeated_dante": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arc.defeated",
+        "arg": "dante"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_defeated_dante"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  }
+}

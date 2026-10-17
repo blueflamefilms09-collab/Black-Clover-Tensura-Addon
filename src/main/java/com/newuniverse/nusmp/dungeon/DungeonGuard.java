@@ -48,6 +48,7 @@ public final class DungeonGuard {
     public static boolean on(Level level) {
         if (level == null || level.isClientSide()) return false;
         if (com.newuniverse.nusmp.arena.ZogratisArena.in(level)) return true;                                       // 1.46.0: the arena of the Final Hour is held by the same guard, always (the fight's furniture must not be dug up)
+        if (com.newuniverse.nusmp.arc.arena.ArcArena.in(level)) return !com.newuniverse.nusmp.arc.arena.ArcArena.editing();   // 1.61.0: the story arenas of the arcs, the same way; an operator's edit switch (off at every start) lets a creative operator change one
         if (com.newuniverse.nusmp.labyrinth.Labyrinth.in(level)) return com.newuniverse.nusmp.labyrinth.LabyrinthConfig.get(com.newuniverse.nusmp.labyrinth.LabyrinthConfig.UNBREAKABLE);   // 1.35.0: the Labyrinth is held by the same guard (nobody digs round a sealed door)
         return false;
     }
@@ -59,6 +60,7 @@ public final class DungeonGuard {
     public static boolean predictsClient(Level level) {
         if (level == null || !level.isClientSide()) return false;
         if (com.newuniverse.nusmp.arena.ZogratisArena.in(level)) return true;                                       // 1.46.0: always unbreakable, so the crack never starts
+        if (com.newuniverse.nusmp.arc.arena.ArcArena.in(level)) return true;                                       // 1.61.0: the story arenas too (an operator's edit switch lives on the server; a client that predicts a refusal only loses a crack animation)
         if (!com.newuniverse.nusmp.labyrinth.Labyrinth.in(level)) return false;                                   // 1.35.0: the Labyrinth's own switch
         try { return com.newuniverse.nusmp.labyrinth.LabyrinthConfig.UNBREAKABLE.get(); } catch (RuntimeException notSynced) { return false; }
     }

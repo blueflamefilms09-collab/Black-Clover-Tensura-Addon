@@ -88,6 +88,7 @@ public final class ArcSelfTests {
         List<String> bad = new ArrayList<>();
         if (!DefaultAttributes.hasSupplier(ArcEntities.NPC.get())) bad.add("the NPC type has no attributes");
         for (ArcCharacter c : ArcRoster.bosses()) {
+            if (com.newuniverse.nusmp.arc.world.ExistingBosses.owns(c.id())) continue;             // 1.61.0: the seven older bosses are checked by arcworld.roster
             EntityType<? extends ArcBoss> t = ArcSpawner.typeOf(c.id());
             if (t == null) { bad.add(c.id() + " has no entity type"); continue; }
             ResourceLocation key = BuiltInRegistries.ENTITY_TYPE.getKey(t);
@@ -176,7 +177,7 @@ public final class ArcSelfTests {
         List<String> bad = new ArrayList<>();
         int n = 0;
         for (ArcCharacter c : ArcRoster.bosses()) {
-            if (!c.hasCharter()) continue;
+            if (!c.hasCharter() || com.newuniverse.nusmp.arc.world.ExistingBosses.owns(c.id())) continue;     // 1.61.0: the older seven keep their own Charter rows (arcworld.roster)
             n++;
             CharterTable.Boss b = CharterTable.byId(c.charterId());
             if (b == null) { bad.add(c.id() + " has no Charter row"); continue; }
@@ -255,7 +256,8 @@ public final class ArcSelfTests {
                 if (!c.id().equals(again.characterId()) || !at.above(2).equals(again.home())) return fail("the NPC's character and post do not survive its save data");
                 done.add(c.id() + " placed, named, saved");
             }
-            List<ArcCharacter> bosses = ArcRoster.bosses();
+            List<ArcCharacter> bosses = new ArrayList<>();
+            for (ArcCharacter b : ArcRoster.bosses()) if (!com.newuniverse.nusmp.arc.world.ExistingBosses.owns(b.id())) bosses.add(b);       // 1.61.0: the older seven are made by arcworld.spawn
             if (!bosses.isEmpty()) {
                 ArcCharacter c = bosses.get(0);
                 ArcSpawner.Result r = ArcSpawner.summon(level, c, where.add(4, 0, 0), 0f, List.of(), true);

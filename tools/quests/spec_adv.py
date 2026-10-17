@@ -537,3 +537,6 @@ for arc, slot, ttl, what in FUTURE:
             "Coming soon: %s is not in the Multiverse yet. This advancement is granted by its death once it is made." % what,
             "minecraft:barrier", impossible(), frame="goal", xp=150, hidden=True, chat=True)
     a.future = True
+
+import spec_arc  # noqa: E402,F401  1.61.0: the characters of the arcs (tools/quests/arc_roster.txt)
+spec_arc.build(S)

@@ -1,0 +1,35 @@
+{
+  "parent": "nusmp:arc/saga_spade_raid",
+  "display": {
+    "icon": {
+      "id": "minecraft:iron_sword"
+    },
+    "title": {
+      "translate": "advancement.nusmp.arc.defeated_zenon.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.arc.defeated_zenon.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_defeated_zenon": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "arc.defeated",
+        "arg": "zenon"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_defeated_zenon"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  }
+}

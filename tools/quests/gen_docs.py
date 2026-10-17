@@ -79,6 +79,10 @@ EVENTS = [
     ("shadow.travel", "-", "shadow/ShadowTravel"),
     ("unite.mode", "canis, equus, felis or gallus", "shadow/UniteWatcher"),
     ("time.stop", "-", "blackclover/TimeStop"),
+    ("arc.defeated", "character id lower case (dante, lucius, goliath ...)", "a boss of the arcs falls: arc/story/ArcStory.defeated (the arcs' own bosses), arc/world/ArcWorldCredit (the seven older ones); credits the fighters and, with arc.shareStoryCredit, their nearby FTB teammates"),
+    ("arc.met", "character id lower case", "first conversation with a friendly character of the arcs (arc/story/ArcStory.met)"),
+    ("arc.saga_clear", "saga id lower case (elf_reincarnation, spade_raid, wizard_king, seven_deadly_sins, danmachi)", "a player's story closes a saga (every boss of it defeated), once per saga: arc/world/ArcWorldCredit.settle"),
+    ("arc.arena", "boss id lower case", "a player is carried into a story arena by the Chronicle Sigil: arc/arena/ArcArenaTravel.enter"),
 ]
 
 
@@ -108,6 +112,7 @@ def adv_doc():
         "spells": "signature casts, merging, engraving, the twenty canon pages, the special arts (butoh, song, corpse, paladin, rouge, thread, shadow, time, unite)",
         "arcs": "one milestone per anime arc (13), chained in story order",
         "future": "hidden placeholders for the bosses that are not made yet (granted by their death once they exist)",
+        "arc": "the characters of the arcs, one advancement per character of tools/quests/arc_roster.txt (defeated a boss, met a friend), one per saga cleared, and one for the arenas (spec_arc.py, refreshed by tools/quests/gen_arc_adv.py)",
         "bosses": "every boss the mod has, kill counts, the Triad, Lucius stages, the all-bosses challenge",
         "relics": "obtain, equip, the seven grades, forge, sockets, tiers, Djinn, pairs, sets, Vecna, the Infinity Stones",
         "weapons": "the named weapons, the anti-magic blades, the Genesis edge, engravings",

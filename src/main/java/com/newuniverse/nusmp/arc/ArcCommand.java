@@ -130,7 +130,8 @@ public final class ArcCommand {
             say(ctx, " tier " + c.tier() + ", health " + (int) c.health() + ", attack " + c.attack() + ", speed " + c.speed() + ", armor " + c.armor() + (c.magic().isEmpty() ? "" : ", magic " + c.magic()));
             say(ctx, " floors " + (c.floorMax() <= 0 ? "(never a floor boss)" : c.floorMin() + " to " + c.floorMax() + (c.road() == null ? " on either road" : " on the " + c.road().name().toLowerCase(Locale.ROOT) + " road"))
                     + (c.themes().isEmpty() ? "" : ", themes " + String.join(", ", c.themes())) + (c.arena().isEmpty() ? "" : ", arena " + c.arena()));
-            say(ctx, " entity " + (ArcSpawner.typeOf(c.id()) != null ? "nusmp:" + c.id() : "NOT REGISTERED"));
+            say(ctx, " entity " + (com.newuniverse.nusmp.arc.world.ExistingBosses.owns(c.id()) ? "nusmp:" + com.newuniverse.nusmp.arc.world.ExistingBosses.entityPath(c.id()) + " (an older boss)"      // 1.61.0
+                    : ArcSpawner.typeOf(c.id()) != null ? "nusmp:" + c.id() : "NOT REGISTERED"));
             CharterTable.Boss g = CharterTable.byId(c.charterId());
             say(ctx, " grimoire " + (!c.hasCharter() ? "none" : g == null ? "declared but not in the Charter table" : g.skills().size() + " skills, first-kill chance " + g.chance()));
         }
