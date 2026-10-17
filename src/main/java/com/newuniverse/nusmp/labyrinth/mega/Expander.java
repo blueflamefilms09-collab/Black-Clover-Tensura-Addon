@@ -19,6 +19,12 @@ public interface Expander {
      */
     default boolean requestFirst(MinecraftServer server, Polarity polarity) { return polarity == Polarity.HOLY && requestFirst(server); }
 
+    /**
+     * 1.58.0 (party): queues the first sector of a polarity's chain on the lane of a party ({@link MegaGrid#laneZ(Polarity, int)}). The default keeps a generator that
+     * knows no parties working: the shared lane (party 0) is the old request, every other party is refused until the generator overrides this.
+     */
+    default boolean requestFirst(MinecraftServer server, Polarity polarity, int party) { return party == 0 && requestFirst(server, polarity); }
+
     /** Queues the sector that attaches to {@code from}'s Way Onward. False when refused (already generated, queued, expansion off, limit reached). */
     boolean requestNext(ServerLevel level, Sector from);
 

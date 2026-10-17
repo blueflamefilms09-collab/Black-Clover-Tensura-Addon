@@ -25,7 +25,11 @@ What it checks, in order:
   6b. the floor model (1.58.0, one floor per sector, joined by stairs): the stairwell pools go through Jigsaw, `expand holy` and `expand abyssal` add a floor
      each, every floor audits OK, and the `stairs ...` line of `sector <id>` has both stairwells inside the floor's region, the right climb for the road, the hub
      behind the first floor, floor n leading to floor n + 1 and back, and floors that never touch;
-  7. `--restart`: the server is stopped and started again, and `status` still lists the same sectors in the same states (saved data and resume);
+  6c. the dungeon parties (1.58.0, instanced per party): `expand holy party 1` builds a first floor for a SECOND party on that party's own lane (z -4096, the Holy lanes of
+     parties 1, 2 ... run to the negative side; the Abyssal ones start at 300000 and go on), the party's next floor and its Abyssal road follow, every floor audits OK, party 1's
+     floors are in `status party 1` and NOT in the plain `status` (which is party 0, the shared chain), stand on the lane of their party (a z within a floor's reach of it) and
+     never near a floor of party 0, and `party list` knows the lane. No player is needed: the admin command names the party;
+  7. `--restart`: the server is stopped and started again, and `status` still lists the same sectors in the same states (saved data and resume), party 1's chain included;
   8. the final log has no mod-related ERROR or exception.
 """
 import argparse
@@ -400,8 +404,9 @@ class Smoke:
 
     SECTOR_RE = re.compile(r"sector (\d+) (\w+) theme=(\w+) threat=(\d+) rooms=(\d+) edges=(\d+) pieces=(\d+) relics=(\d+) region=(-?\d+),(-?\d+),(-?\d+),(-?\d+)")
 
-    def status(self):
-        text = self.run("multiverse mega status")
+    def status(self, party=0):
+        """`multiverse mega status` (party 0, the shared chain) or `status party <n>`: the sectors of ONE party's chains, by id."""
+        text = self.run("multiverse mega status" + (" party %d" % party if party else ""))
         sectors = {}
         for m in self.SECTOR_RE.finditer(text):
             g = m.groups()
@@ -409,11 +414,11 @@ class Smoke:
                                   "relics": int(g[7]), "region": tuple(int(v) for v in g[8:12])}
         return text, sectors
 
-    def wait_active(self, sector_id, label):
+    def wait_active(self, sector_id, label, party=0):
         end = time.time() + self.args.gen_timeout
         last = {}
         while time.time() < end:
-            _, sectors = self.status()
+            _, sectors = self.status(party)
             last = sectors.get(sector_id)
             if last and last["state"] not in ("GENERATING",):
                 return last
@@ -561,15 +566,15 @@ class Smoke:
             else:
                 self.fail("floor-pool-" + pool, r.strip()[:200])
 
-    def grow(self, road, label):
-        """Queues the next floor of a road and waits until it is built. Returns its sector id, or None (the check says why)."""
-        r = self.run("multiverse mega expand " + road)
+    def grow(self, road, label, party=0):
+        """Queues the next floor of a road (of party `party`'s chain: 0 is the shared one) and waits until it is built. Returns its sector id, or None (the check says why)."""
+        r = self.run("multiverse mega expand " + road + (" party %d" % party if party else ""))
         m = re.search(r"queued sector (\d+) on the %s road" % road, r)
         if not m:
             (self.fail if self.args.strict else self.skip)(label, r.strip()[:200])
             return None
         nid = int(m.group(1))
-        st = self.wait_active(nid, label)
+        st = self.wait_active(nid, label, party)
         if not st:
             return None
         (self.ok if st["state"] == "ACTIVE" else self.fail)(label, "sector %d is %s: rooms=%d pieces=%d theme=%s" % (nid, st["state"], st["rooms"], st["pieces"], st["theme"]))
@@ -654,6 +659,92 @@ class Smoke:
                                                      "; ".join(problems) if problems else "%s floor %+d: back %s -> %s, forward %s -> %s, boss=%s" % (road, want_floor, info["back"], want_back, info["forward"], want_on, info["boss"]))
         self.final_status = self.status()[1]                                       # the restart check compares with the dungeon as it stands now, floors added here included
 
+    # ---- 1.58.0: the dungeon parties (the dungeon is instanced per party)
+    PARTY_HEAD_RE = re.compile(r"^party: mode=(\w+) instanced=(true|false) maxParties=(\d+) known=(\d+) sectors=(\d+)\s*$", re.M)
+    PARTY_ROW_RE = re.compile(r"^party (\d+) (team|solo|unowned) key=(\S+) name=(.*?) holy=(\d+) abyssal=(\d+) online=(\d+)\s*$", re.M)
+    PARTY_STEP = 4096          # MegaGrid.PARTY_STEP: the z distance between the lanes of two parties
+    PARTY_REACH = 120          # a floor reaches 106 blocks from its lane (half of its 171-block region, a door cap and the gap): a region within this of a lane belongs to it
+    PARTY_LANE_Z = 300000      # MegaGrid.LANE_Z: the Abyssal lane of party 0
+
+    def party_lane(self, road, party):
+        """The z of the lane of a road for a party: party 0 is z 0 / 300000, party k > 0 is -k * 4096 (Holy) and 300000 + k * 4096 (Abyssal)."""
+        return self.PARTY_LANE_Z + party * self.PARTY_STEP if road == "abyssal" else -party * self.PARTY_STEP
+
+    def phase_party(self):
+        """The dungeon is instanced per party. No player is needed: the admin command names the party. Builds the first floors of party 1 (Holy: two floors; Abyssal: one) and
+        checks that they stand on party 1's lanes, are audited, are listed under `status party 1` and not under the plain `status` (party 0), keep their chain inside the party
+        (the stairs line leads to the party's own next floor) and never come near a floor of party 0."""
+        head = self.run("multiverse mega party list")
+        m = self.PARTY_HEAD_RE.search(head)
+        if not m:
+            (self.fail if self.args.strict else self.skip)("party", "the party command is not in this build: " + head.strip()[:160])
+            return
+        if m.group(2) != "true":
+            self.skip("party", "the dungeon is not instanced in this world (mode=%s, instanced=%s): everybody walks party 0" % (m.group(1), m.group(2)))
+            return
+        party = 1
+        _, zero = self.status()
+        holy1 = self.grow("holy", "party-holy-1", party)
+        if holy1 is None:
+            return
+        a = self.run("multiverse mega audit %d" % holy1)
+        (self.ok if ("audit %d OK" % holy1) in a else self.fail)("party-audit-%d" % holy1, a.strip()[:300])
+        holy2 = self.grow("holy", "party-holy-2", party)
+        abyss1 = self.grow("abyssal", "party-abyssal-1", party)
+        ids = [i for i in (holy1, holy2, abyss1) if i is not None]
+        for i in ids[1:]:
+            a = self.run("multiverse mega audit %d" % i)
+            (self.ok if ("audit %d OK" % i) in a else self.fail)("party-audit-%d" % i, a.strip()[:300])
+        text, mine = self.status(party)
+        _, plain = self.status()
+        problems = []
+        if not re.search(r"^party: showing party %d " % party, text, re.M):
+            problems.append("`status party %d` does not say which party it shows" % party)
+        for i in ids:
+            if i not in mine:
+                problems.append("sector %d is not listed by `status party %d`" % (i, party))
+                continue
+            if i in plain:
+                problems.append("sector %d (party %d) shows up in the plain `status`, which is party 0" % (i, party))
+            road = "holy" if i in (holy1, holy2) else "abyssal"
+            lane = self.party_lane(road, party)
+            x1, z1, x2, z2 = mine[i]["region"]
+            if not (z1 <= lane <= z2) or abs(z1 - lane) > self.PARTY_REACH or abs(z2 - lane) > self.PARTY_REACH:
+                problems.append("sector %d (%s, party %d) has its region at z %d..%d, which is not on its lane z %d" % (i, road, party, z1, z2, lane))
+            if not re.search(r"^sector %d .* party=%d\s*$" % (i, party), text, re.M):
+                problems.append("the line of sector %d does not end in party=%d" % (i, party))
+            for j, other in zero.items():
+                gap = self.gap(mine[i]["region"], other["region"])
+                if gap < 12:
+                    problems.append("sector %d (party %d) is only %d blocks from sector %d of party 0" % (i, party, gap, j))
+        # the chain stays in the party: floor 1's stairs lead on to the party's own floor 2 and floor 2's lead back to floor 1
+        if holy1 is not None and holy2 is not None:
+            f1, f2 = self.floor_info(holy1), self.floor_info(holy2)
+            if f1 is None or f2 is None:
+                problems.append("a floor of party %d has no stairs line" % party)
+            else:
+                if f1["on"] != str(holy2):
+                    problems.append("the forward stairs of party %d's first floor lead to %s, not to its own second floor %d" % (party, f1["on"], holy2))
+                if f2["backTo"] != str(holy1):
+                    problems.append("the stairs back of party %d's second floor lead to %s, not to its own first floor %d" % (party, f2["backTo"], holy1))
+                if f1["backTo"] != "hub":
+                    problems.append("the first floor of party %d leads back to %s, not to the hub" % (party, f1["backTo"]))
+        (self.fail if problems else self.ok)("party-lanes", "; ".join(problems) if problems else
+                                              "party %d: holy floors %s and abyssal floor %s stand on their lanes (z %d and z %d), are listed under `status party %d` only, and keep their chain" % (
+                                                  party, [holy1, holy2], abyss1, self.party_lane("holy", party), self.party_lane("abyssal", party), party))
+        # the admin's list knows the lane
+        listing = self.run("multiverse mega party list")
+        rows = {int(r.group(1)): r.groups() for r in self.PARTY_ROW_RE.finditer(listing)}
+        row = rows.get(party)
+        want = (2 if holy2 is not None else 1, 1 if abyss1 is not None else 0)
+        if row is None:
+            self.fail("party-list", "`party list` has no line for party %d: %s" % (party, listing.strip()[:300]))
+        elif (int(row[4]), int(row[5])) != want:
+            self.fail("party-list", "`party list` says party %d has holy=%s abyssal=%s, not %s" % (party, row[4], row[5], want))
+        else:
+            self.ok("party-list", "party %d: %s, holy=%s abyssal=%s; %d part%s listed" % (party, row[1], row[4], row[5], len(rows), "y" if len(rows) == 1 else "ies"))
+        self.final_party = {party: self.status(party)[1]}                          # the restart check compares with party 1 as it stands now
+
     def phase_restart(self):
         self.run("save-all flush")
         time.sleep(3)
@@ -669,6 +760,10 @@ class Smoke:
             self.ok("restart-state", "%d sectors, same states after a restart (saved data and resume work)" % len(sectors))
         else:
             self.fail("restart-state", "before=%s after=%s" % ({i: s["state"] for i, s in before.items()}, {i: s["state"] for i, s in sectors.items()}))
+        for party, was in getattr(self, "final_party", {}).items():
+            now = self.status(party)[1]
+            same = {i: s["state"] for i, s in now.items()} == {i: s["state"] for i, s in was.items()}
+            (self.ok if same else self.fail)("restart-party-%d" % party, "party %d: %d sectors, %s after a restart" % (party, len(now), "same states" if same else "DIFFERENT states: before=%s after=%s" % ({i: s["state"] for i, s in was.items()}, {i: s["state"] for i, s in now.items()})))
         self.scan_log("restart")
 
     # ---- driver
@@ -686,6 +781,7 @@ class Smoke:
             ran = self.phase_mega()
             if ran:
                 self.phase_floors()
+                self.phase_party()
                 self.phase_selftests()
             self.scan_log("run")
             if self.args.restart and ran:

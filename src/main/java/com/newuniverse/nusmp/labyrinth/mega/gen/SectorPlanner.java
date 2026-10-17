@@ -100,9 +100,15 @@ public final class SectorPlanner {
      * side at x 0 and never come near each other. {@code id} is the sector's global id (it only labels the plan); the seed belongs to the place in the road
      * ({@link SectorDraft#seedKey}), not to the id.
      */
-    public static Plan first(long dungeonSeed, int id, Polarity road) {
-        Vec entry = new Vec(0, DOOR_Y, MegaGrid.laneZ(road));
-        return new Plan(id, sectorSeed(dungeonSeed, SectorDraft.seedKey(road, 0)), entry, Facing.EAST, regionFor(entry, Facing.EAST), 0);
+    public static Plan first(long dungeonSeed, int id, Polarity road) { return first(dungeonSeed, id, road, 0); }
+
+    /**
+     * 1.58.0 (party): {@link #first(long, int, Polarity)} on the lane of party {@code party} ({@link MegaGrid#laneZ(Polarity, int)}) with that party's own seed
+     * ({@link SectorDraft#partySeed}). Party 0 is the shared lane and gives exactly the plan it always gave.
+     */
+    public static Plan first(long dungeonSeed, int id, Polarity road, int party) {
+        Vec entry = new Vec(0, DOOR_Y, MegaGrid.laneZ(road, party));
+        return new Plan(id, sectorSeed(SectorDraft.partySeed(dungeonSeed, party), SectorDraft.seedKey(road, 0)), entry, Facing.EAST, regionFor(entry, Facing.EAST), 0);
     }
 
     /**
@@ -110,9 +116,15 @@ public final class SectorPlanner {
      * no tunnel (floors are joined by stairs, not by corridors) and a region of the size its room count needs. The seed belongs to the PLACE in the road, exactly as for
      * the old sectors ({@link SectorDraft#seedKey}). Pure and independent of every other floor: a floor can be planned, repaired and regenerated alone.
      */
-    public static Plan floor(long dungeonSeed, int id, Polarity road, int chainIndex, int rooms, boolean boss) {
-        Vec entry = FloorPlan.entry(road, chainIndex);
-        return new Plan(id, sectorSeed(dungeonSeed, SectorDraft.seedKey(road, chainIndex)), entry, Facing.EAST, FloorPlan.region(entry, rooms, boss), 0);
+    public static Plan floor(long dungeonSeed, int id, Polarity road, int chainIndex, int rooms, boolean boss) { return floor(dungeonSeed, id, road, chainIndex, rooms, boss, 0); }
+
+    /**
+     * 1.58.0 (party): {@link #floor(long, int, Polarity, int, int, boolean)} on the lane of party {@code party}, with that party's own seed ({@link SectorDraft#partySeed}), so
+     * two parties never walk the same floors twice. Party 0 gives exactly the plan it always gave.
+     */
+    public static Plan floor(long dungeonSeed, int id, Polarity road, int chainIndex, int rooms, boolean boss, int party) {
+        Vec entry = FloorPlan.entry(road, chainIndex, party);
+        return new Plan(id, sectorSeed(SectorDraft.partySeed(dungeonSeed, party), SectorDraft.seedKey(road, chainIndex)), entry, Facing.EAST, FloorPlan.region(entry, rooms, boss), 0);
     }
 
     /** The tunnel (as a keep-clear box) of {@code modules} 9-block segments that starts in front of the seal and runs towards {@code facing}. */

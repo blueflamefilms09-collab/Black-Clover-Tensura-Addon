@@ -6,6 +6,7 @@ import com.newuniverse.nusmp.labyrinth.mega.FloorMap;
 import com.newuniverse.nusmp.labyrinth.mega.MegaConfig;
 import com.newuniverse.nusmp.labyrinth.mega.MegaData;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
+import com.newuniverse.nusmp.labyrinth.mega.MegaGrid;
 import com.newuniverse.nusmp.labyrinth.mega.Polarity;
 import com.newuniverse.nusmp.labyrinth.mega.RegionTheme;
 import com.newuniverse.nusmp.labyrinth.mega.RoomKind;
@@ -49,6 +50,12 @@ import java.util.Locale;
  * party ENTERS a floor ({@link #onFloorReached}), so the stairs are normally ready by the time they are found, except behind a boss floor, whose next floor waits for the
  * Crucible exactly as before. A road whose sectors were saved with ten floors each keeps growing the old way (tunnel and Way Onward): the length of a sector is that of
  * the sector before it.
+ *
+ * <p>Parties (1.58.0): the dungeon is instanced per party, so a sector belongs to a party's chain ({@code Sector.party}) and every question the queue asks about "the
+ * road" is asked about one party's road: the first floor of a road is created on the lane of the party that asked ({@link MegaGrid#laneZ(Polarity, int)}), the next floor
+ * always continues the chain of the sector it follows, the limit {@code mega.maxSectors} is counted per party, and the "Labyrinth shifts" line goes only to the party that
+ * is waiting for the floor. There is still ONE queue and one job at a time for the whole server, so parties that grow at the same moment wait for each other, in the
+ * order they asked.
  */
 public final class ExpansionQueue implements Expander {
     private static final Logger LOG = LogUtils.getLogger();
@@ -96,9 +103,12 @@ public final class ExpansionQueue implements Expander {
     public boolean requestFirst(MinecraftServer server) { return requestFirst(server, Polarity.HOLY); }
 
     @Override
-    public boolean requestFirst(MinecraftServer server, Polarity polarity) {
-        String why = tryFirst(server, polarity);
-        if (why != null) LOG.info("[nusmp] Mega first sector of the {} road refused: {}", polarity == null ? "?" : polarity.id(), why);
+    public boolean requestFirst(MinecraftServer server, Polarity polarity) { return requestFirst(server, polarity, 0); }
+
+    @Override
+    public boolean requestFirst(MinecraftServer server, Polarity polarity, int party) {
+        String why = tryFirst(server, polarity, party);
+        if (why != null) LOG.info("[nusmp] Mega first sector of the {} road of party {} refused: {}", polarity == null ? "?" : polarity.id(), party, why);
         return why == null;
     }
 
@@ -123,14 +133,21 @@ public final class ExpansionQueue implements Expander {
      * sector gets the next global id, whichever road was opened first. Returns null on success, else the reason it was refused (the road already has a sector, even a
      * failed one: retry that one with {@code regen}).
      */
-    public String tryFirst(MinecraftServer server, Polarity road) {
+    public String tryFirst(MinecraftServer server, Polarity road) { return tryFirst(server, road, 0); }
+
+    /**
+     * 1.58.0 (party): the first sector of a road on the lane of party {@code party} ({@link MegaGrid#laneZ(Polarity, int)}); party 0 is the shared lane and behaves exactly
+     * as before. A party has a road of its own, so a road that another party opened is no reason to refuse this one.
+     */
+    public String tryFirst(MinecraftServer server, Polarity road, int party) {
         if (road == null) return "no road named";
+        if (party < 0 || party >= MegaGrid.MAX_PARTIES) return "party " + party + " has no lane (the lanes know the parties 0 to " + (MegaGrid.MAX_PARTIES - 1) + ")";
         ServerLevel level = MegaDungeon.level(server);
         if (level == null) return "the Mega-Dungeon dimension is not loaded";
         MegaData data = MegaData.get(server);
-        Sector tail = data.chainTail(road);
-        if (tail != null) return "the " + road.id() + " road already has sector " + tail.id + " (" + tail.state.name() + ")";
-        if (data.sectors().size() >= MegaConfig.get(MegaConfig.MAX_SECTORS)) return "the dungeon reached maxSectors (" + MegaConfig.get(MegaConfig.MAX_SECTORS) + ")";
+        Sector tail = data.chainTail(party, road);
+        if (tail != null) return "the " + road.id() + " road " + ofParty(party) + "already has sector " + tail.id + " (" + tail.state.name() + ")";
+        if (data.sectorCount(party) >= MegaConfig.get(MegaConfig.MAX_SECTORS)) return "the dungeon " + ofParty(party) + "reached maxSectors (" + MegaConfig.get(MegaConfig.MAX_SECTORS) + ")";
         if (data.seed == 0L) {
             long seed = Rng.mix(server.overworld().getSeed(), 0x4D454741L);
             data.seed = seed == 0L ? 1L : seed;
@@ -139,13 +156,13 @@ public final class ExpansionQueue implements Expander {
         Sector latest = data.latest();
         int id = latest == null ? 0 : latest.id + 1;
         int per = FloorMap.floorsPerSector(FloorsConfig.get(FloorsConfig.PER_SECTOR));
-        SectorDraft draft = SectorDraft.first(data.seed, id, road, per);
+        SectorDraft draft = SectorDraft.first(data.seed, id, road, per, party);
         SectorPlanner.Plan plan;
         if (FloorMap.isFloorModel(per)) {
             Request.Floor spec = FloorPlan.spec(road, 0, MegaConfig.get(MegaConfig.FLOOR_ROOMS));
-            plan = SectorPlanner.floor(data.seed, id, road, 0, spec.rooms(), spec.boss());
+            plan = SectorPlanner.floor(data.seed, id, road, 0, spec.rooms(), spec.boss(), party);
         } else {
-            plan = SectorPlanner.first(data.seed, id, road);
+            plan = SectorPlanner.first(data.seed, id, road, party);
         }
         Sector s = create(draft);
         s.seed = plan.seed();
@@ -154,10 +171,13 @@ public final class ExpansionQueue implements Expander {
         s.forward = SectorGenerator.dir(plan.forward());
         data.add(s);
         queue.add(new Job(id, false, null));
-        LOG.info("[nusmp] Mega sector {} queued: the first of the {} road (floors {}..{}, theme {}, seed {}).", id, road.id(), FloorMap.label(s.firstFloor()), FloorMap.label(s.lastFloor()),
+        LOG.info("[nusmp] Mega sector {} queued: the first of the {} road {}(floors {}..{}, theme {}, seed {}).", id, road.id(), ofParty(party), FloorMap.label(s.firstFloor()), FloorMap.label(s.lastFloor()),
                 s.theme.id(), s.seed);
         return null;
     }
+
+    /** {@code "of party 3 "} for a party's own chain, {@code ""} for the shared lane, so the messages of a world without parties read exactly as they always did. */
+    static String ofParty(int party) { return party == 0 ? "" : "of party " + party + " "; }
 
     /** Queues the sector behind {@code from}'s Way Onward. Returns null on success, else the reason it was refused. */
     public String tryNext(ServerLevel level, Sector from) {
@@ -165,8 +185,8 @@ public final class ExpansionQueue implements Expander {
         if (from.isFloor()) return tryNextFloor(level, from);
         MinecraftServer server = level.getServer();
         MegaData data = MegaData.get(server);
-        boolean slotTaken = data.chainSector(from.polarity, from.chainIndex + 1) != null;
-        String why = ExpandRule.refusalForNext(rowOf(from), data.sectors().size(), MegaConfig.get(MegaConfig.MAX_SECTORS), slotTaken);
+        boolean slotTaken = data.chainSector(from.party, from.polarity, from.chainIndex + 1) != null;
+        String why = ExpandRule.refusalForNext(rowOf(from), data.sectorCount(from.party), MegaConfig.get(MegaConfig.MAX_SECTORS), slotTaken);
         if (why != null) return why;
         SectorPlanner.Next n = planBehind(data, from);
         if (n == null) return "no room behind the seal of sector " + from.id + " (older sectors are in the way)";
@@ -175,7 +195,7 @@ public final class ExpansionQueue implements Expander {
         from.nextId = id;
         data.add(s);
         queue.add(new Job(id, false, null));
-        LOG.info("[nusmp] Mega sector {} queued behind sector {} on the {} road (floors {}..{}, theme {}, {} tunnel segments, seed {}).", id, from.id, s.polarity.id(),
+        LOG.info("[nusmp] Mega sector {} queued behind sector {} on the {} road {}(floors {}..{}, theme {}, {} tunnel segments, seed {}).", id, from.id, s.polarity.id(), ofParty(s.party),
                 FloorMap.label(s.firstFloor()), FloorMap.label(s.lastFloor()), s.theme.id(), n.linkModules(), s.seed);
         return null;
     }
@@ -187,14 +207,14 @@ public final class ExpansionQueue implements Expander {
     private String tryNextFloor(ServerLevel level, Sector from) {
         MinecraftServer server = level.getServer();
         MegaData data = MegaData.get(server);
-        boolean slotTaken = data.chainSector(from.polarity, from.chainIndex + 1) != null;
-        String why = ExpandRule.refusalForNext(rowOf(from), data.sectors().size(), MegaConfig.get(MegaConfig.MAX_SECTORS), slotTaken);
+        boolean slotTaken = data.chainSector(from.party, from.polarity, from.chainIndex + 1) != null;
+        String why = ExpandRule.refusalForNext(rowOf(from), data.sectorCount(from.party), MegaConfig.get(MegaConfig.MAX_SECTORS), slotTaken);
         if (why != null) return why;
         Sector s = draftFloor(data, from);
         from.nextId = s.id;
         data.add(s);
         queue.add(new Job(s.id, false, null));
-        LOG.info("[nusmp] Mega floor {} queued after sector {} on the {} road (floor {}{}, theme {}, seed {}).", s.id, from.id, s.polarity.id(), FloorMap.label(s.firstFloor()),
+        LOG.info("[nusmp] Mega floor {} queued after sector {} on the {} road {}(floor {}{}, theme {}, seed {}).", s.id, from.id, s.polarity.id(), ofParty(s.party), FloorMap.label(s.firstFloor()),
                 s.isBossFloor() ? ", a boss floor" : "", s.theme.id(), s.seed);
         return null;
     }
@@ -209,9 +229,9 @@ public final class ExpansionQueue implements Expander {
         Sector latest = data.latest();
         int id = latest == null ? 0 : latest.id + 1;
         RegionTheme forced = FloorMap.startsDecade(idx, from.perRegion) ? MegaDungeon.themeOverride(from) : null;
-        SectorDraft d = SectorDraft.of(data.seed, id, from.polarity, idx, from.perRegion, from.theme, forced);
+        SectorDraft d = SectorDraft.of(data.seed, id, from.polarity, idx, from.perRegion, from.theme, forced, from.party);
         Request.Floor spec = FloorPlan.spec(from.polarity, idx, MegaConfig.get(MegaConfig.FLOOR_ROOMS));
-        SectorPlanner.Plan plan = SectorPlanner.floor(data.seed, id, from.polarity, idx, spec.rooms(), spec.boss());
+        SectorPlanner.Plan plan = SectorPlanner.floor(data.seed, id, from.polarity, idx, spec.rooms(), spec.boss(), from.party);
         Sector s = create(d);
         s.seed = d.seed();
         s.region = SectorGenerator.bb(plan.region());
@@ -243,7 +263,7 @@ public final class ExpansionQueue implements Expander {
     /** Where the sector behind {@code from}'s Way Onward would go (region, entry door, tunnel length), or null when older sectors leave no room. Changes nothing. */
     static SectorPlanner.Next planBehind(MegaData data, Sector from) {
         return SectorPlanner.planNext(SectorGenerator.vec(from.expansionPos), SectorGenerator.facing(from.expansionFacing), SectorGenerator.box(from.region),
-                SectorGenerator.obstacles(data, Integer.MAX_VALUE, from.id, from.polarity), MegaConfig.get(MegaConfig.MAX_LINK_MODULES));
+                SectorGenerator.obstacles(data, Integer.MAX_VALUE, from.id, from.polarity, from.party), MegaConfig.get(MegaConfig.MAX_LINK_MODULES));
     }
 
     /**
@@ -254,7 +274,7 @@ public final class ExpansionQueue implements Expander {
     static Sector draft(MegaData data, Sector from, SectorPlanner.Next n) {
         Sector latest = data.latest();
         int id = latest == null ? 0 : latest.id + 1;
-        SectorDraft d = SectorDraft.of(data.seed, id, from.polarity, from.chainIndex + 1, from.perRegion, from.theme, MegaDungeon.themeOverride(from));
+        SectorDraft d = SectorDraft.of(data.seed, id, from.polarity, from.chainIndex + 1, from.perRegion, from.theme, MegaDungeon.themeOverride(from), from.party);
         Sector s = create(d);
         s.seed = d.seed();
         s.region = SectorGenerator.bb(n.region());
@@ -267,6 +287,7 @@ public final class ExpansionQueue implements Expander {
     private static Sector create(SectorDraft d) {
         Sector s = new Sector(d.id());
         s.polarity = d.road();
+        s.party = d.party();
         s.chainIndex = d.chainIndex();
         s.perRegion = d.perRegion();
         s.theme = d.theme();
@@ -353,7 +374,7 @@ public final class ExpansionQueue implements Expander {
                 case PLACE -> place(level, s);
                 case FINISH -> finish(server, level, data, s);
             }
-            if (current != null && ticks % ANNOUNCE_EVERY == 0) announce(level, current.progress());
+            if (current != null && ticks % ANNOUNCE_EVERY == 0) announce(level, s.party, current.progress());
         } catch (Throwable t) {
             LOG.error("[nusmp] The Mega-Dungeon generator failed: {}", t.toString(), t);
             try {
@@ -441,10 +462,18 @@ public final class ExpansionQueue implements Expander {
 
     // ================================================================================================================ feedback
 
-    private static void announce(ServerLevel level, float progress) {
+    /**
+     * The "the Labyrinth shifts" line, to everybody who is not standing on the floors of ANOTHER party (a party that is not waiting for this floor has nothing to do with
+     * it; with one party, which is how the dungeon worked before 1.58.0, that is everybody).
+     */
+    private static void announce(ServerLevel level, int party, float progress) {
         int pct = Math.round(progress * 100f);
         Component line = Component.translatable("message.nusmp.mega.core.shifting", pct);
-        for (ServerPlayer p : level.players()) p.displayClientMessage(line, true);
+        for (ServerPlayer p : level.players()) {
+            Sector at = MegaDungeon.sectorAt(level, p.blockPosition());
+            if (at != null && at.party != party) continue;
+            p.displayClientMessage(line, true);
+        }
     }
 
     /** Tells the players who stand in the old sector's antechamber or Way Onward that the way is open. */

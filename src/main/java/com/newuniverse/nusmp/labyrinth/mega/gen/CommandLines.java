@@ -69,6 +69,23 @@ public final class CommandLines {
         return failures.isEmpty() ? "audit " + id + " OK" : "audit " + id + " FAIL: " + String.join("; ", failures);
     }
 
+    /**
+     * 1.58.0 (party): a line followed by the party it is about, {@code <line> party=<n>}, for every party but 0. Party 0 is the shared chain where every older world lives, so
+     * its lines stay exactly what they were and a script that reads them does not notice that parties exist.
+     */
+    public static String withParty(String line, int party) { return party == 0 ? line : line + " party=" + party; }
+
+    /**
+     * 1.58.0 (party): the line {@code status} prints after its first one when more than party 0 exists or a party other than 0 is shown:
+     * {@code party: showing party <n> (parties with floors: <i,j,k>; status party <n> shows another)}.
+     */
+    public static String partyView(int shown, List<Integer> known) {
+        StringBuilder b = new StringBuilder("party: showing party ").append(shown).append(" (parties with floors: ");
+        if (known.isEmpty()) b.append("none");
+        for (int i = 0; i < known.size(); i++) b.append(i == 0 ? "" : ",").append(known.get(i));
+        return b.append("; status party <n> shows another)").toString();
+    }
+
     /** {@code <verb>: queued sector <id>}. */
     public static String queued(String verb, int id) { return verb + ": queued sector " + id; }
 

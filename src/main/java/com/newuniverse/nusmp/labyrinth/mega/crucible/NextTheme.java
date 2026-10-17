@@ -91,7 +91,7 @@ public final class NextTheme {
      */
     public static String rulesetOf(MegaData data, Sector sector) {
         if (data == null || sector == null || sector.chainIndex <= 0) return "";
-        Sector previous = data.chainSector(sector.polarity, sector.chainIndex - 1);
+        Sector previous = data.chainSector(sector.party, sector.polarity, sector.chainIndex - 1);       // the floor before in the SAME party's chain (1.58.0: every party has chains of its own)
         RelicThemes.Road road = roadAfter(previous);
         return road != null && road.theme() == sector.theme ? road.ruleset() : "";
     }

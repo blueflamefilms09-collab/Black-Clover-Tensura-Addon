@@ -38,6 +38,12 @@ public final class Sector {
     public int chainIndex;
     /** 1.55.0: how many floors this sector spans ({@link FloorMap#DEFAULT_PER_REGION}); saved so a config change never renumbers a sector that already exists. */
     public int perRegion = FloorMap.DEFAULT_PER_REGION;
+    /**
+     * 1.58.0 (party): which party's chain of floors this sector belongs to. The dungeon is instanced: every party has its own Holy and Abyssal chain on its own lanes
+     * ({@link MegaGrid#laneZ(Polarity, int)}), and only that party ever stands in it. 0 is the shared / legacy chain, where every sector saved before parties existed
+     * lives, so a sector without the saved value reads as 0 and an old world is unchanged. Set by the generator at creation and never changed afterwards.
+     */
+    public int party;
     /** Set by the generator at creation. */
     public RegionTheme theme = RegionTheme.GRAVITY;
     /** 1 for sector 0, then 1 + id; the encounter director, factions and the guardian scale with it. */
@@ -193,6 +199,7 @@ public final class Sector {
         t.putString("pol", polarity.id());
         t.putInt("chain", chainIndex);
         t.putInt("fpr", perRegion);
+        if (party != 0) t.putInt("party", party);                       // party 0 is the legacy lane: left out, so the save of a world without parties is byte for byte what it was
         t.putString("state", state.name());
         t.putLong("seed", seed);
         t.putIntArray("region", box(region));
@@ -236,6 +243,7 @@ public final class Sector {
         s.polarity = pol == null ? Polarity.HOLY : pol;
         s.chainIndex = t.contains("chain") ? Math.max(0, t.getInt("chain")) : s.id;
         s.perRegion = t.contains("fpr") ? Math.max(1, t.getInt("fpr")) : FloorMap.DEFAULT_PER_REGION;
+        s.party = t.contains("party") ? Math.max(0, Math.min(MegaGrid.MAX_PARTIES - 1, t.getInt("party"))) : 0;     // no saved value (every world before 1.58.0) = the shared lane
         try { s.state = State.valueOf(t.getString("state")); } catch (IllegalArgumentException ex) { s.state = State.ACTIVE; }
         s.seed = t.getLong("seed");
         s.region = box(t.getIntArray("region"));

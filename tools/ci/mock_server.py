@@ -6,6 +6,11 @@ cannot start Minecraft:  python3 tools/ci/server_smoke.py --no-deps --quiet --cm
 It prints a boot log, serves RCON on port 25575 with password "smoke", answers the commands the smoke script sends in the formats the real
 `/multiverse mega` commands print (docs/labyrinth/mega.md), keeps its sectors in a file next to itself so a restart finds them, and exits on `stop`.
 It is not a model of the game: it only proves that the script reads what the real server will print.
+
+1.58.0 (dungeon parties): it also speaks the party commands in the formats `PartyLines` and `CommandLines` print (`party list`, `status party <n>`, `expand holy|abyssal party <n>`,
+`sector <id>` with its stairs line), keeping the floors of a party on that party's lane (Holy z = -k * 4096, Abyssal z = 300000 + k * 4096), so the script's party phase can be run
+against it. Set MOCK_PARTY_FAULT to one of: wrong_lane (a floor of party 1 stands on party 0's lane), leak (party 1's floors show up in the plain `status`), wrong_chain (the stairs of
+party 1's first floor lead to a floor of party 0), no_party_list (`party list` is unknown): the party phase must then FAIL (or skip, for the last).
 """
 import json
 import os
@@ -21,6 +26,10 @@ STATE = os.path.join(ROOT, "run", "smoke", "mock_state.json")
 sectors = []
 polls = {}
 stop = threading.Event()
+FAULT = os.environ.get("MOCK_PARTY_FAULT", "")
+STEP = 4096
+LANE_Z = 300000
+PITCH = 198
 
 
 def load():
@@ -38,12 +47,81 @@ def line(s):
     print(s, flush=True)
 
 
-def status():
+def lane(road, party):
+    return LANE_Z + party * STEP if road == "abyssal" else -party * STEP
+
+
+def sector_line(s):
+    base = "sector %d %s theme=%s threat=%d rooms=%d edges=%d pieces=%d relics=%d region=%d,%d,%d,%d" % (
+        s["id"], s["state"], s["theme"], s["id"] + 1, 120, 150, 300, 2, *s["region"])
+    if "road" not in s:
+        return base
+    sign = 1 if s["road"] == "holy" else -1
+    fl = "%+d" % (sign * (s["chain"] + 1))
+    base += " road=%s chain=%d floors=%s..%s" % (s["road"], s["chain"], fl, fl)
+    return base + (" party=%d" % s["party"] if s.get("party", 0) else "")
+
+
+def of_party(party):
+    return [s for s in sectors if s.get("party", 0) == party]
+
+
+def status(party=0):
+    shown = of_party(party)
+    if FAULT == "leak" and party == 0:
+        shown = list(sectors)
     out = ["mega: expansionLevel=%d sectors=%d job=idle" % (max(0, len(sectors) - 1), len(sectors))]
-    for s in sectors:
-        out.append("sector %d %s theme=%s threat=%d rooms=%d edges=%d pieces=%d relics=%d region=%d,%d,%d,%d" % (
-            s["id"], s["state"], s["theme"], s["id"] + 1, 120, 150, 300, 2, *s["region"]))
+    known = sorted({s.get("party", 0) for s in sectors})
+    if party != 0 or len(known) > 1:
+        out.append("party: showing party %d (parties with floors: %s; status party <n> shows another)" % (party, ",".join(str(k) for k in known) or "none"))
+    floors = [s for s in shown if "road" in s]
+    if floors:
+        for road in ("holy", "abyssal"):
+            chain = sorted([s for s in floors if s["road"] == road], key=lambda s: s["chain"])
+            if not chain:
+                out.append("road %s: not opened" % road)
+                continue
+            sign = 1 if road == "holy" else -1
+            out.append("road %s: sectors=%d ids=%s floors=%+d..%+d state=%s" % (road, len(chain), ",".join(str(s["id"]) for s in chain), sign, sign * len(chain), chain[-1]["state"]))
+            out.extend(sector_line(s) for s in chain)
+    else:
+        out.extend(sector_line(s) for s in shown)
     return "\n".join(out)
+
+
+def stairs_line(s):
+    chain = sorted([x for x in sectors if x.get("party", 0) == s.get("party", 0) and x["road"] == s["road"]], key=lambda x: x["chain"])
+    on = next((x for x in chain if x["chain"] == s["chain"] + 1), None)
+    back = next((x for x in chain if x["chain"] == s["chain"] - 1), None)
+    if FAULT == "wrong_chain" and s.get("party", 0) == 1 and s["chain"] == 0:
+        on = next((x for x in sectors if x.get("party", 0) == 0), on)
+    z = (s["region"][1] + s["region"][3]) // 2
+    inner = lambda dx: "%d,64,%d" % (s["region"][0] + dx, z)
+    return "  stairs back=%s forward=%s forwardPad=%s leadsOn=%s leadsBack=%s boss=%s climbs=%s" % (
+        inner(8), inner(160), inner(150), on["id"] if on else "none", "hub" if s["chain"] == 0 else (back["id"] if back else "none"),
+        "true" if (s["chain"] + 1) % 10 == 0 else "false", "up" if s["road"] == "holy" else "down")
+
+
+def party_list():
+    known = sorted({s.get("party", 0) for s in sectors})
+    out = ["party: mode=party instanced=true maxParties=64 known=%d sectors=%d" % (len(known), len(sectors))]
+    for k in known:
+        mine = of_party(k)
+        out.append("party %d unowned key=none name=- holy=%d abyssal=%d online=0" % (k, len([s for s in mine if s.get("road") == "holy"]), len([s for s in mine if s.get("road") == "abyssal"])))
+    return "\n".join(out)
+
+
+def expand_party(road, party):
+    chain = sorted([s for s in sectors if s.get("party", 0) == party and s.get("road") == road], key=lambda s: s["chain"])
+    k = len(chain)
+    z = lane(road, 0 if FAULT == "wrong_lane" and party == 1 else party)
+    sid = (max(s["id"] for s in sectors) + 1) if sectors else 0
+    sectors.append({"id": sid, "state": "GENERATING", "theme": "radiant" if road == "holy" else "abyss", "road": road, "chain": k, "party": party,
+                    "region": [k * PITCH, z - 85, k * PITCH + 170, z + 85]})
+    save()
+    sign = 1 if road == "holy" else -1
+    fl = "%+d" % (sign * (k + 1))
+    return "expand: queued sector %d on the %s road (floors %s..%s)%s" % (sid, road, fl, fl, " party=%d" % party if party else "")
 
 
 def handle(cmd):
@@ -58,14 +136,26 @@ def handle(cmd):
         return "The nearest nusmp:mega_gateway is at [310, ~, 55] (314 blocks away)"
     if "place jigsaw" in c:
         return "Generated jigsaw at 300, 64, 0"
-    if c == "multiverse mega status":
-        for s in sectors:
+    if c == "multiverse mega status" or c.startswith("multiverse mega status party "):
+        party = int(c.split()[-1]) if c.startswith("multiverse mega status party ") else 0
+        for s in of_party(party):
             if s["state"] == "GENERATING":
                 polls[s["id"]] = polls.get(s["id"], 0) + 1
                 if polls[s["id"]] >= 2:
                     s["state"] = "ACTIVE"
                     save()
-        return status()
+        return status(party)
+    if c == "multiverse mega party list":
+        return "Unknown or incomplete command, see below for error" if FAULT == "no_party_list" else party_list()
+    if c.startswith("multiverse mega expand holy party ") or c.startswith("multiverse mega expand abyssal party "):
+        parts = c.split()
+        return expand_party(parts[3], int(parts[-1]))
+    if c.startswith("multiverse mega sector "):
+        sid = int(c.split()[-1])
+        for s in sectors:
+            if s["id"] == sid:
+                return sector_line(s) + ("\n" + stairs_line(s) if "road" in s else "")
+        return "sector: refused (no sector %d)" % sid
     if c == "multiverse mega expand":
         if not sectors:
             sectors.append({"id": 0, "state": "GENERATING", "theme": "gravity", "region": [1, -85, 171, 85]})
