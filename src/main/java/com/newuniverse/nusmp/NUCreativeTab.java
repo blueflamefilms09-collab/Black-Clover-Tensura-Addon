@@ -43,6 +43,7 @@ public final class NUCreativeTab {
                 for (var egg : com.newuniverse.nusmp.entity.avatar.AvatarEntities.spawnEggs()) output.accept(egg.get());              // 1.22.0
                 for (var egg : com.newuniverse.nusmp.entity.zogratis.ZogratisEntities.spawnEggs()) output.accept(egg.get());      // 1.20.0: the Zogratis bosses
                 for (var ai : com.newuniverse.nusmp.arena.ArenaSystem.creativeItems()) output.accept(ai.get());                  // 1.46.0: the Hourglass of the Final Hour and the Return Sigil
+                for (var ai : com.newuniverse.nusmp.arc.world.ArcWorldItems.creativeItems()) output.accept(ai.get());            // 1.61.0: the Chronicle Sigil
                 output.accept(com.newuniverse.nusmp.block.NUBlocks.GRIMOIRE_ALTAR_ITEM.get());
                 com.newuniverse.nusmp.labyrinth.LabyrinthCreative.addTo(output);                                       // 1.35.0: the Labyrinth's blocks and items
 

@@ -73,6 +73,7 @@ public class NUSMP {
         net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.item.ArmorEngravings::onPlayerTick);   // 1.34.0: armour engravings
         com.newuniverse.nusmp.charter.CharterItems.init();                                                                 // 1.25.0: Charter Grimoires (before NUItems.ITEMS.register)
         com.newuniverse.nusmp.arc.ArcSystem.init(modEventBus, modContainer);                                              // 1.58.0: the characters of the arcs: roster, NPC entity, story, arc Charter Grimoires, spawn egg (before NUItems.ITEMS.register; registers its own config)
+        com.newuniverse.nusmp.arc.world.ArcWorldSystem.init(modEventBus, modContainer);                                    // 1.61.0: where the characters appear: floor bosses, story arenas, the Hub (registers its own config nusmp-arc-world-server.toml; before NUItems.ITEMS.register)
         modEventBus.addListener(com.newuniverse.nusmp.charter.CharterNet::registerPayloads);
         modEventBus.addListener(com.newuniverse.nusmp.boss.bar.BossBarNet::registerPayloads);
         modEventBus.addListener(com.newuniverse.nusmp.relics.wave.WaveBossNet::register);

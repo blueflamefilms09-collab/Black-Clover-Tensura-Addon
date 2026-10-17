@@ -15,6 +15,7 @@ public final class ArcCharacters {
         if (done) return;
         done = true;
         // Saga 1 ... (lines are appended here as the builders are merged, e.g. ArcRoster.register(HeathGriceBoss.CHARACTER);)
+        com.newuniverse.nusmp.arc.world.ExistingBosses.registerAll();   // 1.61.0: the seven older bosses (Goliath ... Lucius) as roster characters, first in the story order (ARC-WORLD)
         // Saga 1, the five openers in the order of the anime (S1A); each CHARACTER constant loads its boss class, which registers its entity type
         ArcRoster.register(com.newuniverse.nusmp.arc.early.RevchiSalikBoss.CHARACTER);
         ArcRoster.register(com.newuniverse.nusmp.arc.early.HeathGriceBoss.CHARACTER);
