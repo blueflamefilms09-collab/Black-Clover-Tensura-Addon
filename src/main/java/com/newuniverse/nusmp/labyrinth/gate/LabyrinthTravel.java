@@ -45,6 +45,28 @@ public final class LabyrinthTravel {
      */
     public static boolean enter(ServerPlayer p, BlockPos from) {
         if (!Labyrinth.engineIsLabyrinth()) return LivingDungeon.enter(p, from);
+        if (Labyrinth.layoutIsMega()) return com.newuniverse.nusmp.labyrinth.mega.travel.MegaTravel.enter(p, from);      // 1.54.0: the singular Mega-Dungeon is the default layout; the Spire below stays behind mega.layout = "spire"
+        return enterSpire(p, from);
+    }
+
+    /**
+     * 1.54.0: the common tail of a way in that already knows its pad (the Mega-Dungeon's Landings): generate the pad's chunk first so nobody
+     * arrives in an ungenerated void, remember where the player came from unless they are already inside a Labyrinth dimension (a trip
+     * between two Landings must not overwrite the way home), store the pad for the void rescue, stamp the gate cooldown, teleport and tell
+     * them. Public because {@code MegaTravel} lives in another package and the origin / pad keys are package-private here.
+     */
+    public static void arrive(ServerPlayer p, ServerLevel level, BlockPos pad, String message) {
+        level.getChunk(pad.getX() >> 4, pad.getZ() >> 4);
+        if (!Labyrinth.in(p)) rememberOrigin(p);
+        p.getPersistentData().putLong(PAD, pad.asLong());
+        stamp(p, level);
+        p.teleportTo(level, pad.getX() + 0.5, pad.getY(), pad.getZ() + 0.5, p.getYRot(), 0f);
+        level.playSound(null, pad, SoundEvents.PORTAL_TRAVEL, SoundSource.PLAYERS, 0.5f, 0.6f);
+        if (message != null) p.sendSystemMessage(Component.literal(message).withStyle(ChatFormatting.DARK_PURPLE));
+    }
+
+    /** The 1.35.0 entry, unchanged: into the Spire nearest that column of the Overworld. */
+    private static boolean enterSpire(ServerPlayer p, BlockPos from) {
         MinecraftServer server = p.getServer();
         ServerLevel labyrinth = server == null ? null : server.getLevel(Labyrinth.DIMENSION);
         if (labyrinth == null) {

@@ -1,0 +1,13 @@
+{
+  "type": "nusmp:mega_dungeon",
+  "generator": {
+    "type": "minecraft:flat",
+    "settings": {
+      "biome": "nusmp:mega_depths",
+      "layers": [],
+      "features": false,
+      "lakes": false,
+      "structure_overrides": []
+    }
+  }
+}

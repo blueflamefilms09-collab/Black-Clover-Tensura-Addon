@@ -27,6 +27,7 @@ public final class LabyrinthSystem {
         com.newuniverse.nusmp.labyrinth.trap.TrapRegistry.register(NeoForge.EVENT_BUS);                    // 1.36.0 F1: light-placement guard near a snuffer glyph
         com.newuniverse.nusmp.labyrinth.dnd.economy.EconomyRegistry.register(NeoForge.EVENT_BUS);          // 1.36.0 F2: stone and meat drops, no vanilla XP, hunger and gloom
         com.newuniverse.nusmp.labyrinth.dnd.vital.VitalStrike.register(NeoForge.EVENT_BUS);                // 1.36.0 F3: the HP buffer and the Vital Strike
+        com.newuniverse.nusmp.labyrinth.mega.MegaSystem.init(modBus);                                      // 1.54.0: the singular, expanding Mega-Dungeon (replaces the Spire as the default layout)
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.labyrinth.gate.LabyrinthEvents::onPlayerTick);   // C: void rescue
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.labyrinth.gate.LabyrinthEvents::onDeath);        // C: a death in the Labyrinth forgets the way back
     }

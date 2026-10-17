@@ -26,6 +26,8 @@ public final class Labyrinth {
 
     /** The void sky dimension the Spire is built in (data/nusmp/dimension/labyrinth.json). */
     public static final ResourceKey<Level> DIMENSION = ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "labyrinth"));
+    /** 1.54.0: the singular, expanding Mega-Dungeon (data/nusmp/dimension/mega_dungeon.json). A NEW dimension, for the same reason the Labyrinth was one: a world keeps the dimension generators written into its level.dat. */
+    public static final ResourceKey<Level> MEGA_DIMENSION = ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "mega_dungeon"));
     /** The one biome of that dimension: no spawners, no features, so only the Jigsaw pieces and what the Sealed Archways call stand there. */
     public static final ResourceKey<Biome> BIOME = ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "labyrinth_sky"));
     /** Structure tag holding the Spire: what {@code ServerLevel.findNearestMapStructure} is asked for from inside the dimension. */
@@ -35,8 +37,21 @@ public final class Labyrinth {
 
     public static final String ENGINE_LABYRINTH = "labyrinth", ENGINE_LEGACY = "legacy";
 
-    /** Is this world the Labyrinth dimension? Null-safe, works on both sides (the key is compared, not the level instance). */
-    public static boolean in(Level level) { return level != null && level.dimension() == DIMENSION; }
+    /**
+     * Is this world a Labyrinth dimension: the Spire's sky ({@link #DIMENSION}) or, since 1.54.0, the Mega-Dungeon ({@link #MEGA_DIMENSION})?
+     * Null-safe, works on both sides (the key is compared, not the level instance). Both count because everything that was written for "the
+     * Labyrinth" (the Dungeon Guard, the economy, the Vital Strike, the gloom, the relic exclusivity, the void rescue) must hold in the new
+     * dimension too without one of those classes being edited; code that needs only the Mega-Dungeon asks {@link #inMega}.
+     */
+    public static boolean in(Level level) { return level != null && (level.dimension() == DIMENSION || level.dimension() == MEGA_DIMENSION); }
+
+    /** Is this world the Mega-Dungeon dimension (1.54.0)? */
+    public static boolean inMega(Level level) { return level != null && level.dimension() == MEGA_DIMENSION; }
+
+    /** Does the {@code mega.layout} switch send Gates, Maws and the enter command into the Mega-Dungeon (default) rather than the 1.35.0 Spire? Safe before the config is loaded. */
+    public static boolean layoutIsMega() {
+        return com.newuniverse.nusmp.labyrinth.mega.MegaConfig.LAYOUT_MEGA.equals(com.newuniverse.nusmp.labyrinth.mega.MegaConfig.get(com.newuniverse.nusmp.labyrinth.mega.MegaConfig.LAYOUT));
+    }
 
     /** Is this entity standing in the Labyrinth dimension? */
     public static boolean in(Entity e) { return e != null && in(e.level()); }
