@@ -55,10 +55,14 @@ public final class VanillaPools implements PoolSource, ResourceManagerReloadList
     private static final String POOL_DIR = "worldgen/template_pool/mega";
     private static final String RECIPE_DIR = "mega/recipe";
     private static final ResourceLocation RECIPE_FILE = ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "mega/recipe/default.json");
+    private static final ResourceLocation FLOOR_RECIPE_FILE = ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "mega/recipe/floor.json");
+    private static final String THEME_DIR = "mega/template_themes";
     private static final String DEFAULT_PROCESSORS = "nusmp:mega_interior";
 
     private volatile Map<String, PoolDef> pools = Map.of();
     private volatile Recipe recipe = new Recipe();
+    private volatile Recipe floorRecipe = Recipe.forFloors();
+    private volatile TemplateThemes themes = TemplateThemes.none();
     private final Map<String, Shape> shapes = new HashMap<>();
     private final Set<String> unreadable = new HashSet<>();
     private final ArrayDeque<String> warmQueue = new ArrayDeque<>();
@@ -70,6 +74,12 @@ public final class VanillaPools implements PoolSource, ResourceManagerReloadList
 
     /** The Sector Recipe as loaded from the data pack (the defaults until the first reload). */
     public Recipe recipe() { return recipe; }
+
+    /** 1.58.0: the recipe of a floor of the floor model ({@code data/nusmp/mega/recipe/floor.json} laid over {@link Recipe#forFloors}; the built-in numbers until the first reload). */
+    public Recipe floorRecipe() { return floorRecipe; }
+
+    /** 1.58.0: which templates are reserved for which themes ({@code data/nusmp/mega/template_themes/*.json}); nothing is reserved until a theme ships a file. */
+    public TemplateThemes themes() { return themes; }
 
     /** The ids of the pools read from the data pack, sorted. */
     public List<String> poolIds() { return new ArrayList<>(new TreeMap<>(pools).keySet()); }
@@ -209,11 +219,49 @@ public final class VanillaPools implements PoolSource, ResourceManagerReloadList
             LOG.info("[nusmp] No Mega recipe file ({}); the built-in defaults are used.", RECIPE_FILE);
         }
         recipe = r;
+        floorRecipe = readFloorRecipe(manager);
+        themes = readThemes(manager);
         pools = loaded;
         shapes.clear();
         unreadable.clear();
         rebuildWarmQueue();
         LOG.info("[nusmp] Loaded {} Mega pools and the Sector Recipe.", loaded.size());
+    }
+
+    /** The floor recipe: the shipped file laid over the built-in floor numbers; a missing or unreadable file keeps the built-in ones (logged). */
+    @SuppressWarnings("unchecked")
+    private static Recipe readFloorRecipe(ResourceManager manager) {
+        List<Resource> stack = manager.listResourceStacks(RECIPE_DIR, rl -> rl.equals(FLOOR_RECIPE_FILE)).get(FLOOR_RECIPE_FILE);
+        if (stack == null || stack.isEmpty()) {
+            LOG.info("[nusmp] No floor recipe file ({}); the built-in floor numbers are used.", FLOOR_RECIPE_FILE);
+            return Recipe.forFloors();
+        }
+        try (Reader reader = new InputStreamReader(stack.get(stack.size() - 1).open(), StandardCharsets.UTF_8)) {
+            Recipe r = Recipe.fromMap((Map<String, Object>) toJava(JsonParser.parseReader(reader)), Recipe.forFloors());
+            for (String k : r.unknownKeys()) LOG.warn("[nusmp] Mega floor recipe: unknown key '{}' (a typo keeps the default)", k);
+            return r;
+        } catch (Exception ex) {
+            LOG.warn("[nusmp] The Mega floor recipe {} cannot be read ({}); the built-in floor numbers are used.", FLOOR_RECIPE_FILE, ex.toString());
+            return Recipe.forFloors();
+        }
+    }
+
+    /** The theme rules of every {@code data/nusmp/mega/template_themes/*.json} (the top file of each stack); what is not understood is logged and skipped. */
+    private static TemplateThemes readThemes(ResourceManager manager) {
+        List<Object> docs = new ArrayList<>();
+        for (Map.Entry<ResourceLocation, List<Resource>> e : new TreeMap<>(manager.listResourceStacks(THEME_DIR, rl -> rl.getPath().endsWith(".json"))).entrySet()) {
+            if (!NUSMP.MODID.equals(e.getKey().getNamespace()) || e.getValue().isEmpty()) continue;
+            try (Reader reader = new InputStreamReader(e.getValue().get(e.getValue().size() - 1).open(), StandardCharsets.UTF_8)) {
+                docs.add(toJava(JsonParser.parseReader(reader)));
+            } catch (Exception ex) {
+                LOG.warn("[nusmp] Skipping Mega theme rooms file {}: {}", e.getKey(), ex.toString());
+            }
+        }
+        List<String> problems = new ArrayList<>();
+        TemplateThemes rules = TemplateThemeFiles.parse(docs, problems);
+        for (String p : problems) LOG.warn("[nusmp] Mega theme rooms: {}", p);
+        LOG.info("[nusmp] Loaded {} theme room file(s): {} template prefix(es) reserved for a theme.", docs.size(), rules.size());
+        return rules;
     }
 
     /** One pool file: {@code {"fallback": ..., "elements": [{"weight": n, "element": {"element_type": ..., "location": ..., "processors": ...}}]}}. */

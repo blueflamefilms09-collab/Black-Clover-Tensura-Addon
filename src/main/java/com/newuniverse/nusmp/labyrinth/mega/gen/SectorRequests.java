@@ -23,7 +23,14 @@ public final class SectorRequests {
      * sector 0); {@code others} are the regions and tunnels of every other sector EXCEPT the tunnel into this one (which is built here).
      */
     public record Inputs(PoolSource source, Recipe recipe, int maxPieces, int maxLinkModules, long seed, Vec entryJigsaw, Facing forward, Box region,
-                         Vec prevSeal, Facing prevFacing, Box prevRegion, List<SectorPlanner.Obstacle> others, int relicCount) {}
+                         Vec prevSeal, Facing prevFacing, Box prevRegion, List<SectorPlanner.Obstacle> others, int relicCount,
+                         String themeId, TemplateThemes themes, Request.Floor floor) {
+        /** A sector of the old model with no theme-reserved rooms (everything before 1.58.0 built its inputs this way, and so do the tests of that time). */
+        public Inputs(PoolSource source, Recipe recipe, int maxPieces, int maxLinkModules, long seed, Vec entryJigsaw, Facing forward, Box region,
+                      Vec prevSeal, Facing prevFacing, Box prevRegion, List<SectorPlanner.Obstacle> others, int relicCount) {
+            this(source, recipe, maxPieces, maxLinkModules, seed, entryJigsaw, forward, region, prevSeal, prevFacing, prevRegion, others, relicCount, null, TemplateThemes.none(), null);
+        }
+    }
 
     /**
      * The request, the tunnel pieces it starts with and, when something does not line up, why the request could not be built. {@code notes} are the things the
@@ -104,6 +111,16 @@ public final class SectorRequests {
         q.relicCount = in.relicCount();
         q.exclusions = SectorPlanner.exclusionsFor(in.region(), in.others());
         q.forced = Map.of(MegaGrid.VAULT, MegaGrid.P_VAULT + "_" + in.relicCount());
+        q.themeId = in.themeId();
+        q.themes = in.themes() == null ? TemplateThemes.none() : in.themes();
+        q.floor = in.floor();
+        if (in.floor() != null) {
+            // the floor model: no tunnel, no neighbours to plan the Way Onward for (floors are joined by stairs), the arrival stairwell instead of a Landing
+            q.onward = null;
+            q.pre = List.of();
+            q.start = new Request.Start(in.entryJigsaw(), in.forward(), in.floor().arrivalPool(), MegaGrid.DOOR, -1, -1);
+            return new Prepared(q, tunnel, tunnelObstacle, null, notes);
+        }
         q.onward = SectorPlanner.policy(in.seed(), in.region(), beyond, in.maxLinkModules());
         q.pre = tunnel.pieces();
         int parent = tunnel.pieces().isEmpty() ? -1 : tunnel.pieces().size() - 1;

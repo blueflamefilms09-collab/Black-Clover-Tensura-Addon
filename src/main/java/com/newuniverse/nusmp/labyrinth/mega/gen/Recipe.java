@@ -44,6 +44,11 @@ public final class Recipe {
     public int capReserve = 60;
     /** Does the audit demand the landmark markers (ARRIVAL, GUARDIAN_SPAWN, GATEKEEPER, VAULT_CENTER, EXPANSION_SOCKET)? */
     public boolean requireMarkers = true;
+    /**
+     * 1.58.0, the floor model: the forward stairwell must be at least this many doorways (rooms walked through) from the arrival stairwell, or the floor is no level to
+     * cross, just a doorstep. Only the floor audit reads it; the old model has no stairwells.
+     */
+    public int stairMinWalk = 4;
 
     private final EnumMap<RoomKind, Integer> min = new EnumMap<>(RoomKind.class);
     private final EnumMap<RoomKind, Integer> max = new EnumMap<>(RoomKind.class);
@@ -65,6 +70,31 @@ public final class Recipe {
         shapeMax.put("nusmp:mega/hall/great_hall", 1);
         shapeMax.put("nusmp:mega/set/cathedral_rotunda", 1);
         shapeMax.put("nusmp:mega/trap/dark_room", 1);
+    }
+
+    /**
+     * 1.58.0: the recipe of a FLOOR of the floor model, the numbers compiled in (the shipped {@code data/nusmp/mega/recipe/floor.json} says the same, and a unit test
+     * fails if the two drift). A floor is a small level (about 28 rooms in a region of 17 x 17 modules, 19 x 19 on a boss floor), so every distance is shorter than in the
+     * ten-floor sector it replaces, there is one treasure closet to find instead of two, and at most one trial, trap and puzzle room each (they are big rooms, and a
+     * floor of 28 rooms with three traps would be a gauntlet). The boss chain keeps its old distances, scaled to the 19-module region.
+     */
+    public static Recipe forFloors() {
+        Recipe r = new Recipe();
+        r.minRooms = 12;
+        r.minLoops = 1;
+        r.arenaMinDistance = 7.0;
+        r.arenaMinDepth = 3;
+        r.safeMinDistance = 2.0;
+        r.safeMaxDistance = 9.0;
+        r.chainLeaves = 4;
+        r.capReserve = 12;
+        r.stairMinWalk = 4;
+        r.setMin(RoomKind.TRIAL, 0);
+        r.setMin(RoomKind.TREASURE, 1);
+        r.setMax(RoomKind.TRIAL, 1);
+        r.setMax(RoomKind.TRAP, 1);
+        r.setMax(RoomKind.PUZZLE, 1);
+        return r;
     }
 
     /** The least number of rooms of this kind a plan must hold (0 when the recipe asks for none). */
@@ -102,6 +132,7 @@ public final class Recipe {
         r.stepBudget = stepBudget;
         r.capReserve = capReserve;
         r.requireMarkers = requireMarkers;
+        r.stairMinWalk = stairMinWalk;
         r.min.clear();
         r.min.putAll(min);
         r.max.clear();
@@ -115,8 +146,11 @@ public final class Recipe {
      * numbers as {@code Number}, booleans as {@code Boolean}); the schema is documented in {@code docs/labyrinth/mega_core.md}. Keys it does not know are
      * collected in {@link #unknownKeys}; a value of the wrong type or outside its sane range is clamped or skipped and also reported there.
      */
-    public static Recipe fromMap(Map<String, Object> values) {
-        Recipe r = new Recipe();
+    public static Recipe fromMap(Map<String, Object> values) { return fromMap(values, new Recipe()); }
+
+    /** {@link #fromMap(Map)} laid over {@code base} instead of over the defaults (the floor recipe is a file of the same format laid over {@link #forFloors}). */
+    public static Recipe fromMap(Map<String, Object> values, Recipe base) {
+        Recipe r = base.copy();
         if (values == null) return r;
         for (Map.Entry<String, Object> e : values.entrySet()) {
             String k = e.getKey();
@@ -136,6 +170,7 @@ public final class Recipe {
                 case "stepBudget" -> r.stepBudget = Math.max(1000L, (long) dbl(v, r.stepBudget));
                 case "capReserve" -> r.capReserve = clamp(num(v, r.capReserve), 0, 1000);
                 case "requireMarkers" -> r.requireMarkers = v instanceof Boolean b ? b : r.requireMarkers;
+                case "stairMinWalk" -> r.stairMinWalk = clamp(num(v, r.stairMinWalk), 0, 60);
                 case "min" -> readKinds(v, r.min, r.unknown, "min");
                 case "max" -> readKinds(v, r.max, r.unknown, "max");
                 case "shapeMax" -> {

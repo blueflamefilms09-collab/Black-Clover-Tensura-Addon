@@ -78,6 +78,17 @@ public final class Sector {
      */
     public boolean expansionPending;
 
+    // ---- the stairs of the floor model (1.58.0, generator fills them from the STAIR_EXIT and ARRIVAL markers of the two stairwells)
+    /**
+     * The cell above the landing pad at the end of the ARRIVAL stairwell's staircase (a {@code stair_exit} marker): walking onto it takes the player BACK, to the
+     * forward stair of the floor before, or to Floor 0 on the first floor. Null for a sector of the old banded model, which has no stairwells.
+     */
+    public BlockPos stairBack;
+    /** The same for the FORWARD stairwell: walking onto it takes the player on, to the arrival stair of the next floor. Null on a sector without one. */
+    public BlockPos stairForward;
+    /** Where a player stands when they come back to this floor from the next one: the {@code arrival} marker of the forward stairwell. Null on a sector without one. */
+    public BlockPos stairForwardPad;
+
     public final Crucible crucible = new Crucible();
 
     public Sector(int id) {
@@ -90,6 +101,12 @@ public final class Sector {
 
     /** The signed number of this sector's last floor (the Guardian's arena, the decennial floor). */
     public int lastFloor() { return FloorMap.lastFloor(polarity, chainIndex, perRegion); }
+
+    /** Is this sector one floor (the floor model), with stairs, rather than a band of {@link #perRegion} floors? */
+    public boolean isFloor() { return FloorMap.isFloorModel(perRegion); }
+
+    /** Does this sector hold a boss: a Guardian, a Gatekeeper, a Crucible? Every sector of the banded model does; of the floor model, every tenth floor. */
+    public boolean isBossFloor() { return FloorMap.isDecennial(lastFloor(), perRegion); }
 
     /** The Crucible of Choice's saved state (the crucible builder owns the meaning; the data lives here so there is one saved file). */
     public static final class Crucible {
@@ -204,6 +221,9 @@ public final class Sector {
         t.putLongArray("peds", pl);
         t.putInt("next", nextId);
         if (expansionPending) t.putBoolean("xpend", true);
+        if (stairBack != null) t.putLong("sbk", stairBack.asLong());
+        if (stairForward != null) t.putLong("sfw", stairForward.asLong());
+        if (stairForwardPad != null) t.putLong("sfp", stairForwardPad.asLong());
         t.put("crucible", crucible.save());
         return t;
     }
@@ -247,6 +267,9 @@ public final class Sector {
         for (long p : t.getLongArray("peds")) s.pedestals.add(BlockPos.of(p));
         s.nextId = t.contains("next") ? t.getInt("next") : -1;
         s.expansionPending = t.getBoolean("xpend");
+        if (t.contains("sbk")) s.stairBack = BlockPos.of(t.getLong("sbk"));
+        if (t.contains("sfw")) s.stairForward = BlockPos.of(t.getLong("sfw"));
+        if (t.contains("sfp")) s.stairForwardPad = BlockPos.of(t.getLong("sfp"));
         if (t.contains("crucible")) s.crucible.load(t.getCompound("crucible"));
         return s;
     }

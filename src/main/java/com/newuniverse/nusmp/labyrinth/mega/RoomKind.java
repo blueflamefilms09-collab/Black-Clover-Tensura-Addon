@@ -29,7 +29,13 @@ public enum RoomKind {
     LINK("link"),
     /** A 3x4x2 door cap / niche (never stored as a room). */
     CAP("cap"),
-    OTHER("");
+    OTHER(""),
+    /**
+     * 1.58.0: a stairwell, the room that joins two floors. Every floor has an ARRIVAL stairwell (where a party appears; it leads back to the floor before, or to
+     * Floor 0 on the first floor) and a FORWARD stairwell (it leads on). It is a safe room: nothing is spawned there, so the party can always get its breath at
+     * the foot of the stairs. Appended last, as every enum entry of the contract is.
+     */
+    STAIRWELL("stairwell");
 
     private final String folder;
 
@@ -38,7 +44,7 @@ public enum RoomKind {
     /** The folder under {@code structure/mega/} this kind lives in ({@code ""} for {@link #OTHER}). */
     public String folder() { return folder; }
 
-    public boolean isSafe() { return this == LANDING || this == SAFE; }
+    public boolean isSafe() { return this == LANDING || this == SAFE || this == STAIRWELL; }
 
     /**
      * Corridors, junctions, links and onward pieces: rooms whose job is to carry traffic. They are not "dead" for the monsters: the corridor and

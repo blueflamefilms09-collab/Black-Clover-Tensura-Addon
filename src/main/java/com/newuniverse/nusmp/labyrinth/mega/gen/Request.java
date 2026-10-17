@@ -21,6 +21,21 @@ public final class Request {
      */
     public record Start(Vec frontCell, Facing growth, String pool, String socketName, int parent, int parentSocket) {}
 
+    /**
+     * 1.58.0, the floor model: what makes this request plan ONE floor (a level of its own) instead of a ten-floor sector. The Landing is replaced by the ARRIVAL
+     * stairwell (drawn from {@code arrivalPool}, with its only door facing into the region), the Way Onward and the tunnel to the next sector by a FORWARD stairwell
+     * (drawn from {@code forwardPool}): on an ordinary floor it hangs from the door of the room that is farthest from the arrival by walking distance, on a boss
+     * floor it stands behind the Way Onward of the boss chain. {@code rooms} is the number of rooms the floor aims at (stairwells, boss chain and Safe Zone
+     * included), {@code minRooms} the least the audit accepts.
+     *
+     * @param boss         is this a boss floor (the boss chain exists and the forward stairwell is behind it)
+     * @param arrivalPool  the pool of the arrival stairwell (stairs that lead BACK: down on the Holy road, up on the Abyssal one)
+     * @param forwardPool  the pool of the forward stairwell (up on the Holy road, down on the Abyssal one; the grand ones on a boss floor)
+     * @param rooms        the room count aimed at
+     * @param minRooms     the least number of rooms a plan may have
+     */
+    public record Floor(boolean boss, String arrivalPool, String forwardPool, int rooms, int minRooms) {}
+
     public PoolSource source;
     public long seed;
     public Start start;
@@ -41,6 +56,12 @@ public final class Request {
     public int relicCount = 1;
     /** The fallback layout: the Landing and the boss chain only, with the distance rules off. */
     public boolean fallback;
+    /** 1.58.0: set for a floor of the floor model (see {@link Floor}); null for a sector of the old model. */
+    public Floor floor;
+    /** 1.58.0: the theme id of the sector ({@code holy_church}); templates reserved for other themes are not drawn ({@link TemplateThemes}). Null = no theme: reserved templates are skipped. */
+    public String themeId;
+    /** 1.58.0: which templates belong to which theme. {@link TemplateThemes#none()} = every template is free for every sector (the 1.54.0 behaviour). */
+    public TemplateThemes themes = TemplateThemes.none();
 
     /** A shallow copy with another seed (the lists and the recipe are shared; the assembler never writes to them). */
     public Request withSeed(long newSeed, boolean asFallback) {
@@ -58,6 +79,9 @@ public final class Request {
         r.pre = pre;
         r.relicCount = relicCount;
         r.fallback = asFallback;
+        r.floor = floor;
+        r.themeId = themeId;
+        r.themes = themes;
         return r;
     }
 }

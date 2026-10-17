@@ -3,6 +3,8 @@ package com.newuniverse.nusmp.labyrinth.mega.gen;
 import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
 import com.newuniverse.nusmp.labyrinth.mega.travel.MegaTravel;
+import com.newuniverse.nusmp.labyrinth.mega.travel.StairSelfTests;
+import com.newuniverse.nusmp.labyrinth.mega.travel.StairTravel;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
@@ -33,6 +35,7 @@ public final class MegaGenRegistry {
         MegaDungeon.setExpander(ExpansionQueue.get());
         MegaDungeon.setChainTravel(MegaTravel::enterChain);          // 1.55.0: the Hub's gates take a player up or down a road through the facade
         CoreSelfTests.register();
+        StairSelfTests.register();                                    // 1.58.0: stairs.layout and stairs.travel
     }
 
     public static void register(IEventBus gameBus) {
@@ -42,6 +45,7 @@ public final class MegaGenRegistry {
         gameBus.addListener(MegaGenRegistry::onAddReloadListeners);
         gameBus.addListener(MegaGenRegistry::onPlayerTick);
         gameBus.addListener(MegaGenRegistry::onLogout);
+        StairTravel.register(gameBus);                                // 1.58.0: walking onto the pad at the end of a staircase takes the player to the linked floor
     }
 
     private static void onServerTick(ServerTickEvent.Post e) {

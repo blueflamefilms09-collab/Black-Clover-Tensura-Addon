@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.labyrinth.mega.gen;
 
+import com.newuniverse.nusmp.labyrinth.mega.Polarity;
 import com.newuniverse.nusmp.labyrinth.mega.RegionTheme;
 
 import java.util.ArrayList;
@@ -23,6 +24,25 @@ final class TestPlans {
                 null, null, null, List.of(), relics));
         if (!p.ok()) throw new IllegalStateException(p.failure());
         return p.request();
+    }
+
+    /**
+     * The request of one FLOOR of the floor model (1.58.0), built the way the game builds it: the plan comes from {@link SectorPlanner#floor}, the room count and the
+     * stairs from {@link FloorPlan#spec}, the theme from {@link SectorDraft} (so a decade shares its theme). {@code previousTheme} is the theme of the floor before (null
+     * for the first floor of a road).
+     */
+    static Request floor(PoolSource src, long dungeonSeed, Polarity road, int chainIndex, int configuredRooms, Recipe recipe, TemplateThemes themes, RegionTheme previousTheme) {
+        Request.Floor fl = FloorPlan.spec(road, chainIndex, configuredRooms);
+        SectorDraft draft = SectorDraft.of(dungeonSeed, chainIndex * 2 + (road == Polarity.ABYSSAL ? 1 : 0), road, chainIndex, 1, previousTheme, null);
+        SectorPlanner.Plan plan = SectorPlanner.floor(dungeonSeed, draft.id(), road, chainIndex, fl.rooms(), fl.boss());
+        SectorRequests.Prepared p = SectorRequests.prepare(new SectorRequests.Inputs(src, recipe, 450, 40, plan.seed(), plan.entry(), plan.forward(), plan.region(),
+                null, null, null, List.of(), draft.relicCount(), draft.theme().id(), themes, fl));
+        if (!p.ok()) throw new IllegalStateException(p.failure());
+        return p.request();
+    }
+
+    static Request floor(PoolSource src, long dungeonSeed, Polarity road, int chainIndex) {
+        return floor(src, dungeonSeed, road, chainIndex, 28, Recipe.forFloors(), TemplateThemes.none(), null);
     }
 
     /** One line per piece: enough to tell two plans apart and nothing that depends on object identity. */

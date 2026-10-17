@@ -24,6 +24,8 @@ import java.util.Map;
 final class CatalogSource implements PoolSource {
     private final Map<String, Shape> shapes = new LinkedHashMap<>();
     private final Map<String, PoolDef> pools = new LinkedHashMap<>();
+    /** 1.58.0: template id to the themes it is reserved for (the {@code themes} list of the catalog; absent or empty = free for every theme). */
+    private final Map<String, List<String>> themes = new LinkedHashMap<>();
 
     /**
      * The default location, relative to the project root (the working directory of Gradle's test task). The system property {@code mega.catalog} points the
@@ -40,7 +42,13 @@ final class CatalogSource implements PoolSource {
         CatalogSource c = new CatalogSource();
         Map<String, Object> root = MiniJson.object(MiniJson.parse(json));
         Map<String, Object> templates = MiniJson.object(root.getOrDefault("templates", Map.of()));
-        for (Map.Entry<String, Object> e : templates.entrySet()) c.shapes.put(e.getKey(), shape(e.getKey(), MiniJson.object(e.getValue())));
+        for (Map.Entry<String, Object> e : templates.entrySet()) {
+            Map<String, Object> t = MiniJson.object(e.getValue());
+            c.shapes.put(e.getKey(), shape(e.getKey(), t));
+            List<String> th = new ArrayList<>();
+            for (Object o : MiniJson.array(t.getOrDefault("themes", List.of()))) th.add(String.valueOf(o));
+            if (!th.isEmpty()) c.themes.put(e.getKey(), th);
+        }
         Map<String, Object> pools = MiniJson.object(root.getOrDefault("pools", Map.of()));
         for (Map.Entry<String, Object> e : pools.entrySet()) c.pools.put(e.getKey(), pool(e.getKey(), MiniJson.object(e.getValue())));
         return c;
@@ -100,6 +108,15 @@ final class CatalogSource implements PoolSource {
             if (!stocked) missing.add(id);
         }
         return missing;
+    }
+
+    /**
+     * The theme rules the catalog was exported with: every template that is reserved for themes becomes a rule whose prefix is its own full id (the longest prefix wins,
+     * so a template whose id is the start of another's still resolves to its own entry). Exactly what {@code data/nusmp/mega/template_themes} says, as the game would load it.
+     */
+    TemplateThemes themes() {
+        Map<String, List<String>> rules = new LinkedHashMap<>(themes);
+        return TemplateThemes.of(rules);
     }
 
     int shapeCount() { return shapes.size(); }

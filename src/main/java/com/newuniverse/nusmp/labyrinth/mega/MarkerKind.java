@@ -45,7 +45,13 @@ public enum MarkerKind {
     /** In front of the sector's Gatekeeper door, on the arena side: the air cell just inside the middle of the door slab's inner layer, row 10. */
     GATEKEEPER,
     /** A hidden trap site the director may arm. args: type. */
-    TRAP;
+    TRAP,
+    /**
+     * 1.58.0: the end of a stairwell's staircase, in the air cell directly above the middle of the last step's landing pad (the pad is 3 x 3 blocks, so the
+     * player has room). Walking onto the pad takes the player to the linked floor; which floor is decided by the generator from the sector (the stairwell
+     * template does not know whether it is the arrival or the forward one). args: dir = {@code up} when the stairs climb, {@code down} when they drop.
+     */
+    STAIR_EXIT;
 
     /** The id as written after {@code nusmp:} in a metadata string ({@code guardian_spawn}). */
     public String id() { return name().toLowerCase(Locale.ROOT); }

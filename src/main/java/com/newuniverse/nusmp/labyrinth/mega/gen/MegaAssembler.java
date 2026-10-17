@@ -40,6 +40,13 @@ import java.util.function.Predicate;
  * <li><b>Loops.</b> Two unused doors that face each other across the wall between two touching rooms are a doorway nobody had to build: an edge of the map.</li>
  * </ol>
  * The class is single-use: {@link #assemble} builds one instance per request.
+ *
+ * <p>The floor model (1.58.0, {@link Request#floor}): the same machinery plans ONE floor, a level of its own. The Landing is the ARRIVAL stairwell (its only door
+ * faces into the region), there is no tunnel and no keep-clear strip, the number of rooms is capped (a floor is small), and the Way Onward's rubble seal is
+ * replaced by the FORWARD stairwell: on an ordinary floor it hangs from the door of the room that is farthest from the arrival by walking distance (a ranked
+ * search over the doors that are still free, {@link StairSearch}, tried in order until one fits), on a boss floor it stands behind the Way Onward of the boss
+ * chain, as the fifth piece of the chain search, so a Way Onward with no room behind it for the grand stairwell is simply not a candidate. Templates reserved for
+ * other themes are never drawn ({@link Request#themes}).
  */
 public final class MegaAssembler {
     private enum Mode { FILL, CAPS }
@@ -71,6 +78,10 @@ public final class MegaAssembler {
     private boolean overBudget;
     private Box zone;
     private Box strip;
+    /** The rooms placed so far (every piece that is neither a door cap nor a tunnel segment), and the limit the filling phases keep to (floor model; unlimited otherwise). */
+    private int roomsPlaced;
+    private int roomLimit = Integer.MAX_VALUE;
+    private boolean limitRooms;
     private Result.Expansion expansion;
     private int landing = -1;
     private double landingCx, landingCz;
@@ -92,6 +103,7 @@ public final class MegaAssembler {
     // ================================================================================================================ the run
 
     private Result run() {
+        if (req.floor != null) return runFloor();
         for (Placed p : req.pre) {
             Placed c = p.copy();
             if (c.index != placed.size()) throw new IllegalArgumentException("tunnel piece indices must be 0..n-1 in order");
@@ -125,6 +137,204 @@ public final class MegaAssembler {
         return Result.failed(region, why, warnings, req.seed, req.fallback, stats);
     }
 
+    // ================================================================================================================ the floor model
+
+    /** Rooms that are neither required by the floor (the forward stairwell, the Safe Zone, a treasure closet) nor part of the boss chain: the filler's share. */
+    private static final int ORDINARY_RESERVE = 3, BOSS_RESERVE = 7;
+
+    /**
+     * Plans one floor: arrival stairwell, filler rooms up to the room budget, the boss chain (boss floors) or the extras, the second fill, the forward stairwell
+     * (ordinary floors; on a boss floor it is part of the chain), door caps, loops. The order matters in two places. The forward stairwell is placed AFTER every
+     * room exists and BEFORE the door caps, because it needs a free doorway, which the caps would use up, and because only then is the walking distance of every
+     * room final (the loops are decided by what is next to what, which no later step changes). The room budget is soft in the second half: the required pieces
+     * (chain, extras, stairwell) are never refused for it, only the ordinary filler is.
+     */
+    private Result runFloor() {
+        Request.Floor fl = req.floor;
+        if (!placeFloorStart()) return fail("no arrival stairwell fits the start (pool " + fl.arrivalPool() + ")");
+        Placed land = placed.get(landing);
+        landingCx = land.box.centerX();
+        landingCz = land.box.centerZ();
+        int target = Math.max(2, fl.rooms());
+        if (!req.fallback) {
+            if (fl.boss()) reserveZone(land);
+            roomLimit = Math.max(roomsPlaced + 2, target - (fl.boss() ? BOSS_RESERVE : ORDINARY_RESERVE));
+            limitRooms = true;
+            fill(Mode.FILL, Math.max(placed.size() + 1, req.maxPieces - rc.capReserve), false);
+            limitRooms = false;
+            roomBlockers.clear();
+            capBlockers.clear();
+        } else if (!fl.boss()) {
+            roomLimit = Math.min(target, 8);                     // the fallback floor: a few rooms between the stairs
+            limitRooms = true;
+            fill(Mode.FILL, req.maxPieces, false);
+            limitRooms = false;
+        }
+        budgeted = true;
+        if (fl.boss() && !ensureChain()) return fail(chainFailure());
+        if (!req.fallback) {
+            String extra = ensureExtras();
+            if (extra != null) return fail(extra);
+        }
+        budgeted = false;
+        if (!req.fallback) {
+            roomLimit = target;
+            limitRooms = true;
+            fill(Mode.FILL, req.maxPieces, true);
+            limitRooms = false;
+        }
+        if (!fl.boss() && !placeForwardStairs()) return fail("no forward stairwell fits any free doorway (" + stairStats() + ")");
+        fill(Mode.CAPS, req.maxPieces, true);
+        List<Result.Loop> loops = findLoops();
+        return new Result(region, placed, loops, expansion, null, warnings, req.seed, req.fallback, landing, stats);
+    }
+
+    /**
+     * Places the arrival stairwell so that it stands against the near edge of the region, centred on the lane axis, with its only door facing into the region.
+     * The Landing of the old model is turned so that its door lands ON the start cell; a stairwell has one door, which must lead INTO the floor, so here the turn is
+     * the one that makes the door face the growth direction and the position is the one that puts the stairwell's box on the near edge. Both follow from the same
+     * maths as everywhere ({@link Rot}), so the game places it where this puts it.
+     */
+    private boolean placeFloorStart() {
+        Request.Start st = req.start;
+        PoolDef pool = src.pool(req.floor.arrivalPool());
+        if (pool == null || pool.isEmpty()) {
+            warn("arrival pool " + req.floor.arrivalPool() + " is missing or empty");
+            return false;
+        }
+        Facing growth = st.growth();
+        Vec entry = st.frontCell();
+        WeightedDraw d = new WeightedDraw(pool, true, rng);
+        PoolEntry e;
+        while ((e = d.next()) != null) {
+            Shape sh = shapeOf(e, pool.id());
+            if (sh == null) continue;
+            for (int k : order(sh)) {
+                Socket ks = sh.sockets.get(k);
+                if (!ks.isDoor() || ks.sealed()) continue;
+                int r = Rot.turnsFor(ks.facing(), growth);
+                Box rel = sh.box(Vec.ZERO, r);
+                Vec rc = Rot.cell(r, ks.cell());
+                Vec o = switch (growth) {
+                    case EAST -> new Vec(region.minX() - rel.minX(), entry.y() - rc.y(), entry.z() - rc.z());
+                    case WEST -> new Vec(region.maxX() - rel.maxX(), entry.y() - rc.y(), entry.z() - rc.z());
+                    case SOUTH -> new Vec(entry.x() - rc.x(), entry.y() - rc.y(), region.minZ() - rel.minZ());
+                    case NORTH -> new Vec(entry.x() - rc.x(), entry.y() - rc.y(), region.maxZ() - rel.maxZ());
+                };
+                Box box = sh.box(o, r);
+                if (!box.inside(region, 0) || hitsExclusion(box) || index.overlapsAny(box)) continue;
+                // ownSocket -1: unlike the Landing of the old model (whose entry door leads out to the tunnel), the stairwell's only door leads INTO the floor, so it is free
+                Placed c = new Placed(placed.size(), sh, e.processors(), r, o, 0, -1, -1, -1, false);
+                push(c);
+                landing = c.index;
+                bump("start.door", k);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /** The pool of the forward stairwell; a boss floor's grand stairwells fall back to the ordinary ones of the same direction when the data pack has none. */
+    private PoolDef forwardPool() {
+        PoolDef pool = src.pool(req.floor.forwardPool());
+        if ((pool == null || pool.isEmpty()) && req.floor.forwardPool().contains("stairwell_grand_")) pool = src.pool(req.floor.forwardPool().replace("stairwell_grand_", "stairwell_"));
+        if (pool == null || pool.isEmpty()) warn("forward stairwell pool " + req.floor.forwardPool() + " is missing or empty");
+        return pool;
+    }
+
+    /**
+     * The forward stairwell of an ordinary floor: ranked search over the doors that are still free (the rooms farthest from the arrival by walking distance first),
+     * the first one the stairwell fits on wins. Records how many candidates there were, how far the best one was, how far the host is and how many ranked above it
+     * did not fit, so a test (and {@code /multiverse mega}) can show the search did what it says.
+     */
+    private boolean placeForwardStairs() {
+        PoolDef pool = forwardPool();
+        if (pool == null) return false;
+        int[] dist = walkDistances();
+        List<StairSearch.Candidate> cs = new ArrayList<>();
+        for (Placed p : placed) {
+            if (p.shape.isCap() || p.link || p.shape.kind == RoomKind.STAIRWELL || dist[p.index] < 0) continue;
+            for (int si = 0; si < p.shape.sockets.size(); si++) {
+                Socket sk = p.shape.sockets.get(si);
+                if (p.isUsed(si) || sk.sealed() || !sk.isDoor()) continue;
+                cs.add(new StairSearch.Candidate(p.index, si, dist[p.index], rng.nextInt(1 << 20)));
+            }
+        }
+        List<StairSearch.Candidate> ranked = StairSearch.rank(cs);
+        bump("stairs.candidates", ranked.size());
+        if (!ranked.isEmpty()) bump("stairs.bestDist", ranked.get(0).dist());
+        int skipped = 0;
+        for (StairSearch.Candidate c : ranked) {
+            if (overBudget) break;
+            Placed host = placed.get(c.piece());
+            WeightedDraw d = new WeightedDraw(pool, true, rng);
+            PoolEntry e;
+            while ((e = d.next()) != null) {
+                Shape sh = shapeOf(e, pool.id());
+                if (sh == null) continue;
+                for (int k : order(sh)) {
+                    Placed st = tryOne(host, c.socket(), sh, e, k, req.maxPieces, null);
+                    if (st == null) continue;
+                    push(st);
+                    bump("stairs.hostDist", c.dist());
+                    bump("stairs.skipped", skipped);
+                    return true;
+                }
+            }
+            skipped++;
+        }
+        bump("stairs.skipped", skipped);
+        return false;
+    }
+
+    private String stairStats() {
+        return "candidates=" + stats.getOrDefault("stairs.candidates", 0) + " skipped=" + stats.getOrDefault("stairs.skipped", 0);
+    }
+
+    /**
+     * The forward stairwell of a boss floor, tried for a Way Onward that has just fitted: the Way Onward is put on the stack for the length of the test (so the
+     * stairwell is judged with it in place), the stairwell is looked for behind the rubble seal, and the stack is restored. Null when no stairwell fits behind
+     * this Way Onward, which makes it no candidate at all (a boss floor whose stairs have no room is no floor).
+     */
+    private Placed stairBehind(Placed onward) {
+        PoolDef pool = forwardPool();
+        if (pool == null) return null;
+        int mark = placed.size();
+        push(onward);
+        Placed found = null;
+        WeightedDraw d = new WeightedDraw(pool, true, rng);
+        PoolEntry e;
+        outer:
+        while ((e = d.next()) != null) {
+            Shape sh = shapeOf(e, pool.id());
+            if (sh == null) continue;
+            for (int k : order(sh)) {
+                Placed st = tryOne(onward, onward.shape.expansionSocket, sh, e, k, req.maxPieces, null);
+                if (st != null) {
+                    found = st;
+                    break outer;
+                }
+            }
+        }
+        rollbackTo(mark);
+        return found;
+    }
+
+    /**
+     * The number of doorways from the arrival to every piece (index = piece index; -1 for a door cap, a tunnel piece or an unreachable piece). Edges are the joins
+     * between rooms plus the loops that are already decided (two free doorways facing each other across a wall), so the distance is the one a walker really has.
+     */
+    private int[] walkDistances() {
+        List<int[]> edges = new ArrayList<>();
+        for (Placed p : placed) {
+            if (p.parent >= 0 && !p.shape.isCap() && !p.link && !placed.get(p.parent).shape.isCap() && !placed.get(p.parent).link) edges.add(new int[] {p.parent, p.index});
+        }
+        for (Result.Loop l : loopsNow()) edges.add(new int[] {l.pieceA(), l.pieceB()});
+        int[] dist = WalkGraph.distances(placed.size(), edges, landing);
+        for (Placed p : placed) if (p.shape.isCap() || p.link) dist[p.index] = -1;
+        return dist;
+    }
+
     // ================================================================================================================ start
 
     private boolean placeStart() {
@@ -137,6 +347,7 @@ public final class MegaAssembler {
         WeightedDraw d = new WeightedDraw(pool, true, rng);
         PoolEntry e;
         while ((e = d.next()) != null) {
+            if (!allowedHere(e.shape())) continue;
             Shape sh = src.shape(e.shape());
             if (sh == null) {
                 warn("pool " + st.pool() + " names the missing template " + e.shape());
@@ -186,6 +397,11 @@ public final class MegaAssembler {
         int onward = extent(MegaGrid.P_ONWARD);
         if (req.onward != null) for (String v : req.onward.variants()) onward = Math.max(onward, extent(v));
         int need = extent(MegaGrid.P_ARENA) + extent(MegaGrid.P_ANTECHAMBER) + onward;
+        if (req.floor != null) {                                           // the forward stairwell stands behind the Way Onward: its depth is part of the line
+            PoolDef fp = forwardPool();
+            need += fp == null ? 0 : extent(fp.id());
+            return Math.max(4, Math.min(need, MegaGrid.REGION_MODULES - 4));
+        }
         return Math.max(4, Math.min(need, MegaGrid.REGION_MODULES - 6));
     }
 
@@ -281,6 +497,7 @@ public final class MegaAssembler {
 
     /** One complete boss chain found by the search: its four pieces (arena, antechamber, vault, Way Onward), the policy's cost for the seal and the seal itself. */
     private record Chain(List<Placed> pieces, int cost, Box strip, Vec seal, Facing facing) {}
+    // (a boss floor of the floor model has a fifth piece in `pieces`: the grand stairwell behind the Way Onward)
 
     private Chain bestChain;
     private int leaves;
@@ -318,8 +535,10 @@ public final class MegaAssembler {
         strip = bestChain.strip();
         roomBlockers.clear();
         capBlockers.clear();
-        roomBlockers.add(strip);
-        capBlockers.add(inner(strip, bestChain.facing()));
+        if (req.floor == null) {                       // the keep-clear corridor is for the tunnel to the next sector; a floor has none (its stairwell stands there)
+            roomBlockers.add(strip);
+            capBlockers.add(inner(strip, bestChain.facing()));
+        }
         bump("chain.leaves", leaves);
         return true;
     }
@@ -382,7 +601,7 @@ public final class MegaAssembler {
         }, () -> stopChain || overBudget || leaves >= arenaLeafCap);
     }
 
-    private record OnwardChoice(Placed piece, int cost, Box strip, Vec seal, Facing facing) {}
+    private record OnwardChoice(Placed piece, int cost, Box strip, Vec seal, Facing facing, Placed stair) {}
 
     /**
      * The leaf of the chain search: picks the best Way Onward for the antechamber on the stack (the first fitting candidate of each variant whose seal faces
@@ -406,7 +625,9 @@ public final class MegaAssembler {
         }
         leaves++;
         int n = placed.size();
-        Chain c = new Chain(List.of(placed.get(n - 3), placed.get(n - 2), placed.get(n - 1), best.piece()), best.cost(), best.strip(), best.seal(), best.facing());
+        List<Placed> pieces = new ArrayList<>(List.of(placed.get(n - 3), placed.get(n - 2), placed.get(n - 1), best.piece()));
+        if (best.stair() != null) pieces.add(best.stair());
+        Chain c = new Chain(pieces, best.cost(), best.strip(), best.seal(), best.facing());
         if (bestChain == null || c.cost() < bestChain.cost()) bestChain = c;
         if (leaves >= rc.chainLeaves) stopChain = true;
         return false;
@@ -432,6 +653,14 @@ public final class MegaAssembler {
                 Vec seal = c.socketCell(sh.expansionSocket);
                 Facing f = c.socketFacing(sh.expansionSocket);
                 Box st = stripFor(seal, f);
+                if (req.floor != null) {                      // the floor model: no tunnel to keep room for, but the grand stairwell must fit behind the seal
+                    Placed stair = stairBehind(c);
+                    if (stair == null) {
+                        bump("chain.onwardNoStairs", 1);
+                        continue;
+                    }
+                    return new OnwardChoice(c, 0, st, seal, f, stair);
+                }
                 if (index.overlapsAny(st) || hitsExclusion(st)) {
                     bump("chain.onwardBlocked", 1);
                     continue;
@@ -439,10 +668,10 @@ public final class MegaAssembler {
                 int cost = req.onward == null ? 0 : req.onward.cost(seal, f);
                 if (cost < 0) {
                     bump("chain.onwardNoRoom", 1);
-                    if (deadEnd == null) deadEnd = new OnwardChoice(c, DEAD_END, st, seal, f);
+                    if (deadEnd == null) deadEnd = new OnwardChoice(c, DEAD_END, st, seal, f, null);
                     continue;
                 }
-                return new OnwardChoice(c, cost, st, seal, f);
+                return new OnwardChoice(c, cost, st, seal, f, null);
             }
             if (overBudget) return deadEnd;
         }
@@ -610,6 +839,7 @@ public final class MegaAssembler {
         if (hitsExclusion(box)) return null;
         for (Box b : cap ? capBlockers : roomBlockers) if (b.overlaps(box)) return null;
         if (index.overlapsAny(box)) return null;
+        if (limitRooms && !cap && roomsPlaced >= roomLimit) return null;
         if (kindCount[sh.kind.ordinal()] >= rc.max(sh.kind)) return null;
         if (sh.max > 0 && shapeCount.getOrDefault(sh.id, 0) >= sh.max) return null;
         int sm = rc.shapeMax(sh.id);
@@ -628,6 +858,7 @@ public final class MegaAssembler {
     private void pushRaw(Placed c) {
         placed.add(c);
         index.add(c.box);
+        if (isRoomPiece(c)) roomsPlaced++;
         kindCount[c.shape.kind.ordinal()]++;
         shapeCount.merge(c.shape.id, 1, Integer::sum);
         unresolved += openUnused(c);
@@ -648,6 +879,7 @@ public final class MegaAssembler {
         while (placed.size() > mark) {
             Placed c = placed.remove(placed.size() - 1);
             index.removeLast();
+            if (isRoomPiece(c)) roomsPlaced--;
             kindCount[c.shape.kind.ordinal()]--;
             shapeCount.merge(c.shape.id, -1, Integer::sum);
             unresolved -= openUnused(c);
@@ -661,6 +893,9 @@ public final class MegaAssembler {
         }
     }
 
+    /** A room for the room budget: everything that is neither a door cap nor a segment of the tunnel into the Landing. */
+    private static boolean isRoomPiece(Placed p) { return !p.shape.isCap() && !p.link; }
+
     private static int openUnused(Placed p) {
         int n = 0;
         for (int i = 0; i < p.shape.sockets.size(); i++) if (!p.isUsed(i) && !p.shape.sockets.get(i).sealed()) n++;
@@ -670,6 +905,16 @@ public final class MegaAssembler {
     // ================================================================================================================ loops
 
     private List<Result.Loop> findLoops() {
+        List<Result.Loop> loops = loopsNow();
+        for (Result.Loop l : loops) {
+            placed.get(l.pieceA()).markUsed(l.socketA(), true);
+            placed.get(l.pieceB()).markUsed(l.socketB(), true);
+        }
+        return loops;
+    }
+
+    /** The loops the pieces placed so far already make (two free doorways facing each other across a shared wall), without marking them used. */
+    private List<Result.Loop> loopsNow() {
         HashMap<Vec, int[]> open = new HashMap<>();
         for (Placed p : placed) {
             if (p.shape.isCap()) continue;
@@ -694,10 +939,6 @@ public final class MegaAssembler {
                 loops.add(new Result.Loop(p.index, si, q.index, sj, p.socketCell(si), f));
             }
         }
-        for (Result.Loop l : loops) {
-            placed.get(l.pieceA()).markUsed(l.socketA(), true);
-            placed.get(l.pieceB()).markUsed(l.socketB(), true);
-        }
         return loops;
     }
 
@@ -708,10 +949,14 @@ public final class MegaAssembler {
     }
 
     private Shape shapeOf(PoolEntry e, String poolId) {
+        if (!allowedHere(e.shape())) return null;                      // reserved for another theme: not an error, just not drawn here
         Shape sh = src.shape(e.shape());
         if (sh == null) warn("pool " + poolId + " names the missing template " + e.shape());
         return sh;
     }
+
+    /** May this template be drawn in the sector being planned (is it free for every theme, or reserved for this one)? */
+    private boolean allowedHere(String templateId) { return req.themes == null || req.themes.allows(templateId, req.themeId); }
 
     private void warn(String w) {
         if (warned.add(w)) warnings.add(w);

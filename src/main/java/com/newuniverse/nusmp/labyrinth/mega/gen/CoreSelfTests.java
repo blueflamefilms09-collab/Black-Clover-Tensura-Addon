@@ -2,6 +2,7 @@ package com.newuniverse.nusmp.labyrinth.mega.gen;
 
 import com.newuniverse.nusmp.labyrinth.gate.LabyrinthTravel;
 import com.newuniverse.nusmp.labyrinth.mega.FloorMap;
+import com.newuniverse.nusmp.labyrinth.mega.MegaConfig;
 import com.newuniverse.nusmp.labyrinth.mega.MegaData;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
 import com.newuniverse.nusmp.labyrinth.mega.MegaGrid;
@@ -9,6 +10,7 @@ import com.newuniverse.nusmp.labyrinth.mega.Polarity;
 import com.newuniverse.nusmp.labyrinth.mega.Room;
 import com.newuniverse.nusmp.labyrinth.mega.SelfTests;
 import com.newuniverse.nusmp.labyrinth.mega.Sector;
+import com.newuniverse.nusmp.labyrinth.mega.floors.FloorsConfig;
 import com.newuniverse.nusmp.labyrinth.mega.travel.MegaTravel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -34,6 +36,12 @@ import java.util.List;
  * {@code core.chain_travel} does {@code MegaDungeon.enterChain} (the generator's {@code ChainTravel}) put a player on the first Landing of each road that exists,
  * and does the memory of the deepest Landing stay on its own road. The checks that need a built sector say so in their answer when there is none, instead of
  * passing silently.
+ *
+ * <p>The floor model (1.58.0, one floor per sector, joined by stairs): {@code core.assemble} probes floor 1 (two seeds) and the first boss floor of each road, with the stairs
+ * in the fill; {@code core.seal} only asks a boss floor's seal to be whole until the next floor exists and gone after it (the grand stairwell stands behind it, there is no
+ * tunnel); {@code core.expand} dry-runs the floor after each road's newest floor ({@link ExpansionQueue#draftFloor}: its slot, its decade theme, its plan, its audit with
+ * the stairs); {@code core.roads} also checks that every floor stands in the slot of its place and that two floors of a road keep apart. A road saved with ten floors per
+ * sector keeps being checked the old way.
  */
 final class CoreSelfTests {
     private CoreSelfTests() {}
@@ -88,13 +96,18 @@ final class CoreSelfTests {
         pools.bind(level.getStructureManager());
         if (pools.poolIds().isEmpty()) return fail("no Mega pools are loaded (data/nusmp/worldgen/template_pool/mega)");
         MegaData data = MegaData.get(server);
-        int pieces = 0, rooms = 0, loops = 0, tries = 0, probes = 0;
+        int pieces = 0, rooms = 0, loops = 0, tries = 0, probes = 0, bosses = 0;
         long nanos = 0;
         StringBuilder notes = new StringBuilder();
+        boolean floors = floorModel();
+        int perRoad = floors ? 3 : 2;                                             // floor model: floor 1 with two seeds, and the first boss floor
         for (Polarity road : Polarity.values()) {
-            for (int n = 0; n < 2; n++) {
-                String who = "the " + road.id() + " probe " + n;
-                SectorGenerator.Planned p = SectorGenerator.probe(level, probeSeed(data, n), road);
+            for (int n = 0; n < perRoad; n++) {
+                boolean bossProbe = floors && n == 2;
+                String who = "the " + road.id() + " probe " + n + (floors ? bossProbe ? " (the first boss floor)" : " (floor 1)" : "");
+                SectorGenerator.Planned p = floors
+                        ? SectorGenerator.probeFloor(pools, probeSeed(data, n), road, bossProbe ? FloorMap.BOSS_EVERY - 1 : 0, System.nanoTime())
+                        : SectorGenerator.probe(level, probeSeed(data, n), road);
                 if (!p.ok()) return fail(who + " cannot be assembled: " + p.failure());
                 if (p.solved().fallback()) {
                     return fail(who + " needed the fallback layout after " + (p.solved().tries() - 1) + " tries: " + SectorSolver.summary(p.solved().failures(), 3));
@@ -102,20 +115,27 @@ final class CoreSelfTests {
                 Box region = p.prepared().request().region;
                 SectorFill f = SectorFill.of(p.result(), region);
                 int relics = p.prepared().request().relicCount;
-                List<String> bad = SavedAudit.audit(f.view(0, "ACTIVE", region, relics, -1), null, pools.recipe().requireMarkers);
+                Request.Floor spec = p.prepared().request().floor;
+                SectorView view = spec == null ? f.view(0, "ACTIVE", region, relics, -1) : f.view(0, "ACTIVE", region, relics, -1, true, spec.boss());
+                List<String> bad = SavedAudit.audit(view, null, pools.recipe().requireMarkers);
                 if (!bad.isEmpty()) return fail(who + " fails the saved-sector audit: " + String.join(", ", bad));
+                if (spec != null && (f.stairBack == null || f.stairForward == null || f.stairForwardPad == null)) return fail(who + " has no stairs in its fill (back " + f.stairBack + ", forward " + f.stairForward + ")");
                 for (String note : p.prepared().notes()) if (notes.indexOf(note) < 0) notes.append(" [").append(note).append("]");
                 pieces += p.result().pieces.size();
                 rooms += f.rooms.size();
                 loops += p.result().loops.size();
                 tries += p.solved().tries();
                 nanos += p.nanos();
+                if (spec != null && spec.boss()) bosses++;
                 probes++;
             }
         }
-        return ok(probes + " probe sectors (two per road): avg pieces=" + pieces / probes + " rooms=" + rooms / probes + " loops=" + loops / probes + " tries=" + tries + " total ms=" + nanos / 1_000_000L
-                + notes);
+        String what = floors ? " probe floors (floor 1 with two seeds and the first boss floor, on each road; " + bosses + " boss floors)" : " probe sectors (two per road)";
+        return ok(probes + what + ": avg pieces=" + pieces / probes + " rooms=" + rooms / probes + " loops=" + loops / probes + " tries=" + tries + " total ms=" + nanos / 1_000_000L + notes);
     }
+
+    /** Is the dungeon built one floor per sector (the 1.58.0 default)? Read from the same config the generator reads, so the probes are the floors a new road would get. */
+    private static boolean floorModel() { return FloorMap.isFloorModel(FloorMap.floorsPerSector(FloorsConfig.get(FloorsConfig.PER_SECTOR))); }
 
     // ================================================================================================================ core.determinism
 
@@ -195,17 +215,22 @@ final class CoreSelfTests {
             for (BlockPos p : cells) if (!level.getBlockState(p).isAir()) solid++;
             Sector next = s.nextId >= 0 ? data.sector(s.nextId) : null;
             BlockPos front = s.expansionPos.relative(s.expansionFacing);
+            // 1.58.0: behind the seal of a boss floor stands the grand stairwell, not a tunnel, so the cells outside are the stairwell's own (floor under them, but not
+            // necessarily air); what has to hold is the seal itself: whole while the next floor is not there, gone once it is
+            boolean stairsBehind = s.isFloor();
             if (next != null && SectorGenerator.playable(next)) {
                 if (solid != 0) return fail("sector " + s.id + " leads to sector " + next.id + " but " + solid + " of " + cells.size() + " seal cells are still solid");
-                if (level.getBlockState(front.below()).isAir()) return fail("sector " + s.id + "'s seal is open but there is no tunnel floor outside it at " + front.below().toShortString());
+                if (level.getBlockState(front.below()).isAir()) return fail("sector " + s.id + "'s seal is open but there is no " + (stairsBehind ? "stairwell" : "tunnel") + " floor outside it at " + front.below().toShortString());
                 detail.append("sector ").append(s.id).append(" open into sector ").append(next.id).append("; ");
             } else {
                 if (solid < cells.size() * 0.75) return fail("sector " + s.id + "'s Way Onward is not sealed: only " + solid + " of " + cells.size() + " seal cells hold blocks");
-                for (int k = 0; k < 3; k++) {
-                    BlockPos outside = front.relative(s.expansionFacing, k);
-                    if (!level.getBlockState(outside).isAir()) return fail("sector " + s.id + " has a block " + (k + 1) + " cells outside its seal at " + outside.toShortString() + ", where the tunnel to the next sector must run");
+                if (!stairsBehind) {
+                    for (int k = 0; k < 3; k++) {
+                        BlockPos outside = front.relative(s.expansionFacing, k);
+                        if (!level.getBlockState(outside).isAir()) return fail("sector " + s.id + " has a block " + (k + 1) + " cells outside its seal at " + outside.toShortString() + ", where the tunnel to the next sector must run");
+                    }
                 }
-                detail.append("sector ").append(s.id).append(" sealed (").append(solid).append("/").append(cells.size()).append(" cells), clear outside; ");
+                detail.append("sector ").append(s.id).append(" sealed (").append(solid).append("/").append(cells.size()).append(" cells)").append(stairsBehind ? ", the stairs behind it" : ", clear outside").append("; ");
             }
         }
         if (checked == 0) return ok("no finished sector has a Way Onward yet");
@@ -301,6 +326,16 @@ final class CoreSelfTests {
             break;
         }
         for (Polarity road : Polarity.values()) {
+            Sector tail = data.chainTail(road);
+            if (tail != null && tail.isFloor()) {                                // 1.58.0: floors are joined by stairs; the dry run plans the floor after the newest one
+                if (!SectorGenerator.playable(tail)) {
+                    detail.append("the newest floor of the ").append(road.id()).append(" road (sector ").append(tail.id).append(") is ").append(tail.state.name()).append(", so no dry run; ");
+                    continue;
+                }
+                String bad = dryRunFloor(level, data, tail, detail);
+                if (bad != null) return fail(bad);
+                continue;
+            }
             Sector free = null;
             for (Sector s : data.chain(road)) if (SectorGenerator.playable(s) && s.expansionPos != null && s.expansionFacing != null && s.nextId < 0) free = s;
             if (free == null) {
@@ -343,6 +378,39 @@ final class CoreSelfTests {
         return null;
     }
 
+    /**
+     * The dry run of the floor after {@code from} (a playable floor of the floor model, the newest of its road): the draft is the one {@code ExpansionQueue} would save, it must
+     * stand in the next slot of the road's lane, keep the decade's theme unless it opens a decade, stay clear of every floor of its road, plan with the real pools and pass the
+     * saved-sector audit with the stairs. Nothing is placed and nothing is saved. Returns what is wrong, or null (and adds a line to {@code detail}).
+     */
+    private static String dryRunFloor(ServerLevel level, MegaData data, Sector from, StringBuilder detail) {
+        Sector draft = ExpansionQueue.draftFloor(data, from);
+        String who = "the floor after sector " + from.id + " (" + from.polarity.id() + " road)";
+        String bad = checkDraft(draft, from, data.seed);
+        if (bad != null) return who + " would be wrong: " + bad;
+        if (!draft.isFloor()) return who + " would not be a floor of the floor model (floors per sector " + draft.perRegion + ")";
+        Vec slot = FloorPlan.entry(draft.polarity, draft.chainIndex);
+        if (draft.entry.getX() != slot.x() || draft.entry.getZ() != slot.z()) return who + " would stand at " + draft.entry.toShortString() + " but its slot is x " + slot.x() + ", z " + slot.z();
+        if (!FloorMap.startsDecade(draft.chainIndex, draft.perRegion) && draft.theme != from.theme) {
+            return who + " is not the first floor of a decade, so it keeps theme " + from.theme.id() + ", but it has " + draft.theme.id();
+        }
+        Box region = SectorGenerator.box(draft.region);
+        for (Sector o : data.chain(from.polarity)) {
+            if (region.inflateXZ(SectorPlanner.GAP - 1).overlaps(SectorGenerator.box(o.region))) return who + " would be closer than " + SectorPlanner.GAP + " blocks to sector " + o.id;
+        }
+        SectorGenerator.Planned p = SectorGenerator.plan(level, data, draft, from);
+        if (!p.ok()) return who + " cannot be planned: " + p.failure();
+        SectorFill f = SectorFill.of(p.result(), region);
+        if (f.stairBack == null || f.stairForward == null || f.stairForwardPad == null) return who + " has no stairs in its fill (back " + f.stairBack + ", forward " + f.stairForward + ")";
+        List<String> audit = SavedAudit.audit(f.view(draft.id, "ACTIVE", region, draft.relicCount, -1, true, draft.isBossFloor()), null, VanillaPools.get().recipe().requireMarkers);
+        if (!audit.isEmpty()) return who + " fails the saved-sector audit: " + String.join(", ", audit);
+        detail.append("floor ").append(FloorMap.label(draft.firstFloor())).append(" (sector ").append(draft.id).append(") after sector ").append(from.id).append(" would be a ").append(draft.theme.id())
+                .append(draft.isBossFloor() ? " boss floor" : " floor").append(" of the ").append(from.polarity.id()).append(" road, threat ").append(draft.threat).append(": ")
+                .append(p.result().pieces.size()).append(" pieces, ").append(f.rooms.size()).append(" rooms, tries ").append(p.solved().tries()).append(p.solved().fallback() ? " (fallback)" : "")
+                .append(", ").append(p.nanos() / 1_000_000L).append(" ms; ");
+        return null;
+    }
+
     // ================================================================================================================ core.roads
 
     private static SelfTests.Result roads(MinecraftServer server) {
@@ -381,11 +449,24 @@ final class CoreSelfTests {
                 if (s.threat != SectorThreat.of(road, s.chainIndex, s.perRegion)) return fail(who + " has threat " + s.threat + " but its floors say " + SectorThreat.of(road, s.chainIndex, s.perRegion));
                 int midZ = (s.region.minZ() + s.region.maxZ()) / 2;
                 if (Math.abs(midZ - MegaGrid.laneZ(road)) > MegaGrid.LANE_Z / 2) return fail(who + " lies at z " + midZ + ", outside its lane");
+                if (s.isFloor()) {                                                   // 1.58.0: a floor stands in the slot of its place and its door is inside its own region
+                    Vec slot = FloorPlan.entry(road, s.chainIndex);
+                    if (s.entry == null || s.entry.getX() != slot.x() || s.entry.getZ() != slot.z()) {
+                        return fail(who + " (floor " + FloorMap.label(s.firstFloor()) + ") has its door at " + (s.entry == null ? "nowhere" : s.entry.toShortString()) + " but its slot is x " + slot.x() + ", z " + slot.z());
+                    }
+                    if (s.entry.getX() < s.region.minX() || s.entry.getX() > s.region.maxX() || s.entry.getZ() < s.region.minZ() || s.entry.getZ() > s.region.maxZ()) {
+                        return fail(who + " has its door at " + s.entry.toShortString() + " outside its own region");
+                    }
+                }
                 if (i > 0) {
                     Sector prev = chain.get(i - 1);
                     if (prev.nextId != s.id) return fail("sector " + prev.id + " does not lead to sector " + s.id + " (it says " + prev.nextId + ") though they follow each other on the " + road.id() + " road");
                     if (s.perRegion != prev.perRegion) return fail(who + " has " + s.perRegion + " floors per sector but the one before it has " + prev.perRegion);
                     if (s.firstFloor() != prev.lastFloor() + road.sign()) return fail("the floors of " + who + " start at " + FloorMap.label(s.firstFloor()) + " but the sector before ends at " + FloorMap.label(prev.lastFloor()));
+                    if (s.isFloor() && prev.isFloor()) {                             // two floors of a road never touch (their slots are one pitch apart)
+                        long gap = SectorGenerator.box(prev.region).gapXZ(SectorGenerator.box(s.region));
+                        if (gap < SectorPlanner.GAP) return fail("floor " + FloorMap.label(prev.firstFloor()) + " (sector " + prev.id + ") and floor " + FloorMap.label(s.firstFloor()) + " (sector " + s.id + ") are only " + gap + " blocks apart");
+                    }
                 }
             }
             Sector head = chain.get(0), tail = chain.get(chain.size() - 1);

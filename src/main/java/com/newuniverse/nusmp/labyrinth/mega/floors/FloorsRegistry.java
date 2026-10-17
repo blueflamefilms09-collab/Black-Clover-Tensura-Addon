@@ -22,6 +22,7 @@ public final class FloorsRegistry {
         AlignmentAttachments.ATTACHMENTS.register(modBus);
         modBus.addListener(AlignmentNet::registerPayloads);
         MegaDungeon.addListener(new FloorAssigner());
+        MegaDungeon.addFloorListener(new FloorGrowth());                    // 1.58.0: a party entering a floor starts the building of the next one
         MegaDungeon.setAlignmentPolicy(new LockPolicy());
         FloorsSelfTests.register();
     }

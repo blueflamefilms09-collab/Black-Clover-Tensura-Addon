@@ -127,6 +127,10 @@ public final class MegaCommand {
         say(src, "  guardian=" + xyz(s.guardianSpawn) + " gatekeeper=" + xyz(s.gatekeeper) + " vault=" + xyz(s.vaultCenter));
         say(src, "  wayOnward=" + xyz(s.expansionPos) + " facing=" + ExpansionQueue.describe(s.expansionFacing) + " seal=" + s.sealW + "x" + s.sealH + "x" + s.sealD
                 + " next=" + (s.nextId < 0 ? "none" : Integer.toString(s.nextId)) + " prev=" + (prev == null ? "none" : Integer.toString(prev.id)));
+        if (s.isFloor()) say(src, CommandLines.stairs(s.stairBack == null ? null : xyz(s.stairBack), s.stairForward == null ? null : xyz(s.stairForward),
+                s.stairForwardPad == null ? null : xyz(s.stairForwardPad), StairLinks.back(s.chainIndex), StairLinks.forward(s.chainIndex), s.polarity, s.isBossFloor(),
+                data.chainSector(s.polarity, s.chainIndex + 1) == null ? -1 : data.chainSector(s.polarity, s.chainIndex + 1).id,
+                s.chainIndex == 0 ? -1 : data.chainSector(s.polarity, s.chainIndex - 1) == null ? -1 : data.chainSector(s.polarity, s.chainIndex - 1).id));
         GenData.Stat st = GenData.get(server).get(s.id);
         if (st != null) {
             say(src, "  generated: tries=" + st.tries + " fallback=" + st.fallback + " deadEnd=" + st.deadEnd + " loops=" + st.loops + " caps=" + st.caps + " link=" + st.link
@@ -270,6 +274,9 @@ public final class MegaCommand {
         List<String> ids = pools.poolIds();
         if (ids.isEmpty()) return no(src, CommandLines.refused("pools", "the data pack has no data/nusmp/worldgen/template_pool/mega pools"));
         say(src, "pools: " + ids.size() + " pools, recipe minRooms=" + pools.recipe().minRooms + " minLoops=" + pools.recipe().minLoops);
+        Recipe fr = pools.floorRecipe();
+        say(src, "floors: " + MegaConfig.get(MegaConfig.FLOOR_ROOMS) + " rooms per floor (config), floor recipe minRooms=" + fr.minRooms + " minLoops=" + fr.minLoops + " stairMinWalk=" + fr.stairMinWalk
+                + ", " + pools.themes().size() + " template theme rule(s)");
         for (String id : ids) {
             PoolDef d = pools.pool(id);
             int unreadable = 0;

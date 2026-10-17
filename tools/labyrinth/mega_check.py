@@ -226,6 +226,67 @@ def check_pool_contents(pools, templates_present, errors, warns, proc_lists):
     return referenced
 
 
+THEME_DIR = os.path.join(DATA, "mega", "template_themes")
+REGION_THEME_JAVA = os.path.join(JAVA, "com", "newuniverse", "nusmp", "labyrinth", "mega", "RegionTheme.java")
+
+
+def region_theme_ids():
+    """The ids of the RegionTheme enum, read from its source (the names of the entries that have a constructor call, lower-cased): a template_themes file must name one."""
+    text = open(REGION_THEME_JAVA, encoding="utf-8", errors="replace").read()
+    body = text[text.index("public enum RegionTheme") :]
+    end = re.search(r"^\s*[A-Z][A-Z0-9_]*\([^;\n]*\)\s*;", body, re.M)               # the last constant ends the list with ");"
+    body = body[: end.end()] if end else body
+    return {m.group(1).lower() for m in re.finditer(r"^\s*([A-Z][A-Z0-9_]*)\(", body, re.M)}
+
+
+def check_template_themes(all_names, errors, warns):
+    """1.58.0 (docs/labyrinth/mega_v2.md section 5.1): every data/nusmp/mega/template_themes/*.json must be valid JSON of the documented shape, name a theme that is
+    a RegionTheme id (a typo would make its rooms unreachable: no sector ever wears that theme), list prefixes that match at least one template (a wrong prefix leaves
+    the rooms free for every theme), and give `relative` weights only to prefixes it also claims. Returns the number of files read."""
+    themes = region_theme_ids()
+    n = 0
+    for path in sorted(glob.glob(os.path.join(THEME_DIR, "*.json"))):
+        n += 1
+        fname = os.path.basename(path)
+        try:
+            doc = json.load(open(path))
+        except Exception as e:  # noqa: BLE001
+            errors.append("template_themes/%s: invalid JSON: %s" % (fname, e))
+            continue
+        if not isinstance(doc, dict):
+            errors.append("template_themes/%s: not a JSON object" % fname)
+            continue
+        for k in doc:
+            if k not in ("theme", "templates", "relative") and not k.startswith("_"):
+                errors.append("template_themes/%s: unknown key %r" % (fname, k))
+        theme = str(doc.get("theme", "")).strip().lower()
+        if theme not in themes:
+            errors.append("template_themes/%s: theme %r is not an id of the RegionTheme enum (%s)" % (fname, theme, ", ".join(sorted(themes))))
+        prefixes = doc.get("templates")
+        if not isinstance(prefixes, list) or not prefixes:
+            errors.append("template_themes/%s: needs a non-empty \"templates\" list of template id prefixes" % fname)
+            prefixes = []
+        claimed = []
+        for pre in prefixes:
+            if not isinstance(pre, str) or not pre.strip():
+                errors.append("template_themes/%s: a prefix is not a non-empty text" % fname)
+                continue
+            full = pre.strip() if ":" in pre else "nusmp:" + pre.strip()
+            claimed.append(full[len("nusmp:"):] if full.startswith("nusmp:") else full)
+            if not any(("nusmp:" + n).startswith(full) for n in all_names):
+                errors.append("template_themes/%s: the prefix %r matches no template (a wrong prefix would leave the rooms free for every theme)" % (fname, pre))
+        rel = doc.get("relative", {})
+        if not isinstance(rel, dict):
+            errors.append("template_themes/%s: \"relative\" must be an object of prefix -> weight" % fname)
+            rel = {}
+        for pre, w in rel.items():
+            if not isinstance(w, int) or isinstance(w, bool) or not (1 <= w <= 150):
+                errors.append("template_themes/%s: weight of %r must be an integer 1..150 (the vanilla pool limit), got %r" % (fname, pre, w))
+            if not any(pre.startswith(c) or c.startswith(pre) for c in claimed):
+                warns.append("template_themes/%s: the weight prefix %r is not under any claimed template prefix" % (fname, pre))
+    return n
+
+
 def main(argv):
     quiet = "--quiet" in argv
     only = [a for a in argv if not a.startswith("--")]
@@ -249,6 +310,8 @@ def main(argv):
         except Exception as e:  # noqa: BLE001
             errors.append("%s: invalid JSON: %s" % (os.path.basename(p), e))
     referenced = check_pool_contents(pools, all_names, errors, warns, proc_lists)
+    if not only:
+        check_template_themes(all_names, errors, warns)
     if not only:
         for n in sorted(all_names):
             if "nusmp:" + n not in referenced and not n.startswith("mega/link/"):

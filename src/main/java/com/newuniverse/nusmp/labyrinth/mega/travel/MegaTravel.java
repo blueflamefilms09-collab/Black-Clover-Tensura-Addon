@@ -1,7 +1,6 @@
 package com.newuniverse.nusmp.labyrinth.mega.travel;
 
 import com.mojang.logging.LogUtils;
-import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.labyrinth.gate.LabyrinthTravel;
 import com.newuniverse.nusmp.labyrinth.mega.FloorMap;
 import com.newuniverse.nusmp.labyrinth.mega.MegaConfig;
@@ -24,7 +23,6 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.levelgen.structure.StructureStart;
 import org.slf4j.Logger;
 
 import java.util.Arrays;
@@ -36,15 +34,15 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * Why: this is where a player goes when a Gate, a Dungeon Maw or the enter command sends them into the Mega-Dungeon ({@code LabyrinthTravel.enter} routes
- * here while {@code mega.layout} is {@code "mega"}). The dungeon is ONE place that exists only after somebody asks for it, so the first player through a
+ * Why: this is where a player goes when a Gate or the enter command sends them into the Mega-Dungeon ({@code LabyrinthTravel.enter} routes
+ * here). The dungeon is ONE place that exists only after somebody asks for it, so the first player through a
  * Gate wakes it: sector 0 is queued and the player is kept waiting (an action-bar line every two seconds, no teleport into a half-built void) until the
  * generator has finished it, then taken in automatically; a player who walks away from the gate meanwhile is released, because being pulled across the
  * world minutes later would be a surprise. Once the dungeon exists the player arrives on a Landing: the deepest one they ever stood in (so the climb is
  * not lost between play sessions), or the first when they sneak through the gate or {@code lastLanding} is off; a sector that is still being built is not
  * a place yet, so the rule falls back to the deepest finished one ({@link LandingRule}). The depth is a plain int in the player's persistent data
  * ({@code nusmp_mega_landing}), which survives death, logout and restart, and is raised by a slow check while the player stands in a Landing (reaching a
- * Landing by any road counts, not only by the Gate). When {@code legacyGates} is off the old Gate arches and Maws refuse and point at the Gateway. A Gate
+ * Landing by any road counts, not only by the Gate). A Gate
  * calls {@link #enter} every tick the player overlaps it, so a refusal is told at most once every three seconds and a waiting player is not queued twice.
  * Server thread only; the waiting list and the message throttle are cleared when the server stops.
  *
@@ -53,8 +51,7 @@ import java.util.UUID;
  * when the road does not exist yet (and keeps the player waiting exactly as for the first sector of 1.54.0), and picks the deepest Landing the player ever reached ON THAT
  * ROAD, or the road's first one. The memory is per road: a persistent int {@code nusmp_mega_landing_holy} / {@code nusmp_mega_landing_abyssal} holding the deepest CHAIN
  * INDEX reached (sector ids are global and interleave the two roads, so an id says nothing about depth; the chain index does). The 1.54.0 key
- * {@code nusmp_mega_landing} (a sector id; the rest anchors write it too) is still written and still read, as a hint for the road its sector belongs to. The old Gates and
- * Maws ({@link #enter}) lead to the first road, the Holy one, and obey the lock like every other door.
+ * {@code nusmp_mega_landing} (a sector id; the rest anchors write it too) is still written and still read, as a hint for the road its sector belongs to. The Gates ({@link #enter}) lead to the first road, the Holy one, and obey the lock like every other door.
  */
 public final class MegaTravel {
     private static final Logger LOG = LogUtils.getLogger();
@@ -81,10 +78,10 @@ public final class MegaTravel {
     // ================================================================================================================ entering
 
     /**
-     * Takes the player into the Mega-Dungeon from an old Gate or Maw at {@code from}: up the first road, the Holy one (what 1.54.0's single chain was). False when it
+     * Takes the player into the Mega-Dungeon from a Gate at {@code from}: up the first road, the Holy one (what 1.54.0's single chain was). False when it
      * cannot (the message says why). Never throws.
      */
-    public static boolean enter(ServerPlayer p, BlockPos from) { return enterSafely(p, from, Polarity.HOLY, true); }
+    public static boolean enter(ServerPlayer p, BlockPos from) { return enterSafely(p, from, Polarity.HOLY); }
 
     /**
      * 1.55.0: the {@code ChainTravel} of the Hub's gates: takes the player into the chain of a polarity, waking its first sector when the road does not exist yet. The
@@ -92,12 +89,12 @@ public final class MegaTravel {
      */
     public static boolean enterChain(ServerPlayer p, Polarity road) {
         if (p == null || road == null) return false;
-        return enterSafely(p, p.blockPosition(), road, false);
+        return enterSafely(p, p.blockPosition(), road);
     }
 
-    private static boolean enterSafely(ServerPlayer p, BlockPos from, Polarity road, boolean oldGate) {
+    private static boolean enterSafely(ServerPlayer p, BlockPos from, Polarity road) {
         try {
-            return enterNow(p, from, road, oldGate);
+            return enterNow(p, from, road);
         } catch (Throwable t) {
             LOG.error("[nusmp] The Mega-Dungeon entry failed for {}: {}", p == null ? "?" : p.getGameProfile().getName(), t.toString(), t);
             if (p != null) tell(p, "The Labyrinth does not answer.");
@@ -105,7 +102,7 @@ public final class MegaTravel {
         }
     }
 
-    private static boolean enterNow(ServerPlayer p, BlockPos from, Polarity road, boolean oldGate) {
+    private static boolean enterNow(ServerPlayer p, BlockPos from, Polarity road) {
         MinecraftServer server = p.getServer();
         if (server == null) return false;
         ServerLevel mega = MegaDungeon.level(server);
@@ -115,10 +112,6 @@ public final class MegaTravel {
         }
         Waiting waiting = WAITING.get(p.getUUID());
         if (waiting != null && waiting.road() == road) return true;                          // a Gate calls this every tick the player stands in it
-        if (oldGate && !Labyrinth.in(p) && !MegaConfig.get(MegaConfig.LEGACY_GATES) && !atGateway(p.serverLevel(), from)) {
-            tell(p, "This old gate no longer opens onto the Labyrinth. Look for the Gateway: it is the one way in.");
-            return false;
-        }
         if (!MegaDungeon.mayEnter(p, road)) return false;                                    // the Directional Lock says why
         MegaData data = MegaData.get(server);
         Sector target = choose(data, p, road, p.isShiftKeyDown());
@@ -191,7 +184,12 @@ public final class MegaTravel {
             return false;
         }
         String floor = FloorMap.label(target.firstFloor());
-        String message = target.chainIndex == 0
+        String way = target.polarity == Polarity.HOLY ? "up" : "down";
+        String message = target.isFloor()
+                ? (target.chainIndex == 0
+                        ? "The gate closes behind you. You stand at the foot of the stairs of floor " + floor + ". Find the stairs that lead " + way + "."
+                        : "You come out at the foot of the stairs of floor " + floor + ".")
+                : target.chainIndex == 0
                 ? "The gate closes behind you. Lamps burn in a hall of dark stone: a Landing, floor " + floor + ". Walk on, and the Labyrinth will find you."
                 : "You step out onto the Landing of floor " + floor + ".";
         LabyrinthTravel.arrive(p, mega, pad, message);
@@ -201,16 +199,6 @@ public final class MegaTravel {
             NusmpEvents.fire(p, "mega.entered", Integer.toString(target.id));
         }
         return true;
-    }
-
-    /** Is the position inside the Overworld Gateway structure (the one entrance that is always open)? */
-    static boolean atGateway(ServerLevel level, BlockPos pos) {
-        try {
-            StructureStart start = level.structureManager().getStructureWithPieceAt(pos, Labyrinth.MEGA_GATEWAY_TAG);
-            return start != null && start.isValid();
-        } catch (Throwable t) {
-            return false;
-        }
     }
 
     // ================================================================================================================ waiting for sector 0
@@ -278,7 +266,7 @@ public final class MegaTravel {
             Sector s = MegaDungeon.sectorAt(p.level(), at);
             if (s == null) return;
             Room r = s.roomAt(at);
-            if (r == null || r.kind != RoomKind.LANDING) return;
+            if (r == null || (r.kind != RoomKind.LANDING && r.kind != RoomKind.STAIRWELL)) return;
             remember(p, s);
         } catch (Throwable t) {
             LOG.debug("[nusmp] Landing check failed: {}", t.toString());

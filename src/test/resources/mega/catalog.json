@@ -593,6 +593,296 @@
    "emptyWeight": 2,
    "fallback": "nusmp:mega/cap"
   },
+  "nusmp:mega/stair_door": {
+   "elements": [
+    {
+     "template": "nusmp:mega/corridor/bend_1x1_a",
+     "weight": 5
+    },
+    {
+     "template": "nusmp:mega/corridor/bend_1x1_b",
+     "weight": 5
+    },
+    {
+     "template": "nusmp:mega/corridor/bend_1x1_c",
+     "weight": 5
+    },
+    {
+     "template": "nusmp:mega/corridor/cross_1x1_a",
+     "weight": 2
+    },
+    {
+     "template": "nusmp:mega/corridor/cross_1x1_b",
+     "weight": 2
+    },
+    {
+     "template": "nusmp:mega/corridor/cross_1x1_c",
+     "weight": 2
+    },
+    {
+     "template": "nusmp:mega/corridor/gallery_2x4_a",
+     "weight": 2
+    },
+    {
+     "template": "nusmp:mega/corridor/gallery_2x4_b",
+     "weight": 2
+    },
+    {
+     "template": "nusmp:mega/corridor/straight_1x2_a",
+     "weight": 7
+    },
+    {
+     "template": "nusmp:mega/corridor/straight_1x2_b",
+     "weight": 7
+    },
+    {
+     "template": "nusmp:mega/corridor/straight_1x2_c",
+     "weight": 7
+    },
+    {
+     "template": "nusmp:mega/corridor/straight_1x3_a",
+     "weight": 7
+    },
+    {
+     "template": "nusmp:mega/corridor/straight_1x3_b",
+     "weight": 7
+    },
+    {
+     "template": "nusmp:mega/corridor/straight_1x3_c",
+     "weight": 7
+    },
+    {
+     "template": "nusmp:mega/corridor/straight_1x4_a",
+     "weight": 5
+    },
+    {
+     "template": "nusmp:mega/corridor/straight_1x4_b",
+     "weight": 5
+    },
+    {
+     "template": "nusmp:mega/corridor/straight_1x4_c",
+     "weight": 5
+    },
+    {
+     "template": "nusmp:mega/corridor/tee_1x1_a",
+     "weight": 5
+    },
+    {
+     "template": "nusmp:mega/corridor/tee_1x1_b",
+     "weight": 5
+    },
+    {
+     "template": "nusmp:mega/corridor/tee_1x1_c",
+     "weight": 5
+    },
+    {
+     "template": "nusmp:mega/hall/alchemy_lab_a",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/hall/alchemy_lab_b",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/hall/armory_forge_a",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/hall/armory_forge_b",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/hall/barracks_a",
+     "weight": 4
+    },
+    {
+     "template": "nusmp:mega/hall/barracks_b",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/hall/cell_block_a",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/hall/cell_block_b",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/hall/cistern_a",
+     "weight": 1
+    },
+    {
+     "template": "nusmp:mega/hall/cistern_b",
+     "weight": 1
+    },
+    {
+     "template": "nusmp:mega/hall/colonnade_hall_a",
+     "weight": 2
+    },
+    {
+     "template": "nusmp:mega/hall/colonnade_hall_b",
+     "weight": 1
+    },
+    {
+     "template": "nusmp:mega/hall/crypt_a",
+     "weight": 4
+    },
+    {
+     "template": "nusmp:mega/hall/crypt_b",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/hall/great_hall",
+     "weight": 1
+    },
+    {
+     "template": "nusmp:mega/hall/kitchen_larder",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/hall/lava_hall_a",
+     "weight": 1
+    },
+    {
+     "template": "nusmp:mega/hall/lava_hall_b",
+     "weight": 1
+    },
+    {
+     "template": "nusmp:mega/hall/library_a",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/hall/library_b",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/hall/mirror_hall",
+     "weight": 1
+    },
+    {
+     "template": "nusmp:mega/hall/ossuary",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/hall/round_hall_a",
+     "weight": 2
+    },
+    {
+     "template": "nusmp:mega/hall/round_hall_b",
+     "weight": 2
+    },
+    {
+     "template": "nusmp:mega/hall/shrine_a",
+     "weight": 3
+    },
+    {
+     "template": "nusmp:mega/hall/shrine_b",
+     "weight": 1
+    },
+    {
+     "template": "nusmp:mega/hall/torture_chamber_a",
+     "weight": 1
+    },
+    {
+     "template": "nusmp:mega/hall/torture_chamber_b",
+     "weight": 1
+    },
+    {
+     "template": "nusmp:mega/junction/crossroads_hall_3x3",
+     "weight": 7
+    },
+    {
+     "template": "nusmp:mega/junction/plaza_2x2_a",
+     "weight": 11
+    },
+    {
+     "template": "nusmp:mega/junction/plaza_2x2_b",
+     "weight": 11
+    },
+    {
+     "template": "nusmp:mega/junction/plaza_2x2_c",
+     "weight": 11
+    },
+    {
+     "template": "nusmp:mega/junction/plaza_3x3_a",
+     "weight": 7
+    },
+    {
+     "template": "nusmp:mega/junction/plaza_3x3_b",
+     "weight": 7
+    },
+    {
+     "template": "nusmp:mega/junction/plaza_3x3_c",
+     "weight": 7
+    }
+   ],
+   "emptyWeight": 0,
+   "fallback": "nusmp:mega/cap"
+  },
+  "nusmp:mega/stairwell_down": {
+   "elements": [
+    {
+     "template": "nusmp:mega/stairwell/down_a",
+     "weight": 7
+    },
+    {
+     "template": "nusmp:mega/stairwell/down_b",
+     "weight": 7
+    },
+    {
+     "template": "nusmp:mega/stairwell/down_c",
+     "weight": 7
+    }
+   ],
+   "emptyWeight": 0,
+   "fallback": "nusmp:mega/cap"
+  },
+  "nusmp:mega/stairwell_grand_down": {
+   "elements": [
+    {
+     "template": "nusmp:mega/stairwell/grand_down_a",
+     "weight": 10
+    },
+    {
+     "template": "nusmp:mega/stairwell/grand_down_b",
+     "weight": 10
+    }
+   ],
+   "emptyWeight": 0,
+   "fallback": "nusmp:mega/cap"
+  },
+  "nusmp:mega/stairwell_grand_up": {
+   "elements": [
+    {
+     "template": "nusmp:mega/stairwell/grand_up_a",
+     "weight": 10
+    },
+    {
+     "template": "nusmp:mega/stairwell/grand_up_b",
+     "weight": 10
+    }
+   ],
+   "emptyWeight": 0,
+   "fallback": "nusmp:mega/cap"
+  },
+  "nusmp:mega/stairwell_up": {
+   "elements": [
+    {
+     "template": "nusmp:mega/stairwell/up_a",
+     "weight": 7
+    },
+    {
+     "template": "nusmp:mega/stairwell/up_b",
+     "weight": 7
+    },
+    {
+     "template": "nusmp:mega/stairwell/up_c",
+     "weight": 7
+    }
+   ],
+   "emptyWeight": 0,
+   "fallback": "nusmp:mega/cap"
+  },
   "nusmp:mega/vault": {
    "elements": [
     {
@@ -704,7 +994,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/antechamber/antechamber_b": {
    "kind": "ANTECHAMBER",
@@ -759,7 +1050,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/arena/guardian_hall_a": {
    "kind": "ARENA",
@@ -811,7 +1103,8 @@
      "y": 9,
      "z": 44
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/arena/guardian_hall_b": {
    "kind": "ARENA",
@@ -863,7 +1156,8 @@
      "y": 9,
      "z": 44
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/cap/alcove_banner_a": {
    "kind": "CAP",
@@ -886,7 +1180,8 @@
      "y": 1,
      "z": 0
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/cap/alcove_banner_b": {
    "kind": "CAP",
@@ -909,7 +1204,8 @@
      "y": 1,
      "z": 0
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/cap/alcove_barrels": {
    "kind": "CAP",
@@ -932,7 +1228,8 @@
      "y": 1,
      "z": 0
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/cap/alcove_bones": {
    "kind": "CAP",
@@ -955,7 +1252,8 @@
      "y": 1,
      "z": 0
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/cap/alcove_bookcase": {
    "kind": "CAP",
@@ -978,7 +1276,8 @@
      "y": 1,
      "z": 0
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/cap/alcove_brazier": {
    "kind": "CAP",
@@ -1001,7 +1300,8 @@
      "y": 1,
      "z": 0
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/cap/alcove_candles_a": {
    "kind": "CAP",
@@ -1024,7 +1324,8 @@
      "y": 1,
      "z": 0
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/cap/alcove_candles_b": {
    "kind": "CAP",
@@ -1047,7 +1348,8 @@
      "y": 1,
      "z": 0
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/cap/alcove_cell": {
    "kind": "CAP",
@@ -1070,7 +1372,8 @@
      "y": 1,
      "z": 0
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/cap/alcove_chest": {
    "kind": "CAP",
@@ -1093,7 +1396,8 @@
      "y": 1,
      "z": 0
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/cap/alcove_cobweb": {
    "kind": "CAP",
@@ -1116,7 +1420,8 @@
      "y": 1,
      "z": 0
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/cap/alcove_lantern_a": {
    "kind": "CAP",
@@ -1139,7 +1444,8 @@
      "y": 1,
      "z": 0
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/cap/alcove_lantern_b": {
    "kind": "CAP",
@@ -1162,7 +1468,8 @@
      "y": 1,
      "z": 0
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/cap/alcove_rack": {
    "kind": "CAP",
@@ -1185,7 +1492,8 @@
      "y": 1,
      "z": 0
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/cap/alcove_skulls": {
    "kind": "CAP",
@@ -1208,7 +1516,8 @@
      "y": 1,
      "z": 0
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/cap/alcove_snake": {
    "kind": "CAP",
@@ -1231,7 +1540,8 @@
      "y": 1,
      "z": 0
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/cap/alcove_statue_a": {
    "kind": "CAP",
@@ -1254,7 +1564,8 @@
      "y": 1,
      "z": 0
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/cap/alcove_statue_b": {
    "kind": "CAP",
@@ -1277,7 +1588,8 @@
      "y": 1,
      "z": 0
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/cap/alcove_window_a": {
    "kind": "CAP",
@@ -1300,7 +1612,8 @@
      "y": 1,
      "z": 0
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/cap/alcove_window_b": {
    "kind": "CAP",
@@ -1323,7 +1636,8 @@
      "y": 1,
      "z": 0
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/cap/plain_wall_a": {
    "kind": "CAP",
@@ -1346,7 +1660,8 @@
      "y": 1,
      "z": 0
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/cap/plain_wall_b": {
    "kind": "CAP",
@@ -1369,7 +1684,8 @@
      "y": 1,
      "z": 0
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/cavern/crystal_cavern": {
    "kind": "CAVERN",
@@ -1500,7 +1816,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/cavern/fungal_grotto_a": {
    "kind": "CAVERN",
@@ -1650,7 +1967,8 @@
      "y": 9,
      "z": 35
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/cavern/fungal_grotto_b": {
    "kind": "CAVERN",
@@ -1800,7 +2118,8 @@
      "y": 9,
      "z": 35
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/cavern/overgrown_cavern": {
    "kind": "CAVERN",
@@ -1966,7 +2285,8 @@
      "y": 9,
      "z": 35
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/corridor/bend_1x1_a": {
    "kind": "CORRIDOR",
@@ -2016,7 +2336,8 @@
      "y": 9,
      "z": 4
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/corridor/bend_1x1_b": {
    "kind": "CORRIDOR",
@@ -2066,7 +2387,8 @@
      "y": 9,
      "z": 4
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/corridor/bend_1x1_c": {
    "kind": "CORRIDOR",
@@ -2125,7 +2447,8 @@
      "y": 9,
      "z": 4
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/corridor/cross_1x1_a": {
    "kind": "CORRIDOR",
@@ -2199,7 +2522,8 @@
      "y": 9,
      "z": 8
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/corridor/cross_1x1_b": {
    "kind": "CORRIDOR",
@@ -2273,7 +2597,8 @@
      "y": 9,
      "z": 8
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/corridor/cross_1x1_c": {
    "kind": "CORRIDOR",
@@ -2356,7 +2681,8 @@
      "y": 9,
      "z": 8
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/corridor/gallery_2x4_a": {
    "kind": "CORRIDOR",
@@ -2533,7 +2859,8 @@
      "y": 9,
      "z": 35
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/corridor/gallery_2x4_b": {
    "kind": "CORRIDOR",
@@ -2719,7 +3046,8 @@
      "y": 9,
      "z": 35
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/corridor/straight_1x2_a": {
    "kind": "CORRIDOR",
@@ -2769,7 +3097,8 @@
      "y": 9,
      "z": 17
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/corridor/straight_1x2_b": {
    "kind": "CORRIDOR",
@@ -2819,7 +3148,8 @@
      "y": 9,
      "z": 17
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/corridor/straight_1x2_c": {
    "kind": "CORRIDOR",
@@ -2878,7 +3208,8 @@
      "y": 9,
      "z": 17
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/corridor/straight_1x3_a": {
    "kind": "CORRIDOR",
@@ -2952,7 +3283,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/corridor/straight_1x3_b": {
    "kind": "CORRIDOR",
@@ -3026,7 +3358,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/corridor/straight_1x3_c": {
    "kind": "CORRIDOR",
@@ -3109,7 +3442,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/corridor/straight_1x4_a": {
    "kind": "CORRIDOR",
@@ -3214,7 +3548,8 @@
      "y": 9,
      "z": 35
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/corridor/straight_1x4_b": {
    "kind": "CORRIDOR",
@@ -3319,7 +3654,8 @@
      "y": 9,
      "z": 35
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/corridor/straight_1x4_c": {
    "kind": "CORRIDOR",
@@ -3433,7 +3769,8 @@
      "y": 9,
      "z": 35
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/corridor/tee_1x1_a": {
    "kind": "CORRIDOR",
@@ -3495,7 +3832,8 @@
      "y": 9,
      "z": 4
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/corridor/tee_1x1_b": {
    "kind": "CORRIDOR",
@@ -3557,7 +3895,8 @@
      "y": 9,
      "z": 4
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/corridor/tee_1x1_c": {
    "kind": "CORRIDOR",
@@ -3628,7 +3967,8 @@
      "y": 9,
      "z": 4
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/hall/alchemy_lab_a": {
    "kind": "HALL",
@@ -3775,7 +4115,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/hall/alchemy_lab_b": {
    "kind": "HALL",
@@ -3920,7 +4261,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/hall/armory_forge_a": {
    "kind": "HALL",
@@ -4046,7 +4388,8 @@
      "y": 9,
      "z": 17
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/hall/armory_forge_b": {
    "kind": "HALL",
@@ -4183,7 +4526,8 @@
      "y": 9,
      "z": 17
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/hall/barracks_a": {
    "kind": "HALL",
@@ -4393,7 +4737,8 @@
      "y": 9,
      "z": 17
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/hall/barracks_b": {
    "kind": "HALL",
@@ -4583,7 +4928,8 @@
      "y": 9,
      "z": 17
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/hall/cell_block_a": {
    "kind": "HALL",
@@ -4724,7 +5070,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/hall/cell_block_b": {
    "kind": "HALL",
@@ -4874,7 +5221,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/hall/cistern_a": {
    "kind": "HALL",
@@ -5031,7 +5379,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/hall/cistern_b": {
    "kind": "HALL",
@@ -5188,7 +5537,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/hall/colonnade_hall_a": {
    "kind": "HALL",
@@ -5364,7 +5714,8 @@
      "y": 9,
      "z": 44
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/hall/colonnade_hall_b": {
    "kind": "HALL",
@@ -5526,7 +5877,8 @@
      "y": 9,
      "z": 44
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/hall/crypt_a": {
    "kind": "HALL",
@@ -5648,7 +6000,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/hall/crypt_b": {
    "kind": "HALL",
@@ -5777,7 +6130,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/hall/great_hall": {
    "kind": "HALL",
@@ -5988,7 +6342,8 @@
      "y": 9,
      "z": 44
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/hall/kitchen_larder": {
    "kind": "HALL",
@@ -6162,7 +6517,8 @@
      "y": 9,
      "z": 17
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/hall/lava_hall_a": {
    "kind": "HALL",
@@ -6296,7 +6652,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/hall/lava_hall_b": {
    "kind": "HALL",
@@ -6453,7 +6810,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/hall/library_a": {
    "kind": "HALL",
@@ -6589,7 +6947,8 @@
      "y": 9,
      "z": 17
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/hall/library_b": {
    "kind": "HALL",
@@ -6725,7 +7084,8 @@
      "y": 9,
      "z": 17
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/hall/mirror_hall": {
    "kind": "HALL",
@@ -6861,7 +7221,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/hall/ossuary": {
    "kind": "HALL",
@@ -6999,7 +7360,8 @@
      "y": 9,
      "z": 17
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/hall/round_hall_a": {
    "kind": "HALL",
@@ -7149,7 +7511,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/hall/round_hall_b": {
    "kind": "HALL",
@@ -7299,7 +7662,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/hall/shrine_a": {
    "kind": "HALL",
@@ -7431,7 +7795,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/hall/shrine_b": {
    "kind": "HALL",
@@ -7553,7 +7918,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/hall/torture_chamber_a": {
    "kind": "HALL",
@@ -7689,7 +8055,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/hall/torture_chamber_b": {
    "kind": "HALL",
@@ -7815,7 +8182,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/junction/crossroads_hall_3x3": {
    "kind": "JUNCTION",
@@ -8010,7 +8378,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/junction/plaza_2x2_a": {
    "kind": "JUNCTION",
@@ -8155,7 +8524,8 @@
      "y": 9,
      "z": 17
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/junction/plaza_2x2_b": {
    "kind": "JUNCTION",
@@ -8300,7 +8670,8 @@
      "y": 9,
      "z": 17
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/junction/plaza_2x2_c": {
    "kind": "JUNCTION",
@@ -8454,7 +8825,8 @@
      "y": 9,
      "z": 17
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/junction/plaza_3x3_a": {
    "kind": "JUNCTION",
@@ -8647,7 +9019,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/junction/plaza_3x3_b": {
    "kind": "JUNCTION",
@@ -8840,7 +9213,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/junction/plaza_3x3_c": {
    "kind": "JUNCTION",
@@ -9042,7 +9416,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/landing/landing_a": {
    "kind": "LANDING",
@@ -9469,7 +9844,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/landing/landing_b": {
    "kind": "LANDING",
@@ -9765,7 +10141,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/link/straight_a": {
    "kind": "LINK",
@@ -9808,7 +10185,8 @@
      "y": 9,
      "z": 8
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/link/straight_b": {
    "kind": "LINK",
@@ -9851,7 +10229,8 @@
      "y": 9,
      "z": 8
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/link/waystation": {
    "kind": "LINK",
@@ -9894,7 +10273,8 @@
      "y": 9,
      "z": 8
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/onward/left_a": {
    "kind": "ONWARD",
@@ -9949,7 +10329,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/onward/left_b": {
    "kind": "ONWARD",
@@ -10004,7 +10385,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/onward/left_c": {
    "kind": "ONWARD",
@@ -10059,7 +10441,8 @@
      "y": 9,
      "z": 17
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/onward/right_a": {
    "kind": "ONWARD",
@@ -10114,7 +10497,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/onward/right_b": {
    "kind": "ONWARD",
@@ -10169,7 +10553,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/onward/right_c": {
    "kind": "ONWARD",
@@ -10224,7 +10609,8 @@
      "y": 9,
      "z": 17
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/onward/straight_a": {
    "kind": "ONWARD",
@@ -10279,7 +10665,8 @@
      "y": 9,
      "z": 35
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/onward/straight_b": {
    "kind": "ONWARD",
@@ -10334,7 +10721,8 @@
      "y": 9,
      "z": 35
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/onward/straight_c": {
    "kind": "ONWARD",
@@ -10389,7 +10777,8 @@
      "y": 9,
      "z": 17
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/puzzle/sigil_hall_a": {
    "kind": "PUZZLE",
@@ -10448,7 +10837,8 @@
      "y": 9,
      "z": 13
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/puzzle/sigil_hall_b": {
    "kind": "PUZZLE",
@@ -10507,7 +10897,8 @@
      "y": 9,
      "z": 17
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/safe/chapel": {
    "kind": "SAFE",
@@ -10867,7 +11258,8 @@
      "y": 9,
      "z": 17
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/safe/hearth_hall_a": {
    "kind": "SAFE",
@@ -11403,7 +11795,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/safe/hearth_hall_b": {
    "kind": "SAFE",
@@ -12078,7 +12471,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/safe/refectory": {
    "kind": "SAFE",
@@ -12378,7 +12772,8 @@
      "y": 9,
      "z": 17
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/safe/workshop_a": {
    "kind": "SAFE",
@@ -12826,7 +13221,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/safe/workshop_b": {
    "kind": "SAFE",
@@ -13257,7 +13653,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/set/cathedral_rotunda": {
    "kind": "SET_PIECE",
@@ -13430,7 +13827,418 @@
      "y": 9,
      "z": 44
     }
-   ]
+   ],
+   "themes": []
+  },
+  "nusmp:mega/stairwell/down_a": {
+   "kind": "STAIRWELL",
+   "markers": [
+    {
+     "args": {
+      "dir": "down"
+     },
+     "kind": "stair_exit",
+     "x": 4,
+     "y": 1,
+     "z": 4
+    },
+    {
+     "args": {},
+     "kind": "arrival",
+     "x": 6,
+     "y": 9,
+     "z": 3
+    }
+   ],
+   "size": [
+    9,
+    48,
+    9
+   ],
+   "sockets": [
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/stair_door",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 8,
+     "y": 9,
+     "z": 4
+    }
+   ],
+   "themes": []
+  },
+  "nusmp:mega/stairwell/down_b": {
+   "kind": "STAIRWELL",
+   "markers": [
+    {
+     "args": {
+      "dir": "down"
+     },
+     "kind": "stair_exit",
+     "x": 4,
+     "y": 1,
+     "z": 4
+    },
+    {
+     "args": {},
+     "kind": "arrival",
+     "x": 6,
+     "y": 9,
+     "z": 5
+    }
+   ],
+   "size": [
+    9,
+    48,
+    9
+   ],
+   "sockets": [
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/stair_door",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 8,
+     "y": 9,
+     "z": 4
+    }
+   ],
+   "themes": []
+  },
+  "nusmp:mega/stairwell/down_c": {
+   "kind": "STAIRWELL",
+   "markers": [
+    {
+     "args": {
+      "dir": "down"
+     },
+     "kind": "stair_exit",
+     "x": 4,
+     "y": 1,
+     "z": 4
+    },
+    {
+     "args": {},
+     "kind": "arrival",
+     "x": 6,
+     "y": 9,
+     "z": 3
+    }
+   ],
+   "size": [
+    9,
+    48,
+    9
+   ],
+   "sockets": [
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/stair_door",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 8,
+     "y": 9,
+     "z": 4
+    }
+   ],
+   "themes": []
+  },
+  "nusmp:mega/stairwell/grand_down_a": {
+   "kind": "STAIRWELL",
+   "markers": [
+    {
+     "args": {
+      "dir": "down"
+     },
+     "kind": "stair_exit",
+     "x": 4,
+     "y": 1,
+     "z": 14
+    },
+    {
+     "args": {},
+     "kind": "arrival",
+     "x": 14,
+     "y": 9,
+     "z": 4
+    }
+   ],
+   "size": [
+    18,
+    48,
+    18
+   ],
+   "sockets": [
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/stair_door",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 17,
+     "y": 9,
+     "z": 4
+    }
+   ],
+   "themes": []
+  },
+  "nusmp:mega/stairwell/grand_down_b": {
+   "kind": "STAIRWELL",
+   "markers": [
+    {
+     "args": {
+      "dir": "down"
+     },
+     "kind": "stair_exit",
+     "x": 4,
+     "y": 1,
+     "z": 14
+    },
+    {
+     "args": {},
+     "kind": "arrival",
+     "x": 14,
+     "y": 9,
+     "z": 4
+    }
+   ],
+   "size": [
+    18,
+    48,
+    18
+   ],
+   "sockets": [
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/stair_door",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 17,
+     "y": 9,
+     "z": 4
+    }
+   ],
+   "themes": []
+  },
+  "nusmp:mega/stairwell/grand_up_a": {
+   "kind": "STAIRWELL",
+   "markers": [
+    {
+     "args": {},
+     "kind": "arrival",
+     "x": 14,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {
+      "dir": "up"
+     },
+     "kind": "stair_exit",
+     "x": 14,
+     "y": 37,
+     "z": 4
+    }
+   ],
+   "size": [
+    18,
+    48,
+    18
+   ],
+   "sockets": [
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/stair_door",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 17,
+     "y": 9,
+     "z": 4
+    }
+   ],
+   "themes": []
+  },
+  "nusmp:mega/stairwell/grand_up_b": {
+   "kind": "STAIRWELL",
+   "markers": [
+    {
+     "args": {},
+     "kind": "arrival",
+     "x": 14,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {
+      "dir": "up"
+     },
+     "kind": "stair_exit",
+     "x": 14,
+     "y": 37,
+     "z": 4
+    }
+   ],
+   "size": [
+    18,
+    48,
+    18
+   ],
+   "sockets": [
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/stair_door",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 17,
+     "y": 9,
+     "z": 4
+    }
+   ],
+   "themes": []
+  },
+  "nusmp:mega/stairwell/up_a": {
+   "kind": "STAIRWELL",
+   "markers": [
+    {
+     "args": {},
+     "kind": "arrival",
+     "x": 6,
+     "y": 9,
+     "z": 3
+    },
+    {
+     "args": {
+      "dir": "up"
+     },
+     "kind": "stair_exit",
+     "x": 4,
+     "y": 41,
+     "z": 4
+    }
+   ],
+   "size": [
+    9,
+    48,
+    9
+   ],
+   "sockets": [
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/stair_door",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 8,
+     "y": 9,
+     "z": 4
+    }
+   ],
+   "themes": []
+  },
+  "nusmp:mega/stairwell/up_b": {
+   "kind": "STAIRWELL",
+   "markers": [
+    {
+     "args": {},
+     "kind": "arrival",
+     "x": 6,
+     "y": 9,
+     "z": 5
+    },
+    {
+     "args": {
+      "dir": "up"
+     },
+     "kind": "stair_exit",
+     "x": 4,
+     "y": 41,
+     "z": 4
+    }
+   ],
+   "size": [
+    9,
+    48,
+    9
+   ],
+   "sockets": [
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/stair_door",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 8,
+     "y": 9,
+     "z": 4
+    }
+   ],
+   "themes": []
+  },
+  "nusmp:mega/stairwell/up_c": {
+   "kind": "STAIRWELL",
+   "markers": [
+    {
+     "args": {},
+     "kind": "arrival",
+     "x": 6,
+     "y": 9,
+     "z": 3
+    },
+    {
+     "args": {
+      "dir": "up"
+     },
+     "kind": "stair_exit",
+     "x": 4,
+     "y": 41,
+     "z": 4
+    }
+   ],
+   "size": [
+    9,
+    48,
+    9
+   ],
+   "sockets": [
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "nusmp:mega/stair_door",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 8,
+     "y": 9,
+     "z": 4
+    }
+   ],
+   "themes": []
   },
   "nusmp:mega/trap/dark_room": {
    "kind": "TRAP",
@@ -13526,7 +14334,8 @@
      "y": 9,
      "z": 17
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/trap/pit_hall_a": {
    "kind": "TRAP",
@@ -13700,7 +14509,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/trap/pit_hall_b": {
    "kind": "TRAP",
@@ -13874,7 +14684,8 @@
      "y": 9,
      "z": 13
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/treasure/closet_a": {
    "kind": "TREASURE",
@@ -13914,7 +14725,8 @@
      "y": 9,
      "z": 0
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/treasure/closet_b": {
    "kind": "TREASURE",
@@ -13959,7 +14771,8 @@
      "y": 9,
      "z": 13
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/treasure/closet_c": {
    "kind": "TREASURE",
@@ -13999,7 +14812,8 @@
      "y": 9,
      "z": 0
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/trial/trial_hall_a": {
    "kind": "TRIAL",
@@ -14065,7 +14879,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/trial/trial_hall_b": {
    "kind": "TRIAL",
@@ -14131,7 +14946,8 @@
      "y": 9,
      "z": 13
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/vault/one_a": {
    "kind": "VAULT",
@@ -14171,7 +14987,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/vault/one_b": {
    "kind": "VAULT",
@@ -14211,7 +15028,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/vault/three_a": {
    "kind": "VAULT",
@@ -14269,7 +15087,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/vault/three_b": {
    "kind": "VAULT",
@@ -14327,7 +15146,8 @@
      "y": 9,
      "z": 35
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/vault/two_a": {
    "kind": "VAULT",
@@ -14376,7 +15196,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   },
   "nusmp:mega/vault/two_b": {
    "kind": "VAULT",
@@ -14425,7 +15246,8 @@
      "y": 9,
      "z": 26
     }
-   ]
+   ],
+   "themes": []
   }
  }
 }

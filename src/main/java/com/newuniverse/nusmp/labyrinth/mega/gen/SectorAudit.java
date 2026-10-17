@@ -15,6 +15,11 @@ import java.util.List;
  * try the next seed, {@code /multiverse mega audit} can print what is wrong with a sector, and the tests can break one invariant at a time and see exactly
  * that sentence appear. It is run by the generator on every plan before anything is placed, so a sector that reaches the world has passed it (or is the
  * documented fallback layout, which skips the pacing checks but never the structural ones). The sentences contain no semicolon: the command joins them with one.
+ *
+ * <p>1.58.0, the floor model: a plan whose request carries a {@link Request#floor} is judged as a FLOOR. The first room is the arrival stairwell, not a Landing;
+ * an ordinary floor has no boss chain at all (a Guardian or a vault on a floor that does not end a decade would block nothing and give a relic for free), a boss
+ * floor has the whole chain with a stairwell behind its Way Onward; there are exactly two stairwells, each with an arrival cell and a stair exit; and in the full
+ * audit the forward stairs are at least {@link Recipe#stairMinWalk} doorways from the arrival (a floor whose stairs are next to its door is no level to cross).
  */
 public final class SectorAudit {
     private SectorAudit() {}
@@ -32,12 +37,19 @@ public final class SectorAudit {
         Recipe rc = q.recipe == null ? new Recipe() : q.recipe;
         List<Placed> ps = r.pieces;
         Placed landing = r.landingPiece();
-        if (landing.shape.kind != RoomKind.LANDING) out.add("the first room is a " + landing.shape.kind.folder() + ", not a Landing");
+        final Request.Floor fl = q.floor;
+        final boolean bossChain = fl == null || fl.boss();
+        RoomKind startKind = fl == null ? RoomKind.LANDING : RoomKind.STAIRWELL;
+        if (landing.shape.kind != startKind) out.add("the first room is a " + landing.shape.kind.folder() + ", not a " + (fl == null ? "Landing" : "stairwell"));
 
         // ---- structure: the boss chain
         List<Placed> arenas = of(ps, RoomKind.ARENA);
         Placed ante = null, vault = null, onward = null;
-        if (arenas.size() != 1) out.add("expected exactly one arena, found " + arenas.size());
+        if (!bossChain) {
+            for (RoomKind k : new RoomKind[] {RoomKind.ARENA, RoomKind.ANTECHAMBER, RoomKind.VAULT, RoomKind.ONWARD}) {
+                if (r.count(k) > 0) out.add("an ordinary floor has " + r.count(k) + " " + k.folder() + " room(s): only a boss floor has the boss chain");
+            }
+        } else if (arenas.size() != 1) out.add("expected exactly one arena, found " + arenas.size());
         else {
             Placed arena = arenas.get(0);
             ante = childOf(ps, arena, RoomKind.ANTECHAMBER);
@@ -53,7 +65,11 @@ public final class SectorAudit {
             int peds = vault.shape.countMarkers(MarkerKind.PEDESTAL);
             if (peds != q.relicCount) out.add("the vault has " + peds + " pedestal markers but the sector needs " + q.relicCount);
         }
-        if (onward != null) {
+        if (onward != null && fl != null) {
+            Result.Expansion e = r.expansion;
+            if (e == null || e.piece() != onward.index) out.add("the Way Onward has no readable seal");
+            else if (childOf(ps, onward, RoomKind.STAIRWELL) == null) out.add("the Way Onward leads nowhere: no stairwell stands behind its seal");
+        } else if (onward != null) {
             Result.Expansion e = r.expansion;
             if (e == null || e.piece() != onward.index) out.add("the Way Onward has no readable seal");
             else {
@@ -70,12 +86,15 @@ public final class SectorAudit {
 
         // ---- structure: landmarks the rest of the mod reads
         if (rc.requireMarkers) {
-            if (countIn(ps, RoomKind.LANDING, MarkerKind.ARRIVAL) < 1) out.add("no ARRIVAL marker in the Landing");
+            if (fl == null && countIn(ps, RoomKind.LANDING, MarkerKind.ARRIVAL) < 1) out.add("no ARRIVAL marker in the Landing");
             if (!arenas.isEmpty() && countIn(ps, RoomKind.ARENA, MarkerKind.GUARDIAN_SPAWN) != 1) out.add("the arena needs exactly one GUARDIAN_SPAWN marker");
-            if (countAll(ps, MarkerKind.GATEKEEPER) < 1) out.add("no GATEKEEPER marker (the door of the boss chain)");
+            if (bossChain && countAll(ps, MarkerKind.GATEKEEPER) < 1) out.add("no GATEKEEPER marker (the door of the boss chain)");
             if (vault != null && countIn(ps, RoomKind.VAULT, MarkerKind.VAULT_CENTER) < 1) out.add("no VAULT_CENTER marker in the vault");
             if (onward != null && !onward.shape.expansionMarked) out.add("the Way Onward has no EXPANSION_SOCKET marker");
         }
+
+        // ---- structure: the stairs of the floor model
+        if (fl != null) stairs(r, rc, ps, landing, strict, out);
 
         // ---- structure: space
         BoxIndex seen = new BoxIndex();
@@ -102,7 +121,8 @@ public final class SectorAudit {
         // ---- pacing
         int rooms = 0;
         for (Placed p : ps) if (Result.isRoom(p) && !p.link) rooms++;
-        if (rooms < rc.minRooms) out.add("only " + rooms + " rooms (the recipe wants " + rc.minRooms + ")");
+        int wantRooms = fl == null ? rc.minRooms : Math.max(rc.minRooms, fl.minRooms());
+        if (rooms < wantRooms) out.add("only " + rooms + " rooms (the " + (fl == null ? "recipe" : "floor") + " wants " + wantRooms + ")");
         if (r.loops.size() < rc.minLoops) out.add("only " + r.loops.size() + " loops (the recipe wants " + rc.minLoops + ")");
         int safe = 0;
         Placed first = landing;
@@ -131,6 +151,43 @@ public final class SectorAudit {
         }
         if (open > 0) out.add(open + " doorway(s) open onto the void (first: " + firstOpen + ")");
         return out;
+    }
+
+    /**
+     * The stairs of a floor: exactly two stairwells (the arrival one is the first room), each with an ARRIVAL cell (where a party stands) and a STAIR_EXIT (where the
+     * stairs end), and in the full audit the forward one at least {@code stairMinWalk} doorways from the arrival.
+     */
+    private static void stairs(Result r, Recipe rc, List<Placed> ps, Placed landing, boolean strict, List<String> out) {
+        List<Placed> stairs = of(ps, RoomKind.STAIRWELL);
+        if (stairs.size() != 2) {
+            out.add("expected exactly two stairwells (arrival and forward), found " + stairs.size());
+            return;
+        }
+        Placed forward = stairs.get(0).index == landing.index ? stairs.get(1) : stairs.get(0);
+        if (rc.requireMarkers) {
+            for (Placed st : stairs) {
+                String which = st.index == landing.index ? "arrival" : "forward";
+                if (st.shape.countMarkers(MarkerKind.ARRIVAL) != 1) out.add("the " + which + " stairwell needs exactly one ARRIVAL marker");
+                if (st.shape.countMarkers(MarkerKind.STAIR_EXIT) != 1) out.add("the " + which + " stairwell needs exactly one STAIR_EXIT marker");
+            }
+        }
+        if (strict) {
+            int[] dist = WalkGraph.distances(ps.size(), pieceEdges(r), landing.index);
+            if (dist[forward.index] < 0) out.add("the forward stairwell cannot be walked to from the arrival stairwell");
+            else if (dist[forward.index] < rc.stairMinWalk) out.add("the forward stairwell is only " + dist[forward.index] + " doorways from the arrival (the recipe wants " + rc.stairMinWalk + ")");
+        }
+    }
+
+    /** The doorways between the pieces that are rooms, as pairs of PIECE indices: every join and every loop. */
+    private static List<int[]> pieceEdges(Result r) {
+        List<int[]> edges = new ArrayList<>();
+        for (Placed p : r.pieces) {
+            if (p.parent < 0 || p.shape.isCap()) continue;
+            if (r.pieces.get(p.parent).shape.isCap()) continue;
+            edges.add(new int[] {p.parent, p.index});
+        }
+        for (Result.Loop l : r.loops) edges.add(new int[] {l.pieceA(), l.pieceB()});
+        return edges;
     }
 
     private static List<Placed> of(List<Placed> ps, RoomKind k) {
