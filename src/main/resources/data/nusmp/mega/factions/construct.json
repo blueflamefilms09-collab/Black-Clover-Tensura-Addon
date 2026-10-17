@@ -23,7 +23,11 @@
     "shadow": 1,
     "astral": 5,
     "radiant": 4,
-    "abyss": 1
+    "abyss": 1,
+    "fungal_underdark": 1,
+    "infernal_foundry": 3,
+    "drowned_crypt": 2,
+    "spider_warrens": 0
   },
   "drops": {
     "meat": "raw_armor_flank",

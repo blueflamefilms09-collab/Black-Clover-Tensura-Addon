@@ -35,14 +35,19 @@ class ThemeDataTest {
     private static final Set<String> SIMPLE_PARTICLES = Set.of("minecraft:ash", "minecraft:crimson_spore", "minecraft:warped_spore", "minecraft:portal", "minecraft:reverse_portal",
             "minecraft:flame", "minecraft:small_flame", "minecraft:snowflake", "minecraft:spore_blossom_air", "minecraft:electric_spark", "minecraft:sculk_soul", "minecraft:soul",
             "minecraft:end_rod", "minecraft:glow", "minecraft:enchant", "minecraft:white_ash", "minecraft:witch", "minecraft:cloud", "minecraft:smoke", "minecraft:soul_fire_flame",
-            "nusmp:light_rukh");
+            "nusmp:light_rukh",
+            // 1.59.0 (THEME-D): the drip of a crypt vault and the falling bits of a spider's web
+            "minecraft:dripping_water", "minecraft:item_cobweb");
     /** Sound events of 1.21.1 that a theme may play as its mood (each one checked against the game's {@code SoundEvents} in the API dump). */
     private static final Set<String> MOOD_SOUNDS = Set.of("minecraft:ambient.cave", "minecraft:ambient.crimson_forest.mood", "minecraft:ambient.warped_forest.mood",
             "minecraft:ambient.soul_sand_valley.mood", "minecraft:ambient.basalt_deltas.mood", "minecraft:block.portal.ambient", "minecraft:block.lava.ambient",
             "minecraft:block.amethyst_block.chime", "minecraft:block.amethyst_block.resonate", "minecraft:block.bell.resonate", "minecraft:block.beacon.ambient",
-            "minecraft:entity.lightning_bolt.thunder", "minecraft:entity.warden.heartbeat");
+            "minecraft:entity.lightning_bolt.thunder", "minecraft:entity.warden.heartbeat",
+            // 1.59.0 (THEME-D), each checked against SoundEvents in the API dump: the warped forest's whispers, a blast furnace, a conduit under water, a spider
+            "minecraft:ambient.warped_forest.additions", "minecraft:block.blastfurnace.fire_crackle", "minecraft:block.conduit.ambient", "minecraft:entity.spider.ambient");
     /** The themes the mod ships, in the order of the {@code RegionTheme} enum (append a new one here AND in the enum; a file nobody lists is a stray). */
-    private static final List<String> SHIPPED = List.of("gravity", "blood", "spatial", "flame", "frost", "verdant", "storm", "shadow", "astral", "radiant", "abyss");
+    private static final List<String> SHIPPED = List.of("gravity", "blood", "spatial", "flame", "frost", "verdant", "storm", "shadow", "astral", "radiant", "abyss",
+            "fungal_underdark", "infernal_foundry", "drowned_crypt", "spider_warrens");
     /** The one mod particle a theme may name: a SimpleParticleType registered by {@code particle/rukh/RukhParticles}. */
     private static final Path RUKH = Path.of("src/main/java/com/newuniverse/nusmp/particle/rukh/RukhParticles.java");
 
@@ -77,7 +82,7 @@ class ThemeDataTest {
         for (RegionTheme t : RegionTheme.values()) assertTrue(files.contains(t.id()), "RegionTheme " + t + " has no data/nusmp/mega/themes/" + t.id() + ".json");
         for (String f : files) assertTrue(SHIPPED.contains(f), "themes/" + f + ".json is not a shipped theme: add it to RegionTheme (appended last) and to SHIPPED here");
         assertEquals(new TreeSet<>(SHIPPED), new TreeSet<>(files), "one file per shipped theme");
-        assertEquals(11, files.size());
+        assertEquals(SHIPPED.size(), files.size());
     }
 
     @Test

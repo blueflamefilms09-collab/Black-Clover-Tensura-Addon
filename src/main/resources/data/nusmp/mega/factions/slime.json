@@ -21,7 +21,11 @@
     "shadow": 2,
     "astral": 1,
     "radiant": 2,
-    "abyss": 3
+    "abyss": 3,
+    "fungal_underdark": 5,
+    "infernal_foundry": 2,
+    "drowned_crypt": 2,
+    "spider_warrens": 1
   },
   "drops": {
     "meat": "raw_slime_jelly",

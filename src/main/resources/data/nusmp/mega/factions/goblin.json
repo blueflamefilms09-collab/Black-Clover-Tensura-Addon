@@ -25,7 +25,11 @@
     "shadow": 1,
     "astral": 0,
     "radiant": 1,
-    "abyss": 3
+    "abyss": 3,
+    "fungal_underdark": 2,
+    "infernal_foundry": 1,
+    "drowned_crypt": 0,
+    "spider_warrens": 1
   },
   "drops": {
     "meat": "raw_monster_meat",

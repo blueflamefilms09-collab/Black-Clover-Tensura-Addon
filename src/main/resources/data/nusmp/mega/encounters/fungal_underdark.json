@@ -1,0 +1,331 @@
+{
+  "comment": "Why: the Underdark is the one theme whose dark is alive and whose light is a threat: the glowing spores that make it bearable to walk are the same spores the colonies breathe, so the party is always among things that are awake. The table is the ecology of a mushroom cavern: oozes and slimes that live in the damp (the slime tag is the default, so every faction roll is a colony), gricks and cave spiders that come out of the stems and the soil, the drow houses that farm the place (cultists: the witch, the evoker and the illusioner stand in for the dark elf priestesses and mages) with spiders as their hounds, and floating eyes that watch from the dark. The roll bonus is plus one: the road is dark but the caps glow, so the dice need less help than on the plain Abyssal road. Everything that needs the dark is a thing that lives in the shade of the caps; nothing needs the light, because the light here is the spores and everyone has it.",
+  "description": "The Underdark: forests of huge mushrooms, glowing spores, drow houses and their spiders, a black lake. The mushrooms are alive and the party is walking through their dinner.",
+  "rollBonus": 1,
+  "budgetScale": 1.2,
+  "defaultFaction": "slime",
+  "entries": [
+    {
+      "id": "fu_spore_drifters",
+      "comment": "The breather of the cavern: one or two of the room's own people drifting out of the spore clouds. No upper threat, so the minor band never runs dry.",
+      "band": "minor",
+      "weight": 14,
+      "mobs": [
+        {
+          "type": "faction",
+          "count": "1-2"
+        }
+      ],
+      "cue": {
+        "sound": "minecraft:entity.slime.squish",
+        "volume": 0.8,
+        "pitch": 0.6,
+        "particle": "minecraft:spore_blossom_air",
+        "count": 8
+      }
+    },
+    {
+      "id": "fu_grick_trickle",
+      "comment": "Gricks (silverfish) wriggling out of the soil round a stem: many, small, and gone after a little threat, when the real inhabitants take over.",
+      "band": "minor",
+      "weight": 10,
+      "maxThreat": 8,
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "minecraft:silverfish",
+          "count": "3-5"
+        }
+      ],
+      "cue": {
+        "sound": "minecraft:block.moss.break",
+        "volume": 0.8,
+        "pitch": 0.6,
+        "particle": "minecraft:infested",
+        "count": 8
+      }
+    },
+    {
+      "id": "fu_cap_crawlers",
+      "comment": "Cave spiders dripping off the underside of a cap: a nuisance in the first sector and food for the bigger spiders after that.",
+      "band": "minor",
+      "weight": 8,
+      "maxThreat": 10,
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "minecraft:cave_spider",
+          "count": "2-3"
+        }
+      ],
+      "cue": {
+        "sound": "minecraft:entity.spider.ambient",
+        "volume": 0.8,
+        "pitch": 0.6,
+        "particle": "minecraft:item_cobweb",
+        "count": 6
+      }
+    },
+    {
+      "id": "fu_drow_patrol",
+      "comment": "A drow patrol: a priestess or mage with a spider on a leash. The cultist tag is the house; the entity is the hound. The evergreen standard fight of the theme.",
+      "band": "standard",
+      "weight": 12,
+      "mobs": [
+        {
+          "type": "faction",
+          "faction": "cultist",
+          "count": "2-3"
+        },
+        {
+          "type": "entity",
+          "id": "minecraft:spider",
+          "count": "1-2"
+        }
+      ],
+      "cue": {
+        "sound": "minecraft:entity.evoker.prepare_summon",
+        "volume": 0.8,
+        "pitch": 0.6,
+        "particle": "minecraft:witch",
+        "count": 10
+      },
+      "message": "message.nusmp.mega.enc.fungal_underdark.fu_drow_patrol"
+    },
+    {
+      "id": "fu_myconid_meld",
+      "comment": "The colony wakes: a knot of oozes and slimes pours out from between the stems, many and slow. Only the slime tag, so a room with a native faction still shows its own.",
+      "band": "standard",
+      "weight": 10,
+      "faction": "slime",
+      "mobs": [
+        {
+          "type": "faction",
+          "count": "3-5"
+        }
+      ],
+      "cells": 2,
+      "cue": {
+        "sound": "minecraft:block.moss.break",
+        "volume": 0.8,
+        "pitch": 0.6,
+        "particle": "minecraft:crimson_spore",
+        "count": 12
+      },
+      "message": "message.nusmp.mega.enc.fungal_underdark.fu_myconid_meld"
+    },
+    {
+      "id": "fu_web_drop",
+      "comment": "An ambush from the stems: a black spider and its brood let themselves down on threads at the edge of the party's sight, out of view behind a cap but close.",
+      "band": "standard",
+      "weight": 10,
+      "minThreat": 2,
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "tensura:black_spider",
+          "count": "1-2"
+        },
+        {
+          "type": "entity",
+          "id": "minecraft:cave_spider",
+          "count": "2-4"
+        }
+      ],
+      "range": [
+        10,
+        22
+      ],
+      "cells": 3,
+      "hunt": 500,
+      "cue": {
+        "sound": "minecraft:entity.spider.ambient",
+        "volume": 0.8,
+        "pitch": 0.6,
+        "particle": "minecraft:item_cobweb",
+        "count": 12
+      },
+      "message": "message.nusmp.mega.enc.fungal_underdark.fu_web_drop"
+    },
+    {
+      "id": "fu_floating_eye",
+      "comment": "A beholder-like watcher: a shulker (the only floating eye the game has) with a few vexes as its sparks. It needs the dark, because the spores blind it where they are thickest.",
+      "band": "standard",
+      "weight": 8,
+      "minThreat": 2,
+      "needs": {
+        "dark": true
+      },
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "minecraft:shulker",
+          "count": "1"
+        },
+        {
+          "type": "entity",
+          "id": "minecraft:vex",
+          "count": "1-2"
+        }
+      ],
+      "cue": {
+        "sound": "minecraft:entity.shulker.open",
+        "volume": 0.8,
+        "pitch": 0.6,
+        "particle": "minecraft:witch",
+        "count": 8
+      },
+      "message": "message.nusmp.mega.enc.fungal_underdark.fu_floating_eye"
+    },
+    {
+      "id": "fu_ooze_flood",
+      "comment": "The whole cavern floor is one colony and it moves: a wave of oozes from three sides at once.",
+      "band": "hard",
+      "weight": 8,
+      "minThreat": 3,
+      "faction": "slime",
+      "mobs": [
+        {
+          "type": "faction",
+          "count": "6-9"
+        }
+      ],
+      "cells": 3,
+      "cue": {
+        "sound": "minecraft:entity.slime.squish",
+        "volume": 0.8,
+        "pitch": 0.6,
+        "particle": "minecraft:item_slime",
+        "count": 14
+      },
+      "message": "message.nusmp.mega.enc.fungal_underdark.fu_ooze_flood"
+    },
+    {
+      "id": "fu_drow_house",
+      "comment": "The house guard: casters of the cultist tag with their spiders, two ecosystems that serve each other. No needs: it comes whether the party is lit or not.",
+      "band": "hard",
+      "weight": 10,
+      "minThreat": 3,
+      "mobs": [
+        {
+          "type": "faction",
+          "faction": "cultist",
+          "count": "2-3"
+        },
+        {
+          "type": "faction",
+          "faction": "insect",
+          "count": "2-3"
+        }
+      ],
+      "cells": 2,
+      "cue": {
+        "sound": "minecraft:entity.illusioner.prepare_blindness",
+        "volume": 0.8,
+        "pitch": 0.6,
+        "particle": "minecraft:witch",
+        "count": 10
+      },
+      "message": "message.nusmp.mega.enc.fungal_underdark.fu_drow_house"
+    },
+    {
+      "id": "fu_beholder_court",
+      "comment": "A watcher with its court: a shulker, an evoker and the vexes it commands. Only in the dark, and only past the first sectors.",
+      "band": "hard",
+      "weight": 6,
+      "minThreat": 4,
+      "needs": {
+        "dark": true
+      },
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "minecraft:shulker",
+          "count": "1-2"
+        },
+        {
+          "type": "entity",
+          "id": "minecraft:evoker",
+          "count": "1"
+        },
+        {
+          "type": "entity",
+          "id": "minecraft:vex",
+          "count": "2-3"
+        }
+      ],
+      "cue": {
+        "sound": "minecraft:entity.evoker.cast_spell",
+        "volume": 0.8,
+        "pitch": 0.6,
+        "particle": "minecraft:witch",
+        "count": 10
+      },
+      "message": "message.nusmp.mega.enc.fungal_underdark.fu_beholder_court"
+    },
+    {
+      "id": "fu_spore_storm",
+      "comment": "Every colony at once: oozes and gricks together in a wide wave, the biggest ordinary encounter of the theme.",
+      "band": "ambush",
+      "weight": 10,
+      "minThreat": 3,
+      "mobs": [
+        {
+          "type": "faction",
+          "faction": "slime",
+          "count": "8-12"
+        },
+        {
+          "type": "entity",
+          "id": "minecraft:silverfish",
+          "count": "5-8"
+        }
+      ],
+      "cells": 3,
+      "cue": {
+        "sound": "minecraft:block.moss.break",
+        "volume": 0.8,
+        "pitch": 0.6,
+        "particle": "minecraft:warped_spore",
+        "count": 16
+      },
+      "message": "message.nusmp.mega.enc.fungal_underdark.fu_spore_storm"
+    },
+    {
+      "id": "fu_spider_court",
+      "comment": "The drow court on its spiders: a knight spider and a pack of spiders led by a priestess. Only in the dark, from the fifth threat on.",
+      "band": "ambush",
+      "weight": 8,
+      "minThreat": 5,
+      "needs": {
+        "dark": true
+      },
+      "mobs": [
+        {
+          "type": "entity",
+          "id": "tensura:knight_spider",
+          "count": "1-2"
+        },
+        {
+          "type": "entity",
+          "id": "minecraft:spider",
+          "count": "4-6"
+        },
+        {
+          "type": "faction",
+          "faction": "cultist",
+          "count": "1-2"
+        }
+      ],
+      "cells": 3,
+      "cue": {
+        "sound": "minecraft:entity.spider.ambient",
+        "volume": 0.8,
+        "pitch": 0.6,
+        "particle": "minecraft:item_cobweb",
+        "count": 16
+      },
+      "message": "message.nusmp.mega.enc.fungal_underdark.fu_spider_court"
+    }
+  ]
+}

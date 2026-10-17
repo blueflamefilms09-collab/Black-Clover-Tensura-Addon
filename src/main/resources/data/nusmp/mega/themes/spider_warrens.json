@@ -1,0 +1,34 @@
+{
+  "_why": "A spider queen's warren: black chitin and white silk. The walls are polished blackstone (the glossy black of a spider's shell), the floors cobbled deepslate (a trampled cave floor), the pillars calcite, which is the colour of silk wrapped round a column and the only theme where pillars are white against black walls, the keystones chiseled polished blackstone, the rubble tuff, the cracks cracked polished blackstone brick, and where the floor is worn it is patched with white wool (a sheet of silk spun over the ground), the rough fill smooth basalt, the wood dark oak (a few old beams that were here before the spiders). It must not be mistaken for Shadow (polished blackstone BRICK walls, deepslate-tile floors, nothing white) or for the Haunted Manor's cobwebs (a house, with planks and furniture): here black walls and white pillars read as a lair at a glance, and the cobwebs are scenery on the sides and ceilings, never across the only way through. Calcite has no stairs, slabs or walls, so the explicit map gives its shapes polished blackstone ones, the colour of the walls it stands on. The lights stay as the templates have them. Spirits and the plague favour it (a cursed spirit in a warren is the queen's dead brood). The ambient is bits of falling web, the mood a distant skitter in the dark; darker than the baseline (light -2), danger 1.25: a warren is a trap with a kitchen.",
+  "id": "spider_warrens",
+  "name": "Spider Warrens",
+  "color": "#9FA3B8",
+  "families": {
+    "brick": "minecraft:polished_blackstone",
+    "tile": "minecraft:cobbled_deepslate",
+    "polished": "minecraft:calcite",
+    "chiseled": "minecraft:chiseled_polished_blackstone",
+    "cobbled": "minecraft:tuff",
+    "cracked_brick": "minecraft:cracked_polished_blackstone_bricks",
+    "cracked_tile": "minecraft:white_wool",
+    "rock": "minecraft:smooth_basalt",
+    "wood": "minecraft:dark_oak_planks"
+  },
+  "explicit": {
+    "minecraft:polished_deepslate_stairs": "minecraft:polished_blackstone_stairs",
+    "minecraft:polished_deepslate_slab": "minecraft:polished_blackstone_slab",
+    "minecraft:polished_deepslate_wall": "minecraft:polished_blackstone_wall"
+  },
+  "relics": {
+    "keywords": ["spider", "weaver", "silk", "arach", "cocoon", "lolth", "drider", "venom", "widow", "tarantula", "shelob", "spinner"]
+  },
+  "catastrophes": {
+    "collapse": 2,
+    "flood": 1,
+    "spirit": 3
+  },
+  "ambient": "minecraft:item_cobweb",
+  "light": -2,
+  "sound": {"id": "minecraft:entity.spider.ambient", "volume": 0.3, "pitch": 0.5, "every": 8},
+  "danger": 1.25
+}

@@ -2,7 +2,7 @@
   "fallback": "nusmp:mega/cap",
   "elements": [
     {
-      "weight": 5,
+      "weight": 2,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/cavern/crystal_cavern",
@@ -11,7 +11,7 @@
       }
     },
     {
-      "weight": 6,
+      "weight": 2,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/cavern/fungal_grotto_a",
@@ -20,7 +20,7 @@
       }
     },
     {
-      "weight": 6,
+      "weight": 2,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/cavern/fungal_grotto_b",
@@ -29,7 +29,25 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/cavern/fungal_underdark_darklake",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/cavern/fungal_underdark_spore_forest",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/cavern/overgrown_cavern",
@@ -218,7 +236,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/alchemy_lab_a",
@@ -227,7 +245,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/alchemy_lab_b",
@@ -236,7 +254,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/armory_forge_a",
@@ -245,7 +263,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/armory_forge_b",
@@ -254,7 +272,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/barracks_a",
@@ -263,7 +281,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/barracks_b",
@@ -272,7 +290,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/cell_block_a",
@@ -281,7 +299,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/cell_block_b",
@@ -308,7 +326,7 @@
       }
     },
     {
-      "weight": 2,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/colonnade_hall_a",
@@ -326,7 +344,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/crypt_a",
@@ -335,10 +353,46 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/crypt_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/drowned_crypt_flooded_nave",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/drowned_crypt_sarcophagus_vault",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/fungal_underdark_drow_enclave",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/fungal_underdark_fungus_farm",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }
@@ -353,7 +407,25 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/infernal_foundry_grand_furnace",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/infernal_foundry_penal_forge",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/kitchen_larder",
@@ -380,7 +452,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/library_a",
@@ -389,7 +461,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/library_b",
@@ -407,7 +479,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/ossuary",
@@ -416,7 +488,7 @@
       }
     },
     {
-      "weight": 2,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/round_hall_a",
@@ -425,7 +497,7 @@
       }
     },
     {
-      "weight": 2,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/round_hall_b",
@@ -434,7 +506,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/shrine_a",
@@ -447,6 +519,24 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/hall/shrine_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/spider_warrens_cocoon_larder",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/hall/spider_warrens_web_great_hall",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }
@@ -533,7 +623,25 @@
       }
     },
     {
-      "weight": 10,
+      "weight": 8,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/puzzle/drowned_crypt_tide_gate",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 8,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/puzzle/infernal_foundry_contract_hall",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/puzzle/sigil_hall_a",
@@ -542,7 +650,7 @@
       }
     },
     {
-      "weight": 10,
+      "weight": 2,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/puzzle/sigil_hall_b",
@@ -551,7 +659,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/safe/chapel",
@@ -560,7 +668,25 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/safe/drowned_crypt_air_bell",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/safe/fungal_underdark_myconid_garden",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/safe/hearth_hall_a",
@@ -569,7 +695,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/safe/hearth_hall_b",
@@ -578,7 +704,16 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/safe/infernal_foundry_smelters_rest",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/safe/refectory",
@@ -587,7 +722,16 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/safe/spider_warrens_silk_nook",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/safe/workshop_a",
@@ -596,7 +740,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/safe/workshop_b",
@@ -605,7 +749,7 @@
       }
     },
     {
-      "weight": 20,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/set/cathedral_rotunda",
@@ -614,37 +758,10 @@
       }
     },
     {
-      "weight": 7,
+      "weight": 5,
       "element": {
         "element_type": "minecraft:single_pool_element",
-        "location": "nusmp:mega/trap/dark_room",
-        "processors": "nusmp:mega_interior",
-        "projection": "rigid"
-      }
-    },
-    {
-      "weight": 7,
-      "element": {
-        "element_type": "minecraft:single_pool_element",
-        "location": "nusmp:mega/trap/pit_hall_a",
-        "processors": "nusmp:mega_interior",
-        "projection": "rigid"
-      }
-    },
-    {
-      "weight": 7,
-      "element": {
-        "element_type": "minecraft:single_pool_element",
-        "location": "nusmp:mega/trap/pit_hall_b",
-        "processors": "nusmp:mega_interior",
-        "projection": "rigid"
-      }
-    },
-    {
-      "weight": 8,
-      "element": {
-        "element_type": "minecraft:single_pool_element",
-        "location": "nusmp:mega/treasure/closet_a",
+        "location": "nusmp:mega/set/drowned_crypt_drowned_chapel",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }
@@ -653,13 +770,85 @@
       "weight": 5,
       "element": {
         "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/set/fungal_underdark_myconid_circle",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/set/infernal_foundry_soul_wheel",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/set/spider_warrens_queens_lair",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/trap/dark_room",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 13,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/trap/fungal_underdark_chasm_ledges",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/trap/pit_hall_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/trap/pit_hall_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/treasure/closet_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/treasure/closet_b",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }
     },
     {
-      "weight": 8,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/treasure/closet_c",
@@ -668,7 +857,61 @@
       }
     },
     {
-      "weight": 10,
+      "weight": 6,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/treasure/drowned_crypt_pearl_reliquary",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/treasure/infernal_foundry_counting_house",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/treasure/spider_warrens_egg_cache",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/trial/drowned_crypt_drowned_font",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/trial/infernal_foundry_cage_arena",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/trial/spider_warrens_brood_hatch",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/trial/trial_hall_a",
@@ -677,7 +920,7 @@
       }
     },
     {
-      "weight": 10,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/trial/trial_hall_b",

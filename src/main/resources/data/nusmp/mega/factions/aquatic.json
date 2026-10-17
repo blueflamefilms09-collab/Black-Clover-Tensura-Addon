@@ -23,7 +23,11 @@
     "shadow": 1,
     "astral": 3,
     "radiant": 1,
-    "abyss": 3
+    "abyss": 3,
+    "fungal_underdark": 2,
+    "infernal_foundry": 0,
+    "drowned_crypt": 5,
+    "spider_warrens": 0
   },
   "drops": {
     "meat": "raw_basilisk_fillet",
