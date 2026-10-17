@@ -1,0 +1,9 @@
+{
+  "id": "tensura:berserk",
+  "kind": "unique",
+  "name": "Berserk",
+  "ep_tax": 6,
+  "min_ep": 1000,
+  "tint": "#C0102A",
+  "description": "Pain becomes power."
+}

@@ -1,0 +1,9 @@
+{
+  "id": "tensura:fighter",
+  "kind": "unique",
+  "name": "Fighter",
+  "ep_tax": 4,
+  "min_ep": 500,
+  "tint": "#FF6A6A",
+  "description": "A body that remembers every fight."
+}

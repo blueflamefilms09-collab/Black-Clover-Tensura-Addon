@@ -1,0 +1,9 @@
+{
+  "id": "tensura:martial_master",
+  "kind": "unique",
+  "name": "Martial Master",
+  "ep_tax": 6,
+  "min_ep": 1000,
+  "tint": "#FF8A4A",
+  "description": "Technique past strength."
+}

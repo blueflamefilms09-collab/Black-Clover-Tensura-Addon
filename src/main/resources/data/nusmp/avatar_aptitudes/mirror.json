@@ -1,0 +1,13 @@
+{
+  "name": "Mirror",
+  "rarity": "RARE",
+  "tax_percent": 8,
+  "magic": "mirror",
+  "skills": [
+    "tensura:body_double",
+    "tensura:doppelganger",
+    "tensura:mirage"
+  ],
+  "tint": "#DDEEFF",
+  "description": "Two of you, and one of them is lying."
+}

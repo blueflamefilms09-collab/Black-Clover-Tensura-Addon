@@ -1,0 +1,13 @@
+{
+  "name": "Gravity",
+  "rarity": "RARE",
+  "tax_percent": 9,
+  "magic": "gravity",
+  "skills": [
+    "tensura:gravity_manipulation",
+    "tensura:gravity_field",
+    "tensura:gravity_flight"
+  ],
+  "tint": "#9A5CE8",
+  "description": "Weight is only a suggestion to you."
+}
