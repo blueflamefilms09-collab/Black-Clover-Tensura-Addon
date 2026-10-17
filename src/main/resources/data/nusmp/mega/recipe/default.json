@@ -1,0 +1,20 @@
+{
+  "_why": "The Sector Recipe: the promises every Mega-Dungeon sector makes, kept as data so the pacing can be retuned without a new jar. The generator (mega.gen.MegaAssembler) forces these after the first fill and the audit (mega.gen.SectorAudit) enforces them; distances are in 9-block modules measured between box centres. The values below are the defaults compiled into mega.gen.Recipe; the unit test RecipeTest fails if the two drift apart. Keys that start with an underscore are comments.",
+  "maxDepth": 24,
+  "minRooms": 40,
+  "minLoops": 3,
+  "arenaMinDistance": 8,
+  "arenaMinDepth": 5,
+  "reserveDepth": 0,
+  "extraSafe": 1,
+  "safeMinDistance": 5,
+  "safeMaxDistance": 12,
+  "min": { "trial": 1, "treasure": 2 },
+  "max": { "set": 1 },
+  "shapeMax": {},
+  "chainSockets": 120,
+  "chainLeaves": 10,
+  "stepBudget": 600000,
+  "capReserve": 60,
+  "requireMarkers": true
+}

@@ -17,7 +17,7 @@ public final class MegaConfig {
     /** "mega" (the singular expanding Mega-Dungeon, default) or "spire" (the 1.35.0 floating Spire of the Labyrinth). */
     public static final ModConfigSpec.ConfigValue<String> LAYOUT;
     public static final ModConfigSpec.BooleanValue EXPANSION, LEGACY_GATES, LAST_LANDING;
-    public static final ModConfigSpec.IntValue PIECES_PER_TICK, MAX_PIECES, MAX_SECTORS, ASSEMBLE_TRIES, MAX_LINK_MODULES;
+    public static final ModConfigSpec.IntValue PIECES_PER_TICK, MAX_PIECES, MAX_SECTORS, ASSEMBLE_TRIES, MAX_LINK_MODULES, GEN_BUDGET_MS;
 
     public static final String LAYOUT_MEGA = "mega", LAYOUT_SPIRE = "spire";
     /** The default layout. Kept at "spire" while the Mega-Dungeon is being built (so a build of a half-finished tree behaves exactly like 1.53.0); the integration commit flips it to "mega". */
@@ -44,6 +44,8 @@ public final class MegaConfig {
                 .defineInRange("assembleTries", 24, 1, 64);
         MAX_LINK_MODULES = b.comment("Longest straight tunnel (in 9-block modules) between two sectors when the next region would collide with an old one. 0 = never build links.")
                 .defineInRange("maxLinkModules", 40, 0, 60);
+        GEN_BUDGET_MS = b.comment("Milliseconds of server time one tick may spend placing the pieces of a sector (at least one piece is always placed, and never more than piecesPerTick). Lower = smoother, but the sector takes longer to appear.")
+                .defineInRange("genBudgetMs", 30, 5, 200);
         b.pop();
         SPEC = b.build();
     }
