@@ -1,0 +1,9 @@
+{
+  "id": "tensura:healer",
+  "kind": "unique",
+  "name": "Healer",
+  "ep_tax": 5,
+  "min_ep": 800,
+  "tint": "#7CF0B0",
+  "description": "Hands that close wounds."
+}

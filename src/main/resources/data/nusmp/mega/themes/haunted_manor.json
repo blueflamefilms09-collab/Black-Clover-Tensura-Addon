@@ -1,0 +1,33 @@
+{
+  "_why": "The Haunted Manor, the evil road's house that remembers. A house is plaster and boards, so the walls are plain diorite (white and grey speckle, the plaster of an old house, the wall of no other theme), the floors the dark deepslate tiles of a cellar and a hall, the pillars and trim polished andesite, the capitals chiselled stone bricks, the rubble plain cobblestone and the rock stone. The worn walls are andesite (the grey stone showing where the plaster has come away) and the worn floors cracked deepslate tiles; the wood is SPRUCE, the dark brown of old furniture and banisters. Nothing in the palette is flammable on purpose: planks as walls would burn the whole sector the first time a lava hall of the shared pool stood next to them, so the timber is left to the furniture and the beams, which the generator keeps away from lava. The lights are left as the templates draw them, the cold teal of soul lanterns next to the warm gold of candles in the signature rooms, because a house where two kinds of light disagree is a house where something is wrong. Its mood is a door creaking open far away, ghost wisps rise from the floor, its light is the dimmest of the four (a house with the lamps burnt out) and its danger 1.05: it is small rooms and sudden fright, not a hunt.",
+  "id": "haunted_manor",
+  "name": "Haunted Manor",
+  "color": "#6E8A82",
+  "families": {
+    "brick": "minecraft:diorite",
+    "tile": "minecraft:deepslate_tiles",
+    "polished": "minecraft:polished_andesite",
+    "chiseled": "minecraft:chiseled_stone_bricks",
+    "cobbled": "minecraft:cobblestone",
+    "cracked_brick": "minecraft:andesite",
+    "cracked_tile": "minecraft:cracked_deepslate_tiles",
+    "rock": "minecraft:stone",
+    "wood": "minecraft:spruce_planks"
+  },
+  "explicit": {
+    "minecraft:deepslate_brick_wall": "minecraft:cobblestone_wall",
+    "minecraft:polished_deepslate_wall": "minecraft:cobblestone_wall"
+  },
+  "relics": {
+    "keywords": ["ghost", "haunt", "spirit", "doll", "locket", "specter", "manor", "lullaby", "memor", "viola", "puppet"]
+  },
+  "catastrophes": {
+    "collapse": 3,
+    "flood": 1,
+    "spirit": 4
+  },
+  "ambient": "minecraft:soul",
+  "light": -3,
+  "sound": {"id": "minecraft:block.wooden_door.open", "volume": 0.3, "pitch": 0.6, "every": 7},
+  "danger": 1.05
+}

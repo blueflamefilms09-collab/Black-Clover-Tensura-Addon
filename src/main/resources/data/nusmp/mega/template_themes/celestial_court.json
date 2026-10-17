@@ -1,0 +1,3 @@
+{ "theme": "celestial_court",
+  "templates": ["nusmp:mega/hall/celestial_court_", "nusmp:mega/set/celestial_court_", "nusmp:mega/trial/celestial_court_", "nusmp:mega/safe/celestial_court_"],
+  "relative": { "mega/hall/celestial_court_": 15, "mega/set/celestial_court_": 20, "mega/trial/celestial_court_": 20, "mega/safe/celestial_court_": 20 } }

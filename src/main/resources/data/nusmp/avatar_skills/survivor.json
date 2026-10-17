@@ -1,0 +1,9 @@
+{
+  "id": "tensura:survivor",
+  "kind": "unique",
+  "name": "Survivor",
+  "ep_tax": 5,
+  "min_ep": 800,
+  "tint": "#9CC0A0",
+  "description": "Still standing."
+}

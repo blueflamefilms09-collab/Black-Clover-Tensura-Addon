@@ -1,0 +1,13 @@
+{
+  "name": "Battle Aura",
+  "rarity": "UNCOMMON",
+  "tax_percent": 3,
+  "magic": "",
+  "skills": [
+    "tensura:battlewill",
+    "tensura:aura_sword",
+    "tensura:aura_slash"
+  ],
+  "tint": "#FFB04A",
+  "description": "Aura drawn down the blade: the fighter's road, no grimoire needed."
+}

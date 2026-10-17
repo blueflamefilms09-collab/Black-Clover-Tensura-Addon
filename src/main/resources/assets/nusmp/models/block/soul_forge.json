@@ -1,0 +1,141 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "nusmp:block/soul_forge_base",
+    "base": "nusmp:block/soul_forge_base",
+    "trim": "nusmp:block/soul_forge_trim",
+    "top": "nusmp:block/soul_forge_top",
+    "gem": "nusmp:block/soul_forge_gem",
+    "bottom": "minecraft:block/obsidian"
+  },
+  "elements": [
+    {
+      "name": "plinth",
+      "from": [0, 0, 0],
+      "to": [16, 3, 16],
+      "faces": {
+        "down": {"texture": "#bottom", "cullface": "down"},
+        "up": {"texture": "#base", "uv": [0, 0, 16, 16]},
+        "north": {"texture": "#base", "uv": [0, 13, 16, 16]},
+        "south": {"texture": "#base", "uv": [0, 13, 16, 16]},
+        "west": {"texture": "#base", "uv": [0, 13, 16, 16]},
+        "east": {"texture": "#base", "uv": [0, 13, 16, 16]}
+      }
+    },
+    {
+      "name": "gold rim of the plinth",
+      "from": [0.5, 3, 0.5],
+      "to": [15.5, 4.5, 15.5],
+      "faces": {
+        "down": {"texture": "#trim"},
+        "up": {"texture": "#trim", "uv": [0, 0, 16, 16]},
+        "north": {"texture": "#trim", "uv": [0.5, 10, 15.5, 11.5]},
+        "south": {"texture": "#trim", "uv": [0.5, 10, 15.5, 11.5]},
+        "west": {"texture": "#trim", "uv": [0.5, 10, 15.5, 11.5]},
+        "east": {"texture": "#trim", "uv": [0.5, 10, 15.5, 11.5]}
+      }
+    },
+    {
+      "name": "pillar",
+      "from": [4, 4.5, 4],
+      "to": [12, 10, 12],
+      "faces": {
+        "north": {"texture": "#base", "uv": [4, 4, 12, 9.5]},
+        "south": {"texture": "#base", "uv": [4, 4, 12, 9.5]},
+        "west": {"texture": "#base", "uv": [4, 4, 12, 9.5]},
+        "east": {"texture": "#base", "uv": [4, 4, 12, 9.5]}
+      }
+    },
+    {
+      "name": "basin",
+      "from": [1.5, 10, 1.5],
+      "to": [14.5, 12, 14.5],
+      "faces": {
+        "down": {"texture": "#trim"},
+        "up": {"texture": "#top", "uv": [1.5, 1.5, 14.5, 14.5]},
+        "north": {"texture": "#trim", "uv": [1.5, 4, 14.5, 6]},
+        "south": {"texture": "#trim", "uv": [1.5, 4, 14.5, 6]},
+        "west": {"texture": "#trim", "uv": [1.5, 4, 14.5, 6]},
+        "east": {"texture": "#trim", "uv": [1.5, 4, 14.5, 6]}
+      }
+    },
+    {
+      "name": "stud north west",
+      "from": [1.5, 12, 1.5],
+      "to": [3.5, 15, 3.5],
+      "faces": {
+        "up": {"texture": "#trim", "uv": [0, 0, 2, 2]},
+        "north": {"texture": "#trim", "uv": [0, 0, 2, 3]},
+        "south": {"texture": "#trim", "uv": [0, 0, 2, 3]},
+        "west": {"texture": "#trim", "uv": [0, 0, 2, 3]},
+        "east": {"texture": "#trim", "uv": [0, 0, 2, 3]}
+      }
+    },
+    {
+      "name": "stud north east",
+      "from": [12.5, 12, 1.5],
+      "to": [14.5, 15, 3.5],
+      "faces": {
+        "up": {"texture": "#trim", "uv": [0, 0, 2, 2]},
+        "north": {"texture": "#trim", "uv": [0, 0, 2, 3]},
+        "south": {"texture": "#trim", "uv": [0, 0, 2, 3]},
+        "west": {"texture": "#trim", "uv": [0, 0, 2, 3]},
+        "east": {"texture": "#trim", "uv": [0, 0, 2, 3]}
+      }
+    },
+    {
+      "name": "stud south west",
+      "from": [1.5, 12, 12.5],
+      "to": [3.5, 15, 14.5],
+      "faces": {
+        "up": {"texture": "#trim", "uv": [0, 0, 2, 2]},
+        "north": {"texture": "#trim", "uv": [0, 0, 2, 3]},
+        "south": {"texture": "#trim", "uv": [0, 0, 2, 3]},
+        "west": {"texture": "#trim", "uv": [0, 0, 2, 3]},
+        "east": {"texture": "#trim", "uv": [0, 0, 2, 3]}
+      }
+    },
+    {
+      "name": "stud south east",
+      "from": [12.5, 12, 12.5],
+      "to": [14.5, 15, 14.5],
+      "faces": {
+        "up": {"texture": "#trim", "uv": [0, 0, 2, 2]},
+        "north": {"texture": "#trim", "uv": [0, 0, 2, 3]},
+        "south": {"texture": "#trim", "uv": [0, 0, 2, 3]},
+        "west": {"texture": "#trim", "uv": [0, 0, 2, 3]},
+        "east": {"texture": "#trim", "uv": [0, 0, 2, 3]}
+      }
+    },
+    {
+      "name": "soul gem, turned about the vertical",
+      "from": [6.4, 12.4, 6.4],
+      "to": [9.6, 15.6, 9.6],
+      "rotation": {"origin": [8, 14, 8], "axis": "y", "angle": 45},
+      "faces": {
+        "down": {"texture": "#gem", "uv": [0, 0, 16, 16]},
+        "up": {"texture": "#gem", "uv": [0, 0, 16, 16]},
+        "north": {"texture": "#gem", "uv": [0, 0, 16, 16]},
+        "south": {"texture": "#gem", "uv": [0, 0, 16, 16]},
+        "west": {"texture": "#gem", "uv": [0, 0, 16, 16]},
+        "east": {"texture": "#gem", "uv": [0, 0, 16, 16]}
+      },
+      "neoforge_data": {"block_light": 15, "sky_light": 15}
+    },
+    {
+      "name": "soul gem, tipped over",
+      "from": [6.4, 12.4, 6.4],
+      "to": [9.6, 15.6, 9.6],
+      "rotation": {"origin": [8, 14, 8], "axis": "x", "angle": 45},
+      "faces": {
+        "down": {"texture": "#gem", "uv": [0, 0, 16, 16]},
+        "up": {"texture": "#gem", "uv": [0, 0, 16, 16]},
+        "north": {"texture": "#gem", "uv": [0, 0, 16, 16]},
+        "south": {"texture": "#gem", "uv": [0, 0, 16, 16]},
+        "west": {"texture": "#gem", "uv": [0, 0, 16, 16]},
+        "east": {"texture": "#gem", "uv": [0, 0, 16, 16]}
+      },
+      "neoforge_data": {"block_light": 15, "sky_light": 15}
+    }
+  ]
+}

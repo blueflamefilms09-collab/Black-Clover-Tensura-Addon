@@ -1,0 +1,14 @@
+{
+  "name": "Anti-Magic",
+  "rarity": "LEGENDARY",
+  "tax_percent": 25,
+  "magic": "anti_magic",
+  "skills": [
+    "tensura:magic_nullification",
+    "tensura:magic_resistance",
+    "tensura:anti_magic_area",
+    "tensura:magic_jamming"
+  ],
+  "tint": "#B04AD8",
+  "description": "A blade that cuts spells in half. The heaviest gift there is."
+}

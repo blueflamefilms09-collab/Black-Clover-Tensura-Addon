@@ -55,9 +55,16 @@ def pool_elements(cfg, pool):
     scale = cfg.get("scale", 20)
     relative = pool.get("relative", {})
     absolute = pool.get("absolute", False)
+    claimed = pool.get("claimed", {})          # template_themes prefix -> weight (the `relative` of the theme files), see build()
     out = []
     for folder, share in sorted(pool["folders"].items()):
         items = [(tid, stem) for tid, stem in templates_in(folder) if stem.startswith(pool.get("filter", ""))]
+        if not items:
+            continue
+        own = [(tid, stem) for tid, stem in items if any(tid.startswith(p) for p in claimed)]
+        items = [x for x in items if x not in own]
+        for tid, _stem in own:
+            out.append((tid, max(1, min(150, relative_weight(claimed, tid)))))
         if not items:
             continue
         rels = [relative_weight(relative, tid) for tid, _ in items]
@@ -96,7 +103,7 @@ def build():
     extra = theme_weights()
     if extra:
         for pool in cfg["pools"].values():
-            pool["relative"] = dict(pool.get("relative", {}), **extra)
+            pool["claimed"] = dict(extra)
     out = {}
     report = []
     for name, pool in sorted(cfg["pools"].items()):

@@ -101,16 +101,24 @@ class GuardianScalingTest {
         assertTrue(GuardianScaling.phaseTwo(0.0, 400.0));
     }
 
+    /** The themes that borrow a trait: the two roads of 1.55.0 and the themes of 1.59.0. */
+    private static final java.util.Map<String, Trait> BORROWED = java.util.Map.ofEntries(
+            java.util.Map.entry("radiant", Trait.ASTRAL), java.util.Map.entry("abyss", Trait.GRAVITY),
+            java.util.Map.entry("feywild_grove", Trait.VERDANT), java.util.Map.entry("dwarven_forgehold", Trait.FLAME),
+            java.util.Map.entry("crystal_geode", Trait.ASTRAL), java.util.Map.entry("sunken_temple", Trait.FROST),
+            java.util.Map.entry("holy_church", Trait.ASTRAL), java.util.Map.entry("celestial_court", Trait.ASTRAL),
+            java.util.Map.entry("sky_citadel", Trait.STORM), java.util.Map.entry("mountain_monastery", Trait.FROST),
+            java.util.Map.entry("cursed_archive", Trait.VERDANT), java.util.Map.entry("necropolis", Trait.FROST),
+            java.util.Map.entry("vampire_castle", Trait.BLOOD), java.util.Map.entry("haunted_manor", Trait.SHADOW));
+
     @Test
     void everyThemeHasItsOwnTrait() {
         Set<Trait> seen = new HashSet<>();
         for (RegionTheme th : RegionTheme.values()) {
             Trait t = GuardianScaling.traitOf(th);
-            switch (th.id()) {                                                         // by id: the same test passes with and without the two roads' themes in the enum
-                case "radiant" -> assertEquals(Trait.ASTRAL, t, "the Holy road's theme rains stars");
-                case "abyss" -> assertEquals(Trait.GRAVITY, t, "the Abyssal road's theme pulls");
-                default -> assertEquals(th.name(), t.name(), "the nine original themes carry their own name as the trait");
-            }
+            Trait borrowed = BORROWED.get(th.id());                                    // by id: the same test passes with and without the later themes in the enum
+            if (borrowed != null) assertEquals(borrowed, t, th.id() + " borrows its trait");
+            else assertEquals(th.name(), t.name(), "the nine original themes carry their own name as the trait");
             seen.add(t);
         }
         assertEquals(9, seen.size(), "every one of the nine traits is some theme's trait");

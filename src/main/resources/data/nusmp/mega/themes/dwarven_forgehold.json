@@ -1,0 +1,38 @@
+{
+  "_why": "A dwarven hold: dressed grey stone, copper trim that never rusts (waxed), iron and oak, and gold flecks in the floor where the miners struck a seam. Polished andesite walls on stone-brick floors, waxed cut copper for pillars and door frames with chiselled copper keystones, plain andesite for the rough fill and oak for the timber, so a room reads as masonry cut by people who take pride in it. It must not be mistaken for Frost (stone bricks everywhere, spruce, snow) or Flame (black stone): the copper trim and the oak timber are what only the hold has. Copper has no wall and polished andesite has no wall, so the explicit map hands them the andesite wall; the cold soul lights of the templates become the warm lights of a forge. Its light is +1 (forges burn in every hall), its mood the crackle of a blast furnace, its ambient a drift of embers, and its danger 0.9: the hold is a place of craftsmen, neutral to good, and its trouble is the stone coming down (collapse weight highest) more than a curse.",
+  "id": "dwarven_forgehold",
+  "name": "Dwarven Forgehold",
+  "color": "#C98A3C",
+  "families": {
+    "brick": "minecraft:polished_andesite",
+    "tile": "minecraft:stone_bricks",
+    "polished": "minecraft:waxed_cut_copper",
+    "chiseled": "minecraft:waxed_chiseled_copper",
+    "cobbled": "minecraft:andesite",
+    "cracked_brick": "minecraft:cracked_stone_bricks",
+    "cracked_tile": "minecraft:gilded_blackstone",
+    "rock": "minecraft:stone",
+    "wood": "minecraft:oak_planks"
+  },
+  "explicit": {
+    "minecraft:deepslate_brick_wall": "minecraft:andesite_wall",
+    "minecraft:deepslate_tile_wall": "minecraft:stone_brick_wall",
+    "minecraft:polished_deepslate_wall": "minecraft:andesite_wall",
+    "minecraft:soul_lantern": "minecraft:lantern",
+    "minecraft:soul_wall_torch": "minecraft:wall_torch",
+    "minecraft:soul_torch": "minecraft:torch",
+    "minecraft:soul_campfire": "minecraft:campfire"
+  },
+  "relics": {
+    "keywords": ["dwarf", "dwarven", "anvil", "mithril", "rune", "delver", "miner", "smith", "adamant", "ingot", "bellows", "mattock"]
+  },
+  "catastrophes": {
+    "collapse": 4,
+    "flood": 1,
+    "spirit": 1
+  },
+  "ambient": "minecraft:small_flame",
+  "light": 1,
+  "sound": {"id": "minecraft:block.blastfurnace.fire_crackle", "volume": 0.4, "pitch": 0.9, "every": 5},
+  "danger": 0.9
+}
