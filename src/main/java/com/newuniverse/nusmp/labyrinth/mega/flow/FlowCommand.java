@@ -89,7 +89,7 @@ public final class FlowCommand {
         }
         FlowTracker.Cast c = FlowTracker.shared().lastCast(p.getUUID());
         if (c == null) {
-            ok(src, text("status.cast.none", "No cast heard from %s since they logged in (if they cast a grimoire page, the hook in QuestHooks.onCast is not wired).", p.getName()));
+            ok(src, text("status.cast.none", "No cast heard from %s since they logged in (if they cast a grimoire page, the two FlowCasts lines in GrimoireBook.castPage are not wired).", p.getName()));
         } else {
             long age = level.getGameTime() - c.tick();
             boolean recent = age >= 0 && age <= window;

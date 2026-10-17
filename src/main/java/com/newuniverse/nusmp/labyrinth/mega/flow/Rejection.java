@@ -13,8 +13,13 @@ import net.minecraft.world.phys.Vec3;
  * once, and something that can never become a way to die by accident or to farm. This is the game-side half of that, the one place that applies a
  * rejection; what it costs and when is decided by the pure {@link FlowRules}. The price is taken as true damage by setting the health directly
  * (the safest choice: armour, resistance and Totems cannot dodge it, and the non-lethal floor is exact) with the hurt flinch broadcast so it looks
- * like a blow; only when the owner turns {@code nonLethal} off does it go through {@code hurt}, the normal death path, because setting a player's
- * health to zero by hand leaves a half-dead player. Creative and spectator players, and the dead, are skipped. The feedback is the place speaking: an
+ * like a blow; only a drain that would really kill (possible only when the owner turns {@code nonLethal} off) goes through {@code hurt}, the normal death
+ * path, because setting a player's health to zero by hand leaves a half-dead player. DECISION, on purpose: the drain is ABSOLUTE. The place's rejection is
+ * not a spell, so the Rare grade's magic resistance of the gear module (which reduces vanilla {@code magic} and Tensura's spell types by up to 40 percent)
+ * must not shrink it; a damage event of the {@code magic} type would be softened by that gear and by the Resistance effect. Setting the health raises no
+ * damage event at all, and the lethal case uses {@code generic_kill}, which no armour, resistance, gear or Totem touches (vanilla's tags
+ * bypasses_armor, bypasses_resistance and bypasses_invulnerability all list it; checked in the 1.21.1 data), so a rejection costs exactly what
+ * {@link FlowRules#rejectionDrain} says. Creative and spectator players, and the dead, are skipped. The feedback is the place speaking: an
  * action-bar line, the rejected magic's Rukh scattering away from the player while the place's own Rukh close in on them, and two sounds, all through
  * {@code RukhFx} (so the particle budget applies) and with no vanilla particle at all.
  */
@@ -33,11 +38,11 @@ final class Rejection {
         double drain = FlowRules.rejectionDrain(p.getMaxHealth(), p.getHealth(), FlowConfig.get(FlowConfig.REJECT_PERCENT),
                 FlowConfig.get(FlowConfig.REJECT_MIN_HEALTH), nonLethal);
         if (drain > 0.0) {
-            if (nonLethal) {
-                p.setHealth((float) (p.getHealth() - drain));
+            if (p.getHealth() - drain > 0.0) {
+                p.setHealth((float) (p.getHealth() - drain));                                     // always the case with nonLethal: no damage event, so nothing can soften the price
                 level.broadcastEntityEvent(p, (byte) 2);                                         // the hurt flinch and sound, without a damage event
             } else {
-                p.hurt(p.damageSources().magic(), (float) drain);                                 // allowed to kill: the normal death path
+                p.hurt(p.damageSources().genericKill(), (float) drain);                           // only with nonLethal off: the normal death path, through a type no armour, resistance or gear softens
             }
         }
         feedback(level, p, cast, flow);

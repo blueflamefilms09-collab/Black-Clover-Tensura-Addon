@@ -1,7 +1,7 @@
 package com.newuniverse.nusmp.labyrinth.mega.flow;
 
 /**
- * Why: the classification table is loaded by a data reload and read by every cast, from the hook in {@code QuestHooks} to the self-tests, so there has to
+ * Why: the classification table is loaded by a data reload and read by every cast, from the hook in {@code GrimoireBook.castPage} to the self-tests, so there has to
  * be exactly one place that holds the table the last reload produced and hands it out. It is a single volatile reference swapped in one assignment, so
  * a reload in progress never exposes a half-built table to a cast that happens on the same tick, and before the first reload (or when the file is
  * missing) it holds {@link MagicAlignments#EMPTY}, which classifies everything as NEUTRAL: the flow then boosts nothing and rejects nothing, which is

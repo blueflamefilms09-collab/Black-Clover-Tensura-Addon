@@ -22,7 +22,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.GameRules;
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 
 import java.util.ArrayList;
@@ -38,8 +37,10 @@ import java.util.Set;
  * ONE OWNER-REQUESTED EXCEPTION to "Unique-or-higher relics come only from Crucibles". It drops once per sector (remembered in {@link FlowData}), as an item
  * at the Guardian's corpse that cannot burn or despawn and glows, to the killer's credit; when no vessel is left the Guardian drops nothing and the killer is
  * told, never an exception. The Guardian is recognised by the contract with the Guard builder: the scoreboard tag {@code nusmp_sector_guardian} on the entity and
- * the persistent int {@code nusmp_sector} holding the sector id (the sector at the corpse is the fallback). The Holy-only rule is the sector's polarity and the
- * decennial rule is {@code FloorMap.isDecennial(sector.lastFloor())}. An admin can run the same logic by hand ({@code /multiverse mega flow vessel give}), which
+ * the persistent int {@code nusmp_sector} holding the sector id (-1 for a test Guardian that belongs to none, which pays nothing; the sector at the corpse is
+ * the fallback only for a Guardian without the key). The Holy-only rule is the sector's polarity and the decennial rule is
+ * {@code FloorMap.isDecennial(sector.lastFloor())}. The reward is a guaranteed boss prize, not mob loot, so it does not look at the {@code doMobLoot} game rule
+ * (the Guardian itself drops nothing else); the Guardian's death event fires whatever the rule says. An admin can run the same logic by hand ({@code /multiverse mega flow vessel give}), which
  * ignores the once-per-sector memory and the config switch and never writes to the memory.
  */
 public final class DecennialReward {
@@ -89,7 +90,6 @@ public final class DecennialReward {
             LivingEntity dead = e.getEntity();
             if (!(dead.level() instanceof ServerLevel level) || !MegaDungeon.in(level)) return;
             if (!dead.getTags().contains(GUARDIAN_TAG)) return;
-            if (!level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT)) return;          // a Guardian's drops are loot like any other: the rule that switches loot off switches this off
             MinecraftServer server = level.getServer();
             Sector sector = sectorOf(dead, MegaData.get(server));
             if (gate(sector, server) != null) return;
@@ -112,13 +112,14 @@ public final class DecennialReward {
         }
     }
 
-    /** The sector of a Guardian: the persistent id the Guard builder stored, else the sector whose region holds the corpse; null when neither is known. */
+    /**
+     * The sector of a Guardian: the id the Guard builder stored in the persistent key. A Guardian that carries the key belongs to exactly that sector, and
+     * -1 or an unknown id means it belongs to none (a test Guardian spawned by an admin), so it pays nothing. Only a Guardian WITHOUT the key (one made
+     * before the key existed) falls back to the sector whose region holds the corpse. Null when no sector is known.
+     */
     static Sector sectorOf(LivingEntity guardian, MegaData data) {
         CompoundTag tag = guardian.getPersistentData();
-        if (tag.contains(SECTOR_KEY, Tag.TAG_ANY_NUMERIC)) {
-            Sector s = data.sector(tag.getInt(SECTOR_KEY));
-            if (s != null) return s;
-        }
+        if (tag.contains(SECTOR_KEY, Tag.TAG_ANY_NUMERIC)) return data.sector(tag.getInt(SECTOR_KEY));
         return data.sectorAt(FlowEvents.posOf(guardian));
     }
 

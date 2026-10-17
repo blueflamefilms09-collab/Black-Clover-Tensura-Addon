@@ -14,9 +14,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Zombie;
+import net.neoforged.neoforge.common.damagesource.DamageContainer;
 import net.neoforged.neoforge.common.util.FakePlayer;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +34,7 @@ import java.util.UUID;
  * issued). {@code flow.classify}: the data reload installed the table and it classifies known ids as the doc says, and the real list of magic families splits
  * into light, dark and the neutral rest. {@code flow.multiplier}: with no cast, a stale cast or a neutral cast a hit is unchanged; with a cast that matches
  * the flow it is multiplied by the configured factor; an opposing cast is a rejection; an ally is never boosted; and, when sector 0 exists and is on the
- * Holy road, the real cast hook remembers the cast, a matching cast costs nothing, an opposing cast takes the configured share of health exactly once (the cooldown
+ * Holy road, a genuine damage event goes through the real handler and is multiplied, the real cast hook remembers the cast, a matching cast costs nothing, an opposing cast takes the configured share of health exactly once (the cooldown
  * holds), and at 1.5 HP it never kills. {@code flow.neutral_outside}: no road, the Abyssal road at its configured flow, the overworld and the Hub have the flow
  * the rules say (none by default) and leave damage as it was. {@code flow.vessel}: the list of Metal Vessel candidates is not empty and every one can carry a
  * Djinn; the free ones are exactly those the Order's ledger does not hold; the draw is valid at both ends of the roll. {@code flow.reward_log}: the
@@ -165,6 +168,7 @@ public final class FlowSelfTests {
                 if (here != Polarity.HOLY) {
                     bad.add("the test player stands at " + FlowEvents.posOf(p) + ", inside sector 0, but MegaDungeon.polarityAt says " + here);
                 } else {
+                    realEvent(p, target, tracker, id, level, holy, m, bad, detail);
                     hooks(p, target, tracker, id, level, holy, opposed, window, bad, detail);
                 }
             }
@@ -173,6 +177,26 @@ public final class FlowSelfTests {
             p.setHealth(p.getMaxHealth());
         }
         return bad.isEmpty() ? ok(detail.toString()) : fail(firstFew(bad));
+    }
+
+    /**
+     * The real damage handler in a Holy sector: a genuine {@code LivingIncomingDamageEvent} (built from a {@code DamageContainer}, the way the game builds
+     * one) is fed to {@link FlowEvents#onIncoming}, so the part that reads the event, finds the player behind the blow and asks the sector for its road is
+     * exercised too, not only the decision inside it. No cast leaves the blow alone; a fresh matching cast multiplies it by the configured factor.
+     */
+    private static void realEvent(FakePlayer p, Zombie target, FlowTracker tracker, UUID id, ServerLevel level, Alignment holy, double m, List<String> bad,
+                                  StringBuilder detail) {
+        tracker.forget(id);
+        DamageSource blow = level.damageSources().playerAttack(p);
+        LivingIncomingDamageEvent plain = new LivingIncomingDamageEvent(target, new DamageContainer(blow, BASE));
+        FlowEvents.onIncoming(plain);
+        if (plain.isCanceled() || !near(plain.getAmount(), BASE)) bad.add("the real handler changed a blow that followed no cast: " + plain.getAmount() + " (canceled " + plain.isCanceled() + ")");
+        tracker.recordCast(id, holy, level.getGameTime());
+        LivingIncomingDamageEvent boosted = new LivingIncomingDamageEvent(target, new DamageContainer(blow, BASE));
+        FlowEvents.onIncoming(boosted);
+        if (boosted.isCanceled() || !near(boosted.getAmount(), (float) (BASE * m))) bad.add("the real handler should turn " + BASE + " into " + (BASE * m) + " after a " + holy + " cast but gave " + boosted.getAmount());
+        tracker.forget(id);
+        detail.append("the real damage handler turned a blow of ").append((int) BASE).append(" into ").append(boosted.getAmount()).append("; ");
     }
 
     /** The real cast hook in a Holy sector: remembers, charges a matching cast nothing, takes the share of an opposing one once, and never kills. */

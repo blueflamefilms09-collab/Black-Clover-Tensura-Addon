@@ -35,6 +35,7 @@ class AlignmentDataTest {
     private static final Path FILE = ROOT.resolve("src/main/resources/data/nusmp/mega/flow/alignments.json");
     private static final Path MAGIC_TYPE = ROOT.resolve("src/main/java/com/newuniverse/nusmp/blackclover/MagicType.java");
     private static final Path BOOKS = ROOT.resolve("src/main/java/com/newuniverse/nusmp/book");
+    private static final Path SOURCES = ROOT.resolve("src/main/java/com/newuniverse/nusmp");
 
     /** The Light soul of the mod's own grouping: Light, Lightning, Sword. */
     private static final Set<String> LIGHT = Set.of("LIGHT", "LIGHTNING", "SWORD");
@@ -53,6 +54,31 @@ class AlignmentDataTest {
             "COPPER", "IRON", "GEL", "GLASS", "BUBBLE", "ICE_WEDGE", "LEGION", "AIR", "HAIR", "MEMORY", "MINERAL", "MODIFICATION", "MUCUS", "MUD",
             "NAIL", "PERMEATION", "POISON_PLANT", "RED_OCHRE", "ROCK", "SANDSTONE", "SCALE", "SHAKUDO", "SKIN", "SNOW", "SONG", "SOUND", "SPIKE",
             "SWITCHING", "TONGUE", "TREE", "STONE", "VINE", "VORTEX", "WING");
+
+    /**
+     * The entries of the shipped file that name a Tensura skill by its namespaced id. The mod's sources cannot prove them (Tensura is a dependency, not source here),
+     * so they are listed by hand from the owner's Tensura 2.0.1.3 id reference; a typo here would be a rule that never matches, which is why the test names them.
+     */
+    private static final Set<String> TENSURA_ENTRIES = Set.of("tensura:poison", "tensura:create_greater_undead", "tensura:create_lesser_undead");
+
+    /**
+     * Every page id whose own name carries a light or dark word, or has a page entry (79 of the 632 distinct page ids of the mod), asked ALONE. Pinned so that a new page named
+     * after light or darkness cannot start being boosted or rejected unnoticed: the test fails with the new name, and the fix is either to accept it here (it
+     * lives in a family that decides anyway, or it really is light or dark) or to give it an exact NEUTRAL entry in the file (the Raging Black Bull is the example).
+     */
+    private static final Set<String> TOUCHED_BY_NAME = new LinkedHashSet<>(List.of((
+            "abyssal_ward abyssal_whirlpool arresting_dark_weave black_blade black_divider black_flame_bullets black_flame_pillar black_flame_twister black_flame_veil "
+            + "black_form black_hole black_hurricane black_lightning_battle_fiend black_meteorite black_moon black_oil_eruption black_oil_sea black_oil_strike blood_bullet "
+            + "blood_pact blood_whip catoblepas_s_evil_eye curse_candle_ritual_disk curse_cleanse curse_epidemic curse_filled_nails curse_misfortune curse_strike "
+            + "curse_transfer curse_warding_strike curse_workers_neighbor cursed_step dark_tide_wave death_scythe death_thrust demon_beast_mantle demon_beast_strike "
+            + "demon_dawn demon_fire_apocalypse demon_fire_strike demon_ice_blizzard demon_ice_body demon_ice_lance demon_ice_shards demon_ice_shatter demon_ice_slide "
+            + "demon_ice_soul demon_ice_strike demon_ice_wall demon_ice_wave demon_ice_winter demon_ice_zero demon_king demon_light_strike demon_porcupine_stingers "
+            + "demon_slayer_slash demon_water_strike devil_dive devil_union evil_eye fallen_angel_gate heavens_shadow_second_sight hellfire_wave myriad_black shadow_bind "
+            + "shadow_realm shadow_step shadow_travel summon_demon_destroyer summon_demon_dweller undying_curse veil_of_black_light divine_punishment light_prison "
+            + "light_shaft_of_divine_punishment light_speed light_step light_sword_of_judgment purging_light").split(" ")));
+
+    /** A page declaration in the sources: {@code starter("id", ...)}, {@code BookPage.mid("id", ...)}, {@code new BookPage("id", ...)} and the other tiers. */
+    private static final Pattern PAGE = Pattern.compile("(?<![A-Za-z0-9_])(?:BookPage\\.)?(?:starter|mid|zone|signature|daily)\\(\\s*\"([a-z0-9_]+)\"|new BookPage\\(\\s*\"([a-z0-9_]+)\"");
 
     private static String read(Path p) throws IOException { return Files.readString(p, StandardCharsets.UTF_8); }
 
@@ -166,12 +192,54 @@ class AlignmentDataTest {
         String pages = allBookSources();
         List<String> bad = new ArrayList<>();
         for (String key : t.exactEntries().keySet()) {
-            if (families.contains(key)) continue;
+            if (families.contains(key) || TENSURA_ENTRIES.contains(key)) continue;
             if (pages.contains("\"" + key + "\"")) continue;
             bad.add(key);
         }
         assertTrue(bad.isEmpty(), "exact entries that are neither a magic family nor a spell page id found in the book sources (a typo?): " + bad);
         assertNotNull(t.exactEntries().get("curse_warding"));
+    }
+
+    @Test
+    void theCorrectionsFoundByReadingEveryRealPageStand() throws IOException {
+        MagicAlignments t = shipped();
+        assertEquals(Alignment.NEUTRAL, t.classify("raging_black_bull", "recombination"), "the Black Bulls are a squad, not darkness");
+        assertEquals(Alignment.NEUTRAL, t.classify("raging_black_bull"), "and by its own name too");
+        assertEquals(Alignment.NEUTRAL, t.classify("tensura:poison"), "Tensura's physical Poison toggle is not the Darkness-soul Poison Magic");
+        assertEquals(Alignment.DARK, t.classify("poison"), "the family itself is still dark");
+        assertEquals(Alignment.DARK, t.classify("tensura:create_greater_undead"));
+        assertEquals(Alignment.DARK, t.classify("tensura:create_lesser_undead"));
+        assertEquals(Alignment.NEUTRAL, t.classify("turn_undead_hypothetical"), "'undead' is deliberately not a keyword");
+    }
+
+    @Test
+    void thePageNamesTheKeywordsTouchAreExactlyTheKnownOnes() throws IOException {
+        MagicAlignments t = shipped();
+        Set<String> pages = new TreeSet<>();
+        try (Stream<Path> walk = Files.walk(SOURCES)) {
+            for (Path f : (Iterable<Path>) walk.filter(p -> p.toString().endsWith(".java"))::iterator) {
+                Matcher m = PAGE.matcher(read(f));
+                while (m.find()) pages.add(m.group(1) != null ? m.group(1) : m.group(2));
+            }
+        }
+        assertTrue(pages.size() > 500, "the page scan found only " + pages.size() + " page ids: the pattern no longer matches how pages are declared");
+        Set<String> touched = new TreeSet<>();
+        for (String id : pages) if (t.classify(id) != Alignment.NEUTRAL) touched.add(id);
+        Set<String> fresh = new TreeSet<>(touched);
+        fresh.removeAll(TOUCHED_BY_NAME);
+        Set<String> gone = new TreeSet<>(TOUCHED_BY_NAME);
+        gone.removeAll(touched);
+        assertTrue(fresh.isEmpty(), "pages whose name now makes them light or dark (accept them in TOUCHED_BY_NAME, or give them an exact neutral entry): " + fresh);
+        assertTrue(gone.isEmpty(), "pages that were light or dark by name and no longer are (renamed, removed, or the rules changed): " + gone);
+    }
+
+    @Test
+    void everyPageOfALightOrDarkFamilyIsDecidedByItsFamilyNotByItsName() throws IOException {
+        MagicAlignments t = shipped();
+        // the only place a page name can overrule its family is an exact page entry, and those are listed on purpose
+        assertEquals(Alignment.LIGHT, t.classify("dark_prison", "light"), "a Light family stays light whatever its page is called");
+        assertEquals(Alignment.DARK, t.classify("holy_nonsense", "dark"), "a Dark family stays dark whatever its page is called");
+        assertEquals(Alignment.DARK, t.classify("devil_union", "light"), "except where a page has an entry of its own");
     }
 
     private static String allBookSources() throws IOException {

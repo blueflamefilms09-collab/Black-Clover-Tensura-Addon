@@ -13,8 +13,9 @@ import net.neoforged.neoforge.event.AddReloadListenerEvent;
  * so it has no ordering constraint against {@code NUItems.ITEMS}. {@code register} puts the handlers on the game bus with {@code addListener} (no
  * annotation scanning, like the rest of the mod): the data reload of the classification table; the damage event that multiplies a matching cast, at HIGH
  * priority so the target's own mitigation and the mod's caps see the boosted number; the drops event that hands out the Metal Vessel; the 40-tick ambient
- * Rukh; the logout and stop events that empty the memory of casts; and the listener on ManasCore's skill activations. The hook that reports grimoire casts is
- * not a registration: {@code QuestHooks.onCast} calls {@link FlowCasts#onCast} (one line, in the lead's integration notes).
+ * Rukh; the logout and stop events that empty the memory of casts; and the listener on ManasCore's skill activations (added once the server has started, see
+ * {@link FlowCasts#registerSkillHook}). The hook that reports grimoire casts is not a registration: {@code GrimoireBook.castPage} calls
+ * {@link FlowCasts#beforeCast} and {@link FlowCasts#onCast} (two lines, in the lead's integration notes).
  */
 public final class FlowRegistry {
     private FlowRegistry() {}
@@ -30,7 +31,7 @@ public final class FlowRegistry {
         gameBus.addListener(FlowEvents::onStopping);
         gameBus.addListener(FlowAir::onServerTick);
         gameBus.addListener(DecennialReward::onDrops);
-        FlowCasts.registerSkillHook();
+        FlowCasts.registerSkillHook(gameBus);
     }
 
     /** The {@code flow} admin node ({@code status | classify | vessel list | vessel give}); the lead attaches it under {@code /multiverse mega}. */
