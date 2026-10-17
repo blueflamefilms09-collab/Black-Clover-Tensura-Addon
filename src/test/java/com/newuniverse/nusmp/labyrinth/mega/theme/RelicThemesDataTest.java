@@ -108,6 +108,29 @@ class RelicThemesDataTest {
         assertTrue(most * 4 <= total, "one theme takes more than a quarter of the relics: " + count);
     }
 
+    /**
+     * The Crucible only offers relics of the minimum grade (UNIQUE by default), so a theme whose explicit relics are all of a lower grade could never be chosen by
+     * a vault; the in-game self-test {@code theme.relic_themes} fails on it, and this test says so before the smoke test is needed.
+     */
+    @Test
+    void everyShippedThemeHasARelicOfUniqueOrHigher() throws IOException {
+        Map<String, String> grade = new TreeMap<>();
+        Pattern def = Pattern.compile("RelicDef\\.of\\(\"([a-z0-9_]+)\"\\s*,\\s*\"[^\"]*\"\\s*,\\s*Grade\\.([A-Z]+)");
+        try (var files = Files.walk(RELICS)) {
+            for (Path p : files.filter(f -> f.toString().endsWith(".java")).toList()) {
+                Matcher m = def.matcher(Files.readString(p, StandardCharsets.UTF_8));
+                while (m.find()) grade.put(m.group(1), m.group(2));
+            }
+        }
+        assertTrue(grade.size() > 200, "the relic definitions were not found: " + grade.size());
+        Set<String> high = Set.of("UNIQUE", "LEGEND", "GOD", "GENESIS");
+        Map<String, Integer> perTheme = new TreeMap<>();
+        for (Map.Entry<String, String> e : RelicThemes.parse(MiniJson.parse(raw()), SHIPPED).explicit().entrySet())
+            if (high.contains(grade.getOrDefault(e.getKey(), ""))) perTheme.merge(e.getValue(), 1, Integer::sum);
+        for (String theme : SHIPPED)
+            assertTrue(perTheme.getOrDefault(theme, 0) >= 1, theme + " has no explicit relic of grade UNIQUE or higher: a vault could never lead to it");
+    }
+
     @Test
     void noKeywordIsListedByTwoThemes() throws IOException {
         Map<String, String> owner = new TreeMap<>();
