@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.61.0] — The characters of the arcs: the Magic Knights of the Sanctuary Hub (the bosses follow in this series)
+
+The owner asked to resume "the bosses and NPCs of the arcs": the bosses and allies of Black Clover (Saga 1 and 2), the Seven Deadly Sins, DanMachi, a remake of Zagred that keeps his magic, and the Magic Knights as friendly characters. The systems under them came first: in 1.58.0 the roster, the shared NPC entity, the dialogue, the story chain, the Charter Grimoire rows of the bosses, the spawn egg and `/multiverse arc ...` (`docs/arc/core.md`), and in 1.59.0 the art kit that generates every character model and its clips (`docs/arc/art_kit.md`). This release carries the characters themselves, as each builder's work is finished. Each character has its own doc in `docs/arc/`.
+
+**State:** written without a whole-project compiler; the pure logic and the data are covered by JUnit tests, the models are generated and were looked at in the kit's software preview (not in the game), and the CI smoke test boots a server with the characters registered. Nothing has been run in a game client.
+
+### NEW
+- **Sixteen friendly Magic Knights and court members** (`docs/arc/npcb.md`), all NPCs of the shared `nusmp:arc_npc` entity: the court (**Julius Novachrono**, **Marx Francois**), the Golden Dawn (**Yuno**, **William Vangeance**, **Mimosa Vermillion**, **Klaus Lunettes**), the Crimson Lion (**Fuegoleon**, **Mereoleona**, **Leopold Vermillion**), the Silver Eagle (**Nozel Silva**, **Solid Silva**), three more captains (**Charlotte Roselei** of the Blue Rose, **Jack the Ripper** of the Green Mantis, **Dorothy Unsworth** of the Coral Peacock) and the Seabed Temple siblings **Kahono** and **Kiato** (the mod's exclusive Song and Butoh casters).
+- Each has a record (saga Allies), a dialogue file with 20 to 30 lines (6 greetings and 3 farewells, the rest hints that point at the next arc and boss and react to the player's story stage; no quest or shop line, because no quest system can finish one yet), and a generated model with its clips (idle, walk, run, attack, cast, hurt, death). 354 dialogue lines in all.
+- Ten of them are meant to wait in the Hub for one of the five Saga-1 opener champions (Revchi Salik, Heath Grice, Lotus Whomalt, Mars, Vetto); the court and the juniors from the first day. The Hub placement itself belongs to the arc-world part. Until then `/multiverse arc spawn_npc <id>` (or the spawn egg) places any of them.
+
+### KEPT
+- Everything that existed: the grimoires of the same people (`CanonBook`), the Song and Butoh books of Kahono and Kiato, the fallback villager model, the two reference characters of the art kit.
+
+### Notes for the owner
+- The squads follow the series, not the first brief: Jack the Ripper is captain of the Green Mantis, Dorothy of the Coral Peacock, Kahono and Kiato are the Seabed Temple siblings, Nozel and Solid are Silver Eagle. The captain of the Purple Orca (Kaiser Granvorka) has a grimoire in the mod but no NPC yet.
+- The looks are partly from memory and partly invented (the colours of several characters, the casual clothes); each model's source file says which parts.
+
 ## [1.60.0] — Parties: the Mega-Dungeon is instanced per FTB team (or per player)
 
 The owner asked for the new dungeon to be "multiplayer friendly (should also work with FTB Teams)". Until now every player shared one chain of floors per road, so the first player to clear a floor changed it for everyone and a group could not keep its own progress. Doc: `docs/labyrinth/mega_v2_party.md` (the lane table, the FTB Teams notes, the decisions and the honest list of what is unverified).

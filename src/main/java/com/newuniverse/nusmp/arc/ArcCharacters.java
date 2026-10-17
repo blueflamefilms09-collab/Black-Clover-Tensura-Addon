@@ -15,5 +15,6 @@ public final class ArcCharacters {
         if (done) return;
         done = true;
         // Saga 1 ... (lines are appended here as the builders are merged, e.g. ArcRoster.register(HeathGriceBoss.CHARACTER);)
+        com.newuniverse.nusmp.arc.knights.KnightsCast.registerAll();   // 1.61.0: sixteen friendly Magic Knights, captains and court members of the Hub (NPC-B)
     }
 }
