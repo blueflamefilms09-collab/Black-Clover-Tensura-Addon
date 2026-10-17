@@ -32,6 +32,23 @@ public final class ZagredMath {
         };
     }
 
+    // ---------------------------------------------------------------- the pace of his speech
+    /**
+     * The least ticks between the end of one Word and the start of the next: five seconds in the first act, shorter as the fight goes on, never under 3.5. The
+     * framework's cooldowns shrink to 42% at the Gates, which suits a brawler but would put a new title on the screen every second or two; a fight that asks
+     * the party to READ each Word needs one title at a time, and the closed heart needs the quiet between Words.
+     */
+    public static int wordGap(int stage) {
+        return switch (Math.max(0, Math.min(4, stage))) { case 0 -> 100; case 1 -> 90; case 2 -> 80; default -> 70; };
+    }
+
+    // ---------------------------------------------------------------- the claw
+    /** How far the claw reaches: five blocks for the man, six and a half for the devil (who also leaps to where the lane is drawn, see {@link #clawLeap}). */
+    public static double clawReach(boolean devil) { return devil ? 6.5 : 5.0; }
+
+    /** The farthest the devil leaps to reach a foe; the man never closes the distance, so the AI never lets him swing at someone past his reach. */
+    public static double clawLeap() { return 9.0; }
+
     // ---------------------------------------------------------------- Halt
     /** The inner edge of the Halt band: standing this close to him is safe (a melee fighter never has to run). */
     public static double haltCore() { return 3.5; }
@@ -131,7 +148,7 @@ public final class ZagredMath {
     public static float wardLayerShare() { return 0.045f; }
 
     // ---------------------------------------------------------------- the pages (grimoire daemons)
-    /** How many players the packs are scaled for: 1.0 for a pair, 0.6 + 0.4 each, at most 1.5. */
+    /** How much the packs grow with the party: 1.0 for a lone player, 0.4 more for each further one (0.6 + 0.4 per player), at most 1.5. */
     public static double partyScale(int players) { return Math.min(1.5, 0.6 + 0.4 * Math.max(1, players)); }
 
     /** Lesser pages alive at most: 3, 4, 6, 8 by act II to V, scaled by the party; none in the first act. */

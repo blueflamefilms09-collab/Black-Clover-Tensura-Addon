@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The heart: closed it lets almost nothing through, open it takes extra, anti-magic always reaches it. */
+/** Why: the closed and open heart are the whole defence of the last act (closed it lets almost nothing through, open it takes extra, anti-magic always reaches it), so the factors and the windows are pinned here. */
 class ZagredHeartTest {
     @Test
     void aClosedHeartLetsLessThanHalfThroughExceptAntiMagic() {

@@ -26,7 +26,7 @@ public final class ZagredAi {
      * @param lastId       the id of the move he used last
      * @param pages        pages (lesser daemons) alive
      * @param pageCap      pages he may have at most
-     * @param silenced     he cannot speak a Word
+     * @param silenced     he cannot speak a Word now (cut, unwritten, or still in the quiet that follows every Word)
      * @param verdictOpen  a verdict is waiting for answers
      * @param ruleOpen     an Overwrite rule or its stones are in force
      */
@@ -40,8 +40,8 @@ public final class ZagredAi {
         if (s.hardControl() && !r.controlReady()) return 0;                       // one binding or silencing Word per twelve seconds, whatever else is ready
         switch (s.id()) {
             case ZagredTable.CLAW -> {
+                if (r.distance() > ZagredMath.clawLeap() || (!r.gates() && r.distance() > ZagredMath.clawReach(false) + 1.5)) return 0;     // the man does not run at you and never swings at the air; the devil leaps
                 if (r.distance() < 4.5) w *= 2.2;
-                else if (r.distance() > 7 && !r.gates()) w *= 0.4;                // the human form does not run at you; the devil form leaps
                 if (r.gates() && r.distance() > 6) w *= 1.6;
             }
             case ZagredTable.HALT -> {

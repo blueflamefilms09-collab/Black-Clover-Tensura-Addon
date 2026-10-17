@@ -7,7 +7,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The table of Words. */
+/** Why: the table of Words is read by the boss, the screen, the verdicts and the language file, so ids, keys and control flags must stay consistent. */
 class ZagredWordTest {
     @Test
     void idsAreUniqueLowerCaseAndFindable() {
@@ -39,7 +39,9 @@ class ZagredWordTest {
     void theBindingWordsAreHardControlAndTheSteelOnesAreStoppedByAShield() {
         assertTrue(ZagredWord.HALT.hardControl());
         assertTrue(ZagredWord.SEAL.hardControl());
-        for (ZagredWord w : ZagredWord.values()) if (w != ZagredWord.HALT && w != ZagredWord.SEAL) assertFalse(w.hardControl(), w + " is not a hard control");
+        assertTrue(ZagredWord.COWER.hardControl(), "terror is a control too");
+        for (ZagredWord w : ZagredWord.values())
+            if (w != ZagredWord.HALT && w != ZagredWord.SEAL && w != ZagredWord.COWER) assertFalse(w.hardControl(), w + " is not a hard control");
         assertTrue(ZagredWord.SWORDS.physical());
         assertTrue(ZagredWord.TRIDENT.physical());
         assertFalse(ZagredWord.REDACT.physical());

@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The numbers of the fight: they grow with the acts, they stay in sane ranges, and the telegraph and the blow share them. */
+/** Why: the numbers of the fight must grow with the acts, stay in sane ranges and be shared by the telegraph and the blow, and one wrong number would be felt by every player. */
 class ZagredMathTest {
     @Test
     void theActFollowsThePowerSteps() {
@@ -112,5 +112,21 @@ class ZagredMathTest {
         assertTrue(ZagredMath.SEAL < ZagredMath.TRIDENT, "the seal is about the lock, not the damage");
         assertTrue(ZagredMath.RULE_BREAK < ZagredMath.LETTER);
         assertTrue(ZagredMath.LAST_LETTER_FACTOR > 1f);
+    }
+
+    @Test
+    void hisSpeechHasARhythmThatNeverRunsAwayAndNeverDrops() {
+        for (int stage = 0; stage <= 4; stage++) {
+            assertTrue(ZagredMath.wordGap(stage) >= 70, "at least three and a half seconds of quiet between two Words");
+            if (stage > 0) assertTrue(ZagredMath.wordGap(stage) <= ZagredMath.wordGap(stage - 1), "the fight never slows down");
+        }
+        assertEquals(ZagredMath.wordGap(0), ZagredMath.wordGap(-5), "a stage below the first is the first");
+        assertEquals(ZagredMath.wordGap(4), ZagredMath.wordGap(99), "a stage above the last is the last");
+    }
+
+    @Test
+    void theClawsReachIsShorterForTheManAndTheLeapIsLongerThanBoth() {
+        assertTrue(ZagredMath.clawReach(true) > ZagredMath.clawReach(false));
+        assertTrue(ZagredMath.clawLeap() > ZagredMath.clawReach(true), "the leap is what closes the distance");
     }
 }

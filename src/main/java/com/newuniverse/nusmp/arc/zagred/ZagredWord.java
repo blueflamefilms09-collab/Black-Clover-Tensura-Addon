@@ -35,7 +35,7 @@ public enum ZagredWord {
     /** The ultimate: a rule written over the arena, held by stones. */
     OVERWRITE("overwrite", "OVERWRITE", "Break three of the five stones", 0xF2194D, false, false, false),
     /** Only ever a verdict: terror, answered by meeting his gaze. */
-    COWER("cower", "COWER", "Meet his gaze", 0x3A2A9A, false, false, true);
+    COWER("cower", "COWER", "Meet his gaze", 0x3A2A9A, true, false, true);
 
     private final String id, title, hint;
     private final int rgb;

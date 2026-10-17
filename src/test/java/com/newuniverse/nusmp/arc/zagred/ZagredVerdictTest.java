@@ -8,7 +8,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** How many players a verdict marks, how long they have, and which words are dealt. */
+/** Why: the verdict is the multi-target mechanic, so how many players are named, how long they have and which words are dealt is pinned here. */
 class ZagredVerdictTest {
     @Test
     void theNumberMarkedGrowsWithTheActAndNeverPassesTheFighters() {

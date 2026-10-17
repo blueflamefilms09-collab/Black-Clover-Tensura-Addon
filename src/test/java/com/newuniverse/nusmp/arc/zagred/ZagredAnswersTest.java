@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The answers a marked player can give, and who is spared. */
+/** Why: a verdict is the one place a player can be punished for what they did, so what counts as an answer and who is spared is pinned here. */
 class ZagredAnswersTest {
     static ZagredAnswers.Snapshot snap(boolean air, double moved, boolean shield, boolean sees, boolean anti, double gaze) {
         return new ZagredAnswers.Snapshot(air, moved, shield, sees, anti, gaze);

@@ -6,7 +6,7 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** He answers what the party does: every claim of the docs about the AI is a line here. */
+/** Why: he answers what the party does (a volley gets Shatter, a flier gets Fall, a crowd gets Banish ...), and every such claim of the docs is a line here, so the weights cannot drift from the text. */
 class ZagredAiTest {
     static ZagredAi.Read calm() {
         return new ZagredAi.Read(10, 1, 0, 0, 0, 0, 0.0, true, 2, false, "", 0, 4, false, false, false);
@@ -62,7 +62,7 @@ class ZagredAiTest {
     @Test
     void controlWordsWaitForTheControlLaw() {
         ZagredAi.Read r = calm();
-        ZagredAi.Read locked = new ZagredAi.Read(r.distance(), 3, 2, 0, 0, 1, 0, false, 2, false, "", 0, 4, false, false, false);
+        ZagredAi.Read locked = new ZagredAi.Read(4, 3, 2, 0, 0, 1, 0, false, 2, false, "", 0, 4, false, false, false);
         assertEquals(0.0, w(ZagredTable.HALT, locked), 1e-12);
         assertEquals(0.0, w(ZagredTable.SEAL, locked), 1e-12);
         assertTrue(w(ZagredTable.TRIDENT, locked) > 0, "the other Words are not affected");
@@ -83,7 +83,7 @@ class ZagredAiTest {
 
     @Test
     void whileAVerdictWaitsNoOtherWordIsSpoken() {
-        ZagredAi.Read open = new ZagredAi.Read(10, 3, 1, 0, 0, 0, 0, true, 3, false, "verdict", 0, 4, false, true, false);
+        ZagredAi.Read open = new ZagredAi.Read(4, 3, 1, 0, 0, 0, 0, true, 3, false, "verdict", 0, 4, false, true, false);
         for (ZagredTable.Spec s : ZagredTable.specs()) if (s.isWord()) assertEquals(0.0, ZagredAi.weight(s, open), 1e-12, s.id());
         assertTrue(ZagredAi.weight(ZagredTable.byId(ZagredTable.CLAW), open) > 0);
     }
@@ -114,9 +114,9 @@ class ZagredAiTest {
 
     @Test
     void theDevilLeapsAndTheHumanDoesNot() {
-        ZagredAi.Read human = new ZagredAi.Read(12, 1, 0, 0, 0, 0, 0, true, 2, false, "", 0, 4, false, false, false);
-        ZagredAi.Read devil = new ZagredAi.Read(12, 1, 0, 0, 0, 0, 0, true, 4, true, "", 0, 4, false, false, false);
-        assertTrue(w(ZagredTable.CLAW, devil) > w(ZagredTable.CLAW, human) * 3);
+        ZagredAi.Read human = new ZagredAi.Read(8, 1, 0, 0, 0, 0, 0, true, 2, false, "", 0, 4, false, false, false);
+        ZagredAi.Read devil = new ZagredAi.Read(8, 1, 0, 0, 0, 0, 0, true, 4, true, "", 0, 4, false, false, false);
+        assertTrue(w(ZagredTable.CLAW, devil) > w(ZagredTable.CLAW, human) * 3, "eight blocks away: the devil leaps, the man does not");
     }
 
     @Test
@@ -140,11 +140,25 @@ class ZagredAiTest {
             double best = 0;
             for (int foes = 1; foes <= 6; foes++)
                 for (int shots = 0; shots <= 3; shots += 3)
-                    for (int casters = 0; casters <= 1; casters++) {
-                        ZagredAi.Read r = new ZagredAi.Read(10, foes, Math.min(foes, 5), foes > 2 ? 1 : 0, shots, casters, foes > 3 ? 0.3 : 0, true, 3, false, "", 0, 4, false, false, false);
-                        best = Math.max(best, ZagredAi.weight(s, r));
-                    }
+                    for (int casters = 0; casters <= 1; casters++)
+                        for (double distance = 4; distance <= 10; distance += 6) {
+                            ZagredAi.Read r = new ZagredAi.Read(distance, foes, Math.min(foes, 5), foes > 2 ? 1 : 0, shots, casters, foes > 3 ? 0.3 : 0, true, 3, false, "", 0, 4, false, false, false);
+                            best = Math.max(best, ZagredAi.weight(s, r));
+                        }
             assertTrue(best > 0, s.id() + " can be chosen");
         }
+    }
+
+    @Test
+    void theManNeverSwingsBeyondHisReachAndTheDevilLeaps() {
+        double reach = ZagredMath.clawReach(false);
+        ZagredAi.Read close = new ZagredAi.Read(reach, 1, 0, 0, 0, 0, 0, true, 2, false, "", 0, 4, false, false, false);
+        ZagredAi.Read far = new ZagredAi.Read(reach + 2, 1, 0, 0, 0, 0, 0, true, 2, false, "", 0, 4, false, false, false);
+        ZagredAi.Read devilFar = new ZagredAi.Read(8, 1, 0, 0, 0, 0, 0, true, 4, true, "", 0, 4, false, false, false);
+        ZagredAi.Read devilBeyond = new ZagredAi.Read(ZagredMath.clawLeap() + 1, 1, 0, 0, 0, 0, 0, true, 4, true, "", 0, 4, false, false, false);
+        assertTrue(w(ZagredTable.CLAW, close) > 0, "inside his reach he claws");
+        assertEquals(0.0, w(ZagredTable.CLAW, far), 1e-12, "past it the man does not swing at the air");
+        assertTrue(w(ZagredTable.CLAW, devilFar) > 0, "the devil leaps to where the lane is drawn");
+        assertEquals(0.0, w(ZagredTable.CLAW, devilBeyond), 1e-12, "even he does not leap beyond the leap");
     }
 }

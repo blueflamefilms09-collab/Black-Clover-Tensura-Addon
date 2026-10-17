@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The flat geometry of the floor shapes: the band, the lane, the ring, the curve of letters, the field of marks. */
+/** Why: every telegraph and every decree draws and judges the same shapes (the band, the lane, the ring, the curve of letters, the field of marks), so a wrong edge would draw one thing and hit another. */
 class ZagredGeometryTest {
     @Test
     void unitAndRotate() {

@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The ward: layers, grains, the unwritten window, the rewrite one layer short, the refresh, the anchor. */
+/** Why: the ward is the first four acts' whole defence (layers, grains, the unwritten window, the rewrite one layer short, the refresh, the anchor), so every rule of it is a test. */
 class ZagredWardTest {
     static final float MAX = 1000f, SHARE = 0.045f, CAP = 45f;
 

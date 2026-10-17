@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The silence rule: a cut buys one window and then locks the cut out, so he is never chain-silenced. */
+/** Why: the rule that keeps him from being stun-locked (a cut buys one window and then locks the cut out) is the fairness of the whole fight, so it is tested on its own. */
 class ZagredComposureTest {
     @Test
     void aCutSilencesHimForThreeSeconds() {

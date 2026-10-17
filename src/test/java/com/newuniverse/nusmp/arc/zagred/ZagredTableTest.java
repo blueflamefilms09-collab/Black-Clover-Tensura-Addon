@@ -12,7 +12,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** Zagred's move table, and a played-out fight through the framework's scheduler: what he does at each act and distance. */
+/** Why: the move table decides what he does at each act and distance, and a played-out fight through the framework's scheduler proves the shape the docs promise. */
 class ZagredTableTest {
     static final List<ZagredTable.Spec> SPECS = ZagredTable.specs();
 

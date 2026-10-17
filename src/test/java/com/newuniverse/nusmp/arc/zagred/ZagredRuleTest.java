@@ -8,7 +8,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The rules Overwrite can write. */
+/** Why: Overwrite's rules are announced to the players, so every rule must be real, distinct and judged exactly as its text says. */
 class ZagredRuleTest {
     @Test
     void theNextRuleIsNeverTheLastAndEveryRuleComesUp() {
