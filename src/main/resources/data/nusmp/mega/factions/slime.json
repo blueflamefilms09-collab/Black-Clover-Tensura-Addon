@@ -1,0 +1,28 @@
+{
+  "why": "Slimes tolerate everyone: they have no rivals, so no faction picks a fight with them and they pick none. The reach numbers only matter if a datapack gives them a rival. They gather in damp, overgrown rooms and leave jelly.",
+  "id": "slime",
+  "name": "Slime Pools",
+  "color": "#58D1A5",
+  "tag": "nusmp:mega/slime",
+  "rivals": [],
+  "allies": [],
+  "aggro": {
+    "range": 6,
+    "nativeBonus": 4
+  },
+  "themeWeights": {
+    "gravity": 3,
+    "blood": 1,
+    "spatial": 1,
+    "flame": 0,
+    "frost": 2,
+    "verdant": 4,
+    "storm": 2,
+    "shadow": 2,
+    "astral": 1
+  },
+  "drops": {
+    "meat": "raw_slime_jelly",
+    "meatChance": 0.6
+  }
+}
