@@ -47,10 +47,11 @@ class AdvancementDataTest {
             "dungeon.maw", "dungeon.floor_boss", "arena.entered", "arena.hourglass_used", "arena.victory", "boss.defeated", "boss.phase",
             "spirit.contract", "devil.union", "squad.created", "squad.joined", "squad.captain", "squad.vice", "convergence.stage",
             "convergence.anomaly", "magic.merged", "weapon.engraved", "weapon.genesis", "butoh.dance", "song.sung", "corpse.raised",
-            "paladin.converted", "rouge.saved", "thread.trap", "shadow.travel", "unite.mode", "time.stop");
+            "paladin.converted", "rouge.saved", "thread.trap", "shadow.travel", "unite.mode", "time.stop",
+            "mega.entered", "mega.sector_cleared", "mega.rested", "mega.crucible_choice", "mega.wanderer_survived");
 
     private static final Set<String> DIMENSIONS = Set.of("nusmp:labyrinth", "nusmp:living_dungeon", "nusmp:zogratis_arena", "nusmp:dream",
-            "nusmp:grimoire_library", "minecraft:overworld", "minecraft:the_nether", "minecraft:the_end");
+            "nusmp:grimoire_library", "nusmp:mega_dungeon", "minecraft:overworld", "minecraft:the_nether", "minecraft:the_end");
 
     private static List<Path> files() throws IOException {
         try (Stream<Path> s = Files.walk(ADV)) {

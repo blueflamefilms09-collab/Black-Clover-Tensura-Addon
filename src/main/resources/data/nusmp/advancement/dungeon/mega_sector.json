@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:dungeon/mega",
+  "display": {
+    "icon": {
+      "id": "minecraft:heavy_core"
+    },
+    "title": {
+      "translate": "advancement.nusmp.dungeon.mega_sector.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.dungeon.mega_sector.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_mega_sector_cleared": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "mega.sector_cleared"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_mega_sector_cleared"
+    ]
+  ],
+  "rewards": {
+    "experience": 120
+  }
+}

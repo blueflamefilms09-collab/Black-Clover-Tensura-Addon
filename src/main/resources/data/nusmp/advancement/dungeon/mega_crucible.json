@@ -1,0 +1,34 @@
+{
+  "parent": "nusmp:dungeon/mega_sector",
+  "display": {
+    "icon": {
+      "id": "nusmp:relic_pedestal"
+    },
+    "title": {
+      "translate": "advancement.nusmp.dungeon.mega_crucible.title"
+    },
+    "description": {
+      "translate": "advancement.nusmp.dungeon.mega_crucible.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_mega_crucible_choice": {
+      "trigger": "nusmp:event",
+      "conditions": {
+        "key": "mega.crucible_choice"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_mega_crucible_choice"
+    ]
+  ],
+  "rewards": {
+    "experience": 300
+  }
+}

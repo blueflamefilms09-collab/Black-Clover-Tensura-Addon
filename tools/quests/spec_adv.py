@@ -327,8 +327,10 @@ add(we + "armory", we + "elsdocia", "Ten Engravings", "Engrave ten weapons at th
 du = "dungeon/"
 add(du + "living_dungeon", "root", "Into the Living Dungeon", "Enter the Living Dungeon, a world that feeds on itself.",
     "nusmp:dungeon_maw", dimension("nusmp:living_dungeon"), frame="goal", xp=40)
-DUNGEON_ENTER = anyof(ev("dungeon.entered"), ev("labyrinth.entered"), dimension("nusmp:living_dungeon"), dimension("nusmp:labyrinth"))
-add(du + "entered", du + "living_dungeon", "Dungeon Delver", "Enter a dungeon of the Multiverse by any door: the Living Dungeon or the Labyrinth.",
+# the Mega-Dungeon alternatives are appended LAST so the criterion names of the older doors (a0_..d3_) never change for saved progress
+DUNGEON_ENTER = anyof(ev("dungeon.entered"), ev("labyrinth.entered"), dimension("nusmp:living_dungeon"), dimension("nusmp:labyrinth"),
+                      ev("mega.entered"), dimension("nusmp:mega_dungeon"))
+add(du + "entered", du + "living_dungeon", "Dungeon Delver", "Enter a dungeon of the Multiverse by any door: the Living Dungeon, the Labyrinth or the Mega-Dungeon.",
     "minecraft:lantern", DUNGEON_ENTER, xp=10)
 add(du + "maw", du + "living_dungeon", "The Maw", "Step through a Dungeon Maw.", "nusmp:dungeon_maw", ev("dungeon.maw"), xp=20)
 add(du + "maw_item", du + "maw", "Dungeon Maw", "Carry a Dungeon Maw block.", "nusmp:dungeon_maw", have("nusmp:dungeon_maw"), xp=10)
@@ -360,6 +362,23 @@ add(du + "vault", du + "seal", "The Vault", "Open the vault at the top of the La
     ev("labyrinth.vault_opened"), frame="challenge", xp=300)
 add(du + "traps", du + "labyrinth", "Tabletop Traps", "Carry a pitfall tile, a snuffer glyph or a riddle stone.", "nusmp:pitfall_tile",
     have("nusmp:pitfall_tile", "nusmp:snuffer_glyph", "nusmp:riddle_stone", mode="any"), xp=15)
+
+# The Mega-Dungeon (1.54.0): one dimension that grows a sector at a time. Its branch hangs off the root like the Labyrinth's, so the older
+# dungeons keep their own branches.
+add(du + "mega", "root", "The Mega-Dungeon", "Enter the Mega-Dungeon, one endless dungeon that grows every time a sector guardian falls.",
+    "nusmp:labyrinth_gate", dimension("nusmp:mega_dungeon"), frame="goal", xp=60)
+add(du + "mega_gateway", du + "mega", "Through the Gateway", "Step through a Gateway into the Mega-Dungeon.", "minecraft:lantern",
+    ev("mega.entered"), xp=10)
+add(du + "mega_rest", du + "mega", "A Safe Seat", "Rest at a seat, a hearth or a bed in a safe zone. Nothing else heals you down here.",
+    "minecraft:campfire", ev("mega.rested"), xp=20)
+add(du + "mega_wanderer", du + "mega", "Hide and Seek", "Get away from a wandering boss without dying.", "minecraft:sculk_shrieker",
+    ev("mega.wanderer_survived"), frame="goal", xp=80)
+add(du + "mega_sector", du + "mega", "Sector Cleared", "Defeat the Labyrinth Guardian of a sector.", "minecraft:heavy_core",
+    ev("mega.sector_cleared"), frame="goal", xp=120)
+add(du + "mega_sector_3", du + "mega_sector", "Three Sectors Deep", "Clear three sectors of the Mega-Dungeon.", "minecraft:beacon",
+    ev("mega.sector_cleared", 3), frame="challenge", xp=300)
+add(du + "mega_crucible", du + "mega_sector", "The Crucible of Choice", "Take a relic from a Crucible. Only one can be taken, and the dungeon answers.",
+    "nusmp:relic_pedestal", ev("mega.crucible_choice"), frame="challenge", xp=300)
 
 # ============================================================================================================== spirits
 spi = "spirits/"
