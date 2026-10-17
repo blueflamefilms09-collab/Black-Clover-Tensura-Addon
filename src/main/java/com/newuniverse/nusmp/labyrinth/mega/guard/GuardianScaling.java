@@ -100,6 +100,11 @@ public final class GuardianScaling {
         switch (theme.id()) {
             case "radiant": return Trait.ASTRAL;
             case "abyss": return Trait.GRAVITY;
+            // the themes of 1.59.0 borrow the trait that fits their element
+            case "feywild_grove": return Trait.VERDANT;
+            case "dwarven_forgehold": return Trait.FLAME;
+            case "crystal_geode": return Trait.ASTRAL;
+            case "sunken_temple": return Trait.FROST;
             default: break;
         }
         try { return Trait.valueOf(theme.name()); } catch (IllegalArgumentException unmapped) { return Trait.GRAVITY; }
@@ -181,6 +186,10 @@ public final class GuardianScaling {
             case "astral" -> 0xF0D878;
             case "radiant" -> 0xFFF1C2;
             case "abyss" -> 0x38596E;
+            case "feywild_grove" -> 0xD98BE8;
+            case "dwarven_forgehold" -> 0xC98A3C;
+            case "crystal_geode" -> 0xC9A0FF;
+            case "sunken_temple" -> 0x3FB8B0;
             default -> 0x9AA0B4;
         };
     }
