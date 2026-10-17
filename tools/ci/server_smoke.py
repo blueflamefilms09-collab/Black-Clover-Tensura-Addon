@@ -373,12 +373,14 @@ class Smoke:
         # The test pieces go to z=150000: between the Holy chain (z=0) and the Abyssal chain (z=300000), so they never touch a real sector. The command
         # needs the origin chunk loaded ("That position is not loaded" otherwise), so the area is forceloaded first and released afterwards.
         x, z = 300, 150000
+        # The start jigsaw is named by the pool's own entry socket: most rooms enter through nusmp:mega_door, the antechamber through nusmp:mega_onward and a vault through nusmp:mega_vault.
+        start = {"antechamber": "nusmp:mega_onward", "vault_1": "nusmp:mega_vault"}
         for pool in ("landing", "side", "safe", "arena", "antechamber", "vault_1", "onward_straight"):
             self.run("execute in nusmp:mega_dungeon run forceload add %d %d %d %d" % (x - 48, z - 48, x + 48, z + 48))
             r = ""
             for _ in range(4):
                 time.sleep(2)
-                r = self.run("execute in nusmp:mega_dungeon run place jigsaw nusmp:mega/%s nusmp:mega_door 3 %d 64 %d" % (pool, x, z))
+                r = self.run("execute in nusmp:mega_dungeon run place jigsaw nusmp:mega/%s %s 3 %d 64 %d" % (pool, start.get(pool, "nusmp:mega_door"), x, z))
                 if "not loaded" not in r:
                     break
             self.run("execute in nusmp:mega_dungeon run forceload remove %d %d %d %d" % (x - 48, z - 48, x + 48, z + 48))
