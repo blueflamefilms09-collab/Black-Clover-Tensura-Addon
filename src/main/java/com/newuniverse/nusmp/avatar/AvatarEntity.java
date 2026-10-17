@@ -66,6 +66,8 @@ public class AvatarEntity extends PathfinderMob implements OwnableEntity, HasDnd
     public static final EntityDataAccessor<String> PRIMARY = SynchedEntityData.defineId(AvatarEntity.class, EntityDataSerializers.STRING);
     public static final EntityDataAccessor<String> SECONDARY = SynchedEntityData.defineId(AvatarEntity.class, EntityDataSerializers.STRING);
     public static final EntityDataAccessor<String> RACE = SynchedEntityData.defineId(AvatarEntity.class, EntityDataSerializers.STRING);
+    /** 1.58.0: the Magic Aptitudes chosen or rolled in the Soul Forge, as comma separated aptitude ids (synced so the client can tint the aura). */
+    public static final EntityDataAccessor<String> APTITUDES = SynchedEntityData.defineId(AvatarEntity.class, EntityDataSerializers.STRING);
 
     private static final ResourceLocation RACE_PREFIX = ResourceLocation.fromNamespaceAndPath("nusmp", "avatar_race");
     private static final ResourceLocation PERK_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "avatar_perk");
@@ -105,7 +107,7 @@ public class AvatarEntity extends PathfinderMob implements OwnableEntity, HasDnd
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder b) {
         super.defineSynchedData(b);
-        b.define(IS_FRENZIED, false).define(APPEARANCE, new CompoundTag()).define(PRIMARY, AvatarPersonality.LOYAL.name()).define(SECONDARY, "").define(RACE, "");
+        b.define(IS_FRENZIED, false).define(APPEARANCE, new CompoundTag()).define(PRIMARY, AvatarPersonality.LOYAL.name()).define(SECONDARY, "").define(RACE, "").define(APTITUDES, "");
     }
 
     // ================================================================ accessors (the contract)
@@ -189,6 +191,31 @@ public class AvatarEntity extends PathfinderMob implements OwnableEntity, HasDnd
     public void setNamed(boolean v) { named = v; }
 
     public void setHasUniqueOrUltimate(boolean v) { hasUniqueOrUltimate = v; }
+
+    /** 1.58.0: the aptitude ids (see {@code aptitude.AptitudeCatalog}); empty when none. */
+    public java.util.List<String> magicAptitudes() {
+        String s = getEntityData().get(APTITUDES);
+        return s.isEmpty() ? java.util.List.of() : java.util.List.of(s.split(","));
+    }
+
+    /** 1.58.0: replaces the aptitudes (ids are cleaned to snake_case, duplicates dropped, at most 8 kept). */
+    public void setMagicAptitudes(java.util.List<String> ids) {
+        java.util.LinkedHashSet<String> clean = new java.util.LinkedHashSet<>();
+        if (ids != null) for (String id : ids) if (id != null && id.matches("[a-z][a-z0-9_]*") && clean.size() < 8) clean.add(id);
+        getEntityData().set(APTITUDES, String.join(",", clean));
+    }
+
+    private String chosenUnique = "", chosenUltimate = "";
+
+    /** 1.58.0: the Unique and Ultimate skill ids picked in the Soul Forge ("tensura:..."), empty when none. */
+    public String chosenUnique() { return chosenUnique; }
+
+    public String chosenUltimate() { return chosenUltimate; }
+
+    public void setChosenSkills(String uniqueId, String ultimateId) {
+        chosenUnique = uniqueId == null ? "" : uniqueId;
+        chosenUltimate = ultimateId == null ? "" : ultimateId;
+    }
 
     public void setPersonalities(AvatarPersonality primary, AvatarPersonality secondary) {
         getEntityData().set(PRIMARY, (primary == null ? AvatarPersonality.LOYAL : primary).name());
@@ -416,6 +443,9 @@ public class AvatarEntity extends PathfinderMob implements OwnableEntity, HasDnd
         t.putDouble("PermanentMagiculeTax", permanentTax);
         t.putInt("OutcomeTimer", outcomeTimer);
         t.putBoolean("HasUniqueOrUltimateSkill", hasUniqueOrUltimate);
+        t.putString("MagicAptitudes", getEntityData().get(APTITUDES));
+        t.putString("ChosenUnique", chosenUnique);
+        t.putString("ChosenUltimate", chosenUltimate);
         t.put("AppearanceData", getEntityData().get(APPEARANCE).copy());
         t.putString("RaceId", getEntityData().get(RACE));
         t.putString("OutcomeState", outcomeState().name());
@@ -442,6 +472,9 @@ public class AvatarEntity extends PathfinderMob implements OwnableEntity, HasDnd
         permanentTax = t.getDouble("PermanentMagiculeTax");
         outcomeTimer = t.contains("OutcomeTimer") ? t.getInt("OutcomeTimer") : AvatarConfig.outcomeTicks();
         hasUniqueOrUltimate = t.getBoolean("HasUniqueOrUltimateSkill");
+        getEntityData().set(APTITUDES, t.getString("MagicAptitudes"));
+        chosenUnique = t.getString("ChosenUnique");
+        chosenUltimate = t.getString("ChosenUltimate");
         if (t.contains("AppearanceData")) getEntityData().set(APPEARANCE, t.getCompound("AppearanceData"));
         getEntityData().set(RACE, t.getString("RaceId"));
         outcome = Outcome.byName(t.getString("OutcomeState"));
