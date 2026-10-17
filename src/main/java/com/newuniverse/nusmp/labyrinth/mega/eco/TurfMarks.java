@@ -18,7 +18,7 @@ public final class TurfMarks {
     private TurfMarks() {}
 
     /** Scoreboard tags that mark a boss: {@code PEAK_BOSS_TAG} of the Peak Altar, the encounter director's wanderer, the old floor boss, Juggernaut and Charybdis tags. */
-    public static final Set<String> BOSS_TAGS = Set.of("nusmp_peak_boss", "nusmp_wanderer", "nusmp_floor_boss", "nusmp_juggernaut", "nusmp_charybdis");
+    public static final Set<String> BOSS_TAGS = Set.of("nusmp_peak_boss", "nusmp_wanderer", "nusmp_floor_boss", "nusmp_juggernaut", "nusmp_charybdis", "nusmp_cursed_spirit");
     /** The Floor Warden's entity id (the Labyrinth Guardian is a subclass and is caught by its class instead). */
     public static final String WARDEN_ID = "nusmp:floor_warden";
     /** Scoreboard tags that mark a servant: the Underworld Gate's, and {@code nusmp_servant}, the one tag any future servant system can set. */

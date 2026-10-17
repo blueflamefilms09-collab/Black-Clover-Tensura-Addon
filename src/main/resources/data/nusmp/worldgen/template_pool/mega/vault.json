@@ -2,25 +2,7 @@
   "fallback": "nusmp:mega/cap",
   "elements": [
     {
-      "weight": 3,
-      "element": {
-        "element_type": "minecraft:single_pool_element",
-        "location": "nusmp:mega/vault/one_a",
-        "processors": "nusmp:mega_interior",
-        "projection": "rigid"
-      }
-    },
-    {
-      "weight": 3,
-      "element": {
-        "element_type": "minecraft:single_pool_element",
-        "location": "nusmp:mega/vault/one_b",
-        "processors": "nusmp:mega_interior",
-        "projection": "rigid"
-      }
-    },
-    {
-      "weight": 3,
+      "weight": 10,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/vault/three_a",
@@ -29,28 +11,10 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 10,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "nusmp:mega/vault/three_b",
-        "processors": "nusmp:mega_interior",
-        "projection": "rigid"
-      }
-    },
-    {
-      "weight": 3,
-      "element": {
-        "element_type": "minecraft:single_pool_element",
-        "location": "nusmp:mega/vault/two_a",
-        "processors": "nusmp:mega_interior",
-        "projection": "rigid"
-      }
-    },
-    {
-      "weight": 3,
-      "element": {
-        "element_type": "minecraft:single_pool_element",
-        "location": "nusmp:mega/vault/two_b",
         "processors": "nusmp:mega_interior",
         "projection": "rigid"
       }

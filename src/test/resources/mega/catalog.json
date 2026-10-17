@@ -594,22 +594,58 @@
    "fallback": "nusmp:mega/cap"
   },
   "nusmp:mega/vault": {
-   "elements": [],
+   "elements": [
+    {
+     "template": "nusmp:mega/vault/three_a",
+     "weight": 10
+    },
+    {
+     "template": "nusmp:mega/vault/three_b",
+     "weight": 10
+    }
+   ],
    "emptyWeight": 0,
    "fallback": "nusmp:mega/cap"
   },
   "nusmp:mega/vault_1": {
-   "elements": [],
+   "elements": [
+    {
+     "template": "nusmp:mega/vault/one_a",
+     "weight": 10
+    },
+    {
+     "template": "nusmp:mega/vault/one_b",
+     "weight": 10
+    }
+   ],
    "emptyWeight": 0,
    "fallback": "nusmp:mega/cap"
   },
   "nusmp:mega/vault_2": {
-   "elements": [],
+   "elements": [
+    {
+     "template": "nusmp:mega/vault/two_a",
+     "weight": 10
+    },
+    {
+     "template": "nusmp:mega/vault/two_b",
+     "weight": 10
+    }
+   ],
    "emptyWeight": 0,
    "fallback": "nusmp:mega/cap"
   },
   "nusmp:mega/vault_3": {
-   "elements": [],
+   "elements": [
+    {
+     "template": "nusmp:mega/vault/three_a",
+     "weight": 10
+    },
+    {
+     "template": "nusmp:mega/vault/three_b",
+     "weight": 10
+    }
+   ],
    "emptyWeight": 0,
    "fallback": "nusmp:mega/cap"
   }
@@ -14094,6 +14130,300 @@
      "x": 26,
      "y": 9,
      "z": 13
+    }
+   ]
+  },
+  "nusmp:mega/vault/one_a": {
+   "kind": "VAULT",
+   "markers": [
+    {
+     "args": {},
+     "kind": "vault_center",
+     "x": 13,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {
+      "slot": "0"
+     },
+     "kind": "pedestal",
+     "x": 13,
+     "y": 11,
+     "z": 6
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_vault",
+     "place": 0,
+     "pool": "minecraft:empty",
+     "sel": 0,
+     "target": "nusmp:mega_vault",
+     "x": 13,
+     "y": 9,
+     "z": 26
+    }
+   ]
+  },
+  "nusmp:mega/vault/one_b": {
+   "kind": "VAULT",
+   "markers": [
+    {
+     "args": {},
+     "kind": "vault_center",
+     "x": 13,
+     "y": 10,
+     "z": 13
+    },
+    {
+     "args": {
+      "slot": "0"
+     },
+     "kind": "pedestal",
+     "x": 13,
+     "y": 12,
+     "z": 5
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_vault",
+     "place": 0,
+     "pool": "minecraft:empty",
+     "sel": 0,
+     "target": "nusmp:mega_vault",
+     "x": 13,
+     "y": 9,
+     "z": 26
+    }
+   ]
+  },
+  "nusmp:mega/vault/three_a": {
+   "kind": "VAULT",
+   "markers": [
+    {
+     "args": {},
+     "kind": "vault_center",
+     "x": 13,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {
+      "slot": "1"
+     },
+     "kind": "pedestal",
+     "x": 13,
+     "y": 11,
+     "z": 6
+    },
+    {
+     "args": {
+      "slot": "0"
+     },
+     "kind": "pedestal",
+     "x": 7,
+     "y": 11,
+     "z": 10
+    },
+    {
+     "args": {
+      "slot": "2"
+     },
+     "kind": "pedestal",
+     "x": 19,
+     "y": 11,
+     "z": 10
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_vault",
+     "place": 0,
+     "pool": "minecraft:empty",
+     "sel": 0,
+     "target": "nusmp:mega_vault",
+     "x": 13,
+     "y": 9,
+     "z": 26
+    }
+   ]
+  },
+  "nusmp:mega/vault/three_b": {
+   "kind": "VAULT",
+   "markers": [
+    {
+     "args": {},
+     "kind": "vault_center",
+     "x": 13,
+     "y": 10,
+     "z": 17
+    },
+    {
+     "args": {
+      "slot": "0"
+     },
+     "kind": "pedestal",
+     "x": 7,
+     "y": 12,
+     "z": 5
+    },
+    {
+     "args": {
+      "slot": "1"
+     },
+     "kind": "pedestal",
+     "x": 13,
+     "y": 12,
+     "z": 5
+    },
+    {
+     "args": {
+      "slot": "2"
+     },
+     "kind": "pedestal",
+     "x": 19,
+     "y": 12,
+     "z": 5
+    }
+   ],
+   "size": [
+    27,
+    48,
+    36
+   ],
+   "sockets": [
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_vault",
+     "place": 0,
+     "pool": "minecraft:empty",
+     "sel": 0,
+     "target": "nusmp:mega_vault",
+     "x": 13,
+     "y": 9,
+     "z": 35
+    }
+   ]
+  },
+  "nusmp:mega/vault/two_a": {
+   "kind": "VAULT",
+   "markers": [
+    {
+     "args": {},
+     "kind": "vault_center",
+     "x": 13,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "args": {
+      "slot": "0"
+     },
+     "kind": "pedestal",
+     "x": 7,
+     "y": 11,
+     "z": 10
+    },
+    {
+     "args": {
+      "slot": "1"
+     },
+     "kind": "pedestal",
+     "x": 19,
+     "y": 11,
+     "z": 10
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_vault",
+     "place": 0,
+     "pool": "minecraft:empty",
+     "sel": 0,
+     "target": "nusmp:mega_vault",
+     "x": 13,
+     "y": 9,
+     "z": 26
+    }
+   ]
+  },
+  "nusmp:mega/vault/two_b": {
+   "kind": "VAULT",
+   "markers": [
+    {
+     "args": {},
+     "kind": "vault_center",
+     "x": 13,
+     "y": 10,
+     "z": 13
+    },
+    {
+     "args": {
+      "slot": "0"
+     },
+     "kind": "pedestal",
+     "x": 9,
+     "y": 12,
+     "z": 5
+    },
+    {
+     "args": {
+      "slot": "1"
+     },
+     "kind": "pedestal",
+     "x": 17,
+     "y": 12,
+     "z": 5
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_vault",
+     "place": 0,
+     "pool": "minecraft:empty",
+     "sel": 0,
+     "target": "nusmp:mega_vault",
+     "x": 13,
+     "y": 9,
+     "z": 26
     }
    ]
   }

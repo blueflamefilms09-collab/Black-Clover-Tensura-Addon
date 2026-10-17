@@ -130,7 +130,8 @@
       "folders": {
         "vault": 1
       },
-      "fallback": "nusmp:mega/cap"
+      "fallback": "nusmp:mega/cap",
+      "filter": "three_"
     },
     "vault_1": {
       "folders": {

@@ -4254,5 +4254,22 @@
   "message.nusmp.mega.mhb.travel.arrive": "Floor 0, the Sanctuary. Nothing here wishes you harm. The Spire to the east climbs, the Chasm to the west descends; the gate behind you leads home.",
   "message.nusmp.mega.mhb.travel.leave": "The Sanctuary lets you go. The gate stands quiet behind you.",
   "message.nusmp.mega.mhb.travel.no_level": "The Sanctuary does not answer: its dimension is not loaded.",
-  "message.nusmp.mega.mhb.travel.plaza": "You are back on the Sanctuary's square."
+  "message.nusmp.mega.mhb.travel.plaza": "You are back on the Sanctuary's square.",
+  "message.nusmp.mega.crucible.chosen": "%s takes %s.",
+  "message.nusmp.mega.crucible.collapse": "The ceiling groans. Watch the floor and RUN!",
+  "message.nusmp.mega.crucible.crumble": "The other relics crumble to dust.",
+  "message.nusmp.mega.crucible.empty_slot": "There is nothing on this pedestal.",
+  "message.nusmp.mega.crucible.exhausted": "The pedestals stay bare: every relic of this rank already walks the world.",
+  "message.nusmp.mega.crucible.flood": "Magicule flood: %s s. Leave the vault!",
+  "message.nusmp.mega.crucible.flood_start": "Toxic magicules pour out of the floor. Leave the vault!",
+  "message.nusmp.mega.crucible.inspect": "%s (%s): leads to %s",
+  "message.nusmp.mega.crucible.not_offered": "The relics have not appeared yet.",
+  "message.nusmp.mega.crucible.offer_line": "  %s (%s): leads to %s",
+  "message.nusmp.mega.crucible.offered": "The vault stirs: %s relics rise from the dust. Take one and the rest are lost.",
+  "message.nusmp.mega.crucible.refused": "The Order's ledger refuses: that relic walks the world already. The vault falls silent.",
+  "message.nusmp.mega.crucible.resolved": "The vault falls quiet.",
+  "message.nusmp.mega.crucible.road": "The relic chooses the road: the next ten floors are %s.",
+  "message.nusmp.mega.crucible.spirit": "A Cursed Spirit tears itself out of the stone!",
+  "message.nusmp.mega.crucible.swapped": "Another hand had claimed that relic: a different one took its place.",
+  "message.nusmp.mega.crucible.too_late": "Too late: a relic was already taken and the others are dust."
 }
