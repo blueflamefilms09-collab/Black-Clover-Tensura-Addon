@@ -1,9 +1,10 @@
 # Mega-Dungeon: standard Normal / Special / Rare equipment, dropped without limit (`mega.gear`, 1.55.0, builder GEAR)
 
 Package `com.newuniverse.nusmp.labyrinth.mega.gear`, data `data/nusmp/mega/gear/tables.json`. **Nothing here was run in game.** The pure classes are
-unit tested (JUnit, 60 tests, mutation checked), the game classes were type-checked against the project's API stubs (rebuilt from the API dump, so they
+unit tested (JUnit, 62 tests, mutation checked), the game classes were type-checked against the project's API stubs (rebuilt from the API dump, so they
 know the 1.21 data-component classes), the shipped table is read and checked by `GearDataTest`, and four IN-GAME self-tests (`gear.*`, section 10) are
-registered with the shared `SelfTests` registry so the CI server smoke test exercises the real thing. CI is the first real compile.
+registered with the shared `SelfTests` registry so the CI server smoke test exercises the real thing. CI is the first real compile. Three pictures of the
+grades, the chances and example tooltips are drawn by `tools/labyrinth/mega_gear_preview.py` (section 13).
 
 The brief (system 5, "Abyssal Descents"): *"Standard Loot (Normal, Special, Rare): the `LivingDropsEvent` logic where monsters drop physical Magic
 Stones and Monster Meat, alongside lower-tier equipment. Based on the Tensura grading scale, 'Normal' (standard everyday items without magic), 'Special'
@@ -45,7 +46,8 @@ off. The relic `Grade` colours and names are reused only for the look.
 2. **A sector Guardian** (scoreboard tag `nusmp_sector_guardian`) gets no roll but a guarantee: one Rare piece, when `gear.bossGuaranteed` is on. **Any
    other boss** (the economy's own tests: the DPS-budget interface, the Floor Warden class, the boss and wanderer tags, `c:bosses`, the Warden id) and any
    **servant** (a tame or owned creature, a Paladin, a shadow soldier, a relic summon: the faction layer's `TurfMarks` list) drops no standard gear.
-3. Any other **hostile `Enemy`**: one roll. The floor is `MegaDungeon.floorAt` where it died (Floor 0 and the gaps between sectors count as floor 1;
+3. Any other **hostile `Enemy` or Dungeon Master creature** (scoreboard tag `nusmp_dm`, `MegaDungeon.isDungeonMonster`: Tensura's monsters are tamable
+   animals and not `Enemy`, so the economy, the HP buffer and the faction drops already ask the tag too): one roll. The floor is `MegaDungeon.floorAt` where it died (Floor 0 and the gaps between sectors count as floor 1;
    the Abyssal road is as deep as the Holy one: only the distance from the Hub counts, `FloorMap.threat`). The three grades' chances are laid end to end
    on one random number, so **at most one piece per kill**. A hit picks the slot by weight, a base item from the grade's list, the bonuses, the
    enchantments and engravings, the resistance: a `GearSpec`.
@@ -97,6 +99,11 @@ off. The relic `Grade` colours and names are reused only for the look.
 * **Why Looting adds to the total and not to a grade.** Looting is "more drops", not "better drops": the bonus (`lootingBonus`, 0.01 per level) is added
   to the total chance and shared out in proportion, so Looting III turns 6.9 % into 9.9 % with the same mix. Otherwise a flat +1 % on Rare would make
   Looting III triple the Rare rate.
+* **Why a Dungeon Master creature counts as hostile.** The Dungeon Master (`mega.enc`) tags every monster it spawns `nusmp_dm`, and most of them are
+  Tensura monsters, which are tamable animals and not the vanilla `Enemy` interface. The 1.36.0 economy, the HP buffer and the 1.54.0 faction drops therefore ask
+  `MegaDungeon.isDungeonMonster` as well as `Enemy`; the first version of this listener asked only `Enemy` and would have dropped gear for zombies and skeletons
+  but for almost none of the dungeon's own population. It now asks both (`GearDrops.hostile`), and `gear.drop` proves it with a cow that is no `Enemy`: tagged
+  `nusmp_dm` it pays at the table's rate, untagged it never does.
 * **Why one piece per kill.** The economy already pays stones and meat on every kill; equipment on top of that must stay an event. One roll over the three
   chances end to end gives at most one piece, is trivially unbiased (the tests check 100000 rolls against the table), and a farm of weak monsters cannot
   shower the player with gear.
@@ -275,7 +282,7 @@ Text goes through `message.nusmp.mega.mgr.cmd.*` with English fallbacks in the c
 ## 10. Tests
 
 ### 10.1 JUnit (`src/test/java/com/newuniverse/nusmp/labyrinth/mega/gear`)
-`GearRollerTest` (18), `GearTablesParserTest` (13), `GearDataTest` (10), `ResistMathTest` (4), `MagicDamageTest` (5), `GearInfoTest` (6),
+`GearRollerTest` (20), `GearTablesParserTest` (13), `GearDataTest` (10), `ResistMathTest` (4), `MagicDamageTest` (5), `GearInfoTest` (6),
 `GearIsNotARelicTest` (4), with helpers `GearFx` and `MiniJson` (a copy of the faction tests' tiny reader: no JSON library is on the test class path) and
 resources `mega/gear/vanilla_items.txt` (the 1333 constants of the API dump's `Items` class), `vanilla_enchantments.txt` (the 42 enchantments of the 1.21.1
 data pack; **from memory, the dump has no enchantment class**; the in-game `gear.tables` proves them), `tensura_enchantments.txt` (the owner's 34) and
@@ -293,7 +300,11 @@ weights ignored, `reduce` using the percent instead of its complement, armour co
 word `elemental` lost, substring matching instead of whole words, the wildcard matching every namespace, the range clamp lost, an id of any shape accepted, the
 curve unsorted, a missing grade reported silently, a typo'd base item, iron in the Normal grade, a protection-family enchantment on a chestplate, resistance
 on Special, Normal rising with depth, the factory importing the ledger, a relic serial stamped on a drop, a second component registered. Every one made at
-least one test fail.
+least one test fail. The relaunched builder repeated fourteen of them on the code as it stands (curve ignored, Looting dropped, the total cap lost, `reduce`
+inverted, armour counted in any worn slot, the 90 hard cap lost, the word `elemental` lost, `thorns` counted as magic, an id of any shape accepted, the range swap
+lost, the slot pick always the last, the resistance clamp of `GearInfo` lost, the level cap lost, engravings allowed on armour) and TWO SURVIVED: the final level
+clamp in `draw` (a pool entry whose own minimum is above the cap) and the armour rule when a pack lists an armour engraving pool (the shipped file has none). Two
+tests were added for them (`anEntryWhoseMinimumIsAboveTheCapIsStillHeldToTheCap`, `armourNeverCarriesEngravingsEvenIfAPackListsAPool`) and both mutants now die.
 
 ### 10.2 In-game self-tests (`GearSelfTests`, run by `/multiverse mega selftest`)
 
@@ -301,7 +312,7 @@ least one test fail.
 |---|---|
 | `gear.tables` | The tables in force were read by a data reload (not the jar fallback: this catches an unregistered listener), parse with no complaint, every base item and every vanilla enchantment resolves in this game, and at least some Tensura engravings exist (the detail lists the absent ones). |
 | `gear.roll` | 300 pieces of all three grades through the real factory. Each has the component with the right grade, a name in the colour of the relic grade, a lore line `Standard Gear`, NO relic component (`relic_serial`, `relic_attuned`, `relic_uses`, `relic_state`) and no relic definition; Rare armour 5 to 12 % with its resistance line, only Rare resists; a durability bonus raises the maximum; the sword, axe or armour keeps its OWN attack damage or armour next to the new bonus, with exactly one modifier of the slot's fixed id; every enchantment and every existing engraving is on the stack. Then 30000 rolls at floor 40 must produce every grade. |
-| `gear.drop` | 8000 zombie kills by a fake player in sector 0 (or anywhere in the Mega level, counted as floor 1, when no sector has been generated yet: the test needs none) posted to `GearDrops.process` as real `LivingDropsEvent`s: never more than one piece per kill, always a graded stack, the count and each grade within six standard deviations of the table; 300 deaths with no player drop nothing; a zombie tagged as a boss, a wanderer or a servant drops nothing; tagged `nusmp_sector_guardian` it drops exactly one Rare piece every time. |
+| `gear.drop` | 8000 zombie kills by a fake player in sector 0 (or anywhere in the Mega level, counted as floor 1, when no sector has been generated yet: the test needs none) posted to `GearDrops.process` as real `LivingDropsEvent`s: never more than one piece per kill, always a graded stack, the count and each grade within six standard deviations of the table; 300 deaths with no player drop nothing; a zombie tagged as a boss, a wanderer or a servant drops nothing; tagged `nusmp_sector_guardian` it drops exactly one Rare piece every time; then 6000 kills of a cow (no `Enemy`) tagged `nusmp_dm` pay at the table's rate and 400 of the untagged cow pay nothing. |
 | `gear.resist` | A fake player wears and holds Rare pieces: the sum is armour worn plus weapon and shield held (a chestplate carried in the hand and boots worn on the head do not count), held to the ceiling; magic and indirect magic are cut by exactly the share, fall and generic damage are not; four Tensura spells (fire elemental, light elemental, holy, magic generic) are cut and four other Tensura types (bullet, suffocate, magicule poison, severer blade) are not, by their real registry keys. The equipment is restored. |
 
 ## 11. Hooks for the lead
@@ -319,11 +330,16 @@ least one test fail.
 2. **The Tensura damage-type ids are the constant names of `TensuraDamageTypes` in lower case.** One (`tensura:holy_damage`) is confirmed by existing code; the
    rest are not. `gear.resist` checks four spells and four non-spells by their real keys and will FAIL, naming the type, if the rule is wrong; the fix is
    `gear.extraMagicTypes` or a word in `MagicDamage`.
-3. **The Tensura engravings on vanilla bases.** Their ids are from the owner's reference; their maximum levels are not known (the factory caps each at the
-   engraving's own maximum); whether each takes effect on a vanilla sword or armour piece as it does on the mod's own weapons is untried. `tensura:magic_protection`
+3. **The Tensura engravings on vanilla bases.** Their ids are from the owner's reference (the 34 ids of `tensura-ids-3-attributes-effects-enchantments.md`, diffed
+   against `tensura_enchantments.txt`: identical); their maximum levels are not known, but every level the table asks for (Sturdy 2, Magicule Absorption 2, the
+   rest 1) is at or below a level `item/WeaponEngravings` / `ArmorEngravings` already request for the same id (Sturdy 3, Magicule Absorption 2, Magic Interference 2,
+   Magic Protection 3, Crushing 3, Barrier Piercing 3, Swift 2), and the factory caps each at the engraving's own maximum anyway; whether each takes effect on a vanilla sword or armour piece as it does on the mod's own weapons is untried. `tensura:magic_protection`
    on a Rare shield may stack with the component's own resistance.
-4. **`vanilla_enchantments.txt` is from memory of the 1.21.1 data pack**; the API dump has no enchantment class. `gear.tables` resolves every pool entry in the real
-   registry.
+4. **`vanilla_enchantments.txt` is from memory of the 1.21.1 data pack**; the API dump has no enchantment class. The sixteen vanilla enchantments the table
+   USES (sharpness, unbreaking, knockback, sweeping_edge, efficiency, power, punch, quick_charge, piercing, protection, respiration, aqua_affinity, thorns,
+   swift_sneak, feather_falling, plus looting for the bonus) were checked online against `github.com/misode/mcmeta` branch `1.21.1-data`
+   (`data/minecraft/enchantment/<id>.json`: every one exists, none of the pools holds two that exclude each other, the supported-item tags fit the slots; the
+   tooltip order of the preview is the tag `tags/enchantment/tooltip_order.json` of the same branch). `gear.tables` resolves every pool entry in the real registry.
 5. **The attribute-modifier handling** (`ItemAttributeModifiers.withModifierAdded`, the fallback to the item's default list) is checked against the rebuilt stubs'
    signatures and by `gear.roll` in game, not by hand.
 6. **`GearEvents.onIncomingDamage` is a five-line wrapper around `reduced`** and is not itself driven by a test (building a `LivingIncomingDamageEvent` needs
@@ -332,6 +348,35 @@ least one test fail.
 8. **Balance.** A Rare diamond sword at +35 % deals 9.45, more than a vanilla netherite sword (8): the brief's ranges, applied to the item's own damage. A full Rare
    set with sword and shield reaches the 40 % ceiling. Whether that is too generous for floors with 2.5 times the health is for the owner to say after play.
 9. **Pickup quest.** `ItemEntityPickupEvent.Post.getOriginalStack()` is relied on to keep the components; the dump lists the method.
-10. **The `nusmp_sector_guardian` tag does not exist in this worktree yet** (the guard module is another builder's); without it the Guardian is just a boss and drops no
-    gear (it is excluded by the boss tests). `gear.drop` tags a zombie itself to prove the branch.
+10. **The `nusmp_sector_guardian` tag does not exist in THIS worktree** (the guard module is another builder's), but the GUARD builder's worktree sets it
+    (`LabyrinthGuardianEntity.SECTOR_TAG = "nusmp_sector_guardian"`, `addTag(SECTOR_TAG)` in the constructor, re-applied on load; its doc
+    `docs/labyrinth/mega_guard.md` names it as the key the Metal Vessel and the gear drops hang on), so the match is by reading their code, not by running it. Without
+    it the Guardian is just a boss and drops no gear (it is excluded by the boss tests). `gear.drop` tags a zombie itself to prove the branch.
 11. Monsters that pick up and wear a Rare piece get its resistance too (the event reads any creature's equipment). That is intended, and untried.
+12. **Normal weapons carry no Tensura engraving.** The brief says "Normal is plain" and the Tensura scale describes Normal as gear without any magical property,
+    while the owner's rule 6 says every weapon gets engravings (written for new or reworked weapons of the mod). This module follows the brief: Normal is exactly
+    the vanilla item with a grade. If the owner wants a light engraving even there it is a data-only change: in `tables.json`, `grades.normal.engravings`, set
+    `count` to `[0, 1]` and add a `pool` per weapon slot (for example `tensura:sturdy`).
+13. **Rare armour carries no `tensura:magic_protection`.** The mod's own robes do (`item/ArmorEngravings`), but Tensura's engraving "decreases damage input of magic
+    attacks for each piece of gear equipped" by a formula nobody can check here, and it would stack on top of the component's own, capped, resistance. The code
+    forbids engravings on armour on purpose (a test pins it), so this needs a code change in `GearSlot.engraves`, not a data change, if the owner wants it.
+14. **The picture's tooltips are a drawing**, not a screenshot: the font is not the game's, and the maximum level of each Tensura engraving is shown as rolled
+    (the game caps it at the engraving's own maximum, which is not known here).
+15. **The Rukh flow's rejection drain is magic damage too.** The FLOW module hurts a player who casts opposing magic with `damageSources().magic()`
+    (`flow/Rejection.java` in the FLOW builder's worktree), and `magic` is exactly what Rare gear resists, so a player in a full Rare set takes up to 40 % less of
+    that drain. It is consistent ("magic resistance") but it softens the punishment the owner asked for; if the drain must stay absolute, FLOW should hurt with a
+    damage type outside the rule (`generic`, or `thorns`, which `MagicDamage` deliberately does not count), or `gear.maxResist` can be lowered. Nothing in this module
+    needs to change.
+
+## 13. Pictures and the preview tool
+
+`python3 tools/labyrinth/mega_gear_preview.py [--out DIR] [--verify dump.json]` (Pillow) draws three PNGs from `tables.json` and the config defaults:
+`gear_grade_tables.png` (what each grade is made of, the base item of every slot, the engravings by slot, how the magic resistance adds up),
+`gear_drop_chances.png` (chance per kill and share of the drops by floor, with every number in a table underneath; the colours are the game's grade colours, so
+stripes and dots are the second encoding) and `gear_tooltips.png` (example Normal, Special and Rare pieces drawn like the game's tooltips: enchantments, the lore
+block, the attribute lines with the grade's flat bonus under the base stat). The script is also an INDEPENDENT second implementation of the roller and of the
+factory's arithmetic (written from the Java; it carries `java.util.Random`'s generator so it replays the Java seeds): `--verify` takes a JSON dump written by the
+Java roller (chances at eleven floors and 162 seeded pieces, one per grade, slot and six seeds; written by `tools/labyrinth/mega_gear_dump/PreviewDump.java`, whose
+comment holds the three commands) and fails on any difference. It was run: 11 chance rows and
+162 pieces, 0 differences, which is a second check that the chances in section 7 and the pieces the roller makes are what the code says. Vanilla numbers in the
+script (attack damage, durability) are from `github.com/misode/mcmeta` `1.21.1-summary/item_components`.

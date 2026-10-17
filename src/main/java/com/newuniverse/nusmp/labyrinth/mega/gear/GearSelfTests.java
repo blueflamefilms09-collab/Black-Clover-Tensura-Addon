@@ -31,6 +31,7 @@ import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -302,10 +303,42 @@ public final class GearSelfTests {
             } finally {
                 zombie.removeTag(GearDrops.GUARDIAN_TAG);
             }
+            String dm = dungeonMonsters(level, at, byPlayer, total, dice);
+            if (dm != null) return fail(dm);
             return ok(kills + " zombie kills at floor " + FloorMap.label(floor) + (floor == 0 ? " (no sector here, counted as floor 1)" : "") + ": " + pieces + " pieces (table " + String.format(java.util.Locale.ROOT, "%.1f", kills * total) + "), Normal " + byGrade[0] + " Special " + byGrade[1] + " Rare " + byGrade[2]
-                    + "; never more than one per kill; no gear from a player-less death, a boss, a wanderer or a servant; the Guardian drops one Rare piece");
+                    + "; never more than one per kill; no gear from a player-less death, a boss, a wanderer or a servant; the Guardian drops one Rare piece; a Dungeon Master creature that is not an Enemy pays like a zombie, a plain animal never");
         } finally {
             zombie.discard();
+        }
+    }
+
+    /**
+     * Tensura's monsters are tamable animals and not {@code Enemy}: a creature of the Dungeon Master (scoreboard tag {@code nusmp_dm}) must pay gear at the table's
+     * rate like a zombie does, and the same animal without the tag never. A cow stands in for them (it is no Enemy and no boss). Null when all is right.
+     */
+    private static String dungeonMonsters(ServerLevel level, BlockPos at, DamageSource byPlayer, double chance, Dice dice) {
+        Cow cow = EntityType.COW.create(level);
+        if (cow == null) return "a test cow could not be created";
+        cow.moveTo(at.getX() + 0.5, at.getY(), at.getZ() + 0.5);
+        try {
+            for (int i = 0; i < 400; i++) {
+                List<ItemEntity> out = new ArrayList<>();
+                if (GearDrops.process(new LivingDropsEvent(cow, byPlayer, out, true), dice) != 0 || !out.isEmpty()) return "an ordinary animal (no Enemy, no nusmp_dm tag) dropped standard gear";
+            }
+            cow.addTag(MegaDungeon.DM_TAG);
+            int kills = 6000, pieces = 0;
+            for (int i = 0; i < kills; i++) {
+                List<ItemEntity> out = new ArrayList<>();
+                int n = GearDrops.process(new LivingDropsEvent(cow, byPlayer, out, true), dice);
+                if (n > 1 || out.size() != n) return "one kill of a Dungeon Master creature must drop at most one piece but process() returned " + n;
+                pieces += n;
+            }
+            double sigma = Math.sqrt(kills * chance * (1 - chance));
+            if (Math.abs(pieces - kills * chance) > 6 * sigma + 5)
+                return "a Dungeon Master creature that is no Enemy gave " + pieces + " pieces in " + kills + " kills, the table says " + String.format(java.util.Locale.ROOT, "%.1f", kills * chance) + " (is MegaDungeon.isDungeonMonster consulted?)";
+            return null;
+        } finally {
+            cow.discard();
         }
     }
 

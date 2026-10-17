@@ -282,6 +282,29 @@ class GearRollerTest {
                 "every slot weight is zero in this table, so the only offered slot is chosen");
     }
 
+    /**
+     * Armour carries the magic-resistance component and never Tensura engravings (owner rule 6 is about weapons, and Tensura's own protection engravings
+     * would count twice). That rule lives in the code, not only in the shipped file, so a datapack that lists an engraving pool for a chestplate still gets
+     * none (found by mutation: with the check replaced by "always", every other test still passed because the shipped file has no armour pool).
+     */
+    @Test
+    void armourNeverCarriesEngravingsEvenIfAPackListsAPool() {
+        Map<GearSlot, List<String>> items = new EnumMap<>(GearSlot.class);
+        items.put(GearSlot.CHESTPLATE, List.of("minecraft:iron_chestplate"));
+        items.put(GearSlot.SWORD, List.of("minecraft:iron_sword"));
+        Map<GearSlot, List<Pool>> pools = new EnumMap<>(GearSlot.class);
+        pools.put(GearSlot.CHESTPLATE, List.of(new Pool("tensura:magic_protection", 1, 1)));
+        pools.put(GearSlot.SWORD, List.of(new Pool("tensura:sturdy", 1, 1)));
+        GradeTable gt = new GradeTable(items, GearTables.IntRange.ZERO, GearTables.IntRange.ZERO, GearTables.IntRange.ZERO, 1, Map.of(),
+                new GearTables.IntRange(1, 1), pools, GearTables.IntRange.ZERO, GearTables.IntRange.ZERO);
+        GearTables t = new GearTables(Map.of(GearGrade.RARE, gt), Map.of(), Map.of(), 0.5, Map.of());
+        Dice d = GearFx.dice(9);
+        for (int i = 0; i < 100; i++) {
+            assertTrue(GearRoller.make(d, GearGrade.RARE, GearSlot.CHESTPLATE, t).orElseThrow().engravings().isEmpty(), "armour has no engravings");
+            assertEquals(1, GearRoller.make(d, GearGrade.RARE, GearSlot.SWORD, t).orElseThrow().engravings().size(), "the sword takes the one engraving of its pool");
+        }
+    }
+
     @Test
     void theBossGuaranteeIsAlwaysARarePieceWithResistance() {
         GearTables t = GearFx.tables();
@@ -292,6 +315,24 @@ class GearRollerTest {
             assertTrue(s.resistPercent() >= 4, "a Rare piece always resists magic: " + s);
             assertFalse(s.enchants().isEmpty(), "a Rare piece always has an enchantment, except where the slot has no pool");
             if (s.slot().engraves()) assertFalse(s.engravings().isEmpty(), "a Rare weapon or shield always has an engraving");
+        }
+    }
+
+    /**
+     * A datapack may list an entry whose own minimum is above the grade's level cap (min 3 under a cap of 1). The cap is the grade's promise ("Special
+     * enchantments are minor"), so it wins over the entry; found by mutation: removing the final clamp in {@code draw} changed no other test.
+     */
+    @Test
+    void anEntryWhoseMinimumIsAboveTheCapIsStillHeldToTheCap() {
+        Dice d = GearFx.dice(3);
+        for (int i = 0; i < 200; i++) {
+            List<Ench> got = GearRoller.draw(d, new GearTables.IntRange(1, 1), List.of(new Pool("minecraft:sharpness", 3, 4)), 1);
+            assertEquals(1, got.size());
+            assertEquals(1, got.get(0).level(), "the cap of 1 holds over an entry that starts at 3");
+            List<Ench> two = GearRoller.draw(d, new GearTables.IntRange(2, 2), List.of(new Pool("a:one", 1, 5), new Pool("a:two", 4, 5), new Pool("a:three", 1, 1)), 2);
+            assertEquals(2, two.size());
+            assertFalse(two.get(0).id().equals(two.get(1).id()), "the entries drawn are distinct");
+            for (Ench e : two) assertTrue(e.level() >= 1 && e.level() <= 2, e.id() + " level " + e.level());
         }
     }
 

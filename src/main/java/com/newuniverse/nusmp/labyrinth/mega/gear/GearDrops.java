@@ -34,7 +34,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Why: this is the third {@code LivingDropsEvent} listener of the Mega-Dungeon, beside the 1.36.0 economy (Magic Stones and monster meat) and the 1.54.0
  * faction drops, and it adds only the EQUIPMENT: the owner wants Normal, Special and Rare gear to drop without limit across the floors, "alongside" the
  * stones and the meat, so it is a separate listener at LOW priority that adds one item and touches nothing the other two decided. It applies on exactly
- * their terms: the Mega-Dungeon only, a hostile {@code Enemy} that is neither a boss nor anyone's servant, killed by a player (the damage source's player,
+ * their terms: the Mega-Dungeon only, a hostile {@code Enemy} or a Dungeon Master creature (Tensura's monsters are not {@code Enemy}) that is neither a boss
+ * nor anyone's servant, killed by a player (the damage source's player,
  * else the kill credit), so a monster that died to another monster or to a trap pays no gear and a Shadow Core minion or a tamed pet is no farm. AT MOST ONE
  * piece per kill: the roller lays the three grades' chances end to end on one roll. The exception is the Labyrinth Guardian of a sector (the entity with
  * the scoreboard tag {@code nusmp_sector_guardian}), the decennial boss: it is not an ordinary kill, so it gets no roll but a guarantee, exactly one Rare
@@ -81,7 +82,7 @@ public final class GearDrops {
             if (!GearConfig.get(GearConfig.BOSS_GUARANTEED)) return 0;
             spec = GearRoller.make(d, GearGrade.RARE, null, tables).orElse(null);
         } else {
-            if (!(mob instanceof Enemy) || isBoss(mob) || isServant(mob)) return 0;
+            if (!hostile(mob) || isBoss(mob) || isServant(mob)) return 0;
             int floor = MegaDungeon.floorAt(level, mob.blockPosition());
             spec = GearRoller.roll(d, floor, looting(level, killer), tables, GearConfig.rates()).orElse(null);
         }
@@ -90,6 +91,15 @@ public final class GearDrops {
         if (stack.isEmpty()) return 0;
         e.getDrops().add(new ItemEntity(level, mob.getX(), mob.getY() + 0.3, mob.getZ(), stack));
         return 1;
+    }
+
+    /**
+     * Is this a monster of the dungeon: a vanilla-style {@code Enemy}, or one of the Dungeon Master's creatures (scoreboard tag {@code nusmp_dm}). The second
+     * half matters most: Tensura's monsters are tamable animals, not {@code Enemy}, and they are the bulk of the population, so the economy, the HP buffer
+     * and the faction drops all ask {@link MegaDungeon#isDungeonMonster} as well; a direwolf the Director sent must drop gear like a zombie does.
+     */
+    static boolean hostile(Mob m) {
+        return m instanceof Enemy || MegaDungeon.isDungeonMonster(m);
     }
 
     /**
