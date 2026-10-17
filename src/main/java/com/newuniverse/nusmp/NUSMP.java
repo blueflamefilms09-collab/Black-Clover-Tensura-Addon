@@ -210,6 +210,7 @@ public class NUSMP {
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.flow.FlowConfig.SPEC, "nusmp-labyrinth-mega-flow-server.toml");   // 1.55.0: the Rukh flow of the Holy floors
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.system.SystemConfig.SPEC, "nusmp-labyrinth-mega-system-server.toml");   // 1.55.0: the System overlay, floor quests, the Shadow Core
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.floors.FloorsConfig.SPEC, "nusmp-labyrinth-mega-floors-server.toml");   // 1.55.0: floors and the Directional Lock
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.guard.GuardConfig.SPEC, "nusmp-labyrinth-mega-guard-server.toml");   // 1.54.0: the Labyrinth Guardian, the Mana Core, the sector Gatekeeper
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.boss.rules.BossRulesConfig.SPEC, "nusmp-boss-rules-server.toml");   // 1.37.0
 
         // Multiverse: /multiverse commands, ceremony, mastery pages, ranks & stars, squads, status sync, world sites

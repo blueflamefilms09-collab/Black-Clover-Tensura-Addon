@@ -18,5 +18,6 @@ public final class SealClient {
 
     private static void registerRenderers(EntityRenderersEvent.RegisterRenderers e) {
         e.registerEntityRenderer(SealRegistry.FLOOR_WARDEN.get(), FloorWardenRenderer::new);
+        e.registerEntityRenderer(com.newuniverse.nusmp.labyrinth.mega.guard.GuardRegistry.GUARDIAN.get(), FloorWardenRenderer::new);   // 1.54.0: the sector Guardian wears the Warden's model, larger
     }
 }

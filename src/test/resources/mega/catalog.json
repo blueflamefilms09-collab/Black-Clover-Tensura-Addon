@@ -4,12 +4,30 @@
  "module": 9,
  "pools": {
   "nusmp:mega/antechamber": {
-   "elements": [],
+   "elements": [
+    {
+     "template": "nusmp:mega/antechamber/antechamber_a",
+     "weight": 10
+    },
+    {
+     "template": "nusmp:mega/antechamber/antechamber_b",
+     "weight": 10
+    }
+   ],
    "emptyWeight": 0,
    "fallback": "nusmp:mega/cap"
   },
   "nusmp:mega/arena": {
-   "elements": [],
+   "elements": [
+    {
+     "template": "nusmp:mega/arena/guardian_hall_a",
+     "weight": 10
+    },
+    {
+     "template": "nusmp:mega/arena/guardian_hall_b",
+     "weight": 10
+    }
+   ],
    "emptyWeight": 0,
    "fallback": "nusmp:mega/cap"
   },
@@ -140,22 +158,98 @@
    "fallback": "nusmp:mega/cap"
   },
   "nusmp:mega/onward": {
-   "elements": [],
+   "elements": [
+    {
+     "template": "nusmp:mega/onward/left_a",
+     "weight": 2
+    },
+    {
+     "template": "nusmp:mega/onward/left_b",
+     "weight": 2
+    },
+    {
+     "template": "nusmp:mega/onward/left_c",
+     "weight": 2
+    },
+    {
+     "template": "nusmp:mega/onward/right_a",
+     "weight": 2
+    },
+    {
+     "template": "nusmp:mega/onward/right_b",
+     "weight": 2
+    },
+    {
+     "template": "nusmp:mega/onward/right_c",
+     "weight": 2
+    },
+    {
+     "template": "nusmp:mega/onward/straight_a",
+     "weight": 2
+    },
+    {
+     "template": "nusmp:mega/onward/straight_b",
+     "weight": 2
+    },
+    {
+     "template": "nusmp:mega/onward/straight_c",
+     "weight": 2
+    }
+   ],
    "emptyWeight": 0,
    "fallback": "nusmp:mega/cap"
   },
   "nusmp:mega/onward_left": {
-   "elements": [],
+   "elements": [
+    {
+     "template": "nusmp:mega/onward/left_a",
+     "weight": 7
+    },
+    {
+     "template": "nusmp:mega/onward/left_b",
+     "weight": 7
+    },
+    {
+     "template": "nusmp:mega/onward/left_c",
+     "weight": 7
+    }
+   ],
    "emptyWeight": 0,
    "fallback": "nusmp:mega/cap"
   },
   "nusmp:mega/onward_right": {
-   "elements": [],
+   "elements": [
+    {
+     "template": "nusmp:mega/onward/right_a",
+     "weight": 7
+    },
+    {
+     "template": "nusmp:mega/onward/right_b",
+     "weight": 7
+    },
+    {
+     "template": "nusmp:mega/onward/right_c",
+     "weight": 7
+    }
+   ],
    "emptyWeight": 0,
    "fallback": "nusmp:mega/cap"
   },
   "nusmp:mega/onward_straight": {
-   "elements": [],
+   "elements": [
+    {
+     "template": "nusmp:mega/onward/straight_a",
+     "weight": 7
+    },
+    {
+     "template": "nusmp:mega/onward/straight_b",
+     "weight": 7
+    },
+    {
+     "template": "nusmp:mega/onward/straight_c",
+     "weight": 7
+    }
+   ],
    "emptyWeight": 0,
    "fallback": "nusmp:mega/cap"
   },
@@ -521,6 +615,220 @@
   }
  },
  "templates": {
+  "nusmp:mega/antechamber/antechamber_a": {
+   "kind": "ANTECHAMBER",
+   "markers": [
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 13
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_onward",
+     "place": 0,
+     "pool": "nusmp:mega/onward",
+     "sel": 0,
+     "target": "nusmp:mega_onward",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_vault",
+     "place": 0,
+     "pool": "nusmp:mega/vault",
+     "sel": 0,
+     "target": "nusmp:mega_vault",
+     "x": 26,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_chain",
+     "place": 0,
+     "pool": "minecraft:empty",
+     "sel": 0,
+     "target": "nusmp:mega_chain",
+     "x": 13,
+     "y": 9,
+     "z": 26
+    }
+   ]
+  },
+  "nusmp:mega/antechamber/antechamber_b": {
+   "kind": "ANTECHAMBER",
+   "markers": [
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 13
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "west",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_vault",
+     "place": 0,
+     "pool": "nusmp:mega/vault",
+     "sel": 0,
+     "target": "nusmp:mega_vault",
+     "x": 0,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "east",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_onward",
+     "place": 0,
+     "pool": "nusmp:mega/onward",
+     "sel": 0,
+     "target": "nusmp:mega_onward",
+     "x": 26,
+     "y": 9,
+     "z": 13
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_chain",
+     "place": 0,
+     "pool": "minecraft:empty",
+     "sel": 0,
+     "target": "nusmp:mega_chain",
+     "x": 13,
+     "y": 9,
+     "z": 26
+    }
+   ]
+  },
+  "nusmp:mega/arena/guardian_hall_a": {
+   "kind": "ARENA",
+   "markers": [
+    {
+     "args": {
+      "facing": "north"
+     },
+     "kind": "gatekeeper",
+     "x": 22,
+     "y": 10,
+     "z": 2
+    },
+    {
+     "args": {},
+     "kind": "guardian_spawn",
+     "x": 22,
+     "y": 12,
+     "z": 22
+    }
+   ],
+   "size": [
+    45,
+    48,
+    45
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "nusmp:gatekeeper_door[kind=sector,open=false,half=lower]",
+     "name": "nusmp:mega_chain",
+     "place": 0,
+     "pool": "nusmp:mega/antechamber",
+     "sel": 0,
+     "target": "nusmp:mega_chain",
+     "x": 22,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "minecraft:empty",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 22,
+     "y": 9,
+     "z": 44
+    }
+   ]
+  },
+  "nusmp:mega/arena/guardian_hall_b": {
+   "kind": "ARENA",
+   "markers": [
+    {
+     "args": {
+      "facing": "north"
+     },
+     "kind": "gatekeeper",
+     "x": 22,
+     "y": 10,
+     "z": 2
+    },
+    {
+     "args": {},
+     "kind": "guardian_spawn",
+     "x": 22,
+     "y": 12,
+     "z": 22
+    }
+   ],
+   "size": [
+    45,
+    48,
+    45
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "nusmp:gatekeeper_door[kind=sector,open=false,half=lower]",
+     "name": "nusmp:mega_chain",
+     "place": 0,
+     "pool": "nusmp:mega/antechamber",
+     "sel": 0,
+     "target": "nusmp:mega_chain",
+     "x": 22,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "minecraft:empty",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 22,
+     "y": 9,
+     "z": 44
+    }
+   ]
+  },
   "nusmp:mega/cap/alcove_banner_a": {
    "kind": "CAP",
    "markers": [],
@@ -9549,6 +9857,501 @@
      "x": 4,
      "y": 9,
      "z": 8
+    }
+   ]
+  },
+  "nusmp:mega/onward/left_a": {
+   "kind": "ONWARD",
+   "markers": [
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 22,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {
+      "d": "2",
+      "facing": "west",
+      "h": "4",
+      "w": "3"
+     },
+     "kind": "expansion_socket",
+     "x": 0,
+     "y": 10,
+     "z": 4
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "west",
+     "final": "minecraft:cobbled_deepslate",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "minecraft:empty",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_onward",
+     "place": 0,
+     "pool": "minecraft:empty",
+     "sel": 0,
+     "target": "nusmp:mega_onward",
+     "x": 22,
+     "y": 9,
+     "z": 26
+    }
+   ]
+  },
+  "nusmp:mega/onward/left_b": {
+   "kind": "ONWARD",
+   "markers": [
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 22,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {
+      "d": "2",
+      "facing": "west",
+      "h": "4",
+      "w": "3"
+     },
+     "kind": "expansion_socket",
+     "x": 0,
+     "y": 10,
+     "z": 4
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "west",
+     "final": "minecraft:cobbled_deepslate",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "minecraft:empty",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_onward",
+     "place": 0,
+     "pool": "minecraft:empty",
+     "sel": 0,
+     "target": "nusmp:mega_onward",
+     "x": 22,
+     "y": 9,
+     "z": 26
+    }
+   ]
+  },
+  "nusmp:mega/onward/left_c": {
+   "kind": "ONWARD",
+   "markers": [
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 13,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {
+      "d": "2",
+      "facing": "west",
+      "h": "4",
+      "w": "3"
+     },
+     "kind": "expansion_socket",
+     "x": 0,
+     "y": 10,
+     "z": 4
+    }
+   ],
+   "size": [
+    18,
+    48,
+    18
+   ],
+   "sockets": [
+    {
+     "facing": "west",
+     "final": "minecraft:cobbled_deepslate",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "minecraft:empty",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 0,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_onward",
+     "place": 0,
+     "pool": "minecraft:empty",
+     "sel": 0,
+     "target": "nusmp:mega_onward",
+     "x": 13,
+     "y": 9,
+     "z": 17
+    }
+   ]
+  },
+  "nusmp:mega/onward/right_a": {
+   "kind": "ONWARD",
+   "markers": [
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 4,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {
+      "d": "2",
+      "facing": "east",
+      "h": "4",
+      "w": "3"
+     },
+     "kind": "expansion_socket",
+     "x": 26,
+     "y": 10,
+     "z": 4
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "east",
+     "final": "minecraft:cobbled_deepslate",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "minecraft:empty",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 26,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_onward",
+     "place": 0,
+     "pool": "minecraft:empty",
+     "sel": 0,
+     "target": "nusmp:mega_onward",
+     "x": 4,
+     "y": 9,
+     "z": 26
+    }
+   ]
+  },
+  "nusmp:mega/onward/right_b": {
+   "kind": "ONWARD",
+   "markers": [
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 4,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {
+      "d": "2",
+      "facing": "east",
+      "h": "4",
+      "w": "3"
+     },
+     "kind": "expansion_socket",
+     "x": 26,
+     "y": 10,
+     "z": 4
+    }
+   ],
+   "size": [
+    27,
+    48,
+    27
+   ],
+   "sockets": [
+    {
+     "facing": "east",
+     "final": "minecraft:cobbled_deepslate",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "minecraft:empty",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 26,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_onward",
+     "place": 0,
+     "pool": "minecraft:empty",
+     "sel": 0,
+     "target": "nusmp:mega_onward",
+     "x": 4,
+     "y": 9,
+     "z": 26
+    }
+   ]
+  },
+  "nusmp:mega/onward/right_c": {
+   "kind": "ONWARD",
+   "markers": [
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 4,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "args": {
+      "d": "2",
+      "facing": "east",
+      "h": "4",
+      "w": "3"
+     },
+     "kind": "expansion_socket",
+     "x": 17,
+     "y": 10,
+     "z": 4
+    }
+   ],
+   "size": [
+    18,
+    48,
+    18
+   ],
+   "sockets": [
+    {
+     "facing": "east",
+     "final": "minecraft:cobbled_deepslate",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "minecraft:empty",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 17,
+     "y": 9,
+     "z": 4
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_onward",
+     "place": 0,
+     "pool": "minecraft:empty",
+     "sel": 0,
+     "target": "nusmp:mega_onward",
+     "x": 4,
+     "y": 9,
+     "z": 17
+    }
+   ]
+  },
+  "nusmp:mega/onward/straight_a": {
+   "kind": "ONWARD",
+   "markers": [
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 4,
+     "y": 9,
+     "z": 17
+    },
+    {
+     "args": {
+      "d": "2",
+      "facing": "north",
+      "h": "4",
+      "w": "3"
+     },
+     "kind": "expansion_socket",
+     "x": 4,
+     "y": 10,
+     "z": 0
+    }
+   ],
+   "size": [
+    9,
+    48,
+    36
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:cobbled_deepslate",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "minecraft:empty",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 4,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_onward",
+     "place": 0,
+     "pool": "minecraft:empty",
+     "sel": 0,
+     "target": "nusmp:mega_onward",
+     "x": 4,
+     "y": 9,
+     "z": 35
+    }
+   ]
+  },
+  "nusmp:mega/onward/straight_b": {
+   "kind": "ONWARD",
+   "markers": [
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 4,
+     "y": 9,
+     "z": 17
+    },
+    {
+     "args": {
+      "d": "2",
+      "facing": "north",
+      "h": "4",
+      "w": "3"
+     },
+     "kind": "expansion_socket",
+     "x": 4,
+     "y": 10,
+     "z": 0
+    }
+   ],
+   "size": [
+    9,
+    48,
+    36
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:cobbled_deepslate",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "minecraft:empty",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 4,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_onward",
+     "place": 0,
+     "pool": "minecraft:empty",
+     "sel": 0,
+     "target": "nusmp:mega_onward",
+     "x": 4,
+     "y": 9,
+     "z": 35
+    }
+   ]
+  },
+  "nusmp:mega/onward/straight_c": {
+   "kind": "ONWARD",
+   "markers": [
+    {
+     "args": {},
+     "kind": "patrol",
+     "x": 4,
+     "y": 9,
+     "z": 8
+    },
+    {
+     "args": {
+      "d": "2",
+      "facing": "north",
+      "h": "4",
+      "w": "3"
+     },
+     "kind": "expansion_socket",
+     "x": 4,
+     "y": 10,
+     "z": 0
+    }
+   ],
+   "size": [
+    9,
+    48,
+    18
+   ],
+   "sockets": [
+    {
+     "facing": "north",
+     "final": "minecraft:cobbled_deepslate",
+     "name": "nusmp:mega_door",
+     "place": 0,
+     "pool": "minecraft:empty",
+     "sel": 0,
+     "target": "nusmp:mega_door",
+     "x": 4,
+     "y": 9,
+     "z": 0
+    },
+    {
+     "facing": "south",
+     "final": "minecraft:air",
+     "name": "nusmp:mega_onward",
+     "place": 0,
+     "pool": "minecraft:empty",
+     "sel": 0,
+     "target": "nusmp:mega_onward",
+     "x": 4,
+     "y": 9,
+     "z": 17
     }
    ]
   },

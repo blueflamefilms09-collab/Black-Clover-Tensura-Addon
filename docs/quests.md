@@ -93,7 +93,7 @@ The advancement trigger `nusmp:event` takes `key`, optional `count` (>= 1, compa
 | `labyrinth.vault_opened` | - | vault pedestal opened |
 | `labyrinth.seal_opened` | - | gatekeeper door opened with the key |
 | `mega.entered` | - | a player arrives in the Mega-Dungeon through a Gateway (labyrinth/mega/travel) |
-| `mega.sector_cleared` | sector id | the Labyrinth Guardian of a sector dies (credit the party) |
+| `mega.sector_cleared` | sector id | a Mana Core opens the sector's Gatekeeper door (the opener and every living player within 32 blocks are credited; fired once per opening, at the door, not at the Guardian's death) |
 | `mega.rested` | short or long | a rest completes at a seat, hearth or bed of a safe zone |
 | `mega.crucible_choice` | - | a relic is taken from a Crucible of Choice |
 | `mega.wanderer_survived` | - | a player escapes a wandering boss that was chasing them |
