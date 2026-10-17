@@ -284,7 +284,7 @@ def planter(mt, x, z):
     mt.set(x, ROW0 + 1, z, "minecraft:flowering_azalea")
     mt.set(x + 1, ROW0 + 1, z + 1, "minecraft:azalea")
     mt.set(x + 1, ROW0 + 1, z, "minecraft:fern")
-    mt.set(x, ROW0 + 1, z + 1, "minecraft:moss_carpet", {"bottom": "true"})
+    mt.set(x, ROW0 + 1, z + 1, "minecraft:moss_carpet")
     mt.set(x - 1, ROW0 + 1, z - 1, L.POLISHED)
     mt.set(x - 1, ROW0 + 2, z - 1, L.LANTERN, {"hanging": "false"})
 

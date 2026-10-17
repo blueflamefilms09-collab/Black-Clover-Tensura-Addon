@@ -3,6 +3,7 @@
 # EncounterDataTest checks every id of the shipped files against this list. The vanilla entity types and the simple particle types are the complete lists of
 # Minecraft 1.21.1 (from its API dump); the sounds are the ones the cues use, each checked against the SoundEvents class of the same dump; the Tensura entity
 # types are the entities of Tensura Reincarnated 2.0.1.3 (its id list; projectiles and spell entities included, the test only wants to know an id exists).
+# The sound ids bell.use and sculk.spread / sculk.charge / sculk_sensor.clicking were matched by hand to the fields BELL_BLOCK, SCULK_BLOCK_SPREAD, SCULK_BLOCK_CHARGE and SCULK_CLICKING.
 # nusmp entities are not listed: the test reads them from the entity registrations in the source tree. To use a new id, check it, then add a line.
 entity minecraft:allay
 entity minecraft:area_effect_cloud
@@ -440,19 +441,24 @@ particle minecraft:white_ash
 particle minecraft:white_smoke
 particle minecraft:witch
 sound minecraft:block.amethyst_block.chime
+sound minecraft:block.amethyst_block.resonate
 sound minecraft:block.anvil.land
 sound minecraft:block.beacon.ambient
+sound minecraft:block.bell.use
 sound minecraft:block.bone_block.break
 sound minecraft:block.chain.fall
 sound minecraft:block.copper.break
 sound minecraft:block.deepslate.break
 sound minecraft:block.deepslate_bricks.break
+sound minecraft:block.enchantment_table.use
 sound minecraft:block.fire.ambient
 sound minecraft:block.glass.break
 sound minecraft:block.grass.break
 sound minecraft:block.lava.ambient
 sound minecraft:block.lava.pop
 sound minecraft:block.moss.break
+sound minecraft:block.netherrack.break
+sound minecraft:block.sculk.spread
 sound minecraft:block.sculk_catalyst.bloom
 sound minecraft:block.sculk_shrieker.shriek
 sound minecraft:block.snow.break
@@ -462,6 +468,7 @@ sound minecraft:entity.bat.takeoff
 sound minecraft:entity.bee.loop_aggressive
 sound minecraft:entity.blaze.ambient
 sound minecraft:entity.breeze.idle_ground
+sound minecraft:entity.drowned.ambient
 sound minecraft:entity.enderman.scream
 sound minecraft:entity.enderman.stare
 sound minecraft:entity.enderman.teleport
@@ -487,6 +494,7 @@ sound minecraft:entity.stray.ambient
 sound minecraft:entity.vex.ambient
 sound minecraft:entity.vex.charge
 sound minecraft:entity.vindicator.ambient
+sound minecraft:entity.warden.heartbeat
 sound minecraft:entity.witch.ambient
 sound minecraft:entity.wither_skeleton.ambient
 sound minecraft:entity.wolf.growl

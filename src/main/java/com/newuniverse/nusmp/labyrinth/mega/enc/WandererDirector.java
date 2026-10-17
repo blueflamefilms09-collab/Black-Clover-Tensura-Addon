@@ -49,8 +49,8 @@ import java.util.UUID;
  * monster that walks the halls of a sector, room by room, along the doorways, and hunts by what it sees and hears, teaches the tabletop's other
  * lesson: sometimes the answer to a monster is not to be there. Every few minutes, in a sector that has players, the chance rolls ({@link
  * WandererRules#spawnChance}); a winner is drawn from the roster ({@code wanderers.json}), placed at a room far from the party and out of its
- * sight, named, scaled by the sector's threat, and made persistent while a player is in the sector. From then on every half second this class
- * lets the boss think: it builds what the boss PERCEIVES (the players of its sector with their line of sight, crouching, light and stillness,
+ * sight, named, scaled by the threat of the floor the party stands on (the sector's threat when the floor is unknown), and made persistent while a
+ * player is in the sector. From then on every half second this class lets the boss think: it builds what the boss PERCEIVES (the players of its sector with their line of sight, crouching, light and stillness,
  * the loudest thing it heard, a blow it took), asks the pure {@link WandererMind} for an order, and carries it out with the polite steering that
  * works on goal-driven and brain-driven mobs alike ({@link MobSteer}). Four rules are enforced here because they are about the world, not the
  * mind: it never stands in a Sanctuary room (it is walked out, and teleported out after a second and a half if it is stuck inside), it never
@@ -121,7 +121,7 @@ public final class WandererDirector {
             Sector s = MegaDungeon.data(level.getServer()).sector(en.getKey());
             if (s == null || s.state == Sector.State.GENERATING || s.state == Sector.State.FAILED || hasLive(s.id)) continue;
             long since = now - LAST_END.computeIfAbsent(s.id, k -> now);          // the first sight of players starts the clock
-            double chance = WandererRules.spawnChance(base, s.threat, since, gap);
+            double chance = WandererRules.spawnChance(base, FloorThreat.of(level, s, en.getValue()), since, gap);
             if (chance <= 0.0 || rnd.nextDouble() >= chance) continue;
             spawn(level, s, en.getValue(), rnd);
             return;                                                              // at most one new boss per check
@@ -145,8 +145,9 @@ public final class WandererDirector {
         if (hasLive(sector.id)) return new Spawned(null, "sector " + sector.id + " has a wandering boss already");
         PatrolGraph g = graphOf(sector);
         if (g.size() < 3) return new Spawned(null, "sector " + sector.id + " has fewer than three rooms a wandering boss may enter");
-        WandererRoster.Entry kind = EncData.roster().pick(sector.threat, e -> Bestiary.usable(Bestiary.type(e.entity())), rnd);
-        if (kind == null) return new Spawned(null, "no usable kind of wandering boss in the roster for threat " + sector.threat);
+        int threat = FloorThreat.of(level, sector, avoid);
+        WandererRoster.Entry kind = EncData.roster().pick(threat, e -> Bestiary.usable(Bestiary.type(e.entity())), rnd);
+        if (kind == null) return new Spawned(null, "no usable kind of wandering boss in the roster for threat " + threat);
         EntityType<?> type = Bestiary.type(kind.entity());
         List<double[]> points = new ArrayList<>();
         List<SpawnPicker.Eye> eyes = new ArrayList<>();
@@ -170,7 +171,7 @@ public final class WandererDirector {
                 mob.discard();
                 continue;
             }
-            stamp(level, mob, sector, kind);
+            stamp(level, mob, sector, kind, threat);
             Wanderer w = new Wanderer(mob.getUUID(), sector.id, level.getGameTime(), kind.name());
             w.lastBlock = mob.blockPosition().asLong();
             LIVE.put(mob.getUUID(), w);
@@ -188,7 +189,7 @@ public final class WandererDirector {
     }
 
     /** Names it, binds it to its sector, scales it, and makes it persistent (it is removed by the Director, not by the game's despawner). */
-    private static void stamp(ServerLevel level, Mob mob, Sector sector, WandererRoster.Entry kind) {
+    private static void stamp(ServerLevel level, Mob mob, Sector sector, WandererRoster.Entry kind, int threat) {
         mob.finalizeSpawn(level, level.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.EVENT, null);
         mob.setPersistenceRequired();
         mob.addTag(TAG);
@@ -196,7 +197,7 @@ public final class WandererDirector {
         data.putInt(SECTOR, sector.id);
         mob.setCustomName(Component.literal(kind.name()));
         mob.setCustomNameVisible(false);
-        EncounterSpawner.scale(mob, ThreatScale.amount(sector.threat, EncConfig.get(EncConfig.HEALTH_PER_LEVEL)), ThreatScale.amount(sector.threat, EncConfig.get(EncConfig.DAMAGE_PER_LEVEL)));
+        EncounterSpawner.scale(mob, ThreatScale.amount(threat, EncConfig.get(EncConfig.HEALTH_PER_LEVEL)), ThreatScale.amount(threat, EncConfig.get(EncConfig.DAMAGE_PER_LEVEL)));
         AttributeInstance hp = mob.getAttribute(Attributes.MAX_HEALTH);
         if (hp != null && kind.healthScale() != 1.0) hp.addOrReplacePermanentModifier(new AttributeModifier(HEALTH_ID, kind.healthScale() - 1.0, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
         AttributeInstance sp = mob.getAttribute(Attributes.MOVEMENT_SPEED);

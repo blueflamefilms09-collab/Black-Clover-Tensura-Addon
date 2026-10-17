@@ -356,7 +356,7 @@ def weathering(g, rng):
         fr = TIERS[t][1]
         cur = g.get(x, fr, z)
         if g.get(x, fr + 1, z) is None and cur is not None and "stairs" not in cur.block:
-            g.set(x, fr + 1, z, "minecraft:moss_carpet", {"bottom": "true"})
+            g.set(x, fr + 1, z, "minecraft:moss_carpet")
     # rubble heaps at the pylon corners on the third court
     for (x, z, f) in ((8, 16, Wd), (30, 22, E), (8, 22, Wd), (30, 16, E)):
         fr = floor_row(x, z)
