@@ -73,8 +73,14 @@ public final class SectorPlanner {
      * plane of the door, the region runs {@code REGION_MODULES} modules forward and is centred on the door sideways (the door is at a module centre, so
      * the 19 modules of the region sit on the Landing's own module grid). Height: the full 48 rows of a piece.
      */
-    public static Box regionFor(Vec entryJigsaw, Facing forward) {
-        int len = MegaGrid.blocks(MegaGrid.REGION_MODULES);
+    public static Box regionFor(Vec entryJigsaw, Facing forward) { return regionFor(entryJigsaw, forward, MegaGrid.REGION_MODULES); }
+
+    /**
+     * {@link #regionFor(Vec, Facing)} for a region of {@code modules} modules (an ODD number: the region is centred on the door, which stands at a module centre,
+     * so an even number would put the door on a module edge). The floor model uses smaller regions than the old sectors (see {@link FloorPlan#regionModules}).
+     */
+    public static Box regionFor(Vec entryJigsaw, Facing forward, int modules) {
+        int len = MegaGrid.blocks(modules);
         int half = len / 2;
         int y1 = MegaGrid.ORIGIN_Y, y2 = MegaGrid.ORIGIN_Y + MegaGrid.HEIGHT - 1;
         return switch (forward) {
@@ -97,6 +103,16 @@ public final class SectorPlanner {
     public static Plan first(long dungeonSeed, int id, Polarity road) {
         Vec entry = new Vec(0, DOOR_Y, MegaGrid.laneZ(road));
         return new Plan(id, sectorSeed(dungeonSeed, SectorDraft.seedKey(road, 0)), entry, Facing.EAST, regionFor(entry, Facing.EAST), 0);
+    }
+
+    /**
+     * 1.58.0, the floor model: the plan of floor {@code chainIndex} of a road. It stands in its fixed slot of the road's lane ({@link FloorPlan#entry}), grows east, has
+     * no tunnel (floors are joined by stairs, not by corridors) and a region of the size its room count needs. The seed belongs to the PLACE in the road, exactly as for
+     * the old sectors ({@link SectorDraft#seedKey}). Pure and independent of every other floor: a floor can be planned, repaired and regenerated alone.
+     */
+    public static Plan floor(long dungeonSeed, int id, Polarity road, int chainIndex, int rooms, boolean boss) {
+        Vec entry = FloorPlan.entry(road, chainIndex);
+        return new Plan(id, sectorSeed(dungeonSeed, SectorDraft.seedKey(road, chainIndex)), entry, Facing.EAST, FloorPlan.region(entry, rooms, boss), 0);
     }
 
     /** The tunnel (as a keep-clear box) of {@code modules} 9-block segments that starts in front of the seal and runs towards {@code facing}. */

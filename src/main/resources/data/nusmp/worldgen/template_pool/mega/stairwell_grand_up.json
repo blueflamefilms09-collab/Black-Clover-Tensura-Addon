@@ -1,0 +1,23 @@
+{
+  "fallback": "nusmp:mega/cap",
+  "elements": [
+    {
+      "weight": 10,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/stairwell/grand_up_a",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 10,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nusmp:mega/stairwell/grand_up_b",
+        "processors": "nusmp:mega_interior",
+        "projection": "rigid"
+      }
+    }
+  ]
+}

@@ -143,6 +143,7 @@ public final class FloorsSelfTests {
         FloorBands.Strategy strategy = FloorAssigner.strategy();
         FloorAssigner.assign(s, data);
         data.setDirty();
+        if (s.isFloor()) return checkFloorBands(data, s, bad);
         int first = Math.abs(s.firstFloor()), last = Math.abs(s.lastFloor());
         Room landing = FloorAssigner.landingOf(s), arena = FloorAssigner.arenaOf(s);
         if (landing == null) {
@@ -206,6 +207,31 @@ public final class FloorsSelfTests {
         if (usedCount < 2) bad.add(name + ": only " + usedCount + " distinct floor(s) are used");
         return name + ": " + s.rooms.size() + " rooms numbered " + FloorMap.label(s.firstFloor()) + ".." + FloorMap.label(s.lastFloor()) + " by the " + strategy.id() + " rule, " + usedCount + " distinct floors, rooms per floor "
                 + Arrays.toString(Arrays.copyOfRange(perBand, 1, perBand.length)) + ", arena depth " + arenaDepth + ", Landing " + FloorMap.label(landing.floor) + ", arena " + FloorMap.label(arena.floor) + ", a second run changed nothing";
+    }
+
+    /**
+     * 1.58.0, the floor model: a sector is ONE floor, so every room carries that floor (there is nothing to cut), the arrival stairwell is the Landing, there are two
+     * stairwells, a boss floor has its arena and an ordinary floor has none, and a second numbering changes nothing. Problems go to {@code bad}; null when the sector
+     * could not be checked at all.
+     */
+    private static String checkFloorBands(MegaData data, Sector s, List<String> bad) {
+        String name = "sector " + s.id + " (" + s.polarity.id() + ", floor " + FloorMap.label(s.firstFloor()) + ")";
+        Room landing = FloorAssigner.landingOf(s), arena = FloorAssigner.arenaOf(s);
+        if (landing == null) {
+            bad.add(name + " has no arrival stairwell (no room holds its arrival marker)");
+            return null;
+        }
+        if (landing.kind != RoomKind.STAIRWELL) bad.add(name + ": the room that holds the arrival marker is a " + landing.kind + ", not a stairwell");
+        int stairwells = 0;
+        for (Room r : s.rooms) {
+            if (r.kind == RoomKind.STAIRWELL) stairwells++;
+            if (r.floor == 0) bad.add(name + ": room #" + r.id + " (" + r.kind + ") has no floor");
+            else if (r.floor != s.firstFloor()) bad.add(name + ": room #" + r.id + " (" + r.kind + ") is floor " + FloorMap.label(r.floor) + " but the whole sector is one floor");
+        }
+        if (stairwells != 2) bad.add(name + " has " + stairwells + " stairwell room(s), not 2");
+        if (s.isBossFloor() != (arena != null)) bad.add(name + (arena == null ? " is a boss floor but has no arena" : " has an arena but is not a boss floor"));
+        if (FloorAssigner.assign(s, data) != 0) bad.add(name + ": a second numbering changed rooms: the assigner is not idempotent");
+        return name + ": " + s.rooms.size() + " rooms, all on the one floor, " + stairwells + " stairwells" + (arena != null ? ", a boss floor with its arena" : "") + ", a second run changed nothing";
     }
 
     /** A room whose floor comes from its depth alone (not a link and not the boss chain; the Landing is excluded by the caller). */
@@ -359,11 +385,32 @@ public final class FloorsSelfTests {
             data.setDirty();
         }
         Room landing = FloorAssigner.landingOf(s), arena = FloorAssigner.arenaOf(s);
-        if (landing == null || arena == null) {
-            bad.add(name + " needs a Landing and an arena for this test (landing " + (landing != null) + ", arena " + (arena != null) + ")");
+        Room target = arena;                                                       // where the stand-in walks to: the arena of a banded sector
+        String targetName = "arena";
+        if (s.isFloor()) {
+            // the floor model: floors are joined by stairs, so the walk is from the arrival stairwell to the arrival stairwell of the NEXT floor when it exists (that is
+            // the change of floor a party really makes), else to the forward stairwell of the same floor (no change of floor, so no event)
+            Sector next = data.chainSector(s.polarity, s.chainIndex + 1);
+            Room nextLanding = null;
+            if (next != null && next.state != Sector.State.GENERATING && next.state != Sector.State.FAILED && !next.rooms.isEmpty()) {
+                if (!FloorAssigner.isBanded(next)) {
+                    FloorAssigner.assign(next, data);
+                    data.setDirty();
+                }
+                nextLanding = FloorAssigner.landingOf(next);
+            }
+            target = nextLanding;
+            targetName = "arrival stairwell of the next floor";
+            if (target == null) {
+                for (Room r : s.rooms) if (r.kind == RoomKind.STAIRWELL && r != landing) target = r;
+                targetName = "forward stairwell";
+            }
+        }
+        if (landing == null || target == null) {
+            bad.add(name + " needs a Landing and a " + targetName + " for this test (landing " + (landing != null) + ", " + targetName + " " + (target != null) + ")");
             return name + ": not walked";
         }
-        if (landing.floor == arena.floor) {
+        if (!s.isFloor() && landing.floor == target.floor) {
             bad.add(name + ": the Landing and the arena are both floor " + FloorMap.label(landing.floor));
             return name + ": not walked";
         }
@@ -387,14 +434,17 @@ public final class FloorsSelfTests {
             FloorTracker.check(p);
             expect(heard, List.of("enter 0->" + FloorMap.label(landing.floor)), name + " after a second look at the same place (no new event)", bad);
 
-            double[] to = stand(arena);
+            double[] to = stand(target);
             p.setPos(to[0], to[1], to[2]);
             FloorTracker.check(p);
-            List<String> expected = new ArrayList<>(List.of("enter 0->" + FloorMap.label(landing.floor), "enter " + FloorMap.label(landing.floor) + "->" + FloorMap.label(arena.floor)));
-            boolean sameRoad = Math.abs(arena.floor) > Math.abs(landing.floor);
+            List<String> expected = new ArrayList<>(List.of("enter 0->" + FloorMap.label(landing.floor)));
+            boolean moves = target.floor != landing.floor;                          // false for the other stairwell of the same floor: nothing to announce
+            boolean sameRoad = moves && Math.abs(target.floor) > Math.abs(landing.floor) && Polarity.ofFloor(target.floor) == Polarity.ofFloor(landing.floor);
+            if (moves) expected.add("enter " + FloorMap.label(landing.floor) + "->" + FloorMap.label(target.floor));
             if (sameRoad) expected.add("clear " + FloorMap.label(landing.floor));
-            expect(heard, expected, name + " after walking from the Landing to the arena", bad);
-            if (a.deepest(s.polarity) != Math.abs(arena.floor)) bad.add(name + ": the deepest floor on the " + s.polarity.id() + " road is " + a.deepest(s.polarity) + ", expected " + Math.abs(arena.floor));
+            expect(heard, expected, name + " after walking from the Landing to the " + targetName, bad);
+            int deepest = Math.abs(moves ? target.floor : landing.floor);
+            if (a.deepest(s.polarity) != deepest) bad.add(name + ": the deepest floor on the " + s.polarity.id() + " road is " + a.deepest(s.polarity) + ", expected " + deepest);
             if (sameRoad && Math.abs(landing.floor) >= FloorsConfig.get(FloorsConfig.LOCK_AT_FLOOR) && lockOn && (!a.locked() || a.chosen() != s.polarity)) {
                 bad.add(name + ": clearing the Landing's floor should lock the player to the " + s.polarity.id() + " road (locked " + a.locked() + ", road " + a.chosen() + ")");
             }
@@ -403,14 +453,16 @@ public final class FloorsSelfTests {
             int before = heard.size();
             p.setPos(to[0] + 100000, to[1], to[2] + 100000);                       // far outside every sector: no room, so the floor must be kept
             FloorTracker.check(p);
-            if (heard.size() != before || FloorTracker.currentFloor(p) != arena.floor) bad.add(name + ": a position in no room changed the floor (events " + heard + ", tracker " + FloorMap.label(FloorTracker.currentFloor(p)) + ")");
+            int kept = moves ? target.floor : landing.floor;
+            if (heard.size() != before || FloorTracker.currentFloor(p) != kept) bad.add(name + ": a position in no room changed the floor (events " + heard + ", tracker " + FloorMap.label(FloorTracker.currentFloor(p)) + ")");
         } finally {
             RECORDER.sink = null;
             RECORDER.only = null;
             AlignmentRules.reset(a);
             FloorTracker.forget(p.getUUID());
         }
-        return name + ": Landing " + FloorMap.label(landing.floor) + " then arena " + FloorMap.label(arena.floor) + " announced in order" + (locksAtOne ? ", the Landing's floor cleared and the player locked" : ", no lock expected at this config")
+        return name + ": Landing " + FloorMap.label(landing.floor) + " then the " + targetName + " " + FloorMap.label(target.floor) + " announced in order"
+                + (target.floor == landing.floor ? " (the same floor: one event)" : locksAtOne ? ", the Landing's floor cleared and the player locked" : ", no lock expected at this config")
                 + ", no event for the same place or for a position in no room";
     }
 

@@ -47,7 +47,8 @@ COLORS = [  # (regex on the block path, (r, g, b, a))
 KIND_COLORS = {"LANDING": (90, 160, 120), "SAFE": (90, 170, 130), "CORRIDOR": (176, 150, 120), "JUNCTION": (190, 160, 125), "HALL": (200, 170, 130),
                "SET_PIECE": (210, 120, 90), "CAVERN": (95, 140, 80), "TRIAL": (190, 100, 100), "TRAP": (200, 120, 60), "PUZZLE": (110, 140, 200),
                "TREASURE": (220, 190, 70), "ARENA": (180, 60, 60), "ANTECHAMBER": (150, 90, 160), "VAULT": (230, 200, 80), "ONWARD": (120, 120, 200),
-               "LINK": (150, 150, 150), "CAP": (110, 110, 110), "OTHER": (170, 170, 170)}
+               "LINK": (150, 150, 150), "CAP": (110, 110, 110), "OTHER": (170, 170, 170),
+               "STAIRWELL": (240, 215, 120)}                                  # 1.58.0: the two stairwells of a floor stand out on its map
 
 
 def color_of(block):

@@ -7,8 +7,10 @@ import com.newuniverse.nusmp.labyrinth.mega.MegaConfig;
 import com.newuniverse.nusmp.labyrinth.mega.MegaData;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
 import com.newuniverse.nusmp.labyrinth.mega.Polarity;
+import com.newuniverse.nusmp.labyrinth.mega.RegionTheme;
 import com.newuniverse.nusmp.labyrinth.mega.RoomKind;
 import com.newuniverse.nusmp.labyrinth.mega.Sector;
+import com.newuniverse.nusmp.labyrinth.mega.floors.FloorsConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -41,6 +43,12 @@ import java.util.Locale;
  * floors, the threat, the theme, the relic count and the seed are decided by {@link SectorDraft} when the sector is created. The next sector may be requested at any time
  * after the Guardian is dead (the rule is {@link ExpandRule#refusalForNext}): the facade holds the request back until the Crucible is resolved (so the relic taken can pick
  * the next theme, which {@code MegaDungeon.themeOverride} answers here), and the admin command asks at once.
+ *
+ * <p>The floor model (1.58.0, {@code floors.perSector = 1}, the default): a sector is ONE floor and floors are joined by stairs, not by tunnels. A floor stands in a
+ * fixed slot of its road's lane ({@link FloorPlan#entry}), so creating one needs no neighbour planning at all ({@link #tryNextFloor}); the next floor is queued when a
+ * party ENTERS a floor ({@link #onFloorReached}), so the stairs are normally ready by the time they are found, except behind a boss floor, whose next floor waits for the
+ * Crucible exactly as before. A road whose sectors were saved with ten floors each keeps growing the old way (tunnel and Way Onward): the length of a sector is that of
+ * the sector before it.
  */
 public final class ExpansionQueue implements Expander {
     private static final Logger LOG = LogUtils.getLogger();
@@ -130,8 +138,15 @@ public final class ExpansionQueue implements Expander {
         }
         Sector latest = data.latest();
         int id = latest == null ? 0 : latest.id + 1;
-        SectorDraft draft = SectorDraft.first(data.seed, id, road);
-        SectorPlanner.Plan plan = SectorPlanner.first(data.seed, id, road);
+        int per = FloorMap.floorsPerSector(FloorsConfig.get(FloorsConfig.PER_SECTOR));
+        SectorDraft draft = SectorDraft.first(data.seed, id, road, per);
+        SectorPlanner.Plan plan;
+        if (FloorMap.isFloorModel(per)) {
+            Request.Floor spec = FloorPlan.spec(road, 0, MegaConfig.get(MegaConfig.FLOOR_ROOMS));
+            plan = SectorPlanner.floor(data.seed, id, road, 0, spec.rooms(), spec.boss());
+        } else {
+            plan = SectorPlanner.first(data.seed, id, road);
+        }
         Sector s = create(draft);
         s.seed = plan.seed();
         s.region = SectorGenerator.bb(plan.region());
@@ -147,6 +162,7 @@ public final class ExpansionQueue implements Expander {
     /** Queues the sector behind {@code from}'s Way Onward. Returns null on success, else the reason it was refused. */
     public String tryNext(ServerLevel level, Sector from) {
         if (level == null || from == null) return "no sector";
+        if (from.isFloor()) return tryNextFloor(level, from);
         MinecraftServer server = level.getServer();
         MegaData data = MegaData.get(server);
         boolean slotTaken = data.chainSector(from.polarity, from.chainIndex + 1) != null;
@@ -164,9 +180,64 @@ public final class ExpansionQueue implements Expander {
         return null;
     }
 
-    /** What {@link ExpandRule} needs to know about a sector. */
+    /**
+     * 1.58.0: queues the floor above (or below) {@code from}. It needs no room planning: the next floor stands in the next slot of the road's lane. The theme is the
+     * floor's own draft ({@link SectorDraft}: only the first floor of a decade draws one, or takes the Crucible's choice). Returns null on success, else the reason.
+     */
+    private String tryNextFloor(ServerLevel level, Sector from) {
+        MinecraftServer server = level.getServer();
+        MegaData data = MegaData.get(server);
+        boolean slotTaken = data.chainSector(from.polarity, from.chainIndex + 1) != null;
+        String why = ExpandRule.refusalForNext(rowOf(from), data.sectors().size(), MegaConfig.get(MegaConfig.MAX_SECTORS), slotTaken);
+        if (why != null) return why;
+        Sector s = draftFloor(data, from);
+        from.nextId = s.id;
+        data.add(s);
+        queue.add(new Job(s.id, false, null));
+        LOG.info("[nusmp] Mega floor {} queued after sector {} on the {} road (floor {}{}, theme {}, seed {}).", s.id, from.id, s.polarity.id(), FloorMap.label(s.firstFloor()),
+                s.isBossFloor() ? ", a boss floor" : "", s.theme.id(), s.seed);
+        return null;
+    }
+
+    /**
+     * The floor after {@code from} as a new, unsaved sector: the next global id, the same road, the next place in it, its slot of the road's lane, its region (sized for
+     * its room count), its theme (its decade's, or the Crucible's choice on the first floor of a decade), its seed (the seed of its place). Not added to the data; the
+     * self-test {@code core.expand} plans exactly this as a dry run.
+     */
+    static Sector draftFloor(MegaData data, Sector from) {
+        int idx = from.chainIndex + 1;
+        Sector latest = data.latest();
+        int id = latest == null ? 0 : latest.id + 1;
+        RegionTheme forced = FloorMap.startsDecade(idx, from.perRegion) ? MegaDungeon.themeOverride(from) : null;
+        SectorDraft d = SectorDraft.of(data.seed, id, from.polarity, idx, from.perRegion, from.theme, forced);
+        Request.Floor spec = FloorPlan.spec(from.polarity, idx, MegaConfig.get(MegaConfig.FLOOR_ROOMS));
+        SectorPlanner.Plan plan = SectorPlanner.floor(data.seed, id, from.polarity, idx, spec.rooms(), spec.boss());
+        Sector s = create(d);
+        s.seed = d.seed();
+        s.region = SectorGenerator.bb(plan.region());
+        s.entry = SectorGenerator.pos(plan.entryFloor());
+        s.forward = SectorGenerator.dir(plan.forward());
+        return s;
+    }
+
+    /**
+     * 1.58.0: a party entered the floor of {@code s} (by its arrival stairs, by the Hub's gate, by an admin): the floor after it is queued now, so the stairs are normally
+     * ready by the time they are found. Silent when there is nothing to do (the next floor exists or is queued, the dungeon is full, the floor is of the old model) and on a
+     * boss floor (its next floor waits for the Crucible, {@code mega.expandAfterVault}, which {@code MegaDungeon.unseal} handles). Returns true when a floor was queued.
+     */
+    public boolean onFloorReached(ServerLevel level, Sector s) {
+        if (level == null || s == null || !s.isFloor() || s.isBossFloor()) return false;
+        if (s.nextId >= 0 || working(s.id) || !SectorGenerator.playable(s)) return false;
+        if (!MegaConfig.get(MegaConfig.EXPANSION)) return false;
+        String why = tryNextFloor(level, s);
+        if (why != null) LOG.info("[nusmp] Mega floor after {} not queued: {}", s.id, why);
+        return why == null;
+    }
+
+    /** What {@link ExpandRule} needs to know about a sector: a floor of the floor model has a way on when it has forward stairs, any other sector when its Way Onward has a seal. */
     static ExpandRule.Row rowOf(Sector s) {
-        return new ExpandRule.Row(s.id, s.expansionPos != null && s.expansionFacing != null, s.nextId, s.state == Sector.State.GENERATING, s.state == Sector.State.FAILED);
+        boolean way = (s.expansionPos != null && s.expansionFacing != null) || (s.isFloor() && s.stairForward != null);
+        return new ExpandRule.Row(s.id, way, s.nextId, s.state == Sector.State.GENERATING, s.state == Sector.State.FAILED);
     }
 
     /** Where the sector behind {@code from}'s Way Onward would go (region, entry door, tunnel length), or null when older sectors leave no room. Changes nothing. */

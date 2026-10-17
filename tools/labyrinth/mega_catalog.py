@@ -27,11 +27,43 @@ DATA = os.path.join(L.RES, "data", "nusmp")
 OUT = os.path.join(L.ROOT, "src", "test", "resources", "mega", "catalog.json")
 FOLDER_KIND = {"landing": "LANDING", "safe": "SAFE", "corridor": "CORRIDOR", "junction": "JUNCTION", "hall": "HALL", "set": "SET_PIECE", "cavern": "CAVERN",
                "trial": "TRIAL", "trap": "TRAP", "puzzle": "PUZZLE", "treasure": "TREASURE", "arena": "ARENA", "antechamber": "ANTECHAMBER",
-               "vault": "VAULT", "onward": "ONWARD", "link": "LINK", "cap": "CAP"}
+               "vault": "VAULT", "onward": "ONWARD", "link": "LINK", "cap": "CAP", "stairwell": "STAIRWELL"}
+THEME_DIR = os.path.join(DATA, "mega", "template_themes")
+
+
+def theme_rules():
+    """[(prefix, theme id)] of every data/nusmp/mega/template_themes/*.json (1.58.0, docs/labyrinth/mega_v2.md section 5.1): a template whose id starts with a prefix may
+    only be drawn in sectors of that theme. Prefixes are written with or without the namespace; here they get it, like the pool entries have it. A file that cannot be
+    read is skipped here and reported by mega_check.py."""
+    out = []
+    for path in sorted(glob.glob(os.path.join(THEME_DIR, "*.json"))):
+        try:
+            doc = json.load(open(path))
+        except ValueError:
+            continue
+        theme = str(doc.get("theme", "")).strip().lower()
+        for prefix in doc.get("templates", []):
+            if isinstance(prefix, str) and prefix.strip():
+                p = prefix.strip()
+                out.append((p if ":" in p else "nusmp:" + p, theme))
+    return out
+
+
+def themes_of(template_id, rules):
+    """The themes that may draw this template (sorted), or [] when it is free for every theme: the themes of the LONGEST matching prefix, the rule of TemplateThemes.java."""
+    best, themes = -1, set()
+    for prefix, theme in rules:
+        if template_id.startswith(prefix):
+            if len(prefix) > best:
+                best, themes = len(prefix), {theme}
+            elif len(prefix) == best:
+                themes.add(theme)
+    return sorted(themes)
 
 
 def build():
     templates = {}
+    rules = theme_rules()
     for path in sorted(glob.glob(os.path.join(DATA, "structure", "mega", "**", "*.nbt"), recursive=True)):
         name = os.path.relpath(path, os.path.join(DATA, "structure")).replace(os.sep, "/")[:-4]
         t = load(path, name)
@@ -55,7 +87,7 @@ def build():
                         elif a:
                             args[a] = "true"
                     markers.append({"kind": parts_m[0][6:], "x": x, "y": y, "z": z, "args": args})
-        templates["nusmp:" + name] = {"size": list(t.size), "kind": kind, "sockets": sockets, "markers": markers}
+        templates["nusmp:" + name] = {"size": list(t.size), "kind": kind, "sockets": sockets, "markers": markers, "themes": themes_of("nusmp:" + name, rules)}
     pools = {}
     for path in sorted(glob.glob(os.path.join(DATA, "worldgen", "template_pool", "mega", "*.json"))):
         pid = "nusmp:mega/" + os.path.basename(path)[:-5]

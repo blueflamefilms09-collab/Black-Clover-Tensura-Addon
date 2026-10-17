@@ -52,6 +52,18 @@ public final class CommandLines {
         return queued(verb, id) + " on the " + road.id() + " road (floors " + FloorMap.label(firstFloor) + ".." + FloorMap.label(lastFloor) + ")";
     }
 
+    /**
+     * The stairs of a floor of the floor model, the line {@code /multiverse mega sector <id>} prints after the landmarks and the CI smoke test parses:
+     * {@code   stairs back=<x,y,z|none> forward=<x,y,z|none> forwardPad=<x,y,z|none> leadsOn=<sector id|none> leadsBack=<sector id|hub|none> boss=<true|false> climbs=<up|down>}.
+     * {@code leadsOn} is the id of the sector the forward stairs lead to, {@code leadsBack} the one the stairs back lead to ({@code hub} from the first floor), {@code none}
+     * where that floor does not exist (yet). {@code climbs} is the way the FORWARD stairs go: {@code up} on the Holy road, {@code down} on the Abyssal road.
+     */
+    public static String stairs(String back, String forward, String forwardPad, StairLinks.Dest backDest, StairLinks.Dest forwardDest, Polarity road, boolean boss, int forwardId, int backId) {
+        String leadsBack = backDest.hub() ? "hub" : backId < 0 ? "none" : Integer.toString(backId);
+        return "  stairs back=" + (back == null ? "none" : back) + " forward=" + (forward == null ? "none" : forward) + " forwardPad=" + (forwardPad == null ? "none" : forwardPad)
+                + " leadsOn=" + (forwardId < 0 ? "none" : Integer.toString(forwardId)) + " leadsBack=" + leadsBack + " boss=" + boss + " climbs=" + (road == Polarity.ABYSSAL ? "down" : "up");
+    }
+
     /** {@code audit <id> OK} or {@code audit <id> FAIL: <failure>; <failure>}. */
     public static String audit(int id, List<String> failures) {
         return failures.isEmpty() ? "audit " + id + " OK" : "audit " + id + " FAIL: " + String.join("; ", failures);

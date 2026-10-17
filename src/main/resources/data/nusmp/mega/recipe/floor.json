@@ -1,0 +1,21 @@
+{
+  "_why": "The recipe of a FLOOR of the floor model (1.58.0, docs/labyrinth/mega_v2_gen2.md): the promises one small level makes, kept as data so the pacing can be retuned without a new jar. It is the default recipe with the numbers of a floor of about 28 rooms in a region of 13 to 19 modules (the old sector had about 100 rooms in 19 x 19): every distance is shorter, there is one treasure closet to find instead of two, and at most one trial, trap and puzzle room each (they are big rooms, and a small floor with three traps would be a gauntlet). `stairMinWalk` is the least number of doorways between the arrival stairs and the forward stairs. The values below are the numbers compiled into mega.gen.Recipe.forFloors; the unit test FloorRecipeTest fails if the two drift apart. Keys that start with an underscore are comments.",
+  "maxDepth": 24,
+  "minRooms": 12,
+  "minLoops": 1,
+  "arenaMinDistance": 7,
+  "arenaMinDepth": 3,
+  "reserveDepth": 0,
+  "extraSafe": 1,
+  "safeMinDistance": 2,
+  "safeMaxDistance": 9,
+  "min": { "trial": 0, "treasure": 1 },
+  "max": { "set": 1, "trial": 1, "trap": 1, "puzzle": 1 },
+  "shapeMax": { "nusmp:mega/hall/great_hall": 1, "nusmp:mega/set/cathedral_rotunda": 1, "nusmp:mega/trap/dark_room": 1 },
+  "chainSockets": 120,
+  "chainLeaves": 4,
+  "stepBudget": 600000,
+  "capReserve": 12,
+  "requireMarkers": true,
+  "stairMinWalk": 4
+}

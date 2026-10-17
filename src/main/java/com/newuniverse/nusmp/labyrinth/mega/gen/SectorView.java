@@ -22,9 +22,22 @@ import java.util.List;
  * @param seal        the jigsaw cell of the Way Onward's rubble seal, or null
  * @param sealFacing  the way the seal points (the direction the next sector attaches), or null
  * @param nextId      the sector generated off this one's Way Onward, or -1
+ * @param floorModel  1.58.0: is the sector one floor with stairwells (the floor model)? Then it has no Landing: the arrival stairwell takes its place
+ * @param bossFloor   1.58.0: does the floor have the boss chain? An ordinary floor of the floor model has none, and no Way Onward seal
+ * @param stairBack   1.58.0: the stair exit of the arrival stairwell (it leads back), or null
+ * @param stairForward 1.58.0: the stair exit of the forward stairwell (it leads on), or null
+ * @param stairForwardPad 1.58.0: the cell where a party stands when it comes back from the next floor, or null
  */
 public record SectorView(int id, String state, Box region, List<SectorFill.RoomOut> rooms, List<int[]> edges, List<MarkerView> markers, int relicCount,
-                         List<Vec> pedestals, Vec arrival, Vec guardianSpawn, Vec gatekeeper, Vec vaultCenter, Vec seal, Facing sealFacing, int nextId) {
+                         List<Vec> pedestals, Vec arrival, Vec guardianSpawn, Vec gatekeeper, Vec vaultCenter, Vec seal, Facing sealFacing, int nextId,
+                         boolean floorModel, boolean bossFloor, Vec stairBack, Vec stairForward, Vec stairForwardPad) {
+    /** A sector of the old model (no stairwells): the 1.55.0 shape of the view, which the tests of that time build by hand. */
+    public SectorView(int id, String state, Box region, List<SectorFill.RoomOut> rooms, List<int[]> edges, List<MarkerView> markers, int relicCount,
+                      List<Vec> pedestals, Vec arrival, Vec guardianSpawn, Vec gatekeeper, Vec vaultCenter, Vec seal, Facing sealFacing, int nextId) {
+        this(id, state, region, rooms, edges, markers, relicCount, pedestals, arrival, guardianSpawn, gatekeeper, vaultCenter, seal, sealFacing, nextId,
+                false, true, null, null, null);
+    }
+
     /** A saved marker as far as the audit cares: what it is and where. */
     public record MarkerView(MarkerKind kind, Vec cell) {}
 }

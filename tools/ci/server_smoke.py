@@ -22,6 +22,9 @@ What it checks, in order:
   5. the vanilla Jigsaw machinery places our pools and processors (`/place jigsaw nusmp:mega/<pool> nusmp:mega_door 3 x 64 z` in the dimension);
   6. the Mega-Dungeon generator: `/multiverse mega expand` creates sector 0, `status` reaches ACTIVE, `audit 0` is OK; `unseal k` grows sector k+1 up to
      `--sectors`, every audit is OK, regions never closer than the 12-block gap; `regen 0` reproduces the same plan (determinism);
+  6b. the floor model (1.58.0, one floor per sector, joined by stairs): the stairwell pools go through Jigsaw, `expand holy` and `expand abyssal` add a floor
+     each, every floor audits OK, and the `stairs ...` line of `sector <id>` has both stairwells inside the floor's region, the right climb for the road, the hub
+     behind the first floor, floor n leading to floor n + 1 and back, and floors that never touch;
   7. `--restart`: the server is stopped and started again, and `status` still lists the same sectors in the same states (saved data and resume);
   8. the final log has no mod-related ERROR or exception.
 """
@@ -242,6 +245,11 @@ class Smoke:
         with open(path, "w") as f:
             for k, v in existing.items():
                 f.write("%s=%s\n" % (k, v))
+        if self.args.per_sector > 0:
+            conf = os.path.join(RUN, "world", "serverconfig")
+            os.makedirs(conf, exist_ok=True)
+            with open(os.path.join(conf, "nusmp-labyrinth-mega-floors-server.toml"), "w") as f:
+                f.write("[floors]\n\tperSector = %d\n" % self.args.per_sector)
         if not self.args.no_deps:
             self.fetch_terrablender()
 
@@ -504,6 +512,148 @@ class Smoke:
                     return None
         return None
 
+    # ---- 1.58.0: the floor model (one floor per sector, floors joined by stairs)
+    FLOOR_SECTOR_RE = re.compile(r"sector (\d+) (\w+) theme=(\w+) .*? road=(\w+) chain=(\d+) floors=([+-]?\d+)\.\.([+-]?\d+)")
+    STAIRS_RE = re.compile(r"stairs back=(\S+) forward=(\S+) forwardPad=(\S+) leadsOn=(\S+) leadsBack=(\S+) boss=(true|false) climbs=(up|down)")
+    ROAD_RE = re.compile(r"road (holy|abyssal): sectors=(\d+) ids=([\d,]+)")
+
+    def road_ids(self):
+        """The sector ids of each opened road in chain order, read from `multiverse mega status`."""
+        text = self.run("multiverse mega status")
+        return {m.group(1): [int(x) for x in m.group(3).split(",")] for m in self.ROAD_RE.finditer(text)}
+
+    def floor_info(self, sid):
+        """What `multiverse mega sector <id>` says about one floor of the floor model, or None when the sector has no stairs line (a sector of the old ten-floor model)."""
+        text = self.run("multiverse mega sector %d" % sid)
+        a, b = self.FLOOR_SECTOR_RE.search(text), self.STAIRS_RE.search(text)
+        if not a or not b:
+            return None
+        g, h = a.groups(), b.groups()
+        return {"id": int(g[0]), "state": g[1], "theme": g[2], "road": g[3], "chain": int(g[4]), "first": int(g[5]), "last": int(g[6]),
+                "back": h[0], "forward": h[1], "pad": h[2], "on": h[3], "backTo": h[4], "boss": h[5] == "true", "climbs": h[6]}
+
+    @staticmethod
+    def inside(cell, region):
+        """Is the x,y,z cell of a stairs line inside the x1,z1,x2,z2 region of its floor (looked at in x and z)?"""
+        try:
+            x, _, z = [int(v) for v in cell.split(",")]
+        except ValueError:
+            return False
+        return region[0] <= x <= region[2] and region[1] <= z <= region[3]
+
+    def phase_floor_pools(self):
+        """The new stairwell pools through vanilla Jigsaw, exactly as phase_jigsaw does for the old ones: the templates load in the real game, the pools resolve, the processors run."""
+        x, z = 300, 160000
+        for pool in ("stairwell_up", "stairwell_down", "stairwell_grand_up", "stairwell_grand_down", "stair_door"):
+            self.run("execute in nusmp:mega_dungeon run forceload add %d %d %d %d" % (x - 48, z - 48, x + 48, z + 48))
+            r = ""
+            for _ in range(4):
+                time.sleep(2)
+                r = self.run("execute in nusmp:mega_dungeon run place jigsaw nusmp:mega/%s nusmp:mega_door 3 %d 64 %d" % (pool, x, z))
+                if "not loaded" not in r:
+                    break
+            self.run("execute in nusmp:mega_dungeon run forceload remove %d %d %d %d" % (x - 48, z - 48, x + 48, z + 48))
+            x += 300
+            if "generated jigsaw" in r.lower():
+                self.ok("floor-pool-" + pool, "vanilla Jigsaw placed our pool with its processors")
+            elif self.missing(r) or "Invalid" in r:
+                (self.fail if self.args.strict else self.skip)("floor-pool-" + pool, r.strip()[:120])
+            else:
+                self.fail("floor-pool-" + pool, r.strip()[:200])
+
+    def grow(self, road, label):
+        """Queues the next floor of a road and waits until it is built. Returns its sector id, or None (the check says why)."""
+        r = self.run("multiverse mega expand " + road)
+        m = re.search(r"queued sector (\d+) on the %s road" % road, r)
+        if not m:
+            (self.fail if self.args.strict else self.skip)(label, r.strip()[:200])
+            return None
+        nid = int(m.group(1))
+        st = self.wait_active(nid, label)
+        if not st:
+            return None
+        (self.ok if st["state"] == "ACTIVE" else self.fail)(label, "sector %d is %s: rooms=%d pieces=%d theme=%s" % (nid, st["state"], st["rooms"], st["pieces"], st["theme"]))
+        return nid if st["state"] == "ACTIVE" else None
+
+    def phase_floors(self):
+        """The floor model: every floor is a sector of its own and floors are joined by stairs. Puts the stairwell pools through Jigsaw, grows the Abyssal road by one floor and the
+        Holy road up to --floors floors (`expand abyssal`, `expand holy`, each waited for), audits every floor, counts its rooms by kind (two stairwells; the boss chain on
+        a boss floor and nowhere else) and reads the stairs line of `sector <id>`: both stairwells have their markers inside the floor's region, the stairs go the way the road
+        goes, the first floor leads back to the hub, the forward stairs of floor n lead to floor n+1 (whose back stairs lead to floor n) once it exists, and no two floors of a
+        road touch."""
+        roads = self.road_ids()
+        first = next((ids[0] for ids in roads.values() if ids), None)
+        if first is None:
+            (self.fail if self.args.strict else self.skip)("floors", "the status shows no road with a floor")
+            return
+        if self.floor_info(first) is None:
+            self.skip("floors", "the first sector has no stairs line: this world is of the ten-floor model (floors.perSector = 10)")
+            return
+        self.phase_floor_pools()
+        if roads.get("abyssal"):
+            self.grow("abyssal", "floors-expand-abyssal")
+        else:
+            self.skip("floors-expand-abyssal", "the abyssal road is not opened")
+        if roads.get("holy"):
+            # the Holy road is grown up to --floors floors: 10 reaches the first boss floor, which is where the boss chain, the grand stairs and the self-tests of the Guardian and the Crucible live
+            for _ in range(max(1, self.args.floors - len(roads["holy"]))):
+                if self.grow("holy", "floors-expand-holy%+d" % (len(self.road_ids().get("holy", [])) + 1)) is None:
+                    break
+        else:
+            self.skip("floors-expand-holy", "the holy road is not opened")
+        roads = self.road_ids()
+        _, sectors = self.status()
+        for road, ids in roads.items():
+            for pos, sid in enumerate(ids):
+                a = self.run("multiverse mega audit %d" % sid)
+                (self.ok if ("audit %d OK" % sid) in a else self.fail)("floors-audit-%d" % sid, a.strip()[:300])
+                info = self.floor_info(sid)
+                if info is None:
+                    self.fail("floors-stairs-%d" % sid, "the sector has no stairs line")
+                    continue
+                problems = []
+                if info["road"] != road or info["chain"] != pos:
+                    problems.append("it says %s road place %d but the status has it at %s place %d" % (info["road"], info["chain"], road, pos))
+                want_floor = (pos + 1) * (1 if road == "holy" else -1)
+                if info["first"] != want_floor or info["last"] != want_floor:
+                    problems.append("its floors are %+d..%+d, not the single floor %+d" % (info["first"], info["last"], want_floor))
+                if "none" in (info["back"], info["forward"], info["pad"]):
+                    problems.append("a stairwell has no marker (back=%s forward=%s landing=%s)" % (info["back"], info["forward"], info["pad"]))
+                elif sid in sectors and not all(self.inside(c, sectors[sid]["region"]) for c in (info["back"], info["forward"], info["pad"])):
+                    problems.append("a stair cell lies outside the floor's region %s" % (sectors[sid]["region"],))
+                if info["back"] == info["forward"]:
+                    problems.append("both stairs are the same cell")
+                if info["climbs"] != ("up" if road == "holy" else "down"):
+                    problems.append("the forward stairs go %s on the %s road" % (info["climbs"], road))
+                want_back = "hub" if pos == 0 else str(ids[pos - 1])
+                if info["backTo"] != want_back:
+                    problems.append("the way back leads to %s, not %s" % (info["backTo"], want_back))
+                want_on = str(ids[pos + 1]) if pos + 1 < len(ids) else "none"
+                if info["on"] != want_on:
+                    problems.append("the forward stairs lead to %s, not %s" % (info["on"], want_on))
+                if info["boss"] != (abs(want_floor) % 10 == 0):
+                    problems.append("boss=%s for floor %+d" % (info["boss"], want_floor))
+                rooms = self.run("multiverse mega rooms %d" % sid)
+                counts = {m.group(1): int(m.group(2)) for m in re.finditer(r"^(\w+) (\d+)\s*$", rooms, re.M)}
+                if not counts:
+                    problems.append("`rooms` printed no counts")
+                else:
+                    if counts.get("stairwell", 0) != 2:
+                        problems.append("%d stairwell room(s), not 2" % counts.get("stairwell", 0))
+                    chain = [counts.get(k, 0) for k in ("arena", "antechamber", "vault", "onward")]
+                    want = [1, 1, 1, 1] if info["boss"] else [0, 0, 0, 0]
+                    if chain != want:
+                        problems.append("arena/antechamber/vault/onward are %s, a %s floor needs %s" % (chain, "boss" if info["boss"] else "ordinary", want))
+                    if counts.get("landing", 0):
+                        problems.append("a floor of the floor model has a Landing room")
+                if pos + 1 < len(ids) and sid in sectors and ids[pos + 1] in sectors:
+                    gap = self.gap(sectors[sid]["region"], sectors[ids[pos + 1]]["region"])
+                    if gap < 12:
+                        problems.append("floor %+d and floor %+d are only %d blocks apart" % (want_floor, want_floor + (1 if road == "holy" else -1), gap))
+                (self.fail if problems else self.ok)("floors-stairs-%d" % sid,
+                                                     "; ".join(problems) if problems else "%s floor %+d: back %s -> %s, forward %s -> %s, boss=%s" % (road, want_floor, info["back"], want_back, info["forward"], want_on, info["boss"]))
+        self.final_status = self.status()[1]                                       # the restart check compares with the dungeon as it stands now, floors added here included
+
     def phase_restart(self):
         self.run("save-all flush")
         time.sleep(3)
@@ -535,6 +685,7 @@ class Smoke:
             self.phase_reload()
             ran = self.phase_mega()
             if ran:
+                self.phase_floors()
                 self.phase_selftests()
             self.scan_log("run")
             if self.args.restart and ran:
@@ -580,6 +731,8 @@ def main(argv):
     ap.add_argument("--boot-timeout", type=int, default=1800)
     ap.add_argument("--gen-timeout", type=int, default=600)
     ap.add_argument("--sectors", type=int, default=3)
+    ap.add_argument("--floors", type=int, default=10, help="floor model: grow the Holy road to this many floors (10 reaches the first boss floor)")
+    ap.add_argument("--per-sector", type=int, default=0, help="write floors.perSector into the world's server config before the first boot (10 = the old ten-floor sectors, which the self-tests of the Guardian and the Crucible still assume; 0 = leave the default of 1 floor per sector)")
     ap.add_argument("--restart", action="store_true")
     ap.add_argument("--strict", action="store_true", help="a missing pool, structure or command is a FAILURE (the integrated build must have them all)")
     ap.add_argument("--no-deps", action="store_true", help="do not download TerraBlender (self-test with a stand-in server)")

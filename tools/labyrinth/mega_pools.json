@@ -7,7 +7,8 @@
     "drown the corridors). `relative` maps a template-id prefix (longest prefix wins, default 1) to its weight inside its folder.",
     "A pool with `absolute: true` uses `relative` as plain weights (default 1) instead. `filter` keeps only templates whose file name starts with it,",
     "`empty` adds an empty pool element of that weight (the assembler then draws the fallback pool: a door cap), `fallback` is the pool drawn after the",
-    "elements. Vanilla limits a weight to 1..150."
+    "elements. Vanilla limits a weight to 1..150.",
+    "1.58.0, the floor model: `stair_door` is where the arrival stairwell's only door draws its first room from (corridors, junctions and halls, which all have several doors, so a floor never starts in a dead end); `stairwell_up`, `stairwell_down`, `stairwell_grand_up`, `stairwell_grand_down` are the four kinds of stairwell by file-name prefix (up_*, down_*, grand_up_*, grand_down_*), drawn for the arrival and the forward stairs of a floor by mega.gen.FloorPlan. Why a new pool and not `side`: the arrival stairwell has ONE door, and `side` holds treasure closets and other dead ends."
   ],
   "scale": 20,
   "processors": "nusmp:mega_interior",
@@ -191,6 +192,74 @@
         "mega/link/straight_b": 4,
         "mega/link/waystation": 1
       },
+      "fallback": "nusmp:mega/cap"
+    },
+    "stair_door": {
+      "folders": {
+        "corridor": 5,
+        "junction": 3,
+        "hall": 3
+      },
+      "relative": {
+        "mega/corridor/straight_1x2": 3,
+        "mega/corridor/straight_1x3": 3,
+        "mega/corridor/straight_1x4": 2,
+        "mega/corridor/bend": 2,
+        "mega/corridor/tee": 2,
+        "mega/corridor/cross": 1,
+        "mega/corridor/gallery": 1,
+        "mega/junction/plaza_2x2": 3,
+        "mega/junction/plaza_3x3": 2,
+        "mega/junction/crossroads_hall": 2,
+        "mega/hall/cell_block": 10,
+        "mega/hall/torture_chamber": 4,
+        "mega/hall/crypt_a": 14,
+        "mega/hall/crypt_b": 10,
+        "mega/hall/ossuary": 10,
+        "mega/hall/library": 10,
+        "mega/hall/alchemy_lab": 10,
+        "mega/hall/armory_forge": 10,
+        "mega/hall/kitchen_larder": 10,
+        "mega/hall/barracks_a": 14,
+        "mega/hall/barracks_b": 10,
+        "mega/hall/shrine_a": 10,
+        "mega/hall/shrine_b": 5,
+        "mega/hall/great_hall": 5,
+        "mega/hall/round_hall": 6,
+        "mega/hall/colonnade_hall_a": 6,
+        "mega/hall/colonnade_hall_b": 5,
+        "mega/hall/cistern": 4,
+        "mega/hall/lava_hall": 4,
+        "mega/hall/mirror_hall": 4
+      },
+      "fallback": "nusmp:mega/cap"
+    },
+    "stairwell_up": {
+      "folders": {
+        "stairwell": 1
+      },
+      "filter": "up_",
+      "fallback": "nusmp:mega/cap"
+    },
+    "stairwell_down": {
+      "folders": {
+        "stairwell": 1
+      },
+      "filter": "down_",
+      "fallback": "nusmp:mega/cap"
+    },
+    "stairwell_grand_up": {
+      "folders": {
+        "stairwell": 1
+      },
+      "filter": "grand_up_",
+      "fallback": "nusmp:mega/cap"
+    },
+    "stairwell_grand_down": {
+      "folders": {
+        "stairwell": 1
+      },
+      "filter": "grand_down_",
       "fallback": "nusmp:mega/cap"
     }
   }

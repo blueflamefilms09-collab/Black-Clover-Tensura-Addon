@@ -19,7 +19,9 @@ import com.newuniverse.nusmp.labyrinth.mega.RegionTheme;
  *     first. {@link #seedKey} is the number of the place (road and chain index), so the Holy road's third sector is the same sector in every world with that seed.
  *     The key of the first Holy sector is 0, the number 1.54.0 used for its sector 0, so a plan of that sector is unchanged.</li>
  * <li><b>The theme is the Crucible's choice first.</b> The relic taken in the previous sector's vault may force the next theme; only when nobody forced one does the
- *     seeded, road-biased draw ({@link RegionTheme#pick(long, int, RegionTheme, Polarity)}) decide, and the first sector of a road wears the road's signature theme.</li>
+ *     seeded, road-biased draw ({@link RegionTheme#pick(long, int, RegionTheme, Polarity)}) decide, and the first sector of a road wears the road's signature theme.
+ *     1.58.0, the floor model: a theme belongs to a DECADE of floors, so only the first floor of each decade (floor 1, 11, 21 ...) draws one (the draw is made for the decade
+ *     index) or takes the Crucible's choice; the other nine floors keep the theme of the floor before.</li>
  * <li><b>Threat counts floors.</b> It is {@link SectorThreat#of}: the distance from Floor 0 of the sector's first floor, not {@code 1 + id}.</li>
  * </ul>
  *
@@ -42,6 +44,11 @@ public record SectorDraft(int id, Polarity road, int chainIndex, int perRegion, 
         return of(dungeonSeed, id, road, 0, FloorMap.DEFAULT_PER_REGION, null, null);
     }
 
+    /** 1.58.0: the first sector of a road with {@code perRegion} floors per sector (1 = the floor model). */
+    public static SectorDraft first(long dungeonSeed, int id, Polarity road, int perRegion) {
+        return of(dungeonSeed, id, road, 0, perRegion, null, null);
+    }
+
     /**
      * The sector at {@code chainIndex} of a road. {@code previous} is the theme of the sector before it (null for the first) and {@code override} the theme the
      * Crucible's chosen relic forces (null for no opinion).
@@ -49,7 +56,16 @@ public record SectorDraft(int id, Polarity road, int chainIndex, int perRegion, 
     public static SectorDraft of(long dungeonSeed, int id, Polarity road, int chainIndex, int perRegion, RegionTheme previous, RegionTheme override) {
         int idx = Math.max(0, chainIndex);
         int per = Math.max(1, perRegion);
-        RegionTheme theme = override != null ? override : RegionTheme.pick(dungeonSeed, idx, previous, road);
+        RegionTheme theme;
+        if (FloorMap.isFloorModel(per)) {
+            // the floor model: a theme belongs to a DECADE of floors (1..10, 11..20 ...). Only the first floor of a decade draws one (or takes the one the Crucible's relic
+            // chose, which is why the override is ignored on every other floor); the rest of the decade wears the theme of the floor before.
+            boolean starts = FloorMap.startsDecade(idx, per);
+            if (!starts && previous != null) theme = previous;
+            else theme = override != null && starts ? override : RegionTheme.pick(dungeonSeed, FloorMap.decadeOf(idx, per), previous, road);
+        } else {
+            theme = override != null ? override : RegionTheme.pick(dungeonSeed, idx, previous, road);
+        }
         int key = seedKey(road, idx);
         return new SectorDraft(id, road, idx, per, SectorThreat.of(road, idx, per), SectorPlanner.sectorSeed(dungeonSeed, key), theme, theme.relicCount(dungeonSeed, key));
     }

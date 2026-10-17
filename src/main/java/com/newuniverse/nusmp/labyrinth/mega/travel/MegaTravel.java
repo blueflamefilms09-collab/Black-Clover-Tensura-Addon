@@ -184,7 +184,12 @@ public final class MegaTravel {
             return false;
         }
         String floor = FloorMap.label(target.firstFloor());
-        String message = target.chainIndex == 0
+        String way = target.polarity == Polarity.HOLY ? "up" : "down";
+        String message = target.isFloor()
+                ? (target.chainIndex == 0
+                        ? "The gate closes behind you. You stand at the foot of the stairs of floor " + floor + ". Find the stairs that lead " + way + "."
+                        : "You come out at the foot of the stairs of floor " + floor + ".")
+                : target.chainIndex == 0
                 ? "The gate closes behind you. Lamps burn in a hall of dark stone: a Landing, floor " + floor + ". Walk on, and the Labyrinth will find you."
                 : "You step out onto the Landing of floor " + floor + ".";
         LabyrinthTravel.arrive(p, mega, pad, message);
@@ -261,7 +266,7 @@ public final class MegaTravel {
             Sector s = MegaDungeon.sectorAt(p.level(), at);
             if (s == null) return;
             Room r = s.roomAt(at);
-            if (r == null || r.kind != RoomKind.LANDING) return;
+            if (r == null || (r.kind != RoomKind.LANDING && r.kind != RoomKind.STAIRWELL)) return;
             remember(p, s);
         } catch (Throwable t) {
             LOG.debug("[nusmp] Landing check failed: {}", t.toString());

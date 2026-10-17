@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.labyrinth.mega.gen;
 
 import com.mojang.logging.LogUtils;
+import com.newuniverse.nusmp.labyrinth.mega.FloorMap;
 import com.newuniverse.nusmp.labyrinth.mega.Marker;
 import com.newuniverse.nusmp.labyrinth.mega.MegaConfig;
 import com.newuniverse.nusmp.labyrinth.mega.MegaData;
@@ -8,6 +9,7 @@ import com.newuniverse.nusmp.labyrinth.mega.Polarity;
 import com.newuniverse.nusmp.labyrinth.mega.Room;
 import com.newuniverse.nusmp.labyrinth.mega.RoomKind;
 import com.newuniverse.nusmp.labyrinth.mega.Sector;
+import com.newuniverse.nusmp.labyrinth.mega.floors.FloorsConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -130,6 +132,7 @@ public final class SectorGenerator {
         long t0 = System.nanoTime();
         VanillaPools pools = VanillaPools.get();
         pools.bind(level.getStructureManager());
+        if (s.isFloor()) return planFloor(pools, s, t0);
         Recipe recipe = pools.recipe();
         Vec entryJigsaw = new Vec(s.entry.getX(), s.entry.getY() + 1, s.entry.getZ());
         Facing forward = facing(s.forward);
@@ -148,7 +151,7 @@ public final class SectorGenerator {
             LOG.warn("[nusmp] Mega sector {} ({} road, chain index {}) has no predecessor that points at it; it is planned as a free-standing sector.", s.id, s.polarity.id(), s.chainIndex);
         }
         SectorRequests.Inputs in = new SectorRequests.Inputs(pools, recipe, MegaConfig.get(MegaConfig.MAX_PIECES), MegaConfig.get(MegaConfig.MAX_LINK_MODULES), s.seed,
-                entryJigsaw, forward, region, prevSeal, prevFacing, prevRegion, obstacles(data, s.id, -1, s.polarity), s.relicCount);
+                entryJigsaw, forward, region, prevSeal, prevFacing, prevRegion, obstacles(data, s.id, -1, s.polarity), s.relicCount, s.theme.id(), pools.themes(), null);
         SectorRequests.Prepared prep = SectorRequests.prepare(in);
         for (String n : prep.notes()) LOG.warn("[nusmp] Mega sector {} plan: {}", s.id, n);
         if (!prep.ok()) return new Planned(prep, null, System.nanoTime() - t0, prep.failure());
@@ -156,6 +159,27 @@ public final class SectorGenerator {
         long dt = System.nanoTime() - t0;
         if (!solved.ok()) return new Planned(prep, solved, dt, "no sector could be assembled: " + SectorSolver.summary(solved.failures(), 4));
         for (String w : solved.result().warnings) LOG.warn("[nusmp] Mega sector {} plan: {}", s.id, w);
+        return new Planned(prep, solved, dt, null);
+    }
+
+    /**
+     * 1.58.0, the floor model: plans one floor. A floor depends on nothing but its own saved data (seed, region, entry, theme, relic count) and the data pack: there
+     * is no predecessor to hang from and no neighbour to keep out of (floors stand in fixed slots and are joined by stairs), so a floor can be planned, repaired and
+     * regenerated alone, which is what makes the restart repair and {@code regen} safe. The REGION is the saved one (its size came from the room count of the time the
+     * floor was created), the room count and the stairs are asked of the config and the road now.
+     */
+    private static Planned planFloor(VanillaPools pools, Sector s, long t0) {
+        Vec entryJigsaw = new Vec(s.entry.getX(), s.entry.getY() + 1, s.entry.getZ());
+        Request.Floor spec = FloorPlan.spec(s.polarity, s.chainIndex, MegaConfig.get(MegaConfig.FLOOR_ROOMS));
+        SectorRequests.Inputs in = new SectorRequests.Inputs(pools, pools.floorRecipe(), MegaConfig.get(MegaConfig.MAX_PIECES), MegaConfig.get(MegaConfig.MAX_LINK_MODULES), s.seed,
+                entryJigsaw, facing(s.forward), box(s.region), null, null, null, List.of(), s.relicCount, s.theme.id(), pools.themes(), spec);
+        SectorRequests.Prepared prep = SectorRequests.prepare(in);
+        for (String n : prep.notes()) LOG.warn("[nusmp] Mega floor {} plan: {}", s.id, n);
+        if (!prep.ok()) return new Planned(prep, null, System.nanoTime() - t0, prep.failure());
+        SectorSolver.Solved solved = SectorSolver.solve(prep.request(), MegaConfig.get(MegaConfig.ASSEMBLE_TRIES));
+        long dt = System.nanoTime() - t0;
+        if (!solved.ok()) return new Planned(prep, solved, dt, "no floor could be assembled: " + SectorSolver.summary(solved.failures(), 4));
+        for (String w : solved.result().warnings) LOG.warn("[nusmp] Mega floor {} plan: {}", s.id, w);
         return new Planned(prep, solved, dt, null);
     }
 
@@ -171,14 +195,36 @@ public final class SectorGenerator {
         long t0 = System.nanoTime();
         VanillaPools pools = VanillaPools.get();
         pools.bind(level.getStructureManager());
+        if (FloorMap.isFloorModel(FloorMap.floorsPerSector(FloorsConfig.get(FloorsConfig.PER_SECTOR)))) {
+            return probeFloor(pools, dungeonSeed, road, 0, t0);
+        }
         SectorPlanner.Plan plan = SectorPlanner.first(dungeonSeed, 0, road);
+        SectorDraft first = SectorDraft.first(dungeonSeed, 0, road);
         SectorRequests.Inputs in = new SectorRequests.Inputs(pools, pools.recipe(), MegaConfig.get(MegaConfig.MAX_PIECES), MegaConfig.get(MegaConfig.MAX_LINK_MODULES), plan.seed(),
-                plan.entry(), plan.forward(), plan.region(), null, null, null, List.of(), SectorDraft.first(dungeonSeed, 0, road).relicCount());
+                plan.entry(), plan.forward(), plan.region(), null, null, null, List.of(), first.relicCount(), first.theme().id(), pools.themes(), null);
         SectorRequests.Prepared prep = SectorRequests.prepare(in);
         if (!prep.ok()) return new Planned(prep, null, System.nanoTime() - t0, prep.failure());
         SectorSolver.Solved solved = SectorSolver.solve(prep.request(), MegaConfig.get(MegaConfig.ASSEMBLE_TRIES));
         long dt = System.nanoTime() - t0;
         if (!solved.ok()) return new Planned(prep, solved, dt, "no sector could be assembled: " + SectorSolver.summary(solved.failures(), 4));
+        return new Planned(prep, solved, dt, null);
+    }
+
+    /**
+     * 1.58.0: the probe of the floor model: floor {@code chainIndex} of a road planned with the real pools, templates, floor recipe and theme rules, nothing placed and
+     * nothing saved. The self-tests probe floor 1 (an ordinary floor) and floor 10 (a boss floor) of each road.
+     */
+    public static Planned probeFloor(VanillaPools pools, long dungeonSeed, Polarity road, int chainIndex, long t0) {
+        Request.Floor spec = FloorPlan.spec(road, chainIndex, MegaConfig.get(MegaConfig.FLOOR_ROOMS));
+        SectorDraft draft = SectorDraft.of(dungeonSeed, 0, road, chainIndex, 1, null, null);
+        SectorPlanner.Plan plan = SectorPlanner.floor(dungeonSeed, 0, road, chainIndex, spec.rooms(), spec.boss());
+        SectorRequests.Inputs in = new SectorRequests.Inputs(pools, pools.floorRecipe(), MegaConfig.get(MegaConfig.MAX_PIECES), MegaConfig.get(MegaConfig.MAX_LINK_MODULES), plan.seed(),
+                plan.entry(), plan.forward(), plan.region(), null, null, null, List.of(), draft.relicCount(), draft.theme().id(), pools.themes(), spec);
+        SectorRequests.Prepared prep = SectorRequests.prepare(in);
+        if (!prep.ok()) return new Planned(prep, null, System.nanoTime() - t0, prep.failure());
+        SectorSolver.Solved solved = SectorSolver.solve(prep.request(), MegaConfig.get(MegaConfig.ASSEMBLE_TRIES));
+        long dt = System.nanoTime() - t0;
+        if (!solved.ok()) return new Planned(prep, solved, dt, "no floor could be assembled: " + SectorSolver.summary(solved.failures(), 4));
         return new Planned(prep, solved, dt, null);
     }
 
@@ -235,6 +281,9 @@ public final class SectorGenerator {
         s.edges.addAll(f.edges);
         s.markers.addAll(b.markers());
         s.arrival = f.arrival == null ? null : pos(f.arrival);
+        s.stairBack = f.stairBack == null ? null : pos(f.stairBack);
+        s.stairForward = f.stairForward == null ? null : pos(f.stairForward);
+        s.stairForwardPad = f.stairForwardPad == null ? null : pos(f.stairForwardPad);
         s.guardianSpawn = f.guardianSpawn == null ? null : pos(f.guardianSpawn);
         s.gatekeeper = f.gatekeeper == null ? null : pos(f.gatekeeper);
         s.vaultCenter = f.vaultCenter == null ? null : pos(f.vaultCenter);
@@ -264,7 +313,8 @@ public final class SectorGenerator {
         return new SectorView(s.id, s.state.name(), box(s.region), rooms, new ArrayList<>(s.edges), markers, s.relicCount, pedestals,
                 s.arrival == null ? null : vec(s.arrival), s.guardianSpawn == null ? null : vec(s.guardianSpawn), s.gatekeeper == null ? null : vec(s.gatekeeper),
                 s.vaultCenter == null ? null : vec(s.vaultCenter), s.expansionPos == null ? null : vec(s.expansionPos),
-                s.expansionFacing == null ? null : facing(s.expansionFacing), s.nextId);
+                s.expansionFacing == null ? null : facing(s.expansionFacing), s.nextId, s.isFloor(), s.isBossFloor(),
+                s.stairBack == null ? null : vec(s.stairBack), s.stairForward == null ? null : vec(s.stairForward), s.stairForwardPad == null ? null : vec(s.stairForwardPad));
     }
 
     /** The statistics the status line and the log line report. */
@@ -287,10 +337,10 @@ public final class SectorGenerator {
     /** Can a player stand in this sector (it is finished and not failed)? */
     public static boolean playable(Sector s) { return s.state != Sector.State.GENERATING && s.state != Sector.State.FAILED; }
 
-    /** The sector's standing cell for travel and the rest of the mod: the ARRIVAL marker's cell, else the middle of the first Landing room. */
+    /** The sector's standing cell for travel and the rest of the mod: the ARRIVAL marker's cell, else the middle of the first Landing (or arrival stairwell) room. */
     public static BlockPos padOf(Sector s) {
         if (s.arrival != null) return s.arrival;
-        for (Room r : s.rooms) if (r.kind == RoomKind.LANDING) return r.center();
+        for (Room r : s.rooms) if (r.kind == RoomKind.LANDING || r.kind == RoomKind.STAIRWELL) return r.center();
         return null;
     }
 }

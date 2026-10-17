@@ -13,7 +13,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 public final class FloorsConfig {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue LOCK_ENABLED, HARD_LOCK, OPS_BYPASS;
-    public static final ModConfigSpec.IntValue LOCK_AT_FLOOR, PER_REGION, TRACK_EVERY_TICKS;
+    public static final ModConfigSpec.IntValue LOCK_AT_FLOOR, PER_REGION, PER_SECTOR, TRACK_EVERY_TICKS;
     /** How the rooms of a sector are cut into floors: "even" (default) or "arena" (the design brief's rule); see {@code FloorBands.Strategy}. */
     public static final ModConfigSpec.ConfigValue<String> BANDING;
 
@@ -32,6 +32,8 @@ public final class FloorsConfig {
                 .define("opsBypass", true);
         PER_REGION = b.comment("How many floors one sector has (the floor of the Guardian's arena is the last one, so this is also the distance between two bosses). It is stored in each sector the first time it is numbered and a sector of a road that already has numbered sectors takes THEIR length, so changing this key in a world that has opened a road does not renumber it or overlap its floors: it only matters for a road that has not been opened yet.")
                 .defineInRange("perRegion", 10, 2, 20);
+        PER_SECTOR = b.comment("1.58.0, the floor model: how many floors one SECTOR holds when a road is opened. 1 (default) = every floor is a level of its own: the party starts at the foot of a stair and must find the stair that leads on (the way a D&D dungeon works). A value above 1 keeps the old model, where a sector is that many floors laid flat in one big sector and banded by distance (then perRegion and banding below apply). Read when the FIRST sector of a road is created; a road that already exists keeps the length of its sectors, so changing this key never renumbers a world.")
+                .defineInRange("perSector", 1, 1, 20);
         BANDING = b.comment("How a sector's rooms are cut into its floors. \"even\" (default): rooms are ranked by how many doorways they are from the Landing and cut into runs of equal size, so every floor from 1 to perRegion-1 holds about the same number of rooms and the last floor is the boss chain alone. \"arena\": the floor is the doorway distance over the distance to the Guardian's arena, which only fills the floors when the arena is perRegion-1 or more doorways away (the generated sectors are shallower, so floors are left empty and about half the rooms land on the last one). Read when a sector is numbered; a sector already numbered keeps its floors until /multiverse mega floors assign is run.")
                 .define("banding", BANDING_EVEN, o -> o instanceof String s && (s.equalsIgnoreCase(BANDING_EVEN) || s.equalsIgnoreCase(BANDING_ARENA)));
         TRACK_EVERY_TICKS = b.comment("Ticks between two looks at which floor each player stands on (10 = twice a second). Lower is quicker to notice a new floor, higher is cheaper.")

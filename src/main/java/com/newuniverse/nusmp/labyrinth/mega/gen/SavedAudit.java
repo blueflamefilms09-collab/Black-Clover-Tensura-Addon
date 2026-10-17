@@ -19,6 +19,10 @@ import java.util.Set;
  * on: the boss chain exists once each, the rooms stay inside the region and do not overlap, the markers sit in the rooms they belong to, the pedestals
  * match the relic count, the Way Onward's seal is inside an onward corridor, and every room can be walked to from the Landing. The sentences never contain a
  * semicolon, because the command joins them with one.
+ *
+ * <p>1.58.0, the floor model: a floor has two stairwells instead of a Landing (the arrival one holds the arrival cell and the exit that leads back, the forward
+ * one the exit that leads on and the cell where a party stands when it comes back), an ordinary floor has no boss chain and no seal, a boss floor has both, and every
+ * room must be walkable from the arrival stairwell.
  */
 public final class SavedAudit {
     private SavedAudit() {}
@@ -89,26 +93,41 @@ public final class SavedAudit {
     }
 
     private static void chain(SectorView v, List<String> bad, boolean requireMarkers) {
-        List<SectorFill.RoomOut> landing = of(v, RoomKind.LANDING), arena = of(v, RoomKind.ARENA), ante = of(v, RoomKind.ANTECHAMBER), vault = of(v, RoomKind.VAULT),
+        final boolean floor = v.floorModel();
+        final boolean boss = !floor || v.bossFloor();
+        List<SectorFill.RoomOut> landing = of(v, floor ? RoomKind.STAIRWELL : RoomKind.LANDING), arena = of(v, RoomKind.ARENA), ante = of(v, RoomKind.ANTECHAMBER), vault = of(v, RoomKind.VAULT),
                 onward = of(v, RoomKind.ONWARD);
-        once(bad, "Landing", landing.size());
-        once(bad, "arena", arena.size());
-        once(bad, "antechamber", ante.size());
-        once(bad, "vault", vault.size());
-        if (onward.isEmpty()) bad.add("the sector has no Way Onward corridor");
+        if (floor) {
+            if (landing.size() != 2) bad.add("expected exactly two stairwells (arrival and forward) but the sector has " + landing.size());
+        } else once(bad, "Landing", landing.size());
+        if (boss) {
+            once(bad, "arena", arena.size());
+            once(bad, "antechamber", ante.size());
+            once(bad, "vault", vault.size());
+            if (onward.isEmpty()) bad.add("the sector has no Way Onward corridor");
+        } else if (!arena.isEmpty() || !ante.isEmpty() || !vault.isEmpty() || !onward.isEmpty()) {
+            bad.add("an ordinary floor has a boss chain (" + arena.size() + " arena, " + ante.size() + " antechamber, " + vault.size() + " vault, " + onward.size() + " Way Onward)");
+        }
 
         Map<MarkerKind, Integer> count = new HashMap<>();
         for (SectorView.MarkerView m : v.markers()) count.merge(m.kind(), 1, Integer::sum);
         if (requireMarkers) {
-            for (MarkerKind k : new MarkerKind[] {MarkerKind.ARRIVAL, MarkerKind.GATEKEEPER, MarkerKind.VAULT_CENTER, MarkerKind.EXPANSION_SOCKET}) {
-                if (count.getOrDefault(k, 0) < 1) bad.add("no " + k.id() + " marker was saved");
+            if (count.getOrDefault(MarkerKind.ARRIVAL, 0) < 1) bad.add("no arrival marker was saved");
+            if (boss) {
+                for (MarkerKind k : new MarkerKind[] {MarkerKind.GATEKEEPER, MarkerKind.VAULT_CENTER, MarkerKind.EXPANSION_SOCKET}) {
+                    if (count.getOrDefault(k, 0) < 1) bad.add("no " + k.id() + " marker was saved");
+                }
+                int g = count.getOrDefault(MarkerKind.GUARDIAN_SPAWN, 0);
+                if (g != 1) bad.add(g == 0 ? "no guardian_spawn marker was saved" : g + " guardian_spawn markers were saved (exactly one is needed)");
             }
-            int g = count.getOrDefault(MarkerKind.GUARDIAN_SPAWN, 0);
-            if (g != 1) bad.add(g == 0 ? "no guardian_spawn marker was saved" : g + " guardian_spawn markers were saved (exactly one is needed)");
+            if (floor && count.getOrDefault(MarkerKind.STAIR_EXIT, 0) != 2) bad.add(count.getOrDefault(MarkerKind.STAIR_EXIT, 0) + " stair_exit markers were saved (the two stairwells need one each)");
         }
 
         if (v.arrival() == null) bad.add("the sector has no arrival cell");
-        else if (!landing.isEmpty() && !inAny(landing, v.arrival(), 0)) bad.add("the arrival cell " + v.arrival() + " is not inside the Landing");
+        else if (!landing.isEmpty() && !inAny(landing, v.arrival(), 0)) bad.add("the arrival cell " + v.arrival() + " is not inside the " + (floor ? "arrival stairwell" : "Landing"));
+        if (floor) stairs(v, landing, bad);
+        if (!boss) return;
+
         if (v.guardianSpawn() == null) {
             if (requireMarkers) bad.add("the sector has no guardian spawn cell");
         } else if (!arena.isEmpty() && !inAny(arena, v.guardianSpawn(), 0)) bad.add("the guardian spawn " + v.guardianSpawn() + " is not inside the arena");
@@ -135,6 +154,23 @@ public final class SavedAudit {
         }
     }
 
+    /**
+     * The saved stairs of a floor: the exit that leads back is inside the arrival stairwell (the one that holds the arrival cell), the exit that leads on and the
+     * cell where a returning party stands are inside the other one, and the two exits are not the same cell.
+     */
+    private static void stairs(SectorView v, List<SectorFill.RoomOut> stairwells, List<String> bad) {
+        if (v.stairBack() == null) bad.add("the sector has no stair that leads back");
+        if (v.stairForward() == null) bad.add("the sector has no stair that leads on");
+        if (v.stairForwardPad() == null) bad.add("the sector has no cell for a party that comes back down to it");
+        if (stairwells.size() != 2 || v.arrival() == null) return;
+        SectorFill.RoomOut arrivalRoom = inAny(List.of(stairwells.get(0)), v.arrival(), 0) ? stairwells.get(0) : stairwells.get(1);
+        SectorFill.RoomOut forwardRoom = arrivalRoom == stairwells.get(0) ? stairwells.get(1) : stairwells.get(0);
+        if (v.stairBack() != null && !inAny(List.of(arrivalRoom), v.stairBack(), 0)) bad.add("the stair that leads back " + v.stairBack() + " is not inside the arrival stairwell");
+        if (v.stairForward() != null && !inAny(List.of(forwardRoom), v.stairForward(), 0)) bad.add("the stair that leads on " + v.stairForward() + " is not inside the forward stairwell");
+        if (v.stairForwardPad() != null && !inAny(List.of(forwardRoom), v.stairForwardPad(), 0)) bad.add("the cell for a returning party " + v.stairForwardPad() + " is not inside the forward stairwell");
+        if (v.stairBack() != null && v.stairBack().equals(v.stairForward())) bad.add("both stairs end in the same cell");
+    }
+
     private static void once(List<String> bad, String what, int n) {
         if (n != 1) bad.add("expected exactly one " + what + " room but the sector has " + n);
     }
@@ -155,6 +191,10 @@ public final class SavedAudit {
             b.add(e[0]);
         }
         List<SectorFill.RoomOut> landing = of(v, RoomKind.LANDING);
+        if (v.floorModel()) {                                                      // the start is the stairwell that holds the arrival cell
+            landing = new ArrayList<>();
+            for (SectorFill.RoomOut r : of(v, RoomKind.STAIRWELL)) if (v.arrival() != null && r.box().contains(v.arrival())) landing.add(r);
+        }
         if (landing.size() != 1) return;                                           // already reported; there is no start to walk from
         Set<Integer> reached = new HashSet<>();
         ArrayDeque<Integer> todo = new ArrayDeque<>();

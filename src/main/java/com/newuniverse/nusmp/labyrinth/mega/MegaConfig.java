@@ -12,6 +12,8 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  * builders edit one spec; the keys here are the generator's and the gateway's.
  */
 public final class MegaConfig {
+    /** 1.58.0, the floor model: how many rooms one floor has ({@code mega.floorRooms}). */
+    public static final ModConfigSpec.IntValue FLOOR_ROOMS;
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue EXPANSION, LAST_LANDING, EXPAND_AFTER_VAULT;
     public static final ModConfigSpec.IntValue PIECES_PER_TICK, MAX_PIECES, MAX_SECTORS, ASSEMBLE_TRIES, MAX_LINK_MODULES, GEN_BUDGET_MS;
@@ -29,14 +31,16 @@ public final class MegaConfig {
                 .defineInRange("piecesPerTick", 3, 1, 16);
         MAX_PIECES = b.comment("Upper bound on the pieces of one sector (rooms, corridors and door caps together).")
                 .defineInRange("maxPiecesPerSector", 450, 100, 2000);
-        MAX_SECTORS = b.comment("The dungeon stops growing after this many sectors.")
-                .defineInRange("maxSectors", 500, 1, 10000);
+        MAX_SECTORS = b.comment("The dungeon stops growing after this many sectors. Since 1.58.0 a sector is one floor, so this is the number of floors of both roads together (the default was 500 when a sector was ten floors).")
+                .defineInRange("maxSectors", 1000, 1, 10000);
         ASSEMBLE_TRIES = b.comment("How many seeds the generator tries before it gives up on a sector layout that passes the audit and uses the fallback.")
                 .defineInRange("assembleTries", 24, 1, 64);
         MAX_LINK_MODULES = b.comment("Longest straight tunnel (in 9-block modules) between two sectors when the next region would collide with an old one. 0 = never build links.")
                 .defineInRange("maxLinkModules", 40, 0, 60);
         GEN_BUDGET_MS = b.comment("Milliseconds of server time one tick may spend placing the pieces of a sector (at least one piece is always placed, and never more than piecesPerTick). Lower = smoother, but the sector takes longer to appear.")
                 .defineInRange("genBudgetMs", 30, 5, 200);
+        FLOOR_ROOMS = b.comment("1.58.0, the floor model: how many rooms one floor has (the arrival stairwell, the forward stairwell, the halls, corridors, traps and the Safe Zone together; a boss floor gets 8 more for its boss chain). Floors are small levels of their own now, so this is far fewer than the ~100 rooms of an old ten-floor sector.")
+                .defineInRange("floorRooms", 28, 18, 40);
         b.pop();
         SPEC = b.build();
     }

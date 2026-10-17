@@ -233,6 +233,37 @@ final class SyntheticCatalog implements PoolSource {
         return c;
     }
 
+    // ---------------------------------------------------------------- the stand-in with stairwells (the floor model, 1.58.0)
+
+    /**
+     * {@link #realSized()} plus the pieces of the floor model: the four kinds of stairwell (one door on the east face, an ARRIVAL cell and a STAIR_EXIT cell each; the
+     * grand ones are two modules across) and the pool the arrival stairwell's door draws its first room from. Why a stand-in as well as the real stairwells: the
+     * floor assembler is tested on thousands of seeds in unit tests, and those tests must not depend on a template generator having run.
+     */
+    static SyntheticCatalog floors() {
+        SyntheticCatalog c = realSized();
+        final String M = "nusmp:mega/";
+        String[][] kinds = {{"up", "up"}, {"down", "down"}, {"grand_up", "up"}, {"grand_down", "down"}};
+        for (String[] k : kinds) {
+            boolean grand = k[0].startsWith("grand");
+            int side = grand ? 2 : 1;
+            for (String v : new String[] {"a", "b"}) {
+                String id = M + "stairwell/" + k[0] + "_" + v;
+                B b = c.shape(id, RoomKind.STAIRWELL, side, side).door('e', 4, MegaGrid.DOOR, MegaGrid.DOOR, FloorPlan.P_STAIR_DOOR, "minecraft:air")
+                        .marker(MarkerKind.ARRIVAL, 5, 9, 4).marker(MarkerKind.STAIR_EXIT, 3, 9, 4, "dir", k[1]);
+                c.put(b);
+            }
+        }
+        c.pool(FloorPlan.P_UP, 0, MegaGrid.P_CAP, M + "stairwell/up_a", 3, M + "stairwell/up_b", 2);
+        c.pool(FloorPlan.P_DOWN, 0, MegaGrid.P_CAP, M + "stairwell/down_a", 3, M + "stairwell/down_b", 2);
+        c.pool(FloorPlan.P_GRAND_UP, 0, MegaGrid.P_CAP, M + "stairwell/grand_up_a", 1, M + "stairwell/grand_up_b", 1);
+        c.pool(FloorPlan.P_GRAND_DOWN, 0, MegaGrid.P_CAP, M + "stairwell/grand_down_a", 1, M + "stairwell/grand_down_b", 1);
+        c.pool(FloorPlan.P_STAIR_DOOR, 0, MegaGrid.P_CAP,
+                M + "hall/cell_1x1", 2, M + "hall/chamber_2x1", 3, M + "hall/chamber_1x2", 3, M + "hall/hall_2x2", 4, M + "corridor/straight_1x3", 5, M + "corridor/ribs_1x3", 4,
+                M + "corridor/long_1x5", 2, M + "junction/cross_1x1", 3, M + "junction/tee_1x1", 3);
+        return c;
+    }
+
     // ---------------------------------------------------------------- the catalog.json format
 
     /** This catalog in the format of {@code tools/labyrinth/mega_catalog.py}, so {@link CatalogSource} and the simulator read it like the real one. */
