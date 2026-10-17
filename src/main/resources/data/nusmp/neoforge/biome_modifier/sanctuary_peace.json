@@ -1,0 +1,7 @@
+{
+  "type": "nusmp:sanctuary_peace",
+  "biomes": "nusmp:sanctuary_plains",
+  "keep_namespaces": [
+    "minecraft"
+  ]
+}
