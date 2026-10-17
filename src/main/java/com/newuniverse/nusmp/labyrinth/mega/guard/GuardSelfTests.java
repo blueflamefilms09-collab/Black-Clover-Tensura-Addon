@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.labyrinth.mega.guard;
 
+import com.newuniverse.nusmp.labyrinth.mega.gen.BossFloors;
 import com.mojang.authlib.GameProfile;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.boss.budget.BossBudgetConfig;
@@ -142,14 +143,14 @@ final class GuardSelfTests {
 
     private record World(ServerLevel level, MegaData data, Sector sector) {}
 
-    /** The Mega level and sector 0, which must be generated and playable. */
+    /** The Mega level and the first sector that holds a boss chain (sector 0 in a ten-floor world; the first built boss floor in the floor model), which must be generated and playable. */
     private static World world(MinecraftServer server) {
         ServerLevel level = SelfTests.mega(server);
         expect(level != null, "no mega dimension");
         MegaData data = MegaData.get(server);
-        Sector s = data.sector(0);
-        expect(s != null, "sector 0 does not exist (the smoke test creates it with /multiverse mega expand)");
-        expect(s.state != Sector.State.GENERATING && s.state != Sector.State.FAILED, "sector 0 is " + s.state);
+        Sector s = BossFloors.first(data);
+        expect(s != null, "no boss floor exists (the smoke test grows the Holy road to floor +10 with /multiverse mega expand)");
+        expect(s.state != Sector.State.GENERATING && s.state != Sector.State.FAILED, "sector " + s.id + " is " + s.state);
         return new World(level, data, s);
     }
 

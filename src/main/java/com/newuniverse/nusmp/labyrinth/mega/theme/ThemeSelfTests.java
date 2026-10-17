@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.labyrinth.mega.theme;
 
+import com.newuniverse.nusmp.labyrinth.mega.gen.BossFloors;
 import com.newuniverse.nusmp.labyrinth.mega.MegaData;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
 import com.newuniverse.nusmp.labyrinth.mega.RegionContext;
@@ -193,8 +194,8 @@ public final class ThemeSelfTests {
             if (t.maxRelics() == t.minRelics() && seen.size() != 1) return SelfTests.Result.fail(t.id() + " has a fixed count but gave " + seen);
         }
         MegaData data = MegaData.get(server);
-        Sector s = data.sector(0);
-        if (s == null) return SelfTests.Result.fail("sector 0 does not exist (the smoke test creates it with /multiverse mega expand first)");
+        Sector s = BossFloors.first(data);
+        if (s == null) return SelfTests.Result.fail("no boss floor exists (the smoke test grows the Holy road to floor +10 with /multiverse mega expand first)");
         RegionTheme t = s.theme;
         if (s.relicCount < t.minRelics() || s.relicCount > t.maxRelics())
             return SelfTests.Result.fail("sector 0 (" + t.id() + ") has relic count " + s.relicCount + ", outside its theme's " + t.minRelics() + ".." + t.maxRelics());

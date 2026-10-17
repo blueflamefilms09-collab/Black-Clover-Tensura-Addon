@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.labyrinth.mega.crucible;
 
+import com.newuniverse.nusmp.labyrinth.mega.gen.BossFloors;
 import com.newuniverse.nusmp.dungeon.DungeonEffects;
 import com.newuniverse.nusmp.labyrinth.mega.MegaData;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
@@ -127,8 +128,8 @@ public final class CrucibleSelfTests {
             ServerLevel level = SelfTests.mega(server);
             check(level != null, "the server has no Mega-Dungeon dimension");
             MegaData data = MegaData.get(server);
-            Sector s = data.sector(0);
-            check(s != null, "sector 0 does not exist (the smoke test creates it with /multiverse mega expand first)");
+            Sector s = BossFloors.first(data);
+            check(s != null, "no boss floor exists (the smoke test grows the Holy road to floor +10 with /multiverse mega expand first)");
             List<BlockPos> slots = CruciblePedestals.ordered(s);
             check(!slots.isEmpty(), "sector 0 has no pedestal marker: its vault template or the vault pool is wrong");
             BlockPos center = CruciblePedestals.center(s);

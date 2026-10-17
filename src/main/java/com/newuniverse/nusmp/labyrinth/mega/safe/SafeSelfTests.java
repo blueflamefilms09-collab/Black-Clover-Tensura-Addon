@@ -147,7 +147,7 @@ final class SafeSelfTests {
     private static SelfTests.Result zone(MinecraftServer server) {
         Ctx c = ctx(server);
         Room landing = null;
-        for (Room r : c.sector.rooms) if (r.kind == RoomKind.LANDING) { landing = r; break; }
+        for (Room r : c.sector.rooms) if (r.kind == RoomKind.LANDING || r.kind == RoomKind.STAIRWELL) { landing = r; break; }
         if (landing == null) return SelfTests.Result.fail("sector 0 has no Landing room (" + c.sector.rooms.size() + " rooms)");
         if (!MegaDungeon.inSafeZone(c.level, landing.center())) return SelfTests.Result.fail("the Landing centre " + pos(landing.center()) + " is not a safe zone");
         int safe = 0;
@@ -384,7 +384,7 @@ final class SafeSelfTests {
     private static SelfTests.Result regenThrottle(MinecraftServer server) {
         Ctx c = ctx(server);
         Room landing = null;
-        for (Room r : c.sector.rooms) if (r.kind == RoomKind.LANDING) { landing = r; break; }
+        for (Room r : c.sector.rooms) if (r.kind == RoomKind.LANDING || r.kind == RoomKind.STAIRWELL) { landing = r; break; }
         if (landing == null) return SelfTests.Result.fail("sector 0 has no Landing room");
         double scale = SafeConfig.get(SafeConfig.PASSIVE_REGEN_SCALE);
         BlockPos out = outsideEverything(c);

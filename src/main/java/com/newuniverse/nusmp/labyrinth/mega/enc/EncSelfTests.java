@@ -338,7 +338,7 @@ final class EncSelfTests {
             if (Math.abs(floor) < lo || Math.abs(floor) > hi) return fail(who + " is floor " + floor + ", outside the sector's floors " + first + " to " + last);
             if (ThreatInput.of(s.threat, floor, true) != Math.abs(floor)) return fail(who + ": the threat of floor " + floor + " is " + ThreatInput.of(s.threat, floor, true));
             floors.add(floor);
-            if (r.kind == RoomKind.LANDING) landing = r;
+            if (r.kind == RoomKind.LANDING || r.kind == RoomKind.STAIRWELL) landing = r;
             if (deepest == null || Math.abs(floor) > Math.abs(deepestFloor)) {
                 deepest = r;
                 deepestFloor = floor;
