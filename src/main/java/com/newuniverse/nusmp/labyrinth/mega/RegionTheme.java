@@ -30,7 +30,11 @@ public enum RegionTheme {
     /** Polished blackstone, sculk, soul lanterns. */
     SHADOW(3, 3),
     /** Quartz, calcite, prismarine and gold: a cold observatory of stars. */
-    ASTRAL(3, 3);
+    ASTRAL(3, 3),
+    /** 1.55.0, the Holy road: white quartz, smooth stone, gold and calcite, light everywhere, the air thick with Light Rukh. The Holy chain draws it most often. */
+    RADIANT(3, 3),
+    /** 1.55.0, the Abyssal road: dark organic rock, deepslate with sculk, moss and netherrack growing through it, soul fire. The Abyssal chain draws it most often. */
+    ABYSS(3, 3);
 
     /**
      * The owner's newest brief fixes the Crucible at EXACTLY three distinct Unique-or-higher relics (one pick per region, so one high-tier relic per ten
