@@ -143,7 +143,7 @@ final class EncSelfTests {
             else if (ModList.get().isLoaded(e.entity().substring(0, e.entity().indexOf(':')))) broken.add("wanderers.json: " + e.entity() + " is not a usable entity type");
         }
         if (kinds < 3) broken.add("only " + kinds + " usable kinds of wandering boss");
-        if (!broken.isEmpty()) return fail(broken.size() + " problems: " + broken.subList(0, Math.min(5, broken.size())));
+        if (!broken.isEmpty()) return fail(broken.size() + " problems: " + broken.subList(0, Math.min(10, broken.size())));
         return SelfTests.Result.ok(names.size() + " tables, " + entries + " entries (bands " + bands + "), " + types.size() + " entity types resolve, " + dormantExtras + " optional extras dormant, " + kinds + " wandering boss kinds");
     }
 

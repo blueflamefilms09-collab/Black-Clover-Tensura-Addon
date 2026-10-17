@@ -164,6 +164,12 @@ public final class LabyrinthTravel {
         return GateRules.cooldownHolds(p.level().getGameTime(), data.getLong(GATE_USED), data.getLong(LEGACY_GATE_USED));
     }
 
+    /** The pad {@link #arrive} last set this player down on, or null when there is none (read by the self-tests: a connection-less stand-in does not move on a same-level teleport). */
+    public static BlockPos arrivalPad(ServerPlayer p) {
+        CompoundTag data = p.getPersistentData();
+        return data.contains(PAD) ? BlockPos.of(data.getLong(PAD)) : null;
+    }
+
     /** Forgets the way back and the pad (on leaving, and on a death inside: the respawn is a normal one). */
     public static void forget(ServerPlayer p) {
         CompoundTag data = p.getPersistentData();

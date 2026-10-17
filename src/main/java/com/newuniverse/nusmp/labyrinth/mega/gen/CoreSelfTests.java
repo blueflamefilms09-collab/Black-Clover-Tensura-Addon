@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.labyrinth.mega.gen;
 
+import com.newuniverse.nusmp.labyrinth.gate.LabyrinthTravel;
 import com.newuniverse.nusmp.labyrinth.mega.FloorMap;
 import com.newuniverse.nusmp.labyrinth.mega.MegaData;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
@@ -241,6 +242,7 @@ final class CoreSelfTests {
             if (legacy == null || legacy.id != want) return fail("the 1.54.0 key naming sector " + newest.id + " should offer sector " + want + " but gave " + (legacy == null ? "nothing" : Integer.toString(legacy.id)));
 
             clearMemory(mem);
+            LabyrinthTravel.forget(p);
             p.setPos(0.5, 70.0, 0.5);
             boolean entered;
             try {
@@ -250,9 +252,9 @@ final class CoreSelfTests {
             }
             if (!entered) return fail("MegaTravel.enter refused the player (see the server log)");
             BlockPos pad = SectorGenerator.padOf(first);
-            double dx = p.getX() - (pad.getX() + 0.5), dz = p.getZ() - (pad.getZ() + 0.5), dy = p.getY() - pad.getY();
-            if (dx * dx + dz * dz > 1.0 || Math.abs(dy) > 1.5) {
-                return fail("after entering, the player stands at " + (int) p.getX() + "," + (int) p.getY() + "," + (int) p.getZ() + " instead of the Landing pad of sector " + first.id
+            BlockPos sent = LabyrinthTravel.arrivalPad(p);
+            if (!pad.equals(sent)) {
+                return fail("after entering, the player was sent to " + (sent == null ? "nowhere" : sent.toShortString()) + " instead of the Landing pad of sector " + first.id
                         + " at " + pad.toShortString());
             }
             String remembered = "";
@@ -425,15 +427,16 @@ final class CoreSelfTests {
             CompoundTag mem = p.getPersistentData();
             clearMemory(mem);
             MegaTravel.forget(p.getUUID());
+            LabyrinthTravel.forget(p);
             try {
                 Sector chosen = MegaTravel.choose(data, p, road, false);
                 if (chosen == null || chosen.id != first.id) return fail("a newcomer should be offered the first sector of the " + road.id() + " road (sector " + first.id + ") but got " + (chosen == null ? "nothing" : Integer.toString(chosen.id)));
                 // the facade: this is the call the Hub's gates make, so it proves the generator registered its ChainTravel
                 if (!MegaDungeon.enterChain(p, road)) return fail("MegaDungeon.enterChain refused a player for the " + road.id() + " road (is the ChainTravel registered? see the server log)");
                 BlockPos pad = SectorGenerator.padOf(first);
-                double dx = p.getX() - (pad.getX() + 0.5), dz = p.getZ() - (pad.getZ() + 0.5), dy = p.getY() - pad.getY();
-                if (dx * dx + dz * dz > 1.0 || Math.abs(dy) > 1.5) {
-                    return fail("after enterChain(" + road.id() + ") the player stands at " + (int) p.getX() + "," + (int) p.getY() + "," + (int) p.getZ() + " instead of the pad of sector " + first.id + " at " + pad.toShortString());
+                BlockPos sent = LabyrinthTravel.arrivalPad(p);
+                if (!pad.equals(sent)) {
+                    return fail("after enterChain(" + road.id() + ") the player was sent to " + (sent == null ? "nowhere" : sent.toShortString()) + " instead of the pad of sector " + first.id + " at " + pad.toShortString());
                 }
                 // the memory of one road never leaks into the other
                 List<Sector> chain = data.chain(road);

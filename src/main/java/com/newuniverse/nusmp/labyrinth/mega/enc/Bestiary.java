@@ -49,9 +49,13 @@ final class Bestiary {
         return t.orElse(null);
     }
 
-    /** Can this type be a monster of an encounter: a living creature the game knows the attributes of, that is not a marker or a projectile? */
+    /**
+     * Can this type be a monster of an encounter: a living creature the game knows the attributes of, that is not a marker or a projectile? Having
+     * attributes is what keeps markers and projectiles out; the MISC category is NOT a filter (the Iron Golem, the Snow Golem and the Villager are
+     * all MISC), only the armor stand, the one MISC thing with attributes that is furniture, is left out by name.
+     */
     static boolean usable(EntityType<?> t) {
-        return t != null && t.canSummon() && t.getCategory() != MobCategory.MISC && DefaultAttributes.hasSupplier(t);
+        return t != null && t.canSummon() && t != EntityType.ARMOR_STAND && DefaultAttributes.hasSupplier(t);
     }
 
     /** The default maximum health of a type, or {@link MobPicker#DEFAULT_TOUGHNESS} when it cannot be read. */

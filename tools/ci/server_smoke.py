@@ -333,7 +333,7 @@ class Smoke:
             if key == "summary":
                 continue
             found += 1
-            (self.ok if level == "OK" else self.fail)("selftest-" + key, detail.strip()[:240])
+            (self.ok if level == "OK" else self.fail)("selftest-" + key, detail.strip()[:900])
         if found == 0:
             (self.fail if self.args.strict else self.skip)("selftests", "no self-test reported: " + text.strip()[:160])
         # every system of the build must have registered at least one test (a registry that is not wired reports none and would pass silently)
@@ -370,9 +370,18 @@ class Smoke:
             self.fail("locate-gateway", r.strip()[:200])
 
     def phase_jigsaw(self):
-        x = 300
+        # The test pieces go to z=150000: between the Holy chain (z=0) and the Abyssal chain (z=300000), so they never touch a real sector. The command
+        # needs the origin chunk loaded ("That position is not loaded" otherwise), so the area is forceloaded first and released afterwards.
+        x, z = 300, 150000
         for pool in ("landing", "side", "safe", "arena", "antechamber", "vault_1", "onward_straight"):
-            r = self.run("execute in nusmp:mega_dungeon run place jigsaw nusmp:mega/%s nusmp:mega_door 3 %d 64 0" % (pool, x))
+            self.run("execute in nusmp:mega_dungeon run forceload add %d %d %d %d" % (x - 48, z - 48, x + 48, z + 48))
+            r = ""
+            for _ in range(4):
+                time.sleep(2)
+                r = self.run("execute in nusmp:mega_dungeon run place jigsaw nusmp:mega/%s nusmp:mega_door 3 %d 64 %d" % (pool, x, z))
+                if "not loaded" not in r:
+                    break
+            self.run("execute in nusmp:mega_dungeon run forceload remove %d %d %d %d" % (x - 48, z - 48, x + 48, z + 48))
             x += 300
             if "Generated jigsaw" in r or "generated jigsaw" in r.lower():
                 self.ok("jigsaw-" + pool, "vanilla Jigsaw placed our pool with its processors")
