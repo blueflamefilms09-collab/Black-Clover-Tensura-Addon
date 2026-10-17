@@ -1,5 +1,12 @@
 # The Labyrinth — Hybrid Anime Dungeon Architecture (1.35.0)
 
+> **REMOVED in 1.58.0 (owner's request): the Spire.** The floating Spire of this document (system 4: the dimension `nusmp:labyrinth` as a place that
+> generates, the structure set `labyrinth_spires`, the pools `nusmp:labyrinth/*` and their templates, the biome-palette and vein processors, the
+> `labyrinth/gen` code), the old Dungeon Gate arches (system 1's surface portal) and the switches `mega.layout`, `mega.legacyGates` and
+> `labyrinth.engine` are gone: the Mega-Dungeon is the only dungeon and its Gateway the only way in. What stayed, because the Mega-Dungeon builds on
+> it (the gate and exit blocks, trials, seals, vaults, traps, the economy, Vital Strike, the Guard, relic exclusivity, the void rescue), and
+> everything that went, with the reason for each, is in `docs/labyrinth/mega_v2_prune.md`. The text below is kept as history.
+
 **State:** written without a compiler; CI is the first compile. Nothing has been run in game. Every rule below says *why* it is built the
 way it is, as the owner asked; the per-system documents in `docs/labyrinth/` carry the file-by-file reasons.
 

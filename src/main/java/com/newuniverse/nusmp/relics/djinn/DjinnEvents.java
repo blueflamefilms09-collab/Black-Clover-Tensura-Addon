@@ -28,7 +28,6 @@ public final class DjinnEvents {
         bus.addListener(DjinnEvents::onRespawn);
         bus.addListener(DjinnEvents::onDimension);
         bus.addListener(DjinnEvents::onServerStopping);
-        bus.addListener(DjinnSources::onCollapse);
         bus.addListener(DjinnSources::onServerTick);
         bus.addListener(DjinnSources::onContainerOpen);
         com.newuniverse.nusmp.relics.djinn.weapon.DjinnWeaponEvents.register(bus);                                  // the temporary Djinn weapons: enforcement, guards, the Brand mark

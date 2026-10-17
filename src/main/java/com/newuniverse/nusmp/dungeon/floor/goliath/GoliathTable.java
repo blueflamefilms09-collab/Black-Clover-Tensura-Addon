@@ -37,6 +37,8 @@ public final class GoliathTable {
     public static final double SLAM_RADIUS = 7.0, STOMP_RADIUS = 8.0, FIST_RADIUS = 3.6, LINE_HALF_WIDTH = 1.7, RUBBLE_RADIUS = 2.4;
     /** How far the roar's ring and the quake's rings run: across the whole pit (its floor is 28 blocks in radius). */
     public static final double SHOCKWAVE_REACH = 34.0, QUAKE_REACH = 32.0;
+    /** The radius, in blocks, the Rubble Fall spreads its circles over: the floor of the pit the fight was built for (the pit was removed with the Living Dungeon, 1.58.0; the fight kept its measure). */
+    public static final int ARENA_R = 28;
     /** The Gates (25% health): the cracked, glowing giant swings wider. */
     public static final double GATES_REACH = 1.25;
     /** The farthest from the giant the fist may land: a foe beyond it is struck at the edge of its reach. */

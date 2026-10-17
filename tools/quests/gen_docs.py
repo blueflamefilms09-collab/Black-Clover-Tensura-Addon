@@ -53,8 +53,7 @@ EVENTS = [
     ("labyrinth.warden_defeated", "-", "Floor Warden dies"),
     ("labyrinth.vault_opened", "-", "vault pedestal opened"),
     ("labyrinth.seal_opened", "-", "gatekeeper door opened with the key"),
-    ("dungeon.entered", "-", "enter the living dungeon or the labyrinth by any door"),
-    ("dungeon.maw", "-", "step through a Dungeon Maw"),
+    ("dungeon.entered", "-", "enter the dungeon by any door (no longer fired since the Living Dungeon was removed in 1.58.0; the criterion stays in the advancement so saved progress counts)"),
     ("dungeon.floor_boss", "goliath or charybdis", "floor boss dies"),
     ("arena.entered", "-", "arena travel"),
     ("arena.hourglass_used", "-", "Hourglass of the Final Hour used"),
@@ -112,7 +111,7 @@ def adv_doc():
         "bosses": "every boss the mod has, kill counts, the Triad, Lucius stages, the all-bosses challenge",
         "relics": "obtain, equip, the seven grades, forge, sockets, tiers, Djinn, pairs, sets, Vecna, the Infinity Stones",
         "weapons": "the named weapons, the anti-magic blades, the Genesis edge, engravings",
-        "dungeon": "Living Dungeon, Maw, floor bosses, cooking, Labyrinth, wardens, keys, seals, vault",
+        "dungeon": "Mega-Dungeon, floor bosses, cooking, Labyrinth, wardens, keys, seals, vault",
         "spirits": "spirit charm and contract, elemental lords, devil contract, union, the nine cores",
         "squads": "found, join, captain, vice, charters",
         "world": "kingdoms, library, dream, the arena of the Final Hour, the codex",
@@ -161,7 +160,7 @@ def adv_doc():
     lines += ["", "Keys of the original brief that no advancement uses: " + ", ".join("`%s`" % e[0] for e in EVENTS if e[0] not in use)
               + ", plus `convergence.stage` and `convergence.anomaly` (the Convergence system was removed in 1.14.0, so there is nothing to hook).",
               "", "## Add an advancement in three lines", "",
-              "```python", "# tools/quests/spec_adv.py", 'add("dungeon/new_thing", "dungeon/living_dungeon", "Title", "What to do.", "nusmp:dungeon_maw", ev("dungeon.maw", 3), xp=20)',
+              "```python", "# tools/quests/spec_adv.py", 'add("dungeon/new_thing", "dungeon/mega", "Title", "What to do.", "nusmp:labyrinth_gate", ev("mega.entered", 3), xp=20)',
               "```", "then `python tools/quests/gen_advancements.py` and `python tools/quests/merge_lang.py`.", "",
               "## The future-boss placeholders", "",
               "`nusmp:future/<arc>_<boss>` (hidden, criterion `impossible`). They are awarded by `NusmpEvents.futureBoss(player, arc, boss)`. "

@@ -18,7 +18,7 @@ What it checks, in order:
   1. the server reaches "Done" (the whole mod loads, every datapack registry decodes);
   2. no mod-related ERROR or exception in the boot log;
   3. the dimension `nusmp:mega_dungeon` exists and takes blocks;
-  4. `/locate structure nusmp:dungeon_gate` (the old arches) and `nusmp:mega_gateway` (the singular Gateway) answer;
+  4. `/locate structure nusmp:mega_gateway` (the singular Gateway, the only structure of the dungeon in the Overworld) answers;
   5. the vanilla Jigsaw machinery places our pools and processors (`/place jigsaw nusmp:mega/<pool> nusmp:mega_door 3 x 64 z` in the dimension);
   6. the Mega-Dungeon generator: `/multiverse mega expand` creates sector 0, `status` reaches ACTIVE, `audit 0` is OK; `unseal k` grows sector k+1 up to
      `--sectors`, every audit is OK, regions never closer than the 12-block gap; `regen 0` reproduces the same plan (determinism);
@@ -359,8 +359,6 @@ class Smoke:
         self.run("execute in nusmp:mega_dungeon run forceload remove all")
 
     def phase_locate(self):
-        r = self.run("locate structure nusmp:dungeon_gate")
-        (self.ok if "nearest" in r.lower() else self.fail)("locate-old-gate", r.strip()[:200])
         r = self.run("locate structure nusmp:mega_gateway")
         if "nearest" in r.lower():
             self.ok("locate-gateway", r.strip()[:200])

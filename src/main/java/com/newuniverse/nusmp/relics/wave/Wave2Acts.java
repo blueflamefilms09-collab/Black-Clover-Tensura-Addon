@@ -1,7 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
 import com.newuniverse.nusmp.balance.BalanceLaw;
-import com.newuniverse.nusmp.dungeon.LivingDungeon;
+import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicFlags;
@@ -372,7 +372,7 @@ final class Wave2Acts {
         ServerLevel lv = p.serverLevel();
         Fx.ring(lv, p.position(), 1.5, 0x8C7CFF);
         Fx.lendSkills(p, 400, "tensura:shadow_motion", "tensura:spatial_motion");      // the heels borrow Tensura's two ways through the world for twenty seconds
-        boolean through = !LivingDungeon.in(lv) && phase(p, 8.0);                // through walls too, except inside the Dungeon, whose walls hold
+        boolean through = !Labyrinth.in(lv) && phase(p, 8.0);                // through walls too, except inside the Dungeon, whose walls hold
         if (!through && !Fx.teleportLook(p, 8.0)) Fx.dash(p, 6.0);              // through creatures; no safe place beyond: slip forward instead
         Fx.ring(lv, p.position(), 1.5, 0x8C7CFF);
         Fx.addEffect(p, "minecraft:invisibility", 40, 0);

@@ -2,8 +2,7 @@ package com.newuniverse.nusmp.dungeon.floor.goliath;
 
 /**
  * The numbers of the Goliath's rising (pure, unit tested): who wakes it, how long the seal cracks for, how long the climb takes, how the
- * climb is eased, and how hard the new body shoves players off the seal. The site ({@link GoliathPitSite}) plays the cracking and spawns
- * the body; the body ({@link GoliathBoss}) climbs and the renderer sinks the model by the same eased share.
+ * climb is eased, and how hard the new body shoves players off the seal. The body ({@link GoliathBoss}) plays the cracking and climbs and the renderer sinks the model by the same eased share.
  */
 public final class GoliathRise {
     private GoliathRise() {}

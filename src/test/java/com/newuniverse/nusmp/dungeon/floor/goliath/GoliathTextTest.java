@@ -24,6 +24,7 @@ class GoliathTextTest {
             all.add(GoliathText.woken(who));
             all.add(GoliathText.fallen(who));
             all.add(GoliathText.fallenDuringCollapse(who));
+            all.add(GoliathText.slain(who));
         }
         for (int p : new int[]{0, 20, 60, 100}) for (boolean g : new boolean[]{false, true}) all.add(GoliathText.bar(p, g));
         for (GoliathTable.Spec s : GoliathTable.specs()) all.add(GoliathTable.warning(s.id()));
@@ -84,5 +85,15 @@ class GoliathTextTest {
         assertTrue(GoliathText.fallenDuringCollapse("Alex").contains("Alex"));
         assertFalse(GoliathText.fallenDuringCollapse("Alex").contains("come down"), "the pit is already coming down");
         assertFalse(GoliathText.fallenDuringCollapse(null).contains("null"));
+    }
+
+    @Test
+    void theLineTheBossSaysPromisesNoPit() {
+        assertTrue(GoliathText.slain("Alex").contains("Alex"));
+        assertFalse(GoliathText.slain("Alex").contains("pit"), "since 1.58.0 no pit comes down");
+        assertFalse(GoliathText.slain("Alex").contains("come down"));
+        assertFalse(GoliathText.slain(null).contains("null"));
+        assertFalse(GoliathText.slain("  ").isBlank());
+        assertEquals("The Goliath has fallen.", GoliathText.slain("  "));
     }
 }

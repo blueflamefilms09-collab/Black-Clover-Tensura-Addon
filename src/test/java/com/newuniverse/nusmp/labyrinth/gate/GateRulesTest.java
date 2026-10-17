@@ -10,17 +10,11 @@ class GateRulesTest {
     void aGateRefusesThePlayerItJustSetDownUntilTheStampPasses() {
         long used = GateRules.cooldownUntil(1000);
         assertEquals(1080, used);
-        assertTrue(GateRules.cooldownHolds(1000, used, 0), "the tick of the trip");
-        assertTrue(GateRules.cooldownHolds(1079, used, 0), "the last tick of the cooldown");
-        assertFalse(GateRules.cooldownHolds(1080, used, 0), "then the gate works again");
-        assertFalse(GateRules.cooldownHolds(1000, 0, 0), "a player who never travelled");
-    }
-
-    @Test
-    void theLegacyMawsStampHoldsTheLabyrinthGateToo() {
-        assertTrue(GateRules.cooldownHolds(500, 0, 560), "set down inside a Labyrinth Gate after a Root Gate trip");
-        assertTrue(GateRules.cooldownHolds(500, 560, 0), "set down inside a Maw after an Exit Gate trip");
-        assertFalse(GateRules.cooldownHolds(560, 560, 560));
+        assertTrue(GateRules.cooldownHolds(1000, used), "the tick of the trip");
+        assertTrue(GateRules.cooldownHolds(1079, used), "the last tick of the cooldown");
+        assertFalse(GateRules.cooldownHolds(1080, used), "then the gate works again");
+        assertFalse(GateRules.cooldownHolds(1000, 0), "a player who never travelled");
+        assertFalse(GateRules.cooldownHolds(560, 560), "the stamp itself is already over");
     }
 
     @Test

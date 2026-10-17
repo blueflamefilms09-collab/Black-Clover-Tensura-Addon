@@ -2,17 +2,11 @@ package com.newuniverse.nusmp.dungeon.floor.goliath;
 
 import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.blackclover.Devil;
-import com.newuniverse.nusmp.dungeon.DungeonMaw;
-import com.newuniverse.nusmp.dungeon.LivingDungeon;
-import com.newuniverse.nusmp.dungeon.nexus.DungeonCollapseEvent;
-import com.newuniverse.nusmp.dungeon.nexus.NexusCells;
-import com.newuniverse.nusmp.dungeon.nexus.NexusInfo;
-import com.newuniverse.nusmp.dungeon.nexus.NexusState;
-import com.newuniverse.nusmp.dungeon.nexus.NexusZone;
-import com.newuniverse.nusmp.dungeon.nexus.NexusZones;
 import com.newuniverse.nusmp.entity.zogratis.Move;
 import com.newuniverse.nusmp.entity.zogratis.Tells;
 import com.newuniverse.nusmp.entity.zogratis.ZogratisBoss;
+import com.newuniverse.nusmp.labyrinth.Labyrinth;
+import com.newuniverse.nusmp.relics.djinn.DjinnSources;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
 import net.minecraft.ChatFormatting;
@@ -39,31 +33,31 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.NeoForge;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The Goliath, the Upper Catacombs' floor boss: a stone giant six blocks tall that is born from the bedrock seal in the middle of its pit and
+ * The Goliath, a floor boss of the dungeon: a stone giant six blocks tall that can be born from a bedrock seal in the floor and
  * fights with its weight. It is slow (speed 0.20), hard (1500 health, armour 12, toughness 6, no knockback) and everything it does is a
  * telegraphed ring or circle on the floor ({@link GoliathMoves}, numbers in {@link GoliathTable}):
  * <ul>
- *   <li><b>Rising</b>: a player near the seal wakes it ({@link GoliathPitSite}). The body is made at once, sunk into the floor: for three seconds the
+ *   <li><b>Rising</b>: called to rise ({@link #spawnRising}), the body is made at once, sunk into the floor: for three seconds the
  *       seal cracks (dust, grinding, a heartbeat), then it climbs out over four, shoving players off the seal. The synched {@link #rise} (0 to 1)
  *       tells the renderer how deep the model is sunk. While it rises it cannot be hurt and looks for nobody.</li>
  *   <li><b>The fight</b> is the framework's ({@link ZogratisBoss}): the percentage power system (20, 40, 60, 80 percent of its fury as its health falls, the
  *       list of moves opening up), then at a quarter of its health its stone cracks and glows (the framework's Gates, here the "cracked" form) and it
  *       moves faster. Seven moves and the plain blow: the Ground Slam, the Twin Stomp, the Roaring Shockwave, the Bedrock Fist, the Seismic Line,
  *       the Rubble Fall, and from 60 percent the ultimate, the Bedrock Quake, after which it is exposed for three seconds.</li>
- *   <li><b>The end</b>: when it falls it posts the Treasury Collapse of its pit ({@link DungeonCollapseEvent}) and drops experience only. A pit that
- *       collapses for another reason (its central relic was taken) crumbles any Goliath still standing ({@link #crumble}).</li>
+ *   <li><b>The end</b>: when it falls inside the Labyrinth the server is told and the first fall in a world pays its Djinn Seal
+ *       ({@link DjinnSources#floorBossFell}); it drops experience only. (Until 1.58.0 it also posted the Treasury Collapse of its pit in the Living
+ *       Dungeon, and a collapsing pit crumbled it; both went with the Living Dungeon.)</li>
  * </ul>
  * The Goliath changes no block at all; its stone is particles and sound. Nothing here names a devil: the framework's devil lines are replaced
  * ({@link GoliathText}); the devil it reports is only the framework's way to colour its boss bar and effects (Astaroth, which is bound to no sibling).
  */
 public class GoliathBoss extends ZogratisBoss {
-    /** The scoreboard tags every Goliath carries: the sentient line treats the first as "a floor boss", the pit looks for the second. */
+    /** The scoreboard tags every Goliath carries: the first marks "a floor boss" (the boss rules and the economy read it), the second finds a Goliath. */
     public static final String FLOOR_BOSS_TAG = "nusmp_floor_boss", TAG = "nusmp_goliath";
 
     /** How far the body has climbed out of the floor, 0 (all of it below) to 1 (standing): eased, set by the server every tick of the rise. */
@@ -74,8 +68,7 @@ public class GoliathBoss extends ZogratisBoss {
 
     /** Ticks into the waking (server). A Goliath made standing (a command, an egg) starts at {@link #WOKEN}. */
     private int wakeTicks = WOKEN;
-    /** Was this body made by a pit (it then goes with its pit) or by hand? Saved. */
-    private boolean pit, fellPosted, warned;
+    private boolean fellPosted, warned;
     private ServerPlayer killer;
     /** The marks a wind-up locked for the move that follows (server). */
     private String lockedFor = "";
@@ -150,9 +143,6 @@ public class GoliathBoss extends ZogratisBoss {
 
     /** Is the body still in the floor? (Both sides: it reads the synched value.) */
     public boolean rising() { return entityData.get(RISE) < 1f; }
-
-    /** Was it made by a pit? */
-    public boolean ofPit() { return pit; }
 
     private void beginWake() {
         wakeTicks = 0;
@@ -261,17 +251,16 @@ public class GoliathBoss extends ZogratisBoss {
 
     // ================================================================ spawning
     /**
-     * A Goliath that rises from `seal` (the floor block it comes out of): sunk, cracking the seal for three seconds, then climbing out. `pit` says
-     * whether a pit made it (it then goes with the pit). Null if it could not be made.
+     * A Goliath that rises from `seal` (the floor block it comes out of): sunk, cracking the seal for three seconds, then climbing out. Null if it
+     * could not be made.
      */
-    public static GoliathBoss spawnRising(ServerLevel level, BlockPos seal, float yaw, boolean pit) {
+    public static GoliathBoss spawnRising(ServerLevel level, BlockPos seal, float yaw) {
         GoliathBoss g = GoliathEntities.GOLIATH.get().create(level);
         if (g == null) return null;
         g.moveTo(seal.getX() + 0.5, seal.getY() + 1.0, seal.getZ() + 0.5, yaw, 0f);
         g.setYHeadRot(yaw);
         g.setYBodyRot(yaw);
         g.setArena(seal.above());
-        g.pit = pit;
         g.beginWake();
         return level.addFreshEntity(g) ? g : null;
     }
@@ -336,7 +325,7 @@ public class GoliathBoss extends ZogratisBoss {
         }
     }
 
-    /** It falls: the server is told, and the Treasury Collapse of its pit begins, once. A Goliath that is not in a pit takes nothing with it. */
+    /** It falls: the effects play; inside the Labyrinth the server is told and the first fall in a world pays its Djinn Seal, once. */
     private void fall(ServerLevel sl) {
         if (fellPosted) return;
         fellPosted = true;
@@ -344,23 +333,10 @@ public class GoliathBoss extends ZogratisBoss {
         GoliathMoves.burst(sl, position().add(0, 1.5, 0), 80, 1.6);
         GoliathVfx.fall(this, position());
         sl.sendParticles(ParticleTypes.EXPLOSION_EMITTER, getX(), getY() + 2.0, getZ(), 1, 0.0, 0.0, 0.0, 0.0);
-        if (!LivingDungeon.in(sl)) return;
-        BlockPos centre = arena();
-        NexusInfo info = NexusZones.containing(sl, centre);
-        if (info == null || info.zone != NexusZone.GOLIATH_PIT) return;
-        boolean already = info.state == NexusState.COLLAPSED;
+        if (!Labyrinth.in(sl)) return;
         String who = killer == null ? null : killer.getName().getString();
-        DungeonMaw.broadcast(sl.getServer(), Component.literal(already ? GoliathText.fallenDuringCollapse(who) : GoliathText.fallen(who)).withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
-        if (!already) NeoForge.EVENT_BUS.post(new DungeonCollapseEvent(sl, centre, NexusZone.GOLIATH_PIT, killer, true));
-    }
-
-    /** The pit came down around it (its relic was taken, or the world was reloaded into a collapsed pit): it breaks apart into rubble and is gone. */
-    public void crumble() {
-        if (!(level() instanceof ServerLevel sl) || isRemoved()) return;
-        GoliathMoves.burst(sl, position().add(0, getBbHeight() * 0.5, 0), 120, 1.5);
-        GoliathMoves.sound(sl, position(), SoundEvents.STONE_BREAK, 4.0f, 0.4f);
-        GoliathMoves.sound(sl, position(), SoundEvents.ANVIL_LAND, 2.5f, 0.3f);
-        discard();
+        sl.getServer().getPlayerList().broadcastSystemMessage(Component.literal(GoliathText.slain(who)).withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD), false);
+        DjinnSources.floorBossFell(sl, arena(), "GOLIATH_PIT", killer);
     }
 
     @Override
@@ -369,7 +345,6 @@ public class GoliathBoss extends ZogratisBoss {
         try {
             if (wakeTicks < WOKEN) wakeStep(sl);
             else if (gatesOpen() && tickCount % 8 == 0) embers(sl);
-            if (pit && tickCount % 100 == 37 && LivingDungeon.in(sl)) checkPit(sl);
         } catch (RuntimeException | LinkageError failure) {
             if (!warned) {
                 warned = true;
@@ -383,13 +358,6 @@ public class GoliathBoss extends ZogratisBoss {
         Vec3 c = position().add(0, getBbHeight() * 0.55, 0);
         sl.sendParticles(ParticleTypes.SMALL_FLAME, c.x, c.y, c.z, 3, 0.9, 1.6, 0.9, 0.01);
         if (tickCount % 24 == 0) sl.sendParticles(ParticleTypes.LAVA, c.x, c.y + 0.5, c.z, 1, 0.8, 1.2, 0.8, 0.0);
-    }
-
-    /** A Goliath of a pit that has collapsed (it was not loaded when the collapse began) goes with it. */
-    private void checkPit(ServerLevel sl) {
-        BlockPos a = arena();
-        int cx = Math.floorDiv(a.getX(), NexusZone.CELL), cz = Math.floorDiv(a.getZ(), NexusZone.CELL);
-        if (NexusCells.isNexusCell(cx, cz) && NexusZones.stateOf(sl.getServer(), cx, cz) == NexusState.COLLAPSED) crumble();
     }
 
     // ================================================================ moves
@@ -484,7 +452,7 @@ public class GoliathBoss extends ZogratisBoss {
         List<double[]> at = new ArrayList<>();
         for (LivingEntity e : foes) at.add(new double[]{e.getX(), e.getZ()});
         Vec3 c = arenaCenter();
-        List<double[]> plan = GoliathMath.rubbleSpots(at, GoliathMath.rubbleCount(foes.size(), tuning().castSlots(), gatesOpen()), c.x, c.z, GoliathPitPlan.R, radius * 1.8,
+        List<double[]> plan = GoliathMath.rubbleSpots(at, GoliathMath.rubbleCount(foes.size(), tuning().castSlots(), gatesOpen()), c.x, c.z, GoliathTable.ARENA_R, radius * 1.8,
                 getX(), getZ(), getRandom().nextDouble() * Math.PI * 2);
         List<Vec3> out = new ArrayList<>();
         for (double[] s : plan) {
@@ -601,7 +569,6 @@ public class GoliathBoss extends ZogratisBoss {
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("GWake", wakeTicks);
-        tag.putBoolean("GPit", pit);
         tag.putBoolean("GFell", fellPosted);
     }
 
@@ -609,7 +576,6 @@ public class GoliathBoss extends ZogratisBoss {
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         wakeTicks = tag.contains("GWake") ? Math.max(0, Math.min(WOKEN, tag.getInt("GWake"))) : WOKEN;
-        pit = tag.getBoolean("GPit");
         fellPosted = tag.getBoolean("GFell");
         syncRise();
     }

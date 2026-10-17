@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "nusmp:item/anti_bird_compass_02"
-  }
-}

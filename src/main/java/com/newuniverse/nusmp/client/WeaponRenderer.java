@@ -84,7 +84,6 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             NUItems.PERMAFROST_SABRE, NUItems.CYCLONE_RAPIER, NUItems.BOLT_THROWER, NUItems.CROSSBOW_OF_SWIFT_DEATH,
             NUItems.CLUB_OF_ROT, NUItems.DOOM_HAMMER,
             NUItems.MAGEBANE_SHIELD, NUItems.WEAPON_OF_RESURGENCE, NUItems.BROOCH_PIN, NUItems.HAND_OF_PROVIDENCE, NUItems.BUTCHER_CLEAVER,
-            com.newuniverse.nusmp.dungeon.nexus.nav.NavItems.KI_RESONANCE_LANTERN, com.newuniverse.nusmp.dungeon.nexus.nav.NavItems.ANTI_BIRD_COMPASS,      // 1.21.0
             com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.GLUTTON_CHALICE, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.DEVIL_BOUND_SHEATH, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.GAMBLERS_GRIMOIRE_PAGE,
             com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.AMULET_OF_THE_JUGGERNAUTS_BLINDNESS,      // 1.22.0
             com.newuniverse.nusmp.arena.ArenaSystem.HOURGLASS,      // 1.46.0: the Hourglass of the Final Hour
@@ -139,16 +138,36 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
 
     static ModelResourceLocation icon(String id) { return ModelResourceLocation.standalone(DemonSlayerRenderer.rl("item/" + id + "_icon")); }
 
+    /**
+     * An item's inventory icon model with its overrides applied. This renderer draws the {@code _icon} model directly, which skips the override lookup,
+     * so an item whose icon switches on a property (a state, an angle) must pass the icon through here first. (It lived in the Dungeon Delving Gear's
+     * client class until 1.58.0; the lantern and the compass went with the Living Dungeon, the helper stayed.)
+     */
+    static BakedModel resolveIcon(BakedModel icon, ItemStack stack) {
+        Minecraft mc = Minecraft.getInstance();
+        BakedModel resolved = icon.getOverrides().resolve(icon, stack, mc.level, mc.player, 0);
+        return resolved == null ? icon : resolved;
+    }
+
+    /** The mesh id of a stack: Marid's Valor in its liquid state (1.24.0) draws the liquid blade; everything else is just {@code id}. */
+    static String meshId(ItemStack stack, String id) {
+        if (id.equals("marids_valor")) {
+            net.minecraft.world.item.component.CustomData d = stack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
+            if (d != null && d.copyTag().getCompound("nusmp_w1").getLong("state") == 1L) return "marids_valor_liquid";
+        }
+        return id;
+    }
+
     @Override
     public void renderByItem(ItemStack stack, ItemDisplayContext ctx, PoseStack pose, MultiBufferSource buffers, int light, int overlay) {
         Minecraft mc = Minecraft.getInstance();
         String id = BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath();
         // 1.25.0: the draw / load stage of a bow or crossbow and the Genesis / five-leaf variants pick the mesh (client/relics/item)
         ItemStateVariants.Result state = ctx == ItemDisplayContext.GUI ? null
-                : ItemStateVariants.resolve(stack, com.newuniverse.nusmp.client.nexus.NavClient.meshId(stack, id, ctx), ctx, m -> mesh(m) != null);
+                : ItemStateVariants.resolve(stack, meshId(stack, id), ctx, m -> mesh(m) != null);
         Mesh mesh = state == null ? null : mesh(state.meshId());
         if (mesh == null) {                                                        // the inventory (or a missing mesh): the old icon
-            BakedModel icon = com.newuniverse.nusmp.client.nexus.NavClient.resolveIcon(mc.getModelManager().getModel(icon(id)), stack);
+            BakedModel icon = resolveIcon(mc.getModelManager().getModel(icon(id)), stack);
             pose.pushPose();
             pose.translate(0.5f, 0.5f, 0.5f);                                      // render() translates by -0.5 again
             mc.getItemRenderer().render(stack, ctx, false, pose, buffers, light, overlay, icon);

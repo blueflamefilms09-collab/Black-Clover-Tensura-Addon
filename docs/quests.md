@@ -6,19 +6,19 @@ Why: the owner asked for "a fully fleshed out questline with FTB Quests and Team
 
 ## What is in the book
 
-22 chapters in 3 groups, 339 quests (60 boss, 25 final, 23 intro, 67 mile, 50 side, 11 soon, 103 step), 10 reward tables. Nearly every task is an `advancement` task on the advancement tree (`docs/advancements.md`), plus `item` (obtain, squad treasuries), `kill` (hunters), `dimension` and `checkmark` tasks.
+22 chapters in 3 groups, 333 quests (60 boss, 25 final, 23 intro, 65 mile, 48 side, 11 soon, 101 step), 10 reward tables. Nearly every task is an `advancement` task on the advancement tree (`docs/advancements.md`), plus `item` (obtain, squad treasuries), `kill` (hunters), `dimension` and `checkmark` tasks.
 
 | Group | Chapter (file) | Title | Quests | Optional | Boss-kind quests |
 | --- | --- | --- | --- | --- | --- |
 | The Journey | `prologue` | Prologue: First Steps | 20 | 3 | 0 |
 | The Journey | `magic_mastery` | Magic Mastery | 49 | 3 | 12 |
 | The Journey | `weapons_relics` | Weapons and Relics | 43 | 6 | 5 |
-| The Journey | `dungeon_labyrinth` | Dungeon and Labyrinth | 21 | 7 | 3 |
+| The Journey | `dungeon_labyrinth` | Dungeon and Labyrinth | 17 | 5 | 3 |
 | The Journey | `spirits_devils` | Spirits and Devils | 13 | 2 | 3 |
 | The Journey | `squads_kingdoms` | Squads and Kingdoms | 27 | 12 | 5 |
 | The Anime Arcs | `arc01_hage` | Arc 1: Hage Village | 8 | 2 | 0 |
 | The Anime Arcs | `arc02_exam` | Arc 2: Magic Knights Entrance Exam | 8 | 2 | 0 |
-| The Anime Arcs | `arc03_dungeon` | Arc 3: The Dungeon Arc | 8 | 1 | 2 |
+| The Anime Arcs | `arc03_dungeon` | Arc 3: The Dungeon Arc | 6 | 1 | 2 |
 | The Anime Arcs | `arc04_triad` | Arc 4: Dark Triad: The Royal Capital | 8 | 1 | 1 |
 | The Anime Arcs | `arc05_eye` | Arc 5: Eye of the Midnight Sun | 8 | 1 | 1 |
 | The Anime Arcs | `arc06_witches` | Arc 6: The Witches' Forest | 8 | 2 | 1 |
@@ -92,20 +92,7 @@ The advancement trigger `nusmp:event` takes `key`, optional `count` (>= 1, compa
 | `labyrinth.warden_defeated` | - | Floor Warden dies |
 | `labyrinth.vault_opened` | - | vault pedestal opened |
 | `labyrinth.seal_opened` | - | gatekeeper door opened with the key |
-| `mega.entered` | - | a player arrives in the Mega-Dungeon through a Gateway (labyrinth/mega/travel) |
-| `mega.sector_cleared` | sector id | a Mana Core opens the sector's Gatekeeper door (the opener and every living player within 32 blocks are credited; fired once per opening, at the door, not at the Guardian's death) |
-| `mega.rested` | short or long | a rest completes at a seat, hearth or bed of a safe zone |
-| `mega.crucible_choice` | - | a relic is taken from a Crucible of Choice |
-| `mega.wanderer_survived` | - | a player escapes a wandering boss that was chasing them |
-| `mega.hub` | - | a player arrives on Floor 0, the Sanctuary Hub (labyrinth/mega/hub) |
-| `mega.aligned` | holy or abyssal | the Directional Lock closes: the player cleared the first floor of a road (labyrinth/mega/floors) |
-| `mega.floor` | floor label such as +4 or -10 | a depth is reached on a road for the first time |
-| `mega.gear` | normal, special or rare | a graded piece of standard gear is picked up, once per grade per player (labyrinth/mega/gear; also from chests) |
-| `mega.system_quest` | quest id | a quest of the Solo Leveling System is completed (labyrinth/mega/system) |
-| `mega.shadow` | entity type id | a shadow is extracted with a Shadow Core |
-| `mega.vessel` | relic id | the decennial Metal Vessel is handed out (the drop is off by default, config vesselEnabled) |
-| `dungeon.entered` | - | enter the living dungeon or the labyrinth by any door |
-| `dungeon.maw` | - | step through a Dungeon Maw |
+| `dungeon.entered` | - | enter the dungeon by any door (no longer fired since the Living Dungeon was removed in 1.58.0; the criterion stays in the advancement so saved progress counts) |
 | `dungeon.floor_boss` | goliath or charybdis | floor boss dies |
 | `arena.entered` | - | arena travel |
 | `arena.hourglass_used` | - | Hourglass of the Final Hour used |
@@ -170,7 +157,7 @@ The pack is bundled in the jar under `/quest_pack/` (FTB's files directly at its
 ## Validation result
 
 ```
-quest pack src/main/resources/quest_pack: 22 chapters, 3 groups, 339 quests, 470 tasks (416 advancement tasks), 536 rewards, 10 reward tables, 357 dependency edges, 1109 lang entries; 0 errors, 0 warnings
+quest pack src/main/resources/quest_pack: 22 chapters, 3 groups, 333 quests, 464 tasks (412 advancement tasks), 528 rewards, 10 reward tables, 351 dependency edges, 1091 lang entries; 0 errors, 0 warnings
 ```
 
 `validate_snbt.py` also ran with deliberately broken packs (unknown key, a missing dependency, an int `x`, a missing advancement) and reported each of them; `QuestPackTest` fails on the same mutations.

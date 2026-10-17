@@ -232,9 +232,16 @@ class CharybdisTableTest {
 
     @Test
     void theLeviathanWakesInsideTheWaterOfTheBasin() {
-        assertTrue(CharybdisTable.SURFACE_RANGE > Swim.ORBIT_MAX && CharybdisTable.SURFACE_RANGE < CharybdisBasinPlan.R,
+        assertTrue(CharybdisTable.SURFACE_RANGE > Swim.ORBIT_MAX && CharybdisTable.SURFACE_RANGE < CharybdisTable.ARENA_R,
                 "past its own orbit and inside the water: " + CharybdisTable.SURFACE_RANGE);
         assertEquals(60, CharybdisTable.BUBBLE_TICKS);
         assertEquals(60, CharybdisTable.RISE_TICKS);
+    }
+
+    @Test
+    void theStageKeepsTheMeasureOfTheBasinItWasBuiltFor() {
+        assertEquals(28, CharybdisTable.ARENA_R, "the ring the megalodons tear loose from");
+        assertEquals(CharybdisTable.ARENA_R + 4, CharybdisTable.ARENA_OUTER, "the basin's wall was four blocks thick");
+        assertTrue(CharybdisTable.ARENA_HOVER > 0 && CharybdisTable.ARENA_HEIGHT > 2 * CharybdisTable.ARENA_HOVER, "the leviathan hovers well inside the volume it is looked for in");
     }
 }

@@ -3,7 +3,7 @@ package com.newuniverse.nusmp.relics.wave;
 import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.relics.Fx;
-import com.newuniverse.nusmp.dungeon.LivingDungeon;
+import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -204,7 +204,7 @@ final class Wave15Field {
             return false;
         }
         if (p.isPassenger() || PHASED.containsKey(p.getUUID())) return false;
-        if (LivingDungeon.in(p.level())) {
+        if (Labyrinth.in(p.level())) {
             Wave15Util.tell(p, "The Dungeon's stone is magic: the bracers cannot part it.", ChatFormatting.RED);
             return false;
         }

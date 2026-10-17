@@ -10,7 +10,7 @@ Nothing was run in Minecraft. See "Unverified in the game".
 - The lang fragment must be merged into `assets/nusmp/lang/en_us.json` (`python tools/quests/merge_lang.py`, idempotent). `AdvancementDataTest` fails while a key is missing.
 - `src/test/java/com/newuniverse/nusmp/quests/AdvancementDataTest.java` checks every file: parses, parent exists, one root, no cycle, translations exist, triggers are known, event keys are in the contract, mod items / entities / effects / dimensions exist, every criterion is used by a requirement.
 
-## The tree (369 advancements)
+## The tree (379 advancements)
 
 | Branch (folder) | Advancements | What is in it |
 | --- | --- | --- |
@@ -21,7 +21,7 @@ Nothing was run in Minecraft. See "Unverified in the game".
 | `bosses` | 21 | every boss the mod has, kill counts, the Triad, Lucius stages, the all-bosses challenge |
 | `relics` | 25 | obtain, equip, the seven grades, forge, sockets, tiers, Djinn, pairs, sets, Vecna, the Infinity Stones |
 | `weapons` | 16 | the named weapons, the anti-magic blades, the Genesis edge, engravings |
-| `dungeon` | 20 | Living Dungeon, Maw, floor bosses, cooking, Labyrinth, wardens, keys, seals, vault |
+| `dungeon` | 30 | Mega-Dungeon, floor bosses, cooking, Labyrinth, wardens, keys, seals, vault |
 | `spirits` | 11 | spirit charm and contract, elemental lords, devil contract, union, the nine cores |
 | `squads` | 6 | found, join, captain, vice, charters |
 | `world` | 15 | kingdoms, library, dream, the arena of the Final Hour, the codex |
@@ -29,7 +29,7 @@ Nothing was run in Minecraft. See "Unverified in the game".
 | `arcs` | 13 | one milestone per anime arc (13), chained in story order |
 | `future` | 11 | hidden placeholders for the bosses that are not made yet (granted by their death once they exist) |
 
-Frames: 207 task, 109 goal, 53 challenge. Goals and challenges announce in chat, tasks do not. Every advancement grants experience (5 to 2000 points, more for challenges).
+Frames: 211 task, 113 goal, 55 challenge. Goals and challenges announce in chat, tasks do not. Every advancement grants experience (5 to 2000 points, more for challenges).
 
 The tab background is `textures/block/grimoire_altar_top.png` (an existing 16x16 texture of the mod; the advancement screen tiles it).
 
@@ -56,9 +56,8 @@ Everything else is the mod's own trigger `nusmp:event` (implemented in `quests/N
 | `ceremony.completed` | - | 2 | 1 | multiverse/Ceremony after the grimoire is handed over |
 | `corpse.raised` | - | 3 | 1, 10 | corpse/Corpses |
 | `devil.union` | - | 2 | 1 | devil union |
-| `dungeon.entered` | - | 2 | 1 | enter the living dungeon or the labyrinth by any door |
+| `dungeon.entered` | - | 2 | 1 | enter the dungeon by any door (no longer fired since the Living Dungeon was removed in 1.58.0; the criterion stays in the advancement so saved progress counts) |
 | `dungeon.floor_boss` | goliath or charybdis | 4 | 1 | floor boss dies |
-| `dungeon.maw` | - | 1 | 1 | step through a Dungeon Maw |
 | `grimoire.kingdom` | clover, spade, heart or diamond (extra key requested by the data side) | 8 | 1 | same moment as grimoire.received, one event per grant (extra key) |
 | `grimoire.opened` | - | 1 | 1 | grimoire GUI open (GrimoireItem) |
 | `grimoire.received` | magic id lower case (what the Java side sends) | 3 | 1, 5 | ceremony / altar grant (multiverse/Ceremony) |
@@ -68,6 +67,17 @@ Everything else is the mod's own trigger `nusmp:event` (implemented in `quests/N
 | `labyrinth.warden_defeated` | - | 1 | 1 | Floor Warden dies |
 | `magic.merged` | - | 3 | 1, 5 | core/magic/merge |
 | `mastery.max` | - | 1 | 1 | mastery bar reaches 100% |
+| `mega.aligned` | ? | 2 | 1 | ? |
+| `mega.crucible_choice` | ? | 1 | 1 | ? |
+| `mega.entered` | ? | 3 | 1 | ? |
+| `mega.floor` | ? | 2 | 1 | ? |
+| `mega.gear` | ? | 2 | 1 | ? |
+| `mega.hub` | ? | 1 | 1 | ? |
+| `mega.rested` | ? | 1 | 1 | ? |
+| `mega.sector_cleared` | ? | 2 | 1, 3 | ? |
+| `mega.shadow` | ? | 1 | 1 | ? |
+| `mega.system_quest` | ? | 1 | 1 | ? |
+| `mega.wanderer_survived` | ? | 1 | 1 | ? |
 | `page.unlocked` | page id (e.g. thread_trap, paladin_conversion) | 64 | 1, 5, 10 | multiverse/MasteryPages when a page opens |
 | `paladin.converted` | - | 3 | 1, 5 | soul/Paladins |
 | `relic.djinn_bound` | - | 1 | 1 | Djinn bound to a vessel |
@@ -102,7 +112,7 @@ Keys of the original brief that no advancement uses: , plus `convergence.stage` 
 
 ```python
 # tools/quests/spec_adv.py
-add("dungeon/new_thing", "dungeon/living_dungeon", "Title", "What to do.", "nusmp:dungeon_maw", ev("dungeon.maw", 3), xp=20)
+add("dungeon/new_thing", "dungeon/mega", "Title", "What to do.", "nusmp:labyrinth_gate", ev("mega.entered", 3), xp=20)
 ```
 then `python tools/quests/gen_advancements.py` and `python tools/quests/merge_lang.py`.
 

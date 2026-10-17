@@ -5,14 +5,13 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * The relics and what names them: the enum (its ordinals are bits of a mask and part of saved worlds), the pedestal's property enum, and the
+ * The relics and what names them: the enum (its ordinals are bits of a mask and part of saved worlds) and the
  * datapack that gives them exactly two Curios slots (docs/living_dungeon.md section 7).
  */
 class RelicEnumTest {
@@ -51,60 +50,15 @@ class RelicEnumTest {
     }
 
     @Test
-    void everyRelicHasAnItemIdAndAPedestalValueAndTheOtherWayRound() {
+    void everyRelicHasALegalItemIdNoOtherRelicShares() {
         Set<String> ids = new HashSet<>();
         for (Relic r : Relic.values()) {
             assertNotNull(r.id);
             assertFalse(r.id.isEmpty(), r.name());
             assertTrue(r.id.matches("[a-z0-9_]+"), "a legal registry path: " + r.id);
             assertTrue(ids.add(r.id), "no two relics share an id: " + r.id);
-            RelicSlot s = RelicSlot.of(r);
-            assertNotEquals(RelicSlot.EMPTY, s, r.name() + " needs a pedestal value");
-            assertSame(r, s.relic());
-            assertEquals(r.id, s.getSerializedName(), "the pedestal names the relic by its item id");
         }
-        for (RelicSlot s : RelicSlot.values()) {
-            if (s == RelicSlot.EMPTY) {
-                assertNull(s.relic());
-                assertEquals("empty", s.getSerializedName());
-            } else {
-                assertNotNull(s.relic(), s.name());
-            }
-        }
-        assertEquals(Relic.values().length + 1, RelicSlot.values().length, "every relic plus the empty pedestal");
-        assertSame(RelicSlot.AMULET_OF_THE_JUGGERNAUTS_BLINDNESS, RelicSlot.values()[RelicSlot.values().length - 1], "the new value is the last one");
-    }
-
-    @Test
-    void theTreasuryHoldsTheFourRelicsOfTheDesignInItsOrder() {
-        Relic[] t = Relic.treasury();
-        assertEquals(4, t.length);
-        assertArrayEquals(new Relic[]{Relic.BAND_OF_THE_SPATIAL_ANCHOR, Relic.DEVIL_BOUND_SHEATH, Relic.GAMBLERS_GRIMOIRE_PAGE, Relic.AMULET_OF_THE_JUGGERNAUTS_BLINDNESS}, t);
-        assertEquals(4, EnumSet.of(t[0], t[1], t[2], t[3]).size(), "four distinct relics");
-        for (Relic r : t) assertNotEquals(RelicSlot.EMPTY, RelicSlot.of(r), r.name());
-        Set<Relic> left = EnumSet.allOf(Relic.class);
-        left.removeAll(Set.of(t));
-        assertEquals(EnumSet.of(Relic.GLUTTONS_CHALICE, Relic.MANTLE_OF_THE_SCAVENGER), left, "only the two of the removed food web are kept out");
-    }
-
-    @Test
-    void theTreasuryIsACopyNobodyCanChange() {
-        Relic[] t = Relic.treasury();
-        t[0] = Relic.GLUTTONS_CHALICE;
-        assertSame(Relic.BAND_OF_THE_SPATIAL_ANCHOR, Relic.treasury()[0]);
-        Relic[] old = Relic.legacyTreasury();
-        old[0] = Relic.AMULET_OF_THE_JUGGERNAUTS_BLINDNESS;
-        assertSame(Relic.GLUTTONS_CHALICE, Relic.legacyTreasury()[0]);
-    }
-
-    @Test
-    void withTheSentientRulesOffTheTreasuriesHoldWhatTheyAlwaysDid() {
-        assertArrayEquals(new Relic[]{Relic.GLUTTONS_CHALICE, Relic.MANTLE_OF_THE_SCAVENGER, Relic.BAND_OF_THE_SPATIAL_ANCHOR, Relic.DEVIL_BOUND_SHEATH,
-                Relic.GAMBLERS_GRIMOIRE_PAGE}, Relic.legacyTreasury(), "the five of 1.21.0 in their old order");
-        assertArrayEquals(Relic.treasury(), Relic.pool(true));
-        assertArrayEquals(Relic.legacyTreasury(), Relic.pool(false));
-        for (Relic r : Relic.legacyTreasury()) assertTrue(r.ordinal() < 5, "no relic newer than 1.21.0 in the old pool: " + r.name());
-        assertEquals(5, Relic.legacyTreasury().length);
+        assertEquals(Relic.values().length, ids.size());
     }
 
     // ---------------------------------------------------------------- the datapack: exactly two relic slots, and no other slot takes a relic

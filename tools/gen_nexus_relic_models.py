@@ -1,20 +1,15 @@
-"""1.21.0: the 3D in-hand models of the Dimensional Nexus relics and navigation gear, built to the Butcher Cleaver's standard.
+"""1.21.0: the 3D in-hand models of the Dimensional Nexus relics, built to the Butcher Cleaver's standard. (The Ki-Resonance Lantern and the Anti-Bird
+Compass, the navigation gear this file also built, were removed with the Living Dungeon in 1.58.0: docs/labyrinth/mega_v2_prune.md.)
 
 This file is not run on its own: tools/gen_weapon_models.py executes it in its own namespace (one line before `def mirror_x`), so np, math, Image,
 Mesh, Atlas, box, plate, disc_mask, ascii_mask, col, shade, mix, nz, fz, hsh, lerp, SPECS, RELICS, REAL, GRIP, _lathe_dir, _bc_tube, _xb_packed and
 sprite_axis / sprite_box all exist here.
 
     python3 -B tools/gen_nexus_relic_icons.py                       (the 16x16 sprites first: the meshes are placed on them)
-    python3 -B tools/gen_weapon_models.py ki_resonance_lantern ki_resonance_lantern_off ki_resonance_lantern_blue ki_resonance_lantern_red \\
-        anti_bird_compass glutton_chalice devil_bound_sheath gamblers_grimoire_page amulet_of_the_juggernauts_blindness
-    python3 -B tools/item_preview/preview_weapons.py ki_resonance_lantern  (the headless preview)
+    python3 -B tools/gen_weapon_models.py glutton_chalice devil_bound_sheath gamblers_grimoire_page amulet_of_the_juggernauts_blindness
+    python3 -B tools/item_preview/preview_weapons.py glutton_chalice  (the headless preview)
 
 Model units are texels of the 128 skin; y runs up the item (along the sheath for the sheath), x across it, z through it, the front faces +z.
-  ki_resonance_lantern  a hexagonal cage of iron lattice and glass round an open flame in a brass fuel cup, a pointed brass-trimmed roof and a ring to hold it
-                        by. Four meshes, one per flame state: _off (no flame, no glow), the default (amber), _blue (an IllusionStone wall ahead) and _red
-                        (a descent gate ahead): the flame, the glints in the glass and the runes on the base take its colour.
-  anti_bird_compass     a bronze case with a dark green dial, a feather-shaped needle (a pale tail, a biomass-green tip) and a crow's feather hanging off its
-                        ring. The 3D needle is neutral (up): the inventory icon is the 32-frame one.
   glutton_chalice       a living goblet of bone: teeth round the rim, a glowing green stew, red veins that glow and crawl over the bowl and the stem, tendrils
                         round the foot.
   devil_bound_sheath    a black lacquered scabbard wrapped in iron chain, a violet-red sigil that glows, a glowing void in its mouth, horns at the chape and a
@@ -204,225 +199,6 @@ def _rc_iron_lathe(base=_RC_IRON, brass_segs=(), glow_segs=(), glow_rgb=None, ru
             return col(glow_rgb), col(glow_rgb, 1.0)
         return col(_rc_clip(c)), g
     return p
-
-
-# ================================================================ the Ki-Resonance Lantern
-_RC_FLAMES = {
-    # state: (outer, mid, core, glint on the glass, runes, glow tint, pulse speed, pulse min)
-    "amber": ((224, 108, 28), (255, 176, 52), (255, 244, 196), (255, 196, 90), (255, 176, 60), "FFFFFF", 0.30, 0.62),
-    "blue": ((38, 96, 224), (86, 176, 255), (226, 248, 255), (130, 200, 255), (110, 190, 255), "FFFFFF", 0.30, 0.62),
-    "red": ((168, 22, 30), (255, 80, 58), (255, 222, 200), (255, 110, 90), (255, 84, 66), "FFFFFF", 0.30, 0.62),
-    "off": None,
-}
-_RC_LANTERN_IDS = {"ki_resonance_lantern": "amber", "ki_resonance_lantern_off": "off", "ki_resonance_lantern_blue": "blue", "ki_resonance_lantern_red": "red"}
-
-_RC_HEX = 6
-_RC_LR = 10.5                     # radius of the cage's corner posts
-_RC_Y_DECK, _RC_Y_CAGE = 6.2, 30.4
-
-
-def _rc_lantern(m, a, state):
-    spec = _RC_FLAMES[state]
-    lit = spec is not None
-    outer, mid, core, glint, runec = (spec[0], spec[1], spec[2], spec[3], spec[4]) if lit else (None,) * 5
-    R = _RC_LR
-
-    # ---- the base: a hexagonal plinth, runes round its flare, a brass deck rim
-    base_prof = [(0.0, 0.0), (0.0, 12.6), (1.3, 13.8), (4.2, 13.8), (5.4, 12.4), (6.2, 11.6), (6.2, 0.0)]
-    bc = _rc_cum(base_prof)
-
-    def runes_on_base(k, s, d):
-        dl = d - bc[2]
-        return 0.4 < dl < 2.5 and (0.18 < s < 0.34 or 0.62 < s < 0.78)
-    _rc_lathe(m, a, base_prof, _RC_HEX, _rc_iron_lathe(brass_segs=(5,), glow_segs=(2,), glow_rgb=runec, rune=runes_on_base if lit else None, salt=1), sw=3)
-    # ---- the fuel cup: a brass dish holding a shard of magic stone, the flame's wick
-    cup = [(6.2, 3.4), (7.6, 4.4), (10.6, 4.2), (10.6, 3.2), (9.4, 3.0), (9.4, 0.0)]
-    _rc_lathe(m, a, cup, 8, lambda k, s, d, seg, th: (col(_rc_clip(np.array(_RC_BRASS if seg < 3 else (70, 44, 24), np.float32) * _rc_shade(th, 0.7, 0.4) + fz(k * 2 + s, d * 2, 72) * 22)), None), sw=2)
-    if lit:
-        shard = [(9.4, 0.0), (9.4, 2.4), (11.2, 3.0), (12.8, 1.6), (13.6, 0.0)]
-        _rc_lathe(m, a, shard, 5, lambda k, s, d, seg, th: (col(mix(mid, core, 0.35 + 0.4 * (k % 2))), col(mid, 1.0)), sw=2, jitter=0.1, salt=4)
-    else:
-        wick = [(9.4, 0.0), (9.4, 0.7), (12.6, 0.6), (13.0, 0.0)]
-        _rc_lathe(m, a, wick, 4, lambda k, s, d, seg, th: (col((38, 34, 38)), None), sw=2)
-    # ---- the flame: four crossed cards, each a teardrop with a pale core
-    if lit:
-        fy0, fy1, fh, fw = 10.6, 30.0, 26, 17
-
-        def flame_paint(i, j, w, h):
-            x = (i + 0.5 - w / 2) / (w / 2)
-            y = 1.0 - (j + 0.5) / h
-            sway = 0.16 * math.sin(math.pi * 1.4 * y + 0.6)
-            wd = 0.96 * math.sin(math.pi * min(1.0, max(0.0, y) ** 0.66))
-            if wd <= 0.04 or abs(x - sway) > wd:
-                return None, None
-            u = abs(x - sway) / wd
-            c = core if (u < 0.34 and 0.06 < y < 0.62) else mid if (u < 0.7 and y < 0.84) else outer
-            c = tuple(np.array(c, np.float32) * (0.86 + 0.14 * (1 - y)))
-            return col(c), col(c, 1.0)
-        for (ang, hw_) in ((0.0, fw / 2), (math.pi / 4, fw / 2), (math.pi / 2, fw / 2), (3 * math.pi / 4, fw / 2)):
-            dx, dz = math.cos(ang) * hw_, math.sin(ang) * hw_
-            _rc_card(m, a, (-dx, fy0, -dz), (dx, fy0, dz), (dx, fy1, dz), (-dx, fy0 + (fy1 - fy0), -dz), fw, fh, flame_paint)
-    # ---- the six posts, brass collars at their ends
-    for q in range(_RC_HEX):
-        ang = 2 * math.pi * q / _RC_HEX
-        post = [(0.0, 0.0), (0.0, 1.5), (1.1, 1.6), (1.1, 1.0), (1.9, 1.5), (2.7, 1.0), (_RC_Y_CAGE - _RC_Y_DECK - 2.7, 1.0), (_RC_Y_CAGE - _RC_Y_DECK - 1.9, 1.5),
-                (_RC_Y_CAGE - _RC_Y_DECK - 1.1, 1.0), (_RC_Y_CAGE - _RC_Y_DECK - 1.1, 1.6), (_RC_Y_CAGE - _RC_Y_DECK, 1.5), (_RC_Y_CAGE - _RC_Y_DECK, 0.0)]
-        _rc_lathe(m, a, post, 4, _rc_iron_lathe(brass_segs=(1, 2, 3, 4, 7, 8, 9, 10), salt=q), sw=2, base=(R * math.cos(ang), _RC_Y_DECK, R * math.sin(ang)))
-    # ---- the panes: an iron diamond lattice with glints of glass, open between (you see the flame through them)
-    y0p, y1p = _RC_Y_DECK + 1.6, _RC_Y_CAGE - 1.6
-    pw_, ph_ = int(round(R)), int(round(y1p - y0p))
-
-    def pane_paint(i, j, w, h):
-        edge = (j == 0 or j == h - 1)
-        d1, d2 = (i + j) % 11, (i - j) % 11
-        if edge or d1 == 0 or d2 == 0:
-            n = fz(i * 2, j * 2, 80) * 14
-            return col(_rc_clip(np.array((78, 82, 108), np.float32) + n + (34 if (d1 == 0 and d2 == 0) else 0))), None
-        if (i * 5 + j * 3) % 37 == 0:                                                   # a few glints of glass
-            return col((200, 230, 244), 0.95), (col(glint, 0.5) if lit else None)
-        return None, None
-    for q in range(_RC_HEX):
-        a0, a1 = 2 * math.pi * q / _RC_HEX, 2 * math.pi * (q + 1) / _RC_HEX
-        A = (R * math.cos(a0), R * math.sin(a0))
-        Bp = (R * math.cos(a1), R * math.sin(a1))
-        _rc_card(m, a, (A[0], y0p, A[1]), (Bp[0], y0p, Bp[1]), (Bp[0], y1p, Bp[1]), (A[0], y1p, A[1]), pw_, ph_, pane_paint)
-    # ---- the roof: a flange with a brass rim, a pointed hex roof with runes, a finial
-    y = _RC_Y_CAGE
-    roof = [(y - 0.8, 0.0), (y - 0.8, 12.6), (y + 0.4, 14.0), (y + 1.6, 14.0), (y + 2.4, 12.2), (y + 3.4, 11.6), (y + 7.0, 8.2), (y + 10.4, 4.6), (y + 12.0, 2.8),
-            (y + 12.8, 2.8), (y + 13.8, 1.7), (y + 14.8, 0.0)]
-    rc = _rc_cum(roof)
-
-    def runes_on_roof(k, s, d):
-        dl = d - rc[5]
-        return 0.8 < dl < 3.6 and (0.2 < s < 0.34 or 0.66 < s < 0.8)
-    _rc_lathe(m, a, roof, _RC_HEX, _rc_iron_lathe(brass_segs=(2, 3, 4, 9), glow_segs=(5,), glow_rgb=runec, rune=runes_on_roof if lit else None, salt=7), sw=3)
-    for q in range(_RC_HEX):                                                # little brass finials on the flange corners
-        ang = 2 * math.pi * q / _RC_HEX
-        _rc_lathe(m, a, [(0.0, 0.0), (0.0, 1.3), (1.4, 0.9), (3.6, 0.0)], 4, _rc_iron_lathe(brass_segs=(0, 1, 2), salt=20 + q), sw=2,
-                  base=(13.2 * math.cos(ang), y + 0.4, 13.2 * math.sin(ang)))
-    # ---- the ring to hold it by
-    cy = y + 14.8 + 3.4
-    ring = [(4.2 * math.cos(2 * math.pi * q / 20), cy + 4.2 * math.sin(2 * math.pi * q / 20), 0.0) for q in range(20)]
-    _rc_tube(m, a, ring, 1.05, 6, lambda k, s, d, th: (col(_rc_clip(np.array(_RC_BRASS, np.float32) * _rc_shade(th, 0.7, 0.4) + fz(k + s, d * 2, 73) * 22)), None), sw=2, closed=True)
-    return dict(glow=(spec[5], spec[6], spec[7], 1.0)) if lit else dict()
-
-
-def _rc_lantern_fn(state):
-    @_xb_packed
-    def build(m, a):
-        return _rc_lantern(m, a, state)
-    build.__doc__ = "The Ki-Resonance Lantern with the flame '%s'." % state
-    return build
-
-
-
-# ================================================================ the Anti-Bird Compass
-def _rc_bronze(k, s, d, seg, th, salt=0):
-    """Worn bronze: grain, a darker side, verdigris in patches, a few bright dents."""
-    x = (k + s) * 2.0
-    c = np.array((190, 118, 52), np.float32) * _rc_shade(th, 0.7, 0.4) + nz(x, d * 1.3, 110 + salt) * 34 + fz(x * 2, d * 2, 111 + salt) * 16
-    if nz(x * 0.7, d * 0.8, 112 + salt) > 0.15:
-        c = c * 0.78 + np.array((70, 130, 106), np.float32) * 0.22
-    if hsh(int(x), int(d), 113 + salt) > 0.96:
-        c = c * 1.25 + 14
-    return col(_rc_clip(c)), None
-
-
-def _rc_dial(k, s, d, seg, th, rho):
-    """The dial, in polar texels: a deep green with two rings, sixteen ticks, the four cardinal ones long and glowing; a green triangle marks up."""
-    c = np.array((22, 50, 46), np.float32) + (1 - rho) * np.array((14, 34, 26), np.float32) + fz(th * 40, rho * 20, 120) * 10
-    g = None
-    for r0 in (0.34, 0.7):
-        if abs(rho - r0) < 0.035:
-            c = np.array((52, 112, 92), np.float32)
-    t16 = (th * 16) % 1.0
-    near = min(t16, 1 - t16) < 0.07
-    cardinal = abs(((th * 4) % 1.0) - 0.0) < 0.05 or abs(((th * 4) % 1.0) - 1.0) < 0.05
-    if near and rho > 0.84:
-        c = np.array((236, 224, 170), np.float32)
-    if cardinal and rho > 0.74:
-        c = np.array((255, 236, 160), np.float32)
-        g = col((255, 226, 130), 0.8)
-    if abs(th - 0.75) < 0.028 and 0.5 < rho < 0.7:                                        # the green triangle that marks up
-        c = np.array((150, 255, 120), np.float32)
-        g = col((150, 255, 120), 0.9)
-    if rho < 0.1:
-        c = np.array((120, 90, 44), np.float32)
-    return col(_rc_clip(c)), g
-
-
-@_xb_packed
-def anti_bird_compass(m, a):
-    """Anti-Bird Compass: a bronze case round a dark green dial, a feather-shaped needle (a pale tail, a biomass-green tip, neutral: pointing up), a few
-    glints of glass over it, and a crow's feather hanging off the ring."""
-    prof = [(-3.2, 0.0), (-3.2, 11.6), (-2.4, 14.4), (2.8, 15.0), (3.9, 14.0), (3.9, 12.3), (3.0, 12.0), (1.4, 11.8), (1.4, 0.0)]
-    cum = [0.0]
-    for (y0, r0), (y1, r1) in zip(prof, prof[1:]):
-        cum.append(cum[-1] + math.hypot(y1 - y0, r1 - r0))
-
-    def case_paint(k, s, d, seg, th):
-        if seg == 7:                                                  # the dial
-            rho = max(0.0, min(1.0, 1.0 - (d - cum[7]) / 11.8))
-            return _rc_dial(k, s, d, seg, th, rho)
-        if seg == 4:                                                  # the polished rim, ticks engraved round it
-            c, _ = _rc_bronze(k, s, d, seg, th, 5)
-            c = np.array(c, np.float32) * 1.18 + 14
-            if (th * 32) % 1.0 < 0.14:
-                c = c * 0.5
-            return col(_rc_clip(c)), None
-        if seg == 6:
-            c, _ = _rc_bronze(k, s, d, seg, th, 9)
-            return col(_rc_clip(np.array(c, np.float32) * 0.72)), None
-        return _rc_bronze(k, s, d, seg, th)
-    _rc_lathe(m, a, prof, 32, case_paint, sw=2, direction=(0.0, 0.0, 1.0))
-    # ---- the needle: one card above the dial
-    def needle(i, j, w, h):
-        x = (i + 0.5 - w / 2) / (w / 2)
-        y = 1.0 - (j + 0.5) / h
-        wd = math.sin(math.pi * min(1.0, max(0.0, y)) ** 0.9) ** 0.75
-        if abs(x) > wd * 0.98:
-            return None, None
-        if abs(x) < 0.16:
-            return col((255, 244, 190)), (col((200, 255, 150), 0.5) if y > 0.45 else None)
-        if y > 0.44:
-            return col((170, 250, 112)), col((150, 255, 110), 0.9)
-        return col((232, 232, 242) if abs(x) < 0.6 else (190, 190, 206)), None
-    _rc_card(m, a, (-3.2, -9.0, 2.15), (3.2, -9.0, 2.15), (3.2, 13.0, 2.15), (-3.2, 13.0, 2.15), 8, 22, needle)
-    _rc_lathe(m, a, [(0.0, 0.0), (0.0, 2.2), (1.1, 1.8), (1.9, 1.0), (2.2, 0.0)], 8, lambda k, s, d, seg, th: _rc_bronze(k, s, d, seg, th, 3), sw=2,
-              base=(0.0, 0.0, 2.1), direction=(0.0, 0.0, 1.0))
-    # ---- a few glints of glass over the dial
-    def glints(i, j, w, h):
-        if abs((i - 1) + (j - 9)) < 0.9 and 1 <= i <= 5:                                 # one streak and a dot, high on the left of the dial
-            return col((226, 246, 255), 0.95), None
-        if (i, j) == (7, 3):
-            return col((226, 246, 255), 0.95), None
-        return None, None
-    _rc_card(m, a, (-8.5, 4.5, 3.7), (-0.5, 4.5, 3.7), (-0.5, 12.5, 3.7), (-8.5, 12.5, 3.7), 8, 8, glints, both=False)
-    # ---- the neck, the ring, and the crow's feather
-    _rc_lathe(m, a, [(0.0, 0.0), (0.0, 2.4), (1.0, 1.7), (2.0, 1.4), (2.2, 0.0)], 8, lambda k, s, d, seg, th: _rc_bronze(k, s, d, seg, th, 4), sw=2, base=(0.0, 14.7, 0.0))
-    cy = 19.6
-    ring = [(2.9 * math.cos(2 * math.pi * q / 16), cy + 2.9 * math.sin(2 * math.pi * q / 16), 0.0) for q in range(16)]
-    _rc_tube(m, a, ring, 0.85, 6, lambda k, s, d, th: _rc_bronze(k, s, d * 2, 0, th, 6), sw=2, closed=True)
-    ang = math.radians(48)
-    ux, uy = math.cos(ang), math.sin(ang)
-    vx, vy = -uy, ux
-    bx, by, L, hw = 2.2, 21.8, 14.0, 3.4
-
-    def feather(i, j, w, h):
-        x = (i + 0.5 - w / 2) / (w / 2)
-        y = 1.0 - (j + 0.5) / h
-        wf = 0.98 * math.sin(math.pi * min(1.0, 0.12 + 0.88 * y) ** 0.85) ** 0.7
-        notch = ((j * 3 + (1 if x > 0 else 0) * 2) % 6 == 0) and abs(x) > wf * 0.7
-        if abs(x) > wf or notch:
-            return None, None
-        if abs(x) < 0.13:
-            return col((226, 214, 180)), None
-        if 0.13 <= x < 0.5 and (j % 5) != 0:
-            return col((72, 150, 128)), col((90, 200, 160), 0.3)
-        return col(_rc_clip(np.array((34, 32, 48), np.float32) + fz(i * 2, j * 2, 130) * 10)), None
-    _rc_card(m, a, (bx - vx * hw, by - vy * hw, 0.0), (bx + vx * hw, by + vy * hw, 0.0), (bx + vx * hw + ux * L, by + vy * hw + uy * L, 0.0),
-             (bx - vx * hw + ux * L, by - vy * hw + uy * L, 0.0), 9, 28, feather)
-    return dict(glow=("B8FFB0", 0.07, 0.5, 1.0))
 
 
 # ================================================================ the Glutton's Chalice
@@ -953,8 +729,7 @@ def amulet_of_the_juggernauts_blindness(m, a):
 
 # ================================================================ registration
 SPECS += [("devil_bound_sheath", devil_bound_sheath)]
-RELICS += [("anti_bird_compass", anti_bird_compass), ("glutton_chalice", glutton_chalice), ("gamblers_grimoire_page", gamblers_grimoire_page)]
+RELICS += [("glutton_chalice", glutton_chalice), ("gamblers_grimoire_page", gamblers_grimoire_page)]
 RELICS += [("amulet_of_the_juggernauts_blindness", amulet_of_the_juggernauts_blindness)]
-RELICS += [(i, _rc_lantern_fn(s)) for i, s in _RC_LANTERN_IDS.items()]
 REAL.update({"devil_bound_sheath": 1.1})              # metres: the scabbard 0.88 m and the lanyard
 GRIP.update({"devil_bound_sheath": 0.25})             # held round the mouth

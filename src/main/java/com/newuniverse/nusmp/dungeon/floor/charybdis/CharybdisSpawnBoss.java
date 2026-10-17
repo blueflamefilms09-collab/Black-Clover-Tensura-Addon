@@ -4,7 +4,10 @@ import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.blackclover.Devil;
 import com.newuniverse.nusmp.entity.zogratis.Move;
 import com.newuniverse.nusmp.entity.zogratis.ZogratisBoss;
+import com.newuniverse.nusmp.labyrinth.Labyrinth;
+import com.newuniverse.nusmp.relics.djinn.DjinnSources;
 import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -41,14 +44,16 @@ import java.util.UUID;
  *   <li><b>It swims by hand.</b> A floating water mob has no walkable path, so the framework's walking goal is not registered and every tick
  *       {@link Swim} gives the velocity: a slow orbit round the dais, an approach to any foe near, a brake to a standstill while it casts. It has no
  *       gravity, is not pushed by currents and breathes water because the entity type tag {@code minecraft:can_breathe_under_water} lists it.</li>
- *   <li><b>It surfaces.</b> {@link CharybdisBasinSite} wakes it when a player comes near the dais: it appears in the well beneath and rises six
- *       blocks over three seconds, unhurt and untargeting ({@link #beginRise}).</li>
+ *   <li><b>It surfaces.</b> When it is called it can appear in the water beneath and rise six blocks over three seconds, unhurt and untargeting
+ *       ({@link #beginRise}).</li>
  *   <li><b>Its moves</b> ({@link CharybdisMoves}, numbers in {@link CharybdisTable}): the Magicule Scale Volley, the Tentacle Sweep, the
  *       Whirlpool, the Beak Lunge, Summon Megalodons, the Tidal Crush and, from 60% power, the Maelstrom of Scales. Its scales are real projectiles
  *       ({@link MagiculeScaleEntity}) that a shield, the Magebane Shield's parry or a blow turns back on it.</li>
  *   <li><b>Its voice</b> is narration ({@link CharybdisText}): nothing it says names a devil. It reports the Beelzebub of the framework only because
  *       a boss must have a devil; the bar, the chat colour and every line are its own.</li>
- *   <li><b>Its end</b>: it posts the Dungeon's collapse event once, drops experience and nothing else, and its megalodons go with it.</li>
+ *   <li><b>Its end</b>: inside the Labyrinth the server is told and the first fall in a world pays its Djinn Seal ({@link DjinnSources#floorBossFell});
+ *       it drops experience and nothing else, and its megalodons go with it. (Until 1.58.0 it also posted the collapse event of the Charybdis Basin of
+ *       the Living Dungeon, which was removed.)</li>
  * </ul>
  */
 public class CharybdisSpawnBoss extends ZogratisBoss {
@@ -349,10 +354,22 @@ public class CharybdisSpawnBoss extends ZogratisBoss {
         if (!(level() instanceof ServerLevel sl)) return;
         CharybdisMinions.dismiss(sl, this);
         if (won) CharybdisVfx.burst(this);
-        if (won) CharybdisBasinSite.fell(sl, arena(), killer == null ? null : sl.getServer().getPlayerList().getPlayer(killer));
+        if (won) reportFall(sl, killer == null ? null : sl.getServer().getPlayerList().getPlayer(killer));
     }
 
-    /** Remembers who struck the last blow (the collapse event names them). */
+    /** The leviathan fell: inside the Labyrinth the server is told, once, and the first fall in a world pays its Djinn Seal. */
+    private void reportFall(ServerLevel sl, ServerPlayer slayer) {
+        if (!Labyrinth.in(sl)) return;
+        try {
+            String who = slayer == null ? null : slayer.getName().getString();
+            sl.getServer().getPlayerList().broadcastSystemMessage(Component.literal(CharybdisText.slain(who)).withStyle(ChatFormatting.DARK_AQUA, ChatFormatting.BOLD), false);
+            DjinnSources.floorBossFell(sl, arena(), "CHARYBDIS_BASIN", slayer);
+        } catch (RuntimeException | LinkageError failure) {
+            LOG.warn("[nusmp] Could not announce the fall of the Charybdis Spawn", failure);
+        }
+    }
+
+    /** Remembers who struck the last blow (the Seal goes to them). */
     @Override
     public void die(DamageSource source) {
         if (source.getEntity() instanceof ServerPlayer p) killer = p.getUUID();

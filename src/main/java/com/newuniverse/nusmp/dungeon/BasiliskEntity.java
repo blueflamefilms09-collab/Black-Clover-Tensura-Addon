@@ -21,10 +21,6 @@ public class BasiliskEntity extends DungeonCreature {
 
     @Override public int tier() { return 3; }
 
-    @Override public float weight() { return 25f; }
-
-    @Override public int carcassKind() { return 2; }
-
     @Override public boolean isPrey(LivingEntity e) { return e instanceof LivingArmorEntity || e instanceof DungeonSlimeEntity; }
 
     @Override public boolean huntsPlayers() { return true; }

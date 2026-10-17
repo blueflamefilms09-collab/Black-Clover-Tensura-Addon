@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.labyrinth.gen.LabyrinthLocate;
 import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.ActCtx;
@@ -26,8 +25,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.levelgen.structure.BoundingBox;
-import net.minecraft.world.level.levelgen.structure.StructureStart;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -319,22 +316,12 @@ final class Wave30Deck {
     private static void vizier(ServerPlayer p, ServerLevel level) {
         try {
             BlockPos here = p.blockPosition();
-            if (Labyrinth.in(level)) {
-                StructureStart start = LabyrinthLocate.nearestStart(level, Labyrinth.SPIRE_TAG, here);
-                BlockPos pad = LabyrinthLocate.arrivalPadOf(start);
-                if (pad == null) {
-                    Wave30Kit.say(p, "Vizier: the sage looks long over the Labyrinth and names no Spire within " + LabyrinthLocate.LOCATE_RADIUS_CHUNKS + " chunks.");
-                    return;
-                }
-                BoundingBox box = start.getBoundingBox();
-                Wave30Kit.say(p, "Vizier: the sage answers: the nearest Spire's arrival pad is at " + pad.getX() + ", " + pad.getY() + ", " + pad.getZ()
-                        + " (" + (int) Math.sqrt(pad.distSqr(here)) + " blocks away; it spans y " + box.minY() + " to " + box.maxY() + ").");
-            } else if (level.dimension() == Level.OVERWORLD) {
+            if (level.dimension() == Level.OVERWORLD) {
                 BlockPos gate = LabyrinthLocate.nearestGate(level, here);
-                Wave30Kit.say(p, gate == null ? "Vizier: the sage names no Dungeon Gate within " + LabyrinthLocate.LOCATE_RADIUS_CHUNKS + " chunks."
-                        : "Vizier: the sage answers: the nearest Dungeon Gate stands at " + gate.getX() + ", " + gate.getY() + ", " + gate.getZ() + " (" + (int) Math.sqrt(gate.distSqr(here)) + " blocks away).");
+                Wave30Kit.say(p, gate == null ? "Vizier: the sage names no Gateway within " + LabyrinthLocate.LOCATE_RADIUS_CHUNKS + " chunks."
+                        : "Vizier: the sage answers: the nearest Gateway stands at " + gate.getX() + ", " + gate.getY() + ", " + gate.getZ() + " (" + (int) Math.sqrt(gate.distSqr(here)) + " blocks away).");
             } else {
-                Wave30Kit.say(p, "Vizier: Gates stand in the Overworld and Spires in the Labyrinth; the sage has nothing to tell you here.");
+                Wave30Kit.say(p, "Vizier: the Gateway stands in the Overworld; the sage has nothing to tell you here.");
             }
         } catch (RuntimeException | LinkageError failed) {
             Wave30Kit.say(p, "Vizier: the sage's answer is lost in the static.");

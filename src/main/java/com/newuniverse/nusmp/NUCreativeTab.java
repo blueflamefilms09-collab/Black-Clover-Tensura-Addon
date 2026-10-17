@@ -43,30 +43,12 @@ public final class NUCreativeTab {
                 for (var egg : com.newuniverse.nusmp.entity.zogratis.ZogratisEntities.spawnEggs()) output.accept(egg.get());      // 1.20.0: the Zogratis bosses
                 for (var ai : com.newuniverse.nusmp.arena.ArenaSystem.creativeItems()) output.accept(ai.get());                  // 1.46.0: the Hourglass of the Final Hour and the Return Sigil
                 output.accept(com.newuniverse.nusmp.block.NUBlocks.GRIMOIRE_ALTAR_ITEM.get());
-                output.accept(com.newuniverse.nusmp.dungeon.DungeonBlocks.DUNGEON_MAW_ITEM.get());           // 1.17.0
-                output.accept(com.newuniverse.nusmp.dungeon.DungeonBlocks.DUNGEON_GATE_ITEM.get());                com.newuniverse.nusmp.labyrinth.LabyrinthCreative.addTo(output);                                       // 1.35.0: the Labyrinth's blocks and items
+                com.newuniverse.nusmp.labyrinth.LabyrinthCreative.addTo(output);                                       // 1.35.0: the Labyrinth's blocks and items
 
-                output.accept(com.newuniverse.nusmp.dungeon.DungeonBlocks.MAW_ROOT_ITEM.get());
-                output.accept(com.newuniverse.nusmp.dungeon.DungeonBlocks.DUNGEON_MYCELIUM_ITEM.get());
-                output.accept(com.newuniverse.nusmp.dungeon.city.CityBlocks.AURELIAN_ALTAR_ITEM.get());          // 1.19.0
-                output.accept(com.newuniverse.nusmp.dungeon.city.CityBlocks.AURELIAN_CORE.get());
-                output.accept(com.newuniverse.nusmp.dungeon.MawReward.MAW_FRUIT.get());
-                output.accept(com.newuniverse.nusmp.dungeon.nexus.vault.NexusBlocks.ILLUSION_STONE_ITEM.get());                      // 1.21.0: the Variable Core
-                output.accept(com.newuniverse.nusmp.dungeon.nexus.vault.NexusBlocks.ILLUSION_DEEPSLATE_ITEM.get());
-                output.accept(com.newuniverse.nusmp.dungeon.nexus.vault.NexusBlocks.DESCENT_GATE_ITEM.get());
-                output.accept(com.newuniverse.nusmp.dungeon.nexus.vault.NexusBlocks.WARP_TRAP_ITEM.get());
-                output.accept(com.newuniverse.nusmp.dungeon.nexus.vault.NexusBlocks.NUTRIENT_BLOOM_ITEM.get());
-                output.accept(com.newuniverse.nusmp.dungeon.nexus.vault.NexusBlocks.NUTRIENT_NECTAR.get());
-                output.accept(com.newuniverse.nusmp.dungeon.nexus.relic.RelicBlocks.ARTIFACT_BLOCK_ITEM.get());
-                output.accept(com.newuniverse.nusmp.dungeon.nexus.relic.RelicBlocks.MANA_GATE_ITEM.get());
                 for (var relic : new net.neoforged.neoforge.registries.DeferredItem[]{com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.GLUTTON_CHALICE, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.MANTLE_OF_THE_SCAVENGER,
                         com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.BAND_OF_THE_SPATIAL_ANCHOR, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.DEVIL_BOUND_SHEATH, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.GAMBLERS_GRIMOIRE_PAGE,
                         com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.AMULET_OF_THE_JUGGERNAUTS_BLINDNESS}) output.accept((net.minecraft.world.item.Item) relic.get());
                 for (var it : com.newuniverse.nusmp.dungeon.sentient.SentientItems.all()) output.accept(it.get());                    // 1.22.0: synthesis materials
-                output.accept(com.newuniverse.nusmp.dungeon.nexus.zone.GoldenBlocks.GOLDEN_LEAVES_ITEM.get());
-                output.accept(com.newuniverse.nusmp.dungeon.nexus.nav.NavItems.KI_RESONANCE_LANTERN.get());
-                output.accept(com.newuniverse.nusmp.dungeon.nexus.nav.NavItems.ANTI_BIRD_COMPASS.get());
-                output.accept(com.newuniverse.nusmp.dungeon.nexus.nav.NavItems.VENOM_GLAND.get());
                 for (var f : new net.neoforged.neoforge.registries.DeferredItem[]{com.newuniverse.nusmp.dungeon.DungeonFood.RAW_SLIME_JELLY, com.newuniverse.nusmp.dungeon.DungeonFood.RAW_ARMOR_FLANK,   // 1.19.0
                         com.newuniverse.nusmp.dungeon.DungeonFood.RAW_BASILISK_FILLET, com.newuniverse.nusmp.dungeon.DungeonFood.RAW_DIREWOLF_HAUNCH, com.newuniverse.nusmp.dungeon.DungeonFood.RAW_MONSTER_MEAT,
                         com.newuniverse.nusmp.dungeon.DungeonFood.RUINED_MEAT, com.newuniverse.nusmp.dungeon.DungeonFood.PURIFIED_MEAT, com.newuniverse.nusmp.dungeon.DungeonFood.CANDIED_SLIME_JELLY,

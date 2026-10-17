@@ -29,10 +29,6 @@ public class LivingArmorEntity extends DungeonCreature {
 
     @Override public int tier() { return 2; }
 
-    @Override public float weight() { return 8f; }
-
-    @Override public int carcassKind() { return 1; }
-
     @Override public boolean isPrey(LivingEntity e) { return e instanceof DungeonSlimeEntity; }
 
     @Override public boolean huntsPlayers() { return true; }

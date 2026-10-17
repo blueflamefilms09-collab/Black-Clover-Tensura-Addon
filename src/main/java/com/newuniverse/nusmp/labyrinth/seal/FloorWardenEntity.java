@@ -1,8 +1,6 @@
 package com.newuniverse.nusmp.labyrinth.seal;
 
-import com.newuniverse.nusmp.dungeon.DungeonBlocks;
 import com.newuniverse.nusmp.dungeon.DungeonEntities;
-import com.newuniverse.nusmp.dungeon.DungeonGuard;
 import com.newuniverse.nusmp.dungeon.LivingArmorEntity;
 import com.newuniverse.nusmp.labyrinth.LabyrinthConfig;
 import net.minecraft.core.BlockPos;
@@ -48,9 +46,6 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * Why: the Floor Warden is the Labyrinth's mini-boss, the thing that drops the Shadow Key. It is a subclass of the Living Armor
  * ({@link LivingArmorEntity}, the Living Dungeon's tier-2 armour colony) so it shares that model, texture pipeline, armour layer and melee
@@ -58,10 +53,8 @@ import java.util.Set;
  * price is that {@link com.newuniverse.nusmp.dungeon.DungeonCreature} was written for the food web, and three of its rules are wrong for a
  * boss, so each is undone here: (1) STARVATION: {@code hunger} is protected, so {@link #aiStep} pins it to {@code HUNGER_MAX} before the
  * parent's tick runs (the decrement is 1 per 100 ticks and never reaches 0), and {@link #hurt} drops {@code starve} damage outright as a
- * second lock; (2) CARCASS: {@code DungeonCreature.die} calls {@code super.die} and then {@code CarcassBlock.leave}; Java cannot skip one
- * level of {@code super}, so {@link #die} notes which of the six spots {@code leave} may use already hold a carcass, lets the parent run, and
- * removes any carcass that is new (inside the guard's internal span, because the Labyrinth is a guarded dimension; {@code leave} itself only
- * places in the legacy dimension, so in the Labyrinth there is nothing to remove, but the Warden can be spawned anywhere); (3) LOOT:
+ * second lock; (2) CARCASS: until 1.58.0 the parent left a Carcass block where it died (in the Living Dungeon) and this class removed any that
+ * appeared; the carcass went with the Living Dungeon, so there is nothing to undo any more; (3) LOOT:
  * {@code dropFromLootTable} and {@code dropCustomDeathLoot} are overridden empty in the parent, so {@link #dropFromLootTable} rolls the
  * entity's loot table itself, the way {@code LivingEntity} does, and {@link #dropCustomDeathLoot} drops the Shadow Key from code: a
  * guaranteed progression item must not depend on a loot table a datapack can edit, on Looting or on luck. Max health is an attribute (static
@@ -231,26 +224,9 @@ public class FloorWardenEntity extends LivingArmorEntity {
 
     @Override
     public void die(DamageSource source) {
-        ServerLevel sl = level() instanceof ServerLevel s ? s : null;
-        Set<Long> carcassesBefore = sl != null ? carcassesAround(sl) : Set.of();
         super.die(source);
-        if (sl != null) {
-            Set<Long> after = carcassesAround(sl);
-            after.removeAll(carcassesBefore);
-            if (!after.isEmpty()) DungeonGuard.internal(() -> { for (long key : after) sl.removeBlock(BlockPos.of(key), false); });
-        }
         bar.setProgress(0f);
         bar.removeAllPlayers();
-    }
-
-    /** The six spots {@code CarcassBlock.leave} may use (where it stood, above it, and the four sides) that hold a carcass now. */
-    private Set<Long> carcassesAround(ServerLevel sl) {
-        Set<Long> out = new HashSet<>();
-        BlockPos at = blockPosition();
-        for (BlockPos p : new BlockPos[]{at, at.above(), at.north(), at.south(), at.east(), at.west()}) {
-            if (sl.getBlockState(p).is(DungeonBlocks.CARCASS.get())) out.add(p.asLong());
-        }
-        return out;
     }
 
     /** The entity loot table ({@code nusmp:entities/floor_warden}), rolled the way {@code LivingEntity} does: the parent turned it off. */

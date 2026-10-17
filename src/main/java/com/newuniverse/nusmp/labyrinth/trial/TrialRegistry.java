@@ -19,7 +19,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.List;
 
 /**
- * Why: the one registry of the trial chambers (1.35.0), in the pattern of {@link com.newuniverse.nusmp.dungeon.DungeonBlocks}: its own
+ * Why: the one registry of the trial chambers (1.35.0), in the pattern of the other block packages: its own
  * {@code DeferredRegister.Blocks}, the mod's first {@code DeferredRegister} of block entity types, and block items on {@code NUItems.ITEMS}
  * so the lead's creative tab line can list them. {@code LabyrinthSystem.init} calls {@link #init} during mod construction, before
  * {@code NUItems.ITEMS} is handed to the bus. The keystone is hard but not unbreakable (50 / 1200: a builder outside the Labyrinth can

@@ -72,7 +72,7 @@ def gauntlet(reg):
     c.q("clones", "Echoes", (6.5, 6), "minecraft:ender_pearl", "side", "Zogratis clones",
         "Kill ten Zogratis clones.", deps=["beasts"], tasks=[T.kill("nusmp:zogratis_clone", 10)], rewards=[R.xp(60), R.loot("arc_cache")])
     c.q("basilisks", "Basilisk Hunt", (3.5, 7.5), "nusmp:raw_basilisk_fillet", "side", "Five basilisks",
-        "Kill five basilisks of the Living Dungeon.", deps=["first"], tasks=[T.kill("nusmp:basilisk", 5)], rewards=[R.xp(50), R.loot("dungeon_cache")])
+        "Kill five basilisks of the dungeon.", deps=["first"], tasks=[T.kill("nusmp:basilisk", 5)], rewards=[R.xp(50), R.loot("dungeon_cache")])
     c.q("direwolves", "Direwolf Pack", (5, 7.5), "nusmp:direwolf_pelt", "side", "Ten direwolves",
         "Kill ten dungeon direwolves.", deps=["basilisks"], tasks=[T.kill("nusmp:dungeon_direwolf", 10)], rewards=[R.xp(50), R.loot("dungeon_cache")])
     c.q("armour", "Empty Armour", (6.5, 7.5), "minecraft:iron_chestplate", "side", "Fifteen living armours",

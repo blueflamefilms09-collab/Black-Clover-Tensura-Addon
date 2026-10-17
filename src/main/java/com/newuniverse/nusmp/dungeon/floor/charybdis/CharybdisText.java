@@ -45,7 +45,12 @@ public final class CharybdisText {
 
     public static String maelstrom() { return "The leviathan spins the water into a Maelstrom and fills it with scales."; }
 
-    /** The server-wide line when the leviathan falls and the basin begins to collapse ('who' is the killer's name, or null). */
+    /** The server-wide line when the leviathan falls, wherever it was called: no basin comes apart (the basin was removed with the Living Dungeon in 1.58.0). */
+    public static String slain(String who) {
+        return who == null ? "The Charybdis Spawn has been slain!" : who + " has slain the Charybdis Spawn!";
+    }
+
+    /** The server-wide line when the leviathan falls and the basin begins to collapse ('who' is the killer's name, or null). Not said since 1.58.0: the boss says {@link #slain}. */
     public static String fallen(String who) {
         return (who == null ? "The Charybdis Spawn has been slain!" : who + " has slain the Charybdis Spawn!")
                 + " The drowned basin begins to come apart: take the relics and swim for the way out.";

@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.dungeon.LivingDungeon;
 import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.relics.ActCtx;
@@ -82,7 +81,7 @@ final class Wave30Key {
     }
 
     private static boolean refused(ServerPlayer p, ServerLevel level) {
-        if (Labyrinth.in(level) || LivingDungeon.in(level)) {
+        if (Labyrinth.in(level)) {
             Wave30Kit.say(p, "The Dungeon's doors and locks do not answer the Key.");
             return true;
         }

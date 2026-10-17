@@ -31,11 +31,6 @@
       "length_blocks": 0.686
     },
     {
-      "id": "anti_bird_compass",
-      "action": "keep",
-      "length_blocks": 0.95
-    },
-    {
       "id": "astralaria",
       "action": "preset",
       "length_blocks": 2.071,
@@ -670,11 +665,6 @@
       "tip_out_of_view": false,
       "ground_scale": 0.435,
       "fixed_scale": 0.817
-    },
-    {
-      "id": "ki_resonance_lantern",
-      "action": "keep",
-      "length_blocks": 0.95
     },
     {
       "id": "krakeblade",

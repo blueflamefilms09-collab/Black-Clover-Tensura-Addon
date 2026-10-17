@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.djinn.dark;
 
-import com.newuniverse.nusmp.dungeon.nexus.collapse.CollapseManager;
 import com.newuniverse.nusmp.entity.zogratis.LuciusBoss;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicDef;
@@ -76,7 +75,7 @@ public final class DarkDjinn {
         Djinn d = s.djinn();
         boolean vessel = d != null && s.serial() != null && VesselAccess.boundDjinn(other) == d && s.serial().equals(VesselAccess.serial(other));
         int members = d == null ? 0 : DjinnLedger.get(server).household(d).size();
-        boolean collapse = CollapseManager.active(p.serverLevel(), p.blockPosition());
+        boolean collapse = false;                                          // the Treasury Collapse went with the Living Dungeon (1.58.0); the rule keeps the flag
         DarkRules.Verdict v = DarkRules.drink(new DarkRules.Drink(p.isShiftKeyDown(), s.owns(), s.lent(), members, s.dark(), vessel, s.trust(), s.phase(),
                 collapse, DjinnItems.isDarkShard(shard), p.isCreative()));
         if (v != DarkRules.Verdict.OK) {
@@ -167,7 +166,7 @@ public final class DarkDjinn {
         }
         if (phase < 3 || s.assimilation() < DarkRules.FALL_ASSIMILATION) return;
         boolean has = hasShard(p);
-        boolean collapse = has && CollapseManager.active(p.serverLevel(), p.blockPosition());
+        boolean collapse = false;                                          // same
         if (!DarkRules.falls(p.getRandom().nextDouble(), true, false, false, phase, s.assimilation(), has, collapse)) return;
         if (!takeShard(p)) return;
         darken(p, s);

@@ -191,9 +191,6 @@
   "anti_bird_charm": {
    "class": "handitem"
   },
-  "anti_bird_compass": {
-   "class": "handitem"
-  },
   "astralaria": {
    "class": "battleaxe"
   },
@@ -358,9 +355,6 @@
   },
   "junglethorn_whip": {
    "class": "coilwhip"
-  },
-  "ki_resonance_lantern": {
-   "class": "handitem"
   },
   "krakeblade": {
    "class": "greatsword"

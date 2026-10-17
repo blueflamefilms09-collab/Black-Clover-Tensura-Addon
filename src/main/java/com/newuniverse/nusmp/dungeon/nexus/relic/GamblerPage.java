@@ -5,10 +5,6 @@ import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.book.GrimoireBook;
 import com.newuniverse.nusmp.book.SpellRuntime;
-import com.newuniverse.nusmp.dungeon.LivingDungeon;
-import com.newuniverse.nusmp.dungeon.nexus.DungeonCollapseEvent;
-import com.newuniverse.nusmp.dungeon.sentient.ImmuneSystem;
-import com.newuniverse.nusmp.dungeon.sentient.SentientMode;
 import com.newuniverse.nusmp.dungeon.wild.Wildlife;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
@@ -30,7 +26,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.NeoForge;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -45,10 +40,9 @@ import java.util.List;
  * the balance law and no change to any block. The page rests for a minute after every use.
  *
  * <p>Its curse, Wild Magic Surge: every use rolls a hidden d20 ({@link WildSurge}); on a 1 there is no spell: the page backfires, a tenth of
- * the user's mana pool is lost until the day ends ({@link SurgeHandler}: it survives a relog and a death), and inside the Dungeon its immune
- * system is set on the user at once ({@code ImmuneSystem.aggro}: a Juggernaut is born from the walls). With the Sentient Dungeon's rules off
- * ({@code dungeon.sentient = false}) the 1.21.0 consequence stays instead: a {@link DungeonCollapseEvent} at the user's position. Outside the
- * Dungeon only the mana penalty and a harmless burst.
+ * the user's mana pool is lost until the day ends ({@link SurgeHandler}: it survives a relog and a death) and a harmless burst goes off. (Until
+ * 1.58.0 the Living Dungeon answered a 1 in its own way, setting its immune system on the user or starting a Treasury Collapse; both went
+ * with the Living Dungeon.)
  */
 final class GamblerPage {
     private GamblerPage() {}
@@ -223,10 +217,7 @@ final class GamblerPage {
     }
 
     // ---------------------------------------------------------------- Wild Magic Surge
-    /**
-     * A 1: no spell. A tenth of the mana pool is drained for the day, and inside the Dungeon its immune system turns on the user (the Sentient
-     * Dungeon), or, with those rules off, its structure starts to come down (1.21.0).
-     */
+    /** A 1: no spell. A tenth of the mana pool is drained for the day, and a harmless burst goes off. */
     private static void backfire(ServerPlayer p, ServerLevel level) {
         Vec3 c = p.position().add(0, 1.0, 0);
         VfxSpawn.send(level, VfxShape.MAGIC_CIRCLE_EXPLOSION, c, c, RED, 16, 2.2f);
@@ -239,33 +230,7 @@ final class GamblerPage {
             ex.setMagicule(Math.min(ex.getMagicule(), EnergyHelper.getMaxMagicule(p)));
             ex.markDirty();
         }
-        boolean dungeon = LivingDungeon.in(level);
-        boolean hunted = dungeon && provoke(p, level);
-        p.displayClientMessage(Component.literal("WILD MAGIC SURGE! The page tears itself apart: a tenth of your mana pool is drained until the day ends"
-                + (hunted ? ", and the Dungeon's immune system turns on you!" : dungeon ? ", and the Dungeon shudders around you." : "."))
+        p.displayClientMessage(Component.literal("WILD MAGIC SURGE! The page tears itself apart: a tenth of your mana pool is drained until the day ends.")
                 .withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD), true);
-    }
-
-    /**
-     * What the Dungeon does about a 1: with the Sentient Dungeon's rules on, its immune system takes the user for a lethal threat now (a Juggernaut
-     * is born from the walls; true if one is coming). With them off, or if that package is absent, the 1.21.0 consequence: a Treasury Collapse
-     * event at the user's position. Never throws, so the page cannot break on it.
-     */
-    private static boolean provoke(ServerPlayer p, ServerLevel level) {
-        boolean sentient;
-        try {
-            sentient = SentientMode.active();
-        } catch (LinkageError | RuntimeException absent) {
-            sentient = false;
-        }
-        if (!sentient) {
-            NeoForge.EVENT_BUS.post(new DungeonCollapseEvent(level, p.blockPosition(), Relics.zoneAt(level, p.getBlockX(), p.getBlockZ()), p, false));
-            return false;
-        }
-        try {
-            return ImmuneSystem.aggro(p, "wild_surge");
-        } catch (LinkageError | RuntimeException failed) {
-            return false;
-        }
     }
 }

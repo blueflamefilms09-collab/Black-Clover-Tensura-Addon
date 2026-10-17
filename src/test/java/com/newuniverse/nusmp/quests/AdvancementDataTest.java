@@ -44,7 +44,7 @@ class AdvancementDataTest {
             "page.unlocked", "mastery.max", "wizard.questionnaire", "relic.obtained", "relic.equipped", "relic.grade",
             "relic.forged", "relic.socketed", "relic.tier", "relic.djinn_bound", "relic.unique_ledger",
             "labyrinth.entered", "labyrinth.warden_defeated", "labyrinth.vault_opened", "labyrinth.seal_opened", "dungeon.entered",
-            "dungeon.maw", "dungeon.floor_boss", "arena.entered", "arena.hourglass_used", "arena.victory", "boss.defeated", "boss.phase",
+            "dungeon.floor_boss", "arena.entered", "arena.hourglass_used", "arena.victory", "boss.defeated", "boss.phase",
             "spirit.contract", "devil.union", "squad.created", "squad.joined", "squad.captain", "squad.vice", "convergence.stage",
             "convergence.anomaly", "magic.merged", "weapon.engraved", "weapon.genesis", "butoh.dance", "song.sung", "corpse.raised",
             "paladin.converted", "rouge.saved", "thread.trap", "shadow.travel", "unite.mode", "time.stop",

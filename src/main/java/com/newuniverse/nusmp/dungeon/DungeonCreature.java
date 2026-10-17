@@ -20,9 +20,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 /**
- * A creature of the Living Dungeon's food web (docs/living_dungeon.md section 1). Tier 1 are the slimes (scavengers), tier 2 the Living
+ * A creature of the dungeon's food web (docs/living_dungeon.md section 1, kept as history). Tier 1 are the slimes, tier 2 the Living
  * Armors, tier 3 the apex predators (Direwolf, Basilisk). Each has a <b>hunger</b> (0-100) that falls with time: hungry predators hunt,
- * full ones sleep and ignore everyone, one that starves takes damage. Nothing it dies of drops loot: it leaves a Carcass.
+ * full ones sleep and ignore everyone, one that starves takes damage. Nothing it dies of drops loot of its own (the economy's drop handler
+ * pays the stones and the meat). Until 1.58.0 it also left a Carcass block where it died and fed the chunk's ecosystem; both went with the
+ * Living Dungeon.
  */
 public abstract class DungeonCreature extends PathfinderMob {
     public static final int HUNGER_MAX = 100, HUNGRY = 40, FULL = 80;
@@ -30,8 +32,6 @@ public abstract class DungeonCreature extends PathfinderMob {
     private static final EntityDataAccessor<Boolean> SLEEPING = SynchedEntityData.defineId(DungeonCreature.class, EntityDataSerializers.BOOLEAN);
 
     protected int hunger = 70;
-    /** Marked by a Butcher Cleaver's Anatomical Cut: its carcass carries an extra portion of meat. */
-    private boolean dressed;
     private BlockPos home;
 
     protected DungeonCreature(EntityType<? extends PathfinderMob> type, Level level) {
@@ -40,12 +40,6 @@ public abstract class DungeonCreature extends PathfinderMob {
 
     /** 1 = slime, 2 = Living Armor, 3 = Direwolf or Basilisk. */
     public abstract int tier();
-
-    /** What it weighs in the chunk's biomass. */
-    public abstract float weight();
-
-    /** Which Carcass it leaves (CarcassBlock.KIND: 0 slime, 1 armor, 2 basilisk, 3 direwolf, 4 anything else). */
-    public abstract int carcassKind();
 
     /** Is this something it hunts? */
     public boolean isPrey(LivingEntity e) { return false; }
@@ -66,25 +60,15 @@ public abstract class DungeonCreature extends PathfinderMob {
 
     public int hunger() { return hunger; }
 
-    public void dress() { dressed = true; }
-
     public boolean hungry() { return hunger <= HUNGRY; }
 
     public boolean full() { return hunger >= FULL; }
 
     public boolean nearHome(LivingEntity e) { return home != null && home.distSqr(e.blockPosition()) < 36; }
 
-    /** It ate: hunger rises, and the chunk gets some of the magicules back. */
-    public void feed(int amount, float magicule) {
+    /** It ate: hunger rises. */
+    public void feed(int amount) {
         hunger = Math.min(HUNGER_MAX, hunger + amount);
-        if (level() instanceof ServerLevel sl) {
-            EcosystemData eco = LivingDungeon.eco(sl, blockPosition());
-            if (eco != null) {
-                eco.magicule += magicule;
-                eco.clamp();
-                LivingDungeon.touch(sl, blockPosition());
-            }
-        }
     }
 
     @Override
@@ -93,7 +77,6 @@ public abstract class DungeonCreature extends PathfinderMob {
         goalSelector.addGoal(1, new DungeonGoals.Sleep(this));
         if (canAttack()) goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.15, true));
         goalSelector.addGoal(4, new DungeonGoals.HuntForSustenance(this, 1.1));
-        goalSelector.addGoal(5, new DungeonGoals.Scavenge(this, 1.0));
         goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 0.8));
         goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8f));
         goalSelector.addGoal(9, new RandomLookAroundGoal(this));
@@ -112,16 +95,10 @@ public abstract class DungeonCreature extends PathfinderMob {
         if (tickCount % 10 == 0) entityData.set(SLEEPING, tier() == 3 && full() && getTarget() == null && getNavigation().isDone());
     }
 
-    /** What it does with the chunk around it now and then (slimes graze magicules). */
+    /** What it does now and then (slimes graze and grow). */
     protected void metabolize() {}
 
-    @Override
-    public void die(DamageSource source) {
-        super.die(source);
-        if (!level().isClientSide && level() instanceof ServerLevel sl) CarcassBlock.leave(sl, blockPosition(), carcassKind(), weight() + (dressed ? 10f : 0f));
-    }
-
-    // standard loot is disabled in the Dungeon: a kill leaves a carcass to harvest, not items
+    // standard loot is disabled in the Dungeon: the economy's drop handler pays the stones and the meat
     @Override protected void dropFromLootTable(DamageSource source, boolean hitByPlayer) {}
 
     @Override protected void dropCustomDeathLoot(ServerLevel level, DamageSource source, boolean hitByPlayer) {}
@@ -132,7 +109,6 @@ public abstract class DungeonCreature extends PathfinderMob {
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("Hunger", hunger);
-        tag.putBoolean("Dressed", dressed);
         if (home != null) tag.putLong("Home", home.asLong());
     }
 
@@ -140,7 +116,6 @@ public abstract class DungeonCreature extends PathfinderMob {
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         hunger = tag.contains("Hunger") ? tag.getInt("Hunger") : 70;
-        dressed = tag.getBoolean("Dressed");
         if (tag.contains("Home")) home = BlockPos.of(tag.getLong("Home"));
     }
 }

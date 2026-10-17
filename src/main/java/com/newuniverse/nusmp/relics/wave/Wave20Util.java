@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.relics.wave;
 
-import com.newuniverse.nusmp.dungeon.LivingDungeon;
 import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicDef;
@@ -44,7 +43,7 @@ final class Wave20Util {
     static boolean isBig(LivingEntity e) { return e.getMaxHealth() > Wave20Rules.BOSS_HEALTH; }
 
     /** The Labyrinth and the Living Dungeon are unbreakable: acts that would change blocks stay away from them. */
-    static boolean protectedWorld(ServerLevel level) { return Labyrinth.in(level) || LivingDungeon.in(level); }
+    static boolean protectedWorld(ServerLevel level) { return Labyrinth.in(level); }
 
     /** The wielder, teammates, their pets and relic summons. */
     static boolean friend(ServerPlayer p, LivingEntity t) {

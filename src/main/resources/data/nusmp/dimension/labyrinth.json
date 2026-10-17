@@ -7,9 +7,7 @@
       "layers": [],
       "features": false,
       "lakes": false,
-      "structure_overrides": [
-        "nusmp:labyrinth_spires"
-      ]
+      "structure_overrides": []
     }
   }
 }

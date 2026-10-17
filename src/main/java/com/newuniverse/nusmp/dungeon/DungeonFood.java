@@ -28,7 +28,7 @@ import java.util.List;
 public final class DungeonFood {
     private DungeonFood() {}
 
-    // ---------------------------------------------------------------- raw cuts (kind 0..4 as in CarcassBlock.KIND)
+    // ---------------------------------------------------------------- raw cuts (kind 0..4: slime, armor, basilisk, direwolf, anything else; the Economy picks the kind)
     public static final DeferredItem<Item> RAW_SLIME_JELLY = raw("raw_slime_jelly", 2, 0.1f, 400);
     public static final DeferredItem<Item> RAW_ARMOR_FLANK = raw("raw_armor_flank", 4, 0.3f, 600);
     public static final DeferredItem<Item> RAW_BASILISK_FILLET = raw("raw_basilisk_fillet", 5, 0.4f, 900);

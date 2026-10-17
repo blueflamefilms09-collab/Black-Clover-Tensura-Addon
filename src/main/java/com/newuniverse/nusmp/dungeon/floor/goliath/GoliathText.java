@@ -49,10 +49,15 @@ public final class GoliathText {
         return "The bedrock under the Upper Catacombs has cracked. The Goliath is rising, and " + who + " woke it.";
     }
 
-    /** The server-wide line when it falls. */
+    /** The server-wide line when it falls and the pit it stood in begins to come down. Not said since 1.58.0 (the pit was removed): the boss says {@link #slain}. */
     public static String fallen(String player) {
         return player == null || player.isBlank() ? "The Goliath has fallen. Its pit begins to come down."
                 : "The Goliath has fallen to " + player + ". Its pit begins to come down.";
+    }
+
+    /** The server-wide line when it falls, wherever it was called: no pit comes down (the pit was removed with the Living Dungeon in 1.58.0). */
+    public static String slain(String player) {
+        return player == null || player.isBlank() ? "The Goliath has fallen." : "The Goliath has fallen to " + player + ".";
     }
 
     /** The server-wide line when it falls after the pit has already begun to come down (a relic was taken first). */

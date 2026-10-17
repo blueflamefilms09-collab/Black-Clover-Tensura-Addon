@@ -2,7 +2,7 @@ package com.newuniverse.nusmp.relics.wave;
 
 import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
-import com.newuniverse.nusmp.dungeon.LivingDungeon;
+import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import net.minecraft.ChatFormatting;
@@ -97,7 +97,7 @@ final class Wave12Heavy {
     static void fell(ActCtx c) {
         ServerPlayer p = c.player();
         ServerLevel l = p.serverLevel();
-        if (LivingDungeon.in(l)) {
+        if (Labyrinth.in(l)) {
             Wave5Aim.msg(p, "The Dungeon's walls and roots cannot be cut.", ChatFormatting.GRAY);
             return;
         }

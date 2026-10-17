@@ -105,21 +105,17 @@ def arc2(reg):
 
 # ------------------------------------------------------------------------------------------------------------ 3 Dungeon
 def arc3(reg):
-    c = start(reg, "arc03_dungeon", "The Dungeon Arc", "nusmp:dungeon_maw", "The dungeon opened, and it was alive.",
-              "A Dungeon appeared beneath the world, and the Magic Knights were sent to clear it. In this world the dungeon is a living "
-              "ecosystem: it eats, it breeds, and it feeds those who learn to cook.", 3, prev_of(3))
+    c = start(reg, "arc03_dungeon", "The Dungeon Arc", "nusmp:labyrinth_gate", "The dungeon opened, and it was alive.",
+              "A Dungeon appeared beneath the world, and the Magic Knights were sent to clear it. In this world the dungeon is a place that "
+              "grows floor by floor, guards its stone, and feeds those who learn to cook.", 3, prev_of(3))
     c.q("rumour", "Rumours of a Dungeon", (1, 1), "minecraft:lantern", "step", "Enter",
         "Enter any dungeon of the Multiverse.", deps=["welcome"], tasks=[T.adv("dungeon/entered"), T.adv("arcs/dungeon_arc")])
-    c.q("maw", "The Maw Opens", (2, 1), "nusmp:dungeon_maw", "step", "A hungry portal",
-        "Step through a Dungeon Maw.", deps=["rumour"], tasks=[T.adv("dungeon/maw")])
-    c.q("living", "Down the Living Dungeon", (3, 1), "nusmp:dungeon_maw", "mile", "Arrive",
-        "Arrive in the Living Dungeon dimension.", deps=["maw"], tasks=[T.dim("nusmp:living_dungeon")])
     c.q("cook", "Delicious in Dungeon", (3, 2), "nusmp:purified_monster_meat", "side", "Eat",
-        "Cook monster meat and eat it. The best way to survive is to eat what lives here.", deps=["living"], tasks=[T.adv("dungeon/meat")])
+        "Cook monster meat and eat it. The best way to survive is to eat what lives here.", deps=["rumour"], tasks=[T.adv("dungeon/meat")])
     c.q("goliath", "Pit Guardian: Goliath", (4, 1), "minecraft:heavy_core", "boss", "The first guardian",
-        "At the bottom of its pit sleeps Goliath. Defeat it.", deps=["living"], tasks=[T.adv("bosses/goliath")])
+        "A stone giant guards a floor of the dungeon. Defeat Goliath.", deps=["rumour"], tasks=[T.adv("bosses/goliath")])
     soon(c, "vetto", "Vetto", (5, 0), "dungeon_arc", "vetto", ["goliath"], "The Dungeon Arc ends with Vetto.")
-    c.q("final", "Dungeon Cleared", (5, 1.8), "nusmp:dungeon_maw", "final", "Out alive",
+    c.q("final", "Dungeon Cleared", (5, 1.8), "nusmp:labyrinth_gate", "final", "Out alive",
         "You came back up. The Magic Knights have a new story to tell.", deps=["goliath"], tasks=[T.adv("dungeon/goliath")],
         rewards=[R.xp(150), R.choice("choice_delver")])
     ARC_ORDER.append(("arc03_dungeon", "final"))
@@ -217,13 +213,13 @@ def arc7(reg):
 
 # ------------------------------------------------------------------------------------------ 8 Royal Knights Selection
 def arc8(reg):
-    c = start(reg, "arc08_selection", "Royal Knights Selection Exam", "nusmp:labyrinth_gate", "A spire in the sky, a team of three, a key.",
-              "The Royal Knights pick their next members in a tournament of squads and trials. In this world the trial is the Labyrinth: a spire "
+    c = start(reg, "arc08_selection", "Royal Knights Selection Exam", "nusmp:labyrinth_gate", "A dungeon of sealed doors, a team of three, a key.",
+              "The Royal Knights pick their next members in a tournament of squads and trials. In this world the trial is the Labyrinth: a dungeon "
               "with doors that open only to those who earned them.", 8, prev_of(8))
     c.q("squad", "Form a Team", (1, 1), "minecraft:white_banner", "step", "A squad of three",
         "The selection exam is a team event. Found a squad.", deps=["welcome"], tasks=[T.adv("squads/created")])
     c.q("gate", "Through the Gate", (2, 1), "nusmp:labyrinth_gate", "mile", "Enter the spire",
-        "Cross the Gate and enter the Labyrinth.", deps=["squad"], tasks=[T.dim("nusmp:labyrinth"), T.adv("arcs/royal_knights")])
+        "Cross the Gate and enter the Labyrinth.", deps=["squad"], tasks=[T.dim("nusmp:mega_dungeon"), T.adv("arcs/royal_knights")])
     c.q("trap", "Tabletop Traps", (3, 2), "nusmp:pitfall_tile", "side", "Mind the floor",
         "Pitfalls, glyphs and riddle stones decorate the exam. Carry one.", deps=["gate"], tasks=[T.adv("dungeon/traps")])
     c.q("warden", "The Floor's Warden", (3, 1), "minecraft:iron_bars", "boss", "A Warden",

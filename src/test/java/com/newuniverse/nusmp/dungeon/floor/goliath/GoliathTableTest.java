@@ -150,4 +150,10 @@ class GoliathTableTest {
         assertTrue(GoliathTable.QUAKE <= GoliathTable.STOMP_SECOND + 1, "the quake's three hits are small ones");
         assertTrue(GoliathTable.STOMP_BUDGET < GoliathTable.QUAKE_BUDGET && GoliathTable.QUAKE_BUDGET < 0.8, "no multi-hit move can take most of someone's health");
     }
+
+    @Test
+    void theRubbleSpreadsOverTheFloorOfThePitTheFightWasBuiltFor() {
+        assertEquals(28, GoliathTable.ARENA_R);
+        assertTrue(GoliathTable.SHOCKWAVE_REACH > GoliathTable.ARENA_R && GoliathTable.QUAKE_REACH > GoliathTable.ARENA_R, "the roar and the quake run across the whole floor");
+    }
 }

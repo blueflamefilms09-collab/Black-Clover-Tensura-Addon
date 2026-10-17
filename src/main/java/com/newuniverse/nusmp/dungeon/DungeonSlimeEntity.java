@@ -4,7 +4,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -16,8 +15,9 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.level.Level;
 
 /**
- * A Dungeon slime: the base of the food web (tier 1). Born of dense magicules, it grazes the air for them and the Dungeon Mycelium and
- * the carcasses for the rest, grows (three sizes) when well fed, flees when hurt and is eaten by everything above it.
+ * A Dungeon slime: the base of the food web (tier 1). Born of dense magicules, it grazes the air for them, grows (three sizes) when well
+ * fed, flees when hurt and is eaten by everything above it. (Until 1.58.0 it grazed the finite magicules of its chunk's ecosystem and the
+ * carcasses and mycelium of the Living Dungeon; the air is now always rich enough, so a slime of the Mega-Dungeon never starves.)
  */
 public class DungeonSlimeEntity extends DungeonCreature {
     private static final EntityDataAccessor<Integer> GROWTH = SynchedEntityData.defineId(DungeonSlimeEntity.class, EntityDataSerializers.INT);
@@ -29,10 +29,6 @@ public class DungeonSlimeEntity extends DungeonCreature {
     }
 
     @Override public int tier() { return 1; }
-
-    @Override public float weight() { return 2f + 3f * growth(); }
-
-    @Override public int carcassKind() { return 0; }
 
     public int growth() { return entityData.get(GROWTH); }
 
@@ -59,14 +55,7 @@ public class DungeonSlimeEntity extends DungeonCreature {
     /** Grazes the magicules of the air; well fed, it grows. */
     @Override
     protected void metabolize() {
-        if (!(level() instanceof ServerLevel sl)) return;
-        EcosystemData eco = LivingDungeon.eco(sl, blockPosition());
-        if (eco != null && eco.magicule >= 40f && hunger < 95) {
-            eco.magicule -= 12f;
-            eco.clamp();
-            LivingDungeon.touch(sl, blockPosition());
-            hunger = Math.min(HUNGER_MAX, hunger + 18);
-        }
+        if (hunger < 95) hunger = Math.min(HUNGER_MAX, hunger + 18);
         if (hunger >= 85 && growth() < 2 && random.nextInt(3) == 0) {
             entityData.set(GROWTH, growth() + 1);
             hunger -= 25;

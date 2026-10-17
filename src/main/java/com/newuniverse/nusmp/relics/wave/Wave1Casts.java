@@ -1,7 +1,7 @@
 package com.newuniverse.nusmp.relics.wave;
 
 import com.newuniverse.nusmp.book.SpellRuntime;
-import com.newuniverse.nusmp.dungeon.LivingDungeon;
+import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import io.github.manasmods.tensura.damage.TensuraDamageTypes;
@@ -415,7 +415,7 @@ final class Wave1Casts {
             Fx.say(p, "Only the solid blade freezes water: change its state first.");
             return false;
         }
-        if (LivingDungeon.in(l)) {
+        if (Labyrinth.in(l)) {
             Fx.say(p, "The Dungeon's water will not freeze.");
             return false;
         }
@@ -553,7 +553,7 @@ final class Wave1Casts {
             BlockState st = l.getBlockState(pos);
             ResourceLocation key = BuiltInRegistries.BLOCK.getKey(st.getBlock());
             String next = "minecraft".equals(key.getNamespace()) ? Wave1Words.nextDye(key.getPath()) : null;
-            if (next != null && !LivingDungeon.in(l) && l.mayInteract(p, pos)) {
+            if (next != null && !Labyrinth.in(l) && l.mayInteract(p, pos)) {
                 ResourceLocation id = ResourceLocation.withDefaultNamespace(next);
                 if (BuiltInRegistries.BLOCK.containsKey(id)) {
                     BlockState to = BuiltInRegistries.BLOCK.get(id).defaultBlockState();
@@ -592,7 +592,7 @@ final class Wave1Casts {
     }
 
     static boolean dimensionDoor(ServerPlayer p) {
-        if (LivingDungeon.in(p.level())) {
+        if (Labyrinth.in(p.level())) {
             Fx.say(p, "The Dungeon's walls keep the door shut.");
             return false;
         }
@@ -621,7 +621,7 @@ final class Wave1Casts {
 
     /** To your bed, or the world's spawn: 3 charges and a long wait, and never out of or into the Living Dungeon. */
     static boolean planeshift(ServerPlayer p) {
-        if (LivingDungeon.in(p.level())) {
+        if (Labyrinth.in(p.level())) {
             Fx.say(p, "The Dungeon holds the way shut.");
             return false;
         }
@@ -630,7 +630,7 @@ final class Wave1Casts {
         ServerLevel dest = null;
         BlockPos around = p.getRespawnPosition();
         if (around != null && p.getRespawnDimension() != null) dest = srv.getLevel(p.getRespawnDimension());
-        if (dest == null || LivingDungeon.in(dest)) {
+        if (dest == null || Labyrinth.in(dest)) {
             dest = srv.overworld();
             around = dest.getSharedSpawnPos();
         }
