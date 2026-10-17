@@ -1,0 +1,56 @@
+{
+  "lines": {
+    "greeting": [
+      {
+        "text": "Ah, {player}. I do not think we have met. I am {npc}.",
+        "key": "arc.dialogue._fallback.1",
+        "first": true
+      },
+      {
+        "text": "Welcome, {player}. They call me {npc}.",
+        "key": "arc.dialogue._fallback.2",
+        "first": true
+      },
+      {
+        "text": "Back again, {player}?",
+        "key": "arc.dialogue._fallback.3",
+        "first": false
+      },
+      {
+        "text": "Good to see you, {player}.",
+        "key": "arc.dialogue._fallback.4",
+        "first": false
+      }
+    ],
+    "hint": [
+      {
+        "text": "The road ahead is long, {player}. Do not rush it.",
+        "key": "arc.dialogue._fallback.5"
+      },
+      {
+        "text": "A door that will not open usually has another way around.",
+        "key": "arc.dialogue._fallback.6"
+      },
+      {
+        "text": "You have already brought one of them down. Keep your head, and keep going.",
+        "key": "arc.dialogue._fallback.7",
+        "minStage": 1
+      },
+      {
+        "text": "Every story starts with a first fight. Choose it well.",
+        "key": "arc.dialogue._fallback.8",
+        "maxStage": 0
+      }
+    ],
+    "farewell": [
+      {
+        "text": "Until next time, {player}.",
+        "key": "arc.dialogue._fallback.9"
+      },
+      {
+        "text": "Take care out there.",
+        "key": "arc.dialogue._fallback.10"
+      }
+    ]
+  }
+}

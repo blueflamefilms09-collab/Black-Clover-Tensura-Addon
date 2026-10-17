@@ -59,6 +59,8 @@ public final class BossBuffTable {
     }
 
     private static final Map<String, Profile> PROFILES = new LinkedHashMap<>();
+    /** The rows of the arc bosses (1.60.0), replaced as a whole by {@link #addArc}; the engine reads this every refresh. */
+    private static volatile Map<String, Profile> arcProfiles = Map.of();
     static {
         // floor bosses: a thin shell, one theme skill, a small aura
         PROFILES.put(BossRegistry.GOLIATH, new Profile(BossRegistry.GOLIATH, 1, lv(PHYSICAL_BARRIER, 1), List.of(MORTAL_FEAR), 8, 2, 0.30, 0, 0));
@@ -76,9 +78,34 @@ public final class BossBuffTable {
     }
 
     /** The profile of a boss id, or null when it is not one of the table's bosses (so the engine does nothing for it). */
-    public static Profile profile(String bossId) { return bossId == null ? null : PROFILES.get(bossId); }
+    public static Profile profile(String bossId) {
+        if (bossId == null) return null;
+        Profile p = PROFILES.get(bossId);
+        return p != null ? p : arcProfiles.get(bossId);
+    }
 
-    public static List<Profile> all() { return List.copyOf(PROFILES.values()); }
+    public static List<Profile> all() {
+        List<Profile> out = new ArrayList<>(PROFILES.values());
+        out.addAll(arcProfiles.values());
+        return List.copyOf(out);
+    }
+
+    /**
+     * Adds the row of an arc boss (built by {@code ArcBossProfile.profileFor}). Returns false and changes nothing when the id already has a row, so the
+     * rows above can never be overwritten; true when the row was added or is the same one again.
+     */
+    public static synchronized boolean addArc(Profile p) {
+        if (p == null || p.bossId() == null || p.bossId().isEmpty() || PROFILES.containsKey(p.bossId())) return false;
+        Profile have = arcProfiles.get(p.bossId());
+        if (have != null) return have.equals(p);
+        Map<String, Profile> next = new LinkedHashMap<>(arcProfiles);
+        next.put(p.bossId(), p);
+        arcProfiles = Collections.unmodifiableMap(next);
+        return true;
+    }
+
+    /** Removes every arc row again (tests only). */
+    public static synchronized void clearArcForTests() { arcProfiles = Map.of(); }
 
     /** The multiplier the engine really uses: NaN or negative = 0, never above {@link #MAX_MULTIPLIER}. */
     public static double clampMultiplier(double m) {

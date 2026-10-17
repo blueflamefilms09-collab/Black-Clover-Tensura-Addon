@@ -1,5 +1,8 @@
 package com.newuniverse.nusmp.charter;
 
+import com.newuniverse.nusmp.arc.ArcCharacter;
+import com.newuniverse.nusmp.arc.ArcCharterRules;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -13,6 +16,9 @@ import java.util.Set;
  * looks, and the Tensura skills it lends while it is held. Boss ids are stable strings (they are also the keys of the world's drop lock, see
  * {@link DropLedger}); the entity types are found by their registry path, and only entities of this mod's namespace are ever bosses (the
  * isolation law of the overhaul: nothing vanilla or from base Tensura is touched).
+ * <p>
+ * 1.60.0: the bosses of the arcs add their own grimoires after boot through {@link #addArc} (copy-on-write, in the order of the roster); the seven above
+ * are never touched by it, and a character whose id or entity path is already taken by one of them is refused.
  * <p>
  * Skill sets are thematic and capped ({@link #MAX_SKILLS}). Every id is in the Tensura 2.0.1.3 id reference. {@link #NEVER_LENT} lists the
  * skills that can take things from others: they are not lent (non-destructive law), whatever a boss owns.
@@ -41,6 +47,8 @@ public final class CharterTable {
     }
 
     private static final Map<String, Boss> BY_ID = new LinkedHashMap<>();
+    /** The grimoires of the arc bosses, replaced as a whole whenever one is added (readers never see a half-built map). */
+    private static volatile Map<String, Boss> arc = Map.of();
 
     private static void add(String id, String entityPath, String name, String grade, double chance, int cover, int trim, String lore, String... skills) {
         List<String> list = new ArrayList<>();
@@ -73,13 +81,46 @@ public final class CharterTable {
                 "water_manipulation", "water_domination", "water_current_control", "water_jail", "water_blade", "water_breathing", "water_attack_resistance", "hydraulic_propulsion");
     }
 
-    /** Every grimoire, in the fixed order of the table. */
-    public static List<Boss> all() { return Collections.unmodifiableList(new ArrayList<>(BY_ID.values())); }
+    /**
+     * Adds the grimoire of an arc boss (its Charter row is made by {@link ArcCharterRules#toBoss}: the laws of the Charter are applied there). Returns the
+     * row, or null when the character has no grimoire or its id / entity path belongs to one of the seven. Adding the same character again is harmless.
+     */
+    public static synchronized Boss addArc(ArcCharacter c) {
+        Boss b = ArcCharterRules.toBoss(c);
+        if (b == null) return null;
+        if (BY_ID.containsKey(b.id())) return null;
+        for (Boss core : BY_ID.values()) if (core.entityPath().equals(b.entityPath())) return null;
+        Boss known = arc.get(b.id());
+        if (known != null) return known;
+        Map<String, Boss> next = new LinkedHashMap<>(arc);
+        next.put(b.id(), b);
+        arc = Collections.unmodifiableMap(next);
+        return b;
+    }
 
-    public static List<String> ids() { return Collections.unmodifiableList(new ArrayList<>(BY_ID.keySet())); }
+    /** Forgets every arc grimoire (tests only; the seven are untouched). */
+    public static synchronized void clearArcForTests() { arc = Map.of(); }
+
+    /** Every grimoire, in the fixed order of the table, then the arc bosses in the order they were added. */
+    public static List<Boss> all() {
+        List<Boss> out = new ArrayList<>(BY_ID.values());
+        out.addAll(arc.values());
+        return Collections.unmodifiableList(out);
+    }
+
+    public static List<String> ids() {
+        List<String> out = new ArrayList<>(BY_ID.keySet());
+        out.addAll(arc.keySet());
+        return Collections.unmodifiableList(out);
+    }
 
     /** The grimoire of a boss id, or null. */
-    public static Boss byId(String bossId) { return bossId == null ? null : BY_ID.get(bossId.toLowerCase(Locale.ROOT)); }
+    public static Boss byId(String bossId) {
+        if (bossId == null) return null;
+        String id = bossId.toLowerCase(Locale.ROOT);
+        Boss b = BY_ID.get(id);
+        return b != null ? b : arc.get(id);
+    }
 
     /**
      * The boss an entity type is, or null. The isolation guard: only the registry namespace {@link #NAMESPACE} can ever match, so a vanilla or
@@ -88,6 +129,7 @@ public final class CharterTable {
     public static Boss byEntity(String namespace, String path) {
         if (!NAMESPACE.equals(namespace) || path == null) return null;
         for (Boss b : BY_ID.values()) if (b.entityPath.equals(path)) return b;
+        for (Boss b : arc.values()) if (b.entityPath.equals(path)) return b;
         return null;
     }
 

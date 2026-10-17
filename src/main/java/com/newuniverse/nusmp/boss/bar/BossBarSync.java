@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.boss.bar;
 
-import com.newuniverse.nusmp.entity.zogratis.DevilStyle;
 import com.newuniverse.nusmp.entity.zogratis.PowerCurve;
 import com.newuniverse.nusmp.entity.zogratis.ZogratisBoss;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -57,7 +56,7 @@ public final class BossBarSync {
         int power = boss.power();
         int phase = PowerCurve.stage(power);
         String id = BuiltInRegistries.ENTITY_TYPE.getKey(boss.getType()).getPath();
-        BossBarThemes.Tint t = BossBarThemes.tint(id, DevilStyle.color(boss.devil()), DevilStyle.accent(boss.devil()), phase);
+        BossBarThemes.Tint t = BossBarThemes.tint(id, boss.styleColor(), boss.styleAccent(), phase);        // 1.60.0: the boss's own palette (a devil's for the Zogratis family, the character's for the arcs)
         float glow = com.newuniverse.nusmp.boss.refill.PhaseRefill.glowStep(boss.refillGlow());      // 1.35.0: a refill lightens the tint (the bar morphs, no new packet)
         update(boss, bar, id, com.newuniverse.nusmp.boss.refill.PhaseRefill.lift(t.primary(), glow),
                 com.newuniverse.nusmp.boss.refill.PhaseRefill.lift(t.secondary(), glow), phase, BossBarThemes.rage(power));
