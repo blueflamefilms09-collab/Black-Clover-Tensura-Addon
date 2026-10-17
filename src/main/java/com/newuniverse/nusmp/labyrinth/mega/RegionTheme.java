@@ -78,6 +78,35 @@ public enum RegionTheme {
     }
 
     /**
+     * 1.55.0: the polarity-aware draw. The first sector of a road wears the road's own signature ({@link #RADIANT} for Holy, {@link #ABYSS} for Abyssal), so the
+     * two roads look different from the first step; later sectors are drawn with weights that favour the themes that fit the road (Holy: radiant, astral,
+     * frost, spatial, storm; Abyssal: abyss, shadow, blood, flame, verdant) three to one over the rest, never equal to the previous sector's theme. Deterministic
+     * (splitmix64 of the dungeon seed, the chain index and the polarity). The older three-argument {@link #pick} is kept for single-chain worlds.
+     */
+    public static RegionTheme pick(long dungeonSeed, int chainIndex, RegionTheme previous, Polarity polarity) {
+        if (polarity == null) return pick(dungeonSeed, chainIndex, previous);
+        if (chainIndex <= 0) return polarity == Polarity.HOLY ? RADIANT : ABYSS;
+        List<RegionTheme> pool = new ArrayList<>();
+        for (RegionTheme t : values()) {
+            if (t == previous) continue;
+            int w = polarity == Polarity.HOLY ? (t.favoursHoly() ? 3 : 1) : (t.favoursAbyss() ? 3 : 1);
+            for (int i = 0; i < w; i++) pool.add(t);
+        }
+        if (pool.isEmpty()) return GRAVITY;
+        long z = dungeonSeed * 0x9E3779B97F4A7C15L + (chainIndex * 2L + polarity.ordinal()) * 0xBF58476D1CE4E5B9L;
+        z = (z ^ (z >>> 30)) * 0xBF58476D1CE4E5B9L;
+        z = (z ^ (z >>> 27)) * 0x94D049BB133111EBL;
+        z ^= z >>> 31;
+        return pool.get((int) Math.floorMod(z, (long) pool.size()));
+    }
+
+    /** Does this theme suit the Holy road (bright, cold, clean)? */
+    public boolean favoursHoly() { return this == RADIANT || this == ASTRAL || this == FROST || this == SPATIAL || this == STORM; }
+
+    /** Does this theme suit the Abyssal road (dark, organic, hot)? */
+    public boolean favoursAbyss() { return this == ABYSS || this == SHADOW || this == BLOOD || this == FLAME || this == VERDANT; }
+
+    /**
      * Deterministic theme of a sector: sector 0 is always {@link #GRAVITY} (the baseline look is the one the player meets first), later ones
      * are drawn from a splitmix64 of {@code dungeonSeed} and the sector id, never equal to the previous sector's theme (two identical regions
      * in a row would read as a bug, not as a theme).

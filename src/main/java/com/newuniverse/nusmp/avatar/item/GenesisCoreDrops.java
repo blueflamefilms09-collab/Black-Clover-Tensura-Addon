@@ -33,6 +33,7 @@ public final class GenesisCoreDrops {
     public static boolean isDungeonBoss(LivingEntity e) {
         if (e == null || e instanceof Player) return false;
         try {
+            if (e.getTags().contains("nusmp_wanderer")) return false;       // 1.54.0: a wandering Floor Warden of the Mega-Dungeon is not a boss-room boss (Genesis Cores drop from boss rooms only)
             if (BOSS_TYPES.contains(BuiltInRegistries.ENTITY_TYPE.getKey(e.getType()).getPath())) return true;
             for (String t : BOSS_TAGS) if (e.getTags().contains(t)) return true;
         } catch (RuntimeException unreadable) { /* not provably a dungeon boss: not one */ }
