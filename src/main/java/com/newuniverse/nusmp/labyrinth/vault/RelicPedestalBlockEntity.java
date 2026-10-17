@@ -53,6 +53,19 @@ public final class RelicPedestalBlockEntity extends BlockEntity {
     /** Client only: the tick phase of the bob and the turn (advanced by the client ticker, read with the partial tick by the renderer). */
     private float phase;
 
+    /**
+     * 1.54.0: a rule another system puts in front of the pick. It answers {@code TRUE} (it handled the click and something was given), {@code FALSE} (it
+     * handled the click and nothing was given) or {@code null} (not its pedestal: the old behaviour below runs unchanged). The Crucible of Choice installs
+     * one so a vault's pedestals obey "one relic per region" while a Spire's pedestal, or one placed by an admin, works exactly as before.
+     */
+    @FunctionalInterface
+    public interface TakeHook extends java.util.function.BiFunction<ServerPlayer, RelicPedestalBlockEntity, Boolean> {}
+
+    private static volatile TakeHook takeHook;
+
+    /** Installs (or, with null, removes) the take hook; called once at start-up by the Mega-Dungeon's theme builder. */
+    public static void setTakeHook(TakeHook hook) { takeHook = hook; }
+
     public RelicPedestalBlockEntity(BlockPos pos, BlockState state) { super(VaultRegistry.PEDESTAL_BE.get(), pos, state); }
 
     // ---------------------------------------------------------------- nbt
@@ -92,6 +105,12 @@ public final class RelicPedestalBlockEntity extends BlockEntity {
     /** Sets what floats above the pedestal (admin / future use); the client is told. */
     public void setHeld(ItemStack stack) {
         held = stack == null ? ItemStack.EMPTY : stack;
+        sync();
+    }
+
+    /** 1.54.0: marks the pedestal taken (the Crucible's crumbled slots) or fresh again (an admin reset); saved with the block entity. */
+    public void setTaken(boolean value) {
+        taken = value;
         sync();
     }
 
@@ -146,6 +165,11 @@ public final class RelicPedestalBlockEntity extends BlockEntity {
      * and tell everyone (particles, the beacon chime, an action-bar line). Returns true when something was given.
      */
     public boolean take(ServerPlayer player) {
+        TakeHook hook = takeHook;                                                           // 1.54.0: a Crucible pedestal is judged first; null = not its pedestal, carry on
+        if (hook != null) {
+            Boolean handled = hook.apply(player, this);
+            if (handled != null) return handled;
+        }
         if (!(level instanceof ServerLevel server)) return false;
         boolean rolling = !taken && held.isEmpty() && lootTable != null;
         unpackLoot(player);

@@ -56,9 +56,32 @@ public final class RelicExclusivity {
         return table != null && allowsChest(table.getNamespace(), table.getPath(), exclusive());
     }
 
-    /** The mob-drop rule with the live inputs: whether the level is the Labyrinth or the legacy Living Dungeon, and the config. */
+    /**
+     * 1.54.0 pure rule: the same with the Mega-Dungeon in mind. In the singular dungeon the Crucible of Choice is the ONLY source of relics (exactly one per
+     * region), so a Mimic drops none there, whatever the config says, even though the level is a dungeon; every other level answers as the two-argument rule does.
+     */
+    public static boolean allowsMobDrop(boolean inDungeon, boolean inMega, boolean exclusive) {
+        return !inMega && allowsMobDrop(inDungeon, exclusive);
+    }
+
+    /**
+     * 1.54.0 pure rule: may the world's loot (a chest table, the {@code nusmp:relic} loot entry, a Mimic) roll a relic in this kind of level? Never in the
+     * Mega-Dungeon, whatever the config says: there a Crucible is the only source of relics of Unique and above, exactly one per region, so a stray chest
+     * table or a Mimic cannot add a second. Everywhere else the answer is yes (the rules above decide where the old paths apply).
+     */
+    public static boolean allowsWildRoll(boolean inMega) { return !inMega; }
+
+    /** The same with the live level; a null level is not the Mega-Dungeon. */
+    public static boolean allowsWildRoll(Level level) { return allowsWildRoll(inMega(level)); }
+
+    /** The mob-drop rule with the live inputs: whether the level is the Labyrinth or the legacy Living Dungeon, whether it is the Mega-Dungeon (1.54.0: none there), and the config. */
     public static boolean allowsMobDrop(Level level) {
-        return allowsMobDrop(inDungeon(level), exclusive());
+        return allowsMobDrop(inDungeon(level), inMega(level), exclusive());
+    }
+
+    /** The Mega-Dungeon dimension (1.54.0). Never throws. */
+    static boolean inMega(Level level) {
+        try { return Labyrinth.inMega(level); } catch (RuntimeException | LinkageError ignored) { return false; }
     }
 
     /** A dungeon dimension: the Labyrinth sky or the legacy noise-cave dimension. Never throws (a missing class counts as "not in it"). */

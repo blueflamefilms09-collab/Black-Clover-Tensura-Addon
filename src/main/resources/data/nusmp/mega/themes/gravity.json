@@ -1,0 +1,30 @@
+{
+  "_why": "The baseline: every template is drawn in the deepslate palette, so this theme maps every block to itself and the processor does nothing for it (the first sector the player meets looks exactly as the templates were drawn). Falling stone is its catastrophe, weights and anchors its relics. Its mood is the plain cave ambience, low and slow, and its danger is the baseline 1.",
+  "id": "gravity",
+  "name": "Gravity",
+  "color": "#6B6F7A",
+  "families": {
+    "brick": "minecraft:deepslate_bricks",
+    "tile": "minecraft:deepslate_tiles",
+    "polished": "minecraft:polished_deepslate",
+    "chiseled": "minecraft:chiseled_deepslate",
+    "cobbled": "minecraft:cobbled_deepslate",
+    "cracked_brick": "minecraft:cracked_deepslate_bricks",
+    "cracked_tile": "minecraft:cracked_deepslate_tiles",
+    "rock": "minecraft:deepslate",
+    "wood": "minecraft:dark_oak_planks"
+  },
+  "explicit": {},
+  "relics": {
+    "keywords": ["gravity", "weight", "anchor", "hammer", "stone", "mountain", "maul", "heavy", "earth", "titan", "colossus", "mass"]
+  },
+  "catastrophes": {
+    "collapse": 4,
+    "flood": 1,
+    "spirit": 1
+  },
+  "ambient": "minecraft:ash",
+  "light": 0,
+  "sound": {"id": "minecraft:ambient.cave", "volume": 0.5, "pitch": 0.8, "every": 8},
+  "danger": 1
+}

@@ -1,0 +1,38 @@
+{
+  "_why": "The Holy road: seamless smooth quartz walls, quartz trim, light smooth stone floors and a calcite shell, with gold blocks where the deepslate templates have chiselled capitals, so a gold accent crowns every pillar and medallion. It must not be mistaken for Astral (quartz bricks, polished diorite, prismarine, a dark night-sky floor): Radiant is the one bright, warm, clean theme, so the soul lights of the templates become ordinary warm ones and the Light Rukh drift in the air. Vanilla gives smooth quartz and quartz blocks no wall, so the explicit map hands them diorite walls; smooth stone has no stairs or walls and falls back to the quartz shapes. It is the brightest theme (light +3, and every soul light of the templates is a warm one), its mood a far bell humming in a cathedral, and its danger 0.8: the Holy road is the kinder road, as the brief intends.",
+  "id": "radiant",
+  "name": "Radiant",
+  "color": "#FFD95A",
+  "families": {
+    "brick": "minecraft:smooth_quartz",
+    "tile": "minecraft:smooth_stone",
+    "polished": "minecraft:quartz_block",
+    "chiseled": "minecraft:gold_block",
+    "cobbled": "minecraft:diorite",
+    "cracked_brick": "minecraft:quartz_bricks",
+    "cracked_tile": "minecraft:calcite",
+    "rock": "minecraft:calcite",
+    "wood": "minecraft:birch_planks"
+  },
+  "explicit": {
+    "minecraft:deepslate_brick_wall": "minecraft:diorite_wall",
+    "minecraft:deepslate_tile_wall": "minecraft:diorite_wall",
+    "minecraft:polished_deepslate_wall": "minecraft:diorite_wall",
+    "minecraft:soul_lantern": "minecraft:lantern",
+    "minecraft:soul_wall_torch": "minecraft:wall_torch",
+    "minecraft:soul_torch": "minecraft:torch",
+    "minecraft:soul_campfire": "minecraft:campfire"
+  },
+  "relics": {
+    "keywords": ["holy", "divine", "sacred", "radiant", "halo", "angel", "seraph", "saint", "paladin", "bless", "mercy", "dawn", "pure", "hope", "grace", "golden", "lumin", "solar", "providence"]
+  },
+  "catastrophes": {
+    "collapse": 3,
+    "flood": 2,
+    "spirit": 1
+  },
+  "ambient": "nusmp:light_rukh",
+  "light": 3,
+  "sound": {"id": "minecraft:block.bell.resonate", "volume": 0.3, "pitch": 0.7, "every": 8},
+  "danger": 0.8
+}

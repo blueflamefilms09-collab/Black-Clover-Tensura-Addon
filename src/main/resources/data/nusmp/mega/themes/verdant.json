@@ -1,0 +1,30 @@
+{
+  "_why": "Mossy stone bricks, mossy cobblestone floors and plain stone brick trim with jungle wood: an overgrown ruin. The trim stays clean on purpose, so the door frames and pillars read as the original building and the moss as what grew over it; moss blocks stand in for the floor wear. Its catastrophe is the spore flood. Its mood is a forest murmur; it is the gentlest of the old themes (danger 0.95), so its trouble is the spore flood and not the stone.",
+  "id": "verdant",
+  "name": "Verdant",
+  "color": "#4F9D3A",
+  "families": {
+    "brick": "minecraft:mossy_stone_bricks",
+    "tile": "minecraft:mossy_cobblestone",
+    "polished": "minecraft:stone_bricks",
+    "chiseled": "minecraft:chiseled_stone_bricks",
+    "cobbled": "minecraft:cobblestone",
+    "cracked_brick": "minecraft:cracked_stone_bricks",
+    "cracked_tile": "minecraft:moss_block",
+    "rock": "minecraft:mossy_cobblestone",
+    "wood": "minecraft:jungle_planks"
+  },
+  "explicit": {},
+  "relics": {
+    "keywords": ["forest", "thorn", "ivy", "dryad", "druid", "jungle", "leaf", "bloom", "beast", "bear", "huntress", "hemlock", "mush", "honey", "bee", "root", "vine", "garden", "autumn", "fey"]
+  },
+  "catastrophes": {
+    "collapse": 1,
+    "flood": 4,
+    "spirit": 2
+  },
+  "ambient": "minecraft:spore_blossom_air",
+  "light": 0,
+  "sound": {"id": "minecraft:ambient.warped_forest.mood", "volume": 0.5, "pitch": 1, "every": 6},
+  "danger": 0.95
+}
