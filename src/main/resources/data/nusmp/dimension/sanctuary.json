@@ -1,0 +1,10 @@
+{
+  "type": "nusmp:sanctuary",
+  "generator": {
+    "type": "nusmp:sanctuary",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "nusmp:sanctuary_plains"
+    }
+  }
+}
