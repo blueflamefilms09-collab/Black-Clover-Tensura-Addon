@@ -30,11 +30,14 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
 
       - name: Boot the server and run the smoke checks
+        env:
+          # through the environment, never pasted into the script text: a commit message is free text
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
         run: |
           chmod +x gradlew
           # [strict] in the commit message: a missing pool, structure or command is a failure (use it on the integrated build)
           STRICT=""
-          if [[ "${{ github.event.head_commit.message }}" == *"[strict]"* ]]; then STRICT="--strict"; fi
+          if [[ "$COMMIT_MESSAGE" == *"[strict]"* ]]; then STRICT="--strict"; fi
           python3 tools/ci/server_smoke.py --sectors 3 --restart --quiet $STRICT 2>&1 | tee smoke.log
 
       - name: Mod-related lines of the server log
