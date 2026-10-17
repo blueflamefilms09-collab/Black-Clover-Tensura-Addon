@@ -44,7 +44,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
  * NOTHING: no loot table and none of the Warden's Shadow Keys; the Mana Core is forged by its altar when the death is confirmed, so the
  * progression has exactly one owner ({@link GuardianAltarBlockEntity}) and a Guardian spawned by an admin for a test cannot unseal a
  * sector. Its boss-bar title carries the theme ({@code entity.nusmp.labyrinth_guardian.bar}) and, when the sector can say which floor it
- * gates, that floor ({@code entity.nusmp.labyrinth_guardian.bar_floor}, "Guardian of Floor +10"), through the custom name the Warden's bar
+ * gates, that floor ({@code entity.nusmp.labyrinth_guardian.bar_floor}, "Floor +10 Warden (Frost)"), through the custom name the Warden's bar
  * already shows. (6) It is COLOSSAL (1.55.0: "the colossal boss that gates every tenth floor"): the SCALE attribute starts at
  * {@code GuardConfig.guardianScale} (1.8) and grows a little with the threat; the hitbox follows by itself ({@code LivingEntity.getDimensions}
  * scales the type's size by the attribute) and so does the model, because {@code LivingEntityRenderer.render} applies the attribute before

@@ -25,7 +25,7 @@ public final class GuardConfig {
                 .defineInRange("threatHealthScale", GuardianScaling.HEALTH_PER_THREAT, 0.0, 5.0);
         THREAT_DAMAGE_SCALE = b.comment("Extra melee damage per level of threat, as a share of the base 14 (0.12 = +12 % per threat). Armour and size grow by fixed, gentler steps.")
                 .defineInRange("threatDamageScale", GuardianScaling.DAMAGE_PER_THREAT, 0.0, 2.0);
-        GUARDIAN_SCALE = b.comment("Body size of the Labyrinth Guardian: the SCALE attribute, so its hitbox and model grow together (1.0 is a Floor Warden; the drawn ground shadow is the renderer's own). The Guardian is the colossal boss that gates every tenth floor, so it defaults to 1.8; a later sector's Guardian grows up to a quarter more.")
+        GUARDIAN_SCALE = b.comment("Body size of the Labyrinth Guardian: the SCALE attribute, so its hitbox and model grow together (1.0 is the size of a Floor Warden, 0.5 half of it, 4.0 the most the halls hold). The Guardian is the colossal boss that gates every tenth floor, so it defaults to 1.8; a later sector's Guardian grows up to a quarter more.")
                 .defineInRange("guardianScale", GuardianScaling.BASE_SCALE, GuardianScaling.MIN_BASE_SCALE, GuardianScaling.MAX_SCALE);
         APPROACH_RADIUS = b.comment("A survival player this close (blocks) to the Guardian Altar wakes the Guardian. The fight counts as abandoned when the party stays more than this plus 16 blocks away.")
                 .defineInRange("approachRadius", 16, 6, 48);

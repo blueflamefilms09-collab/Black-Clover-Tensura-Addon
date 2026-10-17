@@ -30,8 +30,11 @@ public final class GuardianScaling {
     public static final double BASE_ARMOR = 12.0, ARMOR_PER_THREAT = 0.75, MAX_ARMOR = 30.0;
     /** The Guardian's base body size (the SCALE attribute): colossal, 1.8 times a Floor Warden. The config key {@code guardianScale} repeats it. */
     public static final double BASE_SCALE = 1.8;
-    /** The config's range: never smaller than a Warden, never larger than 4 (a 5.6 x 12.8 block body is the most the 26 block high halls hold). */
-    public static final double MIN_BASE_SCALE = 1.0, MAX_SCALE = 4.0;
+    /**
+     * The config's range, 0.5 to 4: a server that finds a colossal boss too much may halve a Warden's size, and nobody may make it larger than 4 (a
+     * 5.6 x 12.8 block body is the most the 26 block high halls hold). The default is {@link #BASE_SCALE}.
+     */
+    public static final double MIN_BASE_SCALE = 0.5, MAX_SCALE = 4.0;
     /** Growth per level of threat, as a share of the base size, and the most it may grow in all (a quarter more). */
     public static final double SCALE_PER_THREAT = 0.02, MAX_SCALE_GROWTH = 1.25;
     /** The vanilla max-health attribute's ceiling: a Guardian's raw health above it becomes a damage divisor. */

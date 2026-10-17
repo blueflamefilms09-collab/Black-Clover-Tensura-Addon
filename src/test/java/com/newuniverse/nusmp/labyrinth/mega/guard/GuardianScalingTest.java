@@ -79,8 +79,12 @@ class GuardianScalingTest {
             last = sc;
         }
         assertEquals(GuardianScaling.scale(base, 1), GuardianScaling.scale(base, -5), 1e-9, "a bad threat is clamped");
-        // the config range is a hard fence: a hand-edited file can neither shrink the boss below a Warden nor grow it past 4
-        assertEquals(1.0, GuardianScaling.scale(0.2, 1), 1e-9);
+        // the config range is a hard fence (0.5 to 4): a hand-edited file can neither shrink the boss below half a Warden nor grow it past 4
+        assertEquals(0.5, GuardianScaling.MIN_BASE_SCALE, 1e-12, "the config range starts at half a Warden");
+        assertEquals(4.0, GuardianScaling.MAX_SCALE, 1e-12, "and ends at four times one");
+        assertEquals(0.5, GuardianScaling.scale(0.2, 1), 1e-9);
+        assertEquals(0.5, GuardianScaling.scale(0.5, 1), 1e-9, "half a Warden is a legal setting");
+        assertEquals(1.0, GuardianScaling.scale(1.0, 1), 1e-9, "a plain Warden's size is a legal setting");
         assertEquals(GuardianScaling.MAX_SCALE, GuardianScaling.scale(9.0, 1), 1e-9);
         assertEquals(GuardianScaling.MAX_SCALE, GuardianScaling.scale(GuardianScaling.MAX_SCALE, 500), 1e-9, "even the largest base never passes the ceiling");
         assertEquals(base, GuardianScaling.scale(Double.NaN, 1), 1e-9, "a NaN reads as the default");

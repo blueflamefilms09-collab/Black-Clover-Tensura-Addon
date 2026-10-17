@@ -18,6 +18,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Why: the new {@code kind=sector} of the Gatekeeper door answers to exactly one thing, the Mana Core of its own sector, and the code that
@@ -32,6 +36,9 @@ import net.minecraft.world.level.block.state.BlockState;
  */
 public final class SectorDoor {
     private SectorDoor() {}
+
+    /** Players this close to the opened door share the credit of clearing the sector: a party opens a seal together, and the door has one clicker. */
+    private static final double CREDIT_RADIUS = 32.0;
 
     /** A right click on a closed sector door with {@code stack}. Called from {@code GatekeeperDoorBlock.useItemOn} for {@code kind=sector} only. */
     public static ItemInteractionResult useItem(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player) {
@@ -65,13 +72,31 @@ public final class SectorDoor {
         sl.sendParticles(ParticleTypes.END_ROD, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 24, 1.0, 1.4, 0.6, 0.04);
         sl.sendParticles(ParticleTypes.ENCHANT, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, 60, 1.4, 1.6, 1.0, 0.8);
         tell(player, "message.nusmp.mega.mgd.door_open");
-        if (player instanceof ServerPlayer sp) NusmpEvents.fire(sp, "mega.sector_cleared", Integer.toString(sector.id));
+        creditParty(sl, pos, player, sector.id);
         try {
             MegaDungeon.unseal(sl, sector.id);
         } catch (RuntimeException e) {
             GuardLog.failed("unseal", e);                                                  // a listener of another system must not kick the player: the door is open and the core is spent already
         }
         return ItemInteractionResult.CONSUME;
+    }
+
+    /**
+     * The quest hook {@code mega.sector_cleared} (argument: the sector id): the player who opened the door and every living player within
+     * {@link #CREDIT_RADIUS} blocks of it, each once, with the squad sharing {@code NusmpEvents.fireAll} applies on top (the way a boss kill is credited).
+     * A stand-in that is no {@code ServerPlayer} (the in-game self-tests) credits nobody, and the hook never throws.
+     */
+    private static void creditParty(ServerLevel sl, BlockPos pos, Player opener, int sectorId) {
+        try {
+            List<ServerPlayer> party = new ArrayList<>();
+            if (opener instanceof ServerPlayer sp) party.add(sp);
+            for (ServerPlayer p : sl.getEntitiesOfClass(ServerPlayer.class, new AABB(pos).inflate(CREDIT_RADIUS), x -> x.isAlive() && !x.isSpectator())) {
+                if (!party.contains(p)) party.add(p);
+            }
+            if (!party.isEmpty()) NusmpEvents.fireAll(party, "mega.sector_cleared", Integer.toString(sectorId));
+        } catch (RuntimeException e) {
+            GuardLog.failed("quest credit", e);
+        }
     }
 
     private static void tell(Player player, String key) {

@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 The boss-chain templates of the Mega-Dungeon (1.54.0, builder GUARD): the Labyrinth Guardian's hall, the antechamber behind its Gatekeeper and
-the Way Onward corridors. Nine templates, built with `mega_lib.MT` and the helpers of `mega_guard_lib.py`, written to
+the Way Onward corridors. Thirteen templates (the first nine of 1.54.0, then a mirrored antechamber and three compact Way Onwards that the assembler needs
+where a region is nearly used up), built with `mega_lib.MT` and the helpers of `mega_guard_lib.py`, written to
 `src/main/resources/data/nusmp/structure/mega/{arena,antechamber,onward}/`:
 
     python3 tools/labyrinth/gen_mega_guard.py                 # (re)writes every template
@@ -21,9 +22,13 @@ What each piece is FOR (the owner's brief: a boss-worthy hall, a calm lobby with
   * arena/guardian_hall_b  "The Chapter of the Eight Stars": the same contract in an octagon (the corners of the footprint cut off), eight columns on
                            a ring, concentric octagonal rings in the floor, a stepped, faceted vault with a glowing lantern at the top.
   * antechamber/antechamber_a  "The Hall of the Two Roads": the calm lobby behind the Gatekeeper: red marks the road to the Crucible Vault (east), blue the
-                           Way Onward (west).
-  * onward/{straight,left,right}_{a,b}  The corridor from the antechamber to the next sector, ending in a rubble seal with the EXPANSION_SOCKET marker.
-                           `a` is a passage of chains and lanterns with a collapsed end; `b` an ossuary of skulls, bars and candles.
+                           Way Onward (west). antechamber_b is its mirror image (Vault west, Way Onward east).
+  * onward/{straight,left,right}_{a,b,c}  The corridor from the antechamber to the next sector, ending in a rubble seal with the EXPANSION_SOCKET marker.
+                           `a` is a passage of chains and lanterns with a collapsed end; `b` an ossuary of skulls, bars and candles; `c` the passage of `a`
+                           in compact size (9 x 18 straight, 18 x 18 for the turns) under blue banners.
+
+Every template ends with `G.ensure_light` (invisible `minecraft:light` blocks for what the visible fixtures leave dark, see mega_guard_lib.py) and has to pass
+`mega_check.py`, `mega_arch_check.py` and this script's own `verify`.
 """
 import argparse
 import math
@@ -38,6 +43,7 @@ from mega_lib import MT  # noqa: E402
 
 FLOOR = L.FLOOR_ROW
 C = 22                                  # centre cell of the 45 x 45 halls
+ALTAR_HEADROOM = [(C, FLOOR + 3 + k, C) for k in range(1, 10)]      # the nine cells above the Guardian Altar stay free for the colossal Guardian
 CRYING = "minecraft:crying_obsidian"
 SEA = "minecraft:sea_lantern"
 
@@ -231,10 +237,25 @@ def hall_a():
         for cz in cols:
             if cx in (8, 36) or cz in (8, 36):
                 G.candle_cluster(mt, cx + (2 if cx < C else -2), FLOOR + 1, cz + (2 if cz < C else -2), "purple", 3)
+    # votive candles along the foot of the walls, three to a block every third cell (the reference's field of lit candles, kept to the aisles: the nave's
+    # floor stays open), except in front of the pilasters, the portals and the corner fires
+    for side in "nsew":
+        for k, lat in enumerate(range(5, 40, 3)):
+            if 13 <= lat <= 17 or 27 <= lat <= 31 or (side in "ns" and 17 <= lat <= 27) or lat in (5, 38):
+                continue
+            x, y, z = G.cell(mt, side, lat, 2, FLOOR + 1)
+            G.candle_cluster(mt, x, y, z, ("purple", "white")[k % 2], 3)
+    # the corners and the two portals are the darkest places of a hall this tall (a chandelier hung from row 34 lights nothing at the floor): a pair of
+    # soul fires beside every corner statue, a warm fire either side of the Gatekeeper and of the entry so both doors read from across the nave
+    for (bx, bz) in ((6, 3), (3, 6), (38, 3), (41, 6), (6, 41), (3, 38), (38, 41), (41, 38)):
+        G.brazier(mt, bx, FLOOR + 1, bz, soul=True)
+    for (bx, bz) in ((16, 4), (28, 4), (16, 40), (28, 40)):
+        G.brazier(mt, bx, FLOOR + 1, bz, soul=False)
 
     mt.finish()
     G.fill_gatekeeper(mt, "n", C)
     mt.marker(C, FLOOR + 2, 2, "gatekeeper", facing="north")
+    G.ensure_light(mt, keep_clear=ALTAR_HEADROOM)
     return mt
 
 
@@ -302,8 +323,9 @@ def hall_b():
     hall_floor_and_dais(mt, oct_measure, ring_outer=10.2, checker_outer=17.5, node_radius=14.0, node_phase=math.pi / 8, cells=interior)
     dais(mt, oct_measure)
 
-    # eight columns on the ring of radius 15, joined by a lintel
-    cols = [(C + 15, C), (C + 11, C + 11), (C, C + 15), (C - 11, C + 11), (C - 15, C), (C - 11, C - 11), (C, C - 15), (C + 11, C - 11)]
+    # eight columns on the ring of radius 16, joined by a lintel. The ring is turned half a step (22.5 degrees) so that no column stands in the axis of a
+    # doorway: with one on each axis the entry and the Gatekeeper both looked at a pillar, and the carpet ran into its foot
+    cols = [(C + int(round(16 * math.cos(math.pi / 8 + k * math.pi / 4))), C + int(round(16 * math.sin(math.pi / 8 + k * math.pi / 4)))) for k in range(8)]
     for (cx, cz) in cols:
         G.column(mt, cx, cz, FLOOR + 1, 24)
     for i, (a, b) in enumerate(zip(cols, cols[1:] + cols[:1])):
@@ -376,10 +398,14 @@ def hall_b():
         for x in (21, 23):
             mt.set(x, FLOOR + 1, z, "minecraft:black_carpet")
         mt.set(C, FLOOR + 1, z, "minecraft:purple_carpet")
+    # a warm fire either side of the Gatekeeper and of the entry, so both doors read from across the chapter
+    for (bx, bz) in ((16, 4), (28, 4), (16, 40), (28, 40)):
+        G.brazier(mt, bx, FLOOR + 1, bz, soul=False)
 
     mt.finish()
     G.fill_gatekeeper(mt, "n", C)
     mt.marker(C, FLOOR + 2, 2, "gatekeeper", facing="north")
+    G.ensure_light(mt, keep_clear=ALTAR_HEADROOM)
     return mt
 
 
@@ -403,14 +429,19 @@ def road_plaque(mt, side, offset, wool, candle, accent):
     mt.set(x, y, z, accent)
 
 
-def antechamber_a():
-    mt = MT("mega/antechamber/antechamber_a", 3, 3)
+def antechamber(name, mirror=False):
+    """The Hall of the Two Roads. `mirror` turns the hall into its mirror image: the Crucible Vault road on the WEST and the Way Onward on the EAST (the
+    plaques, carpets and window colours follow). Why a mirror: the assembler cannot flip a template, and the two roads leave this hall at its two flanks, so
+    the Way Onward always lands on one fixed side of the chain; where that side is shut in by the edge of the region the chain would not fit, while its
+    mirror image does (the pool offers both, and the search takes whichever fits)."""
+    mt = MT(name, 3, 3)
     H = 18
     TOP = FLOOR + H                                           # 26, the last free row; the ceiling is rows 27 and 28
     mt.room(H, floor=L.TILE, wall=L.BRICK, ceiling=L.TILE, wear=0.08)
+    vside, oside = ("w", "e") if mirror else ("e", "w")      # the side of the Vault road and of the Way Onward
     mt.socket("s", 13, pool=L.P_EMPTY, name=L.CHAIN, target=L.CHAIN)
-    mt.socket("e", 13, pool=L.P_VAULT, name=L.VAULT, target=L.VAULT)
-    mt.socket("w", 13, pool=L.P_ONWARD, name=L.ONWARD, target=L.ONWARD)
+    mt.socket(vside, 13, pool=L.P_VAULT, name=L.VAULT, target=L.VAULT)
+    mt.socket(oside, 13, pool=L.P_ONWARD, name=L.ONWARD, target=L.ONWARD)
     c = 13
 
     # the floor: a sigil of rings and an eight-pointed star round the middle, a polished border at the walls
@@ -449,11 +480,12 @@ def antechamber_a():
         mt.set(c + int(round(math.cos(a) * 9)), TOP + 1, c + int(round(math.sin(a) * 9)), SEA)
 
     # the walls: lit windows, banners, the memorial niche on the north wall, the two plaques over the roads
+    cyan, purple = "minecraft:cyan_stained_glass", "minecraft:purple_stained_glass"
     for side in "ns":
-        for lat0, glass in ((3, "minecraft:cyan_stained_glass"), (21, "minecraft:purple_stained_glass")):
+        for lat0, glass in ((3, purple if mirror else cyan), (21, cyan if mirror else purple)):
             G.lancet(mt, side, lat0, 3, 14, 10, glass)
     for side in "ew":
-        for lat0, glass in ((3, "minecraft:purple_stained_glass"), (21, "minecraft:cyan_stained_glass")):
+        for lat0, glass in ((3, cyan if mirror else purple), (21, purple if mirror else cyan)):
             G.lancet(mt, side, lat0, 3, 14, 10, glass)
     for side in "ns":
         G.wall_banners(mt, side, 10, 2, 22, ("purple", "black"))
@@ -461,8 +493,8 @@ def antechamber_a():
     for side in "ew":
         G.pilaster(mt, side, 6, FLOOR + 1, 21)
         G.pilaster(mt, side, 20, FLOOR + 1, 21)
-    road_plaque(mt, "e", 13, "minecraft:red_wool", "red", "minecraft:redstone_lamp")
-    road_plaque(mt, "w", 13, "minecraft:blue_wool", "blue", "minecraft:sea_lantern")
+    road_plaque(mt, vside, 13, "minecraft:red_wool", "red", "minecraft:redstone_lamp")
+    road_plaque(mt, oside, 13, "minecraft:blue_wool", "blue", "minecraft:sea_lantern")
     # the memorial niche: two armoured statues and braziers on the north wall, a seal of chiselled stone between them
     for lat in range(11, 16):
         for row in range(14, 19):
@@ -476,14 +508,24 @@ def antechamber_a():
     # carpets: purple from the entry to the sigil, red to the east door, blue to the west door (flat; the doorways stay clear)
     for z in range(15, 25):
         mt.set(c, FLOOR + 1, z, "minecraft:purple_carpet")
-    for x in range(15, 24):
+    east, west = range(15, 24), range(3, 12)
+    for x in (west if mirror else east):
         mt.set(x, FLOOR + 1, c, "minecraft:red_carpet")
-    for x in range(3, 12):
+    for x in (east if mirror else west):
         mt.set(x, FLOOR + 1, c, "minecraft:blue_carpet")
     mt.marker(c, FLOOR + 1, c, "patrol")
 
     mt.finish()
+    G.ensure_light(mt)
     return mt
+
+
+def antechamber_a():
+    return antechamber("mega/antechamber/antechamber_a")
+
+
+def antechamber_b():
+    return antechamber("mega/antechamber/antechamber_b", mirror=True)
 
 
 # ====================================================================================================================
@@ -525,12 +567,14 @@ def rib(mt, run, interior, a, block=L.POLISHED):
 
 
 def sconce(mt, run, interior, a, sign, soul=False):
-    """A lantern on a bracket on the wall of the side `sign` (-1 / +1) at position a: an upside-down stair against the wall and a lantern hanging from it."""
+    """A lantern on a bracket on the wall of the side `sign` (-1 / +1) at position a: a polished slab against the wall and a lantern hanging from its
+    underside. (A first version used an upside-down stair; the game lets a lantern hang only from a face that covers the middle of its cell, which a
+    stair's step does not, so `mega_arch_check.py` refused it. A bottom slab's underside is a full face.)"""
     x, z = run.at(a, 2 * sign)
     if (x, z) not in interior:
         return
     L_ = L.SOUL_LANTERN if soul else L.LANTERN
-    G.stair(mt, x, FLOOR + 5, z, L.POLISHED_STAIRS, run.toward(-sign), half="top", shape="straight")
+    G.slab(mt, x, FLOOR + 5, z, L.POLISHED_SLAB, "bottom")
     mt.set(x, FLOOR + 4, z, L_, {"hanging": "true"})
 
 
@@ -568,7 +612,8 @@ def collapse(mt, run, interior, a_seal, direction, length=9, heavy=1.0):
 
 def ossuary_alcove(mt, run, interior, a, sign):
     """A skull niche in the wall of the side `sign` at position a: three cells wide along the wall, two high, cut into the inner wall layer, bone behind a
-    skull flanked by two lit candles and a soul lantern above it."""
+    skull flanked by two lit candles, and a soul lantern hanging from the wall block over the skull (a lantern cannot stand on a skull: its top is not a
+    full face, and `mega_arch_check.py` says so)."""
     for da in (-1, 0, 1):
         x, z = run.at(a + da, 3 * sign)
         bx, bz = run.at(a + da, 4 * sign)
@@ -579,33 +624,47 @@ def ossuary_alcove(mt, run, interior, a, sign):
             mt.set(bx, row, bz, "minecraft:bone_block", {"axis": "y"})
         if da == 0:
             mt.set(x, FLOOR + 2, z, "minecraft:skeleton_skull", {"rotation": str(SKULL_ROTATION[run.toward(-sign)])})
-            mt.set(x, FLOOR + 3, z, L.SOUL_LANTERN, {"hanging": "false"})
+            mt.set(x, FLOOR + 3, z, L.SOUL_LANTERN, {"hanging": "true"})
         else:
             mt.set(x, FLOOR + 2, z, "minecraft:candle", {"candles": "3", "lit": "true"})
 
 
 def onward(name, kind, style):
-    """One Way Onward template. kind: straight (9 x 36, ends on the north face), right (27 x 27, turns east, ends on the east face) or left (turns west, ends on the
-    west face); the entry is always on the south face. style: a (a passage of chains and lanterns) or b (an ossuary)."""
+    """One Way Onward template. kind: straight (ends on the north face), right (turns east, ends on the east face) or left (turns west, ends on the west face);
+    the entry is always on the south face. style: a (a passage of chains and lanterns), b (an ossuary) or c (the same passage in compact size, under blue
+    banners over a blue runner, the colour of the Way Onward's plaque): a and b are 9 x 36 (straight) and 27 x 27 (L); c is 9 x 18 and 18 x 18.
+    Why a compact size: the corridor leaves the antechamber at the side of the chain, so where the sector's region is nearly used up on that side only a
+    short corridor still fits, and a sector that cannot place its Way Onward cannot grow (the pool offers all sizes and the search takes the first that fits)."""
+    compact = style == "c"
+    deco = "b" if style == "b" else "a"                                                  # c is dressed like a
     if kind == "straight":
-        mt = MT(name, 1, 4)
-        legs = [G.Leg("z", 4, 2, 33)]
-        entry, end, patrol = ("s", 4), ("n", 4), (4, FLOOR + 1, 17)
+        n = 2 if compact else 4
+        mt = MT(name, 1, n)
+        last = 9 * n - 3
+        legs = [G.Leg("z", 4, 2, last)]
+        entry, end, patrol = ("s", 4), ("n", 4), (4, FLOOR + 1, 9 * n // 2 - 1)
         end_leg, end_dir, end_a = legs[0], -1, 2
     elif kind == "right":
-        mt = MT(name, 3, 3)
-        legs = [G.Leg("z", 4, 2, 24), G.Leg("x", 4, 2, 24)]
+        n = 2 if compact else 3
+        mt = MT(name, n, n)
+        last = 9 * n - 3
+        legs = [G.Leg("z", 4, 2, last), G.Leg("x", 4, 2, last)]
         entry, end, patrol = ("s", 4), ("e", 4), (4, FLOOR + 1, 4)
-        end_leg, end_dir, end_a = legs[1], 1, 24
+        end_leg, end_dir, end_a = legs[1], 1, last
     else:
-        mt = MT(name, 3, 3)
-        legs = [G.Leg("z", 22, 2, 24), G.Leg("x", 4, 2, 24)]
-        entry, end, patrol = ("s", 22), ("w", 4), (22, FLOOR + 1, 4)
+        n = 2 if compact else 3
+        mt = MT(name, n, n)
+        last = 9 * n - 3
+        ec = 9 * (n - 1) + 4                                                             # the lateral centre of the entry: the east module column
+        legs = [G.Leg("z", ec, 2, last), G.Leg("x", 4, 2, last)]
+        entry, end, patrol = ("s", ec), ("w", 4), (ec, FLOOR + 1, 4)
         end_leg, end_dir, end_a = legs[1], -1, 2
-    interior = G.corridor_shell(mt, legs, wear=0.14 if style == "a" else 0.20)
+    collapse_len = 6 if compact else 9
+    interior = G.corridor_shell(mt, legs, wear=0.20 if deco == "b" else 0.14)
     mt.socket(entry[0], entry[1], pool=L.P_EMPTY, name=L.ONWARD, target=L.ONWARD)
     mt.socket(end[0], end[1], pool=L.P_EMPTY, name=L.DOOR, target=L.DOOR, final_state=L.COBBLED, hole=False)
 
+    banner_colours = ("blue", "white", "blue") if compact else ("purple", "black", "blue")
     runs = [Run(leg) for leg in legs]
     for run in runs:
         leg = run.leg
@@ -614,30 +673,31 @@ def onward(name, kind, style):
             if in_elbow(a) or in_elbow(a - 1) or in_elbow(a + 1):
                 continue
             rib(mt, run, interior, a)
-            sconce(mt, run, interior, a, -1, soul=(style == "b"))
-            sconce(mt, run, interior, a, 1, soul=(style == "b"))
-            if style == "a":
+            sconce(mt, run, interior, a, -1, soul=(deco == "b"))
+            sconce(mt, run, interior, a, 1, soul=(deco == "b"))
+            if deco == "a":
                 x, z = run.at(a + 2, 0)
                 if (x, z) in interior:
                     G.hang_lantern(mt, x, interior[(x, z)], z, 2)
                 for sign in (-1, 1):
                     bx, bz = run.at(a + 2, 2 * sign)
                     if (bx, bz) in interior:
-                        mt.set(bx, FLOOR + 5, bz, "minecraft:%s_wall_banner" % ("purple", "black", "blue")[(a // 5) % 3], {"facing": run.toward(-sign)})
+                        mt.set(bx, FLOOR + 5, bz, "minecraft:%s_wall_banner" % banner_colours[(a // 5) % 3], {"facing": run.toward(-sign)})
             else:
                 ossuary_alcove(mt, run, interior, a + 2, -1)
                 ossuary_alcove(mt, run, interior, a + 2, 1)
-        if style == "a":                                                                   # a black carpet runner down the middle, except in the collapse
+        if deco == "a":                                                                    # a runner down the middle, except in the collapse
             for a in range(leg.a0, leg.a1 + 1):
                 x, z = run.at(a, 0)
-                near_seal = leg is end_leg and abs(a - end_a) <= 9
+                near_seal = leg is end_leg and abs(a - end_a) <= collapse_len
                 if not near_seal and not any(o is not leg and o.contains(x, z) for o in legs):
-                    mt.set(x, FLOOR + 1, z, "minecraft:black_carpet")
-    collapse(mt, Run(end_leg), interior, end_a - end_dir, end_dir, length=9, heavy=1.0 if style == "a" else 0.7)
+                    mt.set(x, FLOOR + 1, z, "minecraft:blue_carpet" if compact else "minecraft:black_carpet")
+    collapse(mt, Run(end_leg), interior, end_a - end_dir, end_dir, length=collapse_len, heavy=1.0 if deco == "a" else 0.7)
     mt.marker(patrol[0], patrol[1], patrol[2], "patrol")
     mt.finish()
     cell = G.rubble_seal(mt, end[0], end[1])
     mt.marker(cell[0], cell[1], cell[2], "expansion_socket", facing=G.DIRS[end[0]], w=3, h=4, d=2)
+    G.ensure_light(mt, level=12)                                   # the collapse and the ossuary niches leave dark stretches: cover them
     mt.leak_start = (patrol[0], patrol[1] + 1, patrol[2])
     return mt
 
@@ -654,7 +714,7 @@ def _marker_cells(mt, kind):
 
 
 def _is_air(c):
-    return c is None or c.block in ("minecraft:air", "minecraft:structure_block")
+    return c is None or c.block in ("minecraft:air", "minecraft:structure_block", "minecraft:light")      # a light block has no collision: a Guardian walks through it
 
 
 def verify(name, mt):
@@ -741,8 +801,12 @@ BUILDERS = {
     "mega/arena/guardian_hall_a": hall_a,
     "mega/arena/guardian_hall_b": hall_b,
     "mega/antechamber/antechamber_a": antechamber_a,
+    "mega/antechamber/antechamber_b": antechamber_b,
     "mega/onward/straight_a": lambda: onward("mega/onward/straight_a", "straight", "a"),
     "mega/onward/straight_b": lambda: onward("mega/onward/straight_b", "straight", "b"),
+    "mega/onward/straight_c": lambda: onward("mega/onward/straight_c", "straight", "c"),
+    "mega/onward/left_c": lambda: onward("mega/onward/left_c", "left", "c"),
+    "mega/onward/right_c": lambda: onward("mega/onward/right_c", "right", "c"),
     "mega/onward/left_a": lambda: onward("mega/onward/left_a", "left", "a"),
     "mega/onward/left_b": lambda: onward("mega/onward/left_b", "left", "b"),
     "mega/onward/right_a": lambda: onward("mega/onward/right_a", "right", "a"),

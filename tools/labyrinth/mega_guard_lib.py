@@ -294,6 +294,77 @@ def corridor_shell(mt, legs, wall=L.BRICK, floor=L.TILE, ceiling=L.TILE, wear=0.
     return interior
 
 
+# ------------------------------------------------------------------ light: the gloom clock punishes the dark
+LIGHT_BLOCK = "minecraft:light"
+
+
+def ensure_light(mt, min_level=6, level=13, rise=3, limit=120, keep_clear=()):
+    """Invisible light sources (the vanilla `minecraft:light` block) for whatever the visible fixtures leave dark. Why: the dungeon's gloom clock
+    (labyrinth/dnd/economy/GloomClock) counts every second a player spends at block light 4 or less with nothing lit in hand, so a boss hall that is
+    only lit where a brazier happens to stand would punish the party in the one room where it cannot afford to look for a torch. The visible fixtures
+    (braziers, lanterns, sea lanterns in the floor) are placed by the template functions for their looks; this pass only covers what is still dark, with
+    the preview tool's own light model (`mega_shape_preview.light_field` and `standable_cells`, the same numbers the light report prints), greedily: the
+    dark cell with the most dark cells round it gets a light `rise` cells above it (above a player's head, so it never blocks anyone: a light block has no
+    collision), until every standable cell reaches `min_level` at eye height or `limit` lights are used. Deterministic (sorted scans, no randomness).
+    `keep_clear` is a list of cells that must stay free (the headroom of the altar). Returns how many lights it placed."""
+    import mega_shape_preview as SP    # imported here: it needs Pillow, and nothing else in this module does
+    t = mt.t
+    lf = SP.light_field(t)
+    opaque = {p for p, c in t.cells.items() if SP.blocks_light(c.block, c.props)}
+    stand = sorted(SP.standable_cells(t))
+    size = t.size
+    clear = set(keep_clear)
+
+    def eye(p):
+        return lf.get((p[0], p[1] + 1, p[2]), 0)
+
+    def flood(src, lvl):
+        q = [src]
+        lf[src] = max(lf.get(src, 0), lvl)
+        while q:
+            cur = q.pop()
+            v = lf[cur]
+            if v <= 1:
+                continue
+            for d in ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1)):
+                nb = (cur[0] + d[0], cur[1] + d[1], cur[2] + d[2])
+                if not (0 <= nb[0] < size[0] and 0 <= nb[1] < size[1] and 0 <= nb[2] < size[2]) or nb in opaque:
+                    continue
+                if lf.get(nb, 0) < v - 1:
+                    lf[nb] = v - 1
+                    q.append(nb)
+
+    def free_for_light(c):
+        return c not in mt.reserved and c not in clear and t.get(*c) is None
+
+    placed = 0
+    while placed < limit:
+        dark = [p for p in stand if eye(p) < min_level]
+        if not dark:
+            break
+        dark_set = set(dark)
+        best, best_score = None, -1
+        for p in dark:
+            spot = None
+            for k in range(rise, 0, -1):
+                cand = (p[0], p[1] + k, p[2])
+                if free_for_light(cand) and all(t.get(p[0], p[1] + j, p[2]) is None for j in range(1, k)):
+                    spot = cand
+                    break
+            if spot is None:
+                continue
+            near = sum(1 for q in dark if abs(q[0] - p[0]) <= 4 and abs(q[2] - p[2]) <= 4 and abs(q[1] - p[1]) <= 2)
+            score = near * 16 - eye(p)
+            if score > best_score:
+                best, best_score = spot, score
+        if best is None:
+            break
+        mt.set(best[0], best[1], best[2], LIGHT_BLOCK, {"level": str(level), "waterlogged": "false"})
+        flood(best, level)
+        placed += 1
+    return placed
+
+
 # ------------------------------------------------------------------ the checks a game would do for us
 #: blocks that do not stop air, light or a mob from passing for the purposes of the seal check (a hanging lantern does not close a hole)
 _NOT_A_SEAL = ("air", "cave_air", "void_air", "structure_block", "light")
@@ -356,7 +427,7 @@ def lane_check(mt, length=10, headroom=8):
             return False
         for k in range(headroom):
             c = mt.t.get(x, y + k, z)
-            if c is not None and not (c.block.endswith(":air") or c.block.endswith("structure_block") or c.block.endswith("_wall_banner")):
+            if c is not None and not (c.block.endswith(":air") or c.block.endswith("structure_block") or c.block.endswith("_wall_banner") or c.block.endswith(":light")):
                 return False
         return True
 
