@@ -24,7 +24,9 @@
     "verdant": 5,
     "storm": 2,
     "shadow": 1,
-    "astral": 0
+    "astral": 0,
+    "radiant": 2,
+    "abyss": 4
   },
   "drops": {
     "meat": "raw_direwolf_haunch",

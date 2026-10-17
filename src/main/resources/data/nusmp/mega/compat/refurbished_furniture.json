@@ -1,0 +1,69 @@
+{
+  "_why": "MrCrayfish's Furniture Mod: Refurbished for the Safe Zones: stair seats become chairs and sofas, table tops become tables, counters and storage become the mod's counters, drawers and crates, wool beds become its beds, when the mod 'refurbished_furniture' is loaded. THE IDS BELOW ARE NOT VERIFIED (no copy of the mod was available when this was written): every plausible spelling is listed in order of likelihood, the first one that exists in the block registry is used, and when none exists the vanilla block stays. {wood} is filled from the block being replaced (dark_oak_stairs gives dark_oak, default oak) and {color} from a coloured block (default red). Open the mod's jar (assets/refurbished_furniture/blockstates) and edit this list to the real ids: no rebuild needed. flip_facing lists the hints whose `facing` must be reversed (a stair 'faces' up its slope, behind the sitter; a chair faces the way the sitter looks). facing_property is the name of the replacement's horizontal facing property (vanilla style: facing).",
+  "mod": "refurbished_furniture",
+  "facing_property": "facing",
+  "flip_facing": ["chair", "sofa"],
+  "swaps": {
+    "chair": [
+      "refurbished_furniture:chair_{wood}",
+      "refurbished_furniture:chair_oak",
+      "refurbished_furniture:dining_chair_{wood}",
+      "refurbished_furniture:dining_chair_oak",
+      "refurbished_furniture:stool_{wood}",
+      "refurbished_furniture:stool_oak",
+      "refurbished_furniture:chair"
+    ],
+    "sofa": [
+      "refurbished_furniture:sofa_{color}",
+      "refurbished_furniture:sofa_red",
+      "refurbished_furniture:couch_{color}",
+      "refurbished_furniture:couch_red",
+      "refurbished_furniture:sofa",
+      "refurbished_furniture:couch",
+      "refurbished_furniture:bench_{wood}",
+      "refurbished_furniture:park_bench_{wood}"
+    ],
+    "table": [
+      "refurbished_furniture:table_{wood}",
+      "refurbished_furniture:table_oak",
+      "refurbished_furniture:dining_table_{wood}",
+      "refurbished_furniture:dining_table_oak",
+      "refurbished_furniture:coffee_table_{wood}",
+      "refurbished_furniture:coffee_table_oak",
+      "refurbished_furniture:desk_{wood}",
+      "refurbished_furniture:desk_oak",
+      "refurbished_furniture:table"
+    ],
+    "counter": [
+      "refurbished_furniture:kitchen_counter_{wood}",
+      "refurbished_furniture:kitchen_counter_oak",
+      "refurbished_furniture:counter_{wood}",
+      "refurbished_furniture:counter_oak",
+      "refurbished_furniture:kitchen_cabinet_{wood}",
+      "refurbished_furniture:kitchen_cabinet_oak",
+      "refurbished_furniture:kitchen_drawer_{wood}",
+      "refurbished_furniture:kitchen_drawer_oak",
+      "refurbished_furniture:counter"
+    ],
+    "storage": [
+      "refurbished_furniture:crate_{wood}",
+      "refurbished_furniture:crate_oak",
+      "refurbished_furniture:drawer_{wood}",
+      "refurbished_furniture:drawer_oak",
+      "refurbished_furniture:bedside_cabinet_{wood}",
+      "refurbished_furniture:bedside_cabinet_oak",
+      "refurbished_furniture:cabinet_{wood}",
+      "refurbished_furniture:cabinet_oak",
+      "refurbished_furniture:storage_jar",
+      "refurbished_furniture:crate",
+      "refurbished_furniture:drawer"
+    ],
+    "bed": [
+      "refurbished_furniture:bed_{color}",
+      "refurbished_furniture:bed_red",
+      "refurbished_furniture:bed_{wood}",
+      "refurbished_furniture:bed_oak",
+      "refurbished_furniture:bed"
+    ]
+  }
+}

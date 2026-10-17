@@ -142,6 +142,29 @@ public class MegaContractTest {
         }
     }
 
+    /** 1.55.0: each road starts in its own signature theme and then leans toward the themes that fit it. */
+    @Test
+    public void eachRoadHasItsOwnLookAndLeansTowardItsThemes() {
+        assertEquals(RegionTheme.RADIANT, RegionTheme.pick(5L, 0, null, Polarity.HOLY));
+        assertEquals(RegionTheme.ABYSS, RegionTheme.pick(5L, 0, null, Polarity.ABYSSAL));
+        assertEquals(RegionTheme.pick(5L, 4, RegionTheme.FLAME), RegionTheme.pick(5L, 4, RegionTheme.FLAME, null), "no polarity: the old draw");
+        int holyFavoured = 0, abyssFavoured = 0, n = 3000;
+        RegionTheme prevHoly = RegionTheme.RADIANT, prevAbyss = RegionTheme.ABYSS;
+        for (int chain = 1; chain <= n; chain++) {
+            RegionTheme h = RegionTheme.pick(77L, chain, prevHoly, Polarity.HOLY);
+            RegionTheme a = RegionTheme.pick(77L, chain, prevAbyss, Polarity.ABYSSAL);
+            assertTrue(h != prevHoly && a != prevAbyss, "never the same look twice in a row");
+            assertEquals(h, RegionTheme.pick(77L, chain, prevHoly, Polarity.HOLY), "deterministic");
+            if (h.favoursHoly()) holyFavoured++;
+            if (a.favoursAbyss()) abyssFavoured++;
+            prevHoly = h;
+            prevAbyss = a;
+        }
+        assertTrue(holyFavoured > n * 0.55, "the Holy road leans Holy: " + holyFavoured + "/" + n);
+        assertTrue(abyssFavoured > n * 0.55, "the Abyssal road leans Abyssal: " + abyssFavoured + "/" + n);
+        for (RegionTheme t : RegionTheme.values()) assertFalse(t.favoursHoly() && t.favoursAbyss(), t + " cannot suit both roads");
+    }
+
     @Test
     public void themeIdsParseLeniently() {
         assertEquals(RegionTheme.BLOOD, RegionTheme.fromId("blood"));

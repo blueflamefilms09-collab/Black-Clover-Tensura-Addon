@@ -1,0 +1,60 @@
+{
+  "_doc": [
+    "The weights of the Mega-Dungeon template pools (read by tools/labyrinth/gen_mega_pools.py; docs/labyrinth/mega_arch.md explains every number).",
+    "A pool is built from folders of structure/mega/<folder>/*.nbt. For a pool with `folders` (a map folder -> share) a template's weight is",
+    "  share * scale * relative / (sum of the relative weights of that folder's templates), rounded, at least 1,",
+    "so the SHARE of a folder in the pool stays what it is written here however many templates the folder holds (a builder adding ten halls does not",
+    "drown the corridors). `relative` maps a template-id prefix (longest prefix wins, default 1) to its weight inside its folder.",
+    "A pool with `absolute: true` uses `relative` as plain weights (default 1) instead. `filter` keeps only templates whose file name starts with it,",
+    "`empty` adds an empty pool element of that weight (the assembler then draws the fallback pool: a door cap), `fallback` is the pool drawn after the",
+    "elements. Vanilla limits a weight to 1..150."
+  ],
+  "scale": 20,
+  "processors": "nusmp:mega_interior",
+  "pools": {
+    "landing": {"folders": {"landing": 1}, "fallback": "nusmp:mega/cap"},
+    "side": {
+      "folders": {"corridor": 5, "junction": 3, "hall": 3, "trap": 1, "puzzle": 1, "trial": 1, "treasure": 1, "cavern": 1, "set": 1, "safe": 1},
+      "relative": {
+        "mega/corridor/straight_1x2": 3, "mega/corridor/straight_1x3": 3, "mega/corridor/straight_1x4": 2,
+        "mega/corridor/bend": 2, "mega/corridor/tee": 2, "mega/corridor/cross": 1, "mega/corridor/gallery": 1,
+        "mega/junction/plaza_2x2": 3, "mega/junction/plaza_3x3": 2, "mega/junction/crossroads_hall": 2
+      },
+      "empty": 2,
+      "fallback": "nusmp:mega/cap"
+    },
+    "cap": {
+      "absolute": true,
+      "folders": {"cap": 1},
+      "relative": {
+        "mega/cap/plain_wall_a": 6, "mega/cap/plain_wall_b": 4,
+        "mega/cap/alcove_lantern_a": 4, "mega/cap/alcove_lantern_b": 3,
+        "mega/cap/alcove_candles_a": 3, "mega/cap/alcove_candles_b": 2,
+        "mega/cap/alcove_banner_a": 3, "mega/cap/alcove_banner_b": 3,
+        "mega/cap/alcove_statue_a": 2, "mega/cap/alcove_statue_b": 1,
+        "mega/cap/alcove_bookcase": 2, "mega/cap/alcove_skulls": 2, "mega/cap/alcove_brazier": 2,
+        "mega/cap/alcove_window_a": 2, "mega/cap/alcove_window_b": 2, "mega/cap/alcove_snake": 1,
+        "mega/cap/alcove_cell": 1, "mega/cap/alcove_chest": 1, "mega/cap/alcove_barrels": 2,
+        "mega/cap/alcove_bones": 2, "mega/cap/alcove_cobweb": 2, "mega/cap/alcove_rack": 2
+      },
+      "fallback": "minecraft:empty"
+    },
+    "safe": {"folders": {"safe": 1}, "fallback": "nusmp:mega/cap"},
+    "arena": {"folders": {"arena": 1}, "fallback": "nusmp:mega/cap"},
+    "antechamber": {"folders": {"antechamber": 1}, "fallback": "nusmp:mega/cap"},
+    "vault": {"folders": {"vault": 1}, "fallback": "nusmp:mega/cap"},
+    "vault_1": {"folders": {"vault": 1}, "filter": "one_", "fallback": "nusmp:mega/cap"},
+    "vault_2": {"folders": {"vault": 1}, "filter": "two_", "fallback": "nusmp:mega/cap"},
+    "vault_3": {"folders": {"vault": 1}, "filter": "three_", "fallback": "nusmp:mega/cap"},
+    "onward": {"folders": {"onward": 1}, "fallback": "nusmp:mega/cap"},
+    "onward_straight": {"folders": {"onward": 1}, "filter": "straight_", "fallback": "nusmp:mega/cap"},
+    "onward_left": {"folders": {"onward": 1}, "filter": "left_", "fallback": "nusmp:mega/cap"},
+    "onward_right": {"folders": {"onward": 1}, "filter": "right_", "fallback": "nusmp:mega/cap"},
+    "link": {
+      "absolute": true,
+      "folders": {"link": 1},
+      "relative": {"mega/link/straight_a": 4, "mega/link/straight_b": 4, "mega/link/waystation": 1},
+      "fallback": "nusmp:mega/cap"
+    }
+  }
+}

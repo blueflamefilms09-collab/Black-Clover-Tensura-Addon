@@ -1,0 +1,189 @@
+{
+  "comment": "Why: the flame sectors are forges, so the table is built from the smiths (goblins, piglin brutes), what the fire made (blazes, magma cubes, moths, spirits) and what it burnt (wither skeletons). Noise draws the overseer, light draws the moths, and the mimic is the half-finished suit on the anvil.",
+  "description": "Blackstone, magma and lava forges: elementals, the smiths who serve them and the burnt dead. Fire in a closed hall: fights here are loud and short.",
+  "rollBonus": 0,
+  "budgetScale": 1.0,
+  "defaultFaction": "elemental",
+  "entries": [
+    {
+      "id": "cinder_crawlers",
+      "comment": "Magma cubes that rolled in from the slag: bouncy, tanky for their cost, and they split. A nuisance in a narrow hall.",
+      "band": "minor",
+      "weight": 14,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:magma_cube", "count": "2-3"}
+      ],
+      "range": [10, 24],
+      "cells": 2,
+      "cue": {"sound": "minecraft:block.lava.pop", "volume": 0.8, "pitch": 0.8, "particle": "minecraft:flame", "count": 6}
+    },
+    {
+      "id": "scorched_bones",
+      "comment": "One or two wither skeletons: what the forge fires left standing.",
+      "band": "minor",
+      "weight": 10,
+      "maxThreat": 8,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:wither_skeleton", "count": "1-2"}
+      ],
+      "cue": {"sound": "minecraft:entity.wither_skeleton.ambient", "volume": 0.6, "pitch": 0.7, "particle": "minecraft:ash", "count": 8}
+    },
+    {
+      "id": "smithy_goblins",
+      "comment": "The smiths of the forge: goblins (Tensura goblins, piglins, raiders), weapons in hand, always more than the party expects.",
+      "band": "standard",
+      "weight": 12,
+      "faction": "goblin",
+      "mobs": [
+        {"type": "faction", "count": "2-4"}
+      ],
+      "cue": {"sound": "minecraft:block.anvil.land", "volume": 0.7, "pitch": 0.8, "particle": "minecraft:smoke", "count": 6}
+    },
+    {
+      "id": "ember_patrol",
+      "comment": "Blazes: ranged fire, hovering, expensive to chase, and their smoke is the warning.",
+      "band": "standard",
+      "weight": 10,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:blaze", "count": "2-3"}
+      ],
+      "cue": {"sound": "minecraft:entity.blaze.ambient", "volume": 0.8, "pitch": 0.8, "particle": "minecraft:small_flame", "count": 10}
+    },
+    {
+      "id": "hellhound_pack",
+      "comment": "A pack of the beast tag with the forge's heat on them: arrives together from one side.",
+      "band": "standard",
+      "weight": 10,
+      "minThreat": 2,
+      "faction": "beast",
+      "mobs": [
+        {"type": "faction", "count": "3-5"}
+      ],
+      "cells": 1,
+      "cue": {"sound": "minecraft:entity.wolf.growl", "volume": 0.9, "pitch": 0.5, "particle": "minecraft:flame", "count": 6}
+    },
+    {
+      "id": "smoke_stalker",
+      "comment": "The lone hunter: a wither skeleton in the smoke, only for a party in the dark.",
+      "band": "standard",
+      "weight": 8,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:wither_skeleton", "count": "1-2"}
+      ],
+      "needs": {"dark": true},
+      "scaleWithParty": false,
+      "cue": {"sound": "minecraft:block.fire.ambient", "volume": 0.7, "pitch": 0.6, "particle": "minecraft:ash", "count": 14},
+      "message": "message.nusmp.mega.enc.flame.smoke_stalker"
+    },
+    {
+      "id": "firelight_moths",
+      "comment": "Hell moths love fire and light: only for a bright party.",
+      "band": "standard",
+      "weight": 8,
+      "mobs": [
+        {"type": "entity", "id": "tensura:hell_moth", "count": "2-4"}
+      ],
+      "needs": {"lit": true},
+      "cue": {"sound": "minecraft:entity.phantom.swoop", "volume": 0.5, "pitch": 1.4, "particle": "minecraft:flame", "count": 6}
+    },
+    {
+      "id": "fire_spirits",
+      "comment": "Tensura's salamander with blazes in its train: an elemental pair, the spirit first and the blazes trimmed first when the budget is short.",
+      "band": "standard",
+      "weight": 8,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "tensura:salamander", "count": "1-2"},
+        {"type": "entity", "id": "minecraft:blaze", "count": "1-2"}
+      ],
+      "cue": {"sound": "minecraft:block.lava.ambient", "volume": 0.8, "pitch": 0.8, "particle": "minecraft:flame", "count": 10}
+    },
+    {
+      "id": "forge_overseer",
+      "comment": "Hammering is noise, and a loud party drowns it out: the overseer comes to see who is louder, with his goblins.",
+      "band": "hard",
+      "weight": 10,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:piglin_brute", "count": "1"},
+        {"type": "faction", "count": "2-3", "faction": "goblin"}
+      ],
+      "needs": {"noisy": true},
+      "cue": {"sound": "minecraft:entity.piglin_brute.angry", "volume": 0.9, "pitch": 0.6, "particle": "minecraft:large_smoke", "count": 10},
+      "message": "message.nusmp.mega.enc.flame.forge_overseer"
+    },
+    {
+      "id": "pyre_cult",
+      "comment": "A pyre cult: casters with blazes as their lamps. Casters first, so the entry always has them.",
+      "band": "hard",
+      "weight": 8,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "faction", "count": "1-2", "faction": "cultist"},
+        {"type": "entity", "id": "minecraft:blaze", "count": "1-2"}
+      ],
+      "cue": {"sound": "minecraft:entity.evoker.cast_spell", "volume": 0.8, "pitch": 0.8, "particle": "minecraft:flame", "count": 12}
+    },
+    {
+      "id": "cooling_armour",
+      "comment": "The mimic-style surprise: the suit on the anvil that is not yet cold. Close range, short hunt, a magma cube or two in its slag.",
+      "band": "hard",
+      "weight": 6,
+      "minThreat": 2,
+      "mobs": [
+        {"type": "entity", "id": "nusmp:living_armor", "count": "1-2"},
+        {"type": "entity", "id": "minecraft:magma_cube", "count": "1-2"}
+      ],
+      "range": [10, 18],
+      "cells": 2,
+      "hunt": 300,
+      "cue": {"sound": "minecraft:item.armor.equip_iron", "volume": 0.8, "pitch": 0.5, "particle": "minecraft:flame", "count": 10},
+      "message": "message.nusmp.mega.enc.flame.cooling_armour"
+    },
+    {
+      "id": "lava_surge",
+      "comment": "Slag floods the hall: a tide of magma cubes in three places and a blaze or two over them.",
+      "band": "ambush",
+      "weight": 10,
+      "minThreat": 3,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:magma_cube", "count": "5-8"},
+        {"type": "entity", "id": "minecraft:blaze", "count": "1-2"}
+      ],
+      "range": [12, 26],
+      "cells": 3,
+      "cue": {"sound": "minecraft:block.lava.pop", "volume": 1.0, "pitch": 0.5, "particle": "minecraft:lava", "count": 16},
+      "message": "message.nusmp.mega.enc.flame.lava_surge"
+    },
+    {
+      "id": "forge_warband",
+      "comment": "The whole forge turns out: brutes in front, goblins behind, from two sides.",
+      "band": "ambush",
+      "weight": 8,
+      "minThreat": 4,
+      "mobs": [
+        {"type": "entity", "id": "minecraft:piglin_brute", "count": "2-3"},
+        {"type": "faction", "count": "3-5", "faction": "goblin"}
+      ],
+      "cells": 2,
+      "cue": {"sound": "minecraft:entity.piglin_brute.angry", "volume": 1.0, "pitch": 0.5, "particle": "minecraft:large_smoke", "count": 16}
+    },
+    {
+      "id": "inferno_march",
+      "comment": "The late ambush: demons, blazes and the burnt dead in three places. Only for parties of two or more.",
+      "band": "ambush",
+      "weight": 6,
+      "minThreat": 6,
+      "mobs": [
+        {"type": "faction", "count": "2-3", "faction": "demon"},
+        {"type": "entity", "id": "minecraft:blaze", "count": "3-4"},
+        {"type": "entity", "id": "minecraft:wither_skeleton", "count": "2-3"}
+      ],
+      "minParty": 2,
+      "cells": 3,
+      "cue": {"sound": "minecraft:entity.ghast.warn", "volume": 1.0, "pitch": 0.6, "particle": "minecraft:lava", "count": 20}
+    }
+  ]
+}

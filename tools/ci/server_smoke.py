@@ -336,6 +336,14 @@ class Smoke:
             (self.ok if level == "OK" else self.fail)("selftest-" + key, detail.strip()[:240])
         if found == 0:
             (self.fail if self.args.strict else self.skip)("selftests", "no self-test reported: " + text.strip()[:160])
+        # every system of the build must have registered at least one test (a registry that is not wired reports none and would pass silently)
+        keys = [m.group(1) for m in self.SELFTEST_RE.finditer(text) if m.group(1) != "summary"]
+        for prefix in [p.strip() for p in (self.args.expect_selftests or "").split(",") if p.strip()]:
+            n = sum(1 for k in keys if k.startswith(prefix + "."))
+            if n:
+                self.ok("selftests-" + prefix, "%d test(s) registered" % n)
+            else:
+                (self.fail if self.args.strict else self.skip)("selftests-" + prefix, "no self-test with the prefix '%s.' was reported: the registry is not wired" % prefix)
 
     def phase_dimension(self):
         r = self.run("execute in nusmp:mega_dungeon run forceload add 0 0")
@@ -553,6 +561,7 @@ def main(argv):
     ap.add_argument("--restart", action="store_true")
     ap.add_argument("--strict", action="store_true", help="a missing pool, structure or command is a FAILURE (the integrated build must have them all)")
     ap.add_argument("--no-deps", action="store_true", help="do not download TerraBlender (self-test with a stand-in server)")
+    ap.add_argument("--expect-selftests", default=os.environ.get("SMOKE_EXPECT", ""), help="comma list of self-test key prefixes that must each have at least one test (default: $SMOKE_EXPECT)")
     ap.add_argument("--quiet", action="store_true")
     args = ap.parse_args(argv)
     if os.path.exists(os.path.join(ROOT, "gradlew")):
