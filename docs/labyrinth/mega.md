@@ -158,7 +158,8 @@ Algorithm (CORE implements it exactly; the numbers are config):
    pool's elements in weighted-shuffled order (only while depth < `maxDepth`, 24) followed by the fallback pool's; an `empty` element ends the search. For each candidate and each of the four
    rotations (shuffled) and each socket K of the candidate with `canAttach(socket, K)` (target = name, facings opposite, `aligned`): the origin is `socket.cell + facingVector - K.local`;
    accept the first whose box (a) lies inside the region (door caps may exceed it by `CAP_MARGIN`), (b) overlaps no placed box in more than touching, (c) overlaps no exclusion. Record the junction,
-   queue the new piece. A socket that finds nothing stays UNUSED (a niche).
+   queue the new piece. A socket that finds nothing stays UNUSED (a niche). Unlike vanilla, an `empty` element does NOT end the whole search: it only ends the primary pool's candidates and the search continues with the fallback
+   pool (the door caps), so a doorway that faces free space is always capped and can never open onto the void; empties only thin out the connectivity.
 3. **Ensure (the Sector Recipe).** After the fill, force what must exist: the **boss chain** (an `arena` attached to an unused socket at least 8 modules from the Landing and next to the reserved zone
    at the far side; then the antechamber, the vault chosen by `relicCount`, the Way Onward variant that points to free space) by running step 2 on that socket with the pool forced; at least one extra
    `safe` room 5-12 modules from the Landing; at least one `trial`; at least two `treasure`; at most one `set` piece. The recipe is data (`data/nusmp/mega/recipe/default.json`).

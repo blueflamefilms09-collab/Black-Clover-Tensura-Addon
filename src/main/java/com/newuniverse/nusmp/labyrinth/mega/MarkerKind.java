@@ -28,9 +28,13 @@ public enum MarkerKind {
     BED,
     /** Above a table / counter / storage block that a compat mod may replace. args: as (table, counter, cutting_board, storage). */
     FURNITURE,
-    /** Where the Labyrinth Guardian appears (arena floor cell + 1). */
+    /** Where the Labyrinth Guardian appears (the air cell above the Guardian Altar, in the middle of the arena). */
     GUARDIAN_SPAWN,
-    /** The end of the Way Onward: the seal box to clear and the direction the next sector attaches. args: facing, w, h, d. Stands IN the seal's bottom-centre cell of its outer layer. */
+    /**
+     * The end of the Way Onward: the direction the next sector attaches and the size of the rubble seal to clear. args: facing (outward, in the
+     * template frame), w, h, d (default 3, 4, 2). It stands in the cell directly ABOVE the jigsaw cell of the corridor's end socket (outer wall
+     * layer, row 10), so the seal's bottom-centre cell, the jigsaw cell, is {@code marker.pos().below()} and the seal runs {@code d} layers inward.
+     */
     EXPANSION_SOCKET,
     /** The centre of the Crucible Vault floor (+1). */
     VAULT_CENTER,
@@ -38,7 +42,7 @@ public enum MarkerKind {
     PEDESTAL,
     /** The native faction of the room. args: faction. */
     FACTION,
-    /** The centre of a Gatekeeper door (the middle of the door slab). */
+    /** In front of the sector's Gatekeeper door, on the arena side: the air cell just inside the middle of the door slab's inner layer, row 10. */
     GATEKEEPER,
     /** A hidden trap site the director may arm. args: type. */
     TRAP;

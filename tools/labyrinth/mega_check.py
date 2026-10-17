@@ -60,8 +60,12 @@ def registered_nusmp_blocks():
     return out
 
 
+#: processor types the contract promises (registered by the theme and safe builders); a missing registration is only a warning here and an error at integration
+CONTRACT_PROCESSORS = {"nusmp:region_theme", "nusmp:mod_compat"}
+
+
 def registered_processor_types():
-    out = set(VANILLA_PROCESSORS)
+    out = set(VANILLA_PROCESSORS) | CONTRACT_PROCESSORS
     pat = re.compile(r'PROCESSORS\.register\("([a-z0-9_]+)"')
     for path in glob.glob(os.path.join(JAVA, "**", "*.java"), recursive=True):
         try:

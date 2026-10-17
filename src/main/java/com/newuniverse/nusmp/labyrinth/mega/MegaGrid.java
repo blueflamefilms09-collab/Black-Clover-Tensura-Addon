@@ -32,8 +32,10 @@ public final class MegaGrid {
     public static final int DOOR_ROW = FLOOR_ROW + 1;
     /** Edge of one sector's region, in modules (the assembler's allowed box is this many modules square). */
     public static final int REGION_MODULES = 19;
-    /** Extra blocks a door cap may protrude past the region (a cap is only 2 deep; regions are separated by more than this). */
-    public static final int CAP_MARGIN = 4;
+    /** Extra blocks a door cap may protrude past the region (a cap is at most 8 deep; regions are kept at least {@link #REGION_GAP} apart, which is more than this). */
+    public static final int CAP_MARGIN = 8;
+    /** Minimum clear distance between the regions of two sectors, so no cap of one can touch a piece of another. */
+    public static final int REGION_GAP = 12;
 
     /** Jigsaw names and pools every builder must use (the connector contract of docs/labyrinth/mega.md). */
     public static final String DOOR = "nusmp:mega_door";

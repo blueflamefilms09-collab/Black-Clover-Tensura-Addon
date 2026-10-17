@@ -53,7 +53,7 @@ public final class Sector {
 
     // ---- the boss chain (generator fills them from the markers; the guard builder uses them)
     public BlockPos guardianSpawn, gatekeeper, vaultCenter;
-    /** The rubble seal of the Way Onward: its bottom-centre cell, the direction the next sector attaches, and the seal's size (width, height, depth). */
+    /** The rubble seal of the Way Onward: its bottom-centre cell of the OUTER layer (the end socket's jigsaw cell, marker.below()), the direction the next sector attaches, and the seal's size (width, height, depth: it runs depth layers inward). */
     public BlockPos expansionPos;
     public Direction expansionFacing;
     public int sealW = 3, sealH = 4, sealD = 2;

@@ -32,6 +32,8 @@ public final class Labyrinth {
     public static final ResourceKey<Biome> BIOME = ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "labyrinth_sky"));
     /** Structure tag holding the Spire: what {@code ServerLevel.findNearestMapStructure} is asked for from inside the dimension. */
     public static final TagKey<Structure> SPIRE_TAG = TagKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "labyrinth_spire"));
+    /** 1.54.0: structure tag holding the Gateway of the Mega-Dungeon (one per world); also listed in {@link #GATE_TAG}. */
+    public static final TagKey<Structure> MEGA_GATEWAY_TAG = TagKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "mega_gateway"));
     /** Structure tag holding the Overworld Gate arch (the way in). */
     public static final TagKey<Structure> GATE_TAG = TagKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "dungeon_gate"));
 
