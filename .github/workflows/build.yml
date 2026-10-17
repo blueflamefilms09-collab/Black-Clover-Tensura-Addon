@@ -12,8 +12,9 @@ permissions:
 
 jobs:
   build:
-    # a commit message with [smoke-only] asks for the server smoke test (smoke.yml) INSTEAD of a build and a release
-    if: ${{ !contains(github.event.head_commit.message, '[smoke-only]') }}
+    # a commit message with [smoke-only] asks for the server smoke test (smoke.yml) INSTEAD of a build and a release;
+    # [no-build] skips only this job (for a commit that exists to start another workflow, such as the API dump, and must not publish a release)
+    if: ${{ !contains(github.event.head_commit.message, '[smoke-only]') && !contains(github.event.head_commit.message, '[no-build]') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

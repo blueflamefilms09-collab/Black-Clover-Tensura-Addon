@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "nusmp:dungeon_gate"
+    "nusmp:dungeon_gate",
+    "nusmp:mega_gateway"
   ]
 }

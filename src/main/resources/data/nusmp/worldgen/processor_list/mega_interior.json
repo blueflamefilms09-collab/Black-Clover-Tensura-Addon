@@ -1,0 +1,10 @@
+{
+  "processors": [
+    {
+      "processor_type": "nusmp:region_theme"
+    },
+    {
+      "processor_type": "nusmp:mod_compat"
+    }
+  ]
+}
