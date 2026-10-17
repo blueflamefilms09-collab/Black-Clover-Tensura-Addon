@@ -17,11 +17,11 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.List;
 
 /**
- * Why: the Labyrinth masonry. The gate ruins and every spire piece are built from a signature palette of our own blocks instead of
- * vanilla deepslate so that (1) the biome palette processor ({@code nusmp:biome_palette}, processor list {@code nusmp:labyrinth_palette})
- * can swap "the pillar", "the floor", "the accent" by TAG without touching the player's own deepslate builds next to a gate, (2) the vein
- * processor can target "structural stone" ({@code #nusmp:labyrinth/veinable}) without lighting up every deepslate cave, and (3) the
- * structures read as one place from the Overworld arch to the Boss Peak. They are plain {@link Block}s with deepslate-brick numbers
+ * Why: the Labyrinth masonry. The Gateway ruin, the trap and trial rooms and the Mega-Dungeon's templates are built from a signature palette of our
+ * own blocks instead of vanilla deepslate so that the structures read as one place from the Overworld arch to the Guardian's hall and the player's own
+ * deepslate builds next to a gate are never touched by anything. (Until 1.58.0 the Spire's biome palette and vein processors swapped these blocks by
+ * TAG; the Spire and those processors were removed, the blocks stayed because the traps and the templates name them.) They are plain {@link Block}s with
+ * deepslate-brick numbers
  * (3.5 / 6, pickaxe, {@link SoundType#DEEPSLATE_BRICKS}) so they behave like masonry a player can quarry and reuse; the light-emitting
  * ones ({@code labyrinth_glyph} 6, {@code labyrinth_lantern} 15, {@code magicule_vein} 11) use {@code lightLevel} on the state so no
  * block entity or tick is involved. Block items go on {@link NUItems#ITEMS} like every other block of the mod, which is why
@@ -40,19 +40,19 @@ public final class LabyrinthBlocks {
     /** The wall stone of the Labyrinth: dark blue-black blocks with faint gold seams. */
     public static final DeferredBlock<Block> LABYRINTH_BRICKS = BLOCKS.register("labyrinth_bricks", () -> new Block(masonry()));
 
-    /** The floor stone: smaller tiles of the same rock (swap_floor: the palette processor replaces it per biome). */
+    /** The floor stone: smaller tiles of the same rock . */
     public static final DeferredBlock<Block> LABYRINTH_TILES = BLOCKS.register("labyrinth_tiles", () -> new Block(masonry()));
 
-    /** The column stone: fluted sides, a capped top, rotates on its axis like a log (swap_pillar). */
+    /** The column stone: fluted sides, a capped top, rotates on its axis like a log. */
     public static final DeferredBlock<RotatedPillarBlock> LABYRINTH_PILLAR = BLOCKS.register("labyrinth_pillar", () -> new RotatedPillarBlock(masonry()));
 
-    /** An accent block with a glowing cyan sigil: the marker stone of the builders (swap_accent). Light 6, enough to read the sigil. */
+    /** An accent block with a glowing cyan sigil: the marker stone of the builders. Light 6, enough to read the sigil. */
     public static final DeferredBlock<Block> LABYRINTH_GLYPH = BLOCKS.register("labyrinth_glyph", () -> new Block(masonry().lightLevel(s -> 6)));
 
     /** The lantern of the Labyrinth: a caged mana flame set in the same stone. Light 15. */
     public static final DeferredBlock<Block> LABYRINTH_LANTERN = BLOCKS.register("labyrinth_lantern", () -> new Block(masonry().lightLevel(s -> 15)));
 
-    /** Dark stone shot through with bright magicule veins; the vein processor places it more densely toward the Boss Peak. Light 11. */
+    /** Dark stone shot through with bright magicule veins; the Spire's vein processor (removed, 1.58.0) grew it toward the Boss Peak. Light 11. */
     public static final DeferredBlock<Block> MAGICULE_VEIN = BLOCKS.register("magicule_vein", () -> new Block(masonry().lightLevel(s -> 11)));
 
     public static final DeferredItem<BlockItem> LABYRINTH_BRICKS_ITEM = NUItems.ITEMS.register("labyrinth_bricks", () -> new BlockItem(LABYRINTH_BRICKS.get(), new Item.Properties()));

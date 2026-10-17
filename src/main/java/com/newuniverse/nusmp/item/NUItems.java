@@ -139,7 +139,7 @@ public final class NUItems {
     public static final DeferredItem<MagicWeaponItem> WEAPON_OF_RESURGENCE = weapon("weapon_of_resurgence", MagicWeaponItem.Kind.WEAPON_OF_RESURGENCE);
     // the Brooch Pin and the Hand of Providence (see PinProvidenceArts)
     public static final DeferredItem<MagicWeaponItem> BROOCH_PIN = weapon("brooch_pin", MagicWeaponItem.Kind.BROOCH_PIN);
-    // the Living Dungeon's cook's tool (1.19.0; see ButcherArts, dungeon.Harvest)
+    // the cook's tool of the dungeon (1.19.0; see ButcherArts)
     public static final DeferredItem<MagicWeaponItem> BUTCHER_CLEAVER = weapon("butcher_cleaver", MagicWeaponItem.Kind.BUTCHER_CLEAVER);
     public static final DeferredItem<MagicWeaponItem> HAND_OF_PROVIDENCE = weapon("hand_of_providence", MagicWeaponItem.Kind.HAND_OF_PROVIDENCE);
 

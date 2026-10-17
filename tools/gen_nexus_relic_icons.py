@@ -1,18 +1,16 @@
 #!/usr/bin/env python3
 """
-1.21.0: the 16x16 inventory sprites of the Dimensional Nexus relics and navigation gear (docs/living_dungeon.md), drawn to the dungeon's look:
-a dark outline, three or four shades per material, small bright glints and glows.
+1.21.0: the 16x16 inventory sprites of the Dimensional Nexus relics (docs/living_dungeon.md), drawn to the dungeon's look:
+a dark outline, three or four shades per material, small bright glints and glows. (The Ki-Resonance Lantern and the Anti-Bird Compass, the navigation
+gear this script also drew, were removed with the Living Dungeon in 1.58.0: docs/labyrinth/mega_v2_prune.md.)
 
     python3 tools/gen_nexus_relic_icons.py
 
 Writes assets/nusmp/textures/item/
-  ki_resonance_lantern.png (amber flame, the default sprite), ki_resonance_lantern_off.png, _blue.png, _red.png     the four flame states
-  anti_bird_compass.png (the needle pointing up) and anti_bird_compass_00.png .. _31.png                            the 32 needle frames
   glutton_chalice.png, mantle_of_the_scavenger.png, band_of_the_spatial_anchor.png, devil_bound_sheath.png, gamblers_grimoire_page.png
   amulet_of_the_juggernauts_blindness.png (the Sentient Dungeon's fourth relic)
-and under assets/nusmp/models/item/ the item models: <id>.json (the 3D marker client/WeaponRenderer draws in hand: the lantern, the compass, the chalice, the sheath,
-the page and the amulet; the flat model for the mantle and the band), <id>_icon.json (the inventory icon, with the overrides of the lantern's flame, "nusmp:flame", and
-the compass's needle, "nusmp:angle") and the flat sub-models those overrides point to.
+and under assets/nusmp/models/item/ the item models: <id>.json (the 3D marker client/WeaponRenderer draws in hand: the chalice, the sheath,
+the page and the amulet; the flat model for the mantle and the band) and <id>_icon.json (the inventory icon).
 tools/gen_nexus_relic_models.py (run through tools/gen_weapon_models.py) builds the in-hand 3D models and reads these sprites for placement, so run
 this script first. Idempotent: running it again rewrites the same files.
 """
@@ -71,137 +69,6 @@ def write_model(name, data):
     with open(os.path.join(MODELS, name + ".json"), "w", newline="\n") as f:
         json.dump(data, f, indent=2)
         f.write("\n")
-
-
-# ================================================================ the Ki-Resonance Lantern
-# An ornate iron cage round a flame, a brass collar and a ring to hold it by. Four states of the same sprite: the flame is out, amber (fuelled), blue (an
-# IllusionStone wall ahead) or red (a descent gate ahead); the glass and the base runes take the flame's colour.
-LANTERN_ROWS = [
-    ".....kkkkkk.....",
-    "....kOooooOk....",
-    "....kok..kOk....",
-    "....kOk..kok....",
-    "....kkoOOokk....",
-    "...kkLllLlIkk...",
-    "..koOooooooOok..",
-    "..kLSSSSSSSSIk..",
-    "..kLSSSSSSSSIk..",
-    "..kISSSSSSSSIk..",
-    "..kISSSSSSSSIk..",
-    "..kISSSSSSSSIk..",
-    "..kkkkkwwkkkkk..",
-    ".kIlLllrrllllIk.",
-    ".kIiiiiiiiiiiIk.",
-    "..kk.kk..kk.kk..",
-]
-# the flame, drawn over the glass on rows 7..11 (its base sits on the wick on the row below)
-FLAME_ROWS = [
-    "........e.......",
-    ".......eFe......",
-    "......efFe......",
-    "......efFFe.....",
-    ".....efFFFfe....",
-]
-LANTERN_STATES = {
-    # name: (flame outer, mid, core, glass tint, rune glint, file)
-    "amber": ((222, 112, 30), (255, 178, 52), (255, 244, 196), (84, 62, 30), (255, 190, 70), "ki_resonance_lantern"),
-    "off": (None, None, None, (30, 38, 50), (74, 78, 98), "ki_resonance_lantern_off"),
-    "blue": ((38, 98, 224), (84, 176, 255), (226, 248, 255), (24, 52, 98), (110, 190, 255), "ki_resonance_lantern_blue"),
-    "red": ((168, 22, 30), (255, 78, 58), (255, 222, 200), (90, 24, 28), (255, 90, 70), "ki_resonance_lantern_red"),
-}
-
-
-def lantern(state):
-    outer, mid, core, tint, rune, _ = LANTERN_STATES[state]
-    legend = {
-        "k": OUTLINE, "L": (206, 212, 232), "l": (136, 142, 170), "I": (82, 86, 112), "i": (46, 48, 66),
-        "o": (190, 136, 56), "O": (248, 204, 108), "w": (58, 52, 56), "r": rune, "S": tint,
-    }
-    px = from_rows(LANTERN_ROWS, legend)
-    lit = outer is not None
-    for y in range(7, 12):                                    # the glass: a brighter strip down the left, a faint gradient to the right
-        for x in range(4, 12):
-            base = tuple(tint)
-            if x == 4:
-                base = tuple(min(255, int(c * 1.55 + 22)) for c in base)
-            elif x >= 10:
-                base = tuple(int(c * 0.78) for c in base)
-            if lit:                                           # the flame's light fills the glass round it
-                d = abs(x - 7.5) + abs(y - 9.0) * 0.6
-                k = max(0.0, 1.0 - d / 4.4)
-                base = tuple(min(255, int(c + (m - c) * 0.55 * k)) for c, m in zip(base, mid))
-            px[(x, y)] = base
-    if lit:
-        for y, row in enumerate(FLAME_ROWS):
-            for x, ch in enumerate(row):
-                if ch != ".":
-                    px[(x, 7 + y)] = {"e": outer, "f": mid, "F": core}[ch]
-        px[(7, 12)] = core                                    # the wick, lit
-        px[(8, 12)] = core
-    else:
-        px[(8, 11)] = (92, 86, 90)                            # a dead, charred wick
-        px[(8, 10)] = (60, 56, 62)
-    return px
-
-
-# ================================================================ the Anti-Bird Compass
-# A bronze case round a dark green dial, the needle a little feather (a pale tail, a biomass-green tip), a black crow's feather hanging off the ring.
-COMPASS_CENTRE = (6.6, 9.4)
-
-
-def compass_case():
-    cx, cy = COMPASS_CENTRE
-    px = {}
-    bronze_d, bronze, bronze_l, bronze_h = (104, 60, 28), (178, 110, 48), (226, 162, 72), (255, 220, 132)
-    r_out, r_in = 5.95, 4.15
-    for y in range(16):
-        for x in range(16):
-            dx, dy = x + 0.5 - cx, y + 0.5 - cy
-            d = math.hypot(dx, dy)
-            if d <= r_out:
-                if d > r_in:                                         # the ring, lit from the upper left
-                    lit = (-dx - dy) / (d + 1e-6)
-                    c = bronze_h if lit > 0.84 else bronze_l if lit > 0.3 else bronze if lit > -0.45 else bronze_d
-                else:                                                # the dial
-                    t = d / r_in
-                    c = (22, 52, 48) if t < 0.62 else (32, 72, 62)
-                    if dx + dy < -1.4 and t > 0.55:
-                        c = (46, 96, 82)
-                px[(x, y)] = c
-    for (x, y) in ((6, 4), (6, 14), (1, 9), (11, 9)):                  # the four ticks on the ring
-        px[(x, y)] = (255, 236, 168)
-    # the ring of the case, above it, with a dark hole
-    for (x, y), c in {(5, 2): bronze_l, (6, 1): bronze_h, (7, 1): bronze_l, (8, 2): bronze, (5, 3): bronze, (8, 3): bronze_d, (6, 3): bronze_d, (7, 3): bronze_d}.items():
-        px[(x, y)] = c
-    # the crow's feather hanging off the ring to the upper right: a pale shaft, a black vane with a green sheen
-    bx, by, tx, ty = 9.4, 3.6, 15.2, 0.6
-    L = math.hypot(tx - bx, ty - by)
-    ux, uy = (tx - bx) / L, (ty - by) / L
-    for y in range(16):
-        for x in range(16):
-            dx, dy = x + 0.5 - bx, y + 0.5 - by
-            t = (dx * ux + dy * uy) / L
-            a_ = -dx * uy + dy * ux
-            if 0.0 <= t <= 1.0 and abs(a_) <= 1.75 * math.sin(math.pi * min(1.0, t * 0.92 + 0.08)) ** 0.8:
-                px[(x, y)] = (226, 214, 180) if abs(a_) < 0.42 else (82, 160, 136) if a_ > 0 and abs(a_) < 1.1 else (36, 34, 50)
-    return add_outline(px, (34, 22, 18))
-
-
-def compass_frame(k):
-    """The case with the needle turned k/32 of a turn clockwise from straight up."""
-    px = compass_case()
-    cx, cy = COMPASS_CENTRE
-    th = 2 * math.pi * k / 32
-    ux, uy = math.sin(th), -math.cos(th)
-    for y in range(16):
-        for x in range(16):
-            dx, dy = x + 0.5 - cx, y + 0.5 - cy
-            along = dx * ux + dy * uy
-            across = abs(-dx * uy + dy * ux)
-            if -2.0 <= along <= 3.7 and across < 0.62 + (0.35 if -0.6 < along < 1.2 else 0) and math.hypot(dx, dy) <= 4.2:
-                px[(x, y)] = (178, 255, 120) if along > 1.4 else (232, 232, 240) if along < -0.4 else (255, 255, 200)
-    px[(int(cx), int(cy))] = (255, 232, 160)
-    return px
 
 
 # ================================================================ the Glutton's Chalice
@@ -492,27 +359,6 @@ def marker_model(item_id, display):
 
 def write_models():
     import copy
-    # the lantern is carried by its ring: hung a little lower in the hand than a flat item
-    lantern = copy.deepcopy(GENERATED_DISPLAY)
-    lantern["thirdperson_righthand"]["translation"] = [0, 1.2, 1]
-    lantern["firstperson_righthand"]["translation"] = [1.13, 1.4, 1.13]
-    write_model("ki_resonance_lantern", marker_model("ki_resonance_lantern", lantern))
-    for state, spec in LANTERN_STATES.items():
-        write_model("ki_resonance_lantern_flame_" + state, flat_model(spec[5]))
-    icon = flat_model("ki_resonance_lantern_off")
-    # flame: 0 off, 0.34 amber, 0.67 blue, 1.0 red; the thresholds sit between those values so a value a little off still picks its state
-    icon["overrides"] = [{"predicate": {"nusmp:flame": thr}, "model": "nusmp:item/ki_resonance_lantern_flame_" + state}
-                         for thr, state in ((0.17, "amber"), (0.5, "blue"), (0.84, "red"))]
-    write_model("ki_resonance_lantern_icon", icon)
-    # the compass: the needle's angle as a fraction of a turn clockwise from straight up, 32 frames, thresholds halfway between them (vanilla's compass way)
-    write_model("anti_bird_compass", marker_model("anti_bird_compass", GENERATED_DISPLAY))
-    for k in range(32):
-        write_model("anti_bird_compass_%02d" % k, flat_model("anti_bird_compass_%02d" % k))
-    icon = flat_model("anti_bird_compass_00")
-    icon["overrides"] = [{"predicate": {"nusmp:angle": 0.0}, "model": "nusmp:item/anti_bird_compass_00"}]
-    icon["overrides"] += [{"predicate": {"nusmp:angle": round((k - 0.5) / 32, 6)}, "model": "nusmp:item/anti_bird_compass_%02d" % k} for k in range(1, 32)]
-    icon["overrides"].append({"predicate": {"nusmp:angle": round(31.5 / 32, 6)}, "model": "nusmp:item/anti_bird_compass_00"})
-    write_model("anti_bird_compass_icon", icon)
     for item_id in ("glutton_chalice", "gamblers_grimoire_page", "amulet_of_the_juggernauts_blindness"):
         write_model(item_id, marker_model(item_id, GENERATED_DISPLAY))
         write_model(item_id + "_icon", flat_model(item_id))
@@ -528,11 +374,6 @@ def write_models():
 
 # ================================================================ main
 def main():
-    for state, spec in LANTERN_STATES.items():
-        save(lantern(state), spec[5])
-    for k in range(32):
-        save(compass_frame(k), "anti_bird_compass_%02d" % k)
-    save(compass_frame(0), "anti_bird_compass")
     save(chalice(), "glutton_chalice")
     save(mantle(), "mantle_of_the_scavenger")
     save(band(), "band_of_the_spatial_anchor")

@@ -37,6 +37,13 @@ public final class CharybdisTable {
     /** The most one blow of a megalodon may take of a player's health (the share of their maximum), and at least this many points so a weak player is still hurt. */
     public static final float MINION_SHARE = 0.18f, MINION_FLOOR = 3f;
 
+    /**
+     * The stage of the fight in blocks: the radius of the ring the megalodons tear loose from, the outer radius and the height of the volume they are
+     * looked for in, and how far over the floor the leviathan hovers. They are the numbers of the Charybdis Basin the fight was built for; the basin
+     * was removed with the Living Dungeon (1.58.0) and the fight keeps its measure wherever the boss is called.
+     */
+    public static final int ARENA_R = 28, ARENA_OUTER = 32, ARENA_HEIGHT = 24, ARENA_HOVER = 5;
+
     /** What a megalodon's blow of 'incoming' damage does to a victim with that much health: never more than the share, never less than the floor unless the blow was smaller. */
     public static float capMinion(float incoming, float victimMax) {
         if (incoming <= 0f || victimMax <= 0f) return Math.max(0f, incoming);

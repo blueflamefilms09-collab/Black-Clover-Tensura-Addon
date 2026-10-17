@@ -1,5 +1,11 @@
 # The Living Dungeon (Tensura x Black Clover x Delicious in Dungeon)
 
+> **REMOVED in 1.58.0 (owner's request).** The Living Dungeon described below (the cave dimension `nusmp:living_dungeon` with its ecosystem, tiers,
+> atmosphere, the Golden City, the Variable Core zones, vaults and collapse, the sentient rooms and immune system, the Maw, the wild food web, the
+> Goliath pit and the Charybdis basin, `/multiverse dungeon ...` and `DungeonConfig`) was removed. Kept: the creatures, the two floor bosses, the
+> meals and their skills, the Guard, the Treasury relics, the economy's dice and stone tables and the synthesis materials, because other systems
+> still use them. What stayed and what went, with the reason for each, is in `docs/labyrinth/mega_v2_prune.md`. The text below is kept as history.
+
 Technical design document, translated to what this mod actually runs on: **NeoForge 21.1 / Minecraft 1.21.1**. The original
 design was written against Forge 1.20.1 (capabilities, `AttachCapabilitiesEvent`, `BiomeModifier` for the dimension). Where the
 two differ, this document says what is built instead.

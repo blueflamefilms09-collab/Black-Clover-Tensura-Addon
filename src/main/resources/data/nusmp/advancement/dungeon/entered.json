@@ -1,5 +1,5 @@
 {
-  "parent": "nusmp:dungeon/living_dungeon",
+  "parent": "nusmp:root",
   "display": {
     "icon": {
       "id": "minecraft:lantern"

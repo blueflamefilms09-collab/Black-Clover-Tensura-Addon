@@ -21,7 +21,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * the way they would run into a nether portal; {@code entityInside} is the hook the game already fires for every entity whose box overlaps a
  * no-collision block, so no ticking block entity is needed. Only a {@link ServerPlayer} travels (mobs and items stay), and only once per gate
  * use: {@link LabyrinthTravel#justTravelled} reads the game-time stamp the travel code leaves in the player's persistent data, so the player
- * who is set down INSIDE a gate on the way back is not sent straight through again (the same guard {@code DungeonBlocks.PortalBlock} uses).
+ * who is set down INSIDE a gate on the way back is not sent straight through again (the same guard the removed Maw and Root Gate blocks used).
  * The outline shape is the full cube so the block can be looked at and targeted while the collision shape stays empty. The client swirl is
  * drawn in {@code animateTick} (the game's random-tick hook for cosmetic particles) and the real animation is the texture itself (a 16 x 128
  * frame sheet with a {@code .png.mcmeta}), which costs nothing per block. Which way the gate sends you is {@link #travel}, overridden by the

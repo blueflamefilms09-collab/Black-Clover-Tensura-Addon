@@ -329,8 +329,10 @@ public final class MultiverseCommands {
                 .then(Commands.literal("tower").executes(ctx -> locate(ctx, WorldSites.Kind.TOWER)))
                 .then(Commands.literal("ruins").executes(ctx -> locate(ctx, WorldSites.Kind.RUINS))));
 
-        root.then(com.newuniverse.nusmp.dungeon.DungeonCommand.build());        root.then(com.newuniverse.nusmp.labyrinth.gen.LabyrinthCommand.build());                              // 1.35.0: locate / enter / leave / here / palette
-                                   // 1.17.0: the Living Dungeon
+        root.then(com.newuniverse.nusmp.labyrinth.gen.LabyrinthCommand.build());                              // 1.35.0: locate / enter / leave / here (palette went with the Spire, 1.58.0)
+        var dungeonNode = Commands.literal("dungeon");                                                       // 1.58.0: all that is left of /multiverse dungeon ... is the Treasury relics (they keep their word)
+        com.newuniverse.nusmp.dungeon.nexus.relic.RelicCommand.addTo(dungeonNode);                           // /multiverse dungeon relic give | attune | release | status
+        root.then(dungeonNode);
         root.then(Commands.literal("wizard").requires(MultiverseCommands::admin)                              // 1.6.0: the Tower Wizard
                 .then(Commands.literal("summon").then(Commands.argument("player", EntityArgument.player()).executes(ctx -> {
                     ServerPlayer p = EntityArgument.getPlayer(ctx, "player");

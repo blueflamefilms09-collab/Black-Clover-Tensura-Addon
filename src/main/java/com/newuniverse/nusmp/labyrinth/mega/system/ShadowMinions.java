@@ -4,7 +4,6 @@ import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.boss.rules.BossIdentity;
 import com.newuniverse.nusmp.corpse.Corpses;
-import com.newuniverse.nusmp.dungeon.nexus.zone.MonarchBoss;
 import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.labyrinth.dnd.vital.HpBuffer;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
@@ -96,7 +95,7 @@ public final class ShadowMinions {
         if (e == null) return false;
         try {
             if (isMinion(e) || e.getTags().contains(TAG) || e.getTags().contains("nusmp_underworld")) return true;
-            if (Paladins.isPaladin(e) || Corpses.isCorpse(e) || MonarchBoss.isSoldier(e)) return true;
+            if (Paladins.isPaladin(e) || Corpses.isCorpse(e)) return true;
             CompoundTag d = e.getPersistentData();
             if (d.contains("nusmp_relic_owner") || d.contains("nusmp_bull_owner") || d.contains("nusmp_paladin_turn")) return true;
             return e instanceof OwnableEntity o && o.getOwnerUUID() != null;

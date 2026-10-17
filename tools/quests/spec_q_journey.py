@@ -264,45 +264,35 @@ def relics(reg):
 
 # ============================================================================================================== dungeon
 def dungeon(reg):
-    c = reg.chapter("dungeon_labyrinth", "journey", "Dungeon and Labyrinth", "nusmp:dungeon_maw",
-                    "The Living Dungeon, the Labyrinth in the sky, and what is cooked in both.")
-    c.q("welcome", "Where the Dungeon Is Alive", (0, 2), "nusmp:dungeon_maw", "intro", "Two places, one rule: nothing is free",
-        "The Multiverse has two dungeons. The Living Dungeon is an ecosystem that eats, breeds and digs; you enter it through a Maw.\n"
-        "The Labyrinth is a spire in a sky of clouds, reached through a Gate on the surface, with trials, wardens, keys and a vault at the top.\n"
-        "Neither can be mined away. The only ways up are the ones the designer left.", tasks=[T.check("Pack your bag")])
+    c = reg.chapter("dungeon_labyrinth", "journey", "Dungeon and Labyrinth", "nusmp:labyrinth_gate",
+                    "The dungeon under the Gateway, its floor guardians, and what is cooked in it.")
+    c.q("welcome", "Where the Dungeon Is Alive", (0, 2), "nusmp:labyrinth_gate", "intro", "One place, one rule: nothing is free",
+        "The Multiverse has one dungeon: the Labyrinth, a place that grows as you go, reached through the Gateway on the surface, with trials, "
+        "wardens, keys and a vault at the end of every stretch.\n"
+        "It cannot be mined away. The only ways on are the ones the designer left.", tasks=[T.check("Pack your bag")])
     c.q("entered", "Dungeon Delver", (1, 1), "minecraft:lantern", "step", "Enter any dungeon",
         "Enter a dungeon of the Multiverse by any door.", deps=["welcome"], tasks=[T.adv("dungeon/entered")])
-    c.q("maw", "The Maw", (2, 1), "nusmp:dungeon_maw", "step", "A hungry portal",
-        "Dungeon Maws open on the surface when the dungeon's ecosystem is hungry. Step through one.", deps=["entered"],
-        tasks=[T.adv("dungeon/maw")])
-    c.q("living", "Into the Living Dungeon", (3, 1), "nusmp:dungeon_maw", "mile", "A world that feeds on itself",
-        "Arrive in the Living Dungeon dimension.", deps=["maw"], tasks=[T.dim("nusmp:living_dungeon")],
-        rewards=[R.xp(40), R.loot("dungeon_cache")])
-    c.q("maw_item", "Dungeon Maw", (2, 0), "nusmp:dungeon_maw", "side", "The block itself",
-        "Carry a Dungeon Maw block.", deps=["maw"], tasks=[T.adv("dungeon/maw_item")])
-    c.q("descent", "Descent Gate", (4, 0), "nusmp:descent_gate", "side", "Hidden doors down",
-        "Descent Gates lead to the hidden vaults of the Variable Core. Carry one.", deps=["living"], tasks=[T.adv("dungeon/descent")])
     c.q("meat", "Delicious in Dungeon", (4, 1), "nusmp:purified_monster_meat", "step", "Cook what you kill",
-        "Monster meat is poison raw. Purify it, cook it, and eat. The dungeon feeds those who cook.", deps=["living"],
+        "Monster meat is poison raw. Purify it, cook it, and eat. The dungeon feeds those who cook.", deps=["entered"],
         tasks=[T.adv("dungeon/meat")], rewards=[R.xp(25), R.item("minecraft:honey_bottle", 2)])
     c.q("basilisk", "Basilisk Fillet", (5, 0.5), "nusmp:roast_basilisk_fillet", "side", "A delicacy",
         "Eat a roast basilisk fillet.", deps=["meat"], tasks=[T.adv("dungeon/basilisk")])
     c.q("direwolf", "Direwolf Haunch", (5, 1.5), "nusmp:roast_direwolf_haunch", "side", "A hearty haunch",
         "Eat a roast direwolf haunch.", deps=["meat"], tasks=[T.adv("dungeon/direwolf")])
     c.q("goliath", "Pit Guardian", (4, 3), "minecraft:heavy_core", "boss", "Goliath",
-        "At the bottom of the Goliath pit sleeps the first floor guardian. Defeat Goliath.", deps=["living"],
+        "A stone giant guards a floor of the dungeon. Defeat Goliath.", deps=["entered"],
         tasks=[T.adv("dungeon/goliath")], rewards=[R.xp(150), R.loot("boss_trophy")])
     c.q("charybdis", "The Whirlpool", (4, 4.5), "minecraft:nautilus_shell", "boss", "Spawn of Charybdis",
-        "In a flooded basin the Spawn of Charybdis waits. Defeat it.", deps=["living"], tasks=[T.adv("dungeon/charybdis")],
+        "In flooded halls the Spawn of Charybdis waits. Defeat it.", deps=["entered"], tasks=[T.adv("dungeon/charybdis")],
         rewards=[R.xp(150), R.loot("boss_trophy")])
     c.q("both_floors", "Both Floors Clear", (6, 3.75), "minecraft:beacon", "final", "Goliath and Charybdis",
-        "Both floor bosses defeated. The Living Dungeon recognises you.", deps=["goliath", "charybdis"],
+        "Both floor bosses defeated. The dungeon recognises you.", deps=["goliath", "charybdis"],
         tasks=[T.adv("dungeon/both_floors")], rewards=[R.xp(300), R.choice("choice_delver")])
     # labyrinth
-    c.q("gate", "The Labyrinth", (1, 6), "nusmp:labyrinth_gate", "mile", "A spire in the sky",
-        "The Labyrinth is reached through a Gate that stands on the surface. Cross it.", deps=["welcome"], tasks=[T.dim("nusmp:labyrinth")],
+    c.q("gate", "The Labyrinth", (1, 6), "nusmp:labyrinth_gate", "mile", "A dungeon of sealed doors",
+        "The Labyrinth is reached through the Gateway that stands on the surface. Cross it.", deps=["welcome"], tasks=[T.dim("nusmp:mega_dungeon")],
         rewards=[R.xp(60), R.loot("dungeon_cache")])
-    c.q("gate_event", "Gate of the Spire", (2, 6), "nusmp:labyrinth_gate", "step", "Past the threshold",
+    c.q("gate_event", "Gate of the Labyrinth", (2, 6), "nusmp:labyrinth_gate", "step", "Past the threshold",
         "Pass the gate and stand on the first floor.", deps=["gate"], tasks=[T.adv("dungeon/labyrinth_event")])
     c.q("archway", "Sealed Archway", (3, 5), "nusmp:sealed_archway", "side", "Trial doors",
         "A sealed archway opens only when its trial is done. Carry one.", deps=["gate_event"], tasks=[T.adv("dungeon/archway")])

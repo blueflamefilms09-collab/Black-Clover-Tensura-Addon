@@ -2,7 +2,7 @@ package com.newuniverse.nusmp.relics.wave;
 
 import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
-import com.newuniverse.nusmp.dungeon.LivingDungeon;
+import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicEngine;
@@ -117,7 +117,7 @@ final class Wave14Feet {
             Wave14Util.tell(p, "The Ruby Boots have no charges left (1d3 return at dawn).", ChatFormatting.GRAY);
             return;
         }
-        if (dest == null || LivingDungeon.in(dest) || LivingDungeon.in(p.level())) {
+        if (dest == null || Labyrinth.in(dest) || Labyrinth.in(p.level())) {
             Wave14Util.store(d, P_RUBY, pool);
             Wave14Util.tell(p, "The plane resists: you cannot stride to or from the Dungeon.", ChatFormatting.RED);
             return;
@@ -143,7 +143,7 @@ final class Wave14Feet {
         CompoundTag d = Wave14Util.data(p);
         Mark to = place(p, d, index);
         ServerLevel dest = levelOf(p, to.dim());
-        Vec3 spot = dest == null || LivingDungeon.in(dest) || LivingDungeon.in(p.level()) ? null : standingSpot(dest, p, to.x() + 0.5, to.y(), to.z() + 0.5);
+        Vec3 spot = dest == null || Labyrinth.in(dest) || Labyrinth.in(p.level()) ? null : standingSpot(dest, p, to.x() + 0.5, to.y(), to.z() + 0.5);
         if (spot == null) {
             long today = Wave14Util.today(p.serverLevel());
             Pool pool = Wave14Util.pool(d, P_RUBY, Wave14Rules.RUBY_CHARGES, today, () -> 0);
@@ -173,7 +173,7 @@ final class Wave14Feet {
     /** Learn this Place: the boots remember where you stand (four places at most; the oldest is forgotten). */
     static void learnPlace(ActCtx c) {
         ServerPlayer p = c.player();
-        if (LivingDungeon.in(p.level())) {
+        if (Labyrinth.in(p.level())) {
             Wave14Util.tell(p, "The Dungeon will not be remembered.", ChatFormatting.RED);
             return;
         }

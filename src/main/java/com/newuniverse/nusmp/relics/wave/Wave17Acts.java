@@ -2,7 +2,7 @@ package com.newuniverse.nusmp.relics.wave;
 
 import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
-import com.newuniverse.nusmp.dungeon.LivingDungeon;
+import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.Relics;
@@ -134,7 +134,7 @@ public final class Wave17Acts {
         ServerPlayer p = c.player();
         ServerLevel level = p.serverLevel();
         ItemStack stack = Wave17Kit.live(c);
-        if (LivingDungeon.in(level)) { say(p, "The Dungeon swallows the road: the beads will not carry anyone in or out of it."); return; }
+        if (Labyrinth.in(level)) { say(p, "The Dungeon swallows the road: the beads will not carry anyone in or out of it."); return; }
         ListTag marks = marks(stack);
         int choice = Math.floorMod(Wave17Kit.tag(stack).getInt(SEL), Wave17Rules.choiceCount(marks.size()));
         if (Wave17Rules.isNewMark(choice, marks.size())) { rememberPlace(c); return; }
@@ -204,7 +204,7 @@ public final class Wave17Acts {
     public static void rememberPlace(ActCtx c) {
         ServerPlayer p = c.player();
         ItemStack stack = Wave17Kit.live(c);
-        if (LivingDungeon.in(p.serverLevel())) { say(p, "The Dungeon will not be remembered."); return; }
+        if (Labyrinth.in(p.serverLevel())) { say(p, "The Dungeon will not be remembered."); return; }
         ListTag list = marks(stack).copy();
         String dim = p.serverLevel().dimension().location().toString();
         BlockPos here = p.blockPosition();

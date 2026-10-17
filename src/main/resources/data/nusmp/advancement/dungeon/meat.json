@@ -1,5 +1,5 @@
 {
-  "parent": "nusmp:dungeon/living_dungeon",
+  "parent": "nusmp:dungeon/entered",
   "display": {
     "icon": {
       "id": "nusmp:purified_monster_meat"

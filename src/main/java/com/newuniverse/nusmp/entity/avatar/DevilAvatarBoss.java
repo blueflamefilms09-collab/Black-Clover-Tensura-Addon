@@ -2,14 +2,12 @@ package com.newuniverse.nusmp.entity.avatar;
 
 import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.blackclover.Devil;
-import com.newuniverse.nusmp.dungeon.DungeonMaw;
-import com.newuniverse.nusmp.dungeon.LivingDungeon;
-import com.newuniverse.nusmp.dungeon.nexus.DungeonCollapseEvent;
-import com.newuniverse.nusmp.dungeon.nexus.NexusZone;
 import com.newuniverse.nusmp.entity.zogratis.Move;
 import com.newuniverse.nusmp.entity.zogratis.PowerCurve;
 import com.newuniverse.nusmp.entity.zogratis.Tells;
 import com.newuniverse.nusmp.entity.zogratis.ZogratisBoss;
+import com.newuniverse.nusmp.labyrinth.Labyrinth;
+import com.newuniverse.nusmp.relics.djinn.DjinnSources;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -26,7 +24,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.NeoForge;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -49,9 +46,9 @@ import java.util.UUID;
  *   <li><b>Void Claws</b> and <b>Call the Disciples</b> round out the list; <b>Abyssal Collapse</b> (60% power) chains a wider pull, the crush
  *       on marks drawn under the lifted foes, and a curse wave, and leaves the Avatar exposed for 3 s.</li>
  * </ul>
- * It carries the scoreboard tag {@code nusmp_floor_boss}. When it falls it posts the {@link DungeonCollapseEvent} of the Underworld Gate once
- * (the Treasury Collapse begins), tells the server in its own words and gives experience only: the Magic Stones come from the sentient
- * Dungeon's own death handler. The Triad's bond ({@code TriadBond}) counts every Lucifero or Megicula boss as a sibling, so
+ * It carries the scoreboard tag {@code nusmp_floor_boss}. When it falls inside the Labyrinth it tells the server in its own words and pays the
+ * Djinn Seal and the Dark Rukh Shard of the Underworld Gate once ({@link DjinnSources#floorBossFell}); it gives experience only, the Magic Stones
+ * come from the economy's drop handler. (Until 1.58.0 it also posted the Nexus collapse event of the Living Dungeon, which was removed.) The Triad's bond ({@code TriadBond}) counts every Lucifero or Megicula boss as a sibling, so
  * {@link #enrage} is ignored here: a fallen Zogratis does not make an Avatar rage.
  */
 public class DevilAvatarBoss extends ZogratisBoss {
@@ -69,9 +66,9 @@ public class DevilAvatarBoss extends ZogratisBoss {
 
     private final Set<String> hinted = new HashSet<>();
     private long lastQuip;
-    /** The middle of the Nexus this Avatar guards (the centre of its collapse), or null: then its arena. */
+    /** Where it fell is reported (the Djinn Seal drops there if nobody can take it), or null: then its arena. */
     private BlockPos centre;
-    private boolean collapsePosted;
+    private boolean fallReported;
 
     public DevilAvatarBoss(EntityType<DevilAvatarBoss> type, Level level) {
         super(type, level);
@@ -103,7 +100,7 @@ public class DevilAvatarBoss extends ZogratisBoss {
 
     @Override protected Component getTypeName() { return Component.literal(bossName()); }
 
-    /** The middle of the Nexus whose Gate this Avatar guards; its collapse is centred there. */
+    /** Where its fall is reported; null = its arena. */
     public void setCentre(BlockPos p) { centre = p == null ? null : p.immutable(); }
 
     // ================================================================ tuning
@@ -148,7 +145,7 @@ public class DevilAvatarBoss extends ZogratisBoss {
     @Override
     protected void onFightEnd(boolean won) {
         clearMarks();
-        if (won) postCollapse();
+        if (won) reportFall();
     }
 
     private void clearMarks() {
@@ -177,25 +174,25 @@ public class DevilAvatarBoss extends ZogratisBoss {
     }
 
     /**
-     * The Avatar fell: the Treasury Collapse of its Gate begins (the event is posted once, centred on the middle of the Nexus), after the
-     * server is told, in the Dungeon only. It gives experience and nothing else.
+     * The Avatar fell: the server is told, once, and the first fall in a world pays the Djinn Seal (and rolls the Dark Rukh Shard) of the
+     * Underworld Gate. Inside the Labyrinth only: an Avatar called up anywhere else just dies. It gives experience and nothing else.
      */
-    private void postCollapse() {
-        if (collapsePosted || !(level() instanceof ServerLevel sl)) return;
-        collapsePosted = true;
-        if (!LivingDungeon.in(sl)) return;                                      // an Avatar called up anywhere else just dies
+    private void reportFall() {
+        if (fallReported || !(level() instanceof ServerLevel sl)) return;
+        fallReported = true;
+        if (!Labyrinth.in(sl)) return;
         ServerPlayer killer = killer(sl);
         BlockPos at = centre != null ? centre : arena();
         try {
-            DungeonMaw.broadcast(sl.getServer(), Component.literal(AvatarText.fell(bossName(), killer == null ? null : killer.getName().getString()))
-                    .withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD));
+            sl.getServer().getPlayerList().broadcastSystemMessage(Component.literal(AvatarText.fell(bossName(), killer == null ? null : killer.getName().getString()))
+                    .withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD), false);
         } catch (RuntimeException | LinkageError ex) {
             LogUtils.getLogger().warn("[nusmp] The fall of the Devil Avatar could not be announced: {}", ex.toString());
         }
         try {
-            NeoForge.EVENT_BUS.post(new DungeonCollapseEvent(sl, at, NexusZone.UNDERWORLD_GATE, killer, true));
+            DjinnSources.floorBossFell(sl, at, "UNDERWORLD_GATE", killer);
         } catch (RuntimeException | LinkageError ex) {
-            LogUtils.getLogger().warn("[nusmp] The collapse of the Underworld Gate could not be started: {}", ex.toString());
+            LogUtils.getLogger().warn("[nusmp] The reward of the Underworld Gate could not be paid: {}", ex.toString());
         }
     }
 
@@ -324,7 +321,7 @@ public class DevilAvatarBoss extends ZogratisBoss {
         super.addAdditionalSaveData(tag);
         tag.putInt("AVariant", variant());
         if (centre != null) tag.put("ACentre", NbtUtils.writeBlockPos(centre));
-        tag.putBoolean("AFell", collapsePosted);
+        tag.putBoolean("AFell", fallReported);
     }
 
     @Override
@@ -332,7 +329,7 @@ public class DevilAvatarBoss extends ZogratisBoss {
         super.readAdditionalSaveData(tag);
         if (tag.contains("AVariant")) entityData.set(VARIANT, AvatarTable.variantOf(tag.getInt("AVariant")));
         NbtUtils.readBlockPos(tag, "ACentre").ifPresent(pos -> centre = pos);
-        collapsePosted = tag.getBoolean("AFell");
+        fallReported = tag.getBoolean("AFell");
         addTag(FLOOR_BOSS_TAG);
     }
 }

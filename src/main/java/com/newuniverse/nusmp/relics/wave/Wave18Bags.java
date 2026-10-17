@@ -2,7 +2,7 @@ package com.newuniverse.nusmp.relics.wave;
 
 import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
-import com.newuniverse.nusmp.dungeon.LivingDungeon;
+import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.Relics;
@@ -189,7 +189,7 @@ final class Wave18Bags {
             else Fx.say(p, "Point the bag at a latched door, trapdoor or gate.");
             return;
         }
-        if (LivingDungeon.in(level)) {
+        if (Labyrinth.in(level)) {
             Fx.say(p, "The Dungeon's locks are not yours to open.");
             return;
         }

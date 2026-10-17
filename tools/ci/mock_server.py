@@ -54,8 +54,6 @@ def handle(cmd):
         return "Changed the block at 0, 70, 0"
     if c.startswith("execute in nusmp:mega_dungeon run forceload remove"):
         return "All chunks are no longer being force loaded"
-    if c.startswith("locate structure nusmp:dungeon_gate"):
-        return "The nearest nusmp:dungeon_gate is at [120, ~, -40] (126 blocks away)"
     if c.startswith("locate structure nusmp:mega_gateway"):
         return "The nearest nusmp:mega_gateway is at [310, ~, 55] (314 blocks away)"
     if "place jigsaw" in c:

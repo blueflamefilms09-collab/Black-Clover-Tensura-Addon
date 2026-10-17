@@ -258,7 +258,7 @@ public final class ExpansionQueue implements Expander {
         ticks++;
         try {
             if (current == null && queue.isEmpty()) {
-                if (com.newuniverse.nusmp.labyrinth.Labyrinth.layoutIsMega() && ticks % 2 == 0) {
+                if (ticks % 2 == 0) {
                     ServerLevel lv = MegaDungeon.level(server);
                     if (lv != null) {
                         VanillaPools.get().bind(lv.getStructureManager());

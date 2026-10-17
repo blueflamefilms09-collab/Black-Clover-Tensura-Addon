@@ -34,17 +34,10 @@ public class NUSMP {
         modEventBus.addListener(com.newuniverse.nusmp.blackclover.GrimoireSlot::registerPayloads);
         com.newuniverse.nusmp.block.NUBlocks.init();
         com.newuniverse.nusmp.block.NUBlocks.BLOCKS.register(modEventBus);
-        com.newuniverse.nusmp.dungeon.DungeonBlocks.init();                                                // 1.17.0: the Living Dungeon
         com.newuniverse.nusmp.dungeon.DungeonFood.init();                                                  // 1.19.0: its food
-        com.newuniverse.nusmp.dungeon.city.CityBlocks.init();                                              // 1.19.0: the Golden City's altar and core
-        com.newuniverse.nusmp.dungeon.MawReward.init();                                                    // 1.19.0: the Maw Fruit
-        com.newuniverse.nusmp.dungeon.DungeonBlocks.BLOCKS.register(modEventBus);
-        com.newuniverse.nusmp.dungeon.city.CityBlocks.BLOCKS.register(modEventBus);
         com.newuniverse.nusmp.dungeon.DungeonEntities.ENTITIES.register(modEventBus);
         modEventBus.addListener(com.newuniverse.nusmp.dungeon.DungeonEntities::attributes);
         com.newuniverse.nusmp.dungeon.DungeonEffects.EFFECTS.register(modEventBus);
-        com.newuniverse.nusmp.dungeon.LivingDungeon.ATTACHMENTS.register(modEventBus);
-        com.newuniverse.nusmp.dungeon.wild.Dweller.ATTACHMENTS.register(modEventBus);                      // 1.19.0: the real mobs of the Dungeon (hunger, home, sleep)
         com.newuniverse.nusmp.entity.zogratis.ZogratisEntities.init();                                    // 1.20.0: the Zogratis bosses
         com.newuniverse.nusmp.entity.zogratis.ZogratisEffects.init();
         com.newuniverse.nusmp.entity.zogratis.ZogratisEntities.ENTITIES.register(modEventBus);
@@ -55,8 +48,6 @@ public class NUSMP {
         com.newuniverse.nusmp.entity.zogratis.LuciusEffects.init();
         com.newuniverse.nusmp.entity.zogratis.LuciusEffects.EFFECTS.register(modEventBus);
         com.newuniverse.nusmp.entity.zogratis.VanicaCurse.EFFECTS.register(modEventBus);
-        com.newuniverse.nusmp.dungeon.nexus.vault.NexusBlocks.init();                                                    // 1.21.0: the Variable Core (vault blocks)
-        com.newuniverse.nusmp.dungeon.nexus.vault.NexusBlocks.BLOCKS.register(modEventBus);
         com.newuniverse.nusmp.relics.order.OrderEntities.init();                                                                  // 1.24.0: Relics of Many Worlds, the God of Order, the Djinn
         com.newuniverse.nusmp.relics.order.OrderEntities.ENTITIES.register(modEventBus);
         modEventBus.addListener(com.newuniverse.nusmp.relics.order.OrderEntities::attributes);
@@ -98,13 +89,7 @@ public class NUSMP {
         com.newuniverse.nusmp.entity.avatar.AvatarEntities.ENTITIES.register(modEventBus);
         modEventBus.addListener(com.newuniverse.nusmp.entity.avatar.AvatarEntities::attributes);
         com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.init();                                                     // the Treasury's five Relics
-        com.newuniverse.nusmp.dungeon.nexus.relic.RelicBlocks.init();
-        com.newuniverse.nusmp.dungeon.nexus.relic.RelicBlocks.BLOCKS.register(modEventBus);
         com.newuniverse.nusmp.dungeon.nexus.relic.RelicComponents.COMPONENTS.register(modEventBus);
-        com.newuniverse.nusmp.dungeon.nexus.nav.NavComponents.COMPONENTS.register(modEventBus);                          // lantern and compass
-        com.newuniverse.nusmp.dungeon.nexus.nav.NavItems.init();
-        com.newuniverse.nusmp.dungeon.nexus.zone.GoldenBlocks.init();                                                    // the Golden City's leaves
-        com.newuniverse.nusmp.dungeon.nexus.zone.GoldenBlocks.BLOCKS.register(modEventBus);
         com.newuniverse.nusmp.world.NUWorldgen.FEATURES.register(modEventBus);
         com.newuniverse.nusmp.particle.rukh.RukhParticles.init(modEventBus);                                               // 1.36.0: Dark and Light Rukh particle types
         com.newuniverse.nusmp.relics.forge.ForgeRegistry.init(modEventBus);                                                // 1.40.0: the Relic Forge (block item on NUItems.ITEMS: before its register)
@@ -182,10 +167,6 @@ public class NUSMP {
             com.newuniverse.nusmp.client.avatar.PlayerAvatarClient.register(modEventBus);                                           // 1.51.0: the player-made Avatars
             modEventBus.addListener(com.newuniverse.nusmp.client.nexus.RelicKeys::register);                                         // 1.22.0: Use Relic (R)
             NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.client.nexus.RelicKeys::onClientTick);
-            modEventBus.addListener(com.newuniverse.nusmp.client.nexus.NavClient::registerProperties);                              // 1.21.0: lantern flame, compass needle
-            NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.client.dungeon.DungeonSky::onFogColor);
-            NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.client.dungeon.DungeonSky::onRenderFog);
-            NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.client.dungeon.DungeonSky::onClientTick);
             modEventBus.addListener(com.newuniverse.nusmp.client.CottonSheepRenderer::register);        // 0.52: Cotton Magic's sheep and cloud
             modEventBus.addListener(com.newuniverse.nusmp.client.CottonSheepRenderer::layers);
             modEventBus.addListener(com.newuniverse.nusmp.client.WindSpiritLordRenderer::register);          // 0.53: Sylph, the Wind Spirit Lord boss
@@ -200,7 +181,7 @@ public class NUSMP {
         }
         modContainer.registerConfig(ModConfig.Type.SERVER, NUConfig.SPEC);
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.multiverse.MultiverseConfig.SPEC, "nusmp-multiverse-server.toml");
-        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.dungeon.DungeonConfig.SPEC, "nusmp-dungeon-server.toml");        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.LabyrinthConfig.SPEC, "nusmp-labyrinth-server.toml");   // 1.35.0
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.LabyrinthConfig.SPEC, "nusmp-labyrinth-server.toml");   // 1.35.0
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.dnd.DndConfig.SPEC, "nusmp-labyrinth-dnd-server.toml");   // 1.36.0
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.MegaConfig.SPEC, "nusmp-labyrinth-mega-server.toml");   // 1.54.0
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.eco.EcoConfig.SPEC, "nusmp-labyrinth-mega-eco-server.toml");   // 1.54.0: factions and the stone-and-meat economy
@@ -228,53 +209,11 @@ public class NUSMP {
                 entity instanceof net.minecraft.world.entity.player.Player pl && com.newuniverse.nusmp.multiverse.WizardKing.isKing(pl)
                         ? dev.architectury.event.EventResult.interruptFalse() : dev.architectury.event.EventResult.pass());
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.WizardKing::onPlayerTick);            // 1.6.0: one Wizard King
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.DungeonEcology::onFinalizeSpawn);          // 1.17.0: the Living Dungeon
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.DungeonEcology::onServerTick);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.DungeonEcology::onBreak);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.DungeonEcology::onPlayerTick);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.DungeonEcology::onIncomingDamage);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.DungeonEcology::onDrops);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.NexusBuilder::onServerTick);                      // 1.21.0: replaces CityBuilder::onServerTick: a core cell builds as one of four zones (the Golden City is one)
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.NexusBuilder::onServerStopping);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.vault.VaultDirector::onServerTick);              // hidden vaults, descent gates
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.vault.Distortion::onPlayerTick);                 // spatial distortion
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.vault.Distortion::onPlace);
         com.newuniverse.nusmp.dungeon.nexus.relic.RelicEvents.register(NeoForge.EVENT_BUS);                                  // the five Relics
-        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST, com.newuniverse.nusmp.dungeon.nexus.nav.AvianDrops::onDrops);   // the Anti-Bird Compass
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.nav.NavTicker::onPlayerTick);                    // the Ki-Resonance Lantern
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.MonarchDriver::onJoin);                     // Monarch's Vault
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.MonarchDriver::onServerTick);
-        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGH, com.newuniverse.nusmp.dungeon.nexus.zone.MonarchDriver::onIncomingDamage);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.MonarchDriver::onDeath);
-        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGH, com.newuniverse.nusmp.dungeon.nexus.zone.MonarchDriver::onDrops);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.MonarchDriver::onCollapse);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.MonarchDriver::onServerStopping);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.GravityWarp::onServerTick);                 // Underworld Gate
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.GravityWarp::onIncomingDamage);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.GravityWarp::onServerStopping);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.UnderworldGateSite::onCollapse);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.HiveDriver::onServerTick);                  // Tempest Mirage
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.HiveDriver::onJoin);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.HiveDriver::onLeave);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.HiveDriver::onDeath);
-        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGH, com.newuniverse.nusmp.dungeon.nexus.zone.HiveDriver::onDrops);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.HiveDriver::onIncomingDamage);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.HiveDriver::onCollapse);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.zone.HiveDriver::onServerStopping);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.collapse.CollapseManager::onCollapse);                      // the Treasury Collapse
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.collapse.CollapseManager::onServerTick);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.collapse.CollapseManager::onEntityJoin);
-        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST, true, com.newuniverse.nusmp.dungeon.nexus.collapse.CollapseManager::onFallingBlockJoin);   // takes back the guard's cancel for the collapse's own falling blocks
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.nexus.collapse.CollapseManager::onServerStopping);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.DungeonAmbience::onServerTick);           // 1.19.0: the Dungeon's ambient sounds
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.MealSkills::onPlayerTick);                // 1.19.0: skills lent by cooked meals
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.MealSkills::onLogin);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.MealSkills::onClone);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.MealAttunement::onDamage);                // 1.19.0: a second magic's rider from a meal
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.MawReward::onBreak);                      // 1.19.0: who cut a Maw's roots
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.wild.WildDriver::onJoin);                 // 1.19.0: roster mobs get their record
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.wild.WildDriver::onServerTick);           // the food web sweep
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.wild.WildDriver::onDeath);                // kills feed the killer
         // 1.24.0: Relics of Many Worlds (engine + every wave's hooks), the Order, the Djinn
         com.newuniverse.nusmp.relics.RelicSystem.registerGame(NeoForge.EVENT_BUS);
         com.newuniverse.nusmp.relics.order.OrderEvents.register(NeoForge.EVENT_BUS);
@@ -329,26 +268,9 @@ public class NUSMP {
         com.newuniverse.nusmp.boss.bar.BossBarSync.init();
         com.newuniverse.nusmp.relics.RelicHolderSync.register(NeoForge.EVENT_BUS);
         // 1.23.0: the floor arenas (Goliath's Pit, the Charybdis Basin)
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.floor.goliath.GoliathPitSite::onCollapse);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.floor.goliath.GoliathPitSite::onServerStopping);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.floor.charybdis.CharybdisBasinSite::onCollapse);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.floor.charybdis.CharybdisBasinSite::onServerStopping);
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGH, com.newuniverse.nusmp.dungeon.floor.charybdis.CharybdisMinions::onDrops);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.floor.charybdis.CharybdisMinions::onIncomingDamage);
-        // 1.22.0: the Sentient Dungeon (room births, born mobs, the immune system)
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.sentient.DungeonRoomManager::onServerTick);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.sentient.DungeonRoomManager::onLogout);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.sentient.DungeonRoomManager::onServerStopping);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.sentient.WallBirth::onServerTick);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.sentient.WallBirth::onServerStopping);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.sentient.BornDriver::onServerTick);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.sentient.BornDriver::onJoin);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.sentient.BornDriver::onServerStopping);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.sentient.ImmuneSystem::onServerTick);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.sentient.ImmuneSystem::onDeath);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.sentient.ImmuneSystem::onLogout);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.sentient.ImmuneSystem::onServerStopping);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.wild.WildDriver::onServerStarted);        // logs the roster at start-up
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.floor.charybdis.CharybdisMinions::onServerStopping);     // the statics of the megalodons (it was one of the basin's stopping hooks)
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.entity.zogratis.VanicaCurse::onHeal);              // 1.20.0: Megicula's Decay cuts healing
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.entity.zogratis.SpellSeal::onIncomingDamage);       // Spatial Mana Domination
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGH, com.newuniverse.nusmp.entity.zogratis.SoulPaladins::onDeath);   // Lucius's immortal Paladins

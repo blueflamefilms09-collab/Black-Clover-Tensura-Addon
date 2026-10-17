@@ -4,7 +4,7 @@ import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.book.SpellRuntime;
-import com.newuniverse.nusmp.dungeon.LivingDungeon;
+import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import net.minecraft.core.BlockPos;
@@ -89,7 +89,7 @@ final class Wave11Acts {
             p.clearFire();
             Fx.say(p, "The blade draws the water to you and the flames go out.");
         }
-        if (LivingDungeon.in(l)) {
+        if (Labyrinth.in(l)) {
             Fx.say(p, "The Dungeon's water will not be shaped.");
             return;
         }

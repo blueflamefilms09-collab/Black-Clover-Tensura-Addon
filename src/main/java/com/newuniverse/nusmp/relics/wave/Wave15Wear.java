@@ -2,7 +2,7 @@ package com.newuniverse.nusmp.relics.wave;
 
 import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
-import com.newuniverse.nusmp.dungeon.LivingDungeon;
+import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicEngine;
@@ -55,7 +55,7 @@ final class Wave15Wear {
 
     private static boolean slipThroughWall(ServerPlayer p) {
         ServerLevel lv = p.serverLevel();
-        if (LivingDungeon.in(lv)) return false;                                      // the Dungeon's walls and sealed rooms are not for slipping through
+        if (Labyrinth.in(lv)) return false;                                      // the Dungeon's walls and sealed rooms are not for slipping through
         Vec3 eye = p.getEyePosition(), look = p.getLookAngle();
         int n = Wave15Rules.SLIP_STEPS + 1;
         boolean[] blocked = new boolean[n], stand = new boolean[n];

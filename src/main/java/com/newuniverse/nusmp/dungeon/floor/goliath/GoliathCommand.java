@@ -12,8 +12,8 @@ import net.minecraft.world.phys.Vec3;
 
 /**
  * {@code /multiverse boss goliath} (permission 2): a Goliath stands where the executor does, its arena there. {@code goliath rise} lets it climb out of
- * the floor under the executor instead, the way a pit's does (three seconds of cracking, then the climb); a Goliath made here belongs to no pit,
- * so its fall starts a collapse only if it stands inside a pit. The multiverse command calls {@link #addTo} with its "boss" node.
+ * the floor under the executor instead (three seconds of cracking, then the climb). The multiverse command calls {@link #addTo} with its "boss" node.
+ * (Until 1.58.0 a Goliath's Pit in the Living Dungeon woke one the same way; the pit was removed, the boss and this way to call it stayed.)
  */
 public final class GoliathCommand {
     private GoliathCommand() {}
@@ -29,7 +29,7 @@ public final class GoliathCommand {
         GoliathBoss boss;
         if (rise) {
             Vec3 floor = ZogratisBoss.ground(level, here);
-            boss = GoliathBoss.spawnRising(level, BlockPos.containing(floor).below(), 0f, false);
+            boss = GoliathBoss.spawnRising(level, BlockPos.containing(floor).below(), 0f);
         } else {
             boss = GoliathBoss.spawnStanding(level, ZogratisBoss.ground(level, here), 0f);
         }

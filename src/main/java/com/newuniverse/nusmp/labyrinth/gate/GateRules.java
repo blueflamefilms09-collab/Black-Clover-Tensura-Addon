@@ -22,8 +22,8 @@ public final class GateRules {
     /** When a gate used at {@code now} stops refusing the player. */
     public static long cooldownUntil(long now) { return now + GATE_COOLDOWN; }
 
-    /** Is a gate still refusing this player? Either stamp (ours, the legacy Maw's) in the future holds. */
-    public static boolean cooldownHolds(long now, long ownStamp, long legacyStamp) { return now < ownStamp || now < legacyStamp; }
+    /** Is a gate still refusing this player? A stamp in the future holds. */
+    public static boolean cooldownHolds(long now, long stamp) { return now < stamp; }
 
     /** Does the void check run on this tick of the player? */
     public static boolean checkDue(int tickCount) { return tickCount % RESCUE_EVERY == 0; }

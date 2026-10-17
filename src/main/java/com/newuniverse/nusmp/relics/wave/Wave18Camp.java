@@ -2,7 +2,7 @@ package com.newuniverse.nusmp.relics.wave;
 
 import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
-import com.newuniverse.nusmp.dungeon.LivingDungeon;
+import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.relics.ActCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import net.minecraft.core.BlockPos;
@@ -68,7 +68,7 @@ final class Wave18Camp {
         ServerPlayer p = c.player();
         ServerLevel level = p.serverLevel();
         ItemStack pouch = c.stack();
-        if (LivingDungeon.in(level)) {
+        if (Labyrinth.in(level)) {
             Fx.say(p, "The Dungeon will not take a camp.");
             return;
         }
@@ -138,7 +138,7 @@ final class Wave18Camp {
             Fx.say(p, "The camp is in another world.");
             return;
         }
-        if (LivingDungeon.in(level)) {
+        if (Labyrinth.in(level)) {
             Fx.say(p, "The Dungeon will not let a camp be folded away.");
             return;
         }

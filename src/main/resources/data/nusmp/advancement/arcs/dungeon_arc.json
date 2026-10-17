@@ -2,7 +2,7 @@
   "parent": "nusmp:arcs/entrance_exam",
   "display": {
     "icon": {
-      "id": "nusmp:dungeon_maw"
+      "id": "nusmp:labyrinth_gate"
     },
     "title": {
       "translate": "advancement.nusmp.arcs.dungeon_arc.title"

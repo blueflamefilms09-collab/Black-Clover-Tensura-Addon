@@ -26,6 +26,8 @@ class CharybdisTextTest {
         all.add(CharybdisText.fallen("Aster"));
         all.add(CharybdisText.fallenDuringCollapse(null));
         all.add(CharybdisText.fallenDuringCollapse("Aster"));
+        all.add(CharybdisText.slain(null));
+        all.add(CharybdisText.slain("Aster"));
         return all;
     }
 
@@ -66,5 +68,16 @@ class CharybdisTextTest {
         assertTrue(CharybdisText.fallen(null).startsWith("The Charybdis Spawn has been slain"));
         assertTrue(CharybdisText.fallenDuringCollapse("Aster").contains("Aster"));
         assertTrue(CharybdisText.fallenDuringCollapse(null).contains("already coming down"));
+    }
+
+    @Test
+    void theLineTheBossSaysPromisesNoCollapse() {
+        assertTrue(CharybdisText.slain("Aster").startsWith("Aster has slain"));
+        assertTrue(CharybdisText.slain(null).startsWith("The Charybdis Spawn has been slain"));
+        for (String line : new String[]{CharybdisText.slain("Aster"), CharybdisText.slain(null)}) {
+            String lower = line.toLowerCase(Locale.ROOT);
+            assertFalse(lower.contains("basin") || lower.contains("relics") || lower.contains("come apart") || lower.contains("way out"), line);
+            assertFalse(lower.contains("null"), line);
+        }
     }
 }

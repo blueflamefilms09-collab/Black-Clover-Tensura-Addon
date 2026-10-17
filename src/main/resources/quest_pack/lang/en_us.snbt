@@ -22,7 +22,7 @@
 	]
 	"chapter.259D79A3D94D62A8.title": "Weapons and Relics"
 	"chapter.2748BD37FDA5E6F3.chapter_subtitle": [
-		"The Living Dungeon, the Labyrinth in the sky, and what is cooked in both."
+		"The dungeon under the Gateway, its floor guardians, and what is cooked in it."
 	]
 	"chapter.2748BD37FDA5E6F3.title": "Dungeon and Labyrinth"
 	"chapter.2A68FF8B36116056.chapter_subtitle": [
@@ -46,7 +46,7 @@
 	]
 	"chapter.3887E699980A0DFA.title": "The Boss Gauntlet"
 	"chapter.47F49E148FC2484D.chapter_subtitle": [
-		"A spire in the sky, a team of three, a key."
+		"A dungeon of sealed doors, a team of three, a key."
 	]
 	"chapter.47F49E148FC2484D.title": "Arc 8: Royal Knights Selection Exam"
 	"chapter.523F27D303C24410.chapter_subtitle": [
@@ -114,11 +114,6 @@
 	]
 	"quest.02A3EF952ECC1EC5.quest_subtitle": "A grimoire of this suit"
 	"quest.02A3EF952ECC1EC5.title": "Clover Kingdom"
-	"quest.02A6058AE91570FD.quest_desc": [
-		"Descent Gates lead to the hidden vaults of the Variable Core. Carry one."
-	]
-	"quest.02A6058AE91570FD.quest_subtitle": "Hidden doors down"
-	"quest.02A6058AE91570FD.title": "Descent Gate"
 	"quest.02B8976CEF3700F2.quest_desc": [
 		"Carry a devil contract. The price is always on the last line."
 	]
@@ -301,7 +296,7 @@
 	"quest.1182F3DAF2C9379E.quest_subtitle": "Arc 11"
 	"quest.1182F3DAF2C9379E.title": "The Diamond Kingdom"
 	"quest.11A0D4CAFD33DC2F.quest_desc": [
-		"At the bottom of the Goliath pit sleeps the first floor guardian. Defeat Goliath."
+		"A stone giant guards a floor of the dungeon. Defeat Goliath."
 	]
 	"quest.11A0D4CAFD33DC2F.quest_subtitle": "Goliath"
 	"quest.11A0D4CAFD33DC2F.title": "Pit Guardian"
@@ -309,12 +304,12 @@
 	"quest.11F44DBD4E426820.quest_subtitle": "A hearty haunch"
 	"quest.11F44DBD4E426820.title": "Direwolf Haunch"
 	"quest.11F6197A86647FF1.quest_desc": [
-		"At the bottom of its pit sleeps Goliath. Defeat it."
+		"A stone giant guards a floor of the dungeon. Defeat Goliath."
 	]
 	"quest.11F6197A86647FF1.quest_subtitle": "The first guardian"
 	"quest.11F6197A86647FF1.title": "Pit Guardian: Goliath"
 	"quest.1310BA1F873A4390.quest_desc": [
-		"Both floor bosses defeated. The Living Dungeon recognises you."
+		"Both floor bosses defeated. The dungeon recognises you."
 	]
 	"quest.1310BA1F873A4390.quest_subtitle": "Goliath and Charybdis"
 	"quest.1310BA1F873A4390.title": "Both Floors Clear"
@@ -434,9 +429,6 @@
 	"quest.1D32A8FFE0642A87.quest_desc": ["Carry the Otherworld Trident."]
 	"quest.1D32A8FFE0642A87.quest_subtitle": "Zagred's trident"
 	"quest.1D32A8FFE0642A87.title": "Otherworld Trident"
-	"quest.1E0CB74FB7F20729.quest_desc": ["Arrive in the Living Dungeon dimension."]
-	"quest.1E0CB74FB7F20729.quest_subtitle": "A world that feeds on itself"
-	"quest.1E0CB74FB7F20729.title": "Into the Living Dungeon"
 	"quest.1ED5D47CE7D47F1F.quest_desc": [
 		"At the edge of the Clover Kingdom lies a village called Hage, and in it two orphans who made a promise: to become Wizard King. One has no magic at all. The other has more than anyone his age."
 		""
@@ -619,9 +611,6 @@
 	"quest.2D2D4C15EFA618C7.quest_desc": ["Carry the Hourglass of the Final Hour."]
 	"quest.2D2D4C15EFA618C7.quest_subtitle": "Carry it"
 	"quest.2D2D4C15EFA618C7.title": "Hourglass of the Final Hour"
-	"quest.2DF65A31BCCDD68A.quest_desc": ["Arrive in the Living Dungeon dimension."]
-	"quest.2DF65A31BCCDD68A.quest_subtitle": "Arrive"
-	"quest.2DF65A31BCCDD68A.title": "Down the Living Dungeon"
 	"quest.2E1252FBC37C5B17.quest_desc": [
 		"Cast Light Magic, the first of this branch. The magics of this branch: Light, Lightning, Dark, Poison, Smoke, Curse, and more."
 	]
@@ -728,13 +717,11 @@
 	"quest.34C9D509F7D83B02.quest_subtitle": "Begin"
 	"quest.34C9D509F7D83B02.title": "Turn the Glass"
 	"quest.352F989AD5CC7E21.quest_desc": [
-		"The Multiverse has two dungeons. The Living Dungeon is an ecosystem that eats, breeds and digs; you enter it through a Maw."
+		"The Multiverse has one dungeon: the Labyrinth, a place that grows as you go, reached through the Gateway on the surface, with trials, wardens, keys and a vault at the end of every stretch."
 		""
-		"The Labyrinth is a spire in a sky of clouds, reached through a Gate on the surface, with trials, wardens, keys and a vault at the top."
-		""
-		"Neither can be mined away. The only ways up are the ones the designer left."
+		"It cannot be mined away. The only ways on are the ones the designer left."
 	]
-	"quest.352F989AD5CC7E21.quest_subtitle": "Two places, one rule: nothing is free"
+	"quest.352F989AD5CC7E21.quest_subtitle": "One place, one rule: nothing is free"
 	"quest.352F989AD5CC7E21.title": "Where the Dungeon Is Alive"
 	"quest.3531C3DE8445B1C6.quest_desc": [
 		"The Dungeon Arc ends with Vetto."
@@ -780,7 +767,7 @@
 	"quest.3A0E8E4CB44A3CDE.quest_subtitle": "8 magics"
 	"quest.3A0E8E4CB44A3CDE.title": "Mirror, Painting and Dream: Every Magic"
 	"quest.3A24CC4AAD3E4173.quest_desc": [
-		"A Dungeon appeared beneath the world, and the Magic Knights were sent to clear it. In this world the dungeon is a living ecosystem: it eats, it breeds, and it feeds those who learn to cook."
+		"A Dungeon appeared beneath the world, and the Magic Knights were sent to clear it. In this world the dungeon is a place that grows floor by floor, guards its stone, and feeds those who learn to cook."
 	]
 	"quest.3A24CC4AAD3E4173.quest_subtitle": "Arc 3"
 	"quest.3A24CC4AAD3E4173.title": "The Dungeon Arc"
@@ -803,9 +790,9 @@
 	"quest.3BDEAFB942E8AD2D.quest_subtitle": "The curse-weaver"
 	"quest.3BDEAFB942E8AD2D.title": "Vanica, Mistress of Curses"
 	"quest.3C2CF535A17DF8FD.quest_desc": [
-		"The Labyrinth is reached through a Gate that stands on the surface. Cross it."
+		"The Labyrinth is reached through the Gateway that stands on the surface. Cross it."
 	]
-	"quest.3C2CF535A17DF8FD.quest_subtitle": "A spire in the sky"
+	"quest.3C2CF535A17DF8FD.quest_subtitle": "A dungeon of sealed doors"
 	"quest.3C2CF535A17DF8FD.title": "The Labyrinth"
 	"quest.3C703E17646293E9.quest_desc": [
 		"Cast each of the 10 magics of this branch once. Not all of them are in the same grimoire: magics can be learned, merged and borrowed over a long career."
@@ -1029,7 +1016,7 @@
 	"quest.4AA8E575D6332D15.quest_subtitle": "A spell to be known by"
 	"quest.4AA8E575D6332D15.title": "Sword and Forge: Signature"
 	"quest.4B468F86A70AB2FC.quest_desc": [
-		"In a flooded basin the Spawn of Charybdis waits. Defeat it."
+		"In flooded halls the Spawn of Charybdis waits. Defeat it."
 	]
 	"quest.4B468F86A70AB2FC.quest_subtitle": "Spawn of Charybdis"
 	"quest.4B468F86A70AB2FC.title": "The Whirlpool"
@@ -1118,7 +1105,7 @@
 	"quest.513DE0C789A51027.quest_subtitle": "Zogratis clones"
 	"quest.513DE0C789A51027.title": "Echoes"
 	"quest.519D28E29EE8273D.quest_desc": [
-		"The Royal Knights pick their next members in a tournament of squads and trials. In this world the trial is the Labyrinth: a spire with doors that open only to those who earned them."
+		"The Royal Knights pick their next members in a tournament of squads and trials. In this world the trial is the Labyrinth: a dungeon with doors that open only to those who earned them."
 	]
 	"quest.519D28E29EE8273D.quest_subtitle": "Arc 8"
 	"quest.519D28E29EE8273D.title": "Royal Knights Selection Exam"
@@ -1150,9 +1137,7 @@
 	"quest.52B39607661D111F.quest_desc": ["Carry all twelve Djinn seals."]
 	"quest.52B39607661D111F.quest_subtitle": "All twelve"
 	"quest.52B39607661D111F.title": "Twelve Seals of the Djinn"
-	"quest.52D84D4A7EB85132.quest_desc": [
-		"Kill five basilisks of the Living Dungeon."
-	]
+	"quest.52D84D4A7EB85132.quest_desc": ["Kill five basilisks of the dungeon."]
 	"quest.52D84D4A7EB85132.quest_subtitle": "Five basilisks"
 	"quest.52D84D4A7EB85132.title": "Basilisk Hunt"
 	"quest.5465D14C08E96C1C.quest_desc": [
@@ -1254,9 +1239,6 @@
 	]
 	"quest.5A6CFCE0D9770B2B.quest_subtitle": "Arc 13"
 	"quest.5A6CFCE0D9770B2B.title": "The Devil Arc"
-	"quest.5AD9284D3093743C.quest_desc": ["Step through a Dungeon Maw."]
-	"quest.5AD9284D3093743C.quest_subtitle": "A hungry portal"
-	"quest.5AD9284D3093743C.title": "The Maw Opens"
 	"quest.5AE5A46F058E1140.quest_desc": [
 		"Cast each of the 10 magics of this branch once. Not all of them are in the same grimoire: magics can be learned, merged and borrowed over a long career."
 	]
@@ -1288,9 +1270,6 @@
 	"quest.5D57C2EFB5EF1EB0.quest_desc": ["Raise ten soul corpses."]
 	"quest.5D57C2EFB5EF1EB0.quest_subtitle": "Ten corpses"
 	"quest.5D57C2EFB5EF1EB0.title": "Necromancer"
-	"quest.5E08ABE7F433030A.quest_desc": ["Carry a Dungeon Maw block."]
-	"quest.5E08ABE7F433030A.quest_subtitle": "The block itself"
-	"quest.5E08ABE7F433030A.title": "Dungeon Maw"
 	"quest.5EB7B5098840B9AD.quest_desc": ["Cross the Gate and enter the Labyrinth."]
 	"quest.5EB7B5098840B9AD.quest_subtitle": "Enter the spire"
 	"quest.5EB7B5098840B9AD.title": "Through the Gate"
@@ -1384,11 +1363,6 @@
 	"quest.670D9A20D2396885.quest_desc": ["Use a Relic Forge on a relic."]
 	"quest.670D9A20D2396885.quest_subtitle": "Work it at the forge"
 	"quest.670D9A20D2396885.title": "Reforged"
-	"quest.675CC69EC6A20650.quest_desc": [
-		"Dungeon Maws open on the surface when the dungeon's ecosystem is hungry. Step through one."
-	]
-	"quest.675CC69EC6A20650.quest_subtitle": "A hungry portal"
-	"quest.675CC69EC6A20650.title": "The Maw"
 	"quest.6801A5BA3BC1D657.quest_desc": [
 		"Pair relics are two weapons that are one relic: they come together, the world holds one pair, and the bonus works only with a half in each hand. Carry both halves of the Twin Hook Swords."
 	]
@@ -1624,7 +1598,7 @@
 		"Pass the gate and stand on the first floor."
 	]
 	"quest.7D725C620B7D2C76.quest_subtitle": "Past the threshold"
-	"quest.7D725C620B7D2C76.title": "Gate of the Spire"
+	"quest.7D725C620B7D2C76.title": "Gate of the Labyrinth"
 	"quest.7D915910DD81C24C.quest_desc": [
 		"Carry Elsdocia, the blade of the wizard kings. Its engravings are legacy of the wizard kings, magic interference, magicule absorption and barrier piercing."
 	]

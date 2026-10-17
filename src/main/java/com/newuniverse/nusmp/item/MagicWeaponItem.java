@@ -81,8 +81,8 @@ public class MagicWeaponItem extends SwordItem {
         // the Brooch Pin and the Hand of Providence (logic in BroochPinArts / HandOfProvidenceArts, reached through ReferenceWeapons; the first stopgap, PinProvidenceArts, is kept but no longer wired)
         BROOCH_PIN(Tiers.DIAMOND, 0, -0.8f, "Piercing Pin", "A quick lunge of up to 7 blocks: every foe on the line is run through (armour does not stop the pin) and slowed, and the first is struck from behind as you land past it.", 100, false),
         HAND_OF_PROVIDENCE(Tiers.NETHERITE, 2, -1.8f, "Laying On of Hands", "Lays the gauntlet on the ally you are looking at within 6 blocks, or on yourself: a big mend, Regeneration, and every curse and poison cleansed.", 200, false),
-        // 1.19.0: the cook's tool of the Living Dungeon (logic in ButcherArts; cuts prime meat out of carcasses, see dungeon.Harvest)
-        BUTCHER_CLEAVER(Tiers.IRON, 4, -2.4f, "Anatomical Cut", "A precise cut at the weak point: armour does not stop it, the wound bleeds, and a creature of the Dungeon cut this way leaves an extra portion of meat. On a carcass the cleaver finds the prime cuts.", 160, false);
+        // 1.19.0: the cook's tool of the dungeon (logic in ButcherArts; the carcass cuts went with the Living Dungeon in 1.58.0)
+        BUTCHER_CLEAVER(Tiers.IRON, 4, -2.4f, "Anatomical Cut", "A precise cut at the weak point: armour does not stop it and the wound bleeds.", 160, false);
 
         final Tier tier; final int damage; final float speed; final String ability, desc; final int cooldown; final boolean demon;
         Kind(Tier t, int d, float s, String a, String desc, int cd, boolean demon) {

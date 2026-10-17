@@ -213,7 +213,7 @@ BOSSES = [
     ("lucius_zogratis", "Lucius, the Final Hour", "Defeat Lucius Zogratis in his arena.", "nusmp:zogratis_hourglass", "challenge", 600),
     ("zagred", "Zagred, the Devil of the Word", "Defeat Zagred.", "nusmp:last_word", "challenge", 500),
     ("devil_avatar", "The Devil's Avatar", "Defeat the Devil Avatar.", "nusmp:devil_horn", "challenge", 400),
-    ("goliath", "Goliath", "Defeat Goliath, the pit guardian of the Living Dungeon.", "minecraft:heavy_core", "goal", 200),
+    ("goliath", "Goliath", "Defeat Goliath, the stone giant that guards a floor of the dungeon.", "minecraft:heavy_core", "goal", 200),
     ("charybdis_spawn", "Spawn of Charybdis", "Defeat the Spawn of Charybdis in its basin.", "minecraft:nautilus_shell", "goal", 200),
     ("floor_warden", "The Floor Warden", "Defeat a Warden of the Labyrinth.", "minecraft:iron_bars", "goal", 120),
     ("god_of_order", "The God of Order", "Defeat the God of Order, judge of the relic ledger.", "nusmp:notice_of_order", "challenge", 600),
@@ -326,34 +326,30 @@ add(we + "armory", we + "elsdocia", "Ten Engravings", "Engrave ten weapons at th
 
 # ============================================================================================================== dungeon
 du = "dungeon/"
-add(du + "living_dungeon", "root", "Into the Living Dungeon", "Enter the Living Dungeon, a world that feeds on itself.",
-    "nusmp:dungeon_maw", dimension("nusmp:living_dungeon"), frame="goal", xp=40)
+# 1.58.0: the Living Dungeon, its Maws and its Descent Gates were removed (docs/labyrinth/mega_v2_prune.md): the advancements "Into the Living
+# Dungeon", "The Maw", "Dungeon Maw" and "Descent Gate" went with them, and so did the Spire's "The Labyrinth" (its children hang off the
+# Mega-Dungeon now). The criteria of "Dungeon Delver" below keep their old doors (names a0_..d3_) so saved progress still counts.
 # the Mega-Dungeon alternatives are appended LAST so the criterion names of the older doors (a0_..d3_) never change for saved progress
 DUNGEON_ENTER = anyof(ev("dungeon.entered"), ev("labyrinth.entered"), dimension("nusmp:living_dungeon"), dimension("nusmp:labyrinth"),
                       ev("mega.entered"), dimension("nusmp:mega_dungeon"))
-add(du + "entered", du + "living_dungeon", "Dungeon Delver", "Enter a dungeon of the Multiverse by any door: the Living Dungeon, the Labyrinth or the Mega-Dungeon.",
+add(du + "entered", "root", "Dungeon Delver", "Enter the dungeon of the Multiverse: step through the Gateway into the Mega-Dungeon.",
     "minecraft:lantern", DUNGEON_ENTER, xp=10)
-add(du + "maw", du + "living_dungeon", "The Maw", "Step through a Dungeon Maw.", "nusmp:dungeon_maw", ev("dungeon.maw"), xp=20)
-add(du + "maw_item", du + "maw", "Dungeon Maw", "Carry a Dungeon Maw block.", "nusmp:dungeon_maw", have("nusmp:dungeon_maw"), xp=10)
-add(du + "goliath", du + "living_dungeon", "Pit Guardian", "Defeat Goliath in its pit.", "minecraft:heavy_core",
+add(du + "goliath", du + "entered", "Pit Guardian", "Defeat Goliath, the stone giant that guards a floor.", "minecraft:heavy_core",
     ev("dungeon.floor_boss", 1, "goliath"), frame="goal", xp=150)
-add(du + "charybdis", du + "living_dungeon", "The Whirlpool", "Defeat the Spawn of Charybdis.", "minecraft:nautilus_shell",
+add(du + "charybdis", du + "entered", "The Whirlpool", "Defeat the Spawn of Charybdis.", "minecraft:nautilus_shell",
     ev("dungeon.floor_boss", 1, "charybdis"), frame="goal", xp=150)
 add(du + "both_floors", du + "goliath", "Both Floors Clear", "Defeat both floor bosses, Goliath and Charybdis.", "minecraft:beacon",
     AND(ev("dungeon.floor_boss", 1, "goliath"), ev("dungeon.floor_boss", 1, "charybdis")), frame="challenge", xp=300)
-add(du + "descent", du + "living_dungeon", "Descent Gate", "Carry a Descent Gate.", "nusmp:descent_gate", have("nusmp:descent_gate"), xp=15)
-add(du + "meat", du + "living_dungeon", "Delicious in Dungeon", "Eat cooked monster meat. The dungeon feeds those who cook it.",
+add(du + "meat", du + "entered", "Delicious in Dungeon", "Eat cooked monster meat. The dungeon feeds those who cook it.",
     "nusmp:purified_monster_meat", consume("nusmp:purified_monster_meat"), xp=20)
 add(du + "basilisk", du + "meat", "Basilisk Fillet", "Eat a roast basilisk fillet.", "nusmp:roast_basilisk_fillet",
     consume("nusmp:roast_basilisk_fillet"), xp=20)
 add(du + "direwolf", du + "meat", "Direwolf Haunch", "Eat a roast direwolf haunch.", "nusmp:roast_direwolf_haunch",
     consume("nusmp:roast_direwolf_haunch"), xp=20)
-add(du + "labyrinth", "root", "The Labyrinth", "Enter the Labyrinth, a spire in its own sky.", "nusmp:labyrinth_gate",
-    dimension("nusmp:labyrinth"), frame="goal", xp=60)
-add(du + "labyrinth_event", du + "labyrinth", "Gate of the Spire", "Pass the Gate of the Labyrinth.", "nusmp:labyrinth_gate",
+add(du + "labyrinth_event", du + "mega", "Gate of the Labyrinth", "Pass the Gate of the Labyrinth.", "nusmp:labyrinth_gate",
     ev("labyrinth.entered"), xp=10)
-add(du + "archway", du + "labyrinth", "Sealed Archway", "Carry a Sealed Archway.", "nusmp:sealed_archway", have("nusmp:sealed_archway"), xp=10)
-add(du + "warden", du + "labyrinth", "Warden Down", "Defeat the Warden of a floor.", "minecraft:iron_bars",
+add(du + "archway", du + "mega", "Sealed Archway", "Carry a Sealed Archway.", "nusmp:sealed_archway", have("nusmp:sealed_archway"), xp=10)
+add(du + "warden", du + "mega", "Warden Down", "Defeat the Warden of a floor.", "minecraft:iron_bars",
     ev("labyrinth.warden_defeated"), frame="goal", xp=100)
 add(du + "shadow_key", du + "warden", "The Shadow Key", "Carry a Shadow Key.", "nusmp:shadow_key", have("nusmp:shadow_key"), xp=30)
 add(du + "seal", du + "shadow_key", "A Seal Opens", "Open a seal of the Labyrinth with the key.", "minecraft:tripwire_hook",
@@ -361,7 +357,7 @@ add(du + "seal", du + "shadow_key", "A Seal Opens", "Open a seal of the Labyrint
 add(du + "peak_altar", du + "seal", "Peak Altar", "Carry a Peak Altar.", "nusmp:peak_altar", have("nusmp:peak_altar"), xp=20)
 add(du + "vault", du + "seal", "The Vault", "Open the vault at the top of the Labyrinth.", "nusmp:relic_pedestal",
     ev("labyrinth.vault_opened"), frame="challenge", xp=300)
-add(du + "traps", du + "labyrinth", "Tabletop Traps", "Carry a pitfall tile, a snuffer glyph or a riddle stone.", "nusmp:pitfall_tile",
+add(du + "traps", du + "mega", "Tabletop Traps", "Carry a pitfall tile, a snuffer glyph or a riddle stone.", "nusmp:pitfall_tile",
     have("nusmp:pitfall_tile", "nusmp:snuffer_glyph", "nusmp:riddle_stone", mode="any"), xp=15)
 
 # The Mega-Dungeon (1.54.0): one dimension that grows a sector at a time. Its branch hangs off the root like the Labyrinth's, so the older
@@ -504,7 +500,7 @@ ARCS = [
      ev("ceremony.completed")),
     ("entrance_exam", "Magic Knights Entrance Exam", "Take the tower's exam and learn what magic is born in you.", "minecraft:enchanted_book",
      ev("wizard.questionnaire")),
-    ("dungeon_arc", "The Dungeon Arc", "Enter a dungeon of the Multiverse.", "nusmp:dungeon_maw", DUNGEON_ENTER),
+    ("dungeon_arc", "The Dungeon Arc", "Enter a dungeon of the Multiverse.", "nusmp:labyrinth_gate", DUNGEON_ENTER),
     ("dark_triad", "Dark Triad: Royal Capital", "Call on a signature spell and stand with the Royal Capital.", "minecraft:nether_star",
      ev("spell.cast.signature")),
     ("eye_midnight", "Eye of the Midnight Sun", "Wear a relic of a lost age.", "nusmp:ring_of_power", ev("relic.equipped")),

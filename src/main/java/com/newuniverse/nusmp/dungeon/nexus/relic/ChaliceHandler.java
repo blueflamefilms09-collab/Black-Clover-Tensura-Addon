@@ -2,7 +2,6 @@ package com.newuniverse.nusmp.dungeon.nexus.relic;
 
 import com.newuniverse.nusmp.dungeon.DungeonEffects;
 import com.newuniverse.nusmp.dungeon.DungeonFood;
-import com.newuniverse.nusmp.dungeon.RadiationShield;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
 import io.github.manasmods.tensura.storage.TensuraStorages;
@@ -91,7 +90,6 @@ final class ChaliceHandler {
             RelicState.IMMUNE.remove(id);
             return;
         }
-        RadiationShield.ward(p, DigestTable.WARD_AHEAD);
         if (p.hasEffect(DungeonEffects.SUFFOCATION)) p.removeEffect(DungeonEffects.SUFFOCATION);
     }
 

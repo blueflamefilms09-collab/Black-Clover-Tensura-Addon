@@ -1,7 +1,6 @@
 package com.newuniverse.nusmp.dungeon.floor.charybdis;
 
 import com.mojang.logging.LogUtils;
-import com.newuniverse.nusmp.dungeon.wild.WildSpawn;
 import com.newuniverse.nusmp.dungeon.wild.Wildlife;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -23,6 +22,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,9 +36,8 @@ import java.util.UUID;
  * The Charybdis Spawn's megalodons (the "smaller megalodons" of the design): the real Tensura megalodon, looked up by id at run time (nothing
  * happens if Tensura or the creature is absent). They tear loose from the basin wall near the players, at most {@link CharybdisTable#MINION_CAP} at
  * once, each marked with the scoreboard tag {@code nusmp_charybdis_minion}, the glowing outline and the id of the boss that called it. They are driven
- * from outside the way the Dungeon's other brain-driven creatures are (set the target, walk to it, strike in reach: CollapseGuards, WildDriver),
- * their blows on a player are capped to a share of the player's health, they leave neither loot nor carcass, and they go with the boss, with the
- * collapse, or when the boss is gone and the basin is looked at again.
+ * from outside, because the Tensura brain owns the creature (set the target, walk to it, strike in reach), their blows on a player are capped to
+ * a share of the player's health, they leave no loot, and they go with the boss.
  */
 public final class CharybdisMinions {
     private CharybdisMinions() {}
@@ -67,12 +66,15 @@ public final class CharybdisMinions {
         WARNED.clear();
     }
 
+    /** The world is closing: nothing of it (the entities, their schedules) may stay behind in the statics. */
+    public static void onServerStopping(ServerStoppingEvent event) { clear(); }
+
     // ================================================================ who is out
     /** The live megalodons this boss called (found by their mark, in the basin's volume). */
     static List<Mob> alive(ServerLevel level, CharybdisSpawnBoss boss) {
         String me = boss.getUUID().toString();
         Vec3 c = boss.arenaCenter();
-        AABB box = new AABB(c, c).inflate(CharybdisBasinPlan.OUTER, CharybdisBasinPlan.HEIGHT, CharybdisBasinPlan.OUTER);
+        AABB box = new AABB(c, c).inflate(CharybdisTable.ARENA_OUTER, CharybdisTable.ARENA_HEIGHT, CharybdisTable.ARENA_OUTER);
         return level.getEntitiesOfClass(Mob.class, box, m -> m.isAlive() && isMinion(m) && me.equals(m.getPersistentData().getString(KEY_BOSS)));
     }
 
@@ -83,11 +85,11 @@ public final class CharybdisMinions {
         int count = CharybdisMath.minionsToSummon(alive(level, boss).size());
         if (count <= 0) return List.of();
         Vec3 c = boss.arenaCenter();
-        double floor = c.y - CharybdisBasinPlan.HOVER, towards = Math.atan2(target.getZ() - c.z, target.getX() - c.x);
+        double floor = c.y - CharybdisTable.ARENA_HOVER, towards = Math.atan2(target.getZ() - c.z, target.getX() - c.x);
         double y = Mth.clamp(target.getY(), floor + 3, floor + 14);
         List<Vec3> out = new ArrayList<>();
         for (double a : CharybdisMath.wallAngles(count, towards, 0.9)) {
-            double[] p = CharybdisMath.onRing(c.x, c.z, a, CharybdisBasinPlan.R - 3);
+            double[] p = CharybdisMath.onRing(c.x, c.z, a, CharybdisTable.ARENA_R - 3);
             out.add(new Vec3(p[0], y, p[1]));
         }
         return out;
@@ -134,7 +136,7 @@ public final class CharybdisMinions {
         double base = Math.atan2(spot.z - c.z, spot.x - c.x), r = Math.hypot(spot.x - c.x, spot.z - c.z);
         for (int k = 0; k < RING_OFFSET.length; k++) {
             double[] p = CharybdisMath.onRing(c.x, c.z, base + RING_OFFSET[k], r);
-            Mob m = WildSpawn.spawnType(level, type, BlockPos.containing(p[0], spot.y + HEIGHT_OFFSET[k], p[1]), level.getRandom(), MobSpawnType.EVENT, true);
+            Mob m = spawnType(level, type, BlockPos.containing(p[0], spot.y + HEIGHT_OFFSET[k], p[1]));
             if (m == null) continue;
             m.addTag(CharybdisTable.TAG_MINION);
             m.setGlowingTag(true);
@@ -144,6 +146,32 @@ public final class CharybdisMinions {
             return m;
         }
         return null;
+    }
+
+    /**
+     * The one way a megalodon is made: create, place, finalize (as an event spawn, so no spawn hook meddles), mark it as staying, add. Null if the
+     * type is not a mob, there is no room for it, or the mob's own setup fails (logged once per kind of failure).
+     */
+    private static Mob spawnType(ServerLevel level, EntityType<?> type, BlockPos at) {
+        try {
+            Entity made = type.create(level);
+            if (!(made instanceof Mob m)) {
+                if (made != null) made.discard();
+                return null;
+            }
+            m.moveTo(at.getX() + 0.5, at.getY(), at.getZ() + 0.5, level.getRandom().nextFloat() * 360f, 0f);
+            if (!level.noCollision(m.getBoundingBox())) {
+                m.discard();
+                return null;
+            }
+            m.finalizeSpawn(level, level.getCurrentDifficultyAt(at), MobSpawnType.EVENT, null);
+            m.setPersistenceRequired();
+            level.addFreshEntity(m);
+            return m;
+        } catch (RuntimeException | LinkageError ex) {
+            if (WARNED.add(Wildlife.idOf(type) + ":" + ex.getClass().getName())) LOG.warn("[nusmp] Could not spawn {}", Wildlife.idOf(type), ex);
+            return null;
+        }
     }
 
     // ================================================================ driving them
@@ -193,7 +221,7 @@ public final class CharybdisMinions {
         NEXT_STRIKE.keySet().retainAll(keep);
     }
 
-    /** One bite every two seconds when in reach, unless the creature's own brain has just done so (as CollapseGuards and WildDriver do). */
+    /** One bite every two seconds when in reach, unless the creature's own brain has just done so. */
     private static void strike(Mob m, LivingEntity target, long now) {
         if (now < NEXT_STRIKE.getOrDefault(m.getUUID(), 0L)) return;
         if (!m.getBoundingBox().inflate(1.1, 0.7, 1.1).intersects(target.getBoundingBox())) return;
@@ -216,36 +244,6 @@ public final class CharybdisMinions {
             m.discard();
         }
         NEXT_STRIKE.clear();
-    }
-
-    /** Megalodons in the volume whose boss is gone (a restart, a collapse, a boss removed in an unloaded chunk): they leave. Returns how many. */
-    static int sweepOrphans(ServerLevel level, AABB volume) {
-        int n = 0;
-        for (Mob m : level.getEntitiesOfClass(Mob.class, volume, CharybdisMinions::isMinion)) {
-            Entity owner = null;
-            try {
-                String id = m.getPersistentData().getString(KEY_BOSS);
-                owner = id.isEmpty() ? null : level.getEntity(UUID.fromString(id));
-            } catch (IllegalArgumentException ignored) {
-                // an unreadable mark counts as no boss
-            }
-            if (owner != null && owner.isAlive()) continue;
-            poof(level, m);
-            m.discard();
-            n++;
-        }
-        return n;
-    }
-
-    /** Every megalodon and the boss in a volume, boss or no boss (the collapse takes them). */
-    static int removeAll(ServerLevel level, AABB volume) {
-        int n = 0;
-        for (Mob m : level.getEntitiesOfClass(Mob.class, volume, e -> isMinion(e) || isBoss(e))) {
-            poof(level, m);
-            m.discard();
-            n++;
-        }
-        return n;
     }
 
     // ================================================================ events

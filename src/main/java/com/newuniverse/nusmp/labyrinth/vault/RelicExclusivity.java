@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.labyrinth.vault;
 
-import com.newuniverse.nusmp.dungeon.LivingDungeon;
 import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.labyrinth.LabyrinthConfig;
 import net.minecraft.resources.ResourceLocation;
@@ -74,7 +73,7 @@ public final class RelicExclusivity {
     /** The same with the live level; a null level is not the Mega-Dungeon. */
     public static boolean allowsWildRoll(Level level) { return allowsWildRoll(inMega(level)); }
 
-    /** The mob-drop rule with the live inputs: whether the level is the Labyrinth or the legacy Living Dungeon, whether it is the Mega-Dungeon (1.54.0: none there), and the config. */
+    /** The mob-drop rule with the live inputs: whether the level is a Labyrinth dimension, whether it is the Mega-Dungeon (1.54.0: none there), and the config. */
     public static boolean allowsMobDrop(Level level) {
         return allowsMobDrop(inDungeon(level), inMega(level), exclusive());
     }
@@ -84,12 +83,9 @@ public final class RelicExclusivity {
         try { return Labyrinth.inMega(level); } catch (RuntimeException | LinkageError ignored) { return false; }
     }
 
-    /** A dungeon dimension: the Labyrinth sky or the legacy noise-cave dimension. Never throws (a missing class counts as "not in it"). */
+    /** A dungeon dimension (the Labyrinth's). Never throws (a missing class counts as "not in it"). */
     static boolean inDungeon(Level level) {
         if (level == null) return false;
-        boolean in = false;
-        try { in = Labyrinth.in(level); } catch (RuntimeException | LinkageError ignored) { /* the Labyrinth is not loaded: not in it */ }
-        try { in = in || LivingDungeon.in(level); } catch (RuntimeException | LinkageError ignored) { /* same */ }
-        return in;
+        try { return Labyrinth.in(level); } catch (RuntimeException | LinkageError ignored) { return false; /* the Labyrinth is not loaded: not in it */ }
     }
 }

@@ -1,7 +1,7 @@
 package com.newuniverse.nusmp.labyrinth.mega.safe;
 
 import com.mojang.serialization.MapCodec;
-import com.newuniverse.nusmp.labyrinth.gen.BiomePaletteProcessor;
+import com.newuniverse.nusmp.labyrinth.gen.StateCarry;
 import com.newuniverse.nusmp.labyrinth.mega.Marker;
 import com.newuniverse.nusmp.labyrinth.mega.MarkerKind;
 import com.newuniverse.nusmp.labyrinth.mega.RegionContext;
@@ -33,7 +33,7 @@ import java.util.Optional;
  * ({@code nusmp:seat;as=chair}, {@code nusmp:hearth;as=stove}, {@code nusmp:bed;as=bed}, {@code nusmp:furniture;as=table}); the generator hands
  * the markers of the sector it is building to {@link RegionContext}, and this processor looks for one above each block it is given. If the
  * {@link CompatTable} has a candidate for that hint whose mod is loaded and whose block exists, the block is replaced and keeps its
- * {@code facing}, {@code half}, {@code part}, {@code lit} ... by name ({@link BiomePaletteProcessor#carryProperties}, which never throws on a
+ * {@code facing}, {@code half}, {@code part}, {@code lit} ... by name ({@link StateCarry#carryProperties}, which never throws on a
  * mismatch); a seat flips its facing, because a stair "faces" up its slope, behind the sitter, while a chair faces the way the sitter looks.
  * A bed is two blocks and the marker is above the FOOT, so the head looks for it across the bed (turned the way the piece will be turned), and
  * both halves swap together or neither does. Outside the generator the context is null and the block is returned untouched, so a datapack Jigsaw
@@ -74,7 +74,7 @@ public final class ModCompatProcessor extends StructureProcessor {
             if (target == null || !BuiltInRegistries.BLOCK.containsKey(target)) return placed;
             Block block = BuiltInRegistries.BLOCK.get(target);
             if (block == state.getBlock()) return placed;
-            BlockState next = BiomePaletteProcessor.carryProperties(state, block.defaultBlockState());
+            BlockState next = StateCarry.carryProperties(state, block.defaultBlockState());
             next = faceLikeThe(state, next, pick);
             return new StructureTemplate.StructureBlockInfo(at, next, null);
         } catch (RuntimeException e) {

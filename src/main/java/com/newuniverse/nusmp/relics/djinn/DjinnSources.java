@@ -1,9 +1,9 @@
 package com.newuniverse.nusmp.relics.djinn;
 
-import com.newuniverse.nusmp.dungeon.nexus.DungeonCollapseEvent;
 import com.newuniverse.nusmp.relics.djinn.dark.DarkDjinn;
 import com.newuniverse.nusmp.relics.djinn.dark.DarkRules;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -22,13 +22,14 @@ import java.util.List;
 /**
  * Where Djinn Seals come from (the acquisition economy; the doc has the reasoning):
  * <ul>
- *   <li><b>The floor bosses.</b> The first time each of the Dungeon's four floor bosses falls in a world (Goliath, the Charybdis Spawn, the Devil
- *       Avatar, the Blood-Red Commander) it pays one random Seal of a Djinn nobody holds and no Seal exists for. Heard through the
- *       {@link DungeonCollapseEvent} every one of them posts. The killer receives it (a Seal in an inventory is safe from the collapse).</li>
+ *   <li><b>The floor bosses.</b> The first time each of the Dungeon's floor bosses falls in a world (Goliath, the Charybdis Spawn, the Devil
+ *       Avatar) it pays one random Seal of a Djinn nobody holds and no Seal exists for. Each of them calls {@link #floorBossFell} when it
+ *       dies inside the Labyrinth. The killer receives it. (Until 1.58.0 they posted the Nexus collapse event, which went with the Living Dungeon;
+ *       the zone names of that event are still the keys of the ledger, so a world keeps its record of which boss has paid.)</li>
  *   <li><b>A vault chest</b>, very rarely ({@link HouseholdRules#VAULT_CHANCE}): {@link #vaultSeal}, for the vault / Treasury code to call.</li>
  *   <li><b>Between players</b>: a Seal is an item; it is dropped, traded and, when an owner releases the Djinn, comes back into the world (an owner's death does not release it).</li>
  *   <li><b>An admin</b>: /multiverse djinn grant.</li>
- *   <li><b>The Dark Rukh Shard</b> (apart from the Seals): the Blood-Red Commander and the Devil Avatar drop one to the killer with a 15% chance on every
+ *   <li><b>The Dark Rukh Shard</b> (apart from the Seals): the Devil Avatar drops one to the killer with a 15% chance on every
  *       kill, Lucius likewise ({@link DarkDjinn#onLuciusDeath}), and a vault chest that holds no Seal has a 2% chance of one.</li>
  * </ul>
  * A Seal that nobody has seen for a week of running time lets its Djinn sleep again, so none is lost for good ({@link #onServerTick}).
@@ -37,29 +38,31 @@ public final class DjinnSources {
     private DjinnSources() {}
 
     // ---------------------------------------------------------------- the floor bosses
-    public static void onCollapse(DungeonCollapseEvent e) {
-        if (!e.bossDefeated() || e.zone() == null) return;
-        if (DarkRules.isShardZone(e.zone().name()))                                                     // the Dark Rukh Shard: a roll on every kill, apart from the Seal
-            DarkDjinn.rollBossShard(e.level(), e.cause(), Vec3.atCenterOf(e.centre()).add(0, 1, 0), DarkRules.bossName(e.zone().name()));
-        if (!HouseholdRules.isSealBoss(e.zone().name())) return;
-        ServerLevel level = e.level();
+    /**
+     * A floor boss of the Dungeon has fallen. {@code zone} is the ledger key of the boss ("GOLIATH_PIT", "CHARYBDIS_BASIN", "UNDERWORLD_GATE": the
+     * names the Nexus zones had, kept so saved ledgers still match), {@code centre} where it fell and {@code cause} the player who killed it or null.
+     * The boss calls this from its death handler inside a try/catch, so a failure here never stops its fall.
+     */
+    public static void floorBossFell(ServerLevel level, BlockPos centre, String zone, ServerPlayer cause) {
+        if (level == null || centre == null || zone == null) return;
+        if (DarkRules.isShardZone(zone))                                                                // the Dark Rukh Shard: a roll on every kill, apart from the Seal
+            DarkDjinn.rollBossShard(level, cause, Vec3.atCenterOf(centre).add(0, 1, 0), DarkRules.bossName(zone));
+        if (!HouseholdRules.isSealBoss(zone)) return;
         MinecraftServer server = level.getServer();
         if (server == null) return;
         DjinnLedger ledger = DjinnLedger.get(server);
-        String zone = e.zone().name();
         if (ledger.zoneRewarded(zone)) return;
         ledger.markZone(zone);                                              // the boss has paid, even if every Djinn is taken
         Djinn d = HouseholdRules.pickSleeping(ledger.sleeping(), level.getRandom().nextDouble());
         if (d == null) return;
         long now = server.overworld().getGameTime();
-        ledger.sealIssued(d, level.dimension().location().toString(), e.centre(), now);
+        ledger.sealIssued(d, level.dimension().location().toString(), centre, now);
         ItemStack seal = DjinnItems.sealStack(d);
-        ServerPlayer cause = e.cause();
         if (cause != null && cause.isAlive()) {
             cause.getInventory().placeItemBackInInventory(seal);
             cause.sendSystemMessage(Component.literal("A Djinn Seal comes loose from the fallen guardian and settles in your hands: " + d.fullName() + ".").withColor(d.color()));
         } else {
-            dropSeal(level, Vec3.atCenterOf(e.centre()).add(0, 1, 0), seal);
+            dropSeal(level, Vec3.atCenterOf(centre).add(0, 1, 0), seal);
         }
         server.getPlayerList().broadcastSystemMessage(Component.literal("A Djinn stirs in the Dungeon: the Seal of " + d.displayName() + " has been given up.")
                 .withStyle(ChatFormatting.LIGHT_PURPLE), false);

@@ -1,5 +1,5 @@
 {
-  "parent": "nusmp:dungeon/labyrinth",
+  "parent": "nusmp:dungeon/mega",
   "display": {
     "icon": {
       "id": "nusmp:pitfall_tile"

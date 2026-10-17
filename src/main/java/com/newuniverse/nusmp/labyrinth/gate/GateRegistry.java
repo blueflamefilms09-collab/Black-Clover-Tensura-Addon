@@ -17,7 +17,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 /**
  * Why: the two portal blocks of the Labyrinth (docs/labyrinth/c_gate.md). They live in their own DeferredRegister so the gate package registers
  * itself in one line from {@link com.newuniverse.nusmp.labyrinth.LabyrinthSystem}, and their block items go on {@code NUItems.ITEMS} like every
- * other block of the mod ({@link com.newuniverse.nusmp.dungeon.DungeonBlocks}), which is why the system init must run before
+ * other block of the mod, which is why the system init must run before
  * {@code NUItems.ITEMS.register}. Both blocks are built like bedrock: {@code strength(-1, 3600000)} is "cannot be mined in survival" plus "no
  * explosion reaches it", {@code pushReaction(BLOCK)} stops pistons moving them, {@code noLootTable} because nothing should ever drop one. They
  * have NO collision so a player walks INTO them the way they walk into a nether portal, and {@code noOcclusion} because their texture is

@@ -2,7 +2,7 @@ package com.newuniverse.nusmp.relics.wave;
 
 import com.newuniverse.nusmp.particle.rukh.RukhFx;
 
-import com.newuniverse.nusmp.dungeon.LivingDungeon;
+import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.relics.Attune;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.RelicDef;
@@ -220,7 +220,7 @@ final class Wave9Events {
         PATCHES.add(new Patch(level.dimension(), at, level.getGameTime() + Wave9Rules.FROST_PATCH_TICKS, owner.getUUID()));
         Fx.ring(level, at, Wave9Rules.FROST_PATCH_RADIUS, 0x9FE8FF);
         RukhFx.spray(level, RukhFx.Alignment.LIGHT, at.x, at.y + 0.3, at.z, 30, 1.2, 0.3, 1.2, 0.02);
-        if (LivingDungeon.in(level)) return;                                                   // the Dungeon's blocks are not for turning into ice
+        if (Labyrinth.in(level)) return;                                                   // the Dungeon's blocks are not for turning into ice
         int r = (int) Math.ceil(Wave9Rules.FROST_PATCH_RADIUS);
         BlockPos c = BlockPos.containing(at);
         int changed = 0;

@@ -62,7 +62,7 @@ KNOWN_ENTITIES = {"dante_zogratis", "vanica_zogratis", "zenon_zogratis", "lucius
                   "zogratis_clone", "devil_avatar", "zagred", "grimoire_daemon", "goliath", "charybdis_spawn", "magicule_scale",
                   "floor_warden", "god_of_order", "wind_spirit_lord", "elemental_spirit_lord", "spirit_lord", "dungeon_slime",
                   "living_armor", "dungeon_direwolf", "basilisk", "tower_wizard", "mirror_double", "painted_construct"}
-KNOWN_DIMS = {"nusmp:labyrinth", "nusmp:living_dungeon", "nusmp:zogratis_arena", "nusmp:dream", "nusmp:grimoire_library",
+KNOWN_DIMS = {"nusmp:labyrinth", "nusmp:living_dungeon", "nusmp:mega_dungeon", "nusmp:sanctuary", "nusmp:zogratis_arena", "nusmp:dream", "nusmp:grimoire_library",
               "minecraft:overworld", "minecraft:the_nether", "minecraft:the_end"}
 
 

@@ -105,7 +105,7 @@ public final class ArenaTravel {
     /** Where a player stands, as the hourglass rules see it. */
     public static HourglassRules.Place placeOf(Level level) {
         if (ZogratisArena.in(level)) return HourglassRules.Place.ARENA;
-        if (com.newuniverse.nusmp.labyrinth.Labyrinth.in(level) || com.newuniverse.nusmp.dungeon.LivingDungeon.in(level)) return HourglassRules.Place.FORBIDDEN;
+        if (com.newuniverse.nusmp.labyrinth.Labyrinth.in(level)) return HourglassRules.Place.FORBIDDEN;
         return HourglassRules.Place.FREE;
     }
 }
