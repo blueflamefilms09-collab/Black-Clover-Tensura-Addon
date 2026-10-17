@@ -1,0 +1,33 @@
+{
+  "why": "Which Rukh a cast belongs to, for the Rukh flow of the Holy floors (docs/labyrinth/mega_flow.md): LIGHT magic is multiplied where the air is thick with Light Rukh and DARK magic is rejected there. Read by MagicAlignments (pure, tested) in this order: (1) 'exact' is a deliberate answer for one id (a magic family such as lightning, a spell page such as devil_union, a Tensura skill) and beats every keyword, because only a person can tell that Curse-Warding is a ward and not a curse; (2) otherwise the id is cut into WHOLE words (demon_light is demon + light, so lightning and lighten are not 'light') and a word in 'dark' or 'light' decides, DARK winning when both match because a half-demonic spell must not slip through the holy air; (3) anything else is neutral, which the flow ignores. The 'exact' families below follow the mod's own soul groups (the Light soul: Light, Lightning, Sword; the Darkness soul: Dark, Shadow, Poison, Eyeball, Curse, the four Demon magics, Demon Beast, Black Oil, Smoke, Soul, Soul Corpse) plus Blood and Anti-Magic, which the lore ties to blood and devils; every other magic family is neutral on purpose, and a unit test pins that table so a new family has to be placed here on purpose. A datapack that ships this same path replaces the whole file.",
+  "light": ["light", "holy", "sacred", "solar", "divine", "radiant", "angel", "angelic", "seraph", "saint", "paladin"],
+  "dark": ["dark", "darkness", "shadow", "demon", "demonic", "devil", "curse", "cursed", "hell", "hellfire", "death", "blood", "black", "necro", "necromancy", "evil", "abyss", "abyssal", "fallen", "yami"],
+  "exact": {
+    "light": "light",
+    "lightning": "light",
+    "sword": "light",
+
+    "dark": "dark",
+    "shadow": "dark",
+    "poison": "dark",
+    "eyeball": "dark",
+    "curse": "dark",
+    "demon_beast": "dark",
+    "demon_fire": "dark",
+    "demon_ice": "dark",
+    "demon_light": "dark",
+    "demon_water": "dark",
+    "black_oil": "dark",
+    "smoke": "dark",
+    "soul": "dark",
+    "soul_corpse": "dark",
+    "blood": "dark",
+    "anti_magic": "dark",
+
+    "curse_warding": "neutral",
+
+    "devil_union": "dark",
+    "devil_dive": "dark",
+    "black_lightning_battle_fiend": "dark"
+  }
+}
