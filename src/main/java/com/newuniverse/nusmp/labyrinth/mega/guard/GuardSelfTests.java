@@ -332,12 +332,12 @@ final class GuardSelfTests {
         expect(level.addFreshEntity(g), "the Guardian was refused by the level");
         try {
             double base = GuardConfig.get(GuardConfig.GUARDIAN_BASE_HEALTH), per = GuardConfig.get(GuardConfig.THREAT_HEALTH_SCALE);
-            expect(g.sectorId() == s.id && g.threat() == s.threat && g.theme() == s.theme, "the Guardian is not bound to sector 0: " + g.sectorId() + "/" + g.threat() + "/" + g.theme());
+            expect(g.sectorId() == s.id && g.threat() == FloorMap.threat(s.lastFloor()) && g.theme() == s.theme, "the Guardian is not bound to sector 0: " + g.sectorId() + "/" + g.threat() + "/" + g.theme());
             expect(g.trait() == GuardianScaling.traitOf(s.theme), "wrong trait " + g.trait());
-            expect(Math.abs(g.getMaxHealth() - (float) GuardianScaling.health(base, per, s.threat)) < 0.5f,
-                    "max health " + g.getMaxHealth() + " is not the formula's " + GuardianScaling.health(base, per, s.threat));
+            expect(Math.abs(g.getMaxHealth() - (float) GuardianScaling.health(base, per, FloorMap.threat(s.lastFloor()))) < 0.5f,
+                    "max health " + g.getMaxHealth() + " is not the formula's " + GuardianScaling.health(base, per, FloorMap.threat(s.lastFloor())));
             expect(g.getHealth() >= g.getMaxHealth() - 0.5f, "a fresh Guardian is not at full health: " + g.getHealth());
-            double wantScale = GuardianScaling.scale(GuardConfig.get(GuardConfig.GUARDIAN_SCALE), s.threat);
+            double wantScale = GuardianScaling.scale(GuardConfig.get(GuardConfig.GUARDIAN_SCALE), FloorMap.threat(s.lastFloor()));
             expect(Math.abs(g.getScale() - (float) wantScale) < 1e-3f, "size " + g.getScale() + " is not the config's colossal " + wantScale);
             expect(Math.abs(g.getBbHeight() - 3.2f * (float) wantScale) < 0.05f, "the hitbox did not grow with the body: " + g.getBbHeight() + " high for scale " + wantScale);
             expect(g.getTags().contains(PeakAltarBlockEntity.BOSS_TAG) && g.getTags().contains(LabyrinthGuardianEntity.TAG), "the boss tags are missing: " + g.getTags());
@@ -376,7 +376,7 @@ final class GuardSelfTests {
             }
             for (int i = 0; i < 10; i++) g.tick();                                     // the whole tick (phase check, leash, trait) with nobody near
             expect(!g.isRemoved(), "the Guardian was removed while ticking (world difficulty " + level.getDifficulty() + ")");
-            return Result.ok("bound to sector " + s.id + " (threat " + s.threat + ", " + s.theme.id() + ", trait " + g.trait().name().toLowerCase(Locale.ROOT) + "), "
+            return Result.ok("bound to sector " + s.id + " (threat " + FloorMap.threat(s.lastFloor()) + ", " + s.theme.id() + ", trait " + g.trait().name().toLowerCase(Locale.ROOT) + "), "
                     + String.format(Locale.ROOT, "%.0f health, size %.2f, boss rules on", g.getMaxHealth(), g.getScale())
                     + (taken >= 0f ? String.format(Locale.ROOT, ", a blow of a million took %.0f", taken) : ", the damage budget is off in the config (blow not tried)"));
         } finally {

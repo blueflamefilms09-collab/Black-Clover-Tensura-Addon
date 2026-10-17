@@ -182,7 +182,7 @@ public final class RestEvents {
         int total = RestRules.ticksFor(kind, SafeConfig.get(SafeConfig.SHORT_REST_SECONDS), SafeConfig.get(SafeConfig.LONG_REST_SECONDS));
         long ambushAt = -1L;
         if (kind == RestKind.LONG) {
-            double chance = RestRules.ambushChance(sector.threat, SafeConfig.get(SafeConfig.AMBUSH_CHANCE), SafeConfig.get(SafeConfig.AMBUSH_MAX_CHANCE));
+            double chance = RestRules.ambushChance(Math.max(sector.threat, MegaDungeon.threatAt(level, p.blockPosition())), SafeConfig.get(SafeConfig.AMBUSH_CHANCE), SafeConfig.get(SafeConfig.AMBUSH_MAX_CHANCE));   // 1.55.0: the floor's threat, not only the sector's
             if (RestRules.rollAmbush(chance, level.getRandom().nextDouble())) ambushAt = RestRules.ambushDelay(total, level.getRandom().nextDouble());
         }
         st.channel = new RestState.Channel(kind, now, total, p.position(), clicked.immutable(), sector.id, ambushAt);
@@ -317,7 +317,7 @@ public final class RestEvents {
         boolean handled = false;
         for (RestAmbushListener l : AMBUSH_LISTENERS) {
             try {
-                handled |= l.onAmbush(p, sector, sector.threat);
+                handled |= l.onAmbush(p, sector, Math.max(sector.threat, MegaDungeon.threatAt(level, p.blockPosition())));
             } catch (RuntimeException ex) {
                 LOG.warn("[nusmp] A rest ambush listener failed and was ignored", ex);
             }

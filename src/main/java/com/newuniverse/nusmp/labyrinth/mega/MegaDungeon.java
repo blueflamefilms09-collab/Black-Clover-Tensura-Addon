@@ -125,10 +125,16 @@ public final class MegaDungeon {
         return r != null && r.kind.isSafe();
     }
 
-    /** The threat level at the position (the sector's, 1 and up), or 0 outside any sector. */
+    /**
+     * The threat level at the position, 1 and up, or 0 outside any sector. 1.55.0: it follows the FLOOR (a sector is ten floors and threat grows by one per
+     * floor, {@link FloorMap#threat}) when the position's floor is known, and falls back to the sector's own number (its first floor) otherwise, so the
+     * monsters, loot and ambushes of floor +9 are tougher than those of floor +1 of the same sector.
+     */
     public static int threatAt(Level level, BlockPos pos) {
         Sector s = sectorAt(level, pos);
-        return s == null ? 0 : s.threat;
+        if (s == null) return 0;
+        int floor = floorAt(level, pos);
+        return floor != 0 ? FloorMap.threat(floor) : s.threat;
     }
 
     /**

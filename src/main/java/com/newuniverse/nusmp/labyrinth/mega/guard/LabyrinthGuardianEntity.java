@@ -111,7 +111,8 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
 
     /** Makes this the boss of {@code sector} (null: a plain threat-1 test Guardian), calling from {@code anchor} (the altar, or null) and rescales it. */
     public void configure(Sector sector, BlockPos anchor) {
-        configure(sector == null ? -1 : sector.id, sector == null ? 1 : sector.threat, sector == null ? RegionTheme.GRAVITY : sector.theme, anchor,
+        configure(sector == null ? -1 : sector.id, sector == null ? 1 : com.newuniverse.nusmp.labyrinth.mega.FloorMap.threat(sector.lastFloor()),   // 1.55.0: the decennial boss stands on the sector's LAST floor, so it is as tough as that floor's monsters and then some
+                 sector == null ? RegionTheme.GRAVITY : sector.theme, anchor,
                 sector == null ? null : FloorMap.label(sector.lastFloor()));
     }
 
