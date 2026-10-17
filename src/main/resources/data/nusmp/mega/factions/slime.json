@@ -19,7 +19,9 @@
     "verdant": 4,
     "storm": 2,
     "shadow": 2,
-    "astral": 1
+    "astral": 1,
+    "radiant": 2,
+    "abyss": 3
   },
   "drops": {
     "meat": "raw_slime_jelly",

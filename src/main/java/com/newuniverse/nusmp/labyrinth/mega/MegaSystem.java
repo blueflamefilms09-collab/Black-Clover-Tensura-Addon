@@ -36,6 +36,7 @@ public final class MegaSystem {
         com.newuniverse.nusmp.labyrinth.mega.enc.EncRegistry.register(bus);
         com.newuniverse.nusmp.labyrinth.mega.eco.EcoRegistry.register(bus);
         com.newuniverse.nusmp.labyrinth.mega.guard.GuardRegistry.register(bus);
+        bus.addListener(ExpansionTrigger::onServerTick);            // 1.55.0: starts a held-back expansion when a player reaches the Way Onward
         com.newuniverse.nusmp.labyrinth.mega.floors.FloorsRegistry.register(bus);
         com.newuniverse.nusmp.labyrinth.mega.macro.MacroRegistry.register(bus);
         com.newuniverse.nusmp.labyrinth.mega.hub.HubRegistry.register(bus);

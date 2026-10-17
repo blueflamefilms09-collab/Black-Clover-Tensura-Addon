@@ -24,7 +24,9 @@
     "verdant": 0,
     "storm": 1,
     "shadow": 4,
-    "astral": 1
+    "astral": 1,
+    "radiant": 0,
+    "abyss": 5
   },
   "drops": {
     "meat": "raw_monster_meat",

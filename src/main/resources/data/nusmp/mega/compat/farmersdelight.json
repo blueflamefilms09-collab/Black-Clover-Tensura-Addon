@@ -1,0 +1,10 @@
+{
+  "_why": "Farmer's Delight furniture for the Safe Zones: a marker `nusmp:hearth;as=stove` above a campfire becomes a Stove, `furniture;as=skillet` a Skillet, `furniture;as=cutting_board` a Cutting Board, `furniture;as=cooking_pot` a Cooking Pot, so the monster meat of the dungeon economy can be cooked on real kitchen blocks. Used only when the mod 'farmersdelight' is loaded and the id exists in the block registry; a wrong id falls through to the next candidate and finally to the vanilla block. Edit the ids here if a version of the mod renames them (no rebuild needed: it is a data file).",
+  "mod": "farmersdelight",
+  "swaps": {
+    "stove": ["farmersdelight:stove"],
+    "skillet": ["farmersdelight:skillet"],
+    "cutting_board": ["farmersdelight:cutting_board"],
+    "cooking_pot": ["farmersdelight:cooking_pot"]
+  }
+}
