@@ -1,0 +1,54 @@
+{
+ "quests": [
+  {
+   "id": "deliver_diamonds",
+   "type": "progression",
+   "kind": "deliver",
+   "title": "Deliver {n} diamonds",
+   "desc": "The Guild's craftsmen need diamonds and ask no questions.",
+   "target": 4,
+   "reward": 2500,
+   "item": "minecraft:diamond",
+   "requires": []
+  },
+  {
+   "id": "deliver_ender_pearls",
+   "type": "progression",
+   "kind": "deliver",
+   "title": "Deliver {n} ender pearls",
+   "desc": "The Guild's craftsmen need ender pearls and ask no questions.",
+   "target": 8,
+   "reward": 3000,
+   "item": "minecraft:ender_pearl",
+   "requires": [
+    "deliver_diamonds"
+   ]
+  },
+  {
+   "id": "deliver_blaze_rods",
+   "type": "progression",
+   "kind": "deliver",
+   "title": "Deliver {n} blaze rods",
+   "desc": "The Guild's craftsmen need blaze rods and ask no questions.",
+   "target": 8,
+   "reward": 3200,
+   "item": "minecraft:blaze_rod",
+   "requires": [
+    "deliver_diamonds"
+   ]
+  },
+  {
+   "id": "deliver_netherite_scrap",
+   "type": "progression",
+   "kind": "deliver",
+   "title": "Deliver {n} netherite scrap",
+   "desc": "The Guild's craftsmen need netherite scrap and ask no questions.",
+   "target": 4,
+   "reward": 9000,
+   "item": "minecraft:netherite_scrap",
+   "requires": [
+    "deliver_ender_pearls"
+   ]
+  }
+ ]
+}

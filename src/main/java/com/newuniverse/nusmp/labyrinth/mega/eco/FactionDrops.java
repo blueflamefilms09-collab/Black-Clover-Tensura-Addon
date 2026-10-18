@@ -81,7 +81,7 @@ public final class FactionDrops {
 
     /** {@code count} of the item with this id, in stacks that fit; a missing crystal falls back to the Magic Stone and a missing stone to nothing, as in the base economy. */
     private static void add(List<ItemStack> out, ResourceLocation id, int count) {
-        if (count <= 0) return;
+        if (count <= 0 || com.newuniverse.nusmp.elite.hub.Currency.stonesSuppressed()) return;      // 1.83.0 Hub economy: with Tensura coins as the currency the stones and crystals are replaced by coins (elite/hub)
         Item item = BuiltInRegistries.ITEM.getOptional(id).orElseGet(() -> BuiltInRegistries.ITEM.getOptional(STONE).orElse(null));
         if (item == null) return;
         int max = Math.max(1, new ItemStack(item).getMaxStackSize());
