@@ -86,6 +86,29 @@ def scarf(kit, rig, color, length=9.0, width=3.0, salt=70, ring=True):
     rig.animate("scarf", sway=1.2)
 
 
+def strip_cubes(rig, keep=("head",)):
+    """Removes every cube that is not on a bone of `keep` (called from an `extra`): a character that is only a head, such as the Cotton Cloud, whose body is a heap of wool with a face.
+    The bones stay (the clips address them), only their cubes go, so the clips and the checks still hold."""
+    for name, bone in rig.m.bones.items():
+        if name not in keep:
+            bone["cubes"] = []
+
+
+def shift(rig, bone, dx, dy, dz):
+    """Adds (dx, dy, dz) pixels to a bone's position in every clip (creating the track when a clip has none): puts a part of a model somewhere the kit's body never has it."""
+    for clip in rig.A.clips.values():
+        entry = clip["bones"].setdefault(bone, {})
+        pos = entry.setdefault("position", {"0.00": [0.0, 0.0, 0.0], _key(clip["animation_length"]): [0.0, 0.0, 0.0]})
+        for key in pos:
+            pos[key] = [round(pos[key][0] + dx, 4), round(pos[key][1] + dy, 4), round(pos[key][2] + dz, 4)]
+
+
+def scale_head(rig, sx, sy, sz):
+    """The head bone drawn at (sx, sy, sz) times its size in every clip (a flat pillow of a head, a giant's big head ...): a steady scale track, as the kit's own characters do in `post`."""
+    for name, clip in rig.A.clips.items():
+        rig.A.scale(name, "head", {0.0: (sx, sy, sz), clip["animation_length"]: (sx, sy, sz)})
+
+
 def _sample(track, t):
     """The value of a clip track {"0.00": [x, y, z], ...} at second t (linear between keys, held outside them), as the game plays it."""
     keys = sorted((float(k), v) for k, v in track.items())

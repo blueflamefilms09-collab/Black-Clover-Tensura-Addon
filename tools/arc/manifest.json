@@ -1941,6 +1941,115 @@
    ],
    "problems": []
   },
+  "cotton_cloud": {
+   "model": "arc_cotton_cloud",
+   "spec": "GeoSpec.of(\"arc\", \"cotton_cloud\")",
+   "form": 1,
+   "role": "npc",
+   "name": "Cotton Cloud",
+   "build": "child",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_cotton_cloud.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_cotton_cloud.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_cotton_cloud.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_cotton_cloud_glow.png"
+   ],
+   "texture": [
+    512,
+    192
+   ],
+   "cubes": 16,
+   "faces_per_pass": 95,
+   "height_blocks": 1.41,
+   "height_with_hair_and_horns_blocks": 1.41,
+   "bounds_blocks": {
+    "min": [
+     -1.29,
+     0.0,
+     -1.33
+    ],
+    "max": [
+     1.36,
+     1.41,
+     1.29
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.5,
+    "height": 1.41
+   },
+   "arc_look": {
+    "height": 1.41,
+    "walkCycle": 0.75,
+    "runCycle": 1.29,
+    "shadow": 0.95,
+    "growXz": 1.86,
+    "growUp": 0.4,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 3.0,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "hair_back",
+    "heap"
+   ],
+   "glow_bones": [],
+   "problems": []
+  },
   "cotton_sheep": {
    "model": "arc_cotton_sheep",
    "spec": "GeoSpec.of(\"arc\", \"cotton_sheep\")",
