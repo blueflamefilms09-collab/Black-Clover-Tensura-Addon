@@ -16,4 +16,11 @@ public record TransformSpec(TransformState state, Set<TransformState> from, int 
         entries = List.copyOf(entries);
         modifiers = List.copyOf(modifiers);
     }
+
+    /** The same state with the server's dials applied: how long it lasts, how long it rests, what it drains. A duration of 0 (unlimited) stays unlimited. */
+    public TransformSpec scaled(double durationFactor, double cooldownFactor, double drainFactor) {
+        int d = durationTicks <= 0 ? 0 : Math.max(20, (int) Math.round(durationTicks * Math.max(0.0, durationFactor)));
+        int c = Math.max(0, (int) Math.round(cooldownTicks * Math.max(0.0, cooldownFactor)));
+        return new TransformSpec(state, from, minTier, entries, d, c, auraDrainPerSecond * Math.max(0.0, drainFactor), endsAtDawn, kiScaled, darkRukh, color, modifiers);
+    }
 }

@@ -24,6 +24,7 @@ public final class EliteSystem {
 
 
         // ---- races: Saiyan tiers, Primordial race (elite/races)
+        com.newuniverse.nusmp.elite.races.EliteRaces.init(modBus, container);
 
 
 
