@@ -1,0 +1,272 @@
+{
+ "remodel_dark_disciple_lucifero": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/arc_dark_disciple.geo.json",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     0.981,
+     0
+    ],
+    "dist": 4.023
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 8,
+    "target": [
+     0,
+     0.981,
+     0
+    ],
+    "dist": 4.023
+   }
+  ],
+  "texture": "nusmp:textures/entity/arc_dark_disciple_lucifero.png",
+  "animations": "nusmp:animations/entity/arc_dark_disciple.animation.json"
+ },
+ "remodel_dark_disciple_megicula": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/arc_dark_disciple.geo.json",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     0.981,
+     0
+    ],
+    "dist": 4.023
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 8,
+    "target": [
+     0,
+     0.981,
+     0
+    ],
+    "dist": 4.023
+   }
+  ],
+  "texture": "nusmp:textures/entity/arc_dark_disciple_megicula.png",
+  "animations": "nusmp:animations/entity/arc_dark_disciple.animation.json"
+ },
+ "remodel_dark_disciple_beelzebub": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/arc_dark_disciple.geo.json",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     0.981,
+     0
+    ],
+    "dist": 4.023
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 8,
+    "target": [
+     0,
+     0.981,
+     0
+    ],
+    "dist": 4.023
+   }
+  ],
+  "texture": "nusmp:textures/entity/arc_dark_disciple_beelzebub.png",
+  "animations": "nusmp:animations/entity/arc_dark_disciple.animation.json"
+ },
+ "remodel_dark_disciple_astaroth": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/arc_dark_disciple.geo.json",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     0.981,
+     0
+    ],
+    "dist": 4.023
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 8,
+    "target": [
+     0,
+     0.981,
+     0
+    ],
+    "dist": 4.023
+   }
+  ],
+  "texture": "nusmp:textures/entity/arc_dark_disciple_astaroth.png",
+  "animations": "nusmp:animations/entity/arc_dark_disciple.animation.json"
+ },
+ "remodel_devil_avatar_megicula": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/arc_devil_avatar.geo.json",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     1.907,
+     0
+    ],
+    "dist": 8.445
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 8,
+    "target": [
+     0,
+     1.907,
+     0
+    ],
+    "dist": 8.445
+   }
+  ],
+  "texture": "nusmp:textures/entity/arc_devil_avatar_megicula.png",
+  "animations": "nusmp:animations/entity/arc_devil_avatar.animation.json"
+ },
+ "remodel_devil_avatar_megicula_form2": {
+  "kind": "geo",
+  "model": "nusmp:geo/entity/arc_devil_avatar_form2.geo.json",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     2.061,
+     0
+    ],
+    "dist": 8.449
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 8,
+    "target": [
+     0,
+     2.061,
+     0
+    ],
+    "dist": 8.449
+   }
+  ],
+  "texture": "nusmp:textures/entity/arc_devil_avatar_megicula_form2.png",
+  "animations": "nusmp:animations/entity/arc_devil_avatar_form2.animation.json"
+ }
+}
