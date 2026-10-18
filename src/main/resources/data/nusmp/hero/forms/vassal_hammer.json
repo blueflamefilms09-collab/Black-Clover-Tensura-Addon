@@ -1,0 +1,84 @@
+{
+  "weapon": "vassal_hammer",
+  "forms": [
+    {
+      "id": "base",
+      "name": "Small Hammer",
+      "desc": "The Vassal Hammer as it first answers a wielder: a plain iron hammer with a spark of the gem in its face. Slow, heavy and honest. Every blow builds poise on the foe until the foe breaks.",
+      "tier": 0,
+      "parents": [],
+      "requires": [],
+      "mastery": 0,
+      "stats": { "armor": 1.0, "knockback_resistance": 0.1 },
+      "abilityBonus": {},
+      "skills": { "use": "hammer.overhead_smash", "sneak": "hammer.shockwave", "key1": "hammer.armor_crack" },
+      "passives": ["heavy_blows"],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "stone_hammer",
+      "name": "Stone Hammer",
+      "desc": "The gem takes in stone and coal and the head grows rough and heavy. A full swing throws rubble at the foes beside the one struck, and the wielder learns to plant their feet and shake the ground.",
+      "tier": 1,
+      "parents": ["base"],
+      "requires": [
+        { "item": "minecraft:cobblestone", "count": 48 },
+        { "item": "minecraft:coal", "count": 16 }
+      ],
+      "mastery": 100,
+      "stats": { "attack_damage": 1.5, "armor": 1.0, "knockback_resistance": 0.2 },
+      "abilityBonus": { "knockback_resistance": 0.05 },
+      "skills": { "use": "hammer.overhead_smash", "sneak": "hammer.shockwave", "key1": "hammer.armor_crack", "key2": "hammer.quake_stomp" },
+      "passives": ["heavy_blows", "rubble"],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "anvil_hammer",
+      "name": "Anvil Hammer",
+      "desc": "Iron, gold and blaze rods feed the gem and the head becomes a smith's hammer. Sneaking behind it blunts the blows you take, it can launch a foe out of the fight, and it can temper you and your allies like hot iron.",
+      "tier": 2,
+      "parents": ["stone_hammer"],
+      "requires": [
+        { "item": "minecraft:iron_ingot", "count": 64 },
+        { "item": "minecraft:gold_ingot", "count": 24 },
+        { "item": "minecraft:blaze_rod", "count": 8 }
+      ],
+      "mastery": 180,
+      "stats": { "attack_damage": 2.0, "armor": 3.0, "armor_toughness": 1.0, "knockback_resistance": 0.35, "max_health": 4.0 },
+      "abilityBonus": { "armor": 0.5, "max_health": 1.0 },
+      "skills": { "use": "hammer.overhead_smash", "sneak": "hammer.skyward_smash", "key1": "hammer.armor_crack", "key2": "hammer.quake_stomp", "key3": "hammer.forge_aegis" },
+      "passives": ["heavy_blows", "anvil_stance"],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "synthesis_hammer",
+      "name": "Synthesis Hammer",
+      "desc": "Diamond, obsidian and netherite scrap: the gem fuses the signature of every form you have learned into one head, the way the hammer's power-up copies the best of one form onto another. Every third full swing cracks armour, and the wielder can leap and fall like a mountain.",
+      "tier": 3,
+      "parents": ["anvil_hammer"],
+      "requires": [
+        { "item": "minecraft:diamond", "count": 32 },
+        { "item": "minecraft:obsidian", "count": 48 },
+        { "item": "minecraft:netherite_scrap", "count": 8 }
+      ],
+      "mastery": 300,
+      "stats": { "attack_damage": 4.0, "attack_speed": -0.2, "armor": 4.0, "armor_toughness": 2.0, "knockback_resistance": 0.5, "max_health": 6.0 },
+      "abilityBonus": { "attack_damage": 1.0, "armor": 1.0, "max_health": 1.5 },
+      "skills": { "use": "hammer.overhead_smash", "sneak": "hammer.shockwave", "key1": "hammer.skyward_smash", "key2": "hammer.quake_stomp", "key3": "hammer.titan_fall" },
+      "passives": ["heavy_blows", "synthesis", "crushing_weight"],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "weapon": "vassal_claw",
+  "forms": [
+    {
+      "id": "base",
+      "name": "Small Claw",
+      "desc": "The Vassal Claw as it first answers a wielder: three short blades on a glove and a spark of the gem on the back of the hand. Light and quick. Every blow opens a wound that goes on bleeding, and every damaging technique grows with use.",
+      "tier": 0,
+      "parents": [],
+      "requires": [],
+      "mastery": 0,
+      "stats": { "movement_speed": 0.02 },
+      "abilityBonus": {},
+      "skills": { "use": "claw.air_strike_slash", "sneak": "claw.second_slash", "key1": "claw.hemorrhage" },
+      "passives": ["rending_blows", "skill_mastery"],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "bone_claws",
+      "name": "Bone Claws",
+      "desc": "The gem takes in bone and hide and the blades lengthen into fangs. A blow on a foe that bears three wounds cuts once more, and the wielder gains the Pounce, a leap that lands with the claws out.",
+      "tier": 1,
+      "parents": ["base"],
+      "requires": [
+        { "item": "minecraft:bone", "count": 40 },
+        { "item": "minecraft:leather", "count": 24 }
+      ],
+      "mastery": 100,
+      "stats": { "attack_damage": 1.0, "attack_speed": 0.3, "movement_speed": 0.03 },
+      "abilityBonus": { "movement_speed": 0.01 },
+      "skills": { "use": "claw.air_strike_slash", "sneak": "claw.second_slash", "key1": "claw.hemorrhage", "key2": "claw.pounce" },
+      "passives": ["rending_blows", "skill_mastery", "scent_of_blood"],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "rope_claws",
+      "name": "Rope Claws",
+      "desc": "String and phantom membrane give the claws a cord, the Rope Claw of the series. The Pounce now homes in on the foe you face, and the wielder can rake a foe in a four-cut Shredding Rush that strips its armour.",
+      "tier": 2,
+      "parents": ["bone_claws"],
+      "requires": [
+        { "item": "minecraft:string", "count": 48 },
+        { "item": "minecraft:phantom_membrane", "count": 16 }
+      ],
+      "mastery": 180,
+      "stats": { "attack_damage": 1.5, "attack_speed": 0.4, "movement_speed": 0.05, "reach": 0.5 },
+      "abilityBonus": { "attack_speed": 0.1, "movement_speed": 0.01 },
+      "skills": { "use": "claw.air_strike_slash", "sneak": "claw.second_slash", "key1": "claw.hemorrhage", "key2": "claw.pounce", "key3": "claw.shredding_rush" },
+      "passives": ["rending_blows", "skill_mastery", "scent_of_blood", "rope_hook"],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "dragon_head_claws",
+      "name": "Dragon Head Claws",
+      "desc": "Dragon breath, diamond and membrane fuse the claws into the heads of dragons, the Dragon Head Claws of the series. Wounds go deeper and stay open longer, Predator's Instinct shows every bleeding foe, and Dragon Rend tears through a whole line.",
+      "tier": 3,
+      "parents": ["rope_claws"],
+      "requires": [
+        { "item": "minecraft:dragon_breath", "count": 4 },
+        { "item": "minecraft:diamond", "count": 16 },
+        { "item": "minecraft:phantom_membrane", "count": 32 }
+      ],
+      "mastery": 300,
+      "stats": { "attack_damage": 3.0, "attack_speed": 0.5, "movement_speed": 0.07, "reach": 0.5, "max_health": 4.0 },
+      "abilityBonus": { "attack_damage": 0.75, "movement_speed": 0.015, "max_health": 1.0 },
+      "skills": { "use": "claw.air_strike_slash", "sneak": "claw.second_slash", "key1": "claw.hemorrhage", "key2": "claw.predator_instinct", "key3": "claw.dragon_rend" },
+      "passives": ["rending_blows", "skill_mastery", "scent_of_blood", "dragon_fangs"],
+      "look": "base",
+      "curse": false,
+      "sin": null,
+      "corruptionPerSecond": 0
+    },
+    {
+      "id": "cursed_claw",
+      "name": "Cursed Claw",
+      "desc": "The claws drink the despair of the wielder. Every blow opens an extra wound, and the Wahnsinn Claw fires a beam of cursed light, at a price paid in corruption. Only a wielder who has embraced the curse can wear it.",
+      "tier": 1,
+      "parents": ["base"],
+      "requires": [],
+      "mastery": 150,
+      "stats": { "attack_damage": 4.0, "attack_speed": 0.4, "movement_speed": 0.04, "armor": -2.0 },
+      "abilityBonus": {},
+      "skills": { "use": "claw.air_strike_slash", "sneak": "claw.wahnsinn_claw", "key1": "claw.hemorrhage", "key2": "claw.pounce", "key3": "claw.shredding_rush" },
+      "passives": ["rending_blows", "skill_mastery", "madness"],
+      "look": "base",
+      "curse": true,
+      "sin": "wrath",
+      "corruptionPerSecond": 6
+    }
+  ]
+}
