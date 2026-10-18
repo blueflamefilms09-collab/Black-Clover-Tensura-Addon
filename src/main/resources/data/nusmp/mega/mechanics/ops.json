@@ -1,0 +1,2816 @@
+{
+ "version": 1,
+ "ops": {
+  "effect": {
+   "group": "creature",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "id",
+     "t": "str",
+     "d": "minecraft:slowness"
+    },
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 5,
+     "lo": 0.5,
+     "hi": 600
+    },
+    {
+     "n": "amp",
+     "t": "num",
+     "d": 0,
+     "lo": 0,
+     "hi": 9
+    },
+    {
+     "n": "who",
+     "t": "str",
+     "d": "players",
+     "e": [
+      "players",
+      "mobs",
+      "all"
+     ]
+    }
+   ],
+   "doc": "apply a mob effect"
+  },
+  "damage": {
+   "group": "creature",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "amount",
+     "t": "num",
+     "d": 2,
+     "lo": 0,
+     "hi": 400
+    },
+    {
+     "n": "pct",
+     "t": "num",
+     "d": 0,
+     "lo": 0,
+     "hi": 90
+    },
+    {
+     "n": "kind",
+     "t": "str",
+     "d": "magic",
+     "e": [
+      "magic",
+      "fire",
+      "freeze",
+      "fall",
+      "drown",
+      "wither",
+      "generic",
+      "sting",
+      "lightning"
+     ]
+    },
+    {
+     "n": "who",
+     "t": "str",
+     "d": "players",
+     "e": [
+      "players",
+      "mobs",
+      "all"
+     ]
+    }
+   ],
+   "doc": "hurt"
+  },
+  "heal": {
+   "group": "creature",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "amount",
+     "t": "num",
+     "d": 4,
+     "lo": 0,
+     "hi": 400
+    },
+    {
+     "n": "pct",
+     "t": "num",
+     "d": 0,
+     "lo": 0,
+     "hi": 100
+    },
+    {
+     "n": "who",
+     "t": "str",
+     "d": "players",
+     "e": [
+      "players",
+      "mobs",
+      "all"
+     ]
+    }
+   ],
+   "doc": "heal"
+  },
+  "knockback": {
+   "group": "creature",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "power",
+     "t": "num",
+     "d": 1.0,
+     "lo": 0,
+     "hi": 5
+    },
+    {
+     "n": "up",
+     "t": "num",
+     "d": 0.3,
+     "lo": 0,
+     "hi": 2
+    },
+    {
+     "n": "from",
+     "t": "str",
+     "d": "anchor",
+     "e": [
+      "anchor",
+      "random",
+      "player"
+     ]
+    },
+    {
+     "n": "who",
+     "t": "str",
+     "d": "players",
+     "e": [
+      "players",
+      "mobs",
+      "all"
+     ]
+    }
+   ],
+   "doc": "push away"
+  },
+  "pull": {
+   "group": "creature",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "power",
+     "t": "num",
+     "d": 0.8,
+     "lo": 0,
+     "hi": 4
+    },
+    {
+     "n": "who",
+     "t": "str",
+     "d": "players",
+     "e": [
+      "players",
+      "mobs",
+      "all"
+     ]
+    }
+   ],
+   "doc": "drag towards the anchor"
+  },
+  "launch": {
+   "group": "creature",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "power",
+     "t": "num",
+     "d": 1.0,
+     "lo": 0,
+     "hi": 4
+    },
+    {
+     "n": "who",
+     "t": "str",
+     "d": "players",
+     "e": [
+      "players",
+      "mobs",
+      "all"
+     ]
+    }
+   ],
+   "doc": "throw upward"
+  },
+  "dash": {
+   "group": "creature",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "power",
+     "t": "num",
+     "d": 1.0,
+     "lo": 0,
+     "hi": 4
+    },
+    {
+     "n": "dir",
+     "t": "str",
+     "d": "random",
+     "e": [
+      "random",
+      "toward",
+      "away",
+      "north",
+      "south",
+      "east",
+      "west"
+     ]
+    },
+    {
+     "n": "who",
+     "t": "str",
+     "d": "players",
+     "e": [
+      "players",
+      "mobs",
+      "all"
+     ]
+    }
+   ],
+   "doc": "a sideways shove"
+  },
+  "ignite": {
+   "group": "creature",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 4,
+     "lo": 0.5,
+     "hi": 30
+    },
+    {
+     "n": "who",
+     "t": "str",
+     "d": "players",
+     "e": [
+      "players",
+      "mobs",
+      "all"
+     ]
+    }
+   ],
+   "doc": "set on fire"
+  },
+  "freeze": {
+   "group": "creature",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 5,
+     "lo": 0.5,
+     "hi": 30
+    },
+    {
+     "n": "who",
+     "t": "str",
+     "d": "players",
+     "e": [
+      "players",
+      "mobs",
+      "all"
+     ]
+    }
+   ],
+   "doc": "powder-snow chill"
+  },
+  "starve": {
+   "group": "creature",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "amount",
+     "t": "num",
+     "d": 4,
+     "lo": 0,
+     "hi": 20
+    }
+   ],
+   "doc": "drain hunger"
+  },
+  "drain_mana": {
+   "group": "creature",
+   "channels": [
+    "mana"
+   ],
+   "sustained": false,
+   "args": [
+    {
+     "n": "pct",
+     "t": "num",
+     "d": 10,
+     "lo": 0,
+     "hi": 100
+    }
+   ],
+   "doc": "drain magicules"
+  },
+  "restore_mana": {
+   "group": "creature",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "pct",
+     "t": "num",
+     "d": 20,
+     "lo": 0,
+     "hi": 100
+    }
+   ],
+   "doc": "restore magicules"
+  },
+  "xp": {
+   "group": "creature",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "levels",
+     "t": "num",
+     "d": -1,
+     "lo": -30,
+     "hi": 30
+    }
+   ],
+   "doc": "give or take experience levels"
+  },
+  "gravity": {
+   "group": "creature",
+   "channels": [
+    "gravity"
+   ],
+   "sustained": true,
+   "args": [
+    {
+     "n": "mode",
+     "t": "str",
+     "d": "up",
+     "e": [
+      "up",
+      "heavy",
+      "float",
+      "spin"
+     ]
+    },
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 4,
+     "lo": 0.5,
+     "hi": 60
+    },
+    {
+     "n": "who",
+     "t": "str",
+     "d": "players",
+     "e": [
+      "players",
+      "mobs",
+      "all"
+     ]
+    }
+   ],
+   "doc": "flip or weigh gravity"
+  },
+  "root": {
+   "group": "creature",
+   "channels": [
+    "movement"
+   ],
+   "sustained": false,
+   "args": [
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 3,
+     "lo": 0.5,
+     "hi": 30
+    },
+    {
+     "n": "who",
+     "t": "str",
+     "d": "players",
+     "e": [
+      "players",
+      "mobs",
+      "all"
+     ]
+    }
+   ],
+   "doc": "hold in place"
+  },
+  "tp_random": {
+   "group": "creature",
+   "channels": [
+    "teleport"
+   ],
+   "sustained": false,
+   "args": [
+    {
+     "n": "radius",
+     "t": "num",
+     "d": 6,
+     "lo": 1,
+     "hi": 40
+    },
+    {
+     "n": "who",
+     "t": "str",
+     "d": "players",
+     "e": [
+      "players",
+      "mobs",
+      "all"
+     ]
+    }
+   ],
+   "doc": "blink to a random safe spot of the area"
+  },
+  "tp_anchor": {
+   "group": "creature",
+   "channels": [
+    "teleport"
+   ],
+   "sustained": false,
+   "args": [
+    {
+     "n": "who",
+     "t": "str",
+     "d": "players",
+     "e": [
+      "players",
+      "mobs",
+      "all"
+     ]
+    }
+   ],
+   "doc": "to the anchor"
+  },
+  "tp_swap": {
+   "group": "creature",
+   "channels": [
+    "teleport"
+   ],
+   "sustained": false,
+   "args": [],
+   "doc": "two players trade places"
+  },
+  "tp_entry": {
+   "group": "creature",
+   "channels": [
+    "teleport"
+   ],
+   "sustained": false,
+   "args": [],
+   "doc": "back to where they came in"
+  },
+  "tp_room": {
+   "group": "creature",
+   "channels": [
+    "teleport"
+   ],
+   "sustained": false,
+   "args": [
+    {
+     "n": "mode",
+     "t": "str",
+     "d": "random",
+     "e": [
+      "random",
+      "next",
+      "prev",
+      "first",
+      "last"
+     ]
+    }
+   ],
+   "doc": "to another room of the floor"
+  },
+  "mark": {
+   "group": "creature",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 10,
+     "lo": 1,
+     "hi": 120
+    },
+    {
+     "n": "who",
+     "t": "str",
+     "d": "players",
+     "e": [
+      "players",
+      "mobs",
+      "all"
+     ]
+    }
+   ],
+   "doc": "glowing"
+  },
+  "shuffle_hotbar": {
+   "group": "creature",
+   "channels": [],
+   "sustained": false,
+   "args": [],
+   "doc": "swap two hotbar slots"
+  },
+  "item_cooldown": {
+   "group": "creature",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 6,
+     "lo": 0.5,
+     "hi": 60
+    }
+   ],
+   "doc": "every item on cooldown"
+  },
+  "curse_hand": {
+   "group": "creature",
+   "channels": [
+    "curse"
+   ],
+   "sustained": true,
+   "args": [
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 20,
+     "lo": 1,
+     "hi": 300
+    },
+    {
+     "n": "dmg",
+     "t": "num",
+     "d": 1.0,
+     "lo": 0,
+     "hi": 20
+    }
+   ],
+   "doc": "attacking hurts the attacker"
+  },
+  "take_item": {
+   "group": "creature",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "item",
+     "t": "str",
+     "d": "minecraft:gold_nugget"
+    },
+    {
+     "n": "count",
+     "t": "num",
+     "d": 1,
+     "lo": 1,
+     "hi": 64
+    }
+   ],
+   "doc": "remove items from the inventory"
+  },
+  "give_item": {
+   "group": "creature",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "item",
+     "t": "str",
+     "d": "minecraft:gold_nugget"
+    },
+    {
+     "n": "count",
+     "t": "num",
+     "d": 1,
+     "lo": 1,
+     "hi": 64
+    }
+   ],
+   "doc": "give items"
+  },
+  "give_loot": {
+   "group": "creature",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "table",
+     "t": "str",
+     "d": "nusmp:chests/labyrinth_trial"
+    },
+    {
+     "n": "rolls",
+     "t": "num",
+     "d": 1,
+     "lo": 1,
+     "hi": 4
+    }
+   ],
+   "doc": "roll a loot table into the inventory"
+  },
+  "xp_orbs": {
+   "group": "creature",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "amount",
+     "t": "num",
+     "d": 20,
+     "lo": 1,
+     "hi": 2000
+    }
+   ],
+   "doc": "drop experience"
+  },
+  "burden": {
+   "group": "creature",
+   "channels": [
+    "movement"
+   ],
+   "sustained": true,
+   "args": [
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 6,
+     "lo": 1,
+     "hi": 120
+    },
+    {
+     "n": "per",
+     "t": "num",
+     "d": 6,
+     "lo": 1,
+     "hi": 36
+    }
+   ],
+   "doc": "slowness by how full the inventory is"
+  },
+  "speed": {
+   "group": "creature",
+   "channels": [
+    "time"
+   ],
+   "sustained": true,
+   "args": [
+    {
+     "n": "factor",
+     "t": "num",
+     "d": -0.4,
+     "lo": -0.9,
+     "hi": 2.0
+    },
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 6,
+     "lo": 1,
+     "hi": 120
+    },
+    {
+     "n": "who",
+     "t": "str",
+     "d": "players",
+     "e": [
+      "players",
+      "mobs",
+      "all"
+     ]
+    }
+   ],
+   "doc": "walk speed modifier (time dilation)"
+  },
+  "disorient": {
+   "group": "creature",
+   "channels": [],
+   "sustained": false,
+   "args": [],
+   "doc": "spin the view"
+  },
+  "link": {
+   "group": "creature",
+   "channels": [
+    "tether"
+   ],
+   "sustained": true,
+   "args": [
+    {
+     "n": "radius",
+     "t": "num",
+     "d": 8,
+     "lo": 2,
+     "hi": 30
+    },
+    {
+     "n": "dmg",
+     "t": "num",
+     "d": 1.0,
+     "lo": 0,
+     "hi": 20
+    },
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 20,
+     "lo": 1,
+     "hi": 300
+    }
+   ],
+   "doc": "players tied together"
+  },
+  "share_damage": {
+   "group": "creature",
+   "channels": [
+    "burden"
+   ],
+   "sustained": true,
+   "args": [
+    {
+     "n": "pct",
+     "t": "num",
+     "d": 50,
+     "lo": 10,
+     "hi": 100
+    },
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 20,
+     "lo": 1,
+     "hi": 300
+    }
+   ],
+   "doc": "a blow is shared by the party"
+  },
+  "downed": {
+   "group": "creature",
+   "channels": [
+    "revive"
+   ],
+   "sustained": true,
+   "args": [
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 12,
+     "lo": 3,
+     "hi": 60
+    }
+   ],
+   "doc": "a lethal blow leaves a downed player a mate can lift"
+  },
+  "no_regen": {
+   "group": "creature",
+   "channels": [
+    "regen"
+   ],
+   "sustained": true,
+   "args": [
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 20,
+     "lo": 1,
+     "hi": 300
+    }
+   ],
+   "doc": "no natural healing"
+  },
+  "place": {
+   "group": "world",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "block",
+     "t": "str",
+     "d": "minecraft:stone"
+    },
+    {
+     "n": "shape",
+     "t": "str",
+     "d": "ring",
+     "e": [
+      "ring",
+      "disc",
+      "cross",
+      "scatter",
+      "pillars",
+      "walls",
+      "line",
+      "grid",
+      "square"
+     ]
+    },
+    {
+     "n": "radius",
+     "t": "num",
+     "d": 4,
+     "lo": 1,
+     "hi": 12
+    },
+    {
+     "n": "height",
+     "t": "num",
+     "d": 1,
+     "lo": 1,
+     "hi": 6
+    },
+    {
+     "n": "count",
+     "t": "num",
+     "d": 12,
+     "lo": 1,
+     "hi": 80
+    },
+    {
+     "n": "at",
+     "t": "str",
+     "d": "auto",
+     "e": [
+      "auto",
+      "anchor",
+      "player",
+      "room"
+     ]
+    },
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 0,
+     "lo": 0,
+     "hi": 600
+    }
+   ],
+   "doc": "place blocks into free air"
+  },
+  "floor_swap": {
+   "group": "world",
+   "channels": [
+    "floor"
+   ],
+   "sustained": false,
+   "args": [
+    {
+     "n": "block",
+     "t": "str",
+     "d": "minecraft:magma_block"
+    },
+    {
+     "n": "shape",
+     "t": "str",
+     "d": "disc",
+     "e": [
+      "disc",
+      "ring",
+      "checker",
+      "scatter",
+      "room"
+     ]
+    },
+    {
+     "n": "radius",
+     "t": "num",
+     "d": 3,
+     "lo": 1,
+     "hi": 12
+    },
+    {
+     "n": "at",
+     "t": "str",
+     "d": "auto",
+     "e": [
+      "auto",
+      "anchor",
+      "player",
+      "room"
+     ]
+    },
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 0,
+     "lo": 0,
+     "hi": 600
+    }
+   ],
+   "doc": "replace the floor layer"
+  },
+  "pit": {
+   "group": "world",
+   "channels": [
+    "floor"
+   ],
+   "sustained": false,
+   "args": [
+    {
+     "n": "radius",
+     "t": "num",
+     "d": 2,
+     "lo": 1,
+     "hi": 6
+    },
+    {
+     "n": "depth",
+     "t": "num",
+     "d": 1,
+     "lo": 1,
+     "hi": 2
+    },
+    {
+     "n": "at",
+     "t": "str",
+     "d": "auto",
+     "e": [
+      "auto",
+      "anchor",
+      "player",
+      "room"
+     ]
+    },
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 8,
+     "lo": 1,
+     "hi": 120
+    }
+   ],
+   "doc": "open a shallow pit"
+  },
+  "flood": {
+   "group": "world",
+   "channels": [
+    "water"
+   ],
+   "sustained": false,
+   "args": [
+    {
+     "n": "height",
+     "t": "num",
+     "d": 2,
+     "lo": 1,
+     "hi": 8
+    },
+    {
+     "n": "block",
+     "t": "str",
+     "d": "minecraft:water"
+    },
+    {
+     "n": "at",
+     "t": "str",
+     "d": "room",
+     "e": [
+      "auto",
+      "anchor",
+      "player",
+      "room"
+     ]
+    },
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 10,
+     "lo": 1,
+     "hi": 300
+    }
+   ],
+   "doc": "raise liquid over the floor"
+  },
+  "cage": {
+   "group": "world",
+   "channels": [
+    "cage"
+   ],
+   "sustained": false,
+   "args": [
+    {
+     "n": "radius",
+     "t": "num",
+     "d": 3,
+     "lo": 1,
+     "hi": 8
+    },
+    {
+     "n": "height",
+     "t": "num",
+     "d": 3,
+     "lo": 2,
+     "hi": 6
+    },
+    {
+     "n": "block",
+     "t": "str",
+     "d": "minecraft:iron_bars"
+    },
+    {
+     "n": "at",
+     "t": "str",
+     "d": "auto",
+     "e": [
+      "auto",
+      "anchor",
+      "player",
+      "room"
+     ]
+    },
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 0,
+     "lo": 0,
+     "hi": 300
+    }
+   ],
+   "doc": "bars round the party"
+  },
+  "seal_doors": {
+   "group": "world",
+   "channels": [
+    "doors"
+   ],
+   "sustained": false,
+   "args": [
+    {
+     "n": "block",
+     "t": "str",
+     "d": "minecraft:iron_bars"
+    },
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 0,
+     "lo": 0,
+     "hi": 600
+    }
+   ],
+   "doc": "bar every doorway of the room"
+  },
+  "unseal": {
+   "group": "world",
+   "channels": [],
+   "sustained": false,
+   "args": [],
+   "doc": "lift the seal and cages of this mechanic"
+  },
+  "lights_out": {
+   "group": "world",
+   "channels": [
+    "light"
+   ],
+   "sustained": false,
+   "args": [
+    {
+     "n": "radius",
+     "t": "num",
+     "d": 10,
+     "lo": 2,
+     "hi": 30
+    },
+    {
+     "n": "at",
+     "t": "str",
+     "d": "auto",
+     "e": [
+      "auto",
+      "anchor",
+      "player",
+      "room"
+     ]
+    },
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 0,
+     "lo": 0,
+     "hi": 600
+    }
+   ],
+   "doc": "snuff the light sources"
+  },
+  "lights_on": {
+   "group": "world",
+   "channels": [
+    "light"
+   ],
+   "sustained": false,
+   "args": [
+    {
+     "n": "count",
+     "t": "num",
+     "d": 6,
+     "lo": 1,
+     "hi": 30
+    },
+    {
+     "n": "level",
+     "t": "num",
+     "d": 15,
+     "lo": 1,
+     "hi": 15
+    },
+    {
+     "n": "at",
+     "t": "str",
+     "d": "auto",
+     "e": [
+      "auto",
+      "anchor",
+      "player",
+      "room"
+     ]
+    },
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 0,
+     "lo": 0,
+     "hi": 600
+    }
+   ],
+   "doc": "invisible light blocks"
+  },
+  "wall_blink": {
+   "group": "world",
+   "channels": [
+    "walls"
+   ],
+   "sustained": true,
+   "args": [
+    {
+     "n": "block",
+     "t": "str",
+     "d": "minecraft:stone_bricks"
+    },
+    {
+     "n": "period",
+     "t": "num",
+     "d": 40,
+     "lo": 10,
+     "hi": 400
+    },
+    {
+     "n": "radius",
+     "t": "num",
+     "d": 4,
+     "lo": 2,
+     "hi": 10
+    },
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 30,
+     "lo": 2,
+     "hi": 300
+    },
+    {
+     "n": "at",
+     "t": "str",
+     "d": "auto",
+     "e": [
+      "auto",
+      "anchor",
+      "player",
+      "room"
+     ]
+    }
+   ],
+   "doc": "walls that come and go"
+  },
+  "slider": {
+   "group": "world",
+   "channels": [
+    "platform"
+   ],
+   "sustained": true,
+   "args": [
+    {
+     "n": "block",
+     "t": "str",
+     "d": "minecraft:smooth_stone"
+    },
+    {
+     "n": "axis",
+     "t": "str",
+     "d": "x",
+     "e": [
+      "x",
+      "z",
+      "y"
+     ]
+    },
+    {
+     "n": "range",
+     "t": "num",
+     "d": 6,
+     "lo": 2,
+     "hi": 14
+    },
+    {
+     "n": "period",
+     "t": "num",
+     "d": 10,
+     "lo": 2,
+     "hi": 60
+    },
+    {
+     "n": "radius",
+     "t": "num",
+     "d": 2,
+     "lo": 1,
+     "hi": 5
+    },
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 30,
+     "lo": 2,
+     "hi": 300
+    },
+    {
+     "n": "at",
+     "t": "str",
+     "d": "auto",
+     "e": [
+      "auto",
+      "anchor",
+      "player",
+      "room"
+     ]
+    }
+   ],
+   "doc": "a platform that travels"
+  },
+  "ceiling": {
+   "group": "world",
+   "channels": [
+    "ceiling"
+   ],
+   "sustained": true,
+   "args": [
+    {
+     "n": "block",
+     "t": "str",
+     "d": "minecraft:stone"
+    },
+    {
+     "n": "period",
+     "t": "num",
+     "d": 12,
+     "lo": 2,
+     "hi": 60
+    },
+    {
+     "n": "radius",
+     "t": "num",
+     "d": 4,
+     "lo": 2,
+     "hi": 9
+    },
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 12,
+     "lo": 2,
+     "hi": 120
+    },
+    {
+     "n": "at",
+     "t": "str",
+     "d": "auto",
+     "e": [
+      "auto",
+      "anchor",
+      "player",
+      "room"
+     ]
+    }
+   ],
+   "doc": "a ceiling that comes down and goes up again"
+  },
+  "trail": {
+   "group": "world",
+   "channels": [
+    "trail"
+   ],
+   "sustained": true,
+   "args": [
+    {
+     "n": "block",
+     "t": "str",
+     "d": "minecraft:glass"
+    },
+    {
+     "n": "life",
+     "t": "num",
+     "d": 40,
+     "lo": 5,
+     "hi": 400
+    },
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 20,
+     "lo": 1,
+     "hi": 300
+    }
+   ],
+   "doc": "a bridge that forms under the feet and fades"
+  },
+  "prop": {
+   "group": "world",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "kind",
+     "t": "str",
+     "d": "pedestal",
+     "e": [
+      "plate",
+      "lever",
+      "pedestal",
+      "lectern",
+      "button",
+      "chest"
+     ]
+    },
+    {
+     "n": "count",
+     "t": "num",
+     "d": 3,
+     "lo": 1,
+     "hi": 8
+    },
+    {
+     "n": "at",
+     "t": "str",
+     "d": "auto",
+     "e": [
+      "auto",
+      "anchor",
+      "player",
+      "room"
+     ]
+    }
+   ],
+   "doc": "interactive props of this mechanic"
+  },
+  "spawn_group": {
+   "group": "mob",
+   "channels": [
+    "summon"
+   ],
+   "sustained": false,
+   "args": [
+    {
+     "n": "group",
+     "t": "str",
+     "d": "undead",
+     "e": [
+      "undead",
+      "beast",
+      "construct",
+      "fiend",
+      "arcane",
+      "swarm",
+      "elemental",
+      "knight"
+     ]
+    },
+    {
+     "n": "count",
+     "t": "num",
+     "d": 3,
+     "lo": 1,
+     "hi": 24
+    },
+    {
+     "n": "ring",
+     "t": "num",
+     "d": 6,
+     "lo": 2,
+     "hi": 20
+    },
+    {
+     "n": "hunt",
+     "t": "bool",
+     "d": true
+    },
+    {
+     "n": "hp",
+     "t": "num",
+     "d": 1.0,
+     "lo": 0.5,
+     "hi": 6
+    }
+   ],
+   "doc": "a band of monsters round the anchor"
+  },
+  "spawn_ambush": {
+   "group": "mob",
+   "channels": [
+    "summon"
+   ],
+   "sustained": false,
+   "args": [
+    {
+     "n": "group",
+     "t": "str",
+     "d": "undead",
+     "e": [
+      "undead",
+      "beast",
+      "construct",
+      "fiend",
+      "arcane",
+      "swarm",
+      "elemental",
+      "knight"
+     ]
+    },
+    {
+     "n": "count",
+     "t": "num",
+     "d": 3,
+     "lo": 1,
+     "hi": 24
+    },
+    {
+     "n": "hp",
+     "t": "num",
+     "d": 1.0,
+     "lo": 0.5,
+     "hi": 6
+    }
+   ],
+   "doc": "monsters from the dark edge of the room"
+  },
+  "spawn_guard": {
+   "group": "mob",
+   "channels": [
+    "summon"
+   ],
+   "sustained": false,
+   "args": [
+    {
+     "n": "group",
+     "t": "str",
+     "d": "construct",
+     "e": [
+      "undead",
+      "beast",
+      "construct",
+      "fiend",
+      "arcane",
+      "swarm",
+      "elemental",
+      "knight"
+     ]
+    },
+    {
+     "n": "count",
+     "t": "num",
+     "d": 2,
+     "lo": 1,
+     "hi": 12
+    },
+    {
+     "n": "still",
+     "t": "bool",
+     "d": true
+    },
+    {
+     "n": "hp",
+     "t": "num",
+     "d": 1.5,
+     "lo": 0.5,
+     "hi": 8
+    }
+   ],
+   "doc": "guards that hold their post"
+  },
+  "spawn_swarm": {
+   "group": "mob",
+   "channels": [
+    "summon"
+   ],
+   "sustained": false,
+   "args": [
+    {
+     "n": "kind",
+     "t": "str",
+     "d": "silverfish",
+     "e": [
+      "silverfish",
+      "endermite",
+      "vex",
+      "bee",
+      "cave_spider"
+     ]
+    },
+    {
+     "n": "count",
+     "t": "num",
+     "d": 6,
+     "lo": 1,
+     "hi": 30
+    }
+   ],
+   "doc": "a swarm of small things"
+  },
+  "spawn_elite": {
+   "group": "mob",
+   "channels": [
+    "summon"
+   ],
+   "sustained": false,
+   "args": [
+    {
+     "n": "group",
+     "t": "str",
+     "d": "knight",
+     "e": [
+      "undead",
+      "beast",
+      "construct",
+      "fiend",
+      "arcane",
+      "swarm",
+      "elemental",
+      "knight"
+     ]
+    },
+    {
+     "n": "hp",
+     "t": "num",
+     "d": 3.0,
+     "lo": 1,
+     "hi": 12
+    }
+   ],
+   "doc": "one big monster"
+  },
+  "spawn_chest": {
+   "group": "world",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "loot",
+     "t": "str",
+     "d": "nusmp:chests/labyrinth_trial"
+    },
+    {
+     "n": "mimic",
+     "t": "num",
+     "d": 0.3,
+     "lo": 0,
+     "hi": 1
+    },
+    {
+     "n": "cursed",
+     "t": "bool",
+     "d": false
+    },
+    {
+     "n": "at",
+     "t": "str",
+     "d": "auto",
+     "e": [
+      "auto",
+      "anchor",
+      "player",
+      "room"
+     ]
+    }
+   ],
+   "doc": "a chest, maybe a mimic, maybe cursed"
+  },
+  "buff_mobs": {
+   "group": "mob",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "id",
+     "t": "str",
+     "d": "minecraft:strength"
+    },
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 10,
+     "lo": 1,
+     "hi": 300
+    },
+    {
+     "n": "amp",
+     "t": "num",
+     "d": 0,
+     "lo": 0,
+     "hi": 5
+    }
+   ],
+   "doc": "effect on the monsters of the area"
+  },
+  "shield_mobs": {
+   "group": "mob",
+   "channels": [
+    "shield"
+   ],
+   "sustained": false,
+   "args": [
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 0,
+     "lo": 0,
+     "hi": 600
+    }
+   ],
+   "doc": "monsters take no damage until unshielded"
+  },
+  "unshield": {
+   "group": "mob",
+   "channels": [],
+   "sustained": false,
+   "args": [],
+   "doc": "lift the shield"
+  },
+  "kill_mobs": {
+   "group": "mob",
+   "channels": [],
+   "sustained": false,
+   "args": [],
+   "doc": "remove the mechanic's monsters"
+  },
+  "heal_mobs": {
+   "group": "mob",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "pct",
+     "t": "num",
+     "d": 50,
+     "lo": 1,
+     "hi": 100
+    }
+   ],
+   "doc": "heal the monsters"
+  },
+  "enrage": {
+   "group": "mob",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 15,
+     "lo": 1,
+     "hi": 120
+    },
+    {
+     "n": "speed",
+     "t": "num",
+     "d": 0.3,
+     "lo": 0,
+     "hi": 1.5
+    }
+   ],
+   "doc": "faster and stronger"
+  },
+  "tether": {
+   "group": "mob",
+   "channels": [
+    "shield"
+   ],
+   "sustained": true,
+   "args": [
+    {
+     "n": "pct",
+     "t": "num",
+     "d": 80,
+     "lo": 10,
+     "hi": 95
+    }
+   ],
+   "doc": "followers take less damage while their leader lives"
+  },
+  "reflect": {
+   "group": "mob",
+   "channels": [
+    "reflect"
+   ],
+   "sustained": true,
+   "args": [
+    {
+     "n": "pct",
+     "t": "num",
+     "d": 30,
+     "lo": 5,
+     "hi": 100
+    },
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 20,
+     "lo": 1,
+     "hi": 300
+    }
+   ],
+   "doc": "blows are returned to the attacker"
+  },
+  "summon_wave": {
+   "group": "mob",
+   "channels": [
+    "summon"
+   ],
+   "sustained": true,
+   "args": [
+    {
+     "n": "group",
+     "t": "str",
+     "d": "undead",
+     "e": [
+      "undead",
+      "beast",
+      "construct",
+      "fiend",
+      "arcane",
+      "swarm",
+      "elemental",
+      "knight"
+     ]
+    },
+    {
+     "n": "count",
+     "t": "num",
+     "d": 3,
+     "lo": 1,
+     "hi": 12
+    },
+    {
+     "n": "waves",
+     "t": "num",
+     "d": 3,
+     "lo": 1,
+     "hi": 8
+    },
+    {
+     "n": "period",
+     "t": "num",
+     "d": 200,
+     "lo": 40,
+     "hi": 1200
+    }
+   ],
+   "doc": "waves on a timer"
+  },
+  "split_on_death": {
+   "group": "mob",
+   "channels": [],
+   "sustained": true,
+   "args": [
+    {
+     "n": "count",
+     "t": "num",
+     "d": 2,
+     "lo": 1,
+     "hi": 4
+    }
+   ],
+   "doc": "a slain monster leaves smaller ones"
+  },
+  "swap_mob": {
+   "group": "mob",
+   "channels": [
+    "teleport"
+   ],
+   "sustained": false,
+   "args": [],
+   "doc": "a monster trades places with a player"
+  },
+  "doppelganger": {
+   "group": "mob",
+   "channels": [
+    "summon"
+   ],
+   "sustained": false,
+   "args": [
+    {
+     "n": "count",
+     "t": "num",
+     "d": 1,
+     "lo": 1,
+     "hi": 4
+    }
+   ],
+   "doc": "a hostile double of a player"
+  },
+  "call_dm": {
+   "group": "mob",
+   "channels": [
+    "summon"
+   ],
+   "sustained": false,
+   "args": [],
+   "doc": "ask the Dungeon Master for an ambush"
+  },
+  "weather": {
+   "group": "env",
+   "channels": [
+    "weather"
+   ],
+   "sustained": true,
+   "args": [
+    {
+     "n": "mode",
+     "t": "str",
+     "d": "rain",
+     "e": [
+      "rain",
+      "thunder",
+      "clear"
+     ]
+    },
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 20,
+     "lo": 2,
+     "hi": 300
+    }
+   ],
+   "doc": "weather for the players of the area only"
+  },
+  "lightning": {
+   "group": "env",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "count",
+     "t": "num",
+     "d": 2,
+     "lo": 1,
+     "hi": 8
+    },
+    {
+     "n": "dmg",
+     "t": "num",
+     "d": 4,
+     "lo": 0,
+     "hi": 60
+    },
+    {
+     "n": "spread",
+     "t": "num",
+     "d": 5,
+     "lo": 1,
+     "hi": 16
+    }
+   ],
+   "doc": "visual bolts that hurt"
+  },
+  "projectile": {
+   "group": "env",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "kind",
+     "t": "str",
+     "d": "arrow",
+     "e": [
+      "arrow",
+      "snowball",
+      "small_fireball",
+      "spectral_arrow",
+      "egg"
+     ]
+    },
+    {
+     "n": "count",
+     "t": "num",
+     "d": 3,
+     "lo": 1,
+     "hi": 16
+    },
+    {
+     "n": "speed",
+     "t": "num",
+     "d": 1.2,
+     "lo": 0.3,
+     "hi": 3
+    },
+    {
+     "n": "dmg",
+     "t": "num",
+     "d": 2,
+     "lo": 0,
+     "hi": 60
+    }
+   ],
+   "doc": "shots from the walls"
+  },
+  "shockwave": {
+   "group": "env",
+   "channels": [],
+   "sustained": true,
+   "args": [
+    {
+     "n": "radius",
+     "t": "num",
+     "d": 6,
+     "lo": 2,
+     "hi": 16
+    },
+    {
+     "n": "dmg",
+     "t": "num",
+     "d": 3,
+     "lo": 0,
+     "hi": 60
+    },
+    {
+     "n": "power",
+     "t": "num",
+     "d": 0.8,
+     "lo": 0,
+     "hi": 3
+    },
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 2,
+     "lo": 0.5,
+     "hi": 8
+    }
+   ],
+   "doc": "a ring that runs outward"
+  },
+  "blast": {
+   "group": "env",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "radius",
+     "t": "num",
+     "d": 4,
+     "lo": 1,
+     "hi": 12
+    },
+    {
+     "n": "dmg",
+     "t": "num",
+     "d": 4,
+     "lo": 0,
+     "hi": 80
+    },
+    {
+     "n": "power",
+     "t": "num",
+     "d": 1.2,
+     "lo": 0,
+     "hi": 4
+    }
+   ],
+   "doc": "a burst with no block damage"
+  },
+  "wind": {
+   "group": "env",
+   "channels": [
+    "wind"
+   ],
+   "sustained": true,
+   "args": [
+    {
+     "n": "dir",
+     "t": "str",
+     "d": "north",
+     "e": [
+      "north",
+      "south",
+      "east",
+      "west",
+      "up",
+      "spiral"
+     ]
+    },
+    {
+     "n": "power",
+     "t": "num",
+     "d": 0.12,
+     "lo": 0.02,
+     "hi": 0.6
+    },
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 6,
+     "lo": 1,
+     "hi": 120
+    }
+   ],
+   "doc": "a steady push"
+  },
+  "quake": {
+   "group": "env",
+   "channels": [],
+   "sustained": true,
+   "args": [
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 4,
+     "lo": 1,
+     "hi": 30
+    },
+    {
+     "n": "dmg",
+     "t": "num",
+     "d": 0,
+     "lo": 0,
+     "hi": 20
+    }
+   ],
+   "doc": "the room shakes"
+  },
+  "rukh": {
+   "group": "env",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "align",
+     "t": "str",
+     "d": "auto",
+     "e": [
+      "auto",
+      "light",
+      "dark"
+     ]
+    },
+    {
+     "n": "shape",
+     "t": "str",
+     "d": "burst",
+     "e": [
+      "burst",
+      "ring",
+      "column",
+      "aura"
+     ]
+    },
+    {
+     "n": "count",
+     "t": "num",
+     "d": 10,
+     "lo": 1,
+     "hi": 12
+    }
+   ],
+   "doc": "Rukh particles"
+  },
+  "sound": {
+   "group": "env",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "id",
+     "t": "str",
+     "d": "minecraft:block.beacon.ambient"
+    },
+    {
+     "n": "vol",
+     "t": "num",
+     "d": 1.0,
+     "lo": 0,
+     "hi": 4
+    },
+    {
+     "n": "pitch",
+     "t": "num",
+     "d": 1.0,
+     "lo": 0.2,
+     "hi": 2
+    }
+   ],
+   "doc": "a sound"
+  },
+  "title": {
+   "group": "env",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "text",
+     "t": "str",
+     "d": ""
+    },
+    {
+     "n": "mode",
+     "t": "str",
+     "d": "actionbar",
+     "e": [
+      "actionbar",
+      "title",
+      "chat"
+     ]
+    }
+   ],
+   "doc": "a message to the players of the area"
+  },
+  "counter_add": {
+   "group": "env",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "name",
+     "t": "str",
+     "d": "count"
+    },
+    {
+     "n": "n",
+     "t": "num",
+     "d": 1,
+     "lo": -100,
+     "hi": 100
+    }
+   ],
+   "doc": "count something for the counter / trigger"
+  },
+  "reveal": {
+   "group": "env",
+   "channels": [],
+   "sustained": false,
+   "args": [
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 6,
+     "lo": 1,
+     "hi": 60
+    }
+   ],
+   "doc": "show the props of the mechanic"
+  }
+ },
+ "triggers": {
+  "floor_enter": {
+   "args": [],
+   "doc": "once, when the first player steps into the mechanic's area"
+  },
+  "area_enter": {
+   "args": [
+    {
+     "n": "cooldown",
+     "t": "num",
+     "d": 200,
+     "lo": 20,
+     "hi": 6000
+    }
+   ],
+   "doc": "every time a player comes into the area"
+  },
+  "timer": {
+   "args": [
+    {
+     "n": "every",
+     "t": "num",
+     "d": 200,
+     "lo": 20,
+     "hi": 6000
+    }
+   ],
+   "doc": "every N ticks while a player is inside"
+  },
+  "proximity": {
+   "args": [
+    {
+     "n": "r",
+     "t": "num",
+     "d": 4,
+     "lo": 1,
+     "hi": 16
+    },
+    {
+     "n": "cooldown",
+     "t": "num",
+     "d": 100,
+     "lo": 10,
+     "hi": 6000
+    }
+   ],
+   "doc": "a player within r blocks of the anchor"
+  },
+  "sight": {
+   "args": [
+    {
+     "n": "range",
+     "t": "num",
+     "d": 14,
+     "lo": 3,
+     "hi": 40
+    },
+    {
+     "n": "cooldown",
+     "t": "num",
+     "d": 100,
+     "lo": 10,
+     "hi": 6000
+    }
+   ],
+   "doc": "a player looks at the anchor"
+  },
+  "kill": {
+   "args": [
+    {
+     "n": "n",
+     "t": "num",
+     "d": 3,
+     "lo": 1,
+     "hi": 30
+    }
+   ],
+   "doc": "n monsters die in the area"
+  },
+  "hp_below": {
+   "args": [
+    {
+     "n": "frac",
+     "t": "num",
+     "d": 0.5,
+     "lo": 0.05,
+     "hi": 0.95
+    },
+    {
+     "n": "cooldown",
+     "t": "num",
+     "d": 200,
+     "lo": 20,
+     "hi": 6000
+    }
+   ],
+   "doc": "a player under a fraction of their health"
+  },
+  "item_use": {
+   "args": [
+    {
+     "n": "item",
+     "t": "str",
+     "d": "any"
+    },
+    {
+     "n": "cooldown",
+     "t": "num",
+     "d": 100,
+     "lo": 10,
+     "hi": 6000
+    }
+   ],
+   "doc": "a player uses an item (any, food, light, weapon, magic, or an id)"
+  },
+  "interact": {
+   "args": [
+    {
+     "n": "cooldown",
+     "t": "num",
+     "d": 60,
+     "lo": 5,
+     "hi": 6000
+    }
+   ],
+   "doc": "a player uses a prop block of the mechanic"
+  },
+  "damage_taken": {
+   "args": [
+    {
+     "n": "min",
+     "t": "num",
+     "d": 1,
+     "lo": 0,
+     "hi": 40
+    },
+    {
+     "n": "cooldown",
+     "t": "num",
+     "d": 60,
+     "lo": 5,
+     "hi": 6000
+    }
+   ],
+   "doc": "a player is hurt in the area"
+  },
+  "sprint": {
+   "args": [
+    {
+     "n": "ticks",
+     "t": "num",
+     "d": 40,
+     "lo": 5,
+     "hi": 400
+    },
+    {
+     "n": "cooldown",
+     "t": "num",
+     "d": 100,
+     "lo": 10,
+     "hi": 6000
+    }
+   ],
+   "doc": "a player sprints for a while"
+  },
+  "idle": {
+   "args": [
+    {
+     "n": "ticks",
+     "t": "num",
+     "d": 100,
+     "lo": 20,
+     "hi": 1200
+    },
+    {
+     "n": "cooldown",
+     "t": "num",
+     "d": 100,
+     "lo": 10,
+     "hi": 6000
+    }
+   ],
+   "doc": "a player stands still for a while"
+  },
+  "sneak": {
+   "args": [
+    {
+     "n": "ticks",
+     "t": "num",
+     "d": 60,
+     "lo": 10,
+     "hi": 600
+    },
+    {
+     "n": "cooldown",
+     "t": "num",
+     "d": 100,
+     "lo": 10,
+     "hi": 6000
+    }
+   ],
+   "doc": "a player sneaks for a while"
+  },
+  "jump": {
+   "args": [
+    {
+     "n": "n",
+     "t": "num",
+     "d": 3,
+     "lo": 1,
+     "hi": 20
+    },
+    {
+     "n": "cooldown",
+     "t": "num",
+     "d": 100,
+     "lo": 10,
+     "hi": 6000
+    }
+   ],
+   "doc": "a player jumps n times"
+  },
+  "boss_hp": {
+   "args": [
+    {
+     "n": "frac",
+     "t": "num",
+     "d": 0.5,
+     "lo": 0.05,
+     "hi": 0.95
+    }
+   ],
+   "doc": "the boss of the arena falls under a fraction of its health"
+  },
+  "party_size": {
+   "args": [
+    {
+     "n": "n",
+     "t": "num",
+     "d": 2,
+     "lo": 2,
+     "hi": 8
+    },
+    {
+     "n": "cooldown",
+     "t": "num",
+     "d": 200,
+     "lo": 20,
+     "hi": 6000
+    }
+   ],
+   "doc": "n or more players in the area"
+  },
+  "death": {
+   "args": [
+    {
+     "n": "cooldown",
+     "t": "num",
+     "d": 100,
+     "lo": 10,
+     "hi": 6000
+    }
+   ],
+   "doc": "a player dies in the area"
+  },
+  "dark": {
+   "args": [
+    {
+     "n": "light",
+     "t": "num",
+     "d": 4,
+     "lo": 0,
+     "hi": 14
+    },
+    {
+     "n": "ticks",
+     "t": "num",
+     "d": 60,
+     "lo": 10,
+     "hi": 600
+    },
+    {
+     "n": "cooldown",
+     "t": "num",
+     "d": 100,
+     "lo": 10,
+     "hi": 6000
+    }
+   ],
+   "doc": "a player stays in the dark"
+  }
+ },
+ "counters": {
+  "none": {
+   "args": [],
+   "props": "none",
+   "doc": "cannot be beaten: it must be survived or left behind"
+  },
+  "kill_all": {
+   "args": [
+    {
+     "n": "group",
+     "t": "str",
+     "d": "undead",
+     "e": [
+      "undead",
+      "beast",
+      "construct",
+      "fiend",
+      "arcane",
+      "swarm",
+      "elemental",
+      "knight"
+     ]
+    },
+    {
+     "n": "count",
+     "t": "num",
+     "d": 3,
+     "lo": 1,
+     "hi": 12
+    }
+   ],
+   "props": "mobs",
+   "doc": "kill every warden the mechanic spawns"
+  },
+  "kill_marked": {
+   "args": [
+    {
+     "n": "group",
+     "t": "str",
+     "d": "knight",
+     "e": [
+      "undead",
+      "beast",
+      "construct",
+      "fiend",
+      "arcane",
+      "swarm",
+      "elemental",
+      "knight"
+     ]
+    }
+   ],
+   "props": "mobs",
+   "doc": "kill the one marked warden"
+  },
+  "item_offer": {
+   "args": [
+    {
+     "n": "item",
+     "t": "str",
+     "d": "minecraft:gold_ingot"
+    },
+    {
+     "n": "count",
+     "t": "num",
+     "d": 1,
+     "lo": 1,
+     "hi": 16
+    }
+   ],
+   "props": "pedestal",
+   "doc": "give an item to the altar"
+  },
+  "stand_plate": {
+   "args": [
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 6,
+     "lo": 1,
+     "hi": 60
+    }
+   ],
+   "props": "plate",
+   "doc": "stand on the plate for a while"
+  },
+  "sneak_through": {
+   "args": [
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 8,
+     "lo": 2,
+     "hi": 60
+    }
+   ],
+   "props": "none",
+   "doc": "sneak for a while in the area"
+  },
+  "hold_light": {
+   "args": [
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 8,
+     "lo": 2,
+     "hi": 60
+    }
+   ],
+   "props": "none",
+   "doc": "carry a light for a while"
+  },
+  "sequence": {
+   "args": [
+    {
+     "n": "steps",
+     "t": "num",
+     "d": 4,
+     "lo": 2,
+     "hi": 8
+    }
+   ],
+   "props": "pedestal",
+   "doc": "use the props in the right order"
+  },
+  "lever": {
+   "args": [],
+   "props": "lever",
+   "doc": "pull the lever"
+  },
+  "survive": {
+   "args": [
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 30,
+     "lo": 5,
+     "hi": 300
+    }
+   ],
+   "props": "none",
+   "doc": "last out the time"
+  },
+  "all_present": {
+   "args": [
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 4,
+     "lo": 1,
+     "hi": 60
+    }
+   ],
+   "props": "plate",
+   "doc": "every living party member in the area at once"
+  },
+  "split_plates": {
+   "args": [
+    {
+     "n": "n",
+     "t": "num",
+     "d": 2,
+     "lo": 2,
+     "hi": 6
+    }
+   ],
+   "props": "plate",
+   "doc": "n different players on n plates together"
+  },
+  "carry": {
+   "args": [
+    {
+     "n": "item",
+     "t": "str",
+     "d": "minecraft:amethyst_shard"
+    }
+   ],
+   "props": "pedestal",
+   "doc": "carry the item from one pedestal to the other"
+  },
+  "no_damage": {
+   "args": [
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 20,
+     "lo": 5,
+     "hi": 120
+    }
+   ],
+   "props": "none",
+   "doc": "take no damage for a while"
+  },
+  "quiet": {
+   "args": [
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 15,
+     "lo": 3,
+     "hi": 120
+    }
+   ],
+   "props": "none",
+   "doc": "neither sprint nor jump for a while"
+  },
+  "pay_xp": {
+   "args": [
+    {
+     "n": "levels",
+     "t": "num",
+     "d": 3,
+     "lo": 1,
+     "hi": 30
+    }
+   ],
+   "props": "pedestal",
+   "doc": "pay experience levels at the altar"
+  },
+  "pay_hp": {
+   "args": [
+    {
+     "n": "hearts",
+     "t": "num",
+     "d": 3,
+     "lo": 1,
+     "hi": 10
+    }
+   ],
+   "props": "pedestal",
+   "doc": "pay health at the altar"
+  },
+  "pay_item": {
+   "args": [
+    {
+     "n": "item",
+     "t": "str",
+     "d": "minecraft:iron_ingot"
+    },
+    {
+     "n": "count",
+     "t": "num",
+     "d": 4,
+     "lo": 1,
+     "hi": 32
+    }
+   ],
+   "props": "pedestal",
+   "doc": "pay a price in items"
+  },
+  "pillars_sync": {
+   "args": [
+    {
+     "n": "secs",
+     "t": "num",
+     "d": 4,
+     "lo": 1,
+     "hi": 20
+    },
+    {
+     "n": "steps",
+     "t": "num",
+     "d": 3,
+     "lo": 2,
+     "hi": 6
+    }
+   ],
+   "props": "pedestal",
+   "doc": "light every pillar within seconds of each other"
+  },
+  "mirror": {
+   "args": [
+    {
+     "n": "steps",
+     "t": "num",
+     "d": 3,
+     "lo": 2,
+     "hi": 6
+    }
+   ],
+   "props": "pedestal",
+   "doc": "repeat a shown pattern"
+  }
+ },
+ "exclusive": [
+  "burden",
+  "cage",
+  "ceiling",
+  "curse",
+  "doors",
+  "floor",
+  "gravity",
+  "light",
+  "mana",
+  "movement",
+  "platform",
+  "reflect",
+  "regen",
+  "revive",
+  "shield",
+  "tether",
+  "time",
+  "trail",
+  "vision",
+  "walls",
+  "water",
+  "weather",
+  "wind"
+ ],
+ "effectChannels": {
+  "minecraft:darkness": "vision",
+  "minecraft:blindness": "vision",
+  "minecraft:levitation": "gravity",
+  "minecraft:slow_falling": "gravity",
+  "minecraft:slowness": "movement",
+  "minecraft:speed": "time",
+  "minecraft:haste": "time",
+  "minecraft:mining_fatigue": "time",
+  "minecraft:hunger": "burden",
+  "minecraft:nausea": "vision"
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "mechanic.nusmp.floor.rim_curse.name": "The Curse of the Rim",
+ "mechanic.nusmp.floor.rim_curse.desc": "A sickness rides every delver who has gone deep: now and then the world swims and the stomach turns, and the further down the floor, the worse it bites.",
+ "mechanic.nusmp.floor.rim_curse.flavor": "Going down is a gift. Coming back is the price.",
+ "mechanic.nusmp.floor.rim_curse.e_wither.name": "The Curse of the Rim: Rotting Rim",
+ "mechanic.nusmp.floor.rim_curse.e_wither.desc": "A sickness rides every delver who has gone deep: now and then the world swims and the stomach turns, and the further down the floor, the worse it bites. The sickness is a creeping rot that eats health instead of the stomach.",
+ "mechanic.nusmp.floor.rim_curse.e_wither.flavor": "Going down is a gift. Coming back is the price.",
+ "mechanic.nusmp.floor.rim_curse.t_sprint.name": "The Curse of the Rim: Footfall",
+ "mechanic.nusmp.floor.rim_curse.t_sprint.desc": "A sickness rides every delver who has gone deep: now and then the world swims and the stomach turns, and the further down the floor, the worse it bites. Running in its area sets it off.",
+ "mechanic.nusmp.floor.rim_curse.t_sprint.flavor": "Going down is a gift. Coming back is the price.",
+ "mechanic.nusmp.floor.rim_curse.c_hold_light.name": "The Curse of the Rim: Lantern-bearer",
+ "mechanic.nusmp.floor.rim_curse.c_hold_light.desc": "A sickness rides every delver who has gone deep: now and then the world swims and the stomach turns, and the further down the floor, the worse it bites. Carry a light through it long enough and it relents.",
+ "mechanic.nusmp.floor.rim_curse.c_hold_light.flavor": "Going down is a gift. Coming back is the price.",
+ "mechanic.nusmp.floor.mana_tide.name": "The Ebb and Flow of Magic",
+ "mechanic.nusmp.floor.mana_tide.desc": "The floor's mana rises and falls like a tide: while it ebbs the delvers' magicules drain away, and the pulse repeats until the tide is turned.",
+ "mechanic.nusmp.floor.mana_tide.flavor": "Mana is a living thing, and it breathes.",
+ "mechanic.nusmp.floor.mana_tide.e_surge.name": "The Ebb and Flow of Magic: Surging Tide",
+ "mechanic.nusmp.floor.mana_tide.e_surge.desc": "The floor's mana rises and falls like a tide: while it ebbs the delvers' magicules drain away, and the pulse repeats until the tide is turned. At the crest the tide throws the mana back with a shock that hurts.",
+ "mechanic.nusmp.floor.mana_tide.e_surge.flavor": "Mana is a living thing, and it breathes.",
+ "mechanic.nusmp.floor.mana_tide.t_area_enter.name": "The Ebb and Flow of Magic: Threshold",
+ "mechanic.nusmp.floor.mana_tide.t_area_enter.desc": "The floor's mana rises and falls like a tide: while it ebbs the delvers' magicules drain away, and the pulse repeats until the tide is turned. It strikes every time someone steps back into the area.",
+ "mechanic.nusmp.floor.mana_tide.t_area_enter.flavor": "Mana is a living thing, and it breathes."
+}
