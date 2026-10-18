@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.83.0] — The System: you choose where each stat point goes; move and resize the window with the mouse
+
+Your requests: "allow player to pick where each skill point for the dungeons solo leveling system go, allow them to move it around with mouse not key they should also be able to change the size of it as well" and "remove the key moving for the system only keep the toggle to turn on or off to move it".
+
+### NEW
+- **Free stat points.** A cleared floor quest now pays into a pool of free points (server config `system.pointMode = choose`, the default) and YOU decide where each point goes. A server-validated allocate request moves points from the pool into STR / AGI / VIT / INT / SENSE (cap per stat as before), the bonuses apply at once. `/multiverse mega system free give|take`.
+- **Stat screen** (key `I`, or the MOVE WINDOW button): five rows with points, a bar, and what one more point really does (from the stat table); buttons +1 (shift-click 5), +5, MAX per stat, mouse wheel over a row to add or take back a point, RESET (config `system.allowRespec`, default on), tooltips. A "+N PTS" badge appears on the System window while points are waiting.
+- **Mouse move and resize** (edit toggle key `U`): drag the window anywhere with the left mouse button (it snaps to the nearest of nine anchors and keeps its place across resolution and GUI-scale changes), drag a corner handle or use the wheel to resize (0.5x to 2.5x), RESET, DONE.
+
+### REPLACED
+- Moving the System window with the keyboard is **removed** (the arrow, Home and End keys, the key-edit mode and the one-time message that explained them). Only the on/off toggle for the mouse edit screen (`U`) and the window toggle (`Y`) remain.
+
+### KEPT
+- `pointMode = random` is the old behaviour (a point goes to a random stat). All old saves load (the free pool starts at 0); config keys `anchor`, `offsetX`, `offsetY`, `scale` keep their meaning (scale now goes to 2.5).
+
+### Honest notes
+- Nothing has been run in game: the two screens, the drag and wheel handling and the new payloads are only type-checked and unit-tested; the in-game self-test `system.points` runs in CI.
+- Clicking the HUD window itself is not possible (the cursor is captured while it is drawn): use the stat screen key.
+
 ## [1.82.0] — 275 Unique Skill Lines, 3D skill books, passive toggles, tree backgrounds, fog of war
 
 The owner's brief ("275+ unique skill lines, 3D books, Tensura-style passive toggles, thematic tree backgrounds, visibility lock, one active line") is an extension of the 1.62.0 Skill Tree engine; the dungeon half of the same brief (rifts, waypoint, WFC rooms, tier mobs, the D&D boss, the Mana Core) already existed (see `docs/skilltree/lines.md`).
