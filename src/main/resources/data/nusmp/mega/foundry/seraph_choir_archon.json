@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "heal_pulse",
+  "ward_allies",
+  "radiant_aura"
+ ],
+ "animation": "slim__orb-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "elemental",
+ "glow": "#fff0b0",
+ "height": 1.94,
+ "id": "seraph_choir_archon",
+ "name": "Seraph Choir Archon",
+ "road": "holy",
+ "size": 1.6,
+ "source": "D&D: seraph",
+ "tier": 5
+}

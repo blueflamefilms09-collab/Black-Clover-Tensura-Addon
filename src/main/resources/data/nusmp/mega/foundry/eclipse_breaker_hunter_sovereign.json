@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "shadow_step",
+  "holy_lance",
+  "blood_rage"
+ ],
+ "animation": "broad__greatsword-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "cultist",
+ "glow": "#ffc840",
+ "height": 2.09,
+ "id": "eclipse_breaker_hunter_sovereign",
+ "name": "Eclipse Breaker Hunter Sovereign",
+ "road": "holy",
+ "size": 1.4,
+ "source": "Solo Leveling",
+ "tier": 5
+}

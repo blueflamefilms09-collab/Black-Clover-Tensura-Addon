@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "lunge",
+  "shadow_step",
+  "cleave"
+ ],
+ "animation": "broad__sword-sword__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "construct",
+ "glow": "#e1c274",
+ "height": 2.09,
+ "id": "titan_slayer_commander_of_walls",
+ "name": "Titan Slayer Commander of Walls",
+ "road": "holy",
+ "size": 1.4,
+ "source": "Attack on Titan",
+ "tier": 5
+}

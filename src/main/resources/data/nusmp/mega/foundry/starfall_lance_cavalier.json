@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "dash",
+  "sky_dive",
+  "holy_lance"
+ ],
+ "animation": "slim__spear-none__auto-auto-auto",
+ "archetype": "charger",
+ "faction": "cultist",
+ "glow": "#fff0b0",
+ "height": 1.94,
+ "id": "starfall_lance_cavalier",
+ "name": "Starfall Lance Cavalier",
+ "road": "holy",
+ "size": 1.4,
+ "source": "Fate",
+ "tier": 5
+}

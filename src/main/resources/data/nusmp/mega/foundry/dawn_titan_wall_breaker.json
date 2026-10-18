@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "leap_slam",
+  "enrage",
+  "thunder_clap"
+ ],
+ "animation": "huge__axe-none__auto-auto-auto",
+ "archetype": "charger",
+ "faction": "ogre",
+ "glow": "#cd6363",
+ "height": 3.09,
+ "id": "dawn_titan_wall_breaker",
+ "name": "Dawn Titan Wall Breaker",
+ "road": "holy",
+ "size": 2.0,
+ "source": "Attack on Titan",
+ "tier": 5
+}

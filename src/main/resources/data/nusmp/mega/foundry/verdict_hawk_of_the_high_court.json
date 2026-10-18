@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "sky_dive",
+  "lunge",
+  "shadow_step"
+ ],
+ "animation": "lanky__katana-none__auto-auto-auto",
+ "archetype": "flier",
+ "faction": "beast",
+ "glow": "#e9c279",
+ "height": 2.31,
+ "id": "verdict_hawk_of_the_high_court",
+ "name": "Verdict Hawk of the High Court",
+ "road": "holy",
+ "size": 1.4,
+ "source": "Re:Zero",
+ "tier": 5
+}

@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "stoneskin",
+  "ground_slam",
+  "war_cry"
+ ],
+ "animation": "huge__greatsword-none__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "cultist",
+ "glow": "#606066",
+ "height": 3.09,
+ "id": "demigod_warden_of_the_golden_tree",
+ "name": "Demigod Warden of the Golden Tree",
+ "road": "holy",
+ "size": 1.7,
+ "source": "Elden Ring",
+ "tier": 5
+}

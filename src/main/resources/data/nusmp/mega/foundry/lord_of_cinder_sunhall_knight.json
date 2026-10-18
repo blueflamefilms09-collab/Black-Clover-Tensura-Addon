@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "fire_bolt",
+  "holy_lance",
+  "burning_aura"
+ ],
+ "animation": "broad__sword-orb__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "construct",
+ "glow": "#e48460",
+ "height": 2.09,
+ "id": "lord_of_cinder_sunhall_knight",
+ "name": "Lord of Cinder Sunhall Knight",
+ "road": "holy",
+ "size": 1.5,
+ "source": "Dark Souls",
+ "tier": 5
+}

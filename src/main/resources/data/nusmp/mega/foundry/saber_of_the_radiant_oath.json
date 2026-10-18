@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "holy_lance",
+  "dash",
+  "cleave"
+ ],
+ "animation": "average__greatsword-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "construct",
+ "glow": "#fff0b0",
+ "height": 2.0,
+ "id": "saber_of_the_radiant_oath",
+ "name": "Saber of the Radiant Oath",
+ "road": "holy",
+ "size": 1.5,
+ "source": "Fate",
+ "tier": 5
+}

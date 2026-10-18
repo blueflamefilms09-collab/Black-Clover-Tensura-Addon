@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "thunder_clap",
+  "sky_dive",
+  "arrow_rain"
+ ],
+ "animation": "huge__trident-none__auto-auto-auto",
+ "archetype": "flier",
+ "faction": "beast",
+ "glow": "#f7f7fa",
+ "height": 3.09,
+ "id": "thunderhead_roc_patriarch",
+ "name": "Thunderhead Roc Patriarch",
+ "road": "holy",
+ "size": 1.9,
+ "source": "D&D: roc",
+ "tier": 5
+}

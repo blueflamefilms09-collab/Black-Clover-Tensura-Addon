@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "holy_lance",
+  "war_cry",
+  "cleave"
+ ],
+ "animation": "broad__sword-shield__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "cultist",
+ "glow": "#fff0b0",
+ "height": 2.09,
+ "id": "hero_king_of_the_dawn_realm",
+ "name": "Hero King of the Dawn Realm",
+ "road": "holy",
+ "size": 1.5,
+ "source": "Dragon Quest",
+ "tier": 5
+}

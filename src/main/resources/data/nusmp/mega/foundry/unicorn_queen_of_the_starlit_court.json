@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "heal_pulse",
+  "regrowth",
+  "holy_lance"
+ ],
+ "animation": "slim__staff-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "beast",
+ "glow": "#e1c274",
+ "height": 1.94,
+ "id": "unicorn_queen_of_the_starlit_court",
+ "name": "Unicorn Queen of the Starlit Court",
+ "road": "holy",
+ "size": 1.5,
+ "source": "D&D: unicorn queen",
+ "tier": 5
+}

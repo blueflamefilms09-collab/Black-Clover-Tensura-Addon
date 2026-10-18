@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "fire_bolt",
+  "sky_dive",
+  "regrowth"
+ ],
+ "animation": "broad__staff-none__auto-auto-auto",
+ "archetype": "flier",
+ "faction": "elemental",
+ "glow": "#ffc840",
+ "height": 2.09,
+ "id": "eternal_phoenix_cantor",
+ "name": "Eternal Phoenix Cantor",
+ "road": "holy",
+ "size": 1.6,
+ "source": "D&D: phoenix",
+ "tier": 5
+}

@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "ice_bind",
+  "radiant_aura",
+  "holy_lance"
+ ],
+ "animation": "slim__orb-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "beast",
+ "glow": "#a0e8ff",
+ "height": 1.94,
+ "id": "celestial_gate_wyrm_handmaiden",
+ "name": "Celestial Gate Wyrm Handmaiden",
+ "road": "holy",
+ "size": 1.4,
+ "source": "D&D: couatl",
+ "tier": 5
+}

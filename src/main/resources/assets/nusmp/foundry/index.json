@@ -14,12 +14,33 @@
    "size": 1.15,
    "tier": 3
   },
+  "ancestor_spirit_grove_mother": {
+   "anim": "broad__staff-none__auto-auto-auto",
+   "glow": 12124128,
+   "height": 2.09,
+   "size": 1.6,
+   "tier": 5
+  },
+  "ancient_gold_dragon_hierophant": {
+   "anim": "huge__staff-none__auto-auto-auto",
+   "glow": 9199473,
+   "height": 3.09,
+   "size": 1.9,
+   "tier": 5
+  },
   "arcane_academy_honor_student": {
    "anim": "average__staff-none__auto-auto-auto",
    "glow": 10545407,
    "height": 2.0,
    "size": 1.0,
    "tier": 2
+  },
+  "archangel_of_the_last_gate": {
+   "anim": "broad__sword-shield__auto-auto-auto",
+   "glow": 10545407,
+   "height": 2.09,
+   "size": 1.6,
+   "tier": 5
   },
   "ashen_lantern_bearer": {
    "anim": "lanky__staff-orb__auto-auto-auto",
@@ -34,6 +55,13 @@
    "height": 2.31,
    "size": 1.0,
    "tier": 2
+  },
+  "aurora_hart_spirit_queen": {
+   "anim": "slim__wand-none__auto-auto-auto",
+   "glow": 12124128,
+   "height": 1.94,
+   "size": 1.6,
+   "tier": 5
   },
   "aurora_stag_witch": {
    "anim": "lanky__wand-none__auto-auto-auto",
@@ -147,6 +175,13 @@
    "size": 1.2,
    "tier": 4
   },
+  "celestial_gate_wyrm_handmaiden": {
+   "anim": "slim__orb-none__auto-auto-auto",
+   "glow": 10545407,
+   "height": 1.94,
+   "size": 1.4,
+   "tier": 5
+  },
   "cellar_ghoul": {
    "anim": "lanky__none-none__auto-auto-auto",
    "glow": 12091492,
@@ -174,6 +209,20 @@
    "height": 2.09,
    "size": 1.3,
    "tier": 4
+  },
+  "chorus_of_the_thousand_bells": {
+   "anim": "huge__hammer-none__auto-auto-auto",
+   "glow": 16773296,
+   "height": 3.09,
+   "size": 1.8,
+   "tier": 5
+  },
+  "chronicle_keeper_of_the_last_page": {
+   "anim": "lanky__none-grimoire__auto-auto-auto",
+   "glow": 14795380,
+   "height": 2.31,
+   "size": 1.4,
+   "tier": 5
   },
   "class_servant_of_the_bow": {
    "anim": "lanky__none-bow__auto-auto-auto",
@@ -266,12 +315,26 @@
    "size": 1.0,
    "tier": 1
   },
+  "dawn_titan_wall_breaker": {
+   "anim": "huge__axe-none__auto-auto-auto",
+   "glow": 13460323,
+   "height": 3.09,
+   "size": 2.0,
+   "tier": 5
+  },
   "dawnbreak_lancer_cavalry": {
    "anim": "broad__spear-none__auto-auto-auto",
    "glow": 7708888,
    "height": 2.09,
    "size": 1.0,
    "tier": 2
+  },
+  "demigod_warden_of_the_golden_tree": {
+   "anim": "huge__greatsword-none__auto-auto-auto",
+   "glow": 6316134,
+   "height": 3.09,
+   "size": 1.7,
+   "tier": 5
   },
   "deva_wingmaiden": {
    "anim": "slim__spear-none__auto-auto-auto",
@@ -286,6 +349,13 @@
    "height": 1.41,
    "size": 1.0,
    "tier": 1
+  },
+  "divine_beast_zephyr_hawk": {
+   "anim": "lanky__trident-none__auto-auto-auto",
+   "glow": 10545407,
+   "height": 2.31,
+   "size": 1.5,
+   "tier": 5
   },
   "djinn_equip_magi_sovereign": {
    "anim": "slim__staff-none__auto-auto-auto",
@@ -308,6 +378,34 @@
    "size": 1.0,
    "tier": 4
   },
+  "dragon_lord_gate_defender": {
+   "anim": "huge__axe-none__auto-auto-auto",
+   "glow": 10545407,
+   "height": 3.09,
+   "size": 1.9,
+   "tier": 5
+  },
+  "eclipse_breaker_hunter_sovereign": {
+   "anim": "broad__greatsword-none__auto-auto-auto",
+   "glow": 16762944,
+   "height": 2.09,
+   "size": 1.4,
+   "tier": 5
+  },
+  "elder_dragon_dawn_warden": {
+   "anim": "huge__hammer-none__auto-auto-auto",
+   "glow": 15700576,
+   "height": 3.09,
+   "size": 1.9,
+   "tier": 5
+  },
+  "ember_choir_archmage_elder": {
+   "anim": "average__staff-none__auto-auto-auto",
+   "glow": 16762944,
+   "height": 2.0,
+   "size": 1.4,
+   "tier": 5
+  },
   "ember_choir_pyromancer": {
    "anim": "slim__wand-none__auto-auto-auto",
    "glow": 14795380,
@@ -321,6 +419,20 @@
    "height": 1.41,
    "size": 1.0,
    "tier": 1
+  },
+  "empyrean_storm_sovereign": {
+   "anim": "huge__spear-none__auto-auto-auto",
+   "glow": 10545407,
+   "height": 3.09,
+   "size": 1.8,
+   "tier": 5
+  },
+  "eternal_phoenix_cantor": {
+   "anim": "broad__staff-none__auto-auto-auto",
+   "glow": 16762944,
+   "height": 2.09,
+   "size": 1.6,
+   "tier": 5
   },
   "familia_level_five_vanguard": {
    "anim": "broad__axe-none__auto-auto-auto",
@@ -357,6 +469,13 @@
    "size": 1.2,
    "tier": 4
   },
+  "floor_warden_queen_of_the_lotus_throne": {
+   "anim": "slim__hammer-none__auto-auto-auto",
+   "glow": 16773296,
+   "height": 1.94,
+   "size": 1.5,
+   "tier": 5
+  },
   "forgehold_anvil_priest": {
    "anim": "broad__hammer-shield__auto-auto-auto",
    "glow": 14795380,
@@ -392,12 +511,26 @@
    "size": 1.1,
    "tier": 3
   },
+  "gold_saint_of_the_zenith_hall": {
+   "anim": "slim__none-none__auto-auto-auto",
+   "glow": 16762944,
+   "height": 1.94,
+   "size": 1.5,
+   "tier": 5
+  },
   "gotei_lieutenant_of_the_pale_court": {
    "anim": "average__katana-none__auto-auto-auto",
    "glow": 14795380,
    "height": 2.0,
    "size": 1.0,
    "tier": 4
+  },
+  "great_spirit_of_the_four_leaf_crown": {
+   "anim": "huge__staff-none__auto-auto-auto",
+   "glow": 16773296,
+   "height": 3.09,
+   "size": 1.8,
+   "tier": 5
   },
   "greenwood_archer": {
    "anim": "slim__none-bow__auto-auto-auto",
@@ -476,6 +609,13 @@
    "size": 1.0,
    "tier": 2
   },
+  "hero_king_of_the_dawn_realm": {
+   "anim": "broad__sword-shield__auto-auto-auto",
+   "glow": 16773296,
+   "height": 2.09,
+   "size": 1.5,
+   "tier": 5
+  },
   "hero_society_wingsuit_scout": {
    "anim": "slim__dagger-none__auto-auto-auto",
    "glow": 14976096,
@@ -546,6 +686,13 @@
    "size": 1.0,
    "tier": 2
   },
+  "ice_court_aegis_matriarch": {
+   "anim": "broad__hammer-shield__auto-auto-auto",
+   "glow": 13162751,
+   "height": 2.09,
+   "size": 1.5,
+   "tier": 5
+  },
   "ink_cap_mage": {
    "anim": "slim__none-grimoire__auto-auto-auto",
    "glow": 13883099,
@@ -595,12 +742,26 @@
    "size": 1.0,
    "tier": 3
   },
+  "lord_of_cinder_sunhall_knight": {
+   "anim": "broad__sword-orb__auto-auto-auto",
+   "glow": 14976096,
+   "height": 2.09,
+   "size": 1.5,
+   "tier": 5
+  },
   "lotus_pond_healer_frog": {
    "anim": "small__staff-none__auto-auto-auto",
    "glow": 15722195,
    "height": 1.5,
    "size": 1.0,
    "tier": 2
+  },
+  "lotus_throne_monk_emperor": {
+   "anim": "huge__none-none__auto-auto-auto",
+   "glow": 16762944,
+   "height": 3.09,
+   "size": 1.7,
+   "tier": 5
   },
   "lunar_archive_scribe": {
    "anim": "lanky__none-grimoire__auto-auto-auto",
@@ -700,6 +861,13 @@
    "size": 1.0,
    "tier": 3
   },
+  "oracle_of_seven_thousand_eyes": {
+   "anim": "slim__orb-none__auto-auto-auto",
+   "glow": 10545407,
+   "height": 1.94,
+   "size": 1.5,
+   "tier": 5
+  },
   "orb_weaver_priestess": {
    "anim": "slim__orb-none__auto-auto-auto",
    "glow": 10545407,
@@ -721,6 +889,13 @@
    "size": 1.0,
    "tier": 1
   },
+  "pegasus_chariot_valkyrie_marshal": {
+   "anim": "broad__spear-shield__auto-auto-auto",
+   "glow": 12758389,
+   "height": 2.09,
+   "size": 1.5,
+   "tier": 5
+  },
   "phoenix_choir_cantor": {
    "anim": "slim__wand-none__auto-auto-auto",
    "glow": 16762944,
@@ -741,6 +916,13 @@
    "height": 2.09,
    "size": 1.0,
    "tier": 4
+  },
+  "pillar_of_the_sunlit_inferno": {
+   "anim": "huge__hammer-none__auto-auto-auto",
+   "glow": 14993507,
+   "height": 3.09,
+   "size": 1.7,
+   "tier": 5
   },
   "pirate_kingdom_ensign": {
    "anim": "broad__sword-none__auto-auto-auto",
@@ -784,6 +966,13 @@
    "size": 1.0,
    "tier": 4
   },
+  "raging_sunlit_berserker_knight": {
+   "anim": "huge__greatsword-none__auto-auto-auto",
+   "glow": 12739435,
+   "height": 3.09,
+   "size": 1.7,
+   "tier": 5
+  },
   "rainbow_bridge_valkyrie": {
    "anim": "slim__spear-shield__auto-auto-auto",
    "glow": 15715694,
@@ -819,6 +1008,27 @@
    "size": 1.0,
    "tier": 1
   },
+  "saber_of_the_radiant_oath": {
+   "anim": "average__greatsword-none__auto-auto-auto",
+   "glow": 16773296,
+   "height": 2.0,
+   "size": 1.5,
+   "tier": 5
+  },
+  "sage_chancellor_of_the_spiral_library": {
+   "anim": "lanky__none-grimoire__auto-auto-auto",
+   "glow": 16773296,
+   "height": 2.31,
+   "size": 1.4,
+   "tier": 5
+  },
+  "sage_king_of_four_winds": {
+   "anim": "slim__staff-none__auto-auto-auto",
+   "glow": 10545407,
+   "height": 1.94,
+   "size": 1.4,
+   "tier": 5
+  },
   "sage_mode_toad_elder": {
    "anim": "small__staff-none__auto-auto-auto",
    "glow": 15311459,
@@ -847,6 +1057,13 @@
    "size": 1.0,
    "tier": 1
   },
+  "seraph_choir_archon": {
+   "anim": "slim__orb-none__auto-auto-auto",
+   "glow": 16773296,
+   "height": 1.94,
+   "size": 1.6,
+   "tier": 5
+  },
   "shinigami_gate_scout": {
    "anim": "average__katana-none__auto-auto-auto",
    "glow": 11384770,
@@ -867,6 +1084,13 @@
    "height": 1.94,
    "size": 1.0,
    "tier": 3
+  },
+  "silver_saint_marshal_of_the_lyre": {
+   "anim": "average__wand-orb__auto-auto-auto",
+   "glow": 13162751,
+   "height": 2.0,
+   "size": 1.5,
+   "tier": 5
   },
   "silver_saint_of_the_lyre_hall": {
    "anim": "slim__wand-orb__auto-auto-auto",
@@ -895,6 +1119,20 @@
    "height": 2.0,
    "size": 1.0,
    "tier": 2
+  },
+  "solar_of_the_unsetting_sun": {
+   "anim": "huge__greatsword-none__auto-auto-auto",
+   "glow": 16762944,
+   "height": 3.09,
+   "size": 1.7,
+   "tier": 5
+  },
+  "soul_reaper_commander_in_white": {
+   "anim": "lanky__katana-none__auto-auto-auto",
+   "glow": 13162751,
+   "height": 2.31,
+   "size": 1.4,
+   "tier": 5
   },
   "sphinx_riddle_warden": {
    "anim": "broad__none-none__auto-auto-auto",
@@ -930,6 +1168,13 @@
    "height": 1.41,
    "size": 1.0,
    "tier": 2
+  },
+  "starfall_lance_cavalier": {
+   "anim": "slim__spear-none__auto-auto-auto",
+   "glow": 16773296,
+   "height": 1.94,
+   "size": 1.4,
+   "tier": 5
   },
   "starfall_oracle": {
    "anim": "slim__staff-none__auto-auto-auto",
@@ -1022,6 +1267,13 @@
    "size": 1.2,
    "tier": 3
   },
+  "thunderhead_roc_patriarch": {
+   "anim": "huge__trident-none__auto-auto-auto",
+   "glow": 16250874,
+   "height": 3.09,
+   "size": 1.9,
+   "tier": 5
+  },
   "tidal_chapel_deacon": {
    "anim": "average__trident-none__auto-auto-auto",
    "glow": 14795380,
@@ -1042,6 +1294,13 @@
    "height": 2.0,
    "size": 1.0,
    "tier": 1
+  },
+  "titan_slayer_commander_of_walls": {
+   "anim": "broad__sword-sword__auto-auto-auto",
+   "glow": 14795380,
+   "height": 2.09,
+   "size": 1.4,
+   "tier": 5
   },
   "titan_slayer_squad_captain": {
    "anim": "average__sword-dagger__auto-auto-auto",
@@ -1071,12 +1330,26 @@
    "size": 1.0,
    "tier": 2
   },
+  "unicorn_queen_of_the_starlit_court": {
+   "anim": "slim__staff-none__auto-auto-auto",
+   "glow": 14795380,
+   "height": 1.94,
+   "size": 1.5,
+   "tier": 5
+  },
   "verdant_warden_of_the_seed_vault": {
    "anim": "huge__none-none__auto-auto-auto",
    "glow": 15920350,
    "height": 3.09,
    "size": 1.4,
    "tier": 4
+  },
+  "verdict_hawk_of_the_high_court": {
+   "anim": "lanky__katana-none__auto-auto-auto",
+   "glow": 15319673,
+   "height": 2.31,
+   "size": 1.4,
+   "tier": 5
   },
   "vesper_bell_cantor": {
    "anim": "slim__staff-none__auto-auto-auto",
@@ -1105,6 +1378,13 @@
    "height": 2.09,
    "size": 1.25,
    "tier": 2
+  },
+  "warden_golem_of_the_sunless_vault": {
+   "anim": "huge__hammer-none__auto-auto-auto",
+   "glow": 6316134,
+   "height": 3.09,
+   "size": 1.9,
+   "tier": 5
   },
   "will_o_wisp_lampwright": {
    "anim": "lanky__orb-none__auto-auto-auto",
