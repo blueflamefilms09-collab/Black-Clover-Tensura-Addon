@@ -34,6 +34,7 @@ public final class EliteSystem {
 
 
         // ---- records: records, achievements, titles, synergies (elite/records)
+        com.newuniverse.nusmp.elite.records.RecordsSystem.init(modBus, container);                                         // records, 20 condition types, titles, synergies, Records screen, /records
 
 
 
