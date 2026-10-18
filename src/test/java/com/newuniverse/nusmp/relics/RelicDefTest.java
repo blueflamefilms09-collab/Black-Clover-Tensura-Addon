@@ -27,11 +27,11 @@ class RelicDefTest {
     void aDefIsImmutable() {
         RelicDef base = RelicDef.of("test_blade", "Test Blade", Grade.RARE, RelicSlot.MAIN_HAND);
         RelicDef more = base.attune().model3d().desc("x").engrave("severance", "holy_weapon").melee(7, 1.6).passive(Passive.flag("a"));
-        assertFalse(base.needsAttunement());
+        assertFalse(base.definedWithAttunement());
         assertFalse(base.hasModel3d());
         assertTrue(base.engravings().isEmpty());
         assertTrue(base.passives().isEmpty());
-        assertTrue(more.needsAttunement());
+        assertTrue(more.definedWithAttunement());
         assertTrue(more.hasModel3d());
         assertEquals(2, more.engravings().size());
         assertEquals(1, more.passives().size());

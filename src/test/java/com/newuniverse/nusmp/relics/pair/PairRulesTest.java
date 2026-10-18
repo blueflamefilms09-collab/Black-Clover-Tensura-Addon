@@ -92,7 +92,7 @@ class PairRulesTest {
         assertEquals(right.engravings(), left.engravings());
         assertEquals(right.grade(), left.grade());
         assertTrue(left.hasModel3d());
-        assertTrue(left.needsAttunement());
+        assertTrue(left.definedWithAttunement());
         assertFalse(left.isVessel());
         assertTrue(left.isUnique() && right.isUnique(), "each half is a one-of-a-kind stack in the Order's ledger");
         assertNull(RelicDef.of("plain", "Plain", Grade.RARE, RelicSlot.MAIN_HAND).pairLeft());

@@ -44,7 +44,7 @@ class Wave5DefsTest {
             assertEquals(w[1], d.grade(), d.id());
             assertEquals(RelicSlot.NECK, d.slot(), d.id());
             assertEquals(w[2], d.isVessel(), d.id() + " vessel");
-            assertTrue(d.needsAttunement(), d.id() + " needs attunement");
+            assertTrue(d.definedWithAttunement(), d.id() + " needs attunement");
             assertFalse(d.hasModel3d(), "an amulet has no hand mesh");
             assertFalse(d.desc().isBlank(), d.id() + " has a description");
             assertTrue(d.desc().length() <= 330, d.id() + " description stays short: " + d.desc().length());

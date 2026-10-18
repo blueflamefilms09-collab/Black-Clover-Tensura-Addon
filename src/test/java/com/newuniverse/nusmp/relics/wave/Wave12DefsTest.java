@@ -40,7 +40,7 @@ class Wave12DefsTest {
             assertNotNull(d, (String) w[0]);
             assertEquals(w[1], d.grade(), d.id());
             assertEquals(RelicSlot.MAIN_HAND, d.slot(), d.id());
-            assertEquals(w[2], d.needsAttunement(), d.id() + " attunement");
+            assertEquals(w[2], d.definedWithAttunement(), d.id() + " attunement");
             assertFalse(d.isVessel(), d.id() + " is no vessel");
             assertTrue(d.hasModel3d(), d.id() + " is a real 3D weapon");
             assertFalse(d.engravings().isEmpty(), d.id() + " has Tensura engravings");

@@ -227,6 +227,9 @@ public final class RelicDef {
      * Rare or Unique relic works for whoever carries it, even where a definition says {@code .attune()}. The definitions are untouched, so lowering the bar later is one constant.
      */
     public boolean needsAttunement() { return AttuneRules.requires(attune, grade); }
+
+    /** Was the definition written with {@code .attune()}? (The raw flag the data states; {@link #needsAttunement()} also applies the grade rule.) */
+    public boolean definedWithAttunement() { return attune; }
     public boolean hasModel3d() { return model3d; }
     public boolean isVessel() { return vessel; }
     public String desc() { return desc; }
