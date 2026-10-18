@@ -9,8 +9,8 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class DepthConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue ENABLED, STRENGTH, SMARTS;
-    public static final ModConfigSpec.DoubleValue STRENGTH_SCALE, SHARE_ALREADY_SCALED;
+    public static final ModConfigSpec.BooleanValue ENABLED, STRENGTH, SMARTS, DROPS;
+    public static final ModConfigSpec.DoubleValue STRENGTH_SCALE, SHARE_ALREADY_SCALED, DROP_ROLLS_MAX, DROP_COUNT_MAX, DROP_LUCK_MAX, XP_MAX, DROP_SCALE;
     public static final ModConfigSpec.ConfigValue<String> MIND_FLOORS;
 
     static {
@@ -28,11 +28,28 @@ public final class DepthConfig {
                 .defineInRange("shareForScaledMobs", 0.5, 0.0, 1.0);
         MIND_FLOORS = b.comment("The six depths at which the mind level goes up by one, comma separated and strictly rising. A bad list falls back to 6,16,40,100,250,500.")
                 .define("mindFloors", DepthRules.DEFAULT_MIND_FLOORS);
+        DROPS = b.comment("Better drops: the deeper the floor, the more extra rolls of the mob's own loot table, the bigger every stack, the luckier those rolls and the more experience a kill gives (coins and equipment already scale with depth by their own rules and are not touched). Needs a player kill.")
+                .define("drops", true);
+        DROP_ROLLS_MAX = b.comment("The most extra rolls of the mob's loot table at the limit of depth (reached slowly: about half of it at floor 200).")
+                .defineInRange("dropRollsMax", DepthDropRules.DEFAULTS.rollsMax(), 0.0, 20.0);
+        DROP_COUNT_MAX = b.comment("The most that is added to every dropped stack at the limit of depth (1.0 = twice as many).")
+                .defineInRange("dropCountMax", DepthDropRules.DEFAULTS.countMax(), 0.0, 10.0);
+        DROP_LUCK_MAX = b.comment("The most Luck added to the extra rolls at the limit of depth.")
+                .defineInRange("dropLuckMax", DepthDropRules.DEFAULTS.luckMax(), 0.0, 20.0);
+        XP_MAX = b.comment("The most that is added to the experience of a kill at the limit of depth (3.0 = four times as much).")
+                .defineInRange("xpMax", DepthDropRules.DEFAULTS.xpMax(), 0.0, 20.0);
+        DROP_SCALE = b.comment("Multiplies all four of the drop ceilings above. 0 = the deep floors drop what the shallow ones do.")
+                .defineInRange("dropScale", DepthDropRules.DEFAULTS.scale(), 0.0, 10.0);
         b.pop();
         SPEC = b.build();
     }
 
     private DepthConfig() {}
+
+    /** The drop ceilings as the rules take them. */
+    public static DepthDropRules.Params dropParams() {
+        return new DepthDropRules.Params(get(DROP_ROLLS_MAX), get(DROP_COUNT_MAX), get(DROP_LUCK_MAX), get(XP_MAX), get(DROP_SCALE));
+    }
 
     /** The value, or its default while the config is not loaded yet. */
     public static <T> T get(ModConfigSpec.ConfigValue<T> v) {

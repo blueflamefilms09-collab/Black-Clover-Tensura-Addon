@@ -3,18 +3,17 @@ package com.newuniverse.nusmp.labyrinth.mega.enc;
 import com.newuniverse.nusmp.boss.rules.BossIdentity;
 import com.newuniverse.nusmp.labyrinth.Labyrinth;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
+import com.newuniverse.nusmp.labyrinth.mega.gear.GearDrops;
 import com.newuniverse.nusmp.labyrinth.mega.foundry.FoundryMobEntity;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.monster.Enemy;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,11 +61,13 @@ public final class DepthMobs {
         }
     }
 
-    /** Is this a mob the rule is for: hostile, not a boss, not somebody's pet or summon? */
+    /**
+     * Is this a mob the rule is for: a monster of the dungeon (the economy's own test, {@link GearDrops#hostile}: a vanilla-style {@code Enemy} or a Dungeon Master creature, which is how
+     * Tensura's monsters, tamable animals and not {@code Enemy}, count), not a boss, and nobody's servant. One definition for the economy, the gear and the depth rule, so they cannot disagree.
+     */
     public static boolean eligible(Mob mob) {
-        if (!(mob instanceof Enemy)) return false;
-        if (BossIdentity.isBoss(mob) || mob.getTags().contains(WandererDirector.TAG)) return false;
-        return !(mob instanceof OwnableEntity o && o.getOwnerUUID() != null);
+        if (!GearDrops.hostile(mob) || GearDrops.isBoss(mob) || GearDrops.isServant(mob)) return false;
+        return !(BossIdentity.isBoss(mob) || mob.getTags().contains(WandererDirector.TAG));
     }
 
     /** Does the mob already scale with the floor by the Dungeon Master's or the Foundry's own rule? */

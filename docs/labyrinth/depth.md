@@ -51,3 +51,20 @@ Every hostile mob that is born, or loaded, in the Mega-Dungeon gets two things f
 
 ## Not verified
 Nothing has been run in the game. The curves and thresholds are my design. The behaviours are the part most likely to need tuning in play: flanking and close-down share the mob's navigation with its own melee goal, which re-paths every few ticks, so the result may look jittery on some mobs; Tensura mobs that think with a brain may ignore a goal's steering for a pass.
+
+## Drops (1.91.0): the deeper (or higher), the better the mobs' drops
+Owner brief: "also make the dungeon mob drops better the deeper/higher you go." Coins (`CoinLoot`, x3 per tier of 200 floors) and equipment (`GearRoller`, the grade mix moves with the depth) already scale by depth by their own rules and are NOT changed. What had no depth was everything else a monster leaves and the experience of the kill. `DepthDrops` (a LOWEST-priority `LivingDropsEvent` listener, so it adds to what the other listeners decided) and `DepthDropRules` (pure, `DepthDropRulesTest`, 9 tests) add four curves of the same depth (`max * x / (x + half)`, `x = depth - 1`, the same up and down):
+
+| what | ceiling | half-way depth | floor 10 | floor 100 | floor 200 | floor 1000 |
+|---|---|---|---|---|---|---|
+| extra rolls of the mob's own loot table | +3 | 200 | 0.12 | 0.99 | 1.49 | 2.5 |
+| bonus on every stack that drops | +100 % | 400 | +2 % | +20 % | +33 % | +71 % |
+| luck added to the extra rolls | +3 | 300 | 0.09 | 0.74 | 1.2 | 2.3 |
+| experience of the kill | x4 | 300 | x1.09 | x1.74 | x2.2 | x3.3 |
+
+- The extra rolls are the mob's own loot table (`EntityType.getDefaultLootTable()`) rolled again, RAW (the global loot modifiers do not fire again, so a coin or a skill book is never paid twice), with the killer's Luck plus the depth luck. At most 24 extra stacks per death.
+- Coin stacks (Tensura's and this mod's) are not boosted: the coin rules already scale them.
+- Applies on the same terms as the gear: the Mega-Dungeon, a dungeon monster that is no boss and no servant, killed by a player. The floor is the one the mob was born on (`nusmp_depth_floor`) when it has it, else where it died.
+- Config (`nusmp-labyrinth-mega-depth-server.toml`, `[depth]`): `drops` (true), `dropRollsMax` (3), `dropCountMax` (1), `dropLuckMax` (3), `xpMax` (3), `dropScale` (1; 0 = the deep floors drop what the shallow ones do). Self-test `enc.depth_drops`.
+- Fixed in the same release: the depth rule of 1.89.0 only touched mobs that are `Enemy`, but Tensura's monsters (the bulk of the dungeon) are tamable animals marked by the Dungeon Master, so `DepthMobs.eligible` now uses the economy's own test (`GearDrops.hostile`, `isBoss`, `isServant`, widened to public): one definition for the economy, the gear and the depth rule.
+- Not verified in game: the loot-table re-roll and the experience event are only type-checked and covered by the `enc.depth_drops` smoke test and the unit tests of the curves.

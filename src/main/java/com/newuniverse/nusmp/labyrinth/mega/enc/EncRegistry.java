@@ -27,6 +27,8 @@ public final class EncRegistry {
         gameBus.addListener(NoiseEvents::onGameEvent);
         gameBus.addListener(NoiseEvents::onDamage);
         gameBus.addListener(EncounterDirector::onJoin);
+        gameBus.addListener(net.neoforged.bus.api.EventPriority.LOWEST, DepthDrops::onDrops);                                       // 1.91.0: better drops the deeper (or higher) the floor
+        gameBus.addListener(DepthDrops::onExperience);
         gameBus.addListener(DepthMobs::onJoin);                                         // 1.89.0: the depth rule: strength and mind for every hostile mob born in the Mega-Dungeon
         gameBus.addListener(WandererDirector::onJoin);
         gameBus.addListener(WandererGuard::onChangeTarget);

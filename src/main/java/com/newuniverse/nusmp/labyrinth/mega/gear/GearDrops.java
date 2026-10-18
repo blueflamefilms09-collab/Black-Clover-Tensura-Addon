@@ -98,7 +98,7 @@ public final class GearDrops {
      * half matters most: Tensura's monsters are tamable animals, not {@code Enemy}, and they are the bulk of the population, so the economy, the HP buffer
      * and the faction drops all ask {@link MegaDungeon#isDungeonMonster} as well; a direwolf the Director sent must drop gear like a zombie does.
      */
-    static boolean hostile(Mob m) {
+    public static boolean hostile(Mob m) {
         return m instanceof Enemy || MegaDungeon.isDungeonMonster(m);
     }
 
@@ -107,7 +107,7 @@ public final class GearDrops {
      * tags, the shared {@code c:bosses} entity tag and the Floor Warden's id. (The economy keeps its version package-private, so this repeats it; the
      * strings come from the faction layer's single list, {@link TurfMarks}.)
      */
-    static boolean isBoss(Mob m) {
+    public static boolean isBoss(Mob m) {
         if (m instanceof BudgetedBoss || m instanceof FloorWardenEntity) return true;
         if (TurfMarks.anyOf(m.getTags(), TurfMarks.BOSS_TAGS)) return true;
         if (m.getType().is(Tags.EntityTypes.BOSSES)) return true;
@@ -115,7 +115,7 @@ public final class GearDrops {
     }
 
     /** A servant answers to a player (a tamed or owned creature, a Paladin, a shadow soldier, a relic's summon): its death is no loot. */
-    static boolean isServant(Mob m) {
+    public static boolean isServant(Mob m) {
         if (m instanceof TamableAnimal t && t.isTame()) return true;
         if (m instanceof OwnableEntity o && o.getOwnerUUID() != null) return true;
         if (TurfMarks.anyOf(m.getTags(), TurfMarks.SERVANT_TAGS)) return true;

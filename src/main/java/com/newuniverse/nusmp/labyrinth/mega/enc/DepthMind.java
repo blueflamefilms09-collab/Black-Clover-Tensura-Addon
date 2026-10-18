@@ -10,7 +10,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.monster.Enemy;
+import com.newuniverse.nusmp.labyrinth.mega.gear.GearDrops;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -167,7 +167,7 @@ final class DepthMind extends Goal {
         alertedFor = foe;
         if (!fair(level, foe)) return;
         double r = DepthRules.alertRadius(mind);
-        List<Mob> near = level.getEntitiesOfClass(Mob.class, mob.getBoundingBox().inflate(r), m -> m != mob && m instanceof Enemy && m.isAlive() && m.getTarget() == null
+        List<Mob> near = level.getEntitiesOfClass(Mob.class, mob.getBoundingBox().inflate(r), m -> m != mob && GearDrops.hostile(m) && m.isAlive() && m.getTarget() == null
                 && !BossIdentity.isBoss(m) && !m.getTags().contains(WandererDirector.TAG));
         near.sort(Comparator.comparingDouble(m -> m.distanceToSqr(mob)));
         for (int i = 0; i < Math.min(near.size(), 10); i++) MobSteer.aim(near.get(i), foe);
@@ -179,7 +179,7 @@ final class DepthMind extends Goal {
         if (t == null || mob instanceof RangedAttackMob || !fair(level, t)) return;
         double d = mob.distanceTo(t);
         if (d < 5.0 || d > 18.0) return;                              // close in: the mob's own attack takes over; far away: it is not a fight yet
-        List<Mob> pack = level.getEntitiesOfClass(Mob.class, t.getBoundingBox().inflate(14.0), m -> m instanceof Enemy && m.isAlive() && m.getTarget() == t);
+        List<Mob> pack = level.getEntitiesOfClass(Mob.class, t.getBoundingBox().inflate(14.0), m -> GearDrops.hostile(m) && m.isAlive() && m.getTarget() == t);
         if (pack.size() < 2) return;
         pack.sort(Comparator.comparing(Mob::getUUID));
         int index = Math.max(0, pack.indexOf(mob));

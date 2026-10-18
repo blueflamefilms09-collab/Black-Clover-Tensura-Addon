@@ -19,6 +19,7 @@ final class DepthSelfTests {
 
     static void register() {
         SelfTests.register("enc.depth", DepthSelfTests::depth);
+        SelfTests.register("enc.depth_drops", DepthSelfTests::drops);
     }
 
     private static SelfTests.Result depth(MinecraftServer server) {
@@ -44,7 +45,25 @@ final class DepthSelfTests {
         if (mind > 0 && !GoalAccess.has(up, DepthMind.class)) return SelfTests.Result.fail("a mob of mind " + mind + " has no mind goal (the goal list could not be read?)");
         if (shallow.getPersistentData().getInt(DepthMobs.MIND_KEY) != 0 && !GoalAccess.has(shallow, DepthMind.class)) return SelfTests.Result.fail("mind without goal at +1");
         if (!DepthMobs.eligible(plain)) return SelfTests.Result.fail("a zombie is not eligible");
-        if (DepthMobs.eligible((Mob) wolf)) return SelfTests.Result.fail("a wolf is eligible");
+        if (DepthMobs.eligible((Mob) wolf)) return SelfTests.Result.fail("a plain wolf is eligible");
+        wolf.addTag(com.newuniverse.nusmp.labyrinth.mega.MegaDungeon.DM_TAG);                       // Tensura's monsters are not Enemy: the Dungeon Master's stamp is what makes them the dungeon's
+        if (!DepthMobs.eligible((Mob) wolf)) return SelfTests.Result.fail("a Dungeon Master wolf is not eligible");
         return SelfTests.Result.ok("+300 and -300: " + String.format("%.0f", once) + " health from " + String.format("%.0f", base) + ", mind " + mind + "; +1 unchanged; no stacking");
+    }
+
+    /** The loot-table half of the depth drops, against the live registries: a zombie rolled many times leaves stacks, never more than the cap, and zero rolls leave nothing. */
+    private static SelfTests.Result drops(MinecraftServer server) {
+        ServerLevel level = server.overworld();
+        Zombie z = EntityType.ZOMBIE.create(level);
+        if (z == null) return SelfTests.Result.fail("could not make a zombie");
+        net.minecraft.server.level.ServerPlayer killer = net.neoforged.neoforge.common.util.FakePlayerFactory.getMinecraft(level);
+        net.minecraft.world.damagesource.DamageSource src = level.damageSources().playerAttack(killer);
+        if (!DepthDrops.rollExtra(level, z, src, killer, 0, 0f).isEmpty()) return SelfTests.Result.fail("zero rolls left something");
+        java.util.List<net.minecraft.world.item.ItemStack> many = DepthDrops.rollExtra(level, z, src, killer, 200, 3f);
+        if (many.isEmpty()) return SelfTests.Result.fail("200 rolls of the zombie's loot table left nothing (does the loot table resolve?)");
+        if (many.size() > DepthDropRules.MAX_EXTRA_STACKS) return SelfTests.Result.fail("the stack cap was passed: " + many.size());
+        DepthDropRules.Params p = DepthDropRules.DEFAULTS;
+        if (DepthDropRules.extraRolls(1, p, 0.0) != 0 || DepthDropRules.bonusRolls(1000, p) <= DepthDropRules.bonusRolls(10, p)) return SelfTests.Result.fail("the rolls curve is wrong");
+        return SelfTests.Result.ok(many.size() + " extra stacks from 200 rolls (cap " + DepthDropRules.MAX_EXTRA_STACKS + "); floor 1000 gives " + String.format("%.2f", DepthDropRules.bonusRolls(1000, p)) + " expected extra rolls");
     }
 }

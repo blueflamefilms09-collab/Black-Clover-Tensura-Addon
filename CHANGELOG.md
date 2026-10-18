@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.91.0] — Better drops the deeper (or higher) you go, bows held the way vanilla's are, the depth rule reaches Tensura's monsters
+
+### NEW
+- **Depth drops** (`labyrinth/mega/enc/DepthDrops`, `DepthDropRules`, `docs/labyrinth/depth.md`): the deeper or higher the floor (the same for both directions), the more a dungeon mob leaves. Four saturating curves of the floor's distance from the Hub: up to **+3 extra rolls** of the mob's own loot table (raw, with extra luck, so a deep monster leaves its whole drop list again, not only bigger stacks), up to **+100 % on every stack**, up to **+3 Luck** on those rolls and up to **x4 experience** (floor 10: 0.12 extra rolls and x1.09 xp; floor 200: 1.5 rolls, +33 % stacks, x2.2 xp; floor 1000: 2.5 rolls, +71 %, x3.3). Coins and equipment already scale with depth and are not changed. Config keys `drops`, `dropRollsMax`, `dropCountMax`, `dropLuckMax`, `xpMax`, `dropScale`; self-test `enc.depth_drops`; 9 unit tests.
+
+### REPLACED
+- **Bow placement** (24 bow meshes: the five relic and hero bows and their draw stages): the owner's screenshots showed the custom bows still turned the wrong way in first person. I measured the vanilla `bow.png` itself: its wood arc runs from the top right tip round the upper LEFT to the bottom left tip, its string lies on the lower right, the arrow flies up and to the left. 1.63.0 (angle 45) had the limbs right but the bow shooting backwards, and 1.84.0 (angle 135) turned the limbs a quarter turn off. The place angle is now **225**, which puts the limbs on the same diagonal as the sprite and the belly and arrow toward the upper left (`tools/relics/bow_vanilla.py`, `BowDisplayGuardTest`). The display transforms are the vanilla bow's, which is what the owner's new spec lists.
+
+### FIXED
+- The depth rule of 1.89.0 skipped most of the dungeon: it only touched mobs that are `Enemy`, but Tensura's monsters are tamable animals that the Dungeon Master marks. It now uses the economy's own test (`GearDrops.hostile`, `isBoss`, `isServant`, made public), so Tensura's monsters get the strength and the mind too.
+
+### KEPT
+- Everything else. The rest of the two new specs (Hub economy, cyclic dungeon, 3D skill books, passive toggles, rifts, loot modifiers) already exists; the Tensura Ability Selection menu integration is a separate piece (next release).
+
+### Honest notes
+- Nothing has been run in the game. The bow angle comes from the vanilla texture's pixels and the geometry of the mesh (limbs along y, belly and arrow along +x, checked on all six bow meshes and their draw stages), not from a screenshot of the result.
+
 ## [1.90.0] — FTB Chunks claims are refused in the dungeons
 
 Owner brief: "players should not be able to claim chunks in the dungeons with FTB." Details: `docs/compat/maps.md` section 7.
