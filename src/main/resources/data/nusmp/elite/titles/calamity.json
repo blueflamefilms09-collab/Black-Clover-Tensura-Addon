@@ -1,0 +1,100 @@
+{
+  "titles": [
+    {
+      "id": "calamity_witness",
+      "name": "Calamity Witness",
+      "description": "You struck a calamity and lived.",
+      "rarity": "uncommon",
+      "tags": [
+        "calamity"
+      ],
+      "requirements": [
+        {
+          "record": "caldmg_1k"
+        }
+      ],
+      "bonuses": {
+        "attributes": [],
+        "effects": [],
+        "stats": {
+          "calamity_damage_percent": 2
+        }
+      }
+    },
+    {
+      "id": "calamity_hunter",
+      "name": "Calamity Hunter",
+      "description": "One calamity brought down.",
+      "rarity": "rare",
+      "tags": [
+        "calamity"
+      ],
+      "requirements": [
+        {
+          "record": "calkill_1"
+        }
+      ],
+      "bonuses": {
+        "attributes": [],
+        "effects": [],
+        "stats": {
+          "calamity_damage_percent": 4
+        }
+      }
+    },
+    {
+      "id": "calamity_bane",
+      "name": "Calamity Bane",
+      "description": "Ten calamities brought down.",
+      "rarity": "epic",
+      "tags": [
+        "calamity"
+      ],
+      "requirements": [
+        {
+          "record": "calkill_10"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.attack_damage",
+            "amount": 0.03,
+            "operation": "add_multiplied_base"
+          }
+        ],
+        "effects": [],
+        "stats": {
+          "calamity_damage_percent": 6
+        }
+      }
+    },
+    {
+      "id": "disaster_end",
+      "name": "End of Disasters",
+      "description": "Fifty calamities brought down.",
+      "rarity": "legendary",
+      "tags": [
+        "calamity"
+      ],
+      "requirements": [
+        {
+          "record": "calkill_50"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.attack_damage",
+            "amount": 0.05,
+            "operation": "add_multiplied_base"
+          }
+        ],
+        "effects": [],
+        "stats": {
+          "calamity_damage_percent": 10
+        }
+      }
+    }
+  ]
+}

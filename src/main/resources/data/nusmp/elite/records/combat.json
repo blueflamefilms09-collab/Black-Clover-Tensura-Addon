@@ -1,0 +1,633 @@
+{
+  "records": [
+    {
+      "id": "kills_10",
+      "name": "First Blood",
+      "description": "Kill 10 creatures.",
+      "category": "combat",
+      "rarity": "common",
+      "hidden": false,
+      "condition": {
+        "type": "kill_count",
+        "count": 10,
+        "group": "all"
+      }
+    },
+    {
+      "id": "kills_100",
+      "name": "Hundred Down",
+      "description": "Kill 100 creatures.",
+      "category": "combat",
+      "rarity": "common",
+      "hidden": false,
+      "condition": {
+        "type": "kill_count",
+        "count": 100,
+        "group": "all"
+      }
+    },
+    {
+      "id": "kills_500",
+      "name": "Veteran of Many Fights",
+      "description": "Kill 500 creatures.",
+      "category": "combat",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "kill_count",
+        "count": 500,
+        "group": "all"
+      }
+    },
+    {
+      "id": "kills_1000",
+      "name": "A Thousand Falls",
+      "description": "Kill 1,000 creatures.",
+      "category": "combat",
+      "rarity": "rare",
+      "hidden": false,
+      "condition": {
+        "type": "kill_count",
+        "count": 1000,
+        "group": "all"
+      }
+    },
+    {
+      "id": "kills_5000",
+      "name": "Five Thousand Souls",
+      "description": "Kill 5,000 creatures.",
+      "category": "combat",
+      "rarity": "epic",
+      "hidden": false,
+      "condition": {
+        "type": "kill_count",
+        "count": 5000,
+        "group": "all"
+      }
+    },
+    {
+      "id": "kills_10000",
+      "name": "Ten Thousand Graves",
+      "description": "Kill 10,000 creatures.",
+      "category": "combat",
+      "rarity": "legendary",
+      "hidden": false,
+      "condition": {
+        "type": "kill_count",
+        "count": 10000,
+        "group": "all"
+      }
+    },
+    {
+      "id": "kills_50000",
+      "name": "The Long Harvest",
+      "description": "Kill 50,000 creatures.",
+      "category": "combat",
+      "rarity": "mythic",
+      "hidden": false,
+      "condition": {
+        "type": "kill_count",
+        "count": 50000,
+        "group": "all"
+      }
+    },
+    {
+      "id": "kills_hostile_250",
+      "name": "Monster Season",
+      "description": "Kill 250 hostile monsters.",
+      "category": "combat",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "kill_count",
+        "count": 250,
+        "group": "hostile"
+      }
+    },
+    {
+      "id": "kills_hostile_2500",
+      "name": "Night Shift",
+      "description": "Dusk to dawn, every night. Kill 2,500 hostile monsters.",
+      "category": "combat",
+      "rarity": "epic",
+      "hidden": false,
+      "condition": {
+        "type": "kill_count",
+        "count": 2500,
+        "group": "hostile"
+      }
+    },
+    {
+      "id": "kills_passive_100",
+      "name": "Provisioner",
+      "description": "Kill 100 passive animals.",
+      "category": "combat",
+      "rarity": "common",
+      "hidden": false,
+      "condition": {
+        "type": "kill_count",
+        "count": 100,
+        "group": "passive"
+      }
+    },
+    {
+      "id": "kills_player_1",
+      "name": "A Line Crossed",
+      "description": "It is not the same after. Kill 1 other player.",
+      "category": "combat",
+      "rarity": "uncommon",
+      "hidden": true,
+      "condition": {
+        "type": "kill_count",
+        "count": 1,
+        "group": "player"
+      }
+    },
+    {
+      "id": "kills_player_10",
+      "name": "Duellist",
+      "description": "Kill 10 other players.",
+      "category": "combat",
+      "rarity": "rare",
+      "hidden": false,
+      "condition": {
+        "type": "kill_count",
+        "count": 10,
+        "group": "player"
+      }
+    },
+    {
+      "id": "kills_player_50",
+      "name": "Bloodied Name",
+      "description": "Kill 50 other players.",
+      "category": "combat",
+      "rarity": "epic",
+      "hidden": false,
+      "condition": {
+        "type": "kill_count",
+        "count": 50,
+        "group": "player"
+      }
+    },
+    {
+      "id": "kills_boss_1",
+      "name": "Giant Felled",
+      "description": "Kill 1 boss.",
+      "category": "combat",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "kill_count",
+        "count": 1,
+        "group": "boss"
+      }
+    },
+    {
+      "id": "kills_boss_5",
+      "name": "Boss Rush",
+      "description": "Kill 5 bosses.",
+      "category": "combat",
+      "rarity": "rare",
+      "hidden": false,
+      "condition": {
+        "type": "kill_count",
+        "count": 5,
+        "group": "boss"
+      }
+    },
+    {
+      "id": "kills_boss_25",
+      "name": "Raid Boss Regular",
+      "description": "Kill 25 bosses.",
+      "category": "combat",
+      "rarity": "epic",
+      "hidden": false,
+      "condition": {
+        "type": "kill_count",
+        "count": 25,
+        "group": "boss"
+      }
+    },
+    {
+      "id": "kill_creeper_50",
+      "name": "Quiet Hiss",
+      "description": "Kill 50 creepers.",
+      "category": "combat",
+      "rarity": "common",
+      "hidden": false,
+      "condition": {
+        "type": "kill_entity",
+        "entity": "minecraft:creeper",
+        "count": 50
+      }
+    },
+    {
+      "id": "kill_zombie_200",
+      "name": "Grave Pit",
+      "description": "Kill 200 zombies.",
+      "category": "combat",
+      "rarity": "common",
+      "hidden": false,
+      "condition": {
+        "type": "kill_entity",
+        "entity": "minecraft:zombie",
+        "count": 200
+      }
+    },
+    {
+      "id": "kill_skeleton_100",
+      "name": "Bone Collector",
+      "description": "Kill 100 skeletons.",
+      "category": "combat",
+      "rarity": "common",
+      "hidden": false,
+      "condition": {
+        "type": "kill_entity",
+        "entity": "minecraft:skeleton",
+        "count": 100
+      }
+    },
+    {
+      "id": "kill_spider_100",
+      "name": "Web Cutter",
+      "description": "Kill 100 spiders.",
+      "category": "combat",
+      "rarity": "common",
+      "hidden": false,
+      "condition": {
+        "type": "kill_entity",
+        "entity": "minecraft:spider",
+        "count": 100
+      }
+    },
+    {
+      "id": "kill_slime_50",
+      "name": "Squish",
+      "description": "Kill 50 slimes.",
+      "category": "combat",
+      "rarity": "common",
+      "hidden": false,
+      "condition": {
+        "type": "kill_entity",
+        "entity": "minecraft:slime",
+        "count": 50
+      }
+    },
+    {
+      "id": "kill_enderman_50",
+      "name": "Do Not Look",
+      "description": "Kill 50 endermans.",
+      "category": "combat",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "kill_entity",
+        "entity": "minecraft:enderman",
+        "count": 50
+      }
+    },
+    {
+      "id": "kill_blaze_50",
+      "name": "Rod Harvest",
+      "description": "Kill 50 blazes.",
+      "category": "combat",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "kill_entity",
+        "entity": "minecraft:blaze",
+        "count": 50
+      }
+    },
+    {
+      "id": "kill_ghast_10",
+      "name": "Cry Back",
+      "description": "Kill 10 ghasts.",
+      "category": "combat",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "kill_entity",
+        "entity": "minecraft:ghast",
+        "count": 10
+      }
+    },
+    {
+      "id": "kill_wither_skeleton_25",
+      "name": "Skull Collector",
+      "description": "Kill 25 wither skeletons.",
+      "category": "combat",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "kill_entity",
+        "entity": "minecraft:wither_skeleton",
+        "count": 25
+      }
+    },
+    {
+      "id": "kill_piglin_brute_10",
+      "name": "Brute Force",
+      "description": "Kill 10 piglin brutes.",
+      "category": "combat",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "kill_entity",
+        "entity": "minecraft:piglin_brute",
+        "count": 10
+      }
+    },
+    {
+      "id": "kill_evoker_5",
+      "name": "Totem Thief",
+      "description": "Kill 5 evokers.",
+      "category": "combat",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "kill_entity",
+        "entity": "minecraft:evoker",
+        "count": 5
+      }
+    },
+    {
+      "id": "kill_witch_25",
+      "name": "Brew Breaker",
+      "description": "Kill 25 witchs.",
+      "category": "combat",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "kill_entity",
+        "entity": "minecraft:witch",
+        "count": 25
+      }
+    },
+    {
+      "id": "kill_phantom_50",
+      "name": "Insomniac",
+      "description": "Kill 50 phantoms.",
+      "category": "combat",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "kill_entity",
+        "entity": "minecraft:phantom",
+        "count": 50
+      }
+    },
+    {
+      "id": "kill_guardian_25",
+      "name": "Thorns and Spines",
+      "description": "Kill 25 guardians.",
+      "category": "combat",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "kill_entity",
+        "entity": "minecraft:guardian",
+        "count": 25
+      }
+    },
+    {
+      "id": "kill_ravager_5",
+      "name": "Beast Tamer, Sort Of",
+      "description": "Kill 5 ravagers.",
+      "category": "combat",
+      "rarity": "rare",
+      "hidden": false,
+      "condition": {
+        "type": "kill_entity",
+        "entity": "minecraft:ravager",
+        "count": 5
+      }
+    },
+    {
+      "id": "kill_shulker_20",
+      "name": "Open the Box",
+      "description": "Kill 20 shulkers.",
+      "category": "combat",
+      "rarity": "rare",
+      "hidden": false,
+      "condition": {
+        "type": "kill_entity",
+        "entity": "minecraft:shulker",
+        "count": 20
+      }
+    },
+    {
+      "id": "kill_elder_guardian_1",
+      "name": "Curse Lifted",
+      "description": "Kill 1 elder guardian.",
+      "category": "combat",
+      "rarity": "rare",
+      "hidden": false,
+      "condition": {
+        "type": "kill_entity",
+        "entity": "minecraft:elder_guardian",
+        "count": 1
+      }
+    },
+    {
+      "id": "kill_ender_dragon_1",
+      "name": "Dragonslayer",
+      "description": "Kill 1 ender dragon.",
+      "category": "combat",
+      "rarity": "epic",
+      "hidden": false,
+      "condition": {
+        "type": "kill_entity",
+        "entity": "minecraft:ender_dragon",
+        "count": 1
+      }
+    },
+    {
+      "id": "kill_wither_1",
+      "name": "Withered Away",
+      "description": "Kill 1 wither.",
+      "category": "combat",
+      "rarity": "epic",
+      "hidden": false,
+      "condition": {
+        "type": "kill_entity",
+        "entity": "minecraft:wither",
+        "count": 1
+      }
+    },
+    {
+      "id": "kill_warden_1",
+      "name": "Hush",
+      "description": "Kill 1 warden.",
+      "category": "combat",
+      "rarity": "legendary",
+      "hidden": false,
+      "condition": {
+        "type": "kill_entity",
+        "entity": "minecraft:warden",
+        "count": 1
+      }
+    },
+    {
+      "id": "kill_ender_dragon_5",
+      "name": "Dragon's Bane",
+      "description": "The End has a revolving door. Kill the Ender Dragon 5 times.",
+      "category": "combat",
+      "rarity": "legendary",
+      "hidden": true,
+      "condition": {
+        "type": "kill_entity",
+        "entity": "minecraft:ender_dragon",
+        "count": 5
+      }
+    },
+    {
+      "id": "kill_wither_5",
+      "name": "Five Withers",
+      "description": "Kill 5 Withers.",
+      "category": "combat",
+      "rarity": "legendary",
+      "hidden": true,
+      "condition": {
+        "type": "kill_entity",
+        "entity": "minecraft:wither",
+        "count": 5
+      }
+    },
+    {
+      "id": "kill_tensura_100",
+      "name": "Local Pest Control",
+      "description": "Kill 100 creatures of Tensura.",
+      "category": "combat",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "kill_entity",
+        "entity": "tensura:*",
+        "count": 100
+      }
+    },
+    {
+      "id": "kill_tensura_1000",
+      "name": "Tensura Hunter",
+      "description": "Kill 1,000 creatures of Tensura.",
+      "category": "combat",
+      "rarity": "rare",
+      "hidden": false,
+      "condition": {
+        "type": "kill_entity",
+        "entity": "tensura:*",
+        "count": 1000
+      }
+    },
+    {
+      "id": "kill_tensura_5000",
+      "name": "Scourge of the Other World",
+      "description": "Kill 5,000 creatures of Tensura.",
+      "category": "combat",
+      "rarity": "epic",
+      "hidden": false,
+      "condition": {
+        "type": "kill_entity",
+        "entity": "tensura:*",
+        "count": 5000
+      }
+    },
+    {
+      "id": "hit_20",
+      "name": "A Good Punch",
+      "description": "Deal 20 damage in a single hit.",
+      "category": "combat",
+      "rarity": "common",
+      "hidden": false,
+      "condition": {
+        "type": "single_hit_damage",
+        "damage": 20
+      }
+    },
+    {
+      "id": "hit_50",
+      "name": "Heavy Hand",
+      "description": "Deal 50 damage in a single hit.",
+      "category": "combat",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "single_hit_damage",
+        "damage": 50
+      }
+    },
+    {
+      "id": "hit_100",
+      "name": "Wall Cracker",
+      "description": "Deal 100 damage in a single hit.",
+      "category": "combat",
+      "rarity": "rare",
+      "hidden": false,
+      "condition": {
+        "type": "single_hit_damage",
+        "damage": 100
+      }
+    },
+    {
+      "id": "hit_250",
+      "name": "Armour Breaker",
+      "description": "Deal 250 damage in a single hit.",
+      "category": "combat",
+      "rarity": "epic",
+      "hidden": false,
+      "condition": {
+        "type": "single_hit_damage",
+        "damage": 250
+      }
+    },
+    {
+      "id": "hit_500",
+      "name": "Siege Strike",
+      "description": "Deal 500 damage in a single hit.",
+      "category": "combat",
+      "rarity": "epic",
+      "hidden": false,
+      "condition": {
+        "type": "single_hit_damage",
+        "damage": 500
+      }
+    },
+    {
+      "id": "hit_1000",
+      "name": "One Blow",
+      "description": "Enough to end a duel. Deal 1,000 damage in a single hit.",
+      "category": "combat",
+      "rarity": "legendary",
+      "hidden": false,
+      "condition": {
+        "type": "single_hit_damage",
+        "damage": 1000
+      }
+    },
+    {
+      "id": "hit_5000",
+      "name": "Mountain Splitter",
+      "description": "Deal 5,000 damage in a single hit.",
+      "category": "combat",
+      "rarity": "legendary",
+      "hidden": false,
+      "condition": {
+        "type": "single_hit_damage",
+        "damage": 5000
+      }
+    },
+    {
+      "id": "hit_10000",
+      "name": "World Breaker",
+      "description": "Not a number, a fact of nature. Deal 10,000 damage in a single hit.",
+      "category": "combat",
+      "rarity": "mythic",
+      "hidden": false,
+      "condition": {
+        "type": "single_hit_damage",
+        "damage": 10000
+      }
+    }
+  ]
+}

@@ -1,0 +1,394 @@
+{
+  "titles": [
+    {
+      "id": "wanderer",
+      "name": "Wanderer",
+      "description": "You have walked a thousand metres and want more.",
+      "rarity": "common",
+      "tags": [
+        "explorer"
+      ],
+      "requirements": [
+        {
+          "record": "dist_all_1k"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.movement_speed",
+            "amount": 0.02,
+            "operation": "add_multiplied_base"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "pathfinder",
+      "name": "Pathfinder",
+      "description": "Ten kilometres of your own tracks.",
+      "rarity": "uncommon",
+      "tags": [
+        "explorer"
+      ],
+      "requirements": [
+        {
+          "record": "dist_all_10k"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.movement_speed",
+            "amount": 0.03,
+            "operation": "add_multiplied_base"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "trailblazer",
+      "name": "Trailblazer",
+      "description": "Fifty kilometres, and a trail behind you.",
+      "rarity": "rare",
+      "tags": [
+        "explorer"
+      ],
+      "requirements": [
+        {
+          "record": "dist_all_50k"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.movement_speed",
+            "amount": 0.04,
+            "operation": "add_multiplied_base"
+          },
+          {
+            "attribute": "minecraft:player.block_interaction_range",
+            "amount": 0.5,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "world_walker",
+      "name": "World Walker",
+      "description": "A hundred kilometres under your boots.",
+      "rarity": "epic",
+      "tags": [
+        "explorer"
+      ],
+      "requirements": [
+        {
+          "record": "dist_all_100k"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.movement_speed",
+            "amount": 0.05,
+            "operation": "add_multiplied_base"
+          },
+          {
+            "attribute": "minecraft:generic.safe_fall_distance",
+            "amount": 2.0,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "horizon_chaser",
+      "name": "Horizon Chaser",
+      "description": "Five hundred kilometres: the horizon runs from you.",
+      "rarity": "legendary",
+      "tags": [
+        "explorer"
+      ],
+      "requirements": [
+        {
+          "record": "dist_all_500k"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.movement_speed",
+            "amount": 0.06,
+            "operation": "add_multiplied_base"
+          }
+        ],
+        "effects": [
+          {
+            "effect": "minecraft:jump_boost",
+            "amplifier": 0
+          }
+        ],
+        "stats": {}
+      }
+    },
+    {
+      "id": "seafarer",
+      "name": "Seafarer",
+      "description": "At home on boat and wave.",
+      "rarity": "uncommon",
+      "tags": [
+        "explorer"
+      ],
+      "requirements": [
+        {
+          "record": "dist_boat_5k"
+        },
+        {
+          "record": "dist_swim_2k"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.oxygen_bonus",
+            "amount": 2.0,
+            "operation": "add_value"
+          },
+          {
+            "attribute": "minecraft:generic.water_movement_efficiency",
+            "amount": 0.1,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "biome_scholar",
+      "name": "Biome Scholar",
+      "description": "Ten biomes in your notebook.",
+      "rarity": "uncommon",
+      "tags": [
+        "explorer"
+      ],
+      "requirements": [
+        {
+          "record": "biomes_10"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.luck",
+            "amount": 0.5,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "naturalist",
+      "name": "Naturalist",
+      "description": "Twenty-five biomes, catalogued.",
+      "rarity": "rare",
+      "tags": [
+        "explorer"
+      ],
+      "requirements": [
+        {
+          "record": "biomes_25"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.luck",
+            "amount": 1.0,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "cartographer",
+      "name": "Cartographer",
+      "description": "Forty biomes: the map is yours.",
+      "rarity": "epic",
+      "tags": [
+        "explorer"
+      ],
+      "requirements": [
+        {
+          "record": "biomes_40"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.luck",
+            "amount": 1.0,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {
+          "xp_bonus_percent": 5
+        }
+      }
+    },
+    {
+      "id": "ruin_delver",
+      "name": "Ruin Delver",
+      "description": "Five kinds of ruin, five doors opened.",
+      "rarity": "common",
+      "tags": [
+        "explorer"
+      ],
+      "requirements": [
+        {
+          "record": "structs_5"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:player.block_interaction_range",
+            "amount": 0.5,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "relic_hunter",
+      "name": "Relic Hunter",
+      "description": "Ten kinds of ruin, and what they held.",
+      "rarity": "rare",
+      "tags": [
+        "explorer"
+      ],
+      "requirements": [
+        {
+          "record": "structs_10"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.luck",
+            "amount": 1.0,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {
+          "xp_bonus_percent": 3
+        }
+      }
+    },
+    {
+      "id": "deep_diver",
+      "name": "Deep Diver",
+      "description": "You walked the Deep Dark and its sunken city and came back.",
+      "rarity": "epic",
+      "tags": [
+        "explorer"
+      ],
+      "requirements": [
+        {
+          "record": "biome_deep_dark"
+        },
+        {
+          "record": "struct_ancient_city"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.luck",
+            "amount": 0.5,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [
+          {
+            "effect": "minecraft:night_vision",
+            "amplifier": 0
+          }
+        ],
+        "stats": {}
+      }
+    },
+    {
+      "id": "nether_walker",
+      "name": "Nether Walker",
+      "description": "The Nether's three strangest biomes did not stop you.",
+      "rarity": "uncommon",
+      "tags": [
+        "explorer"
+      ],
+      "requirements": [
+        {
+          "record": "biome_warped_forest"
+        },
+        {
+          "record": "biome_soul_sand_valley"
+        },
+        {
+          "record": "biome_basalt_deltas"
+        }
+      ],
+      "bonuses": {
+        "attributes": [],
+        "effects": [
+          {
+            "effect": "minecraft:fire_resistance",
+            "amplifier": 0
+          }
+        ],
+        "stats": {}
+      }
+    },
+    {
+      "id": "end_voyager",
+      "name": "End Voyager",
+      "description": "You have been to the city at the edge.",
+      "rarity": "rare",
+      "tags": [
+        "explorer"
+      ],
+      "requirements": [
+        {
+          "record": "struct_end_city"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.safe_fall_distance",
+            "amount": 3.0,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    }
+  ]
+}

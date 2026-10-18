@@ -1,0 +1,109 @@
+{
+  "titles": [
+    {
+      "id": "survivor",
+      "name": "Survivor",
+      "description": "You died once and noticed.",
+      "rarity": "common",
+      "tags": [
+        "survivor"
+      ],
+      "requirements": [
+        {
+          "record": "deaths_1"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.max_absorption",
+            "amount": 2.0,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "tenacious",
+      "name": "Tenacious",
+      "description": "Ten deaths, ten returns.",
+      "rarity": "uncommon",
+      "tags": [
+        "survivor"
+      ],
+      "requirements": [
+        {
+          "record": "deaths_10"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.knockback_resistance",
+            "amount": 0.05,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "undying",
+      "name": "Undying",
+      "description": "Fifty deaths and still here.",
+      "rarity": "rare",
+      "tags": [
+        "survivor"
+      ],
+      "requirements": [
+        {
+          "record": "deaths_50"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.max_health",
+            "amount": 2.0,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "phoenix",
+      "name": "Phoenix",
+      "description": "A hundred deaths, a hundred dawns.",
+      "rarity": "epic",
+      "tags": [
+        "survivor"
+      ],
+      "requirements": [
+        {
+          "record": "deaths_100"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.max_health",
+            "amount": 4.0,
+            "operation": "add_value"
+          },
+          {
+            "attribute": "minecraft:generic.armor",
+            "amount": 1.0,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    }
+  ]
+}

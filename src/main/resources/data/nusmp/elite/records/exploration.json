@@ -1,0 +1,690 @@
+{
+  "records": [
+    {
+      "id": "biome_plains",
+      "name": "Open Fields",
+      "description": "The wind carries nothing but grass. Discover the plains biome.",
+      "category": "exploration",
+      "rarity": "common",
+      "hidden": false,
+      "condition": {
+        "type": "biome_discovery",
+        "biome": "minecraft:plains"
+      }
+    },
+    {
+      "id": "biome_desert",
+      "name": "Sands Underfoot",
+      "description": "Every step is a little deeper. Discover the desert biome.",
+      "category": "exploration",
+      "rarity": "common",
+      "hidden": false,
+      "condition": {
+        "type": "biome_discovery",
+        "biome": "minecraft:desert"
+      }
+    },
+    {
+      "id": "biome_swamp",
+      "name": "Mire Wader",
+      "description": "The water is warmer than it should be. Discover the swamp biome.",
+      "category": "exploration",
+      "rarity": "common",
+      "hidden": false,
+      "condition": {
+        "type": "biome_discovery",
+        "biome": "minecraft:swamp"
+      }
+    },
+    {
+      "id": "biome_taiga",
+      "name": "Pine Breath",
+      "description": "Needles, snow and woodsmoke. Discover the taiga biome.",
+      "category": "exploration",
+      "rarity": "common",
+      "hidden": false,
+      "condition": {
+        "type": "biome_discovery",
+        "biome": "minecraft:taiga"
+      }
+    },
+    {
+      "id": "biome_savanna",
+      "name": "Golden Grass",
+      "description": "Acacia shade is the only roof. Discover the savanna biome.",
+      "category": "exploration",
+      "rarity": "common",
+      "hidden": false,
+      "condition": {
+        "type": "biome_discovery",
+        "biome": "minecraft:savanna"
+      }
+    },
+    {
+      "id": "biome_jungle",
+      "name": "Canopy Climber",
+      "description": "Light comes down in coins. Discover the jungle biome.",
+      "category": "exploration",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "biome_discovery",
+        "biome": "minecraft:jungle"
+      }
+    },
+    {
+      "id": "biome_badlands",
+      "name": "Red Mesa",
+      "description": "Layers of old sea floor, baked red. Discover the badlands biome.",
+      "category": "exploration",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "biome_discovery",
+        "biome": "minecraft:badlands"
+      }
+    },
+    {
+      "id": "biome_cherry_grove",
+      "name": "Petal Storm",
+      "description": "Pink snow that never melts. Discover the cherry grove biome.",
+      "category": "exploration",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "biome_discovery",
+        "biome": "minecraft:cherry_grove"
+      }
+    },
+    {
+      "id": "biome_lush_caves",
+      "name": "Hidden Garden",
+      "description": "A garden under the stone. Discover the lush caves biome.",
+      "category": "exploration",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "biome_discovery",
+        "biome": "minecraft:lush_caves"
+      }
+    },
+    {
+      "id": "biome_warped_forest",
+      "name": "Warped Walker",
+      "description": "A forest that grew on the wrong side of the world. Discover the warped forest biome.",
+      "category": "exploration",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "biome_discovery",
+        "biome": "minecraft:warped_forest"
+      }
+    },
+    {
+      "id": "biome_soul_sand_valley",
+      "name": "Valley of Souls",
+      "description": "The ground whispers back. Discover the soul sand valley biome.",
+      "category": "exploration",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "biome_discovery",
+        "biome": "minecraft:soul_sand_valley"
+      }
+    },
+    {
+      "id": "biome_ice_spikes",
+      "name": "Spiked Frost",
+      "description": "A frozen field of blades. Discover the ice spikes biome.",
+      "category": "exploration",
+      "rarity": "rare",
+      "hidden": false,
+      "condition": {
+        "type": "biome_discovery",
+        "biome": "minecraft:ice_spikes"
+      }
+    },
+    {
+      "id": "biome_mushroom_fields",
+      "name": "Fungal Isle",
+      "description": "No monster has ever walked here. Discover the mushroom fields biome.",
+      "category": "exploration",
+      "rarity": "rare",
+      "hidden": false,
+      "condition": {
+        "type": "biome_discovery",
+        "biome": "minecraft:mushroom_fields"
+      }
+    },
+    {
+      "id": "biome_basalt_deltas",
+      "name": "Basalt Pilgrim",
+      "description": "Ash falls like slow rain. Discover the basalt deltas biome.",
+      "category": "exploration",
+      "rarity": "rare",
+      "hidden": false,
+      "condition": {
+        "type": "biome_discovery",
+        "biome": "minecraft:basalt_deltas"
+      }
+    },
+    {
+      "id": "biome_end_highlands",
+      "name": "Beyond the Void",
+      "description": "Land floating over nothing. Discover the end highlands biome.",
+      "category": "exploration",
+      "rarity": "rare",
+      "hidden": false,
+      "condition": {
+        "type": "biome_discovery",
+        "biome": "minecraft:end_highlands"
+      }
+    },
+    {
+      "id": "biome_deep_dark",
+      "name": "Where Light Fears",
+      "description": "Something here is listening. Discover the deep dark biome.",
+      "category": "exploration",
+      "rarity": "epic",
+      "hidden": false,
+      "condition": {
+        "type": "biome_discovery",
+        "biome": "minecraft:deep_dark"
+      }
+    },
+    {
+      "id": "biomes_10",
+      "name": "Ten Horizons",
+      "description": "A short list, but a start. Discover 10 different biomes.",
+      "category": "exploration",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "biome_discovery",
+        "count": 10
+      }
+    },
+    {
+      "id": "biomes_25",
+      "name": "Atlas Pages",
+      "description": "Your map has begun to fill. Discover 25 different biomes.",
+      "category": "exploration",
+      "rarity": "rare",
+      "hidden": false,
+      "condition": {
+        "type": "biome_discovery",
+        "count": 25
+      }
+    },
+    {
+      "id": "biomes_40",
+      "name": "Cartographer's Dream",
+      "description": "You know the world by its colours. Discover 40 different biomes.",
+      "category": "exploration",
+      "rarity": "epic",
+      "hidden": false,
+      "condition": {
+        "type": "biome_discovery",
+        "count": 40
+      }
+    },
+    {
+      "id": "biomes_60",
+      "name": "Every Corner",
+      "description": "There is nowhere left to be a stranger. Discover 60 different biomes.",
+      "category": "exploration",
+      "rarity": "legendary",
+      "hidden": false,
+      "condition": {
+        "type": "biome_discovery",
+        "count": 60
+      }
+    },
+    {
+      "id": "struct_village",
+      "name": "Hearth and Hammer",
+      "description": "Smoke from a chimney, finally. Find a village.",
+      "category": "exploration",
+      "rarity": "common",
+      "hidden": false,
+      "condition": {
+        "type": "structure_discovery",
+        "structure": "minecraft:village_*"
+      }
+    },
+    {
+      "id": "struct_shipwreck",
+      "name": "Wreck Diver",
+      "description": "Someone else's last voyage. Find a shipwreck.",
+      "category": "exploration",
+      "rarity": "common",
+      "hidden": false,
+      "condition": {
+        "type": "structure_discovery",
+        "structure": "minecraft:shipwreck*"
+      }
+    },
+    {
+      "id": "struct_ruined_portal",
+      "name": "Broken Gate",
+      "description": "A door to somewhere, left ajar. Find a ruined portal.",
+      "category": "exploration",
+      "rarity": "common",
+      "hidden": false,
+      "condition": {
+        "type": "structure_discovery",
+        "structure": "minecraft:ruined_portal*"
+      }
+    },
+    {
+      "id": "struct_mineshaft",
+      "name": "Old Timbers",
+      "description": "Rails run into the dark. Find a mineshaft.",
+      "category": "exploration",
+      "rarity": "common",
+      "hidden": false,
+      "condition": {
+        "type": "structure_discovery",
+        "structure": "minecraft:mineshaft*"
+      }
+    },
+    {
+      "id": "struct_desert_pyramid",
+      "name": "Sun-Baked Tomb",
+      "description": "The trap under the pressure plate is patient. Find a desert pyramid.",
+      "category": "exploration",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "structure_discovery",
+        "structure": "minecraft:desert_pyramid"
+      }
+    },
+    {
+      "id": "struct_jungle_pyramid",
+      "name": "Moss and Levers",
+      "description": "Puzzles built by people who hated visitors. Find a jungle pyramid.",
+      "category": "exploration",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "structure_discovery",
+        "structure": "minecraft:jungle_pyramid"
+      }
+    },
+    {
+      "id": "struct_pillager_outpost",
+      "name": "Raiders' Watch",
+      "description": "Banners and crossbows. Find a pillager outpost.",
+      "category": "exploration",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "structure_discovery",
+        "structure": "minecraft:pillager_outpost"
+      }
+    },
+    {
+      "id": "struct_igloo",
+      "name": "Cold Comfort",
+      "description": "A bed in the snow. Find a igloo.",
+      "category": "exploration",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "structure_discovery",
+        "structure": "minecraft:igloo"
+      }
+    },
+    {
+      "id": "struct_swamp_hut",
+      "name": "Hag's Cottage",
+      "description": "The cauldron is still warm. Find a swamp hut.",
+      "category": "exploration",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "structure_discovery",
+        "structure": "minecraft:swamp_hut"
+      }
+    },
+    {
+      "id": "struct_trail_ruins",
+      "name": "Trail of the Buried",
+      "description": "Pottery shards and old brushes. Find a trail ruins.",
+      "category": "exploration",
+      "rarity": "rare",
+      "hidden": false,
+      "condition": {
+        "type": "structure_discovery",
+        "structure": "minecraft:trail_ruins"
+      }
+    },
+    {
+      "id": "struct_monument",
+      "name": "Drowned Throne",
+      "description": "Guardians keep watch under the tide. Find a monument.",
+      "category": "exploration",
+      "rarity": "rare",
+      "hidden": false,
+      "condition": {
+        "type": "structure_discovery",
+        "structure": "minecraft:monument"
+      }
+    },
+    {
+      "id": "struct_fortress",
+      "name": "Nether Bastion",
+      "description": "A fortress of bricks older than the fire. Find a fortress.",
+      "category": "exploration",
+      "rarity": "rare",
+      "hidden": false,
+      "condition": {
+        "type": "structure_discovery",
+        "structure": "minecraft:fortress"
+      }
+    },
+    {
+      "id": "struct_bastion_remnant",
+      "name": "Gold Hoard",
+      "description": "Piglins guard their shine. Find a bastion remnant.",
+      "category": "exploration",
+      "rarity": "rare",
+      "hidden": false,
+      "condition": {
+        "type": "structure_discovery",
+        "structure": "minecraft:bastion_remnant"
+      }
+    },
+    {
+      "id": "struct_mansion",
+      "name": "Woodland Manor",
+      "description": "The invitation was a mistake. Find a mansion.",
+      "category": "exploration",
+      "rarity": "epic",
+      "hidden": false,
+      "condition": {
+        "type": "structure_discovery",
+        "structure": "minecraft:mansion"
+      }
+    },
+    {
+      "id": "struct_end_city",
+      "name": "City at the Edge",
+      "description": "Purple towers and a ship in the sky. Find a end city.",
+      "category": "exploration",
+      "rarity": "epic",
+      "hidden": false,
+      "condition": {
+        "type": "structure_discovery",
+        "structure": "minecraft:end_city"
+      }
+    },
+    {
+      "id": "struct_ancient_city",
+      "name": "Sunken Silence",
+      "description": "Do not make a sound. Find a ancient city.",
+      "category": "exploration",
+      "rarity": "epic",
+      "hidden": false,
+      "condition": {
+        "type": "structure_discovery",
+        "structure": "minecraft:ancient_city"
+      }
+    },
+    {
+      "id": "struct_trial_chambers",
+      "name": "Trialgoer",
+      "description": "The spawner counts every mistake. Find a trial chambers.",
+      "category": "exploration",
+      "rarity": "epic",
+      "hidden": false,
+      "condition": {
+        "type": "structure_discovery",
+        "structure": "minecraft:trial_chambers"
+      }
+    },
+    {
+      "id": "struct_stronghold",
+      "name": "Gate of the End",
+      "description": "A ring of eyes, a door of fire. Find a stronghold.",
+      "category": "exploration",
+      "rarity": "rare",
+      "hidden": false,
+      "condition": {
+        "type": "structure_discovery",
+        "structure": "minecraft:stronghold"
+      }
+    },
+    {
+      "id": "structs_5",
+      "name": "Ruin Hopper",
+      "description": "Five doors opened. Find 5 different kinds of structure.",
+      "category": "exploration",
+      "rarity": "common",
+      "hidden": false,
+      "condition": {
+        "type": "structure_discovery",
+        "count": 5
+      }
+    },
+    {
+      "id": "structs_10",
+      "name": "Delver",
+      "description": "Ten places that were not meant to be found. Find 10 different kinds of structure.",
+      "category": "exploration",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "structure_discovery",
+        "count": 10
+      }
+    },
+    {
+      "id": "structs_15",
+      "name": "Grave Robber's Almanac",
+      "description": "Fifteen kinds of dark. Find 15 different kinds of structure.",
+      "category": "exploration",
+      "rarity": "epic",
+      "hidden": false,
+      "condition": {
+        "type": "structure_discovery",
+        "count": 15
+      }
+    },
+    {
+      "id": "structs_20",
+      "name": "Keeper of Ruins",
+      "description": "You have stood in all of them. Find 20 different kinds of structure.",
+      "category": "exploration",
+      "rarity": "legendary",
+      "hidden": false,
+      "condition": {
+        "type": "structure_discovery",
+        "count": 20
+      }
+    },
+    {
+      "id": "dist_all_1k",
+      "name": "First Kilometre",
+      "description": "Travel 1 km in total.",
+      "category": "exploration",
+      "rarity": "common",
+      "hidden": false,
+      "condition": {
+        "type": "distance_traveled",
+        "meters": 1000,
+        "mode": "all"
+      }
+    },
+    {
+      "id": "dist_all_10k",
+      "name": "Ten Thousand Steps",
+      "description": "Travel 10 km in total.",
+      "category": "exploration",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "distance_traveled",
+        "meters": 10000,
+        "mode": "all"
+      }
+    },
+    {
+      "id": "dist_all_50k",
+      "name": "Long Road",
+      "description": "Travel 50 km in total.",
+      "category": "exploration",
+      "rarity": "rare",
+      "hidden": false,
+      "condition": {
+        "type": "distance_traveled",
+        "meters": 50000,
+        "mode": "all"
+      }
+    },
+    {
+      "id": "dist_all_100k",
+      "name": "A Hundred Kilometres",
+      "description": "Travel 100 km in total.",
+      "category": "exploration",
+      "rarity": "epic",
+      "hidden": false,
+      "condition": {
+        "type": "distance_traveled",
+        "meters": 100000,
+        "mode": "all"
+      }
+    },
+    {
+      "id": "dist_all_500k",
+      "name": "Around the Edge",
+      "description": "Travel 500 km in total.",
+      "category": "exploration",
+      "rarity": "legendary",
+      "hidden": false,
+      "condition": {
+        "type": "distance_traveled",
+        "meters": 500000,
+        "mode": "all"
+      }
+    },
+    {
+      "id": "dist_all_1000k",
+      "name": "Further Than the Horizon",
+      "description": "Mile after mile. Travel 1,000 km in total.",
+      "category": "exploration",
+      "rarity": "mythic",
+      "hidden": false,
+      "condition": {
+        "type": "distance_traveled",
+        "meters": 1000000,
+        "mode": "all"
+      }
+    },
+    {
+      "id": "dist_walk_20k",
+      "name": "Footsore",
+      "description": "Travel 20 km on foot.",
+      "category": "exploration",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "distance_traveled",
+        "meters": 20000,
+        "mode": "walk"
+      }
+    },
+    {
+      "id": "dist_sprint_25k",
+      "name": "Never Stop Running",
+      "description": "Travel 25 km sprinting.",
+      "category": "exploration",
+      "rarity": "rare",
+      "hidden": false,
+      "condition": {
+        "type": "distance_traveled",
+        "meters": 25000,
+        "mode": "sprint"
+      }
+    },
+    {
+      "id": "dist_swim_2k",
+      "name": "Strong Swimmer",
+      "description": "Travel 2 km swimming.",
+      "category": "exploration",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "distance_traveled",
+        "meters": 2000,
+        "mode": "swim"
+      }
+    },
+    {
+      "id": "dist_boat_5k",
+      "name": "Boatman",
+      "description": "Travel 5 km by boat.",
+      "category": "exploration",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "distance_traveled",
+        "meters": 5000,
+        "mode": "boat"
+      }
+    },
+    {
+      "id": "dist_fly_10k",
+      "name": "Skybound",
+      "description": "Travel 10 km flying.",
+      "category": "exploration",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "distance_traveled",
+        "meters": 10000,
+        "mode": "fly"
+      }
+    },
+    {
+      "id": "dist_elytra_5k",
+      "name": "On Borrowed Wings",
+      "description": "Travel 5 km gliding on elytra.",
+      "category": "exploration",
+      "rarity": "rare",
+      "hidden": false,
+      "condition": {
+        "type": "distance_traveled",
+        "meters": 5000,
+        "mode": "elytra"
+      }
+    },
+    {
+      "id": "dist_elytra_50k",
+      "name": "Wind Rider",
+      "description": "Travel 50 km gliding on elytra.",
+      "category": "exploration",
+      "rarity": "epic",
+      "hidden": false,
+      "condition": {
+        "type": "distance_traveled",
+        "meters": 50000,
+        "mode": "elytra"
+      }
+    },
+    {
+      "id": "dist_mount_20k",
+      "name": "Born in the Saddle",
+      "description": "Travel 20 km on a mount.",
+      "category": "exploration",
+      "rarity": "rare",
+      "hidden": false,
+      "condition": {
+        "type": "distance_traveled",
+        "meters": 20000,
+        "mode": "mount"
+      }
+    }
+  ]
+}

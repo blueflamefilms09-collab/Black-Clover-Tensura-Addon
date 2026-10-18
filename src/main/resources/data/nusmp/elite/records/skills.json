@@ -1,0 +1,292 @@
+{
+  "records": [
+    {
+      "id": "skills_1",
+      "name": "First Skill",
+      "description": "Learn 1 skills.",
+      "category": "skills",
+      "rarity": "common",
+      "hidden": false,
+      "condition": {
+        "type": "skill_learned",
+        "count": 1
+      }
+    },
+    {
+      "id": "skills_5",
+      "name": "Five Skills",
+      "description": "Learn 5 skills.",
+      "category": "skills",
+      "rarity": "common",
+      "hidden": false,
+      "condition": {
+        "type": "skill_learned",
+        "count": 5
+      }
+    },
+    {
+      "id": "skills_10",
+      "name": "Ten Skills",
+      "description": "Learn 10 skills.",
+      "category": "skills",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "skill_learned",
+        "count": 10
+      }
+    },
+    {
+      "id": "skills_20",
+      "name": "Twenty Skills",
+      "description": "Learn 20 skills.",
+      "category": "skills",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "skill_learned",
+        "count": 20
+      }
+    },
+    {
+      "id": "skills_40",
+      "name": "Skill Collector",
+      "description": "Learn 40 skills.",
+      "category": "skills",
+      "rarity": "rare",
+      "hidden": false,
+      "condition": {
+        "type": "skill_learned",
+        "count": 40
+      }
+    },
+    {
+      "id": "skills_75",
+      "name": "Walking Library",
+      "description": "Learn 75 skills.",
+      "category": "skills",
+      "rarity": "epic",
+      "hidden": false,
+      "condition": {
+        "type": "skill_learned",
+        "count": 75
+      }
+    },
+    {
+      "id": "skills_150",
+      "name": "Arcane Archive",
+      "description": "Learn 150 skills.",
+      "category": "skills",
+      "rarity": "legendary",
+      "hidden": false,
+      "condition": {
+        "type": "skill_learned",
+        "count": 150
+      }
+    },
+    {
+      "id": "skills_300",
+      "name": "All Of It",
+      "description": "There is no more room on the shelf. Learn 300 skills.",
+      "category": "skills",
+      "rarity": "mythic",
+      "hidden": true,
+      "condition": {
+        "type": "skill_learned",
+        "count": 300
+      }
+    },
+    {
+      "id": "skill_intrinsic_1",
+      "name": "Born With It",
+      "description": "Learn 1 intrinsic skill.",
+      "category": "skills",
+      "rarity": "common",
+      "hidden": false,
+      "condition": {
+        "type": "skill_learned",
+        "count": 1,
+        "skill_type": "intrinsic"
+      }
+    },
+    {
+      "id": "skill_common_5",
+      "name": "Common Knowledge",
+      "description": "Learn 5 common skills.",
+      "category": "skills",
+      "rarity": "common",
+      "hidden": false,
+      "condition": {
+        "type": "skill_learned",
+        "count": 5,
+        "skill_type": "common"
+      }
+    },
+    {
+      "id": "skill_common_15",
+      "name": "Jack of Trades",
+      "description": "Learn 15 common skills.",
+      "category": "skills",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "skill_learned",
+        "count": 15,
+        "skill_type": "common"
+      }
+    },
+    {
+      "id": "skill_resistance_3",
+      "name": "Thick Skinned",
+      "description": "Learn 3 resistance skills.",
+      "category": "skills",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "skill_learned",
+        "count": 3,
+        "skill_type": "resistance"
+      }
+    },
+    {
+      "id": "skill_resistance_10",
+      "name": "Nothing Hurts",
+      "description": "Learn 10 resistance skills.",
+      "category": "skills",
+      "rarity": "rare",
+      "hidden": false,
+      "condition": {
+        "type": "skill_learned",
+        "count": 10,
+        "skill_type": "resistance"
+      }
+    },
+    {
+      "id": "skill_extra_3",
+      "name": "Extra Credit",
+      "description": "Learn 3 extra skills.",
+      "category": "skills",
+      "rarity": "uncommon",
+      "hidden": false,
+      "condition": {
+        "type": "skill_learned",
+        "count": 3,
+        "skill_type": "extra"
+      }
+    },
+    {
+      "id": "skill_extra_10",
+      "name": "Beyond Common",
+      "description": "Learn 10 extra skills.",
+      "category": "skills",
+      "rarity": "rare",
+      "hidden": false,
+      "condition": {
+        "type": "skill_learned",
+        "count": 10,
+        "skill_type": "extra"
+      }
+    },
+    {
+      "id": "skill_unique_1",
+      "name": "One of a Kind",
+      "description": "Learn 1 unique skill.",
+      "category": "skills",
+      "rarity": "rare",
+      "hidden": false,
+      "condition": {
+        "type": "skill_learned",
+        "count": 1,
+        "skill_type": "unique"
+      }
+    },
+    {
+      "id": "skill_unique_3",
+      "name": "Trio of the Unique",
+      "description": "Learn 3 unique skills.",
+      "category": "skills",
+      "rarity": "epic",
+      "hidden": false,
+      "condition": {
+        "type": "skill_learned",
+        "count": 3,
+        "skill_type": "unique"
+      }
+    },
+    {
+      "id": "skill_unique_5",
+      "name": "A Gallery of Uniques",
+      "description": "Learn 5 unique skills.",
+      "category": "skills",
+      "rarity": "legendary",
+      "hidden": false,
+      "condition": {
+        "type": "skill_learned",
+        "count": 5,
+        "skill_type": "unique"
+      }
+    },
+    {
+      "id": "skill_ultimate_1",
+      "name": "Ultimate Skill",
+      "description": "Learn 1 ultimate skill.",
+      "category": "skills",
+      "rarity": "legendary",
+      "hidden": false,
+      "condition": {
+        "type": "skill_learned",
+        "count": 1,
+        "skill_type": "ultimate"
+      }
+    },
+    {
+      "id": "skill_ultimate_3",
+      "name": "Three Ultimates",
+      "description": "Learn 3 ultimate skills.",
+      "category": "skills",
+      "rarity": "mythic",
+      "hidden": false,
+      "condition": {
+        "type": "skill_learned",
+        "count": 3,
+        "skill_type": "ultimate"
+      }
+    },
+    {
+      "id": "skill_great_sage",
+      "name": "Sage's Voice",
+      "description": "A voice that answers before you ask. Learn Great Sage.",
+      "category": "skills",
+      "rarity": "epic",
+      "hidden": false,
+      "condition": {
+        "type": "skill_learned",
+        "skill": "tensura:great_sage"
+      }
+    },
+    {
+      "id": "skill_demon_lord_haki",
+      "name": "Overlord's Presence",
+      "description": "Learn Demon Lord Haki.",
+      "category": "skills",
+      "rarity": "rare",
+      "hidden": false,
+      "condition": {
+        "type": "skill_learned",
+        "skill": "tensura:demon_lord_haki"
+      }
+    },
+    {
+      "id": "skill_hero_haki",
+      "name": "Hero's Presence",
+      "description": "Learn Hero Haki.",
+      "category": "skills",
+      "rarity": "rare",
+      "hidden": false,
+      "condition": {
+        "type": "skill_learned",
+        "skill": "tensura:hero_haki"
+      }
+    }
+  ]
+}
