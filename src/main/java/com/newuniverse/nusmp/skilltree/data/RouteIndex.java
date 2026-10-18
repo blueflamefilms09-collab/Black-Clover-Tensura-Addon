@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.skilltree.data;
 
 import com.google.gson.JsonElement;
+import com.newuniverse.nusmp.skilltree.line.LineCard;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,16 +43,8 @@ public final class RouteIndex {
         public static final Caps REGISTRY = new Caps(1024, 64_000_000L);
     }
 
-    /**
-     * Why: the admin inspect list and the lazily built route list need a name, a colour and a size for every line WITHOUT the nodes (which are the heavy part): this is that card. About 100 bytes a
-     * line, so the whole catalogue of 283 lines is one small payload for an administrator, and the client never builds a tree layout to list them.
-     */
-    public record Summary(String id, String magic, String franchise, String name, int color, String icon, int nodeCount) {
-        public static Summary of(SkillRoute r) { return new Summary(r.id(), r.magic(), r.franchise() == null ? "" : r.franchise(), r.name(), r.color() & 0xFFFFFF, r.icon(), r.nodes().size()); }
-    }
-
     private final List<SkillRoute> routes;
-    private final List<Summary> summaries;
+    private final List<LineCard> cards;
     private final List<Entry> report;
     private final int bytes;
     private final Map<String, SkillRoute> byId = new HashMap<>(), byBook = new HashMap<>(), byClass = new HashMap<>();
@@ -60,9 +53,9 @@ public final class RouteIndex {
     private RouteIndex(List<SkillRoute> routes, List<Entry> report, int bytes) {
         this.routes = Collections.unmodifiableList(new ArrayList<>(routes));
         this.report = Collections.unmodifiableList(new ArrayList<>(report));
-        List<Summary> sum = new ArrayList<>(routes.size());
-        for (SkillRoute r : routes) sum.add(Summary.of(r));
-        this.summaries = Collections.unmodifiableList(sum);
+        List<LineCard> sum = new ArrayList<>(routes.size());
+        for (SkillRoute r : routes) sum.add(LineCard.of(r));
+        this.cards = Collections.unmodifiableList(sum);
         this.bytes = bytes;
         for (SkillRoute r : routes) {
             byId.putIfAbsent(r.id(), r);
@@ -76,8 +69,8 @@ public final class RouteIndex {
     /** Every route, in id order. */
     public List<SkillRoute> all() { return routes; }
 
-    /** One card per route, in id order (no nodes). */
-    public List<Summary> summaries() { return summaries; }
+    /** One card per route, in id order (identity and look, never the nodes): what is sent to every client, see {@link LineCard}. */
+    public List<LineCard> cards() { return cards; }
 
     public SkillRoute byId(String routeId) { return routeId == null ? null : byId.get(routeId); }
 

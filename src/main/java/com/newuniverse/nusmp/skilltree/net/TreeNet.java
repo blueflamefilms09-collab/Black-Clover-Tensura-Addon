@@ -136,18 +136,23 @@ public final class TreeNet {
     public static void sendTree(ServerPlayer player) {
         try {
             PacketDistributor.sendToPlayer(player, new TreeSyncPayload(SkillTreeAttachments.get(player).toTag()));
+            com.newuniverse.nusmp.skilltree.line.LineSync.afterTree(player);                               // 1.82.0: the lines this player owns are sent again only when that set changed
         } catch (RuntimeException | LinkageError e) {
             LOG.debug("[nusmp] skill tree: could not send the tree to {}", player.getGameProfile().getName(), e);          // no connection yet (a test world): nothing to show anyway
         }
     }
 
-    /** Sends the routes the registry holds to these players. */
+    /**
+     * Sends the routes to these players. 1.82.0 (Unique Skill Lines): not the whole registry any more. With 283 lines that would be megabytes per login and would hand every player the trees of lines they
+     * have not unlocked, so each player gets the FULL routes of the lines they own (in as many packets as the payload limits need) plus a card for every line (name, colour, book; never nodes), see
+     * {@code skilltree.line.LineSync}.
+     */
     public static void sendRoutes(Stream<ServerPlayer> players) {
         try {
-            RoutesPayload payload = new RoutesPayload(RouteRegistry.all());
             players.forEach(p -> {
                 try {
-                    PacketDistributor.sendToPlayer(p, payload);
+                    com.newuniverse.nusmp.skilltree.line.LineSync.sendCards(p);
+                    com.newuniverse.nusmp.skilltree.line.LineSync.sendOwned(p);
                 } catch (RuntimeException | LinkageError e) {
                     LOG.debug("[nusmp] skill tree: could not send the routes to {}", p.getGameProfile().getName(), e);
                 }
@@ -162,11 +167,13 @@ public final class TreeNet {
     public static void forget(UUID id) {
         LIMITER.forget(id);
         QUEUE.forget(id);
+        com.newuniverse.nusmp.skilltree.line.LineNet.forget(id);
     }
 
     /** The server stopped: nothing here may outlive it. */
     public static void clear() {
         LIMITER.clear();
         QUEUE.clear();
+        com.newuniverse.nusmp.skilltree.line.LineNet.clear();
     }
 }

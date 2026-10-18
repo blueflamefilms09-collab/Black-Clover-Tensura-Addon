@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skilltree.data;
 
+import com.newuniverse.nusmp.skilltree.line.LineCard;
+
 import java.util.List;
 
 /**
@@ -71,16 +73,21 @@ public final class RouteRegistry {
 
     // ---------------------------------------------------------------- the client side
     /** Client thread: the routes the server sent replace the client copy as a whole. */
-    public static void setClient(List<SkillRoute> routes) { client = RouteIndex.of(routes == null ? List.of() : routes); }
+    public static void setClient(List<SkillRoute> routes) {
+        clientFull = routes == null ? List.of() : List.copyOf(routes);
+        rebuildClient();
+    }
 
     /** The client left its world: forget the copy of that server's routes. */
     public static void clearClient() {
+        clientFull = List.of();
+        clientCards = List.of();
         client = RouteIndex.EMPTY;
-        clientSummaries = List.of();
     }
 
-    // ---------------------------------------------------------------- 1.82.0: the lines a client holds (owned ones, plus the ones an administrator asked to inspect)
-    private static volatile List<RouteIndex.Summary> clientSummaries = List.of();
+    // ---------------------------------------------------------------- 1.82.0: what a client holds (the lines it owns in full, a node-less stub of every other line)
+    private static volatile List<SkillRoute> clientFull = List.of();
+    private static volatile List<LineCard> clientCards = List.of();
 
     /**
      * Client thread: routes that arrive AFTER the first chunk of a sync, or that an administrator asked to inspect, are added to the client copy (a route with the same id is replaced). Why a
@@ -89,17 +96,33 @@ public final class RouteRegistry {
     public static void addClient(List<SkillRoute> routes) {
         if (routes == null || routes.isEmpty()) return;
         java.util.Map<String, SkillRoute> merged = new java.util.LinkedHashMap<>();
-        for (SkillRoute r : client.all()) merged.put(r.id(), r);
+        for (SkillRoute r : clientFull) merged.put(r.id(), r);
         for (SkillRoute r : routes) merged.put(r.id(), r);
-        client = RouteIndex.of(new java.util.ArrayList<>(merged.values()));
+        clientFull = List.copyOf(merged.values());
+        rebuildClient();
     }
 
-    /** Client thread: the cards of every registered line, sent to an administrator who turned inspect mode on (a dedicated server does not send the trees themselves). */
-    public static void setClientSummaries(List<RouteIndex.Summary> summaries) { clientSummaries = summaries == null ? List.of() : List.copyOf(summaries); }
+    /**
+     * Client thread: the cards of every registered line. Each becomes a node-less stub route so that the code that names a Skill Book, lists the Black Market or fills the creative tab, which asks
+     * this registry by id and by book, works for lines the player does not own; a line the player owns (or inspected) is the full route, never the stub.
+     */
+    public static void setClientCards(List<LineCard> cards) {
+        clientCards = cards == null ? List.of() : List.copyOf(cards);
+        rebuildClient();
+    }
+
+    private static void rebuildClient() {
+        java.util.Map<String, SkillRoute> all = new java.util.LinkedHashMap<>();
+        for (SkillRoute r : clientFull) all.put(r.id(), r);
+        for (LineCard c : clientCards) all.computeIfAbsent(c.id(), k -> c.toStub());
+        java.util.List<SkillRoute> list = new java.util.ArrayList<>(all.values());
+        list.sort(java.util.Comparator.comparing(SkillRoute::id));
+        client = RouteIndex.of(list);
+    }
 
     /**
-     * One card per registered line, in id order: the server snapshot's while a server runs in this JVM (single player: everything is already here), else the cards the server sent an
-     * administrator. Empty for an ordinary player on a remote server, who is never told about lines they do not own.
+     * One card per registered line, in id order: computed from the server snapshot while a server runs in this JVM, else the cards the server sent. Contains every line (the cards carry no
+     * nodes), so the Passives panel, the inspect list and the books can name a line; whether a player may SEE a line in the library is decided by ownership, not by this list.
      */
-    public static List<RouteIndex.Summary> summaries() { return serverLoaded ? server.summaries() : clientSummaries; }
+    public static List<LineCard> cards() { return serverLoaded ? server.cards() : clientCards; }
 }

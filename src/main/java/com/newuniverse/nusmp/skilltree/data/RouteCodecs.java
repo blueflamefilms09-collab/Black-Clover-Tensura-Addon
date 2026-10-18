@@ -25,6 +25,11 @@ public final class RouteCodecs {
             (buf, routes) -> RouteWire.writeAll(new BufSink(buf), routes.size() > RouteWire.MAX_ROUTES ? routes.subList(0, RouteWire.MAX_ROUTES) : routes),
             buf -> RouteWire.readAll(new BufSource(buf)));
 
+    /** 1.82.0: the cards of the lines (identity and look, no nodes), see {@code LineCard}. */
+    public static final StreamCodec<FriendlyByteBuf, List<com.newuniverse.nusmp.skilltree.line.LineCard>> CARDS = StreamCodec.of(
+            (buf, cards) -> com.newuniverse.nusmp.skilltree.line.LineCard.writeAll(new BufSink(buf), cards),
+            buf -> com.newuniverse.nusmp.skilltree.line.LineCard.readAll(new BufSource(buf)));
+
     private record BufSink(FriendlyByteBuf buf) implements RouteWire.Sink {
         @Override public void varInt(int value) { buf.writeVarInt(value); }
 
