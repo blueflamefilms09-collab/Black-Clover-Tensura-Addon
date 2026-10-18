@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "vassal_seal",
+  "ingredients": [
+    {
+      "item": "nusmp:gem_fragment"
+    },
+    {
+      "item": "minecraft:blaze_rod"
+    },
+    {
+      "item": "minecraft:blaze_rod"
+    },
+    {
+      "item": "minecraft:amethyst_block"
+    }
+  ],
+  "result": {
+    "id": "nusmp:vassal_seal_staff",
+    "count": 1
+  }
+}

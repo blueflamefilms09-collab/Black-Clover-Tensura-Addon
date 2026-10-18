@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "vassal_seal",
+  "ingredients": [
+    {
+      "item": "nusmp:gem_fragment"
+    },
+    {
+      "item": "minecraft:lead"
+    },
+    {
+      "item": "minecraft:lead"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    }
+  ],
+  "result": {
+    "id": "nusmp:vassal_seal_whip",
+    "count": 1
+  }
+}
