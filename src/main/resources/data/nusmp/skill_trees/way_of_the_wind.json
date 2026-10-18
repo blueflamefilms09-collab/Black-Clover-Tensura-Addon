@@ -1,0 +1,1208 @@
+{
+  "magic": "omniscient_readers_viewpoint",
+  "franchise": "omniscient_readers_viewpoint",
+  "name": "Way of the Wind",
+  "desc": "A swordsman's road that follows the breeze. Never stand still: dash, spin and fall on the enemy like a gale with a blade.",
+  "book": "nusmp:way_of_the_wind_book",
+  "book_name": "Scroll of the Passing Breeze",
+  "book_lore": "The wind has no sheath, and it answers anyone who walks fast enough.",
+  "color": "#7FD6A8",
+  "icon": "minecraft:feather",
+  "class_id": "way_of_the_wind",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/way_of_the_wind.png",
+  "book_texture": "nusmp:item/skill_book_3d/omniscient_readers_viewpoint",
+  "background_theme": "forest",
+  "nodes": [
+    {
+      "id": "breeze_stance",
+      "name": "Breeze Stance",
+      "desc": "A relaxed, drifting stance: quicker feet and a faint regeneration, but a lighter blade.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "damage_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "armor": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "speed_pct": [
+          0.15,
+          0.18,
+          0.21
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0.5,
+          0.6,
+          0.7
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:string"
+    },
+    {
+      "id": "gale_stance",
+      "name": "Gale Stance",
+      "desc": "A reckless, raging stance: you are faster and cut harder, but a gust could knock you down.",
+      "parents": [
+        {
+          "node": "breeze_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_TORNADO"
+      },
+      "values": {
+        "damage_pct": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "armor": [
+          -4.0,
+          -5.0,
+          -6.0
+        ],
+        "speed_pct": [
+          0.3,
+          0.36,
+          0.42
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:wind_charge"
+    },
+    {
+      "id": "light_step",
+      "name": "Light Step",
+      "desc": "Your stride is a breath: bonus movement speed.",
+      "parents": [
+        {
+          "node": "breeze_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.05,
+          0.0625,
+          0.075,
+          0.0875,
+          0.1
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "windborne_leap",
+      "name": "Windborne Leap",
+      "desc": "A spring in every step: a higher jump.",
+      "parents": [
+        {
+          "node": "gale_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "jump_strength",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.05,
+          0.0625,
+          0.075,
+          0.0875,
+          0.1
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:rabbit_foot"
+    },
+    {
+      "id": "fall_like_a_leaf",
+      "name": "Fall Like a Leaf",
+      "desc": "You can drop farther without harm: a longer safe fall.",
+      "parents": [
+        {
+          "node": "breeze_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "safe_fall_distance",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "swift_blade_hand",
+      "name": "Swift Blade Hand",
+      "desc": "The blade follows the wind: bonus attack speed.",
+      "parents": [
+        {
+          "node": "gale_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.05,
+          0.0625,
+          0.075,
+          0.0875,
+          0.1
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "wind_step",
+      "name": "Wind Step",
+      "desc": "Dash forward in a streak of wind, cutting every foe you pass.",
+      "parents": [
+        {
+          "node": "breeze_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "distance": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:sugar"
+    },
+    {
+      "id": "cyclone_dance",
+      "name": "Cyclone Dance",
+      "desc": "Spin in place and slash everything around you several times.",
+      "parents": [
+        {
+          "node": "gale_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "whirlwind",
+      "params": {
+        "vfx": "WIND_TORNADO"
+      },
+      "values": {
+        "damage": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "radius": [
+          3.5,
+          3.78,
+          4.06,
+          4.34
+        ],
+        "hits": [
+          4.0,
+          5.0,
+          6.0,
+          8.0
+        ],
+        "interval": [
+          5.0,
+          5.0,
+          5.0,
+          5.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          260.0,
+          239.0,
+          218.0,
+          198.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:wind_charge"
+    },
+    {
+      "id": "crescent_of_wind",
+      "name": "Crescent of Wind",
+      "desc": "A broad cone of cutting wind in front of you.",
+      "parents": [
+        {
+          "node": "wind_step",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "range": [
+          3.5,
+          3.78,
+          4.06,
+          4.34
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0,
+          52.0
+        ],
+        "targets": [
+          2.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "knockback": [
+          0.4,
+          0.44,
+          0.48,
+          0.52
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          100.0,
+          92.0,
+          84.0,
+          76.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "vanish_on_the_breeze",
+      "name": "Vanish on the Breeze",
+      "desc": "Fade and reappear several blocks away, leaving only a ring of wind.",
+      "parents": [
+        {
+          "node": "cyclone_dance",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "blink",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "distance": [
+          8.0,
+          8.96,
+          9.92,
+          10.88
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:phantom_membrane"
+    },
+    {
+      "id": "descending_gale",
+      "name": "Descending Gale",
+      "desc": "Leap up and crash down in a burst of air.",
+      "parents": [
+        {
+          "node": "crescent_of_wind",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "height": [
+          0.7,
+          0.756,
+          0.812,
+          0.868
+        ],
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "radius": [
+          3.0,
+          3.3,
+          3.6,
+          3.9
+        ],
+        "knockback": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:elytra"
+    },
+    {
+      "id": "rolling_gust",
+      "name": "Rolling Gust",
+      "desc": "Send a low wave of wind rolling along the ground.",
+      "parents": [
+        {
+          "node": "vanish_on_the_breeze",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "length": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "width": [
+          2.0,
+          2.2,
+          2.4,
+          2.6
+        ],
+        "knockback": [
+          0.5,
+          0.55,
+          0.6,
+          0.65
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          180.0,
+          166.0,
+          151.0,
+          137.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:white_wool"
+    },
+    {
+      "id": "rising_updraft",
+      "name": "Rising Updraft",
+      "desc": "Throw the foe in front of you into the air on an updraft.",
+      "parents": [
+        {
+          "node": "descending_gale",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "uppercut",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "range": [
+          3.2,
+          3.392,
+          3.584,
+          3.776
+        ],
+        "launch": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:fire_charge"
+    },
+    {
+      "id": "tailwind",
+      "name": "Tailwind",
+      "desc": "A gale at your back: you gain speed and haste for a while.",
+      "parents": [
+        {
+          "node": "rolling_gust",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "speed",
+        "effect2": "haste",
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "seconds": [
+          12.0,
+          14.0,
+          16.0,
+          17.0
+        ],
+        "amp": [
+          1.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        "amp2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 10,
+      "y": 6,
+      "icon": "minecraft:sugar"
+    },
+    {
+      "id": "wind_at_your_back",
+      "name": "Wind at Your Back",
+      "desc": "You deal more damage while sprinting.",
+      "parents": [
+        {
+          "node": "wind_step",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "sprint_bonus",
+      "values": {
+        "bonus": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "gathering_gale",
+      "name": "Gathering Gale",
+      "desc": "Blows in a row grow stronger as the gale builds.",
+      "parents": [
+        {
+          "node": "cyclone_dance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "momentum",
+      "values": {
+        "per_stack": [
+          0.04,
+          0.046,
+          0.052,
+          0.058
+        ],
+        "max_stacks": [
+          5.0,
+          6.0,
+          8.0,
+          10.0
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:wind_charge"
+    },
+    {
+      "id": "leaf_in_the_wind",
+      "name": "Leaf in the Wind",
+      "desc": "You sometimes drift out of the way of a blow.",
+      "parents": [
+        {
+          "node": "crescent_of_wind",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.08,
+          0.096,
+          0.112,
+          0.128
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:oak_leaves"
+    },
+    {
+      "id": "feather_fall",
+      "name": "Feather Fall",
+      "desc": "You take much less fall damage.",
+      "parents": [
+        {
+          "node": "vanish_on_the_breeze",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "fall_guard",
+      "values": {
+        "pct": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "pushing_gust",
+      "name": "Pushing Gust",
+      "desc": "Your blows sometimes push the foe back on a puff of wind.",
+      "parents": [
+        {
+          "node": "descending_gale",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "knockback_on_hit",
+      "values": {
+        "strength": [
+          0.4,
+          0.46,
+          0.52,
+          0.58
+        ],
+        "chance": [
+          0.3,
+          0.345,
+          0.39,
+          0.435
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:piston"
+    },
+    {
+      "id": "cutting_draft",
+      "name": "Cutting Draft",
+      "desc": "Your blows sometimes strike critically.",
+      "parents": [
+        {
+          "node": "rolling_gust",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.1,
+          0.12,
+          0.14,
+          0.16
+        ],
+        "mult": [
+          1.5,
+          1.62,
+          1.74,
+          1.86
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:shears"
+    },
+    {
+      "id": "entangling_breeze",
+      "name": "Entangling Breeze",
+      "desc": "Struck foes are sometimes slowed, caught in whirling air.",
+      "parents": [
+        {
+          "node": "rising_updraft",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "on_hit_effect",
+      "params": {
+        "effect": "slowness"
+      },
+      "values": {
+        "seconds": [
+          3.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "chance": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:cobweb"
+    },
+    {
+      "id": "light_as_air",
+      "name": "Light as Air",
+      "desc": "You tire more slowly.",
+      "parents": [
+        {
+          "node": "tailwind",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "hunger_saver",
+      "values": {
+        "pct": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:dried_kelp"
+    },
+    {
+      "id": "tempest_step",
+      "name": "Tempest Step",
+      "desc": "Become the storm: a very long dash that tears through everything in its way.",
+      "parents": [
+        {
+          "node": "tailwind",
+          "level": 3
+        },
+        {
+          "node": "light_as_air",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "WIND_TORNADO"
+      },
+      "values": {
+        "distance": [
+          14,
+          14,
+          14
+        ],
+        "damage": [
+          24.0,
+          30.0,
+          36.0
+        ],
+        "targets": [
+          10.0,
+          10.0,
+          10.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174
+        ],
+        "cooldown": [
+          2400.0,
+          2208.0,
+          2016.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:elytra"
+    },
+    {
+      "id": "hundred_gust_storm",
+      "name": "Hundred-Gust Storm",
+      "desc": "A towering whirlwind of blades of air around you, striking again and again.",
+      "parents": [
+        {
+          "node": "rising_updraft",
+          "level": 3
+        },
+        {
+          "node": "entangling_breeze",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "whirlwind",
+      "params": {
+        "vfx": "WIND_TORNADO"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5
+        ],
+        "radius": [
+          6.0,
+          6.48,
+          6.96
+        ],
+        "hits": [
+          7.0,
+          9.0,
+          11.0
+        ],
+        "interval": [
+          5.0,
+          5.0,
+          5.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029
+        ],
+        "cooldown": [
+          2700.0,
+          2484.0,
+          2268.0
+        ]
+      },
+      "x": 16,
+      "y": 6,
+      "icon": "minecraft:breeze_rod"
+    }
+  ]
+}

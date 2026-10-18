@@ -1,0 +1,1155 @@
+{
+  "magic": "omniscient_readers_viewpoint",
+  "franchise": "omniscient_readers_viewpoint",
+  "name": "Black Heavenly Demon Sword",
+  "desc": "A merciless sword style soaked in demonic qi. Every cut is a crescent of black light that drinks a little of whatever it touches.",
+  "book": "nusmp:black_heavenly_demon_sword_book",
+  "book_name": "Manual of the Black Heavenly Edge",
+  "book_lore": "No sect taught it; it was taught by the dead who had tried to survive.",
+  "color": "#B3202A",
+  "icon": "minecraft:netherite_sword",
+  "class_id": "black_heavenly_demon_sword",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/black_heavenly_demon_sword.png",
+  "book_texture": "nusmp:item/skill_book_3d/omniscient_readers_viewpoint",
+  "background_theme": "blood",
+  "nodes": [
+    {
+      "id": "demon_s_stance",
+      "name": "Demon's Stance",
+      "desc": "Let the demon lead: a huge boost to your damage, but you drop all defence.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "damage_pct": [
+          0.3,
+          0.36,
+          0.42
+        ],
+        "armor": [
+          -4.0,
+          -5.0,
+          -6.0
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:wither_skeleton_skull"
+    },
+    {
+      "id": "heavenly_sheath",
+      "name": "Heavenly Sheath",
+      "desc": "Sheathe the edge behind a calm heaven: more armor and slow recovery, with a weaker blade.",
+      "parents": [
+        {
+          "node": "demon_s_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "damage_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "armor": [
+          4.0,
+          5.0,
+          6.0
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0.6,
+          0.72,
+          0.84
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "black_edge",
+      "name": "Black Edge",
+      "desc": "A darker, sharper steel: bonus attack damage.",
+      "parents": [
+        {
+          "node": "demon_s_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:netherite_sword"
+    },
+    {
+      "id": "demon_core",
+      "name": "Demon Core",
+      "desc": "The demonic core feeds your body: more maximum health.",
+      "parents": [
+        {
+          "node": "heavenly_sheath",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          4.0,
+          5.0,
+          6.0,
+          7.0,
+          8.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:wither_rose"
+    },
+    {
+      "id": "sword_callus",
+      "name": "Sword Callus",
+      "desc": "Hands and skin hardened by the blade: bonus armor.",
+      "parents": [
+        {
+          "node": "demon_s_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:iron_chestplate"
+    },
+    {
+      "id": "sword_qi_flow",
+      "name": "Sword Qi Flow",
+      "desc": "Qi through the wrists: bonus attack speed.",
+      "parents": [
+        {
+          "node": "heavenly_sheath",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.05,
+          0.0625,
+          0.075,
+          0.0875,
+          0.1
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:blaze_powder"
+    },
+    {
+      "id": "black_crescent",
+      "name": "Black Crescent",
+      "desc": "A wide cone of black sword qi in front of you.",
+      "parents": [
+        {
+          "node": "demon_s_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "range": [
+          3.5,
+          3.78,
+          4.06,
+          4.34
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0,
+          52.0
+        ],
+        "targets": [
+          2.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "knockback": [
+          0.4,
+          0.44,
+          0.48,
+          0.52
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          100.0,
+          92.0,
+          84.0,
+          76.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:coal"
+    },
+    {
+      "id": "demon_splitting_wave",
+      "name": "Demon-Splitting Wave",
+      "desc": "Send a low black wave along the ground that cleaves everything in its path.",
+      "parents": [
+        {
+          "node": "heavenly_sheath",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "length": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "width": [
+          2.0,
+          2.2,
+          2.4,
+          2.6
+        ],
+        "knockback": [
+          0.5,
+          0.55,
+          0.6,
+          0.65
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          180.0,
+          166.0,
+          151.0,
+          137.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:obsidian"
+    },
+    {
+      "id": "heavenly_rising_cut",
+      "name": "Heavenly Rising Cut",
+      "desc": "An upward slash that throws the foe in front of you into the air.",
+      "parents": [
+        {
+          "node": "black_crescent",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "uppercut",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "range": [
+          3.2,
+          3.392,
+          3.584,
+          3.776
+        ],
+        "launch": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:netherite_sword"
+    },
+    {
+      "id": "devouring_edge",
+      "name": "Devouring Edge",
+      "desc": "Cut a foe in front of you and drink some of the damage back as health.",
+      "parents": [
+        {
+          "node": "demon_splitting_wave",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "drain_bite",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "range": [
+          3.2,
+          3.392,
+          3.584,
+          3.776
+        ],
+        "heal_pct": [
+          0.3,
+          0.336,
+          0.372,
+          0.408
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:ghast_tear"
+    },
+    {
+      "id": "descent_of_the_black_sword",
+      "name": "Descent of the Black Sword",
+      "desc": "Leap high and slam down in a shock of black qi.",
+      "parents": [
+        {
+          "node": "heavenly_rising_cut",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "height": [
+          0.7,
+          0.756,
+          0.812,
+          0.868
+        ],
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "radius": [
+          3.0,
+          3.3,
+          3.6,
+          3.9
+        ],
+        "knockback": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:anvil"
+    },
+    {
+      "id": "qi_rot",
+      "name": "Qi Rot",
+      "desc": "A cone of rotting demonic qi withers everyone it touches.",
+      "parents": [
+        {
+          "node": "devouring_edge",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "debuff_cone",
+      "params": {
+        "effect": "wither",
+        "effect2": "weakness",
+        "vfx": "POISON_BREATH"
+      },
+      "values": {
+        "range": [
+          5.0,
+          5.4,
+          5.8,
+          6.2
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0,
+          52.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seconds2": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          220.0,
+          202.0,
+          185.0,
+          167.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:wither_rose"
+    },
+    {
+      "id": "three_hundred_slashes",
+      "name": "Three Hundred Slashes",
+      "desc": "A single cut that jumps from foe to foe in a chain of black light.",
+      "parents": [
+        {
+          "node": "descent_of_the_black_sword",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "chain_hit",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "damage": [
+          5.0,
+          6.25,
+          7.5,
+          8.75
+        ],
+        "jumps": [
+          3.0,
+          4.0,
+          5.0,
+          7.0
+        ],
+        "jump_range": [
+          5.0,
+          5.0,
+          6.0,
+          6.0
+        ],
+        "falloff": [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          160.0,
+          147.0,
+          134.0,
+          122.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "sword_heart",
+      "name": "Sword Heart",
+      "desc": "You deal more damage while holding a sword.",
+      "parents": [
+        {
+          "node": "black_crescent",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_when",
+      "params": {
+        "condition": "holding_sword"
+      },
+      "values": {
+        "bonus": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:diamond_sword"
+    },
+    {
+      "id": "demonic_qi",
+      "name": "Demonic Qi",
+      "desc": "Struck foes are sometimes withered by lingering qi.",
+      "parents": [
+        {
+          "node": "demon_splitting_wave",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "on_hit_effect",
+      "params": {
+        "effect": "wither"
+      },
+      "values": {
+        "seconds": [
+          3.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "chance": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:wither_skeleton_skull"
+    },
+    {
+      "id": "blood_qi_circulation",
+      "name": "Blood Qi Circulation",
+      "desc": "You heal for a share of the damage you deal.",
+      "parents": [
+        {
+          "node": "heavenly_rising_cut",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "lifesteal",
+      "values": {
+        "pct": [
+          0.05,
+          0.06,
+          0.07,
+          0.08
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:redstone"
+    },
+    {
+      "id": "killing_intent",
+      "name": "Killing Intent",
+      "desc": "Your blows sometimes strike critically.",
+      "parents": [
+        {
+          "node": "devouring_edge",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.1,
+          0.12,
+          0.14,
+          0.16
+        ],
+        "mult": [
+          1.5,
+          1.62,
+          1.74,
+          1.86
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:flint"
+    },
+    {
+      "id": "feast_of_the_fallen",
+      "name": "Feast of the Fallen",
+      "desc": "A kill heals you and grants brief strength.",
+      "parents": [
+        {
+          "node": "descent_of_the_black_sword",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "kill_reward",
+      "params": {
+        "effect": "strength"
+      },
+      "values": {
+        "heal": [
+          2.0,
+          2.5,
+          3.0,
+          3.5
+        ],
+        "seconds": [
+          4.0,
+          5.0,
+          5.0,
+          6.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:bone"
+    },
+    {
+      "id": "qi_hardened_body",
+      "name": "Qi-Hardened Body",
+      "desc": "You take less wither damage.",
+      "parents": [
+        {
+          "node": "qi_rot",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "wither"
+      },
+      "values": {
+        "pct": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:obsidian"
+    },
+    {
+      "id": "overwhelming_edge",
+      "name": "Overwhelming Edge",
+      "desc": "Your blows sometimes shove the foe back.",
+      "parents": [
+        {
+          "node": "three_hundred_slashes",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "knockback_on_hit",
+      "values": {
+        "strength": [
+          0.4,
+          0.46,
+          0.52,
+          0.58
+        ],
+        "chance": [
+          0.3,
+          0.345,
+          0.39,
+          0.435
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:iron_axe"
+    },
+    {
+      "id": "black_heavenly_demon_slash",
+      "name": "Black Heavenly Demon Slash",
+      "desc": "A huge, long wave of black qi that runs far across the ground and flings foes aside.",
+      "parents": [
+        {
+          "node": "three_hundred_slashes",
+          "level": 3
+        },
+        {
+          "node": "overwhelming_edge",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "damage": [
+          26.0,
+          32.5,
+          39.0
+        ],
+        "length": [
+          16.0,
+          17.6,
+          19.2
+        ],
+        "width": [
+          4.0,
+          4.4,
+          4.8
+        ],
+        "knockback": [
+          1.2,
+          1.32,
+          1.44
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          2400.0,
+          2208.0,
+          2016.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:netherite_sword"
+    },
+    {
+      "id": "ten_thousand_demon_dance",
+      "name": "Ten Thousand Demon Dance",
+      "desc": "Become a storm of black blades: a spinning flurry that hits everyone around you.",
+      "parents": [
+        {
+          "node": "qi_rot",
+          "level": 3
+        },
+        {
+          "node": "qi_hardened_body",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "whirlwind",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5
+        ],
+        "radius": [
+          6.0,
+          6.48,
+          6.96
+        ],
+        "hits": [
+          8.0,
+          10.0,
+          12.0
+        ],
+        "interval": [
+          5.0,
+          5.0,
+          5.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029
+        ],
+        "cooldown": [
+          2700.0,
+          2484.0,
+          2268.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:wither_skeleton_skull"
+    }
+  ]
+}

@@ -1,0 +1,1071 @@
+{
+  "magic": "omniscient_readers_viewpoint",
+  "franchise": "omniscient_readers_viewpoint",
+  "name": "Character List",
+  "desc": "A roster of personas that you can put on like costumes. Equip the Vanguard, then the Assassin, and play every part the scenario needs.",
+  "book": "nusmp:character_list_book",
+  "book_name": "Dramatis Personae",
+  "book_lore": "Each name on the list is a life you have read, and any of them can answer when you call.",
+  "color": "#E0B24A",
+  "icon": "minecraft:writable_book",
+  "class_id": "character_list",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/character_list.png",
+  "book_texture": "nusmp:item/skill_book_3d/omniscient_readers_viewpoint",
+  "background_theme": "city",
+  "nodes": [
+    {
+      "id": "character_vanguard",
+      "name": "Character: Vanguard",
+      "desc": "Wear the Vanguard: sturdier and a bit stronger, but slow on your feet.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "damage_pct": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "armor": [
+          3.0,
+          3.75,
+          4.5
+        ],
+        "speed_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:iron_helmet"
+    },
+    {
+      "id": "character_assassin",
+      "name": "Character: Assassin",
+      "desc": "Wear the Assassin: fast and prone to crits, but thin-skinned.",
+      "parents": [
+        {
+          "node": "character_vanguard",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          -3.0,
+          -3.75,
+          -4.5
+        ],
+        "speed_pct": [
+          0.2,
+          0.24,
+          0.28
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.15,
+          0.18,
+          0.21
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "roster_capacity",
+      "name": "Roster Capacity",
+      "desc": "More names fit on your list: bonus maximum health.",
+      "parents": [
+        {
+          "node": "character_vanguard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          4.0,
+          5.0,
+          6.0,
+          7.0,
+          8.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:book"
+    },
+    {
+      "id": "character_affinity",
+      "name": "Character Affinity",
+      "desc": "You fit your roles snugly: bonus attack damage.",
+      "parents": [
+        {
+          "node": "character_assassin",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "costume_change_speed",
+      "name": "Costume Change Speed",
+      "desc": "Swap personas without losing a step: bonus movement speed.",
+      "parents": [
+        {
+          "node": "character_vanguard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.04,
+          0.05,
+          0.06,
+          0.07,
+          0.08
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "equip_vanguard_s_might",
+      "name": "Equip: Vanguard's Might",
+      "desc": "Take on the Vanguard's strength and toughness for a while.",
+      "parents": [
+        {
+          "node": "character_vanguard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "strength",
+        "effect2": "resistance",
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "seconds": [
+          12.0,
+          14.0,
+          16.0,
+          17.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "amp2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:iron_chestplate"
+    },
+    {
+      "id": "equip_assassin_s_tread",
+      "name": "Equip: Assassin's Tread",
+      "desc": "Slip into the Assassin: swift feet and a higher jump for a while.",
+      "parents": [
+        {
+          "node": "character_assassin",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "speed",
+        "effect2": "jump_boost",
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "seconds": [
+          14.0,
+          16.0,
+          18.0,
+          20.0
+        ],
+        "amp": [
+          1.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        "amp2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:chainmail_boots"
+    },
+    {
+      "id": "roster_rally",
+      "name": "Roster Rally",
+      "desc": "Call the cast together: you and nearby allies gain strength.",
+      "parents": [
+        {
+          "node": "equip_vanguard_s_might",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "strength",
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "seconds": [
+          10.0,
+          12.0,
+          13.0,
+          14.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          600.0,
+          564.0,
+          528.0,
+          492.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:white_banner"
+    },
+    {
+      "id": "character_recovery",
+      "name": "Character Recovery",
+      "desc": "Step off stage for a breath: heal and regenerate.",
+      "parents": [
+        {
+          "node": "equip_assassin_s_tread",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_self",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "amount": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "regen_seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:golden_carrot"
+    },
+    {
+      "id": "persona_swap_dash",
+      "name": "Persona Swap Dash",
+      "desc": "Change roles mid-charge and dash forward, striking all in your path.",
+      "parents": [
+        {
+          "node": "roster_rally",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "distance": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "backstage_curtain",
+      "name": "Backstage Curtain",
+      "desc": "Drop a curtain of smoke that blinds the creatures near you while you reposition.",
+      "parents": [
+        {
+          "node": "character_recovery",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "smoke",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "radius": [
+          5.0,
+          5.5,
+          6.0,
+          6.5
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:black_dye"
+    },
+    {
+      "id": "persona_slash",
+      "name": "Persona Slash",
+      "desc": "A cone-shaped sweep in the style of whichever role you wear.",
+      "parents": [
+        {
+          "node": "persona_swap_dash",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "range": [
+          3.5,
+          3.78,
+          4.06,
+          4.34
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0,
+          52.0
+        ],
+        "targets": [
+          2.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "knockback": [
+          0.4,
+          0.44,
+          0.48,
+          0.52
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          100.0,
+          92.0,
+          84.0,
+          76.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:stone_sword"
+    },
+    {
+      "id": "quick_change",
+      "name": "Quick Change",
+      "desc": "While sprinting you gain a burst of extra speed.",
+      "parents": [
+        {
+          "node": "equip_vanguard_s_might",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "speed",
+        "condition": "sprinting"
+      },
+      "values": {
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:sugar"
+    },
+    {
+      "id": "supporting_cast",
+      "name": "Supporting Cast",
+      "desc": "Allies near you slowly regenerate.",
+      "parents": [
+        {
+          "node": "equip_assassin_s_tread",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "aura",
+      "params": {
+        "effect": "regeneration",
+        "target": "allies"
+      },
+      "values": {
+        "radius": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:red_banner"
+    },
+    {
+      "id": "ensemble_combo",
+      "name": "Ensemble Combo",
+      "desc": "Every few blows in a row hit much harder.",
+      "parents": [
+        {
+          "node": "roster_rally",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "combo",
+      "values": {
+        "hits": [
+          4.0,
+          4.0,
+          3.0,
+          3.0
+        ],
+        "bonus": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:blaze_rod"
+    },
+    {
+      "id": "rising_action",
+      "name": "Rising Action",
+      "desc": "Blows in a row grow stronger the longer the fight goes on.",
+      "parents": [
+        {
+          "node": "character_recovery",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "momentum",
+      "values": {
+        "per_stack": [
+          0.04,
+          0.046,
+          0.052,
+          0.058
+        ],
+        "max_stacks": [
+          5.0,
+          6.0,
+          8.0,
+          10.0
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:redstone"
+    },
+    {
+      "id": "typecast_weapon",
+      "name": "Typecast Weapon",
+      "desc": "You deal more damage while holding a sword.",
+      "parents": [
+        {
+          "node": "persona_swap_dash",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_when",
+      "params": {
+        "condition": "holding_sword"
+      },
+      "values": {
+        "bonus": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:diamond_sword"
+    },
+    {
+      "id": "character_development",
+      "name": "Character Development",
+      "desc": "Your kills give more experience.",
+      "parents": [
+        {
+          "node": "backstage_curtain",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "xp_bonus",
+      "values": {
+        "pct": [
+          0.1,
+          0.12,
+          0.14,
+          0.16
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:experience_bottle"
+    },
+    {
+      "id": "curtain_call",
+      "name": "Curtain Call",
+      "desc": "A kill heals you and grants a brief burst of strength.",
+      "parents": [
+        {
+          "node": "persona_slash",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "kill_reward",
+      "params": {
+        "effect": "strength"
+      },
+      "values": {
+        "heal": [
+          2.0,
+          2.5,
+          3.0,
+          3.5
+        ],
+        "seconds": [
+          4.0,
+          5.0,
+          5.0,
+          6.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:gold_ingot"
+    },
+    {
+      "id": "total_character_overlay",
+      "name": "Total Character Overlay",
+      "desc": "Layer every persona at once: very high strength and speed for a long moment.",
+      "parents": [
+        {
+          "node": "persona_slash",
+          "level": 3
+        },
+        {
+          "node": "curtain_call",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "strength",
+        "effect2": "speed",
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "seconds": [
+          18.0,
+          21.0,
+          23.0
+        ],
+        "amp": [
+          2.0,
+          3.0,
+          4.0
+        ],
+        "amp2": [
+          1.0,
+          2.0,
+          2.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174
+        ],
+        "cooldown": [
+          2700.0,
+          2538.0,
+          2376.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:enchanted_golden_apple"
+    },
+    {
+      "id": "ensemble_finale",
+      "name": "Ensemble Finale",
+      "desc": "The whole cast strikes: a blow that chains across many foes.",
+      "parents": [
+        {
+          "node": "backstage_curtain",
+          "level": 3
+        },
+        {
+          "node": "character_development",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "chain_hit",
+      "params": {
+        "vfx": "THREAD_LINE"
+      },
+      "values": {
+        "damage": [
+          18.0,
+          22.5,
+          27.0
+        ],
+        "jumps": [
+          6.0,
+          8.0,
+          10.0
+        ],
+        "jump_range": [
+          5.0,
+          5.0,
+          6.0
+        ],
+        "falloff": [
+          0.15,
+          0.15,
+          0.15
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          2400.0,
+          2208.0,
+          2016.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:totem_of_undying"
+    }
+  ]
+}

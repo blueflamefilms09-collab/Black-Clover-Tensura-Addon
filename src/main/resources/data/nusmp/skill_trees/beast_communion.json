@@ -1,0 +1,1100 @@
+{
+  "magic": "omniscient_readers_viewpoint",
+  "franchise": "omniscient_readers_viewpoint",
+  "name": "Beast Communion",
+  "desc": "A boy who can talk to animals leads a pack. Howl to rally it, charge as one, and let the wild take care of its own.",
+  "book": "nusmp:beast_communion_book",
+  "book_name": "Whisper Book of the Beast Child",
+  "book_lore": "The animals never lied to him, and in a world of stories that was worth more than anything.",
+  "color": "#9CCC65",
+  "icon": "minecraft:bone",
+  "class_id": "beast_communion",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/beast_communion.png",
+  "book_texture": "nusmp:item/skill_book_3d/omniscient_readers_viewpoint",
+  "background_theme": "forest",
+  "nodes": [
+    {
+      "id": "pack_leader",
+      "name": "Pack Leader",
+      "desc": "Stand tall at the front of the pack: armor and a steady heal, but a slower stride.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          2.0,
+          2.5,
+          3.0
+        ],
+        "speed_pct": [
+          -0.05,
+          -0.06,
+          -0.07
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0.6,
+          0.72,
+          0.84
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:lead"
+    },
+    {
+      "id": "feral_instinct",
+      "name": "Feral Instinct",
+      "desc": "Drop to all fours: much faster and stronger, but with a thin hide.",
+      "parents": [
+        {
+          "node": "pack_leader",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "damage_pct": [
+          0.15,
+          0.18,
+          0.21
+        ],
+        "armor": [
+          -4.0,
+          -5.0,
+          -6.0
+        ],
+        "speed_pct": [
+          0.2,
+          0.24,
+          0.28
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:bone"
+    },
+    {
+      "id": "beast_bond",
+      "name": "Beast Bond",
+      "desc": "The pack shares its stamina: more maximum health.",
+      "parents": [
+        {
+          "node": "pack_leader",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          6.0,
+          7.5,
+          9.0,
+          10.5,
+          12.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:beef"
+    },
+    {
+      "id": "predator_s_gait",
+      "name": "Predator's Gait",
+      "desc": "A hunter's gait: bonus movement speed.",
+      "parents": [
+        {
+          "node": "feral_instinct",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.05,
+          0.0625,
+          0.075,
+          0.0875,
+          0.1
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:rabbit_hide"
+    },
+    {
+      "id": "thick_hide",
+      "name": "Thick Hide",
+      "desc": "Fur and scars: bonus armor.",
+      "parents": [
+        {
+          "node": "pack_leader",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:leather"
+    },
+    {
+      "id": "wild_senses",
+      "name": "Wild Senses",
+      "desc": "A nose for what is about to happen: bonus luck.",
+      "parents": [
+        {
+          "node": "feral_instinct",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "luck",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:rabbit_foot"
+    },
+    {
+      "id": "pounce_of_the_wolf",
+      "name": "Pounce of the Wolf",
+      "desc": "Leap-dash forward and hit every foe along your path.",
+      "parents": [
+        {
+          "node": "pack_leader",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "distance": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:bone"
+    },
+    {
+      "id": "pack_howl",
+      "name": "Pack Howl",
+      "desc": "A long howl: you and nearby allies gain speed.",
+      "parents": [
+        {
+          "node": "feral_instinct",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "speed",
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "radius": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "seconds": [
+          10.0,
+          12.0,
+          13.0,
+          14.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          600.0,
+          564.0,
+          528.0,
+          492.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:goat_horn"
+    },
+    {
+      "id": "quieting_call",
+      "name": "Quieting Call",
+      "desc": "A low hush that freezes the creatures around you in their tracks.",
+      "parents": [
+        {
+          "node": "pounce_of_the_wolf",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "stun_ring",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          4.0,
+          4.4,
+          4.8,
+          5.2
+        ],
+        "seconds": [
+          2.0,
+          2.0,
+          3.0,
+          3.0
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:lead"
+    },
+    {
+      "id": "charging_boar",
+      "name": "Charging Boar",
+      "desc": "A headlong rush sends a heavy wave along the ground.",
+      "parents": [
+        {
+          "node": "pack_howl",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "length": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "width": [
+          2.0,
+          2.2,
+          2.4,
+          2.6
+        ],
+        "knockback": [
+          0.5,
+          0.55,
+          0.6,
+          0.65
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          180.0,
+          166.0,
+          151.0,
+          137.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:porkchop"
+    },
+    {
+      "id": "pack_mending",
+      "name": "Pack Mending",
+      "desc": "Lick wounds clean: you and nearby allies heal.",
+      "parents": [
+        {
+          "node": "quieting_call",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_pulse",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "amount": [
+          5.0,
+          6.25,
+          7.5,
+          8.75
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          500.0,
+          470.0,
+          440.0,
+          410.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:cooked_beef"
+    },
+    {
+      "id": "rally_the_pack",
+      "name": "Rally the Pack",
+      "desc": "A call that drags the nearby creatures in to your side.",
+      "parents": [
+        {
+          "node": "charging_boar",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "pull",
+      "params": {
+        "vfx": "THREAD_LINE"
+      },
+      "values": {
+        "radius": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "strength": [
+          0.8,
+          0.88,
+          0.96,
+          1.04
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "damage": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:string"
+    },
+    {
+      "id": "horn_toss",
+      "name": "Horn Toss",
+      "desc": "Toss the foe in front of you into the air with a lowered head.",
+      "parents": [
+        {
+          "node": "pack_mending",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "uppercut",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "range": [
+          3.2,
+          3.392,
+          3.584,
+          3.776
+        ],
+        "launch": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:iron_horse_armor"
+    },
+    {
+      "id": "pack_s_presence",
+      "name": "Pack's Presence",
+      "desc": "Allies near you gain a little speed.",
+      "parents": [
+        {
+          "node": "pounce_of_the_wolf",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "aura",
+      "params": {
+        "effect": "speed",
+        "target": "allies"
+      },
+      "values": {
+        "radius": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:bone"
+    },
+    {
+      "id": "pounce_momentum",
+      "name": "Pounce Momentum",
+      "desc": "You deal more damage while sprinting.",
+      "parents": [
+        {
+          "node": "pack_howl",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "sprint_bonus",
+      "values": {
+        "bonus": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "wild_reflex",
+      "name": "Wild Reflex",
+      "desc": "You sometimes dodge a blow completely.",
+      "parents": [
+        {
+          "node": "quieting_call",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.08,
+          0.096,
+          0.112,
+          0.128
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:rabbit_foot"
+    },
+    {
+      "id": "hamstring_bite",
+      "name": "Hamstring Bite",
+      "desc": "Struck foes are sometimes slowed.",
+      "parents": [
+        {
+          "node": "charging_boar",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "on_hit_effect",
+      "params": {
+        "effect": "slowness"
+      },
+      "values": {
+        "seconds": [
+          3.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "chance": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:cobweb"
+    },
+    {
+      "id": "forager_s_appetite",
+      "name": "Forager's Appetite",
+      "desc": "You tire more slowly.",
+      "parents": [
+        {
+          "node": "pack_mending",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "hunger_saver",
+      "values": {
+        "pct": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:sweet_berries"
+    },
+    {
+      "id": "cat_s_landing",
+      "name": "Cat's Landing",
+      "desc": "You take much less fall damage.",
+      "parents": [
+        {
+          "node": "rally_the_pack",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "fall_guard",
+      "values": {
+        "pct": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "wounded_beast",
+      "name": "Wounded Beast",
+      "desc": "While in a fight you heal steadily.",
+      "parents": [
+        {
+          "node": "horn_toss",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "in_combat"
+      },
+      "values": {
+        "per_second": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:beef"
+    },
+    {
+      "id": "great_stampede",
+      "name": "Great Stampede",
+      "desc": "The whole herd charges: a huge wave of hooves along the ground.",
+      "parents": [
+        {
+          "node": "horn_toss",
+          "level": 3
+        },
+        {
+          "node": "wounded_beast",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage": [
+          26.0,
+          32.5,
+          39.0
+        ],
+        "length": [
+          18.0,
+          19.8,
+          21.6
+        ],
+        "width": [
+          6,
+          6,
+          6
+        ],
+        "knockback": [
+          2,
+          2,
+          2
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          2400.0,
+          2208.0,
+          2016.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:saddle"
+    },
+    {
+      "id": "call_of_the_alpha",
+      "name": "Call of the Alpha",
+      "desc": "A mighty call that fills you and your allies with regeneration for a long time.",
+      "parents": [
+        {
+          "node": "rally_the_pack",
+          "level": 3
+        },
+        {
+          "node": "cat_s_landing",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "regeneration",
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          12.0,
+          13.2,
+          14.4
+        ],
+        "seconds": [
+          20.0,
+          23.0,
+          26.0
+        ],
+        "amp": [
+          1.0,
+          2.0,
+          2.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348
+        ],
+        "cooldown": [
+          2700.0,
+          2538.0,
+          2376.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:wolf_armor"
+    }
+  ]
+}
