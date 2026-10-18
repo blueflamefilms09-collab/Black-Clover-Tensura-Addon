@@ -44,6 +44,7 @@ public final class EliteSystem {
 
 
         // ---- items: weapons, armor, consumables, crates, plushies (elite/items)
+        com.newuniverse.nusmp.elite.items.EliteItems.init(modBus, container);
 
 
 

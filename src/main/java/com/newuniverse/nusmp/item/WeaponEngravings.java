@@ -96,7 +96,14 @@ public final class WeaponEngravings {
             Map.entry("vassal_staff", List.of(e("magic_weapon", 1), e("swift", 1), e("magic_interference", 1))),   // a casting focus; accelerated casting is its signature; Magic Prism and Float Mirror bend others' magic
             Map.entry("vassal_gauntlet", List.of(e("crushing", 2), e("barrier_piercing", 1), e("sturdy", 1))),   // fists that break defences (Turtle Crush, Conflagration Fist); the quaking shock and palm go through guards; the gauntlet is armour too (Iron Guard)
             Map.entry("vassal_projectile", List.of(e("swift", 2), e("severance", 1), e("magic_weapon", 1))),   // speed of throw; knives, kunai and chakrams cut clean; the base form is a blade conjured through the gem
-            Map.entry("vassal_carriage", List.of(e("sturdy", 2), e("crushing", 1), e("swift", 1), e("vitality", 1))));   // built to protect those aboard; rams and runs foes down; Haikuikku and the Queen's pull; the Soothing Ride tends the riders
+            Map.entry("vassal_carriage", List.of(e("sturdy", 2), e("crushing", 1), e("swift", 1), e("vitality", 1))),   // built to protect those aboard; rams and runs foes down; Haikuikku and the Queen's pull; the Soothing Ride tends the riders
+            // 1.83.0 (elite/items): the six weapons of the EliteTensuraAddon item set (docs/elite/items.md says why each)
+            Map.entry("astral_edge", List.of(e("holy_weapon", 1), e("barrier_piercing", 1), e("swift", 1), e("elemental_boost", 1))),   // starlight: holy, quick, passes through wards
+            Map.entry("void_edge", List.of(e("severance", 2), e("magic_interference", 1), e("soul_eater", 1), e("enervation", 1))),     // cuts space, unravels magic, the void drinks what it cuts
+            Map.entry("fenrir_sword", List.of(e("severance", 1), e("swift", 2), e("energy_steal", 1), e("crushing", 1))),              // the wolf: fast, a tearing bite that feeds the biter
+            Map.entry("runic_sword_renewed", List.of(e("magic_weapon", 1), e("sturdy", 1))),                                            // a mended rune-blade, one slot
+            Map.entry("runic_sword_ancient", List.of(e("magic_weapon", 1), e("magic_interference", 1), e("sturdy", 2), e("elemental_boost", 1))),   // an old rune-blade, two slots
+            Map.entry("runic_sword_mythical", List.of(e("magic_weapon", 1), e("magic_interference", 2), e("elemental_boost", 2), e("barrier_piercing", 1), e("magicule_absorption", 1), e("sturdy", 2))));   // a legend, three slots
 
     static final String FLAG = "NUEngraved";
 

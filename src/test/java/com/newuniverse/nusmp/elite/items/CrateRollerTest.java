@@ -89,6 +89,19 @@ class CrateRollerTest {
     }
 
     @Test
+    void refusedTypesAreRerolledWithoutThatType() {
+        CrateTable t = new CrateTable("t", 3, 3, List.of(
+                new RewardEntry("coins", 100, "", 5, 5, ""),
+                new RewardEntry("item", 1, "minecraft:stone", 2, 2, "")));
+        Random r = new Random(9);
+        // the economy is off: coins are refused every time, so every slot still pays out, with the item
+        List<String> got = CrateRoller.open(t, r::nextDouble, roll -> roll.entry().type().equals("coins") ? null : roll.entry().id() + "x" + roll.amount());
+        assertEquals(List.of("minecraft:stonex2", "minecraft:stonex2", "minecraft:stonex2"), got);
+        // nothing can be given at all: the opening is empty rather than looping forever
+        assertEquals(0, CrateRoller.open(t, r::nextDouble, roll -> null).size());
+    }
+
+    @Test
     void parserDropsBadEntriesAndRefusesCommands() {
         String json = "{\"rolls\":[1,2],\"entries\":["
                 + "{\"type\":\"item\",\"id\":\"minecraft:stone\",\"weight\":5,\"count\":4},"

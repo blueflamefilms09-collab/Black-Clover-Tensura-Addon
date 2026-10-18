@@ -51,6 +51,29 @@ public final class CrateRoller {
         return out;
     }
 
+    /**
+     * A whole opening with a granter: for each roll the granter tries to give the reward and returns what to show, or null when it could not (the economy is off, the skill tree is off). A refused
+     * roll is re-rolled with that reward TYPE excluded, up to {@link #ATTEMPTS} tries, so a switched-off system never makes a crate pay less. Generic so the test can use strings.
+     */
+    public static <T> List<T> open(CrateTable table, DoubleSupplier dice, java.util.function.Function<Roll, T> grant) {
+        Set<String> excluded = new java.util.HashSet<>();
+        List<T> out = new ArrayList<>();
+        int n = rollCount(table, dice);
+        for (int i = 0; i < n; i++) {
+            for (int attempt = 0; attempt < ATTEMPTS; attempt++) {
+                Roll r = rollOne(table, dice, excluded);
+                if (r == null) break;
+                T given = grant.apply(r);
+                if (given != null) { out.add(given); break; }
+                excluded.add(r.entry().type());
+            }
+        }
+        return out;
+    }
+
+    /** How many times one slot is re-rolled before it is given up. */
+    public static final int ATTEMPTS = 4;
+
     /** floor(d * n) kept inside 0..n-1, so a dice that returns exactly 1.0 (or NaN) cannot overrun. */
     static int clampIndex(double d, int n) {
         if (n <= 1) return 0;
