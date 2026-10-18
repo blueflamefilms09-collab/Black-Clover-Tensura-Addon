@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.78.0] — The mobs are remodelled on the player rig (27 mob ids, 33 characters, 42 models)
+
+### REPLACED (new look only; entity ids, stats, AI and hitboxes unchanged)
+- Zogratis four (Dante, Vanica, Zenon, Lucius, each with a second form; Lucius's divine form has three pairs of wings; the clone wears Lucius), dark disciples (four devil skins), Devil Avatar, God of Order, Goliath, Charybdis Spawn, Floor Warden and Labyrinth Guardian, Living Armor, Tower Wizard, Zagred's legacy (phase 4 with the trident), Grimoire Daemons (4 tiers), Painted constructs (hound, knight, giant), Cotton sheep/cook/cloud, Rouge (sitting pose; the head-cat is the kit Rouge), Blood Beast, Dungeon Direwolf, Basilisk, Dungeon Slime, the Spirit Lords (salamander, undine, sylph, gnome, black devil).
+- Creatures became anthropomorphic characters on the Old Witch quality rig (wolf-man, serpent-folk, slime child, dragonfolk, sea titan, cloud-face on a wool heap).
+- New renderers in `client/remodel/` (`RemodelTable`, `KitMobRenderer`, `KitBossRenderer`, `KitCloudRenderer`, `KitZagredRenderer` keeps the aura shader); one line in `NUSMP.java` registers them last so they win. Docs: `docs/arc/remodel.md`.
+
+### NEW
+- The Spirit Lord companion is now a full body (was an orb), the wind spirit lord has a body (its renderer drew nothing), and a black devil spirit.
+
+### KEPT
+- All old models, textures, generators and renderer classes stay on disk (delete a row from `RemodelTable.ENTRIES` to get a mob's old look back). `mirror_double` and `player_avatar` stay as they are (they should look like the player).
+
+### Honest notes
+- Not run in game: the scale against each hitbox, light on dark models, and the "last registered renderer wins" assumption. Dropped for now: Goliath's per-move clips, Undine/Sylph overlays, equipment on Living Armor, painted-beast genome heads. The cotton cloud is bigger than its hitbox, so riders sink in a little.
+- About 13 MB uncompressed (1.9 MB deflated) of new models and animations.
+
 ## [1.77.0] — The skills are rebuilt: 38 skills, real mechanics, distinct Ultimates, unique icons, chanted spells
 
 ### REPLACED (old versions of the same skills; ids, saves and config keys kept)
