@@ -6,7 +6,6 @@ import com.newuniverse.nusmp.labyrinth.mega.MegaData;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
 import com.newuniverse.nusmp.labyrinth.mega.MegaGrid;
 import com.newuniverse.nusmp.labyrinth.mega.Polarity;
-import com.newuniverse.nusmp.labyrinth.mega.RoomKind;
 import com.newuniverse.nusmp.labyrinth.mega.SelfTests;
 import com.newuniverse.nusmp.labyrinth.mega.Sector;
 import com.newuniverse.nusmp.labyrinth.mega.cyclic.CategoryBalance;
@@ -95,7 +94,7 @@ final class CyclicSelfTests {
                 GeometryCheck.Report geo = GeometryCheck.run(level, SectorGenerator.build(level, new SectorGenerator.Planned(base.prepared(), b, 0L, null)), 0);
                 if (!geo.ok()) return fail(who + ": the game disagrees with the cyclic plan: " + String.join(", ", geo.failures()));
                 int through = 0;
-                for (Placed p : b.result().pieces) if (throughHallway(b.result(), p)) through++;
+                for (Placed p : b.result().pieces) if (CyclicGraphs.throughHallway(b.result(), p)) through++;
                 int made = b.result().stats.getOrDefault("cyclic.hallways", 0);
                 if (through < made) return fail(who + ": " + made + " hallway rooms were built but only " + through + " pass-through corridor pieces join two rooms");
                 probes++;
@@ -130,7 +129,7 @@ final class CyclicSelfTests {
             for (Result.Loop l : r.loops) {
                 Placed pa = r.pieces.get(l.pieceA()), pb = r.pieces.get(l.pieceB());
                 int solid = solidInDoorway(level, pa.socketCell(l.socketA()), pa.socketFacing(l.socketA()));
-                boolean ours = throughHallway(r, pa) || throughHallway(r, pb);
+                boolean ours = CyclicGraphs.throughHallway(r, pa) || CyclicGraphs.throughHallway(r, pb);
                 if (ours) {
                     checkedDoorways++;
                     if (solid > 0) return fail("sector " + s.id + ": a loop doorway at " + pa.socketCell(l.socketA()) + " into a hallway has " + solid + " solid blocks in its 3 x 4 opening: a wall behind a door");
@@ -139,7 +138,7 @@ final class CyclicSelfTests {
             for (Placed c : r.pieces) {
                 if (c.parent < 0 || c.shape.isCap() || r.pieces.get(c.parent).shape.isCap()) continue;
                 Placed par = r.pieces.get(c.parent);
-                if (!throughHallway(r, c) && !throughHallway(r, par)) continue;
+                if (!CyclicGraphs.throughHallway(r, c) && !CyclicGraphs.throughHallway(r, par)) continue;
                 checkedDoorways++;
                 int solid = solidInDoorway(level, par.socketCell(c.parentSocket), par.socketFacing(c.parentSocket));
                 if (solid > 0) return fail("sector " + s.id + ": the doorway between " + par.shape.id + " and the hallway piece " + c.shape.id + " at " + par.socketCell(c.parentSocket) + " has " + solid + " solid blocks in its opening");
@@ -158,25 +157,6 @@ final class CyclicSelfTests {
         StringBuilder b = new StringBuilder();
         for (Placed p : r.pieces) b.append(p.index).append(' ').append(p.shape.id).append(" r").append(p.rot).append(' ').append(p.origin).append(" p").append(p.parent).append(':').append(p.parentSocket).append('\n');
         return b.toString();
-    }
-
-    /** Is this piece a one-module corridor or link with two doorways, both joined to a room (a hallway cell, or a corridor that happens to be one)? */
-    static boolean throughHallway(Result r, Placed p) {
-        if (p.shape.isCap() || p.link || (p.shape.kind != RoomKind.CORRIDOR && p.shape.kind != RoomKind.LINK)) return false;
-        if (p.shape.sx != MegaGrid.MODULE || p.shape.sz != MegaGrid.MODULE || p.shape.sockets.size() != 2) return false;
-        int joined = 0;
-        for (int si = 0; si < 2; si++) {
-            if (si == p.ownSocket && p.parent >= 0 && !r.pieces.get(p.parent).shape.isCap()) joined++;
-            else if (si != p.ownSocket && partnerRoom(r, p, si)) joined++;
-        }
-        return joined == 2;
-    }
-
-    /** Does socket {@code si} of {@code p} lead to a room (a child that is not a cap, or a loop partner)? */
-    private static boolean partnerRoom(Result r, Placed p, int si) {
-        for (Placed c : r.pieces) if (c.parent == p.index && c.parentSocket == si && !c.shape.isCap()) return true;
-        for (Result.Loop l : r.loops) if ((l.pieceA() == p.index && l.socketA() == si) || (l.pieceB() == p.index && l.socketB() == si)) return true;
-        return false;
     }
 
     /**

@@ -50,4 +50,23 @@ public final class CyclicGraphs {
 
     /** For tests: the room graph's edges as a plain list of pairs. */
     public static List<int[]> edges(Result r) { return r.edges(); }
+
+    /** Is this piece a one-module corridor or link with two doorways, both joined to a room (a hallway cell, or a corridor that happens to be one)? */
+    public static boolean throughHallway(Result r, Placed p) {
+        if (p.shape.isCap() || p.link || (p.shape.kind != RoomKind.CORRIDOR && p.shape.kind != RoomKind.LINK)) return false;
+        if (p.shape.sx != com.newuniverse.nusmp.labyrinth.mega.MegaGrid.MODULE || p.shape.sz != com.newuniverse.nusmp.labyrinth.mega.MegaGrid.MODULE || p.shape.sockets.size() != 2) return false;
+        int joined = 0;
+        for (int si = 0; si < 2; si++) {
+            if (si == p.ownSocket && p.parent >= 0 && !r.pieces.get(p.parent).shape.isCap()) joined++;
+            else if (si != p.ownSocket && partnerRoom(r, p, si)) joined++;
+        }
+        return joined == 2;
+    }
+
+    /** Does socket {@code si} of {@code p} lead to a room (a child that is not a cap, or a loop partner)? */
+    private static boolean partnerRoom(Result r, Placed p, int si) {
+        for (Placed c : r.pieces) if (c.parent == p.index && c.parentSocket == si && !c.shape.isCap()) return true;
+        for (Result.Loop l : r.loops) if ((l.pieceA() == p.index && l.socketA() == si) || (l.pieceB() == p.index && l.socketB() == si)) return true;
+        return false;
+    }
 }
