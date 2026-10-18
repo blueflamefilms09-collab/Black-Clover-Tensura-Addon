@@ -1,0 +1,14 @@
+{
+  "type": "mine_block",
+  "tier": 3,
+  "count": 16,
+  "title": "Obsidian for the Gate",
+  "reward": {
+    "coins": 1680,
+    "xp": 50,
+    "rep": 15
+  },
+  "weight": 8,
+  "min_level": 5,
+  "target": "minecraft:obsidian"
+}

@@ -1,0 +1,14 @@
+{
+  "type": "kill_mob",
+  "tier": 1,
+  "count": 20,
+  "title": "Clear the Shambling Dead",
+  "reward": {
+    "coins": 230,
+    "xp": 9,
+    "rep": 5
+  },
+  "weight": 12,
+  "min_level": 1,
+  "target": "minecraft:zombie"
+}

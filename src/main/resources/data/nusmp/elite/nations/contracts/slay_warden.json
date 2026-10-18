@@ -1,0 +1,15 @@
+{
+  "type": "kill_mob",
+  "tier": 5,
+  "count": 1,
+  "title": "Silence the Warden",
+  "reward": {
+    "coins": 8240,
+    "xp": 185,
+    "rep": 30
+  },
+  "weight": 2,
+  "min_level": 9,
+  "target": "minecraft:warden",
+  "time_limit_minutes": 240
+}

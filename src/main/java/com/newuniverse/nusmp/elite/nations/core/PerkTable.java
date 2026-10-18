@@ -91,20 +91,18 @@ public final class PerkTable {
                 || Perk.GUARD_COUNT.equals(type) || Perk.CONTRACT_BONUS.equals(type) || Perk.BOARD_SLOTS.equals(type);
     }
 
-    /** The built-in table (same numbers as the shipped perks.json). */
+    /** The built-in table (the same numbers as the shipped data/nusmp/elite/nations/perks.json; a test keeps the two equal). */
     public static PerkTable defaults() {
         PerkTable t = new PerkTable();
-        for (int lv = 2; lv <= 10; lv++) {
-            t.add(lv, new Perk(Perk.TREASURY_CAP, "", 25_000.0 * lv));
-            if (lv % 2 == 0) t.add(lv, new Perk(Perk.MEMBER_CAP, "", 5));
-            if (lv % 3 == 0) t.add(lv, new Perk(Perk.GUARD_COUNT, "", 1));
-            if (lv >= 3 && lv % 3 == 0) t.add(lv, new Perk(Perk.SHOP_DISCOUNT, "", 2));
-        }
-        t.add(2, new Perk(Perk.ATTRIBUTE, "minecraft:generic.max_health", 2.0));
-        t.add(5, new Perk(Perk.ATTRIBUTE, "minecraft:generic.armor", 1.0));
-        t.add(8, new Perk(Perk.ATTRIBUTE, "minecraft:generic.attack_damage", 1.0));
-        t.add(4, new Perk(Perk.BOARD_SLOTS, "", 2));
-        t.add(6, new Perk(Perk.CONTRACT_BONUS, "", 10));
+        t.add(2, new Perk(Perk.TREASURY_CAP, "", 50_000)).add(2, new Perk(Perk.MEMBER_CAP, "", 5)).add(2, new Perk(Perk.ATTRIBUTE, "minecraft:generic.max_health", 2.0));
+        t.add(3, new Perk(Perk.TREASURY_CAP, "", 75_000)).add(3, new Perk(Perk.GUARD_COUNT, "", 1)).add(3, new Perk(Perk.SHOP_DISCOUNT, "", 2));
+        t.add(4, new Perk(Perk.TREASURY_CAP, "", 100_000)).add(4, new Perk(Perk.MEMBER_CAP, "", 5)).add(4, new Perk(Perk.BOARD_SLOTS, "", 2));
+        t.add(5, new Perk(Perk.TREASURY_CAP, "", 125_000)).add(5, new Perk(Perk.ATTRIBUTE, "minecraft:generic.armor", 1.0));
+        t.add(6, new Perk(Perk.TREASURY_CAP, "", 150_000)).add(6, new Perk(Perk.MEMBER_CAP, "", 5)).add(6, new Perk(Perk.GUARD_COUNT, "", 1)).add(6, new Perk(Perk.SHOP_DISCOUNT, "", 2)).add(6, new Perk(Perk.CONTRACT_BONUS, "", 10));
+        t.add(7, new Perk(Perk.TREASURY_CAP, "", 175_000)).add(7, new Perk(Perk.ATTRIBUTE, "minecraft:generic.movement_speed", 0.005));
+        t.add(8, new Perk(Perk.TREASURY_CAP, "", 200_000)).add(8, new Perk(Perk.MEMBER_CAP, "", 5)).add(8, new Perk(Perk.ATTRIBUTE, "minecraft:generic.attack_damage", 1.0)).add(8, new Perk(Perk.BOARD_SLOTS, "", 1));
+        t.add(9, new Perk(Perk.TREASURY_CAP, "", 225_000)).add(9, new Perk(Perk.GUARD_COUNT, "", 1)).add(9, new Perk(Perk.SHOP_DISCOUNT, "", 2));
+        t.add(10, new Perk(Perk.TREASURY_CAP, "", 250_000)).add(10, new Perk(Perk.MEMBER_CAP, "", 10)).add(10, new Perk(Perk.ATTRIBUTE, "minecraft:generic.max_health", 2.0)).add(10, new Perk(Perk.CONTRACT_BONUS, "", 15));
         return t;
     }
 }

@@ -1,0 +1,14 @@
+{
+  "type": "mine_block",
+  "tier": 2,
+  "count": 24,
+  "title": "Iron for the Armoury",
+  "reward": {
+    "coins": 690,
+    "xp": 23,
+    "rep": 10
+  },
+  "weight": 10,
+  "min_level": 3,
+  "target": "#minecraft:iron_ores"
+}

@@ -18,7 +18,7 @@ public final class NationsConfig {
     public static final ModConfigSpec.BooleanValue ENABLED;
     public static final ModConfigSpec.IntValue TICK_INTERVAL, SYNC_MIN_INTERVAL, MAX_NATIONS;
     // founding / members
-    public static final ModConfigSpec.ConfigValue<String> FOUND_COST_MODE, FOUND_COST_ITEM;
+    public static final ModConfigSpec.ConfigValue<String> FOUND_COST_MODE, FOUND_COST_ITEM, ENTRY_ROLE;
     public static final ModConfigSpec.LongValue FOUND_COST_COINS;
     public static final ModConfigSpec.IntValue FOUND_COST_ITEM_COUNT, NAME_MIN, NAME_MAX, CAPITAL_RADIUS, BASE_MEMBER_CAP, MAX_MEMBER_CAP, INVITE_TTL_SECONDS, MAX_CUSTOM_ROLES;
     // levels
@@ -72,6 +72,7 @@ public final class NationsConfig {
         MAX_MEMBER_CAP = b.comment("Hard ceiling for the member cap, perks included.").defineInRange("maxMemberCap", 100, 1, 1000);
         INVITE_TTL_SECONDS = b.defineInRange("inviteTtlSeconds", 120, 10, 86400);
         MAX_CUSTOM_ROLES = b.comment("Custom roles a nation may add on top of the four default ones.").defineInRange("maxCustomRoles", 6, 0, 32);
+        ENTRY_ROLE = b.comment("Role id a new member starts with (leader, officer, member, recruit or a custom role id; an unknown id falls back to recruit).").define("entryRole", "member");
         b.pop();
 
         b.push("levels");

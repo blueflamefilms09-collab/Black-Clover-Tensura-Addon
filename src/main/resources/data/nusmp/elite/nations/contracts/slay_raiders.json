@@ -1,0 +1,14 @@
+{
+  "type": "kill_mob",
+  "tier": 3,
+  "count": 25,
+  "title": "Break the Raiders",
+  "reward": {
+    "coins": 1720,
+    "xp": 52,
+    "rep": 15
+  },
+  "weight": 8,
+  "min_level": 5,
+  "target": "#minecraft:raiders"
+}

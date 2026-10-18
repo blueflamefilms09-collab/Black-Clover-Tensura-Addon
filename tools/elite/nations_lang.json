@@ -1,4 +1,6 @@
 {
+  "block.nusmp.contract_board": "Contract Board",
+  "block.nusmp.nation_banner": "Nation Banner",
   "key.nusmp.nation_screen": "Open Nations screen",
   "nusmp.nation.gui.abandon": "Abandon",
   "nusmp.nation.gui.accept": "Accept",

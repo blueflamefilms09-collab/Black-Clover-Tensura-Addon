@@ -232,7 +232,8 @@ public final class NationService {
         }
         if (chosen == null) return Res.fail("nusmp.nation.m.no_invite");
         if (chosen.memberCount() >= NationPerks.memberCap(chosen)) return Res.fail("nusmp.nation.m.nation_full", NationPerks.memberCap(chosen));
-        chosen.addMember(p.getUUID(), p.getGameProfile().getName(), Roles.RECRUIT);
+        String entry = NationsConfig.get(NationsConfig.ENTRY_ROLE);
+        chosen.addMember(p.getUUID(), p.getGameProfile().getName(), Roles.LEADER.equals(entry) ? Roles.RECRUIT : entry);   // addMember falls back to recruit for an unknown role
         d.indexMember(p.getUUID(), chosen.id);
         refresh(s, chosen);
         Msg.broadcast(s, chosen, "nusmp.nation.m.joined", p.getGameProfile().getName());

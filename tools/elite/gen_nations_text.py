@@ -16,6 +16,8 @@ def m(k, v): T["nusmp.nation.m." + k] = v
 
 
 T["key.nusmp.nation_screen"] = "Open Nations screen"
+T["block.nusmp.nation_banner"] = "Nation Banner"
+T["block.nusmp.contract_board"] = "Contract Board"
 g("abandon", "Abandon"); g("accept", "Accept"); g("ally_accept", "Accept alliance"); g("ally_break", "Break alliance"); g("ally_decline", "Decline"); g("ally_propose", "Propose alliance")
 g("as_nation_mob", "Nation: mob"); g("as_nation_player", "Nation: player"); g("board", "Contract board"); g("bounties", "Bounties"); g("capital", "Capital: %s, %s, %s")
 g("ceasefire_offered", "(ceasefire offered)"); g("decline", "Decline"); g("delete_role", "Delete role"); g("deliver", "Hand in items"); g("deposit", "Deposit")

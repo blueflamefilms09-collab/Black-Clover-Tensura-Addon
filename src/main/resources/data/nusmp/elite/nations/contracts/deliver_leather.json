@@ -1,0 +1,14 @@
+{
+  "type": "deliver_item",
+  "tier": 1,
+  "count": 24,
+  "title": "Hides for the Tannery",
+  "reward": {
+    "coins": 230,
+    "xp": 9,
+    "rep": 5
+  },
+  "weight": 12,
+  "min_level": 1,
+  "target": "minecraft:leather"
+}

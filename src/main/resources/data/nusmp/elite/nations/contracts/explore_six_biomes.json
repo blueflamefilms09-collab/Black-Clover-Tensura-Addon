@@ -1,0 +1,13 @@
+{
+  "type": "explore_biome",
+  "tier": 2,
+  "count": 6,
+  "title": "Survey the Realm",
+  "reward": {
+    "coins": 640,
+    "xp": 21,
+    "rep": 10
+  },
+  "weight": 10,
+  "min_level": 3
+}

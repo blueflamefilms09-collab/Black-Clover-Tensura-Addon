@@ -1,0 +1,15 @@
+{
+  "type": "kill_mob",
+  "tier": 4,
+  "count": 3,
+  "title": "Fell the Ravagers",
+  "reward": {
+    "coins": 3680,
+    "xp": 95,
+    "rep": 20
+  },
+  "weight": 5,
+  "min_level": 7,
+  "target": "minecraft:ravager",
+  "time_limit_minutes": 180
+}

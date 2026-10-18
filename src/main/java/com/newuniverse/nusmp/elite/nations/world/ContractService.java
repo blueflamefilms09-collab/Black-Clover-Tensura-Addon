@@ -160,6 +160,8 @@ public final class ContractService {
     static void complete(MinecraftServer s, Nation n, ServerPlayer p, Contract c) {
         NationsData d = NationService.data(s);
         c.state = Contract.State.DONE;
+        d.board(n.id).remove(c);
+        d.lastBoardRefresh = 0L;   // refill the slot at the next loop run
         Reward r = c.reward.withBonusPercent(NationPerks.contractBonusPercent(n));
         long[] split = ContractRules.splitTax(r.coins(), n.taxPercent);
         if (split[0] > 0) EliteHooks.wallet.give(p, split[0]);

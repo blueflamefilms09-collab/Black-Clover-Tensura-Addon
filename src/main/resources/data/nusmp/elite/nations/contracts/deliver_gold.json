@@ -1,0 +1,14 @@
+{
+  "type": "deliver_item",
+  "tier": 2,
+  "count": 24,
+  "title": "Tribute in Gold",
+  "reward": {
+    "coins": 690,
+    "xp": 23,
+    "rep": 10
+  },
+  "weight": 10,
+  "min_level": 3,
+  "target": "minecraft:gold_ingot"
+}

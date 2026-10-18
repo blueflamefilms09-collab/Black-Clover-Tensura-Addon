@@ -15,6 +15,8 @@ public final class NationText {
     private static final Map<String, String> EN = new TreeMap<>();
 
     static {
+        EN.put("block.nusmp.contract_board", "Contract Board");
+        EN.put("block.nusmp.nation_banner", "Nation Banner");
         EN.put("key.nusmp.nation_screen", "Open Nations screen");
         EN.put("nusmp.nation.gui.abandon", "Abandon");
         EN.put("nusmp.nation.gui.accept", "Accept");

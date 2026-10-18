@@ -1,0 +1,14 @@
+{
+  "type": "mine_block",
+  "tier": 3,
+  "count": 8,
+  "title": "Diamonds for the Crown",
+  "reward": {
+    "coins": 1630,
+    "xp": 49,
+    "rep": 15
+  },
+  "weight": 8,
+  "min_level": 5,
+  "target": "#minecraft:diamond_ores"
+}

@@ -24,7 +24,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * check, {@code setPlacedBy} re-validates and removes the block again, so a banner that is not a capital cannot exist.
  */
 public class NationBannerBlock extends Block {
-    private static final VoxelShape SHAPE = Block.box(2, 0, 2, 14, 30, 14);
+    private static final VoxelShape SHAPE = Block.box(2, 0, 6, 14, 16, 10);
 
     public NationBannerBlock(Properties props) { super(props); }
 
