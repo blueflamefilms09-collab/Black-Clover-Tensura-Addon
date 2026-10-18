@@ -33,6 +33,9 @@ public final class CalamityDirector {
         timers.keySet().removeIf(k -> k.startsWith(prefix));
     }
 
+    /** Forgets every timer of every player (the server stopped). */
+    public void clear() { timers.clear(); }
+
     public int timer(UUID player, String calamityId, int triggerIndex) { return timers.getOrDefault(key(player, calamityId, triggerIndex), 0); }
 
     private static String key(UUID p, String c, int i) { return p + ":" + c + ":" + i; }

@@ -40,6 +40,7 @@ public final class EliteSystem {
 
         // ---- world: calamities, bosses, the magicule world engine (elite/world)
 
+        com.newuniverse.nusmp.elite.world.WorldRegistry.init(modBus, container);
 
 
 
