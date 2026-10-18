@@ -1,0 +1,1159 @@
+{
+  "magic": "tower_of_god",
+  "franchise": "tower_of_god",
+  "name": "Floor Guard",
+  "desc": "A Floor Guard stands at a staircase and lets nothing pass. Heavy, loud, and very hard to get around: you hold the line for everyone behind you.",
+  "book": "nusmp:tog_floor_guard_book",
+  "book_name": "Orders of the Staircase",
+  "book_lore": "The first order is: you do not leave your post. There is no second order.",
+  "color": "#8D6E63",
+  "icon": "minecraft:shield",
+  "class_id": "tog_floor_guard",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/tog_floor_guard.png",
+  "book_texture": "nusmp:item/skill_book_3d/tower_of_god",
+  "background_theme": "ruin",
+  "nodes": [
+    {
+      "id": "gate_post_stance",
+      "name": "Gate Post Stance",
+      "desc": "Plant yourself at the stair: very heavy armor and immune to shoves, but slow.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          4.0,
+          5.0,
+          6.0
+        ],
+        "speed_pct": [
+          -0.15,
+          -0.18,
+          -0.21
+        ],
+        "knockback_res": [
+          0.6,
+          0.72,
+          0.84
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:iron_bars"
+    },
+    {
+      "id": "patrol_stance",
+      "name": "Patrol Stance",
+      "desc": "Walk the corridor: quicker, steadier, a little more dangerous.",
+      "parents": [
+        {
+          "node": "gate_post_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "damage_pct": [
+          0.05,
+          0.06,
+          0.07
+        ],
+        "armor": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "speed_pct": [
+          0.06,
+          0.072,
+          0.084
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0.3,
+          0.36,
+          0.42
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:compass"
+    },
+    {
+      "id": "guard_s_vigor",
+      "name": "Guard's Vigor",
+      "desc": "Long watches harden your health.",
+      "parents": [
+        {
+          "node": "gate_post_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:cooked_beef"
+    },
+    {
+      "id": "gate_armor",
+      "name": "Gate Armor",
+      "desc": "Plate and Shinsu on the stair.",
+      "parents": [
+        {
+          "node": "patrol_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:iron_chestplate"
+    },
+    {
+      "id": "toughened_gaze",
+      "name": "Toughened Gaze",
+      "desc": "Not even a sharp blow gets through the full plate.",
+      "parents": [
+        {
+          "node": "gate_post_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor_toughness",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:netherite_ingot"
+    },
+    {
+      "id": "sentry_reach",
+      "name": "Sentry Reach",
+      "desc": "You hold a longer arm's length.",
+      "parents": [
+        {
+          "node": "patrol_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "entity_interaction_range",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.3,
+          0.375,
+          0.45,
+          0.525,
+          0.6
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:lead"
+    },
+    {
+      "id": "halt",
+      "name": "Halt!",
+      "desc": "Slam your weapon and a pulse of Shinsu freezes the creatures around you in place.",
+      "parents": [
+        {
+          "node": "gate_post_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "stun_ring",
+      "params": {
+        "vfx": "SEAL_CHAINS"
+      },
+      "values": {
+        "radius": [
+          4.0,
+          4.4,
+          4.8,
+          5.2
+        ],
+        "seconds": [
+          2.0,
+          2.0,
+          3.0,
+          3.0
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:bell"
+    },
+    {
+      "id": "challenge_roar",
+      "name": "Challenge Roar",
+      "desc": "Bellow a Guard's challenge: hostile creatures near you turn on you.",
+      "parents": [
+        {
+          "node": "patrol_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "taunt",
+      "params": {
+        "vfx": "DEVIL_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "targets": [
+          5.0,
+          7.0,
+          9.0,
+          11.0
+        ],
+        "resist_seconds": [
+          3.0,
+          4.0,
+          4.0,
+          5.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:goat_horn"
+    },
+    {
+      "id": "barrier_wall",
+      "name": "Barrier Wall",
+      "desc": "Raise a wall of your own Shinsu around you that absorbs a lot of damage.",
+      "parents": [
+        {
+          "node": "halt",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "absorb_hearts": [
+          6.0,
+          8.0,
+          9.0,
+          10.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          7.0,
+          8.0
+        ],
+        "resist_amp": [
+          1.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:shield"
+    },
+    {
+      "id": "stairwell_bash",
+      "name": "Stairwell Bash",
+      "desc": "Rush forward behind the shield and slam everything ahead of you.",
+      "parents": [
+        {
+          "node": "challenge_roar",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "distance": [
+          5.0,
+          5.5,
+          6.0,
+          6.5
+        ],
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:iron_ingot"
+    },
+    {
+      "id": "gate_slam",
+      "name": "Gate Slam",
+      "desc": "Bring the weapon down and send a shock wave along the floor in front of you.",
+      "parents": [
+        {
+          "node": "barrier_wall",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "length": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "width": [
+          2.0,
+          2.2,
+          2.4,
+          2.6
+        ],
+        "knockback": [
+          0.5,
+          0.55,
+          0.6,
+          0.65
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          180.0,
+          166.0,
+          151.0,
+          137.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:anvil"
+    },
+    {
+      "id": "intruder_mark",
+      "name": "Intruder Mark",
+      "desc": "Brand a trespasser: it takes more damage from everything while marked.",
+      "parents": [
+        {
+          "node": "stairwell_bash",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "mark",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "range": [
+          16.0,
+          17.6,
+          19.2,
+          20.8
+        ],
+        "seconds": [
+          8.0,
+          9.0,
+          10.0,
+          12.0
+        ],
+        "bonus": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:name_tag"
+    },
+    {
+      "id": "guard_s_counter",
+      "name": "Guard's Counter",
+      "desc": "Raise your guard: part of every blow you take is returned to the attacker for a while.",
+      "parents": [
+        {
+          "node": "gate_slam",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ward_reflect",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "seconds": [
+          6.0,
+          7.0,
+          7.0,
+          8.0
+        ],
+        "reflect_pct": [
+          0.4,
+          0.48,
+          0.56,
+          0.64
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:iron_chestplate"
+    },
+    {
+      "id": "watch_mending",
+      "name": "Watch Mending",
+      "desc": "A Guard keeps the ranks fit: heal yourself and the allies around you.",
+      "parents": [
+        {
+          "node": "intruder_mark",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_pulse",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "amount": [
+          5.0,
+          6.25,
+          7.5,
+          8.75
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          500.0,
+          470.0,
+          440.0,
+          410.0
+        ]
+      },
+      "x": 10,
+      "y": 6,
+      "icon": "minecraft:bread"
+    },
+    {
+      "id": "gate_discipline",
+      "name": "Gate Discipline",
+      "desc": "While you are in a fight you take less damage.",
+      "parents": [
+        {
+          "node": "halt",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "reduce_when",
+      "params": {
+        "condition": "in_combat"
+      },
+      "values": {
+        "pct": [
+          0.1,
+          0.12,
+          0.14,
+          0.16
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:iron_chestplate"
+    },
+    {
+      "id": "spiked_pauldrons",
+      "name": "Spiked Pauldrons",
+      "desc": "Anyone who hits you takes part of the damage back.",
+      "parents": [
+        {
+          "node": "challenge_roar",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "thorns",
+      "values": {
+        "pct": [
+          0.18,
+          0.216,
+          0.252,
+          0.288
+        ],
+        "rest": [
+          20.0,
+          20.0,
+          20.0,
+          20.0
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:iron_bars"
+    },
+    {
+      "id": "hold_the_line",
+      "name": "Hold the Line",
+      "desc": "When almost dead, a Guard raises a short shield and holds on.",
+      "parents": [
+        {
+          "node": "barrier_wall",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "last_stand",
+      "values": {
+        "threshold": [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "rest": [
+          1800.0,
+          1620.0,
+          1440.0,
+          1260.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:totem_of_undying"
+    },
+    {
+      "id": "blast_cover",
+      "name": "Blast Cover",
+      "desc": "Your plate absorbs blasts: less explosion damage.",
+      "parents": [
+        {
+          "node": "stairwell_bash",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "explosion"
+      },
+      "values": {
+        "pct": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:tnt"
+    },
+    {
+      "id": "trespasser_hunter",
+      "name": "Trespasser Hunter",
+      "desc": "You hit other players who slip by you harder.",
+      "parents": [
+        {
+          "node": "gate_slam",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_vs",
+      "params": {
+        "category": "player"
+      },
+      "values": {
+        "bonus": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:player_head"
+    },
+    {
+      "id": "watch_rations",
+      "name": "Watch Rations",
+      "desc": "A Guard stands for hours: you tire slower.",
+      "parents": [
+        {
+          "node": "intruder_mark",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "hunger_saver",
+      "values": {
+        "pct": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:bread"
+    },
+    {
+      "id": "answer_in_kind",
+      "name": "Answer in Kind",
+      "desc": "Whoever hits you may be left weakened by the blow.",
+      "parents": [
+        {
+          "node": "guard_s_counter",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "on_hurt_retaliate",
+      "params": {
+        "effect": "weakness"
+      },
+      "values": {
+        "seconds": [
+          3.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "chance": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:fermented_spider_eye"
+    },
+    {
+      "id": "floor_lockdown",
+      "name": "Floor Lockdown",
+      "desc": "Seal the whole staircase: every creature around you is held in place for a long moment.",
+      "parents": [
+        {
+          "node": "watch_mending",
+          "level": 3
+        },
+        {
+          "node": "answer_in_kind",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stun_ring",
+      "params": {
+        "vfx": "SEAL_CHAINS"
+      },
+      "values": {
+        "radius": [
+          9.0,
+          9.9,
+          10
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          7.0
+        ],
+        "targets": [
+          12.0,
+          14.0,
+          14.0
+        ],
+        "cost": [
+          0.08,
+          0.0864,
+          0.0928
+        ],
+        "cooldown": [
+          1900.0,
+          1748.0,
+          1596.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:bell"
+    },
+    {
+      "id": "guardian_s_verdict",
+      "name": "Guardian's Verdict",
+      "desc": "Leap up and drive your whole weight into the ground: a crater and a ring of broken stone.",
+      "parents": [
+        {
+          "node": "guard_s_counter",
+          "level": 3
+        },
+        {
+          "node": "watch_rations",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "height": [
+          0.7,
+          0.756,
+          0.812
+        ],
+        "damage": [
+          26.0,
+          32.5,
+          39.0
+        ],
+        "radius": [
+          5.0,
+          5.5,
+          6.0
+        ],
+        "knockback": [
+          1.8,
+          1.98,
+          2.16
+        ],
+        "cost": [
+          0.06,
+          0.0648,
+          0.0696
+        ],
+        "cooldown": [
+          1600.0,
+          1472.0,
+          1344.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:anvil"
+    }
+  ]
+}
