@@ -74,7 +74,29 @@ public final class WeaponEngravings {
             Map.entry("thundercleave", List.of(e("elemental_boost", 2), e("crushing", 2), e("severance", 1))),           // a thunder-struck greatsword
             Map.entry("bloodbound_katana", List.of(e("energy_steal", 2), e("severance", 1), e("soul_eater", 1))),        // drinks the blood it draws
             Map.entry("permafrost_sabre", List.of(e("elemental_boost", 2), e("swift", 1), e("sturdy", 1))),              // frost-grained, one of the Boreal Blades
-            Map.entry("cyclone_rapier", List.of(e("swift", 2), e("elemental_boost", 1), e("magic_weapon", 1))));        // gale-etched, one of the Boreal Blades
+            Map.entry("cyclone_rapier", List.of(e("swift", 2), e("elemental_boost", 1), e("magic_weapon", 1))),        // gale-etched, one of the Boreal Blades
+            // 1.62.0: the weapons of The Rising of the Shield Hero (docs/heroweapon/weapon_<name>.md section 8 gives the reason for each engraving)
+            Map.entry("vassal_mirror", List.of(e("magic_interference", 2), e("magic_protection", 1), e("elemental_boost", 1))),   // glass that turns spells aside and stores their light
+            Map.entry("vassal_instrument", List.of(e("swift", 1), e("magic_weapon", 1), e("enervation", 1))),   // a violin and bow: quick, magical, its dirges sap strength
+            Map.entry("vassal_harpoon", List.of(e("barrier_piercing", 2), e("elemental_boost", 2), e("severance", 1))),   // a lightning harpoon that skewers through wards and fells whales
+            Map.entry("vassal_sewing_set", List.of(e("severance", 1), e("restoration", 1), e("magic_interference", 1))),   // a needle that cuts clean, mends, and seals
+            Map.entry("vassal_chain", List.of(e("sturdy", 2), e("enervation", 2), e("crushing", 1))),   // a heavy war chain: hard to break, tiring to be caught in, hits like a flail
+            Map.entry("legendary_shield", List.of(e("sturdy", 3), e("magic_protection", 2), e("magic_interference", 1), e("holy_weapon", 1))),   // the Legendary Shield: unbreakable, wards magic, a holy weapon of the Waves
+            Map.entry("legendary_sword", List.of(e("swift", 2), e("severance", 2), e("barrier_piercing", 1), e("holy_weapon", 1))),   // the Legendary Sword: fast clean strikes through wards, a holy weapon of the Waves
+            Map.entry("vassal_fan", List.of(e("swift", 2), e("elemental_boost", 1), e("magicule_absorption", 1))),   // Glass' fan: wind, glide; residue is absorbed magic
+            Map.entry("vassal_scythe", List.of(e("soul_eater", 2), e("severance", 1), e("energy_steal", 1))),   // every kill gathers a soul; clean reaping cut; capped heals
+            Map.entry("vassal_katana", List.of(e("severance", 2), e("swift", 2), e("barrier_piercing", 1))),   // duelist: lines, iaido speed, thrusts through a guard
+            Map.entry("vassal_book", List.of(e("magic_weapon", 1), e("elemental_boost", 2), e("restoration", 1), e("magic_protection", 1))),   // spellbook: fire/lightning pages, Healing Verse, Paper Wall
+            Map.entry("vassal_hammer", List.of(e("crushing", 3), e("sturdy", 2), e("enervation", 1))),   // heavy blunt head that breaks armour and poise, forge-hardened, saps what it breaks
+            Map.entry("vassal_claw", List.of(e("swift", 2), e("severance", 2), e("energy_steal", 1))),   // lightest, fastest weapon; cuts open wounds; the gem feeds on what bleeds
+            Map.entry("vassal_axe", List.of(e("severance", 2), e("crushing", 2), e("sturdy", 1))),   // cleaving arcs, heavy chops that break strength and guard, a body hardened by Brawn
+            Map.entry("vassal_whip", List.of(e("swift", 1), e("enervation", 1), e("magic_interference", 1))),   // quick lash that binds and saps; takes hold of the power of monsters
+            Map.entry("legendary_spear", List.of(e("holy_weapon", 2), e("barrier_piercing", 3), e("swift", 2), e("restoration", 1))),   // Motoyasu's Cardinal weapon: holy, a lance and beams that go through wards, the fast one of the four, and Time Reversal mends
+            Map.entry("legendary_bow", List.of(e("holy_weapon", 2), e("barrier_piercing", 2), e("swift", 2), e("elemental_boost", 1))),   // Itsuki's Cardinal weapon: holy, arrows of light that go through wards, a quick draw, frost and fire in its rains
+            Map.entry("vassal_staff", List.of(e("magic_weapon", 1), e("swift", 1), e("magic_interference", 1))),   // a casting focus; accelerated casting is its signature; Magic Prism and Float Mirror bend others' magic
+            Map.entry("vassal_gauntlet", List.of(e("crushing", 2), e("barrier_piercing", 1), e("sturdy", 1))),   // fists that break defences (Turtle Crush, Conflagration Fist); the quaking shock and palm go through guards; the gauntlet is armour too (Iron Guard)
+            Map.entry("vassal_projectile", List.of(e("swift", 2), e("severance", 1), e("magic_weapon", 1))),   // speed of throw; knives, kunai and chakrams cut clean; the base form is a blade conjured through the gem
+            Map.entry("vassal_carriage", List.of(e("sturdy", 2), e("crushing", 1), e("swift", 1), e("vitality", 1))));   // built to protect those aboard; rams and runs foes down; Haikuikku and the Queen's pull; the Soothing Ride tends the riders
 
     static final String FLAG = "NUEngraved";
 

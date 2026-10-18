@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.client.heroweapon;
 
 import com.newuniverse.nusmp.NUSMP;
+import com.newuniverse.nusmp.client.heroweapon.carriage.CarriageClient;
 import com.newuniverse.nusmp.client.heroweapon.curse.CurseClient;
 import com.newuniverse.nusmp.client.heroweapon.forms.FormsClient;
 import com.newuniverse.nusmp.heroweapon.HeroItems;
@@ -38,6 +39,7 @@ public final class HeroClient {
         HeroTooltip.keyNames = HeroKeysClient::name;
         FormsClient.init(modBus);
         CurseClient.init(modBus);
+        CarriageClient.init(modBus);                       // the Vassal Carriage's renderer; idempotent, its logic also calls it
     }
 
     /** The vanilla predicate names for a raised guard and a drawn string, for the two weapons that use them. */
