@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.75.0] — Relics can be found in the hidden rooms of ordinary floors
+
+Your request: "relics can also be found in hidden rooms in regular floors, not just dungeons". I read it as: the Mega-Dungeon's ordinary (non-boss) floors, whose hidden rooms are the treasure rooms. If you meant something else (new secret-door rooms), say so.
+
+### NEW
+- The 15 treasure rooms of the Mega-Dungeon (three closets and twelve themed nooks and vaults) now roll the new loot table `nusmp:chests/hidden_cache`: the old trial loot plus a **30% chance per chest of one relic of Normal to Rare grade** (any of the 196+ generated relics and the older ones of those grades, through the God of Order's ledger so none is duplicated).
+- Rule kept: relics of **Unique and above stay the Crucible's alone** inside the Mega-Dungeon (one per region); a cache never rolls above Rare (`RelicExclusivity.allowsWildRoll(inMega, maxGrade)`), and Mimics still drop no relic there.
+- Guards: `RelicCacheTemplatesTest` (every treasure chest rolls the cache; the table's grades stay at Rare or lower), `RelicExclusivityMegaTest` (the grade rule), `tools/labyrinth/retarget_treasure_loot.py --check`. Docs: `docs/labyrinth/hidden_caches.md`.
+
+### KEPT
+- The old loot table, all room templates and the Crucible unchanged.
+
 ## [1.74.0] — Crash fix, and 98 more relics (Overlord, Frieren, Delicious in Dungeon, Solo Leveling, Mushoku Tensei)
 
 ### FIXED

@@ -53,7 +53,7 @@ public final class RelicLoot {
     public static List<ItemStack> rollUnissuedAll(ServerLevel level, RandomSource rng, Grade min, Grade max) {
         List<ItemStack> none = new ArrayList<>();
         if (level == null || level.getServer() == null) return none;
-        if (!com.newuniverse.nusmp.labyrinth.vault.RelicExclusivity.allowsWildRoll(level)) return none;      // 1.54.0: in the Mega-Dungeon a Crucible is the only source of relics
+        if (!com.newuniverse.nusmp.labyrinth.vault.RelicExclusivity.allowsWildRoll(level, max)) return none;      // 1.54.0: in the Mega-Dungeon a Crucible is the only source of the capped grades; 1.75.0: a roll of Rare or lower (a hidden cache) is allowed
         List<RelicDef> pool = candidates(level, min, max);
         for (int tries = 0; tries < 8 && !pool.isEmpty(); tries++) {
             RelicDef d = pick(pool, rng);
@@ -78,7 +78,7 @@ public final class RelicLoot {
      */
     public static boolean anyUnissued(ServerLevel level, Grade min, Grade max) {
         if (level == null || level.getServer() == null) return false;
-        if (!com.newuniverse.nusmp.labyrinth.vault.RelicExclusivity.allowsWildRoll(level)) return false;      // 1.54.0: see rollUnissuedAll
+        if (!com.newuniverse.nusmp.labyrinth.vault.RelicExclusivity.allowsWildRoll(level, max)) return false;      // 1.54.0 / 1.75.0: see rollUnissuedAll
         return !candidates(level, min, max).isEmpty();
     }
 

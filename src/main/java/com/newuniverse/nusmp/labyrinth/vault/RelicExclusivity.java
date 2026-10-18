@@ -70,6 +70,22 @@ public final class RelicExclusivity {
      */
     public static boolean allowsWildRoll(boolean inMega) { return !inMega; }
 
+    /**
+     * 1.75.0: the hidden caches of the Mega-Dungeon (the treasure rooms, {@code nusmp:chests/hidden_cache}) may hold a relic of a grade that is not hard-capped. The Crucible stays
+     * the only source of the capped grades (Unique and above, one per region), so inside the Mega-Dungeon a roll is allowed only when its HIGHEST grade is at most
+     * {@link #HIDDEN_CACHE_MAX}; every other level answers as {@link #allowsWildRoll(boolean)} does (yes).
+     */
+    public static boolean allowsWildRoll(boolean inMega, com.newuniverse.nusmp.relics.Grade max) {
+        if (!inMega) return true;
+        return max != null && max.ordinal() <= HIDDEN_CACHE_MAX.ordinal();
+    }
+
+    /** The highest grade a hidden cache of the Mega-Dungeon may hold: Rare (Normal, Special and Rare relics are farmable, not capped by the God of Order's ledger). */
+    public static final com.newuniverse.nusmp.relics.Grade HIDDEN_CACHE_MAX = com.newuniverse.nusmp.relics.Grade.RARE;
+
+    /** The same with the live level and the roll's highest grade. */
+    public static boolean allowsWildRoll(Level level, com.newuniverse.nusmp.relics.Grade max) { return allowsWildRoll(inMega(level), max); }
+
     /** The same with the live level; a null level is not the Mega-Dungeon. */
     public static boolean allowsWildRoll(Level level) { return allowsWildRoll(inMega(level)); }
 

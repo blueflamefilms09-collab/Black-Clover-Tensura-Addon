@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        { "type": "minecraft:loot_table", "value": "nusmp:chests/labyrinth_trial", "weight": 1 }
+      ]
+    },
+    {
+      "rolls": 1,
+      "conditions": [ { "condition": "minecraft:random_chance", "chance": 0.3 } ],
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:group",
+              "children": [
+                { "type": "nusmp:relic", "min_grade": "normal", "max_grade": "special", "weight": 55 },
+                { "type": "nusmp:relic", "min_grade": "special", "max_grade": "rare", "weight": 45 }
+              ]
+            },
+            { "type": "minecraft:item", "name": "minecraft:emerald",
+              "functions": [ { "function": "minecraft:set_count", "count": { "type": "minecraft:uniform", "min": 2, "max": 5 } } ] }
+          ]
+        }
+      ]
+    }
+  ]
+}

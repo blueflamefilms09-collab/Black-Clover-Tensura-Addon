@@ -34,4 +34,15 @@ class RelicExclusivityMegaTest {
         assertFalse(RelicExclusivity.allowsWildRoll(true));
         assertTrue(RelicExclusivity.allowsWildRoll(false));
     }
+
+    /** 1.75.0: a hidden cache of the Mega-Dungeon may roll a relic that is not hard-capped (Rare or lower); the capped grades stay the Crucible's alone. */
+    @Test
+    void aHiddenCacheMayHoldAFarmableRelicButNeverACappedOne() {
+        for (com.newuniverse.nusmp.relics.Grade g : com.newuniverse.nusmp.relics.Grade.values()) {
+            boolean farmable = g.ordinal() <= com.newuniverse.nusmp.relics.Grade.RARE.ordinal();
+            assertTrue(farmable == RelicExclusivity.allowsWildRoll(true, g), "in the Mega-Dungeon a roll up to " + g + " is " + (farmable ? "allowed" : "refused"));
+            assertTrue(RelicExclusivity.allowsWildRoll(false, g), "everywhere else every grade rolls as before");
+        }
+        assertFalse(RelicExclusivity.allowsWildRoll(true, null));
+    }
 }
