@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.85.0] — Tensura-coin economy and Hub NPCs, no more dead-end mazes, Saiyan and Primordial races, records and titles
+
+The first four pieces of the EliteTensuraAddon inventory and the Hub economy brief (plan: `docs/elite/plan.md`). The original addon source was not available: the names are the inventory's, every number and rule is designed here and listed in the docs.
+
+### NEW
+- **Hub economy** (`elite/hub`, `docs/elite/hub.md`): Tensura coins (bronze, silver, gold, stellar gold) are the dungeon's currency. Mobs, boss Guardians, chests and rift chests drop coins scaled by tier and floor; the Hub never pays. **Quest Giver and Merchant NPCs** stand in the Sanctuary (villager model, own skins); the **shop** (45 offers: gear, food, utility) charges coins only, stock per player per day; **73 quests** (daily, per road, hunts, deliveries; kill, clear floors, deliver, reach floor) with a HUD tracker ("12/50 Tier 1 Abyssal Kills") and a dialogue screen; the **Dungeon Map** item (3D rolled map, also in the shop) shows the rooms of the floor you stand on with fog of war.
+- **Cyclic dungeon generation** (`labyrinth/mega/cyclic`, `docs/labyrinth/cyclic_wfc.md`): new sectors are grown with a loop-closing pass (open doorways of neighbouring rooms are joined, short hallways link near ones, leaves are trimmed) and a placement lookahead that prefers rooms whose doorways line up. Measured on the shipped templates: dead-end rooms **32.6% -> 6.1%**, rooms on a loop **34% -> 80%**, boss chain and stairs untouched. Config `nusmp-labyrinth-mega-gen-server.toml` `[generation] cyclic` (on for new sectors only; sectors already generated keep the old generator forever).
+- **Races** (`elite/races`): real Tensura races **Lesser, Medium, High and Divine Saiyan** (an evolution line with EP, kill, mastery, item rules) and the **Primordial** race (entered by a rite); transformation states (boosted, ascended, great ape at full moon, divine) as a state machine with a hotkey (`.`); `/multiverse elite race ...`.
+- **Records, achievements and titles** (`elite/records`): **210 records** (20 condition types), **81 titles** with attribute/effect bonuses, **26 title synergies**, a mouse-driven Records screen (key `I` inside the Codex menus, button injected), toasts, `/records`. Other systems report to it through `RecordEvents`.
+
+### REPLACED
+- What the Mega-Dungeon pays: coins instead of Magic Stones (config `economy.currency = tensura_coins`, default). Magic Stone items, ids, saves and the old drop code are KEPT (`magic_stones` mode, `keepStoneDrops`).
+
+### KEPT
+- All old generation for existing sectors, the Black Market, the multiverse race buffs, the Tensura titles.
+
+### Honest notes
+- Nothing has been run in game. The shop, quest and map screens, the NPC spawn spots, the Saiyan evolution against Tensura's real race code, the hotkeys and the generated hallways are only type-checked and unit-tested; the in-game self-tests (`elite.hub`, `elite.races`, `elite.records`, `gen.cyclic`) run in the CI smoke test.
+- Coin ratios bronze = silver/100 and stellar gold = 100 gold are my assumptions (only gold = 100 silver was in the mod). Tensura coin pouches are not counted.
+- The 400 foundry mobs and the Guardian bypass the normal loot modifier, so coins for them come from death listeners; the skill-book loot modifier does not fire for them either (to be looked at).
+- Counters for forge, war, Walpurgis and calamities in the records stay at 0 until those systems (not built yet) report to `RecordEvents`.
+
 ## [1.84.0] — Relics below Legend need no attunement, the Unbinding Seal, bows held the vanilla way
 
 ### NEW
