@@ -1,0 +1,53 @@
+{
+  "weapon": "vassal_instrument",
+  "forms": [
+    {
+      "id": "base", "name": "Violin",
+      "desc": "The violin of Glass' world. It shoots notes like arrows and plays songs round its wielder; time one technique after another (every two to five seconds) to build harmony and the notes fly true.",
+      "tier": 0, "parents": [], "requires": [], "mastery": 0,
+      "stats": { "movement_speed": 0.01, "luck": 0.5 }, "abilityBonus": {},
+      "skills": { "use": "instrument.music_strike", "key1": "instrument.march", "key2": "instrument.lullaby" },
+      "passives": [], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "guitar", "name": "Stun Beat Guitar",
+      "desc": "The instrument takes in wood and strings and turns into a guitar. Its notes are accurate now, and it can stun with a flash of sound.",
+      "tier": 1, "parents": ["base"],
+      "requires": [ { "tag": "minecraft:planks", "count": 32 }, { "item": "minecraft:string", "count": 24 }, { "item": "minecraft:note_block", "count": 8 } ],
+      "mastery": 80,
+      "stats": { "movement_speed": 0.02, "luck": 1.0 }, "abilityBonus": { "luck": 0.25 },
+      "skills": { "use": "instrument.music_strike", "sneak": "instrument.stun_beat", "key1": "instrument.march", "key2": "instrument.lullaby", "key3": "instrument.demons_melody" },
+      "passives": ["perfect_pitch"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "humming_fairy_lyre", "name": "Humming Fairy Lyre",
+      "desc": "A lyre that hums with the fairies of the wiki's list: its songs reach a quarter farther, and it plays the war song and the poisonous dirge.",
+      "tier": 2, "parents": ["guitar"],
+      "requires": [ { "item": "minecraft:amethyst_shard", "count": 32 }, { "item": "minecraft:gold_ingot", "count": 16 }, { "item": "minecraft:phantom_membrane", "count": 8 } ],
+      "mastery": 160,
+      "stats": { "movement_speed": 0.03, "max_health": 2.0, "luck": 1.5 }, "abilityBonus": { "movement_speed": 0.01, "max_health": 0.5 },
+      "skills": { "use": "instrument.music_strike", "sneak": "instrument.dirge", "key1": "instrument.march", "key2": "instrument.war_song", "key3": "instrument.demons_melody" },
+      "passives": ["perfect_pitch", "fairy_choir"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "grilled_fish_horn", "name": "Grilled Fish Horn",
+      "desc": "The odd instrument that looks like a grilled fish, and plays the Glutton God Tango. A support form: it feeds and mends the party.",
+      "tier": 2, "parents": ["guitar"],
+      "requires": [ { "item": "minecraft:cooked_cod", "count": 32 }, { "item": "minecraft:cooked_salmon", "count": 16 }, { "item": "minecraft:kelp", "count": 16 } ],
+      "mastery": 160,
+      "stats": { "movement_speed": 0.02, "max_health": 4.0, "luck": 1.0 }, "abilityBonus": { "max_health": 1.0 },
+      "skills": { "use": "instrument.music_strike", "sneak": "instrument.glutton_god_tango", "key1": "instrument.march", "key2": "instrument.lullaby", "key3": "instrument.war_song" },
+      "passives": ["perfect_pitch"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "instrument_zero", "name": "Musical Instrument 0",
+      "desc": "The 0 series form, made by absorbing poison: a silent note that frees allies from bonds, a wider beat, and the Crescendo that ends a long phrase. Needs both the lyre and the fish horn.",
+      "tier": 3, "parents": ["humming_fairy_lyre", "grilled_fish_horn"],
+      "requires": [ { "item": "minecraft:fermented_spider_eye", "count": 24 }, { "item": "minecraft:poisonous_potato", "count": 32 }, { "item": "minecraft:pufferfish", "count": 12 }, { "item": "tensura:magic_stone", "count": 32 } ],
+      "mastery": 280,
+      "stats": { "movement_speed": 0.05, "max_health": 4.0, "armor_toughness": 1.0, "luck": 2.0 }, "abilityBonus": { "movement_speed": 0.01, "max_health": 1.0, "luck": 0.5 },
+      "skills": { "use": "instrument.music_strike", "sneak": "instrument.zero_note", "key1": "instrument.march", "key2": "instrument.war_song", "key3": "instrument.crescendo" },
+      "passives": ["perfect_pitch", "fairy_choir", "steady_beat"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    }
+  ]
+}

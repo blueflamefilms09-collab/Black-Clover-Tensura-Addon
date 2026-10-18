@@ -1,0 +1,53 @@
+{
+  "weapon": "vassal_harpoon",
+  "forms": [
+    {
+      "id": "base", "name": "Harpoon",
+      "desc": "The whaling harpoon of Glass' world. Throw it to skewer a foe and tie a line to it; then reel the foe in, or yourself to it. It also charges as a dragon of lightning.",
+      "tier": 0, "parents": [], "requires": [], "mastery": 0,
+      "stats": { "attack_damage": 1.0, "reach": 0.5 }, "abilityBonus": {},
+      "skills": { "use": "harpoon.harpoon_throw", "key1": "harpoon.reel_in", "key2": "harpoon.lightning_strike_dragon" },
+      "passives": ["barbed_head"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "whale_hunter", "name": "Whale Hunting Harpoon",
+      "desc": "The harpoon takes in the sea and learns the great throw that fells whales: slow to gather, and it hits a big body a quarter harder.",
+      "tier": 1, "parents": ["base"],
+      "requires": [ { "item": "minecraft:prismarine_shard", "count": 32 }, { "item": "minecraft:cod", "count": 32 }, { "item": "minecraft:iron_ingot", "count": 24 } ],
+      "mastery": 80,
+      "stats": { "attack_damage": 2.0, "reach": 0.5, "armor": 1.0 }, "abilityBonus": { "attack_damage": 0.5 },
+      "skills": { "use": "harpoon.harpoon_throw", "sneak": "harpoon.whale_hunting_harpoon", "key1": "harpoon.reel_in", "key2": "harpoon.lightning_strike_dragon" },
+      "passives": ["barbed_head"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "lightning_shock_harpoon", "name": "Lightning Shock Harpoon",
+      "desc": "Copper and lightning rods turn the line into a conductor: shock what is tied, pin it under a cross of lightning, and let the throw arc to a second foe.",
+      "tier": 2, "parents": ["whale_hunter"],
+      "requires": [ { "item": "minecraft:copper_ingot", "count": 48 }, { "item": "minecraft:lightning_rod", "count": 8 }, { "item": "minecraft:redstone", "count": 32 } ],
+      "mastery": 160,
+      "stats": { "attack_damage": 3.0, "reach": 1.0, "movement_speed": 0.02 }, "abilityBonus": { "attack_damage": 0.75, "reach": 0.25 },
+      "skills": { "use": "harpoon.harpoon_throw", "sneak": "harpoon.crucifixion", "key1": "harpoon.reel_in", "key2": "harpoon.lightning_strike_dragon", "key3": "harpoon.lightning_shock_harpoon" },
+      "passives": ["barbed_head", "storm_charged"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "brave_fish_blaster", "name": "Brave Fish Blaster",
+      "desc": "The great surge: a fish-shaped wave of lightning-charged water along your aim. It needs a heart of the sea, and a long gathering before it breaks.",
+      "tier": 3, "parents": ["lightning_shock_harpoon"],
+      "requires": [ { "item": "minecraft:heart_of_the_sea", "count": 4 }, { "item": "minecraft:nautilus_shell", "count": 12 }, { "item": "minecraft:prismarine_crystals", "count": 32 }, { "item": "minecraft:tropical_fish", "count": 16 } ],
+      "mastery": 280,
+      "stats": { "attack_damage": 4.0, "reach": 1.0, "armor": 2.0, "movement_speed": 0.03, "max_health": 4.0 }, "abilityBonus": { "attack_damage": 1.0, "max_health": 1.0 },
+      "skills": { "use": "harpoon.harpoon_throw", "sneak": "harpoon.whale_hunting_harpoon", "key1": "harpoon.reel_in", "key2": "harpoon.lightning_shock_harpoon", "key3": "harpoon.brave_fish_blaster" },
+      "passives": ["barbed_head", "storm_charged"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "harpoon_zero", "name": "Harpoon 0",
+      "desc": "The 0 series form, made by absorbing poison: no damage, no fuss, and effective against illegitimate power. It strips the helpful effects a foe has borrowed.",
+      "tier": 3, "parents": ["lightning_shock_harpoon"],
+      "requires": [ { "item": "minecraft:fermented_spider_eye", "count": 24 }, { "item": "minecraft:poisonous_potato", "count": 32 }, { "item": "minecraft:pufferfish", "count": 12 }, { "item": "tensura:magic_stone", "count": 24 } ],
+      "mastery": 240,
+      "stats": { "attack_damage": 3.0, "reach": 1.0, "armor": 2.0, "luck": 1.0, "knockback_resistance": 0.1 }, "abilityBonus": { "attack_damage": 0.5, "luck": 0.5 },
+      "skills": { "use": "harpoon.harpoon_throw", "sneak": "harpoon.harpoon_zero", "key1": "harpoon.reel_in", "key2": "harpoon.crucifixion", "key3": "harpoon.lightning_shock_harpoon" },
+      "passives": ["barbed_head", "storm_charged"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    }
+  ]
+}

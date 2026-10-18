@@ -1,0 +1,43 @@
+{
+  "weapon": "vassal_sewing_set",
+  "forms": [
+    {
+      "id": "base", "name": "Sewing Set",
+      "desc": "A needle and thread of S'yne's world, its gem slowly losing power with its lost home. Needles mark foes and allies; silk binds and mends.",
+      "tier": 0, "parents": [], "requires": [], "mastery": 0,
+      "stats": { "movement_speed": 0.01, "luck": 0.5 }, "abilityBonus": {},
+      "skills": { "use": "sewing_set.needle_shot", "key1": "sewing_set.stitch_mend", "key2": "sewing_set.bind_wire" },
+      "passives": [], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "silk_thread_set", "name": "Silk Thread Set",
+      "desc": "Wool, string and shears teach the set finer stitching: marks last longer, and a needle in an ally becomes a place to jump to.",
+      "tier": 1, "parents": ["base"],
+      "requires": [ { "tag": "minecraft:wool", "count": 32 }, { "item": "minecraft:string", "count": 48 }, { "item": "minecraft:shears", "count": 4 } ],
+      "mastery": 80,
+      "stats": { "movement_speed": 0.02, "luck": 1.0 }, "abilityBonus": { "luck": 0.25 },
+      "skills": { "use": "sewing_set.needle_shot", "sneak": "sewing_set.stitch_mend", "key1": "sewing_set.bind_wire", "key2": "sewing_set.jumping_needle" },
+      "passives": ["fine_stitch"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "spider_wire_set", "name": "Spider Wire Set",
+      "desc": "Spider silk and webs: the Scissor Cut, a net that holds a crowd, and a seam of stitches that catches arrows.",
+      "tier": 2, "parents": ["silk_thread_set"],
+      "requires": [ { "item": "minecraft:cobweb", "count": 24 }, { "item": "minecraft:spider_eye", "count": 32 }, { "item": "minecraft:fermented_spider_eye", "count": 8 } ],
+      "mastery": 160,
+      "stats": { "movement_speed": 0.03, "armor": 1.0, "luck": 1.0 }, "abilityBonus": { "movement_speed": 0.01, "armor": 0.25 },
+      "skills": { "use": "sewing_set.needle_shot", "sneak": "sewing_set.scissor_cut", "key1": "sewing_set.bind_wire", "key2": "sewing_set.spider_net", "key3": "sewing_set.stitched_barrier" },
+      "passives": ["fine_stitch"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "ariadnes_thread", "name": "Ariadne's Thread",
+      "desc": "The thread that maps a labyrinth and leads people out of it: draw your marked allies to your side and light up every foe nearby.",
+      "tier": 3, "parents": ["spider_wire_set"],
+      "requires": [ { "item": "minecraft:amethyst_shard", "count": 48 }, { "item": "minecraft:ender_pearl", "count": 16 }, { "item": "minecraft:compass", "count": 8 }, { "item": "tensura:high_quality_magic_crystal", "count": 6 } ],
+      "mastery": 280,
+      "stats": { "movement_speed": 0.05, "max_health": 4.0, "armor": 1.0, "luck": 1.5 }, "abilityBonus": { "movement_speed": 0.01, "max_health": 1.0, "luck": 0.5 },
+      "skills": { "use": "sewing_set.needle_shot", "sneak": "sewing_set.stitch_mend", "key1": "sewing_set.jumping_needle", "key2": "sewing_set.scissor_cut", "key3": "sewing_set.ariadnes_thread" },
+      "passives": ["fine_stitch"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    }
+  ]
+}
