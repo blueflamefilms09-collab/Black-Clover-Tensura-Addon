@@ -50,5 +50,6 @@ final class AuraRegistry {
         CompassAura.register();
         MercuryAura.register();
         WikiAura.register();                 // 1.27.0: the 30 wiki magics
+        EarthAura.register();                // 1.93.0: Sandstone, Rock, Red Ochre, Stone, Earth, Mineral armours (answers its own styles, hands the rest to WikiAura)
     }
 }

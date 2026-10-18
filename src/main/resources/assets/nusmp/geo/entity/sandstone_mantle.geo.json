@@ -1,0 +1,133 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.sandstone_mantle",
+    "texture_width": 64,
+    "texture_height": 64,
+    "visible_bounds_width": 4,
+    "visible_bounds_height": 4,
+    "visible_bounds_offset": [
+     0,
+     1,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "root",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -6.2,
+        23.4,
+        -4.0
+       ],
+       "size": [
+        12.4,
+        1.6,
+        8.0
+       ],
+       "uv": [
+        0,
+        13
+       ],
+       "inflate": 0.1
+      },
+      {
+       "origin": [
+        -7.4,
+        22.0,
+        -4.6
+       ],
+       "size": [
+        14.8,
+        1.4,
+        9.2
+       ],
+       "uv": [
+        0,
+        0
+       ],
+       "inflate": 0.1
+      },
+      {
+       "origin": [
+        -4.7,
+        20.4,
+        2.4
+       ],
+       "size": [
+        9.4,
+        2.4,
+        1.6
+       ],
+       "uv": [
+        0,
+        24
+       ],
+       "inflate": 0.1
+      },
+      {
+       "origin": [
+        -4.3,
+        17.8,
+        2.4
+       ],
+       "size": [
+        8.6,
+        2.4,
+        1.6
+       ],
+       "uv": [
+        25,
+        24
+       ],
+       "inflate": 0.1
+      },
+      {
+       "origin": [
+        -3.9,
+        15.2,
+        2.4
+       ],
+       "size": [
+        7.8,
+        2.4,
+        1.6
+       ],
+       "uv": [
+        0,
+        30
+       ],
+       "inflate": 0.1
+      },
+      {
+       "origin": [
+        -3.4,
+        12.6,
+        2.4
+       ],
+       "size": [
+        6.8,
+        2.4,
+        1.6
+       ],
+       "uv": [
+        21,
+        30
+       ],
+       "inflate": 0.1
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

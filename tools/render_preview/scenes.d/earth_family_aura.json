@@ -1,0 +1,18 @@
+{
+ "ef_0_geo_init": {"kind": "geo", "model": "rock_helm", "space": "PLAYER", "layer": "CUTOUT", "glow": "FFFF9640", "ages": [0], "tile": [200, 260],
+  "views": [{"name": "front", "yaw": 20, "pitch": 8}]},
+ "ef_rock_aura": {"kind": "aura", "attr": "Earth", "aura": "WIKI", "style": 11, "total": 120, "ages": [3, 8, 14, 50, 108, 114], "tile": [360, 520],
+  "views": [{"name": "front 3/4", "yaw": 35, "pitch": 10}, {"name": "side", "yaw": 90, "pitch": 6}, {"name": "back", "yaw": 200, "pitch": 10}]},
+ "ef_rock_close": {"kind": "aura", "attr": "Earth", "aura": "WIKI", "style": 11, "total": 120, "ages": [50], "tile": [760, 980],
+  "views": [{"name": "front", "yaw": 0, "pitch": 6}, {"name": "3/4", "yaw": 40, "pitch": 12}, {"name": "back", "yaw": 180, "pitch": 8}]},
+ "ef_sandstone_close": {"kind": "aura", "attr": "Earth", "aura": "WIKI", "style": 12, "total": 120, "ages": [50], "tile": [760, 980],
+  "views": [{"name": "front", "yaw": 0, "pitch": 6}, {"name": "3/4", "yaw": 40, "pitch": 12}, {"name": "back", "yaw": 180, "pitch": 8}]},
+ "ef_red_ochre_close": {"kind": "aura", "attr": "Earth", "aura": "WIKI", "style": 10, "total": 120, "ages": [50], "tile": [760, 980],
+  "views": [{"name": "front", "yaw": 0, "pitch": 6}, {"name": "3/4", "yaw": 40, "pitch": 12}, {"name": "back", "yaw": 180, "pitch": 8}]},
+ "ef_stone_close": {"kind": "aura", "attr": "Earth", "aura": "WIKI", "style": 26, "total": 120, "ages": [50], "tile": [760, 980],
+  "views": [{"name": "front", "yaw": 0, "pitch": 6}, {"name": "3/4", "yaw": 40, "pitch": 12}, {"name": "back", "yaw": 180, "pitch": 8}]},
+ "ef_earth_close": {"kind": "aura", "attr": "Earth", "aura": "WIKI", "style": 100, "total": 120, "ages": [50], "tile": [760, 980],
+  "views": [{"name": "front", "yaw": 0, "pitch": 6}, {"name": "3/4", "yaw": 40, "pitch": 12}, {"name": "back", "yaw": 180, "pitch": 8}]},
+ "ef_mineral_close": {"kind": "aura", "attr": "Earth", "aura": "WIKI", "style": 3, "total": 120, "ages": [50], "tile": [760, 980],
+  "views": [{"name": "front", "yaw": 0, "pitch": 6}, {"name": "3/4", "yaw": 40, "pitch": 12}, {"name": "back", "yaw": 180, "pitch": 8}]}
+}
