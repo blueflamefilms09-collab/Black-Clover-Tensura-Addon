@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.client.relics.item;
 
+import com.newuniverse.nusmp.heroweapon.HeroKind;
+import com.newuniverse.nusmp.heroweapon.HeroWeaponItem;
 import com.newuniverse.nusmp.item.MagicWeaponItem;
 import com.newuniverse.nusmp.relics.Grade;
 import com.newuniverse.nusmp.relics.RelicBearer;
@@ -109,6 +111,12 @@ public final class ItemStateVariants {
             if (holder == null) return RangedStage.REST;
             boolean cooling = holder instanceof Player p && p.getCooldowns().isOnCooldown(item);
             return cooling ? RangedStage.SPENT : RangedStage.CHARGED;
+        }
+        // 1.62.0: the Legendary Bow draws like a relic bow, so its pull meshes (legendary_bow_pull1..3, legendary_bow_curse_pull1..3) are chosen by the same stages
+        if (item instanceof HeroWeaponItem hero && hero.kind() == HeroKind.BOW) {
+            boolean using = holder != null && holder.isUsingItem() && holder.getUseItem() == stack;
+            float pull = using ? RangedStage.bowPull(stack.getUseDuration(holder), holder.getUseItemRemainingTicks()) : 0f;
+            return RangedStage.stage(RangedStage.Kind.BOW, using, false, pull);
         }
         return RangedStage.REST;
     }
