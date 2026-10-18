@@ -91,7 +91,8 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             com.newuniverse.nusmp.arc.world.ArcWorldItems.CHRONICLE_SIGIL);      // 1.61.0: the Chronicle Sigil
 
     /** 1.24.0: the old list plus every 3D relic of Relics of Many Worlds. */
-    static final List<Supplier<? extends Item>> WEAPONS = java.util.stream.Stream.concat(BASE_WEAPONS.stream(), com.newuniverse.nusmp.relics.RelicCatalog.model3dItems().stream()).toList();
+    static final List<Supplier<? extends Item>> WEAPONS = java.util.stream.Stream.of(BASE_WEAPONS.stream(), com.newuniverse.nusmp.relics.RelicCatalog.model3dItems().stream(),
+            com.newuniverse.nusmp.heroweapon.HeroItems.all().stream()).flatMap(s -> s).toList();      // 1.62.0: + the 21 hero weapons
 
     static final int BODY = 0, VOID = 1, GLOW = 2;
 
