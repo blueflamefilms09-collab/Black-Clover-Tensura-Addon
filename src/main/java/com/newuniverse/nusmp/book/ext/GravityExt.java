@@ -1,15 +1,16 @@
 package com.newuniverse.nusmp.book.ext;
 
 import com.newuniverse.nusmp.book.BookPage;
+import com.newuniverse.nusmp.book.GravityWorksPages;
 
 import java.util.List;
 
 /**
- * 0.53 Gravity Magic upgrade: STUB (replaced by the attribute's own implementation). The pages returned here are APPENDED to the
- * existing GRAVITY book (never reorder or remove the book's own pages).
+ * 1.93.0 Gravity Magic rebuild: the pages APPENDED to the Gravity book (never reordered or removed; the book's own five pages come first): Heavy Infighting:
+ * Gladiator, Evil God's Pressure Craft, Lightened Step and Weighted Blows (the wiki's spell list and its description of lowering and raising gravity).
  */
 public final class GravityExt {
     private GravityExt() {}
 
-    public static List<BookPage> pages() { return List.of(); }
+    public static List<BookPage> pages() { return GravityWorksPages.pages(); }
 }
