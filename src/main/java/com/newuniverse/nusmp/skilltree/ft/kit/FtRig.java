@@ -49,7 +49,7 @@ public final class FtRig implements AutoCloseable {
         BlockPos spawn = level.getSharedSpawnPos();
         if (!level.hasChunkAt(spawn)) return null;
         double y = Math.min(280.0, level.getMaxBuildHeight() - 30.0);
-        FakePlayer p = SelfTests.player(level, name, spawn.getX() + 0.5, y, spawn.getZ() + 0.5);
+        FakePlayer p = SelfTests.standIn(level, name, spawn.getX() + 0.5, y, spawn.getZ() + 0.5);
         p.setYRot(0f);
         p.setXRot(0f);
         FtRig rig = new FtRig(level, p);

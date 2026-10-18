@@ -76,7 +76,7 @@ final class SpearSelfTest {
         if (!level.hasChunkAt(spawn)) return SelfTests.Result.ok(paper + "; the casts were skipped: the spawn chunk is not loaded");
 
         int ground = level.getHeight(Heightmap.Types.MOTION_BLOCKING, spawn.getX(), spawn.getZ());
-        ServerPlayer fp = SelfTests.player(level, PLAYER, spawn.getX() + 0.5, ground, spawn.getZ() + 0.5);
+        ServerPlayer fp = SelfTests.standIn(level, PLAYER, spawn.getX() + 0.5, ground, spawn.getZ() + 0.5);
         if (HeroBonds.of(fp).isBound()) HeroBonds.release(fp);
         String refused = HeroBonds.bind(fp, HeroKind.SPEAR);
         if (refused != null) return SelfTests.Result.ok(paper + "; the casts were skipped: the stand-in could not bind (" + refused + ")");

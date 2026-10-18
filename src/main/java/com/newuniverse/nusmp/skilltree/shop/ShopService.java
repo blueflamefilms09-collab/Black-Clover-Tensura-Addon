@@ -52,7 +52,8 @@ public final class ShopService {
     // ================================================================ who and where
     /** The nearest living witch within {@link ShopRules#REACH} blocks of the player, or null. */
     public static ArcNpcEntity witchNear(ServerPlayer p) {
-        AABB box = p.getBoundingBox().inflate(ShopRules.REACH);
+        double r = ShopRules.REACH;
+        AABB box = new AABB(p.getX() - r, p.getY() - r, p.getZ() - r, p.getX() + r, p.getY() + r, p.getZ() + r);        // from the player's own coordinates, not their bounding box (a stand-in's box can sit elsewhere)
         ArcNpcEntity best = null;
         double bestDistance = Double.MAX_VALUE;
         for (ArcNpcEntity n : p.level().getEntitiesOfClass(ArcNpcEntity.class, box, e -> e.isAlive() && BlackMarketWitch.ID.equals(e.characterId()))) {

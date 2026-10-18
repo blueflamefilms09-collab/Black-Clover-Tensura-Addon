@@ -58,8 +58,10 @@ public final class IceConstructs {
     public static List<ServerPlayer> friendsAround(ServerPlayer caster, Vec3 c, double radius) {
         Set<UUID> friends = FtWorld.friendIds(caster);
         List<ServerPlayer> out = new ArrayList<>();
+        double r2 = radius * radius;
+        if (caster.isAlive() && !caster.isSpectator() && caster.distanceToSqr(c) <= r2) out.add(caster);        // the caster is always one of their own friends, whatever the level's player list says
         for (ServerPlayer m : caster.serverLevel().players()) {
-            if (friends.contains(m.getUUID()) && m.isAlive() && !m.isSpectator() && m.distanceToSqr(c) <= radius * radius) out.add(m);
+            if (m != caster && friends.contains(m.getUUID()) && m.isAlive() && !m.isSpectator() && m.distanceToSqr(c) <= r2) out.add(m);
         }
         return out;
     }

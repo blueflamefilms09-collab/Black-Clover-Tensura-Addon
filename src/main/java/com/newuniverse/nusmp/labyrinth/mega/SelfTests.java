@@ -76,4 +76,16 @@ public final class SelfTests {
         p.setHealth(p.getMaxHealth());
         return p;
     }
+
+    /**
+     * 1.62.0: like {@link #player} but a {@link StandIn}: it answers {@code position()}, {@code blockPosition()} and the bounding box with the place it was put at, where a plain
+     * {@code FakePlayer} answers with the origin. Use it when the test asks something about the neighbourhood of the stand-in (a technique's circle, a shop's reach, a rewind).
+     */
+    public static FakePlayer standIn(ServerLevel level, String name, double x, double y, double z) {
+        UUID id = UUID.nameUUIDFromBytes(("nusmp-selftest:" + name).getBytes(java.nio.charset.StandardCharsets.UTF_8));
+        StandIn p = StandIn.get(level, new GameProfile(id, name));
+        p.setPos(x, y, z);
+        p.setHealth(p.getMaxHealth());
+        return p;
+    }
 }

@@ -86,8 +86,9 @@ public final class Moves {
             try {
                 p.teleportTo(x, y, z);
             } catch (RuntimeException noConnection) {
-                p.setPos(x, y, z);
+                // a stand-in has no connection to teleport through: the position check below moves it
             }
+            if (p.distanceToSqr(x, y, z) > 0.25) p.setPos(x, y, z);          // the network teleport did not (or could not) move the player: put them there
             p.fallDistance = 0f;
             p.setDeltaMovement(Vec3.ZERO);
             p.hurtMarked = true;

@@ -29,8 +29,9 @@ public final class SkyAllies {
         Set<UUID> friends = FtWorld.friendIds(caster);
         double r2 = radius * radius;
         List<LivingEntity> out = new ArrayList<>();
+        if (caster.isAlive() && !caster.isSpectator() && caster.distanceToSqr(centre) <= r2) out.add(caster);        // the caster is always their own ally, found or not by the level's entity lookup
         for (LivingEntity e : caster.serverLevel().getEntitiesOfClass(LivingEntity.class, new AABB(centre, centre).inflate(radius), x -> x.isAlive() && !x.isSpectator())) {
-            if (e.distanceToSqr(centre) <= r2 && isAlly(caster, e, friends)) out.add(e);
+            if (e != caster && e.distanceToSqr(centre) <= r2 && isAlly(caster, e, friends)) out.add(e);
         }
         return out;
     }

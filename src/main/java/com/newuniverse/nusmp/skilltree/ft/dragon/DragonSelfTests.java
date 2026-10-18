@@ -88,7 +88,7 @@ public final class DragonSelfTests {
         if (!problems.isEmpty()) return fail(problems);
 
         ServerLevel level = server.overworld();
-        FakePlayer fp = SelfTests.player(level, spec.tester(), 0.5, 100.0, 0.5);
+        FakePlayer fp = SelfTests.standIn(level, spec.tester(), 0.5, 100.0, 0.5);
         fp.setYRot(0.0f);
         fp.setXRot(0.0f);
         IPlayerSkillTree tree = SkillTreeApi.of(fp);
@@ -96,6 +96,7 @@ public final class DragonSelfTests {
         Zombie dummy = EntityType.ZOMBIE.create(level);
         if (dummy == null) return SelfTests.Result.fail("could not create the dummy mob");
         int casts = 0, hurtCasts = 0, refused = 0;
+        int[] detached = {0};
         try {
             dummy.moveTo(0.5, 100.0, 3.0, 180.0f, 0.0f);
             dummy.setNoAi(true);
@@ -108,7 +109,7 @@ public final class DragonSelfTests {
             // 1. without the route nothing can be cast, nothing is spent, nothing is hurt
             for (SkillNode n : skillNodes) {
                 if (SkillTreeApi.canCast(fp, route.id(), n.id())) problems.add(n.id() + ": the stand-in can cast it without the route");
-                ManasSkillInstance inst = learn(skills, n);
+                ManasSkillInstance inst = learn(skills, n, detached);
                 if (inst == null) { problems.add(n.id() + ": the skill could not be taught to the stand-in"); continue; }
                 refill(fp);
                 double mana = magicule(fp);
@@ -135,7 +136,7 @@ public final class DragonSelfTests {
                 for (SkillNode n : skillNodes) {
                     String at = n.id() + " at level " + (pass == 0 ? 1 : n.maxLevel());
                     if (!SkillTreeApi.canCast(fp, route.id(), n.id())) { problems.add(at + ": the stand-in cannot cast it although the route is unlocked and the node bought"); continue; }
-                    ManasSkillInstance inst = learn(skills, n);
+                    ManasSkillInstance inst = learn(skills, n, detached);
                     if (inst == null) { problems.add(at + ": the skill could not be taught to the stand-in"); continue; }
                     refill(fp);
                     dummy.invulnerableTime = 0;
@@ -178,18 +179,23 @@ public final class DragonSelfTests {
         }
         if (!problems.isEmpty()) return fail(problems);
         return SelfTests.Result.ok(skillNodes.size() + " techniques x 2 levels: " + casts + " cast, " + refused + " refused (no room or a cooldown), " + hurtCasts
-                + " hurt the dummy; refused without the route with nothing spent; the passives answer; the numbers in the registry obey the budget");
+                + " hurt the dummy; refused without the route with nothing spent; the passives answer; the numbers in the registry obey the budget"
+                + (detached[0] > 0 ? " (note: the stand-in's skill storage refused " + detached[0] + " lessons, so those casts ran from detached instances)" : ""));
     }
 
     /** A fresh instance of the node's skill in the stand-in's storage (any old one is forgotten first, so no cooldown carries over). */
-    private static ManasSkillInstance learn(Skills skills, SkillNode n) {
+    private static ManasSkillInstance learn(Skills skills, SkillNode n, int[] detached) {
         ResourceLocation id = ResourceLocation.tryParse(n.skill());
         if (id == null) return null;
         ManasSkill skill = SkillAPI.getSkillRegistry().get(id);
         if (skill == null) return null;
         if (skills.getSkill(id).isPresent()) skills.forgetSkill(id);
         skills.learnSkill(skill.createDefaultInstance());
-        return skills.getSkill(id).orElse(null);
+        ManasSkillInstance taught = skills.getSkill(id).orElse(null);
+        if (taught != null) return taught;
+        // a stand-in player is not part of the level, so its skill storage may refuse to learn anything: a cast needs only an instance, so cast from one that belongs to nobody
+        detached[0]++;
+        return skill.createDefaultInstance();
     }
 
     private static void refill(FakePlayer fp) {

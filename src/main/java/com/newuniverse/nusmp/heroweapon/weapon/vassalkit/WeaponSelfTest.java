@@ -93,7 +93,8 @@ public final class WeaponSelfTest {
             List<String> fileIds = new ArrayList<>(), gameIds = new ArrayList<>();
             for (JsonElement f : root.getAsJsonArray("forms")) if (f.isJsonObject() && f.getAsJsonObject().has("id")) fileIds.add(f.getAsJsonObject().get("id").getAsString());
             for (HeroForm f : loaded) gameIds.add(f.id());
-            if (!fileIds.equals(gameIds)) bad.add("the game loaded the forms " + gameIds + " but the file has " + fileIds);
+            // the loader orders the forms by tier (the book shows them so), the file by the author's reading order: the same forms are what matters
+            if (fileIds.size() != gameIds.size() || !new HashSet<>(fileIds).equals(new HashSet<>(gameIds))) bad.add("the game loaded the forms " + gameIds + " but the file has " + fileIds);
         }
         for (HeroForm f : loaded) for (String id : f.skills().values()) if (HeroLogics.skill(id) == null) bad.add("the form " + f.id() + " names the unknown skill " + id);
         if (!bad.isEmpty() || skills.isEmpty()) return finish(bad, "no cast");

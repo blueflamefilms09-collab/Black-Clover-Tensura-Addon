@@ -22,7 +22,6 @@ import com.newuniverse.nusmp.heroweapon.skill.HeroLogics;
 import com.newuniverse.nusmp.heroweapon.skill.HeroSkill;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -357,18 +356,25 @@ public final class WeaponBookScreen extends Screen {
         else g.fill(x, y, x + w, y + h, UiMath.withAlpha(UiDraw.ACCENT, 0.25f * amount));
     }
 
+    /** The dim scrim, then the book itself: drawn as the screen's background so that the buttons land on top of it and vanilla's blur never touches the panel (no super call on purpose). */
     @Override
     public void renderBackground(GuiGraphics g, int mx, int my, float partial) {
         if (anime()) UiPanel.scrim(g, width, height, 1f);
         else g.fillGradient(0, 0, width, height, 0xB0101018, 0xC0101018);
+        drawBook(g, mx, my);
     }
 
     // ================================================================================================ drawing
+    /** The tooltip is drawn last, over everything; vanilla's render draws the background (the book) and then the buttons. */
     @Override
     public void render(GuiGraphics g, int mx, int my, float partial) {
-        renderBackground(g, mx, my, partial);
-        float now = UiTheme.now();
         tip = null;
+        super.render(g, mx, my, partial);
+        if (tip != null) g.renderTooltip(font, tip, mx, my);
+    }
+
+    private void drawBook(GuiGraphics g, int mx, int my) {
+        float now = UiTheme.now();
         panel(g, lay.panel(), 0.6f);
         drawHeader(g, mx, my, now);
         if (kind == null || forms.isEmpty()) {
@@ -379,8 +385,6 @@ public final class WeaponBookScreen extends Screen {
             drawPane(g, mx, my, now);
             drawFooterLeft(g, now);
         }
-        for (Renderable r : renderables) r.render(g, mx, my, partial);
-        if (tip != null) g.renderTooltip(font, tip, mx, my);
     }
 
     private void drawNone(GuiGraphics g) {

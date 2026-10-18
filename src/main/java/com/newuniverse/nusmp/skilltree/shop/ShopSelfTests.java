@@ -103,7 +103,7 @@ public final class ShopSelfTests {
         if (!ShopConfig.enabled()) return ok("skipped: the Black Market is switched off in the config (nusmp-skilltree-shop-server.toml, enabled)");
         if (!SkillTreeApi.isEnabled()) return ok("skipped: the Skill Tree is switched off in the config, so the shop is closed with it");
         ServerLevel level = server.overworld();
-        FakePlayer fp = SelfTests.player(level, PLAYER, 0.5, 100, 0.5);
+        FakePlayer fp = SelfTests.standIn(level, PLAYER, 0.5, 100, 0.5);
         ArcNpcEntity witch = ArcEntities.NPC.get().create(level);
         if (witch == null) return fail("the NPC entity could not be created");
         MarketState state = MarketState.get(server);

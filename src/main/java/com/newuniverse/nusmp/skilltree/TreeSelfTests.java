@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.skilltree;
 
 import com.newuniverse.nusmp.labyrinth.mega.SelfTests;
+import com.newuniverse.nusmp.skill.NUSkills;
 import com.newuniverse.nusmp.skilltree.ability.TreeSkill;
 import com.newuniverse.nusmp.skilltree.data.RouteCodecs;
 import com.newuniverse.nusmp.skilltree.data.RouteIndex;
@@ -21,7 +22,9 @@ import com.newuniverse.nusmp.skilltree.rules.TreeRules;
 import com.newuniverse.nusmp.skilltree.state.IPlayerSkillTree;
 import com.newuniverse.nusmp.skilltree.state.PlayerSkillTree;
 import io.github.manasmods.manascore.skill.api.ManasSkill;
+import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import io.github.manasmods.manascore.skill.api.SkillAPI;
+import io.github.manasmods.manascore.skill.api.Skills;
 import io.netty.buffer.Unpooled;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -250,6 +253,24 @@ final class TreeSelfTests {
     }
 
     /** With a real route that grants a skill: buying its root teaches the skill, a respec takes it back. Returns a sentence for the result line. */
+    /**
+     * Can this stand-in's skill storage hold a skill at all? A plain stand-in is not part of the level, and the storage of such a player may refuse every lesson; then the test cannot observe
+     * what a purchase teaches. The question is asked with an unrelated skill of the mod, which is taught and taken back at once.
+     */
+    private static boolean canStoreSkills(Skills skills) {
+        try {
+            ManasSkillInstance control = NUSkills.FIREBOLT.get().createDefaultInstance();
+            ResourceLocation controlId = control.getSkillId();
+            boolean had = skills.getSkill(controlId).isPresent();
+            if (!had) skills.learnSkill(control);
+            boolean holds = skills.getSkill(controlId).isPresent();
+            if (!had && holds) skills.forgetSkill(controlId);
+            return holds;
+        } catch (RuntimeException e) {
+            return false;
+        }
+    }
+
     private static String skillsOnReal(FakePlayer fp, RouteIndex real, List<String> bad) {
         SkillRoute route = null;
         SkillNode root = null;
@@ -269,6 +290,7 @@ final class TreeSelfTests {
         try {
             var skills = SkillAPI.getSkillsFrom(fp);
             if (skills == null) return "the stand-in player has no skill storage, so learning and forgetting a skill was not exercised";
+            boolean observable = canStoreSkills(skills);
             IPlayerSkillTree t = SkillTreeApi.of(fp);
             t.setSp(100);
             if (SkillTreeApi.unlockRoute(fp, route.id(), false) != SkillTreeApi.UnlockResult.OK) {
@@ -280,10 +302,11 @@ final class TreeSelfTests {
                 bad.add("could not buy the root " + root.id() + " of " + route.id() + " with 100 SP");
                 return "";
             }
-            if (skills.getSkill(id).isEmpty()) bad.add("buying " + route.id() + "/" + root.id() + " did not teach " + id);
+            if (observable && skills.getSkill(id).isEmpty()) bad.add("buying " + route.id() + "/" + root.id() + " did not teach " + id + " (the stand-in's storage does hold a control skill)");
             if (SkillTreeApi.respec(fp, route.id()).cleared() < 1) bad.add("the respec of " + route.id() + " cleared nothing");
-            if (skills.getSkill(id).isPresent()) bad.add("the respec of " + route.id() + " did not take " + id + " back");
+            if (observable && skills.getSkill(id).isPresent()) bad.add("the respec of " + route.id() + " did not take " + id + " back");
             SkillTreeApi.lockRoute(fp, route.id());
+            if (!observable) return "buying " + route.id() + "/" + root.id() + " was accepted and the respec cleared it; the stand-in's skill storage refuses every skill (a plain stand-in is not part of the level), so the lesson itself could not be observed";
             return "buying " + route.id() + "/" + root.id() + " taught " + id + " and the respec took it back";
         } catch (RuntimeException e) {
             return "learning a skill on the stand-in player was skipped (" + e.getClass().getSimpleName() + ": " + e.getMessage() + ")";
