@@ -7,7 +7,7 @@ import com.newuniverse.nusmp.skilltree.ft.SkyDragonSkills;
 import com.newuniverse.nusmp.skilltree.item.ItemsSystem;
 import com.newuniverse.nusmp.skilltree.shop.ShopSystem;
 import com.newuniverse.nusmp.skilltree.state.SkillTreeAttachments;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 
@@ -41,7 +41,7 @@ public final class SkillTreeSystem {
     }
 
     /** What the creative tab offers: the Skill Books and SP Books (every route of the registry, every SP variant). */
-    public static List<Item> creativeItems() {
+    public static List<ItemStack> creativeItems() {
         return new ArrayList<>(ItemsSystem.creativeItems());
     }
 }
