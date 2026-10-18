@@ -13,6 +13,7 @@ public final class AirBook {
     public static GrimoireBook rebuilt(MagicType magic) {
         return switch (magic) {
             case SMOKE -> SmokeBook.create();
+            case WING -> WingBook.create();
             case SNOW -> SnowBook.create();
             default -> null;
         };

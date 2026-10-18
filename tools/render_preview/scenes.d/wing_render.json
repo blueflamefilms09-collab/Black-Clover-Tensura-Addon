@@ -1,0 +1,11 @@
+{
+ "wing_hawk_view": {"kind": "geo", "model": "wing_hawk", "space": "PROP", "anim": "idle", "glow": "FFFFFFFF", "ages": [0, 5, 10], "tile": [360, 300]},
+ "wing_back_view": {"kind": "geo", "model": "wing_back", "space": "PLAYER", "anim": "idle", "glow": "FFFFFFFF", "ages": [0, 12, 24], "tile": [360, 420]},
+ "wing_aura_armour": {"kind": "aura", "attr": "Wing", "aura": "WING", "style": 0, "total": 120, "ages": [3, 9, 16, 40, 80, 108], "tile": [300, 420],
+  "exampleFiles": ["../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java", "../../../src/main/java/com/newuniverse/nusmp/client/aura/AirSetKit.java",
+                   "../../../src/main/java/com/newuniverse/nusmp/client/prop/SealDraw.java"]},
+ "wing_prop_hawk": {"kind": "prop", "attr": "Wing", "propKind": "WING_1", "param": 0, "scale": 1.2, "maxLife": 200, "pos": [0, 1.2, 0], "ages": [3, 8, 20, 60, 195], "tile": [340, 320],
+  "exampleFiles": ["../../../src/main/java/com/newuniverse/nusmp/prop/AirPropWord.java"]},
+ "wing_prop_blade": {"kind": "prop", "attr": "Wing", "propKind": "WING_1", "param": 1, "scale": 1.0, "maxLife": 200, "pos": [0, 1.2, 0], "ages": [3, 8, 20, 60, 195], "tile": [300, 320],
+  "exampleFiles": ["../../../src/main/java/com/newuniverse/nusmp/prop/AirPropWord.java"]}
+}

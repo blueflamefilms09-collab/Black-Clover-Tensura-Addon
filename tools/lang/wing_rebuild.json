@@ -1,0 +1,11 @@
+{
+ "nusmp.skill.book_wing.description": "A grimoire of Wing Magic: wings and feathers as weapons, flight and lift. A fan of feathers, a slash of the wing, an updraft, a launch into the sky with two feather hawks, a suit of silver and gold feathers with real wings forged piece by piece, a dash on the wing, a storm of feather blades and a diving hawk. Summon your grimoire, select a page, and press the skill key to cast.",
+ "nusmp.page.book_wing.attribute_bolt": "Feather Shot: three feathers fly in a fan, each bursting for damage and a short levitation. Damage scales with your EP.",
+ "nusmp.page.book_wing.attribute_cut": "Wing Slash: a slash of the wing ten blocks long cuts everything on the line and throws it up. Damage scales with your EP.",
+ "nusmp.page.book_wing.attribute_field": "Updraft: six seconds of rising wind where you aim. Foes inside float up (shortened on bosses, shares the control lock) and are hurt a little; you and your allies inside fall slowly. Radius scales with your EP.",
+ "nusmp.page.book_wing.attribute_domain": "Skyward: you are flung into the sky on your wings and glide down slowly, two feather hawks hunt for you for twenty seconds (longer with EP), and you wear the winged armour for five seconds.",
+ "nusmp.page.book_wing.attribute_guard": "Wing Armour: nine seconds of silver and gold armour with a pair of beating wings, forged piece by piece. Slow falling, no fall damage, speed and jump boost, and your blows hit harder.",
+ "nusmp.page.book_wing.wing_dash": "Wing Dash: a beat of the wings carries you twelve blocks in a line, cutting and pushing everything you pass.",
+ "nusmp.page.book_wing.feather_storm": "Feather Storm: four feather blades orbit you for fifteen seconds (longer with EP). Each flies at the nearest hostile within ten blocks once a second, cuts it and returns.",
+ "nusmp.page.book_wing.hawk_strike": "Hawk Strike: a feather hawk dives at the foe you look at, striking once for damage and a push."
+}
