@@ -1,0 +1,75 @@
+{
+  "weapon": "vassal_mirror",
+  "forms": [
+    {
+      "id": "base", "name": "Hand Mirror",
+      "desc": "A silver hand mirror of Glass' world. It bashes with its edge, stands panes of glass in the air and fires beams of light; its glass turns spells aside.",
+      "tier": 0, "parents": [], "requires": [], "mastery": 0,
+      "stats": { "armor": 1.0, "luck": 0.5 }, "abilityBonus": {},
+      "skills": { "use": "mirror.mirror_bash", "key1": "mirror.glass_shield", "key2": "mirror.prism_ray" },
+      "passives": ["spell_ward"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "white_tiger_clone_mirror", "name": "White Tiger Clone Mirror",
+      "desc": "The mirror takes in glass and silver and learns to cast its light on others: a star-glass barrier for an ally, and chains hung from the panes that bind foes.",
+      "tier": 1, "parents": ["base"],
+      "requires": [ { "item": "minecraft:glass", "count": 48 }, { "item": "minecraft:iron_ingot", "count": 24 }, { "item": "minecraft:quartz", "count": 16 } ],
+      "mastery": 80,
+      "stats": { "armor": 2.0, "armor_toughness": 1.0, "luck": 1.0 }, "abilityBonus": { "armor": 0.5 },
+      "skills": { "use": "mirror.mirror_bash", "sneak": "mirror.stardust_mirror", "key1": "mirror.glass_shield", "key2": "mirror.prism_ray", "key3": "mirror.chain_binding" },
+      "passives": ["spell_ward"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "hetsu_kagami", "name": "Okitsu Kagami: Hetsu Kagami",
+      "desc": "Named for the two mirrors of the old treasures. It turns whole spells back on their casters and steps between mirrors, leaving an image that repeats your next strike.",
+      "tier": 2, "parents": ["white_tiger_clone_mirror"],
+      "requires": [ { "item": "minecraft:amethyst_shard", "count": 48 }, { "item": "minecraft:gold_ingot", "count": 24 }, { "item": "minecraft:ender_pearl", "count": 12 } ],
+      "mastery": 160,
+      "stats": { "armor": 3.0, "armor_toughness": 1.5, "knockback_resistance": 0.1, "movement_speed": 0.02, "luck": 1.0 },
+      "abilityBonus": { "armor": 0.75, "movement_speed": 0.01 },
+      "skills": { "use": "mirror.mirror_bash", "sneak": "mirror.release_rebound", "key1": "mirror.glass_shield", "key2": "mirror.prism_ray", "key3": "mirror.movement_mirror" },
+      "passives": ["spell_ward", "afterimage"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "yata_mirror", "name": "Yata Mirror",
+      "desc": "The great mirror of the old stories: crossfire with your own image, rays that bounce between the panes, and the Kaleidoscope, a ring of glass that strikes everyone inside it.",
+      "tier": 3, "parents": ["hetsu_kagami"],
+      "requires": [ { "item": "minecraft:diamond", "count": 24 }, { "item": "minecraft:amethyst_shard", "count": 96 }, { "item": "minecraft:echo_shard", "count": 8 }, { "item": "tensura:high_quality_magic_crystal", "count": 6 } ],
+      "mastery": 280,
+      "stats": { "armor": 4.0, "armor_toughness": 2.0, "max_health": 4.0, "knockback_resistance": 0.15, "movement_speed": 0.03, "luck": 1.5 },
+      "abilityBonus": { "armor": 1.0, "max_health": 1.0, "luck": 0.5 },
+      "skills": { "use": "mirror.mirror_bash", "sneak": "mirror.movement_mirror", "key1": "mirror.glass_shield", "key2": "mirror.prism_ray", "key3": "mirror.kaleidoscope" },
+      "passives": ["spell_ward", "afterimage"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "envious_glass", "name": "Envious Glass",
+      "desc": "The first face of the Envy series (a design choice, not canon): the glass wants what others have. Covet copies a foe's helpful effects; the price is paid in corruption.",
+      "tier": 1, "parents": ["base"],
+      "requires": [ { "item": "minecraft:emerald", "count": 32 } ],
+      "mastery": 120,
+      "stats": { "armor": 3.0, "movement_speed": 0.04, "luck": 1.0 }, "abilityBonus": { "armor": 0.5 },
+      "skills": { "use": "mirror.mirror_bash", "sneak": "mirror.covet", "key1": "mirror.glass_shield", "key2": "mirror.prism_ray", "key3": "mirror.movement_mirror" },
+      "passives": ["spell_ward", "afterimage"], "look": "base", "curse": true, "sin": "envy", "corruptionPerSecond": 4
+    },
+    {
+      "id": "green_eyed_mirror", "name": "Green-Eyed Mirror",
+      "desc": "Envy sharpens: the creatures around you envy each other and turn on one another while you keep covetous watch.",
+      "tier": 2, "parents": ["envious_glass"],
+      "requires": [ { "item": "minecraft:emerald", "count": 64 }, { "item": "minecraft:spider_eye", "count": 32 } ],
+      "mastery": 220,
+      "stats": { "armor": 4.0, "armor_toughness": 1.5, "movement_speed": 0.06, "luck": 1.5 }, "abilityBonus": { "armor": 0.75, "movement_speed": 0.01 },
+      "skills": { "use": "mirror.mirror_bash", "sneak": "mirror.covet", "key1": "mirror.glass_shield", "key2": "mirror.prism_ray", "key3": "mirror.ressentiment" },
+      "passives": ["spell_ward"], "look": "base", "curse": true, "sin": "envy", "corruptionPerSecond": 7
+    },
+    {
+      "id": "mirror_of_envy", "name": "Mirror of Envy",
+      "desc": "The whole of Envy: coveting, jealous crowds, an image to fight beside and the Kaleidoscope to end it. The glass takes more of you every second it is held.",
+      "tier": 3, "parents": ["green_eyed_mirror"],
+      "requires": [ { "item": "minecraft:emerald", "count": 128 }, { "item": "minecraft:fermented_spider_eye", "count": 32 }, { "item": "tensura:magic_stone", "count": 48 } ],
+      "mastery": 320,
+      "stats": { "armor": 5.0, "armor_toughness": 2.5, "movement_speed": 0.08, "luck": 2.0 }, "abilityBonus": { "armor": 1.0, "luck": 0.5 },
+      "skills": { "use": "mirror.mirror_bash", "sneak": "mirror.covet", "key1": "mirror.ressentiment", "key2": "mirror.movement_mirror", "key3": "mirror.kaleidoscope" },
+      "passives": ["spell_ward", "afterimage"], "look": "base", "curse": true, "sin": "envy", "corruptionPerSecond": 10
+    }
+  ]
+}

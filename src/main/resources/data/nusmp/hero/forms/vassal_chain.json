@@ -1,0 +1,73 @@
+{
+  "weapon": "vassal_chain",
+  "forms": [
+    {
+      "id": "base", "name": "Chain",
+      "desc": "The war chain of S'yne's world. Lash with it, hook a foe and yank it in, slam it down so many chains race out along the floor. Its heavy links slow what it strikes.",
+      "tier": 0, "parents": [], "requires": [], "mastery": 0,
+      "stats": { "attack_damage": 1.0, "reach": 0.5, "armor": 1.0 }, "abilityBonus": {},
+      "skills": { "use": "chain.chain_lash", "key1": "chain.chain_pull", "key2": "chain.hydra" },
+      "passives": ["heavy_links"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "tempered_chain", "name": "Tempered Chain",
+      "desc": "Iron and coal temper the links. The chain learns to wrap its wielder and the people beside them, and to bind a foe fast.",
+      "tier": 1, "parents": ["base"],
+      "requires": [ { "item": "minecraft:iron_ingot", "count": 48 }, { "item": "minecraft:chain", "count": 32 }, { "item": "minecraft:coal", "count": 24 } ],
+      "mastery": 80,
+      "stats": { "attack_damage": 2.0, "reach": 0.5, "armor": 2.0, "knockback_resistance": 0.1 }, "abilityBonus": { "armor": 0.5 },
+      "skills": { "use": "chain.chain_lash", "sneak": "chain.chain_defence", "key1": "chain.chain_pull", "key2": "chain.hydra", "key3": "chain.chain_binding" },
+      "passives": ["heavy_links"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "hydra_chain", "name": "Hydra Chain",
+      "desc": "Serpent heads at the end of every strand: the chain swings its wielder to a foe, and the Hydra fans out wider.",
+      "tier": 2, "parents": ["tempered_chain"],
+      "requires": [ { "item": "minecraft:chain", "count": 64 }, { "item": "minecraft:fermented_spider_eye", "count": 12 }, { "item": "minecraft:prismarine_crystals", "count": 16 } ],
+      "mastery": 160,
+      "stats": { "attack_damage": 3.0, "reach": 1.0, "armor": 3.0, "knockback_resistance": 0.15 }, "abilityBonus": { "attack_damage": 0.5, "reach": 0.25 },
+      "skills": { "use": "chain.chain_lash", "sneak": "chain.chain_defence", "key1": "chain.grapple", "key2": "chain.hydra", "key3": "chain.chain_binding" },
+      "passives": ["heavy_links"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "orochi_chain", "name": "Orochi Chain",
+      "desc": "Eight heads for eight rivers: the Multi-Headed Orochi, four groups of chains that bind and squeeze everything in a circle of ground.",
+      "tier": 3, "parents": ["hydra_chain"],
+      "requires": [ { "item": "minecraft:netherite_scrap", "count": 8 }, { "item": "minecraft:chain", "count": 96 }, { "item": "minecraft:blaze_rod", "count": 24 } ],
+      "mastery": 280,
+      "stats": { "attack_damage": 4.0, "reach": 1.0, "armor": 4.0, "knockback_resistance": 0.2, "max_health": 4.0 }, "abilityBonus": { "attack_damage": 1.0, "armor": 1.0, "max_health": 1.0 },
+      "skills": { "use": "chain.chain_lash", "sneak": "chain.grapple", "key1": "chain.chain_pull", "key2": "chain.chain_binding", "key3": "chain.orochi" },
+      "passives": ["heavy_links"], "look": "base", "curse": false, "sin": null, "corruptionPerSecond": 0
+    },
+    {
+      "id": "idle_chain", "name": "Idle Chain",
+      "desc": "The first face of the Sloth series (a design choice, not canon): the chain grows heavy and in no hurry. Swings are slower, the body harder to move; Weight slows foes, and you.",
+      "tier": 1, "parents": ["base"],
+      "requires": [ { "item": "minecraft:iron_block", "count": 8 }, { "item": "minecraft:chain", "count": 32 } ],
+      "mastery": 120,
+      "stats": { "attack_damage": 4.0, "attack_speed": -0.3, "armor": 3.0, "knockback_resistance": 0.2 }, "abilityBonus": { "armor": 0.5 },
+      "skills": { "use": "chain.chain_lash", "sneak": "chain.sloth_weight", "key1": "chain.chain_pull", "key2": "chain.hydra", "key3": "chain.chain_binding" },
+      "passives": ["heavy_links"], "look": "base", "curse": true, "sin": "sloth", "corruptionPerSecond": 3
+    },
+    {
+      "id": "drowsy_chain", "name": "Chain of the Long Nap",
+      "desc": "Sloth deepens: wrap a foe now and let the chain snap tight a second later. Everything it does arrives late and hits hard.",
+      "tier": 2, "parents": ["idle_chain"],
+      "requires": [ { "item": "minecraft:iron_block", "count": 16 }, { "item": "minecraft:soul_sand", "count": 32 }, { "item": "minecraft:cobweb", "count": 16 } ],
+      "mastery": 220,
+      "stats": { "attack_damage": 5.0, "attack_speed": -0.5, "reach": 1.0, "armor": 4.0, "knockback_resistance": 0.3 }, "abilityBonus": { "armor": 0.75, "knockback_resistance": 0.05 },
+      "skills": { "use": "chain.chain_lash", "sneak": "chain.sloth_weight", "key1": "chain.sloth_snap", "key2": "chain.hydra", "key3": "chain.chain_binding" },
+      "passives": ["heavy_links"], "look": "base", "curse": true, "sin": "sloth", "corruptionPerSecond": 5
+    },
+    {
+      "id": "long_afternoon", "name": "Chain of the Long Afternoon",
+      "desc": "The whole of Sloth: slow the room, put everything off, and let the bill come due in one terrible blow. The chain weighs on its wielder more every second.",
+      "tier": 3, "parents": ["drowsy_chain"],
+      "requires": [ { "item": "minecraft:iron_block", "count": 32 }, { "item": "minecraft:soul_sand", "count": 64 }, { "item": "minecraft:netherite_scrap", "count": 4 }, { "item": "tensura:magic_stone", "count": 48 } ],
+      "mastery": 320,
+      "stats": { "attack_damage": 6.0, "attack_speed": -0.7, "reach": 1.5, "armor": 5.0, "knockback_resistance": 0.4, "max_health": 4.0 }, "abilityBonus": { "armor": 1.0, "knockback_resistance": 0.1 },
+      "skills": { "use": "chain.chain_lash", "sneak": "chain.sloth_snap", "key1": "chain.sloth_weight", "key2": "chain.chain_binding", "key3": "chain.debt_comes_due" },
+      "passives": ["heavy_links"], "look": "base", "curse": true, "sin": "sloth", "corruptionPerSecond": 8
+    }
+  ]
+}
