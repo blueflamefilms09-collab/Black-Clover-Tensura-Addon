@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "triple_shot",
+  "hunters_mark"
+ ],
+ "animation": "lanky__none-bow__auto-auto-auto",
+ "archetype": "archer",
+ "faction": "beast",
+ "glow": "#f7f7fa",
+ "height": 2.31,
+ "id": "cloister_wind_ranger",
+ "name": "Cloister Wind Ranger",
+ "road": "holy",
+ "size": 1.0,
+ "source": "D&D: ranger",
+ "tier": 3
+}

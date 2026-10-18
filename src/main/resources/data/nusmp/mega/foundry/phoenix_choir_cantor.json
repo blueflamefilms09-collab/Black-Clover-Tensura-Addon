@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "fire_bolt",
+  "regrowth"
+ ],
+ "animation": "slim__wand-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "elemental",
+ "glow": "#ffc840",
+ "height": 1.94,
+ "id": "phoenix_choir_cantor",
+ "name": "Phoenix Choir Cantor",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Fire Force",
+ "tier": 3
+}

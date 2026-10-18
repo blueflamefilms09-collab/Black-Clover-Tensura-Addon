@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "sky_dive",
+  "heal_pulse"
+ ],
+ "animation": "small__dagger-none__auto-auto-auto",
+ "archetype": "flier",
+ "faction": "beast",
+ "glow": "#e1c274",
+ "height": 1.5,
+ "id": "sanctum_moogle_bat_courier",
+ "name": "Sanctum Moogle-Bat Courier",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Final Fantasy",
+ "tier": 2
+}

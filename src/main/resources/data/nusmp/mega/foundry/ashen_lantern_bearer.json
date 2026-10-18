@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "fire_bolt",
+  "burning_aura"
+ ],
+ "animation": "lanky__staff-orb__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "construct",
+ "glow": "#e1c274",
+ "height": 2.31,
+ "id": "ashen_lantern_bearer",
+ "name": "Ashen Lantern Bearer",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Elden Ring",
+ "tier": 2
+}

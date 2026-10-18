@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "dash",
+  "holy_lance"
+ ],
+ "animation": "broad__spear-none__auto-auto-auto",
+ "archetype": "charger",
+ "faction": "construct",
+ "glow": "#75a0d8",
+ "height": 2.09,
+ "id": "dawnbreak_lancer_cavalry",
+ "name": "Dawnbreak Lancer Cavalry",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Fate",
+ "tier": 2
+}

@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "sky_dive",
+  "hunters_mark"
+ ],
+ "animation": "slim__dagger-none__auto-auto-auto",
+ "archetype": "flier",
+ "faction": "beast",
+ "glow": "#e9c279",
+ "height": 1.94,
+ "id": "griffon_scout",
+ "name": "Griffon Scout",
+ "road": "holy",
+ "size": 1.0,
+ "source": "D&D: griffon",
+ "tier": 2
+}

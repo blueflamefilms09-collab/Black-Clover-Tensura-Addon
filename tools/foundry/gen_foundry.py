@@ -17,6 +17,7 @@
 
 Models are built in parallel (one process per core) and only when their inputs changed would be an optimisation; the full build takes a few minutes, a mob about a second.
 """
+import hashlib
 import json
 import multiprocessing
 import os
@@ -91,7 +92,32 @@ def write_json(path, obj):
         f.write("\n")
 
 
-def build_all(rows, only, assets, data_dir, jobs, measure):
+def kit_stamp():
+    """A hash of every source file that decides what the clips look like (the art kit and the foundry kit), so the clip cache knows when it is stale."""
+    h = hashlib.sha1()
+    for d in (os.path.join(HERE, "..", "arc_kit"), HERE):
+        for fn in sorted(os.listdir(d)):
+            if fn.endswith(".py") and fn not in ("gen_foundry.py", "guard.py") and not fn.startswith("roster"):
+                h.update(open(os.path.join(d, fn), "rb").read())
+    return h.hexdigest()
+
+
+CACHE = os.path.join(REPO, "build", "foundry_clip_cache.json")
+
+
+def load_cache():
+    try:
+        return json.load(open(CACHE))
+    except (OSError, ValueError):
+        return {}
+
+
+def save_cache(c):
+    os.makedirs(os.path.dirname(CACHE), exist_ok=True)
+    json.dump(c, open(CACHE, "w"))
+
+
+def build_all(rows, only, assets, data_dir, jobs, measure, use_cache=True):
     t0 = time.time()
     todo = [r for r in rows if not only or r["id"] in only]
     with multiprocessing.Pool(jobs) as pool:
@@ -106,7 +132,18 @@ def build_all(rows, only, assets, data_dir, jobs, measure):
                 facts[r["id"]] = {"id": r["id"], "cls": d["animation"], "height": d["height"], "glow": d["glow"], "sizes": None, "spec": None}
     classes = sorted({f["cls"] for f in facts.values()})
     t1 = time.time()
-    need = [c for c in classes if not os.path.isfile(os.path.join(assets, "animations", "entity", "foundry_anim_%s.animation.json" % c))] if only else classes
+    cache = load_cache() if use_cache else {}
+    stamp = kit_stamp()
+    need = []
+    for c in classes:
+        path = os.path.join(assets, "animations", "entity", "foundry_anim_%s.animation.json" % c)
+        key = hashlib.sha1((stamp + json.dumps(FK.canonical_spec(c), sort_keys=True)).encode()).hexdigest()
+        if use_cache and os.path.isfile(path) and cache.get(c) == key:
+            continue                                             # its clips were built from the same class spec by the same kit: nothing to do
+        need.append(c)
+        cache[c] = key
+    if use_cache:
+        save_cache(cache)
     with multiprocessing.Pool(jobs) as pool:
         csizes = {c: n for c, n, _ in pool.map(class_one, [(c, assets) for c in need])}
     print("animation classes: %d of %d built in %.0f s" % (len(need), len(classes), time.time() - t1))
@@ -201,7 +238,7 @@ def check(rows, jobs):
     try:
         assets = os.path.join(tmp, "assets", "nusmp")
         data = os.path.join(tmp, "data")
-        build_all(rows, (), assets, data, jobs, 0)
+        build_all(rows, (), assets, data, jobs, 0, use_cache=False)
         bad = 0
         n = 0
         for root, base in ((assets, ASSETS), (data, DATA)):

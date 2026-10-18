@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "stoneskin",
+  "shield_bash"
+ ],
+ "animation": "average__sword-none__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "slime",
+ "glow": "#f7f7fa",
+ "height": 2.0,
+ "id": "slime_knight_heirloom",
+ "name": "Slime Knight Heirloom",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Dragon Quest",
+ "tier": 2
+}

@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "war_cry",
+  "regrowth"
+ ],
+ "animation": "average__staff-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "beast",
+ "glow": "#efe6d3",
+ "height": 2.0,
+ "id": "meadow_satyr_reveler",
+ "name": "Meadow Satyr Reveler",
+ "road": "holy",
+ "size": 1.0,
+ "source": "D&D: satyr",
+ "tier": 2
+}

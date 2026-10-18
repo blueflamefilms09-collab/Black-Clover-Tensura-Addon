@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "stoneskin",
+  "enrage"
+ ],
+ "animation": "huge__hammer-none__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "construct",
+ "glow": "#e48460",
+ "height": 3.09,
+ "id": "runed_warhammer_colossus",
+ "name": "Runed Warhammer Colossus",
+ "road": "holy",
+ "size": 1.4,
+ "source": "D&D: iron golem",
+ "tier": 3
+}

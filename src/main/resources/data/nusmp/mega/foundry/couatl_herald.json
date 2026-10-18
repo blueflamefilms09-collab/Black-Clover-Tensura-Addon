@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "radiant_aura",
+  "holy_lance"
+ ],
+ "animation": "lanky__none-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "beast",
+ "glow": "#f7f7fa",
+ "height": 2.31,
+ "id": "couatl_herald",
+ "name": "Couatl Herald",
+ "road": "holy",
+ "size": 1.0,
+ "source": "D&D: couatl",
+ "tier": 2
+}

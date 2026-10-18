@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "whirlwind",
+  "lunge"
+ ],
+ "animation": "broad__none-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "cultist",
+ "glow": "#efe6d3",
+ "height": 2.09,
+ "id": "monastery_fist_abbot",
+ "name": "Monastery Fist Abbot",
+ "road": "holy",
+ "size": 1.1,
+ "source": "D&D: monk",
+ "tier": 3
+}

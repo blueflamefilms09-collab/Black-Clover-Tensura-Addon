@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "thunder_clap",
+  "dash"
+ ],
+ "animation": "broad__none-none__auto-auto-auto",
+ "archetype": "charger",
+ "faction": "beast",
+ "glow": "#e1c274",
+ "height": 2.09,
+ "id": "ki_rin_thunder_stag",
+ "name": "Ki-rin Thunder Stag",
+ "road": "holy",
+ "size": 1.25,
+ "source": "D&D: ki-rin",
+ "tier": 3
+}

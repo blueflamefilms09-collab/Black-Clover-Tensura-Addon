@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "holy_lance",
+  "blink"
+ ],
+ "animation": "average__sword-orb__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "cultist",
+ "glow": "#e1c274",
+ "height": 2.0,
+ "id": "magic_knight_captain_of_the_radiant_squad",
+ "name": "Magic Knight Captain of the Radiant Squad",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Black Clover",
+ "tier": 3
+}

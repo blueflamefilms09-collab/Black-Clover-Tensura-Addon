@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "stoneskin",
+  "thunder_clap"
+ ],
+ "animation": "huge__none-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "beast",
+ "glow": "#b89770",
+ "height": 3.09,
+ "id": "lammasu_temple_guardian",
+ "name": "Lammasu Temple Guardian",
+ "road": "holy",
+ "size": 1.3,
+ "source": "D&D: lammasu",
+ "tier": 3
+}

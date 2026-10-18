@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "thunder_clap",
+  "sky_dive"
+ ],
+ "animation": "broad__trident-none__auto-auto-auto",
+ "archetype": "flier",
+ "faction": "beast",
+ "glow": "#a0e8ff",
+ "height": 2.09,
+ "id": "thunderbird_rider_of_the_spire",
+ "name": "Thunderbird Rider of the Spire",
+ "road": "holy",
+ "size": 1.2,
+ "source": "D&D: roc",
+ "tier": 3
+}

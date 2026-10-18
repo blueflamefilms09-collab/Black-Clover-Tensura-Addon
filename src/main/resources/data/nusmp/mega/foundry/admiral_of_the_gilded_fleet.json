@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "ground_slam",
+  "war_cry"
+ ],
+ "animation": "broad__hammer-none__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "cultist",
+ "glow": "#606b8d",
+ "height": 2.09,
+ "id": "admiral_of_the_gilded_fleet",
+ "name": "Admiral of the Gilded Fleet",
+ "road": "holy",
+ "size": 1.15,
+ "source": "One Piece",
+ "tier": 3
+}

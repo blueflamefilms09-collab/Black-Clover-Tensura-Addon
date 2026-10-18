@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "holy_lance",
+  "sky_dive"
+ ],
+ "animation": "child__wand-none__auto-auto-auto",
+ "archetype": "flier",
+ "faction": "elemental",
+ "glow": "#ffc840",
+ "height": 1.41,
+ "id": "stained_glass_sparrow",
+ "name": "Stained Glass Sparrow",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Fairy Tail",
+ "tier": 2
+}

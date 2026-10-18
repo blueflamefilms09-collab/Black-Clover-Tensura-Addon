@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "summon_pack",
+  "ward_allies"
+ ],
+ "animation": "slim__orb-none__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "cultist",
+ "glow": "#a0e8ff",
+ "height": 1.94,
+ "id": "orb_weaver_priestess",
+ "name": "Orb Weaver Priestess",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Overlord",
+ "tier": 3
+}

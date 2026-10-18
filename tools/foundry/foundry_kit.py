@@ -150,8 +150,9 @@ def build_spec(r):
             S["cape"]["length"] = 1.0
     if t.get("armor"):
         ap = _parts(t["armor"])
-        S["armor"] = {"pieces": ap[0].split("+"), "style": _opt(ap, 1) or "plate", "color": mixc(p1, "#9aa4b4", 0.55) if (_opt(ap, 1) in (None, "plate", "chain", "scale")) else mixc(p1, "#d8d0b4", 0.4),
-                      "trim": p2, "glow": glow if "aglow" in t else None}
+        metal = _opt(ap, 1) in (None, "plate", "chain", "scale")
+        S["armor"] = {"pieces": ap[0].split("+"), "style": _opt(ap, 1) or "plate",
+                      "color": PAL.hexof(ap[2]) if _opt(ap, 2) else (mixc(p0, "#9aa4b4", 0.3) if metal else mixc(p1, "#d8d0b4", 0.4)), "trim": p2, "glow": glow if "aglow" in t else None}
 
     # --- creature parts
     if t.get("wings"):

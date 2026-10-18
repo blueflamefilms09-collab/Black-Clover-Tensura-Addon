@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "sky_dive",
+  "stoneskin"
+ ],
+ "animation": "huge__none-none__auto-auto-auto",
+ "archetype": "flier",
+ "faction": "construct",
+ "glow": "#e48460",
+ "height": 3.09,
+ "id": "cathedral_gargoyle_sentinel",
+ "name": "Cathedral Gargoyle Sentinel",
+ "road": "holy",
+ "size": 1.3,
+ "source": "D&D: gargoyle",
+ "tier": 3
+}

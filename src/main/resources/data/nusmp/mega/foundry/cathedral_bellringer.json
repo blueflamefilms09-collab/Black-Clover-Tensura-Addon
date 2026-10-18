@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "thunder_clap",
+  "ground_slam"
+ ],
+ "animation": "huge__hammer-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "construct",
+ "glow": "#606066",
+ "height": 3.09,
+ "id": "cathedral_bellringer",
+ "name": "Cathedral Bellringer",
+ "road": "holy",
+ "size": 1.45,
+ "source": "Dark Souls",
+ "tier": 3
+}

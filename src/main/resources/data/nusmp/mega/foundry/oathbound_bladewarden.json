@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "shadow_step",
+  "whirlwind"
+ ],
+ "animation": "average__katana-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "cultist",
+ "glow": "#e1c274",
+ "height": 2.0,
+ "id": "oathbound_bladewarden",
+ "name": "Oathbound Bladewarden",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Fate",
+ "tier": 3
+}

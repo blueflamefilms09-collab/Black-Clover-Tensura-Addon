@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "ground_slam",
+  "troll_blood"
+ ],
+ "animation": "huge__hammer-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "ogre",
+ "glow": "#8c7564",
+ "height": 3.09,
+ "id": "stone_giant_hall_sculptor",
+ "name": "Stone Giant Hall Sculptor",
+ "road": "holy",
+ "size": 1.4,
+ "source": "D&D: stone giant",
+ "tier": 3
+}

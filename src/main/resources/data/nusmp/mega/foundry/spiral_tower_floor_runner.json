@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "blink",
+  "holy_lance"
+ ],
+ "animation": "lanky__staff-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "cultist",
+ "glow": "#e1c274",
+ "height": 2.31,
+ "id": "spiral_tower_floor_runner",
+ "name": "Spiral Tower Floor Runner",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Tower of God",
+ "tier": 2
+}

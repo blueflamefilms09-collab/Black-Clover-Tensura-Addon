@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "pounce",
+  "thorn_skin"
+ ],
+ "animation": "small__axe-none__auto-auto-auto",
+ "archetype": "skirmisher",
+ "faction": "elemental",
+ "glow": "#d3d6db",
+ "height": 1.5,
+ "id": "crystalline_gnome_cutter",
+ "name": "Crystalline Gnome Cutter",
+ "road": "holy",
+ "size": 1.0,
+ "source": "D&D: svirfneblin",
+ "tier": 3
+}

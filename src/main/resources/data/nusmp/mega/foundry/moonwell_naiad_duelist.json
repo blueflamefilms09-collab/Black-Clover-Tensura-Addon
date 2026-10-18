@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "lunge",
+  "ice_bind"
+ ],
+ "animation": "slim__sword-none__auto-auto-auto",
+ "archetype": "skirmisher",
+ "faction": "aquatic",
+ "glow": "#c8d8ff",
+ "height": 1.94,
+ "id": "moonwell_naiad_duelist",
+ "name": "Moonwell Naiad Duelist",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Fate",
+ "tier": 2
+}

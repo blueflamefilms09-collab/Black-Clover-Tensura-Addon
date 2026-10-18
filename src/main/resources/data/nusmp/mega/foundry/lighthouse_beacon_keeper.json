@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "radiant_aura",
+  "mending_light"
+ ],
+ "animation": "broad__orb-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "construct",
+ "glow": "#e4b163",
+ "height": 2.09,
+ "id": "lighthouse_beacon_keeper",
+ "name": "Lighthouse Beacon Keeper",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Zelda",
+ "tier": 3
+}

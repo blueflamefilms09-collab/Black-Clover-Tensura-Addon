@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "ice_bind",
+  "hex"
+ ],
+ "animation": "lanky__none-grimoire__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "cultist",
+ "glow": "#efe6d3",
+ "height": 2.31,
+ "id": "lunar_archive_scribe",
+ "name": "Lunar Archive Scribe",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Frieren",
+ "tier": 3
+}

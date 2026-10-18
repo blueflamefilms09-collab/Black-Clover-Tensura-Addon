@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "heal_pulse",
+  "mending_light"
+ ],
+ "animation": "average__wand-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "cultist",
+ "glow": "#e9c279",
+ "height": 2.0,
+ "id": "guildhall_tavern_healer",
+ "name": "Guildhall Tavern Healer",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Log Horizon",
+ "tier": 2
+}

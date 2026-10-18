@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "dash",
+  "leap_slam"
+ ],
+ "animation": "broad__spear-none__auto-auto-auto",
+ "archetype": "charger",
+ "faction": "beast",
+ "glow": "#b89770",
+ "height": 2.09,
+ "id": "warband_centaur_lancer",
+ "name": "Warband Centaur Lancer",
+ "road": "holy",
+ "size": 1.25,
+ "source": "D&D: centaur",
+ "tier": 2
+}

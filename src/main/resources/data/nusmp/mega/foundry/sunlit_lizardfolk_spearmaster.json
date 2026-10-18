@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "lunge",
+  "pounce"
+ ],
+ "animation": "lanky__spear-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "beast",
+ "glow": "#d8c8a0",
+ "height": 2.31,
+ "id": "sunlit_lizardfolk_spearmaster",
+ "name": "Sunlit Lizardfolk Spearmaster",
+ "road": "holy",
+ "size": 1.0,
+ "source": "D&D: lizardfolk",
+ "tier": 3
+}

@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "shadow_step",
+  "cleave"
+ ],
+ "animation": "average__katana-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "cultist",
+ "glow": "#adb7c2",
+ "height": 2.0,
+ "id": "shinigami_gate_scout",
+ "name": "Shinigami Gate Scout",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Bleach",
+ "tier": 2
+}

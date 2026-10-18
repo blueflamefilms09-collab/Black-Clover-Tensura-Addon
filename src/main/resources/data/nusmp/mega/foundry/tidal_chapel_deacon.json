@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "ice_bind",
+  "heal_pulse"
+ ],
+ "animation": "average__trident-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "aquatic",
+ "glow": "#e1c274",
+ "height": 2.0,
+ "id": "tidal_chapel_deacon",
+ "name": "Tidal Chapel Deacon",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Frieren",
+ "tier": 2
+}

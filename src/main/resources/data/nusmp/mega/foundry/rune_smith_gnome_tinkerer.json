@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "summon_pack",
+  "fire_bolt"
+ ],
+ "animation": "small__wand-none__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "construct",
+ "glow": "#efe6d3",
+ "height": 1.5,
+ "id": "rune_smith_gnome_tinkerer",
+ "name": "Rune Smith Gnome Tinkerer",
+ "road": "holy",
+ "size": 1.0,
+ "source": "D&D: gnome",
+ "tier": 2
+}

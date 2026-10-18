@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "sky_dive",
+  "lunge"
+ ],
+ "animation": "slim__dagger-none__auto-auto-auto",
+ "archetype": "flier",
+ "faction": "cultist",
+ "glow": "#e48460",
+ "height": 1.94,
+ "id": "hero_society_wingsuit_scout",
+ "name": "Hero Society Wingsuit Scout",
+ "road": "holy",
+ "size": 1.0,
+ "source": "My Hero Academia",
+ "tier": 3
+}

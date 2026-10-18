@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "ward_allies",
+  "ground_slam"
+ ],
+ "animation": "broad__hammer-shield__auto-auto-auto",
+ "archetype": "support",
+ "faction": "construct",
+ "glow": "#e1c274",
+ "height": 2.09,
+ "id": "forgehold_anvil_priest",
+ "name": "Forgehold Anvil Priest",
+ "road": "holy",
+ "size": 1.0,
+ "source": "D&D: dwarf cleric",
+ "tier": 3
+}

@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "heal_pulse",
+  "holy_lance"
+ ],
+ "animation": "slim__none-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "beast",
+ "glow": "#a0c8e9",
+ "height": 1.94,
+ "id": "unicorn_maiden_of_the_glade",
+ "name": "Unicorn Maiden of the Glade",
+ "road": "holy",
+ "size": 1.0,
+ "source": "D&D: unicorn",
+ "tier": 2
+}

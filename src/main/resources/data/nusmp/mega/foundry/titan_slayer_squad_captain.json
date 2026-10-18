@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "lunge",
+  "shadow_step"
+ ],
+ "animation": "average__sword-dagger__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "cultist",
+ "glow": "#f7f7fa",
+ "height": 2.0,
+ "id": "titan_slayer_squad_captain",
+ "name": "Titan Slayer Squad Captain",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Attack on Titan",
+ "tier": 3
+}

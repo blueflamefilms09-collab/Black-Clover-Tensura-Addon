@@ -1,0 +1,4 @@
+Gutter Imp | demon | small | crimson soot gold | D&D: imp | skin=red horns=small tail=devil wings=bat/ember hair=bald face=sinister/amber top=bare legs=shorts boots=bare prop=dagger | skirmisher | shadow_dash conjure_imps
+Cellar Ghoul | undead | lanky | bone mud rust | D&D: ghoul | skin=undead hair=shaggy/ash face=mad/lumen/cracks+veins top=tunic/knee/-/runes ragged sleeves=torn legs=baggy boots=bare gloves=wraps | assassin | vampiric_bite lunge
+Hollow Squire | undead | average | iron soot rust | Berserk | skin=undead mask=skull top=tabard/knee/chain armor=pauldrons+helm/chain cape=tattered prop=sword off=shield | tank | shield_bash bulwark
+Candle Acolyte | cultist | slim | wine ink amber | Overlord | skin=pale hair=hood/ink face=cold/amber top=robe/floor/-/runes neck=necklace prop=grimoire acc=ear_cuffs | caster | shadow_bolt hex

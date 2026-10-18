@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "fire_bolt",
+  "phase_step"
+ ],
+ "animation": "lanky__orb-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "elemental",
+ "glow": "#b8ffe0",
+ "height": 2.31,
+ "id": "will_o_wisp_lampwright",
+ "name": "Will-o-Wisp Lampwright",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Spirited Away",
+ "tier": 3
+}

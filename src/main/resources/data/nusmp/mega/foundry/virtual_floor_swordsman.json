@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "lunge",
+  "blink"
+ ],
+ "animation": "slim__sword-none__auto-auto-auto",
+ "archetype": "skirmisher",
+ "faction": "cultist",
+ "glow": "#d3d6db",
+ "height": 1.94,
+ "id": "virtual_floor_swordsman",
+ "name": "Virtual Floor Swordsman",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Sword Art Online",
+ "tier": 2
+}

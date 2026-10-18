@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "lunge",
+  "shadow_dash"
+ ],
+ "animation": "slim__katana-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "cultist",
+ "glow": "#e1c274",
+ "height": 1.94,
+ "id": "breath_corps_slayer",
+ "name": "Breath Corps Slayer",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Demon Slayer",
+ "tier": 2
+}

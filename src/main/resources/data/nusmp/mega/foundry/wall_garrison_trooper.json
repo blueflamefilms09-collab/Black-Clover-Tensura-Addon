@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "dash",
+  "lunge"
+ ],
+ "animation": "average__sword-dagger__auto-auto-auto",
+ "archetype": "skirmisher",
+ "faction": "construct",
+ "glow": "#8c8e95",
+ "height": 2.0,
+ "id": "wall_garrison_trooper",
+ "name": "Wall Garrison Trooper",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Attack on Titan",
+ "tier": 2
+}

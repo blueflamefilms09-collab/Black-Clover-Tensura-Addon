@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "sky_dive",
+  "holy_lance"
+ ],
+ "animation": "slim__spear-none__auto-auto-auto",
+ "archetype": "flier",
+ "faction": "construct",
+ "glow": "#d3d6db",
+ "height": 1.94,
+ "id": "sky_citadel_cloudknight",
+ "name": "Sky Citadel Cloudknight",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Magi",
+ "tier": 3
+}

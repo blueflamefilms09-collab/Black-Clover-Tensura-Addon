@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "thunder_clap",
+  "holy_lance"
+ ],
+ "animation": "huge__staff-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "ogre",
+ "glow": "#d3d6db",
+ "height": 3.09,
+ "id": "cloud_giant_courtier",
+ "name": "Cloud Giant Courtier",
+ "road": "holy",
+ "size": 1.4,
+ "source": "D&D: cloud giant",
+ "tier": 3
+}
