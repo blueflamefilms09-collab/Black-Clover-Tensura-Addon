@@ -13,7 +13,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 public final class BossRulesConfig {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue STRIP_REGENERATION, BAN_UNIQUE_ULTIMATE, LUCIUS_COMBO_AI, REFILL_AT_GATES,
-            LUCIUS_ANIME_ARC, LUCIUS_TIME_REVERSAL;
+            LUCIUS_ANIME_ARC, LUCIUS_TIME_REVERSAL, ENVIRONMENT_IMMUNE;
     public static final ModConfigSpec.ConfigValue<String> FORBIDDEN_WORDS;
 
     static {
@@ -26,6 +26,8 @@ public final class BossRulesConfig {
                 .define("banUniqueUltimate", true);
         FORBIDDEN_WORDS = b.comment("Extra words that mark a skill or effect id as part of the regeneration family, comma separated (the built-in words always apply).")
                 .define("forbiddenWords", BossSkillPolicy.DEFAULT_WORDS);
+        ENVIRONMENT_IMMUNE = b.comment("1.68.0: a boss of the mod takes none of the world's own damage (suffocation inside a wall, cramming, falling, drowning, cactus, berry bush, stalagmite, magma, powder snow, storm lightning, an undead boss's daylight burn) when nothing attacked it. Fixes bosses 'taking random damage' when spawned outside the dungeons. false = the old behaviour.")
+                .define("environmentImmune", true);
         LUCIUS_COMBO_AI = b.comment("Lucius chains distinct spells (spatial, offensive, defensive or control, then one heavy magic cast) under cooldowns. false = his old move chooser.")
                 .define("luciusComboAi", true);
         REFILL_AT_GATES = b.comment("The Gates (100% mode) refill a Zogratis boss's health bar once. The one deliberate exception to 'no second wind'; false removes it.")

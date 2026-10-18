@@ -4,7 +4,7 @@ license="All rights reserved"
 
 [[mods]]
 modId="nusmp"
-version="1.68.0"
+version="1.69.0"
 displayName="Multiverse"
 logoFile="logo.png"
 logoBlur=false

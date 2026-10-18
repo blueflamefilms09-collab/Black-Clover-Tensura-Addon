@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.69.0] — Bosses no longer take random damage outside the dungeons
+
+The owner reported that bosses take random damage when they are spawned outside the dungeons. **I could not reproduce it (nothing here runs a game), so this fixes the likely cause and says so.**
+
+### FIXED
+- **Cause (most likely):** the dungeon halls are built so that no world damage can happen there; outside, a big boss (the Labyrinth Guardian is 5 blocks tall and more) stands half inside a tree or a cliff and suffocates, is crammed, falls from its spawn height, wades into water, touches a cactus, a berry bush, a stalagmite or magma, freezes in powder snow, is struck by a storm's lightning or (the undead) burns in daylight. None of it has an attacker, so it looks random.
+- **Fix:** a boss of the mod (`BossIdentity`: the Zogratis family, Zagred, the Floor Warden and Guardian, the dungeon floor bosses, the arc bosses tagged `nusmp:boss`) takes none of that world damage, only when nothing attacked it. Real fights are untouched (weapons, magic, lava, the void, `/kill`, and fire or drowning that a player caused). New file `boss/rules/BossEnvironment`, one switch `bossRules.environmentImmune` (default on; false = the old behaviour).
+- If a boss still loses health unexplained outside the dungeons, tell me which boss, how it was spawned and what was around it.
+
 ## [1.68.0] — The God of Order's rulebook: a gamerule and a one-world command list
 
 The owner asked for a gamerule that disables the God of Order entity and for a command list on the God of Order that sets what is and is not one world only. **Nothing has been run in a game client.**

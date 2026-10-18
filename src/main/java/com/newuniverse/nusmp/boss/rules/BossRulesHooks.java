@@ -42,6 +42,7 @@ public final class BossRulesHooks {
         if (done) return;
         done = true;
         NeoForge.EVENT_BUS.addListener(BossRulesHooks::onHeal);
+        NeoForge.EVENT_BUS.addListener(BossRulesHooks::onIncomingDamage);
         NeoForge.EVENT_BUS.addListener(BossRulesHooks::onJoin);
         NeoForge.EVENT_BUS.addListener(BossRulesHooks::onLeave);
         NeoForge.EVENT_BUS.addListener(BossRulesHooks::onTick);
@@ -55,6 +56,16 @@ public final class BossRulesHooks {
         if (!BossHealGuard.blocks(e.getEntity())) return;
         e.setAmount(0f);
         e.setCanceled(true);
+    }
+
+    /** 1.68.0: a boss shrugs off the world's own damage (see {@link BossEnvironment}). */
+    static void onIncomingDamage(net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent e) {
+        try {
+            if (e.getEntity().level().isClientSide() || !BossRulesConfig.ENVIRONMENT_IMMUNE.get()) return;
+            if (BossIdentity.isBoss(e.getEntity()) && BossEnvironment.shrugsOff(e.getEntity(), e.getSource())) e.setCanceled(true);
+        } catch (RuntimeException | LinkageError ignored) {
+            // the rule must never reach the server loop: a boss that cannot be judged takes the damage as before
+        }
     }
 
     static void onJoin(EntityJoinLevelEvent e) {
