@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "shield_wall",
+  "holy_lance"
+ ],
+ "animation": "broad__sword-shield__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "cultist",
+ "glow": "#e1c274",
+ "height": 2.09,
+ "id": "holy_knight_grand_cross",
+ "name": "Holy Knight Grand Cross",
+ "road": "holy",
+ "size": 1.15,
+ "source": "Seven Deadly Sins",
+ "tier": 4
+}

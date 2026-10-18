@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "war_cry",
+  "whirlwind"
+ ],
+ "animation": "broad__axe-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "cultist",
+ "glow": "#cd6363",
+ "height": 2.09,
+ "id": "familia_level_five_vanguard",
+ "name": "Familia Level Five Vanguard",
+ "road": "holy",
+ "size": 1.1,
+ "source": "DanMachi",
+ "tier": 4
+}

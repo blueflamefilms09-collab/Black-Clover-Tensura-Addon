@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "regrowth",
+  "ward_allies"
+ ],
+ "animation": "lanky__staff-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "elemental",
+ "glow": "#fff0b0",
+ "height": 2.31,
+ "id": "spirit_guardian_of_the_four_leaf_altar",
+ "name": "Spirit Guardian of the Four Leaf Altar",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Black Clover",
+ "tier": 4
+}

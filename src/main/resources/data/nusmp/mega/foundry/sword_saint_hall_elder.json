@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "lunge",
+  "whirlwind"
+ ],
+ "animation": "lanky__katana-dagger__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "cultist",
+ "glow": "#e4b163",
+ "height": 2.31,
+ "id": "sword_saint_hall_elder",
+ "name": "Sword Saint Hall Elder",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Re:Zero",
+ "tier": 4
+}

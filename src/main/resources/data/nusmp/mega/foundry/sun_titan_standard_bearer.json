@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "thunder_clap",
+  "war_cry"
+ ],
+ "animation": "huge__hammer-none__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "ogre",
+ "glow": "#c2636b",
+ "height": 3.09,
+ "id": "sun_titan_standard_bearer",
+ "name": "Sun Titan Standard Bearer",
+ "road": "holy",
+ "size": 1.6,
+ "source": "D&D: titan",
+ "tier": 4
+}

@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "holy_lance",
+  "ward_allies"
+ ],
+ "animation": "average__orb-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "construct",
+ "glow": "#a0e8ff",
+ "height": 2.0,
+ "id": "prismatic_golem_chimes",
+ "name": "Prismatic Golem Chimes",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Frieren",
+ "tier": 4
+}

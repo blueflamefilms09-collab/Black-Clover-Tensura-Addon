@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "blink",
+  "conjure_imps"
+ ],
+ "animation": "small__dagger-none__auto-auto-auto",
+ "archetype": "skirmisher",
+ "faction": "demon",
+ "glow": "#e1c274",
+ "height": 1.5,
+ "id": "ivory_tower_reliquary_imp",
+ "name": "Ivory Tower Reliquary Imp",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Konosuba",
+ "tier": 4
+}

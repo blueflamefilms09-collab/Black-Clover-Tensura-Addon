@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "burning_aura",
+  "ground_slam"
+ ],
+ "animation": "broad__hammer-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "elemental",
+ "glow": "#e1c274",
+ "height": 2.09,
+ "id": "pillar_ignition_warden",
+ "name": "Pillar Ignition Warden",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Fire Force",
+ "tier": 4
+}

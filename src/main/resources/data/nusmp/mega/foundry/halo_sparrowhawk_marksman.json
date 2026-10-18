@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "triple_shot",
+  "sky_dive"
+ ],
+ "animation": "slim__none-bow__auto-auto-auto",
+ "archetype": "archer",
+ "faction": "beast",
+ "glow": "#d3d6db",
+ "height": 1.94,
+ "id": "halo_sparrowhawk_marksman",
+ "name": "Halo Sparrowhawk Marksman",
+ "road": "holy",
+ "size": 1.0,
+ "source": "D&D: aarakocra",
+ "tier": 4
+}

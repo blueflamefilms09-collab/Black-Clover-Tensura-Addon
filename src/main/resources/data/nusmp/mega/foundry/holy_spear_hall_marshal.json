@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "dash",
+  "cleave"
+ ],
+ "animation": "lanky__spear-none__auto-auto-auto",
+ "archetype": "charger",
+ "faction": "cultist",
+ "glow": "#e1c274",
+ "height": 2.31,
+ "id": "holy_spear_hall_marshal",
+ "name": "Holy Spear Hall Marshal",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Mushoku Tensei",
+ "tier": 4
+}

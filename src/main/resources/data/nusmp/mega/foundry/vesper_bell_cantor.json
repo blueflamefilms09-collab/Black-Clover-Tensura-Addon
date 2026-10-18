@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "mending_light",
+  "ward_allies"
+ ],
+ "animation": "slim__staff-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "cultist",
+ "glow": "#efe6d3",
+ "height": 1.94,
+ "id": "vesper_bell_cantor",
+ "name": "Vesper Bell Cantor",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Frieren",
+ "tier": 4
+}

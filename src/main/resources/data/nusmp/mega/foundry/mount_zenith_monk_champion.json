@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "whirlwind",
+  "ground_slam"
+ ],
+ "animation": "huge__none-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "cultist",
+ "glow": "#606066",
+ "height": 3.09,
+ "id": "mount_zenith_monk_champion",
+ "name": "Mount Zenith Monk Champion",
+ "road": "holy",
+ "size": 1.4,
+ "source": "Record of Ragnarok",
+ "tier": 4
+}

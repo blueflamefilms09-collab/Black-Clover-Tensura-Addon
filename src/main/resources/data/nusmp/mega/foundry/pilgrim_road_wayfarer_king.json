@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "war_cry",
+  "stoneskin"
+ ],
+ "animation": "broad__mace-none__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "cultist",
+ "glow": "#f7f7fa",
+ "height": 2.09,
+ "id": "pilgrim_road_wayfarer_king",
+ "name": "Pilgrim Road Wayfarer King",
+ "road": "holy",
+ "size": 1.2,
+ "source": "Dragon Quest",
+ "tier": 4
+}

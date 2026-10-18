@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "pounce",
+  "enrage"
+ ],
+ "animation": "broad__none-none__auto-auto-auto",
+ "archetype": "charger",
+ "faction": "beast",
+ "glow": "#cd6363",
+ "height": 2.09,
+ "id": "chimera_choir_beastmaster",
+ "name": "Chimera Choir Beastmaster",
+ "road": "holy",
+ "size": 1.3,
+ "source": "D&D: chimera",
+ "tier": 4
+}

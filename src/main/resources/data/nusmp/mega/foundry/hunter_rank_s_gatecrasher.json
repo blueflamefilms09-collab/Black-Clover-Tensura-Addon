@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "shadow_step",
+  "blood_rage"
+ ],
+ "animation": "broad__dagger-dagger__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "cultist",
+ "glow": "#75a0d8",
+ "height": 2.09,
+ "id": "hunter_rank_s_gatecrasher",
+ "name": "Hunter Rank S Gatecrasher",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Solo Leveling",
+ "tier": 4
+}

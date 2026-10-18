@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "shadow_dash",
+  "whirlwind"
+ ],
+ "animation": "average__katana-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "cultist",
+ "glow": "#e1c274",
+ "height": 2.0,
+ "id": "gotei_lieutenant_of_the_pale_court",
+ "name": "Gotei Lieutenant of the Pale Court",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Bleach",
+ "tier": 4
+}

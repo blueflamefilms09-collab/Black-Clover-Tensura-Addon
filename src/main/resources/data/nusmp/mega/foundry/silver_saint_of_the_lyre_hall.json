@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "ice_bind",
+  "holy_lance"
+ ],
+ "animation": "slim__wand-orb__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "construct",
+ "glow": "#b060ff",
+ "height": 1.94,
+ "id": "silver_saint_of_the_lyre_hall",
+ "name": "Silver Saint of the Lyre Hall",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Saint Seiya",
+ "tier": 4
+}
