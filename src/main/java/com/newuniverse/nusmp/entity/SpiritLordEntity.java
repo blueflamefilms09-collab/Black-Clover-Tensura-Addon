@@ -64,6 +64,15 @@ public class SpiritLordEntity extends TamableAnimal implements GeoEntity {
     private static final EntityDataAccessor<String> KIND = SynchedEntityData.defineId(SpiritLordEntity.class, EntityDataSerializers.STRING);
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private int castCooldown = 40;
+    /** The entity event the server sends when the spirit casts, and the client tick it arrived at (the art-kit renderer shows the cast pose for a few ticks after it). */
+    static final byte EVENT_CAST = 100;
+    public int clientCastTick = -1000;
+
+    @Override
+    public void handleEntityEvent(byte id) {
+        if (id == EVENT_CAST) clientCastTick = tickCount;
+        else super.handleEntityEvent(id);
+    }
 
     public SpiritLordEntity(EntityType<? extends TamableAnimal> type, Level level) {
         super(type, level);
@@ -108,6 +117,7 @@ public class SpiritLordEntity extends TamableAnimal implements GeoEntity {
         castCooldown = 60;
         Kind k = kind();
         triggerAnim("cast", "cast_" + k.name().toLowerCase());
+        level().broadcastEntityEvent(this, EVENT_CAST);                  // the art-kit renderer (client/remodel) plays its cast pose from this
         LivingEntity owner = getOwner();
         DamageSource src = owner != null ? damageSources().indirectMagic(this, owner) : damageSources().mobAttack(this);
         t.hurt(src, BalanceLaw.damage(t, 10f, 0.5));
