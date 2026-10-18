@@ -143,6 +143,25 @@ class RemodelTableTest {
     }
 
     @Test
+    void everyModelNameTheRenderersMentionIsAModelOfTheTable() throws Exception {
+        // a typo in a probe ("spirit_undin") would draw nothing in game; every snake_case literal of the renderer sources must be an entity id, a model, a second form or a skin of the table
+        Set<String> known = new HashSet<>(RemodelTable.withSecondForms());
+        for (RemodelTable.Entry en : RemodelTable.ENTRIES) known.add(en.entityId());
+        RemodelTable.SKINS.values().forEach(known::addAll);
+        known.add("koto_ring");          // a texture of the old Zagred's reticle, not a model
+        Pattern literal = Pattern.compile("\"([a-z][a-z0-9]*(?:_[a-z0-9]+)+)\"");
+        for (String file : new String[]{"KitProbes", "KitBossHooks", "RemodelRenderers", "KitZagredRenderer", "KitCloudRenderer"}) {
+            String src = Files.readString(Path.of(MAIN + "client/remodel/" + file + ".java"));
+            Matcher m = literal.matcher(src);
+            while (m.find()) {
+                String s = m.group(1);
+                if (s.equals("cast_big")) continue;
+                assertTrue(known.contains(s), file + ".java names \"" + s + "\", which is neither an entity, a model, a second form nor a skin of RemodelTable");
+            }
+        }
+    }
+
+    @Test
     void theModelsOfEveryEntityAreAllInTheTable() {
         Set<String> all = new HashSet<>(RemodelTable.models());
         for (RemodelTable.Entry en : RemodelTable.ENTRIES) assertTrue(all.containsAll(en.models()), en.entityId());
