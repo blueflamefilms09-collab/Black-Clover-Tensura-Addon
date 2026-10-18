@@ -1,0 +1,1120 @@
+{
+  "magic": "danmachi",
+  "franchise": "danmachi",
+  "name": "Boar Warrior's Might",
+  "desc": "The strongest warrior of the strongest familia: earth-shaking waves, a stampede nobody stops and a hand that picks monsters up and throws them. Inspired by the boar-man champion of the story.",
+  "book": "nusmp:boar_warrior_might_book",
+  "book_name": "Chronicle of the Unbeaten Warrior",
+  "book_lore": "He has never needed to be told twice. He has rarely needed to be told once.",
+  "color": "#6B4A2B",
+  "icon": "minecraft:mace",
+  "class_id": "boar_warrior_might",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/boar_warrior_might.png",
+  "book_texture": "nusmp:item/skill_book_3d/danmachi",
+  "background_theme": "sand",
+  "nodes": [
+    {
+      "id": "champion_s_stance",
+      "name": "Champion's Stance",
+      "desc": "Planted and unshakable: huge armor and almost immovable, but ponderous.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "EARTH_SPIKES"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          6.0,
+          7.5,
+          9.0
+        ],
+        "speed_pct": [
+          -0.15,
+          -0.18,
+          -0.21
+        ],
+        "knockback_res": [
+          0.6,
+          0.72,
+          0.84
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:iron_block"
+    },
+    {
+      "id": "warrior_s_onslaught",
+      "name": "Warrior's Onslaught",
+      "desc": "Swing out: more damage and speed, with lighter armor.",
+      "parents": [
+        {
+          "node": "champion_s_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage_pct": [
+          0.25,
+          0.3,
+          0.35
+        ],
+        "armor": [
+          -1.0,
+          -1.25,
+          -1.5
+        ],
+        "speed_pct": [
+          0.05,
+          0.06,
+          0.07
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:mace"
+    },
+    {
+      "id": "champion_s_strength",
+      "name": "Champion's Strength",
+      "desc": "Pure, overwhelming force.",
+      "parents": [
+        {
+          "node": "champion_s_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:mace"
+    },
+    {
+      "id": "boar_hide",
+      "name": "Boar Hide",
+      "desc": "A pelt like armor.",
+      "parents": [
+        {
+          "node": "warrior_s_onslaught",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:iron_chestplate"
+    },
+    {
+      "id": "untouchable_mass",
+      "name": "Untouchable Mass",
+      "desc": "Hard to move.",
+      "parents": [
+        {
+          "node": "champion_s_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "knockback_resistance",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.15,
+          0.1875,
+          0.225,
+          0.2625,
+          0.3
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:anvil"
+    },
+    {
+      "id": "warrior_s_heart",
+      "name": "Warrior's Heart",
+      "desc": "A huge pool of health.",
+      "parents": [
+        {
+          "node": "warrior_s_onslaught",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          4.0,
+          5.0,
+          6.0,
+          7.0,
+          8.0
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:cooked_beef"
+    },
+    {
+      "id": "earthbreak",
+      "name": "Earthbreak",
+      "desc": "Drive the weapon down and send a crack of force along the floor.",
+      "parents": [
+        {
+          "node": "champion_s_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "length": [
+          12.0,
+          13.2,
+          14.4,
+          15.6
+        ],
+        "width": [
+          3.0,
+          3.3,
+          3.6,
+          3.9
+        ],
+        "knockback": [
+          1.3,
+          1.43,
+          1.56,
+          1.69
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          180.0,
+          166.0,
+          151.0,
+          137.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:cobblestone"
+    },
+    {
+      "id": "stampede",
+      "name": "Stampede",
+      "desc": "Charge forward, trampling everything in the way.",
+      "parents": [
+        {
+          "node": "warrior_s_onslaught",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "FLAME_TRAIL"
+      },
+      "values": {
+        "distance": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:iron_horse_armor"
+    },
+    {
+      "id": "hardened_muscle",
+      "name": "Hardened Muscle",
+      "desc": "Tense every muscle: Strength and Resistance for a while.",
+      "parents": [
+        {
+          "node": "earthbreak",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "strength",
+        "effect2": "resistance",
+        "vfx": "EARTH_SPIKES"
+      },
+      "values": {
+        "seconds": [
+          16.0,
+          18.0,
+          21.0,
+          23.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "amp2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:iron_ingot"
+    },
+    {
+      "id": "boar_s_verdict",
+      "name": "Boar's Verdict",
+      "desc": "One huge swing, devastating against wounded monsters.",
+      "parents": [
+        {
+          "node": "stampede",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "execute",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          10.0,
+          12.5,
+          15.0,
+          17.5
+        ],
+        "range": [
+          3.5,
+          3.71,
+          3.92,
+          4.13
+        ],
+        "bonus": [
+          0.9,
+          1.035,
+          1.17,
+          1.305
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:netherite_axe"
+    },
+    {
+      "id": "seize_and_throw",
+      "name": "Seize and Throw",
+      "desc": "Grab the nearby monsters and fling them toward you.",
+      "parents": [
+        {
+          "node": "hardened_muscle",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "pull",
+      "params": {
+        "vfx": "SEAL_CHAINS"
+      },
+      "values": {
+        "radius": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "strength": [
+          1.2,
+          1.32,
+          1.44,
+          1.56
+        ],
+        "targets": [
+          5.0,
+          7.0,
+          9.0,
+          11.0
+        ],
+        "damage": [
+          5.0,
+          6.25,
+          7.5,
+          8.75
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:chain"
+    },
+    {
+      "id": "shoulder_slam_shock",
+      "name": "Shoulder-Slam Shock",
+      "desc": "A mighty shoulder charge sends a shockwave around you.",
+      "parents": [
+        {
+          "node": "boar_s_verdict",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "radius": [
+          4.2,
+          4.62,
+          5.04,
+          5.46
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "knockback": [
+          1.3,
+          1.43,
+          1.56,
+          1.69
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:obsidian"
+    },
+    {
+      "id": "champion_s_sweep",
+      "name": "Champion's Sweep",
+      "desc": "A massive cone-shaped sweep of the weapon.",
+      "parents": [
+        {
+          "node": "seize_and_throw",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          10.0,
+          12.5,
+          15.0,
+          17.5
+        ],
+        "range": [
+          4.0,
+          4.32,
+          4.64,
+          4.96
+        ],
+        "half_angle": [
+          55.0,
+          60.5,
+          66.0,
+          71.5
+        ],
+        "targets": [
+          2.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "knockback": [
+          1.0,
+          1.1,
+          1.2,
+          1.3
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          100.0,
+          92.0,
+          84.0,
+          76.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:mace"
+    },
+    {
+      "id": "warrior_s_calm",
+      "name": "Warrior's Calm",
+      "desc": "In the thick of a fight you take less damage.",
+      "parents": [
+        {
+          "node": "earthbreak",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "reduce_when",
+      "params": {
+        "condition": "in_combat"
+      },
+      "values": {
+        "pct": [
+          0.13,
+          0.156,
+          0.182,
+          0.208
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:iron_ingot"
+    },
+    {
+      "id": "giant_killer",
+      "name": "Giant-Killer",
+      "desc": "You deal more damage to bosses.",
+      "parents": [
+        {
+          "node": "stampede",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_vs",
+      "params": {
+        "category": "boss"
+      },
+      "values": {
+        "bonus": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:dragon_head"
+    },
+    {
+      "id": "pushing_power",
+      "name": "Pushing Power",
+      "desc": "Your blows may shove the monster back.",
+      "parents": [
+        {
+          "node": "hardened_muscle",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "knockback_on_hit",
+      "values": {
+        "strength": [
+          0.8,
+          0.92,
+          1.04,
+          1.16
+        ],
+        "chance": [
+          0.45,
+          0.5175,
+          0.585,
+          0.6525
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:piston"
+    },
+    {
+      "id": "armored_spikes",
+      "name": "Armored Spikes",
+      "desc": "A share of the damage you take returns to the attacker.",
+      "parents": [
+        {
+          "node": "boar_s_verdict",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "thorns",
+      "values": {
+        "pct": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ],
+        "rest": [
+          20.0,
+          20.0,
+          20.0,
+          20.0
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:pointed_dripstone"
+    },
+    {
+      "id": "unbowed_champion",
+      "name": "Unbowed Champion",
+      "desc": "When nearly dead you are briefly shielded.",
+      "parents": [
+        {
+          "node": "seize_and_throw",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "last_stand",
+      "values": {
+        "threshold": [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "seconds": [
+          7.0,
+          8.0,
+          9.0,
+          10.0
+        ],
+        "rest": [
+          1800.0,
+          1620.0,
+          1440.0,
+          1260.0
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:totem_of_undying"
+    },
+    {
+      "id": "planted_landing",
+      "name": "Planted Landing",
+      "desc": "You take much less fall damage.",
+      "parents": [
+        {
+          "node": "shoulder_slam_shock",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "fall_guard",
+      "values": {
+        "pct": [
+          0.6,
+          0.72,
+          0.84,
+          0.96
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:anvil"
+    },
+    {
+      "id": "strength_feeds_strength",
+      "name": "Strength Feeds Strength",
+      "desc": "Your blows heal you.",
+      "parents": [
+        {
+          "node": "champion_s_sweep",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "lifesteal",
+      "values": {
+        "pct": [
+          0.06,
+          0.072,
+          0.084,
+          0.096
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:cooked_beef"
+    },
+    {
+      "id": "warrior_s_wrath",
+      "name": "Warrior's Wrath",
+      "desc": "The ground splits ahead of you in one titanic shockwave.",
+      "parents": [
+        {
+          "node": "champion_s_sweep",
+          "level": 3
+        },
+        {
+          "node": "strength_feeds_strength",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage": [
+          24.0,
+          30.0,
+          36.0
+        ],
+        "length": [
+          18.0,
+          19.8,
+          21.6
+        ],
+        "width": [
+          5.0,
+          5.5,
+          6
+        ],
+        "knockback": [
+          1.8,
+          1.98,
+          2
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1400.0,
+          1288.0,
+          1176.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:netherite_block"
+    },
+    {
+      "id": "unstoppable_charge",
+      "name": "Unstoppable Charge",
+      "desc": "Run the whole line down, hitting everyone on it.",
+      "parents": [
+        {
+          "node": "shoulder_slam_shock",
+          "level": 3
+        },
+        {
+          "node": "planted_landing",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "FLAME_TRAIL"
+      },
+      "values": {
+        "distance": [
+          11.0,
+          12.1,
+          13.2
+        ],
+        "damage": [
+          24.0,
+          30.0,
+          36.0
+        ],
+        "targets": [
+          6.0,
+          8.0,
+          10.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174
+        ],
+        "cooldown": [
+          1300.0,
+          1196.0,
+          1092.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:netherite_axe"
+    }
+  ]
+}

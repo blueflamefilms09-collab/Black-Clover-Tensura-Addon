@@ -1,0 +1,1090 @@
+{
+  "magic": "danmachi",
+  "franchise": "danmachi",
+  "name": "Rea Laevateinn",
+  "desc": "Elven chant magic of fire: stand still, speak the verses and loose a flame sword of terrible reach. Slow to begin, hard to forget.",
+  "book": "nusmp:rea_laevateinn_book",
+  "book_name": "Long Chant of the Flame Sword",
+  "book_lore": "Every verse is a step toward a fire you may not like.",
+  "color": "#FF6A2A",
+  "icon": "minecraft:blaze_rod",
+  "class_id": "rea_laevateinn",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/rea_laevateinn.png",
+  "book_texture": "nusmp:item/skill_book_3d/danmachi",
+  "background_theme": "magma",
+  "nodes": [
+    {
+      "id": "chanting_stance",
+      "name": "Chanting Stance",
+      "desc": "Feet planted, voice steady: much more damage, but you cannot afford to move.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage_pct": [
+          0.3,
+          0.36,
+          0.42
+        ],
+        "armor": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "speed_pct": [
+          -0.2,
+          -0.24,
+          -0.28
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:lectern"
+    },
+    {
+      "id": "warded_caster",
+      "name": "Warded Caster",
+      "desc": "A guarded stance of wind and cloth: armored and slowly healing, with less damage.",
+      "parents": [
+        {
+          "node": "chanting_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "damage_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "armor": [
+          4.0,
+          5.0,
+          6.0
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0.5,
+          0.6,
+          0.7
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:shield"
+    },
+    {
+      "id": "flame_mage_s_power",
+      "name": "Flame Mage's Power",
+      "desc": "More fire in every verse.",
+      "parents": [
+        {
+          "node": "chanting_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.5,
+          1.875,
+          2.25,
+          2.625,
+          3.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:blaze_powder"
+    },
+    {
+      "id": "elven_vitality",
+      "name": "Elven Vitality",
+      "desc": "A long-lived body.",
+      "parents": [
+        {
+          "node": "warded_caster",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:golden_apple"
+    },
+    {
+      "id": "mage_s_mantle",
+      "name": "Mage's Mantle",
+      "desc": "A warded robe.",
+      "parents": [
+        {
+          "node": "chanting_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor_toughness",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "chant_complete",
+      "name": "Chant Complete",
+      "desc": "The verse finishes: Strength and Fire Resistance for a while.",
+      "parents": [
+        {
+          "node": "chanting_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "strength",
+        "effect2": "fire_resistance",
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "seconds": [
+          16.0,
+          18.0,
+          21.0,
+          23.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "amp2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:enchanted_book"
+    },
+    {
+      "id": "flare_sweep",
+      "name": "Flare Sweep",
+      "desc": "A flame-bright cone sweeping in front of you.",
+      "parents": [
+        {
+          "node": "warded_caster",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          4.5,
+          4.86,
+          5.22,
+          5.58
+        ],
+        "half_angle": [
+          55.0,
+          60.5,
+          66.0,
+          71.5
+        ],
+        "targets": [
+          2.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "knockback": [
+          0.4,
+          0.44,
+          0.48,
+          0.52
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          100.0,
+          92.0,
+          84.0,
+          76.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:blaze_powder"
+    },
+    {
+      "id": "fire_road",
+      "name": "Fire Road",
+      "desc": "A road of flame races ahead of you.",
+      "parents": [
+        {
+          "node": "chant_complete",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "FLAME_TRAIL"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "length": [
+          12.0,
+          13.2,
+          14.4,
+          15.6
+        ],
+        "width": [
+          2.0,
+          2.2,
+          2.4,
+          2.6
+        ],
+        "knockback": [
+          0.5,
+          0.55,
+          0.6,
+          0.65
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          180.0,
+          166.0,
+          151.0,
+          137.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:magma_block"
+    },
+    {
+      "id": "verse_of_eruption",
+      "name": "Verse of Eruption",
+      "desc": "The ground around you bursts into flame.",
+      "parents": [
+        {
+          "node": "flare_sweep",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "radius": [
+          4.5,
+          4.95,
+          5.4,
+          5.85
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "knockback": [
+          0.9,
+          0.99,
+          1.08,
+          1.17
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:fire_charge"
+    },
+    {
+      "id": "laevateinn_beam",
+      "name": "Laevateinn Beam",
+      "desc": "A narrow beam of flame pierces everything along your sight line.",
+      "parents": [
+        {
+          "node": "fire_road",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "FIRE_SPIRAL"
+      },
+      "values": {
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "range": [
+          24.0,
+          26.4,
+          28.8,
+          31.2
+        ],
+        "pierce": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:blaze_rod"
+    },
+    {
+      "id": "flame_sword_descent",
+      "name": "Flame Sword Descent",
+      "desc": "A sword of flame falls on the place you look at.",
+      "parents": [
+        {
+          "node": "verse_of_eruption",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "delay": [
+          20.0,
+          19.0,
+          18.0,
+          17.0
+        ],
+        "damage": [
+          14.0,
+          17.5,
+          21.0,
+          24.5
+        ],
+        "radius": [
+          4.5,
+          4.95,
+          5.4,
+          5.85
+        ],
+        "range": [
+          24.0,
+          25.92,
+          27.84,
+          29.76
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          360.0,
+          331.0,
+          302.0,
+          274.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:lava_bucket"
+    },
+    {
+      "id": "fire_veil_ward",
+      "name": "Fire-Veil Ward",
+      "desc": "A shell of low flame absorbs some damage.",
+      "parents": [
+        {
+          "node": "laevateinn_beam",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "absorb_hearts": [
+          5.0,
+          6.0,
+          8.0,
+          9.0
+        ],
+        "seconds": [
+          8.0,
+          9.0,
+          10.0,
+          10.0
+        ],
+        "resist_amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:campfire"
+    },
+    {
+      "id": "kin_of_fire",
+      "name": "Kin of Fire",
+      "desc": "You take much less fire damage.",
+      "parents": [
+        {
+          "node": "chant_complete",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "fire"
+      },
+      "values": {
+        "pct": [
+          0.45,
+          0.54,
+          0.63,
+          0.72
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:lava_bucket"
+    },
+    {
+      "id": "mage_s_crit",
+      "name": "Mage's Crit",
+      "desc": "Your spells may strike critically.",
+      "parents": [
+        {
+          "node": "flare_sweep",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ],
+        "mult": [
+          1.8,
+          1.944,
+          2.088,
+          2.232
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:ender_eye"
+    },
+    {
+      "id": "closing_verse",
+      "name": "Closing Verse",
+      "desc": "You deal much more damage to nearly dead monsters.",
+      "parents": [
+        {
+          "node": "fire_road",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "execute_threshold",
+      "values": {
+        "threshold": [
+          0.25,
+          0.275,
+          0.3,
+          0.325
+        ],
+        "bonus": [
+          0.7,
+          0.84,
+          0.98,
+          1.12
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:blaze_rod"
+    },
+    {
+      "id": "chant_breathing",
+      "name": "Chant Breathing",
+      "desc": "Crouch and breathe, and your wounds close.",
+      "parents": [
+        {
+          "node": "verse_of_eruption",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "sneaking"
+      },
+      "values": {
+        "per_second": [
+          1.0,
+          1.2,
+          1.4,
+          1.6
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:book"
+    },
+    {
+      "id": "magic_experience",
+      "name": "Magic Experience",
+      "desc": "Kills give more experience.",
+      "parents": [
+        {
+          "node": "laevateinn_beam",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "xp_bonus",
+      "values": {
+        "pct": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:experience_bottle"
+    },
+    {
+      "id": "flame_against_the_dead",
+      "name": "Flame Against the Dead",
+      "desc": "You deal more damage to the undead.",
+      "parents": [
+        {
+          "node": "flame_sword_descent",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_vs",
+      "params": {
+        "category": "undead"
+      },
+      "values": {
+        "bonus": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:bone"
+    },
+    {
+      "id": "verse_of_defiance",
+      "name": "Verse of Defiance",
+      "desc": "When nearly dead you are briefly shielded.",
+      "parents": [
+        {
+          "node": "fire_veil_ward",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "last_stand",
+      "values": {
+        "threshold": [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "rest": [
+          1800.0,
+          1620.0,
+          1440.0,
+          1260.0
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:totem_of_undying"
+    },
+    {
+      "id": "rea_laevateinn_burning_judgment",
+      "name": "Rea Laevateinn: Burning Judgment",
+      "desc": "The full chant: a colossal flame sword crashes down.",
+      "parents": [
+        {
+          "node": "fire_veil_ward",
+          "level": 3
+        },
+        {
+          "node": "verse_of_defiance",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "delay": [
+          20.0,
+          19.0,
+          18.0
+        ],
+        "damage": [
+          32.0,
+          40.0,
+          48.0
+        ],
+        "radius": [
+          7.0,
+          7.7,
+          8.4
+        ],
+        "range": [
+          28.0,
+          30.24,
+          32.48
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348
+        ],
+        "cooldown": [
+          1500.0,
+          1380.0,
+          1260.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:nether_star"
+    },
+    {
+      "id": "surge_of_the_flame_sword",
+      "name": "Surge of the Flame Sword",
+      "desc": "A ring of flame bursts outward from you.",
+      "parents": [
+        {
+          "node": "flame_sword_descent",
+          "level": 3
+        },
+        {
+          "node": "flame_against_the_dead",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "damage": [
+          24.0,
+          30.0,
+          36.0
+        ],
+        "radius": [
+          7.0,
+          7.7,
+          8.4
+        ],
+        "targets": [
+          9.0,
+          13.0,
+          16.0
+        ],
+        "knockback": [
+          1.6,
+          1.76,
+          1.92
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1300.0,
+          1196.0,
+          1092.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:fire_charge"
+    }
+  ]
+}

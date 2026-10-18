@@ -1,0 +1,1123 @@
+{
+  "magic": "danmachi",
+  "franchise": "danmachi",
+  "name": "Airiel: Wind Maiden",
+  "desc": "A sword wrapped in a gale: dashes, crescents and a descent from the sky, all carried by a wind that never leaves the blade. The Sword Princess's way.",
+  "book": "nusmp:airiel_wind_maiden_book",
+  "book_name": "Gale Armor Treatise",
+  "book_lore": "The wind is a good friend, and quiet about it.",
+  "color": "#F3E07A",
+  "icon": "minecraft:golden_sword",
+  "class_id": "airiel_wind_maiden",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/airiel_wind_maiden.png",
+  "book_texture": "nusmp:item/skill_book_3d/danmachi",
+  "background_theme": "holy",
+  "nodes": [
+    {
+      "id": "wind_sheathed",
+      "name": "Wind-Sheathed",
+      "desc": "The gale wraps you: much faster and sharper, with thinner armor.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "damage_pct": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "armor": [
+          -2.0,
+          -2.5,
+          -3.0
+        ],
+        "speed_pct": [
+          0.15,
+          0.18,
+          0.21
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "sword_princess_s_guard",
+      "name": "Sword Princess's Guard",
+      "desc": "Blade held in a perfect guard: steadier, harder to push, with gentler cuts.",
+      "parents": [
+        {
+          "node": "wind_sheathed",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage_pct": [
+          -0.05,
+          -0.06,
+          -0.07
+        ],
+        "armor": [
+          3.0,
+          3.75,
+          4.5
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0.3,
+          0.36,
+          0.42
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:shield"
+    },
+    {
+      "id": "gale_honed_edge",
+      "name": "Gale-Honed Edge",
+      "desc": "A wind-sharpened blade.",
+      "parents": [
+        {
+          "node": "wind_sheathed",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.5,
+          1.875,
+          2.25,
+          2.625,
+          3.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:golden_sword"
+    },
+    {
+      "id": "tailwind",
+      "name": "Tailwind",
+      "desc": "A wind at your back.",
+      "parents": [
+        {
+          "node": "sword_princess_s_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.05,
+          0.0625,
+          0.075,
+          0.0875,
+          0.1
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:golden_boots"
+    },
+    {
+      "id": "sword_princess_s_poise",
+      "name": "Sword Princess's Poise",
+      "desc": "Calm, flowing swing speed.",
+      "parents": [
+        {
+          "node": "wind_sheathed",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.06,
+          0.075,
+          0.09,
+          0.105,
+          0.12
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:clock"
+    },
+    {
+      "id": "weightless_landing",
+      "name": "Weightless Landing",
+      "desc": "The gale softens every landing.",
+      "parents": [
+        {
+          "node": "sword_princess_s_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "safe_fall_distance",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "airiel_armor",
+      "name": "Airiel Armor",
+      "desc": "The wind takes the shape of armor: Speed and Resistance for a while.",
+      "parents": [
+        {
+          "node": "wind_sheathed",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "speed",
+        "effect2": "resistance",
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "seconds": [
+          14.0,
+          16.0,
+          18.0,
+          20.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "amp2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:wind_charge"
+    },
+    {
+      "id": "tempest_dash",
+      "name": "Tempest Dash",
+      "desc": "Ride the wind through the monsters ahead.",
+      "parents": [
+        {
+          "node": "sword_princess_s_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "distance": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "wind_edged_cut",
+      "name": "Wind-Edged Cut",
+      "desc": "A bright crescent of wind and steel.",
+      "parents": [
+        {
+          "node": "airiel_armor",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          4.0,
+          4.32,
+          4.64,
+          4.96
+        ],
+        "half_angle": [
+          55.0,
+          60.5,
+          66.0,
+          71.5
+        ],
+        "targets": [
+          2.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "knockback": [
+          0.4,
+          0.44,
+          0.48,
+          0.52
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          100.0,
+          92.0,
+          84.0,
+          76.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:golden_sword"
+    },
+    {
+      "id": "cyclone_dance",
+      "name": "Cyclone Dance",
+      "desc": "Spin in a tight tornado of cuts.",
+      "parents": [
+        {
+          "node": "tempest_dash",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "whirlwind",
+      "params": {
+        "vfx": "WIND_TORNADO"
+      },
+      "values": {
+        "damage": [
+          3.5,
+          4.375,
+          5.25,
+          6.125
+        ],
+        "radius": [
+          3.5,
+          3.78,
+          4.06,
+          4.34
+        ],
+        "hits": [
+          5.0,
+          6.0,
+          8.0,
+          10.0
+        ],
+        "interval": [
+          5.0,
+          5.0,
+          5.0,
+          5.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          260.0,
+          239.0,
+          218.0,
+          198.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "gale_slash",
+      "name": "Gale Slash",
+      "desc": "A thin wave of wind skims the ground ahead.",
+      "parents": [
+        {
+          "node": "wind_edged_cut",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "length": [
+          12.0,
+          13.2,
+          14.4,
+          15.6
+        ],
+        "width": [
+          2.0,
+          2.2,
+          2.4,
+          2.6
+        ],
+        "knockback": [
+          0.5,
+          0.55,
+          0.6,
+          0.65
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          180.0,
+          166.0,
+          151.0,
+          137.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:white_dye"
+    },
+    {
+      "id": "descending_storm",
+      "name": "Descending Storm",
+      "desc": "Leap high on the wind and crash down on the monsters below.",
+      "parents": [
+        {
+          "node": "cyclone_dance",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "height": [
+          1.1,
+          1.188,
+          1.276,
+          1.364
+        ],
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "radius": [
+          3.2,
+          3.52,
+          3.84,
+          4.16
+        ],
+        "knockback": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:elytra"
+    },
+    {
+      "id": "wind_lance",
+      "name": "Wind Lance",
+      "desc": "Compress the wind into a spear that pierces a line of monsters.",
+      "parents": [
+        {
+          "node": "gale_slash",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          22.0,
+          24.2,
+          26.4,
+          28.6
+        ],
+        "pierce": [
+          2.0,
+          3.0,
+          3.0,
+          4.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:breeze_rod"
+    },
+    {
+      "id": "wind_footed_draw",
+      "name": "Wind-Footed Draw",
+      "desc": "While you hold a sword you are faster.",
+      "parents": [
+        {
+          "node": "airiel_armor",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "speed",
+        "condition": "holding_sword"
+      },
+      "values": {
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:golden_sword"
+    },
+    {
+      "id": "edge_of_the_gale",
+      "name": "Edge of the Gale",
+      "desc": "Your cuts may strike critically.",
+      "parents": [
+        {
+          "node": "tempest_dash",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ],
+        "mult": [
+          1.8,
+          1.944,
+          2.088,
+          2.232
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:flint"
+    },
+    {
+      "id": "slip_the_wind",
+      "name": "Slip the Wind",
+      "desc": "You may avoid a blow completely.",
+      "parents": [
+        {
+          "node": "wind_edged_cut",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.12,
+          0.144,
+          0.168,
+          0.192
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:phantom_membrane"
+    },
+    {
+      "id": "wind_cushion",
+      "name": "Wind Cushion",
+      "desc": "You take much less fall damage.",
+      "parents": [
+        {
+          "node": "cyclone_dance",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "fall_guard",
+      "values": {
+        "pct": [
+          0.6,
+          0.72,
+          0.84,
+          0.96
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:hay_block"
+    },
+    {
+      "id": "aerial_strike",
+      "name": "Aerial Strike",
+      "desc": "While airborne your blows hit harder.",
+      "parents": [
+        {
+          "node": "gale_slash",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_when",
+      "params": {
+        "condition": "airborne"
+      },
+      "values": {
+        "bonus": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:elytra"
+    },
+    {
+      "id": "gale_push",
+      "name": "Gale Push",
+      "desc": "Your cuts may shove the monster back.",
+      "parents": [
+        {
+          "node": "descending_storm",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "knockback_on_hit",
+      "values": {
+        "strength": [
+          0.5,
+          0.575,
+          0.65,
+          0.725
+        ],
+        "chance": [
+          0.35,
+          0.4025,
+          0.455,
+          0.5075
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:wind_charge"
+    },
+    {
+      "id": "wind_deflection",
+      "name": "Wind Deflection",
+      "desc": "The wind turns arrows and bolts aside: less projectile damage.",
+      "parents": [
+        {
+          "node": "wind_lance",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "projectile"
+      },
+      "values": {
+        "pct": [
+          0.35,
+          0.42,
+          0.49,
+          0.56
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:arrow"
+    },
+    {
+      "id": "tempest_sword_princess_s_gale",
+      "name": "Tempest: Sword Princess's Gale",
+      "desc": "A great wave of wind and steel sweeps the ground ahead.",
+      "parents": [
+        {
+          "node": "wind_lance",
+          "level": 3
+        },
+        {
+          "node": "wind_deflection",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          22.0,
+          27.5,
+          33.0
+        ],
+        "length": [
+          18.0,
+          19.8,
+          21.6
+        ],
+        "width": [
+          5.0,
+          5.5,
+          6
+        ],
+        "knockback": [
+          1.2,
+          1.32,
+          1.44
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1300.0,
+          1196.0,
+          1092.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:diamond_sword"
+    },
+    {
+      "id": "airiel_storm_maiden",
+      "name": "Airiel: Storm Maiden",
+      "desc": "A whirling storm of cuts rises around you.",
+      "parents": [
+        {
+          "node": "descending_storm",
+          "level": 3
+        },
+        {
+          "node": "gale_push",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "whirlwind",
+      "params": {
+        "vfx": "WIND_TORNADO"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0
+        ],
+        "radius": [
+          5.0,
+          5.4,
+          5.8
+        ],
+        "hits": [
+          7.0,
+          9.0,
+          11.0
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029
+        ],
+        "cooldown": [
+          1400.0,
+          1288.0,
+          1176.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:wind_charge"
+    }
+  ]
+}

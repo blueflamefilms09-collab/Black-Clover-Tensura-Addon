@@ -1,0 +1,1042 @@
+{
+  "magic": "danmachi",
+  "franchise": "danmachi",
+  "name": "Luminous Wind",
+  "desc": "The quiet elf's wind: a hooded silence, a breeze that helps friends and cuts foes, and a precise blow when the moment is right. Part assassin, part healer.",
+  "book": "nusmp:luminous_wind_book",
+  "book_name": "Hooded Notes of the Quiet Elf",
+  "book_lore": "Revenge keeps well. Kindness keeps better.",
+  "color": "#6FD6A8",
+  "icon": "minecraft:glow_berries",
+  "class_id": "luminous_wind",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/luminous_wind.png",
+  "book_texture": "nusmp:item/skill_book_3d/danmachi",
+  "background_theme": "forest",
+  "nodes": [
+    {
+      "id": "hooded_silence",
+      "name": "Hooded Silence",
+      "desc": "Move like a rumor: quicker, sharper crits, thin armor.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          -1.0,
+          -1.25,
+          -1.5
+        ],
+        "speed_pct": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:leather_helmet"
+    },
+    {
+      "id": "lion_s_reserve",
+      "name": "Lion's Reserve",
+      "desc": "Hold back and mend: armored and healing, with gentle blows.",
+      "parents": [
+        {
+          "node": "hooded_silence",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "damage_pct": [
+          -0.05,
+          -0.06,
+          -0.07
+        ],
+        "armor": [
+          3.0,
+          3.75,
+          4.5
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0.5,
+          0.6,
+          0.7
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:shield"
+    },
+    {
+      "id": "elven_grace",
+      "name": "Elven Grace",
+      "desc": "Light, quiet feet.",
+      "parents": [
+        {
+          "node": "hooded_silence",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.04,
+          0.05,
+          0.06,
+          0.07,
+          0.08
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "silent_edge",
+      "name": "Silent Edge",
+      "desc": "A precise hand.",
+      "parents": [
+        {
+          "node": "lion_s_reserve",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "wind_in_the_lungs",
+      "name": "Wind in the Lungs",
+      "desc": "More maximum health.",
+      "parents": [
+        {
+          "node": "hooded_silence",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:golden_carrot"
+    },
+    {
+      "id": "wind_veil",
+      "name": "Wind Veil",
+      "desc": "A swirl of luminous dust blinds the creatures around you while you slip away.",
+      "parents": [
+        {
+          "node": "hooded_silence",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "smoke",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "radius": [
+          5.0,
+          5.5,
+          6.0,
+          6.5
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:glowstone_dust"
+    },
+    {
+      "id": "gale_step",
+      "name": "Gale Step",
+      "desc": "Slip a few blocks forward on a gust.",
+      "parents": [
+        {
+          "node": "lion_s_reserve",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "blink",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "distance": [
+          9.0,
+          10.08,
+          11.16,
+          12.24
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "luminous_needles",
+      "name": "Luminous Needles",
+      "desc": "A fan of small wind-blades flies at the monster you look at.",
+      "parents": [
+        {
+          "node": "wind_veil",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          2.5,
+          3.125,
+          3.75,
+          4.375
+        ],
+        "shots": [
+          7.0,
+          9.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          16.0,
+          17.28,
+          18.56,
+          19.84
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          240.0,
+          221.0,
+          202.0,
+          182.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:iron_nugget"
+    },
+    {
+      "id": "wind_s_blessing",
+      "name": "Wind's Blessing",
+      "desc": "A kind breeze: you and your allies gain Speed.",
+      "parents": [
+        {
+          "node": "gale_step",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "speed",
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          10.0,
+          11.0,
+          12.0,
+          13.0
+        ],
+        "seconds": [
+          14.0,
+          16.0,
+          18.0,
+          20.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          600.0,
+          564.0,
+          528.0,
+          492.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:white_dye"
+    },
+    {
+      "id": "soothing_gale",
+      "name": "Soothing Gale",
+      "desc": "A soft wind heals you and the allies near you.",
+      "parents": [
+        {
+          "node": "luminous_needles",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_pulse",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "amount": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          500.0,
+          470.0,
+          440.0,
+          410.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:honey_bottle"
+    },
+    {
+      "id": "elven_execution",
+      "name": "Elven Execution",
+      "desc": "One quiet, accurate blow, deadly against a wounded monster.",
+      "parents": [
+        {
+          "node": "wind_s_blessing",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "execute",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "range": [
+          3.5,
+          3.71,
+          3.92,
+          4.13
+        ],
+        "bonus": [
+          1.0,
+          1.15,
+          1.3,
+          1.45
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:wooden_sword"
+    },
+    {
+      "id": "cutting_wind",
+      "name": "Cutting Wind",
+      "desc": "A cone of wind that weakens everything in it.",
+      "parents": [
+        {
+          "node": "soothing_gale",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "debuff_cone",
+      "params": {
+        "effect": "weakness",
+        "effect2": "none",
+        "vfx": "WIND_TORNADO"
+      },
+      "values": {
+        "range": [
+          5.0,
+          5.4,
+          5.8,
+          6.2
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0,
+          52.0
+        ],
+        "seconds": [
+          7.0,
+          8.0,
+          9.0,
+          10.0
+        ],
+        "amp": [
+          1.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        "seconds2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          220.0,
+          202.0,
+          185.0,
+          167.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:string"
+    },
+    {
+      "id": "elf_s_reflexes",
+      "name": "Elf's Reflexes",
+      "desc": "You may avoid a blow completely.",
+      "parents": [
+        {
+          "node": "wind_veil",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.12,
+          0.144,
+          0.168,
+          0.192
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:rabbit_foot"
+    },
+    {
+      "id": "unseen_under_the_hood",
+      "name": "Unseen Under the Hood",
+      "desc": "While sneaking you fade from sight.",
+      "parents": [
+        {
+          "node": "gale_step",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "invisibility",
+        "condition": "sneaking"
+      },
+      "values": {
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:glass"
+    },
+    {
+      "id": "opening_strike",
+      "name": "Opening Strike",
+      "desc": "Your blows may strike critically.",
+      "parents": [
+        {
+          "node": "luminous_needles",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.16,
+          0.192,
+          0.224,
+          0.256
+        ],
+        "mult": [
+          1.9,
+          2.052,
+          2.204,
+          2.356
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:flint"
+    },
+    {
+      "id": "wind_companions",
+      "name": "Wind Companions",
+      "desc": "Allies near you run faster.",
+      "parents": [
+        {
+          "node": "wind_s_blessing",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "aura",
+      "params": {
+        "effect": "speed",
+        "target": "allies"
+      },
+      "values": {
+        "radius": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "meditative_breath",
+      "name": "Meditative Breath",
+      "desc": "Crouched, your wounds close.",
+      "parents": [
+        {
+          "node": "soothing_gale",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "sneaking"
+      },
+      "values": {
+        "per_second": [
+          0.9,
+          1.08,
+          1.26,
+          1.44
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:glow_berries"
+    },
+    {
+      "id": "forest_landing",
+      "name": "Forest Landing",
+      "desc": "You take much less fall damage.",
+      "parents": [
+        {
+          "node": "elven_execution",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "fall_guard",
+      "values": {
+        "pct": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:oak_sapling"
+    },
+    {
+      "id": "merciless_moment",
+      "name": "Merciless Moment",
+      "desc": "You deal much more damage to nearly dead monsters.",
+      "parents": [
+        {
+          "node": "cutting_wind",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "execute_threshold",
+      "values": {
+        "threshold": [
+          0.2,
+          0.22,
+          0.24,
+          0.26
+        ],
+        "bonus": [
+          0.7,
+          0.84,
+          0.98,
+          1.12
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:iron_nugget"
+    },
+    {
+      "id": "luminous_wind_mercy_and_reckoning",
+      "name": "Luminous Wind: Mercy and Reckoning",
+      "desc": "A great gust of light that heals you and your allies in a wide ring.",
+      "parents": [
+        {
+          "node": "cutting_wind",
+          "level": 3
+        },
+        {
+          "node": "merciless_moment",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "heal_pulse",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          11.0,
+          12.1,
+          13.2
+        ],
+        "amount": [
+          20.0,
+          25.0,
+          30
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348
+        ],
+        "cooldown": [
+          1500.0,
+          1410.0,
+          1320.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:golden_apple"
+    },
+    {
+      "id": "hooded_verdict",
+      "name": "Hooded Verdict",
+      "desc": "Appear before a single monster and end it in one cut.",
+      "parents": [
+        {
+          "node": "elven_execution",
+          "level": 3
+        },
+        {
+          "node": "forest_landing",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "execute",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          30.0,
+          37.5,
+          45.0
+        ],
+        "range": [
+          6.0,
+          6.36,
+          6.72
+        ],
+        "bonus": [
+          2.0,
+          2.3,
+          2.6
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1300.0,
+          1196.0,
+          1092.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:netherite_sword"
+    }
+  ]
+}
