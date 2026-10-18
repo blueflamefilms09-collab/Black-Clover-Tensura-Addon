@@ -105,7 +105,7 @@ another mod's item is harmless. `PriceTable` is the pure table, `MarketData.pric
 
 ```json
 { "entries": [
-  { "id": "fang_of_smoldering_insanity", "kind": "route_book", "route": "nusmp:fire_dragon_slayer",
+  { "id": "fang_of_smoldering_insanity", "kind": "route_book", "route": "nusmp:smoldering_fang_of_insanity",
     "price_min": 2000000, "price_max": 3000000, "band_low": 0.6667, "stock": 1, "weight": 100, "flagship": true },
   { "id": "route_books", "kind": "route_book", "routes": "all", "price_min": 2000000, "price_max": 3000000, "stock": 1, "weight": 100 },
   { "id": "beginner_archery_primer", "kind": "sp_book", "sp_kind": "beginner_archery", "price_min": 120000, "price_max": 180000, "stock": [3, 5], "weight": 100 }

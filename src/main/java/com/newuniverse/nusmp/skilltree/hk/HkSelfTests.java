@@ -34,7 +34,7 @@ public final class HkSelfTests {
         if (RouteRegistry.all().isEmpty()) return SelfTests.Result.ok("skipped: no skill tree is loaded yet (the route registry is empty)");
         List<String> bad = new ArrayList<>();
         int nodes = 0;
-        for (String id : new String[] {HkRoute.OATH, HkRoute.SWORD, HkRoute.LUCK}) {
+        for (String id : new String[] {HkRoute.OATH, HkRoute.SWORD, HkRoute.LUCK, HkRoute.FANG}) {
             SkillRoute route = RouteRegistry.byId(id);
             if (route == null) {
                 bad.add(id + " is not among the loaded routes");

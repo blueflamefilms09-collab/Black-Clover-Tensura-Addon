@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Why: nine nodes of the Heavy Knight routes are not buttons but things that are simply true of the player while the route is EQUIPPED, and the owner's rule is exact: "if the active route is not
+ * Why: eleven nodes of the Heavy Knight routes are not buttons but things that are simply true of the player while the route is EQUIPPED, and the owner's rule is exact: "if the active route is not
  * this route, return" - an unequipped route gives zero benefit. So every passive starts with ONE question, {@link #level}, which is the tree's own cast gate ({@code SkillTreeApi.canCast}: the
  * engine is on, the route is unlocked, the node is bought AND the route's class is the player's active class), and a node of an unequipped route answers 0, so its passive is not applied at all and
  * nothing has to be cleaned up when the player switches class. The passives live where the game decides the thing they change: the damage event decides what a blow does (the Cat's Paw cancels it, the
@@ -43,7 +43,9 @@ public final class HkPassives {
     private HkPassives() {}
 
     private static final Logger LOG = LogUtils.getLogger();
-    static final String REST_PAW = "nusmp_hk_paw_rest", REST_LAST = "nusmp_hk_last_rest", HURT_AT = "nusmp_hk_hurt_at";
+    static final String REST_PAW = "nusmp_hk_paw_rest", REST_LAST = "nusmp_hk_last_rest", HURT_AT = "nusmp_hk_hurt_at", REST_ASH = "nusmp_hk_ash_rest";
+    /** Game time until which the Fit of Insanity runs (the player's own data, so no static state). */
+    static final String MAD_UNTIL = "nusmp_hk_mad_until";
     /** The beat of the attribute tick: every this many ticks (a player's own count modulo, so a server's players do not all update on one tick). */
     public static final int BEAT = 10;
 
@@ -154,6 +156,16 @@ public final class HkPassives {
             p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, ticks, 1, true, false, true));
         }
 
+        int mad = level(p, HkRoute.FANG, HkRoute.INSANITY);
+        if (mad > 0 && now < d.getLong(MAD_UNTIL)) amount *= (float) (1.0 + num(HkRoute.FANG, HkRoute.INSANITY, "vulnerability", mad));   // the fit costs the guard
+
+        int ash = level(p, HkRoute.FANG, HkRoute.ASH_SKIN);
+        if (ash > 0 && src.getEntity() instanceof net.minecraft.world.entity.LivingEntity striker && striker != p && now >= d.getLong(REST_ASH)
+                && p.getRandom().nextDouble() < Math.min(0.75, num(HkRoute.FANG, HkRoute.ASH_SKIN, "chance", ash))) {
+            d.putLong(REST_ASH, now + (long) num(HkRoute.FANG, HkRoute.ASH_SKIN, "rest", ash));
+            striker.addEffect(new MobEffectInstance(MobEffects.WITHER, Math.max(20, (int) num(HkRoute.FANG, HkRoute.ASH_SKIN, "seconds", ash) * 20), 0, false, true, true));
+        }
+
         if (level(p, HkRoute.SWORD, HkRoute.RIPOSTE) > 0) d.putLong(HURT_AT, now);
         return amount;
     }
@@ -167,6 +179,11 @@ public final class HkPassives {
         if (rip > 0 && d.contains(HURT_AT) && now - d.getLong(HURT_AT) <= (long) num(HkRoute.SWORD, HkRoute.RIPOSTE, "window", rip)) {
             d.remove(HURT_AT);
             amount *= (float) (1.0 + num(HkRoute.SWORD, HkRoute.RIPOSTE, "bonus", rip));
+        }
+        int rabid = level(a, HkRoute.FANG, HkRoute.RABID_FANGS);
+        if (rabid > 0) {
+            double missing = Math.max(0.0, Math.min(1.0, 1.0 - a.getHealth() / Math.max(1f, a.getMaxHealth())));
+            amount *= (float) (1.0 + num(HkRoute.FANG, HkRoute.RABID_FANGS, "bonus", rabid) * missing);   // the hungrier the fang, the harder it bites
         }
         int lucky = level(a, HkRoute.LUCK, HkRoute.LUCKY_STRIKE);
         if (lucky > 0) {

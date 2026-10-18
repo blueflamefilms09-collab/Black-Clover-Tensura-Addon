@@ -74,7 +74,7 @@ public final class ShopSelfTests {
             if (always && !listed && MarketState.get(server).boughtView().isEmpty()) bad.add("the route " + r.id() + " has an always-stocked line but no offer");
         }
         StockBoard.Offer fang = StockBoard.find(StockBoard.build(seed, 11, 0, slots, id -> 0), "fang_of_smoldering_insanity");
-        String flagship = "no Fire Dragon Slayer route in the registry yet";
+        String flagship = "no Smoldering Fang of Insanity route in the registry yet";
         StockEntry fangLine = null;
         for (StockEntry e : MarketData.stock()) if (e.id().equals("fang_of_smoldering_insanity")) fangLine = e;
         if (fang != null && fangLine != null) {

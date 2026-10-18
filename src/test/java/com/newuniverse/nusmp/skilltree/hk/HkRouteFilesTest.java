@@ -23,9 +23,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class HkRouteFilesTest {
     private static final Path DIR = Path.of("src/main/resources/data/nusmp/skill_trees");
-    private static final String[][] ROUTES = {{"oath_of_the_heavy_armor", HkRoute.OATH}, {"basic_swordsmanship", HkRoute.SWORD}, {"lady_luck", HkRoute.LUCK}};
+    private static final String[][] ROUTES = {{"oath_of_the_heavy_armor", HkRoute.OATH}, {"basic_swordsmanship", HkRoute.SWORD}, {"lady_luck", HkRoute.LUCK}, {"smoldering_fang_of_insanity", HkRoute.FANG}};
     private static final Set<String> SKILLS = Set.of(HkRoute.SKILL_PROVOKE, HkRoute.SKILL_SHIELD_WALL, HkRoute.SKILL_SHIELD_BASH, HkRoute.SKILL_POWER_STRIKE, HkRoute.SKILL_SWIFT_STEP,
-            HkRoute.SKILL_CRESCENT_CUT, HkRoute.SKILL_GAMBLERS_COIN, HkRoute.SKILL_JACKPOT);
+            HkRoute.SKILL_CRESCENT_CUT, HkRoute.SKILL_GAMBLERS_COIN, HkRoute.SKILL_JACKPOT, HkRoute.SKILL_EMBER_BITE, HkRoute.SKILL_INSANITY, HkRoute.SKILL_HOWL_OF_RUIN, HkRoute.SKILL_FANG_OF_INSANITY);
 
     private static JsonObject read(String file) throws Exception {
         return JsonParser.parseString(Files.readString(DIR.resolve(file + ".json"))).getAsJsonObject();
@@ -41,7 +41,20 @@ class HkRouteFilesTest {
             assertTrue(books.add(o.get("book").getAsString()), "book used twice in " + r[0]);
             assertTrue(r[1].endsWith(r[0]), "the route id constant names the file " + r[0]);
         }
-        assertEquals(Set.of(HkRoute.OATH_CLASS, HkRoute.SWORD_CLASS, HkRoute.LUCK_CLASS), classes);
+        assertEquals(Set.of(HkRoute.OATH_CLASS, HkRoute.SWORD_CLASS, HkRoute.LUCK_CLASS, HkRoute.FANG_CLASS), classes);
+    }
+
+    @Test
+    void theSmolderingFangIsItsOwnRouteAndNotTheFireDragonSlayers() throws Exception {
+        JsonObject fang = read("smoldering_fang_of_insanity"), fire = read("fire_dragon_slayer");
+        assertEquals("Smoldering Fang of Insanity", fang.get("book_name").getAsString());
+        assertTrue(!fire.get("book_name").getAsString().toLowerCase().contains("smoldering"), "the Fire Dragon Slayer must not carry the Fang's name");
+        assertTrue(!fang.get("magic").getAsString().equals(fire.get("magic").getAsString()), "different magic families");
+        assertTrue(!fang.get("class_id").getAsString().equals(fire.get("class_id").getAsString()), "different classes");
+        for (JsonElement el : fang.getAsJsonArray("nodes")) {
+            JsonObject n = el.getAsJsonObject();
+            if (n.has("skill")) assertTrue(n.get("skill").getAsString().startsWith("nusmp:hk_"), "a Fang technique is a Heavy Knight technique: " + n.get("skill").getAsString());
+        }
     }
 
     @Test

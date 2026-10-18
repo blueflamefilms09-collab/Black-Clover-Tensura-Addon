@@ -21,7 +21,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.List;
 
 /**
- * Why: the eight techniques of the three Heavy Knight routes are small and share one shape (read my numbers from the route file at my node level, pay my share of the magicules, do one clear thing,
+ * Why: the twelve techniques of the four Heavy Knight routes are small and share one shape (read my numbers from the route file at my node level, pay my share of the magicules, do one clear thing,
  * start the cooldown of my table), so they are nested classes of one file on top of {@link FtTreeSkill}, which already owns the gate of the whole engine (the route must be unlocked, the node bought AND,
  * by the single-active-route rule, the route must be the equipped one) and the bookkeeping after a cast. A technique therefore writes only {@code cast}; whatever the player has not equipped
  * simply cannot be cast. Each does what its name says with ordinary game rules and no particle spam: the Provoke turns hostile creatures onto the caster with the creature's own target field (the
@@ -198,6 +198,96 @@ public final class HkTechniques {
             AbilityKit.fx(lvl(p), VfxShape.SPIRIT_AURA, p.position(), p.position().add(0, 1.0, 0), HkRoute.GOLD, 60, 1.4f);
             AbilityKit.sound(p, SoundEvents.PLAYER_LEVELUP, 0.9f, 1.2f);
             AbilityKit.say(p, "JACKPOT!");
+            return true;
+        }
+    }
+
+    // ================================================================ Smoldering Fang of Insanity
+    public static final class EmberBite extends Base {
+        public EmberBite() { super(HkRoute.FANG, HkRoute.EMBER_BITE, "item/bone"); }
+
+        @Override
+        protected boolean cast(ServerPlayer p, ManasSkillInstance instance, int lv, int heldTicks, int mode) {
+            double range = num("range", lv);
+            float raw = (float) num("damage", lv);
+            List<LivingEntity> foes = FtWorld.nearest(FtWorld.hostile(p, AbilityKit.cone(p, range, 30)), p.getEyePosition(), 1);
+            if (foes.isEmpty()) {
+                AbilityKit.say(p, "No foe in reach.");
+                return false;
+            }
+            if (!pay(p, lv)) return false;
+            LivingEntity foe = foes.get(0);
+            AbilityKit.hit(p, foe, raw, FtWorld.masteryFrac(instance));
+            foe.addEffect(new MobEffectInstance(MobEffects.WITHER, Math.max(20, whole("wither_seconds", lv) * 20), 0, false, true, true));
+            AbilityKit.heal(p, (float) (raw * num("life_steal", lv)));
+            AbilityKit.fx(lvl(p), VfxShape.WIND_SLASH, p.getEyePosition(), FtWorld.center(foe), HkRoute.EMBER, 10, 0.8f);
+            AbilityKit.sound(p, SoundEvents.WOLF_GROWL, 0.9f, 1.2f);
+            return true;
+        }
+    }
+
+    public static final class Insanity extends Base {
+        public Insanity() { super(HkRoute.FANG, HkRoute.INSANITY, "item/fermented_spider_eye"); }
+
+        @Override
+        protected boolean cast(ServerPlayer p, ManasSkillInstance instance, int lv, int heldTicks, int mode) {
+            int ticks = Math.max(40, whole("seconds", lv) * 20);
+            if (!pay(p, lv)) return false;
+            p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, ticks, Math.max(0, whole("strength_amp", lv)), true, false, true));
+            p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, ticks, Math.max(0, whole("speed_amp", lv)), true, false, true));
+            p.getPersistentData().putLong(HkPassives.MAD_UNTIL, p.serverLevel().getGameTime() + ticks);
+            AbilityKit.fx(lvl(p), VfxShape.SPIRIT_AURA, p.position(), p.position().add(0, 1.0, 0), HkRoute.EMBER, 40, 1.2f);
+            AbilityKit.sound(p, SoundEvents.WOLF_HOWL, 0.8f, 0.7f);
+            AbilityKit.say(p, "The fang is smouldering. You stop guarding.");
+            return true;
+        }
+    }
+
+    public static final class HowlOfRuin extends Base {
+        public HowlOfRuin() { super(HkRoute.FANG, HkRoute.HOWL_OF_RUIN, "item/goat_horn"); }
+
+        @Override
+        protected boolean cast(ServerPlayer p, ManasSkillInstance instance, int lv, int heldTicks, int mode) {
+            double radius = num("radius", lv), push = num("knockback", lv);
+            int cap = whole("targets", lv), weak = Math.max(20, whole("weak_seconds", lv) * 20), slow = Math.max(20, whole("slow_seconds", lv) * 20);
+            if (!pay(p, lv)) return false;
+            for (LivingEntity foe : FtWorld.nearest(FtWorld.hostile(p, AbilityKit.around(p, p.position(), radius)), p.position(), cap)) {
+                foe.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, weak, 1, false, true, true));
+                foe.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, slow, 1, false, true, true));
+                FtWorld.shove(foe, p, push);
+            }
+            AbilityKit.fx(lvl(p), VfxShape.WIND_RING, p.position(), p.position(), HkRoute.ASH, 30, (float) Math.min(2.2, radius / 5.0));
+            AbilityKit.sound(p, SoundEvents.WOLF_HOWL, 1.0f, 0.5f);
+            return true;
+        }
+    }
+
+    public static final class FangOfInsanity extends Base {
+        public FangOfInsanity() { super(HkRoute.FANG, HkRoute.FANG_OF_INSANITY, "item/wither_skeleton_skull"); }
+
+        @Override
+        protected boolean cast(ServerPlayer p, ManasSkillInstance instance, int lv, int heldTicks, int mode) {
+            double reach = num("reach", lv);
+            float raw = (float) num("damage", lv);
+            List<LivingEntity> foes = FtWorld.nearest(FtWorld.hostile(p, AbilityKit.cone(p, reach, 35)), p.getEyePosition(), 1);
+            if (foes.isEmpty()) {
+                AbilityKit.say(p, "No foe in reach.");
+                return false;
+            }
+            if (!pay(p, lv)) return false;
+            LivingEntity foe = foes.get(0);
+            Vec3 toward = FtWorld.center(foe).subtract(p.position());
+            Vec3 dir = new Vec3(toward.x, 0, toward.z).normalize();
+            p.setDeltaMovement(dir.x * 1.1, 0.25, dir.z * 1.1);                    // the leap that closes the distance
+            p.hurtMarked = true;
+            p.fallDistance = 0f;
+            AbilityKit.hit(p, foe, raw, FtWorld.masteryFrac(instance));
+            foe.addEffect(new MobEffectInstance(MobEffects.WITHER, Math.max(20, whole("wither_seconds", lv) * 20), 1, false, true, true));
+            AbilityKit.heal(p, (float) (raw * num("heal_pct", lv)));
+            p.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, Math.max(20, whole("exhaust_seconds", lv) * 20), 0, true, false, true));
+            AbilityKit.fx(lvl(p), VfxShape.WIND_SLASH, p.getEyePosition(), FtWorld.center(foe), HkRoute.EMBER, 16, 1.6f);
+            AbilityKit.fx(lvl(p), VfxShape.SPIRIT_AURA, FtWorld.center(foe), FtWorld.center(foe).add(0, 0.8, 0), HkRoute.ASH, 40, 1.2f);
+            AbilityKit.sound(p, SoundEvents.WOLF_GROWL, 1.0f, 0.6f);
             return true;
         }
     }

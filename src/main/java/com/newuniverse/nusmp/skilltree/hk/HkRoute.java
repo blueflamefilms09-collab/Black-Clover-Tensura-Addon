@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Why: the three routes of The Exiled Heavy Knight (Oath of the Heavy Armor, Basic Swordsmanship, Lady Luck) are named in three places that must never disagree (the JSON file, the ManasCore
+ * Why: the four routes of The Exiled Heavy Knight (Oath of the Heavy Armor, Basic Swordsmanship, Lady Luck, Smoldering Fang of Insanity) are named in three places that must never disagree (the JSON file, the ManasCore
  * skill ids it points at, and the passives that look a node up by id), and a typo in any of them would make a technique silently uncastable or a passive silently dead. So every id is
  * spelled once, here, as a constant that the skills, the passives and the self-test all read. The class ids are the {@code class_id} of the files: the single-active-route rule keys on
  * them, so a player who equips Lady Luck gets nothing from the Oath and the Swordsmanship. The fallback table holds the level-1 value of every number a technique reads from its file; the
@@ -17,8 +17,8 @@ public final class HkRoute {
     /** The franchise tag of all three routes (the {@code magic} field of the files; the screen groups the routes by it). */
     public static final String FRANCHISE = "exiled_heavy_knight";
 
-    public static final String OATH = "nusmp:oath_of_the_heavy_armor", SWORD = "nusmp:basic_swordsmanship", LUCK = "nusmp:lady_luck";
-    public static final String OATH_CLASS = "heavy_armor", SWORD_CLASS = "swordsmanship", LUCK_CLASS = "lady_luck";
+    public static final String OATH = "nusmp:oath_of_the_heavy_armor", SWORD = "nusmp:basic_swordsmanship", LUCK = "nusmp:lady_luck", FANG = "nusmp:smoldering_fang_of_insanity";
+    public static final String OATH_CLASS = "heavy_armor", SWORD_CLASS = "swordsmanship", LUCK_CLASS = "lady_luck", FANG_CLASS = "smoldering_fang";
 
     // Oath of the Heavy Armor
     public static final String PROVOKE = "provoke", IRON_HIDE = "iron_hide", SHIELD_WALL = "shield_wall", BULWARK = "bulwark", SHIELD_BASH = "shield_bash", UNYIELDING = "unyielding";
@@ -27,15 +27,19 @@ public final class HkRoute {
     // Lady Luck
     public static final String FORTUNES_FAVOR = "fortunes_favor", CATS_PAW = "cats_paw", LUCKY_STRIKE = "lucky_strike", GAMBLERS_COIN = "gamblers_coin", TREASURE_NOSE = "treasure_nose", JACKPOT = "jackpot";
 
+    // Smoldering Fang of Insanity (its own route: a berserker's fang, nothing to do with the Fire Dragon Slayer)
+    public static final String EMBER_BITE = "ember_bite", RABID_FANGS = "rabid_fangs", ASH_SKIN = "ash_skin", INSANITY = "insanity", HOWL_OF_RUIN = "howl_of_ruin", FANG_OF_INSANITY = "fang_of_insanity";
+
     /** The ManasCore skill ids (registry path under {@code nusmp}). */
     public static final String SKILL_PROVOKE = "hk_provoke", SKILL_SHIELD_WALL = "hk_shield_wall", SKILL_SHIELD_BASH = "hk_shield_bash", SKILL_POWER_STRIKE = "hk_power_strike",
-            SKILL_SWIFT_STEP = "hk_swift_step", SKILL_CRESCENT_CUT = "hk_crescent_cut", SKILL_GAMBLERS_COIN = "hk_gamblers_coin", SKILL_JACKPOT = "hk_jackpot";
+            SKILL_SWIFT_STEP = "hk_swift_step", SKILL_CRESCENT_CUT = "hk_crescent_cut", SKILL_GAMBLERS_COIN = "hk_gamblers_coin", SKILL_JACKPOT = "hk_jackpot",
+            SKILL_EMBER_BITE = "hk_ember_bite", SKILL_INSANITY = "hk_insanity", SKILL_HOWL_OF_RUIN = "hk_howl_of_ruin", SKILL_FANG_OF_INSANITY = "hk_fang_of_insanity";
 
     /** The passive ids the files list under {@code passives}. */
-    public static final Set<String> PASSIVES = Set.of("hk_iron_hide", "hk_bulwark", "hk_unyielding", "hk_sword_mastery", "hk_riposte", "hk_fortunes_favor", "hk_cats_paw", "hk_lucky_strike", "hk_treasure_nose");
+    public static final Set<String> PASSIVES = Set.of("hk_iron_hide", "hk_bulwark", "hk_unyielding", "hk_sword_mastery", "hk_riposte", "hk_fortunes_favor", "hk_cats_paw", "hk_lucky_strike", "hk_treasure_nose", "hk_rabid_fangs", "hk_ash_skin");
 
     /** Effect colours, 0xAARRGGBB (for {@code VfxSpawn}). */
-    public static final int STEEL = 0xFF8E9AAF, BLADE = 0xFFC9D2E0, GOLD = 0xFFF2C94C;
+    public static final int STEEL = 0xFF8E9AAF, BLADE = 0xFFC9D2E0, GOLD = 0xFFF2C94C, EMBER = 0xFFB3341F, ASH = 0xFF4A4452;
 
     private static final Map<String, Map<String, Double>> FALLBACK = new HashMap<>();
 
@@ -63,6 +67,12 @@ public final class HkRoute {
         node(GAMBLERS_COIN, "seconds", 12, "heads_chance", 0.55, "cost", 0.015, "cooldown", 600);
         node(TREASURE_NOSE, "chance", 0.1);
         node(JACKPOT, "emeralds", 2, "xp", 30, "cost", 0.04, "cooldown", 3600);
+        node(EMBER_BITE, "damage", 5, "range", 3, "wither_seconds", 3, "life_steal", 0.1, "cost", 0.012, "cooldown", 80);
+        node(RABID_FANGS, "bonus", 0.15);
+        node(ASH_SKIN, "chance", 0.2, "seconds", 3, "rest", 100);
+        node(INSANITY, "seconds", 8, "strength_amp", 0, "speed_amp", 0, "vulnerability", 0.25, "cost", 0.02, "cooldown", 600);
+        node(HOWL_OF_RUIN, "radius", 6, "targets", 4, "weak_seconds", 6, "slow_seconds", 3, "knockback", 0.6, "cost", 0.02, "cooldown", 300);
+        node(FANG_OF_INSANITY, "damage", 18, "reach", 6, "wither_seconds", 6, "heal_pct", 0.35, "exhaust_seconds", 4, "cost", 0.04, "cooldown", 3600);
     }
 
     /** The shipped level-1 value of a node's table (0 when unknown). */

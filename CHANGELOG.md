@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.81.0] — Smoldering Fang of Insanity is its own skill route (not the Fire Dragon Slayer's)
+
+### NEW
+- **Route `nusmp:smoldering_fang_of_insanity`**, the fourth route of The Exiled Heavy Knight (next to Oath of the Heavy Armor, Basic Swordsmanship and Lady Luck), with its own book (*Smoldering Fang of Insanity*), class and six nodes: **Ember Bite**, **Rabid Fangs** (passive: harder blows at low health), **Ash Skin** (passive: foes that strike you wither), **Fit of Insanity** (Strength and Speed, but you take more damage), **Howl of Ruin** (weaken, slow and shove back a crowd) and the Secret Art **Fang of Insanity** (leap and a huge withering bite that heals you). Four new skills (`hk_ember_bite`, `hk_insanity`, `hk_howl_of_ruin`, `hk_fang_of_insanity`), two passives, lang, tests (`HkRouteFilesTest` now checks that the Fang is not the Fire Dragon Slayer's), docs `docs/skilltree/hk_smoldering_fang.md`.
+- Like the other Heavy Knight routes it works only while it is the equipped route.
+
+### REPLACED
+- The Fire Dragon Slayer's book is now called *Heart of the Fire Dragon* (it carried the Fang's name before). The Black Market's flagship line (`fang_of_smoldering_insanity`, the dearest book) now sells the Fang route's book.
+
+### KEPT
+- The Fire Dragon Slayer route (all seven techniques), the other routes, and every saved unlock.
+
+### Honest notes
+- The names are from my own knowledge of the work and the numbers are a first guess; not run in game.
+
 ## [1.80.0] — The Mob Foundry: 400 custom dungeon mobs, 200 per road, all on player-rig models
 
 ### NEW (nothing existed before: the 400 custom mobs had not been built)
