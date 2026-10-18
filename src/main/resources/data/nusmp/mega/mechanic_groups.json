@@ -1,0 +1,61 @@
+{
+  "_why": "Which monsters stand for a group at which depth, for the dungeon mechanics library (labyrinth/mega/mechanics/MobGroups). An entry is an entity id, the lowest tier (1-5) it appears at, a weight, and optionally a variant (written into the monster's data) and 'optional': true (skipped silently when the entity type does not exist, so the foundry's mobs can be named here before they are built). A datapack replaces this file to change the cast.",
+  "undead": [
+    {"id": "minecraft:zombie", "tier": 1, "weight": 10},
+    {"id": "minecraft:skeleton", "tier": 1, "weight": 10},
+    {"id": "minecraft:husk", "tier": 2, "weight": 8},
+    {"id": "minecraft:stray", "tier": 2, "weight": 8},
+    {"id": "minecraft:wither_skeleton", "tier": 4, "weight": 6},
+    {"id": "nusmp:foundry_mob", "variant": "undead", "tier": 1, "weight": 4, "optional": true}
+  ],
+  "beast": [
+    {"id": "minecraft:spider", "tier": 1, "weight": 10},
+    {"id": "minecraft:cave_spider", "tier": 1, "weight": 8},
+    {"id": "minecraft:hoglin", "tier": 3, "weight": 6},
+    {"id": "minecraft:zoglin", "tier": 4, "weight": 6},
+    {"id": "minecraft:ravager", "tier": 5, "weight": 3},
+    {"id": "nusmp:foundry_mob", "variant": "beast", "tier": 1, "weight": 4, "optional": true}
+  ],
+  "construct": [
+    {"id": "minecraft:vindicator", "tier": 1, "weight": 10},
+    {"id": "minecraft:pillager", "tier": 2, "weight": 8},
+    {"id": "minecraft:ravager", "tier": 4, "weight": 4},
+    {"id": "nusmp:foundry_mob", "variant": "construct", "tier": 1, "weight": 4, "optional": true}
+  ],
+  "fiend": [
+    {"id": "minecraft:zombified_piglin", "tier": 1, "weight": 8},
+    {"id": "minecraft:piglin_brute", "tier": 2, "weight": 8},
+    {"id": "minecraft:blaze", "tier": 3, "weight": 6},
+    {"id": "minecraft:wither_skeleton", "tier": 4, "weight": 6},
+    {"id": "nusmp:foundry_mob", "variant": "fiend", "tier": 1, "weight": 4, "optional": true}
+  ],
+  "arcane": [
+    {"id": "minecraft:witch", "tier": 1, "weight": 10},
+    {"id": "minecraft:vex", "tier": 2, "weight": 8},
+    {"id": "minecraft:evoker", "tier": 3, "weight": 6},
+    {"id": "minecraft:illusioner", "tier": 4, "weight": 4},
+    {"id": "nusmp:foundry_mob", "variant": "arcane", "tier": 1, "weight": 4, "optional": true}
+  ],
+  "swarm": [
+    {"id": "minecraft:silverfish", "tier": 1, "weight": 10},
+    {"id": "minecraft:endermite", "tier": 1, "weight": 8},
+    {"id": "minecraft:cave_spider", "tier": 2, "weight": 8},
+    {"id": "minecraft:vex", "tier": 3, "weight": 4},
+    {"id": "nusmp:foundry_mob", "variant": "swarm", "tier": 1, "weight": 4, "optional": true}
+  ],
+  "elemental": [
+    {"id": "minecraft:slime", "tier": 1, "weight": 10},
+    {"id": "minecraft:magma_cube", "tier": 2, "weight": 8},
+    {"id": "minecraft:blaze", "tier": 3, "weight": 6},
+    {"id": "minecraft:breeze", "tier": 4, "weight": 6},
+    {"id": "nusmp:foundry_mob", "variant": "elemental", "tier": 1, "weight": 4, "optional": true}
+  ],
+  "knight": [
+    {"id": "minecraft:vindicator", "tier": 1, "weight": 10},
+    {"id": "minecraft:piglin_brute", "tier": 2, "weight": 8},
+    {"id": "minecraft:pillager", "tier": 2, "weight": 6},
+    {"id": "minecraft:evoker", "tier": 4, "weight": 4},
+    {"id": "minecraft:ravager", "tier": 5, "weight": 3},
+    {"id": "nusmp:foundry_mob", "variant": "knight", "tier": 1, "weight": 4, "optional": true}
+  ]
+}

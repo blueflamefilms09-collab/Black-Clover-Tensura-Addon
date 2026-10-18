@@ -29,6 +29,7 @@ public final class MegaCommands {
         mega.then(com.newuniverse.nusmp.labyrinth.mega.hub.HubRegistry.command());           // hub: Floor 0, the Sanctuary Hub (status, tp, plaza, gates)
         mega.then(com.newuniverse.nusmp.labyrinth.mega.crucible.CrucibleCommand.command());   // crucible: status, roll, reset, catastrophe
         mega.then(com.newuniverse.nusmp.labyrinth.mega.macro.MacroCommand.command());         // macro: info, sample (what the Hub generator would place)
+        mega.then(com.newuniverse.nusmp.labyrinth.mega.mechanics.MechanicsRegistry.command());   // mechanic: the dungeon mechanics library (list, info, apply, clear, count, verify)
         mega.then(SelfTestCommand.command());                                               // selftest: the in-game self-tests the CI smoke test reads
         return mega;
     }
