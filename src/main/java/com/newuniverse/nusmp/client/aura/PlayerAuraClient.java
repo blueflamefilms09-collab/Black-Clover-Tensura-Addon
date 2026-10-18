@@ -28,7 +28,7 @@ public final class PlayerAuraClient {
     private static final EnumMap<Aura, AuraPainter> PAINTERS = new EnumMap<>(Aura.class);
 
     public static void register(Aura a, AuraPainter p) { PAINTERS.put(a, p); }
-    /** public since 1.27.0: the merged magic armour layer (client.merge) overlays the painters of its parents. */
+    /** The painter registered for an aura (public since 1.27.0), or null. */
     public static AuraPainter painter(Aura a) { return PAINTERS.get(a); }
     static EnumMap<Aura, long[]> running(int entityId) { return ACTIVE.get(entityId); }
 

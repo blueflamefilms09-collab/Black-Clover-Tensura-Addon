@@ -174,7 +174,6 @@ public final class VfxManager {
         register(new CompassLayer());
         register(new MercuryLayer());
         register(new com.newuniverse.nusmp.vfx.client.layer.BornMagicLayer());     // 1.16.0
-        register(new com.newuniverse.nusmp.vfx.client.layer.MergedMagicLayer());    // 1.27.0: merged magics (core.magic.merge)
         register(new com.newuniverse.nusmp.vfx.client.layer.CastHoldLayer());      // 1.27.0: the held cast key's one continuous circle
         // 1.35.0: the Zogratis bosses' own effects
         register(new com.newuniverse.nusmp.vfx.client.layer.ZogratisGravityLayer());

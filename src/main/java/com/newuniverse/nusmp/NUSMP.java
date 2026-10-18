@@ -56,7 +56,6 @@ public class NUSMP {
         com.newuniverse.nusmp.relics.djinn.DjinnAttachments.ATTACHMENTS.register(modEventBus);
         modEventBus.addListener(com.newuniverse.nusmp.relics.djinn.DjinnNet::registerPayloads);
         com.newuniverse.nusmp.core.discovery.Discovery.init(modEventBus, modContainer);                                    // 1.27.0: what a player has not found stays hidden
-        modEventBus.addListener(com.newuniverse.nusmp.core.magic.merge.MergedSync::register);                              // 1.27.0: merged magics
         com.newuniverse.nusmp.relics.tier.TierSystem.registerContent(modEventBus);                                         // 1.30.0: tier component, catalysts (before NUItems.ITEMS.register)
         com.newuniverse.nusmp.relics.socket.SocketItems.init();                                                            // 1.30.0: Spirit and Devil Cores
         com.newuniverse.nusmp.relics.socket.SocketComponents.COMPONENTS.register(modEventBus);
@@ -151,7 +150,6 @@ public class NUSMP {
             com.newuniverse.nusmp.client.mega.system.SystemClient.init(modEventBus, modContainer);                           // 1.55.0: the System overlay layer, its key and client config
             com.newuniverse.nusmp.labyrinth.mega.floors.FloorsClient.init();                                                 // 1.55.0: the client side of the alignment sync
             com.newuniverse.nusmp.client.discovery.DiscoveryClient.init();                                                    // 1.27.0
-            com.newuniverse.nusmp.client.merge.MergedClient.init(modEventBus);
             com.newuniverse.nusmp.client.ui.theme.UiThemeClient.init(modEventBus);                                           // 1.27.0: the anime GUI theme
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.ui.theme.UiThemeOptions.SPEC, "nusmp-ui-client.toml");
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.relics.fx.RelicFxOptions.SPEC, "nusmp-relicfx-client.toml");     // 1.30.0: relic effects quality
@@ -242,7 +240,7 @@ public class NUSMP {
         com.newuniverse.nusmp.relics.order.OrderEvents.register(NeoForge.EVENT_BUS);
         com.newuniverse.nusmp.relics.djinn.DjinnEvents.register(NeoForge.EVENT_BUS);
         // 1.25.0: Mod Boss Global Buff Engine, Charter Grimoires + first-kill lock, boss bar sync, holder flags
-        com.newuniverse.nusmp.core.magic.merge.MergeEvents.register(NeoForge.EVENT_BUS);                                    // 1.27.0 (also runs the magic audit at start)
+        com.newuniverse.nusmp.core.magic.profile.MagicAuditEvents.register(NeoForge.EVENT_BUS);                             // the magic framework's startup audit; forgets the retired merged-magic skills at login (1.93.0: the merge generator was removed)
         com.newuniverse.nusmp.relics.tier.TierSystem.registerGame(NeoForge.EVENT_BUS);                                      // 1.30.0
         com.newuniverse.nusmp.relics.scaling.ScalingSystem.registerGame(NeoForge.EVENT_BUS);
         com.newuniverse.nusmp.relics.socket.SocketEngine.register(NeoForge.EVENT_BUS);

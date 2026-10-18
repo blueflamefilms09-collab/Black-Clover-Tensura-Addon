@@ -69,7 +69,7 @@ public abstract class GrimoireBook extends Skill {
     }
 
     // ---------------------------------------------------------------- 1.27.0: what a book calls itself (a merged book answers dynamically)
-    /** The magic this book casts RIGHT NOW: its fixed magic, except a merged book (core.magic.merge), which answers its dominant parent. */
+    /** The magic this book casts RIGHT NOW: its fixed magic (the retired merged-magic skills answer a placeholder). */
     public MagicType magicNow() { return magic; }
 
     /** The id the fault guard and the profile registry know this book by: "FLAME", or "merged:flame+water" for a merged book. */
@@ -385,7 +385,6 @@ public abstract class GrimoireBook extends Skill {
                 || (target instanceof ServerPlayer tp && GrimoirePages.grimoireOf(tp).map(g -> cover(g).isForbidden()).orElse(false)))) r *= 1.25f;
         com.newuniverse.nusmp.blackclover.CopyMemory.remember(target, this, mode);
         target.hurt(createSource(i, caster, type, mode), BalanceLaw.damage(caster, target, r, masteryFrac(i)));
-        com.newuniverse.nusmp.core.magic.merge.MergeContext.onHit(caster, target);      // 1.27.0: a merged cast rides the other parent's hit effect on every hit
     }
 
     public static LivingEntity target(ServerPlayer p, double range) {

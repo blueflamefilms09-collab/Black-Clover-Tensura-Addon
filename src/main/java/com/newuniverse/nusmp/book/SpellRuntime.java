@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.book;
 
-import com.newuniverse.nusmp.core.magic.merge.MergeContext;
 import com.newuniverse.nusmp.core.magic.profile.SafeCast;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -58,7 +57,7 @@ public final class SpellRuntime {
     public static Bolt bolt(ServerPlayer owner, Vec3 start, Vec3 vel, double radius, int life, boolean pierce,
                             LivingEntity homing, OnHit onHit, OnEnd onEnd) {
         // 1.27.0: a bolt fired inside a merged cast keeps the merge (colours, the second hit effect) when it hits or ends ticks later
-        Bolt b = new Bolt(owner, start, vel, radius, life, pierce, homing, MergeContext.wrap(onHit), MergeContext.wrap(onEnd));
+        Bolt b = new Bolt(owner, start, vel, radius, life, pierce, homing, onHit, onEnd);
         BOLTS.add(b);
         return b;
     }
@@ -112,11 +111,11 @@ public final class SpellRuntime {
 
     /** Runs step(age) every 'interval' ticks for 'ticks' ticks. */
     public static void zone(ServerLevel level, int ticks, int interval, IntConsumer step) {
-        ZONES.add(new Zone(level, level.getGameTime() + ticks, Math.max(1, interval), MergeContext.wrap(step), new long[]{0}));
+        ZONES.add(new Zone(level, level.getGameTime() + ticks, Math.max(1, interval), step, new long[]{0}));
     }
 
     public static void later(ServerLevel level, int delay, Runnable run) {
-        LATER.add(new Later(level, level.getGameTime() + delay, MergeContext.wrap(run)));
+        LATER.add(new Later(level, level.getGameTime() + delay, run));
     }
 
     /** Places a block in an air/replaceable spot and removes it after 'ticks'. */

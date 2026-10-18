@@ -208,7 +208,7 @@ public enum VfxShape {
     // 1.27.0: the held cast key (CastHoldLayer): ONE circle follows the caster for the whole hold instead of a new circle every few ticks (anim.CastHold)
     MAGIC_CIRCLE_HOLD,       // start / charge step / keep-alive of the hold circle (follows the caster); duration = how long it lives without news; power = size
     MAGIC_CIRCLE_HOLD_END,   // the key was released: the hold circle stays for the wind-up and fades; duration = wind-up + fade
-    // 1.27.0: merged magics (MergedMagicLayer). The payload's colour is the blended primary colour; the seed's high 32 bits are the merged
+    // 1.27.0 merged-magic shapes: RETIRED in 1.93.0 (the merge generator was removed); the constants stay so the ordinals of the shapes after them never move
     // magic's key (core.magic.merge.MergedKeys), which the client resolves to the synced definition (parents, palette, weights).
     MERGED_CAST,             // a bolt / trail from 'from' to 'to': one strand of motes per parent in the parent's colour, a blended core; power = size
     MERGED_FIELD,            // a zone at 'from' (power = radius / 3): counter-turning rune rings, one per parent, joined by a blended ring

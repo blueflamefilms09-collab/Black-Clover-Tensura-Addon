@@ -1,3 +1,10 @@
+> **REMOVED in 1.93.0 (owner's request).** The merge generator (the "custom" magic a player received when they held the grimoires of two attributes that have no hybrid of their own) is gone:
+> `core/magic/merge/**`, `client/merge/**`, `MergedMagicLayer`, the `/multiverse magic merge|list|info|remove|grant|revoke` commands, the sync and the combined armour and effects. Two attributes now
+> simply stay two attributes, each with its own grimoire skill, pages, effects and armour; nothing combines them. For saves: the 64 skill ids `nusmp:merged_00..63` stay registered as inert
+> `core/magic/profile/RetiredMagic.RetiredBook` placeholders and a player who still holds one has it forgotten at login; `SavedData nusmp_merged_magic` is simply never read again; the enum constants
+> `Aura.MERGED` and `VfxShape.MERGED_*` stay so no ordinal moves; `MagicKeys`/`MagicAlignments` still tolerate a stale `merged:` id. The startup audit that used to ride on `MergeEvents` is now
+> `core/magic/profile/MagicAuditEvents`. The text below is the historical design.
+
 # The merge generator (1.27.0)
 
 Takes two to four existing magics and makes a **new magic** of them: its own name, soul type, hit effects, spell list, effects,

@@ -239,9 +239,9 @@ public final class NUSkills {
         return ids;
     }
 
-    /** 1.27.0: the 64 skills that cast the merged magics of a world (core.magic.merge); a merged magic takes one of them when it is created. Not part of BOOKS on purpose. Registered LAST so the registry order (and every raw id) of the skills before it is unchanged. */
-    public static final java.util.List<DeferredHolder<ManasSkill, com.newuniverse.nusmp.core.magic.merge.MergedBook>> MERGED_BOOKS =
-            com.newuniverse.nusmp.core.magic.merge.MergedSkills.registerAll(SKILLS);
+    /** The 64 retired merged-magic skill ids (nusmp:merged_00..63), kept registered as inert placeholders so old saves load (core.magic.profile.RetiredMagic); forgotten at login. Registered LAST so the registry order of everything else is unchanged. */
+    public static final java.util.List<DeferredHolder<ManasSkill, com.newuniverse.nusmp.core.magic.profile.RetiredMagic.RetiredBook>> MERGED_BOOKS =
+            com.newuniverse.nusmp.core.magic.profile.RetiredMagic.registerAll(SKILLS);
 
     private NUSkills() {}
 }

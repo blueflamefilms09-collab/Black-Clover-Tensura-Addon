@@ -48,7 +48,7 @@ public enum Aura {
     SLASH,
     COMPASS,
     MERCURY,
-    /** 1.27.0: the temporary armour layer of a merged magic: the parents' armours overlaid with a blend (client.merge.MergedArmorPainter); style = the merged magic's slot */
+    /** 1.27.0: the merged-magic armour; RETIRED in 1.93.0 (no painter is registered for it any more; the constant stays so the ordinals after it never move) */
     MERGED,
     /** 1.27.0: the temporary armour / aura of the 30 wiki magics; the style is the magic's WikiStyles index (client.aura.WikiAura) */
     WIKI

@@ -11582,5 +11582,7 @@
   "nusmp.skill.line_wizard_king_sovereign": "Wizard King Sovereign",
   "nusmp.skill.line_wizard_saint_rock_magic": "Wizard Saint's Rock Magic",
   "nusmp.skill.line_wood_make": "Wood-Make",
-  "nusmp.skill.line_wynn_fimbulvetr": "Wynn Fimbulvetr"
+  "nusmp.skill.line_wynn_fimbulvetr": "Wynn Fimbulvetr",
+  "nusmp.merge.retired": "Retired magic",
+  "nusmp.merge.retired.description": "The merged (custom) magics were removed. Two attributes now stay two attributes, each with its own grimoire."
 }

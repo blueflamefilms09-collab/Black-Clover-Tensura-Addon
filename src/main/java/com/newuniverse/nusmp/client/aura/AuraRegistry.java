@@ -49,7 +49,6 @@ final class AuraRegistry {
         SlashAura.register();
         CompassAura.register();
         MercuryAura.register();
-        com.newuniverse.nusmp.client.merge.MergedArmorPainter.register();      // 1.27.0: merged magics
         WikiAura.register();                 // 1.27.0: the 30 wiki magics
     }
 }
