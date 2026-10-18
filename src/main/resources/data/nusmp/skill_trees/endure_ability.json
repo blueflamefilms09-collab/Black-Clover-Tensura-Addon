@@ -1,0 +1,1077 @@
+{
+  "magic": "danmachi",
+  "franchise": "danmachi",
+  "name": "Developmental Ability: Endure",
+  "desc": "Outlast everything: a body that shrugs off blows, regenerates in a pinch and hands back some of the pain. The patient face of Level-up growth.",
+  "book": "nusmp:endure_ability_book",
+  "book_name": "Treatise on Not Falling Down",
+  "book_lore": "Winning is optional. Being there at the end is not.",
+  "color": "#6F8F9F",
+  "icon": "minecraft:iron_chestplate",
+  "class_id": "endure_ability",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/endure_ability.png",
+  "book_texture": "nusmp:item/skill_book_3d/danmachi",
+  "background_theme": "city",
+  "nodes": [
+    {
+      "id": "unyielding_stance",
+      "name": "Unyielding Stance",
+      "desc": "Brace the body: huge armor and knockback resistance, slow to move.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "EARTH_SPIKES"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          6.0,
+          7.5,
+          9.0
+        ],
+        "speed_pct": [
+          -0.15,
+          -0.18,
+          -0.21
+        ],
+        "knockback_res": [
+          0.5,
+          0.6,
+          0.7
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:iron_block"
+    },
+    {
+      "id": "marathon_stance",
+      "name": "Marathon Stance",
+      "desc": "Pace yourself: strong regeneration at the cost of damage.",
+      "parents": [
+        {
+          "node": "unyielding_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "damage_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "armor": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          1.5,
+          1.8,
+          2.1
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:golden_carrot"
+    },
+    {
+      "id": "vast_reserve",
+      "name": "Vast Reserve",
+      "desc": "A huge pool of health.",
+      "parents": [
+        {
+          "node": "unyielding_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          5.0,
+          6.25,
+          7.5,
+          8.75,
+          10.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:golden_apple"
+    },
+    {
+      "id": "hardened_body",
+      "name": "Hardened Body",
+      "desc": "Layers of toughened tissue.",
+      "parents": [
+        {
+          "node": "marathon_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:iron_chestplate"
+    },
+    {
+      "id": "planted_heels",
+      "name": "Planted Heels",
+      "desc": "Very hard to push.",
+      "parents": [
+        {
+          "node": "unyielding_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "knockback_resistance",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.15,
+          0.1875,
+          0.225,
+          0.2625,
+          0.3
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:anvil"
+    },
+    {
+      "id": "scarred_toughness",
+      "name": "Scarred Toughness",
+      "desc": "A hide that blunts the worst hits.",
+      "parents": [
+        {
+          "node": "marathon_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor_toughness",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:netherite_scrap"
+    },
+    {
+      "id": "deep_reserve_breath",
+      "name": "Deep Reserve Breath",
+      "desc": "Breathe deep: a big heal and then regeneration.",
+      "parents": [
+        {
+          "node": "unyielding_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_self",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "amount": [
+          10.0,
+          12.5,
+          15.0,
+          17.5
+        ],
+        "regen_seconds": [
+          9.0,
+          10.0,
+          12.0,
+          13.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:bread"
+    },
+    {
+      "id": "hardening_breath",
+      "name": "Hardening Breath",
+      "desc": "Draw yourself tight: Resistance and Regeneration for a while.",
+      "parents": [
+        {
+          "node": "marathon_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "resistance",
+        "effect2": "regeneration",
+        "vfx": "EARTH_SPIKES"
+      },
+      "values": {
+        "seconds": [
+          14.0,
+          16.0,
+          18.0,
+          20.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "amp2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:iron_ingot"
+    },
+    {
+      "id": "pain_returned",
+      "name": "Pain Returned",
+      "desc": "For a short while a big share of the damage you take is flung back.",
+      "parents": [
+        {
+          "node": "deep_reserve_breath",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ward_reflect",
+      "params": {
+        "vfx": "DEVIL_CIRCLE"
+      },
+      "values": {
+        "seconds": [
+          6.0,
+          7.0,
+          7.0,
+          8.0
+        ],
+        "reflect_pct": [
+          0.4,
+          0.48,
+          0.56,
+          0.64
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:crying_obsidian"
+    },
+    {
+      "id": "stubborn_wall",
+      "name": "Stubborn Wall",
+      "desc": "A thick shell of stubbornness that absorbs a lot of damage.",
+      "parents": [
+        {
+          "node": "hardening_breath",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "absorb_hearts": [
+          7.0,
+          9.0,
+          10.0,
+          12.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          7.0,
+          8.0
+        ],
+        "resist_amp": [
+          1.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:shield"
+    },
+    {
+      "id": "endurance_shove",
+      "name": "Endurance Shove",
+      "desc": "Lean into the monsters and push a wave of force along the ground.",
+      "parents": [
+        {
+          "node": "pain_returned",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "length": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "width": [
+          3.0,
+          3.3,
+          3.6,
+          3.9
+        ],
+        "knockback": [
+          1.5,
+          1.65,
+          1.8,
+          1.95
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          180.0,
+          166.0,
+          151.0,
+          137.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:cobblestone"
+    },
+    {
+      "id": "landing_stand",
+      "name": "Landing Stand",
+      "desc": "Leap and land like a boulder, shaking the monsters near.",
+      "parents": [
+        {
+          "node": "stubborn_wall",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "height": [
+          0.8,
+          0.864,
+          0.928,
+          0.992
+        ],
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "radius": [
+          3.2,
+          3.52,
+          3.84,
+          4.16
+        ],
+        "knockback": [
+          1.2,
+          1.32,
+          1.44,
+          1.56
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:anvil"
+    },
+    {
+      "id": "hold_your_ground",
+      "name": "Hold Your Ground",
+      "desc": "A stomp that freezes the monsters around you.",
+      "parents": [
+        {
+          "node": "endurance_shove",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "stun_ring",
+      "params": {
+        "vfx": "EARTH_SPIKES"
+      },
+      "values": {
+        "radius": [
+          4.5,
+          4.95,
+          5.4,
+          5.85
+        ],
+        "seconds": [
+          2.0,
+          2.0,
+          3.0,
+          3.0
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:iron_boots"
+    },
+    {
+      "id": "pain_threshold",
+      "name": "Pain Threshold",
+      "desc": "In a fight you take less damage.",
+      "parents": [
+        {
+          "node": "deep_reserve_breath",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "reduce_when",
+      "params": {
+        "condition": "in_combat"
+      },
+      "values": {
+        "pct": [
+          0.14,
+          0.168,
+          0.196,
+          0.224
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:iron_ingot"
+    },
+    {
+      "id": "never_down",
+      "name": "Never Down",
+      "desc": "When nearly dead you are briefly shielded.",
+      "parents": [
+        {
+          "node": "hardening_breath",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "last_stand",
+      "values": {
+        "threshold": [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "seconds": [
+          7.0,
+          8.0,
+          9.0,
+          10.0
+        ],
+        "rest": [
+          1800.0,
+          1620.0,
+          1440.0,
+          1260.0
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:totem_of_undying"
+    },
+    {
+      "id": "quiet_recovery",
+      "name": "Quiet Recovery",
+      "desc": "Your wounds close slowly, even out of combat.",
+      "parents": [
+        {
+          "node": "pain_returned",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "mending",
+      "values": {
+        "seconds": [
+          10.0,
+          9.0,
+          8.0,
+          7.0
+        ],
+        "amount": [
+          1,
+          1.25,
+          1.5,
+          1.75
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:honeycomb"
+    },
+    {
+      "id": "scrape_and_rise",
+      "name": "Scrape and Rise",
+      "desc": "At low health your wounds close fast.",
+      "parents": [
+        {
+          "node": "stubborn_wall",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "low_health"
+      },
+      "values": {
+        "per_second": [
+          1.3,
+          1.56,
+          1.82,
+          2.08
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:glistering_melon_slice"
+    },
+    {
+      "id": "stone_faced",
+      "name": "Stone-Faced",
+      "desc": "Explosions break against you.",
+      "parents": [
+        {
+          "node": "endurance_shove",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "explosion"
+      },
+      "values": {
+        "pct": [
+          0.35,
+          0.42,
+          0.49,
+          0.56
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:tnt"
+    },
+    {
+      "id": "padded_landing",
+      "name": "Padded Landing",
+      "desc": "You take much less fall damage.",
+      "parents": [
+        {
+          "node": "landing_stand",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "fall_guard",
+      "values": {
+        "pct": [
+          0.6,
+          0.72,
+          0.84,
+          0.96
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:hay_block"
+    },
+    {
+      "id": "marathon_lungs",
+      "name": "Marathon Lungs",
+      "desc": "You tire more slowly.",
+      "parents": [
+        {
+          "node": "hold_your_ground",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "hunger_saver",
+      "values": {
+        "pct": [
+          0.35,
+          0.42,
+          0.49,
+          0.56
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:bread"
+    },
+    {
+      "id": "endure_immortal_wall",
+      "name": "Endure: Immortal Wall",
+      "desc": "An enormous shell of absorption and Resistance: the wall nobody gets through.",
+      "parents": [
+        {
+          "node": "hold_your_ground",
+          "level": 3
+        },
+        {
+          "node": "marathon_lungs",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "absorb_hearts": [
+          12.0,
+          15.0,
+          18.0
+        ],
+        "seconds": [
+          14.0,
+          15.0,
+          17.0
+        ],
+        "resist_amp": [
+          1.0,
+          2.0,
+          2.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1500.0,
+          1410.0,
+          1320.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:beacon"
+    },
+    {
+      "id": "refuse_the_count",
+      "name": "Refuse the Count",
+      "desc": "From the floor to your feet: a vast heal with long regeneration.",
+      "parents": [
+        {
+          "node": "landing_stand",
+          "level": 3
+        },
+        {
+          "node": "padded_landing",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "heal_self",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "amount": [
+          25.0,
+          31.25,
+          37.5
+        ],
+        "regen_seconds": [
+          12.0,
+          14.0,
+          16.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1600.0,
+          1504.0,
+          1408.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:enchanted_golden_apple"
+    }
+  ]
+}
