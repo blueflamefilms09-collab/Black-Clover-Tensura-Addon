@@ -32,6 +32,8 @@ public final class WikiBooks {
 
     public static GrimoireBook attribute(MagicType magic) {
         if (!isNewAttribute(magic)) throw new IllegalArgumentException("Not a newly added wiki attribute: " + magic);
+        GrimoireBook rebuilt = AirBook.rebuilt(magic);                   // 1.93.0: Smoke, Snow, Wing, Vortex and Air have their own rebuilt books
+        if (rebuilt != null) return rebuilt;
         String name = magic.displayName.replace(" Magic", "");
         var rider = rider(magic);
         return new ElementBook(magic, color(magic), TensuraDamageTypes.MAGIC_GENERIC, List.of(

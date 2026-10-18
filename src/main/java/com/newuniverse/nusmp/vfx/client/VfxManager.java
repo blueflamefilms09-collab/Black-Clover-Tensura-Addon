@@ -193,6 +193,7 @@ public final class VfxManager {
         register(new com.newuniverse.nusmp.vfx.client.layer.SongNotesLayer());
         register(new com.newuniverse.nusmp.vfx.client.layer.SongRingLayer());
         register(new com.newuniverse.nusmp.vfx.client.layer.CorpseLayer());
+        register(new com.newuniverse.nusmp.vfx.client.layer.SmokeLayer());                 // 1.93.0: Smoke, Snow, Wing, Vortex, Air and Ash Magic rebuild
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }

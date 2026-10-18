@@ -97,5 +97,12 @@ public enum PropKind {
     RECOMBINATION_1,
     RECOMBINATION_2,
     /** 1.43.0: Unite Canis's shadow wolves (server: shadow.ShadowPackProps, painter: client.shadow.ShadowPackPainter). */
-    SHADOW_PACK_1
+    SHADOW_PACK_1,
+    /** 1.93.0 rebuild: the summons of Smoke (clone, serpent), Snow (golem, crystal), Wing (hawk, feather blade), Vortex (core, funnel), Air (blades, orb) and Ash (soldier, trap); the variant is in param */
+    SMOKE_1,
+    SNOW_1,
+    WING_1,
+    VORTEX_1,
+    AIR_1,
+    ASH_1
 }

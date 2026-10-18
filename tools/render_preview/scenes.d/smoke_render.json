@@ -1,0 +1,7 @@
+{
+ "smoke_clone_view": {"kind": "geo", "model": "smoke_clone", "space": "PROP", "anim": "idle", "glow": "FFFFFFFF", "ages": [0, 15, 30], "tile": [300, 360]},
+ "smoke_serpent_view": {"kind": "geo", "model": "smoke_serpent", "space": "PROP", "anim": "idle", "glow": "FFFFFFFF", "ages": [0, 15, 30], "tile": [380, 300]},
+ "smoke_aura_armour": {"kind": "aura", "attr": "Smoke", "aura": "SMOKE", "style": 0, "total": 120, "ages": [3, 9, 16, 40, 80, 108], "tile": [300, 420],
+  "exampleFiles": ["../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java", "../../../src/main/java/com/newuniverse/nusmp/client/aura/AirSetKit.java",
+                   "../../../src/main/java/com/newuniverse/nusmp/client/prop/SealDraw.java"]}
+}
