@@ -47,7 +47,7 @@ public final class RouteSchema {
      * 1.82.0: the wider canvas grid of an EXTENDED route (one that names a {@code franchise}, i.e. a generated Unique Skill Line): the generator lays a line out in five columns of up to 16 cells
      * with stacked rows, which does not fit the classic 12 by 9. A classic route keeps its old limits exactly, so its tests and its files mean what they always meant.
      */
-    public static final int MAX_LINE_X = 24, MAX_LINE_Y = 15;
+    public static final int MAX_LINE_X = 20, MAX_LINE_Y = 18;
     /** 1.82.0: the string parameters of a node (at most this many, each value at most {@link #LEN_PARAM} characters). */
     public static final int MAX_PARAMS = 8, LEN_PARAM = 40;
     /** 1.82.0: a texture path such as {@code nusmp:textures/gui/skill_trees/<line id>.png} is longer than a resource id of the old fields. */

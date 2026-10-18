@@ -41,7 +41,9 @@ final class DetailPanel {
 
     // ------------------------------------------------------------------ content
     /** What the card shows: a sealed route, a route summary (node == null), or a node. */
-    record Subject(SkillRoute route, SkillNode node, NodeState nodeState, TreeState player) {}
+    record Subject(SkillRoute route, SkillNode node, NodeState nodeState, TreeState player, boolean inspect) {
+        Subject(SkillRoute route, SkillNode node, NodeState nodeState, TreeState player) { this(route, node, nodeState, player, false); }
+    }
 
     /** Rebuilds the blocks when the subject (or the width, or the look) changed since the last call. */
     void update(Font font, int width, Subject s) {
@@ -59,7 +61,7 @@ final class DetailPanel {
         StringBuilder b = new StringBuilder();
         boolean unlocked = s.player().hasRoute(s.route().id());
         b.append(System.identityHashCode(s.route())).append('|').append(s.node() == null ? "" : s.node().id()).append('|').append(unlocked).append('|').append(s.player().sp()).append('|')
-                .append(width).append('|').append(TreeSkin.anime());
+                .append(width).append('|').append(TreeSkin.anime()).append('|').append(s.inspect());
         if (s.nodeState() != null) b.append('|').append(s.nodeState().status()).append(s.nodeState().level());
         if (s.node() != null) for (NodeState.Requirement r : NodeState.requirements(s.player(), s.route(), s.node())) b.append('|').append(r.have());
         if (s.node() == null && unlocked) b.append('|').append(NodeState.ownedNodes(s.player(), s.route()));
@@ -70,7 +72,8 @@ final class DetailPanel {
         List<Block> out = new ArrayList<>();
         SkillRoute r = s.route();
         int rgb = r.color() & 0xFFFFFF;
-        if (!s.player().hasRoute(r.id())) {                              // a sealed route: what it needs and where to find it
+        boolean owned = s.player().hasRoute(r.id());
+        if (!owned && !s.inspect()) {                                    // a sealed route: what it needs and where to find it
             out.add(new Block(BlockKind.PADLOCK, "", List.of(), 0, 22));
             out.add(para(font, w, SkillTreeLang.tr(SkillTreeLang.LOCKED_TITLE).withStyle(ChatFormatting.BOLD), TreeSkin.gold()));
             out.add(gap(4));
@@ -101,7 +104,16 @@ final class DetailPanel {
         MutableComponent level = st.status() == NodeStatus.MAXED ? SkillTreeLang.tr(SkillTreeLang.LEVEL_MAX, st.level()) : SkillTreeLang.tr(SkillTreeLang.LEVEL, st.level(), st.max());
         out.add(para(font, w, level, TreeSkin.opaque(rgb)));
         out.add(para(font, w, SkillTreeLang.tr(stateKey(st.status())), stateColor(st.status())));
-        out.add(para(font, w, SkillTreeLang.tr(n.grantsSkill() ? SkillTreeLang.TAG_ACTIVE : SkillTreeLang.TAG_PASSIVE), TreeSkin.dim()));
+        out.add(para(font, w, SkillTreeLang.tr(n.grantsSkill() || n.nodeType() == SkillNode.NodeType.ACTIVE ? SkillTreeLang.TAG_ACTIVE : SkillTreeLang.TAG_PASSIVE), TreeSkin.dim()));
+        if (!n.params().isEmpty()) {                                     // 1.82.0: the words of a line node (effect, element, shape...)
+            StringBuilder words = new StringBuilder();
+            for (var pe : n.params().entrySet()) {
+                if (pe.getValue().equals("none")) continue;
+                if (words.length() > 0) words.append(", ");
+                words.append(TreeText.prettify(pe.getKey())).append(": ").append(TreeText.prettify(pe.getValue().toLowerCase(Locale.ROOT)));
+            }
+            if (words.length() > 0) out.add(para(font, w, Component.literal(words.toString()), TreeSkin.dim()));
+        }
         if (!n.desc().isEmpty()) {
             out.add(gap(4));
             out.add(para(font, w, Component.literal(n.desc()), TreeSkin.text()));
@@ -117,7 +129,7 @@ final class DetailPanel {
                 out.add(gap(2));
             }
         }
-        if (st.status() != NodeStatus.MAXED) {
+        if (st.status() != NodeStatus.MAXED && owned) {
             out.add(gap(3));
             out.add(new Block(BlockKind.HEADING, SkillTreeLang.str(SkillTreeLang.COST).toUpperCase(Locale.ROOT), List.of(), TreeSkin.gold(), 14));
             boolean afford = s.player().sp() >= st.price();

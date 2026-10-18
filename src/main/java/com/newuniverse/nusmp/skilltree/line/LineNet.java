@@ -68,6 +68,7 @@ public final class LineNet {
             if (p == null || !allow(REQUESTS, p, REQUESTS_PER_SECOND)) return;
             if (!SkillTreeApi.setPassiveEnabled(p, payload.route(), payload.node(), payload.on())) {
                 p.displayClientMessage(LineText.tr(LineText.TOGGLE_REFUSED).withStyle(ChatFormatting.RED), true);
+                SkillTreeApi.resync(p);                           // the client flipped its own copy before asking: send the truth back
                 return;
             }
             LineAttrs.sync(p);                                    // do not wait for the next beat: the stat bonus follows the switch at once

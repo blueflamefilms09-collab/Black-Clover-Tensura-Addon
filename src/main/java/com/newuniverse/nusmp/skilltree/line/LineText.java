@@ -52,7 +52,8 @@ public final class LineText {
     public static final String PASSIVES_TITLE = def("gui.nusmp.lines.passives.title", "Passives");
     public static final String PASSIVES_CLOSE = def("gui.nusmp.lines.passives.close", "Back");
     public static final String PASSIVES_EMPTY = def("gui.nusmp.lines.passives.empty", "You have no passives yet. Read a Skill Book and buy passive nodes in the Skill Tree.");
-    public static final String PASSIVES_ON = def("gui.nusmp.lines.passives.on", "ON");
+    public static final String PASSIVES_NO_MATCH = def("gui.nusmp.lines.passives.no_match", "No passive matches that search.");
+    public static final String PASSIVES_ON =def("gui.nusmp.lines.passives.on", "ON");
     public static final String PASSIVES_OFF = def("gui.nusmp.lines.passives.off", "OFF");
     public static final String PASSIVES_EQUIPPED = def("gui.nusmp.lines.passives.equipped", "EQUIPPED");
     public static final String PASSIVES_NOT_EQUIPPED = def("gui.nusmp.lines.passives.not_equipped", "Not equipped: this line's passives are asleep.");

@@ -41,7 +41,13 @@ final class RouteList {
     static int textWidth(int areaW) { return Math.max(20, areaW - 6 - ICON_COLUMN - 2); }
 
     /** Rebuilds the rows from the groups for a list area {@code areaW} wide. Cheap, called every frame. */
+    private List<RouteGrouping.Group> builtFrom;
+    private int builtW = -1;
+
     void build(List<RouteGrouping.Group> groups, Font font, int areaW) {
+        if (groups == builtFrom && areaW == builtW) return;             // 1.82.0: the rows are rebuilt only when the grouped list (or the width) changed, not every frame
+        builtFrom = groups;
+        builtW = areaW;
         SageLayout.Metrics m = font::width;
         int tw = textWidth(areaW);
         List<Row> out = new ArrayList<>();
