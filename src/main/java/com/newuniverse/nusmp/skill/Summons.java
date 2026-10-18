@@ -38,14 +38,44 @@ final class Summons {
     private static final double SCAN = 64.0;
 
     // ---------------------------------------------------------------- lookup
-    /** All living summons of this player within {@link #SCAN} blocks (oldest first: lowest entity id). */
+    /**
+     * Every summon an owner has called, by UUID, so the cap counts them wherever they stand (another dimension, far away), not just the
+     * ones near the owner. In memory only: after a restart the ledger is empty and fills again from the entities found near the owner.
+     */
+    private static final java.util.Map<UUID, List<UUID>> LEDGER = new java.util.HashMap<>();
+
+    /** All living summons of this player: the ledger's (any distance, any loaded dimension) plus any found near them (oldest first). */
     static List<Mob> owned(ServerPlayer player) {
-        ServerLevel level = player.serverLevel();
         UUID id = player.getUUID();
-        List<Mob> found = level.getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(SCAN),
-                m -> m.isAlive() && m.getTags().contains(SummonerSkill.SUMMON_TAG) && ownedBy(m, id));
-        found.sort(Comparator.comparingInt(Mob::getId));
-        return found;
+        java.util.Map<UUID, Mob> found = new java.util.LinkedHashMap<>();
+        List<UUID> ids = LEDGER.computeIfAbsent(id, k -> new ArrayList<>());
+        MinecraftServer server = player.getServer();
+        if (server != null) {
+            for (java.util.Iterator<UUID> it = ids.iterator(); it.hasNext(); ) {
+                UUID mobId = it.next();
+                net.minecraft.world.entity.Entity e = null;
+                for (ServerLevel lvl : server.getAllLevels()) {
+                    e = lvl.getEntity(mobId);
+                    if (e != null) break;
+                }
+                if (e instanceof Mob m && m.isAlive() && ownedBy(m, id)) found.put(mobId, m); else it.remove();
+            }
+        }
+        // anything of theirs near them that the ledger does not know yet (after a restart) is adopted
+        for (Mob m : player.serverLevel().getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(SCAN),
+                m -> m.isAlive() && m.getTags().contains(SummonerSkill.SUMMON_TAG) && ownedBy(m, id))) {
+            if (found.putIfAbsent(m.getUUID(), m) == null) ids.add(m.getUUID());
+        }
+        List<Mob> list = new ArrayList<>(found.values());
+        list.sort(Comparator.comparingInt(Mob::getId));
+        if (ids.isEmpty()) LEDGER.remove(id);
+        return list;
+    }
+
+    static void clearLedger() { LEDGER.clear(); }
+
+    private static void track(ServerPlayer owner, Mob mob) {
+        LEDGER.computeIfAbsent(owner.getUUID(), k -> new ArrayList<>()).add(mob.getUUID());
     }
 
     static boolean ownedBy(Mob m, UUID owner) {
@@ -136,6 +166,7 @@ final class Summons {
             if (!level.noCollision(mob)) mob.moveTo(owner.getX(), owner.getY(), owner.getZ(), owner.getYRot(), 0.0F);
             if (level.addFreshEntity(mob)) {
                 made++;
+                track(owner, mob);
                 SkillFx.burst(level, mob.position().add(0, mob.getBbHeight() * 0.5, 0), card == Card.WRAITH, 8, 0.4);
             }
         }

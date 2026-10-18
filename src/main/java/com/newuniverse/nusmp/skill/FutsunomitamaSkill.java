@@ -51,7 +51,7 @@ public class FutsunomitamaSkill extends ChantedMagicSkill {
         SkillFx.spray(level, true, c.add(0, 0.5, 0), 12, radius / 3, 0.3, radius / 3, 0.0);
         SkillFx.sound(level, c, SoundEvents.ANVIL_LAND, 1.5F, 0.5F);
 
-        int pulses = ChantRules.pulses(ChantRules.gravityTicks(tier), ChantRules.gravityInterval());
+        int pulses = ChantRules.pulses(ChantRules.gravityTicks(tier), ChantRules.gravityInterval()) + 1;   // + the instant first crush
         SkillZones.start(player, ChantRules.gravityInterval(), pulses, (owner, lvl, index) -> {
             if (index == 0) return;                                   // the first crush was dealt above
             for (LivingEntity t : SkillTargets.foes(owner, c, radius)) {

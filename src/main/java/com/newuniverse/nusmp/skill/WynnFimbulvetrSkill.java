@@ -53,7 +53,7 @@ public class WynnFimbulvetrSkill extends ChantedMagicSkill {
         SkillFx.sound(level, c, SoundEvents.GLASS_BREAK, 2.0F, 0.5F);
 
         // the blizzard lingers: every second it chills and hurts whatever is still inside
-        int pulses = ChantRules.pulses(ChantRules.blizzardTicks(tier), ChantRules.blizzardInterval());
+        int pulses = ChantRules.pulses(ChantRules.blizzardTicks(tier), ChantRules.blizzardInterval()) + 1;   // + the instant first strike
         SkillZones.start(player, ChantRules.blizzardInterval(), pulses, (owner, lvl, index) -> {
             if (index == 0) return;                                   // the first strike was dealt above
             for (LivingEntity t : SkillTargets.foes(owner, c, radius)) {

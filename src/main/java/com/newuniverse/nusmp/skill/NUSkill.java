@@ -43,7 +43,7 @@ public abstract class NUSkill extends Skill {
 
     /** The tier the skill's numbers are read from for this wearer. */
     protected Tier tier(ManasSkillInstance instance, LivingEntity entity) {
-        return Tier.of(instance.isMastered(entity), ultimate);
+        return Tier.of(entity != null && instance.isMastered(entity), ultimate);
     }
 
     /** Mastery as a 0..1 fraction (BalanceLaw scales damage with it). */

@@ -49,5 +49,8 @@ public final class SkillEvents {
     }
 
     /** The server is stopping: forget every zone (summons are saved with their owner and lifetime, and swept on the next start). */
-    public static void onServerStopping() { SkillZones.clearAll(); }
+    public static void onServerStopping() {
+        SkillZones.clearAll();
+        Summons.clearLedger();
+    }
 }
