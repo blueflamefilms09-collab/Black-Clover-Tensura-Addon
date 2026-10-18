@@ -386,13 +386,13 @@ SIZES = [(64, 32), (64, 64), (128, 64), (128, 128), (128, 256), (256, 256)]
 
 
 def build(key, name, seed, specs, bones=None, anim=None, quiet=True):
-    """Builds, paints and saves one model. bones: list of (name, parent, pivot) beyond 'root' (a bone at the origin). The smallest sheet that fits is used."""
+    """Builds, paints and saves one model. bones: list of (name, parent, pivot) beyond 'root' (a bone at the origin; a bone may carry a 4th item, its rest rotation). The smallest sheet that fits is used."""
     last = None
     for tw, th in SIZES:
         sh = Sheet(key, name, tw, th, seed)
         sh.bone("root", pivot=(0, 0, 0))
         for b in bones or []:
-            sh.bone(b[0], b[1], b[2])
+            sh.bone(b[0], b[1], b[2], b[3] if len(b) > 3 else None)
         for sp in specs:
             sh.cube(sp["bone"], sp["o"], sp["s"], sp["mat"], sp["rot"], sp["pv"], sp["infl"], **sp["opt"])
         try:

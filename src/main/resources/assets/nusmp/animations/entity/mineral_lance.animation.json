@@ -1,0 +1,30 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "idle": {
+   "loop": true,
+   "animation_length": 0.8,
+   "bones": {
+    "l": {
+     "rotation": {
+      "0.00": [
+       0,
+       0,
+       0
+      ],
+      "0.40": [
+       0,
+       0,
+       180
+      ],
+      "0.80": [
+       0,
+       0,
+       360
+      ]
+     }
+    }
+   }
+  }
+ }
+}
