@@ -1,0 +1,14 @@
+{
+  "item.nusmp.charter_grimoire_dante": "Canon Grimoire of Dante Zogratis",
+  "item.nusmp.charter_grimoire_vanica": "Canon Grimoire of Vanica Zogratis",
+  "item.nusmp.charter_grimoire_zenon": "Canon Grimoire of Zenon Zogratis",
+  "item.nusmp.charter_grimoire_lucius": "Canon Grimoire of Lucius Zogratis",
+  "item.nusmp.charter_grimoire_devil_avatar": "Canon Grimoire of the Devil Avatar",
+  "item.nusmp.charter_grimoire_goliath": "Canon Grimoire of Goliath",
+  "item.nusmp.charter_grimoire_charybdis_spawn": "Canon Grimoire of the Charybdis Spawn",
+  "advancement.nusmp.squads.charter.title": "A Written Canon",
+  "advancement.nusmp.squads.charter.desc": "Carry a canon grimoire for a boss.",
+  "advancement.nusmp.squads.charter_all.title": "The Complete Canon",
+  "advancement.nusmp.squads.charter_all.desc": "Carry all seven boss canon grimoires.",
+  "arc.dialogue.marx_francois.11": "A Canon Grimoire may fall to the first one to defeat a champion, once per world, by chance. Hold it and it lends its skills; put it away and they return."
+}

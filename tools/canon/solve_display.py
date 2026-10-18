@@ -87,12 +87,20 @@ def report(name, L0, rot, t, scale, extra=""):
 def main():
     # ---- first person: Pose = translate(0.56, -0.52, -0.72) in the camera frame: no rotation, x right, y up, z toward the eye
     L0 = np.eye(3)
-    f_t, u_t = (-0.18, 0.40, 0.90), (-0.16, 0.86, -0.49)
+    f_t, u_t = (-0.22, 0.30, 0.93), (-0.10, 0.93, -0.35)      # the cover faces the player and leans back 17 degrees; the top leans a little to the middle of the screen
     rot, err = best_euler(L0, f_t, u_t)
-    scale = 0.45
-    # the book's centre sits at (0.42, -0.30, -0.78) of the camera frame; the translation lives in the same frame, relative to the anchor (0.56, -0.52, -0.72)
-    t = translation_for(L0, rot, scale, CENTRE, (0.42 - 0.56, -0.30 + 0.52, -0.78 + 0.72))
+    scale = 0.38
+    # the book's centre sits at (0.40, -0.22, -0.75) of the camera frame (lower right of the screen); the translation lives in the same frame, relative to the anchor (0.56, -0.52, -0.72)
+    t = translation_for(L0, rot, scale, CENTRE, (0.40 - 0.56, -0.22 + 0.52, -0.75 + 0.72))
     report("firstperson_righthand", L0, rot, t, scale, "err %.3f rad" % err)
+    # ---- third person: Pose = pivot, arm xRot -18, Rx(-90) Ry(180), translate(1/16, 0.125, -0.625): the display origin is the middle of the front-bottom edge of the arm box.
+    # The fist is 2 px behind it and 1 px up the arm (display (0, -2, +1)/16), so the lower spine goes there.
+    L0 = (pb.MODEL_TO_WORLD @ pb.hand_pose(False))[:3, :3]
+    f_t, u_t = (0.87, 0.05, -0.50), (0.10, 0.96, -0.25)        # the cover faces outward and a little forward, the top up and leaning forward 14 degrees; the fore-edge points forward
+    rot, err = best_euler(L0, f_t, u_t)
+    scale = 0.55
+    t = translation_for(L0, rot, scale, SPINE_GRIP, (0.0, -2 / 16.0, 1 / 16.0))
+    report("thirdperson_righthand", L0, rot, t, scale, "err %.3f rad" % err)
 
 
 if __name__ == "__main__":
