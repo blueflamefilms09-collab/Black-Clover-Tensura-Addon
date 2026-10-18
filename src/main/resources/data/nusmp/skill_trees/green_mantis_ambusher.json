@@ -1,0 +1,1109 @@
+{
+  "magic": "black_clover",
+  "franchise": "black_clover",
+  "name": "Green Mantis Ambusher",
+  "desc": "A forest hunter who strikes from the leaves: still as a branch, then gone. Kills are quick, quiet, and nobody saw you at all.",
+  "book": "nusmp:green_mantis_ambusher_book",
+  "book_name": "Mantis Canopy Guide",
+  "book_lore": "Pressed leaves, whittled tips and a very short chapter on being seen.",
+  "color": "#5FA84A",
+  "icon": "minecraft:fern",
+  "class_id": "green_mantis_ambusher",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/green_mantis_ambusher.png",
+  "book_texture": "nusmp:item/skill_book_3d/black_clover",
+  "background_theme": "forest",
+  "nodes": [
+    {
+      "id": "hidden_in_the_canopy",
+      "name": "Hidden in the Canopy",
+      "desc": "Lighter and quicker, with a sharp eye for weak points, but nothing to stop a hit.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          -3.0,
+          -3.75,
+          -4.5
+        ],
+        "speed_pct": [
+          0.15,
+          0.18,
+          0.21
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.12,
+          0.144,
+          0.168
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:fern"
+    },
+    {
+      "id": "mantis_posture",
+      "name": "Mantis Posture",
+      "desc": "Coiled to strike: heavier hits and braced against shoves.",
+      "parents": [
+        {
+          "node": "hidden_in_the_canopy",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage_pct": [
+          0.22,
+          0.264,
+          0.308
+        ],
+        "armor": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "speed_pct": [
+          -0.05,
+          -0.06,
+          -0.07
+        ],
+        "knockback_res": [
+          0.3,
+          0.36,
+          0.42
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "thin_as_a_twig",
+      "name": "Thin as a Twig",
+      "desc": "Narrow of frame, long of life.",
+      "parents": [
+        {
+          "node": "hidden_in_the_canopy",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:apple"
+    },
+    {
+      "id": "leaf_step",
+      "name": "Leaf Step",
+      "desc": "A soft, fast step.",
+      "parents": [
+        {
+          "node": "mantis_posture",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.05,
+          0.0625,
+          0.075,
+          0.0875,
+          0.1
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "mantis_strength",
+      "name": "Mantis Strength",
+      "desc": "Wiry and strong.",
+      "parents": [
+        {
+          "node": "hidden_in_the_canopy",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:iron_ingot"
+    },
+    {
+      "id": "spring_in_the_legs",
+      "name": "Spring in the Legs",
+      "desc": "Higher jumps for rooftop work.",
+      "parents": [
+        {
+          "node": "mantis_posture",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "jump_strength",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.06,
+          0.075,
+          0.09,
+          0.105,
+          0.12
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:rabbit_foot"
+    },
+    {
+      "id": "leaf_veil",
+      "name": "Leaf Veil",
+      "desc": "Whirl a cloud of leaves that blinds the creatures nearby while you slip away.",
+      "parents": [
+        {
+          "node": "hidden_in_the_canopy",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "smoke",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "radius": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:oak_leaves"
+    },
+    {
+      "id": "mantis_lunge",
+      "name": "Mantis Lunge",
+      "desc": "A single swift lunge forward that cuts everything you cross.",
+      "parents": [
+        {
+          "node": "mantis_posture",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "distance": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "throat_cut",
+      "name": "Throat Cut",
+      "desc": "A silent blow that does much more damage the weaker the target is.",
+      "parents": [
+        {
+          "node": "leaf_veil",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "execute",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "range": [
+          3.5,
+          3.71,
+          3.92,
+          4.13
+        ],
+        "bonus": [
+          0.5,
+          0.575,
+          0.65,
+          0.725
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "spore_mist",
+      "name": "Spore Mist",
+      "desc": "Breathe out a cone of spores that poisons whoever stands in it.",
+      "parents": [
+        {
+          "node": "mantis_lunge",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "debuff_cone",
+      "params": {
+        "effect": "poison",
+        "effect2": "weakness",
+        "vfx": "POISON_BREATH"
+      },
+      "values": {
+        "range": [
+          5.0,
+          5.4,
+          5.8,
+          6.2
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0,
+          52.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seconds2": [
+          4.0,
+          5.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          220.0,
+          202.0,
+          185.0,
+          167.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:spore_blossom"
+    },
+    {
+      "id": "prey_mark",
+      "name": "Prey Mark",
+      "desc": "Mark your next victim: it takes extra damage for a while.",
+      "parents": [
+        {
+          "node": "throat_cut",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "mark",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "range": [
+          22.0,
+          24.2,
+          26.4,
+          28.6
+        ],
+        "seconds": [
+          8.0,
+          9.0,
+          10.0,
+          12.0
+        ],
+        "bonus": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:spyglass"
+    },
+    {
+      "id": "thorn_ricochet",
+      "name": "Thorn Ricochet",
+      "desc": "Throw a thorn that rebounds from foe to foe.",
+      "parents": [
+        {
+          "node": "spore_mist",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "chain_hit",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          5.0,
+          6.25,
+          7.5,
+          8.75
+        ],
+        "jumps": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "jump_range": [
+          5.0,
+          5.0,
+          6.0,
+          6.0
+        ],
+        "falloff": [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          160.0,
+          147.0,
+          134.0,
+          122.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:sweet_berries"
+    },
+    {
+      "id": "moss_salve",
+      "name": "Moss Salve",
+      "desc": "Press fresh moss to your wounds: heal yourself and regenerate.",
+      "parents": [
+        {
+          "node": "prey_mark",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_self",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "amount": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "regen_seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:moss_block"
+    },
+    {
+      "id": "camouflage",
+      "name": "Camouflage",
+      "desc": "While you sneak you turn invisible.",
+      "parents": [
+        {
+          "node": "leaf_veil",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "invisibility",
+        "condition": "sneaking"
+      },
+      "values": {
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:glass"
+    },
+    {
+      "id": "ambusher_s_edge",
+      "name": "Ambusher's Edge",
+      "desc": "You deal far more damage while sneaking.",
+      "parents": [
+        {
+          "node": "mantis_lunge",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_when",
+      "params": {
+        "condition": "sneaking"
+      },
+      "values": {
+        "bonus": [
+          0.45,
+          0.54,
+          0.63,
+          0.72
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "venomed_edge",
+      "name": "Venomed Edge",
+      "desc": "Your blows may poison the foe.",
+      "parents": [
+        {
+          "node": "throat_cut",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "on_hit_effect",
+      "params": {
+        "effect": "poison"
+      },
+      "values": {
+        "seconds": [
+          3.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "chance": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:fermented_spider_eye"
+    },
+    {
+      "id": "forager_s_meal",
+      "name": "Forager's Meal",
+      "desc": "A kill heals you and speeds you up for a moment.",
+      "parents": [
+        {
+          "node": "spore_mist",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "kill_reward",
+      "params": {
+        "effect": "speed"
+      },
+      "values": {
+        "heal": [
+          2.0,
+          2.5,
+          3.0,
+          3.5
+        ],
+        "seconds": [
+          4.0,
+          5.0,
+          5.0,
+          6.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:sweet_berries"
+    },
+    {
+      "id": "branch_dodge",
+      "name": "Branch Dodge",
+      "desc": "You may slip away from a hit entirely.",
+      "parents": [
+        {
+          "node": "prey_mark",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.08,
+          0.096,
+          0.112,
+          0.128
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "treetop_landing",
+      "name": "Treetop Landing",
+      "desc": "You take much less fall damage.",
+      "parents": [
+        {
+          "node": "thorn_ricochet",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "fall_guard",
+      "values": {
+        "pct": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:oak_leaves"
+    },
+    {
+      "id": "hunter_s_patience",
+      "name": "Hunter's Patience",
+      "desc": "You get more experience from kills.",
+      "parents": [
+        {
+          "node": "moss_salve",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "xp_bonus",
+      "values": {
+        "pct": [
+          0.1,
+          0.12,
+          0.14,
+          0.16
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:experience_bottle"
+    },
+    {
+      "id": "apex_ambush",
+      "name": "Apex Ambush",
+      "desc": "Vanish and reappear on the weakest creature around: a single killing blow that dwarfs every other.",
+      "parents": [
+        {
+          "node": "moss_salve",
+          "level": 3
+        },
+        {
+          "node": "hunter_s_patience",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "execute",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "damage": [
+          34.0,
+          42.5,
+          51.0
+        ],
+        "range": [
+          6.0,
+          6.36,
+          6.72
+        ],
+        "bonus": [
+          1.5,
+          1.725,
+          1.95
+        ],
+        "cost": [
+          0.05,
+          0.054,
+          0.058
+        ],
+        "cooldown": [
+          1250.0,
+          1150.0,
+          1050.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:netherite_sword"
+    },
+    {
+      "id": "canopy_collapse",
+      "name": "Canopy Collapse",
+      "desc": "The forest answers: a rain of branches and thorns hits the place you look at after a short delay.",
+      "parents": [
+        {
+          "node": "thorn_ricochet",
+          "level": 3
+        },
+        {
+          "node": "treetop_landing",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "EARTH_SPIKES"
+      },
+      "values": {
+        "delay": [
+          20.0,
+          19.0,
+          18.0
+        ],
+        "damage": [
+          26.0,
+          32.5,
+          39.0
+        ],
+        "radius": [
+          6.0,
+          6.6,
+          7.2
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88
+        ],
+        "cost": [
+          0.05,
+          0.054,
+          0.058
+        ],
+        "cooldown": [
+          1200.0,
+          1104.0,
+          1008.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:oak_log"
+    }
+  ]
+}
