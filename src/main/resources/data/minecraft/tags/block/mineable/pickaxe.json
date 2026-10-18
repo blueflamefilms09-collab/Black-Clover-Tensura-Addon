@@ -12,6 +12,11 @@
     "nusmp:sigil_plate",
     "nusmp:riddle_stone",
     "nusmp:relic_forge",
-    "nusmp:soul_forge"
+    "nusmp:soul_forge",
+    "nusmp:magic_bud_small",
+    "nusmp:magic_bud_medium",
+    "nusmp:magic_bud_large",
+    "nusmp:magic_crystal_cluster",
+    "nusmp:mother_rock"
   ]
 }

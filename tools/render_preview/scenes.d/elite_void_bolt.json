@@ -1,0 +1,47 @@
+{
+ "elite_void_bolt_spin": {
+  "kind": "geo",
+  "model": "elite_void_bolt",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   4,
+   8
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "spin",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 5,
+    "target": [
+     0,
+     0.1,
+     0
+    ],
+    "dist": 1.5
+   },
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 8,
+    "target": [
+     0,
+     0.1,
+     0
+    ],
+    "dist": 1.5
+   }
+  ]
+ }
+}

@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "charge=0": {
+      "model": "nusmp:block/mother_rock_0"
+    },
+    "charge=1": {
+      "model": "nusmp:block/mother_rock_1"
+    },
+    "charge=2": {
+      "model": "nusmp:block/mother_rock_2"
+    },
+    "charge=3": {
+      "model": "nusmp:block/mother_rock_3"
+    }
+  }
+}

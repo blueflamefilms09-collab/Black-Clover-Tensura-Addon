@@ -1,0 +1,47 @@
+{
+ "elite_phylactery_idle": {
+  "kind": "geo",
+  "model": "elite_phylactery",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0,
+   20,
+   40
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 5,
+    "target": [
+     0,
+     0.6,
+     0
+    ],
+    "dist": 3.0
+   },
+   {
+    "name": "3/4",
+    "yaw": 38,
+    "pitch": 8,
+    "target": [
+     0,
+     0.6,
+     0
+    ],
+    "dist": 3.0
+   }
+  ]
+ }
+}
