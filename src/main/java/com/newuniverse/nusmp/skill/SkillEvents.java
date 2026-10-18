@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.skill.rules.SummonRules;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
@@ -20,19 +21,31 @@ public final class SkillEvents {
         if (!(event.getEntity() instanceof ServerPlayer player) || player.level().isClientSide) return;
         try {
             SkillZones.tick(player);
-            if (player.tickCount % 20 == 7) Summons.tick(player, player.getServer(), SummonerSkill.capFor(player));
+            if (player.tickCount % 20 == 7) {
+                // a Summoner / Lord of Summons owner gets their summons steered every second; everybody else only
+                // has expired or ownerless summons swept up, every five seconds (one entity query each, so it stays cheap)
+                int cap = SummonerSkill.capFor(player);
+                if (cap < SummonRules.HARD_CAP || player.tickCount % 100 == 7) Summons.tick(player, player.getServer(), cap);
+            }
             if (player.tickCount % 200 == 11) SkillZones.sweep(player.getServer());
         } catch (RuntimeException | LinkageError upkeep) {
             // upkeep is never allowed to crash the server tick
         }
     }
 
-    /** A player dies: their summons and zones end with them. */
+    /**
+     * A player dies: their summons and zones end with them. The check runs one tick later, because a skill such as Unbreakable Will may
+     * cancel the death and stand the player back up in this very event: only a player who is really dead then loses their summons.
+     */
     public static void onDeath(LivingDeathEvent event) {
-        if (event.getEntity() instanceof ServerPlayer player) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || event.isCanceled()) return;
+        var server = player.getServer();
+        if (server == null) return;
+        server.execute(() -> {
+            if (player.isAlive()) return;                                   // the death was refused
             Summons.recall(player);
             SkillZones.clear(player.getUUID());
-        }
+        });
     }
 
     /** The server is stopping: forget every zone (summons are saved with their owner and lifetime, and swept on the next start). */

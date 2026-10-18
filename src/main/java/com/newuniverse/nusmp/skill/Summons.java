@@ -35,7 +35,7 @@ final class Summons {
 
     static final String UNTIL = "nusmp_summon_until", CARD = "nusmp_summon_card";
     /** How far from a player a summon is still looked after. */
-    private static final double SCAN = 96.0;
+    private static final double SCAN = 64.0;
 
     // ---------------------------------------------------------------- lookup
     /** All living summons of this player within {@link #SCAN} blocks (oldest first: lowest entity id). */
@@ -180,7 +180,10 @@ final class Summons {
         mine.sort(Comparator.comparingInt(Mob::getId));
         for (int i = 0, drop = SummonRules.excess(mine.size(), max); i < drop; i++) mine.remove(0).discard();   // oldest first
 
-        List<LivingEntity> foes = SkillTargets.foes(player, player.position(), SummonRules.ENGAGE_RANGE);
+        // summons pick fights with monsters on their own, never with players (a PvP server must not see wolves hunting strangers);
+        // they still defend their owner against a player through the ordinary tamed-animal AI
+        List<LivingEntity> foes = new ArrayList<>(SkillTargets.foes(player, player.position(), SummonRules.ENGAGE_RANGE));
+        foes.removeIf(f -> f instanceof net.minecraft.world.entity.player.Player);
         for (Mob m : mine) steer(m, player, foes);
     }
 
