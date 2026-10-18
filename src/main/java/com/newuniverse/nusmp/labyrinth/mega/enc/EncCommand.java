@@ -41,6 +41,9 @@ public final class EncCommand {
                                 .executes(ctx -> roll(ctx.getSource(), StringArgumentType.getString(ctx, "band")))))
                 .then(Commands.literal("spawn").then(Commands.argument("entry", StringArgumentType.word()).suggests((c, b) -> SharedSuggestionProvider.suggest(entryIds(), b))
                         .executes(ctx -> spawn(ctx.getSource(), StringArgumentType.getString(ctx, "entry")))))
+                .then(Commands.literal("depth").executes(ctx -> depth(ctx.getSource(), null))
+                        .then(Commands.argument("floor", com.mojang.brigadier.arguments.IntegerArgumentType.integer(-1_000_000, 1_000_000))
+                                .executes(ctx -> depth(ctx.getSource(), com.mojang.brigadier.arguments.IntegerArgumentType.getInteger(ctx, "floor")))))
                 .then(Commands.literal("wanderer").executes(ctx -> wanderer(ctx.getSource())))
                 .then(Commands.literal("clear").executes(ctx -> clear(ctx.getSource())));
     }
@@ -91,6 +94,14 @@ public final class EncCommand {
         }
         if (out.isEmpty()) out.add(who);
         return out;
+    }
+
+    /** 1.89.0: what the depth rule gives a mob born on a floor (the given one, or the one the admin stands on). */
+    private static int depth(CommandSourceStack src, Integer floor) throws CommandSyntaxException {
+        int f = floor != null ? floor : MegaDungeon.floorAt(here(src).serverLevel(), here(src).blockPosition());
+        if (f == 0) return fail(src, "You are not on a floor of the Mega-Dungeon. Give one: /multiverse mega dm depth <floor>.");
+        for (String line : DepthMobs.describe(f)) ok(src, line);
+        return 1;
     }
 
     private static int status(CommandSourceStack src) throws CommandSyntaxException {

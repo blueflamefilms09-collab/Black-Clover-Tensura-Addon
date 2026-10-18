@@ -18,6 +18,7 @@ public final class EncRegistry {
 
     public static void init(IEventBus modBus) {
         EncSelfTests.register();
+        DepthSelfTests.register();                                                    // 1.89.0: the depth rule (stronger and smarter mobs the further from the Hub)
     }
 
     public static void register(IEventBus gameBus) {
@@ -26,6 +27,7 @@ public final class EncRegistry {
         gameBus.addListener(NoiseEvents::onGameEvent);
         gameBus.addListener(NoiseEvents::onDamage);
         gameBus.addListener(EncounterDirector::onJoin);
+        gameBus.addListener(DepthMobs::onJoin);                                         // 1.89.0: the depth rule: strength and mind for every hostile mob born in the Mega-Dungeon
         gameBus.addListener(WandererDirector::onJoin);
         gameBus.addListener(WandererGuard::onChangeTarget);
         gameBus.addListener(WandererGuard::onHeal);

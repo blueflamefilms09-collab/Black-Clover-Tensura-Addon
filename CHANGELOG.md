@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.89.0] — The deeper (or higher) you go, the stronger and smarter the mobs get
+
+Owner brief: "make it so the higher/lower you go in a dungeon the stronger and smarter the mobs will get." Full description: `docs/labyrinth/depth.md`.
+
+### NEW
+- **Depth rule** (`labyrinth/mega/enc/Depth*.java`): every hostile mob born or loaded in the Mega-Dungeon gets bonuses from the depth of its floor (the distance from the Hub, the same for Holy floors above and Abyssal floors below). **Stronger:** health up to +400 %, damage up to +250 %, speed up to +22 %, armour up to +12, knockback resistance up to +0.6, follow range up to +24 blocks, on a saturating curve (floor 10: +12 % health, floor 100: +99 %, floor 1000: +308 %). **Smarter:** a mind level 0 to 6 (depth 6, 16, 40, 100, 250, 500), each level teaching one behaviour: it keeps hunting where it last saw you, calls the monsters near it, flanks with its pack, falls back and recovers when badly hurt, closes down a target that kites it, and goes for the weakest player; a deeper mind also thinks more often.
+- Config `nusmp-labyrinth-mega-depth-server.toml` (`enabled`, `strength`, `smarts`, `strengthScale`, `shareForScaledMobs`, `mindFloors`), command `/multiverse mega dm depth [floor]`, self-test `enc.depth`, 13 unit tests.
+
+### REPLACED
+- Nothing.
+
+### KEPT
+- The Dungeon Master's threat scaling, the Mob Foundry's tier scaling and every boss's own scaling are untouched. Bosses, owned pets and summons, non-hostile animals and the Hub are not affected by the depth rule; mobs that already scale with the floor take half of the strength bonus (config) and the full mind.
+
+### Honest notes
+- Nothing has been run in the game. The numbers and the thresholds are my design; flanking and the close-down burst share the mob's navigation with its own attack goal and may look jittery on some mobs, and Tensura mobs that think with a brain may ignore a goal's steering for a pass.
+
 ## [1.88.0] — EliteTensuraAddon systems removed (at the owner's request)
 
 The owner asked for everything built from the "EliteTensuraAddon" specification to be taken out. 1.85.0 and 1.87.1 never produced a release (their builds failed on tests), and 1.86.0 is the only published build that contained part of it.

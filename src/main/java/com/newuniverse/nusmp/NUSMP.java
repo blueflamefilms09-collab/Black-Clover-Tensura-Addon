@@ -203,6 +203,7 @@ public class NUSMP {
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.MegaConfig.SPEC, "nusmp-labyrinth-mega-server.toml");   // 1.54.0
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.eco.EcoConfig.SPEC, "nusmp-labyrinth-mega-eco-server.toml");   // 1.54.0: factions and the stone-and-meat economy
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.enc.EncConfig.SPEC, "nusmp-labyrinth-mega-enc-server.toml");   // 1.54.0: the Dungeon Master's encounters
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.enc.DepthConfig.SPEC, "nusmp-labyrinth-mega-depth-server.toml");   // 1.89.0: stronger and smarter mobs by depth
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.safe.SafeConfig.SPEC, "nusmp-labyrinth-mega-safe-server.toml");   // 1.54.0: rests and safe zones
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.gear.GearConfig.SPEC, "nusmp-labyrinth-mega-gear-server.toml");   // 1.55.0: standard Normal / Special / Rare gear
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.flow.FlowConfig.SPEC, "nusmp-labyrinth-mega-flow-server.toml");   // 1.55.0: the Rukh flow of the Holy floors
