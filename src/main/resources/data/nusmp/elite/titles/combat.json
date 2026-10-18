@@ -1,0 +1,414 @@
+{
+  "titles": [
+    {
+      "id": "brawler",
+      "name": "Brawler",
+      "description": "A hundred creatures know your fist.",
+      "rarity": "common",
+      "tags": [
+        "combat"
+      ],
+      "requirements": [
+        {
+          "record": "kills_100"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.attack_damage",
+            "amount": 0.5,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "slayer",
+      "name": "Slayer",
+      "description": "Five hundred kills and a steady hand.",
+      "rarity": "uncommon",
+      "tags": [
+        "combat"
+      ],
+      "requirements": [
+        {
+          "record": "kills_500"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.attack_damage",
+            "amount": 1.0,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "monster_hunter",
+      "name": "Monster Hunter",
+      "description": "A thousand kills, a quarter of them monsters.",
+      "rarity": "rare",
+      "tags": [
+        "combat"
+      ],
+      "requirements": [
+        {
+          "record": "kills_1000"
+        },
+        {
+          "record": "kills_hostile_250"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.attack_damage",
+            "amount": 1.0,
+            "operation": "add_value"
+          },
+          {
+            "attribute": "minecraft:generic.armor",
+            "amount": 1.0,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "veteran",
+      "name": "Veteran",
+      "description": "Five thousand fights survived.",
+      "rarity": "epic",
+      "tags": [
+        "combat"
+      ],
+      "requirements": [
+        {
+          "record": "kills_5000"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.attack_damage",
+            "amount": 0.05,
+            "operation": "add_multiplied_base"
+          },
+          {
+            "attribute": "minecraft:generic.max_health",
+            "amount": 2.0,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "reaper",
+      "name": "Reaper",
+      "description": "Ten thousand graves, and each one feeds you a little.",
+      "rarity": "legendary",
+      "tags": [
+        "combat"
+      ],
+      "requirements": [
+        {
+          "record": "kills_10000"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.attack_damage",
+            "amount": 0.08,
+            "operation": "add_multiplied_base"
+          }
+        ],
+        "effects": [],
+        "stats": {
+          "kill_heal": 1
+        }
+      }
+    },
+    {
+      "id": "blade_calamity",
+      "name": "Blade Calamity",
+      "description": "Fifty thousand kills: a disaster with a sword.",
+      "rarity": "mythic",
+      "tags": [
+        "combat"
+      ],
+      "requirements": [
+        {
+          "record": "kills_50000"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.attack_damage",
+            "amount": 0.12,
+            "operation": "add_multiplied_base"
+          },
+          {
+            "attribute": "minecraft:generic.attack_speed",
+            "amount": 0.05,
+            "operation": "add_multiplied_base"
+          }
+        ],
+        "effects": [],
+        "stats": {
+          "kill_heal": 2
+        }
+      }
+    },
+    {
+      "id": "dragon_slayer",
+      "name": "Dragon Slayer",
+      "description": "The Ender Dragon fell.",
+      "rarity": "epic",
+      "tags": [
+        "combat",
+        "boss"
+      ],
+      "requirements": [
+        {
+          "record": "kill_ender_dragon_1"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.attack_damage",
+            "amount": 1.0,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {
+          "boss_damage_percent": 5
+        }
+      }
+    },
+    {
+      "id": "wither_bane",
+      "name": "Wither's Bane",
+      "description": "The Wither withered.",
+      "rarity": "epic",
+      "tags": [
+        "combat",
+        "boss"
+      ],
+      "requirements": [
+        {
+          "record": "kill_wither_1"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.armor",
+            "amount": 2.0,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {
+          "boss_damage_percent": 5
+        }
+      }
+    },
+    {
+      "id": "warden_slayer",
+      "name": "Warden Slayer",
+      "description": "You made the Warden hush.",
+      "rarity": "legendary",
+      "tags": [
+        "combat",
+        "boss"
+      ],
+      "requirements": [
+        {
+          "record": "kill_warden_1"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.max_health",
+            "amount": 4.0,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {
+          "boss_damage_percent": 8
+        }
+      }
+    },
+    {
+      "id": "giant_slayer",
+      "name": "Giant Slayer",
+      "description": "Five bosses, one ravager's worth of contempt.",
+      "rarity": "rare",
+      "tags": [
+        "combat",
+        "boss"
+      ],
+      "requirements": [
+        {
+          "record": "kills_boss_5"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.attack_damage",
+            "amount": 0.5,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {
+          "boss_damage_percent": 3
+        }
+      }
+    },
+    {
+      "id": "oathbreaker",
+      "name": "Oathbreaker",
+      "description": "Ten duels, none of them fair.",
+      "rarity": "rare",
+      "tags": [
+        "combat"
+      ],
+      "requirements": [
+        {
+          "record": "kills_player_10"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.attack_speed",
+            "amount": 0.03,
+            "operation": "add_multiplied_base"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "heavy_hitter",
+      "name": "Heavy Hitter",
+      "description": "A single blow of a hundred.",
+      "rarity": "rare",
+      "tags": [
+        "combat"
+      ],
+      "requirements": [
+        {
+          "record": "hit_100"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.attack_damage",
+            "amount": 1.0,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "one_blow",
+      "name": "One Blow",
+      "description": "A single blow of a thousand.",
+      "rarity": "legendary",
+      "tags": [
+        "combat"
+      ],
+      "requirements": [
+        {
+          "record": "hit_1000"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.attack_damage",
+            "amount": 0.1,
+            "operation": "add_multiplied_base"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "world_breaker",
+      "name": "World Breaker",
+      "description": "A single blow of ten thousand.",
+      "rarity": "mythic",
+      "tags": [
+        "combat"
+      ],
+      "requirements": [
+        {
+          "record": "hit_10000"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.attack_damage",
+            "amount": 0.15,
+            "operation": "add_multiplied_base"
+          },
+          {
+            "attribute": "minecraft:player.entity_interaction_range",
+            "amount": 0.5,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "tensura_hunter",
+      "name": "Tensura Hunter",
+      "description": "A thousand kills among the creatures of the other world.",
+      "rarity": "rare",
+      "tags": [
+        "combat"
+      ],
+      "requirements": [
+        {
+          "record": "kill_tensura_1000"
+        }
+      ],
+      "bonuses": {
+        "attributes": [],
+        "effects": [],
+        "stats": {
+          "xp_bonus_percent": 4
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,169 @@
+{
+  "titles": [
+    {
+      "id": "chronicle_keeper",
+      "name": "Chronicle Keeper",
+      "description": "Forty records written down.",
+      "rarity": "uncommon",
+      "tags": [
+        "meta"
+      ],
+      "requirements": [
+        {
+          "records": {
+            "count": 40
+          }
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.luck",
+            "amount": 0.5,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "archivist",
+      "name": "Archivist",
+      "description": "Eighty records.",
+      "rarity": "rare",
+      "tags": [
+        "meta"
+      ],
+      "requirements": [
+        {
+          "records": {
+            "count": 80
+          }
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.luck",
+            "amount": 1.0,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "grand_archivist",
+      "name": "Grand Archivist",
+      "description": "A hundred and forty records.",
+      "rarity": "epic",
+      "tags": [
+        "meta"
+      ],
+      "requirements": [
+        {
+          "records": {
+            "count": 140
+          }
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.luck",
+            "amount": 1.5,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {
+          "xp_bonus_percent": 5
+        }
+      }
+    },
+    {
+      "id": "legend_of_legends",
+      "name": "Legend of Legends",
+      "description": "Fifteen legendary records or better.",
+      "rarity": "legendary",
+      "tags": [
+        "meta"
+      ],
+      "requirements": [
+        {
+          "records": {
+            "count": 15,
+            "rarity": "legendary"
+          }
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.luck",
+            "amount": 2.0,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "point_hunter",
+      "name": "Point Hunter",
+      "description": "Five hundred record points.",
+      "rarity": "epic",
+      "tags": [
+        "meta"
+      ],
+      "requirements": [
+        {
+          "points": 500
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.luck",
+            "amount": 1.0,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "completionist",
+      "name": "Completionist",
+      "description": "Nine records in ten.",
+      "rarity": "mythic",
+      "tags": [
+        "meta"
+      ],
+      "requirements": [
+        {
+          "records": {
+            "count": 189
+          }
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.luck",
+            "amount": 3.0,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {
+          "xp_bonus_percent": 10
+        }
+      }
+    }
+  ]
+}

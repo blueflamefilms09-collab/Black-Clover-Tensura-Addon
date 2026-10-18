@@ -1,0 +1,219 @@
+{
+  "titles": [
+    {
+      "id": "apprentice",
+      "name": "Apprentice",
+      "description": "Five skills, and you want a sixth.",
+      "rarity": "common",
+      "tags": [
+        "skills"
+      ],
+      "requirements": [
+        {
+          "record": "skills_5"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "tensura:ability_learning_gain",
+            "amount": 0.05,
+            "operation": "add_multiplied_base"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "adept",
+      "name": "Adept",
+      "description": "Twenty skills.",
+      "rarity": "uncommon",
+      "tags": [
+        "skills"
+      ],
+      "requirements": [
+        {
+          "record": "skills_20"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "tensura:ability_mastery_gain",
+            "amount": 0.05,
+            "operation": "add_multiplied_base"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "skill_collector",
+      "name": "Skill Collector",
+      "description": "Forty skills.",
+      "rarity": "rare",
+      "tags": [
+        "skills"
+      ],
+      "requirements": [
+        {
+          "record": "skills_40"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "tensura:ability_mastery_gain",
+            "amount": 0.08,
+            "operation": "add_multiplied_base"
+          },
+          {
+            "attribute": "tensura:ability_learning_gain",
+            "amount": 0.08,
+            "operation": "add_multiplied_base"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "sage",
+      "name": "Sage",
+      "description": "Seventy-five skills.",
+      "rarity": "epic",
+      "tags": [
+        "skills"
+      ],
+      "requirements": [
+        {
+          "record": "skills_75"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "tensura:ability_mastery_gain",
+            "amount": 0.1,
+            "operation": "add_multiplied_base"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "arcane_archive",
+      "name": "Arcane Archive",
+      "description": "A hundred and fifty skills.",
+      "rarity": "legendary",
+      "tags": [
+        "skills"
+      ],
+      "requirements": [
+        {
+          "record": "skills_150"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "tensura:ability_mastery_gain",
+            "amount": 0.15,
+            "operation": "add_multiplied_base"
+          },
+          {
+            "attribute": "tensura:ability_learning_gain",
+            "amount": 0.15,
+            "operation": "add_multiplied_base"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "unique_bearer",
+      "name": "Unique Bearer",
+      "description": "A Unique skill is yours.",
+      "rarity": "rare",
+      "tags": [
+        "skills"
+      ],
+      "requirements": [
+        {
+          "record": "skill_unique_1"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "tensura:ability_mastery_gain",
+            "amount": 0.05,
+            "operation": "add_multiplied_base"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "ultimate_wielder",
+      "name": "Ultimate Wielder",
+      "description": "An Ultimate skill is yours.",
+      "rarity": "legendary",
+      "tags": [
+        "skills"
+      ],
+      "requirements": [
+        {
+          "record": "skill_ultimate_1"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "tensura:ability_mastery_gain",
+            "amount": 0.1,
+            "operation": "add_multiplied_base"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "skill_overlord",
+      "name": "Skill Overlord",
+      "description": "Three Ultimates and five Uniques.",
+      "rarity": "mythic",
+      "tags": [
+        "skills"
+      ],
+      "requirements": [
+        {
+          "record": "skill_ultimate_3"
+        },
+        {
+          "record": "skill_unique_5"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "tensura:ability_mastery_gain",
+            "amount": 0.2,
+            "operation": "add_multiplied_base"
+          }
+        ],
+        "effects": [],
+        "stats": {
+          "ep_gain_percent": 5
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,329 @@
+{
+  "titles": [
+    {
+      "id": "awakened",
+      "name": "Awakened",
+      "description": "Ten thousand EP: your magicules stir.",
+      "rarity": "uncommon",
+      "tags": [
+        "power"
+      ],
+      "requirements": [
+        {
+          "record": "ep_10k"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "tensura:max_magicule",
+            "amount": 0.02,
+            "operation": "add_multiplied_base"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "prodigy",
+      "name": "Prodigy",
+      "description": "A hundred thousand EP.",
+      "rarity": "rare",
+      "tags": [
+        "power"
+      ],
+      "requirements": [
+        {
+          "record": "ep_100k"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "tensura:max_magicule",
+            "amount": 0.03,
+            "operation": "add_multiplied_base"
+          },
+          {
+            "attribute": "tensura:max_aura",
+            "amount": 0.03,
+            "operation": "add_multiplied_base"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "ascendant",
+      "name": "Ascendant",
+      "description": "A million EP.",
+      "rarity": "epic",
+      "tags": [
+        "power"
+      ],
+      "requirements": [
+        {
+          "record": "ep_1m"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "tensura:max_magicule",
+            "amount": 0.04,
+            "operation": "add_multiplied_base"
+          },
+          {
+            "attribute": "tensura:max_aura",
+            "amount": 0.04,
+            "operation": "add_multiplied_base"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "transcendent",
+      "name": "Transcendent",
+      "description": "Ten million EP: you have left the scale.",
+      "rarity": "legendary",
+      "tags": [
+        "power",
+        "ascended"
+      ],
+      "requirements": [
+        {
+          "record": "ep_10m"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "tensura:max_magicule",
+            "amount": 0.06,
+            "operation": "add_multiplied_base"
+          },
+          {
+            "attribute": "tensura:max_aura",
+            "amount": 0.06,
+            "operation": "add_multiplied_base"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "apex_being",
+      "name": "Apex Being",
+      "description": "A billion EP: nothing above you is left to measure.",
+      "rarity": "mythic",
+      "tags": [
+        "power",
+        "ascended"
+      ],
+      "requirements": [
+        {
+          "record": "ep_1b"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "tensura:max_magicule",
+            "amount": 0.1,
+            "operation": "add_multiplied_base"
+          },
+          {
+            "attribute": "tensura:max_aura",
+            "amount": 0.1,
+            "operation": "add_multiplied_base"
+          }
+        ],
+        "effects": [],
+        "stats": {
+          "ep_gain_percent": 5
+        }
+      }
+    },
+    {
+      "id": "demon_lord_seed",
+      "name": "Seed of Ruin",
+      "description": "A Demon Lord seed rests in you.",
+      "rarity": "rare",
+      "tags": [
+        "power",
+        "crown"
+      ],
+      "requirements": [
+        {
+          "record": "demon_seed"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "tensura:max_magicule",
+            "amount": 0.03,
+            "operation": "add_multiplied_base"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "demon_lord",
+      "name": "Demon Lord",
+      "description": "You wear the crown of the Demon Lords.",
+      "rarity": "legendary",
+      "tags": [
+        "power",
+        "crown"
+      ],
+      "requirements": [
+        {
+          "record": "demon_true"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "tensura:max_magicule",
+            "amount": 0.08,
+            "operation": "add_multiplied_base"
+          },
+          {
+            "attribute": "tensura:max_aura",
+            "amount": 0.04,
+            "operation": "add_multiplied_base"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "hero_egg",
+      "name": "Hero's Egg",
+      "description": "A hero waits inside the shell.",
+      "rarity": "rare",
+      "tags": [
+        "power",
+        "crown"
+      ],
+      "requirements": [
+        {
+          "record": "hero_egg"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "tensura:max_aura",
+            "amount": 0.03,
+            "operation": "add_multiplied_base"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "true_hero",
+      "name": "True Hero",
+      "description": "The world chose you.",
+      "rarity": "legendary",
+      "tags": [
+        "power",
+        "crown"
+      ],
+      "requirements": [
+        {
+          "record": "hero_true"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "tensura:max_aura",
+            "amount": 0.08,
+            "operation": "add_multiplied_base"
+          },
+          {
+            "attribute": "tensura:max_magicule",
+            "amount": 0.04,
+            "operation": "add_multiplied_base"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "higher_being",
+      "name": "Higher Being",
+      "description": "You are more than flesh.",
+      "rarity": "epic",
+      "tags": [
+        "power",
+        "ascended"
+      ],
+      "requirements": [
+        {
+          "record": "higher_spiritual"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "tensura:magicule_regeneration_multiplier",
+            "amount": 0.1,
+            "operation": "add_multiplied_base"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "divine_ascendant",
+      "name": "Divine Ascendant",
+      "description": "You are a principle.",
+      "rarity": "mythic",
+      "tags": [
+        "power",
+        "ascended"
+      ],
+      "requirements": [
+        {
+          "record": "higher_divine"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "tensura:magicule_regeneration_multiplier",
+            "amount": 0.15,
+            "operation": "add_multiplied_base"
+          },
+          {
+            "attribute": "tensura:max_magicule",
+            "amount": 0.05,
+            "operation": "add_multiplied_base"
+          },
+          {
+            "attribute": "tensura:max_aura",
+            "amount": 0.05,
+            "operation": "add_multiplied_base"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    }
+  ]
+}

@@ -1,0 +1,207 @@
+{
+  "titles": [
+    {
+      "id": "soldier",
+      "name": "Soldier",
+      "description": "Your first kill in a war.",
+      "rarity": "common",
+      "tags": [
+        "war"
+      ],
+      "requirements": [
+        {
+          "record": "warkills_1"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.armor",
+            "amount": 0.5,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "warrior",
+      "name": "Warrior",
+      "description": "Fifty war kills.",
+      "rarity": "uncommon",
+      "tags": [
+        "war"
+      ],
+      "requirements": [
+        {
+          "record": "warkills_50"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.armor",
+            "amount": 1.0,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {
+          "war_damage_percent": 2
+        }
+      }
+    },
+    {
+      "id": "warlord",
+      "name": "Warlord",
+      "description": "Five hundred war kills.",
+      "rarity": "rare",
+      "tags": [
+        "war"
+      ],
+      "requirements": [
+        {
+          "record": "warkills_500"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.armor",
+            "amount": 1.0,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {
+          "war_damage_percent": 4
+        }
+      }
+    },
+    {
+      "id": "conqueror",
+      "name": "Conqueror",
+      "description": "Ten wars won.",
+      "rarity": "epic",
+      "tags": [
+        "war"
+      ],
+      "requirements": [
+        {
+          "record": "warwins_10"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.max_health",
+            "amount": 2.0,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {
+          "war_damage_percent": 6
+        }
+      }
+    },
+    {
+      "id": "supreme_commander",
+      "name": "Supreme Commander",
+      "description": "Fifty wars won.",
+      "rarity": "legendary",
+      "tags": [
+        "war"
+      ],
+      "requirements": [
+        {
+          "record": "warwins_50"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.max_health",
+            "amount": 4.0,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {
+          "war_damage_percent": 10
+        }
+      }
+    },
+    {
+      "id": "envoy",
+      "name": "Envoy",
+      "description": "You were invited to the council.",
+      "rarity": "common",
+      "tags": [
+        "war",
+        "council"
+      ],
+      "requirements": [
+        {
+          "record": "walp_1"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.luck",
+            "amount": 0.5,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {}
+      }
+    },
+    {
+      "id": "council_regular",
+      "name": "Council Regular",
+      "description": "Five councils attended.",
+      "rarity": "rare",
+      "tags": [
+        "war",
+        "council"
+      ],
+      "requirements": [
+        {
+          "record": "walp_5"
+        }
+      ],
+      "bonuses": {
+        "attributes": [],
+        "effects": [],
+        "stats": {
+          "council_vote_weight": 1
+        }
+      }
+    },
+    {
+      "id": "walpurgis_veteran",
+      "name": "Walpurgis Veteran",
+      "description": "Twenty-five councils attended.",
+      "rarity": "epic",
+      "tags": [
+        "war",
+        "council"
+      ],
+      "requirements": [
+        {
+          "record": "walp_25"
+        }
+      ],
+      "bonuses": {
+        "attributes": [],
+        "effects": [],
+        "stats": {
+          "council_vote_weight": 2
+        }
+      }
+    }
+  ]
+}

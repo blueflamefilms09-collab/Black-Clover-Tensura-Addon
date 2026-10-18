@@ -1,0 +1,127 @@
+{
+  "titles": [
+    {
+      "id": "landowner",
+      "name": "Landowner",
+      "description": "A plot with your name on it.",
+      "rarity": "common",
+      "tags": [
+        "dominion"
+      ],
+      "requirements": [
+        {
+          "record": "ftb_1"
+        }
+      ],
+      "bonuses": {
+        "attributes": [],
+        "effects": [],
+        "stats": {
+          "coin_bonus_percent": 2
+        }
+      }
+    },
+    {
+      "id": "lord_of_the_manor",
+      "name": "Lord of the Manor",
+      "description": "Twenty-five claimed chunks.",
+      "rarity": "uncommon",
+      "tags": [
+        "dominion"
+      ],
+      "requirements": [
+        {
+          "record": "ftb_25"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.max_absorption",
+            "amount": 2.0,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {
+          "coin_bonus_percent": 3
+        }
+      }
+    },
+    {
+      "id": "territorial_lord",
+      "name": "Territorial Lord",
+      "description": "A hundred claimed chunks.",
+      "rarity": "rare",
+      "tags": [
+        "dominion"
+      ],
+      "requirements": [
+        {
+          "record": "ftb_100"
+        }
+      ],
+      "bonuses": {
+        "attributes": [],
+        "effects": [],
+        "stats": {
+          "coin_bonus_percent": 5
+        }
+      }
+    },
+    {
+      "id": "sovereign",
+      "name": "Sovereign",
+      "description": "Five hundred claimed chunks.",
+      "rarity": "epic",
+      "tags": [
+        "dominion"
+      ],
+      "requirements": [
+        {
+          "record": "ftb_500"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.max_health",
+            "amount": 2.0,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {
+          "coin_bonus_percent": 8
+        }
+      }
+    },
+    {
+      "id": "emperor",
+      "name": "Emperor",
+      "description": "A thousand claimed chunks: a realm.",
+      "rarity": "mythic",
+      "tags": [
+        "dominion"
+      ],
+      "requirements": [
+        {
+          "record": "ftb_1000"
+        }
+      ],
+      "bonuses": {
+        "attributes": [
+          {
+            "attribute": "minecraft:generic.max_health",
+            "amount": 4.0,
+            "operation": "add_value"
+          }
+        ],
+        "effects": [],
+        "stats": {
+          "coin_bonus_percent": 12
+        }
+      }
+    }
+  ]
+}
