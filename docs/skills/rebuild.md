@@ -19,7 +19,7 @@ switch, the All Fiction health memory, cooldown tags) are unchanged, so old worl
 | Zones | `SkillZones` | Short lingering effects (blizzard, flame pillars, gravity, Freya's charm) that pulse on the owner's own tick; max 4 per owner, ended when the owner dies, leaves or changes dimension. |
 | Summons | `Summons` | Creation, ownership tags (`nusmp_summon`, `nusmp_owner`), lifetime, steering, expiry, over-cap trimming and clean-up. |
 | Upkeep | `SkillEvents` | Called from the listeners the mod already registers (`SkillEvolution.onPlayerTick`, `LiarisFreeseSkill.onKill`): **no new wiring needed**. |
-| Icons | `tools/skills/gen_skill_icons.py` | 38 distinct 32x32 icons (frame by type: Extra = steel, Unique = gold, Ultimate = black iron). |
+| Icons | `tools/skills/gen_skill_icons.py` | 38 distinct 32x32 icons (32 px is the size the grimoire icons and Tensura add-on skill icons use) (frame by type: Extra = steel, Unique = gold, Ultimate = black iron). |
 | Lang | `tools/skills/gen_lang_fragment.py` -> `tools/skills/lang_fragment.json` | Scans the Java sources for every key and writes the flat fragment the lead merges into `en_us.json`. `--check` fails if stale. |
 
 Tiers: **BASE** (fresh Unique), **MASTERED** (the Unique once mastered), **ULTIMATE** (an Ultimate evolution; its own mastery adds x1.2 on top).
