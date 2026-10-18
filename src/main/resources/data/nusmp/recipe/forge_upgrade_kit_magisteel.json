@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "M": { "item": "tensura:low_magisteel_ingot" },
+    "I": { "item": "minecraft:iron_block" },
+    "A": { "item": "minecraft:anvil" }
+  },
+  "pattern": [
+    "MIM",
+    "IAI",
+    "MIM"
+  ],
+  "result": { "id": "nusmp:forge_upgrade_kit_magisteel", "count": 1 }
+}

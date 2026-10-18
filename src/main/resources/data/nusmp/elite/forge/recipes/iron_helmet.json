@@ -1,0 +1,33 @@
+{
+  "tier": 0,
+  "category": "armor",
+  "output": {
+    "item": "minecraft:iron_helmet",
+    "count": 1
+  },
+  "inputs": [
+    {
+      "item": "minecraft:iron_ingot",
+      "count": 5
+    }
+  ],
+  "premium": [
+    {
+      "item": "minecraft:gold_ingot",
+      "count": 2,
+      "bonus": 2
+    }
+  ],
+  "minigames": [
+    {
+      "type": "hammer_timing",
+      "difficulty": 1
+    },
+    {
+      "type": "temperature_forge",
+      "difficulty": 1
+    }
+  ],
+  "base_quality": 15,
+  "engrave": true
+}

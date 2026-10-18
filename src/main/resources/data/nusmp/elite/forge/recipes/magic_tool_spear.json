@@ -1,0 +1,45 @@
+{
+  "tier": 0,
+  "category": "rune",
+  "output": {
+    "item": "nusmp:magic_tool_spear",
+    "count": 1
+  },
+  "inputs": [
+    {
+      "item": "minecraft:iron_ingot",
+      "count": 1
+    },
+    {
+      "item": "minecraft:stick",
+      "count": 2
+    },
+    {
+      "item": "tensura:magic_stone",
+      "count": 2
+    },
+    {
+      "item": "tensura:low_quality_magic_crystal",
+      "count": 1
+    }
+  ],
+  "premium": [
+    {
+      "item": "tensura:medium_quality_magic_crystal",
+      "count": 1,
+      "bonus": 4
+    }
+  ],
+  "minigames": [
+    {
+      "type": "rune_alignment",
+      "difficulty": 1
+    },
+    {
+      "type": "magicule_flow",
+      "difficulty": 1
+    }
+  ],
+  "base_quality": 14,
+  "engrave": true
+}

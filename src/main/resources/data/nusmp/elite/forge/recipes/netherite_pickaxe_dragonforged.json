@@ -1,0 +1,45 @@
+{
+  "tier": 3,
+  "category": "tool",
+  "output": {
+    "item": "minecraft:netherite_pickaxe",
+    "count": 1
+  },
+  "inputs": [
+    {
+      "item": "minecraft:netherite_ingot",
+      "count": 2
+    },
+    {
+      "item": "tensura:adamantite_ingot",
+      "count": 2
+    },
+    {
+      "item": "minecraft:stick",
+      "count": 2
+    }
+  ],
+  "premium": [
+    {
+      "item": "tensura:hihiirokane_ingot",
+      "count": 1,
+      "bonus": 8
+    }
+  ],
+  "minigames": [
+    {
+      "type": "hammer_timing",
+      "difficulty": 4
+    },
+    {
+      "type": "temperature_forge",
+      "difficulty": 3
+    },
+    {
+      "type": "magicule_flow",
+      "difficulty": 3
+    }
+  ],
+  "base_quality": 9,
+  "engrave": false
+}

@@ -1,0 +1,15 @@
+{
+  "_comment": "Quality points the forge pays for skills a player has (owned / mastered). Soft ids: a skill that is not installed pays 0. Sum is capped by cap (max 16). Numbers designed for this mod; see docs/elite/forge.md.",
+  "cap": 16,
+  "skills": [
+    { "id": "nusmp:hephaestus", "owned": 5, "mastered": 8 },
+    { "id": "nusmp:runesmiths_insight", "owned": 5, "mastered": 9 },
+    { "id": "nusmp:forge_mastery", "owned": 4, "mastered": 7 },
+    { "id": "tensura:creator", "owned": 4, "mastered": 6 },
+    { "id": "tensura:great_sage", "owned": 3, "mastered": 5 },
+    { "id": "tensura:sage", "owned": 2, "mastered": 3 },
+    { "id": "tensura:analytical_appraisal", "owned": 2, "mastered": 3 },
+    { "id": "tensura:molecular_manipulation", "owned": 3, "mastered": 5 },
+    { "id": "tensura:thought_acceleration", "owned": 1, "mastered": 2 }
+  ]
+}

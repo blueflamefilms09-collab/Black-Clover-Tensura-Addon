@@ -1,0 +1,33 @@
+{
+  "tier": 0,
+  "category": "weapon",
+  "output": {
+    "item": "minecraft:iron_sword",
+    "count": 1
+  },
+  "inputs": [
+    {
+      "item": "minecraft:iron_ingot",
+      "count": 2
+    },
+    {
+      "item": "minecraft:stick",
+      "count": 1
+    }
+  ],
+  "premium": [
+    {
+      "item": "minecraft:gold_ingot",
+      "count": 2,
+      "bonus": 2
+    }
+  ],
+  "minigames": [
+    {
+      "type": "hammer_timing",
+      "difficulty": 1
+    }
+  ],
+  "base_quality": 16,
+  "engrave": true
+}
