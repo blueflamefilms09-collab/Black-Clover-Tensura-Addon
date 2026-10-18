@@ -118,7 +118,7 @@ public final class Planner {
         double total = 0;
         for (MechanicDef d : lib) {
             if (!scopes.contains(d.scope()) || d.cost() > budget) continue;
-            if (!c.categories().contains(d.category()) || c.blacklist().contains(d.id())) continue;
+            if (!c.categories().contains(d.category()) || Blacklist.bans(c.blacklist(), d.id())) continue;
             double w = Weights.weight(d, f.floor(), f.road(), f.theme(), roomKind == null ? 1.0 : Weights.roomBias(roomKind, d.category()));
             if (w <= 0) continue;
             boolean clash = false;

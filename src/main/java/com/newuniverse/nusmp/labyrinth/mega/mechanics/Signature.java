@@ -26,7 +26,7 @@ public final class Signature {
         b.append(";r:").append(d.reward());
         for (MechanicDef.Effect e : d.effects()) {
             OpCatalog.OpSpec spec = cat.op(e.op());
-            b.append(";e:").append(e.op()).append('[').append(num(e.delay())).append(',').append(num(e.chance() * 10.0)).append(',').append(e.times()).append(',').append(num(e.every())).append("](");
+            b.append(";e:").append(e.op()).append('[').append(num(e.delay())).append(',').append(num(e.chance() * 10.0)).append(',').append(e.times()).append(',').append(num(e.every())).append(',').append(e.cond()).append("](");
             b.append(args(e.args(), spec == null ? List.of() : spec.args())).append(')');
         }
         return b.toString();

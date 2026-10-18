@@ -88,7 +88,7 @@ public final class MechanicParser {
                 String op = str(x, "op", "");
                 if (op.isEmpty()) { problems.add(where + ": an effect has no op"); continue; }
                 effects.add(new MechanicDef.Effect(op, Args.fromJson(x, OpCatalog.EFFECT_KEYS), Math.max(0, intOf(x, "delay", 0)), Math.max(0.0, Math.min(1.0, dbl(x, "chance", 1.0))),
-                        Math.max(1, intOf(x, "times", 1)), Math.max(1, intOf(x, "every", 20))));
+                        Math.max(1, intOf(x, "times", 1)), Math.max(1, intOf(x, "every", 20)), str(x, "if", "")));
             }
         }
         String reward = str(o, "reward", "none");

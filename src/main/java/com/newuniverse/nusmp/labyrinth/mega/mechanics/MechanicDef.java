@@ -12,8 +12,11 @@ import java.util.List;
 public record MechanicDef(String id, String name, String desc, String flavor, MechCategory category, String source, String base, Scope scope, int tierMin, int tierMax,
                           Road road, List<String> themes, int cost, int weight, Trigger trigger, List<Effect> effects, Counter counter, String reward, String sig) {
 
-    /** One primitive call. {@code delay}: ticks after the trigger; {@code chance}: 0..1; {@code times}/{@code every}: repeat count and gap in ticks. */
-    public record Effect(String op, Args args, int delay, double chance, int times, int every) {}
+    /**
+     * One primitive call. {@code delay}: ticks after the trigger; {@code chance}: 0..1; {@code times}/{@code every}: repeat count and gap in ticks; {@code cond}: an optional
+     * gate on the instance's counters, such as {@code "wrong>=3"} (empty = always).
+     */
+    public record Effect(String op, Args args, int delay, double chance, int times, int every, String cond) {}
 
     /** What sets the mechanic off. */
     public record Trigger(String kind, Args args) {}

@@ -138,8 +138,8 @@ def signature(m):
                                           sig_args({k: v for k, v in c.items() if k != "kind"}, cspec), m["reward"])
     for e in m["effects"]:
         spec = OPS_MOD.OPS[e["op"]]["args"]
-        args = {k: v for k, v in e.items() if k not in ("op", "delay", "chance", "times", "every")}
-        out += ";e:%s[%d,%d,%d,%d](%s)" % (e["op"], bucket(e.get("delay", 0)), bucket(e.get("chance", 1.0) * 10.0), e.get("times", 1), bucket(e.get("every", 20)), sig_args(args, spec))
+        args = {k: v for k, v in e.items() if k not in ("op", "delay", "chance", "times", "every", "if")}
+        out += ";e:%s[%d,%d,%d,%d,%s](%s)" % (e["op"], bucket(e.get("delay", 0)), bucket(e.get("chance", 1.0) * 10.0), e.get("times", 1), bucket(e.get("every", 20)), e.get("if", ""), sig_args(args, spec))
     return out
 
 
@@ -173,7 +173,7 @@ def apply_element(fx, el):
     for i, patch in el.set.items():
         fx[i].update(patch)
     for i, (opname, patch) in el.swap.items():
-        keep = {k: v for k, v in fx[i].items() if k in ("delay", "chance", "times", "every")}
+        keep = {k: v for k, v in fx[i].items() if k in ("delay", "chance", "times", "every", "if")}
         fx[i] = {"op": opname}
         fx[i].update(patch)
         fx[i].update(keep)
@@ -303,7 +303,7 @@ def guard(all_m, bases_by_cat, partial=False):
         if t["kind"] == "boss_hp" and m["scope"] != "boss": problems.append(m["id"] + ": boss_hp trigger outside a boss mechanic")
         for i, e in enumerate(m["effects"]):
             if e["op"] not in OPS_MOD.OPS: problems.append("%s: unknown primitive %s" % (m["id"], e["op"])); continue
-            check_args("%s effect %d (%s)" % (m["id"], i, e["op"]), {k: v for k, v in e.items() if k not in ("op", "delay", "chance", "times", "every")}, OPS_MOD.OPS[e["op"]]["args"], problems)
+            check_args("%s effect %d (%s)" % (m["id"], i, e["op"]), {k: v for k, v in e.items() if k not in ("op", "delay", "chance", "times", "every", "if")}, OPS_MOD.OPS[e["op"]]["args"], problems)
     if partial: return problems
     total = len(all_m)
     per_cat = {}
@@ -337,8 +337,9 @@ def dumps_category(cat, ms):
     return "\n".join(lines) + "\n"
 
 
-def ops_json():
-    o = {"version": 1, "ops": {}, "triggers": {}, "counters": {}, "exclusive": sorted(set(OPS_MOD.CHANNEL_EXCLUSIVE)), "effectChannels": OPS_MOD.EFFECT_CHANNELS}
+def ops_json(all_m):
+    counts = {c: sum(1 for m in all_m if m["cat"] == c) for c in CATEGORIES}
+    o = {"version": 1, "total": len(all_m), "counts": counts, "ops": {}, "triggers": {}, "counters": {}, "exclusive": sorted(set(OPS_MOD.CHANNEL_EXCLUSIVE)), "effectChannels": OPS_MOD.EFFECT_CHANNELS}
     for k, v in OPS_MOD.OPS.items():
         o["ops"][k] = {"group": v["group"], "channels": v["channels"], "sustained": v["sustained"], "args": v["args"], "doc": v["doc"]}
     for k, v in OPS_MOD.TRIGGERS.items(): o["triggers"][k] = {"args": v["args"], "doc": v["doc"]}
@@ -423,7 +424,7 @@ def main():
         ms = expand(c, by_cat[c]) if by_cat[c] else []
         all_m.extend(ms)
         files[os.path.join(OUT, c + ".json")] = dumps_category(c, ms)
-    files[os.path.join(OUT, "ops.json")] = ops_json()
+    files[os.path.join(OUT, "ops.json")] = ops_json(all_m)
     files[LANG] = lang_json(all_m)
     problems = guard(all_m, by_cat, "--partial" in sys.argv)
     if "--stats" in sys.argv:

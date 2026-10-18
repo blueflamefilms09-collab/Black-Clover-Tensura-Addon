@@ -1,5 +1,16 @@
 {
  "version": 1,
+ "total": 7,
+ "counts": {
+  "floor": 7,
+  "puzzle": 0,
+  "hazard": 0,
+  "combat": 0,
+  "risk": 0,
+  "boss": 0,
+  "travel": 0,
+  "party": 0
+ },
  "ops": {
   "effect": {
    "group": "creature",
@@ -1225,7 +1236,7 @@
     {
      "n": "block",
      "t": "str",
-     "d": "minecraft:smooth_stone"
+     "d": "minecraft:smooth_stone_slab"
     },
     {
      "n": "axis",
@@ -1311,6 +1322,13 @@
      "d": 12,
      "lo": 2,
      "hi": 120
+    },
+    {
+     "n": "dmg",
+     "t": "num",
+     "d": 2,
+     "lo": 0,
+     "hi": 60
     },
     {
      "n": "at",

@@ -40,21 +40,31 @@ public final class OpCatalog {
     }
 
     /** Keys of an effect object that are not arguments of its primitive. */
-    public static final Set<String> EFFECT_KEYS = Set.of("op", "delay", "chance", "times", "every");
+    public static final Set<String> EFFECT_KEYS = Set.of("op", "delay", "chance", "times", "every", "if");
     public static final Set<String> TRIGGER_KEYS = Set.of("kind"), COUNTER_KEYS = Set.of("kind");
 
     private final Map<String, OpSpec> ops;
     private final Map<String, KindSpec> triggers, counters;
     private final Set<String> exclusive;
     private final Map<String, String> effectChannels;
+    private final int total;
+    private final Map<String, Integer> counts;
 
-    private OpCatalog(Map<String, OpSpec> ops, Map<String, KindSpec> triggers, Map<String, KindSpec> counters, Set<String> exclusive, Map<String, String> effectChannels) {
+    private OpCatalog(Map<String, OpSpec> ops, Map<String, KindSpec> triggers, Map<String, KindSpec> counters, Set<String> exclusive, Map<String, String> effectChannels, int total,
+                      Map<String, Integer> counts) {
+        this.total = total;
+        this.counts = counts;
         this.ops = ops;
         this.triggers = triggers;
         this.counters = counters;
         this.exclusive = exclusive;
         this.effectChannels = effectChannels;
     }
+
+    /** How many mechanics the generator wrote (the self-test demands the loaded library has exactly this many), and per category. */
+    public int total() { return total; }
+
+    public Map<String, Integer> counts() { return counts; }
 
     public OpSpec op(String id) { return ops.get(id); }
 
@@ -90,7 +100,10 @@ public final class OpCatalog {
             ops.put(e.getKey(), new OpSpec(e.getKey(), v.get("group").getAsString(), List.copyOf(ch), v.get("sustained").getAsBoolean(), specs(v.getAsJsonArray("args")),
                     v.has("doc") ? v.get("doc").getAsString() : ""));
         }
-        return new OpCatalog(ops, kinds(root.getAsJsonObject("triggers")), kinds(root.getAsJsonObject("counters")), strings(root.getAsJsonArray("exclusive")), map(root.getAsJsonObject("effectChannels")));
+        Map<String, Integer> counts = new LinkedHashMap<>();
+        if (root.has("counts")) for (Map.Entry<String, JsonElement> e : root.getAsJsonObject("counts").entrySet()) counts.put(e.getKey(), e.getValue().getAsInt());
+        return new OpCatalog(ops, kinds(root.getAsJsonObject("triggers")), kinds(root.getAsJsonObject("counters")), strings(root.getAsJsonArray("exclusive")),
+                map(root.getAsJsonObject("effectChannels")), root.has("total") ? root.get("total").getAsInt() : 0, Map.copyOf(counts));
     }
 
     private static Map<String, KindSpec> kinds(JsonObject o) {
