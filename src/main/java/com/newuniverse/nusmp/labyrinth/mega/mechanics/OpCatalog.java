@@ -40,7 +40,7 @@ public final class OpCatalog {
     }
 
     /** Keys of an effect object that are not arguments of its primitive. */
-    public static final Set<String> EFFECT_KEYS = Set.of("op", "delay", "chance", "times", "every", "if");
+    public static final Set<String> EFFECT_KEYS = Set.of("op", "delay", "chance", "times", "every", "if", "on");
     public static final Set<String> TRIGGER_KEYS = Set.of("kind"), COUNTER_KEYS = Set.of("kind");
 
     private final Map<String, OpSpec> ops;

@@ -51,6 +51,14 @@ final class Props {
         if (!need.equals("none") && (need.equals("mobs") ? in.mobs.isEmpty() : in.props.isEmpty())) in.ctr.broken = true;
     }
 
+    /** Before the blocks are put back: a reward chest nobody opened gives up its unrolled loot table, so removing it spills nothing (the party has left; the loot is not a gift to the floor). */
+    static void sealChests(Instance in) {
+        for (Prop p : in.props) {
+            if (!p.kind().equals("chest") && !p.kind().equals("cursed_chest") && !p.kind().equals("mimic")) continue;
+            if (in.level.hasChunkAt(p.pos()) && in.level.getBlockEntity(p.pos()) instanceof net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity c) c.setLootTable(null);
+        }
+    }
+
     /** The chest was a mimic: the lid snaps shut on the player's hand and a monster of the dungeon climbs out. */
     static void mimic(Instance in, ServerPlayer p, Prop prop) {
         in.props.remove(prop);

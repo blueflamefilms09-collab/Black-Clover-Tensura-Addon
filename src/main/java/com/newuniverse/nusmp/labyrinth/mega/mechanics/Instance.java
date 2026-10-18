@@ -186,7 +186,7 @@ public final class Instance {
         fired = true;
         for (int i = 0; i < def.effects().size(); i++) {
             MechanicDef.Effect e = def.effects().get(i);
-            pending.add(new Pending(now + e.delay(), i, e.times() - 1, e.every()));
+            if (!e.onSolve()) pending.add(new Pending(now + e.delay(), i, e.times() - 1, e.every()));
         }
     }
 
@@ -291,12 +291,18 @@ public final class Instance {
             warn("reward", e);
         }
         stopEffects();
+        long t = clock();
+        for (int i = 0; i < def.effects().size(); i++) {                       // the reward behind the price: a chest, a bounty
+            MechanicDef.Effect e = def.effects().get(i);
+            if (e.onSolve()) pending.add(new Pending(t + e.delay(), i, e.times() - 1, e.every()));
+        }
         Messages.solved(this);
         if (!admin) MechanicsData.get(level.getServer()).markSolved(key);
     }
 
     /** Ends every running effect and restores the blocks of effects (not of the props). */
     void stopEffects() {
+        Props.sealChests(this);
         for (Run r : new ArrayList<>(running)) endRun(r);
         for (Journal j : kept) j.restore();
         kept.clear();

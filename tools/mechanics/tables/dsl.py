@@ -12,7 +12,7 @@ THEMES = ["gravity", "blood", "spatial", "flame", "frost", "verdant", "storm", "
 CATEGORIES = ["floor", "puzzle", "hazard", "combat", "risk", "boss", "travel", "party"]
 
 
-def E(op, delay=0, chance=1.0, times=1, every=20, cond=None, **args):
+def E(op, delay=0, chance=1.0, times=1, every=20, cond=None, on=None, **args):
     """One primitive call. Reserved keys: delay (ticks after the trigger), chance, times + every (repeat)."""
     d = {"op": op}
     if "frm" in args: args["from"] = args.pop("frm")      # `from` is a Python keyword
@@ -22,6 +22,7 @@ def E(op, delay=0, chance=1.0, times=1, every=20, cond=None, **args):
     if times != 1: d["times"] = times
     if every != 20 and times != 1: d["every"] = every
     if cond: d["if"] = cond
+    if on: d["on"] = on
     return d
 
 

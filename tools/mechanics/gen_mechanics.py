@@ -138,8 +138,8 @@ def signature(m):
                                           sig_args({k: v for k, v in c.items() if k != "kind"}, cspec), m["reward"])
     for e in m["effects"]:
         spec = OPS_MOD.OPS[e["op"]]["args"]
-        args = {k: v for k, v in e.items() if k not in ("op", "delay", "chance", "times", "every", "if")}
-        out += ";e:%s[%d,%d,%d,%d,%s](%s)" % (e["op"], bucket(e.get("delay", 0)), bucket(e.get("chance", 1.0) * 10.0), e.get("times", 1), bucket(e.get("every", 20)), e.get("if", ""), sig_args(args, spec))
+        args = {k: v for k, v in e.items() if k not in ("op", "delay", "chance", "times", "every", "if", "on")}
+        out += ";e:%s[%d,%d,%d,%d,%s,%s](%s)" % (e["op"], bucket(e.get("delay", 0)), bucket(e.get("chance", 1.0) * 10.0), e.get("times", 1), bucket(e.get("every", 20)), e.get("if", ""), e.get("on", ""), sig_args(args, spec))
     return out
 
 
@@ -173,7 +173,7 @@ def apply_element(fx, el):
     for i, patch in el.set.items():
         fx[i].update(patch)
     for i, (opname, patch) in el.swap.items():
-        keep = {k: v for k, v in fx[i].items() if k in ("delay", "chance", "times", "every", "if")}
+        keep = {k: v for k, v in fx[i].items() if k in ("delay", "chance", "times", "every", "if", "on")}
         fx[i] = {"op": opname}
         fx[i].update(keep)
         fx[i].update(patch)
@@ -270,6 +270,9 @@ def build(cat, b, ei, ti, ci):
     if ci is not None:
         ctr, label, clause = ctr_alt(b.ctrs[ci])
         parts_k.append("c_" + ctr["kind"]); parts_l.append(label); clauses.append(clause)
+    if b.ctr["kind"] == "none" and ctr["kind"] != "none":
+        for e in fx:                                     # a price was added to a design that had none: its rewards wait behind the price
+            if e["op"] in ("spawn_chest", "give_loot", "xp_orbs") and "on" not in e: e["on"] = "solve"
     mid = "%s.%s" % (cat, b.key) + ("." + ".".join(parts_k) if parts_k else "")
     name = b.name + (": " + " / ".join(parts_l) if parts_l else "")
     desc = b.desc + ((" " + " ".join(clauses)) if clauses else "")
@@ -304,9 +307,10 @@ def guard(all_m, bases_by_cat, partial=False):
         else: check_args(m["id"] + " counter", {k: v for k, v in c.items() if k != "kind"}, OPS_MOD.COUNTERS[c["kind"]]["args"], problems)
         if t["kind"] == "boss_hp" and m["scope"] != "boss": problems.append(m["id"] + ": boss_hp trigger outside a boss mechanic")
         for i, e in enumerate(m["effects"]):
+            if e.get("on", "solve") != "solve" or (e.get("on") == "solve" and m["counter"]["kind"] == "none"): problems.append("%s effect %d: bad on-solve" % (m["id"], i))
             if "if" in e and not re.match(r"^\s*[a-z0-9_]+\s*(>=|<=|==|!=|>|<)\s*-?\d+\s*$", e["if"]): problems.append("%s effect %d: bad condition %r" % (m["id"], i, e["if"]))
             if e["op"] not in OPS_MOD.OPS: problems.append("%s: unknown primitive %s" % (m["id"], e["op"])); continue
-            check_args("%s effect %d (%s)" % (m["id"], i, e["op"]), {k: v for k, v in e.items() if k not in ("op", "delay", "chance", "times", "every", "if")}, OPS_MOD.OPS[e["op"]]["args"], problems)
+            check_args("%s effect %d (%s)" % (m["id"], i, e["op"]), {k: v for k, v in e.items() if k not in ("op", "delay", "chance", "times", "every", "if", "on")}, OPS_MOD.OPS[e["op"]]["args"], problems)
     if partial: return problems
     total = len(all_m)
     per_cat = {}

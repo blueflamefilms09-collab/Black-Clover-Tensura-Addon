@@ -14,9 +14,12 @@ public record MechanicDef(String id, String name, String desc, String flavor, Me
 
     /**
      * One primitive call. {@code delay}: ticks after the trigger; {@code chance}: 0..1; {@code times}/{@code every}: repeat count and gap in ticks; {@code cond}: an optional
-     * gate on the instance's counters, such as {@code "wrong>=3"} (empty = always).
+     * gate on the instance's counters, such as {@code "wrong>=3"} (empty = always); {@code on}: {@code "solve"} runs the effect when the counter is beaten instead of when the mechanic fires.
      */
-    public record Effect(String op, Args args, int delay, double chance, int times, int every, String cond) {}
+    public record Effect(String op, Args args, int delay, double chance, int times, int every, String cond, String on) {
+        /** Does this effect wait for the counter to be beaten (the reward chest behind the price) instead of running when the mechanic fires? */
+        public boolean onSolve() { return "solve".equals(on); }
+    }
 
     /** What sets the mechanic off. */
     public record Trigger(String kind, Args args) {}

@@ -255,7 +255,9 @@ final class PrimsCreature {
             if (have == null) return;
             ResourceLocation id = ResourceLocation.fromNamespaceAndPath("nusmp", "mech_speed_" + Integer.toHexString(r.inst.key.hashCode()));
             for (UUID u : have) {
-                if (r.level().getEntity(u) instanceof LivingEntity t) {
+                LivingEntity t = r.level().getEntity(u) instanceof LivingEntity found ? found : null;
+                for (ServerPlayer p : r.inst.inside) if (p.getUUID().equals(u)) t = p;
+                if (t != null) {
                     AttributeInstance a = t.getAttribute(Attributes.MOVEMENT_SPEED);
                     if (a != null) a.removeModifier(id);
                 }

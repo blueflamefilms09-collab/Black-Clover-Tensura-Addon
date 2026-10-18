@@ -178,7 +178,7 @@ final class PrimsWorld {
             r.mem.put("c", r.centres(r.str("at")).get(0));
             blink(r);
         }, r -> {
-            if (r.age() % Math.max(10, (int) r.num("period")) == 0) blink(r);
+            if (r.age() > 0 && r.age() % Math.max(10, (int) r.num("period")) == 0) blink(r);
         }, r -> { }));
 
         m.put("slider", Prims.timed(r -> r.ticks("secs"), r -> {

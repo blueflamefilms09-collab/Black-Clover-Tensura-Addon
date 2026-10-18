@@ -72,9 +72,7 @@ public final class MechanicsSelfTests {
     }
 
     private static void wipe(ServerLevel level) {
-        for (Entity e : level.getEntities((Entity) null, new AABB(BOX.minX() - 6, MegaGrid.FLOOR_Y - 10, BOX.minZ() - 6, BOX.maxX() + 7, MegaGrid.FLOOR_Y + 30, BOX.maxZ() + 7), x -> !(x instanceof ServerPlayer))) {
-            if (!(x(e))) e.discard();
-        }
+        wipeEntities(level);
         DungeonGuard.internal(() -> {
             for (int x = BOX.minX() - 5; x <= BOX.maxX() + 5; x++) for (int z = BOX.minZ() - 5; z <= BOX.maxZ() + 5; z++) {
                 for (int y = MegaGrid.FLOOR_Y - 4; y <= MegaGrid.FLOOR_Y + 22; y++) {
@@ -84,8 +82,6 @@ public final class MechanicsSelfTests {
             }
         });
     }
-
-    private static boolean x(Entity e) { return e instanceof ServerPlayer; }
 
     private static int[] snapshot(ServerLevel level) {
         List<Integer> out = new ArrayList<>();
@@ -101,14 +97,16 @@ public final class MechanicsSelfTests {
         return new MechanicDef(id, "Test " + op, "A self-test mechanic.", "", MechCategory.HAZARD, "Self-test", op, scope, 1, 5, Road.BOTH, List.of(), 1, 1, t, fx, c, reward, "");
     }
 
-    private static MechanicDef.Effect fx(String op) { return new MechanicDef.Effect(op, Args.EMPTY, 0, 1.0, 1, 20, ""); }
+    private static MechanicDef.Effect fx(String op) { return new MechanicDef.Effect(op, Args.EMPTY, 0, 1.0, 1, 20, "", ""); }
 
     private static MechanicDef.Trigger trig(String kind) { return new MechanicDef.Trigger(kind, Args.EMPTY); }
 
     private static MechanicDef.Counter none() { return new MechanicDef.Counter("none", Args.EMPTY); }
 
     private static Instance scratchInstance(ServerLevel level, MechanicDef d) {
-        return new Instance("selftest:" + d.id(), d, level, null, room(), Area.room(BOX), ORIGIN.above(), 1, 424242L, 1.0);
+        Instance in = new Instance("selftest:" + d.id(), d, level, null, room(), Area.room(BOX), ORIGIN.above(), 1, 424242L, 1.0);
+        in.admin = true;                                    // a self-test mechanic never writes a "beaten" mark into the saved data
+        return in;
     }
 
     // ---------------------------------------------------------------- library, resolve
@@ -156,12 +154,11 @@ public final class MechanicsSelfTests {
                     in.end();
                 }
                 if (in.errors > 0 || !in.brokenOps().isEmpty()) return SelfTests.Result.fail("the primitive " + op + " threw: " + in.brokenOps());
-                for (Entity e : level.getEntities((Entity) null, BOX.minX() > 0 ? new AABB(BOX.minX(), MegaGrid.FLOOR_Y - 9, BOX.minZ(), BOX.maxX(), MegaGrid.FLOOR_Y + 30, BOX.maxZ()) : new AABB(0, 0, 0, 1, 1, 1), z -> !(z instanceof ServerPlayer))) e.discard();
+                wipeEntities(level);
                 if (!Arrays.equals(before, snapshot(level))) return SelfTests.Result.fail("the primitive " + op + " left the scratch room changed");
                 done.add(op);
             }
         } finally {
-            p.discard();
             wipe(level);
         }
         return SelfTests.Result.ok(done.size() + " primitives executed on a scratch room; the room is exactly as it was afterwards");
@@ -195,7 +192,7 @@ public final class MechanicsSelfTests {
                     case "proximity" -> args.put("r", 8.0);
                     default -> { }
                 }
-                MechanicDef d = def("selftest.trig." + kind, kind, Scope.ROOM, new MechanicDef.Trigger(kind, Args.of(args)), List.of(new MechanicDef.Effect("counter_add", Args.of(java.util.Map.of("name", "fired")), 0, 1.0, 1, 20, "")), none(), "none");
+                MechanicDef d = def("selftest.trig." + kind, kind, Scope.ROOM, new MechanicDef.Trigger(kind, Args.of(args)), List.of(new MechanicDef.Effect("counter_add", Args.of(java.util.Map.of("name", "fired")), 0, 1.0, 1, 20, "", "")), none(), "none");
                 if (kind.equals("boss_hp")) d = def("selftest.trig." + kind, kind, Scope.BOSS, d.trigger(), d.effects(), none(), "none");
                 Instance in = scratchInstance(level, d);
                 long t0 = level.getGameTime();
@@ -207,7 +204,10 @@ public final class MechanicsSelfTests {
                         case "hp_below" -> a.setHealth(a.getMaxHealth() * 0.5f);
                         case "sprint" -> a.setSprinting(true);
                         case "sneak" -> a.setShiftKeyDown(true);
-                        case "sight" -> aim(a, in.anchor);
+                        case "sight" -> {
+                            a.setPos(ORIGIN.getX() + 0.5, MegaGrid.FLOOR_Y + 1, ORIGIN.getZ() - 5.5);
+                            aim(a, in.anchor);
+                        }
                         case "kill" -> {
                             dummy = zombie(level, in);
                         }
@@ -237,8 +237,6 @@ public final class MechanicsSelfTests {
                 }
             }
         } finally {
-            a.discard();
-            b.discard();
             wipe(level);
         }
         return SelfTests.Result.ok(ok.size() + " trigger kinds fire under their conditions");
@@ -296,8 +294,6 @@ public final class MechanicsSelfTests {
                 }
             }
         } finally {
-            a.discard();
-            b.discard();
             wipe(level);
         }
         return SelfTests.Result.ok(ok.size() + " counter kinds beaten the way they describe");
@@ -313,7 +309,7 @@ public final class MechanicsSelfTests {
             }
             case "lever" -> in.onUse(a, in.props.get(0).pos());
             case "item_offer", "pay_item" -> {
-                Item(a, in.def.counter().kind().equals("item_offer") ? "minecraft:gold_ingot" : "minecraft:iron_ingot", 16);
+                giveItems(a, "minecraft:iron_ingot", 16);
                 if (kind.equals("item_offer")) a.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new ItemStack(Items.GOLD_INGOT, 16));
                 in.onUse(a, in.props.get(0).pos());
             }
@@ -355,7 +351,7 @@ public final class MechanicsSelfTests {
     }
 
     /** Gives a stand-in the items a payment counter needs. */
-    private static void Item(ServerPlayer p, String id, int n) {
+    private static void giveItems(ServerPlayer p, String id, int n) {
         net.minecraft.world.item.Item it = Counters.item(id);
         if (it != null) p.getInventory().add(new ItemStack(it, n));
     }
@@ -470,7 +466,6 @@ public final class MechanicsSelfTests {
             }
             return SelfTests.Result.ok("applied " + d.id() + " (blocks " + (changed ? "changed and restored" : "untouched") + ") and cleared it; no sector with a safe room to test the refusal");
         } finally {
-            p.discard();
             wipe(level);
         }
     }
