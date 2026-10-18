@@ -1,0 +1,13 @@
+{
+ "_doc": "hart2 (the Seven Star weapons): id -> a class of assets/nusmp/weapon_classes.json. No new class is needed. Merge into the `weapons` map of tools/relics/weapon_classes.json (then python tools/relics/audit_weapon_scale.py --write copies it to the game).",
+ "classes": {},
+ "weapons": {
+  "vassal_axe": "battleaxe",
+  "vassal_claw": "shortsword",
+  "vassal_gauntlet": "handitem",
+  "vassal_hammer": "hammer",
+  "vassal_projectile": "dagger",
+  "vassal_staff": "staff",
+  "vassal_whip": "coilwhip"
+ }
+}
