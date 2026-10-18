@@ -175,7 +175,8 @@ public class KitBossRenderer<T extends ZogratisBoss> extends ZogratisRenderer<T>
         pose.translate(0f, lift - sink, 0f);
         pose.scale(size, size, size);
         paint(pose, buffers, spec, clock.clip, clock.seconds, light, bodyRgb(e), fade, glow);
-        float flash = !transforming ? 0f : look.splitTransform ? ZogratisGlow.flash(phase) : Math.max(ZogratisGlow.flash(phase), ZogratisGlow.flash(0.5f + phase));
+        // the flash is at the model swap: the middle of the transformation; the Triad's hybrid body is worn from the first frame, so it also bursts there
+        float flash = !transforming ? 0f : look.secondFromTransform ? Math.max(ZogratisGlow.flash(phase), ZogratisGlow.flash(0.5f + phase)) : ZogratisGlow.flash(phase);
         if (flash > 0.02f) {                                                          // the boss's colour burns over the model swap
             int base = look.flash >= 0 ? look.flash : e.styleColor();
             int rgb = ZogratisGlow.mix(base, 0xFFFFFF, 0.5f);

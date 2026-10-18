@@ -52,8 +52,8 @@ def extra(kit, rig):
             cx, cz = r * math.cos(a), r * math.sin(a)
             rig.box("root", (cx - 2.4, k * (d.hip_y / rings), cz - 2.4), (4.8, h, 4.8), paint, rotation=(0, -math.degrees(a), 0), pivot=(cx, k * (d.hip_y / rings), cz), faces=("front", "back", "left", "right", "top"))
     snout = kit.scale_paint(kit.shades("#2a5a34", 5, 1.2), salt=83, size=2)
-    rig.box("head", (-2.2, d.head_y + 0.2, -9.2), (4.4, 3.0, 5.2), snout, faces=("front", "left", "right", "top", "bottom"))
-    rig.box("head", (-1.4, d.head_y + 2.4, -9.5), (2.8, 1.0, 0.8), kit.solid((20, 36, 24)))
+    rig.box("head", (-1.8, d.head_y - 0.9, -8.6), (3.6, 2.4, 4.6), snout, faces=("front", "left", "right", "top", "bottom"))
+    rig.box("head", (-1.2, d.head_y + 0.9, -9.0), (2.4, 0.9, 0.8), kit.solid((20, 36, 24)))
 
 
 def post(kit, rig):

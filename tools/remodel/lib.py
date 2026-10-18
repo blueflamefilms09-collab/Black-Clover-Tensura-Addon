@@ -149,7 +149,7 @@ def pose_clip(rig, name, src, t, length, adds=None, ramp=0.0, loop=False, sway=N
     clip = rig.A.clips[src]["bones"]
     adds, sway = adds or {}, sway or {}
     out = {}
-    for bone in set(clip) | set(adds) | set(sway):
+    for bone in sorted(set(clip) | set(adds) | set(sway)):          # sorted: a set's order changes from run to run, and the build must be deterministic (the kit's --check)
         if not rig.has(bone):
             continue
         tracks = clip.get(bone, {})

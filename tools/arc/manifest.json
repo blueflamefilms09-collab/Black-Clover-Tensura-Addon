@@ -11985,8 +11985,8 @@
     512,
     192
    ],
-   "cubes": 119,
-   "faces_per_pass": 654,
+   "cubes": 115,
+   "faces_per_pass": 632,
    "height_blocks": 1.91,
    "height_with_hair_and_horns_blocks": 2.54,
    "bounds_blocks": {
@@ -12087,9 +12087,7 @@
     "body",
     "head",
     "arm_l",
-    "leg_l",
     "arm_r",
-    "leg_r",
     "horns"
    ],
    "problems": []

@@ -37,11 +37,11 @@ def extra(kit, rig):
     d = rig.d
     skin = rig.look.skin
     muz = kit.skin_paint([kit.mix(c, (255, 160, 150), 0.18) for c in skin], salt=91)
-    rig.box("head", (-2.2, d.head_y - 0.4, -8.8), (4.4, 3.4, 4.8), muz, faces=("front", "left", "right", "top", "bottom"))
-    rig.box("head", (-1.1, d.head_y + 1.8, -9.3), (2.2, 1.4, 0.8), kit.solid((60, 8, 16)))
+    rig.box("head", (-1.8, d.head_y - 1.2, -8.4), (3.6, 2.6, 4.4), muz, faces=("front", "left", "right", "top", "bottom"))
+    rig.box("head", (-0.9, d.head_y + 0.6, -8.9), (1.8, 1.1, 0.8), kit.solid((60, 8, 16)))
     fang = kit.bone_paint(kit.shades("#f6ecdc", 5, 1.0), 92)
     for sg in (1, -1):
-        rig.box("head", (sg * 1.4 - 0.4, d.head_y - 1.6, -8.6), (0.8, 1.8, 0.8), fang)
+        rig.box("head", (sg * 1.1 - 0.4, d.head_y - 2.4, -8.2), (0.8, 1.8, 0.8), fang)
     vein = kit.metal(kit.shades("#ff4050", 5, 1.1), 93, glow=(255, 64, 80, 220), emboss=False)
     rig.box("body", (-0.6, d.hip_y + 1.0, -d.td / 2 - 0.15), (1.2, d.sh_y - d.hip_y - 2.0, 0.3), vein, faces=("front",))
     for sg in (1, -1):

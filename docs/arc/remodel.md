@@ -141,6 +141,12 @@ bat wings with lit veins, a long whip tail; form 2 (phase 4) carries the trident
 * Java, all new in `client/remodel/`: `RemodelTable` (pure), `RemodelLooks` (generated), `KitMath` (pure), `KitClips`, `KitBossRenderer<T extends ZogratisBoss>` (the framework bosses),
   `KitBossHooks` (Lucius's float and Julius glow, the Avatar's skin, the Goliath's rise, the God of Order's visit clips), `KitMobRenderer<T extends LivingEntity>` with a `Probe` per mob in `KitProbes`,
   `KitCloudRenderer`, `KitZagredRenderer`, `RemodelRenderers` (the one registration call, `RemodelRenderers.init(modEventBus)`, added to `NUSMP.java` after the old registrations).
+* Files per model `<m>`: `tools/arc/char_<m>.py` (the spec), `assets/nusmp/geo/entity/arc_<m>.geo.json`, `assets/nusmp/animations/entity/arc_<m>.animation.json`,
+  `assets/nusmp/textures/entity/arc_<m>.png` and `arc_<m>_glow.png`, `tools/render_preview/scenes.d/arc_<m>.json` (the preview scenes), and for a second form the same under `arc_<m>_form2`.
+  The 33 characters: `dante_zogratis vanica_zogratis zenon_zogratis lucius_zogratis dark_disciple blood_beast devil_avatar god_of_order goliath charybdis_spawn floor_warden living_armor
+  dungeon_direwolf basilisk dungeon_slime spirit_salamander spirit_undine spirit_sylph spirit_gnome spirit_black_devil grimoire_daemon grimoire_daemon_greater grimoire_daemon_arch
+  grimoire_daemon_stone painted_beast painted_knight painted_giant rouge tower_wizard cotton_sheep cotton_sheep_cook cotton_cloud zagred_legacy`. The skins are
+  `arc_dark_disciple_{lucifero,megicula,beelzebub,astaroth}[_glow].png` and `arc_devil_avatar_megicula[_form2][_glow].png` (`tools/render_preview/scenes.d/remodel_skins.json` previews them).
 * The clips are the kit's (`idle walk run attack cast cast_big hurt transform death`, optionally `spawn`) plus `sleep` (direwolf, basilisk), `sit` (Rouge), `read beam bow` (God of Order), which
   the renderers play by state. The pose clock is the Zogratis one (`ZogratisPose`), so a boss's attack, cast, ultimate, hurt, transformation and death play as before.
 
