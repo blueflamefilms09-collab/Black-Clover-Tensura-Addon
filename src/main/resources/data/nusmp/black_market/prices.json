@@ -1,0 +1,46 @@
+{
+  "_why": "What the old witch PAYS for the dungeon's goods. It is the only source of gold besides the operator's /multiverse tree gold, so this file is the tap of the whole economy: a route book costs 2,000,000 to 3,000,000 gold and these are the numbers that decide how long that takes to earn. It is data so the owner can retune it with no rebuild and a server owner can replace it with a datapack and /reload (the pure reader is PriceTable.java; every field and every number is explained in docs/skilltree/shop.md sections 4 and 12). A row is an item id with the gold paid PER ITEM, or { gold, category }. The owner's own numbers are used where he gave them (magic stone 50,000, monster meat 4,000, diamond 200,000, emerald 60,000, nether star 1,500,000, netherite scrap 400,000, gold ingot 25,000, enchanted golden apple 600,000); everything else is graded by rarity. An id the game does not have (another mod that is not installed) is dropped at load and listed by /multiverse tree shop status. Keys that start with an underscore are comments.",
+  "_why_bulk": "The categories the screen's 'All <category>' button may sweep. Valuables (gems, metals, treasure) are deliberately NOT here, so one stray click can never sell a nether star; they are sold one stack at a time.",
+  "bulk": ["stones", "meat", "materials"],
+  "prices": {
+    "_why_stones": "The dungeon's staple. The mod's own Magic Stone is the owner's 50,000 (40 to 60 of them buy a route book); the plain Tensura stone drops from every monster, so it pays far less; the three Tensura crystals pay more with every tier.",
+    "nusmp:magic_stone": { "gold": 50000, "category": "stones" },
+    "tensura:magic_stone": { "gold": 6000, "category": "stones" },
+    "tensura:low_quality_magic_crystal": { "gold": 30000, "category": "stones" },
+    "tensura:medium_quality_magic_crystal": { "gold": 100000, "category": "stones" },
+    "tensura:high_quality_magic_crystal": { "gold": 350000, "category": "stones" },
+
+    "_why_meat": "Bulk food: raw meat is the owner's 4,000 and deliberately cheap, so selling it is a chore and not a fortune. Cooked meat fetches about twice as much (the witch says so in her hints): cooking costs fire and patience, and that should pay.",
+    "nusmp:raw_slime_jelly": { "gold": 4000, "category": "meat" },
+    "nusmp:raw_armor_flank": { "gold": 4000, "category": "meat" },
+    "nusmp:raw_basilisk_fillet": { "gold": 4000, "category": "meat" },
+    "nusmp:raw_direwolf_haunch": { "gold": 4000, "category": "meat" },
+    "nusmp:raw_monster_meat": { "gold": 4000, "category": "meat" },
+    "nusmp:purified_monster_meat": { "gold": 5000, "category": "meat" },
+    "nusmp:seared_monster_meat": { "gold": 8000, "category": "meat" },
+    "nusmp:candied_slime_jelly": { "gold": 9000, "category": "meat" },
+    "nusmp:grilled_armor_flank": { "gold": 9000, "category": "meat" },
+    "nusmp:roast_basilisk_fillet": { "gold": 10000, "category": "meat" },
+    "nusmp:roast_direwolf_haunch": { "gold": 10000, "category": "meat" },
+
+    "_why_materials": "A handful of Tensura monster drops, graded by the rarity of the mob (a bat wing is a common drop, a rank B hide is not). The ids are the field names of Tensura's item registry; one that does not exist in the installed version is dropped at load and costs nothing.",
+    "tensura:giant_bat_wing": { "gold": 12000, "category": "materials" },
+    "tensura:spider_fang": { "gold": 15000, "category": "materials" },
+    "tensura:monster_leather_d": { "gold": 20000, "category": "materials" },
+    "tensura:beast_horn": { "gold": 40000, "category": "materials" },
+    "tensura:monster_leather_c": { "gold": 60000, "category": "materials" },
+    "tensura:unicorn_horn": { "gold": 150000, "category": "materials" },
+    "tensura:monster_leather_b": { "gold": 180000, "category": "materials" },
+
+    "_why_valuables": "The owner's numbers for the things worth carrying out of the dungeon on purpose. They are not in the bulk list. Ancient debris is the one number that differs from the brief (800,000): that is MORE than the 400,000 of the netherite scrap it smelts into, so smelting would lose value; debris is set a little under the scrap. Put 800,000 back if the owner really wants it.",
+    "minecraft:emerald": { "gold": 60000, "category": "gems" },
+    "minecraft:diamond": { "gold": 200000, "category": "gems" },
+
+    "minecraft:gold_ingot": { "gold": 25000, "category": "metals" },
+    "minecraft:ancient_debris": { "gold": 300000, "category": "metals" },
+    "minecraft:netherite_scrap": { "gold": 400000, "category": "metals" },
+
+    "minecraft:enchanted_golden_apple": { "gold": 600000, "category": "treasure" },
+    "minecraft:nether_star": { "gold": 1500000, "category": "treasure" }
+  }
+}
