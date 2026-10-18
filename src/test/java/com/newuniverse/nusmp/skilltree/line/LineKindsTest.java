@@ -178,11 +178,23 @@ class LineKindsTest {
     @Test
     void theLiveRegistriesAgreeWhenMinecraftIsOnTheClassPath() throws Exception {
         try {
-            Class.forName("net.minecraft.world.entity.LivingEntity");
+            Class.forName("net.minecraft.world.entity.LivingEntity", false, LineKindsTest.class.getClassLoader());     // do not initialise it: that needs a bootstrapped game
         } catch (ClassNotFoundException notThere) {
             System.out.println("[kinds] live registry check skipped: Minecraft is not on the class path; the source check above covers it");
             return;
         }
+        try {
+            liveCheck();
+        } catch (java.lang.reflect.InvocationTargetException wrapped) {
+            if (!(wrapped.getCause() instanceof ExceptionInInitializerError || wrapped.getCause() instanceof NoClassDefFoundError)) throw wrapped;
+            System.out.println("[kinds] live registry check skipped: Minecraft is not bootstrapped in a unit test; the in-game self-test tree.lines.kinds covers it");
+        } catch (ExceptionInInitializerError | NoClassDefFoundError notBootstrapped) {
+            // 1.82.0: Gradle's plain unit-test JVM has Minecraft on the class path but no bootstrapped registries (MobEffects, Attributes...); the same agreement is checked in game by the self-test tree.lines.kinds
+            System.out.println("[kinds] live registry check skipped: Minecraft is not bootstrapped in a unit test (" + notBootstrapped.getClass().getSimpleName() + "); the in-game self-test tree.lines.kinds covers it");
+        }
+    }
+
+    private void liveCheck() throws Exception {
         String p = "com.newuniverse.nusmp.skilltree.line.";
         LineCatalog cat = LineCatalog.get();
         Set<String> active = new TreeSet<>(cat.activeKinds());
