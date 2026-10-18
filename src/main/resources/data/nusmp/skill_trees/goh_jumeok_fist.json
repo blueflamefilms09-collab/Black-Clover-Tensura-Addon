@@ -679,8 +679,8 @@
       "icon": "minecraft:anvil"
     },
     {
-      "id": "second_wind",
-      "name": "Second Wind",
+      "id": "breather_between_rounds",
+      "name": "Breather Between Rounds",
       "desc": "Roll the shoulders and breathe: heal and regenerate.",
       "parents": [
         {
@@ -728,7 +728,7 @@
         ]
       },
       "x": 10,
-      "y": 2,
+      "y": 0,
       "icon": "minecraft:cooked_beef"
     },
     {
@@ -766,7 +766,7 @@
         ]
       },
       "x": 10,
-      "y": 0,
+      "y": 2,
       "icon": "minecraft:clock"
     },
     {
@@ -965,7 +965,7 @@
       "desc": "While your health is full you hit harder.",
       "parents": [
         {
-          "node": "second_wind",
+          "node": "breather_between_rounds",
           "level": 2
         }
       ],
@@ -1000,7 +1000,7 @@
       "desc": "A single full-power punch that tears the ground open in a long wave.",
       "parents": [
         {
-          "node": "second_wind",
+          "node": "breather_between_rounds",
           "level": 3
         },
         {

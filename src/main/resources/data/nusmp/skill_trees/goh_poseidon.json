@@ -1,0 +1,1121 @@
+{
+  "magic": "god_of_high_school",
+  "franchise": "god_of_high_school",
+  "name": "Poseidon's Charyeok",
+  "desc": "Borrow the sea god's command of water: tidal waves, whirlpools that drag foes in and a trident of surging blue light. Tough and forceful.",
+  "book": "nusmp:goh_poseidon_book",
+  "book_name": "Tide-Book of the Deep",
+  "book_lore": "The pages are always damp, whatever you do.",
+  "color": "#1565C0",
+  "icon": "minecraft:trident",
+  "class_id": "goh_poseidon",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/goh_poseidon.png",
+  "book_texture": "nusmp:item/skill_book_3d/god_of_high_school",
+  "background_theme": "ocean",
+  "nodes": [
+    {
+      "id": "deep_current_stance",
+      "name": "Deep Current Stance",
+      "desc": "Be the current: heavy armor and regeneration, but movement slows.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WATER_RING"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          3.0,
+          3.75,
+          4.5
+        ],
+        "speed_pct": [
+          -0.06,
+          -0.072,
+          -0.084
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0.4,
+          0.48,
+          0.56
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:prismarine_shard"
+    },
+    {
+      "id": "surging_tide_stance",
+      "name": "Surging Tide Stance",
+      "desc": "Be the tide: fast and strong, but nothing guards you.",
+      "parents": [
+        {
+          "node": "deep_current_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "damage_pct": [
+          0.15,
+          0.18,
+          0.21
+        ],
+        "armor": [
+          -2.0,
+          -2.5,
+          -3.0
+        ],
+        "speed_pct": [
+          0.05,
+          0.06,
+          0.07
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:heart_of_the_sea"
+    },
+    {
+      "id": "sea_god_s_constitution",
+      "name": "Sea God's Constitution",
+      "desc": "Salt and storm toughen the body.",
+      "parents": [
+        {
+          "node": "deep_current_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:heart_of_the_sea"
+    },
+    {
+      "id": "trident_arm",
+      "name": "Trident Arm",
+      "desc": "A trident feels light in your hand.",
+      "parents": [
+        {
+          "node": "surging_tide_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:trident"
+    },
+    {
+      "id": "wave_grip",
+      "name": "Wave Grip",
+      "desc": "The sea cannot push you.",
+      "parents": [
+        {
+          "node": "deep_current_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "knockback_resistance",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.1,
+          0.125,
+          0.15,
+          0.175,
+          0.2
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:prismarine_bricks"
+    },
+    {
+      "id": "long_stride_of_the_tide",
+      "name": "Long Stride of the Tide",
+      "desc": "You move like a tide.",
+      "parents": [
+        {
+          "node": "surging_tide_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.04,
+          0.05,
+          0.06,
+          0.07,
+          0.08
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "whirlpool",
+      "name": "Whirlpool",
+      "desc": "A whirlpool forms around you and drags nearby foes into its center.",
+      "parents": [
+        {
+          "node": "deep_current_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "pull",
+      "params": {
+        "vfx": "WATER_RING"
+      },
+      "values": {
+        "radius": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "strength": [
+          1.1,
+          1.21,
+          1.32,
+          1.43
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "damage": [
+          4.0,
+          5.0,
+          6.0,
+          7.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:nautilus_shell"
+    },
+    {
+      "id": "tidal_wave",
+      "name": "Tidal Wave",
+      "desc": "Send a rolling wall of water along the floor ahead.",
+      "parents": [
+        {
+          "node": "surging_tide_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "length": [
+          12.0,
+          13.2,
+          14.4,
+          15.6
+        ],
+        "width": [
+          3.0,
+          3.3,
+          3.6,
+          3.9
+        ],
+        "knockback": [
+          0.5,
+          0.55,
+          0.6,
+          0.65
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          180.0,
+          166.0,
+          151.0,
+          137.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:prismarine_crystals"
+    },
+    {
+      "id": "sea_surge",
+      "name": "Sea Surge",
+      "desc": "A ring of surging water bursts out of you and throws the foes back.",
+      "parents": [
+        {
+          "node": "whirlpool",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "WATER_RING"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "radius": [
+          4.0,
+          4.4,
+          4.8,
+          5.2
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "knockback": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:prismarine_shard"
+    },
+    {
+      "id": "trident_thrust",
+      "name": "Trident Thrust",
+      "desc": "Hurl a trident of blue light along your sight; it pierces the foes ahead.",
+      "parents": [
+        {
+          "node": "tidal_wave",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          18.0,
+          19.8,
+          21.6,
+          23.4
+        ],
+        "pierce": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:trident"
+    },
+    {
+      "id": "wall_of_water",
+      "name": "Wall of Water",
+      "desc": "A curtain of sea water rises around you and absorbs damage.",
+      "parents": [
+        {
+          "node": "sea_surge",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "WATER_RING"
+      },
+      "values": {
+        "absorb_hearts": [
+          5.0,
+          6.0,
+          8.0,
+          9.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          7.0,
+          8.0
+        ],
+        "resist_amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:water_bucket"
+    },
+    {
+      "id": "rain_of_mercy",
+      "name": "Rain of Mercy",
+      "desc": "A soft rain falls: you and the allies around you are healed.",
+      "parents": [
+        {
+          "node": "trident_thrust",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_pulse",
+      "params": {
+        "vfx": "WATER_RING"
+      },
+      "values": {
+        "radius": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "amount": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          500.0,
+          470.0,
+          440.0,
+          410.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:glass_bottle"
+    },
+    {
+      "id": "leviathan_s_fall",
+      "name": "Leviathan's Fall",
+      "desc": "Call down a vast wave on the spot you look at.",
+      "parents": [
+        {
+          "node": "wall_of_water",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "delay": [
+          20.0,
+          19.0,
+          18.0,
+          17.0
+        ],
+        "damage": [
+          11.0,
+          13.75,
+          16.5,
+          19.25
+        ],
+        "radius": [
+          4.0,
+          4.4,
+          4.8,
+          5.2
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88,
+          22.32
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          360.0,
+          331.0,
+          302.0,
+          274.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:conduit"
+    },
+    {
+      "id": "sea_legs",
+      "name": "Sea Legs",
+      "desc": "You deal more damage while in the water.",
+      "parents": [
+        {
+          "node": "whirlpool",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_when",
+      "params": {
+        "condition": "in_water"
+      },
+      "values": {
+        "bonus": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:trident"
+    },
+    {
+      "id": "tidal_recovery",
+      "name": "Tidal Recovery",
+      "desc": "Water heals you steadily.",
+      "parents": [
+        {
+          "node": "tidal_wave",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "in_water"
+      },
+      "values": {
+        "per_second": [
+          0.8,
+          0.96,
+          1.12,
+          1.28
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:kelp"
+    },
+    {
+      "id": "storm_hide",
+      "name": "Storm Hide",
+      "desc": "You take less lightning damage.",
+      "parents": [
+        {
+          "node": "sea_surge",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "lightning"
+      },
+      "values": {
+        "pct": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:lightning_rod"
+    },
+    {
+      "id": "deep_aura",
+      "name": "Deep Aura",
+      "desc": "Enemies near you are slowed by the pressure of the sea.",
+      "parents": [
+        {
+          "node": "trident_thrust",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "aura",
+      "params": {
+        "effect": "slowness",
+        "target": "enemies"
+      },
+      "values": {
+        "radius": [
+          5.0,
+          5.5,
+          6.0,
+          6.5
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:cobweb"
+    },
+    {
+      "id": "salt_spray",
+      "name": "Salt Spray",
+      "desc": "Your blows may leave the foe nauseous.",
+      "parents": [
+        {
+          "node": "wall_of_water",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "on_hit_effect",
+      "params": {
+        "effect": "nausea"
+      },
+      "values": {
+        "seconds": [
+          3.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "chance": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:fermented_spider_eye"
+    },
+    {
+      "id": "riptide_shove",
+      "name": "Riptide Shove",
+      "desc": "Your blows may drive the foe back.",
+      "parents": [
+        {
+          "node": "rain_of_mercy",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "knockback_on_hit",
+      "values": {
+        "strength": [
+          0.6,
+          0.69,
+          0.78,
+          0.87
+        ],
+        "chance": [
+          0.3,
+          0.345,
+          0.39,
+          0.435
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:piston"
+    },
+    {
+      "id": "breaker_fall",
+      "name": "Breaker Fall",
+      "desc": "The sea softens your falls.",
+      "parents": [
+        {
+          "node": "leviathan_s_fall",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "fall_guard",
+      "values": {
+        "pct": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:water_bucket"
+    },
+    {
+      "id": "sea_splitting_torrent",
+      "name": "Sea-Splitting Torrent",
+      "desc": "Split the room with a monster wave that sweeps the whole lane ahead.",
+      "parents": [
+        {
+          "node": "leviathan_s_fall",
+          "level": 3
+        },
+        {
+          "node": "breaker_fall",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "damage": [
+          28.0,
+          35.0,
+          42.0
+        ],
+        "length": [
+          22.0,
+          24,
+          24
+        ],
+        "width": [
+          5.0,
+          5.5,
+          6
+        ],
+        "knockback": [
+          1.8,
+          1.98,
+          2
+        ],
+        "cost": [
+          0.06,
+          0.0648,
+          0.0696
+        ],
+        "cooldown": [
+          1700.0,
+          1564.0,
+          1428.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:heart_of_the_sea"
+    },
+    {
+      "id": "abyssal_maelstrom",
+      "name": "Abyssal Maelstrom",
+      "desc": "A colossal whirlpool opens and drags everything around you to its center.",
+      "parents": [
+        {
+          "node": "rain_of_mercy",
+          "level": 3
+        },
+        {
+          "node": "riptide_shove",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "pull",
+      "params": {
+        "vfx": "WATER_RING"
+      },
+      "values": {
+        "radius": [
+          12.0,
+          13.2,
+          14
+        ],
+        "strength": [
+          1.9,
+          2.09,
+          2.28
+        ],
+        "targets": [
+          10.0,
+          14.0,
+          14.0
+        ],
+        "damage": [
+          20.0,
+          25.0,
+          30.0
+        ],
+        "cost": [
+          0.06,
+          0.0648,
+          0.0696
+        ],
+        "cooldown": [
+          1800.0,
+          1656.0,
+          1512.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:conduit"
+    }
+  ]
+}
