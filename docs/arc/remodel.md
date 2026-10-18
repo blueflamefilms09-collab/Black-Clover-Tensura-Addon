@@ -160,7 +160,9 @@ python3 -B tools/gen_arc_characters.py --preview <model> front back idle attack 
 ```
 Tests (JUnit 5, pure): `client/remodel/RemodelTableTest` (every entity registered, every model has geometry, animations, texture, glow, second form, skins and the clips the clock plays and the
 mob's own; the looks are the manifest's numbers and the kit found no problem; every character file and table row agree; every family and entity has a renderer case; the NUSMP line is there;
-the mobs meant to look like the player were left alone) and `client/remodel/KitMathTest`.
+every snake_case name the renderer sources mention is an entity, a model, a second form or a skin of the table; the mobs meant to look like the player were left alone) and
+`client/remodel/KitMathTest` (the tint, Rouge's unravel and re-knit, the painted rise). The kit's own `--check` (inside `gen_remodel.py --check`) also caught a nondeterministic clip build
+in this work (a set iterated in `lib.pose_clip`), now sorted.
 
 ## 6. Sizes
 
