@@ -1,50 +1,266 @@
-# The Dungeon Mechanics Library (plan, then reference)
+# The Dungeon Mechanics Library (1000 mechanics)
 
-**Status:** plan committed first; this file is rewritten into the reference as the library grows. Code: `labyrinth/mega/mechanics/`,
-data: `data/nusmp/mega/mechanics/*.json` (generated), generator: `tools/mechanics/gen_mechanics.py` + `tools/mechanics/tables/*.py`.
+A layer ON TOP of the Mega-Dungeon: **1000 data-defined mechanics** that the dungeon attaches to a floor, a room, a hazard zone or a boss arena, built from about 150 hand-designed
+base designs and their variants, drawn from more than 45 anime and from the main D&D rulebooks. Code: `labyrinth/mega/mechanics/`; data: `data/nusmp/mega/mechanics/*.json`
+(generated); generator: `tools/mechanics/gen_mechanics.py` with the design cards in `tools/mechanics/tables/*.py`; lang: `tools/mechanics/lang_fragment.json`.
 
-## What it is
-A layer ON TOP of the traps, riddle rooms and room kinds that already exist (nothing is removed): **1000 data-defined mechanics** the
-dungeon can attach to a floor, a room, a boss fight or a hazard zone. Each mechanic = id, name, description, flavour (lang), category,
-source (an anime or a D&D book), tier range (5 tiers of 200 floors, as `DndRules.tierOf`), road affinity, theme affinities, a threat cost,
-a weight, a TRIGGER, a list of EFFECTS from ~80 composable primitives (numbers scaled by floor), and an optional COUNTER (how a player
-beats or disarms it).
+**New or replacement (owner's rule 5).** Everything here is NEW. Nothing existing was replaced or removed: the D&D traps (`labyrinth/trap`), the riddle rooms, the room kinds, the
+Dungeon Master, the safe zones, the rifts and the Guardians work exactly as before. The library only adds a layer the Director can put on top of them; with
+`[mechanics] enabled = false` the dungeon is as it was.
 
-## Categories (125 each = 1000)
-| id | name | what |
+**State of this document.** Written without a compiler or a game (CI compiles, runs the JUnit tests and the headless server smoke test). The pure part (catalogue, parser, signature
+guard, planner, scaling) is pinned by JUnit tests that were run; the engine and the 80 primitives were type-checked against the API stubs and are covered by in-game self-tests that
+nobody has run yet. Section 9 lists what is unverified.
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+## 1. What a mechanic is
+
+| field | meaning |
+|---|---|
+| `id` | `<category>.<base>[.<variant>]`, for example `hazard.spore_cloud.e_poison` |
+| `name`, `desc`, `flavor` | English texts, also the fallbacks of the lang keys `mechanic.nusmp.<id>.name / .desc / .flavor`; they say in the mod's own words what the mechanic is and where it comes from |
+| `cat` | one of 8 categories (below) |
+| `src` | the series or rulebook it is inspired by (never empty; guarded) |
+| `base` | the hand-designed card it was expanded from |
+| `scope` | `floor` (every player of the floor), `room` (one room), `zone` (a disc round an anchor in a room), `boss` (the arena of a boss floor) |
+| `tiers` | `[lo, hi]` of the five tiers of 200 floors (`Scaling.tierOf`); dearer mechanics start deeper, trivial ones end sooner |
+| `road` | `both`, `holy` or `abyssal` |
+| `themes` | the themes it is at home in (weight x3 there, x0.35 elsewhere; empty = no preference) |
+| `cost`, `weight` | threat cost against the floor's budget, and the weight in the draw |
+| `trigger` | WHEN it fires: one of 18 kinds with its arguments |
+| `effects` | WHAT it does: a list of calls of the 80 primitives. Reserved keys of an effect: `delay`, `chance`, `times` + `every`, `if` (a gate on the instance's counters, for example `"wrong>=1"`), `on` (`"solve"`: the effect is a reward that waits for the counter) |
+| `counter` | HOW a player beats it: one of 20 kinds (`none` = survive it or leave) |
+| `reward` | what beating it pays: `none`, `loot` (the dungeon's trial table, never a relic), `xp`, `heal`, `mana` |
+| `sig` | the first 12 hex digits of the SHA-1 of the behaviour signature (the generator writes it, a test recomputes it in Java) |
+
+A number written `[a, b]` is SCALED by depth: `a + b*s` where `s` runs from 0 at floor 1 to 4.995 at floor 1000 (`Scaling.value`); plain numbers are constants. Damage-like numbers are also
+multiplied by the config difficulty.
+
+## 2. Architecture
+
+```
+tools/mechanics/tables/*.py  --gen_mechanics.py-->  data/nusmp/mega/mechanics/{floor,puzzle,hazard,combat,risk,boss,travel,party}.json + ops.json
+                                                                  |  (reload listener: MechanicLibrary.Reload)
+                                                        MechanicLibrary (immutable snapshot) + OpCatalog (ops.json)
+                                                                  |
+ Planner.plan(library, floor, config)  <-- pure, seeded -- MechanicsDirector.planFor(sector)   (cached per sector, rebuilt when the config or library changes)
+                                                                  |  scan of the players every 10 ticks
+                                                        Instance (one live mechanic: anchor, Area, props, wardens, flags, running effects, journals)
+                                                                  |  every tick
+              Triggers.poll  ->  fire  ->  Prims (80 primitives)  ->  Run (arguments, targets, Journal)      Counters.poll / onUse / onMobDeath -> solve -> Rewards
+                                                                  |
+                                                  Instance.end(): blocks restored from the journals, monsters removed, flags dropped
+```
+
+* **Pure and testable (no Minecraft types):** `MechCategory`, `Scope`, `Road`, `Scaling`, `Args`, `MechanicDef`, `OpCatalog`, `MechanicParser`, `Signature`, `Channels`, `Weights`, `Seeds`, `Planner`, `Shapes`,
+  `Cond`, `Blacklist`, `MobGroups`.
+* **Engine (server thread):** `MechanicLibrary`, `MechanicsDirector`, `Instance`, `Run`, `Prim`/`Prims*`, `Triggers`, `Counters`, `Props`, `Mobs`, `Journal`, `Rules`, `Rewards`, `Messages`, `Rukh`, `Safety`, `Area`, `MechanicsData`
+  (SavedData), `MechanicsEvents`, `MechanicsCommand`, `MechanicsConfig`, `MechanicsSelfTests`, `MechanicsRegistry`.
+
+## 3. The primitives, triggers and counters
+
+The vocabulary lives in `tools/mechanics/tables/ops.py` and is shipped as `ops.json` (the Java `OpCatalog` validates every mechanic against it; the self-test demands an executor for every id).
+
+<!-- OPS:BEGIN -->
+
+Generated by `tools/mechanics/gen_mechanics.py` from `tools/mechanics/tables/ops.py`; do not edit by hand.
+
+### The 80 effect primitives
+
+| id | group | arguments (defaults) | channels | sustained | what it does |
+|---|---|---|---|---|---|
+| `effect` | creature | id=minecraft:slowness, secs=5, amp=0, who=players | - |  | apply a mob effect |
+| `damage` | creature | amount=2, pct=0, kind=magic, who=players | - |  | hurt |
+| `heal` | creature | amount=4, pct=0, who=players | - |  | heal |
+| `knockback` | creature | power=1, up=0.3, from=anchor, who=players | - |  | push away |
+| `pull` | creature | power=0.8, who=players | - |  | drag towards the anchor |
+| `launch` | creature | power=1, who=players | - |  | throw upward |
+| `dash` | creature | power=1, dir=random, who=players | - |  | a sideways shove |
+| `ignite` | creature | secs=4, who=players | - |  | set on fire |
+| `freeze` | creature | secs=5, who=players | - |  | powder-snow chill |
+| `starve` | creature | amount=4 | - |  | drain hunger |
+| `drain_mana` | creature | pct=10 | mana |  | drain magicules |
+| `restore_mana` | creature | pct=20 | - |  | restore magicules |
+| `xp` | creature | levels=-1 | - |  | give or take experience levels |
+| `gravity` | creature | mode=up, secs=4, who=players | gravity | yes | flip or weigh gravity |
+| `root` | creature | secs=3, who=players | movement |  | hold in place |
+| `tp_random` | creature | radius=6, who=players | teleport |  | blink to a random safe spot of the area |
+| `tp_anchor` | creature | who=players | teleport |  | to the anchor |
+| `tp_swap` | creature |  | teleport |  | two players trade places |
+| `tp_entry` | creature |  | teleport |  | back to where they came in |
+| `tp_room` | creature | mode=random | teleport |  | to another room of the floor |
+| `mark` | creature | secs=10, who=players | - |  | glowing |
+| `shuffle_hotbar` | creature |  | - |  | swap two hotbar slots |
+| `item_cooldown` | creature | secs=6 | - |  | every item on cooldown |
+| `curse_hand` | creature | secs=20, dmg=1 | curse | yes | attacking hurts the attacker |
+| `take_item` | creature | item=minecraft:gold_nugget, count=1 | - |  | remove items from the inventory |
+| `give_item` | creature | item=minecraft:gold_nugget, count=1 | - |  | give items |
+| `give_loot` | creature | table=nusmp:chests/labyrinth_trial, rolls=1 | - |  | roll a loot table into the inventory |
+| `xp_orbs` | creature | amount=20 | - |  | drop experience |
+| `burden` | creature | secs=6, per=6 | movement | yes | slowness by how full the inventory is |
+| `speed` | creature | factor=-0.4, secs=6, who=players | time | yes | walk speed modifier (time dilation) |
+| `disorient` | creature |  | - |  | spin the view |
+| `link` | creature | radius=8, dmg=1, secs=20 | tether | yes | players tied together |
+| `share_damage` | creature | pct=50, secs=20 | burden | yes | a blow is shared by the party |
+| `downed` | creature | secs=12 | revive | yes | a lethal blow leaves a downed player a mate can lift |
+| `no_regen` | creature | secs=20 | regen | yes | no natural healing |
+| `place` | world | block=minecraft:stone, shape=ring, radius=4, height=1, count=12, at=auto, secs=0 | - |  | place blocks into free air |
+| `floor_swap` | world | block=minecraft:magma_block, shape=disc, radius=3, at=auto, secs=0 | floor |  | replace the floor layer |
+| `pit` | world | radius=2, depth=1, at=auto, secs=8 | floor |  | open a shallow pit |
+| `flood` | world | height=2, block=minecraft:water, at=room, secs=10 | water |  | raise liquid over the floor |
+| `cage` | world | radius=3, height=3, block=minecraft:iron_bars, at=auto, secs=0 | cage |  | bars round the party |
+| `seal_doors` | world | block=minecraft:iron_bars, secs=0 | doors |  | bar every doorway of the room |
+| `unseal` | world |  | - |  | lift the seal and cages of this mechanic |
+| `lights_out` | world | radius=10, at=auto, secs=0 | light |  | snuff the light sources |
+| `lights_on` | world | count=6, level=15, at=auto, secs=0 | light |  | invisible light blocks |
+| `wall_blink` | world | block=minecraft:stone_bricks, period=40, radius=4, secs=30, at=auto | walls | yes | walls that come and go |
+| `slider` | world | block=minecraft:smooth_stone_slab, axis=x, range=6, period=10, radius=2, secs=30, at=auto | platform | yes | a platform that travels |
+| `ceiling` | world | block=minecraft:stone, period=12, radius=4, secs=12, dmg=2, at=auto | ceiling | yes | a ceiling that comes down and goes up again |
+| `trail` | world | block=minecraft:glass, life=40, secs=20 | trail | yes | a bridge that forms under the feet and fades |
+| `prop` | world | kind=pedestal, count=3, at=auto | - |  | interactive props of this mechanic |
+| `spawn_group` | mob | group=undead, count=3, ring=6, hunt=true, hp=1 | summon |  | a band of monsters round the anchor |
+| `spawn_ambush` | mob | group=undead, count=3, hp=1 | summon |  | monsters from the dark edge of the room |
+| `spawn_guard` | mob | group=construct, count=2, still=true, hp=1.5 | summon |  | guards that hold their post |
+| `spawn_swarm` | mob | kind=silverfish, count=6 | summon |  | a swarm of small things |
+| `spawn_elite` | mob | group=knight, hp=3 | summon |  | one big monster |
+| `spawn_chest` | world | loot=nusmp:chests/labyrinth_trial, mimic=0.3, cursed=false, at=auto | - |  | a chest, maybe a mimic, maybe cursed |
+| `buff_mobs` | mob | id=minecraft:strength, secs=10, amp=0 | - |  | effect on the monsters of the area |
+| `shield_mobs` | mob | secs=0 | shield |  | monsters take no damage until unshielded |
+| `unshield` | mob |  | - |  | lift the shield |
+| `kill_mobs` | mob |  | - |  | remove the mechanic's monsters |
+| `heal_mobs` | mob | pct=50 | - |  | heal the monsters |
+| `enrage` | mob | secs=15, speed=0.3 | - |  | faster and stronger |
+| `tether` | mob | pct=80 | shield | yes | followers take less damage while their leader lives |
+| `reflect` | mob | pct=30, secs=20 | reflect | yes | blows are returned to the attacker |
+| `summon_wave` | mob | group=undead, count=3, waves=3, period=200 | summon | yes | waves on a timer |
+| `split_on_death` | mob | count=2 | - | yes | a slain monster leaves smaller ones |
+| `swap_mob` | mob |  | teleport |  | a monster trades places with a player |
+| `doppelganger` | mob | count=1 | summon |  | a hostile double of a player |
+| `call_dm` | mob |  | summon |  | ask the Dungeon Master for an ambush |
+| `weather` | env | mode=rain, secs=20 | weather | yes | weather for the players of the area only |
+| `lightning` | env | count=2, dmg=4, spread=5 | - |  | visual bolts that hurt |
+| `projectile` | env | kind=arrow, count=3, speed=1.2, dmg=2 | - |  | shots from the walls |
+| `shockwave` | env | radius=6, dmg=3, power=0.8, secs=2 | - | yes | a ring that runs outward |
+| `blast` | env | radius=4, dmg=4, power=1.2 | - |  | a burst with no block damage |
+| `wind` | env | dir=north, power=0.12, secs=6 | wind | yes | a steady push |
+| `quake` | env | secs=4, dmg=0 | - | yes | the room shakes |
+| `rukh` | env | align=auto, shape=burst, count=10 | - |  | Rukh particles |
+| `sound` | env | id=minecraft:block.beacon.ambient, vol=1, pitch=1 | - |  | a sound |
+| `title` | env | text=, mode=actionbar | - |  | a message to the players of the area |
+| `counter_add` | env | name=count, n=1 | - |  | count something for the counter / trigger |
+| `reveal` | env | secs=6 | - |  | show the props of the mechanic |
+
+### The 18 triggers
+
+| id | arguments (defaults) | fires when |
 |---|---|---|
-| floor | Floor modifiers | gravity, silence, mana tide, rukh flow, time dilation, shifting walls, darkness, weather, burning floor ... |
-| puzzle | Room puzzles | sequence plates, light/mirror routing, weight, levers, notes, colours, memory, carry ... |
-| hazard | Hazards and traps | timed, proximity, line of sight, chains, falling ceilings, flooding, spores, collapsing floors, glyphs ... |
-| combat | Combat gimmicks | kill order, shielded foes + switch, reflective phases, waves, cursed weapons, ambush rooms ... |
-| risk | Risk and reward | cursed chests, bargains, gambling altars, sacrifice shrines, mimics, vault timers ... |
-| boss | Boss mechanics | phases, lair actions, arena transformations, minion tethers, anti-cheese ... |
-| travel | Traversal | moving platforms, wind lifts, one-way doors, teleport networks, shafts ... |
-| party | Social and party | shared burdens, split-party rooms, revive rules, cooperative locks ... |
+| `floor_enter` |  | once, when the first player steps into the mechanic's area |
+| `area_enter` | cooldown=200 | every time a player comes into the area |
+| `timer` | every=200 | every N ticks while a player is inside |
+| `proximity` | r=4, cooldown=100 | a player within r blocks of the anchor |
+| `sight` | range=14, cooldown=100 | a player looks at the anchor |
+| `kill` | n=3 | n monsters die in the area |
+| `hp_below` | frac=0.5, cooldown=200 | a player under a fraction of their health |
+| `item_use` | item=any, cooldown=100 | a player uses an item (any, food, light, weapon, magic, or an id) |
+| `interact` | cooldown=60 | a player uses a prop block of the mechanic |
+| `damage_taken` | min=1, cooldown=60 | a player is hurt in the area |
+| `sprint` | ticks=40, cooldown=100 | a player sprints for a while |
+| `idle` | ticks=100, cooldown=100 | a player stands still for a while |
+| `sneak` | ticks=60, cooldown=100 | a player sneaks for a while |
+| `jump` | n=3, cooldown=100 | a player jumps n times |
+| `boss_hp` | frac=0.5 | the boss of the arena falls under a fraction of its health |
+| `party_size` | n=2, cooldown=200 | n or more players in the area |
+| `death` | cooldown=100 | a player dies in the area |
+| `dark` | light=4, ticks=60, cooldown=100 | a player stays in the dark |
 
-## Generation (data, deterministic)
-~150 hand-designed BASE mechanics (`tools/mechanics/tables/<category>.py`), each with a few ELEMENT / TRIGGER / COUNTER alternatives.
-`gen_mechanics.py` expands every base into its base + 5 or 6 variants that change something the player notices (the element it uses,
-what triggers it, how it is beaten) and writes `data/nusmp/mega/mechanics/<category>.json` + `ops.json` (the primitive catalogue)
-+ `tools/mechanics/lang_fragment.json`. `--check` exits 1 when a file on disk differs. A BEHAVIOUR SIGNATURE (sorted primitives + trigger + counter + scope
-+ categorical arguments + bucketed numbers) must be unique across the library; so must every name and description.
+### The 20 counters
 
-## Engine (server)
-`MechanicsDirector`: picks mechanics for a floor / room by weight from the floor's tier, road, theme and threat budget with a per-floor seed
-(`Seeds`, reproducible), under per-floor and per-room caps, never stacking mechanics that share an exclusive CHANNEL (the conflict table),
-never inside safe rooms, the Hub (a different dimension) or rift pockets (`RiftRules.slotAt >= 0`); activates an instance when a player
-enters its area; ticks triggers, effects (sustained ones too) and counters; cleans up (blocks restored from a JOURNAL, spawned mobs removed,
-flags dropped) when the area is left, the floor is left or unloaded. The journal of a running instance is mirrored in SavedData so a crash
-cannot leave a block changed.
+| id | arguments (defaults) | the engine places | how it is beaten |
+|---|---|---|---|
+| `none` |  | none | cannot be beaten: it must be survived or left behind |
+| `kill_all` | group=undead, count=3 | mobs | kill every warden the mechanic spawns |
+| `kill_marked` | group=knight | mobs | kill the one marked warden |
+| `item_offer` | item=minecraft:gold_ingot, count=1 | pedestal | give an item to the altar |
+| `stand_plate` | secs=6 | plate | stand on the plate for a while |
+| `sneak_through` | secs=8 | none | sneak for a while in the area |
+| `hold_light` | secs=8 | none | carry a light for a while |
+| `sequence` | steps=4 | pedestal | use the props in the right order |
+| `lever` |  | lever | pull the lever |
+| `survive` | secs=30 | none | last out the time |
+| `all_present` | secs=4 | plate | every living party member in the area at once |
+| `split_plates` | n=2 | plate | n different players on n plates together |
+| `carry` | item=minecraft:amethyst_shard | pedestal | carry the item from one pedestal to the other |
+| `no_damage` | secs=20 | none | take no damage for a while |
+| `quiet` | secs=15 | none | neither sprint nor jump for a while |
+| `pay_xp` | levels=3 | pedestal | pay experience levels at the altar |
+| `pay_hp` | hearts=3 | pedestal | pay health at the altar |
+| `pay_item` | item=minecraft:iron_ingot, count=4 | pedestal | pay a price in items |
+| `pillars_sync` | secs=4, steps=3 | pedestal | light every pillar within seconds of each other |
+| `mirror` | steps=3 | pedestal | repeat a shown pattern |
 
-Hooks (all existing events): server tick, `FloorListener`, `LivingDeathEvent`, `LivingIncomingDamageEvent`, `PlayerInteractEvent`,
-logout/dimension change/server stop.
+Exclusive channels (two mechanics sharing one are never stacked): `burden`, `cage`, `ceiling`, `curse`, `doors`, `floor`, `gravity`, `light`, `mana`, `movement`, `platform`, `reflect`, `regen`, `revive`, `shield`, `tether`, `time`, `trail`, `vision`, `walls`, `water`, `weather`, `wind`.
 
-## Config / commands / tests
-`MechanicsConfig` (own file `nusmp-labyrinth-mega-mechanics-server.toml`), `/multiverse mega mechanic list|info|apply|clear|count|verify`,
-in-game self-tests `mech.*`, JUnit tests for the signature guard, distribution, scaling, weights, conflicts and seeding.
+<!-- OPS:END -->
 
-## The base designs
+## 4. How the Director chooses (the rules of the brief)
+
+* **Seeded and reproducible.** `Seeds.floorSeed(sector.seed, floor)`; the plan is a pure function of the sector, its rooms, the library and the config, so it needs no saved state; it is cached in memory.
+* **By weight.** `Weights.weight`: 0 outside the mechanic's tier range or on the other road; x3 for a theme it likes, x0.35 for one it does not; times a bias by room kind (`puzzle` rooms draw puzzles, `trap` rooms hazards,
+  `trial` rooms combat, `treasure` rooms risk-and-reward, corridors traversal).
+* **By budget.** A floor has a threat budget of `8 + 4*tier` (times the difficulty); each mechanic costs `cost`; a boss arena has `4 + 2*tier` of its own.
+* **Caps.** `[mechanics] perFloor` (default 4: floor-wide plus room/zone ones; a boss arena may add up to two boss mechanics) and `perRoom` (default 1).
+* **No stacking of conflicts.** `Channels.of(def)`: every primitive declares the exclusive channels it occupies (`gravity`, `light`, `water`, `weather`, `time`, `doors`, `shield`, `reflect`, `revive`, `burden`, `vision`, `floor`,
+  `movement` ...), a mob effect may too (darkness is `vision`); two mechanics sharing a channel, or two variants of one base, are never planned together. Floor-wide mechanics clash with everything on the floor, room ones with the
+  mechanics of their room.
+* **Never in the wrong place.** `Safety.allowedAt`: only the Mega-Dungeon dimension (the Hub, Floor 0, is another dimension), never in a rift pocket (`RiftRules.slotAt >= 0`), never in a safe room (Landing, Safe Zone, stairwell).
+  The planner also never plans a mechanic in a safe room, the Guardian's chain (antechamber, vault, onward) or a room smaller than 9 blocks; creative and spectating players are never affected.
+* **Cleaning up.** An instance ends when its area has been empty for five seconds, when the Guardian of a boss floor dies, when an admin clears it, when the switch is turned off or the server stops. Ending restores every block
+  from the journals, discards the monsters it spawned and drops its flags. A mechanic that was beaten is remembered in `MechanicsData` (`nusmp_mechanics`) so it does not re-arm. The journals of running instances are mirrored
+  in the same SavedData, so a crash cannot leave a block changed: the next start restores them before any player is let in.
+
+## 5. Config, command, lang, tests
+
+* `world/serverconfig/nusmp-labyrinth-mega-mechanics-server.toml`, `[mechanics]`: `enabled`, `perFloor`, `perRoom`, `difficulty`, one switch per category (`floorModifiers`, `roomPuzzles`, `hazards`, `combatGimmicks`,
+  `riskReward`, `bossMechanics`, `traversal`, `party`), `blacklist` (a comma-separated string of ids; `base.*` bans a base and all its variants), `creativeActivates`.
+* `/multiverse mega mechanic list [category] [page]`, `info <id>`, `apply <id> here`, `clear`, `reset`, `count`, `verify` (permission 2).
+* Lang: every key is `Component.translatableWithFallback`; `tools/mechanics/lang_fragment.json` holds the 3000 mechanic keys and the message keys (`message.nusmp.mega.mech.*`); merge it into `en_us.json`.
+* Monster groups: `data/nusmp/mega/mechanic_groups.json` (which entity stands for `undead`, `swarm` ... at which tier; the foundry's `nusmp:foundry_mob` is named there as an `optional` entry, skipped when the type does not exist).
+* In-game self-tests (run by the CI smoke test): `mech.library`, `mech.resolve`, `mech.prims` (every primitive executes on a scratch room and leaves it block for block as it was), `mech.triggers`, `mech.counters`, `mech.director`, `mech.apply`.
+* JUnit 5 (pure): `MechanicsDataTest` (parses cleanly, no two mechanics share a behaviour signature, name or description, the generator's and Java's signature agree, every source non-empty and spread: at least 30 anime,
+  none above 8 %, every theme exists, every primitive/trigger/counter is used), `PlannerTest` (determinism per seed, caps, budget, conflicts, no safe rooms, categories and blacklist), `MechanicsCoreTest` (scaling, buckets, seeds,
+  weights, channels, blacklist, conditions, shapes, monster groups, catalogue).
+
+## 6. How to add a mechanic
+
+1. A new VARIANT of an existing design: add an element, trigger or counter alternative to its card in `tools/mechanics/tables/<category>.py`. Alternatives are taken in the order element 0, trigger 0, counter 0, element 1 ... so a new
+   alternative only appears in the expansion if the card's variant count reaches it; raise the count by moving it earlier in the list.
+2. A new BASE: add a `base(...)` card. Each category must expand to exactly 125 (`PER_CATEGORY` in the generator) and the generator spreads that over the cards of the category; it fails when a card has too few alternatives.
+3. Run `python3 tools/mechanics/gen_mechanics.py` (writes) and `--check` (CI). The guards fail on a duplicate id, name, description or behaviour signature, an argument outside the catalogue, a missing source, a source above 8 %, fewer than
+   30 anime sources, or a primitive/trigger/counter nobody uses.
+4. A new PRIMITIVE: add it to `tools/mechanics/tables/ops.py` AND an executor in one of `PrimsCreature` / `PrimsWorld` / `PrimsMob` / `PrimsEnv` (`Prims.once` / `Prims.timed`); `mech.library` and `mech.prims` fail until both exist.
+   Block changes must go through `r.journal()` (or the instance's named journals) so they are restored.
+
+## 7. Wiring (the lead adds these lines; this branch already has them)
+
+* `MegaSystem.init`: `com.newuniverse.nusmp.labyrinth.mega.mechanics.MechanicsRegistry.init(modBus);` and `MegaSystem.init` end: `...MechanicsRegistry.register(bus);`
+* `MegaCommands.node()`: `mega.then(com.newuniverse.nusmp.labyrinth.mega.mechanics.MechanicsRegistry.command());`
+* `NUSMP`: `modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.mechanics.MechanicsConfig.SPEC, "nusmp-labyrinth-mega-mechanics-server.toml");`
+
+## 8. The counts
+
+Category and source counts, and every base design, are in the generated section below.
+
+## 9. Not verified (honest list)
+
+Nothing of the engine was run in the game. Unverified: every primitive's feel (timings, numbers, how a platform carries a rider, how water behaves round the doors), the 1.21.1 API calls that the stub type-checker cannot check (the lever and
+button block states, the packet constructors, `ClipContext`), the interplay of the incoming-damage hooks with the mod's other damage systems (the HP buffer, the Guardians' damage budget, the Rukh flow), the shared-SavedData journal
+recovery after a crash, the floor-wide mechanics' anchor (chosen among the rooms within 56 blocks of the first player to enter, not at a fixed room), and the balance of all the numbers. The foundry's variant names in `mechanic_groups.json`
+are guesses to be replaced by the foundry's real ones.
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+## 10. The base designs
 
 <!-- BASES:BEGIN -->
 
