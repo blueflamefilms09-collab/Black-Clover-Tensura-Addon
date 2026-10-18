@@ -1,0 +1,1104 @@
+{
+  "magic": "exiled_heavy_knight",
+  "franchise": "exiled_heavy_knight",
+  "name": "Animation Cancel Technique",
+  "desc": "Skip the recovery of every move: end a lunge halfway, step out of a swing, chain the next one before the last has landed. Frames are the only currency.",
+  "book": "nusmp:animation_cancel_book",
+  "book_name": "Frame Data of the Skipped Heartbeat",
+  "book_lore": "Nothing is slow if you refuse to finish it.",
+  "color": "#1ABC9C",
+  "icon": "minecraft:feather",
+  "class_id": "animation_cancel",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/animation_cancel.png",
+  "book_texture": "nusmp:item/skill_book_3d/exiled_heavy_knight",
+  "background_theme": "storm",
+  "nodes": [
+    {
+      "id": "frame_skip_stance",
+      "name": "Frame-Skip Stance",
+      "desc": "Lean forward on the balls of your feet: much faster, a little crit, but your armor is pulled thin.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          -2.0,
+          -2.5,
+          -3.0
+        ],
+        "speed_pct": [
+          0.2,
+          0.24,
+          0.28
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.05,
+          0.06,
+          0.07
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:rabbit_foot"
+    },
+    {
+      "id": "recovery_cancel_stance",
+      "name": "Recovery-Cancel Stance",
+      "desc": "Swing without the wind-down: stronger blows and some speed, a thinner guard.",
+      "parents": [
+        {
+          "node": "frame_skip_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage_pct": [
+          0.12,
+          0.144,
+          0.168
+        ],
+        "armor": [
+          -1.0,
+          -1.25,
+          -1.5
+        ],
+        "speed_pct": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "input_buffer_reflexes",
+      "name": "Input Buffer Reflexes",
+      "desc": "A faster swing recovery.",
+      "parents": [
+        {
+          "node": "frame_skip_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.05,
+          0.0625,
+          0.075,
+          0.0875,
+          0.1
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:clock"
+    },
+    {
+      "id": "cancel_step_legs",
+      "name": "Cancel-Step Legs",
+      "desc": "A permanent boost to walking speed.",
+      "parents": [
+        {
+          "node": "recovery_cancel_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.05,
+          0.0625,
+          0.075,
+          0.0875,
+          0.1
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:sugar"
+    },
+    {
+      "id": "hop_cancel_spring",
+      "name": "Hop-Cancel Spring",
+      "desc": "You jump higher between moves.",
+      "parents": [
+        {
+          "node": "frame_skip_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "jump_strength",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.08,
+          0.1,
+          0.12,
+          0.14,
+          0.16
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:slime_ball"
+    },
+    {
+      "id": "ledge_skip_soles",
+      "name": "Ledge Skip Soles",
+      "desc": "You step up whole blocks without slowing.",
+      "parents": [
+        {
+          "node": "recovery_cancel_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "step_height",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.2,
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "cancelled_lunge",
+      "name": "Cancelled Lunge",
+      "desc": "Lunge forward in a streak of wind and hit everything on the line before the animation can finish.",
+      "parents": [
+        {
+          "node": "frame_skip_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "distance": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "input_buffer_blink",
+      "name": "Input Buffer Blink",
+      "desc": "Vanish from your spot and reappear ahead; the swing you queued is already waiting.",
+      "parents": [
+        {
+          "node": "recovery_cancel_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "blink",
+      "params": {
+        "vfx": "SPATIAL_RIFT"
+      },
+      "values": {
+        "distance": [
+          9.0,
+          10.08,
+          11.16,
+          12.24
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:ender_pearl"
+    },
+    {
+      "id": "rising_cancel",
+      "name": "Rising Cancel",
+      "desc": "Cancel into an uppercut that throws the nearest foe skyward.",
+      "parents": [
+        {
+          "node": "cancelled_lunge",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "uppercut",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "range": [
+          3.2,
+          3.392,
+          3.584,
+          3.776
+        ],
+        "launch": [
+          0.9,
+          0.99,
+          1.08,
+          1.17
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:flint"
+    },
+    {
+      "id": "spin_cancel_cyclone",
+      "name": "Spin-Cancel Cyclone",
+      "desc": "Spin on the spot, canceling each turn into the next, and shred what surrounds you.",
+      "parents": [
+        {
+          "node": "input_buffer_blink",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "whirlwind",
+      "params": {
+        "vfx": "WIND_TORNADO"
+      },
+      "values": {
+        "damage": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "radius": [
+          3.5,
+          3.78,
+          4.06,
+          4.34
+        ],
+        "hits": [
+          5.0,
+          6.0,
+          8.0,
+          10.0
+        ],
+        "interval": [
+          5.0,
+          5.0,
+          5.0,
+          5.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          260.0,
+          239.0,
+          218.0,
+          198.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:chain"
+    },
+    {
+      "id": "hop_cancel_slam",
+      "name": "Hop-Cancel Slam",
+      "desc": "A short leap canceled into a crash that cracks the ground below.",
+      "parents": [
+        {
+          "node": "rising_cancel",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "height": [
+          0.7,
+          0.756,
+          0.812,
+          0.868
+        ],
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "radius": [
+          3.0,
+          3.3,
+          3.6,
+          3.9
+        ],
+        "knockback": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:mace"
+    },
+    {
+      "id": "cancel_chain",
+      "name": "Cancel Chain",
+      "desc": "A blow that skips off the first target and hops to the next in line.",
+      "parents": [
+        {
+          "node": "spin_cancel_cyclone",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "chain_hit",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          5.0,
+          6.25,
+          7.5,
+          8.75
+        ],
+        "jumps": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "jump_range": [
+          5.0,
+          5.0,
+          6.0,
+          6.0
+        ],
+        "falloff": [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          160.0,
+          147.0,
+          134.0,
+          122.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:iron_nugget"
+    },
+    {
+      "id": "weave_slash",
+      "name": "Weave Slash",
+      "desc": "A wide, fast crescent slash before the foe can react.",
+      "parents": [
+        {
+          "node": "hop_cancel_slam",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "range": [
+          4.2,
+          4.536,
+          4.872,
+          5.208
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0,
+          52.0
+        ],
+        "targets": [
+          2.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "knockback": [
+          0.4,
+          0.44,
+          0.48,
+          0.52
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          100.0,
+          92.0,
+          84.0,
+          76.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:stone_sword"
+    },
+    {
+      "id": "sprint_window_bonus",
+      "name": "Sprint Window Bonus",
+      "desc": "You hit harder while sprinting.",
+      "parents": [
+        {
+          "node": "cancelled_lunge",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "sprint_bonus",
+      "values": {
+        "bonus": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "chain_frame_momentum",
+      "name": "Chain Frame Momentum",
+      "desc": "Consecutive blows build up strength until you stop fighting.",
+      "parents": [
+        {
+          "node": "input_buffer_blink",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "momentum",
+      "values": {
+        "per_stack": [
+          0.04,
+          0.046,
+          0.052,
+          0.058
+        ],
+        "max_stacks": [
+          5.0,
+          6.0,
+          8.0,
+          10.0
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:amethyst_shard"
+    },
+    {
+      "id": "i_frame_roll",
+      "name": "I-Frame Roll",
+      "desc": "You may avoid a blow completely.",
+      "parents": [
+        {
+          "node": "rising_cancel",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.08,
+          0.096,
+          0.112,
+          0.128
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:phantom_membrane"
+    },
+    {
+      "id": "hasted_by_the_run",
+      "name": "Hasted by the Run",
+      "desc": "You are fast while sprinting.",
+      "parents": [
+        {
+          "node": "spin_cancel_cyclone",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "speed",
+        "condition": "sprinting"
+      },
+      "values": {
+        "amp": [
+          1.0,
+          2.0,
+          2.0,
+          2.0
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:sugar"
+    },
+    {
+      "id": "canceled_combo_counter",
+      "name": "Canceled Combo Counter",
+      "desc": "Every few blows in a row hit much harder.",
+      "parents": [
+        {
+          "node": "hop_cancel_slam",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "combo",
+      "values": {
+        "hits": [
+          4.0,
+          4.0,
+          3.0,
+          3.0
+        ],
+        "bonus": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:blaze_powder"
+    },
+    {
+      "id": "soft_landing_cancel",
+      "name": "Soft Landing Cancel",
+      "desc": "You take less fall damage.",
+      "parents": [
+        {
+          "node": "cancel_chain",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "fall_guard",
+      "values": {
+        "pct": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "shove_cancel",
+      "name": "Shove Cancel",
+      "desc": "Your hits may knock the target back.",
+      "parents": [
+        {
+          "node": "weave_slash",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "knockback_on_hit",
+      "values": {
+        "strength": [
+          0.4,
+          0.46,
+          0.52,
+          0.58
+        ],
+        "chance": [
+          0.3,
+          0.345,
+          0.39,
+          0.435
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:string"
+    },
+    {
+      "id": "zero_frame_combo",
+      "name": "Zero-Frame Combo",
+      "desc": "A blur: you dash through a whole pack in a single heartbeat and strike each of them.",
+      "parents": [
+        {
+          "node": "weave_slash",
+          "level": 3
+        },
+        {
+          "node": "shove_cancel",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "LIGHTNING_FIEND"
+      },
+      "values": {
+        "distance": [
+          13.0,
+          14,
+          14
+        ],
+        "damage": [
+          26.0,
+          32.5,
+          39.0
+        ],
+        "targets": [
+          9.0,
+          10.0,
+          10.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174
+        ],
+        "cooldown": [
+          1300.0,
+          1196.0,
+          1092.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:netherite_sword"
+    },
+    {
+      "id": "infinite_cancel_barrage",
+      "name": "Infinite Cancel Barrage",
+      "desc": "Loose a flurry of cancelled shots at the foe you look at, every one skipping the last's recovery.",
+      "parents": [
+        {
+          "node": "cancel_chain",
+          "level": 3
+        },
+        {
+          "node": "soft_landing_cancel",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0
+        ],
+        "shots": [
+          10.0,
+          14.0,
+          16.0
+        ],
+        "range": [
+          20.0,
+          21.6,
+          23.2
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029
+        ],
+        "cooldown": [
+          1300.0,
+          1196.0,
+          1092.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:crossbow"
+    }
+  ]
+}

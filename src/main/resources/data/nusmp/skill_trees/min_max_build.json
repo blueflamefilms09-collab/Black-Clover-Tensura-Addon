@@ -1,0 +1,1083 @@
+{
+  "magic": "exiled_heavy_knight",
+  "franchise": "exiled_heavy_knight",
+  "name": "Min-Max Build Theory",
+  "desc": "Every stat point goes exactly where it pays off most. Switch allocations on the fly between a cannon and a wall, then spend your cleverness on beams and burst.",
+  "book": "nusmp:min_max_build_book",
+  "book_name": "Spreadsheet of the Optimal Allocation",
+  "book_lore": "Nothing is wasted: every point has a job.",
+  "color": "#8E44AD",
+  "icon": "minecraft:enchanted_book",
+  "class_id": "min_max_build",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/min_max_build.png",
+  "book_texture": "nusmp:item/skill_book_3d/exiled_heavy_knight",
+  "background_theme": "tower",
+  "nodes": [
+    {
+      "id": "glass_cannon_allocation",
+      "name": "Glass Cannon Allocation",
+      "desc": "All points into offense: huge damage and a little speed, paid with armor.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "damage_pct": [
+          0.35,
+          0.42,
+          0.49
+        ],
+        "armor": [
+          -4.0,
+          -5.0,
+          -6.0
+        ],
+        "speed_pct": [
+          0.05,
+          0.06,
+          0.07
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:tnt"
+    },
+    {
+      "id": "tank_allocation",
+      "name": "Tank Allocation",
+      "desc": "All points into defense: armor and knockback resistance, with slower, lighter blows.",
+      "parents": [
+        {
+          "node": "glass_cannon_allocation",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage_pct": [
+          -0.15,
+          -0.18,
+          -0.21
+        ],
+        "armor": [
+          6.0,
+          7.5,
+          9.0
+        ],
+        "speed_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "knockback_res": [
+          0.3,
+          0.36,
+          0.42
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:iron_block"
+    },
+    {
+      "id": "strength_point_surplus",
+      "name": "Strength Point Surplus",
+      "desc": "Spare points go to raw attack power.",
+      "parents": [
+        {
+          "node": "glass_cannon_allocation",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "vitality_point_surplus",
+      "name": "Vitality Point Surplus",
+      "desc": "Spare points go to health.",
+      "parents": [
+        {
+          "node": "tank_allocation",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          4.0,
+          5.0,
+          6.0,
+          7.0,
+          8.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:golden_apple"
+    },
+    {
+      "id": "defense_point_surplus",
+      "name": "Defense Point Surplus",
+      "desc": "Spare points go to armor.",
+      "parents": [
+        {
+          "node": "glass_cannon_allocation",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:iron_chestplate"
+    },
+    {
+      "id": "luck_point_dump",
+      "name": "Luck Point Dump",
+      "desc": "A few points slipped into luck, just in case.",
+      "parents": [
+        {
+          "node": "tank_allocation",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "luck",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:rabbit_foot"
+    },
+    {
+      "id": "stat_point_dump",
+      "name": "Stat Point Dump",
+      "desc": "Overload your body for a moment: strength and speed surge at once.",
+      "parents": [
+        {
+          "node": "glass_cannon_allocation",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "strength",
+        "effect2": "speed",
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "seconds": [
+          14.0,
+          16.0,
+          18.0,
+          20.0
+        ],
+        "amp": [
+          1.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        "amp2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:nether_star"
+    },
+    {
+      "id": "weak_point_calculation",
+      "name": "Weak Point Calculation",
+      "desc": "A cold stare locates the seam in a foe's defense: it takes more damage for a while.",
+      "parents": [
+        {
+          "node": "tank_allocation",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "mark",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "range": [
+          16.0,
+          17.6,
+          19.2,
+          20.8
+        ],
+        "seconds": [
+          8.0,
+          9.0,
+          10.0,
+          12.0
+        ],
+        "bonus": [
+          0.4,
+          0.48,
+          0.56,
+          0.64
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:spyglass"
+    },
+    {
+      "id": "overtuned_beam",
+      "name": "Overtuned Beam",
+      "desc": "Fire a thin, perfectly tuned beam of force that pierces several foes in a row.",
+      "parents": [
+        {
+          "node": "stat_point_dump",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "range": [
+          14.0,
+          15.4,
+          16.8,
+          18.2
+        ],
+        "pierce": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:end_rod"
+    },
+    {
+      "id": "potion_reallocation",
+      "name": "Potion Reallocation",
+      "desc": "Gulp a reserve potion: a quick heal and a trickle of regeneration.",
+      "parents": [
+        {
+          "node": "weak_point_calculation",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_self",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "amount": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "regen_seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:potion"
+    },
+    {
+      "id": "party_respec",
+      "name": "Party Respec",
+      "desc": "Give yourself and your allies nearby a haste boost, as if each had been optimized.",
+      "parents": [
+        {
+          "node": "overtuned_beam",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "haste",
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "seconds": [
+          14.0,
+          16.0,
+          18.0,
+          20.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          600.0,
+          564.0,
+          528.0,
+          492.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:clock"
+    },
+    {
+      "id": "optimal_finisher",
+      "name": "Optimal Finisher",
+      "desc": "A strike that finds the exact weakness: it hits much harder the weaker the foe.",
+      "parents": [
+        {
+          "node": "potion_reallocation",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "execute",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "range": [
+          3.5,
+          3.71,
+          3.92,
+          4.13
+        ],
+        "bonus": [
+          0.5,
+          0.575,
+          0.65,
+          0.725
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:diamond_sword"
+    },
+    {
+      "id": "damage_cap_breaker",
+      "name": "Damage Cap Breaker",
+      "desc": "A thin wave of force along the ground that ignores the usual limit and crashes through a line of foes.",
+      "parents": [
+        {
+          "node": "party_respec",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "length": [
+          11.0,
+          12.1,
+          13.2,
+          14.3
+        ],
+        "width": [
+          2.0,
+          2.2,
+          2.4,
+          2.6
+        ],
+        "knockback": [
+          0.5,
+          0.55,
+          0.6,
+          0.65
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          180.0,
+          166.0,
+          151.0,
+          137.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:netherite_axe"
+    },
+    {
+      "id": "critical_build",
+      "name": "Critical Build",
+      "desc": "Your blows may strike critically.",
+      "parents": [
+        {
+          "node": "stat_point_dump",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.18,
+          0.216,
+          0.252,
+          0.288
+        ],
+        "mult": [
+          1.7,
+          1.836,
+          1.972,
+          2.108
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:diamond"
+    },
+    {
+      "id": "full_hp_bonus",
+      "name": "Full-HP Bonus",
+      "desc": "More damage while at full health.",
+      "parents": [
+        {
+          "node": "weak_point_calculation",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_when",
+      "params": {
+        "condition": "full_health"
+      },
+      "values": {
+        "bonus": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:golden_carrot"
+    },
+    {
+      "id": "efficient_leech",
+      "name": "Efficient Leech",
+      "desc": "Heal for a share of the damage you deal.",
+      "parents": [
+        {
+          "node": "overtuned_beam",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "lifesteal",
+      "values": {
+        "pct": [
+          0.05,
+          0.06,
+          0.07,
+          0.08
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:redstone"
+    },
+    {
+      "id": "grind_efficiency",
+      "name": "Grind Efficiency",
+      "desc": "Kills give more experience.",
+      "parents": [
+        {
+          "node": "potion_reallocation",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "xp_bonus",
+      "values": {
+        "pct": [
+          0.1,
+          0.12,
+          0.14,
+          0.16
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:experience_bottle"
+    },
+    {
+      "id": "low_hp_passive",
+      "name": "Low-HP Passive",
+      "desc": "You take less damage when nearly dead.",
+      "parents": [
+        {
+          "node": "party_respec",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "reduce_when",
+      "params": {
+        "condition": "low_health"
+      },
+      "values": {
+        "pct": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:iron_ingot"
+    },
+    {
+      "id": "strength_aura",
+      "name": "Strength Aura",
+      "desc": "Allies close to you gain strength.",
+      "parents": [
+        {
+          "node": "optimal_finisher",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "aura",
+      "params": {
+        "effect": "strength",
+        "target": "allies"
+      },
+      "values": {
+        "radius": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:beacon"
+    },
+    {
+      "id": "stamina_curve",
+      "name": "Stamina Curve",
+      "desc": "You tire more slowly.",
+      "parents": [
+        {
+          "node": "damage_cap_breaker",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "hunger_saver",
+      "values": {
+        "pct": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:bread"
+    },
+    {
+      "id": "hard_cap_breaker_beam",
+      "name": "Hard-Cap Breaker Beam",
+      "desc": "A massive, tight beam that bores through a whole line of enemies.",
+      "parents": [
+        {
+          "node": "damage_cap_breaker",
+          "level": 3
+        },
+        {
+          "node": "stamina_curve",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "LIGHTNING_FIEND"
+      },
+      "values": {
+        "damage": [
+          30.0,
+          37.5,
+          45.0
+        ],
+        "range": [
+          28.0,
+          30.8,
+          33.6
+        ],
+        "pierce": [
+          5.0,
+          6.0,
+          6.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1400.0,
+          1288.0,
+          1176.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:netherite_ingot"
+    },
+    {
+      "id": "respec_meteor",
+      "name": "Respec Meteor",
+      "desc": "Redistribute the sky: after a pause, a meteor lands exactly where you looked.",
+      "parents": [
+        {
+          "node": "optimal_finisher",
+          "level": 3
+        },
+        {
+          "node": "strength_aura",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "delay": [
+          20.0,
+          19.0,
+          18.0
+        ],
+        "damage": [
+          34.0,
+          42.5,
+          51.0
+        ],
+        "radius": [
+          6.0,
+          6.6,
+          7.2
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348
+        ],
+        "cooldown": [
+          1500.0,
+          1380.0,
+          1260.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:fire_charge"
+    }
+  ]
+}

@@ -1,0 +1,1117 @@
+{
+  "magic": "exiled_heavy_knight",
+  "franchise": "exiled_heavy_knight",
+  "name": "Cheese Strategy",
+  "desc": "The monsters' AI has holes and he knows each of them: blind them, leash them to a corner, snipe from where they cannot reach. Not honorable, extremely effective.",
+  "book": "nusmp:cheese_strategy_book",
+  "book_name": "Notes on the Unfair Corner",
+  "book_lore": "Every boss has a spot where it cannot reach you.",
+  "color": "#27AE60",
+  "icon": "minecraft:cobweb",
+  "class_id": "cheese_strategy",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/cheese_strategy.png",
+  "book_texture": "nusmp:item/skill_book_3d/exiled_heavy_knight",
+  "background_theme": "forest",
+  "nodes": [
+    {
+      "id": "out_of_reach_posture",
+      "name": "Out-of-Reach Posture",
+      "desc": "Hold a spot the foes cannot path to: heavier armor and a little regeneration, at the cost of mobility.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          3.0,
+          3.75,
+          4.5
+        ],
+        "speed_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0.6,
+          0.72,
+          0.84
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:ladder"
+    },
+    {
+      "id": "pillar_hop_posture",
+      "name": "Pillar-Hop Posture",
+      "desc": "Keep bouncing from perch to perch: nimble and fast, but nearly unarmored.",
+      "parents": [
+        {
+          "node": "out_of_reach_posture",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          -2.0,
+          -2.5,
+          -3.0
+        ],
+        "speed_pct": [
+          0.15,
+          0.18,
+          0.21
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.05,
+          0.06,
+          0.07
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:scaffolding"
+    },
+    {
+      "id": "ledge_climber",
+      "name": "Ledge Climber",
+      "desc": "Step up blocks as if they were stairs.",
+      "parents": [
+        {
+          "node": "out_of_reach_posture",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "step_height",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.3,
+          0.375,
+          0.45,
+          0.525,
+          0.6
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:ladder"
+    },
+    {
+      "id": "pillar_springs",
+      "name": "Pillar Springs",
+      "desc": "A higher jump to reach the safe perch.",
+      "parents": [
+        {
+          "node": "pillar_hop_posture",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "jump_strength",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.1,
+          0.125,
+          0.15,
+          0.175,
+          0.2
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:slime_block"
+    },
+    {
+      "id": "soft_landing_habit",
+      "name": "Soft-Landing Habit",
+      "desc": "A longer safe fall.",
+      "parents": [
+        {
+          "node": "out_of_reach_posture",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "safe_fall_distance",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:hay_block"
+    },
+    {
+      "id": "long_arm_of_the_exploit",
+      "name": "Long Arm of the Exploit",
+      "desc": "Hit foes from just beyond their reach.",
+      "parents": [
+        {
+          "node": "pillar_hop_posture",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "entity_interaction_range",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.5,
+          0.625,
+          0.75,
+          0.875,
+          1.0
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:blaze_rod"
+    },
+    {
+      "id": "leash_break_smoke",
+      "name": "Leash-Break Smoke",
+      "desc": "A cloud of smoke blinds the creatures around you while you slip free of their leash.",
+      "parents": [
+        {
+          "node": "out_of_reach_posture",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "smoke",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "radius": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:gunpowder"
+    },
+    {
+      "id": "safe_spot_sniping",
+      "name": "Safe-Spot Sniping",
+      "desc": "From a spot they cannot reach, loose a patient volley at the target.",
+      "parents": [
+        {
+          "node": "pillar_hop_posture",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "shots": [
+          6.0,
+          8.0,
+          10.0,
+          12.0
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88,
+          22.32
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          240.0,
+          221.0,
+          202.0,
+          182.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:bow"
+    },
+    {
+      "id": "pathing_confusion",
+      "name": "Pathing Confusion",
+      "desc": "A wave of dizzying sparks in a cone: foes in front go blind and lose their way.",
+      "parents": [
+        {
+          "node": "leash_break_smoke",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "debuff_cone",
+      "params": {
+        "effect": "blindness",
+        "effect2": "slowness",
+        "vfx": "POISON_BREATH"
+      },
+      "values": {
+        "range": [
+          5.0,
+          5.4,
+          5.8,
+          6.2
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0,
+          52.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seconds2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          220.0,
+          202.0,
+          185.0,
+          167.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:fermented_spider_eye"
+    },
+    {
+      "id": "door_frame_slip",
+      "name": "Door-Frame Slip",
+      "desc": "Pop through the narrowest gap: a short teleport forward.",
+      "parents": [
+        {
+          "node": "safe_spot_sniping",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "blink",
+      "params": {
+        "vfx": "SPATIAL_RIFT"
+      },
+      "values": {
+        "distance": [
+          7.0,
+          7.84,
+          8.68,
+          9.52
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:ender_eye"
+    },
+    {
+      "id": "stuck_mob_drag",
+      "name": "Stuck-Mob Drag",
+      "desc": "Yank stragglers off their ledge and drag them into your kill zone.",
+      "parents": [
+        {
+          "node": "pathing_confusion",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "pull",
+      "params": {
+        "vfx": "THREAD_LINE"
+      },
+      "values": {
+        "radius": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "strength": [
+          0.8,
+          0.88,
+          0.96,
+          1.04
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "damage": [
+          4.0,
+          5.0,
+          6.0,
+          7.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:lead"
+    },
+    {
+      "id": "predictable_pattern",
+      "name": "Predictable Pattern",
+      "desc": "Mark the foe: it has repeated its move once too often and takes extra damage.",
+      "parents": [
+        {
+          "node": "door_frame_slip",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "mark",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "range": [
+          16.0,
+          17.6,
+          19.2,
+          20.8
+        ],
+        "seconds": [
+          8.0,
+          9.0,
+          10.0,
+          12.0
+        ],
+        "bonus": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:compass"
+    },
+    {
+      "id": "aggro_leash",
+      "name": "Aggro Leash",
+      "desc": "Draw nearby monsters to a spot of your choosing.",
+      "parents": [
+        {
+          "node": "stuck_mob_drag",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "taunt",
+      "params": {
+        "vfx": "SEAL_CHAINS"
+      },
+      "values": {
+        "radius": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "resist_seconds": [
+          3.0,
+          4.0,
+          4.0,
+          5.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:lead"
+    },
+    {
+      "id": "corner_evasion",
+      "name": "Corner Evasion",
+      "desc": "You may avoid a blow completely.",
+      "parents": [
+        {
+          "node": "leash_break_smoke",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.08,
+          0.096,
+          0.112,
+          0.128
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:phantom_membrane"
+    },
+    {
+      "id": "cushioned_fall",
+      "name": "Cushioned Fall",
+      "desc": "You take less fall damage.",
+      "parents": [
+        {
+          "node": "safe_spot_sniping",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "fall_guard",
+      "values": {
+        "pct": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:hay_block"
+    },
+    {
+      "id": "high_ground_bonus",
+      "name": "High-Ground Bonus",
+      "desc": "More damage while airborne.",
+      "parents": [
+        {
+          "node": "pathing_confusion",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_when",
+      "params": {
+        "condition": "airborne"
+      },
+      "values": {
+        "bonus": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "quiet_posture",
+      "name": "Quiet Posture",
+      "desc": "Less damage while sneaking.",
+      "parents": [
+        {
+          "node": "door_frame_slip",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "reduce_when",
+      "params": {
+        "condition": "sneaking"
+      },
+      "values": {
+        "pct": [
+          0.18,
+          0.216,
+          0.252,
+          0.288
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:leather_helmet"
+    },
+    {
+      "id": "hidden_spot_cloak",
+      "name": "Hidden Spot Cloak",
+      "desc": "While sneaking you turn invisible.",
+      "parents": [
+        {
+          "node": "stuck_mob_drag",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "invisibility",
+        "condition": "sneaking"
+      },
+      "values": {
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:fermented_spider_eye"
+    },
+    {
+      "id": "webbing_strikes",
+      "name": "Webbing Strikes",
+      "desc": "Your blows may slow the foe.",
+      "parents": [
+        {
+          "node": "predictable_pattern",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "on_hit_effect",
+      "params": {
+        "effect": "slowness"
+      },
+      "values": {
+        "seconds": [
+          3.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "chance": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:cobweb"
+    },
+    {
+      "id": "opportunist_s_loot",
+      "name": "Opportunist's Loot",
+      "desc": "A kill heals you a little and gives a short burst of speed.",
+      "parents": [
+        {
+          "node": "aggro_leash",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "kill_reward",
+      "params": {
+        "effect": "speed"
+      },
+      "values": {
+        "heal": [
+          2.0,
+          2.5,
+          3.0,
+          3.5
+        ],
+        "seconds": [
+          4.0,
+          5.0,
+          5.0,
+          6.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:gold_nugget"
+    },
+    {
+      "id": "staircase_trap_barrage",
+      "name": "Staircase Trap Barrage",
+      "desc": "A long volley of shots into a pack that cannot climb the stairs to answer.",
+      "parents": [
+        {
+          "node": "aggro_leash",
+          "level": 3
+        },
+        {
+          "node": "opportunist_s_loot",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0
+        ],
+        "shots": [
+          12.0,
+          16.0,
+          16.0
+        ],
+        "range": [
+          24.0,
+          25.92,
+          27.84
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029
+        ],
+        "cooldown": [
+          1300.0,
+          1196.0,
+          1092.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:crossbow"
+    },
+    {
+      "id": "cliff_edge_drop",
+      "name": "Cliff-Edge Drop",
+      "desc": "Pull a stone from the sky: after a brief delay it falls on the spot you looked at.",
+      "parents": [
+        {
+          "node": "predictable_pattern",
+          "level": 3
+        },
+        {
+          "node": "webbing_strikes",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "delay": [
+          20.0,
+          19.0,
+          18.0
+        ],
+        "damage": [
+          32.0,
+          40.0,
+          48.0
+        ],
+        "radius": [
+          5.0,
+          5.5,
+          6.0
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348
+        ],
+        "cooldown": [
+          1400.0,
+          1288.0,
+          1176.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:dripstone_block"
+    }
+  ]
+}
