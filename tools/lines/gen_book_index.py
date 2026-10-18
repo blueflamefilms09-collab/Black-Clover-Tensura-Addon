@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate assets/nusmp/skill_books.json: the table a CLIENT uses to dress a Skill Book whose line it does not know.
 
-usage: python3 tools/lines/gen_book_index.py [--check] [--rows-dir DIR] [--routes-dir DIR]
+usage: python3 tools/lines/gen_book_index.py [--check] [--rows-dir DIR] [--routes-dir DIR] [--out FILE]
 
 WHY: the server syncs a client only the lines that player owns (docs/skilltree/lines.md, scale rule). A Skill Book of a line the player has not unlocked yet (found in a chest,
 dropped by a boss, bought) must still show the right cover colour, the right franchise cover and the line's name, and the registry on the client has no such route. So the
@@ -35,18 +35,19 @@ def main():
     args = sys.argv[1:]
     rows_dir = args[args.index("--rows-dir") + 1] if "--rows-dir" in args else None
     routes_dir = args[args.index("--routes-dir") + 1] if "--routes-dir" in args else None
+    out = args[args.index("--out") + 1] if "--out" in args else OUT
     lines = RS.collect(rows_dir, routes_dir)
     data = build(lines)
     text = json.dumps(data, indent=1, ensure_ascii=False) + "\n"
     if "--check" in args:
-        if not os.path.exists(OUT) or open(OUT, encoding="utf-8").read() != text:
+        if not os.path.exists(out) or open(out, encoding="utf-8").read() != text:
             print("skill_books.json is stale: run python3 tools/lines/gen_book_index.py")
             sys.exit(1)
         print("ok: skill_books.json is current (%d lines)" % len(lines))
         return
-    os.makedirs(os.path.dirname(OUT), exist_ok=True)
-    if not os.path.exists(OUT) or open(OUT, encoding="utf-8").read() != text:
-        open(OUT, "w", encoding="utf-8", newline="\n").write(text)
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    if not os.path.exists(out) or open(out, encoding="utf-8").read() != text:
+        open(out, "w", encoding="utf-8", newline="\n").write(text)
     unknown = [lid for lid, l in lines.items() if l["franchise"] not in FRANCHISES]
     print("ok: %d lines written%s" % (len(lines), ("; no franchise cover for: " + ", ".join(unknown)) if unknown else ""))
 
