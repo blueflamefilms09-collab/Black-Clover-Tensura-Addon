@@ -1,0 +1,4 @@
+{
+  "_why": "The files the mod reads at registration (a race object bakes its stats when it is built, long before any datapack exists). A datapack may replace any of them under data/nusmp/elite/races/ and /reload applies the rules and the transformation states at once; the baked stats need a restart.",
+  "races": ["lesser_saiyan", "medium_saiyan", "high_saiyan", "divine_saiyan", "primordial"]
+}

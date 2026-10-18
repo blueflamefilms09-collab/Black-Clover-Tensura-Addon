@@ -1,0 +1,46 @@
+{
+  "_why": "Tier 1 of the Saiyan line (LesserSaiyan). Designed numbers: the original addon's were not available. Stats are Tensura's default-race block, additive on the vanilla base. Aura is the ki pool, magicule is small (a Saiyan fights with ki).",
+  "line": "saiyan",
+  "tier": 1,
+  "difficulty": "intermediate",
+  "alignment": "default",
+  "stats": {
+    "aura_min": 800, "aura_max": 2000, "magicule_min": 150, "magicule_max": 500, "size": 0.0,
+    "max_health": 10, "spiritual_health": 20, "attack": 2.0, "attack_speed": 0.1, "knockback_resistance": 0.05, "movement_speed": 0.01, "swim_speed": 0.0
+  },
+  "intrinsic_skills": ["tensura:strength"],
+  "resistances": ["tensura:pain_resistance"],
+  "natural_skill": "tensura:strength",
+  "traits": ["zenkai"],
+  "evolves_to": "medium_saiyan",
+  "evolution": [
+    {"type": "ep", "min": 4000, "weight": 50},
+    {"type": "kills", "key": "any", "count": 150, "weight": 30},
+    {"type": "mastery", "skill": "tensura:strength", "fraction": 0.25, "weight": 20}
+  ],
+  "transformations": {
+    "boosted": {
+      "from": ["base"], "min_tier": 1, "duration_seconds": 120, "cooldown_seconds": 30, "aura_drain": 0.006, "ki_scaled": true, "color": "#FFD84A", "rukh": "light",
+      "entries": [{}],
+      "modifiers": [
+        {"attribute": "attack_damage", "amount": 0.20, "op": "mult_base"},
+        {"attribute": "movement_speed", "amount": 0.10, "op": "mult_base"}
+      ]
+    },
+    "great_ape": {
+      "from": ["base"], "min_tier": 1, "duration_seconds": 240, "cooldown_seconds": 600, "ends_at_dawn": true, "color": "#4A2A12", "rukh": "dark",
+      "entries": [{"moon": "full_moon", "sky": true, "auto": true}],
+      "modifiers": [
+        {"attribute": "scale", "amount": 1.0, "op": "mult_base"},
+        {"attribute": "attack_damage", "amount": 0.60, "op": "mult_base"},
+        {"attribute": "max_health", "amount": 20, "op": "add"},
+        {"attribute": "armor", "amount": 3, "op": "add"},
+        {"attribute": "knockback_resistance", "amount": 0.4, "op": "add"},
+        {"attribute": "movement_speed", "amount": -0.15, "op": "mult_base"},
+        {"attribute": "step_height", "amount": 1.0, "op": "add"},
+        {"attribute": "entity_interaction_range", "amount": 1.5, "op": "add"},
+        {"attribute": "block_interaction_range", "amount": 1.5, "op": "add"}
+      ]
+    }
+  }
+}
