@@ -19,7 +19,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -31,6 +30,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.levelgen.structure.Structure;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
@@ -73,7 +73,7 @@ public final class RecordsService {
 
     static void register() {
         NeoForge.EVENT_BUS.addListener(RecordsService::onPlayerTick);
-        NeoForge.EVENT_BUS.addListener(RecordsService::onDeath);
+        NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, RecordsService::onDeath);        // after everything that can cancel a death (a totem): a cancelled death is not counted
         NeoForge.EVENT_BUS.addListener(RecordsService::onDamaged);
         NeoForge.EVENT_BUS.addListener(RecordsService::onIncoming);
         NeoForge.EVENT_BUS.addListener(RecordsService::onXp);
@@ -317,11 +317,5 @@ public final class RecordsService {
         if (p != null) return RecordsAttachments.of(p).heldCount();
         Snapshot s = OFFLINE.get(id);
         return s == null ? 0 : s.titles().size();
-    }
-
-    /** The key a pure test or the screen may use to name an entity type. */
-    static String entityKey(LivingEntity e) {
-        ResourceKey<?> k = BuiltInRegistries.ENTITY_TYPE.getResourceKey(e.getType()).orElse(null);
-        return k == null ? "" : k.location().toString();
     }
 }

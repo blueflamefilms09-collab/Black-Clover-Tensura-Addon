@@ -50,12 +50,18 @@ public final class Catalog {
 
     /** The tags of a title, plus the implicit {@code rarity:<id>}; empty for an unknown title. */
     public Set<String> tagsOf(String titleId) {
+        Set<String> cached = tagCache.get(titleId);
+        if (cached != null) return cached;
         TitleDef t = titles.get(titleId);
         if (t == null) return Set.of();
         Set<String> s = new HashSet<>(t.tags());
         s.add("rarity:" + t.rarity().id());
-        return s;
+        Set<String> frozen = Collections.unmodifiableSet(s);
+        tagCache.put(titleId, frozen);
+        return frozen;
     }
+
+    private final Map<String, Set<String>> tagCache = new java.util.concurrent.ConcurrentHashMap<>();
 
     /** The points an unlocked record is worth (its rarity's), 0 for an unknown id. */
     public int pointsOf(String recordId) {

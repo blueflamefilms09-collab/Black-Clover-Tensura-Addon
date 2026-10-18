@@ -107,6 +107,13 @@ public final class RecordsScreen extends Screen {
     private List<TitleInfo> titleRows() {
         List<TitleInfo> out = new ArrayList<>();
         for (TitleInfo t : RecordsClientState.titles()) if (passes(RecordsClientState.held(t.id()))) out.add(t);
+        // the active title first, then the held ones (rarest first), then the ones still to earn (easiest first)
+        out.sort((a, b) -> {
+            boolean ha = RecordsClientState.held(a.id()), hb = RecordsClientState.held(b.id());
+            if (a.id().equals(RecordsClientState.active()) != b.id().equals(RecordsClientState.active())) return a.id().equals(RecordsClientState.active()) ? -1 : 1;
+            if (ha != hb) return ha ? -1 : 1;
+            return ha ? Integer.compare(b.rarity(), a.rarity()) : Integer.compare(a.rarity(), b.rarity());
+        });
         return out;
     }
 
