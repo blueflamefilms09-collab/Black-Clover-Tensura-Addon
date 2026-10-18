@@ -37,6 +37,7 @@ public final class SkillTreeSystem {
         SkyDragonSkills.SKILLS.register(modBus);
         IceMakeSkills.SKILLS.register(modBus);
         HeavyKnightSkills.SKILLS.register(modBus);                  // 1.63.0: the Exiled Heavy Knight routes (Oath of the Heavy Armor, Basic Swordsmanship, Lady Luck)
+        com.newuniverse.nusmp.skilltree.menu.LineStandIns.init(modBus, modContainer);           // one stand-in Unique skill per line, so the lines show in Tensura's Ability Selection menu (docs/skilltree/tensura_menu.md)
         TreeCore.init(modBus, modContainer);
         ItemsSystem.init(modBus, modContainer);
         ShopSystem.init(modBus, modContainer);

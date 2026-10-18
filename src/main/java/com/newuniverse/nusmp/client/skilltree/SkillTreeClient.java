@@ -19,6 +19,7 @@ public final class SkillTreeClient {
         ShopClient.init(modBus);
         MenuInjection.init();
         ArtsBarClient.init(modBus);                                      // 1.82.0: the Arts bar, its keys and the Passives key of the Unique Skill Lines
+        TensuraMenuClient.init();                                        // the Unique Skill Lines in Tensura's Ability Selection menu: nested panel, ON/OFF boxes, admin inspect (docs/skilltree/tensura_menu.md)
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> {
             SkillTreeScreen.forget();
             MenuInjection.forget();
