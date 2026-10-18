@@ -1,0 +1,1122 @@
+{
+  "magic": "god_of_high_school",
+  "franchise": "god_of_high_school",
+  "name": "Jumeok Fist",
+  "desc": "Pure fist-fighting: jabs, hooks, hammer fists and a punch heavy enough to send a shock along the floor. A brawler who ends fights in a few blows.",
+  "book": "nusmp:goh_jumeok_fist_book",
+  "book_name": "Knuckle Wraps of the Street",
+  "book_lore": "No pictures, just bruises in the margins.",
+  "color": "#E65100",
+  "icon": "minecraft:iron_axe",
+  "class_id": "goh_jumeok_fist",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/goh_jumeok_fist.png",
+  "book_texture": "nusmp:item/skill_book_3d/god_of_high_school",
+  "background_theme": "magma",
+  "nodes": [
+    {
+      "id": "peekaboo_guard",
+      "name": "Peekaboo Guard",
+      "desc": "Fists up and head tucked: tough and steady, a little slower.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          3.0,
+          3.75,
+          4.5
+        ],
+        "speed_pct": [
+          -0.06,
+          -0.072,
+          -0.084
+        ],
+        "knockback_res": [
+          0.3,
+          0.36,
+          0.42
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:shield"
+    },
+    {
+      "id": "brawler_s_charge",
+      "name": "Brawler's Charge",
+      "desc": "Come in swinging: very strong blows with a thin guard.",
+      "parents": [
+        {
+          "node": "peekaboo_guard",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "damage_pct": [
+          0.18,
+          0.216,
+          0.252
+        ],
+        "armor": [
+          -2.0,
+          -2.5,
+          -3.0
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.04,
+          0.048,
+          0.056
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:blaze_powder"
+    },
+    {
+      "id": "knuckle_power",
+      "name": "Knuckle Power",
+      "desc": "Bare hands that crack stone.",
+      "parents": [
+        {
+          "node": "peekaboo_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:iron_axe"
+    },
+    {
+      "id": "bruiser_s_chest",
+      "name": "Bruiser's Chest",
+      "desc": "A chest you can punch all day.",
+      "parents": [
+        {
+          "node": "brawler_s_charge",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:cooked_beef"
+    },
+    {
+      "id": "wrapped_hands",
+      "name": "Wrapped Hands",
+      "desc": "Taped fists shrug off the strikes.",
+      "parents": [
+        {
+          "node": "peekaboo_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "fast_hands",
+      "name": "Fast Hands",
+      "desc": "Your jabs come out in a blink.",
+      "parents": [
+        {
+          "node": "brawler_s_charge",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_speed",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.2,
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:iron_nugget"
+    },
+    {
+      "id": "jab_storm",
+      "name": "Jab Storm",
+      "desc": "Throw a blur of jabs at the foe you look at.",
+      "parents": [
+        {
+          "node": "peekaboo_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "damage": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "shots": [
+          7.0,
+          9.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          6,
+          6.48,
+          6.96,
+          7.44
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          240.0,
+          221.0,
+          202.0,
+          182.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:iron_nugget"
+    },
+    {
+      "id": "rising_fist",
+      "name": "Rising Fist",
+      "desc": "A rising uppercut that sends the foe in front of you into the air.",
+      "parents": [
+        {
+          "node": "brawler_s_charge",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "uppercut",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          3.2,
+          3.392,
+          3.584,
+          3.776
+        ],
+        "launch": [
+          0.8,
+          0.88,
+          0.96,
+          1.04
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:iron_axe"
+    },
+    {
+      "id": "punch_wave",
+      "name": "Punch Wave",
+      "desc": "Drive your fist into the air and send the shock along the floor.",
+      "parents": [
+        {
+          "node": "jab_storm",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "EARTH_SPIKES"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "length": [
+          10.0,
+          11.0,
+          12.0,
+          13.0
+        ],
+        "width": [
+          2.0,
+          2.2,
+          2.4,
+          2.6
+        ],
+        "knockback": [
+          0.5,
+          0.55,
+          0.6,
+          0.65
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          180.0,
+          166.0,
+          151.0,
+          137.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:stone"
+    },
+    {
+      "id": "knuckle_wrap",
+      "name": "Knuckle Wrap",
+      "desc": "Wrap the fists: you strike harder and recover faster for a while.",
+      "parents": [
+        {
+          "node": "rising_fist",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "strength",
+        "effect2": "haste",
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "seconds": [
+          12.0,
+          14.0,
+          16.0,
+          17.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "amp2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:string"
+    },
+    {
+      "id": "ricochet_hook",
+      "name": "Ricochet Hook",
+      "desc": "Land a hook that bounces on to the next foe.",
+      "parents": [
+        {
+          "node": "punch_wave",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "chain_hit",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "damage": [
+          5.0,
+          6.25,
+          7.5,
+          8.75
+        ],
+        "jumps": [
+          3.0,
+          4.0,
+          5.0,
+          7.0
+        ],
+        "jump_range": [
+          5.0,
+          5.0,
+          6.0,
+          6.0
+        ],
+        "falloff": [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          160.0,
+          147.0,
+          134.0,
+          122.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:iron_axe"
+    },
+    {
+      "id": "hammer_fist",
+      "name": "Hammer Fist",
+      "desc": "Leap and bring both fists down on the foes below.",
+      "parents": [
+        {
+          "node": "knuckle_wrap",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "height": [
+          0.8,
+          0.864,
+          0.928,
+          0.992
+        ],
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "radius": [
+          3.0,
+          3.3,
+          3.6,
+          3.9
+        ],
+        "knockback": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:anvil"
+    },
+    {
+      "id": "second_wind",
+      "name": "Second Wind",
+      "desc": "Roll the shoulders and breathe: heal and regenerate.",
+      "parents": [
+        {
+          "node": "ricochet_hook",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_self",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "amount": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "regen_seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:cooked_beef"
+    },
+    {
+      "id": "rhythm_of_fists",
+      "name": "Rhythm of Fists",
+      "desc": "Every few punches in a row hit much harder.",
+      "parents": [
+        {
+          "node": "jab_storm",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "combo",
+      "values": {
+        "hits": [
+          4.0,
+          4.0,
+          3.0,
+          3.0
+        ],
+        "bonus": [
+          0.6,
+          0.72,
+          0.84,
+          0.96
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:clock"
+    },
+    {
+      "id": "haymaker_push",
+      "name": "Haymaker Push",
+      "desc": "Your punches may shove the foe back.",
+      "parents": [
+        {
+          "node": "rising_fist",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "knockback_on_hit",
+      "values": {
+        "strength": [
+          0.6,
+          0.69,
+          0.78,
+          0.87
+        ],
+        "chance": [
+          0.3,
+          0.345,
+          0.39,
+          0.435
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:piston"
+    },
+    {
+      "id": "lucky_punch",
+      "name": "Lucky Punch",
+      "desc": "Your punches land critically more often.",
+      "parents": [
+        {
+          "node": "punch_wave",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.14,
+          0.168,
+          0.196,
+          0.224
+        ],
+        "mult": [
+          1.8,
+          1.944,
+          2.088,
+          2.232
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:spectral_arrow"
+    },
+    {
+      "id": "heating_up",
+      "name": "Heating Up",
+      "desc": "The longer the fight, the harder each punch lands.",
+      "parents": [
+        {
+          "node": "knuckle_wrap",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "momentum",
+      "values": {
+        "per_stack": [
+          0.04,
+          0.046,
+          0.052,
+          0.058
+        ],
+        "max_stacks": [
+          6.0,
+          8.0,
+          10.0,
+          11.0
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:blaze_powder"
+    },
+    {
+      "id": "taste_of_blood",
+      "name": "Taste of Blood",
+      "desc": "A share of the damage you deal returns as health.",
+      "parents": [
+        {
+          "node": "ricochet_hook",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "lifesteal",
+      "values": {
+        "pct": [
+          0.05,
+          0.06,
+          0.07,
+          0.08
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:redstone"
+    },
+    {
+      "id": "dig_in",
+      "name": "Dig In",
+      "desc": "When almost dead, a brief shield saves you.",
+      "parents": [
+        {
+          "node": "hammer_fist",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "last_stand",
+      "values": {
+        "threshold": [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "rest": [
+          1800.0,
+          1620.0,
+          1440.0,
+          1260.0
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:totem_of_undying"
+    },
+    {
+      "id": "brawler_s_pride",
+      "name": "Brawler's Pride",
+      "desc": "While your health is full you hit harder.",
+      "parents": [
+        {
+          "node": "second_wind",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_when",
+      "params": {
+        "condition": "full_health"
+      },
+      "values": {
+        "bonus": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:iron_axe"
+    },
+    {
+      "id": "earth_cracking_punch",
+      "name": "Earth-Cracking Punch",
+      "desc": "A single full-power punch that tears the ground open in a long wave.",
+      "parents": [
+        {
+          "node": "second_wind",
+          "level": 3
+        },
+        {
+          "node": "brawler_s_pride",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "EARTH_SPIKES"
+      },
+      "values": {
+        "damage": [
+          28.0,
+          35.0,
+          42.0
+        ],
+        "length": [
+          20.0,
+          22.0,
+          24
+        ],
+        "width": [
+          4.0,
+          4.4,
+          4.8
+        ],
+        "knockback": [
+          1.6,
+          1.76,
+          1.92
+        ],
+        "cost": [
+          0.06,
+          0.0648,
+          0.0696
+        ],
+        "cooldown": [
+          1700.0,
+          1564.0,
+          1428.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:netherite_axe"
+    },
+    {
+      "id": "thousand_fist_flurry",
+      "name": "Thousand Fist Flurry",
+      "desc": "A storm of fists at the foe in front of you.",
+      "parents": [
+        {
+          "node": "hammer_fist",
+          "level": 3
+        },
+        {
+          "node": "dig_in",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "damage": [
+          5.0,
+          6.25,
+          7.5
+        ],
+        "shots": [
+          12.0,
+          16.0,
+          16.0
+        ],
+        "range": [
+          7.0,
+          7.56,
+          8.12
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.08,
+          0.0864,
+          0.0928
+        ],
+        "cooldown": [
+          1800.0,
+          1656.0,
+          1512.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:iron_axe"
+    }
+  ]
+}
