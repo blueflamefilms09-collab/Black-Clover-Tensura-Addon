@@ -5,6 +5,8 @@ Until 1.33.0 the Djinn Equip drew its weapon only as a render layer (`DjinnArmor
 light and a dark look), with its own melee numbers, Tensura engravings and **two abilities**. The Extreme Magic (phase 4) is unchanged. This page
 supersedes the older sentence "the Djinn weapon is only visual" in `docs/relics_of_many_worlds.md` and `docs/boss_overhaul.md`.
 
+(1.93.0: thirty-six Djinn, so 72 weapon items; the loan overlays a weapon vessel instead of moving it; see section 5 and `docs/djinn_roster_36.md`.)
+
 Code: `relics/djinn/weapon/**` (new), `relics/djinn/DjinnWeaponBridge.java` (new, the package-private helpers the weapons may use), small hooks in
 `DjinnEngine`, `DjinnEvents`, `DjinnItems`, `DjinnState`, `DjinnComponents`, `DjinnCommand`; client: `client/relics/djinn/DjinnWeaponClient.java` (new) and
 a three-line edit of `DjinnArmorLayer`. Art: `tools/relics/djinn_weapons.py`.
@@ -100,3 +102,29 @@ When the real weapon is in the main hand, `DjinnArmorLayer` does **not** draw it
 Full / dark numbers, the cooldown table, the ids, every engraving id is a Tensura one), `WeaponGeoTest` (cone, beam distance, wall, crescents, chain), `ActClockTest`
 (cooldowns, a clock that went backwards, the mark table and its cap), `DjinnWeaponAssetsTest` (the 24 meshes, skins, icons, models, the size band, the lang table).
 Nothing was run in the game.
+
+## 5. 1.93.0: the weapon overlays a weapon vessel, thirty-six weapons, better acts
+
+This section changes the text above where it says so; nothing above was removed.
+
+**The bug and its fix.** A vessel can be a weapon. The vessel is found only while it is held (a hand), worn (armour) or in a Curios slot (`VesselAccess.findBound`, from the
+core's `Relics.equipped`). The loan (section 2) displaced whatever stood in the selected hotbar slot to the first free slot, so a weapon that was also the Djinn's vessel
+left the hand, the engine's once-a-second check found no vessel, and the Equip ended ("Your vessel left you") the moment it began; the Djinn weapon "moved the weapon over
+to a new place" instead of covering it. Now `WeaponLoan.summon` / `ensure` ask `Ops.overlays(item)`: the bearer's own bound vessel (`VesselOverlay.isVesselOf`: the
+`djinn_bound` and `djinn_serial` components of this Djinn and this bearer) is not displaced. It is kept whole in the loan record (`wloan.overlay`, saved with `saveOptional`, so
+enchantments and every data component survive), in no inventory slot, the Djinn weapon takes its slot, and `VesselAccess.findBound` counts the overlaid vessel as on the body
+(`VesselOverlay.read`). The vessel returns to the home slot unchanged when the Equip ends, on death (before the drops), logout, the login after a crash, a dimension change or
+a switch to creative, and a scroll of the hotbar changes nothing (the weapon stays in its slot). A vessel put into the home slot during the Equip is overlaid too. Any other item
+in the home slot is displaced exactly as before (section 2). If a record loses its home slot but still holds a vessel, the vessel is given back to the first free slot
+(`WeaponLoan.release`), and a new Equip over such a stale overlay displaces it instead of deleting it. While overlaid, the vessel's own relic powers do not work (the Djinn
+weapon is in the hand, as before); the Djinn's Equip does.
+
+**Thirty-six weapons.** `Djinn` now has 36 rows, so there are 72 weapon items (`djinn_weapon_<id>` and `djinn_weapon_<id>_dark`) and 72 acts. The twenty-four new rows and
+their acts are in `docs/djinn_roster_36.md`; their acts are data (`ActLibrary`: beam, cone, nova, dash, wall, pillars, chain, heal, pull, shield) run by
+`DjinnWeaponActs.generic`, so they follow every rule of section 1 (paid in Magoi, cooldowns, foes the Djinn spells strike, the balance law, bounded particles). Engravings
+for the new weapons are in `DjinnWeaponRules.engravings`. Item models and meshes of the new ids come from the asset tools; an item with no model draws as the missing-model
+cube and nothing else is affected.
+
+**The buff of the twelve.** Melee damage +1; act power x1.15, cooldown x0.9, reach x1.1 (table in `docs/djinn_roster_36.md`); the acts' effects last longer (Thunder Throw jumps one
+more link, Judgement Step leaves you quick, the fire acts burn longer, Frost Surge freezes harder, Brand marks for +30% (+15% on players), Chain Lightning has five links,
+Abyssal Reap and Radiant Burst heal more). The test bounds this widened are named in `DjinnWeaponRulesTest`: melee damage 15, power 15, reach 35, shortest cooldown 50 ticks.

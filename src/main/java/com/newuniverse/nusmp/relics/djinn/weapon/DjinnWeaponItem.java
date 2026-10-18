@@ -24,7 +24,7 @@ import net.minecraft.world.level.Level;
 import java.util.List;
 
 /**
- * The twelve Djinn weapons (and their twelve dark twins): the temporary item a Half or Full Djinn Equip puts in the bearer's hand. One class; the
+ * The Djinn weapons (thirty-six, and their dark twins): the temporary item a Half or Full Djinn Equip puts in the bearer's hand. One class; the
  * Djinn and the look (light or dark) decide the numbers ({@link DjinnWeaponRules}), the mesh, the skin and the engravings. A right-click is the first
  * act, a sneak + right-click the second ({@link DjinnWeaponActs}); the blow is a normal melee blow, and the Djinn's Half Equip special still rides on
  * it ({@code DjinnMagic.onOutgoing}). The item never breaks. Where it lives, when it goes and what is done with the item it displaced is

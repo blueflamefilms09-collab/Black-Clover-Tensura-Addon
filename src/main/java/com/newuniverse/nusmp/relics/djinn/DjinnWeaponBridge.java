@@ -36,6 +36,9 @@ public final class DjinnWeaponBridge {
     /** Throws a living thing away from {@code from}. */
     public static void push(LivingEntity t, Vec3 from, double strength, double up) { DjinnMagic.push(t, from, strength, up); }
 
+    /** Drags a living thing towards {@code to} (horizontally; never further than a quarter of its distance, so it cannot overshoot). */
+    public static void pull(LivingEntity t, Vec3 to, double strength, double up) { DjinnMagic.pull(t, to, strength, up); }
+
     public static String damageType(Djinn d) { return DjinnFx.damageType(d.affinity()); }
 
     public static ParticleOptions particle(Djinn d) { return DjinnFx.particle(d.affinity()); }

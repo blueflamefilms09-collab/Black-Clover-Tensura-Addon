@@ -50,8 +50,8 @@ public final class DjinnWeaponActs {
     /** Pending strikes per bearer (Storm Pillars) are bounded: three pillars, two casts in the air at most. */
     private static final int MAX_STRIKES = 6;
 
-    /** A marked ground point that will be struck at a game time. */
-    private record Strike(long due, Vec3 at, double power, boolean dark) {}
+    /** A marked ground point that will be struck at a game time. {@code gen} and {@code djinn} are set for a generic act's pillar (null for Storm Pillars). */
+    private record Strike(long due, Vec3 at, double power, boolean dark, ActLibrary.Gen gen, Djinn djinn) {}
 
     // ================================================================ use
     /** Handles a right-click with a Djinn weapon in the main hand. True if an act ran. */
@@ -203,7 +203,10 @@ public final class DjinnWeaponActs {
             case "heavenly_dash" -> heavenlyDash(c);
             case "abyssal_reap" -> abyssalReap(c);
             case "drowning_pull" -> drowningPull(c);
-            default -> { }
+            default -> {
+                ActLibrary.Gen g = ActLibrary.gen(key);                                    // the acts of the 1.93.0 weapons are data (ActLibrary)
+                if (g != null) generic(c, g);
+            }
         }
     }
 
@@ -291,10 +294,10 @@ public final class DjinnWeaponActs {
         if (hit.size() > 5) hit = new ArrayList<>(hit.subList(0, 5));
         for (LivingEntity t : hit) {
             c.hurt(t, 1.0);
-            DjinnWeaponBridge.effect(t, "minecraft:slowness", 30, 1);
+            DjinnWeaponBridge.effect(t, "minecraft:slowness", 50, 1);
         }
         LivingEntity from = hit.isEmpty() ? null : hit.get(hit.size() - 1);
-        int links = c.full ? 3 : 2;
+        int links = c.full ? 4 : 3;
         List<LivingEntity> seen = new ArrayList<>(hit);
         Vec3 at = from == null ? end : centre(from);
         for (int i = 0; i < links && from != null; i++) {
@@ -323,8 +326,9 @@ public final class DjinnWeaponActs {
         Fx.dash(c.p, 8.0);
         for (LivingEntity t : hit) {
             c.hurt(t, 0.9);
-            DjinnWeaponBridge.effect(t, "minecraft:slowness", 40, 2);
+            DjinnWeaponBridge.effect(t, "minecraft:slowness", 60, 2);
         }
+        Fx.addEffect(c.p, "minecraft:speed", 60, 1);                                          // 1.93.0: the step leaves you quick
         Vec3 end = start.add(c.flat.scale(8.0));
         DjinnWeaponBridge.line(c.l, start.add(0, 1, 0), end.add(0, 1, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 40);
         DjinnWeaponBridge.line(c.l, start.add(0, 0.4, 0), end.add(0, 0.4, 0), DjinnWeaponBridge.dust(c.glow, 1.6f), 30);
@@ -336,7 +340,7 @@ public final class DjinnWeaponActs {
     private static void sunCleave(Ctx c) {
         for (LivingEntity t : cone(c, c.range, 60.0)) {
             c.hurt(t, 1.0);
-            t.setRemainingFireTicks(Math.max(t.getRemainingFireTicks(), 100));
+            t.setRemainingFireTicks(Math.max(t.getRemainingFireTicks(), 140));
             DjinnWeaponBridge.push(t, c.feet(), 0.5, 0.15);
         }
         arc(c, 3.0, 60, 24, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), c.glow);
@@ -350,10 +354,10 @@ public final class DjinnWeaponActs {
         for (LivingEntity t : around(c, c.range + 1.0)) {
             if (!WeaponGeo.inWall(px, pz, c.flat.x, c.flat.z, t.getX(), t.getZ(), 1.5, 5.0, 3.5)) continue;
             c.hurt(t, 0.8);
-            t.setRemainingFireTicks(Math.max(t.getRemainingFireTicks(), 120));
+            t.setRemainingFireTicks(Math.max(t.getRemainingFireTicks(), 160));
             DjinnWeaponBridge.push(t, c.feet(), 1.0, 0.2);
         }
-        Fx.addEffect(c.p, "minecraft:fire_resistance", 100, 0);
+        Fx.addEffect(c.p, "minecraft:fire_resistance", 160, 0);
         Vec3 side = new Vec3(-c.flat.z, 0, c.flat.x);
         for (int i = -3; i <= 3; i++) {
             Vec3 base = c.feet().add(c.flat.scale(3.2)).add(side.scale(i));
@@ -369,7 +373,7 @@ public final class DjinnWeaponActs {
         for (LivingEntity t : beam(c, len, 1.0)) {
             c.hurt(t, 1.0);
             DjinnWeaponBridge.push(t, c.feet(), 1.2, 0.15);
-            DjinnWeaponBridge.effect(t, "minecraft:slowness", 40, 0);
+            DjinnWeaponBridge.effect(t, "minecraft:slowness", 70, 1);
         }
         Vec3 start = c.eye.add(c.look.scale(0.8)).add(0, -0.3, 0), end = c.eye.add(c.look.scale(len));
         DjinnWeaponBridge.line(c.l, start, end, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 40);
@@ -381,8 +385,8 @@ public final class DjinnWeaponActs {
     private static void frostSurge(Ctx c) {
         for (LivingEntity t : cone(c, c.range, 50.0)) {
             c.hurt(t, 1.0);
-            t.setTicksFrozen(t.getTicksRequiredToFreeze() + 60);
-            DjinnWeaponBridge.effect(t, "minecraft:slowness", BalanceLaw.controlTicks(t, 80), 2);
+            t.setTicksFrozen(t.getTicksRequiredToFreeze() + 100);
+            DjinnWeaponBridge.effect(t, "minecraft:slowness", BalanceLaw.controlTicks(t, 110), 2);
         }
         arc(c, 3.0, 50, 20, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), c.glow);
         arc(c, 6.0, 50, 24, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), c.color);
@@ -393,7 +397,7 @@ public final class DjinnWeaponActs {
     // ================================================================ FOCALOR
     private static void cycloneSweep(Ctx c) {
         for (LivingEntity t : around(c, c.range)) {
-            c.hurt(t, 0.8);
+            c.hurt(t, 0.9);
             DjinnWeaponBridge.push(t, c.feet(), 1.0, 0.35);
         }
         rings(c, c.feet(), c.range);
@@ -404,13 +408,13 @@ public final class DjinnWeaponActs {
 
     private static void updraftLeap(Ctx c) {
         for (LivingEntity t : around(c, 3.5)) {
-            c.hurt(t, 0.4);
+            c.hurt(t, 0.5);
             DjinnWeaponBridge.push(t, c.feet(), 0.1, 0.9);
         }
         c.p.setDeltaMovement(c.look.x * 0.5, 1.15, c.look.z * 0.5);
         c.p.hurtMarked = true;
         c.p.fallDistance = 0;
-        Fx.addEffect(c.p, "minecraft:slow_falling", 100, 0);
+        Fx.addEffect(c.p, "minecraft:slow_falling", 160, 0);
         rings(c, c.feet(), 3.5);
         DjinnWeaponBridge.column(c.l, c.p.getX(), c.p.getY(), c.p.getY() + 4, c.p.getZ(), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 20);
         snd(c, SoundEvents.PHANTOM_FLAP, 1.0f, 1.2f);
@@ -420,12 +424,12 @@ public final class DjinnWeaponActs {
     private static void bloomHeal(Ctx c) {
         for (ServerPlayer a : DjinnWeaponBridge.alliesNear(c.p, c.range)) {
             BalanceLaw.heal(a, (float) c.power);
-            Fx.addEffect(a, "minecraft:regeneration", 80, 0);
+            Fx.addEffect(a, "minecraft:regeneration", 140, 0);
             com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, a.getX(), a.getY() + 1, a.getZ(), 10, 0.4, 0.6, 0.4, 0.05);
         }
         for (LivingEntity t : around(c, c.range - 2.0)) {
-            c.hurt(t, 0.5);
-            DjinnWeaponBridge.effect(t, "minecraft:slowness", BalanceLaw.controlTicks(t, 60), 3);
+            c.hurt(t, 0.6);
+            DjinnWeaponBridge.effect(t, "minecraft:slowness", BalanceLaw.controlTicks(t, 80), 3);
         }
         rings(c, c.feet(), c.range * 0.8);
         com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, c.p.getX(), c.p.getY() + 1, c.p.getZ(), 40, c.range * 0.3, 0.8, c.range * 0.3, 0.05);
@@ -438,8 +442,8 @@ public final class DjinnWeaponActs {
         for (int i = 0; i < n; i++) {
             LivingEntity t = in.get(i);
             c.hurt(t, 1.0);
-            DjinnWeaponBridge.effect(t, "minecraft:slowness", BalanceLaw.controlTicks(t, 80), 4);
-            DjinnWeaponBridge.effect(t, "minecraft:poison", 100, 0);
+            DjinnWeaponBridge.effect(t, "minecraft:slowness", BalanceLaw.controlTicks(t, 110), 4);
+            DjinnWeaponBridge.effect(t, "minecraft:poison", 140, 0);
             Vec3 m = centre(t);
             DjinnWeaponBridge.line(c.l, c.eye.add(0, -0.4, 0), m, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 24);
             DjinnWeaponBridge.column(c.l, t.getX(), t.getY(), t.getY() + 1.8, t.getZ(), DjinnWeaponBridge.dust(c.glow, 1.4f), 10);
@@ -469,8 +473,8 @@ public final class DjinnWeaponActs {
         for (int i = 0; i < n; i++) {
             LivingEntity t = in.get(i);
             c.hurt(t, 1.0 + Math.min(20.0, t.getArmorValue()) / 20.0);
-            DjinnWeaponBridge.effect(t, "minecraft:weakness", 100, 1);
-            Fx.addEffect(t, "tensura:fragility", 160, 0);
+            DjinnWeaponBridge.effect(t, "minecraft:weakness", 140, 1);
+            Fx.addEffect(t, "tensura:fragility", 220, 0);
             DjinnWeaponBridge.push(t, c.feet(), 0.4, 0.1);
             com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, t.getX(), t.getY() + t.getBbHeight() * 0.6, t.getZ(), 14, 0.3, 0.4, 0.3, 0.3);
         }
@@ -483,7 +487,7 @@ public final class DjinnWeaponActs {
         for (LivingEntity t : cone(c, c.range, 45.0)) {
             c.hurt(t, 1.0);
             DjinnWeaponBridge.push(t, c.feet(), 1.3, 0.25);
-            EnergyBridge.effect(t, "silence", 80, 0);
+            EnergyBridge.effect(t, "silence", 120, 0);
         }
         for (int k = 1; k <= 3; k++) arc(c, 2.5 * k, 45, 8 + 4 * k, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), k == 3 ? c.glow : c.color);
         snd(c, SoundEvents.NOTE_BLOCK_BELL.value(), 1.6f, 0.6f);
@@ -493,8 +497,8 @@ public final class DjinnWeaponActs {
     private static void dissonance(Ctx c) {
         for (LivingEntity t : around(c, c.range)) {
             c.hurt(t, 0.7);
-            DjinnWeaponBridge.effect(t, "minecraft:nausea", 120, 0);
-            DjinnWeaponBridge.effect(t, "minecraft:slowness", 60, 0);
+            DjinnWeaponBridge.effect(t, "minecraft:nausea", 180, 0);
+            DjinnWeaponBridge.effect(t, "minecraft:slowness", 90, 0);
         }
         rings(c, c.feet(), c.range);
         com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, c.p.getX(), c.p.getY() + 1.5, c.p.getZ(), 16, c.range * 0.3, 0.6, c.range * 0.3, 1.0);
@@ -508,7 +512,7 @@ public final class DjinnWeaponActs {
         Fx.dash(c.p, 7.0);
         for (LivingEntity t : hit) {
             c.hurt(t, 1.0);
-            t.setRemainingFireTicks(Math.max(t.getRemainingFireTicks(), 80));
+            t.setRemainingFireTicks(Math.max(t.getRemainingFireTicks(), 120));
         }
         Vec3 end = start.add(c.flat.scale(c.range));
         DjinnWeaponBridge.line(c.l, start.add(0, 1, 0), end.add(0, 1, 0), com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 40);
@@ -534,7 +538,7 @@ public final class DjinnWeaponActs {
         c.hurt(target, 1.0);
         target.setRemainingFireTicks(Math.max(target.getRemainingFireTicks(), 80));
         DjinnWeaponBridge.effect(target, "minecraft:glowing", 160, 0);
-        MARKS.mark(target.getUUID(), c.p.level().getGameTime(), 160, target instanceof Player ? 0.12 : 0.25);
+        MARKS.mark(target.getUUID(), c.p.level().getGameTime(), 160, target instanceof Player ? 0.15 : 0.30);
         Vec3 m = centre(target);
         DjinnWeaponBridge.line(c.l, c.eye.add(0, -0.4, 0), m, DjinnWeaponBridge.dust(c.glow, 1.4f), 24);
         DjinnWeaponBridge.ring(c.l, target.position(), 1.2, c.glow, 24, 0.1);
@@ -549,9 +553,9 @@ public final class DjinnWeaponActs {
         int n = Math.min(2, hit.size());
         for (int i = 0; i < n; i++) {
             LivingEntity t = hit.get(i);
-            double mult = (i == 0 ? 1.0 : 0.6) * (t.getType().is(EntityTypeTags.UNDEAD) ? 2.0 : 1.0);
+            double mult = (i == 0 ? 1.0 : 0.7) * (t.getType().is(EntityTypeTags.UNDEAD) ? 2.0 : 1.0);
             c.hurt(t, mult);
-            DjinnWeaponBridge.effect(t, "minecraft:glowing", 60, 0);
+            DjinnWeaponBridge.effect(t, "minecraft:glowing", 100, 0);
             com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, t.getX(), t.getY() + t.getBbHeight() * 0.6, t.getZ(), 8, 0.2, 0.3, 0.2, 0.05);
         }
         Vec3 start = c.eye.add(c.look.scale(0.8)).add(0, -0.3, 0), end = c.eye.add(c.look.scale(len));
@@ -564,9 +568,9 @@ public final class DjinnWeaponActs {
     private static void radiantBurst(Ctx c) {
         for (LivingEntity t : around(c, c.range)) {
             c.hurt(t, 1.0);
-            DjinnWeaponBridge.effect(t, "minecraft:blindness", 60, 0);
+            DjinnWeaponBridge.effect(t, "minecraft:blindness", 100, 0);
         }
-        for (ServerPlayer a : DjinnWeaponBridge.alliesNear(c.p, c.range)) BalanceLaw.heal(a, (float) (c.power * 0.35));
+        for (ServerPlayer a : DjinnWeaponBridge.alliesNear(c.p, c.range)) BalanceLaw.heal(a, (float) (c.power * 0.45));
         flash(c, c.feet());
         rings(c, c.feet(), c.range);
         com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, c.p.getX(), c.p.getY() + 1.0, c.p.getZ(), 40, c.range * 0.3, 0.8, c.range * 0.3, 0.2);
@@ -586,7 +590,7 @@ public final class DjinnWeaponActs {
             c.p.displayClientMessage(Component.translatable("djinn_weapon.msg.nothing"), true);
             return;
         }
-        int links = c.full ? 5 : 4;
+        int links = c.full ? 6 : 5;
         List<LivingEntity> seen = new ArrayList<>();
         Vec3 at = c.eye.add(0, -0.4, 0);
         LivingEntity cur = first;
@@ -623,7 +627,7 @@ public final class DjinnWeaponActs {
         List<Strike> list = new ArrayList<>(STRIKES.getOrDefault(c.p.getUUID(), List.of()));
         for (Vec3 m : marks) {
             if (list.size() >= MAX_STRIKES) break;
-            list.add(new Strike(due, m, c.power, c.dark));
+            list.add(new Strike(due, m, c.power, c.dark, null, null));
             DjinnWeaponBridge.ring(c.l, m, 2.4, c.glow, 24, 0.15);
             DjinnWeaponBridge.ring(c.l, m, 1.2, c.color, 14, 0.2);
         }
@@ -635,9 +639,24 @@ public final class DjinnWeaponActs {
     private static void strike(ServerPlayer p, Strike st) {
         ServerLevel l = p.serverLevel();
         Vec3 at = st.at;
+        if (st.gen != null && st.djinn != null) {                                          // a generic act's pillar: the Djinn's own element and effects
+            int glowRgb = st.dark ? 0xB07CFF : st.djinn.glow();
+            for (LivingEntity t : DjinnWeaponBridge.foesNear(p, at, 2.4)) {
+                Fx.damageHeavy(p, t, (float) (st.power * st.gen.mult()), DjinnWeaponBridge.damageType(st.djinn));
+                applyEff(t, st.gen.eff1());
+                applyEff(t, st.gen.eff2());
+                if (st.gen.fire() > 0) t.setRemainingFireTicks(Math.max(t.getRemainingFireTicks(), st.gen.fire()));
+            }
+            DjinnWeaponBridge.column(l, at.x, at.y, at.y + 12, at.z, DjinnWeaponBridge.particle(st.djinn), 28);
+            DjinnWeaponBridge.column(l, at.x, at.y, at.y + 10, at.z, DjinnWeaponBridge.dust(glowRgb, 1.7f), 22);
+            DjinnWeaponBridge.ring(l, at, 2.4, glowRgb, 20, 0.2);
+            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, at.x, at.y + 0.5, at.z, 1, 0, 0, 0, 0);
+            snd(l, at, themeSound(st.djinn), 1.2f, 1.2f);
+            return;
+        }
         for (LivingEntity t : DjinnWeaponBridge.foesNear(p, at, 2.4)) {
             Fx.damageHeavy(p, t, (float) st.power, "minecraft:lightning_bolt");
-            DjinnWeaponBridge.effect(t, "minecraft:slowness", BalanceLaw.controlTicks(t, 20), 3);
+            DjinnWeaponBridge.effect(t, "minecraft:slowness", BalanceLaw.controlTicks(t, 30), 3);
         }
         int glow = st.dark ? 0xB07CFF : 0xD2C2FF;
         DjinnWeaponBridge.column(l, at.x, at.y, at.y + 14, at.z, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 32);
@@ -653,7 +672,7 @@ public final class DjinnWeaponActs {
         for (LivingEntity t : around(c, c.range + 1.0)) {
             if (!WeaponGeo.inCrescents(px, pz, c.flat.x, c.flat.z, t.getX(), t.getZ(), c.range, 28.0, 22.0)) continue;
             c.hurt(t, 1.0);
-            DjinnWeaponBridge.effect(t, "minecraft:wither", 40, 0);
+            DjinnWeaponBridge.effect(t, "minecraft:wither", 70, 0);
             DjinnWeaponBridge.push(t, c.feet(), 0.4, 0.1);
         }
         for (int side = -1; side <= 1; side += 2) {
@@ -677,7 +696,7 @@ public final class DjinnWeaponActs {
         Fx.dash(c.p, 9.0);
         c.p.setDeltaMovement(c.p.getDeltaMovement().add(0, 0.25, 0));
         c.p.hurtMarked = true;
-        Fx.addEffect(c.p, "minecraft:slow_falling", 60, 0);
+        Fx.addEffect(c.p, "minecraft:slow_falling", 100, 0);
         for (LivingEntity t : hit) {
             c.hurt(t, 1.0);
             DjinnWeaponBridge.push(t, start, 0.5, 0.2);
@@ -694,11 +713,11 @@ public final class DjinnWeaponActs {
         int reaped = 0;
         for (LivingEntity t : in) {
             c.hurt(t, 1.0);
-            Fx.addEffect(t, "tensura:fear", BalanceLaw.controlTicks(t, 100), 0);
+            Fx.addEffect(t, "tensura:fear", BalanceLaw.controlTicks(t, 140), 0);
             com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.DARK, t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 6, 0.3, 0.4, 0.3, 0.02);
             reaped++;
         }
-        if (reaped > 0) BalanceLaw.heal(c.p, (float) (c.power * 0.25 * Math.min(3, reaped)));
+        if (reaped > 0) BalanceLaw.heal(c.p, (float) (c.power * 0.30 * Math.min(3, reaped)));
         arc(c, 3.0, 70, 24, com.newuniverse.nusmp.particle.rukh.RukhParticles.dark(), c.color);
         arc(c, 5.0, 70, 30, DjinnWeaponBridge.particle(c.d), c.glow);
         snd(c, SoundEvents.PLAYER_ATTACK_SWEEP, 1.4f, 0.5f);
@@ -713,8 +732,8 @@ public final class DjinnWeaponActs {
             t.setDeltaMovement(t.getDeltaMovement().add(pull.x, 0.2, pull.z));
             t.hurtMarked = true;
             c.hurt(t, 0.5);
-            DjinnWeaponBridge.effect(t, "minecraft:slowness", 60, 1);
-            t.setAirSupply(Math.max(-20, t.getAirSupply() - 150));
+            DjinnWeaponBridge.effect(t, "minecraft:slowness", 90, 1);
+            t.setAirSupply(Math.max(-20, t.getAirSupply() - 200));
         }
         for (int arm = 0; arm < 3; arm++)
             for (int i = 0; i < 8; i++) {
@@ -724,4 +743,242 @@ public final class DjinnWeaponActs {
         rings(c, at, c.range);
         snd(c, SoundEvents.PLAYER_SPLASH_HIGH_SPEED, 1.0f, 0.5f);
     }
+
+    // ================================================================ the generic acts (ActLibrary): the weapons of 1.93.0
+    /** The sound that fits a Djinn's magic. */
+    private static SoundEvent themeSound(Djinn d) {
+        return switch (d.affinity()) {
+            case HEAT -> SoundEvents.FIRECHARGE_USE;
+            case LIGHTNING -> SoundEvents.LIGHTNING_BOLT_IMPACT;
+            case WATER -> SoundEvents.PLAYER_SPLASH_HIGH_SPEED;
+            case WIND -> SoundEvents.PLAYER_ATTACK_SWEEP;
+            case LIFE -> SoundEvents.AMETHYST_BLOCK_CHIME;
+            case STRENGTH -> SoundEvents.IRON_GOLEM_ATTACK;
+            case SOUND -> SoundEvents.NOTE_BLOCK_BELL.value();
+            case LIGHT -> SoundEvents.AMETHYST_BLOCK_RESONATE;
+        };
+    }
+
+    /** One effect on a creature: a mob effect (long control effects go through the balance law's diminishing control time), or a pseudo effect of ActLibrary. */
+    private static void applyEff(LivingEntity t, ActLibrary.Eff e) {
+        if (e == null || e.none() || t == null || !t.isAlive()) return;
+        switch (e.id()) {
+            case ActLibrary.SILENCE -> EnergyBridge.effect(t, "silence", e.ticks(), 0);
+            case ActLibrary.FREEZE -> t.setTicksFrozen(t.getTicksRequiredToFreeze() + e.ticks());
+            case ActLibrary.UNVEIL -> t.removeEffect(MobEffects.INVISIBILITY);
+            case ActLibrary.CLEANSE -> { }
+            default -> {
+                boolean hard = e.amp() >= 2 || e.id().equals("tensura:fear");
+                DjinnWeaponBridge.effect(t, e.id(), hard ? BalanceLaw.controlTicks(t, e.ticks()) : e.ticks(), e.amp());
+            }
+        }
+    }
+
+    /** Everything a generic act does to one foe besides the damage. */
+    private static void foeFx(Ctx c, ActLibrary.Gen g, LivingEntity t, Vec3 from) {
+        applyEff(t, g.eff1());
+        applyEff(t, g.eff2());
+        if (g.fire() > 0) t.setRemainingFireTicks(Math.max(t.getRemainingFireTicks(), g.fire()));
+        if (g.push() > 0.0 || g.lift() > 0.0) DjinnWeaponBridge.push(t, from, g.push(), g.lift());
+    }
+
+    /** What a generic act does to the bearer (a dash's speed, a shield's Resistance): a cleanse takes the harmful effects off instead. */
+    private static void selfFx(Ctx c, ActLibrary.Gen g) {
+        ActLibrary.Eff s = g.self();
+        if (s == null || s.none()) return;
+        if (s.id().equals(ActLibrary.CLEANSE)) cleanse(c.p);
+        else Fx.addEffect(c.p, s.id(), s.ticks(), s.amp());
+    }
+
+    private static void cleanse(LivingEntity a) {
+        for (net.minecraft.world.effect.MobEffectInstance m : new ArrayList<>(a.getActiveEffects())) if (!m.getEffect().value().isBeneficial()) a.removeEffect(m.getEffect());
+    }
+
+    private static void generic(Ctx c, ActLibrary.Gen g) {
+        double mult = g.mult();
+        int dealt = 0;
+        switch (g.kind()) {
+            case BEAM -> {
+                double len = rayLength(c, c.range);
+                List<LivingEntity> hit = beam(c, len, Math.max(0.5, g.arc()));
+                int n = Math.min(Math.max(1, g.count()), hit.size());
+                for (int i = 0; i < n; i++) {
+                    LivingEntity t = hit.get(i);
+                    c.hurt(t, mult * (i == 0 ? 1.0 : 0.75));
+                    foeFx(c, g, t, c.feet());
+                    dealt++;
+                    com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, t.getX(), t.getY() + t.getBbHeight() * 0.6, t.getZ(), 6, 0.2, 0.3, 0.2, 0.05);
+                }
+                Vec3 start = c.eye.add(c.look.scale(0.8)).add(0, -0.3, 0), end = c.eye.add(c.look.scale(len));
+                DjinnWeaponBridge.line(c.l, start, end, c.fx(), 40);
+                DjinnWeaponBridge.line(c.l, start, end, DjinnWeaponBridge.dust(c.glow, 1.5f), 30);
+                flash(c, end);
+                themeSound(c, 1.2f, 1.5f);
+            }
+            case CONE -> {
+                for (LivingEntity t : cone(c, c.range, g.arc())) {
+                    c.hurt(t, mult);
+                    foeFx(c, g, t, c.feet());
+                    dealt++;
+                }
+                arc(c, c.range * 0.5, g.arc(), 22, c.fx(), c.glow);
+                arc(c, c.range * 0.95, g.arc(), 28, c.fx(), c.color);
+                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, c.p.getX() + c.flat.x * c.range * 0.5, c.p.getY() + 1.2, c.p.getZ() + c.flat.z * c.range * 0.5, 4, 0.6, 0.3, 0.6, 0.0);
+                themeSound(c, 1.3f, 0.9f);
+            }
+            case NOVA -> {
+                for (LivingEntity t : around(c, c.range)) {
+                    c.hurt(t, mult);
+                    foeFx(c, g, t, c.feet());
+                    dealt++;
+                }
+                selfFx(c, g);
+                rings(c, c.feet(), c.range);
+                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, c.p.getX(), c.p.getY() + 0.8, c.p.getZ(), 20, c.range * 0.4, 0.4, c.range * 0.4, 0.15);
+                themeSound(c, 1.4f, 0.8f);
+            }
+            case DASH -> {
+                Vec3 start = c.feet();
+                List<LivingEntity> hit = path(c, start, c.range, 1.8);
+                Fx.dash(c.p, c.range);
+                if (g.lift() > 0.0) c.p.setDeltaMovement(c.p.getDeltaMovement().add(0, Math.min(0.3, g.lift()), 0));
+                c.p.hurtMarked = true;
+                for (LivingEntity t : hit) {
+                    c.hurt(t, mult);
+                    foeFx(c, g, t, start);
+                    dealt++;
+                }
+                selfFx(c, g);
+                Vec3 end = start.add(c.flat.scale(c.range));
+                DjinnWeaponBridge.line(c.l, start.add(0, 1, 0), end.add(0, 1, 0), c.fx(), 40);
+                DjinnWeaponBridge.line(c.l, start.add(0, 0.5, 0), end.add(0, 0.5, 0), DjinnWeaponBridge.dust(c.glow, 1.6f), 30);
+                themeSound(c, 1.3f, 1.1f);
+            }
+            case WALL -> {
+                double px = c.p.getX(), pz = c.p.getZ();
+                for (LivingEntity t : around(c, c.range + 1.0)) {
+                    if (!WeaponGeo.inWall(px, pz, c.flat.x, c.flat.z, t.getX(), t.getZ(), 1.5, c.range, Math.max(1.0, g.arc()))) continue;
+                    c.hurt(t, mult);
+                    foeFx(c, g, t, c.feet());
+                    dealt++;
+                }
+                Vec3 side = new Vec3(-c.flat.z, 0, c.flat.x);
+                double step = Math.max(1.0, g.arc()) / 3.0;
+                for (int i = -3; i <= 3; i++) {
+                    Vec3 base = c.feet().add(c.flat.scale(Math.min(c.range, 3.5))).add(side.scale(i * step));
+                    DjinnWeaponBridge.column(c.l, base.x, base.y, base.y + 2.4, base.z, c.fx(), 7);
+                    com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.relics.Fx.align(c.glow), base.x, base.y + 1.2, base.z, 2, 0.1, 0.6, 0.1, 0.0);
+                }
+                themeSound(c, 1.3f, 0.7f);
+            }
+            case PILLARS -> {
+                List<Vec3> marks = new ArrayList<>();
+                for (LivingEntity t : DjinnWeaponBridge.foesNear(c.p, c.feet(), c.range)) {
+                    if (marks.size() >= Math.max(1, g.count())) break;
+                    marks.add(t.position());
+                }
+                double ahead = rayLength(c, 12.0);
+                for (int i = 0; marks.size() < Math.max(1, g.count()); i++) marks.add(c.feet().add(c.flat.scale(Math.min(ahead, 5.0 + 3.0 * i))));
+                long due = c.p.level().getGameTime() + DjinnWeaponRules.STRIKE_DELAY;
+                List<Strike> list = new ArrayList<>(STRIKES.getOrDefault(c.p.getUUID(), List.of()));
+                for (Vec3 m : marks) {
+                    if (list.size() >= MAX_STRIKES) break;
+                    list.add(new Strike(due, m, c.power, c.dark, g, c.d));
+                    DjinnWeaponBridge.ring(c.l, m, 2.4, c.glow, 24, 0.15);
+                    DjinnWeaponBridge.ring(c.l, m, 1.2, c.color, 14, 0.2);
+                }
+                STRIKES.put(c.p.getUUID(), list);
+                themeSound(c, 1.0f, 1.7f);
+            }
+            case CHAIN -> {
+                LivingEntity first = null;
+                List<LivingEntity> in = cone(c, c.range, 35.0);
+                if (!in.isEmpty()) first = in.get(0);
+                else {
+                    List<LivingEntity> any = DjinnWeaponBridge.foesNear(c.p, c.feet(), c.range);
+                    if (!any.isEmpty()) first = any.get(0);
+                }
+                if (first == null) {
+                    c.p.displayClientMessage(Component.translatable("djinn_weapon.msg.nothing"), true);
+                    return;
+                }
+                int links = Math.max(1, g.count()) + (c.full ? 1 : 0);
+                List<LivingEntity> seen = new ArrayList<>();
+                Vec3 at = c.eye.add(0, -0.4, 0);
+                LivingEntity cur = first;
+                for (int i = 0; i < links && cur != null; i++) {
+                    c.hurt(cur, mult * WeaponGeo.chainFactor(i, 0.85));
+                    foeFx(c, g, cur, c.feet());
+                    dealt++;
+                    Vec3 m = centre(cur);
+                    DjinnWeaponBridge.line(c.l, at, m, c.fx(), 16);
+                    DjinnWeaponBridge.line(c.l, at, m, DjinnWeaponBridge.dust(c.glow, 1.2f), 10);
+                    seen.add(cur);
+                    at = m;
+                    LivingEntity next = null;
+                    double best = 36.0;
+                    for (LivingEntity o : DjinnWeaponBridge.foesNear(c.p, m, 6.0)) {
+                        double dd = centre(o).distanceToSqr(m);
+                        if (!seen.contains(o) && dd < best) { best = dd; next = o; }
+                    }
+                    cur = next;
+                }
+                themeSound(c, 1.0f, 1.6f);
+            }
+            case HEAL -> {
+                boolean clean = g.self() != null && g.self().id().equals(ActLibrary.CLEANSE);
+                for (ServerPlayer a : DjinnWeaponBridge.alliesNear(c.p, c.range)) {
+                    BalanceLaw.heal(a, (float) (c.power * g.heal()));
+                    if (clean) {
+                        cleanse(a);
+                        Fx.addEffect(a, "minecraft:regeneration", 100, 1);
+                    } else if (g.self() != null && !g.self().none()) {
+                        Fx.addEffect(a, g.self().id(), g.self().ticks(), g.self().amp());
+                    }
+                    com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, a.getX(), a.getY() + 1, a.getZ(), 10, 0.4, 0.6, 0.4, 0.05);
+                }
+                for (LivingEntity t : around(c, Math.max(3.0, c.range - 2.0))) {
+                    c.hurt(t, mult);
+                    foeFx(c, g, t, c.feet());
+                    dealt++;
+                }
+                rings(c, c.feet(), c.range * 0.8);
+                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, c.p.getX(), c.p.getY() + 1, c.p.getZ(), 40, c.range * 0.3, 0.8, c.range * 0.3, 0.05);
+                themeSound(c, 1.4f, 1.3f);
+            }
+            case PULL -> {
+                Vec3 at = c.feet();
+                for (LivingEntity t : around(c, c.range)) {
+                    DjinnWeaponBridge.pull(t, at, 1.1, 0.2);
+                    c.hurt(t, mult);
+                    foeFx(c, g, t, at);
+                    dealt++;
+                }
+                for (int arm = 0; arm < 3; arm++)
+                    for (int i = 0; i < 8; i++) {
+                        double rr = c.range * (1.0 - i / 9.0), a = arm * 2.0944 + i * 0.6;
+                        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, at.x + Math.cos(a) * rr, at.y + 0.3 + i * 0.12, at.z + Math.sin(a) * rr, 1, 0, 0, 0, 0);
+                    }
+                rings(c, at, c.range);
+                themeSound(c, 1.2f, 0.6f);
+            }
+            case SHIELD -> {
+                double absorb = g.heal() * (c.full ? DjinnWeaponRules.FULL_POWER : 1.0);
+                c.p.setAbsorptionAmount((float) Math.min(12.0, c.p.getAbsorptionAmount() + absorb));
+                selfFx(c, g);
+                for (LivingEntity t : around(c, c.range)) {
+                    c.hurt(t, mult);
+                    foeFx(c, g, t, c.feet());
+                    dealt++;
+                }
+                rings(c, c.feet(), c.range);
+                rings(c, c.feet().add(0, 0.8, 0), c.range * 0.6);
+                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, c.p.getX(), c.p.getY() + 1, c.p.getZ(), 30, 0.7, 0.9, 0.7, 0.05);
+                themeSound(c, 1.2f, 1.1f);
+            }
+        }
+        if (g.leech() > 0.0 && dealt > 0) BalanceLaw.heal(c.p, (float) (c.power * g.leech() * Math.min(3, dealt)));
+    }
+
+    private static void themeSound(Ctx c, float vol, float pitch) { snd(c, themeSound(c.d), vol, pitch); }
 }
