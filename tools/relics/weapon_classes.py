@@ -65,7 +65,7 @@ KEYWORDS = [
     ("lance", "spear"), ("pike", "spear"), ("staff", "staff"), ("wand", "wand"), ("whip", "whip"), ("crossbow", "crossbow"), ("longbow", "bow"), ("shortbow", "bow"), ("bow", "crossbow"),
     ("greathammer", "greathammer"), ("great_hammer", "greathammer"), ("hammer", "hammer"), ("maul", "hammer"), ("mace", "mace"), ("club", "club"), ("shield", "shield"), ("sword", "longsword"), ("blade", "longsword"),
 ]
-STATE_SUFFIX = re.compile(r"(_(pull[123]|charged|spent|genesis|5leaf|liquid|off|blue|left)|(?<=lantern)_red)$")
+STATE_SUFFIX = re.compile(r"(_(pull[123]|charged|spent|genesis|5leaf|liquid|off|blue|left|curse)|(?<=lantern)_red)$")      # 1.62.0: + curse, as in client/relics/item/WeaponClasses.java
 
 
 def base_id(item_id):
