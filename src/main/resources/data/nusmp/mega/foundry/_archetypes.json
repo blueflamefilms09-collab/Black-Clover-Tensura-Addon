@@ -1,0 +1,15 @@
+{
+  "why": "The stats archetypes of the Mob Foundry: a mob row names one, the tier and the floor give the base numbers (FoundryScaling), and the archetype shapes them. hp/dmg/speed/armor are multipliers; style is the movement the AI uses (melee = close in, hitrun = strike and step away, ranged = keep 'keep' blocks away and shoot from 'near' to 'far', support = stay by the allies, charge = telegraph then ram, air = hover and dive); reach = melee reach bonus; ability = how often the ability roll is made (ticks between rolls).",
+  "archetypes": [
+    {"id": "brute", "hp": 1.25, "dmg": 1.10, "speed": 1.00, "armor": 1.0, "style": "melee", "near": 0, "far": 0, "keep": 0, "ability": 30},
+    {"id": "skirmisher", "hp": 0.90, "dmg": 0.90, "speed": 1.20, "armor": 0.6, "style": "hitrun", "near": 0, "far": 0, "keep": 0, "ability": 24},
+    {"id": "archer", "hp": 0.75, "dmg": 0.85, "speed": 1.00, "armor": 0.5, "style": "ranged", "near": 6, "far": 16, "keep": 5, "ability": 20},
+    {"id": "caster", "hp": 0.70, "dmg": 1.00, "speed": 0.95, "armor": 0.4, "style": "ranged", "near": 5, "far": 14, "keep": 6, "ability": 16},
+    {"id": "assassin", "hp": 0.70, "dmg": 1.35, "speed": 1.30, "armor": 0.4, "style": "hitrun", "near": 0, "far": 0, "keep": 0, "ability": 20},
+    {"id": "tank", "hp": 1.80, "dmg": 0.80, "speed": 0.80, "armor": 2.0, "style": "melee", "near": 0, "far": 0, "keep": 0, "ability": 40},
+    {"id": "support", "hp": 0.85, "dmg": 0.60, "speed": 0.95, "armor": 0.7, "style": "support", "near": 4, "far": 10, "keep": 5, "ability": 14},
+    {"id": "summoner", "hp": 0.80, "dmg": 0.60, "speed": 0.90, "armor": 0.6, "style": "ranged", "near": 8, "far": 16, "keep": 8, "ability": 20},
+    {"id": "flier", "hp": 0.80, "dmg": 0.90, "speed": 1.10, "armor": 0.5, "style": "air", "near": 0, "far": 0, "keep": 0, "ability": 24},
+    {"id": "charger", "hp": 1.30, "dmg": 1.20, "speed": 0.90, "armor": 1.2, "style": "charge", "near": 0, "far": 0, "keep": 0, "ability": 30}
+  ]
+}

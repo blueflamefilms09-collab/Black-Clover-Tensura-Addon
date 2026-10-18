@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "shadow_dash",
+  "conjure_imps"
+ ],
+ "animation": "small__dagger-none__auto-auto-auto",
+ "archetype": "skirmisher",
+ "faction": "demon",
+ "glow": "#e1c274",
+ "height": 1.5,
+ "id": "gutter_imp",
+ "name": "Gutter Imp",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: imp",
+ "tier": 1
+}

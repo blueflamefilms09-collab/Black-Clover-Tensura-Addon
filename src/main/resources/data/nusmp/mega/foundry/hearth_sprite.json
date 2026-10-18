@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "fire_bolt",
+  "mending_light"
+ ],
+ "animation": "child__wand-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "elemental",
+ "glow": "#ffc840",
+ "height": 1.41,
+ "id": "hearth_sprite",
+ "name": "Hearth Sprite",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Fairy Tail",
+ "tier": 1
+}
