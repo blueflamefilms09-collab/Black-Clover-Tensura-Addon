@@ -1,0 +1,1123 @@
+{
+  "magic": "magi",
+  "franchise": "magi",
+  "name": "Extreme Magic Adept",
+  "desc": "You have learned to pour the whole wellspring into a single spell. Between the great ones you rest, guard and charge: every cast is an event.",
+  "book": "nusmp:extreme_magic_adept_book",
+  "book_name": "On Extreme Magic",
+  "book_lore": "A lecture in print: three pages of theory, two of warnings and one blank page for 'regrets'.",
+  "color": "#FF9A3C",
+  "icon": "minecraft:nether_star",
+  "class_id": "extreme_magic_adept",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/extreme_magic_adept.png",
+  "book_texture": "nusmp:item/skill_book_3d/magi",
+  "background_theme": "stellar",
+  "nodes": [
+    {
+      "id": "magoi_overdrive",
+      "name": "Magoi Overdrive",
+      "desc": "Open the sluices: massive damage and crits, without a guard or a drop of regen.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage_pct": [
+          0.35,
+          0.42,
+          0.49
+        ],
+        "armor": [
+          -5.0,
+          -6.25,
+          -7.5
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:nether_star"
+    },
+    {
+      "id": "magoi_sealed",
+      "name": "Magoi Sealed",
+      "desc": "Close the gates and save up: heavy guard and recovery, a little weaker.",
+      "parents": [
+        {
+          "node": "magoi_overdrive",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SEAL_CHAINS"
+      },
+      "values": {
+        "damage_pct": [
+          -0.15,
+          -0.18,
+          -0.21
+        ],
+        "armor": [
+          4.0,
+          5.0,
+          6.0
+        ],
+        "speed_pct": [
+          -0.05,
+          -0.06,
+          -0.07
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0.9,
+          1.08,
+          1.26
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:obsidian"
+    },
+    {
+      "id": "wellspring_body",
+      "name": "Wellspring Body",
+      "desc": "A body that has survived its own spells.",
+      "parents": [
+        {
+          "node": "magoi_overdrive",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          4.0,
+          5.0,
+          6.0,
+          7.0,
+          8.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:enchanted_golden_apple"
+    },
+    {
+      "id": "concentrated_power",
+      "name": "Concentrated Power",
+      "desc": "Everything focused to a point.",
+      "parents": [
+        {
+          "node": "magoi_sealed",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:netherite_sword"
+    },
+    {
+      "id": "cast_shell",
+      "name": "Cast Shell",
+      "desc": "A sturdy ward from long practice.",
+      "parents": [
+        {
+          "node": "magoi_overdrive",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:obsidian"
+    },
+    {
+      "id": "pacing_the_cast",
+      "name": "Pacing the Cast",
+      "desc": "Methodical steps.",
+      "parents": [
+        {
+          "node": "magoi_sealed",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_speed",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.1,
+          0.125,
+          0.15,
+          0.175,
+          0.2
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:clock"
+    },
+    {
+      "id": "falling_star",
+      "name": "Falling Star",
+      "desc": "Call a star down onto the place you look at after a short delay.",
+      "parents": [
+        {
+          "node": "magoi_overdrive",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "delay": [
+          20.0,
+          19.0,
+          18.0,
+          17.0
+        ],
+        "damage": [
+          14.0,
+          17.5,
+          21.0,
+          24.5
+        ],
+        "radius": [
+          4.5,
+          4.95,
+          5.4,
+          5.85
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88,
+          22.32
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          360.0,
+          331.0,
+          302.0,
+          274.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:nether_star"
+    },
+    {
+      "id": "fissure_of_light",
+      "name": "Fissure of Light",
+      "desc": "Split the ground in a line of light ahead of you.",
+      "parents": [
+        {
+          "node": "magoi_sealed",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "length": [
+          11.0,
+          12.1,
+          13.2,
+          14.3
+        ],
+        "width": [
+          2.0,
+          2.2,
+          2.4,
+          2.6
+        ],
+        "knockback": [
+          0.5,
+          0.55,
+          0.6,
+          0.65
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          180.0,
+          166.0,
+          151.0,
+          137.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:end_rod"
+    },
+    {
+      "id": "magoi_ring",
+      "name": "Magoi Ring",
+      "desc": "A ring of condensed magoi detonates around you.",
+      "parents": [
+        {
+          "node": "falling_star",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "radius": [
+          4.5,
+          4.95,
+          5.4,
+          5.85
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "knockback": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:amethyst_block"
+    },
+    {
+      "id": "pillar_of_magoi",
+      "name": "Pillar of Magoi",
+      "desc": "A needle of magoi along your sight line, piercing everything.",
+      "parents": [
+        {
+          "node": "fissure_of_light",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          10.0,
+          12.5,
+          15.0,
+          17.5
+        ],
+        "range": [
+          14.0,
+          15.4,
+          16.8,
+          18.2
+        ],
+        "pierce": [
+          2.0,
+          3.0,
+          3.0,
+          4.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:beacon"
+    },
+    {
+      "id": "cast_surge",
+      "name": "Cast Surge",
+      "desc": "Prepare the big spell: strength and haste for a while.",
+      "parents": [
+        {
+          "node": "magoi_ring",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "strength",
+        "effect2": "haste",
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "seconds": [
+          12.0,
+          14.0,
+          16.0,
+          17.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "amp2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:blaze_powder"
+    },
+    {
+      "id": "backlash_barrier",
+      "name": "Backlash Barrier",
+      "desc": "A shell of your own magoi that soaks up damage.",
+      "parents": [
+        {
+          "node": "pillar_of_magoi",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "absorb_hearts": [
+          5.0,
+          6.0,
+          8.0,
+          9.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          7.0,
+          8.0
+        ],
+        "resist_amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:crying_obsidian"
+    },
+    {
+      "id": "caught_in_the_wake",
+      "name": "Caught in the Wake",
+      "desc": "A pulse of leftover force freezes the creatures around you for a moment.",
+      "parents": [
+        {
+          "node": "cast_surge",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "stun_ring",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          4.0,
+          4.4,
+          4.8,
+          5.2
+        ],
+        "seconds": [
+          2.0,
+          2.0,
+          3.0,
+          3.0
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:heavy_core"
+    },
+    {
+      "id": "desperate_reserves",
+      "name": "Desperate Reserves",
+      "desc": "You deal more damage when nearly dead.",
+      "parents": [
+        {
+          "node": "falling_star",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_when",
+      "params": {
+        "condition": "low_health"
+      },
+      "values": {
+        "bonus": [
+          0.35,
+          0.42,
+          0.49,
+          0.56
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:redstone"
+    },
+    {
+      "id": "backlash_shield",
+      "name": "Backlash Shield",
+      "desc": "When you are nearly dead you are shielded for a few seconds.",
+      "parents": [
+        {
+          "node": "fissure_of_light",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "last_stand",
+      "values": {
+        "threshold": [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "rest": [
+          1800.0,
+          1620.0,
+          1440.0,
+          1260.0
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:totem_of_undying"
+    },
+    {
+      "id": "calculated_strikes",
+      "name": "Calculated Strikes",
+      "desc": "Your spells may strike critically.",
+      "parents": [
+        {
+          "node": "magoi_ring",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.1,
+          0.12,
+          0.14,
+          0.16
+        ],
+        "mult": [
+          1.5,
+          1.62,
+          1.74,
+          1.86
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:enchanted_book"
+    },
+    {
+      "id": "finishing_flourish",
+      "name": "Finishing Flourish",
+      "desc": "You deal much more damage to nearly dead foes.",
+      "parents": [
+        {
+          "node": "pillar_of_magoi",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "execute_threshold",
+      "values": {
+        "threshold": [
+          0.2,
+          0.22,
+          0.24,
+          0.26
+        ],
+        "bonus": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:flint"
+    },
+    {
+      "id": "magoi_recovery",
+      "name": "Magoi Recovery",
+      "desc": "A kill heals you and fills you with regeneration.",
+      "parents": [
+        {
+          "node": "cast_surge",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "kill_reward",
+      "params": {
+        "effect": "regeneration"
+      },
+      "values": {
+        "heal": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "seconds": [
+          4.0,
+          5.0,
+          5.0,
+          6.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:amethyst_shard"
+    },
+    {
+      "id": "frugal_caster",
+      "name": "Frugal Caster",
+      "desc": "You tire more slowly.",
+      "parents": [
+        {
+          "node": "backlash_barrier",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "hunger_saver",
+      "values": {
+        "pct": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:bread"
+    },
+    {
+      "id": "backlash_ward",
+      "name": "Backlash Ward",
+      "desc": "Explosions hardly hurt you.",
+      "parents": [
+        {
+          "node": "caught_in_the_wake",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "explosion"
+      },
+      "values": {
+        "pct": [
+          0.4,
+          0.48,
+          0.56,
+          0.64
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:tnt"
+    },
+    {
+      "id": "extreme_magic_falling_star",
+      "name": "Extreme Magic: Falling Star",
+      "desc": "Pour the wellspring into one star: a colossal explosion at the place you look at.",
+      "parents": [
+        {
+          "node": "caught_in_the_wake",
+          "level": 3
+        },
+        {
+          "node": "backlash_ward",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "delay": [
+          28.0,
+          27.0,
+          25.0
+        ],
+        "damage": [
+          40.0,
+          50.0,
+          60.0
+        ],
+        "radius": [
+          8.0,
+          8.8,
+          9.6
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88
+        ],
+        "cost": [
+          0.06,
+          0.0648,
+          0.0696
+        ],
+        "cooldown": [
+          1400.0,
+          1288.0,
+          1176.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:nether_star"
+    },
+    {
+      "id": "extreme_magic_last_light",
+      "name": "Extreme Magic: Last Light",
+      "desc": "The whole of your magoi in one beam, from your hand to the horizon.",
+      "parents": [
+        {
+          "node": "backlash_barrier",
+          "level": 3
+        },
+        {
+          "node": "frugal_caster",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          40.0,
+          50.0,
+          60.0
+        ],
+        "range": [
+          30.0,
+          33.0,
+          36.0
+        ],
+        "pierce": [
+          3.0,
+          4.0,
+          5.0
+        ],
+        "cost": [
+          0.06,
+          0.0648,
+          0.0696
+        ],
+        "cooldown": [
+          1350.0,
+          1242.0,
+          1134.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:beacon"
+    }
+  ]
+}
