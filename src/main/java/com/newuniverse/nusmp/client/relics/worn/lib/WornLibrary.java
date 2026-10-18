@@ -114,7 +114,10 @@ public final class WornLibrary {
         for (WornCatalog.Piece p : wanted) {
             WornMesh m = WornModels.mesh(p.model());
             if (m == null) continue;
-            out.add(new Resolved(m, p.anchor() != null ? p.anchor() : m.anchor, p.mirror()));
+            WornAnchor at = p.anchor() != null ? p.anchor() : m.anchor;
+            WornPlacer.Placement fit = WornPlacer.fit(at, p.model());
+            m = m.clearOf(at, p.mirror(), fit.scale(), fit.dx(), fit.dy(), fit.dz());              // 1.71.0: never under the skin's second layer (hat, jacket, sleeves, pants)
+            out.add(new Resolved(m, at, p.mirror()));
         }
         if (out.isEmpty()) return null;
         FxTheme theme = FxTheme.byName(cat.themeOf(def.id()));

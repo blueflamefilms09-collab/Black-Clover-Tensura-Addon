@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.logging.LogUtils;
 import com.mojang.math.Axis;
+import com.newuniverse.nusmp.client.relics.item.HandWrap;
 import com.newuniverse.nusmp.client.relics.item.ItemStateVariants;
 import com.newuniverse.nusmp.client.relics.item.OversizeGuard;
 import com.newuniverse.nusmp.client.relics.item.VariantRules;
@@ -184,7 +185,14 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         }
         float time = mc.level == null ? 0 : mc.level.getGameTime() + mc.getTimer().getGameTimeDeltaPartialTick(false);
         pose.pushPose();
-        if (ctx.firstPerson()) {                                                   // 1.25.0: an oversized weapon never goes through the camera (tools/relics/display_presets.py is the rule)
+        HandWrap.Wrap wrap = ctx == ItemDisplayContext.THIRD_PERSON_RIGHT_HAND || ctx == ItemDisplayContext.THIRD_PERSON_LEFT_HAND ? HandWrap.of(id) : null;
+        if (wrap != null) {                                                        // 1.71.0: worn on the hand, not held (client/relics/item/HandWrap)
+            pose.translate(0.5f, 0.5f, 0.5f);                                      // the hand's own origin; the layer has already moved to the grip point
+            pose.translate(0f, -HandWrap.ORIGIN_FORWARD / 16f, (HandWrap.ORIGIN_DOWN_ARM - wrap.mouthPx()) / 16f);
+            if (ctx == ItemDisplayContext.THIRD_PERSON_LEFT_HAND) pose.mulPose(Axis.ZP.rotationDegrees(180f));          // item +x is the inside of the left arm: turn the same glove about the arm
+            pose.mulPose(wrap.quaternion());
+            pose.scale(wrap.sx(), wrap.sy(), wrap.sz());
+        } else if (ctx.firstPerson()) {                                            // 1.25.0: an oversized weapon never goes through the camera (tools/relics/display_presets.py is the rule)
             float k = OversizeGuard.factor(mesh.length, pose.last().pose().getScale(new Vector3f()).x);
             if (k < 1f) {
                 pose.translate(mesh.gripX, mesh.gripY, 0.5f);
@@ -192,10 +200,12 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
                 pose.translate(-mesh.gripX, -mesh.gripY, -0.5f);
             }
         }
-        pose.translate(mesh.ox, mesh.oy, 0.5f);
-        pose.mulPose(Axis.ZP.rotationDegrees(mesh.angle - 90f));
-        pose.scale(mesh.scale, mesh.scale, mesh.scale);
-        pose.translate(0f, -mesh.ymin, 0f);
+        if (wrap == null) {
+            pose.translate(mesh.ox, mesh.oy, 0.5f);
+            pose.mulPose(Axis.ZP.rotationDegrees(mesh.angle - 90f));
+            pose.scale(mesh.scale, mesh.scale, mesh.scale);
+            pose.translate(0f, -mesh.ymin, 0f);
+        }
         PoseStack.Pose p = pose.last();
         emit(p, ItemRenderer.getFoilBufferDirect(buffers, RenderType.entityCutout(mesh.tex), false, stack.hasFoil()), mesh.layers[BODY],
                 state.tint() ? VariantRules.BODY_TINT_5LEAF : 0xFFFFFFFF, light, overlay);
@@ -263,7 +273,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
                 float[] info = modelInfo(id);                                            // 1.29.0: the third-person display scale and the manual marker of the model json
                 if (info[1] > 0f) mesh.manual = true;
                 applyOrient(mesh);
-                if (!mesh.manual) normalise(id, mesh, info[0]);
+                if (!mesh.manual && !HandWrap.isWrapped(id)) normalise(id, mesh, info[0]);                 // a wrapped weapon keeps its modelled axes (client/relics/item/HandWrap)
                 mesh.length = Math.max(0f, (mesh.ymax - mesh.ymin) * mesh.scale);
                 float along = OversizeGuard.GRIP_FRACTION * mesh.length;
                 mesh.gripX = mesh.ox + along * (float) Math.cos(Math.toRadians(mesh.angle));

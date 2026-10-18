@@ -60,6 +60,57 @@ public final class WornMesh {
         this.shellQuads = s;
     }
 
+    /**
+     * The box of the player's second skin layer (hat, jacket, sleeves, pants) round an anchor part, in the part's own layer space: x0, x1, y0, y1, z0, z1. The outer layer is the
+     * part's box grown by 0.5 pixel on the head and 0.25 on the body, arms and legs; a worn model that sinks into it is drawn under the skin's layer and seems to vanish.
+     */
+    public static float[] overlayBox(WornAnchor a) {
+        return switch (a) {
+            case HEAD -> new float[]{-4.5f, 4.5f, -8.5f, 0.5f, -4.5f, 4.5f};
+            case RIGHT_ARM -> new float[]{-3.25f, 1.25f, -2.25f, 10.25f, -2.25f, 2.25f};
+            case LEFT_ARM -> new float[]{-1.25f, 3.25f, -2.25f, 10.25f, -2.25f, 2.25f};
+            case RIGHT_LEG, LEFT_LEG -> new float[]{-2.25f, 2.25f, -0.25f, 12.25f, -2.25f, 2.25f};
+            default -> new float[]{-4.25f, 4.25f, -0.25f, 12.25f, -2.25f, 2.25f};
+        };
+    }
+
+    /** How far past the skin layer a pushed-out vertex stands (pixels): enough to win the depth test, too little to see. */
+    public static final float CLEARANCE = 0.06f;
+
+    /**
+     * A copy of this model whose static vertices never stand inside the second skin layer of {@code anchor} once drawn (1.71.0: relics were hidden under jackets, sleeves and
+     * hat layers). The model is drawn as {@code translate(dx, dy, dz) * scale(k) * mirrorX?(p)}; a vertex whose drawn place lies inside the layer's box is moved out through the
+     * nearest face (plus {@link #CLEARANCE}) and carried back to model space, so a model that already stands clear is returned unchanged (same instance) and one that sinks is
+     * changed only where it sinks. Animated groups (orbiting motes, swarms) are left as they are.
+     */
+    public WornMesh clearOf(WornAnchor a, boolean mirror, float k, float dx, float dy, float dz) {
+        if (a == null || k <= 0f) return this;
+        float[] b = overlayBox(a);
+        float[] np = null;
+        int end = groupStart.length > 1 ? groupStart[1] : quads;
+        for (int i = 0; i < end * 4; i++) {
+            float x = pos[3 * i], y = pos[3 * i + 1], z = pos[3 * i + 2];
+            float rx = k * (mirror ? -x : x) + dx, ry = k * y + dy, rz = k * z + dz;
+            if (rx <= b[0] || rx >= b[1] || ry <= b[2] || ry >= b[3] || rz <= b[4] || rz >= b[5]) continue;
+            float[] push = {rx - b[0], b[1] - rx, ry - b[2], b[3] - ry, rz - b[4], b[5] - rz};
+            int best = 0;
+            for (int j = 1; j < 6; j++) if (push[j] < push[best]) best = j;
+            if (best >= 4) {                                                   // front or back: the faces the eye sees are the ones that must stay visible
+                rz = best == 4 ? b[4] - CLEARANCE : b[5] + CLEARANCE;
+            } else if (best >= 2) {
+                ry = best == 2 ? b[2] - CLEARANCE : b[3] + CLEARANCE;
+            } else {
+                rx = best == 0 ? b[0] - CLEARANCE : b[1] + CLEARANCE;
+            }
+            if (np == null) np = pos.clone();
+            float qx = (rx - dx) / k, qy = (ry - dy) / k, qz = (rz - dz) / k;
+            np[3 * i] = mirror ? -qx : qx;
+            np[3 * i + 1] = qy;
+            np[3 * i + 2] = qz;
+        }
+        return np == null ? this : new WornMesh(name, anchor, np, uv, nrm, slot, flags, groupStart, groups);
+    }
+
     /** Vertices of the solid pass (every quad), of the emissive pass and of the shell pass. */
     public int solidVertices() { return quads * 4; }
 

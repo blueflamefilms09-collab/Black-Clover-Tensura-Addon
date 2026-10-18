@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.71.0] — Relics no longer hide under the skin's second layer; the Vassal Claw and Gauntlet are worn on the hand
+
+I cannot run the game here, so both fixes are built from the geometry and unit-tested, not looked at. If either needs a nudge, tell me what you see.
+
+### FIXED
+- **Relics showed under the player's skin layers (jacket, sleeves, pants, hat).** Cause: every on-body relic model is drawn at 85% size (or 80% for shoulder and bracer pieces, moved toward the body) about its body part, which sank their surfaces into the skin's outer layer, so the layer covered them. Fix: `WornMesh.clearOf` moves only the vertices that would land inside that layer (0.25 px on the body, arms and legs, 0.5 px on the head) out through its nearest face, accounting for the shrink and the mirrored left arm; a model that already stands clear is not changed. Animated parts (orbiting motes) are left alone. Test: `WornMeshClearanceTest`.
+- **Vassal Claw and Vassal Gauntlet were held like swords, floating in front of the fist.** Now, in third person, the bracer sits round the forearm and the hand plate round the fist (`HandWrap`: the mesh is turned so its forearm axis runs along the arm, scaled to the arm's 4 x 4 pixel section, mouth 2-3 pixels below the shoulder; the left hand wears the same glove turned about the arm). Their model json has identity third-person display entries and `nusmp_display_preset: manual`. In first person vanilla draws only the item (no arm), so that view is unchanged. Test: `HandWrapTest`.
+
+### KEPT
+- All meshes, forms, skills and models of both weapons; only where they are drawn in third person changed. The other Vassal weapons are still held (a claw and a gauntlet are the ones that are worn).
+
+### NOT DONE YET
+- The skills list you sent (Summoner, Faith, Firebolt ... and the Ultimate evolutions): "remove/rebuild these" needs a decision from you before I touch them (see my reply).
+
 ## [1.70.0] — 95 new relics from the anime and webtoon worlds, and every relic looks different
 
 First batch of the "about 300 more relics" request: **95 relics in five series**, each with its own sprite, its own palette and its own worn ornament. Names and places come from the works; the rules text is the mod's own, and the item lists come from my own knowledge of the series (the web searches I ran returned no usable item lists), so a few names are "inspired by" rather than exact.
