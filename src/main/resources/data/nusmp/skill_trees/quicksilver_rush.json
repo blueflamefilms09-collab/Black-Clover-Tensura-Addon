@@ -1,0 +1,1106 @@
+{
+  "magic": "solo_leveling",
+  "franchise": "solo_leveling",
+  "name": "Quicksilver",
+  "desc": "Time seems to wade through syrup around you. Dashes, afterimages and a blur of cuts for the hunter who is simply never where the blow lands.",
+  "book": "nusmp:quicksilver_rush_book",
+  "book_name": "Quicksilver Field Notes",
+  "book_lore": "Haste is a skill. Patience is what you do with the time it buys.",
+  "color": "#5DE0FF",
+  "icon": "minecraft:lightning_rod",
+  "class_id": "quicksilver_rush",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/quicksilver_rush.png",
+  "book_texture": "nusmp:item/skill_book_3d/solo_leveling",
+  "background_theme": "storm",
+  "nodes": [
+    {
+      "id": "mercury_flow",
+      "name": "Mercury Flow",
+      "desc": "You pour yourself across the field: blindingly fast but paper-thin.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "LIGHTNING_FIEND"
+      },
+      "values": {
+        "damage_pct": [
+          0.05,
+          0.06,
+          0.07
+        ],
+        "armor": [
+          -3.0,
+          -3.75,
+          -4.5
+        ],
+        "speed_pct": [
+          0.28,
+          0.336,
+          0.392
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:sugar"
+    },
+    {
+      "id": "anchor_point",
+      "name": "Anchor Point",
+      "desc": "Plant a heel and trade the speed for heavier cuts and a steadier stance.",
+      "parents": [
+        {
+          "node": "mercury_flow",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "damage_pct": [
+          0.15,
+          0.18,
+          0.21
+        ],
+        "armor": [
+          3.0,
+          3.75,
+          4.5
+        ],
+        "speed_pct": [
+          -0.05,
+          -0.06,
+          -0.07
+        ],
+        "knockback_res": [
+          0.3,
+          0.36,
+          0.42
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:iron_boots"
+    },
+    {
+      "id": "silver_stride",
+      "name": "Silver Stride",
+      "desc": "Faster legs.",
+      "parents": [
+        {
+          "node": "mercury_flow",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.05,
+          0.0625,
+          0.075,
+          0.0875,
+          0.1
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:golden_boots"
+    },
+    {
+      "id": "flickering_hands",
+      "name": "Flickering Hands",
+      "desc": "Faster blades.",
+      "parents": [
+        {
+          "node": "anchor_point",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.06,
+          0.075,
+          0.09,
+          0.105,
+          0.12
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:clock"
+    },
+    {
+      "id": "spring_loaded_heels",
+      "name": "Spring-Loaded Heels",
+      "desc": "A higher jump.",
+      "parents": [
+        {
+          "node": "mercury_flow",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "jump_strength",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.05,
+          0.0625,
+          0.075,
+          0.0875,
+          0.1
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:rabbit_foot"
+    },
+    {
+      "id": "rooftop_runner",
+      "name": "Rooftop Runner",
+      "desc": "Step up kerbs and ledges without slowing.",
+      "parents": [
+        {
+          "node": "anchor_point",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "step_height",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:ladder"
+    },
+    {
+      "id": "mercury_dash",
+      "name": "Mercury Dash",
+      "desc": "Burst through the foes ahead of you in one silver streak.",
+      "parents": [
+        {
+          "node": "mercury_flow",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "LIGHTNING_FIEND"
+      },
+      "values": {
+        "distance": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:golden_boots"
+    },
+    {
+      "id": "flicker_step",
+      "name": "Flicker Step",
+      "desc": "Teleport a short way in a flash of light.",
+      "parents": [
+        {
+          "node": "anchor_point",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "blink",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "distance": [
+          8.0,
+          8.96,
+          9.92,
+          10.88
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:ender_pearl"
+    },
+    {
+      "id": "ricochet_cuts",
+      "name": "Ricochet Cuts",
+      "desc": "A slash that zigzags between foes at impossible speed.",
+      "parents": [
+        {
+          "node": "mercury_dash",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "chain_hit",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          5.0,
+          6.25,
+          7.5,
+          8.75
+        ],
+        "jumps": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "jump_range": [
+          6.0,
+          6.0,
+          7.0,
+          7.0
+        ],
+        "falloff": [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          160.0,
+          147.0,
+          134.0,
+          122.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "silver_spin",
+      "name": "Silver Spin",
+      "desc": "Spin like a top, cutting everything around you many times.",
+      "parents": [
+        {
+          "node": "flicker_step",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "whirlwind",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "damage": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "radius": [
+          3.5,
+          3.78,
+          4.06,
+          4.34
+        ],
+        "hits": [
+          5.0,
+          6.0,
+          8.0,
+          10.0
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          260.0,
+          239.0,
+          218.0,
+          198.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:iron_axe"
+    },
+    {
+      "id": "time_dilation_rush",
+      "name": "Time Dilation Rush",
+      "desc": "The world slows around you: Speed and Haste for a while.",
+      "parents": [
+        {
+          "node": "ricochet_cuts",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "speed",
+        "effect2": "haste",
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "seconds": [
+          15.0,
+          17.0,
+          20.0,
+          22.0
+        ],
+        "amp": [
+          1.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        "amp2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:clock"
+    },
+    {
+      "id": "silver_rising",
+      "name": "Silver Rising",
+      "desc": "A rising strike so fast the foe leaves the ground before it flinches.",
+      "parents": [
+        {
+          "node": "silver_spin",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "uppercut",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "range": [
+          3.2,
+          3.392,
+          3.584,
+          3.776
+        ],
+        "launch": [
+          0.9,
+          0.99,
+          1.08,
+          1.17
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:wind_charge"
+    },
+    {
+      "id": "afterimage_volley",
+      "name": "Afterimage Volley",
+      "desc": "Your afterimages throw a volley of blades at the foe you look at.",
+      "parents": [
+        {
+          "node": "time_dilation_rush",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "WEAPON_CONSTRUCTS"
+      },
+      "values": {
+        "damage": [
+          2.5,
+          3.125,
+          3.75,
+          4.375
+        ],
+        "shots": [
+          7.0,
+          9.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          14.0,
+          15.12,
+          16.24,
+          17.36
+        ],
+        "interval": [
+          2.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          240.0,
+          221.0,
+          202.0,
+          182.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:iron_nugget"
+    },
+    {
+      "id": "gathering_speed",
+      "name": "Gathering Speed",
+      "desc": "Blows in a row build momentum that makes you hit harder.",
+      "parents": [
+        {
+          "node": "mercury_dash",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "momentum",
+      "values": {
+        "per_stack": [
+          0.05,
+          0.0575,
+          0.065,
+          0.0725
+        ],
+        "max_stacks": [
+          6.0,
+          8.0,
+          10.0,
+          11.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:gunpowder"
+    },
+    {
+      "id": "run_up_impact",
+      "name": "Run-Up Impact",
+      "desc": "You deal more damage while sprinting.",
+      "parents": [
+        {
+          "node": "flicker_step",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "sprint_bonus",
+      "values": {
+        "bonus": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:sugar"
+    },
+    {
+      "id": "always_in_motion",
+      "name": "Always in Motion",
+      "desc": "While sprinting you move even faster.",
+      "parents": [
+        {
+          "node": "ricochet_cuts",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "speed",
+        "condition": "sprinting"
+      },
+      "values": {
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "second_wind_of_the_runner",
+      "name": "Second Wind of the Runner",
+      "desc": "While sprinting your wounds mend.",
+      "parents": [
+        {
+          "node": "silver_spin",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "sprinting"
+      },
+      "values": {
+        "per_second": [
+          0.8,
+          0.96,
+          1.12,
+          1.28
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:golden_carrot"
+    },
+    {
+      "id": "wasn_t_there",
+      "name": "Wasn't There",
+      "desc": "You may avoid a blow completely.",
+      "parents": [
+        {
+          "node": "time_dilation_rush",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.12,
+          0.144,
+          0.168,
+          0.192
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:phantom_membrane"
+    },
+    {
+      "id": "flurry_rhythm",
+      "name": "Flurry Rhythm",
+      "desc": "Every few blows in a row hit much harder.",
+      "parents": [
+        {
+          "node": "silver_rising",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "combo",
+      "values": {
+        "hits": [
+          3.0,
+          3.0,
+          2.0,
+          2.0
+        ],
+        "bonus": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:flint"
+    },
+    {
+      "id": "speed_feeds_speed",
+      "name": "Speed Feeds Speed",
+      "desc": "Each kill heals you and gives you Speed.",
+      "parents": [
+        {
+          "node": "afterimage_volley",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "kill_reward",
+      "params": {
+        "effect": "speed"
+      },
+      "values": {
+        "heal": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "amp": [
+          1.0,
+          2.0,
+          2.0,
+          2.0
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:sugar"
+    },
+    {
+      "id": "quicksilver_tempest",
+      "name": "Quicksilver Tempest",
+      "desc": "Run through the whole enemy line, a streak of cuts from end to end.",
+      "parents": [
+        {
+          "node": "afterimage_volley",
+          "level": 3
+        },
+        {
+          "node": "speed_feeds_speed",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "LIGHTNING_FIEND"
+      },
+      "values": {
+        "distance": [
+          10.0,
+          11.0,
+          12.0
+        ],
+        "damage": [
+          20.0,
+          25.0,
+          30.0
+        ],
+        "targets": [
+          6.0,
+          8.0,
+          10.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174
+        ],
+        "cooldown": [
+          1300.0,
+          1196.0,
+          1092.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:lightning_rod"
+    },
+    {
+      "id": "thousand_step_dance",
+      "name": "Thousand-Step Dance",
+      "desc": "A storm of cuts around you that outruns the eye.",
+      "parents": [
+        {
+          "node": "silver_rising",
+          "level": 3
+        },
+        {
+          "node": "flurry_rhythm",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "whirlwind",
+      "params": {
+        "vfx": "WIND_TORNADO"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0
+        ],
+        "radius": [
+          5.0,
+          5.4,
+          5.8
+        ],
+        "hits": [
+          7.0,
+          9.0,
+          11.0
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029
+        ],
+        "cooldown": [
+          1400.0,
+          1288.0,
+          1176.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:diamond_sword"
+    }
+  ]
+}

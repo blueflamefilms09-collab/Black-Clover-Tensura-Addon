@@ -1,0 +1,1104 @@
+{
+  "magic": "solo_leveling",
+  "franchise": "solo_leveling",
+  "name": "Monarch of Plagues",
+  "desc": "Command swarms, rot and contagion: a creeping line of poison that spreads from foe to foe and feeds on the dying.",
+  "book": "nusmp:plague_monarch_book",
+  "book_name": "Almanac of Blight and Buzzing",
+  "book_lore": "The first cough is the cheapest. The rest are compounding interest.",
+  "color": "#98B62A",
+  "icon": "minecraft:rotten_flesh",
+  "class_id": "plague_monarch",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/plague_monarch.png",
+  "book_texture": "nusmp:item/skill_book_3d/solo_leveling",
+  "background_theme": "ruin",
+  "nodes": [
+    {
+      "id": "cloak_of_flies",
+      "name": "Cloak of Flies",
+      "desc": "A cloud of insects shrouds you: tougher and healing, but you move slowly.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "POISON_BREATH"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          3.0,
+          3.75,
+          4.5
+        ],
+        "speed_pct": [
+          -0.06,
+          -0.072,
+          -0.084
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0.6,
+          0.72,
+          0.84
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:cobweb"
+    },
+    {
+      "id": "pestilent_crescendo",
+      "name": "Pestilent Crescendo",
+      "desc": "Let the contagion run wild: far more damage, no guard.",
+      "parents": [
+        {
+          "node": "cloak_of_flies",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "POISON_BREATH"
+      },
+      "values": {
+        "damage_pct": [
+          0.3,
+          0.36,
+          0.42
+        ],
+        "armor": [
+          -3.0,
+          -3.75,
+          -4.5
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:fermented_spider_eye"
+    },
+    {
+      "id": "carrier_s_constitution",
+      "name": "Carrier's Constitution",
+      "desc": "The plague spares you: more maximum health.",
+      "parents": [
+        {
+          "node": "cloak_of_flies",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:golden_apple"
+    },
+    {
+      "id": "swarm_reflex",
+      "name": "Swarm Reflex",
+      "desc": "Insects scout ahead: slightly faster.",
+      "parents": [
+        {
+          "node": "pestilent_crescendo",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.03,
+          0.0375,
+          0.045,
+          0.0525,
+          0.06
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "chitin_skin",
+      "name": "Chitin Skin",
+      "desc": "A hardened second skin.",
+      "parents": [
+        {
+          "node": "cloak_of_flies",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:turtle_helmet"
+    },
+    {
+      "id": "pestilent_breath",
+      "name": "Pestilent Breath",
+      "desc": "Exhale a cone of sickly fog that poisons and starves everything it touches.",
+      "parents": [
+        {
+          "node": "cloak_of_flies",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "debuff_cone",
+      "params": {
+        "effect": "poison",
+        "effect2": "hunger",
+        "vfx": "POISON_BREATH"
+      },
+      "values": {
+        "range": [
+          5.0,
+          5.4,
+          5.8,
+          6.2
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0,
+          52.0
+        ],
+        "seconds": [
+          8.0,
+          9.0,
+          10.0,
+          12.0
+        ],
+        "amp": [
+          1.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        "seconds2": [
+          8.0,
+          9.0,
+          10.0,
+          12.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          220.0,
+          202.0,
+          185.0,
+          167.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:fermented_spider_eye"
+    },
+    {
+      "id": "contagion_leap",
+      "name": "Contagion Leap",
+      "desc": "A diseased lash that jumps from foe to foe.",
+      "parents": [
+        {
+          "node": "pestilent_crescendo",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "chain_hit",
+      "params": {
+        "vfx": "POISON_BREATH"
+      },
+      "values": {
+        "damage": [
+          5.0,
+          6.25,
+          7.5,
+          8.75
+        ],
+        "jumps": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "jump_range": [
+          6.0,
+          6.0,
+          7.0,
+          7.0
+        ],
+        "falloff": [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          160.0,
+          147.0,
+          134.0,
+          122.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:spider_eye"
+    },
+    {
+      "id": "cloud_of_flies",
+      "name": "Cloud of Flies",
+      "desc": "A swarm of biting flies blinds the creatures around you.",
+      "parents": [
+        {
+          "node": "pestilent_breath",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "smoke",
+      "params": {
+        "vfx": "POISON_BREATH"
+      },
+      "values": {
+        "radius": [
+          5.0,
+          5.5,
+          6.0,
+          6.5
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:black_dye"
+    },
+    {
+      "id": "swarm_eruption",
+      "name": "Swarm Eruption",
+      "desc": "The swarm bursts out of you in a ring and knocks everything back.",
+      "parents": [
+        {
+          "node": "contagion_leap",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "POISON_BREATH"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "radius": [
+          4.5,
+          4.95,
+          5.4,
+          5.85
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "knockback": [
+          0.9,
+          0.99,
+          1.08,
+          1.17
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:honeycomb"
+    },
+    {
+      "id": "mark_of_contagion",
+      "name": "Mark of Contagion",
+      "desc": "Infect one creature; it takes extra damage while the plague works.",
+      "parents": [
+        {
+          "node": "cloud_of_flies",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "mark",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "range": [
+          16.0,
+          17.6,
+          19.2,
+          20.8
+        ],
+        "seconds": [
+          8.0,
+          9.0,
+          10.0,
+          12.0
+        ],
+        "bonus": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:poisonous_potato"
+    },
+    {
+      "id": "swarm_recycles_life",
+      "name": "Swarm Recycles Life",
+      "desc": "Insects pull vitality out of the air and give it to you and your allies.",
+      "parents": [
+        {
+          "node": "swarm_eruption",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_pulse",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "amount": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          500.0,
+          470.0,
+          440.0,
+          410.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:honey_bottle"
+    },
+    {
+      "id": "maggot_s_feast",
+      "name": "Maggot's Feast",
+      "desc": "Bite a foe and feed on the rot.",
+      "parents": [
+        {
+          "node": "mark_of_contagion",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "drain_bite",
+      "params": {
+        "vfx": "POISON_BREATH"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "range": [
+          3.2,
+          3.392,
+          3.584,
+          3.776
+        ],
+        "heal_pct": [
+          0.3,
+          0.336,
+          0.372,
+          0.408
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:rotten_flesh"
+    },
+    {
+      "id": "blight_touch",
+      "name": "Blight Touch",
+      "desc": "Your blows may wither the foe.",
+      "parents": [
+        {
+          "node": "pestilent_breath",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "on_hit_effect",
+      "params": {
+        "effect": "wither"
+      },
+      "values": {
+        "seconds": [
+          4.0,
+          5.0,
+          5.0,
+          6.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "chance": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:wither_rose"
+    },
+    {
+      "id": "miasma_field",
+      "name": "Miasma Field",
+      "desc": "Enemies near you are constantly poisoned.",
+      "parents": [
+        {
+          "node": "contagion_leap",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "aura",
+      "params": {
+        "effect": "poison",
+        "target": "enemies"
+      },
+      "values": {
+        "radius": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:spider_eye"
+    },
+    {
+      "id": "immune_to_rot",
+      "name": "Immune to Rot",
+      "desc": "You take much less wither damage.",
+      "parents": [
+        {
+          "node": "cloud_of_flies",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "wither"
+      },
+      "values": {
+        "pct": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:rotten_flesh"
+    },
+    {
+      "id": "self_mending_chitin",
+      "name": "Self-Mending Chitin",
+      "desc": "Your wounds close over time, even out of combat.",
+      "parents": [
+        {
+          "node": "swarm_eruption",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "mending",
+      "values": {
+        "seconds": [
+          14.0,
+          13.0,
+          11.0,
+          10.0
+        ],
+        "amount": [
+          1,
+          1.25,
+          1.5,
+          1.75
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:honeycomb"
+    },
+    {
+      "id": "feast_on_the_fallen",
+      "name": "Feast on the Fallen",
+      "desc": "Kills restore your health.",
+      "parents": [
+        {
+          "node": "mark_of_contagion",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "kill_reward",
+      "params": {
+        "effect": "none"
+      },
+      "values": {
+        "heal": [
+          5.0,
+          6.25,
+          7.5,
+          8.75
+        ],
+        "seconds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:bone_meal"
+    },
+    {
+      "id": "rot_in_the_wound",
+      "name": "Rot in the Wound",
+      "desc": "A share of the damage you take returns to the attacker.",
+      "parents": [
+        {
+          "node": "swarm_recycles_life",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "thorns",
+      "values": {
+        "pct": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ],
+        "rest": [
+          20.0,
+          20.0,
+          20.0,
+          20.0
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:pointed_dripstone"
+    },
+    {
+      "id": "grave_vitality",
+      "name": "Grave Vitality",
+      "desc": "Underground, where the plague breeds, your wounds close fast.",
+      "parents": [
+        {
+          "node": "maggot_s_feast",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "underground"
+      },
+      "values": {
+        "per_second": [
+          0.9,
+          1.08,
+          1.26,
+          1.44
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:deepslate"
+    },
+    {
+      "id": "the_great_swarm",
+      "name": "The Great Swarm",
+      "desc": "Everything within range is stripped by a rolling cloud of insects.",
+      "parents": [
+        {
+          "node": "maggot_s_feast",
+          "level": 3
+        },
+        {
+          "node": "grave_vitality",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "POISON_BREATH"
+      },
+      "values": {
+        "damage": [
+          20.0,
+          25.0,
+          30.0
+        ],
+        "radius": [
+          7.0,
+          7.7,
+          8.4
+        ],
+        "targets": [
+          8.0,
+          11.0,
+          14.0
+        ],
+        "knockback": [
+          0.8,
+          0.88,
+          0.96
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1400.0,
+          1288.0,
+          1176.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:beehive"
+    },
+    {
+      "id": "blight_of_ages",
+      "name": "Blight of Ages",
+      "desc": "A cone of terminal rot: a very long withering poison on everything in front of you.",
+      "parents": [
+        {
+          "node": "swarm_recycles_life",
+          "level": 3
+        },
+        {
+          "node": "rot_in_the_wound",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "debuff_cone",
+      "params": {
+        "effect": "wither",
+        "effect2": "poison",
+        "vfx": "POISON_BREATH"
+      },
+      "values": {
+        "range": [
+          8.0,
+          8.64,
+          9.28
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0
+        ],
+        "seconds": [
+          14.0,
+          16.0,
+          18.0
+        ],
+        "amp": [
+          1.0,
+          2.0,
+          2.0
+        ],
+        "seconds2": [
+          14.0,
+          16.0,
+          18.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1300.0,
+          1196.0,
+          1092.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:wither_skeleton_skull"
+    }
+  ]
+}

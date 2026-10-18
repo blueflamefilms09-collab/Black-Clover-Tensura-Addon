@@ -1,0 +1,1118 @@
+{
+  "magic": "solo_leveling",
+  "franchise": "solo_leveling",
+  "name": "Kamish's Wrath",
+  "desc": "The fury of a slain dragon bound in a dagger: diving fire, black flame beams and scales that laugh at heat and lightning.",
+  "book": "nusmp:kamish_wrath_book",
+  "book_name": "Scale and Ember",
+  "book_lore": "It died once. Its anger did not get the memo.",
+  "color": "#FF5A1F",
+  "icon": "minecraft:blaze_rod",
+  "class_id": "kamish_wrath",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/kamish_wrath.png",
+  "book_texture": "nusmp:item/skill_book_3d/solo_leveling",
+  "background_theme": "magma",
+  "nodes": [
+    {
+      "id": "dragon_s_hunger",
+      "name": "Dragon's Hunger",
+      "desc": "Fire in the belly: far more damage, little care for your own skin.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "damage_pct": [
+          0.3,
+          0.36,
+          0.42
+        ],
+        "armor": [
+          -3.0,
+          -3.75,
+          -4.5
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:fire_charge"
+    },
+    {
+      "id": "scaled_hide",
+      "name": "Scaled Hide",
+      "desc": "Scales rise across your body: tough, steady and healing, with softer blows.",
+      "parents": [
+        {
+          "node": "dragon_s_hunger",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "EARTH_SPIKES"
+      },
+      "values": {
+        "damage_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "armor": [
+          5.0,
+          6.25,
+          7.5
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0.3,
+          0.36,
+          0.42
+        ],
+        "regen": [
+          0.5,
+          0.6,
+          0.7
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:turtle_helmet"
+    },
+    {
+      "id": "draconic_might",
+      "name": "Draconic Might",
+      "desc": "The dragon's strength flows in the blade.",
+      "parents": [
+        {
+          "node": "dragon_s_hunger",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.5,
+          1.875,
+          2.25,
+          2.625,
+          3.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:netherite_sword"
+    },
+    {
+      "id": "drake_vitality",
+      "name": "Drake Vitality",
+      "desc": "A dragon's lifespan: more maximum health.",
+      "parents": [
+        {
+          "node": "scaled_hide",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          3.0,
+          3.75,
+          4.5,
+          5.25,
+          6.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:enchanted_golden_apple"
+    },
+    {
+      "id": "scale_plating",
+      "name": "Scale Plating",
+      "desc": "Overlapping scales harden your skin.",
+      "parents": [
+        {
+          "node": "dragon_s_hunger",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.5,
+          1.875,
+          2.25,
+          2.625,
+          3.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:netherite_chestplate"
+    },
+    {
+      "id": "wyrm_reach",
+      "name": "Wyrm Reach",
+      "desc": "Long arms and a long dagger.",
+      "parents": [
+        {
+          "node": "scaled_hide",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "entity_interaction_range",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:blaze_rod"
+    },
+    {
+      "id": "dragon_dive",
+      "name": "Dragon Dive",
+      "desc": "Leap into the sky and crash down in a ball of fire.",
+      "parents": [
+        {
+          "node": "dragon_s_hunger",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "height": [
+          1.1,
+          1.188,
+          1.276,
+          1.364
+        ],
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "radius": [
+          3.5,
+          3.85,
+          4.2,
+          4.55
+        ],
+        "knockback": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:fire_charge"
+    },
+    {
+      "id": "claw_rake",
+      "name": "Claw Rake",
+      "desc": "Four claws of flame rake a cone in front of you.",
+      "parents": [
+        {
+          "node": "scaled_hide",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          4.0,
+          4.32,
+          4.64,
+          4.96
+        ],
+        "half_angle": [
+          50.0,
+          55.0,
+          60.0,
+          65.0
+        ],
+        "targets": [
+          2.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "knockback": [
+          0.4,
+          0.44,
+          0.48,
+          0.52
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          100.0,
+          92.0,
+          84.0,
+          76.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:blaze_powder"
+    },
+    {
+      "id": "black_fire_beam",
+      "name": "Black Fire Beam",
+      "desc": "A beam of black flame pierces a long line of enemies.",
+      "parents": [
+        {
+          "node": "dragon_dive",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "FIRE_SPIRAL"
+      },
+      "values": {
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "range": [
+          22.0,
+          24.2,
+          26.4,
+          28.6
+        ],
+        "pierce": [
+          2.0,
+          3.0,
+          3.0,
+          4.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:magma_cream"
+    },
+    {
+      "id": "falling_ember_star",
+      "name": "Falling Ember Star",
+      "desc": "Call a burning star down on the spot you look at.",
+      "parents": [
+        {
+          "node": "claw_rake",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "delay": [
+          20.0,
+          19.0,
+          18.0,
+          17.0
+        ],
+        "damage": [
+          14.0,
+          17.5,
+          21.0,
+          24.5
+        ],
+        "radius": [
+          4.5,
+          4.95,
+          5.4,
+          5.85
+        ],
+        "range": [
+          22.0,
+          23.76,
+          25.52,
+          27.28
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          360.0,
+          331.0,
+          302.0,
+          274.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:lava_bucket"
+    },
+    {
+      "id": "scorched_earth_wake",
+      "name": "Scorched Earth Wake",
+      "desc": "Drag the dagger and send a trail of flame along the ground.",
+      "parents": [
+        {
+          "node": "black_fire_beam",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "FLAME_TRAIL"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "length": [
+          11.0,
+          12.1,
+          13.2,
+          14.3
+        ],
+        "width": [
+          2.0,
+          2.2,
+          2.4,
+          2.6
+        ],
+        "knockback": [
+          0.5,
+          0.55,
+          0.6,
+          0.65
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          180.0,
+          166.0,
+          151.0,
+          137.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:magma_block"
+    },
+    {
+      "id": "draconic_blood",
+      "name": "Draconic Blood",
+      "desc": "Wounds close over in a burst of dragon vitality.",
+      "parents": [
+        {
+          "node": "falling_ember_star",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_self",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "amount": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "regen_seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:golden_apple"
+    },
+    {
+      "id": "dragon_s_challenge",
+      "name": "Dragon's Challenge",
+      "desc": "Roar and every hostile nearby turns to face you.",
+      "parents": [
+        {
+          "node": "scorched_earth_wake",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "taunt",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "radius": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "targets": [
+          5.0,
+          7.0,
+          9.0,
+          11.0
+        ],
+        "resist_seconds": [
+          3.0,
+          4.0,
+          4.0,
+          5.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:dragon_head"
+    },
+    {
+      "id": "dragonhide_flame",
+      "name": "Dragonhide: Flame",
+      "desc": "You take much less fire damage.",
+      "parents": [
+        {
+          "node": "dragon_dive",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "fire"
+      },
+      "values": {
+        "pct": [
+          0.4,
+          0.48,
+          0.56,
+          0.64
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:lava_bucket"
+    },
+    {
+      "id": "dragonhide_thunder",
+      "name": "Dragonhide: Thunder",
+      "desc": "You take much less lightning damage.",
+      "parents": [
+        {
+          "node": "claw_rake",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "lightning"
+      },
+      "values": {
+        "pct": [
+          0.35,
+          0.42,
+          0.49,
+          0.56
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:lightning_rod"
+    },
+    {
+      "id": "burning_fury",
+      "name": "Burning Fury",
+      "desc": "While you are on fire your blows hit harder.",
+      "parents": [
+        {
+          "node": "black_fire_beam",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_when",
+      "params": {
+        "condition": "on_fire"
+      },
+      "values": {
+        "bonus": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:blaze_powder"
+    },
+    {
+      "id": "scorching_scales",
+      "name": "Scorching Scales",
+      "desc": "A share of the damage you take is burned back into the attacker.",
+      "parents": [
+        {
+          "node": "falling_ember_star",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "thorns",
+      "values": {
+        "pct": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ],
+        "rest": [
+          20.0,
+          20.0,
+          20.0,
+          20.0
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:magma_cream"
+    },
+    {
+      "id": "dragon_s_last_breath",
+      "name": "Dragon's Last Breath",
+      "desc": "When nearly dead the dragon's spirit shields you.",
+      "parents": [
+        {
+          "node": "scorched_earth_wake",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "last_stand",
+      "values": {
+        "threshold": [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "seconds": [
+          7.0,
+          8.0,
+          9.0,
+          10.0
+        ],
+        "rest": [
+          1800.0,
+          1620.0,
+          1440.0,
+          1260.0
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:totem_of_undying"
+    },
+    {
+      "id": "tyrant_s_eye",
+      "name": "Tyrant's Eye",
+      "desc": "Your blows may strike critically.",
+      "parents": [
+        {
+          "node": "draconic_blood",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ],
+        "mult": [
+          1.8,
+          1.944,
+          2.088,
+          2.232
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:ender_eye"
+    },
+    {
+      "id": "hardened_by_the_hoard",
+      "name": "Hardened by the Hoard",
+      "desc": "In the thick of a fight you take less damage.",
+      "parents": [
+        {
+          "node": "dragon_s_challenge",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "reduce_when",
+      "params": {
+        "condition": "in_combat"
+      },
+      "values": {
+        "pct": [
+          0.12,
+          0.144,
+          0.168,
+          0.192
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:gold_block"
+    },
+    {
+      "id": "kamish_s_wrath_black_fire_breath",
+      "name": "Kamish's Wrath: Black Fire Breath",
+      "desc": "The dragon breathes through you: a huge black flame pierces everything in a long line.",
+      "parents": [
+        {
+          "node": "dragon_s_challenge",
+          "level": 3
+        },
+        {
+          "node": "hardened_by_the_hoard",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "FIRE_SPIRAL"
+      },
+      "values": {
+        "damage": [
+          26.0,
+          32.5,
+          39.0
+        ],
+        "range": [
+          30.0,
+          33.0,
+          36.0
+        ],
+        "pierce": [
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1400.0,
+          1288.0,
+          1176.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:dragon_breath"
+    },
+    {
+      "id": "wyrm_s_descent",
+      "name": "Wyrm's Descent",
+      "desc": "Soar and fall as a comet of dragonfire, shattering the ground and everything on it.",
+      "parents": [
+        {
+          "node": "draconic_blood",
+          "level": 3
+        },
+        {
+          "node": "tyrant_s_eye",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "height": [
+          1.2,
+          1.296,
+          1.392
+        ],
+        "damage": [
+          28.0,
+          35.0,
+          42.0
+        ],
+        "radius": [
+          6.0,
+          6.6,
+          7.2
+        ],
+        "knockback": [
+          1.6,
+          1.76,
+          1.92
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1300.0,
+          1196.0,
+          1092.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:nether_star"
+    }
+  ]
+}

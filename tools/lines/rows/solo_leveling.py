@@ -420,3 +420,201 @@ LINES.append(Line(
         A("Wall of Killing Intent", "A lane of crushing menace sweeps ahead of you.", "ground_wave", "minecraft:netherite_scrap", damage=24, length=18, width=5, cooldown=1300, vfx="DEVIL_CIRCLE"),
     ],
 ))
+
+# ---------------------------------------------------------------------------------------------------------------------------------- 11
+LINES.append(Line(
+    id="quicksilver_rush", name="Quicksilver", franchise=F,
+    desc="Time seems to wade through syrup around you. Dashes, afterimages and a blur of cuts for the hunter who is simply never where the blow lands.",
+    color="#5de0ff", background="storm", icon="minecraft:lightning_rod",
+    book_name="Quicksilver Field Notes", book_lore="Haste is a skill. Patience is what you do with the time it buys.",
+    stances=[
+        S("Mercury Flow", "You pour yourself across the field: blindingly fast but paper-thin.", "minecraft:sugar", speed_pct=0.28, armor=-3, damage_pct=0.05, vfx="LIGHTNING_FIEND"),
+        S("Anchor Point", "Plant a heel and trade the speed for heavier cuts and a steadier stance.", "minecraft:iron_boots", armor=3, knockback_res=0.3, damage_pct=0.15, speed_pct=-0.05, vfx="WIND_RING"),
+    ],
+    stats=[
+        T("Silver Stride", "Faster legs.", "movement_speed", 0.05, "minecraft:golden_boots", op="mult"),
+        T("Flickering Hands", "Faster blades.", "attack_speed", 0.06, "minecraft:clock", op="mult"),
+        T("Spring-Loaded Heels", "A higher jump.", "jump_strength", 0.05, "minecraft:rabbit_foot", op="mult"),
+        T("Rooftop Runner", "Step up kerbs and ledges without slowing.", "step_height", 0.4, "minecraft:ladder"),
+    ],
+    arts=[
+        A("Mercury Dash", "Burst through the foes ahead of you in one silver streak.", "dash_strike", "minecraft:golden_boots", distance=9, damage=7, vfx="LIGHTNING_FIEND"),
+        A("Flicker Step", "Teleport a short way in a flash of light.", "blink", "minecraft:ender_pearl", distance=8, vfx="LIGHTNING_SPEAR"),
+        A("Ricochet Cuts", "A slash that zigzags between foes at impossible speed.", "chain_hit", "minecraft:iron_sword", damage=5, jumps=4, jump_range=6, vfx="WIND_SLASH"),
+        A("Silver Spin", "Spin like a top, cutting everything around you many times.", "whirlwind", "minecraft:iron_axe", damage=3, hits=5, radius=3.5, interval=3, vfx="WIND_RING"),
+        A("Time Dilation Rush", "The world slows around you: Speed and Haste for a while.", "buff_self", "minecraft:clock", effect="speed", effect2="haste", seconds=15, amp=1, vfx="SPIRIT_AURA"),
+        A("Silver Rising", "A rising strike so fast the foe leaves the ground before it flinches.", "uppercut", "minecraft:wind_charge", damage=7, launch=0.9, vfx="WIND_SLASH"),
+        A("Afterimage Volley", "Your afterimages throw a volley of blades at the foe you look at.", "barrage", "minecraft:iron_nugget", damage=2.5, shots=7, range=14, interval=2, vfx="WEAPON_CONSTRUCTS"),
+    ],
+    passives=[
+        P("Gathering Speed", "Blows in a row build momentum that makes you hit harder.", "momentum", "minecraft:gunpowder", max_stacks=6, per_stack=0.05),
+        P("Run-Up Impact", "You deal more damage while sprinting.", "sprint_bonus", "minecraft:sugar", bonus=0.3),
+        P("Always in Motion", "While sprinting you move even faster.", "self_effect_when", "minecraft:feather", effect="speed", condition="sprinting"),
+        P("Second Wind of the Runner", "While sprinting your wounds mend.", "regen_when", "minecraft:golden_carrot", condition="sprinting", per_second=0.8),
+        P("Wasn't There", "You may avoid a blow completely.", "dodge", "minecraft:phantom_membrane", chance=0.12),
+        P("Flurry Rhythm", "Every few blows in a row hit much harder.", "combo", "minecraft:flint", hits=3, bonus=0.5),
+        P("Speed Feeds Speed", "Each kill heals you and gives you Speed.", "kill_reward", "minecraft:sugar", heal=3, effect="speed", seconds=6, amp=1),
+    ],
+    finishers=[
+        A("Quicksilver Tempest", "Run through the whole enemy line, a streak of cuts from end to end.", "dash_strike", "minecraft:lightning_rod", distance=10, damage=20, targets=6, cooldown=1300, vfx="LIGHTNING_FIEND"),
+        A("Thousand-Step Dance", "A storm of cuts around you that outruns the eye.", "whirlwind", "minecraft:diamond_sword", damage=6, hits=7, radius=5, interval=3, cooldown=1400, vfx="WIND_TORNADO"),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------------------------- 12
+LINES.append(Line(
+    id="kamish_wrath", name="Kamish's Wrath", franchise=F,
+    desc="The fury of a slain dragon bound in a dagger: diving fire, black flame beams and scales that laugh at heat and lightning.",
+    color="#ff5a1f", background="magma", icon="minecraft:blaze_rod",
+    book_name="Scale and Ember", book_lore="It died once. Its anger did not get the memo.",
+    stances=[
+        S("Dragon's Hunger", "Fire in the belly: far more damage, little care for your own skin.", "minecraft:fire_charge", damage_pct=0.3, armor=-3, vfx="FLAME_EXPLOSION"),
+        S("Scaled Hide", "Scales rise across your body: tough, steady and healing, with softer blows.", "minecraft:turtle_helmet", armor=5, knockback_res=0.3, regen=0.5, damage_pct=-0.1, vfx="EARTH_SPIKES"),
+    ],
+    stats=[
+        T("Draconic Might", "The dragon's strength flows in the blade.", "attack_damage", 1.5, "minecraft:netherite_sword"),
+        T("Drake Vitality", "A dragon's lifespan: more maximum health.", "max_health", 3, "minecraft:enchanted_golden_apple"),
+        T("Scale Plating", "Overlapping scales harden your skin.", "armor", 1.5, "minecraft:netherite_chestplate"),
+        T("Wyrm Reach", "Long arms and a long dagger.", "entity_interaction_range", 0.4, "minecraft:blaze_rod"),
+    ],
+    arts=[
+        A("Dragon Dive", "Leap into the sky and crash down in a ball of fire.", "leap_slam", "minecraft:fire_charge", damage=9, radius=3.5, height=1.1, vfx="FLAME_EXPLOSION"),
+        A("Claw Rake", "Four claws of flame rake a cone in front of you.", "cone_strike", "minecraft:blaze_powder", damage=8, range=4, half_angle=50, vfx="FIRE_BURST"),
+        A("Black Fire Beam", "A beam of black flame pierces a long line of enemies.", "ray_shot", "minecraft:magma_cream", damage=9, range=22, pierce=2, vfx="FIRE_SPIRAL"),
+        A("Falling Ember Star", "Call a burning star down on the spot you look at.", "meteor_drop", "minecraft:lava_bucket", damage=14, radius=4.5, range=22, vfx="FLAME_EXPLOSION"),
+        A("Scorched Earth Wake", "Drag the dagger and send a trail of flame along the ground.", "ground_wave", "minecraft:magma_block", damage=7, length=11, width=2, vfx="FLAME_TRAIL"),
+        A("Draconic Blood", "Wounds close over in a burst of dragon vitality.", "heal_self", "minecraft:golden_apple", amount=9, regen_seconds=6, vfx="FIRE_BURST"),
+        A("Dragon's Challenge", "Roar and every hostile nearby turns to face you.", "taunt", "minecraft:dragon_head", radius=9, targets=5, vfx="FLAME_EXPLOSION"),
+    ],
+    passives=[
+        P("Dragonhide: Flame", "You take much less fire damage.", "resist", "minecraft:lava_bucket", damage_kind="fire", pct=0.4),
+        P("Dragonhide: Thunder", "You take much less lightning damage.", "resist", "minecraft:lightning_rod", damage_kind="lightning", pct=0.35),
+        P("Burning Fury", "While you are on fire your blows hit harder.", "dmg_when", "minecraft:blaze_powder", condition="on_fire", bonus=0.3),
+        P("Scorching Scales", "A share of the damage you take is burned back into the attacker.", "thorns", "minecraft:magma_cream", pct=0.25),
+        P("Dragon's Last Breath", "When nearly dead the dragon's spirit shields you.", "last_stand", "minecraft:totem_of_undying", seconds=7),
+        P("Tyrant's Eye", "Your blows may strike critically.", "crit", "minecraft:ender_eye", chance=0.15, mult=1.8),
+        P("Hardened by the Hoard", "In the thick of a fight you take less damage.", "reduce_when", "minecraft:gold_block", condition="in_combat", pct=0.12),
+    ],
+    finishers=[
+        A("Kamish's Wrath: Black Fire Breath", "The dragon breathes through you: a huge black flame pierces everything in a long line.", "ray_shot", "minecraft:dragon_breath", damage=26, range=30, pierce=4, cooldown=1400, vfx="FIRE_SPIRAL"),
+        A("Wyrm's Descent", "Soar and fall as a comet of dragonfire, shattering the ground and everything on it.", "leap_slam", "minecraft:nether_star", damage=28, radius=6, height=1.2, knockback=1.6, cooldown=1300, vfx="FLAME_EXPLOSION"),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------------------------- 13
+LINES.append(Line(
+    id="frost_monarch", name="Monarch of Frost", franchise=F,
+    desc="Command a blizzard that never melts: glacial roads, flash freezes and a mantle of snow that keeps the cold in your favour.",
+    color="#8fd8ff", background="frost", icon="minecraft:blue_ice",
+    book_name="Annals of the Endless Winter", book_lore="Cold is not the absence of heat. It is a decision.",
+    stances=[
+        S("Winter's Embrace", "Frost wraps you in an icy shell: armoured and healing, but slow.", "minecraft:packed_ice", armor=4, regen=0.6, speed_pct=-0.12, vfx="WATER_RING"),
+        S("Blizzard Step", "Ride the wind of the storm: faster and sharper, with thinner armor.", "minecraft:snowball", speed_pct=0.12, damage_pct=0.15, armor=-1, vfx="WIND_TORNADO"),
+    ],
+    stats=[
+        T("Frostbound Plate", "Layers of hardened ice shield your body.", "armor", 1.5, "minecraft:iron_chestplate"),
+        T("Glacier Weight", "You are as hard to move as a glacier.", "knockback_resistance", 0.1, "minecraft:ice"),
+        T("Heart of Winter", "More maximum health.", "max_health", 2, "minecraft:golden_apple"),
+    ],
+    arts=[
+        A("Hoarfrost Nova", "A ring of killing frost bursts out of you.", "ring_burst", "minecraft:snow_block", damage=6, radius=4.5, knockback=0.7, vfx="WATER_RING"),
+        A("Blizzard Breath", "Exhale a cone of snow that slows and blinds everything in it.", "debuff_cone", "minecraft:powder_snow_bucket", effect="slowness", effect2="blindness", seconds=7, seconds2=3, amp=1, vfx="WIND_TORNADO"),
+        A("Ice Spear Volley", "Throw a lance of ice that pierces the line before you.", "ray_shot", "minecraft:blue_ice", damage=8, range=20, pierce=2, vfx="WATER_BURST"),
+        A("Flash Freeze", "The air itself locks: creatures around you are frozen in place.", "stun_ring", "minecraft:packed_ice", radius=5, seconds=2.5, vfx="WATER_RING"),
+        A("Glacier Road", "A road of cracking ice runs ahead of you, hammering what it crosses.", "ground_wave", "minecraft:ice", damage=7, length=12, width=3, knockback=0.6, vfx="STONE_SPIKES"),
+        A("Ice Aegis", "A shell of ice forms around you as an absorption shield.", "shield", "minecraft:glass", absorb_hearts=6, seconds=8, vfx="MIRROR_PANE"),
+        A("Hailstone Drop", "A hail of ice falls on the place you look at.", "meteor_drop", "minecraft:snowball", damage=12, radius=4, range=20, vfx="WATER_BURST"),
+    ],
+    passives=[
+        P("Frostbound Flesh", "You take much less freezing damage.", "resist", "minecraft:powder_snow_bucket", damage_kind="freeze", pct=0.5),
+        P("Snow Mantle", "Under rain or snow the weather soothes you and you take less damage.", "reduce_when", "minecraft:snow_block", condition="raining", pct=0.15),
+        P("Killing Cold", "Enemies near you are constantly slowed by the cold.", "aura", "minecraft:blue_ice", effect="slowness", target="enemies", radius=7),
+        P("Meltwater Mending", "In water your wounds close steadily.", "regen_when", "minecraft:water_bucket", condition="in_water", per_second=1.0),
+        P("Frostbite Touch", "Your blows may slow the foe.", "on_hit_effect", "minecraft:ice", effect="slowness", seconds=5, chance=0.35),
+        P("Rime Thorns", "Part of the damage you take returns to the attacker as frost.", "thorns", "minecraft:prismarine_shard", pct=0.2),
+        P("Winter's Foe", "You deal more damage to burning creatures.", "dmg_vs", "minecraft:fire_charge", category="burning", bonus=0.3),
+    ],
+    finishers=[
+        A("Absolute Zero", "For a heartbeat everything around you stops: a wide freeze of every creature in range.", "stun_ring", "minecraft:nether_star", radius=8, seconds=3, targets=12, cooldown=1500, vfx="WATER_RING"),
+        A("Spear of the Frost Monarch", "A colossal spear of ice speeds along your sight line, piercing everything.", "ray_shot", "minecraft:blue_ice", damage=26, range=30, pierce=4, cooldown=1400, vfx="WATER_BURST"),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------------------------- 14
+LINES.append(Line(
+    id="beast_monarch", name="Monarch of Beasts", franchise=F,
+    desc="Lead the pack as the apex of every wild thing: pounces, rending claws and a howl that lifts the whole party.",
+    color="#c8863a", background="forest", icon="minecraft:leather",
+    book_name="The Alpha's Almanac", book_lore="Every pack is a family. This one has fangs.",
+    stances=[
+        S("Feral Surge", "Drop to all fours: faster and deadlier, with less armor.", "minecraft:bone", speed_pct=0.15, damage_pct=0.2, armor=-2, vfx="WIND_RING"),
+        S("Pack Alpha", "Stand tall at the front of the pack: steady, resilient and healing.", "minecraft:white_banner", armor=3, regen=0.8, knockback_res=0.3, vfx="SPIRIT_AURA"),
+    ],
+    stats=[
+        T("Alpha's Frame", "More maximum health.", "max_health", 3, "minecraft:cooked_beef"),
+        T("Rending Claws", "Heavier paws.", "attack_damage", 1, "minecraft:flint"),
+        T("Predator's Gait", "Fast, loping strides.", "movement_speed", 0.04, "minecraft:leather_boots", op="mult"),
+        T("Sure-Footed", "Hop over low ledges without slowing down.", "step_height", 0.5, "minecraft:rabbit_foot"),
+    ],
+    arts=[
+        A("Claw Pounce", "Spring at the foes and crash down on them.", "leap_slam", "minecraft:rabbit_foot", damage=8, radius=3.2, height=0.9, vfx="WIND_RING"),
+        A("Pack's Call", "Throw back your head and howl: you and your allies gain Speed.", "buff_aura", "minecraft:goat_horn", effect="speed", radius=10, seconds=14, vfx="SPIRIT_AURA"),
+        A("Maul and Devour", "Sink your teeth into a foe and heal from the bite.", "drain_bite", "minecraft:beef", damage=7, heal_pct=0.35, vfx="FIRE_BURST"),
+        A("Rending Maul", "A frenzy of claws and teeth around you.", "whirlwind", "minecraft:bone", damage=3.5, hits=5, radius=3.5, vfx="WIND_RING"),
+        A("Hurling Swipe", "A heavy paw swing that tosses the foe skyward.", "uppercut", "minecraft:leather", damage=7, launch=0.8, vfx="WIND_SLASH"),
+        A("Claw Tear", "Four parallel slashes across a cone in front of you.", "cone_strike", "minecraft:flint", damage=8, range=3.8, half_angle=50, vfx="WIND_SLASH"),
+        A("Alpha's Challenge", "A roar that makes every hostile nearby turn to you.", "taunt", "minecraft:bone_block", radius=8, targets=5, vfx="DEVIL_CIRCLE"),
+    ],
+    passives=[
+        P("Moon Vitality", "At night your wounds heal faster.", "regen_when", "minecraft:clock", condition="night", per_second=0.9),
+        P("Apex Predator", "You deal more damage to hostile monsters.", "dmg_vs", "minecraft:rotten_flesh", category="monster", bonus=0.2),
+        P("Moonlit Might", "At night you are visibly stronger.", "self_effect_when", "minecraft:white_wool", effect="strength", condition="night"),
+        P("Hamstring Strike", "Your blows may slow the foe.", "on_hit_effect", "minecraft:string", effect="slowness", seconds=5, chance=0.3),
+        P("Pack Bond", "Your allies near you run faster.", "aura", "minecraft:bone", effect="speed", target="allies", radius=8),
+        P("Fresh Kill", "Each kill heals you and speeds you up.", "kill_reward", "minecraft:beef", heal=4, effect="speed", seconds=6),
+        P("Shoulder-Shove", "Your blows may shove the foe back.", "knockback_on_hit", "minecraft:piston", strength=0.5, chance=0.35),
+    ],
+    finishers=[
+        A("Primal Frenzy", "A feral storm of claws around you, without pause.", "whirlwind", "minecraft:netherite_axe", damage=6, hits=7, radius=5, cooldown=1300, vfx="WIND_TORNADO"),
+        A("Beast King's Charge", "Stampede through the enemy line, trampling everything.", "dash_strike", "minecraft:iron_horse_armor", distance=11, damage=22, targets=6, cooldown=1400, vfx="FLAME_TRAIL"),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------------------------- 15
+LINES.append(Line(
+    id="plague_monarch", name="Monarch of Plagues", franchise=F,
+    desc="Command swarms, rot and contagion: a creeping line of poison that spreads from foe to foe and feeds on the dying.",
+    color="#98b62a", background="ruin", icon="minecraft:rotten_flesh",
+    book_name="Almanac of Blight and Buzzing", book_lore="The first cough is the cheapest. The rest are compounding interest.",
+    stances=[
+        S("Cloak of Flies", "A cloud of insects shrouds you: tougher and healing, but you move slowly.", "minecraft:cobweb", armor=3, speed_pct=-0.06, regen=0.6, vfx="POISON_BREATH"),
+        S("Pestilent Crescendo", "Let the contagion run wild: far more damage, no guard.", "minecraft:fermented_spider_eye", damage_pct=0.3, armor=-3, vfx="POISON_BREATH"),
+    ],
+    stats=[
+        T("Carrier's Constitution", "The plague spares you: more maximum health.", "max_health", 2, "minecraft:golden_apple"),
+        T("Swarm Reflex", "Insects scout ahead: slightly faster.", "movement_speed", 0.03, "minecraft:feather", op="mult"),
+        T("Chitin Skin", "A hardened second skin.", "armor", 1, "minecraft:turtle_helmet"),
+    ],
+    arts=[
+        A("Pestilent Breath", "Exhale a cone of sickly fog that poisons and starves everything it touches.", "debuff_cone", "minecraft:fermented_spider_eye", effect="poison", effect2="hunger", seconds=8, seconds2=8, amp=1, vfx="POISON_BREATH"),
+        A("Contagion Leap", "A diseased lash that jumps from foe to foe.", "chain_hit", "minecraft:spider_eye", damage=5, jumps=4, jump_range=6, falloff=0.1, vfx="POISON_BREATH"),
+        A("Cloud of Flies", "A swarm of biting flies blinds the creatures around you.", "smoke", "minecraft:black_dye", radius=5, seconds=6, vfx="POISON_BREATH"),
+        A("Swarm Eruption", "The swarm bursts out of you in a ring and knocks everything back.", "ring_burst", "minecraft:honeycomb", damage=6, radius=4.5, knockback=0.9, vfx="POISON_BREATH"),
+        A("Mark of Contagion", "Infect one creature; it takes extra damage while the plague works.", "mark", "minecraft:poisonous_potato", bonus=0.3, vfx="MAGIC_CIRCLE"),
+        A("Swarm Recycles Life", "Insects pull vitality out of the air and give it to you and your allies.", "heal_pulse", "minecraft:honey_bottle", amount=6, radius=7, vfx="SPIRIT_AURA"),
+        A("Maggot's Feast", "Bite a foe and feed on the rot.", "drain_bite", "minecraft:rotten_flesh", damage=6, heal_pct=0.3, vfx="POISON_BREATH"),
+    ],
+    passives=[
+        P("Blight Touch", "Your blows may wither the foe.", "on_hit_effect", "minecraft:wither_rose", effect="wither", seconds=4, chance=0.25),
+        P("Miasma Field", "Enemies near you are constantly poisoned.", "aura", "minecraft:spider_eye", effect="poison", target="enemies", radius=6),
+        P("Immune to Rot", "You take much less wither damage.", "resist", "minecraft:rotten_flesh", damage_kind="wither", pct=0.5),
+        P("Self-Mending Chitin", "Your wounds close over time, even out of combat.", "mending", "minecraft:honeycomb", seconds=14),
+        P("Feast on the Fallen", "Kills restore your health.", "kill_reward", "minecraft:bone_meal", heal=5, effect="none", seconds=0),
+        P("Rot in the Wound", "A share of the damage you take returns to the attacker.", "thorns", "minecraft:pointed_dripstone", pct=0.2),
+        P("Grave Vitality", "Underground, where the plague breeds, your wounds close fast.", "regen_when", "minecraft:deepslate", condition="underground", per_second=0.9),
+    ],
+    finishers=[
+        A("The Great Swarm", "Everything within range is stripped by a rolling cloud of insects.", "ring_burst", "minecraft:beehive", damage=20, radius=7, targets=8, knockback=0.8, cooldown=1400, vfx="POISON_BREATH"),
+        A("Blight of Ages", "A cone of terminal rot: a very long withering poison on everything in front of you.", "debuff_cone", "minecraft:wither_skeleton_skull", effect="wither", effect2="poison", seconds=14, seconds2=14, amp=1, range=8, cooldown=1300, vfx="POISON_BREATH"),
+    ],
+))
