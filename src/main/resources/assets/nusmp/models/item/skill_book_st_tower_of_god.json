@@ -1,0 +1,12 @@
+{
+  "loader": "neoforge:separate_transforms",
+  "gui_light": "front",
+  "base": {
+    "parent": "nusmp:item/skill_book_3d_tower_of_god"
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "nusmp:item/skill_book_2d"
+    }
+  }
+}

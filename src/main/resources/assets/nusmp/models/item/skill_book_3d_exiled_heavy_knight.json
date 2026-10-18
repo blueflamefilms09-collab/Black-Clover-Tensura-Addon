@@ -1,0 +1,6 @@
+{
+  "parent": "nusmp:item/skill_book_3d",
+  "textures": {
+    "cover": "nusmp:item/skill_book_3d/exiled_heavy_knight"
+  }
+}

@@ -90,7 +90,7 @@ class ItemsAssetsTest {
 
     @Test
     void theSkillBookModelNamesBothLayersInOrder() throws Exception {
-        JsonObject model = json(ASSETS + "models/item/skill_book.json");
+        JsonObject model = json(ASSETS + "models/item/skill_book_2d.json");              // 1.82.0: the sprite model moved here (the 3D book took skill_book.json; the sprite stays the inventory icon)
         assertEquals("minecraft:item/generated", model.get("parent").getAsString());
         JsonObject tex = model.getAsJsonObject("textures");
         assertEquals("nusmp:item/skill_book", tex.get("layer0").getAsString());

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "nusmp:item/skill_book",
+    "layer1": "nusmp:item/skill_book_cover"
+  }
+}

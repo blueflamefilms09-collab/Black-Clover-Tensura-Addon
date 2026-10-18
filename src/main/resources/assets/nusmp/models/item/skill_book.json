@@ -1,7 +1,80 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "nusmp:item/skill_book",
-    "layer1": "nusmp:item/skill_book_cover"
-  }
+  "loader": "neoforge:separate_transforms",
+  "gui_light": "front",
+  "base": {
+    "parent": "nusmp:item/skill_book_3d"
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "nusmp:item/skill_book_2d"
+    }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "nusmp:franchise": 0.025
+      },
+      "model": "nusmp:item/skill_book_st_exiled_heavy_knight"
+    },
+    {
+      "predicate": {
+        "nusmp:franchise": 0.075
+      },
+      "model": "nusmp:item/skill_book_st_tensura"
+    },
+    {
+      "predicate": {
+        "nusmp:franchise": 0.125
+      },
+      "model": "nusmp:item/skill_book_st_black_clover"
+    },
+    {
+      "predicate": {
+        "nusmp:franchise": 0.175
+      },
+      "model": "nusmp:item/skill_book_st_magi"
+    },
+    {
+      "predicate": {
+        "nusmp:franchise": 0.225
+      },
+      "model": "nusmp:item/skill_book_st_solo_leveling"
+    },
+    {
+      "predicate": {
+        "nusmp:franchise": 0.275
+      },
+      "model": "nusmp:item/skill_book_st_danmachi"
+    },
+    {
+      "predicate": {
+        "nusmp:franchise": 0.325
+      },
+      "model": "nusmp:item/skill_book_st_fairy_tail"
+    },
+    {
+      "predicate": {
+        "nusmp:franchise": 0.375
+      },
+      "model": "nusmp:item/skill_book_st_tbate"
+    },
+    {
+      "predicate": {
+        "nusmp:franchise": 0.425
+      },
+      "model": "nusmp:item/skill_book_st_tower_of_god"
+    },
+    {
+      "predicate": {
+        "nusmp:franchise": 0.475
+      },
+      "model": "nusmp:item/skill_book_st_god_of_high_school"
+    },
+    {
+      "predicate": {
+        "nusmp:franchise": 0.525
+      },
+      "model": "nusmp:item/skill_book_st_omniscient_readers_viewpoint"
+    }
+  ]
 }
