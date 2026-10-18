@@ -50,6 +50,7 @@ public final class EliteSkillEvents {
         game.addListener((EntityTeleportEvent.EnderPearl e) -> onTeleport(e));
         game.addListener((EntityTeleportEvent.EnderEntity e) -> onTeleport(e));
         game.addListener((EntityTeleportEvent.ChorusFruit e) -> onTeleport(e));
+        game.addListener(EliteSkillsCommand::register);
         game.addListener(EliteSkillEvents::onLogin);
         game.addListener(EliteSkillEvents::onLogout);
         game.addListener(EliteSkillEvents::onRespawn);
