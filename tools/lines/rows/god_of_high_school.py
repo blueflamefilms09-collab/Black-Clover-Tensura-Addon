@@ -669,3 +669,363 @@ LINES.append(Line(
         A("Wrath of the Red Banner", "Call a field of fire down on the place you look at.", "meteor_drop", "minecraft:fire_charge", vfx="FLAME_EXPLOSION", damage=30, radius=5.5, cost=0.09, cooldown=1900),
     ],
 ))
+
+# ---------------------------------------------------------------------------------------------------------------- 17
+LINES.append(Line(
+    id="goh_athena_charyeok", name="Athena's Charyeok", franchise=F,
+    desc="Borrow the goddess of wisdom's aegis: a shield for yourself and your allies, a mark on the weak point and a spear thrown with perfect aim. A fighter who plans two moves ahead.",
+    color="#B0BEC5", background="holy", icon="minecraft:shield",
+    book_name="Owl-Scribe's Strategy Codex", book_lore="Every plan has a second plan underlined twice.",
+    stances=[
+        S("Aegis Bearer Stance", "Hold the aegis forward: a lot of armor and stability, at a slower pace.", "minecraft:shield", armor=4, knockback_res=0.4, speed_pct=-0.08, vfx="MIRROR_PANE"),
+        S("Strategist's Stance", "Think and strike: sharper, with better crits, and a little lighter on the feet.", "minecraft:writable_book", damage_pct=0.1, crit_chance=0.08, speed_pct=0.03, armor=-1, vfx="MAGIC_CIRCLE"),
+    ],
+    stats=[
+        T("Owl's Composure", "A calm mind keeps the heart going.", "max_health", 2, "minecraft:ender_eye"),
+        T("Bronze Aegis", "A bronze-bright skin.", "armor", 1, "minecraft:golden_chestplate"),
+        T("Wise Hand", "Spear thrown with a clear head.", "attack_damage", 1, "minecraft:trident"),
+        T("Vision of the Owl", "Your reach is long.", "entity_interaction_range", 0.4, "minecraft:spyglass"),
+    ],
+    arts=[
+        A("Aegis Wall", "Raise a bronze-bright shell that absorbs damage.", "shield", "minecraft:shield", vfx="MIRROR_PANE", absorb_hearts=5, resist_amp=1),
+        A("Weak Point Sight", "See where the foe will fail: it takes extra damage while marked.", "mark", "minecraft:spyglass", vfx="MAGIC_CIRCLE", bonus=0.3, range=26),
+        A("Spear of Wisdom", "Throw a spear of white light with perfect aim: it pierces the foes in a line.", "ray_shot", "minecraft:trident", vfx="LIGHTNING_SPEAR", damage=8, range=20, pierce=3),
+        A("Phalanx Formation", "You and the allies near you stand firm: resistance for a while.", "buff_aura", "minecraft:iron_bars", vfx="MIRROR_PANE", effect="resistance", radius=9, seconds=12),
+        A("Mirror of Reason", "For a few seconds a share of every blow is thrown back at the attacker.", "ward_reflect", "minecraft:glass_pane", vfx="MIRROR_PANE", reflect_pct=0.4),
+        A("Owl's Blessing", "A feather of light falls: you and your allies are healed.", "heal_pulse", "minecraft:feather", vfx="MAGIC_CIRCLE", radius=7, amount=6),
+        A("Gorgon Gaze", "Your stare freezes the creatures near you in place.", "stun_ring", "minecraft:ender_eye", vfx="MAGIC_CIRCLE", radius=4, seconds=2),
+    ],
+    passives=[
+        P("Strategist's Calm", "While fighting you take less damage.", "reduce_when", "minecraft:golden_chestplate", condition="in_combat", pct=0.1),
+        P("Learned from Every Battle", "Every kill gives more experience.", "xp_bonus", "minecraft:experience_bottle", pct=0.15),
+        P("Shot-Deflecting Shield", "Arrows and missiles bounce off your aegis.", "resist", "minecraft:iron_ingot", damage_kind="projectile", pct=0.3),
+        P("Bronze Barbs", "Part of every blow against you is returned.", "thorns", "minecraft:iron_nugget", pct=0.15),
+        P("Anticipation", "You may step out of the way of a blow.", "dodge", "minecraft:feather", chance=0.1),
+        P("Monster Study", "You deal more damage to monsters.", "dmg_vs", "minecraft:writable_book", category="monster", bonus=0.15),
+        P("Hold the Standard", "When nearly dead, a brief shield holds you up.", "last_stand", "minecraft:totem_of_undying", threshold=0.3, seconds=5),
+    ],
+    finishers=[
+        A("Aegis of the City", "A giant aegis for a long moment: huge absorption and resistance.", "shield", "minecraft:golden_chestplate", vfx="MIRROR_PANE", absorb_hearts=10, seconds=10, resist_amp=2, cost=0.05, cooldown=1600),
+        A("Owl's Judgement", "A glowing spear thrown through the whole line of foes.", "ray_shot", "minecraft:end_rod", vfx="LIGHTNING_SPEAR", damage=28, range=30, pierce=5, cost=0.06, cooldown=1700),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------- 18
+LINES.append(Line(
+    id="goh_hermes_charyeok", name="Hermes's Charyeok", franchise=F,
+    desc="Borrow the messenger god's winged sandals: bursts of impossible speed, darts in a flurry and a blur of afterimages. You win by never being where the blow lands.",
+    color="#80DEEA", background="sand", icon="minecraft:feather",
+    book_name="Winged Courier's Waybill", book_lore="Delivered before it was sent.",
+    stances=[
+        S("Winged Sandals Stance", "Run lighter than air: huge speed, fragile guard.", "minecraft:feather", speed_pct=0.14, armor=-2, damage_pct=-0.03, vfx="WIND_RING"),
+        S("Herald's Stand Stance", "Plant your feet: steadier, with armor and regeneration.", "minecraft:leather_chestplate", armor=2, regen=0.4, speed_pct=0.02, vfx="WIND_RING"),
+    ],
+    stats=[
+        T("Messenger's Pace", "The fastest legs in the arena.", "movement_speed", 0.06, "minecraft:leather_boots", op="mult"),
+        T("Quick Strike", "Your blows come in a blink.", "attack_speed", 0.25, "minecraft:feather"),
+        T("Swift Heart", "A quick pulse, a long life.", "max_health", 2, "minecraft:golden_carrot"),
+        T("Sky Leap", "Your spring launches you over fences.", "jump_strength", 0.06, "minecraft:rabbit_foot", op="mult"),
+    ],
+    arts=[
+        A("Blur Dash", "Vanish into a streak and cut through the foes in a line.", "dash_strike", "minecraft:iron_boots", vfx="WIND_SLASH", damage=7, distance=9),
+        A("Winged Skip", "Flick forward in an instant to a spot a few blocks ahead.", "blink", "minecraft:feather", vfx="WIND_RING", distance=10),
+        A("Afterimage Barrage", "Your afterimages strike the foe in front of you from every side.", "barrage", "minecraft:iron_nugget", vfx="WIND_SLASH", damage=3, shots=7),
+        A("Hermes' Boon", "The god's speed fills you: a long run of speed and jump height.", "buff_self", "minecraft:sugar", vfx="WIND_RING", effect="speed", amp=1, effect2="jump_boost", seconds=14),
+        A("Trickster's Smoke", "Throw a puff of smoke: the creatures near you lose sight of you.", "smoke", "minecraft:gunpowder", vfx="ASH_FORMATION", radius=5, seconds=6),
+        A("Relay Strike", "A strike that bounces from one foe to the next like a baton.", "chain_hit", "minecraft:iron_sword", vfx="WIND_SLASH", damage=5, jumps=4),
+        A("Heel Flick", "Flick up with the heel and send the foe in front of you skyward.", "uppercut", "minecraft:leather_boots", vfx="WIND_SLASH", damage=7),
+    ],
+    passives=[
+        P("Sprint Fury", "You deal more damage while sprinting.", "sprint_bonus", "minecraft:sugar", bonus=0.25),
+        P("Blur Evade", "You may avoid a blow completely.", "dodge", "minecraft:feather", chance=0.15),
+        P("Speed Builds", "The longer the fight goes, the more your blows add up.", "momentum", "minecraft:redstone", per_stack=0.04, max_stacks=6),
+        P("Courier's Rush", "While sprinting you move even faster.", "self_effect_when", "minecraft:sugar", effect="speed", condition="sprinting"),
+        P("Sandal Cushion", "You take much less fall damage.", "fall_guard", "minecraft:feather", pct=0.5),
+        P("Light Meals", "You tire slowly.", "hunger_saver", "minecraft:bread", pct=0.2),
+        P("Wingtip Reflex", "Your hits land critically more often.", "crit", "minecraft:spectral_arrow", chance=0.12, mult=1.7),
+    ],
+    finishers=[
+        A("Speed of the Messenger", "A thousand afterimages strike at once: a giant volley at the foe in front of you.", "barrage", "minecraft:diamond_boots", vfx="WIND_SLASH", damage=5, shots=12, range=14, cost=0.08, cooldown=1800),
+        A("Lightning Courier", "Streak through the whole line of foes ahead in a single blink.", "dash_strike", "minecraft:elytra", vfx="WIND_SLASH", damage=24, distance=13, targets=9, cost=0.06, cooldown=1600),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------- 19
+LINES.append(Line(
+    id="goh_hephaestus_charyeok", name="Hephaestus's Charyeok", franchise=F,
+    desc="Borrow the smith god's forge: weapons hammered out of nothing, an anvil dropped from above and hot metal chains. You fight from a burning workshop.",
+    color="#FF6F00", background="magma", icon="minecraft:anvil",
+    book_name="The Divine Smith's Apprentice Book", book_lore="Burned at the edges, nine times corrected in the margins.",
+    stances=[
+        S("Tempered Plate Stance", "Wear the forge: heavy armor, slow movement.", "minecraft:iron_chestplate", armor=4, knockback_res=0.3, speed_pct=-0.08, vfx="FLAME_EXPLOSION"),
+        S("Hammer in Hand Stance", "Swing without thinking: much stronger, a thin guard.", "minecraft:mace", damage_pct=0.15, armor=-2, vfx="FLAME_EXPLOSION"),
+    ],
+    stats=[
+        T("Forge Heat", "A hot heart.", "max_health", 2, "minecraft:magma_cream"),
+        T("Hammer Arm", "Arms that swing an anvil.", "attack_damage", 1, "minecraft:mace"),
+        T("Slag Coat", "Metal scale on the skin.", "armor", 1, "minecraft:iron_ingot"),
+        T("Heavy Stance", "You cannot be shoved off the anvil.", "knockback_resistance", 0.1, "minecraft:anvil"),
+    ],
+    arts=[
+        A("Divine Arsenal", "Hammer out a rack of weapons and throw them at the foe you look at.", "barrage", "minecraft:iron_sword", vfx="WEAPON_CONSTRUCTS", damage=3, shots=7),
+        A("Molten Spray", "Spray molten metal across the cone in front of you.", "cone_strike", "minecraft:lava_bucket", vfx="FLAME_EXPLOSION", damage=7, half_angle=55),
+        A("Forge Barrier", "Wrap yourself in a plate of cooling steel that absorbs damage.", "shield", "minecraft:iron_chestplate", vfx="WEAPON_CONSTRUCTS", absorb_hearts=5),
+        A("Anvil Drop", "Drop an anvil on the spot you look at after a moment.", "meteor_drop", "minecraft:anvil", vfx="WEAPON_CONSTRUCTS", damage=11, radius=3.5),
+        A("Tempering", "Temper your body: you gain resistance and strength for a while.", "buff_self", "minecraft:blast_furnace", vfx="FLAME_EXPLOSION", effect="resistance", effect2="strength", seconds=12),
+        A("Hot Chains", "Glowing chains lock the creatures around you in place.", "stun_ring", "minecraft:chain", vfx="SEAL_CHAINS", radius=4, seconds=2),
+        A("Sledge Leap", "Leap and drive a sledge into the foes below.", "leap_slam", "minecraft:mace", vfx="FLAME_EXPLOSION", damage=8, height=0.9),
+    ],
+    passives=[
+        P("Forge-Proof", "You take much less fire damage.", "resist", "minecraft:fire_charge", damage_kind="fire", pct=0.4),
+        P("Scalding Plate", "Part of every blow against you is returned in a flash of heat.", "thorns", "minecraft:iron_bars", pct=0.18),
+        P("Burning Resolve", "While you are on fire, you take less damage.", "reduce_when", "minecraft:blaze_powder", condition="on_fire", pct=0.2),
+        P("Smith's Hand", "While you hold a sword, you deal more damage.", "dmg_when", "minecraft:iron_sword", condition="holding_sword", bonus=0.15),
+        P("Anvil Ring", "Your blows may shove the foe back.", "knockback_on_hit", "minecraft:piston", strength=0.5, chance=0.3),
+        P("Quenched Edge", "Your blows land critically more often.", "crit", "minecraft:flint", chance=0.1, mult=1.7),
+        P("Cooling Down", "When nearly dead, a brief shield holds you up.", "last_stand", "minecraft:totem_of_undying", threshold=0.3, seconds=5),
+    ],
+    finishers=[
+        A("Forge of the Gods", "Hammer out a whole armory and loose it at once.", "barrage", "minecraft:netherite_sword", vfx="WEAPON_CONSTRUCTS", damage=5, shots=12, range=18, cost=0.08, cooldown=1800),
+        A("Divine Anvil", "Drop a mountain-sized anvil on the spot you look at.", "meteor_drop", "minecraft:smithing_table", vfx="WEAPON_CONSTRUCTS", damage=30, radius=5.5, cost=0.09, cooldown=1900),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------- 20
+LINES.append(Line(
+    id="goh_artemis_charyeok", name="Artemis's Charyeok", franchise=F,
+    desc="Borrow the huntress's moon-bright bow: silver arrows, rain of arrows, a mark on the quarry and a silent step through the trees. A sniper whose prey never sees the shot.",
+    color="#C5E1A5", background="forest", icon="minecraft:bow",
+    book_name="Huntress's Quarry Book", book_lore="Every page has a single name and a single arrow.",
+    stances=[
+        S("Draw and Hold Stance", "Hold the draw: a sharper eye with crits, but the body stays still.", "minecraft:bow", crit_chance=0.1, damage_pct=0.08, speed_pct=-0.06, vfx="ELF_CIRCLE"),
+        S("Silent Runner Stance", "Run through the trees: fast and light, with a thin guard.", "minecraft:leather_boots", speed_pct=0.1, armor=-1, damage_pct=-0.03, vfx="ELF_CIRCLE"),
+    ],
+    stats=[
+        T("Huntress's Eye", "Your aim reaches a long way.", "entity_interaction_range", 0.5, "minecraft:spyglass"),
+        T("Steady Draw", "A long, quiet bow arm.", "attack_damage", 1, "minecraft:bow"),
+        T("Forest Stride", "You run as the forest allows.", "movement_speed", 0.05, "minecraft:leather_boots", op="mult"),
+        T("Quick Nock", "Another arrow on the string at once.", "attack_speed", 0.2, "minecraft:arrow"),
+    ],
+    arts=[
+        A("Silver Arrow", "Loose a silver arrow that pierces through the first foes.", "ray_shot", "minecraft:spectral_arrow", vfx="ELF_CIRCLE", damage=8, range=24, pierce=2),
+        A("Arrow Rain", "Loose a rapid volley at the foe you look at.", "barrage", "minecraft:arrow", vfx="ELF_CIRCLE", damage=3, shots=7, range=16),
+        A("Moon Mark", "Mark the quarry in silver: it takes extra damage while marked.", "mark", "minecraft:glow_item_frame", vfx="ELF_CIRCLE", bonus=0.3, range=28),
+        A("Forest Step", "Slip behind a trunk and appear a few blocks away.", "blink", "minecraft:oak_leaves", vfx="ELF_CIRCLE", distance=9),
+        A("Ricochet Shot", "An arrow that hits the first foe and bounces on to the next.", "chain_hit", "minecraft:arrow", vfx="ELF_CIRCLE", damage=5, jumps=4),
+        A("Cloaking Mist", "A pale mist hides you from the creatures near you.", "smoke", "minecraft:white_dye", vfx="ASH_FORMATION", radius=5, seconds=6),
+        A("Finishing Arrow", "An arrow at a weakened quarry that bites far harder at low health.", "execute", "minecraft:tipped_arrow", vfx="ELF_CIRCLE", damage=9, bonus=0.9),
+    ],
+    passives=[
+        P("Keen Eye", "Your hits land critically more often.", "crit", "minecraft:spectral_arrow", chance=0.14, mult=1.8),
+        P("Moonlight Hunter", "At night you deal more damage.", "dmg_when", "minecraft:clock", condition="night", bonus=0.2),
+        P("Vanish into the Leaves", "You may avoid a blow completely.", "dodge", "minecraft:feather", chance=0.12),
+        P("Hunter's Dash", "You deal more damage while sprinting.", "sprint_bonus", "minecraft:sugar", bonus=0.2),
+        P("Quarry's End", "You deal much more damage to nearly dead foes.", "execute_threshold", "minecraft:bow", threshold=0.25, bonus=0.7),
+        P("Owl Eyes", "At night you see clearly.", "self_effect_when", "minecraft:golden_carrot", effect="night_vision", condition="night"),
+        P("Trophy Skinning", "Whatever you fell may drop an extra stack of loot.", "drop_bonus", "minecraft:leather", chance=0.1),
+    ],
+    finishers=[
+        A("Moonpiercer", "Loose a giant silver arrow that goes through the whole line of foes ahead.", "ray_shot", "minecraft:end_rod", vfx="ELF_CIRCLE", damage=30, range=32, pierce=5, cost=0.06, cooldown=1700),
+        A("Hunt of a Thousand Arrows", "A rain of arrows from the sky onto the foe in front of you.", "barrage", "minecraft:tipped_arrow", vfx="ELF_CIRCLE", damage=5, shots=12, range=18, cost=0.08, cooldown=1800),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------- 21
+LINES.append(Line(
+    id="goh_apollo_charyeok", name="Apollo's Charyeok", franchise=F,
+    desc="Borrow the sun god's gifts: healing light, a golden beam and a glare that blinds. Gentle with friends, a solar flare to foes.",
+    color="#FFCA28", background="holy", icon="minecraft:sunflower",
+    book_name="Hymnal of the Sun Chariot", book_lore="Best read at noon. At night it quietly glows.",
+    stances=[
+        S("Noon Radiance Stance", "Stand in full light: sturdy, recovering, and slightly softer in attack.", "minecraft:sunflower", armor=2, regen=0.6, damage_pct=-0.04, vfx="SPIRIT_AURA"),
+        S("Solar Flare Stance", "Burn bright: stronger and faster, with a thin guard.", "minecraft:blaze_powder", damage_pct=0.14, speed_pct=0.04, armor=-2, vfx="FIRE_SPIRAL"),
+    ],
+    stats=[
+        T("Sunlit Heart", "Warm light keeps you healthy.", "max_health", 2, "minecraft:golden_apple"),
+        T("Golden Strike", "A golden shine behind every blow.", "attack_damage", 1, "minecraft:gold_ingot"),
+        T("Daybreak Step", "You run towards the sun.", "movement_speed", 0.04, "minecraft:leather_boots", op="mult"),
+        T("Muse's Fortune", "Songs go in your favor.", "luck", 1, "minecraft:note_block"),
+    ],
+    arts=[
+        A("Healing Hymn", "A bright hymn that heals you and the allies around you.", "heal_pulse", "minecraft:note_block", vfx="SPIRIT_AURA", radius=7, amount=6),
+        A("Chariot's Blessing", "A golden rush for you and your allies: haste for a while.", "buff_aura", "minecraft:gold_ingot", vfx="FIRE_SPIRAL", effect="haste", radius=9, seconds=12),
+        A("Sunbeam", "A narrow beam of sunlight pierces the first foes ahead.", "ray_shot", "minecraft:end_rod", vfx="LIGHTNING_SPEAR", damage=8, range=20, pierce=2),
+        A("Solar Glare", "A blinding glare in a cone: the foes are blinded and lit up.", "debuff_cone", "minecraft:glowstone", vfx="FIRE_SPIRAL", effect="blindness", effect2="glowing", seconds=5, seconds2=8),
+        A("Dawn Mending", "The first light of dawn: heal and regenerate.", "heal_self", "minecraft:honey_bottle", vfx="SPIRIT_AURA", amount=8),
+        A("Flare Ring", "A ring of flame-bright light bursts out of you.", "ring_burst", "minecraft:fire_charge", vfx="FIRE_BURST", damage=6, radius=4),
+        A("Sun Chariot's Fall", "Call down a burst of sun on the spot you look at.", "meteor_drop", "minecraft:magma_block", vfx="FLAME_EXPLOSION", damage=12, radius=3.5),
+    ],
+    passives=[
+        P("Sunrise Salve", "In the day your wounds close on their own.", "regen_when", "minecraft:glow_berries", condition="day", per_second=0.6),
+        P("Midday Might", "In the day your blows are stronger.", "dmg_when", "minecraft:gold_ingot", condition="day", bonus=0.2),
+        P("Chorus of Light", "Allies near you slowly regenerate.", "aura", "minecraft:note_block", effect="regeneration", target="allies", radius=7),
+        P("Sunlit Vigor", "In the day you feel stronger.", "self_effect_when", "minecraft:sunflower", effect="strength", condition="day"),
+        P("Bright Salve", "Your wounds close over time.", "mending", "minecraft:honey_bottle", seconds=16, amount=1),
+        P("Smite the Dead", "The undead take much more damage from you.", "dmg_vs", "minecraft:skeleton_skull", category="undead", bonus=0.2),
+        P("Sun-Tempered", "You take much less fire damage.", "resist", "minecraft:fire_charge", damage_kind="fire", pct=0.3),
+    ],
+    finishers=[
+        A("Dawn of Mercy", "A great wave of golden light heals you and every ally around you.", "heal_pulse", "minecraft:beacon", vfx="SPIRIT_AURA", radius=12, amount=18, cost=0.08, cooldown=1700),
+        A("Solar Cannon", "A massive beam of sun that burns a lane through the foes ahead.", "ray_shot", "minecraft:glowstone", vfx="FIRE_SPIRAL", damage=28, range=30, pierce=4, cost=0.06, cooldown=1600),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------- 22
+LINES.append(Line(
+    id="goh_charyeok_vessel", name="Charyeok Vessel", franchise=F,
+    desc="A body that can hold a borrowed power. You draw a spirit's strength into yourself and spend it as bursts, beams, blinks and borrowed armor. Flexible, raw and unfinished.",
+    color="#7C4DFF", background="dream", icon="minecraft:echo_shard",
+    book_name="Contract of the Borrowed Hour", book_lore="Terms: you may keep it until it wants to leave.",
+    stances=[
+        S("Open Vessel Stance", "Leave the door open: stronger blows and crits, thin guard.", "minecraft:echo_shard", damage_pct=0.14, crit_chance=0.06, armor=-2, vfx="SPIRIT_AURA"),
+        S("Closed Vessel Stance", "Close the door: sturdier and recovering, at lower offense.", "minecraft:amethyst_shard", armor=3, regen=0.5, damage_pct=-0.05, vfx="SPIRIT_AURA"),
+    ],
+    stats=[
+        T("Receptive Body", "A body that holds a borrowed power.", "max_health", 2, "minecraft:echo_shard"),
+        T("Borrowed Strength", "Strength that is not yours, but works.", "attack_damage", 1, "minecraft:amethyst_shard"),
+        T("Spirit Step", "Light, as if carried.", "movement_speed", 0.04, "minecraft:feather", op="mult"),
+        T("Contract Luck", "The terms go your way.", "luck", 1, "minecraft:emerald"),
+    ],
+    arts=[
+        A("Borrow Power", "Draw a spirit's strength into your body: strength and resistance for a while.", "buff_self", "minecraft:echo_shard", vfx="SPIRIT_AURA", effect="strength", effect2="resistance", seconds=14),
+        A("Echo Burst", "Release the borrowed power in a ring around you.", "ring_burst", "minecraft:amethyst_shard", vfx="SPIRIT_AURA", damage=5, radius=4),
+        A("Spirit Step", "Slip sideways into the spirit side and reappear ahead.", "blink", "minecraft:ender_pearl", vfx="SPATIAL_RIFT", distance=9),
+        A("Borrowed Beam", "Fire the borrowed power as a beam through the first foes.", "ray_shot", "minecraft:end_rod", vfx="LIGHTNING_SPEAR", damage=7, range=18, pierce=2),
+        A("Return the Loan", "Pay back part of the power by healing: heal and regenerate.", "heal_self", "minecraft:glow_berries", vfx="SPIRIT_AURA", amount=7),
+        A("Borrowed Aegis", "Wrap yourself in the spirit's armor: it absorbs damage.", "shield", "minecraft:amethyst_block", vfx="SPIRIT_AURA", absorb_hearts=4),
+        A("Possession Chain", "A strike that jumps from foe to foe like a spirit.", "chain_hit", "minecraft:soul_torch", vfx="LIGHTNING_FIEND", damage=5, jumps=3),
+    ],
+    passives=[
+        P("Spirit Sense", "Every kill gives more experience.", "xp_bonus", "minecraft:experience_bottle", pct=0.15),
+        P("Resonant Presence", "Allies near you feel stronger.", "aura", "minecraft:echo_shard", effect="strength", target="allies", radius=6),
+        P("Borrowed Time", "When nearly dead, a brief shield holds you up.", "last_stand", "minecraft:totem_of_undying", threshold=0.3, seconds=5),
+        P("Spirit Strike", "Your blows land critically more often.", "crit", "minecraft:spectral_arrow", chance=0.12, mult=1.7),
+        P("Settling of the Spirit", "Your wounds close over time.", "mending", "minecraft:honey_bottle", seconds=16, amount=1),
+        P("Spirit Bones", "In the dark of night you move faster.", "self_effect_when", "minecraft:soul_torch", effect="speed", condition="night"),
+        P("Hex Ward", "You take less magic damage.", "resist", "minecraft:amethyst_shard", damage_kind="magic", pct=0.25),
+    ],
+    finishers=[
+        A("Full Possession", "Let the power take you completely: an enormous ring of force around you.", "ring_burst", "minecraft:nether_star", vfx="SPIRIT_AURA", damage=24, radius=7, targets=9, knockback=1.8, cost=0.06, cooldown=1800),
+        A("Contract Collapse", "Burn the contract: a pillar of spirit-force on the spot you look at.", "meteor_drop", "minecraft:end_crystal", vfx="SPATIAL_RIFT", damage=28, radius=5, cost=0.09, cooldown=1900),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------- 23
+LINES.append(Line(
+    id="goh_heracles_labors", name="Heracles's Labors", franchise=F,
+    desc="Borrow the hero of the twelve labors: a lion-skin hide, a hydra's regrowth, a stag's speed and a strength that has beaten monsters. You are built to fight things bigger than you.",
+    color="#D84315", background="ruin", icon="minecraft:leather_chestplate",
+    book_name="The Twelve Labors, Abridged", book_lore="Eleven are done. The twelfth is sitting in front of you.",
+    stances=[
+        S("Lion-Skin Stance", "Wear the lion's hide: huge armor and stability, slow to act.", "minecraft:leather_chestplate", armor=4, knockback_res=0.4, speed_pct=-0.1, vfx="EARTH_SPIKES"),
+        S("Labor Stance", "Take on the labor: stronger, tireless, and a bit too bold.", "minecraft:iron_axe", damage_pct=0.16, regen=0.2, armor=-2, vfx="EARTH_SPIKES"),
+    ],
+    stats=[
+        T("Demigod's Vitality", "A long-lived body.", "max_health", 2, "minecraft:enchanted_golden_apple"),
+        T("Lion-Hide Skin", "A hide no blade has found.", "armor", 1, "minecraft:leather"),
+        T("Club Arm", "A club feels like a feather.", "attack_damage", 1, "minecraft:iron_axe"),
+        T("Strong Legs", "Legs for chasing stags.", "movement_speed", 0.04, "minecraft:leather_boots", op="mult"),
+    ],
+    arts=[
+        A("Lion-Hide Guard", "Pull the lion's hide around you as a thick shield of absorption.", "shield", "minecraft:leather_chestplate", vfx="EARTH_SPIKES", absorb_hearts=5, resist_amp=1),
+        A("Hide-Breaker", "A blow reserved for creatures already weakened: far stronger at low health.", "execute", "minecraft:iron_axe", vfx="EARTH_SPIKES", damage=9, bonus=0.9),
+        A("Hydra Heads", "A strike that leaps from foe to foe like a hydra's many heads.", "chain_hit", "minecraft:slime_ball", vfx="POISON_BREATH", damage=5, jumps=4),
+        A("Stag Catch", "Catch the creatures around you with a lasso and drag them to you.", "pull", "minecraft:lead", vfx="THREAD_LINE", radius=8, strength=1.0, damage=3),
+        A("Stymphalian Shot", "Loose an iron-tipped arrow that pierces a line of foes.", "ray_shot", "minecraft:arrow", vfx="WIND_SLASH", damage=7, range=20, pierce=3),
+        A("Hydra Regrowth", "Your wounds regrow like a hydra's heads: heal and regenerate.", "heal_self", "minecraft:golden_apple", vfx="POISON_BREATH", amount=8),
+        A("Labor's Leap", "Leap and crash down with the full weight of a hero.", "leap_slam", "minecraft:anvil", vfx="EARTH_SPIKES", damage=8, height=0.9),
+    ],
+    passives=[
+        P("Monster Slayer", "You deal more damage to monsters.", "dmg_vs", "minecraft:zombie_head", category="monster", bonus=0.2),
+        P("Hero's Appetite", "A share of every blow you deal returns as health.", "lifesteal", "minecraft:cooked_beef", pct=0.05),
+        P("Hydra Blood", "When wounded you recover health continuously.", "regen_when", "minecraft:golden_apple", condition="low_health", per_second=1.0),
+        P("Lion Hide", "While you are fighting you take less damage.", "reduce_when", "minecraft:leather_chestplate", condition="in_combat", pct=0.1),
+        P("Spoils of the Labor", "Kills restore health.", "kill_reward", "minecraft:cooked_beef", heal=4, effect="none"),
+        P("Unbowed Hero", "When nearly dead, a brief shield holds you up.", "last_stand", "minecraft:totem_of_undying", threshold=0.3, seconds=5),
+        P("Trophy of the Hunt", "Whatever you defeat may drop an extra stack of loot.", "drop_bonus", "minecraft:leather", chance=0.1),
+    ],
+    finishers=[
+        A("Twelfth Labor", "Gather your whole strength in one blow, devastating against a wounded foe.", "execute", "minecraft:netherite_axe", vfx="EARTH_SPIKES", damage=28, bonus=2.3, cost=0.06, cooldown=1600),
+        A("Nemean Roar", "The lion's roar rolls out as a huge ring that throws every foe around you.", "ring_burst", "minecraft:goat_horn", vfx="EARTH_SPIKES", damage=22, radius=6.5, targets=9, knockback=1.7, cost=0.06, cooldown=1800),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------- 24
+LINES.append(Line(
+    id="goh_pankration_grappler", name="Pankration Grappler", franchise=F,
+    desc="Wrestling and all-in grappling: tackles, suplexes, pins and a taunt that makes the other side lose their heads. Dirty and fair at once.",
+    color="#8E24AA", background="iron", icon="minecraft:leather_leggings",
+    book_name="Sand-Pit Grappler's Record", book_lore="The scorecard is covered in dirt and several footprints.",
+    stances=[
+        S("Wrestler's Crouch", "Get low: armor, firm footing, slower.", "minecraft:leather_leggings", armor=3, knockback_res=0.3, speed_pct=-0.06, vfx="WIND_RING"),
+        S("Showman Stance", "Play to the crowd: stronger blows, but you are wide open.", "minecraft:gold_ingot", damage_pct=0.15, crit_chance=0.05, armor=-2, vfx="WIND_RING"),
+    ],
+    stats=[
+        T("Wrestler's Back", "A back like a door.", "max_health", 2, "minecraft:cooked_beef"),
+        T("Bear Hug", "Your arms close like a vice.", "attack_damage", 1, "minecraft:iron_axe"),
+        T("Mat Footing", "Floors are your friend.", "knockback_resistance", 0.1, "minecraft:white_wool"),
+        T("Crowd Stamina", "Fights run long.", "armor_toughness", 1, "minecraft:iron_ingot"),
+    ],
+    arts=[
+        A("Double-Leg Tackle", "Shoot in low and carry the foes in your way with you.", "dash_strike", "minecraft:iron_boots", vfx="WIND_RING", damage=7, distance=7),
+        A("Rope-Burn Pull", "Drag the creatures around you into the ropes with you.", "pull", "minecraft:lead", vfx="WIND_RING", radius=7, strength=1.0, damage=3),
+        A("Body Slam", "Leap and slam your whole weight onto the foes below.", "leap_slam", "minecraft:white_wool", vfx="WIND_RING", damage=8, height=0.8),
+        A("Referee's Count", "Pin the creatures near you: they are held in place.", "stun_ring", "minecraft:bell", vfx="SEAL_CHAINS", radius=4, seconds=2),
+        A("Belly-to-Back Suplex", "Heave the foe in front of you up and over.", "uppercut", "minecraft:white_banner", vfx="WIND_SLASH", damage=8, launch=0.9),
+        A("Trash Talk", "Talk the hostile creatures around you into coming for you.", "taunt", "minecraft:name_tag", vfx="DEVIL_CIRCLE", radius=8, targets=5),
+        A("Tag Out", "Step out of the ring for a moment: heal and regenerate.", "heal_self", "minecraft:bread", vfx="SPIRIT_AURA", amount=7),
+    ],
+    passives=[
+        P("Take the Hit", "While you are fighting you take less damage.", "reduce_when", "minecraft:leather_chestplate", condition="in_combat", pct=0.1),
+        P("Bear Hug Barbs", "Part of every blow against you is returned.", "thorns", "minecraft:iron_nugget", pct=0.15),
+        P("Crowd Fuel", "Every kill gives you some health.", "kill_reward", "minecraft:cooked_beef", heal=3, effect="none"),
+        P("Powerhouse", "Your blows may shove the foe back.", "knockback_on_hit", "minecraft:piston", strength=0.6, chance=0.3),
+        P("Pin Rhythm", "Every few strikes in a row hit much harder.", "combo", "minecraft:clock", hits=4, bonus=0.6),
+        P("Mat Breath", "You tire slowly.", "hunger_saver", "minecraft:bread", pct=0.25),
+        P("Hold Your Ground", "When nearly dead, a brief shield holds you up.", "last_stand", "minecraft:totem_of_undying", threshold=0.3, seconds=5),
+    ],
+    finishers=[
+        A("Championship Slam", "Leap to the top rope and fall: a crater-making slam on the foes below.", "leap_slam", "minecraft:anvil", vfx="WIND_RING", damage=26, radius=5, knockback=1.8, height=1.1, cost=0.06, cooldown=1600),
+        A("Arena Lockdown", "Pin everything around you with one huge grab: all are held for a long moment.", "stun_ring", "minecraft:chain", vfx="SEAL_CHAINS", radius=8, seconds=4, targets=10, cost=0.08, cooldown=1900),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------- 25
+LINES.append(Line(
+    id="goh_tiger_crane_kungfu", name="Tiger and Crane Kung Fu", franchise=F,
+    desc="Two classic animal styles in one body: the tiger's claw for power, the crane's wing for balance and evasion. Hard strikes, then a hop away.",
+    color="#FFA000", background="forest", icon="minecraft:honeycomb",
+    book_name="Scroll of Tiger and Crane", book_lore="The tiger paragraphs are underlined in red; the crane paragraphs in white.",
+    stances=[
+        S("Tiger Stance", "Low and ready to pounce: hard-hitting, with a thinner guard.", "minecraft:rabbit_hide", damage_pct=0.15, crit_chance=0.04, armor=-1, vfx="WIND_SLASH"),
+        S("Crane Stance", "On one leg and light: quick and elusive, a bit softer.", "minecraft:feather", speed_pct=0.08, armor=1, damage_pct=-0.04, vfx="WIND_RING"),
+    ],
+    stats=[
+        T("Tiger Claw", "A hand that can grip stone.", "attack_damage", 1, "minecraft:rabbit_hide"),
+        T("Crane Balance", "Standing on one foot is easy for you.", "safe_fall_distance", 2, "minecraft:feather"),
+        T("Dragon Breath", "Slow breathing, long life.", "max_health", 2, "minecraft:honey_bottle"),
+        T("Mantis Speed", "Rapid hands.", "attack_speed", 0.2, "minecraft:iron_nugget"),
+    ],
+    arts=[
+        A("Tiger Claw Rake", "Rake the cone in front of you with five fingers like blades.", "cone_strike", "minecraft:rabbit_hide", vfx="WIND_SLASH", damage=7, half_angle=55),
+        A("Crane Hop", "Hop a good way on one leg like a crane.", "blink", "minecraft:feather", vfx="WIND_RING", distance=8),
+        A("Mantis Jabs", "A hail of tiny jabs at the foe you look at.", "barrage", "minecraft:iron_nugget", vfx="WIND_SLASH", damage=3, shots=6),
+        A("Dragon Tail Sweep", "Spin low and sweep everything around you several times.", "whirlwind", "minecraft:string", vfx="WIND_TORNADO", damage=3, hits=4),
+        A("Drunken Rhythm", "Sway and stumble perfectly: speed and jump height for a while.", "buff_self", "minecraft:sweet_berries", vfx="SPIRIT_AURA", effect="speed", effect2="jump_boost", seconds=14),
+        A("Snake Fang", "A swift, poisonous finger strike at a weakened foe.", "execute", "minecraft:spider_eye", vfx="WIND_SLASH", damage=8, bonus=0.8),
+        A("Wing Block", "Wings spread and protect: a shell of absorption.", "shield", "minecraft:phantom_membrane", vfx="WIND_RING", absorb_hearts=4),
+    ],
+    passives=[
+        P("Tiger Pounce", "Your hits land critically more often.", "crit", "minecraft:spectral_arrow", chance=0.12, mult=1.7),
+        P("Crane Evade", "You may avoid a blow completely.", "dodge", "minecraft:feather", chance=0.12),
+        P("Flow of the Forms", "Every few strikes in a row hit much harder.", "combo", "minecraft:clock", hits=4, bonus=0.6),
+        P("Light Foot", "You take much less fall damage.", "fall_guard", "minecraft:phantom_membrane", pct=0.5),
+        P("Snake Venom", "Your hits may poison the foe.", "on_hit_effect", "minecraft:spider_eye", effect="poison", chance=0.2),
+        P("Breath of the Dragon", "Your wounds close over time.", "mending", "minecraft:honey_bottle", seconds=16, amount=1),
+        P("Fighting Spirit", "While you are fighting you move faster.", "self_effect_when", "minecraft:sugar", effect="speed", condition="in_combat"),
+    ],
+    finishers=[
+        A("Hundred Tiger Claws", "A sweeping tiger strike that rips a huge cone in front of you.", "cone_strike", "minecraft:netherite_sword", vfx="WIND_SLASH", damage=28, range=5.5, half_angle=70, targets=9, cost=0.06, cooldown=1700),
+        A("Crane's Soaring Fall", "Leap high on the crane's wing and come down like a stone.", "leap_slam", "minecraft:elytra", vfx="WIND_RING", damage=26, radius=5, knockback=1.7, height=1.2, cost=0.06, cooldown=1600),
+    ],
+))

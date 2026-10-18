@@ -1,0 +1,1125 @@
+{
+  "magic": "god_of_high_school",
+  "franchise": "god_of_high_school",
+  "name": "Tiger and Crane Kung Fu",
+  "desc": "Two classic animal styles in one body: the tiger's claw for power, the crane's wing for balance and evasion. Hard strikes, then a hop away.",
+  "book": "nusmp:goh_tiger_crane_kungfu_book",
+  "book_name": "Scroll of Tiger and Crane",
+  "book_lore": "The tiger paragraphs are underlined in red; the crane paragraphs in white.",
+  "color": "#FFA000",
+  "icon": "minecraft:honeycomb",
+  "class_id": "goh_tiger_crane_kungfu",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/goh_tiger_crane_kungfu.png",
+  "book_texture": "nusmp:item/skill_book_3d/god_of_high_school",
+  "background_theme": "forest",
+  "nodes": [
+    {
+      "id": "tiger_stance",
+      "name": "Tiger Stance",
+      "desc": "Low and ready to pounce: hard-hitting, with a thinner guard.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage_pct": [
+          0.15,
+          0.18,
+          0.21
+        ],
+        "armor": [
+          -1.0,
+          -1.25,
+          -1.5
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.04,
+          0.048,
+          0.056
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:rabbit_hide"
+    },
+    {
+      "id": "crane_stance",
+      "name": "Crane Stance",
+      "desc": "On one leg and light: quick and elusive, a bit softer.",
+      "parents": [
+        {
+          "node": "tiger_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "damage_pct": [
+          -0.04,
+          -0.048,
+          -0.056
+        ],
+        "armor": [
+          1.0,
+          1.25,
+          1.5
+        ],
+        "speed_pct": [
+          0.08,
+          0.096,
+          0.112
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "tiger_claw",
+      "name": "Tiger Claw",
+      "desc": "A hand that can grip stone.",
+      "parents": [
+        {
+          "node": "tiger_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:rabbit_hide"
+    },
+    {
+      "id": "crane_balance",
+      "name": "Crane Balance",
+      "desc": "Standing on one foot is easy for you.",
+      "parents": [
+        {
+          "node": "crane_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "safe_fall_distance",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "dragon_breath",
+      "name": "Dragon Breath",
+      "desc": "Slow breathing, long life.",
+      "parents": [
+        {
+          "node": "tiger_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:honey_bottle"
+    },
+    {
+      "id": "mantis_speed",
+      "name": "Mantis Speed",
+      "desc": "Rapid hands.",
+      "parents": [
+        {
+          "node": "crane_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_speed",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.2,
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:iron_nugget"
+    },
+    {
+      "id": "tiger_claw_rake",
+      "name": "Tiger Claw Rake",
+      "desc": "Rake the cone in front of you with five fingers like blades.",
+      "parents": [
+        {
+          "node": "tiger_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "range": [
+          3.5,
+          3.78,
+          4.06,
+          4.34
+        ],
+        "half_angle": [
+          55.0,
+          60.5,
+          66.0,
+          71.5
+        ],
+        "targets": [
+          2.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "knockback": [
+          0.4,
+          0.44,
+          0.48,
+          0.52
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          100.0,
+          92.0,
+          84.0,
+          76.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:rabbit_hide"
+    },
+    {
+      "id": "crane_hop",
+      "name": "Crane Hop",
+      "desc": "Hop a good way on one leg like a crane.",
+      "parents": [
+        {
+          "node": "crane_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "blink",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "distance": [
+          8.0,
+          8.96,
+          9.92,
+          10.88
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "mantis_jabs",
+      "name": "Mantis Jabs",
+      "desc": "A hail of tiny jabs at the foe you look at.",
+      "parents": [
+        {
+          "node": "tiger_claw_rake",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "shots": [
+          6.0,
+          8.0,
+          10.0,
+          12.0
+        ],
+        "range": [
+          12.0,
+          12.96,
+          13.92,
+          14.88
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          240.0,
+          221.0,
+          202.0,
+          182.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:iron_nugget"
+    },
+    {
+      "id": "dragon_tail_sweep",
+      "name": "Dragon Tail Sweep",
+      "desc": "Spin low and sweep everything around you several times.",
+      "parents": [
+        {
+          "node": "crane_hop",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "whirlwind",
+      "params": {
+        "vfx": "WIND_TORNADO"
+      },
+      "values": {
+        "damage": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "radius": [
+          3.5,
+          3.78,
+          4.06,
+          4.34
+        ],
+        "hits": [
+          4.0,
+          5.0,
+          6.0,
+          8.0
+        ],
+        "interval": [
+          5.0,
+          5.0,
+          5.0,
+          5.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          260.0,
+          239.0,
+          218.0,
+          198.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:string"
+    },
+    {
+      "id": "drunken_rhythm",
+      "name": "Drunken Rhythm",
+      "desc": "Sway and stumble perfectly: speed and jump height for a while.",
+      "parents": [
+        {
+          "node": "mantis_jabs",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "speed",
+        "effect2": "jump_boost",
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "seconds": [
+          14.0,
+          16.0,
+          18.0,
+          20.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "amp2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:sweet_berries"
+    },
+    {
+      "id": "snake_fang",
+      "name": "Snake Fang",
+      "desc": "A swift, poisonous finger strike at a weakened foe.",
+      "parents": [
+        {
+          "node": "dragon_tail_sweep",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "execute",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          3.5,
+          3.71,
+          3.92,
+          4.13
+        ],
+        "bonus": [
+          0.8,
+          0.92,
+          1.04,
+          1.16
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:spider_eye"
+    },
+    {
+      "id": "wing_block",
+      "name": "Wing Block",
+      "desc": "Wings spread and protect: a shell of absorption.",
+      "parents": [
+        {
+          "node": "drunken_rhythm",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "absorb_hearts": [
+          4.0,
+          5.0,
+          6.0,
+          7.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          7.0,
+          8.0
+        ],
+        "resist_amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:phantom_membrane"
+    },
+    {
+      "id": "tiger_pounce",
+      "name": "Tiger Pounce",
+      "desc": "Your hits land critically more often.",
+      "parents": [
+        {
+          "node": "tiger_claw_rake",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.12,
+          0.144,
+          0.168,
+          0.192
+        ],
+        "mult": [
+          1.7,
+          1.836,
+          1.972,
+          2.108
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:spectral_arrow"
+    },
+    {
+      "id": "crane_evade",
+      "name": "Crane Evade",
+      "desc": "You may avoid a blow completely.",
+      "parents": [
+        {
+          "node": "crane_hop",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.12,
+          0.144,
+          0.168,
+          0.192
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "flow_of_the_forms",
+      "name": "Flow of the Forms",
+      "desc": "Every few strikes in a row hit much harder.",
+      "parents": [
+        {
+          "node": "mantis_jabs",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "combo",
+      "values": {
+        "hits": [
+          4.0,
+          4.0,
+          3.0,
+          3.0
+        ],
+        "bonus": [
+          0.6,
+          0.72,
+          0.84,
+          0.96
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:clock"
+    },
+    {
+      "id": "light_foot",
+      "name": "Light Foot",
+      "desc": "You take much less fall damage.",
+      "parents": [
+        {
+          "node": "dragon_tail_sweep",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "fall_guard",
+      "values": {
+        "pct": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:phantom_membrane"
+    },
+    {
+      "id": "snake_venom",
+      "name": "Snake Venom",
+      "desc": "Your hits may poison the foe.",
+      "parents": [
+        {
+          "node": "drunken_rhythm",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "on_hit_effect",
+      "params": {
+        "effect": "poison"
+      },
+      "values": {
+        "seconds": [
+          3.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "chance": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:spider_eye"
+    },
+    {
+      "id": "breath_of_the_dragon",
+      "name": "Breath of the Dragon",
+      "desc": "Your wounds close over time.",
+      "parents": [
+        {
+          "node": "snake_fang",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "mending",
+      "values": {
+        "seconds": [
+          16.0,
+          14.0,
+          13.0,
+          11.0
+        ],
+        "amount": [
+          1,
+          1.25,
+          1.5,
+          1.75
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:honey_bottle"
+    },
+    {
+      "id": "fighting_spirit",
+      "name": "Fighting Spirit",
+      "desc": "While you are fighting you move faster.",
+      "parents": [
+        {
+          "node": "wing_block",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "speed",
+        "condition": "in_combat"
+      },
+      "values": {
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:sugar"
+    },
+    {
+      "id": "hundred_tiger_claws",
+      "name": "Hundred Tiger Claws",
+      "desc": "A sweeping tiger strike that rips a huge cone in front of you.",
+      "parents": [
+        {
+          "node": "wing_block",
+          "level": 3
+        },
+        {
+          "node": "fighting_spirit",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          28.0,
+          35.0,
+          42.0
+        ],
+        "range": [
+          5.5,
+          5.94,
+          6.38
+        ],
+        "half_angle": [
+          70.0,
+          77.0,
+          80
+        ],
+        "targets": [
+          9.0,
+          12.0,
+          12.0
+        ],
+        "knockback": [
+          0.4,
+          0.44,
+          0.48
+        ],
+        "cost": [
+          0.06,
+          0.0648,
+          0.0696
+        ],
+        "cooldown": [
+          1700.0,
+          1564.0,
+          1428.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:netherite_sword"
+    },
+    {
+      "id": "crane_s_soaring_fall",
+      "name": "Crane's Soaring Fall",
+      "desc": "Leap high on the crane's wing and come down like a stone.",
+      "parents": [
+        {
+          "node": "snake_fang",
+          "level": 3
+        },
+        {
+          "node": "breath_of_the_dragon",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "height": [
+          1.2,
+          1.296,
+          1.392
+        ],
+        "damage": [
+          26.0,
+          32.5,
+          39.0
+        ],
+        "radius": [
+          5.0,
+          5.5,
+          6.0
+        ],
+        "knockback": [
+          1.7,
+          1.87,
+          2.04
+        ],
+        "cost": [
+          0.06,
+          0.0648,
+          0.0696
+        ],
+        "cooldown": [
+          1600.0,
+          1472.0,
+          1344.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:elytra"
+    }
+  ]
+}

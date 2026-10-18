@@ -1,0 +1,1095 @@
+{
+  "magic": "god_of_high_school",
+  "franchise": "god_of_high_school",
+  "name": "Apollo's Charyeok",
+  "desc": "Borrow the sun god's gifts: healing light, a golden beam and a glare that blinds. Gentle with friends, a solar flare to foes.",
+  "book": "nusmp:goh_apollo_charyeok_book",
+  "book_name": "Hymnal of the Sun Chariot",
+  "book_lore": "Best read at noon. At night it quietly glows.",
+  "color": "#FFCA28",
+  "icon": "minecraft:sunflower",
+  "class_id": "goh_apollo_charyeok",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/goh_apollo_charyeok.png",
+  "book_texture": "nusmp:item/skill_book_3d/god_of_high_school",
+  "background_theme": "holy",
+  "nodes": [
+    {
+      "id": "noon_radiance_stance",
+      "name": "Noon Radiance Stance",
+      "desc": "Stand in full light: sturdy, recovering, and slightly softer in attack.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "damage_pct": [
+          -0.04,
+          -0.048,
+          -0.056
+        ],
+        "armor": [
+          2.0,
+          2.5,
+          3.0
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0.6,
+          0.72,
+          0.84
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:sunflower"
+    },
+    {
+      "id": "solar_flare_stance",
+      "name": "Solar Flare Stance",
+      "desc": "Burn bright: stronger and faster, with a thin guard.",
+      "parents": [
+        {
+          "node": "noon_radiance_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "FIRE_SPIRAL"
+      },
+      "values": {
+        "damage_pct": [
+          0.14,
+          0.168,
+          0.196
+        ],
+        "armor": [
+          -2.0,
+          -2.5,
+          -3.0
+        ],
+        "speed_pct": [
+          0.04,
+          0.048,
+          0.056
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:blaze_powder"
+    },
+    {
+      "id": "sunlit_heart",
+      "name": "Sunlit Heart",
+      "desc": "Warm light keeps you healthy.",
+      "parents": [
+        {
+          "node": "noon_radiance_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:golden_apple"
+    },
+    {
+      "id": "golden_strike",
+      "name": "Golden Strike",
+      "desc": "A golden shine behind every blow.",
+      "parents": [
+        {
+          "node": "solar_flare_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:gold_ingot"
+    },
+    {
+      "id": "daybreak_step",
+      "name": "Daybreak Step",
+      "desc": "You run towards the sun.",
+      "parents": [
+        {
+          "node": "noon_radiance_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.04,
+          0.05,
+          0.06,
+          0.07,
+          0.08
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "muse_s_fortune",
+      "name": "Muse's Fortune",
+      "desc": "Songs go in your favor.",
+      "parents": [
+        {
+          "node": "solar_flare_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "luck",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:note_block"
+    },
+    {
+      "id": "healing_hymn",
+      "name": "Healing Hymn",
+      "desc": "A bright hymn that heals you and the allies around you.",
+      "parents": [
+        {
+          "node": "noon_radiance_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_pulse",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "amount": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          500.0,
+          470.0,
+          440.0,
+          410.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:note_block"
+    },
+    {
+      "id": "chariot_s_blessing",
+      "name": "Chariot's Blessing",
+      "desc": "A golden rush for you and your allies: haste for a while.",
+      "parents": [
+        {
+          "node": "solar_flare_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "haste",
+        "vfx": "FIRE_SPIRAL"
+      },
+      "values": {
+        "radius": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "seconds": [
+          12.0,
+          14.0,
+          16.0,
+          17.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          600.0,
+          564.0,
+          528.0,
+          492.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:gold_ingot"
+    },
+    {
+      "id": "sunbeam",
+      "name": "Sunbeam",
+      "desc": "A narrow beam of sunlight pierces the first foes ahead.",
+      "parents": [
+        {
+          "node": "healing_hymn",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          20.0,
+          22.0,
+          24.0,
+          26.0
+        ],
+        "pierce": [
+          2.0,
+          3.0,
+          3.0,
+          4.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:end_rod"
+    },
+    {
+      "id": "solar_glare",
+      "name": "Solar Glare",
+      "desc": "A blinding glare in a cone: the foes are blinded and lit up.",
+      "parents": [
+        {
+          "node": "chariot_s_blessing",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "debuff_cone",
+      "params": {
+        "effect": "blindness",
+        "effect2": "glowing",
+        "vfx": "FIRE_SPIRAL"
+      },
+      "values": {
+        "range": [
+          5.0,
+          5.4,
+          5.8,
+          6.2
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0,
+          52.0
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seconds2": [
+          8.0,
+          9.0,
+          10.0,
+          12.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          220.0,
+          202.0,
+          185.0,
+          167.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:glowstone"
+    },
+    {
+      "id": "dawn_mending",
+      "name": "Dawn Mending",
+      "desc": "The first light of dawn: heal and regenerate.",
+      "parents": [
+        {
+          "node": "sunbeam",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_self",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "amount": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "regen_seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:honey_bottle"
+    },
+    {
+      "id": "flare_ring",
+      "name": "Flare Ring",
+      "desc": "A ring of flame-bright light bursts out of you.",
+      "parents": [
+        {
+          "node": "solar_glare",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "radius": [
+          4.0,
+          4.4,
+          4.8,
+          5.2
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "knockback": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:fire_charge"
+    },
+    {
+      "id": "sun_chariot_s_fall",
+      "name": "Sun Chariot's Fall",
+      "desc": "Call down a burst of sun on the spot you look at.",
+      "parents": [
+        {
+          "node": "dawn_mending",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "delay": [
+          20.0,
+          19.0,
+          18.0,
+          17.0
+        ],
+        "damage": [
+          12.0,
+          15.0,
+          18.0,
+          21.0
+        ],
+        "radius": [
+          3.5,
+          3.85,
+          4.2,
+          4.55
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88,
+          22.32
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          360.0,
+          331.0,
+          302.0,
+          274.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:magma_block"
+    },
+    {
+      "id": "sunrise_salve",
+      "name": "Sunrise Salve",
+      "desc": "In the day your wounds close on their own.",
+      "parents": [
+        {
+          "node": "healing_hymn",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "day"
+      },
+      "values": {
+        "per_second": [
+          0.6,
+          0.72,
+          0.84,
+          0.96
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:glow_berries"
+    },
+    {
+      "id": "midday_might",
+      "name": "Midday Might",
+      "desc": "In the day your blows are stronger.",
+      "parents": [
+        {
+          "node": "chariot_s_blessing",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_when",
+      "params": {
+        "condition": "day"
+      },
+      "values": {
+        "bonus": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:gold_ingot"
+    },
+    {
+      "id": "chorus_of_light",
+      "name": "Chorus of Light",
+      "desc": "Allies near you slowly regenerate.",
+      "parents": [
+        {
+          "node": "sunbeam",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "aura",
+      "params": {
+        "effect": "regeneration",
+        "target": "allies"
+      },
+      "values": {
+        "radius": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:note_block"
+    },
+    {
+      "id": "sunlit_vigor",
+      "name": "Sunlit Vigor",
+      "desc": "In the day you feel stronger.",
+      "parents": [
+        {
+          "node": "solar_glare",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "strength",
+        "condition": "day"
+      },
+      "values": {
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:sunflower"
+    },
+    {
+      "id": "bright_salve",
+      "name": "Bright Salve",
+      "desc": "Your wounds close over time.",
+      "parents": [
+        {
+          "node": "dawn_mending",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "mending",
+      "values": {
+        "seconds": [
+          16.0,
+          14.0,
+          13.0,
+          11.0
+        ],
+        "amount": [
+          1,
+          1.25,
+          1.5,
+          1.75
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:honey_bottle"
+    },
+    {
+      "id": "smite_the_dead",
+      "name": "Smite the Dead",
+      "desc": "The undead take much more damage from you.",
+      "parents": [
+        {
+          "node": "flare_ring",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_vs",
+      "params": {
+        "category": "undead"
+      },
+      "values": {
+        "bonus": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:skeleton_skull"
+    },
+    {
+      "id": "sun_tempered",
+      "name": "Sun-Tempered",
+      "desc": "You take much less fire damage.",
+      "parents": [
+        {
+          "node": "sun_chariot_s_fall",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "fire"
+      },
+      "values": {
+        "pct": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:fire_charge"
+    },
+    {
+      "id": "dawn_of_mercy",
+      "name": "Dawn of Mercy",
+      "desc": "A great wave of golden light heals you and every ally around you.",
+      "parents": [
+        {
+          "node": "sun_chariot_s_fall",
+          "level": 3
+        },
+        {
+          "node": "sun_tempered",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "heal_pulse",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          12.0,
+          13.2,
+          14
+        ],
+        "amount": [
+          18.0,
+          22.5,
+          27.0
+        ],
+        "cost": [
+          0.08,
+          0.0864,
+          0.0928
+        ],
+        "cooldown": [
+          1700.0,
+          1598.0,
+          1496.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:beacon"
+    },
+    {
+      "id": "solar_cannon",
+      "name": "Solar Cannon",
+      "desc": "A massive beam of sun that burns a lane through the foes ahead.",
+      "parents": [
+        {
+          "node": "flare_ring",
+          "level": 3
+        },
+        {
+          "node": "smite_the_dead",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "FIRE_SPIRAL"
+      },
+      "values": {
+        "damage": [
+          28.0,
+          35.0,
+          42.0
+        ],
+        "range": [
+          30.0,
+          33.0,
+          36.0
+        ],
+        "pierce": [
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.06,
+          0.0648,
+          0.0696
+        ],
+        "cooldown": [
+          1600.0,
+          1472.0,
+          1344.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:glowstone"
+    }
+  ]
+}

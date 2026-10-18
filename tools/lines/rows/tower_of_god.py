@@ -365,7 +365,7 @@ LINES.append(Line(
         A("Halt!", "Slam your weapon and a pulse of Shinsu freezes the creatures around you in place.", "stun_ring", "minecraft:bell", vfx="SEAL_CHAINS", radius=4, seconds=2),
         A("Challenge Roar", "Bellow a Guard's challenge: hostile creatures near you turn on you.", "taunt", "minecraft:goat_horn", vfx="DEVIL_CIRCLE", radius=9, targets=5),
         A("Barrier Wall", "Raise a wall of your own Shinsu around you that absorbs a lot of damage.", "shield", "minecraft:shield", vfx="SPIRIT_AURA", absorb_hearts=6, resist_amp=1),
-        A("Shield Bash", "Rush forward behind the shield and slam everything ahead of you.", "dash_strike", "minecraft:iron_ingot", vfx="WIND_RING", damage=6, distance=5),
+        A("Stairwell Bash", "Rush forward behind the shield and slam everything ahead of you.", "dash_strike", "minecraft:iron_ingot", vfx="WIND_RING", damage=6, distance=5),
         A("Gate Slam", "Bring the weapon down and send a shock wave along the floor in front of you.", "ground_wave", "minecraft:anvil", vfx="STONE_SPIKES", damage=6, length=9),
         A("Intruder Mark", "Brand a trespasser: it takes more damage from everything while marked.", "mark", "minecraft:name_tag", vfx="MAGIC_CIRCLE", bonus=0.3),
         A("Guard's Counter", "Raise your guard: part of every blow you take is returned to the attacker for a while.", "ward_reflect", "minecraft:iron_chestplate", vfx="MIRROR_PANE", reflect_pct=0.4),

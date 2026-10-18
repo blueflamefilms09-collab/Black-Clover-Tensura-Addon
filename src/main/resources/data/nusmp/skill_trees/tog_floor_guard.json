@@ -476,8 +476,8 @@
       "icon": "minecraft:shield"
     },
     {
-      "id": "shield_bash",
-      "name": "Shield Bash",
+      "id": "stairwell_bash",
+      "name": "Stairwell Bash",
       "desc": "Rush forward behind the shield and slam everything ahead of you.",
       "parents": [
         {
@@ -605,7 +605,7 @@
       "desc": "Brand a trespasser: it takes more damage from everything while marked.",
       "parents": [
         {
-          "node": "shield_bash",
+          "node": "stairwell_bash",
           "level": 2
         }
       ],
@@ -887,7 +887,7 @@
       "desc": "Your plate absorbs blasts: less explosion damage.",
       "parents": [
         {
-          "node": "shield_bash",
+          "node": "stairwell_bash",
           "level": 2
         }
       ],
