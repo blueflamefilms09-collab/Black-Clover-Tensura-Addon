@@ -97,5 +97,7 @@ public enum PropKind {
     RECOMBINATION_1,
     RECOMBINATION_2,
     /** 1.43.0: Unite Canis's shadow wolves (server: shadow.ShadowPackProps, painter: client.shadow.ShadowPackPainter). */
-    SHADOW_PACK_1
+    SHADOW_PACK_1,
+    /** 1.93.0: the constructs of Earth, Rock, Stone, Sandstone, Red Ochre and Mineral magic: golems, a sentinel, a sphinx, the prison cage, a totem, a crystal spire, thrown boulders and lances; the variant is {@link EarthConstruct#type} of the param (server: prop.EarthConstructProps, painter: client.prop.EarthPropPainter). */
+    EARTH_CONSTRUCT
 }

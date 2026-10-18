@@ -45,7 +45,9 @@ JARS = {
 
 REAL_BASE = ["client/prop/PropDraw.java", "client/prop/PropPainter.java", "client/prop/MagicPropRenderer.java", "client/aura/AuraPainter.java",
              "client/aura/AuraContext.java", "client/aura/LazyBuffers.java", "client/aura/AuraRender.java", "client/aura/PlayerAuraLayer.java", "aura/Aura.java", "prop/PropKind.java",
-             "client/aura/EquipAnimation.java"]                                   # 1.93.0: the Djinn-style forge-in / shatter-out the armour painters share
+             "client/aura/EquipAnimation.java",                                   # 1.93.0: the Djinn-style forge-in / shatter-out the armour painters share
+             "prop/EarthConstruct.java", "vfx/EarthFxStyle.java",                 # 1.93.0: pure tables the earth-family painters read (prop param word, effect palettes)
+             "client/prop/SealDraw.java"]                                         # 1.93.0: the shared billboard / ribbon / flat-sigil helpers (also used by WikiAura)
 REAL_GEO = ["client/geo/GeoModelData.java", "client/geo/GeoAnim.java", "client/geo/GeoDraw.java", "client/geo/GeoSpec.java", "client/geo/GeoModels.java"]
 
 BUDGET_VERTICES = 6000

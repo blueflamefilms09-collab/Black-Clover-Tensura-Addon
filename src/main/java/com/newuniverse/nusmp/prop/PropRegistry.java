@@ -52,5 +52,6 @@ final class PropRegistry {
         SandProps.init();
         RecombinationProps.init();
         com.newuniverse.nusmp.shadow.ShadowPackProps.init();
+        EarthConstructProps.init();          // 1.93.0: Earth / Rock / Stone / Sandstone / Red Ochre / Mineral constructs
     }
 }
