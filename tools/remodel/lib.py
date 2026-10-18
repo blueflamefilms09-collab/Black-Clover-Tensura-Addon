@@ -51,6 +51,27 @@ def breathe(length, axis, amp, steps=4):
     return out
 
 
+def sit_pose(rig, length=3.2):
+    """The pose of something sitting on the floor with its legs out in front ('sit' clip): the root lowered so the hips rest on the floor, the thighs forward, the hands in the lap, a slow
+    breath and a slow tail-less sway of the head. Every bone is rotated from its rest, so it fits any build."""
+    d = rig.d
+    sink = -(d.hip_y - d.ld * 0.5)
+    tracks = {
+        "root": {"position": {0.0: (0, sink, 0), length: (0, sink, 0)}},
+        "body": {"rotation": {0.0: (-4, 0, 0), length / 2: (-6, 0, 0), length: (-4, 0, 0)}},
+        "head": {"rotation": {0.0: (4, 0, 0), length / 2: (6, 3, 0), length: (4, 0, 0)}},
+        "leg_l": {"rotation": {0.0: (84, 0, 6), length: (84, 0, 6)}},
+        "leg_r": {"rotation": {0.0: (84, 0, -6), length: (84, 0, -6)}},
+        "shin_l": {"rotation": {0.0: (-8, 0, 0), length: (-8, 0, 0)}},
+        "shin_r": {"rotation": {0.0: (-8, 0, 0), length: (-8, 0, 0)}},
+        "arm_l": {"rotation": {0.0: (36, 0, 4), length: (36, 0, 4)}},
+        "arm_r": {"rotation": {0.0: (36, 0, -4), length: (36, 0, -4)}},
+        "forearm_l": {"rotation": {0.0: (34, 0, 0), length: (34, 0, 0)}},
+        "forearm_r": {"rotation": {0.0: (34, 0, 0), length: (34, 0, 0)}},
+    }
+    add_clip(rig, "sit", length, tracks, loop=True)
+
+
 def sleep_pose(rig, length=3.2):
     """The pose a sleeping predator takes ('sleep' clip): the body folded forward and down onto bent legs, the head on the arms, a slow breath. Every bone is rotated from its
     rest, so it fits any build; the root is lowered by a fraction of the leg length so the feet stay on the floor."""
