@@ -338,7 +338,7 @@ public final class Instance {
         if (mobCacheAt == now) return mobCache;
         List<Mob> out = new ArrayList<>();
         Set<UUID> seen = new HashSet<>();
-        java.util.function.Predicate<Mob> mine = m -> m.isAlive() && (m.getTags().contains(mobTag) || MegaDungeon.isDungeonMonster(m));
+        java.util.function.Predicate<Mob> mine = m -> m.isAlive() && (m.getTags().contains(mobTag) || MegaDungeon.isDungeonMonster(m) || m instanceof com.newuniverse.nusmp.labyrinth.mega.guard.LabyrinthGuardianEntity);
         if (area.kind == Area.Kind.FLOOR) {
             for (ServerPlayer p : inside) {
                 for (Mob m : level.getEntitiesOfClass(Mob.class, p.getBoundingBox().inflate(24.0), mine)) if (seen.add(m.getUUID())) out.add(m);

@@ -85,7 +85,7 @@ final class Rules {
     }
 
     static boolean concerns(Instance in, Mob m) {
-        return m.getTags().contains(in.mobTag()) || (MegaDungeon.isDungeonMonster(m) && in.area.contains(m));
+        return m.getTags().contains(in.mobTag()) || ((MegaDungeon.isDungeonMonster(m) || m instanceof com.newuniverse.nusmp.labyrinth.mega.guard.LabyrinthGuardianEntity) && in.area.contains(m));
     }
 
     /** No natural healing in an area with the flag: cancels the heal. */

@@ -1,13 +1,13 @@
 {
  "version": 1,
- "total": 375,
+ "total": 750,
  "counts": {
   "floor": 125,
   "puzzle": 125,
   "hazard": 125,
-  "combat": 0,
-  "risk": 0,
-  "boss": 0,
+  "combat": 125,
+  "risk": 125,
+  "boss": 125,
   "travel": 0,
   "party": 0
  },
