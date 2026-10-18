@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "acid_spit",
+  "regrowth"
+ ],
+ "animation": "slim__mace-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "slime",
+ "glow": "#efe6d3",
+ "height": 1.94,
+ "id": "sludge_scullery_maid",
+ "name": "Sludge Scullery Maid",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Tensura",
+ "tier": 1
+}

@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "shadow_dash",
+  "vampiric_bite"
+ ],
+ "animation": "child__none-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "demon",
+ "glow": "#c2636b",
+ "height": 1.41,
+ "id": "cursed_spirit_grunt",
+ "name": "Cursed Spirit Grunt",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Jujutsu Kaisen",
+ "tier": 1
+}

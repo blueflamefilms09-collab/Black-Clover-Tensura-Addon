@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "ground_slam",
+  "miasma"
+ ],
+ "animation": "broad__hammer-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "undead",
+ "glow": "#e1dbc8",
+ "height": 2.09,
+ "id": "drowned_dockhand",
+ "name": "Drowned Dockhand",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Konosuba",
+ "tier": 1
+}

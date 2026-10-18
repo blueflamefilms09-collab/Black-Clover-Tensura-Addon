@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "stoneskin",
+  "ground_slam"
+ ],
+ "animation": "broad__hammer-none__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "undead",
+ "glow": "#8c7564",
+ "height": 2.09,
+ "id": "burnt_parish_sexton",
+ "name": "Burnt Parish Sexton",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Dark Souls",
+ "tier": 1
+}

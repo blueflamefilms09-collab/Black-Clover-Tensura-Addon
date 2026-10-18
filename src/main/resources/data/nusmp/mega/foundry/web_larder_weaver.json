@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "web_shot",
+  "swarm_call"
+ ],
+ "animation": "slim__staff-none__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "insect",
+ "glow": "#e1dbc8",
+ "height": 1.94,
+ "id": "web_larder_weaver",
+ "name": "Web Larder Weaver",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: giant spider",
+ "tier": 1
+}

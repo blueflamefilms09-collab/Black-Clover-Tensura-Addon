@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "pounce",
+  "call_wolves"
+ ],
+ "animation": "average__spear-none__auto-auto-auto",
+ "archetype": "skirmisher",
+ "faction": "beast",
+ "glow": "#e1dbc8",
+ "height": 2.0,
+ "id": "gnoll_pup_raider",
+ "name": "Gnoll Pup Raider",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: gnoll",
+ "tier": 1
+}

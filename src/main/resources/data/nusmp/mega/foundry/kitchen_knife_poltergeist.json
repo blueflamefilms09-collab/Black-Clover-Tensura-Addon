@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "shadow_step",
+  "lunge"
+ ],
+ "animation": "small__dagger-dagger__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "undead",
+ "glow": "#c2636b",
+ "height": 1.5,
+ "id": "kitchen_knife_poltergeist",
+ "name": "Kitchen Knife Poltergeist",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Spirited Away",
+ "tier": 1
+}

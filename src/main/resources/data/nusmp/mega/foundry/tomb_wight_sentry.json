@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "life_drain",
+  "shield_wall"
+ ],
+ "animation": "broad__sword-shield__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "undead",
+ "glow": "#606066",
+ "height": 2.09,
+ "id": "tomb_wight_sentry",
+ "name": "Tomb Wight Sentry",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: wight",
+ "tier": 1
+}

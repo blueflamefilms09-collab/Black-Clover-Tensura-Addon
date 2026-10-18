@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "swarm_call",
+  "vampiric_bite"
+ ],
+ "animation": "child__none-none__auto-auto-auto",
+ "archetype": "flier",
+ "faction": "beast",
+ "glow": "#c2636b",
+ "height": 1.41,
+ "id": "pit_bat_swarmlord",
+ "name": "Pit Bat Swarmlord",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: stirge",
+ "tier": 1
+}

@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "sky_dive",
+  "web_shot"
+ ],
+ "animation": "child__dagger-none__auto-auto-auto",
+ "archetype": "flier",
+ "faction": "insect",
+ "glow": "#efe990",
+ "height": 1.41,
+ "id": "moth_wing_cave_fiend",
+ "name": "Moth Wing Cave Fiend",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Made in Abyss",
+ "tier": 1
+}

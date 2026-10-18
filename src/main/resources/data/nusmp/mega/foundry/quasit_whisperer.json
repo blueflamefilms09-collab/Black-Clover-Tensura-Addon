@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "hex",
+  "shadow_step"
+ ],
+ "animation": "child__dagger-none__auto-auto-auto",
+ "archetype": "skirmisher",
+ "faction": "demon",
+ "glow": "#e48460",
+ "height": 1.41,
+ "id": "quasit_whisperer",
+ "name": "Quasit Whisperer",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: quasit",
+ "tier": 1
+}

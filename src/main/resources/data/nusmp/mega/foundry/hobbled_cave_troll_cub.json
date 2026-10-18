@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "troll_blood",
+  "ground_slam"
+ ],
+ "animation": "huge__mace-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "ogre",
+ "glow": "#ae756b",
+ "height": 3.09,
+ "id": "hobbled_cave_troll_cub",
+ "name": "Hobbled Cave Troll Cub",
+ "road": "abyssal",
+ "size": 0.8,
+ "source": "D&D: troll",
+ "tier": 1
+}

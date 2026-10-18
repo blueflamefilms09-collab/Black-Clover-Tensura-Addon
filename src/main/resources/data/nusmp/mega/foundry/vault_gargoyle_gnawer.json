@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "sky_dive",
+  "stoneskin"
+ ],
+ "animation": "small__none-none__auto-auto-auto",
+ "archetype": "flier",
+ "faction": "construct",
+ "glow": "#e48460",
+ "height": 1.5,
+ "id": "vault_gargoyle_gnawer",
+ "name": "Vault Gargoyle Gnawer",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: gargoyle",
+ "tier": 1
+}

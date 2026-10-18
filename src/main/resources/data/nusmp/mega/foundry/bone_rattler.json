@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "dash",
+  "lunge"
+ ],
+ "animation": "average__sword-none__auto-auto-slouch",
+ "archetype": "skirmisher",
+ "faction": "undead",
+ "glow": "#b88064",
+ "height": 2.0,
+ "id": "bone_rattler",
+ "name": "Bone Rattler",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: skeleton",
+ "tier": 1
+}

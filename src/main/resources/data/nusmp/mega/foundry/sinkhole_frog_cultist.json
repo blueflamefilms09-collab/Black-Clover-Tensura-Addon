@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "pounce",
+  "acid_spit"
+ ],
+ "animation": "small__trident-none__auto-auto-auto",
+ "archetype": "skirmisher",
+ "faction": "aquatic",
+ "glow": "#8c806e",
+ "height": 1.5,
+ "id": "sinkhole_frog_cultist",
+ "name": "Sinkhole Frog Cultist",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: bullywug",
+ "tier": 1
+}
