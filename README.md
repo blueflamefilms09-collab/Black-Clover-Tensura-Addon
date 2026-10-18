@@ -17,10 +17,10 @@ Custom Tensura: Reincarnated skills for NeoForge 1.21.1.
 | Hephaestus (god) | `nusmp:hephaestus` | Repair held item (+ armor when mastered) |
 | Loki (god) | `nusmp:loki` | Vanish + blink forward |
 | Wynn Fimbulvetr (magic) | `nusmp:wynn_fimbulvetr` | Instant ice blizzard at target |
-| Rea Laevateinn (magic) | `nusmp:rea_laevateinn` | Instant flame pillars around you |
-| Arcs Ray (magic) | `nusmp:arcs_ray` | Instant piercing light beam |
-| Futsunomitama (magic) | `nusmp:futsunomitama` | Instant gravity field |
-| Uchide no Kozuchi (magic) | `nusmp:uchide_no_kozuchi` | Instant Level Boost on an ally |
+| Rea Laevateinn (magic) | `nusmp:rea_laevateinn` | Chanted: flame pillars around you |
+| Arcs Ray (magic) | `nusmp:arcs_ray` | Chanted: piercing light beam |
+| Futsunomitama (magic) | `nusmp:futsunomitama` | Chanted: gravity field |
+| Uchide no Kozuchi (magic) | `nusmp:uchide_no_kozuchi` | Chanted: Level Boost on an ally |
 
 | Hell Walker | `nusmp:hell_walker` | Toggle: more damage the lower your health |
 | Hawk Eye (Allen) | `nusmp:hawk_eye` | Toggle: night vision + hostile mobs glow |
@@ -49,7 +49,7 @@ God-tier balance: config `[god_tier]` (affectsPlayers, bossHealthThreshold, inst
 
 Config `[ultimate_evolution]`: enabled, minimumEP, replacesBase.
 
-Magic spells fire when the skill key is released; holding the key does not trigger them early.
+The DanMachi spells are chanted: hold the skill key, a line finishes every 14 ticks (6 when mastered), release after the last line to cast; releasing early breaks the chant at no cost. Every skill, mode and number is in `docs/skills/rebuild.md`.
 
 ## Build
 
@@ -60,7 +60,7 @@ Magic spells fire when the skill key is released; holding the key does not trigg
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-1.76.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-1.77.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.

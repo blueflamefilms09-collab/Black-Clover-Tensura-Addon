@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.77.0] — The skills are rebuilt: 38 skills, real mechanics, distinct Ultimates, unique icons, chanted spells
+
+### REPLACED (old versions of the same skills; ids, saves and config keys kept)
+- **Every custom skill class** (25 Uniques/Extras, 10 Ultimate evolutions, 3 standalone Ultimates) rewritten on shared bases (`NUSkill`, `SkillTargets`, `SkillDamage`, `SkillZones`, `Summons`, `SkillEvents`) plus 14 Minecraft-free rule classes in `skill/rules/`.
+- **Ultimates are now different skills, not flagged copies:** Lord of Summons (double cap, stronger cards, Legion and Wraith modes), Goddess of Faith (Blessing, Miracle), Hero's Argonaut (ten bells, Hero's Beam), Hell Conqueror (life steal, hellfire aura, berserk), Immortal Will (rises at full health, shockwave, Rally), Adolla Burst (Light Speed plus explosion mode), Gold Experience Requiem (Life Burst), Black Wings (full reflection, no fall damage, glide); All Fiction and Limitless rebuilt with their mode sets.
+- **The five DanMachi spells are chanted** (hold the key, a line every 14 ticks, 6 when mastered, release early = broken chant, free). Blizzard, flame pillars and gravity linger through a zone scheduler. This is a play change from the old instant cast.
+- **Targeting and balance:** area effects hit only foes (not pets, villagers or other players' summons); heals and buffs reach players and the caster's creatures; damage, hard control and healing go through `BalanceLaw` (EP scaling, PvP hit cap).
+- **Summons:** capped, tracked by UUID, timed, steered, never auto-target players, removed when the owner dies or leaves.
+- The Visionary's meteor no longer uses `level.explode` (no vanilla particles or fire); damage and sound stay.
+
+### NEW
+- **38 unique 32x32 skill icons** (`textures/skill/<id>.png`, `tools/skills/gen_skill_icons.py`), 197 lang keys (98 new, 36 descriptions changed), `docs/skills/rebuild.md`, tests (`skill/rules/*Test`, `SkillAssetsTest`).
+
+### KEPT
+- All registry ids, the Unique to Ultimate evolution table, saved data (`Faith`, Infinity switch, `H0..H4`, `Paid`, summon tags), config keys, Time Magic and Grimoire files untouched.
+
+### Honest notes
+- Written against API stubs, not run in game: summon steering, Vex summons, Black Wings deflection, zone effects and the chosen VFX shapes need an in-game look. A few icons (Hero's Argonaut, Book Maker's screw) are simple at 32 px.
+- The summon ledger is in memory: after a restart it refills from entities near the owner.
+
 ## [1.76.0] — 102 more relics: the 300 are done (KonoSuba, The Eminence in Shadow, Tower of God, Fullmetal Alchemist and Berserk, Sword Art Online and Log Horizon)
 
 ### NEW
