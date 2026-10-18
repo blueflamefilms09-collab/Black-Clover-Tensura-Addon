@@ -53,5 +53,6 @@ final class PropPainterRegistry {
         RecombinationPropPainter.register();
         com.newuniverse.nusmp.client.shadow.ShadowPackPainter.register();
         SmokePropPainter.register();         // 1.93.0: the rebuilt summons of Smoke, Snow, Wing, Vortex, Air and Ash
+        SnowPropPainter.register();
     }
 }

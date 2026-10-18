@@ -8,6 +8,8 @@ package com.newuniverse.nusmp.prop;
 public final class AirPropWord {
     private AirPropWord() {}
 
+    public static final int IDLE = 0, ACT = 1, ACT2 = 2;
+
     public static int pack(int variant, int state, long gameTime) { return (variant & 0xFF) | ((state & 3) << 8) | ((int) (gameTime & 0xFFFF) << 10); }
 
     public static int variant(int param) { return param & 0xFF; }

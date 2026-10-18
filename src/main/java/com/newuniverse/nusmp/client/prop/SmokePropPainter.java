@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.newuniverse.nusmp.client.aura.AuraRender;
 import com.newuniverse.nusmp.client.geo.GeoDraw;
 import com.newuniverse.nusmp.client.geo.GeoSpec;
-import com.newuniverse.nusmp.prop.AirPropKit;
+import com.newuniverse.nusmp.prop.AirPropWord;
 import com.newuniverse.nusmp.prop.MagicPropEntity;
 import com.newuniverse.nusmp.prop.PropKind;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -45,7 +45,7 @@ public final class SmokePropPainter {
     }
 
     private static void paint(MagicPropEntity e, float partial, float age, PoseStack pose, MultiBufferSource buffers, int light) {
-        int p = e.param(), v = AirPropKit.variant(p);
+        int p = e.param(), v = AirPropWord.variant(p);
         long now = e.level().getGameTime();
         float s = Math.max(0.3f, e.scale());
         float maxL = Math.max(1f, e.maxLife());
@@ -60,7 +60,7 @@ public final class SmokePropPainter {
         String clip;
         float secs;
         if (left < 14f) { clip = "vanish"; secs = (14f - left) / 14f; }
-        else if (AirPropKit.state(p) == AirPropKit.ACT && AirPropKit.since(p, now) < 18) { clip = "strike"; secs = (AirPropKit.since(p, now) + partial) / 20f; }
+        else if (AirPropWord.state(p) == AirPropWord.ACT && AirPropWord.since(p, now) < 18) { clip = "strike"; secs = (AirPropWord.since(p, now) + partial) / 20f; }
         else { clip = "idle"; secs = age / 20f; }
         float alpha = rise * out;
         shade(pose, buffers, 0.8f * s * alpha, 0.35f * alpha, light);

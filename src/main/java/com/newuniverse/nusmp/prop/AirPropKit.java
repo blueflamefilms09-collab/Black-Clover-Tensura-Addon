@@ -29,7 +29,7 @@ import java.util.List;
 public final class AirPropKit {
     private AirPropKit() {}
 
-    public static final int IDLE = 0, ACT = 1, ACT2 = 2;
+    public static final int IDLE = AirPropWord.IDLE, ACT = AirPropWord.ACT, ACT2 = AirPropWord.ACT2;
 
     // ------------------------------------------------------------------ the synced word (pure)
     public static int pack(int variant, int state, long gameTime) { return AirPropWord.pack(variant, state, gameTime); }

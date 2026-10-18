@@ -274,7 +274,7 @@ def textures():
     L.particle_cloud("smoke_puff", 101, 128, lobes=8, detail=0.55)
     L.particle_cloud("smoke_billow", 102, 128, lobes=5, detail=0.35, hard=0.15)
     L.particle_streak("smoke_wisp", 64, 256, 103, core=0.10, wisp=0.62)
-    L.particle_ring("smoke_ring", 256, 0.74, 0.96, 0.10, ticks=0, seed=104, wobble=0.07)
+    L.particle_ring("smoke_ring", 256, 0.84, 0.97, 0.06, ticks=0, seed=104, wobble=0.07)
 
     def sigil(d, S):                                                 # the sigil on the ground: two rings, a swirl of three smoke arms and an eye of embers
         c = S / 2.0
