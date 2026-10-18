@@ -1,0 +1,14 @@
+{
+  "type": "mine_block",
+  "tier": 1,
+  "count": 128,
+  "title": "Quarry Work",
+  "reward": {
+    "coins": 270,
+    "xp": 11,
+    "rep": 5
+  },
+  "weight": 12,
+  "min_level": 1,
+  "target": "minecraft:stone"
+}

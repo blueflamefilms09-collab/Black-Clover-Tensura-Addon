@@ -1,0 +1,14 @@
+{
+  "type": "craft_item",
+  "tier": 3,
+  "count": 2,
+  "title": "Blades for the Captains",
+  "reward": {
+    "coins": 1560,
+    "xp": 47,
+    "rep": 15
+  },
+  "weight": 8,
+  "min_level": 5,
+  "target": "minecraft:diamond_sword"
+}

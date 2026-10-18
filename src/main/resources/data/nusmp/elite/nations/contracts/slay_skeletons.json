@@ -1,0 +1,14 @@
+{
+  "type": "kill_mob",
+  "tier": 1,
+  "count": 15,
+  "title": "Rattle the Bone Archers",
+  "reward": {
+    "coins": 220,
+    "xp": 9,
+    "rep": 5
+  },
+  "weight": 12,
+  "min_level": 1,
+  "target": "minecraft:skeleton"
+}

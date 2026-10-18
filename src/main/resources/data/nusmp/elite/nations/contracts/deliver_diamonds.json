@@ -1,0 +1,14 @@
+{
+  "type": "deliver_item",
+  "tier": 3,
+  "count": 8,
+  "title": "Diamonds for the Vault",
+  "reward": {
+    "coins": 1630,
+    "xp": 49,
+    "rep": 15
+  },
+  "weight": 8,
+  "min_level": 5,
+  "target": "minecraft:diamond"
+}

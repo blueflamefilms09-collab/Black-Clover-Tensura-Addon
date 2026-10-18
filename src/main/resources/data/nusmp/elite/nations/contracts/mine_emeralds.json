@@ -1,0 +1,14 @@
+{
+  "type": "mine_block",
+  "tier": 3,
+  "count": 6,
+  "title": "Emeralds for the Envoys",
+  "reward": {
+    "coins": 1610,
+    "xp": 48,
+    "rep": 15
+  },
+  "weight": 8,
+  "min_level": 5,
+  "target": "#minecraft:emerald_ores"
+}

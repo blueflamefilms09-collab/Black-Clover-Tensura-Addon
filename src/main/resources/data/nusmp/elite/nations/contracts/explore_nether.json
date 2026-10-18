@@ -1,0 +1,14 @@
+{
+  "type": "explore_biome",
+  "tier": 3,
+  "count": 3,
+  "title": "Map the Nether Wastes",
+  "reward": {
+    "coins": 1580,
+    "xp": 47,
+    "rep": 15
+  },
+  "weight": 8,
+  "min_level": 5,
+  "target": "#minecraft:is_nether"
+}

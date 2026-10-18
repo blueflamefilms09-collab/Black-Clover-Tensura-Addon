@@ -1,0 +1,14 @@
+{
+  "type": "deliver_item",
+  "tier": 2,
+  "count": 32,
+  "title": "Powder for the Sappers",
+  "reward": {
+    "coins": 700,
+    "xp": 23,
+    "rep": 10
+  },
+  "weight": 10,
+  "min_level": 3,
+  "target": "minecraft:gunpowder"
+}

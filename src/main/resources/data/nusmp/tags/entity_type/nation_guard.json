@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#nusmp:nation_guard_tier_1",
+    "#nusmp:nation_guard_tier_2",
+    "#nusmp:nation_guard_tier_3",
+    "#nusmp:nation_guard_tier_4",
+    "#nusmp:nation_guard_tier_5"
+  ]
+}

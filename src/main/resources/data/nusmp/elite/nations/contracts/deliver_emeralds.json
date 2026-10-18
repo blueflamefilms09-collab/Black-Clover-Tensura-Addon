@@ -1,0 +1,14 @@
+{
+  "type": "deliver_item",
+  "tier": 3,
+  "count": 16,
+  "title": "Emeralds for the Envoys",
+  "reward": {
+    "coins": 1680,
+    "xp": 50,
+    "rep": 15
+  },
+  "weight": 8,
+  "min_level": 5,
+  "target": "minecraft:emerald"
+}

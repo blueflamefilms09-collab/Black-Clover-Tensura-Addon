@@ -1,0 +1,15 @@
+{
+  "type": "deliver_item",
+  "tier": 4,
+  "count": 4,
+  "title": "Scrap for the Royal Armoury",
+  "reward": {
+    "coins": 3710,
+    "xp": 95,
+    "rep": 20
+  },
+  "weight": 5,
+  "min_level": 7,
+  "target": "minecraft:netherite_scrap",
+  "time_limit_minutes": 180
+}

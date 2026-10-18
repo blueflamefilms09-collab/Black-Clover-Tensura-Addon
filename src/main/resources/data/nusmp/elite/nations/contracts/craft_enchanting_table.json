@@ -1,0 +1,14 @@
+{
+  "type": "craft_item",
+  "tier": 3,
+  "count": 1,
+  "title": "A Table for the Court Mage",
+  "reward": {
+    "coins": 1540,
+    "xp": 46,
+    "rep": 15
+  },
+  "weight": 8,
+  "min_level": 5,
+  "target": "minecraft:enchanting_table"
+}
