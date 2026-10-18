@@ -1,0 +1,1123 @@
+{
+  "magic": "tensura",
+  "franchise": "tensura",
+  "name": "Dragon Nova of the Destroyer",
+  "desc": "The strongest and the most careless: she wins fights with one punch and starts the next before the dust settles. Raw dragon force with no restraint and a childlike grin.",
+  "book": "nusmp:dragon_nova_milim_book",
+  "book_name": "Diary of the Destroyer",
+  "book_lore": "She wanted to play. The mountain was in the way.",
+  "color": "#E91E8C",
+  "icon": "minecraft:firework_star",
+  "class_id": "dragon_nova_milim",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/dragon_nova_milim.png",
+  "book_texture": "nusmp:item/skill_book_3d/tensura",
+  "background_theme": "stellar",
+  "nodes": [
+    {
+      "id": "playful_destroyer",
+      "name": "Playful Destroyer",
+      "desc": "Pure joy in the fight: huge damage and speed, with careless armor.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "damage_pct": [
+          0.35,
+          0.42,
+          0.49
+        ],
+        "armor": [
+          -3.0,
+          -3.75,
+          -4.5
+        ],
+        "speed_pct": [
+          0.06,
+          0.072,
+          0.084
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:firework_star"
+    },
+    {
+      "id": "dragon_soul_guard",
+      "name": "Dragon Soul Guard",
+      "desc": "A burst of dragon will: armor and knockback resistance, calm damage.",
+      "parents": [
+        {
+          "node": "playful_destroyer",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage_pct": [
+          -0.05,
+          -0.06,
+          -0.07
+        ],
+        "armor": [
+          4.0,
+          5.0,
+          6.0
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0.4,
+          0.48,
+          0.56
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:dragon_egg"
+    },
+    {
+      "id": "dragon_soul_power",
+      "name": "Dragon Soul Power",
+      "desc": "A permanent bonus to attack damage.",
+      "parents": [
+        {
+          "node": "playful_destroyer",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:firework_star"
+    },
+    {
+      "id": "dragon_soul_vitality",
+      "name": "Dragon Soul Vitality",
+      "desc": "More hearts.",
+      "parents": [
+        {
+          "node": "dragon_soul_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          6.0,
+          7.5,
+          9.0,
+          10.5,
+          12.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:golden_apple"
+    },
+    {
+      "id": "child_sprint",
+      "name": "Child Sprint",
+      "desc": "Faster steps.",
+      "parents": [
+        {
+          "node": "playful_destroyer",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.06,
+          0.075,
+          0.09,
+          0.105,
+          0.12
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:sugar"
+    },
+    {
+      "id": "nova_stance",
+      "name": "Nova Stance",
+      "desc": "Hard to knock back.",
+      "parents": [
+        {
+          "node": "dragon_soul_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "knockback_resistance",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.1,
+          0.125,
+          0.15,
+          0.175,
+          0.2
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:anvil"
+    },
+    {
+      "id": "dragon_knuckle",
+      "name": "Dragon Knuckle",
+      "desc": "Throw a punch of compressed dragon force through the first foes in front.",
+      "parents": [
+        {
+          "node": "playful_destroyer",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "distance": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:firework_star"
+    },
+    {
+      "id": "pink_nova",
+      "name": "Pink Nova",
+      "desc": "A ring of shining force that bursts from you.",
+      "parents": [
+        {
+          "node": "dragon_soul_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "radius": [
+          4.5,
+          4.95,
+          5.4,
+          5.85
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "knockback": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:fire_charge"
+    },
+    {
+      "id": "dragon_stomp",
+      "name": "Dragon Stomp",
+      "desc": "Leap and stomp on the foes below.",
+      "parents": [
+        {
+          "node": "dragon_knuckle",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "height": [
+          0.7,
+          0.756,
+          0.812,
+          0.868
+        ],
+        "damage": [
+          10.0,
+          12.5,
+          15.0,
+          17.5
+        ],
+        "radius": [
+          4.0,
+          4.4,
+          4.8,
+          5.2
+        ],
+        "knockback": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:anvil"
+    },
+    {
+      "id": "rising_dragon_fist",
+      "name": "Rising Dragon Fist",
+      "desc": "An uppercut that sends the foe in front into the sky.",
+      "parents": [
+        {
+          "node": "pink_nova",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "uppercut",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "range": [
+          3.2,
+          3.392,
+          3.584,
+          3.776
+        ],
+        "launch": [
+          0.9,
+          0.99,
+          1.08,
+          1.17
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:blaze_rod"
+    },
+    {
+      "id": "starfall_salvo",
+      "name": "Starfall Salvo",
+      "desc": "Throw a salvo of small stars at the target.",
+      "parents": [
+        {
+          "node": "dragon_stomp",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "damage": [
+          3.5,
+          4.375,
+          5.25,
+          6.125
+        ],
+        "shots": [
+          8.0,
+          11.0,
+          14.0,
+          16.0
+        ],
+        "range": [
+          12.0,
+          12.96,
+          13.92,
+          14.88
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          240.0,
+          221.0,
+          202.0,
+          182.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:firework_rocket"
+    },
+    {
+      "id": "shockwave_punch",
+      "name": "Shockwave Punch",
+      "desc": "Punch the ground: a wave of shock races ahead.",
+      "parents": [
+        {
+          "node": "rising_dragon_fist",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "length": [
+          12.0,
+          13.2,
+          14.4,
+          15.6
+        ],
+        "width": [
+          2.0,
+          2.2,
+          2.4,
+          2.6
+        ],
+        "knockback": [
+          0.5,
+          0.55,
+          0.6,
+          0.65
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          180.0,
+          166.0,
+          151.0,
+          137.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:cobblestone"
+    },
+    {
+      "id": "hungry_spin",
+      "name": "Hungry Spin",
+      "desc": "Spin with fists out, hitting everything around you.",
+      "parents": [
+        {
+          "node": "starfall_salvo",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "whirlwind",
+      "params": {
+        "vfx": "WIND_TORNADO"
+      },
+      "values": {
+        "damage": [
+          3.5,
+          4.375,
+          5.25,
+          6.125
+        ],
+        "radius": [
+          3.5,
+          3.78,
+          4.06,
+          4.34
+        ],
+        "hits": [
+          5.0,
+          6.0,
+          8.0,
+          10.0
+        ],
+        "interval": [
+          5.0,
+          5.0,
+          5.0,
+          5.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          260.0,
+          239.0,
+          218.0,
+          198.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:iron_boots"
+    },
+    {
+      "id": "childlike_fury",
+      "name": "Childlike Fury",
+      "desc": "Every few blows in a row hit much harder.",
+      "parents": [
+        {
+          "node": "dragon_knuckle",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "combo",
+      "values": {
+        "hits": [
+          3.0,
+          3.0,
+          2.0,
+          2.0
+        ],
+        "bonus": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:blaze_powder"
+    },
+    {
+      "id": "bruiser_s_instinct",
+      "name": "Bruiser's Instinct",
+      "desc": "Your blows may strike critically.",
+      "parents": [
+        {
+          "node": "pink_nova",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ],
+        "mult": [
+          1.8,
+          1.944,
+          2.088,
+          2.232
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:flint"
+    },
+    {
+      "id": "shockwave_knock",
+      "name": "Shockwave Knock",
+      "desc": "Your hits may shove foes far back.",
+      "parents": [
+        {
+          "node": "dragon_stomp",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "knockback_on_hit",
+      "values": {
+        "strength": [
+          0.9,
+          1.035,
+          1.17,
+          1.305
+        ],
+        "chance": [
+          0.3,
+          0.345,
+          0.39,
+          0.435
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:piston"
+    },
+    {
+      "id": "nova_resilience",
+      "name": "Nova Resilience",
+      "desc": "Explosions hurt you much less.",
+      "parents": [
+        {
+          "node": "rising_dragon_fist",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "explosion"
+      },
+      "values": {
+        "pct": [
+          0.4,
+          0.48,
+          0.56,
+          0.64
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:tnt"
+    },
+    {
+      "id": "tireless_appetite",
+      "name": "Tireless Appetite",
+      "desc": "You tire more slowly.",
+      "parents": [
+        {
+          "node": "starfall_salvo",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "hunger_saver",
+      "values": {
+        "pct": [
+          0.35,
+          0.42,
+          0.49,
+          0.56
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:cake"
+    },
+    {
+      "id": "hot_streak",
+      "name": "Hot Streak",
+      "desc": "Consecutive blows build momentum.",
+      "parents": [
+        {
+          "node": "shockwave_punch",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "momentum",
+      "values": {
+        "per_stack": [
+          0.05,
+          0.0575,
+          0.065,
+          0.0725
+        ],
+        "max_stacks": [
+          5.0,
+          6.0,
+          8.0,
+          10.0
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:amethyst_shard"
+    },
+    {
+      "id": "dragon_soul_recovery",
+      "name": "Dragon Soul Recovery",
+      "desc": "You heal while at low health.",
+      "parents": [
+        {
+          "node": "hungry_spin",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "low_health"
+      },
+      "values": {
+        "per_second": [
+          1.2,
+          1.44,
+          1.68,
+          1.92
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:glistering_melon_slice"
+    },
+    {
+      "id": "dragon_nova",
+      "name": "Dragon Nova",
+      "desc": "Release a star-sized burst of dragon force in a mighty ring around you.",
+      "parents": [
+        {
+          "node": "hungry_spin",
+          "level": 3
+        },
+        {
+          "node": "dragon_soul_recovery",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "damage": [
+          38.0,
+          47.5,
+          57.0
+        ],
+        "radius": [
+          10.0,
+          11.0,
+          12
+        ],
+        "targets": [
+          14.0,
+          16.0,
+          16.0
+        ],
+        "knockback": [
+          0.6,
+          0.66,
+          0.72
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1500.0,
+          1380.0,
+          1260.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:firework_star"
+    },
+    {
+      "id": "destroyer_s_barrage",
+      "name": "Destroyer's Barrage",
+      "desc": "Call a rain of dragon-force meteors on the spot you look at.",
+      "parents": [
+        {
+          "node": "shockwave_punch",
+          "level": 3
+        },
+        {
+          "node": "hot_streak",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "delay": [
+          20.0,
+          19.0,
+          18.0
+        ],
+        "damage": [
+          36.0,
+          45.0,
+          54.0
+        ],
+        "radius": [
+          9.0,
+          9.9,
+          10
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348
+        ],
+        "cooldown": [
+          1500.0,
+          1380.0,
+          1260.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:fire_charge"
+    }
+  ]
+}
