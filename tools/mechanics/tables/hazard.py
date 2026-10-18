@@ -15,7 +15,7 @@ BASES = [
          trigs=["interact", "sight"],
          ctrs=[("sneak_through", dict(secs=6)), ("lever", {})]),
 
-    base("rolling_boulder", "The Rolling Boulder", "D&D: Dungeon Master's Guide",
+    base("rolling_boulder", "The Rolling Boulder", "D&D: Xanathar's Guide to Everything",
          "A tripwire in a long hall and a rumble from behind: the delvers who do not duck are carried off down the corridor by a boulder with no particular malice and no brakes.",
          "Indiana Jones had a better hat. You have a worse boulder.", "zone",
          T("proximity", r=3, cooldown=300),
@@ -49,7 +49,7 @@ BASES = [
          trigs=["proximity", "timer"],
          ctrs=[("lever", {}), ("hold_light", dict(secs=8))]),
 
-    base("fire_jets", "The Fire Jets", "D&D: Dungeon Master's Guide",
+    base("fire_jets", "The Fire Jets", "D&D: Xanathar's Guide to Everything",
          "Hidden nozzles along the corridor open one after another in a rolling wave of flame; the old dwarves made them to guard the forge, and the forge is long gone, but the nozzles are not.",
          "Mind the gaps between the flames.", "zone",
          T("timer", every=(200, -10)),
@@ -136,7 +136,7 @@ BASES = [
          [E("root", secs=(2, 0.2)), E("damage", amount=(2, 0.6), kind="generic", delay=10), E("spawn_ambush", group="knight", count=(1, 0.4), hp=1.0, delay=30)],
          cost=4, weight=10, themes=["shadow", "vampire_castle", "spider_warrens"],
          elems=[El("webs", "Spider Wire", "A thread of spider silk instead: webs and a slow, sticky delay.", swap={0: ("place", dict(block="minecraft:cobweb", shape="scatter", radius=3, height=1, count=(6, 1), at="player", secs=(10, 0.5)))}, cost=0),
-                El("net", "The Net", "A net drops: a cage closes round the runners.", swap={0: ("cage", dict(radius=2, height=3, block="minecraft:iron_bars", at="player", secs=(8, 0.5)))}, cost=1)],
+                El("net", "The Second Snag", "The first snag is only a warning; from the second on, the hunters come in earnest, and a net drops round the runners.", swap={0: ("cage", dict(radius=2, height=3, block="minecraft:iron_bars", at="player", secs=(8, 0.5)))}, add=[E("counter_add", name="snags", n=1)], set={2: {"if": "snags>=1"}}, cost=1)],
          trigs=["jump", "proximity"],
          ctrs=[("sneak_through", dict(secs=6)), ("kill_all", dict(group="knight", count=1))]),
 

@@ -57,7 +57,7 @@ BASES = [
          [SEAL(), E("wall_blink", block="minecraft:iron_bars", period=40, radius=4, secs=(40, 2), delay=100), E("spawn_ambush", group="construct", count=(2, 0.4), hp=1.0, delay=900, times=3, every=900)],
          C("lever"), reward="loot", cost=4, weight=12, themes=["gravity", "dwarven_forgehold", "infernal_foundry"],
          elems=[El("pressure", "Gallery of Pressure", "Pressure plates and a lever: the plate is the hint, standing on it for a few seconds does the trick.", ctr=dict(kind="stand_plate", secs=8)),
-                El("loud", "Gallery of Bells", "The bells are loud and relentless: a quake rattles the room until the lever is found.", swap={2: ("quake", dict(secs=(4, 0.4), dmg=(1, 0.3), delay=600, times=4, every=600))}, cost=1)],
+                El("loud", "Gallery of Bells", "The bells are loud and relentless: a quake rattles the room until the lever is found.", swap={2: ("quake", dict(secs=(4, 0.4), dmg=(1, 0.3), delay=600, times=4, every=600))}, add=[E("unseal", delay=3000)], cost=1)],
          trigs=["floor_enter", "interact"],
          ctrs=[("sequence", dict(steps=3)), ("kill_marked", dict(group="construct"))]),
 
@@ -101,7 +101,7 @@ BASES = [
          [SEAL(), E("lights_out", radius=16, secs=0), E("effect", id="minecraft:darkness", secs=(60, 4), amp=0)],
          C("hold_light", secs=10), reward="loot", cost=3, weight=11, themes=["crystal_geode", "astral", "shadow"],
          elems=[El("echo", "Echoing Relay", "The dark has voices in it: a swarm of cave biters stirs while the lantern burns.", add=[E("spawn_swarm", kind="cave_spider", count=(4, 0.8), delay=200, times=2, every=400)], cost=2),
-                El("mirror", "Mirror Relay", "The room is lined with mirrors that throw the light back: lit crystals dazzle the eyes.", add=[E("effect", id="minecraft:nausea", secs=(4, 0.3), amp=0, delay=100, times=5, every=200)])],
+                El("mirror", "Mirror Relay", "The room is lined with mirrors that throw the light back: lit crystals dazzle the eyes.", add=[E("effect", id="minecraft:nausea", secs=(4, 0.3), amp=0, delay=100, times=5, every=200), E("reveal", secs=(10, 1), delay=40, times=4, every=600)])],
          trigs=["area_enter", "dark"],
          ctrs=[("stand_plate", dict(secs=8)), ("survive", dict(secs=30))]),
 
@@ -222,7 +222,7 @@ BASES = [
          [SEAL(), E("rukh", align="dark", shape="ring", count=8), E("effect", id="minecraft:blindness", secs=(2, 0.2), amp=0, delay=400, times=6, every=400)],
          C("sequence", steps=3), reward="loot", cost=3, weight=11, themes=["vampire_castle", "haunted_manor", "feywild_grove"],
          elems=[El("five", "The Five-Card Spread", "A five-card spread, longer and meaner.", ctr=dict(kind="sequence", steps=5), cost=1),
-                El("curse", "The Cursed Reading", "A wrong card brings the curse of the pavilion: wither and weakness.", add=[E("effect", id="minecraft:wither", secs=(3, 0.3), amp=0, delay=500, times=4, every=500)], cost=1)],
+                El("curse", "The Cursed Reading", "A lectern of cards stands beside the table, and a wrong card brings the curse of the pavilion: wither and weakness.", add=[E("prop", kind="lectern", count=1, at="anchor"), E("effect", id="minecraft:wither", secs=(3, 0.3), amp=0, delay=500, times=4, every=500)], cost=1)],
          trigs=["area_enter", "interact"],
          ctrs=[("mirror", dict(steps=3)), ("item_offer", dict(item="minecraft:amethyst_shard", count=1))]),
 ]

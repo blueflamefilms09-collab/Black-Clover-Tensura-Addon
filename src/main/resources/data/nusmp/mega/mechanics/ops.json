@@ -1,6 +1,6 @@
 {
  "version": 1,
- "total": 750,
+ "total": 1000,
  "counts": {
   "floor": 125,
   "puzzle": 125,
@@ -8,8 +8,8 @@
   "combat": 125,
   "risk": 125,
   "boss": 125,
-  "travel": 0,
-  "party": 0
+  "travel": 125,
+  "party": 125
  },
  "ops": {
   "effect": {

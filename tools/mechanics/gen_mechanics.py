@@ -304,6 +304,7 @@ def guard(all_m, bases_by_cat, partial=False):
         else: check_args(m["id"] + " counter", {k: v for k, v in c.items() if k != "kind"}, OPS_MOD.COUNTERS[c["kind"]]["args"], problems)
         if t["kind"] == "boss_hp" and m["scope"] != "boss": problems.append(m["id"] + ": boss_hp trigger outside a boss mechanic")
         for i, e in enumerate(m["effects"]):
+            if "if" in e and not re.match(r"^\s*[a-z0-9_]+\s*(>=|<=|==|!=|>|<)\s*-?\d+\s*$", e["if"]): problems.append("%s effect %d: bad condition %r" % (m["id"], i, e["if"]))
             if e["op"] not in OPS_MOD.OPS: problems.append("%s: unknown primitive %s" % (m["id"], e["op"])); continue
             check_args("%s effect %d (%s)" % (m["id"], i, e["op"]), {k: v for k, v in e.items() if k not in ("op", "delay", "chance", "times", "every", "if")}, OPS_MOD.OPS[e["op"]]["args"], problems)
     if partial: return problems

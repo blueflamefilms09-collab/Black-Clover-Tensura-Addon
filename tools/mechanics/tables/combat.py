@@ -112,7 +112,7 @@ BASES = [
          elems=[El("heal", "The Hunters' Feast", "The pack also recovers a third of its health.", add=[E("heal_mobs", pct=30)], cost=1),
                 El("fear", "Frightening Frenzy", "The howl rattles the delvers too.", add=[E("effect", id="minecraft:weakness", secs=(8, 0.6), amp=0)], cost=1)],
          trigs=["floor_enter", "damage_taken"],
-         ctrs=[("kill_marked", dict(group="beast")), ("hold_light", dict(secs=8))]),
+         ctrs=[("no_damage", dict(secs=20)), ("kill_marked", dict(group="beast"))]),
 
     base("homunculus_core", "The Homunculus Core", "Fullmetal Alchemist",
          "The enemies here stitch themselves back together as fast as they are torn apart: somewhere in each is a red core, and while it holds, they live.",
@@ -177,7 +177,7 @@ BASES = [
          [E("spawn_ambush", group="undead", count=(4, 0.8), hp=1.0), E("rukh", align="dark", shape="ring", count=10), E("sound", id="minecraft:entity.wither.spawn", vol=0.6, pitch=1.4)],
          C("kill_all", group="undead", count=4), reward="xp", cost=5, weight=9, themes=["necropolis", "shadow", "cursed_archive"], road="abyssal",
          elems=[El("kill", "The Cult's Reply", "It answers every kill of its own followers instead: two more come for each death.", set={}, trig=dict(kind="kill", n=2), cost=1),
-                El("blood", "The Blood Cult", "The reinforcements are fiends of blood.", set={0: dict(group="fiend")}, cost=1)],
+                El("blood", "The Blood Cult", "The reinforcements are fiends of blood, and the cult withdraws them after two minutes if they have not finished the job.", set={0: dict(group="fiend")}, add=[E("kill_mobs", delay=2400)], cost=1)],
          trigs=["area_enter", "hp_below"],
          ctrs=[("kill_marked", dict(group="undead")), ("survive", dict(secs=50))]),
 
