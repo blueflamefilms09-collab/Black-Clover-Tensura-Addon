@@ -1,0 +1,1123 @@
+{
+  "magic": "danmachi",
+  "franchise": "danmachi",
+  "name": "Developmental Ability: Hunter",
+  "desc": "The Level-up ability of a monster-slayer: spotting weak points, harvesting more from each kill and cleaving through whatever the dungeon spawns.",
+  "book": "nusmp:hunter_ability_book",
+  "book_name": "Hunter's Ledger of Kills",
+  "book_lore": "Every monster is just a lesson with a long tail.",
+  "color": "#B8472D",
+  "icon": "minecraft:bow",
+  "class_id": "hunter_ability",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/hunter_ability.png",
+  "book_texture": "nusmp:item/skill_book_3d/danmachi",
+  "background_theme": "ruin",
+  "nodes": [
+    {
+      "id": "stalker_s_stance",
+      "name": "Stalker's Stance",
+      "desc": "Quiet and patient: sharper crits and a little extra damage, slightly slower.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage_pct": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "armor": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "speed_pct": [
+          -0.05,
+          -0.06,
+          -0.07
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.15,
+          0.18,
+          0.21
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:spyglass"
+    },
+    {
+      "id": "trophy_hunter",
+      "name": "Trophy Hunter",
+      "desc": "Go for the big prize: much more damage, thin armor.",
+      "parents": [
+        {
+          "node": "stalker_s_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "damage_pct": [
+          0.25,
+          0.3,
+          0.35
+        ],
+        "armor": [
+          -2.0,
+          -2.5,
+          -3.0
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:dragon_head"
+    },
+    {
+      "id": "monster_slayer_s_arm",
+      "name": "Monster-Slayer's Arm",
+      "desc": "Strong, practiced hands.",
+      "parents": [
+        {
+          "node": "stalker_s_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.5,
+          1.875,
+          2.25,
+          2.625,
+          3.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:iron_axe"
+    },
+    {
+      "id": "stalker_s_footing",
+      "name": "Stalker's Footing",
+      "desc": "Fast, quiet feet.",
+      "parents": [
+        {
+          "node": "trophy_hunter",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.04,
+          0.05,
+          0.06,
+          0.07,
+          0.08
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "hunter_s_vigor",
+      "name": "Hunter's Vigor",
+      "desc": "A pool of health to burn.",
+      "parents": [
+        {
+          "node": "stalker_s_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:cooked_beef"
+    },
+    {
+      "id": "eagle_s_reach",
+      "name": "Eagle's Reach",
+      "desc": "Further eye, further reach.",
+      "parents": [
+        {
+          "node": "trophy_hunter",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "entity_interaction_range",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:spyglass"
+    },
+    {
+      "id": "hunting_mark",
+      "name": "Hunting Mark",
+      "desc": "Mark a monster; it takes extra damage from you for a while.",
+      "parents": [
+        {
+          "node": "stalker_s_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "mark",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "range": [
+          24.0,
+          26.4,
+          28.8,
+          31.2
+        ],
+        "seconds": [
+          8.0,
+          9.0,
+          10.0,
+          12.0
+        ],
+        "bonus": [
+          0.35,
+          0.42,
+          0.49,
+          0.56
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:name_tag"
+    },
+    {
+      "id": "hunter_s_kill_shot",
+      "name": "Hunter's Kill Shot",
+      "desc": "A blow that is devastating against an already wounded monster.",
+      "parents": [
+        {
+          "node": "trophy_hunter",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "execute",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          10.0,
+          12.5,
+          15.0,
+          17.5
+        ],
+        "range": [
+          3.5,
+          3.71,
+          3.92,
+          4.13
+        ],
+        "bonus": [
+          1.1,
+          1.265,
+          1.43,
+          1.595
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "trophy_cleave",
+      "name": "Trophy Cleave",
+      "desc": "A wide cleave through the monsters in front of you.",
+      "parents": [
+        {
+          "node": "hunting_mark",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          4.0,
+          4.32,
+          4.64,
+          4.96
+        ],
+        "half_angle": [
+          55.0,
+          60.5,
+          66.0,
+          71.5
+        ],
+        "targets": [
+          2.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "knockback": [
+          0.4,
+          0.44,
+          0.48,
+          0.52
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          100.0,
+          92.0,
+          84.0,
+          76.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:iron_axe"
+    },
+    {
+      "id": "rending_furrow",
+      "name": "Rending Furrow",
+      "desc": "Drag the blade and cut a furrow along the floor ahead.",
+      "parents": [
+        {
+          "node": "hunter_s_kill_shot",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "length": [
+          12.0,
+          13.2,
+          14.4,
+          15.6
+        ],
+        "width": [
+          2.0,
+          2.2,
+          2.4,
+          2.6
+        ],
+        "knockback": [
+          0.5,
+          0.55,
+          0.6,
+          0.65
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          180.0,
+          166.0,
+          151.0,
+          137.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:stone_axe"
+    },
+    {
+      "id": "field_dressing_bite",
+      "name": "Field Dressing Bite",
+      "desc": "A savage cut that heals you for a share of the damage it deals.",
+      "parents": [
+        {
+          "node": "trophy_cleave",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "drain_bite",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "range": [
+          3.2,
+          3.392,
+          3.584,
+          3.776
+        ],
+        "heal_pct": [
+          0.3,
+          0.336,
+          0.372,
+          0.408
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:beef"
+    },
+    {
+      "id": "trap_darts",
+      "name": "Trap Darts",
+      "desc": "A burst of darts at the monster you look at.",
+      "parents": [
+        {
+          "node": "rending_furrow",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "WEAPON_CONSTRUCTS"
+      },
+      "values": {
+        "damage": [
+          2.5,
+          3.125,
+          3.75,
+          4.375
+        ],
+        "shots": [
+          6.0,
+          8.0,
+          10.0,
+          12.0
+        ],
+        "range": [
+          16.0,
+          17.28,
+          18.56,
+          19.84
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          240.0,
+          221.0,
+          202.0,
+          182.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:arrow"
+    },
+    {
+      "id": "cover_scent",
+      "name": "Cover Scent",
+      "desc": "A pinch of herbs and smoke hides you from the monsters around you.",
+      "parents": [
+        {
+          "node": "field_dressing_bite",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "smoke",
+      "params": {
+        "vfx": "ASH_FORMATION"
+      },
+      "values": {
+        "radius": [
+          5.0,
+          5.5,
+          6.0,
+          6.5
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:fern"
+    },
+    {
+      "id": "monster_hunter",
+      "name": "Monster Hunter",
+      "desc": "You deal more damage to hostile monsters.",
+      "parents": [
+        {
+          "node": "hunting_mark",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_vs",
+      "params": {
+        "category": "monster"
+      },
+      "values": {
+        "bonus": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:rotten_flesh"
+    },
+    {
+      "id": "trophy_drops",
+      "name": "Trophy Drops",
+      "desc": "A kill may drop an extra stack of loot.",
+      "parents": [
+        {
+          "node": "hunter_s_kill_shot",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "drop_bonus",
+      "values": {
+        "chance": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:chest"
+    },
+    {
+      "id": "fresh_kill_fresh_strength",
+      "name": "Fresh Kill, Fresh Strength",
+      "desc": "Each kill heals you and gives you Strength.",
+      "parents": [
+        {
+          "node": "trophy_cleave",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "kill_reward",
+      "params": {
+        "effect": "strength"
+      },
+      "values": {
+        "heal": [
+          4.0,
+          5.0,
+          6.0,
+          7.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:beef"
+    },
+    {
+      "id": "weak_spot_trained",
+      "name": "Weak-Spot Trained",
+      "desc": "You deal much more damage to nearly dead monsters.",
+      "parents": [
+        {
+          "node": "rending_furrow",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "execute_threshold",
+      "values": {
+        "threshold": [
+          0.25,
+          0.275,
+          0.3,
+          0.325
+        ],
+        "bonus": [
+          0.7,
+          0.84,
+          0.98,
+          1.12
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:iron_axe"
+    },
+    {
+      "id": "veteran_s_eye",
+      "name": "Veteran's Eye",
+      "desc": "Your blows may strike critically.",
+      "parents": [
+        {
+          "node": "field_dressing_bite",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ],
+        "mult": [
+          1.8,
+          1.944,
+          2.088,
+          2.232
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:spyglass"
+    },
+    {
+      "id": "hunting_rhythm",
+      "name": "Hunting Rhythm",
+      "desc": "Blows in a row grow stronger.",
+      "parents": [
+        {
+          "node": "trap_darts",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "momentum",
+      "values": {
+        "per_stack": [
+          0.04,
+          0.046,
+          0.052,
+          0.058
+        ],
+        "max_stacks": [
+          6.0,
+          8.0,
+          10.0,
+          11.0
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:flint"
+    },
+    {
+      "id": "spiked_gear",
+      "name": "Spiked Gear",
+      "desc": "A share of the damage you take returns to the attacker.",
+      "parents": [
+        {
+          "node": "cover_scent",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "thorns",
+      "values": {
+        "pct": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ],
+        "rest": [
+          20.0,
+          20.0,
+          20.0,
+          20.0
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:pointed_dripstone"
+    },
+    {
+      "id": "hunter_s_great_kill",
+      "name": "Hunter's Great Kill",
+      "desc": "A single blow meant for the biggest thing in the room.",
+      "parents": [
+        {
+          "node": "cover_scent",
+          "level": 3
+        },
+        {
+          "node": "spiked_gear",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "execute",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "damage": [
+          30.0,
+          37.5,
+          45.0
+        ],
+        "range": [
+          5.0,
+          5.3,
+          5.6
+        ],
+        "bonus": [
+          2.0,
+          2.3,
+          2.6
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1300.0,
+          1196.0,
+          1092.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:netherite_axe"
+    },
+    {
+      "id": "monster_sweep",
+      "name": "Monster Sweep",
+      "desc": "Clear the room with a vast sweeping cleave.",
+      "parents": [
+        {
+          "node": "trap_darts",
+          "level": 3
+        },
+        {
+          "node": "hunting_rhythm",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          22.0,
+          27.5,
+          33.0
+        ],
+        "range": [
+          6.0,
+          6.48,
+          6.96
+        ],
+        "half_angle": [
+          70.0,
+          77.0,
+          80
+        ],
+        "targets": [
+          6.0,
+          8.0,
+          11.0
+        ],
+        "knockback": [
+          0.4,
+          0.44,
+          0.48
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174
+        ],
+        "cooldown": [
+          1400.0,
+          1288.0,
+          1176.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:netherite_sword"
+    }
+  ]
+}

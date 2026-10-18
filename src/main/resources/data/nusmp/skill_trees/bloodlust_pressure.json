@@ -986,7 +986,7 @@
     {
       "id": "monarch_s_roar",
       "name": "Monarch's Roar",
-      "desc": "A roar that shatters the nerve of everything near you: a mighty ring of force and stunning.",
+      "desc": "A roar that shatters the nerve of everything near you: a mighty ring of force that hurls them away.",
       "parents": [
         {
           "node": "rippling_terror",

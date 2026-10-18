@@ -416,7 +416,7 @@ LINES.append(Line(
         P("Blood Memory", "Kills give more experience.", "xp_bonus", "minecraft:experience_bottle", pct=0.15),
     ],
     finishers=[
-        A("Monarch's Roar", "A roar that shatters the nerve of everything near you: a mighty ring of force and stunning.", "ring_burst", "minecraft:dragon_head", damage=22, radius=7, targets=8, knockback=2.0, cooldown=1400, vfx="WIND_RING"),
+        A("Monarch's Roar", "A roar that shatters the nerve of everything near you: a mighty ring of force that hurls them away.", "ring_burst", "minecraft:dragon_head", damage=22, radius=7, targets=8, knockback=2.0, cooldown=1400, vfx="WIND_RING"),
         A("Wall of Killing Intent", "A lane of crushing menace sweeps ahead of you.", "ground_wave", "minecraft:netherite_scrap", damage=24, length=18, width=5, cooldown=1300, vfx="DEVIL_CIRCLE"),
     ],
 ))

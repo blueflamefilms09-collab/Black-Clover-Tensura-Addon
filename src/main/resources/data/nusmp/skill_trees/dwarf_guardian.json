@@ -606,8 +606,8 @@
       "icon": "minecraft:honey_bottle"
     },
     {
-      "id": "hold_the_line",
-      "name": "Hold the Line",
+      "id": "hold_the_doorway",
+      "name": "Hold the Doorway",
       "desc": "A bellowed order: you and your allies gain Resistance.",
       "parents": [
         {
@@ -914,7 +914,7 @@
       "desc": "Your blows may shove the monster back.",
       "parents": [
         {
-          "node": "hold_the_line",
+          "node": "hold_the_doorway",
           "level": 2
         }
       ],
@@ -1041,7 +1041,7 @@
       "desc": "One swing that cracks the floor outward in a ring.",
       "parents": [
         {
-          "node": "hold_the_line",
+          "node": "hold_the_doorway",
           "level": 3
         },
         {

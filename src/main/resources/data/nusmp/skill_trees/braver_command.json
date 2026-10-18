@@ -808,8 +808,8 @@
       "icon": "minecraft:rotten_flesh"
     },
     {
-      "id": "drilled_combination",
-      "name": "Drilled Combination",
+      "id": "tactical_combination",
+      "name": "Tactical Combination",
       "desc": "Every few blows in a row hit much harder.",
       "parents": [
         {

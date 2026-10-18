@@ -261,8 +261,8 @@
       "icon": "minecraft:clock"
     },
     {
-      "id": "weightless_landing",
-      "name": "Weightless Landing",
+      "id": "gale_cushioned_landing",
+      "name": "Gale-Cushioned Landing",
       "desc": "The gale softens every landing.",
       "parents": [
         {

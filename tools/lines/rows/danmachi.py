@@ -236,7 +236,7 @@ LINES.append(Line(
         T("Gale-Honed Edge", "A wind-sharpened blade.", "attack_damage", 1.5, "minecraft:golden_sword"),
         T("Tailwind", "A wind at your back.", "movement_speed", 0.05, "minecraft:golden_boots", op="mult"),
         T("Sword Princess's Poise", "Calm, flowing swing speed.", "attack_speed", 0.06, "minecraft:clock", op="mult"),
-        T("Weightless Landing", "The gale softens every landing.", "safe_fall_distance", 2, "minecraft:feather"),
+        T("Gale-Cushioned Landing", "The gale softens every landing.", "safe_fall_distance", 2, "minecraft:feather"),
     ],
     arts=[
         A("Airiel Armor", "The wind takes the shape of armor: Speed and Resistance for a while.", "buff_self", "minecraft:wind_charge", effect="speed", effect2="resistance", seconds=14, vfx="WIND_RING"),
@@ -408,7 +408,7 @@ LINES.append(Line(
     passives=[
         P("Rallying Presence", "Allies near you hit harder: Strength.", "aura", "minecraft:white_banner", effect="strength", target="allies", radius=8),
         P("Monster Expert", "You deal more damage to hostile monsters.", "dmg_vs", "minecraft:rotten_flesh", category="monster", bonus=0.2),
-        P("Drilled Combination", "Every few blows in a row hit much harder.", "combo", "minecraft:golden_sword", hits=4, bonus=0.5),
+        P("Tactical Combination", "Every few blows in a row hit much harder.", "combo", "minecraft:golden_sword", hits=4, bonus=0.5),
         P("Eye for the Throat", "Your blows may strike critically.", "crit", "minecraft:flint", chance=0.15, mult=1.8),
         P("Close the Opening", "You deal much more damage to nearly dead monsters.", "execute_threshold", "minecraft:trident", threshold=0.25, bonus=0.6),
         P("Field Dressing", "Your wounds close slowly, even out of combat.", "mending", "minecraft:honeycomb", seconds=14),
@@ -481,7 +481,7 @@ LINES.append(Line(
         A("Guardian's Roar", "A bellow that makes every hostile monster look your way.", "taunt", "minecraft:goat_horn", radius=9, targets=6, vfx="DEVIL_CIRCLE"),
         A("Hammer Quake", "Drive the axe haft into the floor; a shockwave runs out ahead.", "ground_wave", "minecraft:anvil", damage=7, length=10, width=3, knockback=1.2, vfx="STONE_SPIKES"),
         A("Dwarven Spirits", "A swig from the flask: heal and regenerate.", "heal_self", "minecraft:honey_bottle", amount=9, regen_seconds=7, vfx="SPIRIT_AURA"),
-        A("Hold the Line", "A bellowed order: you and your allies gain Resistance.", "buff_aura", "minecraft:bell", effect="resistance", radius=9, seconds=12, vfx="MAGIC_CIRCLE"),
+        A("Hold the Doorway", "A bellowed order: you and your allies gain Resistance.", "buff_aura", "minecraft:bell", effect="resistance", radius=9, seconds=12, vfx="MAGIC_CIRCLE"),
         A("Stalwart Reprisal", "For a time, a big share of the damage you take is thrown back at the attacker.", "ward_reflect", "minecraft:crying_obsidian", reflect_pct=0.4, vfx="EARTH_SPIKES"),
     ],
     passives=[
@@ -615,5 +615,399 @@ LINES.append(Line(
     finishers=[
         A("Warrior's Wrath", "The ground splits ahead of you in one titanic shockwave.", "ground_wave", "minecraft:netherite_block", damage=24, length=18, width=5, knockback=1.8, cooldown=1400, vfx="STONE_SPIKES"),
         A("Unstoppable Charge", "Run the whole line down, hitting everyone on it.", "dash_strike", "minecraft:netherite_axe", distance=11, damage=24, targets=6, cooldown=1300, vfx="FLAME_TRAIL"),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------------------------- 16
+LINES.append(Line(
+    id="crozzo_magic_sword", name="Crozzo's Magic Sword", franchise=F,
+    desc="A smith's gamble: a sword that fires real flame with every swing and shatters when the fire is spent. Overload for tremendous damage, then hold the shard.",
+    color="#d9421c", background="magma", icon="minecraft:netherite_sword",
+    book_name="Forging Notes on a Sword That Burns Out", book_lore="A weapon that lasts forever is a weapon that was never really used.",
+    stances=[
+        S("Overload Stance", "Push the sword to its limit: huge damage, fragile for it.", "minecraft:fire_charge", damage_pct=0.35, armor=-3, vfx="FLAME_EXPLOSION"),
+        S("Careful Edge", "Hold the flame back: sturdier, steadier, and the blade lasts.", "minecraft:iron_sword", armor=3, regen=0.3, damage_pct=0.0, vfx="MIRROR_PANE"),
+    ],
+    stats=[
+        T("Smith's Hand", "A strong, steady forearm.", "attack_damage", 1.5, "minecraft:iron_pickaxe"),
+        T("Forge-Hardened", "Years at the fire thicken the skin.", "armor", 1, "minecraft:iron_chestplate"),
+        T("Burning Stamina", "More maximum health.", "max_health", 2, "minecraft:golden_apple"),
+    ],
+    arts=[
+        A("Magic Sword Swing", "A fiery arc that scorches every monster in front.", "cone_strike", "minecraft:netherite_sword", damage=8, range=4, half_angle=50, vfx="FIRE_BURST"),
+        A("Crozzo Flame Slash", "The blade fires a long bar of flame that pierces a line of monsters.", "ray_shot", "minecraft:blaze_rod", damage=9, range=22, pierce=2, vfx="FIRE_SPIRAL"),
+        A("Whetstone Ritual", "A quick sharpening: Strength and Haste for a while.", "buff_self", "minecraft:flint", effect="strength", effect2="haste", seconds=14, vfx="FIRE_BURST"),
+        A("Lava Rift", "Strike the ground and a seam of flame races away ahead.", "ground_wave", "minecraft:magma_block", damage=7, length=12, width=2, vfx="FLAME_TRAIL"),
+        A("Overload Blast", "The sword vents all at once in a ring of fire.", "ring_burst", "minecraft:fire_charge", damage=7, radius=4.5, knockback=1.0, vfx="FLAME_EXPLOSION"),
+        A("Final Cut", "One heavy swing, much stronger against a wounded monster.", "execute", "minecraft:iron_axe", damage=10, bonus=0.9, vfx="WIND_SLASH"),
+        A("Elder Flame Strike", "A pillar of flame drops on the place you look at.", "meteor_drop", "minecraft:lava_bucket", damage=14, radius=4, range=22, vfx="FLAME_EXPLOSION"),
+    ],
+    passives=[
+        P("Flame-Edged Fury", "While you are on fire your blows hit harder.", "dmg_when", "minecraft:blaze_powder", condition="on_fire", bonus=0.3),
+        P("Forge Hardened", "You take much less fire damage.", "resist", "minecraft:lava_bucket", damage_kind="fire", pct=0.4),
+        P("Heat-Cracked Crits", "Your blows may strike critically.", "crit", "minecraft:flint", chance=0.15, mult=1.8),
+        P("Searing Cut", "Your cuts may make the monster glow.", "on_hit_effect", "minecraft:glowstone_dust", effect="glowing", seconds=8, chance=0.35),
+        P("Backlash", "A share of the damage you take burns the attacker.", "thorns", "minecraft:magma_cream", pct=0.2),
+        P("Ore Sense", "A kill may drop an extra stack of loot.", "drop_bonus", "minecraft:raw_iron", chance=0.15),
+        P("Break the Weak", "You deal much more damage to nearly dead monsters.", "execute_threshold", "minecraft:iron_axe", threshold=0.25, bonus=0.7),
+    ],
+    finishers=[
+        A("Crozzo: Last Light", "The sword spends itself in one gigantic line of flame.", "ray_shot", "minecraft:nether_star", damage=28, range=32, pierce=4, cooldown=1400, vfx="FIRE_SPIRAL"),
+        A("Blade Breaks", "The blade shatters in a huge ring of burning shards.", "ring_burst", "minecraft:tnt", damage=26, radius=7, targets=8, knockback=1.8, cooldown=1500, vfx="FLAME_EXPLOSION"),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------------------------- 17
+LINES.append(Line(
+    id="hephaistos_forge", name="Hephaistos Forge-Master", franchise=F,
+    desc="Wear your workshop on the battlefield: tempered plates, hammer arcs, whetstone focus and a party that comes out better equipped than it went in.",
+    color="#c97a2b", background="iron", icon="minecraft:blast_furnace",
+    book_name="The Apprentice Smith's Catalogue", book_lore="Everything breaks. A smith is the one who brings the next one.",
+    stances=[
+        S("Forge Stance", "Stand like an anvil: heavy armor, slow healing and a slow step.", "minecraft:anvil", armor=4, regen=0.5, speed_pct=-0.1, vfx="FIRE_BURST"),
+        S("Hammer Swing", "Wind up the hammer: much more damage, a little less guard.", "minecraft:iron_pickaxe", damage_pct=0.25, armor=-1, vfx="STONE_SPIKES"),
+    ],
+    stats=[
+        T("Hammer Arm", "A smith's forearm.", "attack_damage", 1.5, "minecraft:iron_axe"),
+        T("Apron of Plates", "Layers of tempered leather and iron.", "armor", 1.5, "minecraft:iron_chestplate"),
+        T("Furnace-Fed Vigor", "A strong heart from a hot workshop.", "max_health", 3, "minecraft:cooked_beef"),
+        T("Quick Anvil Hands", "Fast, accurate strikes.", "attack_speed", 0.05, "minecraft:clock", op="mult"),
+    ],
+    arts=[
+        A("Whetstone Focus", "A moment with the stone: Haste and Resistance for a while.", "buff_self", "minecraft:flint", effect="haste", effect2="resistance", seconds=14, vfx="FIRE_BURST"),
+        A("Anvil Drop", "Leap and bring your weight down like an anvil.", "leap_slam", "minecraft:anvil", damage=9, radius=3.2, height=0.9, vfx="STONE_SPIKES"),
+        A("Tempered Gear", "Temper the party's gear on the spot: you and your allies gain Resistance.", "buff_aura", "minecraft:smithing_table", effect="resistance", radius=9, seconds=12, vfx="MAGIC_CIRCLE"),
+        A("Hammer Arc", "A wide arc of the forge hammer.", "cone_strike", "minecraft:iron_pickaxe", damage=8, range=3.8, half_angle=50, knockback=0.9, vfx="WIND_SLASH"),
+        A("Forge Plate", "A quickly-riveted plate of absorption.", "shield", "minecraft:iron_block", absorb_hearts=6, seconds=8, vfx="MIRROR_PANE"),
+        A("Furnace Smoke", "A cloud of coal smoke blinds the monsters around you.", "smoke", "minecraft:coal", radius=5, seconds=6, vfx="ASH_FORMATION"),
+        A("Spark Shower", "A shower of sparks from a heavy strike bursts out in a ring.", "ring_burst", "minecraft:flint_and_steel", damage=6, radius=4, knockback=0.9, vfx="FIRE_BURST"),
+    ],
+    passives=[
+        P("Self-Repairing Gear", "Your wounds close slowly, even out of combat.", "mending", "minecraft:iron_block", seconds=12, amount=1),
+        P("Master's Eye for Ore", "A kill may drop an extra stack of loot.", "drop_bonus", "minecraft:raw_gold", chance=0.18),
+        P("Craftsman's Experience", "Kills give more experience.", "xp_bonus", "minecraft:experience_bottle", pct=0.2),
+        P("Forge-Blast Training", "You take much less fire damage.", "resist", "minecraft:lava_bucket", damage_kind="fire", pct=0.35),
+        P("Steady Breath at the Bellows", "You tire more slowly.", "hunger_saver", "minecraft:bread", pct=0.3),
+        P("Cellar Dweller's Haste", "Deep underground you work faster: Haste.", "self_effect_when", "minecraft:iron_pickaxe", effect="haste", condition="underground"),
+        P("Cool in the Cellar", "Underground you take less damage.", "reduce_when", "minecraft:deepslate", condition="underground", pct=0.12),
+    ],
+    finishers=[
+        A("Masterwork Plating", "A full set of masterwork plate: a large absorption shield and heavy Resistance.", "shield", "minecraft:netherite_chestplate", absorb_hearts=12, seconds=14, resist_amp=1, cooldown=1500, vfx="MIRROR_PANE"),
+        A("Hammer of the Gods", "A falling hammer of forged light crashes down on the place you look at.", "meteor_drop", "minecraft:anvil", damage=28, radius=6.5, range=26, cooldown=1400, vfx="STONE_SPIKES"),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------------------------- 18
+LINES.append(Line(
+    id="cinder_ella", name="Cinder Ella", franchise=F,
+    desc="Magic that changes your face until midnight: borrowed identities, blurred outlines and a mirror dress that sends blows back where they came from.",
+    color="#d8b4ff", background="stellar", icon="minecraft:pumpkin",
+    book_name="Twelve Strokes of a Bell", book_lore="All the magic ends at midnight. Everything else you did stays done.",
+    stances=[
+        S("Borrowed Face", "Someone else's confidence: quicker with sharper crits and little armor.", "minecraft:glass", speed_pct=0.1, crit_chance=0.1, armor=-1, vfx="MIRROR_PANE"),
+        S("Midnight Bell", "Hold your breath and your composure: armored and slowly healing, with gentler blows.", "minecraft:bell", armor=3, regen=0.6, damage_pct=-0.1, vfx="SPIRIT_AURA"),
+    ],
+    stats=[
+        T("Light-Fingered Reflexes", "Quick hands.", "attack_speed", 0.06, "minecraft:rabbit_foot", op="mult"),
+        T("Sure Little Feet", "Nimble steps.", "movement_speed", 0.04, "minecraft:leather_boots", op="mult"),
+        T("Pocketful of Luck", "A brush of fortune.", "luck", 1.5, "minecraft:emerald"),
+    ],
+    arts=[
+        A("Transformation Spell", "Take someone else's shape: Invisibility and Speed for a while.", "buff_self", "minecraft:pumpkin", effect="invisibility", effect2="speed", seconds=14, vfx="MIRROR_PANE"),
+        A("Ashen Fog", "A cloud of ash and glitter blinds the monsters around you.", "smoke", "minecraft:charcoal", radius=5, seconds=6, vfx="ASH_FORMATION"),
+        A("Ball-Gown Twirl", "Twirl in a flash and appear a few blocks ahead.", "blink", "minecraft:ender_pearl", distance=9, vfx="SPATIAL_RIFT"),
+        A("Illusory Confusion", "A cone of dizzying images sickens and slows everything in it.", "debuff_cone", "minecraft:glass", effect="nausea", effect2="slowness", seconds=7, seconds2=5, vfx="MIRROR_PANE"),
+        A("Mirror Dress", "For a short while, a lot of the damage you take bounces back.", "ward_reflect", "minecraft:glass_bottle", reflect_pct=0.4, vfx="MIRROR_PANE"),
+        A("Study the Mark", "Take a good look at a monster; it takes extra damage while you do.", "mark", "minecraft:spyglass", bonus=0.3, vfx="MAGIC_CIRCLE"),
+        A("Glass Slipper Dash", "A swift dash that leaves a shimmer of glass behind.", "dash_strike", "minecraft:glass", distance=7, damage=7, vfx="WIND_SLASH"),
+    ],
+    passives=[
+        P("Unseen Little Thief", "While sneaking you fade from sight.", "self_effect_when", "minecraft:glass", effect="invisibility", condition="sneaking"),
+        P("Slip Between Blows", "You may avoid a blow completely.", "dodge", "minecraft:phantom_membrane", chance=0.13),
+        P("Sticky Fingers", "A kill may drop an extra stack of loot.", "drop_bonus", "minecraft:chest", chance=0.18),
+        P("Keen Learner", "Kills give more experience.", "xp_bonus", "minecraft:experience_bottle", pct=0.2),
+        P("Midnight Strength", "At night your wounds close faster.", "regen_when", "minecraft:clock", condition="night", per_second=0.9),
+        P("Dizzy Glamour", "Monsters near you are constantly sickened.", "aura", "minecraft:fermented_spider_eye", effect="nausea", target="enemies", radius=6),
+        P("Cat's Landing", "You take much less fall damage.", "fall_guard", "minecraft:hay_block", pct=0.5),
+    ],
+    finishers=[
+        A("Midnight Masquerade", "A vast curtain of glitter and ash hides you from every monster in range.", "smoke", "minecraft:black_dye", radius=9, seconds=14, cooldown=1500, vfx="ASH_FORMATION"),
+        A("Ball of Illusions", "You and your allies in a wide ring vanish from sight for a long while.", "buff_aura", "minecraft:ender_eye", effect="invisibility", radius=12, seconds=20, cooldown=1600, vfx="MIRROR_PANE"),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------------------------- 19
+LINES.append(Line(
+    id="dungeon_supporter", name="Supporter's Pack", franchise=F,
+    desc="The porter who makes the dive possible: potion rounds, thrown bombs, escape powder and a pack so well organized that loot never gets left behind.",
+    color="#a98c5a", background="ocean", icon="minecraft:chest",
+    book_name="The Supporter's Packing List", book_lore="If it's not in the pack, it was never going to save you.",
+    stances=[
+        S("Heavy Pack Stance", "A full pack and a straight back: tougher and healing, slower on your feet.", "minecraft:barrel", armor=3, regen=0.3, speed_pct=-0.1, vfx="SPIRIT_AURA"),
+        S("Light-Packed Sprint", "Travel light: much faster, with less armor.", "minecraft:leather_boots", speed_pct=0.15, armor=-1, vfx="WIND_RING"),
+    ],
+    stats=[
+        T("Porter's Back", "More maximum health from lugging a pack.", "max_health", 3, "minecraft:cooked_beef"),
+        T("Sure-Footed Climber", "Step over rubble without losing pace.", "step_height", 0.5, "minecraft:ladder"),
+        T("Quick Thinker", "A brush of luck.", "luck", 1, "minecraft:rabbit_foot"),
+    ],
+    arts=[
+        A("Potion Rounds", "Hand out potions: you and your allies are healed.", "heal_pulse", "minecraft:potion", amount=7, radius=8, vfx="SPIRIT_AURA"),
+        A("Thrown Bombs", "Hurl bombs from the pack at the monster you look at.", "barrage", "minecraft:gunpowder", damage=3, shots=6, range=14, vfx="FLAME_EXPLOSION"),
+        A("Escape Powder", "A pinch of dust blinds nearby monsters so you can slip out.", "smoke", "minecraft:glowstone_dust", radius=5, seconds=6, vfx="ASH_FORMATION"),
+        A("Quick Retreat", "Duck out of the fight a few blocks back.", "blink", "minecraft:leather_boots", distance=8, vfx="WIND_RING"),
+        A("Spiced Rations", "A bite for everyone: you and your allies gain Speed.", "buff_aura", "minecraft:cooked_beef", effect="speed", radius=9, seconds=14, vfx="SPIRIT_AURA"),
+        A("Bomb Pouch Burst", "The whole pouch goes off at once around you.", "ring_burst", "minecraft:tnt", damage=7, radius=4.2, knockback=1.2, vfx="FLAME_EXPLOSION"),
+        A("Spot the Loot", "Point out the monster worth taking down first; it takes extra damage for a while.", "mark", "minecraft:spyglass", bonus=0.3, vfx="MAGIC_CIRCLE"),
+    ],
+    passives=[
+        P("Pack Rat", "A kill may drop an extra stack of loot.", "drop_bonus", "minecraft:chest", chance=0.22),
+        P("Packed Lunch", "You tire more slowly.", "hunger_saver", "minecraft:bread", pct=0.35),
+        P("Slide Down Slopes", "You take much less fall damage.", "fall_guard", "minecraft:hay_block", pct=0.5),
+        P("Bomb Handler", "You take much less explosion damage.", "resist", "minecraft:tnt", damage_kind="explosion", pct=0.4),
+        P("Slippery Porter", "You may slip a blow completely.", "dodge", "minecraft:feather", chance=0.12),
+        P("Fortune in the Pack", "In daylight your luck holds.", "self_effect_when", "minecraft:emerald", effect="luck", condition="day"),
+        P("Patching Up", "Your wounds close slowly, even out of combat.", "mending", "minecraft:honeycomb", seconds=14),
+    ],
+    finishers=[
+        A("Bombardment Pack", "Empty the whole pack on one monster in a stream of bombs.", "barrage", "minecraft:tnt", damage=5, shots=9, range=22, cooldown=1300, vfx="FLAME_EXPLOSION"),
+        A("Emergency Potion Reserve", "The last potions come out all at once: a huge heal for you and your allies.", "heal_pulse", "minecraft:splash_potion", amount=20, radius=11, cooldown=1500, vfx="SPIRIT_AURA"),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------------------------- 20
+LINES.append(Line(
+    id="monster_tamer", name="Tamer's Bond", franchise=F,
+    desc="Befriend what the dungeon throws at you: calling beasts, calming the wild, sharing health with creatures and fighting with their instincts.",
+    color="#5c9e5a", background="forest", icon="minecraft:saddle",
+    book_name="A Tamer's Bestiary", book_lore="Teeth mean something different when they like you.",
+    stances=[
+        S("Bonded Stance", "Stand with the bond at your back: armored and healing, with gentler blows.", "minecraft:lead", armor=2, regen=0.6, damage_pct=-0.05, vfx="SPIRIT_AURA"),
+        S("Beast-Aspect", "Borrow the beast's fury: more damage and speed, thin armor.", "minecraft:bone", damage_pct=0.2, speed_pct=0.1, armor=-2, vfx="WIND_RING"),
+    ],
+    stats=[
+        T("Beastmaster's Frame", "More maximum health.", "max_health", 3, "minecraft:golden_apple"),
+        T("Wild Reflexes", "A beast's quick feet.", "movement_speed", 0.04, "minecraft:rabbit_foot", op="mult"),
+        T("Calming Presence", "Steady hands, steady reach.", "entity_interaction_range", 0.4, "minecraft:lead"),
+    ],
+    arts=[
+        A("Call of the Wild", "A strange call that pulls the monsters around you toward you.", "pull", "minecraft:lead", radius=9, strength=1.0, targets=5, damage=3, vfx="THREAD_LINE"),
+        A("Beast-Aspect Pounce", "Spring like a hunting cat and crash down on the monsters.", "leap_slam", "minecraft:rabbit_foot", damage=8, radius=3.2, height=1.0, vfx="WIND_RING"),
+        A("Lure", "Draw the attention of the hostile creatures nearby onto yourself.", "taunt", "minecraft:cooked_beef", radius=8, targets=5, vfx="DEVIL_CIRCLE"),
+        A("Bonded Bite", "A bite alongside your bonded companion: you heal for a share of the damage.", "drain_bite", "minecraft:bone", damage=7, heal_pct=0.35, vfx="FIRE_BURST"),
+        A("Shared Bond", "Share the bond with your allies: you all gain Speed.", "buff_aura", "minecraft:white_wool", effect="speed", radius=9, seconds=14, vfx="SPIRIT_AURA"),
+        A("Calming Whistle", "A single bright note that stops everything nearby in its tracks.", "stun_ring", "minecraft:goat_horn", radius=5, seconds=2, vfx="WIND_RING"),
+        A("Beast Medicine", "A quick poultice for you and the allies near you.", "heal_pulse", "minecraft:honey_bottle", amount=6, radius=8, vfx="SPIRIT_AURA"),
+    ],
+    passives=[
+        P("Naturalist's Insight", "You deal more damage to animals.", "dmg_vs", "minecraft:beef", category="animal", bonus=0.25),
+        P("Shared Heartbeat", "Allies near you slowly regenerate.", "aura", "minecraft:honey_block", effect="regeneration", target="allies", radius=8),
+        P("Companion's Share", "Your blows heal you.", "lifesteal", "minecraft:beef", pct=0.06),
+        P("Daylight Companionship", "By day your wounds close faster.", "regen_when", "minecraft:sunflower", condition="day", per_second=0.8),
+        P("Bond's Protection", "When nearly dead you are briefly shielded.", "last_stand", "minecraft:totem_of_undying", seconds=6),
+        P("Trail Rations", "You tire more slowly.", "hunger_saver", "minecraft:bread", pct=0.3),
+        P("Beast's Instinct", "You may avoid a blow completely.", "dodge", "minecraft:rabbit_foot", chance=0.1),
+    ],
+    finishers=[
+        A("Wild Stampede Bond", "A rush of the whole wild: you and your allies run at double speed for a long while.", "buff_aura", "minecraft:nether_star", effect="speed", radius=13, seconds=22, amp=1, cooldown=1600, vfx="SPIRIT_AURA"),
+        A("Beast Chorus Howl", "Every bonded voice howls at once in one ring of force.", "ring_burst", "minecraft:goat_horn", damage=22, radius=6.5, targets=8, knockback=1.6, cooldown=1400, vfx="WIND_RING"),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------------------------- 21
+LINES.append(Line(
+    id="dian_cecht_healer", name="Dian Cecht Healer", franchise=F,
+    desc="The familia of medics: pulses of mending, tonics for the party, antiseptic wards and a shock of smelling salts when someone nods off at the wrong moment.",
+    color="#7ae0b0", background="dream", icon="minecraft:glistering_melon_slice",
+    book_name="The Orario Infirmary Ledger", book_lore="You bring them back. They owe you nothing but a bad joke.",
+    stances=[
+        S("Bedside Manner", "Calm hands and a calm voice: strong regeneration and armor, almost no offence.", "minecraft:white_bed", regen=1.2, armor=2, damage_pct=-0.2, vfx="SPIRIT_AURA"),
+        S("Triage Rush", "Run to the wounded: faster, lightly armored.", "minecraft:golden_boots", speed_pct=0.12, armor=-1, vfx="WIND_RING"),
+    ],
+    stats=[
+        T("Reserve of Mana", "More maximum health.", "max_health", 3, "minecraft:golden_apple"),
+        T("Sterile Garb", "Tougher cloth.", "armor_toughness", 1, "minecraft:white_wool"),
+        T("Quick to the Bedside", "Faster feet.", "movement_speed", 0.03, "minecraft:leather_boots", op="mult"),
+    ],
+    arts=[
+        A("Mending Pulse", "A wave of healing for you and every ally nearby.", "heal_pulse", "minecraft:glistering_melon_slice", amount=8, radius=8, vfx="SPIRIT_AURA"),
+        A("Self-Prescription", "Dose yourself: a big heal followed by regeneration.", "heal_self", "minecraft:potion", amount=10, regen_seconds=8, vfx="SPIRIT_AURA"),
+        A("Panacea Tonic", "Drink a tonic: Regeneration and Absorption for a while.", "buff_self", "minecraft:honey_bottle", effect="regeneration", effect2="absorption", seconds=16, vfx="SPIRIT_AURA"),
+        A("Ward of Health", "You and your allies gain Regeneration for a while.", "buff_aura", "minecraft:golden_carrot", effect="regeneration", radius=10, seconds=14, vfx="MAGIC_CIRCLE"),
+        A("Antiseptic Ward", "A shell of clean light absorbs a good deal of damage.", "shield", "minecraft:glass", absorb_hearts=6, seconds=8, vfx="MIRROR_PANE"),
+        A("Sedative Flash", "A burst of calming light freezes nearby monsters for a moment.", "stun_ring", "minecraft:end_rod", radius=5, seconds=2, vfx="MAGIC_CIRCLE"),
+        A("Smelling-Salts Shock", "A sharp shock that sends the monsters around you stumbling back.", "ring_burst", "minecraft:glowstone_dust", damage=5, radius=4, knockback=1.2, vfx="MAGIC_CIRCLE"),
+    ],
+    passives=[
+        P("Bedside Radiance", "Allies near you slowly regenerate.", "aura", "minecraft:honey_block", effect="regeneration", target="allies", radius=8),
+        P("Meditative Practice", "Crouched, your wounds close fast.", "regen_when", "minecraft:book", condition="sneaking", per_second=1.0),
+        P("Chart Review", "Your wounds close slowly, even out of combat.", "mending", "minecraft:honeycomb", seconds=12, amount=1),
+        P("Case Studies", "Kills give more experience.", "xp_bonus", "minecraft:experience_bottle", pct=0.2),
+        P("Poison and Rot Training", "You take much less wither damage.", "resist", "minecraft:wither_rose", damage_kind="wither", pct=0.45),
+        P("Steady Under Stress", "At low health you take much less damage.", "reduce_when", "minecraft:totem_of_undying", condition="low_health", pct=0.25),
+        P("Anathema to the Dead", "You deal more damage to the undead.", "dmg_vs", "minecraft:bone", category="undead", bonus=0.3),
+    ],
+    finishers=[
+        A("Dian Cecht's Miracle", "A miracle of healing for you and every ally in a wide ring.", "heal_pulse", "minecraft:totem_of_undying", amount=22, radius=11, cooldown=1500, vfx="SPIRIT_AURA"),
+        A("Full-Party Recovery", "A long, strong Regeneration for you and all your allies.", "buff_aura", "minecraft:beacon", effect="regeneration", radius=12, seconds=25, amp=1, cooldown=1600, vfx="MAGIC_CIRCLE"),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------------------------- 22
+LINES.append(Line(
+    id="hunter_ability", name="Developmental Ability: Hunter", franchise=F,
+    desc="The Level-up ability of a monster-slayer: spotting weak points, harvesting more from each kill and cleaving through whatever the dungeon spawns.",
+    color="#b8472d", background="ruin", icon="minecraft:bow",
+    book_name="Hunter's Ledger of Kills", book_lore="Every monster is just a lesson with a long tail.",
+    stances=[
+        S("Stalker's Stance", "Quiet and patient: sharper crits and a little extra damage, slightly slower.", "minecraft:spyglass", crit_chance=0.15, damage_pct=0.1, speed_pct=-0.05, vfx="WIND_SLASH"),
+        S("Trophy Hunter", "Go for the big prize: much more damage, thin armor.", "minecraft:dragon_head", damage_pct=0.25, armor=-2, vfx="FIRE_BURST"),
+    ],
+    stats=[
+        T("Monster-Slayer's Arm", "Strong, practiced hands.", "attack_damage", 1.5, "minecraft:iron_axe"),
+        T("Stalker's Footing", "Fast, quiet feet.", "movement_speed", 0.04, "minecraft:leather_boots", op="mult"),
+        T("Hunter's Vigor", "A pool of health to burn.", "max_health", 2, "minecraft:cooked_beef"),
+        T("Eagle's Reach", "Further eye, further reach.", "entity_interaction_range", 0.4, "minecraft:spyglass"),
+    ],
+    arts=[
+        A("Hunting Mark", "Mark a monster; it takes extra damage from you for a while.", "mark", "minecraft:name_tag", bonus=0.35, range=24, vfx="MAGIC_CIRCLE"),
+        A("Hunter's Kill Shot", "A blow that is devastating against an already wounded monster.", "execute", "minecraft:iron_sword", damage=10, bonus=1.1, vfx="WIND_SLASH"),
+        A("Trophy Cleave", "A wide cleave through the monsters in front of you.", "cone_strike", "minecraft:iron_axe", damage=8, range=4, half_angle=55, vfx="WIND_SLASH"),
+        A("Rending Furrow", "Drag the blade and cut a furrow along the floor ahead.", "ground_wave", "minecraft:stone_axe", damage=7, length=12, width=2, vfx="WIND_SLASH"),
+        A("Field Dressing Bite", "A savage cut that heals you for a share of the damage it deals.", "drain_bite", "minecraft:beef", damage=7, heal_pct=0.3, vfx="FIRE_BURST"),
+        A("Trap Darts", "A burst of darts at the monster you look at.", "barrage", "minecraft:arrow", damage=2.5, shots=6, range=16, vfx="WEAPON_CONSTRUCTS"),
+        A("Cover Scent", "A pinch of herbs and smoke hides you from the monsters around you.", "smoke", "minecraft:fern", radius=5, seconds=6, vfx="ASH_FORMATION"),
+    ],
+    passives=[
+        P("Monster Hunter", "You deal more damage to hostile monsters.", "dmg_vs", "minecraft:rotten_flesh", category="monster", bonus=0.3),
+        P("Trophy Drops", "A kill may drop an extra stack of loot.", "drop_bonus", "minecraft:chest", chance=0.25),
+        P("Fresh Kill, Fresh Strength", "Each kill heals you and gives you Strength.", "kill_reward", "minecraft:beef", heal=4, effect="strength", seconds=6),
+        P("Weak-Spot Trained", "You deal much more damage to nearly dead monsters.", "execute_threshold", "minecraft:iron_axe", threshold=0.25, bonus=0.7),
+        P("Veteran's Eye", "Your blows may strike critically.", "crit", "minecraft:spyglass", chance=0.15, mult=1.8),
+        P("Hunting Rhythm", "Blows in a row grow stronger.", "momentum", "minecraft:flint", max_stacks=6),
+        P("Spiked Gear", "A share of the damage you take returns to the attacker.", "thorns", "minecraft:pointed_dripstone", pct=0.2),
+    ],
+    finishers=[
+        A("Hunter's Great Kill", "A single blow meant for the biggest thing in the room.", "execute", "minecraft:netherite_axe", damage=30, range=5, bonus=2.0, cooldown=1300, vfx="FIRE_BURST"),
+        A("Monster Sweep", "Clear the room with a vast sweeping cleave.", "cone_strike", "minecraft:netherite_sword", damage=22, range=6, half_angle=70, targets=6, cooldown=1400, vfx="WIND_SLASH"),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------------------------- 23
+LINES.append(Line(
+    id="endure_ability", name="Developmental Ability: Endure", franchise=F,
+    desc="Outlast everything: a body that shrugs off blows, regenerates in a pinch and hands back some of the pain. The patient face of Level-up growth.",
+    color="#6f8f9f", background="city", icon="minecraft:iron_chestplate",
+    book_name="Treatise on Not Falling Down", book_lore="Winning is optional. Being there at the end is not.",
+    stances=[
+        S("Unyielding Stance", "Brace the body: huge armor and knockback resistance, slow to move.", "minecraft:iron_block", armor=6, knockback_res=0.5, speed_pct=-0.15, vfx="EARTH_SPIKES"),
+        S("Marathon Stance", "Pace yourself: strong regeneration at the cost of damage.", "minecraft:golden_carrot", regen=1.5, damage_pct=-0.1, vfx="SPIRIT_AURA"),
+    ],
+    stats=[
+        T("Vast Reserve", "A huge pool of health.", "max_health", 5, "minecraft:golden_apple"),
+        T("Hardened Body", "Layers of toughened tissue.", "armor", 2, "minecraft:iron_chestplate"),
+        T("Planted Heels", "Very hard to push.", "knockback_resistance", 0.15, "minecraft:anvil"),
+        T("Scarred Toughness", "A hide that blunts the worst hits.", "armor_toughness", 1, "minecraft:netherite_scrap"),
+    ],
+    arts=[
+        A("Deep Reserve Breath", "Breathe deep: a big heal and then regeneration.", "heal_self", "minecraft:bread", amount=10, regen_seconds=9, vfx="SPIRIT_AURA"),
+        A("Hardening Breath", "Draw yourself tight: Resistance and Regeneration for a while.", "buff_self", "minecraft:iron_ingot", effect="resistance", effect2="regeneration", seconds=14, vfx="EARTH_SPIKES"),
+        A("Pain Returned", "For a short while a big share of the damage you take is flung back.", "ward_reflect", "minecraft:crying_obsidian", reflect_pct=0.4, vfx="DEVIL_CIRCLE"),
+        A("Stubborn Wall", "A thick shell of stubbornness that absorbs a lot of damage.", "shield", "minecraft:shield", absorb_hearts=7, resist_amp=1, vfx="MIRROR_PANE"),
+        A("Endurance Shove", "Lean into the monsters and push a wave of force along the ground.", "ground_wave", "minecraft:cobblestone", damage=6, length=9, width=3, knockback=1.5, vfx="STONE_SPIKES"),
+        A("Landing Stand", "Leap and land like a boulder, shaking the monsters near.", "leap_slam", "minecraft:anvil", damage=8, radius=3.2, height=0.8, knockback=1.2, vfx="STONE_SPIKES"),
+        A("Hold Your Ground", "A stomp that freezes the monsters around you.", "stun_ring", "minecraft:iron_boots", radius=4.5, seconds=2, vfx="EARTH_SPIKES"),
+    ],
+    passives=[
+        P("Pain Threshold", "In a fight you take less damage.", "reduce_when", "minecraft:iron_ingot", condition="in_combat", pct=0.14),
+        P("Never Down", "When nearly dead you are briefly shielded.", "last_stand", "minecraft:totem_of_undying", seconds=7),
+        P("Quiet Recovery", "Your wounds close slowly, even out of combat.", "mending", "minecraft:honeycomb", seconds=10, amount=1),
+        P("Scrape and Rise", "At low health your wounds close fast.", "regen_when", "minecraft:glistering_melon_slice", condition="low_health", per_second=1.3),
+        P("Stone-Faced", "Explosions break against you.", "resist", "minecraft:tnt", damage_kind="explosion", pct=0.35),
+        P("Padded Landing", "You take much less fall damage.", "fall_guard", "minecraft:hay_block", pct=0.6),
+        P("Marathon Lungs", "You tire more slowly.", "hunger_saver", "minecraft:bread", pct=0.35),
+    ],
+    finishers=[
+        A("Endure: Immortal Wall", "An enormous shell of absorption and Resistance: the wall nobody gets through.", "shield", "minecraft:beacon", absorb_hearts=12, seconds=14, resist_amp=1, cooldown=1500, vfx="MIRROR_PANE"),
+        A("Refuse the Count", "From the floor to your feet: a vast heal with long regeneration.", "heal_self", "minecraft:enchanted_golden_apple", amount=25, regen_seconds=12, cooldown=1600, vfx="SPIRIT_AURA"),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------------------------- 24
+LINES.append(Line(
+    id="takemikazuchi_bushi", name="Takemikazuchi Bushi", franchise=F,
+    desc="Eastern swordsmanship of the dojo-familia: drawn blades, one-cut kills and a calm that makes monsters hesitate. Inspired by the Japanese-style fighters of the story.",
+    color="#d94b4b", background="storm", icon="minecraft:iron_sword",
+    book_name="Dojo Scroll of the Thunder God", book_lore="The sheath is half the sword.",
+    stances=[
+        S("Iaido Stance", "Hand on the hilt: much more damage and better crits, but you barely move.", "minecraft:iron_sword", damage_pct=0.3, crit_chance=0.1, speed_pct=-0.1, vfx="WIND_SLASH"),
+        S("Water-Mirror Guard", "Still and ready: sturdy and hard to push, with gentler cuts.", "minecraft:shield", armor=3, knockback_res=0.2, damage_pct=-0.1, vfx="WATER_RING"),
+    ],
+    stats=[
+        T("Dojo Discipline", "Clean, practiced strokes.", "attack_damage", 1.5, "minecraft:iron_sword"),
+        T("Sure Footwork", "Dojo steps.", "movement_speed", 0.03, "minecraft:leather_boots", op="mult"),
+        T("Seated Mind", "A calm that reaches further.", "entity_interaction_range", 0.4, "minecraft:lantern"),
+        T("Padded Armor", "Light, disciplined armor.", "armor", 1, "minecraft:leather_chestplate"),
+    ],
+    arts=[
+        A("Zanshin", "Complete awareness: Haste and Resistance for a while.", "buff_self", "minecraft:lantern", effect="haste", effect2="resistance", seconds=14, vfx="SPIRIT_AURA"),
+        A("Iaido Draw", "Draw and cut in a single motion through the monsters ahead.", "dash_strike", "minecraft:iron_sword", distance=7, damage=9, vfx="WIND_SLASH"),
+        A("One-Cut Kill", "A clean cut, much deadlier against a wounded monster.", "execute", "minecraft:diamond_sword", damage=10, bonus=1.1, vfx="WIND_SLASH"),
+        A("Crescent Moon Cut", "A wide crescent across the front.", "cone_strike", "minecraft:golden_sword", damage=8, range=4, half_angle=55, vfx="WIND_SLASH"),
+        A("Falling Petal Step", "Slip forward as softly as a falling petal.", "blink", "minecraft:cherry_sapling", distance=8, vfx="WIND_RING"),
+        A("Wind-Cut Wave", "A thin cut of wind skims the ground ahead.", "ground_wave", "minecraft:white_dye", damage=7, length=12, width=2, vfx="WIND_SLASH"),
+        A("Swallow Rise", "An upward cut that sends the monster flying.", "uppercut", "minecraft:wooden_sword", damage=8, launch=0.9, vfx="WIND_SLASH"),
+    ],
+    passives=[
+        P("Sharpened Edge", "Your cuts may strike critically.", "crit", "minecraft:flint", chance=0.17, mult=1.9),
+        P("Final Stroke", "You deal much more damage to nearly dead monsters.", "execute_threshold", "minecraft:diamond_sword", threshold=0.25, bonus=0.7),
+        P("Sheathed Composure", "While you hold a sword you take less damage.", "reduce_when", "minecraft:shield", condition="holding_sword", pct=0.12),
+        P("Swordsman's Presence", "While you hold a sword you hit harder.", "dmg_when", "minecraft:iron_sword", condition="holding_sword", bonus=0.2),
+        P("Willow in the Wind", "You may sway aside from a blow completely.", "dodge", "minecraft:lily_pad", chance=0.12),
+        P("Even Breathing", "You tire more slowly.", "hunger_saver", "minecraft:bread", pct=0.3),
+        P("Scroll Study", "Your wounds close slowly, even out of combat.", "mending", "minecraft:book", seconds=14),
+    ],
+    finishers=[
+        A("Iaido: Single Flash", "A single cut of light, devastating against one monster.", "execute", "minecraft:netherite_sword", damage=30, range=6, bonus=2.0, cooldown=1300, vfx="WIND_SLASH"),
+        A("Hundred-Step Wind Cut", "A long cut of wind runs across the whole room.", "ground_wave", "minecraft:trident", damage=22, length=18, width=4, knockback=1.0, cooldown=1400, vfx="WIND_SLASH"),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------------------------- 25
+LINES.append(Line(
+    id="little_rookie", name="Little Rookie's Courage", franchise=F,
+    desc="A small adventurer facing something far too big: gather your nerve, hit it from below, throw everything you have and refuse to look away.",
+    color="#7fd7ff", background="holy", icon="minecraft:wooden_sword",
+    book_name="The Rookie's First Big Monster", book_lore="The trick, apparently, is to keep going after it is no longer a good idea.",
+    stances=[
+        S("Wide-Eyed Courage", "Eyes wide, heart racing: faster and stronger but wide open.", "minecraft:golden_carrot", damage_pct=0.2, speed_pct=0.1, armor=-2, vfx="SPIRIT_AURA"),
+        S("Duck and Cover", "Keep your head down: armored and healing, a little slow.", "minecraft:shield", armor=4, regen=0.5, speed_pct=-0.05, vfx="MIRROR_PANE"),
+    ],
+    stats=[
+        T("Small but Quick", "A little speed for a little hero.", "movement_speed", 0.04, "minecraft:feather", op="mult"),
+        T("Rookie's Nerve", "More maximum health.", "max_health", 3, "minecraft:golden_apple"),
+        T("Beginner's Luck", "Good fortune for the green.", "luck", 1.5, "minecraft:rabbit_foot"),
+    ],
+    arts=[
+        A("Gather Courage", "Take a deep breath: Strength and Speed for a while.", "buff_self", "minecraft:sugar", effect="strength", effect2="speed", seconds=14, vfx="SPIRIT_AURA"),
+        A("Rookie's Great Leap", "Jump much higher than you should and land on the monster.", "leap_slam", "minecraft:rabbit_foot", damage=9, radius=3.2, height=1.2, vfx="WIND_RING"),
+        A("Giant Flip", "Get under something large and throw it into the air.", "uppercut", "minecraft:iron_sword", damage=9, launch=1.0, vfx="WIND_SLASH"),
+        A("Deep Breath", "Calm down and stitch yourself back together.", "heal_self", "minecraft:bread", amount=9, regen_seconds=7, vfx="SPIRIT_AURA"),
+        A("Frantic Firebolts", "Fire everything you have in a hurry.", "barrage", "minecraft:fire_charge", damage=2.5, shots=7, range=14, vfx="FIRE_BURST"),
+        A("Eyes on It", "Never look away: the monster takes extra damage while you watch it.", "mark", "minecraft:ender_eye", bonus=0.3, vfx="MAGIC_CIRCLE"),
+        A("Knife Guard", "A knife held up in front of you absorbs a surprising amount of damage.", "shield", "minecraft:iron_nugget", absorb_hearts=5, seconds=8, vfx="MIRROR_PANE"),
+    ],
+    passives=[
+        P("Minotaur Slayer", "You deal more damage to bosses.", "dmg_vs", "minecraft:dragon_head", category="boss", bonus=0.3),
+        P("Still Standing", "When nearly dead you are briefly shielded.", "last_stand", "minecraft:totem_of_undying", seconds=6),
+        P("Hard to Kill", "At low health your wounds close fast.", "regen_when", "minecraft:glistering_melon_slice", condition="low_health", per_second=1.2),
+        P("Adrenaline", "Each kill heals you and gives you Speed.", "kill_reward", "minecraft:sugar", heal=3, effect="speed", seconds=6),
+        P("Beginner's Crit", "Your blows may strike critically.", "crit", "minecraft:flint", chance=0.15, mult=1.8),
+        P("Quick Duck", "You may avoid a blow completely.", "dodge", "minecraft:phantom_membrane", chance=0.12),
+        P("Learn Fast", "Kills give more experience.", "xp_bonus", "minecraft:experience_bottle", pct=0.25),
+    ],
+    finishers=[
+        A("Impossible Strike", "The attack that should not work: a leap that comes down like a falling star.", "leap_slam", "minecraft:nether_star", damage=30, radius=6, height=1.3, knockback=1.8, cooldown=1400, vfx="FLAME_EXPLOSION"),
+        A("Overcharged Spark", "Everything you have, pushed out in one line of light.", "ray_shot", "minecraft:end_crystal", damage=27, range=30, pierce=4, cooldown=1300, vfx="LIGHTNING_SPEAR"),
     ],
 ))

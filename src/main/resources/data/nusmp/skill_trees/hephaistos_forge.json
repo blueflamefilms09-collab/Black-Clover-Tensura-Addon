@@ -1,0 +1,1095 @@
+{
+  "magic": "danmachi",
+  "franchise": "danmachi",
+  "name": "Hephaistos Forge-Master",
+  "desc": "Wear your workshop on the battlefield: tempered plates, hammer arcs, whetstone focus and a party that comes out better equipped than it went in.",
+  "book": "nusmp:hephaistos_forge_book",
+  "book_name": "The Apprentice Smith's Catalogue",
+  "book_lore": "Everything breaks. A smith is the one who brings the next one.",
+  "color": "#C97A2B",
+  "icon": "minecraft:blast_furnace",
+  "class_id": "hephaistos_forge",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/hephaistos_forge.png",
+  "book_texture": "nusmp:item/skill_book_3d/danmachi",
+  "background_theme": "iron",
+  "nodes": [
+    {
+      "id": "forge_stance",
+      "name": "Forge Stance",
+      "desc": "Stand like an anvil: heavy armor, slow healing and a slow step.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          4.0,
+          5.0,
+          6.0
+        ],
+        "speed_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0.5,
+          0.6,
+          0.7
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:anvil"
+    },
+    {
+      "id": "hammer_swing",
+      "name": "Hammer Swing",
+      "desc": "Wind up the hammer: much more damage, a little less guard.",
+      "parents": [
+        {
+          "node": "forge_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage_pct": [
+          0.25,
+          0.3,
+          0.35
+        ],
+        "armor": [
+          -1.0,
+          -1.25,
+          -1.5
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:iron_pickaxe"
+    },
+    {
+      "id": "hammer_arm",
+      "name": "Hammer Arm",
+      "desc": "A smith's forearm.",
+      "parents": [
+        {
+          "node": "forge_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.5,
+          1.875,
+          2.25,
+          2.625,
+          3.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:iron_axe"
+    },
+    {
+      "id": "apron_of_plates",
+      "name": "Apron of Plates",
+      "desc": "Layers of tempered leather and iron.",
+      "parents": [
+        {
+          "node": "hammer_swing",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.5,
+          1.875,
+          2.25,
+          2.625,
+          3.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:iron_chestplate"
+    },
+    {
+      "id": "furnace_fed_vigor",
+      "name": "Furnace-Fed Vigor",
+      "desc": "A strong heart from a hot workshop.",
+      "parents": [
+        {
+          "node": "forge_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          3.0,
+          3.75,
+          4.5,
+          5.25,
+          6.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:cooked_beef"
+    },
+    {
+      "id": "quick_anvil_hands",
+      "name": "Quick Anvil Hands",
+      "desc": "Fast, accurate strikes.",
+      "parents": [
+        {
+          "node": "hammer_swing",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.05,
+          0.0625,
+          0.075,
+          0.0875,
+          0.1
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:clock"
+    },
+    {
+      "id": "whetstone_focus",
+      "name": "Whetstone Focus",
+      "desc": "A moment with the stone: Haste and Resistance for a while.",
+      "parents": [
+        {
+          "node": "forge_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "haste",
+        "effect2": "resistance",
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "seconds": [
+          14.0,
+          16.0,
+          18.0,
+          20.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "amp2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:flint"
+    },
+    {
+      "id": "anvil_drop",
+      "name": "Anvil Drop",
+      "desc": "Leap and bring your weight down like an anvil.",
+      "parents": [
+        {
+          "node": "hammer_swing",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "height": [
+          0.9,
+          0.972,
+          1.044,
+          1.116
+        ],
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "radius": [
+          3.2,
+          3.52,
+          3.84,
+          4.16
+        ],
+        "knockback": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:anvil"
+    },
+    {
+      "id": "tempered_gear",
+      "name": "Tempered Gear",
+      "desc": "Temper the party's gear on the spot: you and your allies gain Resistance.",
+      "parents": [
+        {
+          "node": "whetstone_focus",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "resistance",
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "seconds": [
+          12.0,
+          14.0,
+          16.0,
+          17.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          600.0,
+          564.0,
+          528.0,
+          492.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:smithing_table"
+    },
+    {
+      "id": "hammer_arc",
+      "name": "Hammer Arc",
+      "desc": "A wide arc of the forge hammer.",
+      "parents": [
+        {
+          "node": "anvil_drop",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          3.8,
+          4.104,
+          4.408,
+          4.712
+        ],
+        "half_angle": [
+          50.0,
+          55.0,
+          60.0,
+          65.0
+        ],
+        "targets": [
+          2.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "knockback": [
+          0.9,
+          0.99,
+          1.08,
+          1.17
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          100.0,
+          92.0,
+          84.0,
+          76.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:iron_pickaxe"
+    },
+    {
+      "id": "forge_plate",
+      "name": "Forge Plate",
+      "desc": "A quickly-riveted plate of absorption.",
+      "parents": [
+        {
+          "node": "tempered_gear",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "absorb_hearts": [
+          6.0,
+          8.0,
+          9.0,
+          10.0
+        ],
+        "seconds": [
+          8.0,
+          9.0,
+          10.0,
+          10.0
+        ],
+        "resist_amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:iron_block"
+    },
+    {
+      "id": "furnace_smoke",
+      "name": "Furnace Smoke",
+      "desc": "A cloud of coal smoke blinds the monsters around you.",
+      "parents": [
+        {
+          "node": "hammer_arc",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "smoke",
+      "params": {
+        "vfx": "ASH_FORMATION"
+      },
+      "values": {
+        "radius": [
+          5.0,
+          5.5,
+          6.0,
+          6.5
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:coal"
+    },
+    {
+      "id": "spark_shower",
+      "name": "Spark Shower",
+      "desc": "A shower of sparks from a heavy strike bursts out in a ring.",
+      "parents": [
+        {
+          "node": "forge_plate",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "radius": [
+          4.0,
+          4.4,
+          4.8,
+          5.2
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "knockback": [
+          0.9,
+          0.99,
+          1.08,
+          1.17
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:flint_and_steel"
+    },
+    {
+      "id": "self_repairing_gear",
+      "name": "Self-Repairing Gear",
+      "desc": "Your wounds close slowly, even out of combat.",
+      "parents": [
+        {
+          "node": "whetstone_focus",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "mending",
+      "values": {
+        "seconds": [
+          12.0,
+          11.0,
+          10.0,
+          8.0
+        ],
+        "amount": [
+          1,
+          1.25,
+          1.5,
+          1.75
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:iron_block"
+    },
+    {
+      "id": "master_s_eye_for_ore",
+      "name": "Master's Eye for Ore",
+      "desc": "A kill may drop an extra stack of loot.",
+      "parents": [
+        {
+          "node": "anvil_drop",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "drop_bonus",
+      "values": {
+        "chance": [
+          0.18,
+          0.216,
+          0.252,
+          0.288
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:raw_gold"
+    },
+    {
+      "id": "craftsman_s_experience",
+      "name": "Craftsman's Experience",
+      "desc": "Kills give more experience.",
+      "parents": [
+        {
+          "node": "tempered_gear",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "xp_bonus",
+      "values": {
+        "pct": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:experience_bottle"
+    },
+    {
+      "id": "forge_blast_training",
+      "name": "Forge-Blast Training",
+      "desc": "You take much less fire damage.",
+      "parents": [
+        {
+          "node": "hammer_arc",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "fire"
+      },
+      "values": {
+        "pct": [
+          0.35,
+          0.42,
+          0.49,
+          0.56
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:lava_bucket"
+    },
+    {
+      "id": "steady_breath_at_the_bellows",
+      "name": "Steady Breath at the Bellows",
+      "desc": "You tire more slowly.",
+      "parents": [
+        {
+          "node": "forge_plate",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "hunger_saver",
+      "values": {
+        "pct": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:bread"
+    },
+    {
+      "id": "cellar_dweller_s_haste",
+      "name": "Cellar Dweller's Haste",
+      "desc": "Deep underground you work faster: Haste.",
+      "parents": [
+        {
+          "node": "furnace_smoke",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "haste",
+        "condition": "underground"
+      },
+      "values": {
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:iron_pickaxe"
+    },
+    {
+      "id": "cool_in_the_cellar",
+      "name": "Cool in the Cellar",
+      "desc": "Underground you take less damage.",
+      "parents": [
+        {
+          "node": "spark_shower",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "reduce_when",
+      "params": {
+        "condition": "underground"
+      },
+      "values": {
+        "pct": [
+          0.12,
+          0.144,
+          0.168,
+          0.192
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:deepslate"
+    },
+    {
+      "id": "masterwork_plating",
+      "name": "Masterwork Plating",
+      "desc": "A full set of masterwork plate: a large absorption shield and heavy Resistance.",
+      "parents": [
+        {
+          "node": "spark_shower",
+          "level": 3
+        },
+        {
+          "node": "cool_in_the_cellar",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "absorb_hearts": [
+          12.0,
+          15.0,
+          18.0
+        ],
+        "seconds": [
+          14.0,
+          15.0,
+          17.0
+        ],
+        "resist_amp": [
+          1.0,
+          2.0,
+          2.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1500.0,
+          1410.0,
+          1320.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:netherite_chestplate"
+    },
+    {
+      "id": "hammer_of_the_gods",
+      "name": "Hammer of the Gods",
+      "desc": "A falling hammer of forged light crashes down on the place you look at.",
+      "parents": [
+        {
+          "node": "furnace_smoke",
+          "level": 3
+        },
+        {
+          "node": "cellar_dweller_s_haste",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "delay": [
+          20.0,
+          19.0,
+          18.0
+        ],
+        "damage": [
+          28.0,
+          35.0,
+          42.0
+        ],
+        "radius": [
+          6.5,
+          7.15,
+          7.8
+        ],
+        "range": [
+          26.0,
+          28.08,
+          30.16
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348
+        ],
+        "cooldown": [
+          1400.0,
+          1288.0,
+          1176.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:anvil"
+    }
+  ]
+}
