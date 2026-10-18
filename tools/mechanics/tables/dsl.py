@@ -15,6 +15,7 @@ CATEGORIES = ["floor", "puzzle", "hazard", "combat", "risk", "boss", "travel", "
 def E(op, delay=0, chance=1.0, times=1, every=20, cond=None, **args):
     """One primitive call. Reserved keys: delay (ticks after the trigger), chance, times + every (repeat)."""
     d = {"op": op}
+    if "frm" in args: args["from"] = args.pop("frm")      # `from` is a Python keyword
     d.update(args)
     if delay: d["delay"] = delay
     if chance != 1.0: d["chance"] = chance

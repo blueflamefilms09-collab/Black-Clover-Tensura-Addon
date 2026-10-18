@@ -175,12 +175,14 @@ def apply_element(fx, el):
     for i, (opname, patch) in el.swap.items():
         keep = {k: v for k, v in fx[i].items() if k in ("delay", "chance", "times", "every", "if")}
         fx[i] = {"op": opname}
-        fx[i].update(patch)
         fx[i].update(keep)
+        fx[i].update(patch)
     for e in el.add:
         fx.append(dict(e))
     for i in sorted(el.drop, reverse=True):
         del fx[i]
+    for e in fx:
+        if "frm" in e: e["from"] = e.pop("frm")          # `from` is a Python keyword: tables write frm
     return fx
 
 

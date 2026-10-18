@@ -215,10 +215,12 @@ final class Counters {
                 if (prop.index() == m.order[m.step]) {
                     flash(in, prop.index(), true);
                     m.step++;
+                    in.counters.put("wrong", 0);                                    // "wrong" is 1 while the last press was a mistake: effects may be gated on it
                     if (m.step >= m.order.length) in.solve(p);
                 } else {
                     m.step = 0;
-                    in.counters.merge("wrong", 1, Integer::sum);
+                    in.counters.put("wrong", 1);
+                    in.counters.merge("wrongs", 1, Integer::sum);
                     flash(in, prop.index(), false);
                 }
             }
