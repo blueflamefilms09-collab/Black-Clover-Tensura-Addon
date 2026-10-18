@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "fire_bolt",
+  "burning_aura",
+  "summon_pack"
+ ],
+ "animation": "lanky__staff-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "cultist",
+ "glow": "#ff5a1a",
+ "height": 2.31,
+ "id": "evangelist_of_the_black_flame",
+ "name": "Evangelist of the Black Flame",
+ "road": "abyssal",
+ "size": 1.7,
+ "source": "Fire Force",
+ "tier": 5
+}

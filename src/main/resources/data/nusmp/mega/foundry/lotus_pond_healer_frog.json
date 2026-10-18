@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "regrowth",
+  "ward_allies"
+ ],
+ "animation": "small__staff-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "aquatic",
+ "glow": "#efe6d3",
+ "height": 1.5,
+ "id": "lotus_pond_healer_frog",
+ "name": "Lotus Pond Healer Frog",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Princess Mononoke",
+ "tier": 2
+}

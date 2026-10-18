@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "regrowth",
+  "ward_allies",
+  "holy_lance"
+ ],
+ "animation": "huge__staff-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "elemental",
+ "glow": "#fff0b0",
+ "height": 3.09,
+ "id": "great_spirit_of_the_four_leaf_crown",
+ "name": "Great Spirit of the Four Leaf Crown",
+ "road": "holy",
+ "size": 1.8,
+ "source": "Black Clover",
+ "tier": 5
+}

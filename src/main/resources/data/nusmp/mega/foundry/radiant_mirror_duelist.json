@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "phase_step",
+  "lunge"
+ ],
+ "animation": "slim__sword-sword__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "elemental",
+ "glow": "#c8d8ff",
+ "height": 1.94,
+ "id": "radiant_mirror_duelist",
+ "name": "Radiant Mirror Duelist",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Fate",
+ "tier": 4
+}

@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "cleave",
+  "blood_rage"
+ ],
+ "animation": "broad__greatsword-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "goblin",
+ "glow": "#b88064",
+ "height": 2.09,
+ "id": "orc_warband_reaver",
+ "name": "Orc Warband Reaver",
+ "road": "abyssal",
+ "size": 1.1,
+ "source": "D&D: orc",
+ "tier": 2
+}

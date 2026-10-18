@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "burning_aura",
+  "raise_dead"
+ ],
+ "animation": "lanky__orb-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "undead",
+ "glow": "#ff5a1a",
+ "height": 2.31,
+ "id": "corpse_candle_bearer",
+ "name": "Corpse Candle Bearer",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Spirited Away",
+ "tier": 2
+}

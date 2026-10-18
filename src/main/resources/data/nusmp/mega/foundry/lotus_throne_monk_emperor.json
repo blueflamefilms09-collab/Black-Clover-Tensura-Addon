@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "whirlwind",
+  "ground_slam",
+  "phase_step"
+ ],
+ "animation": "huge__none-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "cultist",
+ "glow": "#ffc840",
+ "height": 3.09,
+ "id": "lotus_throne_monk_emperor",
+ "name": "Lotus Throne Monk Emperor",
+ "road": "holy",
+ "size": 1.7,
+ "source": "Record of Ragnarok",
+ "tier": 5
+}

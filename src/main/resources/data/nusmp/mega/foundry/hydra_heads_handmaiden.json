@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "summon_pack",
+  "acid_spit"
+ ],
+ "animation": "average__trident-none__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "aquatic",
+ "glow": "#e1c274",
+ "height": 2.0,
+ "id": "hydra_heads_handmaiden",
+ "name": "Hydra Heads Handmaiden",
+ "road": "holy",
+ "size": 1.0,
+ "source": "D&D: hydra",
+ "tier": 4
+}

@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "cleave",
+  "blood_rage",
+  "whirlwind"
+ ],
+ "animation": "huge__greatsword-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "cultist",
+ "glow": "#c2636b",
+ "height": 3.09,
+ "id": "raging_sunlit_berserker_knight",
+ "name": "Raging Sunlit Berserker Knight",
+ "road": "holy",
+ "size": 1.7,
+ "source": "Berserk",
+ "tier": 5
+}

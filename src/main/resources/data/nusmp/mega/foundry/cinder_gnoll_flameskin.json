@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "burning_aura",
+  "pounce",
+  "lunge"
+ ],
+ "animation": "lanky__spear-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "beast",
+ "glow": "#b88064",
+ "height": 2.31,
+ "id": "cinder_gnoll_flameskin",
+ "name": "Cinder Gnoll Flameskin",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: gnoll flind",
+ "tier": 3
+}

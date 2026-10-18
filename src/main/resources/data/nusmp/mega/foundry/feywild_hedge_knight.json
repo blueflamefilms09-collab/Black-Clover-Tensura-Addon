@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "thorn_skin",
+  "lunge"
+ ],
+ "animation": "average__sword-shield__auto-auto-auto",
+ "archetype": "skirmisher",
+ "faction": "elemental",
+ "glow": "#c2b7e4",
+ "height": 2.0,
+ "id": "feywild_hedge_knight",
+ "name": "Feywild Hedge Knight",
+ "road": "holy",
+ "size": 1.0,
+ "source": "D&D: eladrin",
+ "tier": 3
+}

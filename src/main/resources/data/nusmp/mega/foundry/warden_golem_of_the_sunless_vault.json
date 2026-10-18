@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "ground_slam",
+  "stoneskin",
+  "death_burst"
+ ],
+ "animation": "huge__hammer-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "construct",
+ "glow": "#606066",
+ "height": 3.09,
+ "id": "warden_golem_of_the_sunless_vault",
+ "name": "Warden Golem of the Sunless Vault",
+ "road": "holy",
+ "size": 1.9,
+ "source": "D&D: stone golem",
+ "tier": 5
+}

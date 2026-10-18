@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "regrowth",
+  "thorn_skin"
+ ],
+ "animation": "huge__none-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "elemental",
+ "glow": "#f2ecde",
+ "height": 3.09,
+ "id": "verdant_warden_of_the_seed_vault",
+ "name": "Verdant Warden of the Seed Vault",
+ "road": "holy",
+ "size": 1.4,
+ "source": "D&D: shambling mound",
+ "tier": 4
+}

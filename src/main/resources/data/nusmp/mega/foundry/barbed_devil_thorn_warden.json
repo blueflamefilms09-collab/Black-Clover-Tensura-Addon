@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "thorn_skin",
+  "lunge"
+ ],
+ "animation": "slim__spear-none__auto-auto-auto",
+ "archetype": "skirmisher",
+ "faction": "demon",
+ "glow": "#e1dbc8",
+ "height": 1.94,
+ "id": "barbed_devil_thorn_warden",
+ "name": "Barbed Devil Thorn Warden",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: barbed devil",
+ "tier": 3
+}

@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "ground_slam",
+  "bulwark",
+  "thunder_clap"
+ ],
+ "animation": "slim__hammer-none__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "construct",
+ "glow": "#fff0b0",
+ "height": 1.94,
+ "id": "floor_warden_queen_of_the_lotus_throne",
+ "name": "Floor Warden Queen of the Lotus Throne",
+ "road": "holy",
+ "size": 1.5,
+ "source": "Overlord",
+ "tier": 5
+}

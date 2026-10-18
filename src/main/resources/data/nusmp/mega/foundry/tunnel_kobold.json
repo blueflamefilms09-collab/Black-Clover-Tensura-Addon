@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "dash",
+  "swarm_call"
+ ],
+ "animation": "small__dagger-none__auto-auto-auto",
+ "archetype": "skirmisher",
+ "faction": "beast",
+ "glow": "#8c8e95",
+ "height": 1.5,
+ "id": "tunnel_kobold",
+ "name": "Tunnel Kobold",
+ "road": "holy",
+ "size": 1.0,
+ "source": "D&D: kobold",
+ "tier": 1
+}

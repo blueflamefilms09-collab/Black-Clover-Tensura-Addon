@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "cleave",
+  "dash"
+ ],
+ "animation": "broad__trident-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "aquatic",
+ "glow": "#75b1d3",
+ "height": 2.09,
+ "id": "sunken_banner_marine",
+ "name": "Sunken Banner Marine",
+ "road": "holy",
+ "size": 1.0,
+ "source": "One Piece",
+ "tier": 2
+}

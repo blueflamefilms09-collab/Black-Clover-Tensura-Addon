@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "holy_lance",
+  "radiant_aura"
+ ],
+ "animation": "slim__staff-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "elemental",
+ "glow": "#fff0b0",
+ "height": 1.94,
+ "id": "starfall_oracle",
+ "name": "Starfall Oracle",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Fate",
+ "tier": 3
+}

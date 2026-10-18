@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "thunder_clap",
+  "blink"
+ ],
+ "animation": "slim__staff-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "elemental",
+ "glow": "#79cdcd",
+ "height": 1.94,
+ "id": "djinn_vessel_wanderer",
+ "name": "Djinn Vessel Wanderer",
+ "road": "holy",
+ "size": 1.1,
+ "source": "Magi",
+ "tier": 2
+}

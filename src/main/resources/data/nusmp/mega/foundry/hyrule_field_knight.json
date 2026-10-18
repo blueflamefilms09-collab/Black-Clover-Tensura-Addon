@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "shield_wall",
+  "lunge"
+ ],
+ "animation": "average__sword-shield__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "construct",
+ "glow": "#f7f7fa",
+ "height": 2.0,
+ "id": "hyrule_field_knight",
+ "name": "Hyrule Field Knight",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Zelda",
+ "tier": 2
+}

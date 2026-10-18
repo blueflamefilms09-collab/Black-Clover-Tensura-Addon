@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "acid_spit",
+  "sky_dive"
+ ],
+ "animation": "child__dagger-none__auto-auto-auto",
+ "archetype": "flier",
+ "faction": "insect",
+ "glow": "#e1dbc8",
+ "height": 1.41,
+ "id": "bloat_fly_courier",
+ "name": "Bloat Fly Courier",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: giant fly",
+ "tier": 2
+}

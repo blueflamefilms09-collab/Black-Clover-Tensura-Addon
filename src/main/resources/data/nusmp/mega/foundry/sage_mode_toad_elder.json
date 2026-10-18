@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "summon_pack",
+  "root"
+ ],
+ "animation": "small__staff-none__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "beast",
+ "glow": "#e9a263",
+ "height": 1.5,
+ "id": "sage_mode_toad_elder",
+ "name": "Sage Mode Toad Elder",
+ "road": "holy",
+ "size": 1.2,
+ "source": "Naruto",
+ "tier": 3
+}

@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "hex",
+  "life_drain"
+ ],
+ "animation": "average__mace-orb__auto-auto-auto",
+ "archetype": "support",
+ "faction": "cultist",
+ "glow": "#e1c274",
+ "height": 2.0,
+ "id": "inquisitor_of_the_weeping_altar",
+ "name": "Inquisitor of the Weeping Altar",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Berserk",
+ "tier": 3
+}

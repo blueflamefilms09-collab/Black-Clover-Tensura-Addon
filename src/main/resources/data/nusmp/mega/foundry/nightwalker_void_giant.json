@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "dread_gaze",
+  "life_drain",
+  "ground_slam"
+ ],
+ "animation": "huge__scythe-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "demon",
+ "glow": "#b060ff",
+ "height": 3.09,
+ "id": "nightwalker_void_giant",
+ "name": "Nightwalker Void Giant",
+ "road": "abyssal",
+ "size": 1.8,
+ "source": "D&D: nightwalker",
+ "tier": 4
+}

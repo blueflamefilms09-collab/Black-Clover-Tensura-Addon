@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "sky_dive",
+  "stoneskin",
+  "ground_slam"
+ ],
+ "animation": "broad__axe-none__auto-auto-auto",
+ "archetype": "flier",
+ "faction": "construct",
+ "glow": "#c2636b",
+ "height": 2.09,
+ "id": "gargoyle_spire_sentinel",
+ "name": "Gargoyle Spire Sentinel",
+ "road": "abyssal",
+ "size": 1.4,
+ "source": "D&D: gargoyle",
+ "tier": 3
+}

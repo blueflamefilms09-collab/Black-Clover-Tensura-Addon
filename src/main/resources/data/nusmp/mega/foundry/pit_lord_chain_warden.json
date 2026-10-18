@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "chain_pull",
+  "ground_slam",
+  "bulwark"
+ ],
+ "animation": "broad__hammer-none__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "demon",
+ "glow": "#e48460",
+ "height": 2.09,
+ "id": "pit_lord_chain_warden",
+ "name": "Pit Lord Chain Warden",
+ "road": "abyssal",
+ "size": 1.7,
+ "source": "D&D: pit fiend",
+ "tier": 5
+}

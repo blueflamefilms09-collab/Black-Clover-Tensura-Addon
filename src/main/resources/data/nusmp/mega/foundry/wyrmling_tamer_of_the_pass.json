@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "volley",
+  "call_wolves"
+ ],
+ "animation": "slim__none-bow__auto-auto-auto",
+ "archetype": "archer",
+ "faction": "beast",
+ "glow": "#e1c274",
+ "height": 1.94,
+ "id": "wyrmling_tamer_of_the_pass",
+ "name": "Wyrmling Tamer of the Pass",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Monster Hunter",
+ "tier": 2
+}

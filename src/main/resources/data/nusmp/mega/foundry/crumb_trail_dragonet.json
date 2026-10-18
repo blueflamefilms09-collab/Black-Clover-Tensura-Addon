@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "fire_bolt",
+  "sky_dive"
+ ],
+ "animation": "child__none-none__auto-auto-auto",
+ "archetype": "flier",
+ "faction": "beast",
+ "glow": "#e48460",
+ "height": 1.41,
+ "id": "crumb_trail_dragonet",
+ "name": "Crumb Trail Dragonet",
+ "road": "holy",
+ "size": 1.0,
+ "source": "D&D: pseudodragon",
+ "tier": 1
+}

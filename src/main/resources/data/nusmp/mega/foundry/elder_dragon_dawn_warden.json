@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "leap_slam",
+  "burning_aura",
+  "enrage"
+ ],
+ "animation": "huge__hammer-none__auto-auto-auto",
+ "archetype": "charger",
+ "faction": "beast",
+ "glow": "#ef9260",
+ "height": 3.09,
+ "id": "elder_dragon_dawn_warden",
+ "name": "Elder Dragon Dawn Warden",
+ "road": "holy",
+ "size": 1.9,
+ "source": "Monster Hunter",
+ "tier": 5
+}

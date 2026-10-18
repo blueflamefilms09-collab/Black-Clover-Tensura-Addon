@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "lunge",
+  "phase_step"
+ ],
+ "animation": "slim__none-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "cultist",
+ "glow": "#efcd6e",
+ "height": 1.94,
+ "id": "cloister_windwalker",
+ "name": "Cloister Windwalker",
+ "road": "holy",
+ "size": 1.0,
+ "source": "D&D: monk",
+ "tier": 4
+}

@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "shadow_dash",
+  "pounce"
+ ],
+ "animation": "child__dagger-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "beast",
+ "glow": "#e1c274",
+ "height": 1.41,
+ "id": "ember_fox_kit",
+ "name": "Ember Fox Kit",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Naruto",
+ "tier": 1
+}

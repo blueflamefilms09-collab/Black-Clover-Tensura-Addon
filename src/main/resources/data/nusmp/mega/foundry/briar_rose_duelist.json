@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "thorn_skin",
+  "lunge"
+ ],
+ "animation": "slim__sword-none__auto-auto-auto",
+ "archetype": "skirmisher",
+ "faction": "beast",
+ "glow": "#f7f7fa",
+ "height": 1.94,
+ "id": "briar_rose_duelist",
+ "name": "Briar Rose Duelist",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Re:Zero",
+ "tier": 1
+}

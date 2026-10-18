@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "summon_pack",
+  "ward_allies",
+  "hex"
+ ],
+ "animation": "lanky__none-grimoire__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "cultist",
+ "glow": "#fff0b0",
+ "height": 2.31,
+ "id": "sage_chancellor_of_the_spiral_library",
+ "name": "Sage Chancellor of the Spiral Library",
+ "road": "holy",
+ "size": 1.4,
+ "source": "Frieren",
+ "tier": 5
+}

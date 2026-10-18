@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "whirlwind",
+  "dash"
+ ],
+ "animation": "broad__sword-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "cultist",
+ "glow": "#e1c274",
+ "height": 2.09,
+ "id": "pirate_kingdom_ensign",
+ "name": "Pirate Kingdom Ensign",
+ "road": "holy",
+ "size": 1.0,
+ "source": "One Piece",
+ "tier": 2
+}

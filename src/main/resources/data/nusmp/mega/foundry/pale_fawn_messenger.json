@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "regrowth",
+  "ward_allies"
+ ],
+ "animation": "lanky__none-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "beast",
+ "glow": "#f7f7fa",
+ "height": 2.31,
+ "id": "pale_fawn_messenger",
+ "name": "Pale Fawn Messenger",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Princess Mononoke",
+ "tier": 1
+}

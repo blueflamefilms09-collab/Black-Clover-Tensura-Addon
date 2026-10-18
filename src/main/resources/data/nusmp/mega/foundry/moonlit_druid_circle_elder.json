@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "call_wolves",
+  "regrowth"
+ ],
+ "animation": "lanky__staff-none__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "beast",
+ "glow": "#efe6d3",
+ "height": 2.31,
+ "id": "moonlit_druid_circle_elder",
+ "name": "Moonlit Druid Circle Elder",
+ "road": "holy",
+ "size": 1.15,
+ "source": "D&D: druid",
+ "tier": 4
+}

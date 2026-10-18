@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "thunder_clap",
+  "stoneskin",
+  "ward_allies"
+ ],
+ "animation": "huge__hammer-none__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "construct",
+ "glow": "#fff0b0",
+ "height": 3.09,
+ "id": "chorus_of_the_thousand_bells",
+ "name": "Chorus of the Thousand Bells",
+ "road": "holy",
+ "size": 1.8,
+ "source": "D&D: modron",
+ "tier": 5
+}

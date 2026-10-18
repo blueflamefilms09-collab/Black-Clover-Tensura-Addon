@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "burning_aura",
+  "ground_slam"
+ ],
+ "animation": "broad__hammer-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "elemental",
+ "glow": "#e1c274",
+ "height": 2.09,
+ "id": "hearthstone_salamander_smith",
+ "name": "Hearthstone Salamander Smith",
+ "road": "holy",
+ "size": 1.0,
+ "source": "D&D: salamander",
+ "tier": 2
+}

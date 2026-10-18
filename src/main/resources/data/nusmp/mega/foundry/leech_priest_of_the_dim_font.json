@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "life_drain",
+  "regrowth"
+ ],
+ "animation": "broad__mace-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "cultist",
+ "glow": "#e1c274",
+ "height": 2.09,
+ "id": "leech_priest_of_the_dim_font",
+ "name": "Leech Priest of the Dim Font",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Overlord",
+ "tier": 2
+}

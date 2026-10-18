@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "acid_spit",
+  "stoneskin"
+ ],
+ "animation": "huge__none-none__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "slime",
+ "glow": "#bcbcc2",
+ "height": 3.09,
+ "id": "black_pudding_glutton",
+ "name": "Black Pudding Glutton",
+ "road": "abyssal",
+ "size": 1.2,
+ "source": "D&D: black pudding",
+ "tier": 2
+}

@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "dread_gaze",
+  "shadow_bolt",
+  "soul_siphon"
+ ],
+ "animation": "huge__orb-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "cultist",
+ "glow": "#e1dbc8",
+ "height": 3.09,
+ "id": "beholder_warden_of_seven_gazes",
+ "name": "Beholder Warden of Seven Gazes",
+ "road": "abyssal",
+ "size": 1.4,
+ "source": "D&D: beholder",
+ "tier": 4
+}

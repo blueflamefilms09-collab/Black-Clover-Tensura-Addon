@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "ward_allies",
+  "mending_light"
+ ],
+ "animation": "slim__none-grimoire__auto-auto-auto",
+ "archetype": "support",
+ "faction": "cultist",
+ "glow": "#a0e8ff",
+ "height": 1.94,
+ "id": "hundred_eyes_archivist_nun",
+ "name": "Hundred Eyes Archivist Nun",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Frieren",
+ "tier": 3
+}

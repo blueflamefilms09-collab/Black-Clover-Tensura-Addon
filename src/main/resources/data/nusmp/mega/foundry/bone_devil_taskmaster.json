@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "chain_pull",
+  "whirlwind"
+ ],
+ "animation": "lanky__scythe-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "demon",
+ "glow": "#c2636b",
+ "height": 2.31,
+ "id": "bone_devil_taskmaster",
+ "name": "Bone Devil Taskmaster",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: bone devil",
+ "tier": 3
+}

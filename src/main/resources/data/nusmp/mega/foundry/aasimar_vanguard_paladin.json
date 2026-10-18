@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "holy_lance",
+  "cleave"
+ ],
+ "animation": "broad__greatsword-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "construct",
+ "glow": "#f4d8b1",
+ "height": 2.09,
+ "id": "aasimar_vanguard_paladin",
+ "name": "Aasimar Vanguard Paladin",
+ "road": "holy",
+ "size": 1.1,
+ "source": "D&D: paladin",
+ "tier": 3
+}

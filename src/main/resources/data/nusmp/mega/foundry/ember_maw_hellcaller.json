@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "burning_aura",
+  "ground_slam"
+ ],
+ "animation": "huge__hammer-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "demon",
+ "glow": "#e1c274",
+ "height": 3.09,
+ "id": "ember_maw_hellcaller",
+ "name": "Ember Maw Hellcaller",
+ "road": "abyssal",
+ "size": 1.5,
+ "source": "Fire Force",
+ "tier": 3
+}

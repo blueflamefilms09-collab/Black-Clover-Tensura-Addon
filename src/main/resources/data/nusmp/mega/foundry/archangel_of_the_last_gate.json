@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "bulwark",
+  "holy_lance",
+  "shield_bash"
+ ],
+ "animation": "broad__sword-shield__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "construct",
+ "glow": "#a0e8ff",
+ "height": 2.09,
+ "id": "archangel_of_the_last_gate",
+ "name": "Archangel of the Last Gate",
+ "road": "holy",
+ "size": 1.6,
+ "source": "Tensura",
+ "tier": 5
+}

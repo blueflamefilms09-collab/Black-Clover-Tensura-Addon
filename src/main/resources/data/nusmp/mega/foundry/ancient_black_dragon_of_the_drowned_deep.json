@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "acid_spit",
+  "miasma",
+  "ground_slam"
+ ],
+ "animation": "huge__hammer-none__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "beast",
+ "glow": "#bcde6e",
+ "height": 3.09,
+ "id": "ancient_black_dragon_of_the_drowned_deep",
+ "name": "Ancient Black Dragon of the Drowned Deep",
+ "road": "abyssal",
+ "size": 2.0,
+ "source": "D&D: ancient black dragon",
+ "tier": 5
+}

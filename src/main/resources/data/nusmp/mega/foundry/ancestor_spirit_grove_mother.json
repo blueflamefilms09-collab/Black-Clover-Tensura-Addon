@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "regrowth",
+  "root",
+  "heal_pulse"
+ ],
+ "animation": "broad__staff-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "elemental",
+ "glow": "#b8ffe0",
+ "height": 2.09,
+ "id": "ancestor_spirit_grove_mother",
+ "name": "Ancestor Spirit Grove Mother",
+ "road": "holy",
+ "size": 1.6,
+ "source": "Princess Mononoke",
+ "tier": 5
+}

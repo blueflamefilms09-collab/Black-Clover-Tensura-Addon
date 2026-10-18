@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "summon_pack",
+  "dread_gaze",
+  "hex"
+ ],
+ "animation": "broad__staff-none__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "demon",
+ "glow": "#ff3050",
+ "height": 2.09,
+ "id": "hand_of_fate_sacrificial_herald",
+ "name": "Hand of Fate Sacrificial Herald",
+ "road": "abyssal",
+ "size": 1.8,
+ "source": "Berserk",
+ "tier": 5
+}

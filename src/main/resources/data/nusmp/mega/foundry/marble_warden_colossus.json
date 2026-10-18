@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "stoneskin",
+  "ground_slam"
+ ],
+ "animation": "huge__hammer-none__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "construct",
+ "glow": "#8c8e95",
+ "height": 3.09,
+ "id": "marble_warden_colossus",
+ "name": "Marble Warden Colossus",
+ "road": "holy",
+ "size": 1.55,
+ "source": "D&D: stone golem",
+ "tier": 4
+}

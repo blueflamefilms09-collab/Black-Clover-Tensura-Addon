@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "call_wolves",
+  "burning_aura"
+ ],
+ "animation": "average__hammer-none__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "demon",
+ "glow": "#e1c274",
+ "height": 2.0,
+ "id": "hell_hound_handler",
+ "name": "Hell Hound Handler",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: hell hound",
+ "tier": 2
+}

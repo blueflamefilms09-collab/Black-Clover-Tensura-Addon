@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "pounce",
+  "blood_rage"
+ ],
+ "animation": "lanky__axe-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "beast",
+ "glow": "#e1dbc8",
+ "height": 2.31,
+ "id": "blood_moon_werewolf_huntsman",
+ "name": "Blood Moon Werewolf Huntsman",
+ "road": "abyssal",
+ "size": 1.2,
+ "source": "D&D: werewolf",
+ "tier": 3
+}

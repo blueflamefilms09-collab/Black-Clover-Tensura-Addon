@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "dash",
+  "ground_slam"
+ ],
+ "animation": "broad__none-none__auto-auto-auto",
+ "archetype": "charger",
+ "faction": "beast",
+ "glow": "#8c8e95",
+ "height": 2.09,
+ "id": "rust_monster_scrapper",
+ "name": "Rust Monster Scrapper",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: rust monster",
+ "tier": 2
+}

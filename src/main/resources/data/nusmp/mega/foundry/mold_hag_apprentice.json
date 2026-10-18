@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "hex",
+  "miasma"
+ ],
+ "animation": "small__wand-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "cultist",
+ "glow": "#e4b163",
+ "height": 1.5,
+ "id": "mold_hag_apprentice",
+ "name": "Mold Hag Apprentice",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: hag",
+ "tier": 1
+}

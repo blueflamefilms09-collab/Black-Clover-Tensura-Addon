@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "regrowth",
+  "ice_bind",
+  "heal_pulse"
+ ],
+ "animation": "slim__wand-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "beast",
+ "glow": "#b8ffe0",
+ "height": 1.94,
+ "id": "aurora_hart_spirit_queen",
+ "name": "Aurora Hart Spirit Queen",
+ "road": "holy",
+ "size": 1.6,
+ "source": "Princess Mononoke",
+ "tier": 5
+}

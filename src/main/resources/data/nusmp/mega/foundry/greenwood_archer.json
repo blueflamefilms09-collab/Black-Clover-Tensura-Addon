@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "volley",
+  "hunters_mark"
+ ],
+ "animation": "slim__none-bow__auto-auto-auto",
+ "archetype": "archer",
+ "faction": "beast",
+ "glow": "#adb89b",
+ "height": 1.94,
+ "id": "greenwood_archer",
+ "name": "Greenwood Archer",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Dungeon Meshi",
+ "tier": 1
+}

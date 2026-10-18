@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "thorn_skin",
+  "regrowth"
+ ],
+ "animation": "huge__staff-none__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "elemental",
+ "glow": "#adcd74",
+ "height": 3.09,
+ "id": "heartwood_treant_warden",
+ "name": "Heartwood Treant Warden",
+ "road": "holy",
+ "size": 1.3,
+ "source": "D&D: treant",
+ "tier": 2
+}

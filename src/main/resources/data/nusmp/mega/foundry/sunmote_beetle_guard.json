@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "pounce",
+  "ground_slam"
+ ],
+ "animation": "broad__spear-none__auto-auto-auto",
+ "archetype": "charger",
+ "faction": "insect",
+ "glow": "#e1c274",
+ "height": 2.09,
+ "id": "sunmote_beetle_guard",
+ "name": "Sunmote Beetle Guard",
+ "road": "holy",
+ "size": 1.0,
+ "source": "D&D: giant beetle",
+ "tier": 1
+}

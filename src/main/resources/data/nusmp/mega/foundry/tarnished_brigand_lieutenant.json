@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "lunge",
+  "shadow_step"
+ ],
+ "animation": "average__sword-dagger__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "goblin",
+ "glow": "#cd9575",
+ "height": 2.0,
+ "id": "tarnished_brigand_lieutenant",
+ "name": "Tarnished Brigand Lieutenant",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Elden Ring",
+ "tier": 1
+}

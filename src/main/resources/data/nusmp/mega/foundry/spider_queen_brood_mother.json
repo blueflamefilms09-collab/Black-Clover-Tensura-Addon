@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "web_shot",
+  "swarm_call"
+ ],
+ "animation": "huge__staff-none__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "insect",
+ "glow": "#d3d6db",
+ "height": 3.09,
+ "id": "spider_queen_brood_mother",
+ "name": "Spider Queen Brood Mother",
+ "road": "abyssal",
+ "size": 1.4,
+ "source": "D&D: drider",
+ "tier": 3
+}

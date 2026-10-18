@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "shadow_bolt",
+  "hex"
+ ],
+ "animation": "lanky__wand-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "cultist",
+ "glow": "#c2636b",
+ "height": 2.31,
+ "id": "chained_warlock_of_the_spiral_pit",
+ "name": "Chained Warlock of the Spiral Pit",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: warlock",
+ "tier": 3
+}

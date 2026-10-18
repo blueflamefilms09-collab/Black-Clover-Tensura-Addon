@@ -2,6 +2,7 @@ package com.newuniverse.nusmp.labyrinth.mega.enc;
 
 import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
+import com.newuniverse.nusmp.labyrinth.mega.foundry.FoundryEncounters;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -59,6 +60,7 @@ final class EncounterSpawner {
                 return null;
             }
             mob = m;
+            FoundryEncounters.prepare(mob);          // Mob Foundry: a blank foundry mob becomes the one the Director asked for BEFORE its size is checked against the room
             if (placeNear(level, mob, cell, rules, rnd)) {
                 finish(level, mob, mob.blockPosition(), threat, faction, entryId);
                 if (level.addFreshEntity(mob)) return mob;

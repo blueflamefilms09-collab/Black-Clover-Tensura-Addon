@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "shadow_dash",
+  "dread_gaze"
+ ],
+ "animation": "lanky__none-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "demon",
+ "glow": "#97979e",
+ "height": 2.31,
+ "id": "cursed_spirit_grade_three",
+ "name": "Cursed Spirit Grade Three",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Jujutsu Kaisen",
+ "tier": 2
+}

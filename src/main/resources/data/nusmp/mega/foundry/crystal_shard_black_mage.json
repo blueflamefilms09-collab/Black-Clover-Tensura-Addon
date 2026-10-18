@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "shadow_bolt",
+  "hex"
+ ],
+ "animation": "small__staff-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "elemental",
+ "glow": "#b060ff",
+ "height": 1.5,
+ "id": "crystal_shard_black_mage",
+ "name": "Crystal Shard Black Mage",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Final Fantasy",
+ "tier": 2
+}

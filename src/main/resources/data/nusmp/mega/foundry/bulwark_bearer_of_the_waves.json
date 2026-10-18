@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "shield_wall",
+  "shield_bash"
+ ],
+ "animation": "broad__sword-shield__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "construct",
+ "glow": "#a0e8ff",
+ "height": 2.09,
+ "id": "bulwark_bearer_of_the_waves",
+ "name": "Bulwark Bearer of the Waves",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Shield Hero",
+ "tier": 2
+}

@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "shadow_step",
+  "lunge"
+ ],
+ "animation": "small__dagger-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "goblin",
+ "glow": "#e1dbc8",
+ "height": 1.5,
+ "id": "kite_goblin_scout",
+ "name": "Kite Goblin Scout",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Goblin Slayer",
+ "tier": 1
+}

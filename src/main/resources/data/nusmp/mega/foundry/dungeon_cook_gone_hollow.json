@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "troll_blood",
+  "war_cry"
+ ],
+ "animation": "average__axe-dagger__auto-auto-auto",
+ "archetype": "support",
+ "faction": "cultist",
+ "glow": "#e48460",
+ "height": 2.0,
+ "id": "dungeon_cook_gone_hollow",
+ "name": "Dungeon Cook Gone Hollow",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Dungeon Meshi",
+ "tier": 1
+}

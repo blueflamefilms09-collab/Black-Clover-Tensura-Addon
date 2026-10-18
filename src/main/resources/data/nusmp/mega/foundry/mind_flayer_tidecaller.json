@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "dread_gaze",
+  "soul_siphon",
+  "hex"
+ ],
+ "animation": "slim__orb-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "aquatic",
+ "glow": "#adcd74",
+ "height": 1.94,
+ "id": "mind_flayer_tidecaller",
+ "name": "Mind Flayer Tidecaller",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: mind flayer",
+ "tier": 3
+}

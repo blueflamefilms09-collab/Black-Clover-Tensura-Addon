@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "raise_dead",
+  "vampiric_bite"
+ ],
+ "animation": "lanky__mace-none__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "undead",
+ "glow": "#8c5f71",
+ "height": 2.31,
+ "id": "ghoul_king_feast_warden",
+ "name": "Ghoul King Feast Warden",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: ghoul king",
+ "tier": 3
+}

@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "acid_spit",
+  "stoneskin"
+ ],
+ "animation": "broad__none-none__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "slime",
+ "glow": "#606066",
+ "height": 2.09,
+ "id": "gloom_gel_cube",
+ "name": "Gloom Gel Cube",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: gelatinous cube",
+ "tier": 1
+}

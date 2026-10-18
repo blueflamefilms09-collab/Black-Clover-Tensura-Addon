@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "burning_aura",
+  "shield_bash",
+  "thunder_clap"
+ ],
+ "animation": "broad__spear-shield__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "demon",
+ "glow": "#e1c274",
+ "height": 2.09,
+ "id": "hellmouth_gate_warden",
+ "name": "Hellmouth Gate Warden",
+ "road": "abyssal",
+ "size": 1.7,
+ "source": "D&D: gate fiend",
+ "tier": 5
+}

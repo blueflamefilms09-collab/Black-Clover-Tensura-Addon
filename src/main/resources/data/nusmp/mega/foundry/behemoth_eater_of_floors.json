@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "leap_slam",
+  "enrage",
+  "ground_slam"
+ ],
+ "animation": "huge__axe-none__auto-auto-auto",
+ "archetype": "charger",
+ "faction": "ogre",
+ "glow": "#ae756b",
+ "height": 3.09,
+ "id": "behemoth_eater_of_floors",
+ "name": "Behemoth Eater of Floors",
+ "road": "abyssal",
+ "size": 1.8,
+ "source": "Berserk",
+ "tier": 4
+}

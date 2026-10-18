@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "burning_aura",
+  "fire_bolt",
+  "thunder_clap"
+ ],
+ "animation": "broad__hammer-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "cultist",
+ "glow": "#606066",
+ "height": 2.09,
+ "id": "hellfire_cult_grand_pyre_master",
+ "name": "Hellfire Cult Grand Pyre Master",
+ "road": "abyssal",
+ "size": 1.3,
+ "source": "Fire Force",
+ "tier": 4
+}

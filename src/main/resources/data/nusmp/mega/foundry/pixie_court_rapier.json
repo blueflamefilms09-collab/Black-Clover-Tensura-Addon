@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "lunge",
+  "phase_step"
+ ],
+ "animation": "child__sword-none__auto-auto-auto",
+ "archetype": "skirmisher",
+ "faction": "elemental",
+ "glow": "#b060ff",
+ "height": 1.41,
+ "id": "pixie_court_rapier",
+ "name": "Pixie Court Rapier",
+ "road": "holy",
+ "size": 1.0,
+ "source": "D&D: pixie",
+ "tier": 2
+}

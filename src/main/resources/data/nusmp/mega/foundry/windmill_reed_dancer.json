@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "war_cry",
+  "regrowth"
+ ],
+ "animation": "slim__wand-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "elemental",
+ "glow": "#a0c8e9",
+ "height": 1.94,
+ "id": "windmill_reed_dancer",
+ "name": "Windmill Reed Dancer",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Frieren",
+ "tier": 3
+}

@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "mending_light",
+  "regrowth"
+ ],
+ "animation": "child__none-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "slime",
+ "glow": "#f4f0f4",
+ "height": 1.41,
+ "id": "dewdrop_slimeling",
+ "name": "Dewdrop Slimeling",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Tensura",
+ "tier": 1
+}

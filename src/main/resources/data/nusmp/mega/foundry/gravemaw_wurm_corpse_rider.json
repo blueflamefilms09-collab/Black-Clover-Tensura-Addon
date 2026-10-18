@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "dash",
+  "acid_spit",
+  "pounce"
+ ],
+ "animation": "lanky__spear-none__auto-auto-auto",
+ "archetype": "charger",
+ "faction": "beast",
+ "glow": "#808690",
+ "height": 2.31,
+ "id": "gravemaw_wurm_corpse_rider",
+ "name": "Gravemaw Wurm Corpse Rider",
+ "road": "abyssal",
+ "size": 1.4,
+ "source": "D&D: purple worm",
+ "tier": 4
+}

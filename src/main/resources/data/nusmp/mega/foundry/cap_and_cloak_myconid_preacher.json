@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "miasma",
+  "regrowth"
+ ],
+ "animation": "lanky__staff-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "slime",
+ "glow": "#8c7564",
+ "height": 2.31,
+ "id": "cap_and_cloak_myconid_preacher",
+ "name": "Cap and Cloak Myconid Preacher",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: myconid",
+ "tier": 1
+}

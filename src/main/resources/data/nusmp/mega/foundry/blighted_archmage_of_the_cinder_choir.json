@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "fire_bolt",
+  "burning_aura",
+  "thunder_clap"
+ ],
+ "animation": "slim__staff-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "elemental",
+ "glow": "#ff5a1a",
+ "height": 1.94,
+ "id": "blighted_archmage_of_the_cinder_choir",
+ "name": "Blighted Archmage of the Cinder Choir",
+ "road": "abyssal",
+ "size": 1.6,
+ "source": "Fairy Tail",
+ "tier": 5
+}

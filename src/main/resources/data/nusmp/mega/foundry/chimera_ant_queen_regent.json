@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "swarm_call",
+  "summon_pack",
+  "miasma"
+ ],
+ "animation": "huge__staff-none__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "insect",
+ "glow": "#f2ecde",
+ "height": 3.09,
+ "id": "chimera_ant_queen_regent",
+ "name": "Chimera Ant Queen Regent",
+ "road": "abyssal",
+ "size": 1.8,
+ "source": "Hunter x Hunter",
+ "tier": 5
+}

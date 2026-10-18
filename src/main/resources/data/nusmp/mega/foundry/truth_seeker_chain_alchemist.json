@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "ground_slam",
+  "chain_pull"
+ ],
+ "animation": "average__hammer-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "construct",
+ "glow": "#e1c274",
+ "height": 2.0,
+ "id": "truth_seeker_chain_alchemist",
+ "name": "Truth Seeker Chain Alchemist",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Fullmetal Alchemist",
+ "tier": 3
+}

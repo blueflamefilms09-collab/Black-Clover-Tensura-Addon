@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "volley",
+  "hunters_mark"
+ ],
+ "animation": "lanky__none-bow__auto-auto-slouch",
+ "archetype": "archer",
+ "faction": "undead",
+ "glow": "#adb7c2",
+ "height": 2.31,
+ "id": "bone_archer_of_the_barrow",
+ "name": "Bone Archer of the Barrow",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: skeleton archer",
+ "tier": 2
+}

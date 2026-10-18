@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "shield_bash",
+  "lunge"
+ ],
+ "animation": "average__sword-shield__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "cultist",
+ "glow": "#efe6d3",
+ "height": 2.0,
+ "id": "hero_class_trainee",
+ "name": "Hero Class Trainee",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Dragon Quest",
+ "tier": 2
+}

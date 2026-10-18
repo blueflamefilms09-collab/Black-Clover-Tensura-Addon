@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "thunder_clap",
+  "blink",
+  "holy_lance"
+ ],
+ "animation": "slim__staff-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "elemental",
+ "glow": "#a0e8ff",
+ "height": 1.94,
+ "id": "sage_king_of_four_winds",
+ "name": "Sage King of Four Winds",
+ "road": "holy",
+ "size": 1.4,
+ "source": "Magi",
+ "tier": 5
+}

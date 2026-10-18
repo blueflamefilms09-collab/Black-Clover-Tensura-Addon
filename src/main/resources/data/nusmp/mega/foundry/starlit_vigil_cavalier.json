@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "dash",
+  "shield_bash"
+ ],
+ "animation": "broad__spear-shield__auto-auto-auto",
+ "archetype": "charger",
+ "faction": "construct",
+ "glow": "#e1c274",
+ "height": 2.09,
+ "id": "starlit_vigil_cavalier",
+ "name": "Starlit Vigil Cavalier",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Dark Souls",
+ "tier": 4
+}

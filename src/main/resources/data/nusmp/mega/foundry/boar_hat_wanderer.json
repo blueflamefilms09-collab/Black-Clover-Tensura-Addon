@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "ground_slam",
+  "war_cry"
+ ],
+ "animation": "broad__hammer-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "beast",
+ "glow": "#8c7564",
+ "height": 2.09,
+ "id": "boar_hat_wanderer",
+ "name": "Boar-Hat Wanderer",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Seven Deadly Sins",
+ "tier": 2
+}

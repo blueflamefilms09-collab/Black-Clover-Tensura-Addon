@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "vampiric_bite",
+  "blink",
+  "life_drain"
+ ],
+ "animation": "average__sword-dagger__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "undead",
+ "glow": "#ff3050",
+ "height": 2.0,
+ "id": "vampire_lord_of_the_crimson_throne",
+ "name": "Vampire Lord of the Crimson Throne",
+ "road": "abyssal",
+ "size": 1.2,
+ "source": "D&D: vampire lord",
+ "tier": 4
+}

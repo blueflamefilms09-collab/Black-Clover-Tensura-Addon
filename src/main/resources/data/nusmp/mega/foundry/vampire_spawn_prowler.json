@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "vampiric_bite",
+  "shadow_step"
+ ],
+ "animation": "slim__dagger-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "undead",
+ "glow": "#c2636b",
+ "height": 1.94,
+ "id": "vampire_spawn_prowler",
+ "name": "Vampire Spawn Prowler",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: vampire spawn",
+ "tier": 2
+}

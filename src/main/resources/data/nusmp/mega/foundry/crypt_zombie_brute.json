@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "troll_blood",
+  "ground_slam"
+ ],
+ "animation": "huge__hammer-none__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "undead",
+ "glow": "#e1dbc8",
+ "height": 3.09,
+ "id": "crypt_zombie_brute",
+ "name": "Crypt Zombie Brute",
+ "road": "abyssal",
+ "size": 1.2,
+ "source": "D&D: ogre zombie",
+ "tier": 2
+}

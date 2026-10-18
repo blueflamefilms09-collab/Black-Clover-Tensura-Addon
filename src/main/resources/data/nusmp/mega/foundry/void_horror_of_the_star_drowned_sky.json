@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "dread_gaze",
+  "soul_siphon",
+  "death_burst"
+ ],
+ "animation": "huge__orb-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "cultist",
+ "glow": "#b060ff",
+ "height": 3.09,
+ "id": "void_horror_of_the_star_drowned_sky",
+ "name": "Void Horror of the Star Drowned Sky",
+ "road": "abyssal",
+ "size": 1.9,
+ "source": "D&D: elder evil",
+ "tier": 5
+}

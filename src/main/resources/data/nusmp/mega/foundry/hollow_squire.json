@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "shield_bash",
+  "bulwark"
+ ],
+ "animation": "average__sword-shield__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "undead",
+ "glow": "#b88064",
+ "height": 2.0,
+ "id": "hollow_squire",
+ "name": "Hollow Squire",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Berserk",
+ "tier": 1
+}

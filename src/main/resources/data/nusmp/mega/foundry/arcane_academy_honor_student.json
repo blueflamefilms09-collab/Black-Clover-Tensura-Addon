@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "fire_bolt",
+  "ice_bind"
+ ],
+ "animation": "average__staff-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "cultist",
+ "glow": "#a0e8ff",
+ "height": 2.0,
+ "id": "arcane_academy_honor_student",
+ "name": "Arcane Academy Honor Student",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Mushoku Tensei",
+ "tier": 2
+}

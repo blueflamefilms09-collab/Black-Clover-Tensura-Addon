@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "shadow_bolt",
+  "hex"
+ ],
+ "animation": "slim__none-grimoire__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "cultist",
+ "glow": "#e4b163",
+ "height": 1.94,
+ "id": "candle_acolyte",
+ "name": "Candle Acolyte",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Overlord",
+ "tier": 1
+}

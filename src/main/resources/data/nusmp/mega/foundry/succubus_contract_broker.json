@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "life_drain",
+  "hex",
+  "blink"
+ ],
+ "animation": "slim__wand-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "demon",
+ "glow": "#e1c274",
+ "height": 1.94,
+ "id": "succubus_contract_broker",
+ "name": "Succubus Contract Broker",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: succubus",
+ "tier": 4
+}

@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "fire_bolt",
+  "burning_aura"
+ ],
+ "animation": "child__staff-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "cultist",
+ "glow": "#efcd6e",
+ "height": 1.41,
+ "id": "crimson_chanter_of_sparks",
+ "name": "Crimson Chanter of Sparks",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Konosuba",
+ "tier": 1
+}

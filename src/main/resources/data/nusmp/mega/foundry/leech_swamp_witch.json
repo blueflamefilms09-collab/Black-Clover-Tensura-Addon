@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "miasma",
+  "root"
+ ],
+ "animation": "slim__staff-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "aquatic",
+ "glow": "#8c5f71",
+ "height": 1.94,
+ "id": "leech_swamp_witch",
+ "name": "Leech Swamp Witch",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: green hag",
+ "tier": 2
+}

@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "burning_aura",
+  "ground_slam",
+  "thunder_clap"
+ ],
+ "animation": "huge__axe-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "construct",
+ "glow": "#8c8e95",
+ "height": 3.09,
+ "id": "obsidian_golem_siegebreaker",
+ "name": "Obsidian Golem Siegebreaker",
+ "road": "abyssal",
+ "size": 1.8,
+ "source": "D&D: obsidian golem",
+ "tier": 4
+}

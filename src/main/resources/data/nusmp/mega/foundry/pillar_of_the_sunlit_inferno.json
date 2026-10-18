@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "burning_aura",
+  "ground_slam",
+  "enrage"
+ ],
+ "animation": "huge__hammer-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "elemental",
+ "glow": "#e4c863",
+ "height": 3.09,
+ "id": "pillar_of_the_sunlit_inferno",
+ "name": "Pillar of the Sunlit Inferno",
+ "road": "holy",
+ "size": 1.7,
+ "source": "Fire Force",
+ "tier": 5
+}

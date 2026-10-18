@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "pounce",
+  "call_wolves"
+ ],
+ "animation": "child__none-none__auto-auto-auto",
+ "archetype": "skirmisher",
+ "faction": "beast",
+ "glow": "#d8c8a0",
+ "height": 1.41,
+ "id": "bramble_pup",
+ "name": "Bramble Pup",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Frieren",
+ "tier": 1
+}

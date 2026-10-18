@@ -16,5 +16,6 @@ public final class LabyrinthClient {
         com.newuniverse.nusmp.client.labyrinth.seal.SealClient.init(modBus);                               // E2: Floor Warden renderer, altar
         com.newuniverse.nusmp.client.labyrinth.vault.VaultClient.init(modBus);                             // D: pedestal renderer
         com.newuniverse.nusmp.client.labyrinth.rift.RiftClient.init(modBus);                               // 1.72.0: the dimensional rift renderer
+        com.newuniverse.nusmp.client.labyrinth.foundry.FoundryClient.init(modBus);                         // the Mob Foundry: the renderer of the 400 dungeon mobs
     }
 }

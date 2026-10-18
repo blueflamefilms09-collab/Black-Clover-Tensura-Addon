@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "miasma",
+  "raise_dead"
+ ],
+ "animation": "lanky__wand-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "undead",
+ "glow": "#9775c2",
+ "height": 2.31,
+ "id": "pale_choir_ghast_cantor",
+ "name": "Pale Choir Ghast Cantor",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: ghast",
+ "tier": 3
+}

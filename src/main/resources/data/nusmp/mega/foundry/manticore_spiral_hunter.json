@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "volley",
+  "sky_dive"
+ ],
+ "animation": "lanky__none-bow__auto-auto-auto",
+ "archetype": "archer",
+ "faction": "beast",
+ "glow": "#e1dbc8",
+ "height": 2.31,
+ "id": "manticore_spiral_hunter",
+ "name": "Manticore Spiral Hunter",
+ "road": "holy",
+ "size": 1.0,
+ "source": "D&D: manticore",
+ "tier": 4
+}

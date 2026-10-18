@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "regrowth",
+  "root"
+ ],
+ "animation": "slim__none-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "elemental",
+ "glow": "#8ca275",
+ "height": 1.94,
+ "id": "seed_pod_dryad",
+ "name": "Seed Pod Dryad",
+ "road": "holy",
+ "size": 1.0,
+ "source": "D&D: dryad",
+ "tier": 1
+}

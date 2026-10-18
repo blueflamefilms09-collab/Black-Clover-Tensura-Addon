@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "bulwark",
+  "ground_slam"
+ ],
+ "animation": "broad__mace-shield__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "construct",
+ "glow": "#b89770",
+ "height": 2.09,
+ "id": "hollow_sunshield_penitent",
+ "name": "Hollow Sunshield Penitent",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Dark Souls",
+ "tier": 2
+}

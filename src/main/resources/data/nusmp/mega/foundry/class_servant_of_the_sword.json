@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "lunge",
+  "holy_lance"
+ ],
+ "animation": "average__greatsword-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "construct",
+ "glow": "#e1c274",
+ "height": 2.0,
+ "id": "class_servant_of_the_sword",
+ "name": "Class Servant of the Sword",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Fate",
+ "tier": 4
+}

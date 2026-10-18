@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "lunge",
+  "call_wolves"
+ ],
+ "animation": "slim__sword-none__auto-auto-auto",
+ "archetype": "skirmisher",
+ "faction": "beast",
+ "glow": "#e1dbc8",
+ "height": 1.94,
+ "id": "black_wool_shepherd_dog",
+ "name": "Black Wool Shepherd Dog",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Berserk",
+ "tier": 1
+}

@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "frost_aura",
+  "ice_bind",
+  "bulwark"
+ ],
+ "animation": "broad__spear-none__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "demon",
+ "glow": "#c8d8ff",
+ "height": 2.09,
+ "id": "ice_devil_palace_warden",
+ "name": "Ice Devil Palace Warden",
+ "road": "abyssal",
+ "size": 1.4,
+ "source": "D&D: ice devil",
+ "tier": 4
+}

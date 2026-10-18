@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "shadow_dash",
+  "whirlwind",
+  "phase_step"
+ ],
+ "animation": "lanky__katana-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "cultist",
+ "glow": "#c8d8ff",
+ "height": 2.31,
+ "id": "soul_reaper_commander_in_white",
+ "name": "Soul Reaper Commander in White",
+ "road": "holy",
+ "size": 1.4,
+ "source": "Bleach",
+ "tier": 5
+}

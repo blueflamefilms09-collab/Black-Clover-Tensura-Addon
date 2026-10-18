@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "triple_shot",
+  "hunters_mark"
+ ],
+ "animation": "lanky__none-bow__auto-auto-auto",
+ "archetype": "archer",
+ "faction": "cultist",
+ "glow": "#e48460",
+ "height": 2.31,
+ "id": "rushlight_hunter",
+ "name": "Rushlight Hunter",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Goblin Slayer",
+ "tier": 1
+}

@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "whirlwind",
+  "shadow_dash"
+ ],
+ "animation": "slim__scythe-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "cultist",
+ "glow": "#9775c2",
+ "height": 1.94,
+ "id": "reaper_academy_scythe_girl",
+ "name": "Reaper Academy Scythe Girl",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Soul Eater",
+ "tier": 2
+}

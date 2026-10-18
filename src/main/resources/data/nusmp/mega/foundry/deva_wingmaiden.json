@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "sky_dive",
+  "radiant_aura"
+ ],
+ "animation": "slim__spear-none__auto-auto-auto",
+ "archetype": "flier",
+ "faction": "elemental",
+ "glow": "#fff0b0",
+ "height": 1.94,
+ "id": "deva_wingmaiden",
+ "name": "Deva Wingmaiden",
+ "road": "holy",
+ "size": 1.0,
+ "source": "D&D: deva",
+ "tier": 3
+}

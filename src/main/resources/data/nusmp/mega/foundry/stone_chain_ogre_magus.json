@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "chain_pull",
+  "thunder_clap"
+ ],
+ "animation": "huge__staff-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "ogre",
+ "glow": "#9775c2",
+ "height": 3.09,
+ "id": "stone_chain_ogre_magus",
+ "name": "Stone Chain Ogre Magus",
+ "road": "abyssal",
+ "size": 1.4,
+ "source": "D&D: ogre mage",
+ "tier": 3
+}

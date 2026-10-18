@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.80.0] — The Mob Foundry: 400 custom dungeon mobs, 200 per road, all on player-rig models
+
+### NEW (nothing existed before: the 400 custom mobs had not been built)
+- **400 mobs: 200 Holy (ascension) and 200 Abyssal (descent), 40 per tier on each road** (`tools/foundry/rows/*.txt`, one line per mob: name, faction, build, palette, source, look, archetype, 2 to 3 abilities). Every one is an art-kit character on the player rig (the Old Witch standard), with creature parts (horns, wings, tails, halos) for non-humans, its own palette and glow texture.
+- **One entity type `nusmp:foundry_mob`** whose identity is a synced string; 10 archetypes with six style goals (melee, hit-and-run, ranged, support, charge, air); 53 abilities over 25 kinds as data (only Light/Dark Rukh particles); scaling by tier and floor; summoner minions that drop nothing; faction extras on drops (Magic Stones and gear through the standard listeners); a faction turf-war goal.
+- **Dungeon integration:** each monster of an encounter becomes, at the configured weight (default 60 %), a foundry mob of the floor's tier and the sector's road; the room's requested faction is 4x as likely. The old tables still supply the other 40 %.
+- **Variety guard** (`tools/foundry/guard.py`, `test_guard.py`): fails on any duplicate name, id, look signature or palette, any two mobs that differ in fewer than 3 of 16 structure groups (closest pair of 79,800 differs in 3), a tier that is not exactly 40 per road, or a source above 8 %.
+- **Sources:** 194 different (45 anime and game series, largest Berserk at 4 %, plus 149 D&D monsters and classes counted each as its own source; read as one D&D family it is 178 mobs, 44 %, so say if you want that balance changed).
+- Config `nusmp-labyrinth-mega-foundry-server.toml`; command `/multiverse mega foundry list|spawn|count|verify`; five self-tests (`foundry.*`, now required by the CI smoke test); lang fragment merged; docs `docs/labyrinth/foundry.md` and `foundry_report.txt`.
+- Size: 4.6 MB deflated in the jar (17.4 MB uncompressed); clips are shared by 107 animation classes.
+
+### KEPT
+- Every existing mob, table and renderer. The mechanics library (1.79.0) can now use foundry variants in `mechanic_groups.json`.
+
+### Honest notes
+- Not run in game: AI and ability feel (cast timing, charge, hover), the real 60 % spawn mix and the live renderer. Tiers use the repo's `DndRules.tierOf` (five tiers of 200 floors), not "20 levels".
+- A plain `/summon nusmp:foundry_mob` becomes a random roster mob on its first tick.
+
 ## [1.79.0] — 1000 dungeon mechanics from 48 anime and D&D sources
 
 ### NEW (everything; nothing replaced)

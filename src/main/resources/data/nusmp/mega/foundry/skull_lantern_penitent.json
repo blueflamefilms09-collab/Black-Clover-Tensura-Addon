@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "fire_bolt",
+  "dread_gaze"
+ ],
+ "animation": "lanky__orb-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "undead",
+ "glow": "#ff5a1a",
+ "height": 2.31,
+ "id": "skull_lantern_penitent",
+ "name": "Skull Lantern Penitent",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Dark Souls",
+ "tier": 1
+}

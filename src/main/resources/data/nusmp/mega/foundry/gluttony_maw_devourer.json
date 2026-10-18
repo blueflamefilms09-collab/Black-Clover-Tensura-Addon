@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "acid_spit",
+  "life_drain",
+  "stoneskin"
+ ],
+ "animation": "huge__none-none__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "slime",
+ "glow": "#c2636b",
+ "height": 3.09,
+ "id": "gluttony_maw_devourer",
+ "name": "Gluttony Maw Devourer",
+ "road": "abyssal",
+ "size": 1.8,
+ "source": "Fullmetal Alchemist",
+ "tier": 4
+}

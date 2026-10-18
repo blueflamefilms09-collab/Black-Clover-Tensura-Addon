@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "life_drain",
+  "vampiric_bite",
+  "raise_dead"
+ ],
+ "animation": "slim__wand-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "undead",
+ "glow": "#ff3050",
+ "height": 1.94,
+ "id": "night_empress_of_the_moonless_court",
+ "name": "Night Empress of the Moonless Court",
+ "road": "abyssal",
+ "size": 1.7,
+ "source": "D&D: vampire empress",
+ "tier": 5
+}

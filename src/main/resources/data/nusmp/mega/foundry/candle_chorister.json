@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "mending_light",
+  "radiant_aura"
+ ],
+ "animation": "average__none-grimoire__auto-pray-auto",
+ "archetype": "support",
+ "faction": "cultist",
+ "glow": "#fff0b0",
+ "height": 2.0,
+ "id": "candle_chorister",
+ "name": "Candle Chorister",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Frieren",
+ "tier": 1
+}

@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "cleave",
+  "thorn_skin"
+ ],
+ "animation": "lanky__scythe-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "construct",
+ "glow": "#e48460",
+ "height": 2.31,
+ "id": "straw_warden",
+ "name": "Straw Warden",
+ "road": "holy",
+ "size": 1.0,
+ "source": "D&D: scarecrow",
+ "tier": 1
+}

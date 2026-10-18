@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "shadow_dash",
+  "whirlwind",
+  "holy_lance"
+ ],
+ "animation": "slim__none-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "construct",
+ "glow": "#ffc840",
+ "height": 1.94,
+ "id": "gold_saint_of_the_zenith_hall",
+ "name": "Gold Saint of the Zenith Hall",
+ "road": "holy",
+ "size": 1.5,
+ "source": "Saint Seiya",
+ "tier": 5
+}

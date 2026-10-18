@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "pounce",
+  "vampiric_bite"
+ ],
+ "animation": "child__none-none__auto-auto-auto",
+ "archetype": "skirmisher",
+ "faction": "beast",
+ "glow": "#b88064",
+ "height": 1.41,
+ "id": "hollow_gnawer_pup",
+ "name": "Hollow Gnawer Pup",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Made in Abyss",
+ "tier": 1
+}

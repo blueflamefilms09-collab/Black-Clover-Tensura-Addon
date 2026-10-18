@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "miasma",
+  "life_drain"
+ ],
+ "animation": "slim__dagger-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "cultist",
+ "glow": "#e1dbc8",
+ "height": 1.94,
+ "id": "plague_doctor_surgeon",
+ "name": "Plague Doctor Surgeon",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Bloodborne",
+ "tier": 2
+}

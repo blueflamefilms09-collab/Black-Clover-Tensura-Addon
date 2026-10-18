@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "cleave",
+  "enrage"
+ ],
+ "animation": "huge__none-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "beast",
+ "glow": "#8c7564",
+ "height": 3.09,
+ "id": "thornhide_owlbear_brawler",
+ "name": "Thornhide Owlbear Brawler",
+ "road": "holy",
+ "size": 1.2,
+ "source": "D&D: owlbear",
+ "tier": 2
+}

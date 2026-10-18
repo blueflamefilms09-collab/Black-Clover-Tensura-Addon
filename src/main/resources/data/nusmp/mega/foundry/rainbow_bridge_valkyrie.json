@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "dash",
+  "holy_lance"
+ ],
+ "animation": "slim__spear-shield__auto-auto-auto",
+ "archetype": "charger",
+ "faction": "construct",
+ "glow": "#efcd6e",
+ "height": 1.94,
+ "id": "rainbow_bridge_valkyrie",
+ "name": "Rainbow Bridge Valkyrie",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Record of Ragnarok",
+ "tier": 3
+}

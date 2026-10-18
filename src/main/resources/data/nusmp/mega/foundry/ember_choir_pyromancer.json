@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "fire_bolt",
+  "burning_aura"
+ ],
+ "animation": "slim__wand-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "elemental",
+ "glow": "#e1c274",
+ "height": 1.94,
+ "id": "ember_choir_pyromancer",
+ "name": "Ember Choir Pyromancer",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Fairy Tail",
+ "tier": 4
+}

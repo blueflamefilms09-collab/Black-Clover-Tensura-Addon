@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "dread_gaze",
+  "hex",
+  "holy_lance"
+ ],
+ "animation": "slim__orb-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "cultist",
+ "glow": "#a0e8ff",
+ "height": 1.94,
+ "id": "oracle_of_seven_thousand_eyes",
+ "name": "Oracle of Seven Thousand Eyes",
+ "road": "holy",
+ "size": 1.5,
+ "source": "Fate",
+ "tier": 5
+}

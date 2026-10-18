@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "dash",
+  "troll_blood"
+ ],
+ "animation": "huge__none-none__auto-auto-auto",
+ "archetype": "charger",
+ "faction": "beast",
+ "glow": "#e1dbc8",
+ "height": 3.09,
+ "id": "mossback_stag_lord",
+ "name": "Mossback Stag Lord",
+ "road": "holy",
+ "size": 1.35,
+ "source": "Princess Mononoke",
+ "tier": 3
+}

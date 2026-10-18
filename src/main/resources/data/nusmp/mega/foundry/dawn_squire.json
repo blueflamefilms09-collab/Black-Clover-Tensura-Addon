@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "shield_bash",
+  "shield_wall"
+ ],
+ "animation": "average__sword-shield__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "construct",
+ "glow": "#a0c8e9",
+ "height": 2.0,
+ "id": "dawn_squire",
+ "name": "Dawn Squire",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Black Clover",
+ "tier": 1
+}

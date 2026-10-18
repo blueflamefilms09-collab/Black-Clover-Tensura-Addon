@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "call_wolves",
+  "enrage"
+ ],
+ "animation": "broad__axe-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "beast",
+ "glow": "#8c5f71",
+ "height": 2.09,
+ "id": "gnoll_fang_pack_alpha",
+ "name": "Gnoll Fang Pack Alpha",
+ "road": "abyssal",
+ "size": 1.2,
+ "source": "D&D: gnoll",
+ "tier": 2
+}

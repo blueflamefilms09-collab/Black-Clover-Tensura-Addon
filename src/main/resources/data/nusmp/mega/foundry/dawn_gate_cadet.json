@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "lunge",
+  "shield_wall"
+ ],
+ "animation": "average__katana-none__auto-auto-auto",
+ "archetype": "skirmisher",
+ "faction": "construct",
+ "glow": "#e1c274",
+ "height": 2.0,
+ "id": "dawn_gate_cadet",
+ "name": "Dawn Gate Cadet",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Fate",
+ "tier": 1
+}

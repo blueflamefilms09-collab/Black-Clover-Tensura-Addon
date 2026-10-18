@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "acid_spit",
+  "summon_pack",
+  "miasma"
+ ],
+ "animation": "huge__staff-none__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "slime",
+ "glow": "#b8ffe0",
+ "height": 3.09,
+ "id": "maw_queen_of_the_endless_larder",
+ "name": "Maw Queen of the Endless Larder",
+ "road": "abyssal",
+ "size": 1.9,
+ "source": "D&D: shoggoth",
+ "tier": 5
+}

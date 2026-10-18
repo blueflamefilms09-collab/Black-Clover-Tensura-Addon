@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "ice_bind",
+  "soul_siphon"
+ ],
+ "animation": "broad__trident-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "aquatic",
+ "glow": "#e1dbc8",
+ "height": 2.09,
+ "id": "drowned_cult_high_priest",
+ "name": "Drowned Cult High Priest",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: kuo-toa",
+ "tier": 3
+}

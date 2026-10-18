@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "war_cry",
+  "shield_bash"
+ ],
+ "animation": "broad__spear-shield__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "goblin",
+ "glow": "#e1c274",
+ "height": 2.09,
+ "id": "hobgoblin_drillmaster",
+ "name": "Hobgoblin Drillmaster",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: hobgoblin",
+ "tier": 1
+}

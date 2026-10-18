@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "chain_pull",
+  "cleave"
+ ],
+ "animation": "broad__trident-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "aquatic",
+ "glow": "#f7f7fa",
+ "height": 2.09,
+ "id": "sky_whale_harpooner",
+ "name": "Sky Whale Harpooner",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Made in Abyss",
+ "tier": 4
+}

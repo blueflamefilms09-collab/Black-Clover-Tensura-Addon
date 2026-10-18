@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "acid_spit",
+  "miasma"
+ ],
+ "animation": "broad__none-none__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "slime",
+ "glow": "#efb1c8",
+ "height": 2.09,
+ "id": "choir_of_mouths_aberration",
+ "name": "Choir of Mouths Aberration",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: aboleth spawn",
+ "tier": 3
+}

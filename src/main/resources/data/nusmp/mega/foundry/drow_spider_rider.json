@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "web_shot",
+  "lunge"
+ ],
+ "animation": "slim__sword-dagger__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "elemental",
+ "glow": "#d3d6db",
+ "height": 1.94,
+ "id": "drow_spider_rider",
+ "name": "Drow Spider Rider",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: drow",
+ "tier": 2
+}

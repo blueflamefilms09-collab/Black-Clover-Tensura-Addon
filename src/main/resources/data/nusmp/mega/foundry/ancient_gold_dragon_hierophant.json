@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "fire_bolt",
+  "summon_pack",
+  "radiant_aura"
+ ],
+ "animation": "huge__staff-none__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "beast",
+ "glow": "#8c5f71",
+ "height": 3.09,
+ "id": "ancient_gold_dragon_hierophant",
+ "name": "Ancient Gold Dragon Hierophant",
+ "road": "holy",
+ "size": 1.9,
+ "source": "D&D: ancient gold dragon",
+ "tier": 5
+}

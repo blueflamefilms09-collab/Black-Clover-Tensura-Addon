@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "pounce",
+  "web_shot"
+ ],
+ "animation": "lanky__spear-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "beast",
+ "glow": "#e1dbc8",
+ "height": 2.31,
+ "id": "dripstone_skink_skulker",
+ "name": "Dripstone Skink Skulker",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: kobold lizardfolk",
+ "tier": 1
+}

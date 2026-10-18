@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "burning_aura",
+  "ground_slam",
+  "life_drain"
+ ],
+ "animation": "huge__hammer-none__auto-auto-auto",
+ "archetype": "charger",
+ "faction": "beast",
+ "glow": "#8c5f71",
+ "height": 3.09,
+ "id": "sin_wyrm_of_greed_unending",
+ "name": "Sin Wyrm of Greed Unending",
+ "road": "abyssal",
+ "size": 2.0,
+ "source": "Seven Deadly Sins",
+ "tier": 5
+}

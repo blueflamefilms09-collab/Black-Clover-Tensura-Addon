@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "heal_pulse",
+  "ward_allies"
+ ],
+ "animation": "average__mace-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "cultist",
+ "glow": "#e1c274",
+ "height": 2.0,
+ "id": "chapel_novice",
+ "name": "Chapel Novice",
+ "road": "holy",
+ "size": 1.0,
+ "source": "D&D: cleric",
+ "tier": 1
+}

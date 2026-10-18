@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "life_drain",
+  "hex",
+  "raise_dead"
+ ],
+ "animation": "slim__wand-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "undead",
+ "glow": "#c8d8ff",
+ "height": 1.94,
+ "id": "pale_queen_of_the_hollow_court",
+ "name": "Pale Queen of the Hollow Court",
+ "road": "abyssal",
+ "size": 1.3,
+ "source": "Berserk",
+ "tier": 4
+}

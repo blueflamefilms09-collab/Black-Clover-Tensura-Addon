@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "burning_aura",
+  "dash"
+ ],
+ "animation": "average__hammer-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "elemental",
+ "glow": "#606066",
+ "height": 2.0,
+ "id": "flame_brigade_cadet",
+ "name": "Flame Brigade Cadet",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Fire Force",
+ "tier": 2
+}

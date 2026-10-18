@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "lunge",
+  "fire_bolt"
+ ],
+ "animation": "slim__sword-dagger__auto-auto-auto",
+ "archetype": "skirmisher",
+ "faction": "beast",
+ "glow": "#c2636b",
+ "height": 1.94,
+ "id": "gold_dragon_wyrmkin_duelist",
+ "name": "Gold Dragon Wyrmkin Duelist",
+ "road": "holy",
+ "size": 1.0,
+ "source": "D&D: gold dragon",
+ "tier": 4
+}

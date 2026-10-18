@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "shadow_dash",
+  "blood_rage",
+  "vampiric_bite"
+ ],
+ "animation": "slim__sword-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "demon",
+ "glow": "#ff3050",
+ "height": 1.94,
+ "id": "scourge_seraph_of_the_fallen_choir",
+ "name": "Scourge Seraph of the Fallen Choir",
+ "road": "abyssal",
+ "size": 1.4,
+ "source": "D&D: fallen angel",
+ "tier": 4
+}

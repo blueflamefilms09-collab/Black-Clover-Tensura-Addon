@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "shield_bash",
+  "bulwark"
+ ],
+ "animation": "broad__sword-shield__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "undead",
+ "glow": "#b88064",
+ "height": 2.09,
+ "id": "hollow_knight_of_the_ashen_gate",
+ "name": "Hollow Knight of the Ashen Gate",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Dark Souls",
+ "tier": 2
+}

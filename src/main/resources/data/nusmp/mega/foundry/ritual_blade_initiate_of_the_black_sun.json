@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "shadow_step",
+  "hex"
+ ],
+ "animation": "average__dagger-dagger__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "cultist",
+ "glow": "#e1dbc8",
+ "height": 2.0,
+ "id": "ritual_blade_initiate_of_the_black_sun",
+ "name": "Ritual Blade Initiate of the Black Sun",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Overlord",
+ "tier": 2
+}

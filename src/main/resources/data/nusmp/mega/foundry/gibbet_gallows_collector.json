@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "chain_pull",
+  "dread_gaze",
+  "whirlwind"
+ ],
+ "animation": "lanky__scythe-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "cultist",
+ "glow": "#e1dbc8",
+ "height": 2.31,
+ "id": "gibbet_gallows_collector",
+ "name": "Gibbet Gallows Collector",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Berserk",
+ "tier": 4
+}

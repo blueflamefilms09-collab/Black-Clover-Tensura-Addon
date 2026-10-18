@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "war_cry",
+  "whirlwind"
+ ],
+ "animation": "broad__none-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "construct",
+ "glow": "#ffc840",
+ "height": 2.09,
+ "id": "gold_saint_of_the_twelve_houses",
+ "name": "Gold Saint of the Twelve Houses",
+ "road": "holy",
+ "size": 1.1,
+ "source": "Saint Seiya",
+ "tier": 3
+}

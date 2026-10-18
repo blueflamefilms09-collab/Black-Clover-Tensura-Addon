@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "holy_lance",
+  "cleave"
+ ],
+ "animation": "broad__greatsword-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "elemental",
+ "glow": "#ffc840",
+ "height": 2.09,
+ "id": "planetar_dawn_blade",
+ "name": "Planetar Dawn Blade",
+ "road": "holy",
+ "size": 1.35,
+ "source": "D&D: planetar",
+ "tier": 4
+}

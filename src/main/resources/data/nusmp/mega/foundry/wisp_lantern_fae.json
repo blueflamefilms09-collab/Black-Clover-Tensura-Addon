@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "holy_lance",
+  "mending_light"
+ ],
+ "animation": "child__orb-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "elemental",
+ "glow": "#a0e8ff",
+ "height": 1.41,
+ "id": "wisp_lantern_fae",
+ "name": "Wisp Lantern Fae",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Spirited Away",
+ "tier": 1
+}

@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "ice_bind",
+  "heal_pulse"
+ ],
+ "animation": "broad__trident-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "aquatic",
+ "glow": "#b89770",
+ "height": 2.09,
+ "id": "tidal_temple_matron",
+ "name": "Tidal Temple Matron",
+ "road": "holy",
+ "size": 1.15,
+ "source": "D&D: sea elf priestess",
+ "tier": 3
+}

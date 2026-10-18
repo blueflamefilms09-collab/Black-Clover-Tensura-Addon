@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "whirlwind",
+  "thorn_skin"
+ ],
+ "animation": "average__axe-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "construct",
+ "glow": "#6a6766",
+ "height": 2.0,
+ "id": "rust_collar_thrall",
+ "name": "Rust Collar Thrall",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Berserk",
+ "tier": 1
+}

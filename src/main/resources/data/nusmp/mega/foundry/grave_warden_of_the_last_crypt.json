@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "stoneskin",
+  "bulwark",
+  "ground_slam"
+ ],
+ "animation": "huge__hammer-shield__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "construct",
+ "glow": "#606066",
+ "height": 3.09,
+ "id": "grave_warden_of_the_last_crypt",
+ "name": "Grave Warden of the Last Crypt",
+ "road": "abyssal",
+ "size": 1.7,
+ "source": "Dark Souls",
+ "tier": 4
+}

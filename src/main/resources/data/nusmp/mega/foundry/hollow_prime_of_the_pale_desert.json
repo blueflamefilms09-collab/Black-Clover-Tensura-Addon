@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "shadow_dash",
+  "whirlwind",
+  "life_drain"
+ ],
+ "animation": "broad__katana-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "undead",
+ "glow": "#ff3050",
+ "height": 2.09,
+ "id": "hollow_prime_of_the_pale_desert",
+ "name": "Hollow Prime of the Pale Desert",
+ "road": "abyssal",
+ "size": 1.8,
+ "source": "Bleach",
+ "tier": 5
+}

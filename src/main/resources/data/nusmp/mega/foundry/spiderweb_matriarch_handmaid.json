@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "web_shot",
+  "swarm_call"
+ ],
+ "animation": "slim__wand-none__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "insect",
+ "glow": "#d3d6db",
+ "height": 1.94,
+ "id": "spiderweb_matriarch_handmaid",
+ "name": "Spiderweb Matriarch Handmaid",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: ettercap",
+ "tier": 2
+}

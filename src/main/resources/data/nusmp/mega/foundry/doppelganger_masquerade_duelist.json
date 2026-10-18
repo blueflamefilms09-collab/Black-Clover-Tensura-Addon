@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "blink",
+  "lunge"
+ ],
+ "animation": "slim__sword-dagger__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "cultist",
+ "glow": "#e1c274",
+ "height": 1.94,
+ "id": "doppelganger_masquerade_duelist",
+ "name": "Doppelganger Masquerade Duelist",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: doppelganger",
+ "tier": 3
+}

@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "pounce",
+  "vampiric_bite"
+ ],
+ "animation": "average__hammer-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "construct",
+ "glow": "#8c5f71",
+ "height": 2.0,
+ "id": "grinning_mimic_pretender",
+ "name": "Grinning Mimic Pretender",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: mimic",
+ "tier": 2
+}

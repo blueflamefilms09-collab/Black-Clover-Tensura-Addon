@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "stoneskin",
+  "ground_slam"
+ ],
+ "animation": "small__hammer-none__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "construct",
+ "glow": "#f7f7fa",
+ "height": 1.5,
+ "id": "floor_guardian_of_the_lotus_court",
+ "name": "Floor Guardian of the Lotus Court",
+ "road": "holy",
+ "size": 1.2,
+ "source": "Overlord",
+ "tier": 4
+}

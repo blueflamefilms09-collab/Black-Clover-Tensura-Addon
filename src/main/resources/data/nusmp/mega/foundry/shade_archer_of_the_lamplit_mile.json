@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "arrow_rain",
+  "hunters_mark"
+ ],
+ "animation": "lanky__none-bow__auto-auto-slouch",
+ "archetype": "archer",
+ "faction": "undead",
+ "glow": "#9775c2",
+ "height": 2.31,
+ "id": "shade_archer_of_the_lamplit_mile",
+ "name": "Shade Archer of the Lamplit Mile",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: shadow",
+ "tier": 3
+}

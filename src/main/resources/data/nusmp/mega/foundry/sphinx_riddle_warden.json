@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "hex",
+  "ground_slam"
+ ],
+ "animation": "broad__none-none__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "beast",
+ "glow": "#606066",
+ "height": 2.09,
+ "id": "sphinx_riddle_warden",
+ "name": "Sphinx Riddle Warden",
+ "road": "holy",
+ "size": 1.3,
+ "source": "D&D: androsphinx",
+ "tier": 3
+}

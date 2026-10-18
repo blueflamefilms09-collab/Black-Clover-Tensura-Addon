@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "cleave",
+  "dread_gaze"
+ ],
+ "animation": "huge__axe-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "cultist",
+ "glow": "#e1dbc8",
+ "height": 3.09,
+ "id": "executioner_of_the_black_mass",
+ "name": "Executioner of the Black Mass",
+ "road": "abyssal",
+ "size": 1.5,
+ "source": "Berserk",
+ "tier": 3
+}

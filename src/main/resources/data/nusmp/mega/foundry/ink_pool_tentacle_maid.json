@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "root",
+  "hex"
+ ],
+ "animation": "slim__wand-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "aquatic",
+ "glow": "#efb1c8",
+ "height": 1.94,
+ "id": "ink_pool_tentacle_maid",
+ "name": "Ink Pool Tentacle Maid",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "Konosuba",
+ "tier": 1
+}

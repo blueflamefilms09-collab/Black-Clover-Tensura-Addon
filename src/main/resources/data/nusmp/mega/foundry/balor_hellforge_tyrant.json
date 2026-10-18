@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "burning_aura",
+  "cleave",
+  "enrage"
+ ],
+ "animation": "huge__greatsword-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "demon",
+ "glow": "#de6868",
+ "height": 3.09,
+ "id": "balor_hellforge_tyrant",
+ "name": "Balor Hellforge Tyrant",
+ "road": "abyssal",
+ "size": 1.6,
+ "source": "D&D: balor",
+ "tier": 4
+}

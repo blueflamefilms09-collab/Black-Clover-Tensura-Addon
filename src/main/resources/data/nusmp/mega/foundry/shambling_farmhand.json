@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "cleave",
+  "troll_blood"
+ ],
+ "animation": "average__axe-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "undead",
+ "glow": "#ae756b",
+ "height": 2.0,
+ "id": "shambling_farmhand",
+ "name": "Shambling Farmhand",
+ "road": "abyssal",
+ "size": 1.0,
+ "source": "D&D: zombie",
+ "tier": 1
+}

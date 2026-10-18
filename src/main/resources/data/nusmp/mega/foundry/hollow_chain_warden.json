@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "chain_pull",
+  "ground_slam"
+ ],
+ "animation": "huge__hammer-none__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "construct",
+ "glow": "#6a6766",
+ "height": 3.09,
+ "id": "hollow_chain_warden",
+ "name": "Hollow Chain Warden",
+ "road": "abyssal",
+ "size": 1.4,
+ "source": "Berserk",
+ "tier": 2
+}

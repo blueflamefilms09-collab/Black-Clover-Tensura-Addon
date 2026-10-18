@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "ground_slam",
+  "leap_slam",
+  "stoneskin"
+ ],
+ "animation": "huge__none-none__auto-auto-auto",
+ "archetype": "charger",
+ "faction": "beast",
+ "glow": "#c2636b",
+ "height": 3.09,
+ "id": "tarrasque_shell_walker",
+ "name": "Tarrasque Shell Walker",
+ "road": "abyssal",
+ "size": 2.0,
+ "source": "D&D: tarrasque",
+ "tier": 5
+}

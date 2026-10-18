@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "leap_slam",
+  "enrage",
+  "dread_gaze"
+ ],
+ "animation": "huge__axe-none__auto-auto-auto",
+ "archetype": "charger",
+ "faction": "demon",
+ "glow": "#ff3050",
+ "height": 3.09,
+ "id": "demon_lord_of_the_bleeding_throne",
+ "name": "Demon Lord of the Bleeding Throne",
+ "road": "abyssal",
+ "size": 2.0,
+ "source": "D&D: demon lord",
+ "tier": 5
+}

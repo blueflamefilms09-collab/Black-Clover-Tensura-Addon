@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "summon_pack",
+  "hex",
+  "dread_gaze"
+ ],
+ "animation": "slim__staff-none__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "cultist",
+ "glow": "#b060ff",
+ "height": 1.94,
+ "id": "evil_god_avatar_of_the_sunken_pantheon",
+ "name": "Evil God Avatar of the Sunken Pantheon",
+ "road": "abyssal",
+ "size": 1.8,
+ "source": "Fate",
+ "tier": 5
+}

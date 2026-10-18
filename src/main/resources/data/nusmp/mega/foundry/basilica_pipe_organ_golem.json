@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "thunder_clap",
+  "bulwark"
+ ],
+ "animation": "huge__hammer-none__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "construct",
+ "glow": "#b89770",
+ "height": 3.09,
+ "id": "basilica_pipe_organ_golem",
+ "name": "Basilica Pipe Organ Golem",
+ "road": "holy",
+ "size": 1.5,
+ "source": "D&D: modron",
+ "tier": 4
+}

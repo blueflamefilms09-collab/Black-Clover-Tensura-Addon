@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "dash",
+  "war_cry"
+ ],
+ "animation": "slim__hammer-none__auto-auto-auto",
+ "archetype": "skirmisher",
+ "faction": "cultist",
+ "glow": "#e1c274",
+ "height": 1.94,
+ "id": "nen_hunter_prodigy",
+ "name": "Nen Hunter Prodigy",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Hunter x Hunter",
+ "tier": 2
+}

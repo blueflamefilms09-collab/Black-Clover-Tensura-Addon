@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "stoneskin",
+  "thunder_clap"
+ ],
+ "animation": "huge__hammer-none__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "construct",
+ "glow": "#efe6d3",
+ "height": 3.09,
+ "id": "bellmetal_choir_golem",
+ "name": "Bellmetal Choir Golem",
+ "road": "holy",
+ "size": 1.2,
+ "source": "D&D: stone golem",
+ "tier": 2
+}

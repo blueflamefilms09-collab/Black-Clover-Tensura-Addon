@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "ice_bind",
+  "radiant_aura"
+ ],
+ "animation": "slim__orb-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "elemental",
+ "glow": "#b060ff",
+ "height": 1.94,
+ "id": "geode_hollow_choirmaster",
+ "name": "Geode Hollow Choirmaster",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Made in Abyss",
+ "tier": 3
+}

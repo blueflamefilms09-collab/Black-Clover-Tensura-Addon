@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "thunder_clap",
+  "blink"
+ ],
+ "animation": "slim__staff-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "elemental",
+ "glow": "#a0e8ff",
+ "height": 1.94,
+ "id": "djinn_equip_magi_sovereign",
+ "name": "Djinn Equip Magi Sovereign",
+ "road": "holy",
+ "size": 1.2,
+ "source": "Magi",
+ "tier": 4
+}

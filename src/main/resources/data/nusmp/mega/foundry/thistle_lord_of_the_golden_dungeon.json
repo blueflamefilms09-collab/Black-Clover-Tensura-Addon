@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "summon_pack",
+  "conjure_imps",
+  "ward_allies"
+ ],
+ "animation": "average__staff-none__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "cultist",
+ "glow": "#f2ecde",
+ "height": 2.0,
+ "id": "thistle_lord_of_the_golden_dungeon",
+ "name": "Thistle Lord of the Golden Dungeon",
+ "road": "abyssal",
+ "size": 1.6,
+ "source": "Dungeon Meshi",
+ "tier": 5
+}

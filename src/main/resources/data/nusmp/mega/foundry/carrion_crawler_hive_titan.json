@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "web_shot",
+  "dash",
+  "miasma"
+ ],
+ "animation": "huge__trident-none__auto-auto-auto",
+ "archetype": "charger",
+ "faction": "insect",
+ "glow": "#606066",
+ "height": 3.09,
+ "id": "carrion_crawler_hive_titan",
+ "name": "Carrion Crawler Hive Titan",
+ "road": "abyssal",
+ "size": 1.6,
+ "source": "D&D: carrion crawler",
+ "tier": 4
+}

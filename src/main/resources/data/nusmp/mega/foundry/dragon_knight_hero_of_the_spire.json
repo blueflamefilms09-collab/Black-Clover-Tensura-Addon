@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "holy_lance",
+  "shield_bash"
+ ],
+ "animation": "average__sword-shield__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "cultist",
+ "glow": "#f2ecde",
+ "height": 2.0,
+ "id": "dragon_knight_hero_of_the_spire",
+ "name": "Dragon Knight Hero of the Spire",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Dragon Quest",
+ "tier": 4
+}

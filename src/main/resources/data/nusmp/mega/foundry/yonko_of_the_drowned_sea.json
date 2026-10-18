@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "chain_pull",
+  "whirlwind",
+  "blood_rage"
+ ],
+ "animation": "huge__trident-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "aquatic",
+ "glow": "#e1dbc8",
+ "height": 3.09,
+ "id": "yonko_of_the_drowned_sea",
+ "name": "Yonko of the Drowned Sea",
+ "road": "abyssal",
+ "size": 1.9,
+ "source": "One Piece",
+ "tier": 5
+}

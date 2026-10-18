@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "arrow_rain",
+  "hunters_mark"
+ ],
+ "animation": "slim__none-bow__auto-auto-auto",
+ "archetype": "archer",
+ "faction": "beast",
+ "glow": "#c8d8ff",
+ "height": 1.94,
+ "id": "silver_lining_sniper_elf",
+ "name": "Silver Lining Sniper Elf",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Frieren",
+ "tier": 3
+}

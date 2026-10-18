@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "holy_lance",
+  "whirlwind",
+  "radiant_aura"
+ ],
+ "animation": "huge__greatsword-none__auto-auto-auto",
+ "archetype": "brute",
+ "faction": "elemental",
+ "glow": "#ffc840",
+ "height": 3.09,
+ "id": "solar_of_the_unsetting_sun",
+ "name": "Solar of the Unsetting Sun",
+ "road": "holy",
+ "size": 1.7,
+ "source": "D&D: solar",
+ "tier": 5
+}

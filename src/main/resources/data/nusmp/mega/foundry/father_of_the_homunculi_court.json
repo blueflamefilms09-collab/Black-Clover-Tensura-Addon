@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "soul_siphon",
+  "shadow_bolt",
+  "life_drain"
+ ],
+ "animation": "slim__orb-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "slime",
+ "glow": "#c2ad75",
+ "height": 1.94,
+ "id": "father_of_the_homunculi_court",
+ "name": "Father of the Homunculi Court",
+ "road": "abyssal",
+ "size": 1.6,
+ "source": "Fullmetal Alchemist",
+ "tier": 5
+}

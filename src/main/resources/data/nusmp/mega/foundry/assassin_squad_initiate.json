@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "shadow_step",
+  "lunge"
+ ],
+ "animation": "lanky__dagger-none__auto-auto-auto",
+ "archetype": "assassin",
+ "faction": "cultist",
+ "glow": "#d3d6db",
+ "height": 2.31,
+ "id": "assassin_squad_initiate",
+ "name": "Assassin Squad Initiate",
+ "road": "holy",
+ "size": 1.0,
+ "source": "Akame ga Kill",
+ "tier": 2
+}

@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "summon_pack",
+  "mending_light",
+  "hex"
+ ],
+ "animation": "lanky__none-grimoire__auto-auto-auto",
+ "archetype": "summoner",
+ "faction": "cultist",
+ "glow": "#e1c274",
+ "height": 2.31,
+ "id": "chronicle_keeper_of_the_last_page",
+ "name": "Chronicle Keeper of the Last Page",
+ "road": "holy",
+ "size": 1.4,
+ "source": "Dungeon Meshi",
+ "tier": 5
+}

@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "heal_pulse",
+  "radiant_aura"
+ ],
+ "animation": "slim__staff-none__auto-auto-auto",
+ "archetype": "support",
+ "faction": "elemental",
+ "glow": "#fff0b0",
+ "height": 1.94,
+ "id": "celestial_choir_seraphim_scout",
+ "name": "Celestial Choir Seraphim Scout",
+ "road": "holy",
+ "size": 1.2,
+ "source": "D&D: seraph",
+ "tier": 4
+}

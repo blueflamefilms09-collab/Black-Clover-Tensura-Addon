@@ -1,0 +1,2 @@
+# Why: abyssal road, tier 3, the deep halls (floors -401..-600): trolls, wraiths, mind flayers, devils, banshees, ghoul kings. One mob per line: Name | faction | build | palette | source | look tokens | archetype | abilities (tools/foundry/roster_common.py).
+Pit Fiend Cadet | demon | broad | scarlet soot goldenrod | D&D: pit fiend | skin=red wings=bat/crimson horns=devil/bone tail=devil/crimson hair=bald face=angry/ember top=bare armor=pauldrons+tassets/scale/ink legs=trousers boots=boots/calf gloves=gauntlets prop=greatsword size=1.3 | brute | burning_aura cleave

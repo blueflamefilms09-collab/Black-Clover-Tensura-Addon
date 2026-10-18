@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "stoneskin",
+  "burning_aura",
+  "ground_slam"
+ ],
+ "animation": "huge__mace-none__auto-auto-auto",
+ "archetype": "tank",
+ "faction": "construct",
+ "glow": "#e48460",
+ "height": 3.09,
+ "id": "rusted_colossus_of_the_iron_maw",
+ "name": "Rusted Colossus of the Iron Maw",
+ "road": "abyssal",
+ "size": 1.9,
+ "source": "D&D: iron golem",
+ "tier": 4
+}

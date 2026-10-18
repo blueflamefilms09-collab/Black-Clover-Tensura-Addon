@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "thunder_clap",
+  "holy_lance"
+ ],
+ "animation": "huge__spear-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "ogre",
+ "glow": "#a0e8ff",
+ "height": 3.09,
+ "id": "empyrean_storm_sovereign",
+ "name": "Empyrean Storm Sovereign",
+ "road": "holy",
+ "size": 1.8,
+ "source": "D&D: empyrean",
+ "tier": 5
+}

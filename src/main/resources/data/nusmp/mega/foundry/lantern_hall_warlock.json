@@ -1,0 +1,17 @@
+{
+ "abilities": [
+  "hex",
+  "shadow_bolt"
+ ],
+ "animation": "slim__wand-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "cultist",
+ "glow": "#606066",
+ "height": 1.94,
+ "id": "lantern_hall_warlock",
+ "name": "Lantern Hall Warlock",
+ "road": "holy",
+ "size": 1.0,
+ "source": "D&D: warlock",
+ "tier": 4
+}

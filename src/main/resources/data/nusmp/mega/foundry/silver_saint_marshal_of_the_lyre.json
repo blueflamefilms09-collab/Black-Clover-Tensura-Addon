@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "ice_bind",
+  "holy_lance",
+  "blink"
+ ],
+ "animation": "average__wand-orb__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "construct",
+ "glow": "#c8d8ff",
+ "height": 2.0,
+ "id": "silver_saint_marshal_of_the_lyre",
+ "name": "Silver Saint Marshal of the Lyre",
+ "road": "holy",
+ "size": 1.5,
+ "source": "Saint Seiya",
+ "tier": 5
+}

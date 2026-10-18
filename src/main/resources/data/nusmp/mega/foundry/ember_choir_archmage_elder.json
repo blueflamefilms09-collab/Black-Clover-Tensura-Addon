@@ -1,0 +1,18 @@
+{
+ "abilities": [
+  "fire_bolt",
+  "burning_aura",
+  "thunder_clap"
+ ],
+ "animation": "average__staff-none__auto-auto-auto",
+ "archetype": "caster",
+ "faction": "elemental",
+ "glow": "#ffc840",
+ "height": 2.0,
+ "id": "ember_choir_archmage_elder",
+ "name": "Ember Choir Archmage Elder",
+ "road": "holy",
+ "size": 1.4,
+ "source": "Fairy Tail",
+ "tier": 5
+}
