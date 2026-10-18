@@ -1,0 +1,1070 @@
+{
+  "magic": "omniscient_readers_viewpoint",
+  "franchise": "omniscient_readers_viewpoint",
+  "name": "Tyrant's Dark Mirror",
+  "desc": "The author who writes the world knows how to turn it round. Mirrors repeat strikes, bounce pain back and trap foes in their own reflections.",
+  "book": "nusmp:tyrant_dark_mirror_book",
+  "book_name": "Folio of Reflected Pages",
+  "book_lore": "Nobody writes villains as well as someone who has been one in every draft.",
+  "color": "#6A5ACD",
+  "icon": "minecraft:echo_shard",
+  "class_id": "tyrant_dark_mirror",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/tyrant_dark_mirror.png",
+  "book_texture": "nusmp:item/skill_book_3d/omniscient_readers_viewpoint",
+  "background_theme": "frost",
+  "nodes": [
+    {
+      "id": "reflecting_surface",
+      "name": "Reflecting Surface",
+      "desc": "Hold the mirror flat: sturdier and hard to push, but your own blows lose weight.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "damage_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "armor": [
+          4.0,
+          5.0,
+          6.0
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0.3,
+          0.36,
+          0.42
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:glass"
+    },
+    {
+      "id": "shattering_surface",
+      "name": "Shattering Surface",
+      "desc": "Crack the glass and let the splinters fly: hit harder and crit more, with almost no defence.",
+      "parents": [
+        {
+          "node": "reflecting_surface",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "damage_pct": [
+          0.25,
+          0.3,
+          0.35
+        ],
+        "armor": [
+          -3.0,
+          -3.75,
+          -4.5
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:prismarine_shard"
+    },
+    {
+      "id": "tyrant_s_wit",
+      "name": "Tyrant's Wit",
+      "desc": "Quick as a sharp reflection: bonus luck.",
+      "parents": [
+        {
+          "node": "reflecting_surface",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "luck",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:amethyst_shard"
+    },
+    {
+      "id": "glass_reflexes",
+      "name": "Glass Reflexes",
+      "desc": "Fast and brittle: bonus attack speed.",
+      "parents": [
+        {
+          "node": "shattering_surface",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.05,
+          0.0625,
+          0.075,
+          0.0875,
+          0.1
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "mirror_bright_will",
+      "name": "Mirror-Bright Will",
+      "desc": "Your will does not crack: more maximum health.",
+      "parents": [
+        {
+          "node": "reflecting_surface",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          4.0,
+          5.0,
+          6.0,
+          7.0,
+          8.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:diamond"
+    },
+    {
+      "id": "echo_of_the_strike",
+      "name": "Echo of the Strike",
+      "desc": "One strike bounces from foe to foe through a series of mirror images.",
+      "parents": [
+        {
+          "node": "reflecting_surface",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "chain_hit",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "damage": [
+          5.0,
+          6.25,
+          7.5,
+          8.75
+        ],
+        "jumps": [
+          3.0,
+          4.0,
+          5.0,
+          7.0
+        ],
+        "jump_range": [
+          5.0,
+          5.0,
+          6.0,
+          6.0
+        ],
+        "falloff": [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          160.0,
+          147.0,
+          134.0,
+          122.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "mirror_that_answers",
+      "name": "Mirror That Answers",
+      "desc": "For a few seconds a share of the damage taken is reflected back to the attacker.",
+      "parents": [
+        {
+          "node": "shattering_surface",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ward_reflect",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "seconds": [
+          6.0,
+          7.0,
+          7.0,
+          8.0
+        ],
+        "reflect_pct": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:glass_pane"
+    },
+    {
+      "id": "step_through_the_glass",
+      "name": "Step Through the Glass",
+      "desc": "Step into one mirror and out of another a few blocks away.",
+      "parents": [
+        {
+          "node": "echo_of_the_strike",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "blink",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "distance": [
+          8.0,
+          8.96,
+          9.92,
+          10.88
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:ender_eye"
+    },
+    {
+      "id": "hall_of_panes",
+      "name": "Hall of Panes",
+      "desc": "Panes of glass burst out in a ring, damaging and shoving everything around you.",
+      "parents": [
+        {
+          "node": "mirror_that_answers",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "damage": [
+          5.0,
+          6.25,
+          7.5,
+          8.75
+        ],
+        "radius": [
+          3.5,
+          3.85,
+          4.2,
+          4.55
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "knockback": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:tinted_glass"
+    },
+    {
+      "id": "frame_the_culprit",
+      "name": "Frame the Culprit",
+      "desc": "Fix a distant foe in a mirror frame; it takes extra damage while framed.",
+      "parents": [
+        {
+          "node": "step_through_the_glass",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "mark",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "range": [
+          16.0,
+          17.6,
+          19.2,
+          20.8
+        ],
+        "seconds": [
+          8.0,
+          9.0,
+          10.0,
+          12.0
+        ],
+        "bonus": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:painting"
+    },
+    {
+      "id": "trapped_in_reflection",
+      "name": "Trapped in Reflection",
+      "desc": "Freeze the creatures around you in their own reflections for a moment.",
+      "parents": [
+        {
+          "node": "hall_of_panes",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "stun_ring",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "radius": [
+          4.0,
+          4.4,
+          4.8,
+          5.2
+        ],
+        "seconds": [
+          2.0,
+          2.0,
+          3.0,
+          3.0
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:blue_ice"
+    },
+    {
+      "id": "splinter_volley",
+      "name": "Splinter Volley",
+      "desc": "A rapid volley of glass shards at the foe you are looking at.",
+      "parents": [
+        {
+          "node": "frame_the_culprit",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "damage": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "shots": [
+          5.0,
+          7.0,
+          8.0,
+          10.0
+        ],
+        "range": [
+          12.0,
+          12.96,
+          13.92,
+          14.88
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          240.0,
+          221.0,
+          202.0,
+          182.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:prismarine_shard"
+    },
+    {
+      "id": "mirrored_pain",
+      "name": "Mirrored Pain",
+      "desc": "Part of the damage you take is thrown back at the attacker.",
+      "parents": [
+        {
+          "node": "echo_of_the_strike",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "thorns",
+      "values": {
+        "pct": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ],
+        "rest": [
+          20.0,
+          20.0,
+          20.0,
+          20.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:glass"
+    },
+    {
+      "id": "facet_strike",
+      "name": "Facet Strike",
+      "desc": "Your blows sometimes strike critically, finding a bright edge.",
+      "parents": [
+        {
+          "node": "mirror_that_answers",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.1,
+          0.12,
+          0.14,
+          0.16
+        ],
+        "mult": [
+          1.5,
+          1.62,
+          1.74,
+          1.86
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:quartz"
+    },
+    {
+      "id": "dazzling_reflection",
+      "name": "Dazzling Reflection",
+      "desc": "Whoever hits you may be blinded by the glare.",
+      "parents": [
+        {
+          "node": "step_through_the_glass",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "on_hurt_retaliate",
+      "params": {
+        "effect": "blindness"
+      },
+      "values": {
+        "seconds": [
+          3.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "chance": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:glowstone_dust"
+    },
+    {
+      "id": "pristine_glass",
+      "name": "Pristine Glass",
+      "desc": "While at full health you deal more damage.",
+      "parents": [
+        {
+          "node": "hall_of_panes",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_when",
+      "params": {
+        "condition": "full_health"
+      },
+      "values": {
+        "bonus": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:glass_bottle"
+    },
+    {
+      "id": "author_s_instinct",
+      "name": "Author's Instinct",
+      "desc": "Your kills give more experience.",
+      "parents": [
+        {
+          "node": "frame_the_culprit",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "xp_bonus",
+      "values": {
+        "pct": [
+          0.1,
+          0.12,
+          0.14,
+          0.16
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:experience_bottle"
+    },
+    {
+      "id": "reflected_blow",
+      "name": "Reflected Blow",
+      "desc": "You sometimes avoid a hit completely, as if it struck a reflection.",
+      "parents": [
+        {
+          "node": "trapped_in_reflection",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.08,
+          0.096,
+          0.112,
+          0.128
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:ender_eye"
+    },
+    {
+      "id": "spell_turning_glass",
+      "name": "Spell-Turning Glass",
+      "desc": "You take less magic damage.",
+      "parents": [
+        {
+          "node": "splinter_volley",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "magic"
+      },
+      "values": {
+        "pct": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:enchanted_book"
+    },
+    {
+      "id": "hall_of_infinite_mirrors",
+      "name": "Hall of Infinite Mirrors",
+      "desc": "A thousand reflections burst outward at once and batter everyone around you.",
+      "parents": [
+        {
+          "node": "splinter_volley",
+          "level": 3
+        },
+        {
+          "node": "spell_turning_glass",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "damage": [
+          24.0,
+          30.0,
+          36.0
+        ],
+        "radius": [
+          7.0,
+          7.7,
+          8.4
+        ],
+        "targets": [
+          12.0,
+          16.0,
+          16.0
+        ],
+        "knockback": [
+          0.6,
+          0.66,
+          0.72
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          2400.0,
+          2208.0,
+          2016.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:tinted_glass"
+    },
+    {
+      "id": "sword_of_a_thousand_reflections",
+      "name": "Sword of a Thousand Reflections",
+      "desc": "A single cut that rebounds through many mirrors and many foes.",
+      "parents": [
+        {
+          "node": "trapped_in_reflection",
+          "level": 3
+        },
+        {
+          "node": "reflected_blow",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "chain_hit",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "damage": [
+          20.0,
+          25.0,
+          30.0
+        ],
+        "jumps": [
+          8.0,
+          10.0,
+          10.0
+        ],
+        "jump_range": [
+          7.0,
+          7.0,
+          8.0
+        ],
+        "falloff": [
+          0.15,
+          0.15,
+          0.15
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          2700.0,
+          2484.0,
+          2268.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:diamond_sword"
+    }
+  ]
+}

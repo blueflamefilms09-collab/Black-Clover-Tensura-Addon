@@ -1,0 +1,1052 @@
+{
+  "magic": "omniscient_readers_viewpoint",
+  "franchise": "omniscient_readers_viewpoint",
+  "name": "Breaking the Sky Sword",
+  "desc": "A sword that is swung at the heavens. One cut opens a seam in the cloud, and what stands beneath it learns what 'heavy' means.",
+  "book": "nusmp:breaking_the_sky_sword_book",
+  "book_name": "Treatise on the Parted Heavens",
+  "book_lore": "The sky is only the biggest thing a sword has not yet cut.",
+  "color": "#6EC6FF",
+  "icon": "minecraft:diamond_sword",
+  "class_id": "breaking_the_sky_sword",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/breaking_the_sky_sword.png",
+  "book_texture": "nusmp:item/skill_book_3d/omniscient_readers_viewpoint",
+  "background_theme": "storm",
+  "nodes": [
+    {
+      "id": "skyward_guard",
+      "name": "Skyward Guard",
+      "desc": "Plant the blade upright against the sky: armor and strong knockback resistance, but a slower body.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          3.0,
+          3.75,
+          4.5
+        ],
+        "speed_pct": [
+          -0.05,
+          -0.06,
+          -0.07
+        ],
+        "knockback_res": [
+          0.5,
+          0.6,
+          0.7
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:shield"
+    },
+    {
+      "id": "heaven_splitting_grip",
+      "name": "Heaven-Splitting Grip",
+      "desc": "Both hands, all the weight: much heavier blows, a slower stride and a loose guard.",
+      "parents": [
+        {
+          "node": "skyward_guard",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage_pct": [
+          0.3,
+          0.36,
+          0.42
+        ],
+        "armor": [
+          -2.0,
+          -2.5,
+          -3.0
+        ],
+        "speed_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:iron_axe"
+    },
+    {
+      "id": "sky_piercing_resolve",
+      "name": "Sky-Piercing Resolve",
+      "desc": "Cut through the clouds: bonus attack damage.",
+      "parents": [
+        {
+          "node": "skyward_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:diamond_sword"
+    },
+    {
+      "id": "heaven_s_breath",
+      "name": "Heaven's Breath",
+      "desc": "The air above feeds you: more maximum health.",
+      "parents": [
+        {
+          "node": "heaven_splitting_grip",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          4.0,
+          5.0,
+          6.0,
+          7.0,
+          8.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:golden_apple"
+    },
+    {
+      "id": "cloud_walker",
+      "name": "Cloud Walker",
+      "desc": "Light on your feet before the leap: bonus movement speed.",
+      "parents": [
+        {
+          "node": "skyward_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.04,
+          0.05,
+          0.06,
+          0.07,
+          0.08
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:white_wool"
+    },
+    {
+      "id": "breaking_the_sky_slash",
+      "name": "Breaking the Sky Slash",
+      "desc": "A thin, brilliant beam of sword light across the sky in front of you, piercing through foes.",
+      "parents": [
+        {
+          "node": "skyward_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "range": [
+          20.0,
+          22.0,
+          24.0,
+          26.0
+        ],
+        "pierce": [
+          1.0,
+          1.0,
+          2.0,
+          2.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:end_rod"
+    },
+    {
+      "id": "step_above_the_clouds",
+      "name": "Step Above the Clouds",
+      "desc": "Cross the distance in one step and reappear a good way ahead.",
+      "parents": [
+        {
+          "node": "heaven_splitting_grip",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "blink",
+      "params": {
+        "vfx": "SPATIAL_RIFT"
+      },
+      "values": {
+        "distance": [
+          10.0,
+          11.2,
+          12.4,
+          13.6
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:ender_pearl"
+    },
+    {
+      "id": "fallen_heaven",
+      "name": "Fallen Heaven",
+      "desc": "Mark the spot you look at; after a short beat a piece of sky falls on it.",
+      "parents": [
+        {
+          "node": "breaking_the_sky_slash",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "delay": [
+          20.0,
+          19.0,
+          18.0,
+          17.0
+        ],
+        "damage": [
+          14.0,
+          17.5,
+          21.0,
+          24.5
+        ],
+        "radius": [
+          4.0,
+          4.4,
+          4.8,
+          5.2
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88,
+          22.32
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          360.0,
+          331.0,
+          302.0,
+          274.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:fire_charge"
+    },
+    {
+      "id": "heaven_s_verdict",
+      "name": "Heaven's Verdict",
+      "desc": "A blow that hits much harder the weaker the foe already is.",
+      "parents": [
+        {
+          "node": "step_above_the_clouds",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "execute",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          3.5,
+          3.71,
+          3.92,
+          4.13
+        ],
+        "bonus": [
+          0.5,
+          0.575,
+          0.65,
+          0.725
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "cleaving_the_earth_line",
+      "name": "Cleaving the Earth Line",
+      "desc": "Drive the sword forward and send a straight cutting wave along the ground.",
+      "parents": [
+        {
+          "node": "fallen_heaven",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "length": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "width": [
+          2.0,
+          2.2,
+          2.4,
+          2.6
+        ],
+        "knockback": [
+          0.5,
+          0.55,
+          0.6,
+          0.65
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          180.0,
+          166.0,
+          151.0,
+          137.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:iron_pickaxe"
+    },
+    {
+      "id": "leap_beyond_the_clouds",
+      "name": "Leap Beyond the Clouds",
+      "desc": "Jump into the air and plunge back down onto the foes below.",
+      "parents": [
+        {
+          "node": "heaven_s_verdict",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "height": [
+          0.7,
+          0.756,
+          0.812,
+          0.868
+        ],
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "radius": [
+          3.0,
+          3.3,
+          3.6,
+          3.9
+        ],
+        "knockback": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:elytra"
+    },
+    {
+      "id": "resolve_of_the_blade",
+      "name": "Resolve of the Blade",
+      "desc": "Steel your body: strength and resistance for a while.",
+      "parents": [
+        {
+          "node": "cleaving_the_earth_line",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "strength",
+        "effect2": "resistance",
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "seconds": [
+          12.0,
+          14.0,
+          16.0,
+          17.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "amp2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:iron_chestplate"
+    },
+    {
+      "id": "above_the_clouds",
+      "name": "Above the Clouds",
+      "desc": "You deal more damage while airborne.",
+      "parents": [
+        {
+          "node": "breaking_the_sky_slash",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_when",
+      "params": {
+        "condition": "airborne"
+      },
+      "values": {
+        "bonus": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:elytra"
+    },
+    {
+      "id": "storm_tempered",
+      "name": "Storm-Tempered",
+      "desc": "You take less lightning damage.",
+      "parents": [
+        {
+          "node": "step_above_the_clouds",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "lightning"
+      },
+      "values": {
+        "pct": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:lightning_rod"
+    },
+    {
+      "id": "sky_splitting_insight",
+      "name": "Sky-Splitting Insight",
+      "desc": "Your blows sometimes strike critically.",
+      "parents": [
+        {
+          "node": "fallen_heaven",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.1,
+          0.12,
+          0.14,
+          0.16
+        ],
+        "mult": [
+          1.5,
+          1.62,
+          1.74,
+          1.86
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:amethyst_shard"
+    },
+    {
+      "id": "gathering_thunder",
+      "name": "Gathering Thunder",
+      "desc": "Blows in a row grow stronger as the storm builds.",
+      "parents": [
+        {
+          "node": "heaven_s_verdict",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "momentum",
+      "values": {
+        "per_stack": [
+          0.04,
+          0.046,
+          0.052,
+          0.058
+        ],
+        "max_stacks": [
+          5.0,
+          6.0,
+          8.0,
+          10.0
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:copper_ingot"
+    },
+    {
+      "id": "landing_from_above",
+      "name": "Landing from Above",
+      "desc": "You take far less fall damage.",
+      "parents": [
+        {
+          "node": "cleaving_the_earth_line",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "fall_guard",
+      "values": {
+        "pct": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "cutting_down_the_weak",
+      "name": "Cutting Down the Weak",
+      "desc": "You deal much more damage to nearly dead foes.",
+      "parents": [
+        {
+          "node": "leap_beyond_the_clouds",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "execute_threshold",
+      "values": {
+        "threshold": [
+          0.2,
+          0.22,
+          0.24,
+          0.26
+        ],
+        "bonus": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "calm_eye_of_the_storm",
+      "name": "Calm Eye of the Storm",
+      "desc": "You tire more slowly.",
+      "parents": [
+        {
+          "node": "resolve_of_the_blade",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "hunger_saver",
+      "values": {
+        "pct": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:bread"
+    },
+    {
+      "id": "breaking_the_sky",
+      "name": "Breaking the Sky",
+      "desc": "The legendary cut: a bright beam that slices a great line through the sky and every foe along it.",
+      "parents": [
+        {
+          "node": "resolve_of_the_blade",
+          "level": 3
+        },
+        {
+          "node": "calm_eye_of_the_storm",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          30.0,
+          37.5,
+          45.0
+        ],
+        "range": [
+          30.0,
+          33.0,
+          36.0
+        ],
+        "pierce": [
+          5.0,
+          6.0,
+          6.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          2700.0,
+          2484.0,
+          2268.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:nether_star"
+    },
+    {
+      "id": "the_sky_falls",
+      "name": "The Sky Falls",
+      "desc": "The torn heavens come down on the place you look at in a huge impact.",
+      "parents": [
+        {
+          "node": "leap_beyond_the_clouds",
+          "level": 3
+        },
+        {
+          "node": "cutting_down_the_weak",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "delay": [
+          20.0,
+          19.0,
+          18.0
+        ],
+        "damage": [
+          32.0,
+          40.0,
+          48.0
+        ],
+        "radius": [
+          8.0,
+          8.8,
+          9.6
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348
+        ],
+        "cooldown": [
+          3000.0,
+          2760.0,
+          2520.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:end_crystal"
+    }
+  ]
+}
