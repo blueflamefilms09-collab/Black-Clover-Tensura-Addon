@@ -48,7 +48,7 @@ class ShopDataFilesTest {
     void theFlagshipIsTheFangInTheTopThirdOfTwoToThreeMillion() throws IOException {
         StockEntry fang = stock().get("fang_of_smoldering_insanity");
         assertNotNull(fang);
-        assertEquals("nusmp:fire_dragon_slayer", fang.route());
+        assertEquals("nusmp:smoldering_fang_of_insanity", fang.route());      // 1.81.0: the Fang is its own route, not the Fire Dragon Slayer
         assertEquals(StockEntry.Kind.ROUTE_BOOK, fang.kind());
         assertEquals(2_000_000L, fang.priceMin());
         assertEquals(3_000_000L, fang.priceMax());

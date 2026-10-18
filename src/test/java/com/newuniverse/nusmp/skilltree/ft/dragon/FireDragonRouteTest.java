@@ -28,7 +28,7 @@ class FireDragonRouteTest {
         assertEquals("nusmp:fire_dragon_slayer", r.id());
         assertEquals("Fire Dragon Slayer", r.name());
         assertEquals("nusmp:fire_dragon_slayer_book", r.book());
-        assertEquals("Fang of Smoldering Insanity", r.bookName());
+        assertEquals("Heart of the Fire Dragon", r.bookName());      // 1.81.0: the Fang of Smoldering Insanity is its own Heavy Knight route now
         assertEquals("fire_dragon_slayer", r.classId());
         assertEquals(3, r.lootWeight(), "the common first book");
         assertEquals(0xE8541C, r.color());
