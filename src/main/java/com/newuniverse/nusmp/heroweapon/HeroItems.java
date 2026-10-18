@@ -3,7 +3,6 @@ package com.newuniverse.nusmp.heroweapon;
 import com.newuniverse.nusmp.NUSMP;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -16,8 +15,8 @@ import java.util.function.Supplier;
 /**
  * Why: 21 items, one per {@link HeroKind}, all of the one class {@link HeroWeaponItem}, registered in a loop over the catalogue so that adding a weapon to the
  * enum adds its item, and so that the renderer's list, the creative tab and the tests iterate the same set. The register is the mod's own (attached to the mod bus
- * by {@code HeroWeaponSystem.init}). The properties are the common ones of a legendary weapon (one in a stack, fire-proof, epic); the core builder sets the
- * attributes and use animation per style in {@link HeroWeaponItem}, which it owns.
+ * by {@code HeroWeaponSystem.init}). The properties are {@link HeroWeaponItem#props}: one in a stack, epic, fire-proof, unbreakable, with the weapon's melee
+ * numbers from {@link HeroBaseStats} (damage, attack speed and reach as attribute modifiers), so the numbers a player reads in the tooltip are the table's.
  */
 public final class HeroItems {
     private HeroItems() {}
@@ -28,7 +27,7 @@ public final class HeroItems {
 
     static {
         for (HeroKind k : HeroKind.values())
-            ITEMS.put(k, REGISTER.register(k.itemId(), () -> new HeroWeaponItem(k, new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant())));
+            ITEMS.put(k, REGISTER.register(k.itemId(), () -> new HeroWeaponItem(k, HeroWeaponItem.props(k))));
     }
 
     /** The item of a weapon. */

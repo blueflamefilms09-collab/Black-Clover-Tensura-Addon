@@ -157,6 +157,9 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             net.minecraft.world.item.component.CustomData d = stack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
             if (d != null && d.copyTag().getCompound("nusmp_w1").getLong("state") == 1L) return "marids_valor_liquid";
         }
+        // 1.62.0: a hero weapon in a curse form (its stack says look=curse) is drawn from its <id>_curse mesh and skins; without that mesh it keeps the base look
+        if (stack.getItem() instanceof com.newuniverse.nusmp.heroweapon.HeroWeaponItem && "curse".equals(com.newuniverse.nusmp.heroweapon.HeroComponents.look(stack)) && mesh(id + "_curse") != null)
+            return id + "_curse";
         return id;
     }
 

@@ -74,7 +74,7 @@ public final class WeaponClasses {
             {"greathammer", "greathammer"}, {"great_hammer", "greathammer"}, {"hammer", "hammer"}, {"maul", "hammer"}, {"mace", "mace"}, {"club", "club"}, {"shield", "shield"}, {"sword", "longsword"}, {"blade", "longsword"},
     };
 
-    private static final Pattern STATE_SUFFIX = Pattern.compile("(_(pull[123]|charged|spent|genesis|5leaf|liquid|off|blue|left)|(?<=lantern)_red)$");
+    private static final Pattern STATE_SUFFIX = Pattern.compile("(_(pull[123]|charged|spent|genesis|5leaf|liquid|off|blue|left|curse)|(?<=lantern)_red)$");      // 1.62.0: + curse (the cursed look of a Holy hero weapon takes its base weapon's class)
 
     private final Map<String, Cls> table;
     private final Map<String, String> weapons;
