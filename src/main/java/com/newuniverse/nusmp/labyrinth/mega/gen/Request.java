@@ -62,6 +62,13 @@ public final class Request {
     public String themeId;
     /** 1.58.0: which templates belong to which theme. {@link TemplateThemes#none()} = every template is free for every sector (the 1.54.0 behaviour). */
     public TemplateThemes themes = TemplateThemes.none();
+    /**
+     * 1.83.0 (anti-dead-end cyclic WFC): null = the old behaviour, a tree that grows until the budget is spent. Set = the cyclic generator: the placement step prefers
+     * candidates whose doorways line up with open doorways (free loops), and after the second fill {@link CyclicAssembly} joins loose doorways by direct doorways and
+     * short transitional hallways, trims what no loop can cure and keeps the dead-end ratio at the configured target (see docs/labyrinth/cyclic_wfc.md). The config
+     * is carried by the request so a plan stays a function of its request.
+     */
+    public com.newuniverse.nusmp.labyrinth.mega.cyclic.LoopConfig cyclic;
 
     /** A shallow copy with another seed (the lists and the recipe are shared; the assembler never writes to them). */
     public Request withSeed(long newSeed, boolean asFallback) {
@@ -82,6 +89,7 @@ public final class Request {
         r.floor = floor;
         r.themeId = themeId;
         r.themes = themes;
+        r.cyclic = cyclic;
         return r;
     }
 }
