@@ -1416,6 +1416,122 @@
    ],
    "problems": []
   },
+  "dark_disciple": {
+   "model": "arc_dark_disciple",
+   "spec": "GeoSpec.of(\"arc\", \"dark_disciple\")",
+   "form": 1,
+   "role": "boss",
+   "name": "Dark Disciple",
+   "build": "average",
+   "files": [
+    "src/main/resources/assets/nusmp/geo/entity/arc_dark_disciple.geo.json",
+    "src/main/resources/assets/nusmp/animations/entity/arc_dark_disciple.animation.json",
+    "src/main/resources/assets/nusmp/textures/entity/arc_dark_disciple.png",
+    "src/main/resources/assets/nusmp/textures/entity/arc_dark_disciple_glow.png"
+   ],
+   "texture": [
+    512,
+    64
+   ],
+   "cubes": 49,
+   "faces_per_pass": 260,
+   "height_blocks": 1.91,
+   "height_with_hair_and_horns_blocks": 1.96,
+   "bounds_blocks": {
+    "min": [
+     -0.75,
+     0.0,
+     -0.31
+    ],
+    "max": [
+     0.68,
+     1.96,
+     0.49
+    ]
+   },
+   "recommended_hitbox_blocks": {
+    "width": 0.62,
+    "height": 1.91
+   },
+   "arc_look": {
+    "height": 1.91,
+    "walkCycle": 0.81,
+    "runCycle": 1.5,
+    "shadow": 0.52,
+    "growXz": 1.25,
+    "growUp": 0.45,
+    "glow": true
+   },
+   "grip": "",
+   "notes": [],
+   "clips": {
+    "idle": {
+     "length": 3.2,
+     "loop": true
+    },
+    "walk": {
+     "length": 1.1,
+     "loop": true
+    },
+    "run": {
+     "length": 0.62,
+     "loop": true
+    },
+    "attack": {
+     "length": 0.9,
+     "loop": false
+    },
+    "cast": {
+     "length": 1.2,
+     "loop": true
+    },
+    "cast_big": {
+     "length": 2.4,
+     "loop": false
+    },
+    "hurt": {
+     "length": 0.45,
+     "loop": false
+    },
+    "transform": {
+     "length": 3.0,
+     "loop": false
+    },
+    "death": {
+     "length": 2.8,
+     "loop": false
+    }
+   },
+   "bones": [
+    "root",
+    "body",
+    "head",
+    "arm_l",
+    "forearm_l",
+    "hand_l",
+    "leg_l",
+    "shin_l",
+    "skirt_l",
+    "arm_r",
+    "forearm_r",
+    "hand_r",
+    "leg_r",
+    "shin_r",
+    "skirt_r",
+    "hair",
+    "cape",
+    "cape_low",
+    "prop_r",
+    "prop_float"
+   ],
+   "glow_bones": [
+    "body",
+    "head",
+    "prop_r",
+    "prop_float"
+   ],
+   "problems": []
+  },
   "diane": {
    "model": "arc_diane",
    "spec": "GeoSpec.of(\"arc\", \"diane\")",
