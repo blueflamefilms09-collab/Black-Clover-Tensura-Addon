@@ -96,7 +96,19 @@ class GeoAssetsTest {
     void everyAnimationNamesRealBones() throws Exception {
         File[] files = ANIM.listFiles((d, n) -> n.endsWith(".animation.json"));
         if (files == null) return;
+        // The Mob Foundry shares its clips between many models ("foundry_anim_*"): they have no model of the same name,
+        // so each bone must exist in at least one model (the renderer walks the mob's own bones and ignores clip bones it lacks, e.g. a skirt panel).
+        Set<String> foundryBones = new HashSet<>();
+        File[] geos = GEO.listFiles((d, n) -> n.endsWith(".geo.json"));
+        if (geos != null) for (File g : geos) foundryBones.addAll(GeoModelData.parse(g.getName(), json(g)).bones.keySet());
         for (File f : files) {
+            if (f.getName().startsWith("foundry_anim_")) {
+                GeoAnim shared = GeoAnim.parse(json(f));
+                for (String name : shared.names())
+                    for (String bone : shared.clip(name).bones.keySet())
+                        assertTrue(foundryBones.contains(bone), f.getName() + ": animation " + name + " moves the bone " + bone + " that no model has");
+                continue;
+            }
             File geo = new File(GEO, stem(f) + ".geo.json");
             assertTrue(geo.isFile(), f.getName() + ": no model " + geo.getName());
             Set<String> bones = new HashSet<>(GeoModelData.parse(geo.getName(), json(geo)).bones.keySet());
