@@ -22,9 +22,9 @@ public final class NationBlocks {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(NUSMP.MODID);
 
     public static final DeferredBlock<NationBannerBlock> BANNER = BLOCKS.register("nation_banner", () -> new NationBannerBlock(
-            BlockBehaviour.Properties.of().strength(5.0f, 3_600_000.0f).sound(SoundType.WOOD).noOcclusion().lightLevel(s -> 8)));
+            BlockBehaviour.Properties.of().mapColor(net.minecraft.world.level.material.MapColor.COLOR_RED).strength(5.0f, 3_600_000.0f).sound(SoundType.WOOD).noOcclusion().lightLevel(s -> 8)));
     public static final DeferredBlock<ContractBoardBlock> BOARD = BLOCKS.register("contract_board", () -> new ContractBoardBlock(
-            BlockBehaviour.Properties.of().strength(2.5f, 6.0f).sound(SoundType.WOOD)));
+            BlockBehaviour.Properties.of().mapColor(net.minecraft.world.level.material.MapColor.WOOD).strength(2.5f, 6.0f).sound(SoundType.WOOD)));
 
     public static final DeferredItem<BlockItem> BANNER_ITEM = ITEMS.register("nation_banner", () -> new BlockItem(BANNER.get(), new Item.Properties().stacksTo(1)));
     public static final DeferredItem<BlockItem> BOARD_ITEM = ITEMS.register("contract_board", () -> new BlockItem(BOARD.get(), new Item.Properties()));

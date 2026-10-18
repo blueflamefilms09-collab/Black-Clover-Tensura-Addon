@@ -56,9 +56,9 @@ class MapBlockColourGuardTest {
         try (Stream<Path> w = Files.walk(root)) { files = w.filter(p -> p.toString().endsWith(".java")).sorted().toList(); }
         for (Path f : files) byName.put(f.getFileName().toString().replace(".java", ""), Files.readString(f, StandardCharsets.UTF_8));
         List<Reg> out = new ArrayList<>();
-        Pattern call = Pattern.compile("\\b\\w*BLOCKS\\w*\\s*\\.\\s*register(?:Simple)?(?:Block)?\\s*\\(\\s*\"([a-z0-9_/.]+)\"|\\.\\s*register(?:Simple)?Block\\s*\\(\\s*\"([a-z0-9_/.]+)\"");
+        Pattern call = Pattern.compile("\\b\\w*BLOCKS\\w*\\s*\\.\\s*register(?:Simple)?(?:Block)?\\s*\\(\\s*\"([a-z0-9_/.]+)\"\\s*,|\\.\\s*register(?:Simple)?Block\\s*\\(\\s*\"([a-z0-9_/.]+)\"\\s*,");
         for (Path f : files) {
-            String src = byName.get(f.getFileName().toString().replace(".java", ""));
+            String src = Files.readString(f, StandardCharsets.UTF_8);          // the file itself: two classes may share a simple name (relics.forge.ForgeRegistry, elite.forge.ForgeRegistry)
             Matcher m = call.matcher(src);
             while (m.find()) {
                 String id = m.group(1) != null ? m.group(1) : m.group(2);
