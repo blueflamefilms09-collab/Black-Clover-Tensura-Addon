@@ -1,0 +1,45 @@
+{
+  "tier": 3,
+  "category": "armor",
+  "output": {
+    "item": "minecraft:netherite_chestplate",
+    "count": 1
+  },
+  "inputs": [
+    {
+      "item": "minecraft:netherite_ingot",
+      "count": 3
+    },
+    {
+      "item": "tensura:adamantite_ingot",
+      "count": 4
+    },
+    {
+      "item": "tensura:hihiirokane_ingot",
+      "count": 1
+    }
+  ],
+  "premium": [
+    {
+      "item": "tensura:high_quality_magic_crystal",
+      "count": 1,
+      "bonus": 6
+    }
+  ],
+  "minigames": [
+    {
+      "type": "hammer_timing",
+      "difficulty": 4
+    },
+    {
+      "type": "temperature_forge",
+      "difficulty": 4
+    },
+    {
+      "type": "rune_alignment",
+      "difficulty": 3
+    }
+  ],
+  "base_quality": 8,
+  "engrave": true
+}

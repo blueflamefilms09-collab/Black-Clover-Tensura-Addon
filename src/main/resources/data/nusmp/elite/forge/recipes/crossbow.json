@@ -1,0 +1,41 @@
+{
+  "tier": 0,
+  "category": "weapon",
+  "output": {
+    "item": "minecraft:crossbow",
+    "count": 1
+  },
+  "inputs": [
+    {
+      "item": "minecraft:iron_ingot",
+      "count": 2
+    },
+    {
+      "item": "minecraft:string",
+      "count": 3
+    },
+    {
+      "item": "minecraft:tripwire_hook",
+      "count": 1
+    },
+    {
+      "item": "minecraft:stick",
+      "count": 3
+    }
+  ],
+  "premium": [
+    {
+      "item": "minecraft:gold_ingot",
+      "count": 2,
+      "bonus": 2
+    }
+  ],
+  "minigames": [
+    {
+      "type": "hammer_timing",
+      "difficulty": 1
+    }
+  ],
+  "base_quality": 13,
+  "engrave": true
+}

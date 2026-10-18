@@ -1,0 +1,49 @@
+{
+  "tier": 2,
+  "category": "tool",
+  "output": {
+    "item": "minecraft:netherite_pickaxe",
+    "count": 1
+  },
+  "inputs": [
+    {
+      "item": "minecraft:netherite_ingot",
+      "count": 1
+    },
+    {
+      "item": "minecraft:diamond",
+      "count": 2
+    },
+    {
+      "item": "tensura:mithril_ingot",
+      "count": 2
+    },
+    {
+      "item": "minecraft:stick",
+      "count": 2
+    }
+  ],
+  "premium": [
+    {
+      "item": "tensura:high_quality_magic_crystal",
+      "count": 1,
+      "bonus": 6
+    }
+  ],
+  "minigames": [
+    {
+      "type": "hammer_timing",
+      "difficulty": 3
+    },
+    {
+      "type": "temperature_forge",
+      "difficulty": 2
+    },
+    {
+      "type": "magicule_flow",
+      "difficulty": 2
+    }
+  ],
+  "base_quality": 12,
+  "engrave": false
+}
