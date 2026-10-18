@@ -86,6 +86,7 @@ class WeaponMeshesTest {
                 if (!name.endsWith(".txt")) continue;
                 String id = name.substring(0, name.length() - 4);
                 if (skipped(id)) continue;
+                if (Files.readAllLines(p).stream().anyMatch(l -> l.trim().equals("orient manual"))) continue;       // 1.91.0: the runtime never normalises a hand-placed mesh (the bows, placed like bow.png)
                 float[] place = new float[6];
                 place[5] = Float.NaN;
                 List<float[]>[] layers = readLayers(p, place);

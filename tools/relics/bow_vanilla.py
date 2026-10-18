@@ -71,6 +71,11 @@ def main(check):
                     if l != line:
                         text[i] = line
                         changed.append(os.path.relpath(path, ROOT))
+                    # 1.91.0: the place angle (225) points down the sprite, which WeaponRenderer's runtime normaliser would "correct" by turning the mesh over; `orient manual` tells it to leave a hand-placed mesh alone
+                    if not any(t.startswith("orient ") for t in text):
+                        text.insert(i + 1, "orient manual")
+                        if os.path.relpath(path, ROOT) not in changed:
+                            changed.append(os.path.relpath(path, ROOT))
                     break
             if not check:
                 open(path, "w", encoding="utf-8", newline="\n").write("\n".join(text))
