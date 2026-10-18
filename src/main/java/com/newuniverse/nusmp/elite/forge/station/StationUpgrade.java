@@ -29,13 +29,13 @@ public final class StationUpgrade {
 
     /** Why an upgrade cannot happen, or null when it can. */
     public static String refusal(ServerLevel level, BlockPos pos, ItemStack kit) {
-        if (!ForgeConfig.enabled()) return "nusmp.forge.msg.disabled";
-        if (!(kit.getItem() instanceof UpgradeKitItem k)) return "nusmp.forge.upgrade.not_kit";
+        if (!ForgeConfig.enabled()) return "nusmp.eforge.msg.disabled";
+        if (!(kit.getItem() instanceof UpgradeKitItem k)) return "nusmp.eforge.upgrade.not_kit";
         StationTier cur = ForgeStationBlock.tierAt(level, pos);
-        if (cur == null) return "nusmp.forge.upgrade.not_station";
-        if (cur.next() == null) return "nusmp.forge.upgrade.max";
-        if (k.target() != cur.next()) return "nusmp.forge.upgrade.wrong_kit";
-        if (ForgeSessions.activeAt(level, pos)) return "nusmp.forge.upgrade.in_use";
+        if (cur == null) return "nusmp.eforge.upgrade.not_station";
+        if (cur.next() == null) return "nusmp.eforge.upgrade.max";
+        if (k.target() != cur.next()) return "nusmp.eforge.upgrade.wrong_kit";
+        if (ForgeSessions.activeAt(level, pos)) return "nusmp.eforge.upgrade.in_use";
         return null;
     }
 
@@ -48,13 +48,13 @@ public final class StationUpgrade {
         }
         StationTier next = ((UpgradeKitItem) kit.getItem()).target();
         if (!upgrade(level, pos, next)) {
-            player.displayClientMessage(Component.translatable("nusmp.forge.upgrade.failed"), true);
+            player.displayClientMessage(Component.translatable("nusmp.eforge.upgrade.failed"), true);
             return false;
         }
         if (!player.getAbilities().instabuild) kit.shrink(1);
         level.playSound(null, pos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1.0F, 0.7F);
         level.playSound(null, pos, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 0.6F, 1.4F);
-        player.displayClientMessage(Component.translatable("nusmp.forge.upgrade.done", Component.translatable("nusmp.forge.tier." + next.id())), false);
+        player.displayClientMessage(Component.translatable("nusmp.eforge.upgrade.done", Component.translatable("nusmp.eforge.tier." + next.id())), false);
         return true;
     }
 

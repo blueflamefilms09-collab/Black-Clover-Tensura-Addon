@@ -92,13 +92,13 @@ public final class ForgeServer {
     /** The tier of the station the player is allowed to use at {@code pos}, or null (and a message) when there is none close enough. */
     private static StationTier stationFor(ServerPlayer p, BlockPos pos) {
         if (!ForgeConfig.enabled()) {
-            say(p, "nusmp.forge.msg.disabled");
+            say(p, "nusmp.eforge.msg.disabled");
             return null;
         }
         StationTier t = ForgeStationBlock.tierAt(p.level(), pos);
         double r = ForgeConfig.stationRange() + 1.5;
         if (t == null || p.distanceToSqr(pos.getCenter()) > r * r) {
-            say(p, "nusmp.forge.msg.too_far");
+            say(p, "nusmp.eforge.msg.too_far");
             return null;
         }
         return t;
@@ -122,23 +122,23 @@ public final class ForgeServer {
 
     /** The whole start-of-session logic, callable without a packet (the self-test uses it). */
     public static Begun begin(ServerPlayer p, BlockPos pos, String recipeId, boolean premium) {
-        if (!ForgeConfig.enabled()) return new Begun(null, "nusmp.forge.msg.disabled");
+        if (!ForgeConfig.enabled()) return new Begun(null, "nusmp.eforge.msg.disabled");
         StationTier t = ForgeStationBlock.tierAt(p.level(), pos);
         double r = ForgeConfig.stationRange() + 1.5;
-        if (t == null || p.distanceToSqr(pos.getCenter()) > r * r) return new Begun(null, "nusmp.forge.msg.too_far");
+        if (t == null || p.distanceToSqr(pos.getCenter()) > r * r) return new Begun(null, "nusmp.eforge.msg.too_far");
         ForgeRecipes.Loaded l = ForgeRecipes.get(recipeId);
-        if (l == null || !l.available()) return new Begun(null, "nusmp.forge.msg.unknown_recipe");
+        if (l == null || !l.available()) return new Begun(null, "nusmp.eforge.msg.unknown_recipe");
         ForgeRecipeDef d = l.def();
-        if (ForgeConfig.enforceTier() && !t.canForge(d.tier())) return new Begun(null, "nusmp.forge.msg.tier");
+        if (ForgeConfig.enforceTier() && !t.canForge(d.tier())) return new Begun(null, "nusmp.eforge.msg.tier");
         UUID user = ForgeSessions.userAt(p.level(), pos);
-        if (user != null && !user.equals(p.getUUID())) return new Begun(null, "nusmp.forge.msg.in_use");
+        if (user != null && !user.equals(p.getUUID())) return new Begun(null, "nusmp.eforge.msg.in_use");
         List<Inventories.Row> rows = new ArrayList<>();
         for (ForgeRecipeDef.Stack s : d.inputs()) {
             Item it = Inventories.item(s.item());
-            if (it == null) return new Begun(null, "nusmp.forge.msg.unknown_recipe");
+            if (it == null) return new Begun(null, "nusmp.eforge.msg.unknown_recipe");
             rows.add(new Inventories.Row(it, s.count()));
         }
-        if (!Inventories.hasAll(p, rows)) return new Begun(null, "nusmp.forge.msg.missing");
+        if (!Inventories.hasAll(p, rows)) return new Begun(null, "nusmp.eforge.msg.missing");
         ForgeSessions.Session old = ForgeSessions.drop(p.getUUID());
         if (old != null && p.getServer() != null) unlight(p.getServer().getLevel(old.dimension()), old.pos());
         ForgeSessions.Session s = ForgeSessions.open(p.getUUID(), p.level(), pos, t, d, premium, p.getRandom().nextLong());
@@ -163,7 +163,7 @@ public final class ForgeServer {
     public static void onResult(ServerPlayer p, ForgeNet.Result r) {
         ForgeSessions.Session s = ForgeSessions.take(p.getUUID(), r.session());
         if (s == null) {
-            send(p, ForgeNet.Done.fail("nusmp.forge.msg.no_session"));
+            send(p, ForgeNet.Done.fail("nusmp.eforge.msg.no_session"));
             return;
         }
         ForgeFinisher.Outcome o = ForgeFinisher.finish(p, s, r.inputs());
@@ -174,7 +174,7 @@ public final class ForgeServer {
     /** Answers a finished attempt: the Done packet, a refreshed screen, and a chat line on a refusal. */
     public static void reply(ServerPlayer p, BlockPos pos, ForgeFinisher.Outcome o) {
         if (!o.ok()) {
-            if (!o.reason().isEmpty()) p.sendSystemMessage(Component.translatable("nusmp.forge.msg.rejected_why", o.reason()));
+            if (!o.reason().isEmpty()) p.sendSystemMessage(Component.translatable("nusmp.eforge.msg.rejected_why", o.reason()));
             send(p, ForgeNet.Done.fail(o.message()));
         } else {
             Quality q = o.roll().quality();
@@ -182,7 +182,7 @@ public final class ForgeServer {
             for (EngravingHandler.Applied a : o.engravings()) eng.add(a.id() + " " + a.level());
             String id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(o.stack().getItem()).toString();
             send(p, new ForgeNet.Done(true, o.message(), q.level(), o.score(), id, o.stack().getCount(), (int) Math.round(o.roll().points() * 10), o.roll().cappedByStation(), List.copyOf(eng)));
-            p.sendSystemMessage(Component.translatable("nusmp.forge.msg.forged", o.stack().getHoverName(), Component.translatable("nusmp.forge.quality." + q.id()).withStyle(style -> style.withColor(q.rgb()))));
+            p.sendSystemMessage(Component.translatable("nusmp.eforge.msg.forged", o.stack().getHoverName(), Component.translatable("nusmp.eforge.quality." + q.id()).withStyle(style -> style.withColor(q.rgb()))));
         }
         StationTier t = ForgeStationBlock.tierAt(p.level(), pos);
         if (t != null) send(p, openView(p, pos, t, true));
@@ -203,9 +203,9 @@ public final class ForgeServer {
     /** Why a specialization cannot be chosen now, or null; a change costs levels. */
     public static String specRefusal(ServerPlayer p, Specialization s) {
         ForgeProgress pr = ForgeStore.of(p);
-        if (s == null) return "nusmp.forge.spec.unknown";
-        if (pr.specialization() == s) return "nusmp.forge.spec.same";
-        if (pr.changeCosts() && !p.getAbilities().instabuild && p.experienceLevel < ForgeConfig.specChangeLevels()) return "nusmp.forge.spec.cost";
+        if (s == null) return "nusmp.eforge.spec.unknown";
+        if (pr.specialization() == s) return "nusmp.eforge.spec.same";
+        if (pr.changeCosts() && !p.getAbilities().instabuild && p.experienceLevel < ForgeConfig.specChangeLevels()) return "nusmp.eforge.spec.cost";
         return null;
     }
 
@@ -230,7 +230,7 @@ public final class ForgeServer {
             say(p, why, ForgeConfig.specChangeLevels());
             return;
         }
-        say(p, "nusmp.forge.spec.chosen", Component.translatable("nusmp.forge.spec." + spec.id()));
+        say(p, "nusmp.eforge.spec.chosen", Component.translatable("nusmp.eforge.spec." + spec.id()));
         send(p, openView(p, s.pos(), t, true));
         sendSync(p);
     }
@@ -247,15 +247,15 @@ public final class ForgeServer {
     public static String engraveHeld(ServerPlayer p) {
         ItemStack stack = p.getMainHandItem();
         Quality q = ForgeComponents.qualityOf(stack);
-        if (q == null) return "nusmp.forge.engrave.not_forged";
+        if (q == null) return "nusmp.eforge.engrave.not_forged";
         ForgeProgress pr = ForgeStore.of(p);
         Specialization spec = pr.specialization();
         Category c = kindOf(stack);
-        if (EngravingHandler.freeSlots(stack, q, spec, c) <= 0) return "nusmp.forge.engrave.no_slot";
+        if (EngravingHandler.freeSlots(stack, q, spec, c) <= 0) return "nusmp.eforge.engrave.no_slot";
         int cost = ForgeConfig.engraveLevels();
-        if (!p.getAbilities().instabuild && p.experienceLevel < cost) return "nusmp.forge.engrave.cost";
+        if (!p.getAbilities().instabuild && p.experienceLevel < cost) return "nusmp.eforge.engrave.cost";
         List<EngravingHandler.Applied> done = EngravingHandler.engrave(p.registryAccess(), stack, q, spec, c, 1, p.getRandom().nextLong());
-        if (done.isEmpty()) return "nusmp.forge.engrave.none_fit";
+        if (done.isEmpty()) return "nusmp.eforge.engrave.none_fit";
         if (!p.getAbilities().instabuild) p.giveExperienceLevels(-cost);
         p.getInventory().setChanged();
         return null;
@@ -269,7 +269,7 @@ public final class ForgeServer {
             say(p, why, ForgeConfig.engraveLevels());
             return;
         }
-        say(p, "nusmp.forge.engrave.done");
+        say(p, "nusmp.eforge.engrave.done");
         send(p, openView(p, e.pos(), t, true));
     }
 

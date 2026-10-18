@@ -27,7 +27,7 @@ public class UpgradeKitItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext ctx, List<Component> lines, TooltipFlag flag) {
-        lines.add(Component.translatable("nusmp.forge.kit.tip", Component.translatable("nusmp.forge.tier." + target.prev().id())).withStyle(net.minecraft.ChatFormatting.GRAY));
-        lines.add(Component.translatable("nusmp.forge.kit.tip2", Component.translatable("nusmp.forge.tier." + target.id())).withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
+        lines.add(Component.translatable("nusmp.eforge.kit.tip", Component.translatable("nusmp.eforge.tier." + target.prev().id())).withStyle(net.minecraft.ChatFormatting.GRAY));
+        lines.add(Component.translatable("nusmp.eforge.kit.tip2", Component.translatable("nusmp.eforge.tier." + target.id())).withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
     }
 }

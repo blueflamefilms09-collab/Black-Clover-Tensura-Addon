@@ -58,16 +58,16 @@ final class HammerTimingView implements MinigameView {
         quality.add(acc);
         flashTicks = 14;
         if (acc >= 0.99) {
-            flash = "nusmp.forge.mg.perfect";
+            flash = "nusmp.eforge.mg.perfect";
             flashColor = ForgeDraw.GOLD;
         } else if (acc >= 0.6) {
-            flash = "nusmp.forge.mg.good";
+            flash = "nusmp.eforge.mg.good";
             flashColor = ForgeDraw.GREEN;
         } else if (acc > 0) {
-            flash = "nusmp.forge.mg.weak";
+            flash = "nusmp.eforge.mg.weak";
             flashColor = ForgeDraw.ORANGE;
         } else {
-            flash = "nusmp.forge.mg.miss";
+            flash = "nusmp.eforge.mg.miss";
             flashColor = ForgeDraw.RED;
         }
         if (strikes.size() >= HammerTiming.strikes(difficulty)) over = true;
@@ -114,7 +114,7 @@ final class HammerTimingView implements MinigameView {
             g.fill(cx - 1, by - 6, cx + 2, by + bh + 6, ForgeDraw.TEXT);
             g.fill(cx - 3, by - 8, cx + 4, by - 5, ForgeDraw.CYAN);
         }
-        g.drawCenteredString(font, Component.translatable("nusmp.forge.mg.strikes", n, total), x + w / 2, by - 28, ForgeDraw.TEXT);
+        g.drawCenteredString(font, Component.translatable("nusmp.eforge.mg.strikes", n, total), x + w / 2, by - 28, ForgeDraw.TEXT);
         if (flashTicks > 0) g.drawCenteredString(font, Component.translatable(flash), x + w / 2, by + bh + 16, ForgeDraw.alpha(flashColor, Math.min(1f, flashTicks / 6f)));
         ForgeDraw.bar(g, x + 20, y + h - 14, w - 40, 5, liveScore() / 1000f, ForgeDraw.GOLD);
     }
@@ -128,7 +128,7 @@ final class HammerTimingView implements MinigameView {
         return out;
     }
 
-    @Override public String hintKey() { return "nusmp.forge.mg.hammer.hint"; }
+    @Override public String hintKey() { return "nusmp.eforge.mg.hammer.hint"; }
 
     @Override
     public int liveScore() {

@@ -65,10 +65,10 @@ public final class ForgeClient {
         if (q == null) return;
         List<Component> lines = e.getToolTip();
         int at = Math.min(1, lines.size());
-        lines.add(at, Component.translatable("nusmp.forge.tip.quality", Component.translatable("nusmp.forge.quality." + q.id()).withStyle(s -> s.withColor(q.rgb()))).withStyle(ChatFormatting.GRAY));
+        lines.add(at, Component.translatable("nusmp.eforge.tip.quality", Component.translatable("nusmp.eforge.quality." + q.id()).withStyle(s -> s.withColor(q.rgb()))).withStyle(ChatFormatting.GRAY));
         String smith = stack.get(ForgeComponents.SMITH.get());
-        if (smith != null && !smith.isEmpty()) lines.add(at + 1, Component.translatable("nusmp.forge.tip.smith", smith).withStyle(ChatFormatting.DARK_GRAY));
+        if (smith != null && !smith.isEmpty()) lines.add(at + 1, Component.translatable("nusmp.eforge.tip.smith", smith).withStyle(ChatFormatting.DARK_GRAY));
         int engraved = ForgeComponents.engravedCount(stack);
-        if (engraved > 0) lines.add(Math.min(at + 2, lines.size()), Component.translatable("nusmp.forge.tip.engraved", engraved).withStyle(ChatFormatting.DARK_PURPLE));
+        if (engraved > 0) lines.add(Math.min(at + 2, lines.size()), Component.translatable("nusmp.eforge.tip.engraved", engraved).withStyle(ChatFormatting.DARK_PURPLE));
     }
 }

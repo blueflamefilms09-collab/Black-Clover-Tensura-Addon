@@ -73,7 +73,7 @@ final class MagiculeFlowView implements MinigameView {
         int hy = tubeTop + tubeH - (int) Math.round(tubeH * lastControl / 1000.0);
         int hx = tx - 26;
         for (int i = 0; i < 6; i++) g.fill(hx + i, hy - 5 + i, hx + i + 1, hy + 6 - i, ForgeDraw.GOLD);
-        g.drawString(font, Component.translatable("nusmp.forge.mg.flow.push"), hx - 40, hy - 4, ForgeDraw.DIM, false);
+        g.drawString(font, Component.translatable("nusmp.eforge.mg.flow.push"), hx - 40, hy - 4, ForgeDraw.DIM, false);
         // the trace of the last 4 seconds on the right
         int trx = tx + tw + 14, trw = Math.min(110, x + w - trx - 8), len = Math.min(n, 80);
         if (trw > 20 && len > 1) {
@@ -88,14 +88,14 @@ final class MagiculeFlowView implements MinigameView {
         }
         float done = samples == null ? 0f : n / (float) samples.length;
         ForgeDraw.bar(g, x + 20, y + h - 14, w - 40, 5, done, ForgeDraw.CYAN);
-        g.drawCenteredString(font, Component.translatable("nusmp.forge.mg.score", liveScore() / 10), x + w - 40, y + 4, ForgeDraw.TEXT);
+        g.drawCenteredString(font, Component.translatable("nusmp.eforge.mg.score", liveScore() / 10), x + w - 40, y + 4, ForgeDraw.TEXT);
     }
 
     @Override public boolean finished() { return samples != null && n >= samples.length; }
 
     @Override public int[] input() { return samples == null ? new int[0] : samples.clone(); }
 
-    @Override public String hintKey() { return "nusmp.forge.mg.flow.hint"; }
+    @Override public String hintKey() { return "nusmp.eforge.mg.flow.hint"; }
 
     @Override public int liveScore() { return run == null || n == 0 ? 0 : run.score(n); }
 }

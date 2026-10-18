@@ -46,7 +46,7 @@ public class ForgeMinigameScreen extends Screen {
     private ForgeNet.OpenStation pending;
 
     public ForgeMinigameScreen(ForgeNet.Start start) {
-        super(Component.translatable("nusmp.forge.mg.title"));
+        super(Component.translatable("nusmp.eforge.mg.title"));
         this.start = start;
         for (ForgeNet.StepView s : start.steps()) views.add(make(MinigameType.byId(s.type())));
     }
@@ -77,8 +77,8 @@ public class ForgeMinigameScreen extends Screen {
     protected void init() {
         if (phase == Phase.RESULT) {
             int y = py() + H - 28;
-            addRenderableWidget(new ThemedButton(px() + 16, y, 140, 16, Component.translatable("nusmp.forge.mg.back"), b -> backToStation()));
-            addRenderableWidget(new ThemedButton(px() + W - 156, y, 140, 16, Component.translatable("nusmp.forge.mg.close"), b -> onClose()));
+            addRenderableWidget(new ThemedButton(px() + 16, y, 140, 16, Component.translatable("nusmp.eforge.mg.back"), b -> backToStation()));
+            addRenderableWidget(new ThemedButton(px() + W - 156, y, 140, 16, Component.translatable("nusmp.eforge.mg.close"), b -> onClose()));
         }
     }
 
@@ -136,7 +136,7 @@ public class ForgeMinigameScreen extends Screen {
             }
             phaseTicks = 0;
         } else if (phase == Phase.JUDGING && phaseTicks > 200) {
-            setDone(ForgeNet.Done.fail("nusmp.forge.msg.no_answer"));
+            setDone(ForgeNet.Done.fail("nusmp.eforge.msg.no_answer"));
         }
     }
 
@@ -213,8 +213,8 @@ public class ForgeMinigameScreen extends Screen {
         ResourceLocation outId = ResourceLocation.tryParse(recipeOutItem());
         ItemStack out = outId == null ? ItemStack.EMPTY : new ItemStack(BuiltInRegistries.ITEM.get(outId));
         g.renderItem(out, x + 14, y + 12);
-        g.drawString(font, Component.translatable("nusmp.forge.mg.heading", out.isEmpty() ? Component.literal("?") : out.getHoverName()), x + 36, y + 10, UiTheme.GOLD, false);
-        g.drawString(font, Component.translatable("nusmp.forge.mg.station", Component.translatable("nusmp.forge.tier." + tierId())), x + 36, y + 22, UiTheme.TEXT_DIM, false);
+        g.drawString(font, Component.translatable("nusmp.eforge.mg.heading", out.isEmpty() ? Component.literal("?") : out.getHoverName()), x + 36, y + 10, UiTheme.GOLD, false);
+        g.drawString(font, Component.translatable("nusmp.eforge.mg.station", Component.translatable("nusmp.eforge.tier." + tierId())), x + 36, y + 22, UiTheme.TEXT_DIM, false);
         // the step pips
         for (int i = 0; i < views.size(); i++) {
             int col = i < scores.size() ? scoreColor(scores.get(i)) : i == step && phase != Phase.RESULT && phase != Phase.JUDGING ? ForgeDraw.CYAN : ForgeDraw.FAINT;
@@ -224,7 +224,7 @@ public class ForgeMinigameScreen extends Screen {
             case INTRO -> renderIntro(g);
             case PLAY -> renderPlay(g, mouseX, mouseY);
             case RECAP -> renderRecap(g);
-            case JUDGING -> g.drawCenteredString(font, Component.translatable("nusmp.forge.mg.judging"), x + W / 2, y + H / 2, UiTheme.TEXT);
+            case JUDGING -> g.drawCenteredString(font, Component.translatable("nusmp.eforge.mg.judging"), x + W / 2, y + H / 2, UiTheme.TEXT);
             case RESULT -> renderResult(g);
         }
     }
@@ -244,21 +244,21 @@ public class ForgeMinigameScreen extends Screen {
 
     private Component stepName() {
         ForgeNet.StepView s = start.steps().get(Math.min(step, start.steps().size() - 1));
-        return Component.translatable("nusmp.forge.mg.type." + s.type());
+        return Component.translatable("nusmp.eforge.mg.type." + s.type());
     }
 
     private void renderIntro(GuiGraphics g) {
         int x = px(), y = py();
         ForgeNet.StepView s = start.steps().get(step);
-        g.drawCenteredString(font, Component.translatable("nusmp.forge.mg.step", step + 1, views.size(), stepName()), x + W / 2, y + 70, UiTheme.GOLD);
-        g.drawCenteredString(font, Component.translatable("nusmp.forge.mg.difficulty", s.difficulty()), x + W / 2, y + 84, UiTheme.TEXT_DIM);
+        g.drawCenteredString(font, Component.translatable("nusmp.eforge.mg.step", step + 1, views.size(), stepName()), x + W / 2, y + 70, UiTheme.GOLD);
+        g.drawCenteredString(font, Component.translatable("nusmp.eforge.mg.difficulty", s.difficulty()), x + W / 2, y + 84, UiTheme.TEXT_DIM);
         g.drawCenteredString(font, Component.translatable(views.get(step).hintKey()), x + W / 2, y + 108, UiTheme.TEXT);
-        g.drawCenteredString(font, Component.translatable("nusmp.forge.mg.click_to_begin"), x + W / 2, y + 150, ForgeDraw.alpha(ForgeDraw.CYAN, 0.6f + 0.4f * (float) Math.sin(UiTheme.now() / 6f)));
+        g.drawCenteredString(font, Component.translatable("nusmp.eforge.mg.click_to_begin"), x + W / 2, y + 150, ForgeDraw.alpha(ForgeDraw.CYAN, 0.6f + 0.4f * (float) Math.sin(UiTheme.now() / 6f)));
     }
 
     private void renderPlay(GuiGraphics g, int mouseX, int mouseY) {
         int x = px(), y = py();
-        g.drawCenteredString(font, Component.translatable("nusmp.forge.mg.step", step + 1, views.size(), stepName()), x + W / 2, y + 36, UiTheme.GOLD);
+        g.drawCenteredString(font, Component.translatable("nusmp.eforge.mg.step", step + 1, views.size(), stepName()), x + W / 2, y + 36, UiTheme.GOLD);
         g.drawCenteredString(font, Component.translatable(views.get(step).hintKey()), x + W / 2, y + 50, UiTheme.TEXT_DIM);
         UiPanel.well(g, gx() - 2, gy() - 2, gw() + 4, gh() + 4, UiTheme.CYAN, 0.9f);
         g.enableScissor(gx(), gy(), gx() + gw(), gy() + gh());
@@ -269,15 +269,15 @@ public class ForgeMinigameScreen extends Screen {
     private void renderRecap(GuiGraphics g) {
         int x = px(), y = py();
         int sc = scores.get(scores.size() - 1);
-        g.drawCenteredString(font, Component.translatable("nusmp.forge.mg.step_done", stepName()), x + W / 2, y + 90, UiTheme.TEXT);
-        g.drawCenteredString(font, Component.translatable("nusmp.forge.mg.score", sc / 10), x + W / 2, y + 110, scoreColor(sc));
+        g.drawCenteredString(font, Component.translatable("nusmp.eforge.mg.step_done", stepName()), x + W / 2, y + 90, UiTheme.TEXT);
+        g.drawCenteredString(font, Component.translatable("nusmp.eforge.mg.score", sc / 10), x + W / 2, y + 110, scoreColor(sc));
     }
 
     private void renderResult(GuiGraphics g) {
         int x = px(), y = py();
         if (done == null) return;
         if (!done.ok()) {
-            g.drawCenteredString(font, Component.translatable("nusmp.forge.mg.failed"), x + W / 2, y + 80, UiTheme.RED);
+            g.drawCenteredString(font, Component.translatable("nusmp.eforge.mg.failed"), x + W / 2, y + 80, UiTheme.RED);
             g.drawCenteredString(font, Component.translatable(done.message()), x + W / 2, y + 100, UiTheme.TEXT);
             return;
         }
@@ -291,19 +291,19 @@ public class ForgeMinigameScreen extends Screen {
         g.pose().popPose();
         int col = q == null ? UiTheme.TEXT : 0xFF000000 | q.rgb();
         g.drawCenteredString(font, out.getHoverName(), x + W / 2, y + 80, UiTheme.TEXT);
-        g.drawCenteredString(font, Component.translatable("nusmp.forge.quality." + (q == null ? "common" : q.id())), x + W / 2, y + 92, col);
-        g.drawCenteredString(font, Component.translatable("nusmp.forge.mg.result_points", done.score() / 10, done.points10() / 10), x + W / 2, y + 108, UiTheme.TEXT_DIM);
+        g.drawCenteredString(font, Component.translatable("nusmp.eforge.quality." + (q == null ? "common" : q.id())), x + W / 2, y + 92, col);
+        g.drawCenteredString(font, Component.translatable("nusmp.eforge.mg.result_points", done.score() / 10, done.points10() / 10), x + W / 2, y + 108, UiTheme.TEXT_DIM);
         int ly = y + 122;
         if (done.capped()) {
-            g.drawCenteredString(font, Component.translatable("nusmp.forge.mg.capped"), x + W / 2, ly, ForgeDraw.ORANGE);
+            g.drawCenteredString(font, Component.translatable("nusmp.eforge.mg.capped"), x + W / 2, ly, ForgeDraw.ORANGE);
             ly += 12;
         }
         if (!done.engravings().isEmpty()) {
-            g.drawCenteredString(font, Component.translatable("nusmp.forge.mg.engraved", String.join(", ", done.engravings())), x + W / 2, ly, ForgeDraw.VIOLET);
+            g.drawCenteredString(font, Component.translatable("nusmp.eforge.mg.engraved", String.join(", ", done.engravings())), x + W / 2, ly, ForgeDraw.VIOLET);
             ly += 12;
         }
         for (int i = 0; i < scores.size() && ly < y + H - 40; i++) {
-            g.drawCenteredString(font, Component.translatable("nusmp.forge.mg.step_line", i + 1, Component.translatable("nusmp.forge.mg.type." + start.steps().get(i).type()), scores.get(i) / 10), x + W / 2, ly, scoreColor(scores.get(i)));
+            g.drawCenteredString(font, Component.translatable("nusmp.eforge.mg.step_line", i + 1, Component.translatable("nusmp.eforge.mg.type." + start.steps().get(i).type()), scores.get(i) / 10), x + W / 2, ly, scoreColor(scores.get(i)));
             ly += 10;
         }
     }

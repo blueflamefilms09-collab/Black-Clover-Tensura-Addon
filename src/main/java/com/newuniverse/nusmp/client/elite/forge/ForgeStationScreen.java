@@ -41,7 +41,7 @@ public class ForgeStationScreen extends Screen {
     private int pw, ph, px, py;
 
     public ForgeStationScreen(ForgeNet.OpenStation data) {
-        super(Component.translatable("nusmp.forge.station.title"));
+        super(Component.translatable("nusmp.eforge.station.title"));
         this.data = data;
     }
 
@@ -117,17 +117,17 @@ public class ForgeStationScreen extends Screen {
         ForgeNet.RecipeView r = current();
         int by = py + ph - 56;
         // forge and premium
-        ThemedButton forge = new ThemedButton(detX(), detY() + detH() - 16, detW(), 16, Component.translatable("nusmp.forge.station.forge"), b -> {
+        ThemedButton forge = new ThemedButton(detX(), detY() + detH() - 16, detW(), 16, Component.translatable("nusmp.eforge.station.forge"), b -> {
             ForgeNet.RecipeView c = current();
             if (c != null) PacketDistributor.sendToServer(new ForgeNet.Begin(data.pos(), c.id(), usePremium));
         });
         forge.active = r != null && craftable(r);
-        if (r != null && !r.unlocked()) forge.setTooltip(Tooltip.create(Component.translatable("nusmp.forge.station.tier_needed", Component.translatable("nusmp.forge.tier." + StationTier.byIndex(r.tier()).id()))));
-        else if (r != null && !forge.active) forge.setTooltip(Tooltip.create(Component.translatable("nusmp.forge.station.missing")));
+        if (r != null && !r.unlocked()) forge.setTooltip(Tooltip.create(Component.translatable("nusmp.eforge.station.tier_needed", Component.translatable("nusmp.eforge.tier." + StationTier.byIndex(r.tier()).id()))));
+        else if (r != null && !forge.active) forge.setTooltip(Tooltip.create(Component.translatable("nusmp.eforge.station.missing")));
         addRenderableWidget(forge);
         if (r != null && !r.premium().isEmpty()) {
             addRenderableWidget(new ThemedButton(detX(), detY() + detH() - 34, detW(), 14,
-                    Component.translatable(usePremium ? "nusmp.forge.station.premium_on" : "nusmp.forge.station.premium_off"), b -> {
+                    Component.translatable(usePremium ? "nusmp.eforge.station.premium_on" : "nusmp.eforge.station.premium_off"), b -> {
                         usePremium = !usePremium;
                         rebuildWidgets();
                     }));
@@ -138,15 +138,15 @@ public class ForgeStationScreen extends Screen {
         int sx = px + 8;
         String cur = data.progress().spec();
         for (Specialization s : Specialization.values()) {
-            ThemedButton b = new ThemedButton(sx, by + 14, specW, 16, Component.translatable("nusmp.forge.spec." + s.id()), bb -> PacketDistributor.sendToServer(new ForgeNet.Spec(data.pos(), s.id())));
+            ThemedButton b = new ThemedButton(sx, by + 14, specW, 16, Component.translatable("nusmp.eforge.spec." + s.id()), bb -> PacketDistributor.sendToServer(new ForgeNet.Spec(data.pos(), s.id())));
             b.active = !s.id().equals(cur);
-            Component cost = data.progress().changeCosts() ? Component.translatable("nusmp.forge.spec.cost_tip", data.progress().changeLevels()) : Component.translatable("nusmp.forge.spec.free_tip");
-            b.setTooltip(Tooltip.create(Component.translatable("nusmp.forge.spec." + s.id() + ".desc").append("\n").append(cost)));
+            Component cost = data.progress().changeCosts() ? Component.translatable("nusmp.eforge.spec.cost_tip", data.progress().changeLevels()) : Component.translatable("nusmp.eforge.spec.free_tip");
+            b.setTooltip(Tooltip.create(Component.translatable("nusmp.eforge.spec." + s.id() + ".desc").append("\n").append(cost)));
             addRenderableWidget(b);
             sx += specW + 4;
         }
-        ThemedButton eng = new ThemedButton(sx, by + 14, engW, 16, Component.translatable("nusmp.forge.station.engrave"), b -> PacketDistributor.sendToServer(new ForgeNet.Engrave(data.pos())));
-        eng.setTooltip(Tooltip.create(Component.translatable("nusmp.forge.station.engrave_tip", data.progress().engraveLevels())));
+        ThemedButton eng = new ThemedButton(sx, by + 14, engW, 16, Component.translatable("nusmp.eforge.station.engrave"), b -> PacketDistributor.sendToServer(new ForgeNet.Engrave(data.pos())));
+        eng.setTooltip(Tooltip.create(Component.translatable("nusmp.eforge.station.engrave_tip", data.progress().engraveLevels())));
         addRenderableWidget(eng);
     }
 
@@ -192,7 +192,7 @@ public class ForgeStationScreen extends Screen {
     @Override public boolean isPauseScreen() { return false; }
 
     // ================================================================ drawing
-    private int chipW(String c) { return 8 + font.width(Component.translatable(c.isEmpty() ? "nusmp.forge.station.all" : "nusmp.forge.cat." + c)); }
+    private int chipW(String c) { return 8 + font.width(Component.translatable(c.isEmpty() ? "nusmp.eforge.station.all" : "nusmp.eforge.cat." + c)); }
 
     @Override
     public void renderBackground(GuiGraphics g, int mouseX, int mouseY, float partial) {
@@ -208,9 +208,9 @@ public class ForgeStationScreen extends Screen {
         super.render(g, mouseX, mouseY, partial);
         ForgeNet.Progress pr = data.progress();
         StationTier t = tier();
-        g.drawString(font, Component.translatable("nusmp.forge.station.head", Component.translatable("nusmp.forge.tier." + t.id())), px + 8, py + 8, UiTheme.GOLD, false);
+        g.drawString(font, Component.translatable("nusmp.eforge.station.head", Component.translatable("nusmp.eforge.tier." + t.id())), px + 8, py + 8, UiTheme.GOLD, false);
         Quality best = Quality.ofLevel(pr.best());
-        Component line = Component.translatable("nusmp.forge.station.stats", pr.crafted(), best == null ? Component.translatable("nusmp.forge.station.none") : Component.translatable("nusmp.forge.quality." + best.id()),
+        Component line = Component.translatable("nusmp.eforge.station.stats", pr.crafted(), best == null ? Component.translatable("nusmp.eforge.station.none") : Component.translatable("nusmp.eforge.quality." + best.id()),
                 data.forgedHere(), pr.skillPoints());
         g.drawString(font, font.plainSubstrByWidth(line.getString(), pw - 190), px + 182, py + 8, UiTheme.TEXT_DIM, false);
         renderChips(g, mouseX, mouseY);
@@ -218,9 +218,9 @@ public class ForgeStationScreen extends Screen {
         renderDetail(g);
         int by = py + ph - 56;
         Specialization sp = Specialization.byId(pr.spec());
-        g.drawString(font, Component.translatable("nusmp.forge.station.spec_line", sp == null ? Component.translatable("nusmp.forge.station.none") : Component.translatable("nusmp.forge.spec." + sp.id())), px + 8, by + 2, UiTheme.TEXT, false);
+        g.drawString(font, Component.translatable("nusmp.eforge.station.spec_line", sp == null ? Component.translatable("nusmp.eforge.station.none") : Component.translatable("nusmp.eforge.spec." + sp.id())), px + 8, by + 2, UiTheme.TEXT, false);
         if (!status.getString().isEmpty()) g.drawString(font, font.plainSubstrByWidth(status.getString(), pw - 16), px + 8, by + 38, statusColor, false);
-        else g.drawString(font, Component.translatable("nusmp.forge.station.station_line", Component.translatable("nusmp.forge.tier." + t.id()), t.qualityBonus(), Component.translatable("nusmp.forge.quality." + t.ceiling().id())), px + 8, by + 38, UiTheme.TEXT_FAINT, false);
+        else g.drawString(font, Component.translatable("nusmp.eforge.station.station_line", Component.translatable("nusmp.eforge.tier." + t.id()), t.qualityBonus(), Component.translatable("nusmp.eforge.quality." + t.ceiling().id())), px + 8, by + 38, UiTheme.TEXT_FAINT, false);
         // hover tooltip of the rows' items
         ForgeNet.RecipeView c = current();
         if (c != null) hoverItems(g, c, mouseX, mouseY);
@@ -232,7 +232,7 @@ public class ForgeStationScreen extends Screen {
             int w = chipW(c);
             boolean hov = mouseX >= cx && mouseX < cx + w && mouseY >= py + 26 && mouseY < py + 38;
             UiPanel.chip(g, cx, py + 26, w, 12, filter.equals(c), hov, UiTheme.CYAN);
-            g.drawString(font, Component.translatable(c.isEmpty() ? "nusmp.forge.station.all" : "nusmp.forge.cat." + c), cx + 4, py + 28, UiTheme.TEXT, false);
+            g.drawString(font, Component.translatable(c.isEmpty() ? "nusmp.eforge.station.all" : "nusmp.eforge.cat." + c), cx + 4, py + 28, UiTheme.TEXT, false);
             cx += w + 2;
         }
     }
@@ -257,7 +257,7 @@ public class ForgeStationScreen extends Screen {
             if (r.known()) g.drawString(font, "*", listX() + listW() - 20, y + 5, UiTheme.GOLD, false);
         }
         g.disableScissor();
-        if (v.isEmpty()) g.drawCenteredString(font, Component.translatable("nusmp.forge.station.no_recipes"), listX() + listW() / 2, listY() + 10, UiTheme.TEXT_DIM);
+        if (v.isEmpty()) g.drawCenteredString(font, Component.translatable("nusmp.eforge.station.no_recipes"), listX() + listW() / 2, listY() + 10, UiTheme.TEXT_DIM);
         int max = Math.max(0, v.size() - rows);
         if (max > 0) {
             int bh = Math.max(10, listH() * rows / v.size());
@@ -272,18 +272,18 @@ public class ForgeStationScreen extends Screen {
         ForgeNet.RecipeView r = current();
         int x = detX(), y = detY(), w = detW();
         if (r == null) {
-            g.drawCenteredString(font, Component.translatable("nusmp.forge.station.pick"), x + w / 2, y + 30, UiTheme.TEXT_DIM);
+            g.drawCenteredString(font, Component.translatable("nusmp.eforge.station.pick"), x + w / 2, y + 30, UiTheme.TEXT_DIM);
             return;
         }
         g.enableScissor(x - 1, y - 1, x + w + 1, y + detH() - 36);
         ItemStack out = stack(r.outItem(), r.outCount());
         g.renderItem(out, x + 2, y + 2);
-        g.drawString(font, Component.translatable("nusmp.forge.station.out", out.getHoverName(), r.outCount()), x + 24, y + 2, UiTheme.GOLD, false);
+        g.drawString(font, Component.translatable("nusmp.eforge.station.out", out.getHoverName(), r.outCount()), x + 24, y + 2, UiTheme.GOLD, false);
         StationTier need = StationTier.byIndex(r.tier());
-        g.drawString(font, Component.translatable("nusmp.forge.station.needs", Component.translatable("nusmp.forge.cat." + r.category()), Component.translatable("nusmp.forge.tier." + need.id())), x + 24, y + 13,
+        g.drawString(font, Component.translatable("nusmp.eforge.station.needs", Component.translatable("nusmp.eforge.cat." + r.category()), Component.translatable("nusmp.eforge.tier." + need.id())), x + 24, y + 13,
                 r.unlocked() ? UiTheme.TEXT_DIM : UiTheme.RED, false);
         int ly = y + 28;
-        g.drawString(font, Component.translatable("nusmp.forge.station.materials"), x + 2, ly, UiTheme.CYAN, false);
+        g.drawString(font, Component.translatable("nusmp.eforge.station.materials"), x + 2, ly, UiTheme.CYAN, false);
         ly += 11;
         for (ForgeNet.StackView s : r.inputs()) {
             ItemStack st = stack(s.item(), s.count());
@@ -301,7 +301,7 @@ public class ForgeStationScreen extends Screen {
         int matPoints = 0;
         if (!r.premium().isEmpty()) {
             ly += 2;
-            g.drawString(font, Component.translatable("nusmp.forge.station.premium"), x + 2, ly, ForgeDraw.VIOLET, false);
+            g.drawString(font, Component.translatable("nusmp.eforge.station.premium"), x + 2, ly, ForgeDraw.VIOLET, false);
             ly += 10;
             for (int i = 0; i < r.premium().size(); i++) {
                 ForgeNet.StackView s = r.premium().get(i);
@@ -317,9 +317,9 @@ public class ForgeStationScreen extends Screen {
         StringBuilder seq = new StringBuilder();
         for (ForgeNet.StepView s : r.steps()) {
             if (seq.length() > 0) seq.append("  >  ");
-            seq.append(Component.translatable("nusmp.forge.mg.type." + s.type()).getString()).append(' ').append(roman(s.difficulty()));
+            seq.append(Component.translatable("nusmp.eforge.mg.type." + s.type()).getString()).append(' ').append(roman(s.difficulty()));
         }
-        g.drawString(font, Component.translatable("nusmp.forge.station.steps"), x + 2, ly, UiTheme.CYAN, false);
+        g.drawString(font, Component.translatable("nusmp.eforge.station.steps"), x + 2, ly, UiTheme.CYAN, false);
         ly += 10;
         g.drawString(font, font.plainSubstrByWidth(seq.toString(), w - 6), x + 4, ly, UiTheme.TEXT, false);
         ly += 12;
@@ -328,9 +328,9 @@ public class ForgeStationScreen extends Screen {
         int specPts = sp == null || cat == null ? 0 : sp.categoryPoints(cat);
         QualityRoller.Result perfect = QualityRoller.roll(new QualityRoller.Inputs(1.0, tier(), r.baseQuality(), matPoints, data.progress().skillPoints(), specPts, 0.0));
         QualityRoller.Result usual = QualityRoller.roll(new QualityRoller.Inputs(0.7, tier(), r.baseQuality(), matPoints, data.progress().skillPoints(), specPts, 0.0));
-        g.drawString(font, Component.translatable("nusmp.forge.station.est_perfect", Component.translatable("nusmp.forge.quality." + perfect.quality().id()).withStyle(s -> s.withColor(perfect.quality().rgb())), Math.round(perfect.points())), x + 4, ly, UiTheme.TEXT, false);
+        g.drawString(font, Component.translatable("nusmp.eforge.station.est_perfect", Component.translatable("nusmp.eforge.quality." + perfect.quality().id()).withStyle(s -> s.withColor(perfect.quality().rgb())), Math.round(perfect.points())), x + 4, ly, UiTheme.TEXT, false);
         ly += 10;
-        g.drawString(font, Component.translatable("nusmp.forge.station.est_usual", Component.translatable("nusmp.forge.quality." + usual.quality().id()).withStyle(s -> s.withColor(usual.quality().rgb())), Math.round(usual.points())), x + 4, ly, UiTheme.TEXT_DIM, false);
+        g.drawString(font, Component.translatable("nusmp.eforge.station.est_usual", Component.translatable("nusmp.eforge.quality." + usual.quality().id()).withStyle(s -> s.withColor(usual.quality().rgb())), Math.round(usual.points())), x + 4, ly, UiTheme.TEXT_DIM, false);
         g.disableScissor();
     }
 

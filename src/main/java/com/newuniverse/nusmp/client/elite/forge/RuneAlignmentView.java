@@ -130,11 +130,11 @@ final class RuneAlignmentView implements MinigameView {
             if (locked) ForgeDraw.dot(g, ForgeDraw.px(cx, r, eff), ForgeDraw.py(cy, r, eff), 2, 0xFF060912);
         }
         ForgeDraw.dot(g, cx, cy, 5, ForgeDraw.alpha(ForgeDraw.VIOLET, 0.9f));
-        g.drawCenteredString(font, Component.translatable("nusmp.forge.mg.rune.ring", Math.min(active + 1, rings), rings), x + w / 2, y + 2, ForgeDraw.TEXT);
-        if (flashTicks > 0) g.drawCenteredString(font, Component.translatable("nusmp.forge.mg.rune.wait"), x + w / 2, y + h - 26, ForgeDraw.RED);
+        g.drawCenteredString(font, Component.translatable("nusmp.eforge.mg.rune.ring", Math.min(active + 1, rings), rings), x + w / 2, y + 2, ForgeDraw.TEXT);
+        if (flashTicks > 0) g.drawCenteredString(font, Component.translatable("nusmp.eforge.mg.rune.wait"), x + w / 2, y + h - 26, ForgeDraw.RED);
         float used = (float) Math.min(1.0, elapsed() / (double) Minigames.RUNES.limitMillis(difficulty));
         ForgeDraw.bar(g, x + 20, y + h - 14, w - 40, 5, over ? 1f : used, ForgeDraw.alpha(ForgeDraw.CYAN, 1f));
-        g.drawCenteredString(font, Component.translatable("nusmp.forge.mg.score", liveScore() / 10), x + w - 40, y + 4, ForgeDraw.TEXT);
+        g.drawCenteredString(font, Component.translatable("nusmp.eforge.mg.score", liveScore() / 10), x + w - 40, y + 4, ForgeDraw.TEXT);
     }
 
     @Override public boolean finished() { return over; }
@@ -149,7 +149,7 @@ final class RuneAlignmentView implements MinigameView {
         return out;
     }
 
-    @Override public String hintKey() { return "nusmp.forge.mg.rune.hint"; }
+    @Override public String hintKey() { return "nusmp.eforge.mg.rune.hint"; }
 
     @Override
     public int liveScore() {

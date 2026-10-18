@@ -212,13 +212,13 @@ public final class ForgeSelfTests {
             ForgeSessions.clearAll();
             // 1. missing materials: refused, nothing opened
             ForgeServer.Begun none = ForgeServer.begin(p, pos, "nusmp:iron_sword", false);
-            if (none.session() != null || !"nusmp.forge.msg.missing".equals(none.error())) return SelfTests.Result.fail("begin without materials: " + none);
+            if (none.session() != null || !"nusmp.eforge.msg.missing".equals(none.error())) return SelfTests.Result.fail("begin without materials: " + none);
             // 2. a recipe of a higher tier is refused at a Basic station
             give(p, Items.IRON_INGOT, 2);
             give(p, Items.STICK, 1);
             give(p, Items.NETHERITE_INGOT, 1);
             ForgeServer.Begun high = ForgeServer.begin(p, pos, "nusmp:netherite_sword", false);
-            if (high.session() != null || !"nusmp.forge.msg.tier".equals(high.error())) return SelfTests.Result.fail("a tier-2 recipe at a Basic station: " + high);
+            if (high.session() != null || !"nusmp.eforge.msg.tier".equals(high.error())) return SelfTests.Result.fail("a tier-2 recipe at a Basic station: " + high);
             // 3. a long sequence reported before it could have been played is refused and costs nothing
             ServerPlayer rich = SelfTests.player(level, "elite_forge_rich", top.getX() + 0.5, top.getY() + 1, top.getZ() + 2.5);
             rich.setData(ForgeStore.PROGRESS.get(), new ForgeProgress());
@@ -362,7 +362,7 @@ public final class ForgeSelfTests {
         ForgeNet.Result.STREAM_CODEC.encode(buf, res);
         ForgeNet.Result r2 = ForgeNet.Result.STREAM_CODEC.decode(buf);
         if (r2.session() != 5 || r2.inputs().size() != 3 || !java.util.Arrays.equals(r2.inputs().get(2), res.inputs().get(2))) return SelfTests.Result.fail("Result did not survive the codec");
-        ForgeNet.Done done = new ForgeNet.Done(true, "nusmp.forge.msg.done", 6, 975, "minecraft:iron_sword", 1, 1013, false, List.of("severance 2"));
+        ForgeNet.Done done = new ForgeNet.Done(true, "nusmp.eforge.msg.done", 6, 975, "minecraft:iron_sword", 1, 1013, false, List.of("severance 2"));
         buf = new FriendlyByteBuf(Unpooled.buffer());
         ForgeNet.Done.STREAM_CODEC.encode(buf, done);
         if (!ForgeNet.Done.STREAM_CODEC.decode(buf).equals(done)) return SelfTests.Result.fail("Done did not survive the codec");

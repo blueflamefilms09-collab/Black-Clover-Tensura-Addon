@@ -69,8 +69,8 @@ final class TemperatureForgeView implements MinigameView {
         g.fill(gx - 3, fy - 1, gx + gw + 3, fy + 1, ForgeDraw.TEXT);
         // the bellows indicator
         boolean heating = run != null && run.heating();
-        g.drawString(font, Component.translatable(heating ? "nusmp.forge.mg.temp.heating" : "nusmp.forge.mg.temp.cooling"), gx - 78, top + gh / 2 - 4, heating ? ForgeDraw.ORANGE : ForgeDraw.CYAN, false);
-        if (warm) g.drawCenteredString(font, Component.translatable("nusmp.forge.mg.temp.warmup"), x + w / 2, top + gh + 3, ForgeDraw.DIM);
+        g.drawString(font, Component.translatable(heating ? "nusmp.eforge.mg.temp.heating" : "nusmp.eforge.mg.temp.cooling"), gx - 78, top + gh / 2 - 4, heating ? ForgeDraw.ORANGE : ForgeDraw.CYAN, false);
+        if (warm) g.drawCenteredString(font, Component.translatable("nusmp.eforge.mg.temp.warmup"), x + w / 2, top + gh + 3, ForgeDraw.DIM);
         // the trace
         int trx = gx + gw + 14, trw = Math.min(120, x + w - trx - 8), len = Math.min(n, 80);
         if (trw > 20 && len > 1) {
@@ -85,14 +85,14 @@ final class TemperatureForgeView implements MinigameView {
         }
         float done = samples == null ? 0f : n / (float) samples.length;
         ForgeDraw.bar(g, x + 20, y + h - 14, w - 40, 5, done, ForgeDraw.ORANGE);
-        g.drawCenteredString(font, Component.translatable("nusmp.forge.mg.score", liveScore() / 10), x + w - 40, y + 4, ForgeDraw.TEXT);
+        g.drawCenteredString(font, Component.translatable("nusmp.eforge.mg.score", liveScore() / 10), x + w - 40, y + 4, ForgeDraw.TEXT);
     }
 
     @Override public boolean finished() { return samples != null && n >= samples.length; }
 
     @Override public int[] input() { return samples == null ? new int[0] : samples.clone(); }
 
-    @Override public String hintKey() { return "nusmp.forge.mg.temp.hint"; }
+    @Override public String hintKey() { return "nusmp.eforge.mg.temp.hint"; }
 
     @Override public int liveScore() { return run == null || n <= TemperatureForge.WARMUP ? 0 : (int) Math.round(run.score()); }
 }

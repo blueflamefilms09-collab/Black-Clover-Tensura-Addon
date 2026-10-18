@@ -57,18 +57,18 @@ public final class ForgeFinisher {
 
     /** The session path: judge the report, then craft. Takes nothing when the report is refused. */
     public static Outcome finish(ServerPlayer player, ForgeSessions.Session s, List<int[]> inputs) {
-        if (!ForgeConfig.enabled()) return Outcome.fail("nusmp.forge.msg.disabled");
+        if (!ForgeConfig.enabled()) return Outcome.fail("nusmp.eforge.msg.disabled");
         ServerLevel level = player.getServer().getLevel(s.dimension());
-        if (level == null || ForgeStationBlock.tierAt(level, s.pos()) == null) return Outcome.fail("nusmp.forge.msg.station_gone");
+        if (level == null || ForgeStationBlock.tierAt(level, s.pos()) == null) return Outcome.fail("nusmp.eforge.msg.station_gone");
         if (!player.level().dimension().equals(s.dimension()) || player.distanceToSqr(s.pos().getCenter()) > square(ForgeConfig.stationRange() + 4)) {
-            return Outcome.fail("nusmp.forge.msg.too_far");
+            return Outcome.fail("nusmp.eforge.msg.too_far");
         }
         ForgeRecipes.Loaded loaded = ForgeRecipes.get(s.recipeId());
-        if (loaded == null || !loaded.available()) return Outcome.fail("nusmp.forge.msg.unknown_recipe");
+        if (loaded == null || !loaded.available()) return Outcome.fail("nusmp.eforge.msg.unknown_recipe");
         SessionCheck.Verdict v = SessionCheck.evaluate(s.steps(), s.seeds(), inputs, ForgeSessions.elapsed(s));
         if (!v.ok()) {
             LOG.info("[nusmp] forge: a result from {} was refused: {}", player.getGameProfile().getName(), v.reason());
-            return Outcome.fail("nusmp.forge.msg.rejected", v.reason());
+            return Outcome.fail("nusmp.eforge.msg.rejected", v.reason());
         }
         StationTier tier = ForgeStationBlock.tierAt(level, s.pos());
         return craft(player, level, s.pos(), tier, loaded, s.premium(), v.total());
@@ -77,15 +77,15 @@ public final class ForgeFinisher {
     /** Crafts the recipe at the given station tier with a finished minigame score (permille). */
     public static Outcome craft(ServerPlayer player, ServerLevel level, BlockPos pos, StationTier tier, ForgeRecipes.Loaded loaded, boolean premium, int scorePermille) {
         ForgeRecipeDef def = loaded.def();
-        if (!loaded.available()) return Outcome.fail("nusmp.forge.msg.unknown_recipe");
-        if (ForgeConfig.enforceTier() && !tier.canForge(def.tier())) return Outcome.fail("nusmp.forge.msg.tier");
+        if (!loaded.available()) return Outcome.fail("nusmp.eforge.msg.unknown_recipe");
+        if (ForgeConfig.enforceTier() && !tier.canForge(def.tier())) return Outcome.fail("nusmp.eforge.msg.tier");
         List<Inventories.Row> pay = new ArrayList<>();
         for (ForgeRecipeDef.Stack st : def.inputs()) {
             Item it = Inventories.item(st.item());
-            if (it == null) return Outcome.fail("nusmp.forge.msg.unknown_recipe");
+            if (it == null) return Outcome.fail("nusmp.eforge.msg.unknown_recipe");
             pay.add(new Inventories.Row(it, st.count()));
         }
-        if (!Inventories.hasAll(player, pay)) return Outcome.fail("nusmp.forge.msg.missing");
+        if (!Inventories.hasAll(player, pay)) return Outcome.fail("nusmp.eforge.msg.missing");
         int materialPoints = 0;
         if (premium) {
             for (ForgeRecipeDef.Premium p : def.premium()) {
@@ -98,7 +98,7 @@ public final class ForgeFinisher {
                 }
             }
         }
-        if (!Inventories.takeAll(player, pay)) return Outcome.fail("nusmp.forge.msg.missing");
+        if (!Inventories.takeAll(player, pay)) return Outcome.fail("nusmp.eforge.msg.missing");
 
         ForgeProgress progress = ForgeStore.of(player);
         Specialization spec = progress.specialization();
@@ -126,10 +126,10 @@ public final class ForgeFinisher {
         player.giveExperiencePoints(2 + q.level() * 3);
         celebrate(level, pos, q);
         if (q == Quality.MYTHICAL && ForgeConfig.announceMythical() && player.getServer() != null) {
-            player.getServer().getPlayerList().broadcastSystemMessage(Component.translatable("nusmp.forge.msg.mythical", player.getDisplayName(), shown.getHoverName())
+            player.getServer().getPlayerList().broadcastSystemMessage(Component.translatable("nusmp.eforge.msg.mythical", player.getDisplayName(), shown.getHoverName())
                     .withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD), false);
         }
-        return new Outcome(true, "nusmp.forge.msg.done", shown, roll, scorePermille, engraved, "");
+        return new Outcome(true, "nusmp.eforge.msg.done", shown, roll, scorePermille, engraved, "");
     }
 
     private static double square(double v) { return v * v; }

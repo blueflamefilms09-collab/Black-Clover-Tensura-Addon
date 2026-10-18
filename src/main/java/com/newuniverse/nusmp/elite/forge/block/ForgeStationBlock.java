@@ -92,7 +92,7 @@ public class ForgeStationBlock extends BaseEntityBlock {
         if (level.isClientSide) return InteractionResult.SUCCESS;
         if (!(player instanceof ServerPlayer sp)) return InteractionResult.PASS;
         if (!ForgeConfig.enabled()) {
-            sp.displayClientMessage(Component.translatable("nusmp.forge.msg.disabled"), true);
+            sp.displayClientMessage(Component.translatable("nusmp.eforge.msg.disabled"), true);
             return InteractionResult.CONSUME;
         }
         ForgeServer.open(sp, pos);
