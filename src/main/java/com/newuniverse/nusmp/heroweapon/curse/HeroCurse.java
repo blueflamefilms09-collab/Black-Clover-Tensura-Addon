@@ -15,6 +15,9 @@ public final class HeroCurse {
     /** True while the player's active form is a Curse Series form. */
     public static boolean active(Player player) { return false; }
 
+    /** True while the weapon holds its wielder (an Overrun): the weapon cannot be dismissed and the form cannot be changed. */
+    public static boolean locked(Player player) { return false; }
+
     /** The corruption of the player, 0 to 1000 (1000 is an Overrun). */
     public static int corruption(Player player) { return 0; }
 

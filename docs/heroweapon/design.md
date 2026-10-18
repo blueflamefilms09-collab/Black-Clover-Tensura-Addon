@@ -168,11 +168,11 @@ that cannot be parsed leaves the weapon with its base form only; the forms build
   is met by what was absorbed so far (a tag requirement counts every absorbed item in the tag; absorbed items are never consumed by unlocking, they only accumulate; this matches the
   series, where the weapon keeps what it ate). Learning an available form is free and automatic by default (forms config `autoLearn`, default true) or by the Weapon Book's button.
   Which items may be absorbed: those some form of the bonded weapon asks for (config `absorbAnything`, default false, lets the gem take anything for the count). How: (a) the Weapon Book's
-  "Feed" buttons, (b) hold the weapon, hold the material in the OFF hand, sneak + right click: the whole off-hand stack is absorbed, (c) `/multiverse hero form absorb`.
+  "Feed" buttons, (b) hold the weapon, hold the material in the OFF hand, sneak + right click (the core's item calls `HeroForms.absorbOffhand`; when it returns true the sneak technique is NOT fired): the whole off-hand stack is absorbed, (c) `/multiverse hero form absorb`.
 * **Active form**: chosen in the Weapon Book, by the hero key "cycle form" (core keybind, calls the forms API) or `/multiverse hero form set`. Changing form is refused while the
   weapon is on cooldown from a technique (global 2 s lock) and inside a Curse Overrun. The forms system keeps the projection in the hand in step: attribute modifiers while summoned,
   the `nusmp:hero_look` component, the tooltip.
-* The Weapon Book (forms builder): a screen opened with a key (default `K`, or a free key the builder verifies) and by sneak-using the weapon with an empty off hand: the form tree, per form the
+* The Weapon Book (forms builder): a screen opened with a key (default `K`, or a free key the builder verifies) and by `/multiverse hero form book`: the form tree, per form the
   requirements with progress bars, the stats, skills and passives, mastery, the curse state; "Feed", "Learn", "Use" buttons. It must work with the mod's GUI theme (`docs/gui_theme.md`).
 
 ## 7. The Curse Series (curse builder)
