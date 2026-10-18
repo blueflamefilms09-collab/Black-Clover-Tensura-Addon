@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.64.0] — Seven new functional rooms for the Mega-Dungeon (Dungeon Keeper style)
+
+The owner sent the Mega-Dungeon spec again with two room-idea references (the Dungeon Keeper room list and a dungeon-room-ideas article; the sites could not be opened from the build session, so the rooms follow the Dungeon Keeper catalogue as remembered) and chose "new functional room types". The dungeon already had the barracks, cells, torture chamber, crypts, libraries, alchemy labs, forges, kitchen and shrines; what was missing is added next to them, **nothing replaced or removed**.
+
+### NEW — `structure/mega/hall/*` (generator `tools/labyrinth/gen_mega_rooms3.py`, same 3 x 2 module footprint and doorways as the Soldiers' Quarters)
+- **hatchery_a** (fenced livestock pens with hay, eggs and water, feed troughs; beast faction), **training_hall_a** (a sand ring, straw dummies on posts, archery targets, weapon racks; goblin faction), **beast_den_a** (the Lair: iron-bar cages, hay, bones, blood; beast faction), **temple_a** (an idol, a sacrificial slab, pews, braziers; undead faction), **graveyard_hall_a** (the Boneyard: graves with headstones, a dead tree; undead faction), **guard_post_a** (a watch desk, bunks, an armour stand, weapon racks; goblin faction) and **casino_hall_a** (felt tables, a bar counter with a merchant marker).
+- They are in the `hall` folder, so the pools pick them up with no Java (the folder's share of the pool is fixed, so they add variety without changing the mix); `gen_mega_pools.py` and `mega_catalog.py` were re-run. Every room passes the template checks (walk graph, routes, light, leaks, markers); the 54 catalog and assembler tests pass.
+- **Not run in a game client.** The boss spec of the second message (Decennial bosses with legendary actions, Mana Cores, Metal Vessels) is already covered by the Labyrinth Guardian traits, Mana Core and Decennial rewards of 1.55 to 1.58; it is audited, not rebuilt, here.
+
 ## [1.63.0] — Bows held like the vanilla Bow (and guarded), and the Exiled Heavy Knight skill routes
 
 The owner reported (screenshot 81) that the 1.62.0 Legendary Bow stood up in front of the player like a vertical plank with a mis-posed arm, asked for the fix on every bow of the mod and for a guard against it happening again ("now make all bow base items use the same as base minecraft bow"), and asked for the skill trees of *The Exiled Heavy Knight Knows How to Game the System* ("like the Lady Luck"). **Nothing has been run in a game client**: the bow poses and every route number are first guesses that need a player.
