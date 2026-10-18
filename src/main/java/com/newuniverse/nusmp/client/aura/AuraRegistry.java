@@ -50,5 +50,11 @@ final class AuraRegistry {
         CompassAura.register();
         MercuryAura.register();
         WikiAura.register();                 // 1.27.0: the 30 wiki magics
+        TreeAura.register();                 // 1.93.0 nature-magic rebuild: the six temporary armours (Tree, Vine, Plant, Poison Plant, Mud, Mucus)
+        VineAura.register();
+        PlantAura.register();
+        PoisonPlantAura.register();
+        MudAura.register();
+        MucusAura.register();
     }
 }

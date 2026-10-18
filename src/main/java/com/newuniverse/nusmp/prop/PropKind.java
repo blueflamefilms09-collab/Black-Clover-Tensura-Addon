@@ -97,5 +97,12 @@ public enum PropKind {
     RECOMBINATION_1,
     RECOMBINATION_2,
     /** 1.43.0: Unite Canis's shadow wolves (server: shadow.ShadowPackProps, painter: client.shadow.ShadowPackPainter). */
-    SHADOW_PACK_1
+    SHADOW_PACK_1,
+    /** 1.93.0 nature-magic rebuild: one kind per magic, the variant is the low byte of the param (see prop.TreeProps and its siblings) */
+    TREE_1,
+    VINE_1,
+    PLANT_1,
+    POISON_PLANT_1,
+    MUD_1,
+    MUCUS_1
 }

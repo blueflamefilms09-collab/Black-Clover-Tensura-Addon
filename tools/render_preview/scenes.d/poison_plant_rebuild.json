@@ -1,0 +1,4 @@
+{
+ "poison_plant_aura_armour": {"kind": "aura", "attr": "PoisonPlant", "aura": "POISON_PLANT", "style": 0, "total": 120, "ages": [3, 8, 14, 40, 102, 110], "tile": [300, 420]},
+ "poison_plant_aura_big": {"kind": "aura", "attr": "PoisonPlant", "aura": "POISON_PLANT", "style": 0, "total": 120, "ages": [40, 62], "tile": [560, 760]}
+}

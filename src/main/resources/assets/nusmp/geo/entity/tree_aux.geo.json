@@ -1,0 +1,330 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.tree_aux",
+    "texture_width": 64,
+    "texture_height": 64,
+    "visible_bounds_width": 4,
+    "visible_bounds_height": 4,
+    "visible_bounds_offset": [
+     0,
+     1,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "root",
+     "pivot": [
+      0,
+      24,
+      0
+     ],
+     "cubes": []
+    },
+    {
+     "name": "orb0",
+     "pivot": [
+      0,
+      18,
+      0
+     ],
+     "cubes": [],
+     "parent": "root",
+     "rotation": [
+      0,
+      0,
+      0
+     ]
+    },
+    {
+     "name": "acorn0",
+     "pivot": [
+      11,
+      16.75,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        10,
+        15.25,
+        -1.5
+       ],
+       "size": [
+        3,
+        3,
+        3
+       ],
+       "uv": [
+        0,
+        0
+       ]
+      },
+      {
+       "origin": [
+        9.7,
+        17.75,
+        -1.8
+       ],
+       "size": [
+        3,
+        1,
+        3
+       ],
+       "uv": [
+        12,
+        0
+       ],
+       "inflate": 0.3
+      },
+      {
+       "origin": [
+        10.8,
+        19.05,
+        -0.3
+       ],
+       "size": [
+        1,
+        1,
+        1
+       ],
+       "uv": [
+        24,
+        0
+       ]
+      }
+     ],
+     "parent": "orb0"
+    },
+    {
+     "name": "orb1",
+     "pivot": [
+      0,
+      18,
+      0
+     ],
+     "cubes": [],
+     "parent": "root",
+     "rotation": [
+      0,
+      90,
+      0
+     ]
+    },
+    {
+     "name": "acorn1",
+     "pivot": [
+      11,
+      19.25,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        10,
+        17.75,
+        -1.5
+       ],
+       "size": [
+        3,
+        3,
+        3
+       ],
+       "uv": [
+        0,
+        0
+       ]
+      },
+      {
+       "origin": [
+        9.7,
+        20.25,
+        -1.8
+       ],
+       "size": [
+        3,
+        1,
+        3
+       ],
+       "uv": [
+        12,
+        0
+       ],
+       "inflate": 0.3
+      },
+      {
+       "origin": [
+        10.8,
+        21.55,
+        -0.3
+       ],
+       "size": [
+        1,
+        1,
+        1
+       ],
+       "uv": [
+        24,
+        0
+       ]
+      }
+     ],
+     "parent": "orb1"
+    },
+    {
+     "name": "orb2",
+     "pivot": [
+      0,
+      18,
+      0
+     ],
+     "cubes": [],
+     "parent": "root",
+     "rotation": [
+      0,
+      180,
+      0
+     ]
+    },
+    {
+     "name": "acorn2",
+     "pivot": [
+      11,
+      16.75,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        10,
+        15.25,
+        -1.5
+       ],
+       "size": [
+        3,
+        3,
+        3
+       ],
+       "uv": [
+        0,
+        0
+       ]
+      },
+      {
+       "origin": [
+        9.7,
+        17.75,
+        -1.8
+       ],
+       "size": [
+        3,
+        1,
+        3
+       ],
+       "uv": [
+        12,
+        0
+       ],
+       "inflate": 0.3
+      },
+      {
+       "origin": [
+        10.8,
+        19.05,
+        -0.3
+       ],
+       "size": [
+        1,
+        1,
+        1
+       ],
+       "uv": [
+        24,
+        0
+       ]
+      }
+     ],
+     "parent": "orb2"
+    },
+    {
+     "name": "orb3",
+     "pivot": [
+      0,
+      18,
+      0
+     ],
+     "cubes": [],
+     "parent": "root",
+     "rotation": [
+      0,
+      270,
+      0
+     ]
+    },
+    {
+     "name": "acorn3",
+     "pivot": [
+      11,
+      19.25,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        10,
+        17.75,
+        -1.5
+       ],
+       "size": [
+        3,
+        3,
+        3
+       ],
+       "uv": [
+        0,
+        0
+       ]
+      },
+      {
+       "origin": [
+        9.7,
+        20.25,
+        -1.8
+       ],
+       "size": [
+        3,
+        1,
+        3
+       ],
+       "uv": [
+        12,
+        0
+       ],
+       "inflate": 0.3
+      },
+      {
+       "origin": [
+        10.8,
+        21.55,
+        -0.3
+       ],
+       "size": [
+        1,
+        1,
+        1
+       ],
+       "uv": [
+        24,
+        0
+       ]
+      }
+     ],
+     "parent": "orb3"
+    }
+   ]
+  }
+ ]
+}
