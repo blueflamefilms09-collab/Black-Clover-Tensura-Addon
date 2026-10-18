@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.skilltree.state;
 
+import com.newuniverse.nusmp.skilltree.line.PassiveToggles;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -23,6 +24,8 @@ public final class PlayerSkillTree implements IPlayerSkillTree {
     private String activeClass = "";
     private long classChangedAt;
     private CompoundTag extra = new CompoundTag();
+    /** 1.82.0: the on/off switches of the line passives (see {@link PassiveToggles}). */
+    private final PassiveToggles toggles = new PassiveToggles();
 
     @Override public Set<String> unlockedRoutes() { return Collections.unmodifiableSet(routes); }
 
@@ -58,8 +61,15 @@ public final class PlayerSkillTree implements IPlayerSkillTree {
         String prefix = routeId + "#";
         int before = nodes.size();
         nodes.keySet().removeIf(k -> k.startsWith(prefix));
+        toggles.clearRoute(routeId);                                         // a respec starts the line's switches from their default again
         return before - nodes.size();
     }
+
+    @Override public Map<String, Boolean> passiveToggles() { return toggles.asMap(); }
+
+    @Override public boolean isPassiveEnabled(String routeId, String nodeId) { return toggles.isEnabled(routeId, nodeId); }
+
+    @Override public void setPassiveEnabled(String routeId, String nodeId, boolean enabled) { toggles.set(routeId, nodeId, enabled); }
 
     @Override public String activeClass() { return activeClass; }
 
@@ -78,7 +88,7 @@ public final class PlayerSkillTree implements IPlayerSkillTree {
     @Override public boolean hasExtra(String system) { return extra.contains(system, Tag.TAG_COMPOUND); }
 
     @Override
-    public boolean isEmpty() { return routes.isEmpty() && nodes.isEmpty() && sp == 0 && spSpent == 0 && activeClass.isEmpty() && extra.isEmpty(); }
+    public boolean isEmpty() { return routes.isEmpty() && nodes.isEmpty() && sp == 0 && spSpent == 0 && activeClass.isEmpty() && extra.isEmpty() && toggles.isEmpty(); }
 
     @Override
     public CompoundTag toTag() {
@@ -94,6 +104,11 @@ public final class PlayerSkillTree implements IPlayerSkillTree {
         t.putString("class", activeClass);
         t.putLong("classAt", classChangedAt);
         t.put("extra", extra.copy());
+        if (!toggles.isEmpty()) {                                            // 1.82.0: written only when there is something, so an old save and a new save without lines look alike
+            CompoundTag tg = new CompoundTag();
+            for (Map.Entry<String, Boolean> e : toggles.asMap().entrySet()) tg.putBoolean(e.getKey(), e.getValue());
+            t.put("toggles", tg);
+        }
         return t;
     }
 
@@ -113,6 +128,12 @@ public final class PlayerSkillTree implements IPlayerSkillTree {
         p.activeClass = t.getString("class");
         p.classChangedAt = t.getLong("classAt");
         if (t.contains("extra", Tag.TAG_COMPOUND)) p.extra = t.getCompound("extra").copy();
+        if (t.contains("toggles", Tag.TAG_COMPOUND)) {                       // tolerant: a missing compound, a key that is not route#node and a value that is not a number are skipped
+            CompoundTag tg = t.getCompound("toggles");
+            Map<String, Object> raw = new LinkedHashMap<>();
+            for (String k : tg.getAllKeys()) if (tg.contains(k, Tag.TAG_ANY_NUMERIC)) raw.put(k, tg.getByte(k));
+            p.toggles.copyFrom(PassiveToggles.fromMap(raw));
+        }
         return p;
     }
 
@@ -128,5 +149,6 @@ public final class PlayerSkillTree implements IPlayerSkillTree {
         activeClass = c.activeClass;
         classChangedAt = c.classChangedAt;
         extra = c.extra;
+        toggles.copyFrom(c.toggles);
     }
 }

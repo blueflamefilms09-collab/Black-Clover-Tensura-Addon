@@ -88,6 +88,33 @@ public final class SkillTreeApi {
         }
     }
 
+    // ------------------------------------------------------------------ 1.82.0: the switches of the line passives
+    /**
+     * Whether this node's own switch is on (true when it was never turned off). This is only the switch: whether the passive RUNS also needs the line to be equipped, which
+     * {@code skilltree.line.LineGate} decides in one place.
+     */
+    public static boolean isPassiveEnabled(Player player, String routeId, String nodeId) { return of(player).isPassiveEnabled(routeId, nodeId); }
+
+    /**
+     * Turns the switch of a passive or attribute node on or off. Server only; refuses (false, nothing changed) when the engine is off, the route is not owned, the node does not exist, has no
+     * switch (it is an art or a plain node) or is not bought. The client sends this as {@code TogglePassivePayload} and never decides.
+     */
+    public static boolean setPassiveEnabled(ServerPlayer player, String routeId, String nodeId, boolean enabled) {
+        try {
+            if (player == null || !TreeConfig.enabled()) return false;
+            SkillRoute route = RouteRegistry.byId(routeId);
+            SkillNode node = route == null ? null : route.node(nodeId);
+            IPlayerSkillTree t = of(player);
+            if (node == null || !node.hasToggle() || !t.hasRoute(routeId) || t.nodeLevel(routeId, nodeId) < 1) return false;
+            t.setPassiveEnabled(routeId, nodeId, enabled);
+            resync(player);
+            return true;
+        } catch (RuntimeException e) {
+            LOG.warn("[nusmp] skill tree: setPassiveEnabled failed for {} {}", routeId, nodeId, e);
+            return false;
+        }
+    }
+
     // ------------------------------------------------------------------ listeners
     /** Registers a listener that is told whenever a route is unlocked (the unlock effects of the items system). Call once at start; listeners live as long as the game. */
     public static void addUnlockListener(RouteUnlockListener listener) {
@@ -166,6 +193,7 @@ public final class SkillTreeApi {
             }
             SkillNode node = route.node(nodeId);
             if (buy.level() == 1 && node.grantsSkill()) SkillGrants.learn(player, node.skill(), true);
+            if (buy.level() == 1 && node.hasToggle()) of(player).setPassiveEnabled(route.id(), node.id(), true);       // 1.82.0: a bought passive starts ON and appears in the Passives panel
             resync(player);
             String key = SkillRoute.key(route.id(), node.id());
             NusmpEvents.fire(player, "tree.node", key);
@@ -281,6 +309,7 @@ public final class SkillTreeApi {
             if (node == null || !t.hasRoute(routeId)) return false;
             int lv = Math.max(0, Math.min(node.maxLevel(), level));
             t.setNodeLevel(routeId, nodeId, lv);
+            if (lv >= 1 && node.hasToggle() && !t.passiveToggles().containsKey(SkillRoute.key(routeId, nodeId))) t.setPassiveEnabled(routeId, nodeId, true);     // 1.82.0
             if (lv >= 1 && node.grantsSkill()) SkillGrants.learn(player, node.skill(), false);
             else if (lv == 0) SkillGrants.reconcile(player);
             resync(player);

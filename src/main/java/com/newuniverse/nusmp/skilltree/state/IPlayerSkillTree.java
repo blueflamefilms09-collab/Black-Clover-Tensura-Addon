@@ -58,6 +58,18 @@ public interface IPlayerSkillTree {
 
     void setClassChangedAt(long gameTime);
 
+    /**
+     * 1.82.0: the Tensura-style switches of the passives and attribute bonuses of the Unique Skill Lines, key {@code <route>#<node>} to on/off. Only switches that were ever stored are listed;
+     * a node with no entry is ON. Unmodifiable view.
+     */
+    Map<String, Boolean> passiveToggles();
+
+    /** Whether the switch of this node is on (true when it was never stored: passives are ON by default). */
+    boolean isPassiveEnabled(String routeId, String nodeId);
+
+    /** Stores the switch of this node. This does not check that the node exists or is bought: {@code SkillTreeApi.setPassiveEnabled} does. */
+    void setPassiveEnabled(String routeId, String nodeId, boolean enabled);
+
     /** A live sub-compound for a system's own saved state ({@code market} for the shop, ...); created empty on first use. */
     CompoundTag extra(String system);
 
