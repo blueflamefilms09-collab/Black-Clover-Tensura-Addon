@@ -50,5 +50,6 @@ final class AuraRegistry {
         CompassAura.register();
         MercuryAura.register();
         WikiAura.register();                 // 1.27.0: the 30 wiki magics
+        SpatialAura.register();              // 1.93.0 magic rebuild (Spatial, Gravity, Permeation, Mirror, Slash): the new armours
     }
 }

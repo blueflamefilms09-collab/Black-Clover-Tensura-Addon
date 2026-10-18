@@ -52,5 +52,6 @@ final class PropRegistry {
         SandProps.init();
         RecombinationProps.init();
         com.newuniverse.nusmp.shadow.ShadowPackProps.init();
+        SpatialProps.init();                 // 1.93.0 magic rebuild
     }
 }

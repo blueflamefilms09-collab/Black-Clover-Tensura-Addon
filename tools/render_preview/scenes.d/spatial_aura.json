@@ -1,0 +1,27 @@
+{
+ "spatial_aura_armour": {
+  "kind": "aura",
+  "attr": "Spatial",
+  "aura": "SPATIAL",
+  "exampleFiles": ["../../../src/main/java/com/newuniverse/nusmp/client/aura/SpatialArmourKit.java", "../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java"],
+  "total": 100,
+  "style": 0,
+  "ages": [4, 9, 16, 40, 76, 90],
+  "tile": [260, 380],
+  "views": [{"name": "front 3/4", "yaw": 28, "pitch": 10}, {"name": "back 3/4", "yaw": 205, "pitch": 12}]
+ },
+ "spatial_aura_signature": {
+  "kind": "aura",
+  "attr": "Spatial",
+  "aura": "SPATIAL",
+  "exampleFiles": ["../../../src/main/java/com/newuniverse/nusmp/client/aura/SpatialArmourKit.java", "../../../src/main/java/com/newuniverse/nusmp/client/aura/EquipAnimation.java"],
+  "total": 100,
+  "style": 1,
+  "skin": "alex",
+  "ages": [30, 55],
+  "limbSwing": 1.4,
+  "limbSwingAmount": 0.8,
+  "tile": [300, 420],
+  "views": [{"name": "side", "yaw": 90, "pitch": 6}, {"name": "front", "yaw": 0, "pitch": 8}]
+ }
+}

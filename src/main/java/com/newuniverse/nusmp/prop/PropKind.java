@@ -97,5 +97,12 @@ public enum PropKind {
     RECOMBINATION_1,
     RECOMBINATION_2,
     /** 1.43.0: Unite Canis's shadow wolves (server: shadow.ShadowPackProps, painter: client.shadow.ShadowPackPainter). */
-    SHADOW_PACK_1
+    SHADOW_PACK_1,
+    /** 1.93.0 magic rebuild: Spatial (gate frame, rift), Mirror (standing mirror, double) and Permeation (phase echo, phase door) summon models */
+    SPATIAL_1,
+    SPATIAL_2,
+    MIRROR_1,
+    MIRROR_2,
+    PERMEATION_1,
+    PERMEATION_2
 }
