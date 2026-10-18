@@ -1,0 +1,1069 @@
+{
+  "magic": "exiled_heavy_knight",
+  "franchise": "exiled_heavy_knight",
+  "name": "I-Frame Dodge Mastery",
+  "desc": "A dodge is not a movement, it is a window in which nothing can hurt you. Time it, and the strongest attack in the room passes through. Miss it, and you are plainly mortal.",
+  "book": "nusmp:invincibility_frames_book",
+  "book_name": "Primer on the Invulnerable Heartbeat",
+  "book_lore": "For one beat the sword went through him. He only blinked.",
+  "color": "#BDC3C7",
+  "icon": "minecraft:phantom_membrane",
+  "class_id": "invincibility_frames",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/invincibility_frames.png",
+  "book_texture": "nusmp:item/skill_book_3d/exiled_heavy_knight",
+  "background_theme": "dream",
+  "nodes": [
+    {
+      "id": "dodge_window_stance",
+      "name": "Dodge-Window Stance",
+      "desc": "Loose and ready to roll: evasion and speed, almost no armor.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          -3.0,
+          -3.75,
+          -4.5
+        ],
+        "speed_pct": [
+          0.12,
+          0.144,
+          0.168
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.04,
+          0.048,
+          0.056
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:phantom_membrane"
+    },
+    {
+      "id": "guarded_roll_stance",
+      "name": "Guarded Roll Stance",
+      "desc": "A tucked roll with a shield-arm up: armor and regeneration, but you move slowly.",
+      "parents": [
+        {
+          "node": "dodge_window_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          2.0,
+          2.5,
+          3.0
+        ],
+        "speed_pct": [
+          -0.05,
+          -0.06,
+          -0.07
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0.7,
+          0.84,
+          0.98
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:shield"
+    },
+    {
+      "id": "roll_reflexes",
+      "name": "Roll Reflexes",
+      "desc": "Faster feet for the next dodge.",
+      "parents": [
+        {
+          "node": "dodge_window_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.05,
+          0.0625,
+          0.075,
+          0.0875,
+          0.1
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "frame_data_heart",
+      "name": "Frame Data Heart",
+      "desc": "A few more hearts.",
+      "parents": [
+        {
+          "node": "guarded_roll_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:apple"
+    },
+    {
+      "id": "quick_recovery",
+      "name": "Quick Recovery",
+      "desc": "Faster swing recovery after a dodge.",
+      "parents": [
+        {
+          "node": "dodge_window_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.05,
+          0.0625,
+          0.075,
+          0.0875,
+          0.1
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:clock"
+    },
+    {
+      "id": "counter_parry_ward",
+      "name": "Counter-Parry Ward",
+      "desc": "Hold a ward for a few seconds: part of the damage you take is thrown back.",
+      "parents": [
+        {
+          "node": "dodge_window_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ward_reflect",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "seconds": [
+          6.0,
+          7.0,
+          7.0,
+          8.0
+        ],
+        "reflect_pct": [
+          0.4,
+          0.48,
+          0.56,
+          0.64
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:shield"
+    },
+    {
+      "id": "roll_through_strike",
+      "name": "Roll Through Strike",
+      "desc": "Roll into a dash that strikes everything on the line.",
+      "parents": [
+        {
+          "node": "guarded_roll_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "distance": [
+          6.0,
+          6.6,
+          7.2,
+          7.8
+        ],
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "iron_window_aegis",
+      "name": "Iron Window Aegis",
+      "desc": "A moment of near-invincibility: a thick shield and a surge of resistance.",
+      "parents": [
+        {
+          "node": "counter_parry_ward",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "absorb_hearts": [
+          5.0,
+          6.0,
+          8.0,
+          9.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          7.0,
+          8.0
+        ],
+        "resist_amp": [
+          1.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:shield"
+    },
+    {
+      "id": "disappear_smoke",
+      "name": "Disappear Smoke",
+      "desc": "Scatter smoke and vanish from sight while the creatures around you grope.",
+      "parents": [
+        {
+          "node": "roll_through_strike",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "smoke",
+      "params": {
+        "vfx": "SHADOW_POOL"
+      },
+      "values": {
+        "radius": [
+          5.0,
+          5.5,
+          6.0,
+          6.5
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:gunpowder"
+    },
+    {
+      "id": "roll_out_slash",
+      "name": "Roll-Out Slash",
+      "desc": "As you come out of the roll, slash a cone of foes in front.",
+      "parents": [
+        {
+          "node": "iron_window_aegis",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "range": [
+          3.5,
+          3.78,
+          4.06,
+          4.34
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0,
+          52.0
+        ],
+        "targets": [
+          2.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "knockback": [
+          0.4,
+          0.44,
+          0.48,
+          0.52
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          100.0,
+          92.0,
+          84.0,
+          76.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:stone_sword"
+    },
+    {
+      "id": "ghost_step_draught",
+      "name": "Ghost-Step Draught",
+      "desc": "Drink your focus: you turn invisible and quicken for a short while.",
+      "parents": [
+        {
+          "node": "disappear_smoke",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "invisibility",
+        "effect2": "speed",
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "seconds": [
+          12.0,
+          14.0,
+          16.0,
+          17.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "amp2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:glass_bottle"
+    },
+    {
+      "id": "frame_perfect_punish",
+      "name": "Frame-Perfect Punish",
+      "desc": "After a perfect dodge, strike back hard: it hits more the weaker the foe.",
+      "parents": [
+        {
+          "node": "roll_out_slash",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "execute",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "range": [
+          3.5,
+          3.71,
+          3.92,
+          4.13
+        ],
+        "bonus": [
+          0.5,
+          0.575,
+          0.65,
+          0.725
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:iron_axe"
+    },
+    {
+      "id": "perfect_roll",
+      "name": "Perfect Roll",
+      "desc": "You may dodge a blow completely.",
+      "parents": [
+        {
+          "node": "counter_parry_ward",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.14,
+          0.168,
+          0.196,
+          0.224
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "not_yet_dead",
+      "name": "Not Yet Dead",
+      "desc": "When nearly dead, a brief shield.",
+      "parents": [
+        {
+          "node": "roll_through_strike",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "last_stand",
+      "values": {
+        "threshold": [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "rest": [
+          1800.0,
+          1620.0,
+          1440.0,
+          1260.0
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:totem_of_undying"
+    },
+    {
+      "id": "moving_target",
+      "name": "Moving Target",
+      "desc": "You take less damage while sprinting.",
+      "parents": [
+        {
+          "node": "iron_window_aegis",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "reduce_when",
+      "params": {
+        "condition": "sprinting"
+      },
+      "values": {
+        "pct": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "painful_touch",
+      "name": "Painful Touch",
+      "desc": "Whoever hits you may be weakened.",
+      "parents": [
+        {
+          "node": "disappear_smoke",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "on_hurt_retaliate",
+      "params": {
+        "effect": "weakness"
+      },
+      "values": {
+        "seconds": [
+          3.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "chance": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:fermented_spider_eye"
+    },
+    {
+      "id": "airborne_recovery",
+      "name": "Airborne Recovery",
+      "desc": "You heal while in the air.",
+      "parents": [
+        {
+          "node": "roll_out_slash",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "airborne"
+      },
+      "values": {
+        "per_second": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "slow_mend",
+      "name": "Slow Mend",
+      "desc": "Your wounds close over time.",
+      "parents": [
+        {
+          "node": "ghost_step_draught",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "mending",
+      "values": {
+        "seconds": [
+          20.0,
+          18.0,
+          16.0,
+          14.0
+        ],
+        "amount": [
+          1,
+          1.25,
+          1.5,
+          1.75
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:glow_berries"
+    },
+    {
+      "id": "spiked_roll",
+      "name": "Spiked Roll",
+      "desc": "Part of the damage you take is thrown back.",
+      "parents": [
+        {
+          "node": "frame_perfect_punish",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "thorns",
+      "values": {
+        "pct": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ],
+        "rest": [
+          20.0,
+          20.0,
+          20.0,
+          20.0
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:cactus"
+    },
+    {
+      "id": "untouchable_ward",
+      "name": "Untouchable Ward",
+      "desc": "A long window in which blows glance off you and sting the one who threw them.",
+      "parents": [
+        {
+          "node": "frame_perfect_punish",
+          "level": 3
+        },
+        {
+          "node": "spiked_roll",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ward_reflect",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "seconds": [
+          12.0,
+          13.0,
+          14.0
+        ],
+        "reflect_pct": [
+          0.75,
+          0.9,
+          1.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1500.0,
+          1410.0,
+          1320.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:totem_of_undying"
+    },
+    {
+      "id": "phantom_run",
+      "name": "Phantom Run",
+      "desc": "Pass through a whole line of foes in a streak, striking each as you go.",
+      "parents": [
+        {
+          "node": "ghost_step_draught",
+          "level": 3
+        },
+        {
+          "node": "slow_mend",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "LIGHTNING_FIEND"
+      },
+      "values": {
+        "distance": [
+          13.0,
+          14,
+          14
+        ],
+        "damage": [
+          26.0,
+          32.5,
+          39.0
+        ],
+        "targets": [
+          9.0,
+          10.0,
+          10.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174
+        ],
+        "cooldown": [
+          1300.0,
+          1196.0,
+          1092.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:phantom_membrane"
+    }
+  ]
+}

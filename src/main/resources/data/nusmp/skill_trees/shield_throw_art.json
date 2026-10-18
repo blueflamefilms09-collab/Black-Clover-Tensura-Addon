@@ -1,0 +1,1095 @@
+{
+  "magic": "exiled_heavy_knight",
+  "franchise": "exiled_heavy_knight",
+  "name": "Shield Throw Art",
+  "desc": "A shield is also a projectile. Hurl it and it ricochets between foes, hauls the lot of them back with a chain, and returns to your arm to the sound of a bell.",
+  "book": "nusmp:shield_throw_art_book",
+  "book_name": "Training Pamphlet of the Returning Disc",
+  "book_lore": "It always comes back, and it brings company.",
+  "color": "#3498DB",
+  "icon": "minecraft:shield",
+  "class_id": "shield_throw_art",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "gui_background": "nusmp:textures/gui/skill_trees/shield_throw_art.png",
+  "book_texture": "nusmp:item/skill_book_3d/exiled_heavy_knight",
+  "background_theme": "ocean",
+  "nodes": [
+    {
+      "id": "arm_strapped_stance",
+      "name": "Arm-Strapped Stance",
+      "desc": "Shield on the arm: armor and knockback resistance, lighter attacks.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "damage_pct": [
+          -0.05,
+          -0.06,
+          -0.07
+        ],
+        "armor": [
+          3.0,
+          3.75,
+          4.5
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0.2,
+          0.24,
+          0.28
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:shield"
+    },
+    {
+      "id": "thrower_s_stance",
+      "name": "Thrower's Stance",
+      "desc": "Shield in the hand and ready to fly: faster and stronger throws, but the guard is down.",
+      "parents": [
+        {
+          "node": "arm_strapped_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage_pct": [
+          0.18,
+          0.216,
+          0.252
+        ],
+        "armor": [
+          -2.0,
+          -2.5,
+          -3.0
+        ],
+        "speed_pct": [
+          0.06,
+          0.072,
+          0.084
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:target"
+    },
+    {
+      "id": "throwing_arm",
+      "name": "Throwing Arm",
+      "desc": "A permanent bonus to attack damage.",
+      "parents": [
+        {
+          "node": "arm_strapped_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "disc_handler_s_hands",
+      "name": "Disc Handler's Hands",
+      "desc": "Faster swing recovery.",
+      "parents": [
+        {
+          "node": "thrower_s_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.05,
+          0.0625,
+          0.075,
+          0.0875,
+          0.1
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:clock"
+    },
+    {
+      "id": "sturdy_strap",
+      "name": "Sturdy Strap",
+      "desc": "A bonus to armor.",
+      "parents": [
+        {
+          "node": "arm_strapped_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.5,
+          1.875,
+          2.25,
+          2.625,
+          3.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:iron_chestplate"
+    },
+    {
+      "id": "ricochet_throw",
+      "name": "Ricochet Throw",
+      "desc": "Throw the shield at a foe: it bounces from one to the next before it returns.",
+      "parents": [
+        {
+          "node": "arm_strapped_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "chain_hit",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "jumps": [
+          5.0,
+          7.0,
+          9.0,
+          10.0
+        ],
+        "jump_range": [
+          6.0,
+          6.0,
+          7.0,
+          7.0
+        ],
+        "falloff": [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          160.0,
+          147.0,
+          134.0,
+          122.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:shield"
+    },
+    {
+      "id": "piercing_throw",
+      "name": "Piercing Throw",
+      "desc": "A flat, hard throw through a line of foes.",
+      "parents": [
+        {
+          "node": "thrower_s_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          14.0,
+          15.4,
+          16.8,
+          18.2
+        ],
+        "pierce": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:iron_ingot"
+    },
+    {
+      "id": "chain_recall",
+      "name": "Chain Recall",
+      "desc": "Yank the creatures around you toward the shield's anchor.",
+      "parents": [
+        {
+          "node": "ricochet_throw",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "pull",
+      "params": {
+        "vfx": "SEAL_CHAINS"
+      },
+      "values": {
+        "radius": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "strength": [
+          0.8,
+          0.88,
+          0.96,
+          1.04
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "damage": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:chain"
+    },
+    {
+      "id": "return_shockwave",
+      "name": "Return Shockwave",
+      "desc": "As the shield slams home, a ring of force bursts from your arm.",
+      "parents": [
+        {
+          "node": "piercing_throw",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "radius": [
+          3.5,
+          3.85,
+          4.2,
+          4.55
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "knockback": [
+          1.0,
+          1.1,
+          1.2,
+          1.3
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:iron_block"
+    },
+    {
+      "id": "shield_wall_cast",
+      "name": "Shield Wall Cast",
+      "desc": "Raise the shield and brace under a shell of absorption.",
+      "parents": [
+        {
+          "node": "chain_recall",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "absorb_hearts": [
+          5.0,
+          6.0,
+          8.0,
+          9.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          7.0,
+          8.0
+        ],
+        "resist_amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:shield"
+    },
+    {
+      "id": "bell_strike",
+      "name": "Bell Strike",
+      "desc": "Ring the shield like a bell: nearby monsters turn to you.",
+      "parents": [
+        {
+          "node": "return_shockwave",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "taunt",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "resist_seconds": [
+          3.0,
+          4.0,
+          4.0,
+          5.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:bell"
+    },
+    {
+      "id": "rebound_cut",
+      "name": "Rebound Cut",
+      "desc": "A rebounding slash in a short cone.",
+      "parents": [
+        {
+          "node": "shield_wall_cast",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "range": [
+          4.0,
+          4.32,
+          4.64,
+          4.96
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0,
+          52.0
+        ],
+        "targets": [
+          2.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "knockback": [
+          0.4,
+          0.44,
+          0.48,
+          0.52
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          100.0,
+          92.0,
+          84.0,
+          76.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:iron_axe"
+    },
+    {
+      "id": "ricochet_chain_hit",
+      "name": "Ricochet Chain Hit",
+      "desc": "Every few blows in a row hit much harder.",
+      "parents": [
+        {
+          "node": "ricochet_throw",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "combo",
+      "values": {
+        "hits": [
+          3.0,
+          3.0,
+          2.0,
+          2.0
+        ],
+        "bonus": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:iron_nugget"
+    },
+    {
+      "id": "arrow_glance",
+      "name": "Arrow Glance",
+      "desc": "Arrows and bolts hurt less.",
+      "parents": [
+        {
+          "node": "piercing_throw",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "projectile"
+      },
+      "values": {
+        "pct": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:arrow"
+    },
+    {
+      "id": "spiked_rim",
+      "name": "Spiked Rim",
+      "desc": "Part of the damage you take is thrown back at the attacker.",
+      "parents": [
+        {
+          "node": "chain_recall",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "thorns",
+      "values": {
+        "pct": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ],
+        "rest": [
+          20.0,
+          20.0,
+          20.0,
+          20.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:cactus"
+    },
+    {
+      "id": "rim_chip",
+      "name": "Rim Chip",
+      "desc": "Your blows may slow the foe.",
+      "parents": [
+        {
+          "node": "return_shockwave",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "on_hit_effect",
+      "params": {
+        "effect": "slowness"
+      },
+      "values": {
+        "seconds": [
+          3.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "chance": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:cobweb"
+    },
+    {
+      "id": "hard_ring_crits",
+      "name": "Hard Ring Crits",
+      "desc": "Your blows may strike critically.",
+      "parents": [
+        {
+          "node": "shield_wall_cast",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.1,
+          0.12,
+          0.14,
+          0.16
+        ],
+        "mult": [
+          1.5,
+          1.62,
+          1.74,
+          1.86
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:flint"
+    },
+    {
+      "id": "held_position_armor",
+      "name": "Held Position Armor",
+      "desc": "You take less damage while sneaking.",
+      "parents": [
+        {
+          "node": "bell_strike",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "reduce_when",
+      "params": {
+        "condition": "sneaking"
+      },
+      "values": {
+        "pct": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:iron_ingot"
+    },
+    {
+      "id": "return_trip_mending",
+      "name": "Return Trip Mending",
+      "desc": "Your wounds close over time.",
+      "parents": [
+        {
+          "node": "rebound_cut",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "mending",
+      "values": {
+        "seconds": [
+          15.0,
+          14.0,
+          12.0,
+          10.0
+        ],
+        "amount": [
+          1,
+          1.25,
+          1.5,
+          1.75
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:glow_berries"
+    },
+    {
+      "id": "aegis_typhoon",
+      "name": "Aegis Typhoon",
+      "desc": "Throw the shield in an endless spin that cuts through the pack and keeps returning.",
+      "parents": [
+        {
+          "node": "rebound_cut",
+          "level": 3
+        },
+        {
+          "node": "return_trip_mending",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "whirlwind",
+      "params": {
+        "vfx": "WIND_TORNADO"
+      },
+      "values": {
+        "damage": [
+          5.0,
+          6.25,
+          7.5
+        ],
+        "radius": [
+          6.0,
+          6.48,
+          6.96
+        ],
+        "hits": [
+          10.0,
+          12.0,
+          12.0
+        ],
+        "interval": [
+          5.0,
+          5.0,
+          5.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029
+        ],
+        "cooldown": [
+          1300.0,
+          1196.0,
+          1092.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:heart_of_the_sea"
+    },
+    {
+      "id": "shield_comet",
+      "name": "Shield Comet",
+      "desc": "Hurl the shield through the horizon in a single piercing line.",
+      "parents": [
+        {
+          "node": "bell_strike",
+          "level": 3
+        },
+        {
+          "node": "held_position_armor",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          34.0,
+          42.5,
+          51.0
+        ],
+        "range": [
+          34.0,
+          37.4,
+          40
+        ],
+        "pierce": [
+          6.0,
+          6.0,
+          6.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1400.0,
+          1288.0,
+          1176.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:netherite_ingot"
+    }
+  ]
+}
