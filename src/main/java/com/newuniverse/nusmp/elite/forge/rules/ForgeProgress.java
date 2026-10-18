@@ -72,6 +72,13 @@ public final class ForgeProgress {
         return true;
     }
 
+    /** Removes the specialization (an operator's tool); false when there was none. The change counter is kept. */
+    public boolean clearSpecialization() {
+        if (specialization.isEmpty()) return false;
+        specialization = "";
+        return true;
+    }
+
     /** True when choosing a specialization now would be a CHANGE (and so costs something). */
     public boolean changeCosts() { return !specialization.isEmpty(); }
 

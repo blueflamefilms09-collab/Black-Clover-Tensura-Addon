@@ -35,6 +35,9 @@ public enum StationTier {
     /** The next tier up, or null for the last. */
     public StationTier next() { return index + 1 < values().length ? values()[index + 1] : null; }
 
+    /** The tier below, or null for the first. */
+    public StationTier prev() { return index > 0 ? values()[index - 1] : null; }
+
     /** True when this station can forge a recipe of the given tier index. */
     public boolean canForge(int recipeTier) { return recipeTier <= index; }
 

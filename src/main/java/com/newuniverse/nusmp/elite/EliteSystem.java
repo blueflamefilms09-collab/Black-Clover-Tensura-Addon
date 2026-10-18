@@ -29,7 +29,7 @@ public final class EliteSystem {
 
 
         // ---- forge: stations, minigames, quality, engraving (elite/forge)
-
+        com.newuniverse.nusmp.elite.forge.ForgeRegistry.init(modBus, container);   // 4 stations, 3 kits, minigames, quality, engraving, specializations, progress (nusmp-elite-forge-server.toml)
 
 
 
