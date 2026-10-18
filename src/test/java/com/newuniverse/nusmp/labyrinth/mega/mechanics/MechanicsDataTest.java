@@ -101,4 +101,37 @@ class MechanicsDataTest {
             if (d.trigger().kind().equals("boss_hp")) assertEquals(Scope.BOSS, d.scope(), d.id() + ": boss_hp outside a boss mechanic");
         }
     }
+
+    @Test
+    void everyPrimitiveOfTheCatalogueHasAnExecutorInTheSources() throws java.io.IOException {
+        java.nio.file.Path dir = java.nio.file.Path.of("src/main/java/com/newuniverse/nusmp/labyrinth/mega/mechanics");
+        Set<String> found = new HashSet<>();
+        try (java.util.stream.Stream<java.nio.file.Path> files = java.nio.file.Files.list(dir)) {
+            for (java.nio.file.Path f : (Iterable<java.nio.file.Path>) files::iterator) {
+                if (!f.getFileName().toString().startsWith("Prims") || f.getFileName().toString().equals("Prims.java")) continue;
+                java.util.regex.Matcher m = java.util.regex.Pattern.compile("m\\.put\\(\"([a-z_]+)\"").matcher(java.nio.file.Files.readString(f));
+                while (m.find()) found.add(m.group(1));
+            }
+        }
+        for (String op : TestLibrary.catalog().ops().keySet()) assertTrue(found.contains(op), "no executor for the primitive " + op);
+    }
+
+    @Test
+    void everyTierAndRoadHasEnoughOfEveryScopeToFillAFloor() {
+        for (com.newuniverse.nusmp.labyrinth.mega.Polarity road : com.newuniverse.nusmp.labyrinth.mega.Polarity.values()) {
+            for (int tier = 1; tier <= 5; tier++) {
+                int floor = 0, room = 0, boss = 0;
+                for (MechanicDef d : TestLibrary.defs()) {
+                    if (!d.fitsTier(tier) || !d.road().allows(road)) continue;
+                    switch (d.scope()) {
+                        case FLOOR -> floor++;
+                        case ROOM, ZONE -> room++;
+                        default -> boss++;
+                    }
+                }
+                if (TestLibrary.defs().size() < 1000) continue;
+                assertTrue(floor >= 40 && room >= 150 && boss >= 10, road.id() + " tier " + tier + ": floor " + floor + ", room/zone " + room + ", boss " + boss);
+            }
+        }
+    }
 }

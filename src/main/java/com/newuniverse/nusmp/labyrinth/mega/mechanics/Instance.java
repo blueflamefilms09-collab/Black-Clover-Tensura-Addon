@@ -302,7 +302,6 @@ public final class Instance {
 
     /** Ends every running effect and restores the blocks of effects (not of the props). */
     void stopEffects() {
-        Props.sealChests(this);
         for (Run r : new ArrayList<>(running)) endRun(r);
         for (Journal j : kept) j.restore();
         kept.clear();
@@ -316,6 +315,7 @@ public final class Instance {
         if (state == State.ENDED) return;
         state = State.ENDED;
         pending.clear();
+        Props.sealChests(this);                                                  // an unopened reward chest must not spill its loot when it is taken away
         stopEffects();
         propJournal.restore();
         for (UUID id : new ArrayList<>(mobs)) {
