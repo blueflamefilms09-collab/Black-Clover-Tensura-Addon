@@ -148,10 +148,10 @@ class EliteSkillAssetsTest {
         String doc = read("docs/elite/skills.md");
         for (String id : registeredIds()) assertTrue(doc.contains(id), "the doc does not mention " + id);
         for (String word : List.of("NEW", "ALREADY EXISTS", "REPLACEMENT", "source was not available")) assertTrue(doc.contains(word), "the doc lacks '" + word + "'");
-        // this job does not write the shared lang file
+        // 1.86.0: the lead merged tools/elite/skills_lang.json into en_us.json, so every registered skill must have its name there
         String en = read("src/main/resources/assets/nusmp/lang/en_us.json");
-        Set<String> leaked = new HashSet<>();
-        for (String id : registeredIds()) if (en.contains("\"nusmp.skill." + id + "\"")) leaked.add(id);
-        assertTrue(leaked.isEmpty(), "en_us.json must not carry the elite keys (they live in tools/elite/skills_lang.json): " + leaked);
+        Set<String> unmerged = new HashSet<>();
+        for (String id : registeredIds()) if (!en.contains("\"nusmp.skill." + id + "\"")) unmerged.add(id);
+        assertTrue(unmerged.isEmpty(), "en_us.json lacks the elite skill names (merge tools/elite/skills_lang.json): " + unmerged);
     }
 }

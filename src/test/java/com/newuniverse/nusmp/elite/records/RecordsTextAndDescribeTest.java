@@ -56,9 +56,9 @@ class RecordsTextAndDescribeTest {
         // the dynamic keys: category and rarity names are built from the enum ids
         for (var c : com.newuniverse.nusmp.elite.records.rule.Category.values()) assertTrue(declared.containsKey("gui.nusmp.records.category." + c.id()), c.id());
         for (var r : com.newuniverse.nusmp.elite.records.rule.Rarity.values()) assertTrue(declared.containsKey("gui.nusmp.records.rarity." + r.id()), r.id());
-        // en_us.json is not edited by this job
+        // 1.86.0: the lead merged tools/elite/records_lang.json into en_us.json, so the shipped file must carry the records strings
         String en = Files.readString(Path.of("src/main/resources/assets/nusmp/lang/en_us.json"), StandardCharsets.UTF_8);
-        assertFalse(en.contains("gui.nusmp.records."), "en_us.json must not be edited by this job");
+        assertTrue(en.contains("gui.nusmp.records."), "en_us.json carries the records strings (merged from tools/elite/records_lang.json)");
     }
 
     @Test

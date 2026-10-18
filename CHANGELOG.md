@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.86.0] — Nations and wars, the Elite Forge, 21 elite skills with evolution, Canon Grimoire remake (also carries everything in 1.85.0, whose build was never released)
+
+1.85.0 failed its build on one stale test (a records test asserted that `en_us.json` held no records text, which the lead had just merged), so it was never published. This release contains all of 1.85.0 below plus the next three EliteTensuraAddon pieces and the Canon Grimoire remake. As before, the original addon source was not available: names are the inventory's, every number and rule is invented and lives in config / data.
+
+### NEW
+- **Nations and War** (`elite/nations`, `docs/elite/nations.md`): found and level a nation, custom roles, treasury ledger (Tensura coins), perks, 58 contracts and bounties, reputation tiers, alliances and wars with phases, score and spoils, `/nation`, key N.
+- **Elite Forge** (`elite/forge`, `docs/elite/forge.md`): four stations (Basic, Magisteel, Mythril, Dragonforge), four minigames (Hammer Timing, Magicule Flow, Rune Alignment, Temperature Forge), quality rolls Common to Mythical, engraving, specialisations, skill bonuses and per-player progress. Config `nusmp-elite-forge-server.toml`.
+- **Elite skills and evolution** (`elite/skills`, `docs/elite/skills.md`): 21 skills (Gravity Well, Kamehameha, Static Chain, Ancient Soul, Iron Resolve, Meditation, Runesmith's Insight, Scavenger, Kaioken, Mechanical Eye/Hands, Crocodile Skin, Hecate, Void Edge, Basilisk Skin, Beelzebuth, Gaia with Pillars and Vein Bloom, Hephaestus, Ouroboros, Rapheal, Void Sovereign) and an evolution engine with 12 triggers (EP gate, kills, ability mastered, forge quality and count, held titles, records, item consume, resets and more); `/nusmp eliteskills` for admins.
+- **Canon Grimoire models** (`tools/canon`, `docs/canon/canon_grimoire.md`): all 30 boss and arc-character books are rebuilt as 44-cube 3D books (rounded covers and spine, page block, ribbon, corner caps, glowing medallion with a motif per book), with new first-person, third-person, ground and frame poses. The inventory icon stays the old sprite.
+
+### REPLACED
+- The registered `charter_grimoire_<id>` model and texture (30 books) are replaced by the 3D version; the visible name "Charter Grimoire" becomes **Canon Grimoire** (item names, messages, lore, quests, advancements). Command `/multiverse charter` still works, `canon` is added as an alias.
+
+### KEPT
+- The old book art stays as `charter_grimoire_<id>_v1.json` / `_v1.png`; all ids, class names, config keys and NBT keys keep the word "charter", so old worlds load. Everything in 1.85.0 below.
+
+### Tests
+- Three tests that said the shared lang file must not hold these keys now check that the merged text is present (records, skills, forge).
+
 ## [1.85.0] — Tensura-coin economy and Hub NPCs, no more dead-end mazes, Saiyan and Primordial races, records and titles
 
 The first four pieces of the EliteTensuraAddon inventory and the Hub economy brief (plan: `docs/elite/plan.md`). The original addon source was not available: the names are the inventory's, every number and rule is designed here and listed in the docs.

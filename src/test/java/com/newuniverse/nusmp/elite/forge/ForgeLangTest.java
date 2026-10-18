@@ -82,10 +82,10 @@ class ForgeLangTest {
         List<String> dead = new ArrayList<>(), clash = new ArrayList<>();
         for (String k : frag.keySet()) {
             if (!used.contains(k)) dead.add(k);
-            if (en.has(k)) clash.add(k);
+            if (en.has(k) && !en.get(k).equals(frag.get(k))) clash.add(k);   // 1.86.0: the fragment is merged into en_us.json, so a key may exist there only with the same text
         }
         assertTrue(dead.isEmpty(), "fragment keys nothing uses: " + dead);
-        assertTrue(clash.isEmpty(), "fragment keys that already exist in en_us.json: " + clash);
+        assertTrue(clash.isEmpty(), "fragment keys that exist in en_us.json with a different text: " + clash);
     }
 
     @Test
